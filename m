@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F931863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B226AC433F0;
-	Wed, 28 Dec 2022 15:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B631863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFE6C433EF;
+	Wed, 28 Dec 2022 15:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241525;
-	bh=RbrP1irQ8j/Lcj9YrEfwriYCsl+nOfxlvSAUHujHDsc=;
+	s=korg; t=1672241527;
+	bh=BQWSJMaFs16rR7Ilkp05C2wjq0DCrvV9O7/ifdmsllM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tdPHV5ArtsREqVRoAzksmdaarZCjqNxOLUYKcWXtgGQRWR5sS6HIz5cuog+rqM+p/
-	 GsdRqdDsTXaUdezoirWZ+z9RGFe38gAjgULCNkkIkQ0TcyLPFPJxkhgQvZ+QtbrALj
-	 VObemFyQGjUXnmQ6l3MDmmgmxjXePC715ZIS3cuA=
+	b=vCqq6VRc7rrm5/KQqxKe+lDjhoIfjE58wi//hhlHXRjMtfaUhmj1zWckNVChhBEX6
+	 3dLBXsMtslQLZjFyVpC81IIV/cM6OumUl2wdzcnd+KO7/lf94ODicEaYduWRTMxWlV
+	 JZQ9PiMedxkwWnBatw5OAIKJMwjFITWsYLXHSB1c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Robert Foss <robert.foss@linaro.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 474/731] iio: adis: handle devices that cannot unmask the drdy pin
-Date: Wed, 28 Dec 2022 15:39:41 +0100
-Message-Id: <20221228144310.289809844@linuxfoundation.org>
+Subject: [PATCH 6.0 0294/1073] media: camss: Clean up received buffers on failed start of streaming
+Date: Wed, 28 Dec 2022 15:31:22 +0100
+Message-Id: <20221228144336.000132194@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,100 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit 31fa357ac809affd9f9a7d0b5d1991951e16beec ]
+[ Upstream commit c8f3582345e6a69da65ab588f7c4c2d1685b0e80 ]
 
-Some devices can't mask/unmask the data ready pin and in those cases
-each driver was just calling '{dis}enable_irq()' to control the trigger
-state. This change, moves that handling into the library by introducing
-a new boolean in the data structure that tells the library that the
-device cannot unmask the pin.
+It is required to return the received buffers, if streaming can not be
+started. For instance media_pipeline_start() may fail with EPIPE, if
+a link validation between entities is not passed, and in such a case
+a user gets a kernel warning:
 
-On top of controlling the trigger state, we can also use this flag to
-automatically request the IRQ with 'IRQF_NO_AUTOEN' in case it is set.
-So far, all users of the library want to start operation with IRQs/DRDY
-pin disabled so it should be fairly safe to do this inside the library.
+  WARNING: CPU: 1 PID: 520 at drivers/media/common/videobuf2/videobuf2-core.c:1592 vb2_start_streaming+0xec/0x160
+  <snip>
+  Call trace:
+   vb2_start_streaming+0xec/0x160
+   vb2_core_streamon+0x9c/0x1a0
+   vb2_ioctl_streamon+0x68/0xbc
+   v4l_streamon+0x30/0x3c
+   __video_do_ioctl+0x184/0x3e0
+   video_usercopy+0x37c/0x7b0
+   video_ioctl2+0x24/0x40
+   v4l2_ioctl+0x4c/0x70
 
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20210903141423.517028-3-nuno.sa@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Stable-dep-of: 99c05e4283a1 ("iio: adis: add '__adis_enable_irq()' implementation")
+The fix is to correct the error path in video_start_streaming() of camss.
+
+Fixes: 0ac2586c410f ("media: camss: Add files which handle the video device nodes")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/adis.c         | 15 ++++++++++++++-
- drivers/iio/imu/adis_trigger.c |  4 ++++
- include/linux/iio/imu/adis.h   |  2 ++
- 3 files changed, 20 insertions(+), 1 deletion(-)
+ drivers/media/platform/qcom/camss/camss-video.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/imu/adis.c b/drivers/iio/imu/adis.c
-index d4e692b187cd..cb0d66bf6561 100644
---- a/drivers/iio/imu/adis.c
-+++ b/drivers/iio/imu/adis.c
-@@ -286,6 +286,13 @@ int adis_enable_irq(struct adis *adis, bool enable)
- 	if (adis->data->enable_irq) {
- 		ret = adis->data->enable_irq(adis, enable);
- 		goto out_unlock;
-+	} else if (adis->data->unmasked_drdy) {
-+		if (enable)
-+			enable_irq(adis->spi->irq);
-+		else
-+			disable_irq(adis->spi->irq);
-+
-+		goto out_unlock;
- 	}
+diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
+index 290df04c4d02..a25fffb0b8ec 100644
+--- a/drivers/media/platform/qcom/camss/camss-video.c
++++ b/drivers/media/platform/qcom/camss/camss-video.c
+@@ -495,7 +495,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
  
- 	ret = __adis_read_reg_16(adis, adis->data->msc_ctrl_reg, &msc);
-@@ -430,7 +437,13 @@ int __adis_initial_startup(struct adis *adis)
- 	if (ret)
- 		return ret;
+ 	ret = media_pipeline_start(&vdev->entity, &video->pipe);
+ 	if (ret < 0)
+-		return ret;
++		goto flush_buffers;
  
--	adis_enable_irq(adis, false);
-+	/*
-+	 * don't bother calling this if we can't unmask the IRQ as in this case
-+	 * the IRQ is most likely not yet requested and we will request it
-+	 * with 'IRQF_NO_AUTOEN' anyways.
-+	 */
-+	if (!adis->data->unmasked_drdy)
-+		adis_enable_irq(adis, false);
+ 	ret = video_check_format(video);
+ 	if (ret < 0)
+@@ -524,6 +524,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
+ error:
+ 	media_pipeline_stop(&vdev->entity);
  
- 	if (!adis->data->prod_id_reg)
- 		return 0;
-diff --git a/drivers/iio/imu/adis_trigger.c b/drivers/iio/imu/adis_trigger.c
-index 48eedc29b28a..c461bd1e8e69 100644
---- a/drivers/iio/imu/adis_trigger.c
-+++ b/drivers/iio/imu/adis_trigger.c
-@@ -30,6 +30,10 @@ static const struct iio_trigger_ops adis_trigger_ops = {
- static int adis_validate_irq_flag(struct adis *adis)
- {
- 	unsigned long direction = adis->irq_flag & IRQF_TRIGGER_MASK;
-+
-+	/* We cannot mask the interrupt so ensure it's not enabled at request */
-+	if (adis->data->unmasked_drdy)
-+		adis->irq_flag |= IRQF_NO_AUTOEN;
- 	/*
- 	 * Typically this devices have data ready either on the rising edge or
- 	 * on the falling edge of the data ready pin. This checks enforces that
-diff --git a/include/linux/iio/imu/adis.h b/include/linux/iio/imu/adis.h
-index cf49997d5903..7c02f5292eea 100644
---- a/include/linux/iio/imu/adis.h
-+++ b/include/linux/iio/imu/adis.h
-@@ -49,6 +49,7 @@ struct adis_timeout {
-  * @status_error_mask: Bitmask of errors supported by the device
-  * @timeouts: Chip specific delays
-  * @enable_irq: Hook for ADIS devices that have a special IRQ enable/disable
-+ * @unmasked_drdy: True for devices that cannot mask/unmask the data ready pin
-  * @has_paging: True if ADIS device has paged registers
-  * @burst_reg_cmd:	Register command that triggers burst
-  * @burst_len:		Burst size in the SPI RX buffer. If @burst_max_len is defined,
-@@ -78,6 +79,7 @@ struct adis_data {
- 	unsigned int status_error_mask;
++flush_buffers:
+ 	video->ops->flush_buffers(video, VB2_BUF_STATE_QUEUED);
  
- 	int (*enable_irq)(struct adis *adis, bool enable);
-+	bool unmasked_drdy;
- 
- 	bool has_paging;
- 
+ 	return ret;
 -- 
 2.35.1
 
