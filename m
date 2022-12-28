@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2AE1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8403DC433D2;
-	Wed, 28 Dec 2022 15:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98B81863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2CCC433EF;
+	Wed, 28 Dec 2022 15:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242490;
-	bh=bKfFoCXPUHuAtHpsb+4nwkEWIosbO+FSLByGcH6YxNc=;
+	s=korg; t=1672242493;
+	bh=m2tIFWpZhwX608DpSwwB/+qfxFqSV5W3BTcJjDw7Uf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dQkLQd6Cj2AVV39lsHMBx72jVhboaXEJQ7bnVHcoNQmXVADpj8A6y5wk5AKgR7BSM
-	 6eMzRCGGEhzxI5mDtKqoMY7dU5KH+RKH7yWgIQuunDtu+dWgCN3/c/3wxiEimwBYME
-	 4bdfXYcGkGkG37nLzPZSEW3TycLWL0u/cm25ZK2o=
+	b=V+RIkSwV6DKXNPtTFW+ufR4gFRBv1PPqgx1riwmNUvIdo5k8qmPM4MNgZL9dhy5fd
+	 rJ2Nv6IvmgBlZpApyZN+V0yxsSvcchl/jauULDgWGx60g3K2/y5rGZ+69NK2JSX2h4
+	 d/TF+0aKlIt9gY8OuNw7tMuC+Xd3vYGCXp+JkkzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amol Jawale <amol.jawale@candelatech.com>,
-	Ben Greear <greearb@candelatech.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Baisong Zhong <zhongbaisong@huawei.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0416/1073] wifi: iwlwifi: mvm: fix double free on tx path.
-Date: Wed, 28 Dec 2022 15:33:24 +0100
-Message-Id: <20221228144339.322996432@linuxfoundation.org>
+Subject: [PATCH 6.1 0376/1146] ALSA: pcm: fix undefined behavior in bit shift for SNDRV_PCM_RATE_KNOT
+Date: Wed, 28 Dec 2022 15:31:55 +0100
+Message-Id: <20221228144340.375975802@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,213 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ben Greear <greearb@candelatech.com>
+From: Baisong Zhong <zhongbaisong@huawei.com>
 
-[ Upstream commit 0473cbae2137b963bd0eaa74336131cb1d3bc6c3 ]
+[ Upstream commit b5172e62458f8e6ff359e5f096044a488db90ac5 ]
 
-We see kernel crashes and lockups and KASAN errors related to ax210
-firmware crashes.  One of the KASAN dumps pointed at the tx path,
-and it appears there is indeed a way to double-free an skb.
+Shifting signed 32-bit value by 31 bits is undefined, so changing
+significant bit to unsigned. The UBSAN warning calltrace like below:
 
-If iwl_mvm_tx_skb_sta returns non-zero, then the 'skb' sent into the
-method will be freed.  But, in case where we build TSO skb buffer,
-the skb may also be freed in error case.  So, return 0 in that particular
-error case and do cleanup manually.
-
-BUG: KASAN: use-after-free in __list_del_entry_valid+0x12/0x90
-iwlwifi 0000:06:00.0: 0x00000000 | tsf hi
-Read of size 8 at addr ffff88813cfa4ba0 by task btserver/9650
-
-CPU: 4 PID: 9650 Comm: btserver Tainted: G        W         5.19.8+ #5
-iwlwifi 0000:06:00.0: 0x00000000 | time gp1
-Hardware name: Default string Default string/SKYBAY, BIOS 5.12 02/19/2019
+UBSAN: shift-out-of-bounds in sound/core/pcm_native.c:2676:21
+left shift of 1 by 31 places cannot be represented in type 'int'
+...
 Call Trace:
  <TASK>
- dump_stack_lvl+0x55/0x6d
- print_report.cold.12+0xf2/0x684
-iwlwifi 0000:06:00.0: 0x1D0915A8 | time gp2
- ? __list_del_entry_valid+0x12/0x90
- kasan_report+0x8b/0x180
-iwlwifi 0000:06:00.0: 0x00000001 | uCode revision type
- ? __list_del_entry_valid+0x12/0x90
- __list_del_entry_valid+0x12/0x90
-iwlwifi 0000:06:00.0: 0x00000048 | uCode version major
- tcp_update_skb_after_send+0x5d/0x170
- __tcp_transmit_skb+0xb61/0x15c0
-iwlwifi 0000:06:00.0: 0xDAA05125 | uCode version minor
- ? __tcp_select_window+0x490/0x490
-iwlwifi 0000:06:00.0: 0x00000420 | hw version
- ? trace_kmalloc_node+0x29/0xd0
- ? __kmalloc_node_track_caller+0x12a/0x260
- ? memset+0x1f/0x40
- ? __build_skb_around+0x125/0x150
- ? __alloc_skb+0x1d4/0x220
- ? skb_zerocopy_clone+0x55/0x230
-iwlwifi 0000:06:00.0: 0x00489002 | board version
- ? kmalloc_reserve+0x80/0x80
- ? rcu_read_lock_bh_held+0x60/0xb0
- tcp_write_xmit+0x3f1/0x24d0
-iwlwifi 0000:06:00.0: 0x034E001C | hcmd
- ? __check_object_size+0x180/0x350
-iwlwifi 0000:06:00.0: 0x24020000 | isr0
- tcp_sendmsg_locked+0x8a9/0x1520
-iwlwifi 0000:06:00.0: 0x01400000 | isr1
- ? tcp_sendpage+0x50/0x50
-iwlwifi 0000:06:00.0: 0x48F0000A | isr2
- ? lock_release+0xb9/0x400
- ? tcp_sendmsg+0x14/0x40
-iwlwifi 0000:06:00.0: 0x00C3080C | isr3
- ? lock_downgrade+0x390/0x390
- ? do_raw_spin_lock+0x114/0x1d0
-iwlwifi 0000:06:00.0: 0x00200000 | isr4
- ? rwlock_bug.part.2+0x50/0x50
-iwlwifi 0000:06:00.0: 0x034A001C | last cmd Id
- ? rwlock_bug.part.2+0x50/0x50
- ? lockdep_hardirqs_on_prepare+0xe/0x200
-iwlwifi 0000:06:00.0: 0x0000C2F0 | wait_event
- ? __local_bh_enable_ip+0x87/0xe0
- ? inet_send_prepare+0x220/0x220
-iwlwifi 0000:06:00.0: 0x000000C4 | l2p_control
- tcp_sendmsg+0x22/0x40
- sock_sendmsg+0x5f/0x70
-iwlwifi 0000:06:00.0: 0x00010034 | l2p_duration
- __sys_sendto+0x19d/0x250
-iwlwifi 0000:06:00.0: 0x00000007 | l2p_mhvalid
- ? __ia32_sys_getpeername+0x40/0x40
-iwlwifi 0000:06:00.0: 0x00000000 | l2p_addr_match
- ? rcu_read_lock_held_common+0x12/0x50
- ? rcu_read_lock_sched_held+0x5a/0xd0
- ? rcu_read_lock_bh_held+0xb0/0xb0
- ? rcu_read_lock_sched_held+0x5a/0xd0
- ? rcu_read_lock_sched_held+0x5a/0xd0
- ? lock_release+0xb9/0x400
- ? lock_downgrade+0x390/0x390
- ? ktime_get+0x64/0x130
- ? ktime_get+0x8d/0x130
- ? rcu_read_lock_held_common+0x12/0x50
- ? rcu_read_lock_sched_held+0x5a/0xd0
- ? rcu_read_lock_held_common+0x12/0x50
- ? rcu_read_lock_sched_held+0x5a/0xd0
- ? rcu_read_lock_bh_held+0xb0/0xb0
- ? rcu_read_lock_bh_held+0xb0/0xb0
- __x64_sys_sendto+0x6f/0x80
- do_syscall_64+0x34/0xb0
- entry_SYSCALL_64_after_hwframe+0x46/0xb0
-RIP: 0033:0x7f1d126e4531
-Code: 00 00 00 00 0f 1f 44 00 00 f3 0f 1e fa 48 8d 05 35 80 0c 00 41 89 ca 8b 00 85 c0 75 1c 45 31 c9 45 31 c0 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 67 c3 66 0f 1f 44 00 00 55 48 83 ec 20 48 89
-RSP: 002b:00007ffe21a679d8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
-RAX: ffffffffffffffda RBX: 000000000000ffdc RCX: 00007f1d126e4531
-RDX: 0000000000010000 RSI: 000000000374acf0 RDI: 0000000000000014
-RBP: 00007ffe21a67ac0 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000010
-R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000000
- </TASK>
+ dump_stack_lvl+0x8d/0xcf
+ ubsan_epilogue+0xa/0x44
+ __ubsan_handle_shift_out_of_bounds+0x1e7/0x208
+ snd_pcm_open_substream+0x9f0/0xa90
+ snd_pcm_oss_open.part.26+0x313/0x670
+ snd_pcm_oss_open+0x30/0x40
+ soundcore_open+0x18b/0x2e0
+ chrdev_open+0xe2/0x270
+ do_dentry_open+0x2f7/0x620
+ path_openat+0xd66/0xe70
+ do_filp_open+0xe3/0x170
+ do_sys_openat2+0x357/0x4a0
+ do_sys_open+0x87/0xd0
+ do_syscall_64+0x34/0x80
 
-Allocated by task 9650:
- kasan_save_stack+0x1c/0x40
- __kasan_slab_alloc+0x6d/0x90
- kmem_cache_alloc_node+0xf3/0x2b0
- __alloc_skb+0x191/0x220
- tcp_stream_alloc_skb+0x3f/0x330
- tcp_sendmsg_locked+0x67c/0x1520
- tcp_sendmsg+0x22/0x40
- sock_sendmsg+0x5f/0x70
- __sys_sendto+0x19d/0x250
- __x64_sys_sendto+0x6f/0x80
- do_syscall_64+0x34/0xb0
- entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Freed by task 9650:
- kasan_save_stack+0x1c/0x40
- kasan_set_track+0x21/0x30
- kasan_set_free_info+0x20/0x30
- __kasan_slab_free+0x102/0x170
- kmem_cache_free+0xc8/0x3e0
- iwl_mvm_mac_itxq_xmit+0x124/0x270 [iwlmvm]
- ieee80211_queue_skb+0x874/0xd10 [mac80211]
- ieee80211_xmit_fast+0xf80/0x1180 [mac80211]
- __ieee80211_subif_start_xmit+0x287/0x680 [mac80211]
- ieee80211_subif_start_xmit+0xcd/0x730 [mac80211]
- dev_hard_start_xmit+0xf6/0x420
- __dev_queue_xmit+0x165b/0x1b50
- ip_finish_output2+0x66e/0xfb0
- __ip_finish_output+0x487/0x6d0
- ip_output+0x11c/0x350
- __ip_queue_xmit+0x36b/0x9d0
- __tcp_transmit_skb+0xb35/0x15c0
- tcp_write_xmit+0x3f1/0x24d0
- tcp_sendmsg_locked+0x8a9/0x1520
- tcp_sendmsg+0x22/0x40
- sock_sendmsg+0x5f/0x70
- __sys_sendto+0x19d/0x250
- __x64_sys_sendto+0x6f/0x80
- do_syscall_64+0x34/0xb0
- entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-The buggy address belongs to the object at ffff88813cfa4b40
- which belongs to the cache skbuff_fclone_cache of size 472
-The buggy address is located 96 bytes inside of
- 472-byte region [ffff88813cfa4b40, ffff88813cfa4d18)
-
-The buggy address belongs to the physical page:
-page:ffffea0004f3e900 refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88813cfa6c40 pfn:0x13cfa4
-head:ffffea0004f3e900 order:2 compound_mapcount:0 compound_pincount:0
-flags: 0x5fff8000010200(slab|head|node=0|zone=2|lastcpupid=0x3fff)
-raw: 005fff8000010200 ffffea0004656b08 ffffea0008e8cf08 ffff8881081a5240
-raw: ffff88813cfa6c40 0000000000170015 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff88813cfa4a80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff88813cfa4b00: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
->ffff88813cfa4b80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                               ^
- ffff88813cfa4c00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff88813cfa4c80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-==================================================================
-
-Fixes: 08f7d8b69aaf ("iwlwifi: mvm: bring back mvm GSO code")
-Link: https://lore.kernel.org/linux-wireless/20220928193057.16132-1-greearb@candelatech.com/
-Tested-by: Amol Jawale <amol.jawale@candelatech.com>
-Signed-off-by: Ben Greear <greearb@candelatech.com>
-Link: https://lore.kernel.org/r/20221123225313.21b1ee31d666.I3b3ba184433dd2a544d91eeeda29b467021824ae@changeid
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
+Link: https://lore.kernel.org/r/20221121110044.3115686-1-zhongbaisong@huawei.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ include/sound/pcm.h | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-index 6fa8d9e6b186..0dd35344e64a 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-@@ -1212,6 +1212,7 @@ int iwl_mvm_tx_skb_sta(struct iwl_mvm *mvm, struct sk_buff *skb,
- 	struct sk_buff_head mpdus_skbs;
- 	unsigned int payload_len;
- 	int ret;
-+	struct sk_buff *orig_skb = skb;
+diff --git a/include/sound/pcm.h b/include/sound/pcm.h
+index 7b1a022910e8..27040b472a4f 100644
+--- a/include/sound/pcm.h
++++ b/include/sound/pcm.h
+@@ -106,24 +106,24 @@ struct snd_pcm_ops {
+ #define SNDRV_PCM_POS_XRUN		((snd_pcm_uframes_t)-1)
  
- 	if (WARN_ON_ONCE(!mvmsta))
- 		return -1;
-@@ -1244,8 +1245,17 @@ int iwl_mvm_tx_skb_sta(struct iwl_mvm *mvm, struct sk_buff *skb,
+ /* If you change this don't forget to change rates[] table in pcm_native.c */
+-#define SNDRV_PCM_RATE_5512		(1<<0)		/* 5512Hz */
+-#define SNDRV_PCM_RATE_8000		(1<<1)		/* 8000Hz */
+-#define SNDRV_PCM_RATE_11025		(1<<2)		/* 11025Hz */
+-#define SNDRV_PCM_RATE_16000		(1<<3)		/* 16000Hz */
+-#define SNDRV_PCM_RATE_22050		(1<<4)		/* 22050Hz */
+-#define SNDRV_PCM_RATE_32000		(1<<5)		/* 32000Hz */
+-#define SNDRV_PCM_RATE_44100		(1<<6)		/* 44100Hz */
+-#define SNDRV_PCM_RATE_48000		(1<<7)		/* 48000Hz */
+-#define SNDRV_PCM_RATE_64000		(1<<8)		/* 64000Hz */
+-#define SNDRV_PCM_RATE_88200		(1<<9)		/* 88200Hz */
+-#define SNDRV_PCM_RATE_96000		(1<<10)		/* 96000Hz */
+-#define SNDRV_PCM_RATE_176400		(1<<11)		/* 176400Hz */
+-#define SNDRV_PCM_RATE_192000		(1<<12)		/* 192000Hz */
+-#define SNDRV_PCM_RATE_352800		(1<<13)		/* 352800Hz */
+-#define SNDRV_PCM_RATE_384000		(1<<14)		/* 384000Hz */
+-
+-#define SNDRV_PCM_RATE_CONTINUOUS	(1<<30)		/* continuous range */
+-#define SNDRV_PCM_RATE_KNOT		(1<<31)		/* supports more non-continuos rates */
++#define SNDRV_PCM_RATE_5512		(1U<<0)		/* 5512Hz */
++#define SNDRV_PCM_RATE_8000		(1U<<1)		/* 8000Hz */
++#define SNDRV_PCM_RATE_11025		(1U<<2)		/* 11025Hz */
++#define SNDRV_PCM_RATE_16000		(1U<<3)		/* 16000Hz */
++#define SNDRV_PCM_RATE_22050		(1U<<4)		/* 22050Hz */
++#define SNDRV_PCM_RATE_32000		(1U<<5)		/* 32000Hz */
++#define SNDRV_PCM_RATE_44100		(1U<<6)		/* 44100Hz */
++#define SNDRV_PCM_RATE_48000		(1U<<7)		/* 48000Hz */
++#define SNDRV_PCM_RATE_64000		(1U<<8)		/* 64000Hz */
++#define SNDRV_PCM_RATE_88200		(1U<<9)		/* 88200Hz */
++#define SNDRV_PCM_RATE_96000		(1U<<10)	/* 96000Hz */
++#define SNDRV_PCM_RATE_176400		(1U<<11)	/* 176400Hz */
++#define SNDRV_PCM_RATE_192000		(1U<<12)	/* 192000Hz */
++#define SNDRV_PCM_RATE_352800		(1U<<13)	/* 352800Hz */
++#define SNDRV_PCM_RATE_384000		(1U<<14)	/* 384000Hz */
++
++#define SNDRV_PCM_RATE_CONTINUOUS	(1U<<30)	/* continuous range */
++#define SNDRV_PCM_RATE_KNOT		(1U<<31)	/* supports more non-continuos rates */
  
- 		ret = iwl_mvm_tx_mpdu(mvm, skb, &info, sta);
- 		if (ret) {
-+			/* Free skbs created as part of TSO logic that have not yet been dequeued */
- 			__skb_queue_purge(&mpdus_skbs);
--			return ret;
-+			/* skb here is not necessarily same as skb that entered this method,
-+			 * so free it explicitly.
-+			 */
-+			if (skb == orig_skb)
-+				ieee80211_free_txskb(mvm->hw, skb);
-+			else
-+				kfree_skb(skb);
-+			/* there was error, but we consumed skb one way or another, so return 0 */
-+			return 0;
- 		}
- 	}
- 
+ #define SNDRV_PCM_RATE_8000_44100	(SNDRV_PCM_RATE_8000|SNDRV_PCM_RATE_11025|\
+ 					 SNDRV_PCM_RATE_16000|SNDRV_PCM_RATE_22050|\
 -- 
 2.35.1
 
