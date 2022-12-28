@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A021C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:28:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76A4BC433F0;
-	Wed, 28 Dec 2022 16:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972EB1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:28:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A96C433D2;
+	Wed, 28 Dec 2022 16:28:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244895;
-	bh=hRW9FyDOEip1L7nZFeWu0VklpZ7h7VisU1wMe/hu+5w=;
+	s=korg; t=1672244898;
+	bh=MtJxME0daBU8mxhlgoTcfsB+TZFPAlcvqI2POhUuFIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJIAMLB5Dlb8Hl6v7r7mV+9ZsDYJF3Q32mwLmTOA+6M3N4Z129eEUJTAAXrmUqDlH
-	 DpnYSOaSB/+onfH/wHqQfpiBJ/zqr/7wWtStexvt7l+J3RDb0a4uVMrfNb8LcmtoiK
-	 las/hciK3RLJMfaWlxuGYdaa/7yAKR8EmeIVCbTg=
+	b=NP6b/ZYRJ3CSbdPUWUpMp8DDv0tVc+SKA2h9rvfwyn83JxVF58ogvdHfGTRaWYsGc
+	 EozlR9bI24NEurBu4rVqda0TgHwA6OsA2IQ+EHuX6Vulf88vHlr0HYzP2nmXkzluTF
+	 UnyLi0tBeCsWgMOJg6zMdKWgbQkIk0uV2+6SCHT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcus Folkesson <marcus.folkesson@gmail.com>,
-	Jacky Bai <ping.bai@nxp.com>,
-	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0749/1146] thermal/drivers/imx8mm_thermal: Validate temperature range
-Date: Wed, 28 Dec 2022 15:38:08 +0100
-Message-Id: <20221228144350.490526676@linuxfoundation.org>
+Subject: [PATCH 6.1 0758/1146] fbdev: ep93xx-fb: Add missing clk_disable_unprepare in ep93xxfb_probe()
+Date: Wed, 28 Dec 2022 15:38:17 +0100
+Message-Id: <20221228144350.732963002@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -36,43 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marcus Folkesson <marcus.folkesson@gmail.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit d37edc7370273306d8747097fafa62436c1cfe16 ]
+[ Upstream commit c84bf485a5aaf9aa0764a58832b7ef4375c29f03 ]
 
-Check against the upper temperature limit (125 degrees C) before
-consider the temperature valid.
+The clk_disable_unprepare() should be called in the error handling
+of register_framebuffer(), fix it.
 
-Fixes: 5eed800a6811 ("thermal: imx8mm: Add support for i.MX8MM thermal monitoring unit")
-Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
-Reviewed-by: Jacky Bai <ping.bai@nxp.com>
-Link: https://lore.kernel.org/r/20221014073507.1594844-1-marcus.folkesson@gmail.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Fixes: 0937a7b3625d ("video: ep93xx: Prepare clock before using it")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/imx8mm_thermal.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/ep93xx-fb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/thermal/imx8mm_thermal.c b/drivers/thermal/imx8mm_thermal.c
-index e2c2673025a7..258d988b266d 100644
---- a/drivers/thermal/imx8mm_thermal.c
-+++ b/drivers/thermal/imx8mm_thermal.c
-@@ -65,8 +65,14 @@ static int imx8mm_tmu_get_temp(void *data, int *temp)
- 	u32 val;
+diff --git a/drivers/video/fbdev/ep93xx-fb.c b/drivers/video/fbdev/ep93xx-fb.c
+index 2398b3d48fed..305f1587bd89 100644
+--- a/drivers/video/fbdev/ep93xx-fb.c
++++ b/drivers/video/fbdev/ep93xx-fb.c
+@@ -552,12 +552,14 @@ static int ep93xxfb_probe(struct platform_device *pdev)
  
- 	val = readl_relaxed(tmu->base + TRITSR) & TRITSR_TEMP0_VAL_MASK;
-+
-+	/*
-+	 * Do not validate against the V bit (bit 31) due to errata
-+	 * ERR051272: TMU: Bit 31 of registers TMU_TSCR/TMU_TRITSR/TMU_TRATSR invalid
-+	 */
-+
- 	*temp = val * 1000;
--	if (*temp < VER1_TEMP_LOW_LIMIT)
-+	if (*temp < VER1_TEMP_LOW_LIMIT || *temp > VER2_TEMP_HIGH_LIMIT)
- 		return -EAGAIN;
+ 	err = register_framebuffer(info);
+ 	if (err)
+-		goto failed_check;
++		goto failed_framebuffer;
  
+ 	dev_info(info->dev, "registered. Mode = %dx%d-%d\n",
+ 		 info->var.xres, info->var.yres, info->var.bits_per_pixel);
  	return 0;
+ 
++failed_framebuffer:
++	clk_disable_unprepare(fbi->clk);
+ failed_check:
+ 	if (fbi->mach_info->teardown)
+ 		fbi->mach_info->teardown(pdev);
 -- 
 2.35.1
 
