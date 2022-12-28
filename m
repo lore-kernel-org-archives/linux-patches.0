@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B15B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:05:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94B26C433D2;
-	Wed, 28 Dec 2022 15:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEDEA1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:05:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D58C433D2;
+	Wed, 28 Dec 2022 15:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239922;
-	bh=T5Ie5dAolnVL2uTZGtu2g9y0Qg/2T8Mkt5hqhl2L7Ug=;
+	s=korg; t=1672239925;
+	bh=1NvxhHXyieoEnwkcsiDEUb0ybq/zQFAIB3q5mfYIKTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ddWVrM6o/rG6RtURHE9NQxEMbE2+cKcFJIGq1HUPtQG7KqB9qIkUnCRVe2EIMOkvm
-	 zG8Teka5pCixjhqwhMRfriUkdUbyF8gbvlQj1QCvQo5H665cVEK2pUDJlZH++fayIp
-	 qy7M3hsf+p4q6jiz1hQ+VmlxmMnnIGr1rgfj27K4=
+	b=jg7BsS+lfIzMSRUc8iY9lhlTGJKbBq5d9Qfvwlda+qjWRoO2jDbnWlc2n71nQDuo8
+	 ZAgFZaK7g/LJFfmeyq/ErJnGN+F19w3vh6hkMuOwnh35wfPRByjZ4d/79vxATPaMKm
+	 UH4TSBojiwjP9S6ErrUpRKXyf1y6dlUo5YuyCHJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qais Yousef <qais.yousef@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0094/1073] sched/uclamp: Fix relationship between uclamp and migration margin
-Date: Wed, 28 Dec 2022 15:28:02 +0100
-Message-Id: <20221228144330.604658163@linuxfoundation.org>
+Subject: [PATCH 5.15 286/731] ALSA: mts64: fix possible null-ptr-defer in snd_mts64_interrupt
+Date: Wed, 28 Dec 2022 15:36:33 +0100
+Message-Id: <20221228144304.861224330@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,198 +35,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qais Yousef <qais.yousef@arm.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 48d5e9daa8b767e75ed9421665b037a49ce4bc04 ]
+[ Upstream commit cf2ea3c86ad90d63d1c572b43e1ca9276b0357ad ]
 
-fits_capacity() verifies that a util is within 20% margin of the
-capacity of a CPU, which is an attempt to speed up upmigration.
+I got a null-ptr-defer error report when I do the following tests
+on the qemu platform:
 
-But when uclamp is used, this 20% margin is problematic because for
-example if a task is boosted to 1024, then it will not fit on any CPU
-according to fits_capacity() logic.
+make defconfig and CONFIG_PARPORT=m, CONFIG_PARPORT_PC=m,
+CONFIG_SND_MTS64=m
 
-Or if a task is boosted to capacity_orig_of(medium_cpu). The task will
-end up on big instead on the desired medium CPU.
+Then making test scripts:
+cat>test_mod1.sh<<EOF
+modprobe snd-mts64
+modprobe snd-mts64
+EOF
 
-Similar corner cases exist for uclamp and usage of capacity_of().
-Slightest irq pressure on biggest CPU for example will make a 1024
-boosted task look like it can't fit.
+Executing the script, perhaps several times, we will get a null-ptr-defer
+report, as follow:
 
-What we really want is for uclamp comparisons to ignore the migration
-margin and capacity pressure, yet retain them for when checking the
-_actual_ util signal.
+syzkaller:~# ./test_mod.sh
+snd_mts64: probe of snd_mts64.0 failed with error -5
+modprobe: ERROR: could not insert 'snd_mts64': No such device
+ BUG: kernel NULL pointer dereference, address: 0000000000000000
+ #PF: supervisor write access in kernel mode
+ #PF: error_code(0x0002) - not-present page
+ PGD 0 P4D 0
+ Oops: 0002 [#1] PREEMPT SMP PTI
+ CPU: 0 PID: 205 Comm: modprobe Not tainted 6.1.0-rc8-00588-g76dcd734eca2 #6
+ Call Trace:
+  <IRQ>
+  snd_mts64_interrupt+0x24/0xa0 [snd_mts64]
+  parport_irq_handler+0x37/0x50 [parport]
+  __handle_irq_event_percpu+0x39/0x190
+  handle_irq_event_percpu+0xa/0x30
+  handle_irq_event+0x2f/0x50
+  handle_edge_irq+0x99/0x1b0
+  __common_interrupt+0x5d/0x100
+  common_interrupt+0xa0/0xc0
+  </IRQ>
+  <TASK>
+  asm_common_interrupt+0x22/0x40
+ RIP: 0010:_raw_write_unlock_irqrestore+0x11/0x30
+  parport_claim+0xbd/0x230 [parport]
+  snd_mts64_probe+0x14a/0x465 [snd_mts64]
+  platform_probe+0x3f/0xa0
+  really_probe+0x129/0x2c0
+  __driver_probe_device+0x6d/0xc0
+  driver_probe_device+0x1a/0xa0
+  __device_attach_driver+0x7a/0xb0
+  bus_for_each_drv+0x62/0xb0
+  __device_attach+0xe4/0x180
+  bus_probe_device+0x82/0xa0
+  device_add+0x550/0x920
+  platform_device_add+0x106/0x220
+  snd_mts64_attach+0x2e/0x80 [snd_mts64]
+  port_check+0x14/0x20 [parport]
+  bus_for_each_dev+0x6e/0xc0
+  __parport_register_driver+0x7c/0xb0 [parport]
+  snd_mts64_module_init+0x31/0x1000 [snd_mts64]
+  do_one_initcall+0x3c/0x1f0
+  do_init_module+0x46/0x1c6
+  load_module+0x1d8d/0x1e10
+  __do_sys_finit_module+0xa2/0xf0
+  do_syscall_64+0x37/0x90
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  </TASK>
+ Kernel panic - not syncing: Fatal exception in interrupt
+ Rebooting in 1 seconds..
 
-For example, task p:
+The mts wa not initialized during interrupt,  we add check for
+mts to fix this bug.
 
-	p->util_avg = 300
-	p->uclamp[UCLAMP_MIN] = 1024
-
-Will fit a big CPU. But
-
-	p->util_avg = 900
-	p->uclamp[UCLAMP_MIN] = 1024
-
-will not, this should trigger overutilized state because the big CPU is
-now *actually* being saturated.
-
-Similar reasoning applies to capping tasks with UCLAMP_MAX. For example:
-
-	p->util_avg = 1024
-	p->uclamp[UCLAMP_MAX] = capacity_orig_of(medium_cpu)
-
-Should fit the task on medium cpus without triggering overutilized
-state.
-
-Inlined comments expand more on desired behavior in more scenarios.
-
-Introduce new util_fits_cpu() function which encapsulates the new logic.
-The new function is not used anywhere yet, but will be used to update
-various users of fits_capacity() in later patches.
-
-Fixes: af24bde8df202 ("sched/uclamp: Add uclamp support to energy_compute()")
-Signed-off-by: Qais Yousef <qais.yousef@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20220804143609.515789-2-qais.yousef@arm.com
+Fixes: 68ab801e32bb ("[ALSA] Add snd-mts64 driver for ESI Miditerminal 4140")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221206061004.1222966-1-cuigaosheng1@huawei.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 123 ++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 123 insertions(+)
+ sound/drivers/mts64.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 914096c5b1ae..4ccd21e9a29f 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -4254,6 +4254,129 @@ static inline void util_est_update(struct cfs_rq *cfs_rq,
- 	trace_sched_util_est_se_tp(&p->se);
- }
+diff --git a/sound/drivers/mts64.c b/sound/drivers/mts64.c
+index d3bc9e8c407d..f0d34cf70c3e 100644
+--- a/sound/drivers/mts64.c
++++ b/sound/drivers/mts64.c
+@@ -815,6 +815,9 @@ static void snd_mts64_interrupt(void *private)
+ 	u8 status, data;
+ 	struct snd_rawmidi_substream *substream;
  
-+static inline int util_fits_cpu(unsigned long util,
-+				unsigned long uclamp_min,
-+				unsigned long uclamp_max,
-+				int cpu)
-+{
-+	unsigned long capacity_orig, capacity_orig_thermal;
-+	unsigned long capacity = capacity_of(cpu);
-+	bool fits, uclamp_max_fits;
++	if (!mts)
++		return;
 +
-+	/*
-+	 * Check if the real util fits without any uclamp boost/cap applied.
-+	 */
-+	fits = fits_capacity(util, capacity);
-+
-+	if (!uclamp_is_used())
-+		return fits;
-+
-+	/*
-+	 * We must use capacity_orig_of() for comparing against uclamp_min and
-+	 * uclamp_max. We only care about capacity pressure (by using
-+	 * capacity_of()) for comparing against the real util.
-+	 *
-+	 * If a task is boosted to 1024 for example, we don't want a tiny
-+	 * pressure to skew the check whether it fits a CPU or not.
-+	 *
-+	 * Similarly if a task is capped to capacity_orig_of(little_cpu), it
-+	 * should fit a little cpu even if there's some pressure.
-+	 *
-+	 * Only exception is for thermal pressure since it has a direct impact
-+	 * on available OPP of the system.
-+	 *
-+	 * We honour it for uclamp_min only as a drop in performance level
-+	 * could result in not getting the requested minimum performance level.
-+	 *
-+	 * For uclamp_max, we can tolerate a drop in performance level as the
-+	 * goal is to cap the task. So it's okay if it's getting less.
-+	 *
-+	 * In case of capacity inversion, which is not handled yet, we should
-+	 * honour the inverted capacity for both uclamp_min and uclamp_max all
-+	 * the time.
-+	 */
-+	capacity_orig = capacity_orig_of(cpu);
-+	capacity_orig_thermal = capacity_orig - arch_scale_thermal_pressure(cpu);
-+
-+	/*
-+	 * We want to force a task to fit a cpu as implied by uclamp_max.
-+	 * But we do have some corner cases to cater for..
-+	 *
-+	 *
-+	 *                                 C=z
-+	 *   |                             ___
-+	 *   |                  C=y       |   |
-+	 *   |_ _ _ _ _ _ _ _ _ ___ _ _ _ | _ | _ _ _ _ _  uclamp_max
-+	 *   |      C=x        |   |      |   |
-+	 *   |      ___        |   |      |   |
-+	 *   |     |   |       |   |      |   |    (util somewhere in this region)
-+	 *   |     |   |       |   |      |   |
-+	 *   |     |   |       |   |      |   |
-+	 *   +----------------------------------------
-+	 *         cpu0        cpu1       cpu2
-+	 *
-+	 *   In the above example if a task is capped to a specific performance
-+	 *   point, y, then when:
-+	 *
-+	 *   * util = 80% of x then it does not fit on cpu0 and should migrate
-+	 *     to cpu1
-+	 *   * util = 80% of y then it is forced to fit on cpu1 to honour
-+	 *     uclamp_max request.
-+	 *
-+	 *   which is what we're enforcing here. A task always fits if
-+	 *   uclamp_max <= capacity_orig. But when uclamp_max > capacity_orig,
-+	 *   the normal upmigration rules should withhold still.
-+	 *
-+	 *   Only exception is when we are on max capacity, then we need to be
-+	 *   careful not to block overutilized state. This is so because:
-+	 *
-+	 *     1. There's no concept of capping at max_capacity! We can't go
-+	 *        beyond this performance level anyway.
-+	 *     2. The system is being saturated when we're operating near
-+	 *        max capacity, it doesn't make sense to block overutilized.
-+	 */
-+	uclamp_max_fits = (capacity_orig == SCHED_CAPACITY_SCALE) && (uclamp_max == SCHED_CAPACITY_SCALE);
-+	uclamp_max_fits = !uclamp_max_fits && (uclamp_max <= capacity_orig);
-+	fits = fits || uclamp_max_fits;
-+
-+	/*
-+	 *
-+	 *                                 C=z
-+	 *   |                             ___       (region a, capped, util >= uclamp_max)
-+	 *   |                  C=y       |   |
-+	 *   |_ _ _ _ _ _ _ _ _ ___ _ _ _ | _ | _ _ _ _ _ uclamp_max
-+	 *   |      C=x        |   |      |   |
-+	 *   |      ___        |   |      |   |      (region b, uclamp_min <= util <= uclamp_max)
-+	 *   |_ _ _|_ _|_ _ _ _| _ | _ _ _| _ | _ _ _ _ _ uclamp_min
-+	 *   |     |   |       |   |      |   |
-+	 *   |     |   |       |   |      |   |      (region c, boosted, util < uclamp_min)
-+	 *   +----------------------------------------
-+	 *         cpu0        cpu1       cpu2
-+	 *
-+	 * a) If util > uclamp_max, then we're capped, we don't care about
-+	 *    actual fitness value here. We only care if uclamp_max fits
-+	 *    capacity without taking margin/pressure into account.
-+	 *    See comment above.
-+	 *
-+	 * b) If uclamp_min <= util <= uclamp_max, then the normal
-+	 *    fits_capacity() rules apply. Except we need to ensure that we
-+	 *    enforce we remain within uclamp_max, see comment above.
-+	 *
-+	 * c) If util < uclamp_min, then we are boosted. Same as (b) but we
-+	 *    need to take into account the boosted value fits the CPU without
-+	 *    taking margin/pressure into account.
-+	 *
-+	 * Cases (a) and (b) are handled in the 'fits' variable already. We
-+	 * just need to consider an extra check for case (c) after ensuring we
-+	 * handle the case uclamp_min > uclamp_max.
-+	 */
-+	uclamp_min = min(uclamp_min, uclamp_max);
-+	if (util < uclamp_min && capacity_orig != SCHED_CAPACITY_SCALE)
-+		fits = fits && (uclamp_min <= capacity_orig_thermal);
-+
-+	return fits;
-+}
-+
- static inline int task_fits_capacity(struct task_struct *p,
- 				     unsigned long capacity)
- {
+ 	spin_lock(&mts->lock);
+ 	ret = mts64_read(mts->pardev->port);
+ 	data = ret & 0x00ff;
 -- 
 2.35.1
 
