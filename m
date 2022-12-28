@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3769E1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF79FC433D2;
-	Wed, 28 Dec 2022 16:29:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB141C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C6DC433F0;
+	Wed, 28 Dec 2022 16:29:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244946;
-	bh=5p6TI3kPoDHFbjPnSlmWdnvOS3eVSq8WPBH3ZjkpxTM=;
+	s=korg; t=1672244949;
+	bh=mdITFTjbfwPjSDJMbCZ1ox/jw4uwrTLdaTJS8sxrtvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qisDDIS0fNrVfngVqOpxOp6M2xuAK6W5IK460CRSDAg9sDyjLr7TVvYzgHUO/n9c6
-	 t8cN0/2Z/v35KNeUrIBUsz2fcXy1GGnRwzzTSsCyAP4kYcTnqRorgfKFZMGSgaKihv
-	 kZ/IQ9Fo7w4MZsuW0J3S8fKp8SaxqNsrA5s8zivI=
+	b=NK9ky7SsWs4WvoTUUylK6xXUEChAbLcL3ceornjogyR2BSBcfcyEfhNSZSyMLbrz6
+	 mqzqMljbAw2e6QHjWZCWOv8QmxkDnHJMesnnkD8VHUKCQ4xHHuScfKk52PIjDgihcB
+	 WLkLDWNNV0r6nbZO2po/OHcl9ovZ0PqMPuDvTIII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nayna Jain <nayna@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0804/1073] powerpc/pseries: fix plpks_read_var() code for different consumers
-Date: Wed, 28 Dec 2022 15:39:52 +0100
-Message-Id: <20221228144349.847685191@linuxfoundation.org>
+Subject: [PATCH 6.1 0767/1146] HSI: omap_ssi_core: fix possible memory leak in ssi_probe()
+Date: Wed, 28 Dec 2022 15:38:26 +0100
+Message-Id: <20221228144350.983451262@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,79 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nayna Jain <nayna@linux.ibm.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 1f622f3f80cbf8999ff5955a2fcfbd801a1f32e0 ]
+[ Upstream commit 1aff514e1d2bd47854dbbdf867970b9d463d4c57 ]
 
-Even though plpks_read_var() is currently called to read variables
-owned by different consumers, it internally supports only OS consumer.
+If ssi_add_controller() returns error, it should call hsi_put_controller()
+to give up the reference that was set in hsi_alloc_controller(), so that
+it can call hsi_controller_release() to free controller and ports that
+allocated in hsi_alloc_controller().
 
-Fix plpks_read_var() to handle different consumers correctly.
-
-Fixes: 2454a7af0f2a ("powerpc/pseries: define driver for Platform KeyStore")
-Signed-off-by: Nayna Jain <nayna@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20221106205839.600442-7-nayna@linux.ibm.com
+Fixes: b209e047bc74 ("HSI: Introduce OMAP SSI driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/plpks.c | 28 +++++++++++++++++---------
- 1 file changed, 18 insertions(+), 10 deletions(-)
+ drivers/hsi/controllers/omap_ssi_core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
-index cbea447122ca..63a1e1fe0185 100644
---- a/arch/powerpc/platforms/pseries/plpks.c
-+++ b/arch/powerpc/platforms/pseries/plpks.c
-@@ -366,22 +366,24 @@ static int plpks_read_var(u8 consumer, struct plpks_var *var)
- {
- 	unsigned long retbuf[PLPAR_HCALL_BUFSIZE] = { 0 };
- 	struct plpks_auth *auth;
--	struct label *label;
-+	struct label *label = NULL;
- 	u8 *output;
- 	int rc;
+diff --git a/drivers/hsi/controllers/omap_ssi_core.c b/drivers/hsi/controllers/omap_ssi_core.c
+index b23a576ed88a..052cf3e92dd6 100644
+--- a/drivers/hsi/controllers/omap_ssi_core.c
++++ b/drivers/hsi/controllers/omap_ssi_core.c
+@@ -502,8 +502,10 @@ static int ssi_probe(struct platform_device *pd)
+ 	platform_set_drvdata(pd, ssi);
  
- 	if (var->namelen > MAX_NAME_SIZE)
- 		return -EINVAL;
+ 	err = ssi_add_controller(ssi, pd);
+-	if (err < 0)
++	if (err < 0) {
++		hsi_put_controller(ssi);
+ 		goto out1;
++	}
  
--	auth = construct_auth(PKS_OS_OWNER);
-+	auth = construct_auth(consumer);
- 	if (IS_ERR(auth))
- 		return PTR_ERR(auth);
+ 	pm_runtime_enable(&pd->dev);
  
--	label = construct_label(var->component, var->os, var->name,
--				var->namelen);
--	if (IS_ERR(label)) {
--		rc = PTR_ERR(label);
--		goto out_free_auth;
-+	if (consumer == PKS_OS_OWNER) {
-+		label = construct_label(var->component, var->os, var->name,
-+					var->namelen);
-+		if (IS_ERR(label)) {
-+			rc = PTR_ERR(label);
-+			goto out_free_auth;
-+		}
- 	}
- 
- 	output = kzalloc(maxobjsize, GFP_KERNEL);
-@@ -390,9 +392,15 @@ static int plpks_read_var(u8 consumer, struct plpks_var *var)
- 		goto out_free_label;
- 	}
- 
--	rc = plpar_hcall(H_PKS_READ_OBJECT, retbuf, virt_to_phys(auth),
--			 virt_to_phys(label), label->size, virt_to_phys(output),
--			 maxobjsize);
-+	if (consumer == PKS_OS_OWNER)
-+		rc = plpar_hcall(H_PKS_READ_OBJECT, retbuf, virt_to_phys(auth),
-+				 virt_to_phys(label), label->size, virt_to_phys(output),
-+				 maxobjsize);
-+	else
-+		rc = plpar_hcall(H_PKS_READ_OBJECT, retbuf, virt_to_phys(auth),
-+				 virt_to_phys(var->name), var->namelen, virt_to_phys(output),
-+				 maxobjsize);
-+
- 
- 	if (rc != H_SUCCESS) {
- 		pr_err("Failed to read variable %s for component %s with error %d\n",
 -- 
 2.35.1
 
