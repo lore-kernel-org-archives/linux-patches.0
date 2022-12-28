@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE871863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9368AC433D2;
-	Wed, 28 Dec 2022 15:10:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBD5B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A781C433D2;
+	Wed, 28 Dec 2022 15:10:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240239;
-	bh=Mdsob+SE7nZK0xnBTXgXVW89uWMn9GX9eUzueW0JSjA=;
+	s=korg; t=1672240242;
+	bh=yacKS3xLkL3TkEsyxN0pfZJ8ccVhPh6cZmLhT2H7NHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xrwWajscmJIyOxUlvfYqFSU79Gh6FS0hGP0ZEjBiQieZgKWgZZqGZI5t/RpyIiNT+
-	 OW7g4QCW67ya1YK9s69nW8l7AtoUmYCr3EOgRFI0hVCQfYt0gv3PrwcYGA7dBAMZAD
-	 Zmky5IC6A61C9TtALy+oJPK0dM+g8wCl9IGyl75g=
+	b=IAMMdpSYoBCvQvkexJMpIu39GGGdTtJKeigxOKNxZOi6W8eAYm58CSJOkOugIcRSF
+	 wHcMxg8lFLMnuQ/djP7g9lyt9k0UVX2U062bDSQBInUbmDWc44n1vehDfhCiMn2Yev
+	 2oYu1qbXF1/5CHOOUGztZ8JkG1XgZmMVDEXqrH/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Grunau <j@jannau.net>,
-	Mark Kettenis <kettenis@openbsd.org>,
-	Hector Martin <marcan@marcan.st>,
+	ruanjinjie <ruanjinjie@huawei.com>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0099/1146] arch: arm64: apple: t8103: Use standard "iommu" node name
-Date: Wed, 28 Dec 2022 15:27:18 +0100
-Message-Id: <20221228144332.833152087@linuxfoundation.org>
+Subject: [PATCH 5.15 327/731] of: overlay: fix null pointer dereferencing in find_dup_cset_node_entry() and find_dup_cset_prop()
+Date: Wed, 28 Dec 2022 15:37:14 +0100
+Message-Id: <20221228144306.051087822@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,53 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Janne Grunau <j@jannau.net>
+From: ruanjinjie <ruanjinjie@huawei.com>
 
-[ Upstream commit 56d32c51dffac8a431b472a4c31efb8563b048d1 ]
+[ Upstream commit ee9d7a0e754568180a2f8ebc4aad226278a9116f ]
 
-The PCIe iommu nodes use "dart" as node names. Replace it with the
-the standard "iommu" node name as all other iommu nodes.
+When kmalloc() fail to allocate memory in kasprintf(), fn_1 or fn_2 will
+be NULL, and strcmp() will cause null pointer dereference.
 
-Fixes: 3c866bb79577 ("arm64: dts: apple: t8103: Add PCIe DARTs")
-Signed-off-by: Janne Grunau <j@jannau.net>
-Reviewed-by: Mark Kettenis <kettenis@openbsd.org>
-Signed-off-by: Hector Martin <marcan@marcan.st>
+Fixes: 2fe0e8769df9 ("of: overlay: check prevents multiple fragments touching same property")
+Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20221211023337.592266-1-ruanjinjie@huawei.com
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/apple/t8103.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/of/overlay.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/apple/t8103.dtsi b/arch/arm64/boot/dts/apple/t8103.dtsi
-index 51a63b29d404..a4d195e9eb8c 100644
---- a/arch/arm64/boot/dts/apple/t8103.dtsi
-+++ b/arch/arm64/boot/dts/apple/t8103.dtsi
-@@ -412,7 +412,7 @@ nvme@27bcc0000 {
- 			resets = <&ps_ans2>;
- 		};
+diff --git a/drivers/of/overlay.c b/drivers/of/overlay.c
+index d1187123c4fc..424682372417 100644
+--- a/drivers/of/overlay.c
++++ b/drivers/of/overlay.c
+@@ -547,7 +547,7 @@ static int find_dup_cset_node_entry(struct overlay_changeset *ovcs,
  
--		pcie0_dart_0: dart@681008000 {
-+		pcie0_dart_0: iommu@681008000 {
- 			compatible = "apple,t8103-dart";
- 			reg = <0x6 0x81008000 0x0 0x4000>;
- 			#iommu-cells = <1>;
-@@ -421,7 +421,7 @@ pcie0_dart_0: dart@681008000 {
- 			power-domains = <&ps_apcie_gp>;
- 		};
+ 		fn_1 = kasprintf(GFP_KERNEL, "%pOF", ce_1->np);
+ 		fn_2 = kasprintf(GFP_KERNEL, "%pOF", ce_2->np);
+-		node_path_match = !strcmp(fn_1, fn_2);
++		node_path_match = !fn_1 || !fn_2 || !strcmp(fn_1, fn_2);
+ 		kfree(fn_1);
+ 		kfree(fn_2);
+ 		if (node_path_match) {
+@@ -582,7 +582,7 @@ static int find_dup_cset_prop(struct overlay_changeset *ovcs,
  
--		pcie0_dart_1: dart@682008000 {
-+		pcie0_dart_1: iommu@682008000 {
- 			compatible = "apple,t8103-dart";
- 			reg = <0x6 0x82008000 0x0 0x4000>;
- 			#iommu-cells = <1>;
-@@ -430,7 +430,7 @@ pcie0_dart_1: dart@682008000 {
- 			power-domains = <&ps_apcie_gp>;
- 		};
- 
--		pcie0_dart_2: dart@683008000 {
-+		pcie0_dart_2: iommu@683008000 {
- 			compatible = "apple,t8103-dart";
- 			reg = <0x6 0x83008000 0x0 0x4000>;
- 			#iommu-cells = <1>;
+ 		fn_1 = kasprintf(GFP_KERNEL, "%pOF", ce_1->np);
+ 		fn_2 = kasprintf(GFP_KERNEL, "%pOF", ce_2->np);
+-		node_path_match = !strcmp(fn_1, fn_2);
++		node_path_match = !fn_1 || !fn_2 || !strcmp(fn_1, fn_2);
+ 		kfree(fn_1);
+ 		kfree(fn_2);
+ 		if (node_path_match &&
 -- 
 2.35.1
 
