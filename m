@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755411863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF29AC433D2;
-	Wed, 28 Dec 2022 15:10:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE871863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9368AC433D2;
+	Wed, 28 Dec 2022 15:10:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240237;
-	bh=In8AWe4cx5K5Jc3dbiscc2C85Y+3tmNLBFVVzKEGWHY=;
+	s=korg; t=1672240239;
+	bh=Mdsob+SE7nZK0xnBTXgXVW89uWMn9GX9eUzueW0JSjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gmvz/aCDKnUPUel4nBsjNU7NN0Kg7hLX7yWk4Anb6XaUwj25bjzibTDRlO/3ETolg
-	 HxHctWYf3tzobXYWAFqgV7wNm8iGFV3prRwWhOcLEsiNs8bpk4Ou0HVIS4Wk2AYU1h
-	 MzkGHrCDtBZINUohhjxiUM3BcZZu7xuwfO+x0Ki0=
+	b=xrwWajscmJIyOxUlvfYqFSU79Gh6FS0hGP0ZEjBiQieZgKWgZZqGZI5t/RpyIiNT+
+	 OW7g4QCW67ya1YK9s69nW8l7AtoUmYCr3EOgRFI0hVCQfYt0gv3PrwcYGA7dBAMZAD
+	 Zmky5IC6A61C9TtALy+oJPK0dM+g8wCl9IGyl75g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-	Marc Zyngier <maz@kernel.org>,
+	Janne Grunau <j@jannau.net>,
+	Mark Kettenis <kettenis@openbsd.org>,
+	Hector Martin <marcan@marcan.st>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0137/1073] irqchip/wpcm450: Fix memory leak in wpcm450_aic_of_init()
-Date: Wed, 28 Dec 2022 15:28:45 +0100
-Message-Id: <20221228144331.752114235@linuxfoundation.org>
+Subject: [PATCH 6.1 0099/1146] arch: arm64: apple: t8103: Use standard "iommu" node name
+Date: Wed, 28 Dec 2022 15:27:18 +0100
+Message-Id: <20221228144332.833152087@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,35 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: Janne Grunau <j@jannau.net>
 
-[ Upstream commit 4208d4faf36573a507b5e5de17abe342e9276759 ]
+[ Upstream commit 56d32c51dffac8a431b472a4c31efb8563b048d1 ]
 
-If of_iomap() failed, 'aic' should be freed before return. Otherwise
-there is a memory leak.
+The PCIe iommu nodes use "dart" as node names. Replace it with the
+the standard "iommu" node name as all other iommu nodes.
 
-Fixes: fead4dd49663 ("irqchip: Add driver for WPCM450 interrupt controller")
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-Reviewed-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20221115092532.1704032-1-weiyongjun@huaweicloud.com
+Fixes: 3c866bb79577 ("arm64: dts: apple: t8103: Add PCIe DARTs")
+Signed-off-by: Janne Grunau <j@jannau.net>
+Reviewed-by: Mark Kettenis <kettenis@openbsd.org>
+Signed-off-by: Hector Martin <marcan@marcan.st>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-wpcm450-aic.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/apple/t8103.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/irqchip/irq-wpcm450-aic.c b/drivers/irqchip/irq-wpcm450-aic.c
-index 0dcbeb1a05a1..91df62a64cd9 100644
---- a/drivers/irqchip/irq-wpcm450-aic.c
-+++ b/drivers/irqchip/irq-wpcm450-aic.c
-@@ -146,6 +146,7 @@ static int __init wpcm450_aic_of_init(struct device_node *node,
- 	aic->regs = of_iomap(node, 0);
- 	if (!aic->regs) {
- 		pr_err("Failed to map WPCM450 AIC registers\n");
-+		kfree(aic);
- 		return -ENOMEM;
- 	}
+diff --git a/arch/arm64/boot/dts/apple/t8103.dtsi b/arch/arm64/boot/dts/apple/t8103.dtsi
+index 51a63b29d404..a4d195e9eb8c 100644
+--- a/arch/arm64/boot/dts/apple/t8103.dtsi
++++ b/arch/arm64/boot/dts/apple/t8103.dtsi
+@@ -412,7 +412,7 @@ nvme@27bcc0000 {
+ 			resets = <&ps_ans2>;
+ 		};
  
+-		pcie0_dart_0: dart@681008000 {
++		pcie0_dart_0: iommu@681008000 {
+ 			compatible = "apple,t8103-dart";
+ 			reg = <0x6 0x81008000 0x0 0x4000>;
+ 			#iommu-cells = <1>;
+@@ -421,7 +421,7 @@ pcie0_dart_0: dart@681008000 {
+ 			power-domains = <&ps_apcie_gp>;
+ 		};
+ 
+-		pcie0_dart_1: dart@682008000 {
++		pcie0_dart_1: iommu@682008000 {
+ 			compatible = "apple,t8103-dart";
+ 			reg = <0x6 0x82008000 0x0 0x4000>;
+ 			#iommu-cells = <1>;
+@@ -430,7 +430,7 @@ pcie0_dart_1: dart@682008000 {
+ 			power-domains = <&ps_apcie_gp>;
+ 		};
+ 
+-		pcie0_dart_2: dart@683008000 {
++		pcie0_dart_2: iommu@683008000 {
+ 			compatible = "apple,t8103-dart";
+ 			reg = <0x6 0x83008000 0x0 0x4000>;
+ 			#iommu-cells = <1>;
 -- 
 2.35.1
 
