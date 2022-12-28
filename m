@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80DCF1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05641C433F0;
-	Wed, 28 Dec 2022 15:21:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4613A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7BEC433EF;
+	Wed, 28 Dec 2022 15:21:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240903;
-	bh=+peOpAZJpiG0NESRyBu2rsUCn5Xx0Ey45SFJcBHmahM=;
+	s=korg; t=1672240906;
+	bh=OQzES7WBCS/SPWTXL2VLSngFjS/hce17tcGDw2hdB10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HGEj/ojNjqW1nqn074keWxlPdvIDyQfv4IEk9mFaA3rUQBhDbDoAFmIvuPKeSw+o4
-	 T5Sb31euHpNi73w2scIGo5xannoiGdiVNImhg2qeQ4dgW8RbQ6Mo9M57CQoVdyEKKI
-	 bQK2rLNykAhzljGnC254tejNo25ZtygtvHtTAxSQ=
+	b=wezL4FKqKUPMzSlh42cV/ODO0PtvQCU885BD/Grq5ISEZpijKQAYb82/q2zeFUKIZ
+	 q5Je9NbBxVKZcBSWvNKWeu1X6NAOt0kuKSlP/yZM+F5pEN+ihBCbN/LFWMuTe7jjuq
+	 WPCljBO/eXTtB6sg7UMVv/pm7UBhIcJ6g4KUBA0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 411/731] scsi: scsi_debug: Fix a warning in resp_verify()
-Date: Wed, 28 Dec 2022 15:38:38 +0100
-Message-Id: <20221228144308.483876288@linuxfoundation.org>
+Subject: [PATCH 5.15 415/731] scsi: ipr: Fix WARNING in ipr_init()
+Date: Wed, 28 Dec 2022 15:38:42 +0100
+Message-Id: <20221228144308.602355882@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,39 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit ed0f17b748b20271cb568c7ca0b23b120316a47d ]
+[ Upstream commit e6f108bffc3708ddcff72324f7d40dfcd0204894 ]
 
-As 'vnum' is controlled by user, so if user tries to allocate memory larger
-than(>=) MAX_ORDER, then kcalloc() will fail, it creates a stack trace and
-messes up dmesg with a warning.
+ipr_init() will not call unregister_reboot_notifier() when
+pci_register_driver() fails, which causes a WARNING. Call
+unregister_reboot_notifier() when pci_register_driver() fails.
 
-Add __GFP_NOWARN in order to avoid too large allocation warning.  This is
-detected by static analysis using smatch.
+notifier callback ipr_halt [ipr] already registered
+WARNING: CPU: 3 PID: 299 at kernel/notifier.c:29
+notifier_chain_register+0x16d/0x230
+Modules linked in: ipr(+) xhci_pci_renesas xhci_hcd ehci_hcd usbcore
+led_class gpu_sched drm_buddy video wmi drm_ttm_helper ttm
+drm_display_helper drm_kms_helper drm drm_panel_orientation_quirks
+agpgart cfbft
+CPU: 3 PID: 299 Comm: modprobe Tainted: G        W
+6.1.0-rc1-00190-g39508d23b672-dirty #332
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014
+RIP: 0010:notifier_chain_register+0x16d/0x230
+Call Trace:
+ <TASK>
+ __blocking_notifier_chain_register+0x73/0xb0
+ ipr_init+0x30/0x1000 [ipr]
+ do_one_initcall+0xdb/0x480
+ do_init_module+0x1cf/0x680
+ load_module+0x6a50/0x70a0
+ __do_sys_finit_module+0x12f/0x1c0
+ do_syscall_64+0x3f/0x90
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fixes: c3e2fe9222d4 ("scsi: scsi_debug: Implement VERIFY(10), add VERIFY(16)")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Link: https://lore.kernel.org/r/20221112070031.2121068-1-harshit.m.mogalapalli@oracle.com
+Fixes: f72919ec2bbb ("[SCSI] ipr: implement shutdown changes and remove obsolete write cache parameter")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Link: https://lore.kernel.org/r/20221113064513.14028-1-shangxiaojing@huawei.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/ipr.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index b44fd9b80934..6ca3205a0bf5 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -4296,7 +4296,7 @@ static int resp_verify(struct scsi_cmnd *scp, struct sdebug_dev_info *devip)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/scsi/ipr.c b/drivers/scsi/ipr.c
+index 56b8a2d6ffe4..04fb7fc01226 100644
+--- a/drivers/scsi/ipr.c
++++ b/drivers/scsi/ipr.c
+@@ -10869,11 +10869,19 @@ static struct notifier_block ipr_notifier = {
+  **/
+ static int __init ipr_init(void)
+ {
++	int rc;
++
+ 	ipr_info("IBM Power RAID SCSI Device Driver version: %s %s\n",
+ 		 IPR_DRIVER_VERSION, IPR_DRIVER_DATE);
  
--	arr = kcalloc(lb_size, vnum, GFP_ATOMIC);
-+	arr = kcalloc(lb_size, vnum, GFP_ATOMIC | __GFP_NOWARN);
- 	if (!arr) {
- 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INSUFF_RES_ASC,
- 				INSUFF_RES_ASCQ);
+ 	register_reboot_notifier(&ipr_notifier);
+-	return pci_register_driver(&ipr_driver);
++	rc = pci_register_driver(&ipr_driver);
++	if (rc) {
++		unregister_reboot_notifier(&ipr_notifier);
++		return rc;
++	}
++
++	return 0;
+ }
+ 
+ /**
 -- 
 2.35.1
 
