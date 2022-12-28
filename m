@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37061863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46547C433D2;
-	Wed, 28 Dec 2022 15:39:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 663921863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4D8C433D2;
+	Wed, 28 Dec 2022 15:39:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241982;
-	bh=7OqLrE8VqfaKw/7UH8Ppl+h4W6SzmKut1joDfri5VkA=;
+	s=korg; t=1672241985;
+	bh=6mjoa0UUO+VjLIgUKRi7R2TLiowgOOeAG487pIy3nus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XTl2i3rb55DPRvY8eRX6YmbxhBqVybHQ8ieQI6nRrEXbzfp2qxM2d/24z+oqRGnTA
-	 3mz3Kf1oC3My2DVN+IfhcRdVhXlnH/1YTP5tUZq83W3p5zbnWEmIMbirCxU7wFlSkg
-	 DGVcFqQ5hftKuY3EKrjvfEDXlHx6K8LlUsO4hrqc=
+	b=lMPNPaTWIizXHMQHYvtzjFGZSIwoC7nW80BIvxO0jO0xvqBqv3nEtrbNMYXXwPEFk
+	 mYYzQxmwIzTLI6o1L0hktXhp62wmedxPY8WZv1LTa9EcghRpqstBDAlOCKWJ/lDto8
+	 Zpz/qZi7vVXdgJ91L7xULr/Q2Hy67a8ELldmqg/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yassine Oudjana <y.oudjana@protonmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Michael Walle <michael@walle.cc>,
+	Tudor Ambarus <tudor.ambarus@microchip.com>,
+	Takahiro Kuwano <Takahiro.Kuwano@infineon.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0312/1146] regmap-irq: Use the new num_config_regs property in regmap_add_irq_chip_fwnode
-Date: Wed, 28 Dec 2022 15:30:51 +0100
-Message-Id: <20221228144338.628579880@linuxfoundation.org>
+Subject: [PATCH 6.0 0351/1073] mtd: spi-nor: hide jedec_id sysfs attribute if not present
+Date: Wed, 28 Dec 2022 15:32:19 +0100
+Message-Id: <20221228144337.539595045@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,78 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yassine Oudjana <y.oudjana@protonmail.com>
+From: Michael Walle <michael@walle.cc>
 
-[ Upstream commit 84498d1fb35de6ab71bdfdb6270a464fb4a0951b ]
+[ Upstream commit 7d388551b6888f3725e6c957f472526b35161a5b ]
 
-Commit faa87ce9196d ("regmap-irq: Introduce config registers for irq
-types") added the num_config_regs, then commit 9edd4f5aee84 ("regmap-irq:
-Deprecate type registers and virtual registers") suggested to replace
-num_type_reg with it. However, regmap_add_irq_chip_fwnode wasn't modified
-to use the new property. Later on, commit 255a03bb1bb3 ("ASoC: wcd9335:
-Convert irq chip to config regs") removed the old num_type_reg property
-from the WCD9335 driver's struct regmap_irq_chip, causing a null pointer
-dereference in regmap_irq_set_type when it tried to index d->type_buf as
-it was never allocated in regmap_add_irq_chip_fwnode:
+Some non-jedec compliant flashes (like the Everspin flashes) don't have
+an ID at all. Hide the attribute in this case.
 
-[   39.199374] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-
-[   39.200006] Call trace:
-[   39.200014]  regmap_irq_set_type+0x84/0x1c0
-[   39.200026]  __irq_set_trigger+0x60/0x1c0
-[   39.200040]  __setup_irq+0x2f4/0x78c
-[   39.200051]  request_threaded_irq+0xe8/0x1a0
-
-Use num_config_regs in regmap_add_irq_chip_fwnode instead of num_type_reg,
-and fall back to it if num_config_regs isn't defined to maintain backward
-compatibility.
-
-Fixes: faa87ce9196d ("regmap-irq: Introduce config registers for irq types")
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-Link: https://lore.kernel.org/r/20221107202114.823975-1-y.oudjana@protonmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 36ac02286265 ("mtd: spi-nor: add initial sysfs support")
+Signed-off-by: Michael Walle <michael@walle.cc>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
+Reviewed-by: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
+Link: https://lore.kernel.org/r/20220810220654.1297699-2-michael@walle.cc
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap-irq.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ .../ABI/testing/sysfs-bus-spi-devices-spi-nor      |  3 +++
+ drivers/mtd/spi-nor/sysfs.c                        | 14 ++++++++++++++
+ 2 files changed, 17 insertions(+)
 
-diff --git a/drivers/base/regmap/regmap-irq.c b/drivers/base/regmap/regmap-irq.c
-index 4ef9488d05cd..3de89795f584 100644
---- a/drivers/base/regmap/regmap-irq.c
-+++ b/drivers/base/regmap/regmap-irq.c
-@@ -722,6 +722,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
- 	int i;
- 	int ret = -ENOMEM;
- 	int num_type_reg;
-+	int num_regs;
- 	u32 reg;
+diff --git a/Documentation/ABI/testing/sysfs-bus-spi-devices-spi-nor b/Documentation/ABI/testing/sysfs-bus-spi-devices-spi-nor
+index d76cd3946434..e9ef69aef20b 100644
+--- a/Documentation/ABI/testing/sysfs-bus-spi-devices-spi-nor
++++ b/Documentation/ABI/testing/sysfs-bus-spi-devices-spi-nor
+@@ -5,6 +5,9 @@ Contact:	linux-mtd@lists.infradead.org
+ Description:	(RO) The JEDEC ID of the SPI NOR flash as reported by the
+ 		flash device.
  
- 	if (chip->num_regs <= 0)
-@@ -796,14 +797,20 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
- 			goto err_alloc;
- 	}
++		The attribute is not present if the flash doesn't support
++		the "Read JEDEC ID" command (9Fh). This is the case for
++		non-JEDEC compliant flashes.
  
--	num_type_reg = chip->type_in_mask ? chip->num_regs : chip->num_type_reg;
--	if (num_type_reg) {
--		d->type_buf_def = kcalloc(num_type_reg,
-+	/*
-+	 * Use num_config_regs if defined, otherwise fall back to num_type_reg
-+	 * to maintain backward compatibility.
-+	 */
-+	num_type_reg = chip->num_config_regs ? chip->num_config_regs
-+			: chip->num_type_reg;
-+	num_regs = chip->type_in_mask ? chip->num_regs : num_type_reg;
-+	if (num_regs) {
-+		d->type_buf_def = kcalloc(num_regs,
- 					  sizeof(*d->type_buf_def), GFP_KERNEL);
- 		if (!d->type_buf_def)
- 			goto err_alloc;
+ What:		/sys/bus/spi/devices/.../spi-nor/manufacturer
+ Date:		April 2021
+diff --git a/drivers/mtd/spi-nor/sysfs.c b/drivers/mtd/spi-nor/sysfs.c
+index 9aec9d8a98ad..4c3b351aef24 100644
+--- a/drivers/mtd/spi-nor/sysfs.c
++++ b/drivers/mtd/spi-nor/sysfs.c
+@@ -67,6 +67,19 @@ static struct bin_attribute *spi_nor_sysfs_bin_entries[] = {
+ 	NULL
+ };
  
--		d->type_buf = kcalloc(num_type_reg, sizeof(*d->type_buf),
-+		d->type_buf = kcalloc(num_regs, sizeof(*d->type_buf),
- 				      GFP_KERNEL);
- 		if (!d->type_buf)
- 			goto err_alloc;
++static umode_t spi_nor_sysfs_is_visible(struct kobject *kobj,
++					struct attribute *attr, int n)
++{
++	struct spi_device *spi = to_spi_device(kobj_to_dev(kobj));
++	struct spi_mem *spimem = spi_get_drvdata(spi);
++	struct spi_nor *nor = spi_mem_get_drvdata(spimem);
++
++	if (attr == &dev_attr_jedec_id.attr && !nor->info->id_len)
++		return 0;
++
++	return 0444;
++}
++
+ static umode_t spi_nor_sysfs_is_bin_visible(struct kobject *kobj,
+ 					    struct bin_attribute *attr, int n)
+ {
+@@ -82,6 +95,7 @@ static umode_t spi_nor_sysfs_is_bin_visible(struct kobject *kobj,
+ 
+ static const struct attribute_group spi_nor_sysfs_group = {
+ 	.name		= "spi-nor",
++	.is_visible	= spi_nor_sysfs_is_visible,
+ 	.is_bin_visible	= spi_nor_sysfs_is_bin_visible,
+ 	.attrs		= spi_nor_sysfs_entries,
+ 	.bin_attrs	= spi_nor_sysfs_bin_entries,
 -- 
 2.35.1
 
