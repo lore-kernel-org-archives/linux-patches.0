@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85BBC1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E5D1C433D2;
-	Wed, 28 Dec 2022 15:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F10F1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA729C433D2;
+	Wed, 28 Dec 2022 15:58:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243108;
-	bh=QDdP89T/Or1/pLj/acPfQsyvLejjtNwFxCss6gEQBG8=;
+	s=korg; t=1672243111;
+	bh=W9wUOoN8RjUY0goWAA4qXdYTiG1MYt93A2fnmLO/5aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tkMmeU22jMLVJReDdQLdpQC1K9kZ0e95KWakoqnHeQ0hQA6dZ13WF2CmqkmzwFZ5P
-	 aIJvQyiBMpXscZcziDTPU2/Ds/Okv/ZC56s+wILfbTVH7zxF061TI1bRJiwQFeV03k
-	 XSIATp/6RWSKABROsnWBLHD9M0ovbrxIFmW8VyoQ=
+	b=W33Kd9rKBp+48kXNfar9SEt3FWyyjTb06QgQS61wNMXFvt5eCnee/8lSqCbFo0PHI
+	 uxNLgyQ7+o8BOyqIIVNibiZqfvjJhOz5PXzTod2zBElMfqcBZ9bsLmSPnx2veeQKMJ
+	 Yx8x8fDdpG4tFLFksU9lDO8kOlbqtxjOgI+KBnSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C3=8D=C3=B1igo=20Huguet?= <ihuguet@redhat.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0452/1146] wifi: mac80211: fix maybe-unused warning
-Date: Wed, 28 Dec 2022 15:33:11 +0100
-Message-Id: <20221228144342.459540068@linuxfoundation.org>
+Subject: [PATCH 6.0 0491/1073] mmc: via-sdmmc: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:34:39 +0100
+Message-Id: <20221228144341.371264170@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,41 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Íñigo Huguet <ihuguet@redhat.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 09d838a457a89883a926b8b0104d575158fd4b92 ]
+[ Upstream commit e4e46fb61e3bb4628170810d3f2b996b709b90d9 ]
 
-In ieee80211_lookup_key, the variable named `local` is unused if
-compiled without lockdep, getting this warning:
+mmc_add_host() may return error, if we ignore its return value,
+it will lead two issues:
+1. The memory that allocated in mmc_alloc_host() is leaked.
+2. In the remove() path, mmc_remove_host() will be called to
+   delete device, but it's not added yet, it will lead a kernel
+   crash because of null-ptr-deref in device_del().
 
-net/mac80211/cfg.c: In function ‘ieee80211_lookup_key’:
-net/mac80211/cfg.c:542:26: error: unused variable ‘local’ [-Werror=unused-variable]
-  struct ieee80211_local *local = sdata->local;
-                          ^~~~~
+Fix this by checking the return value and goto error path which
+will call mmc_free_host().
 
-Fix it with __maybe_unused.
-
-Fixes: 8cbf0c2ab6df ("wifi: mac80211: refactor some key code")
-Signed-off-by: Íñigo Huguet <ihuguet@redhat.com>
-Link: https://lore.kernel.org/r/20221111153622.29016-1-ihuguet@redhat.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: f0bf7f61b840 ("mmc: Add new via-sdmmc host controller driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221108130949.1067699-1-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/via-sdmmc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index 687b4c878d4a..8c8ef87997a8 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -576,7 +576,7 @@ static struct ieee80211_key *
- ieee80211_lookup_key(struct ieee80211_sub_if_data *sdata, int link_id,
- 		     u8 key_idx, bool pairwise, const u8 *mac_addr)
- {
--	struct ieee80211_local *local = sdata->local;
-+	struct ieee80211_local *local __maybe_unused = sdata->local;
- 	struct ieee80211_link_data *link = &sdata->deflink;
- 	struct ieee80211_key *key;
+diff --git a/drivers/mmc/host/via-sdmmc.c b/drivers/mmc/host/via-sdmmc.c
+index 88662a90ed96..a2b0d9461665 100644
+--- a/drivers/mmc/host/via-sdmmc.c
++++ b/drivers/mmc/host/via-sdmmc.c
+@@ -1151,7 +1151,9 @@ static int via_sd_probe(struct pci_dev *pcidev,
+ 	    pcidev->subsystem_device == 0x3891)
+ 		sdhost->quirks = VIA_CRDR_QUIRK_300MS_PWRDELAY;
+ 
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret)
++		goto unmap;
+ 
+ 	return 0;
  
 -- 
 2.35.1
