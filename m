@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95D8B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:47:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECAECC433F0;
-	Wed, 28 Dec 2022 15:47:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE1D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:47:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99911C433F0;
+	Wed, 28 Dec 2022 15:47:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242456;
-	bh=RIXhUxirIE0+ArFSNapk95yY3FktWFx4TLh2xp8XrKU=;
+	s=korg; t=1672242459;
+	bh=MbAb0bNy8l/E5IppMg6LDyvbtgW8oiWqlw+mbO+kd0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WfWjrrhsyIpGers6q++dGIBb9qyia7u7j44g4dyjQJoWp0ail3alpa3s9p/vo/8tm
-	 JecGRd5BtIPJX80hXU9jqIe5fIxQquxUxzKoXVNSoOgcCl9EqJOEw7/rf97yq44hQL
-	 9nbPwKATOVBHPUfnQwr1TdAEXtD3g0Iw8ZtFMtIM=
+	b=YMWCKY0kw3O6zDrsC8lqTNJYfPfhGh6EHGsiJHtG3DcuW4fz8geU7dhY2xiIk/f0H
+	 /TXJKVMBTuDYZO/Pn5Ju0mWrTSQ2UPhArJzFQpDdyARjuiUZmeETepKKoae/JiuzlH
+	 9Q00JMnt1a7blfporJFaWeBbxIkSMJXP804JSCTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	ZhangPeng <zhangpeng362@huawei.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0412/1073] NFS: Fix an Oops in nfs_d_automount()
-Date: Wed, 28 Dec 2022 15:33:20 +0100
-Message-Id: <20221228144339.212923909@linuxfoundation.org>
+Subject: [PATCH 6.1 0372/1146] pinctrl: k210: call of_node_put()
+Date: Wed, 28 Dec 2022 15:31:51 +0100
+Message-Id: <20221228144340.267274371@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,34 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: ZhangPeng <zhangpeng362@huawei.com>
 
-[ Upstream commit 35e3b6ae84935d0d7ff76cbdaa83411b0ad5e471 ]
+[ Upstream commit a8acc11643082a706de86a19f1f824712d971984 ]
 
-When mounting from a NFSv4 referral, path->dentry can end up being a
-negative dentry, so derive the struct nfs_server from the dentry
-itself instead.
+Since for_each_available_child_of_node() will increase the refcount of
+node, we need to call of_node_put() manually when breaking out of the
+iteration.
 
-Fixes: 2b0143b5c986 ("VFS: normal filesystems (and lustre): d_inode() annotations")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: d4c34d09ab03 ("pinctrl: Add RISC-V Canaan Kendryte K210 FPIOA driver")
+Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
+Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Link: https://lore.kernel.org/r/20221122075853.2496680-1-zhangpeng362@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/namespace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-k210.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/namespace.c b/fs/nfs/namespace.c
-index 3295af4110f1..c7363d9e11bf 100644
---- a/fs/nfs/namespace.c
-+++ b/fs/nfs/namespace.c
-@@ -147,7 +147,7 @@ struct vfsmount *nfs_d_automount(struct path *path)
- 	struct nfs_fs_context *ctx;
- 	struct fs_context *fc;
- 	struct vfsmount *mnt = ERR_PTR(-ENOMEM);
--	struct nfs_server *server = NFS_SERVER(d_inode(path->dentry));
-+	struct nfs_server *server = NFS_SB(path->dentry->d_sb);
- 	struct nfs_client *client = server->nfs_client;
- 	int timeout = READ_ONCE(nfs_mountpoint_expiry_timeout);
- 	int ret;
+diff --git a/drivers/pinctrl/pinctrl-k210.c b/drivers/pinctrl/pinctrl-k210.c
+index ecab6bf63dc6..ad4db99094a7 100644
+--- a/drivers/pinctrl/pinctrl-k210.c
++++ b/drivers/pinctrl/pinctrl-k210.c
+@@ -862,8 +862,10 @@ static int k210_pinctrl_dt_node_to_map(struct pinctrl_dev *pctldev,
+ 	for_each_available_child_of_node(np_config, np) {
+ 		ret = k210_pinctrl_dt_subnode_to_map(pctldev, np, map,
+ 						     &reserved_maps, num_maps);
+-		if (ret < 0)
++		if (ret < 0) {
++			of_node_put(np);
+ 			goto err;
++		}
+ 	}
+ 	return 0;
+ 
 -- 
 2.35.1
 
