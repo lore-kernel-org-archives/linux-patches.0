@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B26BA1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3576AC433D2;
-	Wed, 28 Dec 2022 15:04:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5088E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD66C433D2;
+	Wed, 28 Dec 2022 15:04:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239851;
-	bh=fvZFWVyORokyld+Tbq4AN6GoVcBPXYffrLMyHFnmco4=;
+	s=korg; t=1672239854;
+	bh=DpzLQ/G2ePNP1xlnxiuxjJLuCKHJ8oQMc8ESPGVjl84=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O3/m+mGSouwFeBMK/HJVbq5hh9YFB1plvsuIPt/3GynIRhPx31NefNcNFOZAhoSsZ
-	 ZhSF34xIvlySAcOjz4WuUHYBLCWAkU/+5XRT3KlziAD7B57CA/kxDPd3o6GfJSE5Cq
-	 G0SH7/z6cRzqu5260plVgwYEQfbap+9y6Z447P0o=
+	b=qxJJjHFoo0NNKLCP4ta7Big55WBmRHUD5b5+l5qitS+QHDPIF4jQv+0GjBlz0wshS
+	 Ou9DKaAZahuPW5lgSgYKJIiu6sndsVHuEdrk3DroDufjRn4tZEN086f6jz5cxzhR2F
+	 1MMxhaim1WNponq9f1zeuBe63HX3wOyvpdkQu5M8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Geffon <bgeffon@google.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Kees Cook <keescook@chromium.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0086/1073] pstore: Avoid kcore oops by vmap()ing with VM_IOREMAP
-Date: Wed, 28 Dec 2022 15:27:54 +0100
-Message-Id: <20221228144330.395206249@linuxfoundation.org>
+Subject: [PATCH 5.15 278/731] hsr: Synchronize sequence number updates.
+Date: Wed, 28 Dec 2022 15:36:25 +0100
+Message-Id: <20221228144304.631282124@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,101 +35,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephen Boyd <swboyd@chromium.org>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit e6b842741b4f39007215fd7e545cb55aa3d358a2 ]
+[ Upstream commit 5c7aa13210c3abdd34fd421f62347665ec6eb551 ]
 
-An oops can be induced by running 'cat /proc/kcore > /dev/null' on
-devices using pstore with the ram backend because kmap_atomic() assumes
-lowmem pages are accessible with __va().
+hsr_register_frame_out() compares new sequence_nr vs the old one
+recorded in hsr_node::seq_out and if the new sequence_nr is higher then
+it will be written to hsr_node::seq_out as the new value.
 
- Unable to handle kernel paging request at virtual address ffffff807ff2b000
- Mem abort info:
- ESR = 0x96000006
- EC = 0x25: DABT (current EL), IL = 32 bits
- SET = 0, FnV = 0
- EA = 0, S1PTW = 0
- FSC = 0x06: level 2 translation fault
- Data abort info:
- ISV = 0, ISS = 0x00000006
- CM = 0, WnR = 0
- swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000081d87000
- [ffffff807ff2b000] pgd=180000017fe18003, p4d=180000017fe18003, pud=180000017fe18003, pmd=0000000000000000
- Internal error: Oops: 96000006 [#1] PREEMPT SMP
- Modules linked in: dm_integrity
- CPU: 7 PID: 21179 Comm: perf Not tainted 5.15.67-10882-ge4eb2eb988cd #1 baa443fb8e8477896a370b31a821eb2009f9bfba
- Hardware name: Google Lazor (rev3 - 8) (DT)
- pstate: a0400009 (NzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : __memcpy+0x110/0x260
- lr : vread+0x194/0x294
- sp : ffffffc013ee39d0
- x29: ffffffc013ee39f0 x28: 0000000000001000 x27: ffffff807ff2b000
- x26: 0000000000001000 x25: ffffffc0085a2000 x24: ffffff802d4b3000
- x23: ffffff80f8a60000 x22: ffffff802d4b3000 x21: ffffffc0085a2000
- x20: ffffff8080b7bc68 x19: 0000000000001000 x18: 0000000000000000
- x17: 0000000000000000 x16: 0000000000000000 x15: ffffffd3073f2e60
- x14: ffffffffad588000 x13: 0000000000000000 x12: 0000000000000001
- x11: 00000000000001a2 x10: 00680000fff2bf0b x9 : 03fffffff807ff2b
- x8 : 0000000000000001 x7 : 0000000000000000 x6 : 0000000000000000
- x5 : ffffff802d4b4000 x4 : ffffff807ff2c000 x3 : ffffffc013ee3a78
- x2 : 0000000000001000 x1 : ffffff807ff2b000 x0 : ffffff802d4b3000
- Call trace:
- __memcpy+0x110/0x260
- read_kcore+0x584/0x778
- proc_reg_read+0xb4/0xe4
+This operation isn't locked so it is possible that two frames with the
+same sequence number arrive (via the two slave devices) and are fed to
+hsr_register_frame_out() at the same time. Both will pass the check and
+update the sequence counter later to the same value. As a result the
+content of the same packet is fed into the stack twice.
 
-During early boot, memblock reserves the pages for the ramoops reserved
-memory node in DT that would otherwise be part of the direct lowmem
-mapping. Pstore's ram backend reuses those reserved pages to change the
-memory type (writeback or non-cached) by passing the pages to vmap()
-(see pfn_to_page() usage in persistent_ram_vmap() for more details) with
-specific flags. When read_kcore() starts iterating over the vmalloc
-region, it runs over the virtual address that vmap() returned for
-ramoops. In aligned_vread() the virtual address is passed to
-vmalloc_to_page() which returns the page struct for the reserved lowmem
-area. That lowmem page is passed to kmap_atomic(), which effectively
-calls page_to_virt() that assumes a lowmem page struct must be directly
-accessible with __va() and friends. These pages are mapped via vmap()
-though, and the lowmem mapping was never made, so accessing them via the
-lowmem virtual address oopses like above.
+This was noticed by running ping and observing DUP being reported from
+time to time.
 
-Let's side-step this problem by passing VM_IOREMAP to vmap(). This will
-tell vread() to not include the ramoops region in the kcore. Instead the
-area will look like a bunch of zeros. The alternative is to teach kmap()
-about vmalloc areas that intersect with lowmem. Presumably such a change
-isn't a one-liner, and there isn't much interest in inspecting the
-ramoops region in kcore files anyway, so the most expedient route is
-taken for now.
+Instead of using the hsr_priv::seqnr_lock for the whole receive path (as
+it is for sending in the master node) add an additional lock that is only
+used for sequence number checks and updates.
 
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Fixes: 404a6043385d ("staging: android: persistent_ram: handle reserving and mapping memory")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221205233136.3420802-1-swboyd@chromium.org
+Add a per-node lock that is used during sequence number reads and
+updates.
+
+Fixes: f421436a591d3 ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram_core.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/hsr/hsr_framereg.c | 9 ++++++++-
+ net/hsr/hsr_framereg.h | 2 ++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
-index a89e33719fcf..8bf09886e7e6 100644
---- a/fs/pstore/ram_core.c
-+++ b/fs/pstore/ram_core.c
-@@ -439,7 +439,11 @@ static void *persistent_ram_vmap(phys_addr_t start, size_t size,
- 		phys_addr_t addr = page_start + i * PAGE_SIZE;
- 		pages[i] = pfn_to_page(addr >> PAGE_SHIFT);
- 	}
--	vaddr = vmap(pages, page_count, VM_MAP, prot);
-+	/*
-+	 * VM_IOREMAP used here to bypass this region during vread()
-+	 * and kmap_atomic() (i.e. kcore) to avoid __va() failures.
-+	 */
-+	vaddr = vmap(pages, page_count, VM_MAP | VM_IOREMAP, prot);
- 	kfree(pages);
+diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
+index 440788e5b3e2..414bf4d3d3c9 100644
+--- a/net/hsr/hsr_framereg.c
++++ b/net/hsr/hsr_framereg.c
+@@ -159,6 +159,7 @@ static struct hsr_node *hsr_add_node(struct hsr_priv *hsr,
+ 		return NULL;
  
- 	/*
+ 	ether_addr_copy(new_node->macaddress_A, addr);
++	spin_lock_init(&new_node->seq_out_lock);
+ 
+ 	/* We are only interested in time diffs here, so use current jiffies
+ 	 * as initialization. (0 could trigger an spurious ring error warning).
+@@ -313,6 +314,7 @@ void hsr_handle_sup_frame(struct hsr_frame_info *frame)
+ 		goto done;
+ 
+ 	ether_addr_copy(node_real->macaddress_B, ethhdr->h_source);
++	spin_lock_bh(&node_real->seq_out_lock);
+ 	for (i = 0; i < HSR_PT_PORTS; i++) {
+ 		if (!node_curr->time_in_stale[i] &&
+ 		    time_after(node_curr->time_in[i], node_real->time_in[i])) {
+@@ -323,6 +325,7 @@ void hsr_handle_sup_frame(struct hsr_frame_info *frame)
+ 		if (seq_nr_after(node_curr->seq_out[i], node_real->seq_out[i]))
+ 			node_real->seq_out[i] = node_curr->seq_out[i];
+ 	}
++	spin_unlock_bh(&node_real->seq_out_lock);
+ 	node_real->addr_B_port = port_rcv->type;
+ 
+ 	spin_lock_bh(&hsr->list_lock);
+@@ -419,13 +422,17 @@ void hsr_register_frame_in(struct hsr_node *node, struct hsr_port *port,
+ int hsr_register_frame_out(struct hsr_port *port, struct hsr_node *node,
+ 			   u16 sequence_nr)
+ {
++	spin_lock_bh(&node->seq_out_lock);
+ 	if (seq_nr_before_or_eq(sequence_nr, node->seq_out[port->type]) &&
+ 	    time_is_after_jiffies(node->time_out[port->type] +
+-	    msecs_to_jiffies(HSR_ENTRY_FORGET_TIME)))
++	    msecs_to_jiffies(HSR_ENTRY_FORGET_TIME))) {
++		spin_unlock_bh(&node->seq_out_lock);
+ 		return 1;
++	}
+ 
+ 	node->time_out[port->type] = jiffies;
+ 	node->seq_out[port->type] = sequence_nr;
++	spin_unlock_bh(&node->seq_out_lock);
+ 	return 0;
+ }
+ 
+diff --git a/net/hsr/hsr_framereg.h b/net/hsr/hsr_framereg.h
+index f9c83dc02ca5..48990166e4c4 100644
+--- a/net/hsr/hsr_framereg.h
++++ b/net/hsr/hsr_framereg.h
+@@ -69,6 +69,8 @@ void prp_update_san_info(struct hsr_node *node, bool is_sup);
+ 
+ struct hsr_node {
+ 	struct list_head	mac_list;
++	/* Protect R/W access to seq_out */
++	spinlock_t		seq_out_lock;
+ 	unsigned char		macaddress_A[ETH_ALEN];
+ 	unsigned char		macaddress_B[ETH_ALEN];
+ 	/* Local slave through which AddrB frames are received from this node */
 -- 
 2.35.1
 
