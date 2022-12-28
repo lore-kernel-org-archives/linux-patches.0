@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FFF1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C33B7C433D2;
-	Wed, 28 Dec 2022 15:04:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF59E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63277C433D2;
+	Wed, 28 Dec 2022 15:04:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239841;
-	bh=JFjSUMXRaeqCM1nIHQ2yDky9nCdv67vn1vv6ltrX69Y=;
+	s=korg; t=1672239843;
+	bh=Zj9v1liHklHYKjP0Yes7cbUTORLjQ//yW9lHFa/qzgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W1UNrvCIrMlA1NJjakWYBfvpdPNG4OaKrFt2nW1kjRnELDUrFdrm37jnkzPywe9MV
-	 l/OauZd1s/3bmvPYADq6FF6PlDXXR3NTlFhJ/akBScaHyf9Epq09PsQUk2mrWQjo5A
-	 XfLlyAIyGcuFARN4tNJr3aGEqlaBiTypuSHTNGqY=
+	b=a4vfVBW5FYljmedoy/6xttGAk3/jFDMp1rbTK/9YTJu4l1iaekZ5d6sCdTcgmFyLs
+	 wK5hstYv82sZwggWbNZzSbz9CFWxLiUJRxifMW1/1LinxGTglKZrG4WhRE/lH2xeGk
+	 FCUSZYn/JEnWrSk03cvexMXvLqdD4YJ/HmmqTp28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sumit Gupta <sumitg@nvidia.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Doug Brown <doug@schmorgal.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0049/1146] soc/tegra: cbb: Use correct master_id mask for CBB NOC in Tegra194
-Date: Wed, 28 Dec 2022 15:26:28 +0100
-Message-Id: <20221228144331.495646121@linuxfoundation.org>
+Subject: [PATCH 6.0 0085/1073] ARM: mmp: fix timer_read delay
+Date: Wed, 28 Dec 2022 15:27:53 +0100
+Message-Id: <20221228144330.369631537@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,99 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sumit Gupta <sumitg@nvidia.com>
+From: Doug Brown <doug@schmorgal.com>
 
-[ Upstream commit 33af51a652191d7b9fe449563594b0bdbeb93c2a ]
+[ Upstream commit e348b4014c31041e13ff370669ba3348c4d385e3 ]
 
-In Tegra194 SoC, master_id bit range is different between cluster NOC
-and CBB NOC. Currently same bit range is used which results in wrong
-master_id value. Due to this, illegal accesses from the CCPLEX master
-do not result in a crash as expected. Fix this by using the correct
-range for the CBB NOC.
+timer_read() was using an empty 100-iteration loop to wait for the
+TMR_CVWR register to capture the latest timer counter value. The delay
+wasn't long enough. This resulted in CPU idle time being extremely
+underreported on PXA168 with CONFIG_NO_HZ_IDLE=y.
 
-Finally, it is only necessary to extract the master_id when the
-erd_mask_inband_err flag is set because when this is not set, a crash
-is always triggered.
+Switch to the approach used in the vendor kernel, which implements the
+capture delay by reading TMR_CVWR a few times instead.
 
-Fixes: b71344221466 ("soc/tegra: cbb: Add CBB 1.0 driver for Tegra194")
-Fixes: fc2f151d2314 ("soc/tegra: cbb: Add driver for Tegra234 CBB 2.0")
-Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fixes: 49cbe78637eb ("[ARM] pxa: add base support for Marvell's PXA168 processor line")
+Signed-off-by: Doug Brown <doug@schmorgal.com>
+Link: https://lore.kernel.org/r/20221204005117.53452-3-doug@schmorgal.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/tegra/cbb/tegra194-cbb.c | 14 +++++++-------
- drivers/soc/tegra/cbb/tegra234-cbb.c | 13 ++++++-------
- 2 files changed, 13 insertions(+), 14 deletions(-)
+ arch/arm/mach-mmp/time.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/soc/tegra/cbb/tegra194-cbb.c b/drivers/soc/tegra/cbb/tegra194-cbb.c
-index 1ae0bd9a1ac1..2e952c6f7c9e 100644
---- a/drivers/soc/tegra/cbb/tegra194-cbb.c
-+++ b/drivers/soc/tegra/cbb/tegra194-cbb.c
-@@ -102,8 +102,6 @@
- #define CLUSTER_NOC_VQC GENMASK(17, 16)
- #define CLUSTER_NOC_MSTR_ID GENMASK(21, 18)
+diff --git a/arch/arm/mach-mmp/time.c b/arch/arm/mach-mmp/time.c
+index 41b2e8abc9e6..708816caf859 100644
+--- a/arch/arm/mach-mmp/time.c
++++ b/arch/arm/mach-mmp/time.c
+@@ -43,18 +43,21 @@
+ static void __iomem *mmp_timer_base = TIMERS_VIRT_BASE;
  
--#define USRBITS_MSTR_ID GENMASK(21, 18)
--
- #define CBB_ERR_OPC GENMASK(4, 1)
- #define CBB_ERR_ERRCODE GENMASK(10, 8)
- #define CBB_ERR_LEN1 GENMASK(27, 16)
-@@ -2038,15 +2036,17 @@ static irqreturn_t tegra194_cbb_err_isr(int irq, void *data)
- 					    smp_processor_id(), priv->noc->name, priv->res->start,
- 					    irq);
+ /*
+- * FIXME: the timer needs some delay to stablize the counter capture
++ * Read the timer through the CVWR register. Delay is required after requesting
++ * a read. The CR register cannot be directly read due to metastability issues
++ * documented in the PXA168 software manual.
+  */
+ static inline uint32_t timer_read(void)
+ {
+-	int delay = 100;
++	uint32_t val;
++	int delay = 3;
  
--			mstr_id =  FIELD_GET(USRBITS_MSTR_ID, priv->errlog5) - 1;
- 			is_fatal = print_errlog(NULL, priv, status);
+ 	__raw_writel(1, mmp_timer_base + TMR_CVWR(1));
  
- 			/*
--			 * If illegal request is from CCPLEX(0x1)
--			 * initiator then call BUG() to crash system.
-+			 * If illegal request is from CCPLEX(0x1) initiator
-+			 * and error is fatal then call BUG() to crash system.
- 			 */
--			if ((mstr_id == 0x1) && priv->noc->erd_mask_inband_err)
--				is_inband_err = 1;
-+			if (priv->noc->erd_mask_inband_err) {
-+				mstr_id =  FIELD_GET(CBB_NOC_MSTR_ID, priv->errlog5);
-+				if (mstr_id == 0x1)
-+					is_inband_err = 1;
-+			}
- 		}
- 	}
+ 	while (delay--)
+-		cpu_relax();
++		val = __raw_readl(mmp_timer_base + TMR_CVWR(1));
  
-diff --git a/drivers/soc/tegra/cbb/tegra234-cbb.c b/drivers/soc/tegra/cbb/tegra234-cbb.c
-index 3528f9e15d5c..654c3d164606 100644
---- a/drivers/soc/tegra/cbb/tegra234-cbb.c
-+++ b/drivers/soc/tegra/cbb/tegra234-cbb.c
-@@ -92,7 +92,6 @@ struct tegra234_slave_lookup {
- struct tegra234_cbb_fabric {
- 	const char *name;
- 	phys_addr_t off_mask_erd;
--	bool erd_mask_inband_err;
- 	const char * const *master_id;
- 	unsigned int notifier_offset;
- 	const struct tegra_cbb_error *errors;
-@@ -525,14 +524,14 @@ static irqreturn_t tegra234_cbb_isr(int irq, void *data)
- 			if (err)
- 				goto unlock;
+-	return __raw_readl(mmp_timer_base + TMR_CVWR(1));
++	return val;
+ }
  
--			mstr_id =  FIELD_GET(USRBITS_MSTR_ID, priv->mn_user_bits);
--
- 			/*
--			 * If illegal request is from CCPLEX(id:0x1) master then call BUG() to
--			 * crash system.
-+			 * If illegal request is from CCPLEX(id:0x1) master then call WARN()
- 			 */
--			if ((mstr_id == 0x1) && priv->fabric->off_mask_erd)
--				is_inband_err = 1;
-+			if (priv->fabric->off_mask_erd) {
-+				mstr_id =  FIELD_GET(USRBITS_MSTR_ID, priv->mn_user_bits);
-+				if (mstr_id == 0x1)
-+					is_inband_err = 1;
-+			}
- 		}
- 	}
- 
+ static u64 notrace mmp_read_sched_clock(void)
 -- 
 2.35.1
 
