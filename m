@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB4E1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:53:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F8F3C433EF;
-	Wed, 28 Dec 2022 16:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DDF1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:53:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DF38C433D2;
+	Wed, 28 Dec 2022 16:53:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246394;
-	bh=kIPkRcL7vg8/igWD/iLUOEIINTGgR0Al5u+fgeEOQ8U=;
+	s=korg; t=1672246397;
+	bh=zd+4XcInxVMqeLCkW2Lh9Qq7tWs7IhVLFiv/rgH/KEU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZO+B/VNtpkdaj95A1o2OYUR+1wnpJwT0UPWhCoBxhN4jtfNSZzNKY5fpb1vcsfhpG
-	 lQjjbuT0szhVYKaKHxqO9T3X5cJLs1lTLgbH3EITk3gdLhkLYFZz0rCRsRX0avKlmt
-	 BXCod1FhPak/sCIkXuq4wkvZeJ4YGs4rAHDJEXE0=
+	b=m4mHE7iMkUzrZqbFvdbSbz3eBo213uY7hwRnxcA1Ae5k5C547U8fwpM0Rt0+w5dd+
+	 qP85YOStbWhY8XGPx8eRktt39G3D1JEGyXTyMeDKEF/deVvEORG6Mp4hACtJYZ6zJG
+	 VjaAVz9Yx6qqu2zpxptOWgvbt490fpy5gspWhjEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Jun Lei <Jun.Lei@amd.com>,
+	Alan Liu <HaoPing.Liu@amd.com>,
+	Wesley Chalmers <Wesley.Chalmers@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1032/1146] libbpf: Avoid enum forward-declarations in public API in C++ mode
-Date: Wed, 28 Dec 2022 15:42:51 +0100
-Message-Id: <20221228144358.388563709@linuxfoundation.org>
+Subject: [PATCH 6.1 1001/1146] drm/amd/display: Disable DRR actions during state commit
+Date: Wed, 28 Dec 2022 15:42:20 +0100
+Message-Id: <20221228144357.555562092@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,69 +38,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Wesley Chalmers <Wesley.Chalmers@amd.com>
 
-[ Upstream commit b42693415b86f608049cf1b4870adc1dc65e58b0 ]
+[ Upstream commit de020e5fa9ebc6fc32e82ae6ccb0282451ed937c ]
 
-C++ enum forward declarations are fundamentally not compatible with pure
-C enum definitions, and so libbpf's use of `enum bpf_stats_type;`
-forward declaration in libbpf/bpf.h public API header is causing C++
-compilation issues.
+[WHY]
+Committing a state while performing DRR actions can cause underflow.
 
-More details can be found in [0], but it comes down to C++ supporting
-enum forward declaration only with explicitly specified backing type:
+[HOW]
+Disabled features performing DRR actions during state commit.
+Need to follow-up on why DRR actions affect state commit.
 
-  enum bpf_stats_type: int;
-
-In C (and I believe it's a GCC extension also), such forward declaration
-is simply:
-
-  enum bpf_stats_type;
-
-Further, in Linux UAPI this enum is defined in pure C way:
-
-enum bpf_stats_type { BPF_STATS_RUN_TIME = 0; }
-
-And even though in both cases backing type is int, which can be
-confirmed by looking at DWARF information, for C++ compiler actual enum
-definition and forward declaration are incompatible.
-
-To eliminate this problem, for C++ mode define input argument as int,
-which makes enum unnecessary in libbpf public header. This solves the
-issue and as demonstrated by next patch doesn't cause any unwanted
-compiler warnings, at least with default warnings setting.
-
-  [0] https://stackoverflow.com/questions/42766839/c11-enum-forward-causes-underlying-type-mismatch
-  [1] Closes: https://github.com/libbpf/libbpf/issues/249
-
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20221130200013.2997831-1-andrii@kernel.org
+Reviewed-by: Jun Lei <Jun.Lei@amd.com>
+Acked-by: Alan Liu <HaoPing.Liu@amd.com>
+Signed-off-by: Wesley Chalmers <Wesley.Chalmers@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/bpf.h | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/tools/lib/bpf/bpf.h b/tools/lib/bpf/bpf.h
-index 9c50beabdd14..fddc05c667b5 100644
---- a/tools/lib/bpf/bpf.h
-+++ b/tools/lib/bpf/bpf.h
-@@ -393,8 +393,15 @@ LIBBPF_API int bpf_task_fd_query(int pid, int fd, __u32 flags, char *buf,
- 				 __u32 *buf_len, __u32 *prog_id, __u32 *fd_type,
- 				 __u64 *probe_offset, __u64 *probe_addr);
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
+index 8c5045711264..c20e9f76f021 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
+@@ -992,8 +992,5 @@ void dcn30_prepare_bandwidth(struct dc *dc,
+ 			dc->clk_mgr->funcs->set_max_memclk(dc->clk_mgr, dc->clk_mgr->bw_params->clk_table.entries[dc->clk_mgr->bw_params->clk_table.num_entries - 1].memclk_mhz);
  
-+#ifdef __cplusplus
-+/* forward-declaring enums in C++ isn't compatible with pure C enums, so
-+ * instead define bpf_enable_stats() as accepting int as an input
-+ */
-+LIBBPF_API int bpf_enable_stats(int type);
-+#else
- enum bpf_stats_type; /* defined in up-to-date linux/bpf.h */
- LIBBPF_API int bpf_enable_stats(enum bpf_stats_type type);
-+#endif
+ 	dcn20_prepare_bandwidth(dc, context);
+-
+-	dc_dmub_srv_p_state_delegate(dc,
+-		context->bw_ctx.bw.dcn.clk.fw_based_mclk_switching, context);
+ }
  
- struct bpf_prog_bind_opts {
- 	size_t sz; /* size of this struct for forward/backward compatibility */
 -- 
 2.35.1
 
