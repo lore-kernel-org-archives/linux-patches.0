@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1868E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92904C433EF;
-	Wed, 28 Dec 2022 15:39:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C37061863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46547C433D2;
+	Wed, 28 Dec 2022 15:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241979;
-	bh=WDK+wlZh5yvlGL7avl8hWdqP7Kjtv9sRLBNWiO5fNVk=;
+	s=korg; t=1672241982;
+	bh=7OqLrE8VqfaKw/7UH8Ppl+h4W6SzmKut1joDfri5VkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wJH2Fy1r7ePaIPvipAYsQXmEtU6Z8JZ0bJI8BUfv+o4MgC5zLV2PazvURoW3j3uDk
-	 Jy909HXIsz3pEKGaS2uF1/Hb2qzURnDuF6MQOwUCwzisFUp+uWyn3G+VcyZQbvS+hm
-	 yB8RJXqb1fxfoTjFvcBcPyrnj5T06Ao/Eoo9Xkdc=
+	b=XTl2i3rb55DPRvY8eRX6YmbxhBqVybHQ8ieQI6nRrEXbzfp2qxM2d/24z+oqRGnTA
+	 3mz3Kf1oC3My2DVN+IfhcRdVhXlnH/1YTP5tUZq83W3p5zbnWEmIMbirCxU7wFlSkg
+	 DGVcFqQ5hftKuY3EKrjvfEDXlHx6K8LlUsO4hrqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Yassine Oudjana <y.oudjana@protonmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 549/731] iommu/amd: Fix pci device refcount leak in ppr_notifier()
-Date: Wed, 28 Dec 2022 15:40:56 +0100
-Message-Id: <20221228144312.454859250@linuxfoundation.org>
+Subject: [PATCH 6.1 0312/1146] regmap-irq: Use the new num_config_regs property in regmap_add_irq_chip_fwnode
+Date: Wed, 28 Dec 2022 15:30:51 +0100
+Message-Id: <20221228144338.628579880@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,37 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Yassine Oudjana <y.oudjana@protonmail.com>
 
-[ Upstream commit 6cf0981c2233f97d56938d9d61845383d6eb227c ]
+[ Upstream commit 84498d1fb35de6ab71bdfdb6270a464fb4a0951b ]
 
-As comment of pci_get_domain_bus_and_slot() says, it returns
-a pci device with refcount increment, when finish using it,
-the caller must decrement the reference count by calling
-pci_dev_put(). So call it before returning from ppr_notifier()
-to avoid refcount leak.
+Commit faa87ce9196d ("regmap-irq: Introduce config registers for irq
+types") added the num_config_regs, then commit 9edd4f5aee84 ("regmap-irq:
+Deprecate type registers and virtual registers") suggested to replace
+num_type_reg with it. However, regmap_add_irq_chip_fwnode wasn't modified
+to use the new property. Later on, commit 255a03bb1bb3 ("ASoC: wcd9335:
+Convert irq chip to config regs") removed the old num_type_reg property
+from the WCD9335 driver's struct regmap_irq_chip, causing a null pointer
+dereference in regmap_irq_set_type when it tried to index d->type_buf as
+it was never allocated in regmap_add_irq_chip_fwnode:
 
-Fixes: daae2d25a477 ("iommu/amd: Don't copy GCR3 table root pointer")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221118093604.216371-1-yangyingliang@huawei.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+[   39.199374] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
+
+[   39.200006] Call trace:
+[   39.200014]  regmap_irq_set_type+0x84/0x1c0
+[   39.200026]  __irq_set_trigger+0x60/0x1c0
+[   39.200040]  __setup_irq+0x2f4/0x78c
+[   39.200051]  request_threaded_irq+0xe8/0x1a0
+
+Use num_config_regs in regmap_add_irq_chip_fwnode instead of num_type_reg,
+and fall back to it if num_config_regs isn't defined to maintain backward
+compatibility.
+
+Fixes: faa87ce9196d ("regmap-irq: Introduce config registers for irq types")
+Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+Link: https://lore.kernel.org/r/20221107202114.823975-1-y.oudjana@protonmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/iommu_v2.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/base/regmap/regmap-irq.c | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/amd/iommu_v2.c b/drivers/iommu/amd/iommu_v2.c
-index a45c5536d250..c96cf9b21719 100644
---- a/drivers/iommu/amd/iommu_v2.c
-+++ b/drivers/iommu/amd/iommu_v2.c
-@@ -588,6 +588,7 @@ static int ppr_notifier(struct notifier_block *nb, unsigned long e, void *data)
- 	put_device_state(dev_state);
+diff --git a/drivers/base/regmap/regmap-irq.c b/drivers/base/regmap/regmap-irq.c
+index 4ef9488d05cd..3de89795f584 100644
+--- a/drivers/base/regmap/regmap-irq.c
++++ b/drivers/base/regmap/regmap-irq.c
+@@ -722,6 +722,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 	int i;
+ 	int ret = -ENOMEM;
+ 	int num_type_reg;
++	int num_regs;
+ 	u32 reg;
  
- out:
-+	pci_dev_put(pdev);
- 	return ret;
- }
+ 	if (chip->num_regs <= 0)
+@@ -796,14 +797,20 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
+ 			goto err_alloc;
+ 	}
  
+-	num_type_reg = chip->type_in_mask ? chip->num_regs : chip->num_type_reg;
+-	if (num_type_reg) {
+-		d->type_buf_def = kcalloc(num_type_reg,
++	/*
++	 * Use num_config_regs if defined, otherwise fall back to num_type_reg
++	 * to maintain backward compatibility.
++	 */
++	num_type_reg = chip->num_config_regs ? chip->num_config_regs
++			: chip->num_type_reg;
++	num_regs = chip->type_in_mask ? chip->num_regs : num_type_reg;
++	if (num_regs) {
++		d->type_buf_def = kcalloc(num_regs,
+ 					  sizeof(*d->type_buf_def), GFP_KERNEL);
+ 		if (!d->type_buf_def)
+ 			goto err_alloc;
+ 
+-		d->type_buf = kcalloc(num_type_reg, sizeof(*d->type_buf),
++		d->type_buf = kcalloc(num_regs, sizeof(*d->type_buf),
+ 				      GFP_KERNEL);
+ 		if (!d->type_buf)
+ 			goto err_alloc;
 -- 
 2.35.1
 
