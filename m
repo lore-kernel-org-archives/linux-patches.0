@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A175D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B03C433D2;
-	Wed, 28 Dec 2022 15:10:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0798D1868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B59C433D2;
+	Wed, 28 Dec 2022 15:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240229;
-	bh=fvZFWVyORokyld+Tbq4AN6GoVcBPXYffrLMyHFnmco4=;
+	s=korg; t=1672240234;
+	bh=A9bCHidDYJ9dO+hTztqviWUQ2PTx5m/etu9yPXWbbXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cw7taDvsNgTaLzKiqKnYkKNHHOwvCn/nnUQ9LZsTB4dPjT2/yoOz4fSxGRz+9qtwj
-	 ExbY1ZZ5xU57PT9Hj90DPpdQS4UYnIIHs1PFQX3NHg9jQRaMArBS3OdyTFCzyWQUqe
-	 2BrK7p45wbOxcitnL9AncuVmwv2w5TzjDzR0Wp4c=
+	b=sCB6WBlz7iiZMCyHiDtD2qcp9B5rlH+deO20wPn1s9Cm7x9RmeKRrH8q1UPDWfmSA
+	 8ffgMM9PpwWQdfa+GOz4IZoaVr14YPn9EwH5ySYzV96t7upQrws1YSFcmrNbUbJ8EG
+	 3PI36IBlnMYKGoOjSM4cJntwR26RMNE9yiFGnv/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Geffon <bgeffon@google.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Kees Cook <keescook@chromium.org>,
+	Yuan Can <yuancan@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0098/1146] pstore: Avoid kcore oops by vmap()ing with VM_IOREMAP
-Date: Wed, 28 Dec 2022 15:27:17 +0100
-Message-Id: <20221228144332.806137582@linuxfoundation.org>
+Subject: [PATCH 5.15 326/731] drivers: net: qlcnic: Fix potential memory leak in qlcnic_sriov_init()
+Date: Wed, 28 Dec 2022 15:37:13 +0100
+Message-Id: <20221228144306.022538544@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,101 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephen Boyd <swboyd@chromium.org>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit e6b842741b4f39007215fd7e545cb55aa3d358a2 ]
+[ Upstream commit 01de1123322e4fe1bbd0fcdf0982511b55519c03 ]
 
-An oops can be induced by running 'cat /proc/kcore > /dev/null' on
-devices using pstore with the ram backend because kmap_atomic() assumes
-lowmem pages are accessible with __va().
+If vp alloc failed in qlcnic_sriov_init(), all previously allocated vp
+needs to be freed.
 
- Unable to handle kernel paging request at virtual address ffffff807ff2b000
- Mem abort info:
- ESR = 0x96000006
- EC = 0x25: DABT (current EL), IL = 32 bits
- SET = 0, FnV = 0
- EA = 0, S1PTW = 0
- FSC = 0x06: level 2 translation fault
- Data abort info:
- ISV = 0, ISS = 0x00000006
- CM = 0, WnR = 0
- swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000081d87000
- [ffffff807ff2b000] pgd=180000017fe18003, p4d=180000017fe18003, pud=180000017fe18003, pmd=0000000000000000
- Internal error: Oops: 96000006 [#1] PREEMPT SMP
- Modules linked in: dm_integrity
- CPU: 7 PID: 21179 Comm: perf Not tainted 5.15.67-10882-ge4eb2eb988cd #1 baa443fb8e8477896a370b31a821eb2009f9bfba
- Hardware name: Google Lazor (rev3 - 8) (DT)
- pstate: a0400009 (NzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : __memcpy+0x110/0x260
- lr : vread+0x194/0x294
- sp : ffffffc013ee39d0
- x29: ffffffc013ee39f0 x28: 0000000000001000 x27: ffffff807ff2b000
- x26: 0000000000001000 x25: ffffffc0085a2000 x24: ffffff802d4b3000
- x23: ffffff80f8a60000 x22: ffffff802d4b3000 x21: ffffffc0085a2000
- x20: ffffff8080b7bc68 x19: 0000000000001000 x18: 0000000000000000
- x17: 0000000000000000 x16: 0000000000000000 x15: ffffffd3073f2e60
- x14: ffffffffad588000 x13: 0000000000000000 x12: 0000000000000001
- x11: 00000000000001a2 x10: 00680000fff2bf0b x9 : 03fffffff807ff2b
- x8 : 0000000000000001 x7 : 0000000000000000 x6 : 0000000000000000
- x5 : ffffff802d4b4000 x4 : ffffff807ff2c000 x3 : ffffffc013ee3a78
- x2 : 0000000000001000 x1 : ffffff807ff2b000 x0 : ffffff802d4b3000
- Call trace:
- __memcpy+0x110/0x260
- read_kcore+0x584/0x778
- proc_reg_read+0xb4/0xe4
-
-During early boot, memblock reserves the pages for the ramoops reserved
-memory node in DT that would otherwise be part of the direct lowmem
-mapping. Pstore's ram backend reuses those reserved pages to change the
-memory type (writeback or non-cached) by passing the pages to vmap()
-(see pfn_to_page() usage in persistent_ram_vmap() for more details) with
-specific flags. When read_kcore() starts iterating over the vmalloc
-region, it runs over the virtual address that vmap() returned for
-ramoops. In aligned_vread() the virtual address is passed to
-vmalloc_to_page() which returns the page struct for the reserved lowmem
-area. That lowmem page is passed to kmap_atomic(), which effectively
-calls page_to_virt() that assumes a lowmem page struct must be directly
-accessible with __va() and friends. These pages are mapped via vmap()
-though, and the lowmem mapping was never made, so accessing them via the
-lowmem virtual address oopses like above.
-
-Let's side-step this problem by passing VM_IOREMAP to vmap(). This will
-tell vread() to not include the ramoops region in the kcore. Instead the
-area will look like a bunch of zeros. The alternative is to teach kmap()
-about vmalloc areas that intersect with lowmem. Presumably such a change
-isn't a one-liner, and there isn't much interest in inspecting the
-ramoops region in kcore files anyway, so the most expedient route is
-taken for now.
-
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Fixes: 404a6043385d ("staging: android: persistent_ram: handle reserving and mapping memory")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221205233136.3420802-1-swboyd@chromium.org
+Fixes: f197a7aa6288 ("qlcnic: VF-PF communication channel implementation")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram_core.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
-index a89e33719fcf..8bf09886e7e6 100644
---- a/fs/pstore/ram_core.c
-+++ b/fs/pstore/ram_core.c
-@@ -439,7 +439,11 @@ static void *persistent_ram_vmap(phys_addr_t start, size_t size,
- 		phys_addr_t addr = page_start + i * PAGE_SIZE;
- 		pages[i] = pfn_to_page(addr >> PAGE_SHIFT);
- 	}
--	vaddr = vmap(pages, page_count, VM_MAP, prot);
-+	/*
-+	 * VM_IOREMAP used here to bypass this region during vread()
-+	 * and kmap_atomic() (i.e. kcore) to avoid __va() failures.
-+	 */
-+	vaddr = vmap(pages, page_count, VM_MAP | VM_IOREMAP, prot);
- 	kfree(pages);
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
+index 42a44c97572a..df9b84f6600f 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
+@@ -221,6 +221,8 @@ int qlcnic_sriov_init(struct qlcnic_adapter *adapter, int num_vfs)
+ 	return 0;
  
- 	/*
+ qlcnic_destroy_async_wq:
++	while (i--)
++		kfree(sriov->vf_info[i].vp);
+ 	destroy_workqueue(bc->bc_async_wq);
+ 
+ qlcnic_destroy_trans_wq:
 -- 
 2.35.1
 
