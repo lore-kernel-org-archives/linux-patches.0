@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 649981863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE8E5C433EF;
-	Wed, 28 Dec 2022 15:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 242A31863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B350C433D2;
+	Wed, 28 Dec 2022 15:13:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240388;
-	bh=udMDw423tMPoLJhSl+vO+UtqlbZFbxkuHR+1iAEP2tM=;
+	s=korg; t=1672240391;
+	bh=Q/rRuMYWOK/w/tLWxb9Ie3tw9DniL0DJikkmVHz0wYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DaUcrifuHWgWjlwriy9+LnO+oF9MSWzwhnUBvx+reTME/zc0ds6s1//XUhSzsS5ID
-	 kVC5pDm2Y4sgpdIpz4bSA9sqjDQ/qS7ATupPUiNhXYop27c+6uw2rGUgviLB1GapeW
-	 HRQSnAj3gJfZCBL6k9/8ZPyMFd17OhPiwzPiWTWg=
+	b=ns7vEsfXFVZtbwWmM4MYb2/FuvULjknEWlaNL5cQSMdOp/310KWiqxXEYUG9UAR8l
+	 vdzHH5Mefl0bEuBfDcwL++v6u+Pd2FyE7R/PJqatSRxzUMxN1NtPBsB4IBWUpnoIgQ
+	 VDqHqHy2Zp4faUW2GH+a+YuSyKmZqlNS7EqpEwAU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Lee <haolee.swjtu@gmail.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Suren Baghdasaryan <surenb@google.com>,
+	Eric Pilmore <epilmore@gigaio.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0116/1146] sched/psi: Fix possible missing or delayed pending event
-Date: Wed, 28 Dec 2022 15:27:35 +0100
-Message-Id: <20221228144333.308334203@linuxfoundation.org>
+Subject: [PATCH 5.15 344/731] ntb_netdev: Use dev_kfree_skb_any() in interrupt context
+Date: Wed, 28 Dec 2022 15:37:31 +0100
+Message-Id: <20221228144306.537442100@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,47 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hao Lee <haolee.swjtu@gmail.com>
+From: Eric Pilmore <epilmore@gigaio.com>
 
-[ Upstream commit e38f89af6a13e895805febd3a329a13ab7e66fa4 ]
+[ Upstream commit 5f7d78b2b12a9d561f48fa00bab29b40f4616dad ]
 
-When a pending event exists and growth is less than the threshold, the
-current logic is to skip this trigger without generating event. However,
-from e6df4ead85d9 ("psi: fix possible trigger missing in the window"),
-our purpose is to generate event as long as pending event exists and the
-rate meets the limit, no matter what growth is.
-This patch handles this case properly.
+TX/RX callback handlers (ntb_netdev_tx_handler(),
+ntb_netdev_rx_handler()) can be called in interrupt
+context via the DMA framework when the respective
+DMA operations have completed. As such, any calls
+by these routines to free skb's, should use the
+interrupt context safe dev_kfree_skb_any() function.
 
-Fixes: e6df4ead85d9 ("psi: fix possible trigger missing in the window")
-Signed-off-by: Hao Lee <haolee.swjtu@gmail.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Suren Baghdasaryan <surenb@google.com>
-Link: https://lore.kernel.org/r/20220919072356.GA29069@haolee.io
+Previously, these callback handlers would call the
+interrupt unsafe version of dev_kfree_skb(). This has
+not presented an issue on Intel IOAT DMA engines as
+that driver utilizes tasklets rather than a hard
+interrupt handler, like the AMD PTDMA DMA driver.
+On AMD systems, a kernel WARNING message is
+encountered, which is being issued from
+skb_release_head_state() due to in_hardirq()
+being true.
+
+Besides the user visible WARNING from the kernel,
+the other symptom of this bug was that TCP/IP performance
+across the ntb_netdev interface was very poor, i.e.
+approximately an order of magnitude below what was
+expected. With the repair to use dev_kfree_skb_any(),
+kernel WARNINGs from skb_release_head_state() ceased
+and TCP/IP performance, as measured by iperf, was on
+par with expected results, approximately 20 Gb/s on
+AMD Milan based server. Note that this performance
+is comparable with Intel based servers.
+
+Fixes: 765ccc7bc3d91 ("ntb_netdev: correct skb leak")
+Fixes: 548c237c0a997 ("net: Add support for NTB virtual ethernet device")
+Signed-off-by: Eric Pilmore <epilmore@gigaio.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/20221209000659.8318-1-epilmore@gigaio.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/psi.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/ntb_netdev.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/sched/psi.c b/kernel/sched/psi.c
-index ee2ecc081422..7f40d87e8f50 100644
---- a/kernel/sched/psi.c
-+++ b/kernel/sched/psi.c
-@@ -539,10 +539,12 @@ static u64 update_triggers(struct psi_group *group, u64 now)
+diff --git a/drivers/net/ntb_netdev.c b/drivers/net/ntb_netdev.c
+index 1b7d588ff3c5..b701ee83e64a 100644
+--- a/drivers/net/ntb_netdev.c
++++ b/drivers/net/ntb_netdev.c
+@@ -137,7 +137,7 @@ static void ntb_netdev_rx_handler(struct ntb_transport_qp *qp, void *qp_data,
+ enqueue_again:
+ 	rc = ntb_transport_rx_enqueue(qp, skb, skb->data, ndev->mtu + ETH_HLEN);
+ 	if (rc) {
+-		dev_kfree_skb(skb);
++		dev_kfree_skb_any(skb);
+ 		ndev->stats.rx_errors++;
+ 		ndev->stats.rx_fifo_errors++;
+ 	}
+@@ -192,7 +192,7 @@ static void ntb_netdev_tx_handler(struct ntb_transport_qp *qp, void *qp_data,
+ 		ndev->stats.tx_aborted_errors++;
+ 	}
  
- 			/* Calculate growth since last update */
- 			growth = window_update(&t->win, now, total[t->state]);
--			if (growth < t->threshold)
--				continue;
-+			if (!t->pending_event) {
-+				if (growth < t->threshold)
-+					continue;
+-	dev_kfree_skb(skb);
++	dev_kfree_skb_any(skb);
  
--			t->pending_event = true;
-+				t->pending_event = true;
-+			}
- 		}
- 		/* Limit event signaling to once per window */
- 		if (now < t->last_event_time + t->win.size)
+ 	if (ntb_transport_tx_free_entry(dev->qp) >= tx_start) {
+ 		/* Make sure anybody stopping the queue after this sees the new
 -- 
 2.35.1
 
