@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124291863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89553C433D2;
-	Wed, 28 Dec 2022 15:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDD791863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6354EC433F0;
+	Wed, 28 Dec 2022 15:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239642;
-	bh=LN62Qwap7FxUixeVq+R4s4nnFyLMUv94FDJ3IEkQxr0=;
+	s=korg; t=1672239645;
+	bh=avd4fX7l7hX5HTf4cz35HVWK9yS+No8I6+h2r+Fp7Os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vMSUjfsWRF6oCL0GXnAfAl4s0og/EuYUEQa/IYZcZ5Usua9r2CFCbGUWNa2QRHKwU
-	 11AmqxUvJBDlbroFOaixokbPVgnyjVPJLKXHargcsSG1lJ0CZhLJl25EVYbfKr+ZdG
-	 Opdp9olN9OpiSL+Nj2R/p1sgs3E2lPI3yP5tdQ3s=
+	b=f4MycWOoxSh20d4Ahilvxz8LxMXiDyshD+L720P1BRfI07FKrMx6qSzDt9pVPtnvj
+	 jQreyAyuJAWEejfknVue/INAwADg+oZ9bSBpMWe4d8EvoMxFEszoaMgY7DOhw9l4qc
+	 /erUpvBjo4SvtzcJoyzGjVUVrcuvTkmoaEJFFnp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-	Joel Stanley <joel@jms.id.au>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0059/1073] ARM: dts: nuvoton: Remove bogus unit addresses from fixed-partition nodes
-Date: Wed, 28 Dec 2022 15:27:27 +0100
-Message-Id: <20221228144329.702808374@linuxfoundation.org>
+Subject: [PATCH 5.15 253/731] ASoC: mediatek: mt8173: Enable IRQ when pdata is ready
+Date: Wed, 28 Dec 2022 15:36:00 +0100
+Message-Id: <20221228144303.896194800@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,140 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit ea3ce4cf076ba11bb591c8013c5315136cae52c8 ]
+[ Upstream commit 4cbb264d4e9136acab2c8fd39e39ab1b1402b84b ]
 
-The unit addresses do not correspond to the nodes' reg properties,
-because they don't have any.
+If the device does not come straight from reset, we might receive an IRQ
+before we are ready to handle it.
 
-Fixes: e42b650f828d ("ARM: dts: nuvoton: Add new device nodes to NPCM750 EVB")
-Fixes: ee33e2fb3d70 ("ARM: dts: nuvoton: Add Quanta GBS BMC Device Tree")
-Fixes: 59f5abe09f0a ("ARM: dts: nuvoton: Add Quanta GSJ BMC")
-Fixes: 14579c76f5ca ("ARM: dts: nuvoton: Add Fii Kudo system")
-Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
-Reviewed-by: Joel Stanley <joel@jms.id.au>
-Link: https://lore.kernel.org/r/20221031221553.163273-1-j.neuschaefer@gmx.net
-Signed-off-by: Joel Stanley <joel@jms.id.au>
+Fixes:
+
+[    2.334737] Unable to handle kernel read from unreadable memory at virtual address 00000000000001e4
+[    2.522601] Call trace:
+[    2.525040]  regmap_read+0x1c/0x80
+[    2.528434]  mt8173_afe_irq_handler+0x40/0xf0
+...
+[    2.598921]  start_kernel+0x338/0x42c
+
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Fixes: ee0bcaff109f ("ASoC: mediatek: Add AFE platform driver")
+Link: https://lore.kernel.org/r/20221128-mt8173-afe-v1-0-70728221628f@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/nuvoton-npcm730-gbs.dts            | 2 +-
- arch/arm/boot/dts/nuvoton-npcm730-gsj.dts            | 2 +-
- arch/arm/boot/dts/nuvoton-npcm730-kudo.dts           | 6 +++---
- arch/arm/boot/dts/nuvoton-npcm750-evb.dts            | 4 ++--
- arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts | 6 +++---
- 5 files changed, 10 insertions(+), 10 deletions(-)
+ sound/soc/mediatek/mt8173/mt8173-afe-pcm.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts b/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
-index d10669fcd527..9e9eba8bad5e 100644
---- a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
-@@ -366,7 +366,7 @@ flash@0 {
- 		spi-max-frequency = <20000000>;
- 		spi-rx-bus-width = <2>;
- 		label = "bmc";
--		partitions@80000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-diff --git a/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts b/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
-index 491606c4f044..2a394cc15284 100644
---- a/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
-@@ -142,7 +142,7 @@ flash@0 {
- 		reg = <0>;
- 		spi-rx-bus-width = <2>;
+diff --git a/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c b/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
+index 31494930433f..8092506facbd 100644
+--- a/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
++++ b/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
+@@ -1072,16 +1072,6 @@ static int mt8173_afe_pcm_dev_probe(struct platform_device *pdev)
  
--		partitions@80000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-diff --git a/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
-index a0c2d7652625..f7b38bee039b 100644
---- a/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
-@@ -388,7 +388,7 @@ flash@0 {
- 		spi-max-frequency = <5000000>;
- 		spi-rx-bus-width = <2>;
- 		label = "bmc";
--		partitions@80000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-@@ -422,7 +422,7 @@ flash@1 {
- 		reg = <1>;
- 		spi-max-frequency = <5000000>;
- 		spi-rx-bus-width = <2>;
--		partitions@88000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-@@ -447,7 +447,7 @@ flash@0 {
- 		reg = <0>;
- 		spi-max-frequency = <5000000>;
- 		spi-rx-bus-width = <2>;
--		partitions@A0000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-index 3dad32834e5e..f53d45fa1de8 100644
---- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
-@@ -74,7 +74,7 @@ flash@0 {
- 		spi-rx-bus-width = <2>;
- 		reg = <0>;
- 		spi-max-frequency = <5000000>;
--		partitions@80000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-@@ -135,7 +135,7 @@ flash@0 {
- 		spi-rx-bus-width = <2>;
- 		reg = <0>;
- 		spi-max-frequency = <5000000>;
--		partitions@A0000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-diff --git a/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts b/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
-index 132e702281fc..87359ab05db3 100644
---- a/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
-+++ b/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
-@@ -107,7 +107,7 @@ flash@0 {
- 		reg = <0>;
- 		spi-rx-bus-width = <2>;
+ 	afe->dev = &pdev->dev;
  
--		partitions@80000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-@@ -146,7 +146,7 @@ flash@1 {
- 		reg = <1>;
- 		npcm,fiu-rx-bus-width = <2>;
+-	irq_id = platform_get_irq(pdev, 0);
+-	if (irq_id <= 0)
+-		return irq_id < 0 ? irq_id : -ENXIO;
+-	ret = devm_request_irq(afe->dev, irq_id, mt8173_afe_irq_handler,
+-			       0, "Afe_ISR_Handle", (void *)afe);
+-	if (ret) {
+-		dev_err(afe->dev, "could not request_irq\n");
+-		return ret;
+-	}
+-
+ 	afe->base_addr = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(afe->base_addr))
+ 		return PTR_ERR(afe->base_addr);
+@@ -1187,6 +1177,16 @@ static int mt8173_afe_pcm_dev_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_cleanup_components;
  
--		partitions@88000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-@@ -173,7 +173,7 @@ flash@0 {
- 		reg = <0>;
- 		spi-rx-bus-width = <2>;
++	irq_id = platform_get_irq(pdev, 0);
++	if (irq_id <= 0)
++		return irq_id < 0 ? irq_id : -ENXIO;
++	ret = devm_request_irq(afe->dev, irq_id, mt8173_afe_irq_handler,
++			       0, "Afe_ISR_Handle", (void *)afe);
++	if (ret) {
++		dev_err(afe->dev, "could not request_irq\n");
++		goto err_pm_disable;
++	}
++
+ 	dev_info(&pdev->dev, "MT8173 AFE driver initialized.\n");
+ 	return 0;
  
--		partitions@A0000000 {
-+		partitions {
- 			compatible = "fixed-partitions";
- 			#address-cells = <1>;
- 			#size-cells = <1>;
 -- 
 2.35.1
 
