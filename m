@@ -1,29 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2AE1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:50:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46846C433D2;
-	Wed, 28 Dec 2022 16:50:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FBF1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:50:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82131C433EF;
+	Wed, 28 Dec 2022 16:50:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246208;
-	bh=7VuaGYkV0nDTDJVIDF2az2eEPos1FRhz67/jOmyknqg=;
+	s=korg; t=1672246211;
+	bh=nUSiROIuywcjFmshTbQQuHbfp+Kk9J/uXgecjOrgqXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sfoyxCdgBEaIU6QJA083RIOM8S4J9HIT9YY5KbnbEV1GaA1zMs8ZjpR3PJIsULIMS
-	 6L57g4M5veNXdUiCsi7UcXC3evxG2YXcZN96WatH8Az0jkwG/YfGrD3qksjXlW885u
-	 g6Gdgn4sxs9dn3czBzqHVPzYC++6TsCuNzXudwFo=
+	b=haB4fgICIv4nIId+fDbtmXRrEqEK8W7kB7rTR3C5t/O3RN014ClIcilOpgaCzKGNm
+	 hDuN/zeUrRIoa0J/XtnFf3MXwJJ4xb06q0+NPEsGHwl5ypAGR7iVeeVasqsnJ4AiYs
+	 pYWYPgvMowfm7NBBIA2Z5ru7Dj+1pyVKknCGHIs8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
-	Bastien Nocera <hadess@hadess.net>
-Subject: [PATCH 6.0 1031/1073] HID: logitech-hidpp: Guard FF init code against non-USB devices
-Date: Wed, 28 Dec 2022 15:43:39 +0100
-Message-Id: <20221228144356.196545215@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Sandy Huang <hjc@rock-chips.com>,
+	=?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
+	linux-arm-kernel@lists.infradead.org,
+	linux-rockchip@lists.infradead.org,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1003/1146] drm/rockchip: Use drm_mode_copy()
+Date: Wed, 28 Dec 2022 15:42:22 +0100
+Message-Id: <20221228144357.613090753@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,55 +39,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bastien Nocera <hadess@hadess.net>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 0e13e7b448005612972eae36c0f698c21d1e2f8a upstream.
+[ Upstream commit 2bfaa28000d2830d3209161a4541cce0660e1b84 ]
 
-The Force Feedback code assumes that all the devices passed to it will
-be USB devices, but that might not be the case for emulated devices.
-Guard against a crash by checking the device type before poking at USB
-properties.
+struct drm_display_mode embeds a list head, so overwriting
+the full struct with another one will corrupt the list
+(if the destination mode is on a list). Use drm_mode_copy()
+instead which explicitly preserves the list head of
+the destination mode.
 
-Cc: stable@vger.kernel.org # v5.16+
-Reported-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Signed-off-by: Bastien Nocera <hadess@hadess.net>
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Link: https://lore.kernel.org/r/20221215154416.111704-1-hadess@hadess.net
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Even if we know the destination mode is not on any list
+using drm_mode_copy() seems decent as it sets a good
+example. Bad examples of not using it might eventually
+get copied into code where preserving the list head
+actually matters.
+
+Obviously one case not covered here is when the mode
+itself is embedded in a larger structure and the whole
+structure is copied. But if we are careful when copying
+into modes embedded in structures I think we can be a
+little more reassured that bogus list heads haven't been
+propagated in.
+
+@is_mode_copy@
+@@
+drm_mode_copy(...)
+{
+...
+}
+
+@depends on !is_mode_copy@
+struct drm_display_mode *mode;
+expression E, S;
+@@
+(
+- *mode = E
++ drm_mode_copy(mode, &E)
+|
+- memcpy(mode, E, S)
++ drm_mode_copy(mode, E)
+)
+
+@depends on !is_mode_copy@
+struct drm_display_mode mode;
+expression E;
+@@
+(
+- mode = E
++ drm_mode_copy(&mode, &E)
+|
+- memcpy(&mode, E, S)
++ drm_mode_copy(&mode, E)
+)
+
+@@
+struct drm_display_mode *mode;
+@@
+- &*mode
++ mode
+
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Sandy Huang <hjc@rock-chips.com>
+Cc: "Heiko Stübner" <heiko@sntech.de>
+Cc: linux-arm-kernel@lists.infradead.org
+Cc: linux-rockchip@lists.infradead.org
+Link: https://patchwork.freedesktop.org/patch/msgid/20221107192545.9896-7-ville.syrjala@linux.intel.com
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-logitech-hidpp.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/rockchip/cdn-dp-core.c | 2 +-
+ drivers/gpu/drm/rockchip/inno_hdmi.c   | 2 +-
+ drivers/gpu/drm/rockchip/rk3066_hdmi.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/hid/hid-logitech-hidpp.c
-+++ b/drivers/hid/hid-logitech-hidpp.c
-@@ -2545,12 +2545,17 @@ static int hidpp_ff_init(struct hidpp_de
- 	struct hid_device *hid = hidpp->hid_dev;
- 	struct hid_input *hidinput;
- 	struct input_dev *dev;
--	const struct usb_device_descriptor *udesc = &(hid_to_usb_dev(hid)->descriptor);
--	const u16 bcdDevice = le16_to_cpu(udesc->bcdDevice);
-+	struct usb_device_descriptor *udesc;
-+	u16 bcdDevice;
- 	struct ff_device *ff;
- 	int error, j, num_slots = data->num_effects;
- 	u8 version;
+diff --git a/drivers/gpu/drm/rockchip/cdn-dp-core.c b/drivers/gpu/drm/rockchip/cdn-dp-core.c
+index 518ee13b1d6f..8526dda91931 100644
+--- a/drivers/gpu/drm/rockchip/cdn-dp-core.c
++++ b/drivers/gpu/drm/rockchip/cdn-dp-core.c
+@@ -571,7 +571,7 @@ static void cdn_dp_encoder_mode_set(struct drm_encoder *encoder,
+ 	video->v_sync_polarity = !!(mode->flags & DRM_MODE_FLAG_NVSYNC);
+ 	video->h_sync_polarity = !!(mode->flags & DRM_MODE_FLAG_NHSYNC);
  
-+	if (!hid_is_usb(hid)) {
-+		hid_err(hid, "device is not USB\n");
-+		return -ENODEV;
-+	}
-+
- 	if (list_empty(&hid->inputs)) {
- 		hid_err(hid, "no inputs found\n");
- 		return -ENODEV;
-@@ -2564,6 +2569,8 @@ static int hidpp_ff_init(struct hidpp_de
- 	}
+-	memcpy(&dp->mode, adjusted, sizeof(*mode));
++	drm_mode_copy(&dp->mode, adjusted);
+ }
  
- 	/* Get firmware release */
-+	udesc = &(hid_to_usb_dev(hid)->descriptor);
-+	bcdDevice = le16_to_cpu(udesc->bcdDevice);
- 	version = bcdDevice & 255;
+ static bool cdn_dp_check_link_status(struct cdn_dp_device *dp)
+diff --git a/drivers/gpu/drm/rockchip/inno_hdmi.c b/drivers/gpu/drm/rockchip/inno_hdmi.c
+index 87b2243ea23e..f51774866f41 100644
+--- a/drivers/gpu/drm/rockchip/inno_hdmi.c
++++ b/drivers/gpu/drm/rockchip/inno_hdmi.c
+@@ -499,7 +499,7 @@ static void inno_hdmi_encoder_mode_set(struct drm_encoder *encoder,
+ 	inno_hdmi_setup(hdmi, adj_mode);
  
- 	/* Set supported force feedback capabilities */
+ 	/* Store the display mode for plugin/DPMS poweron events */
+-	memcpy(&hdmi->previous_mode, adj_mode, sizeof(hdmi->previous_mode));
++	drm_mode_copy(&hdmi->previous_mode, adj_mode);
+ }
+ 
+ static void inno_hdmi_encoder_enable(struct drm_encoder *encoder)
+diff --git a/drivers/gpu/drm/rockchip/rk3066_hdmi.c b/drivers/gpu/drm/rockchip/rk3066_hdmi.c
+index cf2cf51091a3..90145ad96984 100644
+--- a/drivers/gpu/drm/rockchip/rk3066_hdmi.c
++++ b/drivers/gpu/drm/rockchip/rk3066_hdmi.c
+@@ -395,7 +395,7 @@ rk3066_hdmi_encoder_mode_set(struct drm_encoder *encoder,
+ 	struct rk3066_hdmi *hdmi = encoder_to_rk3066_hdmi(encoder);
+ 
+ 	/* Store the display mode for plugin/DPMS poweron events. */
+-	memcpy(&hdmi->previous_mode, adj_mode, sizeof(hdmi->previous_mode));
++	drm_mode_copy(&hdmi->previous_mode, adj_mode);
+ }
+ 
+ static void rk3066_hdmi_encoder_enable(struct drm_encoder *encoder)
+-- 
+2.35.1
+
 
 
