@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E851863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:49:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3307C433EF;
-	Wed, 28 Dec 2022 15:49:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5411863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:49:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 947CDC433EF;
+	Wed, 28 Dec 2022 15:49:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242560;
-	bh=EG+e9gZtWBtSxd40PAuJyMF+fz0eBwH1KLEtrXDgJ8E=;
+	s=korg; t=1672242562;
+	bh=ssPWlDx4KT8OsUyHxJ8zJkILwGZmpHLVwGJDRafDgjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lf9CxZeBtKLzPo4CV1BQ3+J0W0X3cG/NMiqrD1XudxsOB0o89dsU9sVxsF0caQP3K
-	 I0t6RSQaFttodS9FPqyhpW3NYG9yiC36mx1gfMChP1LFSdcL7LOEjwImMoBz2Pzn7O
-	 DCDjPhO9irBThQcQN2TJximeO32fL1KmpBwwrqXE=
+	b=HBvm5dpdF2d2FqSlUqKBFLYBQkCwPccDnkGzHRUwGZt0szNlLFCjkTUgZ5MexCDrw
+	 UltJhIn4hyMahhTvgPvMBYIRzF6lbcNrrog3cKCIys3wWJAYQbbzn+sbjo9EN298WG
+	 XEJmr5ofo4U8ECLMLfG/qIkqKXDim1qE9M3+h5fQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Kees Cook <keescook@chromium.org>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 619/731] binfmt_misc: fix shift-out-of-bounds in check_special_flags
-Date: Wed, 28 Dec 2022 15:42:06 +0100
-Message-Id: <20221228144314.477038448@linuxfoundation.org>
+Subject: [PATCH 6.1 0388/1146] drbd: remove call to memset before free device/resource/connection
+Date: Wed, 28 Dec 2022 15:32:07 +0100
+Message-Id: <20221228144340.702938896@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,59 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Wang ShaoBo <bobo.shaobowang@huawei.com>
 
-[ Upstream commit 6a46bf558803dd2b959ca7435a5c143efe837217 ]
+[ Upstream commit 6e7b854e4c1b02dba00760dfa79d8dbf6cce561e ]
 
-UBSAN reported a shift-out-of-bounds warning:
+This revert c2258ffc56f2 ("drbd: poison free'd device, resource and
+connection structs"), add memset is odd here for debugging, there are
+some methods to accurately show what happened, such as kdump.
 
- left shift of 1 by 31 places cannot be represented in type 'int'
- Call Trace:
-  <TASK>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x8d/0xcf lib/dump_stack.c:106
-  ubsan_epilogue+0xa/0x44 lib/ubsan.c:151
-  __ubsan_handle_shift_out_of_bounds+0x1e7/0x208 lib/ubsan.c:322
-  check_special_flags fs/binfmt_misc.c:241 [inline]
-  create_entry fs/binfmt_misc.c:456 [inline]
-  bm_register_write+0x9d3/0xa20 fs/binfmt_misc.c:654
-  vfs_write+0x11e/0x580 fs/read_write.c:582
-  ksys_write+0xcf/0x120 fs/read_write.c:637
-  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-  do_syscall_64+0x34/0x80 arch/x86/entry/common.c:80
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
- RIP: 0033:0x4194e1
-
-Since the type of Node's flags is unsigned long, we should define these
-macros with same type too.
-
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221102025123.1117184-1-liushixin2@huawei.com
+Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Link: https://lore.kernel.org/r/20221124015817.2729789-2-bobo.shaobowang@huawei.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 8692814b77ca ("drbd: destroy workqueue when drbd device was freed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/binfmt_misc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/block/drbd/drbd_main.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/fs/binfmt_misc.c b/fs/binfmt_misc.c
-index e1eae7ea823a..bb202ad369d5 100644
---- a/fs/binfmt_misc.c
-+++ b/fs/binfmt_misc.c
-@@ -44,10 +44,10 @@ static LIST_HEAD(entries);
- static int enabled = 1;
+diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
+index 8532b839a343..78cae4e75af1 100644
+--- a/drivers/block/drbd/drbd_main.c
++++ b/drivers/block/drbd/drbd_main.c
+@@ -2217,7 +2217,6 @@ void drbd_destroy_device(struct kref *kref)
+ 		kref_put(&peer_device->connection->kref, drbd_destroy_connection);
+ 		kfree(peer_device);
+ 	}
+-	memset(device, 0xfd, sizeof(*device));
+ 	kfree(device);
+ 	kref_put(&resource->kref, drbd_destroy_resource);
+ }
+@@ -2309,7 +2308,6 @@ void drbd_destroy_resource(struct kref *kref)
+ 	idr_destroy(&resource->devices);
+ 	free_cpumask_var(resource->cpu_mask);
+ 	kfree(resource->name);
+-	memset(resource, 0xf2, sizeof(*resource));
+ 	kfree(resource);
+ }
  
- enum {Enabled, Magic};
--#define MISC_FMT_PRESERVE_ARGV0 (1 << 31)
--#define MISC_FMT_OPEN_BINARY (1 << 30)
--#define MISC_FMT_CREDENTIALS (1 << 29)
--#define MISC_FMT_OPEN_FILE (1 << 28)
-+#define MISC_FMT_PRESERVE_ARGV0 (1UL << 31)
-+#define MISC_FMT_OPEN_BINARY (1UL << 30)
-+#define MISC_FMT_CREDENTIALS (1UL << 29)
-+#define MISC_FMT_OPEN_FILE (1UL << 28)
- 
- typedef struct {
- 	struct list_head list;
+@@ -2650,7 +2648,6 @@ void drbd_destroy_connection(struct kref *kref)
+ 	drbd_free_socket(&connection->data);
+ 	kfree(connection->int_dig_in);
+ 	kfree(connection->int_dig_vv);
+-	memset(connection, 0xfc, sizeof(*connection));
+ 	kfree(connection);
+ 	kref_put(&resource->kref, drbd_destroy_resource);
+ }
 -- 
 2.35.1
 
