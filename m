@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C99331863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:42:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ECC7C433F0;
-	Wed, 28 Dec 2022 15:42:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AF801863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:42:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00F7C433EF;
+	Wed, 28 Dec 2022 15:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242156;
-	bh=0sw4uCSW7Htn5DR7826mBaweXPhwOsT9Xec91BfqeVI=;
+	s=korg; t=1672242159;
+	bh=ssPWlDx4KT8OsUyHxJ8zJkILwGZmpHLVwGJDRafDgjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CbpG18HoGPQsmBuDgOxP5R3EidY/czZyIQzKfsto6fzQzqGaQPcSYwfE87kuYjLEt
-	 QjbPPq/UktUvgIzCFm0qJCPXGSN7lJotArvpCkpNcFkEBpPakKLx4Q6/yMfXXOzRQw
-	 XaEyhBlGAwmJNyMtE9cNtenCZ1BoN3glWePg1dac=
+	b=F9Zk4fNlGlKLSWpLNBkELjwumtHxSIcLzorZjZhGfmGQDaFlZhukP53ixNsqibmEY
+	 SfkfFxnYM1OS1VRv4+aThiaowTnjKs3e6qguEHd6xKrranwyK0PClNI6c8FTpVsGVO
+	 f0WlWpEJly4d/On0LprRsqZlk/+GNbM3b/oFsohQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 569/731] remoteproc: qcom_q6v5_pas: detach power domains on remove
-Date: Wed, 28 Dec 2022 15:41:16 +0100
-Message-Id: <20221228144313.050282840@linuxfoundation.org>
+Subject: [PATCH 6.0 0374/1073] drbd: remove call to memset before free device/resource/connection
+Date: Wed, 28 Dec 2022 15:32:42 +0100
+Message-Id: <20221228144338.162481280@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,77 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Wang ShaoBo <bobo.shaobowang@huawei.com>
 
-[ Upstream commit 34d01df00b84127be04c914fc9f8e8be1fcdf851 ]
+[ Upstream commit 6e7b854e4c1b02dba00760dfa79d8dbf6cce561e ]
 
-We need to detach from the power domains also on remove, not just on
-probe fail so a subsequent probe works as expected.
+This revert c2258ffc56f2 ("drbd: poison free'd device, resource and
+connection structs"), add memset is odd here for debugging, there are
+some methods to accurately show what happened, such as kdump.
 
-Otherwise the following error appears on re-probe:
-
-[   29.452005] sysfs: cannot create duplicate filename '/devices/genpd:0:3000000.remoteproc'
-[   29.477121] CPU: 1 PID: 483 Comm: sh Tainted: G        W          6.1.0-rc4-00075-g71a113770bda #78
-[   29.510319] Hardware name: Fairphone 4 (DT)
-[   29.538335] Call trace:
-[   29.564470]  dump_backtrace.part.0+0xe0/0xf0
-[   29.592602]  show_stack+0x18/0x30
-[   29.619616]  dump_stack_lvl+0x64/0x80
-[   29.646834]  dump_stack+0x18/0x34
-[   29.673541]  sysfs_warn_dup+0x60/0x7c
-[   29.700592]  sysfs_create_dir_ns+0xec/0x110
-[   29.728057]  kobject_add_internal+0xb8/0x374
-[   29.755530]  kobject_add+0x9c/0x104
-[   29.782072]  device_add+0xbc/0x8a0
-[   29.808445]  device_register+0x20/0x30
-[   29.835175]  genpd_dev_pm_attach_by_id+0xa4/0x190
-[   29.862851]  genpd_dev_pm_attach_by_name+0x3c/0xb0
-[   29.890472]  dev_pm_domain_attach_by_name+0x20/0x30
-[   29.918212]  adsp_probe+0x278/0x580
-[   29.944384]  platform_probe+0x68/0xc0
-[   29.970603]  really_probe+0xbc/0x2dc
-[   29.996662]  __driver_probe_device+0x78/0xe0
-[   30.023491]  device_driver_attach+0x48/0xac
-[   30.050215]  bind_store+0xb8/0x114
-[   30.075957]  drv_attr_store+0x24/0x3c
-[   30.101874]  sysfs_kf_write+0x44/0x54
-[   30.127751]  kernfs_fop_write_iter+0x120/0x1f0
-[   30.154448]  vfs_write+0x1ac/0x380
-[   30.179937]  ksys_write+0x70/0x104
-[   30.205274]  __arm64_sys_write+0x1c/0x2c
-[   30.231060]  invoke_syscall+0x48/0x114
-[   30.256594]  el0_svc_common.constprop.0+0x44/0xec
-[   30.283183]  do_el0_svc+0x2c/0xd0
-[   30.308320]  el0_svc+0x2c/0x84
-[   30.333059]  el0t_64_sync_handler+0xf4/0x120
-[   30.359001]  el0t_64_sync+0x18c/0x190
-[   30.384385] kobject_add_internal failed for genpd:0:3000000.remoteproc with -EEXIST, don't try to register things with the same name in the same directory.
-[   30.406029] remoteproc remoteproc0: releasing 3000000.remoteproc
-[   30.416064] qcom_q6v5_pas: probe of 3000000.remoteproc failed with error -17
-
-Fixes: 17ee2fb4e856 ("remoteproc: qcom: pas: Vote for active/proxy power domains")
-Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221118090816.100012-2-luca.weiss@fairphone.com
+Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Link: https://lore.kernel.org/r/20221124015817.2729789-2-bobo.shaobowang@huawei.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 8692814b77ca ("drbd: destroy workqueue when drbd device was freed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_pas.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/block/drbd/drbd_main.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 533b48522326..8b82fd598dfa 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -514,6 +514,7 @@ static int adsp_remove(struct platform_device *pdev)
- 	qcom_remove_sysmon_subdev(adsp->sysmon);
- 	qcom_remove_smd_subdev(adsp->rproc, &adsp->smd_subdev);
- 	qcom_remove_ssr_subdev(adsp->rproc, &adsp->ssr_subdev);
-+	adsp_pds_detach(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
- 	device_init_wakeup(adsp->dev, false);
- 	rproc_free(adsp->rproc);
+diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
+index 8532b839a343..78cae4e75af1 100644
+--- a/drivers/block/drbd/drbd_main.c
++++ b/drivers/block/drbd/drbd_main.c
+@@ -2217,7 +2217,6 @@ void drbd_destroy_device(struct kref *kref)
+ 		kref_put(&peer_device->connection->kref, drbd_destroy_connection);
+ 		kfree(peer_device);
+ 	}
+-	memset(device, 0xfd, sizeof(*device));
+ 	kfree(device);
+ 	kref_put(&resource->kref, drbd_destroy_resource);
+ }
+@@ -2309,7 +2308,6 @@ void drbd_destroy_resource(struct kref *kref)
+ 	idr_destroy(&resource->devices);
+ 	free_cpumask_var(resource->cpu_mask);
+ 	kfree(resource->name);
+-	memset(resource, 0xf2, sizeof(*resource));
+ 	kfree(resource);
+ }
  
+@@ -2650,7 +2648,6 @@ void drbd_destroy_connection(struct kref *kref)
+ 	drbd_free_socket(&connection->data);
+ 	kfree(connection->int_dig_in);
+ 	kfree(connection->int_dig_vv);
+-	memset(connection, 0xfc, sizeof(*connection));
+ 	kfree(connection);
+ 	kref_put(&resource->kref, drbd_destroy_resource);
+ }
 -- 
 2.35.1
 
