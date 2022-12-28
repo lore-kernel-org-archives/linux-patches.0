@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88D171863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:51:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFC0C433EF;
-	Wed, 28 Dec 2022 14:51:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACB11863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:51:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A41AAC433D2;
+	Wed, 28 Dec 2022 14:51:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239077;
-	bh=1VRA98DtIypg+5pvhqP+KOO6DnS43DUQXm/uUmTP+Vc=;
+	s=korg; t=1672239080;
+	bh=EOT13qNqO9wNjfTQOfp6Vv92F/Wje6Iick9/VN0jVe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qcOKwG9aGEPZITtJyJmSZLz7R0X8nrLFOYCmvcXoDJe6X1DMkYZJ/S6epEDKfdpr/
-	 sgZ8BTxEwE+Un9VLxnNx9N+4rKK1VrCOe35812me275zqnyKHNotAzLX4vkxpsWshH
-	 /oh/6nlysHWyY8cy46NWsO+iJcIPurblLwQbGYWk=
+	b=gz8xUjRKedLYAZfH3lX5cxaU5uscSHb2Q8DZzKgUs3nOY6av+JWd++8FFbBLigwkJ
+	 CPY1sZNJsmeHf0TftOroyRv2Q79GSChSpzYfsZO9dFODUAPIbXxnljClMaJ2o4q1pG
+	 GQZdWP63OK+Gk3ZyY5opWRpX9FbD2LGDArt4uuK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Daniel Lezcano <daniel.lezcano@kernel.org>,
+	Li Zetao <lizetao1@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 120/731] clocksource/drivers/timer-ti-dm: Fix missing clk_disable_unprepare in dmtimer_systimer_init_clock()
-Date: Wed, 28 Dec 2022 15:33:47 +0100
-Message-Id: <20221228144300.031137175@linuxfoundation.org>
+Subject: [PATCH 5.15 121/731] ACPICA: Fix use-after-free in acpi_ut_copy_ipackage_to_ipackage()
+Date: Wed, 28 Dec 2022 15:33:48 +0100
+Message-Id: <20221228144300.060659413@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,40 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit 180d35a7c05d520314a590c99ad8643d0213f28b ]
+[ Upstream commit 470188b09e92d83c5a997f25f0e8fb8cd2bc3469 ]
 
-If clk_get_rate() fails which is called after clk_prepare_enable(),
-clk_disable_unprepare() need be called in error path to disable the
-clock in dmtimer_systimer_init_clock().
+There is an use-after-free reported by KASAN:
 
-Fixes: 52762fbd1c47 ("clocksource/drivers/timer-ti-dm: Add clockevent and clocksource support")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20221029114427.946520-1-yangyingliang@huawei.com
-Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
+  BUG: KASAN: use-after-free in acpi_ut_remove_reference+0x3b/0x82
+  Read of size 1 at addr ffff888112afc460 by task modprobe/2111
+  CPU: 0 PID: 2111 Comm: modprobe Not tainted 6.1.0-rc7-dirty
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+  Call Trace:
+   <TASK>
+   kasan_report+0xae/0xe0
+   acpi_ut_remove_reference+0x3b/0x82
+   acpi_ut_copy_iobject_to_iobject+0x3be/0x3d5
+   acpi_ds_store_object_to_local+0x15d/0x3a0
+   acpi_ex_store+0x78d/0x7fd
+   acpi_ex_opcode_1A_1T_1R+0xbe4/0xf9b
+   acpi_ps_parse_aml+0x217/0x8d5
+   ...
+   </TASK>
+
+The root cause of the problem is that the acpi_operand_object
+is freed when acpi_ut_walk_package_tree() fails in
+acpi_ut_copy_ipackage_to_ipackage(), lead to repeated release in
+acpi_ut_copy_iobject_to_iobject(). The problem was introduced
+by "8aa5e56eeb61" commit, this commit is to fix memory leak in
+acpi_ut_copy_iobject_to_iobject(), repeatedly adding remove
+operation, lead to "acpi_operand_object" used after free.
+
+Fix it by removing acpi_ut_remove_reference() in
+acpi_ut_copy_ipackage_to_ipackage(). acpi_ut_copy_ipackage_to_ipackage()
+is called to copy an internal package object into another internal
+package object, when it fails, the memory of acpi_operand_object
+should be freed by the caller.
+
+Fixes: 8aa5e56eeb61 ("ACPICA: Utilities: Fix memory leak in acpi_ut_copy_iobject_to_iobject")
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clocksource/timer-ti-dm-systimer.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/acpi/acpica/utcopy.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/drivers/clocksource/timer-ti-dm-systimer.c b/drivers/clocksource/timer-ti-dm-systimer.c
-index 2737407ff069..632523c1232f 100644
---- a/drivers/clocksource/timer-ti-dm-systimer.c
-+++ b/drivers/clocksource/timer-ti-dm-systimer.c
-@@ -345,8 +345,10 @@ static int __init dmtimer_systimer_init_clock(struct dmtimer_systimer *t,
- 		return error;
+diff --git a/drivers/acpi/acpica/utcopy.c b/drivers/acpi/acpica/utcopy.c
+index d9877153f400..fdd503bb69c4 100644
+--- a/drivers/acpi/acpica/utcopy.c
++++ b/drivers/acpi/acpica/utcopy.c
+@@ -916,13 +916,6 @@ acpi_ut_copy_ipackage_to_ipackage(union acpi_operand_object *source_obj,
+ 	status = acpi_ut_walk_package_tree(source_obj, dest_obj,
+ 					   acpi_ut_copy_ielement_to_ielement,
+ 					   walk_state);
+-	if (ACPI_FAILURE(status)) {
+-
+-		/* On failure, delete the destination package object */
+-
+-		acpi_ut_remove_reference(dest_obj);
+-	}
+-
+ 	return_ACPI_STATUS(status);
+ }
  
- 	r = clk_get_rate(clock);
--	if (!r)
-+	if (!r) {
-+		clk_disable_unprepare(clock);
- 		return -ENODEV;
-+	}
- 
- 	if (is_ick)
- 		t->ick = clock;
 -- 
 2.35.1
 
