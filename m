@@ -1,38 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675A21C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C7AC433EF;
-	Wed, 28 Dec 2022 16:23:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181C51C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF94C433D2;
+	Wed, 28 Dec 2022 16:23:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244617;
-	bh=uAQ25lT/y5CE0rqvxmfHtuHfoaWivQVoi0JYOmOjNUA=;
+	s=korg; t=1672244619;
+	bh=JgxFYTenMO74yrkIpVwBc94p+F9fD0CyR7c+sK9K6XY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F6cIKphrWMreknLrh2Mkm2WQRk6BEUvwn5lUq9YL6brlCBH/v9AmZB0kr4IcgOXcA
-	 Aky+E6zGisqxzA+mp0L6Qg66wA74n69e2Lb5tF2/pyTByfSfSVca6rdOaKEOPsEk6C
-	 z3Cg359RdeDxQomx4sy5hq1ecWpiTurnxnaZFYf4=
+	b=gPF35FSyuCGZkLxWKWyFjmrUWRV5WlsOPR8npJ4LeSBELulWcuyVF6dX2rPJsz8eR
+	 3EWkbeciUCmobbYswLmFQhP4lDwEmBfmsHw4zRwmNKwTu3Eem8Vtke+D5P/qSF2Vix
+	 BkllUCKnDtq7zf8ERpdfrcolZQ2z9jBe4d2AzHng=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@linaro.org>,
-	Ian Rogers <irogers@google.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	bpf@vger.kernel.org,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	"H. Nikolaus Schaller" <hns@goldelico.com>,
+	Sicelo Mhlongo <absicsz@gmail.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0742/1073] perf trace: Return error if a system call doesnt exist
-Date: Wed, 28 Dec 2022 15:38:50 +0100
-Message-Id: <20221228144348.177160426@linuxfoundation.org>
+Subject: [PATCH 6.1 0704/1146] usb: musb: omap2430: Fix probe regression for missing resources
+Date: Wed, 28 Dec 2022 15:37:23 +0100
+Message-Id: <20221228144349.268642447@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -43,53 +36,128 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leo Yan <leo.yan@linaro.org>
+From: Tony Lindgren <tony@atomide.com>
 
-[ Upstream commit d4223e1776c30b2ce8d0e6eaadcbf696e60fca3c ]
+[ Upstream commit ffbe2feac59b37c8dc536727552b4f375e1b9aec ]
 
-When a system call is not detected, the reason is either because the
-system call ID is out of scope or failure to find the corresponding path
-in the sysfs, trace__read_syscall_info() returns zero.  Finally, without
-returning an error value it introduces confusion for the caller.
+Probe for omap2430 glue layer is now broken for interrupt resources in
+all cases.
 
-This patch lets the function trace__read_syscall_info() to return
--EEXIST when a system call doesn't exist.
+Commit  239071064732 ("partially Revert "usb: musb: Set the DT node on the
+child device"") broke probing for SoCs using ti-sysc interconnect target
+module as the dt node is not found.
 
-Fixes: b8b1033fcaa091d8 ("perf trace: Mark syscall ids that are not allocated to avoid unnecessary error messages")
-Signed-off-by: Leo Yan <leo.yan@linaro.org>
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: bpf@vger.kernel.org
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20221121075237.127706-3-leo.yan@linaro.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Commit a1a2b7125e10 ("of/platform: Drop static setup of IRQ resource from
+DT core") caused omap3 to fail with error "-ENXIO: IRQ mc not found" as
+the IRQ resources are no longer automatically populated from devicetree.
+
+Let's fix the issues by calling device_set_of_node_from_dev() only if the
+SoC has been updated to probe with ti-sysc. And for legacy SoCs, let's
+populate the resources manually as needed.
+
+Note that once we have updated the SoCs to probe with proper devicetree
+data in all cases, this is no longer needed. But doing that requires
+patching both devicetree and SoC code, so let's fix the probe issues first.
+
+Fixes: a1a2b7125e10 ("of/platform: Drop static setup of IRQ resource from DT core")
+Fixes: 239071064732 ("partially Revert "usb: musb: Set the DT node on the child device"")
+Cc: H. Nikolaus Schaller <hns@goldelico.com>
+Reported-by: Sicelo Mhlongo <absicsz@gmail.com>
+Tested-by: Sicelo Mhlongo <absicsz@gmail.com>
+Signed-off-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20221118102532.34458-1-tony@atomide.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/musb/omap2430.c | 54 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 0bd9d01c0df9..cf3b6ca4af96 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -1794,11 +1794,11 @@ static int trace__read_syscall_info(struct trace *trace, int id)
- #endif
- 	sc = trace->syscalls.table + id;
- 	if (sc->nonexistent)
--		return 0;
-+		return -EEXIST;
+diff --git a/drivers/usb/musb/omap2430.c b/drivers/usb/musb/omap2430.c
+index f571a65ae6ee..476f55d1fec3 100644
+--- a/drivers/usb/musb/omap2430.c
++++ b/drivers/usb/musb/omap2430.c
+@@ -15,6 +15,7 @@
+ #include <linux/list.h>
+ #include <linux/io.h>
+ #include <linux/of.h>
++#include <linux/of_irq.h>
+ #include <linux/platform_device.h>
+ #include <linux/dma-mapping.h>
+ #include <linux/pm_runtime.h>
+@@ -310,6 +311,7 @@ static int omap2430_probe(struct platform_device *pdev)
+ 	struct device_node		*control_node;
+ 	struct platform_device		*control_pdev;
+ 	int				ret = -ENOMEM, val;
++	bool				populate_irqs = false;
  
- 	if (name == NULL) {
- 		sc->nonexistent = true;
--		return 0;
-+		return -EEXIST;
+ 	if (!np)
+ 		return -ENODEV;
+@@ -328,6 +330,18 @@ static int omap2430_probe(struct platform_device *pdev)
+ 	musb->dev.dma_mask		= &omap2430_dmamask;
+ 	musb->dev.coherent_dma_mask	= omap2430_dmamask;
+ 
++	/*
++	 * Legacy SoCs using omap_device get confused if node is moved
++	 * because of interconnect properties mixed into the node.
++	 */
++	if (of_get_property(np, "ti,hwmods", NULL)) {
++		dev_warn(&pdev->dev, "please update to probe with ti-sysc\n");
++		populate_irqs = true;
++	} else {
++		device_set_of_node_from_dev(&musb->dev, &pdev->dev);
++	}
++	of_node_put(np);
++
+ 	glue->dev			= &pdev->dev;
+ 	glue->musb			= musb;
+ 	glue->status			= MUSB_UNKNOWN;
+@@ -389,6 +403,46 @@ static int omap2430_probe(struct platform_device *pdev)
+ 		goto err2;
  	}
  
- 	sc->name = name;
++	if (populate_irqs) {
++		struct resource musb_res[3];
++		struct resource *res;
++		int i = 0;
++
++		memset(musb_res, 0, sizeof(*musb_res) * ARRAY_SIZE(musb_res));
++
++		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++		if (!res)
++			goto err2;
++
++		musb_res[i].start = res->start;
++		musb_res[i].end = res->end;
++		musb_res[i].flags = res->flags;
++		musb_res[i].name = res->name;
++		i++;
++
++		ret = of_irq_get_byname(np, "mc");
++		if (ret > 0) {
++			musb_res[i].start = ret;
++			musb_res[i].flags = IORESOURCE_IRQ;
++			musb_res[i].name = "mc";
++			i++;
++		}
++
++		ret = of_irq_get_byname(np, "dma");
++		if (ret > 0) {
++			musb_res[i].start = ret;
++			musb_res[i].flags = IORESOURCE_IRQ;
++			musb_res[i].name = "dma";
++			i++;
++		}
++
++		ret = platform_device_add_resources(musb, musb_res, i);
++		if (ret) {
++			dev_err(&pdev->dev, "failed to add IRQ resources\n");
++			goto err2;
++		}
++	}
++
+ 	ret = platform_device_add_data(musb, pdata, sizeof(*pdata));
+ 	if (ret) {
+ 		dev_err(&pdev->dev, "failed to add platform_data\n");
 -- 
 2.35.1
 
