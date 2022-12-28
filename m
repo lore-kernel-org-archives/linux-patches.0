@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479C91863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9ECBC433D2;
-	Wed, 28 Dec 2022 15:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBEA1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D9E2C433D2;
+	Wed, 28 Dec 2022 15:28:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241328;
-	bh=oXaQCjD+enSqgAp1tguXhNS78M0iMCXrjTaJmeGwTuc=;
+	s=korg; t=1672241330;
+	bh=+jwCzEbmijGYDF6u/I/5dKAOYFtW41xjnpynBR2aAlg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ilm85YD5cRGu+Dz9Lvm8prrBwkcDXO/X7RTl18FYsczPVILTeSz2PMsvBEB8ck49v
-	 cnkpNCaxKB2YtQKohL/ZbMZ2AUIZwmJi/BdHdhJGRfGUZRurHrTn1rhdVSu7JE8OTa
-	 6MDsEom85C1ph41zIAAefcJk4HNFCo2Mrn07BvQA=
+	b=V3xho6EWJgUZF+2Z4FcFVxSXi0t53SjAv6rciBRZsuY5tJfKSuNR6YXDJ9B/p0U46
+	 +4NNybAVEEAuVL02r7KAat8sL6qxuUgIHmzvmua6MXz44jji8sZeE1lS+E6uhhv5+3
+	 ZgXvOHrjcR9YqSjq637zEaS0xURfsw7fcWjUj0VA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0233/1146] media: v4l2-ioctl.c: Unify YCbCr/YUV terms in format descriptions
-Date: Wed, 28 Dec 2022 15:29:32 +0100
-Message-Id: <20221228144336.468217568@linuxfoundation.org>
+Subject: [PATCH 6.0 0267/1073] drm/msm/hdmi: use devres helper for runtime PM management
+Date: Wed, 28 Dec 2022 15:30:55 +0100
+Message-Id: <20221228144335.271946424@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,68 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 6a394d563dffb60c150d87dc6678994ef8028c53 ]
+[ Upstream commit b964444b2b64ce182495731d830499d1c588ccf6 ]
 
-Format descriptions use YCbCr and YUV terms interchangeably. Let's unify
-them so they all use YUV. While YCbCr is actually correct term here, YUV
-is shorter and thus it also fixes too long description of P010 tiled
-format.
+Use devm_pm_runtime_enable() to enable runtime PM. This way its effect
+will be reverted on device unbind/destruction.
 
-Fixes: 3c8e19d3d3f9 ("media: Add P010 tiled format")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 6ed9ed484d04 ("drm/msm/hdmi: Set up runtime PM for HDMI")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/499647/
+Link: https://lore.kernel.org/r/20220826093927.851597-2-dmitry.baryshkov@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-ioctl.c | 34 ++++++++++++++--------------
- 1 file changed, 17 insertions(+), 17 deletions(-)
+ drivers/gpu/drm/msm/hdmi/hdmi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
-index fddba75d9074..6876ec25bc51 100644
---- a/drivers/media/v4l2-core/v4l2-ioctl.c
-+++ b/drivers/media/v4l2-core/v4l2-ioctl.c
-@@ -1347,23 +1347,23 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
- 	case V4L2_PIX_FMT_YUV420:	descr = "Planar YUV 4:2:0"; break;
- 	case V4L2_PIX_FMT_HI240:	descr = "8-bit Dithered RGB (BTTV)"; break;
- 	case V4L2_PIX_FMT_M420:		descr = "YUV 4:2:0 (M420)"; break;
--	case V4L2_PIX_FMT_NV12:		descr = "Y/CbCr 4:2:0"; break;
--	case V4L2_PIX_FMT_NV21:		descr = "Y/CrCb 4:2:0"; break;
--	case V4L2_PIX_FMT_NV16:		descr = "Y/CbCr 4:2:2"; break;
--	case V4L2_PIX_FMT_NV61:		descr = "Y/CrCb 4:2:2"; break;
--	case V4L2_PIX_FMT_NV24:		descr = "Y/CbCr 4:4:4"; break;
--	case V4L2_PIX_FMT_NV42:		descr = "Y/CrCb 4:4:4"; break;
--	case V4L2_PIX_FMT_P010:		descr = "10-bit Y/CbCr 4:2:0"; break;
--	case V4L2_PIX_FMT_NV12_4L4:	descr = "Y/CbCr 4:2:0 (4x4 Linear)"; break;
--	case V4L2_PIX_FMT_NV12_16L16:	descr = "Y/CbCr 4:2:0 (16x16 Linear)"; break;
--	case V4L2_PIX_FMT_NV12_32L32:   descr = "Y/CbCr 4:2:0 (32x32 Linear)"; break;
--	case V4L2_PIX_FMT_P010_4L4:	descr = "10-bit Y/CbCr 4:2:0 (4x4 Linear)"; break;
--	case V4L2_PIX_FMT_NV12M:	descr = "Y/CbCr 4:2:0 (N-C)"; break;
--	case V4L2_PIX_FMT_NV21M:	descr = "Y/CrCb 4:2:0 (N-C)"; break;
--	case V4L2_PIX_FMT_NV16M:	descr = "Y/CbCr 4:2:2 (N-C)"; break;
--	case V4L2_PIX_FMT_NV61M:	descr = "Y/CrCb 4:2:2 (N-C)"; break;
--	case V4L2_PIX_FMT_NV12MT:	descr = "Y/CbCr 4:2:0 (64x32 MB, N-C)"; break;
--	case V4L2_PIX_FMT_NV12MT_16X16:	descr = "Y/CbCr 4:2:0 (16x16 MB, N-C)"; break;
-+	case V4L2_PIX_FMT_NV12:		descr = "Y/UV 4:2:0"; break;
-+	case V4L2_PIX_FMT_NV21:		descr = "Y/VU 4:2:0"; break;
-+	case V4L2_PIX_FMT_NV16:		descr = "Y/UV 4:2:2"; break;
-+	case V4L2_PIX_FMT_NV61:		descr = "Y/VU 4:2:2"; break;
-+	case V4L2_PIX_FMT_NV24:		descr = "Y/UV 4:4:4"; break;
-+	case V4L2_PIX_FMT_NV42:		descr = "Y/VU 4:4:4"; break;
-+	case V4L2_PIX_FMT_P010:		descr = "10-bit Y/UV 4:2:0"; break;
-+	case V4L2_PIX_FMT_NV12_4L4:	descr = "Y/UV 4:2:0 (4x4 Linear)"; break;
-+	case V4L2_PIX_FMT_NV12_16L16:	descr = "Y/UV 4:2:0 (16x16 Linear)"; break;
-+	case V4L2_PIX_FMT_NV12_32L32:   descr = "Y/UV 4:2:0 (32x32 Linear)"; break;
-+	case V4L2_PIX_FMT_P010_4L4:	descr = "10-bit Y/UV 4:2:0 (4x4 Linear)"; break;
-+	case V4L2_PIX_FMT_NV12M:	descr = "Y/UV 4:2:0 (N-C)"; break;
-+	case V4L2_PIX_FMT_NV21M:	descr = "Y/VU 4:2:0 (N-C)"; break;
-+	case V4L2_PIX_FMT_NV16M:	descr = "Y/UV 4:2:2 (N-C)"; break;
-+	case V4L2_PIX_FMT_NV61M:	descr = "Y/VU 4:2:2 (N-C)"; break;
-+	case V4L2_PIX_FMT_NV12MT:	descr = "Y/UV 4:2:0 (64x32 MB, N-C)"; break;
-+	case V4L2_PIX_FMT_NV12MT_16X16:	descr = "Y/UV 4:2:0 (16x16 MB, N-C)"; break;
- 	case V4L2_PIX_FMT_YUV420M:	descr = "Planar YUV 4:2:0 (N-C)"; break;
- 	case V4L2_PIX_FMT_YVU420M:	descr = "Planar YVU 4:2:0 (N-C)"; break;
- 	case V4L2_PIX_FMT_YUV422M:	descr = "Planar YUV 4:2:2 (N-C)"; break;
+diff --git a/drivers/gpu/drm/msm/hdmi/hdmi.c b/drivers/gpu/drm/msm/hdmi/hdmi.c
+index f28fb21e3891..8cd5d50639a5 100644
+--- a/drivers/gpu/drm/msm/hdmi/hdmi.c
++++ b/drivers/gpu/drm/msm/hdmi/hdmi.c
+@@ -252,7 +252,7 @@ static struct hdmi *msm_hdmi_init(struct platform_device *pdev)
+ 	if (hdmi->hpd_gpiod)
+ 		gpiod_set_consumer_name(hdmi->hpd_gpiod, "HDMI_HPD");
+ 
+-	pm_runtime_enable(&pdev->dev);
++	devm_pm_runtime_enable(&pdev->dev);
+ 
+ 	hdmi->workq = alloc_ordered_workqueue("msm_hdmi", 0);
+ 
 -- 
 2.35.1
 
