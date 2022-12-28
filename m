@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33FF21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6220C433EF;
-	Wed, 28 Dec 2022 15:46:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B9D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52299C433F2;
+	Wed, 28 Dec 2022 15:46:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242395;
-	bh=i4kn/bkOE2FWuqdT+xmrCUi/bo4Ef6WDtqiFk35+D7k=;
+	s=korg; t=1672242397;
+	bh=7V6ft3lVN55IILIFGQj/INz2L50peMHXGVnsJJGkBZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dDcBJdinGDiHBRA08CG2vd6FKC7Z+mxapcxX5bX16QgtVEx/hixmFmPZkaPZs7iBs
-	 aytcLKxEdel/WUl0QEwEwHHzb9C8+fF1AilHrrUtbmihF5Z4SkXUIcqdMxt1zgQwL3
-	 58z3+HF7VPHF028U1xRAzBfz43O1//Id7YM/jdjw=
+	b=IC3Q1ZyoPyFj7Bk0odE/nR22GyLDkKBNB2fK++ovcr32WcFk6s6uTiv3KUrs9085E
+	 daA0yAH8ie8qr0ph/YQNXAmcVTz0qW/8l4MQXrei9YQJCJUqoA0EmiKe2EJ3uBaBXP
+	 zJD72jmdIscCi+VxF9WQJoFoYLICRt2WSv505W00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Hou Tao <houtao1@huawei.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Yonghong Song <yhs@fb.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0405/1073] drm/msm/mdp5: fix reading hw revision on db410c platform
-Date: Wed, 28 Dec 2022 15:33:13 +0100
-Message-Id: <20221228144339.019136994@linuxfoundation.org>
+Subject: [PATCH 6.1 0365/1146] bpf: Pin the start cgroup in cgroup_iter_seq_init()
+Date: Wed, 28 Dec 2022 15:31:44 +0100
+Message-Id: <20221228144340.081108605@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,71 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit 5d8c0417ea62fed3cec7f5daed06a20477efeb39 ]
+[ Upstream commit 1a5160d4d8fe63ba4964cfff4a85831b6af75f2d ]
 
-Since the commit commit c6122688f265 ("drm/msm/mdp5: stop overriding
-drvdata") reading the MDP5 hw revision on db410c will crash the board
-as the MDSS_GDSC is not enabled. Revert a part of the offending commit
-(moving rpm enablement) and set priv->kms earlier. This make it possible
-to use pm_runtime_get_sync() during read_mdp_hw_revision(), which will
-power up both the MDP5 and MDSS devices.
+bpf_iter_attach_cgroup() has already acquired an extra reference for the
+start cgroup, but the reference may be released if the iterator link fd
+is closed after the creation of iterator fd, and it may lead to
+user-after-free problem when reading the iterator fd.
 
-Fixes: c6122688f265 ("drm/msm/mdp5: stop overriding drvdata")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/512985/
-Link: https://lore.kernel.org/r/20221125000213.252115-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+An alternative fix is pinning iterator link when opening iterator,
+but it will make iterator link being still visible after the close of
+iterator link fd and the behavior is different with other link types, so
+just fixing it by acquiring another reference for the start cgroup.
+
+Fixes: d4ccaf58a847 ("bpf: Introduce cgroup iter")
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Yonghong Song <yhs@fb.com>
+Link: https://lore.kernel.org/bpf/20221121073440.1828292-2-houtao@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ kernel/bpf/cgroup_iter.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index b46f983f2b46..29ae5c9613f3 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -519,10 +519,9 @@ static void read_mdp_hw_revision(struct mdp5_kms *mdp5_kms,
- 	struct device *dev = &mdp5_kms->pdev->dev;
- 	u32 version;
+diff --git a/kernel/bpf/cgroup_iter.c b/kernel/bpf/cgroup_iter.c
+index 9fcf09f2ef00..c187a9e62bdb 100644
+--- a/kernel/bpf/cgroup_iter.c
++++ b/kernel/bpf/cgroup_iter.c
+@@ -164,16 +164,30 @@ static int cgroup_iter_seq_init(void *priv, struct bpf_iter_aux_info *aux)
+ 	struct cgroup_iter_priv *p = (struct cgroup_iter_priv *)priv;
+ 	struct cgroup *cgrp = aux->cgroup.start;
  
--	/* Manually enable the MDP5, as pm runtime isn't usable yet. */
--	mdp5_enable(mdp5_kms);
-+	pm_runtime_get_sync(dev);
- 	version = mdp5_read(mdp5_kms, REG_MDP5_HW_VERSION);
--	mdp5_disable(mdp5_kms);
-+	pm_runtime_put_sync(dev);
- 
- 	*major = FIELD(version, MDP5_HW_VERSION_MAJOR);
- 	*minor = FIELD(version, MDP5_HW_VERSION_MINOR);
-@@ -839,6 +838,12 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
- 	 */
- 	clk_set_rate(mdp5_kms->core_clk, 200000000);
- 
-+	/* set uninit-ed kms */
-+	priv->kms = &mdp5_kms->base.base;
-+
-+	pm_runtime_enable(&pdev->dev);
-+	mdp5_kms->rpm_enabled = true;
-+
- 	read_mdp_hw_revision(mdp5_kms, &major, &minor);
- 
- 	mdp5_kms->cfg = mdp5_cfg_init(mdp5_kms, major, minor);
-@@ -887,12 +892,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
- 	if (ret)
- 		goto fail;
- 
--	/* set uninit-ed kms */
--	priv->kms = &mdp5_kms->base.base;
--
--	pm_runtime_enable(&pdev->dev);
--	mdp5_kms->rpm_enabled = true;
--
++	/* bpf_iter_attach_cgroup() has already acquired an extra reference
++	 * for the start cgroup, but the reference may be released after
++	 * cgroup_iter_seq_init(), so acquire another reference for the
++	 * start cgroup.
++	 */
+ 	p->start_css = &cgrp->self;
++	css_get(p->start_css);
+ 	p->terminate = false;
+ 	p->visited_all = false;
+ 	p->order = aux->cgroup.order;
  	return 0;
- fail:
- 	if (mdp5_kms)
+ }
+ 
++static void cgroup_iter_seq_fini(void *priv)
++{
++	struct cgroup_iter_priv *p = (struct cgroup_iter_priv *)priv;
++
++	css_put(p->start_css);
++}
++
+ static const struct bpf_iter_seq_info cgroup_iter_seq_info = {
+ 	.seq_ops		= &cgroup_iter_seq_ops,
+ 	.init_seq_private	= cgroup_iter_seq_init,
++	.fini_seq_private	= cgroup_iter_seq_fini,
+ 	.seq_priv_size		= sizeof(struct cgroup_iter_priv),
+ };
+ 
 -- 
 2.35.1
 
