@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E6F1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E32AC433D2;
-	Wed, 28 Dec 2022 15:58:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51EB01875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C971DC433D2;
+	Wed, 28 Dec 2022 15:58:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243126;
-	bh=hq9L3NzxtTTQJ/HnUO/qDnvIV6iil0fRyMkvtAxV0jo=;
+	s=korg; t=1672243130;
+	bh=XwAYXGe/bC2YyjALyKx6/vUyKn+z8lMQGmhx+mvs23Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nvCZfbDMhNRQHnwl0tzzvIvqZVZPI7tp8G0mURHHg1wIg7nC+0Mzum9N6wnzo9shA
-	 TDCMDh/8nD99Hb2UdfYXPLvM0M3/unU+Ohhc50yN3HngvNyX5puwRgpyV7XSbWO4HL
-	 aXjhTSBHmQoqqlNBGVd99br+g+/Ypst22XWjkozE=
+	b=XVZjqYUwczvDZ2dbd4ZpzoQWTe5nWFXOMQyqh/HbYWBo6b6xtbETAf074RDmsteeI
+	 8qz1s3lk4js2HCqg+43biQzqbzIwGOBp2UwfmB/XBo2+Ly+X1v6RwbSa3y6RYDN3G+
+	 AvHDxwo0AEsZSXCxjUpIyb6RqvPWmewimP3XnS8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Adrian Granados <agranados@gmail.com>,
+	Deren Wu <deren.wu@mediatek.com>,
+	Sean Wang <sean.wang@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 686/731] ALSA/ASoC: hda: move/rename snd_hdac_ext_stop_streams to hdac_stream.c
-Date: Wed, 28 Dec 2022 15:43:13 +0100
-Message-Id: <20221228144316.352988821@linuxfoundation.org>
+Subject: [PATCH 6.1 0454/1146] wifi: mt76: mt7921: fix antenna signal are way off in monitor mode
+Date: Wed, 28 Dec 2022 15:33:13 +0100
+Message-Id: <20221228144342.513662738@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,134 +37,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Sean Wang <sean.wang@mediatek.com>
 
-[ Upstream commit 12054f0ce8be7d2003ec068ab27c9eb608397b98 ]
+[ Upstream commit c256ba6b1909f28b517274282b6845567e974143 ]
 
-snd_hdac_ext_stop_streams() has really nothing to do with the
-extension, it just loops over the bus streams.
+Group 3 in RxD is disabled in monitor mode. We should use the group 5 in
+RxD instead to fix antenna signal way off issue, e.g we would see the
+incorrect antenna signal value in wireshark. On the other hand, Group 5
+wouldn't be used in STA or AP mode, so the patch shouldn't cause any
+harm to those modes.
 
-Move it to the hdac_stream layer and rename to remove the 'ext'
-prefix and add the precision that the chip will also be stopped.
-
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://lore.kernel.org/r/20211216231128.344321-2-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 171107237246 ("ASoC: Intel: Skylake: Fix driver hang during shutdown")
+Fixes: cbaa0a404f8d ("mt76: mt7921: fix up the monitor mode")
+Reported-by: Adrian Granados <agranados@gmail.com>
+Co-developed-by: Deren Wu <deren.wu@mediatek.com>
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Signed-off-by: Sean Wang <sean.wang@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/hdaudio.h         |  1 +
- include/sound/hdaudio_ext.h     |  1 -
- sound/hda/ext/hdac_ext_stream.c | 17 -----------------
- sound/hda/hdac_stream.c         | 16 ++++++++++++++++
- sound/soc/intel/skylake/skl.c   |  4 ++--
- 5 files changed, 19 insertions(+), 20 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7921/mac.c   | 32 ++++++++++++-------
+ 1 file changed, 21 insertions(+), 11 deletions(-)
 
-diff --git a/include/sound/hdaudio.h b/include/sound/hdaudio.h
-index 22af68b01426..6a90ce405e60 100644
---- a/include/sound/hdaudio.h
-+++ b/include/sound/hdaudio.h
-@@ -558,6 +558,7 @@ int snd_hdac_stream_set_params(struct hdac_stream *azx_dev,
- void snd_hdac_stream_start(struct hdac_stream *azx_dev, bool fresh_start);
- void snd_hdac_stream_clear(struct hdac_stream *azx_dev);
- void snd_hdac_stream_stop(struct hdac_stream *azx_dev);
-+void snd_hdac_stop_streams_and_chip(struct hdac_bus *bus);
- void snd_hdac_stream_reset(struct hdac_stream *azx_dev);
- void snd_hdac_stream_sync_trigger(struct hdac_stream *azx_dev, bool set,
- 				  unsigned int streams, unsigned int reg);
-diff --git a/include/sound/hdaudio_ext.h b/include/sound/hdaudio_ext.h
-index d4e31ea16aba..56ea5cde5e63 100644
---- a/include/sound/hdaudio_ext.h
-+++ b/include/sound/hdaudio_ext.h
-@@ -92,7 +92,6 @@ void snd_hdac_ext_stream_decouple_locked(struct hdac_bus *bus,
- 				  struct hdac_ext_stream *azx_dev, bool decouple);
- void snd_hdac_ext_stream_decouple(struct hdac_bus *bus,
- 				struct hdac_ext_stream *azx_dev, bool decouple);
--void snd_hdac_ext_stop_streams(struct hdac_bus *bus);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
+index 650ab97ae052..6860468ed191 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
+@@ -396,6 +396,27 @@ mt7921_mac_fill_rx(struct mt7921_dev *dev, struct sk_buff *skb)
+ 		if (v0 & MT_PRXV_HT_AD_CODE)
+ 			status->enc_flags |= RX_ENC_FLAG_LDPC;
  
- int snd_hdac_ext_stream_set_spib(struct hdac_bus *bus,
- 				 struct hdac_ext_stream *stream, u32 value);
-diff --git a/sound/hda/ext/hdac_ext_stream.c b/sound/hda/ext/hdac_ext_stream.c
-index 37154ed43bd5..c09652da43ff 100644
---- a/sound/hda/ext/hdac_ext_stream.c
-+++ b/sound/hda/ext/hdac_ext_stream.c
-@@ -475,23 +475,6 @@ int snd_hdac_ext_stream_get_spbmaxfifo(struct hdac_bus *bus,
- }
- EXPORT_SYMBOL_GPL(snd_hdac_ext_stream_get_spbmaxfifo);
- 
--
--/**
-- * snd_hdac_ext_stop_streams - stop all stream if running
-- * @bus: HD-audio core bus
-- */
--void snd_hdac_ext_stop_streams(struct hdac_bus *bus)
--{
--	struct hdac_stream *stream;
--
--	if (bus->chip_init) {
--		list_for_each_entry(stream, &bus->stream_list, list)
--			snd_hdac_stream_stop(stream);
--		snd_hdac_bus_stop_chip(bus);
--	}
--}
--EXPORT_SYMBOL_GPL(snd_hdac_ext_stop_streams);
--
- /**
-  * snd_hdac_ext_stream_drsm_enable - enable DMA resume for a stream
-  * @bus: HD-audio core bus
-diff --git a/sound/hda/hdac_stream.c b/sound/hda/hdac_stream.c
-index aa7955fdf68a..f3582012d22f 100644
---- a/sound/hda/hdac_stream.c
-+++ b/sound/hda/hdac_stream.c
-@@ -142,6 +142,22 @@ void snd_hdac_stream_stop(struct hdac_stream *azx_dev)
- }
- EXPORT_SYMBOL_GPL(snd_hdac_stream_stop);
- 
-+/**
-+ * snd_hdac_stop_streams_and_chip - stop all streams and chip if running
-+ * @bus: HD-audio core bus
-+ */
-+void snd_hdac_stop_streams_and_chip(struct hdac_bus *bus)
-+{
-+	struct hdac_stream *stream;
++		ret = mt76_connac2_mac_fill_rx_rate(&dev->mt76, status, sband,
++						    rxv, &mode);
++		if (ret < 0)
++			return ret;
 +
-+	if (bus->chip_init) {
-+		list_for_each_entry(stream, &bus->stream_list, list)
-+			snd_hdac_stream_stop(stream);
-+		snd_hdac_bus_stop_chip(bus);
-+	}
-+}
-+EXPORT_SYMBOL_GPL(snd_hdac_stop_streams_and_chip);
++		if (rxd1 & MT_RXD1_NORMAL_GROUP_5) {
++			rxd += 6;
++			if ((u8 *)rxd - skb->data >= skb->len)
++				return -EINVAL;
 +
- /**
-  * snd_hdac_stream_reset - reset a stream
-  * @azx_dev: HD-audio core stream to reset
-diff --git a/sound/soc/intel/skylake/skl.c b/sound/soc/intel/skylake/skl.c
-index 5b1a15e39912..148ddf4cace0 100644
---- a/sound/soc/intel/skylake/skl.c
-+++ b/sound/soc/intel/skylake/skl.c
-@@ -439,7 +439,7 @@ static int skl_free(struct hdac_bus *bus)
++			rxv = rxd;
++			/* Monitor mode would use RCPI described in GROUP 5
++			 * instead.
++			 */
++			v1 = le32_to_cpu(rxv[0]);
++
++			rxd += 12;
++			if ((u8 *)rxd - skb->data >= skb->len)
++				return -EINVAL;
++		}
++
+ 		status->chains = mphy->antenna_mask;
+ 		status->chain_signal[0] = to_rssi(MT_PRXV_RCPI0, v1);
+ 		status->chain_signal[1] = to_rssi(MT_PRXV_RCPI1, v1);
+@@ -410,17 +431,6 @@ mt7921_mac_fill_rx(struct mt7921_dev *dev, struct sk_buff *skb)
+ 			status->signal = max(status->signal,
+ 					     status->chain_signal[i]);
+ 		}
+-
+-		ret = mt76_connac2_mac_fill_rx_rate(&dev->mt76, status, sband,
+-						    rxv, &mode);
+-		if (ret < 0)
+-			return ret;
+-
+-		if (rxd1 & MT_RXD1_NORMAL_GROUP_5) {
+-			rxd += 18;
+-			if ((u8 *)rxd - skb->data >= skb->len)
+-				return -EINVAL;
+-		}
+ 	}
  
- 	skl->init_done = 0; /* to be sure */
- 
--	snd_hdac_ext_stop_streams(bus);
-+	snd_hdac_stop_streams_and_chip(bus);
- 
- 	if (bus->irq >= 0)
- 		free_irq(bus->irq, (void *)bus);
-@@ -1096,7 +1096,7 @@ static void skl_shutdown(struct pci_dev *pci)
- 	if (!skl->init_done)
- 		return;
- 
--	snd_hdac_ext_stop_streams(bus);
-+	snd_hdac_stop_streams_and_chip(bus);
- 	list_for_each_entry(s, &bus->stream_list, list) {
- 		stream = stream_to_hdac_ext_stream(s);
- 		snd_hdac_ext_stream_decouple(bus, stream, false);
+ 	amsdu_info = FIELD_GET(MT_RXD4_NORMAL_PAYLOAD_FORMAT, rxd4);
 -- 
 2.35.1
 
