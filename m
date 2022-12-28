@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E2B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C853C433D2;
-	Wed, 28 Dec 2022 15:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64971863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272A7C433D2;
+	Wed, 28 Dec 2022 15:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241958;
-	bh=os/Td5PwHSmMXNaM+DcoJz8j98yfo7xt2eyBCbTzniI=;
+	s=korg; t=1672241961;
+	bh=2u+JqZVFjNOYCm9GMc8BJ4EA8rIcooMLdSQI+41VY6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uT4t5MRd1fA+43IXd4sHArUpK6Cv/f+XL06VGIm74GB/ZkmBYQxH4/y+sJYxEpZ/x
-	 59X8vrYL/O+0qrHL4YMqVJ/7xoixKBMHmfB/3P0eXSPd0lB2c8pwU/UqugLh8Ta75H
-	 0sysChgHK7jyxY0xq53tJFW/5ZeKweBxAw6q86dY=
+	b=jC6lZ6J4PgXm9R1gGkjLB/add1fdCgfKtPSoh/2E29W1uj0gXk5oP7rYd1hxKmuev
+	 wNIZnFTPhm5Bu5Hbw2ktDT2NC791gmYjLjQxyD3+9GzLHnqywabL1+t8ieMhkU8WTO
+	 j+L2JO1O0mmrJp+vQd3Mce7UGBdFp96ML1+CIPBc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Francesco Dolcini <francesco.dolcini@toradex.com>,
+	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
+	Francesco Dolcini <francesco@dolcini.it>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0348/1073] net: ethernet: mtk_eth_soc: fix RSTCTRL_PPE{0,1} definitions
-Date: Wed, 28 Dec 2022 15:32:16 +0100
-Message-Id: <20221228144337.458763377@linuxfoundation.org>
+Subject: [PATCH 5.15 547/731] rtc: snvs: Allow a time difference on clock register read
+Date: Wed, 28 Dec 2022 15:40:54 +0100
+Message-Id: <20221228144312.396944773@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,77 +37,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
 
-[ Upstream commit ef8c373bd91df3cf70596497da0955d218961ead ]
+[ Upstream commit 0462681e207ccc44778a77b3297af728b1cf5b9f ]
 
-Fix RSTCTRL_PPE0 and RSTCTRL_PPE1 register mask definitions for
-MTK_NETSYS_V2.
-Remove duplicated definitions.
+On an iMX6ULL the following message appears when a wakealarm is set:
 
-Fixes: 160d3a9b1929 ("net: ethernet: mtk_eth_soc: introduce MTK_NETSYS_V2 support")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+echo 0 > /sys/class/rtc/rtc1/wakealarm
+rtc rtc1: Timeout trying to get valid LPSRT Counter read
+
+This does not always happen but is reproducible quite often (7 out of 10
+times). The problem appears because the iMX6ULL is not able to read the
+registers within one 32kHz clock cycle which is the base clock of the
+RTC. Therefore, this patch allows a difference of up to 320 cycles
+(10ms). 10ms was chosen to be big enough even on systems with less cpu
+power (e.g. iMX6ULL). According to the reference manual a difference is
+fine:
+- If the two consecutive reads are similar, the value is correct.
+The values have to be similar, not equal.
+
+Fixes: cd7f3a249dbe ("rtc: snvs: Add timeouts to avoid kernel lockups")
+Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
+Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+Signed-off-by: Francesco Dolcini <francesco@dolcini.it>
+Link: https://lore.kernel.org/r/20221106115915.7930-1-francesco@dolcini.it
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 13 +++++++------
- drivers/net/ethernet/mediatek/mtk_eth_soc.h | 10 +++-------
- 2 files changed, 10 insertions(+), 13 deletions(-)
+ drivers/rtc/rtc-snvs.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 26e0a2af64cf..4c16f2df566f 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -3272,16 +3272,17 @@ static int mtk_hw_init(struct mtk_eth *eth)
- 		return 0;
- 	}
+diff --git a/drivers/rtc/rtc-snvs.c b/drivers/rtc/rtc-snvs.c
+index bd929b0e7d7d..d82acf1af1fa 100644
+--- a/drivers/rtc/rtc-snvs.c
++++ b/drivers/rtc/rtc-snvs.c
+@@ -32,6 +32,14 @@
+ #define SNVS_LPPGDR_INIT	0x41736166
+ #define CNTR_TO_SECS_SH		15
  
--	val = RSTCTRL_FE | RSTCTRL_PPE;
- 	if (MTK_HAS_CAPS(eth->soc->caps, MTK_NETSYS_V2)) {
- 		regmap_write(eth->ethsys, ETHSYS_FE_RST_CHK_IDLE_EN, 0);
--
--		val |= RSTCTRL_ETH;
--		if (MTK_HAS_CAPS(eth->soc->caps, MTK_RSTCTRL_PPE1))
--			val |= RSTCTRL_PPE1;
-+		val = RSTCTRL_PPE0_V2;
-+	} else {
-+		val = RSTCTRL_PPE0;
- 	}
- 
--	ethsys_reset(eth, val);
-+	if (MTK_HAS_CAPS(eth->soc->caps, MTK_RSTCTRL_PPE1))
-+		val |= RSTCTRL_PPE1;
++/* The maximum RTC clock cycles that are allowed to pass between two
++ * consecutive clock counter register reads. If the values are corrupted a
++ * bigger difference is expected. The RTC frequency is 32kHz. With 320 cycles
++ * we end at 10ms which should be enough for most cases. If it once takes
++ * longer than expected we do a retry.
++ */
++#define MAX_RTC_READ_DIFF_CYCLES	320
 +
-+	ethsys_reset(eth, RSTCTRL_ETH | RSTCTRL_FE | val);
+ struct snvs_rtc_data {
+ 	struct rtc_device *rtc;
+ 	struct regmap *regmap;
+@@ -56,6 +64,7 @@ static u64 rtc_read_lpsrt(struct snvs_rtc_data *data)
+ static u32 rtc_read_lp_counter(struct snvs_rtc_data *data)
+ {
+ 	u64 read1, read2;
++	s64 diff;
+ 	unsigned int timeout = 100;
  
- 	if (MTK_HAS_CAPS(eth->soc->caps, MTK_NETSYS_V2)) {
- 		regmap_write(eth->ethsys, ETHSYS_FE_RST_CHK_IDLE_EN,
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-index 0f9668a4079d..da261dd49d6f 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-@@ -451,18 +451,14 @@
- /* ethernet reset control register */
- #define ETHSYS_RSTCTRL			0x34
- #define RSTCTRL_FE			BIT(6)
--#define RSTCTRL_PPE			BIT(31)
--#define RSTCTRL_PPE1			BIT(30)
-+#define RSTCTRL_PPE0			BIT(31)
-+#define RSTCTRL_PPE0_V2			BIT(30)
-+#define RSTCTRL_PPE1			BIT(31)
- #define RSTCTRL_ETH			BIT(23)
+ 	/* As expected, the registers might update between the read of the LSB
+@@ -66,7 +75,8 @@ static u32 rtc_read_lp_counter(struct snvs_rtc_data *data)
+ 	do {
+ 		read2 = read1;
+ 		read1 = rtc_read_lpsrt(data);
+-	} while (read1 != read2 && --timeout);
++		diff = read1 - read2;
++	} while (((diff < 0) || (diff > MAX_RTC_READ_DIFF_CYCLES)) && --timeout);
+ 	if (!timeout)
+ 		dev_err(&data->rtc->dev, "Timeout trying to get valid LPSRT Counter read\n");
  
- /* ethernet reset check idle register */
- #define ETHSYS_FE_RST_CHK_IDLE_EN	0x28
+@@ -78,13 +88,15 @@ static u32 rtc_read_lp_counter(struct snvs_rtc_data *data)
+ static int rtc_read_lp_counter_lsb(struct snvs_rtc_data *data, u32 *lsb)
+ {
+ 	u32 count1, count2;
++	s32 diff;
+ 	unsigned int timeout = 100;
  
--/* ethernet reset control register */
--#define ETHSYS_RSTCTRL		0x34
--#define RSTCTRL_FE		BIT(6)
--#define RSTCTRL_PPE		BIT(31)
--
- /* ethernet dma channel agent map */
- #define ETHSYS_DMA_AG_MAP	0x408
- #define ETHSYS_DMA_AG_MAP_PDMA	BIT(0)
+ 	regmap_read(data->regmap, data->offset + SNVS_LPSRTCLR, &count1);
+ 	do {
+ 		count2 = count1;
+ 		regmap_read(data->regmap, data->offset + SNVS_LPSRTCLR, &count1);
+-	} while (count1 != count2 && --timeout);
++		diff = count1 - count2;
++	} while (((diff < 0) || (diff > MAX_RTC_READ_DIFF_CYCLES)) && --timeout);
+ 	if (!timeout) {
+ 		dev_err(&data->rtc->dev, "Timeout trying to get valid LPSRT Counter read\n");
+ 		return -ETIMEDOUT;
 -- 
 2.35.1
 
