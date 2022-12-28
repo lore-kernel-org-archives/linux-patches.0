@@ -1,49 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E741863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:24:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8A7CC433D2;
-	Wed, 28 Dec 2022 15:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A7D21863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:24:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C139BC433EF;
+	Wed, 28 Dec 2022 15:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241042;
-	bh=JuJf+d/y6bvJQ2oX+OqYizt3ypu/VUeJEIGZXe7F+fQ=;
+	s=korg; t=1672241045;
+	bh=QcAXhnMJf0HaZcf+CL/5/q5zJxDCYkltjS2Y+Pa3fFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uoQBgT19wO1blAqFmxVcGAsW7G2pcPMmKUiIzEx0nYBRRtlttmESikBG1JoLv31f/
-	 R6qtNNQXaeAVOcd3UGJwqT/kja3ejtHx/uQcOxwftCWcoVKV6RA3MoZESkOpYHXmmX
-	 aANsCi1qINe9DOyel2l6PWPbYk+HV3xZt7vfVkA8=
+	b=vlRK81hEFLsMungo0yjCnIwsqGKB4xktHiUK5NfYvTBDAZSrJy0oECX+JMLz/uud1
+	 Cnj6CwpUXJuRPbiyFAUg/A33Wgkt8o5bTKamVRrp4rEAG3Bkwb032ONuWDh8FxGNyK
+	 lxz+OuOXpAfwFds/liYcVs6V2lP4uD7Fq7U+6TB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Aravind Iddamsetty <aravind.iddamsetty@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Jason Ekstrand <jason@jlekstrand.net>,
-	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Chris Wilson <chris@chris-wilson.co.uk>,
-	Tejas Upadhyay <tejaskumarx.surendrakumar.upadhyay@intel.com>,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Stuart Summers <stuart.summers@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Ramalingam C <ramalingam.c@intel.com>,
-	Akeem G Abodunrin <akeem.g.abodunrin@intel.com>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Haoyue Xu <xuhaoyue1@hisilicon.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0233/1073] drm/i915: Fix compute pre-emption w/a to apply to compute engines
-Date: Wed, 28 Dec 2022 15:30:21 +0100
-Message-Id: <20221228144334.355326152@linuxfoundation.org>
+Subject: [PATCH 5.15 431/731] RDMA/hns: Fix page size cap from firmware
+Date: Wed, 28 Dec 2022 15:38:58 +0100
+Message-Id: <20221228144309.057282846@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -54,89 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit c3bd49cd9a1043b963331e7fd874b380bed3f2bd ]
+[ Upstream commit 99dc5a0712883d5d13b620d25b3759d429577bc8 ]
 
-An earlier patch added support for compute engines. However, it missed
-enabling the anti-pre-emption w/a for the new engine class. So move
-the 'compute capable' flag earlier and use it for the pre-emption w/a
-test.
+Add verification to make sure the roce page size cap is supported by the
+system page size.
 
-Fixes: c674c5b9342e ("drm/i915/xehp: CCS should use RCS setup functions")
-Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
-Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Cc: Aravind Iddamsetty <aravind.iddamsetty@intel.com>
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: John Harrison <John.C.Harrison@Intel.com>
-Cc: Jason Ekstrand <jason@jlekstrand.net>
-Cc: "Michał Winiarski" <michal.winiarski@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Chris Wilson <chris@chris-wilson.co.uk>
-Cc: Tejas Upadhyay <tejaskumarx.surendrakumar.upadhyay@intel.com>
-Cc: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Cc: "Thomas Hellström" <thomas.hellstrom@linux.intel.com>
-Cc: Stuart Summers <stuart.summers@intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Ramalingam C <ramalingam.c@intel.com>
-Cc: Akeem G Abodunrin <akeem.g.abodunrin@intel.com>
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221006213813.1563435-3-John.C.Harrison@Intel.com
+Fixes: ba6bb7e97421 ("RDMA/hns: Add interfaces to get pf capabilities from firmware")
+Link: https://lore.kernel.org/r/20221126102911.2921820-5-xuhaoyue1@hisilicon.com
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_engine_cs.c | 24 +++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_engine_cs.c b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
-index 699308a1323d..3dd0af057e6b 100644
---- a/drivers/gpu/drm/i915/gt/intel_engine_cs.c
-+++ b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
-@@ -486,6 +486,17 @@ static int intel_engine_setup(struct intel_gt *gt, enum intel_engine_id id,
- 	engine->logical_mask = BIT(logical_instance);
- 	__sprint_engine_name(engine);
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index b9557be812b7..16f39321b319 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -2371,6 +2371,9 @@ static int hns_roce_query_pf_caps(struct hns_roce_dev *hr_dev)
+ 					  V2_QUERY_PF_CAPS_D_RQWQE_HOP_NUM_M,
+ 					  V2_QUERY_PF_CAPS_D_RQWQE_HOP_NUM_S);
  
-+	if ((engine->class == COMPUTE_CLASS && !RCS_MASK(engine->gt) &&
-+	     __ffs(CCS_MASK(engine->gt)) == engine->instance) ||
-+	     engine->class == RENDER_CLASS)
-+		engine->flags |= I915_ENGINE_FIRST_RENDER_COMPUTE;
++	if (!(caps->page_size_cap & PAGE_SIZE))
++		caps->page_size_cap = HNS_ROCE_V2_PAGE_SIZE_SUPPORTED;
 +
-+	/* features common between engines sharing EUs */
-+	if (engine->class == RENDER_CLASS || engine->class == COMPUTE_CLASS) {
-+		engine->flags |= I915_ENGINE_HAS_RCS_REG_STATE;
-+		engine->flags |= I915_ENGINE_HAS_EU_PRIORITY;
-+	}
-+
- 	engine->props.heartbeat_interval_ms =
- 		CONFIG_DRM_I915_HEARTBEAT_INTERVAL;
- 	engine->props.max_busywait_duration_ns =
-@@ -498,20 +509,9 @@ static int intel_engine_setup(struct intel_gt *gt, enum intel_engine_id id,
- 		CONFIG_DRM_I915_TIMESLICE_DURATION;
+ 	return 0;
+ }
  
- 	/* Override to uninterruptible for OpenCL workloads. */
--	if (GRAPHICS_VER(i915) == 12 && engine->class == RENDER_CLASS)
-+	if (GRAPHICS_VER(i915) == 12 && (engine->flags & I915_ENGINE_HAS_RCS_REG_STATE))
- 		engine->props.preempt_timeout_ms = 0;
- 
--	if ((engine->class == COMPUTE_CLASS && !RCS_MASK(engine->gt) &&
--	     __ffs(CCS_MASK(engine->gt)) == engine->instance) ||
--	     engine->class == RENDER_CLASS)
--		engine->flags |= I915_ENGINE_FIRST_RENDER_COMPUTE;
--
--	/* features common between engines sharing EUs */
--	if (engine->class == RENDER_CLASS || engine->class == COMPUTE_CLASS) {
--		engine->flags |= I915_ENGINE_HAS_RCS_REG_STATE;
--		engine->flags |= I915_ENGINE_HAS_EU_PRIORITY;
--	}
--
- 	/* Cap properties according to any system limits */
- #define CLAMP_PROP(field) \
- 	do { \
 -- 
 2.35.1
 
