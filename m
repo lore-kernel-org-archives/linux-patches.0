@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55E31863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:55:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C578C433D2;
-	Wed, 28 Dec 2022 14:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958331863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:55:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19122C433EF;
+	Wed, 28 Dec 2022 14:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239326;
-	bh=LePJ2vt1YjtHwGGSiscpXiJIZjF6rgIfetJV+DGwa8c=;
+	s=korg; t=1672239329;
+	bh=ookrESgwrp86AzZS0/qDL+j98Hi4H2vFMEKzMeXAAko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lRlMboKD8H4f+nutRNaM+KDveBfLTG/EnI5r2YLI2Wz4o/e1eEBvOPe55SqnYiwGy
-	 lHKqgzYBkUg+RzG6yk1XX1U7RXI7mZ7ck/xxVSp7BRh6i9zXPgtGuBcp6uQqJwN7zh
-	 OyU5dylie+ve7nHHKgjZKiBQQq9VxgJUdZk3Rz4k=
+	b=cyxf1BNCiEvxh/A51cmtgnWMQ7HEf7Q3PKnAy9wS5Dbgc92JHvRwgBsMgvzAs11wq
+	 YpWyCsUvv0EEC0xNS1rT/xQMJhZBfDrR36bN5x4od9e4lDHiiQa+KTfyEFIOI9l3aO
+	 NzHeR+RoeTvcHkOGEFbNhQaebxviMVRtZjR3mvcE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0010/1073] arm64: dts: qcom: sm8250-sony-xperia-edo: fix touchscreen bias-disable
-Date: Wed, 28 Dec 2022 15:26:38 +0100
-Message-Id: <20221228144328.446238791@linuxfoundation.org>
+Subject: [PATCH 5.15 206/731] block: clear ->slave_dir when dropping the main slave_dir reference
+Date: Wed, 28 Dec 2022 15:35:13 +0100
+Message-Id: <20221228144302.531258831@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,35 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 7ff4a646fae3697b039c6b684786a1e309e8445c ]
+[ Upstream commit d90db3b1c8676bc88b4309c5a571333de2263b8e ]
 
-The property to disable bias is "bias-disable".
+Zero out the pointer to ->slave_dir so that the holder code doesn't
+incorrectly treat the object as alive when add_disk failed or after
+del_gendisk was called.
 
-Fixes: e76c7e1f15fe ("arm64: dts: qcom: sm8250-edo: Add Samsung touchscreen")
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20220930192954.242546-3-krzysztof.kozlowski@linaro.org
+Fixes: 89f871af1b26 ("dm: delay registering the gendisk")
+Reported-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lore.kernel.org/r/20221115141054.1051801-2-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/genhd.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-index 5428aab3058d..e4769dcfaad7 100644
---- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
-@@ -619,7 +619,7 @@ ts_int_default: ts-int-default {
- 		pins = "gpio39";
- 		function = "gpio";
- 		drive-strength = <2>;
--		bias-disabled;
-+		bias-disable;
- 		input-enable;
- 	};
+diff --git a/block/genhd.c b/block/genhd.c
+index 68065189ca17..a1d9e785dcf7 100644
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -530,6 +530,7 @@ int device_add_disk(struct device *parent, struct gendisk *disk,
+ 	rq_qos_exit(disk->queue);
+ out_put_slave_dir:
+ 	kobject_put(disk->slave_dir);
++	disk->slave_dir = NULL;
+ out_put_holder_dir:
+ 	kobject_put(disk->part0->bd_holder_dir);
+ out_del_integrity:
+@@ -624,6 +625,7 @@ void del_gendisk(struct gendisk *disk)
  
+ 	kobject_put(disk->part0->bd_holder_dir);
+ 	kobject_put(disk->slave_dir);
++	disk->slave_dir = NULL;
+ 
+ 	part_stat_set_all(disk->part0, 0);
+ 	disk->part0->bd_stamp = 0;
 -- 
 2.35.1
 
