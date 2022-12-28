@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB95B1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EB8C433EF;
-	Wed, 28 Dec 2022 15:57:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B691875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8856C433EF;
+	Wed, 28 Dec 2022 15:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243058;
-	bh=NEUP6zN9OADZm5zNxMnUdUs2DJSQYC2jc+XVsX3Rf54=;
+	s=korg; t=1672243061;
+	bh=aqhTVUAqNs5uG0668dzDfneghVWFgYrpeQTgcxSUuxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A5AgzSNbiS8KcCGJh3MA6g+kxXReDO710sNNCvnQHJUPRZ2YkKA0kzZ3j0k8CZ75L
-	 hxxc4UmwkoZEs/AQSMMMIqV2IXXWPa3IbRbKOD6BVZPmenkhS9WPfogCTPClgfPoe3
-	 RAp1ceNon/JLgmAVvsvyD7dh5nMezhdyC5LHfNk8=
+	b=hTpjl792wfkUUYJLMK6qQrGKTjYEWyJStNPQMrgSv7IYg2jCWR+SpPoFP2Jlqwhs2
+	 tmtPo8iR+ZpAbR0qF4mGzeccWwfpDVMMGssfnpF5zYhQ3cXuWseB6RAMhxinszvVZu
+	 8+CMzRP6rr6XHzzw0dCvxeflc0XJwMlbrdsddAk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
+	Pengcheng Yang <yangpc@wangsu.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 679/731] drm/fsl-dcu: Fix return type of fsl_dcu_drm_connector_mode_valid()
-Date: Wed, 28 Dec 2022 15:43:06 +0100
-Message-Id: <20221228144316.156707525@linuxfoundation.org>
+Subject: [PATCH 6.1 0447/1146] bpf, sockmap: Fix data loss caused by using apply_bytes on ingress redirect
+Date: Wed, 28 Dec 2022 15:33:06 +0100
+Message-Id: <20221228144342.323220215@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,55 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Pengcheng Yang <yangpc@wangsu.com>
 
-[ Upstream commit 96d845a67b7e406cfed7880a724c8ca6121e022e ]
+[ Upstream commit 9072931f020bfd907d6d89ee21ff1481cd78b407 ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+Use apply_bytes on ingress redirect, when apply_bytes is less than
+the length of msg data, some data may be skipped and lost in
+bpf_tcp_ingress().
 
-  drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c:74:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .mode_valid = fsl_dcu_drm_connector_mode_valid,
-                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+If there is still data in the scatterlist that has not been consumed,
+we cannot move the msg iter.
 
-->mode_valid() in 'struct drm_connector_helper_funcs' expects a return
-type of 'enum drm_mode_status', not 'int'. Adjust the return type of
-fsl_dcu_drm_connector_mode_valid() to match the prototype's to resolve
-the warning and CFI failure.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reported-by: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221102154215.78059-1-nathan@kernel.org
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/1669718441-2654-4-git-send-email-yangpc@wangsu.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/ipv4/tcp_bpf.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
-index 4d4a715b429d..2c2b92324a2e 100644
---- a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
-+++ b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
-@@ -60,8 +60,9 @@ static int fsl_dcu_drm_connector_get_modes(struct drm_connector *connector)
- 	return drm_panel_get_modes(fsl_connector->panel, connector);
- }
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index 275c5ca9e04d..94aad3870c5f 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -45,8 +45,11 @@ static int bpf_tcp_ingress(struct sock *sk, struct sk_psock *psock,
+ 		tmp->sg.end = i;
+ 		if (apply) {
+ 			apply_bytes -= size;
+-			if (!apply_bytes)
++			if (!apply_bytes) {
++				if (sge->length)
++					sk_msg_iter_var_prev(i);
+ 				break;
++			}
+ 		}
+ 	} while (i != msg->sg.end);
  
--static int fsl_dcu_drm_connector_mode_valid(struct drm_connector *connector,
--					    struct drm_display_mode *mode)
-+static enum drm_mode_status
-+fsl_dcu_drm_connector_mode_valid(struct drm_connector *connector,
-+				 struct drm_display_mode *mode)
- {
- 	if (mode->hdisplay & 0xf)
- 		return MODE_ERROR;
 -- 
 2.35.1
 
