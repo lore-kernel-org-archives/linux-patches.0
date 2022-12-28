@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70D21C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDF6C433D2;
-	Wed, 28 Dec 2022 16:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5586B1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC517C433F0;
+	Wed, 28 Dec 2022 16:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245212;
-	bh=hqklUwmjkTXDO1IOOdvqx5vqdKWCEci0sybVNl62Y4M=;
+	s=korg; t=1672245215;
+	bh=LyVP3Y98azTmWDuoPdwqUDaknN1faS2vSn3+8ydW5B0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wWD7U3u+ECFL4HkL5WmEWDH5TauCf11BqS7xJvYJI4ky4/G643jeAJrDYCUJff+yk
-	 oIZvJ0WnmWITDdILk6lIIs7fnEhGKavz4TXAKlBdg10uMG7b+Xlm77KpzypZjErGup
-	 r4ZsPpVpo7avn6fQ6r/5Q8YC59waLdsfM90XXJIM=
+	b=VD2t6q7vQUPrwzGSPwyjcLDGhxR9dYF2tBCIyquLkm4af1C5JcgUMcfeSZrCJOrXl
+	 Qrs6m7aIulUFCZpnmMNvxa2nUklQjy8X5ZI016EC/Y6gW5kDkKiLmHOZogXtUNJHLT
+	 s/4hqWF6a+I3Y4297J5ZU/MTFspT0ZS13bjVQEyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Andreas Herrmann <aherrmann@suse.de>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0816/1146] phy: qcom-qmp-usb: fix sc8280xp PCS_USB offset
-Date: Wed, 28 Dec 2022 15:39:15 +0100
-Message-Id: <20221228144352.316471530@linuxfoundation.org>
+Subject: [PATCH 6.0 0852/1073] blk-iocost: simplify ioc_name
+Date: Wed, 28 Dec 2022 15:40:40 +0100
+Message-Id: <20221228144351.160644270@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,41 +37,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 4c6b3af3906d0c59497d3bfb07760f3a082b4150 ]
+[ Upstream commit 9df3e65139b923dfe98f76b7057882c7afb2d3e4 ]
 
-The PCS_USB register block lives at an offset of 0x1000 from the PCS
-region on SC8280XP so add the missing offset to avoid corrupting
-unrelated registers on runtime suspend.
+Just directly dereference the disk name instead of going through multiple
+hoops to find the same value.
 
-Note that the current binding is broken as it does not describe the
-PCS_USB region and the PCS register size does not cover PCS_USB and the
-regions in between. As Linux currently maps full pages, simply adding
-the offset to driver works until the binding has been fixed.
-
-Fixes: c0c7769cdae2 ("phy: qcom-qmp: Add SC8280XP USB3 UNI phy")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20221028160435.26948-2-johan+linaro@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Andreas Herrmann <aherrmann@suse.de>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20220921180501.1539876-10-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: d36a9ea5e776 ("block: fix use-after-free of q->q_usage_counter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 1 +
- 1 file changed, 1 insertion(+)
+ block/blk-iocost.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index 4960ebe674ec..f0ba35bb73c1 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -1695,6 +1695,7 @@ static const struct qmp_phy_cfg sc8280xp_usb3_uniphy_cfg = {
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
- 	.regs			= qmp_v4_usb3phy_regs_layout,
-+	.pcs_usb_offset		= 0x1000,
- };
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index 7936e5f5821c..cba9d3ad58e1 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -664,17 +664,13 @@ static struct ioc *q_to_ioc(struct request_queue *q)
+ 	return rqos_to_ioc(rq_qos_id(q, RQ_QOS_COST));
+ }
  
- static const struct qmp_phy_cfg qmp_v3_usb3_uniphy_cfg = {
+-static const char *q_name(struct request_queue *q)
+-{
+-	if (blk_queue_registered(q))
+-		return kobject_name(q->kobj.parent);
+-	else
+-		return "<unknown>";
+-}
+-
+ static const char __maybe_unused *ioc_name(struct ioc *ioc)
+ {
+-	return q_name(ioc->rqos.q);
++	struct gendisk *disk = ioc->rqos.q->disk;
++
++	if (!disk)
++		return "<unknown>";
++	return disk->disk_name;
+ }
+ 
+ static struct ioc_gq *pd_to_iocg(struct blkg_policy_data *pd)
 -- 
 2.35.1
 
