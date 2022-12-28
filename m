@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AB361C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E39ECC433D2;
-	Wed, 28 Dec 2022 16:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB651C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86674C433F2;
+	Wed, 28 Dec 2022 16:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244269;
-	bh=JgxFYTenMO74yrkIpVwBc94p+F9fD0CyR7c+sK9K6XY=;
+	s=korg; t=1672244271;
+	bh=76SbrkjyDdkHkvXCQCqaibBx5NpDPkZFk1cw3Ud3S5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mBVXF1OQVqxiPNXf6J1d9ykwn1LIamg5W1N34+bc2LW8E566FxHr+3BG6XCkUagTi
-	 92cIj2rrnkA4tUGESyV24EDqFXPXCD6mIoHm4hDqcNAVC9WdaZHgiNmA0Az3zKBQwC
-	 ko/Pasu1hEGWAbeu7QPRh8wIRDztiJ2LwFfTg9Is=
+	b=yUyonKNx9TbX+Rkf9DSjk2z9oAnAYwd1xj6Gu+za4odJ6HDW4gZMyVIgFTjllwZ9G
+	 jm3CKKiJ6FgYnLgh9rHU1MzHqETuyv4X3WcROs97aFUttWjia/s7nsDznk3Ca0IYF9
+	 kPKFzlPzOhIc4WEd4L8F9lXBxMTy9Q17CWHNxelA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"H. Nikolaus Schaller" <hns@goldelico.com>,
-	Sicelo Mhlongo <absicsz@gmail.com>,
-	Tony Lindgren <tony@atomide.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0679/1073] usb: musb: omap2430: Fix probe regression for missing resources
-Date: Wed, 28 Dec 2022 15:37:47 +0100
-Message-Id: <20221228144346.479634414@linuxfoundation.org>
+Subject: [PATCH 6.1 0639/1146] crypto: x86/sha512 - fix possible crash with CFI enabled
+Date: Wed, 28 Dec 2022 15:36:18 +0100
+Message-Id: <20221228144347.519292072@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,128 +37,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Lindgren <tony@atomide.com>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit ffbe2feac59b37c8dc536727552b4f375e1b9aec ]
+[ Upstream commit a1d72fa33186ac69c7d8120c71f41ea4fc23dcc9 ]
 
-Probe for omap2430 glue layer is now broken for interrupt resources in
-all cases.
+sha512_transform_ssse3(), sha512_transform_avx(), and
+sha512_transform_rorx() are called via indirect function calls.
+Therefore they need to use SYM_TYPED_FUNC_START instead of
+SYM_FUNC_START to cause their type hashes to be emitted when the kernel
+is built with CONFIG_CFI_CLANG=y.  Otherwise, the code crashes with a
+CFI failure (if the compiler didn't happen to optimize out the indirect
+calls).
 
-Commit  239071064732 ("partially Revert "usb: musb: Set the DT node on the
-child device"") broke probing for SoCs using ti-sysc interconnect target
-module as the dt node is not found.
-
-Commit a1a2b7125e10 ("of/platform: Drop static setup of IRQ resource from
-DT core") caused omap3 to fail with error "-ENXIO: IRQ mc not found" as
-the IRQ resources are no longer automatically populated from devicetree.
-
-Let's fix the issues by calling device_set_of_node_from_dev() only if the
-SoC has been updated to probe with ti-sysc. And for legacy SoCs, let's
-populate the resources manually as needed.
-
-Note that once we have updated the SoCs to probe with proper devicetree
-data in all cases, this is no longer needed. But doing that requires
-patching both devicetree and SoC code, so let's fix the probe issues first.
-
-Fixes: a1a2b7125e10 ("of/platform: Drop static setup of IRQ resource from DT core")
-Fixes: 239071064732 ("partially Revert "usb: musb: Set the DT node on the child device"")
-Cc: H. Nikolaus Schaller <hns@goldelico.com>
-Reported-by: Sicelo Mhlongo <absicsz@gmail.com>
-Tested-by: Sicelo Mhlongo <absicsz@gmail.com>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20221118102532.34458-1-tony@atomide.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ccace936eec7 ("x86: Add types to indirectly called assembly functions")
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/musb/omap2430.c | 54 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 54 insertions(+)
+ arch/x86/crypto/sha512-avx-asm.S   | 3 ++-
+ arch/x86/crypto/sha512-avx2-asm.S  | 3 ++-
+ arch/x86/crypto/sha512-ssse3-asm.S | 3 ++-
+ 3 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/musb/omap2430.c b/drivers/usb/musb/omap2430.c
-index f571a65ae6ee..476f55d1fec3 100644
---- a/drivers/usb/musb/omap2430.c
-+++ b/drivers/usb/musb/omap2430.c
-@@ -15,6 +15,7 @@
- #include <linux/list.h>
- #include <linux/io.h>
- #include <linux/of.h>
-+#include <linux/of_irq.h>
- #include <linux/platform_device.h>
- #include <linux/dma-mapping.h>
- #include <linux/pm_runtime.h>
-@@ -310,6 +311,7 @@ static int omap2430_probe(struct platform_device *pdev)
- 	struct device_node		*control_node;
- 	struct platform_device		*control_pdev;
- 	int				ret = -ENOMEM, val;
-+	bool				populate_irqs = false;
+diff --git a/arch/x86/crypto/sha512-avx-asm.S b/arch/x86/crypto/sha512-avx-asm.S
+index 1fefe6dd3a9e..b0984f19fdb4 100644
+--- a/arch/x86/crypto/sha512-avx-asm.S
++++ b/arch/x86/crypto/sha512-avx-asm.S
+@@ -48,6 +48,7 @@
+ ########################################################################
  
- 	if (!np)
- 		return -ENODEV;
-@@ -328,6 +330,18 @@ static int omap2430_probe(struct platform_device *pdev)
- 	musb->dev.dma_mask		= &omap2430_dmamask;
- 	musb->dev.coherent_dma_mask	= omap2430_dmamask;
+ #include <linux/linkage.h>
++#include <linux/cfi_types.h>
  
-+	/*
-+	 * Legacy SoCs using omap_device get confused if node is moved
-+	 * because of interconnect properties mixed into the node.
-+	 */
-+	if (of_get_property(np, "ti,hwmods", NULL)) {
-+		dev_warn(&pdev->dev, "please update to probe with ti-sysc\n");
-+		populate_irqs = true;
-+	} else {
-+		device_set_of_node_from_dev(&musb->dev, &pdev->dev);
-+	}
-+	of_node_put(np);
-+
- 	glue->dev			= &pdev->dev;
- 	glue->musb			= musb;
- 	glue->status			= MUSB_UNKNOWN;
-@@ -389,6 +403,46 @@ static int omap2430_probe(struct platform_device *pdev)
- 		goto err2;
- 	}
+ .text
  
-+	if (populate_irqs) {
-+		struct resource musb_res[3];
-+		struct resource *res;
-+		int i = 0;
-+
-+		memset(musb_res, 0, sizeof(*musb_res) * ARRAY_SIZE(musb_res));
-+
-+		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+		if (!res)
-+			goto err2;
-+
-+		musb_res[i].start = res->start;
-+		musb_res[i].end = res->end;
-+		musb_res[i].flags = res->flags;
-+		musb_res[i].name = res->name;
-+		i++;
-+
-+		ret = of_irq_get_byname(np, "mc");
-+		if (ret > 0) {
-+			musb_res[i].start = ret;
-+			musb_res[i].flags = IORESOURCE_IRQ;
-+			musb_res[i].name = "mc";
-+			i++;
-+		}
-+
-+		ret = of_irq_get_byname(np, "dma");
-+		if (ret > 0) {
-+			musb_res[i].start = ret;
-+			musb_res[i].flags = IORESOURCE_IRQ;
-+			musb_res[i].name = "dma";
-+			i++;
-+		}
-+
-+		ret = platform_device_add_resources(musb, musb_res, i);
-+		if (ret) {
-+			dev_err(&pdev->dev, "failed to add IRQ resources\n");
-+			goto err2;
-+		}
-+	}
-+
- 	ret = platform_device_add_data(musb, pdata, sizeof(*pdata));
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to add platform_data\n");
+@@ -273,7 +274,7 @@ frame_size = frame_WK + WK_SIZE
+ # of SHA512 message blocks.
+ # "blocks" is the message length in SHA512 blocks
+ ########################################################################
+-SYM_FUNC_START(sha512_transform_avx)
++SYM_TYPED_FUNC_START(sha512_transform_avx)
+ 	test msglen, msglen
+ 	je nowork
+ 
+diff --git a/arch/x86/crypto/sha512-avx2-asm.S b/arch/x86/crypto/sha512-avx2-asm.S
+index 5cdaab7d6901..b1ca99055ef9 100644
+--- a/arch/x86/crypto/sha512-avx2-asm.S
++++ b/arch/x86/crypto/sha512-avx2-asm.S
+@@ -50,6 +50,7 @@
+ ########################################################################
+ 
+ #include <linux/linkage.h>
++#include <linux/cfi_types.h>
+ 
+ .text
+ 
+@@ -565,7 +566,7 @@ frame_size = frame_CTX + CTX_SIZE
+ # of SHA512 message blocks.
+ # "blocks" is the message length in SHA512 blocks
+ ########################################################################
+-SYM_FUNC_START(sha512_transform_rorx)
++SYM_TYPED_FUNC_START(sha512_transform_rorx)
+ 	# Save GPRs
+ 	push	%rbx
+ 	push	%r12
+diff --git a/arch/x86/crypto/sha512-ssse3-asm.S b/arch/x86/crypto/sha512-ssse3-asm.S
+index b84c22e06c5f..c06afb5270e5 100644
+--- a/arch/x86/crypto/sha512-ssse3-asm.S
++++ b/arch/x86/crypto/sha512-ssse3-asm.S
+@@ -48,6 +48,7 @@
+ ########################################################################
+ 
+ #include <linux/linkage.h>
++#include <linux/cfi_types.h>
+ 
+ .text
+ 
+@@ -274,7 +275,7 @@ frame_size = frame_WK + WK_SIZE
+ # of SHA512 message blocks.
+ # "blocks" is the message length in SHA512 blocks.
+ ########################################################################
+-SYM_FUNC_START(sha512_transform_ssse3)
++SYM_TYPED_FUNC_START(sha512_transform_ssse3)
+ 
+ 	test msglen, msglen
+ 	je nowork
 -- 
 2.35.1
 
