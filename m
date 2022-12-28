@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A761863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C495C433D2;
-	Wed, 28 Dec 2022 15:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323FB1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B21C433D2;
+	Wed, 28 Dec 2022 15:01:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239701;
-	bh=XFSJfxMYXb2GMCZSLBsH9qkkyfu6lh+h9Ipan8Pgm2M=;
+	s=korg; t=1672239704;
+	bh=C5LCNxx27JrnHNGcVXG8Z8y7QGx76sJN0z+c5Ri6/5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HjUb0dV5v8pU02vebLr2xm94QZ4PHfioC7jSuehc3Mr3ZcyLbaEG3/4ZWCvdyjpdx
-	 naXdMuktVqhwO8YjOJr/Zg3zgSZCfLvk6e14tkTK5LNAvMsVJBp1BNYRSEbWYuUocB
-	 ZaNbTbQMjamFsZgViN6mrCqV9umYutJKRT02P3e0=
+	b=bPniqj/neiOn6kMgJjgKlmJGb/cg3+z0FQ7oya1jkH/SH5rQPV37bCfL+EY/C9Ggk
+	 jL8HkjGPm5JYTmU6CbRyjsk4vD9NJims4kVvCrkBJrpFBUGQbNaxTI9TegJozF9oWc
+	 r0ehv8opw30r0fb/9lToUki7fptgAX0lzWK8AFuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0029/1146] arm64: dts: qcom: sm8350: fix UFS PHY registers
-Date: Wed, 28 Dec 2022 15:26:08 +0100
-Message-Id: <20221228144330.961089015@linuxfoundation.org>
+Subject: [PATCH 6.0 0066/1073] arm64: dts: mt2712-evb: Fix usb vbus regulators unit names
+Date: Wed, 28 Dec 2022 15:27:34 +0100
+Message-Id: <20221228144329.881936434@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,46 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit b3c7839b698cc617e97dd2e4f1eeb4adc280fe58 ]
+[ Upstream commit ec1ae39a8d25cfb067b5459fac7c5b7b9bce6f6a ]
 
-The sizes of the UFS PHY register regions are too small and does
-specifically not cover all registers used by the Linux driver.
+Update the names to regulator-usb-p{0-3}-vbus to fix unit_address_vs_reg
+warnings for those.
 
-As Linux maps these regions as full pages this is currently not an issue
-on Linux, but let's update the sizes to match the vendor driver.
-
-Fixes: 59c7cf814783 ("arm64: dts: qcom: sm8350: Add UFS nodes")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221024091507.20342-4-johan+linaro@kernel.org
+Fixes: 1724f4cc5133 ("arm64: dts: Add USB3 related nodes for MT2712")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221013152212.416661-7-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt2712-evb.dts | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index a86d9ea93b9d..a6270d97a319 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -2142,11 +2142,11 @@ ufs_mem_phy: phy@1d87000 {
- 			status = "disabled";
+diff --git a/arch/arm64/boot/dts/mediatek/mt2712-evb.dts b/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
+index 638908773706..d31a194124c9 100644
+--- a/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
++++ b/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
+@@ -50,7 +50,7 @@ extcon_usb1: extcon_iddig1 {
+ 		id-gpio = <&pio 14 GPIO_ACTIVE_HIGH>;
+ 	};
  
- 			ufs_mem_phy_lanes: phy@1d87400 {
--				reg = <0 0x01d87400 0 0x108>,
--				      <0 0x01d87600 0 0x1e0>,
--				      <0 0x01d87c00 0 0x1dc>,
--				      <0 0x01d87800 0 0x108>,
--				      <0 0x01d87a00 0 0x1e0>;
-+				reg = <0 0x01d87400 0 0x188>,
-+				      <0 0x01d87600 0 0x200>,
-+				      <0 0x01d87c00 0 0x200>,
-+				      <0 0x01d87800 0 0x188>,
-+				      <0 0x01d87a00 0 0x200>;
- 				#phy-cells = <0>;
- 			};
- 		};
+-	usb_p0_vbus: regulator@2 {
++	usb_p0_vbus: regulator-usb-p0-vbus {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "p0_vbus";
+ 		regulator-min-microvolt = <5000000>;
+@@ -59,7 +59,7 @@ usb_p0_vbus: regulator@2 {
+ 		enable-active-high;
+ 	};
+ 
+-	usb_p1_vbus: regulator@3 {
++	usb_p1_vbus: regulator-usb-p1-vbus {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "p1_vbus";
+ 		regulator-min-microvolt = <5000000>;
+@@ -68,7 +68,7 @@ usb_p1_vbus: regulator@3 {
+ 		enable-active-high;
+ 	};
+ 
+-	usb_p2_vbus: regulator@4 {
++	usb_p2_vbus: regulator-usb-p2-vbus {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "p2_vbus";
+ 		regulator-min-microvolt = <5000000>;
+@@ -77,7 +77,7 @@ usb_p2_vbus: regulator@4 {
+ 		enable-active-high;
+ 	};
+ 
+-	usb_p3_vbus: regulator@5 {
++	usb_p3_vbus: regulator-usb-p3-vbus {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "p3_vbus";
+ 		regulator-min-microvolt = <5000000>;
 -- 
 2.35.1
 
