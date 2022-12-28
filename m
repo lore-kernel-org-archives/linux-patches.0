@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 431641868
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:58:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAEDDC433D2;
-	Wed, 28 Dec 2022 14:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D23661863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:58:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B55C433D2;
+	Wed, 28 Dec 2022 14:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239501;
-	bh=qOWIOEhmVK/i/VqEw80DTsTiRAy5CmRVGEA9eEFOezg=;
+	s=korg; t=1672239503;
+	bh=2NoQsfuLFH5qjh9NeGAICdSwPArreq+lbGl/pwIFnrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GQFn96oPtsUduxgDRVuOEte3ww8NgyFVY1Wxm9AMmQtNkMrAHAgXiLh0F/RAQuNu5
-	 +Rpfit3IqQ5H3JRwmUoz0WnF6ohScJamh5DlwfAnZjuQwhRqvfVfk5Q9hOVEwLss5+
-	 2azo8bevBLWvQeAxTVAiD7edVVvUm+VblMG3pyx8=
+	b=Z3PxGBDIRhMH3xkiHKOXqFl1nrzPaUPWwz+m7tJtuCjr4Net1kycgbaApvUfJXf1k
+	 qtZQ4WUqRFeuwWbYVL7s3JhCbTp1qY+7yzPJbjov3/tW1oN6QWqADYUfHTRrraNSKF
+	 ZVqIHsVzYkWdhjpQJajLKhYAMYPfUTmOha4Zqfk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0009/1073] arm64: dts: qcom: ipq6018-cp01-c1: use BLSPI1 pins
-Date: Wed, 28 Dec 2022 15:26:37 +0100
-Message-Id: <20221228144328.420529608@linuxfoundation.org>
+Subject: [PATCH 5.15 205/731] ima: Fix misuse of dereference of pointer in template_desc_init_fields()
+Date: Wed, 28 Dec 2022 15:35:12 +0100
+Message-Id: <20221228144302.502656150@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,38 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 4871d3c38893c8a585e3e96364b7fb91cda8322e ]
+[ Upstream commit 25369175ce84813dd99d6604e710dc2491f68523 ]
 
-When BLSPI1 (originally SPI0, later renamed in commit f82c48d46852
-("arm64: dts: qcom: ipq6018: correct QUP peripheral labels")) was added,
-the device node lacked respective pin configuration assignment.
+The input parameter @fields is type of struct ima_template_field ***, so
+when allocates array memory for @fields, the size of element should be
+sizeof(**field) instead of sizeof(*field).
 
-Fixes: 5bf635621245 ("arm64: dts: ipq6018: Add a few device nodes")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221006124659.217540-2-krzysztof.kozlowski@linaro.org
+Actually the original code would not cause any runtime error, but it's
+better to make it logically right.
+
+Fixes: adf53a778a0a ("ima: new templates management mechanism")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts | 2 ++
- 1 file changed, 2 insertions(+)
+ security/integrity/ima/ima_template.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-index 1ba2eca33c7b..6a716c83e5f1 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dts
-@@ -37,6 +37,8 @@ &blsp1_i2c3 {
+diff --git a/security/integrity/ima/ima_template.c b/security/integrity/ima/ima_template.c
+index db1ad6d7a57f..f84a0598e4f6 100644
+--- a/security/integrity/ima/ima_template.c
++++ b/security/integrity/ima/ima_template.c
+@@ -241,11 +241,11 @@ int template_desc_init_fields(const char *template_fmt,
+ 	}
  
- &blsp1_spi1 {
- 	cs-select = <0>;
-+	pinctrl-0 = <&spi_0_pins>;
-+	pinctrl-names = "default";
- 	status = "okay";
+ 	if (fields && num_fields) {
+-		*fields = kmalloc_array(i, sizeof(*fields), GFP_KERNEL);
++		*fields = kmalloc_array(i, sizeof(**fields), GFP_KERNEL);
+ 		if (*fields == NULL)
+ 			return -ENOMEM;
  
- 	flash@0 {
+-		memcpy(*fields, found_fields, i * sizeof(*fields));
++		memcpy(*fields, found_fields, i * sizeof(**fields));
+ 		*num_fields = i;
+ 	}
+ 
 -- 
 2.35.1
 
