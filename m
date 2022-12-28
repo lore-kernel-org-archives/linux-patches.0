@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 205941863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:31:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF3FC433D2;
-	Wed, 28 Dec 2022 15:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF8D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:31:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FFCEC433D2;
+	Wed, 28 Dec 2022 15:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241480;
-	bh=HMeGYSEjaVK0ctRVfTQQyllG7nohyNqEuvaEqfo9ZHQ=;
+	s=korg; t=1672241482;
+	bh=uY69BWEonealXJRxRIe5Mc0O8gFvWHAWmyGV5wrFU7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OrLdhwlb/eRdTL9dhnLHCgBwlFVWZVfoRioMj5u0rM+5hBkh8isy3gw4bmtx0dXkr
-	 VSelIQeaYmJjfVdbaGSDrVqv9IVIzQ8RYPUnx+s+oSJSuXEiBqTH3HuF8/2X63ZW5s
-	 bElAVrj1Nfr1cNjo1NDx2LN8eQ/wJSQzt/guN+xM=
+	b=HZCksEWsX7M/elAjk8XjQ2LPRHQULPZpJ4+y22qimgJyrNVmNxu0s3qnyG6Xljefr
+	 Lk3vmuQfU579CR5k92Z5tUnGs+nb1yfTl5zYzrLlm8WrptSsXPLRU3YiRlZt5wvqD+
+	 W/+Tw5rPtRLmgVV4wX9MTeNOol1HejtbM3DuufyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Anssi Hannula <anssi.hannula@bitwise.fi>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Dan Carpenter <error27@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0251/1146] can: kvaser_usb_leaf: Fix bogus restart events
-Date: Wed, 28 Dec 2022 15:29:50 +0100
-Message-Id: <20221228144336.956105018@linuxfoundation.org>
+Subject: [PATCH 5.15 487/731] staging: rtl8192u: Fix use after free in ieee80211_rx()
+Date: Wed, 28 Dec 2022 15:39:54 +0100
+Message-Id: <20221228144310.665518976@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,64 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anssi Hannula <anssi.hannula@bitwise.fi>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 90904d326269a38fe5dd895fb2db7c03199654c4 ]
+[ Upstream commit bcc5e2dcf09089b337b76fc1a589f6ff95ca19ac ]
 
-When auto-restart is enabled, the kvaser_usb_leaf driver considers
-transition from any state >= CAN_STATE_BUS_OFF as a bus-off recovery
-event (restart).
+We cannot dereference the "skb" pointer after calling
+ieee80211_monitor_rx(), because it is a use after free.
 
-However, these events may occur at interface startup time before
-kvaser_usb_open() has set the state to CAN_STATE_ERROR_ACTIVE, causing
-restarts counter to increase and CAN_ERR_RESTARTED to be sent despite no
-actual restart having occurred.
-
-Fix that by making the auto-restart condition checks more strict so that
-they only trigger when the interface was actually in the BUS_OFF state.
-
-Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
-Tested-by: Jimmy Assarsson <extja@kvaser.com>
-Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/all/20221010185237.319219-10-extja@kvaser.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 8fc8598e61f6 ("Staging: Added Realtek rtl8192u driver to staging")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/Y33BArx3k/aw6yv/@kili
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/staging/rtl8192u/ieee80211/ieee80211_rx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-index 4f9c76f4d0da..fa940be4e1b0 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-@@ -898,7 +898,7 @@ static void kvaser_usb_leaf_tx_acknowledge(const struct kvaser_usb *dev,
- 	context = &priv->tx_contexts[tid % dev->max_tx_urbs];
+diff --git a/drivers/staging/rtl8192u/ieee80211/ieee80211_rx.c b/drivers/staging/rtl8192u/ieee80211/ieee80211_rx.c
+index b58e75932ecd..3686b3c599ce 100644
+--- a/drivers/staging/rtl8192u/ieee80211/ieee80211_rx.c
++++ b/drivers/staging/rtl8192u/ieee80211/ieee80211_rx.c
+@@ -951,9 +951,11 @@ int ieee80211_rx(struct ieee80211_device *ieee, struct sk_buff *skb,
+ #endif
  
- 	/* Sometimes the state change doesn't come after a bus-off event */
--	if (priv->can.restart_ms && priv->can.state >= CAN_STATE_BUS_OFF) {
-+	if (priv->can.restart_ms && priv->can.state == CAN_STATE_BUS_OFF) {
- 		struct sk_buff *skb;
- 		struct can_frame *cf;
- 
-@@ -998,7 +998,7 @@ kvaser_usb_leaf_rx_error_update_can_state(struct kvaser_usb_net_priv *priv,
+ 	if (ieee->iw_mode == IW_MODE_MONITOR) {
++		unsigned int len = skb->len;
++
+ 		ieee80211_monitor_rx(ieee, skb, rx_stats);
+ 		stats->rx_packets++;
+-		stats->rx_bytes += skb->len;
++		stats->rx_bytes += len;
+ 		return 1;
  	}
  
- 	if (priv->can.restart_ms &&
--	    cur_state >= CAN_STATE_BUS_OFF &&
-+	    cur_state == CAN_STATE_BUS_OFF &&
- 	    new_state < CAN_STATE_BUS_OFF)
- 		priv->can.can_stats.restarts++;
- 
-@@ -1088,7 +1088,7 @@ static void kvaser_usb_leaf_rx_error(const struct kvaser_usb *dev,
- 		}
- 
- 		if (priv->can.restart_ms &&
--		    old_state >= CAN_STATE_BUS_OFF &&
-+		    old_state == CAN_STATE_BUS_OFF &&
- 		    new_state < CAN_STATE_BUS_OFF) {
- 			cf->can_id |= CAN_ERR_RESTARTED;
- 			netif_carrier_on(priv->netdev);
 -- 
 2.35.1
 
