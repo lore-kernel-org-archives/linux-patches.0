@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FC0B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:11:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211C9C433EF;
-	Wed, 28 Dec 2022 15:11:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7142D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:11:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC1C5C433EF;
+	Wed, 28 Dec 2022 15:11:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240269;
-	bh=WpeOb47p4BcVkPTCK+uNU5DO/tf7q1kPTsMdjVQyzj4=;
+	s=korg; t=1672240272;
+	bh=QSc7ICUxnojblo+gGNMCl4yx24zid3PlU/sjpWlAZ3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D01/8UV9ZEAKLKLqsqNpQQUgsf5glGO0rawZrPeYR2HZf511/SqQVIFRGOsElwmyU
-	 vyF1fZFU0SUW/2tiD0Gg7ImZHVo4vEgmMYrDdgqF+MDkpWlou7EDc34MWdDXMXYJju
-	 KcoUF/uuLTTAeaJSlwHYi2fNmhcyp7zBVMH/c+kU=
+	b=uiSADtDrndVnQ3YCtlbbts3ukmHjsGBRxiOTqGdPDoqirham2eMz/RaSXwrveBPuI
+	 xUyqQnDvkZF0VLRb5B5ZS6NbIwQGXujwBcs0XPa+HGynxz+nCTvbn+Oialbh89BLKO
+	 R8q5pktR3np/goQ2mGZpj1K6VzkmX7LEg0uOCLYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianlin Shi <jishi@redhat.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 330/731] net/tunnel: wait until all sk_user_data reader finish before releasing the sock
-Date: Wed, 28 Dec 2022 15:37:17 +0100
-Message-Id: <20221228144306.137936187@linuxfoundation.org>
+Subject: [PATCH 6.0 0141/1073] NFSD: Finish converting the NFSv3 GETACL result encoder
+Date: Wed, 28 Dec 2022 15:28:49 +0100
+Message-Id: <20221228144331.859197056@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,72 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit 3cf7203ca620682165706f70a1b12b5194607dce ]
+[ Upstream commit 841fd0a3cb490eae5dfd262eccb8c8b11d57f8b8 ]
 
-There is a race condition in vxlan that when deleting a vxlan device
-during receiving packets, there is a possibility that the sock is
-released after getting vxlan_sock vs from sk_user_data. Then in
-later vxlan_ecn_decapsulate(), vxlan_get_sk_family() we will got
-NULL pointer dereference. e.g.
+For some reason, the NFSv2 GETACL result encoder was fully converted
+to use the new nfs_stream_encode_acl(), but the NFSv3 equivalent was
+not similarly converted.
 
-   #0 [ffffa25ec6978a38] machine_kexec at ffffffff8c669757
-   #1 [ffffa25ec6978a90] __crash_kexec at ffffffff8c7c0a4d
-   #2 [ffffa25ec6978b58] crash_kexec at ffffffff8c7c1c48
-   #3 [ffffa25ec6978b60] oops_end at ffffffff8c627f2b
-   #4 [ffffa25ec6978b80] page_fault_oops at ffffffff8c678fcb
-   #5 [ffffa25ec6978bd8] exc_page_fault at ffffffff8d109542
-   #6 [ffffa25ec6978c00] asm_exc_page_fault at ffffffff8d200b62
-      [exception RIP: vxlan_ecn_decapsulate+0x3b]
-      RIP: ffffffffc1014e7b  RSP: ffffa25ec6978cb0  RFLAGS: 00010246
-      RAX: 0000000000000008  RBX: ffff8aa000888000  RCX: 0000000000000000
-      RDX: 000000000000000e  RSI: ffff8a9fc7ab803e  RDI: ffff8a9fd1168700
-      RBP: ffff8a9fc7ab803e   R8: 0000000000700000   R9: 00000000000010ae
-      R10: ffff8a9fcb748980  R11: 0000000000000000  R12: ffff8a9fd1168700
-      R13: ffff8aa000888000  R14: 00000000002a0000  R15: 00000000000010ae
-      ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
-   #7 [ffffa25ec6978ce8] vxlan_rcv at ffffffffc10189cd [vxlan]
-   #8 [ffffa25ec6978d90] udp_queue_rcv_one_skb at ffffffff8cfb6507
-   #9 [ffffa25ec6978dc0] udp_unicast_rcv_skb at ffffffff8cfb6e45
-  #10 [ffffa25ec6978dc8] __udp4_lib_rcv at ffffffff8cfb8807
-  #11 [ffffa25ec6978e20] ip_protocol_deliver_rcu at ffffffff8cf76951
-  #12 [ffffa25ec6978e48] ip_local_deliver at ffffffff8cf76bde
-  #13 [ffffa25ec6978ea0] __netif_receive_skb_one_core at ffffffff8cecde9b
-  #14 [ffffa25ec6978ec8] process_backlog at ffffffff8cece139
-  #15 [ffffa25ec6978f00] __napi_poll at ffffffff8ceced1a
-  #16 [ffffa25ec6978f28] net_rx_action at ffffffff8cecf1f3
-  #17 [ffffa25ec6978fa0] __softirqentry_text_start at ffffffff8d4000ca
-  #18 [ffffa25ec6978ff0] do_softirq at ffffffff8c6fbdc3
-
-Reproducer: https://github.com/Mellanox/ovs-tests/blob/master/test-ovs-vxlan-remove-tunnel-during-traffic.sh
-
-Fix this by waiting for all sk_user_data reader to finish before
-releasing the sock.
-
-Reported-by: Jianlin Shi <jishi@redhat.com>
-Suggested-by: Jakub Sitnicki <jakub@cloudflare.com>
-Fixes: 6a93cc905274 ("udp-tunnel: Add a few more UDP tunnel APIs")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 20798dfe249a ("NFSD: Update the NFSv3 GETACL result encoder to use struct xdr_stream")
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_tunnel_core.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/nfsd/nfs3acl.c | 30 ++++++------------------------
+ 1 file changed, 6 insertions(+), 24 deletions(-)
 
-diff --git a/net/ipv4/udp_tunnel_core.c b/net/ipv4/udp_tunnel_core.c
-index 46101fd67a47..1ff5b8e30bb9 100644
---- a/net/ipv4/udp_tunnel_core.c
-+++ b/net/ipv4/udp_tunnel_core.c
-@@ -179,6 +179,7 @@ EXPORT_SYMBOL_GPL(udp_tunnel_xmit_skb);
- void udp_tunnel_sock_release(struct socket *sock)
+diff --git a/fs/nfsd/nfs3acl.c b/fs/nfsd/nfs3acl.c
+index 9446c6743664..7c798b5f4ec6 100644
+--- a/fs/nfsd/nfs3acl.c
++++ b/fs/nfsd/nfs3acl.c
+@@ -171,11 +171,7 @@ nfs3svc_encode_getaclres(struct svc_rqst *rqstp, struct xdr_stream *xdr)
  {
- 	rcu_assign_sk_user_data(sock->sk, NULL);
-+	synchronize_rcu();
- 	kernel_sock_shutdown(sock, SHUT_RDWR);
- 	sock_release(sock);
- }
+ 	struct nfsd3_getaclres *resp = rqstp->rq_resp;
+ 	struct dentry *dentry = resp->fh.fh_dentry;
+-	struct kvec *head = rqstp->rq_res.head;
+ 	struct inode *inode;
+-	unsigned int base;
+-	int n;
+-	int w;
+ 
+ 	if (!svcxdr_encode_nfsstat3(xdr, resp->status))
+ 		return false;
+@@ -187,26 +183,12 @@ nfs3svc_encode_getaclres(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+ 		if (xdr_stream_encode_u32(xdr, resp->mask) < 0)
+ 			return false;
+ 
+-		base = (char *)xdr->p - (char *)head->iov_base;
+-
+-		rqstp->rq_res.page_len = w = nfsacl_size(
+-			(resp->mask & NFS_ACL)   ? resp->acl_access  : NULL,
+-			(resp->mask & NFS_DFACL) ? resp->acl_default : NULL);
+-		while (w > 0) {
+-			if (!*(rqstp->rq_next_page++))
+-				return false;
+-			w -= PAGE_SIZE;
+-		}
+-
+-		n = nfsacl_encode(&rqstp->rq_res, base, inode,
+-				  resp->acl_access,
+-				  resp->mask & NFS_ACL, 0);
+-		if (n > 0)
+-			n = nfsacl_encode(&rqstp->rq_res, base + n, inode,
+-					  resp->acl_default,
+-					  resp->mask & NFS_DFACL,
+-					  NFS_ACL_DEFAULT);
+-		if (n <= 0)
++		if (!nfs_stream_encode_acl(xdr, inode, resp->acl_access,
++					   resp->mask & NFS_ACL, 0))
++			return false;
++		if (!nfs_stream_encode_acl(xdr, inode, resp->acl_default,
++					   resp->mask & NFS_DFACL,
++					   NFS_ACL_DEFAULT))
+ 			return false;
+ 		break;
+ 	default:
 -- 
 2.35.1
 
