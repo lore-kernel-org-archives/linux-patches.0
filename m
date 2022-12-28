@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45D211875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFCC5C433F0;
-	Wed, 28 Dec 2022 15:58:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7E6F1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E32AC433D2;
+	Wed, 28 Dec 2022 15:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243124;
-	bh=AskKKRRcQqzLYBTMTG/5uzaH5GQVZxK81UJLrVlqNPc=;
+	s=korg; t=1672243126;
+	bh=hq9L3NzxtTTQJ/HnUO/qDnvIV6iil0fRyMkvtAxV0jo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U94V8iPekX+6J/ifH42GOHOuqB6ZaSdj75f9+xVRF5SZ4kNrY3GhaEcdAMu+Oj2Ht
-	 mQzo7zmdbIJl1OVCWhW7ZvGHzVzj2n8kb4MbxGJ2QZqBJPxX0Ks0kZw6Rj2UtM3+8W
-	 8lbftay5I9GwiLHavUI7kzhMghf3KNMjhPVjFidY=
+	b=nvCZfbDMhNRQHnwl0tzzvIvqZVZPI7tp8G0mURHHg1wIg7nC+0Mzum9N6wnzo9shA
+	 TDCMDh/8nD99Hb2UdfYXPLvM0M3/unU+Ohhc50yN3HngvNyX5puwRgpyV7XSbWO4HL
+	 aXjhTSBHmQoqqlNBGVd99br+g+/Ypst22XWjkozE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0492/1073] mmc: wbsd: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:34:40 +0100
-Message-Id: <20221228144341.397955710@linuxfoundation.org>
+Subject: [PATCH 5.15 686/731] ALSA/ASoC: hda: move/rename snd_hdac_ext_stop_streams to hdac_stream.c
+Date: Wed, 28 Dec 2022 15:43:13 +0100
+Message-Id: <20221228144316.352988821@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,53 +39,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit dc5b9b50fc9d1334407e316e6e29a5097ef833bd ]
+[ Upstream commit 12054f0ce8be7d2003ec068ab27c9eb608397b98 ]
 
-mmc_add_host() may return error, if we ignore its return value,
-it will lead two issues:
-1. The memory that allocated in mmc_alloc_host() is leaked.
-2. In the remove() path, mmc_remove_host() will be called to
-   delete device, but it's not added yet, it will lead a kernel
-   crash because of null-ptr-deref in device_del().
+snd_hdac_ext_stop_streams() has really nothing to do with the
+extension, it just loops over the bus streams.
 
-So fix this by checking the return value and goto error path which
-will call mmc_free_host(), besides, other resources also need be
-released.
+Move it to the hdac_stream layer and rename to remove the 'ext'
+prefix and add the precision that the chip will also be stopped.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221109133237.3273558-1-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Kai Vehmanen <kai.vehmanen@intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://lore.kernel.org/r/20211216231128.344321-2-pierre-louis.bossart@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Stable-dep-of: 171107237246 ("ASoC: Intel: Skylake: Fix driver hang during shutdown")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/wbsd.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ include/sound/hdaudio.h         |  1 +
+ include/sound/hdaudio_ext.h     |  1 -
+ sound/hda/ext/hdac_ext_stream.c | 17 -----------------
+ sound/hda/hdac_stream.c         | 16 ++++++++++++++++
+ sound/soc/intel/skylake/skl.c   |  4 ++--
+ 5 files changed, 19 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/mmc/host/wbsd.c b/drivers/mmc/host/wbsd.c
-index 67ecd342fe5f..7c7ec8d10232 100644
---- a/drivers/mmc/host/wbsd.c
-+++ b/drivers/mmc/host/wbsd.c
-@@ -1698,7 +1698,17 @@ static int wbsd_init(struct device *dev, int base, int irq, int dma,
- 	 */
- 	wbsd_init_device(host);
+diff --git a/include/sound/hdaudio.h b/include/sound/hdaudio.h
+index 22af68b01426..6a90ce405e60 100644
+--- a/include/sound/hdaudio.h
++++ b/include/sound/hdaudio.h
+@@ -558,6 +558,7 @@ int snd_hdac_stream_set_params(struct hdac_stream *azx_dev,
+ void snd_hdac_stream_start(struct hdac_stream *azx_dev, bool fresh_start);
+ void snd_hdac_stream_clear(struct hdac_stream *azx_dev);
+ void snd_hdac_stream_stop(struct hdac_stream *azx_dev);
++void snd_hdac_stop_streams_and_chip(struct hdac_bus *bus);
+ void snd_hdac_stream_reset(struct hdac_stream *azx_dev);
+ void snd_hdac_stream_sync_trigger(struct hdac_stream *azx_dev, bool set,
+ 				  unsigned int streams, unsigned int reg);
+diff --git a/include/sound/hdaudio_ext.h b/include/sound/hdaudio_ext.h
+index d4e31ea16aba..56ea5cde5e63 100644
+--- a/include/sound/hdaudio_ext.h
++++ b/include/sound/hdaudio_ext.h
+@@ -92,7 +92,6 @@ void snd_hdac_ext_stream_decouple_locked(struct hdac_bus *bus,
+ 				  struct hdac_ext_stream *azx_dev, bool decouple);
+ void snd_hdac_ext_stream_decouple(struct hdac_bus *bus,
+ 				struct hdac_ext_stream *azx_dev, bool decouple);
+-void snd_hdac_ext_stop_streams(struct hdac_bus *bus);
  
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret) {
-+		if (!pnp)
-+			wbsd_chip_poweroff(host);
+ int snd_hdac_ext_stream_set_spib(struct hdac_bus *bus,
+ 				 struct hdac_ext_stream *stream, u32 value);
+diff --git a/sound/hda/ext/hdac_ext_stream.c b/sound/hda/ext/hdac_ext_stream.c
+index 37154ed43bd5..c09652da43ff 100644
+--- a/sound/hda/ext/hdac_ext_stream.c
++++ b/sound/hda/ext/hdac_ext_stream.c
+@@ -475,23 +475,6 @@ int snd_hdac_ext_stream_get_spbmaxfifo(struct hdac_bus *bus,
+ }
+ EXPORT_SYMBOL_GPL(snd_hdac_ext_stream_get_spbmaxfifo);
+ 
+-
+-/**
+- * snd_hdac_ext_stop_streams - stop all stream if running
+- * @bus: HD-audio core bus
+- */
+-void snd_hdac_ext_stop_streams(struct hdac_bus *bus)
+-{
+-	struct hdac_stream *stream;
+-
+-	if (bus->chip_init) {
+-		list_for_each_entry(stream, &bus->stream_list, list)
+-			snd_hdac_stream_stop(stream);
+-		snd_hdac_bus_stop_chip(bus);
+-	}
+-}
+-EXPORT_SYMBOL_GPL(snd_hdac_ext_stop_streams);
+-
+ /**
+  * snd_hdac_ext_stream_drsm_enable - enable DMA resume for a stream
+  * @bus: HD-audio core bus
+diff --git a/sound/hda/hdac_stream.c b/sound/hda/hdac_stream.c
+index aa7955fdf68a..f3582012d22f 100644
+--- a/sound/hda/hdac_stream.c
++++ b/sound/hda/hdac_stream.c
+@@ -142,6 +142,22 @@ void snd_hdac_stream_stop(struct hdac_stream *azx_dev)
+ }
+ EXPORT_SYMBOL_GPL(snd_hdac_stream_stop);
+ 
++/**
++ * snd_hdac_stop_streams_and_chip - stop all streams and chip if running
++ * @bus: HD-audio core bus
++ */
++void snd_hdac_stop_streams_and_chip(struct hdac_bus *bus)
++{
++	struct hdac_stream *stream;
 +
-+		wbsd_release_resources(host);
-+		wbsd_free_mmc(dev);
-+
-+		mmc_free_host(mmc);
-+		return ret;
++	if (bus->chip_init) {
++		list_for_each_entry(stream, &bus->stream_list, list)
++			snd_hdac_stream_stop(stream);
++		snd_hdac_bus_stop_chip(bus);
 +	}
++}
++EXPORT_SYMBOL_GPL(snd_hdac_stop_streams_and_chip);
++
+ /**
+  * snd_hdac_stream_reset - reset a stream
+  * @azx_dev: HD-audio core stream to reset
+diff --git a/sound/soc/intel/skylake/skl.c b/sound/soc/intel/skylake/skl.c
+index 5b1a15e39912..148ddf4cace0 100644
+--- a/sound/soc/intel/skylake/skl.c
++++ b/sound/soc/intel/skylake/skl.c
+@@ -439,7 +439,7 @@ static int skl_free(struct hdac_bus *bus)
  
- 	pr_info("%s: W83L51xD", mmc_hostname(mmc));
- 	if (host->chip_id != 0)
+ 	skl->init_done = 0; /* to be sure */
+ 
+-	snd_hdac_ext_stop_streams(bus);
++	snd_hdac_stop_streams_and_chip(bus);
+ 
+ 	if (bus->irq >= 0)
+ 		free_irq(bus->irq, (void *)bus);
+@@ -1096,7 +1096,7 @@ static void skl_shutdown(struct pci_dev *pci)
+ 	if (!skl->init_done)
+ 		return;
+ 
+-	snd_hdac_ext_stop_streams(bus);
++	snd_hdac_stop_streams_and_chip(bus);
+ 	list_for_each_entry(s, &bus->stream_list, list) {
+ 		stream = stream_to_hdac_ext_stream(s);
+ 		snd_hdac_ext_stream_decouple(bus, stream, false);
 -- 
 2.35.1
 
