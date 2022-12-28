@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAFC1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A92E8C433D2;
-	Wed, 28 Dec 2022 16:21:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBDE71C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A83BC433EF;
+	Wed, 28 Dec 2022 16:21:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244476;
-	bh=PJPt4jLOFhgcuc/+JuljsVzIoJ3elgqYMe1T4nq2wXc=;
+	s=korg; t=1672244478;
+	bh=FkhWfCq6aFAUBTTHKhFSXWhEzPjELgj/IBt//V8wm80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g1Nv+XtAvKZ8EUDqvU4/cdIrMv28vGq7BOQX6qzFFQ+OEr/Tlsidi/I5/mPGTvVyy
-	 HqsagVbsrDaNUEjviRD+RhHJGd71l/p66zuIsaEEM1N4Bbu6WISjXYz484D4r/Jefl
-	 7dDSyfZUGOEyDvNFwpn7fsWmpSDSuBHbFqXC5x5M=
+	b=txomsBvqm6ZUzUZ7LqM9Ssw4HuB8XuxsFu63A80PRLyiodMJaORC6HjgLvIWNtr3p
+	 ChUfbfu52tp/GOhzYNk/EXPeZZsfeoUHFEcAQ58SMaZhhedzUjYkgbSJgi+aXiipng
+	 8hjnzIu15Yvc37yn3h7WuaM95+JEc+QO9504roSc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	delisun <delisun@pateo.com.cn>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0716/1073] gpiolib: cdev: fix NULL-pointer dereferences
-Date: Wed, 28 Dec 2022 15:38:24 +0100
-Message-Id: <20221228144347.475658739@linuxfoundation.org>
+Subject: [PATCH 6.0 0685/1073] serial: pl011: Do not clear RX FIFO & RX interrupt in unthrottle.
+Date: Wed, 28 Dec 2022 15:37:53 +0100
+Message-Id: <20221228144346.642413557@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -36,132 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: delisun <delisun@pateo.com.cn>
 
-[ Upstream commit 533aae7c94dbc2b14301cfd68ae7e0e90f0c8438 ]
+[ Upstream commit 032d5a71ed378ffc6a2d41a187d8488a4f9fe415 ]
 
-There are several places where we can crash the kernel by requesting
-lines, unbinding the GPIO device, then calling any of the system calls
-relevant to the GPIO character device's annonymous file descriptors:
-ioctl(), read(), poll().
+Clearing the RX FIFO will cause data loss.
+Copy the pl011_enabl_interrupts implementation, and remove the clear
+interrupt and FIFO part of the code.
 
-While I observed it with the GPIO simulator, it will also happen for any
-of the GPIO devices that can be hot-unplugged - for instance any HID GPIO
-expander (e.g. CP2112).
-
-This affects both v1 and v2 uAPI.
-
-This fixes it partially by checking if gdev->chip is not NULL but it
-doesn't entirely remedy the situation as we still have a race condition
-in which another thread can remove the device after the check.
-
-Fixes: d7c51b47ac11 ("gpio: userspace ABI for reading/writing GPIO lines")
-Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
-Fixes: aad955842d1c ("gpiolib: cdev: support GPIO_V2_GET_LINEINFO_IOCTL and GPIO_V2_GET_LINEINFO_WATCH_IOCTL")
-Fixes: a54756cb24ea ("gpiolib: cdev: support GPIO_V2_LINE_SET_CONFIG_IOCTL")
-Fixes: 7b8e00d98168 ("gpiolib: cdev: support GPIO_V2_LINE_SET_VALUES_IOCTL")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 211565b10099 ("serial: pl011: UPSTAT_AUTORTS requires .throttle/unthrottle")
+Signed-off-by: delisun <delisun@pateo.com.cn>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20221110020108.7700-1-delisun@pateo.com.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-cdev.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/tty/serial/amba-pl011.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
-index 92f185575e94..5b647327cb7f 100644
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -201,6 +201,9 @@ static long linehandle_ioctl(struct file *file, unsigned int cmd,
- 	unsigned int i;
- 	int ret;
+diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
+index 72c2a978cf61..c211a1e92db7 100644
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -1831,8 +1831,17 @@ static void pl011_enable_interrupts(struct uart_amba_port *uap)
+ static void pl011_unthrottle_rx(struct uart_port *port)
+ {
+ 	struct uart_amba_port *uap = container_of(port, struct uart_amba_port, port);
++	unsigned long flags;
  
-+	if (!lh->gdev->chip)
-+		return -ENODEV;
+-	pl011_enable_interrupts(uap);
++	spin_lock_irqsave(&uap->port.lock, flags);
 +
- 	switch (cmd) {
- 	case GPIOHANDLE_GET_LINE_VALUES_IOCTL:
- 		/* NOTE: It's okay to read values of output lines */
-@@ -1384,6 +1387,9 @@ static long linereq_ioctl(struct file *file, unsigned int cmd,
- 	struct linereq *lr = file->private_data;
- 	void __user *ip = (void __user *)arg;
- 
-+	if (!lr->gdev->chip)
-+		return -ENODEV;
++	uap->im = UART011_RTIM;
++	if (!pl011_dma_rx_running(uap))
++		uap->im |= UART011_RXIM;
 +
- 	switch (cmd) {
- 	case GPIO_V2_LINE_GET_VALUES_IOCTL:
- 		return linereq_get_values(lr, ip);
-@@ -1410,6 +1416,9 @@ static __poll_t linereq_poll(struct file *file,
- 	struct linereq *lr = file->private_data;
- 	__poll_t events = 0;
- 
-+	if (!lr->gdev->chip)
-+		return EPOLLHUP | EPOLLERR;
++	pl011_write(uap->im, uap, REG_IMSC);
 +
- 	poll_wait(file, &lr->wait, wait);
++	spin_unlock_irqrestore(&uap->port.lock, flags);
+ }
  
- 	if (!kfifo_is_empty_spinlocked_noirqsave(&lr->events,
-@@ -1429,6 +1438,9 @@ static ssize_t linereq_read(struct file *file,
- 	ssize_t bytes_read = 0;
- 	int ret;
- 
-+	if (!lr->gdev->chip)
-+		return -ENODEV;
-+
- 	if (count < sizeof(le))
- 		return -EINVAL;
- 
-@@ -1698,6 +1710,9 @@ static __poll_t lineevent_poll(struct file *file,
- 	struct lineevent_state *le = file->private_data;
- 	__poll_t events = 0;
- 
-+	if (!le->gdev->chip)
-+		return EPOLLHUP | EPOLLERR;
-+
- 	poll_wait(file, &le->wait, wait);
- 
- 	if (!kfifo_is_empty_spinlocked_noirqsave(&le->events, &le->wait.lock))
-@@ -1722,6 +1737,9 @@ static ssize_t lineevent_read(struct file *file,
- 	ssize_t ge_size;
- 	int ret;
- 
-+	if (!le->gdev->chip)
-+		return -ENODEV;
-+
- 	/*
- 	 * When compatible system call is being used the struct gpioevent_data,
- 	 * in case of at least ia32, has different size due to the alignment
-@@ -1803,6 +1821,9 @@ static long lineevent_ioctl(struct file *file, unsigned int cmd,
- 	void __user *ip = (void __user *)arg;
- 	struct gpiohandle_data ghd;
- 
-+	if (!le->gdev->chip)
-+		return -ENODEV;
-+
- 	/*
- 	 * We can get the value for an event line but not set it,
- 	 * because it is input by definition.
-@@ -2389,6 +2410,9 @@ static __poll_t lineinfo_watch_poll(struct file *file,
- 	struct gpio_chardev_data *cdev = file->private_data;
- 	__poll_t events = 0;
- 
-+	if (!cdev->gdev->chip)
-+		return EPOLLHUP | EPOLLERR;
-+
- 	poll_wait(file, &cdev->wait, pollt);
- 
- 	if (!kfifo_is_empty_spinlocked_noirqsave(&cdev->events,
-@@ -2407,6 +2431,9 @@ static ssize_t lineinfo_watch_read(struct file *file, char __user *buf,
- 	int ret;
- 	size_t event_size;
- 
-+	if (!cdev->gdev->chip)
-+		return -ENODEV;
-+
- #ifndef CONFIG_GPIO_CDEV_V1
- 	event_size = sizeof(struct gpio_v2_line_info_changed);
- 	if (count < event_size)
+ static int pl011_startup(struct uart_port *port)
 -- 
 2.35.1
 
