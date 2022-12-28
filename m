@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587781C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:56:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0814C433D2;
-	Wed, 28 Dec 2022 16:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1925720E7
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:56:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85318C433EF;
+	Wed, 28 Dec 2022 16:56:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246574;
-	bh=P9OsdIVMBEreN4JcSrTvRIENSHE29Zj6l6lLqaOumn8=;
+	s=korg; t=1672246576;
+	bh=vWvS77y3aOqKyCHgi+CB3rdVEMh/eS0ZGnwOuYNBRR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1/jU4Vmd68JR9jr7AkqZXLwUDQK11788DcFbxxY3Sa0gvka2GXinj9Q7ahQOGoqJM
-	 eGyatCMj6DQ75E+XtmTewXIFRjDjrsxo5mmTSqCo7jsJk7uNOcJ+xufrtuSBvdEVwC
-	 omSWacBmtTTX7unNrr+WPspuvuz4l4KJhmHnbrto=
+	b=tqUo9KCJn5B1clKHyYJ3ZlbFL231O6vPvRl+NdTb7djG3xcQRb3jVSsVQPEXy4UWr
+	 U0Arazxw7CM/ufj6jGwsNeZTIx31Z3vsIYjF4e3zfa1xqKh3QaQK7X8wtsGVWhQA8M
+	 +3yGFSaIjxehTbc+xHBImo56q6zWOvDaX10fJZ30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergio Paracuellos <sergio.paracuellos@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Michael Petlan <mpetlan@redhat.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Disha Goel <disgoel@linux.vnet.ibm.com>,
+	Ian Rogers <irogers@google.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nageswara R Sastry <rnsastry@linux.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1086/1146] MIPS: ralink: mt7621: avoid to init common ralink reset controller
-Date: Wed, 28 Dec 2022 15:43:45 +0100
-Message-Id: <20221228144359.695076687@linuxfoundation.org>
+Subject: [PATCH 6.1 1087/1146] perf test: Fix "all PMU test" to skip parametrized events
+Date: Wed, 28 Dec 2022 15:43:46 +0100
+Message-Id: <20221228144359.718716577@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,48 +40,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergio Paracuellos <sergio.paracuellos@gmail.com>
+From: Michael Petlan <mpetlan@redhat.com>
 
-[ Upstream commit 76ce51798cb16738a4a28a6662e7344aaf7ef769 ]
+[ Upstream commit b50d691e50e600fab82b423be871860537d75dc9 ]
 
-Commit 38a8553b0a22 ("clk: ralink: make system controller node a reset provider")
-make system controller a reset provider for mt7621 ralink SoCs. Ralink init code
-also tries to start previous common reset controller which at the end tries to
-find device tree node 'ralink,rt2880-reset'. mt7621 device tree file is not
-using at all this node anymore. Hence avoid to init this common reset controller
-for mt7621 ralink SoCs to avoid 'Failed to find reset controller node' boot
-error trace error.
+Parametrized events are not only a powerpc domain. They occur on other
+platforms too (e.g. aarch64). They should be ignored in this testcase,
+since proper setup of the parameters is out of scope of this script.
 
-Fixes: 64b2d6ffff86 ("staging: mt7621-dts: align resets with binding documentation")
-Signed-off-by: Sergio Paracuellos <sergio.paracuellos@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Let's not filter them out by PMU name, but rather based on the fact that
+they expect a parameter.
+
+Fixes: 451ed8058c69a3fe ("perf test: Fix "all PMU test" to skip hv_24x7/hv_gpci tests on powerpc")
+Signed-off-by: Michael Petlan <mpetlan@redhat.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Disha Goel <disgoel@linux.vnet.ibm.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nageswara R Sastry <rnsastry@linux.ibm.com>
+Link: https://lore.kernel.org/r/20221219163008.9691-1-mpetlan@redhat.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/ralink/of.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ tools/perf/tests/shell/stat_all_pmu.sh | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
-diff --git a/arch/mips/ralink/of.c b/arch/mips/ralink/of.c
-index ea8072acf8d9..01c132bc33d5 100644
---- a/arch/mips/ralink/of.c
-+++ b/arch/mips/ralink/of.c
-@@ -21,6 +21,7 @@
- #include <asm/bootinfo.h>
- #include <asm/addrspace.h>
- #include <asm/prom.h>
-+#include <asm/mach-ralink/ralink_regs.h>
+diff --git a/tools/perf/tests/shell/stat_all_pmu.sh b/tools/perf/tests/shell/stat_all_pmu.sh
+index 9c9ef33e0b3c..c77955419173 100755
+--- a/tools/perf/tests/shell/stat_all_pmu.sh
++++ b/tools/perf/tests/shell/stat_all_pmu.sh
+@@ -4,17 +4,8 @@
  
- #include "common.h"
+ set -e
  
-@@ -81,7 +82,8 @@ static int __init plat_of_setup(void)
- 	__dt_register_buses(soc_info.compatible, "palmbus");
- 
- 	/* make sure that the reset controller is setup early */
--	ralink_rst_init();
-+	if (ralink_soc != MT762X_SOC_MT7621AT)
-+		ralink_rst_init();
- 
- 	return 0;
- }
+-for p in $(perf list --raw-dump pmu); do
+-  # In powerpc, skip the events for hv_24x7 and hv_gpci.
+-  # These events needs input values to be filled in for
+-  # core, chip, partition id based on system.
+-  # Example: hv_24x7/CPM_ADJUNCT_INST,domain=?,core=?/
+-  # hv_gpci/event,partition_id=?/
+-  # Hence skip these events for ppc.
+-  if echo "$p" |grep -Eq 'hv_24x7|hv_gpci' ; then
+-    echo "Skipping: Event '$p' in powerpc"
+-    continue
+-  fi
++# Test all PMU events; however exclude parametrized ones (name contains '?')
++for p in $(perf list --raw-dump pmu | sed 's/[[:graph:]]\+?[[:graph:]]\+[[:space:]]//g'); do
+   echo "Testing $p"
+   result=$(perf stat -e "$p" true 2>&1)
+   if ! echo "$result" | grep -q "$p" && ! echo "$result" | grep -q "<not supported>" ; then
 -- 
 2.35.1
 
