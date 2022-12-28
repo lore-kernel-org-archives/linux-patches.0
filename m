@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068291875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:55:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E764C433D2;
-	Wed, 28 Dec 2022 15:55:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0C01875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:55:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 340CDC433D2;
+	Wed, 28 Dec 2022 15:55:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242922;
-	bh=ToX4fY0BSQe3Ffz5Qs4DGu9yMSUB0krkhdBXqArhvS8=;
+	s=korg; t=1672242925;
+	bh=jBE6hruOnRQMIgFsUWDkBDqedX+JURaItPYusGic2g8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DOreidWQCyWya82ZvaQNtEgaD40HlCycfUrpqThfazYiqGbdKDNuC+kiGinybeWBD
-	 +3ABnrVbxKr5+glU1zOwDRpEMe9EChz/b7vpXQQtXIi1OtXK9AtAdnxhNXMlk68sB8
-	 NrTwV1p6lnYlX8HAEJAVUBuV1CwRjo3N+HUuMP40=
+	b=XI3dXt2G12bGnwtUQ23kHAHsEkpZgmDjwckeLTFAeDEyvN4KJVFW+esg81VUBQuCK
+	 XWnP3rPhP6TGBNY2PT43YiivDSKvSCX69ZEMT0LRn1oqGYzLUONcRRvolnkvcebp4L
+	 /HnnEQE2ngDzyDiookqP/LZhK/kntiM/PEvU69+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0431/1146] wifi: rtl8xxxu: Fix use after rcu_read_unlock in rtl8xxxu_bss_info_changed
-Date: Wed, 28 Dec 2022 15:32:50 +0100
-Message-Id: <20221228144341.889016261@linuxfoundation.org>
+Subject: [PATCH 6.0 0470/1073] pinctrl: thunderbay: fix possible memory leak in thunderbay_build_functions()
+Date: Wed, 28 Dec 2022 15:34:18 +0100
+Message-Id: <20221228144340.803152710@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,46 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 7927afb5e27baac694f585b59c436ba323528dc2 ]
+[ Upstream commit 83e1bcaf8cef26edaaf2a6098ef760f563683483 ]
 
-Commit a8b5aef2cca1 ("wifi: rtl8xxxu: gen2: Enable 40 MHz channel width")
-introduced a line where the pointer returned by ieee80211_find_sta() is
-used after rcu_read_unlock().
+The thunderbay_add_functions() will free memory of thunderbay_funcs
+when everything is ok, but thunderbay_funcs will not be freed when
+thunderbay_add_functions() fails, then there will be a memory leak,
+so we need to add kfree() when thunderbay_add_functions() fails to
+fix it.
 
-Move rcu_read_unlock() a bit lower to fix this.
+In addition, doing some cleaner works, moving kfree(funcs) from
+thunderbay_add_functions() to thunderbay_build_functions().
 
-Fixes: a8b5aef2cca1 ("wifi: rtl8xxxu: gen2: Enable 40 MHz channel width")
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/3c82ad09-7593-3be1-1d2c-e58505fb43cb@gmail.com
+Fixes: 12422af8194d ("pinctrl: Add Intel Thunder Bay pinctrl driver")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Reviewed-by: Rafał Miłecki <rafal@milecki.pl>
+Link: https://lore.kernel.org/r/20221129120126.1567338-1-cuigaosheng1@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-thunderbay.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-index 8d00ce805f1c..2d908296cf70 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -4654,7 +4654,6 @@ rtl8xxxu_bss_info_changed(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 			if (sta->deflink.ht_cap.cap &
- 			    (IEEE80211_HT_CAP_SGI_40 | IEEE80211_HT_CAP_SGI_20))
- 				sgi = 1;
--			rcu_read_unlock();
+diff --git a/drivers/pinctrl/pinctrl-thunderbay.c b/drivers/pinctrl/pinctrl-thunderbay.c
+index 9328b17485cf..590bbbf619af 100644
+--- a/drivers/pinctrl/pinctrl-thunderbay.c
++++ b/drivers/pinctrl/pinctrl-thunderbay.c
+@@ -808,7 +808,7 @@ static int thunderbay_add_functions(struct thunderbay_pinctrl *tpc, struct funct
+ 					    funcs[i].num_group_names,
+ 					    funcs[i].data);
+ 	}
+-	kfree(funcs);
++
+ 	return 0;
+ }
  
- 			highest_rate = fls(ramask) - 1;
- 			if (highest_rate < DESC_RATE_MCS0) {
-@@ -4679,6 +4678,7 @@ rtl8xxxu_bss_info_changed(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
- 				else
- 					rarpt->txrate.bw = RATE_INFO_BW_20;
- 			}
-+			rcu_read_unlock();
- 			bit_rate = cfg80211_calculate_bitrate(&rarpt->txrate);
- 			rarpt->bit_rate = bit_rate;
- 			rarpt->desc_rate = highest_rate;
+@@ -817,6 +817,7 @@ static int thunderbay_build_functions(struct thunderbay_pinctrl *tpc)
+ 	struct function_desc *thunderbay_funcs;
+ 	void *ptr;
+ 	int pin;
++	int ret;
+ 
+ 	/*
+ 	 * Allocate maximum possible number of functions. Assume every pin
+@@ -860,7 +861,10 @@ static int thunderbay_build_functions(struct thunderbay_pinctrl *tpc)
+ 		return -ENOMEM;
+ 
+ 	thunderbay_funcs = ptr;
+-	return thunderbay_add_functions(tpc, thunderbay_funcs);
++	ret = thunderbay_add_functions(tpc, thunderbay_funcs);
++
++	kfree(thunderbay_funcs);
++	return ret;
+ }
+ 
+ static int thunderbay_pinconf_set_tristate(struct thunderbay_pinctrl *tpc,
 -- 
 2.35.1
 
