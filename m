@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70261863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B22FC433EF;
-	Wed, 28 Dec 2022 15:34:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925981863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15BB7C433D2;
+	Wed, 28 Dec 2022 15:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241668;
-	bh=CRVDmIxG1GpGqJ2uorF+vSGY0cCgEvkrIvG8qhmtQlI=;
+	s=korg; t=1672241671;
+	bh=CqQRcsSQq058uT3OMgNYfTs9DiLJtY+KpGVWtVw1EFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G1qz2ucoSxhgDfpze6s3Sjl2KpNn5KWmHBUgEqwfJDVfJQbrjUZAgXvVxEliNB0IC
-	 zxv5RFx1aXZ9c9c9DWGvGFES3LNtC04hNqbNGbHWoLYZZjpq53z/HOox6WJfBzHD+R
-	 GoCkvIiJiXkK6jhca67Ezi24fhbc/M4Cvbdol/ic=
+	b=AafOt+nWhvRmd7VfDaH8ROJlpx+KfwtWuQ6o2h6MsUaHhWsIWDN8yxn0W3vi5RI+Z
+	 4/MooIQX+uW2GLd45Tht+k4rj+7gKMTrkOdsXESA1Zaz1hG+9KOPYx/T8R1pW4bsSr
+	 sHVo/O0WhKsRf2BMOoL1rFE2KQmQnccAmD9r8XsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yhs@meta.com>,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0275/1146] bpf: Clobber stack slot when writing over spilled PTR_TO_BTF_ID
-Date: Wed, 28 Dec 2022 15:30:14 +0100
-Message-Id: <20221228144337.604964554@linuxfoundation.org>
+Subject: [PATCH 6.0 0314/1073] wifi: iwlwifi: mei: fix potential NULL-ptr deref after clone
+Date: Wed, 28 Dec 2022 15:31:42 +0100
+Message-Id: <20221228144336.535597562@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,76 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 261f4664caffdeb9dff4e83ee3c0334b1c3a552f ]
+[ Upstream commit d3df49dda431f7ae4132a9a0ac25a5134c04e812 ]
 
-When support was added for spilled PTR_TO_BTF_ID to be accessed by
-helper memory access, the stack slot was not overwritten to STACK_MISC
-(and that too is only safe when env->allow_ptr_leaks is true).
+If cloning the SKB fails, don't try to use it, but rather return
+as if we should pass it.
 
-This means that helpers who take ARG_PTR_TO_MEM and write to it may
-essentially overwrite the value while the verifier continues to track
-the slot for spilled register.
+Coverity CID: 1503456
 
-This can cause issues when PTR_TO_BTF_ID is spilled to stack, and then
-overwritten by helper write access, which can then be passed to BPF
-helpers or kfuncs.
-
-Handle this by falling back to the case introduced in a later commit,
-which will also handle PTR_TO_BTF_ID along with other pointer types,
-i.e. cd17d38f8b28 ("bpf: Permits pointers on stack for helper calls").
-
-Finally, include a comment on why REG_LIVE_WRITTEN is not being set when
-clobber is set to true. In short, the reason is that while when clobber
-is unset, we know that we won't be writing, when it is true, we *may*
-write to any of the stack slots in that range. It may be a partial or
-complete write, to just one or many stack slots.
-
-We cannot be sure, hence to be conservative, we leave things as is and
-never set REG_LIVE_WRITTEN for any stack slot. However, clobber still
-needs to reset them to STACK_MISC assuming writes happened. However read
-marks still need to be propagated upwards from liveness point of view,
-as parent stack slot's contents may still continue to matter to child
-states.
-
-Cc: Yonghong Song <yhs@meta.com>
-Fixes: 1d68f22b3d53 ("bpf: Handle spilled PTR_TO_BTF_ID properly when checking stack_boundary")
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20221103191013.1236066-4-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 2da4366f9e2c ("iwlwifi: mei: add the driver to allow cooperation with CSME")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20221030191011.0ce03ba99601.I87960b7cb0a3d16b9fd8d9144027e7e2587f5a58@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mei/net.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 264b3dc714cc..146056c79cc9 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -5159,10 +5159,6 @@ static int check_stack_range_initialized(
- 			goto mark;
- 		}
+diff --git a/drivers/net/wireless/intel/iwlwifi/mei/net.c b/drivers/net/wireless/intel/iwlwifi/mei/net.c
+index 3472167c8370..eac46d1a397a 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mei/net.c
++++ b/drivers/net/wireless/intel/iwlwifi/mei/net.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /*
+- * Copyright (C) 2021 Intel Corporation
++ * Copyright (C) 2021-2022 Intel Corporation
+  */
  
--		if (is_spilled_reg(&state->stack[spi]) &&
--		    base_type(state->stack[spi].spilled_ptr.type) == PTR_TO_BTF_ID)
--			goto mark;
--
- 		if (is_spilled_reg(&state->stack[spi]) &&
- 		    (state->stack[spi].spilled_ptr.type == SCALAR_VALUE ||
- 		     env->allow_ptr_leaks)) {
-@@ -5193,6 +5189,11 @@ static int check_stack_range_initialized(
- 		mark_reg_read(env, &state->stack[spi].spilled_ptr,
- 			      state->stack[spi].spilled_ptr.parent,
- 			      REG_LIVE_READ64);
-+		/* We do not set REG_LIVE_WRITTEN for stack slot, as we can not
-+		 * be sure that whether stack slot is written to or not. Hence,
-+		 * we must still conservatively propagate reads upwards even if
-+		 * helper may write to the entire memory range.
-+		 */
- 	}
- 	return update_stack_depth(env, state, min_off);
- }
+ #include <uapi/linux/if_ether.h>
+@@ -337,10 +337,14 @@ rx_handler_result_t iwl_mei_rx_filter(struct sk_buff *orig_skb,
+ 	if (!*pass_to_csme)
+ 		return RX_HANDLER_PASS;
+ 
+-	if (ret == RX_HANDLER_PASS)
++	if (ret == RX_HANDLER_PASS) {
+ 		skb = skb_copy(orig_skb, GFP_ATOMIC);
+-	else
++
++		if (!skb)
++			return RX_HANDLER_PASS;
++	} else {
+ 		skb = orig_skb;
++	}
+ 
+ 	/* CSME wants the MAC header as well, push it back */
+ 	skb_push(skb, skb->data - skb_mac_header(skb));
 -- 
 2.35.1
 
