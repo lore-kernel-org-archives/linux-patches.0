@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79161C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:10:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D12AC433F0;
-	Wed, 28 Dec 2022 16:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7116C1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:10:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E94C1C433D2;
+	Wed, 28 Dec 2022 16:10:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243855;
-	bh=1Ebm9EXyzyRrLnk7ex+KcqhioFXHdbAYh5h/mrskiSk=;
+	s=korg; t=1672243858;
+	bh=CEFHAZI9IQgGa18yT9NV81LV/2qCI8eTtWGWC/jGKVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b647jqLfaoaRHsLshHXQsGvFgb9y2MK8DCX/iteOu0MH7Y7QamEJRfL1Vj/+bcJKV
-	 ORrb74iMpIHG3HzNEhbE2X6E39tUY7tUDKxfOjRnRASQE/ZLi+fiaG/xHMPBess1YQ
-	 MEw0znHGgnaEMN5In0OFPKllG6xx7Bd939vrqYoU=
+	b=Q4z6N/G5J4Jdte3Cto3lax70w4CWPFyHT9AiDAMZB9CehjodU4ZXa/HXWW71oDNJm
+	 XUM469xVsj7ZKH2X2DJsEE9Fe6wV9CvWxIjrezDd4Wvde+1givlz2jLUuGT7VT6x19
+	 uWXTfVvmN27A45is6gfTlxhy2xQO5I6oDN2Ld7Hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Weili Qian <qianweili@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0567/1146] octeontx2-af: cn10k: mcs: Fix a resource leak in the probe and remove functions
-Date: Wed, 28 Dec 2022 15:35:06 +0100
-Message-Id: <20221228144345.567940757@linuxfoundation.org>
+Subject: [PATCH 6.0 0600/1073] crypto: hisilicon/qm - add missing pci_dev_put() in q_num_set()
+Date: Wed, 28 Dec 2022 15:36:28 +0100
+Message-Id: <20221228144344.342939670@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,52 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 87c978123ef1f346d7385eaccc141022d368166f ]
+[ Upstream commit cc7710d0d4ebc6998f04035cde4f32c5ddbe9d7f ]
 
-In mcs_register_interrupts(), a call to request_irq() is not balanced by a
-corresponding free_irq(), neither in the error handling path, nor in the
-remove function.
+pci_get_device() will increase the reference count for the returned
+pci_dev. We need to use pci_dev_put() to decrease the reference count
+before q_num_set() returns.
 
-Add the missing calls.
-
-Fixes: 6c635f78c474 ("octeontx2-af: cn10k: mcs: Handle MCS block interrupts")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Link: https://lore.kernel.org/r/69f153db5152a141069f990206e7389f961d41ec.1670693669.git.christophe.jaillet@wanadoo.fr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c8b4b477079d ("crypto: hisilicon - add HiSilicon HPRE accelerator")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Reviewed-by: Weili Qian <qianweili@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/marvell/octeontx2/af/mcs.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ include/linux/hisi_acc_qm.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
-index c0bedf402da9..f68a6a0e3aa4 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/mcs.c
-@@ -1184,10 +1184,13 @@ static int mcs_register_interrupts(struct mcs *mcs)
- 	mcs->tx_sa_active = alloc_mem(mcs, mcs->hw->sc_entries);
- 	if (!mcs->tx_sa_active) {
- 		ret = -ENOMEM;
--		goto exit;
-+		goto free_irq;
+diff --git a/include/linux/hisi_acc_qm.h b/include/linux/hisi_acc_qm.h
+index 851c962ba473..ce0c3ed67a5f 100644
+--- a/include/linux/hisi_acc_qm.h
++++ b/include/linux/hisi_acc_qm.h
+@@ -400,14 +400,14 @@ struct hisi_qp {
+ static inline int q_num_set(const char *val, const struct kernel_param *kp,
+ 			    unsigned int device)
+ {
+-	struct pci_dev *pdev = pci_get_device(PCI_VENDOR_ID_HUAWEI,
+-					      device, NULL);
++	struct pci_dev *pdev;
+ 	u32 n, q_num;
+ 	int ret;
+ 
+ 	if (!val)
+ 		return -EINVAL;
+ 
++	pdev = pci_get_device(PCI_VENDOR_ID_HUAWEI, device, NULL);
+ 	if (!pdev) {
+ 		q_num = min_t(u32, QM_QNUM_V1, QM_QNUM_V2);
+ 		pr_info("No device found currently, suppose queue number is %u\n",
+@@ -417,6 +417,8 @@ static inline int q_num_set(const char *val, const struct kernel_param *kp,
+ 			q_num = QM_QNUM_V1;
+ 		else
+ 			q_num = QM_QNUM_V2;
++
++		pci_dev_put(pdev);
  	}
  
- 	return ret;
-+
-+free_irq:
-+	free_irq(pci_irq_vector(mcs->pdev, MCS_INT_VEC_IP), mcs);
- exit:
- 	pci_free_irq_vectors(mcs->pdev);
- 	mcs->num_vec = 0;
-@@ -1589,6 +1592,7 @@ static void mcs_remove(struct pci_dev *pdev)
- 
- 	/* Set MCS to external bypass */
- 	mcs_set_external_bypass(mcs, true);
-+	free_irq(pci_irq_vector(pdev, MCS_INT_VEC_IP), mcs);
- 	pci_free_irq_vectors(pdev);
- 	pci_release_regions(pdev);
- 	pci_disable_device(pdev);
+ 	ret = kstrtou32(val, 10, &n);
 -- 
 2.35.1
 
