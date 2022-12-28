@@ -1,31 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85AC41C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06317C433EF;
-	Wed, 28 Dec 2022 16:40:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C421C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA04FC433EF;
+	Wed, 28 Dec 2022 16:40:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245637;
-	bh=bwVhQvVtFGcdsk0y4e5dRoUJWNZOnOI73rTZM0UVM+Y=;
+	s=korg; t=1672245640;
+	bh=nilXHjgldc9XTgg0lD9mFlU36zpJXUpepdvHnO0xafY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TTwjzZYaLb7nZw7Xycap5478r2mN8/9PaE8Pma4bFMhp6ZOLxpbPIAFXaHJ42N7Rf
-	 CcIVgZJE+iVV3RorE+wcN51Lem6S9u2Orb8w/Uc8L1qtIYmyLn8Ic5n2mJsT9B6jOB
-	 Goqst0Ny2eLIPqHh79JdRmtsc2mWrwtX2lOQe3Bw=
+	b=0Wt6JWa0x5Z/H0S5daDPm3TpMvuyjS0vX7f7ylHpX8H1GkSEGimH5KQDW7Fss9ATn
+	 TUpZJseI5e/xxRKGbgiqkcZcny4v+TGtwSJ3kiYRI17/Zw6ne99Fpszehn/qVlLMLL
+	 ajs4Sd25Ku0XNPBmhB5Tvtg2gYwXakci1nC7w/Wg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alice Yuan <alice.yuan@nxp.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0897/1146] media: v4l2-ctrls-api.c: add back dropped ctrl->is_new = 1
-Date: Wed, 28 Dec 2022 15:40:36 +0100
-Message-Id: <20221228144354.562874216@linuxfoundation.org>
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	intel-wired-lan@lists.osuosl.org,
+	netdev@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>,
+	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Gurucharan <gurucharanx.g@intel.com>
+Subject: [PATCH 6.0 0930/1073] igb: Do not free q_vector unless new one was allocated
+Date: Wed, 28 Dec 2022 15:41:58 +0100
+Message-Id: <20221228144353.288173346@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,35 +45,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 73278d483378cf850ade923a1107a70297b2602a ]
+[ Upstream commit 0668716506ca66f90d395f36ccdaebc3e0e84801 ]
 
-The patch adding support for dynamically allocated arrays accidentally
-dropped the line setting ctrl->is_new to 1, thus new string values were
-always ignored.
+Avoid potential use-after-free condition under memory pressure. If the
+kzalloc() fails, q_vector will be freed but left in the original
+adapter->q_vector[v_idx] array position.
 
-Fixes: fb582cba4492 ("media: v4l2-ctrls: add support for dynamically allocated arrays.")
-Reported-by: Alice Yuan <alice.yuan@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Cc: Tony Nguyen <anthony.l.nguyen@intel.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: intel-wired-lan@lists.osuosl.org
+Cc: netdev@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Gurucharan <gurucharanx.g@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/v4l2-ctrls-api.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/intel/igb/igb_main.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/v4l2-core/v4l2-ctrls-api.c b/drivers/media/v4l2-core/v4l2-ctrls-api.c
-index d0a3aa3806fb..3d3b6dc24ca6 100644
---- a/drivers/media/v4l2-core/v4l2-ctrls-api.c
-+++ b/drivers/media/v4l2-core/v4l2-ctrls-api.c
-@@ -150,6 +150,7 @@ static int user_to_new(struct v4l2_ext_control *c, struct v4l2_ctrl *ctrl)
- 			 * then return an error.
- 			 */
- 			if (strlen(ctrl->p_new.p_char) == ctrl->maximum && last)
-+			ctrl->is_new = 1;
- 				return -ERANGE;
- 		}
- 		return ret;
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index ea46649b2ed3..0e36894db986 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -1202,8 +1202,12 @@ static int igb_alloc_q_vector(struct igb_adapter *adapter,
+ 	if (!q_vector) {
+ 		q_vector = kzalloc(size, GFP_KERNEL);
+ 	} else if (size > ksize(q_vector)) {
+-		kfree_rcu(q_vector, rcu);
+-		q_vector = kzalloc(size, GFP_KERNEL);
++		struct igb_q_vector *new_q_vector;
++
++		new_q_vector = kzalloc(size, GFP_KERNEL);
++		if (new_q_vector)
++			kfree_rcu(q_vector, rcu);
++		q_vector = new_q_vector;
+ 	} else {
+ 		memset(q_vector, 0, size);
+ 	}
 -- 
 2.35.1
 
