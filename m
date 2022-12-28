@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E80423AF
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:57:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015F5C433EF;
-	Wed, 28 Dec 2022 16:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47BF223AF
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:57:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1B3BC433EF;
+	Wed, 28 Dec 2022 16:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246671;
-	bh=TMjMsjHmMhbl2ZFSTDpsbYNl/eWUpsAJug78mago/Y0=;
+	s=korg; t=1672246674;
+	bh=hikALMhCr119baUZq1pQ/utGrr8+EJvZn7py4V8ykH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PMc1yEemlm7qL1yMug5JcOLO20eD7aB/vHo87zulAihuWB7LvW4HU5jBs7zGaN/Gm
-	 wqrLJhgsjeInOLmmJOnyXbIQccFXR/dzWWTBfOuRZ3GmR3DCYshhZj9rwlPOplPBBc
-	 I/rJ9sCQrNmmJt3NdtxtbcR66klkz1gOFGjnGQjk=
+	b=ydcYMkbozeFc8p17ZXra88R/5rXbfacal75iRYJaeJzIE9DhWlsafRMxfj1X3Jbwn
+	 7JZFHUuEzOD0eEEQ7P/PBAhyO2MRp/LTN+2y8A3C6sUtN81ttGAyMe4Wlan2Ujktxm
+	 1auQ9VrfQjkFCNRIQvRfwhSax9robVAb3Ev4ilMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mattijs Korpershoek <mkorpershoek@baylibre.com>,
 	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1093/1146] Input: iqs7222 - report malformed properties
-Date: Wed, 28 Dec 2022 15:43:52 +0100
-Message-Id: <20221228144359.863076746@linuxfoundation.org>
+Subject: [PATCH 6.1 1094/1146] Input: iqs7222 - add support for IQS7222A v1.13+
+Date: Wed, 28 Dec 2022 15:43:53 +0100
+Message-Id: <20221228144359.889486622@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -38,139 +38,200 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeff LaBundy <jeff@labundy.com>
 
-[ Upstream commit 404f3b48e65f058d94429e4a1ec16a1f82ff3b2f ]
+[ Upstream commit 8d4c313c03f104c69e25ab03058d8955be9dc387 ]
 
-Nonzero return values of several calls to fwnode_property_read_u32()
-are silently ignored, leaving no way to know the properties were not
-applied in the event of an error.
-
-Solve this problem by evaluating fwnode_property_read_u32()'s return
-value, and reporting an error for any nonzero return value not equal
-to -EINVAL which indicates the property was absent altogether.
+IQS7222A revisions 1.13 and later widen the gesture multiplier from
+x4 ms to x16 ms. Add a means to scale the gesture timings specified
+in the device tree based on the revision of the device.
 
 Fixes: e505edaedcb9 ("Input: add support for Azoteq IQS7222A/B/C")
 Signed-off-by: Jeff LaBundy <jeff@labundy.com>
 Reviewed-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
-Link: https://lore.kernel.org/r/Y1SRRrpQXvkETjfm@nixie71
+Link: https://lore.kernel.org/r/Y1SRdbK1Dp2q7O8o@nixie71
 Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/iqs7222.c | 44 +++++++++++++++++++++++++++++-------
- 1 file changed, 36 insertions(+), 8 deletions(-)
+ drivers/input/misc/iqs7222.c | 111 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 111 insertions(+)
 
 diff --git a/drivers/input/misc/iqs7222.c b/drivers/input/misc/iqs7222.c
-index 1c450ba4fdc3..6af25dfd1d2a 100644
+index 6af25dfd1d2a..e47ab6c1177f 100644
 --- a/drivers/input/misc/iqs7222.c
 +++ b/drivers/input/misc/iqs7222.c
-@@ -1807,8 +1807,9 @@ static int iqs7222_parse_chan(struct iqs7222_private *iqs7222,
- 		chan_setup[0] |= IQS7222_CHAN_SETUP_0_REF_MODE_FOLLOW;
- 		chan_setup[4] = val * 42 + 1048;
+@@ -86,7 +86,9 @@ enum iqs7222_reg_key_id {
+ 	IQS7222_REG_KEY_TOUCH,
+ 	IQS7222_REG_KEY_DEBOUNCE,
+ 	IQS7222_REG_KEY_TAP,
++	IQS7222_REG_KEY_TAP_LEGACY,
+ 	IQS7222_REG_KEY_AXIAL,
++	IQS7222_REG_KEY_AXIAL_LEGACY,
+ 	IQS7222_REG_KEY_WHEEL,
+ 	IQS7222_REG_KEY_NO_WHEEL,
+ 	IQS7222_REG_KEY_RESERVED
+@@ -202,10 +204,68 @@ struct iqs7222_dev_desc {
+ 	int allow_offset;
+ 	int event_offset;
+ 	int comms_offset;
++	bool legacy_gesture;
+ 	struct iqs7222_reg_grp_desc reg_grps[IQS7222_NUM_REG_GRPS];
+ };
  
--		if (!fwnode_property_read_u32(chan_node, "azoteq,ref-weight",
--					      &val)) {
-+		error = fwnode_property_read_u32(chan_node, "azoteq,ref-weight",
-+						 &val);
-+		if (!error) {
- 			if (val > U16_MAX) {
- 				dev_err(&client->dev,
- 					"Invalid %s reference weight: %u\n",
-@@ -1817,6 +1818,11 @@ static int iqs7222_parse_chan(struct iqs7222_private *iqs7222,
- 			}
- 
- 			chan_setup[5] = val;
-+		} else if (error != -EINVAL) {
-+			dev_err(&client->dev,
-+				"Failed to read %s reference weight: %d\n",
-+				fwnode_get_name(chan_node), error);
-+			return error;
- 		}
- 
- 		/*
-@@ -1889,9 +1895,10 @@ static int iqs7222_parse_chan(struct iqs7222_private *iqs7222,
+ static const struct iqs7222_dev_desc iqs7222_devs[] = {
++	{
++		.prod_num = IQS7222_PROD_NUM_A,
++		.fw_major = 1,
++		.fw_minor = 13,
++		.sldr_res = U8_MAX * 16,
++		.touch_link = 1768,
++		.allow_offset = 9,
++		.event_offset = 10,
++		.comms_offset = 12,
++		.reg_grps = {
++			[IQS7222_REG_GRP_STAT] = {
++				.base = IQS7222_SYS_STATUS,
++				.num_row = 1,
++				.num_col = 8,
++			},
++			[IQS7222_REG_GRP_CYCLE] = {
++				.base = 0x8000,
++				.num_row = 7,
++				.num_col = 3,
++			},
++			[IQS7222_REG_GRP_GLBL] = {
++				.base = 0x8700,
++				.num_row = 1,
++				.num_col = 3,
++			},
++			[IQS7222_REG_GRP_BTN] = {
++				.base = 0x9000,
++				.num_row = 12,
++				.num_col = 3,
++			},
++			[IQS7222_REG_GRP_CHAN] = {
++				.base = 0xA000,
++				.num_row = 12,
++				.num_col = 6,
++			},
++			[IQS7222_REG_GRP_FILT] = {
++				.base = 0xAC00,
++				.num_row = 1,
++				.num_col = 2,
++			},
++			[IQS7222_REG_GRP_SLDR] = {
++				.base = 0xB000,
++				.num_row = 2,
++				.num_col = 11,
++			},
++			[IQS7222_REG_GRP_GPIO] = {
++				.base = 0xC000,
++				.num_row = 1,
++				.num_col = 3,
++			},
++			[IQS7222_REG_GRP_SYS] = {
++				.base = IQS7222_SYS_SETUP,
++				.num_row = 1,
++				.num_col = 13,
++			},
++		},
++	},
+ 	{
+ 		.prod_num = IQS7222_PROD_NUM_A,
+ 		.fw_major = 1,
+@@ -215,6 +275,7 @@ static const struct iqs7222_dev_desc iqs7222_devs[] = {
+ 		.allow_offset = 9,
+ 		.event_offset = 10,
+ 		.comms_offset = 12,
++		.legacy_gesture = true,
+ 		.reg_grps = {
+ 			[IQS7222_REG_GRP_STAT] = {
+ 				.base = IQS7222_SYS_STATUS,
+@@ -874,6 +935,16 @@ static const struct iqs7222_prop_desc iqs7222_props[] = {
+ 		.reg_offset = 9,
+ 		.reg_shift = 8,
+ 		.reg_width = 8,
++		.val_pitch = 16,
++		.label = "maximum gesture time",
++	},
++	{
++		.name = "azoteq,gesture-max-ms",
++		.reg_grp = IQS7222_REG_GRP_SLDR,
++		.reg_key = IQS7222_REG_KEY_TAP_LEGACY,
++		.reg_offset = 9,
++		.reg_shift = 8,
++		.reg_width = 8,
+ 		.val_pitch = 4,
+ 		.label = "maximum gesture time",
+ 	},
+@@ -884,6 +955,16 @@ static const struct iqs7222_prop_desc iqs7222_props[] = {
+ 		.reg_offset = 9,
+ 		.reg_shift = 3,
+ 		.reg_width = 5,
++		.val_pitch = 16,
++		.label = "minimum gesture time",
++	},
++	{
++		.name = "azoteq,gesture-min-ms",
++		.reg_grp = IQS7222_REG_GRP_SLDR,
++		.reg_key = IQS7222_REG_KEY_TAP_LEGACY,
++		.reg_offset = 9,
++		.reg_shift = 3,
++		.reg_width = 5,
+ 		.val_pitch = 4,
+ 		.label = "minimum gesture time",
+ 	},
+@@ -897,6 +978,16 @@ static const struct iqs7222_prop_desc iqs7222_props[] = {
+ 		.val_pitch = 16,
+ 		.label = "gesture distance",
+ 	},
++	{
++		.name = "azoteq,gesture-dist",
++		.reg_grp = IQS7222_REG_GRP_SLDR,
++		.reg_key = IQS7222_REG_KEY_AXIAL_LEGACY,
++		.reg_offset = 10,
++		.reg_shift = 8,
++		.reg_width = 8,
++		.val_pitch = 16,
++		.label = "gesture distance",
++	},
+ 	{
+ 		.name = "azoteq,gesture-max-ms",
+ 		.reg_grp = IQS7222_REG_GRP_SLDR,
+@@ -904,6 +995,16 @@ static const struct iqs7222_prop_desc iqs7222_props[] = {
+ 		.reg_offset = 10,
+ 		.reg_shift = 0,
+ 		.reg_width = 8,
++		.val_pitch = 16,
++		.label = "maximum gesture time",
++	},
++	{
++		.name = "azoteq,gesture-max-ms",
++		.reg_grp = IQS7222_REG_GRP_SLDR,
++		.reg_key = IQS7222_REG_KEY_AXIAL_LEGACY,
++		.reg_offset = 10,
++		.reg_shift = 0,
++		.reg_width = 8,
+ 		.val_pitch = 4,
+ 		.label = "maximum gesture time",
+ 	},
+@@ -2115,8 +2216,18 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
  		if (!event_node)
  			continue;
  
--		if (!fwnode_property_read_u32(event_node,
--					      "azoteq,timeout-press-ms",
--					      &val)) {
-+		error = fwnode_property_read_u32(event_node,
-+						 "azoteq,timeout-press-ms",
-+						 &val);
-+		if (!error) {
- 			/*
- 			 * The IQS7222B employs a global pair of press timeout
- 			 * registers as opposed to channel-specific registers.
-@@ -1911,6 +1918,12 @@ static int iqs7222_parse_chan(struct iqs7222_private *iqs7222,
++		/*
++		 * Depending on the device, gestures are either offered using
++		 * one of two timing resolutions, or are not supported at all.
++		 */
+ 		if (reg_offset)
+ 			reg_key = IQS7222_REG_KEY_RESERVED;
++		else if (dev_desc->legacy_gesture &&
++			 iqs7222_sl_events[i].reg_key == IQS7222_REG_KEY_TAP)
++			reg_key = IQS7222_REG_KEY_TAP_LEGACY;
++		else if (dev_desc->legacy_gesture &&
++			 iqs7222_sl_events[i].reg_key == IQS7222_REG_KEY_AXIAL)
++			reg_key = IQS7222_REG_KEY_AXIAL_LEGACY;
+ 		else
+ 			reg_key = iqs7222_sl_events[i].reg_key;
  
- 			*setup &= ~(U8_MAX << i * 8);
- 			*setup |= (val / 500 << i * 8);
-+		} else if (error != -EINVAL) {
-+			dev_err(&client->dev,
-+				"Failed to read %s press timeout: %d\n",
-+				fwnode_get_name(event_node), error);
-+			fwnode_handle_put(event_node);
-+			return error;
- 		}
- 
- 		error = iqs7222_parse_event(iqs7222, event_node, chan_index,
-@@ -2009,7 +2022,8 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
- 	if (fwnode_property_present(sldr_node, "azoteq,use-prox"))
- 		sldr_setup[4 + reg_offset] -= 2;
- 
--	if (!fwnode_property_read_u32(sldr_node, "azoteq,slider-size", &val)) {
-+	error = fwnode_property_read_u32(sldr_node, "azoteq,slider-size", &val);
-+	if (!error) {
- 		if (val > dev_desc->sldr_res) {
- 			dev_err(&client->dev, "Invalid %s size: %u\n",
- 				fwnode_get_name(sldr_node), val);
-@@ -2023,6 +2037,10 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
- 			sldr_setup[2] |= (val / 16 <<
- 					  IQS7222_SLDR_SETUP_2_RES_SHIFT);
- 		}
-+	} else if (error != -EINVAL) {
-+		dev_err(&client->dev, "Failed to read %s size: %d\n",
-+			fwnode_get_name(sldr_node), error);
-+		return error;
- 	}
- 
- 	if (!(reg_offset ? sldr_setup[3]
-@@ -2032,7 +2050,8 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
- 		return -EINVAL;
- 	}
- 
--	if (!fwnode_property_read_u32(sldr_node, "azoteq,top-speed", &val)) {
-+	error = fwnode_property_read_u32(sldr_node, "azoteq,top-speed", &val);
-+	if (!error) {
- 		if (val > (reg_offset ? U16_MAX : U8_MAX * 4)) {
- 			dev_err(&client->dev, "Invalid %s top speed: %u\n",
- 				fwnode_get_name(sldr_node), val);
-@@ -2045,9 +2064,14 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
- 			sldr_setup[2] &= ~IQS7222_SLDR_SETUP_2_TOP_SPEED_MASK;
- 			sldr_setup[2] |= (val / 4);
- 		}
-+	} else if (error != -EINVAL) {
-+		dev_err(&client->dev, "Failed to read %s top speed: %d\n",
-+			fwnode_get_name(sldr_node), error);
-+		return error;
- 	}
- 
--	if (!fwnode_property_read_u32(sldr_node, "linux,axis", &val)) {
-+	error = fwnode_property_read_u32(sldr_node, "linux,axis", &val);
-+	if (!error) {
- 		u16 sldr_max = sldr_setup[3] - 1;
- 
- 		if (!reg_offset) {
-@@ -2061,6 +2085,10 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
- 
- 		input_set_abs_params(iqs7222->keypad, val, 0, sldr_max, 0, 0);
- 		iqs7222->sl_axis[sldr_index] = val;
-+	} else if (error != -EINVAL) {
-+		dev_err(&client->dev, "Failed to read %s axis: %d\n",
-+			fwnode_get_name(sldr_node), error);
-+		return error;
- 	}
- 
- 	if (dev_desc->wheel_enable) {
 -- 
 2.35.1
 
