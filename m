@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDD521863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:16:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7165FC433EF;
-	Wed, 28 Dec 2022 15:16:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E701863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:16:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A91C433EF;
+	Wed, 28 Dec 2022 15:16:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240571;
-	bh=bStODH//uoNgIQzokissAlAGcDFttmQ5PfzEbyo0UUc=;
+	s=korg; t=1672240574;
+	bh=35wUNQA3z0odziUalHmDpCk9+LKaQ4zeghy4IUYunuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNETw6J/d1yq1tOMG4hA/F+UGqV3JvXPMoGDmI6Swkx5Z4UUqI4BWBJlwJl1W4zZo
-	 etKj1c4SetrCFI+Zzlxdh9D7wTnzDDtc3kNr3/lN/NtIuZ4Sxpw4+v14IxyBA5G1gB
-	 bl0cC3pBuwDnjhIiOrK9JN5CeXHnw787V20b6mKg=
+	b=FgEDcoULUZatqATinH7yB6wg+yh7hQWG3vkGc1qV5+4kXfeHAMUskhSjuvPGk3fcB
+	 GSpseApSgoIuqCsfqJXr9HFb08EIEWAkgZ4+h26/7HKlBVeE8UC7UYMBvNTnYPZc60
+	 M1W59atX3oPUd681qLRffBy0Nv1JMlZmgJ1xFJn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ladislav Michl <ladis@linux-mips.org>,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0176/1073] MIPS: OCTEON: warn only once if deprecated link status is being used
-Date: Wed, 28 Dec 2022 15:29:24 +0100
-Message-Id: <20221228144332.791632964@linuxfoundation.org>
+Subject: [PATCH 6.1 0141/1146] perf/x86/intel/uncore: Fix reference count leak in hswep_has_limit_sbox()
+Date: Wed, 28 Dec 2022 15:28:00 +0100
+Message-Id: <20221228144333.976568448@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,48 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ladislav Michl <ladis@linux-mips.org>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 4c587a982603d7e7e751b4925809a1512099a690 ]
+[ Upstream commit 1ff9dd6e7071a561f803135c1d684b13c7a7d01d ]
 
-Avoid flooding kernel log with warnings.
+pci_get_device() will increase the reference count for the returned
+'dev'. We need to call pci_dev_put() to decrease the reference count.
+Since 'dev' is only used in pci_read_config_dword(), let's add
+pci_dev_put() right after it.
 
-Fixes: 2c0756d306c2 ("MIPS: OCTEON: warn if deprecated link status is being used")
-Signed-off-by: Ladislav Michl <ladis@linux-mips.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 9d480158ee86 ("perf/x86/intel/uncore: Remove uncore extra PCI dev HSWEP_PCI_PCU_3")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lore.kernel.org/r/20221118063137.121512-3-wangxiongfeng2@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/cavium-octeon/executive/cvmx-helper-board.c | 2 +-
- arch/mips/cavium-octeon/executive/cvmx-helper.c       | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/uncore_snbep.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/mips/cavium-octeon/executive/cvmx-helper-board.c b/arch/mips/cavium-octeon/executive/cvmx-helper-board.c
-index d09d0769f549..0fd9ac76eb74 100644
---- a/arch/mips/cavium-octeon/executive/cvmx-helper-board.c
-+++ b/arch/mips/cavium-octeon/executive/cvmx-helper-board.c
-@@ -211,7 +211,7 @@ union cvmx_helper_link_info __cvmx_helper_board_link_get(int ipd_port)
- {
- 	union cvmx_helper_link_info result;
+diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
+index 76fedc8e12dd..f5d89d06c66a 100644
+--- a/arch/x86/events/intel/uncore_snbep.c
++++ b/arch/x86/events/intel/uncore_snbep.c
+@@ -2891,6 +2891,7 @@ static bool hswep_has_limit_sbox(unsigned int device)
+ 		return false;
  
--	WARN(!octeon_is_simulation(),
-+	WARN_ONCE(!octeon_is_simulation(),
- 	     "Using deprecated link status - please update your DT");
+ 	pci_read_config_dword(dev, HSWEP_PCU_CAPID4_OFFET, &capid4);
++	pci_dev_put(dev);
+ 	if (!hswep_get_chop(capid4))
+ 		return true;
  
- 	/* Unless we fix it later, all links are defaulted to down */
-diff --git a/arch/mips/cavium-octeon/executive/cvmx-helper.c b/arch/mips/cavium-octeon/executive/cvmx-helper.c
-index 6f49fd9be1f3..9abfc4bf9bd8 100644
---- a/arch/mips/cavium-octeon/executive/cvmx-helper.c
-+++ b/arch/mips/cavium-octeon/executive/cvmx-helper.c
-@@ -1096,7 +1096,7 @@ union cvmx_helper_link_info cvmx_helper_link_get(int ipd_port)
- 		if (index == 0)
- 			result = __cvmx_helper_rgmii_link_get(ipd_port);
- 		else {
--			WARN(1, "Using deprecated link status - please update your DT");
-+			WARN_ONCE(1, "Using deprecated link status - please update your DT");
- 			result.s.full_duplex = 1;
- 			result.s.link_up = 1;
- 			result.s.speed = 1000;
 -- 
 2.35.1
 
