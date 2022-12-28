@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EACC1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02D57C433EF;
-	Wed, 28 Dec 2022 15:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284031863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1490C433D2;
+	Wed, 28 Dec 2022 15:02:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239746;
-	bh=KY6EI4QnL0oDLxTOl9x+lSkyQF7MJ5lHNbVGVtlXZVg=;
+	s=korg; t=1672239749;
+	bh=T4r12HL+ymn7zLPbpeyo4FAJM7jFaXoK2bTcvEYzD2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LeKB2Q0exmDY1CBu+ZloWAJGcTRKjUplg9e+hxuJvdks6u9unhip4aM8Ah4QC4Py4
-	 YL8KA6BQooDWjOfIIA/HT06CD1lUcHfRTfCE4GZ0ocXpg+VvXVw5fEO39v6xHgmh4A
-	 /mf9JA/Uvn/MGq14jOFF5liaxCqrooBTGiS/HNNc=
+	b=Evzgn+ALqxSAmRGewHeGx0IOe4/2fViAb9kuOqP7AXaiaPcW+ekDQiobjUG088n0+
+	 cVkAOAL4myFFjpl4PyNZR+X4D72jlVcwH3pA6Ju2HSaPOw2tPOaWKI1sGUcRQcu7aC
+	 4O3zwDlwmbr+BZaBFklC8CUDgWErjSTJxtH2Zcoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0038/1146] arm64: dts: qcom: pm6350: Include header for KEY_POWER
-Date: Wed, 28 Dec 2022 15:26:17 +0100
-Message-Id: <20221228144331.198815444@linuxfoundation.org>
+Subject: [PATCH 6.0 0074/1073] ARM: dts: armada-39x: Fix assigned-addresses for every PCIe Root Port
+Date: Wed, 28 Dec 2022 15:27:42 +0100
+Message-Id: <20221228144330.087969525@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,36 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit f6e2d6914c7c095660a9c7c503328eebab1e2557 ]
+[ Upstream commit 69236d2391b4d7324b11c3252921571577892e7b ]
 
-Make pm6350.dtsi self-contained by including input.h, needed for the
-KEY_POWER constant used to define the power key.
+BDF of resource in DT assigned-addresses property of Marvell PCIe Root Port
+(PCI-to-PCI bridge) should match BDF in address part in that DT node name
+as specified resource belongs to Marvell PCIe Root Port itself.
 
-Fixes: d8a3c775d7cd ("arm64: dts: qcom: Add PM6350 PMIC")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Reviewed-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221030073232.22726-5-marijn.suijten@somainline.org
+Fixes: 538da83ddbea ("ARM: mvebu: add Device Tree files for Armada 39x SoC and board")
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/pm6350.dtsi | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/boot/dts/armada-39x.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pm6350.dtsi b/arch/arm64/boot/dts/qcom/pm6350.dtsi
-index ecf9b9919182..68245d78d2b9 100644
---- a/arch/arm64/boot/dts/qcom/pm6350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm6350.dtsi
-@@ -3,6 +3,7 @@
-  * Copyright (c) 2021, Luca Weiss <luca@z3ntu.xyz>
-  */
- 
-+#include <dt-bindings/input/input.h>
- #include <dt-bindings/spmi/spmi.h>
- 
- &spmi_bus {
+diff --git a/arch/arm/boot/dts/armada-39x.dtsi b/arch/arm/boot/dts/armada-39x.dtsi
+index e0b7c2099831..9525e7b7f436 100644
+--- a/arch/arm/boot/dts/armada-39x.dtsi
++++ b/arch/arm/boot/dts/armada-39x.dtsi
+@@ -453,7 +453,7 @@ pcie@1,0 {
+ 			/* x1 port */
+ 			pcie@2,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x40000 0 0x2000>;
++				assigned-addresses = <0x82001000 0 0x40000 0 0x2000>;
+ 				reg = <0x1000 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
+@@ -472,7 +472,7 @@ pcie@2,0 {
+ 			/* x1 port */
+ 			pcie@3,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
++				assigned-addresses = <0x82001800 0 0x44000 0 0x2000>;
+ 				reg = <0x1800 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
+@@ -494,7 +494,7 @@ pcie@3,0 {
+ 			 */
+ 			pcie@4,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x48000 0 0x2000>;
++				assigned-addresses = <0x82002000 0 0x48000 0 0x2000>;
+ 				reg = <0x2000 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
 -- 
 2.35.1
 
