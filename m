@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7D1D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49656C433EF;
-	Wed, 28 Dec 2022 15:09:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58CF1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C88AC433F0;
+	Wed, 28 Dec 2022 15:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240157;
-	bh=bed5LXd0C8VyUB9EQJk35b/ZjbPrSuop5Ddkv/BqsPg=;
+	s=korg; t=1672240160;
+	bh=jJwJIcYfZdNguDt5FsDyqadpbOHpqtMpZ8oFNZvPm2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uKSeh7kJnifHT9lZgRaJL4PcEB6w4ZACD2iA9bejFx0OvcetHpipezxMnDcWSB2d2
-	 Wyk5+FhEBBHHeciK9n439a0N+24xAK3Sir13ZL4H4vkh5ttF1rHp5wKgrP0SEJ+GDF
-	 F2cke9k6o1JiDV/DKSbifDTCJGIkmMTpFXuoMBic=
+	b=CLl0bTQefoAeocn40PC6r6KVl6SkvfSt0K2TJxF1AACCL7Ffr1MIRiP7xmb08rnsD
+	 q1taMFCYdmDBeyMIfD9EQDc/R/HjoKQNfTU+sdKj1jBYpeeoo7VazTAuGyC+2qZwT2
+	 FTDQthwWwbOOjvujg8U/xdx6hrOb9VXCGI6uEnZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0087/1146] ARM: dts: turris-omnia: Add ethernet aliases
-Date: Wed, 28 Dec 2022 15:27:06 +0100
-Message-Id: <20221228144332.508176152@linuxfoundation.org>
+Subject: [PATCH 5.15 316/731] wifi: rtl8xxxu: Add __packed to struct rtl8723bu_c2h
+Date: Wed, 28 Dec 2022 15:37:03 +0100
+Message-Id: <20221228144305.735821031@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,38 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit f1f3e530c59a7e8c5f06172f4c28b945a6b4bfb8 ]
+[ Upstream commit dd469a754afdb782ba3033cee102147493dc39f4 ]
 
-This allows bootloader to correctly pass MAC addresses used by bootloader
-to individual interfaces into kernel device tree.
+This struct is used to access a sequence of bytes received from the
+wifi chip. It must not have any padding bytes between the members.
 
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Fixes: 26ca8b52d6e1 ("ARM: dts: add support for Turris Omnia")
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+This doesn't change anything on my system, possibly because currently
+none of the members need more than byte alignment.
+
+Fixes: b2b43b7837ba ("rtl8xxxu: Initial functionality to handle C2H events for 8723bu")
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/1a270918-da22-ff5f-29fc-7855f740c5ba@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/armada-385-turris-omnia.dts | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/armada-385-turris-omnia.dts b/arch/arm/boot/dts/armada-385-turris-omnia.dts
-index 72ac807cae25..f2aaaed69ae9 100644
---- a/arch/arm/boot/dts/armada-385-turris-omnia.dts
-+++ b/arch/arm/boot/dts/armada-385-turris-omnia.dts
-@@ -23,6 +23,12 @@ chosen {
- 		stdout-path = &uart0;
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
+index 7ddce3c3f0c4..cd3ff9847ced 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
+@@ -1190,7 +1190,7 @@ struct rtl8723bu_c2h {
+ 			u8 bw;
+ 		} __packed ra_report;
  	};
+-};
++} __packed;
  
-+	aliases {
-+		ethernet0 = &eth0;
-+		ethernet1 = &eth1;
-+		ethernet2 = &eth2;
-+	};
-+
- 	memory {
- 		device_type = "memory";
- 		reg = <0x00000000 0x40000000>; /* 1024 MB */
+ struct rtl8xxxu_fileops;
+ 
 -- 
 2.35.1
 
