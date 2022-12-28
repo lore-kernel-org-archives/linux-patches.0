@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38931C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:37:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77894C433EF;
-	Wed, 28 Dec 2022 16:37:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CC941C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:37:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22530C43396;
+	Wed, 28 Dec 2022 16:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245452;
-	bh=FYBXsWlUp8AgPasGNzvLJEMDl7Pt9WKeBV+dNyhtRUA=;
+	s=korg; t=1672245455;
+	bh=XaMmYE28cw6KO7oP3jZT8Dmiaw8VJ3ASpLNnG1IIEmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SS08v0szOVRnsEe0nTDmNVIsFbRmYArERmga8tpcfoUD7uV/ZSL0kd87rdMHTOYAT
-	 94uXShyjp4H0pXzq64udWklMHLIutcS+BLy3rAY5b4201Pu9B4dSBayJUf8srXD4dl
-	 m0Ck8uHtvu40Q9cWed/HXvffTN5XOz1YGNYhrglA=
+	b=iTgGTTp6C2jdW8wRYnNkwEssrudIJiIv12XGK6dcJ8lNDs6TusisoYssYOSuHN0KA
+	 /CN5Ml46T+OQE1dWd9AtrL1qyE1eg3F3TPzYkrgJkH5oCJtY551+/EOGVrbGLlL8dd
+	 pHBRnCu4NYHaFLkHi+bzrjcogixymIZRBiIC3EYc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Huafei <lihuafei1@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Guenter Roeck <groeck@chromium.org>,
+	Yong Wu <yong.wu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0855/1146] kprobes: Fix check for probe enabled in kill_kprobe()
-Date: Wed, 28 Dec 2022 15:39:54 +0100
-Message-Id: <20221228144353.378179777@linuxfoundation.org>
+Subject: [PATCH 6.1 0864/1146] iommu/mediatek: Validate number of phandles associated with "mediatek,larbs"
+Date: Wed, 28 Dec 2022 15:40:03 +0100
+Message-Id: <20221228144353.630717301@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -36,71 +40,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Huafei <lihuafei1@huawei.com>
+From: Guenter Roeck <groeck@chromium.org>
 
-[ Upstream commit 0c76ef3f26d5ef2ac2c21b47e7620cff35809fbb ]
+[ Upstream commit ef693a8440926884bfd9cc3d6d36f65719513350 ]
 
-In kill_kprobe(), the check whether disarm_kprobe_ftrace() needs to be
-called always fails. This is because before that we set the
-KPROBE_FLAG_GONE flag for kprobe so that "!kprobe_disabled(p)" is always
-false.
+Fix the smatch warnings:
+drivers/iommu/mtk_iommu.c:878 mtk_iommu_mm_dts_parse() error: uninitialized
+symbol 'larbnode'.
 
-The disarm_kprobe_ftrace() call introduced by commit:
+If someone abuse the dtsi node(Don't follow the definition of dt-binding),
+for example "mediatek,larbs" is provided as boolean property, "larb_nr"
+will be zero and cause abnormal.
 
-  0cb2f1372baa ("kprobes: Fix NULL pointer dereference at kprobe_ftrace_handler")
+To fix this problem and improve the code safety, add some checking
+for the invalid input from dtsi, e.g. checking the larb_nr/larbid valid
+range, and avoid "mediatek,larb-id" property conflicts in the smi-larb
+nodes.
 
-to fix the NULL pointer reference problem. When the probe is enabled, if
-we do not disarm it, this problem still exists.
-
-Fix it by putting the probe enabled check before setting the
-KPROBE_FLAG_GONE flag.
-
-Link: https://lore.kernel.org/all/20221126114316.201857-1-lihuafei1@huawei.com/
-
-Fixes: 3031313eb3d54 ("kprobes: Fix to check probe enabled before disarm_kprobe_ftrace()")
-Signed-off-by: Li Huafei <lihuafei1@huawei.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Fixes: d2e9a1102cfc ("iommu/mediatek: Contain MM IOMMU flow with the MM TYPE")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Guenter Roeck <groeck@chromium.org>
+Signed-off-by: Yong Wu <yong.wu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Link: https://lore.kernel.org/r/20221018024258.19073-5-yong.wu@mediatek.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kprobes.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/iommu/mtk_iommu.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/kernel/kprobes.c b/kernel/kprobes.c
-index 3050631e528d..a35074f0daa1 100644
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -2364,6 +2364,14 @@ static void kill_kprobe(struct kprobe *p)
+diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
+index f4a315da4535..f1547199026c 100644
+--- a/drivers/iommu/mtk_iommu.c
++++ b/drivers/iommu/mtk_iommu.c
+@@ -1051,6 +1051,8 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
+ 	larb_nr = of_count_phandle_with_args(dev->of_node, "mediatek,larbs", NULL);
+ 	if (larb_nr < 0)
+ 		return larb_nr;
++	if (larb_nr == 0 || larb_nr > MTK_LARB_NR_MAX)
++		return -EINVAL;
  
- 	lockdep_assert_held(&kprobe_mutex);
+ 	for (i = 0; i < larb_nr; i++) {
+ 		u32 id;
+@@ -1069,6 +1071,11 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
+ 		ret = of_property_read_u32(larbnode, "mediatek,larb-id", &id);
+ 		if (ret)/* The id is consecutive if there is no this property */
+ 			id = i;
++		if (id >= MTK_LARB_NR_MAX) {
++			of_node_put(larbnode);
++			ret = -EINVAL;
++			goto err_larbdev_put;
++		}
  
-+	/*
-+	 * The module is going away. We should disarm the kprobe which
-+	 * is using ftrace, because ftrace framework is still available at
-+	 * 'MODULE_STATE_GOING' notification.
-+	 */
-+	if (kprobe_ftrace(p) && !kprobe_disabled(p) && !kprobes_all_disarmed)
-+		disarm_kprobe_ftrace(p);
-+
- 	p->flags |= KPROBE_FLAG_GONE;
- 	if (kprobe_aggrprobe(p)) {
- 		/*
-@@ -2380,14 +2388,6 @@ static void kill_kprobe(struct kprobe *p)
- 	 * the original probed function (which will be freed soon) any more.
- 	 */
- 	arch_remove_kprobe(p);
--
--	/*
--	 * The module is going away. We should disarm the kprobe which
--	 * is using ftrace, because ftrace framework is still available at
--	 * 'MODULE_STATE_GOING' notification.
--	 */
--	if (kprobe_ftrace(p) && !kprobe_disabled(p) && !kprobes_all_disarmed)
--		disarm_kprobe_ftrace(p);
- }
+ 		plarbdev = of_find_device_by_node(larbnode);
+ 		of_node_put(larbnode);
+@@ -1076,6 +1083,11 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
+ 			ret = -ENODEV;
+ 			goto err_larbdev_put;
+ 		}
++		if (data->larb_imu[id].dev) {
++			platform_device_put(plarbdev);
++			ret = -EEXIST;
++			goto err_larbdev_put;
++		}
+ 		data->larb_imu[id].dev = &plarbdev->dev;
  
- /* Disable one kprobe */
+ 		if (!plarbdev->dev.driver) {
 -- 
 2.35.1
 
