@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83DD1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:22:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68539C433EF;
-	Wed, 28 Dec 2022 15:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940E21863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:22:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19525C433D2;
+	Wed, 28 Dec 2022 15:22:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240924;
-	bh=5Rkahfzkdy121YzyB+QK0AzFVGSjIPPDnmj8I2Smvqw=;
+	s=korg; t=1672240927;
+	bh=+JSkrY5qRzZ4jTK0wCeoTUHJxkbwBCPYvU/9LC3D+IM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ClG0j/5UBJW5ye7fws2l6GgifDEF04rDEKuu180Z+JlE6FWDyhwTyiQFTHcqFKDeL
-	 G7yeQ5e1mydcUKrxmmQTd24tApT66wyjSkKqUrCgGKxX3m7PAy9n80DvOkcjBhchCx
-	 M54dKJPpqGoDT84YpPHjFApliZFEwYD46e6nnsog=
+	b=I5P0uc1ay9V3Hy2ucPYOiuRuqHVLv/p4FPXiwMVTbqzhV6QwD50rfYU94BRLQOPUs
+	 vN4Y1cyfft4mv9UT6Vq1F6i3KckTWefX9+NWYydcPTuar7KkhN+5c/PyAueuhlIwJ+
+	 ESR5i9RDLeU1lm0CbOEnDYbp+VNase50YMt9PcOc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Foster <bfoster@redhat.com>,
-	Dai Ngo <dai.ngo@oracle.com>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Pin-yen Lin <treapking@chromium.org>,
+	Robert Foss <robert.foss@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0185/1146] NFSD: pass range end to vfs_fsync_range() instead of count
-Date: Wed, 28 Dec 2022 15:28:44 +0100
-Message-Id: <20221228144335.176770388@linuxfoundation.org>
+Subject: [PATCH 6.0 0220/1073] drm/bridge: it6505: Initialize AUX channel in it6505_i2c_probe
+Date: Wed, 28 Dec 2022 15:30:08 +0100
+Message-Id: <20221228144333.993025822@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,46 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Foster <bfoster@redhat.com>
+From: Pin-yen Lin <treapking@chromium.org>
 
-[ Upstream commit 79a1d88a36f77374c77fd41a4386d8c2736b8704 ]
+[ Upstream commit e577d4b13064c337b83fe7edecb3f34e87144821 ]
 
-_nfsd_copy_file_range() calls vfs_fsync_range() with an offset and
-count (bytes written), but the former wants the start and end bytes
-of the range to sync. Fix it up.
+During device boot, the HPD interrupt could be triggered before the DRM
+subsystem registers it6505 as a DRM bridge. In such cases, the driver
+tries to access AUX channel and causes NULL pointer dereference.
+Initializing the AUX channel earlier to prevent such error.
 
-Fixes: eac0b17a77fb ("NFSD add vfs_fsync after async copy is done")
-Signed-off-by: Brian Foster <bfoster@redhat.com>
-Tested-by: Dai Ngo <dai.ngo@oracle.com>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: b5c84a9edcd4 ("drm/bridge: add it6505 driver")
+Signed-off-by: Pin-yen Lin <treapking@chromium.org>
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Signed-off-by: Robert Foss <robert.foss@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221013110411.1674359-2-treapking@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/bridge/ite-it6505.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index e91d0918592c..32fe7cbfb28b 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1646,6 +1646,7 @@ static ssize_t _nfsd_copy_file_range(struct nfsd4_copy *copy,
- 	u64 src_pos = copy->cp_src_pos;
- 	u64 dst_pos = copy->cp_dst_pos;
- 	int status;
-+	loff_t end;
+diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
+index a09d1a39ab0a..711f403afe7c 100644
+--- a/drivers/gpu/drm/bridge/ite-it6505.c
++++ b/drivers/gpu/drm/bridge/ite-it6505.c
+@@ -2854,10 +2854,7 @@ static int it6505_bridge_attach(struct drm_bridge *bridge,
+ 	}
  
- 	/* See RFC 7862 p.67: */
- 	if (bytes_total == 0)
-@@ -1665,8 +1666,8 @@ static ssize_t _nfsd_copy_file_range(struct nfsd4_copy *copy,
- 	/* for a non-zero asynchronous copy do a commit of data */
- 	if (nfsd4_copy_is_async(copy) && copy->cp_res.wr_bytes_written > 0) {
- 		since = READ_ONCE(dst->f_wb_err);
--		status = vfs_fsync_range(dst, copy->cp_dst_pos,
--					 copy->cp_res.wr_bytes_written, 0);
-+		end = copy->cp_dst_pos + copy->cp_res.wr_bytes_written - 1;
-+		status = vfs_fsync_range(dst, copy->cp_dst_pos, end, 0);
- 		if (!status)
- 			status = filemap_check_wb_err(dst->f_mapping, since);
- 		if (!status)
+ 	/* Register aux channel */
+-	it6505->aux.name = "DP-AUX";
+-	it6505->aux.dev = dev;
+ 	it6505->aux.drm_dev = bridge->dev;
+-	it6505->aux.transfer = it6505_aux_transfer;
+ 
+ 	ret = drm_dp_aux_register(&it6505->aux);
+ 
+@@ -3310,6 +3307,11 @@ static int it6505_i2c_probe(struct i2c_client *client,
+ 	DRM_DEV_DEBUG_DRIVER(dev, "it6505 device name: %s", dev_name(dev));
+ 	debugfs_init(it6505);
+ 
++	it6505->aux.name = "DP-AUX";
++	it6505->aux.dev = dev;
++	it6505->aux.transfer = it6505_aux_transfer;
++	drm_dp_aux_init(&it6505->aux);
++
+ 	it6505->bridge.funcs = &it6505_bridge_funcs;
+ 	it6505->bridge.type = DRM_MODE_CONNECTOR_DisplayPort;
+ 	it6505->bridge.ops = DRM_BRIDGE_OP_DETECT | DRM_BRIDGE_OP_EDID |
 -- 
 2.35.1
 
