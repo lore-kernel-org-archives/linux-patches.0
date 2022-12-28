@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A55B1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09381C433EF;
-	Wed, 28 Dec 2022 16:52:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A3E1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F8CDC433D2;
+	Wed, 28 Dec 2022 16:52:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246368;
-	bh=2cM9sHk61kwFfoiBAilDqzfeyk7NEDtVTKGidPdFxlg=;
+	s=korg; t=1672246371;
+	bh=49jbtjE20D3i7P5igmqRub2WStPr6KsnGhlBmfvJLkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZOyLq+eZVudkDQrEwefXZW0p+QSDYMxrMDgsWFNsPrscPfFN2c5w/D6qj9Q3toyk6
-	 RtzItk/alSQ8xnf986tR3Li3RNhnm2fvbSxl3EimFlf10TjVIToAq0baHxMt5lXfje
-	 EFsJHlRdpoSMrtDXTYeuRYwamTfoR1nP4JzWwkC8=
+	b=AD+GQFk1/t3VGRzYaCCq186Yil2QmVK7C6b4yrBRBpeNuSf4I5aheklyOYCcmCEmq
+	 BRyLS4DnG/GLNPp5OHfSTfMmoTWGxYvgdslu+nyLOGwzXn53HOykWw7vEECW0w0qAv
+	 Dh5rbBQLSDMrgqgC8/UFT4+8ousdR7KmyeSqBCR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Pacman <edward@edward-p.xyz>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.0 1029/1073] ALSA: hda/realtek: Add quirk for Lenovo TianYi510Pro-14IOB
-Date: Wed, 28 Dec 2022 15:43:37 +0100
-Message-Id: <20221228144356.143112429@linuxfoundation.org>
+	syzbot+0b1fb6b0108c27419f9f@syzkaller.appspotmail.com,
+	Josef Bacik <josef@toxicpanda.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.0 1056/1073] btrfs: do not BUG_ON() on ENOMEM when dropping extent items for a range
+Date: Wed, 28 Dec 2022 15:44:04 +0100
+Message-Id: <20221228144356.912548818@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -34,79 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edward Pacman <edward@edward-p.xyz>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 4bf5bf54476dffe60e6b6d8d539f67309ff599e2 upstream.
+commit 162d053e15fe985f754ef495a96eb3db970c43ed upstream.
 
-Lenovo TianYi510Pro-14IOB (17aa:3742)
-require quirk for enabling headset-mic
+If we get -ENOMEM while dropping file extent items in a given range, at
+btrfs_drop_extents(), due to failure to allocate memory when attempting to
+increment the reference count for an extent or drop the reference count,
+we handle it with a BUG_ON(). This is excessive, instead we can simply
+abort the transaction and return the error to the caller. In fact most
+callers of btrfs_drop_extents(), directly or indirectly, already abort
+the transaction if btrfs_drop_extents() returns any error.
 
-Signed-off-by: Edward Pacman <edward@edward-p.xyz>
-Cc: <stable@vger.kernel.org>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216756
-Link: https://lore.kernel.org/r/20221207133218.18989-1-edward@edward-p.xyz
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Also, we already have error paths at btrfs_drop_extents() that may return
+-ENOMEM and in those cases we abort the transaction, like for example
+anything that changes the b+tree may return -ENOMEM due to a failure to
+allocate a new extent buffer when COWing an existing extent buffer, such
+as a call to btrfs_duplicate_item() for example.
+
+So replace the BUG_ON() calls with proper logic to abort the transaction
+and return the error.
+
+Reported-by: syzbot+0b1fb6b0108c27419f9f@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/00000000000089773e05ee4b9cb4@google.com/
+CC: stable@vger.kernel.org # 5.4+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |   27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ fs/btrfs/file.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -10984,6 +10984,17 @@ static void alc897_fixup_lenovo_headset_
- 	}
- }
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -880,7 +880,10 @@ next_slot:
+ 						args->start - extent_offset,
+ 						0, false);
+ 				ret = btrfs_inc_extent_ref(trans, &ref);
+-				BUG_ON(ret); /* -ENOMEM */
++				if (ret) {
++					btrfs_abort_transaction(trans, ret);
++					break;
++				}
+ 			}
+ 			key.offset = args->start;
+ 		}
+@@ -967,7 +970,10 @@ delete_extent_item:
+ 						key.offset - extent_offset, 0,
+ 						false);
+ 				ret = btrfs_free_extent(trans, &ref);
+-				BUG_ON(ret); /* -ENOMEM */
++				if (ret) {
++					btrfs_abort_transaction(trans, ret);
++					break;
++				}
+ 				args->bytes_found += extent_end - key.offset;
+ 			}
  
-+static void alc897_fixup_lenovo_headset_mode(struct hda_codec *codec,
-+				     const struct hda_fixup *fix, int action)
-+{
-+	struct alc_spec *spec = codec->spec;
-+
-+	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
-+		spec->parse_flags |= HDA_PINCFG_HEADSET_MIC;
-+		spec->gen.hp_automute_hook = alc897_hp_automute_hook;
-+	}
-+}
-+
- static const struct coef_fw alc668_coefs[] = {
- 	WRITE_COEF(0x01, 0xbebe), WRITE_COEF(0x02, 0xaaaa), WRITE_COEF(0x03,    0x0),
- 	WRITE_COEF(0x04, 0x0180), WRITE_COEF(0x06,    0x0), WRITE_COEF(0x07, 0x0f80),
-@@ -11067,6 +11078,8 @@ enum {
- 	ALC897_FIXUP_LENOVO_HEADSET_MIC,
- 	ALC897_FIXUP_HEADSET_MIC_PIN,
- 	ALC897_FIXUP_HP_HSMIC_VERB,
-+	ALC897_FIXUP_LENOVO_HEADSET_MODE,
-+	ALC897_FIXUP_HEADSET_MIC_PIN2,
- };
- 
- static const struct hda_fixup alc662_fixups[] = {
-@@ -11493,6 +11506,19 @@ static const struct hda_fixup alc662_fix
- 			{ }
- 		},
- 	},
-+	[ALC897_FIXUP_LENOVO_HEADSET_MODE] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc897_fixup_lenovo_headset_mode,
-+	},
-+	[ALC897_FIXUP_HEADSET_MIC_PIN2] = {
-+		.type = HDA_FIXUP_PINS,
-+		.v.pins = (const struct hda_pintbl[]) {
-+			{ 0x1a, 0x01a11140 }, /* use as headset mic, without its own jack detect */
-+			{ }
-+		},
-+		.chained = true,
-+		.chain_id = ALC897_FIXUP_LENOVO_HEADSET_MODE
-+	},
- };
- 
- static const struct snd_pci_quirk alc662_fixup_tbl[] = {
-@@ -11545,6 +11571,7 @@ static const struct snd_pci_quirk alc662
- 	SND_PCI_QUIRK(0x17aa, 0x32cb, "Lenovo ThinkCentre M70", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x32cf, "Lenovo ThinkCentre M950", ALC897_FIXUP_HEADSET_MIC_PIN),
- 	SND_PCI_QUIRK(0x17aa, 0x32f7, "Lenovo ThinkCentre M90", ALC897_FIXUP_HEADSET_MIC_PIN),
-+	SND_PCI_QUIRK(0x17aa, 0x3742, "Lenovo TianYi510Pro-14IOB", ALC897_FIXUP_HEADSET_MIC_PIN2),
- 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo Ideapad Y550P", ALC662_FIXUP_IDEAPAD),
- 	SND_PCI_QUIRK(0x17aa, 0x3a0d, "Lenovo Ideapad Y550", ALC662_FIXUP_IDEAPAD),
- 	SND_PCI_QUIRK(0x1849, 0x5892, "ASRock B150M", ALC892_FIXUP_ASROCK_MOBO),
 
 
