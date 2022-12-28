@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 004271863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:05:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7946BC433D2;
-	Wed, 28 Dec 2022 15:05:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2351868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:05:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF9DEC433D2;
+	Wed, 28 Dec 2022 15:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239914;
-	bh=yY9imwIZpyQ07U+IWI4jNgFJ3e3gVQ1hcl1zwzlLWDI=;
+	s=korg; t=1672239920;
+	bh=GdgoA9pamYCRPE7QhZF697AxjjQe/L95Bw5Uhe0Iyv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qqOdZ5I7pOgRC4M6G76nT6mlwNYFyH65FHsTjVq5bP3Co4Od/ftVmE8YIuP+yr6P4
-	 7/NBgZ4hZH8qxt3zoJzAcRG02dpq+npLzCn7SLq/FFb4/tmRdRxFPqZZSysdc6fwQf
-	 6SCc6pXeHozoVTzMlRXJKJ0dnArAlLcrEHRbSpsA=
+	b=S+PJlAcJQlqEfslXAmNT561WtI3MvV0rLK5J8kivn877TAQrTLg+udklvH+O1exZT
+	 G/HFQGdMen7YatuOOsPuv0p4BVEKx7BAPS9kJaHgwEA+iadpNACu8QusCjdxrnwAZD
+	 jFsV/RyazyN6idyEASpfqhQL59GE5PWgpniC06IY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Jay Vosburgh <jay.vosburgh@canonical.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Alexander Potapenko <glider@google.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Marco Elver <elver@google.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 264/731] bonding: uninitialized variable in bond_miimon_inspect()
-Date: Wed, 28 Dec 2022 15:36:11 +0100
-Message-Id: <20221228144304.215633858@linuxfoundation.org>
+Subject: [PATCH 6.1 0058/1146] arm64: mm: kfence: only handle translation faults
+Date: Wed, 28 Dec 2022 15:26:37 +0100
+Message-Id: <20221228144331.736124091@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,39 +38,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit e5214f363dabca240446272dac54d404501ad5e5 ]
+[ Upstream commit 0bb1fbffc631064db567ccaeb9ed6b6df6342b66 ]
 
-The "ignore_updelay" variable needs to be initialized to false.
+Alexander noted that KFENCE only expects to handle faults from invalid page
+table entries (i.e. translation faults), but arm64's fault handling logic will
+call kfence_handle_page_fault() for other types of faults, including alignment
+faults caused by unaligned atomics. This has the unfortunate property of
+causing those other faults to be reported as "KFENCE: use-after-free",
+which is misleading and hinders debugging.
 
-Fixes: f8a65ab2f3ff ("bonding: fix link recovery in mode 2 when updelay is nonzero")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
-Link: https://lore.kernel.org/r/Y4SWJlh3ohJ6EPTL@kili
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fix this by only forwarding unhandled translation faults to the KFENCE
+code, similar to what x86 does already.
+
+Alexander has verified that this passes all the tests in the KFENCE test
+suite and avoids bogus reports on misaligned atomics.
+
+Link: https://lore.kernel.org/all/20221102081620.1465154-1-zhongbaisong@huawei.com/
+Fixes: 840b23986344 ("arm64, kfence: enable KFENCE for ARM64")
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Reviewed-by: Alexander Potapenko <glider@google.com>
+Tested-by: Alexander Potapenko <glider@google.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Marco Elver <elver@google.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20221114104411.2853040-1-mark.rutland@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/mm/fault.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 6dca5bfe8247..456298919d54 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2499,10 +2499,10 @@ static int bond_slave_info_query(struct net_device *bond_dev, struct ifslave *in
- /* called with rcu_read_lock() */
- static int bond_miimon_inspect(struct bonding *bond)
- {
-+	bool ignore_updelay = false;
- 	int link_state, commit = 0;
- 	struct list_head *iter;
- 	struct slave *slave;
--	bool ignore_updelay;
+diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
+index 5b391490e045..74f76514a48d 100644
+--- a/arch/arm64/mm/fault.c
++++ b/arch/arm64/mm/fault.c
+@@ -353,6 +353,11 @@ static bool is_el1_mte_sync_tag_check_fault(unsigned long esr)
+ 	return false;
+ }
  
- 	if (BOND_MODE(bond) == BOND_MODE_ACTIVEBACKUP) {
- 		ignore_updelay = !rcu_dereference(bond->curr_active_slave);
++static bool is_translation_fault(unsigned long esr)
++{
++	return (esr & ESR_ELx_FSC_TYPE) == ESR_ELx_FSC_FAULT;
++}
++
+ static void __do_kernel_fault(unsigned long addr, unsigned long esr,
+ 			      struct pt_regs *regs)
+ {
+@@ -385,7 +390,8 @@ static void __do_kernel_fault(unsigned long addr, unsigned long esr,
+ 	} else if (addr < PAGE_SIZE) {
+ 		msg = "NULL pointer dereference";
+ 	} else {
+-		if (kfence_handle_page_fault(addr, esr & ESR_ELx_WNR, regs))
++		if (is_translation_fault(esr) &&
++		    kfence_handle_page_fault(addr, esr & ESR_ELx_WNR, regs))
+ 			return;
+ 
+ 		msg = "paging request";
 -- 
 2.35.1
 
