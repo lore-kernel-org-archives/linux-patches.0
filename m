@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9C61863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71DD6C433EF;
-	Wed, 28 Dec 2022 15:09:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C000F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1578AC433F0;
+	Wed, 28 Dec 2022 15:09:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240173;
-	bh=qY16RBtuxcD3RstD6hVr5F6RiT/+hNpK2zQhV3Y6A1k=;
+	s=korg; t=1672240176;
+	bh=1dgAvwn1P/cNp3q8xu+IBu4pqFPpqjA+96QZODMhQuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C5rHa/Gfo1zTJlsngVmEfaInC1l3qNhsGChFOEQTkbi8P6PAt24DjlhZQYgEL1F03
-	 Gv/PoSReODG1rUpOGBYWSBwMkgxVSuT9HqxnJVL3AmWToLCsm9jg6c8NDB6xV1hmIF
-	 BsFl1TdOezvo9QMZaCPvNg6YQKiAeVZPWLQ8pK9A=
+	b=ZFNNzM0uYu2l5cfilgTVdA0cgS0ivxUNHPfD2qQ1MN0rSl4Zcz5OS/z/DxM6c9pf5
+	 OjVz5l3Vnm2GB0rHu11+g1Di29pej0iObguFCVZfO7KWXd6Vd1ugd47QUwbXWbD8nC
+	 +LLvRFpqV3dDvXIB+7giapWOpmN3cGMuM51VVCLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0102/1073] cpuidle: dt: Return the correct numbers of parsed idle states
-Date: Wed, 28 Dec 2022 15:28:10 +0100
-Message-Id: <20221228144330.817855877@linuxfoundation.org>
+Subject: [PATCH 6.1 0089/1146] ARM: dts: armada-38x: Fix compatible string for gpios
+Date: Wed, 28 Dec 2022 15:27:08 +0100
+Message-Id: <20221228144332.561705224@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,42 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit ee3c2c8ad6ba6785f14a60e4081d7c82e88162a2 ]
+[ Upstream commit c4de4667f15d04ef5920bacf41e514ec7d1ef03d ]
 
-While we correctly skips to initialize an idle state from a disabled idle
-state node in DT, the returned value from dt_init_idle_driver() don't get
-adjusted accordingly. Instead the number of found idle state nodes are
-returned, while the callers are expecting the number of successfully
-initialized idle states from DT.
+Armada 38x supports per CPU interrupts for gpios, like Armada XP. Pre-XP
+variants like Armada 370 do not support per CPU interrupts for gpios.
 
-This leads to cpuidle drivers unnecessarily continues to initialize their
-idle state specific data. Moreover, in the case when all idle states have
-been disabled in DT, we would end up registering a cpuidle driver, rather
-than relying on the default arch specific idle call.
+So change compatible string for Armada 38x from "marvell,armada-370-gpio"
+which indicates pre-XP variant to "marvell,armadaxp-gpio" which indicates
+XP variant or new.
 
-Fixes: 9f14da345599 ("drivers: cpuidle: implement DT based idle states infrastructure")
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Driver gpio-mvebu.c which handles both pre-XP and XP variants already
+provides support for per CPU interrupts on XP and newer variants.
+
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Fixes: 7cb2acb3fbae ("ARM: dts: mvebu: Add PWM properties for armada-38x")
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/dt_idle_states.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/armada-38x.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/cpuidle/dt_idle_states.c b/drivers/cpuidle/dt_idle_states.c
-index 252f2a9686a6..448bc796b0b4 100644
---- a/drivers/cpuidle/dt_idle_states.c
-+++ b/drivers/cpuidle/dt_idle_states.c
-@@ -223,6 +223,6 @@ int dt_init_idle_driver(struct cpuidle_driver *drv,
- 	 * also be 0 on platforms with missing DT idle states or legacy DT
- 	 * configuration predating the DT idle states bindings.
- 	 */
--	return i;
-+	return state_idx - start_idx;
- }
- EXPORT_SYMBOL_GPL(dt_init_idle_driver);
+diff --git a/arch/arm/boot/dts/armada-38x.dtsi b/arch/arm/boot/dts/armada-38x.dtsi
+index 446861b6b17b..12933eff419f 100644
+--- a/arch/arm/boot/dts/armada-38x.dtsi
++++ b/arch/arm/boot/dts/armada-38x.dtsi
+@@ -304,7 +304,7 @@ spdif_pins: spdif-pins {
+ 			};
+ 
+ 			gpio0: gpio@18100 {
+-				compatible = "marvell,armada-370-gpio",
++				compatible = "marvell,armadaxp-gpio",
+ 					     "marvell,orion-gpio";
+ 				reg = <0x18100 0x40>, <0x181c0 0x08>;
+ 				reg-names = "gpio", "pwm";
+@@ -323,7 +323,7 @@ gpio0: gpio@18100 {
+ 			};
+ 
+ 			gpio1: gpio@18140 {
+-				compatible = "marvell,armada-370-gpio",
++				compatible = "marvell,armadaxp-gpio",
+ 					     "marvell,orion-gpio";
+ 				reg = <0x18140 0x40>, <0x181c8 0x08>;
+ 				reg-names = "gpio", "pwm";
 -- 
 2.35.1
 
