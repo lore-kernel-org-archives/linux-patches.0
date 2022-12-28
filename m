@@ -1,26 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C74AA23AF
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:58:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48505C433EF;
-	Wed, 28 Dec 2022 16:58:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DDF823AF
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:58:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAAB0C433EF;
+	Wed, 28 Dec 2022 16:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246687;
-	bh=KO9p54nhjzygjNgFozlKGwdkzlpcixkmnImu6PElxDk=;
+	s=korg; t=1672246690;
+	bh=IqGOLkZDuMkQFoWswRPL+TSHcMlupgZGnwiOJf+mk80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A1B7qVRAIWoVVwxn8CvPWZMAzz1EBpbpoV/t597IcM1jBPAdtCHBjWbhlV/a7/PRM
-	 kUGgR8ctCNp5+YpZ5MyAKdm2Jh+6nEURfEmgnr57Znr69Qjh13AJioklnvzqoebZxG
-	 BAbqeuLkxJ/4T0+hppPQEC6OcnU3IxLeDDDlq18M=
+	b=i3q0oelbvHhXQLf24JhkLHDKPQk30sXkTujh/9QpkeX4H4p7+mnT9n9MrUFMCgzzZ
+	 t5TU4UlMAqjyqymj50nCIumCf9kpWjDwV/o9DvXn/sGGJFO1LK+kNSblCVtaADmzn7
+	 udxahfuc2rfSy2yk2R4O+zbLNlovqKS9jr5EUKSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wangdicheng <wangdicheng@kylinos.cn>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 1099/1146] ALSA: usb-audio: add the quirk for KT0206 device
-Date: Wed, 28 Dec 2022 15:43:58 +0100
-Message-Id: <20221228144400.017586259@linuxfoundation.org>
+	Wei Wang <wvw@google.com>,
+	Midas Chien <midaschieh@google.com>,
+	Connor OBrien <connoro@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Anton Vorontsov <anton@enomsg.org>,
+	Colin Cross <ccross@android.com>,
+	Tony Luck <tony.luck@intel.com>,
+	kernel test robot <lkp@intel.com>,
+	kernel-team@android.com,
+	John Stultz <jstultz@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1090/1146] pstore: Make sure CONFIG_PSTORE_PMSG selects CONFIG_RT_MUTEXES
+Date: Wed, 28 Dec 2022 15:43:49 +0100
+Message-Id: <20221228144359.789947327@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -34,32 +43,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: wangdicheng <wangdicheng@kylinos.cn>
+From: John Stultz <jstultz@google.com>
 
-commit 696b66ac26ef953aed5783ef26a252ec8f207013 upstream.
+[ Upstream commit 2f4fec5943407318b9523f01ce1f5d668c028332 ]
 
-Add relevant information to the quirks-table.h file.
-The test passes and the sound source file plays normally.
+In commit 76d62f24db07 ("pstore: Switch pmsg_lock to an rt_mutex
+to avoid priority inversion") I changed a lock to an rt_mutex.
 
-Signed-off-by: wangdicheng <wangdicheng@kylinos.cn>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/SG2PR02MB587849631CB96809CF90DBED8A1A9@SG2PR02MB5878.apcprd02.prod.outlook.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+However, its possible that CONFIG_RT_MUTEXES is not enabled,
+which then results in a build failure, as the 0day bot detected:
+  https://lore.kernel.org/linux-mm/202212211244.TwzWZD3H-lkp@intel.com/
+
+Thus this patch changes CONFIG_PSTORE_PMSG to select
+CONFIG_RT_MUTEXES, which ensures the build will not fail.
+
+Cc: Wei Wang <wvw@google.com>
+Cc: Midas Chien<midaschieh@google.com>
+Cc: Connor O'Brien <connoro@google.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Anton Vorontsov <anton@enomsg.org>
+Cc: Colin Cross <ccross@android.com>
+Cc: Tony Luck <tony.luck@intel.com>
+Cc: kernel test robot <lkp@intel.com>
+Cc: kernel-team@android.com
+Fixes: 76d62f24db07 ("pstore: Switch pmsg_lock to an rt_mutex to avoid priority inversion")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: John Stultz <jstultz@google.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221221051855.15761-1-jstultz@google.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/quirks-table.h |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/pstore/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/sound/usb/quirks-table.h
-+++ b/sound/usb/quirks-table.h
-@@ -76,6 +76,8 @@
- { USB_DEVICE_VENDOR_SPEC(0x041e, 0x3f0a) },
- /* E-Mu 0204 USB */
- { USB_DEVICE_VENDOR_SPEC(0x041e, 0x3f19) },
-+/* Ktmicro Usb_audio device */
-+{ USB_DEVICE_VENDOR_SPEC(0x31b2, 0x0011) },
- 
- /*
-  * Creative Technology, Ltd Live! Cam Sync HD [VF0770]
+diff --git a/fs/pstore/Kconfig b/fs/pstore/Kconfig
+index 8adabde685f1..c49d554cc9ae 100644
+--- a/fs/pstore/Kconfig
++++ b/fs/pstore/Kconfig
+@@ -126,6 +126,7 @@ config PSTORE_CONSOLE
+ config PSTORE_PMSG
+ 	bool "Log user space messages"
+ 	depends on PSTORE
++	select RT_MUTEXES
+ 	help
+ 	  When the option is enabled, pstore will export a character
+ 	  interface /dev/pmsg0 to log user space messages. On reboot
+-- 
+2.35.1
+
 
 
