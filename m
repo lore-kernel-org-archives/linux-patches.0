@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B391863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 968FBC433D2;
-	Wed, 28 Dec 2022 15:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F63E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E296C433D2;
+	Wed, 28 Dec 2022 15:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240354;
-	bh=/8TxWuYneagStKLzPona12VDqy8AkK9MDeAhuODTY4w=;
+	s=korg; t=1672240356;
+	bh=FP5yqSp/jSmCxmVZu7K+kiIYgmJ4rkUP3CE3Nm8/EOg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JjSUxFxAUFtedXL08yefchkV22uF5/rjEt9Ip4o0cuMuESkHesbrpJbt9iV1oe4zp
-	 MsWr3DiBASWa/JyCG7qde8fGFfnrIaJZ+0DGCs2u6UH+0RYfW9lc8KafbKbJuRmL9i
-	 uzxrne9W8Ew90Fgznd/iw6hsjAvKbUFT9Z6/ED3c=
+	b=ugYemYM8JZ1C2UASHiRaYuUVWiuXz/oOk1cbCnhs8k02wQKxy/YVGpP2MJLRm0+8Q
+	 gcoNus+QetDac2FMpurh+RS0LZM7CrynBFGMvjZn3sMZsa6tTTvD5w91VYl2CQOR3c
+	 7ByDudB1otHf74KzcL7nSotRxZzhye0EN1/aQas4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qais Yousef <qais.yousef@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0112/1146] sched/uclamp: Cater for uclamp in find_energy_efficient_cpu()s early exit condition
-Date: Wed, 28 Dec 2022 15:27:31 +0100
-Message-Id: <20221228144333.196665205@linuxfoundation.org>
+Subject: [PATCH 5.15 340/731] can: tcan4x5x: Remove invalid write in clear_interrupts
+Date: Wed, 28 Dec 2022 15:37:27 +0100
+Message-Id: <20221228144306.423489463@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,64 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qais Yousef <qais.yousef@arm.com>
+From: Markus Schneider-Pargmann <msp@baylibre.com>
 
-[ Upstream commit d81304bc6193554014d4372a01debdf65e1e9a4d ]
+[ Upstream commit 40c9e4f676abbe194541d88e796341c92d5a13c0 ]
 
-If the utilization of the woken up task is 0, we skip the energy
-calculation because it has no impact.
+Register 0x824 TCAN4X5X_MCAN_INT_REG is a read-only register. Any writes
+to this register do not have any effect.
 
-But if the task is boosted (uclamp_min != 0) will have an impact on task
-placement and frequency selection. Only skip if the util is truly
-0 after applying uclamp values.
+Remove this write. The m_can driver aldready clears the interrupts in
+m_can_isr() by writing to M_CAN_IR which is translated to register
+0x1050 which is a writable version of this register.
 
-Change uclamp_task_cpu() signature to avoid unnecessary additional calls
-to uclamp_eff_get(). feec() is the only user now.
-
-Fixes: 732cd75b8c920 ("sched/fair: Select an energy-efficient CPU on task wake-up")
-Signed-off-by: Qais Yousef <qais.yousef@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20220804143609.515789-8-qais.yousef@arm.com
+Fixes: 5443c226ba91 ("can: tcan4x5x: Add tcan4x5x driver to the kernel")
+Signed-off-by: Markus Schneider-Pargmann <msp@baylibre.com>
+Link: https://lore.kernel.org/all/20221206115728.1056014-9-msp@baylibre.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ drivers/net/can/m_can/tcan4x5x-core.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index a0ee3192e5a7..0f32acb05055 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -4280,14 +4280,16 @@ static inline unsigned long task_util_est(struct task_struct *p)
- }
+diff --git a/drivers/net/can/m_can/tcan4x5x-core.c b/drivers/net/can/m_can/tcan4x5x-core.c
+index 04687b15b250..9b735eccec8a 100644
+--- a/drivers/net/can/m_can/tcan4x5x-core.c
++++ b/drivers/net/can/m_can/tcan4x5x-core.c
+@@ -204,11 +204,6 @@ static int tcan4x5x_clear_interrupts(struct m_can_classdev *cdev)
+ 	if (ret)
+ 		return ret;
  
- #ifdef CONFIG_UCLAMP_TASK
--static inline unsigned long uclamp_task_util(struct task_struct *p)
-+static inline unsigned long uclamp_task_util(struct task_struct *p,
-+					     unsigned long uclamp_min,
-+					     unsigned long uclamp_max)
- {
--	return clamp(task_util_est(p),
--		     uclamp_eff_value(p, UCLAMP_MIN),
--		     uclamp_eff_value(p, UCLAMP_MAX));
-+	return clamp(task_util_est(p), uclamp_min, uclamp_max);
- }
- #else
--static inline unsigned long uclamp_task_util(struct task_struct *p)
-+static inline unsigned long uclamp_task_util(struct task_struct *p,
-+					     unsigned long uclamp_min,
-+					     unsigned long uclamp_max)
- {
- 	return task_util_est(p);
- }
-@@ -7205,7 +7207,7 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
- 	target = prev_cpu;
- 
- 	sync_entity_load_avg(&p->se);
--	if (!task_util_est(p))
-+	if (!uclamp_task_util(p, p_util_min, p_util_max))
- 		goto unlock;
- 
- 	eenv_task_busy_time(&eenv, p, prev_cpu);
+-	ret = tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_MCAN_INT_REG,
+-				      TCAN4X5X_ENABLE_MCAN_INT);
+-	if (ret)
+-		return ret;
+-
+ 	ret = tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_INT_FLAGS,
+ 				      TCAN4X5X_CLEAR_ALL_INT);
+ 	if (ret)
 -- 
 2.35.1
 
