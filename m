@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F5DD1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:34:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A36C433D2;
-	Wed, 28 Dec 2022 16:34:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DEA71C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:34:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DF83C433D2;
+	Wed, 28 Dec 2022 16:34:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245249;
-	bh=+aXCmwXs+uqOZ1eRtgmRmSNmXqLTFfjXkgefY15ukC0=;
+	s=korg; t=1672245252;
+	bh=W4IJTgpGPL7R83Cr9e/83msLC0nkUYBio7i30LOLwa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2I3F8icU8rhpdJPoCAPbt7jFeVV3UR8q6i1B9YPLMyzzr9aG5rIg/9HYdUF0eHQC4
-	 lKrW7qJ7YtQEpp7hXNxkgn7ctl0Dbc0vD1QzrH9HeifdlLTisyo4a+r7qWsMVGLDHU
-	 mSaVONatZ4LcOeXcUAWV7vITYnsqf+t62ZJcTU2o=
+	b=dVJWLNsXcEYdu0cxJqvOYY9RSm6e+qCZgRVSYRP8kj4KMFS/nFqXrg5g1zpgaWOqo
+	 bXjNNqslmRw+tmUCWx+UYGOT5X+QVWvyVOoo0k8NL/OREdzTk9laSU6LMqYX3sDP1X
+	 EKC9tJprXOyTUoALQlprbDFqiM6jByz4BWHw4WHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maksim Kiselev <bigunclemax@gmail.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0860/1073] net: dsa: mv88e6xxx: avoid reg_lock deadlock in mv88e6xxx_setup_port()
-Date: Wed, 28 Dec 2022 15:40:48 +0100
-Message-Id: <20221228144351.378690278@linuxfoundation.org>
+Subject: [PATCH 6.1 0827/1146] phy: qcom-qmp-pcie: Fix high latency with 4x2 PHY when ASPM is enabled
+Date: Wed, 28 Dec 2022 15:39:26 +0100
+Message-Id: <20221228144352.621082628@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,119 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit a7d82367daa6baa5e8399e6327e7f2f463534505 ]
+[ Upstream commit 9ddcd920f8edfe65c3670fbd0b49db00e1e562fe ]
 
-In the blamed commit, it was not noticed that one implementation of
-chip->info->ops->phylink_get_caps(), called by mv88e6xxx_get_caps(),
-may access hardware registers, and in doing so, it takes the
-mv88e6xxx_reg_lock(). Namely, this is mv88e6352_phylink_get_caps().
+The PCIe QMP 4x2 RC PHY generates high latency when ASPM is enabled. This
+seem to be fixed by clearing the QPHY_V5_20_PCS_PCIE_PRESET_P10_POST
+register of the pcs_misc register space.
 
-This is a problem because mv88e6xxx_get_caps(), apart from being
-a top-level function (method invoked by dsa_switch_ops), is now also
-directly called from mv88e6xxx_setup_port(), which runs under the
-mv88e6xxx_reg_lock() taken by mv88e6xxx_setup(). Therefore, when running
-on mv88e6352, the reg_lock would be acquired a second time and the
-system would deadlock on driver probe.
-
-The things that mv88e6xxx_setup() can compete with in terms of register
-access with are the IRQ handlers and MDIO bus operations registered by
-mv88e6xxx_probe(). So there is a real need to acquire the register lock.
-
-The register lock can, in principle, be dropped and re-acquired pretty
-much at will within the driver, as long as no operations that involve
-waiting for indirect access to complete (essentially, callers of
-mv88e6xxx_smi_direct_wait() and mv88e6xxx_wait_mask()) are interrupted
-with the lock released. However, I would guess that in mv88e6xxx_setup(),
-the critical section is kept open for such a long time just in order to
-optimize away multiple lock/unlock operations on the registers.
-
-We could, in principle, drop the reg_lock right before the
-mv88e6xxx_setup_port() -> mv88e6xxx_get_caps() call, and
-re-acquire it immediately afterwards. But this would look ugly, because
-mv88e6xxx_setup_port() would release a lock which it didn't acquire, but
-the caller did.
-
-A cleaner solution to this issue comes from the observation that struct
-mv88e6xxxx_ops methods generally assume they are called with the
-reg_lock already acquired. Whereas mv88e6352_phylink_get_caps() is more
-the exception rather than the norm, in that it acquires the lock itself.
-
-Let's enforce the same locking pattern/convention for
-chip->info->ops->phylink_get_caps() as well, and make
-mv88e6xxx_get_caps(), the top-level function, acquire the register lock
-explicitly, for this one implementation that will access registers for
-port 4 to work properly.
-
-This means that mv88e6xxx_setup_port() will no longer call the top-level
-function, but the low-level mv88e6xxx_ops method which expects the
-correct calling context (register lock held).
-
-Compared to chip->info->ops->phylink_get_caps(), mv88e6xxx_get_caps()
-also fixes up the supported_interfaces bitmap for internal ports, since
-that can be done generically and does not require per-switch knowledge.
-That's code which will no longer execute, however mv88e6xxx_setup_port()
-doesn't need that. It just needs to look at the mac_capabilities bitmap.
-
-Fixes: cc1049ccee20 ("net: dsa: mv88e6xxx: fix speed setting for CPU/DSA ports")
-Reported-by: Maksim Kiselev <bigunclemax@gmail.com>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Tested-by: Maksim Kiselev <bigunclemax@gmail.com>
-Link: https://lore.kernel.org/r/20221214110120.3368472-1-vladimir.oltean@nxp.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 2c91bf6bf290 ("phy: qcom-qmp: Add SM8450 PCIe1 PHY support")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Link: https://lore.kernel.org/r/20221102081835.41892-1-manivannan.sadhasivam@linaro.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/chip.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c           | 1 +
+ drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/chip.c b/drivers/net/dsa/mv88e6xxx/chip.c
-index 546d90dae933..0fd978e3ce2d 100644
---- a/drivers/net/dsa/mv88e6xxx/chip.c
-+++ b/drivers/net/dsa/mv88e6xxx/chip.c
-@@ -689,13 +689,12 @@ static void mv88e6352_phylink_get_caps(struct mv88e6xxx_chip *chip, int port,
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+index 3c5c4a4412e0..5a17cda1a6b8 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+@@ -1308,6 +1308,7 @@ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_pcs_misc_tbl[] = {
+ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_rc_pcs_misc_tbl[] = {
+ 	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_ENDPOINT_REFCLK_DRIVE, 0xc1),
+ 	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_OSC_DTCT_ACTIONS, 0x00),
++	QMP_PHY_INIT_CFG(QPHY_V5_20_PCS_PCIE_PRESET_P10_POST, 0x00),
+ };
  
- 	/* Port 4 supports automedia if the serdes is associated with it. */
- 	if (port == 4) {
--		mv88e6xxx_reg_lock(chip);
- 		err = mv88e6352_g2_scratch_port_has_serdes(chip, port);
- 		if (err < 0)
- 			dev_err(chip->dev, "p%d: failed to read scratch\n",
- 				port);
- 		if (err <= 0)
--			goto unlock;
-+			return;
- 
- 		cmode = mv88e6352_get_port4_serdes_cmode(chip);
- 		if (cmode < 0)
-@@ -703,8 +702,6 @@ static void mv88e6352_phylink_get_caps(struct mv88e6xxx_chip *chip, int port,
- 				port);
- 		else
- 			mv88e6xxx_translate_cmode(cmode, supported);
--unlock:
--		mv88e6xxx_reg_unlock(chip);
- 	}
- }
- 
-@@ -823,7 +820,9 @@ static void mv88e6xxx_get_caps(struct dsa_switch *ds, int port,
- {
- 	struct mv88e6xxx_chip *chip = ds->priv;
- 
-+	mv88e6xxx_reg_lock(chip);
- 	chip->info->ops->phylink_get_caps(chip, port, config);
-+	mv88e6xxx_reg_unlock(chip);
- 
- 	if (mv88e6xxx_phy_is_internal(ds, port)) {
- 		__set_bit(PHY_INTERFACE_MODE_INTERNAL,
-@@ -3299,7 +3298,7 @@ static int mv88e6xxx_setup_port(struct mv88e6xxx_chip *chip, int port)
- 		struct phylink_config pl_config = {};
- 		unsigned long caps;
- 
--		mv88e6xxx_get_caps(ds, port, &pl_config);
-+		chip->info->ops->phylink_get_caps(chip, port, &pl_config);
- 
- 		caps = pl_config.mac_capabilities;
- 
+ static const struct qmp_phy_init_tbl sm8450_qmp_gen4x2_pcie_ep_serdes_tbl[] = {
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h
+index c9fa90b45475..3d9713d348fe 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcs-pcie-v5_20.h
+@@ -11,6 +11,7 @@
+ #define QPHY_V5_20_PCS_PCIE_OSC_DTCT_MODE2_CONFIG5	0x084
+ #define QPHY_V5_20_PCS_PCIE_OSC_DTCT_ACTIONS		0x090
+ #define QPHY_V5_20_PCS_PCIE_EQ_CONFIG1			0x0a0
++#define QPHY_V5_20_PCS_PCIE_PRESET_P10_POST		0x0e0
+ #define QPHY_V5_20_PCS_PCIE_G4_EQ_CONFIG5		0x108
+ #define QPHY_V5_20_PCS_PCIE_G4_PRE_GAIN			0x15c
+ #define QPHY_V5_20_PCS_PCIE_RX_MARGINING_CONFIG3	0x184
 -- 
 2.35.1
 
