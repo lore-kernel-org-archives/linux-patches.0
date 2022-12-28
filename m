@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33B001C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACD83C433D2;
-	Wed, 28 Dec 2022 16:21:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025C31C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C499C433D2;
+	Wed, 28 Dec 2022 16:21:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244506;
-	bh=d65Vl+/h8bBat4qNVjHnKd9X9TaalEA3kwmfWgwqhJE=;
+	s=korg; t=1672244508;
+	bh=HRL0szz7m3tX6TfUqS2i3vmZRRETeIWr52yGzkEUzXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ShOis65ohEFhCOcJEo2n8ehoUl1lBxK5EnnLCljXqSwDn3nm5NPYma4NqLU3M7Sgo
-	 YuGCQi1945I3PAel9x9LWjNW1wEcpB+frdqwE7B7kjap8+I/mRrsf1DeqpVXvN3If0
-	 evP9Zly7XG1X6FnRDWE5XHinHpedrjyMn8ktGQa0=
+	b=CTDAeg61+3MGUhISeKOP6Sl20D/AToSlrQz6/eET/c7lgf9iP2M5AAXd8DM2AgtGc
+	 MQ3UBF9CsAYW/FpKdS1G56tJiRulGruM6kHkamqCJzpnCn+EVvPQKJCr7GMFDWdZ2W
+	 3HhYleQ0E+nlNwQ6m2n74JA2+I6htwZmRslzLSbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yangtao Li <frank.li@vivo.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0685/1146] f2fs: fix iostat parameter for discard
-Date: Wed, 28 Dec 2022 15:37:04 +0100
-Message-Id: <20221228144348.748658145@linuxfoundation.org>
+Subject: [PATCH 6.0 0724/1073] samples: vfio-mdev: Fix missing pci_disable_device() in mdpy_fb_probe()
+Date: Wed, 28 Dec 2022 15:38:32 +0100
+Message-Id: <20221228144347.689747270@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yangtao Li <frank.li@vivo.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 15e38ee44d50cad264da80ef75626b9224ddc4a3 ]
+[ Upstream commit d1f0f50fbbbbca1e3e8157e51934613bf88f6d44 ]
 
-Just like other data we count uses the number of bytes as the basic unit,
-but discard uses the number of cmds as the statistical unit. In fact the
-discard command contains the number of blocks, so let's change to the
-number of bytes as the base unit.
+Add missing pci_disable_device() in fail path of mdpy_fb_probe().
+Besides, fix missing release functions in mdpy_fb_remove().
 
-Fixes: b0af6d491a6b ("f2fs: add app/fs io stat")
-Signed-off-by: Yangtao Li <frank.li@vivo.com>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: cacade1946a4 ("sample: vfio mdev display - guest driver")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Link: https://lore.kernel.org/r/20221208013341.3999-1-shangxiaojing@huawei.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ samples/vfio-mdev/mdpy-fb.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index c568821b8463..c1d0713666ee 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -1170,7 +1170,7 @@ static int __submit_discard_cmd(struct f2fs_sb_info *sbi,
+diff --git a/samples/vfio-mdev/mdpy-fb.c b/samples/vfio-mdev/mdpy-fb.c
+index 9ec93d90e8a5..4eb7aa11cfbb 100644
+--- a/samples/vfio-mdev/mdpy-fb.c
++++ b/samples/vfio-mdev/mdpy-fb.c
+@@ -109,7 +109,7 @@ static int mdpy_fb_probe(struct pci_dev *pdev,
  
- 		atomic_inc(&dcc->issued_discard);
+ 	ret = pci_request_regions(pdev, "mdpy-fb");
+ 	if (ret < 0)
+-		return ret;
++		goto err_disable_dev;
  
--		f2fs_update_iostat(sbi, NULL, FS_DISCARD, 1);
-+		f2fs_update_iostat(sbi, NULL, FS_DISCARD, len * F2FS_BLKSIZE);
+ 	pci_read_config_dword(pdev, MDPY_FORMAT_OFFSET, &format);
+ 	pci_read_config_dword(pdev, MDPY_WIDTH_OFFSET,	&width);
+@@ -191,6 +191,9 @@ static int mdpy_fb_probe(struct pci_dev *pdev,
+ err_release_regions:
+ 	pci_release_regions(pdev);
  
- 		lstart += len;
- 		start += len;
++err_disable_dev:
++	pci_disable_device(pdev);
++
+ 	return ret;
+ }
+ 
+@@ -199,7 +202,10 @@ static void mdpy_fb_remove(struct pci_dev *pdev)
+ 	struct fb_info *info = pci_get_drvdata(pdev);
+ 
+ 	unregister_framebuffer(info);
++	iounmap(info->screen_base);
+ 	framebuffer_release(info);
++	pci_release_regions(pdev);
++	pci_disable_device(pdev);
+ }
+ 
+ static struct pci_device_id mdpy_fb_pci_table[] = {
 -- 
 2.35.1
 
