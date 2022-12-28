@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB6681863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:47:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EC67C433D2;
-	Wed, 28 Dec 2022 15:47:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E37B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:47:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 149F1C433EF;
+	Wed, 28 Dec 2022 15:47:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242421;
-	bh=D3Qpo4WvRoM3MQEmckjJHuzWqUjNIxWOpDs4bzQ4Zc0=;
+	s=korg; t=1672242424;
+	bh=WSLmjL2a8rFWBx8XjgfeKWZeRbeXoLGYdqEcCczltqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CX/zL1zkYpcxDZAzkBbdry307VkYS5D0WTclJvDYEXk/Ewrz05Ig7wkrbtVKYbB0w
-	 mLf5r2lvgF6nLkOAlOJ2RzKTFZZwpHGGi94mRuvMg5UtF2sETIqZdpkc9G+pHwKWwh
-	 Ct8RqIDyswZXmMUA1QcHActt21LxXbGKN7k3n6V8=
+	b=kK94y/9itbTVUnXnInnqIIkeQFfup63aUArt96sKmj1skx3fcyIbxQ9vTOmkaxDXK
+	 Snm79x8zrrtJQ47deicyUKA+d80pQGjbVtM3VkQ6bsu9oY+Ggc77fBiU1EFmsejjXw
+	 C0j1ci+yC/SdcJLwZ4HTclPa1AAh8ayNUgaUF0Rk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Ye Li <ye.li@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0408/1073] NFSv4.2: Fix a memory stomp in decode_attr_security_label
-Date: Wed, 28 Dec 2022 15:33:16 +0100
-Message-Id: <20221228144339.101275273@linuxfoundation.org>
+Subject: [PATCH 6.1 0368/1146] clk: imx93: correct enet clock
+Date: Wed, 28 Dec 2022 15:31:47 +0100
+Message-Id: <20221228144340.161419757@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,41 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Peng Fan <peng.fan@nxp.com>
 
-[ Upstream commit 43c1031f7110967c240cb6e922adcfc4b8899183 ]
+[ Upstream commit 4be5d91b9433f1dc76de485e240ca6aaa2d19f65 ]
 
-We must not change the value of label->len if it is zero, since that
-indicates we stored a label.
+Per update Reference Mannual, correct the enet clock parent to
+wakeup_axi_root.
 
-Fixes: b4487b935452 ("nfs: Fix getxattr kernel panic and memory overflow")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: 24defbe194b6 ("clk: imx: add i.MX93 clk")
+Reviewed-by: Ye Li <ye.li@nxp.com>
+Signed-off-by: Peng Fan <peng.fan@nxp.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20221028095211.2598312-3-peng.fan@oss.nxp.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4xdr.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/clk/imx/clk-imx93.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4xdr.c b/fs/nfs/nfs4xdr.c
-index 9103e022376a..deec76cf5afe 100644
---- a/fs/nfs/nfs4xdr.c
-+++ b/fs/nfs/nfs4xdr.c
-@@ -4236,12 +4236,10 @@ static int decode_attr_security_label(struct xdr_stream *xdr, uint32_t *bitmap,
- 			return -EIO;
- 		bitmap[2] &= ~FATTR4_WORD2_SECURITY_LABEL;
- 		if (len < NFS4_MAXLABELLEN) {
--			if (label) {
--				if (label->len) {
--					if (label->len < len)
--						return -ERANGE;
--					memcpy(label->label, p, len);
--				}
-+			if (label && label->len) {
-+				if (label->len < len)
-+					return -ERANGE;
-+				memcpy(label->label, p, len);
- 				label->len = len;
- 				label->pi = pi;
- 				label->lfs = lfs;
+diff --git a/drivers/clk/imx/clk-imx93.c b/drivers/clk/imx/clk-imx93.c
+index 6c39f3431c79..02d6a9894521 100644
+--- a/drivers/clk/imx/clk-imx93.c
++++ b/drivers/clk/imx/clk-imx93.c
+@@ -240,7 +240,7 @@ static const struct imx93_clk_ccgr {
+ 	{ IMX93_CLK_AUD_XCVR_GATE,	"aud_xcvr",	"audio_xcvr_root",	0x9b80, },
+ 	{ IMX93_CLK_SPDIF_GATE,		"spdif",	"spdif_root",		0x9c00, },
+ 	{ IMX93_CLK_HSIO_32K_GATE,	"hsio_32k",	"osc_32k",		0x9dc0, },
+-	{ IMX93_CLK_ENET1_GATE,		"enet1",	"enet_root",		0x9e00, },
++	{ IMX93_CLK_ENET1_GATE,		"enet1",	"wakeup_axi_root",	0x9e00, },
+ 	{ IMX93_CLK_ENET_QOS_GATE,	"enet_qos",	"wakeup_axi_root",	0x9e40, },
+ 	{ IMX93_CLK_SYS_CNT_GATE,	"sys_cnt",	"osc_24m",		0x9e80, },
+ 	{ IMX93_CLK_TSTMR1_GATE,	"tstmr1",	"bus_aon_root",		0x9ec0, },
 -- 
 2.35.1
 
