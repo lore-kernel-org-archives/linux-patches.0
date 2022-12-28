@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433871C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:06:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA379C433EF;
-	Wed, 28 Dec 2022 16:06:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D0A1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:06:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68721C433D2;
+	Wed, 28 Dec 2022 16:06:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243571;
-	bh=s6fayNqqatLK37mt00Hs0aWVIfXz4k3CCqLNpoB4HG8=;
+	s=korg; t=1672243573;
+	bh=NSnjBrBZ+AWvoKzJjSIouAQFi7wI3pN0wxopmdHS8LY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U9muxKWwukEQdrWGeHx6cUq0UBb8dkpR/jMkZup2Hc2kvsvsNiXxH/xp1vOzDNoM2
-	 QnJDIoBKnizWkIvAQ7hNAGQp1Tn0B+w9UtBjXj5LIkBRK67sR0juTZi9B3RkON3x+v
-	 lkyZC4g2rU5OmzCmjPop8ChMGb1fEv6cGj7GbGSI=
+	b=WBvBIp0MLzvgMhX9k686HeBU/g6UQl4tBOOAoUH+T2AbOfWKT9vGdp8Vkpgy2iguB
+	 mE7D1J9ZsTd/MdlXnf/1DLqOXe7rd7GO3mBPs7pPXzxPwOHixg5o5TfKskwtMSYdzH
+	 PXA9LM1FEVN0ZKbNAxedR3LKcPlimudJieyqdh8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
+	Piergiorgio Beruto <piergiorgio.beruto@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0514/1146] nvme: pass nr_maps explicitly to nvme_alloc_io_tag_set
-Date: Wed, 28 Dec 2022 15:34:13 +0100
-Message-Id: <20221228144344.136491692@linuxfoundation.org>
+Subject: [PATCH 6.0 0550/1073] stmmac: fix potential division by 0
+Date: Wed, 28 Dec 2022 15:35:38 +0100
+Message-Id: <20221228144342.993205541@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,117 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Piergiorgio Beruto <piergiorgio.beruto@gmail.com>
 
-[ Upstream commit dcef77274ae52136925287b6b59d5c6e6a4adfb9 ]
+[ Upstream commit ede5a389852d3640a28e7187fb32b7f204380901 ]
 
-Don't look at ctrl->ops as only RDMA and TCP actually support multiple
-maps.
+When the MAC is connected to a 10 Mb/s PHY and the PTP clock is derived
+from the MAC reference clock (default), the clk_ptp_rate becomes too
+small and the calculated sub second increment becomes 0 when computed by
+the stmmac_config_sub_second_increment() function within
+stmmac_init_tstamp_counter().
 
-Fixes: 6dfba1c09c10 ("nvme-fc: use the tagset alloc/free helpers")
-Fixes: ceee1953f923 ("nvme-loop: use the tagset alloc/free helpers")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Therefore, the subsequent div_u64 in stmmac_init_tstamp_counter()
+operation triggers a divide by 0 exception as shown below.
+
+[   95.062067] socfpga-dwmac ff700000.ethernet eth0: Register MEM_TYPE_PAGE_POOL RxQ-0
+[   95.076440] socfpga-dwmac ff700000.ethernet eth0: PHY [stmmac-0:08] driver [NCN26000] (irq=49)
+[   95.095964] dwmac1000: Master AXI performs any burst length
+[   95.101588] socfpga-dwmac ff700000.ethernet eth0: No Safety Features support found
+[   95.109428] Division by zero in kernel.
+[   95.113447] CPU: 0 PID: 239 Comm: ifconfig Not tainted 6.1.0-rc7-centurion3-1.0.3.0-01574-gb624218205b7-dirty #77
+[   95.123686] Hardware name: Altera SOCFPGA
+[   95.127695]  unwind_backtrace from show_stack+0x10/0x14
+[   95.132938]  show_stack from dump_stack_lvl+0x40/0x4c
+[   95.137992]  dump_stack_lvl from Ldiv0+0x8/0x10
+[   95.142527]  Ldiv0 from __aeabi_uidivmod+0x8/0x18
+[   95.147232]  __aeabi_uidivmod from div_u64_rem+0x1c/0x40
+[   95.152552]  div_u64_rem from stmmac_init_tstamp_counter+0xd0/0x164
+[   95.158826]  stmmac_init_tstamp_counter from stmmac_hw_setup+0x430/0xf00
+[   95.165533]  stmmac_hw_setup from __stmmac_open+0x214/0x2d4
+[   95.171117]  __stmmac_open from stmmac_open+0x30/0x44
+[   95.176182]  stmmac_open from __dev_open+0x11c/0x134
+[   95.181172]  __dev_open from __dev_change_flags+0x168/0x17c
+[   95.186750]  __dev_change_flags from dev_change_flags+0x14/0x50
+[   95.192662]  dev_change_flags from devinet_ioctl+0x2b4/0x604
+[   95.198321]  devinet_ioctl from inet_ioctl+0x1ec/0x214
+[   95.203462]  inet_ioctl from sock_ioctl+0x14c/0x3c4
+[   95.208354]  sock_ioctl from vfs_ioctl+0x20/0x38
+[   95.212984]  vfs_ioctl from sys_ioctl+0x250/0x844
+[   95.217691]  sys_ioctl from ret_fast_syscall+0x0/0x4c
+[   95.222743] Exception stack(0xd0ee1fa8 to 0xd0ee1ff0)
+[   95.227790] 1fa0:                   00574c4f be9aeca4 00000003 00008914 be9aeca4 be9aec50
+[   95.235945] 1fc0: 00574c4f be9aeca4 0059f078 00000036 be9aee8c be9aef7a 00000015 00000000
+[   95.244096] 1fe0: 005a01f0 be9aec38 004d7484 b6e67d74
+
+Signed-off-by: Piergiorgio Beruto <piergiorgio.beruto@gmail.com>
+Fixes: 91a2559c1dc5 ("net: stmmac: Fix sub-second increment")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/de4c64ccac9084952c56a06a8171d738604c4770.1670678513.git.piergiorgio.beruto@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c   | 5 ++---
- drivers/nvme/host/fc.c     | 2 +-
- drivers/nvme/host/nvme.h   | 2 +-
- drivers/nvme/host/rdma.c   | 4 +++-
- drivers/nvme/host/tcp.c    | 1 +
- drivers/nvme/target/loop.c | 2 +-
- 6 files changed, 9 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c | 3 ++-
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h      | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index a4ea0607bc98..95b73b386719 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4867,7 +4867,7 @@ EXPORT_SYMBOL_GPL(nvme_remove_admin_tag_set);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
+index 764832f4dae1..8b50f03056b7 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
+@@ -47,7 +47,8 @@ static void config_sub_second_increment(void __iomem *ioaddr,
+ 	if (!(value & PTP_TCR_TSCTRLSSR))
+ 		data = (data * 1000) / 465;
  
- int nvme_alloc_io_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
- 		const struct blk_mq_ops *ops, unsigned int flags,
--		unsigned int cmd_size)
-+		unsigned int nr_maps, unsigned int cmd_size)
- {
- 	int ret;
+-	data &= PTP_SSIR_SSINC_MASK;
++	if (data > PTP_SSIR_SSINC_MAX)
++		data = PTP_SSIR_SSINC_MAX;
  
-@@ -4881,8 +4881,7 @@ int nvme_alloc_io_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
- 	set->driver_data = ctrl;
- 	set->nr_hw_queues = ctrl->queue_count - 1;
- 	set->timeout = NVME_IO_TIMEOUT;
--	if (ops->map_queues)
--		set->nr_maps = ctrl->opts->nr_poll_queues ? HCTX_MAX_TYPES : 2;
-+	set->nr_maps = nr_maps;
- 	ret = blk_mq_alloc_tag_set(set);
- 	if (ret)
- 		return ret;
-diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
-index 5d57a042dbca..20b0c29a9a34 100644
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -2903,7 +2903,7 @@ nvme_fc_create_io_queues(struct nvme_fc_ctrl *ctrl)
- 	nvme_fc_init_io_queues(ctrl);
+ 	reg_value = data;
+ 	if (gmac4)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
+index 53172a439810..bf619295d079 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
+@@ -64,7 +64,7 @@
+ #define	PTP_TCR_TSENMACADDR	BIT(18)
  
- 	ret = nvme_alloc_io_tag_set(&ctrl->ctrl, &ctrl->tag_set,
--			&nvme_fc_mq_ops, BLK_MQ_F_SHOULD_MERGE,
-+			&nvme_fc_mq_ops, BLK_MQ_F_SHOULD_MERGE, 1,
- 			struct_size((struct nvme_fcp_op_w_sgl *)NULL, priv,
- 				    ctrl->lport->ops->fcprqst_priv_sz));
- 	if (ret)
-diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
-index a29877217ee6..8a0db9e06dc6 100644
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -743,7 +743,7 @@ int nvme_alloc_admin_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
- void nvme_remove_admin_tag_set(struct nvme_ctrl *ctrl);
- int nvme_alloc_io_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
- 		const struct blk_mq_ops *ops, unsigned int flags,
--		unsigned int cmd_size);
-+		unsigned int nr_maps, unsigned int cmd_size);
- void nvme_remove_io_tag_set(struct nvme_ctrl *ctrl);
+ /* SSIR defines */
+-#define	PTP_SSIR_SSINC_MASK		0xff
++#define	PTP_SSIR_SSINC_MAX		0xff
+ #define	GMAC4_PTP_SSIR_SSINC_SHIFT	16
  
- void nvme_remove_namespaces(struct nvme_ctrl *ctrl);
-diff --git a/drivers/nvme/host/rdma.c b/drivers/nvme/host/rdma.c
-index 6e079abb22ee..a55d3e8b607d 100644
---- a/drivers/nvme/host/rdma.c
-+++ b/drivers/nvme/host/rdma.c
-@@ -798,7 +798,9 @@ static int nvme_rdma_alloc_tag_set(struct nvme_ctrl *ctrl)
- 			    NVME_RDMA_METADATA_SGL_SIZE;
- 
- 	return nvme_alloc_io_tag_set(ctrl, &to_rdma_ctrl(ctrl)->tag_set,
--			&nvme_rdma_mq_ops, BLK_MQ_F_SHOULD_MERGE, cmd_size);
-+			&nvme_rdma_mq_ops, BLK_MQ_F_SHOULD_MERGE,
-+			ctrl->opts->nr_poll_queues ? HCTX_MAX_TYPES : 2,
-+			cmd_size);
- }
- 
- static void nvme_rdma_destroy_admin_queue(struct nvme_rdma_ctrl *ctrl)
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 9b47dcb2a7d9..83735c52d34a 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -1868,6 +1868,7 @@ static int nvme_tcp_configure_io_queues(struct nvme_ctrl *ctrl, bool new)
- 		ret = nvme_alloc_io_tag_set(ctrl, &to_tcp_ctrl(ctrl)->tag_set,
- 				&nvme_tcp_mq_ops,
- 				BLK_MQ_F_SHOULD_MERGE | BLK_MQ_F_BLOCKING,
-+				ctrl->opts->nr_poll_queues ? HCTX_MAX_TYPES : 2,
- 				sizeof(struct nvme_tcp_request));
- 		if (ret)
- 			goto out_free_io_queues;
-diff --git a/drivers/nvme/target/loop.c b/drivers/nvme/target/loop.c
-index b45fe3adf015..08c583258e90 100644
---- a/drivers/nvme/target/loop.c
-+++ b/drivers/nvme/target/loop.c
-@@ -494,7 +494,7 @@ static int nvme_loop_create_io_queues(struct nvme_loop_ctrl *ctrl)
- 		return ret;
- 
- 	ret = nvme_alloc_io_tag_set(&ctrl->ctrl, &ctrl->tag_set,
--			&nvme_loop_mq_ops, BLK_MQ_F_SHOULD_MERGE,
-+			&nvme_loop_mq_ops, BLK_MQ_F_SHOULD_MERGE, 1,
- 			sizeof(struct nvme_loop_iod) +
- 			NVME_INLINE_SG_CNT * sizeof(struct scatterlist));
- 	if (ret)
+ /* Auxiliary Control defines */
 -- 
 2.35.1
 
