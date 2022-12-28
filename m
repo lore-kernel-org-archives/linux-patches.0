@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39431863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A314C433D2;
-	Wed, 28 Dec 2022 15:25:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672371863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:26:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA5F5C433EF;
+	Wed, 28 Dec 2022 15:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241159;
-	bh=UVldHqLKx3q/meGvv4NHPJcPuJxemRpYLNiCtT3mBq4=;
+	s=korg; t=1672241162;
+	bh=7bq7Cia6DbB/3reaPZ4aU3ExO4A4f6EOSUFJEvJxb8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1axWRSKZ6Pqru8mH6hiQYOXBVMowEDHNsdSPtOmxMknJ/jRVX0ouNz8YMyFoidjEK
-	 I0x08Kl5EzCJzW0u06EhRlseONm32PiGg9nTHfkwWY+A3UTP2mKFb4zXUmuofgr/lG
-	 YHCAyx9qn3Mj7+uQDD4D6v4ojfY9I2IQi488HVg0=
+	b=XvGFUX++Uq+JkCpdgK7NnJEFtX9M0SvcZkKL765nKvhS2FTmgsn5DIirCpGEItLjO
+	 EWMWDyEwIad/aMj+qnj3AEqhO+1NQIpqBEgJdu3TJZt8zG/hOkwaV+KuM0J0nYycsy
+	 TnTQYWWrS7YL9AQPfbjq5J3BNbqHZOBlV3BG1ZXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Marek Vasut <marex@denx.de>,
-	Kieran Bingham <kieran.bingham@ideasonboard.com>,
-	Liu Ying <victor.liu@nxp.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0214/1146] drm: lcdif: Switch to limited range for RGB to YUV conversion
-Date: Wed, 28 Dec 2022 15:29:13 +0100
-Message-Id: <20221228144335.959272240@linuxfoundation.org>
+Subject: [PATCH 5.15 448/731] usb: typec: tcpci: fix of node refcount leak in tcpci_register_port()
+Date: Wed, 28 Dec 2022 15:39:15 +0100
+Message-Id: <20221228144309.539959933@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,68 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit ec39dee8b25229a646271815cc86a8fc865525cf ]
+[ Upstream commit 0384e87e3fec735e47f1c133c796f32ef7a72a9b ]
 
-Up to and including v1.3, HDMI supported limited quantization range only
-for YCbCr. HDMI v1.4 introduced selectable quantization ranges, but this
-feature isn't supported in the dw-hdmi driver that is used in
-conjunction with the LCDIF in the i.MX8MP. The HDMI YCbCr output is thus
-always advertised in the AVI infoframe as limited range.
+I got the following report while doing device(mt6370-tcpc) load
+test with CONFIG_OF_UNITTEST and CONFIG_OF_DYNAMIC enabled:
 
-The LCDIF driver, on the other hand, configures the CSC to produce full
-range YCbCr. This mismatch results in loss of details and incorrect
-colours. Fix it by switching to limited range YCbCr.
+  OF: ERROR: memory leak, expected refcount 1 instead of 2,
+  of_node_get()/of_node_put() unbalanced - destroy cset entry:
+  attach overlay node /i2c/pmic@34/tcpc/connector
 
-The coefficients are copied from drivers/media/platforms/nxp/imx-pxp.c
-for coherency, as the hardware is most likely identical.
+The 'fwnode' set in tcpci_parse_config() which is called
+in tcpci_register_port(), its node refcount is increased
+in device_get_named_child_node(). It needs be put while
+exiting, so call fwnode_handle_put() in the error path of
+tcpci_register_port() and in tcpci_unregister_port() to
+avoid leak.
 
-Fixes: 9db35bb349a0 ("drm: lcdif: Add support for i.MX8MP LCDIF variant")
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
-Reviewed-by: Liu Ying <victor.liu@nxp.com>
-Signed-off-by: Marek Vasut <marex@denx.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220930083955.31580-4-laurent.pinchart@ideasonboard.com
+Fixes: 5e85a04c8c0d ("usb: typec: add fwnode to tcpc")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20221121062416.1026192-1-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mxsfb/lcdif_kms.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/usb/typec/tcpm/tcpci.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/mxsfb/lcdif_kms.c b/drivers/gpu/drm/mxsfb/lcdif_kms.c
-index b1092aab1423..9f212e29059b 100644
---- a/drivers/gpu/drm/mxsfb/lcdif_kms.c
-+++ b/drivers/gpu/drm/mxsfb/lcdif_kms.c
-@@ -52,16 +52,22 @@ static void lcdif_set_formats(struct lcdif_drm_private *lcdif,
- 		writel(DISP_PARA_LINE_PATTERN_UYVY_H,
- 		       lcdif->base + LCDC_V8_DISP_PARA);
+diff --git a/drivers/usb/typec/tcpm/tcpci.c b/drivers/usb/typec/tcpm/tcpci.c
+index 64e248117c41..5340a3a3a81b 100644
+--- a/drivers/usb/typec/tcpm/tcpci.c
++++ b/drivers/usb/typec/tcpm/tcpci.c
+@@ -817,8 +817,10 @@ struct tcpci *tcpci_register_port(struct device *dev, struct tcpci_data *data)
+ 		return ERR_PTR(err);
  
--		/* CSC: BT.601 Full Range RGB to YCbCr coefficients. */
--		writel(CSC0_COEF0_A2(0x096) | CSC0_COEF0_A1(0x04c),
-+		/*
-+		 * CSC: BT.601 Limited Range RGB to YCbCr coefficients.
-+		 *
-+		 * |Y |   | 0.2568  0.5041  0.0979|   |R|   |16 |
-+		 * |Cb| = |-0.1482 -0.2910  0.4392| * |G| + |128|
-+		 * |Cr|   | 0.4392  0.4392 -0.3678|   |B|   |128|
-+		 */
-+		writel(CSC0_COEF0_A2(0x081) | CSC0_COEF0_A1(0x041),
- 		       lcdif->base + LCDC_V8_CSC0_COEF0);
--		writel(CSC0_COEF1_B1(0x7d5) | CSC0_COEF1_A3(0x01d),
-+		writel(CSC0_COEF1_B1(0x7db) | CSC0_COEF1_A3(0x019),
- 		       lcdif->base + LCDC_V8_CSC0_COEF1);
--		writel(CSC0_COEF2_B3(0x080) | CSC0_COEF2_B2(0x7ac),
-+		writel(CSC0_COEF2_B3(0x070) | CSC0_COEF2_B2(0x7b6),
- 		       lcdif->base + LCDC_V8_CSC0_COEF2);
--		writel(CSC0_COEF3_C2(0x795) | CSC0_COEF3_C1(0x080),
-+		writel(CSC0_COEF3_C2(0x7a2) | CSC0_COEF3_C1(0x070),
- 		       lcdif->base + LCDC_V8_CSC0_COEF3);
--		writel(CSC0_COEF4_D1(0x000) | CSC0_COEF4_C3(0x7ec),
-+		writel(CSC0_COEF4_D1(0x010) | CSC0_COEF4_C3(0x7ee),
- 		       lcdif->base + LCDC_V8_CSC0_COEF4);
- 		writel(CSC0_COEF5_D3(0x080) | CSC0_COEF5_D2(0x080),
- 		       lcdif->base + LCDC_V8_CSC0_COEF5);
+ 	tcpci->port = tcpm_register_port(tcpci->dev, &tcpci->tcpc);
+-	if (IS_ERR(tcpci->port))
++	if (IS_ERR(tcpci->port)) {
++		fwnode_handle_put(tcpci->tcpc.fwnode);
+ 		return ERR_CAST(tcpci->port);
++	}
+ 
+ 	return tcpci;
+ }
+@@ -827,6 +829,7 @@ EXPORT_SYMBOL_GPL(tcpci_register_port);
+ void tcpci_unregister_port(struct tcpci *tcpci)
+ {
+ 	tcpm_unregister_port(tcpci->port);
++	fwnode_handle_put(tcpci->tcpc.fwnode);
+ }
+ EXPORT_SYMBOL_GPL(tcpci_unregister_port);
+ 
 -- 
 2.35.1
 
