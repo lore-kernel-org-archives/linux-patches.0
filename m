@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE061C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2681CC433D2;
-	Wed, 28 Dec 2022 16:41:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A691C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F4029C433D2;
+	Wed, 28 Dec 2022 16:41:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245684;
-	bh=kwAN22GT82QZ6Gdtej146pryhHJx/Z/oP4kQAqPG6ZQ=;
+	s=korg; t=1672245687;
+	bh=DNy84Pr1TmAmxVnIUwRbp4yDVEism59aH63QuDKbLtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nBbtNcNnakwe+aLU3f0CBr6Ao6sAwvaYm3Z60kWR+9mi99IwuDf5jj47UrPl3ui+X
-	 clQnKsxNbVmyNoJGgbK1tboJdE0v9nIm85gGH/zELwOmQ5M7mvhWB1Eq0oo1QbooPD
-	 oLrYk/BksimyL+KUkY65qFd+SM2uoKY88FTpkGEI=
+	b=Vh7X6FkgNfVvsw9qjUK9wRxs3Qu4+5tJyL23xd6D0LFl2Dx/62srb5NK77/us/4k/
+	 5Wx2YYRNY7wgXIncuxWQ6fji2WVYxjCADt7JB9nzCUE+CNi3uyEp4iVe8OTFtfnpf6
+	 4wRbZtufVJ+4LupgLN9fBjAtWYTQT+7jnPSC0tJs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0905/1146] block: fix error unwinding in blk_register_queue
-Date: Wed, 28 Dec 2022 15:40:44 +0100
-Message-Id: <20221228144354.798794401@linuxfoundation.org>
+Subject: [PATCH 6.1 0892/1146] mISDN: hfcpci: dont call dev_kfree_skb/kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:40:31 +0100
+Message-Id: <20221228144354.415267533@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,99 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 40602997be26887bdfa3d58659c3acb4579099e9 ]
+[ Upstream commit f0f596bd75a9d573ca9b587abb39cee0b916bb82 ]
 
-blk_register_queue fails to handle errors from blk_mq_sysfs_register,
-leaks various resources on errors and accidentally sets queue refs percpu
-refcount to percpu mode on kobject_add failure.  Fix all that by
-properly unwinding on errors.
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20221114042637.1009333-4-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: d36a9ea5e776 ("block: fix use-after-free of q->q_usage_counter")
+skb_queue_purge() is called under spin_lock_irqsave() in hfcpci_l2l1D(),
+kfree_skb() is called in it, to fix this, use skb_queue_splice_init()
+to move the dch->squeue to a free queue, also enqueue the tx_skb and
+rx_skb, at last calling __skb_queue_purge() to free the SKBs afer unlock.
+
+Fixes: 1700fe1a10dc ("Add mISDN HFC PCI driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-sysfs.c | 28 ++++++++++++++++------------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+ drivers/isdn/hardware/mISDN/hfcpci.c | 13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
-index 3d6951a0b4e7..1631ba2f7259 100644
---- a/block/blk-sysfs.c
-+++ b/block/blk-sysfs.c
-@@ -820,13 +820,15 @@ int blk_register_queue(struct gendisk *disk)
- 	int ret;
- 
- 	mutex_lock(&q->sysfs_dir_lock);
--
- 	ret = kobject_add(&q->kobj, &disk_to_dev(disk)->kobj, "queue");
- 	if (ret < 0)
--		goto unlock;
-+		goto out_unlock_dir;
- 
--	if (queue_is_mq(q))
--		blk_mq_sysfs_register(disk);
-+	if (queue_is_mq(q)) {
-+		ret = blk_mq_sysfs_register(disk);
-+		if (ret)
-+			goto out_del_queue_kobj;
-+	}
- 	mutex_lock(&q->sysfs_lock);
- 
- 	mutex_lock(&q->debugfs_mutex);
-@@ -838,17 +840,17 @@ int blk_register_queue(struct gendisk *disk)
- 
- 	ret = disk_register_independent_access_ranges(disk);
- 	if (ret)
--		goto put_dev;
-+		goto out_debugfs_remove;
- 
- 	if (q->elevator) {
- 		ret = elv_register_queue(q, false);
- 		if (ret)
--			goto put_dev;
-+			goto out_unregister_ia_ranges;
+diff --git a/drivers/isdn/hardware/mISDN/hfcpci.c b/drivers/isdn/hardware/mISDN/hfcpci.c
+index e964a8dd8512..c0331b268010 100644
+--- a/drivers/isdn/hardware/mISDN/hfcpci.c
++++ b/drivers/isdn/hardware/mISDN/hfcpci.c
+@@ -1617,16 +1617,19 @@ hfcpci_l2l1D(struct mISDNchannel *ch, struct sk_buff *skb)
+ 		test_and_clear_bit(FLG_L2_ACTIVATED, &dch->Flags);
+ 		spin_lock_irqsave(&hc->lock, flags);
+ 		if (hc->hw.protocol == ISDN_P_NT_S0) {
++			struct sk_buff_head free_queue;
++
++			__skb_queue_head_init(&free_queue);
+ 			/* prepare deactivation */
+ 			Write_hfc(hc, HFCPCI_STATES, 0x40);
+-			skb_queue_purge(&dch->squeue);
++			skb_queue_splice_init(&dch->squeue, &free_queue);
+ 			if (dch->tx_skb) {
+-				dev_kfree_skb(dch->tx_skb);
++				__skb_queue_tail(&free_queue, dch->tx_skb);
+ 				dch->tx_skb = NULL;
+ 			}
+ 			dch->tx_idx = 0;
+ 			if (dch->rx_skb) {
+-				dev_kfree_skb(dch->rx_skb);
++				__skb_queue_tail(&free_queue, dch->rx_skb);
+ 				dch->rx_skb = NULL;
+ 			}
+ 			test_and_clear_bit(FLG_TX_BUSY, &dch->Flags);
+@@ -1639,10 +1642,12 @@ hfcpci_l2l1D(struct mISDNchannel *ch, struct sk_buff *skb)
+ 			hc->hw.mst_m &= ~HFCPCI_MASTER;
+ 			Write_hfc(hc, HFCPCI_MST_MODE, hc->hw.mst_m);
+ 			ret = 0;
++			spin_unlock_irqrestore(&hc->lock, flags);
++			__skb_queue_purge(&free_queue);
+ 		} else {
+ 			ret = l1_event(dch->l1, hh->prim);
++			spin_unlock_irqrestore(&hc->lock, flags);
+ 		}
+-		spin_unlock_irqrestore(&hc->lock, flags);
+ 		break;
  	}
- 
- 	ret = blk_crypto_sysfs_register(disk);
- 	if (ret)
--		goto put_dev;
-+		goto out_elv_unregister;
- 
- 	blk_queue_flag_set(QUEUE_FLAG_REGISTERED, q);
- 	wbt_enable_default(q);
-@@ -859,8 +861,6 @@ int blk_register_queue(struct gendisk *disk)
- 	if (q->elevator)
- 		kobject_uevent(&q->elevator->kobj, KOBJ_ADD);
- 	mutex_unlock(&q->sysfs_lock);
--
--unlock:
- 	mutex_unlock(&q->sysfs_dir_lock);
- 
- 	/*
-@@ -879,13 +879,17 @@ int blk_register_queue(struct gendisk *disk)
- 
- 	return ret;
- 
--put_dev:
-+out_elv_unregister:
- 	elv_unregister_queue(q);
-+out_unregister_ia_ranges:
- 	disk_unregister_independent_access_ranges(disk);
-+out_debugfs_remove:
-+	blk_debugfs_remove(disk);
- 	mutex_unlock(&q->sysfs_lock);
--	mutex_unlock(&q->sysfs_dir_lock);
-+out_del_queue_kobj:
- 	kobject_del(&q->kobj);
--
-+out_unlock_dir:
-+	mutex_unlock(&q->sysfs_dir_lock);
- 	return ret;
- }
- 
+ 	if (!ret)
 -- 
 2.35.1
 
