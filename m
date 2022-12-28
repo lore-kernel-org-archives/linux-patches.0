@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEA061863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:50:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71200C433EF;
-	Wed, 28 Dec 2022 14:50:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9377D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:50:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174D0C433EF;
+	Wed, 28 Dec 2022 14:50:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239000;
-	bh=NwpmSBB8E6VbdEyBKNLEtjrA8uAaF0ZUtLvneo0GimE=;
+	s=korg; t=1672239003;
+	bh=AXPXLxh17Tug/qn92KC4ufziprryzeaMVNCXJJh7qCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KzQ2wI0zGRV8/KEGR6XBlQCtCmz1PPu2bDyg0AIPLKiIm0kU6UeofKlMeJjUlVXHl
-	 P+EA5Lbt9mrBOEzsCR6WqyEN8pWFOnflOjysmXBDF4rZF/d2dtxb6mBtES+wvUa43X
-	 Ms/zODvT4BvUG1XUwuc0hoQjB5uEXti31+eAVVM8=
+	b=y5yxRLJ9CubfWHOJ+3PY2VVgkEHUIFeBtZEcjN2XuV+z1ypLPWbqTpz/zG45ytotx
+	 di7abOAbiUCQs8XbvY8DTlFv62JxQT19qSXpK6OkBzmCIbbI7b5MActJHxfC7tQvbm
+	 XE8bi01G969JHGG9cL+G34ifGyqpdiDduclLEahw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhao Gongyi <zhaogongyi@huawei.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 091/731] selftests/efivarfs: Add checking of the test return value
-Date: Wed, 28 Dec 2022 15:33:18 +0100
-Message-Id: <20221228144259.187475010@linuxfoundation.org>
+Subject: [PATCH 5.15 092/731] PNP: fix name memory leak in pnp_alloc_dev()
+Date: Wed, 28 Dec 2022 15:33:19 +0100
+Message-Id: <20221228144259.215707960@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,35 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhao Gongyi <zhaogongyi@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit c93924267fe6f2b44af1849f714ae9cd8117a9cd ]
+[ Upstream commit 110d7b0325c55ff3620073ba4201845f59e22ebf ]
 
-Add checking of the test return value, otherwise it will report success
-forever for test_create_read().
+After commit 1fa5ae857bb1 ("driver core: get rid of struct device's
+bus_id string array"), the name of device is allocated dynamically,
+move dev_set_name() after pnp_add_id() to avoid memory leak.
 
-Fixes: dff6d2ae56d0 ("selftests/efivarfs: clean up test files from test_create*()")
-Signed-off-by: Zhao Gongyi <zhaogongyi@huawei.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/efivarfs/efivarfs.sh | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/pnp/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/efivarfs/efivarfs.sh b/tools/testing/selftests/efivarfs/efivarfs.sh
-index a90f394f9aa9..d374878cc0ba 100755
---- a/tools/testing/selftests/efivarfs/efivarfs.sh
-+++ b/tools/testing/selftests/efivarfs/efivarfs.sh
-@@ -87,6 +87,11 @@ test_create_read()
- {
- 	local file=$efivarfs_mount/$FUNCNAME-$test_guid
- 	./create-read $file
-+	if [ $? -ne 0 ]; then
-+		echo "create and read $file failed"
-+		file_cleanup $file
-+		exit 1
-+	fi
- 	file_cleanup $file
+diff --git a/drivers/pnp/core.c b/drivers/pnp/core.c
+index 4df5aa6a309c..6a60c5d83383 100644
+--- a/drivers/pnp/core.c
++++ b/drivers/pnp/core.c
+@@ -148,14 +148,14 @@ struct pnp_dev *pnp_alloc_dev(struct pnp_protocol *protocol, int id,
+ 	dev->dev.coherent_dma_mask = dev->dma_mask;
+ 	dev->dev.release = &pnp_release_device;
+ 
+-	dev_set_name(&dev->dev, "%02x:%02x", dev->protocol->number, dev->number);
+-
+ 	dev_id = pnp_add_id(dev, pnpid);
+ 	if (!dev_id) {
+ 		kfree(dev);
+ 		return NULL;
+ 	}
+ 
++	dev_set_name(&dev->dev, "%02x:%02x", dev->protocol->number, dev->number);
++
+ 	return dev;
  }
  
 -- 
