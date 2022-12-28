@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 715291863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:26:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED352C433EF;
-	Wed, 28 Dec 2022 15:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 172111863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:26:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91404C433EF;
+	Wed, 28 Dec 2022 15:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241175;
-	bh=yYMALOVS9m0/dT5R4SvMAaRuaKcQbuyAOhleF1HWvAM=;
+	s=korg; t=1672241177;
+	bh=85iggO+a2CPYpne1AVL9xl5N9qzRpTm+0xReCj2RV4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=msIfY9laqTwaT9mk6om72CtK1cxlNdhyVVd8rvBRT+uL/1QOaKkXbfMdJrAr5ROZW
-	 UcIetUAZBSP59CwyPLH+RgVboYEQ+gBMUgDt7wojM7PBKbSLcrHm37NlIA2DkToj0g
-	 eYUOGeuY56X2l9kk4Doibeiku1ozX0DiYYeQkufU=
+	b=y3zYJkVJ3zkeM/6ImYpe0OCvM2y+0CoTRAWSEE4KJqtQwToCCN3yxRYGhFyKPdK5T
+	 +zSyviUue8665uvasymOZT4IBjxZAsrXJCew/pDq5M8CXRq40QDhfSS83oZvwHbaPo
+	 6xDo/0uM6ld8k3NMZRs8jfWAT4BaiIhudAzcT9fU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Sven Peter <sven@svenpeter.dev>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0215/1146] ata: libata: fix NCQ autosense logic
-Date: Wed, 28 Dec 2022 15:29:14 +0100
-Message-Id: <20221228144335.986049071@linuxfoundation.org>
+Subject: [PATCH 5.15 449/731] usb: typec: tipd: Cleanup resources if devm_tps6598_psy_register fails
+Date: Wed, 28 Dec 2022 15:39:16 +0100
+Message-Id: <20221228144309.568846862@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,74 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Cassel <niklas.cassel@wdc.com>
+From: Sven Peter <sven@svenpeter.dev>
 
-[ Upstream commit 7390896b3484d44cbdb8bc4859964314ac66d3c9 ]
+[ Upstream commit 19c220e9ab00f50edefb9667e3101e84a5112df2 ]
 
-Currently, the logic if we should call ata_scsi_set_sense()
-(and set flag ATA_QCFLAG_SENSE_VALID to indicate that we have
-successfully added sense data to the struct ata_queued_cmd)
-looks like this:
+We can't just return if devm_tps6598_psy_register fails since previous
+resources are not devres managed and have yet to be cleaned up.
 
-if (dev->class == ATA_DEV_ZAC &&
-    ((qc->result_tf.status & ATA_SENSE) || qc->result_tf.auxiliary))
-
-The problem with this is that a drive can support the NCQ command
-error log without supporting NCQ autosense.
-
-On such a drive, if the failing command has sense data, the status
-field in the NCQ command error log will have the ATA_SENSE bit set.
-
-It is just that this sense data is not included in the NCQ command
-error log when NCQ autosense is not supported. Instead the sense
-data has to be fetched using the REQUEST SENSE DATA EXT command.
-
-Therefore, we should only add the sense data if the drive supports
-NCQ autosense AND the ATA_SENSE bit is set in the status field.
-
-Fix this, and at the same time, remove the duplicated ATA_DEV_ZAC
-check. The struct ata_taskfile supplied to ata_eh_read_log_10h()
-is memset:ed before calling the function, so simply checking if
-qc->result_tf.auxiliary is set is sufficient to tell us that the
-log actually contained sense data.
-
-Fixes: d238ffd59d3c ("libata: do not attempt to retrieve sense code twice")
-Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Fixes: 10eb0b6ac63a ("usb: typec: tps6598x: Export some power supply properties")
+Signed-off-by: Sven Peter <sven@svenpeter.dev>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20221114174449.34634-1-sven@svenpeter.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-sata.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/usb/typec/tipd/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/libata-sata.c b/drivers/ata/libata-sata.c
-index b6806d41a8c5..fd4dccc25389 100644
---- a/drivers/ata/libata-sata.c
-+++ b/drivers/ata/libata-sata.c
-@@ -1392,7 +1392,8 @@ static int ata_eh_read_log_10h(struct ata_device *dev,
- 	tf->hob_lbah = buf[10];
- 	tf->nsect = buf[12];
- 	tf->hob_nsect = buf[13];
--	if (dev->class == ATA_DEV_ZAC && ata_id_has_ncq_autosense(dev->id))
-+	if (dev->class == ATA_DEV_ZAC && ata_id_has_ncq_autosense(dev->id) &&
-+	    (tf->status & ATA_SENSE))
- 		tf->auxiliary = buf[14] << 16 | buf[15] << 8 | buf[16];
+diff --git a/drivers/usb/typec/tipd/core.c b/drivers/usb/typec/tipd/core.c
+index 23a8b9b0b1fe..dd35b3ee2c5a 100644
+--- a/drivers/usb/typec/tipd/core.c
++++ b/drivers/usb/typec/tipd/core.c
+@@ -684,7 +684,7 @@ static int tps6598x_probe(struct i2c_client *client)
  
- 	return 0;
-@@ -1456,8 +1457,12 @@ void ata_eh_analyze_ncq_error(struct ata_link *link)
- 	memcpy(&qc->result_tf, &tf, sizeof(tf));
- 	qc->result_tf.flags = ATA_TFLAG_ISADDR | ATA_TFLAG_LBA | ATA_TFLAG_LBA48;
- 	qc->err_mask |= AC_ERR_DEV | AC_ERR_NCQ;
--	if (dev->class == ATA_DEV_ZAC &&
--	    ((qc->result_tf.status & ATA_SENSE) || qc->result_tf.auxiliary)) {
-+
-+	/*
-+	 * If the device supports NCQ autosense, ata_eh_read_log_10h() will have
-+	 * stored the sense data in qc->result_tf.auxiliary.
-+	 */
-+	if (qc->result_tf.auxiliary) {
- 		char sense_key, asc, ascq;
+ 	ret = devm_tps6598_psy_register(tps);
+ 	if (ret)
+-		return ret;
++		goto err_role_put;
  
- 		sense_key = (qc->result_tf.auxiliary >> 16) & 0xff;
+ 	tps->port = typec_register_port(&client->dev, &typec_cap);
+ 	if (IS_ERR(tps->port)) {
 -- 
 2.35.1
 
