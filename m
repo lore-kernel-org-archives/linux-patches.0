@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0E431C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:37:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75962C433D2;
-	Wed, 28 Dec 2022 16:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C321C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:37:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20458C433D2;
+	Wed, 28 Dec 2022 16:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245468;
-	bh=SUJBw4+DYl7yZy510RN/erYq4QOUqjRd4IEOBFkRAfE=;
+	s=korg; t=1672245471;
+	bh=XgXKQ4lJt3xgbn4wnwUGVj4qQSLeGJDxzzr5jcmLDYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tze70jmO4G4ODsHorvZ4t1I0A+qfyhiHYwKpdURZrqqNEIBoQULLeuzs67i5JmSvI
-	 kFqzsYxJEtO9YwybkdrUjG2Zfh+AQ3OtaqHHiX7AQTxDMd9LLTlsCi7bKJI9oYAlRc
-	 Nt1wh5J18RqDxIsUiwyUQU2ERbGw1DerSzfqfXb8=
+	b=1eXjrOb/pnyMWYVsSF700vit2tYGSU+fTeWGpL8ytXlqki0fygQiiL2SBXTAbUBfq
+	 mxIliuyN/WF56PHZf4zWq8VdDwzn6KUeoL4B1aHYc7HHfcgREQ1Rx1StWQvKwXgaOo
+	 4wEseXACwh6I6+XI7UH8UXbvf5M3K/G5sT+x/yf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Zhang Jinhao <zhangjinhao2@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	xinlei lee <xinlei.lee@mediatek.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0901/1073] acct: fix potential integer overflow in encode_comp_t()
-Date: Wed, 28 Dec 2022 15:41:29 +0100
-Message-Id: <20221228144352.503504102@linuxfoundation.org>
+Subject: [PATCH 6.1 0867/1146] pwm: mtk-disp: Fix the parameters calculated by the enabled flag of disp_pwm
+Date: Wed, 28 Dec 2022 15:40:06 +0100
+Message-Id: <20221228144353.718909018@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,49 +37,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: xinlei lee <xinlei.lee@mediatek.com>
 
-[ Upstream commit c5f31c655bcc01b6da53b836ac951c1556245305 ]
+[ Upstream commit 0b5ef3429d8f78427558ab0dcbfd862098ba2a63 ]
 
-The integer overflow is descripted with following codes:
-  > 317 static comp_t encode_comp_t(u64 value)
-  > 318 {
-  > 319         int exp, rnd;
-    ......
-  > 341         exp <<= MANTSIZE;
-  > 342         exp += value;
-  > 343         return exp;
-  > 344 }
+In the original mtk_disp_pwm_get_state() function wrongly uses bit 0 of
+CON0 to judge if the PWM is enabled.
+However that is indicated by a bit (at a machine dependent position) in
+the DISP_PWM_EN register. Fix this accordingly.
 
-Currently comp_t is defined as type of '__u16', but the variable 'exp' is
-type of 'int', so overflow would happen when variable 'exp' in line 343 is
-greater than 65535.
-
-Link: https://lkml.kernel.org/r/20210515140631.369106-3-zhengyejian1@huawei.com
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Cc: Hanjun Guo <guohanjun@huawei.com>
-Cc: Randy Dunlap <rdunlap@infradead.org>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Cc: Zhang Jinhao <zhangjinhao2@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 3f2b16734914 ("pwm: mtk-disp: Implement atomic API .get_state()")
+Signed-off-by: xinlei lee <xinlei.lee@mediatek.com>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/1666172538-11652-1-git-send-email-xinlei.lee@mediatek.com
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/acct.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pwm/pwm-mtk-disp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/acct.c b/kernel/acct.c
-index 13706356ec54..67bde1633d8f 100644
---- a/kernel/acct.c
-+++ b/kernel/acct.c
-@@ -350,6 +350,8 @@ static comp_t encode_comp_t(unsigned long value)
- 		exp++;
- 	}
+diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
+index c605013e4114..3fbb4bae93a4 100644
+--- a/drivers/pwm/pwm-mtk-disp.c
++++ b/drivers/pwm/pwm-mtk-disp.c
+@@ -178,7 +178,7 @@ static void mtk_disp_pwm_get_state(struct pwm_chip *chip,
+ {
+ 	struct mtk_disp_pwm *mdp = to_mtk_disp_pwm(chip);
+ 	u64 rate, period, high_width;
+-	u32 clk_div, con0, con1;
++	u32 clk_div, pwm_en, con0, con1;
+ 	int err;
  
-+	if (exp > (((comp_t) ~0U) >> MANTSIZE))
-+		return (comp_t) ~0U;
+ 	err = clk_prepare_enable(mdp->clk_main);
+@@ -197,7 +197,8 @@ static void mtk_disp_pwm_get_state(struct pwm_chip *chip,
+ 	rate = clk_get_rate(mdp->clk_main);
+ 	con0 = readl(mdp->base + mdp->data->con0);
+ 	con1 = readl(mdp->base + mdp->data->con1);
+-	state->enabled = !!(con0 & BIT(0));
++	pwm_en = readl(mdp->base + DISP_PWM_EN);
++	state->enabled = !!(pwm_en & mdp->data->enable_mask);
+ 	clk_div = FIELD_GET(PWM_CLKDIV_MASK, con0);
+ 	period = FIELD_GET(PWM_PERIOD_MASK, con1);
  	/*
- 	 * Clean it up and polish it off.
- 	 */
 -- 
 2.35.1
 
