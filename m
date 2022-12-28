@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38AC31863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9652FC433EF;
-	Wed, 28 Dec 2022 15:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56E41863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FBAC433D2;
+	Wed, 28 Dec 2022 15:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240076;
-	bh=B05NQTeZWLpbNoyEtzdqPyOngzkdrRu1o+cnFfd7SH0=;
+	s=korg; t=1672240078;
+	bh=Oo5BUUtsAlGLp33s/yhgi2J2Q82PJAfUZQM+Kckc3eE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sNyppJ5/syaTiu+XuVNbU2h32QSTHQ24KojA9/JzpIUBrHvdFkn3ckfbpLF+tRMTT
-	 36xuN4L6YjI5j6OnK6dqBsneHycdPrL960hQPtoaY53sg0WUVpMo4x2vS5js4k8enM
-	 Dqvop9vH67qiZqV/OOXEd9B+Pam8r7vslisDvgXI=
+	b=k0homfPcytiafvwL26/meSDTIRCQ8GHzFqE1mWjuxyB3Cmbl9cn/71CVH0LhnWItc
+	 nnz/qRZ3wTl+V/41vSBoG9NSGHKz3GYagVRWPWE7MzmhrHfDbjgbt93nvUtSA4r9le
+	 05UkoDz5k4ID8J7a1jH8rkGFhO5dVbxMdubwoP/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Vidya Sagar <vidyas@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0115/1073] platform/x86: huawei-wmi: fix return value calculation
-Date: Wed, 28 Dec 2022 15:28:23 +0100
-Message-Id: <20221228144331.162913855@linuxfoundation.org>
+Subject: [PATCH 6.1 0078/1146] arm64: tegra: Fix Prefetchable aperture ranges of Tegra234 PCIe controllers
+Date: Wed, 28 Dec 2022 15:26:57 +0100
+Message-Id: <20221228144332.267690193@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,69 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Barnabás Pőcze <pobrn@protonmail.com>
+From: Vidya Sagar <vidyas@nvidia.com>
 
-[ Upstream commit 0b9a1dcdb6a2c841899389bf2dd7a3e0e2aa0e99 ]
+[ Upstream commit 248400656b1cd85de37f3742d065dc1826cdf589 ]
 
-Previously, `huawei_wmi_input_setup()` returned the result of
-logical or-ing the return values of two functions that return negative
-errno-style error codes and one that returns `acpi_status`. If this
-returned value was non-zero, then it was propagated from the platform
-driver's probe function. That function should return a negative
-errno-style error code, so the result of the logical or that
-`huawei_wmi_input_setup()` returned was not appropriate.
+commit edf408b946d3 ("PCI: dwc: Validate iATU outbound mappings against
+hardware constraints") exposes an issue with the existing partitioning of
+the aperture space where the Prefetchable apertures of controllers
+C5, C7 and C9 in Tegra234 cross the 32GB boundary hardware constraint.
+This patch makes sure that the Prefetchable region doesn't spill over
+the 32GB boundary.
 
-Fix that by checking each function separately and returning the
-error code unmodified.
-
-Fixes: 1ac9abeb2e5b ("platform/x86: huawei-wmi: Move to platform driver")
-Signed-off-by: Barnabás Pőcze <pobrn@protonmail.com>
-Link: https://lore.kernel.org/r/20221005150032.173198-2-pobrn@protonmail.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: ec142c44b026 ("arm64: tegra: Add P2U and PCIe controller nodes to Tegra234 DT")
+Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/huawei-wmi.c | 20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/nvidia/tegra234.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/huawei-wmi.c b/drivers/platform/x86/huawei-wmi.c
-index eac3e6b4ea11..935562c870c3 100644
---- a/drivers/platform/x86/huawei-wmi.c
-+++ b/drivers/platform/x86/huawei-wmi.c
-@@ -760,6 +760,9 @@ static int huawei_wmi_input_setup(struct device *dev,
- 		const char *guid,
- 		struct input_dev **idev)
- {
-+	acpi_status status;
-+	int err;
-+
- 	*idev = devm_input_allocate_device(dev);
- 	if (!*idev)
- 		return -ENOMEM;
-@@ -769,10 +772,19 @@ static int huawei_wmi_input_setup(struct device *dev,
- 	(*idev)->id.bustype = BUS_HOST;
- 	(*idev)->dev.parent = dev;
+diff --git a/arch/arm64/boot/dts/nvidia/tegra234.dtsi b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+index 0170bfa8a467..9b43a0b0d775 100644
+--- a/arch/arm64/boot/dts/nvidia/tegra234.dtsi
++++ b/arch/arm64/boot/dts/nvidia/tegra234.dtsi
+@@ -1965,7 +1965,7 @@ pcie@140c0000 {
  
--	return sparse_keymap_setup(*idev, huawei_wmi_keymap, NULL) ||
--		input_register_device(*idev) ||
--		wmi_install_notify_handler(guid, huawei_wmi_input_notify,
--				*idev);
-+	err = sparse_keymap_setup(*idev, huawei_wmi_keymap, NULL);
-+	if (err)
-+		return err;
-+
-+	err = input_register_device(*idev);
-+	if (err)
-+		return err;
-+
-+	status = wmi_install_notify_handler(guid, huawei_wmi_input_notify, *idev);
-+	if (ACPI_FAILURE(status))
-+		return -EIO;
-+
-+	return 0;
- }
+ 		bus-range = <0x0 0xff>;
  
- static void huawei_wmi_input_exit(struct device *dev, const char *guid)
+-		ranges = <0x43000000 0x35 0x40000000 0x35 0x40000000 0x2 0xe8000000>, /* prefetchable memory (11904 MB) */
++		ranges = <0x43000000 0x35 0x40000000 0x35 0x40000000 0x2 0xc0000000>, /* prefetchable memory (11264 MB) */
+ 			 <0x02000000 0x0  0x40000000 0x38 0x28000000 0x0 0x08000000>, /* non-prefetchable memory (128 MB) */
+ 			 <0x01000000 0x0  0x2c100000 0x00 0x2c100000 0x0 0x00100000>; /* downstream I/O (1 MB) */
+ 
+@@ -2336,7 +2336,7 @@ pcie@141a0000 {
+ 
+ 		bus-range = <0x0 0xff>;
+ 
+-		ranges = <0x43000000 0x27 0x40000000 0x27 0x40000000 0x3 0xe8000000>, /* prefetchable memory (16000 MB) */
++		ranges = <0x43000000 0x28 0x00000000 0x28 0x00000000 0x3 0x28000000>, /* prefetchable memory (12928 MB) */
+ 			 <0x02000000 0x0  0x40000000 0x2b 0x28000000 0x0 0x08000000>, /* non-prefetchable memory (128 MB) */
+ 			 <0x01000000 0x0  0x3a100000 0x00 0x3a100000 0x0 0x00100000>; /* downstream I/O (1 MB) */
+ 
+@@ -2442,7 +2442,7 @@ pcie@141e0000 {
+ 
+ 		bus-range = <0x0 0xff>;
+ 
+-		ranges = <0x43000000 0x2e 0x40000000 0x2e 0x40000000 0x3 0xe8000000>, /* prefetchable memory (16000 MB) */
++		ranges = <0x43000000 0x30 0x00000000 0x30 0x00000000 0x2 0x28000000>, /* prefetchable memory (8832 MB) */
+ 			 <0x02000000 0x0  0x40000000 0x32 0x28000000 0x0 0x08000000>, /* non-prefetchable memory (128 MB) */
+ 			 <0x01000000 0x0  0x3e100000 0x00 0x3e100000 0x0 0x00100000>; /* downstream I/O (1 MB) */
+ 
 -- 
 2.35.1
 
