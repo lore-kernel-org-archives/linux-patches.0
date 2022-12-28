@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F011C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:53:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C06C433D2;
-	Wed, 28 Dec 2022 16:53:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2C51C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:53:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91742C433D2;
+	Wed, 28 Dec 2022 16:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246414;
-	bh=P6lOubP86MxuZA+q9UBA8Uu3tUIh58z96vk/I6b1Gt0=;
+	s=korg; t=1672246416;
+	bh=Ze8o+m0mFLQjwiPIvEIpIGMiHCaCyngQcK1Dis3Zl54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rENsRNmXVmptJROxEHpHqyjUdJ2If2vM0mG2OAAPNl2Ekr60q7knuUEQHRYXkFU4c
-	 CiFonbnu0mMP+uLWrJJT3hZ2Z+Hakj7uSO8Ahvf5eiP8JhlzfLZ5x188scLoQJIZFX
-	 WIy5fxFybbqfiETTKel6buxZEmhCqe+sfa29xJoM=
+	b=gr8atXIx1LJ5XkZcFCaujyNG8ytgffbTHgWnCrmbauhoXpjqBHGRpr+vS46esEf0K
+	 nLHmRA+BVdFZIIFdX9rUytDNGzZHDuXSCqM4OlAlpNdRa+J9yMMcRTMGvLUuV9dY5G
+	 ngT1/mkP/c7KaSZv35JnvfVOcg8GrB17HAOFshQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>
-Subject: [PATCH 6.0 1068/1073] clk: renesas: r8a779f0: Fix SD0H clock name
-Date: Wed, 28 Dec 2022 15:44:16 +0100
-Message-Id: <20221228144357.249657451@linuxfoundation.org>
+	Hawkins Jiawei <yin31149@gmail.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1037/1146] nfs: fix possible null-ptr-deref when parsing param
+Date: Wed, 28 Dec 2022 15:42:56 +0100
+Message-Id: <20221228144358.519204978@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,31 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Hawkins Jiawei <yin31149@gmail.com>
 
-commit 99c05a2b710f16ea592ccb63ef5fe5f1f6b15db9 upstream.
+[ Upstream commit 5559405df652008e56eee88872126fe4c451da67 ]
 
-Correct the misspelled textual name of the SD0H clock.
+According to commit "vfs: parse: deal with zero length string value",
+kernel will set the param->string to null pointer in vfs_parse_fs_string()
+if fs string has zero length.
 
-Fixes: 9b5dd1ff705c6854 ("clk: renesas: r8a779f0: Add SDH0 clock")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://lore.kernel.org/r/1f682d338f133608f138ae87323707436ad8c748.1665558014.git.geert+renesas@glider.be
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Yet the problem is that, nfs_fs_context_parse_param() will dereferences the
+param->string, without checking whether it is a null pointer, which may
+trigger a null-ptr-deref bug.
+
+This patch solves it by adding sanity check on param->string
+in nfs_fs_context_parse_param().
+
+Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r8a779f0-cpg-mssr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfs/fs_context.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/clk/renesas/r8a779f0-cpg-mssr.c
-+++ b/drivers/clk/renesas/r8a779f0-cpg-mssr.c
-@@ -113,7 +113,7 @@ static const struct cpg_core_clk r8a779f
- 	DEF_FIXED("sasyncperd2", R8A779F0_CLK_SASYNCPERD2, R8A779F0_CLK_SASYNCPERD1, 2, 1),
- 	DEF_FIXED("sasyncperd4", R8A779F0_CLK_SASYNCPERD4, R8A779F0_CLK_SASYNCPERD1, 4, 1),
+diff --git a/fs/nfs/fs_context.c b/fs/nfs/fs_context.c
+index 09833ec102fc..9bcd53d5c7d4 100644
+--- a/fs/nfs/fs_context.c
++++ b/fs/nfs/fs_context.c
+@@ -684,6 +684,8 @@ static int nfs_fs_context_parse_param(struct fs_context *fc,
+ 			return ret;
+ 		break;
+ 	case Opt_vers:
++		if (!param->string)
++			goto out_invalid_value;
+ 		trace_nfs_mount_assign(param->key, param->string);
+ 		ret = nfs_parse_version_string(fc, param->string);
+ 		if (ret < 0)
+@@ -696,6 +698,8 @@ static int nfs_fs_context_parse_param(struct fs_context *fc,
+ 		break;
  
--	DEF_GEN4_SDH("sdh0",	R8A779F0_CLK_SD0H,	CLK_SDSRC,	   0x870),
-+	DEF_GEN4_SDH("sd0h",	R8A779F0_CLK_SD0H,	CLK_SDSRC,	   0x870),
- 	DEF_GEN4_SD("sd0",	R8A779F0_CLK_SD0,	R8A779F0_CLK_SD0H, 0x870),
+ 	case Opt_proto:
++		if (!param->string)
++			goto out_invalid_value;
+ 		trace_nfs_mount_assign(param->key, param->string);
+ 		protofamily = AF_INET;
+ 		switch (lookup_constant(nfs_xprt_protocol_tokens, param->string, -1)) {
+@@ -732,6 +736,8 @@ static int nfs_fs_context_parse_param(struct fs_context *fc,
+ 		break;
  
- 	DEF_BASE("rpc",		R8A779F0_CLK_RPC,	CLK_TYPE_GEN4_RPC, CLK_RPCSRC),
+ 	case Opt_mountproto:
++		if (!param->string)
++			goto out_invalid_value;
+ 		trace_nfs_mount_assign(param->key, param->string);
+ 		mountfamily = AF_INET;
+ 		switch (lookup_constant(nfs_xprt_protocol_tokens, param->string, -1)) {
+-- 
+2.35.1
+
 
 
