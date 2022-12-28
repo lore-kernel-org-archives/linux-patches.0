@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07BAE1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:53:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70D66C433D2;
-	Wed, 28 Dec 2022 15:53:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D861875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:53:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C79C433D2;
+	Wed, 28 Dec 2022 15:53:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242817;
-	bh=WWqEQ7RoWQt46ctD8ATq/gyweFseY1a1uwNtlRWXbRU=;
+	s=korg; t=1672242820;
+	bh=vo4S1oHrSDm2h7clVrV2HPzMdc4C2dejZJFSz/7FoP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z9l9M3f1R1FCXA+3SEn5fGblq3OZPXGWaixdng1lVaxoDm3aDiXHY7DAFoegNdwG/
-	 4Zufgezi3YnfQYQ0tfYcLqY7UcEUC4QwuK8ciOXBy2sgwtmE2W19ssqKASlNDvrjRF
-	 YdUp8b8Qa+J2T5ET2R1gdAQ0rW8ubWZDjR4SJRsM=
+	b=a0IhaU6amklJP2dkJqjO52kS6+6Z4c18yjsiqWTGYcX5AsZ6ZSUvulKXqt3l9jQNQ
+	 NC07IkszVtmOhjaaancnMZaEicWvBjUlW6AkQEMYn2QBAcrm2GlrvjoI/wdeoBb+aX
+	 PbuUszuK5QrDdUYA6BWcYHI9iUaXKvBuYGtWdops=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0452/1073] clk: qcom: lpass-sc7280: Fix pm_runtime usage
-Date: Wed, 28 Dec 2022 15:34:00 +0100
-Message-Id: <20221228144340.308297231@linuxfoundation.org>
+Subject: [PATCH 6.0 0458/1073] hsr: Disable netpoll.
+Date: Wed, 28 Dec 2022 15:34:06 +0100
+Message-Id: <20221228144340.478974558@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -37,236 +35,128 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit d470be3c4f30b4666e43eef6bab80f543563cdb0 ]
+[ Upstream commit d5c7652eb16fa203d82546e0285136d7b321ffa9 ]
 
-The pm_runtime usage in lpass-sc7280 was broken in quite a few
-ways. Specifically:
+The hsr device is a software device. Its
+net_device_ops::ndo_start_xmit() routine will process the packet and
+then pass the resulting skb to dev_queue_xmit().
+During processing, hsr acquires a lock with spin_lock_bh()
+(hsr_add_node()) which needs to be promoted to the _irq() suffix in
+order to avoid a potential deadlock.
+Then there are the warnings in dev_queue_xmit() (due to
+local_bh_disable() with disabled interrupts) left.
 
-1. At the end of probe it called "put" twice. This is a no-no and will
-   end us up with a negative usage count. Even worse than calling
-   "put" twice, it never called "get" once. Thus after bootup it could
-   be seen that the runtime usage of the devices managed by this
-   driver was -2.
-2. In some error cases it manually called pm_runtime_disable() even
-   though it had previously used devm_add_action_or_reset() to set
-   this up to be called automatically. This meant that in these error
-   cases we'd double-call pm_runtime_disable().
-3. It forgot to call undo pm_runtime_use_autosuspend(), which can
-   sometimes have subtle problems (and the docs specifically mention
-   that you need to undo this function).
+Instead trying to address those (there is qdisc and…) for netpoll sake,
+just disable netpoll on hsr.
 
-Overall the above seriously calls into question how this driver is
-working. It seems like a combination of "it doesn't", "by luck", and
-"because of the weirdness of runtime_pm". Specifically I put a
-printout to the serial console every time the runtime suspend/resume
-was called for the two devices created by this driver (I wrapped the
-pm_clk calls). When I had serial console enabled, I found that the
-calls got resumed at bootup (when the clk core probed and before our
-double-put) and then never touched again. That's no good.
-  [    0.829997] DOUG: my_pm_clk_resume, usage=1
-  [    0.835487] DOUG: my_pm_clk_resume, usage=1
+Disable netpoll on hsr and replace the _irqsave() locking with _bh().
 
-When I disabled serial console (speeding up boot), I got a different
-pattern, which I guess (?) is better:
-  [    0.089767] DOUG: my_pm_clk_resume, usage=1
-  [    0.090507] DOUG: my_pm_clk_resume, usage=1
-  [    0.151885] DOUG: my_pm_clk_suspend, usage=-2
-  [    0.151914] DOUG: my_pm_clk_suspend, usage=-2
-  [    1.825747] DOUG: my_pm_clk_resume, usage=-1
-  [    1.825774] DOUG: my_pm_clk_resume, usage=-1
-  [    1.888269] DOUG: my_pm_clk_suspend, usage=-2
-  [    1.888282] DOUG: my_pm_clk_suspend, usage=-2
-
-These different patterns have to do with the fact that the core PM
-Runtime code really isn't designed to be robust to negative usage
-counts and sometimes may happen to stumble upon a behavior that
-happens to "work". For instance, you can see that
-__pm_runtime_suspend() will treat any non-zero value (including
-negative numbers) as if the device is in use.
-
-In any case, let's fix the driver to be correct. We'll hold a
-pm_runtime reference for the whole probe and then drop it (once!) at
-the end. We'll get rid of manual pm_runtime_disable() calls in the
-error handling. We'll also switch to devm_pm_runtime_enable(), which
-magically handles undoing pm_runtime_use_autosuspend() as of commit
-b4060db9251f ("PM: runtime: Have devm_pm_runtime_enable() handle
-pm_runtime_dont_use_autosuspend()").
-
-While we're at this, let's also use devm_pm_clk_create() instead of
-rolling it ourselves.
-
-Note that the above changes make it obvious that
-lpassaudio_create_pm_clks() was doing more than just creating
-clocks. It was also setting up pm_runtime parameters. Let's rename it.
-
-All of these problems were found by code inspection. I started looking
-at this driver because it was involved in a deadlock that I reported a
-while ago [1]. Though I bisected the deadlock to commit 1b771839de05
-("clk: qcom: gdsc: enable optional power domain support"), it was
-never really clear why that patch affected it other than a luck of
-timing changes. I'll also note that by fixing the timing (as done in
-this change) we also seem to aboid the deadlock, which is a nice
-benefit.
-
-Also note that some of the fixes here are much the same type of stuff
-that Dmitry did in commit 72cfc73f4663 ("clk: qcom: use
-devm_pm_runtime_enable and devm_pm_clk_create"), but I guess
-lpassaudiocc-sc7280.c didn't exist then.
-
-[1] https://lore.kernel.org/r/20220922154354.2486595-1-dianders@chromium.org
-
-Fixes: a9dd26639d05 ("clk: qcom: lpass: Add support for LPASS clock controller for SC7280")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221104064055.1.I00a0e4564a25489e85328ec41636497775627564@changeid
+Fixes: f421436a591d3 ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/lpassaudiocc-sc7280.c | 55 ++++++++++----------------
- 1 file changed, 21 insertions(+), 34 deletions(-)
+ net/hsr/hsr_device.c  | 14 ++++++--------
+ net/hsr/hsr_forward.c |  5 ++---
+ 2 files changed, 8 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/clk/qcom/lpassaudiocc-sc7280.c b/drivers/clk/qcom/lpassaudiocc-sc7280.c
-index 5d4bc563073c..b2646b7e13c9 100644
---- a/drivers/clk/qcom/lpassaudiocc-sc7280.c
-+++ b/drivers/clk/qcom/lpassaudiocc-sc7280.c
-@@ -722,33 +722,17 @@ static const struct of_device_id lpass_audio_cc_sc7280_match_table[] = {
- };
- MODULE_DEVICE_TABLE(of, lpass_audio_cc_sc7280_match_table);
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index 7518f7e93043..84fba2a402a5 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -278,7 +278,6 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
+ 	__u8 type = HSR_TLV_LIFE_CHECK;
+ 	struct hsr_sup_payload *hsr_sp;
+ 	struct hsr_sup_tag *hsr_stag;
+-	unsigned long irqflags;
+ 	struct sk_buff *skb;
  
--static void lpassaudio_pm_runtime_disable(void *data)
--{
--	pm_runtime_disable(data);
--}
--
--static void lpassaudio_pm_clk_destroy(void *data)
--{
--	pm_clk_destroy(data);
--}
--
--static int lpassaudio_create_pm_clks(struct platform_device *pdev)
-+static int lpass_audio_setup_runtime_pm(struct platform_device *pdev)
+ 	*interval = msecs_to_jiffies(HSR_LIFE_CHECK_INTERVAL);
+@@ -299,7 +298,7 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
+ 	set_hsr_stag_HSR_ver(hsr_stag, hsr->prot_version);
+ 
+ 	/* From HSRv1 on we have separate supervision sequence numbers. */
+-	spin_lock_irqsave(&master->hsr->seqnr_lock, irqflags);
++	spin_lock_bh(&hsr->seqnr_lock);
+ 	if (hsr->prot_version > 0) {
+ 		hsr_stag->sequence_nr = htons(hsr->sup_sequence_nr);
+ 		hsr->sup_sequence_nr++;
+@@ -307,7 +306,7 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
+ 		hsr_stag->sequence_nr = htons(hsr->sequence_nr);
+ 		hsr->sequence_nr++;
+ 	}
+-	spin_unlock_irqrestore(&master->hsr->seqnr_lock, irqflags);
++	spin_unlock_bh(&hsr->seqnr_lock);
+ 
+ 	hsr_stag->tlv.HSR_TLV_type = type;
+ 	/* TODO: Why 12 in HSRv0? */
+@@ -332,7 +331,6 @@ static void send_prp_supervision_frame(struct hsr_port *master,
+ 	struct hsr_priv *hsr = master->hsr;
+ 	struct hsr_sup_payload *hsr_sp;
+ 	struct hsr_sup_tag *hsr_stag;
+-	unsigned long irqflags;
+ 	struct sk_buff *skb;
+ 
+ 	skb = hsr_init_skb(master);
+@@ -347,7 +345,7 @@ static void send_prp_supervision_frame(struct hsr_port *master,
+ 	set_hsr_stag_HSR_ver(hsr_stag, (hsr->prot_version ? 1 : 0));
+ 
+ 	/* From HSRv1 on we have separate supervision sequence numbers. */
+-	spin_lock_irqsave(&master->hsr->seqnr_lock, irqflags);
++	spin_lock_bh(&hsr->seqnr_lock);
+ 	hsr_stag->sequence_nr = htons(hsr->sup_sequence_nr);
+ 	hsr->sup_sequence_nr++;
+ 	hsr_stag->tlv.HSR_TLV_type = PRP_TLV_LIFE_CHECK_DD;
+@@ -358,11 +356,11 @@ static void send_prp_supervision_frame(struct hsr_port *master,
+ 	ether_addr_copy(hsr_sp->macaddress_A, master->dev->dev_addr);
+ 
+ 	if (skb_put_padto(skb, ETH_ZLEN)) {
+-		spin_unlock_irqrestore(&master->hsr->seqnr_lock, irqflags);
++		spin_unlock_bh(&hsr->seqnr_lock);
+ 		return;
+ 	}
+ 
+-	spin_unlock_irqrestore(&master->hsr->seqnr_lock, irqflags);
++	spin_unlock_bh(&hsr->seqnr_lock);
+ 
+ 	hsr_forward_skb(skb, master);
+ }
+@@ -444,7 +442,7 @@ void hsr_dev_setup(struct net_device *dev)
+ 	dev->header_ops = &hsr_header_ops;
+ 	dev->netdev_ops = &hsr_device_ops;
+ 	SET_NETDEV_DEVTYPE(dev, &hsr_type);
+-	dev->priv_flags |= IFF_NO_QUEUE;
++	dev->priv_flags |= IFF_NO_QUEUE | IFF_DISABLE_NETPOLL;
+ 
+ 	dev->needs_free_netdev = true;
+ 
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index a8befa35841e..a828221335bd 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -500,7 +500,6 @@ static void handle_std_frame(struct sk_buff *skb,
  {
- 	int ret;
+ 	struct hsr_port *port = frame->port_rcv;
+ 	struct hsr_priv *hsr = port->hsr;
+-	unsigned long irqflags;
  
- 	pm_runtime_use_autosuspend(&pdev->dev);
- 	pm_runtime_set_autosuspend_delay(&pdev->dev, 50);
--	pm_runtime_enable(&pdev->dev);
--
--	ret = devm_add_action_or_reset(&pdev->dev, lpassaudio_pm_runtime_disable, &pdev->dev);
--	if (ret)
--		return ret;
--
--	ret = pm_clk_create(&pdev->dev);
-+	ret = devm_pm_runtime_enable(&pdev->dev);
- 	if (ret)
- 		return ret;
- 
--	ret = devm_add_action_or_reset(&pdev->dev, lpassaudio_pm_clk_destroy, &pdev->dev);
-+	ret = devm_pm_clk_create(&pdev->dev);
- 	if (ret)
- 		return ret;
- 
-@@ -756,7 +740,7 @@ static int lpassaudio_create_pm_clks(struct platform_device *pdev)
- 	if (ret < 0)
- 		dev_err(&pdev->dev, "failed to acquire iface clock\n");
- 
--	return ret;
-+	return pm_runtime_resume_and_get(&pdev->dev);
+ 	frame->skb_hsr = NULL;
+ 	frame->skb_prp = NULL;
+@@ -510,10 +509,10 @@ static void handle_std_frame(struct sk_buff *skb,
+ 		frame->is_from_san = true;
+ 	} else {
+ 		/* Sequence nr for the master node */
+-		spin_lock_irqsave(&hsr->seqnr_lock, irqflags);
++		spin_lock_bh(&hsr->seqnr_lock);
+ 		frame->sequence_nr = hsr->sequence_nr;
+ 		hsr->sequence_nr++;
+-		spin_unlock_irqrestore(&hsr->seqnr_lock, irqflags);
++		spin_unlock_bh(&hsr->seqnr_lock);
+ 	}
  }
  
- static int lpass_audio_cc_sc7280_probe(struct platform_device *pdev)
-@@ -765,7 +749,7 @@ static int lpass_audio_cc_sc7280_probe(struct platform_device *pdev)
- 	struct regmap *regmap;
- 	int ret;
- 
--	ret = lpassaudio_create_pm_clks(pdev);
-+	ret = lpass_audio_setup_runtime_pm(pdev);
- 	if (ret)
- 		return ret;
- 
-@@ -775,8 +759,8 @@ static int lpass_audio_cc_sc7280_probe(struct platform_device *pdev)
- 
- 	regmap = qcom_cc_map(pdev, desc);
- 	if (IS_ERR(regmap)) {
--		pm_runtime_disable(&pdev->dev);
--		return PTR_ERR(regmap);
-+		ret = PTR_ERR(regmap);
-+		goto exit;
- 	}
- 
- 	clk_zonda_pll_configure(&lpass_audio_cc_pll, regmap, &lpass_audio_cc_pll_config);
-@@ -788,20 +772,18 @@ static int lpass_audio_cc_sc7280_probe(struct platform_device *pdev)
- 	ret = qcom_cc_probe_by_index(pdev, 0, &lpass_audio_cc_sc7280_desc);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Failed to register LPASS AUDIO CC clocks\n");
--		pm_runtime_disable(&pdev->dev);
--		return ret;
-+		goto exit;
- 	}
- 
- 	ret = qcom_cc_probe_by_index(pdev, 1, &lpass_audio_cc_reset_sc7280_desc);
- 	if (ret) {
- 		dev_err(&pdev->dev, "Failed to register LPASS AUDIO CC Resets\n");
--		pm_runtime_disable(&pdev->dev);
--		return ret;
-+		goto exit;
- 	}
- 
- 	pm_runtime_mark_last_busy(&pdev->dev);
-+exit:
- 	pm_runtime_put_autosuspend(&pdev->dev);
--	pm_runtime_put_sync(&pdev->dev);
- 
- 	return ret;
- }
-@@ -839,14 +821,15 @@ static int lpass_aon_cc_sc7280_probe(struct platform_device *pdev)
- 	struct regmap *regmap;
- 	int ret;
- 
--	ret = lpassaudio_create_pm_clks(pdev);
-+	ret = lpass_audio_setup_runtime_pm(pdev);
- 	if (ret)
- 		return ret;
- 
- 	if (of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-mode")) {
- 		lpass_audio_cc_sc7280_regmap_config.name = "cc";
- 		desc = &lpass_cc_sc7280_desc;
--		return qcom_cc_probe(pdev, desc);
-+		ret = qcom_cc_probe(pdev, desc);
-+		goto exit;
- 	}
- 
- 	lpass_audio_cc_sc7280_regmap_config.name = "lpasscc_aon";
-@@ -854,18 +837,22 @@ static int lpass_aon_cc_sc7280_probe(struct platform_device *pdev)
- 	desc = &lpass_aon_cc_sc7280_desc;
- 
- 	regmap = qcom_cc_map(pdev, desc);
--	if (IS_ERR(regmap))
--		return PTR_ERR(regmap);
-+	if (IS_ERR(regmap)) {
-+		ret = PTR_ERR(regmap);
-+		goto exit;
-+	}
- 
- 	clk_lucid_pll_configure(&lpass_aon_cc_pll, regmap, &lpass_aon_cc_pll_config);
- 
- 	ret = qcom_cc_really_probe(pdev, &lpass_aon_cc_sc7280_desc, regmap);
--	if (ret)
-+	if (ret) {
- 		dev_err(&pdev->dev, "Failed to register LPASS AON CC clocks\n");
-+		goto exit;
-+	}
- 
- 	pm_runtime_mark_last_busy(&pdev->dev);
-+exit:
- 	pm_runtime_put_autosuspend(&pdev->dev);
--	pm_runtime_put_sync(&pdev->dev);
- 
- 	return ret;
- }
 -- 
 2.35.1
 
