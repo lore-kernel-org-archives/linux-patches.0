@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925981863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15BB7C433D2;
-	Wed, 28 Dec 2022 15:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7381863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A76D4C433EF;
+	Wed, 28 Dec 2022 15:34:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241671;
-	bh=CqQRcsSQq058uT3OMgNYfTs9DiLJtY+KpGVWtVw1EFc=;
+	s=korg; t=1672241674;
+	bh=HSqcU3DS8WauVMBJCEpJALpi2UP11Kfm6Gs/Vah/v5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AafOt+nWhvRmd7VfDaH8ROJlpx+KfwtWuQ6o2h6MsUaHhWsIWDN8yxn0W3vi5RI+Z
-	 4/MooIQX+uW2GLd45Tht+k4rj+7gKMTrkOdsXESA1Zaz1hG+9KOPYx/T8R1pW4bsSr
-	 sHVo/O0WhKsRf2BMOoL1rFE2KQmQnccAmD9r8XsA=
+	b=SP+jzZpQXIfcxphrFE2wiqMXIvst7kNquqN4MVk8vm0wo1xcwq1vC/CbQV7EJVS/v
+	 vCotxHGJXcWTP+XaWnrEyyAK9or02hKhQkPQoZZEn+mWZZCfwCmjqhV2JiqF675Rr2
+	 Bp63CX98xiICJpEP/LHBRRpv0hfHvlQAfuJnhRgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Joel Colledge <joel.colledge@linbit.com>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0314/1073] wifi: iwlwifi: mei: fix potential NULL-ptr deref after clone
-Date: Wed, 28 Dec 2022 15:31:42 +0100
-Message-Id: <20221228144336.535597562@linuxfoundation.org>
+Subject: [PATCH 6.0 0305/1073] drbd: use blk_queue_max_discard_sectors helper
+Date: Wed, 28 Dec 2022 15:31:33 +0100
+Message-Id: <20221228144336.294978299@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,53 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
 
-[ Upstream commit d3df49dda431f7ae4132a9a0ac25a5134c04e812 ]
+[ Upstream commit 258bea6388ac93f34561fd91064232d14e174bff ]
 
-If cloning the SKB fails, don't try to use it, but rather return
-as if we should pass it.
+We currently only set q->limits.max_discard_sectors, but that is not
+enough. Another field, max_hw_discard_sectors, was introduced in
+commit 0034af036554 ("block: make /sys/block/<dev>/queue/discard_max_bytes
+writeable").
 
-Coverity CID: 1503456
+The difference is that max_discard_sectors can be changed from user
+space via sysfs, while max_hw_discard_sectors is the "hardware" upper
+limit.
 
-Fixes: 2da4366f9e2c ("iwlwifi: mei: add the driver to allow cooperation with CSME")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
-Link: https://lore.kernel.org/r/20221030191011.0ce03ba99601.I87960b7cb0a3d16b9fd8d9144027e7e2587f5a58@changeid
+So use this helper, which sets both.
+
+This is also a fixup for commit 998e9cbcd615 ("drbd: cleanup
+decide_on_discard_support"): if discards are not supported, that does
+not necessarily mean we also want to disable write_zeroes.
+
+Fixes: 998e9cbcd615 ("drbd: cleanup decide_on_discard_support")
+Reviewed-by: Joel Colledge <joel.colledge@linbit.com>
+Signed-off-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Link: https://lore.kernel.org/r/20221109133453.51652-2-christoph.boehmwalder@linbit.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mei/net.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/block/drbd/drbd_nl.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mei/net.c b/drivers/net/wireless/intel/iwlwifi/mei/net.c
-index 3472167c8370..eac46d1a397a 100644
---- a/drivers/net/wireless/intel/iwlwifi/mei/net.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mei/net.c
-@@ -1,6 +1,6 @@
- // SPDX-License-Identifier: GPL-2.0-only
- /*
-- * Copyright (C) 2021 Intel Corporation
-+ * Copyright (C) 2021-2022 Intel Corporation
-  */
+diff --git a/drivers/block/drbd/drbd_nl.c b/drivers/block/drbd/drbd_nl.c
+index 013d355a2033..921c303a7b5c 100644
+--- a/drivers/block/drbd/drbd_nl.c
++++ b/drivers/block/drbd/drbd_nl.c
+@@ -1210,6 +1210,7 @@ static void decide_on_discard_support(struct drbd_device *device,
+ 	struct drbd_connection *connection =
+ 		first_peer_device(device)->connection;
+ 	struct request_queue *q = device->rq_queue;
++	unsigned int max_discard_sectors;
  
- #include <uapi/linux/if_ether.h>
-@@ -337,10 +337,14 @@ rx_handler_result_t iwl_mei_rx_filter(struct sk_buff *orig_skb,
- 	if (!*pass_to_csme)
- 		return RX_HANDLER_PASS;
+ 	if (bdev && !bdev_max_discard_sectors(bdev->backing_bdev))
+ 		goto not_supported;
+@@ -1230,15 +1231,14 @@ static void decide_on_discard_support(struct drbd_device *device,
+ 	 * topology on all peers.
+ 	 */
+ 	blk_queue_discard_granularity(q, 512);
+-	q->limits.max_discard_sectors = drbd_max_discard_sectors(connection);
+-	q->limits.max_write_zeroes_sectors =
+-		drbd_max_discard_sectors(connection);
++	max_discard_sectors = drbd_max_discard_sectors(connection);
++	blk_queue_max_discard_sectors(q, max_discard_sectors);
++	blk_queue_max_write_zeroes_sectors(q, max_discard_sectors);
+ 	return;
  
--	if (ret == RX_HANDLER_PASS)
-+	if (ret == RX_HANDLER_PASS) {
- 		skb = skb_copy(orig_skb, GFP_ATOMIC);
--	else
-+
-+		if (!skb)
-+			return RX_HANDLER_PASS;
-+	} else {
- 		skb = orig_skb;
-+	}
+ not_supported:
+ 	blk_queue_discard_granularity(q, 0);
+-	q->limits.max_discard_sectors = 0;
+-	q->limits.max_write_zeroes_sectors = 0;
++	blk_queue_max_discard_sectors(q, 0);
+ }
  
- 	/* CSME wants the MAC header as well, push it back */
- 	skb_push(skb, skb->data - skb_mac_header(skb));
+ static void fixup_write_zeroes(struct drbd_device *device, struct request_queue *q)
 -- 
 2.35.1
 
