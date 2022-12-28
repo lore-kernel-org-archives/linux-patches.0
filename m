@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122791C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C17BC433D2;
-	Wed, 28 Dec 2022 16:04:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16621C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D6DC433D2;
+	Wed, 28 Dec 2022 16:04:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243461;
-	bh=G3bF5zDa6UOtDDkVTz9o54tixBLXMzT7gPBIx978YdA=;
+	s=korg; t=1672243464;
+	bh=muOU84hpJwkJvVOXxaAjMrs9BddxS4K4voxHtLNyP80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P0Gz6c6OiFnmRGON+JhWDanlb1emwqvcpHrsAhCgJU5Vb1WoYX/r0PzodRaCgLWk1
-	 h+tjWUBJamgxcpyjuw7V6MOYTEooiwb2m91PQ7RHtmCwCsfF1rNH8N4BHg3kuPfF4m
-	 UOx+ZRKNNcFr6jlh2qAb+AE0VWRlSSRshWWWiG4M=
+	b=TIdICHAfc2zVkGQhO1m3M4PFja3GT5L2PCbxmw+3fkZFznWg+pan5H4txZwf85uGe
+	 5NJJ0fyu798x/fLfHwnL/x7taw8XK00AwyC3D8jbDKDWyMInCXL66cC6hwp8uuzKQy
+	 ingTTKQHXoDa6okl/z9z5HyE6i7zfJ09NccvVRhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Vivek Yadav <vivek.2311@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0495/1146] mmc: alcor: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:33:54 +0100
-Message-Id: <20221228144343.627409690@linuxfoundation.org>
+Subject: [PATCH 6.0 0532/1073] can: m_can: Call the RAM init directly from m_can_chip_config
+Date: Wed, 28 Dec 2022 15:35:20 +0100
+Message-Id: <20221228144342.502482462@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,42 +35,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Vivek Yadav <vivek.2311@samsung.com>
 
-[ Upstream commit e93d1468f429475a753d6baa79b853b7ee5ef8c0 ]
+[ Upstream commit eaacfeaca7ad0804b9a6eff7afeba93a87db7638 ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+When we try to access the mcan message ram addresses during the probe,
+hclk is gated by any other drivers or disabled, because of that probe
+gets failed.
 
-So fix this by checking the return value and calling mmc_free_host() in the
-error path.
+Move the mram init functionality to mcan chip config called by
+m_can_start from mcan open function, by that time clocks are
+enabled.
 
-Fixes: c5413ad815a6 ("mmc: add new Alcor Micro Cardreader SD/MMC driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-2-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Suggested-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Vivek Yadav <vivek.2311@samsung.com>
+Link: https://lore.kernel.org/all/20221207100632.96200-2-vivek.2311@samsung.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Stable-dep-of: 67727a17a6b3 ("can: tcan4x5x: Fix use of register error status mask")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/alcor.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/can/m_can/m_can.c          | 32 +++++++++++++++++++++-----
+ drivers/net/can/m_can/m_can_platform.c |  4 ----
+ drivers/net/can/m_can/tcan4x5x-core.c  |  5 ----
+ 3 files changed, 26 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/mmc/host/alcor.c b/drivers/mmc/host/alcor.c
-index bfb8efeb7eb8..d01df01d4b4d 100644
---- a/drivers/mmc/host/alcor.c
-+++ b/drivers/mmc/host/alcor.c
-@@ -1114,7 +1114,10 @@ static int alcor_pci_sdmmc_drv_probe(struct platform_device *pdev)
- 	alcor_hw_init(host);
- 
- 	dev_set_drvdata(&pdev->dev, host);
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret)
-+		goto free_host;
+diff --git a/drivers/net/can/m_can/m_can.c b/drivers/net/can/m_can/m_can.c
+index 153d8fd08bd8..a562f36a99f8 100644
+--- a/drivers/net/can/m_can/m_can.c
++++ b/drivers/net/can/m_can/m_can.c
+@@ -1233,10 +1233,17 @@ static int m_can_set_bittiming(struct net_device *dev)
+  * - setup bittiming
+  * - configure timestamp generation
+  */
+-static void m_can_chip_config(struct net_device *dev)
++static int m_can_chip_config(struct net_device *dev)
+ {
+ 	struct m_can_classdev *cdev = netdev_priv(dev);
+ 	u32 cccr, test;
++	int err;
 +
- 	return 0;
++	err = m_can_init_ram(cdev);
++	if (err) {
++		dev_err(cdev->dev, "Message RAM configuration failed\n");
++		return err;
++	}
  
- free_host:
+ 	m_can_config_endisable(cdev, true);
+ 
+@@ -1360,18 +1367,25 @@ static void m_can_chip_config(struct net_device *dev)
+ 
+ 	if (cdev->ops->init)
+ 		cdev->ops->init(cdev);
++
++	return 0;
+ }
+ 
+-static void m_can_start(struct net_device *dev)
++static int m_can_start(struct net_device *dev)
+ {
+ 	struct m_can_classdev *cdev = netdev_priv(dev);
++	int ret;
+ 
+ 	/* basic m_can configuration */
+-	m_can_chip_config(dev);
++	ret = m_can_chip_config(dev);
++	if (ret)
++		return ret;
+ 
+ 	cdev->can.state = CAN_STATE_ERROR_ACTIVE;
+ 
+ 	m_can_enable_all_interrupts(cdev);
++
++	return 0;
+ }
+ 
+ static int m_can_set_mode(struct net_device *dev, enum can_mode mode)
+@@ -1800,7 +1814,9 @@ static int m_can_open(struct net_device *dev)
+ 	}
+ 
+ 	/* start the m_can controller */
+-	m_can_start(dev);
++	err = m_can_start(dev);
++	if (err)
++		goto exit_irq_fail;
+ 
+ 	if (!cdev->is_peripheral)
+ 		napi_enable(&cdev->napi);
+@@ -2059,9 +2075,13 @@ int m_can_class_resume(struct device *dev)
+ 		ret = m_can_clk_start(cdev);
+ 		if (ret)
+ 			return ret;
++		ret  = m_can_start(ndev);
++		if (ret) {
++			m_can_clk_stop(cdev);
++
++			return ret;
++		}
+ 
+-		m_can_init_ram(cdev);
+-		m_can_start(ndev);
+ 		netif_device_attach(ndev);
+ 		netif_start_queue(ndev);
+ 	}
+diff --git a/drivers/net/can/m_can/m_can_platform.c b/drivers/net/can/m_can/m_can_platform.c
+index eee47bad0592..de6d8e01bf2e 100644
+--- a/drivers/net/can/m_can/m_can_platform.c
++++ b/drivers/net/can/m_can/m_can_platform.c
+@@ -140,10 +140,6 @@ static int m_can_plat_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, mcan_class);
+ 
+-	ret = m_can_init_ram(mcan_class);
+-	if (ret)
+-		goto probe_fail;
+-
+ 	pm_runtime_enable(mcan_class->dev);
+ 	ret = m_can_class_register(mcan_class);
+ 	if (ret)
+diff --git a/drivers/net/can/m_can/tcan4x5x-core.c b/drivers/net/can/m_can/tcan4x5x-core.c
+index 1fec394b3517..a77f4d4f6299 100644
+--- a/drivers/net/can/m_can/tcan4x5x-core.c
++++ b/drivers/net/can/m_can/tcan4x5x-core.c
+@@ -229,11 +229,6 @@ static int tcan4x5x_init(struct m_can_classdev *cdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	/* Zero out the MCAN buffers */
+-	ret = m_can_init_ram(cdev);
+-	if (ret)
+-		return ret;
+-
+ 	ret = regmap_update_bits(tcan4x5x->regmap, TCAN4X5X_CONFIG,
+ 				 TCAN4X5X_MODE_SEL_MASK, TCAN4X5X_MODE_NORMAL);
+ 	if (ret)
 -- 
 2.35.1
 
