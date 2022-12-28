@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C731875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:55:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8FFC433EF;
-	Wed, 28 Dec 2022 15:55:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B606E1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:55:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C58DC433EF;
+	Wed, 28 Dec 2022 15:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242933;
-	bh=cLdSKwkfEU+/xCMa34CkE1yrdtXpDsiCSfRd3IkF/JI=;
+	s=korg; t=1672242936;
+	bh=/YOob/Vbjpm8rSPm+MJfs6qmhtAnLjtIkV06Sdbw9Do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=clOAjxNjcjEu7thJxhL+8UeJgKIc9HPk4gvX9YqUwK4UTtVtx2ZDDCvb70dGUjVin
-	 TCGEL48MBfOtfOz+iWIzywemqhF7S3pjxkCougt0afvIGwsc2aagZdYrcqNu7VGMOD
-	 UkDD7wAJ9srdXAN248551n0RHU/4kcOXRZBmMSv8=
+	b=T/FBeVC8J5dXd1+THZmiSJn/AtNt97Tm1RKh/5ARNNTnir/RsXuN5Ati+IJSTbCxk
+	 OtdwJ/pg8vhPbR3DdIgF6p2pBigeXIGTtAYiQF/+RgucCXY9uyTdEW3uSG2rZgchTD
+	 OSbfNSQLBbA4S8CGWPhi/udb6u7DKop/V0Z4dsac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Lin Ma <linma@zju.edu.cn>,
+	kernel test robot <lkp@intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0471/1073] xprtrdma: Fix regbuf data not freed in rpcrdma_req_create()
-Date: Wed, 28 Dec 2022 15:34:19 +0100
-Message-Id: <20221228144340.829546126@linuxfoundation.org>
+Subject: [PATCH 5.15 663/731] media: dvbdev: adopts refcnt to avoid UAF
+Date: Wed, 28 Dec 2022 15:42:50 +0100
+Message-Id: <20221228144315.709559534@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,34 +36,208 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-[ Upstream commit 9181f40fb2952fd59ecb75e7158620c9c669eee3 ]
+[ Upstream commit 0fc044b2b5e2d05a1fa1fb0d7f270367a7855d79 ]
 
-If rdma receive buffer allocate failed, should call rpcrdma_regbuf_free()
-to free the send buffer, otherwise, the buffer data will be leaked.
+dvb_unregister_device() is known that prone to use-after-free.
+That is, the cleanup from dvb_unregister_device() releases the dvb_device
+even if there are pointers stored in file->private_data still refer to it.
 
-Fixes: bb93a1ae2bf4 ("xprtrdma: Allocate req's regbufs at xprt create time")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+This patch adds a reference counter into struct dvb_device and delays its
+deallocation until no pointer refers to the object.
+
+Link: https://lore.kernel.org/linux-media/20220807145952.10368-1-linma@zju.edu.cn
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/verbs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/dvb-core/dvb_ca_en50221.c |  2 +-
+ drivers/media/dvb-core/dvb_frontend.c   |  2 +-
+ drivers/media/dvb-core/dvbdev.c         | 32 +++++++++++++++++++------
+ include/media/dvbdev.h                  | 31 +++++++++++++-----------
+ 4 files changed, 44 insertions(+), 23 deletions(-)
 
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index 2fbe9aaeec34..efa7bcdf6b28 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -834,7 +834,7 @@ struct rpcrdma_req *rpcrdma_req_create(struct rpcrdma_xprt *r_xprt, size_t size,
- 	return req;
+diff --git a/drivers/media/dvb-core/dvb_ca_en50221.c b/drivers/media/dvb-core/dvb_ca_en50221.c
+index 15a08d8c69ef..c2d2792227f8 100644
+--- a/drivers/media/dvb-core/dvb_ca_en50221.c
++++ b/drivers/media/dvb-core/dvb_ca_en50221.c
+@@ -157,7 +157,7 @@ static void dvb_ca_private_free(struct dvb_ca_private *ca)
+ {
+ 	unsigned int i;
  
- out3:
--	kfree(req->rl_sendbuf);
-+	rpcrdma_regbuf_free(req->rl_sendbuf);
- out2:
- 	kfree(req);
- out1:
+-	dvb_free_device(ca->dvbdev);
++	dvb_device_put(ca->dvbdev);
+ 	for (i = 0; i < ca->slot_count; i++)
+ 		vfree(ca->slot_info[i].rx_buffer.data);
+ 
+diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
+index 70d07cdcb2a6..09facc78d88a 100644
+--- a/drivers/media/dvb-core/dvb_frontend.c
++++ b/drivers/media/dvb-core/dvb_frontend.c
+@@ -136,7 +136,7 @@ static void __dvb_frontend_free(struct dvb_frontend *fe)
+ 	struct dvb_frontend_private *fepriv = fe->frontend_priv;
+ 
+ 	if (fepriv)
+-		dvb_free_device(fepriv->dvbdev);
++		dvb_device_put(fepriv->dvbdev);
+ 
+ 	dvb_frontend_invoke_release(fe, fe->ops.release);
+ 
+diff --git a/drivers/media/dvb-core/dvbdev.c b/drivers/media/dvb-core/dvbdev.c
+index 795d9bfaba5c..6406653e46a4 100644
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -107,7 +107,7 @@ static int dvb_device_open(struct inode *inode, struct file *file)
+ 		new_fops = fops_get(dvbdev->fops);
+ 		if (!new_fops)
+ 			goto fail;
+-		file->private_data = dvbdev;
++		file->private_data = dvb_device_get(dvbdev);
+ 		replace_fops(file, new_fops);
+ 		if (file->f_op->open)
+ 			err = file->f_op->open(inode, file);
+@@ -171,6 +171,9 @@ int dvb_generic_release(struct inode *inode, struct file *file)
+ 	}
+ 
+ 	dvbdev->users++;
++
++	dvb_device_put(dvbdev);
++
+ 	return 0;
+ }
+ EXPORT_SYMBOL(dvb_generic_release);
+@@ -487,6 +490,7 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
+ 		return -ENOMEM;
+ 	}
+ 
++	kref_init(&dvbdev->ref);
+ 	memcpy(dvbdev, template, sizeof(struct dvb_device));
+ 	dvbdev->type = type;
+ 	dvbdev->id = id;
+@@ -518,7 +522,7 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
+ #endif
+ 
+ 	dvbdev->minor = minor;
+-	dvb_minors[minor] = dvbdev;
++	dvb_minors[minor] = dvb_device_get(dvbdev);
+ 	up_write(&minor_rwsem);
+ 
+ 	ret = dvb_register_media_device(dvbdev, type, minor, demux_sink_pads);
+@@ -563,6 +567,7 @@ void dvb_remove_device(struct dvb_device *dvbdev)
+ 
+ 	down_write(&minor_rwsem);
+ 	dvb_minors[dvbdev->minor] = NULL;
++	dvb_device_put(dvbdev);
+ 	up_write(&minor_rwsem);
+ 
+ 	dvb_media_device_free(dvbdev);
+@@ -574,21 +579,34 @@ void dvb_remove_device(struct dvb_device *dvbdev)
+ EXPORT_SYMBOL(dvb_remove_device);
+ 
+ 
+-void dvb_free_device(struct dvb_device *dvbdev)
++static void dvb_free_device(struct kref *ref)
+ {
+-	if (!dvbdev)
+-		return;
++	struct dvb_device *dvbdev = container_of(ref, struct dvb_device, ref);
+ 
+ 	kfree (dvbdev->fops);
+ 	kfree (dvbdev);
+ }
+-EXPORT_SYMBOL(dvb_free_device);
++
++
++struct dvb_device *dvb_device_get(struct dvb_device *dvbdev)
++{
++	kref_get(&dvbdev->ref);
++	return dvbdev;
++}
++EXPORT_SYMBOL(dvb_device_get);
++
++
++void dvb_device_put(struct dvb_device *dvbdev)
++{
++	if (dvbdev)
++		kref_put(&dvbdev->ref, dvb_free_device);
++}
+ 
+ 
+ void dvb_unregister_device(struct dvb_device *dvbdev)
+ {
+ 	dvb_remove_device(dvbdev);
+-	dvb_free_device(dvbdev);
++	dvb_device_put(dvbdev);
+ }
+ EXPORT_SYMBOL(dvb_unregister_device);
+ 
+diff --git a/include/media/dvbdev.h b/include/media/dvbdev.h
+index 2f6b0861322a..149b3d33c24b 100644
+--- a/include/media/dvbdev.h
++++ b/include/media/dvbdev.h
+@@ -156,6 +156,7 @@ struct dvb_adapter {
+  */
+ struct dvb_device {
+ 	struct list_head list_head;
++	struct kref ref;
+ 	const struct file_operations *fops;
+ 	struct dvb_adapter *adapter;
+ 	enum dvb_device_type type;
+@@ -187,6 +188,20 @@ struct dvb_device {
+ 	void *priv;
+ };
+ 
++/**
++ * dvb_device_get - Increase dvb_device reference
++ *
++ * @dvbdev:	pointer to struct dvb_device
++ */
++struct dvb_device *dvb_device_get(struct dvb_device *dvbdev);
++
++/**
++ * dvb_device_get - Decrease dvb_device reference
++ *
++ * @dvbdev:	pointer to struct dvb_device
++ */
++void dvb_device_put(struct dvb_device *dvbdev);
++
+ /**
+  * dvb_register_adapter - Registers a new DVB adapter
+  *
+@@ -231,29 +246,17 @@ int dvb_register_device(struct dvb_adapter *adap,
+ /**
+  * dvb_remove_device - Remove a registered DVB device
+  *
+- * This does not free memory.  To do that, call dvb_free_device().
++ * This does not free memory. dvb_free_device() will do that when
++ * reference counter is empty
+  *
+  * @dvbdev:	pointer to struct dvb_device
+  */
+ void dvb_remove_device(struct dvb_device *dvbdev);
+ 
+-/**
+- * dvb_free_device - Free memory occupied by a DVB device.
+- *
+- * Call dvb_unregister_device() before calling this function.
+- *
+- * @dvbdev:	pointer to struct dvb_device
+- */
+-void dvb_free_device(struct dvb_device *dvbdev);
+ 
+ /**
+  * dvb_unregister_device - Unregisters a DVB device
+  *
+- * This is a combination of dvb_remove_device() and dvb_free_device().
+- * Using this function is usually a mistake, and is often an indicator
+- * for a use-after-free bug (when a userspace process keeps a file
+- * handle to a detached device).
+- *
+  * @dvbdev:	pointer to struct dvb_device
+  */
+ void dvb_unregister_device(struct dvb_device *dvbdev);
 -- 
 2.35.1
 
