@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C9D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:19:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE612C433D2;
-	Wed, 28 Dec 2022 15:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00D701863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:19:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BC2FC433D2;
+	Wed, 28 Dec 2022 15:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240791;
-	bh=YfvghuHV/PKWUstqcre32eUMoo1Em/uIM5aaBU6SKTI=;
+	s=korg; t=1672240793;
+	bh=FDnY9memHDK08dNNfY/561sVbx1C03QW5gMzHUsYe7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HRvHpUdfPRo6/yjWHLURh5whyo7+clAEKbHMZTUO4kpdJbtD0U19NmdYLFFgquja2
-	 5FOp9FooS27xBmWwLw381//ZWJIEJIPyO+vmfLmwOh8bDAOhMalXHhfq2oiOEPkD0f
-	 VJSmraiz/8o/pZNkLu2YCztkIzgeqAlokJ72dj2s=
+	b=y/DhiccI2+dPI4EtjJk2Pk9GCR2rtP0j2riLyDNeCavPn18pqapsHeHM4wyBS4NPY
+	 AXDe2ha0kSwgSmhTh24v9RlvvBtubaFgQDZQGq/8EUPNC3aPiAaK9BzefQK/VwsCho
+	 ksxNg3qKAjp8b1YO0DsEQf3jFgDjIVIWUuMEva4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0203/1073] selftest/bpf: Fix memory leak in kprobe_multi_test
-Date: Wed, 28 Dec 2022 15:29:51 +0100
-Message-Id: <20221228144333.532035619@linuxfoundation.org>
+Subject: [PATCH 5.15 398/731] crypto: ccree - Make cc_debugfs_global_fini() available for module init function
+Date: Wed, 28 Dec 2022 15:38:25 +0100
+Message-Id: <20221228144308.101298543@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,90 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Kuohai <xukuohai@huawei.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 6d2e21dc4db3933db65293552ecc1ede26febeca ]
+[ Upstream commit 8e96729fc26c8967db45a3fb7a60387619f77a22 ]
 
-The get_syms() function in kprobe_multi_test.c does not free the string
-memory allocated by sscanf correctly. Fix it.
+ccree_init() calls cc_debugfs_global_fini(), the former is an init
+function and the latter an exit function though.
 
-Fixes: 5b6c7e5c4434 ("selftests/bpf: Add attach bench test")
-Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://lore.kernel.org/bpf/20221011120108.782373-5-xukuohai@huaweicloud.com
+A modular build emits:
+
+	WARNING: modpost: drivers/crypto/ccree/ccree.o: section mismatch in reference: init_module (section: .init.text) -> cc_debugfs_global_fini (section: .exit.text)
+
+(with CONFIG_DEBUG_SECTION_MISMATCH=y).
+
+Fixes: 4f1c596df706 ("crypto: ccree - Remove debugfs when platform_driver_register failed")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bpf/prog_tests/kprobe_multi_test.c        | 26 ++++++++++---------
- 1 file changed, 14 insertions(+), 12 deletions(-)
+ drivers/crypto/ccree/cc_debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c b/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
-index d457a55ff408..287b3ac40227 100644
---- a/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
-+++ b/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
-@@ -325,7 +325,7 @@ static bool symbol_equal(const void *key1, const void *key2, void *ctx __maybe_u
- static int get_syms(char ***symsp, size_t *cntp)
+diff --git a/drivers/crypto/ccree/cc_debugfs.c b/drivers/crypto/ccree/cc_debugfs.c
+index 7083767602fc..8f008f024f8f 100644
+--- a/drivers/crypto/ccree/cc_debugfs.c
++++ b/drivers/crypto/ccree/cc_debugfs.c
+@@ -55,7 +55,7 @@ void __init cc_debugfs_global_init(void)
+ 	cc_debugfs_dir = debugfs_create_dir("ccree", NULL);
+ }
+ 
+-void __exit cc_debugfs_global_fini(void)
++void cc_debugfs_global_fini(void)
  {
- 	size_t cap = 0, cnt = 0, i;
--	char *name, **syms = NULL;
-+	char *name = NULL, **syms = NULL;
- 	struct hashmap *map;
- 	char buf[256];
- 	FILE *f;
-@@ -352,6 +352,8 @@ static int get_syms(char ***symsp, size_t *cntp)
- 		/* skip modules */
- 		if (strchr(buf, '['))
- 			continue;
-+
-+		free(name);
- 		if (sscanf(buf, "%ms$*[^\n]\n", &name) != 1)
- 			continue;
- 		/*
-@@ -369,32 +371,32 @@ static int get_syms(char ***symsp, size_t *cntp)
- 		if (!strncmp(name, "__ftrace_invalid_address__",
- 			     sizeof("__ftrace_invalid_address__") - 1))
- 			continue;
-+
- 		err = hashmap__add(map, name, NULL);
--		if (err) {
--			free(name);
--			if (err == -EEXIST)
--				continue;
-+		if (err == -EEXIST)
-+			continue;
-+		if (err)
- 			goto error;
--		}
-+
- 		err = libbpf_ensure_mem((void **) &syms, &cap,
- 					sizeof(*syms), cnt + 1);
--		if (err) {
--			free(name);
-+		if (err)
- 			goto error;
--		}
--		syms[cnt] = name;
--		cnt++;
-+
-+		syms[cnt++] = name;
-+		name = NULL;
- 	}
- 
- 	*symsp = syms;
- 	*cntp = cnt;
- 
- error:
-+	free(name);
- 	fclose(f);
- 	hashmap__free(map);
- 	if (err) {
- 		for (i = 0; i < cnt; i++)
--			free(syms[cnt]);
-+			free(syms[i]);
- 		free(syms);
- 	}
- 	return err;
+ 	debugfs_remove(cc_debugfs_dir);
+ }
 -- 
 2.35.1
 
