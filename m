@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 892B71863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:44:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FCE8C433D2;
-	Wed, 28 Dec 2022 15:44:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A91F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:44:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04E0C433D2;
+	Wed, 28 Dec 2022 15:44:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242243;
-	bh=yNMT92ZbzXNjoqChQJjK40MRe4b4PoN7RptVuUn+rVI=;
+	s=korg; t=1672242246;
+	bh=MDEkBS14t9zOKpOegTTLz/PJjOLWSO9yvycEsJs76RE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AWgrAkwK4/iSzfF2WsHtEuC9JUh5+IcCAgTbWORWwWMtYsHssFfDuyciTz6S/L9d4
-	 tuqNZ2V4Fpz/yj24vZKwyd8H4pPDihiuFHpS/TegINoSaMr7Y2R+gw3RWN0tweCWqW
-	 escV1UosSgpmoYgppirDFOnzbdLjOIeVsw5zelP0=
+	b=LdT0443ielazQ8p0OwiEteQSJxo2h5LhRWXbXaB4bXrLQ/7ByOwXnt7/Wv8LysQvY
+	 530hvbinTspv5wxhIqrXKg8DYEfdP1EuPb0fhlZ+++S4iIF1S6jvnx0xAMUbDyl7TV
+	 WYnPzTTcUMQ+jop2f+EUBKt0Xh+Yt1GeAoi+xE+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 579/731] rtc: st-lpc: Add missing clk_disable_unprepare in st_rtc_probe()
-Date: Wed, 28 Dec 2022 15:41:26 +0100
-Message-Id: <20221228144313.336496077@linuxfoundation.org>
+Subject: [PATCH 6.0 0384/1073] clk: imx8mn: fix imx8mn_sai2_sels clocks list
+Date: Wed, 28 Dec 2022 15:32:52 +0100
+Message-Id: <20221228144338.439180979@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,34 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit 5fb733d7bd6949e90028efdce8bd528c6ab7cf1e ]
+[ Upstream commit 34d996747a74e3a86990f9f9c48de09159d78edb ]
 
-The clk_disable_unprepare() should be called in the error handling
-of clk_get_rate(), fix it.
+According to the "Clock Root" table of the reference manual (document
+IMX8MNRM Rev 2, 07/2022):
 
-Fixes: b5b2bdfc2893 ("rtc: st: Add new driver for ST's LPC RTC")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://lore.kernel.org/r/20221123014805.1993052-1-cuigaosheng1@huawei.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+     Clock Root     offset     Source Select (CCM_TARGET_ROOTn[MUX])
+        ...          ...                    ...
+   SAI2_CLK_ROOT    0xA600            000 - 24M_REF_CLK
+                                      001 - AUDIO_PLL1_CLK
+                                      010 - AUDIO_PLL2_CLK
+                                      011 - VIDEO_PLL_CLK
+                                      100 - SYSTEM_PLL1_DIV6
+                                      110 - EXT_CLK_2
+                                      111 - EXT_CLK_3
+        ...          ...                    ...
+
+while the imx8mn_sai2_sels list contained clk_ext3 and clk_ext4 for
+source select bits 110b and 111b.
+
+Fixes: 96d6392b54dbb ("clk: imx: Add support for i.MX8MN clock driver")
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Acked-by: Marco Felsch <m.felsch@pengutronix.de>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20221117113637.1978703-5-dario.binacchi@amarulasolutions.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-st-lpc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/imx/clk-imx8mn.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-st-lpc.c b/drivers/rtc/rtc-st-lpc.c
-index bdb20f63254e..0f8e4231098e 100644
---- a/drivers/rtc/rtc-st-lpc.c
-+++ b/drivers/rtc/rtc-st-lpc.c
-@@ -238,6 +238,7 @@ static int st_rtc_probe(struct platform_device *pdev)
+diff --git a/drivers/clk/imx/clk-imx8mn.c b/drivers/clk/imx/clk-imx8mn.c
+index b80af5d1ef46..37128c35198d 100644
+--- a/drivers/clk/imx/clk-imx8mn.c
++++ b/drivers/clk/imx/clk-imx8mn.c
+@@ -109,7 +109,7 @@ static const char * const imx8mn_disp_pixel_sels[] = {"osc_24m", "video_pll_out"
  
- 	rtc->clkrate = clk_get_rate(rtc->clk);
- 	if (!rtc->clkrate) {
-+		clk_disable_unprepare(rtc->clk);
- 		dev_err(&pdev->dev, "Unable to fetch clock rate\n");
- 		return -EINVAL;
- 	}
+ static const char * const imx8mn_sai2_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
+ 						"video_pll_out", "sys_pll1_133m", "dummy",
+-						"clk_ext3", "clk_ext4", };
++						"clk_ext2", "clk_ext3", };
+ 
+ static const char * const imx8mn_sai3_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
+ 						"video_pll_out", "sys_pll1_133m", "dummy",
 -- 
 2.35.1
 
