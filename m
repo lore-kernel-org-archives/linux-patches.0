@@ -1,38 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 777351C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB459C433D2;
-	Wed, 28 Dec 2022 16:40:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5516B1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1D3C433D2;
+	Wed, 28 Dec 2022 16:40:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245623;
-	bh=9oyafgAYJZt8m+g84Q0/Z/9EO3zaqoJGmm/f6hIgaCQ=;
+	s=korg; t=1672245626;
+	bh=hfir7DbpDXAOR+tvs+bqxebL3YHTCRmmWCLgcFiNMO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sbz1xwm7rWKo//AkM5cMEjinCTjKJ6qNSDjuO+yEgBYNSfdfA+0WtxGi3SJPPtRhC
-	 X8Ze9BWYK4ojnD44yH4j5p5z048SOZgWGZsZAN0/LB/8UbfDkE1HNfT9aDU1GxVIzj
-	 1cubS3Sq5GI2wUs9ABsoKFygvu5YpBalG6Gosr+4=
+	b=dBPz9vM6L+RFDJ07h6OXYlRFgKMZGcR9RTjhO3/zbm1qDutRbBqoxCfoSxHZLpm2H
+	 4zRp/oDym8V5zVa5dkUt/bbXL8FblTAwMaSMeW3Q/hLQfQXf4G2NpYEVFB0eW0tl9F
+	 dV5Ms4aKpVnWZCXATtAx4aIwK9ifIsaYjWCnhH6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Andrea Parri (Microsoft)" <parri.andrea@gmail.com>,
-	Dexuan Cui <decui@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	"K. Y. Srinivasan" <kys@microsoft.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	Stephen Hemminger <sthemmin@microsoft.com>,
-	Tianyu Lan <Tianyu.Lan@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
-	Fabio A M Martins <fabiomirmar@gmail.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0888/1073] video: hyperv_fb: Avoid taking busy spinlock on panic path
-Date: Wed, 28 Dec 2022 15:41:16 +0100
-Message-Id: <20221228144352.146910999@linuxfoundation.org>
+Subject: [PATCH 6.1 0891/1146] mISDN: hfcsusb: dont call dev_kfree_skb/kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:40:30 +0100
+Message-Id: <20221228144354.386745449@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -43,104 +36,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guilherme G. Piccoli <gpiccoli@igalia.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 1d044ca035dc22df0d3b39e56f2881071d9118bd ]
+[ Upstream commit ddc9648db162eee556edd5222d2808fe33730203 ]
 
-The Hyper-V framebuffer code registers a panic notifier in order
-to try updating its fbdev if the kernel crashed. The notifier
-callback is straightforward, but it calls the vmbus_sendpacket()
-routine eventually, and such function takes a spinlock for the
-ring buffer operations.
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-Panic path runs in atomic context, with local interrupts and
-preemption disabled, and all secondary CPUs shutdown. That said,
-taking a spinlock might cause a lockup if a secondary CPU was
-disabled with such lock taken. Fix it here by checking if the
-ring buffer spinlock is busy on Hyper-V framebuffer panic notifier;
-if so, bail-out avoiding the potential lockup scenario.
+It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
+The difference between them is free reason, dev_kfree_skb_irq() means
+the SKB is dropped in error and dev_consume_skb_irq() means the SKB
+is consumed in normal.
 
-Cc: Andrea Parri (Microsoft) <parri.andrea@gmail.com>
-Cc: Dexuan Cui <decui@microsoft.com>
-Cc: Haiyang Zhang <haiyangz@microsoft.com>
-Cc: "K. Y. Srinivasan" <kys@microsoft.com>
-Cc: Michael Kelley <mikelley@microsoft.com>
-Cc: Stephen Hemminger <sthemmin@microsoft.com>
-Cc: Tianyu Lan <Tianyu.Lan@microsoft.com>
-Cc: Wei Liu <wei.liu@kernel.org>
-Tested-by: Fabio A M Martins <fabiomirmar@gmail.com>
-Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/20220819221731.480795-10-gpiccoli@igalia.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+skb_queue_purge() is called under spin_lock_irqsave() in hfcusb_l2l1D(),
+kfree_skb() is called in it, to fix this, use skb_queue_splice_init()
+to move the dch->squeue to a free queue, also enqueue the tx_skb and
+rx_skb, at last calling __skb_queue_purge() to free the SKBs afer unlock.
+
+In tx_iso_complete(), dev_kfree_skb() is called to consume the transmitted
+SKB, so replace it with dev_consume_skb_irq().
+
+Fixes: 69f52adb2d53 ("mISDN: Add HFC USB driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/ring_buffer.c        | 13 +++++++++++++
- drivers/video/fbdev/hyperv_fb.c |  8 +++++++-
- include/linux/hyperv.h          |  2 ++
- 3 files changed, 22 insertions(+), 1 deletion(-)
+ drivers/isdn/hardware/mISDN/hfcsusb.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hv/ring_buffer.c b/drivers/hv/ring_buffer.c
-index 59a4aa86d1f3..c6692fd5ab15 100644
---- a/drivers/hv/ring_buffer.c
-+++ b/drivers/hv/ring_buffer.c
-@@ -280,6 +280,19 @@ void hv_ringbuffer_cleanup(struct hv_ring_buffer_info *ring_info)
- 	ring_info->pkt_buffer_size = 0;
- }
+diff --git a/drivers/isdn/hardware/mISDN/hfcsusb.c b/drivers/isdn/hardware/mISDN/hfcsusb.c
+index 651f2f8f685b..1efd17979f24 100644
+--- a/drivers/isdn/hardware/mISDN/hfcsusb.c
++++ b/drivers/isdn/hardware/mISDN/hfcsusb.c
+@@ -326,20 +326,24 @@ hfcusb_l2l1D(struct mISDNchannel *ch, struct sk_buff *skb)
+ 		test_and_clear_bit(FLG_L2_ACTIVATED, &dch->Flags);
  
-+/*
-+ * Check if the ring buffer spinlock is available to take or not; used on
-+ * atomic contexts, like panic path (see the Hyper-V framebuffer driver).
-+ */
+ 		if (hw->protocol == ISDN_P_NT_S0) {
++			struct sk_buff_head free_queue;
 +
-+bool hv_ringbuffer_spinlock_busy(struct vmbus_channel *channel)
-+{
-+	struct hv_ring_buffer_info *rinfo = &channel->outbound;
-+
-+	return spin_is_locked(&rinfo->ring_lock);
-+}
-+EXPORT_SYMBOL_GPL(hv_ringbuffer_spinlock_busy);
-+
- /* Write to the ring buffer. */
- int hv_ringbuffer_write(struct vmbus_channel *channel,
- 			const struct kvec *kv_list, u32 kv_count,
-diff --git a/drivers/video/fbdev/hyperv_fb.c b/drivers/video/fbdev/hyperv_fb.c
-index b58b445bb529..0839ba7d3a34 100644
---- a/drivers/video/fbdev/hyperv_fb.c
-+++ b/drivers/video/fbdev/hyperv_fb.c
-@@ -779,12 +779,18 @@ static void hvfb_ondemand_refresh_throttle(struct hvfb_par *par,
- static int hvfb_on_panic(struct notifier_block *nb,
- 			 unsigned long e, void *p)
- {
-+	struct hv_device *hdev;
- 	struct hvfb_par *par;
- 	struct fb_info *info;
++			__skb_queue_head_init(&free_queue);
+ 			hfcsusb_ph_command(hw, HFC_L1_DEACTIVATE_NT);
+ 			spin_lock_irqsave(&hw->lock, flags);
+-			skb_queue_purge(&dch->squeue);
++			skb_queue_splice_init(&dch->squeue, &free_queue);
+ 			if (dch->tx_skb) {
+-				dev_kfree_skb(dch->tx_skb);
++				__skb_queue_tail(&free_queue, dch->tx_skb);
+ 				dch->tx_skb = NULL;
+ 			}
+ 			dch->tx_idx = 0;
+ 			if (dch->rx_skb) {
+-				dev_kfree_skb(dch->rx_skb);
++				__skb_queue_tail(&free_queue, dch->rx_skb);
+ 				dch->rx_skb = NULL;
+ 			}
+ 			test_and_clear_bit(FLG_TX_BUSY, &dch->Flags);
+ 			spin_unlock_irqrestore(&hw->lock, flags);
++			__skb_queue_purge(&free_queue);
+ #ifdef FIXME
+ 			if (test_and_clear_bit(FLG_L1_BUSY, &dch->Flags))
+ 				dchannel_sched_event(&hc->dch, D_CLEARBUSY);
+@@ -1330,7 +1334,7 @@ tx_iso_complete(struct urb *urb)
+ 					printk("\n");
+ 				}
  
- 	par = container_of(nb, struct hvfb_par, hvfb_panic_nb);
--	par->synchronous_fb = true;
- 	info = par->info;
-+	hdev = device_to_hv_device(info->device);
-+
-+	if (hv_ringbuffer_spinlock_busy(hdev->channel))
-+		return NOTIFY_DONE;
-+
-+	par->synchronous_fb = true;
- 	if (par->need_docopy)
- 		hvfb_docopy(par, 0, dio_fb_size);
- 	synthvid_update(info, 0, 0, INT_MAX, INT_MAX);
-diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
-index 3b42264333ef..646f1da9f27e 100644
---- a/include/linux/hyperv.h
-+++ b/include/linux/hyperv.h
-@@ -1341,6 +1341,8 @@ struct hv_ring_buffer_debug_info {
- int hv_ringbuffer_get_debuginfo(struct hv_ring_buffer_info *ring_info,
- 				struct hv_ring_buffer_debug_info *debug_info);
- 
-+bool hv_ringbuffer_spinlock_busy(struct vmbus_channel *channel);
-+
- /* Vmbus interface */
- #define vmbus_driver_register(driver)	\
- 	__vmbus_driver_register(driver, THIS_MODULE, KBUILD_MODNAME)
+-				dev_kfree_skb(tx_skb);
++				dev_consume_skb_irq(tx_skb);
+ 				tx_skb = NULL;
+ 				if (fifo->dch && get_next_dframe(fifo->dch))
+ 					tx_skb = fifo->dch->tx_skb;
 -- 
 2.35.1
 
