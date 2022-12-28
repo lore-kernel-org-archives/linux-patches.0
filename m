@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B6FD1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4B4DC433EF;
-	Wed, 28 Dec 2022 15:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1901863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EBF1C433EF;
+	Wed, 28 Dec 2022 15:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239888;
-	bh=n/C2t+sJi+BcjAa9Qf7vzV++y35dqIbsd7k4GwQBhUo=;
+	s=korg; t=1672239891;
+	bh=6s1DubVKumRT8kawU7Q+an1rKQYEAy268tWyp3jY/7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G6JI0w1tMBeZH4Xf9hpxLmd5PJeeAoo8HepdJsssxMXeaz8MupwzEJnPs0CU2rH5G
-	 +thNEyF6fSwHKNterypc0qnoyJ+81iTcpnlC0bEwXJHPvBk0txs2RXh1Yq6eIxx851
-	 TRrsg/j663KfEJ0GddQ3IX8SL0u7xCoi4wjv08V8=
+	b=CNm0TkRUt5uvstRdyV3s3DHyPuv7aRjYqwsUH2xPdNVu9DZIP83j0DPyFGZfJvws1
+	 Oo3qc8sWYhH5ICOrOodobXx+jpljrGmZMrCTZaQFDBUjJgB+i2KntOCrvL20aIYtfp
+	 lu+R7J4pmNZz3B/pcLiI5O9zyiJdBJH3k+1mSyJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Maxim Uvarov <maxim.uvarov@linaro.org>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0090/1073] tpm/tpm_ftpm_tee: Fix error handling in ftpm_mod_init()
-Date: Wed, 28 Dec 2022 15:27:58 +0100
-Message-Id: <20221228144330.500514910@linuxfoundation.org>
+Subject: [PATCH 5.15 282/731] hwmon: (jc42) Restore the min/max/critical temperatures on resume
+Date: Wed, 28 Dec 2022 15:36:29 +0100
+Message-Id: <20221228144304.747169257@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,45 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit 2b7d07f7acaac2c7750e420dcf4414588ede6d03 ]
+[ Upstream commit 084ed144c448fd5bc8ed5a58247153fbbfd115c3 ]
 
-The ftpm_mod_init() returns the driver_register() directly without checking
-its return value, if driver_register() failed, the ftpm_tee_plat_driver is
-not unregistered.
+The JC42 compatible thermal sensor on Kingston KSM32ES8/16ME DIMMs
+(using Micron E-Die) is an ST Microelectronics STTS2004 (manufacturer
+0x104a, device 0x2201). It does not keep the previously programmed
+minimum, maximum and critical temperatures after system suspend and
+resume (which is a shutdown / startup cycle for the JC42 temperature
+sensor). This results in an alarm on system resume because the hardware
+default for these values is 0°C (so any environment temperature greater
+than 0°C will trigger the alarm).
 
-Fix by unregister ftpm_tee_plat_driver when driver_register() failed.
+Example before system suspend:
+  jc42-i2c-0-1a
+  Adapter: SMBus PIIX4 adapter port 0 at 0b00
+  temp1:        +34.8°C  (low  =  +0.0°C)
+                         (high = +85.0°C, hyst = +85.0°C)
+                         (crit = +95.0°C, hyst = +95.0°C)
 
-Fixes: 9f1944c23c8c ("tpm_ftpm_tee: register driver on TEE bus")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Maxim Uvarov <maxim.uvarov@linaro.org>
-Acked-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Example after system resume (without this change):
+  jc42-i2c-0-1a
+  Adapter: SMBus PIIX4 adapter port 0 at 0b00
+  temp1:        +34.8°C  (low  =  +0.0°C)             ALARM (HIGH, CRIT)
+                         (high =  +0.0°C, hyst =  +0.0°C)
+                         (crit =  +0.0°C, hyst =  +0.0°C)
+
+Apply the cached values from the JC42_REG_TEMP_UPPER,
+JC42_REG_TEMP_LOWER, JC42_REG_TEMP_CRITICAL and JC42_REG_SMBUS (where
+the SMBUS register is not related to this issue but a side-effect of
+using regcache_sync() during system resume with the previously
+cached/programmed values. This fixes the alarm due to the hardware
+defaults of 0°C because the previously applied limits (set by userspace)
+are re-applied on system resume.
+
+Fixes: 175c490c9e7f ("hwmon: (jc42) Add support for STTS2004 and AT30TSE004")
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20221023213157.11078-3-martin.blumenstingl@googlemail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_ftpm_tee.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/hwmon/jc42.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/char/tpm/tpm_ftpm_tee.c b/drivers/char/tpm/tpm_ftpm_tee.c
-index 5c233423c56f..deff23bb54bf 100644
---- a/drivers/char/tpm/tpm_ftpm_tee.c
-+++ b/drivers/char/tpm/tpm_ftpm_tee.c
-@@ -397,7 +397,13 @@ static int __init ftpm_mod_init(void)
- 	if (rc)
- 		return rc;
+diff --git a/drivers/hwmon/jc42.c b/drivers/hwmon/jc42.c
+index 9a2a062eb7b8..5240bfdfcf2e 100644
+--- a/drivers/hwmon/jc42.c
++++ b/drivers/hwmon/jc42.c
+@@ -567,6 +567,10 @@ static int jc42_suspend(struct device *dev)
  
--	return driver_register(&ftpm_tee_driver.driver);
-+	rc = driver_register(&ftpm_tee_driver.driver);
-+	if (rc) {
-+		platform_driver_unregister(&ftpm_tee_plat_driver);
-+		return rc;
-+	}
+ 	data->config |= JC42_CFG_SHUTDOWN;
+ 	regmap_write(data->regmap, JC42_REG_CONFIG, data->config);
 +
-+	return 0;
++	regcache_cache_only(data->regmap, true);
++	regcache_mark_dirty(data->regmap);
++
+ 	return 0;
  }
  
- static void __exit ftpm_mod_exit(void)
+@@ -574,9 +578,13 @@ static int jc42_resume(struct device *dev)
+ {
+ 	struct jc42_data *data = dev_get_drvdata(dev);
+ 
++	regcache_cache_only(data->regmap, false);
++
+ 	data->config &= ~JC42_CFG_SHUTDOWN;
+ 	regmap_write(data->regmap, JC42_REG_CONFIG, data->config);
+-	return 0;
++
++	/* Restore cached register values to hardware */
++	return regcache_sync(data->regmap);
+ }
+ 
+ static const struct dev_pm_ops jc42_dev_pm_ops = {
 -- 
 2.35.1
 
