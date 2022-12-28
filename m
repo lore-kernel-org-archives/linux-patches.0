@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14AD1C15
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6465BC433F1;
-	Wed, 28 Dec 2022 16:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42AD91C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC297C433EF;
+	Wed, 28 Dec 2022 16:51:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246273;
-	bh=BrglO72aGgIDUCnSTd7qS7EwqALWhU6mg7lEWRQ2jfo=;
+	s=korg; t=1672246271;
+	bh=JwT7pZSHdTosR8oAQYb1QuCWswt5BoH7UB3FTLeYRO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JUo7SjqAeobjEtA7xrvCQOCdc64/0ZyturXQGw+CMolohiup3laP3+V0efoda849S
-	 aKxjhq28aY2NmLPG7SAQQmLqMwLp7m2K/nI7vQYxknPyLVsOb8bGa6mdd/xEX6YV5E
-	 hyXbOzTlvTTYMvUVp0XBBcLZfyF4fVsV+FpjQsPA=
+	b=SaIdew/NfRjm9imc60XV6VsgNirIBPDOaivTAg3xLi7xGHQZMsWJcWbFrNV6BkTu1
+	 5tB6ws3P0J1yJ16e6KD7v1fJTeBaN2EL0WOrTwqcWWA9IiojAHvOEklf5AOu+5Plhv
+	 WcCxqs5k+1wBKTKkOzbwFDzbjL8hEsBB/D3eFK+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Sven=20Z=C3=BChlsdorf?= <sven.zuehlsdorf@vigem.de>,
-	Enrik Berkhan <Enrik.Berkhan@inka.de>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Subject: [PATCH 6.0 1042/1073] HID: mcp2221: dont connect hidraw
-Date: Wed, 28 Dec 2022 15:43:50 +0100
-Message-Id: <20221228144356.498048482@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1013/1146] ipv6/sit: use DEV_STATS_INC() to avoid data-races
+Date: Wed, 28 Dec 2022 15:42:32 +0100
+Message-Id: <20221228144357.880522993@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,59 +36,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Enrik Berkhan <Enrik.Berkhan@inka.de>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 67c90d14018775556d5420382ace86521421f9ff upstream.
+[ Upstream commit cb34b7cf17ecf33499c9298943f85af247abc1e9 ]
 
-The MCP2221 driver should not connect to the hidraw userspace interface,
-as it needs exclusive access to the chip.
+syzbot/KCSAN reported that multiple cpus are updating dev->stats.tx_error
+concurrently.
 
-If you want to use /dev/hidrawX with the MCP2221, you need to avoid
-binding this driver to the device and use the hid generic driver instead
-(e.g. using udev rules).
+This is because sit tunnels are NETIF_F_LLTX, meaning their ndo_start_xmit()
+is not protected by a spinlock.
 
-Cc: stable@vger.kernel.org
-Reported-by: Sven Zühlsdorf <sven.zuehlsdorf@vigem.de>
-Signed-off-by: Enrik Berkhan <Enrik.Berkhan@inka.de>
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
-Link: https://lore.kernel.org/r/20221103222714.21566-2-Enrik.Berkhan@inka.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+While original KCSAN report was about tx path, rx path has the same issue.
+
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-mcp2221.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ net/ipv6/sit.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
---- a/drivers/hid/hid-mcp2221.c
-+++ b/drivers/hid/hid-mcp2221.c
-@@ -840,12 +840,19 @@ static int mcp2221_probe(struct hid_devi
- 		return ret;
+diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
+index 5703d3cbea9b..70d81bba5093 100644
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -694,7 +694,7 @@ static int ipip6_rcv(struct sk_buff *skb)
+ 		skb->dev = tunnel->dev;
+ 
+ 		if (packet_is_spoofed(skb, iph, tunnel)) {
+-			tunnel->dev->stats.rx_errors++;
++			DEV_STATS_INC(tunnel->dev, rx_errors);
+ 			goto out;
+ 		}
+ 
+@@ -714,8 +714,8 @@ static int ipip6_rcv(struct sk_buff *skb)
+ 				net_info_ratelimited("non-ECT from %pI4 with TOS=%#x\n",
+ 						     &iph->saddr, iph->tos);
+ 			if (err > 1) {
+-				++tunnel->dev->stats.rx_frame_errors;
+-				++tunnel->dev->stats.rx_errors;
++				DEV_STATS_INC(tunnel->dev, rx_frame_errors);
++				DEV_STATS_INC(tunnel->dev, rx_errors);
+ 				goto out;
+ 			}
+ 		}
+@@ -942,7 +942,7 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
+ 	if (!rt) {
+ 		rt = ip_route_output_flow(tunnel->net, &fl4, NULL);
+ 		if (IS_ERR(rt)) {
+-			dev->stats.tx_carrier_errors++;
++			DEV_STATS_INC(dev, tx_carrier_errors);
+ 			goto tx_error_icmp;
+ 		}
+ 		dst_cache_set_ip4(&tunnel->dst_cache, &rt->dst, fl4.saddr);
+@@ -950,14 +950,14 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
+ 
+ 	if (rt->rt_type != RTN_UNICAST && rt->rt_type != RTN_LOCAL) {
+ 		ip_rt_put(rt);
+-		dev->stats.tx_carrier_errors++;
++		DEV_STATS_INC(dev, tx_carrier_errors);
+ 		goto tx_error_icmp;
+ 	}
+ 	tdev = rt->dst.dev;
+ 
+ 	if (tdev == dev) {
+ 		ip_rt_put(rt);
+-		dev->stats.collisions++;
++		DEV_STATS_INC(dev, collisions);
+ 		goto tx_error;
  	}
  
--	ret = hid_hw_start(hdev, HID_CONNECT_HIDRAW);
-+	/*
-+	 * This driver uses the .raw_event callback and therefore does not need any
-+	 * HID_CONNECT_xxx flags.
-+	 */
-+	ret = hid_hw_start(hdev, 0);
- 	if (ret) {
- 		hid_err(hdev, "can't start hardware\n");
- 		return ret;
- 	}
+@@ -970,7 +970,7 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
+ 		mtu = dst_mtu(&rt->dst) - t_hlen;
  
-+	hid_info(hdev, "USB HID v%x.%02x Device [%s] on %s\n", hdev->version >> 8,
-+			hdev->version & 0xff, hdev->name, hdev->phys);
-+
- 	ret = hid_hw_open(hdev);
- 	if (ret) {
- 		hid_err(hdev, "can't open device\n");
-@@ -870,8 +877,7 @@ static int mcp2221_probe(struct hid_devi
- 	mcp->adapter.retries = 1;
- 	mcp->adapter.dev.parent = &hdev->dev;
- 	snprintf(mcp->adapter.name, sizeof(mcp->adapter.name),
--			"MCP2221 usb-i2c bridge on hidraw%d",
--			((struct hidraw *)hdev->hidraw)->minor);
-+			"MCP2221 usb-i2c bridge");
+ 		if (mtu < IPV4_MIN_MTU) {
+-			dev->stats.collisions++;
++			DEV_STATS_INC(dev, collisions);
+ 			ip_rt_put(rt);
+ 			goto tx_error;
+ 		}
+@@ -1009,7 +1009,7 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
+ 		struct sk_buff *new_skb = skb_realloc_headroom(skb, max_headroom);
+ 		if (!new_skb) {
+ 			ip_rt_put(rt);
+-			dev->stats.tx_dropped++;
++			DEV_STATS_INC(dev, tx_dropped);
+ 			kfree_skb(skb);
+ 			return NETDEV_TX_OK;
+ 		}
+@@ -1039,7 +1039,7 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
+ 	dst_link_failure(skb);
+ tx_error:
+ 	kfree_skb(skb);
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	return NETDEV_TX_OK;
+ }
  
- 	ret = i2c_add_adapter(&mcp->adapter);
- 	if (ret) {
+@@ -1058,7 +1058,7 @@ static netdev_tx_t sit_tunnel_xmit__(struct sk_buff *skb,
+ 	return NETDEV_TX_OK;
+ tx_error:
+ 	kfree_skb(skb);
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	return NETDEV_TX_OK;
+ }
+ 
+@@ -1087,7 +1087,7 @@ static netdev_tx_t sit_tunnel_xmit(struct sk_buff *skb,
+ 	return NETDEV_TX_OK;
+ 
+ tx_err:
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	kfree_skb(skb);
+ 	return NETDEV_TX_OK;
+ 
+-- 
+2.35.1
+
 
 
