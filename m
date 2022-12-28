@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8C61863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B685CC433D2;
-	Wed, 28 Dec 2022 15:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25511863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AD98C433D2;
+	Wed, 28 Dec 2022 15:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241272;
-	bh=pSQisx6Sl4nDaekEqTZOMxIng/PJE1oDPfYBsR1qefg=;
+	s=korg; t=1672241274;
+	bh=hRsLGpEwKoT96N31pQ5jkxbGhInLr9PJ9L+6/tiqJQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2HYH8fASK6w8/u1+KnbOReOC1PFlzYJWZudTJPRA1rA+tBL/lylfany+VIUoic23G
-	 m+29gPhe9ats1V4nDod3lxxNHb4pk5BuH+OPbydpTJXsRiXY/kDdY24v0POlXvEd/H
-	 HUR0yqdg726L7Y8CZ4yURt69dmxZUvteQD/ifH84=
+	b=sCy5ub77FTcYzYOX8nC3vbIK3qU6izEtmDUwEuYmHCG+DU2tGJ8xS+hHAsxrmZcfg
+	 S3ao6Jjn81tYXSaNCORpEXr4R9TAzYpDhXUdM2lcpVZpTswC8OrTO94Hand9mmPWcE
+	 CfgMIZWcCGDDioyCGD0IfHidElpKLajEa6JPitqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Pin-yen Lin <treapking@chromium.org>,
+	Robert Foss <robert.foss@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 460/731] serial: pch: Fix PCI device refcount leak in pch_request_dma()
-Date: Wed, 28 Dec 2022 15:39:27 +0100
-Message-Id: <20221228144309.885913504@linuxfoundation.org>
+Subject: [PATCH 6.1 0227/1146] drm/bridge: it6505: Initialize AUX channel in it6505_i2c_probe
+Date: Wed, 28 Dec 2022 15:29:26 +0100
+Message-Id: <20221228144336.308197639@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,56 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Pin-yen Lin <treapking@chromium.org>
 
-[ Upstream commit 8be3a7bf773700534a6e8f87f6ed2ed111254be5 ]
+[ Upstream commit e577d4b13064c337b83fe7edecb3f34e87144821 ]
 
-As comment of pci_get_slot() says, it returns a pci_device with its
-refcount increased. The caller must decrement the reference count by
-calling pci_dev_put().
+During device boot, the HPD interrupt could be triggered before the DRM
+subsystem registers it6505 as a DRM bridge. In such cases, the driver
+tries to access AUX channel and causes NULL pointer dereference.
+Initializing the AUX channel earlier to prevent such error.
 
-Since 'dma_dev' is only used to filter the channel in filter(), we can
-call pci_dev_put() before exiting from pch_request_dma(). Add the
-missing pci_dev_put() for the normal and error path.
-
-Fixes: 3c6a483275f4 ("Serial: EG20T: add PCH_UART driver")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Link: https://lore.kernel.org/r/20221122114559.27692-1-wangxiongfeng2@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b5c84a9edcd4 ("drm/bridge: add it6505 driver")
+Signed-off-by: Pin-yen Lin <treapking@chromium.org>
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Signed-off-by: Robert Foss <robert.foss@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221013110411.1674359-2-treapking@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/pch_uart.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/bridge/ite-it6505.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/tty/serial/pch_uart.c b/drivers/tty/serial/pch_uart.c
-index 1e65933f6cce..52cab2038da8 100644
---- a/drivers/tty/serial/pch_uart.c
-+++ b/drivers/tty/serial/pch_uart.c
-@@ -707,6 +707,7 @@ static void pch_request_dma(struct uart_port *port)
- 	if (!chan) {
- 		dev_err(priv->port.dev, "%s:dma_request_channel FAILS(Tx)\n",
- 			__func__);
-+		pci_dev_put(dma_dev);
- 		return;
- 	}
- 	priv->chan_tx = chan;
-@@ -723,6 +724,7 @@ static void pch_request_dma(struct uart_port *port)
- 			__func__);
- 		dma_release_channel(priv->chan_tx);
- 		priv->chan_tx = NULL;
-+		pci_dev_put(dma_dev);
- 		return;
+diff --git a/drivers/gpu/drm/bridge/ite-it6505.c b/drivers/gpu/drm/bridge/ite-it6505.c
+index dfe4351c9bdd..99123eec4551 100644
+--- a/drivers/gpu/drm/bridge/ite-it6505.c
++++ b/drivers/gpu/drm/bridge/ite-it6505.c
+@@ -2860,10 +2860,7 @@ static int it6505_bridge_attach(struct drm_bridge *bridge,
  	}
  
-@@ -730,6 +732,8 @@ static void pch_request_dma(struct uart_port *port)
- 	priv->rx_buf_virt = dma_alloc_coherent(port->dev, port->fifosize,
- 				    &priv->rx_buf_dma, GFP_KERNEL);
- 	priv->chan_rx = chan;
+ 	/* Register aux channel */
+-	it6505->aux.name = "DP-AUX";
+-	it6505->aux.dev = dev;
+ 	it6505->aux.drm_dev = bridge->dev;
+-	it6505->aux.transfer = it6505_aux_transfer;
+ 
+ 	ret = drm_dp_aux_register(&it6505->aux);
+ 
+@@ -3316,6 +3313,11 @@ static int it6505_i2c_probe(struct i2c_client *client,
+ 	DRM_DEV_DEBUG_DRIVER(dev, "it6505 device name: %s", dev_name(dev));
+ 	debugfs_init(it6505);
+ 
++	it6505->aux.name = "DP-AUX";
++	it6505->aux.dev = dev;
++	it6505->aux.transfer = it6505_aux_transfer;
++	drm_dp_aux_init(&it6505->aux);
 +
-+	pci_dev_put(dma_dev);
- }
- 
- static void pch_dma_rx_complete(void *arg)
+ 	it6505->bridge.funcs = &it6505_bridge_funcs;
+ 	it6505->bridge.type = DRM_MODE_CONNECTOR_DisplayPort;
+ 	it6505->bridge.ops = DRM_BRIDGE_OP_DETECT | DRM_BRIDGE_OP_EDID |
 -- 
 2.35.1
 
