@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58A31863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618EDC433D2;
-	Wed, 28 Dec 2022 14:57:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7861863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C60C433EF;
+	Wed, 28 Dec 2022 14:57:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239424;
-	bh=9H5l4CQ8u8WDFpOSxw0urqW3JuRp+pRhbLSUVgXweQQ=;
+	s=korg; t=1672239427;
+	bh=qgZlEtA6VRna5pMVAm5SWl5gqaqPEc8uv3PuHhtYu70=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jC1WaU/mqLlZ4TrNtS3pWYzCBJdoeYaDWDXj6/lhyhlYbDfkIgw9Ke3KoFeZTOTZm
-	 i0lygRtvyHxw/Z54M1LmYfd97kPIDsm8/RYwJ2Sb9iQRshGLNiZN/+UtKr0Tf4pK4W
-	 KSfX+L35gjEPpZzbZH8r8XFTgdeO68Fi81+YdsTk=
+	b=C3+Xk8bmUqnsaMc3KZ3y9CIwRkQUJKPBEpuitDcYNCBfqt1HTLun455qXKR20OetJ
+	 eP7mJmnQ9FdVtP/m9ojTJijSPD51BfrQtQboyTREfB/fULejJMrWMOJEr6loufyk3v
+	 GxN+iTqE+rS5cP1f0byitZIEqLGcxgJtMtY43rAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0027/1073] arm64: dts: qcom: pm660: Use unique ADC5_VCOIN address in node name
-Date: Wed, 28 Dec 2022 15:26:55 +0100
-Message-Id: <20221228144328.883869144@linuxfoundation.org>
+Subject: [PATCH 5.15 223/731] regulator: core: use kfree_const() to free space conditionally
+Date: Wed, 28 Dec 2022 15:35:30 +0100
+Message-Id: <20221228144303.027659276@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Wang ShaoBo <bobo.shaobowang@huawei.com>
 
-[ Upstream commit 02549ba5de0a09a27616496c3512db5af4ad7862 ]
+[ Upstream commit dc8d006d15b623c1d80b90b45d6dcb6e890dad09 ]
 
-The register address in the node name is shadowing vph_pwr@83, whereas
-the ADC5_VCOIN register resolves to 0x85.  Fix this copy-paste
-discrepancy.
+Use kfree_const() to free supply_name conditionally in create_regulator()
+as supply_name may be allocated from kmalloc() or directly from .rodata
+section.
 
-Fixes: 4bf097540506 ("arm64: dts: qcom: pm660: Add VADC and temp alarm nodes")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20220926190148.283805-3-marijn.suijten@somainline.org
+Fixes: 87fe29b61f95 ("regulator: push allocations in create_regulator() outside of lock")
+Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Link: https://lore.kernel.org/r/20221123034616.3609537-1-bobo.shaobowang@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/pm660.dtsi | 2 +-
+ drivers/regulator/core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pm660.dtsi b/arch/arm64/boot/dts/qcom/pm660.dtsi
-index d0eefbb51663..d8c9ece20cd9 100644
---- a/arch/arm64/boot/dts/qcom/pm660.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm660.dtsi
-@@ -163,7 +163,7 @@ vadc_vph_pwr: vph_pwr@83 {
- 				qcom,pre-scaling = <1 3>;
- 			};
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 7bf85e0cce47..65900895a0b2 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1750,7 +1750,7 @@ static struct regulator *create_regulator(struct regulator_dev *rdev,
  
--			vcoin: vcoin@83 {
-+			vcoin: vcoin@85 {
- 				reg = <ADC5_VCOIN>;
- 				qcom,decimation = <1024>;
- 				qcom,pre-scaling = <1 3>;
+ 	regulator = kzalloc(sizeof(*regulator), GFP_KERNEL);
+ 	if (regulator == NULL) {
+-		kfree(supply_name);
++		kfree_const(supply_name);
+ 		return NULL;
+ 	}
+ 
 -- 
 2.35.1
 
