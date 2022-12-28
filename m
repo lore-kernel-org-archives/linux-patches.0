@@ -1,34 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49ABD1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47E9C433F0;
-	Wed, 28 Dec 2022 15:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCE91863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60B1EC433F0;
+	Wed, 28 Dec 2022 15:07:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240068;
-	bh=NiptSmm1Izwv4ZrmHEeZGc306A/GVdhTjv/BY+YFM/4=;
+	s=korg; t=1672240070;
+	bh=/LwiEVsMHxiCwIBQRqfirym4OWaQMf+8G/ygFjOrNOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NYcxOk0KjN+02bqfwoi3E68SNziVNDjvg64fnZLzSbUn9TNRbZnDzlSNbuEOESjiT
-	 uye+j3Jxo6I60/ABQcnlV5wEDH2JPFuLCwM5JGSIQsmknV6afDn431MzsU/H380kwz
-	 Y8ydw1zbRHA0OoJmDC/MfAlOnb6H8pkuzz/3TTLg=
+	b=rXm/Wo+VXW8LUVuByxbYZKn3j1WOa8M13TXxXRu3OSzWyO1h56mVVzYeJzMIf6/1v
+	 qA533zgAziCaw/PBOUxuB/0TUfZ9vO2gHqFE9SnmUYydGEe0oVgLlzhBQfXH/rpYGc
+	 gJaHP9zZEu4kaLSFeqY0USHBxtwFtUr9mQA2741c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wuchi <wuchi.zero@gmail.com>,
-	Waiman Long <longman@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Kees Cook <keescook@chromium.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0114/1073] lib/debugobjects: fix stat count and optimize debug_objects_mem_init
-Date: Wed, 28 Dec 2022 15:28:22 +0100
-Message-Id: <20221228144331.136877682@linuxfoundation.org>
+Subject: [PATCH 6.1 0077/1146] arm64: dts: mediatek: mt6797: Fix 26M oscillator unit name
+Date: Wed, 28 Dec 2022 15:26:56 +0100
+Message-Id: <20221228144332.241055780@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,74 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: wuchi <wuchi.zero@gmail.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit eabb7f1ace53e127309407b2b5e74e8199e85270 ]
+[ Upstream commit 5f535cc583759c9c60d4cc9b8d221762e2d75387 ]
 
-1. Var debug_objects_allocated tracks valid kmem_cache_alloc calls, so
-   track it in debug_objects_replace_static_objects.  Do similar things in
-   object_cpu_offline.
+Update its unit name to oscillator-26m and remove the unneeded unit
+address to fix a unit_address_vs_reg warning.
 
-2. In debug_objects_mem_init, there is no need to call function
-   cpuhp_setup_state_nocalls when debug_objects_enabled = 0 (out of
-   memory).
-
-Link: https://lkml.kernel.org/r/20220611130634.99741-1-wuchi.zero@gmail.com
-Fixes: 634d61f45d6f ("debugobjects: Percpu pool lookahead freeing/allocation")
-Fixes: c4b73aabd098 ("debugobjects: Track number of kmem_cache_alloc/kmem_cache_free done")
-Signed-off-by: wuchi <wuchi.zero@gmail.com>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Kees Cook <keescook@chromium.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 464c510f60c6 ("arm64: dts: mediatek: add mt6797 support")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221013152212.416661-9-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/debugobjects.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/arm64/boot/dts/mediatek/mt6797.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/debugobjects.c b/lib/debugobjects.c
-index 337d797a7141..6f8e5dd1dcd0 100644
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -437,6 +437,7 @@ static int object_cpu_offline(unsigned int cpu)
- 	struct debug_percpu_free *percpu_pool;
- 	struct hlist_node *tmp;
- 	struct debug_obj *obj;
-+	unsigned long flags;
+diff --git a/arch/arm64/boot/dts/mediatek/mt6797.dtsi b/arch/arm64/boot/dts/mediatek/mt6797.dtsi
+index 15616231022a..c3677d77e0a4 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6797.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt6797.dtsi
+@@ -95,7 +95,7 @@ cpu9: cpu@201 {
+ 		};
+ 	};
  
- 	/* Remote access is safe as the CPU is dead already */
- 	percpu_pool = per_cpu_ptr(&percpu_obj_pool, cpu);
-@@ -444,6 +445,12 @@ static int object_cpu_offline(unsigned int cpu)
- 		hlist_del(&obj->node);
- 		kmem_cache_free(obj_cache, obj);
- 	}
-+
-+	raw_spin_lock_irqsave(&pool_lock, flags);
-+	obj_pool_used -= percpu_pool->obj_free;
-+	debug_objects_freed += percpu_pool->obj_free;
-+	raw_spin_unlock_irqrestore(&pool_lock, flags);
-+
- 	percpu_pool->obj_free = 0;
- 
- 	return 0;
-@@ -1318,6 +1325,8 @@ static int __init debug_objects_replace_static_objects(void)
- 		hlist_add_head(&obj->node, &objects);
- 	}
- 
-+	debug_objects_allocated += i;
-+
- 	/*
- 	 * debug_objects_mem_init() is now called early that only one CPU is up
- 	 * and interrupts have been disabled, so it is safe to replace the
-@@ -1386,6 +1395,7 @@ void __init debug_objects_mem_init(void)
- 		debug_objects_enabled = 0;
- 		kmem_cache_destroy(obj_cache);
- 		pr_warn("out of memory.\n");
-+		return;
- 	} else
- 		debug_objects_selftest();
- 
+-	clk26m: oscillator@0 {
++	clk26m: oscillator-26m {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <26000000>;
 -- 
 2.35.1
 
