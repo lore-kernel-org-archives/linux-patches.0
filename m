@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56C81875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45737C433D2;
-	Wed, 28 Dec 2022 15:52:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704311875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E87AEC433D2;
+	Wed, 28 Dec 2022 15:52:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242731;
-	bh=xjvKoBeLivq6v7P9u5FJry/N2JD0b8tlAlmnyi/28TA=;
+	s=korg; t=1672242734;
+	bh=9isJzObK1fz5kLZly/vR8zYnFnKh9qDMeh0qxKWWqk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AX39rCJS9k4sdEzlIw783qpx9TvWAOVRoMRcl00DAUrbMIrhcr7elxIdReYj6eXQp
-	 ndYRXHKgsT91TkW3Q4JoNIw7X9bt/loYxhXdVM3FqU7nmoDNdTFdjRW1pnjCxuc4/L
-	 t++dwes83c9NqVaypDzVAgRVpNYpMtpIBfyao6zk=
+	b=a+WxZVDavFXyFXiLI4DmOJSMlBeHXYUQ44bMp3s8Uf3GCFCiFchzOqjdUZT4k8Nlj
+	 aG0SLO/+cHaoDNdVh3junJoGstO4u04IboAMT2lPjlcR7u4PGaIsd77s8AP19VRP0V
+	 QE0VdIjpNDoZ0lLm5ZIiAkkfoWvM5sPdPeUvRxjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Deren Wu <deren.wu@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0407/1146] media: sun8i-a83t-mipi-csi2: Require both pads to be connected for streaming
-Date: Wed, 28 Dec 2022 15:32:26 +0100
-Message-Id: <20221228144341.221631933@linuxfoundation.org>
+Subject: [PATCH 6.0 0445/1073] wifi: mt76: fix coverity overrun-call in mt76_get_txpower()
+Date: Wed, 28 Dec 2022 15:33:53 +0100
+Message-Id: <20221228144340.117563439@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,40 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+From: Deren Wu <deren.wu@mediatek.com>
 
-[ Upstream commit 8985fc724ba89d9b00694304b3f9faf69f4073d0 ]
+[ Upstream commit 03dd0d49de7db680a856fa566963bb8421f46368 ]
 
-The bridge needs both its pads connected to be able to stream data.
-Enforcing this is useful to produce an error when no sensor is
-connected.
+Make sure the nss is valid for nss_delta array. Return zero
+if the index is invalid.
 
-Fixes: 576d196c522b ("media: sunxi: Add support for the A83T MIPI CSI-2 controller")
-Signed-off-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Coverity message:
+Event overrun-call: Overrunning callee's array of size 4 by passing
+argument "n_chains" (which evaluates to 15) in call to
+"mt76_tx_power_nss_delta".
+int delta = mt76_tx_power_nss_delta(n_chains);
+
+Fixes: 07cda406308b ("mt76: fix rounding issues on converting per-chain and combined txpower")
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c       | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt76.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c b/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
-index b032ec13a683..5e1c25db7bc4 100644
---- a/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
-+++ b/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
-@@ -557,8 +557,10 @@ sun8i_a83t_mipi_csi2_bridge_setup(struct sun8i_a83t_mipi_csi2_device *csi2_dev)
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
+index 4da77d47b0a6..1f8da524a305 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76.h
+@@ -1101,8 +1101,9 @@ static inline bool mt76_is_skb_pktid(u8 pktid)
+ static inline u8 mt76_tx_power_nss_delta(u8 nss)
+ {
+ 	static const u8 nss_delta[4] = { 0, 6, 9, 12 };
++	u8 idx = nss - 1;
  
- 	/* Media Pads */
+-	return nss_delta[nss - 1];
++	return (idx < ARRAY_SIZE(nss_delta)) ? nss_delta[idx] : 0;
+ }
  
--	pads[SUN8I_A83T_MIPI_CSI2_PAD_SINK].flags = MEDIA_PAD_FL_SINK;
--	pads[SUN8I_A83T_MIPI_CSI2_PAD_SOURCE].flags = MEDIA_PAD_FL_SOURCE;
-+	pads[SUN8I_A83T_MIPI_CSI2_PAD_SINK].flags = MEDIA_PAD_FL_SINK |
-+						    MEDIA_PAD_FL_MUST_CONNECT;
-+	pads[SUN8I_A83T_MIPI_CSI2_PAD_SOURCE].flags = MEDIA_PAD_FL_SOURCE |
-+						      MEDIA_PAD_FL_MUST_CONNECT;
- 
- 	ret = media_entity_pads_init(&subdev->entity,
- 				     SUN8I_A83T_MIPI_CSI2_PAD_COUNT, pads);
+ static inline bool mt76_testmode_enabled(struct mt76_phy *phy)
 -- 
 2.35.1
 
