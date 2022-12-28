@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506961C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:34:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB86CC433EF;
-	Wed, 28 Dec 2022 16:34:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E57791C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:34:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A5FDC433D2;
+	Wed, 28 Dec 2022 16:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245276;
-	bh=uMPZJZriCIwf8DxTQjTugYFL0BWpn/O0UZhlxTTMv64=;
+	s=korg; t=1672245278;
+	bh=xQMi28LGCJNTI83BvpgQkwHlz5aot2de7hmQTjlyeZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QtJJf5FfLiW9NivtD1NM8OFaStXx+xTKo1VVm3qdARk47mCi7z6Lsu8pUUJO2OydD
-	 5xOu3rIzAqlDvK6XwMr1AgwI9ojgrFRhQ4W7+n9iTM9zAx6DBnTiVFBq7AKN/A6yM4
-	 Rlm/3FTYMsq1wbiQJQP0TD/+IOLbrD9gRHE7XTjI=
+	b=qnFjbcwZP0gzDxpPA/MR8SlJEMKv0Ea9XZosEYfMnpws72Ip2XDcsH6lavPgu8cAs
+	 uxRKJLPlJ24Fl9uCSsjEgg19vFNMmt2kE6wi4/4lXuL3st4m6l8ikqoYAEADm9HbpV
+	 UHpupSdTl4TPAQdjwDSvkdPpXcq6dMyR/0652E/c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yushan Zhou <katrinzhou@tencent.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Tan Tee Min <tee.min.tan@linux.intel.com>,
+	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0831/1146] rtc: rzn1: Check return value in rzn1_rtc_probe
-Date: Wed, 28 Dec 2022 15:39:30 +0100
-Message-Id: <20221228144352.729627105@linuxfoundation.org>
+Subject: [PATCH 6.0 0865/1073] igc: recalculate Qbv end_time by considering cycle time
+Date: Wed, 28 Dec 2022 15:40:53 +0100
+Message-Id: <20221228144351.515977021@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,40 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yushan Zhou <katrinzhou@tencent.com>
+From: Tan Tee Min <tee.min.tan@linux.intel.com>
 
-[ Upstream commit 9800f24f7bd5b99fb4fc4ce981427102e2e15a1c ]
+[ Upstream commit 6d05251d537a4d3835959a8cdd8cbbbdcdc0c904 ]
 
-The rzn1_rtc_probe() function utilizes devm_pm_runtime_enable()
-but wasn't checking the return value. Fix it by adding missing
-check.
+Qbv users can specify a cycle time that is not equal to the total GCL
+intervals. Hence, recalculation is necessary here to exclude the time
+interval that exceeds the cycle time. As those GCL which exceeds the
+cycle time will be truncated.
 
-Fixes: deeb4b5393e1 ("rtc: rzn1: Add new RTC driver")
+According to IEEE Std. 802.1Q-2018 section 8.6.9.2, once the end of
+the list is reached, it will switch to the END_OF_CYCLE state and
+leave the gates in the same state until the next cycle is started.
 
-Signed-off-by: Yushan Zhou <katrinzhou@tencent.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/r/20221107092544.3721053-1-zys.zljxml@gmail.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: ec50a9d437f0 ("igc: Add support for taprio offloading")
+Signed-off-by: Tan Tee Min <tee.min.tan@linux.intel.com>
+Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-rzn1.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igc/igc_main.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/rtc/rtc-rzn1.c b/drivers/rtc/rtc-rzn1.c
-index ac788799c8e3..0d36bc50197c 100644
---- a/drivers/rtc/rtc-rzn1.c
-+++ b/drivers/rtc/rtc-rzn1.c
-@@ -355,7 +355,9 @@ static int rzn1_rtc_probe(struct platform_device *pdev)
- 	set_bit(RTC_FEATURE_ALARM_RES_MINUTE, rtc->rtcdev->features);
- 	clear_bit(RTC_FEATURE_UPDATE_INTERRUPT, rtc->rtcdev->features);
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index 10690a0cfae1..207b4b5b2e5f 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -6023,6 +6023,21 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
  
--	devm_pm_runtime_enable(&pdev->dev);
-+	ret = devm_pm_runtime_enable(&pdev->dev);
-+	if (ret < 0)
-+		return ret;
- 	ret = pm_runtime_resume_and_get(&pdev->dev);
- 	if (ret < 0)
- 		return ret;
+ 		end_time += e->interval;
+ 
++		/* If any of the conditions below are true, we need to manually
++		 * control the end time of the cycle.
++		 * 1. Qbv users can specify a cycle time that is not equal
++		 * to the total GCL intervals. Hence, recalculation is
++		 * necessary here to exclude the time interval that
++		 * exceeds the cycle time.
++		 * 2. According to IEEE Std. 802.1Q-2018 section 8.6.9.2,
++		 * once the end of the list is reached, it will switch
++		 * to the END_OF_CYCLE state and leave the gates in the
++		 * same state until the next cycle is started.
++		 */
++		if (end_time > adapter->cycle_time ||
++		    n + 1 == qopt->num_entries)
++			end_time = adapter->cycle_time;
++
+ 		for (i = 0; i < adapter->num_tx_queues; i++) {
+ 			struct igc_ring *ring = adapter->tx_ring[i];
+ 
 -- 
 2.35.1
 
