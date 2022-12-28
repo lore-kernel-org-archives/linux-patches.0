@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8500A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07588C433D2;
-	Wed, 28 Dec 2022 15:13:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8A01863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69ADC433D2;
+	Wed, 28 Dec 2022 15:13:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240409;
-	bh=xLT3ZJgbIclUhF/mgdBW/tR/+K8UNJkMPjVmWCCdR+I=;
+	s=korg; t=1672240412;
+	bh=Vw7eGgi4X9x8X+5+bEB3oWCqSQzC5RkvsWNIiNf1iLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QST51WAogPZYm/rLr7TzaLkIIQMpITVhjBRU0P3ip6+UZROilg9dNTaK6dH7uJ3cK
-	 QvnjjhzRZ4OSW+5r/Wi20l093ZiKqAdqRsHcp+/ws2fUxxkw4M3/zCaROCNrnb/XIC
-	 lUym8U9JsOc1o6b/A599PMVShWgRXjeJ7O3hC/pQ=
+	b=pTzQKyUm+x/jU18jMTc20DgPtVtJdEUi7tJPMRiga8E/QBxeFvaSS9H4wcsc9Ut25
+	 F0dUR9R8zE+b9ydwTk7JI9E6nXctbIDVoShl/DU304720bWAaPJ0vfaxRpe/RSXALB
+	 UjbOCIspdw8oPZSfSnzUAZ30XyJRfDlW2rZ+jNyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Inga Stotland <inga.stotland@intel.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Derek Dolney <z23@posteo.net>,
+	Vincent Donnefort <vdonnefort@google.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Valentin Schneider <vschneid@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 346/731] Bluetooth: MGMT: Fix error report for ADD_EXT_ADV_PARAMS
-Date: Wed, 28 Dec 2022 15:37:33 +0100
-Message-Id: <20221228144306.594628188@linuxfoundation.org>
+Subject: [PATCH 6.0 0157/1073] cpu/hotplug: Do not bail-out in DYING/STARTING sections
+Date: Wed, 28 Dec 2022 15:29:05 +0100
+Message-Id: <20221228144332.285131290@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +37,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Inga Stotland <inga.stotland@intel.com>
+From: Vincent Donnefort <vdonnefort@google.com>
 
-[ Upstream commit 3b1c7c00b8c22b3cb79532252c59eb0b287bb86d ]
+[ Upstream commit 6f855b39e4602b6b42a8e5cbcfefb8a1b8b5f0be ]
 
-When validating the parameter length for MGMT_OP_ADD_EXT_ADV_PARAMS
-command, use the correct op code in error status report:
-was MGMT_OP_ADD_ADVERTISING, changed to MGMT_OP_ADD_EXT_ADV_PARAMS.
+The DYING/STARTING callbacks are not expected to fail. However, as reported
+by Derek, buggy drivers such as tboot are still free to return errors
+within those sections, which halts the hot(un)plug and leaves the CPU in an
+unrecoverable state.
 
-Fixes: 12410572833a2 ("Bluetooth: Break add adv into two mgmt commands")
-Signed-off-by: Inga Stotland <inga.stotland@intel.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+As there is no rollback possible, only log the failures and proceed with
+the following steps.
+
+This restores the hotplug behaviour prior to commit 453e41085183
+("cpu/hotplug: Add cpuhp_invoke_callback_range()")
+
+Fixes: 453e41085183 ("cpu/hotplug: Add cpuhp_invoke_callback_range()")
+Reported-by: Derek Dolney <z23@posteo.net>
+Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Derek Dolney <z23@posteo.net>
+Reviewed-by: Valentin Schneider <vschneid@redhat.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=215867
+Link: https://lore.kernel.org/r/20220927101259.1149636-1-vdonnefort@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/mgmt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/cpu.c | 56 +++++++++++++++++++++++++++++++++++++---------------
+ 1 file changed, 40 insertions(+), 16 deletions(-)
 
-diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
-index f09f0a78eb7b..04000499f4a2 100644
---- a/net/bluetooth/mgmt.c
-+++ b/net/bluetooth/mgmt.c
-@@ -7971,7 +7971,7 @@ static int add_ext_adv_params(struct sock *sk, struct hci_dev *hdev,
- 	 * extra parameters we don't know about will be ignored in this request.
- 	 */
- 	if (data_len < MGMT_ADD_EXT_ADV_PARAMS_MIN_SIZE)
--		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_ADD_ADVERTISING,
-+		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_ADD_EXT_ADV_PARAMS,
- 				       MGMT_STATUS_INVALID_PARAMS);
+diff --git a/kernel/cpu.c b/kernel/cpu.c
+index 979de993f853..98a7a7b1471b 100644
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -663,21 +663,51 @@ static bool cpuhp_next_state(bool bringup,
+ 	return true;
+ }
  
- 	flags = __le32_to_cpu(cp->flags);
+-static int cpuhp_invoke_callback_range(bool bringup,
+-				       unsigned int cpu,
+-				       struct cpuhp_cpu_state *st,
+-				       enum cpuhp_state target)
++static int __cpuhp_invoke_callback_range(bool bringup,
++					 unsigned int cpu,
++					 struct cpuhp_cpu_state *st,
++					 enum cpuhp_state target,
++					 bool nofail)
+ {
+ 	enum cpuhp_state state;
+-	int err = 0;
++	int ret = 0;
+ 
+ 	while (cpuhp_next_state(bringup, &state, st, target)) {
++		int err;
++
+ 		err = cpuhp_invoke_callback(cpu, state, bringup, NULL, NULL);
+-		if (err)
++		if (!err)
++			continue;
++
++		if (nofail) {
++			pr_warn("CPU %u %s state %s (%d) failed (%d)\n",
++				cpu, bringup ? "UP" : "DOWN",
++				cpuhp_get_step(st->state)->name,
++				st->state, err);
++			ret = -1;
++		} else {
++			ret = err;
+ 			break;
++		}
+ 	}
+ 
+-	return err;
++	return ret;
++}
++
++static inline int cpuhp_invoke_callback_range(bool bringup,
++					      unsigned int cpu,
++					      struct cpuhp_cpu_state *st,
++					      enum cpuhp_state target)
++{
++	return __cpuhp_invoke_callback_range(bringup, cpu, st, target, false);
++}
++
++static inline void cpuhp_invoke_callback_range_nofail(bool bringup,
++						      unsigned int cpu,
++						      struct cpuhp_cpu_state *st,
++						      enum cpuhp_state target)
++{
++	__cpuhp_invoke_callback_range(bringup, cpu, st, target, true);
+ }
+ 
+ static inline bool can_rollback_cpu(struct cpuhp_cpu_state *st)
+@@ -999,7 +1029,6 @@ static int take_cpu_down(void *_param)
+ 	struct cpuhp_cpu_state *st = this_cpu_ptr(&cpuhp_state);
+ 	enum cpuhp_state target = max((int)st->target, CPUHP_AP_OFFLINE);
+ 	int err, cpu = smp_processor_id();
+-	int ret;
+ 
+ 	/* Ensure this CPU doesn't handle any more interrupts. */
+ 	err = __cpu_disable();
+@@ -1012,13 +1041,10 @@ static int take_cpu_down(void *_param)
+ 	 */
+ 	WARN_ON(st->state != (CPUHP_TEARDOWN_CPU - 1));
+ 
+-	/* Invoke the former CPU_DYING callbacks */
+-	ret = cpuhp_invoke_callback_range(false, cpu, st, target);
+-
+ 	/*
+-	 * DYING must not fail!
++	 * Invoke the former CPU_DYING callbacks. DYING must not fail!
+ 	 */
+-	WARN_ON_ONCE(ret);
++	cpuhp_invoke_callback_range_nofail(false, cpu, st, target);
+ 
+ 	/* Give up timekeeping duties */
+ 	tick_handover_do_timer();
+@@ -1296,16 +1322,14 @@ void notify_cpu_starting(unsigned int cpu)
+ {
+ 	struct cpuhp_cpu_state *st = per_cpu_ptr(&cpuhp_state, cpu);
+ 	enum cpuhp_state target = min((int)st->target, CPUHP_AP_ONLINE);
+-	int ret;
+ 
+ 	rcu_cpu_starting(cpu);	/* Enables RCU usage on this CPU. */
+ 	cpumask_set_cpu(cpu, &cpus_booted_once_mask);
+-	ret = cpuhp_invoke_callback_range(true, cpu, st, target);
+ 
+ 	/*
+ 	 * STARTING must not fail!
+ 	 */
+-	WARN_ON_ONCE(ret);
++	cpuhp_invoke_callback_range_nofail(true, cpu, st, target);
+ }
+ 
+ /*
 -- 
 2.35.1
 
