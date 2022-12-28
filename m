@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF371863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5859C433D2;
-	Wed, 28 Dec 2022 15:37:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F12F01863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72B8AC43392;
+	Wed, 28 Dec 2022 15:37:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241852;
-	bh=QojJVyt77FT8ZU9gk/lUuJ9cIu9f+wBThYUjDEo6nDU=;
+	s=korg; t=1672241854;
+	bh=0qMlYFCk1BMuRAlt8vvWrnHD2OMbPoPtB3GbqDp3dTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pPzMXmXNDnUz10zxmrbracnJ/3MN+C0fcVSI4296NyOm0onrnzEr8HIdBHuNtQ6my
-	 AIHIjCIPLOW+R1UBAr0ZMT6hRCZCfLEMRhygIo2P0C5Qh+5IgCNkvm85KJgJcrpsg6
-	 o2DXmtzU+em+LED9c8jkEsGyyd22KiYr9azVZkSw=
+	b=h4lloWqgdI21Qg2riUelNUPiHMcZhLbEEmHiiAGFFQPokISVSwDkj+t/Cl4fSbdto
+	 QiTfmLgdM481D/VyDXnAsdWt9K7MGqS00+yErg+rvX85ZU41WPrIdmikov6i9l2XAk
+	 4x/2IPHJaW0cUM5rGsX8tP0JlI4AtPUggztOB8OE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 530/731] iommu/sun50i: Fix R/W permission check
-Date: Wed, 28 Dec 2022 15:40:37 +0100
-Message-Id: <20221228144311.906241144@linuxfoundation.org>
+Subject: [PATCH 6.0 0336/1073] wifi: ath10k: Fix return value in ath10k_pci_init()
+Date: Wed, 28 Dec 2022 15:32:04 +0100
+Message-Id: <20221228144337.128436875@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,41 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit eac0104dc69be50bed86926d6f32e82b44f8c921 ]
+[ Upstream commit 2af7749047d8d6ad43feff69f555a13a6a6c2831 ]
 
-Because driver has enum type permissions and iommu subsystem has bitmap
-type, we have to be careful how check for combined read and write
-permissions is done. In such case, we have to mask both permissions and
-check that both are set at the same time.
+This driver is attempting to register to support two different buses.
+if either of these is successful then ath10k_pci_init() should return 0
+so that hardware attached to the successful bus can be probed and
+supported. only if both of these are unsuccessful should ath10k_pci_init()
+return an errno.
 
-Current code just masks both flags but doesn't check that both are set.
-In short, it always sets R/W permission, regardles if requested
-permissions were RO, WO or RW. Fix that.
-
-Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://lore.kernel.org/r/20221025165415.307591-4-jernej.skrabec@gmail.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 0b523ced9a3c ("ath10k: add basic skeleton to support ahb")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Reviewed-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20221110061926.18163-1-xiujianfeng@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/sun50i-iommu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath10k/pci.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-index 5b87672c689f..16bfba1faee1 100644
---- a/drivers/iommu/sun50i-iommu.c
-+++ b/drivers/iommu/sun50i-iommu.c
-@@ -271,7 +271,7 @@ static u32 sun50i_mk_pte(phys_addr_t page, int prot)
- 	enum sun50i_iommu_aci aci;
- 	u32 flags = 0;
+diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
+index bf1c938be7d0..8015b457a870 100644
+--- a/drivers/net/wireless/ath/ath10k/pci.c
++++ b/drivers/net/wireless/ath/ath10k/pci.c
+@@ -3793,18 +3793,22 @@ static struct pci_driver ath10k_pci_driver = {
  
--	if (prot & (IOMMU_READ | IOMMU_WRITE))
-+	if ((prot & (IOMMU_READ | IOMMU_WRITE)) == (IOMMU_READ | IOMMU_WRITE))
- 		aci = SUN50I_IOMMU_ACI_RD_WR;
- 	else if (prot & IOMMU_READ)
- 		aci = SUN50I_IOMMU_ACI_RD;
+ static int __init ath10k_pci_init(void)
+ {
+-	int ret;
++	int ret1, ret2;
+ 
+-	ret = pci_register_driver(&ath10k_pci_driver);
+-	if (ret)
++	ret1 = pci_register_driver(&ath10k_pci_driver);
++	if (ret1)
+ 		printk(KERN_ERR "failed to register ath10k pci driver: %d\n",
+-		       ret);
++		       ret1);
+ 
+-	ret = ath10k_ahb_init();
+-	if (ret)
+-		printk(KERN_ERR "ahb init failed: %d\n", ret);
++	ret2 = ath10k_ahb_init();
++	if (ret2)
++		printk(KERN_ERR "ahb init failed: %d\n", ret2);
+ 
+-	return ret;
++	if (ret1 && ret2)
++		return ret1;
++
++	/* registered to at least one bus */
++	return 0;
+ }
+ module_init(ath10k_pci_init);
+ 
 -- 
 2.35.1
 
