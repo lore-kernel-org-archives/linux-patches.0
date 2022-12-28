@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFBF1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F37C433EF;
-	Wed, 28 Dec 2022 16:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B8A1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AB56C433D2;
+	Wed, 28 Dec 2022 16:32:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245148;
-	bh=U8OW2JTaqhl1eh0qeb5Cl7Hp18Obm5wbV2z950c9jCE=;
+	s=korg; t=1672245151;
+	bh=hfir7DbpDXAOR+tvs+bqxebL3YHTCRmmWCLgcFiNMO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qCaHZFozVRIchzFyrsyGvAgkcbPfBbPvtUFmYWTqDSiOeVaI0dNbiWqMCeR/rJ6tr
-	 VY2DnsiamSS5jfawb1yxdH9B7HrTJWNYwo1TDM/oucnTtjFpGGmEDn8+4XJtiBgcQd
-	 4YF2Qoi6vbsVz+ExjalBESxf8f50cUA2OzIovTUc=
+	b=GJ+OGGPZGfWJL15i5YXOdDzxcZtrobqt01TcOpYOMMI8/0YDgMtv6RHHFaC5iOxRb
+	 LbevOBK6aR8dhPsFfVcVDIZQ5mjIPW1+9ryiUmiw84TYQXehC8AcFC5p+Q4Sv/acvb
+	 jsug8bf1KSEtN7RgUZYuvWvohESw0c9j5npVcpFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0805/1146] phy: qcom-qmp-usb: clean up status polling
-Date: Wed, 28 Dec 2022 15:39:04 +0100
-Message-Id: <20221228144352.019169847@linuxfoundation.org>
+Subject: [PATCH 6.0 0841/1073] mISDN: hfcsusb: dont call dev_kfree_skb/kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:40:29 +0100
+Message-Id: <20221228144350.864612211@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,185 +36,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit f5ef85adece529a6cd1e7563081c41038923a9ed ]
+[ Upstream commit ddc9648db162eee556edd5222d2808fe33730203 ]
 
-Clean up the PHY status polling by dropping the configuration mask which
-is no longer needed since the QMP driver split.
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Link: https://lore.kernel.org/r/20221012085002.24099-13-johan+linaro@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 922adfd59efd ("phy: qcom-qmp-usb: correct registers layout for IPQ8074 USB3 PHY")
+It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
+The difference between them is free reason, dev_kfree_skb_irq() means
+the SKB is dropped in error and dev_consume_skb_irq() means the SKB
+is consumed in normal.
+
+skb_queue_purge() is called under spin_lock_irqsave() in hfcusb_l2l1D(),
+kfree_skb() is called in it, to fix this, use skb_queue_splice_init()
+to move the dch->squeue to a free queue, also enqueue the tx_skb and
+rx_skb, at last calling __skb_queue_purge() to free the SKBs afer unlock.
+
+In tx_iso_complete(), dev_kfree_skb() is called to consume the transmitted
+SKB, so replace it with dev_consume_skb_irq().
+
+Fixes: 69f52adb2d53 ("mISDN: Add HFC USB driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 25 ++-----------------------
- 1 file changed, 2 insertions(+), 23 deletions(-)
+ drivers/isdn/hardware/mISDN/hfcsusb.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-index f8a300f0aec3..a551ef4b5777 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
-@@ -1458,8 +1458,6 @@ struct qmp_phy_cfg {
+diff --git a/drivers/isdn/hardware/mISDN/hfcsusb.c b/drivers/isdn/hardware/mISDN/hfcsusb.c
+index 651f2f8f685b..1efd17979f24 100644
+--- a/drivers/isdn/hardware/mISDN/hfcsusb.c
++++ b/drivers/isdn/hardware/mISDN/hfcsusb.c
+@@ -326,20 +326,24 @@ hfcusb_l2l1D(struct mISDNchannel *ch, struct sk_buff *skb)
+ 		test_and_clear_bit(FLG_L2_ACTIVATED, &dch->Flags);
  
- 	unsigned int start_ctrl;
- 	unsigned int pwrdn_ctrl;
--	/* bit offset of PHYSTATUS in QPHY_PCS_STATUS register */
--	unsigned int phy_status;
+ 		if (hw->protocol == ISDN_P_NT_S0) {
++			struct sk_buff_head free_queue;
++
++			__skb_queue_head_init(&free_queue);
+ 			hfcsusb_ph_command(hw, HFC_L1_DEACTIVATE_NT);
+ 			spin_lock_irqsave(&hw->lock, flags);
+-			skb_queue_purge(&dch->squeue);
++			skb_queue_splice_init(&dch->squeue, &free_queue);
+ 			if (dch->tx_skb) {
+-				dev_kfree_skb(dch->tx_skb);
++				__skb_queue_tail(&free_queue, dch->tx_skb);
+ 				dch->tx_skb = NULL;
+ 			}
+ 			dch->tx_idx = 0;
+ 			if (dch->rx_skb) {
+-				dev_kfree_skb(dch->rx_skb);
++				__skb_queue_tail(&free_queue, dch->rx_skb);
+ 				dch->rx_skb = NULL;
+ 			}
+ 			test_and_clear_bit(FLG_TX_BUSY, &dch->Flags);
+ 			spin_unlock_irqrestore(&hw->lock, flags);
++			__skb_queue_purge(&free_queue);
+ #ifdef FIXME
+ 			if (test_and_clear_bit(FLG_L1_BUSY, &dch->Flags))
+ 				dchannel_sched_event(&hc->dch, D_CLEARBUSY);
+@@ -1330,7 +1334,7 @@ tx_iso_complete(struct urb *urb)
+ 					printk("\n");
+ 				}
  
- 	/* true, if PHY needs delay after POWER_DOWN */
- 	bool has_pwrdn_delay;
-@@ -1617,7 +1615,6 @@ static const struct qmp_phy_cfg ipq8074_usb3phy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
--	.phy_status		= PHYSTATUS,
- };
- 
- static const struct qmp_phy_cfg msm8996_usb3phy_cfg = {
-@@ -1641,7 +1638,6 @@ static const struct qmp_phy_cfg msm8996_usb3phy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
--	.phy_status		= PHYSTATUS,
- };
- 
- static const struct qmp_phy_cfg qmp_v3_usb3phy_cfg = {
-@@ -1665,7 +1661,6 @@ static const struct qmp_phy_cfg qmp_v3_usb3phy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
--	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
- 	.has_phy_dp_com_ctrl	= true,
-@@ -1692,7 +1687,6 @@ static const struct qmp_phy_cfg sc7180_usb3phy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
--	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
- 	.has_phy_dp_com_ctrl	= true,
-@@ -1719,7 +1713,6 @@ static const struct qmp_phy_cfg sc8280xp_usb3_uniphy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
--	.phy_status		= PHYSTATUS,
- };
- 
- static const struct qmp_phy_cfg qmp_v3_usb3_uniphy_cfg = {
-@@ -1743,7 +1736,6 @@ static const struct qmp_phy_cfg qmp_v3_usb3_uniphy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
--	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
- };
-@@ -1769,7 +1761,6 @@ static const struct qmp_phy_cfg msm8998_usb3phy_cfg = {
- 
- 	.start_ctrl             = SERDES_START | PCS_START,
- 	.pwrdn_ctrl             = SW_PWRDN,
--	.phy_status		= PHYSTATUS,
- };
- 
- static const struct qmp_phy_cfg sm8150_usb3phy_cfg = {
-@@ -1796,7 +1787,6 @@ static const struct qmp_phy_cfg sm8150_usb3phy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
--	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
- 	.has_phy_dp_com_ctrl	= true,
-@@ -1826,7 +1816,6 @@ static const struct qmp_phy_cfg sm8150_usb3_uniphy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
--	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
- };
-@@ -1855,7 +1844,6 @@ static const struct qmp_phy_cfg sm8250_usb3phy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
--	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
- 	.has_phy_dp_com_ctrl	= true,
-@@ -1885,7 +1873,6 @@ static const struct qmp_phy_cfg sm8250_usb3_uniphy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
--	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
- };
-@@ -1914,7 +1901,6 @@ static const struct qmp_phy_cfg sdx55_usb3_uniphy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
--	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
- };
-@@ -1943,7 +1929,6 @@ static const struct qmp_phy_cfg sdx65_usb3_uniphy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
--	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
- };
-@@ -1972,7 +1957,6 @@ static const struct qmp_phy_cfg sm8350_usb3phy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
--	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
- 	.has_phy_dp_com_ctrl	= true,
-@@ -2002,7 +1986,6 @@ static const struct qmp_phy_cfg sm8350_usb3_uniphy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
--	.phy_status		= PHYSTATUS,
- 
- 	.has_pwrdn_delay	= true,
- };
-@@ -2028,7 +2011,6 @@ static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
- 
- 	.start_ctrl		= SERDES_START | PCS_START,
- 	.pwrdn_ctrl		= SW_PWRDN,
--	.phy_status		= PHYSTATUS,
- };
- 
- static void qmp_usb_configure_lane(void __iomem *base,
-@@ -2166,7 +2148,7 @@ static int qmp_usb_power_on(struct phy *phy)
- 	void __iomem *rx = qphy->rx;
- 	void __iomem *pcs = qphy->pcs;
- 	void __iomem *status;
--	unsigned int mask, val, ready;
-+	unsigned int val;
- 	int ret;
- 
- 	qmp_usb_serdes_init(qphy);
-@@ -2205,10 +2187,7 @@ static int qmp_usb_power_on(struct phy *phy)
- 	qphy_setbits(pcs, cfg->regs[QPHY_START_CTRL], cfg->start_ctrl);
- 
- 	status = pcs + cfg->regs[QPHY_PCS_STATUS];
--	mask = cfg->phy_status;
--	ready = 0;
--
--	ret = readl_poll_timeout(status, val, (val & mask) == ready, 10,
-+	ret = readl_poll_timeout(status, val, !(val & PHYSTATUS), 10,
- 				 PHY_INIT_COMPLETE_TIMEOUT);
- 	if (ret) {
- 		dev_err(qmp->dev, "phy initialization timed-out\n");
+-				dev_kfree_skb(tx_skb);
++				dev_consume_skb_irq(tx_skb);
+ 				tx_skb = NULL;
+ 				if (fifo->dch && get_next_dframe(fifo->dch))
+ 					tx_skb = fifo->dch->tx_skb;
 -- 
 2.35.1
 
