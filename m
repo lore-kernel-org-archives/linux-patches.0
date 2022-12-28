@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9511863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01611C433D2;
-	Wed, 28 Dec 2022 15:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EF351863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96F17C433EF;
+	Wed, 28 Dec 2022 15:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240256;
-	bh=5p5XapdduFu5x6RJ/vft6XaAAqGCL1qDdotRGVHZb/Q=;
+	s=korg; t=1672240258;
+	bh=4PNDDJZmArPkClOrlBSTTJGNXsNvzCzJ1ewJlq8/RAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b7/3c1FP92sTMkXfMB+VZCfxn1RFquY00WNqxc8vjMwEc87X7vTDo4kPXeJUtrH3c
-	 UFGbHuHf41lz1HvdtBI2RoyiUcI5E79eq5UzY1Xk7DU97qWeKeA7G+0lq589YtGuco
-	 12UpSQfpjrLX6jTtNuWOH7HH9bxFX5fqx1D/73gM=
+	b=YVzzNE/0bWeIuD4o3LYXGo9jPIp/yBwOyNWb+CBN+Qel4qNpnpecSqODB13z8Rw1W
+	 l6TZvzqwFtZrBcaDYKCLy/+PYJpGNI3KjrlNKHamyb+C8fIM6e1jvTe58Metb9KBJ3
+	 gBAKvO2WeMPg6DjCQXgoV09PE6AE2eySxT/XUzgQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eddie James <eajames@linux.ibm.com>,
-	Joel Stanley <joel@jms.id.au>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Li Zetao <lizetao1@huawei.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0101/1146] tpm: Add flag to use default cancellation policy
-Date: Wed, 28 Dec 2022 15:27:20 +0100
-Message-Id: <20221228144332.886471322@linuxfoundation.org>
+Subject: [PATCH 5.15 329/731] net: farsync: Fix kmemleak when rmmods farsync
+Date: Wed, 28 Dec 2022 15:37:16 +0100
+Message-Id: <20221228144306.108498849@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,86 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eddie James <eajames@linux.ibm.com>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit 7bfda9c73fa9710a842a7d6f89b024351c80c19c ]
+[ Upstream commit 2f623aaf9f31de968dea6169849706a2f9be444c ]
 
-The check for cancelled request depends on the VID of the chip, but
-some chips share VID which shouldn't share their cancellation
-behavior. This is the case for the Nuvoton NPCT75X, which should use
-the default cancellation check, not the Winbond one.
-To avoid changing the existing behavior, add a new flag to indicate
-that the chip should use the default cancellation check and set it
-for the I2C TPM2 TIS driver.
+There are two memory leaks reported by kmemleak:
 
-Fixes: bbc23a07b072 ("tpm: Add tpm_tis_i2c backend for tpm_tis_core")
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
-Tested-by: Joel Stanley <joel@jms.id.au>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+  unreferenced object 0xffff888114b20200 (size 128):
+    comm "modprobe", pid 4846, jiffies 4295146524 (age 401.345s)
+    hex dump (first 32 bytes):
+      e0 62 57 09 81 88 ff ff e0 62 57 09 81 88 ff ff  .bW......bW.....
+      01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    backtrace:
+      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
+      [<ffffffff83d35c78>] __hw_addr_add_ex+0x198/0x6c0
+      [<ffffffff83d3989d>] dev_addr_init+0x13d/0x230
+      [<ffffffff83d1063d>] alloc_netdev_mqs+0x10d/0xe50
+      [<ffffffff82b4a06e>] alloc_hdlcdev+0x2e/0x80
+      [<ffffffffa016a741>] fst_add_one+0x601/0x10e0 [farsync]
+      ...
+
+  unreferenced object 0xffff88810b85b000 (size 1024):
+    comm "modprobe", pid 4846, jiffies 4295146523 (age 401.346s)
+    hex dump (first 32 bytes):
+      00 00 b0 02 00 c9 ff ff 00 70 0a 00 00 c9 ff ff  .........p......
+      00 00 00 f2 00 00 00 f3 0a 00 00 00 02 00 00 00  ................
+    backtrace:
+      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
+      [<ffffffffa016a294>] fst_add_one+0x154/0x10e0 [farsync]
+      [<ffffffff82060e83>] local_pci_probe+0xd3/0x170
+      ...
+
+The root cause is traced to the netdev and fst_card_info are not freed
+when removes one fst in fst_remove_one(), which may trigger oom if
+repeated insmod and rmmod module.
+
+Fix it by adding free_netdev() and kfree() in fst_remove_one(), just as
+the operations on the error handling path in fst_add_one().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_core.c | 20 ++++++++++++--------
- drivers/char/tpm/tpm_tis_core.h |  1 +
- drivers/char/tpm/tpm_tis_i2c.c  |  1 +
- 3 files changed, 14 insertions(+), 8 deletions(-)
+ drivers/net/wan/farsync.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
-index 757623bacfd5..3f98e587b3e8 100644
---- a/drivers/char/tpm/tpm_tis_core.c
-+++ b/drivers/char/tpm/tpm_tis_core.c
-@@ -682,15 +682,19 @@ static bool tpm_tis_req_canceled(struct tpm_chip *chip, u8 status)
- {
- 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
+diff --git a/drivers/net/wan/farsync.c b/drivers/net/wan/farsync.c
+index 6a212c085435..5b01642ca44e 100644
+--- a/drivers/net/wan/farsync.c
++++ b/drivers/net/wan/farsync.c
+@@ -2545,6 +2545,7 @@ fst_remove_one(struct pci_dev *pdev)
+ 		struct net_device *dev = port_to_dev(&card->ports[i]);
  
--	switch (priv->manufacturer_id) {
--	case TPM_VID_WINBOND:
--		return ((status == TPM_STS_VALID) ||
--			(status == (TPM_STS_VALID | TPM_STS_COMMAND_READY)));
--	case TPM_VID_STM:
--		return (status == (TPM_STS_VALID | TPM_STS_COMMAND_READY));
--	default:
--		return (status == TPM_STS_COMMAND_READY);
-+	if (!test_bit(TPM_TIS_DEFAULT_CANCELLATION, &priv->flags)) {
-+		switch (priv->manufacturer_id) {
-+		case TPM_VID_WINBOND:
-+			return ((status == TPM_STS_VALID) ||
-+				(status == (TPM_STS_VALID | TPM_STS_COMMAND_READY)));
-+		case TPM_VID_STM:
-+			return (status == (TPM_STS_VALID | TPM_STS_COMMAND_READY));
-+		default:
-+			break;
-+		}
+ 		unregister_hdlc_device(dev);
++		free_netdev(dev);
  	}
-+
-+	return status == TPM_STS_COMMAND_READY;
+ 
+ 	fst_disable_intr(card);
+@@ -2564,6 +2565,7 @@ fst_remove_one(struct pci_dev *pdev)
+ 				  card->tx_dma_handle_card);
+ 	}
+ 	fst_card_array[card->card_no] = NULL;
++	kfree(card);
  }
  
- static irqreturn_t tis_int_handler(int dummy, void *dev_id)
-diff --git a/drivers/char/tpm/tpm_tis_core.h b/drivers/char/tpm/tpm_tis_core.h
-index 66a5a13cd1df..b68479e0de10 100644
---- a/drivers/char/tpm/tpm_tis_core.h
-+++ b/drivers/char/tpm/tpm_tis_core.h
-@@ -86,6 +86,7 @@ enum tis_defaults {
- enum tpm_tis_flags {
- 	TPM_TIS_ITPM_WORKAROUND		= BIT(0),
- 	TPM_TIS_INVALID_STATUS		= BIT(1),
-+	TPM_TIS_DEFAULT_CANCELLATION	= BIT(2),
- };
- 
- struct tpm_tis_data {
-diff --git a/drivers/char/tpm/tpm_tis_i2c.c b/drivers/char/tpm/tpm_tis_i2c.c
-index 635a69dfcbbd..f3a7251c8e38 100644
---- a/drivers/char/tpm/tpm_tis_i2c.c
-+++ b/drivers/char/tpm/tpm_tis_i2c.c
-@@ -329,6 +329,7 @@ static int tpm_tis_i2c_probe(struct i2c_client *dev,
- 	if (!phy->io_buf)
- 		return -ENOMEM;
- 
-+	set_bit(TPM_TIS_DEFAULT_CANCELLATION, &phy->priv.flags);
- 	phy->i2c_client = dev;
- 
- 	/* must precede all communication with the tpm */
+ static struct pci_driver fst_driver = {
 -- 
 2.35.1
 
