@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3931C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:10:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F7D5C433D2;
-	Wed, 28 Dec 2022 16:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A404C1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:10:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1BEC433EF;
+	Wed, 28 Dec 2022 16:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243841;
-	bh=I2Xhz/Jdna+flkvroMELK0RP2K8ACcsMbkJMnpkalaI=;
+	s=korg; t=1672243844;
+	bh=XvJ5bootY+Y8cIQ53tt+n8lSQ8nbmG0dJPSkwm3uaXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Biusnuyljl0SJ6hUJVysjQUGkUoT4EDqrk6xgLX3yue7pUiUiYnlHjbOfhE521mWl
-	 vX7iLnHmC6dLSmVXovKfhpssqDfYBBsfCwRWz5squNAhqKLVGL0ITwlnyWG6DyjFxL
-	 mJRX8lBBzIxHLU8fLOqOd52f3kkTG49WsPoRjGB8=
+	b=k8jJbNE4Jh/T0g8Bid7NGQMWIcsVEEBdKHG134w1Hd6UGADdqZ4EHXg0EZFGo6Tv4
+	 yu598vdYXnR6yA0YaEX3XJPIw+ZaHU0YPolxZFidoODJYmalwy3CY2v430Oc8SQsdn
+	 /E7TSC5vhRr46k6jo6rK0xdwWm2zgAg5oZ8ydh9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Douglas Gilbert <dgilbert@interlog.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0597/1073] scsi: scsi_debug: Fix a warning in resp_write_scat()
-Date: Wed, 28 Dec 2022 15:36:25 +0100
-Message-Id: <20221228144344.262869857@linuxfoundation.org>
+Subject: [PATCH 6.1 0565/1146] Bluetooth: hci_core: dont call kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:35:04 +0100
+Message-Id: <20221228144345.513988588@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,64 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 216e179724c1d9f57a8ababf8bd7aaabef67f01b ]
+[ Upstream commit 39c1eb6fcbae8ce9bb71b2ac5cb609355a2b181b ]
 
-As 'lbdof_blen' is coming from user, if the size in kzalloc() is >=
-MAX_ORDER then we hit a warning.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with interrupts being disabled. So replace kfree_skb()
+with dev_kfree_skb_irq() under spin_lock_irqsave().
 
-Call trace:
-
-sg_ioctl
- sg_ioctl_common
-   scsi_ioctl
-    sg_scsi_ioctl
-     blk_execute_rq
-      blk_mq_sched_insert_request
-       blk_mq_run_hw_queue
-        __blk_mq_delay_run_hw_queue
-         __blk_mq_run_hw_queue
-          blk_mq_sched_dispatch_requests
-           __blk_mq_sched_dispatch_requests
-            blk_mq_dispatch_rq_list
-             scsi_queue_rq
-              scsi_dispatch_cmd
-               scsi_debug_queuecommand
-                schedule_resp
-                 resp_write_scat
-
-If you try to allocate a memory larger than(>=) MAX_ORDER, then kmalloc()
-will definitely fail.  It creates a stack trace and messes up dmesg.  The
-user controls the size here so if they specify a too large size it will
-fail.
-
-Add __GFP_NOWARN in order to avoid too large allocation warning.  This is
-detected by static analysis using smatch.
-
-Fixes: 481b5e5c7949 ("scsi: scsi_debug: add resp_write_scat function")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Link: https://lore.kernel.org/r/20221111100526.1790533-1-harshit.m.mogalapalli@oracle.com
-Acked-by: Douglas Gilbert <dgilbert@interlog.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 9238f36a5a50 ("Bluetooth: Add request cmd_complete and cmd_status functions")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 2 +-
+ net/bluetooth/hci_core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 7346098c1c68..1355820b9733 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -3785,7 +3785,7 @@ static int resp_write_scat(struct scsi_cmnd *scp,
- 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INVALID_FIELD_IN_CDB, 0);
- 		return illegal_condition_result;
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 56f8569ace86..b65c3aabcd53 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -3985,7 +3985,7 @@ void hci_req_cmd_complete(struct hci_dev *hdev, u16 opcode, u8 status,
+ 			*req_complete_skb = bt_cb(skb)->hci.req_complete_skb;
+ 		else
+ 			*req_complete = bt_cb(skb)->hci.req_complete;
+-		kfree_skb(skb);
++		dev_kfree_skb_irq(skb);
  	}
--	lrdp = kzalloc(lbdof_blen, GFP_ATOMIC);
-+	lrdp = kzalloc(lbdof_blen, GFP_ATOMIC | __GFP_NOWARN);
- 	if (lrdp == NULL)
- 		return SCSI_MLQUEUE_HOST_BUSY;
- 	if (sdebug_verbose)
+ 	spin_unlock_irqrestore(&hdev->cmd_q.lock, flags);
+ }
 -- 
 2.35.1
 
