@@ -1,34 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57E911863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:51:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E86C433D2;
-	Wed, 28 Dec 2022 14:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22F71863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:51:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6657CC433EF;
+	Wed, 28 Dec 2022 14:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239064;
-	bh=bhefCoveFalYjvW0k7lZd7xEECoo+RCh7S24bZQWBws=;
+	s=korg; t=1672239066;
+	bh=3K5C9H/H1XZ2Tp7eEaVtGaJav/GejqjYteQIlAcRS1U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d0q4ZSjm+9m4rSeVhYA6r08FK3huLjKq0WyttTA+Soqxg+msY5cv6Fh0L586U0nOl
-	 iVL7Wi0dQrABn6NsPmu5CzoptNpWnFR+qtSCsxXurFK+EC6Gnaym5DQcybYqzTFN7q
-	 Orxi9p0yI7zypEhgriDJwVkzIkQ55CV/IkUxH6vs=
+	b=GaQbV/T78WcJ9gww1UVjODPxpuVVT7OwFsekAQPrW2cR/kqvQ1b5QD7Umou5YCiba
+	 tOW8voiHeb3gwO7pFK2YYgF1LMsz8CWM8t3NC6fC13FZc5nHPXVVnX37JGQSxl6f6G
+	 3pVgaIqzmCEqiTNgH2hUM9KjG+3yUpfiNSZP9+yo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Martin Pitt <mpitt@redhat.com>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 088/731] ocfs2: fix memory leak in ocfs2_stack_glue_init()
-Date: Wed, 28 Dec 2022 15:33:15 +0100
-Message-Id: <20221228144259.102369486@linuxfoundation.org>
+Subject: [PATCH 5.15 079/731] fs: dont audit the capability check in simple_xattr_list()
+Date: Wed, 28 Dec 2022 15:33:06 +0100
+Message-Id: <20221228144258.841727499@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -42,71 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Ondrej Mosnacek <omosnace@redhat.com>
 
-[ Upstream commit 13b6269dd022aaa69ca8d1df374ab327504121cf ]
+[ Upstream commit e7eda157c4071cd1e69f4b1687b0fbe1ae5e6f46 ]
 
-ocfs2_table_header should be free in ocfs2_stack_glue_init() if
-ocfs2_sysfs_init() failed, otherwise kmemleak will report memleak.
+The check being unconditional may lead to unwanted denials reported by
+LSMs when a process has the capability granted by DAC, but denied by an
+LSM. In the case of SELinux such denials are a problem, since they can't
+be effectively filtered out via the policy and when not silenced, they
+produce noise that may hide a true problem or an attack.
 
-BUG: memory leak
-unreferenced object 0xffff88810eeb5800 (size 128):
-  comm "modprobe", pid 4507, jiffies 4296182506 (age 55.888s)
-  hex dump (first 32 bytes):
-    c0 40 14 a0 ff ff ff ff 00 00 00 00 01 00 00 00  .@..............
-    01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<000000001e59e1cd>] __register_sysctl_table+0xca/0xef0
-    [<00000000c04f70f7>] 0xffffffffa0050037
-    [<000000001bd12912>] do_one_initcall+0xdb/0x480
-    [<0000000064f766c9>] do_init_module+0x1cf/0x680
-    [<000000002ba52db0>] load_module+0x6441/0x6f20
-    [<000000009772580d>] __do_sys_finit_module+0x12f/0x1c0
-    [<00000000380c1f22>] do_syscall_64+0x3f/0x90
-    [<000000004cf473bc>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Checking for the capability only if any trusted xattr is actually
+present wouldn't really address the issue, since calling listxattr(2) on
+such node on its own doesn't indicate an explicit attempt to see the
+trusted xattrs. Additionally, it could potentially leak the presence of
+trusted xattrs to an unprivileged user if they can check for the denials
+(e.g. through dmesg).
 
-Link: https://lkml.kernel.org/r/41651ca1-432a-db34-eb97-d35744559de1@linux.alibaba.com
-Fixes: 3878f110f71a ("ocfs2: Move the hb_ctl_path sysctl into the stack glue.")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Therefore, it's best (and simplest) to keep the check unconditional and
+instead use ns_capable_noaudit() that will silence any associated LSM
+denials.
+
+Fixes: 38f38657444d ("xattr: extract simple_xattr code from tmpfs")
+Reported-by: Martin Pitt <mpitt@redhat.com>
+Suggested-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
+Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Reviewed-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/stackglue.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/xattr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/stackglue.c b/fs/ocfs2/stackglue.c
-index 16f1bfc407f2..955f475f9aca 100644
---- a/fs/ocfs2/stackglue.c
-+++ b/fs/ocfs2/stackglue.c
-@@ -703,6 +703,8 @@ static struct ctl_table_header *ocfs2_table_header;
- 
- static int __init ocfs2_stack_glue_init(void)
+diff --git a/fs/xattr.c b/fs/xattr.c
+index 7117cb253864..4c82f271f4aa 100644
+--- a/fs/xattr.c
++++ b/fs/xattr.c
+@@ -1119,7 +1119,7 @@ static int xattr_list_one(char **buffer, ssize_t *remaining_size,
+ ssize_t simple_xattr_list(struct inode *inode, struct simple_xattrs *xattrs,
+ 			  char *buffer, size_t size)
  {
-+	int ret;
-+
- 	strcpy(cluster_stack_name, OCFS2_STACK_PLUGIN_O2CB);
- 
- 	ocfs2_table_header = register_sysctl_table(ocfs2_root_table);
-@@ -712,7 +714,11 @@ static int __init ocfs2_stack_glue_init(void)
- 		return -ENOMEM; /* or something. */
- 	}
- 
--	return ocfs2_sysfs_init();
-+	ret = ocfs2_sysfs_init();
-+	if (ret)
-+		unregister_sysctl_table(ocfs2_table_header);
-+
-+	return ret;
- }
- 
- static void __exit ocfs2_stack_glue_exit(void)
+-	bool trusted = capable(CAP_SYS_ADMIN);
++	bool trusted = ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN);
+ 	struct simple_xattr *xattr;
+ 	ssize_t remaining_size = size;
+ 	int err = 0;
 -- 
 2.35.1
 
