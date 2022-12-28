@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF1D1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72343C433D2;
-	Wed, 28 Dec 2022 15:52:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931351875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B75CC433F0;
+	Wed, 28 Dec 2022 15:52:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242773;
-	bh=ao/zCP+5wM+bBx2k8+4Ko7LKgp2A0wGkuydgVR+P1BE=;
+	s=korg; t=1672242776;
+	bh=g6uAbsg2/4nBl/Qb5jnuKJIGeIlTrVa/TjSijcSD0FA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mGB3G0oL0tl066bm2GozS8KJdb6TSUT8gqLodVzh5cUDoGVPoGzZj8G67WCk1sT3P
-	 Frl/EftnoX3zBUV0V1ZjMp0ocQ+uR3LbS2UK3AhTnH+ar93SVF/wfsbyVHZAfDqhhz
-	 VRtDOnITFMbgO/VU0U8ooE+rmqgqSmI6ZB85WDbw=
+	b=AD4yNrA2QryWsZNffi+JFKP41L2pfFhCO3nuFO3MWZW1IVXxWHy6DqtVTPkuMXECz
+	 +KhbLuATZANKjrFk0rZE71W0p4hhiRY9izKLGp3tElb+K6RZWmOffyKGeFP4pooGcq
+	 tXBJ66czOhGSmEoXgcZ/ERNDRyFnZvlR+m/zBhZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Satya Priya <quic_c_skakit@quicinc.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ming Qian <ming.qian@nxp.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0450/1073] clk: qcom: lpass: Handle the regmap overlap of lpasscc and lpass_aon
-Date: Wed, 28 Dec 2022 15:33:58 +0100
-Message-Id: <20221228144340.254126077@linuxfoundation.org>
+Subject: [PATCH 6.1 0412/1146] media: amphion: lock and check m2m_ctx in event handler
+Date: Wed, 28 Dec 2022 15:32:31 +0100
+Message-Id: <20221228144341.358100029@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,178 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Taniya Das <quic_tdas@quicinc.com>
+From: Ming Qian <ming.qian@nxp.com>
 
-[ Upstream commit 0cbcfbe50cbff331c775982a53bc4fa66c875b36 ]
+[ Upstream commit 1ade3f3f16986cd7c6fce02feede957f03eb8a42 ]
 
-Move registration of lpass_q6ss_ahbm_clk and lpass_q6ss_ahbs_clk to
-lpass_aon_cc_sc7280_probe and register them only if "qcom,adsp-pil-mode"
-is enabled in the lpass_aon DT node.
+driver needs to cancel vpu before releasing the vpu instance,
+so call v4l2_m2m_ctx_release() first,
+to handle the redundant event triggered after m2m_ctx is released.
 
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/1662005846-4838-3-git-send-email-quic_c_skakit@quicinc.com
-Stable-dep-of: d470be3c4f30 ("clk: qcom: lpass-sc7280: Fix pm_runtime usage")
+lock and check m2m_ctx in the event handler.
+
+Fixes: 3cd084519c6f ("media: amphion: add vpu v4l2 m2m support")
+Signed-off-by: Ming Qian <ming.qian@nxp.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/lpassaudiocc-sc7280.c | 44 ++++++++++++++++++++++++++
- drivers/clk/qcom/lpasscc-sc7280.c      | 44 --------------------------
- 2 files changed, 44 insertions(+), 44 deletions(-)
+ drivers/media/platform/amphion/vpu_msgs.c | 2 ++
+ drivers/media/platform/amphion/vpu_v4l2.c | 8 ++++++--
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/qcom/lpassaudiocc-sc7280.c b/drivers/clk/qcom/lpassaudiocc-sc7280.c
-index 6ab6e5a34c72..606732879fea 100644
---- a/drivers/clk/qcom/lpassaudiocc-sc7280.c
-+++ b/drivers/clk/qcom/lpassaudiocc-sc7280.c
-@@ -12,6 +12,7 @@
- #include <linux/pm_runtime.h>
- #include <linux/regmap.h>
+diff --git a/drivers/media/platform/amphion/vpu_msgs.c b/drivers/media/platform/amphion/vpu_msgs.c
+index d8247f36d84b..92672a802b49 100644
+--- a/drivers/media/platform/amphion/vpu_msgs.c
++++ b/drivers/media/platform/amphion/vpu_msgs.c
+@@ -43,6 +43,7 @@ static void vpu_session_handle_mem_request(struct vpu_inst *inst, struct vpu_rpc
+ 		  req_data.ref_frame_num,
+ 		  req_data.act_buf_size,
+ 		  req_data.act_buf_num);
++	vpu_inst_lock(inst);
+ 	call_void_vop(inst, mem_request,
+ 		      req_data.enc_frame_size,
+ 		      req_data.enc_frame_num,
+@@ -50,6 +51,7 @@ static void vpu_session_handle_mem_request(struct vpu_inst *inst, struct vpu_rpc
+ 		      req_data.ref_frame_num,
+ 		      req_data.act_buf_size,
+ 		      req_data.act_buf_num);
++	vpu_inst_unlock(inst);
+ }
  
-+#include <dt-bindings/clock/qcom,lpass-sc7280.h>
- #include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
+ static void vpu_session_handle_stop_done(struct vpu_inst *inst, struct vpu_rpc_event *pkt)
+diff --git a/drivers/media/platform/amphion/vpu_v4l2.c b/drivers/media/platform/amphion/vpu_v4l2.c
+index a24e2d0e9542..590d1084e5a5 100644
+--- a/drivers/media/platform/amphion/vpu_v4l2.c
++++ b/drivers/media/platform/amphion/vpu_v4l2.c
+@@ -242,8 +242,12 @@ int vpu_process_capture_buffer(struct vpu_inst *inst)
  
- #include "clk-alpha-pll.h"
-@@ -38,6 +39,32 @@ static const struct pll_vco zonda_vco[] = {
- 	{ 595200000UL, 3600000000UL, 0 },
- };
+ struct vb2_v4l2_buffer *vpu_next_src_buf(struct vpu_inst *inst)
+ {
+-	struct vb2_v4l2_buffer *src_buf = v4l2_m2m_next_src_buf(inst->fh.m2m_ctx);
++	struct vb2_v4l2_buffer *src_buf = NULL;
  
-+static struct clk_branch lpass_q6ss_ahbm_clk = {
-+	.halt_reg = 0x901c,
-+	.halt_check = BRANCH_HALT,
-+	.clkr = {
-+		.enable_reg = 0x901c,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+				.name = "lpass_q6ss_ahbm_clk",
-+				.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
++	if (!inst->fh.m2m_ctx)
++		return NULL;
 +
-+static struct clk_branch lpass_q6ss_ahbs_clk = {
-+	.halt_reg = 0x9020,
-+	.halt_check = BRANCH_HALT_VOTED,
-+	.clkr = {
-+		.enable_reg = 0x9020,
-+		.enable_mask = BIT(0),
-+		.hw.init = &(struct clk_init_data){
-+			.name = "lpass_q6ss_ahbs_clk",
-+			.ops = &clk_branch2_ops,
-+		},
-+	},
-+};
-+
- /* 1128.96MHz configuration */
- static const struct alpha_pll_config lpass_audio_cc_pll_config = {
- 	.l = 0x3a,
-@@ -614,6 +641,11 @@ static struct gdsc lpass_aon_cc_lpass_audio_hm_gdsc = {
- 	.flags = RETAIN_FF_ENABLE,
- };
++	src_buf = v4l2_m2m_next_src_buf(inst->fh.m2m_ctx);
+ 	if (!src_buf || vpu_get_buffer_state(src_buf) == VPU_BUF_STATE_IDLE)
+ 		return NULL;
  
-+static struct clk_regmap *lpass_cc_sc7280_clocks[] = {
-+	[LPASS_Q6SS_AHBM_CLK] = &lpass_q6ss_ahbm_clk.clkr,
-+	[LPASS_Q6SS_AHBS_CLK] = &lpass_q6ss_ahbs_clk.clkr,
-+};
-+
- static struct clk_regmap *lpass_aon_cc_sc7280_clocks[] = {
- 	[LPASS_AON_CC_AUDIO_HM_H_CLK] = &lpass_aon_cc_audio_hm_h_clk.clkr,
- 	[LPASS_AON_CC_VA_MEM0_CLK] = &lpass_aon_cc_va_mem0_clk.clkr,
-@@ -659,6 +691,12 @@ static struct regmap_config lpass_audio_cc_sc7280_regmap_config = {
- 	.fast_io = true,
- };
+@@ -266,7 +270,7 @@ void vpu_skip_frame(struct vpu_inst *inst, int count)
+ 	enum vb2_buffer_state state;
+ 	int i = 0;
  
-+static const struct qcom_cc_desc lpass_cc_sc7280_desc = {
-+	.config = &lpass_audio_cc_sc7280_regmap_config,
-+	.clks = lpass_cc_sc7280_clocks,
-+	.num_clks = ARRAY_SIZE(lpass_cc_sc7280_clocks),
-+};
-+
- static const struct qcom_cc_desc lpass_audio_cc_sc7280_desc = {
- 	.config = &lpass_audio_cc_sc7280_regmap_config,
- 	.clks = lpass_audio_cc_sc7280_clocks,
-@@ -785,6 +823,12 @@ static int lpass_aon_cc_sc7280_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
+-	if (count <= 0)
++	if (count <= 0 || !inst->fh.m2m_ctx)
+ 		return;
  
-+	if (of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-mode")) {
-+		lpass_audio_cc_sc7280_regmap_config.name = "cc";
-+		desc = &lpass_cc_sc7280_desc;
-+		return qcom_cc_probe(pdev, desc);
-+	}
-+
- 	lpass_audio_cc_sc7280_regmap_config.name = "lpasscc_aon";
- 	lpass_audio_cc_sc7280_regmap_config.max_register = 0xa0008;
- 	desc = &lpass_aon_cc_sc7280_desc;
-diff --git a/drivers/clk/qcom/lpasscc-sc7280.c b/drivers/clk/qcom/lpasscc-sc7280.c
-index b39ee1c9647b..5c1e17bd0d76 100644
---- a/drivers/clk/qcom/lpasscc-sc7280.c
-+++ b/drivers/clk/qcom/lpasscc-sc7280.c
-@@ -17,32 +17,6 @@
- #include "clk-branch.h"
- #include "common.h"
- 
--static struct clk_branch lpass_q6ss_ahbm_clk = {
--	.halt_reg = 0x1c,
--	.halt_check = BRANCH_HALT,
--	.clkr = {
--		.enable_reg = 0x1c,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "lpass_q6ss_ahbm_clk",
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
--static struct clk_branch lpass_q6ss_ahbs_clk = {
--	.halt_reg = 0x20,
--	.halt_check = BRANCH_HALT_VOTED,
--	.clkr = {
--		.enable_reg = 0x20,
--		.enable_mask = BIT(0),
--		.hw.init = &(struct clk_init_data){
--			.name = "lpass_q6ss_ahbs_clk",
--			.ops = &clk_branch2_ops,
--		},
--	},
--};
--
- static struct clk_branch lpass_top_cc_lpi_q6_axim_hs_clk = {
- 	.halt_reg = 0x0,
- 	.halt_check = BRANCH_HALT,
-@@ -105,17 +79,6 @@ static struct regmap_config lpass_regmap_config = {
- 	.fast_io	= true,
- };
- 
--static struct clk_regmap *lpass_cc_sc7280_clocks[] = {
--	[LPASS_Q6SS_AHBM_CLK] = &lpass_q6ss_ahbm_clk.clkr,
--	[LPASS_Q6SS_AHBS_CLK] = &lpass_q6ss_ahbs_clk.clkr,
--};
--
--static const struct qcom_cc_desc lpass_cc_sc7280_desc = {
--	.config = &lpass_regmap_config,
--	.clks = lpass_cc_sc7280_clocks,
--	.num_clks = ARRAY_SIZE(lpass_cc_sc7280_clocks),
--};
--
- static struct clk_regmap *lpass_cc_top_sc7280_clocks[] = {
- 	[LPASS_TOP_CC_LPI_Q6_AXIM_HS_CLK] =
- 				&lpass_top_cc_lpi_q6_axim_hs_clk.clkr,
-@@ -169,13 +132,6 @@ static int lpass_cc_sc7280_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto destroy_pm_clk;
- 
--	lpass_regmap_config.name = "cc";
--	desc = &lpass_cc_sc7280_desc;
--
--	ret = qcom_cc_probe_by_index(pdev, 2, desc);
--	if (ret)
--		goto destroy_pm_clk;
--
- 	return 0;
- 
- destroy_pm_clk:
+ 	while (i < count) {
 -- 
 2.35.1
 
