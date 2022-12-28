@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EE3F1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:55:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC02C433D2;
-	Wed, 28 Dec 2022 15:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435C91875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:55:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5A3CC433D2;
+	Wed, 28 Dec 2022 15:55:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242909;
-	bh=6SQ70RZccRw/EhbzPjDFSwlXxLAY5Ne+GUKkdIONBpY=;
+	s=korg; t=1672242912;
+	bh=Bjp1jxD3DELJl90QpM4hSVLxyl4yYLKc/TpVZaE/S5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JszPqMcmo+PIdZ84oKFo9TeeimciE/t5tac731MVPUj9D/ChGQiz0M17IkKrctU/v
-	 CfcUUUfNfAA4aNMo7bUNbGWzsh6YGzDyMW0hYctec8rEbCEWZ76Z4t1L3ibsra3AYH
-	 Q1UvQm472JMHGzMZr8gCFeKN0/hYldH0U3GjAIfc=
+	b=C2DjA08gE/ys3oW+fZXVbTYDO0l+t3lEKVdToIWyupS+s0e34g1ARnDdLGuQisK6s
+	 URiAAjVQ+jHdChf3DeQfJB8AyY38gycKCIN0MRwMDzL26MEqVgdkHyHknwsB/y+GpP
+	 6BDJ2o7FgLzJqm4vqQhDAmIulwFGkLZzLgUUDJ/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	syzbot+8dd0551dda6020944c5d@syzkaller.appspotmail.com,
+	Stanislav Fomichev <sdf@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Yonghong Song <yhs@fb.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0453/1073] clk: qcom: lpass-sc7180: Fix pm_runtime usage
-Date: Wed, 28 Dec 2022 15:34:01 +0100
-Message-Id: <20221228144340.339199303@linuxfoundation.org>
+Subject: [PATCH 5.15 660/731] bpf: Prevent decl_tag from being referenced in func_proto arg
+Date: Wed, 28 Dec 2022 15:42:47 +0100
+Message-Id: <20221228144315.627585532@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,133 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Stanislav Fomichev <sdf@google.com>
 
-[ Upstream commit ff1ccf59eaffd192efe21f7de9fb0c130faf1b1b ]
+[ Upstream commit f17472d4599697d701aa239b4c475a506bccfd19 ]
 
-The sc7180 lpass clock controller's pm_runtime usage wasn't broken
-quite as spectacularly as the sc7280's pm_runtime usage, but it was
-still broken. Putting some printouts in at boot showed me this (with
-serial console enabled, which makes the prints slow and thus changes
-timing):
-  [    3.109951] DOUG: my_pm_clk_resume, usage=1
-  [    3.114767] DOUG: my_pm_clk_resume, usage=1
-  [    3.664443] DOUG: my_pm_clk_suspend, usage=0
-  [    3.897566] DOUG: my_pm_clk_suspend, usage=0
-  [    3.910137] DOUG: my_pm_clk_resume, usage=1
-  [    3.923217] DOUG: my_pm_clk_resume, usage=0
-  [    4.440116] DOUG: my_pm_clk_suspend, usage=-1
-  [    4.444982] DOUG: my_pm_clk_suspend, usage=0
-  [   14.170501] DOUG: my_pm_clk_resume, usage=1
-  [   14.176245] DOUG: my_pm_clk_resume, usage=0
+Syzkaller managed to hit another decl_tag issue:
 
-...or this w/out serial console:
-  [    0.556139] DOUG: my_pm_clk_resume, usage=1
-  [    0.556279] DOUG: my_pm_clk_resume, usage=1
-  [    1.058422] DOUG: my_pm_clk_suspend, usage=-1
-  [    1.058464] DOUG: my_pm_clk_suspend, usage=0
-  [    1.186250] DOUG: my_pm_clk_resume, usage=1
-  [    1.186292] DOUG: my_pm_clk_resume, usage=0
-  [    1.731536] DOUG: my_pm_clk_suspend, usage=-1
-  [    1.731557] DOUG: my_pm_clk_suspend, usage=0
-  [   10.288910] DOUG: my_pm_clk_resume, usage=1
-  [   10.289496] DOUG: my_pm_clk_resume, usage=0
+  btf_func_proto_check kernel/bpf/btf.c:4506 [inline]
+  btf_check_all_types kernel/bpf/btf.c:4734 [inline]
+  btf_parse_type_sec+0x1175/0x1980 kernel/bpf/btf.c:4763
+  btf_parse kernel/bpf/btf.c:5042 [inline]
+  btf_new_fd+0x65a/0xb00 kernel/bpf/btf.c:6709
+  bpf_btf_load+0x6f/0x90 kernel/bpf/syscall.c:4342
+  __sys_bpf+0x50a/0x6c0 kernel/bpf/syscall.c:5034
+  __do_sys_bpf kernel/bpf/syscall.c:5093 [inline]
+  __se_sys_bpf kernel/bpf/syscall.c:5091 [inline]
+  __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:5091
+  do_syscall_64+0x54/0x70 arch/x86/entry/common.c:48
 
-It seems to be doing roughly the right sequence of calls, but just
-like with sc7280 this is more by luck than anything. Having a usage of
--1 is just not OK.
+This seems similar to commit ea68376c8bed ("bpf: prevent decl_tag from being
+referenced in func_proto") but for the argument.
 
-Let's fix this like we did with sc7280.
-
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Fixes: ce8c195e652f ("clk: qcom: lpasscc: Introduce pm autosuspend for SC7180")
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221104064055.2.I49b25b9bda9430fc7ea21e5a708ca5a0aced2798@changeid
+Reported-by: syzbot+8dd0551dda6020944c5d@syzkaller.appspotmail.com
+Signed-off-by: Stanislav Fomichev <sdf@google.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Yonghong Song <yhs@fb.com>
+Link: https://lore.kernel.org/bpf/20221123035422.872531-2-sdf@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/lpasscorecc-sc7180.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ kernel/bpf/btf.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/clk/qcom/lpasscorecc-sc7180.c b/drivers/clk/qcom/lpasscorecc-sc7180.c
-index ac09b7b840ab..a5731994cbed 100644
---- a/drivers/clk/qcom/lpasscorecc-sc7180.c
-+++ b/drivers/clk/qcom/lpasscorecc-sc7180.c
-@@ -356,7 +356,7 @@ static const struct qcom_cc_desc lpass_audio_hm_sc7180_desc = {
- 	.num_gdscs = ARRAY_SIZE(lpass_audio_hm_sc7180_gdscs),
- };
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 7cb13b9f69a6..0c2fa93bd8d2 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -3864,6 +3864,11 @@ static int btf_func_proto_check(struct btf_verifier_env *env,
+ 			break;
+ 		}
  
--static int lpass_create_pm_clks(struct platform_device *pdev)
-+static int lpass_setup_runtime_pm(struct platform_device *pdev)
- {
- 	int ret;
- 
-@@ -375,7 +375,7 @@ static int lpass_create_pm_clks(struct platform_device *pdev)
- 	if (ret < 0)
- 		dev_err(&pdev->dev, "failed to acquire iface clock\n");
- 
--	return ret;
-+	return pm_runtime_resume_and_get(&pdev->dev);
- }
- 
- static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
-@@ -384,7 +384,7 @@ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
- 	struct regmap *regmap;
- 	int ret;
- 
--	ret = lpass_create_pm_clks(pdev);
-+	ret = lpass_setup_runtime_pm(pdev);
- 	if (ret)
- 		return ret;
- 
-@@ -392,12 +392,14 @@ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
- 	desc = &lpass_audio_hm_sc7180_desc;
- 	ret = qcom_cc_probe_by_index(pdev, 1, desc);
- 	if (ret)
--		return ret;
-+		goto exit;
- 
- 	lpass_core_cc_sc7180_regmap_config.name = "lpass_core_cc";
- 	regmap = qcom_cc_map(pdev, &lpass_core_cc_sc7180_desc);
--	if (IS_ERR(regmap))
--		return PTR_ERR(regmap);
-+	if (IS_ERR(regmap)) {
-+		ret = PTR_ERR(regmap);
-+		goto exit;
-+	}
- 
- 	/*
- 	 * Keep the CLK always-ON
-@@ -415,6 +417,7 @@ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
- 	ret = qcom_cc_really_probe(pdev, &lpass_core_cc_sc7180_desc, regmap);
- 
- 	pm_runtime_mark_last_busy(&pdev->dev);
-+exit:
- 	pm_runtime_put_autosuspend(&pdev->dev);
- 
- 	return ret;
-@@ -425,14 +428,19 @@ static int lpass_hm_core_probe(struct platform_device *pdev)
- 	const struct qcom_cc_desc *desc;
- 	int ret;
- 
--	ret = lpass_create_pm_clks(pdev);
-+	ret = lpass_setup_runtime_pm(pdev);
- 	if (ret)
- 		return ret;
- 
- 	lpass_core_cc_sc7180_regmap_config.name = "lpass_hm_core";
- 	desc = &lpass_core_hm_sc7180_desc;
- 
--	return qcom_cc_probe_by_index(pdev, 0, desc);
-+	ret = qcom_cc_probe_by_index(pdev, 0, desc);
++		if (btf_type_is_resolve_source_only(arg_type)) {
++			btf_verifier_log_type(env, t, "Invalid arg#%u", i + 1);
++			return -EINVAL;
++		}
 +
-+	pm_runtime_mark_last_busy(&pdev->dev);
-+	pm_runtime_put_autosuspend(&pdev->dev);
-+
-+	return ret;
- }
- 
- static const struct of_device_id lpass_hm_sc7180_match_table[] = {
+ 		if (args[i].name_off &&
+ 		    (!btf_name_offset_valid(btf, args[i].name_off) ||
+ 		     !btf_name_valid_identifier(btf, args[i].name_off))) {
 -- 
 2.35.1
 
