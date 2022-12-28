@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469CD1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C20C433D2;
-	Wed, 28 Dec 2022 15:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3458C1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF7DDC433D2;
+	Wed, 28 Dec 2022 15:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242111;
-	bh=XgXKQ4lJt3xgbn4wnwUGVj4qQSLeGJDxzzr5jcmLDYI=;
+	s=korg; t=1672242114;
+	bh=q4sc++3K2GfvUAKwubTjvcqFLgZ2ewrtLeGPqSmaAzM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1QCMxslalt0/NVQRsVtmPS4vVSW26ct2Lqj38NAAZ0Qwy/HSpAftH7cvjdihi0/pU
-	 EcfhMQAskyqcuAVs6VlvPgTif2SoAIuk2HFyDmtHRBL/rqpd3qyRP8jiiPHfoQB6Go
-	 C4//+3w3eiqA2CKMnYyIByrV0fN2VzdXl0xZcsuQ=
+	b=Yvjnua6MfBaRLzXsDUO1XJuT9E/qQ2NFZ+B5Hx829S8xT4jBfu2a94n9nuZoqob2B
+	 4ywjksizxZtrNmRPU5+Y/uAPYhIYkAY8x6CaUuvIzp8tlWlagefXghQ6vfZ47wbcd3
+	 NIv4RrDBK2Ty4zekav/AwVkJf3bMrhV4wMF/9zMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xinlei lee <xinlei.lee@mediatek.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 564/731] pwm: mtk-disp: Fix the parameters calculated by the enabled flag of disp_pwm
-Date: Wed, 28 Dec 2022 15:41:11 +0100
-Message-Id: <20221228144312.910624656@linuxfoundation.org>
+Subject: [PATCH 6.0 0362/1073] ASoC: Intel: avs: Lock substream before snd_pcm_stop()
+Date: Wed, 28 Dec 2022 15:32:30 +0100
+Message-Id: <20221228144337.834349728@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,50 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: xinlei lee <xinlei.lee@mediatek.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit 0b5ef3429d8f78427558ab0dcbfd862098ba2a63 ]
+[ Upstream commit c30c8f9d51ec24b36e2c65a6307a5c8cbc5a0ebc ]
 
-In the original mtk_disp_pwm_get_state() function wrongly uses bit 0 of
-CON0 to judge if the PWM is enabled.
-However that is indicated by a bit (at a machine dependent position) in
-the DISP_PWM_EN register. Fix this accordingly.
+snd_pcm_stop() shall be called with stream lock held to prevent any
+races between nonatomic streaming operations.
 
-Fixes: 3f2b16734914 ("pwm: mtk-disp: Implement atomic API .get_state()")
-Signed-off-by: xinlei lee <xinlei.lee@mediatek.com>
-Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/1666172538-11652-1-git-send-email-xinlei.lee@mediatek.com
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Fixes: 2f1f570cd730 ("ASoC: Intel: avs: Coredump and recovery flow")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://lore.kernel.org/r/20221116115550.1100398-2-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-mtk-disp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/soc/intel/avs/ipc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
-index c605013e4114..3fbb4bae93a4 100644
---- a/drivers/pwm/pwm-mtk-disp.c
-+++ b/drivers/pwm/pwm-mtk-disp.c
-@@ -178,7 +178,7 @@ static void mtk_disp_pwm_get_state(struct pwm_chip *chip,
- {
- 	struct mtk_disp_pwm *mdp = to_mtk_disp_pwm(chip);
- 	u64 rate, period, high_width;
--	u32 clk_div, con0, con1;
-+	u32 clk_div, pwm_en, con0, con1;
- 	int err;
+diff --git a/sound/soc/intel/avs/ipc.c b/sound/soc/intel/avs/ipc.c
+index 77da206f7dbb..306f0dc4eaf5 100644
+--- a/sound/soc/intel/avs/ipc.c
++++ b/sound/soc/intel/avs/ipc.c
+@@ -123,7 +123,10 @@ static void avs_dsp_recovery(struct avs_dev *adev)
+ 				if (!substream || !substream->runtime)
+ 					continue;
  
- 	err = clk_prepare_enable(mdp->clk_main);
-@@ -197,7 +197,8 @@ static void mtk_disp_pwm_get_state(struct pwm_chip *chip,
- 	rate = clk_get_rate(mdp->clk_main);
- 	con0 = readl(mdp->base + mdp->data->con0);
- 	con1 = readl(mdp->base + mdp->data->con1);
--	state->enabled = !!(con0 & BIT(0));
-+	pwm_en = readl(mdp->base + DISP_PWM_EN);
-+	state->enabled = !!(pwm_en & mdp->data->enable_mask);
- 	clk_div = FIELD_GET(PWM_CLKDIV_MASK, con0);
- 	period = FIELD_GET(PWM_PERIOD_MASK, con1);
- 	/*
++				/* No need for _irq() as we are in nonatomic context. */
++				snd_pcm_stream_lock(substream);
+ 				snd_pcm_stop(substream, SNDRV_PCM_STATE_DISCONNECTED);
++				snd_pcm_stream_unlock(substream);
+ 			}
+ 		}
+ 	}
 -- 
 2.35.1
 
