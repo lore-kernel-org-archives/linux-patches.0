@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72C971C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB390C433D2;
-	Wed, 28 Dec 2022 16:25:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA281C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F1F8C433F1;
+	Wed, 28 Dec 2022 16:25:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244740;
-	bh=inN9e4ytR+NXrAHnhQ1/s4gFHfne7lWj4TQ3jrvLG2c=;
+	s=korg; t=1672244743;
+	bh=2eJ6V1wIkJp7Pt/McqCpFA1DrIvXB5FPl9d2Ofr8wd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HFkp5n+SecQIVtCFo9UvXwxHX9WBUR3k3gkGjYd3ybCO5Qf5t2HCVJB3HxZC3kfKC
-	 FNvnprhPla6+zeJh9nQqYFjVSlys+2cCYgDWn0OuJ0ctti7xQbSxyPkzHoSK7aPGB/
-	 TNsPDsAijDTMyXsmUeGiOKb8EehwxXVb1mkU81Q0=
+	b=sjyOiBC0Dsepg9LsIfme4UZABFQ9cQEqmdWHFTfBwyRhpelGI69xUh89v18VGWHxc
+	 6Vf9mGV7tcwK1pKK6qE/TMBhk0rA4Zv0Qnz0VJ9D6dM0kgdKcOY8S1xhJrCc4FjIzM
+	 NCWUJxwaX14uS5AfTCqQyYYfdPspugDm14uCUsXM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0728/1146] usb: roles: fix of node refcount leak in usb_role_switch_is_parent()
-Date: Wed, 28 Dec 2022 15:37:47 +0100
-Message-Id: <20221228144349.919257800@linuxfoundation.org>
+Subject: [PATCH 6.0 0766/1073] phy: qcom-qmp-pcie: fix ipq8074-gen3 initialisation
+Date: Wed, 28 Dec 2022 15:39:14 +0100
+Message-Id: <20221228144348.820424812@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,49 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 1ab30c610630da5391a373cddb8a065bf4c4bc01 ]
+[ Upstream commit 94b7288eadf6e2c09e6280c65a9d07cca01bf434 ]
 
-I got the following report while doing device(mt6370-tcpc) load
-test with CONFIG_OF_UNITTEST and CONFIG_OF_DYNAMIC enabled:
+The phy_status mask was never set for IPQ8074 (gen3) which meant that
+the driver would not wait for the PHY to be initialised during power-on
+and would never detect PHY initialisation timeouts.
 
-  OF: ERROR: memory leak, expected refcount 1 instead of 2,
-  of_node_get()/of_node_put() unbalanced - destroy cset entry:
-  attach overlay node /i2c/pmic@34
-
-The 'parent' returned by fwnode_get_parent() with refcount incremented.
-it needs be put after using.
-
-Fixes: 6fadd72943b8 ("usb: roles: get usb-role-switch from parent")
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221122111226.251588-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 334fad185415 ("phy: qcom-qmp-pcie: add IPQ8074 PCIe Gen3 QMP PHY support")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20221012085002.24099-2-johan+linaro@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/roles/class.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/usb/roles/class.c b/drivers/usb/roles/class.c
-index dfaed7eee94f..32e6d19f7011 100644
---- a/drivers/usb/roles/class.c
-+++ b/drivers/usb/roles/class.c
-@@ -106,10 +106,13 @@ usb_role_switch_is_parent(struct fwnode_handle *fwnode)
- 	struct fwnode_handle *parent = fwnode_get_parent(fwnode);
- 	struct device *dev;
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+index 6d790f2107f5..b17248506fe8 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+@@ -1564,6 +1564,7 @@ static const struct qmp_phy_cfg ipq8074_pciephy_gen3_cfg = {
  
--	if (!parent || !fwnode_property_present(parent, "usb-role-switch"))
-+	if (!fwnode_property_present(parent, "usb-role-switch")) {
-+		fwnode_handle_put(parent);
- 		return NULL;
-+	}
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
++	.phy_status		= PHYSTATUS,
  
- 	dev = class_find_device_by_fwnode(role_class, parent);
-+	fwnode_handle_put(parent);
- 	return dev ? to_role_switch(dev) : ERR_PTR(-EPROBE_DEFER);
- }
- 
+ 	.has_pwrdn_delay	= true,
+ 	.pwrdn_delay_min	= 995,		/* us */
 -- 
 2.35.1
 
