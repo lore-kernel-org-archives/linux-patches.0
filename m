@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 036851C15
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7483AC433EF;
-	Wed, 28 Dec 2022 16:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04681C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2744AC433EF;
+	Wed, 28 Dec 2022 16:35:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245326;
-	bh=ZOJDY+bFvZ1DNZuIJQdi9c3Fo1VNfbpy3RHy5PuQMWU=;
+	s=korg; t=1672245329;
+	bh=rmVJhHKZMH1FTxKYZ4Mv4xjq0qkgcS+ycGLygZcWE9Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nvGET5A6T8OV6fHtoyc9iTE0NjylfRS1YxafuH5dzbvs74p2Ef8WDgoZoI1Oy6qGz
-	 iVslcv+M8oOAc+s0d61fp5RwQ/zHmWxJqAkwug0srf0AAF7uIWJIH3AQljYTdi8+Ra
-	 g/NxqckGDm57rQMOFX5yu6wu2Al4ia+GKUJNKk8M=
+	b=I4Y9X+WD2vPzWVZ+FOrcwz4jJGCh+MkT4v5LLR+hXXhUBpzUzv8Mi80vHMIuEX++z
+	 psy/j2MBVGIRNsla/jOnZgrbaizXPCR+Ha6lD1aK3dulLGIWm+iNYUJZ2rzT+LdPur
+	 TvqK/ocVUt8Q6gMv+CXqNMxCAJDMZxzWFUMWXbkg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0822/1146] pwm: tegra: Ensure the clock rate is not less than needed
-Date: Wed, 28 Dec 2022 15:39:21 +0100
-Message-Id: <20221228144352.482373964@linuxfoundation.org>
+Subject: [PATCH 6.1 0840/1146] rtc: pcf85063: Fix reading alarm
+Date: Wed, 28 Dec 2022 15:39:39 +0100
+Message-Id: <20221228144352.973090481@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -36,52 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jon Hunter <jonathanh@nvidia.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 5eccd0d9fabc4d2ab8d2a0c056fb1d7e2ff892fc ]
+[ Upstream commit a6ceee26fd5ed9b5bd37322b1ca88e4548cee4a3 ]
 
-When dynamically scaling the PWM clock, the function
-dev_pm_opp_set_rate() may set the PWM clock to a rate that is lower than
-what is required. The clock rate requested when calling
-dev_pm_opp_set_rate() is the minimum clock rate that is needed to drive
-the PWM to achieve the required period. Hence, if the actual clock
-rate is less than the requested clock rate, then the required period
-cannot be achieved and configuring the PWM fails. Fix this by
-calling clk_round_rate() to check if the clock rate that will be provided
-is sufficient and if not, double the required clock rate to ensure the
-required period can be attained.
+If the alarms are disabled the topmost bit (AEN_*) is set in the alarm
+registers. This is also interpreted in BCD number leading to this warning:
+rtc rtc0: invalid alarm value: 2022-09-21T80:80:80
 
-Fixes: 8c193f4714df ("pwm: tegra: Optimize period calculation")
-Signed-off-by: Jon Hunter <jonathanh@nvidia.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Fix this by masking alarm enabling and reserved bits.
+
+Fixes: 05cb3a56ee8c ("rtc: pcf85063: add alarm support")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20220921074141.3903104-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-tegra.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/rtc/rtc-pcf85063.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pwm/pwm-tegra.c b/drivers/pwm/pwm-tegra.c
-index b05ea2e8accc..6fc4b69a3ba7 100644
---- a/drivers/pwm/pwm-tegra.c
-+++ b/drivers/pwm/pwm-tegra.c
-@@ -148,6 +148,17 @@ static int tegra_pwm_config(struct pwm_chip *chip, struct pwm_device *pwm,
- 		required_clk_rate = DIV_ROUND_UP_ULL(NSEC_PER_SEC << PWM_DUTY_WIDTH,
- 						     period_ns);
+diff --git a/drivers/rtc/rtc-pcf85063.c b/drivers/rtc/rtc-pcf85063.c
+index 095891999da1..99f9cc57c7b3 100644
+--- a/drivers/rtc/rtc-pcf85063.c
++++ b/drivers/rtc/rtc-pcf85063.c
+@@ -169,10 +169,10 @@ static int pcf85063_rtc_read_alarm(struct device *dev, struct rtc_wkalrm *alrm)
+ 	if (ret)
+ 		return ret;
  
-+		if (required_clk_rate > clk_round_rate(pc->clk, required_clk_rate))
-+			/*
-+			 * required_clk_rate is a lower bound for the input
-+			 * rate; for lower rates there is no value for PWM_SCALE
-+			 * that yields a period less than or equal to the
-+			 * requested period. Hence, for lower rates, double the
-+			 * required_clk_rate to get a clock rate that can meet
-+			 * the requested period.
-+			 */
-+			required_clk_rate *= 2;
-+
- 		err = dev_pm_opp_set_rate(pc->dev, required_clk_rate);
- 		if (err < 0)
- 			return -EINVAL;
+-	alrm->time.tm_sec = bcd2bin(buf[0]);
+-	alrm->time.tm_min = bcd2bin(buf[1]);
+-	alrm->time.tm_hour = bcd2bin(buf[2]);
+-	alrm->time.tm_mday = bcd2bin(buf[3]);
++	alrm->time.tm_sec = bcd2bin(buf[0] & 0x7f);
++	alrm->time.tm_min = bcd2bin(buf[1] & 0x7f);
++	alrm->time.tm_hour = bcd2bin(buf[2] & 0x3f);
++	alrm->time.tm_mday = bcd2bin(buf[3] & 0x3f);
+ 
+ 	ret = regmap_read(pcf85063->regmap, PCF85063_REG_CTRL2, &val);
+ 	if (ret)
 -- 
 2.35.1
 
