@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D409B1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:36:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A8CC433D2;
-	Wed, 28 Dec 2022 16:36:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7037C1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:36:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E807BC433EF;
+	Wed, 28 Dec 2022 16:36:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245398;
-	bh=ezD3OB3O7kZpJCovwCHyicXwG+VlHnom3ed48kJ43qQ=;
+	s=korg; t=1672245401;
+	bh=9IANVcxo4crwHzH7bFhCY9wy6lN3O5MCEPTQI0+8p+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vl9aUgEkCHX+dA4OVsF3hmFF67PDL2FKtGQ4BEuIUfJMhmX07fG5D9oZLr8KnhCFX
-	 PbNG1Gl/uPGjWB6AB63Wqki5hSYxye0onk2t3dBcYcmY2/Q9zrVb31W0acBm/uhtkl
-	 /At0nk29oO3SFhm8SFhwZN38YhPQbKZTAjvIYU6U=
+	b=TrYy1gT2mpiHSbZq+AAypTGLFnnC53q0ZEwA6/b+2Abh1tszxyyt8EEynndIWYJZr
+	 9bD1UxAIOBrmMNc+LrI36MjaOVjWbc6ekg9SRZRWc7GhEYZP3KTNpITf8Nfo62eULC
+	 Tz5o3UBlQ0jegQkZzQmZNWYN/e9AeGcQeuz/P80o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nayna Jain <nayna@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0852/1146] powerpc/pseries: Fix the H_CALL error code in PLPKS driver
-Date: Wed, 28 Dec 2022 15:39:51 +0100
-Message-Id: <20221228144353.296743233@linuxfoundation.org>
+Subject: [PATCH 6.0 0886/1073] arm64: make is_ttbrX_addr() noinstr-safe
+Date: Wed, 28 Dec 2022 15:41:14 +0100
+Message-Id: <20221228144352.093133002@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,59 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nayna Jain <nayna@linux.ibm.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit af223e1728c448073d1e12fe464bf344310edeba ]
+[ Upstream commit d8c1d798a2e5091128c391c6dadcc9be334af3f5 ]
 
-PAPR Spec defines H_P1 actually as H_PARAMETER and maps H_ABORTED to
-a different numerical value.
+We use is_ttbr0_addr() in noinstr code, but as it's only marked as
+inline, it's theoretically possible for the compiler to place it
+out-of-line and instrument it, which would be problematic.
 
-Fix the error codes as per PAPR Specification.
+Mark is_ttbr0_addr() as __always_inline such that that can safely be
+used from noinstr code. For consistency, do the same to is_ttbr1_addr().
+Note that while is_ttbr1_addr() calls arch_kasan_reset_tag(), this is a
+macro (and its callees are either macros or __always_inline), so there
+is not a risk of transient instrumentation.
 
-Fixes: 2454a7af0f2a ("powerpc/pseries: define driver for Platform KeyStore")
-Signed-off-by: Nayna Jain <nayna@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20221106205839.600442-3-nayna@linux.ibm.com
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20221114144042.3001140-1-mark.rutland@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/hvcall.h      | 3 +--
- arch/powerpc/platforms/pseries/plpks.c | 2 +-
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ arch/arm64/include/asm/processor.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/hvcall.h b/arch/powerpc/include/asm/hvcall.h
-index 8abae463f6c1..95fd7f9485d5 100644
---- a/arch/powerpc/include/asm/hvcall.h
-+++ b/arch/powerpc/include/asm/hvcall.h
-@@ -79,7 +79,7 @@
- #define H_NOT_ENOUGH_RESOURCES -44
- #define H_R_STATE       -45
- #define H_RESCINDED     -46
--#define H_P1		-54
-+#define H_ABORTED	-54
- #define H_P2		-55
- #define H_P3		-56
- #define H_P4		-57
-@@ -100,7 +100,6 @@
- #define H_COP_HW	-74
- #define H_STATE		-75
- #define H_IN_USE	-77
--#define H_ABORTED	-78
- #define H_UNSUPPORTED_FLAG_START	-256
- #define H_UNSUPPORTED_FLAG_END		-511
- #define H_MULTI_THREADS_ACTIVE	-9005
-diff --git a/arch/powerpc/platforms/pseries/plpks.c b/arch/powerpc/platforms/pseries/plpks.c
-index f4b5b5a64db3..32ce4d780d8f 100644
---- a/arch/powerpc/platforms/pseries/plpks.c
-+++ b/arch/powerpc/platforms/pseries/plpks.c
-@@ -75,7 +75,7 @@ static int pseries_status_to_err(int rc)
- 	case H_FUNCTION:
- 		err = -ENXIO;
- 		break;
--	case H_P1:
-+	case H_PARAMETER:
- 	case H_P2:
- 	case H_P3:
- 	case H_P4:
+diff --git a/arch/arm64/include/asm/processor.h b/arch/arm64/include/asm/processor.h
+index 86eb0bfe3b38..d9144b6e078c 100644
+--- a/arch/arm64/include/asm/processor.h
++++ b/arch/arm64/include/asm/processor.h
+@@ -308,13 +308,13 @@ static inline void compat_start_thread(struct pt_regs *regs, unsigned long pc,
+ }
+ #endif
+ 
+-static inline bool is_ttbr0_addr(unsigned long addr)
++static __always_inline bool is_ttbr0_addr(unsigned long addr)
+ {
+ 	/* entry assembly clears tags for TTBR0 addrs */
+ 	return addr < TASK_SIZE;
+ }
+ 
+-static inline bool is_ttbr1_addr(unsigned long addr)
++static __always_inline bool is_ttbr1_addr(unsigned long addr)
+ {
+ 	/* TTBR1 addresses may have a tag if KASAN_SW_TAGS is in use */
+ 	return arch_kasan_reset_tag(addr) >= PAGE_OFFSET;
 -- 
 2.35.1
 
