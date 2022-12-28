@@ -1,28 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8992A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:52:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06BCDC433F0;
-	Wed, 28 Dec 2022 14:52:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFDC1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:52:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73278C433D2;
+	Wed, 28 Dec 2022 14:52:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239140;
-	bh=Q+y8zfkE5LlwwWBG4QK6ErHAQ+c8JfDt/6uVSPdlxsM=;
+	s=korg; t=1672239143;
+	bh=lomZ4pZK6Ek1cuGNK35hkaOAos1qguTINJQwSxAZRrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ixyRTmOYMQk6/4/3jfHeAE3c+0DQe7xSDus5dtYB7289mny+dQsmB5QuoyiFekPHo
-	 Ji4tTh66KQ/MtAruj2x1MQ+Wh77eUH3mAfyh4Ic/5bVHXeVcMl8gqYPft3rAUtcY04
-	 pqun82uYDoaCOTShsqvd8r7+fgj3zH+lbeQwWlIM=
+	b=gFjSJgnfNxa6TjLP5v0q4Nb4KBXzQelPyrkIUTqABT5Pms8Dvy1JBapQeQb0eGvPw
+	 vL3aH4Qam5YEnqjpu5cK7fACmTwW3smc6EqEw3a+0Aaym0BVCBObcggW3RmWdCi04/
+	 LJWyt85cVQQ0eMHfH3yEfVCi4R3/UnSwIMmkcBQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Izbyshev <izbyshev@ispras.ru>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Akinobu Mita <akinobu.mita@gmail.com>,
+	Zhao Gongyi <zhaogongyi@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Oscar Salvador <osalvador@suse.de>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 117/731] futex: Resend potentially swallowed owner death notification
-Date: Wed, 28 Dec 2022 15:33:44 +0100
-Message-Id: <20221228144259.944302153@linuxfoundation.org>
+Subject: [PATCH 5.15 108/731] lib/notifier-error-inject: fix error when writing -errno to debugfs file
+Date: Wed, 28 Dec 2022 15:33:35 +0100
+Message-Id: <20221228144259.679681344@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,102 +44,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexey Izbyshev <izbyshev@ispras.ru>
+From: Akinobu Mita <akinobu.mita@gmail.com>
 
-[ Upstream commit 90d758896787048fa3d4209309d4800f3920e66f ]
+[ Upstream commit f883c3edd2c432a2931ec8773c70a570115a50fe ]
 
-Commit ca16d5bee598 ("futex: Prevent robust futex exit race") addressed
-two cases when tasks waiting on a robust non-PI futex remained blocked
-despite the futex not being owned anymore:
+The simple attribute files do not accept a negative value since the commit
+488dac0c9237 ("libfs: fix error cast of negative value in
+simple_attr_write()").
 
-* if the owner died after writing zero to the futex word, but before
-  waking up a waiter
+This restores the previous behaviour by using newly introduced
+DEFINE_SIMPLE_ATTRIBUTE_SIGNED instead of DEFINE_SIMPLE_ATTRIBUTE.
 
-* if a task waiting on the futex was woken up, but died before updating
-  the futex word (effectively swallowing the notification without acting
-  on it)
-
-In the second case, the task could be woken up either by the previous
-owner (after the futex word was reset to zero) or by the kernel (after
-the OWNER_DIED bit was set and the TID part of the futex word was reset
-to zero) if the previous owner died without the resetting the futex.
-
-Because the referenced commit wakes up a potential waiter only if the
-whole futex word is zero, the latter subcase remains unaddressed.
-
-Fix this by looking only at the TID part of the futex when deciding
-whether a wake up is needed.
-
-Fixes: ca16d5bee598 ("futex: Prevent robust futex exit race")
-Signed-off-by: Alexey Izbyshev <izbyshev@ispras.ru>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20221111215439.248185-1-izbyshev@ispras.ru
+Link: https://lkml.kernel.org/r/20220919172418.45257-3-akinobu.mita@gmail.com
+Fixes: 488dac0c9237 ("libfs: fix error cast of negative value in simple_attr_write()")
+Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
+Reported-by: Zhao Gongyi <zhaogongyi@huawei.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Rafael J. Wysocki <rafael@kernel.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Wei Yongjun <weiyongjun1@huawei.com>
+Cc: Yicong Yang <yangyicong@hisilicon.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/futex/core.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ lib/notifier-error-inject.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/futex/core.c b/kernel/futex/core.c
-index f9bc9aa0ce1e..764e73622b38 100644
---- a/kernel/futex/core.c
-+++ b/kernel/futex/core.c
-@@ -3632,6 +3632,7 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
- 			      bool pi, bool pending_op)
- {
- 	u32 uval, nval, mval;
-+	pid_t owner;
- 	int err;
+diff --git a/lib/notifier-error-inject.c b/lib/notifier-error-inject.c
+index 21016b32d313..2b24ea6c9497 100644
+--- a/lib/notifier-error-inject.c
++++ b/lib/notifier-error-inject.c
+@@ -15,7 +15,7 @@ static int debugfs_errno_get(void *data, u64 *val)
+ 	return 0;
+ }
  
- 	/* Futex address must be 32bit aligned */
-@@ -3653,6 +3654,10 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
- 	 * 2. A woken up waiter is killed before it can acquire the
- 	 *    futex in user space.
- 	 *
-+	 * In the second case, the wake up notification could be generated
-+	 * by the unlock path in user space after setting the futex value
-+	 * to zero or by the kernel after setting the OWNER_DIED bit below.
-+	 *
- 	 * In both cases the TID validation below prevents a wakeup of
- 	 * potential waiters which can cause these waiters to block
- 	 * forever.
-@@ -3661,24 +3666,27 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
- 	 *
- 	 *	1) task->robust_list->list_op_pending != NULL
- 	 *	   @pending_op == true
--	 *	2) User space futex value == 0
-+	 *	2) The owner part of user space futex value == 0
- 	 *	3) Regular futex: @pi == false
- 	 *
- 	 * If these conditions are met, it is safe to attempt waking up a
- 	 * potential waiter without touching the user space futex value and
--	 * trying to set the OWNER_DIED bit. The user space futex value is
--	 * uncontended and the rest of the user space mutex state is
--	 * consistent, so a woken waiter will just take over the
--	 * uncontended futex. Setting the OWNER_DIED bit would create
--	 * inconsistent state and malfunction of the user space owner died
--	 * handling.
-+	 * trying to set the OWNER_DIED bit. If the futex value is zero,
-+	 * the rest of the user space mutex state is consistent, so a woken
-+	 * waiter will just take over the uncontended futex. Setting the
-+	 * OWNER_DIED bit would create inconsistent state and malfunction
-+	 * of the user space owner died handling. Otherwise, the OWNER_DIED
-+	 * bit is already set, and the woken waiter is expected to deal with
-+	 * this.
- 	 */
--	if (pending_op && !pi && !uval) {
-+	owner = uval & FUTEX_TID_MASK;
-+
-+	if (pending_op && !pi && !owner) {
- 		futex_wake(uaddr, 1, 1, FUTEX_BITSET_MATCH_ANY);
- 		return 0;
- 	}
+-DEFINE_SIMPLE_ATTRIBUTE(fops_errno, debugfs_errno_get, debugfs_errno_set,
++DEFINE_SIMPLE_ATTRIBUTE_SIGNED(fops_errno, debugfs_errno_get, debugfs_errno_set,
+ 			"%lld\n");
  
--	if ((uval & FUTEX_TID_MASK) != task_pid_vnr(curr))
-+	if (owner != task_pid_vnr(curr))
- 		return 0;
- 
- 	/*
+ static struct dentry *debugfs_create_errno(const char *name, umode_t mode,
 -- 
 2.35.1
 
