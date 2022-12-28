@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19981863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51909C433EF;
-	Wed, 28 Dec 2022 15:37:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8631863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00289C433F1;
+	Wed, 28 Dec 2022 15:37:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241870;
-	bh=7ljlnLcKf9jbkj65tY/z1q7swUbRQNxZMhQJK4+O5Pw=;
+	s=korg; t=1672241873;
+	bh=rJidGOASI21CnwPAr8do/50wsEnGYMJOUvCNeFFlXLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ytwdHkz++0qJyRwqf0HzI51PmXBfKJVGVR043WUN98zod7Tx7o+IzH0zegSpJBgOe
-	 pmz4UnOfxwhEH6vMa4Ut6Hv1T1RcEp9gyzLM59dpsKWKQC3xbDAu2sR0c2WHaL3khg
-	 WVFyho1FuZa+l7fi/6G+rKNZWXJHV7OtMAYEwSxE=
+	b=u8rhtsfewuuh/aenxBCEGlo/VQoC2LOYqAk5+vF6rsZhbCDfOkWDprduq8o8i5cz1
+	 aqf1Nvv5WEi50vz2VeP5lg7hKo5Kg0e/r8zn5k03UB0HKtoCElW5WwGAn4ZM82/jUf
+	 5IKO5q8v+kDl/jYAiVFpogHYwTHFNnH7s9cDEvxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Tang <tanghui20@huawei.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Nirav N Shah <nirav.n.shah@intel.com>,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0338/1073] mtd: lpddr2_nvm: Fix possible null-ptr-deref
-Date: Wed, 28 Dec 2022 15:32:06 +0100
-Message-Id: <20221228144337.185888238@linuxfoundation.org>
+Subject: [PATCH 5.15 537/731] dmaengine: idxd: Fix crc_val field for completion record
+Date: Wed, 28 Dec 2022 15:40:44 +0100
+Message-Id: <20221228144312.111278086@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,36 +37,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hui Tang <tanghui20@huawei.com>
+From: Fenghua Yu <fenghua.yu@intel.com>
 
-[ Upstream commit 6bdd45d795adf9e73b38ced5e7f750cd199499ff ]
+[ Upstream commit dc901d98b1fe6e52ab81cd3e0879379168e06daa ]
 
-It will cause null-ptr-deref when resource_size(add_range) invoked,
-if platform_get_resource() returns NULL.
+The crc_val in the completion record should be 64 bits and not 32 bits.
 
-Fixes: 96ba9dd65788 ("mtd: lpddr: add driver for LPDDR2-NVM PCM memories")
-Signed-off-by: Hui Tang <tanghui20@huawei.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20221114090240.244172-1-tanghui20@huawei.com
+Fixes: 4ac823e9cd85 ("dmaengine: idxd: fix delta_rec and crc size field for completion record")
+Reported-by: Nirav N Shah <nirav.n.shah@intel.com>
+Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/20221111012715.2031481-1-fenghua.yu@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/lpddr/lpddr2_nvm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/uapi/linux/idxd.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/lpddr/lpddr2_nvm.c b/drivers/mtd/lpddr/lpddr2_nvm.c
-index 367e2d906de0..e71af4c49096 100644
---- a/drivers/mtd/lpddr/lpddr2_nvm.c
-+++ b/drivers/mtd/lpddr/lpddr2_nvm.c
-@@ -433,6 +433,8 @@ static int lpddr2_nvm_probe(struct platform_device *pdev)
+diff --git a/include/uapi/linux/idxd.h b/include/uapi/linux/idxd.h
+index c750eac09fc9..f7c01709cb0f 100644
+--- a/include/uapi/linux/idxd.h
++++ b/include/uapi/linux/idxd.h
+@@ -272,7 +272,7 @@ struct dsa_completion_record {
+ 		};
  
- 	/* lpddr2_nvm address range */
- 	add_range = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	if (!add_range)
-+		return -ENODEV;
+ 		uint32_t	delta_rec_size;
+-		uint32_t	crc_val;
++		uint64_t	crc_val;
  
- 	/* Populate map_info data structure */
- 	*map = (struct map_info) {
+ 		/* DIF check & strip */
+ 		struct {
 -- 
 2.35.1
 
