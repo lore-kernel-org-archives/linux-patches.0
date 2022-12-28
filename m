@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79D41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48E4CC4339B;
-	Wed, 28 Dec 2022 15:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35D11863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26AC2C433EF;
+	Wed, 28 Dec 2022 15:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241135;
-	bh=H0/2lVufVcgmfCTaHjqj60U5X0v4AH4CRhvow763WYQ=;
+	s=korg; t=1672241138;
+	bh=H+3m3H5k6fUt8KOt+9nh9x+589HXgKljkSvmX6rEwDw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xeiBnnAGaxbmOhB/GPTJWq9OvGzSpN6JdJx/LvlTviSlSSLpJK8wvc264D1asECYU
-	 CnKptUZAtM6MI/WPDraxzZ/IiY6o4DuiMLZZg/JQe+P3JIAF2VB/LHXXuWIt8kIi9J
-	 Q1ORu0BgW2KjdcgoiDhLdKuBxEV/ohaVu+bBYFAY=
+	b=AloId63E2SHkZ6Ml8OOyPqlpV3E6XiS+1V33pnWXuMGQP3SzjlXsXyMJeEWk7aU8P
+	 lp5FDz0KL3M6JiVfVf1mnOap/yQWGX0of6rahYsXGf4n/M4MUHEoM1FgLcqkwZWc6A
+	 O1cP9zhlzj+mqVj6JnlxBc57jrjtDfml2w6l6s7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Rafael Mendonca <rafaelmendsr@gmail.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 410/731] scsi: efct: Fix possible memleak in efct_device_init()
-Date: Wed, 28 Dec 2022 15:38:37 +0100
-Message-Id: <20221228144308.454204168@linuxfoundation.org>
+Subject: [PATCH 5.15 442/731] vfio: platform: Do not pass return buffer to ACPI _RST method
+Date: Wed, 28 Dec 2022 15:39:09 +0100
+Message-Id: <20221228144309.370123328@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,46 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Rafael Mendonca <rafaelmendsr@gmail.com>
 
-[ Upstream commit bb0cd225dd37df1f4a22e36dad59ff33178ecdfc ]
+[ Upstream commit e67e070632a665c932d534b8b800477bb3111449 ]
 
-In efct_device_init(), when efct_scsi_reg_fc_transport() fails,
-efct_scsi_tgt_driver_exit() is not called to release memory for
-efct_scsi_tgt_driver_init() and causes memleak:
+The ACPI _RST method has no return value, there's no need to pass a return
+buffer to acpi_evaluate_object().
 
-unreferenced object 0xffff8881020ce000 (size 2048):
-  comm "modprobe", pid 465, jiffies 4294928222 (age 55.872s)
-  backtrace:
-    [<0000000021a1ef1b>] kmalloc_trace+0x27/0x110
-    [<000000004c3ed51c>] target_register_template+0x4fd/0x7b0 [target_core_mod]
-    [<00000000f3393296>] efct_scsi_tgt_driver_init+0x18/0x50 [efct]
-    [<00000000115de533>] 0xffffffffc0d90011
-    [<00000000d608f646>] do_one_initcall+0xd0/0x4e0
-    [<0000000067828cf1>] do_init_module+0x1cc/0x6a0
-    ...
-
-Fixes: 4df84e846624 ("scsi: elx: efct: Driver initialization routines")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221111074046.57061-1-chenzhongjin@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: d30daa33ec1d ("vfio: platform: call _RST method when using ACPI")
+Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Link: https://lore.kernel.org/r/20221018152825.891032-1-rafaelmendsr@gmail.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/elx/efct/efct_driver.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/vfio/platform/vfio_platform_common.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/elx/efct/efct_driver.c b/drivers/scsi/elx/efct/efct_driver.c
-index eab68fd9337a..37e1ab96ee5b 100644
---- a/drivers/scsi/elx/efct/efct_driver.c
-+++ b/drivers/scsi/elx/efct/efct_driver.c
-@@ -42,6 +42,7 @@ efct_device_init(void)
+diff --git a/drivers/vfio/platform/vfio_platform_common.c b/drivers/vfio/platform/vfio_platform_common.c
+index 6af7ce7d619c..701bd99a8719 100644
+--- a/drivers/vfio/platform/vfio_platform_common.c
++++ b/drivers/vfio/platform/vfio_platform_common.c
+@@ -72,12 +72,11 @@ static int vfio_platform_acpi_call_reset(struct vfio_platform_device *vdev,
+ 				  const char **extra_dbg)
+ {
+ #ifdef CONFIG_ACPI
+-	struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
+ 	struct device *dev = vdev->device;
+ 	acpi_handle handle = ACPI_HANDLE(dev);
+ 	acpi_status acpi_ret;
  
- 	rc = efct_scsi_reg_fc_transport();
- 	if (rc) {
-+		efct_scsi_tgt_driver_exit();
- 		pr_err("failed to register to FC host\n");
- 		return rc;
- 	}
+-	acpi_ret = acpi_evaluate_object(handle, "_RST", NULL, &buffer);
++	acpi_ret = acpi_evaluate_object(handle, "_RST", NULL, NULL);
+ 	if (ACPI_FAILURE(acpi_ret)) {
+ 		if (extra_dbg)
+ 			*extra_dbg = acpi_format_exception(acpi_ret);
 -- 
 2.35.1
 
