@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A346A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:03:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272AAC433EF;
-	Wed, 28 Dec 2022 15:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FFF1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C33B7C433D2;
+	Wed, 28 Dec 2022 15:04:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239838;
-	bh=BS47w7g9828pTnJC7/ndOiPdTvG8y/saiS21fElgk00=;
+	s=korg; t=1672239841;
+	bh=JFjSUMXRaeqCM1nIHQ2yDky9nCdv67vn1vv6ltrX69Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZFhxSee8HGFlCXdBz7MirjSHvz3t4NwtyhXzqzvXrYho897DziJENTQ3dP+fWtvuz
-	 b4Y5o8pGfPzl+VSJOVxwVH02gfLNT7AuxO4DKkyKups3ku3hUByP6CW1087aTw4Lju
-	 TgVHqZL5zkt5eszSX3Tx88dabbp8Nh6EOqklS/o4=
+	b=W1UNrvCIrMlA1NJjakWYBfvpdPNG4OaKrFt2nW1kjRnELDUrFdrm37jnkzPywe9MV
+	 l/OauZd1s/3bmvPYADq6FF6PlDXXR3NTlFhJ/akBScaHyf9Epq09PsQUk2mrWQjo5A
+	 XfLlyAIyGcuFARN4tNJr3aGEqlaBiTypuSHTNGqY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 276/731] hsr: Disable netpoll.
-Date: Wed, 28 Dec 2022 15:36:23 +0100
-Message-Id: <20221228144304.574212322@linuxfoundation.org>
+Subject: [PATCH 6.1 0049/1146] soc/tegra: cbb: Use correct master_id mask for CBB NOC in Tegra194
+Date: Wed, 28 Dec 2022 15:26:28 +0100
+Message-Id: <20221228144331.495646121@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,127 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Sumit Gupta <sumitg@nvidia.com>
 
-[ Upstream commit d5c7652eb16fa203d82546e0285136d7b321ffa9 ]
+[ Upstream commit 33af51a652191d7b9fe449563594b0bdbeb93c2a ]
 
-The hsr device is a software device. Its
-net_device_ops::ndo_start_xmit() routine will process the packet and
-then pass the resulting skb to dev_queue_xmit().
-During processing, hsr acquires a lock with spin_lock_bh()
-(hsr_add_node()) which needs to be promoted to the _irq() suffix in
-order to avoid a potential deadlock.
-Then there are the warnings in dev_queue_xmit() (due to
-local_bh_disable() with disabled interrupts) left.
+In Tegra194 SoC, master_id bit range is different between cluster NOC
+and CBB NOC. Currently same bit range is used which results in wrong
+master_id value. Due to this, illegal accesses from the CCPLEX master
+do not result in a crash as expected. Fix this by using the correct
+range for the CBB NOC.
 
-Instead trying to address those (there is qdisc and…) for netpoll sake,
-just disable netpoll on hsr.
+Finally, it is only necessary to extract the master_id when the
+erd_mask_inband_err flag is set because when this is not set, a crash
+is always triggered.
 
-Disable netpoll on hsr and replace the _irqsave() locking with _bh().
-
-Fixes: f421436a591d3 ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b71344221466 ("soc/tegra: cbb: Add CBB 1.0 driver for Tegra194")
+Fixes: fc2f151d2314 ("soc/tegra: cbb: Add driver for Tegra234 CBB 2.0")
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_device.c  | 14 ++++++--------
- net/hsr/hsr_forward.c |  5 ++---
- 2 files changed, 8 insertions(+), 11 deletions(-)
+ drivers/soc/tegra/cbb/tegra194-cbb.c | 14 +++++++-------
+ drivers/soc/tegra/cbb/tegra234-cbb.c | 13 ++++++-------
+ 2 files changed, 13 insertions(+), 14 deletions(-)
 
-diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
-index a1045c3d71b4..c44c6747a0bf 100644
---- a/net/hsr/hsr_device.c
-+++ b/net/hsr/hsr_device.c
-@@ -278,7 +278,6 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
- 	__u8 type = HSR_TLV_LIFE_CHECK;
- 	struct hsr_sup_payload *hsr_sp;
- 	struct hsr_sup_tag *hsr_stag;
--	unsigned long irqflags;
- 	struct sk_buff *skb;
+diff --git a/drivers/soc/tegra/cbb/tegra194-cbb.c b/drivers/soc/tegra/cbb/tegra194-cbb.c
+index 1ae0bd9a1ac1..2e952c6f7c9e 100644
+--- a/drivers/soc/tegra/cbb/tegra194-cbb.c
++++ b/drivers/soc/tegra/cbb/tegra194-cbb.c
+@@ -102,8 +102,6 @@
+ #define CLUSTER_NOC_VQC GENMASK(17, 16)
+ #define CLUSTER_NOC_MSTR_ID GENMASK(21, 18)
  
- 	*interval = msecs_to_jiffies(HSR_LIFE_CHECK_INTERVAL);
-@@ -299,7 +298,7 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
- 	set_hsr_stag_HSR_ver(hsr_stag, hsr->prot_version);
+-#define USRBITS_MSTR_ID GENMASK(21, 18)
+-
+ #define CBB_ERR_OPC GENMASK(4, 1)
+ #define CBB_ERR_ERRCODE GENMASK(10, 8)
+ #define CBB_ERR_LEN1 GENMASK(27, 16)
+@@ -2038,15 +2036,17 @@ static irqreturn_t tegra194_cbb_err_isr(int irq, void *data)
+ 					    smp_processor_id(), priv->noc->name, priv->res->start,
+ 					    irq);
  
- 	/* From HSRv1 on we have separate supervision sequence numbers. */
--	spin_lock_irqsave(&master->hsr->seqnr_lock, irqflags);
-+	spin_lock_bh(&hsr->seqnr_lock);
- 	if (hsr->prot_version > 0) {
- 		hsr_stag->sequence_nr = htons(hsr->sup_sequence_nr);
- 		hsr->sup_sequence_nr++;
-@@ -307,7 +306,7 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
- 		hsr_stag->sequence_nr = htons(hsr->sequence_nr);
- 		hsr->sequence_nr++;
- 	}
--	spin_unlock_irqrestore(&master->hsr->seqnr_lock, irqflags);
-+	spin_unlock_bh(&hsr->seqnr_lock);
+-			mstr_id =  FIELD_GET(USRBITS_MSTR_ID, priv->errlog5) - 1;
+ 			is_fatal = print_errlog(NULL, priv, status);
  
- 	hsr_stag->HSR_TLV_type = type;
- 	/* TODO: Why 12 in HSRv0? */
-@@ -332,7 +331,6 @@ static void send_prp_supervision_frame(struct hsr_port *master,
- 	struct hsr_priv *hsr = master->hsr;
- 	struct hsr_sup_payload *hsr_sp;
- 	struct hsr_sup_tag *hsr_stag;
--	unsigned long irqflags;
- 	struct sk_buff *skb;
- 
- 	skb = hsr_init_skb(master);
-@@ -347,7 +345,7 @@ static void send_prp_supervision_frame(struct hsr_port *master,
- 	set_hsr_stag_HSR_ver(hsr_stag, (hsr->prot_version ? 1 : 0));
- 
- 	/* From HSRv1 on we have separate supervision sequence numbers. */
--	spin_lock_irqsave(&master->hsr->seqnr_lock, irqflags);
-+	spin_lock_bh(&hsr->seqnr_lock);
- 	hsr_stag->sequence_nr = htons(hsr->sup_sequence_nr);
- 	hsr->sup_sequence_nr++;
- 	hsr_stag->HSR_TLV_type = PRP_TLV_LIFE_CHECK_DD;
-@@ -358,11 +356,11 @@ static void send_prp_supervision_frame(struct hsr_port *master,
- 	ether_addr_copy(hsr_sp->macaddress_A, master->dev->dev_addr);
- 
- 	if (skb_put_padto(skb, ETH_ZLEN)) {
--		spin_unlock_irqrestore(&master->hsr->seqnr_lock, irqflags);
-+		spin_unlock_bh(&hsr->seqnr_lock);
- 		return;
+ 			/*
+-			 * If illegal request is from CCPLEX(0x1)
+-			 * initiator then call BUG() to crash system.
++			 * If illegal request is from CCPLEX(0x1) initiator
++			 * and error is fatal then call BUG() to crash system.
+ 			 */
+-			if ((mstr_id == 0x1) && priv->noc->erd_mask_inband_err)
+-				is_inband_err = 1;
++			if (priv->noc->erd_mask_inband_err) {
++				mstr_id =  FIELD_GET(CBB_NOC_MSTR_ID, priv->errlog5);
++				if (mstr_id == 0x1)
++					is_inband_err = 1;
++			}
+ 		}
  	}
  
--	spin_unlock_irqrestore(&master->hsr->seqnr_lock, irqflags);
-+	spin_unlock_bh(&hsr->seqnr_lock);
+diff --git a/drivers/soc/tegra/cbb/tegra234-cbb.c b/drivers/soc/tegra/cbb/tegra234-cbb.c
+index 3528f9e15d5c..654c3d164606 100644
+--- a/drivers/soc/tegra/cbb/tegra234-cbb.c
++++ b/drivers/soc/tegra/cbb/tegra234-cbb.c
+@@ -92,7 +92,6 @@ struct tegra234_slave_lookup {
+ struct tegra234_cbb_fabric {
+ 	const char *name;
+ 	phys_addr_t off_mask_erd;
+-	bool erd_mask_inband_err;
+ 	const char * const *master_id;
+ 	unsigned int notifier_offset;
+ 	const struct tegra_cbb_error *errors;
+@@ -525,14 +524,14 @@ static irqreturn_t tegra234_cbb_isr(int irq, void *data)
+ 			if (err)
+ 				goto unlock;
  
- 	hsr_forward_skb(skb, master);
- }
-@@ -444,7 +442,7 @@ void hsr_dev_setup(struct net_device *dev)
- 	dev->header_ops = &hsr_header_ops;
- 	dev->netdev_ops = &hsr_device_ops;
- 	SET_NETDEV_DEVTYPE(dev, &hsr_type);
--	dev->priv_flags |= IFF_NO_QUEUE;
-+	dev->priv_flags |= IFF_NO_QUEUE | IFF_DISABLE_NETPOLL;
- 
- 	dev->needs_free_netdev = true;
- 
-diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
-index daf6abbadeb9..c8bcbd990f59 100644
---- a/net/hsr/hsr_forward.c
-+++ b/net/hsr/hsr_forward.c
-@@ -458,7 +458,6 @@ static void handle_std_frame(struct sk_buff *skb,
- {
- 	struct hsr_port *port = frame->port_rcv;
- 	struct hsr_priv *hsr = port->hsr;
--	unsigned long irqflags;
- 
- 	frame->skb_hsr = NULL;
- 	frame->skb_prp = NULL;
-@@ -468,10 +467,10 @@ static void handle_std_frame(struct sk_buff *skb,
- 		frame->is_from_san = true;
- 	} else {
- 		/* Sequence nr for the master node */
--		spin_lock_irqsave(&hsr->seqnr_lock, irqflags);
-+		spin_lock_bh(&hsr->seqnr_lock);
- 		frame->sequence_nr = hsr->sequence_nr;
- 		hsr->sequence_nr++;
--		spin_unlock_irqrestore(&hsr->seqnr_lock, irqflags);
-+		spin_unlock_bh(&hsr->seqnr_lock);
+-			mstr_id =  FIELD_GET(USRBITS_MSTR_ID, priv->mn_user_bits);
+-
+ 			/*
+-			 * If illegal request is from CCPLEX(id:0x1) master then call BUG() to
+-			 * crash system.
++			 * If illegal request is from CCPLEX(id:0x1) master then call WARN()
+ 			 */
+-			if ((mstr_id == 0x1) && priv->fabric->off_mask_erd)
+-				is_inband_err = 1;
++			if (priv->fabric->off_mask_erd) {
++				mstr_id =  FIELD_GET(USRBITS_MSTR_ID, priv->mn_user_bits);
++				if (mstr_id == 0x1)
++					is_inband_err = 1;
++			}
+ 		}
  	}
- }
  
 -- 
 2.35.1
