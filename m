@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372B81C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6875C433EF;
-	Wed, 28 Dec 2022 16:26:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3261C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61949C433EF;
+	Wed, 28 Dec 2022 16:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244775;
-	bh=rBurc719qreKJtfryobjI1i8Mmm+/tDZv21DfTcX+nM=;
+	s=korg; t=1672244777;
+	bh=6xfCIgPcQgsbeOh9UalWO4mdWmzvSyxBOhIv/xCB7UM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TupjkTkPJVx1G037CaJMj+xWyweiqr1aL2TZzdyT+rnRVgHEx2HTA6aWSM9rVsIhm
-	 eV4oU99XQXtNFWq/PQcR/8yXFFJfiRY9QiwyOeFy62PvII3QUnBYtANJBd/WjR6PSu
-	 gppJx3+YI8DsVePIKtLPPQ7msYNIOmwGauEl29Lo=
+	b=Ut2YMUr2wyFjIqbgkgm9Zv/BkeFKQ5TiJ2rP7Hs7QmjILtQrn9xBi+dvPaJIuZ0HF
+	 6rr6qqcOVCxJnQvB1l3/uht5CmAgMVrR1mVoIPpX/oehvYpmjSewKQ58JKdBPA4nX3
+	 6Z8eNCZitPjC4yG1SZUSiR/zGqVte1kWgW1J90ps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0734/1146] chardev: fix error handling in cdev_device_add()
-Date: Wed, 28 Dec 2022 15:37:53 +0100
-Message-Id: <20221228144350.085566442@linuxfoundation.org>
+Subject: [PATCH 6.0 0772/1073] iommu/sun50i: Implement .iotlb_sync_map
+Date: Wed, 28 Dec 2022 15:39:20 +0100
+Message-Id: <20221228144348.982291413@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,52 +35,141 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 11fa7fefe3d8fac7da56bc9aa3dd5fb3081ca797 ]
+[ Upstream commit e563cc0c787c85a4d9def0a77078dc5d3f445e3d ]
 
-While doing fault injection test, I got the following report:
+Allocated iova ranges need to be invalidated immediately or otherwise
+they might or might not work when used by master or CPU. This was
+discovered when running video decoder conformity test with Cedrus. Some
+videos were now and then decoded incorrectly and generated page faults.
 
-------------[ cut here ]------------
-kobject: '(null)' (0000000039956980): is not initialized, yet kobject_put() is being called.
-WARNING: CPU: 3 PID: 6306 at kobject_put+0x23d/0x4e0
-CPU: 3 PID: 6306 Comm: 283 Tainted: G        W          6.1.0-rc2-00005-g307c1086d7c9 #1253
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
-RIP: 0010:kobject_put+0x23d/0x4e0
-Call Trace:
- <TASK>
- cdev_device_add+0x15e/0x1b0
- __iio_device_register+0x13b4/0x1af0 [industrialio]
- __devm_iio_device_register+0x22/0x90 [industrialio]
- max517_probe+0x3d8/0x6b4 [max517]
- i2c_device_probe+0xa81/0xc00
+According to vendor driver, it's enough to invalidate just start and end
+TLB and PTW cache lines. Documentation says that neighbouring lines must
+be invalidated too. Finally, when page fault occurs, that iova must be
+invalidated the same way, according to documentation.
 
-When device_add() is injected fault and returns error, if dev->devt is not set,
-cdev_add() is not called, cdev_del() is not needed. Fix this by checking dev->devt
-in error path.
-
-Fixes: 233ed09d7fda ("chardev: add helper function to register char devs with a struct device")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221202030237.520280-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://lore.kernel.org/r/20221025165415.307591-6-jernej.skrabec@gmail.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/char_dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/sun50i-iommu.c | 73 ++++++++++++++++++++++++++++++++++++
+ 1 file changed, 73 insertions(+)
 
-diff --git a/fs/char_dev.c b/fs/char_dev.c
-index ba0ded7842a7..3f667292608c 100644
---- a/fs/char_dev.c
-+++ b/fs/char_dev.c
-@@ -547,7 +547,7 @@ int cdev_device_add(struct cdev *cdev, struct device *dev)
- 	}
+diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
+index 7c3b2ac552da..d7c5e9b1a087 100644
+--- a/drivers/iommu/sun50i-iommu.c
++++ b/drivers/iommu/sun50i-iommu.c
+@@ -93,6 +93,8 @@
+ #define NUM_PT_ENTRIES			256
+ #define PT_SIZE				(NUM_PT_ENTRIES * PT_ENTRY_SIZE)
  
- 	rc = device_add(dev);
--	if (rc)
-+	if (rc && dev->devt)
- 		cdev_del(cdev);
++#define SPAGE_SIZE			4096
++
+ struct sun50i_iommu {
+ 	struct iommu_device iommu;
  
- 	return rc;
+@@ -295,6 +297,62 @@ static void sun50i_table_flush(struct sun50i_iommu_domain *sun50i_domain,
+ 	dma_sync_single_for_device(iommu->dev, dma, size, DMA_TO_DEVICE);
+ }
+ 
++static void sun50i_iommu_zap_iova(struct sun50i_iommu *iommu,
++				  unsigned long iova)
++{
++	u32 reg;
++	int ret;
++
++	iommu_write(iommu, IOMMU_TLB_IVLD_ADDR_REG, iova);
++	iommu_write(iommu, IOMMU_TLB_IVLD_ADDR_MASK_REG, GENMASK(31, 12));
++	iommu_write(iommu, IOMMU_TLB_IVLD_ENABLE_REG,
++		    IOMMU_TLB_IVLD_ENABLE_ENABLE);
++
++	ret = readl_poll_timeout_atomic(iommu->base + IOMMU_TLB_IVLD_ENABLE_REG,
++					reg, !reg, 1, 2000);
++	if (ret)
++		dev_warn(iommu->dev, "TLB invalidation timed out!\n");
++}
++
++static void sun50i_iommu_zap_ptw_cache(struct sun50i_iommu *iommu,
++				       unsigned long iova)
++{
++	u32 reg;
++	int ret;
++
++	iommu_write(iommu, IOMMU_PC_IVLD_ADDR_REG, iova);
++	iommu_write(iommu, IOMMU_PC_IVLD_ENABLE_REG,
++		    IOMMU_PC_IVLD_ENABLE_ENABLE);
++
++	ret = readl_poll_timeout_atomic(iommu->base + IOMMU_PC_IVLD_ENABLE_REG,
++					reg, !reg, 1, 2000);
++	if (ret)
++		dev_warn(iommu->dev, "PTW cache invalidation timed out!\n");
++}
++
++static void sun50i_iommu_zap_range(struct sun50i_iommu *iommu,
++				   unsigned long iova, size_t size)
++{
++	assert_spin_locked(&iommu->iommu_lock);
++
++	iommu_write(iommu, IOMMU_AUTO_GATING_REG, 0);
++
++	sun50i_iommu_zap_iova(iommu, iova);
++	sun50i_iommu_zap_iova(iommu, iova + SPAGE_SIZE);
++	if (size > SPAGE_SIZE) {
++		sun50i_iommu_zap_iova(iommu, iova + size);
++		sun50i_iommu_zap_iova(iommu, iova + size + SPAGE_SIZE);
++	}
++	sun50i_iommu_zap_ptw_cache(iommu, iova);
++	sun50i_iommu_zap_ptw_cache(iommu, iova + SZ_1M);
++	if (size > SZ_1M) {
++		sun50i_iommu_zap_ptw_cache(iommu, iova + size);
++		sun50i_iommu_zap_ptw_cache(iommu, iova + size + SZ_1M);
++	}
++
++	iommu_write(iommu, IOMMU_AUTO_GATING_REG, IOMMU_AUTO_GATING_ENABLE);
++}
++
+ static int sun50i_iommu_flush_all_tlb(struct sun50i_iommu *iommu)
+ {
+ 	u32 reg;
+@@ -344,6 +402,18 @@ static void sun50i_iommu_flush_iotlb_all(struct iommu_domain *domain)
+ 	spin_unlock_irqrestore(&iommu->iommu_lock, flags);
+ }
+ 
++static void sun50i_iommu_iotlb_sync_map(struct iommu_domain *domain,
++					unsigned long iova, size_t size)
++{
++	struct sun50i_iommu_domain *sun50i_domain = to_sun50i_domain(domain);
++	struct sun50i_iommu *iommu = sun50i_domain->iommu;
++	unsigned long flags;
++
++	spin_lock_irqsave(&iommu->iommu_lock, flags);
++	sun50i_iommu_zap_range(iommu, iova, size);
++	spin_unlock_irqrestore(&iommu->iommu_lock, flags);
++}
++
+ static void sun50i_iommu_iotlb_sync(struct iommu_domain *domain,
+ 				    struct iommu_iotlb_gather *gather)
+ {
+@@ -767,6 +837,7 @@ static const struct iommu_ops sun50i_iommu_ops = {
+ 		.attach_dev	= sun50i_iommu_attach_device,
+ 		.detach_dev	= sun50i_iommu_detach_device,
+ 		.flush_iotlb_all = sun50i_iommu_flush_iotlb_all,
++		.iotlb_sync_map = sun50i_iommu_iotlb_sync_map,
+ 		.iotlb_sync	= sun50i_iommu_iotlb_sync,
+ 		.iova_to_phys	= sun50i_iommu_iova_to_phys,
+ 		.map		= sun50i_iommu_map,
+@@ -786,6 +857,8 @@ static void sun50i_iommu_report_fault(struct sun50i_iommu *iommu,
+ 		report_iommu_fault(iommu->domain, iommu->dev, iova, prot);
+ 	else
+ 		dev_err(iommu->dev, "Page fault while iommu not attached to any domain?\n");
++
++	sun50i_iommu_zap_range(iommu, iova, SPAGE_SIZE);
+ }
+ 
+ static phys_addr_t sun50i_iommu_handle_pt_irq(struct sun50i_iommu *iommu,
 -- 
 2.35.1
 
