@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0114A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7828BC433D2;
-	Wed, 28 Dec 2022 15:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8B21863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2534BC433EF;
+	Wed, 28 Dec 2022 15:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240012;
-	bh=mGI0MQc9FfHFClE/U9xBR8eDBfcP0c3KSZPzSgISeWk=;
+	s=korg; t=1672240015;
+	bh=35cZwjIkshA2Ay9vlvOfvedHRYE1QOuN38cd7osSdl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qs2zuuEmBKneiHX144ygpNmxbGf6XgV93yHX/Z21sW08QsGmk8QQUMoCVZvuxpj1S
-	 7154x1WAyNQjHQ8blbIWIhBdKwtoldD6fxCTxWYp0iVME5kQhliInqvaXMje3TJnzn
-	 M6hrphYseLjtB5SwHY753OJal42txguEckIo+6o0=
+	b=Tfi4F1mVRLbouteFEZgXvift8aH1LqjKvyUrJF+uXXZSVtA44U1Zpsc/9UQYyQd9z
+	 BRDUlviT6dAWRyFuXgoDuImmTw1i4i6jmhvGdBRuMLyp52QmhXhnT/jX67DVxHvvI3
+	 OGRyjLAHRQcuOoCjwerhkWqSpV41I/FTMpecU0fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 299/731] mmc: wmt-sdmmc: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:36:46 +0100
-Message-Id: <20221228144305.243137032@linuxfoundation.org>
+Subject: [PATCH 6.1 0071/1146] arm64: dts: mt6779: Fix devicetree build warnings
+Date: Wed, 28 Dec 2022 15:26:50 +0100
+Message-Id: <20221228144332.084572690@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,47 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 29276d56f6ed138db0f38cd31aedc0b725c8c76c ]
+[ Upstream commit 4d759c524c15dc4151e40b9e3f368147fda7b789 ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+Rename fixed-clock oscillators to oscillator-26m and oscillator-32k
+and remove the unit address to fix the unit_address_vs_reg warning;
+fix the unit address for interrupt and intpol controllers by
+removing a leading zero in their unit address.
 
-So fix this by checking the return value and goto error path which will call
-mmc_free_host(), besides, clk_disable_unprepare() also needs be called.
+This commit fixes the following warnings:
 
-Fixes: 3a96dff0f828 ("mmc: SD/MMC Host Controller for Wondermedia WM8505/WM8650")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-10-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+(unit_address_vs_reg): /oscillator@0: node has a unit name, but
+no reg or ranges property
+(unit_address_vs_reg): /oscillator@1: node has a unit name, but
+no reg or ranges property
+(simple_bus_reg): /soc/interrupt-controller@0c000000: simple-bus
+unit address format error, expected "c000000"
+(simple_bus_reg): /soc/intpol-controller@0c53a650: simple-bus
+unit address format error, expected "c53a650"
+
+Fixes: 4c7a6260775d ("arm64: dts: add dts nodes for MT6779")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221013152212.416661-3-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/wmt-sdmmc.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt6779.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mmc/host/wmt-sdmmc.c b/drivers/mmc/host/wmt-sdmmc.c
-index 8df722ec57ed..393319548857 100644
---- a/drivers/mmc/host/wmt-sdmmc.c
-+++ b/drivers/mmc/host/wmt-sdmmc.c
-@@ -859,11 +859,15 @@ static int wmt_mci_probe(struct platform_device *pdev)
- 	/* configure the controller to a known 'ready' state */
- 	wmt_reset_hardware(mmc);
+diff --git a/arch/arm64/boot/dts/mediatek/mt6779.dtsi b/arch/arm64/boot/dts/mediatek/mt6779.dtsi
+index 9bdf5145966c..dde9ce137b4f 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6779.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt6779.dtsi
+@@ -88,14 +88,14 @@ pmu {
+ 		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW 0>;
+ 	};
  
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret)
-+		goto fail7;
+-	clk26m: oscillator@0 {
++	clk26m: oscillator-26m {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <26000000>;
+ 		clock-output-names = "clk26m";
+ 	};
  
- 	dev_info(&pdev->dev, "WMT SDHC Controller initialized\n");
+-	clk32k: oscillator@1 {
++	clk32k: oscillator-32k {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <32768>;
+@@ -117,7 +117,7 @@ soc {
+ 		compatible = "simple-bus";
+ 		ranges;
  
- 	return 0;
-+fail7:
-+	clk_disable_unprepare(priv->clk_sdmmc);
- fail6:
- 	clk_put(priv->clk_sdmmc);
- fail5_and_a_half:
+-		gic: interrupt-controller@0c000000 {
++		gic: interrupt-controller@c000000 {
+ 			compatible = "arm,gic-v3";
+ 			#interrupt-cells = <4>;
+ 			interrupt-parent = <&gic>;
+@@ -138,7 +138,7 @@ ppi_cluster1: interrupt-partition-1 {
+ 
+ 		};
+ 
+-		sysirq: intpol-controller@0c53a650 {
++		sysirq: intpol-controller@c53a650 {
+ 			compatible = "mediatek,mt6779-sysirq",
+ 				     "mediatek,mt6577-sysirq";
+ 			interrupt-controller;
 -- 
 2.35.1
 
