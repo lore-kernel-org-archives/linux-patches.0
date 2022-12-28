@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D38DB23AF
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:58:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30A6DC433EF;
-	Wed, 28 Dec 2022 16:58:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A7A23AF
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:58:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08672C433D2;
+	Wed, 28 Dec 2022 16:58:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246733;
-	bh=2xnQGQeWu6FiwzwGPBP5GeWXGIQ5uyJxjO/4k3NZbjo=;
+	s=korg; t=1672246736;
+	bh=RasDkXRFi84a4c6TvGJDhFvdAMwpujcclByER8bQ844=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NoPUNhf6wTuiUn1g+1xXprZLGASq1FKjVapzkfk2y5tiwTgxjuxTznlJt8rNvzzkM
-	 ty96aQ9xwkEI9VUjN3mMa9NkwabuN+DwvOeG7h+4hWPGSegZ6xWnai0POt+UtNmTDH
-	 hNDU5ahSo6x/iAqEkWjp1Wr2NN7a+53+PU9xUQWk=
+	b=L9+Za5/GHFG6q3h+TtFkCDSihMXpvg5mWyDIiq48NvupWImBl65tvDdLBEwB87/Ey
+	 0mN09Hlnv9dQJj+PMmIWXX2w7LVapZijvt47WWd2NZlcqh1tN7eYpA2hiD/RW/Fc8k
+	 32+I57ngGacjROTD2z+24Xs4TfaI9KWk96n84l8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 1143/1146] net: stmmac: fix errno when create_singlethread_workqueue() fails
-Date: Wed, 28 Dec 2022 15:44:42 +0100
-Message-Id: <20221228144401.186207384@linuxfoundation.org>
+	"Stephen Rothwell" <sfr@canb.auug.org.au>,
+	Lin Ma <linma@zju.edu.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 6.1 1144/1146] media: dvbdev: fix build warning due to comments
+Date: Wed, 28 Dec 2022 15:44:43 +0100
+Message-Id: <20221228144401.213301003@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,33 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Lin Ma <linma@zju.edu.cn>
 
-commit 2cb815cfc78b137ee38bcd65e7c955d6cc2cc250 upstream.
+commit 3edfd14bb50fa6f94ed1a37bbb17d9f1c2793b57 upstream.
 
-We should set the return value to -ENOMEM explicitly when
-create_singlethread_workqueue() fails in stmmac_dvr_probe(),
-otherwise we'll lose the error value.
+Previous commit that introduces reference counter does not add proper
+comments, which will lead to warning when building htmldocs. Fix them.
 
-Fixes: a137f3f27f92 ("net: stmmac: fix possible memory leak in stmmac_dvr_probe()")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20221214080117.3514615-1-cuigaosheng1@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reported-by: "Stephen Rothwell" <sfr@canb.auug.org.au>
+Fixes: 0fc044b2b5e2 ("media: dvbdev: adopts refcnt to avoid UAF")
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |    1 +
- 1 file changed, 1 insertion(+)
+ include/media/dvbdev.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -7097,6 +7097,7 @@ int stmmac_dvr_probe(struct device *devi
- 	priv->wq = create_singlethread_workqueue("stmmac_wq");
- 	if (!priv->wq) {
- 		dev_err(priv->device, "failed to create workqueue\n");
-+		ret = -ENOMEM;
- 		goto error_wq_init;
- 	}
+--- a/include/media/dvbdev.h
++++ b/include/media/dvbdev.h
+@@ -126,6 +126,7 @@ struct dvb_adapter {
+  * struct dvb_device - represents a DVB device node
+  *
+  * @list_head:	List head with all DVB devices
++ * @ref:	reference counter
+  * @fops:	pointer to struct file_operations
+  * @adapter:	pointer to the adapter that holds this device node
+  * @type:	type of the device, as defined by &enum dvb_device_type.
+@@ -196,7 +197,7 @@ struct dvb_device {
+ struct dvb_device *dvb_device_get(struct dvb_device *dvbdev);
  
+ /**
+- * dvb_device_get - Decrease dvb_device reference
++ * dvb_device_put - Decrease dvb_device reference
+  *
+  * @dvbdev:	pointer to struct dvb_device
+  */
 
 
