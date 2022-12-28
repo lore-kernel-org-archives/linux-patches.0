@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAAAA1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:49:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59179C433D2;
-	Wed, 28 Dec 2022 15:49:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E851863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:49:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3307C433EF;
+	Wed, 28 Dec 2022 15:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242557;
-	bh=vejQkFDdSOS03xjmkABwON08TrvkSVRcuB0GKoJf21k=;
+	s=korg; t=1672242560;
+	bh=EG+e9gZtWBtSxd40PAuJyMF+fz0eBwH1KLEtrXDgJ8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a+ubaS5kn5RTjRKYy8mDBYjU1Inr5FuqnaHfbM/u4A6qiyL1FP38nSIIv0p9eERTV
-	 24U7rIzAKCss6QbCByZVWf56T+aod5ylY2a6DbRvexUJhrhi0Ggm7xTK5doAH12F4q
-	 Wx3JwK0M+Kv+8djxnZZNzNTnltKsHYOqyXDyk514=
+	b=lf9CxZeBtKLzPo4CV1BQ3+J0W0X3cG/NMiqrD1XudxsOB0o89dsU9sVxsF0caQP3K
+	 I0t6RSQaFttodS9FPqyhpW3NYG9yiC36mx1gfMChP1LFSdcL7LOEjwImMoBz2Pzn7O
+	 DCDjPhO9irBThQcQN2TJximeO32fL1KmpBwwrqXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xia Fukun <xiafukun@huawei.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0425/1073] drm/i915/bios: fix a memory leak in generate_lfp_data_ptrs
-Date: Wed, 28 Dec 2022 15:33:33 +0100
-Message-Id: <20221228144339.566314747@linuxfoundation.org>
+Subject: [PATCH 5.15 619/731] binfmt_misc: fix shift-out-of-bounds in check_special_flags
+Date: Wed, 28 Dec 2022 15:42:06 +0100
+Message-Id: <20221228144314.477038448@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,41 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xia Fukun <xiafukun@huawei.com>
+From: Liu Shixin <liushixin2@huawei.com>
 
-[ Upstream commit 1382901f75a5a7dc8eac05059fd0c7816def4eae ]
+[ Upstream commit 6a46bf558803dd2b959ca7435a5c143efe837217 ]
 
-When (size != 0 || ptrs->lvds_ entries != 3), the program tries to
-free() the ptrs. However, the ptrs is not created by calling kzmalloc(),
-but is obtained by pointer offset operation.
-This may lead to memory leaks or undefined behavior.
+UBSAN reported a shift-out-of-bounds warning:
 
-Fix this by replacing the arguments of kfree() with ptrs_block.
+ left shift of 1 by 31 places cannot be represented in type 'int'
+ Call Trace:
+  <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x8d/0xcf lib/dump_stack.c:106
+  ubsan_epilogue+0xa/0x44 lib/ubsan.c:151
+  __ubsan_handle_shift_out_of_bounds+0x1e7/0x208 lib/ubsan.c:322
+  check_special_flags fs/binfmt_misc.c:241 [inline]
+  create_entry fs/binfmt_misc.c:456 [inline]
+  bm_register_write+0x9d3/0xa20 fs/binfmt_misc.c:654
+  vfs_write+0x11e/0x580 fs/read_write.c:582
+  ksys_write+0xcf/0x120 fs/read_write.c:637
+  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+  do_syscall_64+0x34/0x80 arch/x86/entry/common.c:80
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ RIP: 0033:0x4194e1
 
-Fixes: a87d0a847607 ("drm/i915/bios: Generate LFP data table pointers if the VBT lacks them")
-Signed-off-by: Xia Fukun <xiafukun@huawei.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221125063428.69486-1-xiafukun@huawei.com
-(cherry picked from commit 7674cd0b7d28b952151c3df26bbfa7e07eb2b4ec)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Since the type of Node's flags is unsigned long, we should define these
+macros with same type too.
+
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221102025123.1117184-1-liushixin2@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_bios.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/binfmt_misc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_bios.c b/drivers/gpu/drm/i915/display/intel_bios.c
-index 459571e2cc57..2bfcfbfa52a4 100644
---- a/drivers/gpu/drm/i915/display/intel_bios.c
-+++ b/drivers/gpu/drm/i915/display/intel_bios.c
-@@ -414,7 +414,7 @@ static void *generate_lfp_data_ptrs(struct drm_i915_private *i915,
- 		ptrs->lvds_entries++;
+diff --git a/fs/binfmt_misc.c b/fs/binfmt_misc.c
+index e1eae7ea823a..bb202ad369d5 100644
+--- a/fs/binfmt_misc.c
++++ b/fs/binfmt_misc.c
+@@ -44,10 +44,10 @@ static LIST_HEAD(entries);
+ static int enabled = 1;
  
- 	if (size != 0 || ptrs->lvds_entries != 3) {
--		kfree(ptrs);
-+		kfree(ptrs_block);
- 		return NULL;
- 	}
+ enum {Enabled, Magic};
+-#define MISC_FMT_PRESERVE_ARGV0 (1 << 31)
+-#define MISC_FMT_OPEN_BINARY (1 << 30)
+-#define MISC_FMT_CREDENTIALS (1 << 29)
+-#define MISC_FMT_OPEN_FILE (1 << 28)
++#define MISC_FMT_PRESERVE_ARGV0 (1UL << 31)
++#define MISC_FMT_OPEN_BINARY (1UL << 30)
++#define MISC_FMT_CREDENTIALS (1UL << 29)
++#define MISC_FMT_OPEN_FILE (1UL << 28)
  
+ typedef struct {
+ 	struct list_head list;
 -- 
 2.35.1
 
