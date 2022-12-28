@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1221C15
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:30:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E507DC433D2;
-	Wed, 28 Dec 2022 16:30:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B55C10E9
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:30:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA34C433D2;
+	Wed, 28 Dec 2022 16:30:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245028;
-	bh=Mt3ekxmlDTqRJ1l1rjm3C8i3c0nhGxYJwi4DCc/D+TE=;
+	s=korg; t=1672245031;
+	bh=QpTKAsx72ADvHR3HjIkM4tgMilHaT3NZwCapRsf8+po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LIqbgnDA9FVV+Oaj7j4kta/HogYXhCrjIsdcXEw91f4VxZOcoPy87VnTDCOrdTlf+
-	 8UGa3LpIAfBYRBK0guWeccKdY+gpecghs1pN8b8jvMMPhbvbOBpJdFPVIdcr401Arx
-	 OqWdTX64VDskOqERloywMOpjRue2K/ef4h0CKgMM=
+	b=e5a2Dh6Cn8n4ge6SntlenPeMQ09fA10juXeItI7x2PEx425ftX72SSOwHbZMMNwa4
+	 Fr7suZFGIMTKuZEH0PsVGSfEfv+VByN4MVe+2qU4WtHCpNBVhQd2jIwFqTY6j5RMUY
+	 3XxUFxF2+OxrOJE1y8ulB+gjdLymnVJMkKZoMR5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Marek Vasut <marex@denx.de>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0818/1073] pwm: mediatek: always use bus clock for PWM on MT7622
-Date: Wed, 28 Dec 2022 15:40:06 +0100
-Message-Id: <20221228144350.230000250@linuxfoundation.org>
+Subject: [PATCH 6.1 0781/1146] power: supply: bq25890: Ensure pump_express_work is cancelled on remove
+Date: Wed, 28 Dec 2022 15:38:40 +0100
+Message-Id: <20221228144351.360715573@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,44 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit aa3c668f2f98856af96e13f44da6ca4f26f0b98c ]
+[ Upstream commit a7aaa80098d5b7608b2dc1e883e3c3f929415243 ]
 
-According to MT7622 Reference Manual for Development Board v1.0 the PWM
-unit found in the MT7622 SoC also comes with the PWM_CK_26M_SEL register
-at offset 0x210 just like other modern MediaTek ARM64 SoCs.
-And also MT7622 sets that register to 0x00000001 on reset which is
-described as 'Select 26M fix CLK as BCLK' in the datasheet.
-Hence set has_ck_26m_sel to true also for MT7622 which results in the
-driver writing 0 to the PWM_CK_26M_SEL register which is described as
-'Select bus CLK as BCLK'.
+The pump_express_work which gets queued from an external_power_changed
+callback might be pending / running on remove() (or on probe failure).
 
-Fixes: 0c0ead76235db0 ("pwm: mediatek: Always use bus clock")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/Y1iF2slvSblf6bYK@makrotopia.org
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+Add a devm action cancelling the work, to ensure that it is cancelled.
+
+Note the devm action is added before devm_power_supply_register(), making
+it run after devm unregisters the power_supply, so that the work cannot
+be queued anymore (this is also why a devm action is used for this).
+
+Fixes: 48f45b094dbb ("power: supply: bq25890: Support higher charging voltages through Pump Express+ protocol")
+Reviewed-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-mediatek.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/power/supply/bq25890_charger.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/pwm/pwm-mediatek.c b/drivers/pwm/pwm-mediatek.c
-index 6901a44dc428..a337b47dc2f7 100644
---- a/drivers/pwm/pwm-mediatek.c
-+++ b/drivers/pwm/pwm-mediatek.c
-@@ -296,7 +296,7 @@ static const struct pwm_mediatek_of_data mt6795_pwm_data = {
- static const struct pwm_mediatek_of_data mt7622_pwm_data = {
- 	.num_pwms = 6,
- 	.pwm45_fixup = false,
--	.has_ck_26m_sel = false,
-+	.has_ck_26m_sel = true,
- };
+diff --git a/drivers/power/supply/bq25890_charger.c b/drivers/power/supply/bq25890_charger.c
+index f212fc7cbb6d..0e15302b8df2 100644
+--- a/drivers/power/supply/bq25890_charger.c
++++ b/drivers/power/supply/bq25890_charger.c
+@@ -1219,6 +1219,13 @@ static int bq25890_fw_probe(struct bq25890_device *bq)
+ 	return 0;
+ }
  
- static const struct pwm_mediatek_of_data mt7623_pwm_data = {
++static void bq25890_non_devm_cleanup(void *data)
++{
++	struct bq25890_device *bq = data;
++
++	cancel_delayed_work_sync(&bq->pump_express_work);
++}
++
+ static int bq25890_probe(struct i2c_client *client)
+ {
+ 	struct device *dev = &client->dev;
+@@ -1274,6 +1281,14 @@ static int bq25890_probe(struct i2c_client *client)
+ 	/* OTG reporting */
+ 	bq->usb_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB2);
+ 
++	/*
++	 * This must be before bq25890_power_supply_init(), so that it runs
++	 * after devm unregisters the power_supply.
++	 */
++	ret = devm_add_action_or_reset(dev, bq25890_non_devm_cleanup, bq);
++	if (ret)
++		return ret;
++
+ 	ret = bq25890_register_regulator(bq);
+ 	if (ret)
+ 		return ret;
 -- 
 2.35.1
 
