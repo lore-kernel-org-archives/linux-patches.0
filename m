@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 936F81C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A516C433D2;
-	Wed, 28 Dec 2022 16:17:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB2C1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E95C433EF;
+	Wed, 28 Dec 2022 16:17:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244226;
-	bh=tCKhIKES01vCm26ZLEvARUQHAFuL/43QG7Or5OiUYno=;
+	s=korg; t=1672244229;
+	bh=in6OTzl7ybApRxai7+zCHu0cKfVba7bQHKZk9OyklKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KQdkhikFL5EitRw9muuc1q7+5msfkib4vRm4T1QIqXatbe7W2W0T+sDX2X+p4zmp8
-	 U+zOM/9HxwiSUHtek4V5Qp/JW4mzsXQIo2qAc91ipFt64sRuYzqrq0lMjuK8SkLDnP
-	 Wfh7wr1LiYtMqlS5RpXNOONACCQOj937YYq28yL0=
+	b=dm4uCIlL2LFc3mcxQlblC6TqHjxbJYJj1uBEuhgvu3YH3j5hHsXtl1WD68+yNq1bM
+	 dACm0gAcz5K+8o2x8FcGdiebQBcEGPBbATpWducR0tmKUg99S0tkLEZagt/ddwY/lD
+	 RQ8BXdWVArOVPc8mzW35Rusu3huDnN/uqe9SLuL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Zhang Yiqun <zhangyiqun@phytium.com.cn>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0671/1073] usb: fotg210-udc: Fix ages old endianness issues
-Date: Wed, 28 Dec 2022 15:37:39 +0100
-Message-Id: <20221228144346.265929133@linuxfoundation.org>
+Subject: [PATCH 6.1 0632/1146] crypto: tcrypt - Fix multibuffer skcipher speed test mem leak
+Date: Wed, 28 Dec 2022 15:36:11 +0100
+Message-Id: <20221228144347.333286846@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,69 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Zhang Yiqun <zhangyiqun@phytium.com.cn>
 
-[ Upstream commit 46ed6026ca2181c917c8334a82e3eaf40a6234dd ]
+[ Upstream commit 1aa33fc8d4032227253ceb736f47c52b859d9683 ]
 
-The code in the FOTG210 driver isn't entirely endianness-agnostic
-as reported by the kernel robot sparse testing. This came to
-the surface while moving the files around.
+In the past, the data for mb-skcipher test has been allocated
+twice, that means the first allcated memory area is without
+free, which may cause a potential memory leakage. So this
+patch is to remove one allocation to fix this error.
 
-The driver is only used on little-endian systems, so this causes
-no real-world regression, but it is nice to be strict and have
-some compile coverage also on big endian machines, so fix it
-up with the right LE accessors.
-
-Fixes: b84a8dee23fd ("usb: gadget: add Faraday fotg210_udc driver")
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/linux-usb/202211110910.0dJ7nZCn-lkp@intel.com/
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20221111090317.94228-1-linus.walleij@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e161c5930c15 ("crypto: tcrypt - add multibuf skcipher...")
+Signed-off-by: Zhang Yiqun <zhangyiqun@phytium.com.cn>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/fotg210-udc.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ crypto/tcrypt.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
-diff --git a/drivers/usb/gadget/udc/fotg210-udc.c b/drivers/usb/gadget/udc/fotg210-udc.c
-index fdca28e72a3b..d0e051beb3af 100644
---- a/drivers/usb/gadget/udc/fotg210-udc.c
-+++ b/drivers/usb/gadget/udc/fotg210-udc.c
-@@ -629,10 +629,10 @@ static void fotg210_request_error(struct fotg210_udc *fotg210)
- static void fotg210_set_address(struct fotg210_udc *fotg210,
- 				struct usb_ctrlrequest *ctrl)
- {
--	if (ctrl->wValue >= 0x0100) {
-+	if (le16_to_cpu(ctrl->wValue) >= 0x0100) {
- 		fotg210_request_error(fotg210);
- 	} else {
--		fotg210_set_dev_addr(fotg210, ctrl->wValue);
-+		fotg210_set_dev_addr(fotg210, le16_to_cpu(ctrl->wValue));
- 		fotg210_set_cxdone(fotg210);
- 	}
- }
-@@ -713,17 +713,17 @@ static void fotg210_get_status(struct fotg210_udc *fotg210,
+diff --git a/crypto/tcrypt.c b/crypto/tcrypt.c
+index 3f7dc94a63e0..b23235d58a12 100644
+--- a/crypto/tcrypt.c
++++ b/crypto/tcrypt.c
+@@ -1090,15 +1090,6 @@ static void test_mb_skcipher_speed(const char *algo, int enc, int secs,
+ 			goto out_free_tfm;
+ 		}
  
- 	switch (ctrl->bRequestType & USB_RECIP_MASK) {
- 	case USB_RECIP_DEVICE:
--		fotg210->ep0_data = 1 << USB_DEVICE_SELF_POWERED;
-+		fotg210->ep0_data = cpu_to_le16(1 << USB_DEVICE_SELF_POWERED);
- 		break;
- 	case USB_RECIP_INTERFACE:
--		fotg210->ep0_data = 0;
-+		fotg210->ep0_data = cpu_to_le16(0);
- 		break;
- 	case USB_RECIP_ENDPOINT:
- 		epnum = ctrl->wIndex & USB_ENDPOINT_NUMBER_MASK;
- 		if (epnum)
- 			fotg210->ep0_data =
--				fotg210_is_epnstall(fotg210->ep[epnum])
--				<< USB_ENDPOINT_HALT;
-+				cpu_to_le16(fotg210_is_epnstall(fotg210->ep[epnum])
-+					    << USB_ENDPOINT_HALT);
- 		else
- 			fotg210_request_error(fotg210);
- 		break;
+-
+-	for (i = 0; i < num_mb; ++i)
+-		if (testmgr_alloc_buf(data[i].xbuf)) {
+-			while (i--)
+-				testmgr_free_buf(data[i].xbuf);
+-			goto out_free_tfm;
+-		}
+-
+-
+ 	for (i = 0; i < num_mb; ++i) {
+ 		data[i].req = skcipher_request_alloc(tfm, GFP_KERNEL);
+ 		if (!data[i].req) {
 -- 
 2.35.1
 
