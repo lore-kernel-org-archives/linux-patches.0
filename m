@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F9F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37FCAC433EF;
-	Wed, 28 Dec 2022 15:29:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B401863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCEC1C433D2;
+	Wed, 28 Dec 2022 15:29:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241368;
-	bh=tP5GtcpL8y1odZI4Boe03MmjASKA2EbFGCclmc2dx8c=;
+	s=korg; t=1672241371;
+	bh=J1eQpWRD7dauu8lTpjDHvkOmf4Mpsta51pLJZPdOdww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QvkaoBbOc8Uw0MQTUnWeXIpfKqpXBTpJY9k9p1IlWmyVgMRS4qL6wzrw5gmPnq7o/
-	 d2h8Hs0nOZPJw1/5XZHCuNSQmn4y+1ysnJ5baySxq319uacomZamRKrveTNdVtlDkF
-	 6vM8tEGdxJVH1XeIV4Q+sNhM2+jogTn6tcOOt03M=
+	b=gpvIjvd3FWdiCCVETCJFHcOsGMYCPH7iAGcKFiWpiSh7EodfXewDbObBdGFoc1y1B
+	 iYDyAsES/ehroiPdfbjAzuz7gsEcVhCa554boA8Ebbl+4l9aBa2D9JnZyOsoDP1Y6f
+	 r38LiGbJ/TXiqobpktNoXNa3Uk++AVqPVoWPvNz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Frederic Barrat <fbarrat@linux.ibm.com>,
+	Rafael Mendonca <rafaelmendsr@gmail.com>,
+	Tommaso Merciai <tommaso.merciai@amarulasolutions.com>,
+	Martin Kepplinger <martink@posteo.de>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 471/731] cxl: fix possible null-ptr-deref in cxl_guest_init_afu|adapter()
-Date: Wed, 28 Dec 2022 15:39:38 +0100
-Message-Id: <20221228144310.204619936@linuxfoundation.org>
+Subject: [PATCH 6.1 0238/1146] media: i2c: hi846: Fix memory leak in hi846_parse_dt()
+Date: Wed, 28 Dec 2022 15:29:37 +0100
+Message-Id: <20221228144336.602967346@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,97 +37,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Rafael Mendonca <rafaelmendsr@gmail.com>
 
-[ Upstream commit 61c80d1c3833e196256fb060382db94f24d3d9a7 ]
+[ Upstream commit 80113026d415e27483669db7a88b548d1ec3d3d1 ]
 
-If device_register() fails in cxl_register_afu|adapter(), the device
-is not added, device_unregister() can not be called in the error path,
-otherwise it will cause a null-ptr-deref because of removing not added
-device.
+If any of the checks related to the supported link frequencies fail, then
+the V4L2 fwnode resources don't get released before returning, which leads
+to a memleak. Fix this by properly freeing the V4L2 fwnode data in a
+designated label.
 
-As comment of device_register() says, it should use put_device() to give
-up the reference in the error path. So split device_unregister() into
-device_del() and put_device(), then goes to put dev when register fails.
-
-Fixes: 14baf4d9c739 ("cxl: Add guest-specific code")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Acked-by: Andrew Donnellan <ajd@linux.ibm.com>
-Acked-by: Frederic Barrat <fbarrat@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221111145440.2426970-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e8c0882685f9 ("media: i2c: add driver for the SK Hynix Hi-846 8M pixel camera")
+Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
+Reviewed-by: Tommaso Merciai <tommaso.merciai@amarulasolutions.com>
+Reviewed-by: Martin Kepplinger <martink@posteo.de>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/cxl/guest.c | 24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ drivers/media/i2c/hi846.c | 14 ++++++++++----
+ 1 file changed, 10 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/misc/cxl/guest.c b/drivers/misc/cxl/guest.c
-index 186308f1f8eb..6334376826a9 100644
---- a/drivers/misc/cxl/guest.c
-+++ b/drivers/misc/cxl/guest.c
-@@ -959,10 +959,10 @@ int cxl_guest_init_afu(struct cxl *adapter, int slice, struct device_node *afu_n
- 	 * if it returns an error!
- 	 */
- 	if ((rc = cxl_register_afu(afu)))
--		goto err_put1;
-+		goto err_put_dev;
+diff --git a/drivers/media/i2c/hi846.c b/drivers/media/i2c/hi846.c
+index c5b69823f257..7c61873b7198 100644
+--- a/drivers/media/i2c/hi846.c
++++ b/drivers/media/i2c/hi846.c
+@@ -2008,22 +2008,24 @@ static int hi846_parse_dt(struct hi846 *hi846, struct device *dev)
+ 	    bus_cfg.bus.mipi_csi2.num_data_lanes != 4) {
+ 		dev_err(dev, "number of CSI2 data lanes %d is not supported",
+ 			bus_cfg.bus.mipi_csi2.num_data_lanes);
+-		v4l2_fwnode_endpoint_free(&bus_cfg);
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto check_hwcfg_error;
+ 	}
  
- 	if ((rc = cxl_sysfs_afu_add(afu)))
--		goto err_put1;
-+		goto err_del_dev;
+ 	hi846->nr_lanes = bus_cfg.bus.mipi_csi2.num_data_lanes;
  
- 	/*
- 	 * pHyp doesn't expose the programming models supported by the
-@@ -978,7 +978,7 @@ int cxl_guest_init_afu(struct cxl *adapter, int slice, struct device_node *afu_n
- 		afu->modes_supported = CXL_MODE_DIRECTED;
+ 	if (!bus_cfg.nr_of_link_frequencies) {
+ 		dev_err(dev, "link-frequency property not found in DT\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto check_hwcfg_error;
+ 	}
  
- 	if ((rc = cxl_afu_select_best_mode(afu)))
--		goto err_put2;
-+		goto err_remove_sysfs;
+ 	/* Check that link frequences for all the modes are in device tree */
+ 	fq = hi846_check_link_freqs(hi846, &bus_cfg);
+ 	if (fq) {
+ 		dev_err(dev, "Link frequency of %lld is not supported\n", fq);
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto check_hwcfg_error;
+ 	}
  
- 	adapter->afu[afu->slice] = afu;
- 
-@@ -998,10 +998,12 @@ int cxl_guest_init_afu(struct cxl *adapter, int slice, struct device_node *afu_n
+ 	v4l2_fwnode_endpoint_free(&bus_cfg);
+@@ -2044,6 +2046,10 @@ static int hi846_parse_dt(struct hi846 *hi846, struct device *dev)
+ 	}
  
  	return 0;
++
++check_hwcfg_error:
++	v4l2_fwnode_endpoint_free(&bus_cfg);
++	return ret;
+ }
  
--err_put2:
-+err_remove_sysfs:
- 	cxl_sysfs_afu_remove(afu);
--err_put1:
--	device_unregister(&afu->dev);
-+err_del_dev:
-+	device_del(&afu->dev);
-+err_put_dev:
-+	put_device(&afu->dev);
- 	free = false;
- 	guest_release_serr_irq(afu);
- err2:
-@@ -1135,18 +1137,20 @@ struct cxl *cxl_guest_init_adapter(struct device_node *np, struct platform_devic
- 	 * even if it returns an error!
- 	 */
- 	if ((rc = cxl_register_adapter(adapter)))
--		goto err_put1;
-+		goto err_put_dev;
- 
- 	if ((rc = cxl_sysfs_adapter_add(adapter)))
--		goto err_put1;
-+		goto err_del_dev;
- 
- 	/* release the context lock as the adapter is configured */
- 	cxl_adapter_context_unlock(adapter);
- 
- 	return adapter;
- 
--err_put1:
--	device_unregister(&adapter->dev);
-+err_del_dev:
-+	device_del(&adapter->dev);
-+err_put_dev:
-+	put_device(&adapter->dev);
- 	free = false;
- 	cxl_guest_remove_chardev(adapter);
- err1:
+ static int hi846_probe(struct i2c_client *client)
 -- 
 2.35.1
 
