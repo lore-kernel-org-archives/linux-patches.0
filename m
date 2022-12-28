@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC30B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59E86C433EF;
-	Wed, 28 Dec 2022 15:37:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F28D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02948C433EF;
+	Wed, 28 Dec 2022 15:38:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241878;
-	bh=gLMAYmGvZXOm+sdEvg9NA9/6gcoOyK5lv4EWGoSi33Y=;
+	s=korg; t=1672241881;
+	bh=SW+uCNtMoisbJTVwCKWH3BEOYdsx4fwS7gpKikz2TFM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Au1XGm4/9gg7uz68O8SAOMpbqVH5L8z0zt+3bgQWucEb5lO2NZXVaOoyJgkL/AEGY
-	 tQ6r51USzave6lx5NxRLyI+Yv4/c9v9Oo+PrkBvJY71NAMGWxMApa9+szvrQhwJMkw
-	 5Ki3CPsAZOKGY5HZKh10PjbKT3AutKRQnpCre3/g=
+	b=2AaUZP8hDOwgCmnIjyuQW/aI9yutiXLfelnkabP34sELdI2Rb8VRaMK+vO7mPqvZ+
+	 raEMAkFAlr2o/qrhZYPbMr2f+DlguCb88DZPuvxcUNsLntXJbamEH+mzxg5o1T1ZGU
+	 1jZPEukZes8zpjh4ywVOoa910Dxu4wOWjVm5gUVc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0339/1073] Input: elants_i2c - properly handle the reset GPIO when power is off
-Date: Wed, 28 Dec 2022 15:32:07 +0100
-Message-Id: <20221228144337.213406666@linuxfoundation.org>
+Subject: [PATCH 5.15 531/731] iommu/sun50i: Fix flush size
+Date: Wed, 28 Dec 2022 15:40:38 +0100
+Message-Id: <20221228144311.935476938@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,88 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit a85fbd6498441694475716a4d5c65f9d3e073faf ]
+[ Upstream commit 67a8a67f9eceb72e4c73d1d09ed9ab04f4b8e12d ]
 
-As can be seen in elants_i2c_power_off(), we want the reset GPIO
-asserted when power is off. The reset GPIO is active low so we need
-the reset line logic low when power is off to avoid leakage.
+Function sun50i_table_flush() takes number of entries as an argument,
+not number of bytes. Fix that mistake in sun50i_dte_get_page_table().
 
-We have a problem, though, at probe time. At probe time we haven't
-powered the regulators on yet but we have:
-
-  devm_gpiod_get(&client->dev, "reset", GPIOD_OUT_LOW);
-
-While that _looks_ right, it turns out that it's not. The
-GPIOD_OUT_LOW doesn't mean to init the GPIO to low. It means init the
-GPIO to "not asserted". Since this is an active low GPIO that inits it
-to be high.
-
-Let's fix this to properly init the GPIO. Now after both probe and
-power off the state of the GPIO is consistent (it's "asserted" or
-level low).
-
-Once we fix this, we can see that at power on time we no longer to
-assert the reset GPIO as the first thing. The reset GPIO is _always_
-asserted before powering on. Let's fix powering on to account for
-this.
-
-Fixes: afe10358e47a ("Input: elants_i2c - wire up regulator support")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20221117123805.1.I9959ac561dd6e1e8e1ce7085e4de6167b27c574f@changeid
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://lore.kernel.org/r/20221025165415.307591-5-jernej.skrabec@gmail.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/touchscreen/elants_i2c.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/iommu/sun50i-iommu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/input/touchscreen/elants_i2c.c b/drivers/input/touchscreen/elants_i2c.c
-index 879a4d984c90..e1308e179dd6 100644
---- a/drivers/input/touchscreen/elants_i2c.c
-+++ b/drivers/input/touchscreen/elants_i2c.c
-@@ -1329,14 +1329,12 @@ static int elants_i2c_power_on(struct elants_data *ts)
- 	if (IS_ERR_OR_NULL(ts->reset_gpio))
- 		return 0;
- 
--	gpiod_set_value_cansleep(ts->reset_gpio, 1);
--
- 	error = regulator_enable(ts->vcc33);
- 	if (error) {
- 		dev_err(&ts->client->dev,
- 			"failed to enable vcc33 regulator: %d\n",
- 			error);
--		goto release_reset_gpio;
-+		return error;
+diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
+index 16bfba1faee1..ece3d4b4d7ca 100644
+--- a/drivers/iommu/sun50i-iommu.c
++++ b/drivers/iommu/sun50i-iommu.c
+@@ -512,7 +512,7 @@ static u32 *sun50i_dte_get_page_table(struct sun50i_iommu_domain *sun50i_domain,
+ 		sun50i_iommu_free_page_table(iommu, drop_pt);
  	}
  
- 	error = regulator_enable(ts->vccio);
-@@ -1345,7 +1343,7 @@ static int elants_i2c_power_on(struct elants_data *ts)
- 			"failed to enable vccio regulator: %d\n",
- 			error);
- 		regulator_disable(ts->vcc33);
--		goto release_reset_gpio;
-+		return error;
- 	}
+-	sun50i_table_flush(sun50i_domain, page_table, PT_SIZE);
++	sun50i_table_flush(sun50i_domain, page_table, NUM_PT_ENTRIES);
+ 	sun50i_table_flush(sun50i_domain, dte_addr, 1);
  
- 	/*
-@@ -1354,7 +1352,6 @@ static int elants_i2c_power_on(struct elants_data *ts)
- 	 */
- 	udelay(ELAN_POWERON_DELAY_USEC);
- 
--release_reset_gpio:
- 	gpiod_set_value_cansleep(ts->reset_gpio, 0);
- 	if (error)
- 		return error;
-@@ -1462,7 +1459,7 @@ static int elants_i2c_probe(struct i2c_client *client)
- 		return error;
- 	}
- 
--	ts->reset_gpio = devm_gpiod_get(&client->dev, "reset", GPIOD_OUT_LOW);
-+	ts->reset_gpio = devm_gpiod_get(&client->dev, "reset", GPIOD_OUT_HIGH);
- 	if (IS_ERR(ts->reset_gpio)) {
- 		error = PTR_ERR(ts->reset_gpio);
- 
+ 	return page_table;
 -- 
 2.35.1
 
