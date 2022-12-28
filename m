@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C3FD1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:55:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7E6DC433EF;
-	Wed, 28 Dec 2022 14:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55E31863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:55:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C578C433D2;
+	Wed, 28 Dec 2022 14:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239324;
-	bh=qjmxD+5YGuMRDM6VNVHrJ1TKtw9cOCmIcGTAGg7AaA8=;
+	s=korg; t=1672239326;
+	bh=LePJ2vt1YjtHwGGSiscpXiJIZjF6rgIfetJV+DGwa8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fGkOjeYUYAlYo1RbW1dwgTOg0d6kcNGBVCLUCNes98uwNxyvszqMRfM1NhMTXon/X
-	 euDdXgjghoAR51XjlSg8QEI5VuTHGCvVVjfSekdJifT7lf/pr9zdCI6tXR1INORgd6
-	 SwZnRSwTRFdBVqSv2EDUd2JYv1vg3OzMzaCuKsKE=
+	b=lRlMboKD8H4f+nutRNaM+KDveBfLTG/EnI5r2YLI2Wz4o/e1eEBvOPe55SqnYiwGy
+	 lHKqgzYBkUg+RzG6yk1XX1U7RXI7mZ7ck/xxVSp7BRh6i9zXPgtGuBcp6uQqJwN7zh
+	 OyU5dylie+ve7nHHKgjZKiBQQq9VxgJUdZk3Rz4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 201/731] regulator: qcom-rpmh: Fix PMR735a S3 regulator spec
-Date: Wed, 28 Dec 2022 15:35:08 +0100
-Message-Id: <20221228144302.388834795@linuxfoundation.org>
+Subject: [PATCH 6.0 0010/1073] arm64: dts: qcom: sm8250-sony-xperia-edo: fix touchscreen bias-disable
+Date: Wed, 28 Dec 2022 15:26:38 +0100
+Message-Id: <20221228144328.446238791@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,34 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit dd801b2265c81bf0c8b0b4b8f7c1e7bfed078403 ]
+[ Upstream commit 7ff4a646fae3697b039c6b684786a1e309e8445c ]
 
-PMR735a has a wider range than previously defined. Fix it.
+The property to disable bias is "bias-disable".
 
-Fixes: c4e5aa3dbee5 ("regulator: qcom-rpmh: Add PM7325/PMR735A regulator support")
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Link: https://lore.kernel.org/r/20221110210706.80301-1-konrad.dybcio@linaro.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: e76c7e1f15fe ("arm64: dts: qcom: sm8250-edo: Add Samsung touchscreen")
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20220930192954.242546-3-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/qcom-rpmh-regulator.c | 2 +-
+ arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/qcom-rpmh-regulator.c b/drivers/regulator/qcom-rpmh-regulator.c
-index 7f458d510483..27efdbbd90d9 100644
---- a/drivers/regulator/qcom-rpmh-regulator.c
-+++ b/drivers/regulator/qcom-rpmh-regulator.c
-@@ -1108,7 +1108,7 @@ static const struct rpmh_vreg_init_data pm7325_vreg_data[] = {
- static const struct rpmh_vreg_init_data pmr735a_vreg_data[] = {
- 	RPMH_VREG("smps1",  "smp%s1",  &pmic5_ftsmps520, "vdd-s1"),
- 	RPMH_VREG("smps2",  "smp%s2",  &pmic5_ftsmps520, "vdd-s2"),
--	RPMH_VREG("smps3",  "smp%s3",  &pmic5_hfsmps510, "vdd-s3"),
-+	RPMH_VREG("smps3",  "smp%s3",  &pmic5_hfsmps515, "vdd-s3"),
- 	RPMH_VREG("ldo1",   "ldo%s1",  &pmic5_nldo,      "vdd-l1-l2"),
- 	RPMH_VREG("ldo2",   "ldo%s2",  &pmic5_nldo,      "vdd-l1-l2"),
- 	RPMH_VREG("ldo3",   "ldo%s3",  &pmic5_nldo,      "vdd-l3"),
+diff --git a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+index 5428aab3058d..e4769dcfaad7 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo.dtsi
+@@ -619,7 +619,7 @@ ts_int_default: ts-int-default {
+ 		pins = "gpio39";
+ 		function = "gpio";
+ 		drive-strength = <2>;
+-		bias-disabled;
++		bias-disable;
+ 		input-enable;
+ 	};
+ 
 -- 
 2.35.1
 
