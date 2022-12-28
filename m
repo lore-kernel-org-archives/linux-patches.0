@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311E21C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8243DC433EF;
-	Wed, 28 Dec 2022 16:40:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B054C1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 350F4C433D2;
+	Wed, 28 Dec 2022 16:40:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245656;
-	bh=UGuOnxnM7GPmefNXCCPZBE0jOJo+3GsKpHYT1te8Qhc=;
+	s=korg; t=1672245659;
+	bh=qZG5T3xyT7Knk3MeTWpsmEUZ4/PyUg2RjPoFA7v5H1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ie8AwSa40by0mV01yu3Qmbb5guI9ahS+d6+J3AUNRKehUcGfjl8VezWhn9EPNL+LC
-	 mVMo1qEQRvG/rK8+hdR92+p51pp7H7h0rS/DWykdTfsTvmDH6+T0UG6unvmWDb23Oy
-	 AGZ/Mq+ugdfOpD4a6u7US0M+ozoWlmFqVdyVyls8=
+	b=Iw6zZ6kq01dpCNBs17J1JPaHQd/Z11fw0rUf1uu5TM5xoEUEkmVWIgsAe6utTw+ff
+	 1eFZqmWw9OQyxOGYTRJnEWyj/52yLBeLzUhppEuz3OiaQHGIo7+x1ZKVXy8eTFhzL8
+	 iB5rTvHRpgMGRg1j3D7oMYr5nGaAu47yP1EBfrac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
+	Alexandra Winter <wintera@linux.ibm.com>,
 	Kees Cook <keescook@chromium.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0924/1073] drm/meson: Fix return type of meson_encoder_cvbs_mode_valid()
-Date: Wed, 28 Dec 2022 15:41:52 +0100
-Message-Id: <20221228144353.125462165@linuxfoundation.org>
+Subject: [PATCH 6.0 0933/1073] s390/ctcm: Fix return type of ctc{mp,}m_tx()
+Date: Wed, 28 Dec 2022 15:42:01 +0100
+Message-Id: <20221228144353.370520680@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -39,7 +39,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 6c4e4d35203301906afb53c6d1e1302d4c793c05 ]
+[ Upstream commit aa5bf80c3c067b82b4362cd6e8e2194623bcaca6 ]
 
 With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
 indirect call targets are validated against the expected function
@@ -49,45 +49,62 @@ which manifests as either a kernel panic or thread getting killed. A
 proposed warning in clang aims to catch these at compile time, which
 reveals:
 
-  drivers/gpu/drm/meson/meson_encoder_cvbs.c:211:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' with an expression of type 'int (struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .mode_valid = meson_encoder_cvbs_mode_valid,
-                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+  drivers/s390/net/ctcm_main.c:1064:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .ndo_start_xmit         = ctcm_tx,
+                                    ^~~~~~~
+  drivers/s390/net/ctcm_main.c:1072:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .ndo_start_xmit         = ctcmpc_tx,
+                                    ^~~~~~~~~
 
-->mode_valid() in 'struct drm_bridge_funcs' expects a return type of
-'enum drm_mode_status', not 'int'. Adjust the return type of
-meson_encoder_cvbs_mode_valid() to match the prototype's to resolve the
-warning and CFI failure.
+->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
+'netdev_tx_t', not 'int'. Adjust the return type of ctc{mp,}m_tx() to
+match the prototype's to resolve the warning and potential CFI failure,
+should s390 select ARCH_SUPPORTS_CFI_CLANG in the future.
+
+Additionally, while in the area, remove a comment block that is no
+longer relevant.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reported-by: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
 Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221102155242.1927166-1-nathan@kernel.org
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_encoder_cvbs.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/s390/net/ctcm_main.c | 11 ++---------
+ 1 file changed, 2 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_encoder_cvbs.c b/drivers/gpu/drm/meson/meson_encoder_cvbs.c
-index 5675bc2a92cf..3f73b211fa8e 100644
---- a/drivers/gpu/drm/meson/meson_encoder_cvbs.c
-+++ b/drivers/gpu/drm/meson/meson_encoder_cvbs.c
-@@ -116,9 +116,10 @@ static int meson_encoder_cvbs_get_modes(struct drm_bridge *bridge,
- 	return i;
+diff --git a/drivers/s390/net/ctcm_main.c b/drivers/s390/net/ctcm_main.c
+index e0fdd54bfeb7..f672c610cb24 100644
+--- a/drivers/s390/net/ctcm_main.c
++++ b/drivers/s390/net/ctcm_main.c
+@@ -825,16 +825,9 @@ static int ctcmpc_transmit_skb(struct channel *ch, struct sk_buff *skb)
+ /*
+  * Start transmission of a packet.
+  * Called from generic network device layer.
+- *
+- *  skb		Pointer to buffer containing the packet.
+- *  dev		Pointer to interface struct.
+- *
+- * returns 0 if packet consumed, !0 if packet rejected.
+- *         Note: If we return !0, then the packet is free'd by
+- *               the generic network layer.
+  */
+ /* first merge version - leaving both functions separated */
+-static int ctcm_tx(struct sk_buff *skb, struct net_device *dev)
++static netdev_tx_t ctcm_tx(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct ctcm_priv *priv = dev->ml_priv;
+ 
+@@ -877,7 +870,7 @@ static int ctcm_tx(struct sk_buff *skb, struct net_device *dev)
  }
  
--static int meson_encoder_cvbs_mode_valid(struct drm_bridge *bridge,
--					const struct drm_display_info *display_info,
--					const struct drm_display_mode *mode)
-+static enum drm_mode_status
-+meson_encoder_cvbs_mode_valid(struct drm_bridge *bridge,
-+			      const struct drm_display_info *display_info,
-+			      const struct drm_display_mode *mode)
+ /* unmerged MPC variant of ctcm_tx */
+-static int ctcmpc_tx(struct sk_buff *skb, struct net_device *dev)
++static netdev_tx_t ctcmpc_tx(struct sk_buff *skb, struct net_device *dev)
  {
- 	if (meson_cvbs_get_mode(mode))
- 		return MODE_OK;
+ 	int len = 0;
+ 	struct ctcm_priv *priv = dev->ml_priv;
 -- 
 2.35.1
 
