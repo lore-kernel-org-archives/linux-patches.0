@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C131C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:19:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C134C433D2;
-	Wed, 28 Dec 2022 16:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96621C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:19:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3128CC433D2;
+	Wed, 28 Dec 2022 16:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244385;
-	bh=2t4VGP6/TwZJtk6iHWU/J1bzW291JIdvEI9vvwQXQBk=;
+	s=korg; t=1672244388;
+	bh=L3+CR/NM0ZeTpMq0OUP3T1WXjWvtv1KoHfVZQBBe4q8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dGuhdUwddAWSHOEcRYTOv96+O/vo0aj0eUZdIDRrdG6Di2QR3mNngQvbx1p2kkXoC
-	 AZc85Yy9/Ff/l0br4ZXX0ibjj+30yt90CFWXf1oYOfoe2wmxmXN/fXZh2QG9Y7xs96
-	 w0n3F0PTLjuzQB8mzeXpe4tqaQQS7rY1QwP+YzrI=
+	b=vsrdeD0a+fcJO1WDEqqoUwP1MAdOhr2CprPBWyDGVFsgg5k+4+QdLGCjpy/gBh7qz
+	 T31/usDDY5F6nTPyp1Jxy461ZPmTXCD0zyc0tEzJcIdjyhPa9lYH+KlFQT/BuvkPMV
+	 27JVL2zjnOXfynAlpLodD2cNfwkIMAnXxr1ADw80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ramona Bolboaca <ramona.bolboaca@analog.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Patrisious Haddad <phaddad@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0701/1073] iio: adis: add __adis_enable_irq() implementation
-Date: Wed, 28 Dec 2022 15:38:09 +0100
-Message-Id: <20221228144347.073433020@linuxfoundation.org>
+Subject: [PATCH 6.1 0661/1146] RDMA/nldev: Fix failure to send large messages
+Date: Wed, 28 Dec 2022 15:36:40 +0100
+Message-Id: <20221228144348.108493337@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,134 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ramona Bolboaca <ramona.bolboaca@analog.com>
+From: Mark Zhang <markzhang@nvidia.com>
 
-[ Upstream commit 99c05e4283a19a02a256f14100ca4ec3b2da3f62 ]
+[ Upstream commit fc8f93ad3e5485d45c992233c96acd902992dfc4 ]
 
-Add '__adis_enable_irq()' implementation which is the unlocked
-version of 'adis_enable_irq()'.
-Call '__adis_enable_irq()' instead of 'adis_enable_irq()' from
-'__adis_intial_startup()' to keep the expected unlocked functionality.
+Return "-EMSGSIZE" instead of "-EINVAL" when filling a QP entry, so that
+new SKBs will be allocated if there's not enough room in current SKB.
 
-This fix is needed to remove a deadlock for all devices which are
-using 'adis_initial_startup()'. The deadlock occurs because the
-same mutex is acquired twice, without releasing it.
-The mutex is acquired once inside 'adis_initial_startup()', before
-calling '__adis_initial_startup()', and once inside
-'adis_enable_irq()', which is called by '__adis_initial_startup()'.
-The deadlock is removed by calling '__adis_enable_irq()', instead of
-'adis_enable_irq()' from within '__adis_initial_startup()'.
-
-Fixes: b600bd7eb3335 ("iio: adis: do not disabe IRQs in 'adis_init()'")
-Signed-off-by: Ramona Bolboaca <ramona.bolboaca@analog.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20221122082757.449452-2-ramona.bolboaca@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 65959522f806 ("RDMA: Add support to dump resource tracker in RAW format")
+Signed-off-by: Mark Zhang <markzhang@nvidia.com>
+Reviewed-by: Patrisious Haddad <phaddad@nvidia.com>
+Link: https://lore.kernel.org/r/b5e9c62f6b8369acab5648b661bf539cbceeffdc.1669636336.git.leonro@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/adis.c       | 28 ++++++++++------------------
- include/linux/iio/imu/adis.h | 13 ++++++++++++-
- 2 files changed, 22 insertions(+), 19 deletions(-)
+ drivers/infiniband/core/nldev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/imu/adis.c b/drivers/iio/imu/adis.c
-index f7fcfd04f659..bc40240b29e2 100644
---- a/drivers/iio/imu/adis.c
-+++ b/drivers/iio/imu/adis.c
-@@ -270,23 +270,19 @@ EXPORT_SYMBOL_NS(adis_debugfs_reg_access, IIO_ADISLIB);
- #endif
+diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
+index 54d4e693e03b..222733a83ddb 100644
+--- a/drivers/infiniband/core/nldev.c
++++ b/drivers/infiniband/core/nldev.c
+@@ -513,7 +513,7 @@ static int fill_res_qp_entry(struct sk_buff *msg, bool has_cap_net_admin,
  
- /**
-- * adis_enable_irq() - Enable or disable data ready IRQ
-+ * __adis_enable_irq() - Enable or disable data ready IRQ (unlocked)
-  * @adis: The adis device
-  * @enable: Whether to enable the IRQ
-  *
-  * Returns 0 on success, negative error code otherwise
-  */
--int adis_enable_irq(struct adis *adis, bool enable)
-+int __adis_enable_irq(struct adis *adis, bool enable)
- {
--	int ret = 0;
-+	int ret;
- 	u16 msc;
+ 	/* In create_qp() port is not set yet */
+ 	if (qp->port && nla_put_u32(msg, RDMA_NLDEV_ATTR_PORT_INDEX, qp->port))
+-		return -EINVAL;
++		return -EMSGSIZE;
  
--	mutex_lock(&adis->state_lock);
--
--	if (adis->data->enable_irq) {
--		ret = adis->data->enable_irq(adis, enable);
--		goto out_unlock;
--	}
-+	if (adis->data->enable_irq)
-+		return adis->data->enable_irq(adis, enable);
- 
- 	if (adis->data->unmasked_drdy) {
- 		if (enable)
-@@ -294,12 +290,12 @@ int adis_enable_irq(struct adis *adis, bool enable)
- 		else
- 			disable_irq(adis->spi->irq);
- 
--		goto out_unlock;
-+		return 0;
- 	}
- 
- 	ret = __adis_read_reg_16(adis, adis->data->msc_ctrl_reg, &msc);
+ 	ret = nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_LQPN, qp->qp_num);
  	if (ret)
--		goto out_unlock;
-+		return ret;
- 
- 	msc |= ADIS_MSC_CTRL_DATA_RDY_POL_HIGH;
- 	msc &= ~ADIS_MSC_CTRL_DATA_RDY_DIO2;
-@@ -308,13 +304,9 @@ int adis_enable_irq(struct adis *adis, bool enable)
- 	else
- 		msc &= ~ADIS_MSC_CTRL_DATA_RDY_EN;
- 
--	ret = __adis_write_reg_16(adis, adis->data->msc_ctrl_reg, msc);
--
--out_unlock:
--	mutex_unlock(&adis->state_lock);
--	return ret;
-+	return __adis_write_reg_16(adis, adis->data->msc_ctrl_reg, msc);
- }
--EXPORT_SYMBOL_NS(adis_enable_irq, IIO_ADISLIB);
-+EXPORT_SYMBOL_NS(__adis_enable_irq, IIO_ADISLIB);
- 
- /**
-  * __adis_check_status() - Check the device for error conditions (unlocked)
-@@ -445,7 +437,7 @@ int __adis_initial_startup(struct adis *adis)
- 	 * with 'IRQF_NO_AUTOEN' anyways.
- 	 */
- 	if (!adis->data->unmasked_drdy)
--		adis_enable_irq(adis, false);
-+		__adis_enable_irq(adis, false);
- 
- 	if (!adis->data->prod_id_reg)
- 		return 0;
-diff --git a/include/linux/iio/imu/adis.h b/include/linux/iio/imu/adis.h
-index 515ca09764fe..bcbefb757475 100644
---- a/include/linux/iio/imu/adis.h
-+++ b/include/linux/iio/imu/adis.h
-@@ -402,9 +402,20 @@ static inline int adis_update_bits_base(struct adis *adis, unsigned int reg,
- 	__adis_update_bits_base(adis, reg, mask, val, sizeof(val));	\
- })
- 
--int adis_enable_irq(struct adis *adis, bool enable);
- int __adis_check_status(struct adis *adis);
- int __adis_initial_startup(struct adis *adis);
-+int __adis_enable_irq(struct adis *adis, bool enable);
-+
-+static inline int adis_enable_irq(struct adis *adis, bool enable)
-+{
-+	int ret;
-+
-+	mutex_lock(&adis->state_lock);
-+	ret = __adis_enable_irq(adis, enable);
-+	mutex_unlock(&adis->state_lock);
-+
-+	return ret;
-+}
- 
- static inline int adis_check_status(struct adis *adis)
- {
 -- 
 2.35.1
 
