@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F9B81C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E46C433D2;
-	Wed, 28 Dec 2022 16:26:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372B81C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6875C433EF;
+	Wed, 28 Dec 2022 16:26:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244772;
-	bh=isc+PtY/S6UvDtUWaru1orVyUMYcZ031antn4FepVFQ=;
+	s=korg; t=1672244775;
+	bh=rBurc719qreKJtfryobjI1i8Mmm+/tDZv21DfTcX+nM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VIOVYCPQ3R3VUfCNIev0EoMaRFAHkJHKJJlxQdar49vmIdNTB2ucAHsexhUUnqGuU
-	 FSbBHLok4EsO7EBLQvEg/bNwxjKb89XryC+HUERolcvTtMdeIU/06+TKeoDKj48JJZ
-	 Kz9x6BF5fjMPn9dopRsD63lD3biFfpiZpRI4PyvU=
+	b=TupjkTkPJVx1G037CaJMj+xWyweiqr1aL2TZzdyT+rnRVgHEx2HTA6aWSM9rVsIhm
+	 eV4oU99XQXtNFWq/PQcR/8yXFFJfiRY9QiwyOeFy62PvII3QUnBYtANJBd/WjR6PSu
+	 gppJx3+YI8DsVePIKtLPPQ7msYNIOmwGauEl29Lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0771/1073] iommu/sun50i: Fix flush size
-Date: Wed, 28 Dec 2022 15:39:19 +0100
-Message-Id: <20221228144348.954008852@linuxfoundation.org>
+Subject: [PATCH 6.1 0734/1146] chardev: fix error handling in cdev_device_add()
+Date: Wed, 28 Dec 2022 15:37:53 +0100
+Message-Id: <20221228144350.085566442@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +34,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 67a8a67f9eceb72e4c73d1d09ed9ab04f4b8e12d ]
+[ Upstream commit 11fa7fefe3d8fac7da56bc9aa3dd5fb3081ca797 ]
 
-Function sun50i_table_flush() takes number of entries as an argument,
-not number of bytes. Fix that mistake in sun50i_dte_get_page_table().
+While doing fault injection test, I got the following report:
 
-Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://lore.kernel.org/r/20221025165415.307591-5-jernej.skrabec@gmail.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+------------[ cut here ]------------
+kobject: '(null)' (0000000039956980): is not initialized, yet kobject_put() is being called.
+WARNING: CPU: 3 PID: 6306 at kobject_put+0x23d/0x4e0
+CPU: 3 PID: 6306 Comm: 283 Tainted: G        W          6.1.0-rc2-00005-g307c1086d7c9 #1253
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+RIP: 0010:kobject_put+0x23d/0x4e0
+Call Trace:
+ <TASK>
+ cdev_device_add+0x15e/0x1b0
+ __iio_device_register+0x13b4/0x1af0 [industrialio]
+ __devm_iio_device_register+0x22/0x90 [industrialio]
+ max517_probe+0x3d8/0x6b4 [max517]
+ i2c_device_probe+0xa81/0xc00
+
+When device_add() is injected fault and returns error, if dev->devt is not set,
+cdev_add() is not called, cdev_del() is not needed. Fix this by checking dev->devt
+in error path.
+
+Fixes: 233ed09d7fda ("chardev: add helper function to register char devs with a struct device")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221202030237.520280-1-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/sun50i-iommu.c | 2 +-
+ fs/char_dev.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-index 135df6934a9e..7c3b2ac552da 100644
---- a/drivers/iommu/sun50i-iommu.c
-+++ b/drivers/iommu/sun50i-iommu.c
-@@ -512,7 +512,7 @@ static u32 *sun50i_dte_get_page_table(struct sun50i_iommu_domain *sun50i_domain,
- 		sun50i_iommu_free_page_table(iommu, drop_pt);
+diff --git a/fs/char_dev.c b/fs/char_dev.c
+index ba0ded7842a7..3f667292608c 100644
+--- a/fs/char_dev.c
++++ b/fs/char_dev.c
+@@ -547,7 +547,7 @@ int cdev_device_add(struct cdev *cdev, struct device *dev)
  	}
  
--	sun50i_table_flush(sun50i_domain, page_table, PT_SIZE);
-+	sun50i_table_flush(sun50i_domain, page_table, NUM_PT_ENTRIES);
- 	sun50i_table_flush(sun50i_domain, dte_addr, 1);
+ 	rc = device_add(dev);
+-	if (rc)
++	if (rc && dev->devt)
+ 		cdev_del(cdev);
  
- 	return page_table;
+ 	return rc;
 -- 
 2.35.1
 
