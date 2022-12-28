@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63881863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA6BC433D2;
-	Wed, 28 Dec 2022 15:50:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E2D21863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06622C433EF;
+	Wed, 28 Dec 2022 15:50:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242651;
-	bh=ZXSA5oaRgfG2idKcke4QroHb3mxOgdIVEraQJ4fswjQ=;
+	s=korg; t=1672242654;
+	bh=H7SQm+nsc6E7nY8m6I1Nzd5PkMSJcdD1Syg4IkKJv7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2FkVqph5fI9jOJ1ZCOCvUgOnAvkFv5ehDcaoAeRw5Z+fbjY0k60ynyX6EokB+qi+o
-	 bVGydrB+h7nHfLnOCC1/gHHg28/eEVkFj6W6XeZcTaI6JCfahwkgjcnPS0oAhzeUlQ
-	 cpPl3141/7PBHss25DeLjbPKC76jyRt4imxJv3kA=
+	b=iiu0x3y9v2k+3ufQ4mfihF5jYUb3heoqXpyiILSrSGxRILXoHQUTtD9PyKWOLIrIQ
+	 /yo16lrksjFqbuazUS1z/AyHQm0Dv2lnR7GwunOtdiZjc7g3YUGZPnOZicjMPuop1n
+	 qrCb4oY/mPuWxGfPjDfUsaOasqmII+hA0xCF6qzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0398/1146] clk: imx: replace osc_hdmi with dummy
-Date: Wed, 28 Dec 2022 15:32:17 +0100
-Message-Id: <20221228144340.973859570@linuxfoundation.org>
+Subject: [PATCH 6.0 0436/1073] wifi: mac80211: fix memory leak in ieee80211_if_add()
+Date: Wed, 28 Dec 2022 15:33:44 +0100
+Message-Id: <20221228144339.869825563@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,68 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit e7fa365ff66f16772dc06b480cd78f858d10856b ]
+[ Upstream commit 13e5afd3d773c6fc6ca2b89027befaaaa1ea7293 ]
 
-There is no occurrence of the hdmi oscillator in the reference manual
-(document IMX8MNRM Rev 2, 07/2022). Further, if we consider the indexes
-76-81 and 134 of the "Clock Root" table of chapter 5 of the RM, there is
-no entry for the source select bits 101b, which is the setting referenced
-by "osc_hdmi".
-Fix by renaming "osc_hdmi" with "dummy", a clock which has already been
-used for missing source select bits.
+When register_netdevice() failed in ieee80211_if_add(), ndev->tstats
+isn't released. Fix it.
 
-Tested on the BSH SystemMaster (SMM) S2 board.
-
-Fixes: 96d6392b54dbb ("clk: imx: Add support for i.MX8MN clock driver")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Acked-by: Marco Felsch <m.felsch@pengutronix.de>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20221117113637.1978703-3-dario.binacchi@amarulasolutions.com
+Fixes: 5a490510ba5f ("mac80211: use per-CPU TX/RX statistics")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Link: https://lore.kernel.org/r/20221117064500.319983-1-shaozhengchao@huawei.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mn.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ net/mac80211/iface.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/clk/imx/clk-imx8mn.c b/drivers/clk/imx/clk-imx8mn.c
-index 72f9563a0ff6..0fae97e61e2c 100644
---- a/drivers/clk/imx/clk-imx8mn.c
-+++ b/drivers/clk/imx/clk-imx8mn.c
-@@ -108,27 +108,27 @@ static const char * const imx8mn_disp_pixel_sels[] = {"osc_24m", "video_pll1_out
- 						      "sys_pll3_out", "clk_ext4", };
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index 95b58c5cac07..c3eb08b5a47e 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -2414,6 +2414,7 @@ int ieee80211_if_add(struct ieee80211_local *local, const char *name,
  
- static const char * const imx8mn_sai2_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext3", "clk_ext4", };
- 
- static const char * const imx8mn_sai3_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext3", "clk_ext4", };
- 
- static const char * const imx8mn_sai5_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext2", "clk_ext3", };
- 
- static const char * const imx8mn_sai6_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext3", "clk_ext4", };
- 
- static const char * const imx8mn_sai7_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext3", "clk_ext4", };
- 
- static const char * const imx8mn_spdif1_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						  "video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						  "video_pll1_out", "sys_pll1_133m", "dummy",
- 						  "clk_ext2", "clk_ext3", };
- 
- static const char * const imx8mn_enet_ref_sels[] = {"osc_24m", "sys_pll2_125m", "sys_pll2_50m",
+ 		ret = cfg80211_register_netdevice(ndev);
+ 		if (ret) {
++			ieee80211_if_free(ndev);
+ 			free_netdev(ndev);
+ 			return ret;
+ 		}
 -- 
 2.35.1
 
