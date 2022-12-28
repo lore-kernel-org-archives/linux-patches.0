@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3648A1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF16DC433EF;
-	Wed, 28 Dec 2022 16:32:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8E11C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51BCEC433EF;
+	Wed, 28 Dec 2022 16:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245125;
-	bh=76D15eRWSUo3DCDBd8ybBfGLvBsYAAa0+DGzPmVR394=;
+	s=korg; t=1672245127;
+	bh=c1p2GGnfiBQv48CjHps/2/8lXoGXcBXw1/YdZC0f7IU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UI5391SSGp+7G07TPc98q6A8rnW/vPZNp1DEqq7GUnd1x/qZapRM8KefUCvYU9ijO
-	 m28YVeu4EDIxJsbyT8OgpWr1Eeit2eQfXbk1yY2UEPw2IHJ0CZhFZQZHiFtobiUHwr
-	 N/Y0c7CA1AfdDuHsAU5E6D2+hb5c4Wb/vPiUvLnI=
+	b=yiOmhBRUHnBvtqn/vQen01a4tftkKlFLJzsWqdSdu3rGUaYjgPCL45JnLICWCZQ01
+	 SZ7Rygtb/mFARLoTPxkNatvq5iCMW4vC7Jzr4D6d3kmbwY4Qu/WLfGDZuutkfZYag9
+	 A/jF2/jO8Wj8XeogsESwILV9pdmav0lafVs7XIBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiyu Yang <xiyuyang19@fudan.edu.cn>,
-	"J. Bruce Fields" <bfields@redhat.com>,
-	Dan Aloni <dan.aloni@vastdata.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0837/1073] nfsd: under NFSv4.1, fix double svc_xprt_put on rpc_create failure
-Date: Wed, 28 Dec 2022 15:40:25 +0100
-Message-Id: <20221228144350.754538926@linuxfoundation.org>
+Subject: [PATCH 6.1 0801/1146] phy: qcom-qmp-pcie: fix ipq6018 initialisation
+Date: Wed, 28 Dec 2022 15:39:00 +0100
+Message-Id: <20221228144351.906623950@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,85 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Aloni <dan.aloni@vastdata.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 3bc8edc98bd43540dbe648e4ef91f443d6d20a24 ]
+[ Upstream commit 30518b19895789aa9101474af2ee0f62cd882d5e ]
 
-On error situation `clp->cl_cb_conn.cb_xprt` should not be given
-a reference to the xprt otherwise both client cleanup and the
-error handling path of the caller call to put it. Better to
-delay handing over the reference to a later branch.
+The phy_status mask was never set for IPQ6018 which meant that the
+driver would not wait for the PHY to be initialised during power-on and
+would never detect PHY initialisation timeouts.
 
-[   72.530665] refcount_t: underflow; use-after-free.
-[   72.531933] WARNING: CPU: 0 PID: 173 at lib/refcount.c:28 refcount_warn_saturate+0xcf/0x120
-[   72.533075] Modules linked in: nfsd(OE) nfsv4(OE) nfsv3(OE) nfs(OE) lockd(OE) compat_nfs_ssc(OE) nfs_acl(OE) rpcsec_gss_krb5(OE) auth_rpcgss(OE) rpcrdma(OE) dns_resolver fscache netfs grace rdma_cm iw_cm ib_cm sunrpc(OE) mlx5_ib mlx5_core mlxfw pci_hyperv_intf ib_uverbs ib_core xt_MASQUERADE nf_conntrack_netlink nft_counter xt_addrtype nft_compat br_netfilter bridge stp llc nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject nft_ct nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 ip_set overlay nf_tables nfnetlink crct10dif_pclmul crc32_pclmul ghash_clmulni_intel xfs serio_raw virtio_net virtio_blk net_failover failover fuse [last unloaded: sunrpc]
-[   72.540389] CPU: 0 PID: 173 Comm: kworker/u16:5 Tainted: G           OE     5.15.82-dan #1
-[   72.541511] Hardware name: Red Hat KVM/RHEL-AV, BIOS 1.16.0-3.module+el8.7.0+1084+97b81f61 04/01/2014
-[   72.542717] Workqueue: nfsd4_callbacks nfsd4_run_cb_work [nfsd]
-[   72.543575] RIP: 0010:refcount_warn_saturate+0xcf/0x120
-[   72.544299] Code: 55 00 0f 0b 5d e9 01 50 98 00 80 3d 75 9e 39 08 00 0f 85 74 ff ff ff 48 c7 c7 e8 d1 60 8e c6 05 61 9e 39 08 01 e8 f6 51 55 00 <0f> 0b 5d e9 d9 4f 98 00 80 3d 4b 9e 39 08 00 0f 85 4c ff ff ff 48
-[   72.546666] RSP: 0018:ffffb3f841157cf0 EFLAGS: 00010286
-[   72.547393] RAX: 0000000000000026 RBX: ffff89ac6231d478 RCX: 0000000000000000
-[   72.548324] RDX: ffff89adb7c2c2c0 RSI: ffff89adb7c205c0 RDI: ffff89adb7c205c0
-[   72.549271] RBP: ffffb3f841157cf0 R08: 0000000000000000 R09: c0000000ffefffff
-[   72.550209] R10: 0000000000000001 R11: ffffb3f841157ad0 R12: ffff89ac6231d180
-[   72.551142] R13: ffff89ac6231d478 R14: ffff89ac40c06180 R15: ffff89ac6231d4b0
-[   72.552089] FS:  0000000000000000(0000) GS:ffff89adb7c00000(0000) knlGS:0000000000000000
-[   72.553175] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   72.553934] CR2: 0000563a310506a8 CR3: 0000000109a66000 CR4: 0000000000350ef0
-[   72.554874] Call Trace:
-[   72.555278]  <TASK>
-[   72.555614]  svc_xprt_put+0xaf/0xe0 [sunrpc]
-[   72.556276]  nfsd4_process_cb_update.isra.11+0xb7/0x410 [nfsd]
-[   72.557087]  ? update_load_avg+0x82/0x610
-[   72.557652]  ? cpuacct_charge+0x60/0x70
-[   72.558212]  ? dequeue_entity+0xdb/0x3e0
-[   72.558765]  ? queued_spin_unlock+0x9/0x20
-[   72.559358]  nfsd4_run_cb_work+0xfc/0x270 [nfsd]
-[   72.560031]  process_one_work+0x1df/0x390
-[   72.560600]  worker_thread+0x37/0x3b0
-[   72.561644]  ? process_one_work+0x390/0x390
-[   72.562247]  kthread+0x12f/0x150
-[   72.562710]  ? set_kthread_struct+0x50/0x50
-[   72.563309]  ret_from_fork+0x22/0x30
-[   72.563818]  </TASK>
-[   72.564189] ---[ end trace 031117b1c72ec616 ]---
-[   72.566019] list_add corruption. next->prev should be prev (ffff89ac4977e538), but was ffff89ac4763e018. (next=ffff89ac4763e018).
-[   72.567647] ------------[ cut here ]------------
-
-Fixes: a4abc6b12eb1 ("nfsd: Fix svc_xprt refcnt leak when setup callback client failed")
-Cc: Xiyu Yang <xiyuyang19@fudan.edu.cn>
-Cc: J. Bruce Fields <bfields@redhat.com>
-Signed-off-by: Dan Aloni <dan.aloni@vastdata.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 520264db3bf9 ("phy: qcom-qmp: add QMP V2 PCIe PHY support for ipq60xx")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20221012085002.24099-3-johan+linaro@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4callback.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfsd/nfs4callback.c b/fs/nfsd/nfs4callback.c
-index 4ce328209f61..775d38dc00fe 100644
---- a/fs/nfsd/nfs4callback.c
-+++ b/fs/nfsd/nfs4callback.c
-@@ -916,7 +916,6 @@ static int setup_callback_client(struct nfs4_client *clp, struct nfs4_cb_conn *c
- 	} else {
- 		if (!conn->cb_xprt)
- 			return -EINVAL;
--		clp->cl_cb_conn.cb_xprt = conn->cb_xprt;
- 		clp->cl_cb_session = ses;
- 		args.bc_xprt = conn->cb_xprt;
- 		args.prognumber = clp->cl_cb_session->se_cb_prog;
-@@ -936,6 +935,9 @@ static int setup_callback_client(struct nfs4_client *clp, struct nfs4_cb_conn *c
- 		rpc_shutdown_client(client);
- 		return -ENOMEM;
- 	}
-+
-+	if (clp->cl_minorversion != 0)
-+		clp->cl_cb_conn.cb_xprt = conn->cb_xprt;
- 	clp->cl_cb_client = client;
- 	clp->cl_cb_cred = cred;
- 	rcu_read_lock();
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+index 842ddc3e0a1c..6c6c4b7b6b25 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+@@ -1525,6 +1525,7 @@ static const struct qmp_phy_cfg ipq6018_pciephy_cfg = {
+ 
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
++	.phy_status		= PHYSTATUS,
+ };
+ 
+ static const struct qmp_phy_cfg sdm845_qmp_pciephy_cfg = {
 -- 
 2.35.1
 
