@@ -1,36 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9BE81C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE7AC433D2;
-	Wed, 28 Dec 2022 16:41:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAE061C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2681CC433D2;
+	Wed, 28 Dec 2022 16:41:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245681;
-	bh=I9Gx9m76r4Ac5f8DVvtK63xglKXDOM6E0OjZCYSrZJo=;
+	s=korg; t=1672245684;
+	bh=kwAN22GT82QZ6Gdtej146pryhHJx/Z/oP4kQAqPG6ZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mLY25z9V0Ax80WB5biEifGkfb4prtQ9MaEErlhyNUYy6xM21oRgxyL0tKEATqGvXc
-	 cR5P8ImsgzWL26REr7XHuB9oqv8PWdaKQyJOhVcVvF9epRdRDt8S9lGC0jKCJUTMnw
-	 p2b/OkLN9bHe6yQHLW2mP+nyqi/VgbaGHVagVelc=
+	b=nBbtNcNnakwe+aLU3f0CBr6Ao6sAwvaYm3Z60kWR+9mi99IwuDf5jj47UrPl3ui+X
+	 clQnKsxNbVmyNoJGgbK1tboJdE0v9nIm85gGH/zELwOmQ5M7mvhWB1Eq0oo1QbooPD
+	 oLrYk/BksimyL+KUkY65qFd+SM2uoKY88FTpkGEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@gmail.com>,
-	Sean Paul <sean@poorly.run>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	linux-arm-msm@vger.kernel.org,
-	freedreno@lists.freedesktop.org,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0937/1073] drm/msm: Use drm_mode_copy()
-Date: Wed, 28 Dec 2022 15:42:05 +0100
-Message-Id: <20221228144353.479905766@linuxfoundation.org>
+Subject: [PATCH 6.1 0905/1146] block: fix error unwinding in blk_register_queue
+Date: Wed, 28 Dec 2022 15:40:44 +0100
+Message-Id: <20221228144354.798794401@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -41,94 +35,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit b2a1c5ca50db22b3677676dd5bad5f6092429acf ]
+[ Upstream commit 40602997be26887bdfa3d58659c3acb4579099e9 ]
 
-struct drm_display_mode embeds a list head, so overwriting
-the full struct with another one will corrupt the list
-(if the destination mode is on a list). Use drm_mode_copy()
-instead which explicitly preserves the list head of
-the destination mode.
+blk_register_queue fails to handle errors from blk_mq_sysfs_register,
+leaks various resources on errors and accidentally sets queue refs percpu
+refcount to percpu mode on kobject_add failure.  Fix all that by
+properly unwinding on errors.
 
-Even if we know the destination mode is not on any list
-using drm_mode_copy() seems decent as it sets a good
-example. Bad examples of not using it might eventually
-get copied into code where preserving the list head
-actually matters.
-
-Obviously one case not covered here is when the mode
-itself is embedded in a larger structure and the whole
-structure is copied. But if we are careful when copying
-into modes embedded in structures I think we can be a
-little more reassured that bogus list heads haven't been
-propagated in.
-
-@is_mode_copy@
-@@
-drm_mode_copy(...)
-{
-...
-}
-
-@depends on !is_mode_copy@
-struct drm_display_mode *mode;
-expression E, S;
-@@
-(
-- *mode = E
-+ drm_mode_copy(mode, &E)
-|
-- memcpy(mode, E, S)
-+ drm_mode_copy(mode, E)
-)
-
-@depends on !is_mode_copy@
-struct drm_display_mode mode;
-expression E;
-@@
-(
-- mode = E
-+ drm_mode_copy(&mode, &E)
-|
-- memcpy(&mode, E, S)
-+ drm_mode_copy(&mode, E)
-)
-
-@@
-struct drm_display_mode *mode;
-@@
-- &*mode
-+ mode
-
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221107192545.9896-5-ville.syrjala@linux.intel.com
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20221114042637.1009333-4-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: d36a9ea5e776 ("block: fix use-after-free of q->q_usage_counter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-sysfs.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index a49f6dbbe888..c9d9b384ddd0 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -857,7 +857,7 @@ static int dp_display_set_mode(struct msm_dp *dp_display,
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index 3d6951a0b4e7..1631ba2f7259 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -820,13 +820,15 @@ int blk_register_queue(struct gendisk *disk)
+ 	int ret;
  
- 	dp = container_of(dp_display, struct dp_display_private, dp_display);
+ 	mutex_lock(&q->sysfs_dir_lock);
+-
+ 	ret = kobject_add(&q->kobj, &disk_to_dev(disk)->kobj, "queue");
+ 	if (ret < 0)
+-		goto unlock;
++		goto out_unlock_dir;
  
--	dp->panel->dp_mode.drm_mode = mode->drm_mode;
-+	drm_mode_copy(&dp->panel->dp_mode.drm_mode, &mode->drm_mode);
- 	dp->panel->dp_mode.bpp = mode->bpp;
- 	dp->panel->dp_mode.capabilities = mode->capabilities;
- 	dp_panel_init_panel_info(dp->panel);
+-	if (queue_is_mq(q))
+-		blk_mq_sysfs_register(disk);
++	if (queue_is_mq(q)) {
++		ret = blk_mq_sysfs_register(disk);
++		if (ret)
++			goto out_del_queue_kobj;
++	}
+ 	mutex_lock(&q->sysfs_lock);
+ 
+ 	mutex_lock(&q->debugfs_mutex);
+@@ -838,17 +840,17 @@ int blk_register_queue(struct gendisk *disk)
+ 
+ 	ret = disk_register_independent_access_ranges(disk);
+ 	if (ret)
+-		goto put_dev;
++		goto out_debugfs_remove;
+ 
+ 	if (q->elevator) {
+ 		ret = elv_register_queue(q, false);
+ 		if (ret)
+-			goto put_dev;
++			goto out_unregister_ia_ranges;
+ 	}
+ 
+ 	ret = blk_crypto_sysfs_register(disk);
+ 	if (ret)
+-		goto put_dev;
++		goto out_elv_unregister;
+ 
+ 	blk_queue_flag_set(QUEUE_FLAG_REGISTERED, q);
+ 	wbt_enable_default(q);
+@@ -859,8 +861,6 @@ int blk_register_queue(struct gendisk *disk)
+ 	if (q->elevator)
+ 		kobject_uevent(&q->elevator->kobj, KOBJ_ADD);
+ 	mutex_unlock(&q->sysfs_lock);
+-
+-unlock:
+ 	mutex_unlock(&q->sysfs_dir_lock);
+ 
+ 	/*
+@@ -879,13 +879,17 @@ int blk_register_queue(struct gendisk *disk)
+ 
+ 	return ret;
+ 
+-put_dev:
++out_elv_unregister:
+ 	elv_unregister_queue(q);
++out_unregister_ia_ranges:
+ 	disk_unregister_independent_access_ranges(disk);
++out_debugfs_remove:
++	blk_debugfs_remove(disk);
+ 	mutex_unlock(&q->sysfs_lock);
+-	mutex_unlock(&q->sysfs_dir_lock);
++out_del_queue_kobj:
+ 	kobject_del(&q->kobj);
+-
++out_unlock_dir:
++	mutex_unlock(&q->sysfs_dir_lock);
+ 	return ret;
+ }
+ 
 -- 
 2.35.1
 
