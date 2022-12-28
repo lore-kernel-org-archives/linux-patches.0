@@ -1,31 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 048181863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CD7AC433D2;
-	Wed, 28 Dec 2022 15:35:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E191C1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B62C433D2;
+	Wed, 28 Dec 2022 15:35:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241737;
-	bh=1TjtFbsIZv5NGqDHCzpNDsVKhY55ko3BCqipYKiYS64=;
+	s=korg; t=1672241740;
+	bh=A6323jvDmhC2+1qRiHJup+KmUJxHXazqxMFikHkIEk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HxSI2kPnaiwq0qLTtsyNqTuEnx11arVPsLv2wf3jGCwlFdiRgJVcIkCCHR2VmaWlD
-	 kOVoR+CezcaanpLwPFdSPJ447Vf+ZoAyfQw0wO9j6RoZaTZeFQ3bJriTHfoezH6l8k
-	 YpxZ46n+T5Hy9eNKarll/es2amd4VDOMRcCxCpqs=
+	b=djRqcBmNS5i+1v7MsQnwTES+KfL5oS3haO+vYImxfD6F8Q7rYeNeWsKXdONkQ2mNp
+	 MD/h/JEqn3FGHNGYKvXiAMMORqQrsE3B+jbWnGeVOuaG/L4JbTJaK9vwHro2yc1MU+
+	 3p7S1Cc28YCvctD1r6DEPzg6S0iHpOr1KaZJgxFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Ajay Kaher <akaher@vmware.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Alexey Makhalov <amakhalov@vmware.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Leo Yan <leo.yan@linaro.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	"Srivatsa S. Bhat" <srivatsab@vmware.com>,
+	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
+	Vasavi Sirnapalli <vsirnapalli@vmware.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0283/1146] drm/msm/dsi: Migrate to drm_dsc_compute_rc_parameters()
-Date: Wed, 28 Dec 2022 15:30:22 +0100
-Message-Id: <20221228144337.827453477@linuxfoundation.org>
+Subject: [PATCH 5.15 517/731] perf symbol: correction while adjusting symbol
+Date: Wed, 28 Dec 2022 15:40:24 +0100
+Message-Id: <20221228144311.534545793@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,138 +45,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Ajay Kaher <akaher@vmware.com>
 
-[ Upstream commit c3a1aabce2d4087255de90100c3dad492e7d925c ]
+[ Upstream commit 6f520ce17920b3cdfbd2479b3ccf27f9706219d0 ]
 
-As per the FIXME this code is entirely duplicate with what is already
-provided inside drm_dsc_compute_rc_parameters(), supposedly because that
-function was yielding "incorrect" results while in reality the panel
-driver(s?) used for testing were providing incorrect parameters.
+perf doesn't provide proper symbol information for specially crafted
+.debug files.
 
-For example, this code from downstream assumed dsc->bits_per_pixel to
-contain an integer value, whereas the upstream drm_dsc_config struct
-stores it with 4 fractional bits.  drm_dsc_compute_rc_parameters()
-already accounts for this feat while the panel driver used for testing
-[1] wasn't, hence making drm_dsc_compute_rc_parameters() seem like it
-was returning an incorrect result.
-Other users of dsc->bits_per_pixel inside dsi_populate_dsc_params() also
-treat it in the same erroneous way, and will be addressed in a separate
-patch.
-In the end, using drm_dsc_compute_rc_parameters() spares both a lot of
-duplicate code and erratic behaviour.
+Sometimes .debug file may not have similar program header as runtime
+ELF file. For example if we generate .debug file using objcopy
+--only-keep-debug resulting file will not contain .text, .data and
+other runtime sections. That means corresponding program headers will
+have zero FileSiz and modified Offset.
 
-[1]: https://git.linaro.org/people/vinod.koul/kernel.git/commit/?h=topic/pixel3_5.18-rc1&id=1d7d98ad564f1ec69e7525e07418918d90f247a1
+Example: program header of text section of libxxx.so:
 
-Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/508939/
-Link: https://lore.kernel.org/r/20221026182824.876933-7-marijn.suijten@somainline.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Type           Offset             VirtAddr           PhysAddr
+               FileSiz            MemSiz              Flags  Align
+LOAD        0x00000000003d3000 0x00000000003d3000 0x00000000003d3000
+            0x000000000055ae80 0x000000000055ae80  R E    0x1000
+
+Same program header after executing:
+objcopy --only-keep-debug libxxx.so libxxx.so.debug
+
+LOAD        0x0000000000001000 0x00000000003d3000 0x00000000003d3000
+            0x0000000000000000 0x000000000055ae80  R E    0x1000
+
+Offset and FileSiz have been changed.
+
+Following formula will not provide correct value, if program header
+taken from .debug file (syms_ss):
+
+    sym.st_value -= phdr.p_vaddr - phdr.p_offset;
+
+Correct program header information is located inside runtime ELF
+file (runtime_ss).
+
+Fixes: 2d86612aacb7805f ("perf symbol: Correct address for bss symbols")
+Signed-off-by: Ajay Kaher <akaher@vmware.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Alexey Makhalov <amakhalov@vmware.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Srivatsa S. Bhat <srivatsab@vmware.com>
+Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Cc: Vasavi Sirnapalli <vsirnapalli@vmware.com>
+Link: http://lore.kernel.org/lkml/1669198696-50547-1-git-send-email-akaher@vmware.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 64 +++---------------------------
- 1 file changed, 6 insertions(+), 58 deletions(-)
+ tools/perf/util/symbol-elf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 906ee38133c1..36d42f17331d 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -21,6 +21,7 @@
+diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
+index 6c183df191aa..fd42f768e584 100644
+--- a/tools/perf/util/symbol-elf.c
++++ b/tools/perf/util/symbol-elf.c
+@@ -1292,7 +1292,7 @@ dso__load_sym_internal(struct dso *dso, struct map *map, struct symsrc *syms_ss,
+ 			   (!used_opd && syms_ss->adjust_symbols)) {
+ 			GElf_Phdr phdr;
  
- #include <video/mipi_display.h>
- 
-+#include <drm/display/drm_dsc_helper.h>
- #include <drm/drm_of.h>
- 
- #include "dsi.h"
-@@ -1749,14 +1750,6 @@ static char bpg_offset[DSC_NUM_BUF_RANGES] = {
- 
- static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
- {
--	int mux_words_size;
--	int groups_per_line, groups_total;
--	int min_rate_buffer_size;
--	int hrd_delay;
--	int pre_num_extra_mux_bits, num_extra_mux_bits;
--	int slice_bits;
--	int data;
--	int final_value, final_scale;
- 	int i;
- 
- 	dsc->rc_model_size = 8192;
-@@ -1782,11 +1775,11 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
- 	if (dsc->bits_per_pixel != 8)
- 		dsc->initial_offset = 2048;	/* bpp = 12 */
- 
--	mux_words_size = 48;		/* bpc == 8/10 */
--	if (dsc->bits_per_component == 12)
--		mux_words_size = 64;
-+	if (dsc->bits_per_component <= 10)
-+		dsc->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
-+	else
-+		dsc->mux_word_size = DSC_MUX_WORD_SIZE_12_BPC;
- 
--	dsc->mux_word_size = mux_words_size;
- 	dsc->initial_xmit_delay = 512;
- 	dsc->initial_scale_value = 32;
- 	dsc->first_line_bpg_offset = 12;
-@@ -1798,52 +1791,7 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
- 	dsc->rc_quant_incr_limit0 = 11;
- 	dsc->rc_quant_incr_limit1 = 11;
- 
--	/* FIXME: need to call drm_dsc_compute_rc_parameters() so that rest of
--	 * params are calculated
--	 */
--	groups_per_line = DIV_ROUND_UP(dsc->slice_width, 3);
--	dsc->slice_chunk_size = DIV_ROUND_UP(dsc->slice_width * dsc->bits_per_pixel, 8);
--
--	/* rbs-min */
--	min_rate_buffer_size =  dsc->rc_model_size - dsc->initial_offset +
--				dsc->initial_xmit_delay * dsc->bits_per_pixel +
--				groups_per_line * dsc->first_line_bpg_offset;
--
--	hrd_delay = DIV_ROUND_UP(min_rate_buffer_size, dsc->bits_per_pixel);
--
--	dsc->initial_dec_delay = hrd_delay - dsc->initial_xmit_delay;
--
--	dsc->initial_scale_value = 8 * dsc->rc_model_size /
--				       (dsc->rc_model_size - dsc->initial_offset);
--
--	slice_bits = 8 * dsc->slice_chunk_size * dsc->slice_height;
--
--	groups_total = groups_per_line * dsc->slice_height;
--
--	data = dsc->first_line_bpg_offset * 2048;
--
--	dsc->nfl_bpg_offset = DIV_ROUND_UP(data, (dsc->slice_height - 1));
--
--	pre_num_extra_mux_bits = 3 * (mux_words_size + (4 * dsc->bits_per_component + 4) - 2);
--
--	num_extra_mux_bits = pre_num_extra_mux_bits - (mux_words_size -
--			     ((slice_bits - pre_num_extra_mux_bits) % mux_words_size));
--
--	data = 2048 * (dsc->rc_model_size - dsc->initial_offset + num_extra_mux_bits);
--	dsc->slice_bpg_offset = DIV_ROUND_UP(data, groups_total);
--
--	data = dsc->initial_xmit_delay * dsc->bits_per_pixel;
--	final_value =  dsc->rc_model_size - data + num_extra_mux_bits;
--	dsc->final_offset = final_value;
--
--	final_scale = 8 * dsc->rc_model_size / (dsc->rc_model_size - final_value);
--
--	data = (final_scale - 9) * (dsc->nfl_bpg_offset + dsc->slice_bpg_offset);
--	dsc->scale_increment_interval = (2048 * dsc->final_offset) / data;
--
--	dsc->scale_decrement_interval = groups_per_line / (dsc->initial_scale_value - 8);
--
--	return 0;
-+	return drm_dsc_compute_rc_parameters(dsc);
- }
- 
- static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
+-			if (elf_read_program_header(syms_ss->elf,
++			if (elf_read_program_header(runtime_ss->elf,
+ 						    (u64)sym.st_value, &phdr)) {
+ 				pr_debug4("%s: failed to find program header for "
+ 					   "symbol: %s st_value: %#" PRIx64 "\n",
 -- 
 2.35.1
 
