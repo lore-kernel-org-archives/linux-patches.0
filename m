@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2F0C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A6D8C433D2;
-	Wed, 28 Dec 2022 15:48:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6131863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E907CC433D2;
+	Wed, 28 Dec 2022 15:48:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242525;
-	bh=g6uAbsg2/4nBl/Qb5jnuKJIGeIlTrVa/TjSijcSD0FA=;
+	s=korg; t=1672242528;
+	bh=TysLWZxsnVb8erUgU7pXb3w5UkFrysFkGEmLXlYnk4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y4bByUxKszDrS7IjoRHJQWgXdahr9DlqxvBiAhZuv8TCLsRUrmFfBVjxFD/EoEAdP
-	 ub23rcN8+Deoh6dV3Oup7RBj4PcJwauGRApfNvxGy+T7PROVmHdxZn0wtxaOCuIqQd
-	 1bgiiT5aYZorEMF/EGXrCIUxty9sPh0ugfPSt8hw=
+	b=Q5RzcUcPL6peyJFt+TX7LfnEs86S0rZVn2xWkIILxXvwyL5cc0am0YzwjhzjX7E+w
+	 9lAGWE9IGEZEMX/BCYSP7x+CiPLFzYnRnk61UC+WsJJJ0FCP5NupRAShpJACEpdWYL
+	 XN7jK+cgzQfHhBsJPVTkvIIImPcIjIXQ5TEhNQdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@nxp.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Guchun Chen <guchun.chen@amd.com>,
+	Evan Quan <evan.quan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0396/1073] media: amphion: lock and check m2m_ctx in event handler
-Date: Wed, 28 Dec 2022 15:33:04 +0100
-Message-Id: <20221228144338.773250817@linuxfoundation.org>
+Subject: [PATCH 6.0 0420/1073] drm/amd/pm/smu11: BACO is supported when its in BACO state
+Date: Wed, 28 Dec 2022 15:33:28 +0100
+Message-Id: <20221228144339.429651070@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -36,73 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Qian <ming.qian@nxp.com>
+From: Guchun Chen <guchun.chen@amd.com>
 
-[ Upstream commit 1ade3f3f16986cd7c6fce02feede957f03eb8a42 ]
+[ Upstream commit 6dca7efe6e522bf213c7dab691fa580d82f48f74 ]
 
-driver needs to cancel vpu before releasing the vpu instance,
-so call v4l2_m2m_ctx_release() first,
-to handle the redundant event triggered after m2m_ctx is released.
+Return true early if ASIC is in BACO state already, no need
+to talk to SMU. It can fix the issue that driver was not
+calling BACO exit at all in runtime pm resume, and a timing
+issue leading to a PCI AER error happened eventually.
 
-lock and check m2m_ctx in the event handler.
-
-Fixes: 3cd084519c6f ("media: amphion: add vpu v4l2 m2m support")
-Signed-off-by: Ming Qian <ming.qian@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 8795e182b02d ("PCI/portdrv: Don't disable AER reporting in get_port_device_capability()")
+Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Guchun Chen <guchun.chen@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Evan Quan <evan.quan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_msgs.c | 2 ++
- drivers/media/platform/amphion/vpu_v4l2.c | 8 ++++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/platform/amphion/vpu_msgs.c b/drivers/media/platform/amphion/vpu_msgs.c
-index d8247f36d84b..92672a802b49 100644
---- a/drivers/media/platform/amphion/vpu_msgs.c
-+++ b/drivers/media/platform/amphion/vpu_msgs.c
-@@ -43,6 +43,7 @@ static void vpu_session_handle_mem_request(struct vpu_inst *inst, struct vpu_rpc
- 		  req_data.ref_frame_num,
- 		  req_data.act_buf_size,
- 		  req_data.act_buf_num);
-+	vpu_inst_lock(inst);
- 	call_void_vop(inst, mem_request,
- 		      req_data.enc_frame_size,
- 		      req_data.enc_frame_num,
-@@ -50,6 +51,7 @@ static void vpu_session_handle_mem_request(struct vpu_inst *inst, struct vpu_rpc
- 		      req_data.ref_frame_num,
- 		      req_data.act_buf_size,
- 		      req_data.act_buf_num);
-+	vpu_inst_unlock(inst);
- }
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
+index 70b560737687..ad5f6a15a1d7 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
+@@ -1588,6 +1588,10 @@ bool smu_v11_0_baco_is_support(struct smu_context *smu)
+ 	if (amdgpu_sriov_vf(smu->adev) || !smu_baco->platform_support)
+ 		return false;
  
- static void vpu_session_handle_stop_done(struct vpu_inst *inst, struct vpu_rpc_event *pkt)
-diff --git a/drivers/media/platform/amphion/vpu_v4l2.c b/drivers/media/platform/amphion/vpu_v4l2.c
-index a24e2d0e9542..590d1084e5a5 100644
---- a/drivers/media/platform/amphion/vpu_v4l2.c
-+++ b/drivers/media/platform/amphion/vpu_v4l2.c
-@@ -242,8 +242,12 @@ int vpu_process_capture_buffer(struct vpu_inst *inst)
- 
- struct vb2_v4l2_buffer *vpu_next_src_buf(struct vpu_inst *inst)
- {
--	struct vb2_v4l2_buffer *src_buf = v4l2_m2m_next_src_buf(inst->fh.m2m_ctx);
-+	struct vb2_v4l2_buffer *src_buf = NULL;
- 
-+	if (!inst->fh.m2m_ctx)
-+		return NULL;
++	/* return true if ASIC is in BACO state already */
++	if (smu_v11_0_baco_get_state(smu) == SMU_BACO_STATE_ENTER)
++		return true;
 +
-+	src_buf = v4l2_m2m_next_src_buf(inst->fh.m2m_ctx);
- 	if (!src_buf || vpu_get_buffer_state(src_buf) == VPU_BUF_STATE_IDLE)
- 		return NULL;
- 
-@@ -266,7 +270,7 @@ void vpu_skip_frame(struct vpu_inst *inst, int count)
- 	enum vb2_buffer_state state;
- 	int i = 0;
- 
--	if (count <= 0)
-+	if (count <= 0 || !inst->fh.m2m_ctx)
- 		return;
- 
- 	while (i < count) {
+ 	/* Arcturus does not support this bit mask */
+ 	if (smu_cmn_feature_is_supported(smu, SMU_FEATURE_BACO_BIT) &&
+ 	   !smu_cmn_feature_is_enabled(smu, SMU_FEATURE_BACO_BIT))
 -- 
 2.35.1
 
