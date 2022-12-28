@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C54B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:47:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12B44C433EF;
-	Wed, 28 Dec 2022 15:47:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBEB1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:47:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB9F0C433D2;
+	Wed, 28 Dec 2022 15:47:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242432;
-	bh=z/jxJhufFLOkzP57XxHxKV0muowwsriGrwZehCrrI/U=;
+	s=korg; t=1672242435;
+	bh=X05hHJXyqY+n4R2ll0NBD+mFE/k09gI9iYjsIvAVQnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mE0BhpR/BALAiYiz8Ko7bDUWTVos+498tf6O7VlEnpfya6hGtHfT0CqqotBJ9lHoc
-	 y1tL860W8VvZcpdH7k7ObqUtJdUnMWNMTPKz0mZQjs18DAxScfBE84mCuKndd4rteo
-	 NAwtQNLmmTLCr0AtlSqv8uMOH8ub/47fv+4Jd6l4=
+	b=zbcFb3lGYX7QP9wFzLDS7E4QV3MJtfUgGtCbm06oc7ETrWZQvDk+vNiFdp9Gd0LIF
+	 otOIzgzn0Ici+skr8Vn4y0b2WyWEcCp2roYfMz/uGBLY1+fD5JQPtMn+e47RIBcxmv
+	 mqMGiaUjkVPKgqaYxZPINSFFPqd6WvSZJwDf77ME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Fomichev <sdf@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0369/1146] bpf: Move skb->len == 0 checks into __bpf_redirect
-Date: Wed, 28 Dec 2022 15:31:48 +0100
-Message-Id: <20221228144340.187950172@linuxfoundation.org>
+Subject: [PATCH 5.15 603/731] openvswitch: Fix flow lookup to use unmasked key
+Date: Wed, 28 Dec 2022 15:41:50 +0100
+Message-Id: <20221228144314.016839574@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,64 +35,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanislav Fomichev <sdf@google.com>
+From: Eelco Chaudron <echaudro@redhat.com>
 
-[ Upstream commit 114039b342014680911c35bd6b72624180fd669a ]
+[ Upstream commit 68bb10101e6b0a6bb44e9c908ef795fc4af99eae ]
 
-To avoid potentially breaking existing users.
+The commit mentioned below causes the ovs_flow_tbl_lookup() function
+to be called with the masked key. However, it's supposed to be called
+with the unmasked key. This due to the fact that the datapath supports
+installing wider flows, and OVS relies on this behavior. For example
+if ipv4(src=1.1.1.1/192.0.0.0, dst=1.1.1.2/192.0.0.0) exists, a wider
+flow (smaller mask) of ipv4(src=192.1.1.1/128.0.0.0,dst=192.1.1.2/
+128.0.0.0) is allowed to be added.
 
-Both mac/no-mac cases have to be amended; mac_header >= network_header
-is not enough (verified with a new test, see next patch).
+However, if we try to add a wildcard rule, the installation fails:
 
-Fixes: fd1894224407 ("bpf: Don't redirect packets with invalid pkt_len")
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
-Link: https://lore.kernel.org/r/20221121180340.1983627-1-sdf@google.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+$ ovs-appctl dpctl/add-flow system@myDP "in_port(1),eth_type(0x0800), \
+  ipv4(src=1.1.1.1/192.0.0.0,dst=1.1.1.2/192.0.0.0,frag=no)" 2
+$ ovs-appctl dpctl/add-flow system@myDP "in_port(1),eth_type(0x0800), \
+  ipv4(src=192.1.1.1/0.0.0.0,dst=49.1.1.2/0.0.0.0,frag=no)" 2
+ovs-vswitchd: updating flow table (File exists)
+
+The reason is that the key used to determine if the flow is already
+present in the system uses the original key ANDed with the mask.
+This results in the IP address not being part of the (miniflow) key,
+i.e., being substituted with an all-zero value. When doing the actual
+lookup, this results in the key wrongfully matching the first flow,
+and therefore the flow does not get installed.
+
+This change reverses the commit below, but rather than having the key
+on the stack, it's allocated.
+
+Fixes: 190aa3e77880 ("openvswitch: Fix Frame-size larger than 1024 bytes warning.")
+
+Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c | 3 ---
- net/core/filter.c  | 7 ++++++-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ net/openvswitch/datapath.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index fcb3e6c5e03c..6094ef7cffcd 100644
---- a/net/bpf/test_run.c
-+++ b/net/bpf/test_run.c
-@@ -980,9 +980,6 @@ static int convert___skb_to_skb(struct sk_buff *skb, struct __sk_buff *__skb)
- {
- 	struct qdisc_skb_cb *cb = (struct qdisc_skb_cb *)skb->cb;
+diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
+index 94c48122fdc3..795a25ecb893 100644
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -946,6 +946,7 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	struct sw_flow_mask mask;
+ 	struct sk_buff *reply;
+ 	struct datapath *dp;
++	struct sw_flow_key *key;
+ 	struct sw_flow_actions *acts;
+ 	struct sw_flow_match match;
+ 	u32 ufid_flags = ovs_nla_get_ufid_flags(a[OVS_FLOW_ATTR_UFID_FLAGS]);
+@@ -973,24 +974,26 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	}
  
--	if (!skb->len)
--		return -EINVAL;
--
- 	if (!__skb)
- 		return 0;
- 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index bb0136e7a8e4..b35f642d117f 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2124,6 +2124,11 @@ static int __bpf_redirect_no_mac(struct sk_buff *skb, struct net_device *dev,
- {
- 	unsigned int mlen = skb_network_offset(skb);
- 
-+	if (unlikely(skb->len <= mlen)) {
-+		kfree_skb(skb);
-+		return -ERANGE;
+ 	/* Extract key. */
+-	ovs_match_init(&match, &new_flow->key, false, &mask);
++	key = kzalloc(sizeof(*key), GFP_KERNEL);
++	if (!key) {
++		error = -ENOMEM;
++		goto err_kfree_key;
 +	}
 +
- 	if (mlen) {
- 		__skb_pull(skb, mlen);
++	ovs_match_init(&match, key, false, &mask);
+ 	error = ovs_nla_get_match(net, &match, a[OVS_FLOW_ATTR_KEY],
+ 				  a[OVS_FLOW_ATTR_MASK], log);
+ 	if (error)
+ 		goto err_kfree_flow;
  
-@@ -2145,7 +2150,7 @@ static int __bpf_redirect_common(struct sk_buff *skb, struct net_device *dev,
- 				 u32 flags)
- {
- 	/* Verify that a link layer header is carried */
--	if (unlikely(skb->mac_header >= skb->network_header)) {
-+	if (unlikely(skb->mac_header >= skb->network_header || skb->len == 0)) {
- 		kfree_skb(skb);
- 		return -ERANGE;
- 	}
++	ovs_flow_mask_key(&new_flow->key, key, true, &mask);
++
+ 	/* Extract flow identifier. */
+ 	error = ovs_nla_get_identifier(&new_flow->id, a[OVS_FLOW_ATTR_UFID],
+-				       &new_flow->key, log);
++				       key, log);
+ 	if (error)
+ 		goto err_kfree_flow;
+ 
+-	/* unmasked key is needed to match when ufid is not used. */
+-	if (ovs_identifier_is_key(&new_flow->id))
+-		match.key = new_flow->id.unmasked_key;
+-
+-	ovs_flow_mask_key(&new_flow->key, &new_flow->key, true, &mask);
+-
+ 	/* Validate actions. */
+ 	error = ovs_nla_copy_actions(net, a[OVS_FLOW_ATTR_ACTIONS],
+ 				     &new_flow->key, &acts, log);
+@@ -1017,7 +1020,7 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	if (ovs_identifier_is_ufid(&new_flow->id))
+ 		flow = ovs_flow_tbl_lookup_ufid(&dp->table, &new_flow->id);
+ 	if (!flow)
+-		flow = ovs_flow_tbl_lookup(&dp->table, &new_flow->key);
++		flow = ovs_flow_tbl_lookup(&dp->table, key);
+ 	if (likely(!flow)) {
+ 		rcu_assign_pointer(new_flow->sf_acts, acts);
+ 
+@@ -1087,6 +1090,8 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	if (reply)
+ 		ovs_notify(&dp_flow_genl_family, reply, info);
++
++	kfree(key);
+ 	return 0;
+ 
+ err_unlock_ovs:
+@@ -1096,6 +1101,8 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	ovs_nla_free_flow_actions(acts);
+ err_kfree_flow:
+ 	ovs_flow_free(new_flow, false);
++err_kfree_key:
++	kfree(key);
+ error:
+ 	return error;
+ }
 -- 
 2.35.1
 
