@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2338F1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:30:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B869C433D2;
-	Wed, 28 Dec 2022 16:30:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E641C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:30:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564B8C433F0;
+	Wed, 28 Dec 2022 16:30:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245053;
-	bh=N7E2SRwYkQ21JYEy9MXkODJLsG2TrZGxGZHcYLdxbTU=;
+	s=korg; t=1672245055;
+	bh=j0yrMKeJO2r/tfnUtHUOregZlgkJhmlss1ORUpzt048=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DHdF9HDDAZa2KactUxzpWkAHc4RC7WpOAjHtTOiMzGCaseBWsgnFJZSbKeWbAotTM
-	 RTl+HHkCcjVCyfMoEgb9myolFuR/TIdCYaKjoI0pCxyVQL0H/BlxUbyz4R2DFCUrMf
-	 US1SVjTsRjO5Lo7I0iLi0Gqyt/5bP27ZBYSH0leQ=
+	b=hzXT+XxnStBnaevcTnG0apJ3xTuTEdvxq3zBE1Ij1P86M6RO7fX15UemdKEy8l2HJ
+	 khdUg5DaWA18UC7rTeQtVBtg2HhSpA3oTf0AHPaiqvQoDu6BvYuE0DUz391sFkGla7
+	 cGiIgdNTyMgf42lOJz6CFhscY2ytBYRym4f2S4iA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0784/1146] gfs2: Partially revert gfs2_inode_lookup change
-Date: Wed, 28 Dec 2022 15:38:43 +0100
-Message-Id: <20221228144351.442248574@linuxfoundation.org>
+Subject: [PATCH 6.0 0825/1073] remoteproc: qcom: q6v5: Fix missing clk_disable_unprepare() in q6v5_wcss_qcs404_power_on()
+Date: Wed, 28 Dec 2022 15:40:13 +0100
+Message-Id: <20221228144350.423195240@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,42 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 88f4a9f813c549f6b8a6fbf12030949b48a4d5a4 ]
+[ Upstream commit 7ff5d60f18bba5cbaf17b2926aa9da44d5beca01 ]
 
-Commit c412a97cf6c5 changed delete_work_func() to always perform an
-inode lookup when gfs2_try_evict() fails.  This doesn't make sense as a
-gfs2_try_evict() failure indicates that the inode is likely still in
-use.  Revert that change.
+q6v5_wcss_qcs404_power_on() have no fail path for readl_poll_timeout().
+Add fail path for readl_poll_timeout().
 
-Fixes: c412a97cf6c5 ("gfs2: Use TRY lock in gfs2_inode_lookup for UNLINKED inodes")
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+Fixes: 0af65b9b915e ("remoteproc: qcom: wcss: Add non pas wcss Q6 support for QCS404")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221204082757.18850-1-shangxiaojing@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/gfs2/glock.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/remoteproc/qcom_q6v5_wcss.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/gfs2/glock.c b/fs/gfs2/glock.c
-index df335c258eb0..235a0948f6cc 100644
---- a/fs/gfs2/glock.c
-+++ b/fs/gfs2/glock.c
-@@ -1039,6 +1039,7 @@ static void delete_work_func(struct work_struct *work)
- 			if (gfs2_queue_delete_work(gl, 5 * HZ))
- 				return;
- 		}
-+		goto out;
+diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
+index de232337e082..ba24d745b2d6 100644
+--- a/drivers/remoteproc/qcom_q6v5_wcss.c
++++ b/drivers/remoteproc/qcom_q6v5_wcss.c
+@@ -351,7 +351,7 @@ static int q6v5_wcss_qcs404_power_on(struct q6v5_wcss *wcss)
+ 	if (ret) {
+ 		dev_err(wcss->dev,
+ 			"xo cbcr enabling timed out (rc:%d)\n", ret);
+-		return ret;
++		goto disable_xo_cbcr_clk;
  	}
  
- 	inode = gfs2_lookup_by_inum(sdp, no_addr, gl->gl_no_formal_ino,
-@@ -1051,6 +1052,7 @@ static void delete_work_func(struct work_struct *work)
- 		d_prune_aliases(inode);
- 		iput(inode);
- 	}
-+out:
- 	gfs2_glock_put(gl);
- }
- 
+ 	writel(0, wcss->reg_base + Q6SS_CGC_OVERRIDE);
+@@ -417,6 +417,7 @@ static int q6v5_wcss_qcs404_power_on(struct q6v5_wcss *wcss)
+ 	val = readl(wcss->reg_base + Q6SS_SLEEP_CBCR);
+ 	val &= ~Q6SS_CLK_ENABLE;
+ 	writel(val, wcss->reg_base + Q6SS_SLEEP_CBCR);
++disable_xo_cbcr_clk:
+ 	val = readl(wcss->reg_base + Q6SS_XO_CBCR);
+ 	val &= ~Q6SS_CLK_ENABLE;
+ 	writel(val, wcss->reg_base + Q6SS_XO_CBCR);
 -- 
 2.35.1
 
