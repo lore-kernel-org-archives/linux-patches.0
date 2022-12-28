@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7321863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:16:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB82DC433D2;
-	Wed, 28 Dec 2022 15:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD26F1868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:16:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8FCC433F1;
+	Wed, 28 Dec 2022 15:16:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240585;
-	bh=3A+SBrRFxWKVJUUDtRJhCLdZyBljL+UkRhtIduD9JIs=;
+	s=korg; t=1672240590;
+	bh=ZOFxuwlQiRYgKhrX6MeJJgLFOdLm9A8VsApIXOSl6uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QrITHpHOTAOafYUhcE4w+aR16T9xLVC4agHbAXv0NpUlr1lcpFTSAwR24uXCZbsdF
-	 tWmB1WZT9LT5W+W2Mozn+AfTg7EpBqsXsoIjyOMqiy8AtMtODTEdvGSA/1V9iMpfet
-	 pVdroFqZOIe3J/tM+7y8r39cA9nVQt18hHcTOKXA=
+	b=K72SSgDqjUrZ+YOXP52NYDX0+E+vEbbN1MNs+Nn6kZGnHV5aFqP/hKfxj2sIQqnMZ
+	 f9OSRKYiyVoU7sdiA56TxV25kadkJb+vlbR5BXHBAovrQIM0zBRaF1V70CKqMRppBm
+	 IqaS6a06QOVcdPNKq8LZBn51JzXcwp15R4y3E93M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Neil Brown <neilb@suse.de>,
+	Yongcheng Yang <yoyang@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0142/1146] perf/x86/intel/uncore: Fix reference count leak in snr_uncore_mmio_map()
-Date: Wed, 28 Dec 2022 15:28:01 +0100
-Message-Id: <20221228144334.003129821@linuxfoundation.org>
+Subject: [PATCH 6.0 0178/1073] nfsd: return error if nfs4_setacl fails
+Date: Wed, 28 Dec 2022 15:29:26 +0100
+Message-Id: <20221228144332.844403978@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,38 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 8ebd16c11c346751b3944d708e6c181ed4746c39 ]
+[ Upstream commit 01d53a88c08951f88f2a42f1f1e6568928e0590e ]
 
-pci_get_device() will increase the reference count for the returned
-pci_dev, so snr_uncore_get_mc_dev() will return a pci_dev with its
-reference count increased. We need to call pci_dev_put() to decrease the
-reference count. Let's add the missing pci_dev_put().
+With the addition of POSIX ACLs to struct nfsd_attrs, we no longer
+return an error if setting the ACL fails. Ensure we return the na_aclerr
+error on SETATTR if there is one.
 
-Fixes: ee49532b38dd ("perf/x86/intel/uncore: Add IMC uncore support for Snow Ridge")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20221118063137.121512-4-wangxiongfeng2@huawei.com
+Fixes: c0cbe70742f4 ("NFSD: add posix ACLs to struct nfsd_attrs")
+Cc: Neil Brown <neilb@suse.de>
+Reported-by: Yongcheng Yang <yoyang@redhat.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore_snbep.c | 2 ++
+ fs/nfsd/nfs4proc.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
-index f5d89d06c66a..fcd95e93f479 100644
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -4860,6 +4860,8 @@ static int snr_uncore_mmio_map(struct intel_uncore_box *box,
- 
- 	addr += box_ctl;
- 
-+	pci_dev_put(pdev);
-+
- 	box->io_addr = ioremap(addr, type->mmio_map_size);
- 	if (!box->io_addr) {
- 		pr_warn("perf uncore: Failed to ioremap for %s.\n", type->name);
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 6ba25a5b76e1..b71a3c2d9409 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1141,6 +1141,8 @@ nfsd4_setattr(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 				0, (time64_t)0);
+ 	if (!status)
+ 		status = nfserrno(attrs.na_labelerr);
++	if (!status)
++		status = nfserrno(attrs.na_aclerr);
+ out:
+ 	nfsd_attrs_free(&attrs);
+ 	fh_drop_write(&cstate->current_fh);
 -- 
 2.35.1
 
