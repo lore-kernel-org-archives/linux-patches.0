@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D451C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2751FC433D2;
-	Wed, 28 Dec 2022 16:23:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4414F1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C01B4C433EF;
+	Wed, 28 Dec 2022 16:23:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244582;
-	bh=j46zpKOl6k0n7AFT8PXbXAe/Di5YT7Br9fHCHK91+k4=;
+	s=korg; t=1672244585;
+	bh=pdwzA/XoapmHU5irxCEgo+Z4pa0eAfYtYmmYKkeQ51o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0aeSK/jVh81IaYe9e7ZWBFhifLq9vj8rZk/PdTBkzQSUTmy4JzldzgQQ0SI3lpgRS
-	 kM45cNAPLSKGgcQcjzsgz/wb4zQ9mpRML1dPL381Swx3WL63CAxs6ACluh7rEwDA1z
-	 CEfUKMF/Skkm45Fi+doZzZSepahQCr+ntYYXnlMA=
+	b=2jVbpjOQcUEhLZK3cuPaafDj2/UjqiTOEiizMncGmK3qpclUMN/QJbwCuoBFbjrAT
+	 lqxvPuhRdDtvkKpHdfeV09Ck4jCyPtuN4mvpJweVbzcwgbcunKVYth41/ck5F2V/9i
+	 nhRIAxDCPmCDIik6EMpsLugSCFD20Lnv34f3HlkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Helge Deller <deller@gmx.de>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0736/1073] fbdev: uvesafb: Fixes an error handling path in uvesafb_probe()
-Date: Wed, 28 Dec 2022 15:38:44 +0100
-Message-Id: <20221228144348.016263333@linuxfoundation.org>
+Subject: [PATCH 6.1 0698/1146] staging: vme_user: Fix possible UAF in tsi148_dma_list_add
+Date: Wed, 28 Dec 2022 15:37:17 +0100
+Message-Id: <20221228144349.104057109@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,37 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit a94371040712031ba129c7e9d8ff04a06a2f8207 ]
+[ Upstream commit 357057ee55d3c99a5de5abe8150f7bca04f8e53b ]
 
-If an error occurs after a successful uvesafb_init_mtrr() call, it must be
-undone by a corresponding arch_phys_wc_del() call, as already done in the
-remove function.
+Smatch report warning as follows:
 
-This has been added in the remove function in commit 63e28a7a5ffc
-("uvesafb: Clean up MTRR code")
+drivers/staging/vme_user/vme_tsi148.c:1757 tsi148_dma_list_add() warn:
+  '&entry->list' not removed from list
 
-Fixes: 8bdb3a2d7df4 ("uvesafb: the driver core")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Helge Deller <deller@gmx.de>
+In tsi148_dma_list_add(), the error path "goto err_dma" will not
+remove entry->list from list->entries, but entry will be freed,
+then list traversal may cause UAF.
+
+Fix by removeing it from list->entries before free().
+
+Fixes: b2383c90a9d6 ("vme: tsi148: fix first DMA item mapping")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221117035914.2954454-1-cuigaosheng1@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/uvesafb.c | 1 +
+ drivers/staging/vme_user/vme_tsi148.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/video/fbdev/uvesafb.c b/drivers/video/fbdev/uvesafb.c
-index 4df6772802d7..1f3b7e013568 100644
---- a/drivers/video/fbdev/uvesafb.c
-+++ b/drivers/video/fbdev/uvesafb.c
-@@ -1758,6 +1758,7 @@ static int uvesafb_probe(struct platform_device *dev)
- out_unmap:
- 	iounmap(info->screen_base);
- out_mem:
-+	arch_phys_wc_del(par->mtrr_handle);
- 	release_mem_region(info->fix.smem_start, info->fix.smem_len);
- out_reg:
- 	release_region(0x3c0, 32);
+diff --git a/drivers/staging/vme_user/vme_tsi148.c b/drivers/staging/vme_user/vme_tsi148.c
+index 020e0b3bce64..0171f46d1848 100644
+--- a/drivers/staging/vme_user/vme_tsi148.c
++++ b/drivers/staging/vme_user/vme_tsi148.c
+@@ -1751,6 +1751,7 @@ static int tsi148_dma_list_add(struct vme_dma_list *list,
+ 	return 0;
+ 
+ err_dma:
++	list_del(&entry->list);
+ err_dest:
+ err_source:
+ err_align:
 -- 
 2.35.1
 
