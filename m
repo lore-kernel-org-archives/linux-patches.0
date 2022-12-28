@@ -1,40 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C421C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA04FC433EF;
-	Wed, 28 Dec 2022 16:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8661C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AF5C433D2;
+	Wed, 28 Dec 2022 16:40:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245640;
-	bh=nilXHjgldc9XTgg0lD9mFlU36zpJXUpepdvHnO0xafY=;
+	s=korg; t=1672245642;
+	bh=DPS6VXR88CvOozvz6MYs4udh94EHMAw25F//G8t+0Nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Wt6JWa0x5Z/H0S5daDPm3TpMvuyjS0vX7f7ylHpX8H1GkSEGimH5KQDW7Fss9ATn
-	 TUpZJseI5e/xxRKGbgiqkcZcny4v+TGtwSJ3kiYRI17/Zw6ne99Fpszehn/qVlLMLL
-	 ajs4Sd25Ku0XNPBmhB5Tvtg2gYwXakci1nC7w/Wg=
+	b=uOMLQpZKKIV7bkgdVWDCxrWegjiHNK82FafBroY8tzG6QlEsDGHjbQ+wR8Yb7qP3K
+	 f7SagFVEWIdqeSJl+KT5Y/c3MTKPc667juE+txcaDB9E/CFr99JmPk25hkaUalN1+N
+	 7FIouCzfLYZVMgJnehkVNF0RZqsP+NPC4i649h94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
+	Lorenzo Bianconi <lorenzo.bianconi@redhat.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	intel-wired-lan@lists.osuosl.org,
-	netdev@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
-	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Gurucharan <gurucharanx.g@intel.com>
-Subject: [PATCH 6.0 0930/1073] igb: Do not free q_vector unless new one was allocated
-Date: Wed, 28 Dec 2022 15:41:58 +0100
-Message-Id: <20221228144353.288173346@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0898/1146] net: enetc: avoid buffer leaks on xdp_do_redirect() failure
+Date: Wed, 28 Dec 2022 15:40:37 +0100
+Message-Id: <20221228144354.594258591@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -45,51 +36,146 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 0668716506ca66f90d395f36ccdaebc3e0e84801 ]
+[ Upstream commit 628050ec952d2e2e46ec9fb6aa07e41139e030c8 ]
 
-Avoid potential use-after-free condition under memory pressure. If the
-kzalloc() fails, q_vector will be freed but left in the original
-adapter->q_vector[v_idx] array position.
+Before enetc_clean_rx_ring_xdp() calls xdp_do_redirect(), each software
+BD in the RX ring between index orig_i and i can have one of 2 refcount
+values on its page.
 
-Cc: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Cc: Tony Nguyen <anthony.l.nguyen@intel.com>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: intel-wired-lan@lists.osuosl.org
-Cc: netdev@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Gurucharan <gurucharanx.g@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+We are the owner of the current buffer that is being processed, so the
+refcount will be at least 1.
+
+If the current owner of the buffer at the diametrically opposed index
+in the RX ring (i.o.w, the other half of this page) has not yet called
+kfree(), this page's refcount could even be 2.
+
+enetc_page_reusable() in enetc_flip_rx_buff() tests for the page
+refcount against 1, and [ if it's 2 ] does not attempt to reuse it.
+
+But if enetc_flip_rx_buff() is put after the xdp_do_redirect() call,
+the page refcount can have one of 3 values. It can also be 0, if there
+is no owner of the other page half, and xdp_do_redirect() for this
+buffer ran so far that it triggered a flush of the devmap/cpumap bulk
+queue, and the consumers of those bulk queues also freed the buffer,
+all by the time xdp_do_redirect() returns the execution back to enetc.
+
+This is the reason why enetc_flip_rx_buff() is called before
+xdp_do_redirect(), but there is a big flaw with that reasoning:
+enetc_flip_rx_buff() will set rx_swbd->page = NULL on both sides of the
+enetc_page_reusable() branch, and if xdp_do_redirect() returns an error,
+we call enetc_xdp_free(), which does not deal gracefully with that.
+
+In fact, what happens is quite special. The page refcounts start as 1.
+enetc_flip_rx_buff() figures they're reusable, transfers these
+rx_swbd->page pointers to a different rx_swbd in enetc_reuse_page(), and
+bumps the refcount to 2. When xdp_do_redirect() later returns an error,
+we call the no-op enetc_xdp_free(), but we still haven't lost the
+reference to that page. A copy of it is still at rx_ring->next_to_alloc,
+but that has refcount 2 (and there are no concurrent owners of it in
+flight, to drop the refcount). What really kills the system is when
+we'll flip the rx_swbd->page the second time around. With an updated
+refcount of 2, the page will not be reusable and we'll really leak it.
+Then enetc_new_page() will have to allocate more pages, which will then
+eventually leak again on further errors from xdp_do_redirect().
+
+The problem, summarized, is that we zeroize rx_swbd->page before we're
+completely done with it, and this makes it impossible for the error path
+to do something with it.
+
+Since the packet is potentially multi-buffer and therefore the
+rx_swbd->page is potentially an array, manual passing of the old
+pointers between enetc_flip_rx_buff() and enetc_xdp_free() is a bit
+difficult.
+
+For the sake of going with a simple solution, we accept the possibility
+of racing with xdp_do_redirect(), and we move the flip procedure to
+execute only on the redirect success path. By racing, I mean that the
+page may be deemed as not reusable by enetc (having a refcount of 0),
+but there will be no leak in that case, either.
+
+Once we accept that, we have something better to do with buffers on
+XDP_REDIRECT failure. Since we haven't performed half-page flipping yet,
+we won't, either (and this way, we can avoid enetc_xdp_free()
+completely, which gives the entire page to the slab allocator).
+Instead, we'll call enetc_xdp_drop(), which will recycle this half of
+the buffer back to the RX ring.
+
+Fixes: 9d2b68cc108d ("net: enetc: add support for XDP_REDIRECT")
+Suggested-by: Lorenzo Bianconi <lorenzo.bianconi@redhat.com>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://lore.kernel.org/r/20221213001908.2347046-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/freescale/enetc/enetc.c | 35 +++++---------------
+ 1 file changed, 8 insertions(+), 27 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
-index ea46649b2ed3..0e36894db986 100644
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -1202,8 +1202,12 @@ static int igb_alloc_q_vector(struct igb_adapter *adapter,
- 	if (!q_vector) {
- 		q_vector = kzalloc(size, GFP_KERNEL);
- 	} else if (size > ksize(q_vector)) {
--		kfree_rcu(q_vector, rcu);
--		q_vector = kzalloc(size, GFP_KERNEL);
-+		struct igb_q_vector *new_q_vector;
-+
-+		new_q_vector = kzalloc(size, GFP_KERNEL);
-+		if (new_q_vector)
-+			kfree_rcu(q_vector, rcu);
-+		q_vector = new_q_vector;
- 	} else {
- 		memset(q_vector, 0, size);
- 	}
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+index 8671591cb750..3a79ead5219a 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -1489,23 +1489,6 @@ static void enetc_xdp_drop(struct enetc_bdr *rx_ring, int rx_ring_first,
+ 	rx_ring->stats.xdp_drops++;
+ }
+ 
+-static void enetc_xdp_free(struct enetc_bdr *rx_ring, int rx_ring_first,
+-			   int rx_ring_last)
+-{
+-	while (rx_ring_first != rx_ring_last) {
+-		struct enetc_rx_swbd *rx_swbd = &rx_ring->rx_swbd[rx_ring_first];
+-
+-		if (rx_swbd->page) {
+-			dma_unmap_page(rx_ring->dev, rx_swbd->dma, PAGE_SIZE,
+-				       rx_swbd->dir);
+-			__free_page(rx_swbd->page);
+-			rx_swbd->page = NULL;
+-		}
+-		enetc_bdr_idx_inc(rx_ring, &rx_ring_first);
+-	}
+-	rx_ring->stats.xdp_redirect_failures++;
+-}
+-
+ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 				   struct napi_struct *napi, int work_limit,
+ 				   struct bpf_prog *prog)
+@@ -1527,8 +1510,8 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 		int orig_i, orig_cleaned_cnt;
+ 		struct xdp_buff xdp_buff;
+ 		struct sk_buff *skb;
+-		int tmp_orig_i, err;
+ 		u32 bd_status;
++		int err;
+ 
+ 		rxbd = enetc_rxbd(rx_ring, i);
+ 		bd_status = le32_to_cpu(rxbd->r.lstatus);
+@@ -1615,18 +1598,16 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
+ 				break;
+ 			}
+ 
+-			tmp_orig_i = orig_i;
+-
+-			while (orig_i != i) {
+-				enetc_flip_rx_buff(rx_ring,
+-						   &rx_ring->rx_swbd[orig_i]);
+-				enetc_bdr_idx_inc(rx_ring, &orig_i);
+-			}
+-
+ 			err = xdp_do_redirect(rx_ring->ndev, &xdp_buff, prog);
+ 			if (unlikely(err)) {
+-				enetc_xdp_free(rx_ring, tmp_orig_i, i);
++				enetc_xdp_drop(rx_ring, orig_i, i);
++				rx_ring->stats.xdp_redirect_failures++;
+ 			} else {
++				while (orig_i != i) {
++					enetc_flip_rx_buff(rx_ring,
++							   &rx_ring->rx_swbd[orig_i]);
++					enetc_bdr_idx_inc(rx_ring, &orig_i);
++				}
+ 				xdp_redirect_frm_cnt++;
+ 				rx_ring->stats.xdp_redirect++;
+ 			}
 -- 
 2.35.1
 
