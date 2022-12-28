@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96621C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:19:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3128CC433D2;
-	Wed, 28 Dec 2022 16:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565021C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:19:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB62C433D2;
+	Wed, 28 Dec 2022 16:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244388;
-	bh=L3+CR/NM0ZeTpMq0OUP3T1WXjWvtv1KoHfVZQBBe4q8=;
+	s=korg; t=1672244391;
+	bh=hSIoES5rzG2Tzt9r1wVnmAUajaDyRxb32MmR8W8cvoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vsrdeD0a+fcJO1WDEqqoUwP1MAdOhr2CprPBWyDGVFsgg5k+4+QdLGCjpy/gBh7qz
-	 T31/usDDY5F6nTPyp1Jxy461ZPmTXCD0zyc0tEzJcIdjyhPa9lYH+KlFQT/BuvkPMV
-	 27JVL2zjnOXfynAlpLodD2cNfwkIMAnXxr1ADw80=
+	b=vi10HXgfX6+vb/AIN41aYaK1X+b2pQpIEznOghsW5EHYmsOVOkcsW84naQdIg97YJ
+	 PCWsa3iYsI+tvsZhmL9e8NtUhOG0oSnKPFukJMSfshvgBbOD7DkdlIzNiumot84and
+	 7jZmOxQdmTYuyEmgZTt1ixbb9vJnALAJvxCaxL7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Zhang <markzhang@nvidia.com>,
-	Patrisious Haddad <phaddad@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
+	William Breathitt Gray <william.gray@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0661/1146] RDMA/nldev: Fix failure to send large messages
-Date: Wed, 28 Dec 2022 15:36:40 +0100
-Message-Id: <20221228144348.108493337@linuxfoundation.org>
+Subject: [PATCH 6.0 0702/1073] counter: stm32-lptimer-cnt: fix the check on arr and cmp registers update
+Date: Wed, 28 Dec 2022 15:38:10 +0100
+Message-Id: <20221228144347.100215827@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,36 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Zhang <markzhang@nvidia.com>
+From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
 
-[ Upstream commit fc8f93ad3e5485d45c992233c96acd902992dfc4 ]
+[ Upstream commit fd5ac974fc25feed084c2d1599d0dddb4e0556bc ]
 
-Return "-EMSGSIZE" instead of "-EINVAL" when filling a QP entry, so that
-new SKBs will be allocated if there's not enough room in current SKB.
+The ARR (auto reload register) and CMP (compare) registers are
+successively written. The status bits to check the update of these
+registers are polled together with regmap_read_poll_timeout().
+The condition to end the loop may become true, even if one of the register
+isn't correctly updated.
+So ensure both status bits are set before clearing them.
 
-Fixes: 65959522f806 ("RDMA: Add support to dump resource tracker in RAW format")
-Signed-off-by: Mark Zhang <markzhang@nvidia.com>
-Reviewed-by: Patrisious Haddad <phaddad@nvidia.com>
-Link: https://lore.kernel.org/r/b5e9c62f6b8369acab5648b661bf539cbceeffdc.1669636336.git.leonro@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: d8958824cf07 ("iio: counter: Add support for STM32 LPTimer")
+Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+Link: https://lore.kernel.org/r/20221123133609.465614-1-fabrice.gasnier@foss.st.com/
+Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/nldev.c | 2 +-
+ drivers/counter/stm32-lptimer-cnt.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
-index 54d4e693e03b..222733a83ddb 100644
---- a/drivers/infiniband/core/nldev.c
-+++ b/drivers/infiniband/core/nldev.c
-@@ -513,7 +513,7 @@ static int fill_res_qp_entry(struct sk_buff *msg, bool has_cap_net_admin,
+diff --git a/drivers/counter/stm32-lptimer-cnt.c b/drivers/counter/stm32-lptimer-cnt.c
+index 68031d93ce89..aee3b1a8aaa7 100644
+--- a/drivers/counter/stm32-lptimer-cnt.c
++++ b/drivers/counter/stm32-lptimer-cnt.c
+@@ -69,7 +69,7 @@ static int stm32_lptim_set_enable_state(struct stm32_lptim_cnt *priv,
  
- 	/* In create_qp() port is not set yet */
- 	if (qp->port && nla_put_u32(msg, RDMA_NLDEV_ATTR_PORT_INDEX, qp->port))
--		return -EINVAL;
-+		return -EMSGSIZE;
- 
- 	ret = nla_put_u32(msg, RDMA_NLDEV_ATTR_RES_LQPN, qp->qp_num);
+ 	/* ensure CMP & ARR registers are properly written */
+ 	ret = regmap_read_poll_timeout(priv->regmap, STM32_LPTIM_ISR, val,
+-				       (val & STM32_LPTIM_CMPOK_ARROK),
++				       (val & STM32_LPTIM_CMPOK_ARROK) == STM32_LPTIM_CMPOK_ARROK,
+ 				       100, 1000);
  	if (ret)
+ 		return ret;
 -- 
 2.35.1
 
