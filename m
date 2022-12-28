@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187E81863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D13C433D2;
-	Wed, 28 Dec 2022 15:43:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86141863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC07C433D2;
+	Wed, 28 Dec 2022 15:43:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242232;
-	bh=xBH2Ta0JdDm2ZQTTHy4fWztn5V5aVxdqhRoeLP1CPI4=;
+	s=korg; t=1672242235;
+	bh=9AHDjBP/DXmw5crFAJsYZ1FZafo+ROxtoZmrkGx0acU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V1L6S/bG8gE7gDteK6QwDnkvXxT8AEKzY/qDjtum2UeV/IFhG9IRFGeN4opzUMXFU
-	 MquqIzTHWZpqi0tqsIVPOtx7xTA3O9PQqnS2Iwb4GkzwFgnJfsRT64KMNa3SytZKdb
-	 lwAmGieEKHxUYHEfoG74z443wuMAnuIxT0ihaKyE=
+	b=eAX5Ib59phynXv6we5jN1zQZwaLyK2Iq9TlUG+jpyQmNlL0H2Gu95XygQnT9UlPO6
+	 75yBY90uspKxcRzRqOXG263zWm4QRYTzAEobL4xcwmJba+OvHUBtnLfdAGM2rmjnuO
+	 bR1lLhYcO0DCtS0u/G/vRe9Npv2gOz8y3CdxPOdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Qingfang DENG <dqfext@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0344/1146] dm: track per-add_disk holder relations in DM
-Date: Wed, 28 Dec 2022 15:31:23 +0100
-Message-Id: <20221228144339.503706784@linuxfoundation.org>
+Subject: [PATCH 5.15 578/731] netfilter: flowtable: really fix NAT IPv6 offload
+Date: Wed, 28 Dec 2022 15:41:25 +0100
+Message-Id: <20221228144313.307638914@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,124 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Qingfang DENG <dqfext@gmail.com>
 
-[ Upstream commit 1a581b72169968f4154b5793828f3bc28b258b35 ]
+[ Upstream commit 5fb45f95eec682621748b7cb012c6a8f0f981e6a ]
 
-dm is a bit special in that it opens the underlying devices.  Commit
-89f871af1b26 ("dm: delay registering the gendisk") tried to accommodate
-that by allowing to add the holder to the list before add_gendisk and
-then just add them to sysfs once add_disk is called.  But that leads to
-really odd lifetime problems and error handling problems as we can't
-know the state of the kobjects and don't unwind properly.  To fix this
-switch to just registering all existing table_devices with the holder
-code right after add_disk, and remove them before calling del_gendisk.
+The for-loop was broken from the start. It translates to:
 
-Fixes: 89f871af1b26 ("dm: delay registering the gendisk")
-Reported-by: Yu Kuai <yukuai3@huawei.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Mike Snitzer <snitzer@kernel.org>
-Link: https://lore.kernel.org/r/20221115141054.1051801-7-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+	for (i = 0; i < 4; i += 4)
+
+which means the loop statement is run only once, so only the highest
+32-bit of the IPv6 address gets mangled.
+
+Fix the loop increment.
+
+Fixes: 0e07e25b481a ("netfilter: flowtable: fix NAT IPv6 offload mangling")
+Fixes: 5c27d8d76ce8 ("netfilter: nf_flow_table_offload: add IPv6 support")
+Signed-off-by: Qingfang DENG <dqfext@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm.c | 49 +++++++++++++++++++++++++++++++++++++++----------
- 1 file changed, 39 insertions(+), 10 deletions(-)
+ net/netfilter/nf_flow_table_offload.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/md/dm.c b/drivers/md/dm.c
-index f10ac680cef4..e30c2d2bc9c7 100644
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -751,9 +751,16 @@ static struct table_device *open_table_device(struct mapped_device *md,
- 		goto out_free_td;
- 	}
- 
--	r = bd_link_disk_holder(bdev, dm_disk(md));
--	if (r)
--		goto out_blkdev_put;
-+	/*
-+	 * We can be called before the dm disk is added.  In that case we can't
-+	 * register the holder relation here.  It will be done once add_disk was
-+	 * called.
-+	 */
-+	if (md->disk->slave_dir) {
-+		r = bd_link_disk_holder(bdev, md->disk);
-+		if (r)
-+			goto out_blkdev_put;
-+	}
- 
- 	td->dm_dev.mode = mode;
- 	td->dm_dev.bdev = bdev;
-@@ -774,7 +781,8 @@ static struct table_device *open_table_device(struct mapped_device *md,
-  */
- static void close_table_device(struct table_device *td, struct mapped_device *md)
+diff --git a/net/netfilter/nf_flow_table_offload.c b/net/netfilter/nf_flow_table_offload.c
+index 66c9a6c2b9cf..336f282a221f 100644
+--- a/net/netfilter/nf_flow_table_offload.c
++++ b/net/netfilter/nf_flow_table_offload.c
+@@ -372,12 +372,12 @@ static void flow_offload_ipv6_mangle(struct nf_flow_rule *flow_rule,
+ 				     const __be32 *addr, const __be32 *mask)
  {
--	bd_unlink_disk_holder(td->dm_dev.bdev, dm_disk(md));
-+	if (md->disk->slave_dir)
-+		bd_unlink_disk_holder(td->dm_dev.bdev, md->disk);
- 	blkdev_put(td->dm_dev.bdev, td->dm_dev.mode | FMODE_EXCL);
- 	put_dax(td->dm_dev.dax_dev);
- 	list_del(&td->list);
-@@ -1964,7 +1972,13 @@ static void cleanup_mapped_device(struct mapped_device *md)
- 		md->disk->private_data = NULL;
- 		spin_unlock(&_minor_lock);
- 		if (dm_get_md_type(md) != DM_TYPE_NONE) {
-+			struct table_device *td;
-+
- 			dm_sysfs_exit(md);
-+			list_for_each_entry(td, &md->table_devices, list) {
-+				bd_unlink_disk_holder(td->dm_dev.bdev,
-+						      md->disk);
-+			}
+ 	struct flow_action_entry *entry;
+-	int i, j;
++	int i;
  
- 			/*
- 			 * Hold lock to make sure del_gendisk() won't concurrent
-@@ -2304,6 +2318,7 @@ int dm_setup_md_queue(struct mapped_device *md, struct dm_table *t)
- {
- 	enum dm_queue_mode type = dm_table_get_type(t);
- 	struct queue_limits limits;
-+	struct table_device *td;
- 	int r;
- 
- 	switch (type) {
-@@ -2342,16 +2357,30 @@ int dm_setup_md_queue(struct mapped_device *md, struct dm_table *t)
- 	if (r)
- 		return r;
- 
--	r = dm_sysfs_init(md);
--	if (r) {
--		mutex_lock(&md->table_devices_lock);
--		del_gendisk(md->disk);
--		mutex_unlock(&md->table_devices_lock);
--		return r;
-+	/*
-+	 * Register the holder relationship for devices added before the disk
-+	 * was live.
-+	 */
-+	list_for_each_entry(td, &md->table_devices, list) {
-+		r = bd_link_disk_holder(td->dm_dev.bdev, md->disk);
-+		if (r)
-+			goto out_undo_holders;
+-	for (i = 0, j = 0; i < sizeof(struct in6_addr) / sizeof(u32); i += sizeof(u32), j++) {
++	for (i = 0; i < sizeof(struct in6_addr) / sizeof(u32); i++) {
+ 		entry = flow_action_entry_next(flow_rule);
+ 		flow_offload_mangle(entry, FLOW_ACT_MANGLE_HDR_TYPE_IP6,
+-				    offset + i, &addr[j], mask);
++				    offset + i * sizeof(u32), &addr[i], mask);
  	}
- 
-+	r = dm_sysfs_init(md);
-+	if (r)
-+		goto out_undo_holders;
-+
- 	md->type = type;
- 	return 0;
-+
-+out_undo_holders:
-+	list_for_each_entry_continue_reverse(td, &md->table_devices, list)
-+		bd_unlink_disk_holder(td->dm_dev.bdev, md->disk);
-+	mutex_lock(&md->table_devices_lock);
-+	del_gendisk(md->disk);
-+	mutex_unlock(&md->table_devices_lock);
-+	return r;
  }
  
- struct mapped_device *dm_get_md(dev_t dev)
 -- 
 2.35.1
 
