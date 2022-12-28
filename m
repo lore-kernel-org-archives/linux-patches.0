@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E54D81C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69FF2C433EF;
-	Wed, 28 Dec 2022 16:26:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFDB1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03642C433D2;
+	Wed, 28 Dec 2022 16:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244798;
-	bh=drdpszKaXyRcyESU1j0tSxktDbSa/tboU9PSkZ/kxxY=;
+	s=korg; t=1672244801;
+	bh=ycJSdmVsD2NsqhaOtsUZjC5inYto8Cl7HedkvgHN6Ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZLxGVgnDk7i9AL2Phg29k9t2Vrgd+CwuwHxzypULf26DNDf1Ylj72Ik2JDxYl1aM+
-	 hb9pFI7ZXpWEoBrbpgESwxW3GA2FxTDncDE/rnrGihk9Lkao8Hr0eMoi3tku1Sjyxg
-	 BCtyreMuSUeaSm1uqLe2/iaNzuudCmRVVI+KyDpk=
+	b=TeK5tEvJGxIc5Bz7zKY3qbzkLFa7aYgocV21xeRuVG5L9IVJdvD72xYGhJk3V3Pfp
+	 Laa1D66Eu+q4zWBkJPfxkkArIAj3MW68qDCraDkz+v5U9Kc4svXbox07qBmefff6bl
+	 5GJGqbNHQ1RuL4ZbLiz8n9QbsdI0yakg6VP1a2xY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
+	Justin Chen <justinpopo6@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0738/1146] staging: rtl8192e: Fix potential use-after-free in rtllib_rx_Monitor()
-Date: Wed, 28 Dec 2022 15:37:57 +0100
-Message-Id: <20221228144350.193286491@linuxfoundation.org>
+Subject: [PATCH 6.0 0776/1073] phy: usb: Fix clock imbalance for suspend/resume
+Date: Wed, 28 Dec 2022 15:39:24 +0100
+Message-Id: <20221228144349.089935820@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,38 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Justin Chen <justinpopo6@gmail.com>
 
-[ Upstream commit d30f4436f364b4ad915ca2c09be07cd0f93ceb44 ]
+[ Upstream commit 8484199c09347bdd5d81ee8a2bc530850f900797 ]
 
-The skb is delivered to netif_rx() in rtllib_monitor_rx(), which may free it,
-after calling this, dereferencing skb may trigger use-after-free.
-Found by Smatch.
+We should be disabling clocks when wake from USB is not needed. Since
+this wasn't done, we had a clock imbalance since clocks were always
+being enabled on resume.
 
-Fixes: 94a799425eee ("From: wlanfae <wlanfae@realtek.com> [PATCH 1/8] rtl8192e: Import new version of driver from realtek")
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Link: https://lore.kernel.org/r/20221123081253.22296-1-yuehaibing@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ae532b2b7aa5 ("phy: usb: Add "wake on" functionality for newer Synopsis XHCI controllers")
+Fixes: b0c0b66c0b43 ("phy: usb: Add support for wake and USB low power mode for 7211 S2/S5")
+Signed-off-by: Justin Chen <justinpopo6@gmail.com>
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/1665005418-15807-7-git-send-email-justinpopo6@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8192e/rtllib_rx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c | 2 --
+ drivers/phy/broadcom/phy-brcm-usb-init.h          | 1 -
+ drivers/phy/broadcom/phy-brcm-usb.c               | 8 +++++---
+ 3 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/staging/rtl8192e/rtllib_rx.c b/drivers/staging/rtl8192e/rtllib_rx.c
-index 46d75e925ee9..f710eb2a95f3 100644
---- a/drivers/staging/rtl8192e/rtllib_rx.c
-+++ b/drivers/staging/rtl8192e/rtllib_rx.c
-@@ -1489,9 +1489,9 @@ static int rtllib_rx_Monitor(struct rtllib_device *ieee, struct sk_buff *skb,
- 		hdrlen += 4;
- 	}
+diff --git a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
+index b3386e458dd4..3b374b37b965 100644
+--- a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
++++ b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
+@@ -424,7 +424,6 @@ void brcm_usb_dvr_init_7216(struct brcm_usb_init_params *params)
  
--	rtllib_monitor_rx(ieee, skb, rx_stats, hdrlen);
- 	ieee->stats.rx_packets++;
- 	ieee->stats.rx_bytes += skb->len;
-+	rtllib_monitor_rx(ieee, skb, rx_stats, hdrlen);
- 
- 	return 1;
+ 	params->family_name = "7216";
+ 	params->ops = &bcm7216_ops;
+-	params->suspend_with_clocks = true;
  }
+ 
+ void brcm_usb_dvr_init_7211b0(struct brcm_usb_init_params *params)
+@@ -434,5 +433,4 @@ void brcm_usb_dvr_init_7211b0(struct brcm_usb_init_params *params)
+ 
+ 	params->family_name = "7211";
+ 	params->ops = &bcm7211b0_ops;
+-	params->suspend_with_clocks = true;
+ }
+diff --git a/drivers/phy/broadcom/phy-brcm-usb-init.h b/drivers/phy/broadcom/phy-brcm-usb-init.h
+index 1ccb5ddab865..3236e9498842 100644
+--- a/drivers/phy/broadcom/phy-brcm-usb-init.h
++++ b/drivers/phy/broadcom/phy-brcm-usb-init.h
+@@ -61,7 +61,6 @@ struct  brcm_usb_init_params {
+ 	const struct brcm_usb_init_ops *ops;
+ 	struct regmap *syscon_piarbctl;
+ 	bool wake_enabled;
+-	bool suspend_with_clocks;
+ };
+ 
+ void brcm_usb_dvr_init_4908(struct brcm_usb_init_params *params);
+diff --git a/drivers/phy/broadcom/phy-brcm-usb.c b/drivers/phy/broadcom/phy-brcm-usb.c
+index c0c3ab9b2a15..2bfd78e2d8fd 100644
+--- a/drivers/phy/broadcom/phy-brcm-usb.c
++++ b/drivers/phy/broadcom/phy-brcm-usb.c
+@@ -598,7 +598,7 @@ static int brcm_usb_phy_suspend(struct device *dev)
+ 		 * and newer XHCI->2.0-clks/3.0-clks.
+ 		 */
+ 
+-		if (!priv->ini.suspend_with_clocks) {
++		if (!priv->ini.wake_enabled) {
+ 			if (priv->phys[BRCM_USB_PHY_3_0].inited)
+ 				clk_disable_unprepare(priv->usb_30_clk);
+ 			if (priv->phys[BRCM_USB_PHY_2_0].inited ||
+@@ -615,8 +615,10 @@ static int brcm_usb_phy_resume(struct device *dev)
+ {
+ 	struct brcm_usb_phy_data *priv = dev_get_drvdata(dev);
+ 
+-	clk_prepare_enable(priv->usb_20_clk);
+-	clk_prepare_enable(priv->usb_30_clk);
++	if (!priv->ini.wake_enabled) {
++		clk_prepare_enable(priv->usb_20_clk);
++		clk_prepare_enable(priv->usb_30_clk);
++	}
+ 	brcm_usb_init_ipp(&priv->ini);
+ 
+ 	/*
 -- 
 2.35.1
 
