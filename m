@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67841875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E0EC433D2;
-	Wed, 28 Dec 2022 15:52:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DAF21875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D8BC433EF;
+	Wed, 28 Dec 2022 15:52:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242723;
-	bh=zK5RTB56eEkFgp0quFy23i6FgJ6xr0MJOsoiN8iWKPQ=;
+	s=korg; t=1672242726;
+	bh=z4GeaDspsSR9VcH57Drr7ZHFVuhV4eam1z3XfMGCKSA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zPQy5JTIU7Sl1XWw3HscA8E1g66ay0SIUCuGLBIH1IDLnuODzOn4MaNMPgjdvniiu
-	 UL8Y1tyMuBeKf9RBtqLHE7+c9e+dTgK08dWh6bxP6FtwnNfUNn1xVNpfxTuShQ7wPt
-	 6UvcdUM6gbnxy0xcVC7VDfl+rmjjlYYqcYqn4Hyg=
+	b=gwhg7Aau6loWM5H75mtO7AOfsMd8dipSbo7BfuTTAj3SYEJPckHeC01fbktMvWvYt
+	 WeQN1TAm4g/kr8m1JJX0/Jw15pjs6qyKoUsXF/9HcFzVuUB+QHdfl49eVG0ZNg52zE
+	 YfUIvdxkOaJJmbrBFd5rEaCAk7FVWCvwYyes+Z18=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicolas Cavallari <nicolas.cavallari@green-communications.fr>,
-	Felix Fietkau <nbd@nbd.name>,
+	Martin Liska <mliska@suse.cz>,
+	Ariel Elior <aelior@marvell.com>,
+	Manish Chopra <manishc@marvell.com>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0444/1073] wifi: mt76: mt7915: Fix chainmask calculation on mt7915 DBDC
-Date: Wed, 28 Dec 2022 15:33:52 +0100
-Message-Id: <20221228144340.090030660@linuxfoundation.org>
+Subject: [PATCH 5.15 638/731] qed (gcc13): use u16 for fid to be big enough
+Date: Wed, 28 Dec 2022 15:42:25 +0100
+Message-Id: <20221228144315.005678388@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +38,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit de147cc28985a2a09e5d6d179fc5ef59b22fc058 ]
+[ Upstream commit 7d84118229bf7f7290438c85caa8e49de52d50c1 ]
 
-mt7915 does not have a per-band number of chains unlike the other chips,
-it only has a total number of chains.  Yet the current code would
-consider the total number as a per-band number.
+gcc 13 correctly reports overflow in qed_grc_dump_addr_range():
+In file included from drivers/net/ethernet/qlogic/qed/qed.h:23,
+                 from drivers/net/ethernet/qlogic/qed/qed_debug.c:10:
+drivers/net/ethernet/qlogic/qed/qed_debug.c: In function 'qed_grc_dump_addr_range':
+include/linux/qed/qed_if.h:1217:9: error: overflow in conversion from 'int' to 'u8' {aka 'unsigned char'} changes value from '(int)vf_id << 8 | 128' to '128' [-Werror=overflow]
 
-For example, it would report that a 2x2 + 2x2 DBDC card have 4 chains on
-each band and set chainmask to 0b1111 for the first interface and
-0b11110000 for the second.
+We do:
+  u8 fid;
+  ...
+  fid = vf_id << 8 | 128;
 
-Fixes: 99ad32a4ca3a ("mt76: mt7915: add support for MT7986")
-Co-developed-by: Felix Fietkau <nbd@nbd.name>
-Signed-off-by: Nicolas Cavallari <nicolas.cavallari@green-communications.fr>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Since fid is 16bit (and the stored value above too), fid should be u16,
+not u8. Fix that.
+
+Cc: Martin Liska <mliska@suse.cz>
+Cc: Ariel Elior <aelior@marvell.com>
+Cc: Manish Chopra <manishc@marvell.com>
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20221031114354.10398-1-jirislaby@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/qlogic/qed/qed_debug.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
-index 83bced0c0785..0bce0ce51be0 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
-@@ -194,6 +194,7 @@ void mt7915_eeprom_parse_hw_cap(struct mt7915_dev *dev,
- 	nss = path;
- 	if (dev->dbdc_support) {
- 		if (is_mt7915(&dev->mt76)) {
-+			path = min_t(u8, path, 2);
- 			nss = FIELD_GET(MT_EE_WIFI_CONF3_TX_PATH_B0,
- 					eeprom[MT_EE_WIFI_CONF + 3]);
- 			if (phy->band_idx)
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_debug.c b/drivers/net/ethernet/qlogic/qed/qed_debug.c
+index 6ab3e60d4928..4b4077cf2d26 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_debug.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_debug.c
+@@ -1796,9 +1796,10 @@ static u32 qed_grc_dump_addr_range(struct qed_hwfn *p_hwfn,
+ 				   u8 split_id)
+ {
+ 	struct dbg_tools_data *dev_data = &p_hwfn->dbg_info;
+-	u8 port_id = 0, pf_id = 0, vf_id = 0, fid = 0;
++	u8 port_id = 0, pf_id = 0, vf_id = 0;
+ 	bool read_using_dmae = false;
+ 	u32 thresh;
++	u16 fid;
+ 
+ 	if (!dump)
+ 		return len;
 -- 
 2.35.1
 
