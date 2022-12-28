@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0131863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0CE7C433D2;
-	Wed, 28 Dec 2022 14:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC061863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FEA6C433D2;
+	Wed, 28 Dec 2022 14:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239414;
-	bh=BI81VsQgUesnbRAeUXPSJMeE4jCEZUlWXKKX1VZNNp4=;
+	s=korg; t=1672239416;
+	bh=oCmsP0iqexY3xvxWCYLZRnqXdNwamHrdLKCw8Mvsncs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rQv/ZUpNVoGZw3QUw+nLEJdA5XLkygW5pUU6NjkjWGCFzEdee1jf3Br79D1U54gQh
-	 SYlB+h2+vo8wqXS5A/FMBpuBNgTzi6w53GrCz74sTdlfMhzH2bW0ebRzX76ARj/tX2
-	 yOI6Q6MCA5QiSD3zWqipPo/qUo9LRvnzl0mkkzW8=
+	b=nwzRfFpr3dJ1R9jgJtBiuFvCGlDRT8UO0awr+NDlumLMfEAUw2su2XJaUbeSCBvsH
+	 b6fv7vIMn6j8yxhZXoQUiyMuHdA7njZFhJE8BXL4pwZWnfYtwfyD8cOzePkmagHZBO
+	 3MNV7wdX5lWOate+zUa8OeV7Nwk/yoVYbm4DCFWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Jiahao <chenjiahao16@huawei.com>,
-	Nishanth Menon <nm@ti.com>,
+	Baisong Zhong <zhongbaisong@huawei.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0025/1073] drivers: soc: ti: knav_qmss_queue: Mark knav_acc_firmwares as static
-Date: Wed, 28 Dec 2022 15:26:53 +0100
-Message-Id: <20221228144328.833462049@linuxfoundation.org>
+Subject: [PATCH 5.15 221/731] ALSA: pcm: fix undefined behavior in bit shift for SNDRV_PCM_RATE_KNOT
+Date: Wed, 28 Dec 2022 15:35:28 +0100
+Message-Id: <20221228144302.970905679@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,40 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Jiahao <chenjiahao16@huawei.com>
+From: Baisong Zhong <zhongbaisong@huawei.com>
 
-[ Upstream commit adf85adc2a7199b41e7a4da083bd17274a3d6969 ]
+[ Upstream commit b5172e62458f8e6ff359e5f096044a488db90ac5 ]
 
-There is a sparse warning shown below:
+Shifting signed 32-bit value by 31 bits is undefined, so changing
+significant bit to unsigned. The UBSAN warning calltrace like below:
 
-drivers/soc/ti/knav_qmss_queue.c:70:12: warning: symbol
-'knav_acc_firmwares' was not declared. Should it be static?
+UBSAN: shift-out-of-bounds in sound/core/pcm_native.c:2676:21
+left shift of 1 by 31 places cannot be represented in type 'int'
+...
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x8d/0xcf
+ ubsan_epilogue+0xa/0x44
+ __ubsan_handle_shift_out_of_bounds+0x1e7/0x208
+ snd_pcm_open_substream+0x9f0/0xa90
+ snd_pcm_oss_open.part.26+0x313/0x670
+ snd_pcm_oss_open+0x30/0x40
+ soundcore_open+0x18b/0x2e0
+ chrdev_open+0xe2/0x270
+ do_dentry_open+0x2f7/0x620
+ path_openat+0xd66/0xe70
+ do_filp_open+0xe3/0x170
+ do_sys_openat2+0x357/0x4a0
+ do_sys_open+0x87/0xd0
+ do_syscall_64+0x34/0x80
 
-Since 'knav_acc_firmwares' is only called within knav_qmss_queue.c,
-mark it as static to fix the warning.
-
-Fixes: 96ee19becc3b ("soc: ti: add firmware file name as part of the driver")
-Signed-off-by: Chen Jiahao <chenjiahao16@huawei.com>
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Link: https://lore.kernel.org/r/20221019153212.72350-1-chenjiahao16@huawei.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
+Link: https://lore.kernel.org/r/20221121110044.3115686-1-zhongbaisong@huawei.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/ti/knav_qmss_queue.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/sound/pcm.h | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/soc/ti/knav_qmss_queue.c b/drivers/soc/ti/knav_qmss_queue.c
-index 92af7d1b6f5b..16a6d530a0d4 100644
---- a/drivers/soc/ti/knav_qmss_queue.c
-+++ b/drivers/soc/ti/knav_qmss_queue.c
-@@ -67,7 +67,7 @@ static DEFINE_MUTEX(knav_dev_lock);
-  * Newest followed by older ones. Search is done from start of the array
-  * until a firmware file is found.
-  */
--const char *knav_acc_firmwares[] = {"ks2_qmss_pdsp_acc48.bin"};
-+static const char * const knav_acc_firmwares[] = {"ks2_qmss_pdsp_acc48.bin"};
+diff --git a/include/sound/pcm.h b/include/sound/pcm.h
+index e08bf475d02d..181df0452ae2 100644
+--- a/include/sound/pcm.h
++++ b/include/sound/pcm.h
+@@ -106,24 +106,24 @@ struct snd_pcm_ops {
+ #define SNDRV_PCM_POS_XRUN		((snd_pcm_uframes_t)-1)
  
- static bool device_ready;
- bool knav_qmss_device_ready(void)
+ /* If you change this don't forget to change rates[] table in pcm_native.c */
+-#define SNDRV_PCM_RATE_5512		(1<<0)		/* 5512Hz */
+-#define SNDRV_PCM_RATE_8000		(1<<1)		/* 8000Hz */
+-#define SNDRV_PCM_RATE_11025		(1<<2)		/* 11025Hz */
+-#define SNDRV_PCM_RATE_16000		(1<<3)		/* 16000Hz */
+-#define SNDRV_PCM_RATE_22050		(1<<4)		/* 22050Hz */
+-#define SNDRV_PCM_RATE_32000		(1<<5)		/* 32000Hz */
+-#define SNDRV_PCM_RATE_44100		(1<<6)		/* 44100Hz */
+-#define SNDRV_PCM_RATE_48000		(1<<7)		/* 48000Hz */
+-#define SNDRV_PCM_RATE_64000		(1<<8)		/* 64000Hz */
+-#define SNDRV_PCM_RATE_88200		(1<<9)		/* 88200Hz */
+-#define SNDRV_PCM_RATE_96000		(1<<10)		/* 96000Hz */
+-#define SNDRV_PCM_RATE_176400		(1<<11)		/* 176400Hz */
+-#define SNDRV_PCM_RATE_192000		(1<<12)		/* 192000Hz */
+-#define SNDRV_PCM_RATE_352800		(1<<13)		/* 352800Hz */
+-#define SNDRV_PCM_RATE_384000		(1<<14)		/* 384000Hz */
+-
+-#define SNDRV_PCM_RATE_CONTINUOUS	(1<<30)		/* continuous range */
+-#define SNDRV_PCM_RATE_KNOT		(1<<31)		/* supports more non-continuos rates */
++#define SNDRV_PCM_RATE_5512		(1U<<0)		/* 5512Hz */
++#define SNDRV_PCM_RATE_8000		(1U<<1)		/* 8000Hz */
++#define SNDRV_PCM_RATE_11025		(1U<<2)		/* 11025Hz */
++#define SNDRV_PCM_RATE_16000		(1U<<3)		/* 16000Hz */
++#define SNDRV_PCM_RATE_22050		(1U<<4)		/* 22050Hz */
++#define SNDRV_PCM_RATE_32000		(1U<<5)		/* 32000Hz */
++#define SNDRV_PCM_RATE_44100		(1U<<6)		/* 44100Hz */
++#define SNDRV_PCM_RATE_48000		(1U<<7)		/* 48000Hz */
++#define SNDRV_PCM_RATE_64000		(1U<<8)		/* 64000Hz */
++#define SNDRV_PCM_RATE_88200		(1U<<9)		/* 88200Hz */
++#define SNDRV_PCM_RATE_96000		(1U<<10)	/* 96000Hz */
++#define SNDRV_PCM_RATE_176400		(1U<<11)	/* 176400Hz */
++#define SNDRV_PCM_RATE_192000		(1U<<12)	/* 192000Hz */
++#define SNDRV_PCM_RATE_352800		(1U<<13)	/* 352800Hz */
++#define SNDRV_PCM_RATE_384000		(1U<<14)	/* 384000Hz */
++
++#define SNDRV_PCM_RATE_CONTINUOUS	(1U<<30)	/* continuous range */
++#define SNDRV_PCM_RATE_KNOT		(1U<<31)	/* supports more non-continuos rates */
+ 
+ #define SNDRV_PCM_RATE_8000_44100	(SNDRV_PCM_RATE_8000|SNDRV_PCM_RATE_11025|\
+ 					 SNDRV_PCM_RATE_16000|SNDRV_PCM_RATE_22050|\
 -- 
 2.35.1
 
