@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95971C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D9D0C433D2;
-	Wed, 28 Dec 2022 16:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F93E1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D5BCC433D2;
+	Wed, 28 Dec 2022 16:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246500;
-	bh=NEUP6zN9OADZm5zNxMnUdUs2DJSQYC2jc+XVsX3Rf54=;
+	s=korg; t=1672246503;
+	bh=/yXmksJOT4HkWi9od/IsfhSh/Se23sgAw0aKE2I9pBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=neNNJHlnLzvtFIHqQ2WU/Iunbh3GC+GF3uezfXwTaOzZzwdxmMn6u113M7tyULXex
-	 fR9OhRzK1QTBjqEJNwkWhci/Vsno89nDctJ9AmWRDQmTBu74Tw1nAhSugsqocSjNYD
-	 pfO7932coI8WgaeVjIk1exzp7azaPdtMDfHJ+9aE=
+	b=sM3qh18qjX5KRx/0kCP7WGh+/1BlinZS8GgD2u94sqJyKMGZ1SFplnuTWqgFmBAfu
+	 zE9Vvqsb51VablhyfjzrxVl6688ta/Duls2Z64es3yckj+NzTzLmPu+HMrx0mG8Ah6
+	 AYkHoaCvAjkjormauhxsIaKbWUVxaxn3eRSa5vmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
+	Rui Zhang <zr.zhang@vivo.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1059/1146] drm/fsl-dcu: Fix return type of fsl_dcu_drm_connector_mode_valid()
-Date: Wed, 28 Dec 2022 15:43:18 +0100
-Message-Id: <20221228144359.051852570@linuxfoundation.org>
+Subject: [PATCH 6.1 1033/1146] regulator: core: fix use_count leakage when handling boot-on
+Date: Wed, 28 Dec 2022 15:42:52 +0100
+Message-Id: <20221228144358.415418819@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -36,55 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Rui Zhang <zr.zhang@vivo.com>
 
-[ Upstream commit 96d845a67b7e406cfed7880a724c8ca6121e022e ]
+[ Upstream commit 0591b14ce0398125439c759f889647369aa616a0 ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+I found a use_count leakage towards supply regulator of rdev with
+boot-on option.
 
-  drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c:74:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .mode_valid = fsl_dcu_drm_connector_mode_valid,
-                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+┌───────────────────┐           ┌───────────────────┐
+│  regulator_dev A  │           │  regulator_dev B  │
+│     (boot-on)     │           │     (boot-on)     │
+│    use_count=0    │◀──supply──│    use_count=1    │
+│                   │           │                   │
+└───────────────────┘           └───────────────────┘
 
-->mode_valid() in 'struct drm_connector_helper_funcs' expects a return
-type of 'enum drm_mode_status', not 'int'. Adjust the return type of
-fsl_dcu_drm_connector_mode_valid() to match the prototype's to resolve
-the warning and CFI failure.
+In case of rdev(A) configured with `regulator-boot-on', the use_count
+of supplying regulator(B) will increment inside
+regulator_enable(rdev->supply).
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reported-by: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221102154215.78059-1-nathan@kernel.org
+Thus, B will acts like always-on, and further balanced
+regulator_enable/disable cannot actually disable it anymore.
+
+However, B was also configured with `regulator-boot-on', we wish it
+could be disabled afterwards.
+
+Signed-off-by: Rui Zhang <zr.zhang@vivo.com>
+Link: https://lore.kernel.org/r/20221201033806.2567812-1-zr.zhang@vivo.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/regulator/core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
-index 4d4a715b429d..2c2b92324a2e 100644
---- a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
-+++ b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
-@@ -60,8 +60,9 @@ static int fsl_dcu_drm_connector_get_modes(struct drm_connector *connector)
- 	return drm_panel_get_modes(fsl_connector->panel, connector);
- }
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index d65721498349..15677f5dcd99 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1596,7 +1596,13 @@ static int set_machine_constraints(struct regulator_dev *rdev)
+ 		if (rdev->supply_name && !rdev->supply)
+ 			return -EPROBE_DEFER;
  
--static int fsl_dcu_drm_connector_mode_valid(struct drm_connector *connector,
--					    struct drm_display_mode *mode)
-+static enum drm_mode_status
-+fsl_dcu_drm_connector_mode_valid(struct drm_connector *connector,
-+				 struct drm_display_mode *mode)
- {
- 	if (mode->hdisplay & 0xf)
- 		return MODE_ERROR;
+-		if (rdev->supply) {
++		/* If supplying regulator has already been enabled,
++		 * it's not intended to have use_count increment
++		 * when rdev is only boot-on.
++		 */
++		if (rdev->supply &&
++		    (rdev->constraints->always_on ||
++		     !regulator_is_enabled(rdev->supply))) {
+ 			ret = regulator_enable(rdev->supply);
+ 			if (ret < 0) {
+ 				_regulator_put(rdev->supply);
 -- 
 2.35.1
 
