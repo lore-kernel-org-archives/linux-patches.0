@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACE81863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:40:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F474C433F1;
-	Wed, 28 Dec 2022 15:40:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6386E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:40:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2822C433D2;
+	Wed, 28 Dec 2022 15:40:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242011;
-	bh=ymf3kUV98vrrkLChHbFC3a/CEx83PKvNYKSAs/httkY=;
+	s=korg; t=1672242014;
+	bh=S0YleyCtl8nxSbpHoRmYgzf0i+GtpfERISxg5tXcEsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c6NyqyQlQF6H/r/3ePNqMRI3Dn5UsuqrgI0O/gFbuUwWxZ7JS8OEDeHE1ZCIuFd5h
-	 CpHqvB0wokTrmTmBqG9/EpPb8BCF7FqZ5xj/aeIngUfhRskONMsCBZ9Em3iJpff/Fb
-	 6kGbF7htF5BUBDHL5KyB0HnL34aUULUcSqrC7gR0=
+	b=OEALtw2KfZTL8YTATHT6C4/5W1DUk4L+Om14JSPUalFUeFPgEKk7uWSO3Za94dVfa
+	 kzhADNxeptXfd3HnbU3kFWkLgZgtdHyWzNCXCGC7lX7NMYWtdXeuyHfje+1aXrUe4X
+	 Z9St9Kfa/EEUGiyyfwWI+hlHEVBYrOVTwZ3c09Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0354/1073] HID: i2c: let RMI devices decide what constitutes wakeup event
-Date: Wed, 28 Dec 2022 15:32:22 +0100
-Message-Id: <20221228144337.619526539@linuxfoundation.org>
+Subject: [PATCH 5.15 553/731] powerpc/52xx: Fix a resource leak in an error handling path
+Date: Wed, 28 Dec 2022 15:41:00 +0100
+Message-Id: <20221228144312.567216193@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,60 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 9984fbf55b9bd998b4ff66395cbb118020c1effa ]
+[ Upstream commit 5836947613ef33d311b4eff6a32d019580a214f5 ]
 
-HID-RMI is special in the sense that it does not carry HID events
-directly, but rather uses HID protocol as a wrapper/transport for RMI
-protocol.  Therefore we should not assume that all data coming from the
-device via interrupt is associated with user activity and report wakeup
-event indiscriminately, but rather let HID-RMI do that when appropriate.
+The error handling path of mpc52xx_lpbfifo_probe() has a request_irq()
+that is not balanced by a corresponding free_irq().
 
-HID-RMI devices tag responses to the commands issued by the host as
-RMI_READ_DATA_REPORT_ID whereas motion and other input events from the
-device are tagged as RMI_ATTN_REPORT_ID. Change hid-rmi to report wakeup
-events when receiving the latter packets. This allows ChromeOS to
-accurately identify wakeup source and make correct decision on the mode
-of the resume the system should take ("dark" where the display stays off
-vs normal one).
+Add the missing call, as already done in the remove function.
 
-Fixes: d951ae1ce803 ("HID: i2c-hid: Report wakeup events")
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Fixes: 3c9059d79f5e ("powerpc/5200: add LocalPlus bus FIFO device driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/dec1496d46ccd5311d0f6e9f9ca4238be11bf6a6.1643440531.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-rmi.c              | 2 ++
- drivers/hid/i2c-hid/i2c-hid-core.c | 3 ++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ arch/powerpc/platforms/52xx/mpc52xx_lpbfifo.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hid/hid-rmi.c b/drivers/hid/hid-rmi.c
-index 311eee599ce9..b2bf588d18c3 100644
---- a/drivers/hid/hid-rmi.c
-+++ b/drivers/hid/hid-rmi.c
-@@ -327,6 +327,8 @@ static int rmi_input_event(struct hid_device *hdev, u8 *data, int size)
- 	if (!(test_bit(RMI_STARTED, &hdata->flags)))
- 		return 0;
- 
-+	pm_wakeup_event(hdev->dev.parent, 0);
-+
- 	local_irq_save(flags);
- 
- 	rmi_set_attn_data(rmi_dev, data[1], &data[2], size - 2);
-diff --git a/drivers/hid/i2c-hid/i2c-hid-core.c b/drivers/hid/i2c-hid/i2c-hid-core.c
-index c078f09a2318..5a365648206e 100644
---- a/drivers/hid/i2c-hid/i2c-hid-core.c
-+++ b/drivers/hid/i2c-hid/i2c-hid-core.c
-@@ -554,7 +554,8 @@ static void i2c_hid_get_input(struct i2c_hid *ihid)
- 	i2c_hid_dbg(ihid, "input: %*ph\n", ret_size, ihid->inbuf);
- 
- 	if (test_bit(I2C_HID_STARTED, &ihid->flags)) {
--		pm_wakeup_event(&ihid->client->dev, 0);
-+		if (ihid->hid->group != HID_GROUP_RMI)
-+			pm_wakeup_event(&ihid->client->dev, 0);
- 
- 		hid_input_report(ihid->hid, HID_INPUT_REPORT,
- 				ihid->inbuf + sizeof(__le16),
+diff --git a/arch/powerpc/platforms/52xx/mpc52xx_lpbfifo.c b/arch/powerpc/platforms/52xx/mpc52xx_lpbfifo.c
+index b91ebebd9ff2..e0049b7df212 100644
+--- a/arch/powerpc/platforms/52xx/mpc52xx_lpbfifo.c
++++ b/arch/powerpc/platforms/52xx/mpc52xx_lpbfifo.c
+@@ -530,6 +530,7 @@ static int mpc52xx_lpbfifo_probe(struct platform_device *op)
+  err_bcom_rx_irq:
+ 	bcom_gen_bd_rx_release(lpbfifo.bcom_rx_task);
+  err_bcom_rx:
++	free_irq(lpbfifo.irq, &lpbfifo);
+  err_irq:
+ 	iounmap(lpbfifo.regs);
+ 	lpbfifo.regs = NULL;
 -- 
 2.35.1
 
