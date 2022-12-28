@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3992B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF065C433D2;
-	Wed, 28 Dec 2022 14:57:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58A31863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618EDC433D2;
+	Wed, 28 Dec 2022 14:57:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239422;
-	bh=KHzEcZE2k1pRm8RztkLsclhbLBR1oLAIU4UFuSVxwr4=;
+	s=korg; t=1672239424;
+	bh=9H5l4CQ8u8WDFpOSxw0urqW3JuRp+pRhbLSUVgXweQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U/cJ/TAGgW8vyDvVH+KdBKUkaE6coH8QmGZZibGLQLpCnJOoyjBsM816wsBqHGDQX
-	 pbT29GOmOC7Pqd26D5UBcr0v7aQYnEIkDldZuS+0CH51ulgE9M2HnXBisQNJuHl0l9
-	 Lk0B3/E09u6YdtqTWsOhhjxjHYrgaOKRS87SYVeA=
+	b=jC1WaU/mqLlZ4TrNtS3pWYzCBJdoeYaDWDXj6/lhyhlYbDfkIgw9Ke3KoFeZTOTZm
+	 i0lygRtvyHxw/Z54M1LmYfd97kPIDsm8/RYwJ2Sb9iQRshGLNiZN/+UtKr0Tf4pK4W
+	 KSfX+L35gjEPpZzbZH8r8XFTgdeO68Fi81+YdsTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baisong Zhong <zhongbaisong@huawei.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 222/731] ALSA: seq: fix undefined behavior in bit shift for SNDRV_SEQ_FILTER_USE_EVENT
-Date: Wed, 28 Dec 2022 15:35:29 +0100
-Message-Id: <20221228144302.999362675@linuxfoundation.org>
+Subject: [PATCH 6.0 0027/1073] arm64: dts: qcom: pm660: Use unique ADC5_VCOIN address in node name
+Date: Wed, 28 Dec 2022 15:26:55 +0100
+Message-Id: <20221228144328.883869144@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,63 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baisong Zhong <zhongbaisong@huawei.com>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit cf59e1e4c79bf741905484cdb13c130b53576a16 ]
+[ Upstream commit 02549ba5de0a09a27616496c3512db5af4ad7862 ]
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned. The UBSAN warning calltrace like below:
+The register address in the node name is shadowing vph_pwr@83, whereas
+the ADC5_VCOIN register resolves to 0x85.  Fix this copy-paste
+discrepancy.
 
-UBSAN: shift-out-of-bounds in sound/core/seq/seq_clientmgr.c:509:22
-left shift of 1 by 31 places cannot be represented in type 'int'
-...
-Call Trace:
- <TASK>
- dump_stack_lvl+0x8d/0xcf
- ubsan_epilogue+0xa/0x44
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x208
- snd_seq_deliver_single_event.constprop.21+0x191/0x2f0
- snd_seq_deliver_event+0x1a2/0x350
- snd_seq_kernel_client_dispatch+0x8b/0xb0
- snd_seq_client_notify_subscription+0x72/0xa0
- snd_seq_ioctl_subscribe_port+0x128/0x160
- snd_seq_kernel_client_ctl+0xce/0xf0
- snd_seq_oss_create_client+0x109/0x15b
- alsa_seq_oss_init+0x11c/0x1aa
- do_one_initcall+0x80/0x440
- kernel_init_freeable+0x370/0x3c3
- kernel_init+0x1b/0x190
- ret_from_fork+0x1f/0x30
- </TASK>
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
-Link: https://lore.kernel.org/r/20221121111630.3119259-1-zhongbaisong@huawei.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 4bf097540506 ("arm64: dts: qcom: pm660: Add VADC and temp alarm nodes")
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20220926190148.283805-3-marijn.suijten@somainline.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/sound/asequencer.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/pm660.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/uapi/sound/asequencer.h b/include/uapi/sound/asequencer.h
-index a75e14edc957..dbd60f48b4b0 100644
---- a/include/uapi/sound/asequencer.h
-+++ b/include/uapi/sound/asequencer.h
-@@ -344,10 +344,10 @@ typedef int __bitwise snd_seq_client_type_t;
- #define	KERNEL_CLIENT	((__force snd_seq_client_type_t) 2)
-                         
- 	/* event filter flags */
--#define SNDRV_SEQ_FILTER_BROADCAST	(1<<0)	/* accept broadcast messages */
--#define SNDRV_SEQ_FILTER_MULTICAST	(1<<1)	/* accept multicast messages */
--#define SNDRV_SEQ_FILTER_BOUNCE		(1<<2)	/* accept bounce event in error */
--#define SNDRV_SEQ_FILTER_USE_EVENT	(1<<31)	/* use event filter */
-+#define SNDRV_SEQ_FILTER_BROADCAST	(1U<<0)	/* accept broadcast messages */
-+#define SNDRV_SEQ_FILTER_MULTICAST	(1U<<1)	/* accept multicast messages */
-+#define SNDRV_SEQ_FILTER_BOUNCE		(1U<<2)	/* accept bounce event in error */
-+#define SNDRV_SEQ_FILTER_USE_EVENT	(1U<<31)	/* use event filter */
+diff --git a/arch/arm64/boot/dts/qcom/pm660.dtsi b/arch/arm64/boot/dts/qcom/pm660.dtsi
+index d0eefbb51663..d8c9ece20cd9 100644
+--- a/arch/arm64/boot/dts/qcom/pm660.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm660.dtsi
+@@ -163,7 +163,7 @@ vadc_vph_pwr: vph_pwr@83 {
+ 				qcom,pre-scaling = <1 3>;
+ 			};
  
- struct snd_seq_client_info {
- 	int client;			/* client number to inquire */
+-			vcoin: vcoin@83 {
++			vcoin: vcoin@85 {
+ 				reg = <ADC5_VCOIN>;
+ 				qcom,decimation = <1024>;
+ 				qcom,pre-scaling = <1 3>;
 -- 
 2.35.1
 
