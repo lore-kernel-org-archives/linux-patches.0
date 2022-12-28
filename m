@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACC2A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D44C433EF;
-	Wed, 28 Dec 2022 15:02:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223B61863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98155C433D2;
+	Wed, 28 Dec 2022 15:02:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239730;
-	bh=XVoSdK8260yXeH93s7NZlS9+BxbdpXSUO5DzpwF9pHk=;
+	s=korg; t=1672239733;
+	bh=t+DdR3AGDJohcKG6a+DJBy8uLuku062ruhfRulGYuM8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x+VepysU3JX7xGgzj8/q+9Q6AfrjEKV/SkPF1jCbY6G56MszBpVaQErYM7KfRUjIp
-	 lOQZYGxrLjcb5f54rH6aKWWag64IqAXTRrfaSN8odIgptNz73GiQSVCPRHYEkss92T
-	 hUXWmmR+KPOcLsTLhXBL6ehHKu9m70hZyP+L1Vyk=
+	b=l8o84xgpVKWhTZnEZDcb+rNhJL3wKfupHkCc1fhffsghxnZFPOKr3Sog2aUKSzNJj
+	 700GswYBmjGu+P/h5IU60ola3zmJsQjpxxq+/G/UkgBFGgrjqcuWSvL4qf8Qn2DWgu
+	 /XRlQ0FZ6/6PcygC5MLBJEYQ78x3BBTRxWRLgVBA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Pengcheng Yang <yangpc@wangsu.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0069/1073] ARM: dts: dove: Fix assigned-addresses for every PCIe Root Port
-Date: Wed, 28 Dec 2022 15:27:37 +0100
-Message-Id: <20221228144329.959950093@linuxfoundation.org>
+Subject: [PATCH 5.15 263/731] bpf, sockmap: Fix data loss caused by using apply_bytes on ingress redirect
+Date: Wed, 28 Dec 2022 15:36:10 +0100
+Message-Id: <20221228144304.186660751@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Pengcheng Yang <yangpc@wangsu.com>
 
-[ Upstream commit dcc7d8c72b64a479b8017e4332d99179deb8802d ]
+[ Upstream commit 9072931f020bfd907d6d89ee21ff1481cd78b407 ]
 
-BDF of resource in DT assigned-addresses property of Marvell PCIe Root Port
-(PCI-to-PCI bridge) should match BDF in address part in that DT node name
-as specified resource belongs to Marvell PCIe Root Port itself.
+Use apply_bytes on ingress redirect, when apply_bytes is less than
+the length of msg data, some data may be skipped and lost in
+bpf_tcp_ingress().
 
-Fixes: 74ecaa403a74 ("ARM: dove: add PCIe controllers to SoC DT")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+If there is still data in the scatterlist that has not been consumed,
+we cannot move the msg iter.
+
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
+Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/1669718441-2654-4-git-send-email-yangpc@wangsu.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/dove.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/tcp_bpf.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/dove.dtsi b/arch/arm/boot/dts/dove.dtsi
-index 89e0bdaf3a85..726d353eda68 100644
---- a/arch/arm/boot/dts/dove.dtsi
-+++ b/arch/arm/boot/dts/dove.dtsi
-@@ -129,7 +129,7 @@ pcie0: pcie@1 {
- 			pcie1: pcie@2 {
- 				device_type = "pci";
- 				status = "disabled";
--				assigned-addresses = <0x82002800 0 0x80000 0 0x2000>;
-+				assigned-addresses = <0x82001000 0 0x80000 0 0x2000>;
- 				reg = <0x1000 0 0 0 0>;
- 				clocks = <&gate_clk 5>;
- 				marvell,pcie-port = <1>;
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index 2db868ca32af..b4b642e3de78 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -45,8 +45,11 @@ static int bpf_tcp_ingress(struct sock *sk, struct sk_psock *psock,
+ 		tmp->sg.end = i;
+ 		if (apply) {
+ 			apply_bytes -= size;
+-			if (!apply_bytes)
++			if (!apply_bytes) {
++				if (sge->length)
++					sk_msg_iter_var_prev(i);
+ 				break;
++			}
+ 		}
+ 	} while (i != msg->sg.end);
+ 
 -- 
 2.35.1
 
