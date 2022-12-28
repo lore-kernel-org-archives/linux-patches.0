@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0437F1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74FBCC433D2;
-	Wed, 28 Dec 2022 16:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE1FE1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DFA9C433EF;
+	Wed, 28 Dec 2022 16:15:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244138;
-	bh=aglx1usQfBM6l0KL+69bpy35bIYjRlMNolD+5Qwgf44=;
+	s=korg; t=1672244141;
+	bh=Wfm1eR8kAdXO8PrZmf9DkjddDKM81VKUhPWVPqLMsT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rx64sxCyopQIKC0V7sFPUUOiNQoy9FIqkJjFZR2HZaCvS/+qkRjyRd9VgPU8f1F3D
-	 wFBzzXCGYjLAPHi7qKZ4fvpYJW9nKIO22x7VuAx09/SdFDDZQfQ4Ukq4237K/JQx5O
-	 psz6U+B0NwvdPsad9htiTe4QrrCv+JWzrCSoyQP0=
+	b=OxEYs+FZ9P1QOlqFBBuU54dYYnkUyco1++PjzIB91T+WJiM9yR5i6RTyBcBn9aj48
+	 v+YBKIa8D1HVP6A4knxIK0o2/Pf/To0ZuQ9SUj1wTn8EWQF54SjxPmyTHhQSmjZqPN
+	 b6E+itwFfu+pEtYkmRhkF/xOChD9x8haAMMpribc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Weili Qian <qianweili@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0657/1073] hwrng: amd - Fix PCI device refcount leak
-Date: Wed, 28 Dec 2022 15:37:25 +0100
-Message-Id: <20221228144345.890523216@linuxfoundation.org>
+Subject: [PATCH 6.1 0618/1146] crypto: hisilicon/qm - add missing pci_dev_put() in q_num_set()
+Date: Wed, 28 Dec 2022 15:35:57 +0100
+Message-Id: <20221228144346.956900966@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,72 +38,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit ecadb5b0111ea19fc7c240bb25d424a94471eb7d ]
+[ Upstream commit cc7710d0d4ebc6998f04035cde4f32c5ddbe9d7f ]
 
-for_each_pci_dev() is implemented by pci_get_device(). The comment of
-pci_get_device() says that it will increase the reference count for the
-returned pci_dev and also decrease the reference count for the input
-pci_dev @from if it is not NULL.
+pci_get_device() will increase the reference count for the returned
+pci_dev. We need to use pci_dev_put() to decrease the reference count
+before q_num_set() returns.
 
-If we break for_each_pci_dev() loop with pdev not NULL, we need to call
-pci_dev_put() to decrease the reference count. Add the missing
-pci_dev_put() for the normal and error path.
-
-Fixes: 96d63c0297cc ("[PATCH] Add AMD HW RNG driver")
+Fixes: c8b4b477079d ("crypto: hisilicon - add HiSilicon HPRE accelerator")
 Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Reviewed-by: Weili Qian <qianweili@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/amd-rng.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ include/linux/hisi_acc_qm.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/hw_random/amd-rng.c b/drivers/char/hw_random/amd-rng.c
-index c22d4184bb61..0555e3838bce 100644
---- a/drivers/char/hw_random/amd-rng.c
-+++ b/drivers/char/hw_random/amd-rng.c
-@@ -143,15 +143,19 @@ static int __init amd_rng_mod_init(void)
- found:
- 	err = pci_read_config_dword(pdev, 0x58, &pmbase);
- 	if (err)
--		return err;
-+		goto put_dev;
+diff --git a/include/linux/hisi_acc_qm.h b/include/linux/hisi_acc_qm.h
+index e230c7c46110..c3618255b150 100644
+--- a/include/linux/hisi_acc_qm.h
++++ b/include/linux/hisi_acc_qm.h
+@@ -384,14 +384,14 @@ struct hisi_qp {
+ static inline int q_num_set(const char *val, const struct kernel_param *kp,
+ 			    unsigned int device)
+ {
+-	struct pci_dev *pdev = pci_get_device(PCI_VENDOR_ID_HUAWEI,
+-					      device, NULL);
++	struct pci_dev *pdev;
+ 	u32 n, q_num;
+ 	int ret;
  
- 	pmbase &= 0x0000FF00;
--	if (pmbase == 0)
--		return -EIO;
-+	if (pmbase == 0) {
-+		err = -EIO;
-+		goto put_dev;
-+	}
+ 	if (!val)
+ 		return -EINVAL;
  
- 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
--	if (!priv)
--		return -ENOMEM;
-+	if (!priv) {
-+		err = -ENOMEM;
-+		goto put_dev;
-+	}
- 
- 	if (!request_region(pmbase + PMBASE_OFFSET, PMBASE_SIZE, DRV_NAME)) {
- 		dev_err(&pdev->dev, DRV_NAME " region 0x%x already in use!\n",
-@@ -185,6 +189,8 @@ static int __init amd_rng_mod_init(void)
- 	release_region(pmbase + PMBASE_OFFSET, PMBASE_SIZE);
- out:
- 	kfree(priv);
-+put_dev:
-+	pci_dev_put(pdev);
- 	return err;
- }
- 
-@@ -200,6 +206,8 @@ static void __exit amd_rng_mod_exit(void)
- 
- 	release_region(priv->pmbase + PMBASE_OFFSET, PMBASE_SIZE);
- 
-+	pci_dev_put(priv->pcidev);
++	pdev = pci_get_device(PCI_VENDOR_ID_HUAWEI, device, NULL);
+ 	if (!pdev) {
+ 		q_num = min_t(u32, QM_QNUM_V1, QM_QNUM_V2);
+ 		pr_info("No device found currently, suppose queue number is %u\n",
+@@ -401,6 +401,8 @@ static inline int q_num_set(const char *val, const struct kernel_param *kp,
+ 			q_num = QM_QNUM_V1;
+ 		else
+ 			q_num = QM_QNUM_V2;
 +
- 	kfree(priv);
- }
++		pci_dev_put(pdev);
+ 	}
  
+ 	ret = kstrtou32(val, 10, &n);
 -- 
 2.35.1
 
