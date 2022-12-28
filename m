@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 126C71C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82BC2C433D2;
-	Wed, 28 Dec 2022 16:41:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB0A1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BBB5C433D2;
+	Wed, 28 Dec 2022 16:41:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245670;
-	bh=bylQ92nndUsQDEdsR7BlnEBaPmFt2kKNmE0KssvA6Mg=;
+	s=korg; t=1672245673;
+	bh=H850jVq67tVt0GSLkzOla16JWgCEzjxQpwzXPtGvzEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YrCh0/n2IHT8bgCHPDJbrMqEC8Z+DhGBmUoU3txbplOrl67aKamsxHdNcyMLc49fO
-	 UnFxGgfRv15gmMbpdDj1xFfQzomBWyUKIQJmcK5MDuPDS7aKPTF8ZOcBmpEOvrU2qe
-	 XJa9IkjB4JFjlOEJ7Rj+fCBGKU+bu7RAjsOw/mzo=
+	b=yR443fSL0bMTPcqDiZu7l931MqzH2XhIY6soKvdsFiFOEvjb+yJYcxCeNKxl55H6I
+	 clnsZDlcG8w/wH1n1Pn+hjhfo4+pWyIWCvd8fJ0lnzpuYRTFYdG/6GpnFeQB9hQTJZ
+	 E163Teh++EBQ2pQfPs+CbWFIOw4M+V4j1IfLuKks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Kees Cook <keescook@chromium.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Christoph Hellwig <hch@lst.de>,
+	Eric Biggers <ebiggers@google.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0935/1073] s390/lcs: Fix return type of lcs_start_xmit()
-Date: Wed, 28 Dec 2022 15:42:03 +0100
-Message-Id: <20221228144353.424437895@linuxfoundation.org>
+Subject: [PATCH 6.1 0903/1146] blk-crypto: pass a gendisk to blk_crypto_sysfs_{,un}register
+Date: Wed, 28 Dec 2022 15:40:42 +0100
+Message-Id: <20221228144354.740102648@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,66 +36,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit bb16db8393658e0978c3f0d30ae069e878264fa3 ]
+[ Upstream commit 450deb93df7d457cdd93594a1987f9650c749b96 ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+Prepare for changes to the block layer sysfs handling by passing the
+readily available gendisk to blk_crypto_sysfs_{,un}register.
 
-  drivers/s390/net/lcs.c:2090:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = lcs_start_xmit,
-                                    ^~~~~~~~~~~~~~
-  drivers/s390/net/lcs.c:2097:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = lcs_start_xmit,
-                                    ^~~~~~~~~~~~~~
-
-->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-'netdev_tx_t', not 'int'. Adjust the return type of lcs_start_xmit() to
-match the prototype's to resolve the warning and potential CFI failure,
-should s390 select ARCH_SUPPORTS_CFI_CLANG in the future.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20221114042637.1009333-2-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: d36a9ea5e776 ("block: fix use-after-free of q->q_usage_counter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/net/lcs.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ block/blk-crypto-internal.h | 10 ++++++----
+ block/blk-crypto-sysfs.c    |  7 ++++---
+ block/blk-sysfs.c           |  4 ++--
+ 3 files changed, 12 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/s390/net/lcs.c b/drivers/s390/net/lcs.c
-index 84c8981317b4..38f312664ce7 100644
---- a/drivers/s390/net/lcs.c
-+++ b/drivers/s390/net/lcs.c
-@@ -1519,9 +1519,8 @@ lcs_txbuffer_cb(struct lcs_channel *channel, struct lcs_buffer *buffer)
- /*
-  * Packet transmit function called by network stack
-  */
--static int
--__lcs_start_xmit(struct lcs_card *card, struct sk_buff *skb,
--		 struct net_device *dev)
-+static netdev_tx_t __lcs_start_xmit(struct lcs_card *card, struct sk_buff *skb,
-+				    struct net_device *dev)
+diff --git a/block/blk-crypto-internal.h b/block/blk-crypto-internal.h
+index e6818ffaddbf..b8a00847171f 100644
+--- a/block/blk-crypto-internal.h
++++ b/block/blk-crypto-internal.h
+@@ -21,9 +21,9 @@ extern const struct blk_crypto_mode blk_crypto_modes[];
+ 
+ #ifdef CONFIG_BLK_INLINE_ENCRYPTION
+ 
+-int blk_crypto_sysfs_register(struct request_queue *q);
++int blk_crypto_sysfs_register(struct gendisk *disk);
+ 
+-void blk_crypto_sysfs_unregister(struct request_queue *q);
++void blk_crypto_sysfs_unregister(struct gendisk *disk);
+ 
+ void bio_crypt_dun_increment(u64 dun[BLK_CRYPTO_DUN_ARRAY_SIZE],
+ 			     unsigned int inc);
+@@ -67,12 +67,14 @@ static inline bool blk_crypto_rq_is_encrypted(struct request *rq)
+ 
+ #else /* CONFIG_BLK_INLINE_ENCRYPTION */
+ 
+-static inline int blk_crypto_sysfs_register(struct request_queue *q)
++static inline int blk_crypto_sysfs_register(struct gendisk *disk)
  {
- 	struct lcs_header *header;
- 	int rc = NETDEV_TX_OK;
-@@ -1582,8 +1581,7 @@ __lcs_start_xmit(struct lcs_card *card, struct sk_buff *skb,
- 	return rc;
+ 	return 0;
  }
  
--static int
--lcs_start_xmit(struct sk_buff *skb, struct net_device *dev)
-+static netdev_tx_t lcs_start_xmit(struct sk_buff *skb, struct net_device *dev)
+-static inline void blk_crypto_sysfs_unregister(struct request_queue *q) { }
++static inline void blk_crypto_sysfs_unregister(struct gendisk *disk)
++{
++}
+ 
+ static inline bool bio_crypt_rq_ctx_compatible(struct request *rq,
+ 					       struct bio *bio)
+diff --git a/block/blk-crypto-sysfs.c b/block/blk-crypto-sysfs.c
+index fd93bd2f33b7..e05f145cd797 100644
+--- a/block/blk-crypto-sysfs.c
++++ b/block/blk-crypto-sysfs.c
+@@ -126,8 +126,9 @@ static struct kobj_type blk_crypto_ktype = {
+  * If the request_queue has a blk_crypto_profile, create the "crypto"
+  * subdirectory in sysfs (/sys/block/$disk/queue/crypto/).
+  */
+-int blk_crypto_sysfs_register(struct request_queue *q)
++int blk_crypto_sysfs_register(struct gendisk *disk)
  {
- 	struct lcs_card *card;
- 	int rc;
++	struct request_queue *q = disk->queue;
+ 	struct blk_crypto_kobj *obj;
+ 	int err;
+ 
+@@ -149,9 +150,9 @@ int blk_crypto_sysfs_register(struct request_queue *q)
+ 	return 0;
+ }
+ 
+-void blk_crypto_sysfs_unregister(struct request_queue *q)
++void blk_crypto_sysfs_unregister(struct gendisk *disk)
+ {
+-	kobject_put(q->crypto_kobject);
++	kobject_put(disk->queue->crypto_kobject);
+ }
+ 
+ static int __init blk_crypto_sysfs_init(void)
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index e7871665825a..2b1cf0b2a5c7 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -833,7 +833,7 @@ int blk_register_queue(struct gendisk *disk)
+ 			goto put_dev;
+ 	}
+ 
+-	ret = blk_crypto_sysfs_register(q);
++	ret = blk_crypto_sysfs_register(disk);
+ 	if (ret)
+ 		goto put_dev;
+ 
+@@ -910,7 +910,7 @@ void blk_unregister_queue(struct gendisk *disk)
+ 	 */
+ 	if (queue_is_mq(q))
+ 		blk_mq_sysfs_unregister(disk);
+-	blk_crypto_sysfs_unregister(q);
++	blk_crypto_sysfs_unregister(disk);
+ 
+ 	mutex_lock(&q->sysfs_lock);
+ 	elv_unregister_queue(q);
 -- 
 2.35.1
 
