@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353A01863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:17:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA1ACC433D2;
-	Wed, 28 Dec 2022 15:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D85A41863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:17:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B8CC433EF;
+	Wed, 28 Dec 2022 15:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240620;
-	bh=Tacn1Scr7WCtRrRR+AhaqadldxsQPr8WJg4OpZOivFc=;
+	s=korg; t=1672240622;
+	bh=E3DFW+lNHelMJDUaAEh6db0obghbC4BF8bq34TLnXiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DZcGz9gMhynencaIsj/Riz5BN0VjBb1tWBxaZdD3sTBRj72XSM1VGsa/Krf0JyzBK
-	 d84PSshcUqkCp3QbesPXKK/2sR28qqhJq2X8S8xGRLWs+tiFWOvwq6EG0vOjx22z/p
-	 Lr/2S8feWP9+EP56PWZT5qRs0MbwBMtCrFMcjx1Y=
+	b=iw9dxIdt97oC6FMMnYvoV7t9BUagp0gikJvnRifRirSnF+mhZVKUT+h7PUVZSzHMU
+	 rhJHLQuEoojWi0MBfTtKKsr3xbudGMF1KSoDAH9WBWpTq/E2OaMxE+XkY3Z5SHhp2p
+	 0TokpBPvVljovWWhNSY3Ov7kFYuKKPYcm9p6jXPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianmin Lv <lvjianmin@loongson.cn>,
-	Huacai Chen <chenhuacai@loongson.cn>,
-	Marc Zyngier <maz@kernel.org>,
+	John Keeping <john@metanate.com>,
+	Corentin Labbe <clabbe@baylibre.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0146/1146] irqchip/loongson-pch-pic: Fix translate callback for DT path
-Date: Wed, 28 Dec 2022 15:28:05 +0100
-Message-Id: <20221228144334.111857437@linuxfoundation.org>
+Subject: [PATCH 5.15 374/731] crypto: rockchip - better handle cipher key
+Date: Wed, 28 Dec 2022 15:38:01 +0100
+Message-Id: <20221228144307.400898380@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,43 +36,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jianmin Lv <lvjianmin@loongson.cn>
+From: Corentin Labbe <clabbe@baylibre.com>
 
-[ Upstream commit c7c00138015975c8f0e268564249cc47d8de632c ]
+[ Upstream commit d6b23ccef82816050c2fd458c9dabfa0e0af09b9 ]
 
-In DT path of translate callback, if fwspec->param_count==1
-and of_node is non-null, fwspec->param[1] will be accessed,
-which is introduced from previous commit bcdd75c596c8
-(irqchip/loongson-pch-pic: Add ACPI init support).
+The key should not be set in hardware too much in advance, this will
+fail it 2 TFM with different keys generate alternative requests.
+The key should be stored and used just before doing cipher operations.
 
-Before the patch, for non-null of_node, translate callback
-(use irq_domain_translate_twocell()) will return -EINVAL if
-fwspec->param_count < 2, so the check in the patch is added.
-
-Fixes: bcdd75c596c8 ("irqchip/loongson-pch-pic: Add ACPI init support")
-Signed-off-by: Jianmin Lv <lvjianmin@loongson.cn>
-Reviewed-by: Huacai Chen <chenhuacai@loongson.cn>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20221022075955.11726-3-lvjianmin@loongson.cn
+Fixes: ce0183cb6464b ("crypto: rockchip - switch to skcipher API")
+Reviewed-by: John Keeping <john@metanate.com>
+Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-loongson-pch-pic.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/crypto/rockchip/rk3288_crypto.h          |  1 +
+ drivers/crypto/rockchip/rk3288_crypto_skcipher.c | 10 +++++++---
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/irqchip/irq-loongson-pch-pic.c b/drivers/irqchip/irq-loongson-pch-pic.c
-index c01b9c257005..03493cda65a3 100644
---- a/drivers/irqchip/irq-loongson-pch-pic.c
-+++ b/drivers/irqchip/irq-loongson-pch-pic.c
-@@ -159,6 +159,9 @@ static int pch_pic_domain_translate(struct irq_domain *d,
+diff --git a/drivers/crypto/rockchip/rk3288_crypto.h b/drivers/crypto/rockchip/rk3288_crypto.h
+index dfff0e2a83e4..665cc0bb2264 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto.h
++++ b/drivers/crypto/rockchip/rk3288_crypto.h
+@@ -245,6 +245,7 @@ struct rk_ahash_rctx {
+ struct rk_cipher_ctx {
+ 	struct rk_crypto_info		*dev;
+ 	unsigned int			keylen;
++	u8				key[AES_MAX_KEY_SIZE];
+ 	u8				iv[AES_BLOCK_SIZE];
+ 	struct crypto_skcipher *fallback_tfm;
+ };
+diff --git a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
+index eac5bba66e25..1ef94f8db2c5 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
++++ b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
+@@ -95,7 +95,7 @@ static int rk_aes_setkey(struct crypto_skcipher *cipher,
+ 	    keylen != AES_KEYSIZE_256)
  		return -EINVAL;
+ 	ctx->keylen = keylen;
+-	memcpy_toio(ctx->dev->reg + RK_CRYPTO_AES_KEY_0, key, keylen);
++	memcpy(ctx->key, key, keylen);
  
- 	if (of_node) {
-+		if (fwspec->param_count < 2)
-+			return -EINVAL;
+ 	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
+ }
+@@ -111,7 +111,7 @@ static int rk_des_setkey(struct crypto_skcipher *cipher,
+ 		return err;
+ 
+ 	ctx->keylen = keylen;
+-	memcpy_toio(ctx->dev->reg + RK_CRYPTO_TDES_KEY1_0, key, keylen);
++	memcpy(ctx->key, key, keylen);
+ 
+ 	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
+ }
+@@ -127,7 +127,8 @@ static int rk_tdes_setkey(struct crypto_skcipher *cipher,
+ 		return err;
+ 
+ 	ctx->keylen = keylen;
+-	memcpy_toio(ctx->dev->reg + RK_CRYPTO_TDES_KEY1_0, key, keylen);
++	memcpy(ctx->key, key, keylen);
 +
- 		*hwirq = fwspec->param[0] + priv->ht_vec_base;
- 		*type = fwspec->param[1] & IRQ_TYPE_SENSE_MASK;
+ 	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
+ }
+ 
+@@ -283,6 +284,7 @@ static void rk_ablk_hw_init(struct rk_crypto_info *dev)
+ 			     RK_CRYPTO_TDES_BYTESWAP_IV;
+ 		CRYPTO_WRITE(dev, RK_CRYPTO_TDES_CTRL, rctx->mode);
+ 		memcpy_toio(dev->reg + RK_CRYPTO_TDES_IV_0, req->iv, ivsize);
++		memcpy_toio(ctx->dev->reg + RK_CRYPTO_TDES_KEY1_0, ctx->key, ctx->keylen);
+ 		conf_reg = RK_CRYPTO_DESSEL;
  	} else {
+ 		rctx->mode |= RK_CRYPTO_AES_FIFO_MODE |
+@@ -295,6 +297,7 @@ static void rk_ablk_hw_init(struct rk_crypto_info *dev)
+ 			rctx->mode |= RK_CRYPTO_AES_256BIT_key;
+ 		CRYPTO_WRITE(dev, RK_CRYPTO_AES_CTRL, rctx->mode);
+ 		memcpy_toio(dev->reg + RK_CRYPTO_AES_IV_0, req->iv, ivsize);
++		memcpy_toio(ctx->dev->reg + RK_CRYPTO_AES_KEY_0, ctx->key, ctx->keylen);
+ 	}
+ 	conf_reg |= RK_CRYPTO_BYTESWAP_BTFIFO |
+ 		    RK_CRYPTO_BYTESWAP_BRFIFO;
+@@ -484,6 +487,7 @@ static void rk_ablk_exit_tfm(struct crypto_skcipher *tfm)
+ {
+ 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
+ 
++	memzero_explicit(ctx->key, ctx->keylen);
+ 	free_page((unsigned long)ctx->dev->addr_vir);
+ 	crypto_free_skcipher(ctx->fallback_tfm);
+ }
 -- 
 2.35.1
 
