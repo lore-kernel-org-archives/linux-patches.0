@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2448220E7
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:56:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A08E1C433D2;
-	Wed, 28 Dec 2022 16:56:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0199B20E7
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:56:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AE37C433D2;
+	Wed, 28 Dec 2022 16:56:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246591;
-	bh=KlD3D7u19WG6ygNouAh4CCAwHkRueQdvkNn87zCeWiA=;
+	s=korg; t=1672246593;
+	bh=+2f/ByGGh8mwTX2fIHF/zc9Wwd3FoVMz8xvFRmI5psw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XqFlmTNX0JvUNdgSZY6apq5ViO8Z+h4zf3ioHPKJhnSDatDoRo8IZXgmKguTdAd/a
-	 JZpnJYpowMj066hINe1HotwegHfCvkOhkHx5CsbYZlbmxyxg39Z8zx6Dxfgbc5Oa67
-	 pkBzmDzPcoqbyrawHll+C1e7NLebFD0a3F1dhDGE=
+	b=Y++lne1Rnpfd1mpHXDND4eceBAoa3eoW3nUMRYhNTFYRD9zCGnXRRO9iwpAI3kgMK
+	 rpvB1eqgm/YRufP4sqCif/6VwKccs4L0WzzxAGnxRbMx2u8pWK6mc1gVICXK1QZ4Od
+	 7LePU4ygm61g6QCMpzE9Z84SK960Olx2v78mjdu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1065/1146] hwmon: (jc42) Fix missing unlock on error in jc42_write()
-Date: Wed, 28 Dec 2022 15:43:24 +0100
-Message-Id: <20221228144359.194339681@linuxfoundation.org>
+Subject: [PATCH 6.1 1066/1146] ASoC: sof_es8336: fix possible use-after-free in sof_es8336_remove()
+Date: Wed, 28 Dec 2022 15:43:25 +0100
+Message-Id: <20221228144359.218361866@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -40,36 +38,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit b744db17abf6a2efc2bfa80870cc88e9799a8ccc ]
+[ Upstream commit 1b41beaa7a58467505ec3023af8aad74f878b888 ]
 
-Add the missing unlock before return from function jc42_write()
-in the error handling case.
+sof_es8336_remove() calls cancel_delayed_work(). However, that
+function does not wait until the work function finishes. This
+means that the callback function may still be running after
+the driver's remove function has finished, which would result
+in a use-after-free.
 
-Fixes: 37dedaee8bc6 ("hwmon: (jc42) Convert register access and caching to regmap/regcache")
+Fix by calling cancel_delayed_work_sync(), which ensures that
+the work is properly cancelled, no longer running, and unable
+to re-schedule itself.
+
+Fixes: 89cdb224f2ab ("ASoC: sof_es8336: reduce pop noise on speaker")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Link: https://lore.kernel.org/r/20221027062931.598247-1-yangyingliang@huawei.com
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20221205143721.3988988-1-yangyingliang@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/jc42.c | 2 +-
+ sound/soc/intel/boards/sof_es8336.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hwmon/jc42.c b/drivers/hwmon/jc42.c
-index 0554b41c32bc..6593d81cb901 100644
---- a/drivers/hwmon/jc42.c
-+++ b/drivers/hwmon/jc42.c
-@@ -350,7 +350,7 @@ static int jc42_write(struct device *dev, enum hwmon_sensor_types type,
- 		ret = regmap_read(data->regmap, JC42_REG_TEMP_CRITICAL,
- 				  &regval);
- 		if (ret)
--			return ret;
-+			break;
+diff --git a/sound/soc/intel/boards/sof_es8336.c b/sound/soc/intel/boards/sof_es8336.c
+index 70713e4b07dc..773e5d1d87d4 100644
+--- a/sound/soc/intel/boards/sof_es8336.c
++++ b/sound/soc/intel/boards/sof_es8336.c
+@@ -783,7 +783,7 @@ static int sof_es8336_remove(struct platform_device *pdev)
+ 	struct snd_soc_card *card = platform_get_drvdata(pdev);
+ 	struct sof_es8336_private *priv = snd_soc_card_get_drvdata(card);
  
- 		/*
- 		 * JC42.4 compliant chips only support four hysteresis values.
+-	cancel_delayed_work(&priv->pcm_pop_work);
++	cancel_delayed_work_sync(&priv->pcm_pop_work);
+ 	gpiod_put(priv->gpio_speakers);
+ 	device_remove_software_node(priv->codec_dev);
+ 	put_device(priv->codec_dev);
 -- 
 2.35.1
 
