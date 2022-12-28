@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC39C1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F08FC433F0;
-	Wed, 28 Dec 2022 16:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5405C1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDDF3C433D2;
+	Wed, 28 Dec 2022 16:21:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244462;
-	bh=3lwxasK5NkpFU4+l7wHqxiDULc6e1FGx/znr2yxZgU8=;
+	s=korg; t=1672244465;
+	bh=FgHMjHJUjyT44N2gi/ODXxTj6153Z5JtXkpro7j2C+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hI8WQ9C0hbc8TnkTVtIVQInh/FaDTmGUp0ku4zNBmiXz7CpyAUwCFE3P77Anweqtx
-	 RrPASc+mS2svATgBJP9L9TjQ9KfwsuYHZlYuNksmnRLg8MJaXKgjuVIRabsfyUPXd7
-	 1CAWwRWZIpcaTTfzCsGUJbYCtWlTo6rJsPeCwVfc=
+	b=R0MC6Jx4uvgGlbl4EBhtlnlF/9mjYeWH0z4jcMZjXQREjD+CK96tRQAQLRGeJxvSA
+	 TFxrjagXEaB7FDJIddq18Mgv7+2mYbqoZufhTrnysKFTJ5/gfDEW0i6jS/VSmL7ofw
+	 P2EufEtXtvYowvl35Vl4AKOq4QthROYLJoBSHCyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Haoyue Xu <xuhaoyue1@hisilicon.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0714/1073] staging: rtl8192e: Fix potential use-after-free in rtllib_rx_Monitor()
-Date: Wed, 28 Dec 2022 15:38:22 +0100
-Message-Id: <20221228144347.421807720@linuxfoundation.org>
+Subject: [PATCH 6.1 0674/1146] RDMA/hns: Fix page size cap from firmware
+Date: Wed, 28 Dec 2022 15:36:53 +0100
+Message-Id: <20221228144348.454147347@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,38 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit d30f4436f364b4ad915ca2c09be07cd0f93ceb44 ]
+[ Upstream commit 99dc5a0712883d5d13b620d25b3759d429577bc8 ]
 
-The skb is delivered to netif_rx() in rtllib_monitor_rx(), which may free it,
-after calling this, dereferencing skb may trigger use-after-free.
-Found by Smatch.
+Add verification to make sure the roce page size cap is supported by the
+system page size.
 
-Fixes: 94a799425eee ("From: wlanfae <wlanfae@realtek.com> [PATCH 1/8] rtl8192e: Import new version of driver from realtek")
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Link: https://lore.kernel.org/r/20221123081253.22296-1-yuehaibing@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ba6bb7e97421 ("RDMA/hns: Add interfaces to get pf capabilities from firmware")
+Link: https://lore.kernel.org/r/20221126102911.2921820-5-xuhaoyue1@hisilicon.com
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8192e/rtllib_rx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/staging/rtl8192e/rtllib_rx.c b/drivers/staging/rtl8192e/rtllib_rx.c
-index abe5c153f74e..b0ef9da43bc4 100644
---- a/drivers/staging/rtl8192e/rtllib_rx.c
-+++ b/drivers/staging/rtl8192e/rtllib_rx.c
-@@ -1489,9 +1489,9 @@ static int rtllib_rx_Monitor(struct rtllib_device *ieee, struct sk_buff *skb,
- 		hdrlen += 4;
- 	}
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 747ce3ac72f1..fbdaf95fd82b 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -2341,6 +2341,9 @@ static int hns_roce_query_pf_caps(struct hns_roce_dev *hr_dev)
+ 	caps->wqe_sge_hop_num = hr_reg_read(resp_d, PF_CAPS_D_EX_SGE_HOP_NUM);
+ 	caps->wqe_rq_hop_num = hr_reg_read(resp_d, PF_CAPS_D_RQWQE_HOP_NUM);
  
--	rtllib_monitor_rx(ieee, skb, rx_stats, hdrlen);
- 	ieee->stats.rx_packets++;
- 	ieee->stats.rx_bytes += skb->len;
-+	rtllib_monitor_rx(ieee, skb, rx_stats, hdrlen);
- 
- 	return 1;
++	if (!(caps->page_size_cap & PAGE_SIZE))
++		caps->page_size_cap = HNS_ROCE_V2_PAGE_SIZE_SUPPORTED;
++
+ 	return 0;
  }
+ 
 -- 
 2.35.1
 
