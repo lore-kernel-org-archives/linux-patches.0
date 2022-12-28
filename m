@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8251863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6CA1C433F0;
-	Wed, 28 Dec 2022 15:12:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0280F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78EACC433D2;
+	Wed, 28 Dec 2022 15:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240335;
-	bh=k9LLY1pJ1U5vUDf/AvM+SOtZqFGEm3mmF6Nmg3tXhgw=;
+	s=korg; t=1672240337;
+	bh=WprUurxFYo57t/bA68yT8Rkc5W3dn4f10I5hL4GgaHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r+ulSW95K6gbBP8oXh1Y9FLSYdXxOgdzY2fSa27DbGQV6kOTfNEgXqmcHl/U6/PNN
-	 DiEO9y2/J17sNQM/mIFGNti2ZudPak2zlE6rfaOBeFsSjJJcqGINaHz6jnoXvYlAza
-	 IBCRgWqBxwmnB5hC3KPPfqrw4GUNFh9Sgj78ue1c=
+	b=KTpn8TOxeUypJ55eXwUqZLAEqcX1OidtX94NK7Rfc8jdI6MMoxLwte3u6mvGfwDkb
+	 HT4KZUA0RZZcTtjJj+BXT9E26/TipI3ZA1cntTUIe7JwoOhQGuBCV04of8nvWPGagu
+	 /KI7XJ8ffyXv4s8j8wtTbBwNDu85oAKH4pYQGPJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qais Yousef <qais.yousef@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0110/1146] sched/uclamp: Make asym_fits_capacity() use util_fits_cpu()
-Date: Wed, 28 Dec 2022 15:27:29 +0100
-Message-Id: <20221228144333.141366434@linuxfoundation.org>
+Subject: [PATCH 5.15 338/731] net: amd-xgbe: Fix logic around active and passive cables
+Date: Wed, 28 Dec 2022 15:37:25 +0100
+Message-Id: <20221228144306.365120861@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,102 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qais Yousef <qais.yousef@arm.com>
+From: Tom Lendacky <thomas.lendacky@amd.com>
 
-[ Upstream commit a2e7f03ed28fce26c78b985f87913b6ce3accf9d ]
+[ Upstream commit 4998006c73afe44e2f639d55bd331c6c26eb039f ]
 
-Use the new util_fits_cpu() to ensure migration margin and capacity
-pressure are taken into account correctly when uclamp is being used
-otherwise we will fail to consider CPUs as fitting in scenarios where
-they should.
+SFP+ active and passive cables are copper cables with fixed SFP+ end
+connectors. Due to a misinterpretation of this, SFP+ active cables could
+end up not being recognized, causing the driver to fail to establish a
+connection.
 
-s/asym_fits_capacity/asym_fits_cpu/ to better reflect what it does now.
+Introduce a new enum in SFP+ cable types, XGBE_SFP_CABLE_FIBER, that is
+the default cable type, and handle active and passive cables when they are
+specifically detected.
 
-Fixes: b4c9c9f15649 ("sched/fair: Prefer prev cpu in asymmetric wakeup path")
-Signed-off-by: Qais Yousef <qais.yousef@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20220804143609.515789-6-qais.yousef@arm.com
+Fixes: abf0a1c2b26a ("amd-xgbe: Add support for SFP+ modules")
+Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index c877bbfe5deb..cabbdac97eaa 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -6807,10 +6807,13 @@ select_idle_capacity(struct task_struct *p, struct sched_domain *sd, int target)
- 	return best_cpu;
- }
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
+index a7166cd1179f..a9a734454973 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
+@@ -189,6 +189,7 @@ enum xgbe_sfp_cable {
+ 	XGBE_SFP_CABLE_UNKNOWN = 0,
+ 	XGBE_SFP_CABLE_ACTIVE,
+ 	XGBE_SFP_CABLE_PASSIVE,
++	XGBE_SFP_CABLE_FIBER,
+ };
  
--static inline bool asym_fits_capacity(unsigned long task_util, int cpu)
-+static inline bool asym_fits_cpu(unsigned long util,
-+				 unsigned long util_min,
-+				 unsigned long util_max,
-+				 int cpu)
- {
- 	if (sched_asym_cpucap_active())
--		return fits_capacity(task_util, capacity_of(cpu));
-+		return util_fits_cpu(util, util_min, util_max, cpu);
+ enum xgbe_sfp_base {
+@@ -1149,16 +1150,18 @@ static void xgbe_phy_sfp_parse_eeprom(struct xgbe_prv_data *pdata)
+ 	phy_data->sfp_tx_fault = xgbe_phy_check_sfp_tx_fault(phy_data);
+ 	phy_data->sfp_rx_los = xgbe_phy_check_sfp_rx_los(phy_data);
  
- 	return true;
- }
-@@ -6822,7 +6825,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
- {
- 	bool has_idle_core = false;
- 	struct sched_domain *sd;
--	unsigned long task_util;
-+	unsigned long task_util, util_min, util_max;
- 	int i, recent_used_cpu;
- 
- 	/*
-@@ -6831,7 +6834,9 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
- 	 */
- 	if (sched_asym_cpucap_active()) {
- 		sync_entity_load_avg(&p->se);
--		task_util = uclamp_task_util(p);
-+		task_util = task_util_est(p);
-+		util_min = uclamp_eff_value(p, UCLAMP_MIN);
-+		util_max = uclamp_eff_value(p, UCLAMP_MAX);
+-	/* Assume ACTIVE cable unless told it is PASSIVE */
++	/* Assume FIBER cable unless told otherwise */
+ 	if (sfp_base[XGBE_SFP_BASE_CABLE] & XGBE_SFP_BASE_CABLE_PASSIVE) {
+ 		phy_data->sfp_cable = XGBE_SFP_CABLE_PASSIVE;
+ 		phy_data->sfp_cable_len = sfp_base[XGBE_SFP_BASE_CU_CABLE_LEN];
+-	} else {
++	} else if (sfp_base[XGBE_SFP_BASE_CABLE] & XGBE_SFP_BASE_CABLE_ACTIVE) {
+ 		phy_data->sfp_cable = XGBE_SFP_CABLE_ACTIVE;
++	} else {
++		phy_data->sfp_cable = XGBE_SFP_CABLE_FIBER;
  	}
  
- 	/*
-@@ -6840,7 +6845,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
- 	lockdep_assert_irqs_disabled();
- 
- 	if ((available_idle_cpu(target) || sched_idle_cpu(target)) &&
--	    asym_fits_capacity(task_util, target))
-+	    asym_fits_cpu(task_util, util_min, util_max, target))
- 		return target;
- 
- 	/*
-@@ -6848,7 +6853,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
- 	 */
- 	if (prev != target && cpus_share_cache(prev, target) &&
- 	    (available_idle_cpu(prev) || sched_idle_cpu(prev)) &&
--	    asym_fits_capacity(task_util, prev))
-+	    asym_fits_cpu(task_util, util_min, util_max, prev))
- 		return prev;
- 
- 	/*
-@@ -6863,7 +6868,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
- 	    in_task() &&
- 	    prev == smp_processor_id() &&
- 	    this_rq()->nr_running <= 1 &&
--	    asym_fits_capacity(task_util, prev)) {
-+	    asym_fits_cpu(task_util, util_min, util_max, prev)) {
- 		return prev;
- 	}
- 
-@@ -6875,7 +6880,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
- 	    cpus_share_cache(recent_used_cpu, target) &&
- 	    (available_idle_cpu(recent_used_cpu) || sched_idle_cpu(recent_used_cpu)) &&
- 	    cpumask_test_cpu(p->recent_used_cpu, p->cpus_ptr) &&
--	    asym_fits_capacity(task_util, recent_used_cpu)) {
-+	    asym_fits_cpu(task_util, util_min, util_max, recent_used_cpu)) {
- 		return recent_used_cpu;
- 	}
- 
+ 	/* Determine the type of SFP */
+-	if (phy_data->sfp_cable == XGBE_SFP_CABLE_PASSIVE &&
++	if (phy_data->sfp_cable != XGBE_SFP_CABLE_FIBER &&
+ 	    xgbe_phy_sfp_bit_rate(sfp_eeprom, XGBE_SFP_SPEED_10000))
+ 		phy_data->sfp_base = XGBE_SFP_BASE_10000_CR;
+ 	else if (sfp_base[XGBE_SFP_BASE_10GBE_CC] & XGBE_SFP_BASE_10GBE_CC_SR)
 -- 
 2.35.1
 
