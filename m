@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FFA81C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:13:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92198C433D2;
-	Wed, 28 Dec 2022 16:13:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D20AB1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:13:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B0B9C433D2;
+	Wed, 28 Dec 2022 16:13:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244003;
-	bh=EIj8sJGijWRFsfgtNCgCcLWUcJjmrtfZbMz2oLgw5qE=;
+	s=korg; t=1672244005;
+	bh=/NlQ00/LR5XlA2MbDUa67/WFKNqh5ldcsIfdZ3E2JnI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gZUURE2/pWDRmXwv6zpLHRVHnK5ju4LVAedI5VfmNSxrxlk9pjL6/qupRKX+01GaO
-	 EfX/NKdZ3zvxJwkO95/ORN6iy/U+3s+vPLgkn6WfMLoiAvt7RiK0vDrM/O01YJURG7
-	 88wKODl135FUyvuW41I/D4lHqQjjVsJ/+gMKiu9Q=
+	b=WuyZ/mK43l4B97PoR/NqJ8p+ygMIktC3gw18iEbSqo/wR3U7RYxkcoICMbniAPhNn
+	 HJsfsxK7e2juqOiIQosrJWdJTKxRU9KxPqpk8XLs4UQ6YEUV8NXQKIpOW9u7is8lDe
+	 f+wHmz2N2V8SGq1qXSuApzeAASrB4ATgLeBgQbXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Jie Zhan <zhanjie9@hisilicon.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0593/1146] apparmor: Fix memleak in alloc_ns()
-Date: Wed, 28 Dec 2022 15:35:32 +0100
-Message-Id: <20221228144346.277195003@linuxfoundation.org>
+Subject: [PATCH 6.0 0630/1073] scsi: hisi_sas: Fix SATA devices missing issue during I_T nexus reset
+Date: Wed, 28 Dec 2022 15:36:58 +0100
+Message-Id: <20221228144345.153489765@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Jie Zhan <zhanjie9@hisilicon.com>
 
-[ Upstream commit e9e6fa49dbab6d84c676666f3fe7d360497fd65b ]
+[ Upstream commit 3c2673a09cf1181318c07b7dbc1bc532ba3d33e3 ]
 
-After changes in commit a1bd627b46d1 ("apparmor: share profile name on
-replacement"), the hname member of struct aa_policy is not valid slab
-object, but a subset of that, it can not be freed by kfree_sensitive(),
-use aa_policy_destroy() to fix it.
+SATA devices on an expander may be removed and not be found again when I_T
+nexus reset and revalidation are processed simultaneously.
 
-Fixes: a1bd627b46d1 ("apparmor: share profile name on replacement")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+The issue comes from:
+
+ - Revalidation can remove SATA devices in link reset, e.g. in
+   hisi_sas_clear_nexus_ha().
+
+ - However, hisi_sas_debug_I_T_nexus_reset() polls the state of a SATA
+   device on an expander after sending link_reset, where it calls:
+    hisi_sas_debug_I_T_nexus_reset
+     sas_ata_wait_after_reset
+      ata_wait_after_reset
+       ata_wait_ready
+        smp_ata_check_ready
+         sas_ex_phy_discover
+          sas_ex_phy_discover_helper
+           sas_set_ex_phy
+
+   The ex_phy's change count is updated in sas_set_ex_phy(), so SATA
+   devices after a link reset may not be found later through revalidation.
+
+A similar issue was reported in:
+commit 0f3fce5cc77e ("[SCSI] libsas: fix ata_eh clobbering ex_phys via
+smp_ata_check_ready")
+commit 87c8331fcf72 ("[SCSI] libsas: prevent domain rediscovery competing
+with ata error handling").
+
+To address this issue, in hisi_sas_debug_I_T_nexus_reset(), we now call
+smp_ata_check_ready_type() that only polls the device type while not
+updating the ex_phy's data of libsas.
+
+Fixes: 71453bd9d1bf ("scsi: hisi_sas: Use sas_ata_wait_after_reset() in IT nexus reset")
+Signed-off-by: Jie Zhan <zhanjie9@hisilicon.com>
+Link: https://lore.kernel.org/r/20221118083714.4034612-5-zhanjie9@hisilicon.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy_ns.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/hisi_sas/hisi_sas_main.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/security/apparmor/policy_ns.c b/security/apparmor/policy_ns.c
-index 43beaad083fe..78700d94b453 100644
---- a/security/apparmor/policy_ns.c
-+++ b/security/apparmor/policy_ns.c
-@@ -134,7 +134,7 @@ static struct aa_ns *alloc_ns(const char *prefix, const char *name)
- 	return ns;
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
+index 33af5b8dede2..f4f9e5abee76 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_main.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
+@@ -1701,13 +1701,15 @@ static int hisi_sas_debug_I_T_nexus_reset(struct domain_device *device)
+ 		return rc;
+ 	}
  
- fail_unconfined:
--	kfree_sensitive(ns->base.hname);
-+	aa_policy_destroy(&ns->base);
- fail_ns:
- 	kfree_sensitive(ns);
- 	return NULL;
++	/* Remote phy */
+ 	if (rc)
+ 		return rc;
+ 
+-	/* Remote phy */
+ 	if (dev_is_sata(device)) {
+-		rc = sas_ata_wait_after_reset(device,
+-					HISI_SAS_WAIT_PHYUP_TIMEOUT);
++		struct ata_link *link = &device->sata_dev.ap->link;
++
++		rc = ata_wait_after_reset(link, HISI_SAS_WAIT_PHYUP_TIMEOUT,
++					  smp_ata_check_ready_type);
+ 	} else {
+ 		msleep(2000);
+ 	}
 -- 
 2.35.1
 
