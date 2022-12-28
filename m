@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0798D1868
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B59C433D2;
-	Wed, 28 Dec 2022 15:10:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310691863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2A9C433EF;
+	Wed, 28 Dec 2022 15:10:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240234;
-	bh=A9bCHidDYJ9dO+hTztqviWUQ2PTx5m/etu9yPXWbbXA=;
+	s=korg; t=1672240232;
+	bh=HYvGODctq/5rLDUBG29sPClg+MD7Rh8TIZ7V34lHyK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sCB6WBlz7iiZMCyHiDtD2qcp9B5rlH+deO20wPn1s9Cm7x9RmeKRrH8q1UPDWfmSA
-	 8ffgMM9PpwWQdfa+GOz4IZoaVr14YPn9EwH5ySYzV96t7upQrws1YSFcmrNbUbJ8EG
-	 3PI36IBlnMYKGoOjSM4cJntwR26RMNE9yiFGnv/U=
+	b=f9ytx+4vqXCwuR3trtyEHZlc+omZhxbs4NzLnaOjULZ7EAnp+YwX63XLSYACUI365
+	 sxnVAnqQbtzNgu2Cx/XHkH7fDFbfnk/d28xxChJpMH8qy76pV533Ofhi4SRRvyM/IP
+	 BvD4Ed7GHQxTMl+44NKOP7hFeYIya6ziNZW0aIgM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	kernel test robot <lkp@intel.com>,
+	Sven Peter <sven@svenpeter.dev>,
+	Hector Martin <marcan@marcan.st>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 326/731] drivers: net: qlcnic: Fix potential memory leak in qlcnic_sriov_init()
-Date: Wed, 28 Dec 2022 15:37:13 +0100
-Message-Id: <20221228144306.022538544@linuxfoundation.org>
+Subject: [PATCH 6.1 0092/1146] soc: apple: sart: Stop casting function pointer signatures
+Date: Wed, 28 Dec 2022 15:27:11 +0100
+Message-Id: <20221228144332.641934526@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,35 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Sven Peter <sven@svenpeter.dev>
 
-[ Upstream commit 01de1123322e4fe1bbd0fcdf0982511b55519c03 ]
+[ Upstream commit 422d0b860dc223b5dfc6d083697cae258bb5a4a1 ]
 
-If vp alloc failed in qlcnic_sriov_init(), all previously allocated vp
-needs to be freed.
-
-Fixes: f197a7aa6288 ("qlcnic: VF-PF communication channel implementation")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: b170143ae111 ("soc: apple: Add SART driver")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Sven Peter <sven@svenpeter.dev>
+Signed-off-by: Hector Martin <marcan@marcan.st>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/soc/apple/sart.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-index 42a44c97572a..df9b84f6600f 100644
---- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-+++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-@@ -221,6 +221,8 @@ int qlcnic_sriov_init(struct qlcnic_adapter *adapter, int num_vfs)
+diff --git a/drivers/soc/apple/sart.c b/drivers/soc/apple/sart.c
+index 83804b16ad03..afa111736899 100644
+--- a/drivers/soc/apple/sart.c
++++ b/drivers/soc/apple/sart.c
+@@ -164,6 +164,11 @@ static int apple_sart_probe(struct platform_device *pdev)
  	return 0;
+ }
  
- qlcnic_destroy_async_wq:
-+	while (i--)
-+		kfree(sriov->vf_info[i].vp);
- 	destroy_workqueue(bc->bc_async_wq);
++static void apple_sart_put_device(void *dev)
++{
++	put_device(dev);
++}
++
+ struct apple_sart *devm_apple_sart_get(struct device *dev)
+ {
+ 	struct device_node *sart_node;
+@@ -187,7 +192,7 @@ struct apple_sart *devm_apple_sart_get(struct device *dev)
+ 		return ERR_PTR(-EPROBE_DEFER);
+ 	}
  
- qlcnic_destroy_trans_wq:
+-	ret = devm_add_action_or_reset(dev, (void (*)(void *))put_device,
++	ret = devm_add_action_or_reset(dev, apple_sart_put_device,
+ 				       &sart_pdev->dev);
+ 	if (ret)
+ 		return ERR_PTR(ret);
 -- 
 2.35.1
 
