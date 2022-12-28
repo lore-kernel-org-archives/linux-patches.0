@@ -1,36 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC6341863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:50:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14E4DC433D2;
-	Wed, 28 Dec 2022 14:50:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6074E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:50:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9773C433D2;
+	Wed, 28 Dec 2022 14:50:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239045;
-	bh=qW+NK3FHNVXxAmBvFK9gRgIAoMzXa7/3Txmcb8ByvwM=;
+	s=korg; t=1672239048;
+	bh=3QB2lwfGhwZf5YvU0afz5ahSmlHQgkwc5a63NM7OXb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nZhMyMg/zQQ4CwTfo661Q2Hh8zX5Xe+jPRXW50UQH6zvAhymtgi8/9kLXG35ZWDgM
-	 K5pC/VIRF3JVoFEBOLVNnWTw2O9H9iXuWL700Spzh4YOigaomsZc2MzXQFkLz4FUzS
-	 9cbikRdr0xr2SiZpR77rP8pLjcLTKhFNRM4O4bxY=
+	b=LRLWPzs0UOGH4zMKoksa1zHuAcc9yw7V7J2ZchrGv5iuzMuGMbrvspXG/2fuL9TP8
+	 /sWVoXIf0amQuMg4fI7W5UIarY4TCvK+s1VV1Pdi6ddvSbqSY2nhH8ENDOZIYLB08J
+	 YrMHpg7ZoLMy/Junwyv24IYzog4eDe7yHuRh7ebY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	Zhao Gongyi <zhaogongyi@huawei.com>,
-	David Hildenbrand <david@redhat.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Oscar Salvador <osalvador@suse.de>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 107/731] libfs: add DEFINE_SIMPLE_ATTRIBUTE_SIGNED for signed value
-Date: Wed, 28 Dec 2022 15:33:34 +0100
-Message-Id: <20221228144259.650268376@linuxfoundation.org>
+Subject: [PATCH 5.15 082/731] perf: Fix possible memleak in pmu_dev_alloc()
+Date: Wed, 28 Dec 2022 15:33:09 +0100
+Message-Id: <20221228144258.929048601@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -44,137 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Akinobu Mita <akinobu.mita@gmail.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 2e41f274f9aa71cdcc69dc1f26a3f9304a651804 ]
+[ Upstream commit e8d7a90c08ce963c592fb49845f2ccc606a2ac21 ]
 
-Patch series "fix error when writing negative value to simple attribute
-files".
+In pmu_dev_alloc(), when dev_set_name() failed, it will goto free_dev
+and call put_device(pmu->dev) to release it.
+However pmu->dev->release is assigned after this, which makes warning
+and memleak.
+Call dev_set_name() after pmu->dev->release = pmu_dev_release to fix it.
 
-The simple attribute files do not accept a negative value since the commit
-488dac0c9237 ("libfs: fix error cast of negative value in
-simple_attr_write()"), but some attribute files want to accept a negative
-value.
+  Device '(null)' does not have a release() function...
+  WARNING: CPU: 2 PID: 441 at drivers/base/core.c:2332 device_release+0x1b9/0x240
+  ...
+  Call Trace:
+    <TASK>
+    kobject_put+0x17f/0x460
+    put_device+0x20/0x30
+    pmu_dev_alloc+0x152/0x400
+    perf_pmu_register+0x96b/0xee0
+    ...
+  kmemleak: 1 new suspected memory leaks (see /sys/kernel/debug/kmemleak)
+  unreferenced object 0xffff888014759000 (size 2048):
+    comm "modprobe", pid 441, jiffies 4294931444 (age 38.332s)
+    backtrace:
+      [<0000000005aed3b4>] kmalloc_trace+0x27/0x110
+      [<000000006b38f9b8>] pmu_dev_alloc+0x50/0x400
+      [<00000000735f17be>] perf_pmu_register+0x96b/0xee0
+      [<00000000e38477f1>] 0xffffffffc0ad8603
+      [<000000004e162216>] do_one_initcall+0xd0/0x4e0
+      ...
 
-This patch (of 3):
-
-The simple attribute files do not accept a negative value since the commit
-488dac0c9237 ("libfs: fix error cast of negative value in
-simple_attr_write()"), so we have to use a 64-bit value to write a
-negative value.
-
-This adds DEFINE_SIMPLE_ATTRIBUTE_SIGNED for a signed value.
-
-Link: https://lkml.kernel.org/r/20220919172418.45257-1-akinobu.mita@gmail.com
-Link: https://lkml.kernel.org/r/20220919172418.45257-2-akinobu.mita@gmail.com
-Fixes: 488dac0c9237 ("libfs: fix error cast of negative value in simple_attr_write()")
-Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
-Reported-by: Zhao Gongyi <zhaogongyi@huawei.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Wei Yongjun <weiyongjun1@huawei.com>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: abe43400579d ("perf: Sysfs enumeration")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20221111103653.91058-1-chenzhongjin@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/libfs.c         | 22 +++++++++++++++++++---
- include/linux/fs.h | 12 ++++++++++--
- 2 files changed, 29 insertions(+), 5 deletions(-)
+ kernel/events/core.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/fs/libfs.c b/fs/libfs.c
-index 51b4de3b3447..7bb5d90319cc 100644
---- a/fs/libfs.c
-+++ b/fs/libfs.c
-@@ -967,8 +967,8 @@ ssize_t simple_attr_read(struct file *file, char __user *buf,
- EXPORT_SYMBOL_GPL(simple_attr_read);
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 5422bd77c7d4..e95088144471 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -11175,13 +11175,15 @@ static int pmu_dev_alloc(struct pmu *pmu)
  
- /* interpret the buffer as a number to call the set function with */
--ssize_t simple_attr_write(struct file *file, const char __user *buf,
--			  size_t len, loff_t *ppos)
-+static ssize_t simple_attr_write_xsigned(struct file *file, const char __user *buf,
-+			  size_t len, loff_t *ppos, bool is_signed)
- {
- 	struct simple_attr *attr;
- 	unsigned long long val;
-@@ -989,7 +989,10 @@ ssize_t simple_attr_write(struct file *file, const char __user *buf,
- 		goto out;
+ 	pmu->dev->groups = pmu->attr_groups;
+ 	device_initialize(pmu->dev);
+-	ret = dev_set_name(pmu->dev, "%s", pmu->name);
+-	if (ret)
+-		goto free_dev;
  
- 	attr->set_buf[size] = '\0';
--	ret = kstrtoull(attr->set_buf, 0, &val);
-+	if (is_signed)
-+		ret = kstrtoll(attr->set_buf, 0, &val);
-+	else
-+		ret = kstrtoull(attr->set_buf, 0, &val);
+ 	dev_set_drvdata(pmu->dev, pmu);
+ 	pmu->dev->bus = &pmu_bus;
+ 	pmu->dev->release = pmu_dev_release;
++
++	ret = dev_set_name(pmu->dev, "%s", pmu->name);
++	if (ret)
++		goto free_dev;
++
+ 	ret = device_add(pmu->dev);
  	if (ret)
- 		goto out;
- 	ret = attr->set(attr->data, val);
-@@ -999,8 +1002,21 @@ ssize_t simple_attr_write(struct file *file, const char __user *buf,
- 	mutex_unlock(&attr->mutex);
- 	return ret;
- }
-+
-+ssize_t simple_attr_write(struct file *file, const char __user *buf,
-+			  size_t len, loff_t *ppos)
-+{
-+	return simple_attr_write_xsigned(file, buf, len, ppos, false);
-+}
- EXPORT_SYMBOL_GPL(simple_attr_write);
- 
-+ssize_t simple_attr_write_signed(struct file *file, const char __user *buf,
-+			  size_t len, loff_t *ppos)
-+{
-+	return simple_attr_write_xsigned(file, buf, len, ppos, true);
-+}
-+EXPORT_SYMBOL_GPL(simple_attr_write_signed);
-+
- /**
-  * generic_fh_to_dentry - generic helper for the fh_to_dentry export operation
-  * @sb:		filesystem to do the file handle conversion on
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index d55fdc02f82d..68fcf3ec9cf6 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -3507,7 +3507,7 @@ void simple_transaction_set(struct file *file, size_t n);
-  * All attributes contain a text representation of a numeric value
-  * that are accessed with the get() and set() functions.
-  */
--#define DEFINE_SIMPLE_ATTRIBUTE(__fops, __get, __set, __fmt)		\
-+#define DEFINE_SIMPLE_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, __is_signed)	\
- static int __fops ## _open(struct inode *inode, struct file *file)	\
- {									\
- 	__simple_attr_check_format(__fmt, 0ull);			\
-@@ -3518,10 +3518,16 @@ static const struct file_operations __fops = {				\
- 	.open	 = __fops ## _open,					\
- 	.release = simple_attr_release,					\
- 	.read	 = simple_attr_read,					\
--	.write	 = simple_attr_write,					\
-+	.write	 = (__is_signed) ? simple_attr_write_signed : simple_attr_write,	\
- 	.llseek	 = generic_file_llseek,					\
- }
- 
-+#define DEFINE_SIMPLE_ATTRIBUTE(__fops, __get, __set, __fmt)		\
-+	DEFINE_SIMPLE_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, false)
-+
-+#define DEFINE_SIMPLE_ATTRIBUTE_SIGNED(__fops, __get, __set, __fmt)	\
-+	DEFINE_SIMPLE_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, true)
-+
- static inline __printf(1, 2)
- void __simple_attr_check_format(const char *fmt, ...)
- {
-@@ -3536,6 +3542,8 @@ ssize_t simple_attr_read(struct file *file, char __user *buf,
- 			 size_t len, loff_t *ppos);
- ssize_t simple_attr_write(struct file *file, const char __user *buf,
- 			  size_t len, loff_t *ppos);
-+ssize_t simple_attr_write_signed(struct file *file, const char __user *buf,
-+				 size_t len, loff_t *ppos);
- 
- struct ctl_table;
- int proc_nr_files(struct ctl_table *table, int write,
+ 		goto free_dev;
 -- 
 2.35.1
 
