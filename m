@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FDE21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155B7C433EF;
-	Wed, 28 Dec 2022 15:27:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8C61863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B685CC433D2;
+	Wed, 28 Dec 2022 15:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241269;
-	bh=PcBZnUMQZJfs9UCJITpCQuHInH6dyhAUB/PR4MiLLbs=;
+	s=korg; t=1672241272;
+	bh=pSQisx6Sl4nDaekEqTZOMxIng/PJE1oDPfYBsR1qefg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dqSUXxQXHpwxXgoqAQYb3PH6NxGLqitnzJSkGbKWR7YfY3p++ifBSuU8J2GvIBO3u
-	 55B4ilT2aPAtZFjqeC32xX0HTmO4nhBo+qMOQ/3QGNF6ORqRVi3HlflR1O0Fikb52H
-	 lCNfSd5A3UCzoyy++PdFCR7EIe5LsGH6Oqbrd3M0=
+	b=2HYH8fASK6w8/u1+KnbOReOC1PFlzYJWZudTJPRA1rA+tBL/lylfany+VIUoic23G
+	 m+29gPhe9ats1V4nDod3lxxNHb4pk5BuH+OPbydpTJXsRiXY/kDdY24v0POlXvEd/H
+	 HUR0yqdg726L7Y8CZ4yURt69dmxZUvteQD/ifH84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ralph Siemsen <ralph.siemsen@linaro.org>,
-	Marek Vasut <marex@denx.de>,
-	Gareth Williams <gareth.williams.jx@renesas.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0260/1073] clk: renesas: r9a06g032: Repair grave increment error
-Date: Wed, 28 Dec 2022 15:30:48 +0100
-Message-Id: <20221228144335.079649253@linuxfoundation.org>
+Subject: [PATCH 5.15 460/731] serial: pch: Fix PCI device refcount leak in pch_request_dma()
+Date: Wed, 28 Dec 2022 15:39:27 +0100
+Message-Id: <20221228144309.885913504@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,45 +34,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 02693e11611e082e3c4d8653e8af028e43d31164 ]
+[ Upstream commit 8be3a7bf773700534a6e8f87f6ed2ed111254be5 ]
 
-If condition (clkspec.np != pd->dev.of_node) is true, then the driver
-ends up in an endless loop, forever, locking up the machine.
+As comment of pci_get_slot() says, it returns a pci_device with its
+refcount increased. The caller must decrement the reference count by
+calling pci_dev_put().
 
-Fixes: aad03a66f902 ("clk: renesas: r9a06g032: Add clock domain support")
-Reviewed-by: Ralph Siemsen <ralph.siemsen@linaro.org>
-Signed-off-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Gareth Williams <gareth.williams.jx@renesas.com>
-Link: https://lore.kernel.org/r/20221028113834.7496-1-marex@denx.de
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Since 'dma_dev' is only used to filter the channel in filter(), we can
+call pci_dev_put() before exiting from pch_request_dma(). Add the
+missing pci_dev_put() for the normal and error path.
+
+Fixes: 3c6a483275f4 ("Serial: EG20T: add PCH_UART driver")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Link: https://lore.kernel.org/r/20221122114559.27692-1-wangxiongfeng2@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r9a06g032-clocks.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/tty/serial/pch_uart.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/clk/renesas/r9a06g032-clocks.c b/drivers/clk/renesas/r9a06g032-clocks.c
-index 1488c9d6e639..983faa5707b9 100644
---- a/drivers/clk/renesas/r9a06g032-clocks.c
-+++ b/drivers/clk/renesas/r9a06g032-clocks.c
-@@ -412,7 +412,7 @@ static int r9a06g032_attach_dev(struct generic_pm_domain *pd,
- 	int error;
- 	int index;
- 
--	while (!of_parse_phandle_with_args(np, "clocks", "#clock-cells", i,
-+	while (!of_parse_phandle_with_args(np, "clocks", "#clock-cells", i++,
- 					   &clkspec)) {
- 		if (clkspec.np != pd->dev.of_node)
- 			continue;
-@@ -425,7 +425,6 @@ static int r9a06g032_attach_dev(struct generic_pm_domain *pd,
- 			if (error)
- 				return error;
- 		}
--		i++;
+diff --git a/drivers/tty/serial/pch_uart.c b/drivers/tty/serial/pch_uart.c
+index 1e65933f6cce..52cab2038da8 100644
+--- a/drivers/tty/serial/pch_uart.c
++++ b/drivers/tty/serial/pch_uart.c
+@@ -707,6 +707,7 @@ static void pch_request_dma(struct uart_port *port)
+ 	if (!chan) {
+ 		dev_err(priv->port.dev, "%s:dma_request_channel FAILS(Tx)\n",
+ 			__func__);
++		pci_dev_put(dma_dev);
+ 		return;
+ 	}
+ 	priv->chan_tx = chan;
+@@ -723,6 +724,7 @@ static void pch_request_dma(struct uart_port *port)
+ 			__func__);
+ 		dma_release_channel(priv->chan_tx);
+ 		priv->chan_tx = NULL;
++		pci_dev_put(dma_dev);
+ 		return;
  	}
  
- 	return 0;
+@@ -730,6 +732,8 @@ static void pch_request_dma(struct uart_port *port)
+ 	priv->rx_buf_virt = dma_alloc_coherent(port->dev, port->fifosize,
+ 				    &priv->rx_buf_dma, GFP_KERNEL);
+ 	priv->chan_rx = chan;
++
++	pci_dev_put(dma_dev);
+ }
+ 
+ static void pch_dma_rx_complete(void *arg)
 -- 
 2.35.1
 
