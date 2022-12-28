@@ -1,35 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D3D91C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:30:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FD66C433EF;
-	Wed, 28 Dec 2022 16:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54144ECA
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:30:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D2AC433EF;
+	Wed, 28 Dec 2022 16:30:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245004;
-	bh=bKYZkfKSgI+kx2AIiXRl6MBvkNlUVS1m3baarCW+bWA=;
+	s=korg; t=1672245007;
+	bh=0wxqIuC41VHbvzGNAJLK3kvZBi15ChrR6wbomyFkiaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sKtvRAHr8SjWhpO2sEHg/GGqBVRI13+ZPrKHBQ8B11Zsedd6gfaEaTxjYhBhb/LT3
-	 k/gVwp9rkVwweTUuo8Aqe+QkeVbUxiTYOdL0W5kLDPkmz8B/IBekxq76cekkMiENPU
-	 r3K6qNcUe5D5ElOXYMU50C5MRW3MrLDx3Ky1JFAw=
+	b=BRFFzyjp3I/rTQQdaVdUKGu4MBtXTJ34WNq3vZhPIiRmmdlNQNu7MqSMSJOAT/uV/
+	 h3JLRWurGOHPBMU/YEyeQQdQZvhI/Qt3UNbly0LX9u32F0IWnqggNUYPvAEHbPUwsy
+	 VQ8Nm8g3ZaZAuP4Fd0KRo5lNd+kLX4+bxgyWCIZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Guenter Roeck <groeck@chromium.org>,
-	Yong Wu <yong.wu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Yuan Can <yuancan@huawei.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0814/1073] iommu/mediatek: Validate number of phandles associated with "mediatek,larbs"
-Date: Wed, 28 Dec 2022 15:40:02 +0100
-Message-Id: <20221228144350.117350621@linuxfoundation.org>
+Subject: [PATCH 6.1 0777/1146] power: supply: ab8500: Fix error handling in ab8500_charger_init()
+Date: Wed, 28 Dec 2022 15:38:36 +0100
+Message-Id: <20221228144351.252249662@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -40,74 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guenter Roeck <groeck@chromium.org>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit ef693a8440926884bfd9cc3d6d36f65719513350 ]
+[ Upstream commit c4d33381b134da188ccd1084aef21e2b8c3c422e ]
 
-Fix the smatch warnings:
-drivers/iommu/mtk_iommu.c:878 mtk_iommu_mm_dts_parse() error: uninitialized
-symbol 'larbnode'.
+The ab8500_charger_init() returns the platform_driver_register() directly
+without checking its return value, if platform_driver_register() failed,
+all ab8500_charger_component_drivers are not unregistered.
 
-If someone abuse the dtsi node(Don't follow the definition of dt-binding),
-for example "mediatek,larbs" is provided as boolean property, "larb_nr"
-will be zero and cause abnormal.
+Fix by unregister ab8500_charger_component_drivers when
+platform_driver_register() failed.
 
-To fix this problem and improve the code safety, add some checking
-for the invalid input from dtsi, e.g. checking the larb_nr/larbid valid
-range, and avoid "mediatek,larb-id" property conflicts in the smi-larb
-nodes.
-
-Fixes: d2e9a1102cfc ("iommu/mediatek: Contain MM IOMMU flow with the MM TYPE")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Guenter Roeck <groeck@chromium.org>
-Signed-off-by: Yong Wu <yong.wu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Link: https://lore.kernel.org/r/20221018024258.19073-5-yong.wu@mediatek.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 1c1f13a006ed ("power: supply: ab8500: Move to componentized binding")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/mtk_iommu.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ drivers/power/supply/ab8500_charger.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
-index 39f4c79e9c71..213fc8f5b6c1 100644
---- a/drivers/iommu/mtk_iommu.c
-+++ b/drivers/iommu/mtk_iommu.c
-@@ -1048,6 +1048,8 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
- 	larb_nr = of_count_phandle_with_args(dev->of_node, "mediatek,larbs", NULL);
- 	if (larb_nr < 0)
- 		return larb_nr;
-+	if (larb_nr == 0 || larb_nr > MTK_LARB_NR_MAX)
-+		return -EINVAL;
+diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
+index c19c50442761..58757a5799f8 100644
+--- a/drivers/power/supply/ab8500_charger.c
++++ b/drivers/power/supply/ab8500_charger.c
+@@ -3719,7 +3719,14 @@ static int __init ab8500_charger_init(void)
+ 	if (ret)
+ 		return ret;
  
- 	for (i = 0; i < larb_nr; i++) {
- 		u32 id;
-@@ -1066,6 +1068,11 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
- 		ret = of_property_read_u32(larbnode, "mediatek,larb-id", &id);
- 		if (ret)/* The id is consecutive if there is no this property */
- 			id = i;
-+		if (id >= MTK_LARB_NR_MAX) {
-+			of_node_put(larbnode);
-+			ret = -EINVAL;
-+			goto err_larbdev_put;
-+		}
+-	return platform_driver_register(&ab8500_charger_driver);
++	ret = platform_driver_register(&ab8500_charger_driver);
++	if (ret) {
++		platform_unregister_drivers(ab8500_charger_component_drivers,
++				ARRAY_SIZE(ab8500_charger_component_drivers));
++		return ret;
++	}
++
++	return 0;
+ }
  
- 		plarbdev = of_find_device_by_node(larbnode);
- 		of_node_put(larbnode);
-@@ -1073,6 +1080,11 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
- 			ret = -ENODEV;
- 			goto err_larbdev_put;
- 		}
-+		if (data->larb_imu[id].dev) {
-+			platform_device_put(plarbdev);
-+			ret = -EEXIST;
-+			goto err_larbdev_put;
-+		}
- 		data->larb_imu[id].dev = &plarbdev->dev;
- 
- 		if (!plarbdev->dev.driver) {
+ static void __exit ab8500_charger_exit(void)
 -- 
 2.35.1
 
