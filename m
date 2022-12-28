@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5324F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E2CC433EF;
-	Wed, 28 Dec 2022 15:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26E31863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C2BC433D2;
+	Wed, 28 Dec 2022 15:34:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241650;
-	bh=MtJxME0daBU8mxhlgoTcfsB+TZFPAlcvqI2POhUuFIA=;
+	s=korg; t=1672241652;
+	bh=q39LaOa2W43HErDuWLiPWEb7xwgNIST8ul/1nBzXxHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GzXXRta31oFtC7Byoiie2D1SPc86m4e8MV34MqBqPdSvkupdikdyIR4R6WimbwI9F
-	 wA3t9ltmpAN1cVVObWD3m9j5yG8PDxLo9ONg93k496Vm5qLmzshXjuu6zmTU7Fy61i
-	 yXHlW4tY9eCKN0y2mk8LaMjWY1XFCtfpx3JyRu9c=
+	b=XZStf0z76dy4U7ymAcpjsanwfjrORxWe/sEIY8xTczlk5aZwSJDGwAx/JbzGFjOkX
+	 dCmqMdvyZ6v1GBZOJ7UnGoCuAsJE8BZAVWstBOlWj516IpM9Ocfq97a24klygITKKO
+	 gn3kYdqJmXvc+p2efWP63ozz384kHnIyqRzMOMxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Helge Deller <deller@gmx.de>,
+	GUO Zihua <guozihua@huawei.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 507/731] fbdev: ep93xx-fb: Add missing clk_disable_unprepare in ep93xxfb_probe()
-Date: Wed, 28 Dec 2022 15:40:14 +0100
-Message-Id: <20221228144311.243019046@linuxfoundation.org>
+Subject: [PATCH 6.1 0273/1146] ima: Handle -ESTALE returned by ima_filter_rule_match()
+Date: Wed, 28 Dec 2022 15:30:12 +0100
+Message-Id: <20221228144337.550500105@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,41 +36,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: GUO Zihua <guozihua@huawei.com>
 
-[ Upstream commit c84bf485a5aaf9aa0764a58832b7ef4375c29f03 ]
+[ Upstream commit c7423dbdbc9ecef7fff5239d144cad4b9887f4de ]
 
-The clk_disable_unprepare() should be called in the error handling
-of register_framebuffer(), fix it.
+IMA relies on the blocking LSM policy notifier callback to update the
+LSM based IMA policy rules.
 
-Fixes: 0937a7b3625d ("video: ep93xx: Prepare clock before using it")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+When SELinux update its policies, IMA would be notified and starts
+updating all its lsm rules one-by-one. During this time, -ESTALE would
+be returned by ima_filter_rule_match() if it is called with a LSM rule
+that has not yet been updated. In ima_match_rules(), -ESTALE is not
+handled, and the LSM rule is considered a match, causing extra files
+to be measured by IMA.
+
+Fix it by re-initializing a temporary rule if -ESTALE is returned by
+ima_filter_rule_match(). The origin rule in the rule list would be
+updated by the LSM policy notifier callback.
+
+Fixes: b16942455193 ("ima: use the lsm policy update notifier")
+Signed-off-by: GUO Zihua <guozihua@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/ep93xx-fb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ security/integrity/ima/ima_policy.c | 41 ++++++++++++++++++++++-------
+ 1 file changed, 32 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/video/fbdev/ep93xx-fb.c b/drivers/video/fbdev/ep93xx-fb.c
-index 2398b3d48fed..305f1587bd89 100644
---- a/drivers/video/fbdev/ep93xx-fb.c
-+++ b/drivers/video/fbdev/ep93xx-fb.c
-@@ -552,12 +552,14 @@ static int ep93xxfb_probe(struct platform_device *pdev)
+diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
+index a8802b8da946..bb3707160b01 100644
+--- a/security/integrity/ima/ima_policy.c
++++ b/security/integrity/ima/ima_policy.c
+@@ -549,6 +549,9 @@ static bool ima_match_rules(struct ima_rule_entry *rule,
+ 			    const char *func_data)
+ {
+ 	int i;
++	bool result = false;
++	struct ima_rule_entry *lsm_rule = rule;
++	bool rule_reinitialized = false;
  
- 	err = register_framebuffer(info);
- 	if (err)
--		goto failed_check;
-+		goto failed_framebuffer;
+ 	if ((rule->flags & IMA_FUNC) &&
+ 	    (rule->func != func && func != POST_SETATTR))
+@@ -610,35 +613,55 @@ static bool ima_match_rules(struct ima_rule_entry *rule,
+ 		int rc = 0;
+ 		u32 osid;
  
- 	dev_info(info->dev, "registered. Mode = %dx%d-%d\n",
- 		 info->var.xres, info->var.yres, info->var.bits_per_pixel);
- 	return 0;
+-		if (!rule->lsm[i].rule) {
+-			if (!rule->lsm[i].args_p)
++		if (!lsm_rule->lsm[i].rule) {
++			if (!lsm_rule->lsm[i].args_p)
+ 				continue;
+ 			else
+ 				return false;
+ 		}
++
++retry:
+ 		switch (i) {
+ 		case LSM_OBJ_USER:
+ 		case LSM_OBJ_ROLE:
+ 		case LSM_OBJ_TYPE:
+ 			security_inode_getsecid(inode, &osid);
+-			rc = ima_filter_rule_match(osid, rule->lsm[i].type,
++			rc = ima_filter_rule_match(osid, lsm_rule->lsm[i].type,
+ 						   Audit_equal,
+-						   rule->lsm[i].rule);
++						   lsm_rule->lsm[i].rule);
+ 			break;
+ 		case LSM_SUBJ_USER:
+ 		case LSM_SUBJ_ROLE:
+ 		case LSM_SUBJ_TYPE:
+-			rc = ima_filter_rule_match(secid, rule->lsm[i].type,
++			rc = ima_filter_rule_match(secid, lsm_rule->lsm[i].type,
+ 						   Audit_equal,
+-						   rule->lsm[i].rule);
++						   lsm_rule->lsm[i].rule);
+ 			break;
+ 		default:
+ 			break;
+ 		}
+-		if (!rc)
+-			return false;
++
++		if (rc == -ESTALE && !rule_reinitialized) {
++			lsm_rule = ima_lsm_copy_rule(rule);
++			if (lsm_rule) {
++				rule_reinitialized = true;
++				goto retry;
++			}
++		}
++		if (!rc) {
++			result = false;
++			goto out;
++		}
+ 	}
+-	return true;
++	result = true;
++
++out:
++	if (rule_reinitialized) {
++		for (i = 0; i < MAX_LSM_RULES; i++)
++			ima_filter_rule_free(lsm_rule->lsm[i].rule);
++		kfree(lsm_rule);
++	}
++	return result;
+ }
  
-+failed_framebuffer:
-+	clk_disable_unprepare(fbi->clk);
- failed_check:
- 	if (fbi->mach_info->teardown)
- 		fbi->mach_info->teardown(pdev);
+ /*
 -- 
 2.35.1
 
