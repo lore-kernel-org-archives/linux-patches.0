@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2FB61863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:26:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73B57C433D2;
-	Wed, 28 Dec 2022 15:26:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C79061863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:26:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22D2EC433EF;
+	Wed, 28 Dec 2022 15:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241215;
-	bh=AUIAVlJwPyjM4wz9tSf8uQjv38clK0ktK7K6NKc/VSA=;
+	s=korg; t=1672241218;
+	bh=3dyoOV2dBFkWLhdt9NL07C/fqvThjgd3Xxn8qEq4kSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W4o5bTm5QbufUY38/MBJiw/rNDFNBOdelOUyVrzkfz2XW14aLJXn4WnDnhQd8jI5h
-	 OS2t436XtdG1dksZ8ehygyDUbogS9/hblWOCha77EUH713Vl0Fo3yEro1a0mrzpyO5
-	 PMotu2oXKpJ6bXWg+FlXgZJVY7SFVg5GmAB7d4y8=
+	b=tpZadIR1H+RbM5640PuKHS8LX8iW49NR/cV4uyfplpjpzMaR+/HKBBy8sCwxLhM7y
+	 dqrNnNblJJ8NWIHtlRtEU8G17dg0458w/VNyfc31XNvTvfW8So76XSNkl/AeLYT/g2
+	 p95jOgvK5NciRPMEEohtljmh740+pkeN1Y1LZw3w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Alan Previn <alan.previn.teres.alexis@intel.com>,
+	Marek Vasut <marex@denx.de>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0254/1073] drm/i915/guc: Make GuC log sizes runtime configurable
-Date: Wed, 28 Dec 2022 15:30:42 +0100
-Message-Id: <20221228144334.918765263@linuxfoundation.org>
+Subject: [PATCH 5.15 454/731] extcon: usbc-tusb320: Factor out extcon into dedicated functions
+Date: Wed, 28 Dec 2022 15:39:21 +0100
+Message-Id: <20221228144309.714315919@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,506 +35,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 8ad0152afb1bb3878bba282308f037d73a87ace5 ]
+[ Upstream commit 9483811a126a319ecac749f1b767ea5faecc7aed ]
 
-The GuC log buffer sizes had to be configured statically at compile
-time. This can be quite troublesome when needing to get larger logs
-out of a released driver. So re-organise the code to allow a boot time
-module parameter override.
+Move extcon code into separate functions in preparation for addition of
+USB TYPE-C support. No functional change.
 
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Reviewed-by: Alan Previn <alan.previn.teres.alexis@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220728022028.2190627-7-John.C.Harrison@Intel.com
-Stable-dep-of: befb231d5de2 ("drm/i915/guc: Fix GuC error capture sizing estimation and reporting")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Stable-dep-of: 581c848b610d ("extcon: usbc-tusb320: Update state on probe even if no IRQ pending")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/uc/intel_guc.c        |  53 ++----
- .../gpu/drm/i915/gt/uc/intel_guc_capture.c    |  14 +-
- drivers/gpu/drm/i915/gt/uc/intel_guc_log.c    | 176 +++++++++++++++++-
- drivers/gpu/drm/i915/gt/uc/intel_guc_log.h    |  42 +++--
- drivers/gpu/drm/i915/i915_params.c            |  12 ++
- drivers/gpu/drm/i915/i915_params.h            |   3 +
- 6 files changed, 226 insertions(+), 74 deletions(-)
+ drivers/extcon/extcon-usbc-tusb320.c | 75 +++++++++++++++++-----------
+ 1 file changed, 46 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc.c b/drivers/gpu/drm/i915/gt/uc/intel_guc.c
-index 2706a8c65090..7fbcfeda9195 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc.c
-@@ -224,53 +224,22 @@ static u32 guc_ctl_feature_flags(struct intel_guc *guc)
+diff --git a/drivers/extcon/extcon-usbc-tusb320.c b/drivers/extcon/extcon-usbc-tusb320.c
+index 6ba3d89b106d..aced4bbb455d 100644
+--- a/drivers/extcon/extcon-usbc-tusb320.c
++++ b/drivers/extcon/extcon-usbc-tusb320.c
+@@ -184,19 +184,9 @@ static struct tusb320_ops tusb320l_ops = {
+ 	.get_revision = tusb320l_get_revision,
+ };
  
- static u32 guc_ctl_log_params_flags(struct intel_guc *guc)
+-static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
++static void tusb320_extcon_irq_handler(struct tusb320_priv *priv, u8 reg)
  {
--	u32 offset = intel_guc_ggtt_offset(guc, guc->log.vma) >> PAGE_SHIFT;
--	u32 flags;
+-	struct tusb320_priv *priv = dev_id;
+ 	int state, polarity;
+-	unsigned reg;
 -
--	#if (((CRASH_BUFFER_SIZE) % SZ_1M) == 0)
--	#define LOG_UNIT SZ_1M
--	#define LOG_FLAG GUC_LOG_LOG_ALLOC_UNITS
--	#else
--	#define LOG_UNIT SZ_4K
--	#define LOG_FLAG 0
--	#endif
+-	if (regmap_read(priv->regmap, TUSB320_REG9, &reg)) {
+-		dev_err(priv->dev, "error during i2c read!\n");
+-		return IRQ_NONE;
+-	}
 -
--	#if (((CAPTURE_BUFFER_SIZE) % SZ_1M) == 0)
--	#define CAPTURE_UNIT SZ_1M
--	#define CAPTURE_FLAG GUC_LOG_CAPTURE_ALLOC_UNITS
--	#else
--	#define CAPTURE_UNIT SZ_4K
--	#define CAPTURE_FLAG 0
--	#endif
--
--	BUILD_BUG_ON(!CRASH_BUFFER_SIZE);
--	BUILD_BUG_ON(!IS_ALIGNED(CRASH_BUFFER_SIZE, LOG_UNIT));
--	BUILD_BUG_ON(!DEBUG_BUFFER_SIZE);
--	BUILD_BUG_ON(!IS_ALIGNED(DEBUG_BUFFER_SIZE, LOG_UNIT));
--	BUILD_BUG_ON(!CAPTURE_BUFFER_SIZE);
--	BUILD_BUG_ON(!IS_ALIGNED(CAPTURE_BUFFER_SIZE, CAPTURE_UNIT));
--
--	BUILD_BUG_ON((CRASH_BUFFER_SIZE / LOG_UNIT - 1) >
--			(GUC_LOG_CRASH_MASK >> GUC_LOG_CRASH_SHIFT));
--	BUILD_BUG_ON((DEBUG_BUFFER_SIZE / LOG_UNIT - 1) >
--			(GUC_LOG_DEBUG_MASK >> GUC_LOG_DEBUG_SHIFT));
--	BUILD_BUG_ON((CAPTURE_BUFFER_SIZE / CAPTURE_UNIT - 1) >
--			(GUC_LOG_CAPTURE_MASK >> GUC_LOG_CAPTURE_SHIFT));
-+	struct intel_guc_log *log = &guc->log;
-+	u32 offset, flags;
+-	if (!(reg & TUSB320_REG9_INTERRUPT_STATUS))
+-		return IRQ_NONE;
+ 
+ 	state = (reg >> TUSB320_REG9_ATTACHED_STATE_SHIFT) &
+ 		TUSB320_REG9_ATTACHED_STATE_MASK;
+@@ -219,6 +209,22 @@ static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
+ 	extcon_sync(priv->edev, EXTCON_USB_HOST);
+ 
+ 	priv->state = state;
++}
 +
-+	GEM_BUG_ON(!log->sizes_initialised);
-+
-+	offset = intel_guc_ggtt_offset(guc, log->vma) >> PAGE_SHIFT;
- 
- 	flags = GUC_LOG_VALID |
- 		GUC_LOG_NOTIFY_ON_HALF_FULL |
--		CAPTURE_FLAG |
--		LOG_FLAG |
--		((CRASH_BUFFER_SIZE / LOG_UNIT - 1) << GUC_LOG_CRASH_SHIFT) |
--		((DEBUG_BUFFER_SIZE / LOG_UNIT - 1) << GUC_LOG_DEBUG_SHIFT) |
--		((CAPTURE_BUFFER_SIZE / CAPTURE_UNIT - 1) << GUC_LOG_CAPTURE_SHIFT) |
-+		log->sizes[GUC_LOG_SECTIONS_DEBUG].flag |
-+		log->sizes[GUC_LOG_SECTIONS_CAPTURE].flag |
-+		(log->sizes[GUC_LOG_SECTIONS_CRASH].count << GUC_LOG_CRASH_SHIFT) |
-+		(log->sizes[GUC_LOG_SECTIONS_DEBUG].count << GUC_LOG_DEBUG_SHIFT) |
-+		(log->sizes[GUC_LOG_SECTIONS_CAPTURE].count << GUC_LOG_CAPTURE_SHIFT) |
- 		(offset << GUC_LOG_BUF_ADDR_SHIFT);
- 
--	#undef LOG_UNIT
--	#undef LOG_FLAG
--	#undef CAPTURE_UNIT
--	#undef CAPTURE_FLAG
--
- 	return flags;
- }
- 
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-index b54b7883320b..d2ac53d4f3b6 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-@@ -656,16 +656,17 @@ static void check_guc_capture_size(struct intel_guc *guc)
- 	struct drm_i915_private *i915 = guc_to_gt(guc)->i915;
- 	int min_size = guc_capture_output_min_size_est(guc);
- 	int spare_size = min_size * GUC_CAPTURE_OVERBUFFER_MULTIPLIER;
-+	u32 buffer_size = intel_guc_log_section_size_capture(&guc->log);
- 
- 	if (min_size < 0)
- 		drm_warn(&i915->drm, "Failed to calculate GuC error state capture buffer minimum size: %d!\n",
- 			 min_size);
--	else if (min_size > CAPTURE_BUFFER_SIZE)
-+	else if (min_size > buffer_size)
- 		drm_warn(&i915->drm, "GuC error state capture buffer is too small: %d < %d\n",
--			 CAPTURE_BUFFER_SIZE, min_size);
--	else if (spare_size > CAPTURE_BUFFER_SIZE)
-+			 buffer_size, min_size);
-+	else if (spare_size > buffer_size)
- 		drm_notice(&i915->drm, "GuC error state capture buffer maybe too small: %d < %d (min = %d)\n",
--			   CAPTURE_BUFFER_SIZE, spare_size, min_size);
-+			   buffer_size, spare_size, min_size);
- }
- 
- /*
-@@ -1294,7 +1295,8 @@ static void __guc_capture_process_output(struct intel_guc *guc)
- 
- 	log_buf_state = guc->log.buf_addr +
- 			(sizeof(struct guc_log_buffer_state) * GUC_CAPTURE_LOG_BUFFER);
--	src_data = guc->log.buf_addr + intel_guc_get_log_buffer_offset(GUC_CAPTURE_LOG_BUFFER);
-+	src_data = guc->log.buf_addr +
-+		   intel_guc_get_log_buffer_offset(&guc->log, GUC_CAPTURE_LOG_BUFFER);
- 
- 	/*
- 	 * Make a copy of the state structure, inside GuC log buffer
-@@ -1302,7 +1304,7 @@ static void __guc_capture_process_output(struct intel_guc *guc)
- 	 * from it multiple times.
- 	 */
- 	memcpy(&log_buf_state_local, log_buf_state, sizeof(struct guc_log_buffer_state));
--	buffer_size = intel_guc_get_log_buffer_size(GUC_CAPTURE_LOG_BUFFER);
-+	buffer_size = intel_guc_get_log_buffer_size(&guc->log, GUC_CAPTURE_LOG_BUFFER);
- 	read_offset = log_buf_state_local.read_ptr;
- 	write_offset = log_buf_state_local.sampled_write_ptr;
- 	full_count = log_buf_state_local.buffer_full_cnt;
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_log.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_log.c
-index 991d4a02248d..2b878030d3e1 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_log.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_log.c
-@@ -13,8 +13,158 @@
- #include "intel_guc_capture.h"
- #include "intel_guc_log.h"
- 
-+#if defined(CONFIG_DRM_I915_DEBUG_GUC)
-+#define GUC_LOG_DEFAULT_CRASH_BUFFER_SIZE	SZ_2M
-+#define GUC_LOG_DEFAULT_DEBUG_BUFFER_SIZE	SZ_16M
-+#define GUC_LOG_DEFAULT_CAPTURE_BUFFER_SIZE	SZ_4M
-+#elif defined(CONFIG_DRM_I915_DEBUG_GEM)
-+#define GUC_LOG_DEFAULT_CRASH_BUFFER_SIZE	SZ_1M
-+#define GUC_LOG_DEFAULT_DEBUG_BUFFER_SIZE	SZ_2M
-+#define GUC_LOG_DEFAULT_CAPTURE_BUFFER_SIZE	SZ_4M
-+#else
-+#define GUC_LOG_DEFAULT_CRASH_BUFFER_SIZE	SZ_8K
-+#define GUC_LOG_DEFAULT_DEBUG_BUFFER_SIZE	SZ_64K
-+#define GUC_LOG_DEFAULT_CAPTURE_BUFFER_SIZE	SZ_2M
-+#endif
-+
- static void guc_log_copy_debuglogs_for_relay(struct intel_guc_log *log);
- 
-+struct guc_log_section {
-+	u32 max;
-+	u32 flag;
-+	u32 default_val;
-+	const char *name;
-+};
-+
-+static s32 scale_log_param(struct intel_guc_log *log, const struct guc_log_section *section,
-+			   s32 param)
++static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
 +{
-+	/* -1 means default */
-+	if (param < 0)
-+		return section->default_val;
++	struct tusb320_priv *priv = dev_id;
++	unsigned int reg;
 +
-+	/* Check for 32-bit overflow */
-+	if (param >= SZ_4K) {
-+		drm_err(&guc_to_gt(log_to_guc(log))->i915->drm, "Size too large for GuC %s log: %dMB!",
-+			section->name, param);
-+		return section->default_val;
++	if (regmap_read(priv->regmap, TUSB320_REG9, &reg)) {
++		dev_err(priv->dev, "error during i2c read!\n");
++		return IRQ_NONE;
 +	}
 +
-+	/* Param units are 1MB */
-+	return param * SZ_1M;
-+}
++	if (!(reg & TUSB320_REG9_INTERRUPT_STATUS))
++		return IRQ_NONE;
 +
-+static void _guc_log_init_sizes(struct intel_guc_log *log)
++	tusb320_extcon_irq_handler(priv, reg);
+ 
+ 	regmap_write(priv->regmap, TUSB320_REG9, reg);
+ 
+@@ -230,8 +236,32 @@ static const struct regmap_config tusb320_regmap_config = {
+ 	.val_bits = 8,
+ };
+ 
+-static int tusb320_extcon_probe(struct i2c_client *client,
+-				const struct i2c_device_id *id)
++static int tusb320_extcon_probe(struct tusb320_priv *priv)
 +{
-+	struct intel_guc *guc = log_to_guc(log);
-+	struct drm_i915_private *i915 = guc_to_gt(guc)->i915;
-+	static const struct guc_log_section sections[GUC_LOG_SECTIONS_LIMIT] = {
-+		{
-+			GUC_LOG_CRASH_MASK >> GUC_LOG_CRASH_SHIFT,
-+			GUC_LOG_LOG_ALLOC_UNITS,
-+			GUC_LOG_DEFAULT_CRASH_BUFFER_SIZE,
-+			"crash dump"
-+		},
-+		{
-+			GUC_LOG_DEBUG_MASK >> GUC_LOG_DEBUG_SHIFT,
-+			GUC_LOG_LOG_ALLOC_UNITS,
-+			GUC_LOG_DEFAULT_DEBUG_BUFFER_SIZE,
-+			"debug",
-+		},
-+		{
-+			GUC_LOG_CAPTURE_MASK >> GUC_LOG_CAPTURE_SHIFT,
-+			GUC_LOG_CAPTURE_ALLOC_UNITS,
-+			GUC_LOG_DEFAULT_CAPTURE_BUFFER_SIZE,
-+			"capture",
-+		}
-+	};
-+	s32 params[GUC_LOG_SECTIONS_LIMIT] = {
-+		i915->params.guc_log_size_crash,
-+		i915->params.guc_log_size_debug,
-+		i915->params.guc_log_size_capture,
-+	};
-+	int i;
++	int ret;
 +
-+	for (i = 0; i < GUC_LOG_SECTIONS_LIMIT; i++)
-+		log->sizes[i].bytes = scale_log_param(log, sections + i, params[i]);
-+
-+	/* If debug size > 1MB then bump default crash size to keep the same units */
-+	if (log->sizes[GUC_LOG_SECTIONS_DEBUG].bytes >= SZ_1M &&
-+	    (i915->params.guc_log_size_crash == -1) &&
-+	    GUC_LOG_DEFAULT_CRASH_BUFFER_SIZE < SZ_1M)
-+		log->sizes[GUC_LOG_SECTIONS_CRASH].bytes = SZ_1M;
-+
-+	/* Prepare the GuC API structure fields: */
-+	for (i = 0; i < GUC_LOG_SECTIONS_LIMIT; i++) {
-+		/* Convert to correct units */
-+		if ((log->sizes[i].bytes % SZ_1M) == 0) {
-+			log->sizes[i].units = SZ_1M;
-+			log->sizes[i].flag = sections[i].flag;
-+		} else {
-+			log->sizes[i].units = SZ_4K;
-+			log->sizes[i].flag = 0;
-+		}
-+
-+		if (!IS_ALIGNED(log->sizes[i].bytes, log->sizes[i].units))
-+			drm_err(&i915->drm, "Mis-aligned GuC log %s size: 0x%X vs 0x%X!",
-+				sections[i].name, log->sizes[i].bytes, log->sizes[i].units);
-+		log->sizes[i].count = log->sizes[i].bytes / log->sizes[i].units;
-+
-+		if (!log->sizes[i].count) {
-+			drm_err(&i915->drm, "Zero GuC log %s size!", sections[i].name);
-+		} else {
-+			/* Size is +1 unit */
-+			log->sizes[i].count--;
-+		}
-+
-+		/* Clip to field size */
-+		if (log->sizes[i].count > sections[i].max) {
-+			drm_err(&i915->drm, "GuC log %s size too large: %d vs %d!",
-+				sections[i].name, log->sizes[i].count + 1, sections[i].max + 1);
-+			log->sizes[i].count = sections[i].max;
-+		}
++	priv->edev = devm_extcon_dev_allocate(priv->dev, tusb320_extcon_cable);
++	if (IS_ERR(priv->edev)) {
++		dev_err(priv->dev, "failed to allocate extcon device\n");
++		return PTR_ERR(priv->edev);
 +	}
 +
-+	if (log->sizes[GUC_LOG_SECTIONS_CRASH].units != log->sizes[GUC_LOG_SECTIONS_DEBUG].units) {
-+		drm_err(&i915->drm, "Unit mis-match for GuC log crash and debug sections: %d vs %d!",
-+			log->sizes[GUC_LOG_SECTIONS_CRASH].units,
-+			log->sizes[GUC_LOG_SECTIONS_DEBUG].units);
-+		log->sizes[GUC_LOG_SECTIONS_CRASH].units = log->sizes[GUC_LOG_SECTIONS_DEBUG].units;
-+		log->sizes[GUC_LOG_SECTIONS_CRASH].count = 0;
++	ret = devm_extcon_dev_register(priv->dev, priv->edev);
++	if (ret < 0) {
++		dev_err(priv->dev, "failed to register extcon device\n");
++		return ret;
 +	}
 +
-+	log->sizes_initialised = true;
++	extcon_set_property_capability(priv->edev, EXTCON_USB,
++				       EXTCON_PROP_USB_TYPEC_POLARITY);
++	extcon_set_property_capability(priv->edev, EXTCON_USB_HOST,
++				       EXTCON_PROP_USB_TYPEC_POLARITY);
++
++	return 0;
 +}
 +
-+static void guc_log_init_sizes(struct intel_guc_log *log)
-+{
-+	if (log->sizes_initialised)
-+		return;
-+
-+	_guc_log_init_sizes(log);
-+}
-+
-+static u32 intel_guc_log_section_size_crash(struct intel_guc_log *log)
-+{
-+	guc_log_init_sizes(log);
-+
-+	return log->sizes[GUC_LOG_SECTIONS_CRASH].bytes;
-+}
-+
-+static u32 intel_guc_log_section_size_debug(struct intel_guc_log *log)
-+{
-+	guc_log_init_sizes(log);
-+
-+	return log->sizes[GUC_LOG_SECTIONS_DEBUG].bytes;
-+}
-+
-+u32 intel_guc_log_section_size_capture(struct intel_guc_log *log)
-+{
-+	guc_log_init_sizes(log);
-+
-+	return log->sizes[GUC_LOG_SECTIONS_CAPTURE].bytes;
-+}
-+
- static u32 intel_guc_log_size(struct intel_guc_log *log)
++static int tusb320_probe(struct i2c_client *client,
++			 const struct i2c_device_id *id)
  {
- 	/*
-@@ -38,7 +188,10 @@ static u32 intel_guc_log_size(struct intel_guc_log *log)
- 	 *  |         Capture logs          |
- 	 *  +===============================+ + CAPTURE_SIZE
- 	 */
--	return PAGE_SIZE + CRASH_BUFFER_SIZE + DEBUG_BUFFER_SIZE + CAPTURE_BUFFER_SIZE;
-+	return PAGE_SIZE +
-+		intel_guc_log_section_size_crash(log) +
-+		intel_guc_log_section_size_debug(log) +
-+		intel_guc_log_section_size_capture(log);
- }
+ 	struct tusb320_priv *priv;
+ 	const void *match_data;
+@@ -257,12 +287,6 @@ static int tusb320_extcon_probe(struct i2c_client *client,
  
- /**
-@@ -165,7 +318,8 @@ static void guc_move_to_next_buf(struct intel_guc_log *log)
- 	smp_wmb();
+ 	priv->ops = (struct tusb320_ops*)match_data;
  
- 	/* All data has been written, so now move the offset of sub buffer. */
--	relay_reserve(log->relay.channel, log->vma->obj->base.size - CAPTURE_BUFFER_SIZE);
-+	relay_reserve(log->relay.channel, log->vma->obj->base.size -
-+					  intel_guc_log_section_size_capture(log));
- 
- 	/* Switch to the next sub buffer */
- 	relay_flush(log->relay.channel);
-@@ -210,15 +364,16 @@ bool intel_guc_check_log_buf_overflow(struct intel_guc_log *log,
- 	return overflow;
- }
- 
--unsigned int intel_guc_get_log_buffer_size(enum guc_log_buffer_type type)
-+unsigned int intel_guc_get_log_buffer_size(struct intel_guc_log *log,
-+					   enum guc_log_buffer_type type)
- {
- 	switch (type) {
- 	case GUC_DEBUG_LOG_BUFFER:
--		return DEBUG_BUFFER_SIZE;
-+		return intel_guc_log_section_size_debug(log);
- 	case GUC_CRASH_DUMP_LOG_BUFFER:
--		return CRASH_BUFFER_SIZE;
-+		return intel_guc_log_section_size_crash(log);
- 	case GUC_CAPTURE_LOG_BUFFER:
--		return CAPTURE_BUFFER_SIZE;
-+		return intel_guc_log_section_size_capture(log);
- 	default:
- 		MISSING_CASE(type);
- 	}
-@@ -226,7 +381,8 @@ unsigned int intel_guc_get_log_buffer_size(enum guc_log_buffer_type type)
- 	return 0;
- }
- 
--size_t intel_guc_get_log_buffer_offset(enum guc_log_buffer_type type)
-+size_t intel_guc_get_log_buffer_offset(struct intel_guc_log *log,
-+				       enum guc_log_buffer_type type)
- {
- 	enum guc_log_buffer_type i;
- 	size_t offset = PAGE_SIZE;/* for the log_buffer_states */
-@@ -234,7 +390,7 @@ size_t intel_guc_get_log_buffer_offset(enum guc_log_buffer_type type)
- 	for (i = GUC_DEBUG_LOG_BUFFER; i < GUC_MAX_LOG_BUFFER; ++i) {
- 		if (i == type)
- 			break;
--		offset += intel_guc_get_log_buffer_size(i);
-+		offset += intel_guc_get_log_buffer_size(log, i);
+-	priv->edev = devm_extcon_dev_allocate(priv->dev, tusb320_extcon_cable);
+-	if (IS_ERR(priv->edev)) {
+-		dev_err(priv->dev, "failed to allocate extcon device\n");
+-		return PTR_ERR(priv->edev);
+-	}
+-
+ 	if (priv->ops->get_revision) {
+ 		ret = priv->ops->get_revision(priv, &revision);
+ 		if (ret)
+@@ -272,16 +296,9 @@ static int tusb320_extcon_probe(struct i2c_client *client,
+ 			dev_info(priv->dev, "chip revision %d\n", revision);
  	}
  
- 	return offset;
-@@ -285,7 +441,7 @@ static void _guc_log_copy_debuglogs_for_relay(struct intel_guc_log *log)
- 		 */
- 		memcpy(&log_buf_state_local, log_buf_state,
- 		       sizeof(struct guc_log_buffer_state));
--		buffer_size = intel_guc_get_log_buffer_size(type);
-+		buffer_size = intel_guc_get_log_buffer_size(log, type);
- 		read_offset = log_buf_state_local.read_ptr;
- 		write_offset = log_buf_state_local.sampled_write_ptr;
- 		full_cnt = log_buf_state_local.buffer_full_cnt;
-@@ -400,7 +556,7 @@ static int guc_log_relay_create(struct intel_guc_log *log)
- 	  * Keep the size of sub buffers same as shared log buffer
- 	  * but GuC log-events excludes the error-state-capture logs
- 	  */
--	subbuf_size = log->vma->size - CAPTURE_BUFFER_SIZE;
-+	subbuf_size = log->vma->size - intel_guc_log_section_size_capture(log);
- 
- 	/*
- 	 * Store up to 8 snapshots, which is large enough to buffer sufficient
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_log.h b/drivers/gpu/drm/i915/gt/uc/intel_guc_log.h
-index dc9715411d62..02127703be80 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_log.h
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_log.h
-@@ -15,20 +15,6 @@
- 
- struct intel_guc;
- 
--#if defined(CONFIG_DRM_I915_DEBUG_GUC)
--#define CRASH_BUFFER_SIZE	SZ_2M
--#define DEBUG_BUFFER_SIZE	SZ_16M
--#define CAPTURE_BUFFER_SIZE	SZ_4M
--#elif defined(CONFIG_DRM_I915_DEBUG_GEM)
--#define CRASH_BUFFER_SIZE	SZ_1M
--#define DEBUG_BUFFER_SIZE	SZ_2M
--#define CAPTURE_BUFFER_SIZE	SZ_4M
--#else
--#define CRASH_BUFFER_SIZE	SZ_8K
--#define DEBUG_BUFFER_SIZE	SZ_64K
--#define CAPTURE_BUFFER_SIZE	SZ_2M
--#endif
+-	ret = devm_extcon_dev_register(priv->dev, priv->edev);
+-	if (ret < 0) {
+-		dev_err(priv->dev, "failed to register extcon device\n");
++	ret = tusb320_extcon_probe(priv);
++	if (ret)
+ 		return ret;
+-	}
 -
- /*
-  * While we're using plain log level in i915, GuC controls are much more...
-  * "elaborate"? We have a couple of bits for verbosity, separate bit for actual
-@@ -46,10 +32,30 @@ struct intel_guc;
- #define GUC_VERBOSITY_TO_LOG_LEVEL(x)	((x) + 2)
- #define GUC_LOG_LEVEL_MAX GUC_VERBOSITY_TO_LOG_LEVEL(GUC_LOG_VERBOSITY_MAX)
+-	extcon_set_property_capability(priv->edev, EXTCON_USB,
+-				       EXTCON_PROP_USB_TYPEC_POLARITY);
+-	extcon_set_property_capability(priv->edev, EXTCON_USB_HOST,
+-				       EXTCON_PROP_USB_TYPEC_POLARITY);
  
-+enum {
-+	GUC_LOG_SECTIONS_CRASH,
-+	GUC_LOG_SECTIONS_DEBUG,
-+	GUC_LOG_SECTIONS_CAPTURE,
-+	GUC_LOG_SECTIONS_LIMIT
-+};
-+
- struct intel_guc_log {
- 	u32 level;
-+
-+	/* Allocation settings */
-+	struct {
-+		s32 bytes;	/* Size in bytes */
-+		s32 units;	/* GuC API units - 1MB or 4KB */
-+		s32 count;	/* Number of API units */
-+		u32 flag;	/* GuC API units flag */
-+	} sizes[GUC_LOG_SECTIONS_LIMIT];
-+	bool sizes_initialised;
-+
-+	/* Combined buffer allocation */
- 	struct i915_vma *vma;
- 	void *buf_addr;
-+
-+	/* RelayFS support */
- 	struct {
- 		bool buf_in_use;
- 		bool started;
-@@ -58,6 +64,7 @@ struct intel_guc_log {
- 		struct mutex lock;
- 		u32 full_count;
- 	} relay;
-+
- 	/* logging related stats */
- 	struct {
- 		u32 sampled_overflow;
-@@ -69,8 +76,9 @@ struct intel_guc_log {
- void intel_guc_log_init_early(struct intel_guc_log *log);
- bool intel_guc_check_log_buf_overflow(struct intel_guc_log *log, enum guc_log_buffer_type type,
- 				      unsigned int full_cnt);
--unsigned int intel_guc_get_log_buffer_size(enum guc_log_buffer_type type);
--size_t intel_guc_get_log_buffer_offset(enum guc_log_buffer_type type);
-+unsigned int intel_guc_get_log_buffer_size(struct intel_guc_log *log,
-+					   enum guc_log_buffer_type type);
-+size_t intel_guc_get_log_buffer_offset(struct intel_guc_log *log, enum guc_log_buffer_type type);
- int intel_guc_log_create(struct intel_guc_log *log);
- void intel_guc_log_destroy(struct intel_guc_log *log);
+ 	/* update initial state */
+ 	tusb320_irq_handler(client->irq, priv);
+@@ -313,7 +330,7 @@ static const struct of_device_id tusb320_extcon_dt_match[] = {
+ MODULE_DEVICE_TABLE(of, tusb320_extcon_dt_match);
  
-@@ -92,4 +100,6 @@ void intel_guc_log_info(struct intel_guc_log *log, struct drm_printer *p);
- int intel_guc_log_dump(struct intel_guc_log *log, struct drm_printer *p,
- 		       bool dump_load_err);
- 
-+u32 intel_guc_log_section_size_capture(struct intel_guc_log *log);
-+
- #endif
-diff --git a/drivers/gpu/drm/i915/i915_params.c b/drivers/gpu/drm/i915/i915_params.c
-index 6fc475a5db61..06ca5b822111 100644
---- a/drivers/gpu/drm/i915/i915_params.c
-+++ b/drivers/gpu/drm/i915/i915_params.c
-@@ -171,6 +171,18 @@ i915_param_named(guc_log_level, int, 0400,
- 	"GuC firmware logging level. Requires GuC to be loaded. "
- 	"(-1=auto [default], 0=disable, 1..4=enable with verbosity min..max)");
- 
-+i915_param_named(guc_log_size_crash, int, 0400,
-+	"GuC firmware logging buffer size for crash dumps (in MB)"
-+	"(-1=auto [default], NB: max = 4, other restrictions apply)");
-+
-+i915_param_named(guc_log_size_debug, int, 0400,
-+	"GuC firmware logging buffer size for debug logs (in MB)"
-+	"(-1=auto [default], NB: max = 16, other restrictions apply)");
-+
-+i915_param_named(guc_log_size_capture, int, 0400,
-+	"GuC error capture register dump buffer size (in MB)"
-+	"(-1=auto [default], NB: max = 4, other restrictions apply)");
-+
- i915_param_named_unsafe(guc_firmware_path, charp, 0400,
- 	"GuC firmware path to use instead of the default one");
- 
-diff --git a/drivers/gpu/drm/i915/i915_params.h b/drivers/gpu/drm/i915/i915_params.h
-index 2733cb6cfe09..f684d1ab8707 100644
---- a/drivers/gpu/drm/i915/i915_params.h
-+++ b/drivers/gpu/drm/i915/i915_params.h
-@@ -61,6 +61,9 @@ struct drm_printer;
- 	param(int, invert_brightness, 0, 0600) \
- 	param(int, enable_guc, -1, 0400) \
- 	param(int, guc_log_level, -1, 0400) \
-+	param(int, guc_log_size_crash, -1, 0400) \
-+	param(int, guc_log_size_debug, -1, 0400) \
-+	param(int, guc_log_size_capture, -1, 0400) \
- 	param(char *, guc_firmware_path, NULL, 0400) \
- 	param(char *, huc_firmware_path, NULL, 0400) \
- 	param(char *, dmc_firmware_path, NULL, 0400) \
+ static struct i2c_driver tusb320_extcon_driver = {
+-	.probe		= tusb320_extcon_probe,
++	.probe		= tusb320_probe,
+ 	.driver		= {
+ 		.name	= "extcon-tusb320",
+ 		.of_match_table = tusb320_extcon_dt_match,
 -- 
 2.35.1
 
