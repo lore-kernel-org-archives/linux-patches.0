@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16111C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:08:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24D70C433EF;
-	Wed, 28 Dec 2022 16:08:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C821C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:08:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9DA7C433D2;
+	Wed, 28 Dec 2022 16:08:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243707;
-	bh=E3DFW+lNHelMJDUaAEh6db0obghbC4BF8bq34TLnXiM=;
+	s=korg; t=1672243710;
+	bh=cEByCizjkr9SFweALUH3TyTJ8Hb83s8clgTdI+lTNSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iqOqCnPHyEjlWAmjQ+R4a/9nD8y94DKwqFEbzTv/cTB71bzD896pdYZwRSd6GfGqX
-	 EnTnKy6w2K6LgfPUyGbUpMatU6Xbu2RTqwD8VuWbaM6Ag7hxvWZ8uWhe/fFyKaq1uc
-	 DpYAA0dHDChxILCKoiFCzlK0V8VseIu8dm0H3S+M=
+	b=pNjCx7crumKPq1C/BMJpGwGxc0aNxEkdilsdorsAEkgTclYROY4ZjJlPPdE/2CxYu
+	 7HWbChto34FWFMrTmWfrd+Oi3x2QCo3zE8xot1gozBOnSR1rRWKlwWsFHzbCsf3J34
+	 hUOsndDhiAZr0GhQdRiX1qvcdicXKRCJQthmninc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <john@metanate.com>,
-	Corentin Labbe <clabbe@baylibre.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Tedd Ho-Jeong An <tedd.an@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0573/1073] crypto: rockchip - better handle cipher key
-Date: Wed, 28 Dec 2022 15:36:01 +0100
-Message-Id: <20221228144343.616615992@linuxfoundation.org>
+Subject: [PATCH 6.0 0542/1073] Bluetooth: btintel: Fix missing free skb in btintel_setup_combined()
+Date: Wed, 28 Dec 2022 15:35:30 +0100
+Message-Id: <20221228144342.777753878@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -36,92 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corentin Labbe <clabbe@baylibre.com>
+From: Wang ShaoBo <bobo.shaobowang@huawei.com>
 
-[ Upstream commit d6b23ccef82816050c2fd458c9dabfa0e0af09b9 ]
+[ Upstream commit cee50ce899de415baf4da3ed38b7d4f13c3170d1 ]
 
-The key should not be set in hardware too much in advance, this will
-fail it 2 TFM with different keys generate alternative requests.
-The key should be stored and used just before doing cipher operations.
+skb allocated by __hci_cmd_sync would not be used whether in checking
+for supported iBT hardware variants or after, we should free it in all
+error branches, this patch makes the case read version failed or default
+error case free skb before return.
 
-Fixes: ce0183cb6464b ("crypto: rockchip - switch to skcipher API")
-Reviewed-by: John Keeping <john@metanate.com>
-Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: c86c7285bb08 ("Bluetooth: btintel: Fix the legacy bootloader returns tlv based version")
+Fixes: 019a1caa7fd2 ("Bluetooth: btintel: Refactoring setup routine for bootloader devices")
+Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Reviewed-by: Tedd Ho-Jeong An <tedd.an@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/rockchip/rk3288_crypto.h          |  1 +
- drivers/crypto/rockchip/rk3288_crypto_skcipher.c | 10 +++++++---
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/bluetooth/btintel.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/rockchip/rk3288_crypto.h b/drivers/crypto/rockchip/rk3288_crypto.h
-index dfff0e2a83e4..665cc0bb2264 100644
---- a/drivers/crypto/rockchip/rk3288_crypto.h
-+++ b/drivers/crypto/rockchip/rk3288_crypto.h
-@@ -245,6 +245,7 @@ struct rk_ahash_rctx {
- struct rk_cipher_ctx {
- 	struct rk_crypto_info		*dev;
- 	unsigned int			keylen;
-+	u8				key[AES_MAX_KEY_SIZE];
- 	u8				iv[AES_BLOCK_SIZE];
- 	struct crypto_skcipher *fallback_tfm;
- };
-diff --git a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
-index eac5bba66e25..1ef94f8db2c5 100644
---- a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
-+++ b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
-@@ -95,7 +95,7 @@ static int rk_aes_setkey(struct crypto_skcipher *cipher,
- 	    keylen != AES_KEYSIZE_256)
- 		return -EINVAL;
- 	ctx->keylen = keylen;
--	memcpy_toio(ctx->dev->reg + RK_CRYPTO_AES_KEY_0, key, keylen);
-+	memcpy(ctx->key, key, keylen);
+diff --git a/drivers/bluetooth/btintel.c b/drivers/bluetooth/btintel.c
+index d44a96667517..0c2542cee294 100644
+--- a/drivers/bluetooth/btintel.c
++++ b/drivers/bluetooth/btintel.c
+@@ -2522,7 +2522,7 @@ static int btintel_setup_combined(struct hci_dev *hdev)
+ 		 */
+ 		err = btintel_read_version(hdev, &ver);
+ 		if (err)
+-			return err;
++			break;
  
- 	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
- }
-@@ -111,7 +111,7 @@ static int rk_des_setkey(struct crypto_skcipher *cipher,
- 		return err;
- 
- 	ctx->keylen = keylen;
--	memcpy_toio(ctx->dev->reg + RK_CRYPTO_TDES_KEY1_0, key, keylen);
-+	memcpy(ctx->key, key, keylen);
- 
- 	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
- }
-@@ -127,7 +127,8 @@ static int rk_tdes_setkey(struct crypto_skcipher *cipher,
- 		return err;
- 
- 	ctx->keylen = keylen;
--	memcpy_toio(ctx->dev->reg + RK_CRYPTO_TDES_KEY1_0, key, keylen);
-+	memcpy(ctx->key, key, keylen);
-+
- 	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
- }
- 
-@@ -283,6 +284,7 @@ static void rk_ablk_hw_init(struct rk_crypto_info *dev)
- 			     RK_CRYPTO_TDES_BYTESWAP_IV;
- 		CRYPTO_WRITE(dev, RK_CRYPTO_TDES_CTRL, rctx->mode);
- 		memcpy_toio(dev->reg + RK_CRYPTO_TDES_IV_0, req->iv, ivsize);
-+		memcpy_toio(ctx->dev->reg + RK_CRYPTO_TDES_KEY1_0, ctx->key, ctx->keylen);
- 		conf_reg = RK_CRYPTO_DESSEL;
- 	} else {
- 		rctx->mode |= RK_CRYPTO_AES_FIFO_MODE |
-@@ -295,6 +297,7 @@ static void rk_ablk_hw_init(struct rk_crypto_info *dev)
- 			rctx->mode |= RK_CRYPTO_AES_256BIT_key;
- 		CRYPTO_WRITE(dev, RK_CRYPTO_AES_CTRL, rctx->mode);
- 		memcpy_toio(dev->reg + RK_CRYPTO_AES_IV_0, req->iv, ivsize);
-+		memcpy_toio(ctx->dev->reg + RK_CRYPTO_AES_KEY_0, ctx->key, ctx->keylen);
+ 		/* Apply the device specific HCI quirks
+ 		 *
+@@ -2563,7 +2563,8 @@ static int btintel_setup_combined(struct hci_dev *hdev)
+ 	default:
+ 		bt_dev_err(hdev, "Unsupported Intel hw variant (%u)",
+ 			   INTEL_HW_VARIANT(ver_tlv.cnvi_bt));
+-		return -EINVAL;
++		err = -EINVAL;
++		break;
  	}
- 	conf_reg |= RK_CRYPTO_BYTESWAP_BTFIFO |
- 		    RK_CRYPTO_BYTESWAP_BRFIFO;
-@@ -484,6 +487,7 @@ static void rk_ablk_exit_tfm(struct crypto_skcipher *tfm)
- {
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
  
-+	memzero_explicit(ctx->key, ctx->keylen);
- 	free_page((unsigned long)ctx->dev->addr_vir);
- 	crypto_free_skcipher(ctx->fallback_tfm);
- }
+ exit_error:
 -- 
 2.35.1
 
