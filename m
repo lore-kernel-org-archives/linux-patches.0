@@ -1,31 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181C51C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF94C433D2;
-	Wed, 28 Dec 2022 16:23:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36381C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EDB3C433D2;
+	Wed, 28 Dec 2022 16:23:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244619;
-	bh=JgxFYTenMO74yrkIpVwBc94p+F9fD0CyR7c+sK9K6XY=;
+	s=korg; t=1672244622;
+	bh=5D+FU38HJ61Q0nA/gbKigNP/idHncfMOIrDAREp0A4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gPF35FSyuCGZkLxWKWyFjmrUWRV5WlsOPR8npJ4LeSBELulWcuyVF6dX2rPJsz8eR
-	 3EWkbeciUCmobbYswLmFQhP4lDwEmBfmsHw4zRwmNKwTu3Eem8Vtke+D5P/qSF2Vix
-	 BkllUCKnDtq7zf8ERpdfrcolZQ2z9jBe4d2AzHng=
+	b=Un+LHQDyz1E0ZNCFACxjmvumLWnSVVSkczo4/ayzILpelmWG1sVblu6v0lIaxf/4G
+	 Jdvm0cVnSgJ0yVJGC71okp7H2e4DxHwu7c+TKbHexcz0kyS5H1gZttWlCC74hd+rYk
+	 VIDWPhuggJluCUs3gJTCn45uH3xKkEexHpvSAWGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"H. Nikolaus Schaller" <hns@goldelico.com>,
-	Sicelo Mhlongo <absicsz@gmail.com>,
-	Tony Lindgren <tony@atomide.com>,
+	Leo Yan <leo.yan@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	bpf@vger.kernel.org,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0704/1146] usb: musb: omap2430: Fix probe regression for missing resources
-Date: Wed, 28 Dec 2022 15:37:23 +0100
-Message-Id: <20221228144349.268642447@linuxfoundation.org>
+Subject: [PATCH 6.0 0743/1073] perf trace: Use macro RAW_SYSCALL_ARGS_NUM to replace number
+Date: Wed, 28 Dec 2022 15:38:51 +0100
+Message-Id: <20221228144348.204958416@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,128 +43,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Lindgren <tony@atomide.com>
+From: Leo Yan <leo.yan@linaro.org>
 
-[ Upstream commit ffbe2feac59b37c8dc536727552b4f375e1b9aec ]
+[ Upstream commit eadcab4c7a66e1df03d32da0db55d89fd9343fcc ]
 
-Probe for omap2430 glue layer is now broken for interrupt resources in
-all cases.
+This patch defines a macro RAW_SYSCALL_ARGS_NUM to replace the open
+coded number '6'.
 
-Commit  239071064732 ("partially Revert "usb: musb: Set the DT node on the
-child device"") broke probing for SoCs using ti-sysc interconnect target
-module as the dt node is not found.
-
-Commit a1a2b7125e10 ("of/platform: Drop static setup of IRQ resource from
-DT core") caused omap3 to fail with error "-ENXIO: IRQ mc not found" as
-the IRQ resources are no longer automatically populated from devicetree.
-
-Let's fix the issues by calling device_set_of_node_from_dev() only if the
-SoC has been updated to probe with ti-sysc. And for legacy SoCs, let's
-populate the resources manually as needed.
-
-Note that once we have updated the SoCs to probe with proper devicetree
-data in all cases, this is no longer needed. But doing that requires
-patching both devicetree and SoC code, so let's fix the probe issues first.
-
-Fixes: a1a2b7125e10 ("of/platform: Drop static setup of IRQ resource from DT core")
-Fixes: 239071064732 ("partially Revert "usb: musb: Set the DT node on the child device"")
-Cc: H. Nikolaus Schaller <hns@goldelico.com>
-Reported-by: Sicelo Mhlongo <absicsz@gmail.com>
-Tested-by: Sicelo Mhlongo <absicsz@gmail.com>
-Signed-off-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20221118102532.34458-1-tony@atomide.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Leo Yan <leo.yan@linaro.org>
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: bpf@vger.kernel.org
+Link: https://lore.kernel.org/r/20221121075237.127706-2-leo.yan@linaro.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 03e9a5d8eb55 ("perf trace: Handle failure when trace point folder is missed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/musb/omap2430.c | 54 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 54 insertions(+)
+ tools/perf/builtin-trace.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/musb/omap2430.c b/drivers/usb/musb/omap2430.c
-index f571a65ae6ee..476f55d1fec3 100644
---- a/drivers/usb/musb/omap2430.c
-+++ b/drivers/usb/musb/omap2430.c
-@@ -15,6 +15,7 @@
- #include <linux/list.h>
- #include <linux/io.h>
- #include <linux/of.h>
-+#include <linux/of_irq.h>
- #include <linux/platform_device.h>
- #include <linux/dma-mapping.h>
- #include <linux/pm_runtime.h>
-@@ -310,6 +311,7 @@ static int omap2430_probe(struct platform_device *pdev)
- 	struct device_node		*control_node;
- 	struct platform_device		*control_pdev;
- 	int				ret = -ENOMEM, val;
-+	bool				populate_irqs = false;
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index cf3b6ca4af96..cde14dfad200 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -88,6 +88,8 @@
+ # define F_LINUX_SPECIFIC_BASE	1024
+ #endif
  
- 	if (!np)
- 		return -ENODEV;
-@@ -328,6 +330,18 @@ static int omap2430_probe(struct platform_device *pdev)
- 	musb->dev.dma_mask		= &omap2430_dmamask;
- 	musb->dev.coherent_dma_mask	= omap2430_dmamask;
- 
-+	/*
-+	 * Legacy SoCs using omap_device get confused if node is moved
-+	 * because of interconnect properties mixed into the node.
-+	 */
-+	if (of_get_property(np, "ti,hwmods", NULL)) {
-+		dev_warn(&pdev->dev, "please update to probe with ti-sysc\n");
-+		populate_irqs = true;
-+	} else {
-+		device_set_of_node_from_dev(&musb->dev, &pdev->dev);
-+	}
-+	of_node_put(np);
++#define RAW_SYSCALL_ARGS_NUM	6
 +
- 	glue->dev			= &pdev->dev;
- 	glue->musb			= musb;
- 	glue->status			= MUSB_UNKNOWN;
-@@ -389,6 +403,46 @@ static int omap2430_probe(struct platform_device *pdev)
- 		goto err2;
+ /*
+  * strtoul: Go from a string to a value, i.e. for msr: MSR_FS_BASE to 0xc0000100
+  */
+@@ -108,7 +110,7 @@ struct syscall_fmt {
+ 		const char *sys_enter,
+ 			   *sys_exit;
+ 	}	   bpf_prog_name;
+-	struct syscall_arg_fmt arg[6];
++	struct syscall_arg_fmt arg[RAW_SYSCALL_ARGS_NUM];
+ 	u8	   nr_args;
+ 	bool	   errpid;
+ 	bool	   timeout;
+@@ -1229,7 +1231,7 @@ struct syscall {
+  */
+ struct bpf_map_syscall_entry {
+ 	bool	enabled;
+-	u16	string_args_len[6];
++	u16	string_args_len[RAW_SYSCALL_ARGS_NUM];
+ };
+ 
+ /*
+@@ -1661,7 +1663,7 @@ static int syscall__alloc_arg_fmts(struct syscall *sc, int nr_args)
+ {
+ 	int idx;
+ 
+-	if (nr_args == 6 && sc->fmt && sc->fmt->nr_args != 0)
++	if (nr_args == RAW_SYSCALL_ARGS_NUM && sc->fmt && sc->fmt->nr_args != 0)
+ 		nr_args = sc->fmt->nr_args;
+ 
+ 	sc->arg_fmt = calloc(nr_args, sizeof(*sc->arg_fmt));
+@@ -1812,7 +1814,8 @@ static int trace__read_syscall_info(struct trace *trace, int id)
+ 		sc->tp_format = trace_event__tp_format("syscalls", tp_name);
  	}
  
-+	if (populate_irqs) {
-+		struct resource musb_res[3];
-+		struct resource *res;
-+		int i = 0;
-+
-+		memset(musb_res, 0, sizeof(*musb_res) * ARRAY_SIZE(musb_res));
-+
-+		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+		if (!res)
-+			goto err2;
-+
-+		musb_res[i].start = res->start;
-+		musb_res[i].end = res->end;
-+		musb_res[i].flags = res->flags;
-+		musb_res[i].name = res->name;
-+		i++;
-+
-+		ret = of_irq_get_byname(np, "mc");
-+		if (ret > 0) {
-+			musb_res[i].start = ret;
-+			musb_res[i].flags = IORESOURCE_IRQ;
-+			musb_res[i].name = "mc";
-+			i++;
-+		}
-+
-+		ret = of_irq_get_byname(np, "dma");
-+		if (ret > 0) {
-+			musb_res[i].start = ret;
-+			musb_res[i].flags = IORESOURCE_IRQ;
-+			musb_res[i].name = "dma";
-+			i++;
-+		}
-+
-+		ret = platform_device_add_resources(musb, musb_res, i);
-+		if (ret) {
-+			dev_err(&pdev->dev, "failed to add IRQ resources\n");
-+			goto err2;
-+		}
-+	}
-+
- 	ret = platform_device_add_data(musb, pdata, sizeof(*pdata));
- 	if (ret) {
- 		dev_err(&pdev->dev, "failed to add platform_data\n");
+-	if (syscall__alloc_arg_fmts(sc, IS_ERR(sc->tp_format) ? 6 : sc->tp_format->format.nr_fields))
++	if (syscall__alloc_arg_fmts(sc, IS_ERR(sc->tp_format) ?
++					RAW_SYSCALL_ARGS_NUM : sc->tp_format->format.nr_fields))
+ 		return -ENOMEM;
+ 
+ 	if (IS_ERR(sc->tp_format))
 -- 
 2.35.1
 
