@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64971863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272A7C433D2;
-	Wed, 28 Dec 2022 15:39:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0BB1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC5BC433D2;
+	Wed, 28 Dec 2022 15:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241961;
-	bh=2u+JqZVFjNOYCm9GMc8BJ4EA8rIcooMLdSQI+41VY6U=;
+	s=korg; t=1672241964;
+	bh=x8dmkCqTND2Sk1j97ww3Lgpjzn3k7kpZ5uGEQVuEeZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jC6lZ6J4PgXm9R1gGkjLB/add1fdCgfKtPSoh/2E29W1uj0gXk5oP7rYd1hxKmuev
-	 wNIZnFTPhm5Bu5Hbw2ktDT2NC791gmYjLjQxyD3+9GzLHnqywabL1+t8ieMhkU8WTO
-	 j+L2JO1O0mmrJp+vQd3Mce7UGBdFp96ML1+CIPBc=
+	b=fk6NNsIWxmI9z64A952N0xU1kcTpn3lHP4Y0dBfiRiyG//+DxeFmpROaHQwsceB1N
+	 kEsg3sHRIDBgy/ZE9jl+52Z3DKH5HXVHn10dXS00jQf9uzQkDtKK4eg0PU2148YLqk
+	 JJ8ao2T1b30KddpuOUa6MvsepwDmFhCRSRm7Iieo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
-	Francesco Dolcini <francesco@dolcini.it>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	coverity-bot <keescook+coverity-bot@chromium.org>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 547/731] rtc: snvs: Allow a time difference on clock register read
-Date: Wed, 28 Dec 2022 15:40:54 +0100
-Message-Id: <20221228144312.396944773@linuxfoundation.org>
+Subject: [PATCH 6.1 0310/1146] wifi: rtw89: use u32_encode_bits() to fill MAC quota value
+Date: Wed, 28 Dec 2022 15:30:49 +0100
+Message-Id: <20221228144338.575236777@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,90 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+From: Ping-Ke Shih <pkshih@realtek.com>
 
-[ Upstream commit 0462681e207ccc44778a77b3297af728b1cf5b9f ]
+[ Upstream commit 525c06c81d75690a9b795cc62a758838c1a6b6fe ]
 
-On an iMX6ULL the following message appears when a wakealarm is set:
+Coverity reported shift 16 bits could cause sign extension and might get
+an unexpected value. Since the input values are predefined and no this
+kind of case, original code is safe so far. But, still changing them to
+use u32_encode_bits() will be more clear and prevent mistakes in the
+future.
 
-echo 0 > /sys/class/rtc/rtc1/wakealarm
-rtc rtc1: Timeout trying to get valid LPSRT Counter read
+The original message of Coverity is:
+  Suspicious implicit sign extension: "max_cfg->cma0_dma" with type "u16"
+  (16 bits, unsigned) is promoted in "max_cfg->cma0_dma << 16" to type
+  "int" (32 bits, signed), then sign-extended to type "unsigned long"
+  (64 bits, unsigned).  If "max_cfg->cma0_dma << 16" is greater than
+  0x7FFFFFFF, the upper bits of the result will all be 1."
 
-This does not always happen but is reproducible quite often (7 out of 10
-times). The problem appears because the iMX6ULL is not able to read the
-registers within one 32kHz clock cycle which is the base clock of the
-RTC. Therefore, this patch allows a difference of up to 320 cycles
-(10ms). 10ms was chosen to be big enough even on systems with less cpu
-power (e.g. iMX6ULL). According to the reference manual a difference is
-fine:
-- If the two consecutive reads are similar, the value is correct.
-The values have to be similar, not equal.
-
-Fixes: cd7f3a249dbe ("rtc: snvs: Add timeouts to avoid kernel lockups")
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
-Signed-off-by: Francesco Dolcini <francesco@dolcini.it>
-Link: https://lore.kernel.org/r/20221106115915.7930-1-francesco@dolcini.it
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Reported-by: coverity-bot <keescook+coverity-bot@chromium.org>
+Addresses-Coverity-ID: 1527095 ("Integer handling issues")
+Fixes: e3ec7017f6a2 ("rtw89: add Realtek 802.11ax driver")
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221108013858.10806-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-snvs.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw89/mac.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/rtc/rtc-snvs.c b/drivers/rtc/rtc-snvs.c
-index bd929b0e7d7d..d82acf1af1fa 100644
---- a/drivers/rtc/rtc-snvs.c
-+++ b/drivers/rtc/rtc-snvs.c
-@@ -32,6 +32,14 @@
- #define SNVS_LPPGDR_INIT	0x41736166
- #define CNTR_TO_SECS_SH		15
- 
-+/* The maximum RTC clock cycles that are allowed to pass between two
-+ * consecutive clock counter register reads. If the values are corrupted a
-+ * bigger difference is expected. The RTC frequency is 32kHz. With 320 cycles
-+ * we end at 10ms which should be enough for most cases. If it once takes
-+ * longer than expected we do a retry.
-+ */
-+#define MAX_RTC_READ_DIFF_CYCLES	320
-+
- struct snvs_rtc_data {
- 	struct rtc_device *rtc;
- 	struct regmap *regmap;
-@@ -56,6 +64,7 @@ static u64 rtc_read_lpsrt(struct snvs_rtc_data *data)
- static u32 rtc_read_lp_counter(struct snvs_rtc_data *data)
- {
- 	u64 read1, read2;
-+	s64 diff;
- 	unsigned int timeout = 100;
- 
- 	/* As expected, the registers might update between the read of the LSB
-@@ -66,7 +75,8 @@ static u32 rtc_read_lp_counter(struct snvs_rtc_data *data)
- 	do {
- 		read2 = read1;
- 		read1 = rtc_read_lpsrt(data);
--	} while (read1 != read2 && --timeout);
-+		diff = read1 - read2;
-+	} while (((diff < 0) || (diff > MAX_RTC_READ_DIFF_CYCLES)) && --timeout);
- 	if (!timeout)
- 		dev_err(&data->rtc->dev, "Timeout trying to get valid LPSRT Counter read\n");
- 
-@@ -78,13 +88,15 @@ static u32 rtc_read_lp_counter(struct snvs_rtc_data *data)
- static int rtc_read_lp_counter_lsb(struct snvs_rtc_data *data, u32 *lsb)
- {
- 	u32 count1, count2;
-+	s32 diff;
- 	unsigned int timeout = 100;
- 
- 	regmap_read(data->regmap, data->offset + SNVS_LPSRTCLR, &count1);
- 	do {
- 		count2 = count1;
- 		regmap_read(data->regmap, data->offset + SNVS_LPSRTCLR, &count1);
--	} while (count1 != count2 && --timeout);
-+		diff = count1 - count2;
-+	} while (((diff < 0) || (diff > MAX_RTC_READ_DIFF_CYCLES)) && --timeout);
- 	if (!timeout) {
- 		dev_err(&data->rtc->dev, "Timeout trying to get valid LPSRT Counter read\n");
- 		return -ETIMEDOUT;
+diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
+index 0508dfca8edf..077fddc5fa1e 100644
+--- a/drivers/net/wireless/realtek/rtw89/mac.c
++++ b/drivers/net/wireless/realtek/rtw89/mac.c
+@@ -1429,10 +1429,8 @@ static int dle_mix_cfg(struct rtw89_dev *rtwdev, const struct rtw89_dle_mem *cfg
+ #define INVALID_QT_WCPU U16_MAX
+ #define SET_QUOTA_VAL(_min_x, _max_x, _module, _idx)			\
+ 	do {								\
+-		val = ((_min_x) &					\
+-		       B_AX_ ## _module ## _MIN_SIZE_MASK) |		\
+-		      (((_max_x) << 16) &				\
+-		       B_AX_ ## _module ## _MAX_SIZE_MASK);		\
++		val = u32_encode_bits(_min_x, B_AX_ ## _module ## _MIN_SIZE_MASK) | \
++		      u32_encode_bits(_max_x, B_AX_ ## _module ## _MAX_SIZE_MASK);  \
+ 		rtw89_write32(rtwdev,					\
+ 			      R_AX_ ## _module ## _QTA ## _idx ## _CFG,	\
+ 			      val);					\
 -- 
 2.35.1
 
