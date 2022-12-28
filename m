@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E8CB187A
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:03:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63EC5C433D2;
-	Wed, 28 Dec 2022 16:03:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8A41C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:03:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0282DC433D2;
+	Wed, 28 Dec 2022 16:03:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243402;
-	bh=y0lHDZrcIgidh16KnuWyzmlxz+0g7bavRTkyGNLA/j4=;
+	s=korg; t=1672243405;
+	bh=AUNv4Z887qHvzpEifxMftsN+gO1fimH5MRbEkobYItI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zFQuZmNrp6juuVG/n9JPlxotimgVHDH6Lu1FxPlWimo5kaqDwgsOpCTskSkAwiiY+
-	 isjuZHXrc/MRP2Cn2ep0KGBk/UsXAT0ei2NqyohqKhgM++FktPeqz7hUrszuXagWAV
-	 MYnlV5is8Fe0iVDKWigDB1BBBJlaHlY7nwRafb3s=
+	b=UFBJE2pRyb+PZi4ULClvXjVVpFgnq8Z2l+IMDCESujk4g1eXVYdy05FyARk8lVFGn
+	 Z/6Bu0tXOLgaKDAAVFNpNo/wNAvkRfaJ0OcNh6w5WIvz4pvwEaVR7VpY/O6rKlGyUX
+	 LZZPmUU3prdHQkMsz9yF3gKMOLe/p7HQjNvhKMQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Anna Schumaker <Anna.Schumaker@Netapp.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0489/1146] NFS: Allow very small rsize & wsize again
-Date: Wed, 28 Dec 2022 15:33:48 +0100
-Message-Id: <20221228144343.466675061@linuxfoundation.org>
+Subject: [PATCH 6.0 0526/1073] net: amd: lance: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:35:14 +0100
+Message-Id: <20221228144342.332242390@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,47 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anna Schumaker <Anna.Schumaker@Netapp.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit a60214c2465493aac0b014d87ee19327b6204c42 ]
+[ Upstream commit 6151d105dfce8c23edf30eed35e97f3d9b96a35c ]
 
-940261a19508 introduced nfs_io_size() to clamp the iosize to a multiple
-of PAGE_SIZE. This had the unintended side effect of no longer allowing
-iosizes less than a page, which could be useful in some situations.
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-UDP already has an exception that causes it to fall back on the
-power-of-two style sizes instead. This patch adds an additional
-exception for very small iosizes.
+It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
+The difference between them is free reason, dev_kfree_skb_irq() means
+the SKB is dropped in error and dev_consume_skb_irq() means the SKB
+is consumed in normal.
 
-Reported-by: Jeff Layton <jlayton@kernel.org>
-Fixes: 940261a19508 ("NFS: Allow setting rsize / wsize to a multiple of PAGE_SIZE")
-Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+In these two cases, dev_kfree_skb() is called consume the xmited SKB,
+so replace it with dev_consume_skb_irq().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/internal.h | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/amd/atarilance.c | 2 +-
+ drivers/net/ethernet/amd/lance.c      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfs/internal.h b/fs/nfs/internal.h
-index 647fc3f547cb..ae7d4a8c728c 100644
---- a/fs/nfs/internal.h
-+++ b/fs/nfs/internal.h
-@@ -739,12 +739,10 @@ unsigned long nfs_io_size(unsigned long iosize, enum xprt_transports proto)
- 		iosize = NFS_DEF_FILE_IO_SIZE;
- 	else if (iosize >= NFS_MAX_FILE_IO_SIZE)
- 		iosize = NFS_MAX_FILE_IO_SIZE;
--	else
--		iosize = iosize & PAGE_MASK;
- 
--	if (proto == XPRT_TRANSPORT_UDP)
-+	if (proto == XPRT_TRANSPORT_UDP || iosize < PAGE_SIZE)
- 		return nfs_block_bits(iosize, NULL);
--	return iosize;
-+	return iosize & PAGE_MASK;
- }
- 
- /*
+diff --git a/drivers/net/ethernet/amd/atarilance.c b/drivers/net/ethernet/amd/atarilance.c
+index 27869164c6e6..ca12f9f48839 100644
+--- a/drivers/net/ethernet/amd/atarilance.c
++++ b/drivers/net/ethernet/amd/atarilance.c
+@@ -824,7 +824,7 @@ lance_start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	lp->memcpy_f( PKTBUF_ADDR(head), (void *)skb->data, skb->len );
+ 	head->flag = TMD1_OWN_CHIP | TMD1_ENP | TMD1_STP;
+ 	dev->stats.tx_bytes += skb->len;
+-	dev_kfree_skb( skb );
++	dev_consume_skb_irq(skb);
+ 	lp->cur_tx++;
+ 	while( lp->cur_tx >= TX_RING_SIZE && lp->dirty_tx >= TX_RING_SIZE ) {
+ 		lp->cur_tx -= TX_RING_SIZE;
+diff --git a/drivers/net/ethernet/amd/lance.c b/drivers/net/ethernet/amd/lance.c
+index 462016666752..e3b8de9fc728 100644
+--- a/drivers/net/ethernet/amd/lance.c
++++ b/drivers/net/ethernet/amd/lance.c
+@@ -1001,7 +1001,7 @@ static netdev_tx_t lance_start_xmit(struct sk_buff *skb,
+ 		skb_copy_from_linear_data(skb, &lp->tx_bounce_buffs[entry], skb->len);
+ 		lp->tx_ring[entry].base =
+ 			((u32)isa_virt_to_bus((lp->tx_bounce_buffs + entry)) & 0xffffff) | 0x83000000;
+-		dev_kfree_skb(skb);
++		dev_consume_skb_irq(skb);
+ 	} else {
+ 		lp->tx_skbuff[entry] = skb;
+ 		lp->tx_ring[entry].base = ((u32)isa_virt_to_bus(skb->data) & 0xffffff) | 0x83000000;
 -- 
 2.35.1
 
