@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C1701863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88F90C433EF;
-	Wed, 28 Dec 2022 15:25:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39431863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A314C433D2;
+	Wed, 28 Dec 2022 15:25:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241156;
-	bh=fUhopehXK5q5kKpyplt9LhLxFeU9rOb2gOvpumRX/OU=;
+	s=korg; t=1672241159;
+	bh=UVldHqLKx3q/meGvv4NHPJcPuJxemRpYLNiCtT3mBq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JX3okfKp3Qo2KOiTGt3cwjS8pYAWqR+/krN4d3xagDWSz6LjSDZaUsAf4lYM76RL+
-	 oZJ6RW18wQ89KrGles7GqiHLc7B1Ppyge4gI2Qxsogz42TGiaNxmy3R9m3c5HdVSA6
-	 3EE8Sq3LVSQO5fWlOg1+JzuEIQ67ABB+zKQqNgEE=
+	b=1axWRSKZ6Pqru8mH6hiQYOXBVMowEDHNsdSPtOmxMknJ/jRVX0ouNz8YMyFoidjEK
+	 I0x08Kl5EzCJzW0u06EhRlseONm32PiGg9nTHfkwWY+A3UTP2mKFb4zXUmuofgr/lG
+	 YHCAyx9qn3Mj7+uQDD4D6v4ojfY9I2IQi488HVg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anssi Hannula <anssi.hannula@bitwise.fi>,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Marek Vasut <marex@denx.de>,
+	Kieran Bingham <kieran.bingham@ideasonboard.com>,
+	Liu Ying <victor.liu@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0248/1073] can: kvaser_usb: Add struct kvaser_usb_busparams
-Date: Wed, 28 Dec 2022 15:30:36 +0100
-Message-Id: <20221228144334.759356928@linuxfoundation.org>
+Subject: [PATCH 6.1 0214/1146] drm: lcdif: Switch to limited range for RGB to YUV conversion
+Date: Wed, 28 Dec 2022 15:29:13 +0100
+Message-Id: <20221228144335.959272240@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,141 +37,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jimmy Assarsson <extja@kvaser.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit 00e5786177649c1e3110f9454fdd34e336597265 ]
+[ Upstream commit ec39dee8b25229a646271815cc86a8fc865525cf ]
 
-Add struct kvaser_usb_busparams containing the busparameters used in
-CMD_{SET,GET}_BUSPARAMS* commands.
+Up to and including v1.3, HDMI supported limited quantization range only
+for YCbCr. HDMI v1.4 introduced selectable quantization ranges, but this
+feature isn't supported in the dw-hdmi driver that is used in
+conjunction with the LCDIF in the i.MX8MP. The HDMI YCbCr output is thus
+always advertised in the AVI infoframe as limited range.
 
-Tested-by: Anssi Hannula <anssi.hannula@bitwise.fi>
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/all/20221010185237.319219-11-extja@kvaser.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Stable-dep-of: 39d3df6b0ea8 ("can: kvaser_usb: Compare requested bittiming parameters with actual parameters in do_set_{,data}_bittiming")
+The LCDIF driver, on the other hand, configures the CSC to produce full
+range YCbCr. This mismatch results in loss of details and incorrect
+colours. Fix it by switching to limited range YCbCr.
+
+The coefficients are copied from drivers/media/platforms/nxp/imx-pxp.c
+for coherency, as the hardware is most likely identical.
+
+Fixes: 9db35bb349a0 ("drm: lcdif: Add support for i.MX8MP LCDIF variant")
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
+Reviewed-by: Liu Ying <victor.liu@nxp.com>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220930083955.31580-4-laurent.pinchart@ideasonboard.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb.h   |  8 +++++
- .../net/can/usb/kvaser_usb/kvaser_usb_hydra.c | 32 +++++++------------
- .../net/can/usb/kvaser_usb/kvaser_usb_leaf.c  | 18 ++++-------
- 3 files changed, 27 insertions(+), 31 deletions(-)
+ drivers/gpu/drm/mxsfb/lcdif_kms.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb.h b/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
-index d9c5dd5da908..778b61c90c2b 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
-@@ -76,6 +76,14 @@ struct kvaser_usb_tx_urb_context {
- 	u32 echo_index;
- };
+diff --git a/drivers/gpu/drm/mxsfb/lcdif_kms.c b/drivers/gpu/drm/mxsfb/lcdif_kms.c
+index b1092aab1423..9f212e29059b 100644
+--- a/drivers/gpu/drm/mxsfb/lcdif_kms.c
++++ b/drivers/gpu/drm/mxsfb/lcdif_kms.c
+@@ -52,16 +52,22 @@ static void lcdif_set_formats(struct lcdif_drm_private *lcdif,
+ 		writel(DISP_PARA_LINE_PATTERN_UYVY_H,
+ 		       lcdif->base + LCDC_V8_DISP_PARA);
  
-+struct kvaser_usb_busparams {
-+	__le32 bitrate;
-+	u8 tseg1;
-+	u8 tseg2;
-+	u8 sjw;
-+	u8 nsamples;
-+} __packed;
-+
- struct kvaser_usb {
- 	struct usb_device *udev;
- 	struct usb_interface *intf;
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-index 3abfaa77e893..b8ae29872217 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-@@ -196,17 +196,9 @@ struct kvaser_cmd_chip_state_event {
- #define KVASER_USB_HYDRA_BUS_MODE_CANFD_ISO	0x01
- #define KVASER_USB_HYDRA_BUS_MODE_NONISO	0x02
- struct kvaser_cmd_set_busparams {
--	__le32 bitrate;
--	u8 tseg1;
--	u8 tseg2;
--	u8 sjw;
--	u8 nsamples;
-+	struct kvaser_usb_busparams busparams_arb;
- 	u8 reserved0[4];
--	__le32 bitrate_d;
--	u8 tseg1_d;
--	u8 tseg2_d;
--	u8 sjw_d;
--	u8 nsamples_d;
-+	struct kvaser_usb_busparams busparams_data;
- 	u8 canfd_mode;
- 	u8 reserved1[7];
- } __packed;
-@@ -1538,11 +1530,11 @@ static int kvaser_usb_hydra_set_bittiming(struct net_device *netdev)
- 		return -ENOMEM;
- 
- 	cmd->header.cmd_no = CMD_SET_BUSPARAMS_REQ;
--	cmd->set_busparams_req.bitrate = cpu_to_le32(bt->bitrate);
--	cmd->set_busparams_req.sjw = (u8)sjw;
--	cmd->set_busparams_req.tseg1 = (u8)tseg1;
--	cmd->set_busparams_req.tseg2 = (u8)tseg2;
--	cmd->set_busparams_req.nsamples = 1;
-+	cmd->set_busparams_req.busparams_arb.bitrate = cpu_to_le32(bt->bitrate);
-+	cmd->set_busparams_req.busparams_arb.sjw = (u8)sjw;
-+	cmd->set_busparams_req.busparams_arb.tseg1 = (u8)tseg1;
-+	cmd->set_busparams_req.busparams_arb.tseg2 = (u8)tseg2;
-+	cmd->set_busparams_req.busparams_arb.nsamples = 1;
- 
- 	kvaser_usb_hydra_set_cmd_dest_he
- 		(cmd, dev->card_data.hydra.channel_to_he[priv->channel]);
-@@ -1572,11 +1564,11 @@ static int kvaser_usb_hydra_set_data_bittiming(struct net_device *netdev)
- 		return -ENOMEM;
- 
- 	cmd->header.cmd_no = CMD_SET_BUSPARAMS_FD_REQ;
--	cmd->set_busparams_req.bitrate_d = cpu_to_le32(dbt->bitrate);
--	cmd->set_busparams_req.sjw_d = (u8)sjw;
--	cmd->set_busparams_req.tseg1_d = (u8)tseg1;
--	cmd->set_busparams_req.tseg2_d = (u8)tseg2;
--	cmd->set_busparams_req.nsamples_d = 1;
-+	cmd->set_busparams_req.busparams_data.bitrate = cpu_to_le32(dbt->bitrate);
-+	cmd->set_busparams_req.busparams_data.sjw = (u8)sjw;
-+	cmd->set_busparams_req.busparams_data.tseg1 = (u8)tseg1;
-+	cmd->set_busparams_req.busparams_data.tseg2 = (u8)tseg2;
-+	cmd->set_busparams_req.busparams_data.nsamples = 1;
- 
- 	if (priv->can.ctrlmode & CAN_CTRLMODE_FD) {
- 		if (priv->can.ctrlmode & CAN_CTRLMODE_FD_NON_ISO)
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-index fa940be4e1b0..996d58b97af1 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-@@ -164,11 +164,7 @@ struct usbcan_cmd_softinfo {
- struct kvaser_cmd_busparams {
- 	u8 tid;
- 	u8 channel;
--	__le32 bitrate;
--	u8 tseg1;
--	u8 tseg2;
--	u8 sjw;
--	u8 no_samp;
-+	struct kvaser_usb_busparams busparams;
- } __packed;
- 
- struct kvaser_cmd_tx_can {
-@@ -1699,15 +1695,15 @@ static int kvaser_usb_leaf_set_bittiming(struct net_device *netdev)
- 	cmd->len = CMD_HEADER_LEN + sizeof(struct kvaser_cmd_busparams);
- 	cmd->u.busparams.channel = priv->channel;
- 	cmd->u.busparams.tid = 0xff;
--	cmd->u.busparams.bitrate = cpu_to_le32(bt->bitrate);
--	cmd->u.busparams.sjw = bt->sjw;
--	cmd->u.busparams.tseg1 = bt->prop_seg + bt->phase_seg1;
--	cmd->u.busparams.tseg2 = bt->phase_seg2;
-+	cmd->u.busparams.busparams.bitrate = cpu_to_le32(bt->bitrate);
-+	cmd->u.busparams.busparams.sjw = bt->sjw;
-+	cmd->u.busparams.busparams.tseg1 = bt->prop_seg + bt->phase_seg1;
-+	cmd->u.busparams.busparams.tseg2 = bt->phase_seg2;
- 
- 	if (priv->can.ctrlmode & CAN_CTRLMODE_3_SAMPLES)
--		cmd->u.busparams.no_samp = 3;
-+		cmd->u.busparams.busparams.nsamples = 3;
- 	else
--		cmd->u.busparams.no_samp = 1;
-+		cmd->u.busparams.busparams.nsamples = 1;
- 
- 	rc = kvaser_usb_send_cmd(dev, cmd, cmd->len);
- 
+-		/* CSC: BT.601 Full Range RGB to YCbCr coefficients. */
+-		writel(CSC0_COEF0_A2(0x096) | CSC0_COEF0_A1(0x04c),
++		/*
++		 * CSC: BT.601 Limited Range RGB to YCbCr coefficients.
++		 *
++		 * |Y |   | 0.2568  0.5041  0.0979|   |R|   |16 |
++		 * |Cb| = |-0.1482 -0.2910  0.4392| * |G| + |128|
++		 * |Cr|   | 0.4392  0.4392 -0.3678|   |B|   |128|
++		 */
++		writel(CSC0_COEF0_A2(0x081) | CSC0_COEF0_A1(0x041),
+ 		       lcdif->base + LCDC_V8_CSC0_COEF0);
+-		writel(CSC0_COEF1_B1(0x7d5) | CSC0_COEF1_A3(0x01d),
++		writel(CSC0_COEF1_B1(0x7db) | CSC0_COEF1_A3(0x019),
+ 		       lcdif->base + LCDC_V8_CSC0_COEF1);
+-		writel(CSC0_COEF2_B3(0x080) | CSC0_COEF2_B2(0x7ac),
++		writel(CSC0_COEF2_B3(0x070) | CSC0_COEF2_B2(0x7b6),
+ 		       lcdif->base + LCDC_V8_CSC0_COEF2);
+-		writel(CSC0_COEF3_C2(0x795) | CSC0_COEF3_C1(0x080),
++		writel(CSC0_COEF3_C2(0x7a2) | CSC0_COEF3_C1(0x070),
+ 		       lcdif->base + LCDC_V8_CSC0_COEF3);
+-		writel(CSC0_COEF4_D1(0x000) | CSC0_COEF4_C3(0x7ec),
++		writel(CSC0_COEF4_D1(0x010) | CSC0_COEF4_C3(0x7ee),
+ 		       lcdif->base + LCDC_V8_CSC0_COEF4);
+ 		writel(CSC0_COEF5_D3(0x080) | CSC0_COEF5_D2(0x080),
+ 		       lcdif->base + LCDC_V8_CSC0_COEF5);
 -- 
 2.35.1
 
