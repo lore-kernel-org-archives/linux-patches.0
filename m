@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4445E1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:53:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C77C433F0;
-	Wed, 28 Dec 2022 15:53:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D7191875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:53:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A262C433D2;
+	Wed, 28 Dec 2022 15:53:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242823;
-	bh=lOB/T60sWXx1He6Mrm1mXZncXUBjlFbZN3/xTZPaES8=;
+	s=korg; t=1672242826;
+	bh=AAqlyb/Ejw6JCf31pxPky/4HoZNTR3vn+c64IpxGnvs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K5YUkERNH2Ul1dCws4HP9pBXaTiksHXcbiX6FxRT5S9+XdVXQTPp7R/pdFQNnmdRy
-	 PnzRQXg66+ezA/59ji/5rVT3GpXuhLOw7IM9dGevHjh2TH6GkTqBMqoUyOpa4Eymdl
-	 UyPFyh1QrgNA9tk9hB87HrRvyLrkn+7h46QviptE=
+	b=2YKSAgT5vAkE4y2VveAqoYd3d3MFTOJlWgCzWFoyWnmmWC47MOtLEkdas6TOc9hOK
+	 IMFN+Z9rdFMbfTfA244ptw48h5OUb//obqtDWj5sy4Wu5DlisylRcs+6uEyD+z0wv5
+	 NwkxPLkAl34Fup2TK5A8qrnlbxhEoMSlv5vLijQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Mark Brown <broonie@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0420/1146] ASoC: mediatek: mtk-btcvsd: Add checks for write and read of mtk_btcvsd_snd
-Date: Wed, 28 Dec 2022 15:32:39 +0100
-Message-Id: <20221228144341.582961973@linuxfoundation.org>
+Subject: [PATCH 6.0 0459/1073] hsr: Synchronize sending frames to have always incremented outgoing seq nr.
+Date: Wed, 28 Dec 2022 15:34:07 +0100
+Message-Id: <20221228144340.505371485@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,40 +35,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit d067b3378a78c9c3048ac535e31c171b6f5b5846 ]
+[ Upstream commit 06afd2c31d338fa762548580c1bf088703dd1e03 ]
 
-As the mtk_btcvsd_snd_write and mtk_btcvsd_snd_read may return error,
-it should be better to catch the exception.
+Sending frames via the hsr (master) device requires a sequence number
+which is tracked in hsr_priv::sequence_nr and protected by
+hsr_priv::seqnr_lock. Each time a new frame is sent, it will obtain a
+new id and then send it via the slave devices.
+Each time a packet is sent (via hsr_forward_do()) the sequence number is
+checked via hsr_register_frame_out() to ensure that a frame is not
+handled twice. This make sense for the receiving side to ensure that the
+frame is not injected into the stack twice after it has been received
+from both slave ports.
 
-Fixes: 4bd8597dc36c ("ASoC: mediatek: add btcvsd driver")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20221116030750.40500-1-jiasheng@iscas.ac.cn
-Signed-off-by: Mark Brown <broonie@kernel.org>
+There is no locking to cover the sending path which means the following
+scenario is possible:
+
+  CPU0				CPU1
+  hsr_dev_xmit(skb1)		hsr_dev_xmit(skb2)
+   fill_frame_info()             fill_frame_info()
+    hsr_fill_frame_info()         hsr_fill_frame_info()
+     handle_std_frame()            handle_std_frame()
+      skb1's sequence_nr = 1
+                                    skb2's sequence_nr = 2
+   hsr_forward_do()              hsr_forward_do()
+
+                                   hsr_register_frame_out(, 2)  // okay, send)
+
+    hsr_register_frame_out(, 1) // stop, lower seq duplicate
+
+Both skbs (or their struct hsr_frame_info) received an unique id.
+However since skb2 was sent before skb1, the higher sequence number was
+recorded in hsr_register_frame_out() and the late arriving skb1 was
+dropped and never sent.
+
+This scenario has been observed in a three node HSR setup, with node1 +
+node2 having ping and iperf running in parallel. From time to time ping
+reported a missing packet. Based on tracing that missing ping packet did
+not leave the system.
+
+It might be possible (didn't check) to drop the sequence number check on
+the sending side. But if the higher sequence number leaves on wire
+before the lower does and the destination receives them in that order
+and it will drop the packet with the lower sequence number and never
+inject into the stack.
+Therefore it seems the only way is to lock the whole path from obtaining
+the sequence number and sending via dev_queue_xmit() and assuming the
+packets leave on wire in the same order (and don't get reordered by the
+NIC).
+
+Cover the whole path for the master interface from obtaining the ID
+until after it has been forwarded via hsr_forward_skb() to ensure the
+skbs are sent to the NIC in the order of the assigned sequence numbers.
+
+Fixes: f421436a591d3 ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/common/mtk-btcvsd.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/hsr/hsr_device.c  | 12 +++++++-----
+ net/hsr/hsr_forward.c |  3 +--
+ 2 files changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/sound/soc/mediatek/common/mtk-btcvsd.c b/sound/soc/mediatek/common/mtk-btcvsd.c
-index d884bb7c0fc7..1c28b41e4311 100644
---- a/sound/soc/mediatek/common/mtk-btcvsd.c
-+++ b/sound/soc/mediatek/common/mtk-btcvsd.c
-@@ -1038,11 +1038,9 @@ static int mtk_pcm_btcvsd_copy(struct snd_soc_component *component,
- 	struct mtk_btcvsd_snd *bt = snd_soc_component_get_drvdata(component);
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index 84fba2a402a5..b1e86a7265b3 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -219,7 +219,9 @@ static netdev_tx_t hsr_dev_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		skb->dev = master->dev;
+ 		skb_reset_mac_header(skb);
+ 		skb_reset_mac_len(skb);
++		spin_lock_bh(&hsr->seqnr_lock);
+ 		hsr_forward_skb(skb, master);
++		spin_unlock_bh(&hsr->seqnr_lock);
+ 	} else {
+ 		dev_core_stats_tx_dropped_inc(dev);
+ 		dev_kfree_skb_any(skb);
+@@ -306,7 +308,6 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
+ 		hsr_stag->sequence_nr = htons(hsr->sequence_nr);
+ 		hsr->sequence_nr++;
+ 	}
+-	spin_unlock_bh(&hsr->seqnr_lock);
  
- 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
--		mtk_btcvsd_snd_write(bt, buf, count);
-+		return mtk_btcvsd_snd_write(bt, buf, count);
- 	else
--		mtk_btcvsd_snd_read(bt, buf, count);
+ 	hsr_stag->tlv.HSR_TLV_type = type;
+ 	/* TODO: Why 12 in HSRv0? */
+@@ -317,11 +318,13 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
+ 	hsr_sp = skb_put(skb, sizeof(struct hsr_sup_payload));
+ 	ether_addr_copy(hsr_sp->macaddress_A, master->dev->dev_addr);
+ 
+-	if (skb_put_padto(skb, ETH_ZLEN))
++	if (skb_put_padto(skb, ETH_ZLEN)) {
++		spin_unlock_bh(&hsr->seqnr_lock);
+ 		return;
++	}
+ 
+ 	hsr_forward_skb(skb, master);
 -
--	return 0;
-+		return mtk_btcvsd_snd_read(bt, buf, count);
++	spin_unlock_bh(&hsr->seqnr_lock);
+ 	return;
  }
  
- /* kcontrol */
+@@ -360,9 +363,8 @@ static void send_prp_supervision_frame(struct hsr_port *master,
+ 		return;
+ 	}
+ 
+-	spin_unlock_bh(&hsr->seqnr_lock);
+-
+ 	hsr_forward_skb(skb, master);
++	spin_unlock_bh(&hsr->seqnr_lock);
+ }
+ 
+ /* Announce (supervision frame) timer function
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index a828221335bd..629daacc9607 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -509,10 +509,9 @@ static void handle_std_frame(struct sk_buff *skb,
+ 		frame->is_from_san = true;
+ 	} else {
+ 		/* Sequence nr for the master node */
+-		spin_lock_bh(&hsr->seqnr_lock);
++		lockdep_assert_held(&hsr->seqnr_lock);
+ 		frame->sequence_nr = hsr->sequence_nr;
+ 		hsr->sequence_nr++;
+-		spin_unlock_bh(&hsr->seqnr_lock);
+ 	}
+ }
+ 
 -- 
 2.35.1
 
