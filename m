@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457561863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE07C433EF;
-	Wed, 28 Dec 2022 15:28:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31ED1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A9F6C433D2;
+	Wed, 28 Dec 2022 15:28:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241312;
-	bh=EcXksoM8Re/d5aHV+QElhZ1StwOq+x6n/do5HXugy9s=;
+	s=korg; t=1672241314;
+	bh=cv3C8Ot/jJmZEW0LOQV8qiLWryabEl6mDELQT+iC00k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oxd/3TkDvE/gejMtc8aqTxUglGGZg7xpC2VvtwXv5RX6mQ10QjFtHzmBukSHKyFRT
-	 1xr7S4xT6qWZkwvoUo+MqlFFB6tRhFoTDul+lnTYIoCkb9eAMsnSOfPLuhx4lPHYZy
-	 0293jlgVV7F15YiW5h6KnOZ+VH8lWL07uMTpJL5Q=
+	b=MVlDu087j0jZaj+23ejMSkQw4hUhVwhNxM7woKFCUyLnQbXJXtFyBfvErYFGEIhMu
+	 aNwEYnlqScQOG4TlxU6vd5NONsoJ0ShjFkfpcd1J7MoJDeBPDLSdxvkWldi/wglZgj
+	 SVfMkS6bTvcgzojtToZs4GvJ0XDWpNZ3Yo/mLzDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0265/1073] drm/msm/mdp5: stop overriding drvdata
-Date: Wed, 28 Dec 2022 15:30:53 +0100
-Message-Id: <20221228144335.218736060@linuxfoundation.org>
+Subject: [PATCH 5.15 465/731] test_firmware: fix memory leak in test_firmware_init()
+Date: Wed, 28 Dec 2022 15:39:32 +0100
+Message-Id: <20221228144310.027770630@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,142 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit c6122688f2652d7f8a44000ce21e84e82bae2b5e ]
+[ Upstream commit 7610615e8cdb3f6f5bbd9d8e7a5d8a63e3cabf2e ]
 
-The rest of the code expects that master's device drvdata is the
-struct msm_drm_private instance. Do not override the mdp5's drvdata.
+When misc_register() failed in test_firmware_init(), the memory pointed
+by test_fw_config->name is not released. The memory leak information is
+as follows:
+unreferenced object 0xffff88810a34cb00 (size 32):
+  comm "insmod", pid 7952, jiffies 4294948236 (age 49.060s)
+  hex dump (first 32 bytes):
+    74 65 73 74 2d 66 69 72 6d 77 61 72 65 2e 62 69  test-firmware.bi
+    6e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  n...............
+  backtrace:
+    [<ffffffff81b21fcb>] __kmalloc_node_track_caller+0x4b/0xc0
+    [<ffffffff81affb96>] kstrndup+0x46/0xc0
+    [<ffffffffa0403a49>] __test_firmware_config_init+0x29/0x380 [test_firmware]
+    [<ffffffffa040f068>] 0xffffffffa040f068
+    [<ffffffff81002c41>] do_one_initcall+0x141/0x780
+    [<ffffffff816a72c3>] do_init_module+0x1c3/0x630
+    [<ffffffff816adb9e>] load_module+0x623e/0x76a0
+    [<ffffffff816af471>] __do_sys_finit_module+0x181/0x240
+    [<ffffffff89978f99>] do_syscall_64+0x39/0xb0
+    [<ffffffff89a0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fixes: 6874f48bb8b0 ("drm/msm: make mdp5/dpu devices master components")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/508334/
-Link: https://lore.kernel.org/r/20221024152642.3213488-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: c92316bf8e94 ("test_firmware: add batched firmware tests")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Acked-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lore.kernel.org/r/20221119035721.18268-1-shaozhengchao@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 32 +++++++++++++-----------
- 1 file changed, 17 insertions(+), 15 deletions(-)
+ lib/test_firmware.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index b0d21838a134..b46f983f2b46 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -203,7 +203,7 @@ static int mdp5_set_split_display(struct msm_kms *kms,
- 							  slave_encoder);
- }
+diff --git a/lib/test_firmware.c b/lib/test_firmware.c
+index 1bccd6cd5f48..e68be7aba7d1 100644
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -1111,6 +1111,7 @@ static int __init test_firmware_init(void)
  
--static void mdp5_destroy(struct platform_device *pdev);
-+static void mdp5_destroy(struct mdp5_kms *mdp5_kms);
- 
- static void mdp5_kms_destroy(struct msm_kms *kms)
- {
-@@ -223,7 +223,7 @@ static void mdp5_kms_destroy(struct msm_kms *kms)
- 	}
- 
- 	mdp_kms_destroy(&mdp5_kms->base);
--	mdp5_destroy(mdp5_kms->pdev);
-+	mdp5_destroy(mdp5_kms);
- }
- 
- #ifdef CONFIG_DEBUG_FS
-@@ -519,9 +519,10 @@ static void read_mdp_hw_revision(struct mdp5_kms *mdp5_kms,
- 	struct device *dev = &mdp5_kms->pdev->dev;
- 	u32 version;
- 
--	pm_runtime_get_sync(dev);
-+	/* Manually enable the MDP5, as pm runtime isn't usable yet. */
-+	mdp5_enable(mdp5_kms);
- 	version = mdp5_read(mdp5_kms, REG_MDP5_HW_VERSION);
--	pm_runtime_put_sync(dev);
-+	mdp5_disable(mdp5_kms);
- 
- 	*major = FIELD(version, MDP5_HW_VERSION_MAJOR);
- 	*minor = FIELD(version, MDP5_HW_VERSION_MINOR);
-@@ -559,6 +560,8 @@ static int mdp5_kms_init(struct drm_device *dev)
- 	int irq, i, ret;
- 
- 	ret = mdp5_init(to_platform_device(dev->dev), dev);
-+	if (ret)
-+		return ret;
- 
- 	/* priv->kms would have been populated by the MDP5 driver */
- 	kms = priv->kms;
-@@ -632,9 +635,8 @@ static int mdp5_kms_init(struct drm_device *dev)
- 	return ret;
- }
- 
--static void mdp5_destroy(struct platform_device *pdev)
-+static void mdp5_destroy(struct mdp5_kms *mdp5_kms)
- {
--	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
- 	int i;
- 
- 	if (mdp5_kms->ctlm)
-@@ -648,7 +650,7 @@ static void mdp5_destroy(struct platform_device *pdev)
- 		kfree(mdp5_kms->intfs[i]);
- 
- 	if (mdp5_kms->rpm_enabled)
--		pm_runtime_disable(&pdev->dev);
-+		pm_runtime_disable(&mdp5_kms->pdev->dev);
- 
- 	drm_atomic_private_obj_fini(&mdp5_kms->glob_state);
- 	drm_modeset_lock_fini(&mdp5_kms->glob_state_lock);
-@@ -797,8 +799,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
- 		goto fail;
- 	}
- 
--	platform_set_drvdata(pdev, mdp5_kms);
--
- 	spin_lock_init(&mdp5_kms->resource_lock);
- 
- 	mdp5_kms->dev = dev;
-@@ -839,9 +839,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
- 	 */
- 	clk_set_rate(mdp5_kms->core_clk, 200000000);
- 
--	pm_runtime_enable(&pdev->dev);
--	mdp5_kms->rpm_enabled = true;
--
- 	read_mdp_hw_revision(mdp5_kms, &major, &minor);
- 
- 	mdp5_kms->cfg = mdp5_cfg_init(mdp5_kms, major, minor);
-@@ -893,10 +890,13 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
- 	/* set uninit-ed kms */
- 	priv->kms = &mdp5_kms->base.base;
- 
-+	pm_runtime_enable(&pdev->dev);
-+	mdp5_kms->rpm_enabled = true;
-+
- 	return 0;
- fail:
- 	if (mdp5_kms)
--		mdp5_destroy(pdev);
-+		mdp5_destroy(mdp5_kms);
- 	return ret;
- }
- 
-@@ -953,7 +953,8 @@ static int mdp5_dev_remove(struct platform_device *pdev)
- static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
- {
- 	struct platform_device *pdev = to_platform_device(dev);
--	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
-+	struct msm_drm_private *priv = platform_get_drvdata(pdev);
-+	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
- 
- 	DBG("");
- 
-@@ -963,7 +964,8 @@ static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
- static __maybe_unused int mdp5_runtime_resume(struct device *dev)
- {
- 	struct platform_device *pdev = to_platform_device(dev);
--	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
-+	struct msm_drm_private *priv = platform_get_drvdata(pdev);
-+	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
- 
- 	DBG("");
- 
+ 	rc = misc_register(&test_fw_misc_device);
+ 	if (rc) {
++		__test_firmware_config_free();
+ 		kfree(test_fw_config);
+ 		pr_err("could not register misc device: %d\n", rc);
+ 		return rc;
 -- 
 2.35.1
 
