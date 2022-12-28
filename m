@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB271863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39512C433EF;
-	Wed, 28 Dec 2022 15:01:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F3E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9757C433F0;
+	Wed, 28 Dec 2022 15:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239706;
-	bh=iEkJ4ggRPgklRu6XR4Cbdj3ONEfNXBceFrQnHeRM3SI=;
+	s=korg; t=1672239709;
+	bh=rebGsKThcM65bbJQYw+GC+qgRkRMhRy6T691hYgJaHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=smpsbCBazCU3SqaL4a7Ove1s7/LU9xc8oYU3uUyw/WYJKtpOhgHAxOgQ2c41GWyAG
-	 eGfCddN+Lmtd1C8G0x3w5PNAFizDVHmdhVKZbwEJXXrSVDFUuYVueYZV+RITGn5Uyh
-	 yC6b5D8iB8V29JiRRNF8A8KrycGYKzgkiOFkWKiA=
+	b=2e3kEsM/m+RAFMhBqx8VYvNtB3mMGmSn0RczYzk+T66IGv0zDmnfQgSiOrWdQ7qSc
+	 idC0kF+TUOncky9C3kWaypngNpPYF3MXmqK+Wpo1T0IseTlM1l0S9QoFyNY1qamxbR
+	 3seC3x9NXWp+7LE9IPGbblC9TbTGMMa9EZNZWaOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 260/731] Input: wistron_btns - disable on UML
-Date: Wed, 28 Dec 2022 15:36:07 +0100
-Message-Id: <20221228144304.099587100@linuxfoundation.org>
+Subject: [PATCH 6.1 0030/1146] arm64: dts: qcom: sm8450: fix UFS PHY registers
+Date: Wed, 28 Dec 2022 15:26:09 +0100
+Message-Id: <20221228144330.988168309@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,40 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit b2b80d9dd14cb5b70dc254bddbc4eea932694791 ]
+[ Upstream commit 7af949211a0554bbc06163b081fc2cb516674880 ]
 
-The wistron_btns driver calls rtc_cmos_read(), which isn't
-available with UML builds, so disable this driver on UML.
+The sizes of the UFS PHY register regions are too small and does
+specifically not cover all registers used by the Linux driver.
 
-Prevents this build error:
+As Linux maps these regions as full pages this is currently not an issue
+on Linux, but let's update the sizes to match the vendor driver.
 
-ld: drivers/input/misc/wistron_btns.o: in function `poll_bios':
-wistron_btns.c:(.text+0x4be): undefined reference to `rtc_cmos_read'
-
-Fixes: 0bbadafdc49d ("um: allow disabling NO_IOMEM") # v5.14+
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Link: https://lore.kernel.org/r/20221130161604.1879-1-rdunlap@infradead.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: 07fa917a335e ("arm64: dts: qcom: sm8450: add ufs nodes")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221024091507.20342-5-johan+linaro@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/misc/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8450.dtsi | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/input/misc/Kconfig b/drivers/input/misc/Kconfig
-index dd5227cf8696..b5b8ddb536be 100644
---- a/drivers/input/misc/Kconfig
-+++ b/drivers/input/misc/Kconfig
-@@ -330,7 +330,7 @@ config INPUT_CPCAP_PWRBUTTON
+diff --git a/arch/arm64/boot/dts/qcom/sm8450.dtsi b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+index d32f08df743d..dfc799244180 100644
+--- a/arch/arm64/boot/dts/qcom/sm8450.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8450.dtsi
+@@ -3161,11 +3161,11 @@ ufs_mem_phy: phy@1d87000 {
+ 			status = "disabled";
  
- config INPUT_WISTRON_BTNS
- 	tristate "x86 Wistron laptop button interface"
--	depends on X86_32
-+	depends on X86_32 && !UML
- 	select INPUT_SPARSEKMAP
- 	select NEW_LEDS
- 	select LEDS_CLASS
+ 			ufs_mem_phy_lanes: phy@1d87400 {
+-				reg = <0 0x01d87400 0 0x108>,
+-				      <0 0x01d87600 0 0x1e0>,
+-				      <0 0x01d87c00 0 0x1dc>,
+-				      <0 0x01d87800 0 0x108>,
+-				      <0 0x01d87a00 0 0x1e0>;
++				reg = <0 0x01d87400 0 0x188>,
++				      <0 0x01d87600 0 0x200>,
++				      <0 0x01d87c00 0 0x200>,
++				      <0 0x01d87800 0 0x188>,
++				      <0 0x01d87a00 0 0x200>;
+ 				#phy-cells = <0>;
+ 			};
+ 		};
 -- 
 2.35.1
 
