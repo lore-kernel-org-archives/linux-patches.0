@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379151875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2207C433D2;
-	Wed, 28 Dec 2022 15:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B931875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B347C433D2;
+	Wed, 28 Dec 2022 15:58:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243103;
-	bh=NxM83+USHhwwxGcBp16Ts/UMl6kRvcItqMXZWctqbNw=;
+	s=korg; t=1672243105;
+	bh=2UabSsOlqCYdGnYpJg6lwiZLiazmhh/Z0NoGM4OMvKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MYl8MXVRojQll4pSuLxcfi7O3zJU1L9+Sp/uTH5YMm1LdwQ7a3nn/SNqSQcfndYHF
-	 hMGoe208KT1WY2c0O07MIaX978pzPsJzSCrFOpGwZAysvLWHcFMjPT1+IxAbuTwbXp
-	 Fns4ty9VyaWx7piWUAdBhbs9Y1kYjIfTlQ+z2ZhM=
+	b=gF/jO41YbRGzPVUqd3fudyHXZLCo28tlKgniyQqJjEjnjvRIvXGnj+2qyrrVgsLBc
+	 ZRIPJkCHcRLIlCAhtjULRaxU+IlxS+K4uR19DKpp8w6UwzFT1vOBoTZ5W51Www2KDN
+	 nXDpwfFDoOG4CXoesi3TBmJVrjlpkJuEZ81BbauM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	"Tyler Hicks (Microsoft)" <code@tyhicks.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 675/731] scsi: lpfc: Fix hard lockup when reading the rx_monitor from debugfs
-Date: Wed, 28 Dec 2022 15:43:02 +0100
-Message-Id: <20221228144316.043176344@linuxfoundation.org>
+Subject: [PATCH 5.15 684/731] KVM: selftests: Fix build regression by using accessor function
+Date: Wed, 28 Dec 2022 15:43:11 +0100
+Message-Id: <20221228144316.296920411@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,75 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Tyler Hicks <code@tyhicks.com>
 
-[ Upstream commit c44e50f4a0ec00c2298f31f91bc2c3e9bbd81c7e ]
+Fix the stable backport of commit 05c2224d4b04 ("KVM: selftests: Fix
+number of pages for memory slot in memslot_modification_stress_test"),
+which caused memslot_modification_stress_test.c build failures due to
+trying to access private members of struct kvm_vm.
 
-During I/O and simultaneous cat of /sys/kernel/debug/lpfc/fnX/rx_monitor, a
-hard lockup similar to the call trace below may occur.
+v6.0 commit b530eba14c70 ("KVM: selftests: Get rid of
+kvm_util_internal.h") and some other commits got rid of the accessors
+and made all of the KVM data structures public. Keep using the accessors
+in older kernels.
 
-The spin_lock_bh in lpfc_rx_monitor_report is not protecting from timer
-interrupts as expected, so change the strength of the spin lock to _irq.
+There is no corresponding upstream commit for this change.
 
-Kernel panic - not syncing: Hard LOCKUP
-CPU: 3 PID: 110402 Comm: cat Kdump: loaded
-
-exception RIP: native_queued_spin_lock_slowpath+91
-
-[IRQ stack]
- native_queued_spin_lock_slowpath at ffffffffb814e30b
- _raw_spin_lock at ffffffffb89a667a
- lpfc_rx_monitor_record at ffffffffc0a73a36 [lpfc]
- lpfc_cmf_timer at ffffffffc0abbc67 [lpfc]
- __hrtimer_run_queues at ffffffffb8184250
- hrtimer_interrupt at ffffffffb8184ab0
- smp_apic_timer_interrupt at ffffffffb8a026ba
- apic_timer_interrupt at ffffffffb8a01c4f
-[End of IRQ stack]
-
- apic_timer_interrupt at ffffffffb8a01c4f
- lpfc_rx_monitor_report at ffffffffc0a73c80 [lpfc]
- lpfc_rx_monitor_read at ffffffffc0addde1 [lpfc]
- full_proxy_read at ffffffffb83e7fc3
- vfs_read at ffffffffb833fe71
- ksys_read at ffffffffb83402af
- do_syscall_64 at ffffffffb800430b
- entry_SYSCALL_64_after_hwframe at ffffffffb8a000ad
-
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20221017164323.14536-2-justintee8345@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Tyler Hicks (Microsoft) <code@tyhicks.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_sli.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/kvm/memslot_modification_stress_test.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
-index d6e761adf1f1..df3b190fccd1 100644
---- a/drivers/scsi/lpfc/lpfc_sli.c
-+++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -7992,10 +7992,10 @@ u32 lpfc_rx_monitor_report(struct lpfc_hba *phba,
- 					"IO_cnt", "Info", "BWutil(ms)");
- 	}
+diff --git a/tools/testing/selftests/kvm/memslot_modification_stress_test.c b/tools/testing/selftests/kvm/memslot_modification_stress_test.c
+index 1d806b8ffee2..766c1790df66 100644
+--- a/tools/testing/selftests/kvm/memslot_modification_stress_test.c
++++ b/tools/testing/selftests/kvm/memslot_modification_stress_test.c
+@@ -72,7 +72,7 @@ struct memslot_antagonist_args {
+ static void add_remove_memslot(struct kvm_vm *vm, useconds_t delay,
+ 			       uint64_t nr_modifications)
+ {
+-	uint64_t pages = max_t(int, vm->page_size, getpagesize()) / vm->page_size;
++	uint64_t pages = max_t(int, vm_get_page_size(vm), getpagesize()) / vm_get_page_size(vm);
+ 	uint64_t gpa;
+ 	int i;
  
--	/* Needs to be _bh because record is called from timer interrupt
-+	/* Needs to be _irq because record is called from timer interrupt
- 	 * context
- 	 */
--	spin_lock_bh(ring_lock);
-+	spin_lock_irq(ring_lock);
- 	while (*head_idx != *tail_idx) {
- 		entry = &ring[*head_idx];
- 
-@@ -8039,7 +8039,7 @@ u32 lpfc_rx_monitor_report(struct lpfc_hba *phba,
- 		if (cnt >= max_read_entries)
- 			break;
- 	}
--	spin_unlock_bh(ring_lock);
-+	spin_unlock_irq(ring_lock);
- 
- 	return cnt;
- }
 -- 
 2.35.1
 
