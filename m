@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30B391863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6EFBC433EF;
-	Wed, 28 Dec 2022 15:45:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128E61863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC61C433EF;
+	Wed, 28 Dec 2022 15:45:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242344;
-	bh=DyKGi3evbYPA7Bj7x2CTKvCLQ3TQjbl82UYyKtPm4q0=;
+	s=korg; t=1672242346;
+	bh=pFJdlJUvVn26/7SZmhWIB6C9YE118ei/JxN9aYZPA2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GMPEcaxzreINAPUizfzy2okVfDWznt2AAjIie58E7q0OIQamof84S/qtd6PspNhiV
-	 BpD8zHpMjw5gPCpa8i0DTd1Plf3FTVUPs8gqz9YM6OEmS1faDsmht3qKnkOzg+CcAG
-	 jUOs6i22F0SHGWFEYsbCYpxDaLdR2z+DbQP2VtYE=
+	b=cXFLCzoxsDGtE6zGI+kmt8AFj5SuofVHlYPy82u7ief0OqTS2WGx7VQ0mB5XBP0aL
+	 7Z0AX6hfEie6IbdAQLmRvL4MWlFKPjiFcv8E5MRJjveSRaMNQGlsP4U9XvV+8nuhWZ
+	 tW2CPFoi/H7r3qmQec49kwitcA7qzPv8uv4QtM4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Christoph Hellwig <hch@lst.de>,
+	Andreas Herrmann <aherrmann@suse.de>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0359/1146] net: ethernet: mtk_eth_soc: fix RSTCTRL_PPE{0,1} definitions
-Date: Wed, 28 Dec 2022 15:31:38 +0100
-Message-Id: <20221228144339.912782001@linuxfoundation.org>
+Subject: [PATCH 5.15 593/731] blk-iocost: simplify ioc_name
+Date: Wed, 28 Dec 2022 15:41:40 +0100
+Message-Id: <20221228144313.730764283@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,77 +37,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit ef8c373bd91df3cf70596497da0955d218961ead ]
+[ Upstream commit 9df3e65139b923dfe98f76b7057882c7afb2d3e4 ]
 
-Fix RSTCTRL_PPE0 and RSTCTRL_PPE1 register mask definitions for
-MTK_NETSYS_V2.
-Remove duplicated definitions.
+Just directly dereference the disk name instead of going through multiple
+hoops to find the same value.
 
-Fixes: 160d3a9b1929 ("net: ethernet: mtk_eth_soc: introduce MTK_NETSYS_V2 support")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Andreas Herrmann <aherrmann@suse.de>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20220921180501.1539876-10-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: d36a9ea5e776 ("block: fix use-after-free of q->q_usage_counter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 13 +++++++------
- drivers/net/ethernet/mediatek/mtk_eth_soc.h | 10 +++-------
- 2 files changed, 10 insertions(+), 13 deletions(-)
+ block/blk-iocost.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 1148e22001c0..864452e4426b 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -3292,16 +3292,17 @@ static int mtk_hw_init(struct mtk_eth *eth)
- 		return 0;
- 	}
+diff --git a/block/blk-iocost.c b/block/blk-iocost.c
+index 069193dee95b..f5b501888ba4 100644
+--- a/block/blk-iocost.c
++++ b/block/blk-iocost.c
+@@ -665,17 +665,13 @@ static struct ioc *q_to_ioc(struct request_queue *q)
+ 	return rqos_to_ioc(rq_qos_id(q, RQ_QOS_COST));
+ }
  
--	val = RSTCTRL_FE | RSTCTRL_PPE;
- 	if (MTK_HAS_CAPS(eth->soc->caps, MTK_NETSYS_V2)) {
- 		regmap_write(eth->ethsys, ETHSYS_FE_RST_CHK_IDLE_EN, 0);
+-static const char *q_name(struct request_queue *q)
+-{
+-	if (blk_queue_registered(q))
+-		return kobject_name(q->kobj.parent);
+-	else
+-		return "<unknown>";
+-}
 -
--		val |= RSTCTRL_ETH;
--		if (MTK_HAS_CAPS(eth->soc->caps, MTK_RSTCTRL_PPE1))
--			val |= RSTCTRL_PPE1;
-+		val = RSTCTRL_PPE0_V2;
-+	} else {
-+		val = RSTCTRL_PPE0;
- 	}
- 
--	ethsys_reset(eth, val);
-+	if (MTK_HAS_CAPS(eth->soc->caps, MTK_RSTCTRL_PPE1))
-+		val |= RSTCTRL_PPE1;
+ static const char __maybe_unused *ioc_name(struct ioc *ioc)
+ {
+-	return q_name(ioc->rqos.q);
++	struct gendisk *disk = ioc->rqos.q->disk;
 +
-+	ethsys_reset(eth, RSTCTRL_ETH | RSTCTRL_FE | val);
++	if (!disk)
++		return "<unknown>";
++	return disk->disk_name;
+ }
  
- 	if (MTK_HAS_CAPS(eth->soc->caps, MTK_NETSYS_V2)) {
- 		regmap_write(eth->ethsys, ETHSYS_FE_RST_CHK_IDLE_EN,
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-index b52f3b0177ef..9eaca55a106e 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-@@ -447,18 +447,14 @@
- /* ethernet reset control register */
- #define ETHSYS_RSTCTRL			0x34
- #define RSTCTRL_FE			BIT(6)
--#define RSTCTRL_PPE			BIT(31)
--#define RSTCTRL_PPE1			BIT(30)
-+#define RSTCTRL_PPE0			BIT(31)
-+#define RSTCTRL_PPE0_V2			BIT(30)
-+#define RSTCTRL_PPE1			BIT(31)
- #define RSTCTRL_ETH			BIT(23)
- 
- /* ethernet reset check idle register */
- #define ETHSYS_FE_RST_CHK_IDLE_EN	0x28
- 
--/* ethernet reset control register */
--#define ETHSYS_RSTCTRL		0x34
--#define RSTCTRL_FE		BIT(6)
--#define RSTCTRL_PPE		BIT(31)
--
- /* ethernet dma channel agent map */
- #define ETHSYS_DMA_AG_MAP	0x408
- #define ETHSYS_DMA_AG_MAP_PDMA	BIT(0)
+ static struct ioc_gq *pd_to_iocg(struct blkg_policy_data *pd)
 -- 
 2.35.1
 
