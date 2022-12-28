@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC621863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A5DC433D2;
-	Wed, 28 Dec 2022 15:48:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963791863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:49:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AECBC433F0;
+	Wed, 28 Dec 2022 15:49:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242538;
-	bh=T7hT4a7GPAyQmZCF3BKZH3BCGdsLcX2t0ZMHj9GOTXg=;
+	s=korg; t=1672242541;
+	bh=8EsqfBJhnpIecq5KIgt0aYEKapSpV/WLVB1jLuGwtIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QmgzdLQ5uzMoTcuodGcn/4tLdRgb5hBd8tkRyn93HklHR3TRRlHAqJmxLGgOv6gdR
-	 GeaxnLXAr6gafceK643HYq481A8HEhXJmI9LHUzaEPI3dtmEDuW8N9qDJnVvk37fwT
-	 899MSqkADMGxNiw6vNNqfX2UtCOP0QOtF3jbB4ig=
+	b=0JzCIMwV8cl9izGbDNDvmgqSskPt70HstcXiOPUEQlDRIblek5bAaYZsE75RHrhgO
+	 UpiPiit4Q3Pz6KynxDW1gUIj30eR1mDK8pD7+YbFX1mU73GKMFyqOfCRHp5OLfJgpb
+	 4gK0w7FwCi/qC4CwBm+fovwYThcGvle4bIjgHEe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Previn <alan.previn.teres.alexis@intel.com>,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Zqiang <qiang1.zhang@intel.com>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0381/1146] drm/i915/guc: make default_lists const data
-Date: Wed, 28 Dec 2022 15:32:00 +0100
-Message-Id: <20221228144340.515439559@linuxfoundation.org>
+Subject: [PATCH 5.15 615/731] rcu: Fix __this_cpu_read() lockdep warning in rcu_force_quiescent_state()
+Date: Wed, 28 Dec 2022 15:42:02 +0100
+Message-Id: <20221228144314.360075917@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,39 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jani Nikula <jani.nikula@intel.com>
+From: Zqiang <qiang1.zhang@intel.com>
 
-[ Upstream commit dfa5e6ef3ccefff9fa8a70d9f5fa6ef6244aa312 ]
+[ Upstream commit ceb1c8c9b8aa9199da46a0f29d2d5f08d9b44c15 ]
 
-The default_lists array should be in rodata.
+Running rcutorture with non-zero fqs_duration module parameter in a
+kernel built with CONFIG_PREEMPTION=y results in the following splat:
 
-Fixes: dce2bd542337 ("drm/i915/guc: Add Gen9 registers for GuC error state capture.")
-Cc: Alan Previn <alan.previn.teres.alexis@intel.com>
-Cc: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Reviewed-by: Lucas De Marchi <lucas.demarchi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221122141616.3469214-1-jani.nikula@intel.com
-(cherry picked from commit 8b7f7a9b10b704ba7d73199ff0f01354e0bad7a5)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+BUG: using __this_cpu_read() in preemptible [00000000]
+code: rcu_torture_fqs/398
+caller is __this_cpu_preempt_check+0x13/0x20
+CPU: 3 PID: 398 Comm: rcu_torture_fqs Not tainted 6.0.0-rc1-yoctodev-standard+
+Call Trace:
+<TASK>
+dump_stack_lvl+0x5b/0x86
+dump_stack+0x10/0x16
+check_preemption_disabled+0xe5/0xf0
+__this_cpu_preempt_check+0x13/0x20
+rcu_force_quiescent_state.part.0+0x1c/0x170
+rcu_force_quiescent_state+0x1e/0x30
+rcu_torture_fqs+0xca/0x160
+? rcu_torture_boost+0x430/0x430
+kthread+0x192/0x1d0
+? kthread_complete_and_exit+0x30/0x30
+ret_from_fork+0x22/0x30
+</TASK>
+
+The problem is that rcu_force_quiescent_state() uses __this_cpu_read()
+in preemptible code instead of the proper raw_cpu_read().  This commit
+therefore changes __this_cpu_read() to raw_cpu_read().
+
+Signed-off-by: Zqiang <qiang1.zhang@intel.com>
+Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c | 2 +-
+ kernel/rcu/tree.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-index 2b75b2d53383..685ddccc0f26 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-@@ -165,7 +165,7 @@ static const struct __guc_mmio_reg_descr empty_regs_list[] = {
- 	}
+diff --git a/kernel/rcu/tree.c b/kernel/rcu/tree.c
+index 63f7ce228cc3..cf101da389b0 100644
+--- a/kernel/rcu/tree.c
++++ b/kernel/rcu/tree.c
+@@ -2674,7 +2674,7 @@ void rcu_force_quiescent_state(void)
+ 	struct rcu_node *rnp_old = NULL;
  
- /* List of lists */
--static struct __guc_mmio_reg_descr_group default_lists[] = {
-+static const struct __guc_mmio_reg_descr_group default_lists[] = {
- 	MAKE_REGLIST(default_global_regs, PF, GLOBAL, 0),
- 	MAKE_REGLIST(default_rc_class_regs, PF, ENGINE_CLASS, GUC_RENDER_CLASS),
- 	MAKE_REGLIST(xe_lpd_rc_inst_regs, PF, ENGINE_INSTANCE, GUC_RENDER_CLASS),
+ 	/* Funnel through hierarchy to reduce memory contention. */
+-	rnp = __this_cpu_read(rcu_data.mynode);
++	rnp = raw_cpu_read(rcu_data.mynode);
+ 	for (; rnp != NULL; rnp = rnp->parent) {
+ 		ret = (READ_ONCE(rcu_state.gp_flags) & RCU_GP_FLAG_FQS) ||
+ 		       !raw_spin_trylock(&rnp->fqslock);
 -- 
 2.35.1
 
