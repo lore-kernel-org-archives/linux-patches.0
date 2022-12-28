@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E24F1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8269C433D2;
-	Wed, 28 Dec 2022 16:25:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F341C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C78C433D2;
+	Wed, 28 Dec 2022 16:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244703;
-	bh=39ZJy54SXPZo6RidoU+EedbdchID/mszeTbaHZm/bNM=;
+	s=korg; t=1672244708;
+	bh=8MEO/rRVwQM+oexh/uO6JzcQQF64co5aEekCsfe3xP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J9IlQhcj7CUqTPF7ketvo5AtoJNljNL18oA57pNNNxj71PKHH20ybK5O1nsWReNR3
-	 rTqleDV+/0KFBPSCVyopbhNb7GWefjHPViZZYEjVYeVDpGJ5C1TgGbMqr4PAtnpKeI
-	 PDiyq7VtYuQe05zEBI3UuLqYJwI9+mjIHji2Etww=
+	b=gHtooGoI4v+DAXKTo87raT6tR3GymwhPXSBs7LePVp5wd31mtWLsxDxQjIfhx8yIo
+	 znMZfaG+7uMG2mNUHd+s+rkQQ+0W0kCqAhsQaK4KpIT1GHyHzgAOVpM/9RW3OPQAON
+	 idQowj/AUCjLgwRYFyazPMVfPEqvCaev6S7l169I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Tanislav <cosmin.tanislav@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	"Author: Randy Dunlap" <rdunlap@infradead.org>,
+	syzbot+35b87c668935bb55e666@syzkaller.appspotmail.com,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0722/1146] iio: temperature: ltc2983: make bulk write buffer DMA-safe
-Date: Wed, 28 Dec 2022 15:37:41 +0100
-Message-Id: <20221228144349.756336995@linuxfoundation.org>
+Subject: [PATCH 6.0 0760/1073] fs/ntfs3: Avoid UBSAN error on true_sectors_per_clst()
+Date: Wed, 28 Dec 2022 15:39:08 +0100
+Message-Id: <20221228144348.659664854@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,59 +37,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cosmin Tanislav <cosmin.tanislav@analog.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit 5e0176213949724fbe9a8e4a39817edce337b8a0 ]
+[ Upstream commit caad9dd8792a2622737b7273cb34835fd9536cd2 ]
 
-regmap_bulk_write() does not guarantee implicit DMA-safety,
-even though the current implementation duplicates the given
-buffer. Do not rely on it.
+syzbot reported UBSAN error as below:
 
-Fixes: f110f3188e56 ("iio: temperature: Add support for LTC2983")
-Signed-off-by: Cosmin Tanislav <cosmin.tanislav@analog.com>
-Link: https://lore.kernel.org/r/20221103130041.2153295-2-demonsingur@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+[   76.901829][ T6677] ================================================================================
+[   76.903908][ T6677] UBSAN: shift-out-of-bounds in fs/ntfs3/super.c:675:13
+[   76.905363][ T6677] shift exponent -247 is negative
+
+This patch avoid this error.
+
+Link: https://syzkaller.appspot.com/bug?id=b0299c09a14aababf0f1c862dd4ebc8ab9eb0179
+Fixes: a3b774342fa7 (fs/ntfs3: validate BOOT sectors_per_clusters)
+Cc: Author: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: syzbot+35b87c668935bb55e666@syzkaller.appspotmail.com
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/temperature/ltc2983.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/ntfs3/super.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/temperature/ltc2983.c b/drivers/iio/temperature/ltc2983.c
-index a60ccf183687..1117991ca2ab 100644
---- a/drivers/iio/temperature/ltc2983.c
-+++ b/drivers/iio/temperature/ltc2983.c
-@@ -209,6 +209,7 @@ struct ltc2983_data {
- 	 * Holds the converted temperature
- 	 */
- 	__be32 temp __aligned(IIO_DMA_MINALIGN);
-+	__be32 chan_val;
- };
- 
- struct ltc2983_sensor {
-@@ -313,19 +314,18 @@ static int __ltc2983_fault_handler(const struct ltc2983_data *st,
- 	return 0;
+diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
+index 47012c9bf505..adc4f73722b7 100644
+--- a/fs/ntfs3/super.c
++++ b/fs/ntfs3/super.c
+@@ -672,7 +672,7 @@ static u32 true_sectors_per_clst(const struct NTFS_BOOT *boot)
+ 	if (boot->sectors_per_clusters <= 0x80)
+ 		return boot->sectors_per_clusters;
+ 	if (boot->sectors_per_clusters >= 0xf4) /* limit shift to 2MB max */
+-		return 1U << (0 - boot->sectors_per_clusters);
++		return 1U << -(s8)boot->sectors_per_clusters;
+ 	return -EINVAL;
  }
  
--static int __ltc2983_chan_assign_common(const struct ltc2983_data *st,
-+static int __ltc2983_chan_assign_common(struct ltc2983_data *st,
- 					const struct ltc2983_sensor *sensor,
- 					u32 chan_val)
- {
- 	u32 reg = LTC2983_CHAN_START_ADDR(sensor->chan);
--	__be32 __chan_val;
- 
- 	chan_val |= LTC2983_CHAN_TYPE(sensor->type);
- 	dev_dbg(&st->spi->dev, "Assign reg:0x%04X, val:0x%08X\n", reg,
- 		chan_val);
--	__chan_val = cpu_to_be32(chan_val);
--	return regmap_bulk_write(st->regmap, reg, &__chan_val,
--				 sizeof(__chan_val));
-+	st->chan_val = cpu_to_be32(chan_val);
-+	return regmap_bulk_write(st->regmap, reg, &st->chan_val,
-+				 sizeof(st->chan_val));
- }
- 
- static int __ltc2983_chan_custom_sensor_assign(struct ltc2983_data *st,
 -- 
 2.35.1
 
