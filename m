@@ -1,37 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 873ED1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:22:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEE3FC433D2;
-	Wed, 28 Dec 2022 16:22:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D4E41C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:22:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4B43C433D2;
+	Wed, 28 Dec 2022 16:22:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244574;
-	bh=BLOZxcjnEXYR6XvwzCsyfFc30JnGmIUnqT9FcOApdUQ=;
+	s=korg; t=1672244577;
+	bh=BjqH3xmJbkBB968RtFhygLTCvU7XxDnjI0w1+HtpK2s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AyB9TxUVC4nxnJ2eZHsZYMl7rhga/NMlBErEyc2pujDhzoWgdGZN2ImqjnReZTDlD
-	 Zb3l9oDhx6E4rjr7YKpV1lBD3jBD33Zzan559H+l6lO8ebtca/T3WQgUwZS0iB0Zbo
-	 k1fg1rRO2TJl332SdMptxQmRAC2cBJoOPqLtTTOY=
+	b=O3iTO7WqYywY6A7kGr8bLfebe2OK3zXe3x7aaaImHQy9y08xCf5N3by1OeNJcH7wO
+	 yk1uSHYSJ/PMQGrxmbE6LxsQ+dIs7ixvE7E1eDxVjJYE/tuHUzqV09RXEaBIiKVI98
+	 WkHIWGC4RlCEd3P/BmJEmQL+X/MN+lBCLbxpwx3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Richard Weinberger <richard@nod.at>,
-	linux-um@lists.infradead.org,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Helge Deller <deller@gmx.de>,
-	linux-fbdev@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	Michal Januszewski <spock@gentoo.org>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Samuel Holland <samuel@sholland.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0735/1073] fbdev: uvesafb: dont build on UML
-Date: Wed, 28 Dec 2022 15:38:43 +0100
-Message-Id: <20221228144347.986496644@linuxfoundation.org>
+Subject: [PATCH 6.1 0679/1146] riscv: Fix crash during early errata patching
+Date: Wed, 28 Dec 2022 15:36:58 +0100
+Message-Id: <20221228144348.587791457@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -42,49 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Samuel Holland <samuel@sholland.org>
 
-[ Upstream commit 35b4f4d4a725cf8f8c10649163cd12aed509b953 ]
+[ Upstream commit 0c49688174f5347c3f8012e84c0ffa0d2b2890c8 ]
 
-The uvesafb fbdev driver uses memory management information that is not
-available on ARCH=um, so don't allow this driver to be built on UML.
+The patch function for the T-Head PBMT errata calls __pa_symbol() before
+relocation. This crashes when CONFIG_DEBUG_VIRTUAL is enabled, because
+__pa_symbol() forwards to __phys_addr_symbol(), and __phys_addr_symbol()
+checks against the absolute kernel start/end address.
 
-Prevents these build errors:
+Fix this by checking against the kernel map instead of a symbol address.
 
-../drivers/video/fbdev/uvesafb.c: In function ‘uvesafb_vbe_init’:
-../drivers/video/fbdev/uvesafb.c:807:21: error: ‘__supported_pte_mask’ undeclared (first use in this function)
-  807 |                 if (__supported_pte_mask & _PAGE_NX) {
-../drivers/video/fbdev/uvesafb.c:807:44: error: ‘_PAGE_NX’ undeclared (first use in this function)
-  807 |                 if (__supported_pte_mask & _PAGE_NX) {
-
-Fixes: 68f5d3f3b654 ("um: add PCI over virtio emulation driver")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Johannes Berg <johannes@sipsolutions.net>
-Cc: Richard Weinberger <richard@nod.at>
-Cc: linux-um@lists.infradead.org
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Helge Deller <deller@gmx.de>
-Cc: linux-fbdev@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: Michal Januszewski <spock@gentoo.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: a35707c3d850 ("riscv: add memory-type errata for T-Head")
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Tested-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+Link: https://lore.kernel.org/r/20221126060920.65009-1-samuel@sholland.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ arch/riscv/mm/physaddr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/Kconfig b/drivers/video/fbdev/Kconfig
-index 9497fe929162..974e862cd20d 100644
---- a/drivers/video/fbdev/Kconfig
-+++ b/drivers/video/fbdev/Kconfig
-@@ -601,6 +601,7 @@ config FB_TGA
- config FB_UVESA
- 	tristate "Userspace VESA VGA graphics support"
- 	depends on FB && CONNECTOR
-+	depends on !UML
- 	select FB_CFB_FILLRECT
- 	select FB_CFB_COPYAREA
- 	select FB_CFB_IMAGEBLIT
+diff --git a/arch/riscv/mm/physaddr.c b/arch/riscv/mm/physaddr.c
+index 19cf25a74ee2..9b18bda74154 100644
+--- a/arch/riscv/mm/physaddr.c
++++ b/arch/riscv/mm/physaddr.c
+@@ -22,7 +22,7 @@ EXPORT_SYMBOL(__virt_to_phys);
+ phys_addr_t __phys_addr_symbol(unsigned long x)
+ {
+ 	unsigned long kernel_start = kernel_map.virt_addr;
+-	unsigned long kernel_end = (unsigned long)_end;
++	unsigned long kernel_end = kernel_start + kernel_map.size;
+ 
+ 	/*
+ 	 * Boundary checking aginst the kernel image mapping.
 -- 
 2.35.1
 
