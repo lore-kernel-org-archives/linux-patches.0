@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A31861C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26AE6C433D2;
-	Wed, 28 Dec 2022 16:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F63C1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C5FC433EF;
+	Wed, 28 Dec 2022 16:04:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243472;
-	bh=Jjmn+cly577mIBtdrHbVjmakA1xfXxsj/1hf5RIR99I=;
+	s=korg; t=1672243475;
+	bh=oG8p6uHzd9jeLxIpvjJPqGMurUe78KnMd7qmPO7t9wE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p8ucSPbzuRHLN01fUNMh/oqCCFBG2oNZ6rx3MQIy9RLxTorfSPnw8yy6UV+gbt2Ne
-	 lkdSRklNjCVxXdHszLp/biHYk03QFCE11f2WE4h94DjwJSg9zWvIBS1zn8rFAvRxdU
-	 BhTLLBO6veH3B24jml9Ym4NpfaD+eTaXct7zwtB0=
+	b=NmfaKZ/WwiaW6CUBDngGfb+XW3U1OyhnWZN77dmc/8Zra+78aX+20izFj9hXi/Ldt
+	 oVn0QhYRTFYGYtusNEytnKx+K0Iij4KcQ0T5hJuFv1ccU5qeb13IyUtRBZF/3puprQ
+	 4wQEO98VpchEhnSTWGvpMlOQmCG+R5qrf2K6liS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0512/1073] net: stmmac: selftests: fix potential memleak in stmmac_test_arpoffload()
-Date: Wed, 28 Dec 2022 15:35:00 +0100
-Message-Id: <20221228144341.953392524@linuxfoundation.org>
+Subject: [PATCH 6.0 0533/1073] can: tcan4x5x: Fix use of register error status mask
+Date: Wed, 28 Dec 2022 15:35:21 +0100
+Message-Id: <20221228144342.530045124@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,46 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Markus Schneider-Pargmann <msp@baylibre.com>
 
-[ Upstream commit f150b63f3fa5fdd81e0dd6151e8850268e29438c ]
+[ Upstream commit 67727a17a6b375d68fe569b77e6516b034b834c0 ]
 
-The skb allocated by stmmac_test_get_arp_skb() hasn't been released in
-some error handling case, which will lead to a memory leak. Fix this up
-by adding kfree_skb() to release skb.
+TCAN4X5X_ERROR_STATUS is not a status register that needs clearing
+during interrupt handling. Instead this is a masking register that masks
+error interrupts. Writing TCAN4X5X_CLEAR_ALL_INT to this register
+effectively masks everything.
 
-Compile tested only.
+Rename the register and mask all error interrupts only once by writing
+to the register in tcan4x5x_init.
 
-Fixes: 5e3fb0a6e2b3 ("net: stmmac: selftests: Implement the ARP Offload test")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 5443c226ba91 ("can: tcan4x5x: Add tcan4x5x driver to the kernel")
+Signed-off-by: Markus Schneider-Pargmann <msp@baylibre.com>
+Link: https://lore.kernel.org/all/20221206115728.1056014-10-msp@baylibre.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/can/m_can/tcan4x5x-core.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index 49af7e78b7f5..687f43cd466c 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -1654,12 +1654,16 @@ static int stmmac_test_arpoffload(struct stmmac_priv *priv)
- 	}
+diff --git a/drivers/net/can/m_can/tcan4x5x-core.c b/drivers/net/can/m_can/tcan4x5x-core.c
+index a77f4d4f6299..2342aa011647 100644
+--- a/drivers/net/can/m_can/tcan4x5x-core.c
++++ b/drivers/net/can/m_can/tcan4x5x-core.c
+@@ -10,7 +10,7 @@
+ #define TCAN4X5X_DEV_ID1 0x04
+ #define TCAN4X5X_REV 0x08
+ #define TCAN4X5X_STATUS 0x0C
+-#define TCAN4X5X_ERROR_STATUS 0x10
++#define TCAN4X5X_ERROR_STATUS_MASK 0x10
+ #define TCAN4X5X_CONTROL 0x14
  
- 	ret = stmmac_set_arp_offload(priv, priv->hw, true, ip_addr);
+ #define TCAN4X5X_CONFIG 0x800
+@@ -204,12 +204,7 @@ static int tcan4x5x_clear_interrupts(struct m_can_classdev *cdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	ret = tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_INT_FLAGS,
+-				      TCAN4X5X_CLEAR_ALL_INT);
 -	if (ret)
-+	if (ret) {
-+		kfree_skb(skb);
- 		goto cleanup;
-+	}
+-		return ret;
+-
+-	return tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_ERROR_STATUS,
++	return tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_INT_FLAGS,
+ 				       TCAN4X5X_CLEAR_ALL_INT);
+ }
  
- 	ret = dev_set_promiscuity(priv->dev, 1);
--	if (ret)
-+	if (ret) {
-+		kfree_skb(skb);
- 		goto cleanup;
-+	}
+@@ -229,6 +224,11 @@ static int tcan4x5x_init(struct m_can_classdev *cdev)
+ 	if (ret)
+ 		return ret;
  
- 	ret = dev_direct_xmit(skb, 0);
++	ret = tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_ERROR_STATUS_MASK,
++				      TCAN4X5X_CLEAR_ALL_INT);
++	if (ret)
++		return ret;
++
+ 	ret = regmap_update_bits(tcan4x5x->regmap, TCAN4X5X_CONFIG,
+ 				 TCAN4X5X_MODE_SEL_MASK, TCAN4X5X_MODE_NORMAL);
  	if (ret)
 -- 
 2.35.1
