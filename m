@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AE41C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E80C0C433D2;
-	Wed, 28 Dec 2022 16:42:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E13B1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10DFC433D2;
+	Wed, 28 Dec 2022 16:42:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245745;
-	bh=aYssYvHInmr6xxbFzWbt0xQLEsEqOvui7ZuTmcKtX2o=;
+	s=korg; t=1672245748;
+	bh=d0MDth/qfY9cxyxy3Zk9k5EtCVwww8sBDvtx9JZk5d8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N8KKV002Ft6lVkCKoW+Ypq8ybZgEG9MwAoKdw6wy9CfdkKbzdtMr+oWfC4xm66zH1
-	 DxfNEN8mmyFdeEsrRMI8d0N2V07B5pUAipOQHDWP+xAOsd9ktCnE/W+osN86NaoTG6
-	 lLE6u6H5TQs42PQ2gycD0EOvUwnYFmzwnr6gYans=
+	b=q0KKiqxPkqdP+VWaakrhtmGWkJGpvNth8IgWoDxOmHU2iIjXYgXLSwi3ly/Ea+iQM
+	 fEYjr8vhPu0PboZiRulrfpoHWsSgrLXFuajcr7XAP/rfAnxQTa8a/QLaff72brQdiy
+	 MMBAHb4V/40yh03N9ozOlacsx1FOmR5FQdqnN2BI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tan Tee Min <tee.min.tan@linux.intel.com>,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0915/1146] igc: Set Qbv start_time and end_time to end_time if not being configured in GCL
-Date: Wed, 28 Dec 2022 15:40:54 +0100
-Message-Id: <20221228144355.095887070@linuxfoundation.org>
+Subject: [PATCH 6.1 0893/1146] mISDN: hfcmulti: dont call dev_kfree_skb/kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:40:32 +0100
+Message-Id: <20221228144354.445126884@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -37,67 +36,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tan Tee Min <tee.min.tan@linux.intel.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 72abeedd83982c1bc6023f631e412db78374d9b4 ]
+[ Upstream commit 1232946cf522b8de9e398828bde325d7c41f29dd ]
 
-The default setting of end_time minus start_time is whole 1 second.
-Thus, if it's not being configured in any GCL entry then it will be
-staying at original 1 second.
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-This patch is changing the start_time and end_time to be end_time as
-if setting zero will be having weird HW behavior where the gate will
-not be fully closed.
+skb_queue_purge() is called under spin_lock_irqsave() in handle_dmsg()
+and hfcm_l1callback(), kfree_skb() is called in them, to fix this, use
+skb_queue_splice_init() to move the dch->squeue to a free queue, also
+enqueue the tx_skb and rx_skb, at last calling __skb_queue_purge() to
+free the SKBs afer unlock.
 
-Fixes: ec50a9d437f0 ("igc: Add support for taprio offloading")
-Signed-off-by: Tan Tee Min <tee.min.tan@linux.intel.com>
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: af69fb3a8ffa ("Add mISDN HFC multiport driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/isdn/hardware/mISDN/hfcmulti.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 06c22ff54d31..34db1c006b20 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -6036,6 +6036,7 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
- 	bool queue_configured[IGC_MAX_TX_QUEUES] = { };
- 	u32 start_time = 0, end_time = 0;
- 	size_t n;
-+	int i;
+diff --git a/drivers/isdn/hardware/mISDN/hfcmulti.c b/drivers/isdn/hardware/mISDN/hfcmulti.c
+index 4f7eaa17fb27..e840609c50eb 100644
+--- a/drivers/isdn/hardware/mISDN/hfcmulti.c
++++ b/drivers/isdn/hardware/mISDN/hfcmulti.c
+@@ -3217,6 +3217,7 @@ static int
+ hfcm_l1callback(struct dchannel *dch, u_int cmd)
+ {
+ 	struct hfc_multi	*hc = dch->hw;
++	struct sk_buff_head	free_queue;
+ 	u_long	flags;
  
- 	adapter->qbv_enable = qopt->enable;
- 
-@@ -6056,7 +6057,6 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
- 
- 	for (n = 0; n < qopt->num_entries; n++) {
- 		struct tc_taprio_sched_entry *e = &qopt->entries[n];
--		int i;
- 
- 		end_time += e->interval;
- 
-@@ -6095,6 +6095,18 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
- 		start_time += e->interval;
- 	}
- 
-+	/* Check whether a queue gets configured.
-+	 * If not, set the start and end time to be end time.
-+	 */
-+	for (i = 0; i < adapter->num_tx_queues; i++) {
-+		if (!queue_configured[i]) {
-+			struct igc_ring *ring = adapter->tx_ring[i];
+ 	switch (cmd) {
+@@ -3245,6 +3246,7 @@ hfcm_l1callback(struct dchannel *dch, u_int cmd)
+ 		l1_event(dch->l1, HW_POWERUP_IND);
+ 		break;
+ 	case HW_DEACT_REQ:
++		__skb_queue_head_init(&free_queue);
+ 		/* start deactivation */
+ 		spin_lock_irqsave(&hc->lock, flags);
+ 		if (hc->ctype == HFC_TYPE_E1) {
+@@ -3264,20 +3266,21 @@ hfcm_l1callback(struct dchannel *dch, u_int cmd)
+ 				plxsd_checksync(hc, 0);
+ 			}
+ 		}
+-		skb_queue_purge(&dch->squeue);
++		skb_queue_splice_init(&dch->squeue, &free_queue);
+ 		if (dch->tx_skb) {
+-			dev_kfree_skb(dch->tx_skb);
++			__skb_queue_tail(&free_queue, dch->tx_skb);
+ 			dch->tx_skb = NULL;
+ 		}
+ 		dch->tx_idx = 0;
+ 		if (dch->rx_skb) {
+-			dev_kfree_skb(dch->rx_skb);
++			__skb_queue_tail(&free_queue, dch->rx_skb);
+ 			dch->rx_skb = NULL;
+ 		}
+ 		test_and_clear_bit(FLG_TX_BUSY, &dch->Flags);
+ 		if (test_and_clear_bit(FLG_BUSY_TIMER, &dch->Flags))
+ 			del_timer(&dch->timer);
+ 		spin_unlock_irqrestore(&hc->lock, flags);
++		__skb_queue_purge(&free_queue);
+ 		break;
+ 	case HW_POWERUP_REQ:
+ 		spin_lock_irqsave(&hc->lock, flags);
+@@ -3384,6 +3387,9 @@ handle_dmsg(struct mISDNchannel *ch, struct sk_buff *skb)
+ 	case PH_DEACTIVATE_REQ:
+ 		test_and_clear_bit(FLG_L2_ACTIVATED, &dch->Flags);
+ 		if (dch->dev.D.protocol != ISDN_P_TE_S0) {
++			struct sk_buff_head free_queue;
 +
-+			ring->start_time = end_time;
-+			ring->end_time = end_time;
-+		}
-+	}
-+
- 	return 0;
- }
- 
++			__skb_queue_head_init(&free_queue);
+ 			spin_lock_irqsave(&hc->lock, flags);
+ 			if (debug & DEBUG_HFCMULTI_MSG)
+ 				printk(KERN_DEBUG
+@@ -3405,14 +3411,14 @@ handle_dmsg(struct mISDNchannel *ch, struct sk_buff *skb)
+ 				/* deactivate */
+ 				dch->state = 1;
+ 			}
+-			skb_queue_purge(&dch->squeue);
++			skb_queue_splice_init(&dch->squeue, &free_queue);
+ 			if (dch->tx_skb) {
+-				dev_kfree_skb(dch->tx_skb);
++				__skb_queue_tail(&free_queue, dch->tx_skb);
+ 				dch->tx_skb = NULL;
+ 			}
+ 			dch->tx_idx = 0;
+ 			if (dch->rx_skb) {
+-				dev_kfree_skb(dch->rx_skb);
++				__skb_queue_tail(&free_queue, dch->rx_skb);
+ 				dch->rx_skb = NULL;
+ 			}
+ 			test_and_clear_bit(FLG_TX_BUSY, &dch->Flags);
+@@ -3424,6 +3430,7 @@ handle_dmsg(struct mISDNchannel *ch, struct sk_buff *skb)
+ #endif
+ 			ret = 0;
+ 			spin_unlock_irqrestore(&hc->lock, flags);
++			__skb_queue_purge(&free_queue);
+ 		} else
+ 			ret = l1_event(dch->l1, hh->prim);
+ 		break;
 -- 
 2.35.1
 
