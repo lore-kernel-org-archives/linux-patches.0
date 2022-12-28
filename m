@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B5A1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EABEC433EF;
-	Wed, 28 Dec 2022 15:57:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB95B1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32EB8C433EF;
+	Wed, 28 Dec 2022 15:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243055;
-	bh=aNoUJxHkrs5Gf/DNei8WBoulFD7PDdaQ3IBmis583kA=;
+	s=korg; t=1672243058;
+	bh=NEUP6zN9OADZm5zNxMnUdUs2DJSQYC2jc+XVsX3Rf54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LsBVPVKOkqfKSF8FPlmhxKIF9NNdsslGI/A3SRnFJD7hLGZd97LCukyu2HJP52/nP
-	 ehmR5lM7bfmGnk5PxYMO5U9jph7Uau8Aa8IuYRoYrpAGcgYiTTr94MZc+QIB+jrNNT
-	 DrXyxbXqolcQ2NknBvdFsCNZBmxNbgWdTR5WBqKU=
+	b=A5AgzSNbiS8KcCGJh3MA6g+kxXReDO710sNNCvnQHJUPRZ2YkKA0kzZ3j0k8CZ75L
+	 hxxc4UmwkoZEs/AQSMMMIqV2IXXWPa3IbRbKOD6BVZPmenkhS9WPfogCTPClgfPoe3
+	 RAp1ceNon/JLgmAVvsvyD7dh5nMezhdyC5LHfNk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0485/1073] mmc: vub300: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:34:33 +0100
-Message-Id: <20221228144341.210751067@linuxfoundation.org>
+Subject: [PATCH 5.15 679/731] drm/fsl-dcu: Fix return type of fsl_dcu_drm_connector_mode_valid()
+Date: Wed, 28 Dec 2022 15:43:06 +0100
+Message-Id: <20221228144316.156707525@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,65 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 0613ad2401f88bdeae5594c30afe318e93b14676 ]
+[ Upstream commit 96d845a67b7e406cfed7880a724c8ca6121e022e ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-So fix this by checking the return value and goto error path which will call
-mmc_free_host(), besides, the timer added before mmc_add_host() needs be del.
+  drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c:74:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .mode_valid = fsl_dcu_drm_connector_mode_valid,
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
 
-And this patch fixes another missing call mmc_free_host() if usb_control_msg()
-fails.
+->mode_valid() in 'struct drm_connector_helper_funcs' expects a return
+type of 'enum drm_mode_status', not 'int'. Adjust the return type of
+fsl_dcu_drm_connector_mode_valid() to match the prototype's to resolve
+the warning and CFI failure.
 
-Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-9-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Reported-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221102154215.78059-1-nathan@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/vub300.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/host/vub300.c b/drivers/mmc/host/vub300.c
-index 97beece62fec..ab36ec479747 100644
---- a/drivers/mmc/host/vub300.c
-+++ b/drivers/mmc/host/vub300.c
-@@ -2299,14 +2299,14 @@ static int vub300_probe(struct usb_interface *interface,
- 				0x0000, 0x0000, &vub300->system_port_status,
- 				sizeof(vub300->system_port_status), 1000);
- 	if (retval < 0) {
--		goto error4;
-+		goto error5;
- 	} else if (sizeof(vub300->system_port_status) == retval) {
- 		vub300->card_present =
- 			(0x0001 & vub300->system_port_status.port_flags) ? 1 : 0;
- 		vub300->read_only =
- 			(0x0010 & vub300->system_port_status.port_flags) ? 1 : 0;
- 	} else {
--		goto error4;
-+		goto error5;
- 	}
- 	usb_set_intfdata(interface, vub300);
- 	INIT_DELAYED_WORK(&vub300->pollwork, vub300_pollwork_thread);
-@@ -2329,8 +2329,13 @@ static int vub300_probe(struct usb_interface *interface,
- 			 "USB vub300 remote SDIO host controller[%d]"
- 			 "connected with no SD/SDIO card inserted\n",
- 			 interface_to_InterfaceNumber(interface));
--	mmc_add_host(mmc);
-+	retval = mmc_add_host(mmc);
-+	if (retval)
-+		goto error6;
-+
- 	return 0;
-+error6:
-+	del_timer_sync(&vub300->inactivity_timer);
- error5:
- 	mmc_free_host(mmc);
- 	/*
+diff --git a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
+index 4d4a715b429d..2c2b92324a2e 100644
+--- a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
++++ b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
+@@ -60,8 +60,9 @@ static int fsl_dcu_drm_connector_get_modes(struct drm_connector *connector)
+ 	return drm_panel_get_modes(fsl_connector->panel, connector);
+ }
+ 
+-static int fsl_dcu_drm_connector_mode_valid(struct drm_connector *connector,
+-					    struct drm_display_mode *mode)
++static enum drm_mode_status
++fsl_dcu_drm_connector_mode_valid(struct drm_connector *connector,
++				 struct drm_display_mode *mode)
+ {
+ 	if (mode->hdisplay & 0xf)
+ 		return MODE_ERROR;
 -- 
 2.35.1
 
