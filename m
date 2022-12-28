@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA7CD1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7FEC433D2;
-	Wed, 28 Dec 2022 14:56:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CD31863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04E43C433EF;
+	Wed, 28 Dec 2022 14:56:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239382;
-	bh=bKfpt6h0GlWOpQsLy7N74+aS0RnUo2HirQTk4nM5Xkc=;
+	s=korg; t=1672239385;
+	bh=uZ6ZuLO19ugKrCxi/sMb0dv4W7Z0CJdCwCGGKbw4xW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PnrODgDwMGIuI9wxTsP4dRmEZE8IRI3EE5kAPs5q9KPjb/6Tv1ISRhocbEmgW7pKs
-	 P6Cavj9O00WCZuJoUEJVvfFJ3SgtQAgnjPwMPvTTEunGK3yPNIBEcG9NM5hu9Kzjz9
-	 2Ujr103RT6r927DE9k2wKPZdGpHxiHvq6GrsZy4g=
+	b=UMVOmgbCpcPaozhmSzxcFhVbWqVgZ9NpcNzIJ0xrfxPurXZtIhdsJWKTqdlqEZlYF
+	 Dy1rQz0EVaYTvmpFK1NxYSX5f30TRQCX/884Nl02nP97I9PCMaaaj/BYuJaP7/Ih+L
+	 0wfDGoxzR58GAVTQAhzwABp6jo+J8NwWsdeD/yKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Stevenson <dave.stevenson@raspberrypi.com>,
-	Maxime Ripard <maxime@cerno.tech>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
+	Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 202/731] drm/fourcc: Add packed 10bit YUV 4:2:0 format
-Date: Wed, 28 Dec 2022 15:35:09 +0100
-Message-Id: <20221228144302.417521877@linuxfoundation.org>
+Subject: [PATCH 6.0 0020/1073] arm64: dts: fsd: fix drive strength values as per FSD HW UM
+Date: Wed, 28 Dec 2022 15:26:48 +0100
+Message-Id: <20221228144328.703187521@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,69 +36,132 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Stevenson <dave.stevenson@raspberrypi.com>
+From: Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
 
-[ Upstream commit 006ea1b5822f9019bd722ffc6242bc0880879e3d ]
+[ Upstream commit 21f6546e8bf68a847601e2710378e2224bf49704 ]
 
-Adds a format that is 3 10bit YUV 4:2:0 samples packed into
-a 32bit word (with 2 spare bits).
+Drive strength values used for HSI2C, SPI and UART are not reflecting
+the default values recommended by FSD HW UM.
 
-Supported on Broadcom BCM2711 chips.
-
-Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Acked-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://lore.kernel.org/r/20211215091739.135042-2-maxime@cerno.tech
-Stable-dep-of: b230555f3257 ("drm/fourcc: Fix vsub/hsub for Q410 and Q401")
+Fixes: 684dac402f21 ("arm64: dts: fsd: Add initial pinctrl support")
+Signed-off-by: Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
+Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+Link: https://lore.kernel.org/r/20221013104024.50179-3-p.rajanbabu@samsung.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_fourcc.c  |  3 +++
- include/uapi/drm/drm_fourcc.h | 11 +++++++++++
- 2 files changed, 14 insertions(+)
+ arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi | 26 +++++++++++-----------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_fourcc.c b/drivers/gpu/drm/drm_fourcc.c
-index eda832f9200d..aa747111476f 100644
---- a/drivers/gpu/drm/drm_fourcc.c
-+++ b/drivers/gpu/drm/drm_fourcc.c
-@@ -266,6 +266,9 @@ const struct drm_format_info *__drm_format_info(u32 format)
- 		  .num_planes = 3, .char_per_block = { 2, 2, 2 },
- 		  .block_w = { 1, 1, 1 }, .block_h = { 1, 1, 1 }, .hsub = 0,
- 		  .vsub = 0, .is_yuv = true },
-+		{ .format = DRM_FORMAT_P030,            .depth = 0,  .num_planes = 2,
-+		  .char_per_block = { 4, 8, 0 }, .block_w = { 3, 3, 0 }, .block_h = { 1, 1, 0 },
-+		  .hsub = 2, .vsub = 2, .is_yuv = true},
+diff --git a/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi b/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi
+index 4e151d419909..e3852c946352 100644
+--- a/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi
++++ b/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi
+@@ -253,91 +253,91 @@ hs_i2c0_bus: hs-i2c0-bus-pins {
+ 		samsung,pins = "gpb0-0", "gpb0-1";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
  	};
  
- 	unsigned int i;
-diff --git a/include/uapi/drm/drm_fourcc.h b/include/uapi/drm/drm_fourcc.h
-index 808c73c52820..a50e4646bd6d 100644
---- a/include/uapi/drm/drm_fourcc.h
-+++ b/include/uapi/drm/drm_fourcc.h
-@@ -308,6 +308,13 @@ extern "C" {
-  */
- #define DRM_FORMAT_P016		fourcc_code('P', '0', '1', '6') /* 2x2 subsampled Cr:Cb plane 16 bits per channel */
+ 	hs_i2c1_bus: hs-i2c1-bus-pins {
+ 		samsung,pins = "gpb0-2", "gpb0-3";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
  
-+/* 2 plane YCbCr420.
-+ * 3 10 bit components and 2 padding bits packed into 4 bytes.
-+ * index 0 = Y plane, [31:0] x:Y2:Y1:Y0 2:10:10:10 little endian
-+ * index 1 = Cr:Cb plane, [63:0] x:Cr2:Cb2:Cr1:x:Cb1:Cr0:Cb0 [2:10:10:10:2:10:10:10] little endian
-+ */
-+#define DRM_FORMAT_P030		fourcc_code('P', '0', '3', '0') /* 2x2 subsampled Cr:Cb plane 10 bits per channel packed */
-+
- /* 3 plane non-subsampled (444) YCbCr
-  * 16 bits per component, but only 10 bits are used and 6 bits are padded
-  * index 0: Y plane, [15:0] Y:x [10:6] little endian
-@@ -842,6 +849,10 @@ drm_fourcc_canonicalize_nvidia_format_mod(__u64 modifier)
-  * and UV.  Some SAND-using hardware stores UV in a separate tiled
-  * image from Y to reduce the column height, which is not supported
-  * with these modifiers.
-+ *
-+ * The DRM_FORMAT_MOD_BROADCOM_SAND128_COL_HEIGHT modifier is also
-+ * supported for DRM_FORMAT_P030 where the columns remain as 128 bytes
-+ * wide, but as this is a 10 bpp format that translates to 96 pixels.
-  */
+ 	hs_i2c2_bus: hs-i2c2-bus-pins {
+ 		samsung,pins = "gpb0-4", "gpb0-5";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
  
- #define DRM_FORMAT_MOD_BROADCOM_SAND32_COL_HEIGHT(v) \
+ 	hs_i2c3_bus: hs-i2c3-bus-pins {
+ 		samsung,pins = "gpb0-6", "gpb0-7";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	hs_i2c4_bus: hs-i2c4-bus-pins {
+ 		samsung,pins = "gpb1-0", "gpb1-1";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	hs_i2c5_bus: hs-i2c5-bus-pins {
+ 		samsung,pins = "gpb1-2", "gpb1-3";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	hs_i2c6_bus: hs-i2c6-bus-pins {
+ 		samsung,pins = "gpb1-4", "gpb1-5";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	hs_i2c7_bus: hs-i2c7-bus-pins {
+ 		samsung,pins = "gpb1-6", "gpb1-7";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	uart0_data: uart0-data-pins {
+ 		samsung,pins = "gpb7-0", "gpb7-1";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_NONE>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	uart1_data: uart1-data-pins {
+ 		samsung,pins = "gpb7-4", "gpb7-5";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_NONE>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	spi0_bus: spi0-bus-pins {
+ 		samsung,pins = "gpb4-0", "gpb4-2", "gpb4-3";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	spi1_bus: spi1-bus-pins {
+ 		samsung,pins = "gpb4-4", "gpb4-6", "gpb4-7";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	spi2_bus: spi2-bus-pins {
+ 		samsung,pins = "gpb5-0", "gpb5-2", "gpb5-3";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ };
+ 
 -- 
 2.35.1
 
