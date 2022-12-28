@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 239151C15
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 935F0C433EF;
-	Wed, 28 Dec 2022 16:46:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C5101C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8074C433D2;
+	Wed, 28 Dec 2022 16:46:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245968;
-	bh=joUiXrawmAJHiaVDfPQdm0pzrZtel83AWOUVXLSsXaw=;
+	s=korg; t=1672245965;
+	bh=NEUP6zN9OADZm5zNxMnUdUs2DJSQYC2jc+XVsX3Rf54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KZ+8VAyjk3VozFvwJRuh+k9sfXuKc2A4/gz9qHE3YV7k3TJ1p2VEtwmmcxjnTY9Hn
-	 r5JrYYLpxvDvscx3QFYVTZPhtAM+1CRzokazmhvNIKaK1ZBbzngnXYWk+KfO2Aij5E
-	 7HJCVYJJg3mNw2S1Odmv6ssEgIIrzAsHYiQTl2bw=
+	b=f/WWcffj1moi7T28mMrQ+Di5Zn+3RvXGAFB5Ig0ehMhgWrrT1vCnGTjyoxDXFsetx
+	 /ZSfHoTZpCU4wMFnDGekxvpcIoNmY0W6oxoQB504wCixq4zggxlpikAcM3y6woISXZ
+	 PCHTiqhM/IqvMxP20dJw0cWDEA5/WWrENHvTvAWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0955/1146] ACPI: video: Add force_vendor quirk for Sony Vaio PCG-FRV35
-Date: Wed, 28 Dec 2022 15:41:34 +0100
-Message-Id: <20221228144356.259328375@linuxfoundation.org>
+Subject: [PATCH 6.0 0988/1073] drm/fsl-dcu: Fix return type of fsl_dcu_drm_connector_mode_valid()
+Date: Wed, 28 Dec 2022 15:42:56 +0100
+Message-Id: <20221228144354.939156923@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,50 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 23735543eb228c604e59f99f2f5d13aa507e5db2 ]
+[ Upstream commit 96d845a67b7e406cfed7880a724c8ca6121e022e ]
 
-The Sony Vaio PCG-FRV35 advertises both native and vendor backlight
-control interfaces. With the upcoming changes to prefer native over
-vendor acpi_video_get_backlight_type() will start returning native on
-these laptops.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-But the native radeon_bl0 interface does not work, where as the sony
-vendor interface does work. Add a quirk to force use of the vendor
-interface.
+  drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c:74:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .mode_valid = fsl_dcu_drm_connector_mode_valid,
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+->mode_valid() in 'struct drm_connector_helper_funcs' expects a return
+type of 'enum drm_mode_status', not 'int'. Adjust the return type of
+fsl_dcu_drm_connector_mode_valid() to match the prototype's to resolve
+the warning and CFI failure.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Reported-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221102154215.78059-1-nathan@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/video_detect.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
-index 0ab98f2e484c..8e8b435b4c8c 100644
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -237,6 +237,19 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
- 		},
- 	},
+diff --git a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
+index 4d4a715b429d..2c2b92324a2e 100644
+--- a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
++++ b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
+@@ -60,8 +60,9 @@ static int fsl_dcu_drm_connector_get_modes(struct drm_connector *connector)
+ 	return drm_panel_get_modes(fsl_connector->panel, connector);
+ }
  
-+	/*
-+	 * Models which should use the vendor backlight interface,
-+	 * because of broken native backlight control.
-+	 */
-+	{
-+	 .callback = video_detect_force_vendor,
-+	 /* Sony Vaio PCG-FRV35 */
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "Sony Corporation"),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "PCG-FRV35"),
-+		},
-+	},
-+
- 	/*
- 	 * Toshiba models with Transflective display, these need to use
- 	 * the toshiba_acpi vendor driver for proper Transflective handling.
+-static int fsl_dcu_drm_connector_mode_valid(struct drm_connector *connector,
+-					    struct drm_display_mode *mode)
++static enum drm_mode_status
++fsl_dcu_drm_connector_mode_valid(struct drm_connector *connector,
++				 struct drm_display_mode *mode)
+ {
+ 	if (mode->hdisplay & 0xf)
+ 		return MODE_ERROR;
 -- 
 2.35.1
 
