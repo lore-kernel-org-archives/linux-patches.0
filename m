@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B88D1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:47:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C78C433EF;
-	Wed, 28 Dec 2022 16:47:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3B231C15
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:47:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 677F2C433D2;
+	Wed, 28 Dec 2022 16:47:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246049;
-	bh=9k+WghrtSHhKkk8GrcM41+I21OA+exmk8bde1V9EZxo=;
+	s=korg; t=1672246051;
+	bh=+fHx5xwYWoNrQ8o+aNkjZ5N9nvTSb0xbIriaqQ8NvX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GG+50PbhWC6AwhKOldvYucKKkANkFc5o02T7mZj1Qdgifu32yDgcfoVWvC+owaQ6Q
-	 XmjdaxIXFWJK7bddgKI81TRgdMgKmmauaLfExQYq+XgU/jnwUrf+dnPNfBWfLC2WGk
-	 VLCktFtuKAM8MdLgEurd92HC5bgw+aW6qxkbwDWE=
+	b=rZ1HzVu285xvkWePP8Z74EqBL7l2JDoUR0I73Gahu/u9DW8TXnSt907oqHyre1Fyg
+	 7jNn7fEsQOFNl6p3O7JL0WDDpTRwqYi5+0/iuD9aZVsBRSj2OWzFwKF4rUdhEm9pK9
+	 v4DczNKhKxU1QKGXovxUHndOz02FO9i4R/lavfqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yuchen <zhangyuchen.lcr@bytedance.com>,
-	Corey Minyard <cminyard@mvista.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0972/1146] ipmi: fix memleak when unload ipmi driver
-Date: Wed, 28 Dec 2022 15:41:51 +0100
-Message-Id: <20221228144356.744689263@linuxfoundation.org>
+Subject: [PATCH 6.0 1004/1073] ALSA: hda/hdmi: fix i915 silent stream programming flow
+Date: Wed, 28 Dec 2022 15:43:12 +0100
+Message-Id: <20221228144355.416002332@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,62 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
+From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 
-[ Upstream commit 36992eb6b9b83f7f9cdc8e74fb5799d7b52e83e9 ]
+[ Upstream commit ada261b690ecd5c2f55f0c51bdf11d852a4561a6 ]
 
-After the IPMI disconnect problem, the memory kept rising and we tried
-to unload the driver to free the memory. However, only part of the
-free memory is recovered after the driver is uninstalled. Using
-ebpf to hook free functions, we find that neither ipmi_user nor
-ipmi_smi_msg is free, only ipmi_recv_msg is free.
+The i915 display codec may not successfully transition to
+normal audio streaming mode, if the stream id is programmed
+while codec is actively transmitting data. This can happen
+when silent stream is enabled in KAE mode.
 
-We find that the deliver_smi_err_response call in clean_smi_msgs does
-the destroy processing on each message from the xmit_msg queue without
-checking the return value and free ipmi_smi_msg.
+Fix the issue by implementing a i915 specific programming
+flow, where the silent streaming is temporarily stopped,
+a small delay is applied to ensure display codec becomes
+idle, and then proceed with reprogramming the stream ID.
 
-deliver_smi_err_response is called only at this location. Adding the
-free handling has no effect.
-
-To verify, try using ebpf to trace the free function.
-
-  $ bpftrace -e 'kretprobe:ipmi_alloc_recv_msg {printf("alloc rcv
-      %p\n",retval);} kprobe:free_recv_msg {printf("free recv %p\n",
-      arg0)} kretprobe:ipmi_alloc_smi_msg {printf("alloc smi %p\n",
-        retval);} kprobe:free_smi_msg {printf("free smi  %p\n",arg0)}'
-
-Signed-off-by: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
-Message-Id: <20221007092617.87597-4-zhangyuchen.lcr@bytedance.com>
-[Fixed the comment above handle_one_recv_msg().]
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Fixes: 15175a4f2bbb ("ALSA: hda/hdmi: add keep-alive support for ADL-P and DG2")
+Link: https://gitlab.freedesktop.org/drm/intel/-/issues/7353
+Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Tested-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Link: https://lore.kernel.org/r/20221209101822.3893675-2-kai.vehmanen@linux.intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_hdmi.c | 28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
-index 49a1707693c9..d5ee52be176d 100644
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -3704,12 +3704,16 @@ static void deliver_smi_err_response(struct ipmi_smi *intf,
- 				     struct ipmi_smi_msg *msg,
- 				     unsigned char err)
+diff --git a/sound/pci/hda/patch_hdmi.c b/sound/pci/hda/patch_hdmi.c
+index 287f4f78e7b1..3655584fc37b 100644
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -2963,9 +2963,33 @@ static int i915_hsw_setup_stream(struct hda_codec *codec, hda_nid_t cvt_nid,
+ 				 hda_nid_t pin_nid, int dev_id, u32 stream_tag,
+ 				 int format)
  {
-+	int rv;
- 	msg->rsp[0] = msg->data[0] | 4;
- 	msg->rsp[1] = msg->data[1];
- 	msg->rsp[2] = err;
- 	msg->rsp_size = 3;
--	/* It's an error, so it will never requeue, no need to check return. */
--	handle_one_recv_msg(intf, msg);
++	struct hdmi_spec *spec = codec->spec;
++	int pin_idx = pin_id_to_pin_index(codec, pin_nid, dev_id);
++	struct hdmi_spec_per_pin *per_pin;
++	int res;
 +
-+	/* This will never requeue, but it may ask us to free the message. */
-+	rv = handle_one_recv_msg(intf, msg);
-+	if (rv == 0)
-+		ipmi_free_smi_msg(msg);
++	if (pin_idx < 0)
++		per_pin = NULL;
++	else
++		per_pin = get_pin(spec, pin_idx);
++
+ 	haswell_verify_D0(codec, cvt_nid, pin_nid);
+-	return hdmi_setup_stream(codec, cvt_nid, pin_nid, dev_id,
+-				 stream_tag, format);
++
++	if (spec->silent_stream_type == SILENT_STREAM_KAE && per_pin && per_pin->silent_stream) {
++		silent_stream_set_kae(codec, per_pin, false);
++		/* wait for pending transfers in codec to clear */
++		usleep_range(100, 200);
++	}
++
++	res = hdmi_setup_stream(codec, cvt_nid, pin_nid, dev_id,
++				stream_tag, format);
++
++	if (spec->silent_stream_type == SILENT_STREAM_KAE && per_pin && per_pin->silent_stream) {
++		usleep_range(100, 200);
++		silent_stream_set_kae(codec, per_pin, true);
++	}
++
++	return res;
  }
  
- static void cleanup_smi_msgs(struct ipmi_smi *intf)
+ /* pin_cvt_fixup ops override for HSW+ and VLV+ */
 -- 
 2.35.1
 
