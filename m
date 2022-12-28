@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E621863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4775CC433EF;
-	Wed, 28 Dec 2022 15:02:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6651B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2412C433F0;
+	Wed, 28 Dec 2022 15:02:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239735;
-	bh=5JJQazEZy9oKTh0SQs+GNRlnFhbY1GIwYmsbGaafbeg=;
+	s=korg; t=1672239738;
+	bh=q/xbrCOGSPYNH9TVapXx+pUJmemXqHT+snAIei8Q1ZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e+FjqyirGBE0mPUG5Uuo+lYfgxN/j8LUQIIEbQ8P/sF/r0Zl1mXHcUI0K2gPGUymH
-	 SUjZyXTGLH/ubKYJLxdEbr90cScP/6ZdeptbD+MsBydgyxd6QKQt3BwCYCc8vxyiU8
-	 IFnnVrEVcVVMPzvRMp/KXQ6bUj15k6noJlAqqp24=
+	b=LSIxkvHerpPmu+kigXpifnAhdZEMjLuZJqD2/w9F+lwtuFdk4YLEqz6r53UQ632lk
+	 L9eyoaLC2aWlTWF2MIogJK/qol33OmZ4T4BqQqZ1kg+omMcEMOAUIIholEz8NSAPZC
+	 wxyTX81vgHHYUYR+tNuAaRgl3C+1rH91KrdIv8sg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhangPeng <zhangpeng362@huawei.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 237/731] pinctrl: pinconf-generic: add missing of_node_put()
-Date: Wed, 28 Dec 2022 15:35:44 +0100
-Message-Id: <20221228144303.434237517@linuxfoundation.org>
+Subject: [PATCH 6.0 0040/1073] soc: qcom: apr: Add check for idr_alloc and of_property_read_string_index
+Date: Wed, 28 Dec 2022 15:27:08 +0100
+Message-Id: <20221228144329.218163694@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,37 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangPeng <zhangpeng362@huawei.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 5ead93289815a075d43c415e35c8beafafb801c9 ]
+[ Upstream commit 6d7860f5750d73da2fa1a1f6c9405058a593fa32 ]
 
-of_node_put() needs to be called when jumping out of the loop, since
-for_each_available_child_of_node() will increase the refcount of node.
+As idr_alloc() and of_property_read_string_index() can return negative
+numbers, it should be better to check the return value and deal with
+the exception.
+Therefore, it should be better to use goto statement to stop and return
+error.
 
-Fixes: c7289500e29d ("pinctrl: pinconf-generic: scan also referenced phandle node")
-Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
-Link: https://lore.kernel.org/r/20221125070156.3535855-1-zhangpeng362@huawei.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 6adba21eb434 ("soc: qcom: Add APR bus driver")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221107014403.3606-1-jiasheng@iscas.ac.cn
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinconf-generic.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/soc/qcom/apr.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pinctrl/pinconf-generic.c b/drivers/pinctrl/pinconf-generic.c
-index b1db28007986..e6fe1330eab9 100644
---- a/drivers/pinctrl/pinconf-generic.c
-+++ b/drivers/pinctrl/pinconf-generic.c
-@@ -393,8 +393,10 @@ int pinconf_generic_dt_node_to_map(struct pinctrl_dev *pctldev,
- 	for_each_available_child_of_node(np_config, np) {
- 		ret = pinconf_generic_dt_subnode_to_map(pctldev, np, map,
- 					&reserved_maps, num_maps, type);
--		if (ret < 0)
-+		if (ret < 0) {
-+			of_node_put(np);
- 			goto exit;
-+		}
+diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
+index b4046f393575..cd44f17dad3d 100644
+--- a/drivers/soc/qcom/apr.c
++++ b/drivers/soc/qcom/apr.c
+@@ -454,11 +454,19 @@ static int apr_add_device(struct device *dev, struct device_node *np,
+ 	adev->dev.driver = NULL;
+ 
+ 	spin_lock(&apr->svcs_lock);
+-	idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
++	ret = idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
+ 	spin_unlock(&apr->svcs_lock);
++	if (ret < 0) {
++		dev_err(dev, "idr_alloc failed: %d\n", ret);
++		goto out;
++	}
+ 
+-	of_property_read_string_index(np, "qcom,protection-domain",
+-				      1, &adev->service_path);
++	ret = of_property_read_string_index(np, "qcom,protection-domain",
++					    1, &adev->service_path);
++	if (ret < 0) {
++		dev_err(dev, "Failed to read second value of qcom,protection-domain\n");
++		goto out;
++	}
+ 
+ 	dev_info(dev, "Adding APR/GPR dev: %s\n", dev_name(&adev->dev));
+ 
+@@ -468,6 +476,7 @@ static int apr_add_device(struct device *dev, struct device_node *np,
+ 		put_device(&adev->dev);
  	}
- 	return 0;
+ 
++out:
+ 	return ret;
+ }
  
 -- 
 2.35.1
