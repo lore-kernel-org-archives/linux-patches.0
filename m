@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DFB1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 615A4C433D2;
-	Wed, 28 Dec 2022 16:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D26D1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03320C433EF;
+	Wed, 28 Dec 2022 16:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245164;
-	bh=9PRQxaxbqSB2q5bDkJnQmXFkJCuAIYr0IKxrlRWnCz0=;
+	s=korg; t=1672245167;
+	bh=/i/jO8lqBGMdg0NVwjFTcwnqMV74SH0Tx0c5CjoSec8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lWnuYx7YqCz/gdSUdoUOwRHCt0pmpkFSLCLg1KHzKBDNjZM+jo+SIeAnDeK/CWWyP
-	 mAVmWEETRvQOviSQmCuifJ1O4xIjxVqKkSbLU05RG7rs/Qch4mWM3tsZqyUO/Xk3dK
-	 OwpgIyW/9MAoIPzjKW07fS5jajsimzPI/8674EO0=
+	b=sFA8hYjzmqqsIKkY9UKjeDzeJB+RsitkjmPyKkEXmKFEwo+sXz0y+kuy3pYrdb18a
+	 th580GHw/NKU62EHoePYhdTzOBIaCXQbUUp8tznp8o2oqiG/Yob/Amwgncsvugxf7g
+	 F/3Eq69lTrpOvWMJ/+oM7agiRbm60HSP2Krrof14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Jan Kara <jack@suse.cz>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0808/1146] iommu/s390: Fix duplicate domain attachments
-Date: Wed, 28 Dec 2022 15:39:07 +0100
-Message-Id: <20221228144352.099991654@linuxfoundation.org>
+Subject: [PATCH 6.0 0844/1073] block, bfq: fix possible uaf for bfqq->bic
+Date: Wed, 28 Dec 2022 15:40:32 +0100
+Message-Id: <20221228144350.946931172@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,206 +36,120 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit bf8d2dd2ed0825a58f31cc510245a1eb46f8a87e ]
+[ Upstream commit 64dc8c732f5c2b406cc752e6aaa1bd5471159cab ]
 
-Since commit fa7e9ecc5e1c ("iommu/s390: Tolerate repeat attach_dev
-calls") we can end up with duplicates in the list of devices attached to
-a domain. This is inefficient and confusing since only one domain can
-actually be in control of the IOMMU translations for a device. Fix this
-by detaching the device from the previous domain, if any, on attach.
-Add a WARN_ON() in case we still have attached devices on freeing the
-domain. While here remove the re-attach on failure dance as it was
-determined to be unlikely to help and may confuse debug and recovery.
+Our test report a uaf for 'bfqq->bic' in 5.10:
 
-Fixes: fa7e9ecc5e1c ("iommu/s390: Tolerate repeat attach_dev calls")
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221025115657.1666860-2-schnelle@linux.ibm.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+==================================================================
+BUG: KASAN: use-after-free in bfq_select_queue+0x378/0xa30
+
+CPU: 6 PID: 2318352 Comm: fsstress Kdump: loaded Not tainted 5.10.0-60.18.0.50.h602.kasan.eulerosv2r11.x86_64 #1
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58-20220320_160524-szxrtosci10000 04/01/2014
+Call Trace:
+ bfq_select_queue+0x378/0xa30
+ bfq_dispatch_request+0xe8/0x130
+ blk_mq_do_dispatch_sched+0x62/0xb0
+ __blk_mq_sched_dispatch_requests+0x215/0x2a0
+ blk_mq_sched_dispatch_requests+0x8f/0xd0
+ __blk_mq_run_hw_queue+0x98/0x180
+ __blk_mq_delay_run_hw_queue+0x22b/0x240
+ blk_mq_run_hw_queue+0xe3/0x190
+ blk_mq_sched_insert_requests+0x107/0x200
+ blk_mq_flush_plug_list+0x26e/0x3c0
+ blk_finish_plug+0x63/0x90
+ __iomap_dio_rw+0x7b5/0x910
+ iomap_dio_rw+0x36/0x80
+ ext4_dio_read_iter+0x146/0x190 [ext4]
+ ext4_file_read_iter+0x1e2/0x230 [ext4]
+ new_sync_read+0x29f/0x400
+ vfs_read+0x24e/0x2d0
+ ksys_read+0xd5/0x1b0
+ do_syscall_64+0x33/0x40
+ entry_SYSCALL_64_after_hwframe+0x61/0xc6
+
+Commit 3bc5e683c67d ("bfq: Split shared queues on move between cgroups")
+changes that move process to a new cgroup will allocate a new bfqq to
+use, however, the old bfqq and new bfqq can point to the same bic:
+
+1) Initial state, two process with io in the same cgroup.
+
+Process 1       Process 2
+ (BIC1)          (BIC2)
+  |  Λ            |  Λ
+  |  |            |  |
+  V  |            V  |
+  bfqq1           bfqq2
+
+2) bfqq1 is merged to bfqq2.
+
+Process 1       Process 2
+ (BIC1)          (BIC2)
+  |               |
+   \-------------\|
+                  V
+  bfqq1           bfqq2(coop)
+
+3) Process 1 exit, then issue new io(denoce IOA) from Process 2.
+
+ (BIC2)
+  |  Λ
+  |  |
+  V  |
+  bfqq2(coop)
+
+4) Before IOA is completed, move Process 2 to another cgroup and issue io.
+
+Process 2
+ (BIC2)
+   Λ
+   |\--------------\
+   |                V
+  bfqq2           bfqq3
+
+Now that BIC2 points to bfqq3, while bfqq2 and bfqq3 both point to BIC2.
+If all the requests are completed, and Process 2 exit, BIC2 will be
+freed while there is no guarantee that bfqq2 will be freed before BIC2.
+
+Fix the problem by clearing bfqq->bic while bfqq is detached from bic.
+
+Fixes: 3bc5e683c67d ("bfq: Split shared queues on move between cgroups")
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221214030430.3304151-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/s390-iommu.c | 106 ++++++++++++++++---------------------
- 1 file changed, 45 insertions(+), 61 deletions(-)
+ block/bfq-iosched.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/s390-iommu.c b/drivers/iommu/s390-iommu.c
-index 3c071782f6f1..c2e5e81d609e 100644
---- a/drivers/iommu/s390-iommu.c
-+++ b/drivers/iommu/s390-iommu.c
-@@ -79,10 +79,36 @@ static void s390_domain_free(struct iommu_domain *domain)
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 68872a61706a..528ca21044a5 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -386,6 +386,12 @@ static void bfq_put_stable_ref(struct bfq_queue *bfqq);
+ 
+ void bic_set_bfqq(struct bfq_io_cq *bic, struct bfq_queue *bfqq, bool is_sync)
  {
- 	struct s390_domain *s390_domain = to_s390_domain(domain);
- 
-+	WARN_ON(!list_empty(&s390_domain->devices));
- 	dma_cleanup_tables(s390_domain->dma_table);
- 	kfree(s390_domain);
- }
- 
-+static void __s390_iommu_detach_device(struct zpci_dev *zdev)
-+{
-+	struct s390_domain *s390_domain = zdev->s390_domain;
-+	struct s390_domain_device *domain_device, *tmp;
-+	unsigned long flags;
++	struct bfq_queue *old_bfqq = bic->bfqq[is_sync];
 +
-+	if (!s390_domain)
-+		return;
++	/* Clear bic pointer if bfqq is detached from this bic */
++	if (old_bfqq && old_bfqq->bic == bic)
++		old_bfqq->bic = NULL;
 +
-+	spin_lock_irqsave(&s390_domain->list_lock, flags);
-+	list_for_each_entry_safe(domain_device, tmp, &s390_domain->devices,
-+				 list) {
-+		if (domain_device->zdev == zdev) {
-+			list_del(&domain_device->list);
-+			kfree(domain_device);
-+			break;
-+		}
-+	}
-+	spin_unlock_irqrestore(&s390_domain->list_lock, flags);
-+
-+	zpci_unregister_ioat(zdev, 0);
-+	zdev->s390_domain = NULL;
-+	zdev->dma_table = NULL;
-+}
-+
- static int s390_iommu_attach_device(struct iommu_domain *domain,
- 				    struct device *dev)
- {
-@@ -90,7 +116,7 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
- 	struct zpci_dev *zdev = to_zpci_dev(dev);
- 	struct s390_domain_device *domain_device;
- 	unsigned long flags;
--	int cc, rc;
-+	int cc, rc = 0;
- 
- 	if (!zdev)
- 		return -ENODEV;
-@@ -99,24 +125,18 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
- 	if (!domain_device)
- 		return -ENOMEM;
- 
--	if (zdev->dma_table && !zdev->s390_domain) {
--		cc = zpci_dma_exit_device(zdev);
--		if (cc) {
--			rc = -EIO;
--			goto out_free;
--		}
--	}
--
- 	if (zdev->s390_domain)
--		zpci_unregister_ioat(zdev, 0);
-+		__s390_iommu_detach_device(zdev);
-+	else if (zdev->dma_table)
-+		zpci_dma_exit_device(zdev);
- 
--	zdev->dma_table = s390_domain->dma_table;
- 	cc = zpci_register_ioat(zdev, 0, zdev->start_dma, zdev->end_dma,
--				virt_to_phys(zdev->dma_table));
-+				virt_to_phys(s390_domain->dma_table));
- 	if (cc) {
- 		rc = -EIO;
--		goto out_restore;
-+		goto out_free;
- 	}
-+	zdev->dma_table = s390_domain->dma_table;
- 
- 	spin_lock_irqsave(&s390_domain->list_lock, flags);
- 	/* First device defines the DMA range limits */
-@@ -127,9 +147,9 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
- 	/* Allow only devices with identical DMA range limits */
- 	} else if (domain->geometry.aperture_start != zdev->start_dma ||
- 		   domain->geometry.aperture_end != zdev->end_dma) {
--		rc = -EINVAL;
- 		spin_unlock_irqrestore(&s390_domain->list_lock, flags);
--		goto out_restore;
-+		rc = -EINVAL;
-+		goto out_unregister;
- 	}
- 	domain_device->zdev = zdev;
- 	zdev->s390_domain = s390_domain;
-@@ -138,14 +158,9 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
- 
- 	return 0;
- 
--out_restore:
--	if (!zdev->s390_domain) {
--		zpci_dma_init_device(zdev);
--	} else {
--		zdev->dma_table = zdev->s390_domain->dma_table;
--		zpci_register_ioat(zdev, 0, zdev->start_dma, zdev->end_dma,
--				   virt_to_phys(zdev->dma_table));
--	}
-+out_unregister:
-+	zpci_unregister_ioat(zdev, 0);
-+	zdev->dma_table = NULL;
- out_free:
- 	kfree(domain_device);
- 
-@@ -155,32 +170,12 @@ static int s390_iommu_attach_device(struct iommu_domain *domain,
- static void s390_iommu_detach_device(struct iommu_domain *domain,
- 				     struct device *dev)
- {
--	struct s390_domain *s390_domain = to_s390_domain(domain);
- 	struct zpci_dev *zdev = to_zpci_dev(dev);
--	struct s390_domain_device *domain_device, *tmp;
--	unsigned long flags;
--	int found = 0;
- 
--	if (!zdev)
--		return;
-+	WARN_ON(zdev->s390_domain != to_s390_domain(domain));
- 
--	spin_lock_irqsave(&s390_domain->list_lock, flags);
--	list_for_each_entry_safe(domain_device, tmp, &s390_domain->devices,
--				 list) {
--		if (domain_device->zdev == zdev) {
--			list_del(&domain_device->list);
--			kfree(domain_device);
--			found = 1;
--			break;
--		}
--	}
--	spin_unlock_irqrestore(&s390_domain->list_lock, flags);
--
--	if (found && (zdev->s390_domain == s390_domain)) {
--		zdev->s390_domain = NULL;
--		zpci_unregister_ioat(zdev, 0);
--		zpci_dma_init_device(zdev);
--	}
-+	__s390_iommu_detach_device(zdev);
-+	zpci_dma_init_device(zdev);
- }
- 
- static struct iommu_device *s390_iommu_probe_device(struct device *dev)
-@@ -198,24 +193,13 @@ static struct iommu_device *s390_iommu_probe_device(struct device *dev)
- static void s390_iommu_release_device(struct device *dev)
- {
- 	struct zpci_dev *zdev = to_zpci_dev(dev);
--	struct iommu_domain *domain;
- 
  	/*
--	 * This is a workaround for a scenario where the IOMMU API common code
--	 * "forgets" to call the detach_dev callback: After binding a device
--	 * to vfio-pci and completing the VFIO_SET_IOMMU ioctl (which triggers
--	 * the attach_dev), removing the device via
--	 * "echo 1 > /sys/bus/pci/devices/.../remove" won't trigger detach_dev,
--	 * only release_device will be called via the BUS_NOTIFY_REMOVED_DEVICE
--	 * notifier.
--	 *
--	 * So let's call detach_dev from here if it hasn't been called before.
-+	 * release_device is expected to detach any domain currently attached
-+	 * to the device, but keep it attached to other devices in the group.
- 	 */
--	if (zdev && zdev->s390_domain) {
--		domain = iommu_get_domain_for_dev(dev);
--		if (domain)
--			s390_iommu_detach_device(domain, dev);
--	}
-+	if (zdev)
-+		__s390_iommu_detach_device(zdev);
- }
+ 	 * If bfqq != NULL, then a non-stable queue merge between
+ 	 * bic->bfqq and bfqq is happening here. This causes troubles
+@@ -5379,7 +5385,6 @@ static void bfq_exit_icq_bfqq(struct bfq_io_cq *bic, bool is_sync)
+ 		unsigned long flags;
  
- static int s390_iommu_update_trans(struct s390_domain *s390_domain,
+ 		spin_lock_irqsave(&bfqd->lock, flags);
+-		bfqq->bic = NULL;
+ 		bfq_exit_bfqq(bfqd, bfqq);
+ 		bic_set_bfqq(bic, NULL, is_sync);
+ 		spin_unlock_irqrestore(&bfqd->lock, flags);
 -- 
 2.35.1
 
