@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A9E223AF
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:57:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19104C433EF;
-	Wed, 28 Dec 2022 16:57:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5047C23AF
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:57:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C49EEC433D2;
+	Wed, 28 Dec 2022 16:57:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246660;
-	bh=+4kALDwo3/WgFk2sRRSadisOiigcml8D2xF0/fPe5Uw=;
+	s=korg; t=1672246663;
+	bh=ykql0l1NolxZGhQz+NQUitFMFHuFP7ycSFzjIlFWXcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cZSMaRjo5Gh3+eFqptqNysEdCKzPmMwe1w19bxGXmJ+oSiPQAuILvWNWUrK36yjLx
-	 lZA0G8O5ErNlLImCcS7ROs0eAcSZwpLLA1quxry3op+i2ORUNKueXnFWqNQXB1KDeJ
-	 TNUE6JwT3tAAlUiByvKFQkxuV8f10FwyI9QbzjKs=
+	b=J/rAdAeD9c/Qo+DuvKhobLkcxkIpJz1fNWOng6WZJq0u/Yfb2FtMCD0RI8tNtm+ye
+	 BosKoArX5okL8HR3tlP5PI3bcEvwD2OYWLEoCMEiwvhStaOq/gbKGkS0cgzgnmgGQF
+	 UIuibEZndZjxxt64uFmPaUGDFkdfRAgzAlaK68Fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8f1060e2aaf8ca55220b@syzkaller.appspotmail.com,
-	Schspa Shi <schspa@gmail.com>,
-	Christian Schoenebeck <linux_oss@crudebyte.com>,
-	Dominique Martinet <asmadeus@codewreck.org>
-Subject: [PATCH 6.1 1116/1146] 9p: set req refcount to zero to avoid uninitialized usage
-Date: Wed, 28 Dec 2022 15:44:15 +0100
-Message-Id: <20221228144400.462249646@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.1 1117/1146] security: Restrict CONFIG_ZERO_CALL_USED_REGS to gcc or clang > 15.0.6
+Date: Wed, 28 Dec 2022 15:44:16 +0100
+Message-Id: <20221228144400.489916162@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -36,96 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Schspa Shi <schspa@gmail.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 26273ade77f54716e30dfd40ac6e85ceb54ac0f9 upstream.
+commit d6a9fb87e9d18f3394a9845546bbe868efdccfd2 upstream.
 
-When a new request is allocated, the refcount will be zero if it is
-reused, but if the request is newly allocated from slab, it is not fully
-initialized before being added to idr.
+A bad bug in clang's implementation of -fzero-call-used-regs can result
+in NULL pointer dereferences (see the links above the check for more
+information). Restrict CONFIG_CC_HAS_ZERO_CALL_USED_REGS to either a
+supported GCC version or a clang newer than 15.0.6, which will catch
+both a theoretical 15.0.7 and the upcoming 16.0.0, which will both have
+the bug fixed.
 
-If the p9_read_work got a response before the refcount initiated. It will
-use a uninitialized req, which will result in a bad request data struct.
-
-Here is the logs from syzbot.
-
-Corrupted memory at 0xffff88807eade00b [ 0xff 0x07 0x00 0x00 0x00 0x00
-0x00 0x00 . . . . . . . . ] (in kfence-#110):
- p9_fcall_fini net/9p/client.c:248 [inline]
- p9_req_put net/9p/client.c:396 [inline]
- p9_req_put+0x208/0x250 net/9p/client.c:390
- p9_client_walk+0x247/0x540 net/9p/client.c:1165
- clone_fid fs/9p/fid.h:21 [inline]
- v9fs_fid_xattr_set+0xe4/0x2b0 fs/9p/xattr.c:118
- v9fs_xattr_set fs/9p/xattr.c:100 [inline]
- v9fs_xattr_handler_set+0x6f/0x120 fs/9p/xattr.c:159
- __vfs_setxattr+0x119/0x180 fs/xattr.c:182
- __vfs_setxattr_noperm+0x129/0x5f0 fs/xattr.c:216
- __vfs_setxattr_locked+0x1d3/0x260 fs/xattr.c:277
- vfs_setxattr+0x143/0x340 fs/xattr.c:309
- setxattr+0x146/0x160 fs/xattr.c:617
- path_setxattr+0x197/0x1c0 fs/xattr.c:636
- __do_sys_setxattr fs/xattr.c:652 [inline]
- __se_sys_setxattr fs/xattr.c:648 [inline]
- __ia32_sys_setxattr+0xc0/0x160 fs/xattr.c:648
- do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
- __do_fast_syscall_32+0x65/0xf0 arch/x86/entry/common.c:178
- do_fast_syscall_32+0x33/0x70 arch/x86/entry/common.c:203
- entry_SYSENTER_compat_after_hwframe+0x70/0x82
-
-Below is a similar scenario, the scenario in the syzbot log looks more
-complicated than this one, but this patch can fix it.
-
-     T21124                   p9_read_work
-======================== second trans =================================
-p9_client_walk
-  p9_client_rpc
-    p9_client_prepare_req
-      p9_tag_alloc
-        req = kmem_cache_alloc(p9_req_cache, GFP_NOFS);
-        tag = idr_alloc
-        << preempted >>
-        req->tc.tag = tag;
-                            /* req->[refcount/tag] == uninitialized */
-                            m->rreq = p9_tag_lookup(m->client, m->rc.tag);
-                              /* increments uninitalized refcount */
-
-        refcount_set(&req->refcount, 2);
-                            /* cb drops one ref */
-                            p9_client_cb(req)
-                            /* reader thread drops its ref:
-                               request is incorrectly freed */
-                            p9_req_put(req)
-    /* use after free and ref underflow */
-    p9_req_put(req)
-
-To fix it, we can initialize the refcount to zero before add to idr.
-
-Link: https://lkml.kernel.org/r/20221201033310.18589-1-schspa@gmail.com
-Cc: stable@vger.kernel.org # 6.0+ due to 6cda12864cb0 ("9p: Drop kref usage")
-Fixes: 728356dedeff ("9p: Add refcount to p9_req_t")
-Reported-by: syzbot+8f1060e2aaf8ca55220b@syzkaller.appspotmail.com
-Signed-off-by: Schspa Shi <schspa@gmail.com>
-Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
-Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Cc: stable@vger.kernel.org # v5.15+
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221214232602.4118147-1-nathan@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/9p/client.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ security/Kconfig.hardening |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/net/9p/client.c
-+++ b/net/9p/client.c
-@@ -297,6 +297,11 @@ p9_tag_alloc(struct p9_client *c, int8_t
- 	p9pdu_reset(&req->rc);
- 	req->t_err = 0;
- 	req->status = REQ_STATUS_ALLOC;
-+	/* refcount needs to be set to 0 before inserting into the idr
-+	 * so p9_tag_lookup does not accept a request that is not fully
-+	 * initialized. refcount_set to 2 below will mark request ready.
-+	 */
-+	refcount_set(&req->refcount, 0);
- 	init_waitqueue_head(&req->wq);
- 	INIT_LIST_HEAD(&req->req_list);
+--- a/security/Kconfig.hardening
++++ b/security/Kconfig.hardening
+@@ -257,6 +257,9 @@ config INIT_ON_FREE_DEFAULT_ON
  
+ config CC_HAS_ZERO_CALL_USED_REGS
+ 	def_bool $(cc-option,-fzero-call-used-regs=used-gpr)
++	# https://github.com/ClangBuiltLinux/linux/issues/1766
++	# https://github.com/llvm/llvm-project/issues/59242
++	depends on !CC_IS_CLANG || CLANG_VERSION > 150006
+ 
+ config ZERO_CALL_USED_REGS
+ 	bool "Enable register zeroing on function exit"
 
 
