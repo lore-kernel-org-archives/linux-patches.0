@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B2CA1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF118C433D2;
-	Wed, 28 Dec 2022 16:32:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5391C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E65BC433D2;
+	Wed, 28 Dec 2022 16:33:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245178;
-	bh=4rtHy+9NF3MXkSg5qbyHLYp3vSra1gmtc/HlKypOjkw=;
+	s=korg; t=1672245180;
+	bh=pm5Zv/Er1KLMVxZNDI/ktZnJaPYbszTji8K/IG4IT1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j1GeJXbMxFFnFrceY6lqC15Qxdx4QM/2YlcQrQk5X99xJOVL0wP0FFFAZeTj9m08q
-	 dc3OMcUVg8xqJK8TYyO+YWqyoi9oznjr4K9FvRvXBwxS+HPtnF1wNK/PwLXdWQITH7
-	 7b3XXvjeMh6w7MdwISh8X2Gh0DUqEHSee/vDvxh0=
+	b=QAQ2VmWvTeBl/0I1RhsB2CUVudHuK5nGc1wIAcvLTirSq9uZyiT8/7UK8PWEeatxa
+	 F433eXqbahXy0XVUzPtq8zvsanXtxKKCzzZlKdw39+VqJQrCl9hkRQ9bQqkLUq5Yrs
+	 o8fNTD6J+R1p+iDdvirMnBP0FD8ZVS5lB6Uvpjz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Milan Landaverde <milan@mdaverde.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Stanislav Fomichev <sdf@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0810/1146] iommu/sun50i: Consider all fault sources for reset
-Date: Wed, 28 Dec 2022 15:39:09 +0100
-Message-Id: <20221228144352.155030105@linuxfoundation.org>
+Subject: [PATCH 6.0 0846/1073] bpf: prevent leak of lsm program after failed attach
+Date: Wed, 28 Dec 2022 15:40:34 +0100
+Message-Id: <20221228144351.000064682@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,58 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Milan Landaverde <milan@mdaverde.com>
 
-[ Upstream commit cef20703e2b2276aaa402ec5a65ec9a09963b83e ]
+[ Upstream commit e89f3edffb860a0f54a9ed16deadb7a4a1fa3862 ]
 
-We have to reset masters for all faults - permissions, L1 fault or L2
-fault. Currently it's done only for permissions. If other type of fault
-happens, master is in locked up state. Fix that by really considering
-all fault sources.
+In [0], we added the ability to bpf_prog_attach LSM programs to cgroups,
+but in our validation to make sure the prog is meant to be attached to
+BPF_LSM_CGROUP, we return too early if the check fails. This results in
+lack of decrementing prog's refcnt (through bpf_prog_put)
+leaving the LSM program alive past the point of the expected lifecycle.
+This fix allows for the decrement to take place.
 
-Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://lore.kernel.org/r/20221025165415.307591-3-jernej.skrabec@gmail.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+[0] https://lore.kernel.org/all/20220628174314.1216643-4-sdf@google.com/
+
+Fixes: 69fd337a975c ("bpf: per-cgroup lsm flavor")
+Signed-off-by: Milan Landaverde <milan@mdaverde.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/r/20221213175714.31963-1-milan@mdaverde.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/sun50i-iommu.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ kernel/bpf/syscall.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-index 270204a6ec4a..bbc269500800 100644
---- a/drivers/iommu/sun50i-iommu.c
-+++ b/drivers/iommu/sun50i-iommu.c
-@@ -869,8 +869,8 @@ static phys_addr_t sun50i_iommu_handle_perm_irq(struct sun50i_iommu *iommu)
- 
- static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
- {
-+	u32 status, l1_status, l2_status, resets;
- 	struct sun50i_iommu *iommu = dev_id;
--	u32 status;
- 
- 	spin_lock(&iommu->iommu_lock);
- 
-@@ -880,6 +880,9 @@ static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
- 		return IRQ_NONE;
- 	}
- 
-+	l1_status = iommu_read(iommu, IOMMU_L1PG_INT_REG);
-+	l2_status = iommu_read(iommu, IOMMU_L2PG_INT_REG);
-+
- 	if (status & IOMMU_INT_INVALID_L2PG)
- 		sun50i_iommu_handle_pt_irq(iommu,
- 					    IOMMU_INT_ERR_ADDR_L2_REG,
-@@ -893,7 +896,8 @@ static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
- 
- 	iommu_write(iommu, IOMMU_INT_CLR_REG, status);
- 
--	iommu_write(iommu, IOMMU_RESET_REG, ~status);
-+	resets = (status | l1_status | l2_status) & IOMMU_INT_MASTER_MASK;
-+	iommu_write(iommu, IOMMU_RESET_REG, ~resets);
- 	iommu_write(iommu, IOMMU_RESET_REG, IOMMU_RESET_RELEASE_ALL);
- 
- 	spin_unlock(&iommu->iommu_lock);
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 0e758911d963..6b6fb7237ebe 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -3505,9 +3505,9 @@ static int bpf_prog_attach(const union bpf_attr *attr)
+ 	case BPF_PROG_TYPE_LSM:
+ 		if (ptype == BPF_PROG_TYPE_LSM &&
+ 		    prog->expected_attach_type != BPF_LSM_CGROUP)
+-			return -EINVAL;
+-
+-		ret = cgroup_bpf_prog_attach(attr, ptype, prog);
++			ret = -EINVAL;
++		else
++			ret = cgroup_bpf_prog_attach(attr, ptype, prog);
+ 		break;
+ 	default:
+ 		ret = -EINVAL;
 -- 
 2.35.1
 
