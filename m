@@ -1,35 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80271875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457E4C433D2;
-	Wed, 28 Dec 2022 15:51:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877FC1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EED0C433EF;
+	Wed, 28 Dec 2022 15:51:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242699;
-	bh=4Z2qI0Fuvst/1T3RbuCy5wfyka1vu8Eam/1XFtXFTQQ=;
+	s=korg; t=1672242702;
+	bh=pW/2+44E4DquXjYBO68pLmaOVVQcLKHNIyJzasyyPX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zFkPvPgd4PPatDpkUCKLMD1dSSwWMWEHZZSoZPlVf6fIU6AG8uNjvIk8NHPj7imsZ
-	 zNzFzaU39vzMsMOWYf4wx0CSc2cqSvW9P2ywiaxtOUrkI7HldjyzcRUMfcVyC80ITO
-	 +PXhJdLFjpszS9UuM11JiSqfucfBEHajkiOXj/ek=
+	b=19LLouemhOBH9Q2fLLT6bQ2kXmMdTZw1XqnY1tC7UUA2ILiIbSLd5OP+y3CtzeOhp
+	 ir7sJRBMRrbm29wqQhzDGu2jctWWAKk3zaK+rSDuax2pweV9kmR6J+uaJQUH6kHswj
+	 pSwjYwM5VNSX86oM6lnmTYtuS+dPjQJXNZwLv1yU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Andrea Parri (Microsoft)" <parri.andrea@gmail.com>,
-	Dexuan Cui <decui@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	"K. Y. Srinivasan" <kys@microsoft.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	Stephen Hemminger <sthemmin@microsoft.com>,
-	Tianyu Lan <Tianyu.Lan@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
-	Fabio A M Martins <fabiomirmar@gmail.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Zhang Yuchen <zhangyuchen.lcr@bytedance.com>,
+	Corey Minyard <cminyard@mvista.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 617/731] video: hyperv_fb: Avoid taking busy spinlock on panic path
-Date: Wed, 28 Dec 2022 15:42:04 +0100
-Message-Id: <20221228144314.418831277@linuxfoundation.org>
+Subject: [PATCH 5.15 635/731] ipmi: fix memleak when unload ipmi driver
+Date: Wed, 28 Dec 2022 15:42:22 +0100
+Message-Id: <20221228144314.922567322@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -43,104 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guilherme G. Piccoli <gpiccoli@igalia.com>
+From: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
 
-[ Upstream commit 1d044ca035dc22df0d3b39e56f2881071d9118bd ]
+[ Upstream commit 36992eb6b9b83f7f9cdc8e74fb5799d7b52e83e9 ]
 
-The Hyper-V framebuffer code registers a panic notifier in order
-to try updating its fbdev if the kernel crashed. The notifier
-callback is straightforward, but it calls the vmbus_sendpacket()
-routine eventually, and such function takes a spinlock for the
-ring buffer operations.
+After the IPMI disconnect problem, the memory kept rising and we tried
+to unload the driver to free the memory. However, only part of the
+free memory is recovered after the driver is uninstalled. Using
+ebpf to hook free functions, we find that neither ipmi_user nor
+ipmi_smi_msg is free, only ipmi_recv_msg is free.
 
-Panic path runs in atomic context, with local interrupts and
-preemption disabled, and all secondary CPUs shutdown. That said,
-taking a spinlock might cause a lockup if a secondary CPU was
-disabled with such lock taken. Fix it here by checking if the
-ring buffer spinlock is busy on Hyper-V framebuffer panic notifier;
-if so, bail-out avoiding the potential lockup scenario.
+We find that the deliver_smi_err_response call in clean_smi_msgs does
+the destroy processing on each message from the xmit_msg queue without
+checking the return value and free ipmi_smi_msg.
 
-Cc: Andrea Parri (Microsoft) <parri.andrea@gmail.com>
-Cc: Dexuan Cui <decui@microsoft.com>
-Cc: Haiyang Zhang <haiyangz@microsoft.com>
-Cc: "K. Y. Srinivasan" <kys@microsoft.com>
-Cc: Michael Kelley <mikelley@microsoft.com>
-Cc: Stephen Hemminger <sthemmin@microsoft.com>
-Cc: Tianyu Lan <Tianyu.Lan@microsoft.com>
-Cc: Wei Liu <wei.liu@kernel.org>
-Tested-by: Fabio A M Martins <fabiomirmar@gmail.com>
-Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/20220819221731.480795-10-gpiccoli@igalia.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+deliver_smi_err_response is called only at this location. Adding the
+free handling has no effect.
+
+To verify, try using ebpf to trace the free function.
+
+  $ bpftrace -e 'kretprobe:ipmi_alloc_recv_msg {printf("alloc rcv
+      %p\n",retval);} kprobe:free_recv_msg {printf("free recv %p\n",
+      arg0)} kretprobe:ipmi_alloc_smi_msg {printf("alloc smi %p\n",
+        retval);} kprobe:free_smi_msg {printf("free smi  %p\n",arg0)}'
+
+Signed-off-by: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
+Message-Id: <20221007092617.87597-4-zhangyuchen.lcr@bytedance.com>
+[Fixed the comment above handle_one_recv_msg().]
+Signed-off-by: Corey Minyard <cminyard@mvista.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hv/ring_buffer.c        | 13 +++++++++++++
- drivers/video/fbdev/hyperv_fb.c |  8 +++++++-
- include/linux/hyperv.h          |  2 ++
- 3 files changed, 22 insertions(+), 1 deletion(-)
+ drivers/char/ipmi/ipmi_msghandler.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hv/ring_buffer.c b/drivers/hv/ring_buffer.c
-index f4091143213b..1475ea77351e 100644
---- a/drivers/hv/ring_buffer.c
-+++ b/drivers/hv/ring_buffer.c
-@@ -249,6 +249,19 @@ void hv_ringbuffer_cleanup(struct hv_ring_buffer_info *ring_info)
- 	ring_info->pkt_buffer_size = 0;
+diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
+index 2badf36d4816..8dbc349a2edd 100644
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -3527,12 +3527,16 @@ static void deliver_smi_err_response(struct ipmi_smi *intf,
+ 				     struct ipmi_smi_msg *msg,
+ 				     unsigned char err)
+ {
++	int rv;
+ 	msg->rsp[0] = msg->data[0] | 4;
+ 	msg->rsp[1] = msg->data[1];
+ 	msg->rsp[2] = err;
+ 	msg->rsp_size = 3;
+-	/* It's an error, so it will never requeue, no need to check return. */
+-	handle_one_recv_msg(intf, msg);
++
++	/* This will never requeue, but it may ask us to free the message. */
++	rv = handle_one_recv_msg(intf, msg);
++	if (rv == 0)
++		ipmi_free_smi_msg(msg);
  }
  
-+/*
-+ * Check if the ring buffer spinlock is available to take or not; used on
-+ * atomic contexts, like panic path (see the Hyper-V framebuffer driver).
-+ */
-+
-+bool hv_ringbuffer_spinlock_busy(struct vmbus_channel *channel)
-+{
-+	struct hv_ring_buffer_info *rinfo = &channel->outbound;
-+
-+	return spin_is_locked(&rinfo->ring_lock);
-+}
-+EXPORT_SYMBOL_GPL(hv_ringbuffer_spinlock_busy);
-+
- /* Write to the ring buffer. */
- int hv_ringbuffer_write(struct vmbus_channel *channel,
- 			const struct kvec *kv_list, u32 kv_count,
-diff --git a/drivers/video/fbdev/hyperv_fb.c b/drivers/video/fbdev/hyperv_fb.c
-index 58c304a3b7c4..de865e197c8d 100644
---- a/drivers/video/fbdev/hyperv_fb.c
-+++ b/drivers/video/fbdev/hyperv_fb.c
-@@ -799,12 +799,18 @@ static void hvfb_ondemand_refresh_throttle(struct hvfb_par *par,
- static int hvfb_on_panic(struct notifier_block *nb,
- 			 unsigned long e, void *p)
- {
-+	struct hv_device *hdev;
- 	struct hvfb_par *par;
- 	struct fb_info *info;
- 
- 	par = container_of(nb, struct hvfb_par, hvfb_panic_nb);
--	par->synchronous_fb = true;
- 	info = par->info;
-+	hdev = device_to_hv_device(info->device);
-+
-+	if (hv_ringbuffer_spinlock_busy(hdev->channel))
-+		return NOTIFY_DONE;
-+
-+	par->synchronous_fb = true;
- 	if (par->need_docopy)
- 		hvfb_docopy(par, 0, dio_fb_size);
- 	synthvid_update(info, 0, 0, INT_MAX, INT_MAX);
-diff --git a/include/linux/hyperv.h b/include/linux/hyperv.h
-index ddc8713ce57b..8499fc9220e0 100644
---- a/include/linux/hyperv.h
-+++ b/include/linux/hyperv.h
-@@ -1307,6 +1307,8 @@ struct hv_ring_buffer_debug_info {
- int hv_ringbuffer_get_debuginfo(struct hv_ring_buffer_info *ring_info,
- 				struct hv_ring_buffer_debug_info *debug_info);
- 
-+bool hv_ringbuffer_spinlock_busy(struct vmbus_channel *channel);
-+
- /* Vmbus interface */
- #define vmbus_driver_register(driver)	\
- 	__vmbus_driver_register(driver, THIS_MODULE, KBUILD_MODNAME)
+ static void cleanup_smi_msgs(struct ipmi_smi *intf)
 -- 
 2.35.1
 
