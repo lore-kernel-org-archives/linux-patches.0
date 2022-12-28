@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23671863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A84C433D2;
-	Wed, 28 Dec 2022 15:48:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 531751863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDB37C433EF;
+	Wed, 28 Dec 2022 15:48:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242485;
-	bh=q4sc++3K2GfvUAKwubTjvcqFLgZ2ewrtLeGPqSmaAzM=;
+	s=korg; t=1672242488;
+	bh=n5oSDoJMl6ToX6z7RUTJkH1joAmDLXczJ1jnjU7Fk/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YzJzgudxDlJK9lhXIxsCHDVSpIjWye5TJOkP9dQyCnCWK7sn6gmZm6lkWW4nZiHSF
-	 dJshOhiw5/47vm8Efp4DEZsQ5qZbCijDIuInCwKPtxoEMTA/7czASU0mgzUrgbOmbw
-	 u/YOBke+IQkgOwvV8IVAdbumiSMaR4BkkfDH/5Ck=
+	b=lfGOR5Vy3vrbNt1BsVjaz+/+gzSoAbCEiYrUPhoyl/f+Ax8fENSlJYPJJfPdqh2OL
+	 efltTxfJFmF/RjGm1chIg9f8YPTxgHUyTiKNnDHIo2giLjKMKwVe2cZYokkPGcP+zX
+	 CaPSvrWSJ3ZaLQLoOmGUvQGgp2Jez2w+ystg7IDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0375/1146] ASoC: Intel: avs: Lock substream before snd_pcm_stop()
-Date: Wed, 28 Dec 2022 15:31:54 +0100
-Message-Id: <20221228144340.349340657@linuxfoundation.org>
+Subject: [PATCH 5.15 609/731] mailbox: zynq-ipi: fix error handling while device_register() fails
+Date: Wed, 28 Dec 2022 15:41:56 +0100
+Message-Id: <20221228144314.190254517@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,37 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit c30c8f9d51ec24b36e2c65a6307a5c8cbc5a0ebc ]
+[ Upstream commit a6792a0cdef0b1c2d77920246283a72537e60e94 ]
 
-snd_pcm_stop() shall be called with stream lock held to prevent any
-races between nonatomic streaming operations.
+If device_register() fails, it has two issues:
+1. The name allocated by dev_set_name() is leaked.
+2. The parent of device is not NULL, device_unregister() is called
+   in zynqmp_ipi_free_mboxes(), it will lead a kernel crash because
+   of removing not added device.
 
-Fixes: 2f1f570cd730 ("ASoC: Intel: avs: Coredump and recovery flow")
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://lore.kernel.org/r/20221116115550.1100398-2-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Call put_device() to give up the reference, so the name is freed in
+kobject_cleanup(). Add device registered check in zynqmp_ipi_free_mboxes()
+to avoid null-ptr-deref.
+
+Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/ipc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mailbox/zynqmp-ipi-mailbox.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/avs/ipc.c b/sound/soc/intel/avs/ipc.c
-index 77da206f7dbb..306f0dc4eaf5 100644
---- a/sound/soc/intel/avs/ipc.c
-+++ b/sound/soc/intel/avs/ipc.c
-@@ -123,7 +123,10 @@ static void avs_dsp_recovery(struct avs_dev *adev)
- 				if (!substream || !substream->runtime)
- 					continue;
- 
-+				/* No need for _irq() as we are in nonatomic context. */
-+				snd_pcm_stream_lock(substream);
- 				snd_pcm_stop(substream, SNDRV_PCM_STATE_DISCONNECTED);
-+				snd_pcm_stream_unlock(substream);
- 			}
+diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
+index f44079d62b1a..527204c6d5cd 100644
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -493,6 +493,7 @@ static int zynqmp_ipi_mbox_probe(struct zynqmp_ipi_mbox *ipi_mbox,
+ 	ret = device_register(&ipi_mbox->dev);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register ipi mbox dev.\n");
++		put_device(&ipi_mbox->dev);
+ 		return ret;
+ 	}
+ 	mdev = &ipi_mbox->dev;
+@@ -619,7 +620,8 @@ static void zynqmp_ipi_free_mboxes(struct zynqmp_ipi_pdata *pdata)
+ 		ipi_mbox = &pdata->ipi_mboxes[i];
+ 		if (ipi_mbox->dev.parent) {
+ 			mbox_controller_unregister(&ipi_mbox->mbox);
+-			device_unregister(&ipi_mbox->dev);
++			if (device_is_registered(&ipi_mbox->dev))
++				device_unregister(&ipi_mbox->dev);
  		}
  	}
+ }
 -- 
 2.35.1
 
