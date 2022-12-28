@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1612F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D92AC433EF;
-	Wed, 28 Dec 2022 15:08:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963231863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20477C433F0;
+	Wed, 28 Dec 2022 15:08:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240128;
-	bh=qSViSO7W0JxmQyLibcnUoZm/jLwE6sH4xVbE6B+SUJw=;
+	s=korg; t=1672240131;
+	bh=nYb4UQqvjImALPt2M8TfH0yoZqqP16LwjY8Y9ApjapM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J1JHqCKzlFa4qOLHvVdlvWNUI71jLCi5hzkhNZrefazUSXe3QIX7aCaSywPP/7Okv
-	 dVY2Pzx8doT2pR04ZrwUNQrJdLeaFjPUEGErrDlv53cXui4jhoM8Fr4ZDyEAfHx7vs
-	 V74W0GdBOi5FcM2XHWcRWFD6urTIl90LvwH7lDY4=
+	b=YaTv3KWjU+ZdVZ2krj874yoil/7fL177FNgJqxjlxocnKuxt+VRjyMpPDMQ7/TB+n
+	 ioDSUgKJAFZenKTdUTMRpvwE7hjWtHMiO/hwkkBtQjmG+vX8Og0yY/0KYkpdYCOLpa
+	 0eb42H32rjE9CImgf/ODXyG8wOrGCHB9Ql6eqezM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0121/1073] cpufreq: qcom-hw: Fix the frequency returned by cpufreq_driver->get()
-Date: Wed, 28 Dec 2022 15:28:29 +0100
-Message-Id: <20221228144331.324784426@linuxfoundation.org>
+Subject: [PATCH 6.1 0084/1146] ARM: dts: armada-375: Fix assigned-addresses for every PCIe Root Port
+Date: Wed, 28 Dec 2022 15:27:03 +0100
+Message-Id: <20221228144332.428713623@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,92 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit c72cf0cb1d77f6b1b58c334dcc3d09fa13111c4c ]
+[ Upstream commit 823956d2436f70ced74c0fe8ab99facd8abfc060 ]
 
-The cpufreq_driver->get() callback is supposed to return the current
-frequency of the CPU and not the one requested by the CPUFreq core.
-Fix it by returning the frequency that gets supplied to the CPU after
-the DCVS operation of EPSS/OSM.
+BDF of resource in DT assigned-addresses property of Marvell PCIe Root Port
+(PCI-to-PCI bridge) should match BDF in address part in that DT node name
+as specified resource belongs to Marvell PCIe Root Port itself.
 
-Fixes: 2849dd8bc72b ("cpufreq: qcom-hw: Add support for QCOM cpufreq HW driver")
-Reported-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: 4de59085091f ("ARM: mvebu: add Device Tree description of the Armada 375 SoC")
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/qcom-cpufreq-hw.c | 42 +++++++++++++++++++++----------
- 1 file changed, 29 insertions(+), 13 deletions(-)
+ arch/arm/boot/dts/armada-375.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index 9221a416230a..823b069203e1 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -122,7 +122,35 @@ static int qcom_cpufreq_hw_target_index(struct cpufreq_policy *policy,
- 	return 0;
- }
+diff --git a/arch/arm/boot/dts/armada-375.dtsi b/arch/arm/boot/dts/armada-375.dtsi
+index 929deaf312a5..c310ef26d1cc 100644
+--- a/arch/arm/boot/dts/armada-375.dtsi
++++ b/arch/arm/boot/dts/armada-375.dtsi
+@@ -592,7 +592,7 @@ pcie0_intc: interrupt-controller {
  
-+static unsigned long qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
-+{
-+	unsigned int lval;
-+
-+	if (data->soc_data->reg_current_vote)
-+		lval = readl_relaxed(data->base + data->soc_data->reg_current_vote) & 0x3ff;
-+	else
-+		lval = readl_relaxed(data->base + data->soc_data->reg_domain_state) & 0xff;
-+
-+	return lval * xo_rate;
-+}
-+
-+/* Get the current frequency of the CPU (after throttling) */
- static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
-+{
-+	struct qcom_cpufreq_data *data;
-+	struct cpufreq_policy *policy;
-+
-+	policy = cpufreq_cpu_get_raw(cpu);
-+	if (!policy)
-+		return 0;
-+
-+	data = policy->driver_data;
-+
-+	return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
-+}
-+
-+/* Get the frequency requested by the cpufreq core for the CPU */
-+static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
- {
- 	struct qcom_cpufreq_data *data;
- 	const struct qcom_cpufreq_soc_data *soc_data;
-@@ -284,18 +312,6 @@ static void qcom_get_related_cpus(int index, struct cpumask *m)
- 	}
- }
- 
--static unsigned long qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
--{
--	unsigned int lval;
--
--	if (data->soc_data->reg_current_vote)
--		lval = readl_relaxed(data->base + data->soc_data->reg_current_vote) & 0x3ff;
--	else
--		lval = readl_relaxed(data->base + data->soc_data->reg_domain_state) & 0xff;
--
--	return lval * xo_rate;
--}
--
- static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
- {
- 	struct cpufreq_policy *policy = data->policy;
-@@ -337,7 +353,7 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
- 	 * If h/w throttled frequency is higher than what cpufreq has requested
- 	 * for, then stop polling and switch back to interrupt mechanism.
- 	 */
--	if (throttled_freq >= qcom_cpufreq_hw_get(cpu))
-+	if (throttled_freq >= qcom_cpufreq_get_freq(cpu))
- 		enable_irq(data->throttle_irq);
- 	else
- 		mod_delayed_work(system_highpri_wq, &data->throttle_work,
+ 			pcie1: pcie@2,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
++				assigned-addresses = <0x82001000 0 0x44000 0 0x2000>;
+ 				reg = <0x1000 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
 -- 
 2.35.1
 
