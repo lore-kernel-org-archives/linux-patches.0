@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60DAE1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:01:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF90AC433D2;
-	Wed, 28 Dec 2022 16:01:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF9C1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:01:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84103C433F0;
+	Wed, 28 Dec 2022 16:01:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243271;
-	bh=LLOX41Xb9ERXg6GuLDR0MF9wgsTrmr77hKYGmlX+igY=;
+	s=korg; t=1672243273;
+	bh=sLTI31HENs6Ll01mWXMNkww90A2ei0ml03NtVclXo4E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LEhGSd3ErkJSZGv2t82lStB4det05MqympT4xkfPUt16qYT2E0Fz+qZiwp3VTf98z
-	 +8Xwd2KiJaO9M67S9x6xHQuf/SmLyZ08wXyF3WeRz9rxsQ4F+VsxXDoMfoeIFwcDus
-	 e3XWBrSmfBWxZiXPbTZ2/lmwzvAU2w0tqrlj/GgI=
+	b=gRAVrCXluCpGQlhUzXqqQnqbGTZPZsS184f6+SFhyDmw7QaN0z/iR0A55G910CJLU
+	 B/SSbGuW0R1gPmeIwhsmkSarhj528spNrO1r2kg7L0RugiPS9XDT3nQBTEDS5hfIQw
+	 vxVgKqBU9M7kCMnDm2qxJ7vnqSncjLFoI8fUFnoI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonghong Song <yhs@meta.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Yonghong Song <yhs@fb.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	GUO Zihua <guozihua@huawei.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0508/1073] bpf: Do not zero-extend kfunc return values
-Date: Wed, 28 Dec 2022 15:34:56 +0100
-Message-Id: <20221228144341.846015453@linuxfoundation.org>
+Subject: [PATCH 5.15 702/731] ima: Simplify ima_lsm_copy_rule
+Date: Wed, 28 Dec 2022 15:43:29 +0100
+Message-Id: <20221228144316.810526986@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,101 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Björn Töpel <bjorn@rivosinc.com>
+From: GUO Zihua <guozihua@huawei.com>
 
-[ Upstream commit d35af0a7feb077c43ff0233bba5a8c6e75b73e35 ]
+[ Upstream commit d57378d3aa4d864d9e590482602068af1b20c0c5 ]
 
-In BPF all global functions, and BPF helpers return a 64-bit
-value. For kfunc calls, this is not the case, and they can return
-e.g. 32-bit values.
+Currently ima_lsm_copy_rule() set the arg_p field of the source rule to
+NULL, so that the source rule could be freed afterward. It does not make
+sense for this behavior to be inside a "copy" function. So move it
+outside and let the caller handle this field.
 
-The return register R0 for kfuncs calls can therefore be marked as
-subreg_def != DEF_NOT_SUBREG. In general, if a register is marked with
-subreg_def != DEF_NOT_SUBREG, some archs (where bpf_jit_needs_zext()
-returns true) require the verifier to insert explicit zero-extension
-instructions.
+ima_lsm_copy_rule() now produce a shallow copy of the original entry
+including args_p field. Meaning only the lsm.rule and the rule itself
+should be freed for the original rule. Thus, instead of calling
+ima_lsm_free_rule() which frees lsm.rule as well as args_p field, free
+the lsm.rule directly.
 
-For kfuncs calls, however, the caller should do sign/zero extension
-for return values. In other words, the compiler is responsible to
-insert proper instructions, not the verifier.
-
-An example, provided by Yonghong Song:
-
-$ cat t.c
-extern unsigned foo(void);
-unsigned bar1(void) {
-     return foo();
-}
-unsigned bar2(void) {
-     if (foo()) return 10; else return 20;
-}
-
-$ clang -target bpf -mcpu=v3 -O2 -c t.c && llvm-objdump -d t.o
-t.o:    file format elf64-bpf
-
-Disassembly of section .text:
-
-0000000000000000 <bar1>:
-	0:       85 10 00 00 ff ff ff ff call -0x1
-	1:       95 00 00 00 00 00 00 00 exit
-
-0000000000000010 <bar2>:
-	2:       85 10 00 00 ff ff ff ff call -0x1
-	3:       bc 01 00 00 00 00 00 00 w1 = w0
-	4:       b4 00 00 00 14 00 00 00 w0 = 0x14
-	5:       16 01 01 00 00 00 00 00 if w1 == 0x0 goto +0x1 <LBB1_2>
-	6:       b4 00 00 00 0a 00 00 00 w0 = 0xa
-
-0000000000000038 <LBB1_2>:
-	7:       95 00 00 00 00 00 00 00 exit
-
-If the return value of 'foo()' is used in the BPF program, the proper
-zero-extension will be done.
-
-Currently, the verifier correctly marks, say, a 32-bit return value as
-subreg_def != DEF_NOT_SUBREG, but will fail performing the actual
-zero-extension, due to a verifier bug in
-opt_subreg_zext_lo32_rnd_hi32(). load_reg is not properly set to R0,
-and the following path will be taken:
-
-		if (WARN_ON(load_reg == -1)) {
-			verbose(env, "verifier bug. zext_dst is set, but no reg is defined\n");
-			return -EFAULT;
-		}
-
-A longer discussion from v1 can be found in the link below.
-
-Correct the verifier by avoiding doing explicit zero-extension of R0
-for kfunc calls. Note that R0 will still be marked as a sub-register
-for return values smaller than 64-bit.
-
-Fixes: 83a2881903f3 ("bpf: Account for BPF_FETCH in insn_has_def32()")
-Link: https://lore.kernel.org/bpf/20221202103620.1915679-1-bjorn@kernel.org/
-Suggested-by: Yonghong Song <yhs@meta.com>
-Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/r/20221207103540.396496-1-bjorn@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: GUO Zihua <guozihua@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ security/integrity/ima/ima_policy.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 7a1ca0e58043..57f76b597012 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -13299,6 +13299,10 @@ static int opt_subreg_zext_lo32_rnd_hi32(struct bpf_verifier_env *env,
- 		if (!bpf_jit_needs_zext() && !is_cmpxchg_insn(&insn))
- 			continue;
+diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
+index 844d69f6ac00..ed43d30682ff 100644
+--- a/security/integrity/ima/ima_policy.c
++++ b/security/integrity/ima/ima_policy.c
+@@ -391,12 +391,6 @@ static struct ima_rule_entry *ima_lsm_copy_rule(struct ima_rule_entry *entry)
  
-+		/* Zero-extension is done by the caller. */
-+		if (bpf_pseudo_kfunc_call(&insn))
-+			continue;
-+
- 		if (WARN_ON(load_reg == -1)) {
- 			verbose(env, "verifier bug. zext_dst is set, but no reg is defined\n");
- 			return -EFAULT;
+ 		nentry->lsm[i].type = entry->lsm[i].type;
+ 		nentry->lsm[i].args_p = entry->lsm[i].args_p;
+-		/*
+-		 * Remove the reference from entry so that the associated
+-		 * memory will not be freed during a later call to
+-		 * ima_lsm_free_rule(entry).
+-		 */
+-		entry->lsm[i].args_p = NULL;
+ 
+ 		ima_filter_rule_init(nentry->lsm[i].type, Audit_equal,
+ 				     nentry->lsm[i].args_p,
+@@ -410,6 +404,7 @@ static struct ima_rule_entry *ima_lsm_copy_rule(struct ima_rule_entry *entry)
+ 
+ static int ima_lsm_update_rule(struct ima_rule_entry *entry)
+ {
++	int i;
+ 	struct ima_rule_entry *nentry;
+ 
+ 	nentry = ima_lsm_copy_rule(entry);
+@@ -424,7 +419,8 @@ static int ima_lsm_update_rule(struct ima_rule_entry *entry)
+ 	 * references and the entry itself. All other memory refrences will now
+ 	 * be owned by nentry.
+ 	 */
+-	ima_lsm_free_rule(entry);
++	for (i = 0; i < MAX_LSM_RULES; i++)
++		ima_filter_rule_free(entry->lsm[i].rule);
+ 	kfree(entry);
+ 
+ 	return 0;
 -- 
 2.35.1
 
