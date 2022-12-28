@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B8661C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AF5C433D2;
-	Wed, 28 Dec 2022 16:40:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08A61C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D80C433D2;
+	Wed, 28 Dec 2022 16:40:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245642;
-	bh=DPS6VXR88CvOozvz6MYs4udh94EHMAw25F//G8t+0Nw=;
+	s=korg; t=1672245645;
+	bh=6nYTkxlby+DRi1O8DjM51QkGP8OAhwhGRwgpfg5K5Gw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uOMLQpZKKIV7bkgdVWDCxrWegjiHNK82FafBroY8tzG6QlEsDGHjbQ+wR8Yb7qP3K
-	 f7SagFVEWIdqeSJl+KT5Y/c3MTKPc667juE+txcaDB9E/CFr99JmPk25hkaUalN1+N
-	 7FIouCzfLYZVMgJnehkVNF0RZqsP+NPC4i649h94=
+	b=i1Io8rWrrqBkyZ4s2EwLolzK+QTHU3f/tHdQoEaG+FU0sTMXmsFoHwt5R2ATyZhIp
+	 xFzim8+sVCx49QY6p5y9ePNDykuDP25DOPy7odgVULwjGjQ6lUaoD5xIoGIUUumqUJ
+	 LVVwfgCygIETD3BB3zspxLex/ws0Dx8gMaGT9OXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo.bianconi@redhat.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0898/1146] net: enetc: avoid buffer leaks on xdp_do_redirect() failure
-Date: Wed, 28 Dec 2022 15:40:37 +0100
-Message-Id: <20221228144354.594258591@linuxfoundation.org>
+Subject: [PATCH 6.0 0931/1073] drm/amdgpu: Fix type of second parameter in trans_msg() callback
+Date: Wed, 28 Dec 2022 15:41:59 +0100
+Message-Id: <20221228144353.316925278@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,146 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 628050ec952d2e2e46ec9fb6aa07e41139e030c8 ]
+[ Upstream commit f0d0f1087333714ee683cc134a95afe331d7ddd9 ]
 
-Before enetc_clean_rx_ring_xdp() calls xdp_do_redirect(), each software
-BD in the RX ring between index orig_i and i can have one of 2 refcount
-values on its page.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-We are the owner of the current buffer that is being processed, so the
-refcount will be at least 1.
+  drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c:412:15: error: incompatible function pointer types initializing 'void (*)(struct amdgpu_device *, u32, u32, u32, u32)' (aka 'void (*)(struct amdgpu_device *, unsigned int, unsigned int, unsigned int, unsigned int)') with an expression of type 'void (struct amdgpu_device *, enum idh_request, u32, u32, u32)' (aka 'void (struct amdgpu_device *, enum idh_request, unsigned int, unsigned int, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
+          .trans_msg = xgpu_ai_mailbox_trans_msg,
+                      ^~~~~~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
 
-If the current owner of the buffer at the diametrically opposed index
-in the RX ring (i.o.w, the other half of this page) has not yet called
-kfree(), this page's refcount could even be 2.
+  drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c:435:15: error: incompatible function pointer types initializing 'void (*)(struct amdgpu_device *, u32, u32, u32, u32)' (aka 'void (*)(struct amdgpu_device *, unsigned int, unsigned int, unsigned int, unsigned int)') with an expression of type 'void (struct amdgpu_device *, enum idh_request, u32, u32, u32)' (aka 'void (struct amdgpu_device *, enum idh_request, unsigned int, unsigned int, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
+          .trans_msg = xgpu_nv_mailbox_trans_msg,
+                      ^~~~~~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
 
-enetc_page_reusable() in enetc_flip_rx_buff() tests for the page
-refcount against 1, and [ if it's 2 ] does not attempt to reuse it.
+The type of the second parameter in the prototype should be 'enum
+idh_request' instead of 'u32'. Update it to clear up the warnings.
 
-But if enetc_flip_rx_buff() is put after the xdp_do_redirect() call,
-the page refcount can have one of 3 values. It can also be 0, if there
-is no owner of the other page half, and xdp_do_redirect() for this
-buffer ran so far that it triggered a flush of the devmap/cpumap bulk
-queue, and the consumers of those bulk queues also freed the buffer,
-all by the time xdp_do_redirect() returns the execution back to enetc.
-
-This is the reason why enetc_flip_rx_buff() is called before
-xdp_do_redirect(), but there is a big flaw with that reasoning:
-enetc_flip_rx_buff() will set rx_swbd->page = NULL on both sides of the
-enetc_page_reusable() branch, and if xdp_do_redirect() returns an error,
-we call enetc_xdp_free(), which does not deal gracefully with that.
-
-In fact, what happens is quite special. The page refcounts start as 1.
-enetc_flip_rx_buff() figures they're reusable, transfers these
-rx_swbd->page pointers to a different rx_swbd in enetc_reuse_page(), and
-bumps the refcount to 2. When xdp_do_redirect() later returns an error,
-we call the no-op enetc_xdp_free(), but we still haven't lost the
-reference to that page. A copy of it is still at rx_ring->next_to_alloc,
-but that has refcount 2 (and there are no concurrent owners of it in
-flight, to drop the refcount). What really kills the system is when
-we'll flip the rx_swbd->page the second time around. With an updated
-refcount of 2, the page will not be reusable and we'll really leak it.
-Then enetc_new_page() will have to allocate more pages, which will then
-eventually leak again on further errors from xdp_do_redirect().
-
-The problem, summarized, is that we zeroize rx_swbd->page before we're
-completely done with it, and this makes it impossible for the error path
-to do something with it.
-
-Since the packet is potentially multi-buffer and therefore the
-rx_swbd->page is potentially an array, manual passing of the old
-pointers between enetc_flip_rx_buff() and enetc_xdp_free() is a bit
-difficult.
-
-For the sake of going with a simple solution, we accept the possibility
-of racing with xdp_do_redirect(), and we move the flip procedure to
-execute only on the redirect success path. By racing, I mean that the
-page may be deemed as not reusable by enetc (having a refcount of 0),
-but there will be no leak in that case, either.
-
-Once we accept that, we have something better to do with buffers on
-XDP_REDIRECT failure. Since we haven't performed half-page flipping yet,
-we won't, either (and this way, we can avoid enetc_xdp_free()
-completely, which gives the entire page to the slab allocator).
-Instead, we'll call enetc_xdp_drop(), which will recycle this half of
-the buffer back to the RX ring.
-
-Fixes: 9d2b68cc108d ("net: enetc: add support for XDP_REDIRECT")
-Suggested-by: Lorenzo Bianconi <lorenzo.bianconi@redhat.com>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://lore.kernel.org/r/20221213001908.2347046-1-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Reported-by: Sami Tolvanen <samitolvanen@google.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/enetc/enetc.c | 35 +++++---------------
- 1 file changed, 8 insertions(+), 27 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
-index 8671591cb750..3a79ead5219a 100644
---- a/drivers/net/ethernet/freescale/enetc/enetc.c
-+++ b/drivers/net/ethernet/freescale/enetc/enetc.c
-@@ -1489,23 +1489,6 @@ static void enetc_xdp_drop(struct enetc_bdr *rx_ring, int rx_ring_first,
- 	rx_ring->stats.xdp_drops++;
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
+index 617d072275eb..77210fd64a2b 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
+@@ -75,6 +75,8 @@ struct amdgpu_vf_error_buffer {
+ 	uint64_t data[AMDGPU_VF_ERROR_ENTRY_SIZE];
+ };
  
--static void enetc_xdp_free(struct enetc_bdr *rx_ring, int rx_ring_first,
--			   int rx_ring_last)
--{
--	while (rx_ring_first != rx_ring_last) {
--		struct enetc_rx_swbd *rx_swbd = &rx_ring->rx_swbd[rx_ring_first];
--
--		if (rx_swbd->page) {
--			dma_unmap_page(rx_ring->dev, rx_swbd->dma, PAGE_SIZE,
--				       rx_swbd->dir);
--			__free_page(rx_swbd->page);
--			rx_swbd->page = NULL;
--		}
--		enetc_bdr_idx_inc(rx_ring, &rx_ring_first);
--	}
--	rx_ring->stats.xdp_redirect_failures++;
--}
--
- static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
- 				   struct napi_struct *napi, int work_limit,
- 				   struct bpf_prog *prog)
-@@ -1527,8 +1510,8 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
- 		int orig_i, orig_cleaned_cnt;
- 		struct xdp_buff xdp_buff;
- 		struct sk_buff *skb;
--		int tmp_orig_i, err;
- 		u32 bd_status;
-+		int err;
++enum idh_request;
++
+ /**
+  * struct amdgpu_virt_ops - amdgpu device virt operations
+  */
+@@ -84,7 +86,8 @@ struct amdgpu_virt_ops {
+ 	int (*req_init_data)(struct amdgpu_device *adev);
+ 	int (*reset_gpu)(struct amdgpu_device *adev);
+ 	int (*wait_reset)(struct amdgpu_device *adev);
+-	void (*trans_msg)(struct amdgpu_device *adev, u32 req, u32 data1, u32 data2, u32 data3);
++	void (*trans_msg)(struct amdgpu_device *adev, enum idh_request req,
++			  u32 data1, u32 data2, u32 data3);
+ };
  
- 		rxbd = enetc_rxbd(rx_ring, i);
- 		bd_status = le32_to_cpu(rxbd->r.lstatus);
-@@ -1615,18 +1598,16 @@ static int enetc_clean_rx_ring_xdp(struct enetc_bdr *rx_ring,
- 				break;
- 			}
- 
--			tmp_orig_i = orig_i;
--
--			while (orig_i != i) {
--				enetc_flip_rx_buff(rx_ring,
--						   &rx_ring->rx_swbd[orig_i]);
--				enetc_bdr_idx_inc(rx_ring, &orig_i);
--			}
--
- 			err = xdp_do_redirect(rx_ring->ndev, &xdp_buff, prog);
- 			if (unlikely(err)) {
--				enetc_xdp_free(rx_ring, tmp_orig_i, i);
-+				enetc_xdp_drop(rx_ring, orig_i, i);
-+				rx_ring->stats.xdp_redirect_failures++;
- 			} else {
-+				while (orig_i != i) {
-+					enetc_flip_rx_buff(rx_ring,
-+							   &rx_ring->rx_swbd[orig_i]);
-+					enetc_bdr_idx_inc(rx_ring, &orig_i);
-+				}
- 				xdp_redirect_frm_cnt++;
- 				rx_ring->stats.xdp_redirect++;
- 			}
+ /*
 -- 
 2.35.1
 
