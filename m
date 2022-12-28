@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00651863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34AC1C433D2;
-	Wed, 28 Dec 2022 15:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81B871863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00FF5C433D2;
+	Wed, 28 Dec 2022 15:48:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242509;
-	bh=A4grCHYkvKB4uATlfMPV9R11Sw+LzLAckFqjEiTKo8o=;
+	s=korg; t=1672242512;
+	bh=6O+tJBAgNb1qG4Bb09pcxdwc2LV1uEwiAiUk4IjyR7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hSv8QOs0XtPNh7/6ierwL0t+fVHL8N77YPNZKnJJEDGEmGCyxiL9kW++S5T1jt5up
-	 NGXaM0dsosZOZiKctRT/6LGBW8eXkUEkqVmuOVX6cHYxuESNzTErO/hza6Lh9qlKUx
-	 pIeBe527ossOmNIvXGhzVCiJc6ShzL8WLocnRJOk=
+	b=azeyW5fC2hexoZV8UO0hPu56GKIilUHmi5Lsa1MTPsIkxCV7oTssaiGmjlBiI5haw
+	 AEu1mu8BSAxJvU3x2GOQRqxrQQuUhuQ3+lmhbtH1XQWUK53xcJaNrZ0kVU9DntcpXQ
+	 LrVi0I6WtfDCx0i0qrGd1vWRXDWqNhsaKjzq/laM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0418/1073] ASoC: mediatek: mt8173: Enable IRQ when pdata is ready
-Date: Wed, 28 Dec 2022 15:33:26 +0100
-Message-Id: <20221228144339.375751997@linuxfoundation.org>
+Subject: [PATCH 6.1 0378/1146] regulator: core: use kfree_const() to free space conditionally
+Date: Wed, 28 Dec 2022 15:31:57 +0100
+Message-Id: <20221228144340.433896333@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,68 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Wang ShaoBo <bobo.shaobowang@huawei.com>
 
-[ Upstream commit 4cbb264d4e9136acab2c8fd39e39ab1b1402b84b ]
+[ Upstream commit dc8d006d15b623c1d80b90b45d6dcb6e890dad09 ]
 
-If the device does not come straight from reset, we might receive an IRQ
-before we are ready to handle it.
+Use kfree_const() to free supply_name conditionally in create_regulator()
+as supply_name may be allocated from kmalloc() or directly from .rodata
+section.
 
-Fixes:
-
-[    2.334737] Unable to handle kernel read from unreadable memory at virtual address 00000000000001e4
-[    2.522601] Call trace:
-[    2.525040]  regmap_read+0x1c/0x80
-[    2.528434]  mt8173_afe_irq_handler+0x40/0xf0
-...
-[    2.598921]  start_kernel+0x338/0x42c
-
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Fixes: ee0bcaff109f ("ASoC: mediatek: Add AFE platform driver")
-Link: https://lore.kernel.org/r/20221128-mt8173-afe-v1-0-70728221628f@chromium.org
+Fixes: 87fe29b61f95 ("regulator: push allocations in create_regulator() outside of lock")
+Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Link: https://lore.kernel.org/r/20221123034616.3609537-1-bobo.shaobowang@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8173/mt8173-afe-pcm.c | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ drivers/regulator/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c b/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
-index dcaeeeb8aac7..bc155dd937e0 100644
---- a/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
-+++ b/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
-@@ -1070,16 +1070,6 @@ static int mt8173_afe_pcm_dev_probe(struct platform_device *pdev)
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index bc4bba899aea..78b6469e74d5 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1813,7 +1813,7 @@ static struct regulator *create_regulator(struct regulator_dev *rdev,
  
- 	afe->dev = &pdev->dev;
- 
--	irq_id = platform_get_irq(pdev, 0);
--	if (irq_id <= 0)
--		return irq_id < 0 ? irq_id : -ENXIO;
--	ret = devm_request_irq(afe->dev, irq_id, mt8173_afe_irq_handler,
--			       0, "Afe_ISR_Handle", (void *)afe);
--	if (ret) {
--		dev_err(afe->dev, "could not request_irq\n");
--		return ret;
--	}
--
- 	afe->base_addr = devm_platform_ioremap_resource(pdev, 0);
- 	if (IS_ERR(afe->base_addr))
- 		return PTR_ERR(afe->base_addr);
-@@ -1185,6 +1175,16 @@ static int mt8173_afe_pcm_dev_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err_cleanup_components;
- 
-+	irq_id = platform_get_irq(pdev, 0);
-+	if (irq_id <= 0)
-+		return irq_id < 0 ? irq_id : -ENXIO;
-+	ret = devm_request_irq(afe->dev, irq_id, mt8173_afe_irq_handler,
-+			       0, "Afe_ISR_Handle", (void *)afe);
-+	if (ret) {
-+		dev_err(afe->dev, "could not request_irq\n");
-+		goto err_pm_disable;
-+	}
-+
- 	dev_info(&pdev->dev, "MT8173 AFE driver initialized.\n");
- 	return 0;
+ 	regulator = kzalloc(sizeof(*regulator), GFP_KERNEL);
+ 	if (regulator == NULL) {
+-		kfree(supply_name);
++		kfree_const(supply_name);
+ 		return NULL;
+ 	}
  
 -- 
 2.35.1
