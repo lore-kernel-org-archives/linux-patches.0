@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDCD81863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 442ACC433EF;
-	Wed, 28 Dec 2022 15:30:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651FA1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD72CC433EF;
+	Wed, 28 Dec 2022 15:30:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241413;
-	bh=S6iJRfMbIHxe5GQye2Z4sJxdn416QZ+RRMMYLtoRXPc=;
+	s=korg; t=1672241416;
+	bh=ISCaJs4F/G7EjnJ0lN6s31xC8E2PdrisTIjbtqyN690=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JjkctPd0G4wkb2LNUjhATnG5G55LLUmLVbqhHPpuwL+lDBF5rSTX0Gt7Kejkh8PrN
-	 tjPROsIVhvr7cei0QVSmh94vspQyFPhlJhnp3J1ACJ9M7C7oaIDmZ2bCYXG3nZc7zx
-	 oYFfVaLr0pn8HYM4CYX93AkpEaPDwnSxVqrVNMak=
+	b=DepzeYsGmOAt+bugt5l7sDTwNFxA1EmUWIc7l+7l0qjsxDuulE55tHO+w9nS6Yom9
+	 scP1pBiwuLU4u0syWubfeJjmSDIt9Ab99aU0piVtCZAXle7xaY79z3qK+XIqkK+pol
+	 hYx+0XvOrsGF8t2JryymIjqnqVC9ATykJ68UsCAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Yang Shen <shenyang39@huawei.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 479/731] coresight: trbe: remove cpuhp instance node before remove cpuhp state
-Date: Wed, 28 Dec 2022 15:39:46 +0100
-Message-Id: <20221228144310.436876422@linuxfoundation.org>
+Subject: [PATCH 6.0 0281/1073] drm/msm/dsi: Prevent signed BPG offsets from bleeding into adjacent bits
+Date: Wed, 28 Dec 2022 15:31:09 +0100
+Message-Id: <20221228144335.653538060@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,59 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Shen <shenyang39@huawei.com>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit 20ee8c223f792947378196307d8e707c9cdc2d61 ]
+[ Upstream commit cc84b66be223d36a3d10d59d68ba647e72db3099 ]
 
-cpuhp_state_add_instance() and cpuhp_state_remove_instance() should
-be used in pairs. Or there will lead to the warn on
-cpuhp_remove_multi_state() since the cpuhp_step list is not empty.
+The bpg_offset array contains negative BPG offsets which fill the full 8
+bits of a char thanks to two's complement: this however results in those
+bits bleeding into the next field when the value is packed into DSC PPS
+by the drm_dsc_helper function, which only expects range_bpg_offset to
+contain 6-bit wide values.  As a consequence random slices appear
+corrupted on-screen (tested on a Sony Tama Akatsuki device with sdm845).
 
-The following is the error log with 'rmmod coresight-trbe':
-Error: Removing state 215 which has instances left.
-Call trace:
-  __cpuhp_remove_state_cpuslocked+0x144/0x160
-  __cpuhp_remove_state+0xac/0x100
-  arm_trbe_device_remove+0x2c/0x60 [coresight_trbe]
-  platform_remove+0x34/0x70
-  device_remove+0x54/0x90
-  device_release_driver_internal+0x1e4/0x250
-  driver_detach+0x5c/0xb0
-  bus_remove_driver+0x64/0xc0
-  driver_unregister+0x3c/0x70
-  platform_driver_unregister+0x20/0x30
-  arm_trbe_exit+0x1c/0x658 [coresight_trbe]
-  __arm64_sys_delete_module+0x1ac/0x24c
-  invoke_syscall+0x50/0x120
-  el0_svc_common.constprop.0+0x58/0x1a0
-  do_el0_svc+0x38/0xd0
-  el0_svc+0x2c/0xc0
-  el0t_64_sync_handler+0x1ac/0x1b0
-  el0t_64_sync+0x19c/0x1a0
- ---[ end trace 0000000000000000 ]---
+Use AND operators to limit these two's complement values to 6 bits,
+similar to the AMD and i915 drivers.
 
-Fixes: 3fbf7f011f24 ("coresight: sink: Add TRBE driver")
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Signed-off-by: Yang Shen <shenyang39@huawei.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20221122090355.23533-1-shenyang39@huawei.com
+Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Patchwork: https://patchwork.freedesktop.org/patch/508941/
+Link: https://lore.kernel.org/r/20221026182824.876933-11-marijn.suijten@somainline.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-trbe.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-trbe.c b/drivers/hwtracing/coresight/coresight-trbe.c
-index 7dddb85b9059..fac63d092c7b 100644
---- a/drivers/hwtracing/coresight/coresight-trbe.c
-+++ b/drivers/hwtracing/coresight/coresight-trbe.c
-@@ -1030,6 +1030,7 @@ static int arm_trbe_probe_cpuhp(struct trbe_drvdata *drvdata)
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index c5805416854f..cf7d5b69aac5 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1869,7 +1869,11 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
+ 	for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
+ 		dsc->rc_range_params[i].range_min_qp = min_qp[i];
+ 		dsc->rc_range_params[i].range_max_qp = max_qp[i];
+-		dsc->rc_range_params[i].range_bpg_offset = bpg_offset[i];
++		/*
++		 * Range BPG Offset contains two's-complement signed values that fill
++		 * 8 bits, yet the registers and DCS PPS field are only 6 bits wide.
++		 */
++		dsc->rc_range_params[i].range_bpg_offset = bpg_offset[i] & DSC_RANGE_BPG_OFFSET_MASK;
+ 	}
  
- static void arm_trbe_remove_cpuhp(struct trbe_drvdata *drvdata)
- {
-+	cpuhp_state_remove_instance(drvdata->trbe_online, &drvdata->hotplug_node);
- 	cpuhp_remove_multi_state(drvdata->trbe_online);
- }
- 
+ 	dsc->initial_offset = 6144;		/* Not bpp 12 */
 -- 
 2.35.1
 
