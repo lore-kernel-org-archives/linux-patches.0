@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49911863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F68C433D2;
-	Wed, 28 Dec 2022 15:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3670F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0521C433D2;
+	Wed, 28 Dec 2022 15:23:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241015;
-	bh=S7o5T/QOFbnrqB/QRxQKCXJ2XlTwZ99O41lblVkNgzM=;
+	s=korg; t=1672241018;
+	bh=rLgqm8AkjtP/pV7MG2SgnIVdxklTuEQ4QmDrLwU8k/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xtvkJliOBvDdJ2SARgQ7kPbXv9CvtzxLjZnGe/nek0LcFeVOh1nUV3NTib+DmD/ye
-	 9IlP9vqN39XBTcbFmFlQvzxYJCRIcOp1nJ3ptuhclvImlMW/5AXZyfWbpSijLOA4EL
-	 4U+YR9YUb41KfmmOd25+wN4ty9sl1qBvCycgo6bI=
+	b=p8BpMW7I5Z03Rv+as2C2mmWVVZgCTVHrQXkNL9KZED9NY2oyoXy22l8be7RPEQrJe
+	 XoHast8QsJtHjKnhZ/yN7WW5VPaXGjclnu179+QdMWP0u2o8vhV5ZHk8lTrRF7VGr+
+	 Pz9rgitExlvnhSktRrXE+KkIxvYGl3q5rWsywnuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Mike Marshall <hubcap@omnibond.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0230/1073] media: cedrus: hevc: Fix offset adjustments
-Date: Wed, 28 Dec 2022 15:30:18 +0100
-Message-Id: <20221228144334.274409637@linuxfoundation.org>
+Subject: [PATCH 5.15 428/731] orangefs: Fix sysfs not cleanup when dev init failed
+Date: Wed, 28 Dec 2022 15:38:55 +0100
+Message-Id: <20221228144308.971890979@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,99 +35,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit e9120e76a6f7e19a8d26c03f2964937e4ce69784 ]
+[ Upstream commit ea60a4ad0cf88b411cde6888b8c890935686ecd7 ]
 
-As it turns out, current padding size check works fine in theory but it
-doesn't in practice. Most probable reason are caching issues.
+When the dev init failed, should cleanup the sysfs, otherwise, the
+module will never be loaded since can not create duplicate sysfs
+directory:
 
-Let's rework reading data from bitstream using Cedrus engine instead of
-CPU. That way we avoid all cache issues and make sure that we're reading
-same data as Cedrus.
+  sysfs: cannot create duplicate filename '/fs/orangefs'
 
-Fixes: e7060d9a78c2 ("media: uapi: Change data_bit_offset definition")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+  CPU: 1 PID: 6549 Comm: insmod Tainted: G        W          6.0.0+ #44
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc33 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x34/0x44
+   sysfs_warn_dup.cold+0x17/0x24
+   sysfs_create_dir_ns+0x16d/0x180
+   kobject_add_internal+0x156/0x3a0
+   kobject_init_and_add+0xcf/0x120
+   orangefs_sysfs_init+0x7e/0x3a0 [orangefs]
+   orangefs_init+0xfe/0x1000 [orangefs]
+   do_one_initcall+0x87/0x2a0
+   do_init_module+0xdf/0x320
+   load_module+0x2f98/0x3330
+   __do_sys_finit_module+0x113/0x1b0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+  kobject_add_internal failed for orangefs with -EEXIST, don't try to register things with the same name in the same directory.
+
+Fixes: 2f83ace37181 ("orangefs: put register_chrdev immediately before register_filesystem")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../staging/media/sunxi/cedrus/cedrus_h265.c  | 25 ++++++++++++++-----
- .../staging/media/sunxi/cedrus/cedrus_regs.h  |  2 ++
- 2 files changed, 21 insertions(+), 6 deletions(-)
+ fs/orangefs/orangefs-mod.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/staging/media/sunxi/cedrus/cedrus_h265.c b/drivers/staging/media/sunxi/cedrus/cedrus_h265.c
-index 095b8464f37a..a07fd28e1fcf 100644
---- a/drivers/staging/media/sunxi/cedrus/cedrus_h265.c
-+++ b/drivers/staging/media/sunxi/cedrus/cedrus_h265.c
-@@ -242,6 +242,18 @@ static void cedrus_h265_skip_bits(struct cedrus_dev *dev, int num)
+diff --git a/fs/orangefs/orangefs-mod.c b/fs/orangefs/orangefs-mod.c
+index cd7297815f91..5ab741c60b7e 100644
+--- a/fs/orangefs/orangefs-mod.c
++++ b/fs/orangefs/orangefs-mod.c
+@@ -141,7 +141,7 @@ static int __init orangefs_init(void)
+ 		gossip_err("%s: could not initialize device subsystem %d!\n",
+ 			   __func__,
+ 			   ret);
+-		goto cleanup_device;
++		goto cleanup_sysfs;
  	}
- }
  
-+static u32 cedrus_h265_show_bits(struct cedrus_dev *dev, int num)
-+{
-+	cedrus_write(dev, VE_DEC_H265_TRIGGER,
-+		     VE_DEC_H265_TRIGGER_SHOW_BITS |
-+		     VE_DEC_H265_TRIGGER_TYPE_N_BITS(num));
+ 	ret = register_filesystem(&orangefs_fs_type);
+@@ -152,11 +152,11 @@ static int __init orangefs_init(void)
+ 		goto out;
+ 	}
+ 
+-	orangefs_sysfs_exit();
+-
+-cleanup_device:
+ 	orangefs_dev_cleanup();
+ 
++cleanup_sysfs:
++	orangefs_sysfs_exit();
 +
-+	cedrus_wait_for(dev, VE_DEC_H265_STATUS,
-+			VE_DEC_H265_STATUS_VLD_BUSY);
-+
-+	return cedrus_read(dev, VE_DEC_H265_BITS_READ);
-+}
-+
- static void cedrus_h265_write_scaling_list(struct cedrus_ctx *ctx,
- 					   struct cedrus_run *run)
- {
-@@ -406,7 +418,7 @@ static int cedrus_h265_setup(struct cedrus_ctx *ctx, struct cedrus_run *run)
- 	u32 num_entry_point_offsets;
- 	u32 output_pic_list_index;
- 	u32 pic_order_cnt[2];
--	u8 *padding;
-+	u8 padding;
- 	int count;
- 	u32 reg;
+ sysfs_init_failed:
+ 	orangefs_debugfs_cleanup();
  
-@@ -520,21 +532,22 @@ static int cedrus_h265_setup(struct cedrus_ctx *ctx, struct cedrus_run *run)
- 	if (slice_params->data_byte_offset == 0)
- 		return -EOPNOTSUPP;
- 
--	padding = (u8 *)vb2_plane_vaddr(&run->src->vb2_buf, 0) +
--		slice_params->data_byte_offset - 1;
-+	cedrus_h265_skip_bits(dev, (slice_params->data_byte_offset - 1) * 8);
-+
-+	padding = cedrus_h265_show_bits(dev, 8);
- 
- 	/* at least one bit must be set in that byte */
--	if (*padding == 0)
-+	if (padding == 0)
- 		return -EINVAL;
- 
- 	for (count = 0; count < 8; count++)
--		if (*padding & (1 << count))
-+		if (padding & (1 << count))
- 			break;
- 
- 	/* Include the one bit. */
- 	count++;
- 
--	cedrus_h265_skip_bits(dev, slice_params->data_byte_offset * 8 - count);
-+	cedrus_h265_skip_bits(dev, 8 - count);
- 
- 	/* Bitstream parameters. */
- 
-diff --git a/drivers/staging/media/sunxi/cedrus/cedrus_regs.h b/drivers/staging/media/sunxi/cedrus/cedrus_regs.h
-index d81f7513ade0..655c05b389cf 100644
---- a/drivers/staging/media/sunxi/cedrus/cedrus_regs.h
-+++ b/drivers/staging/media/sunxi/cedrus/cedrus_regs.h
-@@ -505,6 +505,8 @@
- #define VE_DEC_H265_LOW_ADDR_ENTRY_POINTS_BUF(a) \
- 	SHIFT_AND_MASK_BITS(a, 7, 0)
- 
-+#define VE_DEC_H265_BITS_READ			(VE_ENGINE_DEC_H265 + 0xdc)
-+
- #define VE_DEC_H265_SRAM_OFFSET			(VE_ENGINE_DEC_H265 + 0xe0)
- 
- #define VE_DEC_H265_SRAM_OFFSET_PRED_WEIGHT_LUMA_L0	0x00
 -- 
 2.35.1
 
