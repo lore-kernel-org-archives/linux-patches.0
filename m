@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34DF1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 794EAC433D2;
-	Wed, 28 Dec 2022 15:38:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80D61863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AED9C433D2;
+	Wed, 28 Dec 2022 15:38:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241915;
-	bh=kl9t3VKFk9KL5Sokgh4hA/Dvd50iPx2j8/AN9euXYsY=;
+	s=korg; t=1672241918;
+	bh=srbhyofZhUa3gEkfsQwea/xtykDIeRGFFJLXt2xcoOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gTO0Ft9vztGlcgpTRZHW14gWXChXAvfT0Us/7sTFtn1v+/9AbKqEuy1ppi9Uf5UK1
-	 sacXqq+oF9Pu/XjVZMULYciyJQfjouRMieL9cRBsGe4VCDM+3PPxp8dg1bIP2yQ8Hd
-	 5jakoKXRXsPJqFb38sUUrOUr7649Y/Woe6XsWHHI=
+	b=LJRiRCxOkMQBkCPgaXcsOVVuaUwZBLPeWZsLgjj4Yaw/1cwDuPQXTfmSVic20JGQU
+	 gvp9awUVgDjEpUK6QeWozIBdEkr6Bybisri7HtuakHMDThCpcEPVekb9Pgxa07G9Vz
+	 RnGazL51S3QYMCJYUx8o0iGdqraz+jPEqxBZa4Fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0343/1073] media: vidtv: Fix use-after-free in vidtv_bridge_dvb_init()
-Date: Wed, 28 Dec 2022 15:32:11 +0100
-Message-Id: <20221228144337.323006142@linuxfoundation.org>
+Subject: [PATCH 5.15 542/731] rtc: cmos: Call cmos_wake_setup() from cmos_do_probe()
+Date: Wed, 28 Dec 2022 15:40:49 +0100
+Message-Id: <20221228144312.252489324@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,89 +37,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit ba8d9405935097e296bcf7a942c3a01df0edb865 ]
+[ Upstream commit 508ccdfb86b21da37ad091003a4d4567709d5dfb ]
 
-KASAN reports a use-after-free:
-BUG: KASAN: use-after-free in dvb_dmxdev_release+0x4d5/0x5d0 [dvb_core]
-Call Trace:
- ...
- dvb_dmxdev_release+0x4d5/0x5d0 [dvb_core]
- vidtv_bridge_probe+0x7bf/0xa40 [dvb_vidtv_bridge]
- platform_probe+0xb6/0x170
- ...
-Allocated by task 1238:
- ...
- dvb_register_device+0x1a7/0xa70 [dvb_core]
- dvb_dmxdev_init+0x2af/0x4a0 [dvb_core]
- vidtv_bridge_probe+0x766/0xa40 [dvb_vidtv_bridge]
- ...
-Freed by task 1238:
- dvb_register_device+0x6d2/0xa70 [dvb_core]
- dvb_dmxdev_init+0x2af/0x4a0 [dvb_core]
- vidtv_bridge_probe+0x766/0xa40 [dvb_vidtv_bridge]
- ...
+Notice that cmos_wake_setup() is the only user of acpi_rtc_info and it
+can operate on the cmos_rtc variable directly, so it need not set the
+platform_data pointer before cmos_do_probe() is called.  Instead, it
+can be called by cmos_do_probe() in the case when the platform_data
+pointer is not set to implement the default behavior (which is to use
+the FADT information as long as ACPI support is enabled).
 
-It is because the error handling in vidtv_bridge_dvb_init() is wrong.
+Modify the code accordingly.
 
-First, vidtv_bridge_dmx(dev)_init() will clean themselves when fail, but
-goto fail_dmx(_dev): calls release functions again, which causes
-use-after-free.
+While at it, drop a comment that doesn't really match the code it is
+supposed to be describing.
 
-Also, in fail_fe, fail_tuner_probe and fail_demod_probe, j = i will cause
-out-of-bound when i finished its loop (i == NUM_FE). And the loop
-releasing is wrong, although now NUM_FE is 1 so it won't cause problem.
-
-Fix this by correctly releasing everything.
-
-Fixes: f90cf6079bf6 ("media: vidtv: add a bridge driver")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Zhang Rui <rui.zhang@intel.com>
+Tested-by: Zhang Rui <rui.zhang@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/4803444.31r3eYUQgx@kreacher
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../media/test-drivers/vidtv/vidtv_bridge.c   | 22 +++++++------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
+ drivers/rtc/rtc-cmos.c | 47 ++++++++++++++++++++----------------------
+ 1 file changed, 22 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/media/test-drivers/vidtv/vidtv_bridge.c b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-index 82620613d56b..dff7265a42ca 100644
---- a/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-+++ b/drivers/media/test-drivers/vidtv/vidtv_bridge.c
-@@ -459,26 +459,20 @@ static int vidtv_bridge_dvb_init(struct vidtv_dvb *dvb)
- 	for (j = j - 1; j >= 0; --j)
- 		dvb->demux.dmx.remove_frontend(&dvb->demux.dmx,
- 					       &dvb->dmx_fe[j]);
--fail_dmx_dev:
- 	dvb_dmxdev_release(&dvb->dmx_dev);
--fail_dmx:
-+fail_dmx_dev:
- 	dvb_dmx_release(&dvb->demux);
-+fail_dmx:
-+fail_demod_probe:
-+	for (i = i - 1; i >= 0; --i) {
-+		dvb_unregister_frontend(dvb->fe[i]);
- fail_fe:
--	for (j = i; j >= 0; --j)
--		dvb_unregister_frontend(dvb->fe[j]);
-+		dvb_module_release(dvb->i2c_client_tuner[i]);
- fail_tuner_probe:
--	for (j = i; j >= 0; --j)
--		if (dvb->i2c_client_tuner[j])
--			dvb_module_release(dvb->i2c_client_tuner[j]);
--
--fail_demod_probe:
--	for (j = i; j >= 0; --j)
--		if (dvb->i2c_client_demod[j])
--			dvb_module_release(dvb->i2c_client_demod[j]);
--
-+		dvb_module_release(dvb->i2c_client_demod[i]);
-+	}
- fail_adapter:
- 	dvb_unregister_adapter(&dvb->adapter);
--
- fail_i2c:
- 	i2c_del_adapter(&dvb->i2c_adapter);
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index 58cc2bae2f8a..a84262265d6d 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -744,6 +744,8 @@ static irqreturn_t cmos_interrupt(int irq, void *p)
+ 		return IRQ_NONE;
+ }
  
++static void cmos_wake_setup(struct device *dev);
++
+ #ifdef	CONFIG_PNP
+ #define	INITSECTION
+ 
+@@ -827,19 +829,27 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+ 		if (info->address_space)
+ 			address_space = info->address_space;
+ 
+-		if (info->rtc_day_alarm && info->rtc_day_alarm < 128)
+-			cmos_rtc.day_alrm = info->rtc_day_alarm;
+-		if (info->rtc_mon_alarm && info->rtc_mon_alarm < 128)
+-			cmos_rtc.mon_alrm = info->rtc_mon_alarm;
+-		if (info->rtc_century && info->rtc_century < 128)
+-			cmos_rtc.century = info->rtc_century;
++		cmos_rtc.day_alrm = info->rtc_day_alarm;
++		cmos_rtc.mon_alrm = info->rtc_mon_alarm;
++		cmos_rtc.century = info->rtc_century;
+ 
+ 		if (info->wake_on && info->wake_off) {
+ 			cmos_rtc.wake_on = info->wake_on;
+ 			cmos_rtc.wake_off = info->wake_off;
+ 		}
++	} else {
++		cmos_wake_setup(dev);
+ 	}
+ 
++	if (cmos_rtc.day_alrm >= 128)
++		cmos_rtc.day_alrm = 0;
++
++	if (cmos_rtc.mon_alrm >= 128)
++		cmos_rtc.mon_alrm = 0;
++
++	if (cmos_rtc.century >= 128)
++		cmos_rtc.century = 0;
++
+ 	cmos_rtc.dev = dev;
+ 	dev_set_drvdata(dev, &cmos_rtc);
+ 
+@@ -1275,13 +1285,6 @@ static void use_acpi_alarm_quirks(void)
+ static inline void use_acpi_alarm_quirks(void) { }
+ #endif
+ 
+-/* Every ACPI platform has a mc146818 compatible "cmos rtc".  Here we find
+- * its device node and pass extra config data.  This helps its driver use
+- * capabilities that the now-obsolete mc146818 didn't have, and informs it
+- * that this board's RTC is wakeup-capable (per ACPI spec).
+- */
+-static struct cmos_rtc_board_info acpi_rtc_info;
+-
+ static void cmos_wake_setup(struct device *dev)
+ {
+ 	if (acpi_disabled)
+@@ -1289,26 +1292,23 @@ static void cmos_wake_setup(struct device *dev)
+ 
+ 	use_acpi_alarm_quirks();
+ 
+-	acpi_rtc_info.wake_on = rtc_wake_on;
+-	acpi_rtc_info.wake_off = rtc_wake_off;
++	cmos_rtc.wake_on = rtc_wake_on;
++	cmos_rtc.wake_off = rtc_wake_off;
+ 
+-	/* workaround bug in some ACPI tables */
++	/* ACPI tables bug workaround. */
+ 	if (acpi_gbl_FADT.month_alarm && !acpi_gbl_FADT.day_alarm) {
+ 		dev_dbg(dev, "bogus FADT month_alarm (%d)\n",
+ 			acpi_gbl_FADT.month_alarm);
+ 		acpi_gbl_FADT.month_alarm = 0;
+ 	}
+ 
+-	acpi_rtc_info.rtc_day_alarm = acpi_gbl_FADT.day_alarm;
+-	acpi_rtc_info.rtc_mon_alarm = acpi_gbl_FADT.month_alarm;
+-	acpi_rtc_info.rtc_century = acpi_gbl_FADT.century;
++	cmos_rtc.day_alrm = acpi_gbl_FADT.day_alarm;
++	cmos_rtc.mon_alrm = acpi_gbl_FADT.month_alarm;
++	cmos_rtc.century = acpi_gbl_FADT.century;
+ 
+-	/* NOTE:  S4_RTC_WAKE is NOT currently useful to Linux */
+ 	if (acpi_gbl_FADT.flags & ACPI_FADT_S4_RTC_WAKE)
+ 		dev_info(dev, "RTC can wake from S4\n");
+ 
+-	dev->platform_data = &acpi_rtc_info;
+-
+ 	/* RTC always wakes from S1/S2/S3, and often S4/STD */
+ 	device_init_wakeup(dev, 1);
+ }
+@@ -1359,8 +1359,6 @@ static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
+ {
+ 	int irq, ret;
+ 
+-	cmos_wake_setup(&pnp->dev);
+-
+ 	if (pnp_port_start(pnp, 0) == 0x70 && !pnp_irq_valid(pnp, 0)) {
+ 		irq = 0;
+ #ifdef CONFIG_X86
+@@ -1468,7 +1466,6 @@ static int __init cmos_platform_probe(struct platform_device *pdev)
+ 	int irq, ret;
+ 
+ 	cmos_of_init(pdev);
+-	cmos_wake_setup(&pdev->dev);
+ 
+ 	if (RTC_IOMAPPED)
+ 		resource = platform_get_resource(pdev, IORESOURCE_IO, 0);
 -- 
 2.35.1
 
