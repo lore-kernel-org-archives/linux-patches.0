@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1811A1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:50:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D892C433D2;
-	Wed, 28 Dec 2022 16:50:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7C0B1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B439C433D2;
+	Wed, 28 Dec 2022 16:51:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246257;
-	bh=peGOiY9UJyxc+ENCrALAYeUcywYnLBAiyUrKaKSKKD8=;
+	s=korg; t=1672246260;
+	bh=vmx0QPj7LGc340EO84PPItZSxGvdh2PDT2pBaIiWUIc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f0zVfCAgHb6YErn19a95Hi2LD1eg3R486dFqP/cQOPVUUvDrJW5zFG3NQMBLgV+W9
-	 k1/P1kBgvHBWFQwQ5hI3hq0MiTY793pQtdvwIRdI1sTaXZlFym4d9fjqJ4P2chXffL
-	 DaOUaZhPjc4K5tX2Q4JEIatUaJCojnOHYuIsajRU=
+	b=LQ+Z9imW/ZBrdQm/9DUvbDdiy3fCZ8Ww0Tn9y6E/y9OkvNmrf4Ls7o1AM1WgwX1q4
+	 FmgXrrVj29jtvr4yVZIGr2HlAXAw7NSetb0B9BR1eWWcY1Gc/aGEVED85gEjDyntQW
+	 jWFP0G+8BL6tu6yRp3++yE21G+MtMrE/g/uID5lM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1011/1146] nvme-auth: dont override ctrl keys before validation
-Date: Wed, 28 Dec 2022 15:42:30 +0100
-Message-Id: <20221228144357.827735626@linuxfoundation.org>
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.0 1040/1073] xhci: Prevent infinite loop in transaction errors recovery for streams
+Date: Wed, 28 Dec 2022 15:43:48 +0100
+Message-Id: <20221228144356.442568545@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,66 +33,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 01604350e14560d4d69323eb1ba12a257a643ea8 ]
+commit a1575120972ecd7baa6af6a69e4e7ea9213bde7c upstream.
 
-Replace ctrl ctrl_key/host_key only after nvme_auth_generate_key is successful.
-Also, this fixes a bug where the keys are leaked.
+Make sure to also limit the amount of soft reset retries for transaction
+errors on streams in cases where the transaction error event doesn't point
+to any specific TRB.
 
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In these cases we don't know the TRB or stream ring, but we do know which
+endpoint had the error.
+
+To keep error counting simple and functional, move the current err_count
+from ring structure to endpoint structure.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20221130091944.2171610-6-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/host/core.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/usb/host/xhci-ring.c |   14 ++++++++++----
+ drivers/usb/host/xhci.h      |    2 +-
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 95b73b386719..108b5022cead 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -3745,13 +3745,17 @@ static ssize_t nvme_ctrl_dhchap_secret_store(struct device *dev,
- 	memcpy(dhchap_secret, buf, count);
- 	nvme_auth_stop(ctrl);
- 	if (strcmp(dhchap_secret, opts->dhchap_secret)) {
-+		struct nvme_dhchap_key *key, *host_key;
- 		int ret;
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -2458,7 +2458,7 @@ static int process_bulk_intr_td(struct x
  
--		ret = nvme_auth_generate_key(dhchap_secret, &ctrl->host_key);
-+		ret = nvme_auth_generate_key(dhchap_secret, &key);
- 		if (ret)
- 			return ret;
- 		kfree(opts->dhchap_secret);
- 		opts->dhchap_secret = dhchap_secret;
-+		host_key = ctrl->host_key;
-+		ctrl->host_key = key;
-+		nvme_auth_free_key(host_key);
- 		/* Key has changed; re-authentication with new key */
- 		nvme_auth_reset(ctrl);
- 	}
-@@ -3795,13 +3799,17 @@ static ssize_t nvme_ctrl_dhchap_ctrl_secret_store(struct device *dev,
- 	memcpy(dhchap_secret, buf, count);
- 	nvme_auth_stop(ctrl);
- 	if (strcmp(dhchap_secret, opts->dhchap_ctrl_secret)) {
-+		struct nvme_dhchap_key *key, *ctrl_key;
- 		int ret;
+ 	switch (trb_comp_code) {
+ 	case COMP_SUCCESS:
+-		ep_ring->err_count = 0;
++		ep->err_count = 0;
+ 		/* handle success with untransferred data as short packet */
+ 		if (ep_trb != td->last_trb || remaining) {
+ 			xhci_warn(xhci, "WARN Successful completion on short TX\n");
+@@ -2484,7 +2484,7 @@ static int process_bulk_intr_td(struct x
+ 		break;
+ 	case COMP_USB_TRANSACTION_ERROR:
+ 		if (xhci->quirks & XHCI_NO_SOFT_RETRY ||
+-		    (ep_ring->err_count++ > MAX_SOFT_RETRY) ||
++		    (ep->err_count++ > MAX_SOFT_RETRY) ||
+ 		    le32_to_cpu(slot_ctx->tt_info) & TT_SLOT)
+ 			break;
  
--		ret = nvme_auth_generate_key(dhchap_secret, &ctrl->ctrl_key);
-+		ret = nvme_auth_generate_key(dhchap_secret, &key);
- 		if (ret)
- 			return ret;
- 		kfree(opts->dhchap_ctrl_secret);
- 		opts->dhchap_ctrl_secret = dhchap_secret;
-+		ctrl_key = ctrl->ctrl_key;
-+		ctrl->ctrl_key = key;
-+		nvme_auth_free_key(ctrl_key);
- 		/* Key has changed; re-authentication with new key */
- 		nvme_auth_reset(ctrl);
- 	}
--- 
-2.35.1
-
+@@ -2565,8 +2565,14 @@ static int handle_tx_event(struct xhci_h
+ 		case COMP_USB_TRANSACTION_ERROR:
+ 		case COMP_INVALID_STREAM_TYPE_ERROR:
+ 		case COMP_INVALID_STREAM_ID_ERROR:
+-			xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
+-						    EP_SOFT_RESET);
++			xhci_dbg(xhci, "Stream transaction error ep %u no id\n",
++				 ep_index);
++			if (ep->err_count++ > MAX_SOFT_RETRY)
++				xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
++							    EP_HARD_RESET);
++			else
++				xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
++							    EP_SOFT_RESET);
+ 			goto cleanup;
+ 		case COMP_RING_UNDERRUN:
+ 		case COMP_RING_OVERRUN:
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -933,6 +933,7 @@ struct xhci_virt_ep {
+ 	 * have to restore the device state to the previous state
+ 	 */
+ 	struct xhci_ring		*new_ring;
++	unsigned int			err_count;
+ 	unsigned int			ep_state;
+ #define SET_DEQ_PENDING		(1 << 0)
+ #define EP_HALTED		(1 << 1)	/* For stall handling */
+@@ -1627,7 +1628,6 @@ struct xhci_ring {
+ 	 * if we own the TRB (if we are the consumer).  See section 4.9.1.
+ 	 */
+ 	u32			cycle_state;
+-	unsigned int            err_count;
+ 	unsigned int		stream_id;
+ 	unsigned int		num_segs;
+ 	unsigned int		num_trbs_free;
 
 
