@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9A11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA1AC433D2;
-	Wed, 28 Dec 2022 15:29:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B611863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098A4C433EF;
+	Wed, 28 Dec 2022 15:29:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241397;
-	bh=t6Mf8C73r4LJ/2rWzLEn/DbP86+4qJCpSCMITIWCRC8=;
+	s=korg; t=1672241400;
+	bh=qmVET0cJx3ScaVnuwOtD91ze65MEzrFc/OULRL/uRNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r+NZ+uy3R3P4OTkRw6co3C2qBURqhfcKzebkwxi7tm7/XW725PKA5JcPmui0l0i42
-	 FE70aFy0PzUnmKydbeLe+lcOwd2x/QRvtcm8fzeWF0ZVq2kIyq0Ou9NhBDsxIYeEDL
-	 CrRNwHg00cCyl1S0r9U0UeDHUoHfOp9uEuE8eFlc=
+	b=zhZGlGW/eGYyanfEZUBjZGT1Vsgs55egV2CuhDX6FhvNg/ubq/Org5iKjPC/FTml6
+	 GA3M/rVMmT8id8b2HeLPOTP3SqsnLBJCyRNNbnpJ0TTJyTjEQ/zc3m9cZ8JFbvZjL/
+	 jnTuOO8Kc2PGzSbE9se8krKeJFdQt8MMnSitfPCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
+	Rafael Mendonca <rafaelmendsr@gmail.com>,
+	Tommaso Merciai <tommaso.merciai@amarulasolutions.com>,
+	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0279/1073] drm/msm/dsi: Account for DSCs bits_per_pixel having 4 fractional bits
-Date: Wed, 28 Dec 2022 15:31:07 +0100
-Message-Id: <20221228144335.599890092@linuxfoundation.org>
+Subject: [PATCH 6.1 0242/1146] media: i2c: ov5648: Free V4L2 fwnode data on unbind
+Date: Wed, 28 Dec 2022 15:29:41 +0100
+Message-Id: <20221228144336.708905059@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,92 +37,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Rafael Mendonca <rafaelmendsr@gmail.com>
 
-[ Upstream commit d2c277c61986942e99680cb67ce26423d0f42f11 ]
+[ Upstream commit c95770e4fc172696dcb1450893cda7d6324d96fc ]
 
-drm_dsc_config's bits_per_pixel field holds a fractional value with 4
-bits, which all panel drivers should adhere to for
-drm_dsc_pps_payload_pack() to generate a valid payload.  All code in the
-DSI driver here seems to assume that this field doesn't contain any
-fractional bits, hence resulting in the wrong values being computed.
-Since none of the calculations leave any room for fractional bits or
-seem to indicate any possible area of support, disallow such values
-altogether.  calculate_rc_params() in intel_vdsc.c performs an identical
-bitshift to get at this integer value.
+The V4L2 fwnode data structure doesn't get freed on unbind, which leads to
+a memleak.
 
-Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Patchwork: https://patchwork.freedesktop.org/patch/508938/
-Link: https://lore.kernel.org/r/20221026182824.876933-8-marijn.suijten@somainline.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: e43ccb0a045f ("media: i2c: Add support for the OV5648 image sensor")
+Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
+Reviewed-by: Tommaso Merciai <tommaso.merciai@amarulasolutions.com>
+Reviewed-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 19 ++++++++++++++-----
- 1 file changed, 14 insertions(+), 5 deletions(-)
+ drivers/media/i2c/ov5648.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 0c80d0797a6a..27fef5169bed 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -34,7 +34,7 @@
+diff --git a/drivers/media/i2c/ov5648.c b/drivers/media/i2c/ov5648.c
+index 84604ea7bdf9..17465fcf28e3 100644
+--- a/drivers/media/i2c/ov5648.c
++++ b/drivers/media/i2c/ov5648.c
+@@ -2597,6 +2597,7 @@ static void ov5648_remove(struct i2c_client *client)
+ 	v4l2_ctrl_handler_free(&sensor->ctrls.handler);
+ 	mutex_destroy(&sensor->mutex);
+ 	media_entity_cleanup(&subdev->entity);
++	v4l2_fwnode_endpoint_free(&sensor->endpoint);
+ }
  
- #define DSI_RESET_TOGGLE_DELAY_MS 20
- 
--static int dsi_populate_dsc_params(struct drm_dsc_config *dsc);
-+static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc_config *dsc);
- 
- static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
- {
-@@ -984,6 +984,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 	u32 va_end = va_start + mode->vdisplay;
- 	u32 hdisplay = mode->hdisplay;
- 	u32 wc;
-+	int ret;
- 
- 	DBG("");
- 
-@@ -1019,7 +1020,9 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
- 		/* we do the calculations for dsc parameters here so that
- 		 * panel can use these parameters
- 		 */
--		dsi_populate_dsc_params(dsc);
-+		ret = dsi_populate_dsc_params(msm_host, dsc);
-+		if (ret)
-+			return;
- 
- 		/* Divide the display by 3 but keep back/font porch and
- 		 * pulse width same
-@@ -1835,9 +1838,15 @@ static char bpg_offset[DSC_NUM_BUF_RANGES] = {
- 	2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -12, -12, -12
- };
- 
--static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
-+static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc_config *dsc)
- {
- 	int i;
-+	u16 bpp = dsc->bits_per_pixel >> 4;
-+
-+	if (dsc->bits_per_pixel & 0xf) {
-+		DRM_DEV_ERROR(&msm_host->pdev->dev, "DSI does not support fractional bits_per_pixel\n");
-+		return -EINVAL;
-+	}
- 
- 	dsc->rc_model_size = 8192;
- 	dsc->first_line_bpg_offset = 12;
-@@ -1858,8 +1867,8 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
- 		dsc->rc_range_params[i].range_bpg_offset = bpg_offset[i];
- 	}
- 
--	dsc->initial_offset = 6144; /* Not bpp 12 */
--	if (dsc->bits_per_pixel != 8)
-+	dsc->initial_offset = 6144;		/* Not bpp 12 */
-+	if (bpp != 8)
- 		dsc->initial_offset = 2048;	/* bpp = 12 */
- 
- 	if (dsc->bits_per_component <= 10)
+ static const struct dev_pm_ops ov5648_pm_ops = {
 -- 
 2.35.1
 
