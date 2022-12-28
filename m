@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FA31863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B6C5C433D2;
-	Wed, 28 Dec 2022 15:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998D11863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4AAC433D2;
+	Wed, 28 Dec 2022 15:01:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239711;
-	bh=tJ+fUq+Lv66D/5VBYqyCRszREjgHEW1O1QrF4kCzU6A=;
+	s=korg; t=1672239714;
+	bh=+e4kKoYMfsgLA0QIIilo188036g+bAIfSq9Ae03fcaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uQHk62I76gxMNcDO2sPLEmkRElJ41T0QajfcbHgyvcSArRGfAidCtaulM4U/5Safc
-	 sYy6NQrIaY+C6Ew8SMdHApdUpn2bj6ayOZujh7vFj0yYkOuJKYzXQjXdyLlkPciVis
-	 TE2PUR+aPA56FJhU8R6OVlwEh7Yq7DcvArZ+GkiY=
+	b=u3TTUHHGxVS5DLe7sZgb/754DyAmZFvYSg9iTeGxs6rgxrueWt+UCFyXpQRTSiis2
+	 Ni562vnIpruf3vwzouK9BSZrlV8B5gPS68tvFcEHQXvGEeSiZsANi7e70oox7CFlRj
+	 Zbgc5Mhb5O6T4BpP66uXBWKgpUqwSt11kIGEGkXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Molly Sophia <mollysophia379@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0006/1146] arm64: dts: qcom: sdm845-xiaomi-polaris: fix codec pin conf name
-Date: Wed, 28 Dec 2022 15:25:45 +0100
-Message-Id: <20221228144330.357072091@linuxfoundation.org>
+Subject: [PATCH 6.0 0067/1073] arm64: dts: mediatek: pumpkin-common: Fix devicetree warnings
+Date: Wed, 28 Dec 2022 15:27:35 +0100
+Message-Id: <20221228144329.907804859@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,37 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 58c4a0b6f4bdf8c3c2b4aad7f980e4019cc0fc83 ]
+[ Upstream commit 509438336ce75c8b4e6ce8e8d507dc77d0783bdd ]
 
-Fix typo in the codec's pin name to be configured.  Mismatched name
-caused the pin configuration to be ignored.
+Fix the pinctrl submodes and optee node to remove unneeded unit address,
+fixing all unit_address_vs_reg warnings.
 
-Fixes: be497abe19bf ("arm64: dts: qcom: Add support for Xiaomi Mi Mix2s")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Molly Sophia <mollysophia379@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20220930192039.240486-3-krzysztof.kozlowski@linaro.org
+Fixes: 9983822c8cf9 ("arm64: dts: mediatek: add pumpkin board dts")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221013152212.416661-8-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-index afc17e4d403f..f98259489679 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-@@ -628,7 +628,7 @@ sde_dsi_suspend: sde-dsi-suspend {
+diff --git a/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi b/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi
+index 8ee1529683a3..ec8dfb3d1c6d 100644
+--- a/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi
++++ b/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi
+@@ -17,7 +17,7 @@ chosen {
  	};
  
- 	wcd_intr_default: wcd-intr-default {
--		pins = "goui54";
-+		pins = "gpio54";
- 		function = "gpio";
- 		input-enable;
- 		bias-pull-down;
+ 	firmware {
+-		optee: optee@4fd00000 {
++		optee: optee {
+ 			compatible = "linaro,optee-tz";
+ 			method = "smc";
+ 		};
+@@ -209,7 +209,7 @@ pins_cmd_dat {
+ 		};
+ 	};
+ 
+-	i2c0_pins_a: i2c0@0 {
++	i2c0_pins_a: i2c0 {
+ 		pins1 {
+ 			pinmux = <MT8516_PIN_58_SDA0__FUNC_SDA0_0>,
+ 				 <MT8516_PIN_59_SCL0__FUNC_SCL0_0>;
+@@ -217,7 +217,7 @@ pins1 {
+ 		};
+ 	};
+ 
+-	i2c2_pins_a: i2c2@0 {
++	i2c2_pins_a: i2c2 {
+ 		pins1 {
+ 			pinmux = <MT8516_PIN_60_SDA2__FUNC_SDA2_0>,
+ 				 <MT8516_PIN_61_SCL2__FUNC_SCL2_0>;
 -- 
 2.35.1
 
