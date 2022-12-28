@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2102E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B799C433F1;
-	Wed, 28 Dec 2022 15:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901E71863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1563FC433EF;
+	Wed, 28 Dec 2022 15:07:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240021;
-	bh=eFHU17HzWdntTuZi5lZESvb7qKTPfB29SHmGQPBHy00=;
+	s=korg; t=1672240023;
+	bh=Hse2NWEM6mKM2q3l/sDc6/hughAXgOdpaBVYBaCds5w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r/L1RsxNeXOFSu46Up+2ZHRvBEhUOiTKkjsnkvEt5GmyL2znnhiwoIIcLtW+Asl6n
-	 iFz3LJKzrAiw7ps3Qn4RAOZ1tvXAUivEtFVzoPpiJaQGh6dAXlyTN808oIarFyC1hH
-	 2Vpc8jsBfmXSVKXfTP0admQebQhYHTOOADWviy9Q=
+	b=QyhXeqA52a2pVDyM/5Srvnc9ZFuUv1Ebk6EZzNDSooSfHQgcllDPWV0q8WSgr5suU
+	 xSJLHLN8w+t6rIzXYHMdNayTcDr/xHzL2cjWUuDoyQRlU+4LpnNHYVzdkekjoTX5Vo
+	 aCl7klD75PSFs0cOXKmLKWK95WcpATDiVaB/Q+aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 300/731] mmc: atmel-mci: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:36:47 +0100
-Message-Id: <20221228144305.272606255@linuxfoundation.org>
+Subject: [PATCH 6.1 0072/1146] arm64: dts: mt2712e: Fix unit_address_vs_reg warning for oscillators
+Date: Wed, 28 Dec 2022 15:26:51 +0100
+Message-Id: <20221228144332.110736362@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,58 +35,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 9e6e8c43726673ca2abcaac87640b9215fd72f4c ]
+[ Upstream commit e4495a0a8b3d84816c9a46edf3ce060bbf267475 ]
 
-mmc_add_host() may return error, if we ignore its return value,
-it will lead two issues:
-1. The memory that allocated in mmc_alloc_host() is leaked.
-2. In the remove() path, mmc_remove_host() will be called to
-   delete device, but it's not added yet, it will lead a kernel
-   crash because of null-ptr-deref in device_del().
+Rename the fixed-clock oscillators to remove the unit address.
 
-So fix this by checking the return value and calling mmc_free_host()
-in the error path.
+This solves unit_address_vs_reg warnings.
 
-Fixes: 7d2be0749a59 ("atmel-mci: Driver for Atmel on-chip MMC controllers")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221108122819.429975-1-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 5d4839709c8e ("arm64: dts: mt2712: Add clock controller device nodes")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221013152212.416661-4-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/atmel-mci.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt2712e.dtsi | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/mmc/host/atmel-mci.c b/drivers/mmc/host/atmel-mci.c
-index 807177c953f3..6f971a3e7e49 100644
---- a/drivers/mmc/host/atmel-mci.c
-+++ b/drivers/mmc/host/atmel-mci.c
-@@ -2223,6 +2223,7 @@ static int atmci_init_slot(struct atmel_mci *host,
- {
- 	struct mmc_host			*mmc;
- 	struct atmel_mci_slot		*slot;
-+	int ret;
+diff --git a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
+index e6d7453e56e0..ff6b26cdda81 100644
+--- a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
+@@ -160,70 +160,70 @@ sys_clk: dummyclk {
+ 		#clock-cells = <0>;
+ 	};
  
- 	mmc = mmc_alloc_host(sizeof(struct atmel_mci_slot), &host->pdev->dev);
- 	if (!mmc)
-@@ -2306,11 +2307,13 @@ static int atmci_init_slot(struct atmel_mci *host,
+-	clk26m: oscillator@0 {
++	clk26m: oscillator-26m {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <26000000>;
+ 		clock-output-names = "clk26m";
+ 	};
  
- 	host->slot[id] = slot;
- 	mmc_regulator_get_supply(mmc);
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret) {
-+		mmc_free_host(mmc);
-+		return ret;
-+	}
+-	clk32k: oscillator@1 {
++	clk32k: oscillator-32k {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <32768>;
+ 		clock-output-names = "clk32k";
+ 	};
  
- 	if (gpio_is_valid(slot->detect_pin)) {
--		int ret;
--
- 		timer_setup(&slot->detect_timer, atmci_detect_change, 0);
+-	clkfpc: oscillator@2 {
++	clkfpc: oscillator-50m {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <50000000>;
+ 		clock-output-names = "clkfpc";
+ 	};
  
- 		ret = request_irq(gpio_to_irq(slot->detect_pin),
+-	clkaud_ext_i_0: oscillator@3 {
++	clkaud_ext_i_0: oscillator-aud0 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <6500000>;
+ 		clock-output-names = "clkaud_ext_i_0";
+ 	};
+ 
+-	clkaud_ext_i_1: oscillator@4 {
++	clkaud_ext_i_1: oscillator-aud1 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <196608000>;
+ 		clock-output-names = "clkaud_ext_i_1";
+ 	};
+ 
+-	clkaud_ext_i_2: oscillator@5 {
++	clkaud_ext_i_2: oscillator-aud2 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <180633600>;
+ 		clock-output-names = "clkaud_ext_i_2";
+ 	};
+ 
+-	clki2si0_mck_i: oscillator@6 {
++	clki2si0_mck_i: oscillator-i2s0 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <30000000>;
+ 		clock-output-names = "clki2si0_mck_i";
+ 	};
+ 
+-	clki2si1_mck_i: oscillator@7 {
++	clki2si1_mck_i: oscillator-i2s1 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <30000000>;
+ 		clock-output-names = "clki2si1_mck_i";
+ 	};
+ 
+-	clki2si2_mck_i: oscillator@8 {
++	clki2si2_mck_i: oscillator-i2s2 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <30000000>;
+ 		clock-output-names = "clki2si2_mck_i";
+ 	};
+ 
+-	clktdmin_mclk_i: oscillator@9 {
++	clktdmin_mclk_i: oscillator-mclk {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <30000000>;
 -- 
 2.35.1
 
