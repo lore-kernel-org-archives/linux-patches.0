@@ -1,30 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A2461C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:39:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E8FC433D2;
-	Wed, 28 Dec 2022 16:39:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E9C1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:39:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C7C8C433D2;
+	Wed, 28 Dec 2022 16:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245587;
-	bh=XCYAUkk25tpzYLrY7z26zSUToMa1wnEdXMCbDROI2m4=;
+	s=korg; t=1672245590;
+	bh=xzJNGysGIYQo1e07OGvZGwjIVhL5ZmwTqtcjh6+Z8TU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=scdPjeE8a+ITbJ9/4mL/gDumPx14VUisAmRsUcqK2+ap7MYMFc+nRtzxD7VGP1kRt
-	 dloUk9xLdnKRZMv8CPFBxWgQBzvBPsmUWj33lo8bbfaiAkq3GqwFmwETfTMYAt+xNb
-	 1tXUgGEmks4DS/m8pEoQtlLOissdCfv5kkEnpsVk=
+	b=jWLyIprN0U6GT6f3pKyPK7Bh4HyD4Q6PNBreMztV086THKFyuCYcdV/z8Ca3/xxPn
+	 CAs+cniFSAyU4y/d/kh3kELb/3RZ6m+M4cRuRZ16cJLcWI6kjrGYs0QXI5ZwyYyBkG
+	 HSRUzdGKYw7G7XIcpYczdbazPWPsN/c9fW9s+Ns4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Terho <janne.terho@ouman.fi>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Stefan Hajnoczi <stefanha@redhat.com>,
+	Keith Busch <kbusch@kernel.org>,
+	virtualization@lists.linux-foundation.org,
+	Bart Van Assche <bvanassche@acm.org>,
+	David Jeffery <djeffery@redhat.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0885/1146] rtc: pcf85063: fix pcf85063_clkout_control
-Date: Wed, 28 Dec 2022 15:40:24 +0100
-Message-Id: <20221228144354.206788740@linuxfoundation.org>
+Subject: [PATCH 6.0 0919/1073] blk-mq: avoid double ->queue_rq() because of early timeout
+Date: Wed, 28 Dec 2022 15:41:47 +0100
+Message-Id: <20221228144352.990402652@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +40,146 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+From: David Jeffery <djeffery@redhat.com>
 
-[ Upstream commit c2d12e85336f6d4172fb2bab5935027c446d7343 ]
+[ Upstream commit 82c229476b8f6afd7e09bc4dc77d89dc19ff7688 ]
 
-pcf85063_clkout_control reads the wrong register but then update the
-correct one.
+David Jeffery found one double ->queue_rq() issue, so far it can
+be triggered in VM use case because of long vmexit latency or preempt
+latency of vCPU pthread or long page fault in vCPU pthread, then block
+IO req could be timed out before queuing the request to hardware but after
+calling blk_mq_start_request() during ->queue_rq(), then timeout handler
+may handle it by requeue, then double ->queue_rq() is caused, and kernel
+panic.
 
-Reported-by: Janne Terho <janne.terho@ouman.fi>
-Fixes: 8c229ab6048b ("rtc: pcf85063: Add pcf85063 clkout control to common clock framework")
-Link: https://lore.kernel.org/r/20221211223553.59955-1-alexandre.belloni@bootlin.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+So far, it is driver's responsibility to cover the race between timeout
+and completion, so it seems supposed to be solved in driver in theory,
+given driver has enough knowledge.
+
+But it is really one common problem, lots of driver could have similar
+issue, and could be hard to fix all affected drivers, even it isn't easy
+for driver to handle the race. So David suggests this patch by draining
+in-progress ->queue_rq() for solving this issue.
+
+Cc: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Keith Busch <kbusch@kernel.org>
+Cc: virtualization@lists.linux-foundation.org
+Cc: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: David Jeffery <djeffery@redhat.com>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20221026051957.358818-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf85063.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-mq.c | 56 +++++++++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 44 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/rtc/rtc-pcf85063.c b/drivers/rtc/rtc-pcf85063.c
-index 99f9cc57c7b3..754e03984f98 100644
---- a/drivers/rtc/rtc-pcf85063.c
-+++ b/drivers/rtc/rtc-pcf85063.c
-@@ -424,7 +424,7 @@ static int pcf85063_clkout_control(struct clk_hw *hw, bool enable)
- 	unsigned int buf;
- 	int ret;
+diff --git a/block/blk-mq.c b/block/blk-mq.c
+index 88975170cc32..05e33c51702d 100644
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -1442,7 +1442,13 @@ static void blk_mq_rq_timed_out(struct request *req)
+ 	blk_add_timer(req);
+ }
  
--	ret = regmap_read(pcf85063->regmap, PCF85063_REG_OFFSET, &buf);
-+	ret = regmap_read(pcf85063->regmap, PCF85063_REG_CTRL2, &buf);
- 	if (ret < 0)
- 		return ret;
- 	buf &= PCF85063_REG_CLKO_F_MASK;
+-static bool blk_mq_req_expired(struct request *rq, unsigned long *next)
++struct blk_expired_data {
++	bool has_timedout_rq;
++	unsigned long next;
++	unsigned long timeout_start;
++};
++
++static bool blk_mq_req_expired(struct request *rq, struct blk_expired_data *expired)
+ {
+ 	unsigned long deadline;
+ 
+@@ -1452,13 +1458,13 @@ static bool blk_mq_req_expired(struct request *rq, unsigned long *next)
+ 		return false;
+ 
+ 	deadline = READ_ONCE(rq->deadline);
+-	if (time_after_eq(jiffies, deadline))
++	if (time_after_eq(expired->timeout_start, deadline))
+ 		return true;
+ 
+-	if (*next == 0)
+-		*next = deadline;
+-	else if (time_after(*next, deadline))
+-		*next = deadline;
++	if (expired->next == 0)
++		expired->next = deadline;
++	else if (time_after(expired->next, deadline))
++		expired->next = deadline;
+ 	return false;
+ }
+ 
+@@ -1472,7 +1478,7 @@ void blk_mq_put_rq_ref(struct request *rq)
+ 
+ static bool blk_mq_check_expired(struct request *rq, void *priv)
+ {
+-	unsigned long *next = priv;
++	struct blk_expired_data *expired = priv;
+ 
+ 	/*
+ 	 * blk_mq_queue_tag_busy_iter() has locked the request, so it cannot
+@@ -1481,7 +1487,18 @@ static bool blk_mq_check_expired(struct request *rq, void *priv)
+ 	 * it was completed and reallocated as a new request after returning
+ 	 * from blk_mq_check_expired().
+ 	 */
+-	if (blk_mq_req_expired(rq, next))
++	if (blk_mq_req_expired(rq, expired)) {
++		expired->has_timedout_rq = true;
++		return false;
++	}
++	return true;
++}
++
++static bool blk_mq_handle_expired(struct request *rq, void *priv)
++{
++	struct blk_expired_data *expired = priv;
++
++	if (blk_mq_req_expired(rq, expired))
+ 		blk_mq_rq_timed_out(rq);
+ 	return true;
+ }
+@@ -1490,7 +1507,9 @@ static void blk_mq_timeout_work(struct work_struct *work)
+ {
+ 	struct request_queue *q =
+ 		container_of(work, struct request_queue, timeout_work);
+-	unsigned long next = 0;
++	struct blk_expired_data expired = {
++		.timeout_start = jiffies,
++	};
+ 	struct blk_mq_hw_ctx *hctx;
+ 	unsigned long i;
+ 
+@@ -1510,10 +1529,23 @@ static void blk_mq_timeout_work(struct work_struct *work)
+ 	if (!percpu_ref_tryget(&q->q_usage_counter))
+ 		return;
+ 
+-	blk_mq_queue_tag_busy_iter(q, blk_mq_check_expired, &next);
++	/* check if there is any timed-out request */
++	blk_mq_queue_tag_busy_iter(q, blk_mq_check_expired, &expired);
++	if (expired.has_timedout_rq) {
++		/*
++		 * Before walking tags, we must ensure any submit started
++		 * before the current time has finished. Since the submit
++		 * uses srcu or rcu, wait for a synchronization point to
++		 * ensure all running submits have finished
++		 */
++		blk_mq_wait_quiesce_done(q);
++
++		expired.next = 0;
++		blk_mq_queue_tag_busy_iter(q, blk_mq_handle_expired, &expired);
++	}
+ 
+-	if (next != 0) {
+-		mod_timer(&q->timeout, next);
++	if (expired.next != 0) {
++		mod_timer(&q->timeout, expired.next);
+ 	} else {
+ 		/*
+ 		 * Request timeouts are handled as a forward rolling timer. If
 -- 
 2.35.1
 
