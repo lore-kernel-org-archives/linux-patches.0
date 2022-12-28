@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1D11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 871F2C433EF;
-	Wed, 28 Dec 2022 14:56:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE3A1868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BADC433D2;
+	Wed, 28 Dec 2022 14:56:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239403;
-	bh=3zxdj9fRZxlIrvdw1ZwgYZhi4ueY1HbY+3DNRBCDTxA=;
+	s=korg; t=1672239406;
+	bh=jV+jo97mkdKvm8iSkp3Cpt/piH5zPWbhM9ZmxXg4gDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tTzwAYz7W+yrkqoFXqLNHYFzuYPwMCxYaxDj3qx2NTz5oKiOuy/GHVrbqWbOn+mDx
-	 YmfOt7kQvfMq5g1aS1DDk80caD2BXareQuPsWLj6cwAR3/H+waW2WGq+wBh7GmOTNe
-	 I+Hzm9qB0LVCtcu9Guy5+JywGoJlhyof+5DRAm8Q=
+	b=PLzowEjx04Il7MwzptIilzDovwYojI/K0UmyMr2w8Gg1uaol2pvg/JYtOccqJqStt
+	 y1DwWV58Nb0Go58+jX3ME+b3C7HfeOTtX95fKR9HLQ1SxvgNrmWenL8KqieiQUvitF
+	 /ZdEvO7FcBiQxHmh3gn39Wk8/Gf2azNkzUvexOjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcus Folkesson <marcus.folkesson@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Marek Vasut <marex@denx.de>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 219/731] HID: hid-sensor-custom: set fixed size for custom attributes
-Date: Wed, 28 Dec 2022 15:35:26 +0100
-Message-Id: <20221228144302.909085015@linuxfoundation.org>
+Subject: [PATCH 6.0 0024/1073] ARM: dts: stm32: Fix AV96 WLAN regulator gpio property
+Date: Wed, 28 Dec 2022 15:26:52 +0100
+Message-Id: <20221228144328.807638523@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,46 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marcus Folkesson <marcus.folkesson@gmail.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 9d013910df22de91333a0acc81d1dbb115bd76f6 ]
+[ Upstream commit d5d577e3d50713ad11d98dbdaa48bb494346c26d ]
 
-This is no bugfix (so no Fixes: tag is necessary) as it is
-taken care of in hid_sensor_custom_add_attributes().
+The WLAN regulator uses 'gpios' property instead of 'gpio' to specify
+regulator enable GPIO. While the former is also currently handled by
+the Linux kernel regulator-fixed driver, the later is the correct one
+per DT bindings. Update the DT to use the later.
 
-The motivation for this patch is that:
-hid_sensor_custom_field.attr_name and
-hid_sensor_custom_field.attrs
-has the size of HID_CUSTOM_TOTAL_ATTRS and used in same context.
-
-We compare against HID_CUSTOM_TOTAL_ATTRS when
-looping through hid_custom_attrs.
-
-We will silent the smatch error:
-hid_sensor_custom_add_attributes() error: buffer overflow
-'hid_custom_attrs' 8 <= 10
-
-Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Fixes: 7dd5cbba42c93 ("ARM: dts: stm32: Enable WiFi on AV96")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-sensor-custom.c | 2 +-
+ arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-sensor-custom.c b/drivers/hid/hid-sensor-custom.c
-index 32c2306e240d..602465ad2745 100644
---- a/drivers/hid/hid-sensor-custom.c
-+++ b/drivers/hid/hid-sensor-custom.c
-@@ -62,7 +62,7 @@ struct hid_sensor_sample {
- 	u32 raw_len;
- } __packed;
+diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
+index 90933077d66d..b6957cbdeff5 100644
+--- a/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
++++ b/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
+@@ -100,7 +100,7 @@ wlan_pwr: regulator-wlan {
+ 		regulator-min-microvolt = <3300000>;
+ 		regulator-max-microvolt = <3300000>;
  
--static struct attribute hid_custom_attrs[] = {
-+static struct attribute hid_custom_attrs[HID_CUSTOM_TOTAL_ATTRS] = {
- 	{.name = "name", .mode = S_IRUGO},
- 	{.name = "units", .mode = S_IRUGO},
- 	{.name = "unit-expo", .mode = S_IRUGO},
+-		gpios = <&gpioz 3 GPIO_ACTIVE_HIGH>;
++		gpio = <&gpioz 3 GPIO_ACTIVE_HIGH>;
+ 		enable-active-high;
+ 	};
+ };
 -- 
 2.35.1
 
