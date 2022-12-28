@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF9C1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:01:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84103C433F0;
-	Wed, 28 Dec 2022 16:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEB01875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:01:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32269C433EF;
+	Wed, 28 Dec 2022 16:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243273;
-	bh=sLTI31HENs6Ll01mWXMNkww90A2ei0ml03NtVclXo4E=;
+	s=korg; t=1672243276;
+	bh=8dK7rJkxMZus90gChjkmzO0PWJFlcJGoPqqrUrqRcmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gRAVrCXluCpGQlhUzXqqQnqbGTZPZsS184f6+SFhyDmw7QaN0z/iR0A55G910CJLU
-	 B/SSbGuW0R1gPmeIwhsmkSarhj528spNrO1r2kg7L0RugiPS9XDT3nQBTEDS5hfIQw
-	 vxVgKqBU9M7kCMnDm2qxJ7vnqSncjLFoI8fUFnoI=
+	b=pN6jWneJRe/ym/2PwO3Xz893GC+dyPq+2qWuHDjCLahdiQ23sy3VJ7ww9ORuynTsF
+	 Mt4R+RrInKvgaI3I+/yJoGBtxhW7qii+7VNQUprzqQNyHKMo8LQ+SGleGaRtD9gusU
+	 sZMDWqzLVUetChQOZDA9Sz+5b1bCe8Y5qVMTTbZ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	GUO Zihua <guozihua@huawei.com>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 702/731] ima: Simplify ima_lsm_copy_rule
-Date: Wed, 28 Dec 2022 15:43:29 +0100
-Message-Id: <20221228144316.810526986@linuxfoundation.org>
+Subject: [PATCH 6.1 0470/1146] hsr: Add a rcu-read lock to hsr_forward_skb().
+Date: Wed, 28 Dec 2022 15:33:29 +0100
+Message-Id: <20221228144342.950231740@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,64 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: GUO Zihua <guozihua@huawei.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit d57378d3aa4d864d9e590482602068af1b20c0c5 ]
+[ Upstream commit 5aa2820177af650293b2f9f1873c1f6f8e4ad7a4 ]
 
-Currently ima_lsm_copy_rule() set the arg_p field of the source rule to
-NULL, so that the source rule could be freed afterward. It does not make
-sense for this behavior to be inside a "copy" function. So move it
-outside and let the caller handle this field.
+hsr_forward_skb() a skb and keeps information in an on-stack
+hsr_frame_info. hsr_get_node() assigns hsr_frame_info::node_src which is
+from a RCU list. This pointer is used later in hsr_forward_do().
+I don't see a reason why this pointer can't vanish midway since there is
+no guarantee that hsr_forward_skb() is invoked from an RCU read section.
 
-ima_lsm_copy_rule() now produce a shallow copy of the original entry
-including args_p field. Meaning only the lsm.rule and the rule itself
-should be freed for the original rule. Thus, instead of calling
-ima_lsm_free_rule() which frees lsm.rule as well as args_p field, free
-the lsm.rule directly.
+Use rcu_read_lock() to protect hsr_frame_info::node_src from its
+assignment until it is no longer used.
 
-Signed-off-by: GUO Zihua <guozihua@huawei.com>
-Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: f266a683a4804 ("net/hsr: Better frame dispatch")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/ima_policy.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ net/hsr/hsr_forward.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
-index 844d69f6ac00..ed43d30682ff 100644
---- a/security/integrity/ima/ima_policy.c
-+++ b/security/integrity/ima/ima_policy.c
-@@ -391,12 +391,6 @@ static struct ima_rule_entry *ima_lsm_copy_rule(struct ima_rule_entry *entry)
- 
- 		nentry->lsm[i].type = entry->lsm[i].type;
- 		nentry->lsm[i].args_p = entry->lsm[i].args_p;
--		/*
--		 * Remove the reference from entry so that the associated
--		 * memory will not be freed during a later call to
--		 * ima_lsm_free_rule(entry).
--		 */
--		entry->lsm[i].args_p = NULL;
- 
- 		ima_filter_rule_init(nentry->lsm[i].type, Audit_equal,
- 				     nentry->lsm[i].args_p,
-@@ -410,6 +404,7 @@ static struct ima_rule_entry *ima_lsm_copy_rule(struct ima_rule_entry *entry)
- 
- static int ima_lsm_update_rule(struct ima_rule_entry *entry)
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index 3e58d310b4d4..a8befa35841e 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -614,11 +614,13 @@ void hsr_forward_skb(struct sk_buff *skb, struct hsr_port *port)
  {
-+	int i;
- 	struct ima_rule_entry *nentry;
+ 	struct hsr_frame_info frame;
  
- 	nentry = ima_lsm_copy_rule(entry);
-@@ -424,7 +419,8 @@ static int ima_lsm_update_rule(struct ima_rule_entry *entry)
- 	 * references and the entry itself. All other memory refrences will now
- 	 * be owned by nentry.
++	rcu_read_lock();
+ 	if (fill_frame_info(&frame, skb, port) < 0)
+ 		goto out_drop;
+ 
+ 	hsr_register_frame_in(frame.node_src, port, frame.sequence_nr);
+ 	hsr_forward_do(&frame);
++	rcu_read_unlock();
+ 	/* Gets called for ingress frames as well as egress from master port.
+ 	 * So check and increment stats for master port only here.
  	 */
--	ima_lsm_free_rule(entry);
-+	for (i = 0; i < MAX_LSM_RULES; i++)
-+		ima_filter_rule_free(entry->lsm[i].rule);
- 	kfree(entry);
+@@ -633,6 +635,7 @@ void hsr_forward_skb(struct sk_buff *skb, struct hsr_port *port)
+ 	return;
  
- 	return 0;
+ out_drop:
++	rcu_read_unlock();
+ 	port->dev->stats.tx_dropped++;
+ 	kfree_skb(skb);
+ }
 -- 
 2.35.1
 
