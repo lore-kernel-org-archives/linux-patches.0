@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBA423AF
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:57:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7051C433D2;
-	Wed, 28 Dec 2022 16:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 591E623AF
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:57:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7DE6C433D2;
+	Wed, 28 Dec 2022 16:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246629;
-	bh=V+pvIg6dk3hOE9dMwmVtetdhuPODH9BSm+bY0BukB6g=;
+	s=korg; t=1672246632;
+	bh=DAKJyQ1lT+RCLVmNbvt6+iEHVeuQoYcblZIZSvSS4WY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zMH6dQy39eDBZYzfLI6l9H78/AxtxWKhb/ZMJhyVCFdWCHKq7ub76/TwBpKxXJJFv
-	 72pYgMqb/3a6IVHeKjrfNFPLcr+1YVAMfrYFNKW0PcZDXO+UaC1CdRdvhVVSaHPOOg
-	 Rr/Mtez1oEjvsO5xaFxaOt6uJLR46FwR8sXbLZ9E=
+	b=mrL+0UiJDjAm2OhNWVl3K77JlEeS4+5MgZAyE78ZMyZNR8Oh7U6wtqT84T5rdhUay
+	 afix1pHBa7lbk6r2m65PrdRxmT8NpqSPyAIdVmcJB2kIdM77r6Tfm2dCJcnr2q4huJ
+	 rXNwIVNtS+qlULVmAw4IAXOtdYxO7eLTtAYMtCyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 1106/1146] arm64: dts: qcom: sm8250: fix USB-DP PHY registers
-Date: Wed, 28 Dec 2022 15:44:05 +0100
-Message-Id: <20221228144400.199475923@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Li Jun <jun.li@nxp.com>,
+	Abel Vesa <abel.vesa@linaro.org>
+Subject: [PATCH 6.1 1107/1146] dt-bindings: clocks: imx8mp: Add ID for usb suspend clock
+Date: Wed, 28 Dec 2022 15:44:06 +0100
+Message-Id: <20221228144400.226133287@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -34,47 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Li Jun <jun.li@nxp.com>
 
-commit f8d8840c72b3df61b5252052b79020dabec01ab5 upstream.
+commit 5c1f7f1090947d494c30042123e0ec846f696336 upstream.
 
-When adding support for the DisplayPort part of the QMP PHY the binding
-(and devicetree parser) for the (USB) child node was simply reused and
-this has lead to some confusion.
+usb suspend clock has a gate shared with usb_root_clk.
 
-The third DP register region is really the DP_PHY region, not "PCS" as
-the binding claims, and lie at offset 0x2a00 (not 0x2c00).
-
-Similarly, there likely are no "RX", "RX2" or "PCS_MISC" regions as
-there are for the USB part of the PHY (and in any case the Linux driver
-does not use them).
-
-Note that the sixth "PCS_MISC" region is not even in the binding.
-
-Fixes: 5aa0d1becd5b ("arm64: dts: qcom: sm8250: switch usb1 qmp phy to USB3+DP mode")
-Cc: stable@vger.kernel.org      # 5.13
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221111094729.11842-3-johan+linaro@kernel.org
+Fixes: 9c140d9926761 ("clk: imx: Add support for i.MX8MP clock driver")
+Cc: stable@vger.kernel.org # v5.19+
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Li Jun <jun.li@nxp.com>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/1664549663-20364-1-git-send-email-jun.li@nxp.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ include/dt-bindings/clock/imx8mp-clock.h |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2892,10 +2892,9 @@
- 			dp_phy: dp-phy@88ea200 {
- 				reg = <0 0x088ea200 0 0x200>,
- 				      <0 0x088ea400 0 0x200>,
--				      <0 0x088eac00 0 0x400>,
-+				      <0 0x088eaa00 0 0x200>,
- 				      <0 0x088ea600 0 0x200>,
--				      <0 0x088ea800 0 0x200>,
--				      <0 0x088eaa00 0 0x100>;
-+				      <0 0x088ea800 0 0x200>;
- 				#phy-cells = <0>;
- 				#clock-cells = <1>;
- 			};
+--- a/include/dt-bindings/clock/imx8mp-clock.h
++++ b/include/dt-bindings/clock/imx8mp-clock.h
+@@ -324,8 +324,9 @@
+ #define IMX8MP_CLK_CLKOUT2_SEL			317
+ #define IMX8MP_CLK_CLKOUT2_DIV			318
+ #define IMX8MP_CLK_CLKOUT2			319
++#define IMX8MP_CLK_USB_SUSP			320
+ 
+-#define IMX8MP_CLK_END				320
++#define IMX8MP_CLK_END				321
+ 
+ #define IMX8MP_CLK_AUDIOMIX_SAI1_IPG		0
+ #define IMX8MP_CLK_AUDIOMIX_SAI1_MCLK1		1
 
 
