@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 607EA1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:49:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3119C43392;
-	Wed, 28 Dec 2022 16:48:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8671C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:49:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D6DC433D2;
+	Wed, 28 Dec 2022 16:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246140;
-	bh=6/8J81h2gSVAvR104yDxYzP5lN/k3XUcYTsfNdlVLBs=;
+	s=korg; t=1672246142;
+	bh=00NmHKHRLwzQLMEdhQ7IO6s1VJuatijNqi22o4B2TiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y3lYfdYoQEhVJVqB0+Llg7HFTVdfZwJ2YALjuXXaApJCGnfumaj+9D/vAa2NpBxCP
-	 KlWPZq6jE7yyiXOkXrzWDKy/Sy8giSPrJDo4gua5wTp4deOKjIZpfLUFZXGglEX3A1
-	 K6IYMz83/2b73Kl/jkUd02FcxGRS0xOyx8YSDF8E=
+	b=M4WTPCijG1TH9x2VpZAd/KoXRbvjMiHsaVhV8ZyxOLPyoPz8vZfrmNnOlGshVNDGn
+	 /yWxd7VAhGHrV7DMvMIvErGkS53BMpNNL1owx67xqEPWcgQ7OLrXXMNOWZ+bIKPYU9
+	 wlk04HzSE/CJ43ifDmqGqP4XhM+O8esRSpOnvGRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	syzbot+f635e86ec3fa0a37e019@syzkaller.appspotmail.com,
-	Stanislav Fomichev <sdf@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	David Howells <dhowells@redhat.com>,
+	linux-afs@lists.infradead.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0987/1146] bpf: make sure skb->len != 0 when redirecting to a tunneling device
-Date: Wed, 28 Dec 2022 15:42:06 +0100
-Message-Id: <20221228144357.173376985@linuxfoundation.org>
+Subject: [PATCH 6.0 1019/1073] afs: Fix lost servers_outstanding count
+Date: Wed, 28 Dec 2022 15:43:27 +0100
+Message-Id: <20221228144355.864859429@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,71 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanislav Fomichev <sdf@google.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 07ec7b502800ba9f7b8b15cb01dd6556bb41aaca ]
+[ Upstream commit 36f82c93ee0bd88f1c95a52537906b8178b537f1 ]
 
-syzkaller managed to trigger another case where skb->len == 0
-when we enter __dev_queue_xmit:
+The afs_fs_probe_dispatcher() work function is passed a count on
+net->servers_outstanding when it is scheduled (which may come via its
+timer).  This is passed back to the work_item, passed to the timer or
+dropped at the end of the dispatcher function.
 
-WARNING: CPU: 0 PID: 2470 at include/linux/skbuff.h:2576 skb_assert_len include/linux/skbuff.h:2576 [inline]
-WARNING: CPU: 0 PID: 2470 at include/linux/skbuff.h:2576 __dev_queue_xmit+0x2069/0x35e0 net/core/dev.c:4295
+But, at the top of the dispatcher function, there are two checks which
+skip the rest of the function: if the network namespace is being destroyed
+or if there are no fileservers to probe.  These two return paths, however,
+do not drop the count passed to the dispatcher, and so, sometimes, the
+destruction of a network namespace, such as induced by rmmod of the kafs
+module, may get stuck in afs_purge_servers(), waiting for
+net->servers_outstanding to become zero.
 
-Call Trace:
- dev_queue_xmit+0x17/0x20 net/core/dev.c:4406
- __bpf_tx_skb net/core/filter.c:2115 [inline]
- __bpf_redirect_no_mac net/core/filter.c:2140 [inline]
- __bpf_redirect+0x5fb/0xda0 net/core/filter.c:2163
- ____bpf_clone_redirect net/core/filter.c:2447 [inline]
- bpf_clone_redirect+0x247/0x390 net/core/filter.c:2419
- bpf_prog_48159a89cb4a9a16+0x59/0x5e
- bpf_dispatcher_nop_func include/linux/bpf.h:897 [inline]
- __bpf_prog_run include/linux/filter.h:596 [inline]
- bpf_prog_run include/linux/filter.h:603 [inline]
- bpf_test_run+0x46c/0x890 net/bpf/test_run.c:402
- bpf_prog_test_run_skb+0xbdc/0x14c0 net/bpf/test_run.c:1170
- bpf_prog_test_run+0x345/0x3c0 kernel/bpf/syscall.c:3648
- __sys_bpf+0x43a/0x6c0 kernel/bpf/syscall.c:5005
- __do_sys_bpf kernel/bpf/syscall.c:5091 [inline]
- __se_sys_bpf kernel/bpf/syscall.c:5089 [inline]
- __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:5089
- do_syscall_64+0x54/0x70 arch/x86/entry/common.c:48
- entry_SYSCALL_64_after_hwframe+0x61/0xc6
+Fix this by adding the missing decrements in afs_fs_probe_dispatcher().
 
-The reproducer doesn't really reproduce outside of syzkaller
-environment, so I'm taking a guess here. It looks like we
-do generate correct ETH_HLEN-sized packet, but we redirect
-the packet to the tunneling device. Before we do so, we
-__skb_pull l2 header and arrive again at skb->len == 0.
-Doesn't seem like we can do anything better than having
-an explicit check after __skb_pull?
-
-Cc: Eric Dumazet <edumazet@google.com>
-Reported-by: syzbot+f635e86ec3fa0a37e019@syzkaller.appspotmail.com
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
-Link: https://lore.kernel.org/r/20221027225537.353077-1-sdf@google.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: f6cbb368bcb0 ("afs: Actively poll fileservers to maintain NAT or firewall openings")
+Reported-by: Marc Dionne <marc.dionne@auristor.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Tested-by: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+Link: https://lore.kernel.org/r/167164544917.2072364.3759519569649459359.stgit@warthog.procyon.org.uk/
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/afs/fs_probe.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 9b2e18c0d299..a368edd9057c 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2132,6 +2132,10 @@ static int __bpf_redirect_no_mac(struct sk_buff *skb, struct net_device *dev,
+diff --git a/fs/afs/fs_probe.c b/fs/afs/fs_probe.c
+index 3ac5fcf98d0d..daaf3810cc92 100644
+--- a/fs/afs/fs_probe.c
++++ b/fs/afs/fs_probe.c
+@@ -366,12 +366,15 @@ void afs_fs_probe_dispatcher(struct work_struct *work)
+ 	unsigned long nowj, timer_at, poll_at;
+ 	bool first_pass = true, set_timer = false;
  
- 	if (mlen) {
- 		__skb_pull(skb, mlen);
-+		if (unlikely(!skb->len)) {
-+			kfree_skb(skb);
-+			return -ERANGE;
-+		}
+-	if (!net->live)
++	if (!net->live) {
++		afs_dec_servers_outstanding(net);
+ 		return;
++	}
  
- 		/* At ingress, the mac header has already been pulled once.
- 		 * At egress, skb_pospull_rcsum has to be done in case that
+ 	_enter("");
+ 
+ 	if (list_empty(&net->fs_probe_fast) && list_empty(&net->fs_probe_slow)) {
++		afs_dec_servers_outstanding(net);
+ 		_leave(" [none]");
+ 		return;
+ 	}
 -- 
 2.35.1
 
