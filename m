@@ -1,31 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3B81875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:07:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA7CAC433EF;
-	Wed, 28 Dec 2022 16:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9A41875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:07:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A03BC433F2;
+	Wed, 28 Dec 2022 16:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243646;
-	bh=TuF4wUYdyFvLGY9SACynje///QzokDH5XG2EpqcTumw=;
+	s=korg; t=1672243648;
+	bh=Qd2m5/xRBeimlslnLbLYJmHKbk8+HjjwVBuPxQIu2No=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z5uwyKelm++3ADoWpZaGJCTyLDf2v7/2A9s5FnKV1NajUIY3+KT2YLGDlhmwS6/zG
-	 ENXAZHXHG4z4lKG+OU8Lwv2evX3AQz0uEKTO/3V2F321HRu5Ownl5EC2cVjXOCcPCS
-	 t/TNQAUIEerrc2iN9TJsn0KLkEO+OJf5TrZAVYtY=
+	b=C2wZKV+SNAPytSoG94wVQU85E6HqAD8PA6N+fc43t5GtEghR5fxZcKmkCmAGlOw2g
+	 wB77/iMFerYdvnjO0YBySQL0FYthV0yJ8/oRorIMrlX49Czjb0W7cmWOde9Tld0cQ8
+	 38MplCvTM/cnxxYvkprZIhh+oWqbIo9Xyg+Lkw/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Dinh Nguyen <dinguyen@kernel.org>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Mike Christie <michael.christie@oracle.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Ming Lei <ming.lei@redhat.com>,
+	John Garry <john.garry@huawei.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0527/1146] clk: socfpga: Fix memory leak in socfpga_gate_init()
-Date: Wed, 28 Dec 2022 15:34:26 +0100
-Message-Id: <20221228144344.490879413@linuxfoundation.org>
+Subject: [PATCH 6.0 0563/1073] scsi: core: Fix a race between scsi_done() and scsi_timeout()
+Date: Wed, 28 Dec 2022 15:35:51 +0100
+Message-Id: <20221228144343.349213519@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,46 +42,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 0b8ba891ad4d1ef6bfa4c72efc83f9f9f855f68b ]
+[ Upstream commit 978b7922d3dca672b41bb4b8ce6c06ab77112741 ]
 
-Free @socfpga_clk and @ops on the error path to avoid memory leak issue.
+If there is a race between scsi_done() and scsi_timeout() and if
+scsi_timeout() loses the race, scsi_timeout() should not reset the request
+timer. Hence change the return value for this case from BLK_EH_RESET_TIMER
+into BLK_EH_DONE.
 
-Fixes: a30a67be7b6e ("clk: socfpga: Don't have get_parent for single parent ops")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Link: https://lore.kernel.org/r/20221123031622.63171-1-xiujianfeng@huawei.com
-Acked-by: Dinh Nguyen <dinguyen@kernel.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Although the block layer holds a reference on a request (req->ref) while
+calling a timeout handler, restarting the timer (blk_add_timer()) while a
+request is being completed is racy.
+
+Reviewed-by: Mike Christie <michael.christie@oracle.com>
+Cc: Keith Busch <kbusch@kernel.org>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Ming Lei <ming.lei@redhat.com>
+Cc: John Garry <john.garry@huawei.com>
+Cc: Hannes Reinecke <hare@suse.de>
+Reported-by: Adrian Hunter <adrian.hunter@intel.com>
+Fixes: 15f73f5b3e59 ("blk-mq: move failure injection out of blk_mq_complete_request")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20221018202958.1902564-2-bvanassche@acm.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/socfpga/clk-gate.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/scsi/scsi_error.c | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/clk/socfpga/clk-gate.c b/drivers/clk/socfpga/clk-gate.c
-index 53d6e3ec4309..c94b59b80dd4 100644
---- a/drivers/clk/socfpga/clk-gate.c
-+++ b/drivers/clk/socfpga/clk-gate.c
-@@ -188,8 +188,10 @@ void __init socfpga_gate_init(struct device_node *node)
- 		return;
+diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
+index 448748e3fba5..f00212777f82 100644
+--- a/drivers/scsi/scsi_error.c
++++ b/drivers/scsi/scsi_error.c
+@@ -342,19 +342,11 @@ enum blk_eh_timer_return scsi_timeout(struct request *req)
  
- 	ops = kmemdup(&gateclk_ops, sizeof(gateclk_ops), GFP_KERNEL);
--	if (WARN_ON(!ops))
-+	if (WARN_ON(!ops)) {
-+		kfree(socfpga_clk);
- 		return;
-+	}
- 
- 	rc = of_property_read_u32_array(node, "clk-gate", clk_gate, 2);
- 	if (rc)
-@@ -243,6 +245,7 @@ void __init socfpga_gate_init(struct device_node *node)
- 
- 	err = clk_hw_register(NULL, hw_clk);
- 	if (err) {
-+		kfree(ops);
- 		kfree(socfpga_clk);
- 		return;
- 	}
+ 	if (rtn == BLK_EH_DONE) {
+ 		/*
+-		 * Set the command to complete first in order to prevent a real
+-		 * completion from releasing the command while error handling
+-		 * is using it. If the command was already completed, then the
+-		 * lower level driver beat the timeout handler, and it is safe
+-		 * to return without escalating error recovery.
+-		 *
+-		 * If timeout handling lost the race to a real completion, the
+-		 * block layer may ignore that due to a fake timeout injection,
+-		 * so return RESET_TIMER to allow error handling another shot
+-		 * at this command.
++		 * If scsi_done() has already set SCMD_STATE_COMPLETE, do not
++		 * modify *scmd.
+ 		 */
+ 		if (test_and_set_bit(SCMD_STATE_COMPLETE, &scmd->state))
+-			return BLK_EH_RESET_TIMER;
++			return BLK_EH_DONE;
+ 		if (scsi_abort_command(scmd) != SUCCESS) {
+ 			set_host_byte(scmd, DID_TIME_OUT);
+ 			scsi_eh_scmd_add(scmd);
 -- 
 2.35.1
 
