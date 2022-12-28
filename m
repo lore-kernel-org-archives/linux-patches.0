@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14B41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750F5C433D2;
-	Wed, 28 Dec 2022 14:59:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5CD1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224C2C433EF;
+	Wed, 28 Dec 2022 14:59:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239550;
-	bh=QR6MxQrldUdDWMfrKT93GGo/bMaTZQ2jwrNxGnVBOgU=;
+	s=korg; t=1672239553;
+	bh=UYZmhVnYuPPa3z3HlgyKhcTx8yA7jk3Yjvzy6Bl7XT8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QRzPnwcMzbZ5fRj6tTLzn3ugLncHFF46pWLvZqD53mZcz6spdSG7tfMdrapEpEvDF
-	 cQx8ToV/cX2CE8Iz0YviLh4xSDT+Mh8juMfcLxEGOZtJ+i02qaegvoR2AurM15mntN
-	 p0Al9SdIcMnwfB2z+1n9dE7laXQiPEHm0mAZMpbE=
+	b=o/amAcUuhPl9hFNYa5pv9jpHz4OTf1ioxLRDbUMo2izIeSv/osTsofqbcp0ETASdD
+	 fJESNo1Cmmj3lGiuheoNJvx2ZPhnQ8yRUhFze3kERG5BHaDFcV5SUL5KsSuHSNfX+E
+	 LsIpq8LG96sloO19Xt2k+beR/crFybDAIMK5BER4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Zhang Qilong <zhangqilong3@huawei.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 242/731] ASoC: dt-bindings: wcd9335: fix reset line polarity in example
-Date: Wed, 28 Dec 2022 15:35:49 +0100
-Message-Id: <20221228144303.578718924@linuxfoundation.org>
+Subject: [PATCH 6.0 0049/1073] soc: ti: knav_qmss_queue: Fix PM disable depth imbalance in knav_queue_probe
+Date: Wed, 28 Dec 2022 15:27:17 +0100
+Message-Id: <20221228144329.448567959@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Zhang Qilong <zhangqilong3@huawei.com>
 
-[ Upstream commit 34cb111f8a7b98b5fec809dd194003bca20ef1b2 ]
+[ Upstream commit e961c0f19450fd4a26bd043dd2979990bf12caf6 ]
 
-When resetting the block, the reset line is being driven low and then
-high, which means that the line in DTS should be annotated as "active
-low".
+The pm_runtime_enable will increase power disable depth. Thus
+a pairing decrement is needed on the error handling path to
+keep it balanced according to context.
 
-Fixes: 1877c9fda1b7 ("ASoC: dt-bindings: add dt bindings for wcd9335 audio codec")
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20221027074652.1044235-2-dmitry.torokhov@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 41f93af900a2 ("soc: ti: add Keystone Navigator QMSS driver")
+Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Link: https://lore.kernel.org/r/20221108080322.52268-2-zhangqilong3@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/sound/qcom,wcd9335.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/soc/ti/knav_qmss_queue.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd9335.txt b/Documentation/devicetree/bindings/sound/qcom,wcd9335.txt
-index 5d6ea66a863f..1f75feec3dec 100644
---- a/Documentation/devicetree/bindings/sound/qcom,wcd9335.txt
-+++ b/Documentation/devicetree/bindings/sound/qcom,wcd9335.txt
-@@ -109,7 +109,7 @@ audio-codec@1{
- 	reg  = <1 0>;
- 	interrupts = <&msmgpio 54 IRQ_TYPE_LEVEL_HIGH>;
- 	interrupt-names = "intr2"
--	reset-gpios = <&msmgpio 64 0>;
-+	reset-gpios = <&msmgpio 64 GPIO_ACTIVE_LOW>;
- 	slim-ifc-dev  = <&wc9335_ifd>;
- 	clock-names = "mclk", "native";
- 	clocks = <&rpmcc RPM_SMD_DIV_CLK1>,
+diff --git a/drivers/soc/ti/knav_qmss_queue.c b/drivers/soc/ti/knav_qmss_queue.c
+index 16a6d530a0d4..8fb76908be70 100644
+--- a/drivers/soc/ti/knav_qmss_queue.c
++++ b/drivers/soc/ti/knav_qmss_queue.c
+@@ -1785,6 +1785,7 @@ static int knav_queue_probe(struct platform_device *pdev)
+ 	pm_runtime_enable(&pdev->dev);
+ 	ret = pm_runtime_resume_and_get(&pdev->dev);
+ 	if (ret < 0) {
++		pm_runtime_disable(&pdev->dev);
+ 		dev_err(dev, "Failed to enable QMSS\n");
+ 		return ret;
+ 	}
 -- 
 2.35.1
 
