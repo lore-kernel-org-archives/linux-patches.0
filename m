@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 579E7187A
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93DF8C433F1;
-	Wed, 28 Dec 2022 15:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E886A1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DC3FC433D2;
+	Wed, 28 Dec 2022 15:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243064;
-	bh=oyl127HXmqtHfp/cgiU0zfcaX050uHC9XbWrQ5TgbzE=;
+	s=korg; t=1672243066;
+	bh=2uKkYMb4hr3Xmc84zS4ejGuv2VjEpN70QbBuCFkqqGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VoZB7Tua/sWCjFqhz5YoePUpTQeEt7s204fJ/nG69/filPxbeiFWmbdCwj1JqmAnw
-	 RTDRcVk9KPHHycOjWmvDcsAG4QvGaOTpiR9cmr5fPyBhJSbHtmvwoIu7Ym1LJ8aZ14
-	 51LPGbI78Fc/RGWzepzhRtGW7bdgB6eXmsR3xYpQ=
+	b=BIjyPAHS21l09cHjA/mq2vsopjjrEP/NaEiM2WCr6/o2KtVD8qyEdKQIQgUTXSV9r
+	 IeLsAeKZYHifltNdltiJBHY8qyJoG8qEm7Byzf8YhS84Gt7WEcQVOcT7li4eeDsuNU
+	 4VARlxR7y7b8HLPBIUncJuUxSQ3arK2xUbnS0gow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0486/1073] mmc: wmt-sdmmc: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:34:34 +0100
-Message-Id: <20221228144341.237470536@linuxfoundation.org>
+Subject: [PATCH 5.15 680/731] drm/sti: Fix return type of sti_{dvo,hda,hdmi}_connector_mode_valid()
+Date: Wed, 28 Dec 2022 15:43:07 +0100
+Message-Id: <20221228144316.185006185@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,47 +35,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 29276d56f6ed138db0f38cd31aedc0b725c8c76c ]
+[ Upstream commit 0ad811cc08a937d875cbad0149c1bab17f84ba05 ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-So fix this by checking the return value and goto error path which will call
-mmc_free_host(), besides, clk_disable_unprepare() also needs be called.
+  drivers/gpu/drm/sti/sti_hda.c:637:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .mode_valid = sti_hda_connector_mode_valid,
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/gpu/drm/sti/sti_dvo.c:376:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .mode_valid = sti_dvo_connector_mode_valid,
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/gpu/drm/sti/sti_hdmi.c:1035:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .mode_valid = sti_hdmi_connector_mode_valid,
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Fixes: 3a96dff0f828 ("mmc: SD/MMC Host Controller for Wondermedia WM8505/WM8650")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-10-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+->mode_valid() in 'struct drm_connector_helper_funcs' expects a return
+type of 'enum drm_mode_status', not 'int'. Adjust the return type of
+sti_{dvo,hda,hdmi}_connector_mode_valid() to match the prototype's to
+resolve the warning and CFI failure.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221102155623.3042869-1-nathan@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/wmt-sdmmc.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/sti/sti_dvo.c  | 5 +++--
+ drivers/gpu/drm/sti/sti_hda.c  | 5 +++--
+ drivers/gpu/drm/sti/sti_hdmi.c | 5 +++--
+ 3 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mmc/host/wmt-sdmmc.c b/drivers/mmc/host/wmt-sdmmc.c
-index 9b5c503e3a3f..9aa3027ca25e 100644
---- a/drivers/mmc/host/wmt-sdmmc.c
-+++ b/drivers/mmc/host/wmt-sdmmc.c
-@@ -856,11 +856,15 @@ static int wmt_mci_probe(struct platform_device *pdev)
- 	/* configure the controller to a known 'ready' state */
- 	wmt_reset_hardware(mmc);
+diff --git a/drivers/gpu/drm/sti/sti_dvo.c b/drivers/gpu/drm/sti/sti_dvo.c
+index f3a5616b7daf..577c477b5f46 100644
+--- a/drivers/gpu/drm/sti/sti_dvo.c
++++ b/drivers/gpu/drm/sti/sti_dvo.c
+@@ -346,8 +346,9 @@ static int sti_dvo_connector_get_modes(struct drm_connector *connector)
  
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret)
-+		goto fail7;
+ #define CLK_TOLERANCE_HZ 50
  
- 	dev_info(&pdev->dev, "WMT SDHC Controller initialized\n");
+-static int sti_dvo_connector_mode_valid(struct drm_connector *connector,
+-					struct drm_display_mode *mode)
++static enum drm_mode_status
++sti_dvo_connector_mode_valid(struct drm_connector *connector,
++			     struct drm_display_mode *mode)
+ {
+ 	int target = mode->clock * 1000;
+ 	int target_min = target - CLK_TOLERANCE_HZ;
+diff --git a/drivers/gpu/drm/sti/sti_hda.c b/drivers/gpu/drm/sti/sti_hda.c
+index c9e6db15ab66..aa54a6400ab8 100644
+--- a/drivers/gpu/drm/sti/sti_hda.c
++++ b/drivers/gpu/drm/sti/sti_hda.c
+@@ -600,8 +600,9 @@ static int sti_hda_connector_get_modes(struct drm_connector *connector)
  
- 	return 0;
-+fail7:
-+	clk_disable_unprepare(priv->clk_sdmmc);
- fail6:
- 	clk_put(priv->clk_sdmmc);
- fail5_and_a_half:
+ #define CLK_TOLERANCE_HZ 50
+ 
+-static int sti_hda_connector_mode_valid(struct drm_connector *connector,
+-					struct drm_display_mode *mode)
++static enum drm_mode_status
++sti_hda_connector_mode_valid(struct drm_connector *connector,
++			     struct drm_display_mode *mode)
+ {
+ 	int target = mode->clock * 1000;
+ 	int target_min = target - CLK_TOLERANCE_HZ;
+diff --git a/drivers/gpu/drm/sti/sti_hdmi.c b/drivers/gpu/drm/sti/sti_hdmi.c
+index bb2a2868de2d..36bea1551ef8 100644
+--- a/drivers/gpu/drm/sti/sti_hdmi.c
++++ b/drivers/gpu/drm/sti/sti_hdmi.c
+@@ -1003,8 +1003,9 @@ static int sti_hdmi_connector_get_modes(struct drm_connector *connector)
+ 
+ #define CLK_TOLERANCE_HZ 50
+ 
+-static int sti_hdmi_connector_mode_valid(struct drm_connector *connector,
+-					struct drm_display_mode *mode)
++static enum drm_mode_status
++sti_hdmi_connector_mode_valid(struct drm_connector *connector,
++			      struct drm_display_mode *mode)
+ {
+ 	int target = mode->clock * 1000;
+ 	int target_min = target - CLK_TOLERANCE_HZ;
 -- 
 2.35.1
 
