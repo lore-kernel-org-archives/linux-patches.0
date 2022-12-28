@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D07F21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 576FFC433F1;
-	Wed, 28 Dec 2022 15:34:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F62F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E352EC433D2;
+	Wed, 28 Dec 2022 15:34:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241676;
-	bh=j46zpKOl6k0n7AFT8PXbXAe/Di5YT7Br9fHCHK91+k4=;
+	s=korg; t=1672241679;
+	bh=dI78X4+JRfwLn7DLho4ytF6hGZAUmP8/pHSuFy7Fho0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m3xbYnuGdoilMS0dVbJmK6zuEe3YSLGg9AbyJbetXYYOEW8JlPtn3eBU1Tra/poQq
-	 v7BWOC8KIuM+FnU2aKSJ183pGV+TJZWf6Wje1HVtLrQbz4/2X2hkiFmH5HSF6UL8fD
-	 hPLDHwBqvFNloI2zi0/5HegVbygRC29UlCO4cyzs=
+	b=QTAvxq9sfYbDiHh2Ojsv9+IuLPSb8syK8+iFz7I2IXCLuvrSkQzy519JymHkNc0DQ
+	 u61SGpe236SYQruwxJy2jwKr8zvu+Uf4BlhQL+FRYr6C0+kMDRd9FJTpOR6d83oIn6
+	 XVd4+vO54JRrV+gE/Pa53FEWm4wCdlLgrWfRHX+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Helge Deller <deller@gmx.de>,
+	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 510/731] fbdev: uvesafb: Fixes an error handling path in uvesafb_probe()
-Date: Wed, 28 Dec 2022 15:40:17 +0100
-Message-Id: <20221228144311.329647240@linuxfoundation.org>
+Subject: [PATCH 6.1 0276/1146] bpf: Fix slot type check in check_stack_write_var_off
+Date: Wed, 28 Dec 2022 15:30:15 +0100
+Message-Id: <20221228144337.632432018@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,37 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
 
-[ Upstream commit a94371040712031ba129c7e9d8ff04a06a2f8207 ]
+[ Upstream commit f5e477a861e4a20d8a1c5f7a245f3a3c3c376b03 ]
 
-If an error occurs after a successful uvesafb_init_mtrr() call, it must be
-undone by a corresponding arch_phys_wc_del() call, as already done in the
-remove function.
+For the case where allow_ptr_leaks is false, code is checking whether
+slot type is STACK_INVALID and STACK_SPILL and rejecting other cases.
+This is a consequence of incorrectly checking for register type instead
+of the slot type (NOT_INIT and SCALAR_VALUE respectively). Fix the
+check.
 
-This has been added in the remove function in commit 63e28a7a5ffc
-("uvesafb: Clean up MTRR code")
-
-Fixes: 8bdb3a2d7df4 ("uvesafb: the driver core")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 01f810ace9ed ("bpf: Allow variable-offset stack access")
+Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+Link: https://lore.kernel.org/r/20221103191013.1236066-5-memxor@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/uvesafb.c | 1 +
- 1 file changed, 1 insertion(+)
+ kernel/bpf/verifier.c | 19 +++++++++++--------
+ 1 file changed, 11 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/video/fbdev/uvesafb.c b/drivers/video/fbdev/uvesafb.c
-index 4df6772802d7..1f3b7e013568 100644
---- a/drivers/video/fbdev/uvesafb.c
-+++ b/drivers/video/fbdev/uvesafb.c
-@@ -1758,6 +1758,7 @@ static int uvesafb_probe(struct platform_device *dev)
- out_unmap:
- 	iounmap(info->screen_base);
- out_mem:
-+	arch_phys_wc_del(par->mtrr_handle);
- 	release_mem_region(info->fix.smem_start, info->fix.smem_len);
- out_reg:
- 	release_region(0x3c0, 32);
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 146056c79cc9..d533488b75c6 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -3186,14 +3186,17 @@ static int check_stack_write_var_off(struct bpf_verifier_env *env,
+ 		stype = &state->stack[spi].slot_type[slot % BPF_REG_SIZE];
+ 		mark_stack_slot_scratched(env, spi);
+ 
+-		if (!env->allow_ptr_leaks
+-				&& *stype != NOT_INIT
+-				&& *stype != SCALAR_VALUE) {
+-			/* Reject the write if there's are spilled pointers in
+-			 * range. If we didn't reject here, the ptr status
+-			 * would be erased below (even though not all slots are
+-			 * actually overwritten), possibly opening the door to
+-			 * leaks.
++		if (!env->allow_ptr_leaks && *stype != STACK_MISC && *stype != STACK_ZERO) {
++			/* Reject the write if range we may write to has not
++			 * been initialized beforehand. If we didn't reject
++			 * here, the ptr status would be erased below (even
++			 * though not all slots are actually overwritten),
++			 * possibly opening the door to leaks.
++			 *
++			 * We do however catch STACK_INVALID case below, and
++			 * only allow reading possibly uninitialized memory
++			 * later for CAP_PERFMON, as the write may not happen to
++			 * that slot.
+ 			 */
+ 			verbose(env, "spilled ptr in range of var-offset stack write; insn %d, ptr off: %d",
+ 				insn_idx, i);
 -- 
 2.35.1
 
