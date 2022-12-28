@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128E61863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CC61C433EF;
-	Wed, 28 Dec 2022 15:45:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B9B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ABDAC433EF;
+	Wed, 28 Dec 2022 15:45:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242346;
-	bh=pFJdlJUvVn26/7SZmhWIB6C9YE118ei/JxN9aYZPA2o=;
+	s=korg; t=1672242349;
+	bh=wqHBlWwDhEXSeeSSCMDc2kQD+kY2BGT9fPT2b3UzNNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cXFLCzoxsDGtE6zGI+kmt8AFj5SuofVHlYPy82u7ief0OqTS2WGx7VQ0mB5XBP0aL
-	 7Z0AX6hfEie6IbdAQLmRvL4MWlFKPjiFcv8E5MRJjveSRaMNQGlsP4U9XvV+8nuhWZ
-	 tW2CPFoi/H7r3qmQec49kwitcA7qzPv8uv4QtM4I=
+	b=Zx9TmLwxdQuK8N8LF1FD1P45eNAhuc1+51OhMIaqqgZrj4h6siyY/bYunzxjSXphv
+	 siAfcY5qRgujabCBX8VLq5JHhN9Z6JNax2VXofeGPnST3hDhnPrgRZqOkAX73EKJxw
+	 K2QCqcAjwrP2Lb2ksvc69G/0dFcvx2CIHozk/Jsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Andreas Herrmann <aherrmann@suse.de>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Ming Qian <ming.qian@nxp.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 593/731] blk-iocost: simplify ioc_name
-Date: Wed, 28 Dec 2022 15:41:40 +0100
-Message-Id: <20221228144313.730764283@linuxfoundation.org>
+Subject: [PATCH 6.0 0394/1073] media: amphion: try to wakeup vpu core to avoid failure
+Date: Wed, 28 Dec 2022 15:33:02 +0100
+Message-Id: <20221228144338.719585176@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,51 +36,137 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Ming Qian <ming.qian@nxp.com>
 
-[ Upstream commit 9df3e65139b923dfe98f76b7057882c7afb2d3e4 ]
+[ Upstream commit 082744433f7b96db7214a98202ed96f367684693 ]
 
-Just directly dereference the disk name instead of going through multiple
-hoops to find the same value.
+firmware should be waked up by start or configure command,
+but there is a very small chance that firmware failed to wakeup.
+in such case, try to wakeup firmware again by sending a noop command
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Andreas Herrmann <aherrmann@suse.de>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20220921180501.1539876-10-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: d36a9ea5e776 ("block: fix use-after-free of q->q_usage_counter")
+Fixes: 6de8d628df6e ("media: amphion: add v4l2 m2m vpu decoder stateful driver")
+Signed-off-by: Ming Qian <ming.qian@nxp.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-iocost.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ drivers/media/platform/amphion/vpu.h         |  1 +
+ drivers/media/platform/amphion/vpu_cmds.c    | 39 ++++++++++++++++++--
+ drivers/media/platform/amphion/vpu_malone.c  |  1 +
+ drivers/media/platform/amphion/vpu_windsor.c |  1 +
+ 4 files changed, 38 insertions(+), 4 deletions(-)
 
-diff --git a/block/blk-iocost.c b/block/blk-iocost.c
-index 069193dee95b..f5b501888ba4 100644
---- a/block/blk-iocost.c
-+++ b/block/blk-iocost.c
-@@ -665,17 +665,13 @@ static struct ioc *q_to_ioc(struct request_queue *q)
- 	return rqos_to_ioc(rq_qos_id(q, RQ_QOS_COST));
+diff --git a/drivers/media/platform/amphion/vpu.h b/drivers/media/platform/amphion/vpu.h
+index beac0309ca8d..048c23c2bf4d 100644
+--- a/drivers/media/platform/amphion/vpu.h
++++ b/drivers/media/platform/amphion/vpu.h
+@@ -13,6 +13,7 @@
+ #include <linux/mailbox_controller.h>
+ #include <linux/kfifo.h>
+ 
++#define VPU_TIMEOUT_WAKEUP	msecs_to_jiffies(200)
+ #define VPU_TIMEOUT		msecs_to_jiffies(1000)
+ #define VPU_INST_NULL_ID	(-1L)
+ #define VPU_MSG_BUFFER_SIZE	(8192)
+diff --git a/drivers/media/platform/amphion/vpu_cmds.c b/drivers/media/platform/amphion/vpu_cmds.c
+index f4d7ca78a621..fa581ba6bab2 100644
+--- a/drivers/media/platform/amphion/vpu_cmds.c
++++ b/drivers/media/platform/amphion/vpu_cmds.c
+@@ -269,7 +269,7 @@ static bool check_is_responsed(struct vpu_inst *inst, unsigned long key)
+ 	return flag;
  }
  
--static const char *q_name(struct request_queue *q)
--{
--	if (blk_queue_registered(q))
--		return kobject_name(q->kobj.parent);
--	else
--		return "<unknown>";
--}
--
- static const char __maybe_unused *ioc_name(struct ioc *ioc)
+-static int sync_session_response(struct vpu_inst *inst, unsigned long key)
++static int sync_session_response(struct vpu_inst *inst, unsigned long key, long timeout, int try)
  {
--	return q_name(ioc->rqos.q);
-+	struct gendisk *disk = ioc->rqos.q->disk;
-+
-+	if (!disk)
-+		return "<unknown>";
-+	return disk->disk_name;
+ 	struct vpu_core *core;
+ 
+@@ -279,10 +279,12 @@ static int sync_session_response(struct vpu_inst *inst, unsigned long key)
+ 	core = inst->core;
+ 
+ 	call_void_vop(inst, wait_prepare);
+-	wait_event_timeout(core->ack_wq, check_is_responsed(inst, key), VPU_TIMEOUT);
++	wait_event_timeout(core->ack_wq, check_is_responsed(inst, key), timeout);
+ 	call_void_vop(inst, wait_finish);
+ 
+ 	if (!check_is_responsed(inst, key)) {
++		if (try)
++			return -EINVAL;
+ 		dev_err(inst->dev, "[%d] sync session timeout\n", inst->id);
+ 		set_bit(inst->id, &core->hang_mask);
+ 		mutex_lock(&inst->core->cmd_lock);
+@@ -294,6 +296,19 @@ static int sync_session_response(struct vpu_inst *inst, unsigned long key)
+ 	return 0;
  }
  
- static struct ioc_gq *pd_to_iocg(struct blkg_policy_data *pd)
++static void vpu_core_keep_active(struct vpu_core *core)
++{
++	struct vpu_rpc_event pkt;
++
++	memset(&pkt, 0, sizeof(pkt));
++	vpu_iface_pack_cmd(core, &pkt, 0, VPU_CMD_ID_NOOP, NULL);
++
++	dev_dbg(core->dev, "try to wake up\n");
++	mutex_lock(&core->cmd_lock);
++	vpu_cmd_send(core, &pkt);
++	mutex_unlock(&core->cmd_lock);
++}
++
+ static int vpu_session_send_cmd(struct vpu_inst *inst, u32 id, void *data)
+ {
+ 	unsigned long key;
+@@ -304,9 +319,25 @@ static int vpu_session_send_cmd(struct vpu_inst *inst, u32 id, void *data)
+ 		return -EINVAL;
+ 
+ 	ret = vpu_request_cmd(inst, id, data, &key, &sync);
+-	if (!ret && sync)
+-		ret = sync_session_response(inst, key);
++	if (ret)
++		goto exit;
++
++	/* workaround for a firmware issue,
++	 * firmware should be waked up by start or configure command,
++	 * but there is a very small change that firmware failed to wakeup.
++	 * in such case, try to wakeup firmware again by sending a noop command
++	 */
++	if (sync && (id == VPU_CMD_ID_CONFIGURE_CODEC || id == VPU_CMD_ID_START)) {
++		if (sync_session_response(inst, key, VPU_TIMEOUT_WAKEUP, 1))
++			vpu_core_keep_active(inst->core);
++		else
++			goto exit;
++	}
++
++	if (sync)
++		ret = sync_session_response(inst, key, VPU_TIMEOUT, 0);
+ 
++exit:
+ 	if (ret)
+ 		dev_err(inst->dev, "[%d] send cmd(0x%x) fail\n", inst->id, id);
+ 
+diff --git a/drivers/media/platform/amphion/vpu_malone.c b/drivers/media/platform/amphion/vpu_malone.c
+index 51e0702f9ae1..9f2890730fd7 100644
+--- a/drivers/media/platform/amphion/vpu_malone.c
++++ b/drivers/media/platform/amphion/vpu_malone.c
+@@ -692,6 +692,7 @@ int vpu_malone_set_decode_params(struct vpu_shared_addr *shared,
+ }
+ 
+ static struct vpu_pair malone_cmds[] = {
++	{VPU_CMD_ID_NOOP, VID_API_CMD_NULL},
+ 	{VPU_CMD_ID_START, VID_API_CMD_START},
+ 	{VPU_CMD_ID_STOP, VID_API_CMD_STOP},
+ 	{VPU_CMD_ID_ABORT, VID_API_CMD_ABORT},
+diff --git a/drivers/media/platform/amphion/vpu_windsor.c b/drivers/media/platform/amphion/vpu_windsor.c
+index 1526af2ef9da..b93c8cfdee7f 100644
+--- a/drivers/media/platform/amphion/vpu_windsor.c
++++ b/drivers/media/platform/amphion/vpu_windsor.c
+@@ -658,6 +658,7 @@ int vpu_windsor_get_stream_buffer_size(struct vpu_shared_addr *shared)
+ }
+ 
+ static struct vpu_pair windsor_cmds[] = {
++	{VPU_CMD_ID_NOOP, GTB_ENC_CMD_NOOP},
+ 	{VPU_CMD_ID_CONFIGURE_CODEC, GTB_ENC_CMD_CONFIGURE_CODEC},
+ 	{VPU_CMD_ID_START, GTB_ENC_CMD_STREAM_START},
+ 	{VPU_CMD_ID_STOP, GTB_ENC_CMD_STREAM_STOP},
 -- 
 2.35.1
 
