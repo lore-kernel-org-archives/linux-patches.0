@@ -1,206 +1,91 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail-pg1-f172.google.com (mail-pg1-f172.google.com [209.85.215.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADE733217
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 18:17:01 +0000 (UTC)
-Received: by mail-pl1-f173.google.com with SMTP id d7so16712148pll.9
-        for <patches@lists.linux.dev>; Wed, 28 Dec 2022 10:17:01 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F9D1C10
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 19:08:38 +0000 (UTC)
+Received: by mail-pg1-f172.google.com with SMTP id v3so11073834pgh.4
+        for <patches@lists.linux.dev>; Wed, 28 Dec 2022 11:08:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=broadcom.com; s=google;
-        h=mime-version:subject:user-agent:references:in-reply-to:message-id
-         :date:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=B2JMXMxNcPPC9E1bibzVwkEskmXE4/YQNXGRn3Wt7n0=;
-        b=LWVHbRF1lFj1+ToSJ042pkMnAvb3rBT1ZVkf3kh0Ru5JRZAUnku5rPkpRitciQ+lvA
-         Ty5Vax+GDFpHib7a+Kc36Krv3mbBNGKdnWYy+7jE2Vy47VN+51qQZrHzAinsNnR+y5pu
-         2Jq0KYc3wyAdkSdYYmuLqu45a1NNZcmdh4cIA=
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LG1TKXfO3Ap1YVLnv1vLNUNgLF1B4SFHf63ToBDBDCg=;
+        b=FNNpqbSgPvg8Ci3s8pZ/cj5NIEYbaKeAAwgKGJqFKYZyOm7nviLlkiR27j7/kHiv9/
+         MuHJB+cBnFGTq7w139IlWJnRhv8C2KUlnGjFT+vzh/7HKB+W1J+kv544ucAy6VfbLFpu
+         W6QtZAcnN0IKj1z01vbj27jp/80bOBXixHgJBJ6pT1WHjrVicdj7AS6l4AIFwdNxFx73
+         oH3j6aMBeqic8o4P0PKi4LnxXJfbp198PDGGlSWomBxm6cxK6IBG5ugd47Fq7dv44h01
+         ZQ75f7yL6ViuO7uK0KUT7guq5DKDPYI7W8Z/SkMd28MppgKVHYRyS51vPJmKT4IhmdUA
+         Wxmg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=mime-version:subject:user-agent:references:in-reply-to:message-id
-         :date:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=B2JMXMxNcPPC9E1bibzVwkEskmXE4/YQNXGRn3Wt7n0=;
-        b=M0y2IBPCmgsOKOlQgnyHxHHBTp8p7MBGFMroktIx/k5UZsCSai0mrPJ4xj/u+wkAq7
-         qtr1sbapwlMWnIzuMSODrsy56dk1wToTjOh0ZKyEN+eWbY1gwa+EzDQAoYB6945sdhTq
-         +4mTq/MJaiCLvvCToPUB1fAX6Lfe9iKsLuT6gkDspcLwDiXQtXQ6rnNYITZPDMki8b+3
-         l7+BfOicM8h+GfjR5SMVvrSos3q9zqCjZHpLb71LhQa9CXjzuZNST8hniglY0I3I5J3g
-         r4JD3iArsGnNkr+glWY4zE7e8cI6I8zXq4K7gFTi/Mi+XUo4bsBKcHtla+eX1OHJ8Roj
-         cpnw==
-X-Gm-Message-State: AFqh2krmxCFEYF7ZyXxRufjYUIh8jS/M9yd/5EyoK9F+YaRv/pFhU7YG
-	EKPKkCfn5eQL9i9XFuCdILTciA==
-X-Google-Smtp-Source: AMrXdXupaVJIhBQbpJGG1DYz3fXRv15t7/J3SxRYC6AAoSM7OJMS9ndCPwAp0E7FQ2mGZDu3T/U8rQ==
-X-Received: by 2002:a17:903:32c3:b0:189:7819:e5c with SMTP id i3-20020a17090332c300b0018978190e5cmr38631306plr.6.1672251421011;
-        Wed, 28 Dec 2022 10:17:01 -0800 (PST)
-Received: from [10.230.43.52] ([192.19.152.250])
-        by smtp.gmail.com with ESMTPSA id w4-20020a170902e88400b00183c67844aesm11299402plg.22.2022.12.28.10.16.57
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 28 Dec 2022 10:17:00 -0800 (PST)
-From: Arend Van Spriel <arend.vanspriel@broadcom.com>
-To: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, Wang Yufen <wangyufen@huawei.com>, Kalle Valo <kvalo@kernel.org>, Sasha Levin <sashal@kernel.org>
-Date: Wed, 28 Dec 2022 19:16:57 +0100
-Message-ID: <18559f3a1a8.279b.9b12b7fc0a3841636cfb5e919b41b954@broadcom.com>
-In-Reply-To: <20221228144341.787142481@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
- <20221228144341.787142481@linuxfoundation.org>
-User-Agent: AquaMail/1.41.0 (build: 104100234)
-Subject: Re: [PATCH 6.0 0506/1073] wifi: brcmfmac: Fix error return code in brcmf_sdio_download_firmware()
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LG1TKXfO3Ap1YVLnv1vLNUNgLF1B4SFHf63ToBDBDCg=;
+        b=lfVM2zIhXa+rngYz90UuKL0EdiL0MpRxdTGRDB4TvJyYH/IyEPbwNHzPhqnnshGlgD
+         AzNCnswxj1Mln8f1u9fJA6Mt6oonTn/EdgBFLiD4y6fLTYn0FZxcXVKeoEAmu/2T07xB
+         CIPofiufuQv2RK7GxGjFz9N1IfhHuJnrNcnUwimMTvparxQ4TsgBvxij1suanB3WcvX9
+         AYI7KzufRAfrTbI+reSlwTzIBg3F3qUREtLAvmfJK/QLXiJjavhjawoC5PEsqe+Vi9uy
+         F6Xx67oOIrEpSyLcNZTE4PUgRlRp6WXwn1qUyxDwIcuHXXmkJtkJdPzWspZxd2W95BWg
+         KuxA==
+X-Gm-Message-State: AFqh2kprulba59f5n0KOjrbawY3l2HGBDSZEceY/dDUS91bQV/t2DFjD
+	iJVXWpQf3LVxdlTWKh+51qE=
+X-Google-Smtp-Source: AMrXdXs3v3zXwsJDPj1hQvHoDsNZ8SJR/+bixjEBkFAtCi2TvZFCePhcLD/CddXDaxSe9zF7eKZ0HQ==
+X-Received: by 2002:a05:6a00:1255:b0:576:b8e1:862b with SMTP id u21-20020a056a00125500b00576b8e1862bmr33307714pfi.14.1672254517424;
+        Wed, 28 Dec 2022 11:08:37 -0800 (PST)
+Received: from [192.168.1.3] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
+        by smtp.gmail.com with ESMTPSA id j123-20020a625581000000b00574e84ed847sm10715726pfb.24.2022.12.28.11.08.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Dec 2022 11:08:36 -0800 (PST)
+Message-ID: <e0b14de8-db62-b403-bd23-ee36f99073ae@gmail.com>
+Date: Wed, 28 Dec 2022 11:08:35 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pkcs7-signature"; micalg=sha-256;
-	boundary="000000000000f2043305f0e75fb8"
-
---000000000000f2043305f0e75fb8
-Content-Type: text/plain; format=flowed; charset="us-ascii"
-Content-Transfer-Encoding: 8bit
-
-Not sure why this patch is included in stable, but the criteria are unclear 
-to me. With or without this patch the net result is the same, ie. device 
-probe fails.
-
-Regards,
-Arend
-
-On December 28, 2022 5:00:53 PM Greg Kroah-Hartman 
-<gregkh@linuxfoundation.org> wrote:
-
-> From: Wang Yufen <wangyufen@huawei.com>
->
-> [ Upstream commit c2f2924bc7f9ea75ef8d95863e710168f8196256 ]
->
-> Fix to return a negative error code instead of 0 when
-> brcmf_chip_set_active() fails. In addition, change the return
-> value for brcmf_pcie_exit_download_state() to keep consistent.
->
-> Fixes: d380ebc9b6fb ("brcmfmac: rename chip download functions")
-> Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-> Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-> Signed-off-by: Kalle Valo <kvalo@kernel.org>
-> Link: 
-> https://lore.kernel.org/r/1669959342-27144-1-git-send-email-wangyufen@huawei.com
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
-> drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 2 +-
-> drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 1 +
-> 2 files changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c 
-> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-> index 97f0f13dfe50..7fc8d47f2281 100644
-> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-> @@ -626,7 +626,7 @@ static int brcmf_pcie_exit_download_state(struct 
-> brcmf_pciedev_info *devinfo,
-> 	}
->
-> 	if (!brcmf_chip_set_active(devinfo->ci, resetintr))
-> -		return -EINVAL;
-> +		return -EIO;
-> 	return 0;
-> }
->
-> diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c 
-> b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-> index 8968809399c7..2e4cd8096f03 100644
-> --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-> +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-> @@ -3412,6 +3412,7 @@ static int brcmf_sdio_download_firmware(struct 
-> brcmf_sdio *bus,
-> 	/* Take arm out of reset */
-> 	if (!brcmf_chip_set_active(bus->ci, rstvec)) {
-> 		brcmf_err("error getting out of ARM core reset\n");
-> +		bcmerror = -EIO;
-> 		goto err;
-> 	}
->
-> --
-> 2.35.1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 5.15 000/731] 5.15.86-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20221228144256.536395940@linuxfoundation.org>
+Content-Language: en-US
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
 
 
+On 12/28/2022 6:31 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.86 release.
+> There are 731 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 30 Dec 2022 14:41:39 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.86-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
---000000000000f2043305f0e75fb8
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-MIIQdwYJKoZIhvcNAQcCoIIQaDCCEGQCAQExDzANBglghkgBZQMEAgEFADALBgkqhkiG9w0BBwGg
-gg3OMIIFDTCCA/WgAwIBAgIQeEqpED+lv77edQixNJMdADANBgkqhkiG9w0BAQsFADBMMSAwHgYD
-VQQLExdHbG9iYWxTaWduIFJvb3QgQ0EgLSBSMzETMBEGA1UEChMKR2xvYmFsU2lnbjETMBEGA1UE
-AxMKR2xvYmFsU2lnbjAeFw0yMDA5MTYwMDAwMDBaFw0yODA5MTYwMDAwMDBaMFsxCzAJBgNVBAYT
-AkJFMRkwFwYDVQQKExBHbG9iYWxTaWduIG52LXNhMTEwLwYDVQQDEyhHbG9iYWxTaWduIEdDQyBS
-MyBQZXJzb25hbFNpZ24gMiBDQSAyMDIwMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA
-vbCmXCcsbZ/a0fRIQMBxp4gJnnyeneFYpEtNydrZZ+GeKSMdHiDgXD1UnRSIudKo+moQ6YlCOu4t
-rVWO/EiXfYnK7zeop26ry1RpKtogB7/O115zultAz64ydQYLe+a1e/czkALg3sgTcOOcFZTXk38e
-aqsXsipoX1vsNurqPtnC27TWsA7pk4uKXscFjkeUE8JZu9BDKaswZygxBOPBQBwrA5+20Wxlk6k1
-e6EKaaNaNZUy30q3ArEf30ZDpXyfCtiXnupjSK8WU2cK4qsEtj09JS4+mhi0CTCrCnXAzum3tgcH
-cHRg0prcSzzEUDQWoFxyuqwiwhHu3sPQNmFOMwIDAQABo4IB2jCCAdYwDgYDVR0PAQH/BAQDAgGG
-MGAGA1UdJQRZMFcGCCsGAQUFBwMCBggrBgEFBQcDBAYKKwYBBAGCNxQCAgYKKwYBBAGCNwoDBAYJ
-KwYBBAGCNxUGBgorBgEEAYI3CgMMBggrBgEFBQcDBwYIKwYBBQUHAxEwEgYDVR0TAQH/BAgwBgEB
-/wIBADAdBgNVHQ4EFgQUljPR5lgXWzR1ioFWZNW+SN6hj88wHwYDVR0jBBgwFoAUj/BLf6guRSSu
-TVD6Y5qL3uLdG7wwegYIKwYBBQUHAQEEbjBsMC0GCCsGAQUFBzABhiFodHRwOi8vb2NzcC5nbG9i
-YWxzaWduLmNvbS9yb290cjMwOwYIKwYBBQUHMAKGL2h0dHA6Ly9zZWN1cmUuZ2xvYmFsc2lnbi5j
-b20vY2FjZXJ0L3Jvb3QtcjMuY3J0MDYGA1UdHwQvMC0wK6ApoCeGJWh0dHA6Ly9jcmwuZ2xvYmFs
-c2lnbi5jb20vcm9vdC1yMy5jcmwwWgYDVR0gBFMwUTALBgkrBgEEAaAyASgwQgYKKwYBBAGgMgEo
-CjA0MDIGCCsGAQUFBwIBFiZodHRwczovL3d3dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5LzAN
-BgkqhkiG9w0BAQsFAAOCAQEAdAXk/XCnDeAOd9nNEUvWPxblOQ/5o/q6OIeTYvoEvUUi2qHUOtbf
-jBGdTptFsXXe4RgjVF9b6DuizgYfy+cILmvi5hfk3Iq8MAZsgtW+A/otQsJvK2wRatLE61RbzkX8
-9/OXEZ1zT7t/q2RiJqzpvV8NChxIj+P7WTtepPm9AIj0Keue+gS2qvzAZAY34ZZeRHgA7g5O4TPJ
-/oTd+4rgiU++wLDlcZYd/slFkaT3xg4qWDepEMjT4T1qFOQIL+ijUArYS4owpPg9NISTKa1qqKWJ
-jFoyms0d0GwOniIIbBvhI2MJ7BSY9MYtWVT5jJO3tsVHwj4cp92CSFuGwunFMzCCA18wggJHoAMC
-AQICCwQAAAAAASFYUwiiMA0GCSqGSIb3DQEBCwUAMEwxIDAeBgNVBAsTF0dsb2JhbFNpZ24gUm9v
-dCBDQSAtIFIzMRMwEQYDVQQKEwpHbG9iYWxTaWduMRMwEQYDVQQDEwpHbG9iYWxTaWduMB4XDTA5
-MDMxODEwMDAwMFoXDTI5MDMxODEwMDAwMFowTDEgMB4GA1UECxMXR2xvYmFsU2lnbiBSb290IENB
-IC0gUjMxEzARBgNVBAoTCkdsb2JhbFNpZ24xEzARBgNVBAMTCkdsb2JhbFNpZ24wggEiMA0GCSqG
-SIb3DQEBAQUAA4IBDwAwggEKAoIBAQDMJXaQeQZ4Ihb1wIO2hMoonv0FdhHFrYhy/EYCQ8eyip0E
-XyTLLkvhYIJG4VKrDIFHcGzdZNHr9SyjD4I9DCuul9e2FIYQebs7E4B3jAjhSdJqYi8fXvqWaN+J
-J5U4nwbXPsnLJlkNc96wyOkmDoMVxu9bi9IEYMpJpij2aTv2y8gokeWdimFXN6x0FNx04Druci8u
-nPvQu7/1PQDhBjPogiuuU6Y6FnOM3UEOIDrAtKeh6bJPkC4yYOlXy7kEkmho5TgmYHWyn3f/kRTv
-riBJ/K1AFUjRAjFhGV64l++td7dkmnq/X8ET75ti+w1s4FRpFqkD2m7pg5NxdsZphYIXAgMBAAGj
-QjBAMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBSP8Et/qC5FJK5N
-UPpjmove4t0bvDANBgkqhkiG9w0BAQsFAAOCAQEAS0DbwFCq/sgM7/eWVEVJu5YACUGssxOGhigH
-M8pr5nS5ugAtrqQK0/Xx8Q+Kv3NnSoPHRHt44K9ubG8DKY4zOUXDjuS5V2yq/BKW7FPGLeQkbLmU
-Y/vcU2hnVj6DuM81IcPJaP7O2sJTqsyQiunwXUaMld16WCgaLx3ezQA3QY/tRG3XUyiXfvNnBB4V
-14qWtNPeTCekTBtzc3b0F5nCH3oO4y0IrQocLP88q1UOD5F+NuvDV0m+4S4tfGCLw0FREyOdzvcy
-a5QBqJnnLDMfOjsl0oZAzjsshnjJYS8Uuu7bVW/fhO4FCU29KNhyztNiUGUe65KXgzHZs7XKR1g/
-XzCCBVYwggQ+oAMCAQICDE79bW6SMzVJMuOi1zANBgkqhkiG9w0BAQsFADBbMQswCQYDVQQGEwJC
-RTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1zYTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMg
-UGVyc29uYWxTaWduIDIgQ0EgMjAyMDAeFw0yMjA5MTAxMTQzMjNaFw0yNTA5MTAxMTQzMjNaMIGV
-MQswCQYDVQQGEwJJTjESMBAGA1UECBMJS2FybmF0YWthMRIwEAYDVQQHEwlCYW5nYWxvcmUxFjAU
-BgNVBAoTDUJyb2FkY29tIEluYy4xGTAXBgNVBAMTEEFyZW5kIFZhbiBTcHJpZWwxKzApBgkqhkiG
-9w0BCQEWHGFyZW5kLnZhbnNwcmllbEBicm9hZGNvbS5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IB
-DwAwggEKAoIBAQDxOB8Yu89pZLsG9Ic8ZY3uGibuv+NRsij+E70OMJQIwugrByyNq5xgH0BI22vJ
-LT7VKCB6YJC88ewEFfYi3EKW/sn6RL16ImUM40beDmQ12WBquJRoxVNyoByNalmTOBNYR95ZQZJw
-1nrzaoJtK0XIsv0dNCUcLlAc+jHkngD+I0ptVuWoMO1BcJexqJf5iX2M1CdC8PXTh9g4FIQnG2mc
-2Gzj3QNJRLsZu1TLyOyBBIr/BE7UiY3RabgRzknBGAPmzhS+fmyM8OtM5BYBsFBrSUFtZZO2p/tf
-Nbc24J2zf2peoZ8MK+7WQqummYlOnz+FyDkA9EybeNMcS5C+xi/PAgMBAAGjggHdMIIB2TAOBgNV
-HQ8BAf8EBAMCBaAwgaMGCCsGAQUFBwEBBIGWMIGTME4GCCsGAQUFBzAChkJodHRwOi8vc2VjdXJl
-Lmdsb2JhbHNpZ24uY29tL2NhY2VydC9nc2djY3IzcGVyc29uYWxzaWduMmNhMjAyMC5jcnQwQQYI
-KwYBBQUHMAGGNWh0dHA6Ly9vY3NwLmdsb2JhbHNpZ24uY29tL2dzZ2NjcjNwZXJzb25hbHNpZ24y
-Y2EyMDIwME0GA1UdIARGMEQwQgYKKwYBBAGgMgEoCjA0MDIGCCsGAQUFBwIBFiZodHRwczovL3d3
-dy5nbG9iYWxzaWduLmNvbS9yZXBvc2l0b3J5LzAJBgNVHRMEAjAAMEkGA1UdHwRCMEAwPqA8oDqG
-OGh0dHA6Ly9jcmwuZ2xvYmFsc2lnbi5jb20vZ3NnY2NyM3BlcnNvbmFsc2lnbjJjYTIwMjAuY3Js
-MCcGA1UdEQQgMB6BHGFyZW5kLnZhbnNwcmllbEBicm9hZGNvbS5jb20wEwYDVR0lBAwwCgYIKwYB
-BQUHAwQwHwYDVR0jBBgwFoAUljPR5lgXWzR1ioFWZNW+SN6hj88wHQYDVR0OBBYEFIikAXd8CEtv
-ZbDflDRnf3tuStPuMA0GCSqGSIb3DQEBCwUAA4IBAQCdS5XCYx6k2GGZui9DlFsFm75khkqAU7rT
-zBX04sJU1+B1wtgmWTVIzW7ugdtDZ4gzaV0S9xRhpDErjJaltxPbCylb1DEsLj+AIvBR34caW6ZG
-sQk444t0HPb29HnWYj+OllIGMbdJWr0/P95ZrKk2bP24ub3ZP/8SyzrohfIba9WZKMq6g2nTLZE3
-BtkeSGJx/8dy0h8YmRn+adOrxKXHxhSL8BNn8wsmIZyYWe6fRcBtO3Ks2DOLyHCdkoFlN8x9VUQF
-N2ulEgqCbRKkx+qNirW86eF138lr1gRxzclu/38ko//MmkAYR/+hP3WnBll7zbpIt0jc9wyFkSqH
-p8a1MYICbTCCAmkCAQEwazBbMQswCQYDVQQGEwJCRTEZMBcGA1UEChMQR2xvYmFsU2lnbiBudi1z
-YTExMC8GA1UEAxMoR2xvYmFsU2lnbiBHQ0MgUjMgUGVyc29uYWxTaWduIDIgQ0EgMjAyMAIMTv1t
-bpIzNUky46LXMA0GCWCGSAFlAwQCAQUAoIHUMC8GCSqGSIb3DQEJBDEiBCBIj0huGHCHhKgQzRAQ
-j+dN6Zm/taTc8u5mqMGMdwEifDAYBgkqhkiG9w0BCQMxCwYJKoZIhvcNAQcBMBwGCSqGSIb3DQEJ
-BTEPFw0yMjEyMjgxODE3MDFaMGkGCSqGSIb3DQEJDzFcMFowCwYJYIZIAWUDBAEqMAsGCWCGSAFl
-AwQBFjALBglghkgBZQMEAQIwCgYIKoZIhvcNAwcwCwYJKoZIhvcNAQEKMAsGCSqGSIb3DQEBBzAL
-BglghkgBZQMEAgEwDQYJKoZIhvcNAQEBBQAEggEAXLQM+CRdNxO75eU5oVYWKKdzdmWgiHJP3f7J
-5rYCwXQ/lefTvRDWRLLRozSJUBzInXyUjR7sp9+dasjIyBl56CPI0Bqw/TTwppJcNXZ5e8RYd2oS
-cZ9i9WU/Z6Y0pa5wUG89qMpxKKyIXajQNM9828vV2oRuVtbPhk/u8g9xdzb6ZARdl91sck8DEb8H
-DdScjPZqY3orlcQ10wxTd2u/3U5P58yTli6i/IcuuZ1LvHQZl2wOeoCknym5JFOrIOpCU58ZBR3Y
-0SEhc7cchcT0o91iOq2HHDn0kM81FZOESx6ZARBKrNB0DGu8S1s9yyOioWiSHwUarBH/FB/zEzZn
-ZQ==
---000000000000f2043305f0e75fb8--
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
