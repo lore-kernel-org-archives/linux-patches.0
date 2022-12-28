@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B401863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCEC1C433D2;
-	Wed, 28 Dec 2022 15:29:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181901863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91ED7C433D2;
+	Wed, 28 Dec 2022 15:29:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241371;
-	bh=J1eQpWRD7dauu8lTpjDHvkOmf4Mpsta51pLJZPdOdww=;
+	s=korg; t=1672241373;
+	bh=tCKhIKES01vCm26ZLEvARUQHAFuL/43QG7Or5OiUYno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gpvIjvd3FWdiCCVETCJFHcOsGMYCPH7iAGcKFiWpiSh7EodfXewDbObBdGFoc1y1B
-	 iYDyAsES/ehroiPdfbjAzuz7gsEcVhCa554boA8Ebbl+4l9aBa2D9JnZyOsoDP1Y6f
-	 r38LiGbJ/TXiqobpktNoXNa3Uk++AVqPVoWPvNz4=
+	b=aCU5kk0+o/4Z3p4wEcWG4arP5eyhDGJI4dM7ZTwyJU12bANk97TjMO6np2foFYQTU
+	 JEUzkTv+TbkG+5lCpN9MVVz03Y7C1rDzhVqHbJ/lDft07Na9i3jKk/IS3hyTr1LkbA
+	 bl28kyx5HmsJMCB2359CEsuk5e4HKvuL/MUuXlQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Mendonca <rafaelmendsr@gmail.com>,
-	Tommaso Merciai <tommaso.merciai@amarulasolutions.com>,
-	Martin Kepplinger <martink@posteo.de>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	kernel test robot <lkp@intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0238/1146] media: i2c: hi846: Fix memory leak in hi846_parse_dt()
-Date: Wed, 28 Dec 2022 15:29:37 +0100
-Message-Id: <20221228144336.602967346@linuxfoundation.org>
+Subject: [PATCH 5.15 445/731] usb: fotg210-udc: Fix ages old endianness issues
+Date: Wed, 28 Dec 2022 15:39:12 +0100
+Message-Id: <20221228144309.455018826@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,69 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael Mendonca <rafaelmendsr@gmail.com>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 80113026d415e27483669db7a88b548d1ec3d3d1 ]
+[ Upstream commit 46ed6026ca2181c917c8334a82e3eaf40a6234dd ]
 
-If any of the checks related to the supported link frequencies fail, then
-the V4L2 fwnode resources don't get released before returning, which leads
-to a memleak. Fix this by properly freeing the V4L2 fwnode data in a
-designated label.
+The code in the FOTG210 driver isn't entirely endianness-agnostic
+as reported by the kernel robot sparse testing. This came to
+the surface while moving the files around.
 
-Fixes: e8c0882685f9 ("media: i2c: add driver for the SK Hynix Hi-846 8M pixel camera")
-Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
-Reviewed-by: Tommaso Merciai <tommaso.merciai@amarulasolutions.com>
-Reviewed-by: Martin Kepplinger <martink@posteo.de>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+The driver is only used on little-endian systems, so this causes
+no real-world regression, but it is nice to be strict and have
+some compile coverage also on big endian machines, so fix it
+up with the right LE accessors.
+
+Fixes: b84a8dee23fd ("usb: gadget: add Faraday fotg210_udc driver")
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/linux-usb/202211110910.0dJ7nZCn-lkp@intel.com/
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20221111090317.94228-1-linus.walleij@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/hi846.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/usb/gadget/udc/fotg210-udc.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/media/i2c/hi846.c b/drivers/media/i2c/hi846.c
-index c5b69823f257..7c61873b7198 100644
---- a/drivers/media/i2c/hi846.c
-+++ b/drivers/media/i2c/hi846.c
-@@ -2008,22 +2008,24 @@ static int hi846_parse_dt(struct hi846 *hi846, struct device *dev)
- 	    bus_cfg.bus.mipi_csi2.num_data_lanes != 4) {
- 		dev_err(dev, "number of CSI2 data lanes %d is not supported",
- 			bus_cfg.bus.mipi_csi2.num_data_lanes);
--		v4l2_fwnode_endpoint_free(&bus_cfg);
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto check_hwcfg_error;
+diff --git a/drivers/usb/gadget/udc/fotg210-udc.c b/drivers/usb/gadget/udc/fotg210-udc.c
+index fdca28e72a3b..d0e051beb3af 100644
+--- a/drivers/usb/gadget/udc/fotg210-udc.c
++++ b/drivers/usb/gadget/udc/fotg210-udc.c
+@@ -629,10 +629,10 @@ static void fotg210_request_error(struct fotg210_udc *fotg210)
+ static void fotg210_set_address(struct fotg210_udc *fotg210,
+ 				struct usb_ctrlrequest *ctrl)
+ {
+-	if (ctrl->wValue >= 0x0100) {
++	if (le16_to_cpu(ctrl->wValue) >= 0x0100) {
+ 		fotg210_request_error(fotg210);
+ 	} else {
+-		fotg210_set_dev_addr(fotg210, ctrl->wValue);
++		fotg210_set_dev_addr(fotg210, le16_to_cpu(ctrl->wValue));
+ 		fotg210_set_cxdone(fotg210);
  	}
- 
- 	hi846->nr_lanes = bus_cfg.bus.mipi_csi2.num_data_lanes;
- 
- 	if (!bus_cfg.nr_of_link_frequencies) {
- 		dev_err(dev, "link-frequency property not found in DT\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto check_hwcfg_error;
- 	}
- 
- 	/* Check that link frequences for all the modes are in device tree */
- 	fq = hi846_check_link_freqs(hi846, &bus_cfg);
- 	if (fq) {
- 		dev_err(dev, "Link frequency of %lld is not supported\n", fq);
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto check_hwcfg_error;
- 	}
- 
- 	v4l2_fwnode_endpoint_free(&bus_cfg);
-@@ -2044,6 +2046,10 @@ static int hi846_parse_dt(struct hi846 *hi846, struct device *dev)
- 	}
- 
- 	return 0;
-+
-+check_hwcfg_error:
-+	v4l2_fwnode_endpoint_free(&bus_cfg);
-+	return ret;
  }
+@@ -713,17 +713,17 @@ static void fotg210_get_status(struct fotg210_udc *fotg210,
  
- static int hi846_probe(struct i2c_client *client)
+ 	switch (ctrl->bRequestType & USB_RECIP_MASK) {
+ 	case USB_RECIP_DEVICE:
+-		fotg210->ep0_data = 1 << USB_DEVICE_SELF_POWERED;
++		fotg210->ep0_data = cpu_to_le16(1 << USB_DEVICE_SELF_POWERED);
+ 		break;
+ 	case USB_RECIP_INTERFACE:
+-		fotg210->ep0_data = 0;
++		fotg210->ep0_data = cpu_to_le16(0);
+ 		break;
+ 	case USB_RECIP_ENDPOINT:
+ 		epnum = ctrl->wIndex & USB_ENDPOINT_NUMBER_MASK;
+ 		if (epnum)
+ 			fotg210->ep0_data =
+-				fotg210_is_epnstall(fotg210->ep[epnum])
+-				<< USB_ENDPOINT_HALT;
++				cpu_to_le16(fotg210_is_epnstall(fotg210->ep[epnum])
++					    << USB_ENDPOINT_HALT);
+ 		else
+ 			fotg210_request_error(fotg210);
+ 		break;
 -- 
 2.35.1
 
