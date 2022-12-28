@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 651FA1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD72CC433EF;
-	Wed, 28 Dec 2022 15:30:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C6D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80896C433EF;
+	Wed, 28 Dec 2022 15:30:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241416;
-	bh=ISCaJs4F/G7EjnJ0lN6s31xC8E2PdrisTIjbtqyN690=;
+	s=korg; t=1672241419;
+	bh=xNoU7NTr0kGWQZE8bzcq4Lq8MYZaAKLZd0qCwQNS2y4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DepzeYsGmOAt+bugt5l7sDTwNFxA1EmUWIc7l+7l0qjsxDuulE55tHO+w9nS6Yom9
-	 scP1pBiwuLU4u0syWubfeJjmSDIt9Ab99aU0piVtCZAXle7xaY79z3qK+XIqkK+pol
-	 hYx+0XvOrsGF8t2JryymIjqnqVC9ATykJ68UsCAM=
+	b=M5QXUuPZiKVB7Cb+CayEwCQfshTeQp+JXsRiMNBsVuMqXO9bD0C2IV0lWV+w+L7SE
+	 90ei2xsOcZGnWr/H4eVxUR80zr++yf7707yxmg10hapMkoP198kRxL1nkqkbWuk4x4
+	 m9cFbeu1po4o8fHna2lt2cj7tvGJLXd5+XW72dXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
+	Alan Maguire <alan.maguire@oracle.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0281/1073] drm/msm/dsi: Prevent signed BPG offsets from bleeding into adjacent bits
-Date: Wed, 28 Dec 2022 15:31:09 +0100
-Message-Id: <20221228144335.653538060@linuxfoundation.org>
+Subject: [PATCH 6.1 0244/1146] libbpf: Btf dedup identical struct test needs check for nested structs/arrays
+Date: Wed, 28 Dec 2022 15:29:43 +0100
+Message-Id: <20221228144336.763224788@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,49 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Alan Maguire <alan.maguire@oracle.com>
 
-[ Upstream commit cc84b66be223d36a3d10d59d68ba647e72db3099 ]
+[ Upstream commit f3c51fe02c55bd944662714e5b91b96dc271ad9f ]
 
-The bpg_offset array contains negative BPG offsets which fill the full 8
-bits of a char thanks to two's complement: this however results in those
-bits bleeding into the next field when the value is packed into DSC PPS
-by the drm_dsc_helper function, which only expects range_bpg_offset to
-contain 6-bit wide values.  As a consequence random slices appear
-corrupted on-screen (tested on a Sony Tama Akatsuki device with sdm845).
+When examining module BTF, it is common to see core kernel structures
+such as sk_buff, net_device duplicated in the module.  After adding
+debug messaging to BTF it turned out that much of the problem
+was down to the identical struct test failing during deduplication;
+sometimes the compiler adds identical structs.  However
+it turns out sometimes that type ids of identical struct members
+can also differ, even when the containing structs are still identical.
 
-Use AND operators to limit these two's complement values to 6 bits,
-similar to the AMD and i915 drivers.
+To take an example, for struct sk_buff, debug messaging revealed
+that the identical struct matching was failing for the anon
+struct "headers"; specifically for the first field:
 
-Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Patchwork: https://patchwork.freedesktop.org/patch/508941/
-Link: https://lore.kernel.org/r/20221026182824.876933-11-marijn.suijten@somainline.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+__u8       __pkt_type_offset[0]; /*   128     0 */
+
+Looking at the code in BTF deduplication, we have code that guards
+against the possibility of identical struct definitions, down to
+type ids, and identical array definitions.  However in this case
+we have a struct which is being defined twice but does not have
+identical type ids since each duplicate struct has separate type
+ids for the above array member.   A similar problem (though not
+observed) could occur for struct-in-struct.
+
+The solution is to make the "identical struct" test check members
+not just for matching ids, but to also check if they in turn are
+identical structs or arrays.
+
+The results of doing this are quite dramatic (for some modules
+at least); I see the number of type ids drop from around 10000
+to just over 1000 in one module for example.
+
+For testing use latest pahole or apply [1], otherwise dedups
+can fail for the reasons described there.
+
+Also fix return type of btf_dedup_identical_arrays() as
+suggested by Andrii to match boolean return type used
+elsewhere.
+
+Fixes: efdd3eb8015e ("libbpf: Accommodate DWARF/compiler bug with duplicated structs")
+Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/1666622309-22289-1-git-send-email-alan.maguire@oracle.com
+
+[1] https://lore.kernel.org/bpf/1666364523-9648-1-git-send-email-alan.maguire
+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ tools/lib/bpf/btf.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index c5805416854f..cf7d5b69aac5 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1869,7 +1869,11 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
- 	for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
- 		dsc->rc_range_params[i].range_min_qp = min_qp[i];
- 		dsc->rc_range_params[i].range_max_qp = max_qp[i];
--		dsc->rc_range_params[i].range_bpg_offset = bpg_offset[i];
-+		/*
-+		 * Range BPG Offset contains two's-complement signed values that fill
-+		 * 8 bits, yet the registers and DCS PPS field are only 6 bits wide.
-+		 */
-+		dsc->rc_range_params[i].range_bpg_offset = bpg_offset[i] & DSC_RANGE_BPG_OFFSET_MASK;
- 	}
+diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
+index d88647da2c7f..675a0df5c840 100644
+--- a/tools/lib/bpf/btf.c
++++ b/tools/lib/bpf/btf.c
+@@ -3887,14 +3887,14 @@ static inline __u16 btf_fwd_kind(struct btf_type *t)
+ }
  
- 	dsc->initial_offset = 6144;		/* Not bpp 12 */
+ /* Check if given two types are identical ARRAY definitions */
+-static int btf_dedup_identical_arrays(struct btf_dedup *d, __u32 id1, __u32 id2)
++static bool btf_dedup_identical_arrays(struct btf_dedup *d, __u32 id1, __u32 id2)
+ {
+ 	struct btf_type *t1, *t2;
+ 
+ 	t1 = btf_type_by_id(d->btf, id1);
+ 	t2 = btf_type_by_id(d->btf, id2);
+ 	if (!btf_is_array(t1) || !btf_is_array(t2))
+-		return 0;
++		return false;
+ 
+ 	return btf_equal_array(t1, t2);
+ }
+@@ -3918,7 +3918,9 @@ static bool btf_dedup_identical_structs(struct btf_dedup *d, __u32 id1, __u32 id
+ 	m1 = btf_members(t1);
+ 	m2 = btf_members(t2);
+ 	for (i = 0, n = btf_vlen(t1); i < n; i++, m1++, m2++) {
+-		if (m1->type != m2->type)
++		if (m1->type != m2->type &&
++		    !btf_dedup_identical_arrays(d, m1->type, m2->type) &&
++		    !btf_dedup_identical_structs(d, m1->type, m2->type))
+ 			return false;
+ 	}
+ 	return true;
 -- 
 2.35.1
 
