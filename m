@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD03A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5426BC433D2;
-	Wed, 28 Dec 2022 15:09:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791B11863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF8A6C433D2;
+	Wed, 28 Dec 2022 15:09:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240189;
-	bh=IqJZ+mc+y1zrA9Wz06cUVtD47RJVvdK8LZZdWL57Zj4=;
+	s=korg; t=1672240192;
+	bh=kqdXH0cZ/DfQlEfgt3InESfQaUYuOh2IexaMIcw2J38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d21jlaoSOs712G7u23uP7RC0alaRBALZHrgaXgg3i1NbOVRAoMl5ONpXVVu17MZPm
-	 LLK991YT6ycELiOjrAD/9Gubq0QsxGUtRtQcsIFPLSq6ij/kzJoI+HCBkMKGBfo/Uh
-	 epcVAhKmEFbqNTtVXjedd6IURu1+NcflMr0B7fgw=
+	b=Kh1oWmKfHOrvTQqwanVSkK3AvSHuQN1/odlwVtflVyG2/Cs6ncUMpWr4Oflfkgs2h
+	 jVOs8fEuxSzfQ4TATK/2KvPre67Sz+2B3ktbMg16fxc14ubGcjXAfCv0N4pxMLuo76
+	 I4CAUaRHzFEohStPK9UDw7SwOgybng53ljTGPwys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
-	Chen Yu <yu.c.chen@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0128/1073] ACPI: pfr_update: use ACPI_FREE() to free acpi_object
-Date: Wed, 28 Dec 2022 15:28:36 +0100
-Message-Id: <20221228144331.512758976@linuxfoundation.org>
+Subject: [PATCH 6.1 0091/1146] arm64: dts: armada-3720-turris-mox: Add missing interrupt for RTC
+Date: Wed, 28 Dec 2022 15:27:10 +0100
+Message-Id: <20221228144332.615257767@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,55 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang ShaoBo <bobo.shaobowang@huawei.com>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit e335beed78ec82656dcb554f9fe560709f0dc408 ]
+[ Upstream commit 21aad8ba615e9c39cee6c5d0b76726f63791926c ]
 
-acpi_evaluate_dsm_typed()/acpi_evaluate_dsm() should be coupled with
-ACPI_FREE() to free the ACPI memory, because we need to track the
-allocation of acpi_object when ACPI_DBG_TRACK_ALLOCATIONS enabled,
-so use ACPI_FREE() instead of kfree().
+MCP7940MT-I/MNY RTC has connected interrupt line to GPIO2_5.
 
-Fixes: 0db89fa243e5 ("ACPI: Introduce Platform Firmware Runtime Update device driver")
-Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
-Reviewed-by: Chen Yu <yu.c.chen@intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 7109d817db2e ("arm64: dts: marvell: add DTS for Turris Mox")
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/pfr_update.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/acpi/pfr_update.c b/drivers/acpi/pfr_update.c
-index 6bb0b778b5da..9d2bdc13253a 100644
---- a/drivers/acpi/pfr_update.c
-+++ b/drivers/acpi/pfr_update.c
-@@ -178,7 +178,7 @@ static int query_capability(struct pfru_update_cap_info *cap_hdr,
- 	ret = 0;
+diff --git a/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts b/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts
+index ada164d423f3..200f97e1c4c9 100644
+--- a/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts
++++ b/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts
+@@ -125,9 +125,12 @@ &i2c0 {
+ 	/delete-property/ mrvl,i2c-fast-mode;
+ 	status = "okay";
  
- free_acpi_buffer:
--	kfree(out_obj);
-+	ACPI_FREE(out_obj);
++	/* MCP7940MT-I/MNY RTC */
+ 	rtc@6f {
+ 		compatible = "microchip,mcp7940x";
+ 		reg = <0x6f>;
++		interrupt-parent = <&gpiosb>;
++		interrupts = <5 0>; /* GPIO2_5 */
+ 	};
+ };
  
- 	return ret;
- }
-@@ -224,7 +224,7 @@ static int query_buffer(struct pfru_com_buf_info *info,
- 	ret = 0;
- 
- free_acpi_buffer:
--	kfree(out_obj);
-+	ACPI_FREE(out_obj);
- 
- 	return ret;
- }
-@@ -385,7 +385,7 @@ static int start_update(int action, struct pfru_device *pfru_dev)
- 	ret = 0;
- 
- free_acpi_buffer:
--	kfree(out_obj);
-+	ACPI_FREE(out_obj);
- 
- 	return ret;
- }
 -- 
 2.35.1
 
