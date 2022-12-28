@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66EA11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE673C433EF;
-	Wed, 28 Dec 2022 15:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 124291863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89553C433D2;
+	Wed, 28 Dec 2022 15:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239640;
-	bh=5+NbVSRPuQBuAknbwIoK0y8/8BUfbHuJf89N4DK1f2s=;
+	s=korg; t=1672239642;
+	bh=LN62Qwap7FxUixeVq+R4s4nnFyLMUv94FDJ3IEkQxr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PWPNALtTTQWp5f1jEcvVlHeRlbhyuV77QaKJspP7EE1yaAe79jg8bjiZNG3oFB+SZ
-	 LVQlwDq7P8A50uGYAOaoLNa3BU23gbe/gLz26KW9/OM2v7nOYFqtM8Ww3+PwENSsZ+
-	 qD7sbn54KsrzSr2kshuDTORes3AeSPfjdkcXNhE0=
+	b=vMSUjfsWRF6oCL0GXnAfAl4s0og/EuYUEQa/IYZcZ5Usua9r2CFCbGUWNa2QRHKwU
+	 11AmqxUvJBDlbroFOaixokbPVgnyjVPJLKXHargcsSG1lJ0CZhLJl25EVYbfKr+ZdG
+	 Opdp9olN9OpiSL+Nj2R/p1sgs3E2lPI3yP5tdQ3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
+	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+	Joel Stanley <joel@jms.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0022/1146] riscv: dts: microchip: fix memory node unit address for icicle
-Date: Wed, 28 Dec 2022 15:26:01 +0100
-Message-Id: <20221228144330.775849321@linuxfoundation.org>
+Subject: [PATCH 6.0 0059/1073] ARM: dts: nuvoton: Remove bogus unit addresses from fixed-partition nodes
+Date: Wed, 28 Dec 2022 15:27:27 +0100
+Message-Id: <20221228144329.702808374@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,34 +35,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
 
-[ Upstream commit d6105a8b7c160a73ae04054c8921eba80a294146 ]
+[ Upstream commit ea3ce4cf076ba11bb591c8013c5315136cae52c8 ]
 
-Evidently I forgot to update the unit address for the 38-bit cached
-memory node when I changed the address in the reg property..
-Update it to match.
+The unit addresses do not correspond to the nodes' reg properties,
+because they don't have any.
 
-Fixes: 6c1193301791 ("riscv: dts: microchip: update memory configuration for v2022.10")
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Fixes: e42b650f828d ("ARM: dts: nuvoton: Add new device nodes to NPCM750 EVB")
+Fixes: ee33e2fb3d70 ("ARM: dts: nuvoton: Add Quanta GBS BMC Device Tree")
+Fixes: 59f5abe09f0a ("ARM: dts: nuvoton: Add Quanta GSJ BMC")
+Fixes: 14579c76f5ca ("ARM: dts: nuvoton: Add Fii Kudo system")
+Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+Link: https://lore.kernel.org/r/20221031221553.163273-1-j.neuschaefer@gmx.net
+Signed-off-by: Joel Stanley <joel@jms.id.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/boot/dts/microchip/mpfs-icicle-kit.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/nuvoton-npcm730-gbs.dts            | 2 +-
+ arch/arm/boot/dts/nuvoton-npcm730-gsj.dts            | 2 +-
+ arch/arm/boot/dts/nuvoton-npcm730-kudo.dts           | 6 +++---
+ arch/arm/boot/dts/nuvoton-npcm750-evb.dts            | 4 ++--
+ arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts | 6 +++---
+ 5 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/arch/riscv/boot/dts/microchip/mpfs-icicle-kit.dts b/arch/riscv/boot/dts/microchip/mpfs-icicle-kit.dts
-index ec7b7c2a3ce2..8ced67c3b00b 100644
---- a/arch/riscv/boot/dts/microchip/mpfs-icicle-kit.dts
-+++ b/arch/riscv/boot/dts/microchip/mpfs-icicle-kit.dts
-@@ -37,7 +37,7 @@ ddrc_cache_lo: memory@80000000 {
- 		status = "okay";
- 	};
+diff --git a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts b/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
+index d10669fcd527..9e9eba8bad5e 100644
+--- a/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
++++ b/arch/arm/boot/dts/nuvoton-npcm730-gbs.dts
+@@ -366,7 +366,7 @@ flash@0 {
+ 		spi-max-frequency = <20000000>;
+ 		spi-rx-bus-width = <2>;
+ 		label = "bmc";
+-		partitions@80000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+diff --git a/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts b/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
+index 491606c4f044..2a394cc15284 100644
+--- a/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
++++ b/arch/arm/boot/dts/nuvoton-npcm730-gsj.dts
+@@ -142,7 +142,7 @@ flash@0 {
+ 		reg = <0>;
+ 		spi-rx-bus-width = <2>;
  
--	ddrc_cache_hi: memory@1000000000 {
-+	ddrc_cache_hi: memory@1040000000 {
- 		device_type = "memory";
- 		reg = <0x10 0x40000000 0x0 0x40000000>;
- 		status = "okay";
+-		partitions@80000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+diff --git a/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
+index a0c2d7652625..f7b38bee039b 100644
+--- a/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
++++ b/arch/arm/boot/dts/nuvoton-npcm730-kudo.dts
+@@ -388,7 +388,7 @@ flash@0 {
+ 		spi-max-frequency = <5000000>;
+ 		spi-rx-bus-width = <2>;
+ 		label = "bmc";
+-		partitions@80000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+@@ -422,7 +422,7 @@ flash@1 {
+ 		reg = <1>;
+ 		spi-max-frequency = <5000000>;
+ 		spi-rx-bus-width = <2>;
+-		partitions@88000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+@@ -447,7 +447,7 @@ flash@0 {
+ 		reg = <0>;
+ 		spi-max-frequency = <5000000>;
+ 		spi-rx-bus-width = <2>;
+-		partitions@A0000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+diff --git a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+index 3dad32834e5e..f53d45fa1de8 100644
+--- a/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
++++ b/arch/arm/boot/dts/nuvoton-npcm750-evb.dts
+@@ -74,7 +74,7 @@ flash@0 {
+ 		spi-rx-bus-width = <2>;
+ 		reg = <0>;
+ 		spi-max-frequency = <5000000>;
+-		partitions@80000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+@@ -135,7 +135,7 @@ flash@0 {
+ 		spi-rx-bus-width = <2>;
+ 		reg = <0>;
+ 		spi-max-frequency = <5000000>;
+-		partitions@A0000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+diff --git a/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts b/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
+index 132e702281fc..87359ab05db3 100644
+--- a/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
++++ b/arch/arm/boot/dts/nuvoton-npcm750-runbmc-olympus.dts
+@@ -107,7 +107,7 @@ flash@0 {
+ 		reg = <0>;
+ 		spi-rx-bus-width = <2>;
+ 
+-		partitions@80000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+@@ -146,7 +146,7 @@ flash@1 {
+ 		reg = <1>;
+ 		npcm,fiu-rx-bus-width = <2>;
+ 
+-		partitions@88000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+@@ -173,7 +173,7 @@ flash@0 {
+ 		reg = <0>;
+ 		spi-rx-bus-width = <2>;
+ 
+-		partitions@A0000000 {
++		partitions {
+ 			compatible = "fixed-partitions";
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
 -- 
 2.35.1
 
