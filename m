@@ -1,32 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35521863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 666D0C433D2;
-	Wed, 28 Dec 2022 15:50:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82D521863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07211C433D2;
+	Wed, 28 Dec 2022 15:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242627;
-	bh=mjUNtm7t84gX4XohNUnjZN0aUL20Tpw4JWWEJTtiZ6k=;
+	s=korg; t=1672242630;
+	bh=qR0vw+uQELOwhOUev5/wnJO2JEk9ykAYOvrnAJzGcKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s/iXY3J5YJ/aFXQLsu+krVDxpPGTkMkAZpKwCSTMEnE4CDf5asbP12pIXnWog6pkF
-	 e98JHFZqzSplyuxbJSIO2zTOb22EgHE4+px/sBekwL3UBv9YQm8QUKoJoJt+FsWtjE
-	 DIxj9/oWmLS4VtQQtqS1+A4qzFZY5bxk1u3Qz1gE=
+	b=zzjiTwUlJofcP+2hmElmj+eGrLnXE6pJ4aJUY+v5i6JEISoB/rfAxcn2M3u7NeDic
+	 kk8ph/oRlUTIce6tRmH/GJ2gktjaa/AltB4VcKmwvVKr8AAmgflwSGkHrSLoATqqIG
+	 KQKBlDIPu4G4/P9B/4zcGn29wCLyZ5xoqM7nD9jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Jay Vosburgh <jay.vosburgh@canonical.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Zhang Jinhao <zhangjinhao2@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0433/1073] bonding: uninitialized variable in bond_miimon_inspect()
-Date: Wed, 28 Dec 2022 15:33:41 +0100
-Message-Id: <20221228144339.787173437@linuxfoundation.org>
+Subject: [PATCH 5.15 627/731] acct: fix potential integer overflow in encode_comp_t()
+Date: Wed, 28 Dec 2022 15:42:14 +0100
+Message-Id: <20221228144314.700154687@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,39 +39,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit e5214f363dabca240446272dac54d404501ad5e5 ]
+[ Upstream commit c5f31c655bcc01b6da53b836ac951c1556245305 ]
 
-The "ignore_updelay" variable needs to be initialized to false.
+The integer overflow is descripted with following codes:
+  > 317 static comp_t encode_comp_t(u64 value)
+  > 318 {
+  > 319         int exp, rnd;
+    ......
+  > 341         exp <<= MANTSIZE;
+  > 342         exp += value;
+  > 343         return exp;
+  > 344 }
 
-Fixes: f8a65ab2f3ff ("bonding: fix link recovery in mode 2 when updelay is nonzero")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
-Link: https://lore.kernel.org/r/Y4SWJlh3ohJ6EPTL@kili
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Currently comp_t is defined as type of '__u16', but the variable 'exp' is
+type of 'int', so overflow would happen when variable 'exp' in line 343 is
+greater than 65535.
+
+Link: https://lkml.kernel.org/r/20210515140631.369106-3-zhengyejian1@huawei.com
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Cc: Hanjun Guo <guohanjun@huawei.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Zhang Jinhao <zhangjinhao2@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/acct.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 2ad17c840a2a..445c23e424f7 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2531,10 +2531,10 @@ static int bond_slave_info_query(struct net_device *bond_dev, struct ifslave *in
- /* called with rcu_read_lock() */
- static int bond_miimon_inspect(struct bonding *bond)
- {
-+	bool ignore_updelay = false;
- 	int link_state, commit = 0;
- 	struct list_head *iter;
- 	struct slave *slave;
--	bool ignore_updelay;
+diff --git a/kernel/acct.c b/kernel/acct.c
+index 23a7ab8e6cbc..2b5cc63eb295 100644
+--- a/kernel/acct.c
++++ b/kernel/acct.c
+@@ -331,6 +331,8 @@ static comp_t encode_comp_t(unsigned long value)
+ 		exp++;
+ 	}
  
- 	if (BOND_MODE(bond) == BOND_MODE_ACTIVEBACKUP) {
- 		ignore_updelay = !rcu_dereference(bond->curr_active_slave);
++	if (exp > (((comp_t) ~0U) >> MANTSIZE))
++		return (comp_t) ~0U;
+ 	/*
+ 	 * Clean it up and polish it off.
+ 	 */
 -- 
 2.35.1
 
