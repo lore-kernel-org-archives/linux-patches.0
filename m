@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42C3C1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFF2AC433EF;
-	Wed, 28 Dec 2022 16:42:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BB01C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD75C433D2;
+	Wed, 28 Dec 2022 16:42:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245734;
-	bh=T1EBcmEjeuHlN8Z2o4YK5ngb+84CoXiUzQ9398MNlQE=;
+	s=korg; t=1672245736;
+	bh=aDWG8fbGBA74watHfo590CXtwV6HBAc+NsS3rF7zHhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SFjhB37VPA5mJwNgkfQbaAV7E0H0q0bwMbgUXCVGDMNxozPhcTQKowBR/hK+qulMZ
-	 9LvZ+H7Euc7KWJawD8TUT390FdEFl2r439peJLNYQTWh0kHSmUjrKpfvqj6Amejton
-	 uUTNmzjyD0eB11jihRzSHbiE5An89jQ7nCjC1U6Y=
+	b=1+UO/Z/KZqngOe9fR7iEZFPNeBPtKxyiEWz0bqfev27/lYyQU3nnusjIqysxhCryx
+	 bhWl0J//SQkdV5tFtmhA+3fcyNlHhkvHM+ZBMHcpXjEgTA/mdyp3PhPvOabJ0PsU4f
+	 wuCoAOa4j9VvhcwsDXHsvrUTBznvfqNzCt+6iuyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Tan Tee Min <tee.min.tan@linux.intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Hannes Reinecke <hare@suse.de>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0913/1146] igc: allow BaseTime 0 enrollment for Qbv
-Date: Wed, 28 Dec 2022 15:40:52 +0100
-Message-Id: <20221228144355.036595660@linuxfoundation.org>
+Subject: [PATCH 6.0 0946/1073] nvme-auth: dont override ctrl keys before validation
+Date: Wed, 28 Dec 2022 15:42:14 +0100
+Message-Id: <20221228144353.733225720@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,63 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tan Tee Min <tee.min.tan@linux.intel.com>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit e17090eb24944fbbe1f24d9f336d7bad4fbe47e8 ]
+[ Upstream commit 01604350e14560d4d69323eb1ba12a257a643ea8 ]
 
-Introduce qbv_enable flag in igc_adapter struct to store the Qbv on/off.
-So this allow the BaseTime to enroll with zero value.
+Replace ctrl ctrl_key/host_key only after nvme_auth_generate_key is successful.
+Also, this fixes a bug where the keys are leaked.
 
-Fixes: 61572d5f8f91 ("igc: Simplify TSN flags handling")
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Signed-off-by: Tan Tee Min <tee.min.tan@linux.intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Hannes Reinecke <hare@suse.de>
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc.h      | 1 +
- drivers/net/ethernet/intel/igc/igc_main.c | 2 ++
- drivers/net/ethernet/intel/igc/igc_tsn.c  | 2 +-
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/nvme/host/core.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc.h b/drivers/net/ethernet/intel/igc/igc.h
-index 66a57636d329..df3e26c0cf01 100644
---- a/drivers/net/ethernet/intel/igc/igc.h
-+++ b/drivers/net/ethernet/intel/igc/igc.h
-@@ -184,6 +184,7 @@ struct igc_adapter {
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index cd2e2bfeae82..3582a28a1dce 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3739,13 +3739,17 @@ static ssize_t nvme_ctrl_dhchap_secret_store(struct device *dev,
+ 	memcpy(dhchap_secret, buf, count);
+ 	nvme_auth_stop(ctrl);
+ 	if (strcmp(dhchap_secret, opts->dhchap_secret)) {
++		struct nvme_dhchap_key *key, *host_key;
+ 		int ret;
  
- 	ktime_t base_time;
- 	ktime_t cycle_time;
-+	bool qbv_enable;
+-		ret = nvme_auth_generate_key(dhchap_secret, &ctrl->host_key);
++		ret = nvme_auth_generate_key(dhchap_secret, &key);
+ 		if (ret)
+ 			return ret;
+ 		kfree(opts->dhchap_secret);
+ 		opts->dhchap_secret = dhchap_secret;
++		host_key = ctrl->host_key;
++		ctrl->host_key = key;
++		nvme_auth_free_key(host_key);
+ 		/* Key has changed; re-authentication with new key */
+ 		nvme_auth_reset(ctrl);
+ 	}
+@@ -3789,13 +3793,17 @@ static ssize_t nvme_ctrl_dhchap_ctrl_secret_store(struct device *dev,
+ 	memcpy(dhchap_secret, buf, count);
+ 	nvme_auth_stop(ctrl);
+ 	if (strcmp(dhchap_secret, opts->dhchap_ctrl_secret)) {
++		struct nvme_dhchap_key *key, *ctrl_key;
+ 		int ret;
  
- 	/* OS defined structs */
- 	struct pci_dev *pdev;
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 42386a0eef68..d666b3aab523 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -6037,6 +6037,8 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
- 	u32 start_time = 0, end_time = 0;
- 	size_t n;
- 
-+	adapter->qbv_enable = qopt->enable;
-+
- 	if (!qopt->enable)
- 		return igc_tsn_clear_schedule(adapter);
- 
-diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
-index 4a019954cadb..356c7455c5ce 100644
---- a/drivers/net/ethernet/intel/igc/igc_tsn.c
-+++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
-@@ -36,7 +36,7 @@ static unsigned int igc_tsn_new_flags(struct igc_adapter *adapter)
- {
- 	unsigned int new_flags = adapter->flags & ~IGC_FLAG_TSN_ANY_ENABLED;
- 
--	if (adapter->base_time)
-+	if (adapter->qbv_enable)
- 		new_flags |= IGC_FLAG_TSN_QBV_ENABLED;
- 
- 	if (is_any_launchtime(adapter))
+-		ret = nvme_auth_generate_key(dhchap_secret, &ctrl->ctrl_key);
++		ret = nvme_auth_generate_key(dhchap_secret, &key);
+ 		if (ret)
+ 			return ret;
+ 		kfree(opts->dhchap_ctrl_secret);
+ 		opts->dhchap_ctrl_secret = dhchap_secret;
++		ctrl_key = ctrl->ctrl_key;
++		ctrl->ctrl_key = key;
++		nvme_auth_free_key(ctrl_key);
+ 		/* Key has changed; re-authentication with new key */
+ 		nvme_auth_reset(ctrl);
+ 	}
 -- 
 2.35.1
 
