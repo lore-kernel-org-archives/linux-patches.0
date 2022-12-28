@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981DF1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:31:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5F9C433D2;
-	Wed, 28 Dec 2022 15:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 428E01863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:31:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69BFC433D2;
+	Wed, 28 Dec 2022 15:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241514;
-	bh=LLQY0HhUmwEZwBj0IiYZMG+YxjZKk1Pc4jfljUHyRZw=;
+	s=korg; t=1672241517;
+	bh=WdydrDjmFfmFi2uwdAoP3asV+PVKKKriPAKw0MdvNAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=If1juM4+IdMKmd2lWZaan5qDw9FIeZwljsWQ/Zflqh4fv/YjPfe4wndaMGpahyVmH
-	 zR0Uwiwu5R6URd9tC54iZYLApd6h+JteAI7HsTo888HF6mWjYyu0gPWDRURAJtoC02
-	 1ul57JEB6zn3nduHSoAjsziMADAj/DcwENt2xxOs=
+	b=goLWDfxWw9mjmZZOuVgXgAIhs9OuLwcsD+bbM4yQCra+fQeF5BAO4yJQSdlJcvjwx
+	 15Vpcy+Y0d7lZouPhP2nt4Zqx+hibBRaW+Jj4QIo3fp6l75oezZsrUFA59HVLsc5Im
+	 /Xf2yo5qPpobXiP5Ehqot5a40D7i7dxtKx9gTNKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Marek Vasut <marex@denx.de>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 491/731] gpiolib: cdev: fix NULL-pointer dereferences
-Date: Wed, 28 Dec 2022 15:39:58 +0100
-Message-Id: <20221228144310.780026846@linuxfoundation.org>
+Subject: [PATCH 6.0 0293/1073] wifi: rsi: Fix handling of 802.3 EAPOL frames sent via control port
+Date: Wed, 28 Dec 2022 15:31:21 +0100
+Message-Id: <20221228144335.973145394@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,132 +35,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 533aae7c94dbc2b14301cfd68ae7e0e90f0c8438 ]
+[ Upstream commit b8f6efccbb9dc0ff5dee7e20d69a4747298ee603 ]
 
-There are several places where we can crash the kernel by requesting
-lines, unbinding the GPIO device, then calling any of the system calls
-relevant to the GPIO character device's annonymous file descriptors:
-ioctl(), read(), poll().
+When using wpa_supplicant v2.10, this driver is no longer able to
+associate with any AP and fails in the EAPOL 4-way handshake while
+sending the 2/4 message to the AP. The problem is not present in
+wpa_supplicant v2.9 or older. The problem stems from HostAP commit
+144314eaa ("wpa_supplicant: Send EAPOL frames over nl80211 where available")
+which changes the way EAPOL frames are sent, from them being send
+at L2 frames to them being sent via nl80211 control port.
 
-While I observed it with the GPIO simulator, it will also happen for any
-of the GPIO devices that can be hot-unplugged - for instance any HID GPIO
-expander (e.g. CP2112).
+An EAPOL frame sent as L2 frame is passed to the WiFi driver with
+skb->protocol ETH_P_PAE, while EAPOL frame sent via nl80211 control
+port has skb->protocol set to ETH_P_802_3 . The later happens in
+ieee80211_tx_control_port(), where the EAPOL frame is encapsulated
+into 802.3 frame.
 
-This affects both v1 and v2 uAPI.
+The rsi_91x driver handles ETH_P_PAE EAPOL frames as high-priority
+frames and sends them via highest-priority transmit queue, while
+the ETH_P_802_3 frames are sent as regular frames. The EAPOL 4-way
+handshake frames must be sent as highest-priority, otherwise the
+4-way handshake times out.
 
-This fixes it partially by checking if gdev->chip is not NULL but it
-doesn't entirely remedy the situation as we still have a race condition
-in which another thread can remove the device after the check.
+Therefore, to fix this problem, inspect the skb control flags and
+if flag IEEE80211_TX_CTRL_PORT_CTRL_PROTO is set, assume this is
+an EAPOL frame and transmit the frame via high-priority queue just
+like other ETH_P_PAE frames.
 
-Fixes: d7c51b47ac11 ("gpio: userspace ABI for reading/writing GPIO lines")
-Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
-Fixes: aad955842d1c ("gpiolib: cdev: support GPIO_V2_GET_LINEINFO_IOCTL and GPIO_V2_GET_LINEINFO_WATCH_IOCTL")
-Fixes: a54756cb24ea ("gpiolib: cdev: support GPIO_V2_LINE_SET_CONFIG_IOCTL")
-Fixes: 7b8e00d98168 ("gpiolib: cdev: support GPIO_V2_LINE_SET_VALUES_IOCTL")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 0eb42586cf87 ("rsi: data packet descriptor enhancements")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221104163339.227432-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-cdev.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/net/wireless/rsi/rsi_91x_core.c | 4 +++-
+ drivers/net/wireless/rsi/rsi_91x_hal.c  | 6 +++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
-index a20396a6448b..64e37618216f 100644
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -200,6 +200,9 @@ static long linehandle_ioctl(struct file *file, unsigned int cmd,
- 	unsigned int i;
- 	int ret;
- 
-+	if (!lh->gdev->chip)
-+		return -ENODEV;
+diff --git a/drivers/net/wireless/rsi/rsi_91x_core.c b/drivers/net/wireless/rsi/rsi_91x_core.c
+index 0f3a80f66b61..ead4d4e04328 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_core.c
++++ b/drivers/net/wireless/rsi/rsi_91x_core.c
+@@ -466,7 +466,9 @@ void rsi_core_xmit(struct rsi_common *common, struct sk_buff *skb)
+ 							      tid, 0);
+ 			}
+ 		}
+-		if (skb->protocol == cpu_to_be16(ETH_P_PAE)) {
 +
- 	switch (cmd) {
- 	case GPIOHANDLE_GET_LINE_VALUES_IOCTL:
- 		/* NOTE: It's okay to read values of output lines */
-@@ -1188,6 +1191,9 @@ static long linereq_ioctl(struct file *file, unsigned int cmd,
- 	struct linereq *lr = file->private_data;
- 	void __user *ip = (void __user *)arg;
++		if (IEEE80211_SKB_CB(skb)->control.flags &
++		    IEEE80211_TX_CTRL_PORT_CTRL_PROTO) {
+ 			q_num = MGMT_SOFT_Q;
+ 			skb->priority = q_num;
+ 		}
+diff --git a/drivers/net/wireless/rsi/rsi_91x_hal.c b/drivers/net/wireless/rsi/rsi_91x_hal.c
+index c61f83a7333b..c7460fbba014 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_hal.c
++++ b/drivers/net/wireless/rsi/rsi_91x_hal.c
+@@ -162,12 +162,16 @@ int rsi_prepare_data_desc(struct rsi_common *common, struct sk_buff *skb)
+ 	u8 header_size;
+ 	u8 vap_id = 0;
+ 	u8 dword_align_bytes;
++	bool tx_eapol;
+ 	u16 seq_num;
  
-+	if (!lr->gdev->chip)
-+		return -ENODEV;
+ 	info = IEEE80211_SKB_CB(skb);
+ 	vif = info->control.vif;
+ 	tx_params = (struct skb_info *)info->driver_data;
+ 
++	tx_eapol = IEEE80211_SKB_CB(skb)->control.flags &
++		   IEEE80211_TX_CTRL_PORT_CTRL_PROTO;
 +
- 	switch (cmd) {
- 	case GPIO_V2_LINE_GET_VALUES_IOCTL:
- 		return linereq_get_values(lr, ip);
-@@ -1214,6 +1220,9 @@ static __poll_t linereq_poll(struct file *file,
- 	struct linereq *lr = file->private_data;
- 	__poll_t events = 0;
+ 	header_size = FRAME_DESC_SZ + sizeof(struct rsi_xtended_desc);
+ 	if (header_size > skb_headroom(skb)) {
+ 		rsi_dbg(ERR_ZONE, "%s: Unable to send pkt\n", __func__);
+@@ -231,7 +235,7 @@ int rsi_prepare_data_desc(struct rsi_common *common, struct sk_buff *skb)
+ 		}
+ 	}
  
-+	if (!lr->gdev->chip)
-+		return EPOLLHUP | EPOLLERR;
-+
- 	poll_wait(file, &lr->wait, wait);
+-	if (skb->protocol == cpu_to_be16(ETH_P_PAE)) {
++	if (tx_eapol) {
+ 		rsi_dbg(INFO_ZONE, "*** Tx EAPOL ***\n");
  
- 	if (!kfifo_is_empty_spinlocked_noirqsave(&lr->events,
-@@ -1233,6 +1242,9 @@ static ssize_t linereq_read(struct file *file,
- 	ssize_t bytes_read = 0;
- 	int ret;
- 
-+	if (!lr->gdev->chip)
-+		return -ENODEV;
-+
- 	if (count < sizeof(le))
- 		return -EINVAL;
- 
-@@ -1498,6 +1510,9 @@ static __poll_t lineevent_poll(struct file *file,
- 	struct lineevent_state *le = file->private_data;
- 	__poll_t events = 0;
- 
-+	if (!le->gdev->chip)
-+		return EPOLLHUP | EPOLLERR;
-+
- 	poll_wait(file, &le->wait, wait);
- 
- 	if (!kfifo_is_empty_spinlocked_noirqsave(&le->events, &le->wait.lock))
-@@ -1522,6 +1537,9 @@ static ssize_t lineevent_read(struct file *file,
- 	ssize_t ge_size;
- 	int ret;
- 
-+	if (!le->gdev->chip)
-+		return -ENODEV;
-+
- 	/*
- 	 * When compatible system call is being used the struct gpioevent_data,
- 	 * in case of at least ia32, has different size due to the alignment
-@@ -1603,6 +1621,9 @@ static long lineevent_ioctl(struct file *file, unsigned int cmd,
- 	void __user *ip = (void __user *)arg;
- 	struct gpiohandle_data ghd;
- 
-+	if (!le->gdev->chip)
-+		return -ENODEV;
-+
- 	/*
- 	 * We can get the value for an event line but not set it,
- 	 * because it is input by definition.
-@@ -2187,6 +2208,9 @@ static __poll_t lineinfo_watch_poll(struct file *file,
- 	struct gpio_chardev_data *cdev = file->private_data;
- 	__poll_t events = 0;
- 
-+	if (!cdev->gdev->chip)
-+		return EPOLLHUP | EPOLLERR;
-+
- 	poll_wait(file, &cdev->wait, pollt);
- 
- 	if (!kfifo_is_empty_spinlocked_noirqsave(&cdev->events,
-@@ -2205,6 +2229,9 @@ static ssize_t lineinfo_watch_read(struct file *file, char __user *buf,
- 	int ret;
- 	size_t event_size;
- 
-+	if (!cdev->gdev->chip)
-+		return -ENODEV;
-+
- #ifndef CONFIG_GPIO_CDEV_V1
- 	event_size = sizeof(struct gpio_v2_line_info_changed);
- 	if (count < event_size)
+ 		data_desc->frame_info = cpu_to_le16(RATE_INFO_ENABLE);
 -- 
 2.35.1
 
