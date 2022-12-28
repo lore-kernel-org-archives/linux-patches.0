@@ -1,36 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D7B11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:51:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF4DBC433EF;
-	Wed, 28 Dec 2022 14:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3960A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:51:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0D17C433D2;
+	Wed, 28 Dec 2022 14:51:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239069;
-	bh=fs/+NnU3y/vBVrhVY/q5FlpIYZsnZQa9v9NKlB9YuM4=;
+	s=korg; t=1672239072;
+	bh=HUOb01HZODzZKq1CAHY2wWCbP1y0H1CFdVxyQysjJks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QNoKcqt6fFtFcNOxkjpzd7F368Us4kZ+7cWxO3aPg9/h9JO5DZfgFNuhthKLTQO7J
-	 DDafZZc2hg3E+NfptZpJ/gD/6vmsmKXPFBwUu1DxbWBFTnzAeGPlBVZH010keEowzt
-	 M2oxKAYv6FPQA+HwJHc2McAhcqgTvqoZhh+1TnKU=
+	b=0/XAi09jX8IRe3iWUppoJVJDO/aRDkBJmsye3uGjcoST1M8FCZdrHNjFue2O/43sB
+	 IFOhmvh7eWh54TJkulQ4LagSOh4s6ToC18n6JcDd1x+XtjRHVdNS65VEmI+HxcQeCX
+	 vz/YmXQnhxP8W/1Q7wRIfsoB0mvjfcQ/9vQSx++4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	Zhao Gongyi <zhaogongyi@huawei.com>,
-	David Hildenbrand <david@redhat.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Oscar Salvador <osalvador@suse.de>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Phil Auld <pauld@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Valentin Schneider <vschneid@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 109/731] debugfs: fix error when writing negative value to atomic_t debugfs file
-Date: Wed, 28 Dec 2022 15:33:36 +0100
-Message-Id: <20221228144259.708454419@linuxfoundation.org>
+Subject: [PATCH 5.15 118/731] cpu/hotplug: Make target_store() a nop when target == state
+Date: Wed, 28 Dec 2022 15:33:45 +0100
+Message-Id: <20221228144259.973608902@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -44,195 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Akinobu Mita <akinobu.mita@gmail.com>
+From: Phil Auld <pauld@redhat.com>
 
-[ Upstream commit d472cf797c4e268613dbce5ec9b95d0bcae19ecb ]
+[ Upstream commit 64ea6e44f85b9b75925ebe1ba0e6e8430cc4e06f ]
 
-The simple attribute files do not accept a negative value since the commit
-488dac0c9237 ("libfs: fix error cast of negative value in
-simple_attr_write()"), so we have to use a 64-bit value to write a
-negative value for a debugfs file created by debugfs_create_atomic_t().
+Writing the current state back in hotplug/target calls cpu_down()
+which will set cpu dying even when it isn't and then nothing will
+ever clear it. A stress test that reads values and writes them back
+for all cpu device files in sysfs will trigger the BUG() in
+select_fallback_rq once all cpus are marked as dying.
 
-This restores the previous behaviour by introducing
-DEFINE_DEBUGFS_ATTRIBUTE_SIGNED for a signed value.
+kernel/cpu.c::target_store()
+	...
+        if (st->state < target)
+                ret = cpu_up(dev->id, target);
+        else
+                ret = cpu_down(dev->id, target);
 
-Link: https://lkml.kernel.org/r/20220919172418.45257-4-akinobu.mita@gmail.com
-Fixes: 488dac0c9237 ("libfs: fix error cast of negative value in simple_attr_write()")
-Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
-Reported-by: Zhao Gongyi <zhaogongyi@huawei.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Wei Yongjun <weiyongjun1@huawei.com>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+cpu_down() -> cpu_set_state()
+	 bool bringup = st->state < target;
+	 ...
+	 if (cpu_dying(cpu) != !bringup)
+		set_cpu_dying(cpu, !bringup);
+
+Fix this by letting state==target fall through in the target_store()
+conditional. Also make sure st->target == target in that case.
+
+Fixes: 757c989b9994 ("cpu/hotplug: Make target state writeable")
+Signed-off-by: Phil Auld <pauld@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Valentin Schneider <vschneid@redhat.com>
+Link: https://lore.kernel.org/r/20221117162329.3164999-2-pauld@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../fault-injection/fault-injection.rst       | 10 +++----
- fs/debugfs/file.c                             | 28 +++++++++++++++----
- include/linux/debugfs.h                       | 19 +++++++++++--
- 3 files changed, 43 insertions(+), 14 deletions(-)
+ kernel/cpu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/fault-injection/fault-injection.rst b/Documentation/fault-injection/fault-injection.rst
-index 4a25c5eb6f07..8c47847755a6 100644
---- a/Documentation/fault-injection/fault-injection.rst
-+++ b/Documentation/fault-injection/fault-injection.rst
-@@ -83,9 +83,7 @@ configuration of fault-injection capabilities.
- - /sys/kernel/debug/fail*/times:
+diff --git a/kernel/cpu.c b/kernel/cpu.c
+index da871eb07566..e08d207011dd 100644
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -2315,8 +2315,10 @@ static ssize_t target_store(struct device *dev, struct device_attribute *attr,
  
- 	specifies how many times failures may happen at most. A value of -1
--	means "no limit". Note, though, that this file only accepts unsigned
--	values. So, if you want to specify -1, you better use 'printf' instead
--	of 'echo', e.g.: $ printf %#x -1 > times
-+	means "no limit".
- 
- - /sys/kernel/debug/fail*/space:
- 
-@@ -277,7 +275,7 @@ Application Examples
-     echo Y > /sys/kernel/debug/$FAILTYPE/task-filter
-     echo 10 > /sys/kernel/debug/$FAILTYPE/probability
-     echo 100 > /sys/kernel/debug/$FAILTYPE/interval
--    printf %#x -1 > /sys/kernel/debug/$FAILTYPE/times
-+    echo -1 > /sys/kernel/debug/$FAILTYPE/times
-     echo 0 > /sys/kernel/debug/$FAILTYPE/space
-     echo 2 > /sys/kernel/debug/$FAILTYPE/verbose
-     echo 1 > /sys/kernel/debug/$FAILTYPE/ignore-gfp-wait
-@@ -331,7 +329,7 @@ Application Examples
-     echo N > /sys/kernel/debug/$FAILTYPE/task-filter
-     echo 10 > /sys/kernel/debug/$FAILTYPE/probability
-     echo 100 > /sys/kernel/debug/$FAILTYPE/interval
--    printf %#x -1 > /sys/kernel/debug/$FAILTYPE/times
-+    echo -1 > /sys/kernel/debug/$FAILTYPE/times
-     echo 0 > /sys/kernel/debug/$FAILTYPE/space
-     echo 2 > /sys/kernel/debug/$FAILTYPE/verbose
-     echo 1 > /sys/kernel/debug/$FAILTYPE/ignore-gfp-wait
-@@ -362,7 +360,7 @@ Application Examples
-     echo N > /sys/kernel/debug/$FAILTYPE/task-filter
-     echo 100 > /sys/kernel/debug/$FAILTYPE/probability
-     echo 0 > /sys/kernel/debug/$FAILTYPE/interval
--    printf %#x -1 > /sys/kernel/debug/$FAILTYPE/times
-+    echo -1 > /sys/kernel/debug/$FAILTYPE/times
-     echo 0 > /sys/kernel/debug/$FAILTYPE/space
-     echo 1 > /sys/kernel/debug/$FAILTYPE/verbose
- 
-diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
-index 950c63fa4d0b..38930d9b0bb7 100644
---- a/fs/debugfs/file.c
-+++ b/fs/debugfs/file.c
-@@ -378,8 +378,8 @@ ssize_t debugfs_attr_read(struct file *file, char __user *buf,
- }
- EXPORT_SYMBOL_GPL(debugfs_attr_read);
- 
--ssize_t debugfs_attr_write(struct file *file, const char __user *buf,
--			 size_t len, loff_t *ppos)
-+static ssize_t debugfs_attr_write_xsigned(struct file *file, const char __user *buf,
-+			 size_t len, loff_t *ppos, bool is_signed)
- {
- 	struct dentry *dentry = F_DENTRY(file);
- 	ssize_t ret;
-@@ -387,12 +387,28 @@ ssize_t debugfs_attr_write(struct file *file, const char __user *buf,
- 	ret = debugfs_file_get(dentry);
- 	if (unlikely(ret))
- 		return ret;
--	ret = simple_attr_write(file, buf, len, ppos);
-+	if (is_signed)
-+		ret = simple_attr_write_signed(file, buf, len, ppos);
-+	else
-+		ret = simple_attr_write(file, buf, len, ppos);
- 	debugfs_file_put(dentry);
- 	return ret;
- }
-+
-+ssize_t debugfs_attr_write(struct file *file, const char __user *buf,
-+			 size_t len, loff_t *ppos)
-+{
-+	return debugfs_attr_write_xsigned(file, buf, len, ppos, false);
-+}
- EXPORT_SYMBOL_GPL(debugfs_attr_write);
- 
-+ssize_t debugfs_attr_write_signed(struct file *file, const char __user *buf,
-+			 size_t len, loff_t *ppos)
-+{
-+	return debugfs_attr_write_xsigned(file, buf, len, ppos, true);
-+}
-+EXPORT_SYMBOL_GPL(debugfs_attr_write_signed);
-+
- static struct dentry *debugfs_create_mode_unsafe(const char *name, umode_t mode,
- 					struct dentry *parent, void *value,
- 					const struct file_operations *fops,
-@@ -738,11 +754,11 @@ static int debugfs_atomic_t_get(void *data, u64 *val)
- 	*val = atomic_read((atomic_t *)data);
- 	return 0;
- }
--DEFINE_DEBUGFS_ATTRIBUTE(fops_atomic_t, debugfs_atomic_t_get,
-+DEFINE_DEBUGFS_ATTRIBUTE_SIGNED(fops_atomic_t, debugfs_atomic_t_get,
- 			debugfs_atomic_t_set, "%lld\n");
--DEFINE_DEBUGFS_ATTRIBUTE(fops_atomic_t_ro, debugfs_atomic_t_get, NULL,
-+DEFINE_DEBUGFS_ATTRIBUTE_SIGNED(fops_atomic_t_ro, debugfs_atomic_t_get, NULL,
- 			"%lld\n");
--DEFINE_DEBUGFS_ATTRIBUTE(fops_atomic_t_wo, NULL, debugfs_atomic_t_set,
-+DEFINE_DEBUGFS_ATTRIBUTE_SIGNED(fops_atomic_t_wo, NULL, debugfs_atomic_t_set,
- 			"%lld\n");
- 
- /**
-diff --git a/include/linux/debugfs.h b/include/linux/debugfs.h
-index f60674692d36..ea2d919fd9c7 100644
---- a/include/linux/debugfs.h
-+++ b/include/linux/debugfs.h
-@@ -45,7 +45,7 @@ struct debugfs_u32_array {
- 
- extern struct dentry *arch_debugfs_dir;
- 
--#define DEFINE_DEBUGFS_ATTRIBUTE(__fops, __get, __set, __fmt)		\
-+#define DEFINE_DEBUGFS_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, __is_signed)	\
- static int __fops ## _open(struct inode *inode, struct file *file)	\
- {									\
- 	__simple_attr_check_format(__fmt, 0ull);			\
-@@ -56,10 +56,16 @@ static const struct file_operations __fops = {				\
- 	.open	 = __fops ## _open,					\
- 	.release = simple_attr_release,					\
- 	.read	 = debugfs_attr_read,					\
--	.write	 = debugfs_attr_write,					\
-+	.write	 = (__is_signed) ? debugfs_attr_write_signed : debugfs_attr_write,	\
- 	.llseek  = no_llseek,						\
- }
- 
-+#define DEFINE_DEBUGFS_ATTRIBUTE(__fops, __get, __set, __fmt)		\
-+	DEFINE_DEBUGFS_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, false)
-+
-+#define DEFINE_DEBUGFS_ATTRIBUTE_SIGNED(__fops, __get, __set, __fmt)	\
-+	DEFINE_DEBUGFS_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, true)
-+
- typedef struct vfsmount *(*debugfs_automount_t)(struct dentry *, void *);
- 
- #if defined(CONFIG_DEBUG_FS)
-@@ -102,6 +108,8 @@ ssize_t debugfs_attr_read(struct file *file, char __user *buf,
- 			size_t len, loff_t *ppos);
- ssize_t debugfs_attr_write(struct file *file, const char __user *buf,
- 			size_t len, loff_t *ppos);
-+ssize_t debugfs_attr_write_signed(struct file *file, const char __user *buf,
-+			size_t len, loff_t *ppos);
- 
- struct dentry *debugfs_rename(struct dentry *old_dir, struct dentry *old_dentry,
-                 struct dentry *new_dir, const char *new_name);
-@@ -254,6 +262,13 @@ static inline ssize_t debugfs_attr_write(struct file *file,
- 	return -ENODEV;
- }
- 
-+static inline ssize_t debugfs_attr_write_signed(struct file *file,
-+					const char __user *buf,
-+					size_t len, loff_t *ppos)
-+{
-+	return -ENODEV;
-+}
-+
- static inline struct dentry *debugfs_rename(struct dentry *old_dir, struct dentry *old_dentry,
-                 struct dentry *new_dir, char *new_name)
- {
+ 	if (st->state < target)
+ 		ret = cpu_up(dev->id, target);
+-	else
++	else if (st->state > target)
+ 		ret = cpu_down(dev->id, target);
++	else if (WARN_ON(st->target != target))
++		st->target = target;
+ out:
+ 	unlock_device_hotplug();
+ 	return ret ? ret : count;
 -- 
 2.35.1
 
