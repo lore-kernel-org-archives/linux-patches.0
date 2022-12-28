@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A404C1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:10:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1BEC433EF;
-	Wed, 28 Dec 2022 16:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C501C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:10:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F54C433EF;
+	Wed, 28 Dec 2022 16:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243844;
-	bh=XvJ5bootY+Y8cIQ53tt+n8lSQ8nbmG0dJPSkwm3uaXU=;
+	s=korg; t=1672243847;
+	bh=WECNFBqWMgfh/OaxO+PEGaV6v4ab824tu0+YC4JNa/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k8jJbNE4Jh/T0g8Bid7NGQMWIcsVEEBdKHG134w1Hd6UGADdqZ4EHXg0EZFGo6Tv4
-	 yu598vdYXnR6yA0YaEX3XJPIw+ZaHU0YPolxZFidoODJYmalwy3CY2v430Oc8SQsdn
-	 /E7TSC5vhRr46k6jo6rK0xdwWm2zgAg5oZ8ydh9o=
+	b=PlyjQyfyI8w5LklUvtT5XV0U7MBX9GbGyW2YB+OhCz/dolaKF5il8amGRZSsWX7Ar
+	 waMPzhxaEhcgapi1QjFKCd2eGQXvhgMnkYlOr9q/iFHv9+O5s6fp58/ARnnlFDogno
+	 GuWPJfyfzc56haQy3CmX1NQyWJ6G8ANTyTZ5iW94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0565/1146] Bluetooth: hci_core: dont call kfree_skb() under spin_lock_irqsave()
-Date: Wed, 28 Dec 2022 15:35:04 +0100
-Message-Id: <20221228144345.513988588@linuxfoundation.org>
+Subject: [PATCH 6.0 0598/1073] crypto: ccree - Remove debugfs when platform_driver_register failed
+Date: Wed, 28 Dec 2022 15:36:26 +0100
+Message-Id: <20221228144344.289823046@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 39c1eb6fcbae8ce9bb71b2ac5cb609355a2b181b ]
+[ Upstream commit 4f1c596df706c9aca662b6c214fad84047ae2a97 ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with interrupts being disabled. So replace kfree_skb()
-with dev_kfree_skb_irq() under spin_lock_irqsave().
+When platform_driver_register failed, we need to remove debugfs,
+which will caused a resource leak, fix it.
 
-Fixes: 9238f36a5a50 ("Bluetooth: Add request cmd_complete and cmd_status functions")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Failed logs as follows:
+[   32.606488] debugfs: Directory 'ccree' with parent '/' already present!
+
+Fixes: 4c3f97276e15 ("crypto: ccree - introduce CryptoCell driver")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/ccree/cc_driver.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
-index 56f8569ace86..b65c3aabcd53 100644
---- a/net/bluetooth/hci_core.c
-+++ b/net/bluetooth/hci_core.c
-@@ -3985,7 +3985,7 @@ void hci_req_cmd_complete(struct hci_dev *hdev, u16 opcode, u8 status,
- 			*req_complete_skb = bt_cb(skb)->hci.req_complete_skb;
- 		else
- 			*req_complete = bt_cb(skb)->hci.req_complete;
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
- 	}
- 	spin_unlock_irqrestore(&hdev->cmd_q.lock, flags);
+diff --git a/drivers/crypto/ccree/cc_driver.c b/drivers/crypto/ccree/cc_driver.c
+index cadead18b59e..d489c6f80892 100644
+--- a/drivers/crypto/ccree/cc_driver.c
++++ b/drivers/crypto/ccree/cc_driver.c
+@@ -651,9 +651,17 @@ static struct platform_driver ccree_driver = {
+ 
+ static int __init ccree_init(void)
+ {
++	int rc;
++
+ 	cc_debugfs_global_init();
+ 
+-	return platform_driver_register(&ccree_driver);
++	rc = platform_driver_register(&ccree_driver);
++	if (rc) {
++		cc_debugfs_global_fini();
++		return rc;
++	}
++
++	return 0;
  }
+ module_init(ccree_init);
+ 
 -- 
 2.35.1
 
