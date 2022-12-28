@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE64A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:05:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 294ACC433EF;
-	Wed, 28 Dec 2022 15:05:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3B41863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:05:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8408C433D2;
+	Wed, 28 Dec 2022 15:05:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239949;
-	bh=HL6mQPUmwJreVaGCN4UDXMfax8DjgiESGDxwshEOVag=;
+	s=korg; t=1672239952;
+	bh=p8DWC2bI4vk/k0xWLEJHtOcd3edK/daCThar+vd1lIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KxKxF/wfFKnN5X6ifwGtYQ0jZkqnf1bfWcRGy/D+z+jehkJVAO75+yPu3s8tDw2Fy
-	 UKmHCo7sduaJcW8+Prf4eBCn7IFA2STUfTqtRulNICocV53Jn0W8H2uwA+2xJBFYp5
-	 b8QtkTYlchl5M1cimszhZ6ORe0xPNIZjfaabAzTE=
+	b=h8xPdjm8OSdPdlqiLzMLnCd3lZx6DUA/hsg3WyuBkziAD8mDAeD5debS2yvaQ1joC
+	 Mec26BawJO+1dKlfNPNrOkzpjBihJScqQoYwAKo/JLKdnwtaekguump3gKDmtHI1cl
+	 cSEs5iPNLvbQ4y4oxOzMqbrb9lh93AHPegZM09Jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qais Yousef <qais.yousef@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	ChenXiaoSong <chenxiaosong2@huawei.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0097/1073] sched/uclamp: Make select_idle_capacity() use util_fits_cpu()
-Date: Wed, 28 Dec 2022 15:28:05 +0100
-Message-Id: <20221228144330.684412056@linuxfoundation.org>
+Subject: [PATCH 5.15 289/731] NFSv4.x: Fail client initialisation if state manager thread cant run
+Date: Wed, 28 Dec 2022 15:36:36 +0100
+Message-Id: <20221228144304.947295707@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,55 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qais Yousef <qais.yousef@arm.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit b759caa1d9f667b94727b2ad12589cbc4ce13a82 ]
+[ Upstream commit b4e4f66901658fae0614dea5bf91062a5387eda7 ]
 
-Use the new util_fits_cpu() to ensure migration margin and capacity
-pressure are taken into account correctly when uclamp is being used
-otherwise we will fail to consider CPUs as fitting in scenarios where
-they should.
+If the state manager thread fails to start, then we should just mark the
+client initialisation as failed so that other processes or threads don't
+get stuck in nfs_wait_client_init_complete().
 
-Fixes: b4c9c9f15649 ("sched/fair: Prefer prev cpu in asymmetric wakeup path")
-Signed-off-by: Qais Yousef <qais.yousef@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20220804143609.515789-5-qais.yousef@arm.com
+Reported-by: ChenXiaoSong <chenxiaosong2@huawei.com>
+Fixes: 4697bd5e9419 ("NFSv4: Fix a race in the net namespace mount notification")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/nfs/nfs4state.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index abe0e6baaa2e..892ea83864a7 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -6603,21 +6603,23 @@ static int select_idle_cpu(struct task_struct *p, struct sched_domain *sd, bool
- static int
- select_idle_capacity(struct task_struct *p, struct sched_domain *sd, int target)
- {
--	unsigned long task_util, best_cap = 0;
-+	unsigned long task_util, util_min, util_max, best_cap = 0;
- 	int cpu, best_cpu = -1;
- 	struct cpumask *cpus;
- 
- 	cpus = this_cpu_cpumask_var_ptr(select_rq_mask);
- 	cpumask_and(cpus, sched_domain_span(sd), p->cpus_ptr);
- 
--	task_util = uclamp_task_util(p);
-+	task_util = task_util_est(p);
-+	util_min = uclamp_eff_value(p, UCLAMP_MIN);
-+	util_max = uclamp_eff_value(p, UCLAMP_MAX);
- 
- 	for_each_cpu_wrap(cpu, cpus, target) {
- 		unsigned long cpu_cap = capacity_of(cpu);
- 
- 		if (!available_idle_cpu(cpu) && !sched_idle_cpu(cpu))
- 			continue;
--		if (fits_capacity(task_util, cpu_cap))
-+		if (util_fits_cpu(task_util, util_min, util_max, cpu))
- 			return cpu;
- 
- 		if (cpu_cap > best_cap) {
+diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
+index ecac56be6cb7..0cd803b4d90c 100644
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -1227,6 +1227,8 @@ void nfs4_schedule_state_manager(struct nfs_client *clp)
+ 	if (IS_ERR(task)) {
+ 		printk(KERN_ERR "%s: kthread_run: %ld\n",
+ 			__func__, PTR_ERR(task));
++		if (!nfs_client_init_is_complete(clp))
++			nfs_mark_client_ready(clp, PTR_ERR(task));
+ 		nfs4_clear_state_manager_bit(clp);
+ 		nfs_put_client(clp);
+ 		module_put(THIS_MODULE);
 -- 
 2.35.1
 
