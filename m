@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C5E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F85C433D2;
-	Wed, 28 Dec 2022 15:04:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B49F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95D86C433D2;
+	Wed, 28 Dec 2022 15:04:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239846;
-	bh=AFN6+QAA0Sa7n/jufArnZ3dHHcwGf55roie5QWNqqZs=;
+	s=korg; t=1672239848;
+	bh=qs7ePXJz6nWPfINvO/KZHy64/AVUTkyglbnJs4m5cm0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=msKnZqq+eDesHnI1McJEky4nJzE2Ajr6CeKm+pE2wuyRt5fWmkdSyrq5mYHA8Vmqe
-	 3528Xxe2dgIOdCYpzun381FqubpTi7MR2KiwXhkenHeCr9xvrIBlGV0saAQtZzTVht
-	 kz4LxEtBHfTUD0API4liv1DZWXCv+hih0mBBNEQM=
+	b=cNe9QcKrzKMyNokuSac3/cyzlNTcLB/pP4/2xWbD1FRnE1V0+YhGNdz8iAWH1vZ68
+	 xk65ZJl230LSNkneE2WsK2718vk4U56uCE4/owhHV0EkFxBfl3CYONF1LQ5AiHdfFx
+	 DCL6ZlwF5wjWlfIq6UYvZf34aWvCc5loMwtUUH+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 277/731] hsr: Synchronize sending frames to have always incremented outgoing seq nr.
-Date: Wed, 28 Dec 2022 15:36:24 +0100
-Message-Id: <20221228144304.603442136@linuxfoundation.org>
+Subject: [PATCH 6.1 0050/1146] soc/tegra: cbb: Update slave maps for Tegra234
+Date: Wed, 28 Dec 2022 15:26:29 +0100
+Message-Id: <20221228144331.521283065@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,134 +35,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Sumit Gupta <sumitg@nvidia.com>
 
-[ Upstream commit 06afd2c31d338fa762548580c1bf088703dd1e03 ]
+[ Upstream commit cd1d719b47767f1970d02d18661122b649c35b00 ]
 
-Sending frames via the hsr (master) device requires a sequence number
-which is tracked in hsr_priv::sequence_nr and protected by
-hsr_priv::seqnr_lock. Each time a new frame is sent, it will obtain a
-new id and then send it via the slave devices.
-Each time a packet is sent (via hsr_forward_do()) the sequence number is
-checked via hsr_register_frame_out() to ensure that a frame is not
-handled twice. This make sense for the receiving side to ensure that the
-frame is not injected into the stack twice after it has been received
-from both slave ports.
+Updating the slave map for fabrics and using the same maps for DCE, RCE
+and SCE as they all are a replica in Tegra234.
 
-There is no locking to cover the sending path which means the following
-scenario is possible:
-
-  CPU0				CPU1
-  hsr_dev_xmit(skb1)		hsr_dev_xmit(skb2)
-   fill_frame_info()             fill_frame_info()
-    hsr_fill_frame_info()         hsr_fill_frame_info()
-     handle_std_frame()            handle_std_frame()
-      skb1's sequence_nr = 1
-                                    skb2's sequence_nr = 2
-   hsr_forward_do()              hsr_forward_do()
-
-                                   hsr_register_frame_out(, 2)  // okay, send)
-
-    hsr_register_frame_out(, 1) // stop, lower seq duplicate
-
-Both skbs (or their struct hsr_frame_info) received an unique id.
-However since skb2 was sent before skb1, the higher sequence number was
-recorded in hsr_register_frame_out() and the late arriving skb1 was
-dropped and never sent.
-
-This scenario has been observed in a three node HSR setup, with node1 +
-node2 having ping and iperf running in parallel. From time to time ping
-reported a missing packet. Based on tracing that missing ping packet did
-not leave the system.
-
-It might be possible (didn't check) to drop the sequence number check on
-the sending side. But if the higher sequence number leaves on wire
-before the lower does and the destination receives them in that order
-and it will drop the packet with the lower sequence number and never
-inject into the stack.
-Therefore it seems the only way is to lock the whole path from obtaining
-the sequence number and sending via dev_queue_xmit() and assuming the
-packets leave on wire in the same order (and don't get reordered by the
-NIC).
-
-Cover the whole path for the master interface from obtaining the ID
-until after it has been forwarded via hsr_forward_skb() to ensure the
-skbs are sent to the NIC in the order of the assigned sequence numbers.
-
-Fixes: f421436a591d3 ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
+Stable-dep-of: 55084947d6b4 ("soc/tegra: cbb: Add checks for potential out of bound errors")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_device.c  | 12 +++++++-----
- net/hsr/hsr_forward.c |  3 +--
- 2 files changed, 8 insertions(+), 7 deletions(-)
+ drivers/soc/tegra/cbb/tegra234-cbb.c | 34 +++++++++++-----------------
+ 1 file changed, 13 insertions(+), 21 deletions(-)
 
-diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
-index c44c6747a0bf..7ce40b49c956 100644
---- a/net/hsr/hsr_device.c
-+++ b/net/hsr/hsr_device.c
-@@ -219,7 +219,9 @@ static netdev_tx_t hsr_dev_xmit(struct sk_buff *skb, struct net_device *dev)
- 		skb->dev = master->dev;
- 		skb_reset_mac_header(skb);
- 		skb_reset_mac_len(skb);
-+		spin_lock_bh(&hsr->seqnr_lock);
- 		hsr_forward_skb(skb, master);
-+		spin_unlock_bh(&hsr->seqnr_lock);
- 	} else {
- 		atomic_long_inc(&dev->tx_dropped);
- 		dev_kfree_skb_any(skb);
-@@ -306,7 +308,6 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
- 		hsr_stag->sequence_nr = htons(hsr->sequence_nr);
- 		hsr->sequence_nr++;
- 	}
--	spin_unlock_bh(&hsr->seqnr_lock);
+diff --git a/drivers/soc/tegra/cbb/tegra234-cbb.c b/drivers/soc/tegra/cbb/tegra234-cbb.c
+index 654c3d164606..04e12d9fdea5 100644
+--- a/drivers/soc/tegra/cbb/tegra234-cbb.c
++++ b/drivers/soc/tegra/cbb/tegra234-cbb.c
+@@ -516,7 +516,7 @@ static irqreturn_t tegra234_cbb_isr(int irq, void *data)
+ 		u32 status = tegra_cbb_get_status(cbb);
  
- 	hsr_stag->HSR_TLV_type = type;
- 	/* TODO: Why 12 in HSRv0? */
-@@ -317,11 +318,13 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
- 	hsr_sp = skb_put(skb, sizeof(struct hsr_sup_payload));
- 	ether_addr_copy(hsr_sp->macaddress_A, master->dev->dev_addr);
+ 		if (status && (irq == priv->sec_irq)) {
+-			tegra_cbb_print_err(NULL, "CPU:%d, Error: %s@%llx, irq=%d\n",
++			tegra_cbb_print_err(NULL, "CPU:%d, Error: %s@0x%llx, irq=%d\n",
+ 					    smp_processor_id(), priv->fabric->name,
+ 					    priv->res->start, irq);
  
--	if (skb_put_padto(skb, ETH_ZLEN))
-+	if (skb_put_padto(skb, ETH_ZLEN)) {
-+		spin_unlock_bh(&hsr->seqnr_lock);
- 		return;
-+	}
+@@ -732,48 +732,35 @@ static const struct tegra234_cbb_fabric tegra234_cbb_fabric = {
+ 	.off_mask_erd = 0x3a004
+ };
  
- 	hsr_forward_skb(skb, master);
+-static const struct tegra234_slave_lookup tegra234_dce_slave_map[] = {
++static const struct tegra234_slave_lookup tegra234_common_slave_map[] = {
+ 	{ "AXI2APB", 0x00000 },
+ 	{ "AST0",    0x15000 },
+ 	{ "AST1",    0x16000 },
++	{ "CBB",     0x17000 },
++	{ "RSVD",    0x00000 },
+ 	{ "CPU",     0x18000 },
+ };
+ 
+ static const struct tegra234_cbb_fabric tegra234_dce_fabric = {
+ 	.name = "dce-fabric",
+ 	.master_id = tegra234_master_id,
+-	.slave_map = tegra234_dce_slave_map,
++	.slave_map = tegra234_common_slave_map,
+ 	.errors = tegra234_cbb_errors,
+ 	.notifier_offset = 0x19000,
+ };
+ 
+-static const struct tegra234_slave_lookup tegra234_rce_slave_map[] = {
+-	{ "AXI2APB", 0x00000 },
+-	{ "AST0",    0x15000 },
+-	{ "AST1",    0x16000 },
+-	{ "CPU",     0x18000 },
+-};
 -
-+	spin_unlock_bh(&hsr->seqnr_lock);
- 	return;
- }
+ static const struct tegra234_cbb_fabric tegra234_rce_fabric = {
+ 	.name = "rce-fabric",
+ 	.master_id = tegra234_master_id,
+-	.slave_map = tegra234_rce_slave_map,
++	.slave_map = tegra234_common_slave_map,
+ 	.errors = tegra234_cbb_errors,
+ 	.notifier_offset = 0x19000,
+ };
  
-@@ -360,9 +363,8 @@ static void send_prp_supervision_frame(struct hsr_port *master,
- 		return;
- 	}
- 
--	spin_unlock_bh(&hsr->seqnr_lock);
+-static const struct tegra234_slave_lookup tegra234_sce_slave_map[] = {
+-	{ "AXI2APB", 0x00000 },
+-	{ "AST0",    0x15000 },
+-	{ "AST1",    0x16000 },
+-	{ "CBB",     0x17000 },
+-	{ "CPU",     0x18000 },
+-};
 -
- 	hsr_forward_skb(skb, master);
-+	spin_unlock_bh(&hsr->seqnr_lock);
- }
+ static const struct tegra234_cbb_fabric tegra234_sce_fabric = {
+ 	.name = "sce-fabric",
+ 	.master_id = tegra234_master_id,
+-	.slave_map = tegra234_sce_slave_map,
++	.slave_map = tegra234_common_slave_map,
+ 	.errors = tegra234_cbb_errors,
+ 	.notifier_offset = 0x19000,
+ };
+@@ -888,7 +875,7 @@ static const struct tegra_cbb_error tegra241_cbb_errors[] = {
+ };
  
- /* Announce (supervision frame) timer function
-diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
-index c8bcbd990f59..35382ed686d1 100644
---- a/net/hsr/hsr_forward.c
-+++ b/net/hsr/hsr_forward.c
-@@ -467,10 +467,9 @@ static void handle_std_frame(struct sk_buff *skb,
- 		frame->is_from_san = true;
- 	} else {
- 		/* Sequence nr for the master node */
--		spin_lock_bh(&hsr->seqnr_lock);
-+		lockdep_assert_held(&hsr->seqnr_lock);
- 		frame->sequence_nr = hsr->sequence_nr;
- 		hsr->sequence_nr++;
--		spin_unlock_bh(&hsr->seqnr_lock);
- 	}
- }
+ static const struct tegra234_slave_lookup tegra241_cbb_slave_map[] = {
+-	{ "CCPLEX",     0x50000 },
++	{ "RSVD",       0x00000 },
+ 	{ "PCIE_C8",    0x51000 },
+ 	{ "PCIE_C9",    0x52000 },
+ 	{ "RSVD",       0x00000 },
+@@ -941,8 +928,12 @@ static const struct tegra234_slave_lookup tegra241_cbb_slave_map[] = {
+ 	{ "PCIE_C3",    0x58000 },
+ 	{ "PCIE_C0",    0x59000 },
+ 	{ "PCIE_C1",    0x5a000 },
++	{ "CCPLEX",     0x50000 },
+ 	{ "AXI2APB_29", 0x85000 },
+ 	{ "AXI2APB_30", 0x86000 },
++	{ "CBB_CENTRAL", 0x00000 },
++	{ "AXI2APB_31", 0x8E000 },
++	{ "AXI2APB_32", 0x8F000 },
+ };
  
+ static const struct tegra234_cbb_fabric tegra241_cbb_fabric = {
+@@ -955,6 +946,7 @@ static const struct tegra234_cbb_fabric tegra241_cbb_fabric = {
+ };
+ 
+ static const struct tegra234_slave_lookup tegra241_bpmp_slave_map[] = {
++	{ "RSVD",    0x00000 },
+ 	{ "RSVD",    0x00000 },
+ 	{ "RSVD",    0x00000 },
+ 	{ "CBB",     0x15000 },
 -- 
 2.35.1
 
