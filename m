@@ -1,39 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DEA1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:14:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 967FAC433D2;
-	Wed, 28 Dec 2022 16:14:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2601C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:14:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A23E4C433EF;
+	Wed, 28 Dec 2022 16:14:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244070;
-	bh=kRTk6nDVGgy/CNk4BdTNcr95TadAdi4NeD1/gJZGOy4=;
+	s=korg; t=1672244073;
+	bh=Jjc9H8ByxV5FEEeucXxpjQhNtP17Ff7Lp2ToEYiH7mE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xQ+d3ZBR+gZXp58Ww6HB66erW3F66DZ8Qle5N8gUVH+/nWaUk6JzDlJpkmiNByabZ
-	 3/Y7pQUubgnI3gotnak4F/5P76tHrCZf40fYqOqsASVYzQob1oRamjY4eQmNlp5l6R
-	 PYyuYJ6SutFgGDuncyUalZEmwXyM+UUA1bvUMXzg=
+	b=Z+4SvdbYksSWWxmujhJ6prPi50fwrg8SLJu7iufQ5oY8yBtX5yMJzqcIqYA+gTe6q
+	 t52N8LAFEtXtYzuoc+ionTSZxCp398QGx3kLAUERsspGT+uj4sJ1elpdNwYtpTVnVg
+	 6CL35eqE2/D1Ul3G21r5Gb8nldtSQ/PsTKnFva5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-	Christoph Hellwig <hch@infradead.org>,
-	linux-rdma@vger.kernel.org,
-	Jeff Dike <jdike@addtoit.com>,
-	Richard Weinberger <richard@nod.at>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	linux-um@lists.infradead.org,
-	Leon Romanovsky <leon@kernel.org>,
+	Nirmal Patel <nirmal.patel@linux.intel.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0641/1073] RDMA: Disable IB HW for UML
-Date: Wed, 28 Dec 2022 15:37:09 +0100
-Message-Id: <20221228144345.450630069@linuxfoundation.org>
+Subject: [PATCH 6.1 0605/1146] PCI: vmd: Disable MSI remapping after suspend
+Date: Wed, 28 Dec 2022 15:35:44 +0100
+Message-Id: <20221228144346.605948535@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -44,53 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Nirmal Patel <nirmal.patel@linux.intel.com>
 
-[ Upstream commit 323a74fc20f53c0d0e13a16aee703a30d9751235 ]
+[ Upstream commit d899aa668498c07ff217b666ae9712990306e682 ]
 
-Disable all of drivers/infiniband/hw/ and rdmavt for UML builds until
-someone needs it and provides patches to support it.
+MSI remapping is disabled by VMD driver for Intel's Icelake and
+newer systems in order to improve performance by setting
+VMCONFIG_MSI_REMAP. By design VMCONFIG_MSI_REMAP register is cleared
+by firmware during boot. The same register gets cleared when system
+is put in S3 power state. VMD driver needs to set this register again
+in order to avoid interrupt issues with devices behind VMD if MSI
+remapping was disabled before.
 
-This prevents build errors in hw/qib/qib_wc_x86_64.c.
-
-Fixes: 68f5d3f3b654 ("um: add PCI over virtio emulation driver")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Jason Gunthorpe <jgg@nvidia.com>
-Cc: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
-Cc: Christoph Hellwig <hch@infradead.org>
-Cc: linux-rdma@vger.kernel.org
-Cc: Jeff Dike <jdike@addtoit.com>
-Cc: Richard Weinberger <richard@nod.at>
-Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
-Cc: Johannes Berg <johannes@sipsolutions.net>
-Cc: linux-um@lists.infradead.org
-Link: https://lore.kernel.org/r/20221202211940.29111-1-rdunlap@infradead.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Link: https://lore.kernel.org/r/20221109142652.450998-1-nirmal.patel@linux.intel.com
+Fixes: ee81ee84f873 ("PCI: vmd: Disable MSI-X remapping when possible")
+Signed-off-by: Nirmal Patel <nirmal.patel@linux.intel.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/Kconfig | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pci/controller/vmd.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/infiniband/Kconfig b/drivers/infiniband/Kconfig
-index aa36ac618e72..17a227415277 100644
---- a/drivers/infiniband/Kconfig
-+++ b/drivers/infiniband/Kconfig
-@@ -78,6 +78,7 @@ config INFINIBAND_VIRT_DMA
- 	def_bool !HIGHMEM
+diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
+index e06e9f4fc50f..98e0746e681c 100644
+--- a/drivers/pci/controller/vmd.c
++++ b/drivers/pci/controller/vmd.c
+@@ -980,6 +980,11 @@ static int vmd_resume(struct device *dev)
+ 	struct vmd_dev *vmd = pci_get_drvdata(pdev);
+ 	int err, i;
  
- if INFINIBAND_USER_ACCESS || !INFINIBAND_USER_ACCESS
-+if !UML
- source "drivers/infiniband/hw/bnxt_re/Kconfig"
- source "drivers/infiniband/hw/cxgb4/Kconfig"
- source "drivers/infiniband/hw/efa/Kconfig"
-@@ -94,6 +95,7 @@ source "drivers/infiniband/hw/qib/Kconfig"
- source "drivers/infiniband/hw/usnic/Kconfig"
- source "drivers/infiniband/hw/vmw_pvrdma/Kconfig"
- source "drivers/infiniband/sw/rdmavt/Kconfig"
-+endif # !UML
- source "drivers/infiniband/sw/rxe/Kconfig"
- source "drivers/infiniband/sw/siw/Kconfig"
- endif
++       if (vmd->irq_domain)
++               vmd_set_msi_remapping(vmd, true);
++       else
++               vmd_set_msi_remapping(vmd, false);
++
+ 	for (i = 0; i < vmd->msix_count; i++) {
+ 		err = devm_request_irq(dev, vmd->irqs[i].virq,
+ 				       vmd_irq, IRQF_NO_THREAD,
 -- 
 2.35.1
 
