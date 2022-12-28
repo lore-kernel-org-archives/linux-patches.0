@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2E31863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC9DC433EF;
-	Wed, 28 Dec 2022 15:37:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A941863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4D5C433D2;
+	Wed, 28 Dec 2022 15:37:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241832;
-	bh=lL7VBS0iHKkJfUUElzYBQqkPTuo4og5ASgpq3wqi8/M=;
+	s=korg; t=1672241835;
+	bh=nhtrcT3aazaoMzkUoWIWkMfWFVvKSwuQauzPzW2bZY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fo+0/lKkkpRTF1ZuD3HwAE3XJzv50iL4JjF3SynEq/OnfEW+H+3V0l5qDdGUxkHjn
-	 i3ACkWs5qWhzh5D5AF06rQDQ9DLh7n1vGBZzpMFiTfWrYgtBwkdO3bZBSnA96HS3rH
-	 VERwdn91SU4/KsHxQ+BSzv8vRPv71ykJEld1bckA=
+	b=i1ua1+vViEge9ZIuBwN3hsgrD2k61Jdh7Ix0aUHUyB9tkaug4ZFDHaUlCgKg7VYwg
+	 qZr4VVxbmMn/aKsJZ0z0w229+j5If29hUqwl/igvpp/udxEZY05W7yMTMO9a+YeOM+
+	 6g/uXd884pzIDXN1BbpRwiIa7S921lpGipG3bGJI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0332/1073] dm: cleanup close_table_device
-Date: Wed, 28 Dec 2022 15:32:00 +0100
-Message-Id: <20221228144337.021593822@linuxfoundation.org>
+Subject: [PATCH 6.1 0294/1146] bpf: propagate precision across all frames, not just the last one
+Date: Wed, 28 Dec 2022 15:30:33 +0100
+Message-Id: <20221228144338.125183550@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,60 +35,158 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 7b5865831c1003122f737df5e16adaa583f1a595 ]
+[ Upstream commit 529409ea92d590659be487ba0839710329bd8074 ]
 
-Take the list unlink and free into close_table_device so that no half
-torn down table_devices exist.  Also remove the check for a NULL bdev
-as that can't happen - open_table_device never adds a table_device to
-the list that does not have a valid block_device.
+When equivalent completed state is found and it has additional precision
+restrictions, BPF verifier propagates precision to
+currently-being-verified state chain (i.e., including parent states) so
+that if some of the states in the chain are not yet completed, necessary
+precision restrictions are enforced.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Mike Snitzer <snitzer@kernel.org>
-Link: https://lore.kernel.org/r/20221115141054.1051801-5-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 1a581b721699 ("dm: track per-add_disk holder relations in DM")
+Unfortunately, right now this happens only for the last frame (deepest
+active subprogram's frame), not all the frames. This can lead to
+incorrect matching of states due to missing precision marker. Currently
+this doesn't seem possible as BPF verifier forces everything to precise
+when validated BPF program has any subprograms. But with the next patch
+lifting this restriction, this becomes problematic.
+
+In fact, without this fix, we'll start getting failure in one of the
+existing test_verifier test cases:
+
+  #906/p precise: cross frame pruning FAIL
+  Unexpected success to load!
+  verification time 48 usec
+  stack depth 0+0
+  processed 26 insns (limit 1000000) max_states_per_insn 3 total_states 17 peak_states 17 mark_read 8
+
+This patch adds precision propagation across all frames.
+
+Fixes: a3ce685dd01a ("bpf: fix precision tracking")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20221104163649.121784-3-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ kernel/bpf/verifier.c | 71 ++++++++++++++++++++++++-------------------
+ 1 file changed, 39 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/md/dm.c b/drivers/md/dm.c
-index 1903afa4618a..620abcef2df5 100644
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -774,14 +774,11 @@ static struct table_device *open_table_device(struct mapped_device *md,
-  */
- static void close_table_device(struct table_device *td, struct mapped_device *md)
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 110d306df4ed..5bd27b5196cb 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -2768,7 +2768,7 @@ static void mark_all_scalars_precise(struct bpf_verifier_env *env,
+ 		}
+ }
+ 
+-static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
++static int __mark_chain_precision(struct bpf_verifier_env *env, int frame, int regno,
+ 				  int spi)
  {
--	if (!td->dm_dev.bdev)
--		return;
--
- 	bd_unlink_disk_holder(td->dm_dev.bdev, dm_disk(md));
- 	blkdev_put(td->dm_dev.bdev, td->dm_dev.mode | FMODE_EXCL);
- 	put_dax(td->dm_dev.dax_dev);
--	td->dm_dev.bdev = NULL;
--	td->dm_dev.dax_dev = NULL;
-+	list_del(&td->list);
-+	kfree(td);
+ 	struct bpf_verifier_state *st = env->cur_state;
+@@ -2785,7 +2785,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
+ 	if (!env->bpf_capable)
+ 		return 0;
+ 
+-	func = st->frame[st->curframe];
++	func = st->frame[frame];
+ 	if (regno >= 0) {
+ 		reg = &func->regs[regno];
+ 		if (reg->type != SCALAR_VALUE) {
+@@ -2866,7 +2866,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
+ 			break;
+ 
+ 		new_marks = false;
+-		func = st->frame[st->curframe];
++		func = st->frame[frame];
+ 		bitmap_from_u64(mask, reg_mask);
+ 		for_each_set_bit(i, mask, 32) {
+ 			reg = &func->regs[i];
+@@ -2932,12 +2932,17 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
+ 
+ int mark_chain_precision(struct bpf_verifier_env *env, int regno)
+ {
+-	return __mark_chain_precision(env, regno, -1);
++	return __mark_chain_precision(env, env->cur_state->curframe, regno, -1);
  }
  
- static struct table_device *find_table_device(struct list_head *l, dev_t dev,
-@@ -823,11 +820,8 @@ void dm_put_table_device(struct mapped_device *md, struct dm_dev *d)
- 	struct table_device *td = container_of(d, struct table_device, dm_dev);
+-static int mark_chain_precision_stack(struct bpf_verifier_env *env, int spi)
++static int mark_chain_precision_frame(struct bpf_verifier_env *env, int frame, int regno)
+ {
+-	return __mark_chain_precision(env, -1, spi);
++	return __mark_chain_precision(env, frame, regno, -1);
++}
++
++static int mark_chain_precision_stack_frame(struct bpf_verifier_env *env, int frame, int spi)
++{
++	return __mark_chain_precision(env, frame, -1, spi);
+ }
  
- 	mutex_lock(&md->table_devices_lock);
--	if (refcount_dec_and_test(&td->count)) {
-+	if (refcount_dec_and_test(&td->count))
- 		close_table_device(td, md);
--		list_del(&td->list);
--		kfree(td);
+ static bool is_spillable_regtype(enum bpf_reg_type type)
+@@ -11856,34 +11861,36 @@ static int propagate_precision(struct bpf_verifier_env *env,
+ {
+ 	struct bpf_reg_state *state_reg;
+ 	struct bpf_func_state *state;
+-	int i, err = 0;
++	int i, err = 0, fr;
+ 
+-	state = old->frame[old->curframe];
+-	state_reg = state->regs;
+-	for (i = 0; i < BPF_REG_FP; i++, state_reg++) {
+-		if (state_reg->type != SCALAR_VALUE ||
+-		    !state_reg->precise)
+-			continue;
+-		if (env->log.level & BPF_LOG_LEVEL2)
+-			verbose(env, "propagating r%d\n", i);
+-		err = mark_chain_precision(env, i);
+-		if (err < 0)
+-			return err;
 -	}
- 	mutex_unlock(&md->table_devices_lock);
- }
++	for (fr = old->curframe; fr >= 0; fr--) {
++		state = old->frame[fr];
++		state_reg = state->regs;
++		for (i = 0; i < BPF_REG_FP; i++, state_reg++) {
++			if (state_reg->type != SCALAR_VALUE ||
++			    !state_reg->precise)
++				continue;
++			if (env->log.level & BPF_LOG_LEVEL2)
++				verbose(env, "frame %d: propagating r%d\n", i, fr);
++			err = mark_chain_precision_frame(env, fr, i);
++			if (err < 0)
++				return err;
++		}
  
+-	for (i = 0; i < state->allocated_stack / BPF_REG_SIZE; i++) {
+-		if (!is_spilled_reg(&state->stack[i]))
+-			continue;
+-		state_reg = &state->stack[i].spilled_ptr;
+-		if (state_reg->type != SCALAR_VALUE ||
+-		    !state_reg->precise)
+-			continue;
+-		if (env->log.level & BPF_LOG_LEVEL2)
+-			verbose(env, "propagating fp%d\n",
+-				(-i - 1) * BPF_REG_SIZE);
+-		err = mark_chain_precision_stack(env, i);
+-		if (err < 0)
+-			return err;
++		for (i = 0; i < state->allocated_stack / BPF_REG_SIZE; i++) {
++			if (!is_spilled_reg(&state->stack[i]))
++				continue;
++			state_reg = &state->stack[i].spilled_ptr;
++			if (state_reg->type != SCALAR_VALUE ||
++			    !state_reg->precise)
++				continue;
++			if (env->log.level & BPF_LOG_LEVEL2)
++				verbose(env, "frame %d: propagating fp%d\n",
++					(-i - 1) * BPF_REG_SIZE, fr);
++			err = mark_chain_precision_stack_frame(env, fr, i);
++			if (err < 0)
++				return err;
++		}
+ 	}
+ 	return 0;
+ }
 -- 
 2.35.1
 
