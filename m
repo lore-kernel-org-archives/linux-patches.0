@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4F461875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3463AC433D2;
-	Wed, 28 Dec 2022 15:57:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3892A1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA40C433F0;
+	Wed, 28 Dec 2022 15:57:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243040;
-	bh=2PV6rZ6kwN1VEo166SUCdr4uGIWFt0H3y7Ea7llfnzY=;
+	s=korg; t=1672243044;
+	bh=t8zlbSGSsooAWtq4TLVBiXeczbyuDynXBmG8sjChtnU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LPAabiLsjr7MJM2x3uzrGiA45UHHZgUx9wbefrbE4TMCYOeluaC9vn05NxXtFug7C
-	 A16kt37Z4E64cAbeamlfQ3apS2eEAdEPp1clwNeXreoVqg1iir23zw/lckPlXfILWC
-	 d0V9BpV27FV1MzlGKEn5Di6Kw/Ld3W0OkM7EVzf0=
+	b=xO+V3OM+aP4AiUPbOcYr6uo24/hr34IT1Hzp+5uPv+JBAIVNX5ae6ppwTf83BtoYy
+	 KwuZNafLmBW4J9YnOm2eCprH9nz2tPBL9RNNJ0feM352/ym/a4CsN8UosKWOGJwmMn
+	 tOlFrVMh61SRzEdHIl4mx1g5PkPRi1IT22u1JtKM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhiqi Song <songzhiqi1@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Pengcheng Yang <yangpc@wangsu.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 674/731] crypto: hisilicon/hpre - fix resource leak in remove process
-Date: Wed, 28 Dec 2022 15:43:01 +0100
-Message-Id: <20221228144316.016377145@linuxfoundation.org>
+Subject: [PATCH 6.1 0445/1146] bpf, sockmap: Fix repeated calls to sock_put() when msg has more_data
+Date: Wed, 28 Dec 2022 15:33:04 +0100
+Message-Id: <20221228144342.267666039@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,47 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhiqi Song <songzhiqi1@huawei.com>
+From: Pengcheng Yang <yangpc@wangsu.com>
 
-[ Upstream commit 45e6319bd5f2154d8b8c9f1eaa4ac030ba0d330c ]
+[ Upstream commit 7a9841ca025275b5b0edfb0b618934abb6ceec15 ]
 
-In hpre_remove(), when the disable operation of qm sriov failed,
-the following logic should continue to be executed to release the
-remaining resources that have been allocated, instead of returning
-directly, otherwise there will be resource leakage.
+In tcp_bpf_send_verdict() redirection, the eval variable is assigned to
+__SK_REDIRECT after the apply_bytes data is sent, if msg has more_data,
+sock_put() will be called multiple times.
 
-Signed-off-by: Zhiqi Song <songzhiqi1@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+We should reset the eval variable to __SK_NONE every time more_data
+starts.
+
+This causes:
+
+IPv4: Attempt to release TCP socket in state 1 00000000b4c925d7
+------------[ cut here ]------------
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 5 PID: 4482 at lib/refcount.c:25 refcount_warn_saturate+0x7d/0x110
+Modules linked in:
+CPU: 5 PID: 4482 Comm: sockhash_bypass Kdump: loaded Not tainted 6.0.0 #1
+Hardware name: Red Hat KVM, BIOS 1.11.0-2.el7 04/01/2014
+Call Trace:
+ <TASK>
+ __tcp_transmit_skb+0xa1b/0xb90
+ ? __alloc_skb+0x8c/0x1a0
+ ? __kmalloc_node_track_caller+0x184/0x320
+ tcp_write_xmit+0x22a/0x1110
+ __tcp_push_pending_frames+0x32/0xf0
+ do_tcp_sendpages+0x62d/0x640
+ tcp_bpf_push+0xae/0x2c0
+ tcp_bpf_sendmsg_redir+0x260/0x410
+ ? preempt_count_add+0x70/0xa0
+ tcp_bpf_send_verdict+0x386/0x4b0
+ tcp_bpf_sendmsg+0x21b/0x3b0
+ sock_sendmsg+0x58/0x70
+ __sys_sendto+0xfa/0x170
+ ? xfd_validate_state+0x1d/0x80
+ ? switch_fpu_return+0x59/0xe0
+ __x64_sys_sendto+0x24/0x30
+ do_syscall_64+0x37/0x90
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Fixes: cd9733f5d75c ("tcp_bpf: Fix one concurrency problem in the tcp_bpf_send_verdict function")
+Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/1669718441-2654-2-git-send-email-yangpc@wangsu.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/hpre/hpre_main.c | 10 ++--------
- 1 file changed, 2 insertions(+), 8 deletions(-)
+ net/ipv4/tcp_bpf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/hisilicon/hpre/hpre_main.c b/drivers/crypto/hisilicon/hpre/hpre_main.c
-index 65a641396c07..edc61e4105f3 100644
---- a/drivers/crypto/hisilicon/hpre/hpre_main.c
-+++ b/drivers/crypto/hisilicon/hpre/hpre_main.c
-@@ -1143,18 +1143,12 @@ static int hpre_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- static void hpre_remove(struct pci_dev *pdev)
- {
- 	struct hisi_qm *qm = pci_get_drvdata(pdev);
--	int ret;
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index cf9c3e8f7ccb..f3e868f4cd9e 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -279,7 +279,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
+ 	bool cork = false, enospc = sk_msg_full(msg);
+ 	struct sock *sk_redir;
+ 	u32 tosend, origsize, sent, delta = 0;
+-	u32 eval = __SK_NONE;
++	u32 eval;
+ 	int ret;
  
- 	hisi_qm_pm_uninit(qm);
- 	hisi_qm_wait_task_finish(qm, &hpre_devices);
- 	hisi_qm_alg_unregister(qm, &hpre_devices);
--	if (qm->fun_type == QM_HW_PF && qm->vfs_num) {
--		ret = hisi_qm_sriov_disable(pdev, true);
--		if (ret) {
--			pci_err(pdev, "Disable SRIOV fail!\n");
--			return;
--		}
--	}
-+	if (qm->fun_type == QM_HW_PF && qm->vfs_num)
-+		hisi_qm_sriov_disable(pdev, true);
+ more_data:
+@@ -310,6 +310,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
+ 	tosend = msg->sg.size;
+ 	if (psock->apply_bytes && psock->apply_bytes < tosend)
+ 		tosend = psock->apply_bytes;
++	eval = __SK_NONE;
  
- 	hpre_debugfs_exit(qm);
- 	hisi_qm_stop(qm, QM_NORMAL);
+ 	switch (psock->eval) {
+ 	case __SK_PASS:
 -- 
 2.35.1
 
