@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 536211863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA11FC433EF;
-	Wed, 28 Dec 2022 14:56:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F393B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BB1EC433EF;
+	Wed, 28 Dec 2022 14:56:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239372;
-	bh=cozt9pH7kqTViyADS+AmpiaDIgxaRd9B4CstxTgTqpM=;
+	s=korg; t=1672239374;
+	bh=d3qJe/k0GOSsbjQ7kRv8Gec6oJ6gw1cdFtLiMadFhJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=is1r3bSIeBcyJzzLPVEYmiokbNhjjD3o+yDM58N6wsQcd3AzOLjZAiP44iFlYkjdq
-	 WJBptrNMQiSwXjJVQnDeNla159MZh2hcvYtqL2p+eu9BLwqaeEJy5XB0SFkN0rO20Y
-	 QWJL90WIn5GfnHPXkixv+CDvtYDvcPoeXve16cwg=
+	b=Qpshsbgifh0Kg8yW7zcquWNo002d8qJU1PsYNEGvsNK9HBDmvqAvmMM8ALPit8KmY
+	 p4Ec0RBLMMEldh3NPVyElOsiFeOKbf49cAIkXsXMjEs/6g5qbojshhR9L1/IVrQjR7
+	 97HT/hVMTC2lKSx60j44IzH+qRKiR7MkO86YjnYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0018/1073] arm64: dts: qcom: msm8916: Drop MSS fallback compatible
-Date: Wed, 28 Dec 2022 15:26:46 +0100
-Message-Id: <20221228144328.652047360@linuxfoundation.org>
+Subject: [PATCH 5.15 214/731] media: videobuf-dma-contig: use dma_mmap_coherent
+Date: Wed, 28 Dec 2022 15:35:21 +0100
+Message-Id: <20221228144302.760172726@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,50 +34,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit ff02ac621634e82c0c34d02a79d402ae700cdfd0 ]
+[ Upstream commit b3dc3f8e49577840dc8ac8a365c5b3da4edb10b8 ]
 
-MSM8916 was originally using the "qcom,q6v5-pil" compatible for the
-MSS remoteproc. Later it was decided to use SoC-specific compatibles
-instead, so "qcom,msm8916-mss-pil" is now the preferred compatible.
+dma_alloc_coherent does not return a physical address, but a DMA address,
+which might be remapped or have an offset.  Passing the DMA address to
+vm_iomap_memory is thus broken.
 
-Commit 60a05ed059a0 ("arm64: dts: qcom: msm8916: Add MSM8916-specific
-compatibles to SCM/MSS") updated the MSM8916 device tree to make use of
-the new compatible but still kept the old "qcom,q6v5-pil" as fallback.
+Use the proper dma_mmap_coherent helper instead, and stop passing
+__GFP_COMP to dma_alloc_coherent, as the memory management inside the
+DMA allocator is hidden from the callers and does not require it.
 
-This is inconsistent with other SoCs and conflicts with the description
-in the binding documentation (which says that only one compatible should
-be present). Also, it has no functional advantage since older kernels
-could not handle this DT anyway (e.g. "power-domains" in the MSS node is
-only supported by kernels that also support "qcom,msm8916-mss-pil").
+With this the gfp_t argument to __videobuf_dc_alloc can be removed and
+hard coded to GFP_KERNEL.
 
-Make this consistent with other SoCs by using only the
-"qcom,msm8916-mss-pil" compatible.
-
-Fixes: 60a05ed059a0 ("arm64: dts: qcom: msm8916: Add MSM8916-specific compatibles to SCM/MSS")
-Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20220718140344.1831731-2-stephan.gerhold@kernkonzept.com
+Fixes: a8f3c203e19b ("[media] videobuf-dma-contig: add cache support")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/v4l2-core/videobuf-dma-contig.c | 22 +++++++------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 48bc2e09128d..863a60b63641 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1331,7 +1331,7 @@ bam_dmux_dma: dma-controller@4044000 {
- 		};
+diff --git a/drivers/media/v4l2-core/videobuf-dma-contig.c b/drivers/media/v4l2-core/videobuf-dma-contig.c
+index 52312ce2ba05..f2c439359557 100644
+--- a/drivers/media/v4l2-core/videobuf-dma-contig.c
++++ b/drivers/media/v4l2-core/videobuf-dma-contig.c
+@@ -36,12 +36,11 @@ struct videobuf_dma_contig_memory {
  
- 		mpss: remoteproc@4080000 {
--			compatible = "qcom,msm8916-mss-pil", "qcom,q6v5-pil";
-+			compatible = "qcom,msm8916-mss-pil";
- 			reg = <0x04080000 0x100>,
- 			      <0x04020000 0x040>;
+ static int __videobuf_dc_alloc(struct device *dev,
+ 			       struct videobuf_dma_contig_memory *mem,
+-			       unsigned long size, gfp_t flags)
++			       unsigned long size)
+ {
+ 	mem->size = size;
+-	mem->vaddr = dma_alloc_coherent(dev, mem->size,
+-					&mem->dma_handle, flags);
+-
++	mem->vaddr = dma_alloc_coherent(dev, mem->size, &mem->dma_handle,
++					GFP_KERNEL);
+ 	if (!mem->vaddr) {
+ 		dev_err(dev, "memory alloc size %ld failed\n", mem->size);
+ 		return -ENOMEM;
+@@ -258,8 +257,7 @@ static int __videobuf_iolock(struct videobuf_queue *q,
+ 			return videobuf_dma_contig_user_get(mem, vb);
  
+ 		/* allocate memory for the read() method */
+-		if (__videobuf_dc_alloc(q->dev, mem, PAGE_ALIGN(vb->size),
+-					GFP_KERNEL))
++		if (__videobuf_dc_alloc(q->dev, mem, PAGE_ALIGN(vb->size)))
+ 			return -ENOMEM;
+ 		break;
+ 	case V4L2_MEMORY_OVERLAY:
+@@ -295,22 +293,18 @@ static int __videobuf_mmap_mapper(struct videobuf_queue *q,
+ 	BUG_ON(!mem);
+ 	MAGIC_CHECK(mem->magic, MAGIC_DC_MEM);
+ 
+-	if (__videobuf_dc_alloc(q->dev, mem, PAGE_ALIGN(buf->bsize),
+-				GFP_KERNEL | __GFP_COMP))
++	if (__videobuf_dc_alloc(q->dev, mem, PAGE_ALIGN(buf->bsize)))
+ 		goto error;
+ 
+-	/* Try to remap memory */
+-	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
+-
+ 	/* the "vm_pgoff" is just used in v4l2 to find the
+ 	 * corresponding buffer data structure which is allocated
+ 	 * earlier and it does not mean the offset from the physical
+ 	 * buffer start address as usual. So set it to 0 to pass
+-	 * the sanity check in vm_iomap_memory().
++	 * the sanity check in dma_mmap_coherent().
+ 	 */
+ 	vma->vm_pgoff = 0;
+-
+-	retval = vm_iomap_memory(vma, mem->dma_handle, mem->size);
++	retval = dma_mmap_coherent(q->dev, vma, mem->vaddr, mem->dma_handle,
++				   mem->size);
+ 	if (retval) {
+ 		dev_err(q->dev, "mmap: remap failed with error %d. ",
+ 			retval);
 -- 
 2.35.1
 
