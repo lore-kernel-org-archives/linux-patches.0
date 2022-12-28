@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC1B1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01A38C433D2;
-	Wed, 28 Dec 2022 16:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E4041C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96940C433D2;
+	Wed, 28 Dec 2022 16:17:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244277;
-	bh=5xxjbcH2bGXAFn8hvpJJwxugZ9mAmxHZSybqTbCYwm4=;
+	s=korg; t=1672244280;
+	bh=eqq7HL7SE8JPGA/vKzT+Q+FqcFzY+185eK5NQroWzJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yP8UfnVmkIWWpBsiBd0wDwCwPuYw1vAdV7lVwZQtpQlZBNnyekGoek+WL1KXOq0iz
-	 GkPTN+lIL2OOzd7cR2FPZvOxa2mK+dXU/viNeMo4c5rjwL+3KWaRrulmuhgOHyHa9Z
-	 zXTiXI3a9EezFwFL/6UFVjgcQNacPfu4qpAK+Wjg=
+	b=lVTJqQV2vx4jVAASHPsNtLUuB40PUzGYWO/lZwgko7foBYc8vPWCEBA7wGUI2HNET
+	 PiHoXAiggfQZGsYHmJxaRSIj3R/lEJqLIRBp/Vh+J2qfI3vs1XH9rR4B+2LUgpXP1O
+	 XrQulMSN/Z0ZycpVj+6fCTm1T37lxnG5eCeCE5mQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Haoyue Xu <xuhaoyue1@hisilicon.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0640/1146] crypto: x86/sm3 - fix possible crash with CFI enabled
-Date: Wed, 28 Dec 2022 15:36:19 +0100
-Message-Id: <20221228144347.545606462@linuxfoundation.org>
+Subject: [PATCH 6.0 0649/1073] RDMA/hns: Fix PBL page MTR find
+Date: Wed, 28 Dec 2022 15:37:17 +0100
+Message-Id: <20221228144345.673206319@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,47 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit 8ba490d9f5a56f52091644325a32d3f71a982776 ]
+[ Upstream commit 9fb39ef2ff3e18f1740625ba04093dfbef086d2b ]
 
-sm3_transform_avx() is called via indirect function calls.  Therefore it
-needs to use SYM_TYPED_FUNC_START instead of SYM_FUNC_START to cause its
-type hash to be emitted when the kernel is built with
-CONFIG_CFI_CLANG=y.  Otherwise, the code crashes with a CFI failure (if
-the compiler didn't happen to optimize out the indirect call).
+Now, The address of the first two pages in the MR will be searched, which
+use to speed up the lookup of the pbl table for hardware.  An exception
+will occur when there is only one page in this MR.  This patch fix the
+number of page to search.
 
-Fixes: ccace936eec7 ("x86: Add types to indirectly called assembly functions")
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 9b2cf76c9f05 ("RDMA/hns: Optimize PBL buffer allocation process")
+Link: https://lore.kernel.org/r/20221126102911.2921820-4-xuhaoyue1@hisilicon.com
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/crypto/sm3-avx-asm_64.S | 3 ++-
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/crypto/sm3-avx-asm_64.S b/arch/x86/crypto/sm3-avx-asm_64.S
-index b12b9efb5ec5..8fc5ac681fd6 100644
---- a/arch/x86/crypto/sm3-avx-asm_64.S
-+++ b/arch/x86/crypto/sm3-avx-asm_64.S
-@@ -12,6 +12,7 @@
-  */
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index ba60496c8f01..5bd21e589565 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -3277,7 +3277,8 @@ static int set_mtpt_pbl(struct hns_roce_dev *hr_dev,
+ 	int i, count;
  
- #include <linux/linkage.h>
-+#include <linux/cfi_types.h>
- #include <asm/frame.h>
- 
- /* Context structure */
-@@ -328,7 +329,7 @@
-  *                        const u8 *data, int nblocks);
-  */
- .align 16
--SYM_FUNC_START(sm3_transform_avx)
-+SYM_TYPED_FUNC_START(sm3_transform_avx)
- 	/* input:
- 	 *	%rdi: ctx, CTX
- 	 *	%rsi: data (64*nblks bytes)
+ 	count = hns_roce_mtr_find(hr_dev, &mr->pbl_mtr, 0, pages,
+-				  ARRAY_SIZE(pages), &pbl_ba);
++				  min_t(int, ARRAY_SIZE(pages), mr->npages),
++				  &pbl_ba);
+ 	if (count < 1) {
+ 		ibdev_err(ibdev, "failed to find PBL mtr, count = %d.\n",
+ 			  count);
 -- 
 2.35.1
 
