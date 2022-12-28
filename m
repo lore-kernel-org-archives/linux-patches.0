@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8391C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 556A8C433D2;
-	Wed, 28 Dec 2022 16:18:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83D3E1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 081DBC433F0;
+	Wed, 28 Dec 2022 16:18:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244313;
-	bh=nhVLOn9tQ1IgdvyQjuR0l3ISCzx0EW2vFTSi8xyFKEw=;
+	s=korg; t=1672244316;
+	bh=uk0nQwChktl9ikYq1svLREd9MaeIHvUyQ6lqfp8+vyA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RSOKBwenDvUo47xKOf8eFQdQqiCe+BjNhZJvW7hAO41hlGr7RM1XNHViwWdmd+K31
-	 RaXkJ45hG9GcGlbeVebhY7wKVAhVhRgN8b4AjFxppMBG9Z86e7IT7FnP4Kwnw+uFBM
-	 xgHEiBI/wi/cg+735tzD2u9gZG+6KNsfeK7cfEi4=
+	b=aalJSdA4UZkNs6ekiTOuZcjdUHXC9pdFVH0tr7lKifoe9ZgZuThbweQRoxWOMGV4v
+	 I164joDD+7+iD5MUlmXs027ktgKr343zJpICLn0qsazbzZfJNjn94ubYMu1cR54hGt
+	 NQ2WFkaq4M/HYzhb5TSJufPe761niGR25FyWtKk4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Gabriel Somlo <gsomlo@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0649/1146] scsi: scsi_debug: Fix a warning in resp_verify()
-Date: Wed, 28 Dec 2022 15:36:28 +0100
-Message-Id: <20221228144347.786242417@linuxfoundation.org>
+Subject: [PATCH 6.0 0690/1073] serial: altera_uart: fix locking in polling mode
+Date: Wed, 28 Dec 2022 15:37:58 +0100
+Message-Id: <20221228144346.776338953@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +34,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Gabriel Somlo <gsomlo@gmail.com>
 
-[ Upstream commit ed0f17b748b20271cb568c7ca0b23b120316a47d ]
+[ Upstream commit 1307c5d33cce8a41dd77c2571e4df65a5b627feb ]
 
-As 'vnum' is controlled by user, so if user tries to allocate memory larger
-than(>=) MAX_ORDER, then kcalloc() will fail, it creates a stack trace and
-messes up dmesg with a warning.
+Since altera_uart_interrupt() may also be called from
+a poll timer in "serving_softirq" context, use
+spin_[lock_irqsave|unlock_irqrestore] variants, which
+are appropriate for both softirq and hardware interrupt
+contexts.
 
-Add __GFP_NOWARN in order to avoid too large allocation warning.  This is
-detected by static analysis using smatch.
-
-Fixes: c3e2fe9222d4 ("scsi: scsi_debug: Implement VERIFY(10), add VERIFY(16)")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Link: https://lore.kernel.org/r/20221112070031.2121068-1-harshit.m.mogalapalli@oracle.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 2f8b9c15cd88 ("altera_uart: Add support for polling mode (IRQ-less)")
+Signed-off-by: Gabriel Somlo <gsomlo@gmail.com>
+Link: https://lore.kernel.org/r/20221122200426.888349-1-gsomlo@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/altera_uart.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 57b091f1767f..78cfb706a4a7 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -4436,7 +4436,7 @@ static int resp_verify(struct scsi_cmnd *scp, struct sdebug_dev_info *devip)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/tty/serial/altera_uart.c b/drivers/tty/serial/altera_uart.c
+index ab08c4050a84..191d737ea563 100644
+--- a/drivers/tty/serial/altera_uart.c
++++ b/drivers/tty/serial/altera_uart.c
+@@ -278,16 +278,17 @@ static irqreturn_t altera_uart_interrupt(int irq, void *data)
+ {
+ 	struct uart_port *port = data;
+ 	struct altera_uart *pp = container_of(port, struct altera_uart, port);
++	unsigned long flags;
+ 	unsigned int isr;
  
--	arr = kcalloc(lb_size, vnum, GFP_ATOMIC);
-+	arr = kcalloc(lb_size, vnum, GFP_ATOMIC | __GFP_NOWARN);
- 	if (!arr) {
- 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INSUFF_RES_ASC,
- 				INSUFF_RES_ASCQ);
+ 	isr = altera_uart_readl(port, ALTERA_UART_STATUS_REG) & pp->imr;
+ 
+-	spin_lock(&port->lock);
++	spin_lock_irqsave(&port->lock, flags);
+ 	if (isr & ALTERA_UART_STATUS_RRDY_MSK)
+ 		altera_uart_rx_chars(port);
+ 	if (isr & ALTERA_UART_STATUS_TRDY_MSK)
+ 		altera_uart_tx_chars(port);
+-	spin_unlock(&port->lock);
++	spin_unlock_irqrestore(&port->lock, flags);
+ 
+ 	return IRQ_RETVAL(isr);
+ }
 -- 
 2.35.1
 
