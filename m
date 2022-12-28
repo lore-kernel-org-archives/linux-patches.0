@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181901863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91ED7C433D2;
-	Wed, 28 Dec 2022 15:29:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA47F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31FB5C433F0;
+	Wed, 28 Dec 2022 15:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241373;
-	bh=tCKhIKES01vCm26ZLEvARUQHAFuL/43QG7Or5OiUYno=;
+	s=korg; t=1672241376;
+	bh=TOU/oiuKLjmB2Ty15HATCPIpELhn9kSTHm6ZnJwyFns=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aCU5kk0+o/4Z3p4wEcWG4arP5eyhDGJI4dM7ZTwyJU12bANk97TjMO6np2foFYQTU
-	 JEUzkTv+TbkG+5lCpN9MVVz03Y7C1rDzhVqHbJ/lDft07Na9i3jKk/IS3hyTr1LkbA
-	 bl28kyx5HmsJMCB2359CEsuk5e4HKvuL/MUuXlQI=
+	b=kPd/HQRX0SYI3MmYYFDcHOIDxzkC7IHQMFWzr6vMxzKYVayXJUybjJDC0Dsn37XvS
+	 73Mr6srQKth3Gb2RnfKrgydJo7ltRszfXIZAc42XkJ0m3wDEjZDY3HJ2trmE+KGmZw
+	 NuxPBXPNisQAdiAS88CwxsaTai1Ik0aSnpKiZnKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 445/731] usb: fotg210-udc: Fix ages old endianness issues
-Date: Wed, 28 Dec 2022 15:39:12 +0100
-Message-Id: <20221228144309.455018826@linuxfoundation.org>
+Subject: [PATCH 5.15 441/731] class: fix possible memory leak in __class_register()
+Date: Wed, 28 Dec 2022 15:39:08 +0100
+Message-Id: <20221228144309.342258273@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,69 +34,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 46ed6026ca2181c917c8334a82e3eaf40a6234dd ]
+[ Upstream commit 8c3e8a6bdb5253b97ad532570f8b5db5f7a06407 ]
 
-The code in the FOTG210 driver isn't entirely endianness-agnostic
-as reported by the kernel robot sparse testing. This came to
-the surface while moving the files around.
+If class_add_groups() returns error, the 'cp->subsys' need be
+unregister, and the 'cp' need be freed.
 
-The driver is only used on little-endian systems, so this causes
-no real-world regression, but it is nice to be strict and have
-some compile coverage also on big endian machines, so fix it
-up with the right LE accessors.
+We can not call kset_unregister() here, because the 'cls' will
+be freed in callback function class_release() and it's also
+freed in caller's error path, it will cause double free.
 
-Fixes: b84a8dee23fd ("usb: gadget: add Faraday fotg210_udc driver")
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/linux-usb/202211110910.0dJ7nZCn-lkp@intel.com/
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20221111090317.94228-1-linus.walleij@linaro.org
+So fix this by calling kobject_del() and kfree_const(name) to
+cleanup kobject. Besides, call kfree() to free the 'cp'.
+
+Fault injection test can trigger this:
+
+unreferenced object 0xffff888102fa8190 (size 8):
+  comm "modprobe", pid 502, jiffies 4294906074 (age 49.296s)
+  hex dump (first 8 bytes):
+    70 6b 74 63 64 76 64 00                          pktcdvd.
+  backtrace:
+    [<00000000e7c7703d>] __kmalloc_track_caller+0x1ae/0x320
+    [<000000005e4d70bc>] kstrdup+0x3a/0x70
+    [<00000000c2e5e85a>] kstrdup_const+0x68/0x80
+    [<000000000049a8c7>] kvasprintf_const+0x10b/0x190
+    [<0000000029123163>] kobject_set_name_vargs+0x56/0x150
+    [<00000000747219c9>] kobject_set_name+0xab/0xe0
+    [<0000000005f1ea4e>] __class_register+0x15c/0x49a
+
+unreferenced object 0xffff888037274000 (size 1024):
+  comm "modprobe", pid 502, jiffies 4294906074 (age 49.296s)
+  hex dump (first 32 bytes):
+    00 40 27 37 80 88 ff ff 00 40 27 37 80 88 ff ff  .@'7.....@'7....
+    00 00 00 00 ad 4e ad de ff ff ff ff 00 00 00 00  .....N..........
+  backtrace:
+    [<00000000151f9600>] kmem_cache_alloc_trace+0x17c/0x2f0
+    [<00000000ecf3dd95>] __class_register+0x86/0x49a
+
+Fixes: ced6473e7486 ("driver core: class: add class_groups support")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221026082803.3458760-1-yangyingliang@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/fotg210-udc.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/base/class.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/usb/gadget/udc/fotg210-udc.c b/drivers/usb/gadget/udc/fotg210-udc.c
-index fdca28e72a3b..d0e051beb3af 100644
---- a/drivers/usb/gadget/udc/fotg210-udc.c
-+++ b/drivers/usb/gadget/udc/fotg210-udc.c
-@@ -629,10 +629,10 @@ static void fotg210_request_error(struct fotg210_udc *fotg210)
- static void fotg210_set_address(struct fotg210_udc *fotg210,
- 				struct usb_ctrlrequest *ctrl)
- {
--	if (ctrl->wValue >= 0x0100) {
-+	if (le16_to_cpu(ctrl->wValue) >= 0x0100) {
- 		fotg210_request_error(fotg210);
- 	} else {
--		fotg210_set_dev_addr(fotg210, ctrl->wValue);
-+		fotg210_set_dev_addr(fotg210, le16_to_cpu(ctrl->wValue));
- 		fotg210_set_cxdone(fotg210);
+diff --git a/drivers/base/class.c b/drivers/base/class.c
+index 7476f393df97..0e44a68e90a0 100644
+--- a/drivers/base/class.c
++++ b/drivers/base/class.c
+@@ -192,6 +192,11 @@ int __class_register(struct class *cls, struct lock_class_key *key)
  	}
+ 	error = class_add_groups(class_get(cls), cls->class_groups);
+ 	class_put(cls);
++	if (error) {
++		kobject_del(&cp->subsys.kobj);
++		kfree_const(cp->subsys.kobj.name);
++		kfree(cp);
++	}
+ 	return error;
  }
-@@ -713,17 +713,17 @@ static void fotg210_get_status(struct fotg210_udc *fotg210,
- 
- 	switch (ctrl->bRequestType & USB_RECIP_MASK) {
- 	case USB_RECIP_DEVICE:
--		fotg210->ep0_data = 1 << USB_DEVICE_SELF_POWERED;
-+		fotg210->ep0_data = cpu_to_le16(1 << USB_DEVICE_SELF_POWERED);
- 		break;
- 	case USB_RECIP_INTERFACE:
--		fotg210->ep0_data = 0;
-+		fotg210->ep0_data = cpu_to_le16(0);
- 		break;
- 	case USB_RECIP_ENDPOINT:
- 		epnum = ctrl->wIndex & USB_ENDPOINT_NUMBER_MASK;
- 		if (epnum)
- 			fotg210->ep0_data =
--				fotg210_is_epnstall(fotg210->ep[epnum])
--				<< USB_ENDPOINT_HALT;
-+				cpu_to_le16(fotg210_is_epnstall(fotg210->ep[epnum])
-+					    << USB_ENDPOINT_HALT);
- 		else
- 			fotg210_request_error(fotg210);
- 		break;
+ EXPORT_SYMBOL_GPL(__class_register);
 -- 
 2.35.1
 
