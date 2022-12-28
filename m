@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A13E11875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:59:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01238C433D2;
-	Wed, 28 Dec 2022 15:59:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73A871875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:00:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5E41C433D2;
+	Wed, 28 Dec 2022 16:00:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243198;
-	bh=FKtCj8p/pFb9w5475+Qx7EIJbbFLYrGQLnNpQwnJEmc=;
+	s=korg; t=1672243201;
+	bh=F/SzWPdVnhRsksvZ9j1OOAWMBR2NQrYAmrU8kfUHv9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F+E6YDm07BFX0+J/EzKjccO5gDGNamWNPn9Np3nZhE0jyQBpgZsjCzLX2hj0S0pPr
-	 jxxivf6jK95m2U/FPkBAEnE4Lz82+oiCX6YSpuDMEipFtaMoEfgRGmv+Ieuh5Y3TO1
-	 QPxpY0FfJCoIft5E0OSFj8el00d5h2HFSh6c+C0c=
+	b=jWeqmo0v9ZMHMwlyz1Gipo23sfTA2Ye7+QzvyfrvYTHaxy+O7Z35p1WN4z7SuVeni
+	 cuc6lFrtFhX+vw9/ZagY5b+FKrNvoxiso8jBXGELXFLXEQNRFPLIKX5eyXodlCcKkB
+	 tmYI4L5F7MgBaTThHRpfu83kYxbDrNEcReyoUPBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Wang Jingjin <wangjingjin1@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 676/731] scsi: ufs: Reduce the START STOP UNIT timeout
-Date: Wed, 28 Dec 2022 15:43:03 +0100
-Message-Id: <20221228144316.070794153@linuxfoundation.org>
+Subject: [PATCH 5.15 694/731] ASoC: rockchip: spdif: Add missing clk_disable_unprepare() in rk_spdif_runtime_resume()
+Date: Wed, 28 Dec 2022 15:43:21 +0100
+Message-Id: <20221228144316.579627533@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,53 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Wang Jingjin <wangjingjin1@huawei.com>
 
-[ Upstream commit dcd5b7637c6d442d957f73780a03047413ed3a10 ]
+[ Upstream commit 6d94d0090527b1763872275a7ccd44df7219b31e ]
 
-Reduce the START STOP UNIT command timeout to one second since on Android
-devices a kernel panic is triggered if an attempt to suspend the system
-takes more than 20 seconds. One second should be enough for the START STOP
-UNIT command since this command completes in less than a millisecond for
-the UFS devices I have access to.
+rk_spdif_runtime_resume() may have called clk_prepare_enable() before return
+from failed branches, add missing clk_disable_unprepare() in this case.
 
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20221018202958.1902564-7-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: f874b80e1571 ("ASoC: rockchip: Add rockchip SPDIF transceiver driver")
+Signed-off-by: Wang Jingjin <wangjingjin1@huawei.com>
+Link: https://lore.kernel.org/r/20221208063900.4180790-1-wangjingjin1@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ufs/ufshcd.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ sound/soc/rockchip/rockchip_spdif.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
-index dae1a85f1512..a428b8145dcc 100644
---- a/drivers/scsi/ufs/ufshcd.c
-+++ b/drivers/scsi/ufs/ufshcd.c
-@@ -8476,8 +8476,6 @@ static int ufshcd_set_dev_pwr_mode(struct ufs_hba *hba,
- 	struct scsi_device *sdp;
- 	unsigned long flags;
- 	int ret, retries;
--	unsigned long deadline;
--	int32_t remaining;
+diff --git a/sound/soc/rockchip/rockchip_spdif.c b/sound/soc/rockchip/rockchip_spdif.c
+index d027ca4b1796..09a25d84fee6 100644
+--- a/sound/soc/rockchip/rockchip_spdif.c
++++ b/sound/soc/rockchip/rockchip_spdif.c
+@@ -88,6 +88,7 @@ static int __maybe_unused rk_spdif_runtime_resume(struct device *dev)
  
- 	spin_lock_irqsave(hba->host->host_lock, flags);
- 	sdp = hba->sdev_ufs_device;
-@@ -8510,14 +8508,9 @@ static int ufshcd_set_dev_pwr_mode(struct ufs_hba *hba,
- 	 * callbacks hence set the RQF_PM flag so that it doesn't resume the
- 	 * already suspended childs.
- 	 */
--	deadline = jiffies + 10 * HZ;
- 	for (retries = 3; retries > 0; --retries) {
--		ret = -ETIMEDOUT;
--		remaining = deadline - jiffies;
--		if (remaining <= 0)
--			break;
- 		ret = scsi_execute(sdp, cmd, DMA_NONE, NULL, 0, NULL, &sshdr,
--				   remaining / HZ, 0, 0, RQF_PM, NULL);
-+				   HZ, 0, 0, RQF_PM, NULL);
- 		if (!scsi_status_is_check_condition(ret) ||
- 				!scsi_sense_valid(&sshdr) ||
- 				sshdr.sense_key != UNIT_ATTENTION)
+ 	ret = clk_prepare_enable(spdif->hclk);
+ 	if (ret) {
++		clk_disable_unprepare(spdif->mclk);
+ 		dev_err(spdif->dev, "hclk clock enable failed %d\n", ret);
+ 		return ret;
+ 	}
 -- 
 2.35.1
 
