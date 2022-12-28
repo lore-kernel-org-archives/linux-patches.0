@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E701C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F096BC433D2;
-	Wed, 28 Dec 2022 16:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E96F1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99662C433EF;
+	Wed, 28 Dec 2022 16:18:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244324;
-	bh=WYTj24gHWOgJnCuBWpN5rv/BxgI9Y51+WK1pKanmyzY=;
+	s=korg; t=1672244327;
+	bh=OoW6+A9KlidEaPg6LYF0DzCw0G9ropuf4+xsU6mgME4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GPtIbhXcLB8dshxlf4BJwkjrC2AmB4EtsK8MtykwOvUFp/xib1lks+Yd8B4sa8O+6
-	 Z46Wc+bw045LoX3UlTUBJn7+eXaLH4SCsbWeP7KHgJ3exzCb+73vRF49ivhzfxuFgG
-	 3TNAIFT7zEB56CDJT2XOCtAlCsj1c/5qMJC6lMC8=
+	b=yREK4lH30LEoj7bg7CBKK0VkibaLOsYvVcM/kCa/55hvL4BlGB4KwnrVySAs5AAs/
+	 4QACuIIq8TfLNuxe6XoLCiBh5hPAwCWG8SbBl9+/YjMepiTASmwJbd4gWJegr+wni+
+	 YBaXEXiulz106U8ZIsOiK36j692T3E0zhFNAZQ4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0691/1073] serial: sunsab: Fix error handling in sunsab_init()
-Date: Wed, 28 Dec 2022 15:37:59 +0100
-Message-Id: <20221228144346.803065876@linuxfoundation.org>
+Subject: [PATCH 6.1 0651/1146] scsi: fcoe: Fix possible name leak when device_register() fails
+Date: Wed, 28 Dec 2022 15:36:30 +0100
+Message-Id: <20221228144347.841319124@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,44 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 1a6ec673fb627c26e2267ca0a03849f91dbd9b40 ]
+[ Upstream commit 47b6a122c7b69a876c7ee2fc064a26b09627de9d ]
 
-The sunsab_init() returns the platform_driver_register() directly without
-checking its return value, if platform_driver_register() failed, the
-allocated sunsab_ports is leaked.
-Fix by free sunsab_ports and set it to NULL when platform_driver_register()
-failed.
+If device_register() returns an error, the name allocated by dev_set_name()
+needs to be freed. As the comment of device_register() says, one should use
+put_device() to give up the reference in the error path. Fix this by
+calling put_device(), then the name can be freed in kobject_cleanup().
 
-Fixes: c4d37215a824 ("[SERIAL] sunsab: Convert to of_driver framework.")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Link: https://lore.kernel.org/r/20221123061212.52593-1-yuancan@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The 'fcf' is freed in fcoe_fcf_device_release(), so the kfree() in the
+error path can be removed.
+
+The 'ctlr' is freed in fcoe_ctlr_device_release(), so don't use the error
+label, just return NULL after calling put_device().
+
+Fixes: 9a74e884ee71 ("[SCSI] libfcoe: Add fcoe_sysfs")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221112094310.3633291-1-yangyingliang@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sunsab.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/scsi/fcoe/fcoe_sysfs.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/tty/serial/sunsab.c b/drivers/tty/serial/sunsab.c
-index 6ea52293d9f3..7c10715dace8 100644
---- a/drivers/tty/serial/sunsab.c
-+++ b/drivers/tty/serial/sunsab.c
-@@ -1137,7 +1137,13 @@ static int __init sunsab_init(void)
- 		}
- 	}
+diff --git a/drivers/scsi/fcoe/fcoe_sysfs.c b/drivers/scsi/fcoe/fcoe_sysfs.c
+index af658aa38fed..6260aa5ea6af 100644
+--- a/drivers/scsi/fcoe/fcoe_sysfs.c
++++ b/drivers/scsi/fcoe/fcoe_sysfs.c
+@@ -830,14 +830,15 @@ struct fcoe_ctlr_device *fcoe_ctlr_device_add(struct device *parent,
  
--	return platform_driver_register(&sab_driver);
-+	err = platform_driver_register(&sab_driver);
-+	if (err) {
-+		kfree(sunsab_ports);
-+		sunsab_ports = NULL;
+ 	dev_set_name(&ctlr->dev, "ctlr_%d", ctlr->id);
+ 	error = device_register(&ctlr->dev);
+-	if (error)
+-		goto out_del_q2;
++	if (error) {
++		destroy_workqueue(ctlr->devloss_work_q);
++		destroy_workqueue(ctlr->work_q);
++		put_device(&ctlr->dev);
++		return NULL;
 +	}
-+
-+	return err;
- }
  
- static void __exit sunsab_exit(void)
+ 	return ctlr;
+ 
+-out_del_q2:
+-	destroy_workqueue(ctlr->devloss_work_q);
+-	ctlr->devloss_work_q = NULL;
+ out_del_q:
+ 	destroy_workqueue(ctlr->work_q);
+ 	ctlr->work_q = NULL;
+@@ -1036,16 +1037,16 @@ struct fcoe_fcf_device *fcoe_fcf_device_add(struct fcoe_ctlr_device *ctlr,
+ 	fcf->selected = new_fcf->selected;
+ 
+ 	error = device_register(&fcf->dev);
+-	if (error)
+-		goto out_del;
++	if (error) {
++		put_device(&fcf->dev);
++		goto out;
++	}
+ 
+ 	fcf->state = FCOE_FCF_STATE_CONNECTED;
+ 	list_add_tail(&fcf->peers, &ctlr->fcfs);
+ 
+ 	return fcf;
+ 
+-out_del:
+-	kfree(fcf);
+ out:
+ 	return NULL;
+ }
 -- 
 2.35.1
 
