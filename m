@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70821C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:16:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BF70C433D2;
-	Wed, 28 Dec 2022 16:16:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A89F1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4942C433D2;
+	Wed, 28 Dec 2022 16:17:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244218;
-	bh=WKZsGlJcj7T6Sy565WhJHuPvhBlrMw/lCS7NDMncPNQ=;
+	s=korg; t=1672244221;
+	bh=5UizsMV9wiYyZ4JDG+DlLKc7fGxS6bLAGUQI6Vk/jmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ERKSmi7O6ErFIqPyij8ethQOkPvja0jICYGZyuUcy1kKNX5l7T5iENudnAPa62FwA
-	 lsNzcteyQ9vySDKj514cFCRG19DUdZA75Q58z/rmG6oavqG4ufUuXTCQGMxUjArhy2
-	 e2PDjVgpA2HGYup9vmmHPtah/Xs/VqMRCqcUBiI0=
+	b=gW7JFRvZoits1tJe/OjuUHQGHwNfS+bg9KAvXSh5NHhR/Ccpj7GXUMg6IQ7o8Hq6B
+	 dzy7krYRLDDOav85+V6piF6juDmrU6VPDmBzP6DZyMZuMMEVQjswACZm3+uM5JBnVp
+	 4l/HdgNnn+1CBYtGMMUbjE1ROjWP/7EnAzdtkqLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Mendonca <rafaelmendsr@gmail.com>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Haoyue Xu <xuhaoyue1@hisilicon.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0670/1073] uio: uio_dmem_genirq: Fix deadlock between irq config and handling
-Date: Wed, 28 Dec 2022 15:37:38 +0100
-Message-Id: <20221228144346.239822420@linuxfoundation.org>
+Subject: [PATCH 6.0 0648/1073] RDMA/hns: Fix AH attr queried by query_qp
+Date: Wed, 28 Dec 2022 15:37:16 +0100
+Message-Id: <20221228144345.644543042@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -34,62 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael Mendonca <rafaelmendsr@gmail.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit 118b918018175d9fcd8db667f905012e986cc2c9 ]
+[ Upstream commit bc34c04f7b97c3794dec5a6d6d27ffd5f0e4f5c8 ]
 
-This fixes a concurrency issue addressed in commit 34cb27528398 ("UIO: Fix
-concurrency issue"):
+The queried AH attr is invalid. This patch fix it.
 
-  "In a SMP case there was a race condition issue between
-  Uio_pdrv_genirq_irqcontrol() running on one CPU and irq handler on
-  another CPU. Fix it by spin_locking shared resources access inside irq
-  handler."
+This problem is found by rdma-core test test_mr_rereg_pd
 
-The implementation of "uio_dmem_genirq" was based on "uio_pdrv_genirq" and
-it is used in a similar manner to the "uio_pdrv_genirq" driver with respect
-to interrupt configuration and handling. At the time "uio_dmem_genirq" was
-merged, both had the same implementation of the 'uio_info' handlers
-irqcontrol() and handler(), thus, both had the same concurrency issue
-mentioned by the above commit. However, the above patch was only applied to
-the "uio_pdrv_genirq" driver.
+ERROR: test_mr_rereg_pd (tests.test_mr.MRTest)
+Test that cover rereg MR's PD with this flow:
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./tests/test_mr.py", line 157, in test_mr_rereg_pd
+    self.restate_qps()
+  File "./tests/test_mr.py", line 113, in restate_qps
+    self.server.qp.to_rts(self.server_qp_attr)
+  File "qp.pyx", line 1137, in pyverbs.qp.QP.to_rts
+  File "qp.pyx", line 1123, in pyverbs.qp.QP.to_rtr
+pyverbs.pyverbs_error.PyverbsRDMAError: Failed to modify QP state to RTR.
+Errno: 22, Invalid argument
 
-Split out from commit 34cb27528398 ("UIO: Fix concurrency issue").
-
-Fixes: 0a0c3b5a24bd ("Add new uio device for dynamic memory allocation")
-Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
-Link: https://lore.kernel.org/r/20220930224100.816175-3-rafaelmendsr@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 926a01dc000d ("RDMA/hns: Add QP operations support for hip08 SoC")
+Link: https://lore.kernel.org/r/20221126102911.2921820-3-xuhaoyue1@hisilicon.com
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/uio/uio_dmem_genirq.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/uio/uio_dmem_genirq.c b/drivers/uio/uio_dmem_genirq.c
-index cb283ee36eaa..792c3e9c9ce5 100644
---- a/drivers/uio/uio_dmem_genirq.c
-+++ b/drivers/uio/uio_dmem_genirq.c
-@@ -110,8 +110,10 @@ static irqreturn_t uio_dmem_genirq_handler(int irq, struct uio_info *dev_info)
- 	 * remember the state so we can allow user space to enable it later.
- 	 */
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index d242fa192f0d..ba60496c8f01 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -5470,6 +5470,8 @@ static int hns_roce_v2_query_qp(struct ib_qp *ibqp, struct ib_qp_attr *qp_attr,
  
-+	spin_lock(&priv->lock);
- 	if (!test_and_set_bit(0, &priv->flags))
- 		disable_irq_nosync(irq);
-+	spin_unlock(&priv->lock);
- 
- 	return IRQ_HANDLED;
- }
-@@ -125,7 +127,8 @@ static int uio_dmem_genirq_irqcontrol(struct uio_info *dev_info, s32 irq_on)
- 	 * in the interrupt controller, but keep track of the
- 	 * state to prevent per-irq depth damage.
- 	 *
--	 * Serialize this operation to support multiple tasks.
-+	 * Serialize this operation to support multiple tasks and concurrency
-+	 * with irq handler on SMP systems.
- 	 */
- 
- 	spin_lock_irqsave(&priv->lock, flags);
+ 		rdma_ah_set_sl(&qp_attr->ah_attr,
+ 			       hr_reg_read(&context, QPC_SL));
++		rdma_ah_set_port_num(&qp_attr->ah_attr, hr_qp->port + 1);
++		rdma_ah_set_ah_flags(&qp_attr->ah_attr, IB_AH_GRH);
+ 		grh->flow_label = hr_reg_read(&context, QPC_FL);
+ 		grh->sgid_index = hr_reg_read(&context, QPC_GMV_IDX);
+ 		grh->hop_limit = hr_reg_read(&context, QPC_HOPLIMIT);
 -- 
 2.35.1
 
