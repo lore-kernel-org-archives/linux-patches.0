@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D12B51C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56001C433EF;
-	Wed, 28 Dec 2022 16:25:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 846881C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF326C433D2;
+	Wed, 28 Dec 2022 16:25:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244716;
-	bh=FLk0k+bo2rCESWWBatgB7EdgAxL+VwLLBfO09Y9EYOo=;
+	s=korg; t=1672244719;
+	bh=OO/IKjdkhfzXgaba/1sSlehygQc52J/jkKERn6B57+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y2qZ8YC2VYxvXQeIhp3VbJ+veXfiY/qWYzoA5C2XiGZ4ajhjeg+kWHyN6MarlQGZV
-	 EPi95P7t7QNYAAuHLxz8woMnAGDcmu+TlYTtRsk37DJqfyzvy9zxWzUf32an40lpz4
-	 MsQmMACWHXAAFWLvjmNj92cFp7x7IOTnjIXj65e0=
+	b=RUB83Ln5zuICBsR+K/IBv78lZxA0yTcuDbYiC2OvyMFAP9s4CKWSfgJK5BSYS5DiF
+	 4OIKiSsvDQjxoiKu2zgk3FndTXU4BI3/zWpq6FNSDFWnHk+EHrwN3jDOlyKfBUZBi9
+	 5jlrvKc4w7+bJ2Dy9YBp0U7lXkoQ47U8N0M5Pt/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	William Breathitt Gray <william.gray@linaro.org>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0724/1146] counter: stm32-lptimer-cnt: fix the check on arr and cmp registers update
-Date: Wed, 28 Dec 2022 15:37:43 +0100
-Message-Id: <20221228144349.810608615@linuxfoundation.org>
+Subject: [PATCH 6.0 0762/1073] phy: marvell: phy-mvebu-a3700-comphy: Reset COMPHY registers before USB 3.0 power on
+Date: Wed, 28 Dec 2022 15:39:10 +0100
+Message-Id: <20221228144348.711985306@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +37,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit fd5ac974fc25feed084c2d1599d0dddb4e0556bc ]
+[ Upstream commit b01d622d76134e9401970ffd3fbbb9a7051f976a ]
 
-The ARR (auto reload register) and CMP (compare) registers are
-successively written. The status bits to check the update of these
-registers are polled together with regmap_read_poll_timeout().
-The condition to end the loop may become true, even if one of the register
-isn't correctly updated.
-So ensure both status bits are set before clearing them.
+Turris MOX board with older ARM Trusted Firmware version v1.5 is not able
+to detect any USB 3.0 device connected to USB-A port on Mox-A module after
+commit 0a6fc70d76bd ("phy: marvell: phy-mvebu-a3700-comphy: Remove broken
+reset support"). On the other hand USB 2.0 devices connected to the same
+USB-A port are working fine.
 
-Fixes: d8958824cf07 ("iio: counter: Add support for STM32 LPTimer")
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Link: https://lore.kernel.org/r/20221123133609.465614-1-fabrice.gasnier@foss.st.com/
-Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
+It looks as if the older firmware configures COMPHY registers for USB 3.0
+somehow incompatibly for kernel driver. Experiments show that resetting
+COMPHY registers via setting SFT_RST auto-clearing bit in COMPHY_SFT_RESET
+register fixes this issue.
+
+Reset the COMPHY in mvebu_a3700_comphy_usb3_power_on() function as a first
+step after selecting COMPHY lane and USB 3.0 function. With this change
+Turris MOX board can successfully detect USB 3.0 devices again.
+
+Before the above mentioned commit this reset was implemented in PHY reset
+method, so this is the reason why there was no issue with older firmware
+version then.
+
+Fixes: 0a6fc70d76bd ("phy: marvell: phy-mvebu-a3700-comphy: Remove broken reset support")
+Reported-by: Marek Behún <kabel@kernel.org>
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Link: https://lore.kernel.org/r/20220920121154.30115-1-pali@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/counter/stm32-lptimer-cnt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/marvell/phy-mvebu-a3700-comphy.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/counter/stm32-lptimer-cnt.c b/drivers/counter/stm32-lptimer-cnt.c
-index d6b80b6dfc28..8439755559b2 100644
---- a/drivers/counter/stm32-lptimer-cnt.c
-+++ b/drivers/counter/stm32-lptimer-cnt.c
-@@ -69,7 +69,7 @@ static int stm32_lptim_set_enable_state(struct stm32_lptim_cnt *priv,
- 
- 	/* ensure CMP & ARR registers are properly written */
- 	ret = regmap_read_poll_timeout(priv->regmap, STM32_LPTIM_ISR, val,
--				       (val & STM32_LPTIM_CMPOK_ARROK),
-+				       (val & STM32_LPTIM_CMPOK_ARROK) == STM32_LPTIM_CMPOK_ARROK,
- 				       100, 1000);
+diff --git a/drivers/phy/marvell/phy-mvebu-a3700-comphy.c b/drivers/phy/marvell/phy-mvebu-a3700-comphy.c
+index 67712c77d806..d641b345afa3 100644
+--- a/drivers/phy/marvell/phy-mvebu-a3700-comphy.c
++++ b/drivers/phy/marvell/phy-mvebu-a3700-comphy.c
+@@ -826,6 +826,9 @@ mvebu_a3700_comphy_usb3_power_on(struct mvebu_a3700_comphy_lane *lane)
  	if (ret)
  		return ret;
+ 
++	/* COMPHY register reset (cleared automatically) */
++	comphy_lane_reg_set(lane, COMPHY_SFT_RESET, SFT_RST, SFT_RST);
++
+ 	/*
+ 	 * 0. Set PHY OTG Control(0x5d034), bit 4, Power up OTG module The
+ 	 * register belong to UTMI module, so it is set in UTMI phy driver.
 -- 
 2.35.1
 
