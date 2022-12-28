@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD8C1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:59:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91477C433D2;
-	Wed, 28 Dec 2022 15:59:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7D51875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:59:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44418C433D2;
+	Wed, 28 Dec 2022 15:59:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243163;
-	bh=D5xTLGtfH6tIVUWRU4u3V1+jEB8UI/2PGD0znMVXnKY=;
+	s=korg; t=1672243165;
+	bh=bfVACty6wrQMY9FGTLJ2CbgpKEkw+xMGqWk0IQOrlSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bZ3HmBy5ZIz82cVhVscvL+14ikTMQb4NhN3B55iXU/kUfuso5B1GGo0SoLaTifKCW
-	 hN9pto9x9fXOuifJ7Qi/wCr0F7qMFAZW4uq8FxkmdOzdVlxQa4cgaf6DU9ImKAQ0xE
-	 mMvFddv7IBqQUu+Zl/oamC0lAqDQ2qaL3vezMWJg=
+	b=gW6RjzL+bF0Mdhjv3HIrmLcQ+EzJdI/wkXMnRSkM6/P7Py6qRNtkVnxLFnSP708XP
+	 jjpSH910D3RjjxQVv9uNNmblHaX2OY/nPWWSBRAAlqYShWKG2W1oNa0TEOF1+a1aWT
+	 hkJICoUIKjuYeUhWtLq35K7w/2l3ccCuk1HOw1bE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
-	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Shayne Chen <shayne.chen@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 690/731] ASoC: audio-graph-card: fix refcount leak of cpu_ep in __graph_for_each_link()
-Date: Wed, 28 Dec 2022 15:43:17 +0100
-Message-Id: <20221228144316.465477813@linuxfoundation.org>
+Subject: [PATCH 6.1 0458/1146] wifi: mt76: mt7915: rework eeprom tx paths and streams init
+Date: Wed, 28 Dec 2022 15:33:17 +0100
+Message-Id: <20221228144342.623004958@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,40 +35,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: Shayne Chen <shayne.chen@mediatek.com>
 
-[ Upstream commit 8ab2d12c726f0fde0692fa5d81d8019b3dcd62d0 ]
+[ Upstream commit a7ec8bcf00034ce84d4c9a15dffd7577fbed4db2 ]
 
-The of_get_next_child() returns a node with refcount incremented, and
-decrements the refcount of prev. So in the error path of the while loop,
-of_node_put() needs be called for cpu_ep.
+Rework tx paths and streams init part to improve readability, and make
+sure that the available tx streams should be smaller than or equal to
+the available tx paths.
 
-Fixes: fce9b90c1ab7 ("ASoC: audio-graph-card: cleanup DAI link loop method - step2")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
-Link: https://lore.kernel.org/r/1670228127-13835-1-git-send-email-wangyufen@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Stable-dep-of: de147cc28985 ("wifi: mt76: mt7915: Fix chainmask calculation on mt7915 DBDC")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/generic/audio-graph-card.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../wireless/mediatek/mt76/mt7915/eeprom.c    | 57 ++++++++-----------
+ .../wireless/mediatek/mt76/mt7915/eeprom.h    |  5 --
+ 2 files changed, 23 insertions(+), 39 deletions(-)
 
-diff --git a/sound/soc/generic/audio-graph-card.c b/sound/soc/generic/audio-graph-card.c
-index 28cbcdb56857..89814f68ff56 100644
---- a/sound/soc/generic/audio-graph-card.c
-+++ b/sound/soc/generic/audio-graph-card.c
-@@ -483,8 +483,10 @@ static int __graph_for_each_link(struct asoc_simple_priv *priv,
- 			of_node_put(codec_ep);
- 			of_node_put(codec_port);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
+index 4b1a9811646f..83bced0c0785 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
+@@ -173,60 +173,49 @@ static void mt7915_eeprom_parse_band_config(struct mt7915_phy *phy)
+ void mt7915_eeprom_parse_hw_cap(struct mt7915_dev *dev,
+ 				struct mt7915_phy *phy)
+ {
+-	u8 nss, nss_band, nss_band_max, *eeprom = dev->mt76.eeprom.data;
++	u8 path, nss, nss_max = 4, *eeprom = dev->mt76.eeprom.data;
+ 	struct mt76_phy *mphy = phy->mt76;
+-	bool ext_phy = phy != &dev->phy;
  
--			if (ret < 0)
-+			if (ret < 0) {
-+				of_node_put(cpu_ep);
- 				return ret;
-+			}
+ 	mt7915_eeprom_parse_band_config(phy);
  
- 			codec_port_old = codec_port;
+-	/* read tx/rx mask from eeprom */
++	/* read tx/rx path from eeprom */
+ 	if (is_mt7915(&dev->mt76)) {
+-		nss = FIELD_GET(MT_EE_WIFI_CONF0_TX_PATH,
+-				eeprom[MT_EE_WIFI_CONF]);
++		path = FIELD_GET(MT_EE_WIFI_CONF0_TX_PATH,
++				 eeprom[MT_EE_WIFI_CONF]);
+ 	} else {
+-		nss = FIELD_GET(MT_EE_WIFI_CONF0_TX_PATH,
+-				eeprom[MT_EE_WIFI_CONF + phy->band_idx]);
++		path = FIELD_GET(MT_EE_WIFI_CONF0_TX_PATH,
++				 eeprom[MT_EE_WIFI_CONF + phy->band_idx]);
+ 	}
+ 
+-	if (!nss || nss > 4)
+-		nss = 4;
++	if (!path || path > 4)
++		path = 4;
+ 
+ 	/* read tx/rx stream */
+-	nss_band = nss;
+-
++	nss = path;
+ 	if (dev->dbdc_support) {
+ 		if (is_mt7915(&dev->mt76)) {
+-			nss_band = FIELD_GET(MT_EE_WIFI_CONF3_TX_PATH_B0,
+-					     eeprom[MT_EE_WIFI_CONF + 3]);
++			nss = FIELD_GET(MT_EE_WIFI_CONF3_TX_PATH_B0,
++					eeprom[MT_EE_WIFI_CONF + 3]);
+ 			if (phy->band_idx)
+-				nss_band = FIELD_GET(MT_EE_WIFI_CONF3_TX_PATH_B1,
+-						     eeprom[MT_EE_WIFI_CONF + 3]);
++				nss = FIELD_GET(MT_EE_WIFI_CONF3_TX_PATH_B1,
++						eeprom[MT_EE_WIFI_CONF + 3]);
+ 		} else {
+-			nss_band = FIELD_GET(MT_EE_WIFI_CONF_STREAM_NUM,
+-					     eeprom[MT_EE_WIFI_CONF + 2 + phy->band_idx]);
++			nss = FIELD_GET(MT_EE_WIFI_CONF_STREAM_NUM,
++					eeprom[MT_EE_WIFI_CONF + 2 + phy->band_idx]);
  		}
+ 
+-		nss_band_max = is_mt7986(&dev->mt76) ?
+-			       MT_EE_NSS_MAX_DBDC_MA7986 : MT_EE_NSS_MAX_DBDC_MA7915;
+-	} else {
+-		nss_band_max = is_mt7986(&dev->mt76) ?
+-			       MT_EE_NSS_MAX_MA7986 : MT_EE_NSS_MAX_MA7915;
++		if (!is_mt7986(&dev->mt76))
++			nss_max = 2;
+ 	}
+ 
+-	if (!nss_band || nss_band > nss_band_max)
+-		nss_band = nss_band_max;
+-
+-	if (nss_band > nss) {
+-		dev_warn(dev->mt76.dev,
+-			 "nss mismatch, nss(%d) nss_band(%d) band(%d) ext_phy(%d)\n",
+-			 nss, nss_band, phy->band_idx, ext_phy);
+-		nss = nss_band;
+-	}
++	if (!nss)
++		nss = nss_max;
++	nss = min_t(u8, min_t(u8, nss_max, nss), path);
+ 
+-	mphy->chainmask = BIT(nss) - 1;
+-	if (ext_phy)
++	mphy->chainmask = BIT(path) - 1;
++	if (phy->band_idx)
+ 		mphy->chainmask <<= dev->chainshift;
+-	mphy->antenna_mask = BIT(nss_band) - 1;
++	mphy->antenna_mask = BIT(nss) - 1;
+ 	dev->chainmask |= mphy->chainmask;
+ 	dev->chainshift = hweight8(dev->mphy.chainmask);
+ }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
+index 7578ac6d0be6..f3e56817d36e 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
+@@ -58,11 +58,6 @@ enum mt7915_eeprom_field {
+ #define MT_EE_RATE_DELTA_SIGN			BIT(6)
+ #define MT_EE_RATE_DELTA_EN			BIT(7)
+ 
+-#define MT_EE_NSS_MAX_MA7915			4
+-#define MT_EE_NSS_MAX_DBDC_MA7915		2
+-#define MT_EE_NSS_MAX_MA7986			4
+-#define MT_EE_NSS_MAX_DBDC_MA7986		4
+-
+ enum mt7915_adie_sku {
+ 	MT7976_ONE_ADIE_DBDC = 0x7,
+ 	MT7975_ONE_ADIE	= 0x8,
 -- 
 2.35.1
 
