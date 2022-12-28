@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6D211868
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7963DC433F0;
-	Wed, 28 Dec 2022 15:41:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F19F1868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E7C6C433EF;
+	Wed, 28 Dec 2022 15:41:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242063;
-	bh=MbAb0bNy8l/E5IppMg6LDyvbtgW8oiWqlw+mbO+kd0Y=;
+	s=korg; t=1672242066;
+	bh=H5nfNj6i2aBjx1sIE6dF/39prsVVVi+kb+2ZnFvZ8IU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ukC047UA4xS6BD6CT7nlUgVl2147xPmeFJHgzT6f6NyYCLy1ObFZLWDbhKoiwQfnX
-	 0EJffcIAtujYed2zGqTF7NYS7eU8KAr7vpqD1Klwse5VukFE5zEcKJ8PQPju9SRdCh
-	 n486a//CTZ98UcEXihj0eBMESDRxDSWKVACFLeqs=
+	b=mQhMCOva2godZaWAqpAcjNzIfOo+HUQ4NY3wziS+Hp1Po+/GyW/QeHEkYzSHn8O0M
+	 aeP6y+NAuwtYOcZ4KJsGPxOoPjfUydtiDBRpOvtRhyuYyG2JmzbyedLEp30W3ZraYB
+	 I1Er9gofDeecfK7eU6bVboVn0UTgDzwBVOaNJJ4s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhangPeng <zhangpeng362@huawei.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0360/1073] pinctrl: k210: call of_node_put()
-Date: Wed, 28 Dec 2022 15:32:28 +0100
-Message-Id: <20221228144337.780319245@linuxfoundation.org>
+Subject: [PATCH 5.15 558/731] powerpc/perf: callchain validate kernel stack pointer bounds
+Date: Wed, 28 Dec 2022 15:41:05 +0100
+Message-Id: <20221228144312.740805254@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,40 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangPeng <zhangpeng362@huawei.com>
+From: Nicholas Piggin <npiggin@gmail.com>
 
-[ Upstream commit a8acc11643082a706de86a19f1f824712d971984 ]
+[ Upstream commit 32c5209214bd8d4f8c4e9d9b630ef4c671f58e79 ]
 
-Since for_each_available_child_of_node() will increase the refcount of
-node, we need to call of_node_put() manually when breaking out of the
-iteration.
+The interrupt frame detection and loads from the hypothetical pt_regs
+are not bounds-checked. The next-frame validation only bounds-checks
+STACK_FRAME_OVERHEAD, which does not include the pt_regs. Add another
+test for this.
 
-Fixes: d4c34d09ab03 ("pinctrl: Add RISC-V Canaan Kendryte K210 FPIOA driver")
-Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
-Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Link: https://lore.kernel.org/r/20221122075853.2496680-1-zhangpeng362@huawei.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+The user could set r1 to be equal to the address matching the first
+interrupt frame - STACK_INT_FRAME_SIZE, which is in the previous page
+due to the kernel redzone, and induce the kernel to load the marker from
+there. Possibly this could cause a crash at least. If the user could
+induce the previous page to contain a valid marker, then it might be
+able to direct perf to read specific memory addresses in a way that
+could be transmitted back to the user in the perf data.
+
+Fixes: 20002ded4d93 ("perf_counter: powerpc: Add callchain support")
+Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20221127124942.1665522-4-npiggin@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-k210.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/powerpc/perf/callchain.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pinctrl/pinctrl-k210.c b/drivers/pinctrl/pinctrl-k210.c
-index ecab6bf63dc6..ad4db99094a7 100644
---- a/drivers/pinctrl/pinctrl-k210.c
-+++ b/drivers/pinctrl/pinctrl-k210.c
-@@ -862,8 +862,10 @@ static int k210_pinctrl_dt_node_to_map(struct pinctrl_dev *pctldev,
- 	for_each_available_child_of_node(np_config, np) {
- 		ret = k210_pinctrl_dt_subnode_to_map(pctldev, np, map,
- 						     &reserved_maps, num_maps);
--		if (ret < 0)
-+		if (ret < 0) {
-+			of_node_put(np);
- 			goto err;
-+		}
- 	}
- 	return 0;
+diff --git a/arch/powerpc/perf/callchain.c b/arch/powerpc/perf/callchain.c
+index 082f6d0308a4..8718289c051d 100644
+--- a/arch/powerpc/perf/callchain.c
++++ b/arch/powerpc/perf/callchain.c
+@@ -61,6 +61,7 @@ perf_callchain_kernel(struct perf_callchain_entry_ctx *entry, struct pt_regs *re
+ 		next_sp = fp[0];
  
+ 		if (next_sp == sp + STACK_INT_FRAME_SIZE &&
++		    validate_sp(sp, current, STACK_INT_FRAME_SIZE) &&
+ 		    fp[STACK_FRAME_MARKER] == STACK_FRAME_REGS_MARKER) {
+ 			/*
+ 			 * This looks like an interrupt frame for an
 -- 
 2.35.1
 
