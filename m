@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA75A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:44:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41AB6C433D2;
-	Wed, 28 Dec 2022 14:44:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B0B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:44:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6E4AC433D2;
+	Wed, 28 Dec 2022 14:44:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672238693;
-	bh=OvoPftLgNCIVWyumvRT5AIgLunjqxeCqOuMRWjthq48=;
+	s=korg; t=1672238696;
+	bh=piILM7sVfGfMJfU/egBmMvperD0OKi+BxmloSjLTPos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HpPVom9g1J5CpWJEjUc82tthK3sO7IhLU6VddKB2Qy84S38ZJihowXMKtrmqmIHO8
-	 QmvsG69/W/rMxNBpkqiifByoPaqWKgOLq+BD6XVzFKgbTQ08OvTleWzwvhz+9a5Zl9
-	 Ki4bvo+A5o8M/zXP9+ha3FCvOsvm8vVJGXcIsHOw=
+	b=qJXOisbugVNpsDfE8GspRhm86JJbsPx0om5R7O8PDJ6JybZ+HLQd1z3TBcnBcb5gX
+	 QCcF00O8uocvgl8IC2wLlhKHr67r3eQwWwOWP+rnLPp8Ar6VzQBbN2klAHzgTOaoLJ
+	 KV+2sfj34s4ZnjjnHjX2jiGthpk7fBe8rSciroeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Cercueil <paul@crapouillou.net>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Subject: [PATCH 6.1 0001/1146] MIPS: DTS: CI20: fix reset line polarity of the ethernet controller
-Date: Wed, 28 Dec 2022 15:25:40 +0100
-Message-Id: <20221228144330.227642259@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0002/1146] usb: musb: remove extra check in musb_gadget_vbus_draw
+Date: Wed, 28 Dec 2022 15:25:41 +0100
+Message-Id: <20221228144330.253341726@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,39 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
 
-commit ca637c0ece144ce62ec8ef75dc127bcccd4f442a upstream.
+[ Upstream commit ecec4b20d29c3d6922dafe7d2555254a454272d2 ]
 
-The reset line is called PWRST#, annotated as "active low" in the
-binding documentation, and is driven low and then high by the driver to
-reset the chip. However in device tree for CI20 board it was incorrectly
-marked as "active high". Fix it.
+The checks for musb->xceiv and musb->xceiv->set_power duplicate those in
+usb_phy_set_power(), so there is no need of them. Moreover, not calling
+usb_phy_set_power() results in usb_phy_set_charger_current() not being
+called, so current USB config max current is not propagated through USB
+charger framework and charger drivers may try to draw more current than
+allowed or possible.
 
-Because (as far as I know) the ci20.dts is always built in the kernel I
-elected not to also add a quirk to gpiolib to force the polarity there.
+Fix that by removing those extra checks and calling usb_phy_set_power()
+directly.
 
-Fixes: db49ca38579d ("net: davicom: dm9000: switch to using gpiod API")
-Reported-by: Paul Cercueil <paul@crapouillou.net>
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Acked-by: Paul Cercueil <paul@crapouillou.net>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Cc: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Tested on Motorola Droid4 and Nokia N900
+
+Fixes: a9081a008f84 ("usb: phy: Add USB charger support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
+Link: https://lore.kernel.org/r/1669400475-4762-1-git-send-email-ivo.g.dimitrov.75@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/boot/dts/ingenic/ci20.dts |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/musb/musb_gadget.c | 2 --
+ 1 file changed, 2 deletions(-)
 
---- a/arch/mips/boot/dts/ingenic/ci20.dts
-+++ b/arch/mips/boot/dts/ingenic/ci20.dts
-@@ -438,7 +438,7 @@
- 		ingenic,nemc-tAW = <50>;
- 		ingenic,nemc-tSTRV = <100>;
+diff --git a/drivers/usb/musb/musb_gadget.c b/drivers/usb/musb/musb_gadget.c
+index 6704a62a1665..ba20272d2221 100644
+--- a/drivers/usb/musb/musb_gadget.c
++++ b/drivers/usb/musb/musb_gadget.c
+@@ -1628,8 +1628,6 @@ static int musb_gadget_vbus_draw(struct usb_gadget *gadget, unsigned mA)
+ {
+ 	struct musb	*musb = gadget_to_musb(gadget);
  
--		reset-gpios = <&gpf 12 GPIO_ACTIVE_HIGH>;
-+		reset-gpios = <&gpf 12 GPIO_ACTIVE_LOW>;
- 		vcc-supply = <&eth0_power>;
+-	if (!musb->xceiv->set_power)
+-		return -EOPNOTSUPP;
+ 	return usb_phy_set_power(musb->xceiv, mA);
+ }
  
- 		interrupt-parent = <&gpe>;
+-- 
+2.35.1
+
 
 
