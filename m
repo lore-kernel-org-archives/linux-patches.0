@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5F471C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A047C433EF;
-	Wed, 28 Dec 2022 16:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A57F1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6894C433D2;
+	Wed, 28 Dec 2022 16:21:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244494;
-	bh=UyN2zZFlGAz1ZGYHDjqce7MbOSq7bZuAzV5IrRy9LYc=;
+	s=korg; t=1672244497;
+	bh=NmjV0E95oCV4E3g5lm5gTZp50u5GYHXobVmdFC/SW9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z3jrJYwURwuFUsb7cmhKjSm+wpJY5Tz2dnst9EuMryx5+9Wrd5gM+s4AR1qukx3RP
-	 sOZo2QhELNwwby0RJOzkHqv2oql4tps4UXYiy0LGgfa3GYJ6bFP50rcy5pC5mk9aA8
-	 wSv5c4Kw8/58EjjxJ7Gb38k7jhbW03x/STsfcRwg=
+	b=mVkA5WesyJrPW976mT0bzuqdfHP4TY5Z8yyXfBxDuAlND/GBPJY4VhXAwE9fYenMx
+	 tAY8slCkR6L8sO5aMKdXAjCjoXMItLOyQ900VlA24Syp57UYEnri3qb1L2Kb4ggZ1d
+	 cumGv2xH8vtM/Q42GV8kBWS/TjY4b5//TKwg6/Gs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	mhiramat@kernel.org,
+	zanussi@kernel.org,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0683/1146] IB/IPoIB: Fix queue count inconsistency for PKEY child interfaces
-Date: Wed, 28 Dec 2022 15:37:02 +0100
-Message-Id: <20221228144348.695701132@linuxfoundation.org>
+Subject: [PATCH 6.0 0722/1073] tracing/hist: Fix issue of losting command info in error_log
+Date: Wed, 28 Dec 2022 15:38:30 +0100
+Message-Id: <20221228144347.636427597@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,59 +37,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit dbc94a0fb81771a38733c0e8f2ea8c4fa6934dc1 ]
+[ Upstream commit 608c6ed3337850c767ab0dd6c583477922233e29 ]
 
-There are 2 ways to create IPoIB PKEY child interfaces:
-1) Writing a PKEY to /sys/class/net/<ib parent interface>/create_child.
-2) Using netlink with iproute.
+When input some constructed invalid 'trigger' command, command info
+in 'error_log' are lost [1].
 
-While with sysfs the child interface has the same number of tx and
-rx queues as the parent, with netlink there will always be 1 tx
-and 1 rx queue for the child interface. That's because the
-get_num_tx/rx_queues() netlink ops are missing and the default value
-of 1 is taken for the number of queues (in rtnl_create_link()).
+The root cause is that there is a path that event_hist_trigger_parse()
+is recursely called once and 'last_cmd' which save origin command is
+cleared, then later calling of hist_err() will no longer record origin
+command info:
 
-This change adds the get_num_tx/rx_queues() ops which allows for
-interfaces with multiple queues to be created over netlink. This
-constant only represents the max number of tx and rx queues on that
-net device.
+  event_hist_trigger_parse() {
+    last_cmd_set()  // <1> 'last_cmd' save origin command here at first
+    create_actions() {
+      onmatch_create() {
+        action_create() {
+          trace_action_create() {
+            trace_action_create_field_var() {
+              create_field_var_hist() {
+                event_hist_trigger_parse() {  // <2> recursely called once
+                  hist_err_clear()  // <3> 'last_cmd' is cleared here
+                }
+                hist_err()  // <4> No longer find origin command!!!
 
-Fixes: 9baa0b036410 ("IB/ipoib: Add rtnl_link_ops support")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Link: https://lore.kernel.org/r/f4a42c8aa43c02d5ae5559a60c3e5e0f18c82531.1670485816.git.leonro@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Since 'glob' is empty string while running into the recurse call, we
+can trickly check it and bypass the call of hist_err_clear() to solve it.
+
+[1]
+ # cd /sys/kernel/tracing
+ # echo "my_synth_event int v1; int v2; int v3;" >> synthetic_events
+ # echo 'hist:keys=pid' >> events/sched/sched_waking/trigger
+ # echo "hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(\
+pid,pid1)" >> events/sched/sched_switch/trigger
+ # cat error_log
+[  8.405018] hist:sched:sched_switch: error: Couldn't find synthetic event
+  Command:
+hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(pid,pid1)
+                                                          ^
+[  8.816902] hist:sched:sched_switch: error: Couldn't find field
+  Command:
+hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(pid,pid1)
+                          ^
+[  8.816902] hist:sched:sched_switch: error: Couldn't parse field variable
+  Command:
+hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(pid,pid1)
+                          ^
+[  8.999880] : error: Couldn't find field
+  Command:
+           ^
+[  8.999880] : error: Couldn't parse field variable
+  Command:
+           ^
+[  8.999880] : error: Couldn't find field
+  Command:
+           ^
+[  8.999880] : error: Couldn't create histogram for field
+  Command:
+           ^
+
+Link: https://lore.kernel.org/linux-trace-kernel/20221207135326.3483216-1-zhengyejian1@huawei.com
+
+Cc: <mhiramat@kernel.org>
+Cc: <zanussi@kernel.org>
+Fixes: f404da6e1d46 ("tracing: Add 'last error' error facility for hist triggers")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/ipoib/ipoib_netlink.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ kernel/trace/trace_events_hist.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_netlink.c b/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
-index ea16ba5d8da6..9ad8d9856275 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
-@@ -41,6 +41,11 @@ static const struct nla_policy ipoib_policy[IFLA_IPOIB_MAX + 1] = {
- 	[IFLA_IPOIB_UMCAST]	= { .type = NLA_U16 },
- };
+diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
+index 49243e861714..d8406f6f5d39 100644
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -6346,7 +6346,7 @@ static int event_hist_trigger_parse(struct event_command *cmd_ops,
+ 	if (se)
+ 		se->ref++;
+  out:
+-	if (ret == 0)
++	if (ret == 0 && glob[0])
+ 		hist_err_clear();
  
-+static unsigned int ipoib_get_max_num_queues(void)
-+{
-+	return min_t(unsigned int, num_possible_cpus(), 128);
-+}
-+
- static int ipoib_fill_info(struct sk_buff *skb, const struct net_device *dev)
- {
- 	struct ipoib_dev_priv *priv = ipoib_priv(dev);
-@@ -172,6 +177,8 @@ static struct rtnl_link_ops ipoib_link_ops __read_mostly = {
- 	.changelink	= ipoib_changelink,
- 	.get_size	= ipoib_get_size,
- 	.fill_info	= ipoib_fill_info,
-+	.get_num_rx_queues = ipoib_get_max_num_queues,
-+	.get_num_tx_queues = ipoib_get_max_num_queues,
- };
- 
- struct rtnl_link_ops *ipoib_get_link_ops(void)
+ 	return ret;
 -- 
 2.35.1
 
