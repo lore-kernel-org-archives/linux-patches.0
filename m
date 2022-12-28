@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF2251863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45943C433EF;
-	Wed, 28 Dec 2022 15:27:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A3E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6620C433EF;
+	Wed, 28 Dec 2022 15:27:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241229;
-	bh=S4MofCqekZZLQeDNlqqTmspwwgyyYMA449UzYiU88zk=;
+	s=korg; t=1672241232;
+	bh=ea7/DX0DUqreOuWBiXYFkHJIeizsMAwd2iDKksw/lYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZFLgctOjeVkU1n9UD4fxsxc/DjZXc3ZD2Tex37oLhzq3HWiWxonxjxCj8K8lgLXuy
-	 Bcsz2SI8qje8WcTJOjScqqDOWtRnU/tGCzmz5LuJgjMvdvZDNzH7x5xGx1D8Ms1Nww
-	 XJb8+5cnNxJmfunT9K6Dh0Hjrdf/oiSz3DWNUboQ=
+	b=rElzvQIvANX6YrHOhsr+h0l17rqxbaaWO92xVQR7XRSbd1dUHBt/Z1JLUVDZFgDKi
+	 r4hjqHxK0hfuoqieMhejndFgb5chhbGxRzYwMvfnCBmDB7ruGzmAVz68kQf3dGv9Pf
+	 gkxp3JjuZLSyIXYrApn/18ZJZwUdaOinh7naebZ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@seco.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jimmy Assarsson <extja@kvaser.com>,
+	Anssi Hannula <anssi.hannula@bitwise.fi>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0222/1146] powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G
-Date: Wed, 28 Dec 2022 15:29:21 +0100
-Message-Id: <20221228144336.174153228@linuxfoundation.org>
+Subject: [PATCH 6.0 0244/1073] can: kvaser_usb_leaf: Set Warning state even without bus errors
+Date: Wed, 28 Dec 2022 15:30:32 +0100
+Message-Id: <20221228144334.653364688@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,140 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Anderson <sean.anderson@seco.com>
+From: Anssi Hannula <anssi.hannula@bitwise.fi>
 
-[ Upstream commit 36926a7d70c2d462fca1ed85bfee000d17fd8662 ]
+[ Upstream commit df1b7af2761b935f63b4a53e789d41ed859edf61 ]
 
-On the T208X SoCs, MAC1 and MAC2 support XGMII. Add some new MAC dtsi
-fragments, and mark the QMAN ports as 10G.
+kvaser_usb_leaf_rx_error_update_can_state() sets error state according
+to error counters when the hardware does not indicate a specific state
+directly.
 
-Fixes: da414bb923d9 ("powerpc/mpc85xx: Add FSL QorIQ DPAA FMan support to the SoC device tree(s)")
-Signed-off-by: Sean Anderson <sean.anderson@seco.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+However, this is currently gated behind a check for
+M16C_STATE_BUS_ERROR which does not always seem to be set when error
+counters are increasing, and may not be set when error counters are
+decreasing.
+
+This causes the CAN_STATE_ERROR_WARNING state to not be set in some
+cases even when appropriate.
+
+Change the code to set error state from counters even without
+M16C_STATE_BUS_ERROR.
+
+The Error-Passive case seems superfluous as it is already set via
+M16C_STATE_BUS_PASSIVE flag above, but it is kept for now.
+
+Tested with 0bfd:0124 Kvaser Mini PCI Express 2xHS FW 4.18.778.
+
+Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
+Tested-by: Jimmy Assarsson <extja@kvaser.com>
+Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://lore.kernel.org/all/20221010185237.319219-6-extja@kvaser.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi     | 44 +++++++++++++++++++
- .../boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi     | 44 +++++++++++++++++++
- arch/powerpc/boot/dts/fsl/t2081si-post.dtsi   |  4 +-
- 3 files changed, 90 insertions(+), 2 deletions(-)
- create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
- create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
+ .../net/can/usb/kvaser_usb/kvaser_usb_leaf.c  | 20 ++++++++-----------
+ 1 file changed, 8 insertions(+), 12 deletions(-)
 
-diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
-new file mode 100644
-index 000000000000..437dab3fc017
---- /dev/null
-+++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
-@@ -0,0 +1,44 @@
-+// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
-+/*
-+ * QorIQ FMan v3 10g port #2 device tree stub [ controller @ offset 0x400000 ]
-+ *
-+ * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
-+ * Copyright 2012 - 2015 Freescale Semiconductor Inc.
-+ */
-+
-+fman@400000 {
-+	fman0_rx_0x08: port@88000 {
-+		cell-index = <0x8>;
-+		compatible = "fsl,fman-v3-port-rx";
-+		reg = <0x88000 0x1000>;
-+		fsl,fman-10g-port;
-+	};
-+
-+	fman0_tx_0x28: port@a8000 {
-+		cell-index = <0x28>;
-+		compatible = "fsl,fman-v3-port-tx";
-+		reg = <0xa8000 0x1000>;
-+		fsl,fman-10g-port;
-+	};
-+
-+	ethernet@e0000 {
-+		cell-index = <0>;
-+		compatible = "fsl,fman-memac";
-+		reg = <0xe0000 0x1000>;
-+		fsl,fman-ports = <&fman0_rx_0x08 &fman0_tx_0x28>;
-+		ptp-timer = <&ptp_timer0>;
-+		pcsphy-handle = <&pcsphy0>;
-+	};
-+
-+	mdio@e1000 {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
-+		reg = <0xe1000 0x1000>;
-+		fsl,erratum-a011043; /* must ignore read errors */
-+
-+		pcsphy0: ethernet-phy@0 {
-+			reg = <0x0>;
-+		};
-+	};
-+};
-diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
-new file mode 100644
-index 000000000000..ad116b17850a
---- /dev/null
-+++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
-@@ -0,0 +1,44 @@
-+// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
-+/*
-+ * QorIQ FMan v3 10g port #3 device tree stub [ controller @ offset 0x400000 ]
-+ *
-+ * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
-+ * Copyright 2012 - 2015 Freescale Semiconductor Inc.
-+ */
-+
-+fman@400000 {
-+	fman0_rx_0x09: port@89000 {
-+		cell-index = <0x9>;
-+		compatible = "fsl,fman-v3-port-rx";
-+		reg = <0x89000 0x1000>;
-+		fsl,fman-10g-port;
-+	};
-+
-+	fman0_tx_0x29: port@a9000 {
-+		cell-index = <0x29>;
-+		compatible = "fsl,fman-v3-port-tx";
-+		reg = <0xa9000 0x1000>;
-+		fsl,fman-10g-port;
-+	};
-+
-+	ethernet@e2000 {
-+		cell-index = <1>;
-+		compatible = "fsl,fman-memac";
-+		reg = <0xe2000 0x1000>;
-+		fsl,fman-ports = <&fman0_rx_0x09 &fman0_tx_0x29>;
-+		ptp-timer = <&ptp_timer0>;
-+		pcsphy-handle = <&pcsphy1>;
-+	};
-+
-+	mdio@e3000 {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
-+		reg = <0xe3000 0x1000>;
-+		fsl,erratum-a011043; /* must ignore read errors */
-+
-+		pcsphy1: ethernet-phy@0 {
-+			reg = <0x0>;
-+		};
-+	};
-+};
-diff --git a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
-index ecbb447920bc..74e17e134387 100644
---- a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
-+++ b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
-@@ -609,8 +609,8 @@ usb1: usb@211000 {
- /include/ "qoriq-bman1.dtsi"
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+index 5d96ab85d04c..a6a26085bc15 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+@@ -961,20 +961,16 @@ kvaser_usb_leaf_rx_error_update_can_state(struct kvaser_usb_net_priv *priv,
+ 		new_state = CAN_STATE_BUS_OFF;
+ 	} else if (es->status & M16C_STATE_BUS_PASSIVE) {
+ 		new_state = CAN_STATE_ERROR_PASSIVE;
+-	} else if (es->status & M16C_STATE_BUS_ERROR) {
++	} else if ((es->status & M16C_STATE_BUS_ERROR) &&
++		   cur_state >= CAN_STATE_BUS_OFF) {
+ 		/* Guard against spurious error events after a busoff */
+-		if (cur_state < CAN_STATE_BUS_OFF) {
+-			if (es->txerr >= 128 || es->rxerr >= 128)
+-				new_state = CAN_STATE_ERROR_PASSIVE;
+-			else if (es->txerr >= 96 || es->rxerr >= 96)
+-				new_state = CAN_STATE_ERROR_WARNING;
+-			else if (cur_state > CAN_STATE_ERROR_ACTIVE)
+-				new_state = CAN_STATE_ERROR_ACTIVE;
+-		}
+-	}
+-
+-	if (!es->status)
++	} else if (es->txerr >= 128 || es->rxerr >= 128) {
++		new_state = CAN_STATE_ERROR_PASSIVE;
++	} else if (es->txerr >= 96 || es->rxerr >= 96) {
++		new_state = CAN_STATE_ERROR_WARNING;
++	} else {
+ 		new_state = CAN_STATE_ERROR_ACTIVE;
++	}
  
- /include/ "qoriq-fman3-0.dtsi"
--/include/ "qoriq-fman3-0-1g-0.dtsi"
--/include/ "qoriq-fman3-0-1g-1.dtsi"
-+/include/ "qoriq-fman3-0-10g-2.dtsi"
-+/include/ "qoriq-fman3-0-10g-3.dtsi"
- /include/ "qoriq-fman3-0-1g-2.dtsi"
- /include/ "qoriq-fman3-0-1g-3.dtsi"
- /include/ "qoriq-fman3-0-1g-4.dtsi"
+ 	if (new_state != cur_state) {
+ 		tx_state = (es->txerr >= es->rxerr) ? new_state : 0;
 -- 
 2.35.1
 
