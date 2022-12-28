@@ -1,29 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A501C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:20:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55F83C433D2;
-	Wed, 28 Dec 2022 16:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8329B1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:20:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6FABC433F0;
+	Wed, 28 Dec 2022 16:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244416;
-	bh=yBmzoLX72TzDgaAANwHW4cImJhUIL+CQVc+MpFpu1MA=;
+	s=korg; t=1672244419;
+	bh=kRTk6nDVGgy/CNk4BdTNcr95TadAdi4NeD1/gJZGOy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=auOWqBYEgLWLFCZZPlz1qrMIy1wVU8uUq/12CDf8sZfSUk0C4PiwzV9S/2iHb0WS7
-	 o3jpfwXlbTXdAKuugFXrmDhAl0GCGETyVbXnEFHZJL4DLg4AQU0df73X9X6WP7z00y
-	 tNEU9MxxOft4esFT4z/wzyt0Cgb5q1bb9X+meMrI=
+	b=ZbAmCWjasU89DYy2QKREeS4IVVzUaPUsr3e91J0kWvbY1BxmDIwvG9hmAT/3ccezJ
+	 Bd6u9u+waigarpVJ8PNsl07fxyFVOgajaVzDG+Jx+08yo5X8jYZu98eyqa3asgCB6o
+	 2BeVbOjxfwRyXeCnKlbGNMmjPg9Uh25XRNoZ9hik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	linux-rdma@vger.kernel.org,
+	Jeff Dike <jdike@addtoit.com>,
+	Richard Weinberger <richard@nod.at>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	linux-um@lists.infradead.org,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0706/1073] usb: core: hcd: Fix return value check in usb_hcd_setup_local_mem()
-Date: Wed, 28 Dec 2022 15:38:14 +0100
-Message-Id: <20221228144347.208771015@linuxfoundation.org>
+Subject: [PATCH 6.1 0666/1146] RDMA: Disable IB HW for UML
+Date: Wed, 28 Dec 2022 15:36:45 +0100
+Message-Id: <20221228144348.241855464@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,41 +44,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 3c347cdafa3db43337870006e5c2d7b78a8dae20 ]
+[ Upstream commit 323a74fc20f53c0d0e13a16aee703a30d9751235 ]
 
-If dmam_alloc_attrs() fails, it returns NULL pointer and never
-return ERR_PTR(), so repleace IS_ERR() with IS_ERR_OR_NULL()
-and if it's NULL, returns -ENOMEM.
+Disable all of drivers/infiniband/hw/ and rdmavt for UML builds until
+someone needs it and provides patches to support it.
 
-Fixes: 9ba26f5cecd8 ("ARM: sa1100/assabet: move dmabounce hack to ohci driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221125064120.2842452-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This prevents build errors in hw/qib/qib_wc_x86_64.c.
+
+Fixes: 68f5d3f3b654 ("um: add PCI over virtio emulation driver")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Cc: Christoph Hellwig <hch@infradead.org>
+Cc: linux-rdma@vger.kernel.org
+Cc: Jeff Dike <jdike@addtoit.com>
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: linux-um@lists.infradead.org
+Link: https://lore.kernel.org/r/20221202211940.29111-1-rdunlap@infradead.org
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/hcd.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/infiniband/Kconfig | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/usb/core/hcd.c b/drivers/usb/core/hcd.c
-index 94b305bbd621..4bd9d799f1b9 100644
---- a/drivers/usb/core/hcd.c
-+++ b/drivers/usb/core/hcd.c
-@@ -3140,8 +3140,12 @@ int usb_hcd_setup_local_mem(struct usb_hcd *hcd, phys_addr_t phys_addr,
- 					     GFP_KERNEL,
- 					     DMA_ATTR_WRITE_COMBINE);
+diff --git a/drivers/infiniband/Kconfig b/drivers/infiniband/Kconfig
+index aa36ac618e72..17a227415277 100644
+--- a/drivers/infiniband/Kconfig
++++ b/drivers/infiniband/Kconfig
+@@ -78,6 +78,7 @@ config INFINIBAND_VIRT_DMA
+ 	def_bool !HIGHMEM
  
--	if (IS_ERR(local_mem))
-+	if (IS_ERR_OR_NULL(local_mem)) {
-+		if (!local_mem)
-+			return -ENOMEM;
-+
- 		return PTR_ERR(local_mem);
-+	}
- 
- 	/*
- 	 * Here we pass a dma_addr_t but the arg type is a phys_addr_t.
+ if INFINIBAND_USER_ACCESS || !INFINIBAND_USER_ACCESS
++if !UML
+ source "drivers/infiniband/hw/bnxt_re/Kconfig"
+ source "drivers/infiniband/hw/cxgb4/Kconfig"
+ source "drivers/infiniband/hw/efa/Kconfig"
+@@ -94,6 +95,7 @@ source "drivers/infiniband/hw/qib/Kconfig"
+ source "drivers/infiniband/hw/usnic/Kconfig"
+ source "drivers/infiniband/hw/vmw_pvrdma/Kconfig"
+ source "drivers/infiniband/sw/rdmavt/Kconfig"
++endif # !UML
+ source "drivers/infiniband/sw/rxe/Kconfig"
+ source "drivers/infiniband/sw/siw/Kconfig"
+ endif
 -- 
 2.35.1
 
