@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB141C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7C6DC433F0;
-	Wed, 28 Dec 2022 16:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C411C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54EEDC433EF;
+	Wed, 28 Dec 2022 16:29:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244949;
-	bh=mdITFTjbfwPjSDJMbCZ1ox/jw4uwrTLdaTJS8sxrtvg=;
+	s=korg; t=1672244951;
+	bh=fwbuUC4jbzYu3qFbzyYWlAeu9kbXPPFteuaTahy9Jjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NK9ky7SsWs4WvoTUUylK6xXUEChAbLcL3ceornjogyR2BSBcfcyEfhNSZSyMLbrz6
-	 mqzqMljbAw2e6QHjWZCWOv8QmxkDnHJMesnnkD8VHUKCQ4xHHuScfKk52PIjDgihcB
-	 WLkLDWNNV0r6nbZO2po/OHcl9ovZ0PqMPuDvTIII=
+	b=JrdtX8fBIprKxhxH9YYaqDEKhhU9eUKlBbgAs852Io6C7zz33RNJ8gz104gK05wWu
+	 MBMvIE4mMjV6HGAAthkW+uDPsmNRiI/9sAfnoSo5Sk24DZd4Ebeo8aHWTsXKwkMbYu
+	 XKUAaygEqL+xgpFGNpN8J3YuRS9FjY0xxKP2OsH8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Li Huafei <lihuafei1@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0767/1146] HSI: omap_ssi_core: fix possible memory leak in ssi_probe()
-Date: Wed, 28 Dec 2022 15:38:26 +0100
-Message-Id: <20221228144350.983451262@linuxfoundation.org>
+Subject: [PATCH 6.0 0805/1073] kprobes: Fix check for probe enabled in kill_kprobe()
+Date: Wed, 28 Dec 2022 15:39:53 +0100
+Message-Id: <20221228144349.874655003@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Li Huafei <lihuafei1@huawei.com>
 
-[ Upstream commit 1aff514e1d2bd47854dbbdf867970b9d463d4c57 ]
+[ Upstream commit 0c76ef3f26d5ef2ac2c21b47e7620cff35809fbb ]
 
-If ssi_add_controller() returns error, it should call hsi_put_controller()
-to give up the reference that was set in hsi_alloc_controller(), so that
-it can call hsi_controller_release() to free controller and ports that
-allocated in hsi_alloc_controller().
+In kill_kprobe(), the check whether disarm_kprobe_ftrace() needs to be
+called always fails. This is because before that we set the
+KPROBE_FLAG_GONE flag for kprobe so that "!kprobe_disabled(p)" is always
+false.
 
-Fixes: b209e047bc74 ("HSI: Introduce OMAP SSI driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+The disarm_kprobe_ftrace() call introduced by commit:
+
+  0cb2f1372baa ("kprobes: Fix NULL pointer dereference at kprobe_ftrace_handler")
+
+to fix the NULL pointer reference problem. When the probe is enabled, if
+we do not disarm it, this problem still exists.
+
+Fix it by putting the probe enabled check before setting the
+KPROBE_FLAG_GONE flag.
+
+Link: https://lore.kernel.org/all/20221126114316.201857-1-lihuafei1@huawei.com/
+
+Fixes: 3031313eb3d54 ("kprobes: Fix to check probe enabled before disarm_kprobe_ftrace()")
+Signed-off-by: Li Huafei <lihuafei1@huawei.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hsi/controllers/omap_ssi_core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/kprobes.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/hsi/controllers/omap_ssi_core.c b/drivers/hsi/controllers/omap_ssi_core.c
-index b23a576ed88a..052cf3e92dd6 100644
---- a/drivers/hsi/controllers/omap_ssi_core.c
-+++ b/drivers/hsi/controllers/omap_ssi_core.c
-@@ -502,8 +502,10 @@ static int ssi_probe(struct platform_device *pd)
- 	platform_set_drvdata(pd, ssi);
+diff --git a/kernel/kprobes.c b/kernel/kprobes.c
+index 6d2a8623ec7b..771fcce54fac 100644
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -2360,6 +2360,14 @@ static void kill_kprobe(struct kprobe *p)
  
- 	err = ssi_add_controller(ssi, pd);
--	if (err < 0)
-+	if (err < 0) {
-+		hsi_put_controller(ssi);
- 		goto out1;
-+	}
+ 	lockdep_assert_held(&kprobe_mutex);
  
- 	pm_runtime_enable(&pd->dev);
++	/*
++	 * The module is going away. We should disarm the kprobe which
++	 * is using ftrace, because ftrace framework is still available at
++	 * 'MODULE_STATE_GOING' notification.
++	 */
++	if (kprobe_ftrace(p) && !kprobe_disabled(p) && !kprobes_all_disarmed)
++		disarm_kprobe_ftrace(p);
++
+ 	p->flags |= KPROBE_FLAG_GONE;
+ 	if (kprobe_aggrprobe(p)) {
+ 		/*
+@@ -2376,14 +2384,6 @@ static void kill_kprobe(struct kprobe *p)
+ 	 * the original probed function (which will be freed soon) any more.
+ 	 */
+ 	arch_remove_kprobe(p);
+-
+-	/*
+-	 * The module is going away. We should disarm the kprobe which
+-	 * is using ftrace, because ftrace framework is still available at
+-	 * 'MODULE_STATE_GOING' notification.
+-	 */
+-	if (kprobe_ftrace(p) && !kprobe_disabled(p) && !kprobes_all_disarmed)
+-		disarm_kprobe_ftrace(p);
+ }
  
+ /* Disable one kprobe */
 -- 
 2.35.1
 
