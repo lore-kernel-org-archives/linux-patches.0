@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0512C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:44:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81012C433EF;
-	Wed, 28 Dec 2022 15:44:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEF51863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:44:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22606C433D2;
+	Wed, 28 Dec 2022 15:44:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242253;
-	bh=JehI8lHjyA+rDPC7y/veHkX6Zg9KtWooSzccuAqeEWY=;
+	s=korg; t=1672242256;
+	bh=z+J8YP8WsJR+M9L9J0Ytxfge1lu7xGK6J4aoRP3bPtA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nobqesvpgi3Hgv97rZ9uYXyuV0al5x5AT+8dM2wZXrJMHWqp38WkccwDeRBhq4WM6
-	 ICDhp59z5sn/UNyZvA/yLlNB5G56SIW7cL8MrQlH58G6BX2xUeladtpV24PqSXJbzg
-	 sJ1+iHbZlRaq/pKpqWmoTTpmL5WJTgGwn2koaZJI=
+	b=Jm3J4v5Xd/THhNRxyNXN5t9qTLlnpqnkFFzKVWWrjSmuFSbYefkiJffumX6AriH3w
+	 Bbpukp51V1xBBCgkUeXfbJpqXxIMVc+rr+7Newe9NiF6KuNXnBNjKiLWNjQ4J6Ex/I
+	 3h8/TuDwyHtEbCdWOwiSE9+iv8ytdjP14mRhFqKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0385/1073] clk: imx8mn: fix imx8mn_enet_phy_sels clocks list
-Date: Wed, 28 Dec 2022 15:32:53 +0100
-Message-Id: <20221228144338.466112485@linuxfoundation.org>
+Subject: [PATCH 6.1 0347/1146] drm/msm/a6xx: Fix speed-bin detection vs probe-defer
+Date: Wed, 28 Dec 2022 15:31:26 +0100
+Message-Id: <20221228144339.586688187@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,54 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 2626cf67f20b28446dfc3a5b9493dd535cdb747b ]
+[ Upstream commit f6d1918794ef92b4e26b80c3d40365347b76b1fd ]
 
-According to the "Clock Root" table of the reference manual (document
-IMX8MNRM Rev 2, 07/2022):
+If we get an error (other than -ENOENT) we need to propagate that up the
+stack.  Otherwise if the nvmem driver hasn't probed yet, we'll end up
+end up claiming that we support all the OPPs which is not likely to be
+true (and on some generations impossible to be true, ie. if there are
+conflicting OPPs).
 
-     Clock Root         offset     Source Select (CCM_TARGET_ROOTn[MUX])
-        ...              ...                    ...
- ENET_PHY_REF_CLK_ROOT  0xAA80            000 - 24M_REF_CLK
-                                          001 - SYSTEM_PLL2_DIV20
-                                          010 - SYSTEM_PLL2_DIV8
-                                          011 - SYSTEM_PLL2_DIV5
-                                          100 - SYSTEM_PLL2_DIV2
-                                          101 - AUDIO_PLL1_CLK
-                                          110 - VIDEO_PLL_CLK
-                                          111 - AUDIO_PLL2_CLK
-        ...              ...                    ...
+v2: Update commit msg, gc unused label, etc
+v3: Add previously missing \n's
 
-while the imx8mn_enet_phy_sels list didn't contained audio_pll1_out for
-source select bits 101b.
-
-Fixes: 96d6392b54dbb ("clk: imx: Add support for i.MX8MN clock driver")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Acked-by: Marco Felsch <m.felsch@pengutronix.de>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20221117113637.1978703-6-dario.binacchi@amarulasolutions.com
+Fixes: fe7952c629da ("drm/msm: Add speed-bin support to a618 gpu")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/511690/
+Link: https://lore.kernel.org/r/20221115154637.1613968-1-robdclark@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mn.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx8mn.c b/drivers/clk/imx/clk-imx8mn.c
-index 37128c35198d..2afea905f7f3 100644
---- a/drivers/clk/imx/clk-imx8mn.c
-+++ b/drivers/clk/imx/clk-imx8mn.c
-@@ -140,8 +140,8 @@ static const char * const imx8mn_enet_timer_sels[] = {"osc_24m", "sys_pll2_100m"
- 						      "clk_ext4", "video_pll_out", };
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index fdc578016e0b..e846e629c00d 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1906,7 +1906,7 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_rev rev, u32 fuse)
  
- static const char * const imx8mn_enet_phy_sels[] = {"osc_24m", "sys_pll2_50m", "sys_pll2_125m",
--						    "sys_pll2_200m", "sys_pll2_500m", "video_pll_out",
--						    "audio_pll2_out", };
-+						    "sys_pll2_200m", "sys_pll2_500m", "audio_pll1_out",
-+						    "video_pll_out", "audio_pll2_out", };
+ 	if (val == UINT_MAX) {
+ 		DRM_DEV_ERROR(dev,
+-			"missing support for speed-bin: %u. Some OPPs may not be supported by hardware",
++			"missing support for speed-bin: %u. Some OPPs may not be supported by hardware\n",
+ 			fuse);
+ 		return UINT_MAX;
+ 	}
+@@ -1916,7 +1916,7 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_rev rev, u32 fuse)
  
- static const char * const imx8mn_nand_sels[] = {"osc_24m", "sys_pll2_500m", "audio_pll1_out",
- 						"sys_pll1_400m", "audio_pll2_out", "sys_pll3_out",
+ static int a6xx_set_supported_hw(struct device *dev, struct adreno_rev rev)
+ {
+-	u32 supp_hw = UINT_MAX;
++	u32 supp_hw;
+ 	u32 speedbin;
+ 	int ret;
+ 
+@@ -1928,15 +1928,13 @@ static int a6xx_set_supported_hw(struct device *dev, struct adreno_rev rev)
+ 	if (ret == -ENOENT) {
+ 		return 0;
+ 	} else if (ret) {
+-		DRM_DEV_ERROR(dev,
+-			      "failed to read speed-bin (%d). Some OPPs may not be supported by hardware",
+-			      ret);
+-		goto done;
++		dev_err_probe(dev, ret,
++			      "failed to read speed-bin. Some OPPs may not be supported by hardware\n");
++		return ret;
+ 	}
+ 
+ 	supp_hw = fuse_to_supp_hw(dev, rev, speedbin);
+ 
+-done:
+ 	ret = devm_pm_opp_set_supported_hw(dev, &supp_hw, 1);
+ 	if (ret)
+ 		return ret;
 -- 
 2.35.1
 
