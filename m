@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0B220E7
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:56:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35568C433F0;
-	Wed, 28 Dec 2022 16:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F42C20E7
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:56:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4163C433D2;
+	Wed, 28 Dec 2022 16:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246579;
-	bh=00NmHKHRLwzQLMEdhQ7IO6s1VJuatijNqi22o4B2TiE=;
+	s=korg; t=1672246582;
+	bh=viAwfO3RI0U6SfdLXJO9hpCyP45/2q2Rs9X/DWs8k6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=of38uMQYJtYvrfjOUZC5ubexpD2aGL7Udw851XJnjpq2lSklzd8uJqrsvmz6xpngd
-	 FMEyGeOzALYpufMg8hJjHWbYINIgIPXYMgBFvLLISvKFY5GWbpVnFb78lctTImdbou
-	 SrbqkVacdHmM6bZsPmmfhacuAoaRmZzHKI0LMhno=
+	b=RPRZZkydY2NLoLaanMoeNNkSCU9xMWMR9wK1C3+ZTJOWygFwOs42zJC+YUop/BiLs
+	 tFX7LF6Q/SU6MAAGDIZVz9vxyIqvnq+QzkoN9VViRR7qA1Y0GV4xzn77RXtDakpq0o
+	 /TtwbRNw6GGHRHQr6OUNH3VQ+quebpaAKIF5X2mo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	linux-afs@lists.infradead.org,
+	Mark Rutland <mark.rutland@arm.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1088/1146] afs: Fix lost servers_outstanding count
-Date: Wed, 28 Dec 2022 15:43:47 +0100
-Message-Id: <20221228144359.742298802@linuxfoundation.org>
+Subject: [PATCH 6.1 1089/1146] cfi: Fix CFI failure with KASAN
+Date: Wed, 28 Dec 2022 15:43:48 +0100
+Message-Id: <20221228144359.766288307@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -36,57 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Sami Tolvanen <samitolvanen@google.com>
 
-[ Upstream commit 36f82c93ee0bd88f1c95a52537906b8178b537f1 ]
+[ Upstream commit cf8016408d880afe9c5dc495af40dc2932874e77 ]
 
-The afs_fs_probe_dispatcher() work function is passed a count on
-net->servers_outstanding when it is scheduled (which may come via its
-timer).  This is passed back to the work_item, passed to the timer or
-dropped at the end of the dispatcher function.
+When CFI_CLANG and KASAN are both enabled, LLVM doesn't generate a
+CFI type hash for asan.module_ctor functions in translation units
+where CFI is disabled, which leads to a CFI failure during boot when
+do_ctors calls the affected constructors:
 
-But, at the top of the dispatcher function, there are two checks which
-skip the rest of the function: if the network namespace is being destroyed
-or if there are no fileservers to probe.  These two return paths, however,
-do not drop the count passed to the dispatcher, and so, sometimes, the
-destruction of a network namespace, such as induced by rmmod of the kafs
-module, may get stuck in afs_purge_servers(), waiting for
-net->servers_outstanding to become zero.
+  CFI failure at do_basic_setup+0x64/0x90 (target:
+  asan.module_ctor+0x0/0x28; expected type: 0xa540670c)
 
-Fix this by adding the missing decrements in afs_fs_probe_dispatcher().
+Specifically, this happens because CFI is disabled for
+kernel/cfi.c. There's no reason to keep CFI disabled here anymore, so
+fix the failure by not filtering out CC_FLAGS_CFI for the file.
 
-Fixes: f6cbb368bcb0 ("afs: Actively poll fileservers to maintain NAT or firewall openings")
-Reported-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Tested-by: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Link: https://lore.kernel.org/r/167164544917.2072364.3759519569649459359.stgit@warthog.procyon.org.uk/
+Note that https://reviews.llvm.org/rG3b14862f0a96 fixed the issue
+where LLVM didn't emit CFI type hashes for any sanitizer constructors,
+but now type hashes are emitted correctly for TUs that use CFI.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1742
+Fixes: 89245600941e ("cfi: Switch to -fsanitize=kcfi")
+Reported-by: Mark Rutland <mark.rutland@arm.com>
+Signed-off-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221222225747.3538676-1-samitolvanen@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/fs_probe.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/Makefile | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/fs/afs/fs_probe.c b/fs/afs/fs_probe.c
-index 3ac5fcf98d0d..daaf3810cc92 100644
---- a/fs/afs/fs_probe.c
-+++ b/fs/afs/fs_probe.c
-@@ -366,12 +366,15 @@ void afs_fs_probe_dispatcher(struct work_struct *work)
- 	unsigned long nowj, timer_at, poll_at;
- 	bool first_pass = true, set_timer = false;
+diff --git a/kernel/Makefile b/kernel/Makefile
+index d754e0be1176..ebc692242b68 100644
+--- a/kernel/Makefile
++++ b/kernel/Makefile
+@@ -41,9 +41,6 @@ UBSAN_SANITIZE_kcov.o := n
+ KMSAN_SANITIZE_kcov.o := n
+ CFLAGS_kcov.o := $(call cc-option, -fno-conserve-stack) -fno-stack-protector
  
--	if (!net->live)
-+	if (!net->live) {
-+		afs_dec_servers_outstanding(net);
- 		return;
-+	}
- 
- 	_enter("");
- 
- 	if (list_empty(&net->fs_probe_fast) && list_empty(&net->fs_probe_slow)) {
-+		afs_dec_servers_outstanding(net);
- 		_leave(" [none]");
- 		return;
- 	}
+-# Don't instrument error handlers
+-CFLAGS_REMOVE_cfi.o := $(CC_FLAGS_CFI)
+-
+ obj-y += sched/
+ obj-y += locking/
+ obj-y += power/
 -- 
 2.35.1
 
