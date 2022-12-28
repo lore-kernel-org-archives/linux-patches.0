@@ -1,30 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81D21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:14:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 710E7C433EF;
-	Wed, 28 Dec 2022 15:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9729D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:14:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58A3C433EF;
+	Wed, 28 Dec 2022 15:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240475;
-	bh=6rVLKENdfv0mxhhkx6J8QNlfvoBiuXKXQCv4wAUGhDQ=;
+	s=korg; t=1672240478;
+	bh=do6E1Hvc2Ykge0seq7E8fcpVmZby72dSdcjqsOIhh/k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=014jgL2vpLtPNzRzzL1NaIegXLSqDxCi2Hn0aLWsrTvHouL5aejIJpTdwYwtJP1Vk
-	 cQ1r0r2jaYlLK9gUBtAyylKij5M/Mn6W7/0n9FpnVChEJ4+TVkVTVPd+rHfh0hoGDv
-	 PJRC74gbdvuP7tm1lG1Wt7ynCcUEsi4f8ilt5N2Q=
+	b=OCbg4I0eQHKgIl1PP+mbXiREPHMkykTChmCYxkEP7juePNfH7IWq5QQvCnyv258pr
+	 zHVtVaiXslqixE76vVPUFpTsiBSPaDTI9kad9D8svyLlJdOugBmUl/bPAC97+0vzQq
+	 CupUPXMuEGynrg3qaUzEyVtw4yckByBXmK2VYbI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0165/1073] PM: runtime: Do not call __rpm_callback() from rpm_idle()
-Date: Wed, 28 Dec 2022 15:29:13 +0100
-Message-Id: <20221228144332.497679138@linuxfoundation.org>
+Subject: [PATCH 6.1 0130/1146] ocfs2: fix memory leak in ocfs2_stack_glue_init()
+Date: Wed, 28 Dec 2022 15:27:49 +0100
+Message-Id: <20221228144333.683165494@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,52 +42,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit bc80c2e438dcbfcf748452ec0f7ad5b79ff3ad88 ]
+[ Upstream commit 13b6269dd022aaa69ca8d1df374ab327504121cf ]
 
-Calling __rpm_callback() from rpm_idle() after adding device links
-support to the former is a clear mistake.
+ocfs2_table_header should be free in ocfs2_stack_glue_init() if
+ocfs2_sysfs_init() failed, otherwise kmemleak will report memleak.
 
-Not only it causes rpm_idle() to carry out unnecessary actions, but it
-is also against the assumption regarding the stability of PM-runtime
-status across __rpm_callback() invocations, because rpm_suspend() and
-rpm_resume() may run in parallel with __rpm_callback() when it is called
-by rpm_idle() and the device's PM-runtime status can be updated by any
-of them.
+BUG: memory leak
+unreferenced object 0xffff88810eeb5800 (size 128):
+  comm "modprobe", pid 4507, jiffies 4296182506 (age 55.888s)
+  hex dump (first 32 bytes):
+    c0 40 14 a0 ff ff ff ff 00 00 00 00 01 00 00 00  .@..............
+    01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<000000001e59e1cd>] __register_sysctl_table+0xca/0xef0
+    [<00000000c04f70f7>] 0xffffffffa0050037
+    [<000000001bd12912>] do_one_initcall+0xdb/0x480
+    [<0000000064f766c9>] do_init_module+0x1cf/0x680
+    [<000000002ba52db0>] load_module+0x6441/0x6f20
+    [<000000009772580d>] __do_sys_finit_module+0x12f/0x1c0
+    [<00000000380c1f22>] do_syscall_64+0x3f/0x90
+    [<000000004cf473bc>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fixes: 21d5c57b3726 ("PM / runtime: Use device links")
-Link: https://lore.kernel.org/linux-pm/36aed941-a73e-d937-2721-4f0decd61ce0@quicinc.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Link: https://lkml.kernel.org/r/41651ca1-432a-db34-eb97-d35744559de1@linux.alibaba.com
+Fixes: 3878f110f71a ("ocfs2: Move the hb_ctl_path sysctl into the stack glue.")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/runtime.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ fs/ocfs2/stackglue.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index 997be3ac20a7..d36fb07190bf 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -484,7 +484,17 @@ static int rpm_idle(struct device *dev, int rpmflags)
+diff --git a/fs/ocfs2/stackglue.c b/fs/ocfs2/stackglue.c
+index 317126261523..a8d5ca98fa57 100644
+--- a/fs/ocfs2/stackglue.c
++++ b/fs/ocfs2/stackglue.c
+@@ -669,6 +669,8 @@ static struct ctl_table_header *ocfs2_table_header;
  
- 	dev->power.idle_notification = true;
- 
--	retval = __rpm_callback(callback, dev);
-+	if (dev->power.irq_safe)
-+		spin_unlock(&dev->power.lock);
-+	else
-+		spin_unlock_irq(&dev->power.lock);
+ static int __init ocfs2_stack_glue_init(void)
+ {
++	int ret;
 +
-+	retval = callback(dev);
-+
-+	if (dev->power.irq_safe)
-+		spin_lock(&dev->power.lock);
-+	else
-+		spin_lock_irq(&dev->power.lock);
+ 	strcpy(cluster_stack_name, OCFS2_STACK_PLUGIN_O2CB);
  
- 	dev->power.idle_notification = false;
- 	wake_up_all(&dev->power.wait_queue);
+ 	ocfs2_table_header = register_sysctl("fs/ocfs2/nm", ocfs2_nm_table);
+@@ -678,7 +680,11 @@ static int __init ocfs2_stack_glue_init(void)
+ 		return -ENOMEM; /* or something. */
+ 	}
+ 
+-	return ocfs2_sysfs_init();
++	ret = ocfs2_sysfs_init();
++	if (ret)
++		unregister_sysctl_table(ocfs2_table_header);
++
++	return ret;
+ }
+ 
+ static void __exit ocfs2_stack_glue_exit(void)
 -- 
 2.35.1
 
