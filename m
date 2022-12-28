@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FA71863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80F17C433EF;
-	Wed, 28 Dec 2022 15:13:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A302E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28FE4C433D2;
+	Wed, 28 Dec 2022 15:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240398;
-	bh=uASIUEgxAFYrKr97B58yUNGm0Q7XyTbyU3pgxmTCmA0=;
+	s=korg; t=1672240401;
+	bh=SBV3fhOxfYVj85du5pfVY+VQvTdVqOoix7ayqI5XTCQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0xP8fWLN8Gu2p5UhsYYln6p/OqXpyDw0Tm5/V6Kc9AeAO3mXYCbzlaGG6uJsrKUgV
-	 CRCgCC2gYw7M4Fbw7G3I6N3JqJK5hNf7ldhyqnkMzkxXG7sWYrRPj1GWCM15yt+TNg
-	 vZEzbKOL7jNie/tFLVGC9ZT6iN7z+yaKKW0ycZ3I=
+	b=n/zQ7qsXJDjCCJVkNXUfaOxrGiBlOIdRu4hRSG3wOUZQmppECUO7/r4B1zB8kiSp4
+	 3FvQCi9T4HoptTd2guPrrfXTgoPPcLB11TfUPtxIHhJymlqhb+Pv/LOb8s/XKJdyI0
+	 FFDKXBga8nropGaQ5W0A90DZhExs8l9Ws70iYYkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Firo Yang <firo.yang@suse.com>,
+	Phil Auld <pauld@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Valentin Schneider <vschneid@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 345/731] sctp: sysctl: make extra pointers netns aware
-Date: Wed, 28 Dec 2022 15:37:32 +0100
-Message-Id: <20221228144306.565979398@linuxfoundation.org>
+Subject: [PATCH 6.0 0156/1073] cpu/hotplug: Make target_store() a nop when target == state
+Date: Wed, 28 Dec 2022 15:29:04 +0100
+Message-Id: <20221228144332.258162381@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,164 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Firo Yang <firo.yang@suse.com>
+From: Phil Auld <pauld@redhat.com>
 
-[ Upstream commit da05cecc4939c0410d56c29e252998b192756318 ]
+[ Upstream commit 64ea6e44f85b9b75925ebe1ba0e6e8430cc4e06f ]
 
-Recently, a customer reported that from their container whose
-net namespace is different to the host's init_net, they can't set
-the container's net.sctp.rto_max to any value smaller than
-init_net.sctp.rto_min.
+Writing the current state back in hotplug/target calls cpu_down()
+which will set cpu dying even when it isn't and then nothing will
+ever clear it. A stress test that reads values and writes them back
+for all cpu device files in sysfs will trigger the BUG() in
+select_fallback_rq once all cpus are marked as dying.
 
-For instance,
-Host:
-sudo sysctl net.sctp.rto_min
-net.sctp.rto_min = 1000
+kernel/cpu.c::target_store()
+	...
+        if (st->state < target)
+                ret = cpu_up(dev->id, target);
+        else
+                ret = cpu_down(dev->id, target);
 
-Container:
-echo 100 > /mnt/proc-net/sctp/rto_min
-echo 400 > /mnt/proc-net/sctp/rto_max
-echo: write error: Invalid argument
+cpu_down() -> cpu_set_state()
+	 bool bringup = st->state < target;
+	 ...
+	 if (cpu_dying(cpu) != !bringup)
+		set_cpu_dying(cpu, !bringup);
 
-This is caused by the check made from this'commit 4f3fdf3bc59c
-("sctp: add check rto_min and rto_max in sysctl")'
-When validating the input value, it's always referring the boundary
-value set for the init_net namespace.
+Fix this by letting state==target fall through in the target_store()
+conditional. Also make sure st->target == target in that case.
 
-Having container's rto_max smaller than host's init_net.sctp.rto_min
-does make sense. Consider that the rto between two containers on the
-same host is very likely smaller than it for two hosts.
-
-So to fix this problem, as suggested by Marcelo, this patch makes the
-extra pointers of rto_min, rto_max, pf_retrans, and ps_retrans point
-to the corresponding variables from the newly created net namespace while
-the new net namespace is being registered in sctp_sysctl_net_register.
-
-Fixes: 4f3fdf3bc59c ("sctp: add check rto_min and rto_max in sysctl")
-Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Reviewed-by: Jakub Kicinski <kuba@kernel.org>
-Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Signed-off-by: Firo Yang <firo.yang@suse.com>
-Link: https://lore.kernel.org/r/20221209054854.23889-1-firo.yang@suse.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 757c989b9994 ("cpu/hotplug: Make target state writeable")
+Signed-off-by: Phil Auld <pauld@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Valentin Schneider <vschneid@redhat.com>
+Link: https://lore.kernel.org/r/20221117162329.3164999-2-pauld@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/sysctl.c | 73 ++++++++++++++++++++++++++++-------------------
- 1 file changed, 44 insertions(+), 29 deletions(-)
+ kernel/cpu.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/sctp/sysctl.c b/net/sctp/sysctl.c
-index b46a416787ec..43ebf090029d 100644
---- a/net/sctp/sysctl.c
-+++ b/net/sctp/sysctl.c
-@@ -84,17 +84,18 @@ static struct ctl_table sctp_table[] = {
- 	{ /* sentinel */ }
- };
+diff --git a/kernel/cpu.c b/kernel/cpu.c
+index bbad5e375d3b..979de993f853 100644
+--- a/kernel/cpu.c
++++ b/kernel/cpu.c
+@@ -2326,8 +2326,10 @@ static ssize_t target_store(struct device *dev, struct device_attribute *attr,
  
-+/* The following index defines are used in sctp_sysctl_net_register().
-+ * If you add new items to the sctp_net_table, please ensure that
-+ * the index values of these defines hold the same meaning indicated by
-+ * their macro names when they appear in sctp_net_table.
-+ */
-+#define SCTP_RTO_MIN_IDX       0
-+#define SCTP_RTO_MAX_IDX       1
-+#define SCTP_PF_RETRANS_IDX    2
-+#define SCTP_PS_RETRANS_IDX    3
-+
- static struct ctl_table sctp_net_table[] = {
--	{
--		.procname	= "rto_initial",
--		.data		= &init_net.sctp.rto_initial,
--		.maxlen		= sizeof(unsigned int),
--		.mode		= 0644,
--		.proc_handler	= proc_dointvec_minmax,
--		.extra1         = SYSCTL_ONE,
--		.extra2         = &timer_max
--	},
--	{
-+	[SCTP_RTO_MIN_IDX] = {
- 		.procname	= "rto_min",
- 		.data		= &init_net.sctp.rto_min,
- 		.maxlen		= sizeof(unsigned int),
-@@ -103,7 +104,7 @@ static struct ctl_table sctp_net_table[] = {
- 		.extra1         = SYSCTL_ONE,
- 		.extra2         = &init_net.sctp.rto_max
- 	},
--	{
-+	[SCTP_RTO_MAX_IDX] =  {
- 		.procname	= "rto_max",
- 		.data		= &init_net.sctp.rto_max,
- 		.maxlen		= sizeof(unsigned int),
-@@ -112,6 +113,33 @@ static struct ctl_table sctp_net_table[] = {
- 		.extra1         = &init_net.sctp.rto_min,
- 		.extra2         = &timer_max
- 	},
-+	[SCTP_PF_RETRANS_IDX] = {
-+		.procname	= "pf_retrans",
-+		.data		= &init_net.sctp.pf_retrans,
-+		.maxlen		= sizeof(int),
-+		.mode		= 0644,
-+		.proc_handler	= proc_dointvec_minmax,
-+		.extra1		= SYSCTL_ZERO,
-+		.extra2		= &init_net.sctp.ps_retrans,
-+	},
-+	[SCTP_PS_RETRANS_IDX] = {
-+		.procname	= "ps_retrans",
-+		.data		= &init_net.sctp.ps_retrans,
-+		.maxlen		= sizeof(int),
-+		.mode		= 0644,
-+		.proc_handler	= proc_dointvec_minmax,
-+		.extra1		= &init_net.sctp.pf_retrans,
-+		.extra2		= &ps_retrans_max,
-+	},
-+	{
-+		.procname	= "rto_initial",
-+		.data		= &init_net.sctp.rto_initial,
-+		.maxlen		= sizeof(unsigned int),
-+		.mode		= 0644,
-+		.proc_handler	= proc_dointvec_minmax,
-+		.extra1         = SYSCTL_ONE,
-+		.extra2         = &timer_max
-+	},
- 	{
- 		.procname	= "rto_alpha_exp_divisor",
- 		.data		= &init_net.sctp.rto_alpha,
-@@ -207,24 +235,6 @@ static struct ctl_table sctp_net_table[] = {
- 		.extra1		= SYSCTL_ONE,
- 		.extra2		= SYSCTL_INT_MAX,
- 	},
--	{
--		.procname	= "pf_retrans",
--		.data		= &init_net.sctp.pf_retrans,
--		.maxlen		= sizeof(int),
--		.mode		= 0644,
--		.proc_handler	= proc_dointvec_minmax,
--		.extra1		= SYSCTL_ZERO,
--		.extra2		= &init_net.sctp.ps_retrans,
--	},
--	{
--		.procname	= "ps_retrans",
--		.data		= &init_net.sctp.ps_retrans,
--		.maxlen		= sizeof(int),
--		.mode		= 0644,
--		.proc_handler	= proc_dointvec_minmax,
--		.extra1		= &init_net.sctp.pf_retrans,
--		.extra2		= &ps_retrans_max,
--	},
- 	{
- 		.procname	= "sndbuf_policy",
- 		.data		= &init_net.sctp.sndbuf_policy,
-@@ -586,6 +596,11 @@ int sctp_sysctl_net_register(struct net *net)
- 	for (i = 0; table[i].data; i++)
- 		table[i].data += (char *)(&net->sctp) - (char *)&init_net.sctp;
- 
-+	table[SCTP_RTO_MIN_IDX].extra2 = &net->sctp.rto_max;
-+	table[SCTP_RTO_MAX_IDX].extra1 = &net->sctp.rto_min;
-+	table[SCTP_PF_RETRANS_IDX].extra2 = &net->sctp.ps_retrans;
-+	table[SCTP_PS_RETRANS_IDX].extra1 = &net->sctp.pf_retrans;
-+
- 	net->sctp.sysctl_header = register_net_sysctl(net, "net/sctp", table);
- 	if (net->sctp.sysctl_header == NULL) {
- 		kfree(table);
+ 	if (st->state < target)
+ 		ret = cpu_up(dev->id, target);
+-	else
++	else if (st->state > target)
+ 		ret = cpu_down(dev->id, target);
++	else if (WARN_ON(st->target != target))
++		st->target = target;
+ out:
+ 	unlock_device_hotplug();
+ 	return ret ? ret : count;
 -- 
 2.35.1
 
