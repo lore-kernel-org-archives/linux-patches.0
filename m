@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B3C71863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80505C433EF;
-	Wed, 28 Dec 2022 15:12:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78951863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C186C433D2;
+	Wed, 28 Dec 2022 15:12:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240345;
-	bh=OqaVzf/7EKZ52Ml9iN+BmXsglHZGQOXxg3rE3zFSfm0=;
+	s=korg; t=1672240348;
+	bh=NaX9lVHV3ViQPF2J7kvtfOtQ0W+iwzMLAjy6GUNUaII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IS4VMx9Hz5z0oNlyAOy8eISG76e42m3OI+GT10Ab3dEF3222Bj/dU60e8jjlIYC79
-	 UOKVFDWVhV5O7WrOStvjxw3u9uMjplvIi6G489wWUXE+bZ0aUQTTp1XPoAIS6+bKKK
-	 jXoQjZe2JJ6AZQoOA5f1vQo9ECZeCCmv6+A8MYq0=
+	b=vSOL3qCVq8VQCnoqtSc0RQOFtqyRNRL97ptr4WP41RV+VM62YWZgF7igaacsBA7Dx
+	 Ha2u5pVJM3m3f/mlq1ZmlNrgIQEg/RtzYS0dZqdptIxXBsUuvHvWtOYvwoyF911ON5
+	 c/JuQIFFFWKlf8O9UhT+iVUtRrY0NYpFEZUiQOu0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 339/731] net: amd-xgbe: Check only the minimum speed for active/passive cables
-Date: Wed, 28 Dec 2022 15:37:26 +0100
-Message-Id: <20221228144306.394916629@linuxfoundation.org>
+Subject: [PATCH 6.0 0132/1073] perf/x86/intel/uncore: Fix reference count leak in __uncore_imc_init_box()
+Date: Wed, 28 Dec 2022 15:28:40 +0100
+Message-Id: <20221228144331.619380411@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,73 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tom Lendacky <thomas.lendacky@amd.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit f8ab263d4d48e6dab752029bf562f20a2ee630ed ]
+[ Upstream commit 17b8d847b92d815d1638f0de154654081d66b281 ]
 
-There are cables that exist that can support speeds in excess of 10GbE.
-The driver, however, restricts the EEPROM advertised nominal bitrate to
-a specific range, which can prevent usage of cables that can support,
-for example, up to 25GbE.
+pci_get_device() will increase the reference count for the returned
+pci_dev, so tgl_uncore_get_mc_dev() will return a pci_dev with its
+reference count increased. We need to call pci_dev_put() to decrease the
+reference count before exiting from __uncore_imc_init_box(). Add
+pci_dev_put() for both normal and error path.
 
-Rather than checking that an active or passive cable supports a specific
-range, only check for a minimum supported speed.
-
-Fixes: abf0a1c2b26a ("amd-xgbe: Add support for SFP+ modules")
-Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: fdb64822443e ("perf/x86: Add Intel Tiger Lake uncore support")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lore.kernel.org/r/20221118063137.121512-5-wangxiongfeng2@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ arch/x86/events/intel/uncore_snb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-index a9a734454973..97e32c0490f8 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-@@ -237,10 +237,7 @@ enum xgbe_sfp_speed {
- 
- #define XGBE_SFP_BASE_BR			12
- #define XGBE_SFP_BASE_BR_1GBE_MIN		0x0a
--#define XGBE_SFP_BASE_BR_1GBE_MAX		0x0d
- #define XGBE_SFP_BASE_BR_10GBE_MIN		0x64
--#define XGBE_SFP_BASE_BR_10GBE_MAX		0x68
--#define XGBE_MOLEX_SFP_BASE_BR_10GBE_MAX	0x78
- 
- #define XGBE_SFP_BASE_CU_CABLE_LEN		18
- 
-@@ -827,29 +824,22 @@ static void xgbe_phy_sfp_phy_settings(struct xgbe_prv_data *pdata)
- static bool xgbe_phy_sfp_bit_rate(struct xgbe_sfp_eeprom *sfp_eeprom,
- 				  enum xgbe_sfp_speed sfp_speed)
- {
--	u8 *sfp_base, min, max;
-+	u8 *sfp_base, min;
- 
- 	sfp_base = sfp_eeprom->base;
- 
- 	switch (sfp_speed) {
- 	case XGBE_SFP_SPEED_1000:
- 		min = XGBE_SFP_BASE_BR_1GBE_MIN;
--		max = XGBE_SFP_BASE_BR_1GBE_MAX;
- 		break;
- 	case XGBE_SFP_SPEED_10000:
- 		min = XGBE_SFP_BASE_BR_10GBE_MIN;
--		if (memcmp(&sfp_eeprom->base[XGBE_SFP_BASE_VENDOR_NAME],
--			   XGBE_MOLEX_VENDOR, XGBE_SFP_BASE_VENDOR_NAME_LEN) == 0)
--			max = XGBE_MOLEX_SFP_BASE_BR_10GBE_MAX;
--		else
--			max = XGBE_SFP_BASE_BR_10GBE_MAX;
- 		break;
- 	default:
- 		return false;
+diff --git a/arch/x86/events/intel/uncore_snb.c b/arch/x86/events/intel/uncore_snb.c
+index 1ef4f7861e2e..1f4869227efb 100644
+--- a/arch/x86/events/intel/uncore_snb.c
++++ b/arch/x86/events/intel/uncore_snb.c
+@@ -1338,6 +1338,7 @@ static void __uncore_imc_init_box(struct intel_uncore_box *box,
+ 	/* MCHBAR is disabled */
+ 	if (!(mch_bar & BIT(0))) {
+ 		pr_warn("perf uncore: MCHBAR is disabled. Failed to map IMC free-running counters.\n");
++		pci_dev_put(pdev);
+ 		return;
  	}
- 
--	return ((sfp_base[XGBE_SFP_BASE_BR] >= min) &&
--		(sfp_base[XGBE_SFP_BASE_BR] <= max));
-+	return sfp_base[XGBE_SFP_BASE_BR] >= min;
+ 	mch_bar &= ~BIT(0);
+@@ -1352,6 +1353,8 @@ static void __uncore_imc_init_box(struct intel_uncore_box *box,
+ 	box->io_addr = ioremap(addr, type->mmio_map_size);
+ 	if (!box->io_addr)
+ 		pr_warn("perf uncore: Failed to ioremap for %s.\n", type->name);
++
++	pci_dev_put(pdev);
  }
  
- static void xgbe_phy_free_phy_device(struct xgbe_prv_data *pdata)
+ static void tgl_uncore_imc_freerunning_init_box(struct intel_uncore_box *box)
 -- 
 2.35.1
 
