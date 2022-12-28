@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A421C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF592C433D2;
-	Wed, 28 Dec 2022 16:17:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C2B61C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9653DC433D2;
+	Wed, 28 Dec 2022 16:17:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244242;
-	bh=xywG0XWy9xHqG27Lvsj4AS/kh+Wewvozb4pqlK1NiBA=;
+	s=korg; t=1672244245;
+	bh=8eDiZnpoVyGp1Wn/OiEOQMkqTSKufieerMiv1MdhCz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DX2wfK+n3jNSUm2CVq70rU3AkWIXxmVZluS5hHUiggvyZomHMpwkgytxUUFNWRMuf
-	 LBGGkrIJ1dQ9KAUqb8GV5GDk27WveNZMaVOl3Ef+djsfAgZnqu3yK089Rw6SW3DDJg
-	 TZx0YEwQyIEKwzY/y7LeKa2q1qW4lb/YyLALkdzE=
+	b=OHexxYVyLsFsAgkgLf+hIu803biGlFErb3RBXpMya5qmlqKEhAP2WY8mGrczHWMLh
+	 pfkn22Exf3G7JCXTSZDfE16ghKfNVcavQIuvZK5yd8mRvMfiuVsZEMUN4JWksbnFVr
+	 hyGIuWPfrWMDqFD030NzLnbDsSOGFQ3cC9qupT4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Peter <sven@svenpeter.dev>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0674/1073] usb: typec: Check for ops->exit instead of ops->enter in altmode_exit
-Date: Wed, 28 Dec 2022 15:37:42 +0100
-Message-Id: <20221228144346.346345619@linuxfoundation.org>
+Subject: [PATCH 6.1 0635/1146] crypto: x86/aegis128 - fix possible crash with CFI enabled
+Date: Wed, 28 Dec 2022 15:36:14 +0100
+Message-Id: <20221228144347.412551398@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,37 +37,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Peter <sven@svenpeter.dev>
+From: Eric Biggers <ebiggers@google.com>
 
-[ Upstream commit b6ddd180e3d9f92c1e482b3cdeec7dda086b1341 ]
+[ Upstream commit 8bd9974b6bfcd1e14a001deeca051aed7295559a ]
 
-typec_altmode_exit checks if ops->enter is not NULL but then calls
-ops->exit a few lines below. Fix that and check for the function
-pointer it's about to call instead.
+crypto_aegis128_aesni_enc(), crypto_aegis128_aesni_enc_tail(),
+crypto_aegis128_aesni_dec(), and crypto_aegis128_aesni_dec_tail() are
+called via indirect function calls.  Therefore they need to use
+SYM_TYPED_FUNC_START instead of SYM_FUNC_START to cause their type
+hashes to be emitted when the kernel is built with CONFIG_CFI_CLANG=y.
+Otherwise, the code crashes with a CFI failure (if the compiler didn't
+happen to optimize out the indirect calls).
 
-Fixes: 8a37d87d72f0 ("usb: typec: Bus type for alternate modes")
-Signed-off-by: Sven Peter <sven@svenpeter.dev>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20221114165924.33487-1-sven@svenpeter.dev
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ccace936eec7 ("x86: Add types to indirectly called assembly functions")
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/bus.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/crypto/aegis128-aesni-asm.S | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/typec/bus.c b/drivers/usb/typec/bus.c
-index 26ea2fdec17d..31c2a3130cad 100644
---- a/drivers/usb/typec/bus.c
-+++ b/drivers/usb/typec/bus.c
-@@ -134,7 +134,7 @@ int typec_altmode_exit(struct typec_altmode *adev)
- 	if (!adev || !adev->active)
- 		return 0;
+diff --git a/arch/x86/crypto/aegis128-aesni-asm.S b/arch/x86/crypto/aegis128-aesni-asm.S
+index b48ddebb4748..cdf3215ec272 100644
+--- a/arch/x86/crypto/aegis128-aesni-asm.S
++++ b/arch/x86/crypto/aegis128-aesni-asm.S
+@@ -7,6 +7,7 @@
+  */
  
--	if (!pdev->ops || !pdev->ops->enter)
-+	if (!pdev->ops || !pdev->ops->exit)
- 		return -EOPNOTSUPP;
+ #include <linux/linkage.h>
++#include <linux/cfi_types.h>
+ #include <asm/frame.h>
  
- 	/* Moving to USB Safe State */
+ #define STATE0	%xmm0
+@@ -402,7 +403,7 @@ SYM_FUNC_END(crypto_aegis128_aesni_ad)
+  * void crypto_aegis128_aesni_enc(void *state, unsigned int length,
+  *                                const void *src, void *dst);
+  */
+-SYM_FUNC_START(crypto_aegis128_aesni_enc)
++SYM_TYPED_FUNC_START(crypto_aegis128_aesni_enc)
+ 	FRAME_BEGIN
+ 
+ 	cmp $0x10, LEN
+@@ -499,7 +500,7 @@ SYM_FUNC_END(crypto_aegis128_aesni_enc)
+  * void crypto_aegis128_aesni_enc_tail(void *state, unsigned int length,
+  *                                     const void *src, void *dst);
+  */
+-SYM_FUNC_START(crypto_aegis128_aesni_enc_tail)
++SYM_TYPED_FUNC_START(crypto_aegis128_aesni_enc_tail)
+ 	FRAME_BEGIN
+ 
+ 	/* load the state: */
+@@ -556,7 +557,7 @@ SYM_FUNC_END(crypto_aegis128_aesni_enc_tail)
+  * void crypto_aegis128_aesni_dec(void *state, unsigned int length,
+  *                                const void *src, void *dst);
+  */
+-SYM_FUNC_START(crypto_aegis128_aesni_dec)
++SYM_TYPED_FUNC_START(crypto_aegis128_aesni_dec)
+ 	FRAME_BEGIN
+ 
+ 	cmp $0x10, LEN
+@@ -653,7 +654,7 @@ SYM_FUNC_END(crypto_aegis128_aesni_dec)
+  * void crypto_aegis128_aesni_dec_tail(void *state, unsigned int length,
+  *                                     const void *src, void *dst);
+  */
+-SYM_FUNC_START(crypto_aegis128_aesni_dec_tail)
++SYM_TYPED_FUNC_START(crypto_aegis128_aesni_dec_tail)
+ 	FRAME_BEGIN
+ 
+ 	/* load the state: */
 -- 
 2.35.1
 
