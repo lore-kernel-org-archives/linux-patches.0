@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A251863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A702C433D2;
-	Wed, 28 Dec 2022 15:29:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED231863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10712C433D2;
+	Wed, 28 Dec 2022 15:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241389;
-	bh=TYzj7agvMaacvfHIqG0qbfuuGfwibsm6BCwUUx6GH/M=;
+	s=korg; t=1672241392;
+	bh=DJuE1VWFPAMDDM6fZMfmbX/5rs8RUDv3l5E/3V9lC7k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VOm8SsRj36rhHc4iSgxFq1ZS20bmfk1UtG75k1jAmO4yt+9YdzQn1qQ/d8SzjfOWo
-	 VncLh1+EoAFXKBnr9LZY14AQWXXs56Jj+NTvrU4aaF7Otm5ZGpB6/AOdEvl14JANCf
-	 AROHLOdwSltCwJxv7oyP9adjNI/TD7FAwN61m5Nc=
+	b=V1cWRuuU+9rJ1eTFtrl1Rb6O/XxZ/+ZeBS9X2fJjmUPW7o7GXyeS89ocROWyzKovY
+	 zZObTcCQgckPI4YBJWT0R5tkiTPo5ux9Hiixm/WpHoFTJAwzrKEVx/nr0ZDAc0RSY4
+	 RLEQdGS3KZRCXcCTJbQLvLI7s8TAXrpIXXQXaGlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Kazuho Oku <kazuhooku@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0278/1073] drm/msm/dsi: Migrate to drm_dsc_compute_rc_parameters()
-Date: Wed, 28 Dec 2022 15:31:06 +0100
-Message-Id: <20221228144335.571947961@linuxfoundation.org>
+Subject: [PATCH 6.1 0241/1146] soreuseport: Fix socket selection for SO_INCOMING_CPU.
+Date: Wed, 28 Dec 2022 15:29:40 +0100
+Message-Id: <20221228144336.682722189@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,138 +36,299 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit c3a1aabce2d4087255de90100c3dad492e7d925c ]
+[ Upstream commit b261eda84ec136240a9ca753389853a3a1bccca2 ]
 
-As per the FIXME this code is entirely duplicate with what is already
-provided inside drm_dsc_compute_rc_parameters(), supposedly because that
-function was yielding "incorrect" results while in reality the panel
-driver(s?) used for testing were providing incorrect parameters.
+Kazuho Oku reported that setsockopt(SO_INCOMING_CPU) does not work
+with setsockopt(SO_REUSEPORT) since v4.6.
 
-For example, this code from downstream assumed dsc->bits_per_pixel to
-contain an integer value, whereas the upstream drm_dsc_config struct
-stores it with 4 fractional bits.  drm_dsc_compute_rc_parameters()
-already accounts for this feat while the panel driver used for testing
-[1] wasn't, hence making drm_dsc_compute_rc_parameters() seem like it
-was returning an incorrect result.
-Other users of dsc->bits_per_pixel inside dsi_populate_dsc_params() also
-treat it in the same erroneous way, and will be addressed in a separate
-patch.
-In the end, using drm_dsc_compute_rc_parameters() spares both a lot of
-duplicate code and erratic behaviour.
+With the combination of SO_REUSEPORT and SO_INCOMING_CPU, we could
+build a highly efficient server application.
 
-[1]: https://git.linaro.org/people/vinod.koul/kernel.git/commit/?h=topic/pixel3_5.18-rc1&id=1d7d98ad564f1ec69e7525e07418918d90f247a1
+setsockopt(SO_INCOMING_CPU) associates a CPU with a TCP listener
+or UDP socket, and then incoming packets processed on the CPU will
+likely be distributed to the socket.  Technically, a socket could
+even receive packets handled on another CPU if no sockets in the
+reuseport group have the same CPU receiving the flow.
 
-Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/508939/
-Link: https://lore.kernel.org/r/20221026182824.876933-7-marijn.suijten@somainline.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+The logic exists in compute_score() so that a socket will get a higher
+score if it has the same CPU with the flow.  However, the score gets
+ignored after the blamed two commits, which introduced a faster socket
+selection algorithm for SO_REUSEPORT.
+
+This patch introduces a counter of sockets with SO_INCOMING_CPU in
+a reuseport group to check if we should iterate all sockets to find
+a proper one.  We increment the counter when
+
+  * calling listen() if the socket has SO_INCOMING_CPU and SO_REUSEPORT
+
+  * enabling SO_INCOMING_CPU if the socket is in a reuseport group
+
+Also, we decrement it when
+
+  * detaching a socket out of the group to apply SO_INCOMING_CPU to
+    migrated TCP requests
+
+  * disabling SO_INCOMING_CPU if the socket is in a reuseport group
+
+When the counter reaches 0, we can get back to the O(1) selection
+algorithm.
+
+The overall changes are negligible for the non-SO_INCOMING_CPU case,
+and the only notable thing is that we have to update sk_incomnig_cpu
+under reuseport_lock.  Otherwise, the race prevents transitioning to
+the O(n) algorithm and results in the wrong socket selection.
+
+ cpu1 (setsockopt)               cpu2 (listen)
++-----------------+             +-------------+
+
+lock_sock(sk1)                  lock_sock(sk2)
+
+reuseport_update_incoming_cpu(sk1, val)
+.
+|  /* set CPU as 0 */
+|- WRITE_ONCE(sk1->incoming_cpu, val)
+|
+|                               spin_lock_bh(&reuseport_lock)
+|                               reuseport_grow(sk2, reuse)
+|                               .
+|                               |- more_socks_size = reuse->max_socks * 2U;
+|                               |- if (more_socks_size > U16_MAX &&
+|                               |       reuse->num_closed_socks)
+|                               |  .
+|                               |  |- RCU_INIT_POINTER(sk1->sk_reuseport_cb, NULL);
+|                               |  `- __reuseport_detach_closed_sock(sk1, reuse)
+|                               |     .
+|                               |     `- reuseport_put_incoming_cpu(sk1, reuse)
+|                               |        .
+|                               |        |  /* Read shutdown()ed sk1's sk_incoming_cpu
+|                               |        |   * without lock_sock().
+|                               |        |   */
+|                               |        `- if (sk1->sk_incoming_cpu >= 0)
+|                               |           .
+|                               |           |  /* decrement not-yet-incremented
+|                               |           |   * count, which is never incremented.
+|                               |           |   */
+|                               |           `- __reuseport_put_incoming_cpu(reuse);
+|                               |
+|                               `- spin_lock_bh(&reuseport_lock)
+|
+|- spin_lock_bh(&reuseport_lock)
+|
+|- reuse = rcu_dereference_protected(sk1->sk_reuseport_cb, ...)
+|- if (!reuse)
+|  .
+|  |  /* Cannot increment reuse->incoming_cpu. */
+|  `- goto out;
+|
+`- spin_unlock_bh(&reuseport_lock)
+
+Fixes: e32ea7e74727 ("soreuseport: fast reuseport UDP socket selection")
+Fixes: c125e80b8868 ("soreuseport: fast reuseport TCP socket selection")
+Reported-by: Kazuho Oku <kazuhooku@gmail.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 64 +++---------------------------
- 1 file changed, 6 insertions(+), 58 deletions(-)
+ include/net/sock_reuseport.h |  2 +
+ net/core/sock.c              |  2 +-
+ net/core/sock_reuseport.c    | 94 ++++++++++++++++++++++++++++++++++--
+ 3 files changed, 92 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 5e5eb1a10f94..0c80d0797a6a 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -21,6 +21,7 @@
- 
- #include <video/mipi_display.h>
- 
-+#include <drm/display/drm_dsc_helper.h>
- #include <drm/drm_of.h>
- 
- #include "dsi.h"
-@@ -1836,14 +1837,6 @@ static char bpg_offset[DSC_NUM_BUF_RANGES] = {
- 
- static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
- {
--	int mux_words_size;
--	int groups_per_line, groups_total;
--	int min_rate_buffer_size;
--	int hrd_delay;
--	int pre_num_extra_mux_bits, num_extra_mux_bits;
--	int slice_bits;
--	int data;
--	int final_value, final_scale;
- 	int i;
- 
- 	dsc->rc_model_size = 8192;
-@@ -1869,11 +1862,11 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
- 	if (dsc->bits_per_pixel != 8)
- 		dsc->initial_offset = 2048;	/* bpp = 12 */
- 
--	mux_words_size = 48;		/* bpc == 8/10 */
--	if (dsc->bits_per_component == 12)
--		mux_words_size = 64;
-+	if (dsc->bits_per_component <= 10)
-+		dsc->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
-+	else
-+		dsc->mux_word_size = DSC_MUX_WORD_SIZE_12_BPC;
- 
--	dsc->mux_word_size = mux_words_size;
- 	dsc->initial_xmit_delay = 512;
- 	dsc->initial_scale_value = 32;
- 	dsc->first_line_bpg_offset = 12;
-@@ -1885,52 +1878,7 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
- 	dsc->rc_quant_incr_limit0 = 11;
- 	dsc->rc_quant_incr_limit1 = 11;
- 
--	/* FIXME: need to call drm_dsc_compute_rc_parameters() so that rest of
--	 * params are calculated
--	 */
--	groups_per_line = DIV_ROUND_UP(dsc->slice_width, 3);
--	dsc->slice_chunk_size = DIV_ROUND_UP(dsc->slice_width * dsc->bits_per_pixel, 8);
--
--	/* rbs-min */
--	min_rate_buffer_size =  dsc->rc_model_size - dsc->initial_offset +
--				dsc->initial_xmit_delay * dsc->bits_per_pixel +
--				groups_per_line * dsc->first_line_bpg_offset;
--
--	hrd_delay = DIV_ROUND_UP(min_rate_buffer_size, dsc->bits_per_pixel);
--
--	dsc->initial_dec_delay = hrd_delay - dsc->initial_xmit_delay;
--
--	dsc->initial_scale_value = 8 * dsc->rc_model_size /
--				       (dsc->rc_model_size - dsc->initial_offset);
--
--	slice_bits = 8 * dsc->slice_chunk_size * dsc->slice_height;
--
--	groups_total = groups_per_line * dsc->slice_height;
--
--	data = dsc->first_line_bpg_offset * 2048;
--
--	dsc->nfl_bpg_offset = DIV_ROUND_UP(data, (dsc->slice_height - 1));
--
--	pre_num_extra_mux_bits = 3 * (mux_words_size + (4 * dsc->bits_per_component + 4) - 2);
--
--	num_extra_mux_bits = pre_num_extra_mux_bits - (mux_words_size -
--			     ((slice_bits - pre_num_extra_mux_bits) % mux_words_size));
--
--	data = 2048 * (dsc->rc_model_size - dsc->initial_offset + num_extra_mux_bits);
--	dsc->slice_bpg_offset = DIV_ROUND_UP(data, groups_total);
--
--	data = dsc->initial_xmit_delay * dsc->bits_per_pixel;
--	final_value =  dsc->rc_model_size - data + num_extra_mux_bits;
--	dsc->final_offset = final_value;
--
--	final_scale = 8 * dsc->rc_model_size / (dsc->rc_model_size - final_value);
--
--	data = (final_scale - 9) * (dsc->nfl_bpg_offset + dsc->slice_bpg_offset);
--	dsc->scale_increment_interval = (2048 * dsc->final_offset) / data;
--
--	dsc->scale_decrement_interval = groups_per_line / (dsc->initial_scale_value - 8);
--
--	return 0;
-+	return drm_dsc_compute_rc_parameters(dsc);
+diff --git a/include/net/sock_reuseport.h b/include/net/sock_reuseport.h
+index efc9085c6892..6ec140b0a61b 100644
+--- a/include/net/sock_reuseport.h
++++ b/include/net/sock_reuseport.h
+@@ -16,6 +16,7 @@ struct sock_reuseport {
+ 	u16			max_socks;		/* length of socks */
+ 	u16			num_socks;		/* elements in socks */
+ 	u16			num_closed_socks;	/* closed elements in socks */
++	u16			incoming_cpu;
+ 	/* The last synq overflow event timestamp of this
+ 	 * reuse->socks[] group.
+ 	 */
+@@ -58,5 +59,6 @@ static inline bool reuseport_has_conns(struct sock *sk)
  }
  
- static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
+ void reuseport_has_conns_set(struct sock *sk);
++void reuseport_update_incoming_cpu(struct sock *sk, int val);
+ 
+ #endif  /* _SOCK_REUSEPORT_H */
+diff --git a/net/core/sock.c b/net/core/sock.c
+index a3ba0358c77c..30407b2dd2ac 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -1436,7 +1436,7 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
+ 		break;
+ 		}
+ 	case SO_INCOMING_CPU:
+-		WRITE_ONCE(sk->sk_incoming_cpu, val);
++		reuseport_update_incoming_cpu(sk, val);
+ 		break;
+ 
+ 	case SO_CNX_ADVICE:
+diff --git a/net/core/sock_reuseport.c b/net/core/sock_reuseport.c
+index fb90e1e00773..5a165286e4d8 100644
+--- a/net/core/sock_reuseport.c
++++ b/net/core/sock_reuseport.c
+@@ -37,6 +37,70 @@ void reuseport_has_conns_set(struct sock *sk)
+ }
+ EXPORT_SYMBOL(reuseport_has_conns_set);
+ 
++static void __reuseport_get_incoming_cpu(struct sock_reuseport *reuse)
++{
++	/* Paired with READ_ONCE() in reuseport_select_sock_by_hash(). */
++	WRITE_ONCE(reuse->incoming_cpu, reuse->incoming_cpu + 1);
++}
++
++static void __reuseport_put_incoming_cpu(struct sock_reuseport *reuse)
++{
++	/* Paired with READ_ONCE() in reuseport_select_sock_by_hash(). */
++	WRITE_ONCE(reuse->incoming_cpu, reuse->incoming_cpu - 1);
++}
++
++static void reuseport_get_incoming_cpu(struct sock *sk, struct sock_reuseport *reuse)
++{
++	if (sk->sk_incoming_cpu >= 0)
++		__reuseport_get_incoming_cpu(reuse);
++}
++
++static void reuseport_put_incoming_cpu(struct sock *sk, struct sock_reuseport *reuse)
++{
++	if (sk->sk_incoming_cpu >= 0)
++		__reuseport_put_incoming_cpu(reuse);
++}
++
++void reuseport_update_incoming_cpu(struct sock *sk, int val)
++{
++	struct sock_reuseport *reuse;
++	int old_sk_incoming_cpu;
++
++	if (unlikely(!rcu_access_pointer(sk->sk_reuseport_cb))) {
++		/* Paired with REAE_ONCE() in sk_incoming_cpu_update()
++		 * and compute_score().
++		 */
++		WRITE_ONCE(sk->sk_incoming_cpu, val);
++		return;
++	}
++
++	spin_lock_bh(&reuseport_lock);
++
++	/* This must be done under reuseport_lock to avoid a race with
++	 * reuseport_grow(), which accesses sk->sk_incoming_cpu without
++	 * lock_sock() when detaching a shutdown()ed sk.
++	 *
++	 * Paired with READ_ONCE() in reuseport_select_sock_by_hash().
++	 */
++	old_sk_incoming_cpu = sk->sk_incoming_cpu;
++	WRITE_ONCE(sk->sk_incoming_cpu, val);
++
++	reuse = rcu_dereference_protected(sk->sk_reuseport_cb,
++					  lockdep_is_held(&reuseport_lock));
++
++	/* reuseport_grow() has detached a closed sk. */
++	if (!reuse)
++		goto out;
++
++	if (old_sk_incoming_cpu < 0 && val >= 0)
++		__reuseport_get_incoming_cpu(reuse);
++	else if (old_sk_incoming_cpu >= 0 && val < 0)
++		__reuseport_put_incoming_cpu(reuse);
++
++out:
++	spin_unlock_bh(&reuseport_lock);
++}
++
+ static int reuseport_sock_index(struct sock *sk,
+ 				const struct sock_reuseport *reuse,
+ 				bool closed)
+@@ -64,6 +128,7 @@ static void __reuseport_add_sock(struct sock *sk,
+ 	/* paired with smp_rmb() in reuseport_(select|migrate)_sock() */
+ 	smp_wmb();
+ 	reuse->num_socks++;
++	reuseport_get_incoming_cpu(sk, reuse);
+ }
+ 
+ static bool __reuseport_detach_sock(struct sock *sk,
+@@ -76,6 +141,7 @@ static bool __reuseport_detach_sock(struct sock *sk,
+ 
+ 	reuse->socks[i] = reuse->socks[reuse->num_socks - 1];
+ 	reuse->num_socks--;
++	reuseport_put_incoming_cpu(sk, reuse);
+ 
+ 	return true;
+ }
+@@ -86,6 +152,7 @@ static void __reuseport_add_closed_sock(struct sock *sk,
+ 	reuse->socks[reuse->max_socks - reuse->num_closed_socks - 1] = sk;
+ 	/* paired with READ_ONCE() in inet_csk_bind_conflict() */
+ 	WRITE_ONCE(reuse->num_closed_socks, reuse->num_closed_socks + 1);
++	reuseport_get_incoming_cpu(sk, reuse);
+ }
+ 
+ static bool __reuseport_detach_closed_sock(struct sock *sk,
+@@ -99,6 +166,7 @@ static bool __reuseport_detach_closed_sock(struct sock *sk,
+ 	reuse->socks[i] = reuse->socks[reuse->max_socks - reuse->num_closed_socks];
+ 	/* paired with READ_ONCE() in inet_csk_bind_conflict() */
+ 	WRITE_ONCE(reuse->num_closed_socks, reuse->num_closed_socks - 1);
++	reuseport_put_incoming_cpu(sk, reuse);
+ 
+ 	return true;
+ }
+@@ -166,6 +234,7 @@ int reuseport_alloc(struct sock *sk, bool bind_inany)
+ 	reuse->bind_inany = bind_inany;
+ 	reuse->socks[0] = sk;
+ 	reuse->num_socks = 1;
++	reuseport_get_incoming_cpu(sk, reuse);
+ 	rcu_assign_pointer(sk->sk_reuseport_cb, reuse);
+ 
+ out:
+@@ -209,6 +278,7 @@ static struct sock_reuseport *reuseport_grow(struct sock_reuseport *reuse)
+ 	more_reuse->reuseport_id = reuse->reuseport_id;
+ 	more_reuse->bind_inany = reuse->bind_inany;
+ 	more_reuse->has_conns = reuse->has_conns;
++	more_reuse->incoming_cpu = reuse->incoming_cpu;
+ 
+ 	memcpy(more_reuse->socks, reuse->socks,
+ 	       reuse->num_socks * sizeof(struct sock *));
+@@ -458,18 +528,32 @@ static struct sock *run_bpf_filter(struct sock_reuseport *reuse, u16 socks,
+ static struct sock *reuseport_select_sock_by_hash(struct sock_reuseport *reuse,
+ 						  u32 hash, u16 num_socks)
+ {
++	struct sock *first_valid_sk = NULL;
+ 	int i, j;
+ 
+ 	i = j = reciprocal_scale(hash, num_socks);
+-	while (reuse->socks[i]->sk_state == TCP_ESTABLISHED) {
++	do {
++		struct sock *sk = reuse->socks[i];
++
++		if (sk->sk_state != TCP_ESTABLISHED) {
++			/* Paired with WRITE_ONCE() in __reuseport_(get|put)_incoming_cpu(). */
++			if (!READ_ONCE(reuse->incoming_cpu))
++				return sk;
++
++			/* Paired with WRITE_ONCE() in reuseport_update_incoming_cpu(). */
++			if (READ_ONCE(sk->sk_incoming_cpu) == raw_smp_processor_id())
++				return sk;
++
++			if (!first_valid_sk)
++				first_valid_sk = sk;
++		}
++
+ 		i++;
+ 		if (i >= num_socks)
+ 			i = 0;
+-		if (i == j)
+-			return NULL;
+-	}
++	} while (i != j);
+ 
+-	return reuse->socks[i];
++	return first_valid_sk;
+ }
+ 
+ /**
 -- 
 2.35.1
 
