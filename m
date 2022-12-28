@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3530F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0462C433EF;
-	Wed, 28 Dec 2022 15:43:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2151863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554B0C433D2;
+	Wed, 28 Dec 2022 15:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242191;
-	bh=gGKFdLQh9+hNSTjkHWs4Ma/sIi/sl10LiXJb+KfUtRA=;
+	s=korg; t=1672242193;
+	bh=wK5rzT72np5XETtHMRR5L8dBvUrFeT3UP7y0SQOT1Nc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IQRmdYUAbqua5RlTpLRo1N28cNKBS39DIgY+Emg999ZTbQrzo4+e2YVuGZxMLOetU
-	 a3P2rwo4gYVcgOv0JIz/UsvwC8moNOcJvPa4LRuk203DQPYRnSUUpr2O+VmcdoxOiq
-	 rMFjuQoDIXYWp5MFfMreFdjE50pb0Bq/Ch9ljArc=
+	b=XaFE1C+RQibZYjGTn5jdsuFfZkZM35Se1Wtx3HeC29O7uQ1wXtbh35sTKsfrE6WMq
+	 zZK3nl4eUmWuIu6Q6WQfYHGhUc06AyRG4WhSeApT1hiGdCNvWhfimPx2VihehMzy1t
+	 +wln3Arj5+TBnIC6Ru+DHStMyWRb6sXnf8svdksQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com,
+	Gautam Menghani <gautammenghani201@gmail.com>,
+	Sean Young <sean@mess.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 573/731] powerpc/pseries/eeh: use correct API for error log size
-Date: Wed, 28 Dec 2022 15:41:20 +0100
-Message-Id: <20221228144313.165112486@linuxfoundation.org>
+Subject: [PATCH 6.0 0378/1073] media: imon: fix a race condition in send_packet()
+Date: Wed, 28 Dec 2022 15:32:46 +0100
+Message-Id: <20221228144338.269961455@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,47 +37,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: Gautam Menghani <gautammenghani201@gmail.com>
 
-[ Upstream commit 9aafbfa5f57a4b75bafd3bed0191e8429c5fa618 ]
+[ Upstream commit 813ceef062b53d68f296aa3cb944b21a091fabdb ]
 
-rtas-error-log-max is not the name of an RTAS function, so rtas_token()
-is not the appropriate API for retrieving its value. We already have
-rtas_get_error_log_max() which returns a sensible value if the property
-is absent for any reason, so use that instead.
+The function send_packet() has a race condition as follows:
 
-Fixes: 8d633291b4fc ("powerpc/eeh: pseries platform EEH error log retrieval")
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-[mpe: Drop no-longer possible error handling as noticed by ajd]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20221118150751.469393-6-nathanl@linux.ibm.com
+func send_packet()
+{
+    // do work
+    call usb_submit_urb()
+    mutex_unlock()
+    wait_for_event_interruptible()  <-- lock gone
+    mutex_lock()
+}
+
+func vfd_write()
+{
+    mutex_lock()
+    call send_packet()  <- prev call is not completed
+    mutex_unlock()
+}
+
+When the mutex is unlocked and the function send_packet() waits for the
+call to complete, vfd_write() can start another call, which leads to the
+"URB submitted while active" warning in usb_submit_urb().
+Fix this by removing the mutex_unlock() call in send_packet() and using
+mutex_lock_interruptible().
+
+Link: https://syzkaller.appspot.com/bug?id=e378e6a51fbe6c5cc43e34f131cc9a315ef0337e
+
+Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
+Reported-by: syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com
+Signed-off-by: Gautam Menghani <gautammenghani201@gmail.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/eeh_pseries.c | 11 +----------
- 1 file changed, 1 insertion(+), 10 deletions(-)
+ drivers/media/rc/imon.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pseries/eeh_pseries.c b/arch/powerpc/platforms/pseries/eeh_pseries.c
-index 08ce7e4ad9f0..f51fd4ac3f0b 100644
---- a/arch/powerpc/platforms/pseries/eeh_pseries.c
-+++ b/arch/powerpc/platforms/pseries/eeh_pseries.c
-@@ -846,16 +846,7 @@ static int __init eeh_pseries_init(void)
- 	}
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index 735b925da998..91d8056666ec 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -646,15 +646,14 @@ static int send_packet(struct imon_context *ictx)
+ 		pr_err_ratelimited("error submitting urb(%d)\n", retval);
+ 	} else {
+ 		/* Wait for transmission to complete (or abort) */
+-		mutex_unlock(&ictx->lock);
+ 		retval = wait_for_completion_interruptible(
+ 				&ictx->tx.finished);
+ 		if (retval) {
+ 			usb_kill_urb(ictx->tx_urb);
+ 			pr_err_ratelimited("task interrupted\n");
+ 		}
+-		mutex_lock(&ictx->lock);
  
- 	/* Initialize error log size */
--	eeh_error_buf_size = rtas_token("rtas-error-log-max");
--	if (eeh_error_buf_size == RTAS_UNKNOWN_SERVICE) {
--		pr_info("%s: unknown EEH error log size\n",
--			__func__);
--		eeh_error_buf_size = 1024;
--	} else if (eeh_error_buf_size > RTAS_ERROR_LOG_MAX) {
--		pr_info("%s: EEH error log size %d exceeds the maximal %d\n",
--			__func__, eeh_error_buf_size, RTAS_ERROR_LOG_MAX);
--		eeh_error_buf_size = RTAS_ERROR_LOG_MAX;
--	}
-+	eeh_error_buf_size = rtas_get_error_log_max();
++		ictx->tx.busy = false;
+ 		retval = ictx->tx.status;
+ 		if (retval)
+ 			pr_err_ratelimited("packet tx failed (%d)\n", retval);
+@@ -955,7 +954,8 @@ static ssize_t vfd_write(struct file *file, const char __user *buf,
+ 	if (ictx->disconnected)
+ 		return -ENODEV;
  
- 	/* Set EEH probe mode */
- 	eeh_add_flag(EEH_PROBE_MODE_DEVTREE | EEH_ENABLE_IO_FOR_LOG);
+-	mutex_lock(&ictx->lock);
++	if (mutex_lock_interruptible(&ictx->lock))
++		return -ERESTARTSYS;
+ 
+ 	if (!ictx->dev_present_intf0) {
+ 		pr_err_ratelimited("no iMON device present\n");
 -- 
 2.35.1
 
