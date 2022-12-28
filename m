@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D19F01863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52DD1C433EF;
-	Wed, 28 Dec 2022 15:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70CF81868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA565C433D2;
+	Wed, 28 Dec 2022 15:01:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239685;
-	bh=er9of461J3Uo3jH6vdagbkN2a6gyiOFyIQ/0xnmXITw=;
+	s=korg; t=1672239688;
+	bh=+8C5TD0uVy2aZN8sHo/7+k0ZY9KAbPu+uh9uqy9bU4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F2zJmpnVOJgFiiDSBGBYUmm4qIy42L1bEE0cUuDqB3Z8XmXPa5sPts5kl2elfFtA/
-	 /9phjV8blCtKGyG54ijphwW8vE6Zoh4saax/BVhHIwhfQmlgoG6RW74d1XorkXXnZ3
-	 dD0vTTLPap174nX8DZLdhcHMHhVCWvpZdTdeu9MY=
+	b=tWQgpLBrbWxilEqTTm/Gp+lXB4QYq9fKMgfVHW4nO0Qq16rZ/mGcOCGPTNpDapfNc
+	 LtUMrWrz6pETzh/KvmU/2Z8qeF7/m9+Anir1s+1s+ZKbvqkMeLEUAOuZhYRnD9MO3E
+	 W72BZ/V8XpSXlo03skBcLjqn/cw6ETJ/rMnUEwbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0027/1146] arm64: dts: qcom: sm8150: fix UFS PHY registers
-Date: Wed, 28 Dec 2022 15:26:06 +0100
-Message-Id: <20221228144330.907898221@linuxfoundation.org>
+Subject: [PATCH 6.0 0064/1073] arm64: dts: mt2712e: Fix unit address for pinctrl node
+Date: Wed, 28 Dec 2022 15:27:32 +0100
+Message-Id: <20221228144329.831314681@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,46 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 36a31b3a8d9ba1707a23de8d8dc1ceaef4eda695 ]
+[ Upstream commit 1d4516f53a611b362db7ba7a8889923d469f57e1 ]
 
-The sizes of the UFS PHY register regions are too small and does
-specifically not cover all registers used by the Linux driver.
+The unit address for the pinctrl node is (0x)1000b000 and not
+(0x)10005000, which is the syscfg_pctl_a address instead.
 
-As Linux maps these regions as full pages this is currently not an issue
-on Linux, but let's update the sizes to match the vendor driver.
+This fixes the following warning:
+arch/arm64/boot/dts/mediatek/mt2712e.dtsi:264.40-267.4: Warning
+(unique_unit_address): /syscfg_pctl_a@10005000: duplicate
+unit-address (also used in node /pinctrl@10005000)
 
-Fixes: 3834a2e92229 ("arm64: dts: qcom: sm8150: Add ufs nodes")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221024091507.20342-2-johan+linaro@kernel.org
+Fixes: f0c64340b748 ("arm64: dts: mt2712: add pintcrl device node.")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221013152212.416661-5-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt2712e.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index cef8c4f4f0ff..4a527a64772b 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -2032,11 +2032,11 @@ ufs_mem_phy: phy@1d87000 {
- 			status = "disabled";
+diff --git a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
+index dcd3df8eb4da..2ebefd144d6f 100644
+--- a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
+@@ -266,7 +266,7 @@ syscfg_pctl_a: syscfg_pctl_a@10005000 {
+ 		reg = <0 0x10005000 0 0x1000>;
+ 	};
  
- 			ufs_mem_phy_lanes: phy@1d87400 {
--				reg = <0 0x01d87400 0 0x108>,
--				      <0 0x01d87600 0 0x1e0>,
--				      <0 0x01d87c00 0 0x1dc>,
--				      <0 0x01d87800 0 0x108>,
--				      <0 0x01d87a00 0 0x1e0>;
-+				reg = <0 0x01d87400 0 0x16c>,
-+				      <0 0x01d87600 0 0x200>,
-+				      <0 0x01d87c00 0 0x200>,
-+				      <0 0x01d87800 0 0x16c>,
-+				      <0 0x01d87a00 0 0x200>;
- 				#phy-cells = <0>;
- 			};
- 		};
+-	pio: pinctrl@10005000 {
++	pio: pinctrl@1000b000 {
+ 		compatible = "mediatek,mt2712-pinctrl";
+ 		reg = <0 0x1000b000 0 0x1000>;
+ 		mediatek,pctl-regmap = <&syscfg_pctl_a>;
 -- 
 2.35.1
 
