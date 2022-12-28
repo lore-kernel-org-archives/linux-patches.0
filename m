@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A16621C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28D6DC433D2;
-	Wed, 28 Dec 2022 16:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E5B41C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8EE5C433EF;
+	Wed, 28 Dec 2022 16:04:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243464;
-	bh=muOU84hpJwkJvVOXxaAjMrs9BddxS4K4voxHtLNyP80=;
+	s=korg; t=1672243467;
+	bh=0M/OPwvmJP+Idq8AfkXKDErqkYJNV34deQ165lkVVlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TIdICHAfc2zVkGQhO1m3M4PFja3GT5L2PCbxmw+3fkZFznWg+pan5H4txZwf85uGe
-	 5NJJ0fyu798x/fLfHwnL/x7taw8XK00AwyC3D8jbDKDWyMInCXL66cC6hwp8uuzKQy
-	 ingTTKQHXoDa6okl/z9z5HyE6i7zfJ09NccvVRhw=
+	b=Sbj2h6HyPokToy4hUFsh0cymMnVVaVVkE12bmRYL3r6291hDVggpcfIoeis5zibvc
+	 +c6oMctnmsIVzz7pY3JG0xwjZNYMpfm1qF+C/24GUV+Wg1FqsAPtT0BCthSuib2fRt
+	 hON8GSiotmVuY6qjZWMrHgpoytNWxkb25QsmwHGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
-	Vivek Yadav <vivek.2311@samsung.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0532/1073] can: m_can: Call the RAM init directly from m_can_chip_config
-Date: Wed, 28 Dec 2022 15:35:20 +0100
-Message-Id: <20221228144342.502482462@linuxfoundation.org>
+	syzbot <syzbot+25bdb7b1703639abd498@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.15 724/731] fbdev: fbcon: release buffer when fbcon_do_set_font() failed
+Date: Wed, 28 Dec 2022 15:43:51 +0100
+Message-Id: <20221228144317.431290532@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,141 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vivek Yadav <vivek.2311@samsung.com>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-[ Upstream commit eaacfeaca7ad0804b9a6eff7afeba93a87db7638 ]
+commit 3c3bfb8586f848317ceba5d777e11204ba3e5758 upstream.
 
-When we try to access the mcan message ram addresses during the probe,
-hclk is gated by any other drivers or disabled, because of that probe
-gets failed.
+syzbot is reporting memory leak at fbcon_do_set_font() [1], for
+commit a5a923038d70 ("fbdev: fbcon: Properly revert changes when
+vc_resize() failed") missed that the buffer might be newly allocated
+by fbcon_set_font().
 
-Move the mram init functionality to mcan chip config called by
-m_can_start from mcan open function, by that time clocks are
-enabled.
-
-Suggested-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Signed-off-by: Vivek Yadav <vivek.2311@samsung.com>
-Link: https://lore.kernel.org/all/20221207100632.96200-2-vivek.2311@samsung.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Stable-dep-of: 67727a17a6b3 ("can: tcan4x5x: Fix use of register error status mask")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://syzkaller.appspot.com/bug?extid=25bdb7b1703639abd498 [1]
+Reported-by: syzbot <syzbot+25bdb7b1703639abd498@syzkaller.appspotmail.com>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Tested-by: syzbot <syzbot+25bdb7b1703639abd498@syzkaller.appspotmail.com>
+Fixes: a5a923038d70 ("fbdev: fbcon: Properly revert changes when vc_resize() failed")
+CC: stable@vger.kernel.org # 5.15+
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/can/m_can/m_can.c          | 32 +++++++++++++++++++++-----
- drivers/net/can/m_can/m_can_platform.c |  4 ----
- drivers/net/can/m_can/tcan4x5x-core.c  |  5 ----
- 3 files changed, 26 insertions(+), 15 deletions(-)
+ drivers/video/fbdev/core/fbcon.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/m_can/m_can.c b/drivers/net/can/m_can/m_can.c
-index 153d8fd08bd8..a562f36a99f8 100644
---- a/drivers/net/can/m_can/m_can.c
-+++ b/drivers/net/can/m_can/m_can.c
-@@ -1233,10 +1233,17 @@ static int m_can_set_bittiming(struct net_device *dev)
-  * - setup bittiming
-  * - configure timestamp generation
-  */
--static void m_can_chip_config(struct net_device *dev)
-+static int m_can_chip_config(struct net_device *dev)
- {
- 	struct m_can_classdev *cdev = netdev_priv(dev);
- 	u32 cccr, test;
-+	int err;
-+
-+	err = m_can_init_ram(cdev);
-+	if (err) {
-+		dev_err(cdev->dev, "Message RAM configuration failed\n");
-+		return err;
-+	}
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -2462,7 +2462,8 @@ err_out:
  
- 	m_can_config_endisable(cdev, true);
- 
-@@ -1360,18 +1367,25 @@ static void m_can_chip_config(struct net_device *dev)
- 
- 	if (cdev->ops->init)
- 		cdev->ops->init(cdev);
-+
-+	return 0;
- }
- 
--static void m_can_start(struct net_device *dev)
-+static int m_can_start(struct net_device *dev)
- {
- 	struct m_can_classdev *cdev = netdev_priv(dev);
-+	int ret;
- 
- 	/* basic m_can configuration */
--	m_can_chip_config(dev);
-+	ret = m_can_chip_config(dev);
-+	if (ret)
-+		return ret;
- 
- 	cdev->can.state = CAN_STATE_ERROR_ACTIVE;
- 
- 	m_can_enable_all_interrupts(cdev);
-+
-+	return 0;
- }
- 
- static int m_can_set_mode(struct net_device *dev, enum can_mode mode)
-@@ -1800,7 +1814,9 @@ static int m_can_open(struct net_device *dev)
+ 	if (userfont) {
+ 		p->userfont = old_userfont;
+-		REFCOUNT(data)--;
++		if (--REFCOUNT(data) == 0)
++			kfree(data - FONT_EXTRA_WORDS * sizeof(int));
  	}
  
- 	/* start the m_can controller */
--	m_can_start(dev);
-+	err = m_can_start(dev);
-+	if (err)
-+		goto exit_irq_fail;
- 
- 	if (!cdev->is_peripheral)
- 		napi_enable(&cdev->napi);
-@@ -2059,9 +2075,13 @@ int m_can_class_resume(struct device *dev)
- 		ret = m_can_clk_start(cdev);
- 		if (ret)
- 			return ret;
-+		ret  = m_can_start(ndev);
-+		if (ret) {
-+			m_can_clk_stop(cdev);
-+
-+			return ret;
-+		}
- 
--		m_can_init_ram(cdev);
--		m_can_start(ndev);
- 		netif_device_attach(ndev);
- 		netif_start_queue(ndev);
- 	}
-diff --git a/drivers/net/can/m_can/m_can_platform.c b/drivers/net/can/m_can/m_can_platform.c
-index eee47bad0592..de6d8e01bf2e 100644
---- a/drivers/net/can/m_can/m_can_platform.c
-+++ b/drivers/net/can/m_can/m_can_platform.c
-@@ -140,10 +140,6 @@ static int m_can_plat_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, mcan_class);
- 
--	ret = m_can_init_ram(mcan_class);
--	if (ret)
--		goto probe_fail;
--
- 	pm_runtime_enable(mcan_class->dev);
- 	ret = m_can_class_register(mcan_class);
- 	if (ret)
-diff --git a/drivers/net/can/m_can/tcan4x5x-core.c b/drivers/net/can/m_can/tcan4x5x-core.c
-index 1fec394b3517..a77f4d4f6299 100644
---- a/drivers/net/can/m_can/tcan4x5x-core.c
-+++ b/drivers/net/can/m_can/tcan4x5x-core.c
-@@ -229,11 +229,6 @@ static int tcan4x5x_init(struct m_can_classdev *cdev)
- 	if (ret)
- 		return ret;
- 
--	/* Zero out the MCAN buffers */
--	ret = m_can_init_ram(cdev);
--	if (ret)
--		return ret;
--
- 	ret = regmap_update_bits(tcan4x5x->regmap, TCAN4X5X_CONFIG,
- 				 TCAN4X5X_MODE_SEL_MASK, TCAN4X5X_MODE_NORMAL);
- 	if (ret)
--- 
-2.35.1
-
+ 	vc->vc_font.width = old_width;
 
 
