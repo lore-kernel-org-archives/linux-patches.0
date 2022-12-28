@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B7861863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09C60C433EF;
-	Wed, 28 Dec 2022 14:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A57F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0B5FC433D2;
+	Wed, 28 Dec 2022 14:57:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239427;
-	bh=qgZlEtA6VRna5pMVAm5SWl5gqaqPEc8uv3PuHhtYu70=;
+	s=korg; t=1672239430;
+	bh=9wfDYIB58GisEeKWQM7pB1z+rwODjF8XtdA24gCenDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C3+Xk8bmUqnsaMc3KZ3y9CIwRkQUJKPBEpuitDcYNCBfqt1HTLun455qXKR20OetJ
-	 eP7mJmnQ9FdVtP/m9ojTJijSPD51BfrQtQboyTREfB/fULejJMrWMOJEr6loufyk3v
-	 GxN+iTqE+rS5cP1f0byitZIEqLGcxgJtMtY43rAQ=
+	b=p2z1QKONTmswn3UX799+2J25Q9AaScWUtxVySqShxCxtPnT+Rhh3H11CckNM8+OJg
+	 44gIJoswpLxybD1/79TmIZw0/L7j+/FF0gHXNS9+bolXXvmYUxtZVKGD66unIucp+z
+	 AEs/PoewUx1yLkDpSGNrVVqCfzlfwvAuM+7VmqHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 223/731] regulator: core: use kfree_const() to free space conditionally
-Date: Wed, 28 Dec 2022 15:35:30 +0100
-Message-Id: <20221228144303.027659276@linuxfoundation.org>
+Subject: [PATCH 6.0 0028/1073] arm64: dts: qcom: sm8250: correct LPASS pin pull down
+Date: Wed, 28 Dec 2022 15:26:56 +0100
+Message-Id: <20221228144328.910965923@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang ShaoBo <bobo.shaobowang@huawei.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit dc8d006d15b623c1d80b90b45d6dcb6e890dad09 ]
+[ Upstream commit 195a0a11d66d6c696cbcf398d6bc3f3a3a462f7c ]
 
-Use kfree_const() to free supply_name conditionally in create_regulator()
-as supply_name may be allocated from kmalloc() or directly from .rodata
-section.
+The pull-down property is actually bias-pull-down.
 
-Fixes: 87fe29b61f95 ("regulator: push allocations in create_regulator() outside of lock")
-Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
-Link: https://lore.kernel.org/r/20221123034616.3609537-1-bobo.shaobowang@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 3160c1b894d9 ("arm64: dts: qcom: sm8250: add lpass lpi pin controller node")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20220927153429.55365-4-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 2 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 7bf85e0cce47..65900895a0b2 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -1750,7 +1750,7 @@ static struct regulator *create_regulator(struct regulator_dev *rdev,
- 
- 	regulator = kzalloc(sizeof(*regulator), GFP_KERNEL);
- 	if (regulator == NULL) {
--		kfree(supply_name);
-+		kfree_const(supply_name);
- 		return NULL;
- 	}
- 
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index 052b4dbc1ee4..f4abca3a0843 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -2447,7 +2447,7 @@ data {
+ 					pins = "gpio7";
+ 					function = "dmic1_data";
+ 					drive-strength = <2>;
+-					pull-down;
++					bias-pull-down;
+ 					input-enable;
+ 				};
+ 			};
 -- 
 2.35.1
 
