@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628BB1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4F0C433EF;
-	Wed, 28 Dec 2022 15:13:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06FA71863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80F17C433EF;
+	Wed, 28 Dec 2022 15:13:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240396;
-	bh=+p2VAqoFUUaqsPnAyXOiAtc5/NbSfqaVZt+07BMRA6c=;
+	s=korg; t=1672240398;
+	bh=uASIUEgxAFYrKr97B58yUNGm0Q7XyTbyU3pgxmTCmA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EY9yJCHMUdJewyxZr/dkUxEq7DqQHnU4lF+VnvWx3WRpvm5S5jhhJve48V9eRHjhM
-	 d++R/yPYRDlVSnD52A9PC2KZ1rD29JZ8zI4PmgXkuO+8jpvoomyxNNDwenLIIIzpaO
-	 cMZyNatsCEjw2Xd73mZMZaUEXspPYjimynOten7A=
+	b=0xP8fWLN8Gu2p5UhsYYln6p/OqXpyDw0Tm5/V6Kc9AeAO3mXYCbzlaGG6uJsrKUgV
+	 CRCgCC2gYw7M4Fbw7G3I6N3JqJK5hNf7ldhyqnkMzkxXG7sWYrRPj1GWCM15yt+TNg
+	 vZEzbKOL7jNie/tFLVGC9ZT6iN7z+yaKKW0ycZ3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Md Iqbal Hossain <md.iqbal.hossain@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Firo Yang <firo.yang@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0117/1146] x86/sgx: Reduce delay and interference of enclave release
-Date: Wed, 28 Dec 2022 15:27:36 +0100
-Message-Id: <20221228144333.335253873@linuxfoundation.org>
+Subject: [PATCH 5.15 345/731] sctp: sysctl: make extra pointers netns aware
+Date: Wed, 28 Dec 2022 15:37:32 +0100
+Message-Id: <20221228144306.565979398@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,140 +36,164 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Reinette Chatre <reinette.chatre@intel.com>
+From: Firo Yang <firo.yang@suse.com>
 
-[ Upstream commit 7b72c823ddf8aaaec4e9fb28e6fbe4d511e7dad1 ]
+[ Upstream commit da05cecc4939c0410d56c29e252998b192756318 ]
 
-commit 8795359e35bc ("x86/sgx: Silence softlockup detection when
-releasing large enclaves") introduced a cond_resched() during enclave
-release where the EREMOVE instruction is applied to every 4k enclave
-page. Giving other tasks an opportunity to run while tearing down a
-large enclave placates the soft lockup detector but Iqbal found
-that the fix causes a 25% performance degradation of a workload
-run using Gramine.
+Recently, a customer reported that from their container whose
+net namespace is different to the host's init_net, they can't set
+the container's net.sctp.rto_max to any value smaller than
+init_net.sctp.rto_min.
 
-Gramine maintains a 1:1 mapping between processes and SGX enclaves.
-That means if a workload in an enclave creates a subprocess then
-Gramine creates a duplicate enclave for that subprocess to run in.
-The consequence is that the release of the enclave used to run
-the subprocess can impact the performance of the workload that is
-run in the original enclave, especially in large enclaves when
-SGX2 is not in use.
+For instance,
+Host:
+sudo sysctl net.sctp.rto_min
+net.sctp.rto_min = 1000
 
-The workload run by Iqbal behaves as follows:
-Create enclave (enclave "A")
-/* Initialize workload in enclave "A" */
-Create enclave (enclave "B")
-/* Run subprocess in enclave "B" and send result to enclave "A" */
-Release enclave (enclave "B")
-/* Run workload in enclave "A" */
-Release enclave (enclave "A")
+Container:
+echo 100 > /mnt/proc-net/sctp/rto_min
+echo 400 > /mnt/proc-net/sctp/rto_max
+echo: write error: Invalid argument
 
-The performance impact of releasing enclave "B" in the above scenario
-is amplified when there is a lot of SGX memory and the enclave size
-matches the SGX memory. When there is 128GB SGX memory and an enclave
-size of 128GB, from the time enclave "B" starts the 128GB SGX memory
-is oversubscribed with a combined demand for 256GB from the two
-enclaves.
+This is caused by the check made from this'commit 4f3fdf3bc59c
+("sctp: add check rto_min and rto_max in sysctl")'
+When validating the input value, it's always referring the boundary
+value set for the init_net namespace.
 
-Before commit 8795359e35bc ("x86/sgx: Silence softlockup detection when
-releasing large enclaves") enclave release was done in a tight loop
-without giving other tasks a chance to run. Even though the system
-experienced soft lockups the workload (run in enclave "A") obtained
-good performance numbers because when the workload started running
-there was no interference.
+Having container's rto_max smaller than host's init_net.sctp.rto_min
+does make sense. Consider that the rto between two containers on the
+same host is very likely smaller than it for two hosts.
 
-Commit 8795359e35bc ("x86/sgx: Silence softlockup detection when
-releasing large enclaves") gave other tasks opportunity to run while an
-enclave is released. The impact of this in this scenario is that while
-enclave "B" is released and needing to access each page that belongs
-to it in order to run the SGX EREMOVE instruction on it, enclave "A"
-is attempting to run the workload needing to access the enclave
-pages that belong to it. This causes a lot of swapping due to the
-demand for the oversubscribed SGX memory. Longer latencies are
-experienced by the workload in enclave "A" while enclave "B" is
-released.
+So to fix this problem, as suggested by Marcelo, this patch makes the
+extra pointers of rto_min, rto_max, pf_retrans, and ps_retrans point
+to the corresponding variables from the newly created net namespace while
+the new net namespace is being registered in sctp_sysctl_net_register.
 
-Improve the performance of enclave release while still avoiding the
-soft lockup detector with two enhancements:
-- Only call cond_resched() after XA_CHECK_SCHED iterations.
-- Use the xarray advanced API to keep the xarray locked for
-  XA_CHECK_SCHED iterations instead of locking and unlocking
-  at every iteration.
-
-This batching solution is copied from sgx_encl_may_map() that
-also iterates through all enclave pages using this technique.
-
-With this enhancement the workload experiences a 5%
-performance degradation when compared to a kernel without
-commit 8795359e35bc ("x86/sgx: Silence softlockup detection when
-releasing large enclaves"), an improvement to the reported 25%
-degradation, while still placating the soft lockup detector.
-
-Scenarios with poor performance are still possible even with these
-enhancements. For example, short workloads creating sub processes
-while running in large enclaves. Further performance improvements
-are pursued in user space through avoiding to create duplicate enclaves
-for certain sub processes, and using SGX2 that will do lazy allocation
-of pages as needed so enclaves created for sub processes start quickly
-and release quickly.
-
-Fixes: 8795359e35bc ("x86/sgx: Silence softlockup detection when releasing large enclaves")
-Reported-by: Md Iqbal Hossain <md.iqbal.hossain@intel.com>
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Tested-by: Md Iqbal Hossain <md.iqbal.hossain@intel.com>
-Link: https://lore.kernel.org/all/00efa80dd9e35dc85753e1c5edb0344ac07bb1f0.1667236485.git.reinette.chatre%40intel.com
+Fixes: 4f3fdf3bc59c ("sctp: add check rto_min and rto_max in sysctl")
+Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Signed-off-by: Firo Yang <firo.yang@suse.com>
+Link: https://lore.kernel.org/r/20221209054854.23889-1-firo.yang@suse.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/sgx/encl.c | 23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ net/sctp/sysctl.c | 73 ++++++++++++++++++++++++++++-------------------
+ 1 file changed, 44 insertions(+), 29 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/sgx/encl.c b/arch/x86/kernel/cpu/sgx/encl.c
-index 1ec20807de1e..2c258255a629 100644
---- a/arch/x86/kernel/cpu/sgx/encl.c
-+++ b/arch/x86/kernel/cpu/sgx/encl.c
-@@ -680,11 +680,15 @@ const struct vm_operations_struct sgx_vm_ops = {
- void sgx_encl_release(struct kref *ref)
- {
- 	struct sgx_encl *encl = container_of(ref, struct sgx_encl, refcount);
-+	unsigned long max_page_index = PFN_DOWN(encl->base + encl->size - 1);
- 	struct sgx_va_page *va_page;
- 	struct sgx_encl_page *entry;
--	unsigned long index;
-+	unsigned long count = 0;
+diff --git a/net/sctp/sysctl.c b/net/sctp/sysctl.c
+index b46a416787ec..43ebf090029d 100644
+--- a/net/sctp/sysctl.c
++++ b/net/sctp/sysctl.c
+@@ -84,17 +84,18 @@ static struct ctl_table sctp_table[] = {
+ 	{ /* sentinel */ }
+ };
+ 
++/* The following index defines are used in sctp_sysctl_net_register().
++ * If you add new items to the sctp_net_table, please ensure that
++ * the index values of these defines hold the same meaning indicated by
++ * their macro names when they appear in sctp_net_table.
++ */
++#define SCTP_RTO_MIN_IDX       0
++#define SCTP_RTO_MAX_IDX       1
++#define SCTP_PF_RETRANS_IDX    2
++#define SCTP_PS_RETRANS_IDX    3
 +
-+	XA_STATE(xas, &encl->page_array, PFN_DOWN(encl->base));
+ static struct ctl_table sctp_net_table[] = {
+-	{
+-		.procname	= "rto_initial",
+-		.data		= &init_net.sctp.rto_initial,
+-		.maxlen		= sizeof(unsigned int),
+-		.mode		= 0644,
+-		.proc_handler	= proc_dointvec_minmax,
+-		.extra1         = SYSCTL_ONE,
+-		.extra2         = &timer_max
+-	},
+-	{
++	[SCTP_RTO_MIN_IDX] = {
+ 		.procname	= "rto_min",
+ 		.data		= &init_net.sctp.rto_min,
+ 		.maxlen		= sizeof(unsigned int),
+@@ -103,7 +104,7 @@ static struct ctl_table sctp_net_table[] = {
+ 		.extra1         = SYSCTL_ONE,
+ 		.extra2         = &init_net.sctp.rto_max
+ 	},
+-	{
++	[SCTP_RTO_MAX_IDX] =  {
+ 		.procname	= "rto_max",
+ 		.data		= &init_net.sctp.rto_max,
+ 		.maxlen		= sizeof(unsigned int),
+@@ -112,6 +113,33 @@ static struct ctl_table sctp_net_table[] = {
+ 		.extra1         = &init_net.sctp.rto_min,
+ 		.extra2         = &timer_max
+ 	},
++	[SCTP_PF_RETRANS_IDX] = {
++		.procname	= "pf_retrans",
++		.data		= &init_net.sctp.pf_retrans,
++		.maxlen		= sizeof(int),
++		.mode		= 0644,
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= SYSCTL_ZERO,
++		.extra2		= &init_net.sctp.ps_retrans,
++	},
++	[SCTP_PS_RETRANS_IDX] = {
++		.procname	= "ps_retrans",
++		.data		= &init_net.sctp.ps_retrans,
++		.maxlen		= sizeof(int),
++		.mode		= 0644,
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= &init_net.sctp.pf_retrans,
++		.extra2		= &ps_retrans_max,
++	},
++	{
++		.procname	= "rto_initial",
++		.data		= &init_net.sctp.rto_initial,
++		.maxlen		= sizeof(unsigned int),
++		.mode		= 0644,
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1         = SYSCTL_ONE,
++		.extra2         = &timer_max
++	},
+ 	{
+ 		.procname	= "rto_alpha_exp_divisor",
+ 		.data		= &init_net.sctp.rto_alpha,
+@@ -207,24 +235,6 @@ static struct ctl_table sctp_net_table[] = {
+ 		.extra1		= SYSCTL_ONE,
+ 		.extra2		= SYSCTL_INT_MAX,
+ 	},
+-	{
+-		.procname	= "pf_retrans",
+-		.data		= &init_net.sctp.pf_retrans,
+-		.maxlen		= sizeof(int),
+-		.mode		= 0644,
+-		.proc_handler	= proc_dointvec_minmax,
+-		.extra1		= SYSCTL_ZERO,
+-		.extra2		= &init_net.sctp.ps_retrans,
+-	},
+-	{
+-		.procname	= "ps_retrans",
+-		.data		= &init_net.sctp.ps_retrans,
+-		.maxlen		= sizeof(int),
+-		.mode		= 0644,
+-		.proc_handler	= proc_dointvec_minmax,
+-		.extra1		= &init_net.sctp.pf_retrans,
+-		.extra2		= &ps_retrans_max,
+-	},
+ 	{
+ 		.procname	= "sndbuf_policy",
+ 		.data		= &init_net.sctp.sndbuf_policy,
+@@ -586,6 +596,11 @@ int sctp_sysctl_net_register(struct net *net)
+ 	for (i = 0; table[i].data; i++)
+ 		table[i].data += (char *)(&net->sctp) - (char *)&init_net.sctp;
  
--	xa_for_each(&encl->page_array, index, entry) {
-+	xas_lock(&xas);
-+	xas_for_each(&xas, entry, max_page_index) {
- 		if (entry->epc_page) {
- 			/*
- 			 * The page and its radix tree entry cannot be freed
-@@ -699,9 +703,20 @@ void sgx_encl_release(struct kref *ref)
- 		}
- 
- 		kfree(entry);
--		/* Invoke scheduler to prevent soft lockups. */
--		cond_resched();
-+		/*
-+		 * Invoke scheduler on every XA_CHECK_SCHED iteration
-+		 * to prevent soft lockups.
-+		 */
-+		if (!(++count % XA_CHECK_SCHED)) {
-+			xas_pause(&xas);
-+			xas_unlock(&xas);
++	table[SCTP_RTO_MIN_IDX].extra2 = &net->sctp.rto_max;
++	table[SCTP_RTO_MAX_IDX].extra1 = &net->sctp.rto_min;
++	table[SCTP_PF_RETRANS_IDX].extra2 = &net->sctp.ps_retrans;
++	table[SCTP_PS_RETRANS_IDX].extra1 = &net->sctp.pf_retrans;
 +
-+			cond_resched();
-+
-+			xas_lock(&xas);
-+		}
- 	}
-+	xas_unlock(&xas);
- 
- 	xa_destroy(&encl->page_array);
- 
+ 	net->sctp.sysctl_header = register_net_sysctl(net, "net/sctp", table);
+ 	if (net->sctp.sysctl_header == NULL) {
+ 		kfree(table);
 -- 
 2.35.1
 
