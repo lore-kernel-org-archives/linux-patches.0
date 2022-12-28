@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF8B21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2534BC433EF;
-	Wed, 28 Dec 2022 15:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DFEF1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71D3C433D2;
+	Wed, 28 Dec 2022 15:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240015;
-	bh=35cZwjIkshA2Ay9vlvOfvedHRYE1QOuN38cd7osSdl0=;
+	s=korg; t=1672240018;
+	bh=rnj2D8Gu4UrcFf3KpzZLWCSLRUJj0Yb9goAZhYSmhXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tfi4F1mVRLbouteFEZgXvift8aH1LqjKvyUrJF+uXXZSVtA44U1Zpsc/9UQYyQd9z
-	 BRDUlviT6dAWRyFuXgoDuImmTw1i4i6jmhvGdBRuMLyp52QmhXhnT/jX67DVxHvvI3
-	 OGRyjLAHRQcuOoCjwerhkWqSpV41I/FTMpecU0fM=
+	b=sDZZyVpOiX87Pt6iy1Rr2XHq6tlAbpa5BI0rG+FB4Rqbz0BX0oChUGIzOLWiemPxi
+	 FZolOb1MswfpYR7VcMwBZzf0wFwAJY7mKVB2KQJUcDjzhgzsbaZ73/RYVA0vfSKO4x
+	 y9w1fmN4ELgT1AYMMyTM/hHfjV30Czd4KRO+WFW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Martin Pitt <mpitt@redhat.com>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0071/1146] arm64: dts: mt6779: Fix devicetree build warnings
-Date: Wed, 28 Dec 2022 15:26:50 +0100
-Message-Id: <20221228144332.084572690@linuxfoundation.org>
+Subject: [PATCH 6.0 0108/1073] fs: dont audit the capability check in simple_xattr_list()
+Date: Wed, 28 Dec 2022 15:28:16 +0100
+Message-Id: <20221228144330.976270445@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,74 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Ondrej Mosnacek <omosnace@redhat.com>
 
-[ Upstream commit 4d759c524c15dc4151e40b9e3f368147fda7b789 ]
+[ Upstream commit e7eda157c4071cd1e69f4b1687b0fbe1ae5e6f46 ]
 
-Rename fixed-clock oscillators to oscillator-26m and oscillator-32k
-and remove the unit address to fix the unit_address_vs_reg warning;
-fix the unit address for interrupt and intpol controllers by
-removing a leading zero in their unit address.
+The check being unconditional may lead to unwanted denials reported by
+LSMs when a process has the capability granted by DAC, but denied by an
+LSM. In the case of SELinux such denials are a problem, since they can't
+be effectively filtered out via the policy and when not silenced, they
+produce noise that may hide a true problem or an attack.
 
-This commit fixes the following warnings:
+Checking for the capability only if any trusted xattr is actually
+present wouldn't really address the issue, since calling listxattr(2) on
+such node on its own doesn't indicate an explicit attempt to see the
+trusted xattrs. Additionally, it could potentially leak the presence of
+trusted xattrs to an unprivileged user if they can check for the denials
+(e.g. through dmesg).
 
-(unit_address_vs_reg): /oscillator@0: node has a unit name, but
-no reg or ranges property
-(unit_address_vs_reg): /oscillator@1: node has a unit name, but
-no reg or ranges property
-(simple_bus_reg): /soc/interrupt-controller@0c000000: simple-bus
-unit address format error, expected "c000000"
-(simple_bus_reg): /soc/intpol-controller@0c53a650: simple-bus
-unit address format error, expected "c53a650"
+Therefore, it's best (and simplest) to keep the check unconditional and
+instead use ns_capable_noaudit() that will silence any associated LSM
+denials.
 
-Fixes: 4c7a6260775d ("arm64: dts: add dts nodes for MT6779")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221013152212.416661-3-angelogioacchino.delregno@collabora.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Fixes: 38f38657444d ("xattr: extract simple_xattr code from tmpfs")
+Reported-by: Martin Pitt <mpitt@redhat.com>
+Suggested-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
+Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Reviewed-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt6779.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/xattr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt6779.dtsi b/arch/arm64/boot/dts/mediatek/mt6779.dtsi
-index 9bdf5145966c..dde9ce137b4f 100644
---- a/arch/arm64/boot/dts/mediatek/mt6779.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt6779.dtsi
-@@ -88,14 +88,14 @@ pmu {
- 		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW 0>;
- 	};
- 
--	clk26m: oscillator@0 {
-+	clk26m: oscillator-26m {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <26000000>;
- 		clock-output-names = "clk26m";
- 	};
- 
--	clk32k: oscillator@1 {
-+	clk32k: oscillator-32k {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <32768>;
-@@ -117,7 +117,7 @@ soc {
- 		compatible = "simple-bus";
- 		ranges;
- 
--		gic: interrupt-controller@0c000000 {
-+		gic: interrupt-controller@c000000 {
- 			compatible = "arm,gic-v3";
- 			#interrupt-cells = <4>;
- 			interrupt-parent = <&gic>;
-@@ -138,7 +138,7 @@ ppi_cluster1: interrupt-partition-1 {
- 
- 		};
- 
--		sysirq: intpol-controller@0c53a650 {
-+		sysirq: intpol-controller@c53a650 {
- 			compatible = "mediatek,mt6779-sysirq",
- 				     "mediatek,mt6577-sysirq";
- 			interrupt-controller;
+diff --git a/fs/xattr.c b/fs/xattr.c
+index a1f4998bc6be..8ea6b104b106 100644
+--- a/fs/xattr.c
++++ b/fs/xattr.c
+@@ -1147,7 +1147,7 @@ static int xattr_list_one(char **buffer, ssize_t *remaining_size,
+ ssize_t simple_xattr_list(struct inode *inode, struct simple_xattrs *xattrs,
+ 			  char *buffer, size_t size)
+ {
+-	bool trusted = capable(CAP_SYS_ADMIN);
++	bool trusted = ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN);
+ 	struct simple_xattr *xattr;
+ 	ssize_t remaining_size = size;
+ 	int err = 0;
 -- 
 2.35.1
 
