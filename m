@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FBFA1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7A72C433D2;
-	Wed, 28 Dec 2022 15:37:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E04CC1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65368C433D2;
+	Wed, 28 Dec 2022 15:37:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241860;
-	bh=RoHsNaFHeGJm6qUJRjDvfY9Aow5B5u6yqUOYk2g/nLw=;
+	s=korg; t=1672241862;
+	bh=dUuzfAvJTRQPR0LvCjGelH1YSJVCYz6LxaoNl1VfyJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QDkG8llAPU4hMT7zqTOoYvGVvY9ooQH07X4Er1bRoO6JENMUldsRY/xC0XZGJcXi1
-	 QXCqjD3h65SlYao6xy2IihdT4s8EF+FzwZx7lFyMtKV9cVRb9PTaqaEZOH87hIHpMv
-	 7cMKkI0V6z7ggYqFQB4bqoku8IGZPg5FX28ZpAUI=
+	b=m+DyiDFSqWLlIwczqkNLdjH2619eoUnBVwramfENKcq+ajvSKk5TBqlWpTuj41ZjB
+	 Ikn6pkTWS23xPgQPLdRMHQP5T8PRXBZNHlE1l8AKCRUOc1E8OX0yqhTA67NoglbSQc
+	 IUteB6LgD6dgptzkZG3bTbGUaTKlcYlKDJMFlLNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Rob Clark <robdclark@chromium.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Akhil P Oommen <quic_akhilpo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0298/1146] mtd: Fix device name leak when register device failed in add_mtd_device()
-Date: Wed, 28 Dec 2022 15:30:37 +0100
-Message-Id: <20221228144338.232139891@linuxfoundation.org>
+Subject: [PATCH 6.0 0337/1073] drm/msm/a6xx: Fix speed-bin detection vs probe-defer
+Date: Wed, 28 Dec 2022 15:32:05 +0100
+Message-Id: <20221228144337.156896225@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,59 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 895d68a39481a75c680aa421546931fb11942fa6 ]
+[ Upstream commit f6d1918794ef92b4e26b80c3d40365347b76b1fd ]
 
-There is a kmemleak when register device failed:
-  unreferenced object 0xffff888101aab550 (size 8):
-    comm "insmod", pid 3922, jiffies 4295277753 (age 925.408s)
-    hex dump (first 8 bytes):
-      6d 74 64 30 00 88 ff ff                          mtd0....
-    backtrace:
-      [<00000000bde26724>] __kmalloc_node_track_caller+0x4e/0x150
-      [<000000003c32b416>] kvasprintf+0xb0/0x130
-      [<000000001f7a8f15>] kobject_set_name_vargs+0x2f/0xb0
-      [<000000006e781163>] dev_set_name+0xab/0xe0
-      [<00000000e30d0c78>] add_mtd_device+0x4bb/0x700
-      [<00000000f3d34de7>] mtd_device_parse_register+0x2ac/0x3f0
-      [<00000000c0d88488>] 0xffffffffa0238457
-      [<00000000b40d0922>] 0xffffffffa02a008f
-      [<0000000023d17b9d>] do_one_initcall+0x87/0x2a0
-      [<00000000770f6ca6>] do_init_module+0xdf/0x320
-      [<000000007b6768fe>] load_module+0x2f98/0x3330
-      [<00000000346bed5a>] __do_sys_finit_module+0x113/0x1b0
-      [<00000000674c2290>] do_syscall_64+0x35/0x80
-      [<000000004c6a8d97>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+If we get an error (other than -ENOENT) we need to propagate that up the
+stack.  Otherwise if the nvmem driver hasn't probed yet, we'll end up
+end up claiming that we support all the OPPs which is not likely to be
+true (and on some generations impossible to be true, ie. if there are
+conflicting OPPs).
 
-If register device failed, should call put_device() to give up the
-reference.
+v2: Update commit msg, gc unused label, etc
+v3: Add previously missing \n's
 
-Fixes: 1f24b5a8ecbb ("[MTD] driver model updates")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20221022121352.2534682-1-zhangxiaoxu5@huawei.com
+Fixes: fe7952c629da ("drm/msm: Add speed-bin support to a618 gpu")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/511690/
+Link: https://lore.kernel.org/r/20221115154637.1613968-1-robdclark@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdcore.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
-index 0b4ca0aa4132..a16627455c1d 100644
---- a/drivers/mtd/mtdcore.c
-+++ b/drivers/mtd/mtdcore.c
-@@ -723,8 +723,10 @@ int add_mtd_device(struct mtd_info *mtd)
- 	mtd_check_of_node(mtd);
- 	of_node_get(mtd_get_of_node(mtd));
- 	error = device_register(&mtd->dev);
--	if (error)
-+	if (error) {
-+		put_device(&mtd->dev);
- 		goto fail_added;
-+	}
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 4d501100b9e4..5804c35ae74b 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1869,7 +1869,7 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_rev rev, u32 fuse)
  
- 	/* Add the nvmem provider */
- 	error = mtd_nvmem_add(mtd);
+ 	if (val == UINT_MAX) {
+ 		DRM_DEV_ERROR(dev,
+-			"missing support for speed-bin: %u. Some OPPs may not be supported by hardware",
++			"missing support for speed-bin: %u. Some OPPs may not be supported by hardware\n",
+ 			fuse);
+ 		return UINT_MAX;
+ 	}
+@@ -1879,7 +1879,7 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_rev rev, u32 fuse)
+ 
+ static int a6xx_set_supported_hw(struct device *dev, struct adreno_rev rev)
+ {
+-	u32 supp_hw = UINT_MAX;
++	u32 supp_hw;
+ 	u32 speedbin;
+ 	int ret;
+ 
+@@ -1891,15 +1891,13 @@ static int a6xx_set_supported_hw(struct device *dev, struct adreno_rev rev)
+ 	if (ret == -ENOENT) {
+ 		return 0;
+ 	} else if (ret) {
+-		DRM_DEV_ERROR(dev,
+-			      "failed to read speed-bin (%d). Some OPPs may not be supported by hardware",
+-			      ret);
+-		goto done;
++		dev_err_probe(dev, ret,
++			      "failed to read speed-bin. Some OPPs may not be supported by hardware\n");
++		return ret;
+ 	}
+ 
+ 	supp_hw = fuse_to_supp_hw(dev, rev, speedbin);
+ 
+-done:
+ 	ret = devm_pm_opp_set_supported_hw(dev, &supp_hw, 1);
+ 	if (ret)
+ 		return ret;
 -- 
 2.35.1
 
