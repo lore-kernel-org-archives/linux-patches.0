@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE3A1868
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43BADC433D2;
-	Wed, 28 Dec 2022 14:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B4AF1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9E6DC433EF;
+	Wed, 28 Dec 2022 14:56:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239406;
-	bh=jV+jo97mkdKvm8iSkp3Cpt/piH5zPWbhM9ZmxXg4gDA=;
+	s=korg; t=1672239409;
+	bh=MbAb0bNy8l/E5IppMg6LDyvbtgW8oiWqlw+mbO+kd0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PLzowEjx04Il7MwzptIilzDovwYojI/K0UmyMr2w8Gg1uaol2pvg/JYtOccqJqStt
-	 y1DwWV58Nb0Go58+jX3ME+b3C7HfeOTtX95fKR9HLQ1SxvgNrmWenL8KqieiQUvitF
-	 /ZdEvO7FcBiQxHmh3gn39Wk8/Gf2azNkzUvexOjQ=
+	b=k4N1gmi8rueSGjbfFOhsczX/X393zuxtk8Ibi27/HcIDNrkAs5Kto6OUDRe5gbzRT
+	 BN54pY2fF1m08QfpOS97hYkMk5i1yk1rK55gz9GuJYPbuuYUA4vN1jM15IMyMogEcx
+	 PwXMw9rTtmak5F4fV8zM8eFg8T/nxdwX18jocwnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	ZhangPeng <zhangpeng362@huawei.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0024/1073] ARM: dts: stm32: Fix AV96 WLAN regulator gpio property
-Date: Wed, 28 Dec 2022 15:26:52 +0100
-Message-Id: <20221228144328.807638523@linuxfoundation.org>
+Subject: [PATCH 5.15 220/731] pinctrl: k210: call of_node_put()
+Date: Wed, 28 Dec 2022 15:35:27 +0100
+Message-Id: <20221228144302.941264210@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: ZhangPeng <zhangpeng362@huawei.com>
 
-[ Upstream commit d5d577e3d50713ad11d98dbdaa48bb494346c26d ]
+[ Upstream commit a8acc11643082a706de86a19f1f824712d971984 ]
 
-The WLAN regulator uses 'gpios' property instead of 'gpio' to specify
-regulator enable GPIO. While the former is also currently handled by
-the Linux kernel regulator-fixed driver, the later is the correct one
-per DT bindings. Update the DT to use the later.
+Since for_each_available_child_of_node() will increase the refcount of
+node, we need to call of_node_put() manually when breaking out of the
+iteration.
 
-Fixes: 7dd5cbba42c93 ("ARM: dts: stm32: Enable WiFi on AV96")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Fixes: d4c34d09ab03 ("pinctrl: Add RISC-V Canaan Kendryte K210 FPIOA driver")
+Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
+Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Link: https://lore.kernel.org/r/20221122075853.2496680-1-zhangpeng362@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-k210.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
-index 90933077d66d..b6957cbdeff5 100644
---- a/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
-+++ b/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
-@@ -100,7 +100,7 @@ wlan_pwr: regulator-wlan {
- 		regulator-min-microvolt = <3300000>;
- 		regulator-max-microvolt = <3300000>;
+diff --git a/drivers/pinctrl/pinctrl-k210.c b/drivers/pinctrl/pinctrl-k210.c
+index ecab6bf63dc6..ad4db99094a7 100644
+--- a/drivers/pinctrl/pinctrl-k210.c
++++ b/drivers/pinctrl/pinctrl-k210.c
+@@ -862,8 +862,10 @@ static int k210_pinctrl_dt_node_to_map(struct pinctrl_dev *pctldev,
+ 	for_each_available_child_of_node(np_config, np) {
+ 		ret = k210_pinctrl_dt_subnode_to_map(pctldev, np, map,
+ 						     &reserved_maps, num_maps);
+-		if (ret < 0)
++		if (ret < 0) {
++			of_node_put(np);
+ 			goto err;
++		}
+ 	}
+ 	return 0;
  
--		gpios = <&gpioz 3 GPIO_ACTIVE_HIGH>;
-+		gpio = <&gpioz 3 GPIO_ACTIVE_HIGH>;
- 		enable-active-high;
- 	};
- };
 -- 
 2.35.1
 
