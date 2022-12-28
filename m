@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E292C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44FD4C433D2;
-	Wed, 28 Dec 2022 15:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65E9A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC85AC433EF;
+	Wed, 28 Dec 2022 15:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240123;
-	bh=at0zuXgi2ougpB1ejcoFSfRSnpN+v793kxvZwbvrEeI=;
+	s=korg; t=1672240126;
+	bh=nbsY3WSVrPhxu28msYZko4vjGpymjKrQS4avgwvyqEM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=19AeT7L3OS/0LV7HmHfgmSh0I6dv+y2Bt+ED+ZEKs5Sd3a0dZ+YG/iL3sOSiLrnsc
-	 qBvKPzfRyrjqZRZ0am48rI3l35Uk1iRa8jkGFROE8IA3synzQcPPdbalGZZ9FtwS//
-	 94FXaztsZ3+PsYR2vi0hfIy9XWqZyriyMBvwe/Ag=
+	b=Cp2NQAf3yOLlMpVgI2HIaDYAYzP5eioAegm6semmQEQxf0i9EuTeiinc0c8UbBngt
+	 xTuCGAl+XqjdxLYSh03Nt2G52FxYegzUsNLHzzVwQdHKUrWnmNINxtaoZrfYPzWbYt
+	 4RSRsrUFcVl1fR7iIerGHbUGd5OhQKmYXAFBHP4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0083/1146] ARM: dts: armada-xp: Fix assigned-addresses for every PCIe Root Port
-Date: Wed, 28 Dec 2022 15:27:02 +0100
-Message-Id: <20221228144332.401347577@linuxfoundation.org>
+Subject: [PATCH 5.15 312/731] media: coda: Add check for dcoda_iram_alloc
+Date: Wed, 28 Dec 2022 15:36:59 +0100
+Message-Id: <20221228144305.621829166@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,141 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit eab276787f456cbea89fabea110fe0728673d308 ]
+[ Upstream commit 6b8082238fb8bb20f67e46388123e67a5bbc558d ]
 
-BDF of resource in DT assigned-addresses property of Marvell PCIe Root Port
-(PCI-to-PCI bridge) should match BDF in address part in that DT node name
-as specified resource belongs to Marvell PCIe Root Port itself.
+As the coda_iram_alloc may return NULL pointer,
+it should be better to check the return value
+in order to avoid NULL poineter dereference,
+same as the others.
 
-Fixes: 9d8f44f02d4a ("arm: mvebu: add PCIe Device Tree informations for Armada XP")
-Fixes: 12b69a599745 ("ARM: mvebu: second PCIe unit of Armada XP mv78230 is only x1 capable")
-Fixes: 2163e61c92d9 ("ARM: mvebu: fix second and third PCIe unit of Armada XP mv78260")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Fixes: b313bcc9a467 ("[media] coda: simplify IRAM setup")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/armada-xp-mv78230.dtsi |  8 ++++----
- arch/arm/boot/dts/armada-xp-mv78260.dtsi | 16 ++++++++--------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ drivers/media/platform/coda/coda-bit.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/armada-xp-mv78230.dtsi b/arch/arm/boot/dts/armada-xp-mv78230.dtsi
-index bf9360f41e0a..5ea9d509cd30 100644
---- a/arch/arm/boot/dts/armada-xp-mv78230.dtsi
-+++ b/arch/arm/boot/dts/armada-xp-mv78230.dtsi
-@@ -107,7 +107,7 @@ pcie1_intc: interrupt-controller {
+diff --git a/drivers/media/platform/coda/coda-bit.c b/drivers/media/platform/coda/coda-bit.c
+index c484c008ab02..284608845b85 100644
+--- a/drivers/media/platform/coda/coda-bit.c
++++ b/drivers/media/platform/coda/coda-bit.c
+@@ -852,7 +852,7 @@ static void coda_setup_iram(struct coda_ctx *ctx)
+ 		/* Only H.264BP and H.263P3 are considered */
+ 		iram_info->buf_dbk_y_use = coda_iram_alloc(iram_info, w64);
+ 		iram_info->buf_dbk_c_use = coda_iram_alloc(iram_info, w64);
+-		if (!iram_info->buf_dbk_c_use)
++		if (!iram_info->buf_dbk_y_use || !iram_info->buf_dbk_c_use)
+ 			goto out;
+ 		iram_info->axi_sram_use |= dbk_bits;
  
- 			pcie2: pcie@2,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
-+				assigned-addresses = <0x82001000 0 0x44000 0 0x2000>;
- 				reg = <0x1000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -135,7 +135,7 @@ pcie2_intc: interrupt-controller {
+@@ -876,7 +876,7 @@ static void coda_setup_iram(struct coda_ctx *ctx)
  
- 			pcie3: pcie@3,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x48000 0 0x2000>;
-+				assigned-addresses = <0x82001800 0 0x48000 0 0x2000>;
- 				reg = <0x1800 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -163,7 +163,7 @@ pcie3_intc: interrupt-controller {
+ 		iram_info->buf_dbk_y_use = coda_iram_alloc(iram_info, w128);
+ 		iram_info->buf_dbk_c_use = coda_iram_alloc(iram_info, w128);
+-		if (!iram_info->buf_dbk_c_use)
++		if (!iram_info->buf_dbk_y_use || !iram_info->buf_dbk_c_use)
+ 			goto out;
+ 		iram_info->axi_sram_use |= dbk_bits;
  
- 			pcie4: pcie@4,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x4c000 0 0x2000>;
-+				assigned-addresses = <0x82002000 0 0x4c000 0 0x2000>;
- 				reg = <0x2000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -191,7 +191,7 @@ pcie4_intc: interrupt-controller {
- 
- 			pcie5: pcie@5,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x80000 0 0x2000>;
-+				assigned-addresses = <0x82002800 0 0x80000 0 0x2000>;
- 				reg = <0x2800 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-diff --git a/arch/arm/boot/dts/armada-xp-mv78260.dtsi b/arch/arm/boot/dts/armada-xp-mv78260.dtsi
-index 0714af52e607..6c6fbb9faf5a 100644
---- a/arch/arm/boot/dts/armada-xp-mv78260.dtsi
-+++ b/arch/arm/boot/dts/armada-xp-mv78260.dtsi
-@@ -122,7 +122,7 @@ pcie1_intc: interrupt-controller {
- 
- 			pcie2: pcie@2,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
-+				assigned-addresses = <0x82001000 0 0x44000 0 0x2000>;
- 				reg = <0x1000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -150,7 +150,7 @@ pcie2_intc: interrupt-controller {
- 
- 			pcie3: pcie@3,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x48000 0 0x2000>;
-+				assigned-addresses = <0x82001800 0 0x48000 0 0x2000>;
- 				reg = <0x1800 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -178,7 +178,7 @@ pcie3_intc: interrupt-controller {
- 
- 			pcie4: pcie@4,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x4c000 0 0x2000>;
-+				assigned-addresses = <0x82002000 0 0x4c000 0 0x2000>;
- 				reg = <0x2000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -206,7 +206,7 @@ pcie4_intc: interrupt-controller {
- 
- 			pcie5: pcie@5,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x80000 0 0x2000>;
-+				assigned-addresses = <0x82002800 0 0x80000 0 0x2000>;
- 				reg = <0x2800 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -234,7 +234,7 @@ pcie5_intc: interrupt-controller {
- 
- 			pcie6: pcie@6,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x84000 0 0x2000>;
-+				assigned-addresses = <0x82003000 0 0x84000 0 0x2000>;
- 				reg = <0x3000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -262,7 +262,7 @@ pcie6_intc: interrupt-controller {
- 
- 			pcie7: pcie@7,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x88000 0 0x2000>;
-+				assigned-addresses = <0x82003800 0 0x88000 0 0x2000>;
- 				reg = <0x3800 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -290,7 +290,7 @@ pcie7_intc: interrupt-controller {
- 
- 			pcie8: pcie@8,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x8c000 0 0x2000>;
-+				assigned-addresses = <0x82004000 0 0x8c000 0 0x2000>;
- 				reg = <0x4000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -318,7 +318,7 @@ pcie8_intc: interrupt-controller {
- 
- 			pcie9: pcie@9,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x42000 0 0x2000>;
-+				assigned-addresses = <0x82004800 0 0x42000 0 0x2000>;
- 				reg = <0x4800 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
 -- 
 2.35.1
 
