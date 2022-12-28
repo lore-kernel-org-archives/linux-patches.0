@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1A51875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:00:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91AEC433D2;
-	Wed, 28 Dec 2022 16:00:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12B4D1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:00:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ABB3C433D2;
+	Wed, 28 Dec 2022 16:00:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243249;
-	bh=6SQ70RZccRw/EhbzPjDFSwlXxLAY5Ne+GUKkdIONBpY=;
+	s=korg; t=1672243251;
+	bh=oIHAkWDmVMo/Yiag7xa+x1Jg5pMtkjY98LWFLT5Ik7s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GvAfRsdFHW3Na2b4Gsyr/eKYzWiTUJydFx01azHq5MQ5ynPYZTrMalsLZGlDVU1kH
-	 oe8E17v9CeZ4qti/Xo4Vdghb+mcuv8ADpw//+FrQydITMLW9pKFMOZbjYMqX661Gjl
-	 EgZVGc/1+PcXqq3OiUcoXfj+E7RqV5Yz6vG8No8o=
+	b=duLfZJc0+s6OljsxyrgtDe72863paARmb4avjUAIRTgrVFatp7dXWJHGnomJlhsk0
+	 m6YuHXj0JyJ01VxnmvnVnUgbh8FZ13KvekvG4xTu3lX/AyGgCuuQNve6Ec2QwOQW7Z
+	 81ono6qQF4Vjc5zo1vdmcwMUJt8UGWb3zxQ9LzKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Wang Yufen <wangyufen@huawei.com>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0467/1146] clk: qcom: lpass-sc7180: Fix pm_runtime usage
-Date: Wed, 28 Dec 2022 15:33:26 +0100
-Message-Id: <20221228144342.870412963@linuxfoundation.org>
+Subject: [PATCH 6.0 0506/1073] wifi: brcmfmac: Fix error return code in brcmf_sdio_download_firmware()
+Date: Wed, 28 Dec 2022 15:34:54 +0100
+Message-Id: <20221228144341.787142481@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,133 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit ff1ccf59eaffd192efe21f7de9fb0c130faf1b1b ]
+[ Upstream commit c2f2924bc7f9ea75ef8d95863e710168f8196256 ]
 
-The sc7180 lpass clock controller's pm_runtime usage wasn't broken
-quite as spectacularly as the sc7280's pm_runtime usage, but it was
-still broken. Putting some printouts in at boot showed me this (with
-serial console enabled, which makes the prints slow and thus changes
-timing):
-  [    3.109951] DOUG: my_pm_clk_resume, usage=1
-  [    3.114767] DOUG: my_pm_clk_resume, usage=1
-  [    3.664443] DOUG: my_pm_clk_suspend, usage=0
-  [    3.897566] DOUG: my_pm_clk_suspend, usage=0
-  [    3.910137] DOUG: my_pm_clk_resume, usage=1
-  [    3.923217] DOUG: my_pm_clk_resume, usage=0
-  [    4.440116] DOUG: my_pm_clk_suspend, usage=-1
-  [    4.444982] DOUG: my_pm_clk_suspend, usage=0
-  [   14.170501] DOUG: my_pm_clk_resume, usage=1
-  [   14.176245] DOUG: my_pm_clk_resume, usage=0
+Fix to return a negative error code instead of 0 when
+brcmf_chip_set_active() fails. In addition, change the return
+value for brcmf_pcie_exit_download_state() to keep consistent.
 
-...or this w/out serial console:
-  [    0.556139] DOUG: my_pm_clk_resume, usage=1
-  [    0.556279] DOUG: my_pm_clk_resume, usage=1
-  [    1.058422] DOUG: my_pm_clk_suspend, usage=-1
-  [    1.058464] DOUG: my_pm_clk_suspend, usage=0
-  [    1.186250] DOUG: my_pm_clk_resume, usage=1
-  [    1.186292] DOUG: my_pm_clk_resume, usage=0
-  [    1.731536] DOUG: my_pm_clk_suspend, usage=-1
-  [    1.731557] DOUG: my_pm_clk_suspend, usage=0
-  [   10.288910] DOUG: my_pm_clk_resume, usage=1
-  [   10.289496] DOUG: my_pm_clk_resume, usage=0
-
-It seems to be doing roughly the right sequence of calls, but just
-like with sc7280 this is more by luck than anything. Having a usage of
--1 is just not OK.
-
-Let's fix this like we did with sc7280.
-
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Fixes: ce8c195e652f ("clk: qcom: lpasscc: Introduce pm autosuspend for SC7180")
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221104064055.2.I49b25b9bda9430fc7ea21e5a708ca5a0aced2798@changeid
+Fixes: d380ebc9b6fb ("brcmfmac: rename chip download functions")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/1669959342-27144-1-git-send-email-wangyufen@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/lpasscorecc-sc7180.c | 24 ++++++++++++++++--------
- 1 file changed, 16 insertions(+), 8 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 2 +-
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/lpasscorecc-sc7180.c b/drivers/clk/qcom/lpasscorecc-sc7180.c
-index ac09b7b840ab..a5731994cbed 100644
---- a/drivers/clk/qcom/lpasscorecc-sc7180.c
-+++ b/drivers/clk/qcom/lpasscorecc-sc7180.c
-@@ -356,7 +356,7 @@ static const struct qcom_cc_desc lpass_audio_hm_sc7180_desc = {
- 	.num_gdscs = ARRAY_SIZE(lpass_audio_hm_sc7180_gdscs),
- };
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index 97f0f13dfe50..7fc8d47f2281 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -626,7 +626,7 @@ static int brcmf_pcie_exit_download_state(struct brcmf_pciedev_info *devinfo,
+ 	}
  
--static int lpass_create_pm_clks(struct platform_device *pdev)
-+static int lpass_setup_runtime_pm(struct platform_device *pdev)
- {
- 	int ret;
- 
-@@ -375,7 +375,7 @@ static int lpass_create_pm_clks(struct platform_device *pdev)
- 	if (ret < 0)
- 		dev_err(&pdev->dev, "failed to acquire iface clock\n");
- 
--	return ret;
-+	return pm_runtime_resume_and_get(&pdev->dev);
+ 	if (!brcmf_chip_set_active(devinfo->ci, resetintr))
+-		return -EINVAL;
++		return -EIO;
+ 	return 0;
  }
  
- static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
-@@ -384,7 +384,7 @@ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
- 	struct regmap *regmap;
- 	int ret;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+index 8968809399c7..2e4cd8096f03 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
+@@ -3412,6 +3412,7 @@ static int brcmf_sdio_download_firmware(struct brcmf_sdio *bus,
+ 	/* Take arm out of reset */
+ 	if (!brcmf_chip_set_active(bus->ci, rstvec)) {
+ 		brcmf_err("error getting out of ARM core reset\n");
++		bcmerror = -EIO;
+ 		goto err;
+ 	}
  
--	ret = lpass_create_pm_clks(pdev);
-+	ret = lpass_setup_runtime_pm(pdev);
- 	if (ret)
- 		return ret;
- 
-@@ -392,12 +392,14 @@ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
- 	desc = &lpass_audio_hm_sc7180_desc;
- 	ret = qcom_cc_probe_by_index(pdev, 1, desc);
- 	if (ret)
--		return ret;
-+		goto exit;
- 
- 	lpass_core_cc_sc7180_regmap_config.name = "lpass_core_cc";
- 	regmap = qcom_cc_map(pdev, &lpass_core_cc_sc7180_desc);
--	if (IS_ERR(regmap))
--		return PTR_ERR(regmap);
-+	if (IS_ERR(regmap)) {
-+		ret = PTR_ERR(regmap);
-+		goto exit;
-+	}
- 
- 	/*
- 	 * Keep the CLK always-ON
-@@ -415,6 +417,7 @@ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
- 	ret = qcom_cc_really_probe(pdev, &lpass_core_cc_sc7180_desc, regmap);
- 
- 	pm_runtime_mark_last_busy(&pdev->dev);
-+exit:
- 	pm_runtime_put_autosuspend(&pdev->dev);
- 
- 	return ret;
-@@ -425,14 +428,19 @@ static int lpass_hm_core_probe(struct platform_device *pdev)
- 	const struct qcom_cc_desc *desc;
- 	int ret;
- 
--	ret = lpass_create_pm_clks(pdev);
-+	ret = lpass_setup_runtime_pm(pdev);
- 	if (ret)
- 		return ret;
- 
- 	lpass_core_cc_sc7180_regmap_config.name = "lpass_hm_core";
- 	desc = &lpass_core_hm_sc7180_desc;
- 
--	return qcom_cc_probe_by_index(pdev, 0, desc);
-+	ret = qcom_cc_probe_by_index(pdev, 0, desc);
-+
-+	pm_runtime_mark_last_busy(&pdev->dev);
-+	pm_runtime_put_autosuspend(&pdev->dev);
-+
-+	return ret;
- }
- 
- static const struct of_device_id lpass_hm_sc7180_match_table[] = {
 -- 
 2.35.1
 
