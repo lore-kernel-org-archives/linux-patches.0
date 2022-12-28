@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E6A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:53:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14956C433EF;
-	Wed, 28 Dec 2022 14:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A1DD1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:53:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF44DC433EF;
+	Wed, 28 Dec 2022 14:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239208;
-	bh=IM5erb54z568krpX8fyJGzyCmMOBc6hLPqgUwXnQVyc=;
+	s=korg; t=1672239211;
+	bh=WaD9wFw7pS3mCGugtKAx4RaTcROSvwI6ifkjG1pPutY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JMGASGJh5g5C6feNBxp5t2bVcBIzz57UoSH1bNoJxFzvGTsyQ0nRKzK7dQ17gnS4+
-	 oyOliMpsRxgIRdREZzpGrcqOLFTZGHuoZlgwvXUXJ3wzyoEF8A2H2TYxMzHpp8YOU/
-	 9bz3OfPevAfKH7HFntOzd/xiLMgJZpJtUuS5FbSc=
+	b=j2yOAepTMTjRA2y2QLQZu3XJ8Y84qBSEp1v002x7ExAbAd/OxxJmK/vtoANGUa/9T
+	 bb6LYV4Jdd2wMwmVRMZ1h+x47jnbpq5hhohtb7kSOx/4EH9aRFEDO8Y1BtSw/2oEbl
+	 fuR8sSX6bXXNp1Nj8uSuo+WihvNxFtoIKWnvkHE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 142/731] wifi: ath9k: hif_usb: Fix use-after-free in ath9k_hif_usb_reg_in_cb()
-Date: Wed, 28 Dec 2022 15:34:09 +0100
-Message-Id: <20221228144300.666407652@linuxfoundation.org>
+Subject: [PATCH 5.15 143/731] wifi: rtl8xxxu: Fix reading the vendor of combo chips
+Date: Wed, 28 Dec 2022 15:34:10 +0100
+Message-Id: <20221228144300.694761702@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -37,113 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit dd95f2239fc846795fc926787c3ae0ca701c9840 ]
+[ Upstream commit 6f103aeb5e985ac08f3a4a049a2c17294f40cff9 ]
 
-It is possible that skb is freed in ath9k_htc_rx_msg(), then
-usb_submit_urb() fails and we try to free skb again. It causes
-use-after-free bug. Moreover, if alloc_skb() fails, urb->context becomes
-NULL but rx_buf is not freed and there can be a memory leak.
+The wifi + bluetooth combo chips (RTL8723AU and RTL8723BU) read the
+chip vendor from the wrong register because the val32 variable gets
+overwritten. Add one more variable to avoid this.
 
-The patch removes unnecessary nskb and makes skb processing more clear: it
-is supposed that ath9k_htc_rx_msg() either frees old skb or passes its
-managing to another callback function.
+This had no real effect on RTL8723BU. It may have had an effect on
+RTL8723AU.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Fixes: 3deff76095c4 ("ath9k_htc: Increase URB count for REG_IN pipe")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20221008114917.21404-1-pchelkin@ispras.ru
+Fixes: 26f1fad29ad9 ("New driver: rtl8xxxu (mac80211)")
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/24af8024-2f07-552b-93d8-38823d8e3cb0@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/hif_usb.c | 28 +++++++++++++-----------
- 1 file changed, 15 insertions(+), 13 deletions(-)
+ .../wireless/realtek/rtl8xxxu/rtl8xxxu_core.c    | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
-index e66518d86882..e5d5b0761881 100644
---- a/drivers/net/wireless/ath/ath9k/hif_usb.c
-+++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
-@@ -709,14 +709,13 @@ static void ath9k_hif_usb_reg_in_cb(struct urb *urb)
- 	struct rx_buf *rx_buf = (struct rx_buf *)urb->context;
- 	struct hif_device_usb *hif_dev = rx_buf->hif_dev;
- 	struct sk_buff *skb = rx_buf->skb;
--	struct sk_buff *nskb;
- 	int ret;
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+index e74c885a04e5..2a4ecbb0fce6 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -1607,18 +1607,18 @@ static void rtl8xxxu_print_chipinfo(struct rtl8xxxu_priv *priv)
+ static int rtl8xxxu_identify_chip(struct rtl8xxxu_priv *priv)
+ {
+ 	struct device *dev = &priv->udev->dev;
+-	u32 val32, bonding;
++	u32 val32, bonding, sys_cfg;
+ 	u16 val16;
  
- 	if (!skb)
- 		return;
+-	val32 = rtl8xxxu_read32(priv, REG_SYS_CFG);
+-	priv->chip_cut = (val32 & SYS_CFG_CHIP_VERSION_MASK) >>
++	sys_cfg = rtl8xxxu_read32(priv, REG_SYS_CFG);
++	priv->chip_cut = (sys_cfg & SYS_CFG_CHIP_VERSION_MASK) >>
+ 		SYS_CFG_CHIP_VERSION_SHIFT;
+-	if (val32 & SYS_CFG_TRP_VAUX_EN) {
++	if (sys_cfg & SYS_CFG_TRP_VAUX_EN) {
+ 		dev_info(dev, "Unsupported test chip\n");
+ 		return -ENOTSUPP;
+ 	}
  
- 	if (!hif_dev)
--		goto free;
-+		goto free_skb;
- 
- 	switch (urb->status) {
- 	case 0:
-@@ -725,7 +724,7 @@ static void ath9k_hif_usb_reg_in_cb(struct urb *urb)
- 	case -ECONNRESET:
- 	case -ENODEV:
- 	case -ESHUTDOWN:
--		goto free;
-+		goto free_skb;
- 	default:
- 		skb_reset_tail_pointer(skb);
- 		skb_trim(skb, 0);
-@@ -736,25 +735,27 @@ static void ath9k_hif_usb_reg_in_cb(struct urb *urb)
- 	if (likely(urb->actual_length != 0)) {
- 		skb_put(skb, urb->actual_length);
- 
--		/* Process the command first */
-+		/*
-+		 * Process the command first.
-+		 * skb is either freed here or passed to be
-+		 * managed to another callback function.
-+		 */
- 		ath9k_htc_rx_msg(hif_dev->htc_handle, skb,
- 				 skb->len, USB_REG_IN_PIPE);
- 
--
--		nskb = alloc_skb(MAX_REG_IN_BUF_SIZE, GFP_ATOMIC);
--		if (!nskb) {
-+		skb = alloc_skb(MAX_REG_IN_BUF_SIZE, GFP_ATOMIC);
-+		if (!skb) {
- 			dev_err(&hif_dev->udev->dev,
- 				"ath9k_htc: REG_IN memory allocation failure\n");
--			urb->context = NULL;
--			return;
-+			goto free_rx_buf;
+-	if (val32 & SYS_CFG_BT_FUNC) {
++	if (sys_cfg & SYS_CFG_BT_FUNC) {
+ 		if (priv->chip_cut >= 3) {
+ 			sprintf(priv->chip_name, "8723BU");
+ 			priv->rtl_chip = RTL8723B;
+@@ -1640,7 +1640,7 @@ static int rtl8xxxu_identify_chip(struct rtl8xxxu_priv *priv)
+ 		if (val32 & MULTI_GPS_FUNC_EN)
+ 			priv->has_gps = 1;
+ 		priv->is_multi_func = 1;
+-	} else if (val32 & SYS_CFG_TYPE_ID) {
++	} else if (sys_cfg & SYS_CFG_TYPE_ID) {
+ 		bonding = rtl8xxxu_read32(priv, REG_HPON_FSM);
+ 		bonding &= HPON_FSM_BONDING_MASK;
+ 		if (priv->fops->tx_desc_size ==
+@@ -1688,7 +1688,7 @@ static int rtl8xxxu_identify_chip(struct rtl8xxxu_priv *priv)
+ 	case RTL8188E:
+ 	case RTL8192E:
+ 	case RTL8723B:
+-		switch (val32 & SYS_CFG_VENDOR_EXT_MASK) {
++		switch (sys_cfg & SYS_CFG_VENDOR_EXT_MASK) {
+ 		case SYS_CFG_VENDOR_ID_TSMC:
+ 			sprintf(priv->chip_vendor, "TSMC");
+ 			break;
+@@ -1705,7 +1705,7 @@ static int rtl8xxxu_identify_chip(struct rtl8xxxu_priv *priv)
  		}
- 
--		rx_buf->skb = nskb;
-+		rx_buf->skb = skb;
- 
- 		usb_fill_int_urb(urb, hif_dev->udev,
- 				 usb_rcvintpipe(hif_dev->udev,
- 						 USB_REG_IN_PIPE),
--				 nskb->data, MAX_REG_IN_BUF_SIZE,
-+				 skb->data, MAX_REG_IN_BUF_SIZE,
- 				 ath9k_hif_usb_reg_in_cb, rx_buf, 1);
- 	}
- 
-@@ -763,12 +764,13 @@ static void ath9k_hif_usb_reg_in_cb(struct urb *urb)
- 	ret = usb_submit_urb(urb, GFP_ATOMIC);
- 	if (ret) {
- 		usb_unanchor_urb(urb);
--		goto free;
-+		goto free_skb;
- 	}
- 
- 	return;
--free:
-+free_skb:
- 	kfree_skb(skb);
-+free_rx_buf:
- 	kfree(rx_buf);
- 	urb->context = NULL;
- }
+ 		break;
+ 	default:
+-		if (val32 & SYS_CFG_VENDOR_ID) {
++		if (sys_cfg & SYS_CFG_VENDOR_ID) {
+ 			sprintf(priv->chip_vendor, "UMC");
+ 			priv->vendor_umc = 1;
+ 		} else {
 -- 
 2.35.1
 
