@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C49B1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:45:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4AD7C433EF;
-	Wed, 28 Dec 2022 16:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3333C1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:45:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C6DC433EF;
+	Wed, 28 Dec 2022 16:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245918;
-	bh=ld4GI8IxkG5GhH1HYhSS/uEu2E7iHy1QQzt0YzYVSSA=;
+	s=korg; t=1672245921;
+	bh=LjGOw9EVQXL+7ablo/MOtMWvynRlorjXYoMhwnC+Mds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qkGg8oD1fZLQOU0mvZrn3e8Yb0C0uc0h37+1dJaCybGLyMWeAgwIZJcmS8VdOo+Rm
-	 e3x3glR650/wSy5UVxHfwurs4GvKY3PrWDJ2FHhfcG4ofmjb2+OiBb2I+cGCxMfKn5
-	 4iazE81Zgvl/cU/IMf30xWLznMTbrsIL3LXlSENY=
+	b=kQmaYc42qpe3ge1/RL5kwWKy7TAaDbKCCPC5EGp85PSMTjVhwZJ5Pbse9fpkL2U/+
+	 AhqQI+d3QNbIIMLrPcky6mEjVroAFCLGpOvs+gyd/BpyU6f9RwRDgI/tgD0LBk4hgD
+	 p6FuV1JWH4+D8tHaczjP4ixfnS0cRDFaWcKCM6wE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Tee <justin.tee@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	syzbot+5fc38b2ddbbca7f5c680@syzkaller.appspotmail.com,
+	"Dr. David Alan Gilbert" <linux@treblig.org>,
+	Kees Cook <keescook@chromium.org>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0980/1073] scsi: lpfc: Fix hard lockup when reading the rx_monitor from debugfs
-Date: Wed, 28 Dec 2022 15:42:48 +0100
-Message-Id: <20221228144354.698033945@linuxfoundation.org>
+Subject: [PATCH 6.1 0947/1146] jfs: Fix fortify moan in symlink
+Date: Wed, 28 Dec 2022 15:41:26 +0100
+Message-Id: <20221228144356.040343439@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,75 +37,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Justin Tee <justin.tee@broadcom.com>
+From: Dr. David Alan Gilbert <linux@treblig.org>
 
-[ Upstream commit c44e50f4a0ec00c2298f31f91bc2c3e9bbd81c7e ]
+[ Upstream commit ebe060369f8d6e4588b115f252bebf5ba4d64350 ]
 
-During I/O and simultaneous cat of /sys/kernel/debug/lpfc/fnX/rx_monitor, a
-hard lockup similar to the call trace below may occur.
+JFS has in jfs_incore.h:
 
-The spin_lock_bh in lpfc_rx_monitor_report is not protecting from timer
-interrupts as expected, so change the strength of the spin lock to _irq.
+      /* _inline may overflow into _inline_ea when needed */
+      /* _inline_ea may overlay the last part of
+       * file._xtroot if maxentry = XTROOTINITSLOT
+       */
+      union {
+        struct {
+          /* 128: inline symlink */
+          unchar _inline[128];
+          /* 128: inline extended attr */
+          unchar _inline_ea[128];
+        };
+        unchar _inline_all[256];
 
-Kernel panic - not syncing: Hard LOCKUP
-CPU: 3 PID: 110402 Comm: cat Kdump: loaded
+and currently the symlink code copies into _inline;
+if this is larger than 128 bytes it triggers a fortify warning of the
+form:
 
-exception RIP: native_queued_spin_lock_slowpath+91
+  memcpy: detected field-spanning write (size 132) of single field
+     "ip->i_link" at fs/jfs/namei.c:950 (size 18446744073709551615)
 
-[IRQ stack]
- native_queued_spin_lock_slowpath at ffffffffb814e30b
- _raw_spin_lock at ffffffffb89a667a
- lpfc_rx_monitor_record at ffffffffc0a73a36 [lpfc]
- lpfc_cmf_timer at ffffffffc0abbc67 [lpfc]
- __hrtimer_run_queues at ffffffffb8184250
- hrtimer_interrupt at ffffffffb8184ab0
- smp_apic_timer_interrupt at ffffffffb8a026ba
- apic_timer_interrupt at ffffffffb8a01c4f
-[End of IRQ stack]
+when it's actually OK.
 
- apic_timer_interrupt at ffffffffb8a01c4f
- lpfc_rx_monitor_report at ffffffffc0a73c80 [lpfc]
- lpfc_rx_monitor_read at ffffffffc0addde1 [lpfc]
- full_proxy_read at ffffffffb83e7fc3
- vfs_read at ffffffffb833fe71
- ksys_read at ffffffffb83402af
- do_syscall_64 at ffffffffb800430b
- entry_SYSCALL_64_after_hwframe at ffffffffb8a000ad
+Copy it into _inline_all instead.
 
-Signed-off-by: Justin Tee <justin.tee@broadcom.com>
-Link: https://lore.kernel.org/r/20221017164323.14536-2-justintee8345@gmail.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Reported-by: syzbot+5fc38b2ddbbca7f5c680@syzkaller.appspotmail.com
+Signed-off-by: Dr. David Alan Gilbert <linux@treblig.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/lpfc/lpfc_sli.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/jfs/namei.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/lpfc/lpfc_sli.c b/drivers/scsi/lpfc/lpfc_sli.c
-index 03c21167fc85..c4960da4c1c4 100644
---- a/drivers/scsi/lpfc/lpfc_sli.c
-+++ b/drivers/scsi/lpfc/lpfc_sli.c
-@@ -8076,10 +8076,10 @@ u32 lpfc_rx_monitor_report(struct lpfc_hba *phba,
- 					"IO_cnt", "Info", "BWutil(ms)");
- 	}
+diff --git a/fs/jfs/namei.c b/fs/jfs/namei.c
+index 9db4f5789c0e..4fbbf88435e6 100644
+--- a/fs/jfs/namei.c
++++ b/fs/jfs/namei.c
+@@ -946,7 +946,7 @@ static int jfs_symlink(struct user_namespace *mnt_userns, struct inode *dip,
+ 	if (ssize <= IDATASIZE) {
+ 		ip->i_op = &jfs_fast_symlink_inode_operations;
  
--	/* Needs to be _bh because record is called from timer interrupt
-+	/* Needs to be _irq because record is called from timer interrupt
- 	 * context
- 	 */
--	spin_lock_bh(ring_lock);
-+	spin_lock_irq(ring_lock);
- 	while (*head_idx != *tail_idx) {
- 		entry = &ring[*head_idx];
+-		ip->i_link = JFS_IP(ip)->i_inline;
++		ip->i_link = JFS_IP(ip)->i_inline_all;
+ 		memcpy(ip->i_link, name, ssize);
+ 		ip->i_size = ssize - 1;
  
-@@ -8123,7 +8123,7 @@ u32 lpfc_rx_monitor_report(struct lpfc_hba *phba,
- 		if (cnt >= max_read_entries)
- 			break;
- 	}
--	spin_unlock_bh(ring_lock);
-+	spin_unlock_irq(ring_lock);
- 
- 	return cnt;
- }
 -- 
 2.35.1
 
