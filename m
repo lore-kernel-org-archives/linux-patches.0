@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6E81863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31136C433EF;
-	Wed, 28 Dec 2022 15:50:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB571863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2D26C433EF;
+	Wed, 28 Dec 2022 15:50:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242611;
-	bh=xHjXY4bMW1rOeIrD/J7KzUvpFtFrI1zkacv8I5eMCh8=;
+	s=korg; t=1672242614;
+	bh=qmrueYJijRJSOJtq3XPBXwwDuSzM496o343p/ZAk2Q8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zL36D+Yzo72B500xw1RLAo7N7+8TPuNswrObynNFjhDWdHXZEUnxn5ezMKlz4/q/j
-	 7jQLIadCwCXUDdFUyGsKmxEgE2atTkPNdWNSdK5R+Kymo9RxsODG7TovTCy6sfwi0s
-	 AvfXH3utXLIcrcx9Z4FyqzCVduxJyyyrQXEoLiY8=
+	b=DpNoKfevCXxJpAnbaycca2dih5m890OjlenaQZkMqV/ZGzks2Ror9GsaWd09hNf4v
+	 Kp4iXS9JcsNe+4qB06aLZrGsmu+Ak/siSvoTtmQ9NwUt60bKzPyFtRS4qP4MJ5B8Qo
+	 tm0E21hkTwav+Sd/i6uh7q3rEbYlyUtTjwIwqALk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+e91619dd4c11c4960706@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 616/731] arm64: make is_ttbrX_addr() noinstr-safe
-Date: Wed, 28 Dec 2022 15:42:03 +0100
-Message-Id: <20221228144314.388868406@linuxfoundation.org>
+Subject: [PATCH 5.15 625/731] nilfs2: fix shift-out-of-bounds/overflow in nilfs_sb2_bad_offset()
+Date: Wed, 28 Dec 2022 15:42:12 +0100
+Message-Id: <20221228144314.646392508@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,50 +36,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit d8c1d798a2e5091128c391c6dadcc9be334af3f5 ]
+[ Upstream commit 610a2a3d7d8be3537458a378ec69396a76c385b6 ]
 
-We use is_ttbr0_addr() in noinstr code, but as it's only marked as
-inline, it's theoretically possible for the compiler to place it
-out-of-line and instrument it, which would be problematic.
+Patch series "nilfs2: fix UBSAN shift-out-of-bounds warnings on mount
+time".
 
-Mark is_ttbr0_addr() as __always_inline such that that can safely be
-used from noinstr code. For consistency, do the same to is_ttbr1_addr().
-Note that while is_ttbr1_addr() calls arch_kasan_reset_tag(), this is a
-macro (and its callees are either macros or __always_inline), so there
-is not a risk of transient instrumentation.
+The first patch fixes a bug reported by syzbot, and the second one fixes
+the remaining bug of the same kind.  Although they are triggered by the
+same super block data anomaly, I divided it into the above two because the
+details of the issues and how to fix it are different.
 
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20221114144042.3001140-1-mark.rutland@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Both are required to eliminate the shift-out-of-bounds issues at mount
+time.
+
+This patch (of 2):
+
+If the block size exponent information written in an on-disk superblock is
+corrupted, nilfs_sb2_bad_offset helper function can trigger
+shift-out-of-bounds warning followed by a kernel panic (if panic_on_warn
+is set):
+
+ shift exponent 38983 is too large for 64-bit type 'unsigned long long'
+ Call Trace:
+  <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
+  ubsan_epilogue lib/ubsan.c:151 [inline]
+  __ubsan_handle_shift_out_of_bounds+0x33d/0x3b0 lib/ubsan.c:322
+  nilfs_sb2_bad_offset fs/nilfs2/the_nilfs.c:449 [inline]
+  nilfs_load_super_block+0xdf5/0xe00 fs/nilfs2/the_nilfs.c:523
+  init_nilfs+0xb7/0x7d0 fs/nilfs2/the_nilfs.c:577
+  nilfs_fill_super+0xb1/0x5d0 fs/nilfs2/super.c:1047
+  nilfs_mount+0x613/0x9b0 fs/nilfs2/super.c:1317
+  ...
+
+In addition, since nilfs_sb2_bad_offset() performs multiplication without
+considering the upper bound, the computation may overflow if the disk
+layout parameters are not normal.
+
+This fixes these issues by inserting preliminary sanity checks for those
+parameters and by converting the comparison from one involving
+multiplication and left bit-shifting to one using division and right
+bit-shifting.
+
+Link: https://lkml.kernel.org/r/20221027044306.42774-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20221027044306.42774-2-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+e91619dd4c11c4960706@syzkaller.appspotmail.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/processor.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/nilfs2/the_nilfs.c | 31 +++++++++++++++++++++++++++----
+ 1 file changed, 27 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/include/asm/processor.h b/arch/arm64/include/asm/processor.h
-index d9bf3d12a2b8..7364530de0a7 100644
---- a/arch/arm64/include/asm/processor.h
-+++ b/arch/arm64/include/asm/processor.h
-@@ -240,13 +240,13 @@ static inline void compat_start_thread(struct pt_regs *regs, unsigned long pc,
+diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
+index 16994598a8db..6a86acd35696 100644
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -13,6 +13,7 @@
+ #include <linux/blkdev.h>
+ #include <linux/backing-dev.h>
+ #include <linux/random.h>
++#include <linux/log2.h>
+ #include <linux/crc32.h>
+ #include "nilfs.h"
+ #include "segment.h"
+@@ -443,11 +444,33 @@ static int nilfs_valid_sb(struct nilfs_super_block *sbp)
+ 	return crc == le32_to_cpu(sbp->s_sum);
  }
- #endif
  
--static inline bool is_ttbr0_addr(unsigned long addr)
-+static __always_inline bool is_ttbr0_addr(unsigned long addr)
+-static int nilfs_sb2_bad_offset(struct nilfs_super_block *sbp, u64 offset)
++/**
++ * nilfs_sb2_bad_offset - check the location of the second superblock
++ * @sbp: superblock raw data buffer
++ * @offset: byte offset of second superblock calculated from device size
++ *
++ * nilfs_sb2_bad_offset() checks if the position on the second
++ * superblock is valid or not based on the filesystem parameters
++ * stored in @sbp.  If @offset points to a location within the segment
++ * area, or if the parameters themselves are not normal, it is
++ * determined to be invalid.
++ *
++ * Return Value: true if invalid, false if valid.
++ */
++static bool nilfs_sb2_bad_offset(struct nilfs_super_block *sbp, u64 offset)
  {
- 	/* entry assembly clears tags for TTBR0 addrs */
- 	return addr < TASK_SIZE;
+-	return offset < ((le64_to_cpu(sbp->s_nsegments) *
+-			  le32_to_cpu(sbp->s_blocks_per_segment)) <<
+-			 (le32_to_cpu(sbp->s_log_block_size) + 10));
++	unsigned int shift_bits = le32_to_cpu(sbp->s_log_block_size);
++	u32 blocks_per_segment = le32_to_cpu(sbp->s_blocks_per_segment);
++	u64 nsegments = le64_to_cpu(sbp->s_nsegments);
++	u64 index;
++
++	if (blocks_per_segment < NILFS_SEG_MIN_BLOCKS ||
++	    shift_bits > ilog2(NILFS_MAX_BLOCK_SIZE) - BLOCK_SIZE_BITS)
++		return true;
++
++	index = offset >> (shift_bits + BLOCK_SIZE_BITS);
++	do_div(index, blocks_per_segment);
++	return index < nsegments;
  }
  
--static inline bool is_ttbr1_addr(unsigned long addr)
-+static __always_inline bool is_ttbr1_addr(unsigned long addr)
- {
- 	/* TTBR1 addresses may have a tag if KASAN_SW_TAGS is in use */
- 	return arch_kasan_reset_tag(addr) >= PAGE_OFFSET;
+ static void nilfs_release_super_block(struct the_nilfs *nilfs)
 -- 
 2.35.1
 
