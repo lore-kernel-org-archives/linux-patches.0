@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931351875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B75CC433F0;
-	Wed, 28 Dec 2022 15:52:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563DC1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B61F7C433D2;
+	Wed, 28 Dec 2022 15:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242776;
-	bh=g6uAbsg2/4nBl/Qb5jnuKJIGeIlTrVa/TjSijcSD0FA=;
+	s=korg; t=1672242779;
+	bh=To1zNpXD0KVKRva4FzasldUmR2gCcvIZD+yhSo2fdVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AD4yNrA2QryWsZNffi+JFKP41L2pfFhCO3nuFO3MWZW1IVXxWHy6DqtVTPkuMXECz
-	 +KhbLuATZANKjrFk0rZE71W0p4hhiRY9izKLGp3tElb+K6RZWmOffyKGeFP4pooGcq
-	 tXBJ66czOhGSmEoXgcZ/ERNDRyFnZvlR+m/zBhZg=
+	b=nj2gGWLU1WxG4mSLulnhx1M7c+0TezGX7yuwfoEl1aWZ0z9jj/kDOSopUcpgKRPOL
+	 FRIY2nVUZ+CXr181/+ijtUpRAptf5kgy3ofMXTE2CwrRpLoOIC1dxP3MItIlYp15g6
+	 GRyo3bt69TEeGB/bCh17VfsNFNSeVyYkPpF/a+fQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@nxp.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0412/1146] media: amphion: lock and check m2m_ctx in event handler
-Date: Wed, 28 Dec 2022 15:32:31 +0100
-Message-Id: <20221228144341.358100029@linuxfoundation.org>
+Subject: [PATCH 5.15 644/731] drm/amdgpu: Fix type of second parameter in trans_msg() callback
+Date: Wed, 28 Dec 2022 15:42:31 +0100
+Message-Id: <20221228144315.176366505@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,73 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Qian <ming.qian@nxp.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 1ade3f3f16986cd7c6fce02feede957f03eb8a42 ]
+[ Upstream commit f0d0f1087333714ee683cc134a95afe331d7ddd9 ]
 
-driver needs to cancel vpu before releasing the vpu instance,
-so call v4l2_m2m_ctx_release() first,
-to handle the redundant event triggered after m2m_ctx is released.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-lock and check m2m_ctx in the event handler.
+  drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c:412:15: error: incompatible function pointer types initializing 'void (*)(struct amdgpu_device *, u32, u32, u32, u32)' (aka 'void (*)(struct amdgpu_device *, unsigned int, unsigned int, unsigned int, unsigned int)') with an expression of type 'void (struct amdgpu_device *, enum idh_request, u32, u32, u32)' (aka 'void (struct amdgpu_device *, enum idh_request, unsigned int, unsigned int, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
+          .trans_msg = xgpu_ai_mailbox_trans_msg,
+                      ^~~~~~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
 
-Fixes: 3cd084519c6f ("media: amphion: add vpu v4l2 m2m support")
-Signed-off-by: Ming Qian <ming.qian@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+  drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c:435:15: error: incompatible function pointer types initializing 'void (*)(struct amdgpu_device *, u32, u32, u32, u32)' (aka 'void (*)(struct amdgpu_device *, unsigned int, unsigned int, unsigned int, unsigned int)') with an expression of type 'void (struct amdgpu_device *, enum idh_request, u32, u32, u32)' (aka 'void (struct amdgpu_device *, enum idh_request, unsigned int, unsigned int, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
+          .trans_msg = xgpu_nv_mailbox_trans_msg,
+                      ^~~~~~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
+
+The type of the second parameter in the prototype should be 'enum
+idh_request' instead of 'u32'. Update it to clear up the warnings.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Reported-by: Sami Tolvanen <samitolvanen@google.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_msgs.c | 2 ++
- drivers/media/platform/amphion/vpu_v4l2.c | 8 ++++++--
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/amphion/vpu_msgs.c b/drivers/media/platform/amphion/vpu_msgs.c
-index d8247f36d84b..92672a802b49 100644
---- a/drivers/media/platform/amphion/vpu_msgs.c
-+++ b/drivers/media/platform/amphion/vpu_msgs.c
-@@ -43,6 +43,7 @@ static void vpu_session_handle_mem_request(struct vpu_inst *inst, struct vpu_rpc
- 		  req_data.ref_frame_num,
- 		  req_data.act_buf_size,
- 		  req_data.act_buf_num);
-+	vpu_inst_lock(inst);
- 	call_void_vop(inst, mem_request,
- 		      req_data.enc_frame_size,
- 		      req_data.enc_frame_num,
-@@ -50,6 +51,7 @@ static void vpu_session_handle_mem_request(struct vpu_inst *inst, struct vpu_rpc
- 		      req_data.ref_frame_num,
- 		      req_data.act_buf_size,
- 		      req_data.act_buf_num);
-+	vpu_inst_unlock(inst);
- }
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
+index ce31d4fdee93..4af3610f4a82 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
+@@ -62,6 +62,8 @@ struct amdgpu_vf_error_buffer {
+ 	uint64_t data[AMDGPU_VF_ERROR_ENTRY_SIZE];
+ };
  
- static void vpu_session_handle_stop_done(struct vpu_inst *inst, struct vpu_rpc_event *pkt)
-diff --git a/drivers/media/platform/amphion/vpu_v4l2.c b/drivers/media/platform/amphion/vpu_v4l2.c
-index a24e2d0e9542..590d1084e5a5 100644
---- a/drivers/media/platform/amphion/vpu_v4l2.c
-+++ b/drivers/media/platform/amphion/vpu_v4l2.c
-@@ -242,8 +242,12 @@ int vpu_process_capture_buffer(struct vpu_inst *inst)
- 
- struct vb2_v4l2_buffer *vpu_next_src_buf(struct vpu_inst *inst)
- {
--	struct vb2_v4l2_buffer *src_buf = v4l2_m2m_next_src_buf(inst->fh.m2m_ctx);
-+	struct vb2_v4l2_buffer *src_buf = NULL;
- 
-+	if (!inst->fh.m2m_ctx)
-+		return NULL;
++enum idh_request;
 +
-+	src_buf = v4l2_m2m_next_src_buf(inst->fh.m2m_ctx);
- 	if (!src_buf || vpu_get_buffer_state(src_buf) == VPU_BUF_STATE_IDLE)
- 		return NULL;
+ /**
+  * struct amdgpu_virt_ops - amdgpu device virt operations
+  */
+@@ -71,7 +73,8 @@ struct amdgpu_virt_ops {
+ 	int (*req_init_data)(struct amdgpu_device *adev);
+ 	int (*reset_gpu)(struct amdgpu_device *adev);
+ 	int (*wait_reset)(struct amdgpu_device *adev);
+-	void (*trans_msg)(struct amdgpu_device *adev, u32 req, u32 data1, u32 data2, u32 data3);
++	void (*trans_msg)(struct amdgpu_device *adev, enum idh_request req,
++			  u32 data1, u32 data2, u32 data3);
+ };
  
-@@ -266,7 +270,7 @@ void vpu_skip_frame(struct vpu_inst *inst, int count)
- 	enum vb2_buffer_state state;
- 	int i = 0;
- 
--	if (count <= 0)
-+	if (count <= 0 || !inst->fh.m2m_ctx)
- 		return;
- 
- 	while (i < count) {
+ /*
 -- 
 2.35.1
 
