@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790EC1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB8EDC433D2;
-	Wed, 28 Dec 2022 16:21:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F44D1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D11CC433D2;
+	Wed, 28 Dec 2022 16:21:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244511;
-	bh=+vZNcwnTcRQqjUzQHdUFdM5gSLlmZ0HxnhFErN0E+5c=;
+	s=korg; t=1672244513;
+	bh=72Wh5J16EpVtZQMTyye0rh1CNnnfej2Qm+l0VhW9Oa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tEYVJX/3gko2mR+S4DVMXypfY4jviQt06kDF/5bV47QuBN0dRa+8YHJLic1wHOO/F
-	 Sdmsama9XoOl/qWtNMX4vhyczL6P45miLTy42XBj8HuBnCjA3c9q2IKcip/u2Ay0yJ
-	 r3WGh9QQu+SaBb2bwfTZbItyjZM8KbTiGV7/OuJo=
+	b=1lWoQGhgUp+1+H1dSIAs8itZQhJhs30cScK/Y52u82XdU3Zp0js8ehGZOOfkQGHBx
+	 gNEgVcaTxvWPIHB6P3owftsbWV0jI8cGOp/TIpHVUDH+OHuyQWK2sSkPcu9Nta19b3
+	 rqopABrYl5hg9pcXYQ5xulF33/hM+QX1gaiRx3/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandre Ghiti <alexghiti@rivosinc.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Marcus Folkesson <marcus.folkesson@gmail.com>,
+	Jacky Bai <ping.bai@nxp.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0686/1146] riscv: Fix P4D_SHIFT definition for 3-level page table mode
-Date: Wed, 28 Dec 2022 15:37:05 +0100
-Message-Id: <20221228144348.774946219@linuxfoundation.org>
+Subject: [PATCH 6.0 0725/1073] thermal/drivers/imx8mm_thermal: Validate temperature range
+Date: Wed, 28 Dec 2022 15:38:33 +0100
+Message-Id: <20221228144347.717810329@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,48 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Ghiti <alexghiti@rivosinc.com>
+From: Marcus Folkesson <marcus.folkesson@gmail.com>
 
-[ Upstream commit 71fc3621efc38ace9640ee6a0db3300900689592 ]
+[ Upstream commit d37edc7370273306d8747097fafa62436c1cfe16 ]
 
-RISC-V kernels support 3,4,5-level page tables at runtime by folding
-upper levels.
+Check against the upper temperature limit (125 degrees C) before
+consider the temperature valid.
 
-In case of a 3-level page table, PGDIR is folded into P4D which in turn
-is folded into PUD: PGDIR_SHIFT value is correctly set to the same value
-as PUD_SHIFT, but P4D_SHIFT is not, then any use of P4D_SHIFT will access
-invalid address bits (all set to 1).
-
-Fix this by dynamically defining P4D_SHIFT value, like we already do for
-PGDIR_SHIFT.
-
-Fixes: d10efa21a937 ("riscv: mm: Control p4d's folding by pgtable_l5_enabled")
-Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
-Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
-Link: https://lore.kernel.org/r/20221201135128.1482189-2-alexghiti@rivosinc.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 5eed800a6811 ("thermal: imx8mm: Add support for i.MX8MM thermal monitoring unit")
+Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
+Reviewed-by: Jacky Bai <ping.bai@nxp.com>
+Link: https://lore.kernel.org/r/20221014073507.1594844-1-marcus.folkesson@gmail.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/pgtable-64.h | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/thermal/imx8mm_thermal.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/include/asm/pgtable-64.h b/arch/riscv/include/asm/pgtable-64.h
-index dc42375c2357..42a042c0e13e 100644
---- a/arch/riscv/include/asm/pgtable-64.h
-+++ b/arch/riscv/include/asm/pgtable-64.h
-@@ -25,7 +25,11 @@ extern bool pgtable_l5_enabled;
- #define PGDIR_MASK      (~(PGDIR_SIZE - 1))
+diff --git a/drivers/thermal/imx8mm_thermal.c b/drivers/thermal/imx8mm_thermal.c
+index af666bd9e8d4..c5cd873c6e01 100644
+--- a/drivers/thermal/imx8mm_thermal.c
++++ b/drivers/thermal/imx8mm_thermal.c
+@@ -65,8 +65,14 @@ static int imx8mm_tmu_get_temp(void *data, int *temp)
+ 	u32 val;
  
- /* p4d is folded into pgd in case of 4-level page table */
--#define P4D_SHIFT      39
-+#define P4D_SHIFT_L3   30
-+#define P4D_SHIFT_L4   39
-+#define P4D_SHIFT_L5   39
-+#define P4D_SHIFT      (pgtable_l5_enabled ? P4D_SHIFT_L5 : \
-+		(pgtable_l4_enabled ? P4D_SHIFT_L4 : P4D_SHIFT_L3))
- #define P4D_SIZE       (_AC(1, UL) << P4D_SHIFT)
- #define P4D_MASK       (~(P4D_SIZE - 1))
+ 	val = readl_relaxed(tmu->base + TRITSR) & TRITSR_TEMP0_VAL_MASK;
++
++	/*
++	 * Do not validate against the V bit (bit 31) due to errata
++	 * ERR051272: TMU: Bit 31 of registers TMU_TSCR/TMU_TRITSR/TMU_TRATSR invalid
++	 */
++
+ 	*temp = val * 1000;
+-	if (*temp < VER1_TEMP_LOW_LIMIT)
++	if (*temp < VER1_TEMP_LOW_LIMIT || *temp > VER2_TEMP_HIGH_LIMIT)
+ 		return -EAGAIN;
  
+ 	return 0;
 -- 
 2.35.1
 
