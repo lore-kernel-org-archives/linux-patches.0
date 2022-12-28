@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9511C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:08:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90367C433EF;
-	Wed, 28 Dec 2022 16:08:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C4D1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:08:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56FF2C433D2;
+	Wed, 28 Dec 2022 16:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243734;
-	bh=QtLQYQfbDlvXGVYbZvwjozrTI1OYVyEVmQvOT2ln1q4=;
+	s=korg; t=1672243736;
+	bh=hyGk5xAxOG7JgeXooe7Mer+qdbGqEGgLz6wJzdEmU3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YlVkMrLm9x3vrxhlz564QE+2L+AmBYBzW/iy0sheYN0NMFDF2Iw6lzQ3HOUcyvhJH
-	 K+xN0yaai6j4ZpfC3kZsEBanLmTOFM0x/qa5oo0y9lE+D2xiBog3pFkA0DoJXBIC4f
-	 O8rcMpYyOMI861yJsLAB4fsampgsJd/B0Xg6IENo=
+	b=MXE6BkjqlBzFNMZSKEio8t9Ci3B6a/SEyjt+/a0j7eAWa4kqmGhf0RC5i1IPFpVlC
+	 cL3JRTn+21nA0lkLjS8buawtiNpMJavV/BpsfJrv0zvdwNyya/TSK9yg/3ur1ARE1Q
+	 TVqiDWIfGsIXyw+YzfG0sNgsCqGpfNTbp++4+EjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+035a381ea1afb63f098d@syzkaller.appspotmail.com,
-	syzbot+729c925c2d9fc495ddee@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0579/1073] f2fs: fix to invalidate dcc->f2fs_issue_discard in error path
-Date: Wed, 28 Dec 2022 15:36:07 +0100
-Message-Id: <20221228144343.776565545@linuxfoundation.org>
+Subject: [PATCH 6.1 0547/1146] net: amd-xgbe: Check only the minimum speed for active/passive cables
+Date: Wed, 28 Dec 2022 15:34:46 +0100
+Message-Id: <20221228144345.029121893@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,68 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Tom Lendacky <thomas.lendacky@amd.com>
 
-[ Upstream commit 91586ce0d39a05f88795aa8814fb99b1387236b3 ]
+[ Upstream commit f8ab263d4d48e6dab752029bf562f20a2ee630ed ]
 
-Syzbot reports a NULL pointer dereference issue as below:
+There are cables that exist that can support speeds in excess of 10GbE.
+The driver, however, restricts the EEPROM advertised nominal bitrate to
+a specific range, which can prevent usage of cables that can support,
+for example, up to 25GbE.
 
- __refcount_add include/linux/refcount.h:193 [inline]
- __refcount_inc include/linux/refcount.h:250 [inline]
- refcount_inc include/linux/refcount.h:267 [inline]
- get_task_struct include/linux/sched/task.h:110 [inline]
- kthread_stop+0x34/0x1c0 kernel/kthread.c:703
- f2fs_stop_discard_thread+0x3c/0x5c fs/f2fs/segment.c:1638
- kill_f2fs_super+0x5c/0x194 fs/f2fs/super.c:4522
- deactivate_locked_super+0x70/0xe8 fs/super.c:332
- deactivate_super+0xd0/0xd4 fs/super.c:363
- cleanup_mnt+0x1f8/0x234 fs/namespace.c:1186
- __cleanup_mnt+0x20/0x30 fs/namespace.c:1193
- task_work_run+0xc4/0x14c kernel/task_work.c:177
- exit_task_work include/linux/task_work.h:38 [inline]
- do_exit+0x26c/0xbe0 kernel/exit.c:795
- do_group_exit+0x60/0xe8 kernel/exit.c:925
- __do_sys_exit_group kernel/exit.c:936 [inline]
- __se_sys_exit_group kernel/exit.c:934 [inline]
- __wake_up_parent+0x0/0x40 kernel/exit.c:934
- __invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
- invoke_syscall arch/arm64/kernel/syscall.c:52 [inline]
- el0_svc_common+0x138/0x220 arch/arm64/kernel/syscall.c:142
- do_el0_svc+0x48/0x164 arch/arm64/kernel/syscall.c:206
- el0_svc+0x58/0x150 arch/arm64/kernel/entry-common.c:636
- el0t_64_sync_handler+0x84/0xf0 arch/arm64/kernel/entry-common.c:654
- el0t_64_sync+0x18c/0x190 arch/arm64/kernel/entry.S:581
+Rather than checking that an active or passive cable supports a specific
+range, only check for a minimum supported speed.
 
-The root cause of this issue is in error path of f2fs_start_discard_thread(),
-it missed to invalidate dcc->f2fs_issue_discard, later kthread_stop() may
-access invalid pointer.
-
-Fixes: 4d67490498ac ("f2fs: Don't create discard thread when device doesn't support realtime discard")
-Reported-by: syzbot+035a381ea1afb63f098d@syzkaller.appspotmail.com
-Reported-by: syzbot+729c925c2d9fc495ddee@syzkaller.appspotmail.com
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: abf0a1c2b26a ("amd-xgbe: Add support for SFP+ modules")
+Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index 84bad18ce13d..10d8bc81cff7 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -2026,8 +2026,10 @@ int f2fs_start_discard_thread(struct f2fs_sb_info *sbi)
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
+index 868a768f424c..c731a04731f8 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
+@@ -237,10 +237,7 @@ enum xgbe_sfp_speed {
  
- 	dcc->f2fs_issue_discard = kthread_run(issue_discard_thread, sbi,
- 				"f2fs_discard-%u:%u", MAJOR(dev), MINOR(dev));
--	if (IS_ERR(dcc->f2fs_issue_discard))
-+	if (IS_ERR(dcc->f2fs_issue_discard)) {
- 		err = PTR_ERR(dcc->f2fs_issue_discard);
-+		dcc->f2fs_issue_discard = NULL;
-+	}
+ #define XGBE_SFP_BASE_BR			12
+ #define XGBE_SFP_BASE_BR_1GBE_MIN		0x0a
+-#define XGBE_SFP_BASE_BR_1GBE_MAX		0x0d
+ #define XGBE_SFP_BASE_BR_10GBE_MIN		0x64
+-#define XGBE_SFP_BASE_BR_10GBE_MAX		0x68
+-#define XGBE_MOLEX_SFP_BASE_BR_10GBE_MAX	0x78
  
- 	return err;
+ #define XGBE_SFP_BASE_CU_CABLE_LEN		18
+ 
+@@ -827,29 +824,22 @@ static void xgbe_phy_sfp_phy_settings(struct xgbe_prv_data *pdata)
+ static bool xgbe_phy_sfp_bit_rate(struct xgbe_sfp_eeprom *sfp_eeprom,
+ 				  enum xgbe_sfp_speed sfp_speed)
+ {
+-	u8 *sfp_base, min, max;
++	u8 *sfp_base, min;
+ 
+ 	sfp_base = sfp_eeprom->base;
+ 
+ 	switch (sfp_speed) {
+ 	case XGBE_SFP_SPEED_1000:
+ 		min = XGBE_SFP_BASE_BR_1GBE_MIN;
+-		max = XGBE_SFP_BASE_BR_1GBE_MAX;
+ 		break;
+ 	case XGBE_SFP_SPEED_10000:
+ 		min = XGBE_SFP_BASE_BR_10GBE_MIN;
+-		if (memcmp(&sfp_eeprom->base[XGBE_SFP_BASE_VENDOR_NAME],
+-			   XGBE_MOLEX_VENDOR, XGBE_SFP_BASE_VENDOR_NAME_LEN) == 0)
+-			max = XGBE_MOLEX_SFP_BASE_BR_10GBE_MAX;
+-		else
+-			max = XGBE_SFP_BASE_BR_10GBE_MAX;
+ 		break;
+ 	default:
+ 		return false;
+ 	}
+ 
+-	return ((sfp_base[XGBE_SFP_BASE_BR] >= min) &&
+-		(sfp_base[XGBE_SFP_BASE_BR] <= max));
++	return sfp_base[XGBE_SFP_BASE_BR] >= min;
  }
+ 
+ static void xgbe_phy_free_phy_device(struct xgbe_prv_data *pdata)
 -- 
 2.35.1
 
