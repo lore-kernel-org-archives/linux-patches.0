@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B23C1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ACE1C433EF;
-	Wed, 28 Dec 2022 16:42:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76AE41C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E80C0C433D2;
+	Wed, 28 Dec 2022 16:42:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245742;
-	bh=wCx4FlX28tBybEM1H1bAUOgK4G5TCZVzQdCZ1DcnxR4=;
+	s=korg; t=1672245745;
+	bh=aYssYvHInmr6xxbFzWbt0xQLEsEqOvui7ZuTmcKtX2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PEJChmYVET5yIaZ9eV+4IO32Cg7CRsdZShRRCfN59b1A0yOHy+7TlVX25pVnAFOZM
-	 +gnGvCfCUVAkwpYJhLm1LAeB05pi5494l00aI0w/uRNbn34j9F6nOQsN5BuP3tU9+G
-	 88S6jo2JjOeqZDstZhQ4MfGR3yeXXj/orRbTGlzo=
+	b=N8KKV002Ft6lVkCKoW+Ypq8ybZgEG9MwAoKdw6wy9CfdkKbzdtMr+oWfC4xm66zH1
+	 DxfNEN8mmyFdeEsrRMI8d0N2V07B5pUAipOQHDWP+xAOsd9ktCnE/W+osN86NaoTG6
+	 lLE6u6H5TQs42PQ2gycD0EOvUwnYFmzwnr6gYans=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Tan Tee Min <tee.min.tan@linux.intel.com>,
+	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0947/1073] net: add atomic_long_t to net_device_stats fields
-Date: Wed, 28 Dec 2022 15:42:15 +0100
-Message-Id: <20221228144353.759951580@linuxfoundation.org>
+Subject: [PATCH 6.1 0915/1146] igc: Set Qbv start_time and end_time to end_time if not being configured in GCL
+Date: Wed, 28 Dec 2022 15:40:54 +0100
+Message-Id: <20221228144355.095887070@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,162 +37,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tan Tee Min <tee.min.tan@linux.intel.com>
 
-[ Upstream commit 6c1c5097781f563b70a81683ea6fdac21637573b ]
+[ Upstream commit 72abeedd83982c1bc6023f631e412db78374d9b4 ]
 
-Long standing KCSAN issues are caused by data-race around
-some dev->stats changes.
+The default setting of end_time minus start_time is whole 1 second.
+Thus, if it's not being configured in any GCL entry then it will be
+staying at original 1 second.
 
-Most performance critical paths already use per-cpu
-variables, or per-queue ones.
+This patch is changing the start_time and end_time to be end_time as
+if setting zero will be having weird HW behavior where the gate will
+not be fully closed.
 
-It is reasonable (and more correct) to use atomic operations
-for the slow paths.
-
-This patch adds an union for each field of net_device_stats,
-so that we can convert paths that are not yet protected
-by a spinlock or a mutex.
-
-netdev_stats_to_stats64() no longer has an #if BITS_PER_LONG==64
-
-Note that the memcpy() we were using on 64bit arches
-had no provision to avoid load-tearing,
-while atomic_long_read() is providing the needed protection
-at no cost.
-
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: ec50a9d437f0 ("igc: Add support for taprio offloading")
+Signed-off-by: Tan Tee Min <tee.min.tan@linux.intel.com>
+Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/netdevice.h | 58 +++++++++++++++++++++++----------------
- include/net/dst.h         |  5 ++--
- net/core/dev.c            | 14 ++--------
- 3 files changed, 40 insertions(+), 37 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_main.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
-diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
-index 05d6f3facd5a..47b8b0ab7694 100644
---- a/include/linux/netdevice.h
-+++ b/include/linux/netdevice.h
-@@ -171,31 +171,38 @@ static inline bool dev_xmit_complete(int rc)
-  *	(unsigned long) so they can be read and written atomically.
-  */
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index 06c22ff54d31..34db1c006b20 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -6036,6 +6036,7 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
+ 	bool queue_configured[IGC_MAX_TX_QUEUES] = { };
+ 	u32 start_time = 0, end_time = 0;
+ 	size_t n;
++	int i;
  
-+#define NET_DEV_STAT(FIELD)			\
-+	union {					\
-+		unsigned long FIELD;		\
-+		atomic_long_t __##FIELD;	\
+ 	adapter->qbv_enable = qopt->enable;
+ 
+@@ -6056,7 +6057,6 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
+ 
+ 	for (n = 0; n < qopt->num_entries; n++) {
+ 		struct tc_taprio_sched_entry *e = &qopt->entries[n];
+-		int i;
+ 
+ 		end_time += e->interval;
+ 
+@@ -6095,6 +6095,18 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
+ 		start_time += e->interval;
+ 	}
+ 
++	/* Check whether a queue gets configured.
++	 * If not, set the start and end time to be end time.
++	 */
++	for (i = 0; i < adapter->num_tx_queues; i++) {
++		if (!queue_configured[i]) {
++			struct igc_ring *ring = adapter->tx_ring[i];
++
++			ring->start_time = end_time;
++			ring->end_time = end_time;
++		}
 +	}
 +
- struct net_device_stats {
--	unsigned long	rx_packets;
--	unsigned long	tx_packets;
--	unsigned long	rx_bytes;
--	unsigned long	tx_bytes;
--	unsigned long	rx_errors;
--	unsigned long	tx_errors;
--	unsigned long	rx_dropped;
--	unsigned long	tx_dropped;
--	unsigned long	multicast;
--	unsigned long	collisions;
--	unsigned long	rx_length_errors;
--	unsigned long	rx_over_errors;
--	unsigned long	rx_crc_errors;
--	unsigned long	rx_frame_errors;
--	unsigned long	rx_fifo_errors;
--	unsigned long	rx_missed_errors;
--	unsigned long	tx_aborted_errors;
--	unsigned long	tx_carrier_errors;
--	unsigned long	tx_fifo_errors;
--	unsigned long	tx_heartbeat_errors;
--	unsigned long	tx_window_errors;
--	unsigned long	rx_compressed;
--	unsigned long	tx_compressed;
-+	NET_DEV_STAT(rx_packets);
-+	NET_DEV_STAT(tx_packets);
-+	NET_DEV_STAT(rx_bytes);
-+	NET_DEV_STAT(tx_bytes);
-+	NET_DEV_STAT(rx_errors);
-+	NET_DEV_STAT(tx_errors);
-+	NET_DEV_STAT(rx_dropped);
-+	NET_DEV_STAT(tx_dropped);
-+	NET_DEV_STAT(multicast);
-+	NET_DEV_STAT(collisions);
-+	NET_DEV_STAT(rx_length_errors);
-+	NET_DEV_STAT(rx_over_errors);
-+	NET_DEV_STAT(rx_crc_errors);
-+	NET_DEV_STAT(rx_frame_errors);
-+	NET_DEV_STAT(rx_fifo_errors);
-+	NET_DEV_STAT(rx_missed_errors);
-+	NET_DEV_STAT(tx_aborted_errors);
-+	NET_DEV_STAT(tx_carrier_errors);
-+	NET_DEV_STAT(tx_fifo_errors);
-+	NET_DEV_STAT(tx_heartbeat_errors);
-+	NET_DEV_STAT(tx_window_errors);
-+	NET_DEV_STAT(rx_compressed);
-+	NET_DEV_STAT(tx_compressed);
- };
-+#undef NET_DEV_STAT
- 
- /* per-cpu stats, allocated on demand.
-  * Try to fit them in a single cache line, for dev_get_stats() sake.
-@@ -5143,4 +5150,9 @@ extern struct list_head ptype_base[PTYPE_HASH_SIZE] __read_mostly;
- 
- extern struct net_device *blackhole_netdev;
- 
-+/* Note: Avoid these macros in fast path, prefer per-cpu or per-queue counters. */
-+#define DEV_STATS_INC(DEV, FIELD) atomic_long_inc(&(DEV)->stats.__##FIELD)
-+#define DEV_STATS_ADD(DEV, FIELD, VAL) 	\
-+		atomic_long_add((VAL), &(DEV)->stats.__##FIELD)
-+
- #endif	/* _LINUX_NETDEVICE_H */
-diff --git a/include/net/dst.h b/include/net/dst.h
-index 6aa252c3fc55..19af7a2713cc 100644
---- a/include/net/dst.h
-+++ b/include/net/dst.h
-@@ -362,9 +362,8 @@ static inline void __skb_tunnel_rx(struct sk_buff *skb, struct net_device *dev,
- static inline void skb_tunnel_rx(struct sk_buff *skb, struct net_device *dev,
- 				 struct net *net)
- {
--	/* TODO : stats should be SMP safe */
--	dev->stats.rx_packets++;
--	dev->stats.rx_bytes += skb->len;
-+	DEV_STATS_INC(dev, rx_packets);
-+	DEV_STATS_ADD(dev, rx_bytes, skb->len);
- 	__skb_tunnel_rx(skb, dev, net);
+ 	return 0;
  }
- 
-diff --git a/net/core/dev.c b/net/core/dev.c
-index d2ab54c9c3ed..25c73f967761 100644
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -10398,24 +10398,16 @@ void netdev_run_todo(void)
- void netdev_stats_to_stats64(struct rtnl_link_stats64 *stats64,
- 			     const struct net_device_stats *netdev_stats)
- {
--#if BITS_PER_LONG == 64
--	BUILD_BUG_ON(sizeof(*stats64) < sizeof(*netdev_stats));
--	memcpy(stats64, netdev_stats, sizeof(*netdev_stats));
--	/* zero out counters that only exist in rtnl_link_stats64 */
--	memset((char *)stats64 + sizeof(*netdev_stats), 0,
--	       sizeof(*stats64) - sizeof(*netdev_stats));
--#else
--	size_t i, n = sizeof(*netdev_stats) / sizeof(unsigned long);
--	const unsigned long *src = (const unsigned long *)netdev_stats;
-+	size_t i, n = sizeof(*netdev_stats) / sizeof(atomic_long_t);
-+	const atomic_long_t *src = (atomic_long_t *)netdev_stats;
- 	u64 *dst = (u64 *)stats64;
- 
- 	BUILD_BUG_ON(n > sizeof(*stats64) / sizeof(u64));
- 	for (i = 0; i < n; i++)
--		dst[i] = src[i];
-+		dst[i] = atomic_long_read(&src[i]);
- 	/* zero out counters that only exist in rtnl_link_stats64 */
- 	memset((char *)stats64 + n * sizeof(u64), 0,
- 	       sizeof(*stats64) - n * sizeof(u64));
--#endif
- }
- EXPORT_SYMBOL(netdev_stats_to_stats64);
  
 -- 
 2.35.1
