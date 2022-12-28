@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F2F01C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5B3DC433EF;
-	Wed, 28 Dec 2022 16:42:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FC91C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86CFEC433F1;
+	Wed, 28 Dec 2022 16:42:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245723;
-	bh=g5DWXgmezYnT/RO8YzVpE4jnKtnrAXeoJ9Yq5ZKvGXo=;
+	s=korg; t=1672245725;
+	bh=scAjh5f8FKUHPUIaZJCpBxjtgn9vl/P0GaSN3HR+cwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cwo3cMfLLUFhNKqnNC8ChJCQlFt/dZQxIEap9xrU45qY+TERyeYSaLaRsLCCq3adg
-	 gFr8gPfvteFOLefFG9HIcsb3gc2VuMAGJr6oiaR95CaYmMH/xg72sQ2r+tRR+tgz6D
-	 hgfgc40UIMntzHBFqqzsqrjgB569zqP5oe3uR1/g=
+	b=Ys+mEpzvBxyy0Uz7Fnms6BDco4BMr7dT640JN9naaa8JcF4AFpfxLmBbhspNWu63i
+	 HAJCDC2FzruXRmg18cB1RtjIf3CjRKWxocQq+VYAtlSsMlti03zYBdRfkVO6tuWQA0
+	 6xpAt32o5k0HSWVrX243K94Zp2I7zbA3/2MQgDb8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Alvin Lee <Alvin.Lee2@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	George Shen <george.shen@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0911/1146] igc: Use strict cycles for Qbv scheduling
-Date: Wed, 28 Dec 2022 15:40:50 +0100
-Message-Id: <20221228144354.976862108@linuxfoundation.org>
+Subject: [PATCH 6.0 0944/1073] drm/amd/display: Workaround to increase phantom pipe vactive in pipesplit
+Date: Wed, 28 Dec 2022 15:42:12 +0100
+Message-Id: <20221228144353.679754050@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,50 +38,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: George Shen <george.shen@amd.com>
 
-[ Upstream commit d8f45be01dd9381065a3778a579385249ed011dc ]
+[ Upstream commit 5b8f9deaf3b6badfc0da968e6e07ceabd19700b6 ]
 
-Configuring strict cycle mode in the controller forces more well
-behaved transmissions when taprio is offloaded.
+[Why]
+Certain high resolution displays exhibit DCC line corruption with SubVP
+enabled. This is likely due to insufficient DCC meta data buffered
+immediately after the mclk switch.
 
-When set this strict_cycle and strict_end, transmission is not
-enabled if the whole packet cannot be completed before end of
-the Qbv cycle.
+[How]
+Add workaround to increase phantom pipe vactive height by
+meta_row_height number of lines, thus increasing the amount of meta data
+buffered immediately after mclk switch finishes.
 
-Fixes: 82faa9b79950 ("igc: Add support for ETF offloading")
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: George Shen <george.shen@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_tsn.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
-index 0fce22de2ab8..4a019954cadb 100644
---- a/drivers/net/ethernet/intel/igc/igc_tsn.c
-+++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
-@@ -110,15 +110,8 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
- 		wr32(IGC_STQT(i), ring->start_time);
- 		wr32(IGC_ENDQT(i), ring->end_time);
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+index 07c56e231b04..d05df4f7139f 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -485,9 +485,11 @@ void dcn32_set_phantom_stream_timing(struct dc *dc,
+ 	unsigned int i, pipe_idx;
+ 	struct pipe_ctx *pipe;
+ 	uint32_t phantom_vactive, phantom_bp, pstate_width_fw_delay_lines;
++	unsigned int num_dpp;
+ 	unsigned int vlevel = context->bw_ctx.dml.vba.VoltageLevel;
+ 	unsigned int dcfclk = context->bw_ctx.dml.vba.DCFCLKState[vlevel][context->bw_ctx.dml.vba.maxMpcComb];
+ 	unsigned int socclk = context->bw_ctx.dml.vba.SOCCLKPerState[vlevel];
++	struct vba_vars_st *vba = &context->bw_ctx.dml.vba;
  
--		if (adapter->base_time) {
--			/* If we have a base_time we are in "taprio"
--			 * mode and we need to be strict about the
--			 * cycles: only transmit a packet if it can be
--			 * completed during that cycle.
--			 */
--			txqctl |= IGC_TXQCTL_STRICT_CYCLE |
--				IGC_TXQCTL_STRICT_END;
--		}
-+		txqctl |= IGC_TXQCTL_STRICT_CYCLE |
-+			IGC_TXQCTL_STRICT_END;
+ 	dc_assert_fp_enabled();
  
- 		if (ring->launchtime_enable)
- 			txqctl |= IGC_TXQCTL_QUEUE_MODE_LAUNCHT;
+@@ -523,6 +525,11 @@ void dcn32_set_phantom_stream_timing(struct dc *dc,
+ 	phantom_vactive = get_subviewport_lines_needed_in_mall(&context->bw_ctx.dml, pipes, pipe_cnt, pipe_idx) +
+ 				pstate_width_fw_delay_lines + dc->caps.subvp_swath_height_margin_lines;
+ 
++	// W/A for DCC corruption with certain high resolution timings.
++	// Determing if pipesplit is used. If so, add meta_row_height to the phantom vactive.
++	num_dpp = vba->NoOfDPP[vba->VoltageLevel][vba->maxMpcComb][vba->pipe_plane[pipe_idx]];
++	phantom_vactive += num_dpp > 1 ? vba->meta_row_height[vba->pipe_plane[pipe_idx]] : 0;
++
+ 	// For backporch of phantom pipe, use vstartup of the main pipe
+ 	phantom_bp = get_vstartup(&context->bw_ctx.dml, pipes, pipe_cnt, pipe_idx);
+ 
 -- 
 2.35.1
 
