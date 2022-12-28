@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 970881863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D631C433EF;
-	Wed, 28 Dec 2022 15:00:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44EC91863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9A24C433D2;
+	Wed, 28 Dec 2022 15:00:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239619;
-	bh=FoxYHp9WbO8yNbj/wlK5JvWJiKXSe9+l6W+iEX6c9Cc=;
+	s=korg; t=1672239622;
+	bh=BI81VsQgUesnbRAeUXPSJMeE4jCEZUlWXKKX1VZNNp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AFv1N6KYN+2C47AChZfCXP85w5ili16C9lsMQzgLEN8TQdcDXVOclHxOhK2UlQ5jh
-	 XwYmrjTl3NC/WzPfqyIdl4kRg8zRPntM2Nnl7KyG0qqTjTRTf91bbu48qemlHDHu9i
-	 FBIwgW6jeHFOp/JWz1EihjywaKz6ykkRymvATc6Y=
+	b=PiqhYqwaZLhQE6jpUe33UyCSRtPrgAnKiYW9M8qN8yC26vRVBrdhf7nfXnmGF4j6f
+	 5S+N/TAn60NN8bk9U4UPxk2Kj+b3S9JTRj7/CuUGYOdN0UOSQ6+JtcJJonA1m0VORh
+	 35tRx+PSMG6+ZyDbgJ2UYrYpabZLUzagK4kPand0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Chen Jiahao <chenjiahao16@huawei.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 250/731] ALSA: asihpi: fix missing pci_disable_device()
-Date: Wed, 28 Dec 2022 15:35:57 +0100
-Message-Id: <20221228144303.809119186@linuxfoundation.org>
+Subject: [PATCH 6.1 0020/1146] drivers: soc: ti: knav_qmss_queue: Mark knav_acc_firmwares as static
+Date: Wed, 28 Dec 2022 15:25:59 +0100
+Message-Id: <20221228144330.719825544@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Chen Jiahao <chenjiahao16@huawei.com>
 
-[ Upstream commit 9d86515c3d4c0564a0c31a2df87d735353a1971e ]
+[ Upstream commit adf85adc2a7199b41e7a4da083bd17274a3d6969 ]
 
-pci_disable_device() need be called while module exiting, switch to use
-pcim_enable(), pci_disable_device() will be called in pcim_release().
+There is a sparse warning shown below:
 
-Fixes: 3285ea10e9b0 ("ALSA: asihpi - Interrelated HPI tidy up.")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Link: https://lore.kernel.org/r/20221126021429.3029562-1-liushixin2@huawei.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+drivers/soc/ti/knav_qmss_queue.c:70:12: warning: symbol
+'knav_acc_firmwares' was not declared. Should it be static?
+
+Since 'knav_acc_firmwares' is only called within knav_qmss_queue.c,
+mark it as static to fix the warning.
+
+Fixes: 96ee19becc3b ("soc: ti: add firmware file name as part of the driver")
+Signed-off-by: Chen Jiahao <chenjiahao16@huawei.com>
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Link: https://lore.kernel.org/r/20221019153212.72350-1-chenjiahao16@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/asihpi/hpioctl.c | 2 +-
+ drivers/soc/ti/knav_qmss_queue.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/pci/asihpi/hpioctl.c b/sound/pci/asihpi/hpioctl.c
-index bb31b7fe867d..477a5b4b50bc 100644
---- a/sound/pci/asihpi/hpioctl.c
-+++ b/sound/pci/asihpi/hpioctl.c
-@@ -361,7 +361,7 @@ int asihpi_adapter_probe(struct pci_dev *pci_dev,
- 		pci_dev->device, pci_dev->subsystem_vendor,
- 		pci_dev->subsystem_device, pci_dev->devfn);
+diff --git a/drivers/soc/ti/knav_qmss_queue.c b/drivers/soc/ti/knav_qmss_queue.c
+index 92af7d1b6f5b..16a6d530a0d4 100644
+--- a/drivers/soc/ti/knav_qmss_queue.c
++++ b/drivers/soc/ti/knav_qmss_queue.c
+@@ -67,7 +67,7 @@ static DEFINE_MUTEX(knav_dev_lock);
+  * Newest followed by older ones. Search is done from start of the array
+  * until a firmware file is found.
+  */
+-const char *knav_acc_firmwares[] = {"ks2_qmss_pdsp_acc48.bin"};
++static const char * const knav_acc_firmwares[] = {"ks2_qmss_pdsp_acc48.bin"};
  
--	if (pci_enable_device(pci_dev) < 0) {
-+	if (pcim_enable_device(pci_dev) < 0) {
- 		dev_err(&pci_dev->dev,
- 			"pci_enable_device failed, disabling device\n");
- 		return -EIO;
+ static bool device_ready;
+ bool knav_qmss_device_ready(void)
 -- 
 2.35.1
 
