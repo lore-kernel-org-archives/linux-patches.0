@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CEFD1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:55:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B18AC433D2;
-	Wed, 28 Dec 2022 14:55:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939A51863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:55:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19006C433D2;
+	Wed, 28 Dec 2022 14:55:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239342;
-	bh=AEb70Q1MeoX8gIrWrw8ekroLnKt8Vaic7XkzL2DG5/o=;
+	s=korg; t=1672239345;
+	bh=j1ALrGnqB1XDxRqxmm5sH6hFPd/6VMxh/l/c1wBe1A4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FIz455uy1eLlSiDm/hOVbU/AkE4MkPcXQoa0YnrDoX6tXNmnhwyf+hSV9RA2EH1gL
-	 Qj8ytKQOCHCojHPP7ipBMZ3WKeQ3XUOkJ3Vvdt39i/WikWyIjYwda4bu9mOVuckf5j
-	 0uC5osILbXXS/AcW0pUZjKVtRTlfO+HaqfCGN4n0=
+	b=MG9W0pBxtaLVxFp5ptDKS4dj84YDoGrF8cs4GrKIWwW7ZjuImF0vdBQfHg632AtVW
+	 H5txJaFnS71Ew9OVwqedzU5xq0CUt7W5yOgCTUvok0ShQT+WhQunBHVOWjjhpz1JsH
+	 AVEZYB0bJPLmTJ0+ACV64smuXPGnlWack1pVzp8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Hui Tang <tanghui20@huawei.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0013/1073] arm64: dts: qcom: msm8996: fix supported-hw in cpufreq OPP tables
-Date: Wed, 28 Dec 2022 15:26:41 +0100
-Message-Id: <20221228144328.524229362@linuxfoundation.org>
+Subject: [PATCH 5.15 209/731] mtd: lpddr2_nvm: Fix possible null-ptr-deref
+Date: Wed, 28 Dec 2022 15:35:16 +0100
+Message-Id: <20221228144302.616391393@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,111 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Hui Tang <tanghui20@huawei.com>
 
-[ Upstream commit 0154caaa2b748e7414a4ec3c6ee60e8f483b2d4f ]
+[ Upstream commit 6bdd45d795adf9e73b38ced5e7f750cd199499ff ]
 
-Adjust MSM8996 cpufreq tables according to tables in msm-3.18. Some of
-the frequencies are not supported on speed bins other than 0. Also other
-speed bins support intermediate topmost frequencies, not supported on
-speed bin 0. Implement all these differencies.
+It will cause null-ptr-deref when resource_size(add_range) invoked,
+if platform_get_resource() returns NULL.
 
-Fixes: 90173a954a22 ("arm64: dts: qcom: msm8996: Add CPU opps")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20220724140421.1933004-5-dmitry.baryshkov@linaro.org
+Fixes: 96ba9dd65788 ("mtd: lpddr: add driver for LPDDR2-NVM PCM memories")
+Signed-off-by: Hui Tang <tanghui20@huawei.com>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20221114090240.244172-1-tanghui20@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 38 ++++++++++++++++++++-------
- 1 file changed, 29 insertions(+), 9 deletions(-)
+ drivers/mtd/lpddr/lpddr2_nvm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 41c09895268e..24791ed436c5 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -203,22 +203,32 @@ opp-1228800000 {
- 		};
- 		opp-1324800000 {
- 			opp-hz = /bits/ 64 <1324800000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x5>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1363200000 {
-+			opp-hz = /bits/ 64 <1363200000>;
-+			opp-supported-hw = <0x2>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1401600000 {
- 			opp-hz = /bits/ 64 <1401600000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x5>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1478400000 {
- 			opp-hz = /bits/ 64 <1478400000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x1>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1497600000 {
-+			opp-hz = /bits/ 64 <1497600000>;
-+			opp-supported-hw = <0x04>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1593600000 {
- 			opp-hz = /bits/ 64 <1593600000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
- 		};
- 	};
-@@ -329,29 +339,39 @@ opp-1785600000 {
- 			opp-supported-hw = <0x7>;
- 			clock-latency-ns = <200000>;
- 		};
-+		opp-1804800000 {
-+			opp-hz = /bits/ 64 <1804800000>;
-+			opp-supported-hw = <0x6>;
-+			clock-latency-ns = <200000>;
-+		};
- 		opp-1824000000 {
- 			opp-hz = /bits/ 64 <1824000000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x1>;
-+			clock-latency-ns = <200000>;
-+		};
-+		opp-1900800000 {
-+			opp-hz = /bits/ 64 <1900800000>;
-+			opp-supported-hw = <0x4>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1920000000 {
- 			opp-hz = /bits/ 64 <1920000000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-1996800000 {
- 			opp-hz = /bits/ 64 <1996800000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-2073600000 {
- 			opp-hz = /bits/ 64 <2073600000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
- 		};
- 		opp-2150400000 {
- 			opp-hz = /bits/ 64 <2150400000>;
--			opp-supported-hw = <0x7>;
-+			opp-supported-hw = <0x1>;
- 			clock-latency-ns = <200000>;
- 		};
- 	};
+diff --git a/drivers/mtd/lpddr/lpddr2_nvm.c b/drivers/mtd/lpddr/lpddr2_nvm.c
+index 72f5c7b30079..add4386f99f0 100644
+--- a/drivers/mtd/lpddr/lpddr2_nvm.c
++++ b/drivers/mtd/lpddr/lpddr2_nvm.c
+@@ -433,6 +433,8 @@ static int lpddr2_nvm_probe(struct platform_device *pdev)
+ 
+ 	/* lpddr2_nvm address range */
+ 	add_range = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	if (!add_range)
++		return -ENODEV;
+ 
+ 	/* Populate map_info data structure */
+ 	*map = (struct map_info) {
 -- 
 2.35.1
 
