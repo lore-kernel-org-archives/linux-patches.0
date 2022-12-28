@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A35D11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26AC2C433EF;
-	Wed, 28 Dec 2022 15:25:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABAC1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C331EC433F0;
+	Wed, 28 Dec 2022 15:25:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241138;
-	bh=H+3m3H5k6fUt8KOt+9nh9x+589HXgKljkSvmX6rEwDw=;
+	s=korg; t=1672241141;
+	bh=c63AvY7EiMllCaX1dYzzbfLMwnTOuLYomnFjkQ2hMrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AloId63E2SHkZ6Ml8OOyPqlpV3E6XiS+1V33pnWXuMGQP3SzjlXsXyMJeEWk7aU8P
-	 lp5FDz0KL3M6JiVfVf1mnOap/yQWGX0of6rahYsXGf4n/M4MUHEoM1FgLcqkwZWc6A
-	 O1cP9zhlzj+mqVj6JnlxBc57jrjtDfml2w6l6s7M=
+	b=G76bd4XGkzKU27mplnphb3B0CzYfiBvcwC5UUkHeC7Eh6eLRxp9FVMh7PbONjDUqz
+	 0bYWi9l87drZGPFkgYdhsbEmnhCt6AE3MuAsdRVD5zYDFKbYN/SHUTvnV0dEqWSURk
+	 kB9BPJA8z70OxCjSNSuZr0n6k+gskN85Z4Eewipw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Mendonca <rafaelmendsr@gmail.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Jimmy Assarsson <extja@kvaser.com>,
+	Anssi Hannula <anssi.hannula@bitwise.fi>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 442/731] vfio: platform: Do not pass return buffer to ACPI _RST method
-Date: Wed, 28 Dec 2022 15:39:09 +0100
-Message-Id: <20221228144309.370123328@linuxfoundation.org>
+Subject: [PATCH 6.0 0246/1073] can: kvaser_usb_leaf: Fix wrong CAN state after stopping
+Date: Wed, 28 Dec 2022 15:30:34 +0100
+Message-Id: <20221228144334.705989485@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,41 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael Mendonca <rafaelmendsr@gmail.com>
+From: Anssi Hannula <anssi.hannula@bitwise.fi>
 
-[ Upstream commit e67e070632a665c932d534b8b800477bb3111449 ]
+[ Upstream commit a11249acf802341294557895d8e5f6aef080253f ]
 
-The ACPI _RST method has no return value, there's no need to pass a return
-buffer to acpi_evaluate_object().
+0bfd:0124 Kvaser Mini PCI Express 2xHS FW 4.18.778 sends a
+CMD_CHIP_STATE_EVENT indicating bus-off after stopping the device,
+causing a stopped device to appear as CAN_STATE_BUS_OFF instead of
+CAN_STATE_STOPPED.
 
-Fixes: d30daa33ec1d ("vfio: platform: call _RST method when using ACPI")
-Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Link: https://lore.kernel.org/r/20221018152825.891032-1-rafaelmendsr@gmail.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Fix that by not handling error events on stopped devices.
+
+Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
+Tested-by: Jimmy Assarsson <extja@kvaser.com>
+Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://lore.kernel.org/all/20221010185237.319219-8-extja@kvaser.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/platform/vfio_platform_common.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/vfio/platform/vfio_platform_common.c b/drivers/vfio/platform/vfio_platform_common.c
-index 6af7ce7d619c..701bd99a8719 100644
---- a/drivers/vfio/platform/vfio_platform_common.c
-+++ b/drivers/vfio/platform/vfio_platform_common.c
-@@ -72,12 +72,11 @@ static int vfio_platform_acpi_call_reset(struct vfio_platform_device *vdev,
- 				  const char **extra_dbg)
- {
- #ifdef CONFIG_ACPI
--	struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
- 	struct device *dev = vdev->device;
- 	acpi_handle handle = ACPI_HANDLE(dev);
- 	acpi_status acpi_ret;
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+index 993fcc19637d..4f9c76f4d0da 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+@@ -1045,6 +1045,10 @@ static void kvaser_usb_leaf_rx_error(const struct kvaser_usb *dev,
+ 	leaf = priv->sub_priv;
+ 	stats = &priv->netdev->stats;
  
--	acpi_ret = acpi_evaluate_object(handle, "_RST", NULL, &buffer);
-+	acpi_ret = acpi_evaluate_object(handle, "_RST", NULL, NULL);
- 	if (ACPI_FAILURE(acpi_ret)) {
- 		if (extra_dbg)
- 			*extra_dbg = acpi_format_exception(acpi_ret);
++	/* Ignore e.g. state change to bus-off reported just after stopping */
++	if (!netif_running(priv->netdev))
++		return;
++
+ 	/* Update all of the CAN interface's state and error counters before
+ 	 * trying any memory allocation that can actually fail with -ENOMEM.
+ 	 *
 -- 
 2.35.1
 
