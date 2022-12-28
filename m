@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6A821863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F2E1C433EF;
-	Wed, 28 Dec 2022 15:10:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E9511863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01611C433D2;
+	Wed, 28 Dec 2022 15:10:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240253;
-	bh=G7A3c3AZmJLOyiYgx8y+tvh+Xti2Ojp1Fhw10sKfLa8=;
+	s=korg; t=1672240256;
+	bh=5p5XapdduFu5x6RJ/vft6XaAAqGCL1qDdotRGVHZb/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EhIuDNgLcGBmF9Zm1g2hPZzLTZ0Xs0kJDGEtaVvpmdv12JxgIWj51yIt50x6wK2HW
-	 l6UK3TkPMHCUJw6cD5nrlxGa7QuSOmfSUAZr9ofozhnnKheaCi25OD+VZMzn9C1dL0
-	 dZenSL4MB48IeRNWHxN/Kup0rR1Yo0NHpMDwRgNY=
+	b=b7/3c1FP92sTMkXfMB+VZCfxn1RFquY00WNqxc8vjMwEc87X7vTDo4kPXeJUtrH3c
+	 UFGbHuHf41lz1HvdtBI2RoyiUcI5E79eq5UzY1Xk7DU97qWeKeA7G+0lq589YtGuco
+	 12UpSQfpjrLX6jTtNuWOH7HH9bxFX5fqx1D/73gM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
+	Eddie James <eajames@linux.ibm.com>,
+	Joel Stanley <joel@jms.id.au>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0139/1073] EDAC/i10nm: fix refcount leak in pci_get_dev_wrapper()
-Date: Wed, 28 Dec 2022 15:28:47 +0100
-Message-Id: <20221228144331.806134243@linuxfoundation.org>
+Subject: [PATCH 6.1 0101/1146] tpm: Add flag to use default cancellation policy
+Date: Wed, 28 Dec 2022 15:27:20 +0100
+Message-Id: <20221228144332.886471322@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,42 +36,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Eddie James <eajames@linux.ibm.com>
 
-[ Upstream commit 9c8921555907f4d723f01ed2d859b66f2d14f08e ]
+[ Upstream commit 7bfda9c73fa9710a842a7d6f89b024351c80c19c ]
 
-As the comment of pci_get_domain_bus_and_slot() says, it returns
-a PCI device with refcount incremented, so it doesn't need to
-call an extra pci_dev_get() in pci_get_dev_wrapper(), and the PCI
-device needs to be put in the error path.
+The check for cancelled request depends on the VID of the chip, but
+some chips share VID which shouldn't share their cancellation
+behavior. This is the case for the Nuvoton NPCT75X, which should use
+the default cancellation check, not the Winbond one.
+To avoid changing the existing behavior, add a new flag to indicate
+that the chip should use the default cancellation check and set it
+for the I2C TPM2 TIS driver.
 
-Fixes: d4dc89d069aa ("EDAC, i10nm: Add a driver for Intel 10nm server processors")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://lore.kernel.org/r/20221128065512.3572550-1-yangyingliang@huawei.com
+Fixes: bbc23a07b072 ("tpm: Add tpm_tis_i2c backend for tpm_tis_core")
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+Tested-by: Joel Stanley <joel@jms.id.au>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/i10nm_base.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ drivers/char/tpm/tpm_tis_core.c | 20 ++++++++++++--------
+ drivers/char/tpm/tpm_tis_core.h |  1 +
+ drivers/char/tpm/tpm_tis_i2c.c  |  1 +
+ 3 files changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/edac/i10nm_base.c b/drivers/edac/i10nm_base.c
-index 6cf50ee0b77c..e0af60833d28 100644
---- a/drivers/edac/i10nm_base.c
-+++ b/drivers/edac/i10nm_base.c
-@@ -198,11 +198,10 @@ static struct pci_dev *pci_get_dev_wrapper(int dom, unsigned int bus,
- 	if (unlikely(pci_enable_device(pdev) < 0)) {
- 		edac_dbg(2, "Failed to enable device %02x:%02x.%x\n",
- 			 bus, dev, fun);
-+		pci_dev_put(pdev);
- 		return NULL;
- 	}
+diff --git a/drivers/char/tpm/tpm_tis_core.c b/drivers/char/tpm/tpm_tis_core.c
+index 757623bacfd5..3f98e587b3e8 100644
+--- a/drivers/char/tpm/tpm_tis_core.c
++++ b/drivers/char/tpm/tpm_tis_core.c
+@@ -682,15 +682,19 @@ static bool tpm_tis_req_canceled(struct tpm_chip *chip, u8 status)
+ {
+ 	struct tpm_tis_data *priv = dev_get_drvdata(&chip->dev);
  
--	pci_dev_get(pdev);
--
- 	return pdev;
+-	switch (priv->manufacturer_id) {
+-	case TPM_VID_WINBOND:
+-		return ((status == TPM_STS_VALID) ||
+-			(status == (TPM_STS_VALID | TPM_STS_COMMAND_READY)));
+-	case TPM_VID_STM:
+-		return (status == (TPM_STS_VALID | TPM_STS_COMMAND_READY));
+-	default:
+-		return (status == TPM_STS_COMMAND_READY);
++	if (!test_bit(TPM_TIS_DEFAULT_CANCELLATION, &priv->flags)) {
++		switch (priv->manufacturer_id) {
++		case TPM_VID_WINBOND:
++			return ((status == TPM_STS_VALID) ||
++				(status == (TPM_STS_VALID | TPM_STS_COMMAND_READY)));
++		case TPM_VID_STM:
++			return (status == (TPM_STS_VALID | TPM_STS_COMMAND_READY));
++		default:
++			break;
++		}
+ 	}
++
++	return status == TPM_STS_COMMAND_READY;
  }
  
+ static irqreturn_t tis_int_handler(int dummy, void *dev_id)
+diff --git a/drivers/char/tpm/tpm_tis_core.h b/drivers/char/tpm/tpm_tis_core.h
+index 66a5a13cd1df..b68479e0de10 100644
+--- a/drivers/char/tpm/tpm_tis_core.h
++++ b/drivers/char/tpm/tpm_tis_core.h
+@@ -86,6 +86,7 @@ enum tis_defaults {
+ enum tpm_tis_flags {
+ 	TPM_TIS_ITPM_WORKAROUND		= BIT(0),
+ 	TPM_TIS_INVALID_STATUS		= BIT(1),
++	TPM_TIS_DEFAULT_CANCELLATION	= BIT(2),
+ };
+ 
+ struct tpm_tis_data {
+diff --git a/drivers/char/tpm/tpm_tis_i2c.c b/drivers/char/tpm/tpm_tis_i2c.c
+index 635a69dfcbbd..f3a7251c8e38 100644
+--- a/drivers/char/tpm/tpm_tis_i2c.c
++++ b/drivers/char/tpm/tpm_tis_i2c.c
+@@ -329,6 +329,7 @@ static int tpm_tis_i2c_probe(struct i2c_client *dev,
+ 	if (!phy->io_buf)
+ 		return -ENOMEM;
+ 
++	set_bit(TPM_TIS_DEFAULT_CANCELLATION, &phy->priv.flags);
+ 	phy->i2c_client = dev;
+ 
+ 	/* must precede all communication with the tpm */
 -- 
 2.35.1
 
