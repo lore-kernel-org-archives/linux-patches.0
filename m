@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AACE11C15
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:38:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0BAC433EF;
-	Wed, 28 Dec 2022 16:38:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07301C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:38:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2035DC433D2;
+	Wed, 28 Dec 2022 16:38:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245487;
-	bh=PdMP5C30ft0X8j7AZsrvp3AOrowRZsfzSKyJNsTzGmI=;
+	s=korg; t=1672245484;
+	bh=EG+e9gZtWBtSxd40PAuJyMF+fz0eBwH1KLEtrXDgJ8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CWFdg/sLUkWsM8lR6JthV4yXnUAKz3GgswTlvR7xtr9lsZZzzV3kRmTwTh4Phxt2B
-	 w20ej3uP6Eb2FzivoNfSS2OAHihlCi3FNkXAzui/NlrIorNPsR3X5kkEcfobXu0Lo6
-	 phb24v574m2yUfDYfxQQ+JeTJJkcxjQz1kOGqP3k=
+	b=cm5FeJugZriOyz/Eq7cNxeCsD2rlsHAsK981wlX+OZgjVD+vJPmRVaVnAWqd57SUc
+	 Gsl6pcwkZoc+mog9NTkYxMykhEsNdrUKyMeZkL13qwabJiDCIfSPPt6KV1Py58VfE4
+	 FYy86ZQw4oyATnMnm0YyX8zTCmaR+It2TKmeyqok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anup Patel <apatel@ventanamicro.com>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Atish Patra <atishp@rivosinc.com>,
-	Anup Patel <anup@brainfault.org>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0869/1146] RISC-V: KVM: Fix reg_val check in kvm_riscv_vcpu_set_reg_config()
-Date: Wed, 28 Dec 2022 15:40:08 +0100
-Message-Id: <20221228144353.772276525@linuxfoundation.org>
+Subject: [PATCH 6.0 0890/1073] binfmt_misc: fix shift-out-of-bounds in check_special_flags
+Date: Wed, 28 Dec 2022 15:41:18 +0100
+Message-Id: <20221228144352.202048329@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,47 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anup Patel <apatel@ventanamicro.com>
+From: Liu Shixin <liushixin2@huawei.com>
 
-[ Upstream commit e482d9e33d5b0f222cbef7341dcd52cead6b9edc ]
+[ Upstream commit 6a46bf558803dd2b959ca7435a5c143efe837217 ]
 
-The reg_val check in kvm_riscv_vcpu_set_reg_config() should only
-be done for isa config register.
+UBSAN reported a shift-out-of-bounds warning:
 
-Fixes: 9bfd900beeec ("RISC-V: KVM: Improve ISA extension by using a bitmap")
-Signed-off-by: Anup Patel <apatel@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Atish Patra <atishp@rivosinc.com>
-Signed-off-by: Anup Patel <anup@brainfault.org>
+ left shift of 1 by 31 places cannot be represented in type 'int'
+ Call Trace:
+  <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x8d/0xcf lib/dump_stack.c:106
+  ubsan_epilogue+0xa/0x44 lib/ubsan.c:151
+  __ubsan_handle_shift_out_of_bounds+0x1e7/0x208 lib/ubsan.c:322
+  check_special_flags fs/binfmt_misc.c:241 [inline]
+  create_entry fs/binfmt_misc.c:456 [inline]
+  bm_register_write+0x9d3/0xa20 fs/binfmt_misc.c:654
+  vfs_write+0x11e/0x580 fs/read_write.c:582
+  ksys_write+0xcf/0x120 fs/read_write.c:637
+  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+  do_syscall_64+0x34/0x80 arch/x86/entry/common.c:80
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ RIP: 0033:0x4194e1
+
+Since the type of Node's flags is unsigned long, we should define these
+macros with same type too.
+
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221102025123.1117184-1-liushixin2@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kvm/vcpu.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ fs/binfmt_misc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/riscv/kvm/vcpu.c b/arch/riscv/kvm/vcpu.c
-index 71ebbc4821f0..5174ef54ad1d 100644
---- a/arch/riscv/kvm/vcpu.c
-+++ b/arch/riscv/kvm/vcpu.c
-@@ -296,12 +296,15 @@ static int kvm_riscv_vcpu_set_reg_config(struct kvm_vcpu *vcpu,
- 	if (copy_from_user(&reg_val, uaddr, KVM_REG_SIZE(reg->id)))
- 		return -EFAULT;
+diff --git a/fs/binfmt_misc.c b/fs/binfmt_misc.c
+index e1eae7ea823a..bb202ad369d5 100644
+--- a/fs/binfmt_misc.c
++++ b/fs/binfmt_misc.c
+@@ -44,10 +44,10 @@ static LIST_HEAD(entries);
+ static int enabled = 1;
  
--	/* This ONE REG interface is only defined for single letter extensions */
--	if (fls(reg_val) >= RISCV_ISA_EXT_BASE)
--		return -EINVAL;
--
- 	switch (reg_num) {
- 	case KVM_REG_RISCV_CONFIG_REG(isa):
-+		/*
-+		 * This ONE REG interface is only defined for
-+		 * single letter extensions.
-+		 */
-+		if (fls(reg_val) >= RISCV_ISA_EXT_BASE)
-+			return -EINVAL;
-+
- 		if (!vcpu->arch.ran_atleast_once) {
- 			/* Ignore the enable/disable request for certain extensions */
- 			for (i = 0; i < RISCV_ISA_EXT_BASE; i++) {
+ enum {Enabled, Magic};
+-#define MISC_FMT_PRESERVE_ARGV0 (1 << 31)
+-#define MISC_FMT_OPEN_BINARY (1 << 30)
+-#define MISC_FMT_CREDENTIALS (1 << 29)
+-#define MISC_FMT_OPEN_FILE (1 << 28)
++#define MISC_FMT_PRESERVE_ARGV0 (1UL << 31)
++#define MISC_FMT_OPEN_BINARY (1UL << 30)
++#define MISC_FMT_CREDENTIALS (1UL << 29)
++#define MISC_FMT_OPEN_FILE (1UL << 28)
+ 
+ typedef struct {
+ 	struct list_head list;
 -- 
 2.35.1
 
