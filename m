@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21DF1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:26:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37797C433D2;
-	Wed, 28 Dec 2022 15:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C51C1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:26:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34C7C433D2;
+	Wed, 28 Dec 2022 15:26:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241180;
-	bh=NyCK2DCmunHbF2YtxfuT3EFR37RCzlhbdXdP+7WhXhY=;
+	s=korg; t=1672241183;
+	bh=8L2PcGEli8Hm1CSaPBM8Gp1Z/5rQDUi3GMj5KUVG/CY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oHtORDSpBPVEKw45GIZG+C0XRFQyMOdxMKF1WuJDoM73nX4u7/ERkHV5Qwb11ojjx
-	 bbkbrS9B6/gKX1SjK1RAghqrPG6qgYDGXhMDNVe9BnY2eVg6tU1XT6vCmWORWFGVDt
-	 RtLQ8EPOljBpcUWHzNaOQDQgwen1diXKi2KaHxBY=
+	b=W/aOovpwSfiWPbDkzf1LFkTW+9+AIocvDRW57i0cVQDkVSN79v2r/ePj8twFGPjLU
+	 6JKTjuFhq2bVqN7+ira0tVJ+UylsEITRnvZVPki8ULDSARho5KMDQvPlLrwFskvg10
+	 plCDGs7Gxbtd7BZWpD9lTSTKDjoONRbDPqw536g0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0250/1073] clk: renesas: r8a779a0: Fix SD0H clock name
-Date: Wed, 28 Dec 2022 15:30:38 +0100
-Message-Id: <20221228144334.811729046@linuxfoundation.org>
+Subject: [PATCH 6.1 0216/1146] pinctrl: ocelot: add missing destroy_workqueue() in error path in ocelot_pinctrl_probe()
+Date: Wed, 28 Dec 2022 15:29:15 +0100
+Message-Id: <20221228144336.013490722@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +36,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit db7076d5a7f0ca7dcf08f5095c74f86d4d0085ff ]
+[ Upstream commit 8ada020ade3bc4125b639a1dca50a6df687dd986 ]
 
-Correct the misspelled textual name of the SD0H clock.
+Using devm_add_action_or_reset() to make workqueue device-managed, so it can be
+destroy whenever the driver is unbound.
 
-Fixes: 470e3f0d0b15 ("clk: renesas: rcar-gen4: Introduce R-Car Gen4 CPG driver")
-Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://lore.kernel.org/r/20221012184830.3199-1-wsa+renesas@sang-engineering.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Fixes: c297561bc98a ("pinctrl: ocelot: Fix interrupt controller")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Link: https://lore.kernel.org/r/20220925021258.1492905-1-yangyingliang@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r8a779a0-cpg-mssr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-ocelot.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/clk/renesas/r8a779a0-cpg-mssr.c b/drivers/clk/renesas/r8a779a0-cpg-mssr.c
-index d74d46833012..e02542ca24a0 100644
---- a/drivers/clk/renesas/r8a779a0-cpg-mssr.c
-+++ b/drivers/clk/renesas/r8a779a0-cpg-mssr.c
-@@ -116,7 +116,7 @@ static const struct cpg_core_clk r8a779a0_core_clks[] __initconst = {
- 	DEF_FIXED("cp",		R8A779A0_CLK_CP,	CLK_EXTAL,	2, 1),
- 	DEF_FIXED("cl16mck",	R8A779A0_CLK_CL16MCK,	CLK_PLL1_DIV2,	64, 1),
+diff --git a/drivers/pinctrl/pinctrl-ocelot.c b/drivers/pinctrl/pinctrl-ocelot.c
+index 687aaa601555..3d5995cbcb78 100644
+--- a/drivers/pinctrl/pinctrl-ocelot.c
++++ b/drivers/pinctrl/pinctrl-ocelot.c
+@@ -2047,6 +2047,11 @@ static struct regmap *ocelot_pinctrl_create_pincfg(struct platform_device *pdev,
+ 	return devm_regmap_init_mmio(&pdev->dev, base, &regmap_config);
+ }
  
--	DEF_GEN4_SDH("sdh0",	R8A779A0_CLK_SD0H,	CLK_SDSRC,	   0x870),
-+	DEF_GEN4_SDH("sd0h",	R8A779A0_CLK_SD0H,	CLK_SDSRC,	   0x870),
- 	DEF_GEN4_SD("sd0",	R8A779A0_CLK_SD0,	R8A779A0_CLK_SD0H, 0x870),
++static void ocelot_destroy_workqueue(void *data)
++{
++	destroy_workqueue(data);
++}
++
+ static int ocelot_pinctrl_probe(struct platform_device *pdev)
+ {
+ 	const struct ocelot_match_data *data;
+@@ -2078,6 +2083,11 @@ static int ocelot_pinctrl_probe(struct platform_device *pdev)
+ 	if (!info->wq)
+ 		return -ENOMEM;
  
- 	DEF_BASE("rpc",		R8A779A0_CLK_RPC, CLK_TYPE_GEN4_RPC, CLK_RPCSRC),
++	ret = devm_add_action_or_reset(dev, ocelot_destroy_workqueue,
++				       info->wq);
++	if (ret)
++		return ret;
++
+ 	info->pincfg_data = &data->pincfg_data;
+ 
+ 	reset = devm_reset_control_get_optional_shared(dev, "switch");
+@@ -2119,15 +2129,6 @@ static int ocelot_pinctrl_probe(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static int ocelot_pinctrl_remove(struct platform_device *pdev)
+-{
+-	struct ocelot_pinctrl *info = platform_get_drvdata(pdev);
+-
+-	destroy_workqueue(info->wq);
+-
+-	return 0;
+-}
+-
+ static struct platform_driver ocelot_pinctrl_driver = {
+ 	.driver = {
+ 		.name = "pinctrl-ocelot",
+@@ -2135,7 +2136,6 @@ static struct platform_driver ocelot_pinctrl_driver = {
+ 		.suppress_bind_attrs = true,
+ 	},
+ 	.probe = ocelot_pinctrl_probe,
+-	.remove = ocelot_pinctrl_remove,
+ };
+ module_platform_driver(ocelot_pinctrl_driver);
+ 
 -- 
 2.35.1
 
