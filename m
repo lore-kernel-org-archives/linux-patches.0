@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D882A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C181C433F0;
-	Wed, 28 Dec 2022 15:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808311863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F53C433D2;
+	Wed, 28 Dec 2022 15:08:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240094;
-	bh=l4mdijT3DXLoB3FEQAQQT3XWHgMtUjdefbiHKLqvrG4=;
+	s=korg; t=1672240097;
+	bh=vGVaCzCmmr8w9aQ0EeNdcw++8Hnymw9yXnKkc4k3Buk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=neFI0bOapJeH9Ec3k3tPUPBhTRlFjT6pBYhsaOTwPAMyGjiR8XIp+a5RRwQCML7Vg
-	 DHHqtL7jZla0kJelx9d36qRrzhi+Lyzhq9qRdoEe9apkMivv8dy5B/bHeyNnc+L0ob
-	 0mNshYEfLU+rWfmFBEYwYtg+02TG+x4wbdciT6Ws=
+	b=LkGPLavJBO+jec6gMppvLz6ngHwvKOP0cVAxm+LPVvx/XICuSfhsH7J26oQDp4s0u
+	 BKdFpudJSKiGDjETQCC34RXGSawcfANJkKC/TUm2fCU1lsScnAkdKWPaeTPr6hmGx4
+	 X0RHRCdwWfEc8vFSVU00IlwRQllRn5/R6+V/M3hM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Dobriyan <adobriyan@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Frank Wunderlich <frank-w@public-files.de>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0117/1073] proc: fixup uptime selftest
-Date: Wed, 28 Dec 2022 15:28:25 +0100
-Message-Id: <20221228144331.216765246@linuxfoundation.org>
+Subject: [PATCH 6.1 0080/1146] arm64: dts: mt7986: move wed_pcie node
+Date: Wed, 28 Dec 2022 15:26:59 +0100
+Message-Id: <20221228144332.319458679@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,46 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexey Dobriyan <adobriyan@gmail.com>
+From: Frank Wunderlich <frank-w@public-files.de>
 
-[ Upstream commit 5cc81d5c81af0dee54da9a67a3ebe4be076a13db ]
+[ Upstream commit 99cce13b82a9366cfdd230ba6ddb48ba30d2741f ]
 
-syscall(3) returns -1 and sets errno on error, unlike "syscall"
-instruction.
+Move the wed_pcie node to have node aligned by address.
 
-Systems which have <= 32/64 CPUs are unaffected. Test won't bounce
-to all CPUs before completing if there are more of them.
-
-Link: https://lkml.kernel.org/r/Y1bUiT7VRXlXPQa1@p183
-Fixes: 1f5bd0547654 ("proc: selftests: test /proc/uptime")
-Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 00b9903996b3 ("arm64: dts: mediatek: mt7986: add support for Wireless Ethernet Dispatch")
+Signed-off-by: Frank Wunderlich <frank-w@public-files.de>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221118190126.100895-2-linux@fw-web.de
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/proc/proc-uptime-002.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt7986a.dtsi | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/tools/testing/selftests/proc/proc-uptime-002.c b/tools/testing/selftests/proc/proc-uptime-002.c
-index e7ceabed7f51..7d0aa22bdc12 100644
---- a/tools/testing/selftests/proc/proc-uptime-002.c
-+++ b/tools/testing/selftests/proc/proc-uptime-002.c
-@@ -17,6 +17,7 @@
- // while shifting across CPUs.
- #undef NDEBUG
- #include <assert.h>
-+#include <errno.h>
- #include <unistd.h>
- #include <sys/syscall.h>
- #include <stdlib.h>
-@@ -54,7 +55,7 @@ int main(void)
- 		len += sizeof(unsigned long);
- 		free(m);
- 		m = malloc(len);
--	} while (sys_sched_getaffinity(0, len, m) == -EINVAL);
-+	} while (sys_sched_getaffinity(0, len, m) == -1 && errno == EINVAL);
+diff --git a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
+index 14c91ded29e6..35e01fa2d314 100644
+--- a/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt7986a.dtsi
+@@ -112,6 +112,12 @@ infracfg: infracfg@10001000 {
+ 			#clock-cells = <1>;
+ 		};
  
- 	fd = open("/proc/uptime", O_RDONLY);
- 	assert(fd >= 0);
++		wed_pcie: wed-pcie@10003000 {
++			compatible = "mediatek,mt7986-wed-pcie",
++				     "syscon";
++			reg = <0 0x10003000 0 0x10>;
++		};
++
+ 		topckgen: topckgen@1001b000 {
+ 			compatible = "mediatek,mt7986-topckgen", "syscon";
+ 			reg = <0 0x1001B000 0 0x1000>;
+@@ -228,12 +234,6 @@ ethsys: syscon@15000000 {
+ 			 #reset-cells = <1>;
+ 		};
+ 
+-		wed_pcie: wed-pcie@10003000 {
+-			compatible = "mediatek,mt7986-wed-pcie",
+-				     "syscon";
+-			reg = <0 0x10003000 0 0x10>;
+-		};
+-
+ 		wed0: wed@15010000 {
+ 			compatible = "mediatek,mt7986-wed",
+ 				     "syscon";
 -- 
 2.35.1
 
