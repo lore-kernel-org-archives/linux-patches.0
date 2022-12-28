@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C3F11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:55:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEE5CC433D2;
-	Wed, 28 Dec 2022 14:55:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09BC1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:55:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53E8DC433F0;
+	Wed, 28 Dec 2022 14:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239332;
-	bh=QEo7o9/FH/ZPMqOOGUU032HEKCPCRR3Ts0Ly4H4xBsg=;
+	s=korg; t=1672239334;
+	bh=7XiM/Y019F48+ixJCG5UmjIJVmopXRMYr7QK6RitcBI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XjE736bvcGqvtKfuV8ZTCxKKwiqX3u/UBu7P0nklMLNRbHE5lbhxeQXWvTJj6Cr2a
-	 AeFDFC8Le0haYvT4eE4u1qpw/eyHwOCx3dE6rhCp6433PxvTzDKa9FSs+DvCvXX0kF
-	 fejSm347Okog7yqZihyuBrTtvzoEtrNeEJUB8OLg=
+	b=NMP5zMfFWIcWZ1cHYzo/7DsS1gsOHG0URfJ6X8/Z/Tn3spTDngb9D4aY5aDp6zRV1
+	 JkwRyPXs4EIVEaGAfpe/gQcCj9reZGljerVLbgSlzbOC7b5iL3FhbJgSdjfXooDrNT
+	 DwQa5kYkp+2+3dwUbUbBUSszNKuCny/s1vBwHThY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Molly Sophia <mollysophia379@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0011/1073] arm64: dts: qcom: sdm845-xiaomi-polaris: fix codec pin conf name
-Date: Wed, 28 Dec 2022 15:26:39 +0100
-Message-Id: <20221228144328.471638008@linuxfoundation.org>
+Subject: [PATCH 5.15 207/731] wifi: ath10k: Fix return value in ath10k_pci_init()
+Date: Wed, 28 Dec 2022 15:35:14 +0100
+Message-Id: <20221228144302.560217340@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,37 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 58c4a0b6f4bdf8c3c2b4aad7f980e4019cc0fc83 ]
+[ Upstream commit 2af7749047d8d6ad43feff69f555a13a6a6c2831 ]
 
-Fix typo in the codec's pin name to be configured.  Mismatched name
-caused the pin configuration to be ignored.
+This driver is attempting to register to support two different buses.
+if either of these is successful then ath10k_pci_init() should return 0
+so that hardware attached to the successful bus can be probed and
+supported. only if both of these are unsuccessful should ath10k_pci_init()
+return an errno.
 
-Fixes: be497abe19bf ("arm64: dts: qcom: Add support for Xiaomi Mi Mix2s")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Molly Sophia <mollysophia379@gmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20220930192039.240486-3-krzysztof.kozlowski@linaro.org
+Fixes: 0b523ced9a3c ("ath10k: add basic skeleton to support ahb")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Reviewed-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20221110061926.18163-1-xiujianfeng@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath10k/pci.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-index dba7c2693ff5..2611a5c40ba3 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-polaris.dts
-@@ -628,7 +628,7 @@ sde_dsi_suspend: sde-dsi-suspend {
- 	};
+diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
+index 4d4e2f91e15c..85a30c301dad 100644
+--- a/drivers/net/wireless/ath/ath10k/pci.c
++++ b/drivers/net/wireless/ath/ath10k/pci.c
+@@ -3793,18 +3793,22 @@ static struct pci_driver ath10k_pci_driver = {
  
- 	wcd_intr_default: wcd-intr-default {
--		pins = "goui54";
-+		pins = "gpio54";
- 		function = "gpio";
- 		input-enable;
- 		bias-pull-down;
+ static int __init ath10k_pci_init(void)
+ {
+-	int ret;
++	int ret1, ret2;
+ 
+-	ret = pci_register_driver(&ath10k_pci_driver);
+-	if (ret)
++	ret1 = pci_register_driver(&ath10k_pci_driver);
++	if (ret1)
+ 		printk(KERN_ERR "failed to register ath10k pci driver: %d\n",
+-		       ret);
++		       ret1);
+ 
+-	ret = ath10k_ahb_init();
+-	if (ret)
+-		printk(KERN_ERR "ahb init failed: %d\n", ret);
++	ret2 = ath10k_ahb_init();
++	if (ret2)
++		printk(KERN_ERR "ahb init failed: %d\n", ret2);
+ 
+-	return ret;
++	if (ret1 && ret2)
++		return ret1;
++
++	/* registered to at least one bus */
++	return 0;
+ }
+ module_init(ath10k_pci_init);
+ 
 -- 
 2.35.1
 
