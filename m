@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0B61863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:51:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3925C433EF;
-	Wed, 28 Dec 2022 14:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B681863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:51:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58B94C433D2;
+	Wed, 28 Dec 2022 14:51:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239101;
-	bh=dsKCOMVgNega0a5a9Z/vNNlAAsvl2rzfbIZGODXGg7g=;
+	s=korg; t=1672239103;
+	bh=Y1DO5o7BuAe5s+ybFJLesPQquWluBXAXBGwYrizFhzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h738Xb4oACzwFhrksXOlKak8F1FFKdilJhQMpcm00tTtcVvqnd/qwdDYCSOmEo7aF
-	 hdQ+kW7HZZR1v8QU06zkh4aIURSzOw5w1T+5xg3VP0KS144HEfYkzO7lW5oc14HCFY
-	 NW2vLavc5L0jxFf4XwwecknftiEi99cNwPORR5B0=
+	b=AVHqGiWyEQ1NDSBunClisEpM2u35qisi6YMZlzK/SROu4jMpbWb2WCVFYh2iIECrb
+	 H8gSu5iuqLfNvHbZmnlDTROYwdNS5qnHzd1qtx1WKGtUOXOY/SgqqR9LktV6ORUfEu
+	 1I0Dn59jgpOEF2At7CpRK/r0HjKUuwP679AmzKlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Ding <victording@chromium.org>,
-	Prashant Malani <pmalani@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Yu Liao <liaoyu15@huawei.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 128/731] platform/chrome: cros_ec_typec: zero out stale pointers
-Date: Wed, 28 Dec 2022 15:33:55 +0100
-Message-Id: <20221228144300.260282157@linuxfoundation.org>
+Subject: [PATCH 5.15 129/731] platform/x86: mxm-wmi: fix memleak in mxm_wmi_call_mx[ds|mx]()
+Date: Wed, 28 Dec 2022 15:33:56 +0100
+Message-Id: <20221228144300.289275518@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,43 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Victor Ding <victording@chromium.org>
+From: Yu Liao <liaoyu15@huawei.com>
 
-[ Upstream commit 9a8aadcf0b459c1257b9477fd6402e1d5952ae07 ]
+[ Upstream commit 727cc0147f5066e359aca65cc6cc5e6d64cc15d8 ]
 
-`cros_typec_get_switch_handles` allocates four pointers when obtaining
-type-c switch handles. These pointers are all freed if failing to obtain
-any of them; therefore, pointers in `port` become stale. The stale
-pointers eventually cause use-after-free or double free in later code
-paths. Zeroing out all pointer fields after freeing to eliminate these
-stale pointers.
+The ACPI buffer memory (out.pointer) returned by wmi_evaluate_method()
+is not freed after the call, so it leads to memory leak.
 
-Fixes: f28adb41dab4 ("platform/chrome: cros_ec_typec: Register Type C switches")
-Fixes: 1a8912caba02 ("platform/chrome: cros_ec_typec: Get retimer handle")
-Signed-off-by: Victor Ding <victording@chromium.org>
-Acked-by: Prashant Malani <pmalani@chromium.org>
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://lore.kernel.org/r/20221207093924.v2.1.I1864b6a7ee98824118b93677868d22d3750f439b@changeid
+The method results in ACPI buffer is not used, so just pass NULL to
+wmi_evaluate_method() which fixes the memory leak.
+
+Fixes: 99b38b4acc0d ("platform/x86: add MXM WMI driver.")
+Signed-off-by: Yu Liao <liaoyu15@huawei.com>
+Link: https://lore.kernel.org/r/20221129011101.2042315-1-liaoyu15@huawei.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_typec.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/platform/x86/mxm-wmi.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
-index d63be2b3d10e..b94abb8f7706 100644
---- a/drivers/platform/chrome/cros_ec_typec.c
-+++ b/drivers/platform/chrome/cros_ec_typec.c
-@@ -157,8 +157,10 @@ static int cros_typec_get_switch_handles(struct cros_typec_port *port,
+diff --git a/drivers/platform/x86/mxm-wmi.c b/drivers/platform/x86/mxm-wmi.c
+index 9a19fbd2f734..9a457956025a 100644
+--- a/drivers/platform/x86/mxm-wmi.c
++++ b/drivers/platform/x86/mxm-wmi.c
+@@ -35,13 +35,11 @@ int mxm_wmi_call_mxds(int adapter)
+ 		.xarg = 1,
+ 	};
+ 	struct acpi_buffer input = { (acpi_size)sizeof(args), &args };
+-	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER, NULL };
+ 	acpi_status status;
  
- role_sw_err:
- 	typec_switch_put(port->ori_sw);
-+	port->ori_sw = NULL;
- ori_sw_err:
- 	typec_mux_put(port->mux);
-+	port->mux = NULL;
- mux_err:
- 	return -ENODEV;
- }
+ 	printk("calling mux switch %d\n", adapter);
+ 
+-	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input,
+-				     &output);
++	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input, NULL);
+ 
+ 	if (ACPI_FAILURE(status))
+ 		return status;
+@@ -60,13 +58,11 @@ int mxm_wmi_call_mxmx(int adapter)
+ 		.xarg = 1,
+ 	};
+ 	struct acpi_buffer input = { (acpi_size)sizeof(args), &args };
+-	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER, NULL };
+ 	acpi_status status;
+ 
+ 	printk("calling mux switch %d\n", adapter);
+ 
+-	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input,
+-				     &output);
++	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input, NULL);
+ 
+ 	if (ACPI_FAILURE(status))
+ 		return status;
 -- 
 2.35.1
 
