@@ -1,38 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC241C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FBC5C433D2;
-	Wed, 28 Dec 2022 16:29:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3D021C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BC7C433D2;
+	Wed, 28 Dec 2022 16:29:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244978;
-	bh=OJ3yI59KOaUxL2roXJTkbg+W3fSj4YnlpoTOkwllJaU=;
+	s=korg; t=1672244980;
+	bh=eIyGQwYvZ3wNwvA2OOytTQrxnuJbIjeA7zqaBWARaxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yF3kZjKjC3D6HVlw2moSXXOl63LXEpLZ6acW0Gh6fmKePZQEY8uZckflDs6iIMmSD
-	 GfePBUhGR4vDXVahQQRZaVabxpXm8oDe2ULu7GNJj/K2m9aX5GfcVGWehzEQkPoa1Q
-	 64UG8hsIgqykGYvwAIYeOHmeA+9qifRhxA6BmfLo=
+	b=u7SINqwtas4f/OsDmh1caaqMp5GFyxqjsgv2FBHhdOqMDckBEO0oEER3DI7nyclEf
+	 9c7V/DkkRUyEvHu7korh5NSHa+SBP63SRmVVf3Adxr6Z2CORy+ZLJS3qLiirhIvUql
+	 s8bxqrhNuq2zNnRUC3JvG0px9u3NfZQu/usgxsPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@linaro.org>,
-	Ian Rogers <irogers@google.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	bpf@vger.kernel.org,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0772/1146] perf trace: Handle failure when trace point folder is missed
-Date: Wed, 28 Dec 2022 15:38:31 +0100
-Message-Id: <20221228144351.117918625@linuxfoundation.org>
+Subject: [PATCH 6.0 0810/1073] selftests/powerpc: Fix resource leaks
+Date: Wed, 28 Dec 2022 15:39:58 +0100
+Message-Id: <20221228144350.009672258@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -43,91 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leo Yan <leo.yan@linaro.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 03e9a5d8eb552a1bf692a9c8a5ecd50f4e428006 ]
+[ Upstream commit 8f4ab7da904ab7027ccd43ddb4f0094e932a5877 ]
 
-On Arm64 a case is perf tools fails to find the corresponding trace
-point folder for system calls listed in the table 'syscalltbl_arm64',
-e.g. the generated system call table contains "lookup_dcookie" but we
-cannot find out the matched trace point folder for it.
+In check_all_cpu_dscr_defaults, opendir() opens the directory stream.
+Add missing closedir() in the error path to release it.
 
-We need to figure out if there have any issue for the generated system
-call table, on the other hand, we need to handle the case when trace
-point folder is missed under sysfs, this patch sets the flag
-syscall::nonexistent as true and returns the error from
-trace__read_syscall_info().
+In check_cpu_dscr_default, open() creates an open file descriptor.
+Add missing close() in the error path to release it.
 
-Another problem is for trace__syscall_info(), it returns two different
-values if a system call doesn't exist: at the first time calling
-trace__syscall_info() it returns NULL when the system call doesn't exist,
-later if call trace__syscall_info() again for the same missed system
-call, it returns pointer of syscall.  trace__syscall_info() checks the
-condition 'syscalls.table[id].name == NULL', but the name will be
-assigned in the first invoking even the system call is not found.
-
-So checking system call's name in trace__syscall_info() is not the right
-thing to do, this patch simply checks flag syscall::nonexistent to make
-decision if a system call exists or not, finally trace__syscall_info()
-returns the consistent result (NULL) if a system call doesn't existed.
-
-Fixes: b8b1033fcaa091d8 ("perf trace: Mark syscall ids that are not allocated to avoid unnecessary error messages")
-Signed-off-by: Leo Yan <leo.yan@linaro.org>
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: bpf@vger.kernel.org
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20221121075237.127706-4-leo.yan@linaro.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: ebd5858c904b ("selftests/powerpc: Add test for all DSCR sysfs interfaces")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20221205084429.570654-1-linmq006@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ tools/testing/selftests/powerpc/dscr/dscr_sysfs_test.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 40123f5688b2..3dcf6aed1ef7 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -1811,13 +1811,19 @@ static int trace__read_syscall_info(struct trace *trace, int id)
- 		sc->tp_format = trace_event__tp_format("syscalls", tp_name);
+diff --git a/tools/testing/selftests/powerpc/dscr/dscr_sysfs_test.c b/tools/testing/selftests/powerpc/dscr/dscr_sysfs_test.c
+index fbbdffdb2e5d..f20d1c166d1e 100644
+--- a/tools/testing/selftests/powerpc/dscr/dscr_sysfs_test.c
++++ b/tools/testing/selftests/powerpc/dscr/dscr_sysfs_test.c
+@@ -24,6 +24,7 @@ static int check_cpu_dscr_default(char *file, unsigned long val)
+ 	rc = read(fd, buf, sizeof(buf));
+ 	if (rc == -1) {
+ 		perror("read() failed");
++		close(fd);
+ 		return 1;
  	}
+ 	close(fd);
+@@ -65,8 +66,10 @@ static int check_all_cpu_dscr_defaults(unsigned long val)
+ 		if (access(file, F_OK))
+ 			continue;
  
-+	/*
-+	 * Fails to read trace point format via sysfs node, so the trace point
-+	 * doesn't exist.  Set the 'nonexistent' flag as true.
-+	 */
-+	if (IS_ERR(sc->tp_format)) {
-+		sc->nonexistent = true;
-+		return PTR_ERR(sc->tp_format);
-+	}
-+
- 	if (syscall__alloc_arg_fmts(sc, IS_ERR(sc->tp_format) ?
- 					RAW_SYSCALL_ARGS_NUM : sc->tp_format->format.nr_fields))
- 		return -ENOMEM;
- 
--	if (IS_ERR(sc->tp_format))
--		return PTR_ERR(sc->tp_format);
--
- 	sc->args = sc->tp_format->format.fields;
- 	/*
- 	 * We need to check and discard the first variable '__syscall_nr'
-@@ -2134,11 +2140,8 @@ static struct syscall *trace__syscall_info(struct trace *trace,
- 	    (err = trace__read_syscall_info(trace, id)) != 0)
- 		goto out_cant_read;
- 
--	if (trace->syscalls.table[id].name == NULL) {
--		if (trace->syscalls.table[id].nonexistent)
--			return NULL;
-+	if (trace->syscalls.table && trace->syscalls.table[id].nonexistent)
- 		goto out_cant_read;
--	}
- 
- 	return &trace->syscalls.table[id];
- 
+-		if (check_cpu_dscr_default(file, val))
++		if (check_cpu_dscr_default(file, val)) {
++			closedir(sysfs);
+ 			return 1;
++		}
+ 	}
+ 	closedir(sysfs);
+ 	return 0;
 -- 
 2.35.1
 
