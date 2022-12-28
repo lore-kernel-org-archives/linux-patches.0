@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF59E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63277C433D2;
-	Wed, 28 Dec 2022 15:04:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C5E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02F85C433D2;
+	Wed, 28 Dec 2022 15:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239843;
-	bh=Zj9v1liHklHYKjP0Yes7cbUTORLjQ//yW9lHFa/qzgU=;
+	s=korg; t=1672239846;
+	bh=AFN6+QAA0Sa7n/jufArnZ3dHHcwGf55roie5QWNqqZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a4vfVBW5FYljmedoy/6xttGAk3/jFDMp1rbTK/9YTJu4l1iaekZ5d6sCdTcgmFyLs
-	 wK5hstYv82sZwggWbNZzSbz9CFWxLiUJRxifMW1/1LinxGTglKZrG4WhRE/lH2xeGk
-	 FCUSZYn/JEnWrSk03cvexMXvLqdD4YJ/HmmqTp28=
+	b=msKnZqq+eDesHnI1McJEky4nJzE2Ajr6CeKm+pE2wuyRt5fWmkdSyrq5mYHA8Vmqe
+	 3528Xxe2dgIOdCYpzun381FqubpTi7MR2KiwXhkenHeCr9xvrIBlGV0saAQtZzTVht
+	 kz4LxEtBHfTUD0API4liv1DZWXCv+hih0mBBNEQM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Brown <doug@schmorgal.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0085/1073] ARM: mmp: fix timer_read delay
-Date: Wed, 28 Dec 2022 15:27:53 +0100
-Message-Id: <20221228144330.369631537@linuxfoundation.org>
+Subject: [PATCH 5.15 277/731] hsr: Synchronize sending frames to have always incremented outgoing seq nr.
+Date: Wed, 28 Dec 2022 15:36:24 +0100
+Message-Id: <20221228144304.603442136@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,57 +35,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Doug Brown <doug@schmorgal.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit e348b4014c31041e13ff370669ba3348c4d385e3 ]
+[ Upstream commit 06afd2c31d338fa762548580c1bf088703dd1e03 ]
 
-timer_read() was using an empty 100-iteration loop to wait for the
-TMR_CVWR register to capture the latest timer counter value. The delay
-wasn't long enough. This resulted in CPU idle time being extremely
-underreported on PXA168 with CONFIG_NO_HZ_IDLE=y.
+Sending frames via the hsr (master) device requires a sequence number
+which is tracked in hsr_priv::sequence_nr and protected by
+hsr_priv::seqnr_lock. Each time a new frame is sent, it will obtain a
+new id and then send it via the slave devices.
+Each time a packet is sent (via hsr_forward_do()) the sequence number is
+checked via hsr_register_frame_out() to ensure that a frame is not
+handled twice. This make sense for the receiving side to ensure that the
+frame is not injected into the stack twice after it has been received
+from both slave ports.
 
-Switch to the approach used in the vendor kernel, which implements the
-capture delay by reading TMR_CVWR a few times instead.
+There is no locking to cover the sending path which means the following
+scenario is possible:
 
-Fixes: 49cbe78637eb ("[ARM] pxa: add base support for Marvell's PXA168 processor line")
-Signed-off-by: Doug Brown <doug@schmorgal.com>
-Link: https://lore.kernel.org/r/20221204005117.53452-3-doug@schmorgal.com
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+  CPU0				CPU1
+  hsr_dev_xmit(skb1)		hsr_dev_xmit(skb2)
+   fill_frame_info()             fill_frame_info()
+    hsr_fill_frame_info()         hsr_fill_frame_info()
+     handle_std_frame()            handle_std_frame()
+      skb1's sequence_nr = 1
+                                    skb2's sequence_nr = 2
+   hsr_forward_do()              hsr_forward_do()
+
+                                   hsr_register_frame_out(, 2)  // okay, send)
+
+    hsr_register_frame_out(, 1) // stop, lower seq duplicate
+
+Both skbs (or their struct hsr_frame_info) received an unique id.
+However since skb2 was sent before skb1, the higher sequence number was
+recorded in hsr_register_frame_out() and the late arriving skb1 was
+dropped and never sent.
+
+This scenario has been observed in a three node HSR setup, with node1 +
+node2 having ping and iperf running in parallel. From time to time ping
+reported a missing packet. Based on tracing that missing ping packet did
+not leave the system.
+
+It might be possible (didn't check) to drop the sequence number check on
+the sending side. But if the higher sequence number leaves on wire
+before the lower does and the destination receives them in that order
+and it will drop the packet with the lower sequence number and never
+inject into the stack.
+Therefore it seems the only way is to lock the whole path from obtaining
+the sequence number and sending via dev_queue_xmit() and assuming the
+packets leave on wire in the same order (and don't get reordered by the
+NIC).
+
+Cover the whole path for the master interface from obtaining the ID
+until after it has been forwarded via hsr_forward_skb() to ensure the
+skbs are sent to the NIC in the order of the assigned sequence numbers.
+
+Fixes: f421436a591d3 ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-mmp/time.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ net/hsr/hsr_device.c  | 12 +++++++-----
+ net/hsr/hsr_forward.c |  3 +--
+ 2 files changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/arch/arm/mach-mmp/time.c b/arch/arm/mach-mmp/time.c
-index 41b2e8abc9e6..708816caf859 100644
---- a/arch/arm/mach-mmp/time.c
-+++ b/arch/arm/mach-mmp/time.c
-@@ -43,18 +43,21 @@
- static void __iomem *mmp_timer_base = TIMERS_VIRT_BASE;
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index c44c6747a0bf..7ce40b49c956 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -219,7 +219,9 @@ static netdev_tx_t hsr_dev_xmit(struct sk_buff *skb, struct net_device *dev)
+ 		skb->dev = master->dev;
+ 		skb_reset_mac_header(skb);
+ 		skb_reset_mac_len(skb);
++		spin_lock_bh(&hsr->seqnr_lock);
+ 		hsr_forward_skb(skb, master);
++		spin_unlock_bh(&hsr->seqnr_lock);
+ 	} else {
+ 		atomic_long_inc(&dev->tx_dropped);
+ 		dev_kfree_skb_any(skb);
+@@ -306,7 +308,6 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
+ 		hsr_stag->sequence_nr = htons(hsr->sequence_nr);
+ 		hsr->sequence_nr++;
+ 	}
+-	spin_unlock_bh(&hsr->seqnr_lock);
  
- /*
-- * FIXME: the timer needs some delay to stablize the counter capture
-+ * Read the timer through the CVWR register. Delay is required after requesting
-+ * a read. The CR register cannot be directly read due to metastability issues
-+ * documented in the PXA168 software manual.
-  */
- static inline uint32_t timer_read(void)
- {
--	int delay = 100;
-+	uint32_t val;
-+	int delay = 3;
+ 	hsr_stag->HSR_TLV_type = type;
+ 	/* TODO: Why 12 in HSRv0? */
+@@ -317,11 +318,13 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
+ 	hsr_sp = skb_put(skb, sizeof(struct hsr_sup_payload));
+ 	ether_addr_copy(hsr_sp->macaddress_A, master->dev->dev_addr);
  
- 	__raw_writel(1, mmp_timer_base + TMR_CVWR(1));
+-	if (skb_put_padto(skb, ETH_ZLEN))
++	if (skb_put_padto(skb, ETH_ZLEN)) {
++		spin_unlock_bh(&hsr->seqnr_lock);
+ 		return;
++	}
  
- 	while (delay--)
--		cpu_relax();
-+		val = __raw_readl(mmp_timer_base + TMR_CVWR(1));
- 
--	return __raw_readl(mmp_timer_base + TMR_CVWR(1));
-+	return val;
+ 	hsr_forward_skb(skb, master);
+-
++	spin_unlock_bh(&hsr->seqnr_lock);
+ 	return;
  }
  
- static u64 notrace mmp_read_sched_clock(void)
+@@ -360,9 +363,8 @@ static void send_prp_supervision_frame(struct hsr_port *master,
+ 		return;
+ 	}
+ 
+-	spin_unlock_bh(&hsr->seqnr_lock);
+-
+ 	hsr_forward_skb(skb, master);
++	spin_unlock_bh(&hsr->seqnr_lock);
+ }
+ 
+ /* Announce (supervision frame) timer function
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index c8bcbd990f59..35382ed686d1 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -467,10 +467,9 @@ static void handle_std_frame(struct sk_buff *skb,
+ 		frame->is_from_san = true;
+ 	} else {
+ 		/* Sequence nr for the master node */
+-		spin_lock_bh(&hsr->seqnr_lock);
++		lockdep_assert_held(&hsr->seqnr_lock);
+ 		frame->sequence_nr = hsr->sequence_nr;
+ 		hsr->sequence_nr++;
+-		spin_unlock_bh(&hsr->seqnr_lock);
+ 	}
+ }
+ 
 -- 
 2.35.1
 
