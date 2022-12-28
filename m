@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 767F81C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3428C433D2;
-	Wed, 28 Dec 2022 16:35:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7621C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90E6AC433D2;
+	Wed, 28 Dec 2022 16:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245308;
-	bh=SQeq6W8COQ2H8Z6I8XHlflQaBEbjD4HX5d5GKdDWKkc=;
+	s=korg; t=1672245310;
+	bh=ZNqTtWOn2vMG1EH6bQnAzJfZfj7e79dr/PqWV1t5Vt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Js2ap26fJHrGLBH4tALVhTI6HFRVjjfdUuh4O7dts68OC8JFa0DOcLokC7H6CVE7w
-	 T7Rz031ZmmQZpjT/0Pz+6pPLmqvL3Bqwa6G85bcdMRDlnBu6gPoXxa3m0aeNqu2jfS
-	 VXrWv9Kv+a4+KTCJALhBYYo+umh7ec4DZkpgQS5s=
+	b=gXSR82cCSJ0KCqS9LzkD6FscEjrGXO+HeKhuk/op3FCuj8Utso1/RPj/DvLFh8Y7U
+	 CzNjqoEWzZbCS4XUOP+wpZL85/6cqawmIBhBDteQvkapW34fZhRi6SpwD40AmHIobb
+	 IrhCbHoR+Soi4243d9fCoZvlSTludCfowuOh7oTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eelco Chaudron <echaudro@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0870/1073] openvswitch: Fix flow lookup to use unmasked key
-Date: Wed, 28 Dec 2022 15:40:58 +0100
-Message-Id: <20221228144351.653074524@linuxfoundation.org>
+Subject: [PATCH 6.1 0837/1146] rtc: cmos: Rename ACPI-related functions
+Date: Wed, 28 Dec 2022 15:39:36 +0100
+Message-Id: <20221228144352.892158428@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,119 +37,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eelco Chaudron <echaudro@redhat.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 68bb10101e6b0a6bb44e9c908ef795fc4af99eae ]
+[ Upstream commit d13e9ad9f5146f066a5c5a1cc993d09e4fb21ead ]
 
-The commit mentioned below causes the ovs_flow_tbl_lookup() function
-to be called with the masked key. However, it's supposed to be called
-with the unmasked key. This due to the fact that the datapath supports
-installing wider flows, and OVS relies on this behavior. For example
-if ipv4(src=1.1.1.1/192.0.0.0, dst=1.1.1.2/192.0.0.0) exists, a wider
-flow (smaller mask) of ipv4(src=192.1.1.1/128.0.0.0,dst=192.1.1.2/
-128.0.0.0) is allowed to be added.
+The names of rtc_wake_setup() and cmos_wake_setup() don't indicate
+that these functions are ACPI-related, which is the case, and the
+former doesn't really reflect the role of the function.
 
-However, if we try to add a wildcard rule, the installation fails:
+Rename them to acpi_rtc_event_setup() and acpi_cmos_wake_setup(),
+respectively, to address this shortcoming.
 
-$ ovs-appctl dpctl/add-flow system@myDP "in_port(1),eth_type(0x0800), \
-  ipv4(src=1.1.1.1/192.0.0.0,dst=1.1.1.2/192.0.0.0,frag=no)" 2
-$ ovs-appctl dpctl/add-flow system@myDP "in_port(1),eth_type(0x0800), \
-  ipv4(src=192.1.1.1/0.0.0.0,dst=49.1.1.2/0.0.0.0,frag=no)" 2
-ovs-vswitchd: updating flow table (File exists)
+No intentional functional impact.
 
-The reason is that the key used to determine if the flow is already
-present in the system uses the original key ANDed with the mask.
-This results in the IP address not being part of the (miniflow) key,
-i.e., being substituted with an all-zero value. When doing the actual
-lookup, this results in the key wrongfully matching the first flow,
-and therefore the flow does not get installed.
-
-This change reverses the commit below, but rather than having the key
-on the stack, it's allocated.
-
-Fixes: 190aa3e77880 ("openvswitch: Fix Frame-size larger than 1024 bytes warning.")
-
-Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Zhang Rui <rui.zhang@intel.com>
+Tested-by: Zhang Rui <rui.zhang@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/3225614.44csPzL39Z@kreacher
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/datapath.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ drivers/rtc/rtc-cmos.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
-index ae7d4d03790c..ac66cdc7b67b 100644
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -947,6 +947,7 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 	struct sw_flow_mask mask;
- 	struct sk_buff *reply;
- 	struct datapath *dp;
-+	struct sw_flow_key *key;
- 	struct sw_flow_actions *acts;
- 	struct sw_flow_match match;
- 	u32 ufid_flags = ovs_nla_get_ufid_flags(a[OVS_FLOW_ATTR_UFID_FLAGS]);
-@@ -974,24 +975,26 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index 2a21d8281aa6..039486bfedf4 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -784,7 +784,7 @@ static u32 rtc_handler(void *context)
+ 	return ACPI_INTERRUPT_HANDLED;
+ }
+ 
+-static void rtc_wake_setup(struct device *dev)
++static void acpi_rtc_event_setup(struct device *dev)
+ {
+ 	if (acpi_disabled)
+ 		return;
+@@ -828,7 +828,7 @@ static void use_acpi_alarm_quirks(void)
+ static inline void use_acpi_alarm_quirks(void) { }
+ #endif
+ 
+-static void cmos_wake_setup(struct device *dev)
++static void acpi_cmos_wake_setup(struct device *dev)
+ {
+ 	if (acpi_disabled)
+ 		return;
+@@ -880,11 +880,11 @@ static void cmos_check_acpi_rtc_status(struct device *dev,
+ 
+ #else /* !CONFIG_ACPI */
+ 
+-static inline void rtc_wake_setup(struct device *dev)
++static inline void acpi_rtc_event_setup(struct device *dev)
+ {
+ }
+ 
+-static inline void cmos_wake_setup(struct device *dev)
++static inline void acpi_cmos_wake_setup(struct device *dev)
+ {
+ }
+ 
+@@ -986,7 +986,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+ 			cmos_rtc.wake_off = info->wake_off;
+ 		}
+ 	} else {
+-		cmos_wake_setup(dev);
++		acpi_cmos_wake_setup(dev);
  	}
  
- 	/* Extract key. */
--	ovs_match_init(&match, &new_flow->key, false, &mask);
-+	key = kzalloc(sizeof(*key), GFP_KERNEL);
-+	if (!key) {
-+		error = -ENOMEM;
-+		goto err_kfree_key;
-+	}
-+
-+	ovs_match_init(&match, key, false, &mask);
- 	error = ovs_nla_get_match(net, &match, a[OVS_FLOW_ATTR_KEY],
- 				  a[OVS_FLOW_ATTR_MASK], log);
- 	if (error)
- 		goto err_kfree_flow;
+ 	if (cmos_rtc.day_alrm >= 128)
+@@ -1091,7 +1091,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+ 	 * the ACPI RTC fixed event.
+ 	 */
+ 	if (!info)
+-		rtc_wake_setup(dev);
++		acpi_rtc_event_setup(dev);
  
-+	ovs_flow_mask_key(&new_flow->key, key, true, &mask);
-+
- 	/* Extract flow identifier. */
- 	error = ovs_nla_get_identifier(&new_flow->id, a[OVS_FLOW_ATTR_UFID],
--				       &new_flow->key, log);
-+				       key, log);
- 	if (error)
- 		goto err_kfree_flow;
- 
--	/* unmasked key is needed to match when ufid is not used. */
--	if (ovs_identifier_is_key(&new_flow->id))
--		match.key = new_flow->id.unmasked_key;
--
--	ovs_flow_mask_key(&new_flow->key, &new_flow->key, true, &mask);
--
- 	/* Validate actions. */
- 	error = ovs_nla_copy_actions(net, a[OVS_FLOW_ATTR_ACTIONS],
- 				     &new_flow->key, &acts, log);
-@@ -1018,7 +1021,7 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 	if (ovs_identifier_is_ufid(&new_flow->id))
- 		flow = ovs_flow_tbl_lookup_ufid(&dp->table, &new_flow->id);
- 	if (!flow)
--		flow = ovs_flow_tbl_lookup(&dp->table, &new_flow->key);
-+		flow = ovs_flow_tbl_lookup(&dp->table, key);
- 	if (likely(!flow)) {
- 		rcu_assign_pointer(new_flow->sf_acts, acts);
- 
-@@ -1088,6 +1091,8 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 
- 	if (reply)
- 		ovs_notify(&dp_flow_genl_family, reply, info);
-+
-+	kfree(key);
- 	return 0;
- 
- err_unlock_ovs:
-@@ -1097,6 +1102,8 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 	ovs_nla_free_flow_actions(acts);
- err_kfree_flow:
- 	ovs_flow_free(new_flow, false);
-+err_kfree_key:
-+	kfree(key);
- error:
- 	return error;
- }
+ 	dev_info(dev, "%s%s, %d bytes nvram%s\n",
+ 		 !is_valid_irq(rtc_irq) ? "no alarms" :
 -- 
 2.35.1
 
