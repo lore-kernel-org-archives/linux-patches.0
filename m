@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF281863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1295FC433D2;
-	Wed, 28 Dec 2022 15:51:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 605CD1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D55D2C433D2;
+	Wed, 28 Dec 2022 15:51:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242662;
-	bh=CO/WLnVu9lRWQeShL3ynqUDOdnzwPpWyt367rRBsSd4=;
+	s=korg; t=1672242665;
+	bh=IppDHdVxIkZDMbJLSMcl/cUWkF/7izl0yYhhB9kxKHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eh//nOzLLnVcXWmUPYfKAErM+Q7KlBSAf1rU4s/I5nUYAL63s5zqT6Kvi97I2/AUO
-	 L/4XAtuua+P2f+2XLVZAdkZaKjsxPGLZ67rtMfM7xHMR0j6IwpE8HWZuG4sMMSiWug
-	 oBxQw3hpgIcxUduTNlObTBKMRlQwxN9+TjuNmwv8=
+	b=WbbKZy3k3WVmpbXtl2yPwLz43iBf+iqXCovOqUOvzTYJMnu95AHLNHQVLZ++gDY1W
+	 UnOoORQRNYK/khv88HLXF7qNgr6bpWEYcfRcSSNwCH+esJN5Gk8M3ySQ8dD51ovs8k
+	 PfGbBKczKgci5rpKf3gtPhCnqrNA1enYSgTd3p9A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=C3=8D=C3=B1igo=20Huguet?= <ihuguet@redhat.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Wright Feng <wright.feng@cypress.com>,
+	Chi-hsien Lin <chi-hsien.lin@cypress.com>,
+	Ian Lin <ian.lin@infineon.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0437/1073] wifi: mac80211: fix maybe-unused warning
-Date: Wed, 28 Dec 2022 15:33:45 +0100
-Message-Id: <20221228144339.896181950@linuxfoundation.org>
+Subject: [PATCH 5.15 631/731] brcmfmac: return error when getting invalid max_flowrings from dongle
+Date: Wed, 28 Dec 2022 15:42:18 +0100
+Message-Id: <20221228144314.816099620@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,42 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Íñigo Huguet <ihuguet@redhat.com>
+From: Wright Feng <wright.feng@cypress.com>
 
-[ Upstream commit 09d838a457a89883a926b8b0104d575158fd4b92 ]
+[ Upstream commit 2aca4f3734bd717e04943ddf340d49ab62299a00 ]
 
-In ieee80211_lookup_key, the variable named `local` is unused if
-compiled without lockdep, getting this warning:
+When firmware hit trap at initialization, host will read abnormal
+max_flowrings number from dongle, and it will cause kernel panic when
+doing iowrite to initialize dongle ring.
+To detect this error at early stage, we directly return error when getting
+invalid max_flowrings(>256).
 
-net/mac80211/cfg.c: In function ‘ieee80211_lookup_key’:
-net/mac80211/cfg.c:542:26: error: unused variable ‘local’ [-Werror=unused-variable]
-  struct ieee80211_local *local = sdata->local;
-                          ^~~~~
-
-Fix it with __maybe_unused.
-
-Fixes: 8cbf0c2ab6df ("wifi: mac80211: refactor some key code")
-Signed-off-by: Íñigo Huguet <ihuguet@redhat.com>
-Link: https://lore.kernel.org/r/20221111153622.29016-1-ihuguet@redhat.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Wright Feng <wright.feng@cypress.com>
+Signed-off-by: Chi-hsien Lin <chi-hsien.lin@cypress.com>
+Signed-off-by: Ian Lin <ian.lin@infineon.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20220929031001.9962-3-ian.lin@infineon.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/cfg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/mac80211/cfg.c b/net/mac80211/cfg.c
-index 65f34945a767..538f8c0dbb2b 100644
---- a/net/mac80211/cfg.c
-+++ b/net/mac80211/cfg.c
-@@ -539,7 +539,7 @@ static struct ieee80211_key *
- ieee80211_lookup_key(struct ieee80211_sub_if_data *sdata,
- 		     u8 key_idx, bool pairwise, const u8 *mac_addr)
- {
--	struct ieee80211_local *local = sdata->local;
-+	struct ieee80211_local *local __maybe_unused = sdata->local;
- 	struct ieee80211_key *key;
- 	struct sta_info *sta;
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+index 358021a33b8a..f5f5a002fdcf 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -1118,6 +1118,10 @@ static int brcmf_pcie_init_ringbuffers(struct brcmf_pciedev_info *devinfo)
+ 				BRCMF_NROF_H2D_COMMON_MSGRINGS;
+ 		max_completionrings = BRCMF_NROF_D2H_COMMON_MSGRINGS;
+ 	}
++	if (max_flowrings > 256) {
++		brcmf_err(bus, "invalid max_flowrings(%d)\n", max_flowrings);
++		return -EIO;
++	}
  
+ 	if (devinfo->dma_idx_sz != 0) {
+ 		bufsz = (max_submissionrings + max_completionrings) *
 -- 
 2.35.1
 
