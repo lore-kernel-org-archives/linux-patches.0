@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F5B1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CA94C433D2;
-	Wed, 28 Dec 2022 16:17:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C611C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A86F6C433F0;
+	Wed, 28 Dec 2022 16:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244234;
-	bh=WWPsSeepMj9dU7XEy/RR7i+5U38bMl9c8y4cnteUs9U=;
+	s=korg; t=1672244237;
+	bh=APeoHaaHuW+5Ev6wm6wVOmlYpDp6eOoDI/4GnbuxnAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aSMg/Nmzmah62ysEC2Sj4EnZLQnr+1Uw0keuqzIhIwuQ5BxDwKxrrhCFgvka4QfHw
-	 f2QbzwPTuMhUWT0HLFQFcMIQyrcB4veSLmGDo3e9o9qKz3v9d4JOCEFThqqCXW2VLD
-	 /ORVu+nR5QJcXWBXLPX0svKjM5blSmwkAsHQEH9I=
+	b=tgSz9VYv589tt0LtNhtKgpeuShm7UwAXzrIfdIW1Z8jAgWFHcIgi827cCJEYvIPYM
+	 RrESWBxOIW4lKhYS6y4wdEmURtXeFRxVpIMEb7LfZsZjZjeRkk0uzuW2IH3NKKrKVG
+	 X6otoCme4BhCaP9xHE/Io1mX5kq4hVOb4Aukp+mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+bc05445bc14148d51915@syzkaller.appspotmail.com,
-	Daniel Jordan <daniel.m.jordan@oracle.com>,
-	Steffen Klassert <steffen.klassert@secunet.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0633/1146] padata: Always leave BHs disabled when running ->parallel()
-Date: Wed, 28 Dec 2022 15:36:12 +0100
-Message-Id: <20221228144347.359775527@linuxfoundation.org>
+Subject: [PATCH 6.0 0673/1073] staging: vme_user: Fix possible UAF in tsi148_dma_list_add
+Date: Wed, 28 Dec 2022 15:37:41 +0100
+Message-Id: <20221228144346.319620763@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,63 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Jordan <daniel.m.jordan@oracle.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 34c3a47d20ae55b3600fed733bf96eafe9c500d5 ]
+[ Upstream commit 357057ee55d3c99a5de5abe8150f7bca04f8e53b ]
 
-A deadlock can happen when an overloaded system runs ->parallel() in the
-context of the current task:
+Smatch report warning as follows:
 
-    padata_do_parallel
-      ->parallel()
-        pcrypt_aead_enc/dec
-          padata_do_serial
-            spin_lock(&reorder->lock) // BHs still enabled
-              <interrupt>
-                ...
-                  __do_softirq
-                    ...
-                      padata_do_serial
-                        spin_lock(&reorder->lock)
+drivers/staging/vme_user/vme_tsi148.c:1757 tsi148_dma_list_add() warn:
+  '&entry->list' not removed from list
 
-It's a bug for BHs to be on in _do_serial as Steffen points out, so
-ensure they're off in the "current task" case like they are in
-padata_parallel_worker to avoid this situation.
+In tsi148_dma_list_add(), the error path "goto err_dma" will not
+remove entry->list from list->entries, but entry will be freed,
+then list traversal may cause UAF.
 
-Reported-by: syzbot+bc05445bc14148d51915@syzkaller.appspotmail.com
-Fixes: 4611ce224688 ("padata: allocate work structures for parallel jobs from a pool")
-Signed-off-by: Daniel Jordan <daniel.m.jordan@oracle.com>
-Acked-by: Steffen Klassert <steffen.klassert@secunet.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fix by removeing it from list->entries before free().
+
+Fixes: b2383c90a9d6 ("vme: tsi148: fix first DMA item mapping")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221117035914.2954454-1-cuigaosheng1@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/padata.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/staging/vme_user/vme_tsi148.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/padata.c b/kernel/padata.c
-index e5819bb8bd1d..97f51e0c1776 100644
---- a/kernel/padata.c
-+++ b/kernel/padata.c
-@@ -207,14 +207,16 @@ int padata_do_parallel(struct padata_shell *ps,
- 	pw = padata_work_alloc();
- 	spin_unlock(&padata_works_lock);
- 
-+	if (!pw) {
-+		/* Maximum works limit exceeded, run in the current task. */
-+		padata->parallel(padata);
-+	}
-+
- 	rcu_read_unlock_bh();
- 
- 	if (pw) {
- 		padata_work_init(pw, padata_parallel_worker, padata, 0);
- 		queue_work(pinst->parallel_wq, &pw->pw_work);
--	} else {
--		/* Maximum works limit exceeded, run in the current task. */
--		padata->parallel(padata);
- 	}
- 
+diff --git a/drivers/staging/vme_user/vme_tsi148.c b/drivers/staging/vme_user/vme_tsi148.c
+index 956476213241..b741514e938b 100644
+--- a/drivers/staging/vme_user/vme_tsi148.c
++++ b/drivers/staging/vme_user/vme_tsi148.c
+@@ -1765,6 +1765,7 @@ static int tsi148_dma_list_add(struct vme_dma_list *list,
  	return 0;
+ 
+ err_dma:
++	list_del(&entry->list);
+ err_dest:
+ err_source:
+ err_align:
 -- 
 2.35.1
 
