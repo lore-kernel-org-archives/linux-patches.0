@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858371C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:43:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA80DC433D2;
-	Wed, 28 Dec 2022 16:43:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45BB61C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:43:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA0BAC433D2;
+	Wed, 28 Dec 2022 16:43:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245819;
-	bh=YRc8YepZil4fRNkcQMEG8TU2mnvzDHG0bpISHrAty3o=;
+	s=korg; t=1672245822;
+	bh=PgHIFLQWykNcvhfe3hMDbewZPgLYAPZ6EwtqGZ1sCkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RWqD8YNBmndadnbIUHO18BagRgy+vJoBCCD2VahpXjb1rMJgQWLEUjaNPyUs78LOt
-	 R48+L/14zVZoyeoQrLryU+5XAAJzgg6u2maAhahssyXYXie8HSYaYVEp2u0bIuF94g
-	 uMg/4pTnAffOFjLIFy5h35KBSvgHJKGLtwBXXass=
+	b=KjinSAIhvQ9QASLOZi3pxaeIVf6wbSC3KX6hCEqGKa/OfUDG2bS+GovxQigk1S0mV
+	 VlOXVhYgw6g1FvHUVs+glbL+cnqlzOFekNrTkffyqiDnp2YMQzB2VFj0i1DaAwgZKf
+	 Yk/LKEBqXynRo844eZk+L1ybmB1xw/ogwYWgBBW4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Jassi Brar <jaswinder.singh@linaro.org>,
+	Rui Zhang <zr.zhang@vivo.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0926/1146] mailbox: zynq-ipi: fix error handling while device_register() fails
-Date: Wed, 28 Dec 2022 15:41:05 +0100
-Message-Id: <20221228144355.427252849@linuxfoundation.org>
+Subject: [PATCH 6.0 0964/1073] regulator: core: fix use_count leakage when handling boot-on
+Date: Wed, 28 Dec 2022 15:42:32 +0100
+Message-Id: <20221228144354.230955969@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,50 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Rui Zhang <zr.zhang@vivo.com>
 
-[ Upstream commit a6792a0cdef0b1c2d77920246283a72537e60e94 ]
+[ Upstream commit 0591b14ce0398125439c759f889647369aa616a0 ]
 
-If device_register() fails, it has two issues:
-1. The name allocated by dev_set_name() is leaked.
-2. The parent of device is not NULL, device_unregister() is called
-   in zynqmp_ipi_free_mboxes(), it will lead a kernel crash because
-   of removing not added device.
+I found a use_count leakage towards supply regulator of rdev with
+boot-on option.
 
-Call put_device() to give up the reference, so the name is freed in
-kobject_cleanup(). Add device registered check in zynqmp_ipi_free_mboxes()
-to avoid null-ptr-deref.
+┌───────────────────┐           ┌───────────────────┐
+│  regulator_dev A  │           │  regulator_dev B  │
+│     (boot-on)     │           │     (boot-on)     │
+│    use_count=0    │◀──supply──│    use_count=1    │
+│                   │           │                   │
+└───────────────────┘           └───────────────────┘
 
-Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
+In case of rdev(A) configured with `regulator-boot-on', the use_count
+of supplying regulator(B) will increment inside
+regulator_enable(rdev->supply).
+
+Thus, B will acts like always-on, and further balanced
+regulator_enable/disable cannot actually disable it anymore.
+
+However, B was also configured with `regulator-boot-on', we wish it
+could be disabled afterwards.
+
+Signed-off-by: Rui Zhang <zr.zhang@vivo.com>
+Link: https://lore.kernel.org/r/20221201033806.2567812-1-zr.zhang@vivo.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/zynqmp-ipi-mailbox.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/regulator/core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
-index 31a0fa914274..12e004ff1a14 100644
---- a/drivers/mailbox/zynqmp-ipi-mailbox.c
-+++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
-@@ -493,6 +493,7 @@ static int zynqmp_ipi_mbox_probe(struct zynqmp_ipi_mbox *ipi_mbox,
- 	ret = device_register(&ipi_mbox->dev);
- 	if (ret) {
- 		dev_err(dev, "Failed to register ipi mbox dev.\n");
-+		put_device(&ipi_mbox->dev);
- 		return ret;
- 	}
- 	mdev = &ipi_mbox->dev;
-@@ -619,7 +620,8 @@ static void zynqmp_ipi_free_mboxes(struct zynqmp_ipi_pdata *pdata)
- 		ipi_mbox = &pdata->ipi_mboxes[i];
- 		if (ipi_mbox->dev.parent) {
- 			mbox_controller_unregister(&ipi_mbox->mbox);
--			device_unregister(&ipi_mbox->dev);
-+			if (device_is_registered(&ipi_mbox->dev))
-+				device_unregister(&ipi_mbox->dev);
- 		}
- 	}
- }
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 4a93154bb574..1c1710d367d3 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1578,7 +1578,13 @@ static int set_machine_constraints(struct regulator_dev *rdev)
+ 		if (rdev->supply_name && !rdev->supply)
+ 			return -EPROBE_DEFER;
+ 
+-		if (rdev->supply) {
++		/* If supplying regulator has already been enabled,
++		 * it's not intended to have use_count increment
++		 * when rdev is only boot-on.
++		 */
++		if (rdev->supply &&
++		    (rdev->constraints->always_on ||
++		     !regulator_is_enabled(rdev->supply))) {
+ 			ret = regulator_enable(rdev->supply);
+ 			if (ret < 0) {
+ 				_regulator_put(rdev->supply);
 -- 
 2.35.1
 
