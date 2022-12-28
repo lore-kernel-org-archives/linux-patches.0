@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7581C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:16:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DBE7C433D2;
-	Wed, 28 Dec 2022 16:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 134CA1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:16:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B8FCC433D2;
+	Wed, 28 Dec 2022 16:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244176;
-	bh=FDnY9memHDK08dNNfY/561sVbx1C03QW5gMzHUsYe7w=;
+	s=korg; t=1672244178;
+	bh=qkMFgexp8nZaj9OD53Qx/5VzT4kBWfcY4iurDVROmeY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=beobzbVqQUvwNN+QZLM3UREvR9bkssZmz36o5Bk3JVlgnu3al6pNKZt76DxL31Mt2
-	 +5CCFySyWYtzgRWB2//H23jYGwc5WIC9nQfkJtSPdEtuxzi0BYDB4gfmqflAkKN3Zl
-	 Hznc7Znp0AnyBxu/0AFB0+EQSt9/kfO5t9OXzVDE=
+	b=LO6is1u6rmSGdqeSgSuIh+ZO+/tBVLi85WVtlNTt3uRzhVxaDKqZKvYeTim83K3q4
+	 KdECsDhobsjLFcfEN3NZigDMKLA9WW3YKFgwZMq1emPiPJ/KeCpBd+Eh3Jqii38Mu4
+	 RYkbbRWuyEsl27J11d211c8ukXN3wDxXU7bKX24A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Jon Hunter <jonathanh@nvidia.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Akhil R <akhilrajeev@nvidia.com>,
+	Kartik <kkartik@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0624/1146] crypto: ccree - Make cc_debugfs_global_fini() available for module init function
-Date: Wed, 28 Dec 2022 15:36:03 +0100
-Message-Id: <20221228144347.117896226@linuxfoundation.org>
+Subject: [PATCH 6.0 0664/1073] serial: tegra: Read DMA status before terminating
+Date: Wed, 28 Dec 2022 15:37:32 +0100
+Message-Id: <20221228144346.079730225@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,40 +38,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Kartik <kkartik@nvidia.com>
 
-[ Upstream commit 8e96729fc26c8967db45a3fb7a60387619f77a22 ]
+[ Upstream commit 109a951a9f1fd8a34ebd1896cbbd5d5cede880a7 ]
 
-ccree_init() calls cc_debugfs_global_fini(), the former is an init
-function and the latter an exit function though.
+Read the DMA status before terminating the DMA, as doing so deletes
+the DMA desc.
 
-A modular build emits:
+Also, to get the correct transfer status information, pause the DMA
+using dmaengine_pause() before reading the DMA status.
 
-	WARNING: modpost: drivers/crypto/ccree/ccree.o: section mismatch in reference: init_module (section: .init.text) -> cc_debugfs_global_fini (section: .exit.text)
-
-(with CONFIG_DEBUG_SECTION_MISMATCH=y).
-
-Fixes: 4f1c596df706 ("crypto: ccree - Remove debugfs when platform_driver_register failed")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: e9ea096dd225 ("serial: tegra: add serial driver")
+Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
+Signed-off-by: Kartik <kkartik@nvidia.com>
+Link: https://lore.kernel.org/r/1666105086-17326-1-git-send-email-kkartik@nvidia.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccree/cc_debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/serial-tegra.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/ccree/cc_debugfs.c b/drivers/crypto/ccree/cc_debugfs.c
-index 7083767602fc..8f008f024f8f 100644
---- a/drivers/crypto/ccree/cc_debugfs.c
-+++ b/drivers/crypto/ccree/cc_debugfs.c
-@@ -55,7 +55,7 @@ void __init cc_debugfs_global_init(void)
- 	cc_debugfs_dir = debugfs_create_dir("ccree", NULL);
- }
+diff --git a/drivers/tty/serial/serial-tegra.c b/drivers/tty/serial/serial-tegra.c
+index a5748e41483b..ab549b79fde9 100644
+--- a/drivers/tty/serial/serial-tegra.c
++++ b/drivers/tty/serial/serial-tegra.c
+@@ -619,8 +619,9 @@ static void tegra_uart_stop_tx(struct uart_port *u)
+ 	if (tup->tx_in_progress != TEGRA_UART_TX_DMA)
+ 		return;
  
--void __exit cc_debugfs_global_fini(void)
-+void cc_debugfs_global_fini(void)
- {
- 	debugfs_remove(cc_debugfs_dir);
- }
+-	dmaengine_terminate_all(tup->tx_dma_chan);
++	dmaengine_pause(tup->tx_dma_chan);
+ 	dmaengine_tx_status(tup->tx_dma_chan, tup->tx_cookie, &state);
++	dmaengine_terminate_all(tup->tx_dma_chan);
+ 	count = tup->tx_bytes_requested - state.residue;
+ 	async_tx_ack(tup->tx_dma_desc);
+ 	uart_xmit_advance(&tup->uport, count);
+@@ -763,8 +764,9 @@ static void tegra_uart_terminate_rx_dma(struct tegra_uart_port *tup)
+ 		return;
+ 	}
+ 
+-	dmaengine_terminate_all(tup->rx_dma_chan);
++	dmaengine_pause(tup->rx_dma_chan);
+ 	dmaengine_tx_status(tup->rx_dma_chan, tup->rx_cookie, &state);
++	dmaengine_terminate_all(tup->rx_dma_chan);
+ 
+ 	tegra_uart_rx_buffer_push(tup, state.residue);
+ 	tup->rx_dma_active = false;
 -- 
 2.35.1
 
