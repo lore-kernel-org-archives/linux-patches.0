@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9512B1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 195EBC433D2;
-	Wed, 28 Dec 2022 16:52:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BF3D1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6226C433EF;
+	Wed, 28 Dec 2022 16:52:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246339;
-	bh=dyDOPyg+jePFsFzNOFPEqmBLbY1R9nkzmMXaWUBtCLI=;
+	s=korg; t=1672246342;
+	bh=xEMiQK885xmLg3qtc8QmYHFfWoEH/3qKOlQ4YuaktGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RtNlybXBIoI4RhBlJJ7DpHYYP68rMOxs6KWyTx9Q/ALCdLkp/M9UN9XeT5zhBzgVg
-	 2vT2VE3W2I/Rp+XyBmAGm7+I3XHTOpSgUewZ2VO9QkflgVr0mtCtjsBn6bQ+4czuLL
-	 /8QzNj/Bg74eTopr028OTWtrzLJZA1eE2bGh4NGo=
+	b=2NBUUFNpnW6Zc9Nb1ucygUQJnFZe/JGmqzy3xT1jXEzqufH4L3P/k277rgzM7yzsp
+	 QaDc6dide/nDNX8HMXDXHGmo5kzVhF/RefxpEpv7EbGSIus2nTpuehCIG5dl75yl95
+	 OnfdNKR8/q2jDXqhN5ZFfI447AX9ru/U55TRPzzQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Denis Efremov <efremov@linux.com>
-Subject: [PATCH 6.0 1052/1073] floppy: Fix memory leak in do_floppy_init()
-Date: Wed, 28 Dec 2022 15:44:00 +0100
-Message-Id: <20221228144356.795313888@linuxfoundation.org>
+	Mazin Al Haddad <mazinalhaddad05@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+f66dd31987e6740657be@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 1024/1146] media: dvb-usb: fix memory leak in dvb_usb_adapter_init()
+Date: Wed, 28 Dec 2022 15:42:43 +0100
+Message-Id: <20221228144358.181126268@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,90 +36,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Mazin Al Haddad <mazinalhaddad05@gmail.com>
 
-commit f8ace2e304c5dd8a7328db9cd2b8a4b1b98d83ec upstream.
+[ Upstream commit 94d90fb06b94a90c176270d38861bcba34ce377d ]
 
-A memory leak was reported when floppy_alloc_disk() failed in
-do_floppy_init().
+Syzbot reports a memory leak in "dvb_usb_adapter_init()".
+The leak is due to not accounting for and freeing current iteration's
+adapter->priv in case of an error. Currently if an error occurs,
+it will exit before incrementing "num_adapters_initalized",
+which is used as a reference counter to free all adap->priv
+in "dvb_usb_adapter_exit()". There are multiple error paths that
+can exit from before incrementing the counter. Including the
+error handling paths for "dvb_usb_adapter_stream_init()",
+"dvb_usb_adapter_dvb_init()" and "dvb_usb_adapter_frontend_init()"
+within "dvb_usb_adapter_init()".
 
-unreferenced object 0xffff888115ed25a0 (size 8):
-  comm "modprobe", pid 727, jiffies 4295051278 (age 25.529s)
-  hex dump (first 8 bytes):
-    00 ac 67 5b 81 88 ff ff                          ..g[....
-  backtrace:
-    [<000000007f457abb>] __kmalloc_node+0x4c/0xc0
-    [<00000000a87bfa9e>] blk_mq_realloc_tag_set_tags.part.0+0x6f/0x180
-    [<000000006f02e8b1>] blk_mq_alloc_tag_set+0x573/0x1130
-    [<0000000066007fd7>] 0xffffffffc06b8b08
-    [<0000000081f5ac40>] do_one_initcall+0xd0/0x4f0
-    [<00000000e26d04ee>] do_init_module+0x1a4/0x680
-    [<000000001bb22407>] load_module+0x6249/0x7110
-    [<00000000ad31ac4d>] __do_sys_finit_module+0x140/0x200
-    [<000000007bddca46>] do_syscall_64+0x35/0x80
-    [<00000000b5afec39>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
-unreferenced object 0xffff88810fc30540 (size 32):
-  comm "modprobe", pid 727, jiffies 4295051278 (age 25.529s)
+This means that in case of an error in any of these functions the
+current iteration is not accounted for and the current iteration's
+adap->priv is not freed.
+
+Fix this by freeing the current iteration's adap->priv in the
+"stream_init_err:" label in the error path. The rest of the
+(accounted for) adap->priv objects are freed in dvb_usb_adapter_exit()
+as expected using the num_adapters_initalized variable.
+
+Syzbot report:
+
+BUG: memory leak
+unreferenced object 0xffff8881172f1a00 (size 512):
+  comm "kworker/0:2", pid 139, jiffies 4294994873 (age 10.960s)
   hex dump (first 32 bytes):
     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
     00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<000000007f457abb>] __kmalloc_node+0x4c/0xc0
-    [<000000006b91eab4>] blk_mq_alloc_tag_set+0x393/0x1130
-    [<0000000066007fd7>] 0xffffffffc06b8b08
-    [<0000000081f5ac40>] do_one_initcall+0xd0/0x4f0
-    [<00000000e26d04ee>] do_init_module+0x1a4/0x680
-    [<000000001bb22407>] load_module+0x6249/0x7110
-    [<00000000ad31ac4d>] __do_sys_finit_module+0x140/0x200
-    [<000000007bddca46>] do_syscall_64+0x35/0x80
-    [<00000000b5afec39>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+backtrace:
+    [<ffffffff844af012>] dvb_usb_adapter_init drivers/media/usb/dvb-usb/dvb-usb-init.c:75 [inline]
+    [<ffffffff844af012>] dvb_usb_init drivers/media/usb/dvb-usb/dvb-usb-init.c:184 [inline]
+    [<ffffffff844af012>] dvb_usb_device_init.cold+0x4e5/0x79e drivers/media/usb/dvb-usb/dvb-usb-init.c:308
+    [<ffffffff830db21d>] dib0700_probe+0x8d/0x1b0 drivers/media/usb/dvb-usb/dib0700_core.c:883
+    [<ffffffff82d3fdc7>] usb_probe_interface+0x177/0x370 drivers/usb/core/driver.c:396
+    [<ffffffff8274ab37>] call_driver_probe drivers/base/dd.c:542 [inline]
+    [<ffffffff8274ab37>] really_probe.part.0+0xe7/0x310 drivers/base/dd.c:621
+    [<ffffffff8274ae6c>] really_probe drivers/base/dd.c:583 [inline]
+    [<ffffffff8274ae6c>] __driver_probe_device+0x10c/0x1e0 drivers/base/dd.c:752
+    [<ffffffff8274af6a>] driver_probe_device+0x2a/0x120 drivers/base/dd.c:782
+    [<ffffffff8274b786>] __device_attach_driver+0xf6/0x140 drivers/base/dd.c:899
+    [<ffffffff82747c87>] bus_for_each_drv+0xb7/0x100 drivers/base/bus.c:427
+    [<ffffffff8274b352>] __device_attach+0x122/0x260 drivers/base/dd.c:970
+    [<ffffffff827498f6>] bus_probe_device+0xc6/0xe0 drivers/base/bus.c:487
+    [<ffffffff82745cdb>] device_add+0x5fb/0xdf0 drivers/base/core.c:3405
+    [<ffffffff82d3d202>] usb_set_configuration+0x8f2/0xb80 drivers/usb/core/message.c:2170
+    [<ffffffff82d4dbfc>] usb_generic_driver_probe+0x8c/0xc0 drivers/usb/core/generic.c:238
+    [<ffffffff82d3f49c>] usb_probe_device+0x5c/0x140 drivers/usb/core/driver.c:293
+    [<ffffffff8274ab37>] call_driver_probe drivers/base/dd.c:542 [inline]
+    [<ffffffff8274ab37>] really_probe.part.0+0xe7/0x310 drivers/base/dd.c:621
+    [<ffffffff8274ae6c>] really_probe drivers/base/dd.c:583 [inline]
+    [<ffffffff8274ae6c>] __driver_probe_device+0x10c/0x1e0 drivers/base/dd.c:752
 
-If the floppy_alloc_disk() failed, disks of current drive will not be set,
-thus the lastest allocated set->tag cannot be freed in the error handling
-path. A simple call graph shown as below:
+Link: https://syzkaller.appspot.com/bug?extid=f66dd31987e6740657be
+Reported-and-tested-by: syzbot+f66dd31987e6740657be@syzkaller.appspotmail.com
 
- floppy_module_init()
-   floppy_init()
-     do_floppy_init()
-       for (drive = 0; drive < N_DRIVE; drive++)
-         blk_mq_alloc_tag_set()
-           blk_mq_alloc_tag_set_tags()
-             blk_mq_realloc_tag_set_tags() # set->tag allocated
-         floppy_alloc_disk()
-           blk_mq_alloc_disk() # error occurred, disks failed to allocated
-
-       ->out_put_disk:
-       for (drive = 0; drive < N_DRIVE; drive++)
-         if (!disks[drive][0]) # the last disks is not set and loop break
-           break;
-         blk_mq_free_tag_set() # the latest allocated set->tag leaked
-
-Fix this problem by free the set->tag of current drive before jump to
-error handling path.
-
-Cc: stable@vger.kernel.org
-Fixes: 302cfee15029 ("floppy: use a separate gendisk for each media format")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-[efremov: added stable list, changed title]
-Signed-off-by: Denis Efremov <efremov@linux.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/linux-media/20220824012152.539788-1-mazinalhaddad05@gmail.com
+Signed-off-by: Mazin Al Haddad <mazinalhaddad05@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/floppy.c |    4 +++-
+ drivers/media/usb/dvb-usb/dvb-usb-init.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/block/floppy.c
-+++ b/drivers/block/floppy.c
-@@ -4593,8 +4593,10 @@ static int __init do_floppy_init(void)
- 			goto out_put_disk;
+diff --git a/drivers/media/usb/dvb-usb/dvb-usb-init.c b/drivers/media/usb/dvb-usb/dvb-usb-init.c
+index 61439c8f33ca..58eea8ab5477 100644
+--- a/drivers/media/usb/dvb-usb/dvb-usb-init.c
++++ b/drivers/media/usb/dvb-usb/dvb-usb-init.c
+@@ -81,7 +81,7 @@ static int dvb_usb_adapter_init(struct dvb_usb_device *d, short *adapter_nrs)
  
- 		err = floppy_alloc_disk(drive, 0);
--		if (err)
-+		if (err) {
-+			blk_mq_free_tag_set(&tag_sets[drive]);
- 			goto out_put_disk;
-+		}
+ 		ret = dvb_usb_adapter_stream_init(adap);
+ 		if (ret)
+-			return ret;
++			goto stream_init_err;
  
- 		timer_setup(&motor_off_timer[drive], motor_off_callback, 0);
- 	}
+ 		ret = dvb_usb_adapter_dvb_init(adap, adapter_nrs);
+ 		if (ret)
+@@ -114,6 +114,8 @@ static int dvb_usb_adapter_init(struct dvb_usb_device *d, short *adapter_nrs)
+ 	dvb_usb_adapter_dvb_exit(adap);
+ dvb_init_err:
+ 	dvb_usb_adapter_stream_exit(adap);
++stream_init_err:
++	kfree(adap->priv);
+ 	return ret;
+ }
+ 
+-- 
+2.35.1
+
 
 
