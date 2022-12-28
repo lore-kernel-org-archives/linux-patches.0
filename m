@@ -1,36 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EFDC1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:52:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73278C433D2;
-	Wed, 28 Dec 2022 14:52:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BCB1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:52:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3854EC433D2;
+	Wed, 28 Dec 2022 14:52:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239143;
-	bh=lomZ4pZK6Ek1cuGNK35hkaOAos1qguTINJQwSxAZRrc=;
+	s=korg; t=1672239145;
+	bh=XZbEQknCyg1jcKzd9RfraxZOjt78kJ1E9oqPv1n3/h4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gFjSJgnfNxa6TjLP5v0q4Nb4KBXzQelPyrkIUTqABT5Pms8Dvy1JBapQeQb0eGvPw
-	 vL3aH4Qam5YEnqjpu5cK7fACmTwW3smc6EqEw3a+0Aaym0BVCBObcggW3RmWdCi04/
-	 LJWyt85cVQQ0eMHfH3yEfVCi4R3/UnSwIMmkcBQU=
+	b=dGTK5dJtjrPz++B1XKeBbHAYAe3aPqg7gVcDkricdw57D6azKeoVESKVY52Ttv6A8
+	 xN6/FAQnx0nhJyuuZNoSsi0v2yZPAzsUPsGSvpokhHRRoe7xNFq8JYHyOzjPN4mmD5
+	 l3KIpWDGiUu1M1lG8ttIUKkmSey39cfSe1Zq4s28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	Zhao Gongyi <zhaogongyi@huawei.com>,
-	David Hildenbrand <david@redhat.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Oscar Salvador <osalvador@suse.de>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
+	ZhangPeng <zhangpeng362@huawei.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	syzbot+dc3b1cf9111ab5fe98e7@syzkaller.appspotmail.com,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 108/731] lib/notifier-error-inject: fix error when writing -errno to debugfs file
-Date: Wed, 28 Dec 2022 15:33:35 +0100
-Message-Id: <20221228144259.679681344@linuxfoundation.org>
+Subject: [PATCH 5.15 138/731] hfs: Fix OOB Write in hfs_asc2mac
+Date: Wed, 28 Dec 2022 15:34:05 +0100
+Message-Id: <20221228144300.549648285@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -44,49 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Akinobu Mita <akinobu.mita@gmail.com>
+From: ZhangPeng <zhangpeng362@huawei.com>
 
-[ Upstream commit f883c3edd2c432a2931ec8773c70a570115a50fe ]
+[ Upstream commit c53ed55cb275344086e32a7080a6b19cb183650b ]
 
-The simple attribute files do not accept a negative value since the commit
-488dac0c9237 ("libfs: fix error cast of negative value in
-simple_attr_write()").
+Syzbot reported a OOB Write bug:
 
-This restores the previous behaviour by using newly introduced
-DEFINE_SIMPLE_ATTRIBUTE_SIGNED instead of DEFINE_SIMPLE_ATTRIBUTE.
+loop0: detected capacity change from 0 to 64
+==================================================================
+BUG: KASAN: slab-out-of-bounds in hfs_asc2mac+0x467/0x9a0
+fs/hfs/trans.c:133
+Write of size 1 at addr ffff88801848314e by task syz-executor391/3632
 
-Link: https://lkml.kernel.org/r/20220919172418.45257-3-akinobu.mita@gmail.com
-Fixes: 488dac0c9237 ("libfs: fix error cast of negative value in simple_attr_write()")
-Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
-Reported-by: Zhao Gongyi <zhaogongyi@huawei.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Wei Yongjun <weiyongjun1@huawei.com>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
+ print_address_description+0x74/0x340 mm/kasan/report.c:284
+ print_report+0x107/0x1f0 mm/kasan/report.c:395
+ kasan_report+0xcd/0x100 mm/kasan/report.c:495
+ hfs_asc2mac+0x467/0x9a0 fs/hfs/trans.c:133
+ hfs_cat_build_key+0x92/0x170 fs/hfs/catalog.c:28
+ hfs_lookup+0x1ab/0x2c0 fs/hfs/dir.c:31
+ lookup_open fs/namei.c:3391 [inline]
+ open_last_lookups fs/namei.c:3481 [inline]
+ path_openat+0x10e6/0x2df0 fs/namei.c:3710
+ do_filp_open+0x264/0x4f0 fs/namei.c:3740
+
+If in->len is much larger than HFS_NAMELEN(31) which is the maximum
+length of an HFS filename, a OOB write could occur in hfs_asc2mac(). In
+that case, when the dst reaches the boundary, the srclen is still
+greater than 0, which causes a OOB write.
+Fix this by adding a check on dstlen in while() before writing to dst
+address.
+
+Link: https://lkml.kernel.org/r/20221202030038.1391945-1-zhangpeng362@huawei.com
+Fixes: 328b92278650 ("[PATCH] hfs: NLS support")
+Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Reported-by: <syzbot+dc3b1cf9111ab5fe98e7@syzkaller.appspotmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/notifier-error-inject.c | 2 +-
+ fs/hfs/trans.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/notifier-error-inject.c b/lib/notifier-error-inject.c
-index 21016b32d313..2b24ea6c9497 100644
---- a/lib/notifier-error-inject.c
-+++ b/lib/notifier-error-inject.c
-@@ -15,7 +15,7 @@ static int debugfs_errno_get(void *data, u64 *val)
- 	return 0;
- }
+diff --git a/fs/hfs/trans.c b/fs/hfs/trans.c
+index 39f5e343bf4d..fdb0edb8a607 100644
+--- a/fs/hfs/trans.c
++++ b/fs/hfs/trans.c
+@@ -109,7 +109,7 @@ void hfs_asc2mac(struct super_block *sb, struct hfs_name *out, const struct qstr
+ 	if (nls_io) {
+ 		wchar_t ch;
  
--DEFINE_SIMPLE_ATTRIBUTE(fops_errno, debugfs_errno_get, debugfs_errno_set,
-+DEFINE_SIMPLE_ATTRIBUTE_SIGNED(fops_errno, debugfs_errno_get, debugfs_errno_set,
- 			"%lld\n");
- 
- static struct dentry *debugfs_create_errno(const char *name, umode_t mode,
+-		while (srclen > 0) {
++		while (srclen > 0 && dstlen > 0) {
+ 			size = nls_io->char2uni(src, srclen, &ch);
+ 			if (size < 0) {
+ 				ch = '?';
 -- 
 2.35.1
 
