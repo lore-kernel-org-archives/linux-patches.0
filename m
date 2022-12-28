@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D901863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:18:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DE1C433F0;
-	Wed, 28 Dec 2022 15:18:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AEB61863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:18:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3086C433EF;
+	Wed, 28 Dec 2022 15:18:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240681;
-	bh=hxW1T+7rmElCLh/bcg/yD1KBOcng6fuFfC/0VhCe+T8=;
+	s=korg; t=1672240684;
+	bh=0W5PciXOOC4YYnnlUwPHAcov1CTEah3PwDTi+Nvw6/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rBiyhBgdll9DjhXCmFEfl88hSMtVTxfb7paDIbVf8wlgsPB8tAA+yYEfgzM69oV4k
-	 ZkWCmRgO+zzvA6KtoZWR1bUfWEBmcTW7Jlrrtw8L7brxNRiNarbCocKSlhx5wO1IMc
-	 V8BP4oa+NJl/d/mqCUjEd1xm/H7QHXwSphBvoEzs=
+	b=Vg76RTdi/9LF0nhz8NSSBkRhQrRyBF2zv6wMm4zuRIelcW59lZ9QKxTV/E7TpXzmu
+	 3Ho1E3uz4MdIIAmAknx7ygGbccrDiFK+iZC3MeaF3oLulzT3HbMjbJQNI3okBTohAQ
+	 Xjo5C+Ue5qG+drZPj/ZKyJKlcHc1vtVy8tqxsOEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nirmal Patel <nirmal.patel@linux.intel.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 385/731] PCI: vmd: Disable MSI remapping after suspend
-Date: Wed, 28 Dec 2022 15:38:12 +0100
-Message-Id: <20221228144307.721149212@linuxfoundation.org>
+Subject: [PATCH 6.1 0155/1146] cpufreq: amd_freq_sensitivity: Add missing pci_dev_put()
+Date: Wed, 28 Dec 2022 15:28:14 +0100
+Message-Id: <20221228144334.368667327@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,44 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nirmal Patel <nirmal.patel@linux.intel.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit d899aa668498c07ff217b666ae9712990306e682 ]
+[ Upstream commit 91fda1f88c0968f1491ab150bb01690525af150a ]
 
-MSI remapping is disabled by VMD driver for Intel's Icelake and
-newer systems in order to improve performance by setting
-VMCONFIG_MSI_REMAP. By design VMCONFIG_MSI_REMAP register is cleared
-by firmware during boot. The same register gets cleared when system
-is put in S3 power state. VMD driver needs to set this register again
-in order to avoid interrupt issues with devices behind VMD if MSI
-remapping was disabled before.
+pci_get_device() will increase the reference count for the returned
+pci_dev. We need to use pci_dev_put() to decrease the reference count
+after using pci_get_device(). Let's add it.
 
-Link: https://lore.kernel.org/r/20221109142652.450998-1-nirmal.patel@linux.intel.com
-Fixes: ee81ee84f873 ("PCI: vmd: Disable MSI-X remapping when possible")
-Signed-off-by: Nirmal Patel <nirmal.patel@linux.intel.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>
+Fixes: 59a3b3a8db16 ("cpufreq: AMD: Ignore the check for ProcFeedback in ST/CZ")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/vmd.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/cpufreq/amd_freq_sensitivity.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
-index a5987e52700e..8dce71142e10 100644
---- a/drivers/pci/controller/vmd.c
-+++ b/drivers/pci/controller/vmd.c
-@@ -900,6 +900,11 @@ static int vmd_resume(struct device *dev)
- 	struct vmd_dev *vmd = pci_get_drvdata(pdev);
- 	int err, i;
+diff --git a/drivers/cpufreq/amd_freq_sensitivity.c b/drivers/cpufreq/amd_freq_sensitivity.c
+index 6448e03bcf48..59b19b9975e8 100644
+--- a/drivers/cpufreq/amd_freq_sensitivity.c
++++ b/drivers/cpufreq/amd_freq_sensitivity.c
+@@ -125,6 +125,8 @@ static int __init amd_freq_sensitivity_init(void)
+ 	if (!pcidev) {
+ 		if (!boot_cpu_has(X86_FEATURE_PROC_FEEDBACK))
+ 			return -ENODEV;
++	} else {
++		pci_dev_put(pcidev);
+ 	}
  
-+       if (vmd->irq_domain)
-+               vmd_set_msi_remapping(vmd, true);
-+       else
-+               vmd_set_msi_remapping(vmd, false);
-+
- 	for (i = 0; i < vmd->msix_count; i++) {
- 		err = devm_request_irq(dev, pci_irq_vector(pdev, i),
- 				       vmd_irq, IRQF_NO_THREAD,
+ 	if (rdmsrl_safe(MSR_AMD64_FREQ_SENSITIVITY_ACTUAL, &val))
 -- 
 2.35.1
 
