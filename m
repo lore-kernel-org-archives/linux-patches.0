@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C46B1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:10:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 003E6C433EF;
-	Wed, 28 Dec 2022 16:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 427511C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:10:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7690C433EF;
+	Wed, 28 Dec 2022 16:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243817;
-	bh=l9HWFXL6iqJaCWp0n0E1sik/5WoiJBg7NENzeQiWgc8=;
+	s=korg; t=1672243820;
+	bh=3hK324ZcW3L3UmJ5zVrnhE+fsbEoUoe3fn6JuXVY6fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wPiE6qEozQ0hO5oVLxX7WSaWdKHoDXz5XAtbS8cQDwgV/+o7by7qbENHY8VQF3XQr
-	 jSJYrjw3Adu6gm0cOMxFTWPb3vhuO8/PXY8J3XemAH4fXZLKASAoh2bcgF0xmie50d
-	 Dc2NF/F/CBnra466cXfGNsuJrX7kWZhnKS4gZYtk=
+	b=PlZLR08M9ObUBQW/x5JT3WB3tkwJ/rqxHkEYzJjIS7ar0l9mhTwVXRcKDEJleGI1F
+	 coAAHpoz6Q6DeN9VKciflP78FWmIiog/J2TmXj+DmxzfhYVDwAuq30KOsPI4IKKq7l
+	 Hxi8i0hTz1mSlHEgQcfrTX+xBnnCGCQpnBOj4T74=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0593/1073] RDMA/siw: Set defined status for work completion with undefined status
-Date: Wed, 28 Dec 2022 15:36:21 +0100
-Message-Id: <20221228144344.154356202@linuxfoundation.org>
+Subject: [PATCH 6.1 0561/1146] Bluetooth: hci_qca: dont call kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:35:00 +0100
+Message-Id: <20221228144345.406500104@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,49 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bernard Metzler <bmt@zurich.ibm.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 60da2d11fcbc043304910e4d2ca82f9bab953e63 ]
+[ Upstream commit df4cfc91208e0a98f078223793f5871b1a82cc54 ]
 
-A malicious user may write undefined values into memory mapped completion
-queue elements status or opcode. Undefined status or opcode values will
-result in out-of-bounds access to an array mapping siw internal
-representation of opcode and status to RDMA core representation when
-reaping CQ elements. While siw detects those undefined values, it did not
-correctly set completion status to a defined value, thus defeating the
-whole purpose of the check.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with interrupts being disabled. So replace kfree_skb()
+with dev_kfree_skb_irq() under spin_lock_irqsave().
 
-This bug leads to the following Smatch static checker warning:
-
-	drivers/infiniband/sw/siw/siw_cq.c:96 siw_reap_cqe()
-	error: buffer overflow 'map_cqe_status' 10 <= 21
-
-Fixes: bdf1da5df9da ("RDMA/siw: Fix immediate work request flush to completion queue")
-Link: https://lore.kernel.org/r/20221115170747.1263298-1-bmt@zurich.ibm.com
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Bernard Metzler <bmt@zurich.ibm.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 0ff252c1976d ("Bluetooth: hciuart: Add support QCA chipset for UART")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_cq.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/bluetooth/hci_qca.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_cq.c b/drivers/infiniband/sw/siw/siw_cq.c
-index acc7bcd538b5..403029de6b92 100644
---- a/drivers/infiniband/sw/siw/siw_cq.c
-+++ b/drivers/infiniband/sw/siw/siw_cq.c
-@@ -88,9 +88,9 @@ int siw_reap_cqe(struct siw_cq *cq, struct ib_wc *wc)
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index 8df11016fd51..bae9b2a408d9 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -912,7 +912,7 @@ static int qca_enqueue(struct hci_uart *hu, struct sk_buff *skb)
+ 	default:
+ 		BT_ERR("Illegal tx state: %d (losing packet)",
+ 		       qca->tx_ibs_state);
+-		kfree_skb(skb);
++		dev_kfree_skb_irq(skb);
+ 		break;
+ 	}
  
- 			if (opcode >= SIW_NUM_OPCODES) {
- 				opcode = 0;
--				status = IB_WC_GENERAL_ERR;
-+				status = SIW_WC_GENERAL_ERR;
- 			} else if (status >= SIW_NUM_WC_STATUS) {
--				status = IB_WC_GENERAL_ERR;
-+				status = SIW_WC_GENERAL_ERR;
- 			}
- 			wc->opcode = map_wc_opcode[opcode];
- 			wc->status = map_cqe_status[status].ib;
 -- 
 2.35.1
 
