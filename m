@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29851C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2092DC433F1;
-	Wed, 28 Dec 2022 16:35:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4081C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C12DFC433D2;
+	Wed, 28 Dec 2022 16:35:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245321;
-	bh=2u+JqZVFjNOYCm9GMc8BJ4EA8rIcooMLdSQI+41VY6U=;
+	s=korg; t=1672245324;
+	bh=uxKcc1InI0HN9l0fdKDk6mH8C6h893D41KckS6dhTKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r3m7wqmkCm7cPJmFLtEsOFK/aYzGSfhg4D0M17T6E3pSjeaPW/wO9i12ZXnOKiw37
-	 epJs40rEfT2cHM+DJonXRHDAE2WLDyf0q30srllSQnlRu/oBdiIXS6bvoxBkTmPkyK
-	 8XxqBvYxpH6pr9bWPLv5RFqkNm5M0pFFABU7GLFY=
+	b=Ab8yn9Zy20fK0eGSyK7xyS29oi8tLDHhnsHXmWEhnVU18Z5JQDTjLieDEbZ2a/iPA
+	 0gVhTa9OtNjF/+XFP5mV4oAj+rF5fu5m2Xd8XfCEqFTSPwQMK8wjuemgQ1hq1AOt89
+	 Caa3gTpVXJ/nNWz5Oi90k5AVvjP5c2rOFncD0MQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
-	Francesco Dolcini <francesco@dolcini.it>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0839/1146] rtc: snvs: Allow a time difference on clock register read
-Date: Wed, 28 Dec 2022 15:39:38 +0100
-Message-Id: <20221228144352.946106716@linuxfoundation.org>
+Subject: [PATCH 6.0 0873/1073] devlink: protect devlink dump by the instance lock
+Date: Wed, 28 Dec 2022 15:41:01 +0100
+Message-Id: <20221228144351.736098985@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,90 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit 0462681e207ccc44778a77b3297af728b1cf5b9f ]
+[ Upstream commit 214964a13ab56a9757d146b79b468a7ca190fbfb ]
 
-On an iMX6ULL the following message appears when a wakealarm is set:
+Take the instance lock around devlink_nl_fill() when dumping,
+doit takes it already.
 
-echo 0 > /sys/class/rtc/rtc1/wakealarm
-rtc rtc1: Timeout trying to get valid LPSRT Counter read
+We are only dumping basic info so in the worst case we were risking
+data races around the reload statistics. Until the big devlink mutex
+was removed all relevant code was protected by it, so the missing
+instance lock was not exposed.
 
-This does not always happen but is reproducible quite often (7 out of 10
-times). The problem appears because the iMX6ULL is not able to read the
-registers within one 32kHz clock cycle which is the base clock of the
-RTC. Therefore, this patch allows a difference of up to 320 cycles
-(10ms). 10ms was chosen to be big enough even on systems with less cpu
-power (e.g. iMX6ULL). According to the reference manual a difference is
-fine:
-- If the two consecutive reads are similar, the value is correct.
-The values have to be similar, not equal.
-
-Fixes: cd7f3a249dbe ("rtc: snvs: Add timeouts to avoid kernel lockups")
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
-Signed-off-by: Francesco Dolcini <francesco@dolcini.it>
-Link: https://lore.kernel.org/r/20221106115915.7930-1-francesco@dolcini.it
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: d3efc2a6a6d8 ("net: devlink: remove devlink_mutex")
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Link: https://lore.kernel.org/r/20221216044122.1863550-1-kuba@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-snvs.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ net/core/devlink.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/rtc/rtc-snvs.c b/drivers/rtc/rtc-snvs.c
-index bd929b0e7d7d..d82acf1af1fa 100644
---- a/drivers/rtc/rtc-snvs.c
-+++ b/drivers/rtc/rtc-snvs.c
-@@ -32,6 +32,14 @@
- #define SNVS_LPPGDR_INIT	0x41736166
- #define CNTR_TO_SECS_SH		15
+diff --git a/net/core/devlink.c b/net/core/devlink.c
+index b3a869ccc8ed..5f894bd20c31 100644
+--- a/net/core/devlink.c
++++ b/net/core/devlink.c
+@@ -1498,10 +1498,13 @@ static int devlink_nl_cmd_get_dumpit(struct sk_buff *msg,
+ 			continue;
+ 		}
  
-+/* The maximum RTC clock cycles that are allowed to pass between two
-+ * consecutive clock counter register reads. If the values are corrupted a
-+ * bigger difference is expected. The RTC frequency is 32kHz. With 320 cycles
-+ * we end at 10ms which should be enough for most cases. If it once takes
-+ * longer than expected we do a retry.
-+ */
-+#define MAX_RTC_READ_DIFF_CYCLES	320
++		devl_lock(devlink);
+ 		err = devlink_nl_fill(msg, devlink, DEVLINK_CMD_NEW,
+ 				      NETLINK_CB(cb->skb).portid,
+ 				      cb->nlh->nlmsg_seq, NLM_F_MULTI);
++		devl_unlock(devlink);
+ 		devlink_put(devlink);
 +
- struct snvs_rtc_data {
- 	struct rtc_device *rtc;
- 	struct regmap *regmap;
-@@ -56,6 +64,7 @@ static u64 rtc_read_lpsrt(struct snvs_rtc_data *data)
- static u32 rtc_read_lp_counter(struct snvs_rtc_data *data)
- {
- 	u64 read1, read2;
-+	s64 diff;
- 	unsigned int timeout = 100;
- 
- 	/* As expected, the registers might update between the read of the LSB
-@@ -66,7 +75,8 @@ static u32 rtc_read_lp_counter(struct snvs_rtc_data *data)
- 	do {
- 		read2 = read1;
- 		read1 = rtc_read_lpsrt(data);
--	} while (read1 != read2 && --timeout);
-+		diff = read1 - read2;
-+	} while (((diff < 0) || (diff > MAX_RTC_READ_DIFF_CYCLES)) && --timeout);
- 	if (!timeout)
- 		dev_err(&data->rtc->dev, "Timeout trying to get valid LPSRT Counter read\n");
- 
-@@ -78,13 +88,15 @@ static u32 rtc_read_lp_counter(struct snvs_rtc_data *data)
- static int rtc_read_lp_counter_lsb(struct snvs_rtc_data *data, u32 *lsb)
- {
- 	u32 count1, count2;
-+	s32 diff;
- 	unsigned int timeout = 100;
- 
- 	regmap_read(data->regmap, data->offset + SNVS_LPSRTCLR, &count1);
- 	do {
- 		count2 = count1;
- 		regmap_read(data->regmap, data->offset + SNVS_LPSRTCLR, &count1);
--	} while (count1 != count2 && --timeout);
-+		diff = count1 - count2;
-+	} while (((diff < 0) || (diff > MAX_RTC_READ_DIFF_CYCLES)) && --timeout);
- 	if (!timeout) {
- 		dev_err(&data->rtc->dev, "Timeout trying to get valid LPSRT Counter read\n");
- 		return -ETIMEDOUT;
+ 		if (err)
+ 			goto out;
+ 		idx++;
 -- 
 2.35.1
 
