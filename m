@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43A71863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3968EC433EF;
-	Wed, 28 Dec 2022 15:37:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2E31863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EC9DC433EF;
+	Wed, 28 Dec 2022 15:37:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241829;
-	bh=iq7D0MsxMlUOj7XtB97mzYmm+2R8bHDNyoDP8MO2tPk=;
+	s=korg; t=1672241832;
+	bh=lL7VBS0iHKkJfUUElzYBQqkPTuo4og5ASgpq3wqi8/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r24rG/Fj5xCBOd+oGCmW38vf/oVfsxWG5fcEN7hP+McZKoPzKuw9cCzcP9VErF/A4
-	 2H6bQD8agk/2yZKLoJPrfAaWrMRm+qkl0jZSyu6sx04KyAUHKlvPuHSSbOxB2mS4Gp
-	 BmaY3MYw+jFMI54G5qlN01Z1RYGEpwPc/gt0jJzA=
+	b=Fo+0/lKkkpRTF1ZuD3HwAE3XJzv50iL4JjF3SynEq/OnfEW+H+3V0l5qDdGUxkHjn
+	 i3ACkWs5qWhzh5D5AF06rQDQ9DLh7n1vGBZzpMFiTfWrYgtBwkdO3bZBSnA96HS3rH
+	 VERwdn91SU4/KsHxQ+BSzv8vRPv71ykJEld1bckA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 527/731] fs/ntfs3: Harden against integer overflows
-Date: Wed, 28 Dec 2022 15:40:34 +0100
-Message-Id: <20221228144311.821061781@linuxfoundation.org>
+Subject: [PATCH 6.0 0332/1073] dm: cleanup close_table_device
+Date: Wed, 28 Dec 2022 15:32:00 +0100
+Message-Id: <20221228144337.021593822@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,33 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@oracle.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit e001e60869390686809663c02bceb1d3922548fb ]
+[ Upstream commit 7b5865831c1003122f737df5e16adaa583f1a595 ]
 
-Smatch complains that the "add_bytes" is not to be trusted.  Use
-size_add() to prevent an integer overflow.
+Take the list unlink and free into close_table_device so that no half
+torn down table_devices exist.  Also remove the check for a NULL bdev
+as that can't happen - open_table_device never adds a table_device to
+the list that does not have a valid block_device.
 
-Fixes: be71b5cba2e6 ("fs/ntfs3: Add attrib operations")
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lore.kernel.org/r/20221115141054.1051801-5-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 1a581b721699 ("dm: track per-add_disk holder relations in DM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/xattr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/dm.c | 12 +++---------
+ 1 file changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/fs/ntfs3/xattr.c b/fs/ntfs3/xattr.c
-index eb799a5cdfad..8847db015908 100644
---- a/fs/ntfs3/xattr.c
-+++ b/fs/ntfs3/xattr.c
-@@ -107,7 +107,7 @@ static int ntfs_read_ea(struct ntfs_inode *ni, struct EA_FULL **ea,
- 		return -EFBIG;
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index 1903afa4618a..620abcef2df5 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -774,14 +774,11 @@ static struct table_device *open_table_device(struct mapped_device *md,
+  */
+ static void close_table_device(struct table_device *td, struct mapped_device *md)
+ {
+-	if (!td->dm_dev.bdev)
+-		return;
+-
+ 	bd_unlink_disk_holder(td->dm_dev.bdev, dm_disk(md));
+ 	blkdev_put(td->dm_dev.bdev, td->dm_dev.mode | FMODE_EXCL);
+ 	put_dax(td->dm_dev.dax_dev);
+-	td->dm_dev.bdev = NULL;
+-	td->dm_dev.dax_dev = NULL;
++	list_del(&td->list);
++	kfree(td);
+ }
  
- 	/* Allocate memory for packed Ea. */
--	ea_p = kmalloc(size + add_bytes, GFP_NOFS);
-+	ea_p = kmalloc(size_add(size, add_bytes), GFP_NOFS);
- 	if (!ea_p)
- 		return -ENOMEM;
+ static struct table_device *find_table_device(struct list_head *l, dev_t dev,
+@@ -823,11 +820,8 @@ void dm_put_table_device(struct mapped_device *md, struct dm_dev *d)
+ 	struct table_device *td = container_of(d, struct table_device, dm_dev);
+ 
+ 	mutex_lock(&md->table_devices_lock);
+-	if (refcount_dec_and_test(&td->count)) {
++	if (refcount_dec_and_test(&td->count))
+ 		close_table_device(td, md);
+-		list_del(&td->list);
+-		kfree(td);
+-	}
+ 	mutex_unlock(&md->table_devices_lock);
+ }
  
 -- 
 2.35.1
