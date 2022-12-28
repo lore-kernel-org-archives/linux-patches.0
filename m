@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C5661875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:03:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96FE8C433EF;
-	Wed, 28 Dec 2022 16:03:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31581875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:03:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 395C1C433D2;
+	Wed, 28 Dec 2022 16:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243391;
-	bh=wtlDx3YQ3kMb0vvLzeObvYVPVBe/GeH6Kux7qBDQtv4=;
+	s=korg; t=1672243394;
+	bh=3ROR7Pygs5uRnlq+T2ja4v4/0meU851q6weNso+gY1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lkng7tIBWDgINBg0j10nq+KKQVVHKcUYpE08CprzRxNjDeaBnfYs1d+Fr05834suy
-	 ydi5vLCKYdyLJf4qF0KdUCKEUuaj0dVMtZdAhHqj63ngp0S1lXW/UEab9eewnDwhgG
-	 Bx5sGtuVgQKVatiy9vzTrLKbulh+pBAR++IXNDaE=
+	b=hSMleAgMiqAkc4UCwVVtv9uHLjN01S5lUjp6ks0LRpQIkF2ES5xTRjxSjU4yTTfUd
+	 tmd2ey5Fs1SCSUR6XotZZrpyM5HG/t2GEr+BoPdvUmP34i1E6vTP+6LM1fOGf3aL24
+	 V6eOFFkWSW2aAYPuZvUgtCtnYpgXn74dfos/rYRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 5.15 716/731] security: Restrict CONFIG_ZERO_CALL_USED_REGS to gcc or clang > 15.0.6
-Date: Wed, 28 Dec 2022 15:43:43 +0100
-Message-Id: <20221228144317.197953909@linuxfoundation.org>
+	Anna Schumaker <Anna.Schumaker@Netapp.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0488/1146] NFSv4.2: Set the correct size scratch buffer for decoding READ_PLUS
+Date: Wed, 28 Dec 2022 15:33:47 +0100
+Message-Id: <20221228144343.439949547@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,37 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Anna Schumaker <Anna.Schumaker@Netapp.com>
 
-commit d6a9fb87e9d18f3394a9845546bbe868efdccfd2 upstream.
+[ Upstream commit 36357fe74ef736524a29fbd3952948768510a8b9 ]
 
-A bad bug in clang's implementation of -fzero-call-used-regs can result
-in NULL pointer dereferences (see the links above the check for more
-information). Restrict CONFIG_CC_HAS_ZERO_CALL_USED_REGS to either a
-supported GCC version or a clang newer than 15.0.6, which will catch
-both a theoretical 15.0.7 and the upcoming 16.0.0, which will both have
-the bug fixed.
+The scratch_buf array is 16 bytes, but I was passing 32 to the
+xdr_set_scratch_buffer() function. Fix this by using sizeof(), which is
+what I probably should have been doing this whole time.
 
-Cc: stable@vger.kernel.org # v5.15+
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221214232602.4118147-1-nathan@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d3b00a802c84 ("NFS: Replace the READ_PLUS decoding code")
+Signed-off-by: Anna Schumaker <Anna.Schumaker@Netapp.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/Kconfig.hardening |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/nfs/nfs42xdr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/security/Kconfig.hardening
-+++ b/security/Kconfig.hardening
-@@ -240,6 +240,9 @@ config INIT_ON_FREE_DEFAULT_ON
+diff --git a/fs/nfs/nfs42xdr.c b/fs/nfs/nfs42xdr.c
+index fe1aeb0f048f..2fd465cab631 100644
+--- a/fs/nfs/nfs42xdr.c
++++ b/fs/nfs/nfs42xdr.c
+@@ -1142,7 +1142,7 @@ static int decode_read_plus(struct xdr_stream *xdr, struct nfs_pgio_res *res)
+ 	if (!segs)
+ 		return -ENOMEM;
  
- config CC_HAS_ZERO_CALL_USED_REGS
- 	def_bool $(cc-option,-fzero-call-used-regs=used-gpr)
-+	# https://github.com/ClangBuiltLinux/linux/issues/1766
-+	# https://github.com/llvm/llvm-project/issues/59242
-+	depends on !CC_IS_CLANG || CLANG_VERSION > 150006
- 
- config ZERO_CALL_USED_REGS
- 	bool "Enable register zeroing on function exit"
+-	xdr_set_scratch_buffer(xdr, &scratch_buf, 32);
++	xdr_set_scratch_buffer(xdr, &scratch_buf, sizeof(scratch_buf));
+ 	status = -EIO;
+ 	for (i = 0; i < segments; i++) {
+ 		status = decode_read_plus_segment(xdr, &segs[i]);
+-- 
+2.35.1
+
 
 
