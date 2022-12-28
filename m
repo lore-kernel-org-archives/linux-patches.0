@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADE91863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:18:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C019C433EF;
-	Wed, 28 Dec 2022 15:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 901381863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:18:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14130C433D2;
+	Wed, 28 Dec 2022 15:18:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240721;
-	bh=kSVwgmvVNGbFTnjgzz26lvZguO1HjL3EHlnn4O0L3Ho=;
+	s=korg; t=1672240724;
+	bh=Lez0XSHP/3AfL8wxzX79PzZk+p3Dw0gYxZGEGDraGYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RdDMXV166KjAK0fZU6oQGjz9eeDsWhyVIRa+UDyeG/i5tRdp3++5y9CilhZyC5FzP
-	 tjI3BgdKWbLO9TIttSw1v0708mBBkY8i/vNTe75nJ+svKpmNw6OqRmwNWZMHnx6bvu
-	 4380EYzXgEZ/tOEdZuleWpfbfWyl+JJ17OP+7DoA=
+	b=E2nL1McnMfHsQMTSmTBp6KpJiOaQzHtmdv8De9EKvPhFNA3ydtXbV9u1T5fyc7D4L
+	 0Rahgpt/ngWu1G7RzhHU3cJJtmNAubVRKUzYTTKhMZoAvW043XXGgS2ErrTRPBDZ1X
+	 iEChpDQmny/4Puy/vagL3QiRZfSNz3rbB6wQJyjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Douglas Gilbert <dgilbert@interlog.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Alexandre Bounine <alex.bou9@gmail.com>,
+	Matt Porter <mporter@kernel.crashing.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 390/731] scsi: scsi_debug: Fix a warning in resp_write_scat()
-Date: Wed, 28 Dec 2022 15:38:17 +0100
-Message-Id: <20221228144307.865428304@linuxfoundation.org>
+Subject: [PATCH 6.1 0160/1146] rapidio: fix possible name leaks when rio_add_device() fails
+Date: Wed, 28 Dec 2022 15:28:19 +0100
+Message-Id: <20221228144334.505159984@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,64 +37,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 216e179724c1d9f57a8ababf8bd7aaabef67f01b ]
+[ Upstream commit f9574cd48679926e2a569e1957a5a1bcc8a719ac ]
 
-As 'lbdof_blen' is coming from user, if the size in kzalloc() is >=
-MAX_ORDER then we hit a warning.
+Patch series "rapidio: fix three possible memory leaks".
 
-Call trace:
+This patchset fixes three name leaks in error handling.
+ - patch #1 fixes two name leaks while rio_add_device() fails.
+ - patch #2 fixes a name leak while  rio_register_mport() fails.
 
-sg_ioctl
- sg_ioctl_common
-   scsi_ioctl
-    sg_scsi_ioctl
-     blk_execute_rq
-      blk_mq_sched_insert_request
-       blk_mq_run_hw_queue
-        __blk_mq_delay_run_hw_queue
-         __blk_mq_run_hw_queue
-          blk_mq_sched_dispatch_requests
-           __blk_mq_sched_dispatch_requests
-            blk_mq_dispatch_rq_list
-             scsi_queue_rq
-              scsi_dispatch_cmd
-               scsi_debug_queuecommand
-                schedule_resp
-                 resp_write_scat
+This patch (of 2):
 
-If you try to allocate a memory larger than(>=) MAX_ORDER, then kmalloc()
-will definitely fail.  It creates a stack trace and messes up dmesg.  The
-user controls the size here so if they specify a too large size it will
-fail.
+If rio_add_device() returns error, the name allocated by dev_set_name()
+need be freed.  It should use put_device() to give up the reference in the
+error path, so that the name can be freed in kobject_cleanup(), and the
+'rdev' can be freed in rio_release_dev().
 
-Add __GFP_NOWARN in order to avoid too large allocation warning.  This is
-detected by static analysis using smatch.
-
-Fixes: 481b5e5c7949 ("scsi: scsi_debug: add resp_write_scat function")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Link: https://lore.kernel.org/r/20221111100526.1790533-1-harshit.m.mogalapalli@oracle.com
-Acked-by: Douglas Gilbert <dgilbert@interlog.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Link: https://lkml.kernel.org/r/20221114152636.2939035-1-yangyingliang@huawei.com
+Link: https://lkml.kernel.org/r/20221114152636.2939035-2-yangyingliang@huawei.com
+Fixes: e8de370188d0 ("rapidio: add mport char device driver")
+Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Cc: Alexandre Bounine <alex.bou9@gmail.com>
+Cc: Matt Porter <mporter@kernel.crashing.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rapidio/devices/rio_mport_cdev.c | 7 +++++--
+ drivers/rapidio/rio-scan.c               | 8 ++++++--
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 0b16061d8da8..b44fd9b80934 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -3640,7 +3640,7 @@ static int resp_write_scat(struct scsi_cmnd *scp,
- 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INVALID_FIELD_IN_CDB, 0);
- 		return illegal_condition_result;
- 	}
--	lrdp = kzalloc(lbdof_blen, GFP_ATOMIC);
-+	lrdp = kzalloc(lbdof_blen, GFP_ATOMIC | __GFP_NOWARN);
- 	if (lrdp == NULL)
- 		return SCSI_MLQUEUE_HOST_BUSY;
- 	if (sdebug_verbose)
+diff --git a/drivers/rapidio/devices/rio_mport_cdev.c b/drivers/rapidio/devices/rio_mport_cdev.c
+index 2cdc054e53a5..3cc83997a1f8 100644
+--- a/drivers/rapidio/devices/rio_mport_cdev.c
++++ b/drivers/rapidio/devices/rio_mport_cdev.c
+@@ -1804,8 +1804,11 @@ static int rio_mport_add_riodev(struct mport_cdev_priv *priv,
+ 		rio_init_dbell_res(&rdev->riores[RIO_DOORBELL_RESOURCE],
+ 				   0, 0xffff);
+ 	err = rio_add_device(rdev);
+-	if (err)
+-		goto cleanup;
++	if (err) {
++		put_device(&rdev->dev);
++		return err;
++	}
++
+ 	rio_dev_get(rdev);
+ 
+ 	return 0;
+diff --git a/drivers/rapidio/rio-scan.c b/drivers/rapidio/rio-scan.c
+index 19b0c33f4a62..fdcf742b2adb 100644
+--- a/drivers/rapidio/rio-scan.c
++++ b/drivers/rapidio/rio-scan.c
+@@ -454,8 +454,12 @@ static struct rio_dev *rio_setup_device(struct rio_net *net,
+ 				   0, 0xffff);
+ 
+ 	ret = rio_add_device(rdev);
+-	if (ret)
+-		goto cleanup;
++	if (ret) {
++		if (rswitch)
++			kfree(rswitch->route_table);
++		put_device(&rdev->dev);
++		return NULL;
++	}
+ 
+ 	rio_dev_get(rdev);
+ 
 -- 
 2.35.1
 
