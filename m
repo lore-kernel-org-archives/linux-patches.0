@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638361863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:47:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDEE4C433D2;
-	Wed, 28 Dec 2022 15:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39AB31863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:47:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937C0C433D2;
+	Wed, 28 Dec 2022 15:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242448;
-	bh=FphEkFFeAHGR/8Nzfu3WYKTyl00C3ATiGiN/BUSk4A4=;
+	s=korg; t=1672242450;
+	bh=Hzszc/GtUqFEvoxto5YfhgAmKhqqPYvO/qwSglXLCFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sa0dmCY6FZACEbem5FdOV9RZAVyPaLVSLs2P79ROdE/uTuIxts82y0nWRsphDj+0z
-	 xxqehyO0/tzq6TVNr6qdmD/S0kIFQ0Blgf8pfRVd02PtgGNn+rho33DQWyAHp0YqbG
-	 zuXrvDrJ4CM829JNkkFhlTlG/Ro7bKXNH/tuUj5g=
+	b=E3bdW8uBOoZDb9b9a6M7X8sArcTXhI57EMyoA9B8rhk1duyHsIbdt4fn+ErmIMhGq
+	 6AjHmFUeD7F9gowDDV5fqMaG442hWSEopE1wqkcFaLM66PdbK5/oo5XatvrgviJ1tj
+	 l/+ILYkrmCBh8P6lvCJL9ehzzLMU1l4WznL9liyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Jesse Taube <mr.bossman075@gmail.com>,
+	Giulio Benetti <giulio.benetti@benettiengineering.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0411/1073] NFSv4: Fix a deadlock between nfs4_open_recover_helper() and delegreturn
-Date: Wed, 28 Dec 2022 15:33:19 +0100
-Message-Id: <20221228144339.183913058@linuxfoundation.org>
+Subject: [PATCH 6.1 0371/1146] clk: imx: imxrt1050: fix IMXRT1050_CLK_LCDIF_APB offsets
+Date: Wed, 28 Dec 2022 15:31:50 +0100
+Message-Id: <20221228144340.240525349@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,70 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Giulio Benetti <giulio.benetti@benettiengineering.com>
 
-[ Upstream commit 51069e4aef6257b0454057359faed0ab0c9af083 ]
+[ Upstream commit 3095c02f95e537c553e0b30948c2f6c7cbed87ee ]
 
-If we're asked to recover open state while a delegation return is
-outstanding, then the state manager thread cannot use a cached open, so
-if the server returns a delegation, we can end up deadlocked behind the
-pending delegreturn.
-To avoid this problem, let's just ask the server not to give us a
-delegation unless we're explicitly reclaiming one.
+Fix IMXRT1050_CLK_LCDIF_APB offsets.
 
-Fixes: be36e185bd26 ("NFSv4: nfs4_open_recover_helper() must set share access")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: 7154b046d8f3 ("clk: imx: Add initial support for i.MXRT1050 clock driver")
+Cc: Jesse Taube <mr.bossman075@gmail.com>
+Signed-off-by: Giulio Benetti <giulio.benetti@benettiengineering.com>
+Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20221117181014.851505-1-giulio.benetti@benettiengineering.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ drivers/clk/imx/clk-imxrt1050.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index f85559bbb422..6e247647a5fb 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -2130,18 +2130,18 @@ static struct nfs4_opendata *nfs4_open_recoverdata_alloc(struct nfs_open_context
- }
- 
- static int nfs4_open_recover_helper(struct nfs4_opendata *opendata,
--		fmode_t fmode)
-+				    fmode_t fmode)
- {
- 	struct nfs4_state *newstate;
-+	struct nfs_server *server = NFS_SB(opendata->dentry->d_sb);
-+	int openflags = opendata->o_arg.open_flags;
- 	int ret;
- 
- 	if (!nfs4_mode_match_open_stateid(opendata->state, fmode))
- 		return 0;
--	opendata->o_arg.open_flags = 0;
- 	opendata->o_arg.fmode = fmode;
--	opendata->o_arg.share_access = nfs4_map_atomic_open_share(
--			NFS_SB(opendata->dentry->d_sb),
--			fmode, 0);
-+	opendata->o_arg.share_access =
-+		nfs4_map_atomic_open_share(server, fmode, openflags);
- 	memset(&opendata->o_res, 0, sizeof(opendata->o_res));
- 	memset(&opendata->c_res, 0, sizeof(opendata->c_res));
- 	nfs4_init_opendata_res(opendata);
-@@ -2723,10 +2723,15 @@ static int _nfs4_open_expired(struct nfs_open_context *ctx, struct nfs4_state *s
- 	struct nfs4_opendata *opendata;
- 	int ret;
- 
--	opendata = nfs4_open_recoverdata_alloc(ctx, state,
--			NFS4_OPEN_CLAIM_FH);
-+	opendata = nfs4_open_recoverdata_alloc(ctx, state, NFS4_OPEN_CLAIM_FH);
- 	if (IS_ERR(opendata))
- 		return PTR_ERR(opendata);
-+	/*
-+	 * We're not recovering a delegation, so ask for no delegation.
-+	 * Otherwise the recovery thread could deadlock with an outstanding
-+	 * delegation return.
-+	 */
-+	opendata->o_arg.open_flags = O_DIRECT;
- 	ret = nfs4_open_recover(opendata, state);
- 	if (ret == -ESTALE)
- 		d_drop(ctx->dentry);
+diff --git a/drivers/clk/imx/clk-imxrt1050.c b/drivers/clk/imx/clk-imxrt1050.c
+index 9539d35588ee..26108e9f7e67 100644
+--- a/drivers/clk/imx/clk-imxrt1050.c
++++ b/drivers/clk/imx/clk-imxrt1050.c
+@@ -140,7 +140,7 @@ static int imxrt1050_clocks_probe(struct platform_device *pdev)
+ 	hws[IMXRT1050_CLK_USDHC1] = imx_clk_hw_gate2("usdhc1", "usdhc1_podf", ccm_base + 0x80, 2);
+ 	hws[IMXRT1050_CLK_USDHC2] = imx_clk_hw_gate2("usdhc2", "usdhc2_podf", ccm_base + 0x80, 4);
+ 	hws[IMXRT1050_CLK_LPUART1] = imx_clk_hw_gate2("lpuart1", "lpuart_podf", ccm_base + 0x7c, 24);
+-	hws[IMXRT1050_CLK_LCDIF_APB] = imx_clk_hw_gate2("lcdif", "lcdif_podf", ccm_base + 0x74, 10);
++	hws[IMXRT1050_CLK_LCDIF_APB] = imx_clk_hw_gate2("lcdif", "lcdif_podf", ccm_base + 0x70, 28);
+ 	hws[IMXRT1050_CLK_DMA] = imx_clk_hw_gate("dma", "ipg", ccm_base + 0x7C, 6);
+ 	hws[IMXRT1050_CLK_DMA_MUX] = imx_clk_hw_gate("dmamux0", "ipg", ccm_base + 0x7C, 7);
+ 	imx_check_clk_hws(hws, IMXRT1050_CLK_END);
 -- 
 2.35.1
 
