@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13EE21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:17:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AAA5C433D2;
-	Wed, 28 Dec 2022 15:17:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4D901863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:18:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DE1C433F0;
+	Wed, 28 Dec 2022 15:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240678;
-	bh=81QAogFJBSJQ2+beLOlsgb7+J9qEp69BO+kv3XLG5EM=;
+	s=korg; t=1672240681;
+	bh=hxW1T+7rmElCLh/bcg/yD1KBOcng6fuFfC/0VhCe+T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HUAF3INH3pVlcW5cghMLDMAaR1xEyVfojw+XosnnKlmN9wtqrSz8a809ei5sPvo4M
-	 BMG56uiHetgBPFMYL5Tgnc+nN5pWX/mxDfHmTwMquONHdQt5pJ9MHxjK+mLt8FMSnp
-	 9YaifZpQVOewDlQAFjubD0N0xlo24FYz/6gvVp6k=
+	b=rBiyhBgdll9DjhXCmFEfl88hSMtVTxfb7paDIbVf8wlgsPB8tAA+yYEfgzM69oV4k
+	 ZkWCmRgO+zzvA6KtoZWR1bUfWEBmcTW7Jlrrtw8L7brxNRiNarbCocKSlhx5wO1IMc
+	 V8BP4oa+NJl/d/mqCUjEd1xm/H7QHXwSphBvoEzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Berg <johannes.berg@intel.com>,
+	Nirmal Patel <nirmal.patel@linux.intel.com>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0190/1073] wifi: mac80211: check link ID in auth/assoc continuation
-Date: Wed, 28 Dec 2022 15:29:38 +0100
-Message-Id: <20221228144333.173266392@linuxfoundation.org>
+Subject: [PATCH 5.15 385/731] PCI: vmd: Disable MSI remapping after suspend
+Date: Wed, 28 Dec 2022 15:38:12 +0100
+Message-Id: <20221228144307.721149212@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,65 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Berg <johannes.berg@intel.com>
+From: Nirmal Patel <nirmal.patel@linux.intel.com>
 
-[ Upstream commit 85176a3fcd9748558cff72d4cdff5465b8732282 ]
+[ Upstream commit d899aa668498c07ff217b666ae9712990306e682 ]
 
-Ensure that the link ID matches in auth/assoc continuation,
-otherwise we need to reset all the data.
+MSI remapping is disabled by VMD driver for Intel's Icelake and
+newer systems in order to improve performance by setting
+VMCONFIG_MSI_REMAP. By design VMCONFIG_MSI_REMAP register is cleared
+by firmware during boot. The same register gets cleared when system
+is put in S3 power state. VMD driver needs to set this register again
+in order to avoid interrupt issues with devices behind VMD if MSI
+remapping was disabled before.
 
-Fixes: 81151ce462e5 ("wifi: mac80211: support MLO authentication/association with one link")
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://lore.kernel.org/r/20221109142652.450998-1-nirmal.patel@linux.intel.com
+Fixes: ee81ee84f873 ("PCI: vmd: Disable MSI-X remapping when possible")
+Signed-off-by: Nirmal Patel <nirmal.patel@linux.intel.com>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Reviewed-by: Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/ieee80211_i.h | 1 +
- net/mac80211/mlme.c        | 7 +++++--
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/pci/controller/vmd.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
-index 9583643b7033..c7dd1f49bb35 100644
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -389,6 +389,7 @@ struct ieee80211_mgd_auth_data {
- 	bool done, waiting;
- 	bool peer_confirmed;
- 	bool timeout_started;
-+	int link_id;
+diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
+index a5987e52700e..8dce71142e10 100644
+--- a/drivers/pci/controller/vmd.c
++++ b/drivers/pci/controller/vmd.c
+@@ -900,6 +900,11 @@ static int vmd_resume(struct device *dev)
+ 	struct vmd_dev *vmd = pci_get_drvdata(pdev);
+ 	int err, i;
  
- 	u8 ap_addr[ETH_ALEN] __aligned(2);
- 
-diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
-index a21571eb02ec..0a9710747b80 100644
---- a/net/mac80211/mlme.c
-+++ b/net/mac80211/mlme.c
-@@ -6582,6 +6582,7 @@ int ieee80211_mgd_auth(struct ieee80211_sub_if_data *sdata,
- 	       req->ap_mld_addr ?: req->bss->bssid,
- 	       ETH_ALEN);
- 	auth_data->bss = req->bss;
-+	auth_data->link_id = req->link_id;
- 
- 	if (req->auth_data_len >= 4) {
- 		if (req->auth_type == NL80211_AUTHTYPE_SAE) {
-@@ -6600,7 +6601,8 @@ int ieee80211_mgd_auth(struct ieee80211_sub_if_data *sdata,
- 	 * removal and re-addition of the STA entry in
- 	 * ieee80211_prep_connection().
- 	 */
--	cont_auth = ifmgd->auth_data && req->bss == ifmgd->auth_data->bss;
-+	cont_auth = ifmgd->auth_data && req->bss == ifmgd->auth_data->bss &&
-+		    ifmgd->auth_data->link_id == req->link_id;
- 
- 	if (req->ie && req->ie_len) {
- 		memcpy(&auth_data->data[auth_data->data_len],
-@@ -6937,7 +6939,8 @@ int ieee80211_mgd_assoc(struct ieee80211_sub_if_data *sdata,
- 
- 		/* keep sta info, bssid if matching */
- 		match = ether_addr_equal(ifmgd->auth_data->ap_addr,
--					 assoc_data->ap_addr);
-+					 assoc_data->ap_addr) &&
-+			ifmgd->auth_data->link_id == req->link_id;
- 		ieee80211_destroy_auth_data(sdata, match);
- 	}
- 
++       if (vmd->irq_domain)
++               vmd_set_msi_remapping(vmd, true);
++       else
++               vmd_set_msi_remapping(vmd, false);
++
+ 	for (i = 0; i < vmd->msix_count; i++) {
+ 		err = devm_request_irq(dev, pci_irq_vector(pdev, i),
+ 				       vmd_irq, IRQF_NO_THREAD,
 -- 
 2.35.1
 
