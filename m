@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413B21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:24:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B751EC433EF;
-	Wed, 28 Dec 2022 15:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7C611863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:24:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BB0FC433D2;
+	Wed, 28 Dec 2022 15:24:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241053;
-	bh=VN9M4iMM4clNQxQXqqVor1g9XHH1T+QIhpc3P6vGCTE=;
+	s=korg; t=1672241055;
+	bh=cQTVHcqTfT/6Ds8nYR0bBv5qmdbUggzbQyTrhA1xnyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uHms/GJi614raEFQK6Av6amAIcxd7HrITRfGCnoZtk0xc+zftI5Ztt2IiVEfTlWe0
-	 FB/YnkDprHRMg+yOXetot+IZ66VrGrb7fh/LRCVddkLS3fpOxfFbrGxRe3edvHsuSP
-	 C2s7bn/FG+ohDUa2sJ3JN1swGLO1EjRdAr1H3Wtk=
+	b=jgGSnFX5XIBvWdi/I1shCDH6O5Xv8kKjpPNB38bES6QcEZ2MawyhrBkDp8AVjr9kD
+	 Fbws9o4SQ25/Z9daZSmcUuGMVxMYzblwWcqCniXuOUzBuqijt6GP+GNck2DgS6GCet
+	 br8x3YtotPRdeP61K/5Z/78V3hb2lE2X/ypG8+GU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Mendonca <rafaelmendsr@gmail.com>,
-	Tommaso Merciai <tommaso.merciai@amarulasolutions.com>,
-	Martin Kepplinger <martink@posteo.de>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Haoyue Xu <xuhaoyue1@hisilicon.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0234/1073] media: i2c: hi846: Fix memory leak in hi846_parse_dt()
-Date: Wed, 28 Dec 2022 15:30:22 +0100
-Message-Id: <20221228144334.382169544@linuxfoundation.org>
+Subject: [PATCH 5.15 432/731] RDMA/hns: Fix error code of CMD
+Date: Wed, 28 Dec 2022 15:38:59 +0100
+Message-Id: <20221228144309.085857836@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,69 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael Mendonca <rafaelmendsr@gmail.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit 80113026d415e27483669db7a88b548d1ec3d3d1 ]
+[ Upstream commit 667d6164b84884c64de3fc18670cd5a98b0b10cf ]
 
-If any of the checks related to the supported link frequencies fail, then
-the V4L2 fwnode resources don't get released before returning, which leads
-to a memleak. Fix this by properly freeing the V4L2 fwnode data in a
-designated label.
+The error code is fixed to EIO when CMD fails to excute. This patch
+converts the error status reported by firmware to linux errno.
 
-Fixes: e8c0882685f9 ("media: i2c: add driver for the SK Hynix Hi-846 8M pixel camera")
-Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
-Reviewed-by: Tommaso Merciai <tommaso.merciai@amarulasolutions.com>
-Reviewed-by: Martin Kepplinger <martink@posteo.de>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: a04ff739f2a9 ("RDMA/hns: Add command queue support for hip08 RoCE driver")
+Link: https://lore.kernel.org/r/20221126102911.2921820-6-xuhaoyue1@hisilicon.com
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/hi846.c | 14 ++++++++++----
- 1 file changed, 10 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 26 +++++++++++++++++++++-
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.h |  5 +++++
+ 2 files changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/hi846.c b/drivers/media/i2c/hi846.c
-index ad35c3ff3611..254031503c72 100644
---- a/drivers/media/i2c/hi846.c
-+++ b/drivers/media/i2c/hi846.c
-@@ -2008,22 +2008,24 @@ static int hi846_parse_dt(struct hi846 *hi846, struct device *dev)
- 	    bus_cfg.bus.mipi_csi2.num_data_lanes != 4) {
- 		dev_err(dev, "number of CSI2 data lanes %d is not supported",
- 			bus_cfg.bus.mipi_csi2.num_data_lanes);
--		v4l2_fwnode_endpoint_free(&bus_cfg);
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto check_hwcfg_error;
- 	}
- 
- 	hi846->nr_lanes = bus_cfg.bus.mipi_csi2.num_data_lanes;
- 
- 	if (!bus_cfg.nr_of_link_frequencies) {
- 		dev_err(dev, "link-frequency property not found in DT\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto check_hwcfg_error;
- 	}
- 
- 	/* Check that link frequences for all the modes are in device tree */
- 	fq = hi846_check_link_freqs(hi846, &bus_cfg);
- 	if (fq) {
- 		dev_err(dev, "Link frequency of %lld is not supported\n", fq);
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto check_hwcfg_error;
- 	}
- 
- 	v4l2_fwnode_endpoint_free(&bus_cfg);
-@@ -2044,6 +2046,10 @@ static int hi846_parse_dt(struct hi846 *hi846, struct device *dev)
- 	}
- 
- 	return 0;
-+
-+check_hwcfg_error:
-+	v4l2_fwnode_endpoint_free(&bus_cfg);
-+	return ret;
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 16f39321b319..79d92b789984 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -1257,6 +1257,30 @@ static void update_cmdq_status(struct hns_roce_dev *hr_dev)
+ 		hr_dev->cmd.state = HNS_ROCE_CMDQ_STATE_FATAL_ERR;
  }
  
- static int hi846_probe(struct i2c_client *client)
++static int hns_roce_cmd_err_convert_errno(u16 desc_ret)
++{
++	struct hns_roce_cmd_errcode errcode_table[] = {
++		{CMD_EXEC_SUCCESS, 0},
++		{CMD_NO_AUTH, -EPERM},
++		{CMD_NOT_EXIST, -EOPNOTSUPP},
++		{CMD_CRQ_FULL, -EXFULL},
++		{CMD_NEXT_ERR, -ENOSR},
++		{CMD_NOT_EXEC, -ENOTBLK},
++		{CMD_PARA_ERR, -EINVAL},
++		{CMD_RESULT_ERR, -ERANGE},
++		{CMD_TIMEOUT, -ETIME},
++		{CMD_HILINK_ERR, -ENOLINK},
++		{CMD_INFO_ILLEGAL, -ENXIO},
++		{CMD_INVALID, -EBADR},
++	};
++	u16 i;
++
++	for (i = 0; i < ARRAY_SIZE(errcode_table); i++)
++		if (desc_ret == errcode_table[i].return_status)
++			return errcode_table[i].errno;
++	return -EIO;
++}
++
+ static int __hns_roce_cmq_send(struct hns_roce_dev *hr_dev,
+ 			       struct hns_roce_cmq_desc *desc, int num)
+ {
+@@ -1301,7 +1325,7 @@ static int __hns_roce_cmq_send(struct hns_roce_dev *hr_dev,
+ 			dev_err_ratelimited(hr_dev->dev,
+ 					    "Cmdq IO error, opcode = %x, return = %x\n",
+ 					    desc->opcode, desc_ret);
+-			ret = -EIO;
++			ret = hns_roce_cmd_err_convert_errno(desc_ret);
+ 		}
+ 	} else {
+ 		/* FW/HW reset or incorrect number of desc */
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
+index 2f4a0019a716..67f5b6fcfa1b 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
+@@ -276,6 +276,11 @@ enum hns_roce_cmd_return_status {
+ 	CMD_OTHER_ERR = 0xff
+ };
+ 
++struct hns_roce_cmd_errcode {
++	enum hns_roce_cmd_return_status return_status;
++	int errno;
++};
++
+ enum hns_roce_sgid_type {
+ 	GID_TYPE_FLAG_ROCE_V1 = 0,
+ 	GID_TYPE_FLAG_ROCE_V2_IPV4,
 -- 
 2.35.1
 
