@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A587B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:19:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D1CEC433D2;
-	Wed, 28 Dec 2022 15:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54C9D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:19:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE612C433D2;
+	Wed, 28 Dec 2022 15:19:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240788;
-	bh=KWWH51hY4M1mQbWgPvBmW7kMgGxrNEH8Iswhxd603Vs=;
+	s=korg; t=1672240791;
+	bh=YfvghuHV/PKWUstqcre32eUMoo1Em/uIM5aaBU6SKTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gtijqEKbxDm+SIx3xX+kBJd7S8FdpyVcRvhYvZC2fYj3jQxZSTqLtiJJ+1N8kaeKj
-	 d8iTFAIW6C5XjmbQXgLQmFnVOISlsquVDq1rBu4znaG7hDa9Hn9xPIBLRs7ni/oXy5
-	 wACTqWGtcdxUIMGbByzpBs612vlU9solsheCZofY=
+	b=HRvHpUdfPRo6/yjWHLURh5whyo7+clAEKbHMZTUO4kpdJbtD0U19NmdYLFFgquja2
+	 5FOp9FooS27xBmWwLw381//ZWJIEJIPyO+vmfLmwOh8bDAOhMalXHhfq2oiOEPkD0f
+	 VJSmraiz/8o/pZNkLu2YCztkIzgeqAlokJ72dj2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Xu Kuohai <xukuohai@huawei.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0152/1146] NFSD: Finish converting the NFSv3 GETACL result encoder
-Date: Wed, 28 Dec 2022 15:28:11 +0100
-Message-Id: <20221228144334.283104900@linuxfoundation.org>
+Subject: [PATCH 6.0 0203/1073] selftest/bpf: Fix memory leak in kprobe_multi_test
+Date: Wed, 28 Dec 2022 15:29:51 +0100
+Message-Id: <20221228144333.532035619@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,71 +37,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Xu Kuohai <xukuohai@huawei.com>
 
-[ Upstream commit 841fd0a3cb490eae5dfd262eccb8c8b11d57f8b8 ]
+[ Upstream commit 6d2e21dc4db3933db65293552ecc1ede26febeca ]
 
-For some reason, the NFSv2 GETACL result encoder was fully converted
-to use the new nfs_stream_encode_acl(), but the NFSv3 equivalent was
-not similarly converted.
+The get_syms() function in kprobe_multi_test.c does not free the string
+memory allocated by sscanf correctly. Fix it.
 
-Fixes: 20798dfe249a ("NFSD: Update the NFSv3 GETACL result encoder to use struct xdr_stream")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 5b6c7e5c4434 ("selftests/bpf: Add attach bench test")
+Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Acked-by: Jiri Olsa <jolsa@kernel.org>
+Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://lore.kernel.org/bpf/20221011120108.782373-5-xukuohai@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs3acl.c | 30 ++++++------------------------
- 1 file changed, 6 insertions(+), 24 deletions(-)
+ .../bpf/prog_tests/kprobe_multi_test.c        | 26 ++++++++++---------
+ 1 file changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/fs/nfsd/nfs3acl.c b/fs/nfsd/nfs3acl.c
-index 2fb9ee356455..a34a22e272ad 100644
---- a/fs/nfsd/nfs3acl.c
-+++ b/fs/nfsd/nfs3acl.c
-@@ -171,11 +171,7 @@ nfs3svc_encode_getaclres(struct svc_rqst *rqstp, struct xdr_stream *xdr)
+diff --git a/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c b/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
+index d457a55ff408..287b3ac40227 100644
+--- a/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
++++ b/tools/testing/selftests/bpf/prog_tests/kprobe_multi_test.c
+@@ -325,7 +325,7 @@ static bool symbol_equal(const void *key1, const void *key2, void *ctx __maybe_u
+ static int get_syms(char ***symsp, size_t *cntp)
  {
- 	struct nfsd3_getaclres *resp = rqstp->rq_resp;
- 	struct dentry *dentry = resp->fh.fh_dentry;
--	struct kvec *head = rqstp->rq_res.head;
- 	struct inode *inode;
--	unsigned int base;
--	int n;
--	int w;
- 
- 	if (!svcxdr_encode_nfsstat3(xdr, resp->status))
- 		return false;
-@@ -187,26 +183,12 @@ nfs3svc_encode_getaclres(struct svc_rqst *rqstp, struct xdr_stream *xdr)
- 		if (xdr_stream_encode_u32(xdr, resp->mask) < 0)
- 			return false;
- 
--		base = (char *)xdr->p - (char *)head->iov_base;
--
--		rqstp->rq_res.page_len = w = nfsacl_size(
--			(resp->mask & NFS_ACL)   ? resp->acl_access  : NULL,
--			(resp->mask & NFS_DFACL) ? resp->acl_default : NULL);
--		while (w > 0) {
--			if (!*(rqstp->rq_next_page++))
--				return false;
--			w -= PAGE_SIZE;
+ 	size_t cap = 0, cnt = 0, i;
+-	char *name, **syms = NULL;
++	char *name = NULL, **syms = NULL;
+ 	struct hashmap *map;
+ 	char buf[256];
+ 	FILE *f;
+@@ -352,6 +352,8 @@ static int get_syms(char ***symsp, size_t *cntp)
+ 		/* skip modules */
+ 		if (strchr(buf, '['))
+ 			continue;
++
++		free(name);
+ 		if (sscanf(buf, "%ms$*[^\n]\n", &name) != 1)
+ 			continue;
+ 		/*
+@@ -369,32 +371,32 @@ static int get_syms(char ***symsp, size_t *cntp)
+ 		if (!strncmp(name, "__ftrace_invalid_address__",
+ 			     sizeof("__ftrace_invalid_address__") - 1))
+ 			continue;
++
+ 		err = hashmap__add(map, name, NULL);
+-		if (err) {
+-			free(name);
+-			if (err == -EEXIST)
+-				continue;
++		if (err == -EEXIST)
++			continue;
++		if (err)
+ 			goto error;
 -		}
--
--		n = nfsacl_encode(&rqstp->rq_res, base, inode,
--				  resp->acl_access,
--				  resp->mask & NFS_ACL, 0);
--		if (n > 0)
--			n = nfsacl_encode(&rqstp->rq_res, base + n, inode,
--					  resp->acl_default,
--					  resp->mask & NFS_DFACL,
--					  NFS_ACL_DEFAULT);
--		if (n <= 0)
-+		if (!nfs_stream_encode_acl(xdr, inode, resp->acl_access,
-+					   resp->mask & NFS_ACL, 0))
-+			return false;
-+		if (!nfs_stream_encode_acl(xdr, inode, resp->acl_default,
-+					   resp->mask & NFS_DFACL,
-+					   NFS_ACL_DEFAULT))
- 			return false;
- 		break;
- 	default:
++
+ 		err = libbpf_ensure_mem((void **) &syms, &cap,
+ 					sizeof(*syms), cnt + 1);
+-		if (err) {
+-			free(name);
++		if (err)
+ 			goto error;
+-		}
+-		syms[cnt] = name;
+-		cnt++;
++
++		syms[cnt++] = name;
++		name = NULL;
+ 	}
+ 
+ 	*symsp = syms;
+ 	*cntp = cnt;
+ 
+ error:
++	free(name);
+ 	fclose(f);
+ 	hashmap__free(map);
+ 	if (err) {
+ 		for (i = 0; i < cnt; i++)
+-			free(syms[cnt]);
++			free(syms[i]);
+ 		free(syms);
+ 	}
+ 	return err;
 -- 
 2.35.1
 
