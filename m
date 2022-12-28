@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FCC1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F6D5C433EF;
-	Wed, 28 Dec 2022 15:25:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67741863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A903C433F0;
+	Wed, 28 Dec 2022 15:25:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241100;
-	bh=0H/gT3N/xTzqw0ftic1ObQIE7L4MTFIDrAGhCwj5ePk=;
+	s=korg; t=1672241103;
+	bh=4MlXIaLIHA1YBZCXzVwfEewuw4wq8F+Z59/O8zBEtz0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z0GycfJ13Us4gGNGiSo6wKlQ+vk6u3M0EpCZJkgPyHTXNpgKIUKipkS0YVo0Q/Wn8
-	 A50NuRinSWYeoK4jx5xU5C5dQw9abpIK0kEHYFs7hn1/rdV6VviALjQMOLcixcK1//
-	 832vwiJNMYIoohQTwPKiAEBthp0W6kRujLyiu2mI=
+	b=YllcW/sa0RkyOtoDXFhP95yHJZ4or5n3lFJNuCW+frGX7fX0E/ni8U1ppQOeIhXi3
+	 JwS6WQmDQHLnCJCeGQi3e2KcZbpWN5lpSaRKOihbnl7pn9K267jUmTJzg5xFhBrXIK
+	 HyIZHH09w6NfPGT33Klw3T5eUkcRerJg5E0P8hMk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huawei.com>,
+	Alan Maguire <alan.maguire@oracle.com>,
 	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0205/1146] libbpf: Fix use-after-free in btf_dump_name_dups
-Date: Wed, 28 Dec 2022 15:29:04 +0100
-Message-Id: <20221228144335.716976762@linuxfoundation.org>
+Subject: [PATCH 6.0 0240/1073] libbpf: Btf dedup identical struct test needs check for nested structs/arrays
+Date: Wed, 28 Dec 2022 15:30:28 +0100
+Message-Id: <20221228144334.546179410@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,139 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Kuohai <xukuohai@huawei.com>
+From: Alan Maguire <alan.maguire@oracle.com>
 
-[ Upstream commit 93c660ca40b5d2f7c1b1626e955a8e9fa30e0749 ]
+[ Upstream commit f3c51fe02c55bd944662714e5b91b96dc271ad9f ]
 
-ASAN reports an use-after-free in btf_dump_name_dups:
+When examining module BTF, it is common to see core kernel structures
+such as sk_buff, net_device duplicated in the module.  After adding
+debug messaging to BTF it turned out that much of the problem
+was down to the identical struct test failing during deduplication;
+sometimes the compiler adds identical structs.  However
+it turns out sometimes that type ids of identical struct members
+can also differ, even when the containing structs are still identical.
 
-ERROR: AddressSanitizer: heap-use-after-free on address 0xffff927006db at pc 0xaaaab5dfb618 bp 0xffffdd89b890 sp 0xffffdd89b928
-READ of size 2 at 0xffff927006db thread T0
-    #0 0xaaaab5dfb614 in __interceptor_strcmp.part.0 (test_progs+0x21b614)
-    #1 0xaaaab635f144 in str_equal_fn tools/lib/bpf/btf_dump.c:127
-    #2 0xaaaab635e3e0 in hashmap_find_entry tools/lib/bpf/hashmap.c:143
-    #3 0xaaaab635e72c in hashmap__find tools/lib/bpf/hashmap.c:212
-    #4 0xaaaab6362258 in btf_dump_name_dups tools/lib/bpf/btf_dump.c:1525
-    #5 0xaaaab636240c in btf_dump_resolve_name tools/lib/bpf/btf_dump.c:1552
-    #6 0xaaaab6362598 in btf_dump_type_name tools/lib/bpf/btf_dump.c:1567
-    #7 0xaaaab6360b48 in btf_dump_emit_struct_def tools/lib/bpf/btf_dump.c:912
-    #8 0xaaaab6360630 in btf_dump_emit_type tools/lib/bpf/btf_dump.c:798
-    #9 0xaaaab635f720 in btf_dump__dump_type tools/lib/bpf/btf_dump.c:282
-    #10 0xaaaab608523c in test_btf_dump_incremental tools/testing/selftests/bpf/prog_tests/btf_dump.c:236
-    #11 0xaaaab6097530 in test_btf_dump tools/testing/selftests/bpf/prog_tests/btf_dump.c:875
-    #12 0xaaaab6314ed0 in run_one_test tools/testing/selftests/bpf/test_progs.c:1062
-    #13 0xaaaab631a0a8 in main tools/testing/selftests/bpf/test_progs.c:1697
-    #14 0xffff9676d214 in __libc_start_main ../csu/libc-start.c:308
-    #15 0xaaaab5d65990  (test_progs+0x185990)
+To take an example, for struct sk_buff, debug messaging revealed
+that the identical struct matching was failing for the anon
+struct "headers"; specifically for the first field:
 
-0xffff927006db is located 11 bytes inside of 16-byte region [0xffff927006d0,0xffff927006e0)
-freed by thread T0 here:
-    #0 0xaaaab5e2c7c4 in realloc (test_progs+0x24c7c4)
-    #1 0xaaaab634f4a0 in libbpf_reallocarray tools/lib/bpf/libbpf_internal.h:191
-    #2 0xaaaab634f840 in libbpf_add_mem tools/lib/bpf/btf.c:163
-    #3 0xaaaab636643c in strset_add_str_mem tools/lib/bpf/strset.c:106
-    #4 0xaaaab6366560 in strset__add_str tools/lib/bpf/strset.c:157
-    #5 0xaaaab6352d70 in btf__add_str tools/lib/bpf/btf.c:1519
-    #6 0xaaaab6353e10 in btf__add_field tools/lib/bpf/btf.c:2032
-    #7 0xaaaab6084fcc in test_btf_dump_incremental tools/testing/selftests/bpf/prog_tests/btf_dump.c:232
-    #8 0xaaaab6097530 in test_btf_dump tools/testing/selftests/bpf/prog_tests/btf_dump.c:875
-    #9 0xaaaab6314ed0 in run_one_test tools/testing/selftests/bpf/test_progs.c:1062
-    #10 0xaaaab631a0a8 in main tools/testing/selftests/bpf/test_progs.c:1697
-    #11 0xffff9676d214 in __libc_start_main ../csu/libc-start.c:308
-    #12 0xaaaab5d65990  (test_progs+0x185990)
+__u8       __pkt_type_offset[0]; /*   128     0 */
 
-previously allocated by thread T0 here:
-    #0 0xaaaab5e2c7c4 in realloc (test_progs+0x24c7c4)
-    #1 0xaaaab634f4a0 in libbpf_reallocarray tools/lib/bpf/libbpf_internal.h:191
-    #2 0xaaaab634f840 in libbpf_add_mem tools/lib/bpf/btf.c:163
-    #3 0xaaaab636643c in strset_add_str_mem tools/lib/bpf/strset.c:106
-    #4 0xaaaab6366560 in strset__add_str tools/lib/bpf/strset.c:157
-    #5 0xaaaab6352d70 in btf__add_str tools/lib/bpf/btf.c:1519
-    #6 0xaaaab6353ff0 in btf_add_enum_common tools/lib/bpf/btf.c:2070
-    #7 0xaaaab6354080 in btf__add_enum tools/lib/bpf/btf.c:2102
-    #8 0xaaaab6082f50 in test_btf_dump_incremental tools/testing/selftests/bpf/prog_tests/btf_dump.c:162
-    #9 0xaaaab6097530 in test_btf_dump tools/testing/selftests/bpf/prog_tests/btf_dump.c:875
-    #10 0xaaaab6314ed0 in run_one_test tools/testing/selftests/bpf/test_progs.c:1062
-    #11 0xaaaab631a0a8 in main tools/testing/selftests/bpf/test_progs.c:1697
-    #12 0xffff9676d214 in __libc_start_main ../csu/libc-start.c:308
-    #13 0xaaaab5d65990  (test_progs+0x185990)
+Looking at the code in BTF deduplication, we have code that guards
+against the possibility of identical struct definitions, down to
+type ids, and identical array definitions.  However in this case
+we have a struct which is being defined twice but does not have
+identical type ids since each duplicate struct has separate type
+ids for the above array member.   A similar problem (though not
+observed) could occur for struct-in-struct.
 
-The reason is that the key stored in hash table name_map is a string
-address, and the string memory is allocated by realloc() function, when
-the memory is resized by realloc() later, the old memory may be freed,
-so the address stored in name_map references to a freed memory, causing
-use-after-free.
+The solution is to make the "identical struct" test check members
+not just for matching ids, but to also check if they in turn are
+identical structs or arrays.
 
-Fix it by storing duplicated string address in name_map.
+The results of doing this are quite dramatic (for some modules
+at least); I see the number of type ids drop from around 10000
+to just over 1000 in one module for example.
 
-Fixes: 919d2b1dbb07 ("libbpf: Allow modification of BTF and add btf__add_str API")
-Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
+For testing use latest pahole or apply [1], otherwise dedups
+can fail for the reasons described there.
+
+Also fix return type of btf_dedup_identical_arrays() as
+suggested by Andrii to match boolean return type used
+elsewhere.
+
+Fixes: efdd3eb8015e ("libbpf: Accommodate DWARF/compiler bug with duplicated structs")
+Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
 Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://lore.kernel.org/bpf/20221011120108.782373-2-xukuohai@huaweicloud.com
+Link: https://lore.kernel.org/bpf/1666622309-22289-1-git-send-email-alan.maguire@oracle.com
+
+[1] https://lore.kernel.org/bpf/1666364523-9648-1-git-send-email-alan.maguire
+
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf_dump.c | 29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ tools/lib/bpf/btf.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
-index 3937f66c7f8d..0b470169729e 100644
---- a/tools/lib/bpf/btf_dump.c
-+++ b/tools/lib/bpf/btf_dump.c
-@@ -219,6 +219,17 @@ static int btf_dump_resize(struct btf_dump *d)
- 	return 0;
+diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
+index 2d14f1a52d7a..9b18cf3128ac 100644
+--- a/tools/lib/bpf/btf.c
++++ b/tools/lib/bpf/btf.c
+@@ -3889,14 +3889,14 @@ static inline __u16 btf_fwd_kind(struct btf_type *t)
  }
  
-+static void btf_dump_free_names(struct hashmap *map)
-+{
-+	size_t bkt;
-+	struct hashmap_entry *cur;
-+
-+	hashmap__for_each_entry(map, cur, bkt)
-+		free((void *)cur->key);
-+
-+	hashmap__free(map);
-+}
-+
- void btf_dump__free(struct btf_dump *d)
+ /* Check if given two types are identical ARRAY definitions */
+-static int btf_dedup_identical_arrays(struct btf_dedup *d, __u32 id1, __u32 id2)
++static bool btf_dedup_identical_arrays(struct btf_dedup *d, __u32 id1, __u32 id2)
  {
- 	int i;
-@@ -237,8 +248,8 @@ void btf_dump__free(struct btf_dump *d)
- 	free(d->cached_names);
- 	free(d->emit_queue);
- 	free(d->decl_stack);
--	hashmap__free(d->type_names);
--	hashmap__free(d->ident_names);
-+	btf_dump_free_names(d->type_names);
-+	btf_dump_free_names(d->ident_names);
+ 	struct btf_type *t1, *t2;
  
- 	free(d);
+ 	t1 = btf_type_by_id(d->btf, id1);
+ 	t2 = btf_type_by_id(d->btf, id2);
+ 	if (!btf_is_array(t1) || !btf_is_array(t2))
+-		return 0;
++		return false;
+ 
+ 	return btf_equal_array(t1, t2);
  }
-@@ -1520,11 +1531,23 @@ static void btf_dump_emit_type_cast(struct btf_dump *d, __u32 id,
- static size_t btf_dump_name_dups(struct btf_dump *d, struct hashmap *name_map,
- 				 const char *orig_name)
- {
-+	char *old_name, *new_name;
- 	size_t dup_cnt = 0;
-+	int err;
-+
-+	new_name = strdup(orig_name);
-+	if (!new_name)
-+		return 1;
- 
- 	hashmap__find(name_map, orig_name, (void **)&dup_cnt);
- 	dup_cnt++;
--	hashmap__set(name_map, orig_name, (void *)dup_cnt, NULL, NULL);
-+
-+	err = hashmap__set(name_map, new_name, (void *)dup_cnt,
-+			   (const void **)&old_name, NULL);
-+	if (err)
-+		free(new_name);
-+
-+	free(old_name);
- 
- 	return dup_cnt;
- }
+@@ -3920,7 +3920,9 @@ static bool btf_dedup_identical_structs(struct btf_dedup *d, __u32 id1, __u32 id
+ 	m1 = btf_members(t1);
+ 	m2 = btf_members(t2);
+ 	for (i = 0, n = btf_vlen(t1); i < n; i++, m1++, m2++) {
+-		if (m1->type != m2->type)
++		if (m1->type != m2->type &&
++		    !btf_dedup_identical_arrays(d, m1->type, m2->type) &&
++		    !btf_dedup_identical_structs(d, m1->type, m2->type))
+ 			return false;
+ 	}
+ 	return true;
 -- 
 2.35.1
 
