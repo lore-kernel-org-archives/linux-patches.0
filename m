@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C5E81C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1212FC433D2;
-	Wed, 28 Dec 2022 16:04:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358C61C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EB1C433D2;
+	Wed, 28 Dec 2022 16:04:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243448;
-	bh=BnzgfrcnUbhBoEyrfatcrzwFuxGQoSTQsF9opmIAp+A=;
+	s=korg; t=1672243451;
+	bh=Ep1LP9pPDoV+Knr4iC2+D7JKSWohoR/hKJvTo0Q0jwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KjD6BKlqwvlTxi7EVpSx4fZKFnKl+7ykoVePKXNaTJQtH2YOh5nslGVq69IoXQlOD
-	 s4uyH4HVVZbCL4kElCBTjxtFF04Or/b0diQX8BaKootl79o+Lpe7fmSxPfQVSV1jqu
-	 Csl9OUKw0vl7vNz1xY3rWiahzlMX+EX3FP+aKBtA=
+	b=NZUmwIulXyuORAUlgVZehVL1Jlj2PSnSg1SnJQ44g1Kc0fZwZoc54R5et2V6oyHFM
+	 lDexMCOO2lYe2namJsBfd3OBfe/MvVD6UMVnBSkzcZuc+sFAOTKRk//3iK1yeDKxKj
+	 5YB1WgbMH8g8WPv0dzEdS1eTJ7E2iOqGCc7mAnGc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0530/1073] net: amd-xgbe: Check only the minimum speed for active/passive cables
-Date: Wed, 28 Dec 2022 15:35:18 +0100
-Message-Id: <20221228144342.441374088@linuxfoundation.org>
+	Yuan Can <yuancan@huawei.com>,
+	Denis Efremov <efremov@linux.com>
+Subject: [PATCH 5.15 722/731] floppy: Fix memory leak in do_floppy_init()
+Date: Wed, 28 Dec 2022 15:43:49 +0100
+Message-Id: <20221228144317.372691362@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,75 +34,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tom Lendacky <thomas.lendacky@amd.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit f8ab263d4d48e6dab752029bf562f20a2ee630ed ]
+commit f8ace2e304c5dd8a7328db9cd2b8a4b1b98d83ec upstream.
 
-There are cables that exist that can support speeds in excess of 10GbE.
-The driver, however, restricts the EEPROM advertised nominal bitrate to
-a specific range, which can prevent usage of cables that can support,
-for example, up to 25GbE.
+A memory leak was reported when floppy_alloc_disk() failed in
+do_floppy_init().
 
-Rather than checking that an active or passive cable supports a specific
-range, only check for a minimum supported speed.
+unreferenced object 0xffff888115ed25a0 (size 8):
+  comm "modprobe", pid 727, jiffies 4295051278 (age 25.529s)
+  hex dump (first 8 bytes):
+    00 ac 67 5b 81 88 ff ff                          ..g[....
+  backtrace:
+    [<000000007f457abb>] __kmalloc_node+0x4c/0xc0
+    [<00000000a87bfa9e>] blk_mq_realloc_tag_set_tags.part.0+0x6f/0x180
+    [<000000006f02e8b1>] blk_mq_alloc_tag_set+0x573/0x1130
+    [<0000000066007fd7>] 0xffffffffc06b8b08
+    [<0000000081f5ac40>] do_one_initcall+0xd0/0x4f0
+    [<00000000e26d04ee>] do_init_module+0x1a4/0x680
+    [<000000001bb22407>] load_module+0x6249/0x7110
+    [<00000000ad31ac4d>] __do_sys_finit_module+0x140/0x200
+    [<000000007bddca46>] do_syscall_64+0x35/0x80
+    [<00000000b5afec39>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+unreferenced object 0xffff88810fc30540 (size 32):
+  comm "modprobe", pid 727, jiffies 4295051278 (age 25.529s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<000000007f457abb>] __kmalloc_node+0x4c/0xc0
+    [<000000006b91eab4>] blk_mq_alloc_tag_set+0x393/0x1130
+    [<0000000066007fd7>] 0xffffffffc06b8b08
+    [<0000000081f5ac40>] do_one_initcall+0xd0/0x4f0
+    [<00000000e26d04ee>] do_init_module+0x1a4/0x680
+    [<000000001bb22407>] load_module+0x6249/0x7110
+    [<00000000ad31ac4d>] __do_sys_finit_module+0x140/0x200
+    [<000000007bddca46>] do_syscall_64+0x35/0x80
+    [<00000000b5afec39>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Fixes: abf0a1c2b26a ("amd-xgbe: Add support for SFP+ modules")
-Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+If the floppy_alloc_disk() failed, disks of current drive will not be set,
+thus the lastest allocated set->tag cannot be freed in the error handling
+path. A simple call graph shown as below:
+
+ floppy_module_init()
+   floppy_init()
+     do_floppy_init()
+       for (drive = 0; drive < N_DRIVE; drive++)
+         blk_mq_alloc_tag_set()
+           blk_mq_alloc_tag_set_tags()
+             blk_mq_realloc_tag_set_tags() # set->tag allocated
+         floppy_alloc_disk()
+           blk_mq_alloc_disk() # error occurred, disks failed to allocated
+
+       ->out_put_disk:
+       for (drive = 0; drive < N_DRIVE; drive++)
+         if (!disks[drive][0]) # the last disks is not set and loop break
+           break;
+         blk_mq_free_tag_set() # the latest allocated set->tag leaked
+
+Fix this problem by free the set->tag of current drive before jump to
+error handling path.
+
+Cc: stable@vger.kernel.org
+Fixes: 302cfee15029 ("floppy: use a separate gendisk for each media format")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+[efremov: added stable list, changed title]
+Signed-off-by: Denis Efremov <efremov@linux.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ drivers/block/floppy.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-index c7b0d69ee62f..1ef04326a572 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-@@ -237,10 +237,7 @@ enum xgbe_sfp_speed {
+--- a/drivers/block/floppy.c
++++ b/drivers/block/floppy.c
+@@ -4587,8 +4587,10 @@ static int __init do_floppy_init(void)
+ 			goto out_put_disk;
  
- #define XGBE_SFP_BASE_BR			12
- #define XGBE_SFP_BASE_BR_1GBE_MIN		0x0a
--#define XGBE_SFP_BASE_BR_1GBE_MAX		0x0d
- #define XGBE_SFP_BASE_BR_10GBE_MIN		0x64
--#define XGBE_SFP_BASE_BR_10GBE_MAX		0x68
--#define XGBE_MOLEX_SFP_BASE_BR_10GBE_MAX	0x78
+ 		err = floppy_alloc_disk(drive, 0);
+-		if (err)
++		if (err) {
++			blk_mq_free_tag_set(&tag_sets[drive]);
+ 			goto out_put_disk;
++		}
  
- #define XGBE_SFP_BASE_CU_CABLE_LEN		18
- 
-@@ -827,29 +824,22 @@ static void xgbe_phy_sfp_phy_settings(struct xgbe_prv_data *pdata)
- static bool xgbe_phy_sfp_bit_rate(struct xgbe_sfp_eeprom *sfp_eeprom,
- 				  enum xgbe_sfp_speed sfp_speed)
- {
--	u8 *sfp_base, min, max;
-+	u8 *sfp_base, min;
- 
- 	sfp_base = sfp_eeprom->base;
- 
- 	switch (sfp_speed) {
- 	case XGBE_SFP_SPEED_1000:
- 		min = XGBE_SFP_BASE_BR_1GBE_MIN;
--		max = XGBE_SFP_BASE_BR_1GBE_MAX;
- 		break;
- 	case XGBE_SFP_SPEED_10000:
- 		min = XGBE_SFP_BASE_BR_10GBE_MIN;
--		if (memcmp(&sfp_eeprom->base[XGBE_SFP_BASE_VENDOR_NAME],
--			   XGBE_MOLEX_VENDOR, XGBE_SFP_BASE_VENDOR_NAME_LEN) == 0)
--			max = XGBE_MOLEX_SFP_BASE_BR_10GBE_MAX;
--		else
--			max = XGBE_SFP_BASE_BR_10GBE_MAX;
- 		break;
- 	default:
- 		return false;
+ 		timer_setup(&motor_off_timer[drive], motor_off_callback, 0);
  	}
- 
--	return ((sfp_base[XGBE_SFP_BASE_BR] >= min) &&
--		(sfp_base[XGBE_SFP_BASE_BR] <= max));
-+	return sfp_base[XGBE_SFP_BASE_BR] >= min;
- }
- 
- static void xgbe_phy_free_phy_device(struct xgbe_prv_data *pdata)
--- 
-2.35.1
-
 
 
