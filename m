@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652251863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC98EC433EF;
-	Wed, 28 Dec 2022 15:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DD581863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 830CAC433D2;
+	Wed, 28 Dec 2022 15:28:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241288;
-	bh=uLIsukXJhEgNwWpKq1WAWN1iQVsKjrvxWp8y71oSqwA=;
+	s=korg; t=1672241290;
+	bh=d5JUwGfWKaG/ClpSKx2+euAzXSrdJdDEopSBIRaqnpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VpM4hu+if9gehtYQ9KSQaAYpNWUoQGQ3gFl46huT8YgPUAnXcj4OXJ+oDlHbt2Aec
-	 84v/+E9bTmZ50/jOdPOPzQ5La6Lsrcz6yyYUE6kICgPhlnTCOtMFvjf1xPFbEgamlB
-	 IVbY3WNFb7+ExVAgORAlxS+nKyYfSKdfxteWKlRQ=
+	b=0Dpa4vc5zFIocCqiC7EK2AtpebLuxXzE2TM7OwhIqC6W281d0eOxx5ZWpih9IhhAu
+	 tZpWrJjIDkrJIZR7udW3cjfwMVAoUMAlXXCIEGueRDDQjgvkXalG/ZtzA83a3j8/67
+	 dcDdyJF+jY0K3MAcRM2gomCzJ9pVtH8ID+fb9048=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Klauser <tklauser@distanz.ch>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Jiri Slaby <jslaby@suse.cz>,
+	Rafael Mendonca <rafaelmendsr@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 462/731] tty: serial: altera_uart_{r,t}x_chars() need only uart_port
-Date: Wed, 28 Dec 2022 15:39:29 +0100
-Message-Id: <20221228144309.942306262@linuxfoundation.org>
+Subject: [PATCH 5.15 444/731] uio: uio_dmem_genirq: Fix deadlock between irq config and handling
+Date: Wed, 28 Dec 2022 15:39:11 +0100
+Message-Id: <20221228144309.426703713@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,66 +34,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Slaby <jslaby@suse.cz>
+From: Rafael Mendonca <rafaelmendsr@gmail.com>
 
-[ Upstream commit 3af44d9bb0539d5fa27d6159d696fda5f3747bff ]
+[ Upstream commit 118b918018175d9fcd8db667f905012e986cc2c9 ]
 
-Both altera_uart_{r,t}x_chars() need only uart_port, not altera_uart. So
-pass the former from altera_uart_interrupt() directly.
+This fixes a concurrency issue addressed in commit 34cb27528398 ("UIO: Fix
+concurrency issue"):
 
-Apart it maybe saves a dereference, this makes the transition of
-altera_uart_tx_chars() easier to follow in the next patch.
+  "In a SMP case there was a race condition issue between
+  Uio_pdrv_genirq_irqcontrol() running on one CPU and irq handler on
+  another CPU. Fix it by spin_locking shared resources access inside irq
+  handler."
 
-Cc: Tobias Klauser <tklauser@distanz.ch>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Acked-by: Tobias Klauser <tklauser@distanz.ch>
-Signed-off-by: Jiri Slaby <jslaby@suse.cz>
-Link: https://lore.kernel.org/r/20220920052049.20507-4-jslaby@suse.cz
+The implementation of "uio_dmem_genirq" was based on "uio_pdrv_genirq" and
+it is used in a similar manner to the "uio_pdrv_genirq" driver with respect
+to interrupt configuration and handling. At the time "uio_dmem_genirq" was
+merged, both had the same implementation of the 'uio_info' handlers
+irqcontrol() and handler(), thus, both had the same concurrency issue
+mentioned by the above commit. However, the above patch was only applied to
+the "uio_pdrv_genirq" driver.
+
+Split out from commit 34cb27528398 ("UIO: Fix concurrency issue").
+
+Fixes: 0a0c3b5a24bd ("Add new uio device for dynamic memory allocation")
+Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
+Link: https://lore.kernel.org/r/20220930224100.816175-3-rafaelmendsr@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 1307c5d33cce ("serial: altera_uart: fix locking in polling mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/altera_uart.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/uio/uio_dmem_genirq.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/altera_uart.c b/drivers/tty/serial/altera_uart.c
-index 0e194556d76e..6e08fa11ceea 100644
---- a/drivers/tty/serial/altera_uart.c
-+++ b/drivers/tty/serial/altera_uart.c
-@@ -199,9 +199,8 @@ static void altera_uart_set_termios(struct uart_port *port,
+diff --git a/drivers/uio/uio_dmem_genirq.c b/drivers/uio/uio_dmem_genirq.c
+index bfaedc324104..28be820b546e 100644
+--- a/drivers/uio/uio_dmem_genirq.c
++++ b/drivers/uio/uio_dmem_genirq.c
+@@ -110,8 +110,10 @@ static irqreturn_t uio_dmem_genirq_handler(int irq, struct uio_info *dev_info)
+ 	 * remember the state so we can allow user space to enable it later.
  	 */
+ 
++	spin_lock(&priv->lock);
+ 	if (!test_and_set_bit(0, &priv->flags))
+ 		disable_irq_nosync(irq);
++	spin_unlock(&priv->lock);
+ 
+ 	return IRQ_HANDLED;
  }
+@@ -125,7 +127,8 @@ static int uio_dmem_genirq_irqcontrol(struct uio_info *dev_info, s32 irq_on)
+ 	 * in the interrupt controller, but keep track of the
+ 	 * state to prevent per-irq depth damage.
+ 	 *
+-	 * Serialize this operation to support multiple tasks.
++	 * Serialize this operation to support multiple tasks and concurrency
++	 * with irq handler on SMP systems.
+ 	 */
  
--static void altera_uart_rx_chars(struct altera_uart *pp)
-+static void altera_uart_rx_chars(struct uart_port *port)
- {
--	struct uart_port *port = &pp->port;
- 	unsigned char ch, flag;
- 	unsigned short status;
- 
-@@ -246,9 +245,8 @@ static void altera_uart_rx_chars(struct altera_uart *pp)
- 	tty_flip_buffer_push(&port->state->port);
- }
- 
--static void altera_uart_tx_chars(struct altera_uart *pp)
-+static void altera_uart_tx_chars(struct uart_port *port)
- {
--	struct uart_port *port = &pp->port;
- 	struct circ_buf *xmit = &port->state->xmit;
- 
- 	if (port->x_char) {
-@@ -286,9 +284,9 @@ static irqreturn_t altera_uart_interrupt(int irq, void *data)
- 
- 	spin_lock(&port->lock);
- 	if (isr & ALTERA_UART_STATUS_RRDY_MSK)
--		altera_uart_rx_chars(pp);
-+		altera_uart_rx_chars(port);
- 	if (isr & ALTERA_UART_STATUS_TRDY_MSK)
--		altera_uart_tx_chars(pp);
-+		altera_uart_tx_chars(port);
- 	spin_unlock(&port->lock);
- 
- 	return IRQ_RETVAL(isr);
+ 	spin_lock_irqsave(&priv->lock, flags);
 -- 
 2.35.1
 
