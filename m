@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E0C1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:45:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BFFC433D2;
-	Wed, 28 Dec 2022 16:45:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5FB1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:45:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C67C433D2;
+	Wed, 28 Dec 2022 16:45:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245907;
-	bh=oK4XDHowo8pk+fzEGgRwIFdrMEojl+jVI5Mt9gJlPyU=;
+	s=korg; t=1672245910;
+	bh=AmB2MwSLienkqebbxknN/fIW6Ra4Dau+j0MHNDTFaX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UYDQfSobGW8RHyX1t64knpAWfwSbZDBQf2Y/aP4U53opb5LO9ePGmUis7HY/IGKzl
-	 I3JO3YOszcOdkwkwIWrZ9ftljDR+zXVEj4kLx5i2YJsDH88ifh/Syq/yM3Mqh5HzpI
-	 tnbOpHQ9ZAn0OmPGBEFTlOVQxOFjK/UjORR2mGpQ=
+	b=pdanzyNkhqt3g0L5IQx+ye7XUysP1g2OWm8lyDviZN/1yKbeUAbYup4pzfz9VMOr3
+	 8ug4ByjokUiBG0qd4N6uoV+LBp9qV2NcaoWT8ob0L+5GRY+bjVRr8TFq6PNAIeJb/B
+	 Ufnse+MDbwue7ttr9rHtAVytdJF587NKTvGlQEp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+15342c1aa6a00fb7a438@syzkaller.appspotmail.com,
-	Dongliang Mu <mudongliangabcd@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Dillon Varone <Dillon.Varone@amd.com>,
+	Jasdeep Dhillon <jdhillon@amd.com>,
+	Alvin Lee <Alvin.Lee2@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0945/1146] fs: jfs: fix shift-out-of-bounds in dbAllocAG
-Date: Wed, 28 Dec 2022 15:41:24 +0100
-Message-Id: <20221228144355.985841772@linuxfoundation.org>
+Subject: [PATCH 6.0 0961/1073] drm/amd/display: Fix DTBCLK disable requests and SRC_SEL programming
+Date: Wed, 28 Dec 2022 15:42:29 +0100
+Message-Id: <20221228144354.141832934@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,88 +37,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dongliang Mu <mudongliangabcd@gmail.com>
+From: Alvin Lee <Alvin.Lee2@amd.com>
 
-[ Upstream commit 898f706695682b9954f280d95e49fa86ffa55d08 ]
+[ Upstream commit f6015da7f2410109bd2ccd2e2828f26185aeb81d ]
 
-Syzbot found a crash : UBSAN: shift-out-of-bounds in dbAllocAG. The
-underlying bug is the missing check of bmp->db_agl2size. The field can
-be greater than 64 and trigger the shift-out-of-bounds.
+[Description]
+- When transitioning FRL / DP2 is not required, we will always request
+  DTBCLK = 0Mhz, but PMFW returns the min freq
+- This causes us to make DTBCLK requests every time we call optimize
+  after transitioning from FRL to non-FRL
+- If DTBCLK is not required, request the min instead (then we only need
+  to make 1 extra request at boot time)
+- Also when programming PIPE_DTO_SRC_SEL, don't programming for DP
+  first, just programming once for the required selection (programming
+  DP on an HDMI connection then switching back causes corruption)
 
-Fix this bug by adding a check of bmp->db_agl2size in dbMount since this
-field is used in many following functions. The upper bound for this
-field is L2MAXL2SIZE - L2MAXAG, thanks for the help of Dave Kleikamp.
-Note that, for maintenance, I reorganized error handling code of dbMount.
-
-Reported-by: syzbot+15342c1aa6a00fb7a438@syzkaller.appspotmail.com
-Signed-off-by: Dongliang Mu <mudongliangabcd@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+Reviewed-by: Dillon Varone <Dillon.Varone@amd.com>
+Acked-by: Jasdeep Dhillon <jdhillon@amd.com>
+Signed-off-by: Alvin Lee <Alvin.Lee2@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ .../gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c    | 2 +-
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c           | 6 +-----
+ 2 files changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 6b838d3ae7c2..e1cbfbb60303 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -155,7 +155,7 @@ int dbMount(struct inode *ipbmap)
- 	struct bmap *bmp;
- 	struct dbmap_disk *dbmp_le;
- 	struct metapage *mp;
--	int i;
-+	int i, err;
- 
- 	/*
- 	 * allocate/initialize the in-memory bmap descriptor
-@@ -170,8 +170,8 @@ int dbMount(struct inode *ipbmap)
- 			   BMAPBLKNO << JFS_SBI(ipbmap->i_sb)->l2nbperpage,
- 			   PSIZE, 0);
- 	if (mp == NULL) {
--		kfree(bmp);
--		return -EIO;
-+		err = -EIO;
-+		goto err_kfree_bmp;
+diff --git a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
+index e7f1d5f8166f..59a29c32f66a 100644
+--- a/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
++++ b/drivers/gpu/drm/amd/display/dc/clk_mgr/dcn32/dcn32_clk_mgr.c
+@@ -436,7 +436,7 @@ static void dcn32_update_clocks(struct clk_mgr *clk_mgr_base,
  	}
  
- 	/* copy the on-disk bmap descriptor to its in-memory version. */
-@@ -181,9 +181,8 @@ int dbMount(struct inode *ipbmap)
- 	bmp->db_l2nbperpage = le32_to_cpu(dbmp_le->dn_l2nbperpage);
- 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
- 	if (!bmp->db_numag) {
--		release_metapage(mp);
--		kfree(bmp);
--		return -EINVAL;
-+		err = -EINVAL;
-+		goto err_release_metapage;
+ 	if (!new_clocks->dtbclk_en) {
+-		new_clocks->ref_dtbclk_khz = 0;
++		new_clocks->ref_dtbclk_khz = clk_mgr_base->bw_params->clk_table.entries[0].dtbclk_mhz * 1000;
  	}
  
- 	bmp->db_maxlevel = le32_to_cpu(dbmp_le->dn_maxlevel);
-@@ -194,6 +193,11 @@ int dbMount(struct inode *ipbmap)
- 	bmp->db_agwidth = le32_to_cpu(dbmp_le->dn_agwidth);
- 	bmp->db_agstart = le32_to_cpu(dbmp_le->dn_agstart);
- 	bmp->db_agl2size = le32_to_cpu(dbmp_le->dn_agl2size);
-+	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG) {
-+		err = -EINVAL;
-+		goto err_release_metapage;
-+	}
-+
- 	for (i = 0; i < MAXAG; i++)
- 		bmp->db_agfree[i] = le64_to_cpu(dbmp_le->dn_agfree[i]);
- 	bmp->db_agsize = le64_to_cpu(dbmp_le->dn_agsize);
-@@ -214,6 +218,12 @@ int dbMount(struct inode *ipbmap)
- 	BMAP_LOCK_INIT(bmp);
- 
- 	return (0);
-+
-+err_release_metapage:
-+	release_metapage(mp);
-+err_kfree_bmp:
-+	kfree(bmp);
-+	return err;
- }
- 
- 
+ 	/* clock limits are received with MHz precision, divide by 1000 to prevent setting clocks at every call */
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c
+index 6dd8dadd68a5..6f160f65c8fa 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_dccg.c
+@@ -225,11 +225,7 @@ void dccg32_set_dtbclk_dto(
+ 	} else {
+ 		REG_UPDATE_2(OTG_PIXEL_RATE_CNTL[params->otg_inst],
+ 				DTBCLK_DTO_ENABLE[params->otg_inst], 0,
+-				PIPE_DTO_SRC_SEL[params->otg_inst], 1);
+-		if (params->is_hdmi)
+-			REG_UPDATE(OTG_PIXEL_RATE_CNTL[params->otg_inst],
+-				PIPE_DTO_SRC_SEL[params->otg_inst], 0);
+-
++				PIPE_DTO_SRC_SEL[params->otg_inst], params->is_hdmi ? 0 : 1);
+ 		REG_WRITE(DTBCLK_DTO_MODULO[params->otg_inst], 0);
+ 		REG_WRITE(DTBCLK_DTO_PHASE[params->otg_inst], 0);
+ 	}
 -- 
 2.35.1
 
