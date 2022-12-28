@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7B471863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:54:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E842C433EF;
-	Wed, 28 Dec 2022 14:54:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5909D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:54:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF05FC433EF;
+	Wed, 28 Dec 2022 14:54:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239279;
-	bh=hNVp5yNLIIWTp0g/JY/XAlmjdJHkSZBWr6BBAo3AxJI=;
+	s=korg; t=1672239282;
+	bh=JwES6eCXKDSXKi5MHnE4zZyAHXGOjzt/qtjkJKeYBOQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jlRkBtd2vDUcBpFifbg7VhUDiU/wWmRS9eKA0YuHVGPyxQlkVTetnPfJ2M59iLKJV
-	 jzT6zjU71MZLMq9RC/tF9jsUyElN0Ag2p1Ve7EP3+6J5zJdzEhYW/rRNF2118eUiY5
-	 pBi6Fw/zhKN21FTgy9zjW67He4rqn+Cda0X9SLfY=
+	b=hHIeaTtx+c2IpoWXHRJZoYO4OfOqZ8sX/cqP8JrRf4cdZa7euAuPuarBeA7NvNikC
+	 0Ob/xLmSRGg8SG/qlygJsjcP6L/41rN0LhWkKPrBPmuzxE5IcAgDUn4hqZTAjKOCNs
+	 ABFQfENXpVb09/a0o6uYbDOFaY2xVUfH5WuoAnSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Michael <fedora.dm0@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Stanislav Fomichev <sdf@google.com>,
-	Alan Maguire <alan.maguire@oracle.com>,
+	Anssi Hannula <anssi.hannula@bitwise.fi>,
+	Jimmy Assarsson <extja@kvaser.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 196/731] libbpf: Fix uninitialized warning in btf_dump_dump_type_data
-Date: Wed, 28 Dec 2022 15:35:03 +0100
-Message-Id: <20221228144302.240838791@linuxfoundation.org>
+Subject: [PATCH 5.15 170/731] can: kvaser_usb: Add struct kvaser_usb_busparams
+Date: Wed, 28 Dec 2022 15:34:37 +0100
+Message-Id: <20221228144301.489944622@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -37,43 +36,141 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Michael <fedora.dm0@gmail.com>
+From: Jimmy Assarsson <extja@kvaser.com>
 
-[ Upstream commit dfd0afbf151d85411b371e841f62b81ee5d1ca54 ]
+[ Upstream commit 00e5786177649c1e3110f9454fdd34e336597265 ]
 
-GCC 11.3.0 fails to compile btf_dump.c due to the following error,
-which seems to originate in btf_dump_struct_data where the returned
-value would be uninitialized if btf_vlen returns zero.
+Add struct kvaser_usb_busparams containing the busparameters used in
+CMD_{SET,GET}_BUSPARAMS* commands.
 
-btf_dump.c: In function ‘btf_dump_dump_type_data’:
-btf_dump.c:2363:12: error: ‘err’ may be used uninitialized in this function [-Werror=maybe-uninitialized]
- 2363 |         if (err < 0)
-      |            ^
-
-Fixes: 920d16af9b42 ("libbpf: BTF dumper support for typed data")
-Signed-off-by: David Michael <fedora.dm0@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Acked-by: Alan Maguire <alan.maguire@oracle.com>
-Link: https://lore.kernel.org/bpf/87zgcu60hq.fsf@gmail.com
+Tested-by: Anssi Hannula <anssi.hannula@bitwise.fi>
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://lore.kernel.org/all/20221010185237.319219-11-extja@kvaser.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Stable-dep-of: 39d3df6b0ea8 ("can: kvaser_usb: Compare requested bittiming parameters with actual parameters in do_set_{,data}_bittiming")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf_dump.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb.h   |  8 +++++
+ .../net/can/usb/kvaser_usb/kvaser_usb_hydra.c | 32 +++++++------------
+ .../net/can/usb/kvaser_usb/kvaser_usb_leaf.c  | 18 ++++-------
+ 3 files changed, 27 insertions(+), 31 deletions(-)
 
-diff --git a/tools/lib/bpf/btf_dump.c b/tools/lib/bpf/btf_dump.c
-index 9bcd75dc12cc..f620911ad3bb 100644
---- a/tools/lib/bpf/btf_dump.c
-+++ b/tools/lib/bpf/btf_dump.c
-@@ -1915,7 +1915,7 @@ static int btf_dump_struct_data(struct btf_dump *d,
- {
- 	const struct btf_member *m = btf_members(t);
- 	__u16 n = btf_vlen(t);
--	int i, err;
-+	int i, err = 0;
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb.h b/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
+index 1f4583f1dae2..cb8018723748 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
+@@ -76,6 +76,14 @@ struct kvaser_usb_tx_urb_context {
+ 	int dlc;
+ };
  
- 	/* note that we increment depth before calling btf_dump_print() below;
- 	 * this is intentional.  btf_dump_data_newline() will not print a
++struct kvaser_usb_busparams {
++	__le32 bitrate;
++	u8 tseg1;
++	u8 tseg2;
++	u8 sjw;
++	u8 nsamples;
++} __packed;
++
+ struct kvaser_usb {
+ 	struct usb_device *udev;
+ 	struct usb_interface *intf;
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
+index b485f0bc2e6b..64b84c8d5dfd 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
+@@ -196,17 +196,9 @@ struct kvaser_cmd_chip_state_event {
+ #define KVASER_USB_HYDRA_BUS_MODE_CANFD_ISO	0x01
+ #define KVASER_USB_HYDRA_BUS_MODE_NONISO	0x02
+ struct kvaser_cmd_set_busparams {
+-	__le32 bitrate;
+-	u8 tseg1;
+-	u8 tseg2;
+-	u8 sjw;
+-	u8 nsamples;
++	struct kvaser_usb_busparams busparams_arb;
+ 	u8 reserved0[4];
+-	__le32 bitrate_d;
+-	u8 tseg1_d;
+-	u8 tseg2_d;
+-	u8 sjw_d;
+-	u8 nsamples_d;
++	struct kvaser_usb_busparams busparams_data;
+ 	u8 canfd_mode;
+ 	u8 reserved1[7];
+ } __packed;
+@@ -1542,11 +1534,11 @@ static int kvaser_usb_hydra_set_bittiming(struct net_device *netdev)
+ 		return -ENOMEM;
+ 
+ 	cmd->header.cmd_no = CMD_SET_BUSPARAMS_REQ;
+-	cmd->set_busparams_req.bitrate = cpu_to_le32(bt->bitrate);
+-	cmd->set_busparams_req.sjw = (u8)sjw;
+-	cmd->set_busparams_req.tseg1 = (u8)tseg1;
+-	cmd->set_busparams_req.tseg2 = (u8)tseg2;
+-	cmd->set_busparams_req.nsamples = 1;
++	cmd->set_busparams_req.busparams_arb.bitrate = cpu_to_le32(bt->bitrate);
++	cmd->set_busparams_req.busparams_arb.sjw = (u8)sjw;
++	cmd->set_busparams_req.busparams_arb.tseg1 = (u8)tseg1;
++	cmd->set_busparams_req.busparams_arb.tseg2 = (u8)tseg2;
++	cmd->set_busparams_req.busparams_arb.nsamples = 1;
+ 
+ 	kvaser_usb_hydra_set_cmd_dest_he
+ 		(cmd, dev->card_data.hydra.channel_to_he[priv->channel]);
+@@ -1576,11 +1568,11 @@ static int kvaser_usb_hydra_set_data_bittiming(struct net_device *netdev)
+ 		return -ENOMEM;
+ 
+ 	cmd->header.cmd_no = CMD_SET_BUSPARAMS_FD_REQ;
+-	cmd->set_busparams_req.bitrate_d = cpu_to_le32(dbt->bitrate);
+-	cmd->set_busparams_req.sjw_d = (u8)sjw;
+-	cmd->set_busparams_req.tseg1_d = (u8)tseg1;
+-	cmd->set_busparams_req.tseg2_d = (u8)tseg2;
+-	cmd->set_busparams_req.nsamples_d = 1;
++	cmd->set_busparams_req.busparams_data.bitrate = cpu_to_le32(dbt->bitrate);
++	cmd->set_busparams_req.busparams_data.sjw = (u8)sjw;
++	cmd->set_busparams_req.busparams_data.tseg1 = (u8)tseg1;
++	cmd->set_busparams_req.busparams_data.tseg2 = (u8)tseg2;
++	cmd->set_busparams_req.busparams_data.nsamples = 1;
+ 
+ 	if (priv->can.ctrlmode & CAN_CTRLMODE_FD) {
+ 		if (priv->can.ctrlmode & CAN_CTRLMODE_FD_NON_ISO)
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+index b44a9ca22136..9818bc6dc8e9 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+@@ -164,11 +164,7 @@ struct usbcan_cmd_softinfo {
+ struct kvaser_cmd_busparams {
+ 	u8 tid;
+ 	u8 channel;
+-	__le32 bitrate;
+-	u8 tseg1;
+-	u8 tseg2;
+-	u8 sjw;
+-	u8 no_samp;
++	struct kvaser_usb_busparams busparams;
+ } __packed;
+ 
+ struct kvaser_cmd_tx_can {
+@@ -1704,15 +1700,15 @@ static int kvaser_usb_leaf_set_bittiming(struct net_device *netdev)
+ 	cmd->len = CMD_HEADER_LEN + sizeof(struct kvaser_cmd_busparams);
+ 	cmd->u.busparams.channel = priv->channel;
+ 	cmd->u.busparams.tid = 0xff;
+-	cmd->u.busparams.bitrate = cpu_to_le32(bt->bitrate);
+-	cmd->u.busparams.sjw = bt->sjw;
+-	cmd->u.busparams.tseg1 = bt->prop_seg + bt->phase_seg1;
+-	cmd->u.busparams.tseg2 = bt->phase_seg2;
++	cmd->u.busparams.busparams.bitrate = cpu_to_le32(bt->bitrate);
++	cmd->u.busparams.busparams.sjw = bt->sjw;
++	cmd->u.busparams.busparams.tseg1 = bt->prop_seg + bt->phase_seg1;
++	cmd->u.busparams.busparams.tseg2 = bt->phase_seg2;
+ 
+ 	if (priv->can.ctrlmode & CAN_CTRLMODE_3_SAMPLES)
+-		cmd->u.busparams.no_samp = 3;
++		cmd->u.busparams.busparams.nsamples = 3;
+ 	else
+-		cmd->u.busparams.no_samp = 1;
++		cmd->u.busparams.busparams.nsamples = 1;
+ 
+ 	rc = kvaser_usb_send_cmd(dev, cmd, cmd->len);
+ 
 -- 
 2.35.1
 
