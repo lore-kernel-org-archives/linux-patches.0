@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB371863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C338C433D2;
-	Wed, 28 Dec 2022 15:45:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F76C1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2CABC433F0;
+	Wed, 28 Dec 2022 15:45:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242304;
-	bh=d0MDth/qfY9cxyxy3Zk9k5EtCVwww8sBDvtx9JZk5d8=;
+	s=korg; t=1672242307;
+	bh=xjvKoBeLivq6v7P9u5FJry/N2JD0b8tlAlmnyi/28TA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cigQKA27HFOwrUTBTPZVeI3Xy9Nrezu1RmHbHGVtf76TIuN83SC6CcnUylPJMtIbv
-	 F7CHLSwzjb/JF2SsHOLMkeHx99B4ky0Ruwvx41xQkJ6XsS9xTJMuURdkW5ZBPwI2nh
-	 pEDwDlEiNrBKSchJtgkOXAAue5VyLTg16BVvLJ10=
+	b=mXWdhj3AmDeIZuDRl2w2a+cLA+WUAjcNXGffsPBcjw8g4uEGHrjgCrJsr8A2QtpFc
+	 LJ5gC1jpOo2m+IsShKN/Z0zp9HU5Bx+Zef6UM09M5XUjtPgGIEtGFJsK0xwwu2GfB9
+	 ztJ0qEns3jj2KigqLSWc1cBXXOXpBkrazXnUTzi8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 586/731] mISDN: hfcmulti: dont call dev_kfree_skb/kfree_skb() under spin_lock_irqsave()
-Date: Wed, 28 Dec 2022 15:41:33 +0100
-Message-Id: <20221228144313.533639749@linuxfoundation.org>
+Subject: [PATCH 6.0 0391/1073] media: sun8i-a83t-mipi-csi2: Require both pads to be connected for streaming
+Date: Wed, 28 Dec 2022 15:32:59 +0100
+Message-Id: <20221228144338.639627784@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,109 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
 
-[ Upstream commit 1232946cf522b8de9e398828bde325d7c41f29dd ]
+[ Upstream commit 8985fc724ba89d9b00694304b3f9faf69f4073d0 ]
 
-It is not allowed to call kfree_skb() or consume_skb() from hardware
-interrupt context or with hardware interrupts being disabled.
+The bridge needs both its pads connected to be able to stream data.
+Enforcing this is useful to produce an error when no sensor is
+connected.
 
-skb_queue_purge() is called under spin_lock_irqsave() in handle_dmsg()
-and hfcm_l1callback(), kfree_skb() is called in them, to fix this, use
-skb_queue_splice_init() to move the dch->squeue to a free queue, also
-enqueue the tx_skb and rx_skb, at last calling __skb_queue_purge() to
-free the SKBs afer unlock.
-
-Fixes: af69fb3a8ffa ("Add mISDN HFC multiport driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 576d196c522b ("media: sunxi: Add support for the A83T MIPI CSI-2 controller")
+Signed-off-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/isdn/hardware/mISDN/hfcmulti.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ .../sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c       | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/isdn/hardware/mISDN/hfcmulti.c b/drivers/isdn/hardware/mISDN/hfcmulti.c
-index 4f7eaa17fb27..e840609c50eb 100644
---- a/drivers/isdn/hardware/mISDN/hfcmulti.c
-+++ b/drivers/isdn/hardware/mISDN/hfcmulti.c
-@@ -3217,6 +3217,7 @@ static int
- hfcm_l1callback(struct dchannel *dch, u_int cmd)
- {
- 	struct hfc_multi	*hc = dch->hw;
-+	struct sk_buff_head	free_queue;
- 	u_long	flags;
+diff --git a/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c b/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
+index b032ec13a683..5e1c25db7bc4 100644
+--- a/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
++++ b/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
+@@ -557,8 +557,10 @@ sun8i_a83t_mipi_csi2_bridge_setup(struct sun8i_a83t_mipi_csi2_device *csi2_dev)
  
- 	switch (cmd) {
-@@ -3245,6 +3246,7 @@ hfcm_l1callback(struct dchannel *dch, u_int cmd)
- 		l1_event(dch->l1, HW_POWERUP_IND);
- 		break;
- 	case HW_DEACT_REQ:
-+		__skb_queue_head_init(&free_queue);
- 		/* start deactivation */
- 		spin_lock_irqsave(&hc->lock, flags);
- 		if (hc->ctype == HFC_TYPE_E1) {
-@@ -3264,20 +3266,21 @@ hfcm_l1callback(struct dchannel *dch, u_int cmd)
- 				plxsd_checksync(hc, 0);
- 			}
- 		}
--		skb_queue_purge(&dch->squeue);
-+		skb_queue_splice_init(&dch->squeue, &free_queue);
- 		if (dch->tx_skb) {
--			dev_kfree_skb(dch->tx_skb);
-+			__skb_queue_tail(&free_queue, dch->tx_skb);
- 			dch->tx_skb = NULL;
- 		}
- 		dch->tx_idx = 0;
- 		if (dch->rx_skb) {
--			dev_kfree_skb(dch->rx_skb);
-+			__skb_queue_tail(&free_queue, dch->rx_skb);
- 			dch->rx_skb = NULL;
- 		}
- 		test_and_clear_bit(FLG_TX_BUSY, &dch->Flags);
- 		if (test_and_clear_bit(FLG_BUSY_TIMER, &dch->Flags))
- 			del_timer(&dch->timer);
- 		spin_unlock_irqrestore(&hc->lock, flags);
-+		__skb_queue_purge(&free_queue);
- 		break;
- 	case HW_POWERUP_REQ:
- 		spin_lock_irqsave(&hc->lock, flags);
-@@ -3384,6 +3387,9 @@ handle_dmsg(struct mISDNchannel *ch, struct sk_buff *skb)
- 	case PH_DEACTIVATE_REQ:
- 		test_and_clear_bit(FLG_L2_ACTIVATED, &dch->Flags);
- 		if (dch->dev.D.protocol != ISDN_P_TE_S0) {
-+			struct sk_buff_head free_queue;
-+
-+			__skb_queue_head_init(&free_queue);
- 			spin_lock_irqsave(&hc->lock, flags);
- 			if (debug & DEBUG_HFCMULTI_MSG)
- 				printk(KERN_DEBUG
-@@ -3405,14 +3411,14 @@ handle_dmsg(struct mISDNchannel *ch, struct sk_buff *skb)
- 				/* deactivate */
- 				dch->state = 1;
- 			}
--			skb_queue_purge(&dch->squeue);
-+			skb_queue_splice_init(&dch->squeue, &free_queue);
- 			if (dch->tx_skb) {
--				dev_kfree_skb(dch->tx_skb);
-+				__skb_queue_tail(&free_queue, dch->tx_skb);
- 				dch->tx_skb = NULL;
- 			}
- 			dch->tx_idx = 0;
- 			if (dch->rx_skb) {
--				dev_kfree_skb(dch->rx_skb);
-+				__skb_queue_tail(&free_queue, dch->rx_skb);
- 				dch->rx_skb = NULL;
- 			}
- 			test_and_clear_bit(FLG_TX_BUSY, &dch->Flags);
-@@ -3424,6 +3430,7 @@ handle_dmsg(struct mISDNchannel *ch, struct sk_buff *skb)
- #endif
- 			ret = 0;
- 			spin_unlock_irqrestore(&hc->lock, flags);
-+			__skb_queue_purge(&free_queue);
- 		} else
- 			ret = l1_event(dch->l1, hh->prim);
- 		break;
+ 	/* Media Pads */
+ 
+-	pads[SUN8I_A83T_MIPI_CSI2_PAD_SINK].flags = MEDIA_PAD_FL_SINK;
+-	pads[SUN8I_A83T_MIPI_CSI2_PAD_SOURCE].flags = MEDIA_PAD_FL_SOURCE;
++	pads[SUN8I_A83T_MIPI_CSI2_PAD_SINK].flags = MEDIA_PAD_FL_SINK |
++						    MEDIA_PAD_FL_MUST_CONNECT;
++	pads[SUN8I_A83T_MIPI_CSI2_PAD_SOURCE].flags = MEDIA_PAD_FL_SOURCE |
++						      MEDIA_PAD_FL_MUST_CONNECT;
+ 
+ 	ret = media_entity_pads_init(&subdev->entity,
+ 				     SUN8I_A83T_MIPI_CSI2_PAD_COUNT, pads);
 -- 
 2.35.1
 
