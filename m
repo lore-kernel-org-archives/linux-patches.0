@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D241863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13AA3C433EF;
-	Wed, 28 Dec 2022 15:00:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC911863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F23F8C433EF;
+	Wed, 28 Dec 2022 15:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239656;
-	bh=YZHBE/QsmYJTIOgxlNvDplpzhbgG3WKEoKETH6NkGUU=;
+	s=korg; t=1672239659;
+	bh=raxkw2wamku2v4JAuD+ljfYdEpbt0IgKx2kRi+4nCGI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PHKMIYvcRd4bjw5OkL6Vi/A8CJtl6jfnNkitw9YYOSvFZw2xBKftXEOjhe4Aztwiw
-	 bxTKgEZeyfaotkg8lv3MjMrZH6+us3tuL06ErfVzF2VfrU5TuEr80K4m7eSEWnfD10
-	 5S1yk7TIPHY/hnPp9focWj2jifI8xib6tFS5xPNg=
+	b=Iavs6Mc5N0AgtXeC747/KDusb2QA/eo7BXxHFnPoylHp1X8VLu/nUg8PzpF1Pr/ev
+	 bIaPVxxXyWxJLlEAvmYlpvxVUN2skLK/DxVB1LZVtj5LH8PV0qm9CilcRDda2C99Lt
+	 r122yANA/Kh840ldZN9PVpkn5ZtUy1YVG7fbPros=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Guchun Chen <guchun.chen@amd.com>,
-	Evan Quan <evan.quan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 254/731] drm/amd/pm/smu11: BACO is supported when its in BACO state
-Date: Wed, 28 Dec 2022 15:36:01 +0100
-Message-Id: <20221228144303.925084741@linuxfoundation.org>
+Subject: [PATCH 6.1 0024/1146] arm64: dts: qcom: sm8250: correct LPASS pin pull down
+Date: Wed, 28 Dec 2022 15:26:03 +0100
+Message-Id: <20221228144330.827728723@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,41 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guchun Chen <guchun.chen@amd.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit 6dca7efe6e522bf213c7dab691fa580d82f48f74 ]
+[ Upstream commit 195a0a11d66d6c696cbcf398d6bc3f3a3a462f7c ]
 
-Return true early if ASIC is in BACO state already, no need
-to talk to SMU. It can fix the issue that driver was not
-calling BACO exit at all in runtime pm resume, and a timing
-issue leading to a PCI AER error happened eventually.
+The pull-down property is actually bias-pull-down.
 
-Fixes: 8795e182b02d ("PCI/portdrv: Don't disable AER reporting in get_port_device_capability()")
-Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Guchun Chen <guchun.chen@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
-Reviewed-by: Evan Quan <evan.quan@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 3160c1b894d9 ("arm64: dts: qcom: sm8250: add lpass lpi pin controller node")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20220927153429.55365-4-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
-index 614c3d049514..83fa3d20a1d5 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
-@@ -1595,6 +1595,10 @@ bool smu_v11_0_baco_is_support(struct smu_context *smu)
- 	if (amdgpu_sriov_vf(smu->adev) || !smu_baco->platform_support)
- 		return false;
- 
-+	/* return true if ASIC is in BACO state already */
-+	if (smu_v11_0_baco_get_state(smu) == SMU_BACO_STATE_ENTER)
-+		return true;
-+
- 	/* Arcturus does not support this bit mask */
- 	if (smu_cmn_feature_is_supported(smu, SMU_FEATURE_BACO_BIT) &&
- 	   !smu_cmn_feature_is_enabled(smu, SMU_FEATURE_BACO_BIT))
+diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+index e276eed1f8e2..334be39ccaf5 100644
+--- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
+@@ -2455,7 +2455,7 @@ data {
+ 					pins = "gpio7";
+ 					function = "dmic1_data";
+ 					drive-strength = <2>;
+-					pull-down;
++					bias-pull-down;
+ 					input-enable;
+ 				};
+ 			};
 -- 
 2.35.1
 
