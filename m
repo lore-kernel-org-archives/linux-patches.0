@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F026D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7613DC433D2;
-	Wed, 28 Dec 2022 15:38:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45E81863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21D23C433D2;
+	Wed, 28 Dec 2022 15:38:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241899;
-	bh=S6XX5tK7H3MunSpXsltno1bSohcSNgIJr2yYfERfLSc=;
+	s=korg; t=1672241902;
+	bh=Xpr5SKHcy3+AqEw3RM5XcTOQPUOnyOzvq5pbjUEsZ24=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vz1pyQPpjcriRYH4BHw6wuRWtdbPSUN9DDuvoUii53FCuP2qB1b2j3guICY6LxaGw
-	 0MPvx2ihN3PE5sNDqnoLaA+vjcXy8opiML2mmkDC26K1l7uHlS1bS+wI1n4asKAQ3f
-	 b3SPwEvDKZRkBl5Ep5IdzZLH/faVVJzKIlJRRH7U=
+	b=RHjITqgF+l/7+A5VOIaW36c5nIFFSB9WI1a/4fWz2lnpGZ85T/Fmy6HOr2qeFGLuC
+	 GzkXuZkw6U91AkellfF3yiCPLS5zrIOUPmzGx2UDI9YDYVCAeTg3ZEfDuflJw9A4Ii
+	 ObBs5+TiMtDLNEbgvPuFvUSpLdUvxUklXwoAzWaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Rui <rui.zhang@intel.com>,
-	Todd Brandt <todd.e.brandt@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Robert Foss <robert.foss@linaro.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 540/731] rtc: cmos: Fix wake alarm breakage
-Date: Wed, 28 Dec 2022 15:40:47 +0100
-Message-Id: <20221228144312.195368888@linuxfoundation.org>
+Subject: [PATCH 6.1 0303/1146] media: camss: Do not attach an already attached power domain on MSM8916 platform
+Date: Wed, 28 Dec 2022 15:30:42 +0100
+Message-Id: <20221228144338.382941414@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,90 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit 0782b66ed2fbb035dda76111df0954515e417b24 ]
+[ Upstream commit 3d658980e6dac2af6a024fdb6ded3d7bc44dc9ff ]
 
-Commit 4919d3eb2ec0 ("rtc: cmos: Fix event handler registration
-ordering issue") overlooked the fact that cmos_do_probe() depended
-on the preparations carried out by cmos_wake_setup() and the wake
-alarm stopped working after the ordering of them had been changed.
+The change to dynamically allocated power domains neglected a case of
+CAMSS on MSM8916 platform, where a single VFE power domain is neither
+attached, linked or managed in runtime in any way explicitly.
 
-Address this by partially reverting commit 4919d3eb2ec0 so that
-cmos_wake_setup() is called before cmos_do_probe() again and moving
-the rtc_wake_setup() invocation from cmos_wake_setup() directly to the
-callers of cmos_do_probe() where it will happen after a successful
-completion of the latter.
+This is a special case and it shall be kept as is, because the power
+domain management is done outside of the driver, and it's very different
+in comparison to all other platforms supported by CAMSS.
 
-Fixes: 4919d3eb2ec0 ("rtc: cmos: Fix event handler registration ordering issue")
-Reported-by: Zhang Rui <rui.zhang@intel.com>
-Reported-by: Todd Brandt <todd.e.brandt@linux.intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Link: https://lore.kernel.org/r/5887691.lOV4Wx5bFT@kreacher
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
+Fixes: 6b1814e26989 ("media: camss: Allocate power domain resources dynamically")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/media/platform/qcom/camss/camss.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 610413b4e9ca..01fb31f8e534 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -1233,6 +1233,9 @@ static u32 rtc_handler(void *context)
+diff --git a/drivers/media/platform/qcom/camss/camss.c b/drivers/media/platform/qcom/camss/camss.c
+index 1118c40886d5..a157cac72e0a 100644
+--- a/drivers/media/platform/qcom/camss/camss.c
++++ b/drivers/media/platform/qcom/camss/camss.c
+@@ -1465,6 +1465,14 @@ static int camss_configure_pd(struct camss *camss)
+ 		return camss->genpd_num;
+ 	}
  
- static inline void rtc_wake_setup(struct device *dev)
- {
-+	if (acpi_disabled)
++	/*
++	 * If a platform device has just one power domain, then it is attached
++	 * at platform_probe() level, thus there shall be no need and even no
++	 * option to attach it again, this is the case for CAMSS on MSM8916.
++	 */
++	if (camss->genpd_num == 1)
++		return 0;
++
+ 	camss->genpd = devm_kmalloc_array(dev, camss->genpd_num,
+ 					  sizeof(*camss->genpd), GFP_KERNEL);
+ 	if (!camss->genpd)
+@@ -1698,6 +1706,9 @@ void camss_delete(struct camss *camss)
+ 
+ 	pm_runtime_disable(camss->dev);
+ 
++	if (camss->genpd_num == 1)
 +		return;
 +
- 	acpi_install_fixed_event_handler(ACPI_EVENT_RTC, rtc_handler, dev);
- 	/*
- 	 * After the RTC handler is installed, the Fixed_RTC event should
-@@ -1286,7 +1289,6 @@ static void cmos_wake_setup(struct device *dev)
- 
- 	use_acpi_alarm_quirks();
- 
--	rtc_wake_setup(dev);
- 	acpi_rtc_info.wake_on = rtc_wake_on;
- 	acpi_rtc_info.wake_off = rtc_wake_off;
- 
-@@ -1354,6 +1356,8 @@ static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
- {
- 	int irq, ret;
- 
-+	cmos_wake_setup(&pnp->dev);
-+
- 	if (pnp_port_start(pnp, 0) == 0x70 && !pnp_irq_valid(pnp, 0)) {
- 		irq = 0;
- #ifdef CONFIG_X86
-@@ -1372,7 +1376,7 @@ static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
- 	if (ret)
- 		return ret;
- 
--	cmos_wake_setup(&pnp->dev);
-+	rtc_wake_setup(&pnp->dev);
- 
- 	return 0;
- }
-@@ -1461,6 +1465,7 @@ static int __init cmos_platform_probe(struct platform_device *pdev)
- 	int irq, ret;
- 
- 	cmos_of_init(pdev);
-+	cmos_wake_setup(&pdev->dev);
- 
- 	if (RTC_IOMAPPED)
- 		resource = platform_get_resource(pdev, IORESOURCE_IO, 0);
-@@ -1474,7 +1479,7 @@ static int __init cmos_platform_probe(struct platform_device *pdev)
- 	if (ret)
- 		return ret;
- 
--	cmos_wake_setup(&pdev->dev);
-+	rtc_wake_setup(&pdev->dev);
- 
- 	return 0;
- }
+ 	for (i = 0; i < camss->genpd_num; i++) {
+ 		device_link_del(camss->genpd_link[i]);
+ 		dev_pm_domain_detach(camss->genpd[i], true);
 -- 
 2.35.1
 
