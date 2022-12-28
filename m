@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5CD1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 224C2C433EF;
-	Wed, 28 Dec 2022 14:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A70C1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6BCFC433EF;
+	Wed, 28 Dec 2022 14:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239553;
-	bh=UYZmhVnYuPPa3z3HlgyKhcTx8yA7jk3Yjvzy6Bl7XT8=;
+	s=korg; t=1672239556;
+	bh=n5yV5tTFWa2mM5JRZ3IxA7qXWWr2cfGUdwUwoG2a2Y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o/amAcUuhPl9hFNYa5pv9jpHz4OTf1ioxLRDbUMo2izIeSv/osTsofqbcp0ETASdD
-	 fJESNo1Cmmj3lGiuheoNJvx2ZPhnQ8yRUhFze3kERG5BHaDFcV5SUL5KsSuHSNfX+E
-	 LsIpq8LG96sloO19Xt2k+beR/crFybDAIMK5BER4=
+	b=iplHvQCGUAjJzKlEwMsSmKDk0AIuIxNvnZ+QKEBeeskC6Km93JZ1DphGT2rjAjGqy
+	 5EqrTcTr3Zn0BNcAhKkDe1ZWxfbNIpXaLFRm0SXiT6XCfVeozeZeJizUEsUvMXDnV3
+	 mIt+wIZfRwRIfI58HPQtT90XkqxDXhA2OiXkYxL0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Qilong <zhangqilong3@huawei.com>,
-	Nishanth Menon <nm@ti.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0049/1073] soc: ti: knav_qmss_queue: Fix PM disable depth imbalance in knav_queue_probe
-Date: Wed, 28 Dec 2022 15:27:17 +0100
-Message-Id: <20221228144329.448567959@linuxfoundation.org>
+Subject: [PATCH 6.1 0012/1146] arm64: dts: qcom: sdm845-cheza: fix AP suspend pin bias
+Date: Wed, 28 Dec 2022 15:25:51 +0100
+Message-Id: <20221228144330.510988264@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Qilong <zhangqilong3@huawei.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-[ Upstream commit e961c0f19450fd4a26bd043dd2979990bf12caf6 ]
+[ Upstream commit 9bce41fab14da8f21027dc9847535ef5e22cbe8b ]
 
-The pm_runtime_enable will increase power disable depth. Thus
-a pairing decrement is needed on the error handling path to
-keep it balanced according to context.
+There is no "bias-no-pull" property.  Assume intentions were disabling
+bias.
 
-Fixes: 41f93af900a2 ("soc: ti: add Keystone Navigator QMSS driver")
-Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Link: https://lore.kernel.org/r/20221108080322.52268-2-zhangqilong3@huawei.com
+Fixes: 79e7739f7b87 ("arm64: dts: qcom: sdm845-cheza: add initial cheza dt")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221010114417.29859-3-krzysztof.kozlowski@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/ti/knav_qmss_queue.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/soc/ti/knav_qmss_queue.c b/drivers/soc/ti/knav_qmss_queue.c
-index 16a6d530a0d4..8fb76908be70 100644
---- a/drivers/soc/ti/knav_qmss_queue.c
-+++ b/drivers/soc/ti/knav_qmss_queue.c
-@@ -1785,6 +1785,7 @@ static int knav_queue_probe(struct platform_device *pdev)
- 	pm_runtime_enable(&pdev->dev);
- 	ret = pm_runtime_resume_and_get(&pdev->dev);
- 	if (ret < 0) {
-+		pm_runtime_disable(&pdev->dev);
- 		dev_err(dev, "Failed to enable QMSS\n");
- 		return ret;
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+index b5eb8f7eca1d..b5f11fbcc300 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+@@ -1436,7 +1436,7 @@ ap_suspend_l_assert: ap_suspend_l_assert {
+ 		config {
+ 			pins = "gpio126";
+ 			function = "gpio";
+-			bias-no-pull;
++			bias-disable;
+ 			drive-strength = <2>;
+ 			output-low;
+ 		};
+@@ -1446,7 +1446,7 @@ ap_suspend_l_deassert: ap_suspend_l_deassert {
+ 		config {
+ 			pins = "gpio126";
+ 			function = "gpio";
+-			bias-no-pull;
++			bias-disable;
+ 			drive-strength = <2>;
+ 			output-high;
+ 		};
 -- 
 2.35.1
 
