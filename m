@@ -1,38 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B36381C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EDB3C433D2;
-	Wed, 28 Dec 2022 16:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF19F1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37973C433D2;
+	Wed, 28 Dec 2022 16:23:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244622;
-	bh=5D+FU38HJ61Q0nA/gbKigNP/idHncfMOIrDAREp0A4c=;
+	s=korg; t=1672244625;
+	bh=Me0tvVu2TDM8BnW/urNCRBzy7NHva6Q8o6b6aBdIYhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Un+LHQDyz1E0ZNCFACxjmvumLWnSVVSkczo4/ayzILpelmWG1sVblu6v0lIaxf/4G
-	 Jdvm0cVnSgJ0yVJGC71okp7H2e4DxHwu7c+TKbHexcz0kyS5H1gZttWlCC74hd+rYk
-	 VIDWPhuggJluCUs3gJTCn45uH3xKkEexHpvSAWGM=
+	b=BdfN1f+x7z0ZmRq8eKUnryrgofrmcBjk1XGH/GbQj0D5t0/IUGkzYDVAQV0SNrhVB
+	 izqMK/OTOLJJ5GdIvfGIJubkS+4J43DrHbRpZPF73IGXQPAAoNEvVQn9TgWzpzuYab
+	 lCXI3vlPK0PPeK2vhXpKzQzA/QheQ6me0NZjcopc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@linaro.org>,
-	Ian Rogers <irogers@google.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	bpf@vger.kernel.org,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Marek Vasut <marex@denx.de>,
+	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0743/1073] perf trace: Use macro RAW_SYSCALL_ARGS_NUM to replace number
-Date: Wed, 28 Dec 2022 15:38:51 +0100
-Message-Id: <20221228144348.204958416@linuxfoundation.org>
+Subject: [PATCH 6.1 0705/1146] extcon: usbc-tusb320: Update state on probe even if no IRQ pending
+Date: Wed, 28 Dec 2022 15:37:24 +0100
+Message-Id: <20221228144349.296366286@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -43,80 +36,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leo Yan <leo.yan@linaro.org>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit eadcab4c7a66e1df03d32da0db55d89fd9343fcc ]
+[ Upstream commit 581c848b610dbf3fe1ed4d85fd53d0743c61faba ]
 
-This patch defines a macro RAW_SYSCALL_ARGS_NUM to replace the open
-coded number '6'.
+Currently this driver triggers extcon and typec state update in its
+probe function, to read out current state reported by the chip and
+report the correct state to upper layers. This synchronization is
+performed correctly, but only in case the chip indicates a pending
+interrupt in reg09 register.
 
-Signed-off-by: Leo Yan <leo.yan@linaro.org>
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: bpf@vger.kernel.org
-Link: https://lore.kernel.org/r/20221121075237.127706-2-leo.yan@linaro.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: 03e9a5d8eb55 ("perf trace: Handle failure when trace point folder is missed")
+This fails to cover the situation where all interrupts reported by
+the chip were already handled by Linux before reboot, then the system
+rebooted, and then Linux starts again. In this case, the TUSB320 no
+longer reports any interrupts in reg09, and the state update does not
+perform any update as it depends on that interrupt indication.
+
+Fix this by turning tusb320_irq_handler() into a thin wrapper around
+tusb320_state_update_handler(), where the later now contains the bulk
+of the code of tusb320_irq_handler(), but adds new function parameter
+"force_update". The "force_update" parameter can be used by the probe
+function to assure that the state synchronization is always performed,
+independent of the interrupt indicated in reg09. The interrupt handler
+tusb320_irq_handler() callback uses force_update=false to avoid state
+updates on potential spurious interrupts and retain current behavior.
+
+Fixes: 06bc4ca115cdd ("extcon: Add driver for TI TUSB320")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Alvin Šipraga <alsi@bang-olufsen.dk>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20221120141509.81012-1-marex@denx.de
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/extcon/extcon-usbc-tusb320.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index cf3b6ca4af96..cde14dfad200 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -88,6 +88,8 @@
- # define F_LINUX_SPECIFIC_BASE	1024
- #endif
+diff --git a/drivers/extcon/extcon-usbc-tusb320.c b/drivers/extcon/extcon-usbc-tusb320.c
+index 2a120d8d3c27..9dfa545427ca 100644
+--- a/drivers/extcon/extcon-usbc-tusb320.c
++++ b/drivers/extcon/extcon-usbc-tusb320.c
+@@ -313,9 +313,9 @@ static void tusb320_typec_irq_handler(struct tusb320_priv *priv, u8 reg9)
+ 		typec_set_pwr_opmode(port, TYPEC_PWR_MODE_USB);
+ }
  
-+#define RAW_SYSCALL_ARGS_NUM	6
-+
- /*
-  * strtoul: Go from a string to a value, i.e. for msr: MSR_FS_BASE to 0xc0000100
-  */
-@@ -108,7 +110,7 @@ struct syscall_fmt {
- 		const char *sys_enter,
- 			   *sys_exit;
- 	}	   bpf_prog_name;
--	struct syscall_arg_fmt arg[6];
-+	struct syscall_arg_fmt arg[RAW_SYSCALL_ARGS_NUM];
- 	u8	   nr_args;
- 	bool	   errpid;
- 	bool	   timeout;
-@@ -1229,7 +1231,7 @@ struct syscall {
-  */
- struct bpf_map_syscall_entry {
- 	bool	enabled;
--	u16	string_args_len[6];
-+	u16	string_args_len[RAW_SYSCALL_ARGS_NUM];
- };
- 
- /*
-@@ -1661,7 +1663,7 @@ static int syscall__alloc_arg_fmts(struct syscall *sc, int nr_args)
+-static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
++static irqreturn_t tusb320_state_update_handler(struct tusb320_priv *priv,
++						bool force_update)
  {
- 	int idx;
+-	struct tusb320_priv *priv = dev_id;
+ 	unsigned int reg;
  
--	if (nr_args == 6 && sc->fmt && sc->fmt->nr_args != 0)
-+	if (nr_args == RAW_SYSCALL_ARGS_NUM && sc->fmt && sc->fmt->nr_args != 0)
- 		nr_args = sc->fmt->nr_args;
- 
- 	sc->arg_fmt = calloc(nr_args, sizeof(*sc->arg_fmt));
-@@ -1812,7 +1814,8 @@ static int trace__read_syscall_info(struct trace *trace, int id)
- 		sc->tp_format = trace_event__tp_format("syscalls", tp_name);
+ 	if (regmap_read(priv->regmap, TUSB320_REG9, &reg)) {
+@@ -323,7 +323,7 @@ static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
+ 		return IRQ_NONE;
  	}
  
--	if (syscall__alloc_arg_fmts(sc, IS_ERR(sc->tp_format) ? 6 : sc->tp_format->format.nr_fields))
-+	if (syscall__alloc_arg_fmts(sc, IS_ERR(sc->tp_format) ?
-+					RAW_SYSCALL_ARGS_NUM : sc->tp_format->format.nr_fields))
- 		return -ENOMEM;
+-	if (!(reg & TUSB320_REG9_INTERRUPT_STATUS))
++	if (!force_update && !(reg & TUSB320_REG9_INTERRUPT_STATUS))
+ 		return IRQ_NONE;
  
- 	if (IS_ERR(sc->tp_format))
+ 	tusb320_extcon_irq_handler(priv, reg);
+@@ -340,6 +340,13 @@ static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
+ 	return IRQ_HANDLED;
+ }
+ 
++static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
++{
++	struct tusb320_priv *priv = dev_id;
++
++	return tusb320_state_update_handler(priv, false);
++}
++
+ static const struct regmap_config tusb320_regmap_config = {
+ 	.reg_bits = 8,
+ 	.val_bits = 8,
+@@ -466,7 +473,7 @@ static int tusb320_probe(struct i2c_client *client,
+ 		return ret;
+ 
+ 	/* update initial state */
+-	tusb320_irq_handler(client->irq, priv);
++	tusb320_state_update_handler(priv, true);
+ 
+ 	/* Reset chip to its default state */
+ 	ret = tusb320_reset(priv);
+@@ -477,7 +484,7 @@ static int tusb320_probe(struct i2c_client *client,
+ 		 * State and polarity might change after a reset, so update
+ 		 * them again and make sure the interrupt status bit is cleared.
+ 		 */
+-		tusb320_irq_handler(client->irq, priv);
++		tusb320_state_update_handler(priv, true);
+ 
+ 	ret = devm_request_threaded_irq(priv->dev, client->irq, NULL,
+ 					tusb320_irq_handler,
 -- 
 2.35.1
 
