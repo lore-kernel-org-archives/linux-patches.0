@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028211875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B6C0C433D2;
-	Wed, 28 Dec 2022 15:58:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D1FF1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C7A6C433F0;
+	Wed, 28 Dec 2022 15:58:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243097;
-	bh=IA2MOtYGB83Mho+HhAmwBPGe4fu279ox0SfbdpIYz/k=;
+	s=korg; t=1672243100;
+	bh=yLnkhlB9BbEslHaTL3lBF4JqC+SwK2YNaimLsP7VrDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=abQoMDwStL7vgPArH7BQ0/ApMzb4yPi2TEZoyv0Y13pzBk8AC0rV4V2Di6lppEzB5
-	 Az86wM4am5Q6iA+yWGymN/KldsX+y9+rRT4Be1UixrCpnLZcGI3ed/kUy1hid1rby1
-	 1ltmDIwfCUHj+Ivzn0Pm3KfebwJ/xQntFV7G5+cM=
+	b=CyHxLuu0zmFdOOVeUQS97phmGctyYjsdMDvXFX9OahJtOa8CE+4TaUtxpud8xk3NH
+	 Jrjij+4WCZ7oEzksWP12tfM6ALmHWnblOTKkQGXp7uIqcF24FJSVU8XHixXwsXCAOd
+	 FitDUOPo+EFtx9uC6RPEiQVG0q7Sb8Vmt+blj9vs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0451/1146] wifi: mac80211: fix memory leak in ieee80211_if_add()
-Date: Wed, 28 Dec 2022 15:33:10 +0100
-Message-Id: <20221228144342.432384153@linuxfoundation.org>
+Subject: [PATCH 6.0 0490/1073] mmc: meson-gx: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:34:38 +0100
+Message-Id: <20221228144341.344980099@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,34 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 13e5afd3d773c6fc6ca2b89027befaaaa1ea7293 ]
+[ Upstream commit 90935f16f2650ab7416fa2ffbe5c28cb39cf3f1e ]
 
-When register_netdevice() failed in ieee80211_if_add(), ndev->tstats
-isn't released. Fix it.
+mmc_add_host() may return error, if we ignore its return value,
+it will lead two issues:
+1. The memory that allocated in mmc_alloc_host() is leaked.
+2. In the remove() path, mmc_remove_host() will be called to
+   delete device, but it's not added yet, it will lead a kernel
+   crash because of null-ptr-deref in device_del().
 
-Fixes: 5a490510ba5f ("mac80211: use per-CPU TX/RX statistics")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20221117064500.319983-1-shaozhengchao@huawei.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fix this by checking the return value and goto error path which
+will call mmc_free_host().
+
+Fixes: 51c5d8447bd7 ("MMC: meson: initial support for GX platforms")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20221108123417.479045-1-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/iface.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/host/meson-gx-mmc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
-index dd9ac1f7d2ea..46f08ec5ed76 100644
---- a/net/mac80211/iface.c
-+++ b/net/mac80211/iface.c
-@@ -2258,6 +2258,7 @@ int ieee80211_if_add(struct ieee80211_local *local, const char *name,
+diff --git a/drivers/mmc/host/meson-gx-mmc.c b/drivers/mmc/host/meson-gx-mmc.c
+index fc462995cf94..4fd3d545e408 100644
+--- a/drivers/mmc/host/meson-gx-mmc.c
++++ b/drivers/mmc/host/meson-gx-mmc.c
+@@ -1291,7 +1291,9 @@ static int meson_mmc_probe(struct platform_device *pdev)
+ 	}
  
- 		ret = cfg80211_register_netdevice(ndev);
- 		if (ret) {
-+			ieee80211_if_free(ndev);
- 			free_netdev(ndev);
- 			return ret;
- 		}
+ 	mmc->ops = &meson_mmc_ops;
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret)
++		goto err_free_irq;
+ 
+ 	return 0;
+ 
 -- 
 2.35.1
 
