@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931B81875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:02:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1476FC433D2;
-	Wed, 28 Dec 2022 16:02:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466FC1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:02:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9AA4C433D2;
+	Wed, 28 Dec 2022 16:02:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243343;
-	bh=4PNDDJZmArPkClOrlBSTTJGNXsNvzCzJ1ewJlq8/RAQ=;
+	s=korg; t=1672243346;
+	bh=1gcWucT5Vh7LGy2jKM3SozrcRdTed8rJdJ1qE5dYkjw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UMu7OlmwqPc5j2ehF0IVgGXLaNLdPm/kogI6huRRKQXy2XUU00TuPwBD4dnpH+yj9
-	 E+UxFLaTL9fvTEfYKMb2bOx9EaamoIAntIUjXxhPH6Ph4HryZ5eM3GZSK1VRgGYP6d
-	 I/+xZM9K7ToMJkgQCbqUqWhDOeVyTGKwQNbDntUQ=
+	b=qXfgFmGclbr075MpZ/pHfxYHHeKUBe8pVD0dxkLU7hsfiXuBavS8HNSdZZ36e/Lcd
+	 ImE7kEnrr3VdrQOvJXyglJVtsV6BLneyRANo0JbodrnJMTjNmn6C/pCrtJK4quJTE6
+	 04mW0rhDpYYgdYESVC6UKtbVErHFmpAnrL9BuKX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zetao <lizetao1@huawei.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0519/1073] net: farsync: Fix kmemleak when rmmods farsync
-Date: Wed, 28 Dec 2022 15:35:07 +0100
-Message-Id: <20221228144342.140018614@linuxfoundation.org>
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.15 711/731] xhci: Prevent infinite loop in transaction errors recovery for streams
+Date: Wed, 28 Dec 2022 15:43:38 +0100
+Message-Id: <20221228144317.057700246@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,75 +33,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Zetao <lizetao1@huawei.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 2f623aaf9f31de968dea6169849706a2f9be444c ]
+commit a1575120972ecd7baa6af6a69e4e7ea9213bde7c upstream.
 
-There are two memory leaks reported by kmemleak:
+Make sure to also limit the amount of soft reset retries for transaction
+errors on streams in cases where the transaction error event doesn't point
+to any specific TRB.
 
-  unreferenced object 0xffff888114b20200 (size 128):
-    comm "modprobe", pid 4846, jiffies 4295146524 (age 401.345s)
-    hex dump (first 32 bytes):
-      e0 62 57 09 81 88 ff ff e0 62 57 09 81 88 ff ff  .bW......bW.....
-      01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    backtrace:
-      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
-      [<ffffffff83d35c78>] __hw_addr_add_ex+0x198/0x6c0
-      [<ffffffff83d3989d>] dev_addr_init+0x13d/0x230
-      [<ffffffff83d1063d>] alloc_netdev_mqs+0x10d/0xe50
-      [<ffffffff82b4a06e>] alloc_hdlcdev+0x2e/0x80
-      [<ffffffffa016a741>] fst_add_one+0x601/0x10e0 [farsync]
-      ...
+In these cases we don't know the TRB or stream ring, but we do know which
+endpoint had the error.
 
-  unreferenced object 0xffff88810b85b000 (size 1024):
-    comm "modprobe", pid 4846, jiffies 4295146523 (age 401.346s)
-    hex dump (first 32 bytes):
-      00 00 b0 02 00 c9 ff ff 00 70 0a 00 00 c9 ff ff  .........p......
-      00 00 00 f2 00 00 00 f3 0a 00 00 00 02 00 00 00  ................
-    backtrace:
-      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
-      [<ffffffffa016a294>] fst_add_one+0x154/0x10e0 [farsync]
-      [<ffffffff82060e83>] local_pci_probe+0xd3/0x170
-      ...
+To keep error counting simple and functional, move the current err_count
+from ring structure to endpoint structure.
 
-The root cause is traced to the netdev and fst_card_info are not freed
-when removes one fst in fst_remove_one(), which may trigger oom if
-repeated insmod and rmmod module.
-
-Fix it by adding free_netdev() and kfree() in fst_remove_one(), just as
-the operations on the error handling path in fst_add_one().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Li Zetao <lizetao1@huawei.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20221130091944.2171610-6-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wan/farsync.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/host/xhci-ring.c |   14 ++++++++++----
+ drivers/usb/host/xhci.h      |    2 +-
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wan/farsync.c b/drivers/net/wan/farsync.c
-index 6a212c085435..5b01642ca44e 100644
---- a/drivers/net/wan/farsync.c
-+++ b/drivers/net/wan/farsync.c
-@@ -2545,6 +2545,7 @@ fst_remove_one(struct pci_dev *pdev)
- 		struct net_device *dev = port_to_dev(&card->ports[i]);
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -2524,7 +2524,7 @@ static int process_bulk_intr_td(struct x
  
- 		unregister_hdlc_device(dev);
-+		free_netdev(dev);
- 	}
+ 	switch (trb_comp_code) {
+ 	case COMP_SUCCESS:
+-		ep_ring->err_count = 0;
++		ep->err_count = 0;
+ 		/* handle success with untransferred data as short packet */
+ 		if (ep_trb != td->last_trb || remaining) {
+ 			xhci_warn(xhci, "WARN Successful completion on short TX\n");
+@@ -2550,7 +2550,7 @@ static int process_bulk_intr_td(struct x
+ 		break;
+ 	case COMP_USB_TRANSACTION_ERROR:
+ 		if (xhci->quirks & XHCI_NO_SOFT_RETRY ||
+-		    (ep_ring->err_count++ > MAX_SOFT_RETRY) ||
++		    (ep->err_count++ > MAX_SOFT_RETRY) ||
+ 		    le32_to_cpu(slot_ctx->tt_info) & TT_SLOT)
+ 			break;
  
- 	fst_disable_intr(card);
-@@ -2564,6 +2565,7 @@ fst_remove_one(struct pci_dev *pdev)
- 				  card->tx_dma_handle_card);
- 	}
- 	fst_card_array[card->card_no] = NULL;
-+	kfree(card);
- }
- 
- static struct pci_driver fst_driver = {
--- 
-2.35.1
-
+@@ -2631,8 +2631,14 @@ static int handle_tx_event(struct xhci_h
+ 		case COMP_USB_TRANSACTION_ERROR:
+ 		case COMP_INVALID_STREAM_TYPE_ERROR:
+ 		case COMP_INVALID_STREAM_ID_ERROR:
+-			xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
+-						    EP_SOFT_RESET);
++			xhci_dbg(xhci, "Stream transaction error ep %u no id\n",
++				 ep_index);
++			if (ep->err_count++ > MAX_SOFT_RETRY)
++				xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
++							    EP_HARD_RESET);
++			else
++				xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
++							    EP_SOFT_RESET);
+ 			goto cleanup;
+ 		case COMP_RING_UNDERRUN:
+ 		case COMP_RING_OVERRUN:
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -933,6 +933,7 @@ struct xhci_virt_ep {
+ 	 * have to restore the device state to the previous state
+ 	 */
+ 	struct xhci_ring		*new_ring;
++	unsigned int			err_count;
+ 	unsigned int			ep_state;
+ #define SET_DEQ_PENDING		(1 << 0)
+ #define EP_HALTED		(1 << 1)	/* For stall handling */
+@@ -1629,7 +1630,6 @@ struct xhci_ring {
+ 	 * if we own the TRB (if we are the consumer).  See section 4.9.1.
+ 	 */
+ 	u32			cycle_state;
+-	unsigned int            err_count;
+ 	unsigned int		stream_id;
+ 	unsigned int		num_segs;
+ 	unsigned int		num_trbs_free;
 
 
