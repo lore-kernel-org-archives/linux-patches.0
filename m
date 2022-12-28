@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2B661C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:03:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45553C433EF;
-	Wed, 28 Dec 2022 16:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8FCE1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:03:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EC06C433EF;
+	Wed, 28 Dec 2022 16:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243423;
-	bh=7E3nHgAfkm9oyDn+S4KQFsFdg0Z9uo2gyHjxdObYOYQ=;
+	s=korg; t=1672243426;
+	bh=Lmcw3TOe2AlptIzFhBZvvS38VLzYip5lBfUY/kKNdNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XyNXEX+GzdhE94FF1i2dl3pO8Y0n9SGlhYXcOCyhyjQEzSz6uKlMHoDoXw8Vrzn+S
-	 TedyZyPNCKmqmCvoQVj8NsEX4suV7eq/MNb0KknGiCufLBqQEZkbtn0HV56Qji61dv
-	 KhQfiSNozZKFoPOYVq2dX00Bzss6s5Bq9YgQ0YP4=
+	b=RGxKovDCZL+2GG9uhg/JoI7BDJZEXG1xDxljWES9jxscQiYY6HOBS7ZOic8p5xV9H
+	 KYnGNySU1CmyU/rwbpntWq4hmHCu3uZBHnyyytdfUNbuG8Skmd3oLww9niAQ8nt5C5
+	 jAKjrPuvUAiDfUfPNjyUasWaTnz32NFue9VhA32I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Stable@vger.kernel.org
-Subject: [PATCH 5.15 719/731] iio: adc: ad_sigma_delta: do not use internal iio_dev lock
-Date: Wed, 28 Dec 2022 15:43:46 +0100
-Message-Id: <20221228144317.288200591@linuxfoundation.org>
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
+	Pu Lehui <pulehui@huawei.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0491/1146] riscv, bpf: Emit fixed-length instructions for BPF_PSEUDO_FUNC
+Date: Wed, 28 Dec 2022 15:33:50 +0100
+Message-Id: <20221228144343.520406287@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,51 +37,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Pu Lehui <pulehui@huawei.com>
 
-commit 20228a1d5a55e7db0c6720840f2c7d2b48c55f69 upstream.
+[ Upstream commit b54b6003612a376e7be32cbc5c1af3754bbbbb3d ]
 
-Drop 'mlock' usage by making use of iio_device_claim_direct_mode().
-This change actually makes sure we cannot do a single conversion while
-buffering is enable. Note there was a potential race in the previous
-code since we were only acquiring the lock after checking if the bus is
-enabled.
+For BPF_PSEUDO_FUNC instruction, verifier will refill imm with
+correct addresses of bpf_calls and then run last pass of JIT.
+Since the emit_imm of RV64 is variable-length, which will emit
+appropriate length instructions accorroding to the imm, it may
+broke ctx->offset, and lead to unpredictable problem, such as
+inaccurate jump. So let's fix it with fixed-length instructions.
 
-Fixes: af3008485ea0 ("iio:adc: Add common code for ADI Sigma Delta devices")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Cc: <Stable@vger.kernel.org> #No rush as race is very old.
-Link: https://lore.kernel.org/r/20220920112821.975359-2-nuno.sa@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 69c087ba6225 ("bpf: Add bpf_for_each_map_elem() helper")
+Suggested-by: Björn Töpel <bjorn@rivosinc.com>
+Signed-off-by: Pu Lehui <pulehui@huawei.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Björn Töpel <bjorn@kernel.org>
+Acked-by: Björn Töpel <bjorn@kernel.org>
+Link: https://lore.kernel.org/bpf/20221206091410.1584784-1-pulehui@huaweicloud.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ad_sigma_delta.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/riscv/net/bpf_jit_comp64.c | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/adc/ad_sigma_delta.c
-+++ b/drivers/iio/adc/ad_sigma_delta.c
-@@ -280,10 +280,10 @@ int ad_sigma_delta_single_conversion(str
- 	unsigned int data_reg;
- 	int ret = 0;
+diff --git a/arch/riscv/net/bpf_jit_comp64.c b/arch/riscv/net/bpf_jit_comp64.c
+index 00df3a8f92ac..f2417ac54edd 100644
+--- a/arch/riscv/net/bpf_jit_comp64.c
++++ b/arch/riscv/net/bpf_jit_comp64.c
+@@ -136,6 +136,25 @@ static bool in_auipc_jalr_range(s64 val)
+ 		val < ((1L << 31) - (1L << 11));
+ }
  
--	if (iio_buffer_enabled(indio_dev))
--		return -EBUSY;
-+	ret = iio_device_claim_direct_mode(indio_dev);
-+	if (ret)
-+		return ret;
++/* Emit fixed-length instructions for address */
++static int emit_addr(u8 rd, u64 addr, bool extra_pass, struct rv_jit_context *ctx)
++{
++	u64 ip = (u64)(ctx->insns + ctx->ninsns);
++	s64 off = addr - ip;
++	s64 upper = (off + (1 << 11)) >> 12;
++	s64 lower = off & 0xfff;
++
++	if (extra_pass && !in_auipc_jalr_range(off)) {
++		pr_err("bpf-jit: target offset 0x%llx is out of range\n", off);
++		return -ERANGE;
++	}
++
++	emit(rv_auipc(rd, upper), ctx);
++	emit(rv_addi(rd, rd, lower), ctx);
++	return 0;
++}
++
++/* Emit variable-length instructions for 32-bit and 64-bit imm */
+ static void emit_imm(u8 rd, s64 val, struct rv_jit_context *ctx)
+ {
+ 	/* Note that the immediate from the add is sign-extended,
+@@ -1050,7 +1069,15 @@ int bpf_jit_emit_insn(const struct bpf_insn *insn, struct rv_jit_context *ctx,
+ 		u64 imm64;
  
--	mutex_lock(&indio_dev->mlock);
- 	ad_sigma_delta_set_channel(sigma_delta, chan->address);
+ 		imm64 = (u64)insn1.imm << 32 | (u32)imm;
+-		emit_imm(rd, imm64, ctx);
++		if (bpf_pseudo_func(insn)) {
++			/* fixed-length insns for extra jit pass */
++			ret = emit_addr(rd, imm64, extra_pass, ctx);
++			if (ret)
++				return ret;
++		} else {
++			emit_imm(rd, imm64, ctx);
++		}
++
+ 		return 1;
+ 	}
  
- 	spi_bus_lock(sigma_delta->spi->master);
-@@ -322,7 +322,7 @@ out:
- 	ad_sigma_delta_set_mode(sigma_delta, AD_SD_MODE_IDLE);
- 	sigma_delta->bus_locked = false;
- 	spi_bus_unlock(sigma_delta->spi->master);
--	mutex_unlock(&indio_dev->mlock);
-+	iio_device_release_direct_mode(indio_dev);
- 
- 	if (ret)
- 		return ret;
+-- 
+2.35.1
+
 
 
