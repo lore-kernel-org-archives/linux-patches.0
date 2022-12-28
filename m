@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B541875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:54:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B72AC433A1;
-	Wed, 28 Dec 2022 15:54:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D50D1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:54:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A069AC433EF;
+	Wed, 28 Dec 2022 15:54:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242878;
-	bh=2GkK5YJnqS2K8+x4XjShdS4yf6xmc9uTVGnxYH8807A=;
+	s=korg; t=1672242884;
+	bh=Qs8z/eMb9zZap8vuy7TCJ7fXrIA0nWBv7Nf/yamGJUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s5dClnYfAmleN249qXbSUm2WHIPdAKk5su941OizIgfBkoRnpYpPRwnz5YbgmyTS/
-	 V3f1yW++QaZFz2ee5Hl+gjG49s1u3s0liw1uY1JRGM5k3Qmz1AAkA/b66hWYy9SxON
-	 CsghlacUSVvBJlpnYx3QTM3wAa3XYcEmfei0NxhE=
+	b=LuX/XJfwJipEEy7hsWdda/0mcQ9TsUt+2fTbwSB3xJRl7yDECIYMU+4Cp72uFKqxe
+	 3tgpyYqQQK5WRl+ACoLW1TU712Sm5q3FMeM2pHicvVNC4LJsJIL3vCBSUBOuB6ww+f
+	 ozF6XmNQcu6roKUfDf3p+4nS7OtG2IT0ncJRVDFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 645/731] drm/amdgpu: Fix type of second parameter in odn_edit_dpm_table() callback
-Date: Wed, 28 Dec 2022 15:42:32 +0100
-Message-Id: <20221228144315.209768724@linuxfoundation.org>
+Subject: [PATCH 5.15 657/731] ipv6/sit: use DEV_STATS_INC() to avoid data-races
+Date: Wed, 28 Dec 2022 15:42:44 +0100
+Message-Id: <20221228144315.539101661@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -37,74 +36,120 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit e4d0ef752081e7aa6ffb7ccac11c499c732a2e05 ]
+[ Upstream commit cb34b7cf17ecf33499c9298943f85af247abc1e9 ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+syzbot/KCSAN reported that multiple cpus are updating dev->stats.tx_error
+concurrently.
 
-  drivers/gpu/drm/amd/amdgpu/../pm/swsmu/amdgpu_smu.c:3008:29: error: incompatible function pointer types initializing 'int (*)(void *, uint32_t, long *, uint32_t)' (aka 'int (*)(void *, unsigned int, long *, unsigned int)') with an expression of type 'int (void *, enum PP_OD_DPM_TABLE_COMMAND, long *, uint32_t)' (aka 'int (void *, enum PP_OD_DPM_TABLE_COMMAND, long *, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
-          .odn_edit_dpm_table      = smu_od_edit_dpm_table,
-                                     ^~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+This is because sit tunnels are NETIF_F_LLTX, meaning their ndo_start_xmit()
+is not protected by a spinlock.
 
-There are only two implementations of ->odn_edit_dpm_table() in 'struct
-amd_pm_funcs': smu_od_edit_dpm_table() and pp_odn_edit_dpm_table(). One
-has a second parameter type of 'enum PP_OD_DPM_TABLE_COMMAND' and the
-other uses 'u32'. Ultimately, smu_od_edit_dpm_table() calls
-->od_edit_dpm_table() from 'struct pptable_funcs' and
-pp_odn_edit_dpm_table() calls ->odn_edit_dpm_table() from 'struct
-pp_hwmgr_func', which both have a second parameter type of 'enum
-PP_OD_DPM_TABLE_COMMAND'.
+While original KCSAN report was about tx path, rx path has the same issue.
 
-Update the type parameter in both the prototype in 'struct amd_pm_funcs'
-and pp_odn_edit_dpm_table() to 'enum PP_OD_DPM_TABLE_COMMAND', which
-cleans up the warning.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reported-by: Sami Tolvanen <samitolvanen@google.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/include/kgd_pp_interface.h   | 3 ++-
- drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ net/ipv6/sit.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/include/kgd_pp_interface.h b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
-index bac15c466733..6e27c8b16391 100644
---- a/drivers/gpu/drm/amd/include/kgd_pp_interface.h
-+++ b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
-@@ -341,7 +341,8 @@ struct amd_pm_funcs {
- 	int (*get_power_profile_mode)(void *handle, char *buf);
- 	int (*set_power_profile_mode)(void *handle, long *input, uint32_t size);
- 	int (*set_fine_grain_clk_vol)(void *handle, uint32_t type, long *input, uint32_t size);
--	int (*odn_edit_dpm_table)(void *handle, uint32_t type, long *input, uint32_t size);
-+	int (*odn_edit_dpm_table)(void *handle, enum PP_OD_DPM_TABLE_COMMAND type,
-+				  long *input, uint32_t size);
- 	int (*set_mp1_state)(void *handle, enum pp_mp1_state mp1_state);
- 	int (*smu_i2c_bus_access)(void *handle, bool acquire);
- 	int (*gfx_state_change_set)(void *handle, uint32_t state);
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-index 321215003643..0f5930e797bd 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-@@ -924,7 +924,8 @@ static int pp_set_fine_grain_clk_vol(void *handle, uint32_t type, long *input, u
- 	return hwmgr->hwmgr_func->set_fine_grain_clk_vol(hwmgr, type, input, size);
+diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
+index 946871741f12..d4cdc2b1b468 100644
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -696,7 +696,7 @@ static int ipip6_rcv(struct sk_buff *skb)
+ 		skb->dev = tunnel->dev;
+ 
+ 		if (packet_is_spoofed(skb, iph, tunnel)) {
+-			tunnel->dev->stats.rx_errors++;
++			DEV_STATS_INC(tunnel->dev, rx_errors);
+ 			goto out;
+ 		}
+ 
+@@ -716,8 +716,8 @@ static int ipip6_rcv(struct sk_buff *skb)
+ 				net_info_ratelimited("non-ECT from %pI4 with TOS=%#x\n",
+ 						     &iph->saddr, iph->tos);
+ 			if (err > 1) {
+-				++tunnel->dev->stats.rx_frame_errors;
+-				++tunnel->dev->stats.rx_errors;
++				DEV_STATS_INC(tunnel->dev, rx_frame_errors);
++				DEV_STATS_INC(tunnel->dev, rx_errors);
+ 				goto out;
+ 			}
+ 		}
+@@ -948,7 +948,7 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
+ 	if (!rt) {
+ 		rt = ip_route_output_flow(tunnel->net, &fl4, NULL);
+ 		if (IS_ERR(rt)) {
+-			dev->stats.tx_carrier_errors++;
++			DEV_STATS_INC(dev, tx_carrier_errors);
+ 			goto tx_error_icmp;
+ 		}
+ 		dst_cache_set_ip4(&tunnel->dst_cache, &rt->dst, fl4.saddr);
+@@ -956,14 +956,14 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
+ 
+ 	if (rt->rt_type != RTN_UNICAST) {
+ 		ip_rt_put(rt);
+-		dev->stats.tx_carrier_errors++;
++		DEV_STATS_INC(dev, tx_carrier_errors);
+ 		goto tx_error_icmp;
+ 	}
+ 	tdev = rt->dst.dev;
+ 
+ 	if (tdev == dev) {
+ 		ip_rt_put(rt);
+-		dev->stats.collisions++;
++		DEV_STATS_INC(dev, collisions);
+ 		goto tx_error;
+ 	}
+ 
+@@ -976,7 +976,7 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
+ 		mtu = dst_mtu(&rt->dst) - t_hlen;
+ 
+ 		if (mtu < IPV4_MIN_MTU) {
+-			dev->stats.collisions++;
++			DEV_STATS_INC(dev, collisions);
+ 			ip_rt_put(rt);
+ 			goto tx_error;
+ 		}
+@@ -1015,7 +1015,7 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
+ 		struct sk_buff *new_skb = skb_realloc_headroom(skb, max_headroom);
+ 		if (!new_skb) {
+ 			ip_rt_put(rt);
+-			dev->stats.tx_dropped++;
++			DEV_STATS_INC(dev, tx_dropped);
+ 			kfree_skb(skb);
+ 			return NETDEV_TX_OK;
+ 		}
+@@ -1045,7 +1045,7 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
+ 	dst_link_failure(skb);
+ tx_error:
+ 	kfree_skb(skb);
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	return NETDEV_TX_OK;
  }
  
--static int pp_odn_edit_dpm_table(void *handle, uint32_t type, long *input, uint32_t size)
-+static int pp_odn_edit_dpm_table(void *handle, enum PP_OD_DPM_TABLE_COMMAND type,
-+				 long *input, uint32_t size)
- {
- 	struct pp_hwmgr *hwmgr = handle;
+@@ -1064,7 +1064,7 @@ static netdev_tx_t sit_tunnel_xmit__(struct sk_buff *skb,
+ 	return NETDEV_TX_OK;
+ tx_error:
+ 	kfree_skb(skb);
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	return NETDEV_TX_OK;
+ }
+ 
+@@ -1093,7 +1093,7 @@ static netdev_tx_t sit_tunnel_xmit(struct sk_buff *skb,
+ 	return NETDEV_TX_OK;
+ 
+ tx_err:
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	kfree_skb(skb);
+ 	return NETDEV_TX_OK;
  
 -- 
 2.35.1
