@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38A11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 248FDC433EF;
-	Wed, 28 Dec 2022 15:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 457561863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFE07C433EF;
+	Wed, 28 Dec 2022 15:28:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241309;
-	bh=5HQacZ2qBZ7VSrqJ4yUk8JobCyX07jK7Rhb5tvtgnwE=;
+	s=korg; t=1672241312;
+	bh=EcXksoM8Re/d5aHV+QElhZ1StwOq+x6n/do5HXugy9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J8r9qByzElGbCuWjTfRXCzYx/mQKJn8wTk5nFkcdQ9IMUod5GnF9+XgU+zR0xDAQF
-	 iJp7kNe0lXUnMnlt+4eafqMTQ4Qhe0kuw+1kbIBPhFWfqWTN8i+uqIMydgig0bnmPE
-	 bC5QninN1EIrrDevME1aWkUNRRnxtEd3Y5Dm+W5Y=
+	b=oxd/3TkDvE/gejMtc8aqTxUglGGZg7xpC2VvtwXv5RX6mQ10QjFtHzmBukSHKyFRT
+	 1xr7S4xT6qWZkwvoUo+MqlFFB6tRhFoTDul+lnTYIoCkb9eAMsnSOfPLuhx4lPHYZy
+	 0293jlgVV7F15YiW5h6KnOZ+VH8lWL07uMTpJL5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@nxp.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0231/1146] media: amphion: reset instance if its aborted before codec header parsed
-Date: Wed, 28 Dec 2022 15:29:30 +0100
-Message-Id: <20221228144336.414791240@linuxfoundation.org>
+Subject: [PATCH 6.0 0265/1073] drm/msm/mdp5: stop overriding drvdata
+Date: Wed, 28 Dec 2022 15:30:53 +0100
+Message-Id: <20221228144335.218736060@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,83 +35,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Qian <ming.qian@nxp.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 3984ea32e83bcad06b4b034ddd4b0a934c1b2f91 ]
+[ Upstream commit c6122688f2652d7f8a44000ce21e84e82bae2b5e ]
 
-there is hardware limitation that if it's aborted before
-the first codec header parsed, the codec may be stalled
-unless we do reset codec.
+The rest of the code expects that master's device drvdata is the
+struct msm_drm_private instance. Do not override the mdp5's drvdata.
 
-and drop the source change event if it's triggered after reset.
-
-Fixes: 6de8d628df6e ("media: amphion: add v4l2 m2m vpu decoder stateful driver")
-Signed-off-by: Ming Qian <ming.qian@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 6874f48bb8b0 ("drm/msm: make mdp5/dpu devices master components")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/508334/
+Link: https://lore.kernel.org/r/20221024152642.3213488-1-dmitry.baryshkov@linaro.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vdec.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 32 +++++++++++++-----------
+ 1 file changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/media/platform/amphion/vdec.c b/drivers/media/platform/amphion/vdec.c
-index feb75dc204de..84c90ce265f2 100644
---- a/drivers/media/platform/amphion/vdec.c
-+++ b/drivers/media/platform/amphion/vdec.c
-@@ -753,6 +753,9 @@ static bool vdec_check_source_change(struct vpu_inst *inst)
- 	if (!inst->fh.m2m_ctx)
- 		return false;
- 
-+	if (vdec->reset_codec)
-+		return false;
-+
- 	if (!vb2_is_streaming(v4l2_m2m_get_dst_vq(inst->fh.m2m_ctx)))
- 		return true;
- 	fmt = vpu_helper_find_format(inst, inst->cap_format.type, vdec->codec_info.pixfmt);
-@@ -1088,7 +1091,8 @@ static void vdec_event_seq_hdr(struct vpu_inst *inst, struct vpu_dec_codec_info
- 		vdec->seq_tag = vdec->codec_info.tag;
- 		if (vdec->is_source_changed) {
- 			vdec_update_state(inst, VPU_CODEC_STATE_DYAMIC_RESOLUTION_CHANGE, 0);
--			vpu_notify_source_change(inst);
-+			vdec->source_change++;
-+			vdec_handle_resolution_change(inst);
- 			vdec->is_source_changed = false;
- 		}
- 	}
-@@ -1335,6 +1339,8 @@ static void vdec_abort(struct vpu_inst *inst)
- 		  vdec->decoded_frame_count,
- 		  vdec->display_frame_count,
- 		  vdec->sequence);
-+	if (!vdec->seq_hdr_found)
-+		vdec->reset_codec = true;
- 	vdec->params.end_flag = 0;
- 	vdec->drain = 0;
- 	vdec->params.frame_count = 0;
-@@ -1342,6 +1348,7 @@ static void vdec_abort(struct vpu_inst *inst)
- 	vdec->display_frame_count = 0;
- 	vdec->sequence = 0;
- 	vdec->aborting = false;
-+	inst->extra_size = 0;
+diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+index b0d21838a134..b46f983f2b46 100644
+--- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+@@ -203,7 +203,7 @@ static int mdp5_set_split_display(struct msm_kms *kms,
+ 							  slave_encoder);
  }
  
- static void vdec_stop(struct vpu_inst *inst, bool free)
-@@ -1464,8 +1471,7 @@ static int vdec_start_session(struct vpu_inst *inst, u32 type)
+-static void mdp5_destroy(struct platform_device *pdev);
++static void mdp5_destroy(struct mdp5_kms *mdp5_kms);
+ 
+ static void mdp5_kms_destroy(struct msm_kms *kms)
+ {
+@@ -223,7 +223,7 @@ static void mdp5_kms_destroy(struct msm_kms *kms)
  	}
  
- 	if (V4L2_TYPE_IS_OUTPUT(type)) {
--		if (inst->state == VPU_CODEC_STATE_SEEK)
--			vdec_update_state(inst, vdec->state, 1);
-+		vdec_update_state(inst, vdec->state, 1);
- 		vdec->eos_received = 0;
- 		vpu_process_output_buffer(inst);
- 	} else {
-@@ -1629,6 +1635,7 @@ static int vdec_open(struct file *file)
- 		return ret;
+ 	mdp_kms_destroy(&mdp5_kms->base);
+-	mdp5_destroy(mdp5_kms->pdev);
++	mdp5_destroy(mdp5_kms);
+ }
  
- 	vdec->fixed_fmt = false;
-+	vdec->state = VPU_CODEC_STATE_ACTIVE;
- 	inst->min_buffer_cap = VDEC_MIN_BUFFER_CAP;
- 	inst->min_buffer_out = VDEC_MIN_BUFFER_OUT;
- 	vdec_init(file);
+ #ifdef CONFIG_DEBUG_FS
+@@ -519,9 +519,10 @@ static void read_mdp_hw_revision(struct mdp5_kms *mdp5_kms,
+ 	struct device *dev = &mdp5_kms->pdev->dev;
+ 	u32 version;
+ 
+-	pm_runtime_get_sync(dev);
++	/* Manually enable the MDP5, as pm runtime isn't usable yet. */
++	mdp5_enable(mdp5_kms);
+ 	version = mdp5_read(mdp5_kms, REG_MDP5_HW_VERSION);
+-	pm_runtime_put_sync(dev);
++	mdp5_disable(mdp5_kms);
+ 
+ 	*major = FIELD(version, MDP5_HW_VERSION_MAJOR);
+ 	*minor = FIELD(version, MDP5_HW_VERSION_MINOR);
+@@ -559,6 +560,8 @@ static int mdp5_kms_init(struct drm_device *dev)
+ 	int irq, i, ret;
+ 
+ 	ret = mdp5_init(to_platform_device(dev->dev), dev);
++	if (ret)
++		return ret;
+ 
+ 	/* priv->kms would have been populated by the MDP5 driver */
+ 	kms = priv->kms;
+@@ -632,9 +635,8 @@ static int mdp5_kms_init(struct drm_device *dev)
+ 	return ret;
+ }
+ 
+-static void mdp5_destroy(struct platform_device *pdev)
++static void mdp5_destroy(struct mdp5_kms *mdp5_kms)
+ {
+-	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
+ 	int i;
+ 
+ 	if (mdp5_kms->ctlm)
+@@ -648,7 +650,7 @@ static void mdp5_destroy(struct platform_device *pdev)
+ 		kfree(mdp5_kms->intfs[i]);
+ 
+ 	if (mdp5_kms->rpm_enabled)
+-		pm_runtime_disable(&pdev->dev);
++		pm_runtime_disable(&mdp5_kms->pdev->dev);
+ 
+ 	drm_atomic_private_obj_fini(&mdp5_kms->glob_state);
+ 	drm_modeset_lock_fini(&mdp5_kms->glob_state_lock);
+@@ -797,8 +799,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+ 		goto fail;
+ 	}
+ 
+-	platform_set_drvdata(pdev, mdp5_kms);
+-
+ 	spin_lock_init(&mdp5_kms->resource_lock);
+ 
+ 	mdp5_kms->dev = dev;
+@@ -839,9 +839,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+ 	 */
+ 	clk_set_rate(mdp5_kms->core_clk, 200000000);
+ 
+-	pm_runtime_enable(&pdev->dev);
+-	mdp5_kms->rpm_enabled = true;
+-
+ 	read_mdp_hw_revision(mdp5_kms, &major, &minor);
+ 
+ 	mdp5_kms->cfg = mdp5_cfg_init(mdp5_kms, major, minor);
+@@ -893,10 +890,13 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
+ 	/* set uninit-ed kms */
+ 	priv->kms = &mdp5_kms->base.base;
+ 
++	pm_runtime_enable(&pdev->dev);
++	mdp5_kms->rpm_enabled = true;
++
+ 	return 0;
+ fail:
+ 	if (mdp5_kms)
+-		mdp5_destroy(pdev);
++		mdp5_destroy(mdp5_kms);
+ 	return ret;
+ }
+ 
+@@ -953,7 +953,8 @@ static int mdp5_dev_remove(struct platform_device *pdev)
+ static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
+ {
+ 	struct platform_device *pdev = to_platform_device(dev);
+-	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
++	struct msm_drm_private *priv = platform_get_drvdata(pdev);
++	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
+ 
+ 	DBG("");
+ 
+@@ -963,7 +964,8 @@ static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
+ static __maybe_unused int mdp5_runtime_resume(struct device *dev)
+ {
+ 	struct platform_device *pdev = to_platform_device(dev);
+-	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
++	struct msm_drm_private *priv = platform_get_drvdata(pdev);
++	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(priv->kms));
+ 
+ 	DBG("");
+ 
 -- 
 2.35.1
 
