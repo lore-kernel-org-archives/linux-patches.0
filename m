@@ -1,39 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9971863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:18:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A966AC433EF;
-	Wed, 28 Dec 2022 15:18:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF5B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:18:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73F43C433D2;
+	Wed, 28 Dec 2022 15:18:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240711;
-	bh=czY5fFUobZe4djTQze+1Ku0RbqxKIEMWMj4BSLxAV2I=;
+	s=korg; t=1672240713;
+	bh=rhHQfXxjoX9OHe7i94dNZqWIDqimZljx2CQ1aW+3dVI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K3tosQtQRc05s4uGUYmNVgnpkgjXCztMDtaM+uQAIvCBorbQtRYBleEWYPUIA24Fm
-	 gcZCZFTB1MoRhLZIG4/xvTBLliuWMYWkrlwIiHOAJDzkNOhxH8JTo36GTwtD1MqvbX
-	 6ZAqFy5/A4BZT1yxMQLCxnB1sZsZcBsUA3G6qoV8=
+	b=sd2Vdptg4umT0KJmX/FC4rkkFlN19tpjBZUhqWsMdly+zLmi77YrlJGSwehaNz5nD
+	 ob6sq4hpELHSBe8jq11IK3CwnPLuvYwJE1SvIUnEA6R09ZAvr9ENM3fydNte8Qbbjz
+	 lwILnQBNx2XGfQBMisGYju4TCyAGfp/wZ5x2c9/s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akinobu Mita <akinobu.mita@gmail.com>,
-	Zhao Gongyi <zhaogongyi@huawei.com>,
-	David Hildenbrand <david@redhat.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Oscar Salvador <osalvador@suse.de>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	Shuah Khan <shuah@kernel.org>,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0158/1146] debugfs: fix error when writing negative value to atomic_t debugfs file
-Date: Wed, 28 Dec 2022 15:28:17 +0100
-Message-Id: <20221228144334.450137015@linuxfoundation.org>
+Subject: [PATCH 6.0 0194/1073] wifi: ath9k: hif_usb: Fix use-after-free in ath9k_hif_usb_reg_in_cb()
+Date: Wed, 28 Dec 2022 15:29:42 +0100
+Message-Id: <20221228144333.284218956@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -44,195 +37,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Akinobu Mita <akinobu.mita@gmail.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit d472cf797c4e268613dbce5ec9b95d0bcae19ecb ]
+[ Upstream commit dd95f2239fc846795fc926787c3ae0ca701c9840 ]
 
-The simple attribute files do not accept a negative value since the commit
-488dac0c9237 ("libfs: fix error cast of negative value in
-simple_attr_write()"), so we have to use a 64-bit value to write a
-negative value for a debugfs file created by debugfs_create_atomic_t().
+It is possible that skb is freed in ath9k_htc_rx_msg(), then
+usb_submit_urb() fails and we try to free skb again. It causes
+use-after-free bug. Moreover, if alloc_skb() fails, urb->context becomes
+NULL but rx_buf is not freed and there can be a memory leak.
 
-This restores the previous behaviour by introducing
-DEFINE_DEBUGFS_ATTRIBUTE_SIGNED for a signed value.
+The patch removes unnecessary nskb and makes skb processing more clear: it
+is supposed that ath9k_htc_rx_msg() either frees old skb or passes its
+managing to another callback function.
 
-Link: https://lkml.kernel.org/r/20220919172418.45257-4-akinobu.mita@gmail.com
-Fixes: 488dac0c9237 ("libfs: fix error cast of negative value in simple_attr_write()")
-Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
-Reported-by: Zhao Gongyi <zhaogongyi@huawei.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Rafael J. Wysocki <rafael@kernel.org>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: Wei Yongjun <weiyongjun1@huawei.com>
-Cc: Yicong Yang <yangyicong@hisilicon.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Fixes: 3deff76095c4 ("ath9k_htc: Increase URB count for REG_IN pipe")
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20221008114917.21404-1-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../fault-injection/fault-injection.rst       | 10 +++----
- fs/debugfs/file.c                             | 28 +++++++++++++++----
- include/linux/debugfs.h                       | 19 +++++++++++--
- 3 files changed, 43 insertions(+), 14 deletions(-)
+ drivers/net/wireless/ath/ath9k/hif_usb.c | 28 +++++++++++++-----------
+ 1 file changed, 15 insertions(+), 13 deletions(-)
 
-diff --git a/Documentation/fault-injection/fault-injection.rst b/Documentation/fault-injection/fault-injection.rst
-index 17779a2772e5..5f6454b9dbd4 100644
---- a/Documentation/fault-injection/fault-injection.rst
-+++ b/Documentation/fault-injection/fault-injection.rst
-@@ -83,9 +83,7 @@ configuration of fault-injection capabilities.
- - /sys/kernel/debug/fail*/times:
+diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
+index b6b5ce9b9b68..6c653d46136e 100644
+--- a/drivers/net/wireless/ath/ath9k/hif_usb.c
++++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
+@@ -708,14 +708,13 @@ static void ath9k_hif_usb_reg_in_cb(struct urb *urb)
+ 	struct rx_buf *rx_buf = (struct rx_buf *)urb->context;
+ 	struct hif_device_usb *hif_dev = rx_buf->hif_dev;
+ 	struct sk_buff *skb = rx_buf->skb;
+-	struct sk_buff *nskb;
+ 	int ret;
  
- 	specifies how many times failures may happen at most. A value of -1
--	means "no limit". Note, though, that this file only accepts unsigned
--	values. So, if you want to specify -1, you better use 'printf' instead
--	of 'echo', e.g.: $ printf %#x -1 > times
-+	means "no limit".
+ 	if (!skb)
+ 		return;
  
- - /sys/kernel/debug/fail*/space:
+ 	if (!hif_dev)
+-		goto free;
++		goto free_skb;
  
-@@ -284,7 +282,7 @@ Application Examples
-     echo Y > /sys/kernel/debug/$FAILTYPE/task-filter
-     echo 10 > /sys/kernel/debug/$FAILTYPE/probability
-     echo 100 > /sys/kernel/debug/$FAILTYPE/interval
--    printf %#x -1 > /sys/kernel/debug/$FAILTYPE/times
-+    echo -1 > /sys/kernel/debug/$FAILTYPE/times
-     echo 0 > /sys/kernel/debug/$FAILTYPE/space
-     echo 2 > /sys/kernel/debug/$FAILTYPE/verbose
-     echo Y > /sys/kernel/debug/$FAILTYPE/ignore-gfp-wait
-@@ -338,7 +336,7 @@ Application Examples
-     echo N > /sys/kernel/debug/$FAILTYPE/task-filter
-     echo 10 > /sys/kernel/debug/$FAILTYPE/probability
-     echo 100 > /sys/kernel/debug/$FAILTYPE/interval
--    printf %#x -1 > /sys/kernel/debug/$FAILTYPE/times
-+    echo -1 > /sys/kernel/debug/$FAILTYPE/times
-     echo 0 > /sys/kernel/debug/$FAILTYPE/space
-     echo 2 > /sys/kernel/debug/$FAILTYPE/verbose
-     echo Y > /sys/kernel/debug/$FAILTYPE/ignore-gfp-wait
-@@ -369,7 +367,7 @@ Application Examples
-     echo N > /sys/kernel/debug/$FAILTYPE/task-filter
-     echo 100 > /sys/kernel/debug/$FAILTYPE/probability
-     echo 0 > /sys/kernel/debug/$FAILTYPE/interval
--    printf %#x -1 > /sys/kernel/debug/$FAILTYPE/times
-+    echo -1 > /sys/kernel/debug/$FAILTYPE/times
-     echo 0 > /sys/kernel/debug/$FAILTYPE/space
-     echo 1 > /sys/kernel/debug/$FAILTYPE/verbose
+ 	switch (urb->status) {
+ 	case 0:
+@@ -724,7 +723,7 @@ static void ath9k_hif_usb_reg_in_cb(struct urb *urb)
+ 	case -ECONNRESET:
+ 	case -ENODEV:
+ 	case -ESHUTDOWN:
+-		goto free;
++		goto free_skb;
+ 	default:
+ 		skb_reset_tail_pointer(skb);
+ 		skb_trim(skb, 0);
+@@ -735,25 +734,27 @@ static void ath9k_hif_usb_reg_in_cb(struct urb *urb)
+ 	if (likely(urb->actual_length != 0)) {
+ 		skb_put(skb, urb->actual_length);
  
-diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
-index ddb3fc258df9..b54f470e0d03 100644
---- a/fs/debugfs/file.c
-+++ b/fs/debugfs/file.c
-@@ -378,8 +378,8 @@ ssize_t debugfs_attr_read(struct file *file, char __user *buf,
+-		/* Process the command first */
++		/*
++		 * Process the command first.
++		 * skb is either freed here or passed to be
++		 * managed to another callback function.
++		 */
+ 		ath9k_htc_rx_msg(hif_dev->htc_handle, skb,
+ 				 skb->len, USB_REG_IN_PIPE);
+ 
+-
+-		nskb = alloc_skb(MAX_REG_IN_BUF_SIZE, GFP_ATOMIC);
+-		if (!nskb) {
++		skb = alloc_skb(MAX_REG_IN_BUF_SIZE, GFP_ATOMIC);
++		if (!skb) {
+ 			dev_err(&hif_dev->udev->dev,
+ 				"ath9k_htc: REG_IN memory allocation failure\n");
+-			urb->context = NULL;
+-			return;
++			goto free_rx_buf;
+ 		}
+ 
+-		rx_buf->skb = nskb;
++		rx_buf->skb = skb;
+ 
+ 		usb_fill_int_urb(urb, hif_dev->udev,
+ 				 usb_rcvintpipe(hif_dev->udev,
+ 						 USB_REG_IN_PIPE),
+-				 nskb->data, MAX_REG_IN_BUF_SIZE,
++				 skb->data, MAX_REG_IN_BUF_SIZE,
+ 				 ath9k_hif_usb_reg_in_cb, rx_buf, 1);
+ 	}
+ 
+@@ -762,12 +763,13 @@ static void ath9k_hif_usb_reg_in_cb(struct urb *urb)
+ 	ret = usb_submit_urb(urb, GFP_ATOMIC);
+ 	if (ret) {
+ 		usb_unanchor_urb(urb);
+-		goto free;
++		goto free_skb;
+ 	}
+ 
+ 	return;
+-free:
++free_skb:
+ 	kfree_skb(skb);
++free_rx_buf:
+ 	kfree(rx_buf);
+ 	urb->context = NULL;
  }
- EXPORT_SYMBOL_GPL(debugfs_attr_read);
- 
--ssize_t debugfs_attr_write(struct file *file, const char __user *buf,
--			 size_t len, loff_t *ppos)
-+static ssize_t debugfs_attr_write_xsigned(struct file *file, const char __user *buf,
-+			 size_t len, loff_t *ppos, bool is_signed)
- {
- 	struct dentry *dentry = F_DENTRY(file);
- 	ssize_t ret;
-@@ -387,12 +387,28 @@ ssize_t debugfs_attr_write(struct file *file, const char __user *buf,
- 	ret = debugfs_file_get(dentry);
- 	if (unlikely(ret))
- 		return ret;
--	ret = simple_attr_write(file, buf, len, ppos);
-+	if (is_signed)
-+		ret = simple_attr_write_signed(file, buf, len, ppos);
-+	else
-+		ret = simple_attr_write(file, buf, len, ppos);
- 	debugfs_file_put(dentry);
- 	return ret;
- }
-+
-+ssize_t debugfs_attr_write(struct file *file, const char __user *buf,
-+			 size_t len, loff_t *ppos)
-+{
-+	return debugfs_attr_write_xsigned(file, buf, len, ppos, false);
-+}
- EXPORT_SYMBOL_GPL(debugfs_attr_write);
- 
-+ssize_t debugfs_attr_write_signed(struct file *file, const char __user *buf,
-+			 size_t len, loff_t *ppos)
-+{
-+	return debugfs_attr_write_xsigned(file, buf, len, ppos, true);
-+}
-+EXPORT_SYMBOL_GPL(debugfs_attr_write_signed);
-+
- static struct dentry *debugfs_create_mode_unsafe(const char *name, umode_t mode,
- 					struct dentry *parent, void *value,
- 					const struct file_operations *fops,
-@@ -738,11 +754,11 @@ static int debugfs_atomic_t_get(void *data, u64 *val)
- 	*val = atomic_read((atomic_t *)data);
- 	return 0;
- }
--DEFINE_DEBUGFS_ATTRIBUTE(fops_atomic_t, debugfs_atomic_t_get,
-+DEFINE_DEBUGFS_ATTRIBUTE_SIGNED(fops_atomic_t, debugfs_atomic_t_get,
- 			debugfs_atomic_t_set, "%lld\n");
--DEFINE_DEBUGFS_ATTRIBUTE(fops_atomic_t_ro, debugfs_atomic_t_get, NULL,
-+DEFINE_DEBUGFS_ATTRIBUTE_SIGNED(fops_atomic_t_ro, debugfs_atomic_t_get, NULL,
- 			"%lld\n");
--DEFINE_DEBUGFS_ATTRIBUTE(fops_atomic_t_wo, NULL, debugfs_atomic_t_set,
-+DEFINE_DEBUGFS_ATTRIBUTE_SIGNED(fops_atomic_t_wo, NULL, debugfs_atomic_t_set,
- 			"%lld\n");
- 
- /**
-diff --git a/include/linux/debugfs.h b/include/linux/debugfs.h
-index f60674692d36..ea2d919fd9c7 100644
---- a/include/linux/debugfs.h
-+++ b/include/linux/debugfs.h
-@@ -45,7 +45,7 @@ struct debugfs_u32_array {
- 
- extern struct dentry *arch_debugfs_dir;
- 
--#define DEFINE_DEBUGFS_ATTRIBUTE(__fops, __get, __set, __fmt)		\
-+#define DEFINE_DEBUGFS_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, __is_signed)	\
- static int __fops ## _open(struct inode *inode, struct file *file)	\
- {									\
- 	__simple_attr_check_format(__fmt, 0ull);			\
-@@ -56,10 +56,16 @@ static const struct file_operations __fops = {				\
- 	.open	 = __fops ## _open,					\
- 	.release = simple_attr_release,					\
- 	.read	 = debugfs_attr_read,					\
--	.write	 = debugfs_attr_write,					\
-+	.write	 = (__is_signed) ? debugfs_attr_write_signed : debugfs_attr_write,	\
- 	.llseek  = no_llseek,						\
- }
- 
-+#define DEFINE_DEBUGFS_ATTRIBUTE(__fops, __get, __set, __fmt)		\
-+	DEFINE_DEBUGFS_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, false)
-+
-+#define DEFINE_DEBUGFS_ATTRIBUTE_SIGNED(__fops, __get, __set, __fmt)	\
-+	DEFINE_DEBUGFS_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, true)
-+
- typedef struct vfsmount *(*debugfs_automount_t)(struct dentry *, void *);
- 
- #if defined(CONFIG_DEBUG_FS)
-@@ -102,6 +108,8 @@ ssize_t debugfs_attr_read(struct file *file, char __user *buf,
- 			size_t len, loff_t *ppos);
- ssize_t debugfs_attr_write(struct file *file, const char __user *buf,
- 			size_t len, loff_t *ppos);
-+ssize_t debugfs_attr_write_signed(struct file *file, const char __user *buf,
-+			size_t len, loff_t *ppos);
- 
- struct dentry *debugfs_rename(struct dentry *old_dir, struct dentry *old_dentry,
-                 struct dentry *new_dir, const char *new_name);
-@@ -254,6 +262,13 @@ static inline ssize_t debugfs_attr_write(struct file *file,
- 	return -ENODEV;
- }
- 
-+static inline ssize_t debugfs_attr_write_signed(struct file *file,
-+					const char __user *buf,
-+					size_t len, loff_t *ppos)
-+{
-+	return -ENODEV;
-+}
-+
- static inline struct dentry *debugfs_rename(struct dentry *old_dir, struct dentry *old_dentry,
-                 struct dentry *new_dir, char *new_name)
- {
 -- 
 2.35.1
 
