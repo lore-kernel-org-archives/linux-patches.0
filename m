@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECBED1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70407C433D2;
-	Wed, 28 Dec 2022 16:04:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 996941C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16CB8C433EF;
+	Wed, 28 Dec 2022 16:04:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243477;
-	bh=EsVgcSyGk4Pqdt2kx22dkDCMFqpGKOiIq2/4yPeyngk=;
+	s=korg; t=1672243480;
+	bh=YmBIpEdK5yL6LffEKnek5esXfYk7jQRcWfZ9DWlBK2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IFvdcEztu7iCysHbmw27TtOKI/0/xLulxec303bemtW6mTm0Y8UJnxmo7PeWtp0Gd
-	 ervcEhMcIAB6u8jnRwIyMquDEQ1PlgnCgDlQDJEacA6D7yjLKCFDpjFdJ8dbzc3PzP
-	 x8NMBL3nl/lb624bmYruuAzK1khI170ZwM+1Zors=
+	b=17GXmUVKy+CZ34/b/CmeDUjjWQeVLrJFuwNmAnyO2w3FUy9cYLZPVCjYFs7VJStyD
+	 VkaxeQvrnB5yOTKJw8WS9WbPLE/o4XpARpi2eVN0e1v1LN0sTp69FWKA8Mm3vOG//S
+	 ISKMso9eIxGjYd1FADcD02wYHUG3bHbJpKEnjTLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	syzbot+a4055c78774bbf3498bb@syzkaller.appspotmail.com
-Subject: [PATCH 5.15 725/731] ovl: fix use inode directly in rcu-walk mode
-Date: Wed, 28 Dec 2022 15:43:52 +0100
-Message-Id: <20221228144317.459432647@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0497/1146] mmc: mxcmmc: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:33:56 +0100
+Message-Id: <20221228144343.680010065@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,45 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 672e4268b2863d7e4978dfed29552b31c2f9bd4e upstream.
+[ Upstream commit cde600af7b413c9fe03e85c58c4279df90e91d13 ]
 
-ovl_dentry_revalidate_common() can be called in rcu-walk mode.  As document
-said, "in rcu-walk mode, d_parent and d_inode should not be used without
-care".
+mmc_add_host() may return error, if we ignore its return value, the memory
+that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
+crash because of deleting not added device in the remove path.
 
-Check inode here to protect access under rcu-walk mode.
+So fix this by checking the return value and goto error path which will call
+mmc_free_host().
 
-Fixes: bccece1ead36 ("ovl: allow remote upper")
-Reported-and-tested-by: syzbot+a4055c78774bbf3498bb@syzkaller.appspotmail.com
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Cc: <stable@vger.kernel.org> # v5.7
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d96be879ff46 ("mmc: Add a MX2/MX3 specific SDHC driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221101063023.1664968-4-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/super.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/mmc/host/mxcmmc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/overlayfs/super.c
-+++ b/fs/overlayfs/super.c
-@@ -138,11 +138,16 @@ static int ovl_dentry_revalidate_common(
- 					unsigned int flags, bool weak)
- {
- 	struct ovl_entry *oe = dentry->d_fsdata;
-+	struct inode *inode = d_inode_rcu(dentry);
- 	struct dentry *upper;
- 	unsigned int i;
- 	int ret = 1;
+diff --git a/drivers/mmc/host/mxcmmc.c b/drivers/mmc/host/mxcmmc.c
+index 2cf0413407ea..668f865f3efb 100644
+--- a/drivers/mmc/host/mxcmmc.c
++++ b/drivers/mmc/host/mxcmmc.c
+@@ -1143,7 +1143,9 @@ static int mxcmci_probe(struct platform_device *pdev)
  
--	upper = ovl_dentry_upper(dentry);
-+	/* Careful in RCU mode */
-+	if (!inode)
-+		return -ECHILD;
-+
-+	upper = ovl_i_dentry_upper(inode);
- 	if (upper)
- 		ret = ovl_revalidate_real(upper, flags, weak);
+ 	timer_setup(&host->watchdog, mxcmci_watchdog, 0);
  
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret)
++		goto out_free_dma;
+ 
+ 	return 0;
+ 
+-- 
+2.35.1
+
 
 
