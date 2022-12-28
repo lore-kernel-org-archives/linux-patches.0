@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4363A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:42:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB1CCC433D2;
-	Wed, 28 Dec 2022 15:42:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16201863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:42:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6600EC433EF;
+	Wed, 28 Dec 2022 15:42:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242146;
-	bh=VfFYS3P/YwmDM0aWfN8kmbrIPtkCvXK+TmZw2A0TAnc=;
+	s=korg; t=1672242148;
+	bh=52ip9KpOrsiulsZgSWEL1GPJt1pseU72WrLlTtTlIkE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AkZXJA/pQDQWehcnpmpWJarGXEmTPnHwcCGKhkeXo12TWuMsCIwmhNClvFF8ZhdWp
-	 fBREy4mqS4fL1GU8gBOxHwy9DMtN/kqOe8gJZ0NXaFIEPM0elefLR+A9y0yTQgY65m
-	 gvoDqSvcMX5ml3dvHEfQY+LJyqsWsyHF/RpoLeN8=
+	b=RyhTY2XivxhdC5I7p+QpesKvufuWJLIDuCEFQ04NfWfhD7xeVVhR2vforFqsap/sv
+	 lfKDzWLRhPHs25xJvg1ahjrC6DGaW+F3cGKClYrrZMrcrb6TjzmMfzYEwpnVSo+xGR
+	 u4RAzkhTiuik2VO2MFPJ2WwWq4bul4Tt8lZVZyDA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0334/1146] wifi: rtw89: Fix some error handling path in rtw89_core_sta_assoc()
-Date: Wed, 28 Dec 2022 15:31:13 +0100
-Message-Id: <20221228144339.233463537@linuxfoundation.org>
+Subject: [PATCH 5.15 568/731] remoteproc: qcom_q6v5_pas: disable wakeup on probe fail or remove
+Date: Wed, 28 Dec 2022 15:41:15 +0100
+Message-Id: <20221228144313.022114531@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,38 +38,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit 81c0b8928437ddfe87b0024c5bd817bc331d8524 ]
+[ Upstream commit 9a70551996e699fda262e8d54bbd41739d7aad6d ]
 
-'ret' is not updated after a function call in rtw89_core_sta_assoc().
-This prevent error handling from working.
+Leaving wakeup enabled during probe fail (-EPROBE_DEFER) or remove makes
+the subsequent probe fail.
 
-Add the missing assignment.
+[    3.749454] remoteproc remoteproc0: releasing 3000000.remoteproc
+[    3.752949] qcom_q6v5_pas: probe of 3000000.remoteproc failed with error -17
+[    3.878935] remoteproc remoteproc0: releasing 4080000.remoteproc
+[    3.887602] qcom_q6v5_pas: probe of 4080000.remoteproc failed with error -17
+[    4.319552] remoteproc remoteproc0: releasing 8300000.remoteproc
+[    4.332716] qcom_q6v5_pas: probe of 8300000.remoteproc failed with error -17
 
-Fixes: e3ec7017f6a2 ("rtw89: add Realtek 802.11ax driver")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Acked-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/7b1d82594635e4406d3438f33d8da29eaa056c5a.1668354547.git.christophe.jaillet@wanadoo.fr
+Fix this by disabling wakeup in both cases so the driver can properly
+probe on the next try.
+
+Fixes: a781e5aa5911 ("remoteproc: core: Prevent system suspend during remoteproc recovery")
+Fixes: dc86c129b4fb ("remoteproc: qcom: pas: Mark devices as wakeup capable")
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221118090816.100012-1-luca.weiss@fairphone.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/remoteproc/qcom_q6v5_pas.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/core.c b/drivers/net/wireless/realtek/rtw89/core.c
-index bc2994865372..ad420d7ec8af 100644
---- a/drivers/net/wireless/realtek/rtw89/core.c
-+++ b/drivers/net/wireless/realtek/rtw89/core.c
-@@ -2527,7 +2527,7 @@ int rtw89_core_sta_assoc(struct rtw89_dev *rtwdev,
- 	}
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 78d90d856e40..533b48522326 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -498,6 +498,7 @@ static int adsp_probe(struct platform_device *pdev)
+ detach_active_pds:
+ 	adsp_pds_detach(adsp, adsp->active_pds, adsp->active_pd_count);
+ free_rproc:
++	device_init_wakeup(adsp->dev, false);
+ 	rproc_free(rproc);
  
- 	/* update cam aid mac_id net_type */
--	rtw89_fw_h2c_cam(rtwdev, rtwvif, rtwsta, NULL);
-+	ret = rtw89_fw_h2c_cam(rtwdev, rtwvif, rtwsta, NULL);
- 	if (ret) {
- 		rtw89_warn(rtwdev, "failed to send h2c cam\n");
- 		return ret;
+ 	return ret;
+@@ -513,6 +514,7 @@ static int adsp_remove(struct platform_device *pdev)
+ 	qcom_remove_sysmon_subdev(adsp->sysmon);
+ 	qcom_remove_smd_subdev(adsp->rproc, &adsp->smd_subdev);
+ 	qcom_remove_ssr_subdev(adsp->rproc, &adsp->ssr_subdev);
++	device_init_wakeup(adsp->dev, false);
+ 	rproc_free(adsp->rproc);
+ 
+ 	return 0;
 -- 
 2.35.1
 
