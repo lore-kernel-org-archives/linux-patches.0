@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE7251868
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:52:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51527C433EF;
-	Wed, 28 Dec 2022 14:52:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 694151863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:52:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2881C433EF;
+	Wed, 28 Dec 2022 14:52:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239158;
-	bh=IQj4jAtdLDkSaRLYS/ofgyUfK/kIyBl2/qwFt4uRLCg=;
+	s=korg; t=1672239161;
+	bh=S4MofCqekZZLQeDNlqqTmspwwgyyYMA449UzYiU88zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DzAHdODOD3sJkeUY6ljsWMRpsezKILxj6VERGgjBW1FI3QYlKlRvDZQietWGMCUDA
-	 D+4rbahooE/np8bxIzT12k+O1pgRGqPpS8MmE4jAC9h+N4krL0N8l75wFutxENMgOD
-	 Z3vKxe5xQN4a48WzO8mp3L5m6OIycc/gN1IeDgCk=
+	b=QwKSAwk8pMwi5qkxxoGyM3Iv+y30XCZY6j01mULKiT/SL2ittidV+QFcZa1OqlGsN
+	 RGx72J/y7hV2Wh/zxN1bOtbLPZISHUZvhOIY5quEa9sPBdDAx/MHfB2JqaMHAhWtNz
+	 gY/UAS8O77Iu6YBr/uLVKQlFYOjFEP5xcU1XrSR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <evan.quan@amd.com>,
-	Rafael Mendonca <rafaelmendsr@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Sean Anderson <sean.anderson@seco.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 151/731] drm/amdgpu/powerplay/psm: Fix memory leak in power state init
-Date: Wed, 28 Dec 2022 15:34:18 +0100
-Message-Id: <20221228144300.932124306@linuxfoundation.org>
+Subject: [PATCH 5.15 152/731] powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G
+Date: Wed, 28 Dec 2022 15:34:19 +0100
+Message-Id: <20221228144300.959873542@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,39 +35,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael Mendonca <rafaelmendsr@gmail.com>
+From: Sean Anderson <sean.anderson@seco.com>
 
-[ Upstream commit 8f8033d5663b18e6efb33feb61f2287a04605ab5 ]
+[ Upstream commit 36926a7d70c2d462fca1ed85bfee000d17fd8662 ]
 
-Commit 902bc65de0b3 ("drm/amdgpu/powerplay/psm: return an error in power
-state init") made the power state init function return early in case of
-failure to get an entry from the powerplay table, but it missed to clean up
-the allocated memory for the current power state before returning.
+On the T208X SoCs, MAC1 and MAC2 support XGMII. Add some new MAC dtsi
+fragments, and mark the QMAN ports as 10G.
 
-Fixes: 902bc65de0b3 ("drm/amdgpu/powerplay/psm: return an error in power state init")
-Reviewed-by: Evan Quan <evan.quan@amd.com>
-Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: da414bb923d9 ("powerpc/mpc85xx: Add FSL QorIQ DPAA FMan support to the SoC device tree(s)")
+Signed-off-by: Sean Anderson <sean.anderson@seco.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ .../boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi     | 44 +++++++++++++++++++
+ .../boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi     | 44 +++++++++++++++++++
+ arch/powerpc/boot/dts/fsl/t2081si-post.dtsi   |  4 +-
+ 3 files changed, 90 insertions(+), 2 deletions(-)
+ create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
+ create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c
-index 67d7da0b6fed..1d829402cd2e 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c
-@@ -75,8 +75,10 @@ int psm_init_power_state_table(struct pp_hwmgr *hwmgr)
- 	for (i = 0; i < table_entries; i++) {
- 		result = hwmgr->hwmgr_func->get_pp_table_entry(hwmgr, i, state);
- 		if (result) {
-+			kfree(hwmgr->current_ps);
- 			kfree(hwmgr->request_ps);
- 			kfree(hwmgr->ps);
-+			hwmgr->current_ps = NULL;
- 			hwmgr->request_ps = NULL;
- 			hwmgr->ps = NULL;
- 			return -EINVAL;
+diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
+new file mode 100644
+index 000000000000..437dab3fc017
+--- /dev/null
++++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
+@@ -0,0 +1,44 @@
++// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
++/*
++ * QorIQ FMan v3 10g port #2 device tree stub [ controller @ offset 0x400000 ]
++ *
++ * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
++ * Copyright 2012 - 2015 Freescale Semiconductor Inc.
++ */
++
++fman@400000 {
++	fman0_rx_0x08: port@88000 {
++		cell-index = <0x8>;
++		compatible = "fsl,fman-v3-port-rx";
++		reg = <0x88000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	fman0_tx_0x28: port@a8000 {
++		cell-index = <0x28>;
++		compatible = "fsl,fman-v3-port-tx";
++		reg = <0xa8000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	ethernet@e0000 {
++		cell-index = <0>;
++		compatible = "fsl,fman-memac";
++		reg = <0xe0000 0x1000>;
++		fsl,fman-ports = <&fman0_rx_0x08 &fman0_tx_0x28>;
++		ptp-timer = <&ptp_timer0>;
++		pcsphy-handle = <&pcsphy0>;
++	};
++
++	mdio@e1000 {
++		#address-cells = <1>;
++		#size-cells = <0>;
++		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
++		reg = <0xe1000 0x1000>;
++		fsl,erratum-a011043; /* must ignore read errors */
++
++		pcsphy0: ethernet-phy@0 {
++			reg = <0x0>;
++		};
++	};
++};
+diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
+new file mode 100644
+index 000000000000..ad116b17850a
+--- /dev/null
++++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
+@@ -0,0 +1,44 @@
++// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
++/*
++ * QorIQ FMan v3 10g port #3 device tree stub [ controller @ offset 0x400000 ]
++ *
++ * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
++ * Copyright 2012 - 2015 Freescale Semiconductor Inc.
++ */
++
++fman@400000 {
++	fman0_rx_0x09: port@89000 {
++		cell-index = <0x9>;
++		compatible = "fsl,fman-v3-port-rx";
++		reg = <0x89000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	fman0_tx_0x29: port@a9000 {
++		cell-index = <0x29>;
++		compatible = "fsl,fman-v3-port-tx";
++		reg = <0xa9000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	ethernet@e2000 {
++		cell-index = <1>;
++		compatible = "fsl,fman-memac";
++		reg = <0xe2000 0x1000>;
++		fsl,fman-ports = <&fman0_rx_0x09 &fman0_tx_0x29>;
++		ptp-timer = <&ptp_timer0>;
++		pcsphy-handle = <&pcsphy1>;
++	};
++
++	mdio@e3000 {
++		#address-cells = <1>;
++		#size-cells = <0>;
++		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
++		reg = <0xe3000 0x1000>;
++		fsl,erratum-a011043; /* must ignore read errors */
++
++		pcsphy1: ethernet-phy@0 {
++			reg = <0x0>;
++		};
++	};
++};
+diff --git a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
+index ecbb447920bc..74e17e134387 100644
+--- a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
++++ b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
+@@ -609,8 +609,8 @@ usb1: usb@211000 {
+ /include/ "qoriq-bman1.dtsi"
+ 
+ /include/ "qoriq-fman3-0.dtsi"
+-/include/ "qoriq-fman3-0-1g-0.dtsi"
+-/include/ "qoriq-fman3-0-1g-1.dtsi"
++/include/ "qoriq-fman3-0-10g-2.dtsi"
++/include/ "qoriq-fman3-0-10g-3.dtsi"
+ /include/ "qoriq-fman3-0-1g-2.dtsi"
+ /include/ "qoriq-fman3-0-1g-3.dtsi"
+ /include/ "qoriq-fman3-0-1g-4.dtsi"
 -- 
 2.35.1
 
