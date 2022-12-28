@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4510F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:19:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B794DC433EF;
-	Wed, 28 Dec 2022 15:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA6411863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:20:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D867C433EF;
+	Wed, 28 Dec 2022 15:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240799;
-	bh=7VCf0FytvkdTWwX2JiIdKXDlZYw7In5IzXPQ3hcjjMs=;
+	s=korg; t=1672240801;
+	bh=ab9fQLBubp9wKQiy5qM6q7oGlZi3g/mswJdE6Ji+eKU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ME/joJlDy6QiY6D8yHU2swR69Bq28sLFxk9Y26TgEtBlHGw22UGsUfX9iuxNtgA1H
-	 BGQwNk60uANtZxR/a/r+r6uv/QIVT+EXtCHoUz/ns8pzu0qjMxCp2Z3yFfR6iPar6a
-	 YHKfKZcLxME9slKRL9IGdGxwb7ih00pnJj/Ic2aY=
+	b=t3cfvjkFCrSwqzCXqsrUsshqd5Pk7Xd10qUuSQrOeVQBEhH+Hm7/KzhcYn8gDDJYN
+	 OC8fn00f3T5UbRZR0B672x2dbemst4erHk847RSW1a/XGCJO5jx5JaCSblhv1kM2iO
+	 Yrq6q9jQI/Auf5MR5ptoL+WsuVoRLGMmDfmUrcew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0204/1073] selftests/bpf: Fix error failure of case test_xdp_adjust_tail_grow
-Date: Wed, 28 Dec 2022 15:29:52 +0100
-Message-Id: <20221228144333.559168801@linuxfoundation.org>
+Subject: [PATCH 5.15 399/731] RDMA/hns: fix memory leak in hns_roce_alloc_mr()
+Date: Wed, 28 Dec 2022 15:38:26 +0100
+Message-Id: <20221228144308.132115360@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,41 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Kuohai <xukuohai@huawei.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 4abdb1d5b250df4b5b3afd394d5e2fa516064c04 ]
+[ Upstream commit a115aa00b18f7b8982b8f458149632caf64a862a ]
 
-test_xdp_adjust_tail_grow failed with ipv6:
-  test_xdp_adjust_tail_grow:FAIL:ipv6 unexpected error: -28 (errno 28)
+When hns_roce_mr_enable() failed in hns_roce_alloc_mr(), mr_key is not
+released. Compiled test only.
 
-The reason is that this test case tests ipv4 before ipv6, and when ipv4
-test finished, topts.data_size_out was set to 54, which is smaller than the
-ipv6 output data size 114, so ipv6 test fails with NOSPC error.
-
-Fix it by reset topts.data_size_out to sizeof(buf) before testing ipv6.
-
-Fixes: 04fcb5f9a104 ("selftests/bpf: Migrate from bpf_prog_test_run")
-Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://lore.kernel.org/bpf/20221011120108.782373-6-xukuohai@huaweicloud.com
+Fixes: 9b2cf76c9f05 ("RDMA/hns: Optimize PBL buffer allocation process")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Link: https://lore.kernel.org/r/20221119070834.48502-1-shaozhengchao@huawei.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/hns/hns_roce_mr.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c b/tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c
-index 21ceac24e174..7efee9b047d9 100644
---- a/tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c
-+++ b/tools/testing/selftests/bpf/prog_tests/xdp_adjust_tail.c
-@@ -63,6 +63,7 @@ static void test_xdp_adjust_tail_grow(void)
- 	expect_sz = sizeof(pkt_v6) + 40; /* Test grow with 40 bytes */
- 	topts.data_in = &pkt_v6;
- 	topts.data_size_in = sizeof(pkt_v6);
-+	topts.data_size_out = sizeof(buf);
- 	err = bpf_prog_test_run_opts(prog_fd, &topts);
- 	ASSERT_OK(err, "ipv6");
- 	ASSERT_EQ(topts.retval, XDP_TX, "ipv6 retval");
+diff --git a/drivers/infiniband/hw/hns/hns_roce_mr.c b/drivers/infiniband/hw/hns/hns_roce_mr.c
+index 20360df25771..a593c142cd6b 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_mr.c
++++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
+@@ -415,10 +415,10 @@ struct ib_mr *hns_roce_alloc_mr(struct ib_pd *pd, enum ib_mr_type mr_type,
+ 
+ 	return &mr->ibmr;
+ 
+-err_key:
+-	free_mr_key(hr_dev, mr);
+ err_pbl:
+ 	free_mr_pbl(hr_dev, mr);
++err_key:
++	free_mr_key(hr_dev, mr);
+ err_free:
+ 	kfree(mr);
+ 	return ERR_PTR(ret);
 -- 
 2.35.1
 
