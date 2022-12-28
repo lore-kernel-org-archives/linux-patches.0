@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C491C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:47:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B798C433D2;
-	Wed, 28 Dec 2022 16:47:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C813D1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:47:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DF05C433D2;
+	Wed, 28 Dec 2022 16:47:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246041;
-	bh=SsZLdHxV3v0ozemZuINALEFC99IXb8xrVlBR4IvXihw=;
+	s=korg; t=1672246043;
+	bh=94mJ4ktmnNf7/RYeKm5j2AXaLYPBiO/CeY1y913/4sU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yrwqo+hgf6NIHuJyJIhRLSk/aVTU1+7SxiOvv/Hx5PkZGHy+zCw/wGDPJI5x4xyCZ
-	 pZ7ypDR2vOSbFAFAuJB71N8WmZOEEnvqCICDBq9MOp9++kZ5QQP8pS47/XivyZRH5K
-	 ist6pYX2OVMUIOq9xGbwJ9CMNWB04iR8z0/T9oVs=
+	b=rjJFumqOh8w58MUNJ04mDPgK1bN0lw1uYYfqlAp/2u8ccvzbFiR6n8T8i7dmOfuHI
+	 LXj6bCDSwaowu/uQ/w+EmODZKiLc0LiACpX8s+WtZ3QaUBqR04hLn3sdXe9PdzZkai
+	 vCO/Zr3M1ATAv76eCCjLHj0z7Omn3mJta7AltONk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	David Sterba <dsterba@suse.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0962/1146] btrfs: do not panic if we cant allocate a prealloc extent state
-Date: Wed, 28 Dec 2022 15:41:41 +0100
-Message-Id: <20221228144356.449916844@linuxfoundation.org>
+Subject: [PATCH 6.1 0971/1146] ASoC: Intel: avs: Add quirk for KBL-R RVP platform
+Date: Wed, 28 Dec 2022 15:41:50 +0100
+Message-Id: <20221228144356.712896239@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,124 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Josef Bacik <josef@toxicpanda.com>
+From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
 
-[ Upstream commit 5a75034e71ef5ec0fce983afcb6c9cb0147cd5b9 ]
+[ Upstream commit 9d0737fa0e7530313634c0ecd75f09a95ba8d44a ]
 
-We sometimes have to allocate new extent states when clearing or setting
-new bits in an extent io tree.  Generally we preallocate this before
-taking the tree spin lock, but we can use this preallocated extent state
-sometimes and then need to try to do a GFP_ATOMIC allocation under the
-lock.
+KBL-R RVPs contain built-in rt298 codec which requires different PLL
+clock and .dai_fmt configuration than seen on other boards.
 
-Unfortunately sometimes this fails, and then we hit the BUG_ON() and
-bring the box down.  This happens roughly 20 times a week in our fleet.
-
-However the vast majority of callers use GFP_NOFS, which means that if
-this GFP_ATOMIC allocation fails, we could simply drop the spin lock, go
-back and allocate a new extent state with our given gfp mask, and begin
-again from where we left off.
-
-For the remaining callers that do not use GFP_NOFS, they are generally
-using GFP_NOWAIT, which still allows for some reclaim.  So allow these
-allocations to attempt to happen outside of the spin lock so we don't
-need to rely on GFP_ATOMIC allocations.
-
-This in essence creates an infinite loop for anything that isn't
-GFP_NOFS.  To address this we may want to migrate to using mempools for
-extent states so that we will always have emergency reserves in order to
-make our allocations.
-
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://lore.kernel.org/r/20221010121955.718168-5-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent-io-tree.c | 22 ++++++++++++++--------
- 1 file changed, 14 insertions(+), 8 deletions(-)
+ sound/soc/intel/avs/boards/rt298.c | 24 ++++++++++++++++++++++--
+ 1 file changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/fs/btrfs/extent-io-tree.c b/fs/btrfs/extent-io-tree.c
-index 83cb0378096f..3676580c2d97 100644
---- a/fs/btrfs/extent-io-tree.c
-+++ b/fs/btrfs/extent-io-tree.c
-@@ -572,7 +572,7 @@ int __clear_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
- 	if (bits & (EXTENT_LOCKED | EXTENT_BOUNDARY))
- 		clear = 1;
- again:
--	if (!prealloc && gfpflags_allow_blocking(mask)) {
-+	if (!prealloc) {
- 		/*
- 		 * Don't care for allocation failure here because we might end
- 		 * up not needing the pre-allocated extent state at all, which
-@@ -636,7 +636,8 @@ int __clear_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
+diff --git a/sound/soc/intel/avs/boards/rt298.c b/sound/soc/intel/avs/boards/rt298.c
+index b28d36872dcb..58c9d9edecf0 100644
+--- a/sound/soc/intel/avs/boards/rt298.c
++++ b/sound/soc/intel/avs/boards/rt298.c
+@@ -6,6 +6,7 @@
+ //          Amadeusz Slawinski <amadeuszx.slawinski@linux.intel.com>
+ //
  
- 	if (state->start < start) {
- 		prealloc = alloc_extent_state_atomic(prealloc);
--		BUG_ON(!prealloc);
-+		if (!prealloc)
-+			goto search_again;
- 		err = split_state(tree, state, prealloc, start);
- 		if (err)
- 			extent_io_tree_panic(tree, err);
-@@ -657,7 +658,8 @@ int __clear_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
- 	 */
- 	if (state->start <= end && state->end > end) {
- 		prealloc = alloc_extent_state_atomic(prealloc);
--		BUG_ON(!prealloc);
-+		if (!prealloc)
-+			goto search_again;
- 		err = split_state(tree, state, prealloc, end + 1);
- 		if (err)
- 			extent_io_tree_panic(tree, err);
-@@ -966,7 +968,7 @@ static int __set_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
- 	else
- 		ASSERT(failed_start == NULL);
- again:
--	if (!prealloc && gfpflags_allow_blocking(mask)) {
-+	if (!prealloc) {
- 		/*
- 		 * Don't care for allocation failure here because we might end
- 		 * up not needing the pre-allocated extent state at all, which
-@@ -991,7 +993,8 @@ static int __set_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
- 	state = tree_search_for_insert(tree, start, &p, &parent);
- 	if (!state) {
- 		prealloc = alloc_extent_state_atomic(prealloc);
--		BUG_ON(!prealloc);
-+		if (!prealloc)
-+			goto search_again;
- 		prealloc->start = start;
- 		prealloc->end = end;
- 		insert_state_fast(tree, prealloc, p, parent, bits, changeset);
-@@ -1062,7 +1065,8 @@ static int __set_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
- 		}
++#include <linux/dmi.h>
+ #include <linux/module.h>
+ #include <sound/jack.h>
+ #include <sound/pcm.h>
+@@ -14,6 +15,16 @@
+ #include <sound/soc-acpi.h>
+ #include "../../../codecs/rt298.h"
  
- 		prealloc = alloc_extent_state_atomic(prealloc);
--		BUG_ON(!prealloc);
-+		if (!prealloc)
-+			goto search_again;
- 		err = split_state(tree, state, prealloc, start);
- 		if (err)
- 			extent_io_tree_panic(tree, err);
-@@ -1099,7 +1103,8 @@ static int __set_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
- 			this_end = last_start - 1;
++static const struct dmi_system_id kblr_dmi_table[] = {
++	{
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
++			DMI_MATCH(DMI_BOARD_NAME, "Kabylake R DDR4 RVP"),
++		},
++	},
++	{}
++};
++
+ static const struct snd_kcontrol_new card_controls[] = {
+ 	SOC_DAPM_PIN_SWITCH("Headphone Jack"),
+ 	SOC_DAPM_PIN_SWITCH("Mic Jack"),
+@@ -96,9 +107,15 @@ avs_rt298_hw_params(struct snd_pcm_substream *substream, struct snd_pcm_hw_param
+ {
+ 	struct snd_soc_pcm_runtime *rtd = substream->private_data;
+ 	struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
++	unsigned int clk_freq;
+ 	int ret;
  
- 		prealloc = alloc_extent_state_atomic(prealloc);
--		BUG_ON(!prealloc);
-+		if (!prealloc)
-+			goto search_again;
+-	ret = snd_soc_dai_set_sysclk(codec_dai, RT298_SCLK_S_PLL, 19200000, SND_SOC_CLOCK_IN);
++	if (dmi_first_match(kblr_dmi_table))
++		clk_freq = 24000000;
++	else
++		clk_freq = 19200000;
++
++	ret = snd_soc_dai_set_sysclk(codec_dai, RT298_SCLK_S_PLL, clk_freq, SND_SOC_CLOCK_IN);
+ 	if (ret < 0)
+ 		dev_err(rtd->dev, "Set codec sysclk failed: %d\n", ret);
  
- 		/*
- 		 * Avoid to free 'prealloc' if it can be merged with the later
-@@ -1130,7 +1135,8 @@ static int __set_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
- 		}
- 
- 		prealloc = alloc_extent_state_atomic(prealloc);
--		BUG_ON(!prealloc);
-+		if (!prealloc)
-+			goto search_again;
- 		err = split_state(tree, state, prealloc, end + 1);
- 		if (err)
- 			extent_io_tree_panic(tree, err);
+@@ -139,7 +156,10 @@ static int avs_create_dai_link(struct device *dev, const char *platform_name, in
+ 	dl->platforms = platform;
+ 	dl->num_platforms = 1;
+ 	dl->id = 0;
+-	dl->dai_fmt = SND_SOC_DAIFMT_DSP_A | SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_CBS_CFS;
++	if (dmi_first_match(kblr_dmi_table))
++		dl->dai_fmt = SND_SOC_DAIFMT_I2S | SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_CBS_CFS;
++	else
++		dl->dai_fmt = SND_SOC_DAIFMT_DSP_A | SND_SOC_DAIFMT_NB_NF | SND_SOC_DAIFMT_CBS_CFS;
+ 	dl->init = avs_rt298_codec_init;
+ 	dl->be_hw_params_fixup = avs_rt298_be_fixup;
+ 	dl->ops = &avs_rt298_ops;
 -- 
 2.35.1
 
