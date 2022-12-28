@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6343923AF
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:58:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8F46C433D2;
-	Wed, 28 Dec 2022 16:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2673123AF
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:58:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EDECC433EF;
+	Wed, 28 Dec 2022 16:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246682;
-	bh=RcWnq7GP/UzPFJHuOTgz5KeYcbscuCrl+RsL6vKS3p0=;
+	s=korg; t=1672246684;
+	bh=e1R0atgY+TKRwEJiLJwhtP27rBDBejXz4aDMOMqGQFQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CGnl2TgrWDEmyw9TrXjhuYLcGGtuU0XNnLmnN3nlWBwnOyTkEVlED0SzQJO3SE3rQ
-	 Kh7PhWDh/P4D3XvEwjrKwnecI33tttrGXI+IBDWkGCD9djALjNjke+1ToX91QzYcDH
-	 oJyEMaxeeEoD00yQJjinAECXJSrdP5Pv3Ftwxic0=
+	b=N9vVHXgpPVoSOdzZu35ed/S5uVYm2BPf5uJyFoWY6gPz3R/g3J2474GdrPtlMNpUV
+	 0a9JvQp+b4Yud0WrCdAbgqqEUGfcd9C3x7SRI2EXytf6v5q7JBOK6tIKoz2ZaWgVPU
+	 b8ot6iRBv8vVMssHFh3nQOuHSPHgKqSvJP30772g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff LaBundy <jeff@labundy.com>,
-	Rob Herring <robh@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1097/1146] dt-bindings: input: iqs7222: Add support for IQS7222A v1.13+
-Date: Wed, 28 Dec 2022 15:43:56 +0100
-Message-Id: <20221228144359.966541143@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Carl Hetherington <lists@carlh.net>
+Subject: [PATCH 6.1 1098/1146] ALSA: usb-audio: Workaround for XRUN at prepare
+Date: Wed, 28 Dec 2022 15:43:57 +0100
+Message-Id: <20221228144359.992612508@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -36,75 +34,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff LaBundy <jeff@labundy.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 97384a65c5e304ccab0477751546f5519d9371c3 ]
+commit 198dde085ecc0138e4f0b0b69d18a0c870f2dea6 upstream.
 
-IQS7222A revisions 1.13 and later widen the gesture multiplier from
-x4 ms to x16 ms; update the binding accordingly.
+Under certain situations (typically in the implicit feedback mode),
+USB-audio driver starts a playback stream already at PCM prepare call
+even before the actual PCM trigger-START call.  For implicit feedback
+mode, this effectively starts two streams for data and sync
+endpoints, and if a coupled sync stream gets XRUN at this point, it
+results in an error -EPIPE.
 
-As part of this change, refresh the corresponding properties in the
-example as well.
+The problem is that currently we return -EPIPE error as is from the
+prepare.  Then application tries to recover again via the prepare
+call, but it'll fail again because the sync-stop is missing.  The
+sync-stop is missing because it's an internal trigger call (hence the
+PCM core isn't involved).
 
-Fixes: 44dc42d254bf ("dt-bindings: input: Add bindings for Azoteq IQS7222A/B/C")
-Signed-off-by: Jeff LaBundy <jeff@labundy.com>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/Y1SRaVGwj30z/g6r@nixie71
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Since we'll need to re-issue the prepare in anyway when trapped into
+this pitfall, this patch attempts to address it in a bit different
+way; namely, the driver tries to prepare once again after syncing the
+stop manually by itself -- so applications don't see the internal
+error.  At the second failure, we report the error as is, but this
+shouldn't happen in normal situations.
+
+Reported-and-tested-by: Carl Hetherington <lists@carlh.net>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/b4e71631-4a94-613-27b2-fb595792630@carlh.net
+Link: https://lore.kernel.org/r/20221205132124.11585-4-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../bindings/input/azoteq,iqs7222.yaml           | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ sound/usb/pcm.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/input/azoteq,iqs7222.yaml b/Documentation/devicetree/bindings/input/azoteq,iqs7222.yaml
-index 913fd2da9862..9ddba7f2e7aa 100644
---- a/Documentation/devicetree/bindings/input/azoteq,iqs7222.yaml
-+++ b/Documentation/devicetree/bindings/input/azoteq,iqs7222.yaml
-@@ -572,9 +572,9 @@ patternProperties:
-           linux,code: true
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -604,6 +604,7 @@ static int snd_usb_pcm_prepare(struct sn
+ 	struct snd_pcm_runtime *runtime = substream->runtime;
+ 	struct snd_usb_substream *subs = runtime->private_data;
+ 	struct snd_usb_audio *chip = subs->stream->chip;
++	int retry = 0;
+ 	int ret;
  
-           azoteq,gesture-max-ms:
--            multipleOf: 4
-+            multipleOf: 16
-             minimum: 0
--            maximum: 1020
-+            maximum: 4080
-             description:
-               Specifies the length of time (in ms) within which a tap, swipe
-               or flick gesture must be completed in order to be acknowledged
-@@ -582,9 +582,9 @@ patternProperties:
-               gesture applies to all remaining swipe or flick gestures.
+ 	ret = snd_usb_lock_shutdown(chip);
+@@ -614,6 +615,7 @@ static int snd_usb_pcm_prepare(struct sn
+ 		goto unlock;
+ 	}
  
-           azoteq,gesture-min-ms:
--            multipleOf: 4
-+            multipleOf: 16
-             minimum: 0
--            maximum: 124
-+            maximum: 496
-             description:
-               Specifies the length of time (in ms) for which a tap gesture must
-               be held in order to be acknowledged by the device.
-@@ -930,14 +930,14 @@ examples:
++ again:
+ 	if (subs->sync_endpoint) {
+ 		ret = snd_usb_endpoint_prepare(chip, subs->sync_endpoint);
+ 		if (ret < 0)
+@@ -638,9 +640,16 @@ static int snd_usb_pcm_prepare(struct sn
  
-                             event-tap {
-                                     linux,code = <KEY_PLAYPAUSE>;
--                                    azoteq,gesture-max-ms = <600>;
--                                    azoteq,gesture-min-ms = <24>;
-+                                    azoteq,gesture-max-ms = <400>;
-+                                    azoteq,gesture-min-ms = <32>;
-                             };
- 
-                             event-flick-pos {
-                                     linux,code = <KEY_NEXTSONG>;
--                                    azoteq,gesture-max-ms = <600>;
--                                    azoteq,gesture-dist = <816>;
-+                                    azoteq,gesture-max-ms = <800>;
-+                                    azoteq,gesture-dist = <800>;
-                             };
- 
-                             event-flick-neg {
--- 
-2.35.1
-
+ 	subs->lowlatency_playback = lowlatency_playback_available(runtime, subs);
+ 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
+-	    !subs->lowlatency_playback)
++	    !subs->lowlatency_playback) {
+ 		ret = start_endpoints(subs);
+-
++		/* if XRUN happens at starting streams (possibly with implicit
++		 * fb case), restart again, but only try once.
++		 */
++		if (ret == -EPIPE && !retry++) {
++			sync_pending_stops(subs);
++			goto again;
++		}
++	}
+  unlock:
+ 	snd_usb_unlock_shutdown(chip);
+ 	return ret;
 
 
