@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A68CE1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D287C433EF;
-	Wed, 28 Dec 2022 14:56:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 804C41863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E00CAC433EF;
+	Wed, 28 Dec 2022 14:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239361;
-	bh=j6yiISYLHn5zMVQ07eX9Agdjit7ayMym+p7aP10Xw5E=;
+	s=korg; t=1672239364;
+	bh=J5Od7YALa/hq23/+T6cu9swVfU4oJMnR0f8eH49DHrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0c8cre62OdhwVUFsFGUqI2lvpJe1gj5BeZ2ZbnZg/vpOfj2+wdgPbjlmVoQbka5tA
-	 R8Xmkanfq8l8fMjDx1km4Tjo8PnD45i7F04tYx3wvI+TdvZPdueBoYMjxEm0MtKlni
-	 UbiMyxWMaEChWVwZ3SC8cUW45ve0GClZgHK0MlNc=
+	b=gk+td5Nh5kdT4A7waRZoi/m0+ZBJkChdXxN4KLzgrEZcc1WB9NweOy+rYohFsUJpB
+	 UGRf6aFrgUHwysAqwvR5kez6ATbLI5taOo3JS9wZV+NU1t9yo3rTWWFAtbBIcLCMy8
+	 s4SiqoZM5AIKqmmy+OFJFwP5xuiZb6Xdy43e4RSg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0016/1073] arm64: dts: qcom: sdm630: fix UART1 pin bias
-Date: Wed, 28 Dec 2022 15:26:44 +0100
-Message-Id: <20221228144328.600792431@linuxfoundation.org>
+Subject: [PATCH 5.15 212/731] media: solo6x10: fix possible memory leak in solo_sysfs_init()
+Date: Wed, 28 Dec 2022 15:35:19 +0100
+Message-Id: <20221228144302.703406220@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,36 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 780f836fe071a9e8703fe6a05ae00129acf83391 ]
+[ Upstream commit 7f5866dd96d95b74e439f6ee17b8abd8195179fb ]
 
-There is no "bias-no-pull" property.  Assume intentions were disabling
-bias.
+If device_register() returns error in solo_sysfs_init(), the
+name allocated by dev_set_name() need be freed. As comment of
+device_register() says, it should use put_device() to give up
+the reference in the error path. So fix this by calling
+put_device(), then the name can be freed in kobject_cleanup().
 
-Fixes: b190fb010664 ("arm64: dts: qcom: sdm630: Add sdm630 dts file")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221010114417.29859-1-krzysztof.kozlowski@linaro.org
+Fixes: dcae5dacbce5 ("[media] solo6x10: sync to latest code from Bluecherry's git repo")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/pci/solo6x10/solo6x10-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 1bc9091cad2a..12f01815230b 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -773,7 +773,7 @@ rx-cts-rts {
- 					pins = "gpio17", "gpio18", "gpio19";
- 					function = "gpio";
- 					drive-strength = <2>;
--					bias-no-pull;
-+					bias-disable;
- 				};
- 			};
+diff --git a/drivers/media/pci/solo6x10/solo6x10-core.c b/drivers/media/pci/solo6x10/solo6x10-core.c
+index 4a546eeefe38..6d87fbb0ee04 100644
+--- a/drivers/media/pci/solo6x10/solo6x10-core.c
++++ b/drivers/media/pci/solo6x10/solo6x10-core.c
+@@ -420,6 +420,7 @@ static int solo_sysfs_init(struct solo_dev *solo_dev)
+ 		     solo_dev->nr_chans);
  
+ 	if (device_register(dev)) {
++		put_device(dev);
+ 		dev->parent = NULL;
+ 		return -ENOMEM;
+ 	}
 -- 
 2.35.1
 
