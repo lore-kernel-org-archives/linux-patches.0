@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 796AB1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:44:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC795C433EF;
-	Wed, 28 Dec 2022 16:44:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 784961C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:44:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD33EC433EF;
+	Wed, 28 Dec 2022 16:44:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245885;
-	bh=cbQ8SyZFREV8vFF9bRS676PytjnbqBvZbE1b8YYjSf8=;
+	s=korg; t=1672245888;
+	bh=zf7RAbo9htvu/+5dLGrdZRXxBzlJZ32Qyt64KwWEkBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qMPYqgLGDc0BvhdgAwXlQA5ZBs1yY4pGsx+T4J3ubUvoMGN1llcmgYztS/GpRUSPQ
-	 r8lTdGy49hDo24IZmUGuQZJfaFILkHRRHDG8o5zXst3qCAd9wcldnVPmEoGHyGT+yp
-	 6C2hiXB1BToiY4ZSW41D2K+bTQLJH2l2pYRhdCNw=
+	b=uR/ADi/zp00dQDgEMrEFytnWJoHgAeStrEbsk39sikwm+WVOIkkV55VKIu3Dvxmvm
+	 SIQ9y08OiJ2Ptm5ttRB5JuJxxDB72x+XO/VjZAVigeKoyTICtAunDHkaZFt+I5AwGE
+	 eDMCvpDlR1YhJLrsS33HSifX/ABu7Mvhw2mgr350=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaurav Kohli <gauravkohli@linux.microsoft.com>,
-	Michael Kelley <mikelley@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Marek Vasut <marex@denx.de>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0941/1146] x86/hyperv: Remove unregister syscore call from Hyper-V cleanup
-Date: Wed, 28 Dec 2022 15:41:20 +0100
-Message-Id: <20221228144355.872945429@linuxfoundation.org>
+Subject: [PATCH 6.0 0975/1073] Bluetooth: hci_bcm: Add CYW4373A0 support
+Date: Wed, 28 Dec 2022 15:42:43 +0100
+Message-Id: <20221228144354.554789092@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,46 +36,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaurav Kohli <gauravkohli@linux.microsoft.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 32c97d980e2eef25465d453f2956a9ca68926a3c ]
+[ Upstream commit 02d056a3404e20245a69dcb4022a0930085fc5ec ]
 
-Hyper-V cleanup code comes under panic path where preemption and irq
-is already disabled. So calling of unregister_syscore_ops might schedule
-out the thread even for the case where mutex lock is free.
-hyperv_cleanup
-	unregister_syscore_ops
-			mutex_lock(&syscore_ops_lock)
-				might_sleep
-Here might_sleep might schedule out this thread, where voluntary preemption
-config is on and this thread will never comes back. And also this was added
-earlier to maintain the symmetry which is not required as this can comes
-during crash shutdown path only.
+CYW4373A0 is a Wi-Fi + Bluetooth combo device from Cypress.
+This chip is present e.g. on muRata 2AE module.
 
-To prevent the same, removing unregister_syscore_ops function call.
+This chip has additional quirk where the HCI command 0xfc45, used on
+older chips to switch UART clock from 24 MHz to 48 MHz, to support
+baudrates over 3 Mbdps, is no longer recognized by this newer chip.
+This newer chip can configure the 4 Mbdps baudrate without the need
+to issue HCI command 0xfc45, so add flag to indicate this and do not
+issue the command on this chip to avoid failure to set 4 Mbdps baud
+rate.
 
-Signed-off-by: Gaurav Kohli <gauravkohli@linux.microsoft.com>
-Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/1669443291-2575-1-git-send-email-gauravkohli@linux.microsoft.com
-Signed-off-by: Wei Liu <wei.liu@kernel.org>
+It is not clear whether there is a way to determine which chip does
+and which chip does not support the HCI command 0xfc45, other than
+trial and error.
+
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/hyperv/hv_init.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/bluetooth/hci_bcm.c | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/hyperv/hv_init.c b/arch/x86/hyperv/hv_init.c
-index a269049a43ce..85863b9c9e68 100644
---- a/arch/x86/hyperv/hv_init.c
-+++ b/arch/x86/hyperv/hv_init.c
-@@ -535,8 +535,6 @@ void hyperv_cleanup(void)
- 	union hv_x64_msr_hypercall_contents hypercall_msr;
- 	union hv_reference_tsc_msr tsc_msr;
+diff --git a/drivers/bluetooth/hci_bcm.c b/drivers/bluetooth/hci_bcm.c
+index d7e0b75db8a6..2b6c0e1922cb 100644
+--- a/drivers/bluetooth/hci_bcm.c
++++ b/drivers/bluetooth/hci_bcm.c
+@@ -53,11 +53,13 @@
+  * struct bcm_device_data - device specific data
+  * @no_early_set_baudrate: Disallow set baudrate before driver setup()
+  * @drive_rts_on_open: drive RTS signal on ->open() when platform requires it
++ * @no_uart_clock_set: UART clock set command for >3Mbps mode is unavailable
+  * @max_autobaud_speed: max baudrate supported by device in autobaud mode
+  */
+ struct bcm_device_data {
+ 	bool	no_early_set_baudrate;
+ 	bool	drive_rts_on_open;
++	bool	no_uart_clock_set;
+ 	u32	max_autobaud_speed;
+ };
  
--	unregister_syscore_ops(&hv_syscore_ops);
--
- 	/* Reset our OS id */
- 	wrmsrl(HV_X64_MSR_GUEST_OS_ID, 0);
- 	hv_ghcb_msr_write(HV_X64_MSR_GUEST_OS_ID, 0);
+@@ -100,6 +102,7 @@ struct bcm_device_data {
+  * @is_suspended: whether flow control is currently disabled
+  * @no_early_set_baudrate: don't set_baudrate before setup()
+  * @drive_rts_on_open: drive RTS signal on ->open() when platform requires it
++ * @no_uart_clock_set: UART clock set command for >3Mbps mode is unavailable
+  * @pcm_int_params: keep the initial PCM configuration
+  * @use_autobaud_mode: start Bluetooth device in autobaud mode
+  * @max_autobaud_speed: max baudrate supported by device in autobaud mode
+@@ -140,6 +143,7 @@ struct bcm_device {
+ #endif
+ 	bool			no_early_set_baudrate;
+ 	bool			drive_rts_on_open;
++	bool			no_uart_clock_set;
+ 	bool			use_autobaud_mode;
+ 	u8			pcm_int_params[5];
+ 	u32			max_autobaud_speed;
+@@ -172,10 +176,11 @@ static inline void host_set_baudrate(struct hci_uart *hu, unsigned int speed)
+ static int bcm_set_baudrate(struct hci_uart *hu, unsigned int speed)
+ {
+ 	struct hci_dev *hdev = hu->hdev;
++	struct bcm_data *bcm = hu->priv;
+ 	struct sk_buff *skb;
+ 	struct bcm_update_uart_baud_rate param;
+ 
+-	if (speed > 3000000) {
++	if (speed > 3000000 && !bcm->dev->no_uart_clock_set) {
+ 		struct bcm_write_uart_clock_setting clock;
+ 
+ 		clock.type = BCM_UART_CLOCK_48MHZ;
+@@ -1529,6 +1534,7 @@ static int bcm_serdev_probe(struct serdev_device *serdev)
+ 		bcmdev->max_autobaud_speed = data->max_autobaud_speed;
+ 		bcmdev->no_early_set_baudrate = data->no_early_set_baudrate;
+ 		bcmdev->drive_rts_on_open = data->drive_rts_on_open;
++		bcmdev->no_uart_clock_set = data->no_uart_clock_set;
+ 	}
+ 
+ 	return hci_uart_register_device(&bcmdev->serdev_hu, &bcm_proto);
+@@ -1550,6 +1556,10 @@ static struct bcm_device_data bcm43438_device_data = {
+ 	.drive_rts_on_open = true,
+ };
+ 
++static struct bcm_device_data cyw4373a0_device_data = {
++	.no_uart_clock_set = true,
++};
++
+ static struct bcm_device_data cyw55572_device_data = {
+ 	.max_autobaud_speed = 921600,
+ };
+@@ -1566,6 +1576,7 @@ static const struct of_device_id bcm_bluetooth_of_match[] = {
+ 	{ .compatible = "brcm,bcm4349-bt", .data = &bcm43438_device_data },
+ 	{ .compatible = "brcm,bcm43540-bt", .data = &bcm4354_device_data },
+ 	{ .compatible = "brcm,bcm4335a0" },
++	{ .compatible = "cypress,cyw4373a0-bt", .data = &cyw4373a0_device_data },
+ 	{ .compatible = "infineon,cyw55572-bt", .data = &cyw55572_device_data },
+ 	{ },
+ };
 -- 
 2.35.1
 
