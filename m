@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B8621863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:31:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2084C433D2;
-	Wed, 28 Dec 2022 15:31:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32F01863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:31:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4919FC433EF;
+	Wed, 28 Dec 2022 15:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241464;
-	bh=rBurc719qreKJtfryobjI1i8Mmm+/tDZv21DfTcX+nM=;
+	s=korg; t=1672241466;
+	bh=kcQgg9ehBOzyXNlFza6/yPpkNfY3mOMvIREc/aWgUCM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hHrV4sZ/MraqCF9rB+iQ9wR3FtyjagIOTmeJT1KGPsbssrr+E4e3X9TUlydsjkUYo
-	 MQJL16CI5YShw1QwBvuYqDHIV2lgAawthm80iajRzEcKzV1Yh6ys2J+dr9xkbLHqr0
-	 AbPV+JQRxm4qkLgfPJsgVKkiMVayUbK1YDppEKwU=
+	b=WtPly31/8986AqQVPdm5kJU26bfTuwnKz9LckEcSfhjJRBkRi6WconWhbVVQpDoYJ
+	 ejAkKKkHc+Ey3EHWhFG458wcS20OhUecG3duV0qe0n0T+NAefmV/2lU9zZsxTM23CD
+	 WDthQTzwkUe/8dKB7KUdsW7HllPVLkCngO1KZnWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Cosmin Tanislav <cosmin.tanislav@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 485/731] chardev: fix error handling in cdev_device_add()
-Date: Wed, 28 Dec 2022 15:39:52 +0100
-Message-Id: <20221228144310.607975323@linuxfoundation.org>
+Subject: [PATCH 5.15 473/731] iio: temperature: ltc2983: make bulk write buffer DMA-safe
+Date: Wed, 28 Dec 2022 15:39:40 +0100
+Message-Id: <20221228144310.261135296@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -34,52 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Cosmin Tanislav <cosmin.tanislav@analog.com>
 
-[ Upstream commit 11fa7fefe3d8fac7da56bc9aa3dd5fb3081ca797 ]
+[ Upstream commit 5e0176213949724fbe9a8e4a39817edce337b8a0 ]
 
-While doing fault injection test, I got the following report:
+regmap_bulk_write() does not guarantee implicit DMA-safety,
+even though the current implementation duplicates the given
+buffer. Do not rely on it.
 
-------------[ cut here ]------------
-kobject: '(null)' (0000000039956980): is not initialized, yet kobject_put() is being called.
-WARNING: CPU: 3 PID: 6306 at kobject_put+0x23d/0x4e0
-CPU: 3 PID: 6306 Comm: 283 Tainted: G        W          6.1.0-rc2-00005-g307c1086d7c9 #1253
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
-RIP: 0010:kobject_put+0x23d/0x4e0
-Call Trace:
- <TASK>
- cdev_device_add+0x15e/0x1b0
- __iio_device_register+0x13b4/0x1af0 [industrialio]
- __devm_iio_device_register+0x22/0x90 [industrialio]
- max517_probe+0x3d8/0x6b4 [max517]
- i2c_device_probe+0xa81/0xc00
-
-When device_add() is injected fault and returns error, if dev->devt is not set,
-cdev_add() is not called, cdev_del() is not needed. Fix this by checking dev->devt
-in error path.
-
-Fixes: 233ed09d7fda ("chardev: add helper function to register char devs with a struct device")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221202030237.520280-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f110f3188e56 ("iio: temperature: Add support for LTC2983")
+Signed-off-by: Cosmin Tanislav <cosmin.tanislav@analog.com>
+Link: https://lore.kernel.org/r/20221103130041.2153295-2-demonsingur@gmail.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/char_dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/temperature/ltc2983.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/char_dev.c b/fs/char_dev.c
-index ba0ded7842a7..3f667292608c 100644
---- a/fs/char_dev.c
-+++ b/fs/char_dev.c
-@@ -547,7 +547,7 @@ int cdev_device_add(struct cdev *cdev, struct device *dev)
- 	}
+diff --git a/drivers/iio/temperature/ltc2983.c b/drivers/iio/temperature/ltc2983.c
+index 8306daa77908..b2ae2d2c7eef 100644
+--- a/drivers/iio/temperature/ltc2983.c
++++ b/drivers/iio/temperature/ltc2983.c
+@@ -205,6 +205,7 @@ struct ltc2983_data {
+ 	 * Holds the converted temperature
+ 	 */
+ 	__be32 temp ____cacheline_aligned;
++	__be32 chan_val;
+ };
  
- 	rc = device_add(dev);
--	if (rc)
-+	if (rc && dev->devt)
- 		cdev_del(cdev);
+ struct ltc2983_sensor {
+@@ -309,19 +310,18 @@ static int __ltc2983_fault_handler(const struct ltc2983_data *st,
+ 	return 0;
+ }
  
- 	return rc;
+-static int __ltc2983_chan_assign_common(const struct ltc2983_data *st,
++static int __ltc2983_chan_assign_common(struct ltc2983_data *st,
+ 					const struct ltc2983_sensor *sensor,
+ 					u32 chan_val)
+ {
+ 	u32 reg = LTC2983_CHAN_START_ADDR(sensor->chan);
+-	__be32 __chan_val;
+ 
+ 	chan_val |= LTC2983_CHAN_TYPE(sensor->type);
+ 	dev_dbg(&st->spi->dev, "Assign reg:0x%04X, val:0x%08X\n", reg,
+ 		chan_val);
+-	__chan_val = cpu_to_be32(chan_val);
+-	return regmap_bulk_write(st->regmap, reg, &__chan_val,
+-				 sizeof(__chan_val));
++	st->chan_val = cpu_to_be32(chan_val);
++	return regmap_bulk_write(st->regmap, reg, &st->chan_val,
++				 sizeof(st->chan_val));
+ }
+ 
+ static int __ltc2983_chan_custom_sensor_assign(struct ltc2983_data *st,
 -- 
 2.35.1
 
