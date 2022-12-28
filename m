@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81571C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:48:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69D95C433D2;
-	Wed, 28 Dec 2022 16:48:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D2121C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:48:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C27C433D2;
+	Wed, 28 Dec 2022 16:48:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246098;
-	bh=T2xzC8VcMURXvVDF6sbFKUXF9JoG/z82gplZpt5oZRI=;
+	s=korg; t=1672246101;
+	bh=Nr7Czi64UOU5LI7QtmOhNRgux5NWwntjgCqwpLPPEEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ec6hB7VsVfYbDTgFc6K6xoFYpZfMcEADpy6NSZ62HxLX1B3IAG8QvkrNVWvkY+OrY
-	 a9CkmW+QGNEnuTBA9VQvEcUPllAF1r0Z5iZP08qWym5oeBUdTF2xedPRPtfKJrplP4
-	 PHgNk8UrN1t+LxcjBb0qXb73PtfFK7GzckQ3wvp0=
+	b=C4h0cwdZTW6qRgaiPZm2FD8PXWWxdHoVQpxJO41ZjGYKPh6wKkBg7YXNwcr2npZdD
+	 3SE0xsh/KfvNUxDUpUDT6rHN5PuTrtr/XWYV0HK7yjSiFO55ZdJCY21Gkzx1ItXGYl
+	 NM5FQk1rBh71ljNcw39GaZJAcowkdS/27QqF5Nlg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Moore <paul@paul-moore.com>,
-	James Morris <jmorris@namei.org>,
-	"Serge E. Hallyn" <serge@hallyn.com>,
-	linux-security-module@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
-	Ping-Ke Shih <pkshih@realtek.com>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 1012/1073] LoadPin: Ignore the "contents" argument of the LSM hooks
-Date: Wed, 28 Dec 2022 15:43:20 +0100
-Message-Id: <20221228144355.655176782@linuxfoundation.org>
+Subject: [PATCH 6.1 0963/1146] ACPI: x86: Add skip i2c clients quirk for Medion Lifetab S10346
+Date: Wed, 28 Dec 2022 15:41:42 +0100
+Message-Id: <20221228144356.478801122@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,83 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 1a17e5b513ceebf21100027745b8731b4728edf7 ]
+[ Upstream commit ecc6aaabcedc276128315f57755364106017c606 ]
 
-LoadPin only enforces the read-only origin of kernel file reads. Whether
-or not it was a partial read isn't important. Remove the overly
-conservative checks so that things like partial firmware reads will
-succeed (i.e. reading a firmware header).
+The Medion Lifetab S10346 is a x86 tablet which ships with Android x86 as
+factory OS. The Android x86 kernel fork ignores I2C devices described in
+the DSDT, except for the PMIC and Audio codecs.
 
-Fixes: 2039bda1fa8d ("LSM: Add "contents" flag to kernel_read_file hook")
-Cc: Paul Moore <paul@paul-moore.com>
-Cc: James Morris <jmorris@namei.org>
-Cc: "Serge E. Hallyn" <serge@hallyn.com>
-Cc: linux-security-module@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Acked-by: Serge Hallyn <serge@hallyn.com>
-Tested-by: Ping-Ke Shih <pkshih@realtek.com>
-Link: https://lore.kernel.org/r/20221209195453.never.494-kees@kernel.org
+As usual the Medion Lifetab S10346's DSDT contains a bunch of extra I2C
+devices which are not actually there, causing various resource conflicts.
+Add an ACPI_QUIRK_SKIP_I2C_CLIENTS quirk for the Medion Lifetab S10346 to
+the acpi_quirk_skip_dmi_ids table to woraround this.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/loadpin/loadpin.c | 30 ++++++++++++++++++------------
- 1 file changed, 18 insertions(+), 12 deletions(-)
+ drivers/acpi/x86/utils.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/security/loadpin/loadpin.c b/security/loadpin/loadpin.c
-index 44521582dcba..d6767fddbd5a 100644
---- a/security/loadpin/loadpin.c
-+++ b/security/loadpin/loadpin.c
-@@ -120,21 +120,11 @@ static void loadpin_sb_free_security(struct super_block *mnt_sb)
- 	}
- }
- 
--static int loadpin_read_file(struct file *file, enum kernel_read_file_id id,
--			     bool contents)
-+static int loadpin_check(struct file *file, enum kernel_read_file_id id)
- {
- 	struct super_block *load_root;
- 	const char *origin = kernel_read_file_id_str(id);
- 
--	/*
--	 * If we will not know that we'll be seeing the full contents
--	 * then we cannot trust a load will be complete and unchanged
--	 * off disk. Treat all contents=false hooks as if there were
--	 * no associated file struct.
--	 */
--	if (!contents)
--		file = NULL;
--
- 	/* If the file id is excluded, ignore the pinning. */
- 	if ((unsigned int)id < ARRAY_SIZE(ignore_read_file_id) &&
- 	    ignore_read_file_id[id]) {
-@@ -190,9 +180,25 @@ static int loadpin_read_file(struct file *file, enum kernel_read_file_id id,
- 	return 0;
- }
- 
-+static int loadpin_read_file(struct file *file, enum kernel_read_file_id id,
-+			     bool contents)
-+{
-+	/*
-+	 * LoadPin only cares about the _origin_ of a file, not its
-+	 * contents, so we can ignore the "are full contents available"
-+	 * argument here.
-+	 */
-+	return loadpin_check(file, id);
-+}
-+
- static int loadpin_load_data(enum kernel_load_data_id id, bool contents)
- {
--	return loadpin_read_file(NULL, (enum kernel_read_file_id) id, contents);
-+	/*
-+	 * LoadPin only cares about the _origin_ of a file, not its
-+	 * contents, so a NULL file is passed, and we can ignore the
-+	 * state of "contents".
-+	 */
-+	return loadpin_check(NULL, (enum kernel_read_file_id) id);
- }
- 
- static struct security_hook_list loadpin_hooks[] __lsm_ro_after_init = {
+diff --git a/drivers/acpi/x86/utils.c b/drivers/acpi/x86/utils.c
+index 635de40b5822..4e816bb402f6 100644
+--- a/drivers/acpi/x86/utils.c
++++ b/drivers/acpi/x86/utils.c
+@@ -329,6 +329,17 @@ static const struct dmi_system_id acpi_quirk_skip_dmi_ids[] = {
+ 		.driver_data = (void *)(ACPI_QUIRK_SKIP_I2C_CLIENTS |
+ 					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY),
+ 	},
++	{
++		/* Medion Lifetab S10346 */
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "AMI Corporation"),
++			DMI_MATCH(DMI_BOARD_NAME, "Aptio CRB"),
++			/* Way too generic, also match on BIOS data */
++			DMI_MATCH(DMI_BIOS_DATE, "10/22/2015"),
++		},
++		.driver_data = (void *)(ACPI_QUIRK_SKIP_I2C_CLIENTS |
++					ACPI_QUIRK_SKIP_ACPI_AC_AND_BATTERY),
++	},
+ 	{
+ 		/* Nextbook Ares 8 */
+ 		.matches = {
 -- 
 2.35.1
 
