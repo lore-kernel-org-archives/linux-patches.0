@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E011863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45EC9C433F0;
-	Wed, 28 Dec 2022 15:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CC6E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA326C433D2;
+	Wed, 28 Dec 2022 15:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240049;
-	bh=4AjZPYIngutGlWr0f4CqedX5psR2DyI2/NdMi8XVdgM=;
+	s=korg; t=1672240052;
+	bh=C5LCNxx27JrnHNGcVXG8Z8y7QGx76sJN0z+c5Ri6/5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KnEK4SaxEuewzJMrUt+FqX1wg8xVQSeSHC56SiK2bv+rU0oy5npOmmdMnc9vTebG/
-	 FXKvzqhPok5X8wmGpI0m1FvtwKmNHZUkj1Y0T0Za2ZC9f4ssHVhxQZGCXXbeL6mdju
-	 ZnAANhqxvA8wjROb1RCx25Ud4bA1CNtbuX4Rn2NY=
+	b=C0ggtjPaZ8/nXiER6bp2xwvGwXYYK5CGxtvpUu6bPwWYTa0fYhftCh8zpqHVXWL0A
+	 1JwMSOkQLEBI5UIadDFNP9CuRw6kUns/C4nUHqSI3TsIJEXCSTHRCozY2RH56HBEzq
+	 XkGC25mYCD9izAZa3uPT5ZKC7MH/WhgYViAMnp+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yipeng Zou <zouyipeng@huawei.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0112/1073] selftests/ftrace: event_triggers: wait longer for test_event_enable
-Date: Wed, 28 Dec 2022 15:28:20 +0100
-Message-Id: <20221228144331.083695812@linuxfoundation.org>
+Subject: [PATCH 6.1 0075/1146] arm64: dts: mt2712-evb: Fix usb vbus regulators unit names
+Date: Wed, 28 Dec 2022 15:26:54 +0100
+Message-Id: <20221228144332.188496352@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,55 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yipeng Zou <zouyipeng@huawei.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit a1d6cd88c8973cfb08ee85722488b1d6d5d16327 ]
+[ Upstream commit ec1ae39a8d25cfb067b5459fac7c5b7b9bce6f6a ]
 
-In some platform, the schedule event may came slowly, delay 100ms can't
-cover it.
+Update the names to regulator-usb-p{0-3}-vbus to fix unit_address_vs_reg
+warnings for those.
 
-I was notice that on my board which running in low cpu_freq,and this
-selftests allways gose fail.
-
-So maybe we can check more times here to wait longer.
-
-Fixes: 43bb45da82f9 ("selftests: ftrace: Add a selftest to test event enable/disable func trigger")
-Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: 1724f4cc5133 ("arm64: dts: Add USB3 related nodes for MT2712")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221013152212.416661-7-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ftrace/test.d/ftrace/func_event_triggers.tc   | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt2712-evb.dts | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc b/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-index 3145b0f1835c..27a68bbe778b 100644
---- a/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-+++ b/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-@@ -38,11 +38,18 @@ cnt_trace() {
+diff --git a/arch/arm64/boot/dts/mediatek/mt2712-evb.dts b/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
+index 638908773706..d31a194124c9 100644
+--- a/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
++++ b/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
+@@ -50,7 +50,7 @@ extcon_usb1: extcon_iddig1 {
+ 		id-gpio = <&pio 14 GPIO_ACTIVE_HIGH>;
+ 	};
  
- test_event_enabled() {
-     val=$1
-+    check_times=10		# wait for 10 * SLEEP_TIME at most
+-	usb_p0_vbus: regulator@2 {
++	usb_p0_vbus: regulator-usb-p0-vbus {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "p0_vbus";
+ 		regulator-min-microvolt = <5000000>;
+@@ -59,7 +59,7 @@ usb_p0_vbus: regulator@2 {
+ 		enable-active-high;
+ 	};
  
--    e=`cat $EVENT_ENABLE`
--    if [ "$e" != $val ]; then
--	fail "Expected $val but found $e"
--    fi
-+    while [ $check_times -ne 0 ]; do
-+	e=`cat $EVENT_ENABLE`
-+	if [ "$e" == $val ]; then
-+	    return 0
-+	fi
-+	sleep $SLEEP_TIME
-+	check_times=$((check_times - 1))
-+    done
-+
-+    fail "Expected $val but found $e"
- }
+-	usb_p1_vbus: regulator@3 {
++	usb_p1_vbus: regulator-usb-p1-vbus {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "p1_vbus";
+ 		regulator-min-microvolt = <5000000>;
+@@ -68,7 +68,7 @@ usb_p1_vbus: regulator@3 {
+ 		enable-active-high;
+ 	};
  
- run_enable_disable() {
+-	usb_p2_vbus: regulator@4 {
++	usb_p2_vbus: regulator-usb-p2-vbus {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "p2_vbus";
+ 		regulator-min-microvolt = <5000000>;
+@@ -77,7 +77,7 @@ usb_p2_vbus: regulator@4 {
+ 		enable-active-high;
+ 	};
+ 
+-	usb_p3_vbus: regulator@5 {
++	usb_p3_vbus: regulator-usb-p3-vbus {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "p3_vbus";
+ 		regulator-min-microvolt = <5000000>;
 -- 
 2.35.1
 
