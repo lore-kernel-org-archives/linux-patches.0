@@ -1,31 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7D01863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4C48C433D2;
-	Wed, 28 Dec 2022 15:35:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 193D61863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61B54C433EF;
+	Wed, 28 Dec 2022 15:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241727;
-	bh=9KD5OCoC0YJkvftoA1jVJtMMDw0Lti+yrxap7kps9gc=;
+	s=korg; t=1672241729;
+	bh=EkiMvV3HvX3sxagCjGoLMgx9jwP3adKq+9H8iXqZ68Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pWwUbR+2ZspX922p0CY5EWvrqra+Ohn63K8rXf0bA7i2V3mzkEpxeDQUWGYwASXUJ
-	 WS3Of2RyJQ5w3VOesTq3DPghE7eeu5uOKRT6whqKB63mYRcGRpK2nms8CtHxrY5FfI
-	 hFDKmmnNTB0bjeYcUHu55tFJV6tjsiU+gtYkfzJE=
+	b=Llg2kYVFpHcdHWQrH8o0lq5nvxE9MTj850thKGUUOTarpyWar+Y+BT92FvcpT6qB7
+	 3EeZoiKJh0PvH5AzQ4xepP+21A5/MXTrWLlFUw1BILPK/3vuvGu/0PLLPW/1pQQenK
+	 Tx37nfrUmMPTFX8Ke6PcAL8xPUQoSzWAeWtWQgkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
+	Leo Yan <leo.yan@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	bpf@vger.kernel.org,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0282/1146] drm/msm/dsi: Appropriately set dsc->mux_word_size based on bpc
-Date: Wed, 28 Dec 2022 15:30:21 +0100
-Message-Id: <20221228144337.799585902@linuxfoundation.org>
+Subject: [PATCH 5.15 516/731] perf trace: Handle failure when trace point folder is missed
+Date: Wed, 28 Dec 2022 15:40:23 +0100
+Message-Id: <20221228144311.501682140@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,53 +43,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Leo Yan <leo.yan@linaro.org>
 
-[ Upstream commit 0ca870ca304d3449b2ccdc3f0bad9843ff1519f0 ]
+[ Upstream commit 03e9a5d8eb552a1bf692a9c8a5ecd50f4e428006 ]
 
-This field is currently unread but will come into effect when duplicated
-code below is migrated to call drm_dsc_compute_rc_parameters(), which
-uses the bpc-dependent value of the local variable mux_words_size in
-much the same way.
+On Arm64 a case is perf tools fails to find the corresponding trace
+point folder for system calls listed in the table 'syscalltbl_arm64',
+e.g. the generated system call table contains "lookup_dcookie" but we
+cannot find out the matched trace point folder for it.
 
-The hardcoded constant seems to be a remnant from the `/* bpc 8 */`
-comment right above, indicating that this group of field assignments is
-applicable to bpc = 8 exclusively and should probably bail out on
-different bpc values, until constants for other bpc values are added (or
-the current ones are confirmed to be correct across multiple bpc's).
+We need to figure out if there have any issue for the generated system
+call table, on the other hand, we need to handle the case when trace
+point folder is missed under sysfs, this patch sets the flag
+syscall::nonexistent as true and returns the error from
+trace__read_syscall_info().
 
-Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Patchwork: https://patchwork.freedesktop.org/patch/508943/
-Link: https://lore.kernel.org/r/20221026182824.876933-6-marijn.suijten@somainline.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Another problem is for trace__syscall_info(), it returns two different
+values if a system call doesn't exist: at the first time calling
+trace__syscall_info() it returns NULL when the system call doesn't exist,
+later if call trace__syscall_info() again for the same missed system
+call, it returns pointer of syscall.  trace__syscall_info() checks the
+condition 'syscalls.table[id].name == NULL', but the name will be
+assigned in the first invoking even the system call is not found.
+
+So checking system call's name in trace__syscall_info() is not the right
+thing to do, this patch simply checks flag syscall::nonexistent to make
+decision if a system call exists or not, finally trace__syscall_info()
+returns the consistent result (NULL) if a system call doesn't existed.
+
+Fixes: b8b1033fcaa091d8 ("perf trace: Mark syscall ids that are not allocated to avoid unnecessary error messages")
+Signed-off-by: Leo Yan <leo.yan@linaro.org>
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: bpf@vger.kernel.org
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20221121075237.127706-4-leo.yan@linaro.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/builtin-trace.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index c3156e9066f5..906ee38133c1 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1786,6 +1786,7 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
- 	if (dsc->bits_per_component == 12)
- 		mux_words_size = 64;
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index c1db48ff01a5..2fea9952818f 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -1802,13 +1802,19 @@ static int trace__read_syscall_info(struct trace *trace, int id)
+ 		sc->tp_format = trace_event__tp_format("syscalls", tp_name);
+ 	}
  
-+	dsc->mux_word_size = mux_words_size;
- 	dsc->initial_xmit_delay = 512;
- 	dsc->initial_scale_value = 32;
- 	dsc->first_line_bpg_offset = 12;
-@@ -1796,7 +1797,6 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
- 	dsc->flatness_max_qp = 12;
- 	dsc->rc_quant_incr_limit0 = 11;
- 	dsc->rc_quant_incr_limit1 = 11;
--	dsc->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
++	/*
++	 * Fails to read trace point format via sysfs node, so the trace point
++	 * doesn't exist.  Set the 'nonexistent' flag as true.
++	 */
++	if (IS_ERR(sc->tp_format)) {
++		sc->nonexistent = true;
++		return PTR_ERR(sc->tp_format);
++	}
++
+ 	if (syscall__alloc_arg_fmts(sc, IS_ERR(sc->tp_format) ?
+ 					RAW_SYSCALL_ARGS_NUM : sc->tp_format->format.nr_fields))
+ 		return -ENOMEM;
  
- 	/* FIXME: need to call drm_dsc_compute_rc_parameters() so that rest of
- 	 * params are calculated
+-	if (IS_ERR(sc->tp_format))
+-		return PTR_ERR(sc->tp_format);
+-
+ 	sc->args = sc->tp_format->format.fields;
+ 	/*
+ 	 * We need to check and discard the first variable '__syscall_nr'
+@@ -2125,11 +2131,8 @@ static struct syscall *trace__syscall_info(struct trace *trace,
+ 	    (err = trace__read_syscall_info(trace, id)) != 0)
+ 		goto out_cant_read;
+ 
+-	if (trace->syscalls.table[id].name == NULL) {
+-		if (trace->syscalls.table[id].nonexistent)
+-			return NULL;
++	if (trace->syscalls.table && trace->syscalls.table[id].nonexistent)
+ 		goto out_cant_read;
+-	}
+ 
+ 	return &trace->syscalls.table[id];
+ 
 -- 
 2.35.1
 
