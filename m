@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80D61863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AED9C433D2;
-	Wed, 28 Dec 2022 15:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52ECC1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8853C433EF;
+	Wed, 28 Dec 2022 15:38:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241918;
-	bh=srbhyofZhUa3gEkfsQwea/xtykDIeRGFFJLXt2xcoOo=;
+	s=korg; t=1672241921;
+	bh=1yS5ZiO4I4cvZ+6wIElHWtR1ssr18Zd8PCaPJOAdhHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LJRiRCxOkMQBkCPgaXcsOVVuaUwZBLPeWZsLgjj4Yaw/1cwDuPQXTfmSVic20JGQU
-	 gvp9awUVgDjEpUK6QeWozIBdEkr6Bybisri7HtuakHMDThCpcEPVekb9Pgxa07G9Vz
-	 RnGazL51S3QYMCJYUx8o0iGdqraz+jPEqxBZa4Fk=
+	b=GvD8+LAvb+NkFwQdoq528oCmH88JUlRlPCYgfV9R5uUlZH6IqcL1DXHOisyMrZ/WJ
+	 x494DolQjSE/xeqWPYjadMCK6x0qF9WgXw26Puju/sl4xMrEmOKbZTOOQ9X5gA5WTf
+	 3ytl4uO8YwC5VRLVMd8inFhsi9biQMd/4DFGITKw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 542/731] rtc: cmos: Call cmos_wake_setup() from cmos_do_probe()
-Date: Wed, 28 Dec 2022 15:40:49 +0100
-Message-Id: <20221228144312.252489324@linuxfoundation.org>
+Subject: [PATCH 6.1 0305/1146] clk: renesas: r8a779f0: Fix SCIF parent clocks
+Date: Wed, 28 Dec 2022 15:30:44 +0100
+Message-Id: <20221228144338.438355345@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,145 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 508ccdfb86b21da37ad091003a4d4567709d5dfb ]
+[ Upstream commit 2e0d7d3eabce3babae1fd66d7650e00c848a3b45 ]
 
-Notice that cmos_wake_setup() is the only user of acpi_rtc_info and it
-can operate on the cmos_rtc variable directly, so it need not set the
-platform_data pointer before cmos_do_probe() is called.  Instead, it
-can be called by cmos_do_probe() in the case when the platform_data
-pointer is not set to implement the default behavior (which is to use
-the FADT information as long as ACPI support is enabled).
+As serial communication requires a clean clock signal, the Serial
+Communication Interfaces with FIFO (SCIF) are clocked by a clock that is
+not affected by Spread Spectrum or Fractional Multiplication.
 
-Modify the code accordingly.
+Hence change the parent clocks for the SCIF modules from the S0D12_PER
+clock to the SASYNCPERD4 clock (which has the same clock rate), cfr.
+R-Car S4-8 Hardware User's Manual rev. 0.81.
 
-While at it, drop a comment that doesn't really match the code it is
-supposed to be describing.
-
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Zhang Rui <rui.zhang@intel.com>
-Tested-by: Zhang Rui <rui.zhang@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/4803444.31r3eYUQgx@kreacher
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
+Fixes: 24aaff6a6ce4 ("clk: renesas: cpg-mssr: Add support for R-Car S4-8")
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/20221103143440.46449-3-wsa+renesas@sang-engineering.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 47 ++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 25 deletions(-)
+ drivers/clk/renesas/r8a779f0-cpg-mssr.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 58cc2bae2f8a..a84262265d6d 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -744,6 +744,8 @@ static irqreturn_t cmos_interrupt(int irq, void *p)
- 		return IRQ_NONE;
- }
- 
-+static void cmos_wake_setup(struct device *dev);
-+
- #ifdef	CONFIG_PNP
- #define	INITSECTION
- 
-@@ -827,19 +829,27 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
- 		if (info->address_space)
- 			address_space = info->address_space;
- 
--		if (info->rtc_day_alarm && info->rtc_day_alarm < 128)
--			cmos_rtc.day_alrm = info->rtc_day_alarm;
--		if (info->rtc_mon_alarm && info->rtc_mon_alarm < 128)
--			cmos_rtc.mon_alrm = info->rtc_mon_alarm;
--		if (info->rtc_century && info->rtc_century < 128)
--			cmos_rtc.century = info->rtc_century;
-+		cmos_rtc.day_alrm = info->rtc_day_alarm;
-+		cmos_rtc.mon_alrm = info->rtc_mon_alarm;
-+		cmos_rtc.century = info->rtc_century;
- 
- 		if (info->wake_on && info->wake_off) {
- 			cmos_rtc.wake_on = info->wake_on;
- 			cmos_rtc.wake_off = info->wake_off;
- 		}
-+	} else {
-+		cmos_wake_setup(dev);
- 	}
- 
-+	if (cmos_rtc.day_alrm >= 128)
-+		cmos_rtc.day_alrm = 0;
-+
-+	if (cmos_rtc.mon_alrm >= 128)
-+		cmos_rtc.mon_alrm = 0;
-+
-+	if (cmos_rtc.century >= 128)
-+		cmos_rtc.century = 0;
-+
- 	cmos_rtc.dev = dev;
- 	dev_set_drvdata(dev, &cmos_rtc);
- 
-@@ -1275,13 +1285,6 @@ static void use_acpi_alarm_quirks(void)
- static inline void use_acpi_alarm_quirks(void) { }
- #endif
- 
--/* Every ACPI platform has a mc146818 compatible "cmos rtc".  Here we find
-- * its device node and pass extra config data.  This helps its driver use
-- * capabilities that the now-obsolete mc146818 didn't have, and informs it
-- * that this board's RTC is wakeup-capable (per ACPI spec).
-- */
--static struct cmos_rtc_board_info acpi_rtc_info;
--
- static void cmos_wake_setup(struct device *dev)
- {
- 	if (acpi_disabled)
-@@ -1289,26 +1292,23 @@ static void cmos_wake_setup(struct device *dev)
- 
- 	use_acpi_alarm_quirks();
- 
--	acpi_rtc_info.wake_on = rtc_wake_on;
--	acpi_rtc_info.wake_off = rtc_wake_off;
-+	cmos_rtc.wake_on = rtc_wake_on;
-+	cmos_rtc.wake_off = rtc_wake_off;
- 
--	/* workaround bug in some ACPI tables */
-+	/* ACPI tables bug workaround. */
- 	if (acpi_gbl_FADT.month_alarm && !acpi_gbl_FADT.day_alarm) {
- 		dev_dbg(dev, "bogus FADT month_alarm (%d)\n",
- 			acpi_gbl_FADT.month_alarm);
- 		acpi_gbl_FADT.month_alarm = 0;
- 	}
- 
--	acpi_rtc_info.rtc_day_alarm = acpi_gbl_FADT.day_alarm;
--	acpi_rtc_info.rtc_mon_alarm = acpi_gbl_FADT.month_alarm;
--	acpi_rtc_info.rtc_century = acpi_gbl_FADT.century;
-+	cmos_rtc.day_alrm = acpi_gbl_FADT.day_alarm;
-+	cmos_rtc.mon_alrm = acpi_gbl_FADT.month_alarm;
-+	cmos_rtc.century = acpi_gbl_FADT.century;
- 
--	/* NOTE:  S4_RTC_WAKE is NOT currently useful to Linux */
- 	if (acpi_gbl_FADT.flags & ACPI_FADT_S4_RTC_WAKE)
- 		dev_info(dev, "RTC can wake from S4\n");
- 
--	dev->platform_data = &acpi_rtc_info;
--
- 	/* RTC always wakes from S1/S2/S3, and often S4/STD */
- 	device_init_wakeup(dev, 1);
- }
-@@ -1359,8 +1359,6 @@ static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
- {
- 	int irq, ret;
- 
--	cmos_wake_setup(&pnp->dev);
--
- 	if (pnp_port_start(pnp, 0) == 0x70 && !pnp_irq_valid(pnp, 0)) {
- 		irq = 0;
- #ifdef CONFIG_X86
-@@ -1468,7 +1466,6 @@ static int __init cmos_platform_probe(struct platform_device *pdev)
- 	int irq, ret;
- 
- 	cmos_of_init(pdev);
--	cmos_wake_setup(&pdev->dev);
- 
- 	if (RTC_IOMAPPED)
- 		resource = platform_get_resource(pdev, IORESOURCE_IO, 0);
+diff --git a/drivers/clk/renesas/r8a779f0-cpg-mssr.c b/drivers/clk/renesas/r8a779f0-cpg-mssr.c
+index f293a8a54fb2..27b668def357 100644
+--- a/drivers/clk/renesas/r8a779f0-cpg-mssr.c
++++ b/drivers/clk/renesas/r8a779f0-cpg-mssr.c
+@@ -142,10 +142,10 @@ static const struct mssr_mod_clk r8a779f0_mod_clks[] __initconst = {
+ 	DEF_MOD("msiof3",	621,	R8A779F0_CLK_MSO),
+ 	DEF_MOD("pcie0",	624,	R8A779F0_CLK_S0D2),
+ 	DEF_MOD("pcie1",	625,	R8A779F0_CLK_S0D2),
+-	DEF_MOD("scif0",	702,	R8A779F0_CLK_S0D12_PER),
+-	DEF_MOD("scif1",	703,	R8A779F0_CLK_S0D12_PER),
+-	DEF_MOD("scif3",	704,	R8A779F0_CLK_S0D12_PER),
+-	DEF_MOD("scif4",	705,	R8A779F0_CLK_S0D12_PER),
++	DEF_MOD("scif0",	702,	R8A779F0_CLK_SASYNCPERD4),
++	DEF_MOD("scif1",	703,	R8A779F0_CLK_SASYNCPERD4),
++	DEF_MOD("scif3",	704,	R8A779F0_CLK_SASYNCPERD4),
++	DEF_MOD("scif4",	705,	R8A779F0_CLK_SASYNCPERD4),
+ 	DEF_MOD("sdhi0",        706,    R8A779F0_CLK_SD0),
+ 	DEF_MOD("sys-dmac0",	709,	R8A779F0_CLK_S0D3_PER),
+ 	DEF_MOD("sys-dmac1",	710,	R8A779F0_CLK_S0D3_PER),
 -- 
 2.35.1
 
