@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F241863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9DB8C433EF;
-	Wed, 28 Dec 2022 15:21:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA35D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70381C433D2;
+	Wed, 28 Dec 2022 15:21:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240874;
-	bh=oAFmwgTa0iWjrNoNZpBerzG958B+wbIs72xunWuwJbc=;
+	s=korg; t=1672240876;
+	bh=qfdjoX+aTeK0QVl/CpkxTz0Z1WWXL3X/QCgcK1LzpDk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P/I6xU0mSbNVI70Uqg3Rrbsou48mAnIpXf5i60r+Tj/ALkDd3eD1tLYgbXvjvzqmW
-	 270Rs+TcmaYDtCfuckV7TquMmKVWwdC7gw7dtyUx3/OzNYSFWgew692hj8EodAWFcA
-	 laRcq69mw4pm5xJoi04+/tGt71+rZOu1Mf140YkM=
+	b=pNV5XetQwmSCTLZlxkORNxJkuEsAcO06kf9f7Uh0NAURK8/R0G6RyQm4k/rlNqhBh
+	 PZs41lKBvWWlTWkrj8XJMsPKbwxo9isBvMYPJjB1318AK9/hnzUPfC+j76VEl1itNZ
+	 agF5o18Vdb113yGOFra+LYH4pR2BlLfy3hrtIQOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+2ae90e873e97f1faf6f2@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Zhi Li <yieli@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0177/1146] erofs: validate the extent length for uncompressed pclusters
-Date: Wed, 28 Dec 2022 15:28:36 +0100
-Message-Id: <20221228144334.963687449@linuxfoundation.org>
+Subject: [PATCH 6.1 0153/1146] nfsd: dont call nfsd_file_put from client states seqfile display
+Date: Wed, 28 Dec 2022 15:28:12 +0100
+Message-Id: <20221228144334.312174060@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -36,46 +36,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gao Xiang <hsiangkao@linux.alibaba.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit c505feba4c0d76084e56ec498ce819f02a7043ae ]
+[ Upstream commit e0aa651068bfd520afcd357af8ecd2de005fc83d ]
 
-syzkaller reported a KASAN use-after-free:
-https://syzkaller.appspot.com/bug?extid=2ae90e873e97f1faf6f2
+We had a report of this:
 
-The referenced fuzzed image actually has two issues:
- - m_pa == 0 as a non-inlined pcluster;
- - The logical length is longer than its physical length.
+    BUG: sleeping function called from invalid context at fs/nfsd/filecache.c:440
 
-The first issue has already been addressed.  This patch addresses
-the second issue by checking the extent length validity.
+...with a stack trace showing nfsd_file_put being called from
+nfs4_show_open. This code has always tried to call fput while holding a
+spinlock, but we recently changed this to use the filecache, and that
+started triggering the might_sleep() in nfsd_file_put.
 
-Reported-by: syzbot+2ae90e873e97f1faf6f2@syzkaller.appspotmail.com
-Fixes: 02827e1796b3 ("staging: erofs: add erofs_map_blocks_iter")
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20221205150050.47784-2-hsiangkao@linux.alibaba.com
+states_start takes and holds the cl_lock while iterating over the
+client's states, and we can't sleep with that held.
+
+Have the various nfs4_show_* functions instead hold the fi_lock instead
+of taking a nfsd_file reference.
+
+Fixes: 78599c42ae3c ("nfsd4: add file to display list of client's opens")
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2138357
+Reported-by: Zhi Li <yieli@redhat.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zmap.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/nfsd/nfs4state.c | 51 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 33 insertions(+), 18 deletions(-)
 
-diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
-index f49295b9f2e1..e6d5d7a18fb0 100644
---- a/fs/erofs/zmap.c
-+++ b/fs/erofs/zmap.c
-@@ -698,6 +698,11 @@ static int z_erofs_do_map_blocks(struct inode *inode,
- 	}
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 836bd825ca4a..52b5552d0d70 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -675,15 +675,26 @@ find_any_file(struct nfs4_file *f)
+ 	return ret;
+ }
  
- 	if (m.headtype == Z_EROFS_VLE_CLUSTER_TYPE_PLAIN) {
-+		if (map->m_llen > map->m_plen) {
-+			DBG_BUGON(1);
-+			err = -EFSCORRUPTED;
-+			goto unmap_out;
-+		}
- 		if (vi->z_advise & Z_EROFS_ADVISE_INTERLACED_PCLUSTER)
- 			map->m_algorithmformat =
- 				Z_EROFS_COMPRESSION_INTERLACED;
+-static struct nfsd_file *find_deleg_file(struct nfs4_file *f)
++static struct nfsd_file *find_any_file_locked(struct nfs4_file *f)
+ {
+-	struct nfsd_file *ret = NULL;
++	lockdep_assert_held(&f->fi_lock);
++
++	if (f->fi_fds[O_RDWR])
++		return f->fi_fds[O_RDWR];
++	if (f->fi_fds[O_WRONLY])
++		return f->fi_fds[O_WRONLY];
++	if (f->fi_fds[O_RDONLY])
++		return f->fi_fds[O_RDONLY];
++	return NULL;
++}
++
++static struct nfsd_file *find_deleg_file_locked(struct nfs4_file *f)
++{
++	lockdep_assert_held(&f->fi_lock);
+ 
+-	spin_lock(&f->fi_lock);
+ 	if (f->fi_deleg_file)
+-		ret = nfsd_file_get(f->fi_deleg_file);
+-	spin_unlock(&f->fi_lock);
+-	return ret;
++		return f->fi_deleg_file;
++	return NULL;
+ }
+ 
+ static atomic_long_t num_delegations;
+@@ -2613,9 +2624,11 @@ static int nfs4_show_open(struct seq_file *s, struct nfs4_stid *st)
+ 	ols = openlockstateid(st);
+ 	oo = ols->st_stateowner;
+ 	nf = st->sc_file;
+-	file = find_any_file(nf);
++
++	spin_lock(&nf->fi_lock);
++	file = find_any_file_locked(nf);
+ 	if (!file)
+-		return 0;
++		goto out;
+ 
+ 	seq_printf(s, "- ");
+ 	nfs4_show_stateid(s, &st->sc_stateid);
+@@ -2637,8 +2650,8 @@ static int nfs4_show_open(struct seq_file *s, struct nfs4_stid *st)
+ 	seq_printf(s, ", ");
+ 	nfs4_show_owner(s, oo);
+ 	seq_printf(s, " }\n");
+-	nfsd_file_put(file);
+-
++out:
++	spin_unlock(&nf->fi_lock);
+ 	return 0;
+ }
+ 
+@@ -2652,9 +2665,10 @@ static int nfs4_show_lock(struct seq_file *s, struct nfs4_stid *st)
+ 	ols = openlockstateid(st);
+ 	oo = ols->st_stateowner;
+ 	nf = st->sc_file;
+-	file = find_any_file(nf);
++	spin_lock(&nf->fi_lock);
++	file = find_any_file_locked(nf);
+ 	if (!file)
+-		return 0;
++		goto out;
+ 
+ 	seq_printf(s, "- ");
+ 	nfs4_show_stateid(s, &st->sc_stateid);
+@@ -2674,8 +2688,8 @@ static int nfs4_show_lock(struct seq_file *s, struct nfs4_stid *st)
+ 	seq_printf(s, ", ");
+ 	nfs4_show_owner(s, oo);
+ 	seq_printf(s, " }\n");
+-	nfsd_file_put(file);
+-
++out:
++	spin_unlock(&nf->fi_lock);
+ 	return 0;
+ }
+ 
+@@ -2687,9 +2701,10 @@ static int nfs4_show_deleg(struct seq_file *s, struct nfs4_stid *st)
+ 
+ 	ds = delegstateid(st);
+ 	nf = st->sc_file;
+-	file = find_deleg_file(nf);
++	spin_lock(&nf->fi_lock);
++	file = find_deleg_file_locked(nf);
+ 	if (!file)
+-		return 0;
++		goto out;
+ 
+ 	seq_printf(s, "- ");
+ 	nfs4_show_stateid(s, &st->sc_stateid);
+@@ -2705,8 +2720,8 @@ static int nfs4_show_deleg(struct seq_file *s, struct nfs4_stid *st)
+ 	seq_printf(s, ", ");
+ 	nfs4_show_fname(s, file);
+ 	seq_printf(s, " }\n");
+-	nfsd_file_put(file);
+-
++out:
++	spin_unlock(&nf->fi_lock);
+ 	return 0;
+ }
+ 
 -- 
 2.35.1
 
