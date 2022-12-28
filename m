@@ -1,31 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF9ED1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D088C433EF;
-	Wed, 28 Dec 2022 16:52:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CC911C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F400EC433D2;
+	Wed, 28 Dec 2022 16:52:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246373;
-	bh=KuoKBNcyqTfYCus5XqiP+5s9OwApLwtBqGwy//0dO0E=;
+	s=korg; t=1672246376;
+	bh=i7NGx6k2QYLA9A5GKQ456vFhq6Ix1P3Y2frCEaHptIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xFDKg+t/Z9jmMeFAbh7EU6lCrnYKV/b64ZhPpT8DALhksNWy/8FkJB3UDDlFHD6yz
-	 dIH1q0KbNBCBLi+hvmxo33eRa7l+aIpx5O4ZskgOnJzNo0eI+2TYrznLZMO3RgoIwX
-	 +B4M1VmsqZLR8Abcw7dsaaQpmkGlQmZRRnxr8+G0=
+	b=cuInupc0o09TTVuEgEiJfdyuHXzvTTKmAllSCTCs0SXPZNQwtoJUK+mgOGcWTih+m
+	 kZQKIDyWDN8WYNuYEHlEPt13Ry+hlammP2U8nnUFOUthhj/ZzT1lwHOjoG2qH/dWyn
+	 +5Nh+dIxIcaCLyhwzJBNE5g9+WzAai0AyVyzBVys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
-	Luben Tuikov <luben.tuikov@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1028/1146] drm/amdgpu: Fix potential double free and null pointer dereference
-Date: Wed, 28 Dec 2022 15:42:47 +0100
-Message-Id: <20221228144358.283271665@linuxfoundation.org>
+	David Hildenbrand <david@redhat.com>,
+	syzbot+f0b97304ef90f0d0b1dc@syzkaller.appspotmail.com,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Peter Xu <peterx@redhat.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.0 1057/1073] mm/gup: disallow FOLL_FORCE|FOLL_WRITE on hugetlb mappings
+Date: Wed, 28 Dec 2022 15:44:05 +0100
+Message-Id: <20221228144356.941640700@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,63 +39,149 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liang He <windhl@126.com>
+From: David Hildenbrand <david@redhat.com>
 
-[ Upstream commit dfd0287bd3920e132a8dae2a0ec3d92eaff5f2dd ]
+commit f347454d034184b4f0a2caf6e14daf7848cea01c upstream.
 
-In amdgpu_get_xgmi_hive(), we should not call kfree() after
-kobject_put() as the PUT will call kfree().
+hugetlb does not support fake write-faults (write faults without write
+permissions).  However, we are currently able to trigger a
+FAULT_FLAG_WRITE fault on a VMA without VM_WRITE.
 
-In amdgpu_device_ip_init(), we need to check the returned *hive*
-which can be NULL before we dereference it.
+If we'd ever want to support FOLL_FORCE|FOLL_WRITE, we'd have to teach
+hugetlb to:
 
-Signed-off-by: Liang He <windhl@126.com>
-Reviewed-by: Luben Tuikov <luben.tuikov@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+(1) Leave the page mapped R/O after the fake write-fault, like
+    maybe_mkwrite() does.
+(2) Allow writing to an exclusive anon page that's mapped R/O when
+    FOLL_FORCE is set, like can_follow_write_pte(). E.g.,
+    __follow_hugetlb_must_fault() needs adjustment.
+
+For now, it's not clear if that added complexity is really required.
+History tolds us that FOLL_FORCE is dangerous and that we better limit its
+use to a bare minimum.
+
+--------------------------------------------------------------------------
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <fcntl.h>
+  #include <unistd.h>
+  #include <errno.h>
+  #include <stdint.h>
+  #include <sys/mman.h>
+  #include <linux/mman.h>
+
+  int main(int argc, char **argv)
+  {
+          char *map;
+          int mem_fd;
+
+          map = mmap(NULL, 2 * 1024 * 1024u, PROT_READ,
+                     MAP_PRIVATE|MAP_ANON|MAP_HUGETLB|MAP_HUGE_2MB, -1, 0);
+          if (map == MAP_FAILED) {
+                  fprintf(stderr, "mmap() failed: %d\n", errno);
+                  return 1;
+          }
+
+          mem_fd = open("/proc/self/mem", O_RDWR);
+          if (mem_fd < 0) {
+                  fprintf(stderr, "open(/proc/self/mem) failed: %d\n", errno);
+                  return 1;
+          }
+
+          if (pwrite(mem_fd, "0", 1, (uintptr_t) map) == 1) {
+                  fprintf(stderr, "write() succeeded, which is unexpected\n");
+                  return 1;
+          }
+
+          printf("write() failed as expected: %d\n", errno);
+          return 0;
+  }
+--------------------------------------------------------------------------
+
+Fortunately, we have a sanity check in hugetlb_wp() in place ever since
+commit 1d8d14641fd9 ("mm/hugetlb: support write-faults in shared
+mappings"), that bails out instead of silently mapping a page writable in
+a !PROT_WRITE VMA.
+
+Consequently, above reproducer triggers a warning, similar to the one
+reported by szsbot:
+
+------------[ cut here ]------------
+WARNING: CPU: 1 PID: 3612 at mm/hugetlb.c:5313 hugetlb_wp+0x20a/0x1af0 mm/hugetlb.c:5313
+Modules linked in:
+CPU: 1 PID: 3612 Comm: syz-executor250 Not tainted 6.1.0-rc2-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/11/2022
+RIP: 0010:hugetlb_wp+0x20a/0x1af0 mm/hugetlb.c:5313
+Code: ea 03 80 3c 02 00 0f 85 31 14 00 00 49 8b 5f 20 31 ff 48 89 dd 83 e5 02 48 89 ee e8 70 ab b7 ff 48 85 ed 75 5b e8 76 ae b7 ff <0f> 0b 41 bd 40 00 00 00 e8 69 ae b7 ff 48 b8 00 00 00 00 00 fc ff
+RSP: 0018:ffffc90003caf620 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: 0000000008640070 RCX: 0000000000000000
+RDX: ffff88807b963a80 RSI: ffffffff81c4ed2a RDI: 0000000000000007
+RBP: 0000000000000000 R08: 0000000000000007 R09: 0000000000000000
+R10: 0000000000000000 R11: 000000000008c07e R12: ffff888023805800
+R13: 0000000000000000 R14: ffffffff91217f38 R15: ffff88801d4b0360
+FS:  0000555555bba300(0000) GS:ffff8880b9b00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fff7a47a1b8 CR3: 000000002378d000 CR4: 00000000003506e0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+ <TASK>
+ hugetlb_no_page mm/hugetlb.c:5755 [inline]
+ hugetlb_fault+0x19cc/0x2060 mm/hugetlb.c:5874
+ follow_hugetlb_page+0x3f3/0x1850 mm/hugetlb.c:6301
+ __get_user_pages+0x2cb/0xf10 mm/gup.c:1202
+ __get_user_pages_locked mm/gup.c:1434 [inline]
+ __get_user_pages_remote+0x18f/0x830 mm/gup.c:2187
+ get_user_pages_remote+0x84/0xc0 mm/gup.c:2260
+ __access_remote_vm+0x287/0x6b0 mm/memory.c:5517
+ ptrace_access_vm+0x181/0x1d0 kernel/ptrace.c:61
+ generic_ptrace_pokedata kernel/ptrace.c:1323 [inline]
+ ptrace_request+0xb46/0x10c0 kernel/ptrace.c:1046
+ arch_ptrace+0x36/0x510 arch/x86/kernel/ptrace.c:828
+ __do_sys_ptrace kernel/ptrace.c:1296 [inline]
+ __se_sys_ptrace kernel/ptrace.c:1269 [inline]
+ __x64_sys_ptrace+0x178/0x2a0 kernel/ptrace.c:1269
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[...]
+
+So let's silence that warning by teaching GUP code that FOLL_FORCE -- so
+far -- does not apply to hugetlb.
+
+Note that FOLL_FORCE for read-access seems to be working as expected.  The
+assumption is that this has been broken forever, only ever since above
+commit, we actually detect the wrong handling and WARN_ON_ONCE().
+
+I assume this has been broken at least since 2014, when mm/gup.c came to
+life.  I failed to come up with a suitable Fixes tag quickly.
+
+Link: https://lkml.kernel.org/r/20221031152524.173644-1-david@redhat.com
+Fixes: 1d8d14641fd9 ("mm/hugetlb: support write-faults in shared mappings")
+Signed-off-by: David Hildenbrand <david@redhat.com>
+Reported-by: <syzbot+f0b97304ef90f0d0b1dc@syzkaller.appspotmail.com>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Peter Xu <peterx@redhat.com>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Jason Gunthorpe <jgg@nvidia.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 5 +++++
- drivers/gpu/drm/amd/amdgpu/amdgpu_xgmi.c   | 2 --
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ mm/gup.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index 2cf72cfa2e60..913f22d41673 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -2462,6 +2462,11 @@ static int amdgpu_device_ip_init(struct amdgpu_device *adev)
- 			if (!amdgpu_sriov_vf(adev)) {
- 				struct amdgpu_hive_info *hive = amdgpu_get_xgmi_hive(adev);
- 
-+				if (WARN_ON(!hive)) {
-+					r = -ENOENT;
-+					goto init_failed;
-+				}
-+
- 				if (!hive->reset_domain ||
- 				    !amdgpu_reset_get_reset_domain(hive->reset_domain)) {
- 					r = -ENOENT;
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_xgmi.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_xgmi.c
-index 47159e9a0884..4b9e7b050ccd 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_xgmi.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_xgmi.c
-@@ -386,7 +386,6 @@ struct amdgpu_hive_info *amdgpu_get_xgmi_hive(struct amdgpu_device *adev)
- 	if (ret) {
- 		dev_err(adev->dev, "XGMI: failed initializing kobject for xgmi hive\n");
- 		kobject_put(&hive->kobj);
--		kfree(hive);
- 		hive = NULL;
- 		goto pro_end;
- 	}
-@@ -410,7 +409,6 @@ struct amdgpu_hive_info *amdgpu_get_xgmi_hive(struct amdgpu_device *adev)
- 				dev_err(adev->dev, "XGMI: failed initializing reset domain for xgmi hive\n");
- 				ret = -ENOMEM;
- 				kobject_put(&hive->kobj);
--				kfree(hive);
- 				hive = NULL;
- 				goto pro_end;
- 			}
--- 
-2.35.1
-
+--- a/mm/gup.c
++++ b/mm/gup.c
+@@ -1058,6 +1058,9 @@ static int check_vma_flags(struct vm_are
+ 		if (!(vm_flags & VM_WRITE)) {
+ 			if (!(gup_flags & FOLL_FORCE))
+ 				return -EFAULT;
++			/* hugetlb does not support FOLL_FORCE|FOLL_WRITE. */
++			if (is_vm_hugetlb_page(vma))
++				return -EFAULT;
+ 			/*
+ 			 * We used to let the write,force case do COW in a
+ 			 * VM_MAYWRITE VM_SHARED !VM_WRITE vma, so ptrace could
 
 
