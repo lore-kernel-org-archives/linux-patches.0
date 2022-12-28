@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858241C15
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:49:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0111CC433F0;
-	Wed, 28 Dec 2022 16:49:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C0A41C15
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:49:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6304C433EF;
+	Wed, 28 Dec 2022 16:49:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246177;
-	bh=Nfs8AStVoXtuJLiwJLbWWDkqY/o4XJz9nMnz2BkHqWU=;
+	s=korg; t=1672246180;
+	bh=RcWnq7GP/UzPFJHuOTgz5KeYcbscuCrl+RsL6vKS3p0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vKuq/neusg9vpasm/9zEXALWCt+VXp1CV5UjGXSlinOBuQ0rKEodk9qtZpnG1KitL
-	 D4muMVBVLeoTHCN+oc8Z0skuTC6VHUse9wL8TsYtTCxVcLsEgT/aKXA4B2IQLb2kiM
-	 xTKdC5ELUbpggjsllBhS0U+Dt3o8YR7x/PRCMNAM=
+	b=Npf+C7GH/CyYGqBU1j+vs/Qa8jMfgUzugXhcgP8ufd+uNprUkAsGoY6kfb5xVr24C
+	 1FQy9ERfN+OIzY97DslpTBH8DgHShtwcV3CaxVX5sbF3gCnL0/327Oe6z1PUFcXPb0
+	 ylxaA6p/ZHs6+SRBTTHAW4/eUSXrllkVazdzQAaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mia Kanashi <chad@redpilled.dev>,
-	Andreas Grosse <andig.mail@t-online.de>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Jeff LaBundy <jeff@labundy.com>,
+	Rob Herring <robh@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0993/1146] HID: uclogic: Add support for XP-PEN Deco LW
-Date: Wed, 28 Dec 2022 15:42:12 +0100
-Message-Id: <20221228144357.338537155@linuxfoundation.org>
+Subject: [PATCH 6.0 1025/1073] dt-bindings: input: iqs7222: Add support for IQS7222A v1.13+
+Date: Wed, 28 Dec 2022 15:43:33 +0100
+Message-Id: <20221228144356.032045338@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,203 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: José Expósito <jose.exposito89@gmail.com>
+From: Jeff LaBundy <jeff@labundy.com>
 
-[ Upstream commit f9ce4db0ec2b6301f4264ba8627863e2632c922b ]
+[ Upstream commit 97384a65c5e304ccab0477751546f5519d9371c3 ]
 
-The XP-PEN Deco LW is a UGEE v2 device with a frame with 8 buttons.
-Its pen has 2 buttons, supports tilt and pressure.
+IQS7222A revisions 1.13 and later widen the gesture multiplier from
+x4 ms to x16 ms; update the binding accordingly.
 
-It can be connected by USB cable or using a USB Bluetooth dongle to use
-it in wireless mode. When it is connected using the dongle, the device
-battery is used to power it.
+As part of this change, refresh the corresponding properties in the
+example as well.
 
-Its vendor, product and version are identical to the Deco L. The only
-difference reported by its firmware is the product name.
-In order to add support for battery reporting, add a new HID descriptor
-and a quirk to detect the wireless version of the tablet.
-
-Link: https://github.com/DIGImend/digimend-kernel-drivers/issues/635
-Tested-by: Mia Kanashi <chad@redpilled.dev>
-Tested-by: Andreas Grosse <andig.mail@t-online.de>
-Tested-by: Mia Kanashi <chad@redpilled.dev>
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Fixes: 44dc42d254bf ("dt-bindings: input: Add bindings for Azoteq IQS7222A/B/C")
+Signed-off-by: Jeff LaBundy <jeff@labundy.com>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/Y1SRaVGwj30z/g6r@nixie71
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-uclogic-params.c | 73 ++++++++++++++++++++++++++++++++
- drivers/hid/hid-uclogic-rdesc.c  | 34 +++++++++++++++
- drivers/hid/hid-uclogic-rdesc.h  |  7 +++
- 3 files changed, 114 insertions(+)
+ .../bindings/input/azoteq,iqs7222.yaml           | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/hid/hid-uclogic-params.c b/drivers/hid/hid-uclogic-params.c
-index 34fa991e6267..cd1233d7e253 100644
---- a/drivers/hid/hid-uclogic-params.c
-+++ b/drivers/hid/hid-uclogic-params.c
-@@ -18,6 +18,7 @@
- #include "usbhid/usbhid.h"
- #include "hid-ids.h"
- #include <linux/ctype.h>
-+#include <linux/string.h>
- #include <asm/unaligned.h>
+diff --git a/Documentation/devicetree/bindings/input/azoteq,iqs7222.yaml b/Documentation/devicetree/bindings/input/azoteq,iqs7222.yaml
+index 913fd2da9862..9ddba7f2e7aa 100644
+--- a/Documentation/devicetree/bindings/input/azoteq,iqs7222.yaml
++++ b/Documentation/devicetree/bindings/input/azoteq,iqs7222.yaml
+@@ -572,9 +572,9 @@ patternProperties:
+           linux,code: true
  
- /**
-@@ -1211,6 +1212,69 @@ static int uclogic_params_ugee_v2_init_frame_mouse(struct uclogic_params *p)
- 	return rc;
- }
+           azoteq,gesture-max-ms:
+-            multipleOf: 4
++            multipleOf: 16
+             minimum: 0
+-            maximum: 1020
++            maximum: 4080
+             description:
+               Specifies the length of time (in ms) within which a tap, swipe
+               or flick gesture must be completed in order to be acknowledged
+@@ -582,9 +582,9 @@ patternProperties:
+               gesture applies to all remaining swipe or flick gestures.
  
-+/**
-+ * uclogic_params_ugee_v2_has_battery() - check whether a UGEE v2 device has
-+ * battery or not.
-+ * @hdev:	The HID device of the tablet interface.
-+ *
-+ * Returns:
-+ *	True if the device has battery, false otherwise.
-+ */
-+static bool uclogic_params_ugee_v2_has_battery(struct hid_device *hdev)
-+{
-+	/* The XP-PEN Deco LW vendor, product and version are identical to the
-+	 * Deco L. The only difference reported by their firmware is the product
-+	 * name. Add a quirk to support battery reporting on the wireless
-+	 * version.
-+	 */
-+	if (hdev->vendor == USB_VENDOR_ID_UGEE &&
-+	    hdev->product == USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_L) {
-+		struct usb_device *udev = hid_to_usb_dev(hdev);
-+
-+		if (strstarts(udev->product, "Deco LW"))
-+			return true;
-+	}
-+
-+	return false;
-+}
-+
-+/**
-+ * uclogic_params_ugee_v2_init_battery() - initialize UGEE v2 battery reporting.
-+ * @hdev:	The HID device of the tablet interface, cannot be NULL.
-+ * @p:		Parameters to fill in, cannot be NULL.
-+ *
-+ * Returns:
-+ *	Zero, if successful. A negative errno code on error.
-+ */
-+static int uclogic_params_ugee_v2_init_battery(struct hid_device *hdev,
-+					       struct uclogic_params *p)
-+{
-+	int rc = 0;
-+
-+	if (!hdev || !p)
-+		return -EINVAL;
-+
-+	/* Some tablets contain invalid characters in hdev->uniq, throwing a
-+	 * "hwmon: '<name>' is not a valid name attribute, please fix" error.
-+	 * Use the device vendor and product IDs instead.
-+	 */
-+	snprintf(hdev->uniq, sizeof(hdev->uniq), "%x-%x", hdev->vendor,
-+		 hdev->product);
-+
-+	rc = uclogic_params_frame_init_with_desc(&p->frame_list[1],
-+						 uclogic_rdesc_ugee_v2_battery_template_arr,
-+						 uclogic_rdesc_ugee_v2_battery_template_size,
-+						 UCLOGIC_RDESC_UGEE_V2_BATTERY_ID);
-+	if (rc)
-+		return rc;
-+
-+	p->frame_list[1].suffix = "Battery";
-+	p->pen.subreport_list[1].value = 0xf2;
-+	p->pen.subreport_list[1].id = UCLOGIC_RDESC_UGEE_V2_BATTERY_ID;
-+
-+	return rc;
-+}
-+
- /**
-  * uclogic_params_ugee_v2_init() - initialize a UGEE graphics tablets by
-  * discovering their parameters.
-@@ -1334,6 +1398,15 @@ static int uclogic_params_ugee_v2_init(struct uclogic_params *params,
- 	if (rc)
- 		goto cleanup;
+           azoteq,gesture-min-ms:
+-            multipleOf: 4
++            multipleOf: 16
+             minimum: 0
+-            maximum: 124
++            maximum: 496
+             description:
+               Specifies the length of time (in ms) for which a tap gesture must
+               be held in order to be acknowledged by the device.
+@@ -930,14 +930,14 @@ examples:
  
-+	/* Initialize the battery interface*/
-+	if (uclogic_params_ugee_v2_has_battery(hdev)) {
-+		rc = uclogic_params_ugee_v2_init_battery(hdev, &p);
-+		if (rc) {
-+			hid_err(hdev, "error initializing battery: %d\n", rc);
-+			goto cleanup;
-+		}
-+	}
-+
- output:
- 	/* Output parameters */
- 	memcpy(params, &p, sizeof(*params));
-diff --git a/drivers/hid/hid-uclogic-rdesc.c b/drivers/hid/hid-uclogic-rdesc.c
-index 6b73eb0df6bd..fb40775f5f5b 100644
---- a/drivers/hid/hid-uclogic-rdesc.c
-+++ b/drivers/hid/hid-uclogic-rdesc.c
-@@ -1035,6 +1035,40 @@ const __u8 uclogic_rdesc_ugee_v2_frame_mouse_template_arr[] = {
- const size_t uclogic_rdesc_ugee_v2_frame_mouse_template_size =
- 			sizeof(uclogic_rdesc_ugee_v2_frame_mouse_template_arr);
+                             event-tap {
+                                     linux,code = <KEY_PLAYPAUSE>;
+-                                    azoteq,gesture-max-ms = <600>;
+-                                    azoteq,gesture-min-ms = <24>;
++                                    azoteq,gesture-max-ms = <400>;
++                                    azoteq,gesture-min-ms = <32>;
+                             };
  
-+/* Fixed report descriptor template for UGEE v2 battery reports */
-+const __u8 uclogic_rdesc_ugee_v2_battery_template_arr[] = {
-+	0x05, 0x01,         /*  Usage Page (Desktop),                   */
-+	0x09, 0x07,         /*  Usage (Keypad),                         */
-+	0xA1, 0x01,         /*  Collection (Application),               */
-+	0x85, UCLOGIC_RDESC_UGEE_V2_BATTERY_ID,
-+			    /*      Report ID,                          */
-+	0x75, 0x08,         /*      Report Size (8),                    */
-+	0x95, 0x02,         /*      Report Count (2),                   */
-+	0x81, 0x01,         /*      Input (Constant),                   */
-+	0x05, 0x84,         /*      Usage Page (Power Device),          */
-+	0x05, 0x85,         /*      Usage Page (Battery System),        */
-+	0x09, 0x65,         /*      Usage Page (AbsoluteStateOfCharge), */
-+	0x75, 0x08,         /*      Report Size (8),                    */
-+	0x95, 0x01,         /*      Report Count (1),                   */
-+	0x15, 0x00,         /*      Logical Minimum (0),                */
-+	0x26, 0xff, 0x00,   /*      Logical Maximum (255),              */
-+	0x81, 0x02,         /*      Input (Variable),                   */
-+	0x75, 0x01,         /*      Report Size (1),                    */
-+	0x95, 0x01,         /*      Report Count (1),                   */
-+	0x15, 0x00,         /*      Logical Minimum (0),                */
-+	0x25, 0x01,         /*      Logical Maximum (1),                */
-+	0x09, 0x44,         /*      Usage Page (Charging),              */
-+	0x81, 0x02,         /*      Input (Variable),                   */
-+	0x95, 0x07,         /*      Report Count (7),                   */
-+	0x81, 0x01,         /*      Input (Constant),                   */
-+	0x75, 0x08,         /*      Report Size (8),                    */
-+	0x95, 0x07,         /*      Report Count (7),                   */
-+	0x81, 0x01,         /*      Input (Constant),                   */
-+	0xC0                /*  End Collection                          */
-+};
-+const size_t uclogic_rdesc_ugee_v2_battery_template_size =
-+			sizeof(uclogic_rdesc_ugee_v2_battery_template_arr);
-+
- /* Fixed report descriptor for Ugee EX07 frame */
- const __u8 uclogic_rdesc_ugee_ex07_frame_arr[] = {
- 	0x05, 0x01,             /*  Usage Page (Desktop),                   */
-diff --git a/drivers/hid/hid-uclogic-rdesc.h b/drivers/hid/hid-uclogic-rdesc.h
-index 0502a0656496..a1f78c07293f 100644
---- a/drivers/hid/hid-uclogic-rdesc.h
-+++ b/drivers/hid/hid-uclogic-rdesc.h
-@@ -161,6 +161,9 @@ extern const size_t uclogic_rdesc_v2_frame_dial_size;
- /* Device ID byte offset in v2 frame dial reports */
- #define UCLOGIC_RDESC_V2_FRAME_DIAL_DEV_ID_BYTE	0x4
+                             event-flick-pos {
+                                     linux,code = <KEY_NEXTSONG>;
+-                                    azoteq,gesture-max-ms = <600>;
+-                                    azoteq,gesture-dist = <816>;
++                                    azoteq,gesture-max-ms = <800>;
++                                    azoteq,gesture-dist = <800>;
+                             };
  
-+/* Report ID for tweaked UGEE v2 battery reports */
-+#define UCLOGIC_RDESC_UGEE_V2_BATTERY_ID 0xba
-+
- /* Fixed report descriptor template for UGEE v2 pen reports */
- extern const __u8 uclogic_rdesc_ugee_v2_pen_template_arr[];
- extern const size_t uclogic_rdesc_ugee_v2_pen_template_size;
-@@ -177,6 +180,10 @@ extern const size_t uclogic_rdesc_ugee_v2_frame_dial_template_size;
- extern const __u8 uclogic_rdesc_ugee_v2_frame_mouse_template_arr[];
- extern const size_t uclogic_rdesc_ugee_v2_frame_mouse_template_size;
- 
-+/* Fixed report descriptor template for UGEE v2 battery reports */
-+extern const __u8 uclogic_rdesc_ugee_v2_battery_template_arr[];
-+extern const size_t uclogic_rdesc_ugee_v2_battery_template_size;
-+
- /* Fixed report descriptor for Ugee EX07 frame */
- extern const __u8 uclogic_rdesc_ugee_ex07_frame_arr[];
- extern const size_t uclogic_rdesc_ugee_ex07_frame_size;
+                             event-flick-neg {
 -- 
 2.35.1
 
