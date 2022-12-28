@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF451863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:58:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC6CC433EF;
-	Wed, 28 Dec 2022 14:58:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B61E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:58:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0339BC433D2;
+	Wed, 28 Dec 2022 14:58:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239524;
-	bh=qkI7DmXkaE99OO2+MK3ZWxqp3rSuk4puBRTsDLOe0sA=;
+	s=korg; t=1672239527;
+	bh=+OTD/V9/GS/FWbYOlv3g7DUUJbVDOZ9IrgMGkpDCYk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K1jZvPoHt2wuAGg8p3Ipbpyy6ngd9wXWVGv5b2aB2uUsHsJnu7byTHvHx722XvTPu
-	 8mP39/MEnc/PHND+TN1mINa+mLsAX/DQ6JT3gG2xowmi1r8o6hcq2sI0oiKCld4gZH
-	 gCcg8zMQJrr8+kOh9YdGeZtwADFPGeK7CdDb4kpE=
+	b=zHt+kHfrDPEK5t9oCZezXQKGwFs6vpZ9K9/TcTf+LCs6zsm0LXNm7lDURR2WsaQkq
+	 ihGYdb6Ipff/nAnkcUnF4hCV+L5djJ7wiwBg8GlkpscZcTwot5t9wj0vxyQU/nvu5b
+	 cNhyY/HNtM3pkFUNVVFbtFPOQT053rjIHvqRW9OQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Baisong Zhong <zhongbaisong@huawei.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 239/731] media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()
-Date: Wed, 28 Dec 2022 15:35:46 +0100
-Message-Id: <20221228144303.491324183@linuxfoundation.org>
+Subject: [PATCH 6.0 0046/1073] dt-bindings: pwm: fix microchip corePWMs pwm-cells
+Date: Wed, 28 Dec 2022 15:27:14 +0100
+Message-Id: <20221228144329.371891615@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,62 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baisong Zhong <zhongbaisong@huawei.com>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit 0ed554fd769a19ea8464bb83e9ac201002ef74ad ]
+[ Upstream commit a62d196e89887c029d5aef409135f9a2a8667268 ]
 
-Wei Chen reports a kernel bug as blew:
+corePWM is capable of inverted operation but the binding requires
+\#pwm-cells of 2. Expand the binding to support setting the polarity.
 
-general protection fault, probably for non-canonical address
-KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
-...
-Call Trace:
-<TASK>
-__i2c_transfer+0x77e/0x1930 drivers/i2c/i2c-core-base.c:2109
-i2c_transfer+0x1d5/0x3d0 drivers/i2c/i2c-core-base.c:2170
-i2cdev_ioctl_rdwr+0x393/0x660 drivers/i2c/i2c-dev.c:297
-i2cdev_ioctl+0x75d/0x9f0 drivers/i2c/i2c-dev.c:458
-vfs_ioctl fs/ioctl.c:51 [inline]
-__do_sys_ioctl fs/ioctl.c:870 [inline]
-__se_sys_ioctl+0xfb/0x170 fs/ioctl.c:856
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x3d/0x90 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7fd834a8bded
-
-In az6027_i2c_xfer(), if msg[i].addr is 0x99,
-a null-ptr-deref will caused when accessing msg[i].buf.
-For msg[i].len is 0 and msg[i].buf is null.
-
-Fix this by checking msg[i].len in az6027_i2c_xfer().
-
-Link: https://lore.kernel.org/lkml/CAO4mrfcPHB5aQJO=mpqV+p8mPLNg-Fok0gw8gZ=zemAfMGTzMg@mail.gmail.com/
-
-Link: https://lore.kernel.org/linux-media/20221120065918.2160782-1-zhongbaisong@huawei.com
-Fixes: 76f9a820c867 ("V4L/DVB: AZ6027: Initial import of the driver")
-Reported-by: Wei Chen <harperchen1110@gmail.com>
-Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: df77f7735786 ("dt-bindings: pwm: add microchip corepwm binding")
+Acked-by: Rob Herring <robh@kernel.org>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/az6027.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ Documentation/devicetree/bindings/pwm/microchip,corepwm.yaml | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/dvb-usb/az6027.c b/drivers/media/usb/dvb-usb/az6027.c
-index 86788771175b..32b4ee65c280 100644
---- a/drivers/media/usb/dvb-usb/az6027.c
-+++ b/drivers/media/usb/dvb-usb/az6027.c
-@@ -975,6 +975,10 @@ static int az6027_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int n
- 		if (msg[i].addr == 0x99) {
- 			req = 0xBE;
- 			index = 0;
-+			if (msg[i].len < 1) {
-+				i = -EOPNOTSUPP;
-+				break;
-+			}
- 			value = msg[i].buf[0] & 0x00ff;
- 			length = 1;
- 			az6027_usb_out_op(d, req, value, index, data, length);
+diff --git a/Documentation/devicetree/bindings/pwm/microchip,corepwm.yaml b/Documentation/devicetree/bindings/pwm/microchip,corepwm.yaml
+index a7fae1772a81..cd8e9a8907f8 100644
+--- a/Documentation/devicetree/bindings/pwm/microchip,corepwm.yaml
++++ b/Documentation/devicetree/bindings/pwm/microchip,corepwm.yaml
+@@ -30,7 +30,9 @@ properties:
+     maxItems: 1
+ 
+   "#pwm-cells":
+-    const: 2
++    enum: [2, 3]
++    description:
++      The only flag supported by the controller is PWM_POLARITY_INVERTED.
+ 
+   microchip,sync-update-mask:
+     description: |
 -- 
 2.35.1
 
