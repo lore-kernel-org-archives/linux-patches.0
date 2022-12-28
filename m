@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFDF1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:31:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12A0C433D2;
-	Wed, 28 Dec 2022 16:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB5DD1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:31:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E973C433F1;
+	Wed, 28 Dec 2022 16:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245096;
-	bh=mt5AZ1mURiWfYgcw7WIIujrgKsaHmkt9OYdGE26JT7U=;
+	s=korg; t=1672245098;
+	bh=0Jbbn8+jP72XcL5qZalCNK0o7c/74yj6l/iRWNN7ZM4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gKZQM6S9hpkmd5q4+Grw3b/zqLtuBAaWRlhwWT0qngf9OxU0ssyax7syrjU6c6cHO
-	 Mn5sjTpc5VRyfcnP32WO+jZ/xokwzdludLBRgVXlKV+a7rdfWI4RH6llMrGxTuwKy8
-	 ASDparOnfGK8q7AfxJXjCl44KKsPFzFuSpPPv1DM=
+	b=MbZSDmghiRosHeU5UF9kLx7w+j3T1CCk6lEnp+xonQxE9C2L5nHlBF/zCjCzg67z2
+	 8XZHXTGDFs4/VlJgEk5ubCwrB86OBzE/fdR4YtooZbkdcNYWzqBslQgSNY5vcDyEFQ
+	 pbPXGn1TyW1Ahqin086GSXC/1uaOAmSDLm2OMXw4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qingfang DENG <dqfext@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0832/1073] netfilter: flowtable: really fix NAT IPv6 offload
-Date: Wed, 28 Dec 2022 15:40:20 +0100
-Message-Id: <20221228144350.615022194@linuxfoundation.org>
+Subject: [PATCH 6.1 0796/1146] remoteproc: core: Auto select rproc-virtio device id
+Date: Wed, 28 Dec 2022 15:38:55 +0100
+Message-Id: <20221228144351.769955711@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,48 +38,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qingfang DENG <dqfext@gmail.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 5fb45f95eec682621748b7cb012c6a8f0f981e6a ]
+[ Upstream commit 65fcf3872f83d63fb7268e05d4b02640df14126e ]
 
-The for-loop was broken from the start. It translates to:
+With multiple remoteproc device, there will below error:
 
-	for (i = 0; i < 4; i += 4)
+sysfs: cannot create duplicate filename '/bus/platform/devices/rproc-virtio.0'
 
-which means the loop statement is run only once, so only the highest
-32-bit of the IPv6 address gets mangled.
+The rvdev_data.index is duplicate, that cause issue, so
+need to use the PLATFORM_DEVID_AUTO instead. After fixing
+device name it becomes something like:
+/bus/platform/devices/rproc-virtio.2.auto
 
-Fix the loop increment.
-
-Fixes: 0e07e25b481a ("netfilter: flowtable: fix NAT IPv6 offload mangling")
-Fixes: 5c27d8d76ce8 ("netfilter: nf_flow_table_offload: add IPv6 support")
-Signed-off-by: Qingfang DENG <dqfext@gmail.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: 1d7b61c06dc3 ("remoteproc: virtio: Create platform device for the remoteproc_virtio")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com>
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Tested-by: Peng Fan <peng.fan@nxp.com>
+Link: https://lore.kernel.org/r/1666100644-27010-1-git-send-email-shengjiu.wang@nxp.com
+[Fixed typographical error in comment block]
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_flow_table_offload.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/remoteproc/remoteproc_core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_flow_table_offload.c b/net/netfilter/nf_flow_table_offload.c
-index 0fdcdb2c9ae4..4d9b99abe37d 100644
---- a/net/netfilter/nf_flow_table_offload.c
-+++ b/net/netfilter/nf_flow_table_offload.c
-@@ -383,12 +383,12 @@ static void flow_offload_ipv6_mangle(struct nf_flow_rule *flow_rule,
- 				     const __be32 *addr, const __be32 *mask)
- {
- 	struct flow_action_entry *entry;
--	int i, j;
-+	int i;
+diff --git a/drivers/remoteproc/remoteproc_core.c b/drivers/remoteproc/remoteproc_core.c
+index 8768cb64f560..cb1d414a2389 100644
+--- a/drivers/remoteproc/remoteproc_core.c
++++ b/drivers/remoteproc/remoteproc_core.c
+@@ -509,7 +509,13 @@ static int rproc_handle_vdev(struct rproc *rproc, void *ptr,
+ 	rvdev_data.rsc_offset = offset;
+ 	rvdev_data.rsc = rsc;
  
--	for (i = 0, j = 0; i < sizeof(struct in6_addr) / sizeof(u32); i += sizeof(u32), j++) {
-+	for (i = 0; i < sizeof(struct in6_addr) / sizeof(u32); i++) {
- 		entry = flow_action_entry_next(flow_rule);
- 		flow_offload_mangle(entry, FLOW_ACT_MANGLE_HDR_TYPE_IP6,
--				    offset + i, &addr[j], mask);
-+				    offset + i * sizeof(u32), &addr[i], mask);
- 	}
- }
- 
+-	pdev = platform_device_register_data(dev, "rproc-virtio", rvdev_data.index, &rvdev_data,
++	/*
++	 * When there is more than one remote processor, rproc->nb_vdev number is
++	 * same for each separate instances of "rproc". If rvdev_data.index is used
++	 * as device id, then we get duplication in sysfs, so need to use
++	 * PLATFORM_DEVID_AUTO to auto select device id.
++	 */
++	pdev = platform_device_register_data(dev, "rproc-virtio", PLATFORM_DEVID_AUTO, &rvdev_data,
+ 					     sizeof(rvdev_data));
+ 	if (IS_ERR(pdev)) {
+ 		dev_err(dev, "failed to create rproc-virtio device\n");
 -- 
 2.35.1
 
