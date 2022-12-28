@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08A61C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38D80C433D2;
-	Wed, 28 Dec 2022 16:40:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDBC1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D747DC433D2;
+	Wed, 28 Dec 2022 16:40:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245645;
-	bh=6nYTkxlby+DRi1O8DjM51QkGP8OAhwhGRwgpfg5K5Gw=;
+	s=korg; t=1672245648;
+	bh=cmtKgn86exmHAmSRo4zDb/zf9WnHvRGB3TuwMpOcczY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i1Io8rWrrqBkyZ4s2EwLolzK+QTHU3f/tHdQoEaG+FU0sTMXmsFoHwt5R2ATyZhIp
-	 xFzim8+sVCx49QY6p5y9ePNDykuDP25DOPy7odgVULwjGjQ6lUaoD5xIoGIUUumqUJ
-	 LVVwfgCygIETD3BB3zspxLex/ws0Dx8gMaGT9OXY=
+	b=GWGQIntTuHRx7LHvMByZ0gc9xR9ENyW1q62S44jhotcGGrws0p1EmGywPCFu+Uy/d
+	 HOfENQPauzUOADrG5YyIArp/p9Bg8zoIdmnG2luUUcAiJd2P/ocU1UAamdODmnp10d
+	 IUUzSSf13V9rPMGcf8pymDjSgIfqOFchJnpTtP1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0931/1073] drm/amdgpu: Fix type of second parameter in trans_msg() callback
-Date: Wed, 28 Dec 2022 15:41:59 +0100
-Message-Id: <20221228144353.316925278@linuxfoundation.org>
+Subject: [PATCH 6.1 0899/1146] nfc: pn533: Clear nfc_target before being used
+Date: Wed, 28 Dec 2022 15:40:38 +0100
+Message-Id: <20221228144354.622778336@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,64 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
 
-[ Upstream commit f0d0f1087333714ee683cc134a95afe331d7ddd9 ]
+[ Upstream commit 9f28157778ede0d4f183f7ab3b46995bb400abbe ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+Fix a slab-out-of-bounds read that occurs in nla_put() called from
+nfc_genl_send_target() when target->sensb_res_len, which is duplicated
+from an nfc_target in pn533, is too large as the nfc_target is not
+properly initialized and retains garbage values. Clear nfc_targets with
+memset() before they are used.
 
-  drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c:412:15: error: incompatible function pointer types initializing 'void (*)(struct amdgpu_device *, u32, u32, u32, u32)' (aka 'void (*)(struct amdgpu_device *, unsigned int, unsigned int, unsigned int, unsigned int)') with an expression of type 'void (struct amdgpu_device *, enum idh_request, u32, u32, u32)' (aka 'void (struct amdgpu_device *, enum idh_request, unsigned int, unsigned int, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
-          .trans_msg = xgpu_ai_mailbox_trans_msg,
-                      ^~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+Found by a modified version of syzkaller.
 
-  drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c:435:15: error: incompatible function pointer types initializing 'void (*)(struct amdgpu_device *, u32, u32, u32, u32)' (aka 'void (*)(struct amdgpu_device *, unsigned int, unsigned int, unsigned int, unsigned int)') with an expression of type 'void (struct amdgpu_device *, enum idh_request, u32, u32, u32)' (aka 'void (struct amdgpu_device *, enum idh_request, unsigned int, unsigned int, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
-          .trans_msg = xgpu_nv_mailbox_trans_msg,
-                      ^~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+BUG: KASAN: slab-out-of-bounds in nla_put
+Call Trace:
+ memcpy
+ nla_put
+ nfc_genl_dump_targets
+ genl_lock_dumpit
+ netlink_dump
+ __netlink_dump_start
+ genl_family_rcv_msg_dumpit
+ genl_rcv_msg
+ netlink_rcv_skb
+ genl_rcv
+ netlink_unicast
+ netlink_sendmsg
+ sock_sendmsg
+ ____sys_sendmsg
+ ___sys_sendmsg
+ __sys_sendmsg
+ do_syscall_64
 
-The type of the second parameter in the prototype should be 'enum
-idh_request' instead of 'u32'. Update it to clear up the warnings.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reported-by: Sami Tolvanen <samitolvanen@google.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 673088fb42d0 ("NFC: pn533: Send ATR_REQ directly for active device detection")
+Fixes: 361f3cb7f9cf ("NFC: DEP link hook implementation for pn533")
+Signed-off-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20221214015139.119673-1-linuxlovemin@yonsei.ac.kr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/nfc/pn533/pn533.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-index 617d072275eb..77210fd64a2b 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-@@ -75,6 +75,8 @@ struct amdgpu_vf_error_buffer {
- 	uint64_t data[AMDGPU_VF_ERROR_ENTRY_SIZE];
- };
+diff --git a/drivers/nfc/pn533/pn533.c b/drivers/nfc/pn533/pn533.c
+index d9f6367b9993..f0cac1900552 100644
+--- a/drivers/nfc/pn533/pn533.c
++++ b/drivers/nfc/pn533/pn533.c
+@@ -1295,6 +1295,8 @@ static int pn533_poll_dep_complete(struct pn533 *dev, void *arg,
+ 	if (IS_ERR(resp))
+ 		return PTR_ERR(resp);
  
-+enum idh_request;
++	memset(&nfc_target, 0, sizeof(struct nfc_target));
 +
- /**
-  * struct amdgpu_virt_ops - amdgpu device virt operations
-  */
-@@ -84,7 +86,8 @@ struct amdgpu_virt_ops {
- 	int (*req_init_data)(struct amdgpu_device *adev);
- 	int (*reset_gpu)(struct amdgpu_device *adev);
- 	int (*wait_reset)(struct amdgpu_device *adev);
--	void (*trans_msg)(struct amdgpu_device *adev, u32 req, u32 data1, u32 data2, u32 data3);
-+	void (*trans_msg)(struct amdgpu_device *adev, enum idh_request req,
-+			  u32 data1, u32 data2, u32 data3);
- };
+ 	rsp = (struct pn533_cmd_jump_dep_response *)resp->data;
  
- /*
+ 	rc = rsp->status & PN533_CMD_RET_MASK;
+@@ -1926,6 +1928,8 @@ static int pn533_in_dep_link_up_complete(struct pn533 *dev, void *arg,
+ 
+ 		dev_dbg(dev->dev, "Creating new target\n");
+ 
++		memset(&nfc_target, 0, sizeof(struct nfc_target));
++
+ 		nfc_target.supported_protocols = NFC_PROTO_NFC_DEP_MASK;
+ 		nfc_target.nfcid1_len = 10;
+ 		memcpy(nfc_target.nfcid1, rsp->nfcid3t, nfc_target.nfcid1_len);
 -- 
 2.35.1
 
