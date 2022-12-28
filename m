@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8E651863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:19:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24FD1C433EF;
-	Wed, 28 Dec 2022 15:19:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 574EF1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:19:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD0C1C433EF;
+	Wed, 28 Dec 2022 15:19:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240748;
-	bh=WI6CcsguI3tWGJBsi5fp+QL1JRy9bMscPPgNgEOfYAY=;
+	s=korg; t=1672240751;
+	bh=j76NZNX+VuyFiUsR6EsmZCpiE7DtsTkC7Vrl3ZjW4XU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dKwguqxObfmxrRv2a5fsrd+POZu10ATywK8ODDz6jMTPSIAFTDZr5aT8vXofTGfgx
-	 I5d4eaZi3U/fdiTiNqG5On9/GUBuDF8N99tTwtwNjEnxpAU/kZPT4iKkKdQI4WAIdo
-	 cWnnrosFrusQwaCw1l5LvWjbM2ZcQWJL+Ul21fmE=
+	b=1v4Kwej7S+nKtDoSoX0ZQ57bCLxxkQHUQPOoiEXZoaNiBuPlrZ9MHMsOWaw25YsQh
+	 SWq93D++BEVz7WKRtqexSorZymL8shNoxfFI3UEuxn3giBLGRJwJsljwUgrdVEZoT2
+	 LTK5I4csvgFDqVcNFsBtQtgpfVyb8YVPaBihwP9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Weili Qian <qianweili@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Alexey Izbyshev <izbyshev@ispras.ru>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 393/731] crypto: hisilicon/qm - add missing pci_dev_put() in q_num_set()
-Date: Wed, 28 Dec 2022 15:38:20 +0100
-Message-Id: <20221228144307.951318228@linuxfoundation.org>
+Subject: [PATCH 6.1 0163/1146] futex: Resend potentially swallowed owner death notification
+Date: Wed, 28 Dec 2022 15:28:22 +0100
+Message-Id: <20221228144334.588331609@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,53 +36,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Alexey Izbyshev <izbyshev@ispras.ru>
 
-[ Upstream commit cc7710d0d4ebc6998f04035cde4f32c5ddbe9d7f ]
+[ Upstream commit 90d758896787048fa3d4209309d4800f3920e66f ]
 
-pci_get_device() will increase the reference count for the returned
-pci_dev. We need to use pci_dev_put() to decrease the reference count
-before q_num_set() returns.
+Commit ca16d5bee598 ("futex: Prevent robust futex exit race") addressed
+two cases when tasks waiting on a robust non-PI futex remained blocked
+despite the futex not being owned anymore:
 
-Fixes: c8b4b477079d ("crypto: hisilicon - add HiSilicon HPRE accelerator")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Reviewed-by: Weili Qian <qianweili@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+* if the owner died after writing zero to the futex word, but before
+  waking up a waiter
+
+* if a task waiting on the futex was woken up, but died before updating
+  the futex word (effectively swallowing the notification without acting
+  on it)
+
+In the second case, the task could be woken up either by the previous
+owner (after the futex word was reset to zero) or by the kernel (after
+the OWNER_DIED bit was set and the TID part of the futex word was reset
+to zero) if the previous owner died without the resetting the futex.
+
+Because the referenced commit wakes up a potential waiter only if the
+whole futex word is zero, the latter subcase remains unaddressed.
+
+Fix this by looking only at the TID part of the futex when deciding
+whether a wake up is needed.
+
+Fixes: ca16d5bee598 ("futex: Prevent robust futex exit race")
+Signed-off-by: Alexey Izbyshev <izbyshev@ispras.ru>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20221111215439.248185-1-izbyshev@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/qm.h | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ kernel/futex/core.c | 26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/crypto/hisilicon/qm.h b/drivers/crypto/hisilicon/qm.h
-index 3068093229a5..bbb35de994eb 100644
---- a/drivers/crypto/hisilicon/qm.h
-+++ b/drivers/crypto/hisilicon/qm.h
-@@ -318,14 +318,14 @@ struct hisi_qp {
- static inline int q_num_set(const char *val, const struct kernel_param *kp,
- 			    unsigned int device)
+diff --git a/kernel/futex/core.c b/kernel/futex/core.c
+index b22ef1efe751..514e4582b863 100644
+--- a/kernel/futex/core.c
++++ b/kernel/futex/core.c
+@@ -638,6 +638,7 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
+ 			      bool pi, bool pending_op)
  {
--	struct pci_dev *pdev = pci_get_device(PCI_VENDOR_ID_HUAWEI,
--					      device, NULL);
-+	struct pci_dev *pdev;
- 	u32 n, q_num;
- 	int ret;
+ 	u32 uval, nval, mval;
++	pid_t owner;
+ 	int err;
  
- 	if (!val)
- 		return -EINVAL;
- 
-+	pdev = pci_get_device(PCI_VENDOR_ID_HUAWEI, device, NULL);
- 	if (!pdev) {
- 		q_num = min_t(u32, QM_QNUM_V1, QM_QNUM_V2);
- 		pr_info("No device found currently, suppose queue number is %u\n",
-@@ -335,6 +335,8 @@ static inline int q_num_set(const char *val, const struct kernel_param *kp,
- 			q_num = QM_QNUM_V1;
- 		else
- 			q_num = QM_QNUM_V2;
+ 	/* Futex address must be 32bit aligned */
+@@ -659,6 +660,10 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
+ 	 * 2. A woken up waiter is killed before it can acquire the
+ 	 *    futex in user space.
+ 	 *
++	 * In the second case, the wake up notification could be generated
++	 * by the unlock path in user space after setting the futex value
++	 * to zero or by the kernel after setting the OWNER_DIED bit below.
++	 *
+ 	 * In both cases the TID validation below prevents a wakeup of
+ 	 * potential waiters which can cause these waiters to block
+ 	 * forever.
+@@ -667,24 +672,27 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
+ 	 *
+ 	 *	1) task->robust_list->list_op_pending != NULL
+ 	 *	   @pending_op == true
+-	 *	2) User space futex value == 0
++	 *	2) The owner part of user space futex value == 0
+ 	 *	3) Regular futex: @pi == false
+ 	 *
+ 	 * If these conditions are met, it is safe to attempt waking up a
+ 	 * potential waiter without touching the user space futex value and
+-	 * trying to set the OWNER_DIED bit. The user space futex value is
+-	 * uncontended and the rest of the user space mutex state is
+-	 * consistent, so a woken waiter will just take over the
+-	 * uncontended futex. Setting the OWNER_DIED bit would create
+-	 * inconsistent state and malfunction of the user space owner died
+-	 * handling.
++	 * trying to set the OWNER_DIED bit. If the futex value is zero,
++	 * the rest of the user space mutex state is consistent, so a woken
++	 * waiter will just take over the uncontended futex. Setting the
++	 * OWNER_DIED bit would create inconsistent state and malfunction
++	 * of the user space owner died handling. Otherwise, the OWNER_DIED
++	 * bit is already set, and the woken waiter is expected to deal with
++	 * this.
+ 	 */
+-	if (pending_op && !pi && !uval) {
++	owner = uval & FUTEX_TID_MASK;
 +
-+		pci_dev_put(pdev);
++	if (pending_op && !pi && !owner) {
+ 		futex_wake(uaddr, 1, 1, FUTEX_BITSET_MATCH_ANY);
+ 		return 0;
  	}
  
- 	ret = kstrtou32(val, 10, &n);
+-	if ((uval & FUTEX_TID_MASK) != task_pid_vnr(curr))
++	if (owner != task_pid_vnr(curr))
+ 		return 0;
+ 
+ 	/*
 -- 
 2.35.1
 
