@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3BA21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 490CAC433D2;
-	Wed, 28 Dec 2022 14:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630A51863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB554C433D2;
+	Wed, 28 Dec 2022 14:57:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239474;
-	bh=64ooScDa5u/46BdxaDje6BvhAbJW/8KHbxYab9I3bBo=;
+	s=korg; t=1672239477;
+	bh=wAJh6NFGxgffYs+GWGWvdFjhTZ2PvIioEJs3elPeJHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n34bcAWUOB1DAA0dG/X5VrUF6kgIfz7kRi2paKFIigz+flQH841fdy4KKJ2kEF3cV
-	 I5tF2+gjZ47WIDXrGoZ3RtG99PuY2tl8GF6NNHYyXSaS0q2L3adW8HQw8kD7vg3dDd
-	 erYJ9e1buAAACXGmc6oh2ErrvzF4zn7zcbrSEWNo=
+	b=QMiZ3cSRBuwA9clDj6RoI2bLNZxUcWZP5tk7QN6Eufl3wMtBRGqUNqp9pN7DZjTqg
+	 d6FWTG2q+ZEGsCJZGZapahnGqHyXCDfZ21e4mW1b9TexP93Tlv0I+qGXN/fgU2iFz0
+	 ltBtaMONzKNLJe28eICtD5hFJp85nGG3l5x8dlLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 231/731] media: vimc: Fix wrong function called when vimc_init() fails
-Date: Wed, 28 Dec 2022 15:35:38 +0100
-Message-Id: <20221228144303.260159831@linuxfoundation.org>
+Subject: [PATCH 6.0 0036/1073] arm64: dts: qcom: msm8996: fix sound card reset line polarity
+Date: Wed, 28 Dec 2022 15:27:04 +0100
+Message-Id: <20221228144329.114374116@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,45 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit f74d3f326d1d5b8951ce263c59a121ecfa65e7c0 ]
+[ Upstream commit 76d21ffc5d425bf7ea9888652c49d7dbda15f356 ]
 
-In vimc_init(), when platform_driver_register(&vimc_pdrv) fails,
-platform_driver_unregister(&vimc_pdrv) is wrongly called rather than
-platform_device_unregister(&vimc_pdev), which causes kernel warning:
+When resetting the block, the reset line is being driven low and then
+high, which means that the line in DTS should be annotated as "active
+low". It will become important when wcd9335 driver will be converted
+to gpiod API that respects declared line polarities.
 
- Unexpected driver unregister!
- WARNING: CPU: 1 PID: 14517 at drivers/base/driver.c:270 driver_unregister+0x8f/0xb0
- RIP: 0010:driver_unregister+0x8f/0xb0
- Call Trace:
-  <TASK>
-  vimc_init+0x7d/0x1000 [vimc]
-  do_one_initcall+0xd0/0x4e0
-  do_init_module+0x1cf/0x6b0
-  load_module+0x65c2/0x7820
-
-Fixes: 4a29b7090749 ("[media] vimc: Subdevices as modules")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: f3eb39a55a1f ("arm64: dts: db820c: Add sound card support")
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221027074652.1044235-1-dmitry.torokhov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vimc/vimc-core.c | 2 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/test-drivers/vimc/vimc-core.c b/drivers/media/test-drivers/vimc/vimc-core.c
-index 4b0ae6f51d76..857529ce3638 100644
---- a/drivers/media/test-drivers/vimc/vimc-core.c
-+++ b/drivers/media/test-drivers/vimc/vimc-core.c
-@@ -357,7 +357,7 @@ static int __init vimc_init(void)
- 	if (ret) {
- 		dev_err(&vimc_pdev.dev,
- 			"platform driver registration failed (err=%d)\n", ret);
--		platform_driver_unregister(&vimc_pdrv);
-+		platform_device_unregister(&vimc_pdev);
- 		return ret;
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index d3cf0677ea28..5cf04c350a62 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -3358,7 +3358,7 @@ wcd9335: codec@1{
+ 					interrupt-names = "intr1", "intr2";
+ 					interrupt-controller;
+ 					#interrupt-cells = <1>;
+-					reset-gpios = <&tlmm 64 GPIO_ACTIVE_HIGH>;
++					reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
+ 
+ 					slim-ifc-dev = <&tasha_ifd>;
  
 -- 
 2.35.1
