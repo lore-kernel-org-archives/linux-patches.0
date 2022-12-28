@@ -1,31 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78B0D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C5DC433D2;
-	Wed, 28 Dec 2022 15:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C6571863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D904C433D2;
+	Wed, 28 Dec 2022 15:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241695;
-	bh=v8jM3pE8cByIJhJ+yVAtqvDzNsxxf9RrJNrs533gVag=;
+	s=korg; t=1672241698;
+	bh=8zcx4+pxIdKZazB7sAWPppJwslZcmz8YqF8Kw51lHCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gozojpfgjW8nrogeRny+TeWUL/qngS0VD4hU4AzD8U45crOLjeP5sshvTQW1bOsjN
-	 yzBM9pKY1UPeQ/n38vTGVY88kxOFyJcalKQWeGheeN8WqCX6MoSZUzX/wdqLxXHawc
-	 uAd/9iKY3yYJePs16s2sqeNlEVnYyhhvvupPWgU8=
+	b=dCDtQt1s862dQMnKjUlW0PnFJ/8RueLELBYQbBHka3MeCV7jTYkXRUyCxWHoDyGFF
+	 gE64N7qJ59sYnVgTZBPyzimUNfYhsa/ICyNjcgij2TDyhEn1tnHJWY3ncDmQKMSNgd
+	 TD6+tAxZONBlZaX6LVRthPqsZxwrGJJb6Ituw4BI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	kernel test robot <lkp@intel.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Banajit Goswami <bgoswami@quicinc.com>,
+	Mark Brown <broonie@kernel.org>,
+	Liam Girdwood <lgirdwood@gmail.com>,
+	alsa-devel@alsa-project.org,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0278/1146] drm/msm/dsi: Remove useless math in DSC calculations
-Date: Wed, 28 Dec 2022 15:30:17 +0100
-Message-Id: <20221228144337.687897066@linuxfoundation.org>
+Subject: [PATCH 6.0 0317/1073] ASoC: codecs: wsa883x: use correct header file
+Date: Wed, 28 Dec 2022 15:31:45 +0100
+Message-Id: <20221228144336.619048474@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,58 +42,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 01a907980e0be3310f18c7d4955968f3b28e7147 ]
+[ Upstream commit 5f52ceddc40cd61b1dd2ecf735624deaf05f779f ]
 
-Multiplying a value by 2 and adding 1 to it always results in a value
-that is uneven, and that 1 gets truncated immediately when performing
-integer division by 2 again.  There is no "rounding" possible here.
+Fix build errors when GPIOLIB is not set/enabled:
 
-After that target_bpp_x16 is used to store a multiplication of
-bits_per_pixel by 16 which is only ever read to immediately be divided
-by 16 again, and is elided in much the same way.
+../sound/soc/codecs/wsa883x.c: In function 'wsa883x_probe':
+../sound/soc/codecs/wsa883x.c:1394:25: error: implicit declaration of function 'devm_gpiod_get_optional'; did you mean 'devm_regulator_get_optional'? [-Werror=implicit-function-declaration]
+         wsa883x->sd_n = devm_gpiod_get_optional(&pdev->dev, "powerdown",
+../sound/soc/codecs/wsa883x.c:1395:49: error: 'GPIOD_FLAGS_BIT_NONEXCLUSIVE' undeclared (first use in this function)
+         GPIOD_FLAGS_BIT_NONEXCLUSIVE);
+../sound/soc/codecs/wsa883x.c:1414:9: error: implicit declaration of function 'gpiod_direction_output'; did you mean 'gpio_direction_output'? [-Werror=implicit-function-declaration]
+         gpiod_direction_output(wsa883x->sd_n, 1);
 
-Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Patchwork: https://patchwork.freedesktop.org/patch/508932/
-Link: https://lore.kernel.org/r/20221026182824.876933-2-marijn.suijten@somainline.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Fixes: 43b8c7dc85a1 ("ASoC: codecs: add wsa883x amplifier support")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Cc: Banajit Goswami <bgoswami@quicinc.com>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Liam Girdwood <lgirdwood@gmail.com>
+Cc: alsa-devel@alsa-project.org
+Cc: Jaroslav Kysela <perex@perex.cz>
+Cc: Takashi Iwai <tiwai@suse.com>
+Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20221108001829.5100-1-rdunlap@infradead.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ sound/soc/codecs/wsa883x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 7fbf391c024f..8026fe65bff6 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -1762,7 +1762,6 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
- 	int hrd_delay;
- 	int pre_num_extra_mux_bits, num_extra_mux_bits;
- 	int slice_bits;
--	int target_bpp_x16;
- 	int data;
- 	int final_value, final_scale;
- 	int i;
-@@ -1842,14 +1841,7 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
- 	data = 2048 * (dsc->rc_model_size - dsc->initial_offset + num_extra_mux_bits);
- 	dsc->slice_bpg_offset = DIV_ROUND_UP(data, groups_total);
- 
--	/* bpp * 16 + 0.5 */
--	data = dsc->bits_per_pixel * 16;
--	data *= 2;
--	data++;
--	data /= 2;
--	target_bpp_x16 = data;
--
--	data = (dsc->initial_xmit_delay * target_bpp_x16) / 16;
-+	data = dsc->initial_xmit_delay * dsc->bits_per_pixel;
- 	final_value =  dsc->rc_model_size - data + num_extra_mux_bits;
- 	dsc->final_offset = final_value;
- 
+diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
+index cb1d0a3e90e6..9dfa0ac08e6f 100644
+--- a/sound/soc/codecs/wsa883x.c
++++ b/sound/soc/codecs/wsa883x.c
+@@ -7,7 +7,7 @@
+ #include <linux/debugfs.h>
+ #include <linux/delay.h>
+ #include <linux/device.h>
+-#include <linux/gpio.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/init.h>
+ #include <linux/kernel.h>
+ #include <linux/module.h>
 -- 
 2.35.1
 
