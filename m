@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA9D91863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:53:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61F3FC433EF;
-	Wed, 28 Dec 2022 14:53:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FC051863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:53:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12F11C433F0;
+	Wed, 28 Dec 2022 14:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239184;
-	bh=SV5LhaawseBh+yKbh/cBXc6ffUDb4S/FyC7lELOu978=;
+	s=korg; t=1672239187;
+	bh=yGQbxQdxwy+fTPzjkNdk5+reYJgNka9+ufCnjWK6z7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=us+PD0CfZnYWThawLuanSEl2WHXw+ZUWVjvjbBxqLD9SUFNIHHVHoe2QE6qBAfPbP
-	 Q6haD3LepxRcYzvsCMU29COjmvypNul22n2eqd8HGU9qc0o1c+OFeL9DeNKnRBvb9/
-	 tT1sd6852mikB/450Nay/ICrt13oZ9QDaKFjLPfA=
+	b=tjhV8wH5LfbWQCwf90Nfy32phOn4T7/XXaBJizhMz9CI/hx+KrCH0kVQIwdawJ0F8
+	 K8UsYzAilO3f+o8QXjVuiU9hgJBIDXd+Is2zAXVZHPWneTnrSk0hRq/MPf3/R3n7AL
+	 /g4S7LSVulpYG5Ignu2/kIIJHQyhaLYnm1B7wCBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Jimmy Assarsson <extja@kvaser.com>,
+	Vincent Mailhol <mailhol.vincent@wanadoo.fr>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 160/731] libbpf: Btf dedup identical struct test needs check for nested structs/arrays
-Date: Wed, 28 Dec 2022 15:34:27 +0100
-Message-Id: <20221228144301.202100666@linuxfoundation.org>
+Subject: [PATCH 5.15 161/731] can: kvaser_usb: do not increase tx statistics when sending error message frames
+Date: Wed, 28 Dec 2022 15:34:28 +0100
+Message-Id: <20221228144301.230175093@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,91 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
 
-[ Upstream commit f3c51fe02c55bd944662714e5b91b96dc271ad9f ]
+[ Upstream commit 0b0ce2c67795672115ac6ca28351a78799cd114b ]
 
-When examining module BTF, it is common to see core kernel structures
-such as sk_buff, net_device duplicated in the module.  After adding
-debug messaging to BTF it turned out that much of the problem
-was down to the identical struct test failing during deduplication;
-sometimes the compiler adds identical structs.  However
-it turns out sometimes that type ids of identical struct members
-can also differ, even when the containing structs are still identical.
+The CAN error message frames (i.e. error skb) are an interface
+specific to socket CAN. The payload of the CAN error message frames
+does not correspond to any actual data sent on the wire. Only an error
+flag and a delimiter are transmitted when an error occurs (c.f. ISO
+11898-1 section 10.4.4.2 "Error flag").
 
-To take an example, for struct sk_buff, debug messaging revealed
-that the identical struct matching was failing for the anon
-struct "headers"; specifically for the first field:
+For this reason, it makes no sense to increment the tx_packets and
+tx_bytes fields of struct net_device_stats when sending an error
+message frame because no actual payload will be transmitted on the
+wire.
 
-__u8       __pkt_type_offset[0]; /*   128     0 */
+N.B. Sending error message frames is a very specific feature which, at
+the moment, is only supported by the Kvaser Hydra hardware. Please
+refer to [1] for more details on the topic.
 
-Looking at the code in BTF deduplication, we have code that guards
-against the possibility of identical struct definitions, down to
-type ids, and identical array definitions.  However in this case
-we have a struct which is being defined twice but does not have
-identical type ids since each duplicate struct has separate type
-ids for the above array member.   A similar problem (though not
-observed) could occur for struct-in-struct.
+[1] https://lore.kernel.org/linux-can/CAMZ6RqK0rTNg3u3mBpZOoY51jLZ-et-J01tY6-+mWsM4meVw-A@mail.gmail.com/t/#u
 
-The solution is to make the "identical struct" test check members
-not just for matching ids, but to also check if they in turn are
-identical structs or arrays.
-
-The results of doing this are quite dramatic (for some modules
-at least); I see the number of type ids drop from around 10000
-to just over 1000 in one module for example.
-
-For testing use latest pahole or apply [1], otherwise dedups
-can fail for the reasons described there.
-
-Also fix return type of btf_dedup_identical_arrays() as
-suggested by Andrii to match boolean return type used
-elsewhere.
-
-Fixes: efdd3eb8015e ("libbpf: Accommodate DWARF/compiler bug with duplicated structs")
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/1666622309-22289-1-git-send-email-alan.maguire@oracle.com
-
-[1] https://lore.kernel.org/bpf/1666364523-9648-1-git-send-email-alan.maguire
-
+Link: https://lore.kernel.org/all/20211207121531.42941-3-mailhol.vincent@wanadoo.fr
+Co-developed-by: Jimmy Assarsson <extja@kvaser.com>
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Signed-off-by: Vincent Mailhol <mailhol.vincent@wanadoo.fr>
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Stable-dep-of: 35364f5b41a4 ("can: kvaser_usb: kvaser_usb_leaf: Get capabilities from device")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-index 5f3d20ae66d5..3ed759f53e7c 100644
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -3718,14 +3718,14 @@ static inline __u16 btf_fwd_kind(struct btf_type *t)
- }
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
+index 3ff2cd9828d2..215f2b48db24 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
+@@ -295,6 +295,7 @@ struct kvaser_cmd {
+ #define KVASER_USB_HYDRA_CF_FLAG_OVERRUN	BIT(1)
+ #define KVASER_USB_HYDRA_CF_FLAG_REMOTE_FRAME	BIT(4)
+ #define KVASER_USB_HYDRA_CF_FLAG_EXTENDED_ID	BIT(5)
++#define KVASER_USB_HYDRA_CF_FLAG_TX_ACK		BIT(6)
+ /* CAN frame flags. Used in ext_rx_can and ext_tx_can */
+ #define KVASER_USB_HYDRA_CF_FLAG_OSM_NACK	BIT(12)
+ #define KVASER_USB_HYDRA_CF_FLAG_ABL		BIT(13)
+@@ -1125,6 +1126,7 @@ static void kvaser_usb_hydra_tx_acknowledge(const struct kvaser_usb *dev,
+ 	struct kvaser_usb_net_priv *priv;
+ 	unsigned long irq_flags;
+ 	bool one_shot_fail = false;
++	bool is_err_frame = false;
+ 	u16 transid = kvaser_usb_hydra_get_cmd_transid(cmd);
  
- /* Check if given two types are identical ARRAY definitions */
--static int btf_dedup_identical_arrays(struct btf_dedup *d, __u32 id1, __u32 id2)
-+static bool btf_dedup_identical_arrays(struct btf_dedup *d, __u32 id1, __u32 id2)
- {
- 	struct btf_type *t1, *t2;
- 
- 	t1 = btf_type_by_id(d->btf, id1);
- 	t2 = btf_type_by_id(d->btf, id2);
- 	if (!btf_is_array(t1) || !btf_is_array(t2))
--		return 0;
-+		return false;
- 
- 	return btf_equal_array(t1, t2);
- }
-@@ -3749,7 +3749,9 @@ static bool btf_dedup_identical_structs(struct btf_dedup *d, __u32 id1, __u32 id
- 	m1 = btf_members(t1);
- 	m2 = btf_members(t2);
- 	for (i = 0, n = btf_vlen(t1); i < n; i++, m1++, m2++) {
--		if (m1->type != m2->type)
-+		if (m1->type != m2->type &&
-+		    !btf_dedup_identical_arrays(d, m1->type, m2->type) &&
-+		    !btf_dedup_identical_structs(d, m1->type, m2->type))
- 			return false;
+ 	priv = kvaser_usb_hydra_net_priv_from_cmd(dev, cmd);
+@@ -1143,10 +1145,13 @@ static void kvaser_usb_hydra_tx_acknowledge(const struct kvaser_usb *dev,
+ 			kvaser_usb_hydra_one_shot_fail(priv, cmd_ext);
+ 			one_shot_fail = true;
+ 		}
++
++		is_err_frame = flags & KVASER_USB_HYDRA_CF_FLAG_TX_ACK &&
++			       flags & KVASER_USB_HYDRA_CF_FLAG_ERROR_FRAME;
  	}
- 	return true;
+ 
+ 	context = &priv->tx_contexts[transid % dev->max_tx_urbs];
+-	if (!one_shot_fail) {
++	if (!one_shot_fail && !is_err_frame) {
+ 		struct net_device_stats *stats = &priv->netdev->stats;
+ 
+ 		stats->tx_packets++;
 -- 
 2.35.1
 
