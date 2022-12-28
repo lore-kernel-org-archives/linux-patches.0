@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6131863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E907CC433D2;
-	Wed, 28 Dec 2022 15:48:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21F531863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B820C433D2;
+	Wed, 28 Dec 2022 15:48:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242528;
-	bh=TysLWZxsnVb8erUgU7pXb3w5UkFrysFkGEmLXlYnk4s=;
+	s=korg; t=1672242531;
+	bh=jrcC32pe8Kolx3MaVTPjSS7wyKA9V9nxMWJ6XbOIkaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q5RzcUcPL6peyJFt+TX7LfnEs86S0rZVn2xWkIILxXvwyL5cc0am0YzwjhzjX7E+w
-	 9lAGWE9IGEZEMX/BCYSP7x+CiPLFzYnRnk61UC+WsJJJ0FCP5NupRAShpJACEpdWYL
-	 XN7jK+cgzQfHhBsJPVTkvIIImPcIjIXQ5TEhNQdI=
+	b=fOP8oNABDkOkuHl7TqDjhnRybnow6I+lCPJeIvmxiMAMSuSxwg/XvuuYf8TuVrEwL
+	 6vnUU2sp+PJYa2euyRdzpuLN958HQwxR5D9P0EJdYCSpeOEbLNcDqyBhuwkTY4qZrx
+	 dPb4fLnZnsienubeVF+hx0ACdlQdsu8GOgL1UCh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lijo Lazar <lijo.lazar@amd.com>,
-	Guchun Chen <guchun.chen@amd.com>,
 	Evan Quan <evan.quan@amd.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0420/1073] drm/amd/pm/smu11: BACO is supported when its in BACO state
-Date: Wed, 28 Dec 2022 15:33:28 +0100
-Message-Id: <20221228144339.429651070@linuxfoundation.org>
+Subject: [PATCH 6.1 0380/1146] drm/amdgpu: fix pci device refcount leak
+Date: Wed, 28 Dec 2022 15:31:59 +0100
+Message-Id: <20221228144340.488228515@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,41 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guchun Chen <guchun.chen@amd.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 6dca7efe6e522bf213c7dab691fa580d82f48f74 ]
+[ Upstream commit b85e285e3d6352b02947fc1b72303673dfacb0aa ]
 
-Return true early if ASIC is in BACO state already, no need
-to talk to SMU. It can fix the issue that driver was not
-calling BACO exit at all in runtime pm resume, and a timing
-issue leading to a PCI AER error happened eventually.
+As comment of pci_get_domain_bus_and_slot() says, it returns
+a pci device with refcount increment, when finish using it,
+the caller must decrement the reference count by calling
+pci_dev_put().
 
-Fixes: 8795e182b02d ("PCI/portdrv: Don't disable AER reporting in get_port_device_capability()")
-Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
-Signed-off-by: Guchun Chen <guchun.chen@amd.com>
-Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+So before returning from amdgpu_device_resume|suspend_display_audio(),
+pci_dev_put() is called to avoid refcount leak.
+
+Fixes: 3f12acc8d6d4 ("drm/amdgpu: put the audio codec into suspend state before gpu reset V3")
 Reviewed-by: Evan Quan <evan.quan@amd.com>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c | 4 ++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 4 ++++
  1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
-index 70b560737687..ad5f6a15a1d7 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
-@@ -1588,6 +1588,10 @@ bool smu_v11_0_baco_is_support(struct smu_context *smu)
- 	if (amdgpu_sriov_vf(smu->adev) || !smu_baco->platform_support)
- 		return false;
- 
-+	/* return true if ASIC is in BACO state already */
-+	if (smu_v11_0_baco_get_state(smu) == SMU_BACO_STATE_ENTER)
-+		return true;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index f1e9663b4051..2cf72cfa2e60 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -5027,6 +5027,8 @@ static void amdgpu_device_resume_display_audio(struct amdgpu_device *adev)
+ 		pm_runtime_enable(&(p->dev));
+ 		pm_runtime_resume(&(p->dev));
+ 	}
 +
- 	/* Arcturus does not support this bit mask */
- 	if (smu_cmn_feature_is_supported(smu, SMU_FEATURE_BACO_BIT) &&
- 	   !smu_cmn_feature_is_enabled(smu, SMU_FEATURE_BACO_BIT))
++	pci_dev_put(p);
+ }
+ 
+ static int amdgpu_device_suspend_display_audio(struct amdgpu_device *adev)
+@@ -5065,6 +5067,7 @@ static int amdgpu_device_suspend_display_audio(struct amdgpu_device *adev)
+ 
+ 		if (expires < ktime_get_mono_fast_ns()) {
+ 			dev_warn(adev->dev, "failed to suspend display audio\n");
++			pci_dev_put(p);
+ 			/* TODO: abort the succeeding gpu reset? */
+ 			return -ETIMEDOUT;
+ 		}
+@@ -5072,6 +5075,7 @@ static int amdgpu_device_suspend_display_audio(struct amdgpu_device *adev)
+ 
+ 	pm_runtime_disable(&(p->dev));
+ 
++	pci_dev_put(p);
+ 	return 0;
+ }
+ 
 -- 
 2.35.1
 
