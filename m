@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35F281C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:19:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B04A3C433EF;
-	Wed, 28 Dec 2022 16:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B3E1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:19:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BFE7C433D2;
+	Wed, 28 Dec 2022 16:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244370;
-	bh=IvG6SARDwQjWSH+ffasGt+RYVyM+wHEIdsJp6Sgu43Q=;
+	s=korg; t=1672244372;
+	bh=WanpE9m9zFHmVT5JVV7xlaXvmG6gaVQFTxMqa4NNWlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s4YfmmY2RCLzPVSbk9xRRbmf7WT1Woh4LeIxJaBYl/Rcu8AOvmWMcwmJ4cTTlv62I
-	 hZm20RAw/1kHKtKAFv/+flVq/S7yyO50BAYAhJJxx0Y+Pch3aNXjqPQaykA7LefZY4
-	 y9tuhU4NWIuVgkUShRE/+zgNSueC6XzSmtA2FGfk=
+	b=D/PdT6SBH23llwEvUpyR5+Pi98V3wDRIXFe6XU2UE7aIV6fieo2s6R9C1sJnl176u
+	 qUhXxrgkEafMnM4yWBWIxJep6CxNZOjj6CkrZAvFK03VM6lUZjDzxoGqx7TK+UrHCP
+	 gcFNRmkmCVsAVI8W0UU3iIxy7cE0f695J4x4WSHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sheng Yong <shengyong@oppo.com>,
-	Chao Yu <chao@kernel.org>,
-	Nick Terrell <terrelln@fb.com>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Frederic Barrat <fbarrat@linux.ibm.com>,
+	Andrew Donnellan <ajd@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0658/1146] f2fs: set zstd compress level correctly
-Date: Wed, 28 Dec 2022 15:36:37 +0100
-Message-Id: <20221228144348.029423637@linuxfoundation.org>
+Subject: [PATCH 6.0 0699/1073] cxl: fix possible null-ptr-deref in cxl_pci_init_afu|adapter()
+Date: Wed, 28 Dec 2022 15:38:07 +0100
+Message-Id: <20221228144347.017415593@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,33 +36,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sheng Yong <shengyong@oppo.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 4ff23a6547b81ca22adb852dfe93ee5fc45328ac ]
+[ Upstream commit 02cd3032b154fa02fdf90e7467abaeed889330b2 ]
 
-Fixes: cf30f6a5f0c6 ("lib: zstd: Add kernel-specific API")
-Signed-off-by: Sheng Yong <shengyong@oppo.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Reviewed-by: Nick Terrell <terrelln@fb.com>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+If device_register() fails in cxl_pci_afu|adapter(), the device
+is not added, device_unregister() can not be called in the error
+path, otherwise it will cause a null-ptr-deref because of removing
+not added device.
+
+As comment of device_register() says, it should use put_device() to give
+up the reference in the error path. So split device_unregister() into
+device_del() and put_device(), then goes to put dev when register fails.
+
+Fixes: f204e0b8cedd ("cxl: Driver code for powernv PCIe based cards for userspace access")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Acked-by: Frederic Barrat <fbarrat@linux.ibm.com>
+Acked-by: Andrew Donnellan <ajd@linux.ibm.com>
+Link: https://lore.kernel.org/r/20221111145440.2426970-2-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/compress.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/misc/cxl/pci.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/fs/f2fs/compress.c b/fs/f2fs/compress.c
-index d315c2de136f..74d3f2d2271f 100644
---- a/fs/f2fs/compress.c
-+++ b/fs/f2fs/compress.c
-@@ -346,7 +346,7 @@ static int zstd_init_compress_ctx(struct compress_ctx *cc)
- 	if (!level)
- 		level = F2FS_ZSTD_DEFAULT_CLEVEL;
+diff --git a/drivers/misc/cxl/pci.c b/drivers/misc/cxl/pci.c
+index 3de0aea62ade..6d495d641c95 100644
+--- a/drivers/misc/cxl/pci.c
++++ b/drivers/misc/cxl/pci.c
+@@ -1164,10 +1164,10 @@ static int pci_init_afu(struct cxl *adapter, int slice, struct pci_dev *dev)
+ 	 * if it returns an error!
+ 	 */
+ 	if ((rc = cxl_register_afu(afu)))
+-		goto err_put1;
++		goto err_put_dev;
  
--	params = zstd_get_params(F2FS_ZSTD_DEFAULT_CLEVEL, cc->rlen);
-+	params = zstd_get_params(level, cc->rlen);
- 	workspace_size = zstd_cstream_workspace_bound(&params.cParams);
+ 	if ((rc = cxl_sysfs_afu_add(afu)))
+-		goto err_put1;
++		goto err_del_dev;
  
- 	workspace = f2fs_kvmalloc(F2FS_I_SB(cc->inode),
+ 	adapter->afu[afu->slice] = afu;
+ 
+@@ -1176,10 +1176,12 @@ static int pci_init_afu(struct cxl *adapter, int slice, struct pci_dev *dev)
+ 
+ 	return 0;
+ 
+-err_put1:
++err_del_dev:
++	device_del(&afu->dev);
++err_put_dev:
+ 	pci_deconfigure_afu(afu);
+ 	cxl_debugfs_afu_remove(afu);
+-	device_unregister(&afu->dev);
++	put_device(&afu->dev);
+ 	return rc;
+ 
+ err_free_native:
+@@ -1667,23 +1669,25 @@ static struct cxl *cxl_pci_init_adapter(struct pci_dev *dev)
+ 	 * even if it returns an error!
+ 	 */
+ 	if ((rc = cxl_register_adapter(adapter)))
+-		goto err_put1;
++		goto err_put_dev;
+ 
+ 	if ((rc = cxl_sysfs_adapter_add(adapter)))
+-		goto err_put1;
++		goto err_del_dev;
+ 
+ 	/* Release the context lock as adapter is configured */
+ 	cxl_adapter_context_unlock(adapter);
+ 
+ 	return adapter;
+ 
+-err_put1:
++err_del_dev:
++	device_del(&adapter->dev);
++err_put_dev:
+ 	/* This should mirror cxl_remove_adapter, except without the
+ 	 * sysfs parts
+ 	 */
+ 	cxl_debugfs_adapter_remove(adapter);
+ 	cxl_deconfigure_adapter(adapter);
+-	device_unregister(&adapter->dev);
++	put_device(&adapter->dev);
+ 	return ERR_PTR(rc);
+ 
+ err_release:
 -- 
 2.35.1
 
