@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E958B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:26:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68FD2C433EF;
-	Wed, 28 Dec 2022 15:26:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DC41863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:26:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15062C433EF;
+	Wed, 28 Dec 2022 15:26:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241196;
-	bh=gb2+8WEVCParMDt/c+JhBcm5qkrAhe164cAQF9O891U=;
+	s=korg; t=1672241199;
+	bh=K3Tx9dtdTTz4UNH41utkRBHMBa5qQJD4JlT8Zb95Bew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ernk3HwIKUkHUN77x5TM2sj2tDdLbcCU2M4Sjov94aLB2E98RY6GGLcLGEWc+0Nxl
-	 B69Gf2tLJhSrBssWDnKehepbiCvktKvhLJVY7yFehg5J8dn/Q0SwGAziY5jaw2J/tt
-	 Mb9lGgYSh20gjWuTDEdgsXXIN7A+D3O2iAOM1vlc=
+	b=FJx9y9cVwUrGQzuuPF0Op1EUGT3mVmCMm4tes5TEvmKGO1/b+1c+1VvjrSQf3sAND
+	 u+xIfwHwStTLpaR1gSy/kgRTmgXb5a99Sj3F/fNtu0+ne2Ko6bQHQtQrv4laTQP/h1
+	 tW0QJtIJv0MBkym48fee0eZh2YE/1+Zk0p+O+Z9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Previn <alan.previn.teres.alexis@intel.com>,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
+	Yassine Oudjana <y.oudjana@protonmail.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0252/1073] drm/i915/guc: Add a helper for log buffer size
-Date: Wed, 28 Dec 2022 15:30:40 +0100
-Message-Id: <20221228144334.865340615@linuxfoundation.org>
+Subject: [PATCH 5.15 452/731] extcon: usbc-tusb320: Add support for TUSB320L
+Date: Wed, 28 Dec 2022 15:39:19 +0100
+Message-Id: <20221228144309.656698419@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,94 +35,183 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Previn <alan.previn.teres.alexis@intel.com>
+From: Yassine Oudjana <y.oudjana@protonmail.com>
 
-[ Upstream commit 5ce27d6210018e972197ff7e5da6309f919fd61b ]
+[ Upstream commit ce0320bd3872038569be360870e2d5251b975692 ]
 
-Add a helper to get GuC log buffer size.
+TUSB320L is a newer chip with additional features, and it has additional steps
+in its mode changing sequence:
+ - Disable CC state machine,
+ - Write to mode register,
+ - Wait for 5 ms,
+ - Re-enable CC state machine.
+It also has an additional register that a revision number can be read from.
 
-Signed-off-by: Alan Previn <alan.previn.teres.alexis@intel.com>
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Reviewed-by: Matthew Brost <matthew.brost@intel.com>
-Reviewed-by: Alan Previn <alan.previn.teres.alexis@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220728022028.2190627-2-John.C.Harrison@Intel.com
-Stable-dep-of: befb231d5de2 ("drm/i915/guc: Fix GuC error capture sizing estimation and reporting")
+Add support for the mode changing sequence, and read the revision number during
+probe and print it as info.
+
+Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Stable-dep-of: 581c848b610d ("extcon: usbc-tusb320: Update state on probe even if no IRQ pending")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/uc/intel_guc_log.c | 49 ++++++++++++----------
- 1 file changed, 27 insertions(+), 22 deletions(-)
+ drivers/extcon/extcon-usbc-tusb320.c | 82 +++++++++++++++++++++++++++-
+ 1 file changed, 79 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_log.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_log.c
-index 25b2d7ce6640..492bbf419d4d 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_log.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_log.c
-@@ -15,6 +15,32 @@
+diff --git a/drivers/extcon/extcon-usbc-tusb320.c b/drivers/extcon/extcon-usbc-tusb320.c
+index 1ed1dfe54206..6ba3d89b106d 100644
+--- a/drivers/extcon/extcon-usbc-tusb320.c
++++ b/drivers/extcon/extcon-usbc-tusb320.c
+@@ -21,10 +21,13 @@
+ #define TUSB320_REG9_INTERRUPT_STATUS		BIT(4)
  
- static void guc_log_copy_debuglogs_for_relay(struct intel_guc_log *log);
+ #define TUSB320_REGA				0xa
++#define TUSB320L_REGA_DISABLE_TERM		BIT(0)
+ #define TUSB320_REGA_I2C_SOFT_RESET		BIT(3)
+ #define TUSB320_REGA_MODE_SELECT_SHIFT		4
+ #define TUSB320_REGA_MODE_SELECT_MASK		0x3
  
-+static u32 intel_guc_log_size(struct intel_guc_log *log)
++#define TUSB320L_REGA0_REVISION			0xa0
++
+ enum tusb320_attached_state {
+ 	TUSB320_ATTACHED_STATE_NONE,
+ 	TUSB320_ATTACHED_STATE_DFP,
+@@ -39,11 +42,18 @@ enum tusb320_mode {
+ 	TUSB320_MODE_DRP,
+ };
+ 
++struct tusb320_priv;
++
++struct tusb320_ops {
++	int (*set_mode)(struct tusb320_priv *priv, enum tusb320_mode mode);
++	int (*get_revision)(struct tusb320_priv *priv, unsigned int *revision);
++};
++
+ struct tusb320_priv {
+ 	struct device *dev;
+ 	struct regmap *regmap;
+ 	struct extcon_dev *edev;
+-
++	struct tusb320_ops *ops;
+ 	enum tusb320_attached_state state;
+ };
+ 
+@@ -99,12 +109,46 @@ static int tusb320_set_mode(struct tusb320_priv *priv, enum tusb320_mode mode)
+ 	return 0;
+ }
+ 
++static int tusb320l_set_mode(struct tusb320_priv *priv, enum tusb320_mode mode)
 +{
-+	/*
-+	 *  GuC Log buffer Layout:
-+	 *
-+	 *  NB: Ordering must follow "enum guc_log_buffer_type".
-+	 *
-+	 *  +===============================+ 00B
-+	 *  |      Debug state header       |
-+	 *  +-------------------------------+ 32B
-+	 *  |    Crash dump state header    |
-+	 *  +-------------------------------+ 64B
-+	 *  |     Capture state header      |
-+	 *  +-------------------------------+ 96B
-+	 *  |                               |
-+	 *  +===============================+ PAGE_SIZE (4KB)
-+	 *  |          Debug logs           |
-+	 *  +===============================+ + DEBUG_SIZE
-+	 *  |        Crash Dump logs        |
-+	 *  +===============================+ + CRASH_SIZE
-+	 *  |         Capture logs          |
-+	 *  +===============================+ + CAPTURE_SIZE
-+	 */
-+	return PAGE_SIZE + CRASH_BUFFER_SIZE + DEBUG_BUFFER_SIZE + CAPTURE_BUFFER_SIZE;
++	int ret;
++
++	/* Disable CC state machine */
++	ret = regmap_write_bits(priv->regmap, TUSB320_REGA,
++		TUSB320L_REGA_DISABLE_TERM, 1);
++	if (ret) {
++		dev_err(priv->dev,
++			"failed to disable CC state machine: %d\n", ret);
++		return ret;
++	}
++
++	/* Write mode */
++	ret = regmap_write_bits(priv->regmap, TUSB320_REGA,
++		TUSB320_REGA_MODE_SELECT_MASK << TUSB320_REGA_MODE_SELECT_SHIFT,
++		mode << TUSB320_REGA_MODE_SELECT_SHIFT);
++	if (ret) {
++		dev_err(priv->dev, "failed to write mode: %d\n", ret);
++		goto err;
++	}
++
++	msleep(5);
++err:
++	/* Re-enable CC state machine */
++	ret = regmap_write_bits(priv->regmap, TUSB320_REGA,
++		TUSB320L_REGA_DISABLE_TERM, 0);
++	if (ret)
++		dev_err(priv->dev,
++			"failed to re-enable CC state machine: %d\n", ret);
++
++	return ret;
 +}
 +
- /**
-  * DOC: GuC firmware log
-  *
-@@ -461,32 +487,11 @@ int intel_guc_log_create(struct intel_guc_log *log)
+ static int tusb320_reset(struct tusb320_priv *priv)
+ {
+ 	int ret;
  
- 	GEM_BUG_ON(log->vma);
+ 	/* Set mode to default (follow PORT pin) */
+-	ret = tusb320_set_mode(priv, TUSB320_MODE_PORT);
++	ret = priv->ops->set_mode(priv, TUSB320_MODE_PORT);
+ 	if (ret && ret != -EBUSY) {
+ 		dev_err(priv->dev,
+ 			"failed to set mode to PORT: %d\n", ret);
+@@ -126,6 +170,20 @@ static int tusb320_reset(struct tusb320_priv *priv)
+ 	return 0;
+ }
  
--	/*
--	 *  GuC Log buffer Layout
--	 * (this ordering must follow "enum guc_log_buffer_type" definition)
--	 *
--	 *  +===============================+ 00B
--	 *  |      Debug state header       |
--	 *  +-------------------------------+ 32B
--	 *  |    Crash dump state header    |
--	 *  +-------------------------------+ 64B
--	 *  |     Capture state header      |
--	 *  +-------------------------------+ 96B
--	 *  |                               |
--	 *  +===============================+ PAGE_SIZE (4KB)
--	 *  |          Debug logs           |
--	 *  +===============================+ + DEBUG_SIZE
--	 *  |        Crash Dump logs        |
--	 *  +===============================+ + CRASH_SIZE
--	 *  |         Capture logs          |
--	 *  +===============================+ + CAPTURE_SIZE
--	 */
- 	if (intel_guc_capture_output_min_size_est(guc) > CAPTURE_BUFFER_SIZE)
- 		DRM_WARN("GuC log buffer for state_capture maybe too small. %d < %d\n",
- 			 CAPTURE_BUFFER_SIZE, intel_guc_capture_output_min_size_est(guc));
++static int tusb320l_get_revision(struct tusb320_priv *priv, unsigned int *revision)
++{
++	return regmap_read(priv->regmap, TUSB320L_REGA0_REVISION, revision);
++}
++
++static struct tusb320_ops tusb320_ops = {
++	.set_mode = tusb320_set_mode,
++};
++
++static struct tusb320_ops tusb320l_ops = {
++	.set_mode = tusb320l_set_mode,
++	.get_revision = tusb320l_get_revision,
++};
++
+ static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
+ {
+ 	struct tusb320_priv *priv = dev_id;
+@@ -176,6 +234,8 @@ static int tusb320_extcon_probe(struct i2c_client *client,
+ 				const struct i2c_device_id *id)
+ {
+ 	struct tusb320_priv *priv;
++	const void *match_data;
++	unsigned int revision;
+ 	int ret;
  
--	guc_log_size = PAGE_SIZE + CRASH_BUFFER_SIZE + DEBUG_BUFFER_SIZE +
--		       CAPTURE_BUFFER_SIZE;
-+	guc_log_size = intel_guc_log_size(log);
+ 	priv = devm_kzalloc(&client->dev, sizeof(*priv), GFP_KERNEL);
+@@ -191,12 +251,27 @@ static int tusb320_extcon_probe(struct i2c_client *client,
+ 	if (ret)
+ 		return ret;
  
- 	vma = intel_guc_allocate_vma(guc, guc_log_size);
- 	if (IS_ERR(vma)) {
++	match_data = device_get_match_data(&client->dev);
++	if (!match_data)
++		return -EINVAL;
++
++	priv->ops = (struct tusb320_ops*)match_data;
++
+ 	priv->edev = devm_extcon_dev_allocate(priv->dev, tusb320_extcon_cable);
+ 	if (IS_ERR(priv->edev)) {
+ 		dev_err(priv->dev, "failed to allocate extcon device\n");
+ 		return PTR_ERR(priv->edev);
+ 	}
+ 
++	if (priv->ops->get_revision) {
++		ret = priv->ops->get_revision(priv, &revision);
++		if (ret)
++			dev_warn(priv->dev,
++				"failed to read revision register: %d\n", ret);
++		else
++			dev_info(priv->dev, "chip revision %d\n", revision);
++	}
++
+ 	ret = devm_extcon_dev_register(priv->dev, priv->edev);
+ 	if (ret < 0) {
+ 		dev_err(priv->dev, "failed to register extcon device\n");
+@@ -231,7 +306,8 @@ static int tusb320_extcon_probe(struct i2c_client *client,
+ }
+ 
+ static const struct of_device_id tusb320_extcon_dt_match[] = {
+-	{ .compatible = "ti,tusb320", },
++	{ .compatible = "ti,tusb320", .data = &tusb320_ops, },
++	{ .compatible = "ti,tusb320l", .data = &tusb320l_ops, },
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, tusb320_extcon_dt_match);
 -- 
 2.35.1
 
