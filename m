@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889591C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:53:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07E62C433EF;
-	Wed, 28 Dec 2022 16:53:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F011C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:53:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C06C433D2;
+	Wed, 28 Dec 2022 16:53:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246411;
-	bh=X9QyHZW0/Q7y1ozPfSbuoElW40mP7FohwywJd74HR88=;
+	s=korg; t=1672246414;
+	bh=P6lOubP86MxuZA+q9UBA8Uu3tUIh58z96vk/I6b1Gt0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rtrzdd+A+KHpMWzIZ63mRRcurIhTk//ThdPntyPaeAYebsfawJWaS12mk+Uk5PVef
-	 ObVrVZop0pXeiLBU1TCLa3q0j/6qjp4WFf/NFt0gCsoBbN1yQb72iRO3iMZLNhrZJz
-	 lmYjtgDVV2l57+y7JxksAKK4x18hPyE+n/9v7ZPg=
+	b=rENsRNmXVmptJROxEHpHqyjUdJ2If2vM0mG2OAAPNl2Ekr60q7knuUEQHRYXkFU4c
+	 CiFonbnu0mMP+uLWrJJT3hZ2Z+Hakj7uSO8Ahvf5eiP8JhlzfLZ5x188scLoQJIZFX
+	 WIy5fxFybbqfiETTKel6buxZEmhCqe+sfa29xJoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Hilliard <james.hilliard1@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1036/1146] selftests/bpf: Fix conflicts with built-in functions in bpf_iter_ksym
-Date: Wed, 28 Dec 2022 15:42:55 +0100
-Message-Id: <20221228144358.494529805@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>
+Subject: [PATCH 6.0 1068/1073] clk: renesas: r8a779f0: Fix SD0H clock name
+Date: Wed, 28 Dec 2022 15:44:16 +0100
+Message-Id: <20221228144357.249657451@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,78 +34,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: James Hilliard <james.hilliard1@gmail.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit ab0350c743d5c93fd88742f02b3dff12168ab435 ]
+commit 99c05a2b710f16ea592ccb63ef5fe5f1f6b15db9 upstream.
 
-Both tolower and toupper are built in c functions, we should not
-redefine them as this can result in a build error.
+Correct the misspelled textual name of the SD0H clock.
 
-Fixes the following errors:
-progs/bpf_iter_ksym.c:10:20: error: conflicting types for built-in function 'tolower'; expected 'int(int)' [-Werror=builtin-declaration-mismatch]
-   10 | static inline char tolower(char c)
-      |                    ^~~~~~~
-progs/bpf_iter_ksym.c:5:1: note: 'tolower' is declared in header '<ctype.h>'
-    4 | #include <bpf/bpf_helpers.h>
-  +++ |+#include <ctype.h>
-    5 |
-progs/bpf_iter_ksym.c:17:20: error: conflicting types for built-in function 'toupper'; expected 'int(int)' [-Werror=builtin-declaration-mismatch]
-   17 | static inline char toupper(char c)
-      |                    ^~~~~~~
-progs/bpf_iter_ksym.c:17:20: note: 'toupper' is declared in header '<ctype.h>'
-
-See background on this sort of issue:
-https://stackoverflow.com/a/20582607
-https://gcc.gnu.org/bugzilla/show_bug.cgi?id=12213
-
-(C99, 7.1.3p1) "All identifiers with external linkage in any of the
-following subclauses (including the future library directions) are
-always reserved for use as identifiers with external linkage."
-
-This is documented behavior in GCC:
-https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html#index-std-2
-
-Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20221203010847.2191265-1-james.hilliard1@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9b5dd1ff705c6854 ("clk: renesas: r8a779f0: Add SDH0 clock")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/1f682d338f133608f138ae87323707436ad8c748.1665558014.git.geert+renesas@glider.be
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/bpf/progs/bpf_iter_ksym.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/clk/renesas/r8a779f0-cpg-mssr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/bpf_iter_ksym.c b/tools/testing/selftests/bpf/progs/bpf_iter_ksym.c
-index 285c008cbf9c..9ba14c37bbcc 100644
---- a/tools/testing/selftests/bpf/progs/bpf_iter_ksym.c
-+++ b/tools/testing/selftests/bpf/progs/bpf_iter_ksym.c
-@@ -7,14 +7,14 @@ char _license[] SEC("license") = "GPL";
+--- a/drivers/clk/renesas/r8a779f0-cpg-mssr.c
++++ b/drivers/clk/renesas/r8a779f0-cpg-mssr.c
+@@ -113,7 +113,7 @@ static const struct cpg_core_clk r8a779f
+ 	DEF_FIXED("sasyncperd2", R8A779F0_CLK_SASYNCPERD2, R8A779F0_CLK_SASYNCPERD1, 2, 1),
+ 	DEF_FIXED("sasyncperd4", R8A779F0_CLK_SASYNCPERD4, R8A779F0_CLK_SASYNCPERD1, 4, 1),
  
- unsigned long last_sym_value = 0;
+-	DEF_GEN4_SDH("sdh0",	R8A779F0_CLK_SD0H,	CLK_SDSRC,	   0x870),
++	DEF_GEN4_SDH("sd0h",	R8A779F0_CLK_SD0H,	CLK_SDSRC,	   0x870),
+ 	DEF_GEN4_SD("sd0",	R8A779F0_CLK_SD0,	R8A779F0_CLK_SD0H, 0x870),
  
--static inline char tolower(char c)
-+static inline char to_lower(char c)
- {
- 	if (c >= 'A' && c <= 'Z')
- 		c += ('a' - 'A');
- 	return c;
- }
- 
--static inline char toupper(char c)
-+static inline char to_upper(char c)
- {
- 	if (c >= 'a' && c <= 'z')
- 		c -= ('a' - 'A');
-@@ -54,7 +54,7 @@ int dump_ksym(struct bpf_iter__ksym *ctx)
- 	type = iter->type;
- 
- 	if (iter->module_name[0]) {
--		type = iter->exported ? toupper(type) : tolower(type);
-+		type = iter->exported ? to_upper(type) : to_lower(type);
- 		BPF_SEQ_PRINTF(seq, "0x%llx %c %s [ %s ] ",
- 			       value, type, iter->name, iter->module_name);
- 	} else {
--- 
-2.35.1
-
+ 	DEF_BASE("rpc",		R8A779F0_CLK_RPC,	CLK_TYPE_GEN4_RPC, CLK_RPCSRC),
 
 
