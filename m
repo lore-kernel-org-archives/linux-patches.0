@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0600E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:22:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB21C433EF;
-	Wed, 28 Dec 2022 15:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01511863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:22:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2414CC433EF;
+	Wed, 28 Dec 2022 15:22:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240932;
-	bh=+DYwgNKZyaPCUdVD2IEIt6RJcz7jns/DQexItOurSeE=;
+	s=korg; t=1672240935;
+	bh=8ulE3xdIl3AR5duLY964L4RyNp7VI6pFUjXAAX4C410=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wnV72PY4G7WZ26UmcTOcAATfo7DU18r9OVGtwyiuiQ0tD9fz18IYFhqk+/7UKtA0R
-	 LdGPsTq64sPT+kJpbS8kJmzKoz2L2iBNYpARDl978K24BOxwHXbcNS9SiPmdpsZXdh
-	 DBA1KKvPVNIiMTMci5Dz6ajcUFcgIDGOm6t/Erew=
+	b=ZA0F0IVfd2YgeI0CQg424N3nHk2ptjoa2L31V0kfYAcRzaQ96UoQZzoGRSyyZBI/Q
+	 hKahhGnLe7rQZwJoGJf6XpqII9hmFATvcU0SMjEL3VwynRjI+2sXl10Ci3gWTKp0Jv
+	 hBxHD0sBNmXU5btGaWPpxf85gcbm+E+qzLcoUNRo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 412/731] scsi: scsi_debug: Fix a warning in resp_report_zones()
-Date: Wed, 28 Dec 2022 15:38:39 +0100
-Message-Id: <20221228144308.515316588@linuxfoundation.org>
+Subject: [PATCH 6.1 0186/1146] fs: sysv: Fix sysv_nblocks() returns wrong value
+Date: Wed, 28 Dec 2022 15:28:45 +0100
+Message-Id: <20221228144335.204469171@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 07f2ca139d9a7a1ba71c4c03997c8de161db2346 ]
+[ Upstream commit e0c49bd2b4d3cd1751491eb2d940bce968ac65e9 ]
 
-As 'alloc_len' is user controlled data, if user tries to allocate memory
-larger than(>=) MAX_ORDER, then kcalloc() will fail, it creates a stack
-trace and messes up dmesg with a warning.
+sysv_nblocks() returns 'blocks' rather than 'res', which only counting
+the number of triple-indirect blocks and causing sysv_getattr() gets a
+wrong result.
 
-Add __GFP_NOWARN in order to avoid too large allocation warning.  This is
-detected by static analysis using smatch.
+[AV: this is actually a sysv counterpart of minixfs fix -
+0fcd426de9d0 "[PATCH] minix block usage counting fix" in
+historical tree; mea culpa, should've thought to check
+fs/sysv back then...]
 
-Fixes: 7db0e0c8190a ("scsi: scsi_debug: Fix buffer size of REPORT ZONES command")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Link: https://lore.kernel.org/r/20221112070612.2121535-1-harshit.m.mogalapalli@oracle.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 2 +-
+ fs/sysv/itree.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 6ca3205a0bf5..5624bb6a64a3 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -4367,7 +4367,7 @@ static int resp_report_zones(struct scsi_cmnd *scp,
- 	rep_max_zones = min((alloc_len - 64) >> ilog2(RZONES_DESC_HD),
- 			    max_zones);
+diff --git a/fs/sysv/itree.c b/fs/sysv/itree.c
+index d4ec9bb97de9..3b8567564e7e 100644
+--- a/fs/sysv/itree.c
++++ b/fs/sysv/itree.c
+@@ -438,7 +438,7 @@ static unsigned sysv_nblocks(struct super_block *s, loff_t size)
+ 		res += blocks;
+ 		direct = 1;
+ 	}
+-	return blocks;
++	return res;
+ }
  
--	arr = kzalloc(alloc_len, GFP_ATOMIC);
-+	arr = kzalloc(alloc_len, GFP_ATOMIC | __GFP_NOWARN);
- 	if (!arr) {
- 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INSUFF_RES_ASC,
- 				INSUFF_RES_ASCQ);
+ int sysv_getattr(struct user_namespace *mnt_userns, const struct path *path,
 -- 
 2.35.1
 
