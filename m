@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA47F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31FB5C433F0;
-	Wed, 28 Dec 2022 15:29:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BA671863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C7BC433F0;
+	Wed, 28 Dec 2022 15:29:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241376;
-	bh=TOU/oiuKLjmB2Ty15HATCPIpELhn9kSTHm6ZnJwyFns=;
+	s=korg; t=1672241379;
+	bh=OdE+smot/ZM5r/Fvd7ynQ+TbuW5OrN192l62Yjb/t7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kPd/HQRX0SYI3MmYYFDcHOIDxzkC7IHQMFWzr6vMxzKYVayXJUybjJDC0Dsn37XvS
-	 73Mr6srQKth3Gb2RnfKrgydJo7ltRszfXIZAc42XkJ0m3wDEjZDY3HJ2trmE+KGmZw
-	 NuxPBXPNisQAdiAS88CwxsaTai1Ik0aSnpKiZnKk=
+	b=y3tbWxxHFv0+2NHAXVyIFcadX/OLKmc98CK6BI6vp4L42So7mKil0umxhOh/GUvBq
+	 OBUN2gj3c6oxmhMUCeOtW6GY3XtLL3JisKTTaIK1C/VpqqZFIAiijIKLH0sUhWQ84t
+	 VLxxB95X264VJhWhRpwoxql/fDq2T5/L9b8TykDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 441/731] class: fix possible memory leak in __class_register()
-Date: Wed, 28 Dec 2022 15:39:08 +0100
-Message-Id: <20221228144309.342258273@linuxfoundation.org>
+Subject: [PATCH 6.0 0273/1073] drm/msm/dsi: Remove useless math in DSC calculations
+Date: Wed, 28 Dec 2022 15:31:01 +0100
+Message-Id: <20221228144335.432059275@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,69 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit 8c3e8a6bdb5253b97ad532570f8b5db5f7a06407 ]
+[ Upstream commit 01a907980e0be3310f18c7d4955968f3b28e7147 ]
 
-If class_add_groups() returns error, the 'cp->subsys' need be
-unregister, and the 'cp' need be freed.
+Multiplying a value by 2 and adding 1 to it always results in a value
+that is uneven, and that 1 gets truncated immediately when performing
+integer division by 2 again.  There is no "rounding" possible here.
 
-We can not call kset_unregister() here, because the 'cls' will
-be freed in callback function class_release() and it's also
-freed in caller's error path, it will cause double free.
+After that target_bpp_x16 is used to store a multiplication of
+bits_per_pixel by 16 which is only ever read to immediately be divided
+by 16 again, and is elided in much the same way.
 
-So fix this by calling kobject_del() and kfree_const(name) to
-cleanup kobject. Besides, call kfree() to free the 'cp'.
-
-Fault injection test can trigger this:
-
-unreferenced object 0xffff888102fa8190 (size 8):
-  comm "modprobe", pid 502, jiffies 4294906074 (age 49.296s)
-  hex dump (first 8 bytes):
-    70 6b 74 63 64 76 64 00                          pktcdvd.
-  backtrace:
-    [<00000000e7c7703d>] __kmalloc_track_caller+0x1ae/0x320
-    [<000000005e4d70bc>] kstrdup+0x3a/0x70
-    [<00000000c2e5e85a>] kstrdup_const+0x68/0x80
-    [<000000000049a8c7>] kvasprintf_const+0x10b/0x190
-    [<0000000029123163>] kobject_set_name_vargs+0x56/0x150
-    [<00000000747219c9>] kobject_set_name+0xab/0xe0
-    [<0000000005f1ea4e>] __class_register+0x15c/0x49a
-
-unreferenced object 0xffff888037274000 (size 1024):
-  comm "modprobe", pid 502, jiffies 4294906074 (age 49.296s)
-  hex dump (first 32 bytes):
-    00 40 27 37 80 88 ff ff 00 40 27 37 80 88 ff ff  .@'7.....@'7....
-    00 00 00 00 ad 4e ad de ff ff ff ff 00 00 00 00  .....N..........
-  backtrace:
-    [<00000000151f9600>] kmem_cache_alloc_trace+0x17c/0x2f0
-    [<00000000ecf3dd95>] __class_register+0x86/0x49a
-
-Fixes: ced6473e7486 ("driver core: class: add class_groups support")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221026082803.3458760-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Patchwork: https://patchwork.freedesktop.org/patch/508932/
+Link: https://lore.kernel.org/r/20221026182824.876933-2-marijn.suijten@somainline.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/class.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/drivers/base/class.c b/drivers/base/class.c
-index 7476f393df97..0e44a68e90a0 100644
---- a/drivers/base/class.c
-+++ b/drivers/base/class.c
-@@ -192,6 +192,11 @@ int __class_register(struct class *cls, struct lock_class_key *key)
- 	}
- 	error = class_add_groups(class_get(cls), cls->class_groups);
- 	class_put(cls);
-+	if (error) {
-+		kobject_del(&cp->subsys.kobj);
-+		kfree_const(cp->subsys.kobj.name);
-+		kfree(cp);
-+	}
- 	return error;
- }
- EXPORT_SYMBOL_GPL(__class_register);
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 15e108be1901..843521c9cdcf 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1849,7 +1849,6 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
+ 	int hrd_delay;
+ 	int pre_num_extra_mux_bits, num_extra_mux_bits;
+ 	int slice_bits;
+-	int target_bpp_x16;
+ 	int data;
+ 	int final_value, final_scale;
+ 	int i;
+@@ -1929,14 +1928,7 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
+ 	data = 2048 * (dsc->rc_model_size - dsc->initial_offset + num_extra_mux_bits);
+ 	dsc->slice_bpg_offset = DIV_ROUND_UP(data, groups_total);
+ 
+-	/* bpp * 16 + 0.5 */
+-	data = dsc->bits_per_pixel * 16;
+-	data *= 2;
+-	data++;
+-	data /= 2;
+-	target_bpp_x16 = data;
+-
+-	data = (dsc->initial_xmit_delay * target_bpp_x16) / 16;
++	data = dsc->initial_xmit_delay * dsc->bits_per_pixel;
+ 	final_value =  dsc->rc_model_size - data + num_extra_mux_bits;
+ 	dsc->final_offset = final_value;
+ 
 -- 
 2.35.1
 
