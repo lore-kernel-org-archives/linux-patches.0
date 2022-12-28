@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50CB61863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C26C433D2;
-	Wed, 28 Dec 2022 15:39:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1A21863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A50C433D2;
+	Wed, 28 Dec 2022 15:39:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241953;
-	bh=KwKXfZxx3BpPf4NQPS+b85R1s5ASnGewBVbenXMEt2Q=;
+	s=korg; t=1672241955;
+	bh=eVNT0s0v+/VvCyHi9lL/8u/23MNG4PMW3ip0XnAKemk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DW8vLS3anZM1t/toDS7NZjW/ZXZ4I6oXGA8mJA1Bns3ABfaa0slPhFKFUPkhqg2p6
-	 4n+P2eY6bID3Duw/4zo4GhNXkzt2lBBrWBeH/A3B8MN1cPcTlwu+bEWj8qcQqAvev9
-	 5HQdDKjCjC2Gg3JRVvIxwgEWan48H/bU1HzZuNxo=
+	b=zx25SLzz6rAhVmrlKMTgqLGP0v1F+PTJmLVME4re3YtTAcK2nvsGpV94lPFYjDlD6
+	 +YsGTpVH6N/gUp+D8Mj8qDOqGC42Jw14TBJrV6AcfODCZvyIM9FvJ4E1Xr+/Kc9xdY
+	 ptAc5SwXkEGEWec0Q5S7wOuR+SzdLpjXQ7jHNdmU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Marek Vasut <marex@denx.de>,
+	Liu Ying <victor.liu@nxp.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 546/731] rtc: cmos: Disable ACPI RTC event on removal
-Date: Wed, 28 Dec 2022 15:40:53 +0100
-Message-Id: <20221228144312.369745226@linuxfoundation.org>
+Subject: [PATCH 6.1 0309/1146] drm: lcdif: Set and enable FIFO Panic threshold
+Date: Wed, 28 Dec 2022 15:30:48 +0100
+Message-Id: <20221228144338.547670854@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,66 +35,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 83ebb7b3036d151ee39a4a752018665648fc3bd4 ]
+[ Upstream commit e3cac8f7749f78dacdf19c00ed5862a1db52239f ]
 
-Make cmos_do_remove() drop the ACPI RTC fixed event handler so as to
-prevent it from operating on stale data in case the event triggers
-after driver removal.
+In case the LCDIFv3 is used to drive a 4k panel via i.MX8MP HDMI bridge,
+the LCDIFv3 becomes susceptible to FIFO underflows, these lead to nasty
+flicker of the image on the panel, or image being shifted by half frame
+horizontally every second frame. The flicker can be easily triggered by
+running 3D application on top of weston compositor, like neverball or
+chromium. Surprisingly glmark2-es2-wayland or glmark2-es2-drm does not
+trigger this effect so easily.
 
-Fixes: 311ee9c151ad ("rtc: cmos: allow using ACPI for RTC alarm instead of HPET")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Zhang Rui <rui.zhang@intel.com>
-Tested-by: Zhang Rui <rui.zhang@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/2224609.iZASKD2KPV@kreacher
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Configure the FIFO Panic threshold register and enable the FIFO Panic
+mode, which internally boosts the NoC interconnect priority for LCDIFv3
+transactions in case of possible underflow. This mitigates the flicker
+effect on 4k panels as well.
+
+Fixes: 9db35bb349a0 ("drm: lcdif: Add support for i.MX8MP LCDIF variant")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Tested-by: Liu Ying <victor.liu@nxp.com> # i.MX8mp EVK
+Reviewed-by: Liu Ying <victor.liu@nxp.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221101152629.21768-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/gpu/drm/mxsfb/lcdif_kms.c  | 16 ++++++++++++++++
+ drivers/gpu/drm/mxsfb/lcdif_regs.h |  1 +
+ 2 files changed, 17 insertions(+)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 039486bfedf4..00e2ca7374ec 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -798,6 +798,14 @@ static void acpi_rtc_event_setup(struct device *dev)
- 	acpi_disable_event(ACPI_EVENT_RTC, 0);
+diff --git a/drivers/gpu/drm/mxsfb/lcdif_kms.c b/drivers/gpu/drm/mxsfb/lcdif_kms.c
+index d594938a6c8d..71546a5d0a48 100644
+--- a/drivers/gpu/drm/mxsfb/lcdif_kms.c
++++ b/drivers/gpu/drm/mxsfb/lcdif_kms.c
+@@ -5,6 +5,7 @@
+  * This code is based on drivers/gpu/drm/mxsfb/mxsfb*
+  */
+ 
++#include <linux/bitfield.h>
+ #include <linux/clk.h>
+ #include <linux/io.h>
+ #include <linux/iopoll.h>
+@@ -166,6 +167,18 @@ static void lcdif_enable_controller(struct lcdif_drm_private *lcdif)
+ {
+ 	u32 reg;
+ 
++	/* Set FIFO Panic watermarks, low 1/3, high 2/3 . */
++	writel(FIELD_PREP(PANIC0_THRES_LOW_MASK, 1 * PANIC0_THRES_MAX / 3) |
++	       FIELD_PREP(PANIC0_THRES_HIGH_MASK, 2 * PANIC0_THRES_MAX / 3),
++	       lcdif->base + LCDC_V8_PANIC0_THRES);
++
++	/*
++	 * Enable FIFO Panic, this does not generate interrupt, but
++	 * boosts NoC priority based on FIFO Panic watermarks.
++	 */
++	writel(INT_ENABLE_D1_PLANE_PANIC_EN,
++	       lcdif->base + LCDC_V8_INT_ENABLE_D1);
++
+ 	reg = readl(lcdif->base + LCDC_V8_DISP_PARA);
+ 	reg |= DISP_PARA_DISP_ON;
+ 	writel(reg, lcdif->base + LCDC_V8_DISP_PARA);
+@@ -193,6 +206,9 @@ static void lcdif_disable_controller(struct lcdif_drm_private *lcdif)
+ 	reg = readl(lcdif->base + LCDC_V8_DISP_PARA);
+ 	reg &= ~DISP_PARA_DISP_ON;
+ 	writel(reg, lcdif->base + LCDC_V8_DISP_PARA);
++
++	/* Disable FIFO Panic NoC priority booster. */
++	writel(0, lcdif->base + LCDC_V8_INT_ENABLE_D1);
  }
  
-+static void acpi_rtc_event_cleanup(void)
-+{
-+	if (acpi_disabled)
-+		return;
-+
-+	acpi_remove_fixed_event_handler(ACPI_EVENT_RTC, rtc_handler);
-+}
-+
- static void rtc_wake_on(struct device *dev)
- {
- 	acpi_clear_event(ACPI_EVENT_RTC);
-@@ -884,6 +892,10 @@ static inline void acpi_rtc_event_setup(struct device *dev)
- {
- }
+ static void lcdif_reset_block(struct lcdif_drm_private *lcdif)
+diff --git a/drivers/gpu/drm/mxsfb/lcdif_regs.h b/drivers/gpu/drm/mxsfb/lcdif_regs.h
+index 8e8bef175bf2..37f0d9a06b10 100644
+--- a/drivers/gpu/drm/mxsfb/lcdif_regs.h
++++ b/drivers/gpu/drm/mxsfb/lcdif_regs.h
+@@ -252,6 +252,7 @@
  
-+static inline void acpi_rtc_event_cleanup(void)
-+{
-+}
-+
- static inline void acpi_cmos_wake_setup(struct device *dev)
- {
- }
-@@ -1138,6 +1150,9 @@ static void cmos_do_remove(struct device *dev)
- 			hpet_unregister_irq_handler(cmos_interrupt);
- 	}
+ #define PANIC0_THRES_LOW_MASK		GENMASK(24, 16)
+ #define PANIC0_THRES_HIGH_MASK		GENMASK(8, 0)
++#define PANIC0_THRES_MAX		511
  
-+	if (!dev_get_platdata(dev))
-+		acpi_rtc_event_cleanup();
-+
- 	cmos->rtc = NULL;
- 
- 	ports = cmos->iomem;
+ #define LCDIF_MIN_XRES			120
+ #define LCDIF_MIN_YRES			120
 -- 
 2.35.1
 
