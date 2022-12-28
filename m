@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C413A1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:47:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A0DAC433D2;
-	Wed, 28 Dec 2022 16:47:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776F21C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:47:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F269DC433D2;
+	Wed, 28 Dec 2022 16:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246035;
-	bh=Dd5orDmtCNZJCQYWS/JgRzADZ9+VmC5yUIs7CQVaMpE=;
+	s=korg; t=1672246038;
+	bh=XKNp2vgdkZOqvb8ZpnkkTc35WysmYrXuZPl5CpeHkwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KJU+JD/ANqXow00LchGTqjfhE7xaB75KL++28gkF32kTefSRHpBYKfdF6MBONLEdk
-	 QPXz0o9q6E83Mi5XGmIfcFsvbhmPxQTbI6MDOW7SaUS3Pzj2wgzxMDQ5Q16yWcKLUq
-	 Tc8Nnr/RxAKfZv2vLgPzvS04BMK6//x6dSG7C6wc=
+	b=0rP+7OFjoYAZupPKRRAFMO0jKdauBQbEh6H5ru3WNHJWGN1F6lDgOh/UOKcViKXJd
+	 Yh5jQ4yX8iajt3rAyqSuEFKDovEjnR3QBJ3g8/AHyVzPUunB9OEnHkyioRTxFMNasC
+	 S554wTZx9XuurcJZTmqSkxrtc+IbPM9/vMdUdiMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Wang Jingjin <wangjingjin1@huawei.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0970/1146] ASoC: codecs: rt298: Add quirk for KBL-R RVP platform
-Date: Wed, 28 Dec 2022 15:41:49 +0100
-Message-Id: <20221228144356.682335922@linuxfoundation.org>
+Subject: [PATCH 6.0 1002/1073] ASoC: rockchip: pdm: Add missing clk_disable_unprepare() in rockchip_pdm_runtime_resume()
+Date: Wed, 28 Dec 2022 15:43:10 +0100
+Message-Id: <20221228144355.356618308@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,40 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+From: Wang Jingjin <wangjingjin1@huawei.com>
 
-[ Upstream commit 953dbd1cef18ce9ac0d69c1bd735b929fe52a17e ]
+[ Upstream commit ef0a098efb36660326c133af9b5a04a96a00e3ca ]
 
-KBL-R RVP platforms also use combojack, so we need to enable that
-configuration for them.
+The clk_disable_unprepare() should be called in the error handling of
+rockchip_pdm_runtime_resume().
 
-Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://lore.kernel.org/r/20221010121955.718168-4-cezary.rojewski@intel.com
+Fixes: fc05a5b22253 ("ASoC: rockchip: add support for pdm controller")
+Signed-off-by: Wang Jingjin <wangjingjin1@huawei.com>
+Link: https://lore.kernel.org/r/20221205032802.2422983-1-wangjingjin1@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt298.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/soc/rockchip/rockchip_pdm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/rt298.c b/sound/soc/codecs/rt298.c
-index a2ce52dafea8..cea26f3a02b6 100644
---- a/sound/soc/codecs/rt298.c
-+++ b/sound/soc/codecs/rt298.c
-@@ -1166,6 +1166,13 @@ static const struct dmi_system_id force_combo_jack_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Geminilake")
- 		}
- 	},
-+	{
-+		.ident = "Intel Kabylake R RVP",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Kabylake Client platform")
-+		}
-+	},
- 	{ }
- };
+diff --git a/sound/soc/rockchip/rockchip_pdm.c b/sound/soc/rockchip/rockchip_pdm.c
+index a7549f827235..5b1e47bdc376 100644
+--- a/sound/soc/rockchip/rockchip_pdm.c
++++ b/sound/soc/rockchip/rockchip_pdm.c
+@@ -431,6 +431,7 @@ static int rockchip_pdm_runtime_resume(struct device *dev)
  
+ 	ret = clk_prepare_enable(pdm->hclk);
+ 	if (ret) {
++		clk_disable_unprepare(pdm->clk);
+ 		dev_err(pdm->dev, "hclock enable failed %d\n", ret);
+ 		return ret;
+ 	}
 -- 
 2.35.1
 
