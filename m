@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7515F1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4FFC433D2;
-	Wed, 28 Dec 2022 16:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21DA7187A
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9194FC433D2;
+	Wed, 28 Dec 2022 16:11:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243888;
-	bh=fE3QMOo2s3TQgHsLdMZsi7UgSOkYnFXOB8fBJmKgvsM=;
+	s=korg; t=1672243890;
+	bh=NCDusXs63H3DTZi81Gd9ZlJEWUg7qva/XiXOrTJPvg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w0CDKpWotqh3cfxsDtLuD5Uk+TDKHHh848wq9u5tNYq+OClc6Fcdc6Nx6bl0MS+Ox
-	 kKYZDILe9kdiIbPgkBuILGas+pxHyYEXelCtCO5LBTporrNchQbRm29C1/yAR+9WVO
-	 JD+wnKJMYO4ZAHYkOUHiI9zd1H9gaZlIAVLYmPNI=
+	b=1/s7WIwXQGg/21KugPQ/RteP9ov5VpYqNdyIpnuHkCxbJdN4L4AC2FOs7vuCtDOOD
+	 6H4aeV+Hc2bJQGt6XE4VYXTYbnJ9xXGWdLzq8Iz93D171xt+LrxMfCVij7ROy8k/x1
+	 bJmQn/f51t3jn9Hu7S6uuMGlmmWhaTnL7i9ATVsw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Christoph Hellwig <hch@lst.de>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0605/1073] PCI: Check for alloc failure in pci_request_irq()
-Date: Wed, 28 Dec 2022 15:36:33 +0100
-Message-Id: <20221228144344.479779542@linuxfoundation.org>
+Subject: [PATCH 6.1 0573/1146] apparmor: Fix abi check to include v8 abi
+Date: Wed, 28 Dec 2022 15:35:12 +0100
+Message-Id: <20221228144345.736151190@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit 2d9cd957d40c3ac491b358e7cff0515bb07a3a9c ]
+[ Upstream commit 1b5a6198f5a9d0aa5497da0dc4bcd4fc166ee516 ]
 
-When kvasprintf() fails to allocate memory, it returns a NULL pointer.
-Return error from pci_request_irq() so we don't dereference it.
+The v8 abi is supported by the kernel but the userspace supported
+version check does not allow for it. This was missed when v8 was added
+due to a bug in the userspace compiler which was setting an older abi
+version for v8 encoding (which is forward compatible except on the
+network encoding). However it is possible to detect the network
+encoding by checking the policydb network support which the code
+does. The end result was that missing the abi flag worked until
+userspace was fixed and began correctly checking for the v8 abi
+version.
 
-[bhelgaas: commit log]
-Fixes: 704e8953d3e9 ("PCI/irq: Add pci_request_irq() and pci_free_irq() helpers")
-Link: https://lore.kernel.org/r/20221121020029.3759444-1-zengheng4@huawei.com
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Fixes: 56974a6fcfef ("apparmor: add base infastructure for socket mediation")
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/irq.c | 2 ++
- 1 file changed, 2 insertions(+)
+ security/apparmor/policy_unpack.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/irq.c b/drivers/pci/irq.c
-index 12ecd0aaa28d..0050e8f6814e 100644
---- a/drivers/pci/irq.c
-+++ b/drivers/pci/irq.c
-@@ -44,6 +44,8 @@ int pci_request_irq(struct pci_dev *dev, unsigned int nr, irq_handler_t handler,
- 	va_start(ap, fmt);
- 	devname = kvasprintf(GFP_KERNEL, fmt, ap);
- 	va_end(ap);
-+	if (!devname)
-+		return -ENOMEM;
- 
- 	ret = request_threaded_irq(pci_irq_vector(dev, nr), handler, thread_fn,
- 				   irqflags, devname, dev_id);
+diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
+index 55d31bac4f35..9d26bbb90133 100644
+--- a/security/apparmor/policy_unpack.c
++++ b/security/apparmor/policy_unpack.c
+@@ -972,7 +972,7 @@ static int verify_header(struct aa_ext *e, int required, const char **ns)
+ 	 * if not specified use previous version
+ 	 * Mask off everything that is not kernel abi version
+ 	 */
+-	if (VERSION_LT(e->version, v5) || VERSION_GT(e->version, v7)) {
++	if (VERSION_LT(e->version, v5) || VERSION_GT(e->version, v8)) {
+ 		audit_iface(NULL, NULL, NULL, "unsupported interface version",
+ 			    e, error);
+ 		return error;
 -- 
 2.35.1
 
