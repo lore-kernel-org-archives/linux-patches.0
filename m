@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438701875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:00:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 912E7C433D2;
-	Wed, 28 Dec 2022 16:00:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E14031875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:00:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68569C433D2;
+	Wed, 28 Dec 2022 16:00:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243210;
-	bh=EDWLhLGDqbf4Fn+A15HGN/2N4DpwJL7OaUt77iuzllI=;
+	s=korg; t=1672243212;
+	bh=68xVN3VZeD0h3tBkM7WjOn+syreLcmrMvcQukqO9hsI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FQX+Zx0FGrmXKpCenZgfwaeTDv37CQ4P6K1Y1A1DnD5E4ueKhgDLrynzqOci+Tw8Y
-	 zJB9RgJJ39U3BNysfaY24aUqDpPGL6HYudGoh6RwjZeNVXe8XMHIAn5tArjDU2d+0J
-	 LM4jyfSV/m2NAv4vK1aKKBF/wFxwGn5MVOAUemzY=
+	b=NO4PUmBZpDXs8okx1sc7g68S+g1II+W0vtnEmnyMs0bcrMQYw2olpxo2sVeYpo1Wp
+	 4HL3ygdjLpPlUQP6VhYVAFT/yl99bPFHNgi9ttvKguCtHcFSZJV5jFudd98QOV8Qfc
+	 V2fdXyzioqzUtvaNcrdTeaTGzg6C0jGSW/a1kgIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	Deren Wu <deren.wu@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 695/731] ASoC: rt5670: Remove unbalanced pm_runtime_put()
-Date: Wed, 28 Dec 2022 15:43:22 +0100
-Message-Id: <20221228144316.607426693@linuxfoundation.org>
+Subject: [PATCH 6.1 0463/1146] wifi: mt76: do not send firmware FW_FEATURE_NON_DL region
+Date: Wed, 28 Dec 2022 15:33:22 +0100
+Message-Id: <20221228144342.759041031@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,40 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Deren Wu <deren.wu@mediatek.com>
 
-[ Upstream commit 6c900dcc3f7331a67ed29739d74524e428d137fb ]
+[ Upstream commit f37f76d43865c58cb96aa13c87164abb41f22d0b ]
 
-For some reason rt5670_i2c_probe() does a pm_runtime_put() at the end
-of a successful probe. But it has never done a pm_runtime_get() leading
-to the following error being logged into dmesg:
+skip invalid section to avoid potential risks
 
- rt5670 i2c-10EC5640:00: Runtime PM usage count underflow!
-
-Fix this by removing the unnecessary pm_runtime_put().
-
-Fixes: 64e89e5f5548 ("ASoC: rt5670: Add runtime PM support")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20221213123319.11285-1-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 23bdc5d8cadf ("wifi: mt76: mt7921: introduce Country Location Control support")
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5670.c | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/sound/soc/codecs/rt5670.c b/sound/soc/codecs/rt5670.c
-index ecbaf129a6e3..51b385575a5c 100644
---- a/sound/soc/codecs/rt5670.c
-+++ b/sound/soc/codecs/rt5670.c
-@@ -3313,8 +3313,6 @@ static int rt5670_i2c_probe(struct i2c_client *i2c,
- 	if (ret < 0)
- 		goto err;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
+index 011fc9729b38..025a237c1cce 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
++++ b/drivers/net/wireless/mediatek/mt76/mt76_connac_mcu.c
+@@ -2834,6 +2834,9 @@ mt76_connac_mcu_send_ram_firmware(struct mt76_dev *dev,
+ 		len = le32_to_cpu(region->len);
+ 		addr = le32_to_cpu(region->addr);
  
--	pm_runtime_put(&i2c->dev);
--
- 	return 0;
- err:
- 	pm_runtime_disable(&i2c->dev);
++		if (region->feature_set & FW_FEATURE_NON_DL)
++			goto next;
++
+ 		if (region->feature_set & FW_FEATURE_OVERRIDE_ADDR)
+ 			override = addr;
+ 
+@@ -2850,6 +2853,7 @@ mt76_connac_mcu_send_ram_firmware(struct mt76_dev *dev,
+ 			return err;
+ 		}
+ 
++next:
+ 		offset += len;
+ 	}
+ 
 -- 
 2.35.1
 
