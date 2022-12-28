@@ -1,35 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 762FF1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:06:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54E8C433D2;
-	Wed, 28 Dec 2022 16:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01D151C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:06:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75EFCC433EF;
+	Wed, 28 Dec 2022 16:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243579;
-	bh=494EGiQmBY6UEFxiPqEY8hqBwlqe0QqQNwvEp8R4d0I=;
+	s=korg; t=1672243581;
+	bh=WEx2+3ZEyYZEOEZGBWc3Lmc1JAlv+aE+Tbn4FfhuAnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iTpLcU7WduylzSClw0fq1inpxej7StgyWr5XG6IGXoh7polyBBt661e8CHfD80Tzc
-	 DzZgME3N+/Ir7R44ncx0ie00Lynj3uoMdhJoROsUSDsr5llCmul0CYYoJYjCuC3rrq
-	 470BwwOiYQ5+mmuUZnZOK0bexSx2/Wst4Vk64QL8=
+	b=rBe9R4PB2phLQK1JXq5MvIxiQscqkpjva5Atn01bbWzLw/74ilZcZViitUv7Rl/Hb
+	 v6/21uem15NW21HX62ZGB6HSJW9PL0YlWBImfD8/kCuRlHnbln/e/IZ1vIcqy47lVv
+	 seVdC8YA6FdopHTFoLhJpHglGV+ixa8nONyNrpjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Staszewski <bartoszx.staszewski@intel.com>,
-	Mateusz Palczewski <mateusz.palczewski@intel.com>,
-	Shwetha Nagaraju <Shwetha.nagaraju@intel.com>,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Saeed Mahameed <saeed@kernel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Liang He <windhl@126.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0551/1073] i40e: Fix the inability to attach XDP program on downed interface
-Date: Wed, 28 Dec 2022 15:35:39 +0100
-Message-Id: <20221228144343.020754973@linuxfoundation.org>
+Subject: [PATCH 6.1 0516/1146] media: c8sectpfe: Add of_node_put() when breaking out of loop
+Date: Wed, 28 Dec 2022 15:34:15 +0100
+Message-Id: <20221228144344.190326149@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -40,100 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bartosz Staszewski <bartoszx.staszewski@intel.com>
+From: Liang He <windhl@126.com>
 
-[ Upstream commit 0c87b545a2ed5cd8a6318011f1c92b188c2d74bc ]
+[ Upstream commit 63ff05a1ad242a5a0f897921c87b70d601bda59c ]
 
-Whenever trying to load XDP prog on downed interface, function i40e_xdp
-was passing vsi->rx_buf_len field to i40e_xdp_setup() which was equal 0.
-i40e_open() calls i40e_vsi_configure_rx() which configures that field,
-but that only happens when interface is up. When it is down, i40e_open()
-is not being called, thus vsi->rx_buf_len is not set.
+In configure_channels(), we should call of_node_put() when breaking
+out of for_each_child_of_node() which will automatically increase
+and decrease the refcount.
 
-Solution for this is calculate buffer length in newly created
-function - i40e_calculate_vsi_rx_buf_len() that return actual buffer
-length. Buffer length is being calculated based on the same rules
-applied previously in i40e_vsi_configure_rx() function.
-
-Fixes: 613142b0bb88 ("i40e: Log error for oversized MTU on device")
-Fixes: 0c8493d90b6b ("i40e: add XDP support for pass and drop actions")
-Signed-off-by: Bartosz Staszewski <bartoszx.staszewski@intel.com>
-Signed-off-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
-Tested-by: Shwetha Nagaraju <Shwetha.nagaraju@intel.com>
-Reviewed-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Saeed Mahameed <saeed@kernel.com>
-Link: https://lore.kernel.org/r/20221209185411.2519898-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c5f5d0f99794 ("[media] c8sectpfe: STiH407/10 Linux DVB demux support")
+Signed-off-by: Liang He <windhl@126.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c | 36 ++++++++++++++-------
- 1 file changed, 24 insertions(+), 12 deletions(-)
+ drivers/media/platform/st/sti/c8sectpfe/c8sectpfe-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/intel/i40e/i40e_main.c b/drivers/net/ethernet/intel/i40e/i40e_main.c
-index e53ea7ed0b1d..8c07d92a6574 100644
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -3692,6 +3692,24 @@ static int i40e_vsi_configure_tx(struct i40e_vsi *vsi)
- 	return err;
- }
- 
-+/**
-+ * i40e_calculate_vsi_rx_buf_len - Calculates buffer length
-+ *
-+ * @vsi: VSI to calculate rx_buf_len from
-+ */
-+static u16 i40e_calculate_vsi_rx_buf_len(struct i40e_vsi *vsi)
-+{
-+	if (!vsi->netdev || (vsi->back->flags & I40E_FLAG_LEGACY_RX))
-+		return I40E_RXBUFFER_2048;
-+
-+#if (PAGE_SIZE < 8192)
-+	if (!I40E_2K_TOO_SMALL_WITH_PADDING && vsi->netdev->mtu <= ETH_DATA_LEN)
-+		return I40E_RXBUFFER_1536 - NET_IP_ALIGN;
-+#endif
-+
-+	return PAGE_SIZE < 8192 ? I40E_RXBUFFER_3072 : I40E_RXBUFFER_2048;
-+}
-+
- /**
-  * i40e_vsi_configure_rx - Configure the VSI for Rx
-  * @vsi: the VSI being configured
-@@ -3703,20 +3721,14 @@ static int i40e_vsi_configure_rx(struct i40e_vsi *vsi)
- 	int err = 0;
- 	u16 i;
- 
--	if (!vsi->netdev || (vsi->back->flags & I40E_FLAG_LEGACY_RX)) {
--		vsi->max_frame = I40E_MAX_RXBUFFER;
--		vsi->rx_buf_len = I40E_RXBUFFER_2048;
-+	vsi->max_frame = I40E_MAX_RXBUFFER;
-+	vsi->rx_buf_len = i40e_calculate_vsi_rx_buf_len(vsi);
-+
- #if (PAGE_SIZE < 8192)
--	} else if (!I40E_2K_TOO_SMALL_WITH_PADDING &&
--		   (vsi->netdev->mtu <= ETH_DATA_LEN)) {
-+	if (vsi->netdev && !I40E_2K_TOO_SMALL_WITH_PADDING &&
-+	    vsi->netdev->mtu <= ETH_DATA_LEN)
- 		vsi->max_frame = I40E_RXBUFFER_1536 - NET_IP_ALIGN;
--		vsi->rx_buf_len = I40E_RXBUFFER_1536 - NET_IP_ALIGN;
- #endif
--	} else {
--		vsi->max_frame = I40E_MAX_RXBUFFER;
--		vsi->rx_buf_len = (PAGE_SIZE < 8192) ? I40E_RXBUFFER_3072 :
--						       I40E_RXBUFFER_2048;
--	}
- 
- 	/* set up individual rings */
- 	for (i = 0; i < vsi->num_queue_pairs && !err; i++)
-@@ -13290,7 +13302,7 @@ static int i40e_xdp_setup(struct i40e_vsi *vsi, struct bpf_prog *prog,
- 	int i;
- 
- 	/* Don't allow frames that span over multiple buffers */
--	if (frame_size > vsi->rx_buf_len) {
-+	if (frame_size > i40e_calculate_vsi_rx_buf_len(vsi)) {
- 		NL_SET_ERR_MSG_MOD(extack, "MTU too large to enable XDP");
- 		return -EINVAL;
- 	}
+diff --git a/drivers/media/platform/st/sti/c8sectpfe/c8sectpfe-core.c b/drivers/media/platform/st/sti/c8sectpfe/c8sectpfe-core.c
+index cefe6b7bfdc4..1dbb89f0ddb8 100644
+--- a/drivers/media/platform/st/sti/c8sectpfe/c8sectpfe-core.c
++++ b/drivers/media/platform/st/sti/c8sectpfe/c8sectpfe-core.c
+@@ -925,6 +925,7 @@ static int configure_channels(struct c8sectpfei *fei)
+ 		if (ret) {
+ 			dev_err(fei->dev,
+ 				"configure_memdma_and_inputblock failed\n");
++			of_node_put(child);
+ 			goto err_unmap;
+ 		}
+ 		index++;
 -- 
 2.35.1
 
