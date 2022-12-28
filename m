@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007431863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:26:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79821C433EF;
-	Wed, 28 Dec 2022 15:26:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8921863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:26:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26639C433D2;
+	Wed, 28 Dec 2022 15:26:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241207;
-	bh=uZv/CWK8frLiw1+sihoCOGHynh4EZc70d5vM5HvSZGg=;
+	s=korg; t=1672241210;
+	bh=XWTCl5dflEC2C6jV1NT4qsB6XBXD7Pi+Nebs7hEj1xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S4Wc5LZV7Ou8vc+aeX+qgk4ucAkHMxl4yeczY3+D2aB5PahLBwuT1PNkyuX4u6wVb
-	 e8fuvmzIGOfWIWGbs073r6p+A++HyFNhxE6F3Y5ilIup177iCpGk4U2SRVzFUG2ESS
-	 jd9jbhWnljJqGSQvjkARMuc+JgbXDINaoPR9Z9Qk=
+	b=eHraxle0W0y+GqwrukJbUrP/MJ7uAXO7E3SSilw0AWb7fuktdaEYZurzwK9nid+rF
+	 6+hJO5BSYCstrpRszh5Ct3CA8I2WcEwDq7dlnEJfsWcLsRqmfZoH5rpXmvuPNzrCCU
+	 SPHsSfSvaFYFgykew2dkFzyb+6xLoib91Vb7E/Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Alan Previn <alan.previn.teres.alexis@intel.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Samuel Holland <samuel@sholland.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0253/1073] drm/i915/guc: Fix capture size warning and bump the size
-Date: Wed, 28 Dec 2022 15:30:41 +0100
-Message-Id: <20221228144334.892515755@linuxfoundation.org>
+Subject: [PATCH 5.15 453/731] usb: typec: Factor out non-PD fwnode properties
+Date: Wed, 28 Dec 2022 15:39:20 +0100
+Message-Id: <20221228144309.684664008@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,168 +35,148 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: Samuel Holland <samuel@sholland.org>
 
-[ Upstream commit 56c7f0e2026328e56106b54cb0e2fe3a7e70ce4f ]
+[ Upstream commit 2e7dfb0e9cacad0f1adbc4b97f0b96ba35027f24 ]
 
-There was a size check to warn if the GuC error state capture buffer
-allocation would be too small to fit a reasonable amount of capture
-data for the current platform. Unfortunately, the test was done too
-early in the boot sequence and was actually testing 'if(-ENODEV >
-size)'.
+Basic programmable non-PD Type-C port controllers do not need the full
+TCPM library, but they share the same devicetree binding and the same
+typec_capability structure. Factor out a helper for parsing those
+properties which map to fields in struct typec_capability, so the code
+can be shared between TCPM and basic non-TCPM drivers.
 
-Move the check to be later. The check is only used to print a warning
-message, so it doesn't really matter how early or late it is done.
-Note that it is not possible to dynamically size the buffer because
-the allocation needs to be done before the engine information is
-available (at least, it would be in the intended two-phase GuC init
-process).
-
-Now that the check works, it is reporting size too small for newer
-platforms. The check includes a 3x oversample multiplier to allow for
-multiple error captures to be bufferd by GuC before i915 has a chance
-to read them out. This is less important than simply being big enough
-to fit the first capture.
-
-So a) bump the default size to be large enough for one capture minimum
-and b) make the warning only if one capture won't fit, instead use a
-notice for the 3x size.
-
-Note that the size estimate is a worst case scenario. Actual captures
-will likely be smaller.
-
-Lastly, use drm_warn istead of DRM_WARN as the former provides more
-infmration and the latter is deprecated.
-
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Reviewed-by: Alan Previn <alan.previn.teres.alexis@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220728022028.2190627-3-John.C.Harrison@Intel.com
-Stable-dep-of: befb231d5de2 ("drm/i915/guc: Fix GuC error capture sizing estimation and reporting")
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+Link: https://lore.kernel.org/r/20220214050118.61015-4-samuel@sholland.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 581c848b610d ("extcon: usbc-tusb320: Update state on probe even if no IRQ pending")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/i915/gt/uc/intel_guc_capture.c    | 40 ++++++++++++++-----
- .../gpu/drm/i915/gt/uc/intel_guc_capture.h    |  1 -
- drivers/gpu/drm/i915/gt/uc/intel_guc_log.c    |  4 --
- drivers/gpu/drm/i915/gt/uc/intel_guc_log.h    |  4 +-
- 4 files changed, 31 insertions(+), 18 deletions(-)
+ drivers/usb/typec/class.c     | 43 +++++++++++++++++++++++++++++++++++
+ drivers/usb/typec/tcpm/tcpm.c | 24 +------------------
+ include/linux/usb/typec.h     |  3 +++
+ 3 files changed, 47 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-index 75257bd20ff0..b54b7883320b 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-@@ -600,10 +600,8 @@ intel_guc_capture_getnullheader(struct intel_guc *guc,
- 	return 0;
+diff --git a/drivers/usb/typec/class.c b/drivers/usb/typec/class.c
+index ff6c14d7b1a8..339752fef65e 100644
+--- a/drivers/usb/typec/class.c
++++ b/drivers/usb/typec/class.c
+@@ -1895,6 +1895,49 @@ void *typec_get_drvdata(struct typec_port *port)
  }
+ EXPORT_SYMBOL_GPL(typec_get_drvdata);
  
--#define GUC_CAPTURE_OVERBUFFER_MULTIPLIER 3
--
--int
--intel_guc_capture_output_min_size_est(struct intel_guc *guc)
-+static int
-+guc_capture_output_min_size_est(struct intel_guc *guc)
- {
- 	struct intel_gt *gt = guc_to_gt(guc);
- 	struct intel_engine_cs *engine;
-@@ -623,13 +621,8 @@ intel_guc_capture_output_min_size_est(struct intel_guc *guc)
- 	 * For each engine instance, there would be 1 x guc_state_capture_group_t output
- 	 * followed by 3 x guc_state_capture_t lists. The latter is how the register
- 	 * dumps are split across different register types (where the '3' are global vs class
--	 * vs instance). Finally, let's multiply the whole thing by 3x (just so we are
--	 * not limited to just 1 round of data in a worst case full register dump log)
--	 *
--	 * NOTE: intel_guc_log that allocates the log buffer would round this size up to
--	 * a power of two.
-+	 * vs instance).
- 	 */
--
- 	for_each_engine(engine, gt, id) {
- 		worst_min_size += sizeof(struct guc_state_capture_group_header_t) +
- 					 (3 * sizeof(struct guc_state_capture_header_t));
-@@ -649,7 +642,30 @@ intel_guc_capture_output_min_size_est(struct intel_guc *guc)
- 
- 	worst_min_size += (num_regs * sizeof(struct guc_mmio_reg));
- 
--	return (worst_min_size * GUC_CAPTURE_OVERBUFFER_MULTIPLIER);
-+	return worst_min_size;
-+}
-+
-+/*
-+ * Add on a 3x multiplier to allow for multiple back-to-back captures occurring
-+ * before the i915 can read the data out and process it
-+ */
-+#define GUC_CAPTURE_OVERBUFFER_MULTIPLIER 3
-+
-+static void check_guc_capture_size(struct intel_guc *guc)
++int typec_get_fw_cap(struct typec_capability *cap,
++		     struct fwnode_handle *fwnode)
 +{
-+	struct drm_i915_private *i915 = guc_to_gt(guc)->i915;
-+	int min_size = guc_capture_output_min_size_est(guc);
-+	int spare_size = min_size * GUC_CAPTURE_OVERBUFFER_MULTIPLIER;
++	const char *cap_str;
++	int ret;
 +
-+	if (min_size < 0)
-+		drm_warn(&i915->drm, "Failed to calculate GuC error state capture buffer minimum size: %d!\n",
-+			 min_size);
-+	else if (min_size > CAPTURE_BUFFER_SIZE)
-+		drm_warn(&i915->drm, "GuC error state capture buffer is too small: %d < %d\n",
-+			 CAPTURE_BUFFER_SIZE, min_size);
-+	else if (spare_size > CAPTURE_BUFFER_SIZE)
-+		drm_notice(&i915->drm, "GuC error state capture buffer maybe too small: %d < %d (min = %d)\n",
-+			   CAPTURE_BUFFER_SIZE, spare_size, min_size);
- }
- 
- /*
-@@ -1580,5 +1596,7 @@ int intel_guc_capture_init(struct intel_guc *guc)
- 	INIT_LIST_HEAD(&guc->capture->outlist);
- 	INIT_LIST_HEAD(&guc->capture->cachelist);
- 
-+	check_guc_capture_size(guc);
++	cap->fwnode = fwnode;
 +
- 	return 0;
- }
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.h b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.h
-index d3d7bd0b6db6..fbd3713c7832 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.h
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.h
-@@ -21,7 +21,6 @@ int intel_guc_capture_print_engine_node(struct drm_i915_error_state_buf *m,
- void intel_guc_capture_get_matching_node(struct intel_gt *gt, struct intel_engine_coredump *ee,
- 					 struct intel_context *ce);
- void intel_guc_capture_process(struct intel_guc *guc);
--int intel_guc_capture_output_min_size_est(struct intel_guc *guc);
- int intel_guc_capture_getlist(struct intel_guc *guc, u32 owner, u32 type, u32 classid,
- 			      void **outptr);
- int intel_guc_capture_getlistsize(struct intel_guc *guc, u32 owner, u32 type, u32 classid,
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_log.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_log.c
-index 492bbf419d4d..991d4a02248d 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_log.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_log.c
-@@ -487,10 +487,6 @@ int intel_guc_log_create(struct intel_guc_log *log)
++	ret = fwnode_property_read_string(fwnode, "power-role", &cap_str);
++	if (ret < 0)
++		return ret;
++
++	ret = typec_find_port_power_role(cap_str);
++	if (ret < 0)
++		return ret;
++	cap->type = ret;
++
++	/* USB data support is optional */
++	ret = fwnode_property_read_string(fwnode, "data-role", &cap_str);
++	if (ret == 0) {
++		ret = typec_find_port_data_role(cap_str);
++		if (ret < 0)
++			return ret;
++		cap->data = ret;
++	}
++
++	/* Get the preferred power role for a DRP */
++	if (cap->type == TYPEC_PORT_DRP) {
++		cap->prefer_role = TYPEC_NO_PREFERRED_ROLE;
++
++		ret = fwnode_property_read_string(fwnode, "try-power-role", &cap_str);
++		if (ret == 0) {
++			ret = typec_find_power_role(cap_str);
++			if (ret < 0)
++				return ret;
++			cap->prefer_role = ret;
++		}
++	}
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(typec_get_fw_cap);
++
+ /**
+  * typec_port_register_altmode - Register USB Type-C Port Alternate Mode
+  * @port: USB Type-C Port that supports the alternate mode
+diff --git a/drivers/usb/typec/tcpm/tcpm.c b/drivers/usb/typec/tcpm/tcpm.c
+index 33aadc0a29ea..984a13a9efc2 100644
+--- a/drivers/usb/typec/tcpm/tcpm.c
++++ b/drivers/usb/typec/tcpm/tcpm.c
+@@ -5928,7 +5928,6 @@ static int tcpm_fw_get_caps(struct tcpm_port *port,
+ 			    struct fwnode_handle *fwnode)
+ {
+ 	const char *opmode_str;
+-	const char *cap_str;
+ 	int ret;
+ 	u32 mw, frs_current;
  
- 	GEM_BUG_ON(log->vma);
+@@ -5944,23 +5943,10 @@ static int tcpm_fw_get_caps(struct tcpm_port *port,
+ 	 */
+ 	fw_devlink_purge_absent_suppliers(fwnode);
  
--	if (intel_guc_capture_output_min_size_est(guc) > CAPTURE_BUFFER_SIZE)
--		DRM_WARN("GuC log buffer for state_capture maybe too small. %d < %d\n",
--			 CAPTURE_BUFFER_SIZE, intel_guc_capture_output_min_size_est(guc));
+-	/* USB data support is optional */
+-	ret = fwnode_property_read_string(fwnode, "data-role", &cap_str);
+-	if (ret == 0) {
+-		ret = typec_find_port_data_role(cap_str);
+-		if (ret < 0)
+-			return ret;
+-		port->typec_caps.data = ret;
+-	}
 -
- 	guc_log_size = intel_guc_log_size(log);
+-	ret = fwnode_property_read_string(fwnode, "power-role", &cap_str);
++	ret = typec_get_fw_cap(&port->typec_caps, fwnode);
+ 	if (ret < 0)
+ 		return ret;
  
- 	vma = intel_guc_allocate_vma(guc, guc_log_size);
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_log.h b/drivers/gpu/drm/i915/gt/uc/intel_guc_log.h
-index 18007e639be9..dc9715411d62 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_log.h
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_log.h
-@@ -22,11 +22,11 @@ struct intel_guc;
- #elif defined(CONFIG_DRM_I915_DEBUG_GEM)
- #define CRASH_BUFFER_SIZE	SZ_1M
- #define DEBUG_BUFFER_SIZE	SZ_2M
--#define CAPTURE_BUFFER_SIZE	SZ_1M
-+#define CAPTURE_BUFFER_SIZE	SZ_4M
- #else
- #define CRASH_BUFFER_SIZE	SZ_8K
- #define DEBUG_BUFFER_SIZE	SZ_64K
--#define CAPTURE_BUFFER_SIZE	SZ_16K
-+#define CAPTURE_BUFFER_SIZE	SZ_2M
- #endif
+-	ret = typec_find_port_power_role(cap_str);
+-	if (ret < 0)
+-		return ret;
+-	port->typec_caps.type = ret;
+ 	port->port_type = port->typec_caps.type;
+ 	port->pd_supported = !fwnode_property_read_bool(fwnode, "pd-disable");
  
- /*
+@@ -5997,14 +5983,6 @@ static int tcpm_fw_get_caps(struct tcpm_port *port,
+ 	if (port->port_type == TYPEC_PORT_SRC)
+ 		return 0;
+ 
+-	/* Get the preferred power role for DRP */
+-	ret = fwnode_property_read_string(fwnode, "try-power-role", &cap_str);
+-	if (ret < 0)
+-		return ret;
+-
+-	port->typec_caps.prefer_role = typec_find_power_role(cap_str);
+-	if (port->typec_caps.prefer_role < 0)
+-		return -EINVAL;
+ sink:
+ 	port->self_powered = fwnode_property_read_bool(fwnode, "self-powered");
+ 
+diff --git a/include/linux/usb/typec.h b/include/linux/usb/typec.h
+index e2e44bb1dad8..c1e5910809ad 100644
+--- a/include/linux/usb/typec.h
++++ b/include/linux/usb/typec.h
+@@ -295,6 +295,9 @@ int typec_set_mode(struct typec_port *port, int mode);
+ 
+ void *typec_get_drvdata(struct typec_port *port);
+ 
++int typec_get_fw_cap(struct typec_capability *cap,
++		     struct fwnode_handle *fwnode);
++
+ int typec_find_pwr_opmode(const char *name);
+ int typec_find_orientation(const char *name);
+ int typec_find_port_power_role(const char *name);
 -- 
 2.35.1
 
