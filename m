@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844F51863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0227BC433EF;
-	Wed, 28 Dec 2022 15:36:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4523C1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D644C433F0;
+	Wed, 28 Dec 2022 15:36:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241802;
-	bh=qNLVgOCpTLN32DhSLdvueH8qqG8sjzSc6ai5ptu6FbM=;
+	s=korg; t=1672241805;
+	bh=KzbOqu0S9jUEVPFhOZpxJcEZDgSm+A3Hd0Wzrm6/Wl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pUpICTZx+9WYxovBgh9naWUD/+fKLrXSCGlvDlZvAd/VLdJCOvcnHcSlXbnIWaqfG
-	 yWSXu3nPu/D1gfbdlu4pNM7EWrd0Hp9WOzRUQnLQMr0fwo6vNCtYiXfP/jYUnCyQHV
-	 e7wdHFc5+VZulbptArd6iyJjF6bTDmf0MnkA/EIM=
+	b=piBCgdP5nDmm/Ma4E4Pm0avBB0ZghaeTIMTToRPkdPWa/tneusOsjBIZcFpP0V2CH
+	 Sues6JHTaUcfq8RvIBxJ4yOQc+GcDopYaABbEq3sJH5kL/UqysuaL7yvsSryBefGby
+	 EZjZB+WmCjM3WzuCcak6paOcdrtRdaSdJqbtVsb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 524/731] RDMA/siw: Fix pointer cast warning
-Date: Wed, 28 Dec 2022 15:40:31 +0100
-Message-Id: <20221228144311.736217560@linuxfoundation.org>
+Subject: [PATCH 6.0 0329/1073] ima: Fix misuse of dereference of pointer in template_desc_init_fields()
+Date: Wed, 28 Dec 2022 15:31:57 +0100
+Message-Id: <20221228144336.941422753@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,45 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 5244ca88671a1981ceec09c5c8809f003e6a62aa ]
+[ Upstream commit 25369175ce84813dd99d6604e710dc2491f68523 ]
 
-The previous build fix left a remaining issue in configurations with
-64-bit dma_addr_t on 32-bit architectures:
+The input parameter @fields is type of struct ima_template_field ***, so
+when allocates array memory for @fields, the size of element should be
+sizeof(**field) instead of sizeof(*field).
 
-drivers/infiniband/sw/siw/siw_qp_tx.c: In function 'siw_get_pblpage':
-drivers/infiniband/sw/siw/siw_qp_tx.c:32:37: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
-   32 |                 return virt_to_page((void *)paddr);
-      |                                     ^
+Actually the original code would not cause any runtime error, but it's
+better to make it logically right.
 
-Use the same double cast here that the driver uses elsewhere to convert
-between dma_addr_t and void*.
-
-Fixes: 0d1b756acf60 ("RDMA/siw: Pass a pointer to virt_to_page()")
-Link: https://lore.kernel.org/r/20221215170347.2612403-1-arnd@kernel.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Bernard Metzler <bmt@zurich.ibm.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: adf53a778a0a ("ima: new templates management mechanism")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_tx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ security/integrity/ima/ima_template.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_qp_tx.c b/drivers/infiniband/sw/siw/siw_qp_tx.c
-index 7d47b521070b..05052b49107f 100644
---- a/drivers/infiniband/sw/siw/siw_qp_tx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
-@@ -29,7 +29,7 @@ static struct page *siw_get_pblpage(struct siw_mem *mem, u64 addr, int *idx)
- 	dma_addr_t paddr = siw_pbl_get_buffer(pbl, offset, NULL, idx);
+diff --git a/security/integrity/ima/ima_template.c b/security/integrity/ima/ima_template.c
+index c25079faa208..195ac18f0927 100644
+--- a/security/integrity/ima/ima_template.c
++++ b/security/integrity/ima/ima_template.c
+@@ -245,11 +245,11 @@ int template_desc_init_fields(const char *template_fmt,
+ 	}
  
- 	if (paddr)
--		return virt_to_page((void *)paddr);
-+		return virt_to_page((void *)(uintptr_t)paddr);
+ 	if (fields && num_fields) {
+-		*fields = kmalloc_array(i, sizeof(*fields), GFP_KERNEL);
++		*fields = kmalloc_array(i, sizeof(**fields), GFP_KERNEL);
+ 		if (*fields == NULL)
+ 			return -ENOMEM;
  
- 	return NULL;
- }
+-		memcpy(*fields, found_fields, i * sizeof(*fields));
++		memcpy(*fields, found_fields, i * sizeof(**fields));
+ 		*num_fields = i;
+ 	}
+ 
 -- 
 2.35.1
 
