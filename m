@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5088E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD66C433D2;
-	Wed, 28 Dec 2022 15:04:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA7161863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E574C433EF;
+	Wed, 28 Dec 2022 15:04:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239854;
-	bh=DpzLQ/G2ePNP1xlnxiuxjJLuCKHJ8oQMc8ESPGVjl84=;
+	s=korg; t=1672239856;
+	bh=J6w92lKJE7KkfXZIDG1zdd+C9eWbntTcjK3LbxQXACA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qxJJjHFoo0NNKLCP4ta7Big55WBmRHUD5b5+l5qitS+QHDPIF4jQv+0GjBlz0wshS
-	 Ou9DKaAZahuPW5lgSgYKJIiu6sndsVHuEdrk3DroDufjRn4tZEN086f6jz5cxzhR2F
-	 1MMxhaim1WNponq9f1zeuBe63HX3wOyvpdkQu5M8=
+	b=dYF1OktXUHA7D0iHeR8zIDnKwsAZkxSeI6hzf8FOl0c+Y55LEdTMTnlqAAhnfSrMV
+	 x4DQ2mTr0Gy3aR6UhN/Ukg78udX8fu7no9C4kyLEOJ/dvujCO5hsmmcRZyRMHBC9Jl
+	 k/HK4/rs8J7MOdwOTEYRiVHFgFGOMYjsEqFkxozA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 278/731] hsr: Synchronize sequence number updates.
-Date: Wed, 28 Dec 2022 15:36:25 +0100
-Message-Id: <20221228144304.631282124@linuxfoundation.org>
+Subject: [PATCH 6.1 0036/1146] arm64: dts: qcom: sm6350: drop bogus DP PHY clock
+Date: Wed, 28 Dec 2022 15:26:15 +0100
+Message-Id: <20221228144331.147099697@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,99 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 5c7aa13210c3abdd34fd421f62347665ec6eb551 ]
+[ Upstream commit 95fade4016cbd57ee050ab226c8f0483af1753c4 ]
 
-hsr_register_frame_out() compares new sequence_nr vs the old one
-recorded in hsr_node::seq_out and if the new sequence_nr is higher then
-it will be written to hsr_node::seq_out as the new value.
+The QMP pipe clock is used by the USB part of the PHY so drop the
+corresponding properties from the DP child node.
 
-This operation isn't locked so it is possible that two frames with the
-same sequence number arrive (via the two slave devices) and are fed to
-hsr_register_frame_out() at the same time. Both will pass the check and
-update the sequence counter later to the same value. As a result the
-content of the same packet is fed into the stack twice.
-
-This was noticed by running ping and observing DUP being reported from
-time to time.
-
-Instead of using the hsr_priv::seqnr_lock for the whole receive path (as
-it is for sending in the master node) add an additional lock that is only
-used for sequence number checks and updates.
-
-Add a per-node lock that is used during sequence number reads and
-updates.
-
-Fixes: f421436a591d3 ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 23737b9557fe ("arm64: dts: qcom: sm6350: Add USB1 nodes")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221026152511.9661-3-johan+linaro@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_framereg.c | 9 ++++++++-
- net/hsr/hsr_framereg.h | 2 ++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
-index 440788e5b3e2..414bf4d3d3c9 100644
---- a/net/hsr/hsr_framereg.c
-+++ b/net/hsr/hsr_framereg.c
-@@ -159,6 +159,7 @@ static struct hsr_node *hsr_add_node(struct hsr_priv *hsr,
- 		return NULL;
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index c39de7d3ace0..3a315280c34a 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -1154,9 +1154,6 @@ dp_phy: dp-phy@88ea200 {
+ 				      <0 0x088eaa00 0 0x100>;
+ 				#phy-cells = <0>;
+ 				#clock-cells = <1>;
+-				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+-				clock-names = "pipe0";
+-				clock-output-names = "usb3_phy_pipe_clk_src";
+ 			};
+ 		};
  
- 	ether_addr_copy(new_node->macaddress_A, addr);
-+	spin_lock_init(&new_node->seq_out_lock);
- 
- 	/* We are only interested in time diffs here, so use current jiffies
- 	 * as initialization. (0 could trigger an spurious ring error warning).
-@@ -313,6 +314,7 @@ void hsr_handle_sup_frame(struct hsr_frame_info *frame)
- 		goto done;
- 
- 	ether_addr_copy(node_real->macaddress_B, ethhdr->h_source);
-+	spin_lock_bh(&node_real->seq_out_lock);
- 	for (i = 0; i < HSR_PT_PORTS; i++) {
- 		if (!node_curr->time_in_stale[i] &&
- 		    time_after(node_curr->time_in[i], node_real->time_in[i])) {
-@@ -323,6 +325,7 @@ void hsr_handle_sup_frame(struct hsr_frame_info *frame)
- 		if (seq_nr_after(node_curr->seq_out[i], node_real->seq_out[i]))
- 			node_real->seq_out[i] = node_curr->seq_out[i];
- 	}
-+	spin_unlock_bh(&node_real->seq_out_lock);
- 	node_real->addr_B_port = port_rcv->type;
- 
- 	spin_lock_bh(&hsr->list_lock);
-@@ -419,13 +422,17 @@ void hsr_register_frame_in(struct hsr_node *node, struct hsr_port *port,
- int hsr_register_frame_out(struct hsr_port *port, struct hsr_node *node,
- 			   u16 sequence_nr)
- {
-+	spin_lock_bh(&node->seq_out_lock);
- 	if (seq_nr_before_or_eq(sequence_nr, node->seq_out[port->type]) &&
- 	    time_is_after_jiffies(node->time_out[port->type] +
--	    msecs_to_jiffies(HSR_ENTRY_FORGET_TIME)))
-+	    msecs_to_jiffies(HSR_ENTRY_FORGET_TIME))) {
-+		spin_unlock_bh(&node->seq_out_lock);
- 		return 1;
-+	}
- 
- 	node->time_out[port->type] = jiffies;
- 	node->seq_out[port->type] = sequence_nr;
-+	spin_unlock_bh(&node->seq_out_lock);
- 	return 0;
- }
- 
-diff --git a/net/hsr/hsr_framereg.h b/net/hsr/hsr_framereg.h
-index f9c83dc02ca5..48990166e4c4 100644
---- a/net/hsr/hsr_framereg.h
-+++ b/net/hsr/hsr_framereg.h
-@@ -69,6 +69,8 @@ void prp_update_san_info(struct hsr_node *node, bool is_sup);
- 
- struct hsr_node {
- 	struct list_head	mac_list;
-+	/* Protect R/W access to seq_out */
-+	spinlock_t		seq_out_lock;
- 	unsigned char		macaddress_A[ETH_ALEN];
- 	unsigned char		macaddress_B[ETH_ALEN];
- 	/* Local slave through which AddrB frames are received from this node */
 -- 
 2.35.1
 
