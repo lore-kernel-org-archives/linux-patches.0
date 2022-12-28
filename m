@@ -1,45 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE6AF1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:00:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ABE3C433D2;
-	Wed, 28 Dec 2022 16:00:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1A51875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:00:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91AEC433D2;
+	Wed, 28 Dec 2022 16:00:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243246;
-	bh=77Ax692QPbClaw5Sew2l0xTyYFdYyuwdAt/P++1XU+I=;
+	s=korg; t=1672243249;
+	bh=6SQ70RZccRw/EhbzPjDFSwlXxLAY5Ne+GUKkdIONBpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0QG8d61NldqEMxXVfGeJiBiPRyLE14POiUuFS6D4xRGgNWYm2BtDUf+0N+4Ssyc6O
-	 J8N5MYZjk3BP8GILLwdrEHcO5sdWDLAdqv/2NKqzRgg5jaR6a03UOlXp9ZOZLYP4WU
-	 gQA0Q1vQwszWr0FP0ivlx9R7SDDawBxJgP3cEADc=
+	b=GvAfRsdFHW3Na2b4Gsyr/eKYzWiTUJydFx01azHq5MQ5ynPYZTrMalsLZGlDVU1kH
+	 oe8E17v9CeZ4qti/Xo4Vdghb+mcuv8ADpw//+FrQydITMLW9pKFMOZbjYMqX661Gjl
+	 EgZVGc/1+PcXqq3OiUcoXfj+E7RqV5Yz6vG8No8o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Carsten Haitzler <carsten.haitzler@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	martin.lau@kernel.org,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Ravi Bangoria <ravi.bangoria@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 699/731] perf debug: Set debug_peo_args and redirect_to_stderr variable to correct values in perf_quiet_option()
-Date: Wed, 28 Dec 2022 15:43:26 +0100
-Message-Id: <20221228144316.722750056@linuxfoundation.org>
+Subject: [PATCH 6.1 0467/1146] clk: qcom: lpass-sc7180: Fix pm_runtime usage
+Date: Wed, 28 Dec 2022 15:33:26 +0100
+Message-Id: <20221228144342.870412963@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -50,87 +36,133 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Jihong <yangjihong1@huawei.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 188ac720d364035008a54d249cf47b4cc100f819 ]
+[ Upstream commit ff1ccf59eaffd192efe21f7de9fb0c130faf1b1b ]
 
-When perf uses quiet mode, perf_quiet_option() sets the 'debug_peo_args'
-variable to -1, and display_attr() incorrectly determines the value of
-'debug_peo_args'.  As a result, unexpected information is displayed.
+The sc7180 lpass clock controller's pm_runtime usage wasn't broken
+quite as spectacularly as the sc7280's pm_runtime usage, but it was
+still broken. Putting some printouts in at boot showed me this (with
+serial console enabled, which makes the prints slow and thus changes
+timing):
+  [    3.109951] DOUG: my_pm_clk_resume, usage=1
+  [    3.114767] DOUG: my_pm_clk_resume, usage=1
+  [    3.664443] DOUG: my_pm_clk_suspend, usage=0
+  [    3.897566] DOUG: my_pm_clk_suspend, usage=0
+  [    3.910137] DOUG: my_pm_clk_resume, usage=1
+  [    3.923217] DOUG: my_pm_clk_resume, usage=0
+  [    4.440116] DOUG: my_pm_clk_suspend, usage=-1
+  [    4.444982] DOUG: my_pm_clk_suspend, usage=0
+  [   14.170501] DOUG: my_pm_clk_resume, usage=1
+  [   14.176245] DOUG: my_pm_clk_resume, usage=0
 
-Before:
+...or this w/out serial console:
+  [    0.556139] DOUG: my_pm_clk_resume, usage=1
+  [    0.556279] DOUG: my_pm_clk_resume, usage=1
+  [    1.058422] DOUG: my_pm_clk_suspend, usage=-1
+  [    1.058464] DOUG: my_pm_clk_suspend, usage=0
+  [    1.186250] DOUG: my_pm_clk_resume, usage=1
+  [    1.186292] DOUG: my_pm_clk_resume, usage=0
+  [    1.731536] DOUG: my_pm_clk_suspend, usage=-1
+  [    1.731557] DOUG: my_pm_clk_suspend, usage=0
+  [   10.288910] DOUG: my_pm_clk_resume, usage=1
+  [   10.289496] DOUG: my_pm_clk_resume, usage=0
 
-  # perf record --quiet -- ls > /dev/null
-  ------------------------------------------------------------
-  perf_event_attr:
-    size                             128
-    { sample_period, sample_freq }   4000
-    sample_type                      IP|TID|TIME|PERIOD
-    read_format                      ID|LOST
-    disabled                         1
-    inherit                          1
-    mmap                             1
-    comm                             1
-    freq                             1
-    enable_on_exec                   1
-    task                             1
-    precise_ip                       3
-    sample_id_all                    1
-    exclude_guest                    1
-    mmap2                            1
-    comm_exec                        1
-    ksymbol                          1
-    bpf_event                        1
-  ------------------------------------------------------------
-  ...
+It seems to be doing roughly the right sequence of calls, but just
+like with sc7280 this is more by luck than anything. Having a usage of
+-1 is just not OK.
 
-After:
-  # perf record --quiet -- ls > /dev/null
-  #
+Let's fix this like we did with sc7280.
 
-redirect_to_stderr is a similar problem.
-
-Fixes: f78eaef0e0493f60 ("perf tools: Allow to force redirect pr_debug to stderr.")
-Fixes: ccd26741f5e6bdf2 ("perf tool: Provide an option to print perf_event_open args and return value")
-Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Carsten Haitzler <carsten.haitzler@arm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: martin.lau@kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Ravi Bangoria <ravi.bangoria@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221220035702.188413-2-yangjihong1@huawei.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Fixes: ce8c195e652f ("clk: qcom: lpasscc: Introduce pm autosuspend for SC7180")
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221104064055.2.I49b25b9bda9430fc7ea21e5a708ca5a0aced2798@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/debug.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/clk/qcom/lpasscorecc-sc7180.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/tools/perf/util/debug.c b/tools/perf/util/debug.c
-index 65e6c22f38e4..190e818a0717 100644
---- a/tools/perf/util/debug.c
-+++ b/tools/perf/util/debug.c
-@@ -241,6 +241,10 @@ int perf_quiet_option(void)
- 		opt++;
- 	}
+diff --git a/drivers/clk/qcom/lpasscorecc-sc7180.c b/drivers/clk/qcom/lpasscorecc-sc7180.c
+index ac09b7b840ab..a5731994cbed 100644
+--- a/drivers/clk/qcom/lpasscorecc-sc7180.c
++++ b/drivers/clk/qcom/lpasscorecc-sc7180.c
+@@ -356,7 +356,7 @@ static const struct qcom_cc_desc lpass_audio_hm_sc7180_desc = {
+ 	.num_gdscs = ARRAY_SIZE(lpass_audio_hm_sc7180_gdscs),
+ };
  
-+	/* For debug variables that are used as bool types, set to 0. */
-+	redirect_to_stderr = 0;
-+	debug_peo_args = 0;
-+
- 	return 0;
+-static int lpass_create_pm_clks(struct platform_device *pdev)
++static int lpass_setup_runtime_pm(struct platform_device *pdev)
+ {
+ 	int ret;
+ 
+@@ -375,7 +375,7 @@ static int lpass_create_pm_clks(struct platform_device *pdev)
+ 	if (ret < 0)
+ 		dev_err(&pdev->dev, "failed to acquire iface clock\n");
+ 
+-	return ret;
++	return pm_runtime_resume_and_get(&pdev->dev);
  }
  
+ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
+@@ -384,7 +384,7 @@ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
+ 	struct regmap *regmap;
+ 	int ret;
+ 
+-	ret = lpass_create_pm_clks(pdev);
++	ret = lpass_setup_runtime_pm(pdev);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -392,12 +392,14 @@ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
+ 	desc = &lpass_audio_hm_sc7180_desc;
+ 	ret = qcom_cc_probe_by_index(pdev, 1, desc);
+ 	if (ret)
+-		return ret;
++		goto exit;
+ 
+ 	lpass_core_cc_sc7180_regmap_config.name = "lpass_core_cc";
+ 	regmap = qcom_cc_map(pdev, &lpass_core_cc_sc7180_desc);
+-	if (IS_ERR(regmap))
+-		return PTR_ERR(regmap);
++	if (IS_ERR(regmap)) {
++		ret = PTR_ERR(regmap);
++		goto exit;
++	}
+ 
+ 	/*
+ 	 * Keep the CLK always-ON
+@@ -415,6 +417,7 @@ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
+ 	ret = qcom_cc_really_probe(pdev, &lpass_core_cc_sc7180_desc, regmap);
+ 
+ 	pm_runtime_mark_last_busy(&pdev->dev);
++exit:
+ 	pm_runtime_put_autosuspend(&pdev->dev);
+ 
+ 	return ret;
+@@ -425,14 +428,19 @@ static int lpass_hm_core_probe(struct platform_device *pdev)
+ 	const struct qcom_cc_desc *desc;
+ 	int ret;
+ 
+-	ret = lpass_create_pm_clks(pdev);
++	ret = lpass_setup_runtime_pm(pdev);
+ 	if (ret)
+ 		return ret;
+ 
+ 	lpass_core_cc_sc7180_regmap_config.name = "lpass_hm_core";
+ 	desc = &lpass_core_hm_sc7180_desc;
+ 
+-	return qcom_cc_probe_by_index(pdev, 0, desc);
++	ret = qcom_cc_probe_by_index(pdev, 0, desc);
++
++	pm_runtime_mark_last_busy(&pdev->dev);
++	pm_runtime_put_autosuspend(&pdev->dev);
++
++	return ret;
+ }
+ 
+ static const struct of_device_id lpass_hm_sc7180_match_table[] = {
 -- 
 2.35.1
 
