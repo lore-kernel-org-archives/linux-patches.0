@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD4C11C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:22:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E56C433EF;
-	Wed, 28 Dec 2022 16:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64B521C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:22:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF578C433EF;
+	Wed, 28 Dec 2022 16:22:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244524;
-	bh=zMF/yGLZQKNDuBIMeUnyEoVVgDcMNlmXAoVofT5OfCQ=;
+	s=korg; t=1672244527;
+	bh=my7mB0AxbLAMydQyKfjQyENP7hxSdaQcHGnm0y/FDXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OreqdSu/oTQYDSJThCCKKXlQm81FVnIyME9D/9lbUQOE4qSH423qPRT//9b02sj2z
-	 Mvisz7kDhEX+70s3Jh8mRP+brEmOl4ODkRtdSrcMkJ3mEMgWgA1r+WMlD+4aebO0Hl
-	 /rVSuHU4JwPZLSsmjKPS0dTrTkROz6A9xb8vTgus=
+	b=NqIjf4j0kD0m6q1cr11F7WaeObddPnqCBEiq3J0kPbakEnF/6b4wyiAYrBlZlKH0z
+	 Tdcgo/t6D18xJS4bj7gUSRmgl3n3WSkFgsmVEXSMAWZ9aHRCLjoZSJdNWidGByA/Zd
+	 2BeTLo5T6Wsy+dgShwAtjXMsVXhSbcr3OVDxyHHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Hunter <jonathanh@nvidia.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Thierry Reding <treding@nvidia.com>,
-	Akhil R <akhilrajeev@nvidia.com>,
-	Kartik <kkartik@nvidia.com>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Amit Kucheria <amitk@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0688/1146] serial: tegra: Read DMA status before terminating
-Date: Wed, 28 Dec 2022 15:37:07 +0100
-Message-Id: <20221228144348.829794910@linuxfoundation.org>
+Subject: [PATCH 6.0 0727/1073] thermal/drivers/qcom/temp-alarm: Fix inaccurate warning for gen2
+Date: Wed, 28 Dec 2022 15:38:35 +0100
+Message-Id: <20221228144347.771467314@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,55 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kartik <kkartik@nvidia.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit 109a951a9f1fd8a34ebd1896cbbd5d5cede880a7 ]
+[ Upstream commit 8763f8acbf8aef22a2321d4c978cd078aa3b8f64 ]
 
-Read the DMA status before terminating the DMA, as doing so deletes
-the DMA desc.
+On gen2 chips the stage2 threshold is not 140 degC but 125 degC.
 
-Also, to get the correct transfer status information, pause the DMA
-using dmaengine_pause() before reading the DMA status.
+Make the warning message clearer by using this variable and also by
+including the temperature that was checked for.
 
-Fixes: e9ea096dd225 ("serial: tegra: add serial driver")
-Reviewed-by: Jon Hunter <jonathanh@nvidia.com>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Acked-by: Thierry Reding <treding@nvidia.com>
-Signed-off-by: Akhil R <akhilrajeev@nvidia.com>
-Signed-off-by: Kartik <kkartik@nvidia.com>
-Link: https://lore.kernel.org/r/1666105086-17326-1-git-send-email-kkartik@nvidia.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: aa92b3310c55 ("thermal/drivers/qcom-spmi-temp-alarm: Add support for GEN2 rev 1 PMIC peripherals")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Amit Kucheria <amitk@kernel.org>
+Link: https://lore.kernel.org/r/20221020145237.942146-1-luca.weiss@fairphone.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial-tegra.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/serial-tegra.c b/drivers/tty/serial/serial-tegra.c
-index b7170cb9a544..cda9cd4fa92c 100644
---- a/drivers/tty/serial/serial-tegra.c
-+++ b/drivers/tty/serial/serial-tegra.c
-@@ -619,8 +619,9 @@ static void tegra_uart_stop_tx(struct uart_port *u)
- 	if (tup->tx_in_progress != TEGRA_UART_TX_DMA)
- 		return;
- 
--	dmaengine_terminate_all(tup->tx_dma_chan);
-+	dmaengine_pause(tup->tx_dma_chan);
- 	dmaengine_tx_status(tup->tx_dma_chan, tup->tx_cookie, &state);
-+	dmaengine_terminate_all(tup->tx_dma_chan);
- 	count = tup->tx_bytes_requested - state.residue;
- 	async_tx_ack(tup->tx_dma_desc);
- 	uart_xmit_advance(&tup->uport, count);
-@@ -763,8 +764,9 @@ static void tegra_uart_terminate_rx_dma(struct tegra_uart_port *tup)
- 		return;
+diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+index 770f82cc9bca..247b39d57fa7 100644
+--- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
++++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+@@ -252,7 +252,8 @@ static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
+ 			disable_s2_shutdown = true;
+ 		else
+ 			dev_warn(chip->dev,
+-				 "No ADC is configured and critical temperature is above the maximum stage 2 threshold of 140 C! Configuring stage 2 shutdown at 140 C.\n");
++				 "No ADC is configured and critical temperature %d mC is above the maximum stage 2 threshold of %ld mC! Configuring stage 2 shutdown at %ld mC.\n",
++				 temp, stage2_threshold_max, stage2_threshold_max);
  	}
  
--	dmaengine_terminate_all(tup->rx_dma_chan);
-+	dmaengine_pause(tup->rx_dma_chan);
- 	dmaengine_tx_status(tup->rx_dma_chan, tup->rx_cookie, &state);
-+	dmaengine_terminate_all(tup->rx_dma_chan);
- 
- 	tegra_uart_rx_buffer_push(tup, state.residue);
- 	tup->rx_dma_active = false;
+ skip:
 -- 
 2.35.1
 
