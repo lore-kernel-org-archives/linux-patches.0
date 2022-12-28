@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92ECB1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19129C433EF;
-	Wed, 28 Dec 2022 15:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D98C1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69A5C433EF;
+	Wed, 28 Dec 2022 15:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241146;
-	bh=S6V5u5OV27pQOmyaW+vYiNVeAx7P3V/kz81SGJAcsSg=;
+	s=korg; t=1672241149;
+	bh=HMeGYSEjaVK0ctRVfTQQyllG7nohyNqEuvaEqfo9ZHQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lXI4afPLScU9T0LowPf8+uOj0mWAvOdX2aD8ZNYqmYiRmRYuKdtWBmp1DGBj9fSzk
-	 KhEMRhVekQ9ni4M/Y9VV1SPWLwBzJvDGLygDHGFA0oW+cNNRVouZ52fhBqVotjtHgi
-	 PHvifg7HJnhVd/ft0a9cIUmH4xhn9o8/fTDAgGyY=
+	b=I2FuR0o7P1pj4gAh8F4HGRP84JyapBkWzLaLKVIynYRsDGgIJ7O1YVDJrsOOl8Ub0
+	 LnR+MLxS2furt+Up4/087rnvElncR6hN2eWE8Hj/OB/R/boUzs/QbnA+u4Gx5EF9I5
+	 thAgyovt/lp3dndw4s7I+2wm5+XU+IzB8Oh+LCKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Jimmy Assarsson <extja@kvaser.com>,
+	Anssi Hannula <anssi.hannula@bitwise.fi>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 446/731] staging: vme_user: Fix possible UAF in tsi148_dma_list_add
-Date: Wed, 28 Dec 2022 15:39:13 +0100
-Message-Id: <20221228144309.483866246@linuxfoundation.org>
+Subject: [PATCH 6.0 0247/1073] can: kvaser_usb_leaf: Fix bogus restart events
+Date: Wed, 28 Dec 2022 15:30:35 +0100
+Message-Id: <20221228144334.732924480@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,42 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Anssi Hannula <anssi.hannula@bitwise.fi>
 
-[ Upstream commit 357057ee55d3c99a5de5abe8150f7bca04f8e53b ]
+[ Upstream commit 90904d326269a38fe5dd895fb2db7c03199654c4 ]
 
-Smatch report warning as follows:
+When auto-restart is enabled, the kvaser_usb_leaf driver considers
+transition from any state >= CAN_STATE_BUS_OFF as a bus-off recovery
+event (restart).
 
-drivers/staging/vme_user/vme_tsi148.c:1757 tsi148_dma_list_add() warn:
-  '&entry->list' not removed from list
+However, these events may occur at interface startup time before
+kvaser_usb_open() has set the state to CAN_STATE_ERROR_ACTIVE, causing
+restarts counter to increase and CAN_ERR_RESTARTED to be sent despite no
+actual restart having occurred.
 
-In tsi148_dma_list_add(), the error path "goto err_dma" will not
-remove entry->list from list->entries, but entry will be freed,
-then list traversal may cause UAF.
+Fix that by making the auto-restart condition checks more strict so that
+they only trigger when the interface was actually in the BUS_OFF state.
 
-Fix by removeing it from list->entries before free().
-
-Fixes: b2383c90a9d6 ("vme: tsi148: fix first DMA item mapping")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://lore.kernel.org/r/20221117035914.2954454-1-cuigaosheng1@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
+Tested-by: Jimmy Assarsson <extja@kvaser.com>
+Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://lore.kernel.org/all/20221010185237.319219-10-extja@kvaser.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vme/bridges/vme_tsi148.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/vme/bridges/vme_tsi148.c b/drivers/vme/bridges/vme_tsi148.c
-index be9051b02f24..5b4c766d15e6 100644
---- a/drivers/vme/bridges/vme_tsi148.c
-+++ b/drivers/vme/bridges/vme_tsi148.c
-@@ -1765,6 +1765,7 @@ static int tsi148_dma_list_add(struct vme_dma_list *list,
- 	return 0;
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+index 4f9c76f4d0da..fa940be4e1b0 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+@@ -898,7 +898,7 @@ static void kvaser_usb_leaf_tx_acknowledge(const struct kvaser_usb *dev,
+ 	context = &priv->tx_contexts[tid % dev->max_tx_urbs];
  
- err_dma:
-+	list_del(&entry->list);
- err_dest:
- err_source:
- err_align:
+ 	/* Sometimes the state change doesn't come after a bus-off event */
+-	if (priv->can.restart_ms && priv->can.state >= CAN_STATE_BUS_OFF) {
++	if (priv->can.restart_ms && priv->can.state == CAN_STATE_BUS_OFF) {
+ 		struct sk_buff *skb;
+ 		struct can_frame *cf;
+ 
+@@ -998,7 +998,7 @@ kvaser_usb_leaf_rx_error_update_can_state(struct kvaser_usb_net_priv *priv,
+ 	}
+ 
+ 	if (priv->can.restart_ms &&
+-	    cur_state >= CAN_STATE_BUS_OFF &&
++	    cur_state == CAN_STATE_BUS_OFF &&
+ 	    new_state < CAN_STATE_BUS_OFF)
+ 		priv->can.can_stats.restarts++;
+ 
+@@ -1088,7 +1088,7 @@ static void kvaser_usb_leaf_rx_error(const struct kvaser_usb *dev,
+ 		}
+ 
+ 		if (priv->can.restart_ms &&
+-		    old_state >= CAN_STATE_BUS_OFF &&
++		    old_state == CAN_STATE_BUS_OFF &&
+ 		    new_state < CAN_STATE_BUS_OFF) {
+ 			cf->can_id |= CAN_ERR_RESTARTED;
+ 			netif_carrier_on(priv->netdev);
 -- 
 2.35.1
 
