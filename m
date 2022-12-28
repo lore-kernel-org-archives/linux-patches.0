@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81AD91863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:31:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03360C433EF;
-	Wed, 28 Dec 2022 15:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E56E1868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:31:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A232EC433F0;
+	Wed, 28 Dec 2022 15:31:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241485;
-	bh=AsM3FlyknExZPP2FEIGqqcKR8SEAUFg9TzbKq2niAVw=;
+	s=korg; t=1672241488;
+	bh=NMLplV8+tik5i9bld9wYG10i8yTe1yADLHxiNGjEeRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wrvGey5TlMgdKddE9RISDhuP8CRsUlPryTK88AYkDwVQ3EUU2uI3A5bKbx/GROMUZ
-	 UhmoRXXCyZDNAOGS6ipPFivHCjQxpxojG9fOrh5EdwJfd+CWq4oSgV7Rz8gLWU0hvZ
-	 uElwewaapJqaVWt6hvRWG+xM2EAnbFaIf5sEqNbI=
+	b=q0DQa+41ydtckS5S2gdkF7UkcEUiTSjchdYbzT3mj/4/bwO4UEC0J1dVMs137lTpW
+	 bz2cxwdiSTLYRcSVzwVPadMjKV5P7SCY6oKyxou9R9+CAwaXz/LlcbnMO/DrSIoNbe
+	 892EiVhBkhQ48Jy5iKXS6xv9HFtDj0galhBS/6zQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anssi Hannula <anssi.hannula@bitwise.fi>,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	YueHaibing <yuehaibing@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0252/1146] can: kvaser_usb: Add struct kvaser_usb_busparams
-Date: Wed, 28 Dec 2022 15:29:51 +0100
-Message-Id: <20221228144336.983210121@linuxfoundation.org>
+Subject: [PATCH 5.15 488/731] staging: rtl8192e: Fix potential use-after-free in rtllib_rx_Monitor()
+Date: Wed, 28 Dec 2022 15:39:55 +0100
+Message-Id: <20221228144310.693548066@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,141 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jimmy Assarsson <extja@kvaser.com>
+From: YueHaibing <yuehaibing@huawei.com>
 
-[ Upstream commit 00e5786177649c1e3110f9454fdd34e336597265 ]
+[ Upstream commit d30f4436f364b4ad915ca2c09be07cd0f93ceb44 ]
 
-Add struct kvaser_usb_busparams containing the busparameters used in
-CMD_{SET,GET}_BUSPARAMS* commands.
+The skb is delivered to netif_rx() in rtllib_monitor_rx(), which may free it,
+after calling this, dereferencing skb may trigger use-after-free.
+Found by Smatch.
 
-Tested-by: Anssi Hannula <anssi.hannula@bitwise.fi>
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/all/20221010185237.319219-11-extja@kvaser.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Stable-dep-of: 39d3df6b0ea8 ("can: kvaser_usb: Compare requested bittiming parameters with actual parameters in do_set_{,data}_bittiming")
+Fixes: 94a799425eee ("From: wlanfae <wlanfae@realtek.com> [PATCH 1/8] rtl8192e: Import new version of driver from realtek")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Link: https://lore.kernel.org/r/20221123081253.22296-1-yuehaibing@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb.h   |  8 +++++
- .../net/can/usb/kvaser_usb/kvaser_usb_hydra.c | 32 +++++++------------
- .../net/can/usb/kvaser_usb/kvaser_usb_leaf.c  | 18 ++++-------
- 3 files changed, 27 insertions(+), 31 deletions(-)
+ drivers/staging/rtl8192e/rtllib_rx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb.h b/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
-index d9c5dd5da908..778b61c90c2b 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
-@@ -76,6 +76,14 @@ struct kvaser_usb_tx_urb_context {
- 	u32 echo_index;
- };
+diff --git a/drivers/staging/rtl8192e/rtllib_rx.c b/drivers/staging/rtl8192e/rtllib_rx.c
+index e3d0a361d370..98e90670560b 100644
+--- a/drivers/staging/rtl8192e/rtllib_rx.c
++++ b/drivers/staging/rtl8192e/rtllib_rx.c
+@@ -1489,9 +1489,9 @@ static int rtllib_rx_Monitor(struct rtllib_device *ieee, struct sk_buff *skb,
+ 		hdrlen += 4;
+ 	}
  
-+struct kvaser_usb_busparams {
-+	__le32 bitrate;
-+	u8 tseg1;
-+	u8 tseg2;
-+	u8 sjw;
-+	u8 nsamples;
-+} __packed;
-+
- struct kvaser_usb {
- 	struct usb_device *udev;
- 	struct usb_interface *intf;
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-index 66f672ea631b..3319af181e0e 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-@@ -196,17 +196,9 @@ struct kvaser_cmd_chip_state_event {
- #define KVASER_USB_HYDRA_BUS_MODE_CANFD_ISO	0x01
- #define KVASER_USB_HYDRA_BUS_MODE_NONISO	0x02
- struct kvaser_cmd_set_busparams {
--	__le32 bitrate;
--	u8 tseg1;
--	u8 tseg2;
--	u8 sjw;
--	u8 nsamples;
-+	struct kvaser_usb_busparams busparams_arb;
- 	u8 reserved0[4];
--	__le32 bitrate_d;
--	u8 tseg1_d;
--	u8 tseg2_d;
--	u8 sjw_d;
--	u8 nsamples_d;
-+	struct kvaser_usb_busparams busparams_data;
- 	u8 canfd_mode;
- 	u8 reserved1[7];
- } __packed;
-@@ -1538,11 +1530,11 @@ static int kvaser_usb_hydra_set_bittiming(struct net_device *netdev)
- 		return -ENOMEM;
+-	rtllib_monitor_rx(ieee, skb, rx_stats, hdrlen);
+ 	ieee->stats.rx_packets++;
+ 	ieee->stats.rx_bytes += skb->len;
++	rtllib_monitor_rx(ieee, skb, rx_stats, hdrlen);
  
- 	cmd->header.cmd_no = CMD_SET_BUSPARAMS_REQ;
--	cmd->set_busparams_req.bitrate = cpu_to_le32(bt->bitrate);
--	cmd->set_busparams_req.sjw = (u8)sjw;
--	cmd->set_busparams_req.tseg1 = (u8)tseg1;
--	cmd->set_busparams_req.tseg2 = (u8)tseg2;
--	cmd->set_busparams_req.nsamples = 1;
-+	cmd->set_busparams_req.busparams_arb.bitrate = cpu_to_le32(bt->bitrate);
-+	cmd->set_busparams_req.busparams_arb.sjw = (u8)sjw;
-+	cmd->set_busparams_req.busparams_arb.tseg1 = (u8)tseg1;
-+	cmd->set_busparams_req.busparams_arb.tseg2 = (u8)tseg2;
-+	cmd->set_busparams_req.busparams_arb.nsamples = 1;
- 
- 	kvaser_usb_hydra_set_cmd_dest_he
- 		(cmd, dev->card_data.hydra.channel_to_he[priv->channel]);
-@@ -1572,11 +1564,11 @@ static int kvaser_usb_hydra_set_data_bittiming(struct net_device *netdev)
- 		return -ENOMEM;
- 
- 	cmd->header.cmd_no = CMD_SET_BUSPARAMS_FD_REQ;
--	cmd->set_busparams_req.bitrate_d = cpu_to_le32(dbt->bitrate);
--	cmd->set_busparams_req.sjw_d = (u8)sjw;
--	cmd->set_busparams_req.tseg1_d = (u8)tseg1;
--	cmd->set_busparams_req.tseg2_d = (u8)tseg2;
--	cmd->set_busparams_req.nsamples_d = 1;
-+	cmd->set_busparams_req.busparams_data.bitrate = cpu_to_le32(dbt->bitrate);
-+	cmd->set_busparams_req.busparams_data.sjw = (u8)sjw;
-+	cmd->set_busparams_req.busparams_data.tseg1 = (u8)tseg1;
-+	cmd->set_busparams_req.busparams_data.tseg2 = (u8)tseg2;
-+	cmd->set_busparams_req.busparams_data.nsamples = 1;
- 
- 	if (priv->can.ctrlmode & CAN_CTRLMODE_FD) {
- 		if (priv->can.ctrlmode & CAN_CTRLMODE_FD_NON_ISO)
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-index fa940be4e1b0..996d58b97af1 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-@@ -164,11 +164,7 @@ struct usbcan_cmd_softinfo {
- struct kvaser_cmd_busparams {
- 	u8 tid;
- 	u8 channel;
--	__le32 bitrate;
--	u8 tseg1;
--	u8 tseg2;
--	u8 sjw;
--	u8 no_samp;
-+	struct kvaser_usb_busparams busparams;
- } __packed;
- 
- struct kvaser_cmd_tx_can {
-@@ -1699,15 +1695,15 @@ static int kvaser_usb_leaf_set_bittiming(struct net_device *netdev)
- 	cmd->len = CMD_HEADER_LEN + sizeof(struct kvaser_cmd_busparams);
- 	cmd->u.busparams.channel = priv->channel;
- 	cmd->u.busparams.tid = 0xff;
--	cmd->u.busparams.bitrate = cpu_to_le32(bt->bitrate);
--	cmd->u.busparams.sjw = bt->sjw;
--	cmd->u.busparams.tseg1 = bt->prop_seg + bt->phase_seg1;
--	cmd->u.busparams.tseg2 = bt->phase_seg2;
-+	cmd->u.busparams.busparams.bitrate = cpu_to_le32(bt->bitrate);
-+	cmd->u.busparams.busparams.sjw = bt->sjw;
-+	cmd->u.busparams.busparams.tseg1 = bt->prop_seg + bt->phase_seg1;
-+	cmd->u.busparams.busparams.tseg2 = bt->phase_seg2;
- 
- 	if (priv->can.ctrlmode & CAN_CTRLMODE_3_SAMPLES)
--		cmd->u.busparams.no_samp = 3;
-+		cmd->u.busparams.busparams.nsamples = 3;
- 	else
--		cmd->u.busparams.no_samp = 1;
-+		cmd->u.busparams.busparams.nsamples = 1;
- 
- 	rc = kvaser_usb_send_cmd(dev, cmd, cmd->len);
- 
+ 	return 1;
+ }
 -- 
 2.35.1
 
