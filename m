@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6316C1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBA61C433D2;
-	Wed, 28 Dec 2022 16:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A3111C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C74CC433EF;
+	Wed, 28 Dec 2022 16:15:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244144;
-	bh=TXJz3PRK6h7jXubjekPXE6EvGPO4NqLFfK6TRIFVvgU=;
+	s=korg; t=1672244146;
+	bh=DAaGOI5j//tqpdGLaSmIh7me7A4cxD43sAiKX7MCgT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VUrLXt00Yph98r0w2WbgllqDkwblSpZ+9HHQwLeV7SwkQWntHfstEPw2fvzqkehJy
-	 NIpSrnls+QiAha57Q/lgQK8OZbjdlEOMHLZYsy18+Da+xaZlJzM6ngUIn5pzdkyVcc
-	 lc/8t32d68HOoLTuxthT13JCidyYwDe3bqqgp+rE=
+	b=ibw+PugU6KNgCVSH8brDlmiXhbobvT9EViJDxSIrE3KUOIAh7qI0g6vPamNbFP/H6
+	 Lf7s+/19eb04C2oy9PJ65h6LmGJBPWTcyjk38aH4ijMkm9n5OZsftIo6a+OE+++7Vi
+	 482V55fmjDCV26/TFD6NjFW8R2nvFUZb85uGp1qQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Li Zhijian <lizhijian@fujitsu.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0658/1073] hwrng: geode - Fix PCI device refcount leak
-Date: Wed, 28 Dec 2022 15:37:26 +0100
-Message-Id: <20221228144345.917116543@linuxfoundation.org>
+Subject: [PATCH 6.1 0619/1146] RDMA/rxe: Fix mr->map double free
+Date: Wed, 28 Dec 2022 15:35:58 +0100
+Message-Id: <20221228144346.983328556@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,113 +35,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Li Zhijian <lizhijian@fujitsu.com>
 
-[ Upstream commit 9f6ec8dc574efb7f4f3d7ee9cd59ae307e78f445 ]
+[ Upstream commit 7d984dac8f6bf4ebd3398af82b357e1d181ecaac ]
 
-for_each_pci_dev() is implemented by pci_get_device(). The comment of
-pci_get_device() says that it will increase the reference count for the
-returned pci_dev and also decrease the reference count for the input
-pci_dev @from if it is not NULL.
+rxe_mr_cleanup() which tries to free mr->map again will be called when
+rxe_mr_init_user() fails:
 
-If we break for_each_pci_dev() loop with pdev not NULL, we need to call
-pci_dev_put() to decrease the reference count. We add a new struct
-'amd_geode_priv' to record pointer of the pci_dev and membase, and then
-add missing pci_dev_put() for the normal and error path.
+   CPU: 0 PID: 4917 Comm: rdma_flush_serv Kdump: loaded Not tainted 6.1.0-rc1-roce-flush+ #25
+   Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.16.0-0-gd239552ce722-prebuilt.qemu.org 04/01/2014
+   Call Trace:
+    <TASK>
+    dump_stack_lvl+0x45/0x5d
+    panic+0x19e/0x349
+    end_report.part.0+0x54/0x7c
+    kasan_report.cold+0xa/0xf
+    rxe_mr_cleanup+0x9d/0xf0 [rdma_rxe]
+    __rxe_cleanup+0x10a/0x1e0 [rdma_rxe]
+    rxe_reg_user_mr+0xb7/0xd0 [rdma_rxe]
+    ib_uverbs_reg_mr+0x26a/0x480 [ib_uverbs]
+    ib_uverbs_handler_UVERBS_METHOD_INVOKE_WRITE+0x1a2/0x250 [ib_uverbs]
+    ib_uverbs_cmd_verbs+0x1397/0x15a0 [ib_uverbs]
 
-Fixes: ef5d862734b8 ("[PATCH] Add Geode HW RNG driver")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+This issue was firstly exposed since commit b18c7da63fcb ("RDMA/rxe: Fix
+memory leak in error path code") and then we fixed it in commit
+8ff5f5d9d8cf ("RDMA/rxe: Prevent double freeing rxe_map_set()") but this
+fix was reverted together at last by commit 1e75550648da (Revert
+"RDMA/rxe: Create duplicate mapping tables for FMRs")
+
+Simply let rxe_mr_cleanup() always handle freeing the mr->map once it is
+successfully allocated.
+
+Fixes: 1e75550648da ("Revert "RDMA/rxe: Create duplicate mapping tables for FMRs"")
+Link: https://lore.kernel.org/r/1667099073-2-1-git-send-email-lizhijian@fujitsu.com
+Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/geode-rng.c | 36 +++++++++++++++++++++++-------
- 1 file changed, 28 insertions(+), 8 deletions(-)
+ drivers/infiniband/sw/rxe/rxe_mr.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/char/hw_random/geode-rng.c b/drivers/char/hw_random/geode-rng.c
-index 138ce434f86b..12fbe8091831 100644
---- a/drivers/char/hw_random/geode-rng.c
-+++ b/drivers/char/hw_random/geode-rng.c
-@@ -51,6 +51,10 @@ static const struct pci_device_id pci_tbl[] = {
- };
- MODULE_DEVICE_TABLE(pci, pci_tbl);
+diff --git a/drivers/infiniband/sw/rxe/rxe_mr.c b/drivers/infiniband/sw/rxe/rxe_mr.c
+index 502e9ada99b3..80e2d631fdb2 100644
+--- a/drivers/infiniband/sw/rxe/rxe_mr.c
++++ b/drivers/infiniband/sw/rxe/rxe_mr.c
+@@ -99,6 +99,7 @@ static int rxe_mr_alloc(struct rxe_mr *mr, int num_buf)
+ 		kfree(mr->map[i]);
  
-+struct amd_geode_priv {
-+	struct pci_dev *pcidev;
-+	void __iomem *membase;
-+};
- 
- static int geode_rng_data_read(struct hwrng *rng, u32 *data)
- {
-@@ -90,6 +94,7 @@ static int __init geode_rng_init(void)
- 	const struct pci_device_id *ent;
- 	void __iomem *mem;
- 	unsigned long rng_base;
-+	struct amd_geode_priv *priv;
- 
- 	for_each_pci_dev(pdev) {
- 		ent = pci_match_id(pci_tbl, pdev);
-@@ -97,17 +102,26 @@ static int __init geode_rng_init(void)
- 			goto found;
- 	}
- 	/* Device not found. */
--	goto out;
-+	return err;
- 
- found:
-+	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
-+	if (!priv) {
-+		err = -ENOMEM;
-+		goto put_dev;
-+	}
-+
- 	rng_base = pci_resource_start(pdev, 0);
- 	if (rng_base == 0)
--		goto out;
-+		goto free_priv;
- 	err = -ENOMEM;
- 	mem = ioremap(rng_base, 0x58);
- 	if (!mem)
--		goto out;
--	geode_rng.priv = (unsigned long)mem;
-+		goto free_priv;
-+
-+	geode_rng.priv = (unsigned long)priv;
-+	priv->membase = mem;
-+	priv->pcidev = pdev;
- 
- 	pr_info("AMD Geode RNG detected\n");
- 	err = hwrng_register(&geode_rng);
-@@ -116,20 +130,26 @@ static int __init geode_rng_init(void)
- 		       err);
- 		goto err_unmap;
- 	}
--out:
- 	return err;
- 
- err_unmap:
- 	iounmap(mem);
--	goto out;
-+free_priv:
-+	kfree(priv);
-+put_dev:
-+	pci_dev_put(pdev);
-+	return err;
+ 	kfree(mr->map);
++	mr->map = NULL;
+ err1:
+ 	return -ENOMEM;
  }
+@@ -122,7 +123,6 @@ int rxe_mr_init_user(struct rxe_dev *rxe, u64 start, u64 length, u64 iova,
+ 	int			num_buf;
+ 	void			*vaddr;
+ 	int err;
+-	int i;
  
- static void __exit geode_rng_exit(void)
- {
--	void __iomem *mem = (void __iomem *)geode_rng.priv;
-+	struct amd_geode_priv *priv;
+ 	umem = ib_umem_get(&rxe->ib_dev, start, length, access);
+ 	if (IS_ERR(umem)) {
+@@ -163,9 +163,8 @@ int rxe_mr_init_user(struct rxe_dev *rxe, u64 start, u64 length, u64 iova,
+ 				pr_warn("%s: Unable to get virtual address\n",
+ 						__func__);
+ 				err = -ENOMEM;
+-				goto err_cleanup_map;
++				goto err_release_umem;
+ 			}
+-
+ 			buf->addr = (uintptr_t)vaddr;
+ 			buf->size = PAGE_SIZE;
+ 			num_buf++;
+@@ -182,10 +181,6 @@ int rxe_mr_init_user(struct rxe_dev *rxe, u64 start, u64 length, u64 iova,
  
-+	priv = (struct amd_geode_priv *)geode_rng.priv;
- 	hwrng_unregister(&geode_rng);
--	iounmap(mem);
-+	iounmap(priv->membase);
-+	pci_dev_put(priv->pcidev);
-+	kfree(priv);
- }
+ 	return 0;
  
- module_init(geode_rng_init);
+-err_cleanup_map:
+-	for (i = 0; i < mr->num_map; i++)
+-		kfree(mr->map[i]);
+-	kfree(mr->map);
+ err_release_umem:
+ 	ib_umem_release(umem);
+ err_out:
 -- 
 2.35.1
 
