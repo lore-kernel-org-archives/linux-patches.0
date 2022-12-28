@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C98691875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC37C433D2;
-	Wed, 28 Dec 2022 15:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D8811875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14370C433EF;
+	Wed, 28 Dec 2022 15:57:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243047;
-	bh=xUQTlc1D4KPn3pxvsRl1F29e784Z/ZcyQb7a0L/HTl4=;
+	s=korg; t=1672243050;
+	bh=aQFaecaqcH30nHzpU+8RbcjuDn2x7otmuRN7p6ZP31U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mNgHI//fIboxPqe7GPJsM6A6jRL7Xn5Ax+YcEU1HcBaKWMM4kwEVMjZ932X51LmZp
-	 W2/1g3OCYzdqHAVC7Dc5klAYghGouJWeoeCSVAbXdd1cySb4WGYmF5m4J81H7xNyI5
-	 PnD1Q2vf/kiJ86+rmZwflCTRmP/ST6kmr7de6X98=
+	b=D6pwrAH9FbqCDjWoflf2CYkD0Czs2hC0LxPwVYDyR//BLljRS6EWQ8GPQ5yR8I1dq
+	 7pYCa+zU1MXYsqaFprSn2rSx9JZIpHetRgFoOI1LBeF3PAuw84dZAy2RsRYdKMNfHQ
+	 GqJX9Q+kPU6U+EexB6aKEfNYEaRi3HhfRPP/n8eU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	syzbot+a3e6acd85ded5c16a709@syzkaller.appspotmail.com,
+	Hawkins Jiawei <yin31149@gmail.com>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Ian Kent <raven@themaw.net>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0484/1073] mmc: toshsd: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:34:32 +0100
-Message-Id: <20221228144341.184323549@linuxfoundation.org>
+Subject: [PATCH 5.15 678/731] hugetlbfs: fix null-ptr-deref in hugetlbfs_parse_param()
+Date: Wed, 28 Dec 2022 15:43:05 +0100
+Message-Id: <20221228144316.128020522@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,50 +39,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Hawkins Jiawei <yin31149@gmail.com>
 
-[ Upstream commit f670744a316ea983113a65313dcd387b5a992444 ]
+[ Upstream commit 26215b7ee923b9251f7bb12c4e5f09dc465d35f2 ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+Syzkaller reports a null-ptr-deref bug as follows:
+======================================================
+KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
+RIP: 0010:hugetlbfs_parse_param+0x1dd/0x8e0 fs/hugetlbfs/inode.c:1380
+[...]
+Call Trace:
+ <TASK>
+ vfs_parse_fs_param fs/fs_context.c:148 [inline]
+ vfs_parse_fs_param+0x1f9/0x3c0 fs/fs_context.c:129
+ vfs_parse_fs_string+0xdb/0x170 fs/fs_context.c:191
+ generic_parse_monolithic+0x16f/0x1f0 fs/fs_context.c:231
+ do_new_mount fs/namespace.c:3036 [inline]
+ path_mount+0x12de/0x1e20 fs/namespace.c:3370
+ do_mount fs/namespace.c:3383 [inline]
+ __do_sys_mount fs/namespace.c:3591 [inline]
+ __se_sys_mount fs/namespace.c:3568 [inline]
+ __x64_sys_mount+0x27f/0x300 fs/namespace.c:3568
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ [...]
+ </TASK>
+======================================================
 
-So fix this by checking the return value and goto error path which will call
-mmc_free_host(), besides, free_irq() also needs be called.
+According to commit "vfs: parse: deal with zero length string value",
+kernel will set the param->string to null pointer in vfs_parse_fs_string()
+if fs string has zero length.
 
-Fixes: a5eb8bbd66cc ("mmc: add Toshiba PCI SD controller driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-8-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Yet the problem is that, hugetlbfs_parse_param() will dereference the
+param->string, without checking whether it is a null pointer.  To be more
+specific, if hugetlbfs_parse_param() parses an illegal mount parameter,
+such as "size=,", kernel will constructs struct fs_parameter with null
+pointer in vfs_parse_fs_string(), then passes this struct fs_parameter to
+hugetlbfs_parse_param(), which triggers the above null-ptr-deref bug.
+
+This patch solves it by adding sanity check on param->string
+in hugetlbfs_parse_param().
+
+Link: https://lkml.kernel.org/r/20221020231609.4810-1-yin31149@gmail.com
+Reported-by: syzbot+a3e6acd85ded5c16a709@syzkaller.appspotmail.com
+Tested-by: syzbot+a3e6acd85ded5c16a709@syzkaller.appspotmail.com
+  Link: https://lore.kernel.org/all/0000000000005ad00405eb7148c6@google.com/
+Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
+Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Hawkins Jiawei <yin31149@gmail.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Ian Kent <raven@themaw.net>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/toshsd.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/hugetlbfs/inode.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mmc/host/toshsd.c b/drivers/mmc/host/toshsd.c
-index 8d037c2071ab..497791ffada6 100644
---- a/drivers/mmc/host/toshsd.c
-+++ b/drivers/mmc/host/toshsd.c
-@@ -651,7 +651,9 @@ static int toshsd_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	if (ret)
- 		goto unmap;
+diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
+index be8deec29ebe..352230a011e0 100644
+--- a/fs/hugetlbfs/inode.c
++++ b/fs/hugetlbfs/inode.c
+@@ -1250,7 +1250,7 @@ static int hugetlbfs_parse_param(struct fs_context *fc, struct fs_parameter *par
  
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret)
-+		goto free_irq;
+ 	case Opt_size:
+ 		/* memparse() will accept a K/M/G without a digit */
+-		if (!isdigit(param->string[0]))
++		if (!param->string || !isdigit(param->string[0]))
+ 			goto bad_val;
+ 		ctx->max_size_opt = memparse(param->string, &rest);
+ 		ctx->max_val_type = SIZE_STD;
+@@ -1260,7 +1260,7 @@ static int hugetlbfs_parse_param(struct fs_context *fc, struct fs_parameter *par
  
- 	base = pci_resource_start(pdev, 0);
- 	dev_dbg(&pdev->dev, "MMIO %pa, IRQ %d\n", &base, pdev->irq);
-@@ -660,6 +662,8 @@ static int toshsd_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	case Opt_nr_inodes:
+ 		/* memparse() will accept a K/M/G without a digit */
+-		if (!isdigit(param->string[0]))
++		if (!param->string || !isdigit(param->string[0]))
+ 			goto bad_val;
+ 		ctx->nr_inodes = memparse(param->string, &rest);
+ 		return 0;
+@@ -1276,7 +1276,7 @@ static int hugetlbfs_parse_param(struct fs_context *fc, struct fs_parameter *par
  
- 	return 0;
- 
-+free_irq:
-+	free_irq(pdev->irq, host);
- unmap:
- 	pci_iounmap(pdev, host->ioaddr);
- release:
+ 	case Opt_min_size:
+ 		/* memparse() will accept a K/M/G without a digit */
+-		if (!isdigit(param->string[0]))
++		if (!param->string || !isdigit(param->string[0]))
+ 			goto bad_val;
+ 		ctx->min_size_opt = memparse(param->string, &rest);
+ 		ctx->min_val_type = SIZE_STD;
 -- 
 2.35.1
 
