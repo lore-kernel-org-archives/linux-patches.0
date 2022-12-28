@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D6C1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:09:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C98C433EF;
-	Wed, 28 Dec 2022 16:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CD411C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:09:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81E5FC433EF;
+	Wed, 28 Dec 2022 16:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243771;
-	bh=teeLVKOgfi28XtUELtCnXJ/vbvUlO9hMELBv8mXcZro=;
+	s=korg; t=1672243773;
+	bh=63tR6qPp/UwI1Ikt7A38gIkXkKy9HK27cS4inHeaIo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=usQR2rjTS9BSboV+S9kLud8Xyrjwhb4Zbd+Q1px+9RSl7Nfs8jfHw3q0U5vvTaWg5
-	 NPeuytWxeP4qVeiOwI1MAqPRZAy1RHiGaGmCHbOdqsE7ru33bvZoZlQ4+jB184+nQ+
-	 IK0zscyCBZTOZbQ859Z+KBDAMA4JrROj6CPRbMSo=
+	b=01fSXEdfKfu6t+QZhEFxXB9G5h7+gh1OaNNYmmjwLNhOTD2iKlDJhmKiJXCWgsPFQ
+	 83lx6kRKSDotBCe4chYCIcZgrp9pVb1n+4dP/BmNXGXOQrkBvuWGv8wh4H8WBbpLI+
+	 y/0ZlTjf9IvV4EnEimXpjiO5f7zPWqo441kEjdGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Pilmore <epilmore@gigaio.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Olga Kornievskaia <kolga@netapp.com>,
+	Tom Talpey <tom@talpey.com>,
+	Bernard Metzler <bmt@zurich.ibm.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0553/1146] ntb_netdev: Use dev_kfree_skb_any() in interrupt context
-Date: Wed, 28 Dec 2022 15:34:52 +0100
-Message-Id: <20221228144345.190060108@linuxfoundation.org>
+Subject: [PATCH 6.0 0586/1073] RDMA/siw: Fix immediate work request flush to completion queue
+Date: Wed, 28 Dec 2022 15:36:14 +0100
+Message-Id: <20221228144343.964918571@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,71 +37,135 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Pilmore <epilmore@gigaio.com>
+From: Bernard Metzler <bmt@zurich.ibm.com>
 
-[ Upstream commit 5f7d78b2b12a9d561f48fa00bab29b40f4616dad ]
+[ Upstream commit bdf1da5df9da680589a7f74448dd0a94dd3e1446 ]
 
-TX/RX callback handlers (ntb_netdev_tx_handler(),
-ntb_netdev_rx_handler()) can be called in interrupt
-context via the DMA framework when the respective
-DMA operations have completed. As such, any calls
-by these routines to free skb's, should use the
-interrupt context safe dev_kfree_skb_any() function.
+Correctly set send queue element opcode during immediate work request
+flushing in post sendqueue operation, if the QP is in ERROR state.
+An undefined ocode value results in out-of-bounds access to an array
+for mapping the opcode between siw internal and RDMA core representation
+in work completion generation. It resulted in a KASAN BUG report
+of type 'global-out-of-bounds' during NFSoRDMA testing.
 
-Previously, these callback handlers would call the
-interrupt unsafe version of dev_kfree_skb(). This has
-not presented an issue on Intel IOAT DMA engines as
-that driver utilizes tasklets rather than a hard
-interrupt handler, like the AMD PTDMA DMA driver.
-On AMD systems, a kernel WARNING message is
-encountered, which is being issued from
-skb_release_head_state() due to in_hardirq()
-being true.
+This patch further fixes a potential case of a malicious user which may
+write undefined values for completion queue elements status or opcode,
+if the CQ is memory mapped to user land. It avoids the same out-of-bounds
+access to arrays for status and opcode mapping as described above.
 
-Besides the user visible WARNING from the kernel,
-the other symptom of this bug was that TCP/IP performance
-across the ntb_netdev interface was very poor, i.e.
-approximately an order of magnitude below what was
-expected. With the repair to use dev_kfree_skb_any(),
-kernel WARNINGs from skb_release_head_state() ceased
-and TCP/IP performance, as measured by iperf, was on
-par with expected results, approximately 20 Gb/s on
-AMD Milan based server. Note that this performance
-is comparable with Intel based servers.
-
-Fixes: 765ccc7bc3d91 ("ntb_netdev: correct skb leak")
-Fixes: 548c237c0a997 ("net: Add support for NTB virtual ethernet device")
-Signed-off-by: Eric Pilmore <epilmore@gigaio.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20221209000659.8318-1-epilmore@gigaio.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 303ae1cdfdf7 ("rdma/siw: application interface")
+Fixes: b0fff7317bb4 ("rdma/siw: completion queue methods")
+Reported-by: Olga Kornievskaia <kolga@netapp.com>
+Reviewed-by: Tom Talpey <tom@talpey.com>
+Signed-off-by: Bernard Metzler <bmt@zurich.ibm.com>
+Link: https://lore.kernel.org/r/20221107145057.895747-1-bmt@zurich.ibm.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ntb_netdev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/infiniband/sw/siw/siw_cq.c    | 24 ++++++++++++++--
+ drivers/infiniband/sw/siw/siw_verbs.c | 40 ++++++++++++++++++++++++---
+ 2 files changed, 58 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ntb_netdev.c b/drivers/net/ntb_netdev.c
-index a4abea921046..85dbe7f73e31 100644
---- a/drivers/net/ntb_netdev.c
-+++ b/drivers/net/ntb_netdev.c
-@@ -137,7 +137,7 @@ static void ntb_netdev_rx_handler(struct ntb_transport_qp *qp, void *qp_data,
- enqueue_again:
- 	rc = ntb_transport_rx_enqueue(qp, skb, skb->data, ndev->mtu + ETH_HLEN);
- 	if (rc) {
--		dev_kfree_skb(skb);
-+		dev_kfree_skb_any(skb);
- 		ndev->stats.rx_errors++;
- 		ndev->stats.rx_fifo_errors++;
- 	}
-@@ -192,7 +192,7 @@ static void ntb_netdev_tx_handler(struct ntb_transport_qp *qp, void *qp_data,
- 		ndev->stats.tx_aborted_errors++;
- 	}
+diff --git a/drivers/infiniband/sw/siw/siw_cq.c b/drivers/infiniband/sw/siw/siw_cq.c
+index d68e37859e73..acc7bcd538b5 100644
+--- a/drivers/infiniband/sw/siw/siw_cq.c
++++ b/drivers/infiniband/sw/siw/siw_cq.c
+@@ -56,8 +56,6 @@ int siw_reap_cqe(struct siw_cq *cq, struct ib_wc *wc)
+ 	if (READ_ONCE(cqe->flags) & SIW_WQE_VALID) {
+ 		memset(wc, 0, sizeof(*wc));
+ 		wc->wr_id = cqe->id;
+-		wc->status = map_cqe_status[cqe->status].ib;
+-		wc->opcode = map_wc_opcode[cqe->opcode];
+ 		wc->byte_len = cqe->bytes;
  
--	dev_kfree_skb(skb);
-+	dev_kfree_skb_any(skb);
+ 		/*
+@@ -71,10 +69,32 @@ int siw_reap_cqe(struct siw_cq *cq, struct ib_wc *wc)
+ 				wc->wc_flags = IB_WC_WITH_INVALIDATE;
+ 			}
+ 			wc->qp = cqe->base_qp;
++			wc->opcode = map_wc_opcode[cqe->opcode];
++			wc->status = map_cqe_status[cqe->status].ib;
+ 			siw_dbg_cq(cq,
+ 				   "idx %u, type %d, flags %2x, id 0x%pK\n",
+ 				   cq->cq_get % cq->num_cqe, cqe->opcode,
+ 				   cqe->flags, (void *)(uintptr_t)cqe->id);
++		} else {
++			/*
++			 * A malicious user may set invalid opcode or
++			 * status in the user mmapped CQE array.
++			 * Sanity check and correct values in that case
++			 * to avoid out-of-bounds access to global arrays
++			 * for opcode and status mapping.
++			 */
++			u8 opcode = cqe->opcode;
++			u16 status = cqe->status;
++
++			if (opcode >= SIW_NUM_OPCODES) {
++				opcode = 0;
++				status = IB_WC_GENERAL_ERR;
++			} else if (status >= SIW_NUM_WC_STATUS) {
++				status = IB_WC_GENERAL_ERR;
++			}
++			wc->opcode = map_wc_opcode[opcode];
++			wc->status = map_cqe_status[status].ib;
++
+ 		}
+ 		WRITE_ONCE(cqe->flags, 0);
+ 		cq->cq_get++;
+diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
+index 3e814cfb298c..906fde1a2a0d 100644
+--- a/drivers/infiniband/sw/siw/siw_verbs.c
++++ b/drivers/infiniband/sw/siw/siw_verbs.c
+@@ -676,13 +676,45 @@ static int siw_copy_inline_sgl(const struct ib_send_wr *core_wr,
+ static int siw_sq_flush_wr(struct siw_qp *qp, const struct ib_send_wr *wr,
+ 			   const struct ib_send_wr **bad_wr)
+ {
+-	struct siw_sqe sqe = {};
+ 	int rv = 0;
  
- 	if (ntb_transport_tx_free_entry(dev->qp) >= tx_start) {
- 		/* Make sure anybody stopping the queue after this sees the new
+ 	while (wr) {
+-		sqe.id = wr->wr_id;
+-		sqe.opcode = wr->opcode;
+-		rv = siw_sqe_complete(qp, &sqe, 0, SIW_WC_WR_FLUSH_ERR);
++		struct siw_sqe sqe = {};
++
++		switch (wr->opcode) {
++		case IB_WR_RDMA_WRITE:
++			sqe.opcode = SIW_OP_WRITE;
++			break;
++		case IB_WR_RDMA_READ:
++			sqe.opcode = SIW_OP_READ;
++			break;
++		case IB_WR_RDMA_READ_WITH_INV:
++			sqe.opcode = SIW_OP_READ_LOCAL_INV;
++			break;
++		case IB_WR_SEND:
++			sqe.opcode = SIW_OP_SEND;
++			break;
++		case IB_WR_SEND_WITH_IMM:
++			sqe.opcode = SIW_OP_SEND_WITH_IMM;
++			break;
++		case IB_WR_SEND_WITH_INV:
++			sqe.opcode = SIW_OP_SEND_REMOTE_INV;
++			break;
++		case IB_WR_LOCAL_INV:
++			sqe.opcode = SIW_OP_INVAL_STAG;
++			break;
++		case IB_WR_REG_MR:
++			sqe.opcode = SIW_OP_REG_MR;
++			break;
++		default:
++			rv = -EINVAL;
++			break;
++		}
++		if (!rv) {
++			sqe.id = wr->wr_id;
++			rv = siw_sqe_complete(qp, &sqe, 0,
++					      SIW_WC_WR_FLUSH_ERR);
++		}
+ 		if (rv) {
+ 			if (bad_wr)
+ 				*bad_wr = wr;
 -- 
 2.35.1
 
