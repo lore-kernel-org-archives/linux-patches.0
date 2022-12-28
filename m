@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C331C15
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:49:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13B2CC433D2;
-	Wed, 28 Dec 2022 16:49:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313621C15
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:49:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8112C433EF;
+	Wed, 28 Dec 2022 16:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246188;
-	bh=aUaNdeCDNjxXbiUNjQciyDQdOEDWKmEgRFQfJ/YA+bw=;
+	s=korg; t=1672246191;
+	bh=hikALMhCr119baUZq1pQ/utGrr8+EJvZn7py4V8ykH4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aj5sXtDC8+bfmHGg583U64jMZWFIukl0lDqZbFx6c3wpM4aEHziMaDZrFIhX6zUMO
-	 VVbbfIlRlYwzTRFGjsnaRQfwUTwKWbppQE5QwLyPwlDWSfhXPXN1GykeFdbMrkn4So
-	 Sk8R9VQDrisWMfA7zMImHKye0DfGMvqpzOH1ON5g=
+	b=0kohsRUEHW5QX6zP1x9Dhqj/QO6AVETXS6/HepiFuWfLFkoZNzO5g/3Ix4+aOLbwc
+	 sx0Kn6oi00D2mei1LEGilgmoZNTgfpYNP06gHBXfxTLrMeK3Of6Bn1kLDkEbzrSw2Z
+	 QiKkHVw4lJ2t09Jgx2eowHEei+Fb5zsehE3961FQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Jeff LaBundy <jeff@labundy.com>,
+	Mattijs Korpershoek <mkorpershoek@baylibre.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0995/1146] drm/amdgpu: Fix type of second parameter in trans_msg() callback
-Date: Wed, 28 Dec 2022 15:42:14 +0100
-Message-Id: <20221228144357.394113863@linuxfoundation.org>
+Subject: [PATCH 6.0 1027/1073] Input: iqs7222 - add support for IQS7222A v1.13+
+Date: Wed, 28 Dec 2022 15:43:35 +0100
+Message-Id: <20221228144356.087336267@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,64 +36,202 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Jeff LaBundy <jeff@labundy.com>
 
-[ Upstream commit f0d0f1087333714ee683cc134a95afe331d7ddd9 ]
+[ Upstream commit 8d4c313c03f104c69e25ab03058d8955be9dc387 ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+IQS7222A revisions 1.13 and later widen the gesture multiplier from
+x4 ms to x16 ms. Add a means to scale the gesture timings specified
+in the device tree based on the revision of the device.
 
-  drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c:412:15: error: incompatible function pointer types initializing 'void (*)(struct amdgpu_device *, u32, u32, u32, u32)' (aka 'void (*)(struct amdgpu_device *, unsigned int, unsigned int, unsigned int, unsigned int)') with an expression of type 'void (struct amdgpu_device *, enum idh_request, u32, u32, u32)' (aka 'void (struct amdgpu_device *, enum idh_request, unsigned int, unsigned int, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
-          .trans_msg = xgpu_ai_mailbox_trans_msg,
-                      ^~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
-
-  drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c:435:15: error: incompatible function pointer types initializing 'void (*)(struct amdgpu_device *, u32, u32, u32, u32)' (aka 'void (*)(struct amdgpu_device *, unsigned int, unsigned int, unsigned int, unsigned int)') with an expression of type 'void (struct amdgpu_device *, enum idh_request, u32, u32, u32)' (aka 'void (struct amdgpu_device *, enum idh_request, unsigned int, unsigned int, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
-          .trans_msg = xgpu_nv_mailbox_trans_msg,
-                      ^~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
-
-The type of the second parameter in the prototype should be 'enum
-idh_request' instead of 'u32'. Update it to clear up the warnings.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reported-by: Sami Tolvanen <samitolvanen@google.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: e505edaedcb9 ("Input: add support for Azoteq IQS7222A/B/C")
+Signed-off-by: Jeff LaBundy <jeff@labundy.com>
+Reviewed-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
+Link: https://lore.kernel.org/r/Y1SRdbK1Dp2q7O8o@nixie71
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/input/misc/iqs7222.c | 111 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 111 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-index 49c4347d154c..2b9d806e23af 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-@@ -75,6 +75,8 @@ struct amdgpu_vf_error_buffer {
- 	uint64_t data[AMDGPU_VF_ERROR_ENTRY_SIZE];
+diff --git a/drivers/input/misc/iqs7222.c b/drivers/input/misc/iqs7222.c
+index 6af25dfd1d2a..e47ab6c1177f 100644
+--- a/drivers/input/misc/iqs7222.c
++++ b/drivers/input/misc/iqs7222.c
+@@ -86,7 +86,9 @@ enum iqs7222_reg_key_id {
+ 	IQS7222_REG_KEY_TOUCH,
+ 	IQS7222_REG_KEY_DEBOUNCE,
+ 	IQS7222_REG_KEY_TAP,
++	IQS7222_REG_KEY_TAP_LEGACY,
+ 	IQS7222_REG_KEY_AXIAL,
++	IQS7222_REG_KEY_AXIAL_LEGACY,
+ 	IQS7222_REG_KEY_WHEEL,
+ 	IQS7222_REG_KEY_NO_WHEEL,
+ 	IQS7222_REG_KEY_RESERVED
+@@ -202,10 +204,68 @@ struct iqs7222_dev_desc {
+ 	int allow_offset;
+ 	int event_offset;
+ 	int comms_offset;
++	bool legacy_gesture;
+ 	struct iqs7222_reg_grp_desc reg_grps[IQS7222_NUM_REG_GRPS];
  };
  
-+enum idh_request;
-+
- /**
-  * struct amdgpu_virt_ops - amdgpu device virt operations
-  */
-@@ -84,7 +86,8 @@ struct amdgpu_virt_ops {
- 	int (*req_init_data)(struct amdgpu_device *adev);
- 	int (*reset_gpu)(struct amdgpu_device *adev);
- 	int (*wait_reset)(struct amdgpu_device *adev);
--	void (*trans_msg)(struct amdgpu_device *adev, u32 req, u32 data1, u32 data2, u32 data3);
-+	void (*trans_msg)(struct amdgpu_device *adev, enum idh_request req,
-+			  u32 data1, u32 data2, u32 data3);
- };
+ static const struct iqs7222_dev_desc iqs7222_devs[] = {
++	{
++		.prod_num = IQS7222_PROD_NUM_A,
++		.fw_major = 1,
++		.fw_minor = 13,
++		.sldr_res = U8_MAX * 16,
++		.touch_link = 1768,
++		.allow_offset = 9,
++		.event_offset = 10,
++		.comms_offset = 12,
++		.reg_grps = {
++			[IQS7222_REG_GRP_STAT] = {
++				.base = IQS7222_SYS_STATUS,
++				.num_row = 1,
++				.num_col = 8,
++			},
++			[IQS7222_REG_GRP_CYCLE] = {
++				.base = 0x8000,
++				.num_row = 7,
++				.num_col = 3,
++			},
++			[IQS7222_REG_GRP_GLBL] = {
++				.base = 0x8700,
++				.num_row = 1,
++				.num_col = 3,
++			},
++			[IQS7222_REG_GRP_BTN] = {
++				.base = 0x9000,
++				.num_row = 12,
++				.num_col = 3,
++			},
++			[IQS7222_REG_GRP_CHAN] = {
++				.base = 0xA000,
++				.num_row = 12,
++				.num_col = 6,
++			},
++			[IQS7222_REG_GRP_FILT] = {
++				.base = 0xAC00,
++				.num_row = 1,
++				.num_col = 2,
++			},
++			[IQS7222_REG_GRP_SLDR] = {
++				.base = 0xB000,
++				.num_row = 2,
++				.num_col = 11,
++			},
++			[IQS7222_REG_GRP_GPIO] = {
++				.base = 0xC000,
++				.num_row = 1,
++				.num_col = 3,
++			},
++			[IQS7222_REG_GRP_SYS] = {
++				.base = IQS7222_SYS_SETUP,
++				.num_row = 1,
++				.num_col = 13,
++			},
++		},
++	},
+ 	{
+ 		.prod_num = IQS7222_PROD_NUM_A,
+ 		.fw_major = 1,
+@@ -215,6 +275,7 @@ static const struct iqs7222_dev_desc iqs7222_devs[] = {
+ 		.allow_offset = 9,
+ 		.event_offset = 10,
+ 		.comms_offset = 12,
++		.legacy_gesture = true,
+ 		.reg_grps = {
+ 			[IQS7222_REG_GRP_STAT] = {
+ 				.base = IQS7222_SYS_STATUS,
+@@ -874,6 +935,16 @@ static const struct iqs7222_prop_desc iqs7222_props[] = {
+ 		.reg_offset = 9,
+ 		.reg_shift = 8,
+ 		.reg_width = 8,
++		.val_pitch = 16,
++		.label = "maximum gesture time",
++	},
++	{
++		.name = "azoteq,gesture-max-ms",
++		.reg_grp = IQS7222_REG_GRP_SLDR,
++		.reg_key = IQS7222_REG_KEY_TAP_LEGACY,
++		.reg_offset = 9,
++		.reg_shift = 8,
++		.reg_width = 8,
+ 		.val_pitch = 4,
+ 		.label = "maximum gesture time",
+ 	},
+@@ -884,6 +955,16 @@ static const struct iqs7222_prop_desc iqs7222_props[] = {
+ 		.reg_offset = 9,
+ 		.reg_shift = 3,
+ 		.reg_width = 5,
++		.val_pitch = 16,
++		.label = "minimum gesture time",
++	},
++	{
++		.name = "azoteq,gesture-min-ms",
++		.reg_grp = IQS7222_REG_GRP_SLDR,
++		.reg_key = IQS7222_REG_KEY_TAP_LEGACY,
++		.reg_offset = 9,
++		.reg_shift = 3,
++		.reg_width = 5,
+ 		.val_pitch = 4,
+ 		.label = "minimum gesture time",
+ 	},
+@@ -897,6 +978,16 @@ static const struct iqs7222_prop_desc iqs7222_props[] = {
+ 		.val_pitch = 16,
+ 		.label = "gesture distance",
+ 	},
++	{
++		.name = "azoteq,gesture-dist",
++		.reg_grp = IQS7222_REG_GRP_SLDR,
++		.reg_key = IQS7222_REG_KEY_AXIAL_LEGACY,
++		.reg_offset = 10,
++		.reg_shift = 8,
++		.reg_width = 8,
++		.val_pitch = 16,
++		.label = "gesture distance",
++	},
+ 	{
+ 		.name = "azoteq,gesture-max-ms",
+ 		.reg_grp = IQS7222_REG_GRP_SLDR,
+@@ -904,6 +995,16 @@ static const struct iqs7222_prop_desc iqs7222_props[] = {
+ 		.reg_offset = 10,
+ 		.reg_shift = 0,
+ 		.reg_width = 8,
++		.val_pitch = 16,
++		.label = "maximum gesture time",
++	},
++	{
++		.name = "azoteq,gesture-max-ms",
++		.reg_grp = IQS7222_REG_GRP_SLDR,
++		.reg_key = IQS7222_REG_KEY_AXIAL_LEGACY,
++		.reg_offset = 10,
++		.reg_shift = 0,
++		.reg_width = 8,
+ 		.val_pitch = 4,
+ 		.label = "maximum gesture time",
+ 	},
+@@ -2115,8 +2216,18 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
+ 		if (!event_node)
+ 			continue;
  
- /*
++		/*
++		 * Depending on the device, gestures are either offered using
++		 * one of two timing resolutions, or are not supported at all.
++		 */
+ 		if (reg_offset)
+ 			reg_key = IQS7222_REG_KEY_RESERVED;
++		else if (dev_desc->legacy_gesture &&
++			 iqs7222_sl_events[i].reg_key == IQS7222_REG_KEY_TAP)
++			reg_key = IQS7222_REG_KEY_TAP_LEGACY;
++		else if (dev_desc->legacy_gesture &&
++			 iqs7222_sl_events[i].reg_key == IQS7222_REG_KEY_AXIAL)
++			reg_key = IQS7222_REG_KEY_AXIAL_LEGACY;
+ 		else
+ 			reg_key = iqs7222_sl_events[i].reg_key;
+ 
 -- 
 2.35.1
 
