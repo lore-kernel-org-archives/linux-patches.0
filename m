@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCAB01C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:38:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D904C433EF;
-	Wed, 28 Dec 2022 16:38:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7681C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:38:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E715FC433D2;
+	Wed, 28 Dec 2022 16:38:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245512;
-	bh=AJg30lQM+3uKhnVTxpxBj1HiLwsVIJR8eAyQmiDceYU=;
+	s=korg; t=1672245515;
+	bh=0yZi8jFDCBEDUZL6d7RxL5mQsYs00S36dgR+MnEeqLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gpFf3EhJmRLz4g5Kt96UxgNeYFPjXOtPFXrmY0jQ2wP/tAnsUSPVzuDurP3MPbL9M
-	 94W8PVRGgozvsZzmD8oOB2rEVAmPbY3+tUFRkecwnfSmLSHPJ1sVYd+pZsJSEiHZN5
-	 yxngFP00Rt5M+wxSj28TyE46wyAJpF3J+gV4B4wA=
+	b=BEX/GT0R3y+i4KtjDutL1mHQs2HkBq5IW9u1f0tEYtSwZdyBvTtNMNUzUml3E8crr
+	 Gc3fbRoNEHEKzKxhxQDbbKawOjsju2pTawShhghV/L3SyCDL+8eKBHWg7YAN5LDxOX
+	 L0vmT2EzUjjN6vTNDJNXvmPlz5XKIYp2ePXAesLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ming Qian <ming.qian@nxp.com>,
-	Mirela Rabulea <mirela.rabulea@nxp.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Yuan Can <yuancan@huawei.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0907/1073] media: imx-jpeg: Disable useless interrupt to avoid kernel panic
-Date: Wed, 28 Dec 2022 15:41:35 +0100
-Message-Id: <20221228144352.666175250@linuxfoundation.org>
+Subject: [PATCH 6.1 0874/1146] remoteproc: qcom_q6v5_pas: Fix missing of_node_put() in adsp_alloc_memory_region()
+Date: Wed, 28 Dec 2022 15:40:13 +0100
+Message-Id: <20221228144353.906195220@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,46 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Qian <ming.qian@nxp.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit c3720e65c9013a7b2a5dbb63e6bf6d74a35dd894 ]
+[ Upstream commit 38e7d9c19276832ebb0277f415b9214bf7baeb37 ]
 
-There is a hardware bug that the interrupt STMBUF_HALF may be triggered
-after or when disable interrupt.
-It may led to unexpected kernel panic.
-And interrupt STMBUF_HALF and STMBUF_RTND have no other effect.
-So disable them and the unused interrupts.
+The pointer node is returned by of_parse_phandle() with refcount
+incremented. We should use of_node_put() on it when done.
 
-meanwhile clear the interrupt status when disable interrupt.
-
-Signed-off-by: Ming Qian <ming.qian@nxp.com>
-Reviewed-by: Mirela Rabulea <mirela.rabulea@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: b9e718e950c3 ("remoteproc: Introduce Qualcomm ADSP PIL")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221203070639.15128-1-yuancan@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/nxp/imx-jpeg/mxc-jpeg-hw.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/remoteproc/qcom_q6v5_pas.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg-hw.c b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg-hw.c
-index 9418fcf740a8..ef28122a5ed4 100644
---- a/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg-hw.c
-+++ b/drivers/media/platform/nxp/imx-jpeg/mxc-jpeg-hw.c
-@@ -76,12 +76,14 @@ void print_wrapper_info(struct device *dev, void __iomem *reg)
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index a14ff1142e76..dc6f07ca8341 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -449,6 +449,7 @@ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
+ 	}
  
- void mxc_jpeg_enable_irq(void __iomem *reg, int slot)
- {
--	writel(0xFFFFFFFF, reg + MXC_SLOT_OFFSET(slot, SLOT_IRQ_EN));
-+	writel(0xFFFFFFFF, reg + MXC_SLOT_OFFSET(slot, SLOT_STATUS));
-+	writel(0xF0C, reg + MXC_SLOT_OFFSET(slot, SLOT_IRQ_EN));
- }
+ 	ret = of_address_to_resource(node, 0, &r);
++	of_node_put(node);
+ 	if (ret)
+ 		return ret;
  
- void mxc_jpeg_disable_irq(void __iomem *reg, int slot)
- {
- 	writel(0x0, reg + MXC_SLOT_OFFSET(slot, SLOT_IRQ_EN));
-+	writel(0xFFFFFFFF, reg + MXC_SLOT_OFFSET(slot, SLOT_STATUS));
- }
- 
- void mxc_jpeg_sw_reset(void __iomem *reg)
 -- 
 2.35.1
 
