@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8461C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B795AC433D2;
-	Wed, 28 Dec 2022 16:46:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353C61C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9E8C433D2;
+	Wed, 28 Dec 2022 16:46:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245996;
-	bh=xadfa5UUa/VvR7/Q+w8xXinb6FW7rp5NXKRfhIxiI8E=;
+	s=korg; t=1672245999;
+	bh=iEnE92SLTgM8ZrAJ0JBLwuGFmy2fEuNEkWwiceKkZXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hzsm3yNEANYapDh8ZagpyfBRf5oMQ08pLhQpn8J1WTMeFoN79fmoP9bfEKcaLBg/9
-	 XWjnreMjND0OIhAMjv9zI/V4b/NLuOBdCT113V0NuAEsJYO7dWRVqjUn6ZfTkthxe1
-	 SdZvCENSNKhOFOpeHaqW+S3KTtctqYovgq0BxmkE=
+	b=PwZebmZiRkK43TbyL/P2+8zBG8k1L1YT0CyRgNwG0eXThWbjmCOa4HFxIDEjGRHcA
+	 PgmBU36fyjpqlp7sufJwz/Y9dvwRff+Gn+Oz+zGOYHltgb0lbo5knIjO4hQJ/1AT1W
+	 2DxiQFR5TMT5RgDqASpVpDYSrUOCEaW9JEvrkOas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Mike Marshall <hubcap@omnibond.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0993/1073] orangefs: Fix kmemleak in orangefs_{kernel,client}_debug_init()
-Date: Wed, 28 Dec 2022 15:43:01 +0100
-Message-Id: <20221228144355.087715934@linuxfoundation.org>
+Subject: [PATCH 6.1 0929/1146] myri10ge: Fix an error handling path in myri10ge_probe()
+Date: Wed, 28 Dec 2022 15:41:08 +0100
+Message-Id: <20221228144355.515000010@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,105 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 31720a2b109b3080eb77e97b8f6f50a27b4ae599 ]
+[ Upstream commit d83b950d44d2982c0e62e3d81b0f35ab09431008 ]
 
-When insert and remove the orangefs module, there are memory leaked
-as below:
+Some memory allocated in myri10ge_probe_slices() is not released in the
+error handling path of myri10ge_probe().
 
-unreferenced object 0xffff88816b0cc000 (size 2048):
-  comm "insmod", pid 783, jiffies 4294813439 (age 65.512s)
-  hex dump (first 32 bytes):
-    6e 6f 6e 65 0a 00 00 00 00 00 00 00 00 00 00 00  none............
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<0000000031ab7788>] kmalloc_trace+0x27/0xa0
-    [<000000005b405fee>] orangefs_debugfs_init.cold+0xaf/0x17f
-    [<00000000e5a0085b>] 0xffffffffa02780f9
-    [<000000004232d9f7>] do_one_initcall+0x87/0x2a0
-    [<0000000054f22384>] do_init_module+0xdf/0x320
-    [<000000003263bdea>] load_module+0x2f98/0x3330
-    [<0000000052cd4153>] __do_sys_finit_module+0x113/0x1b0
-    [<00000000250ae02b>] do_syscall_64+0x35/0x80
-    [<00000000f11c03c7>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+Add the corresponding kfree(), as already done in the remove function.
 
-Use the golbal variable as the buffer rather than dynamic allocate to
-slove the problem.
-
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+Fixes: 0dcffac1a329 ("myri10ge: add multislices support")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/orangefs-debugfs.c | 26 +++-----------------------
- 1 file changed, 3 insertions(+), 23 deletions(-)
+ drivers/net/ethernet/myricom/myri10ge/myri10ge.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
-index a848b6ef9599..1b508f543384 100644
---- a/fs/orangefs/orangefs-debugfs.c
-+++ b/fs/orangefs/orangefs-debugfs.c
-@@ -194,15 +194,10 @@ void orangefs_debugfs_init(int debug_mask)
-  */
- static void orangefs_kernel_debug_init(void)
- {
--	int rc = -ENOMEM;
--	char *k_buffer = NULL;
-+	static char k_buffer[ORANGEFS_MAX_DEBUG_STRING_LEN] = { };
+diff --git a/drivers/net/ethernet/myricom/myri10ge/myri10ge.c b/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
+index 9063e2e22cd5..9a9341a348c0 100644
+--- a/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
++++ b/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
+@@ -3913,6 +3913,7 @@ static int myri10ge_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	myri10ge_free_slices(mgp);
  
- 	gossip_debug(GOSSIP_DEBUGFS_DEBUG, "%s: start\n", __func__);
+ abort_with_firmware:
++	kfree(mgp->msix_vectors);
+ 	myri10ge_dummy_rdma(mgp, 0);
  
--	k_buffer = kzalloc(ORANGEFS_MAX_DEBUG_STRING_LEN, GFP_KERNEL);
--	if (!k_buffer)
--		goto out;
--
- 	if (strlen(kernel_debug_string) + 1 < ORANGEFS_MAX_DEBUG_STRING_LEN) {
- 		strcpy(k_buffer, kernel_debug_string);
- 		strcat(k_buffer, "\n");
-@@ -213,9 +208,6 @@ static void orangefs_kernel_debug_init(void)
- 
- 	debugfs_create_file(ORANGEFS_KMOD_DEBUG_FILE, 0444, debug_dir, k_buffer,
- 			    &kernel_debug_fops);
--
--out:
--	gossip_debug(GOSSIP_DEBUGFS_DEBUG, "%s: rc:%d:\n", __func__, rc);
- }
- 
- 
-@@ -299,18 +291,13 @@ static int help_show(struct seq_file *m, void *v)
- /*
-  * initialize the client-debug file.
-  */
--static int orangefs_client_debug_init(void)
-+static void orangefs_client_debug_init(void)
- {
- 
--	int rc = -ENOMEM;
--	char *c_buffer = NULL;
-+	static char c_buffer[ORANGEFS_MAX_DEBUG_STRING_LEN] = { };
- 
- 	gossip_debug(GOSSIP_DEBUGFS_DEBUG, "%s: start\n", __func__);
- 
--	c_buffer = kzalloc(ORANGEFS_MAX_DEBUG_STRING_LEN, GFP_KERNEL);
--	if (!c_buffer)
--		goto out;
--
- 	if (strlen(client_debug_string) + 1 < ORANGEFS_MAX_DEBUG_STRING_LEN) {
- 		strcpy(c_buffer, client_debug_string);
- 		strcat(c_buffer, "\n");
-@@ -324,13 +311,6 @@ static int orangefs_client_debug_init(void)
- 						  debug_dir,
- 						  c_buffer,
- 						  &kernel_debug_fops);
--
--	rc = 0;
--
--out:
--
--	gossip_debug(GOSSIP_DEBUGFS_DEBUG, "%s: rc:%d:\n", __func__, rc);
--	return rc;
- }
- 
- /* open ORANGEFS_KMOD_DEBUG_FILE or ORANGEFS_CLIENT_DEBUG_FILE.*/
+ abort_with_ioremap:
 -- 
 2.35.1
 
