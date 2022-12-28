@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FE491863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:51:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0E3C433F0;
-	Wed, 28 Dec 2022 14:51:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63E51863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:51:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B0DAC433EF;
+	Wed, 28 Dec 2022 14:51:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239095;
-	bh=rBw+hqrqGPPUypED3G4ai2j3oE1EYez865ycweTOg8s=;
+	s=korg; t=1672239098;
+	bh=D7vWAd2QM3x++CDRAcyaA6IESMGrPik27SkSHuvJR38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PKgVz2g+dS/g3F+qLKCR9E7gTsrX/xPxaoI655W+svf316jzzs56RqcuUqqWC/Bta
-	 VMNw1oiyBJqAdUe5LtPCb0n3oxn9BCE7h7YJtOkwDrKpyUHhRl+Wa/9UFBRVuibRXa
-	 Oqk8k4wD8I6Fiu0+9yg3TcYcY7r368oG6rESefM4=
+	b=jDB8toj2HQT3m1HXWlKKYM3H9dcqcpOzZ3sdLmEQWLcvLKHLNQhRFJ7xNYD7TQGVA
+	 zzup/phqnAA5DIqxNqJ4uLiUq31+PzRp0S+TUOvjUP0H03GxWJmQ1G2LBMK7zn6Lll
+	 3ZFbrwyVZoPGEoEmNtIksIakFZGch5Ghda+KzBLk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Prashant Malani <pmalani@chromium.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Alexandre Bounine <alex.bou9@gmail.com>,
+	Matt Porter <mporter@kernel.crashing.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 127/731] platform/chrome: cros_ec_typec: Cleanup switch handle return paths
-Date: Wed, 28 Dec 2022 15:33:54 +0100
-Message-Id: <20221228144300.231893112@linuxfoundation.org>
+Subject: [PATCH 5.15 110/731] rapidio: fix possible name leaks when rio_add_device() fails
+Date: Wed, 28 Dec 2022 15:33:37 +0100
+Message-Id: <20221228144259.736883234@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -34,41 +37,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prashant Malani <pmalani@chromium.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 66fe238a9bcc158f75ddecf976d1ce7efe20f713 ]
+[ Upstream commit f9574cd48679926e2a569e1957a5a1bcc8a719ac ]
 
-Some of the return paths for the cros_typec_get_switch_handles()
-aren't necessary. Clean up the return paths to only undo the handle
-get's which succeeded.
+Patch series "rapidio: fix three possible memory leaks".
 
-Signed-off-by: Prashant Malani <pmalani@chromium.org>
-Link: https://lore.kernel.org/r/20220711072333.2064341-9-pmalani@chromium.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 9a8aadcf0b45 ("platform/chrome: cros_ec_typec: zero out stale pointers")
+This patchset fixes three name leaks in error handling.
+ - patch #1 fixes two name leaks while rio_add_device() fails.
+ - patch #2 fixes a name leak while  rio_register_mport() fails.
+
+This patch (of 2):
+
+If rio_add_device() returns error, the name allocated by dev_set_name()
+need be freed.  It should use put_device() to give up the reference in the
+error path, so that the name can be freed in kobject_cleanup(), and the
+'rdev' can be freed in rio_release_dev().
+
+Link: https://lkml.kernel.org/r/20221114152636.2939035-1-yangyingliang@huawei.com
+Link: https://lkml.kernel.org/r/20221114152636.2939035-2-yangyingliang@huawei.com
+Fixes: e8de370188d0 ("rapidio: add mport char device driver")
+Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Cc: Alexandre Bounine <alex.bou9@gmail.com>
+Cc: Matt Porter <mporter@kernel.crashing.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_typec.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/rapidio/devices/rio_mport_cdev.c | 7 +++++--
+ drivers/rapidio/rio-scan.c               | 8 ++++++--
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
-index aadb8d237aef..d63be2b3d10e 100644
---- a/drivers/platform/chrome/cros_ec_typec.c
-+++ b/drivers/platform/chrome/cros_ec_typec.c
-@@ -156,12 +156,10 @@ static int cros_typec_get_switch_handles(struct cros_typec_port *port,
- 	return 0;
+diff --git a/drivers/rapidio/devices/rio_mport_cdev.c b/drivers/rapidio/devices/rio_mport_cdev.c
+index 94331d999d27..48cd9b7f3b89 100644
+--- a/drivers/rapidio/devices/rio_mport_cdev.c
++++ b/drivers/rapidio/devices/rio_mport_cdev.c
+@@ -1803,8 +1803,11 @@ static int rio_mport_add_riodev(struct mport_cdev_priv *priv,
+ 		rio_init_dbell_res(&rdev->riores[RIO_DOORBELL_RESOURCE],
+ 				   0, 0xffff);
+ 	err = rio_add_device(rdev);
+-	if (err)
+-		goto cleanup;
++	if (err) {
++		put_device(&rdev->dev);
++		return err;
++	}
++
+ 	rio_dev_get(rdev);
  
- role_sw_err:
--	usb_role_switch_put(port->role_sw);
--ori_sw_err:
- 	typec_switch_put(port->ori_sw);
--mux_err:
-+ori_sw_err:
- 	typec_mux_put(port->mux);
--
-+mux_err:
- 	return -ENODEV;
- }
+ 	return 0;
+diff --git a/drivers/rapidio/rio-scan.c b/drivers/rapidio/rio-scan.c
+index 19b0c33f4a62..fdcf742b2adb 100644
+--- a/drivers/rapidio/rio-scan.c
++++ b/drivers/rapidio/rio-scan.c
+@@ -454,8 +454,12 @@ static struct rio_dev *rio_setup_device(struct rio_net *net,
+ 				   0, 0xffff);
+ 
+ 	ret = rio_add_device(rdev);
+-	if (ret)
+-		goto cleanup;
++	if (ret) {
++		if (rswitch)
++			kfree(rswitch->route_table);
++		put_device(&rdev->dev);
++		return NULL;
++	}
+ 
+ 	rio_dev_get(rdev);
  
 -- 
 2.35.1
