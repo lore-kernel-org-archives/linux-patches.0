@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02B61C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:19:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42EB1C433D2;
-	Wed, 28 Dec 2022 16:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CDEB1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:19:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83AAC433D2;
+	Wed, 28 Dec 2022 16:19:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244357;
-	bh=kHYnQcbDkTQfgJl0KpLUriDVaVrup0eOHrDTsP8DpgU=;
+	s=korg; t=1672244360;
+	bh=Q7QIBx8B3bOXxoI7XjnJtQq9CABP8wRuiDR0mwf3l8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f4vbqS09vo3ePZ9z3pLZ/ovQb+mDh+VjyCkBdT+/5FDne0tbgZxtQuO4txv5eIQF/
-	 qX7ooMNu6PnarDnfOz3Gh5Wzd/7FKUM03e7R4LkznDy6anY6knQ8OTngcU+3NhDnMS
-	 eRIP17Z/HcViR3N8gqj8GcLocx89zXw1hbZFjlSk=
+	b=uQYpoBWXXrwoFGWg5UsxIwONA5ooUa1bAakbHWHA105xnbgJXzyk/yw4+zTlTgQyf
+	 XEho5+gESd/EO2I/A++bXjuNy/qJRh3U53BSWU97Lso0ar0yZQ58CNInfnsmyG/Pvr
+	 c5WCG9JiPSMfzDPbxxC2mSMBCcEasgjMoIM8FAOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Joel Savitz <jsavitz@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0656/1146] scsi: ufs: core: Fix the polling implementation
-Date: Wed, 28 Dec 2022 15:36:35 +0100
-Message-Id: <20221228144347.976904298@linuxfoundation.org>
+Subject: [PATCH 6.0 0697/1073] firmware: raspberrypi: fix possible memory leak in rpi_firmware_probe()
+Date: Wed, 28 Dec 2022 15:38:05 +0100
+Message-Id: <20221228144346.962451994@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,90 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit ee8c88cab4afbd5ee10a127d6cbecd6b200185a5 ]
+[ Upstream commit 7b51161696e803fd5f9ad55b20a64c2df313f95c ]
 
-Fix the following issues in ufshcd_poll():
+In rpi_firmware_probe(), if mbox_request_channel() fails, the 'fw' will
+not be freed through rpi_firmware_delete(), fix this leak by calling
+kfree() in the error path.
 
- - If polling succeeds, return a positive value.
-
- - Do not complete polling requests from interrupt context because the
-   block layer expects these requests to be completed from thread
-   context. From block/bio.c:
-
-     If REQ_ALLOC_CACHE is set, the final put of the bio MUST be done from
-     process context, not hard/soft IRQ.
-
-Fixes: eaab9b573054 ("scsi: ufs: Implement polling support")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20221118233717.441298-1-bvanassche@acm.org
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 1e7c57355a3b ("firmware: raspberrypi: Keep count of all consumers")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221117070636.3849773-1-yangyingliang@huawei.com
+Acked-by: Joel Savitz <jsavitz@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ufs/core/ufshcd.c | 28 ++++++++++++++++++++++++++--
- 1 file changed, 26 insertions(+), 2 deletions(-)
+ drivers/firmware/raspberrypi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
-index b1f59a5fe632..5432be4cd0ed 100644
---- a/drivers/ufs/core/ufshcd.c
-+++ b/drivers/ufs/core/ufshcd.c
-@@ -5382,6 +5382,26 @@ static void __ufshcd_transfer_req_compl(struct ufs_hba *hba,
+diff --git a/drivers/firmware/raspberrypi.c b/drivers/firmware/raspberrypi.c
+index 4b8978b254f9..dba315f675bc 100644
+--- a/drivers/firmware/raspberrypi.c
++++ b/drivers/firmware/raspberrypi.c
+@@ -272,6 +272,7 @@ static int rpi_firmware_probe(struct platform_device *pdev)
+ 		int ret = PTR_ERR(fw->chan);
+ 		if (ret != -EPROBE_DEFER)
+ 			dev_err(dev, "Failed to get mbox channel: %d\n", ret);
++		kfree(fw);
+ 		return ret;
  	}
- }
  
-+/* Any value that is not an existing queue number is fine for this constant. */
-+enum {
-+	UFSHCD_POLL_FROM_INTERRUPT_CONTEXT = -1
-+};
-+
-+static void ufshcd_clear_polled(struct ufs_hba *hba,
-+				unsigned long *completed_reqs)
-+{
-+	int tag;
-+
-+	for_each_set_bit(tag, completed_reqs, hba->nutrs) {
-+		struct scsi_cmnd *cmd = hba->lrb[tag].cmd;
-+
-+		if (!cmd)
-+			continue;
-+		if (scsi_cmd_to_rq(cmd)->cmd_flags & REQ_POLLED)
-+			__clear_bit(tag, completed_reqs);
-+	}
-+}
-+
- /*
-  * Returns > 0 if one or more commands have been completed or 0 if no
-  * requests have been completed.
-@@ -5398,13 +5418,17 @@ static int ufshcd_poll(struct Scsi_Host *shost, unsigned int queue_num)
- 	WARN_ONCE(completed_reqs & ~hba->outstanding_reqs,
- 		  "completed: %#lx; outstanding: %#lx\n", completed_reqs,
- 		  hba->outstanding_reqs);
-+	if (queue_num == UFSHCD_POLL_FROM_INTERRUPT_CONTEXT) {
-+		/* Do not complete polled requests from interrupt context. */
-+		ufshcd_clear_polled(hba, &completed_reqs);
-+	}
- 	hba->outstanding_reqs &= ~completed_reqs;
- 	spin_unlock_irqrestore(&hba->outstanding_lock, flags);
- 
- 	if (completed_reqs)
- 		__ufshcd_transfer_req_compl(hba, completed_reqs);
- 
--	return completed_reqs;
-+	return completed_reqs != 0;
- }
- 
- /**
-@@ -5435,7 +5459,7 @@ static irqreturn_t ufshcd_transfer_req_compl(struct ufs_hba *hba)
- 	 * Ignore the ufshcd_poll() return value and return IRQ_HANDLED since we
- 	 * do not want polling to trigger spurious interrupt complaints.
- 	 */
--	ufshcd_poll(hba->host, 0);
-+	ufshcd_poll(hba->host, UFSHCD_POLL_FROM_INTERRUPT_CONTEXT);
- 
- 	return IRQ_HANDLED;
- }
 -- 
 2.35.1
 
