@@ -1,38 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7553B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F97C433F0;
-	Wed, 28 Dec 2022 15:35:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FAF61863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98222C433EF;
+	Wed, 28 Dec 2022 15:35:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241711;
-	bh=dubQICoRUaMZoxPUUNZWHpXkhoid96dHvEkNtoni8vA=;
+	s=korg; t=1672241714;
+	bh=lzdtBuIRzXVyB+L7p9CVTHNHZPbhrXxAzXIExjUgUi8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uR/zRPmfzKmIF8IwlhrC+1PYbeufJz11WMtJjfJMQP+x+19nv7Ppj0/yNIR3hFHpv
-	 X0GuqfSnBt2/QG50wG1Qo1jtFbPp9e0t7tZWOG3COt4yo8x7e+1ax3DFSX6l6cf8pR
-	 Soo8yXjj6W0zM4wxG8uzE1r2NKR0B7MCd7otki88=
+	b=WmbwCrijTmmH55+2EW9y92B2B66p4QtqrIYQC/UewgVV47a7GC2zXEKl6Q+STi8Zp
+	 2rXvPk1EFbd+GwvNmbMKwqr+khbCycUGQDNN0mXOoeoBUsrdR7/S/pBOgvvpaZV7KC
+	 WhM3uwcWjx7t34sL+G45l3LOdLF8fLE/muejRiCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@linaro.org>,
-	Ian Rogers <irogers@google.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	bpf@vger.kernel.org,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 514/731] perf trace: Return error if a system call doesnt exist
-Date: Wed, 28 Dec 2022 15:40:21 +0100
-Message-Id: <20221228144311.443765467@linuxfoundation.org>
+Subject: [PATCH 6.1 0280/1146] drm/msm/dsi: Use DIV_ROUND_UP instead of conditional increment on modulo
+Date: Wed, 28 Dec 2022 15:30:19 +0100
+Message-Id: <20221228144337.743087255@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -43,53 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leo Yan <leo.yan@linaro.org>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit d4223e1776c30b2ce8d0e6eaadcbf696e60fca3c ]
+[ Upstream commit 1e8196103bd02a396b45c8f6188541634a47fce2 ]
 
-When a system call is not detected, the reason is either because the
-system call ID is out of scope or failure to find the corresponding path
-in the sysfs, trace__read_syscall_info() returns zero.  Finally, without
-returning an error value it introduces confusion for the caller.
+This exact same math is used to compute bytes_in_slice above in
+dsi_update_dsc_timing(), also used to fill slice_chunk_size.
 
-This patch lets the function trace__read_syscall_info() to return
--EEXIST when a system call doesn't exist.
-
-Fixes: b8b1033fcaa091d8 ("perf trace: Mark syscall ids that are not allocated to avoid unnecessary error messages")
-Signed-off-by: Leo Yan <leo.yan@linaro.org>
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: bpf@vger.kernel.org
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20221121075237.127706-3-leo.yan@linaro.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Patchwork: https://patchwork.freedesktop.org/patch/508935/
+Link: https://lore.kernel.org/r/20221026182824.876933-4-marijn.suijten@somainline.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 2bf21194c7b3..aaa465d7f011 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -1782,11 +1782,11 @@ static int trace__read_syscall_info(struct trace *trace, int id)
- #endif
- 	sc = trace->syscalls.table + id;
- 	if (sc->nonexistent)
--		return 0;
-+		return -EEXIST;
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index d94832504d0f..88c8aa5c6b80 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1807,9 +1807,7 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
+ 	 * params are calculated
+ 	 */
+ 	groups_per_line = DIV_ROUND_UP(dsc->slice_width, 3);
+-	dsc->slice_chunk_size = dsc->slice_width * dsc->bits_per_pixel / 8;
+-	if ((dsc->slice_width * dsc->bits_per_pixel) % 8)
+-		dsc->slice_chunk_size++;
++	dsc->slice_chunk_size = DIV_ROUND_UP(dsc->slice_width * dsc->bits_per_pixel, 8);
  
- 	if (name == NULL) {
- 		sc->nonexistent = true;
--		return 0;
-+		return -EEXIST;
- 	}
- 
- 	sc->name = name;
+ 	/* rbs-min */
+ 	min_rate_buffer_size =  dsc->rc_model_size - dsc->initial_offset +
 -- 
 2.35.1
 
