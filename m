@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26E31863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75C2BC433D2;
-	Wed, 28 Dec 2022 15:34:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9F61863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB9DC433EF;
+	Wed, 28 Dec 2022 15:34:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241652;
-	bh=q39LaOa2W43HErDuWLiPWEb7xwgNIST8ul/1nBzXxHk=;
+	s=korg; t=1672241655;
+	bh=e8C+FLarz7yHRStBr8a5N2PFhBm2ZxbWJSVqh0GRLVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XZStf0z76dy4U7ymAcpjsanwfjrORxWe/sEIY8xTczlk5aZwSJDGwAx/JbzGFjOkX
-	 dCmqMdvyZ6v1GBZOJ7UnGoCuAsJE8BZAVWstBOlWj516IpM9Ocfq97a24klygITKKO
-	 gn3kYdqJmXvc+p2efWP63ozz384kHnIyqRzMOMxY=
+	b=Uc2DVDvfiXi0Fvpu8LVkjG/GFwcqiADX45BJTT0TZdclBivxdeAn+cUpkwYpKCFOz
+	 HbztDuXu7TtmqbiZLLQRkx5n9VAG9VG9Go0BDgI/hE7K1L+yl5LYdBdsX4gnJEZ6Jh
+	 cVhvzaEvztaw7CqfR/9KhqeonFjMF9/HJV48lMJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	GUO Zihua <guozihua@huawei.com>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Emmanuel Grumbach <emmanuel.grumbach@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0273/1146] ima: Handle -ESTALE returned by ima_filter_rule_match()
-Date: Wed, 28 Dec 2022 15:30:12 +0100
-Message-Id: <20221228144337.550500105@linuxfoundation.org>
+Subject: [PATCH 6.0 0312/1073] wifi: iwlwifi: mei: fix tx DHCP packet for devices with new Tx API
+Date: Wed, 28 Dec 2022 15:31:40 +0100
+Message-Id: <20221228144336.482734951@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,112 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: GUO Zihua <guozihua@huawei.com>
+From: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
 
-[ Upstream commit c7423dbdbc9ecef7fff5239d144cad4b9887f4de ]
+[ Upstream commit bcd68b3dbe78b7b0f7b6b55162cf1eff1e7fff9e ]
 
-IMA relies on the blocking LSM policy notifier callback to update the
-LSM based IMA policy rules.
+Devices with new Tx API have the IV introduced by the HW and it is not
+present in the skb at all. Hence we don't need to tell
+iwl_mvm_mei_tx_copy_to_csme to jump over 8 bytes to get to the ethernet
+header.
 
-When SELinux update its policies, IMA would be notified and starts
-updating all its lsm rules one-by-one. During this time, -ESTALE would
-be returned by ima_filter_rule_match() if it is called with a LSM rule
-that has not yet been updated. In ima_match_rules(), -ESTALE is not
-handled, and the LSM rule is considered a match, causing extra files
-to be measured by IMA.
-
-Fix it by re-initializing a temporary rule if -ESTALE is returned by
-ima_filter_rule_match(). The origin rule in the rule list would be
-updated by the LSM policy notifier callback.
-
-Fixes: b16942455193 ("ima: use the lsm policy update notifier")
-Signed-off-by: GUO Zihua <guozihua@huawei.com>
-Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: 2da4366f9e2c ("iwlwifi: mei: add the driver to allow cooperation with CSME")
+Signed-off-by: Emmanuel Grumbach <emmanuel.grumbach@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20221030191011.12dc42133502.Idd744ffeeb84b880eb497963ee02563cbb959a42@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/ima_policy.c | 41 ++++++++++++++++++++++-------
- 1 file changed, 32 insertions(+), 9 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
-index a8802b8da946..bb3707160b01 100644
---- a/security/integrity/ima/ima_policy.c
-+++ b/security/integrity/ima/ima_policy.c
-@@ -549,6 +549,9 @@ static bool ima_match_rules(struct ima_rule_entry *rule,
- 			    const char *func_data)
- {
- 	int i;
-+	bool result = false;
-+	struct ima_rule_entry *lsm_rule = rule;
-+	bool rule_reinitialized = false;
+diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
+index f9e08b339e0c..6fa8d9e6b186 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
++++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
+@@ -1171,9 +1171,15 @@ static int iwl_mvm_tx_mpdu(struct iwl_mvm *mvm, struct sk_buff *skb,
+ 	/* From now on, we cannot access info->control */
+ 	iwl_mvm_skb_prepare_status(skb, dev_cmd);
  
- 	if ((rule->flags & IMA_FUNC) &&
- 	    (rule->func != func && func != POST_SETATTR))
-@@ -610,35 +613,55 @@ static bool ima_match_rules(struct ima_rule_entry *rule,
- 		int rc = 0;
- 		u32 osid;
++	/*
++	 * The IV is introduced by the HW for new tx api, and it is not present
++	 * in the skb, hence, don't tell iwl_mvm_mei_tx_copy_to_csme about the
++	 * IV for those devices.
++	 */
+ 	if (ieee80211_is_data(fc))
+ 		iwl_mvm_mei_tx_copy_to_csme(mvm, skb,
+-					    info->control.hw_key ?
++					    info->control.hw_key &&
++					    !iwl_mvm_has_new_tx_api(mvm) ?
+ 					    info->control.hw_key->iv_len : 0);
  
--		if (!rule->lsm[i].rule) {
--			if (!rule->lsm[i].args_p)
-+		if (!lsm_rule->lsm[i].rule) {
-+			if (!lsm_rule->lsm[i].args_p)
- 				continue;
- 			else
- 				return false;
- 		}
-+
-+retry:
- 		switch (i) {
- 		case LSM_OBJ_USER:
- 		case LSM_OBJ_ROLE:
- 		case LSM_OBJ_TYPE:
- 			security_inode_getsecid(inode, &osid);
--			rc = ima_filter_rule_match(osid, rule->lsm[i].type,
-+			rc = ima_filter_rule_match(osid, lsm_rule->lsm[i].type,
- 						   Audit_equal,
--						   rule->lsm[i].rule);
-+						   lsm_rule->lsm[i].rule);
- 			break;
- 		case LSM_SUBJ_USER:
- 		case LSM_SUBJ_ROLE:
- 		case LSM_SUBJ_TYPE:
--			rc = ima_filter_rule_match(secid, rule->lsm[i].type,
-+			rc = ima_filter_rule_match(secid, lsm_rule->lsm[i].type,
- 						   Audit_equal,
--						   rule->lsm[i].rule);
-+						   lsm_rule->lsm[i].rule);
- 			break;
- 		default:
- 			break;
- 		}
--		if (!rc)
--			return false;
-+
-+		if (rc == -ESTALE && !rule_reinitialized) {
-+			lsm_rule = ima_lsm_copy_rule(rule);
-+			if (lsm_rule) {
-+				rule_reinitialized = true;
-+				goto retry;
-+			}
-+		}
-+		if (!rc) {
-+			result = false;
-+			goto out;
-+		}
- 	}
--	return true;
-+	result = true;
-+
-+out:
-+	if (rule_reinitialized) {
-+		for (i = 0; i < MAX_LSM_RULES; i++)
-+			ima_filter_rule_free(lsm_rule->lsm[i].rule);
-+		kfree(lsm_rule);
-+	}
-+	return result;
- }
- 
- /*
+ 	if (iwl_trans_tx(mvm->trans, skb, dev_cmd, txq_id))
 -- 
 2.35.1
 
