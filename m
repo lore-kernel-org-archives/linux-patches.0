@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8331863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:11:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8CDC433D2;
-	Wed, 28 Dec 2022 15:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23B71863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:11:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 333EBC433EF;
+	Wed, 28 Dec 2022 15:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240279;
-	bh=XhIkxpjGl+KN0Xta15eL1+uI4jJqKZPhMhOir7GTUos=;
+	s=korg; t=1672240282;
+	bh=PPJmcwp3FgBjPY4ZAdOQyFFyIfLnkbvDE5yqRuRAZJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1+bLYbDad4XNa05tvXFqumpuxZWhXBNw+Y9uu4fMTKpqMuAqanG+jtknV6sAXGRcz
-	 GHqL2ndx6tkxJQ9JWtDot9yxWmmQMPbxzi8npHXru33UOsVpIuSUKadpFcmu7AeXmN
-	 OCOHwseZFsNmS2a/WMCeiaZpZIMp75329SCZeZi4=
+	b=I1yFtjqUpt+cCxhfyxlPm7Z2fdSZB52P50x/O2M/jq4I9M9PWhp1H1ZoCoJoo3EKP
+	 ULO3Mbrk+K+DIv0iMZy7haONeuUUcEtAaIYM4NvSEWsYSAQC035SRzFfvX9Yt24wxT
+	 jRTed3VgK9egG6r/tc3Tb2xHHFS5711SFv4kbHKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhi Li <yieli@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Miklos Szeredi <mszeredi@redhat.com>,
+	Amir Goldstein <amir73il@gmail.com>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0142/1073] nfsd: dont call nfsd_file_put from client states seqfile display
-Date: Wed, 28 Dec 2022 15:28:50 +0100
-Message-Id: <20221228144331.885472634@linuxfoundation.org>
+Subject: [PATCH 6.1 0104/1146] ovl: remove privs in ovl_copyfile()
+Date: Wed, 28 Dec 2022 15:27:23 +0100
+Message-Id: <20221228144332.973203603@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,143 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Amir Goldstein <amir73il@gmail.com>
 
-[ Upstream commit e0aa651068bfd520afcd357af8ecd2de005fc83d ]
+[ Upstream commit b306e90ffabdaa7e3b3350dbcd19b7663e71ab17 ]
 
-We had a report of this:
+Underlying fs doesn't remove privs because copy_range/remap_range are
+called with privileged mounter credentials.
 
-    BUG: sleeping function called from invalid context at fs/nfsd/filecache.c:440
+This fixes some failures in fstest generic/673.
 
-...with a stack trace showing nfsd_file_put being called from
-nfs4_show_open. This code has always tried to call fput while holding a
-spinlock, but we recently changed this to use the filecache, and that
-started triggering the might_sleep() in nfsd_file_put.
-
-states_start takes and holds the cl_lock while iterating over the
-client's states, and we can't sleep with that held.
-
-Have the various nfs4_show_* functions instead hold the fi_lock instead
-of taking a nfsd_file reference.
-
-Fixes: 78599c42ae3c ("nfsd4: add file to display list of client's opens")
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2138357
-Reported-by: Zhi Li <yieli@redhat.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 8ede205541ff ("ovl: add reflink/copyfile/dedup support")
+Acked-by: Miklos Szeredi <mszeredi@redhat.com>
+Signed-off-by: Amir Goldstein <amir73il@gmail.com>
+Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 51 +++++++++++++++++++++++++++++----------------
- 1 file changed, 33 insertions(+), 18 deletions(-)
+ fs/overlayfs/file.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index ddb2bf078fda..94420fad4c41 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -664,15 +664,26 @@ find_any_file(struct nfs4_file *f)
+diff --git a/fs/overlayfs/file.c b/fs/overlayfs/file.c
+index a1a22f58ba18..755a11c63596 100644
+--- a/fs/overlayfs/file.c
++++ b/fs/overlayfs/file.c
+@@ -567,14 +567,23 @@ static loff_t ovl_copyfile(struct file *file_in, loff_t pos_in,
+ 	const struct cred *old_cred;
+ 	loff_t ret;
+ 
++	inode_lock(inode_out);
++	if (op != OVL_DEDUPE) {
++		/* Update mode */
++		ovl_copyattr(inode_out);
++		ret = file_remove_privs(file_out);
++		if (ret)
++			goto out_unlock;
++	}
++
+ 	ret = ovl_real_fdget(file_out, &real_out);
+ 	if (ret)
+-		return ret;
++		goto out_unlock;
+ 
+ 	ret = ovl_real_fdget(file_in, &real_in);
+ 	if (ret) {
+ 		fdput(real_out);
+-		return ret;
++		goto out_unlock;
+ 	}
+ 
+ 	old_cred = ovl_override_creds(file_inode(file_out)->i_sb);
+@@ -603,6 +612,9 @@ static loff_t ovl_copyfile(struct file *file_in, loff_t pos_in,
+ 	fdput(real_in);
+ 	fdput(real_out);
+ 
++out_unlock:
++	inode_unlock(inode_out);
++
  	return ret;
- }
- 
--static struct nfsd_file *find_deleg_file(struct nfs4_file *f)
-+static struct nfsd_file *find_any_file_locked(struct nfs4_file *f)
- {
--	struct nfsd_file *ret = NULL;
-+	lockdep_assert_held(&f->fi_lock);
-+
-+	if (f->fi_fds[O_RDWR])
-+		return f->fi_fds[O_RDWR];
-+	if (f->fi_fds[O_WRONLY])
-+		return f->fi_fds[O_WRONLY];
-+	if (f->fi_fds[O_RDONLY])
-+		return f->fi_fds[O_RDONLY];
-+	return NULL;
-+}
-+
-+static struct nfsd_file *find_deleg_file_locked(struct nfs4_file *f)
-+{
-+	lockdep_assert_held(&f->fi_lock);
- 
--	spin_lock(&f->fi_lock);
- 	if (f->fi_deleg_file)
--		ret = nfsd_file_get(f->fi_deleg_file);
--	spin_unlock(&f->fi_lock);
--	return ret;
-+		return f->fi_deleg_file;
-+	return NULL;
- }
- 
- static atomic_long_t num_delegations;
-@@ -2606,9 +2617,11 @@ static int nfs4_show_open(struct seq_file *s, struct nfs4_stid *st)
- 	ols = openlockstateid(st);
- 	oo = ols->st_stateowner;
- 	nf = st->sc_file;
--	file = find_any_file(nf);
-+
-+	spin_lock(&nf->fi_lock);
-+	file = find_any_file_locked(nf);
- 	if (!file)
--		return 0;
-+		goto out;
- 
- 	seq_printf(s, "- ");
- 	nfs4_show_stateid(s, &st->sc_stateid);
-@@ -2630,8 +2643,8 @@ static int nfs4_show_open(struct seq_file *s, struct nfs4_stid *st)
- 	seq_printf(s, ", ");
- 	nfs4_show_owner(s, oo);
- 	seq_printf(s, " }\n");
--	nfsd_file_put(file);
--
-+out:
-+	spin_unlock(&nf->fi_lock);
- 	return 0;
- }
- 
-@@ -2645,9 +2658,10 @@ static int nfs4_show_lock(struct seq_file *s, struct nfs4_stid *st)
- 	ols = openlockstateid(st);
- 	oo = ols->st_stateowner;
- 	nf = st->sc_file;
--	file = find_any_file(nf);
-+	spin_lock(&nf->fi_lock);
-+	file = find_any_file_locked(nf);
- 	if (!file)
--		return 0;
-+		goto out;
- 
- 	seq_printf(s, "- ");
- 	nfs4_show_stateid(s, &st->sc_stateid);
-@@ -2667,8 +2681,8 @@ static int nfs4_show_lock(struct seq_file *s, struct nfs4_stid *st)
- 	seq_printf(s, ", ");
- 	nfs4_show_owner(s, oo);
- 	seq_printf(s, " }\n");
--	nfsd_file_put(file);
--
-+out:
-+	spin_unlock(&nf->fi_lock);
- 	return 0;
- }
- 
-@@ -2680,9 +2694,10 @@ static int nfs4_show_deleg(struct seq_file *s, struct nfs4_stid *st)
- 
- 	ds = delegstateid(st);
- 	nf = st->sc_file;
--	file = find_deleg_file(nf);
-+	spin_lock(&nf->fi_lock);
-+	file = find_deleg_file_locked(nf);
- 	if (!file)
--		return 0;
-+		goto out;
- 
- 	seq_printf(s, "- ");
- 	nfs4_show_stateid(s, &st->sc_stateid);
-@@ -2698,8 +2713,8 @@ static int nfs4_show_deleg(struct seq_file *s, struct nfs4_stid *st)
- 	seq_printf(s, ", ");
- 	nfs4_show_fname(s, file);
- 	seq_printf(s, " }\n");
--	nfsd_file_put(file);
--
-+out:
-+	spin_unlock(&nf->fi_lock);
- 	return 0;
  }
  
 -- 
