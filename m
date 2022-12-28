@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3225D1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F62C433D2;
-	Wed, 28 Dec 2022 16:46:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207E81C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA4AC433D2;
+	Wed, 28 Dec 2022 16:46:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245982;
-	bh=3UcKbcofwLkR8kAs0YAUDXkw+/DMlnfihZ75Bgz68dI=;
+	s=korg; t=1672245985;
+	bh=UO2KWIN9lEp9rlsay7SFYUnLpIwAJ6qTyqrbsgEsLyI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XXQ1GAXCiKKFcnLLI/SizhfYNI0B9UMN+qSAho/usNZcHsjZy/mm9hhEHipkTnIZ9
-	 eHIaos+OAtcPQhQ0ClPEGA1rz1s+z1XowijtguISZaapQMy/K8kYBlmbtp0wLTMOD5
-	 qnKo1xT/bbs1yZHGKESedLabasP41IMBUH2+u0qs=
+	b=KnVOcbsEnk+2m3pf9hXf+ovJo3XNJ5JQeLMXj8pCHoBGkS94VGpXpF4BZOj9r8iV/
+	 IzMzRh0IZT3lCjb+0zRIw7jTM9vQyj3YWdbMSMozWVzNSosL2i9L5P+X4sbFOXFjNP
+	 pCn8I422TCUNq29bZ5M09G7sKxjbbZNhUYOaaPlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+e91619dd4c11c4960706@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Mike Marshall <hubcap@omnibond.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0957/1146] nilfs2: fix shift-out-of-bounds/overflow in nilfs_sb2_bad_offset()
-Date: Wed, 28 Dec 2022 15:41:36 +0100
-Message-Id: <20221228144356.314872722@linuxfoundation.org>
+Subject: [PATCH 6.0 0991/1073] orangefs: Fix kmemleak in orangefs_prepare_debugfs_help_string()
+Date: Wed, 28 Dec 2022 15:42:59 +0100
+Message-Id: <20221228144355.027195984@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,112 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit 610a2a3d7d8be3537458a378ec69396a76c385b6 ]
+[ Upstream commit d23417a5bf3a3afc55de5442eb46e1e60458b0a1 ]
 
-Patch series "nilfs2: fix UBSAN shift-out-of-bounds warnings on mount
-time".
+When insert and remove the orangefs module, then debug_help_string will
+be leaked:
 
-The first patch fixes a bug reported by syzbot, and the second one fixes
-the remaining bug of the same kind.  Although they are triggered by the
-same super block data anomaly, I divided it into the above two because the
-details of the issues and how to fix it are different.
+  unreferenced object 0xffff8881652ba000 (size 4096):
+    comm "insmod", pid 1701, jiffies 4294893639 (age 13218.530s)
+    hex dump (first 32 bytes):
+      43 6c 69 65 6e 74 20 44 65 62 75 67 20 4b 65 79  Client Debug Key
+      77 6f 72 64 73 20 61 72 65 20 75 6e 6b 6e 6f 77  words are unknow
+    backtrace:
+      [<0000000004e6f8e3>] kmalloc_trace+0x27/0xa0
+      [<0000000006f75d85>] orangefs_prepare_debugfs_help_string+0x5e/0x480 [orangefs]
+      [<0000000091270a2a>] _sub_I_65535_1+0x57/0xf70 [crc_itu_t]
+      [<000000004b1ee1a3>] do_one_initcall+0x87/0x2a0
+      [<000000001d0614ae>] do_init_module+0xdf/0x320
+      [<00000000efef068c>] load_module+0x2f98/0x3330
+      [<000000006533b44d>] __do_sys_finit_module+0x113/0x1b0
+      [<00000000a0da6f99>] do_syscall_64+0x35/0x80
+      [<000000007790b19b>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Both are required to eliminate the shift-out-of-bounds issues at mount
-time.
+When remove the module, should always free debug_help_string. Should
+always free the allocated buffer when change the free_debug_help_string.
 
-This patch (of 2):
-
-If the block size exponent information written in an on-disk superblock is
-corrupted, nilfs_sb2_bad_offset helper function can trigger
-shift-out-of-bounds warning followed by a kernel panic (if panic_on_warn
-is set):
-
- shift exponent 38983 is too large for 64-bit type 'unsigned long long'
- Call Trace:
-  <TASK>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
-  ubsan_epilogue lib/ubsan.c:151 [inline]
-  __ubsan_handle_shift_out_of_bounds+0x33d/0x3b0 lib/ubsan.c:322
-  nilfs_sb2_bad_offset fs/nilfs2/the_nilfs.c:449 [inline]
-  nilfs_load_super_block+0xdf5/0xe00 fs/nilfs2/the_nilfs.c:523
-  init_nilfs+0xb7/0x7d0 fs/nilfs2/the_nilfs.c:577
-  nilfs_fill_super+0xb1/0x5d0 fs/nilfs2/super.c:1047
-  nilfs_mount+0x613/0x9b0 fs/nilfs2/super.c:1317
-  ...
-
-In addition, since nilfs_sb2_bad_offset() performs multiplication without
-considering the upper bound, the computation may overflow if the disk
-layout parameters are not normal.
-
-This fixes these issues by inserting preliminary sanity checks for those
-parameters and by converting the comparison from one involving
-multiplication and left bit-shifting to one using division and right
-bit-shifting.
-
-Link: https://lkml.kernel.org/r/20221027044306.42774-1-konishi.ryusuke@gmail.com
-Link: https://lkml.kernel.org/r/20221027044306.42774-2-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+e91619dd4c11c4960706@syzkaller.appspotmail.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/the_nilfs.c | 31 +++++++++++++++++++++++++++----
- 1 file changed, 27 insertions(+), 4 deletions(-)
+ fs/orangefs/orangefs-debugfs.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
-index c8b89b4f94e0..a7c829a7d4f1 100644
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -13,6 +13,7 @@
- #include <linux/blkdev.h>
- #include <linux/backing-dev.h>
- #include <linux/random.h>
-+#include <linux/log2.h>
- #include <linux/crc32.h>
- #include "nilfs.h"
- #include "segment.h"
-@@ -443,11 +444,33 @@ static int nilfs_valid_sb(struct nilfs_super_block *sbp)
- 	return crc == le32_to_cpu(sbp->s_sum);
- }
- 
--static int nilfs_sb2_bad_offset(struct nilfs_super_block *sbp, u64 offset)
-+/**
-+ * nilfs_sb2_bad_offset - check the location of the second superblock
-+ * @sbp: superblock raw data buffer
-+ * @offset: byte offset of second superblock calculated from device size
-+ *
-+ * nilfs_sb2_bad_offset() checks if the position on the second
-+ * superblock is valid or not based on the filesystem parameters
-+ * stored in @sbp.  If @offset points to a location within the segment
-+ * area, or if the parameters themselves are not normal, it is
-+ * determined to be invalid.
-+ *
-+ * Return Value: true if invalid, false if valid.
-+ */
-+static bool nilfs_sb2_bad_offset(struct nilfs_super_block *sbp, u64 offset)
+diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
+index 29eaa4544372..a848b6ef9599 100644
+--- a/fs/orangefs/orangefs-debugfs.c
++++ b/fs/orangefs/orangefs-debugfs.c
+@@ -222,6 +222,8 @@ static void orangefs_kernel_debug_init(void)
+ void orangefs_debugfs_cleanup(void)
  {
--	return offset < ((le64_to_cpu(sbp->s_nsegments) *
--			  le32_to_cpu(sbp->s_blocks_per_segment)) <<
--			 (le32_to_cpu(sbp->s_log_block_size) + 10));
-+	unsigned int shift_bits = le32_to_cpu(sbp->s_log_block_size);
-+	u32 blocks_per_segment = le32_to_cpu(sbp->s_blocks_per_segment);
-+	u64 nsegments = le64_to_cpu(sbp->s_nsegments);
-+	u64 index;
-+
-+	if (blocks_per_segment < NILFS_SEG_MIN_BLOCKS ||
-+	    shift_bits > ilog2(NILFS_MAX_BLOCK_SIZE) - BLOCK_SIZE_BITS)
-+		return true;
-+
-+	index = offset >> (shift_bits + BLOCK_SIZE_BITS);
-+	do_div(index, blocks_per_segment);
-+	return index < nsegments;
+ 	debugfs_remove_recursive(debug_dir);
++	kfree(debug_help_string);
++	debug_help_string = NULL;
  }
  
- static void nilfs_release_super_block(struct the_nilfs *nilfs)
+ /* open ORANGEFS_KMOD_DEBUG_HELP_FILE */
+@@ -671,6 +673,7 @@ int orangefs_prepare_debugfs_help_string(int at_boot)
+ 		memset(debug_help_string, 0, DEBUG_HELP_STRING_SIZE);
+ 		strlcat(debug_help_string, new, string_size);
+ 		mutex_unlock(&orangefs_help_file_lock);
++		kfree(new);
+ 	}
+ 
+ 	rc = 0;
 -- 
 2.35.1
 
