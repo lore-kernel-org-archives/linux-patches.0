@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C3F1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:22:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CCD0C433D2;
-	Wed, 28 Dec 2022 16:22:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949FB1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:22:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B292C433D2;
+	Wed, 28 Dec 2022 16:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244530;
-	bh=A1GtZJCKxKpgLBUInMzrpXDXwlUYoF57zrm/Y0OgDw4=;
+	s=korg; t=1672244534;
+	bh=6DWDjo+onS9Kmg/vNF6YJAbCDqtveaJBwccFfAlaeYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VHI7DI1rkcyfQUPCAT2CyRtqngUzQgVfZjxHe6nRlh3fjTLPRWCCKBM0PQ/cZOCqG
-	 9qByymRHyqmWuF7jQsVgidyViKhNGortgzyziU90sMNg9rKcT7MuIdD9wY1sCnFHtq
-	 CMfn6jvwNx+yeojFusCWczDV4VeN3LT1ZA1vTgWg=
+	b=ujJWfeDR2hsHUgQra96tyhwkU++NZhdzzpeljRN1Xj/oELnNek6F8bTZWDYJB4T0g
+	 jY0jw4IrBjawYRjLcDBWsEGQA49cCVdN834eF8YQGTCML3uozJKqvhWXbeizyvTF+m
+	 fCsiW82r015KFBB/XJd9LITKRJ9bY+6R+bSx9pRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0689/1146] serial: 8250_bcm7271: Fix error handling in brcmuart_init()
-Date: Wed, 28 Dec 2022 15:37:08 +0100
-Message-Id: <20221228144348.856161687@linuxfoundation.org>
+Subject: [PATCH 6.0 0728/1073] thermal/drivers/qcom/lmh: Fix irq handler return value
+Date: Wed, 28 Dec 2022 15:38:36 +0100
+Message-Id: <20221228144347.797754794@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,62 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-[ Upstream commit 6a3ff858915fa8ca36c7eb02c87c9181ae2fc333 ]
+[ Upstream commit 46a891e45be97c6781ac34f5ec777d69370e252b ]
 
-A problem about 8250_bcm7271 create debugfs failed is triggered with the
-following log given:
+After enough invocations the LMh irq is eventually reported as bad, because the
+handler doesn't return IRQ_HANDLED, fix this.
 
- [  324.516635] debugfs: Directory 'bcm7271-uart' with parent '/' already present!
-
-The reason is that brcmuart_init() returns platform_driver_register()
-directly without checking its return value, if platform_driver_register()
-failed, it returns without destroy the newly created debugfs, resulting
-the debugfs of 8250_bcm7271 can never be created later.
-
- brcmuart_init()
-   debugfs_create_dir() # create debugfs directory
-   platform_driver_register()
-     driver_register()
-       bus_add_driver()
-         priv = kzalloc(...) # OOM happened
-   # return without destroy debugfs directory
-
-Fix by removing debugfs when platform_driver_register() returns error.
-
-Fixes: 41a469482de2 ("serial: 8250: Add new 8250-core based Broadcom STB driver")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Link: https://lore.kernel.org/r/20221109072110.117291-2-yuancan@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 53bca371cdf7 ("thermal/drivers/qcom: Add support for LMh driver")
+Reported-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20220316180322.88132-1-bjorn.andersson@linaro.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_bcm7271.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/thermal/qcom/lmh.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/8250/8250_bcm7271.c b/drivers/tty/serial/8250/8250_bcm7271.c
-index fa8ccf204d86..89bfcefbea84 100644
---- a/drivers/tty/serial/8250/8250_bcm7271.c
-+++ b/drivers/tty/serial/8250/8250_bcm7271.c
-@@ -1212,9 +1212,17 @@ static struct platform_driver brcmuart_platform_driver = {
+diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
+index d3d9b9fa49e8..4122a51e9874 100644
+--- a/drivers/thermal/qcom/lmh.c
++++ b/drivers/thermal/qcom/lmh.c
+@@ -45,7 +45,7 @@ static irqreturn_t lmh_handle_irq(int hw_irq, void *data)
+ 	if (irq)
+ 		generic_handle_irq(irq);
  
- static int __init brcmuart_init(void)
- {
-+	int ret;
-+
- 	brcmuart_debugfs_root = debugfs_create_dir(
- 		brcmuart_platform_driver.driver.name, NULL);
--	return platform_driver_register(&brcmuart_platform_driver);
-+	ret = platform_driver_register(&brcmuart_platform_driver);
-+	if (ret) {
-+		debugfs_remove_recursive(brcmuart_debugfs_root);
-+		return ret;
-+	}
-+
-+	return 0;
+-	return 0;
++	return IRQ_HANDLED;
  }
- module_init(brcmuart_init);
  
+ static void lmh_enable_interrupt(struct irq_data *d)
 -- 
 2.35.1
 
