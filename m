@@ -1,30 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D92041863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57CA9C433EF;
-	Wed, 28 Dec 2022 15:50:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8125D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D023FC433EF;
+	Wed, 28 Dec 2022 15:50:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242635;
-	bh=f6uMwpk10iQ6hf7u5EM9uglE3krudtcEF2jqcO8nND4=;
+	s=korg; t=1672242638;
+	bh=6Rt66En4YR4+WeH4ZMOpmV4L4n4yDPPXElFggyH37Wc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ldpt9GR2ckusPuyf3tnlityEr2XzCB8yR0GqKqqi2esCtkGdKVT4zcqrkp8EJsMDK
-	 s/jRzDzwE0y2owz7ZeGJ1k8GBzYHtjh/+kprYe9+DFmua7h2Pk7rnZhHC9TAclg8TP
-	 1wtDmlRw45kNtPAbn0jI+EwQxb8frEjUYvzCgqks=
+	b=TUZHcvPNgAniTxN9J0yEhwxptIyEd5ZDWtJfBn7JQjWQfEIKNLUsKE7qixUFZjsfl
+	 NNQcTVb+ZqfQyJjOvenH3s1T9JDnzOt7aJAAnnPjfDPz4WQJ+XaIZiTGuLfMqo1TJQ
+	 8+X3XsaS3+I3LzQT/5NbaXdjsVMKgdaeCUOurxW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Mark Brown <broonie@kernel.org>,
+	ZhangPeng <zhangpeng362@huawei.com>,
+	syzbot+e836ff7133ac02be825f@syzkaller.appspotmail.com,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Ira Weiny <ira.weiny@intel.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0434/1073] spi: spidev: mask SPI_CS_HIGH in SPI_IOC_RD_MODE
-Date: Wed, 28 Dec 2022 15:33:42 +0100
-Message-Id: <20221228144339.813291008@linuxfoundation.org>
+Subject: [PATCH 5.15 628/731] hfs: fix OOB Read in __hfs_brec_find
+Date: Wed, 28 Dec 2022 15:42:15 +0100
+Message-Id: <20221228144314.727665133@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,81 +43,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: ZhangPeng <zhangpeng362@huawei.com>
 
-[ Upstream commit 7dbfa445ff7393d1c4c066c1727c9e0af1251958 ]
+[ Upstream commit 8d824e69d9f3fa3121b2dda25053bae71e2460d2 ]
 
-Commit f3186dd87669 ("spi: Optionally use GPIO descriptors for CS GPIOs")
-has changed the user-space interface so that bogus SPI_CS_HIGH started
-to appear in the mask returned by SPI_IOC_RD_MODE even for active-low CS
-pins. Commit 138c9c32f090
-("spi: spidev: Fix CS polarity if GPIO descriptors are used") fixed only
-SPI_IOC_WR_MODE part of the problem. Let's fix SPI_IOC_RD_MODE
-symmetrically.
+Syzbot reported a OOB read bug:
 
-Test case:
+==================================================================
+BUG: KASAN: slab-out-of-bounds in hfs_strcmp+0x117/0x190
+fs/hfs/string.c:84
+Read of size 1 at addr ffff88807eb62c4e by task kworker/u4:1/11
+CPU: 1 PID: 11 Comm: kworker/u4:1 Not tainted
+6.1.0-rc6-syzkaller-00308-g644e9524388a #0
+Workqueue: writeback wb_workfn (flush-7:0)
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
+ print_address_description+0x74/0x340 mm/kasan/report.c:284
+ print_report+0x107/0x1f0 mm/kasan/report.c:395
+ kasan_report+0xcd/0x100 mm/kasan/report.c:495
+ hfs_strcmp+0x117/0x190 fs/hfs/string.c:84
+ __hfs_brec_find+0x213/0x5c0 fs/hfs/bfind.c:75
+ hfs_brec_find+0x276/0x520 fs/hfs/bfind.c:138
+ hfs_write_inode+0x34c/0xb40 fs/hfs/inode.c:462
+ write_inode fs/fs-writeback.c:1440 [inline]
 
-	#include <sys/ioctl.h>
-	#include <fcntl.h>
-	#include <linux/spi/spidev.h>
+If the input inode of hfs_write_inode() is incorrect:
+struct inode
+  struct hfs_inode_info
+    struct hfs_cat_key
+      struct hfs_name
+        u8 len # len is greater than HFS_NAMELEN(31) which is the
+maximum length of an HFS filename
 
-	int main(int argc, char **argv)
-	{
-		char modew = SPI_CPHA;
-		char moder;
-		int f = open("/dev/spidev0.0", O_RDWR);
+OOB read occurred:
+hfs_write_inode()
+  hfs_brec_find()
+    __hfs_brec_find()
+      hfs_cat_keycmp()
+        hfs_strcmp() # OOB read occurred due to len is too large
 
-		if (f < 0)
-			return 1;
+Fix this by adding a Check on len in hfs_write_inode() before calling
+hfs_brec_find().
 
-		ioctl(f, SPI_IOC_WR_MODE, &modew);
-		ioctl(f, SPI_IOC_RD_MODE, &moder);
-
-		return moder == modew ? 0 : 2;
-	}
-
-Fixes: f3186dd87669 ("spi: Optionally use GPIO descriptors for CS GPIOs")
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://lore.kernel.org/r/20221130162927.539512-1-alexander.sverdlin@siemens.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lkml.kernel.org/r/20221130065959.2168236-1-zhangpeng362@huawei.com
+Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
+Reported-by: <syzbot+e836ff7133ac02be825f@syzkaller.appspotmail.com>
+Cc: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Cc: Ira Weiny <ira.weiny@intel.com>
+Cc: Jeff Layton <jlayton@kernel.org>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spidev.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ fs/hfs/inode.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
-index b2775d82d2d7..6313e7d0cdf8 100644
---- a/drivers/spi/spidev.c
-+++ b/drivers/spi/spidev.c
-@@ -377,12 +377,23 @@ spidev_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
- 	switch (cmd) {
- 	/* read requests */
- 	case SPI_IOC_RD_MODE:
--		retval = put_user(spi->mode & SPI_MODE_MASK,
--					(__u8 __user *)arg);
--		break;
- 	case SPI_IOC_RD_MODE32:
--		retval = put_user(spi->mode & SPI_MODE_MASK,
--					(__u32 __user *)arg);
-+		tmp = spi->mode;
-+
-+		{
-+			struct spi_controller *ctlr = spi->controller;
-+
-+			if (ctlr->use_gpio_descriptors && ctlr->cs_gpiods &&
-+			    ctlr->cs_gpiods[spi->chip_select])
-+				tmp &= ~SPI_CS_HIGH;
-+		}
-+
-+		if (cmd == SPI_IOC_RD_MODE)
-+			retval = put_user(tmp & SPI_MODE_MASK,
-+					  (__u8 __user *)arg);
-+		else
-+			retval = put_user(tmp & SPI_MODE_MASK,
-+					  (__u32 __user *)arg);
- 		break;
- 	case SPI_IOC_RD_LSB_FIRST:
- 		retval = put_user((spi->mode & SPI_LSB_FIRST) ?  1 : 0,
+diff --git a/fs/hfs/inode.c b/fs/hfs/inode.c
+index 4a95a92546a0..a58a5b733224 100644
+--- a/fs/hfs/inode.c
++++ b/fs/hfs/inode.c
+@@ -456,6 +456,8 @@ int hfs_write_inode(struct inode *inode, struct writeback_control *wbc)
+ 		/* panic? */
+ 		return -EIO;
+ 
++	if (HFS_I(main_inode)->cat_key.CName.len > HFS_NAMELEN)
++		return -EIO;
+ 	fd.search_key->cat = HFS_I(main_inode)->cat_key;
+ 	if (hfs_brec_find(&fd))
+ 		/* panic? */
 -- 
 2.35.1
 
