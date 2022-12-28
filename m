@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323FB1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6B21C433D2;
-	Wed, 28 Dec 2022 15:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB271863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39512C433EF;
+	Wed, 28 Dec 2022 15:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239704;
-	bh=C5LCNxx27JrnHNGcVXG8Z8y7QGx76sJN0z+c5Ri6/5s=;
+	s=korg; t=1672239706;
+	bh=iEkJ4ggRPgklRu6XR4Cbdj3ONEfNXBceFrQnHeRM3SI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bPniqj/neiOn6kMgJjgKlmJGb/cg3+z0FQ7oya1jkH/SH5rQPV37bCfL+EY/C9Ggk
-	 jL8HkjGPm5JYTmU6CbRyjsk4vD9NJims4kVvCrkBJrpFBUGQbNaxTI9TegJozF9oWc
-	 r0ehv8opw30r0fb/9lToUki7fptgAX0lzWK8AFuI=
+	b=smpsbCBazCU3SqaL4a7Ove1s7/LU9xc8oYU3uUyw/WYJKtpOhgHAxOgQ2c41GWyAG
+	 eGfCddN+Lmtd1C8G0x3w5PNAFizDVHmdhVKZbwEJXXrSVDFUuYVueYZV+RITGn5Uyh
+	 yC6b5D8iB8V29JiRRNF8A8KrycGYKzgkiOFkWKiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0066/1073] arm64: dts: mt2712-evb: Fix usb vbus regulators unit names
-Date: Wed, 28 Dec 2022 15:27:34 +0100
-Message-Id: <20221228144329.881936434@linuxfoundation.org>
+Subject: [PATCH 5.15 260/731] Input: wistron_btns - disable on UML
+Date: Wed, 28 Dec 2022 15:36:07 +0100
+Message-Id: <20221228144304.099587100@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,62 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit ec1ae39a8d25cfb067b5459fac7c5b7b9bce6f6a ]
+[ Upstream commit b2b80d9dd14cb5b70dc254bddbc4eea932694791 ]
 
-Update the names to regulator-usb-p{0-3}-vbus to fix unit_address_vs_reg
-warnings for those.
+The wistron_btns driver calls rtc_cmos_read(), which isn't
+available with UML builds, so disable this driver on UML.
 
-Fixes: 1724f4cc5133 ("arm64: dts: Add USB3 related nodes for MT2712")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221013152212.416661-7-angelogioacchino.delregno@collabora.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Prevents this build error:
+
+ld: drivers/input/misc/wistron_btns.o: in function `poll_bios':
+wistron_btns.c:(.text+0x4be): undefined reference to `rtc_cmos_read'
+
+Fixes: 0bbadafdc49d ("um: allow disabling NO_IOMEM") # v5.14+
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20221130161604.1879-1-rdunlap@infradead.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt2712-evb.dts | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/input/misc/Kconfig | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt2712-evb.dts b/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
-index 638908773706..d31a194124c9 100644
---- a/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
-@@ -50,7 +50,7 @@ extcon_usb1: extcon_iddig1 {
- 		id-gpio = <&pio 14 GPIO_ACTIVE_HIGH>;
- 	};
+diff --git a/drivers/input/misc/Kconfig b/drivers/input/misc/Kconfig
+index dd5227cf8696..b5b8ddb536be 100644
+--- a/drivers/input/misc/Kconfig
++++ b/drivers/input/misc/Kconfig
+@@ -330,7 +330,7 @@ config INPUT_CPCAP_PWRBUTTON
  
--	usb_p0_vbus: regulator@2 {
-+	usb_p0_vbus: regulator-usb-p0-vbus {
- 		compatible = "regulator-fixed";
- 		regulator-name = "p0_vbus";
- 		regulator-min-microvolt = <5000000>;
-@@ -59,7 +59,7 @@ usb_p0_vbus: regulator@2 {
- 		enable-active-high;
- 	};
- 
--	usb_p1_vbus: regulator@3 {
-+	usb_p1_vbus: regulator-usb-p1-vbus {
- 		compatible = "regulator-fixed";
- 		regulator-name = "p1_vbus";
- 		regulator-min-microvolt = <5000000>;
-@@ -68,7 +68,7 @@ usb_p1_vbus: regulator@3 {
- 		enable-active-high;
- 	};
- 
--	usb_p2_vbus: regulator@4 {
-+	usb_p2_vbus: regulator-usb-p2-vbus {
- 		compatible = "regulator-fixed";
- 		regulator-name = "p2_vbus";
- 		regulator-min-microvolt = <5000000>;
-@@ -77,7 +77,7 @@ usb_p2_vbus: regulator@4 {
- 		enable-active-high;
- 	};
- 
--	usb_p3_vbus: regulator@5 {
-+	usb_p3_vbus: regulator-usb-p3-vbus {
- 		compatible = "regulator-fixed";
- 		regulator-name = "p3_vbus";
- 		regulator-min-microvolt = <5000000>;
+ config INPUT_WISTRON_BTNS
+ 	tristate "x86 Wistron laptop button interface"
+-	depends on X86_32
++	depends on X86_32 && !UML
+ 	select INPUT_SPARSEKMAP
+ 	select NEW_LEDS
+ 	select LEDS_CLASS
 -- 
 2.35.1
 
