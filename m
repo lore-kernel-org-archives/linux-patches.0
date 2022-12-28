@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A435A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:52:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D28FC433EF;
-	Wed, 28 Dec 2022 14:52:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5511863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:52:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7D99C433D2;
+	Wed, 28 Dec 2022 14:52:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239153;
-	bh=4RnHyQ7viJQ/hDh+fOipsTFvnYoh5Lry5TB6k2A76fg=;
+	s=korg; t=1672239156;
+	bh=rlJmXHtFoiF2suLDD7Caa/PRzyNnvLL3wUmzfw+4j1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h8xAxzFHfZmhwPCn8DEuqifWq/99JtuAp+eQ/Tx8PuWt++noDJeVboJokx+szn10E
-	 rbxTLyUeNClZIrBXf4zJJ87mWb2IuFnJNc2SwYN8tuzx9Lz4ahn4byYvSTOViHQAYY
-	 ORC6qryoxdtHoDdbdPHix2PrI+ZnHGmPnhg6tx8o=
+	b=agw+HFeQAvlsTFtUv1A1ejqu+XjHyouyDzzAL6pjbEJ0vK4Z3r+OpjiXso4NRznuj
+	 IltQicQAL7K0u6wwPbSOODbRlsUqhhgCEVsiIZYi7OZ0dCqK5JH+i2WIO5URD7zJmQ
+	 FzjzsgLRZi7g4hmf4jnTEiR+T/pFR0l0ftazFt7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Andrew Jeffery <andrew@aj.id.au>,
+	Joel Stanley <joel@jms.id.au>,
+	Corey Minyard <cminyard@mvista.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 149/731] ata: libata: fix NCQ autosense logic
-Date: Wed, 28 Dec 2022 15:34:16 +0100
-Message-Id: <20221228144300.873691972@linuxfoundation.org>
+Subject: [PATCH 5.15 150/731] ipmi: kcs: Poll OBF briefly to reduce OBE latency
+Date: Wed, 28 Dec 2022 15:34:17 +0100
+Message-Id: <20221228144300.903077383@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,74 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Cassel <niklas.cassel@wdc.com>
+From: Andrew Jeffery <andrew@aj.id.au>
 
-[ Upstream commit 7390896b3484d44cbdb8bc4859964314ac66d3c9 ]
+[ Upstream commit f90bc0f97f2b65af233a37b2e32fc81871a1e3cf ]
 
-Currently, the logic if we should call ata_scsi_set_sense()
-(and set flag ATA_QCFLAG_SENSE_VALID to indicate that we have
-successfully added sense data to the struct ata_queued_cmd)
-looks like this:
+The ASPEED KCS devices don't provide a BMC-side interrupt for the host
+reading the output data register (ODR). The act of the host reading ODR
+clears the output buffer full (OBF) flag in the status register (STR),
+informing the BMC it can transmit a subsequent byte.
 
-if (dev->class == ATA_DEV_ZAC &&
-    ((qc->result_tf.status & ATA_SENSE) || qc->result_tf.auxiliary))
+On the BMC side the KCS client must enable the OBE event *and* perform a
+subsequent read of STR anyway to avoid races - the polling provides a
+window for the host to read ODR if data was freshly written while
+minimising BMC-side latency.
 
-The problem with this is that a drive can support the NCQ command
-error log without supporting NCQ autosense.
-
-On such a drive, if the failing command has sense data, the status
-field in the NCQ command error log will have the ATA_SENSE bit set.
-
-It is just that this sense data is not included in the NCQ command
-error log when NCQ autosense is not supported. Instead the sense
-data has to be fetched using the REQUEST SENSE DATA EXT command.
-
-Therefore, we should only add the sense data if the drive supports
-NCQ autosense AND the ATA_SENSE bit is set in the status field.
-
-Fix this, and at the same time, remove the duplicated ATA_DEV_ZAC
-check. The struct ata_taskfile supplied to ata_eh_read_log_10h()
-is memset:ed before calling the function, so simply checking if
-qc->result_tf.auxiliary is set is sufficient to tell us that the
-log actually contained sense data.
-
-Fixes: d238ffd59d3c ("libata: do not attempt to retrieve sense code twice")
-Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Fixes: 28651e6c4237 ("ipmi: kcs_bmc: Allow clients to control KCS IRQ state")
+Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+Message-Id: <20220812144741.240315-1-andrew@aj.id.au>
+Signed-off-by: Corey Minyard <cminyard@mvista.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-sata.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/char/ipmi/kcs_bmc_aspeed.c | 24 +++++++++++++++++++++---
+ 1 file changed, 21 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ata/libata-sata.c b/drivers/ata/libata-sata.c
-index 1e59e5b6b047..b5aa525d8760 100644
---- a/drivers/ata/libata-sata.c
-+++ b/drivers/ata/libata-sata.c
-@@ -1413,7 +1413,8 @@ static int ata_eh_read_log_10h(struct ata_device *dev,
- 	tf->hob_lbah = buf[10];
- 	tf->nsect = buf[12];
- 	tf->hob_nsect = buf[13];
--	if (dev->class == ATA_DEV_ZAC && ata_id_has_ncq_autosense(dev->id))
-+	if (dev->class == ATA_DEV_ZAC && ata_id_has_ncq_autosense(dev->id) &&
-+	    (tf->status & ATA_SENSE))
- 		tf->auxiliary = buf[14] << 16 | buf[15] << 8 | buf[16];
+diff --git a/drivers/char/ipmi/kcs_bmc_aspeed.c b/drivers/char/ipmi/kcs_bmc_aspeed.c
+index 92a37b33494c..f23c146bb740 100644
+--- a/drivers/char/ipmi/kcs_bmc_aspeed.c
++++ b/drivers/char/ipmi/kcs_bmc_aspeed.c
+@@ -404,13 +404,31 @@ static void aspeed_kcs_check_obe(struct timer_list *timer)
+ static void aspeed_kcs_irq_mask_update(struct kcs_bmc_device *kcs_bmc, u8 mask, u8 state)
+ {
+ 	struct aspeed_kcs_bmc *priv = to_aspeed_kcs_bmc(kcs_bmc);
++	int rc;
++	u8 str;
  
- 	return 0;
-@@ -1477,8 +1478,12 @@ void ata_eh_analyze_ncq_error(struct ata_link *link)
- 	memcpy(&qc->result_tf, &tf, sizeof(tf));
- 	qc->result_tf.flags = ATA_TFLAG_ISADDR | ATA_TFLAG_LBA | ATA_TFLAG_LBA48;
- 	qc->err_mask |= AC_ERR_DEV | AC_ERR_NCQ;
--	if (dev->class == ATA_DEV_ZAC &&
--	    ((qc->result_tf.status & ATA_SENSE) || qc->result_tf.auxiliary)) {
-+
-+	/*
-+	 * If the device supports NCQ autosense, ata_eh_read_log_10h() will have
-+	 * stored the sense data in qc->result_tf.auxiliary.
-+	 */
-+	if (qc->result_tf.auxiliary) {
- 		char sense_key, asc, ascq;
+ 	/* We don't have an OBE IRQ, emulate it */
+ 	if (mask & KCS_BMC_EVENT_TYPE_OBE) {
+-		if (KCS_BMC_EVENT_TYPE_OBE & state)
+-			mod_timer(&priv->obe.timer, jiffies + OBE_POLL_PERIOD);
+-		else
++		if (KCS_BMC_EVENT_TYPE_OBE & state) {
++			/*
++			 * Given we don't have an OBE IRQ, delay by polling briefly to see if we can
++			 * observe such an event before returning to the caller. This is not
++			 * incorrect because OBF may have already become clear before enabling the
++			 * IRQ if we had one, under which circumstance no event will be propagated
++			 * anyway.
++			 *
++			 * The onus is on the client to perform a race-free check that it hasn't
++			 * missed the event.
++			 */
++			rc = read_poll_timeout_atomic(aspeed_kcs_inb, str,
++						      !(str & KCS_BMC_STR_OBF), 1, 100, false,
++						      &priv->kcs_bmc, priv->kcs_bmc.ioreg.str);
++			/* Time for the slow path? */
++			if (rc == -ETIMEDOUT)
++				mod_timer(&priv->obe.timer, jiffies + OBE_POLL_PERIOD);
++		} else {
+ 			del_timer(&priv->obe.timer);
++		}
+ 	}
  
- 		sense_key = (qc->result_tf.auxiliary >> 16) & 0xff;
+ 	if (mask & KCS_BMC_EVENT_TYPE_IBF) {
 -- 
 2.35.1
 
