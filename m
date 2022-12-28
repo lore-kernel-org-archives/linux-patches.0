@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0B11C15
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:49:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D18DC433D2;
-	Wed, 28 Dec 2022 16:49:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D27C1C15
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:49:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28533C433D2;
+	Wed, 28 Dec 2022 16:49:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246171;
-	bh=yreuj1Pmw8nwCm3ADVtacDriCMOlBPDxspsHT79iAJ0=;
+	s=korg; t=1672246174;
+	bh=Wsda+XD+JwQsJLyyqlUbDKjCumuiyPp1cAJKGf+TYRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yb73xQo7n8Gp9/fOzJGozWd4j+RdAyo+Lpyr+UMA2DAx+EXbQ3TUCY3HHSE1s7r3L
-	 M9eJlvW1rrEgOMIKTfXYm5ZVjjARWybc8n/2cDIxaj89j0U5cc21c/ulpOiMsNBlLd
-	 92H5Eh1X1D3YFkS1ELG+n3BGMVi327IngaCueqrU=
+	b=hYr1VkzlONUz6wP61PxR1AQGrSj5VRY0qw+6iTVQWBW5PUmuq+SH78DDyDToxtnla
+	 9XAnX+9dSSMfGnD44Y97DV4erznjnWfSv0XXkc6mf9W4HdSbhDb+EAlEXvs0msyx6S
+	 yxDurv64xvqtPrQQ1Incn32Zt+XCK73NZakGnNkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mia Kanashi <chad@redpilled.dev>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Jeff LaBundy <jeff@labundy.com>,
+	Rob Herring <robh@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0992/1146] HID: input: do not query XP-PEN Deco LW battery
-Date: Wed, 28 Dec 2022 15:42:11 +0100
-Message-Id: <20221228144357.310172102@linuxfoundation.org>
+Subject: [PATCH 6.0 1024/1073] dt-bindings: input: iqs7222: Correct minimum slider size
+Date: Wed, 28 Dec 2022 15:43:32 +0100
+Message-Id: <20221228144356.004830383@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,60 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: José Expósito <jose.exposito89@gmail.com>
+From: Jeff LaBundy <jeff@labundy.com>
 
-[ Upstream commit 037c1aaeb96fe5f778026f4c1ef28b26cf600bfa ]
+[ Upstream commit 99d03b54ef8506771c15deb714396665592f6adf ]
 
-The XP-PEN Deco LW drawing tablet can be connected by USB cable or using
-a USB Bluetooth dongle. When it is connected using the dongle, there
-might be a small delay until the tablet is paired with the dongle.
+The minimum slider size enforced by the driver is 1 or 16 for the
+IQS7222C or IQS7222A, respectively.
 
-Fetching the device battery during this delay results in random battery
-percentage values.
-
-Add a quirk to avoid actively querying the battery percentage and wait
-for the device to report it on its own.
-
-Reported-by: Mia Kanashi <chad@redpilled.dev>
-Tested-by: Mia Kanashi <chad@redpilled.dev>
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Fixes: 44dc42d254bf ("dt-bindings: input: Add bindings for Azoteq IQS7222A/B/C")
+Signed-off-by: Jeff LaBundy <jeff@labundy.com>
+Acked-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/Y1SRU37t74wRvZv3@nixie71
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-input.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ Documentation/devicetree/bindings/input/azoteq,iqs7222.yaml | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index 859aeb07542e..d728a94c642e 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -340,6 +340,7 @@ static enum power_supply_property hidinput_battery_props[] = {
- #define HID_BATTERY_QUIRK_PERCENT	(1 << 0) /* always reports percent */
- #define HID_BATTERY_QUIRK_FEATURE	(1 << 1) /* ask for feature report */
- #define HID_BATTERY_QUIRK_IGNORE	(1 << 2) /* completely ignore the battery */
-+#define HID_BATTERY_QUIRK_AVOID_QUERY	(1 << 3) /* do not query the battery */
+diff --git a/Documentation/devicetree/bindings/input/azoteq,iqs7222.yaml b/Documentation/devicetree/bindings/input/azoteq,iqs7222.yaml
+index b4eb650dbcb8..913fd2da9862 100644
+--- a/Documentation/devicetree/bindings/input/azoteq,iqs7222.yaml
++++ b/Documentation/devicetree/bindings/input/azoteq,iqs7222.yaml
+@@ -498,7 +498,7 @@ patternProperties:
  
- static const struct hid_device_id hid_battery_quirks[] = {
- 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_APPLE,
-@@ -373,6 +374,8 @@ static const struct hid_device_id hid_battery_quirks[] = {
- 	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN),
- 	  HID_BATTERY_QUIRK_IGNORE },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_UGEE, USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_L),
-+	  HID_BATTERY_QUIRK_AVOID_QUERY },
- 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_ENVY_X360_15),
- 	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_ENVY_X360_15T_DR100),
-@@ -554,6 +557,9 @@ static int hidinput_setup_battery(struct hid_device *dev, unsigned report_type,
- 	dev->battery_avoid_query = report_type == HID_INPUT_REPORT &&
- 				   field->physical == HID_DG_STYLUS;
+       azoteq,slider-size:
+         $ref: /schemas/types.yaml#/definitions/uint32
+-        minimum: 0
++        minimum: 1
+         maximum: 65535
+         description:
+           Specifies the slider's one-dimensional resolution, equal to the
+@@ -687,6 +687,7 @@ allOf:
+           properties:
+             azoteq,slider-size:
+               multipleOf: 16
++              minimum: 16
+               maximum: 4080
  
-+	if (quirks & HID_BATTERY_QUIRK_AVOID_QUERY)
-+		dev->battery_avoid_query = true;
-+
- 	dev->battery = power_supply_register(&dev->dev, psy_desc, &psy_cfg);
- 	if (IS_ERR(dev->battery)) {
- 		error = PTR_ERR(dev->battery);
+             azoteq,top-speed:
 -- 
 2.35.1
 
