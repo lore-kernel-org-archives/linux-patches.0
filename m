@@ -1,40 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B1A81875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A3FDC433EF;
-	Wed, 28 Dec 2022 15:52:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAF1D1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72343C433D2;
+	Wed, 28 Dec 2022 15:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242771;
-	bh=M+k0+5VQoTiQ28+qOM0SuLz5NZ4u1yl9Hi3eY/xvBAo=;
+	s=korg; t=1672242773;
+	bh=ao/zCP+5wM+bBx2k8+4Ko7LKgp2A0wGkuydgVR+P1BE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GowJcS2S2btxdjrr8VsIVQa7Ijk5KFRHxcX3uLOdr9wpzvbEz9uxID0UPmRL2A13l
-	 eMmU70xBM/WPWlBf3kvov0kF+ZY/Ljk2swP9sGvUkZmcHrbii3EQv4aXPBYWfiphRN
-	 S3SQTbN5DlCd4Hyev+wtzYQcOHicKmgfRMxdtGQU=
+	b=mGB3G0oL0tl066bm2GozS8KJdb6TSUT8gqLodVzh5cUDoGVPoGzZj8G67WCk1sT3P
+	 Frl/EftnoX3zBUV0V1ZjMp0ocQ+uR3LbS2UK3AhTnH+ar93SVF/wfsbyVHZAfDqhhz
+	 VRtDOnITFMbgO/VU0U8ooE+rmqgqSmI6ZB85WDbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	intel-wired-lan@lists.osuosl.org,
-	netdev@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
-	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Gurucharan <gurucharanx.g@intel.com>
-Subject: [PATCH 5.15 643/731] igb: Do not free q_vector unless new one was allocated
-Date: Wed, 28 Dec 2022 15:42:30 +0100
-Message-Id: <20221228144315.148014413@linuxfoundation.org>
+	Taniya Das <quic_tdas@quicinc.com>,
+	Satya Priya <quic_c_skakit@quicinc.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 0450/1073] clk: qcom: lpass: Handle the regmap overlap of lpasscc and lpass_aon
+Date: Wed, 28 Dec 2022 15:33:58 +0100
+Message-Id: <20221228144340.254126077@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -45,51 +37,178 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Taniya Das <quic_tdas@quicinc.com>
 
-[ Upstream commit 0668716506ca66f90d395f36ccdaebc3e0e84801 ]
+[ Upstream commit 0cbcfbe50cbff331c775982a53bc4fa66c875b36 ]
 
-Avoid potential use-after-free condition under memory pressure. If the
-kzalloc() fails, q_vector will be freed but left in the original
-adapter->q_vector[v_idx] array position.
+Move registration of lpass_q6ss_ahbm_clk and lpass_q6ss_ahbs_clk to
+lpass_aon_cc_sc7280_probe and register them only if "qcom,adsp-pil-mode"
+is enabled in the lpass_aon DT node.
 
-Cc: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Cc: Tony Nguyen <anthony.l.nguyen@intel.com>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: intel-wired-lan@lists.osuosl.org
-Cc: netdev@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Gurucharan <gurucharanx.g@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
+Signed-off-by: Satya Priya <quic_c_skakit@quicinc.com>
+Reviewed-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/1662005846-4838-3-git-send-email-quic_c_skakit@quicinc.com
+Stable-dep-of: d470be3c4f30 ("clk: qcom: lpass-sc7280: Fix pm_runtime usage")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/clk/qcom/lpassaudiocc-sc7280.c | 44 ++++++++++++++++++++++++++
+ drivers/clk/qcom/lpasscc-sc7280.c      | 44 --------------------------
+ 2 files changed, 44 insertions(+), 44 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
-index 70667b46858a..b246ff8b7c20 100644
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -1204,8 +1204,12 @@ static int igb_alloc_q_vector(struct igb_adapter *adapter,
- 	if (!q_vector) {
- 		q_vector = kzalloc(size, GFP_KERNEL);
- 	} else if (size > ksize(q_vector)) {
--		kfree_rcu(q_vector, rcu);
--		q_vector = kzalloc(size, GFP_KERNEL);
-+		struct igb_q_vector *new_q_vector;
+diff --git a/drivers/clk/qcom/lpassaudiocc-sc7280.c b/drivers/clk/qcom/lpassaudiocc-sc7280.c
+index 6ab6e5a34c72..606732879fea 100644
+--- a/drivers/clk/qcom/lpassaudiocc-sc7280.c
++++ b/drivers/clk/qcom/lpassaudiocc-sc7280.c
+@@ -12,6 +12,7 @@
+ #include <linux/pm_runtime.h>
+ #include <linux/regmap.h>
+ 
++#include <dt-bindings/clock/qcom,lpass-sc7280.h>
+ #include <dt-bindings/clock/qcom,lpassaudiocc-sc7280.h>
+ 
+ #include "clk-alpha-pll.h"
+@@ -38,6 +39,32 @@ static const struct pll_vco zonda_vco[] = {
+ 	{ 595200000UL, 3600000000UL, 0 },
+ };
+ 
++static struct clk_branch lpass_q6ss_ahbm_clk = {
++	.halt_reg = 0x901c,
++	.halt_check = BRANCH_HALT,
++	.clkr = {
++		.enable_reg = 0x901c,
++		.enable_mask = BIT(0),
++		.hw.init = &(struct clk_init_data){
++				.name = "lpass_q6ss_ahbm_clk",
++				.ops = &clk_branch2_ops,
++		},
++	},
++};
 +
-+		new_q_vector = kzalloc(size, GFP_KERNEL);
-+		if (new_q_vector)
-+			kfree_rcu(q_vector, rcu);
-+		q_vector = new_q_vector;
- 	} else {
- 		memset(q_vector, 0, size);
- 	}
++static struct clk_branch lpass_q6ss_ahbs_clk = {
++	.halt_reg = 0x9020,
++	.halt_check = BRANCH_HALT_VOTED,
++	.clkr = {
++		.enable_reg = 0x9020,
++		.enable_mask = BIT(0),
++		.hw.init = &(struct clk_init_data){
++			.name = "lpass_q6ss_ahbs_clk",
++			.ops = &clk_branch2_ops,
++		},
++	},
++};
++
+ /* 1128.96MHz configuration */
+ static const struct alpha_pll_config lpass_audio_cc_pll_config = {
+ 	.l = 0x3a,
+@@ -614,6 +641,11 @@ static struct gdsc lpass_aon_cc_lpass_audio_hm_gdsc = {
+ 	.flags = RETAIN_FF_ENABLE,
+ };
+ 
++static struct clk_regmap *lpass_cc_sc7280_clocks[] = {
++	[LPASS_Q6SS_AHBM_CLK] = &lpass_q6ss_ahbm_clk.clkr,
++	[LPASS_Q6SS_AHBS_CLK] = &lpass_q6ss_ahbs_clk.clkr,
++};
++
+ static struct clk_regmap *lpass_aon_cc_sc7280_clocks[] = {
+ 	[LPASS_AON_CC_AUDIO_HM_H_CLK] = &lpass_aon_cc_audio_hm_h_clk.clkr,
+ 	[LPASS_AON_CC_VA_MEM0_CLK] = &lpass_aon_cc_va_mem0_clk.clkr,
+@@ -659,6 +691,12 @@ static struct regmap_config lpass_audio_cc_sc7280_regmap_config = {
+ 	.fast_io = true,
+ };
+ 
++static const struct qcom_cc_desc lpass_cc_sc7280_desc = {
++	.config = &lpass_audio_cc_sc7280_regmap_config,
++	.clks = lpass_cc_sc7280_clocks,
++	.num_clks = ARRAY_SIZE(lpass_cc_sc7280_clocks),
++};
++
+ static const struct qcom_cc_desc lpass_audio_cc_sc7280_desc = {
+ 	.config = &lpass_audio_cc_sc7280_regmap_config,
+ 	.clks = lpass_audio_cc_sc7280_clocks,
+@@ -785,6 +823,12 @@ static int lpass_aon_cc_sc7280_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
++	if (of_property_read_bool(pdev->dev.of_node, "qcom,adsp-pil-mode")) {
++		lpass_audio_cc_sc7280_regmap_config.name = "cc";
++		desc = &lpass_cc_sc7280_desc;
++		return qcom_cc_probe(pdev, desc);
++	}
++
+ 	lpass_audio_cc_sc7280_regmap_config.name = "lpasscc_aon";
+ 	lpass_audio_cc_sc7280_regmap_config.max_register = 0xa0008;
+ 	desc = &lpass_aon_cc_sc7280_desc;
+diff --git a/drivers/clk/qcom/lpasscc-sc7280.c b/drivers/clk/qcom/lpasscc-sc7280.c
+index b39ee1c9647b..5c1e17bd0d76 100644
+--- a/drivers/clk/qcom/lpasscc-sc7280.c
++++ b/drivers/clk/qcom/lpasscc-sc7280.c
+@@ -17,32 +17,6 @@
+ #include "clk-branch.h"
+ #include "common.h"
+ 
+-static struct clk_branch lpass_q6ss_ahbm_clk = {
+-	.halt_reg = 0x1c,
+-	.halt_check = BRANCH_HALT,
+-	.clkr = {
+-		.enable_reg = 0x1c,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "lpass_q6ss_ahbm_clk",
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+-static struct clk_branch lpass_q6ss_ahbs_clk = {
+-	.halt_reg = 0x20,
+-	.halt_check = BRANCH_HALT_VOTED,
+-	.clkr = {
+-		.enable_reg = 0x20,
+-		.enable_mask = BIT(0),
+-		.hw.init = &(struct clk_init_data){
+-			.name = "lpass_q6ss_ahbs_clk",
+-			.ops = &clk_branch2_ops,
+-		},
+-	},
+-};
+-
+ static struct clk_branch lpass_top_cc_lpi_q6_axim_hs_clk = {
+ 	.halt_reg = 0x0,
+ 	.halt_check = BRANCH_HALT,
+@@ -105,17 +79,6 @@ static struct regmap_config lpass_regmap_config = {
+ 	.fast_io	= true,
+ };
+ 
+-static struct clk_regmap *lpass_cc_sc7280_clocks[] = {
+-	[LPASS_Q6SS_AHBM_CLK] = &lpass_q6ss_ahbm_clk.clkr,
+-	[LPASS_Q6SS_AHBS_CLK] = &lpass_q6ss_ahbs_clk.clkr,
+-};
+-
+-static const struct qcom_cc_desc lpass_cc_sc7280_desc = {
+-	.config = &lpass_regmap_config,
+-	.clks = lpass_cc_sc7280_clocks,
+-	.num_clks = ARRAY_SIZE(lpass_cc_sc7280_clocks),
+-};
+-
+ static struct clk_regmap *lpass_cc_top_sc7280_clocks[] = {
+ 	[LPASS_TOP_CC_LPI_Q6_AXIM_HS_CLK] =
+ 				&lpass_top_cc_lpi_q6_axim_hs_clk.clkr,
+@@ -169,13 +132,6 @@ static int lpass_cc_sc7280_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto destroy_pm_clk;
+ 
+-	lpass_regmap_config.name = "cc";
+-	desc = &lpass_cc_sc7280_desc;
+-
+-	ret = qcom_cc_probe_by_index(pdev, 2, desc);
+-	if (ret)
+-		goto destroy_pm_clk;
+-
+ 	return 0;
+ 
+ destroy_pm_clk:
 -- 
 2.35.1
 
