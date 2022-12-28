@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562B01875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:53:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5AC3C433D2;
-	Wed, 28 Dec 2022 15:53:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A171875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:53:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 865F2C433D2;
+	Wed, 28 Dec 2022 15:53:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242834;
-	bh=ynHIJx1I+Jux3bkepZzlnnnuecWyGY1/PIgBQuaKz48=;
+	s=korg; t=1672242837;
+	bh=WeOOt14tkYeELBrtRWfPT2/q6Bw4lnOCH2VvxZFmpcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t1zfq/HDgGkPO8aJubxRzi98PCkA+E7t6HIeAQk41V9p4VxlzOEEzcMm35OEikQnP
-	 2plsBUxZ+TH/53DpLRAeGjqXvOpgA7A76wgkd4hnYsvuu76fowrlORYbxYIsdPioin
-	 weddfHrbeDoYjsNikV4mSf4ThFbiYvG5ypfRp6Ko=
+	b=vnI/bDxEfQrIh7gS1rpqyTLogvfQj9oG5bDcgrbvYfTHOT6MzkhlDcaLm8K9wcsMw
+	 6Zm01WYLJ+zDQ098lBX/7CL0AQZ8jNuaequ2Jj3Lm/FuKBrgfgAjm3mkzKVww7DL2z
+	 3rlStsQdpptd7hWfEEUwORvOaFeKVIiZWDeaz32s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0460/1073] hsr: Synchronize sequence number updates.
-Date: Wed, 28 Dec 2022 15:34:08 +0100
-Message-Id: <20221228144340.531851334@linuxfoundation.org>
+Subject: [PATCH 5.15 652/731] drm/mediatek: Fix return type of mtk_hdmi_bridge_mode_valid()
+Date: Wed, 28 Dec 2022 15:42:39 +0100
+Message-Id: <20221228144315.403456618@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,99 +38,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 5c7aa13210c3abdd34fd421f62347665ec6eb551 ]
+[ Upstream commit 890d637523eec9d730e3885532fa1228ba678880 ]
 
-hsr_register_frame_out() compares new sequence_nr vs the old one
-recorded in hsr_node::seq_out and if the new sequence_nr is higher then
-it will be written to hsr_node::seq_out as the new value.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-This operation isn't locked so it is possible that two frames with the
-same sequence number arrive (via the two slave devices) and are fed to
-hsr_register_frame_out() at the same time. Both will pass the check and
-update the sequence counter later to the same value. As a result the
-content of the same packet is fed into the stack twice.
+  drivers/gpu/drm/mediatek/mtk_hdmi.c:1407:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' with an expression of type 'int (struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .mode_valid = mtk_hdmi_bridge_mode_valid,
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
 
-This was noticed by running ping and observing DUP being reported from
-time to time.
+->mode_valid() in 'struct drm_bridge_funcs' expects a return type of
+'enum drm_mode_status', not 'int'. Adjust the return type of
+mtk_hdmi_bridge_mode_valid() to match the prototype's to resolve the
+warning and CFI failure.
 
-Instead of using the hsr_priv::seqnr_lock for the whole receive path (as
-it is for sending in the master node) add an additional lock that is only
-used for sequence number checks and updates.
-
-Add a per-node lock that is used during sequence number reads and
-updates.
-
-Fixes: f421436a591d3 ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Reported-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_framereg.c | 9 ++++++++-
- net/hsr/hsr_framereg.h | 2 ++
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/mediatek/mtk_hdmi.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
-index f2dd846ff903..39a6088080e9 100644
---- a/net/hsr/hsr_framereg.c
-+++ b/net/hsr/hsr_framereg.c
-@@ -157,6 +157,7 @@ static struct hsr_node *hsr_add_node(struct hsr_priv *hsr,
- 		return NULL;
- 
- 	ether_addr_copy(new_node->macaddress_A, addr);
-+	spin_lock_init(&new_node->seq_out_lock);
- 
- 	/* We are only interested in time diffs here, so use current jiffies
- 	 * as initialization. (0 could trigger an spurious ring error warning).
-@@ -353,6 +354,7 @@ void hsr_handle_sup_frame(struct hsr_frame_info *frame)
- 	}
- 
- 	ether_addr_copy(node_real->macaddress_B, ethhdr->h_source);
-+	spin_lock_bh(&node_real->seq_out_lock);
- 	for (i = 0; i < HSR_PT_PORTS; i++) {
- 		if (!node_curr->time_in_stale[i] &&
- 		    time_after(node_curr->time_in[i], node_real->time_in[i])) {
-@@ -363,6 +365,7 @@ void hsr_handle_sup_frame(struct hsr_frame_info *frame)
- 		if (seq_nr_after(node_curr->seq_out[i], node_real->seq_out[i]))
- 			node_real->seq_out[i] = node_curr->seq_out[i];
- 	}
-+	spin_unlock_bh(&node_real->seq_out_lock);
- 	node_real->addr_B_port = port_rcv->type;
- 
- 	spin_lock_bh(&hsr->list_lock);
-@@ -456,13 +459,17 @@ void hsr_register_frame_in(struct hsr_node *node, struct hsr_port *port,
- int hsr_register_frame_out(struct hsr_port *port, struct hsr_node *node,
- 			   u16 sequence_nr)
- {
-+	spin_lock_bh(&node->seq_out_lock);
- 	if (seq_nr_before_or_eq(sequence_nr, node->seq_out[port->type]) &&
- 	    time_is_after_jiffies(node->time_out[port->type] +
--	    msecs_to_jiffies(HSR_ENTRY_FORGET_TIME)))
-+	    msecs_to_jiffies(HSR_ENTRY_FORGET_TIME))) {
-+		spin_unlock_bh(&node->seq_out_lock);
- 		return 1;
-+	}
- 
- 	node->time_out[port->type] = jiffies;
- 	node->seq_out[port->type] = sequence_nr;
-+	spin_unlock_bh(&node->seq_out_lock);
- 	return 0;
+diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi.c b/drivers/gpu/drm/mediatek/mtk_hdmi.c
+index 3196189429bc..7613b0fa2be6 100644
+--- a/drivers/gpu/drm/mediatek/mtk_hdmi.c
++++ b/drivers/gpu/drm/mediatek/mtk_hdmi.c
+@@ -1203,9 +1203,10 @@ static enum drm_connector_status mtk_hdmi_detect(struct mtk_hdmi *hdmi)
+ 	return mtk_hdmi_update_plugged_status(hdmi);
  }
  
-diff --git a/net/hsr/hsr_framereg.h b/net/hsr/hsr_framereg.h
-index b5f902397bf1..b23556251d62 100644
---- a/net/hsr/hsr_framereg.h
-+++ b/net/hsr/hsr_framereg.h
-@@ -69,6 +69,8 @@ void prp_update_san_info(struct hsr_node *node, bool is_sup);
- 
- struct hsr_node {
- 	struct list_head	mac_list;
-+	/* Protect R/W access to seq_out */
-+	spinlock_t		seq_out_lock;
- 	unsigned char		macaddress_A[ETH_ALEN];
- 	unsigned char		macaddress_B[ETH_ALEN];
- 	/* Local slave through which AddrB frames are received from this node */
+-static int mtk_hdmi_bridge_mode_valid(struct drm_bridge *bridge,
+-				      const struct drm_display_info *info,
+-				      const struct drm_display_mode *mode)
++static enum drm_mode_status
++mtk_hdmi_bridge_mode_valid(struct drm_bridge *bridge,
++			   const struct drm_display_info *info,
++			   const struct drm_display_mode *mode)
+ {
+ 	struct mtk_hdmi *hdmi = hdmi_ctx_from_bridge(bridge);
+ 	struct drm_bridge *next_bridge;
 -- 
 2.35.1
 
