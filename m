@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDC11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:33:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D792EC433EF;
-	Wed, 28 Dec 2022 15:33:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D65C1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:33:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81EE1C433EF;
+	Wed, 28 Dec 2022 15:33:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241613;
-	bh=ZuJ9isrl1KwnhfHq+fPWeJhnSf7HMwfdDsitIztRlPE=;
+	s=korg; t=1672241615;
+	bh=h7Ai2CixuiWV9kMofQNhiA9BdUYGPBYbLSFyd2Ft4uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ra+IqlsU1GPmBu8HvvO0rD3vLtM0WbyA8wlIVXb2ePAMWf8XiQr0FkzC2mtrjkzqC
-	 IFWNzvKej5NGIrWcnnnnk7+3pLzLBy7OMzEeCRUP6Az8bciy4/ilJl9OLPASO/lNTx
-	 9Ly3mSHFVAd3IyNbs5CMJUvz05VZmjz9JTIo7uJw=
+	b=Ky+4fccSEBKIrcgkoC+0zbD9Z6HM9VMRbikOo64D1xa5CB64v837RHuAECBWKw+zX
+	 ErXJ/v5IouTZZo4uNxqI9jt1/ghox6itTX92ZKpiFvI3RG1kKYh3E0ZueuDH9EyENv
+	 gAIzbO2E6FjAe3nt2w1JtoZhkZDeJsagu6Gq8E5A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Helge Deller <deller@gmx.de>,
+	Sam Shih <sam.shih@mediatek.com>,
+	Frank Wunderlich <frank-w@public-files.de>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 503/731] fbdev: ssd1307fb: Drop optional dependency
-Date: Wed, 28 Dec 2022 15:40:10 +0100
-Message-Id: <20221228144311.128286962@linuxfoundation.org>
+Subject: [PATCH 6.0 0308/1073] dt-bindings: pinctrl: update uart/mmc bindings for MT7986 SoC
+Date: Wed, 28 Dec 2022 15:31:36 +0100
+Message-Id: <20221228144336.373899592@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +37,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Frank Wunderlich <frank-w@public-files.de>
 
-[ Upstream commit 025e3b507a3a8e1ee96a3112bb67495c77d6cdb6 ]
+[ Upstream commit c115e7f51e685536ecb885854bdd4b3f225ff3e4 ]
 
-Only a single out of three devices need a PWM, so from driver it's
-optional. Moreover it's a single driver in the entire kernel that
-currently selects PWM. Unfortunately this selection is a root cause
-of the circular dependencies when we want to enable optional PWM
-for some other drivers that select GPIOLIB.
+Fix mmc and uart pins after uart splitting.
 
-Fixes: a2ed00da5047 ("drivers/video: add support for the Solomon SSD1307 OLED Controller")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Some pinmux pins of the mt7986 pinctrl driver is composed of multiple
+pinctrl groups, the original binding only allows one pinctrl group
+per dts node, this patch sets "maxItems" for these groups and add new
+examples to the binding documentation.
+
+Fixes: 65916a1ca90a ("dt-bindings: pinctrl: update bindings for MT7986 SoC")
+Signed-off-by: Sam Shih <sam.shih@mediatek.com>
+Signed-off-by: Frank Wunderlich <frank-w@public-files.de>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20221106080114.7426-3-linux@fw-web.de
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+ .../pinctrl/mediatek,mt7986-pinctrl.yaml      | 46 +++++++++++++++++--
+ 1 file changed, 41 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/video/fbdev/Kconfig b/drivers/video/fbdev/Kconfig
-index 6ed5e608dd04..5050a9f8e879 100644
---- a/drivers/video/fbdev/Kconfig
-+++ b/drivers/video/fbdev/Kconfig
-@@ -2218,7 +2218,6 @@ config FB_SSD1307
- 	select FB_SYS_COPYAREA
- 	select FB_SYS_IMAGEBLIT
- 	select FB_DEFERRED_IO
--	select PWM
- 	select FB_BACKLIGHT
- 	help
- 	  This driver implements support for the Solomon SSD1307
+diff --git a/Documentation/devicetree/bindings/pinctrl/mediatek,mt7986-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/mediatek,mt7986-pinctrl.yaml
+index 4eadea55df10..41abfa94877f 100644
+--- a/Documentation/devicetree/bindings/pinctrl/mediatek,mt7986-pinctrl.yaml
++++ b/Documentation/devicetree/bindings/pinctrl/mediatek,mt7986-pinctrl.yaml
+@@ -87,6 +87,8 @@ patternProperties:
+           "wifi_led"        "led"       1, 2
+           "i2c"             "i2c"       3, 4
+           "uart1_0"         "uart"      7, 8, 9, 10
++          "uart1_rx_tx"     "uart"      42, 43
++          "uart1_cts_rts"   "uart"      44, 45
+           "pcie_clk"        "pcie"      9
+           "pcie_wake"       "pcie"      10
+           "spi1_0"          "spi"       11, 12, 13, 14
+@@ -98,9 +100,11 @@ patternProperties:
+           "emmc_45"         "emmc"      22, 23, 24, 25, 26, 27, 28, 29, 30,
+                                         31, 32
+           "spi1_1"          "spi"       23, 24, 25, 26
+-          "uart1_2"         "uart"      29, 30, 31, 32
++          "uart1_2_rx_tx"   "uart"      29, 30
++          "uart1_2_cts_rts" "uart"      31, 32
+           "uart1_1"         "uart"      23, 24, 25, 26
+-          "uart2_0"         "uart"      29, 30, 31, 32
++          "uart2_0_rx_tx"   "uart"      29, 30
++          "uart2_0_cts_rts" "uart"      31, 32
+           "spi0"            "spi"       33, 34, 35, 36
+           "spi0_wp_hold"    "spi"       37, 38
+           "uart1_3_rx_tx"   "uart"      35, 36
+@@ -153,7 +157,7 @@ patternProperties:
+             then:
+               properties:
+                 groups:
+-                  enum: [emmc, emmc_rst]
++                  enum: [emmc_45, emmc_51]
+           - if:
+               properties:
+                 function:
+@@ -217,8 +221,12 @@ patternProperties:
+             then:
+               properties:
+                 groups:
+-                  enum: [uart1_0, uart1_1, uart1_2, uart1_3_rx_tx,
+-                         uart1_3_cts_rts, uart2_0, uart2_1, uart0, uart1, uart2]
++                  items:
++                    enum: [uart1_0, uart1_rx_tx, uart1_cts_rts, uart1_1,
++                           uart1_2_rx_tx, uart1_2_cts_rts, uart1_3_rx_tx,
++                           uart1_3_cts_rts, uart2_0_rx_tx, uart2_0_cts_rts,
++                           uart2_1, uart0, uart1, uart2]
++                  maxItems: 2
+           - if:
+               properties:
+                 function:
+@@ -348,6 +356,27 @@ examples:
+         interrupt-parent = <&gic>;
+         #interrupt-cells = <2>;
+ 
++        pcie_pins: pcie-pins {
++          mux {
++            function = "pcie";
++            groups = "pcie_clk", "pcie_wake", "pcie_pereset";
++          };
++        };
++
++        pwm_pins: pwm-pins {
++          mux {
++            function = "pwm";
++            groups = "pwm0", "pwm1_0";
++          };
++        };
++
++        spi0_pins: spi0-pins {
++          mux {
++            function = "spi";
++            groups = "spi0", "spi0_wp_hold";
++          };
++        };
++
+         uart1_pins: uart1-pins {
+           mux {
+             function = "uart";
+@@ -355,6 +384,13 @@ examples:
+           };
+         };
+ 
++        uart1_3_pins: uart1-3-pins {
++          mux {
++            function = "uart";
++            groups = "uart1_3_rx_tx", "uart1_3_cts_rts";
++          };
++        };
++
+         uart2_pins: uart2-pins {
+           mux {
+             function = "uart";
 -- 
 2.35.1
 
