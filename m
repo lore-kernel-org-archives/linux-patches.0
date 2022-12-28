@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F2F01856
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26952C433EF;
-	Wed, 28 Dec 2022 16:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438431C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B799DC433F0;
+	Wed, 28 Dec 2022 16:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245345;
-	bh=P/yqFWzpRP1MUCTMMFFZHoiJC4V0gyYh77CB16B4cZo=;
+	s=korg; t=1672245348;
+	bh=YRc8YepZil4fRNkcQMEG8TU2mnvzDHG0bpISHrAty3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p+Dz59dEYHyIpxvwRhZ6PamRPos2/wwAQh++/Eq1nWg6oY3uB2wLDg/lJInj4QGXO
-	 tIfcjXmsuBslIdefX38d/wC+VF13X/8XQYDjyaJF8N8Z6i//xviTPDNATYZKIHnLOC
-	 t24Ucoz+Dbl/F9R5ph6FmcyAz0G+VA7SQm7XHUQw=
+	b=VmVVmItRc/hUARatQdiq5DtHRRbv+LBAjGPCbk15Ez6nRvZhEpVwqZPz0UYvFHY+9
+	 8w06SW5ajtcNF2pQ8ymxMP+vU2XWOTKTW85vtpvO84mlBPPhNvfvRIr6F79FlFU4cE
+	 DpQ7ga7h4N9wpv+BOqUci2Q/hx4Ug2Z7OEQLe/w4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0843/1146] iommu/amd: Fix pci device refcount leak in ppr_notifier()
-Date: Wed, 28 Dec 2022 15:39:42 +0100
-Message-Id: <20221228144353.053329892@linuxfoundation.org>
+Subject: [PATCH 6.0 0877/1073] mailbox: zynq-ipi: fix error handling while device_register() fails
+Date: Wed, 28 Dec 2022 15:41:05 +0100
+Message-Id: <20221228144351.845567898@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,35 +37,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 6cf0981c2233f97d56938d9d61845383d6eb227c ]
+[ Upstream commit a6792a0cdef0b1c2d77920246283a72537e60e94 ]
 
-As comment of pci_get_domain_bus_and_slot() says, it returns
-a pci device with refcount increment, when finish using it,
-the caller must decrement the reference count by calling
-pci_dev_put(). So call it before returning from ppr_notifier()
-to avoid refcount leak.
+If device_register() fails, it has two issues:
+1. The name allocated by dev_set_name() is leaked.
+2. The parent of device is not NULL, device_unregister() is called
+   in zynqmp_ipi_free_mboxes(), it will lead a kernel crash because
+   of removing not added device.
 
-Fixes: daae2d25a477 ("iommu/amd: Don't copy GCR3 table root pointer")
+Call put_device() to give up the reference, so the name is freed in
+kobject_cleanup(). Add device registered check in zynqmp_ipi_free_mboxes()
+to avoid null-ptr-deref.
+
+Fixes: 4981b82ba2ff ("mailbox: ZynqMP IPI mailbox controller")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221118093604.216371-1-yangyingliang@huawei.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd/iommu_v2.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mailbox/zynqmp-ipi-mailbox.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd/iommu_v2.c b/drivers/iommu/amd/iommu_v2.c
-index 6a1f02c62dff..9f7fab49a5a9 100644
---- a/drivers/iommu/amd/iommu_v2.c
-+++ b/drivers/iommu/amd/iommu_v2.c
-@@ -587,6 +587,7 @@ static int ppr_notifier(struct notifier_block *nb, unsigned long e, void *data)
- 	put_device_state(dev_state);
- 
- out:
-+	pci_dev_put(pdev);
- 	return ret;
+diff --git a/drivers/mailbox/zynqmp-ipi-mailbox.c b/drivers/mailbox/zynqmp-ipi-mailbox.c
+index 31a0fa914274..12e004ff1a14 100644
+--- a/drivers/mailbox/zynqmp-ipi-mailbox.c
++++ b/drivers/mailbox/zynqmp-ipi-mailbox.c
+@@ -493,6 +493,7 @@ static int zynqmp_ipi_mbox_probe(struct zynqmp_ipi_mbox *ipi_mbox,
+ 	ret = device_register(&ipi_mbox->dev);
+ 	if (ret) {
+ 		dev_err(dev, "Failed to register ipi mbox dev.\n");
++		put_device(&ipi_mbox->dev);
+ 		return ret;
+ 	}
+ 	mdev = &ipi_mbox->dev;
+@@ -619,7 +620,8 @@ static void zynqmp_ipi_free_mboxes(struct zynqmp_ipi_pdata *pdata)
+ 		ipi_mbox = &pdata->ipi_mboxes[i];
+ 		if (ipi_mbox->dev.parent) {
+ 			mbox_controller_unregister(&ipi_mbox->mbox);
+-			device_unregister(&ipi_mbox->dev);
++			if (device_is_registered(&ipi_mbox->dev))
++				device_unregister(&ipi_mbox->dev);
+ 		}
+ 	}
  }
- 
 -- 
 2.35.1
 
