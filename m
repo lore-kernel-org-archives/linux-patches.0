@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CCD21875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:55:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D19C433D2;
-	Wed, 28 Dec 2022 15:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09C731875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:55:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8FFC433EF;
+	Wed, 28 Dec 2022 15:55:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242931;
-	bh=22dWusGGbJEuertwfzCMB0ltIeBgQipIDcrTWfHjhJ0=;
+	s=korg; t=1672242933;
+	bh=cLdSKwkfEU+/xCMa34CkE1yrdtXpDsiCSfRd3IkF/JI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WGl1R8DQju4bsPhjln9aevSQ40Yc1vyUbmGbRTsIWh+ox1cjsOUFkjfHgU65dKroy
-	 LNj22WkTII5OBjdk8l1TD8Umjy9MNN54+vV9Yr0yiScxPBK9OGa0ZpzWzcW6ZPVZRk
-	 S98WFi2nJMp62eCguDAmpUc6eELL96WmEk71uyJk=
+	b=clOAjxNjcjEu7thJxhL+8UeJgKIc9HPk4gvX9YqUwK4UTtVtx2ZDDCvb70dGUjVin
+	 TCGEL48MBfOtfOz+iWIzywemqhF7S3pjxkCougt0afvIGwsc2aagZdYrcqNu7VGMOD
+	 UkDD7wAJ9srdXAN248551n0RHU/4kcOXRZBmMSv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amol Jawale <amol.jawale@candelatech.com>,
-	Ben Greear <greearb@candelatech.com>,
-	Gregory Greenman <gregory.greenman@intel.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0432/1146] wifi: iwlwifi: mvm: fix double free on tx path.
-Date: Wed, 28 Dec 2022 15:32:51 +0100
-Message-Id: <20221228144341.915510903@linuxfoundation.org>
+Subject: [PATCH 6.0 0471/1073] xprtrdma: Fix regbuf data not freed in rpcrdma_req_create()
+Date: Wed, 28 Dec 2022 15:34:19 +0100
+Message-Id: <20221228144340.829546126@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,213 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ben Greear <greearb@candelatech.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit 0473cbae2137b963bd0eaa74336131cb1d3bc6c3 ]
+[ Upstream commit 9181f40fb2952fd59ecb75e7158620c9c669eee3 ]
 
-We see kernel crashes and lockups and KASAN errors related to ax210
-firmware crashes.  One of the KASAN dumps pointed at the tx path,
-and it appears there is indeed a way to double-free an skb.
+If rdma receive buffer allocate failed, should call rpcrdma_regbuf_free()
+to free the send buffer, otherwise, the buffer data will be leaked.
 
-If iwl_mvm_tx_skb_sta returns non-zero, then the 'skb' sent into the
-method will be freed.  But, in case where we build TSO skb buffer,
-the skb may also be freed in error case.  So, return 0 in that particular
-error case and do cleanup manually.
-
-BUG: KASAN: use-after-free in __list_del_entry_valid+0x12/0x90
-iwlwifi 0000:06:00.0: 0x00000000 | tsf hi
-Read of size 8 at addr ffff88813cfa4ba0 by task btserver/9650
-
-CPU: 4 PID: 9650 Comm: btserver Tainted: G        W         5.19.8+ #5
-iwlwifi 0000:06:00.0: 0x00000000 | time gp1
-Hardware name: Default string Default string/SKYBAY, BIOS 5.12 02/19/2019
-Call Trace:
- <TASK>
- dump_stack_lvl+0x55/0x6d
- print_report.cold.12+0xf2/0x684
-iwlwifi 0000:06:00.0: 0x1D0915A8 | time gp2
- ? __list_del_entry_valid+0x12/0x90
- kasan_report+0x8b/0x180
-iwlwifi 0000:06:00.0: 0x00000001 | uCode revision type
- ? __list_del_entry_valid+0x12/0x90
- __list_del_entry_valid+0x12/0x90
-iwlwifi 0000:06:00.0: 0x00000048 | uCode version major
- tcp_update_skb_after_send+0x5d/0x170
- __tcp_transmit_skb+0xb61/0x15c0
-iwlwifi 0000:06:00.0: 0xDAA05125 | uCode version minor
- ? __tcp_select_window+0x490/0x490
-iwlwifi 0000:06:00.0: 0x00000420 | hw version
- ? trace_kmalloc_node+0x29/0xd0
- ? __kmalloc_node_track_caller+0x12a/0x260
- ? memset+0x1f/0x40
- ? __build_skb_around+0x125/0x150
- ? __alloc_skb+0x1d4/0x220
- ? skb_zerocopy_clone+0x55/0x230
-iwlwifi 0000:06:00.0: 0x00489002 | board version
- ? kmalloc_reserve+0x80/0x80
- ? rcu_read_lock_bh_held+0x60/0xb0
- tcp_write_xmit+0x3f1/0x24d0
-iwlwifi 0000:06:00.0: 0x034E001C | hcmd
- ? __check_object_size+0x180/0x350
-iwlwifi 0000:06:00.0: 0x24020000 | isr0
- tcp_sendmsg_locked+0x8a9/0x1520
-iwlwifi 0000:06:00.0: 0x01400000 | isr1
- ? tcp_sendpage+0x50/0x50
-iwlwifi 0000:06:00.0: 0x48F0000A | isr2
- ? lock_release+0xb9/0x400
- ? tcp_sendmsg+0x14/0x40
-iwlwifi 0000:06:00.0: 0x00C3080C | isr3
- ? lock_downgrade+0x390/0x390
- ? do_raw_spin_lock+0x114/0x1d0
-iwlwifi 0000:06:00.0: 0x00200000 | isr4
- ? rwlock_bug.part.2+0x50/0x50
-iwlwifi 0000:06:00.0: 0x034A001C | last cmd Id
- ? rwlock_bug.part.2+0x50/0x50
- ? lockdep_hardirqs_on_prepare+0xe/0x200
-iwlwifi 0000:06:00.0: 0x0000C2F0 | wait_event
- ? __local_bh_enable_ip+0x87/0xe0
- ? inet_send_prepare+0x220/0x220
-iwlwifi 0000:06:00.0: 0x000000C4 | l2p_control
- tcp_sendmsg+0x22/0x40
- sock_sendmsg+0x5f/0x70
-iwlwifi 0000:06:00.0: 0x00010034 | l2p_duration
- __sys_sendto+0x19d/0x250
-iwlwifi 0000:06:00.0: 0x00000007 | l2p_mhvalid
- ? __ia32_sys_getpeername+0x40/0x40
-iwlwifi 0000:06:00.0: 0x00000000 | l2p_addr_match
- ? rcu_read_lock_held_common+0x12/0x50
- ? rcu_read_lock_sched_held+0x5a/0xd0
- ? rcu_read_lock_bh_held+0xb0/0xb0
- ? rcu_read_lock_sched_held+0x5a/0xd0
- ? rcu_read_lock_sched_held+0x5a/0xd0
- ? lock_release+0xb9/0x400
- ? lock_downgrade+0x390/0x390
- ? ktime_get+0x64/0x130
- ? ktime_get+0x8d/0x130
- ? rcu_read_lock_held_common+0x12/0x50
- ? rcu_read_lock_sched_held+0x5a/0xd0
- ? rcu_read_lock_held_common+0x12/0x50
- ? rcu_read_lock_sched_held+0x5a/0xd0
- ? rcu_read_lock_bh_held+0xb0/0xb0
- ? rcu_read_lock_bh_held+0xb0/0xb0
- __x64_sys_sendto+0x6f/0x80
- do_syscall_64+0x34/0xb0
- entry_SYSCALL_64_after_hwframe+0x46/0xb0
-RIP: 0033:0x7f1d126e4531
-Code: 00 00 00 00 0f 1f 44 00 00 f3 0f 1e fa 48 8d 05 35 80 0c 00 41 89 ca 8b 00 85 c0 75 1c 45 31 c9 45 31 c0 b8 2c 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 67 c3 66 0f 1f 44 00 00 55 48 83 ec 20 48 89
-RSP: 002b:00007ffe21a679d8 EFLAGS: 00000246 ORIG_RAX: 000000000000002c
-RAX: ffffffffffffffda RBX: 000000000000ffdc RCX: 00007f1d126e4531
-RDX: 0000000000010000 RSI: 000000000374acf0 RDI: 0000000000000014
-RBP: 00007ffe21a67ac0 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000010
-R13: 0000000000000000 R14: 0000000000000001 R15: 0000000000000000
- </TASK>
-
-Allocated by task 9650:
- kasan_save_stack+0x1c/0x40
- __kasan_slab_alloc+0x6d/0x90
- kmem_cache_alloc_node+0xf3/0x2b0
- __alloc_skb+0x191/0x220
- tcp_stream_alloc_skb+0x3f/0x330
- tcp_sendmsg_locked+0x67c/0x1520
- tcp_sendmsg+0x22/0x40
- sock_sendmsg+0x5f/0x70
- __sys_sendto+0x19d/0x250
- __x64_sys_sendto+0x6f/0x80
- do_syscall_64+0x34/0xb0
- entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Freed by task 9650:
- kasan_save_stack+0x1c/0x40
- kasan_set_track+0x21/0x30
- kasan_set_free_info+0x20/0x30
- __kasan_slab_free+0x102/0x170
- kmem_cache_free+0xc8/0x3e0
- iwl_mvm_mac_itxq_xmit+0x124/0x270 [iwlmvm]
- ieee80211_queue_skb+0x874/0xd10 [mac80211]
- ieee80211_xmit_fast+0xf80/0x1180 [mac80211]
- __ieee80211_subif_start_xmit+0x287/0x680 [mac80211]
- ieee80211_subif_start_xmit+0xcd/0x730 [mac80211]
- dev_hard_start_xmit+0xf6/0x420
- __dev_queue_xmit+0x165b/0x1b50
- ip_finish_output2+0x66e/0xfb0
- __ip_finish_output+0x487/0x6d0
- ip_output+0x11c/0x350
- __ip_queue_xmit+0x36b/0x9d0
- __tcp_transmit_skb+0xb35/0x15c0
- tcp_write_xmit+0x3f1/0x24d0
- tcp_sendmsg_locked+0x8a9/0x1520
- tcp_sendmsg+0x22/0x40
- sock_sendmsg+0x5f/0x70
- __sys_sendto+0x19d/0x250
- __x64_sys_sendto+0x6f/0x80
- do_syscall_64+0x34/0xb0
- entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-The buggy address belongs to the object at ffff88813cfa4b40
- which belongs to the cache skbuff_fclone_cache of size 472
-The buggy address is located 96 bytes inside of
- 472-byte region [ffff88813cfa4b40, ffff88813cfa4d18)
-
-The buggy address belongs to the physical page:
-page:ffffea0004f3e900 refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88813cfa6c40 pfn:0x13cfa4
-head:ffffea0004f3e900 order:2 compound_mapcount:0 compound_pincount:0
-flags: 0x5fff8000010200(slab|head|node=0|zone=2|lastcpupid=0x3fff)
-raw: 005fff8000010200 ffffea0004656b08 ffffea0008e8cf08 ffff8881081a5240
-raw: ffff88813cfa6c40 0000000000170015 00000001ffffffff 0000000000000000
-page dumped because: kasan: bad access detected
-
-Memory state around the buggy address:
- ffff88813cfa4a80: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ffff88813cfa4b00: fc fc fc fc fc fc fc fc fa fb fb fb fb fb fb fb
->ffff88813cfa4b80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                               ^
- ffff88813cfa4c00: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
- ffff88813cfa4c80: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-==================================================================
-
-Fixes: 08f7d8b69aaf ("iwlwifi: mvm: bring back mvm GSO code")
-Link: https://lore.kernel.org/linux-wireless/20220928193057.16132-1-greearb@candelatech.com/
-Tested-by: Amol Jawale <amol.jawale@candelatech.com>
-Signed-off-by: Ben Greear <greearb@candelatech.com>
-Link: https://lore.kernel.org/r/20221123225313.21b1ee31d666.I3b3ba184433dd2a544d91eeeda29b467021824ae@changeid
-Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Fixes: bb93a1ae2bf4 ("xprtrdma: Allocate req's regbufs at xprt create time")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlwifi/mvm/tx.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ net/sunrpc/xprtrdma/verbs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-index ba335f57771c..ba944175546d 100644
---- a/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-+++ b/drivers/net/wireless/intel/iwlwifi/mvm/tx.c
-@@ -1212,6 +1212,7 @@ int iwl_mvm_tx_skb_sta(struct iwl_mvm *mvm, struct sk_buff *skb,
- 	struct sk_buff_head mpdus_skbs;
- 	unsigned int payload_len;
- 	int ret;
-+	struct sk_buff *orig_skb = skb;
+diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
+index 2fbe9aaeec34..efa7bcdf6b28 100644
+--- a/net/sunrpc/xprtrdma/verbs.c
++++ b/net/sunrpc/xprtrdma/verbs.c
+@@ -834,7 +834,7 @@ struct rpcrdma_req *rpcrdma_req_create(struct rpcrdma_xprt *r_xprt, size_t size,
+ 	return req;
  
- 	if (WARN_ON_ONCE(!mvmsta))
- 		return -1;
-@@ -1244,8 +1245,17 @@ int iwl_mvm_tx_skb_sta(struct iwl_mvm *mvm, struct sk_buff *skb,
- 
- 		ret = iwl_mvm_tx_mpdu(mvm, skb, &info, sta);
- 		if (ret) {
-+			/* Free skbs created as part of TSO logic that have not yet been dequeued */
- 			__skb_queue_purge(&mpdus_skbs);
--			return ret;
-+			/* skb here is not necessarily same as skb that entered this method,
-+			 * so free it explicitly.
-+			 */
-+			if (skb == orig_skb)
-+				ieee80211_free_txskb(mvm->hw, skb);
-+			else
-+				kfree_skb(skb);
-+			/* there was error, but we consumed skb one way or another, so return 0 */
-+			return 0;
- 		}
- 	}
- 
+ out3:
+-	kfree(req->rl_sendbuf);
++	rpcrdma_regbuf_free(req->rl_sendbuf);
+ out2:
+ 	kfree(req);
+ out1:
 -- 
 2.35.1
 
