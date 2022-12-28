@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4093D1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D55FC433EF;
-	Wed, 28 Dec 2022 16:27:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA891C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D9B6C433D2;
+	Wed, 28 Dec 2022 16:27:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244860;
-	bh=RJOBklZfdn/3YC9rVuulS/t8uNeco02yuuvSzdG+/go=;
+	s=korg; t=1672244862;
+	bh=Jq4TugW0ehcG+e8BFXTH5sEl3zKGdIwI+FWeE6BJRys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H0y3WIbHeGNNFGX12lYw2Rf+XXKrzXZr5H3ffD8lrsSGQ7vNi1YEpEX5yACzny77/
-	 0Tre8D/D/Oe8nbJGNYbK/cjIKB8p4dde728Fm7DBn3VOtAGeIIOfj4rKD6pRmiKnLr
-	 p/6OA/KUrehfA6xJbZEFcXLcI6+AstPZugPrPbxg=
+	b=Nn/FEkIx2kF/83ZQDtuznCowqaPDXCK/xyqAuHY9eynosyX6xdXa3XS/nFfzAcwnU
+	 UcaYinaHHXsshRny4ciAEoP/eZcCXFmaFjBqKWdGSV3KRy5yW/LkXiQQaRa3SiQopY
+	 axZZLofN1xNTkcSXYv5wBqY9EkbBqFzQKazv3lSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ruanjinjie <ruanjinjie@huawei.com>,
+	Yuan Can <yuancan@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0717/1146] misc: tifm: fix possible memory leak in tifm_7xx1_switch_media()
-Date: Wed, 28 Dec 2022 15:37:36 +0100
-Message-Id: <20221228144349.618846606@linuxfoundation.org>
+Subject: [PATCH 6.1 0712/1146] serial: sunsab: Fix error handling in sunsab_init()
+Date: Wed, 28 Dec 2022 15:37:31 +0100
+Message-Id: <20221228144349.484302601@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -34,40 +34,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ruanjinjie <ruanjinjie@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit fd2c930cf6a5b9176382c15f9acb1996e76e25ad ]
+[ Upstream commit 1a6ec673fb627c26e2267ca0a03849f91dbd9b40 ]
 
-If device_register() returns error in tifm_7xx1_switch_media(),
-name of kobject which is allocated in dev_set_name() called in device_add()
-is leaked.
+The sunsab_init() returns the platform_driver_register() directly without
+checking its return value, if platform_driver_register() failed, the
+allocated sunsab_ports is leaked.
+Fix by free sunsab_ports and set it to NULL when platform_driver_register()
+failed.
 
-Never directly free @dev after calling device_register(), even
-if it returned an error! Always use put_device() to give up the
-reference initialized.
-
-Fixes: 2428a8fe2261 ("tifm: move common device management tasks from tifm_7xx1 to tifm_core")
-Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
-Link: https://lore.kernel.org/r/20221117064725.3478402-1-ruanjinjie@huawei.com
+Fixes: c4d37215a824 ("[SERIAL] sunsab: Convert to of_driver framework.")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20221123061212.52593-1-yuancan@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/tifm_7xx1.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/sunsab.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/misc/tifm_7xx1.c b/drivers/misc/tifm_7xx1.c
-index 017c2f7d6287..7dd86a9858ab 100644
---- a/drivers/misc/tifm_7xx1.c
-+++ b/drivers/misc/tifm_7xx1.c
-@@ -190,7 +190,7 @@ static void tifm_7xx1_switch_media(struct work_struct *work)
- 				spin_unlock_irqrestore(&fm->lock, flags);
- 			}
- 			if (sock)
--				tifm_free_device(&sock->dev);
-+				put_device(&sock->dev);
+diff --git a/drivers/tty/serial/sunsab.c b/drivers/tty/serial/sunsab.c
+index 99608b2a2b74..7ace3aa49840 100644
+--- a/drivers/tty/serial/sunsab.c
++++ b/drivers/tty/serial/sunsab.c
+@@ -1133,7 +1133,13 @@ static int __init sunsab_init(void)
  		}
- 		spin_lock_irqsave(&fm->lock, flags);
  	}
+ 
+-	return platform_driver_register(&sab_driver);
++	err = platform_driver_register(&sab_driver);
++	if (err) {
++		kfree(sunsab_ports);
++		sunsab_ports = NULL;
++	}
++
++	return err;
+ }
+ 
+ static void __exit sunsab_exit(void)
 -- 
 2.35.1
 
