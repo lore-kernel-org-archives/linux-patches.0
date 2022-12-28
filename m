@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9A01875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:55:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C01C433D2;
-	Wed, 28 Dec 2022 15:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E148E1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:55:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44848C433D2;
+	Wed, 28 Dec 2022 15:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242903;
-	bh=FoxYHp9WbO8yNbj/wlK5JvWJiKXSe9+l6W+iEX6c9Cc=;
+	s=korg; t=1672242906;
+	bh=vuoz5BJfDr89hu6KaL4k1HR5x5eg+/9gWPsl+Z4jtDA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aqIxoPIEo+0pew/uunlrTjjyoKBT6nO4ir5x8lMRlbuVv1GOB7RiSwHGe465E8FCk
-	 Vn7Tbmoh9LFxs5NhNhV/rvd0K2zkm2WKLdwb8BZuQEFHbx2t+I/QJdd5Cjtkv4SQ7W
-	 4C/NKVwp1rkNx9n5jxpTLJX1+2lQHVMD7qh+ANfo=
+	b=1M8ywnE9ZREq8dw8N8mOJWWOiIPQiNdDtAFOa1/JHSblI8QMEJYVVgFE7C1bV/n2z
+	 bFpd9tvNRYf8V5ktRGWbXpw8luWu0xf4AlrYn7h3tu7xZYnxbH1pVHeE8bq4hY5SZK
+	 G5GZe5DzSnfBmSKqnMz6REQtiNplZt05eMyKOi+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	"Guoniu.zhou" <guoniu.zhou@nxp.com>,
+	Jacopo Mondi <jacopo@jmondi.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0429/1146] ALSA: asihpi: fix missing pci_disable_device()
-Date: Wed, 28 Dec 2022 15:32:48 +0100
-Message-Id: <20221228144341.835358891@linuxfoundation.org>
+Subject: [PATCH 6.0 0468/1073] media: ov5640: set correct default link frequency
+Date: Wed, 28 Dec 2022 15:34:16 +0100
+Message-Id: <20221228144340.748933111@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Guoniu.zhou <guoniu.zhou@nxp.com>
 
-[ Upstream commit 9d86515c3d4c0564a0c31a2df87d735353a1971e ]
+[ Upstream commit d7b41196927ba2a2b5badad1a85f9087eb90b076 ]
 
-pci_disable_device() need be called while module exiting, switch to use
-pcim_enable(), pci_disable_device() will be called in pcim_release().
+current_link_freq field in ov5640_dev structure is link frequency,
+not link frequency array index, so correct it.
 
-Fixes: 3285ea10e9b0 ("ALSA: asihpi - Interrelated HPI tidy up.")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Link: https://lore.kernel.org/r/20221126021429.3029562-1-liushixin2@huawei.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 3c28588f35d3 ("media: ov5640: Update pixel_rate and link_freq")
+Signed-off-by: Guoniu.zhou <guoniu.zhou@nxp.com>
+Acked-by: Jacopo Mondi <jacopo@jmondi.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/asihpi/hpioctl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/i2c/ov5640.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/pci/asihpi/hpioctl.c b/sound/pci/asihpi/hpioctl.c
-index bb31b7fe867d..477a5b4b50bc 100644
---- a/sound/pci/asihpi/hpioctl.c
-+++ b/sound/pci/asihpi/hpioctl.c
-@@ -361,7 +361,7 @@ int asihpi_adapter_probe(struct pci_dev *pci_dev,
- 		pci_dev->device, pci_dev->subsystem_vendor,
- 		pci_dev->subsystem_device, pci_dev->devfn);
+diff --git a/drivers/media/i2c/ov5640.c b/drivers/media/i2c/ov5640.c
+index 502f0b62e950..7e72e7c7b0dd 100644
+--- a/drivers/media/i2c/ov5640.c
++++ b/drivers/media/i2c/ov5640.c
+@@ -3816,7 +3816,8 @@ static int ov5640_probe(struct i2c_client *client)
+ 	sensor->current_mode =
+ 		&ov5640_mode_data[OV5640_MODE_VGA_640_480];
+ 	sensor->last_mode = sensor->current_mode;
+-	sensor->current_link_freq = OV5640_DEFAULT_LINK_FREQ;
++	sensor->current_link_freq =
++		ov5640_csi2_link_freqs[OV5640_DEFAULT_LINK_FREQ];
  
--	if (pci_enable_device(pci_dev) < 0) {
-+	if (pcim_enable_device(pci_dev) < 0) {
- 		dev_err(&pci_dev->dev,
- 			"pci_enable_device failed, disabling device\n");
- 		return -EIO;
+ 	sensor->ae_target = 52;
+ 
 -- 
 2.35.1
 
