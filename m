@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 155591863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:53:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93174C43392;
-	Wed, 28 Dec 2022 14:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD8311863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:53:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36796C433D2;
+	Wed, 28 Dec 2022 14:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239221;
-	bh=fJx0AkQabyF5+jsQf/zYDxdUel1nIZr325rimG8VT1c=;
+	s=korg; t=1672239224;
+	bh=9e3cUH5Y4KLP3OmzR09Ydt74dYaPm6ucmE7z1V7yd6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qyiCXT+GcuFDVU4DvwU+AzkxqIYXULTF9UEX5/XZJuItI1OIjeQNEr9DQOrB6fXEg
-	 y0mOJZXZ6VaUTr6G1+R+TC/KBP+YPVlmCv9gXJSiy97gGJlmT7EBqV1ddXRwxpneVH
-	 hDcy98PgX9er8UI9VsBPEAY1Y6ltA4fh19JkNZok=
+	b=wFQGwKNr2u86HP00INa4PPxDx7NffHmcuvWfSe/jcnAWMSKaKAlirXx44v6kET9pO
+	 K8Am6TBNDfUxGuJRZN6opRp3+WV2lBup+EchOrbfMy5UyOGvGIv9c/zjBt3C2QNkoY
+	 TGhqyzeHmHK2c9N0ZiiEAnQHOa+/CW9FSyJRn82A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ilia.Gavrilov" <Ilia.Gavrilov@infotecs.ru>,
-	Colin Ian King <colin.i.king@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	wuchi <wuchi.zero@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Jimmy Assarsson <extja@kvaser.com>,
+	Anssi Hannula <anssi.hannula@bitwise.fi>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 137/731] relay: fix type mismatch when allocating memory in relay_create_buf()
-Date: Wed, 28 Dec 2022 15:34:04 +0100
-Message-Id: <20221228144300.520334245@linuxfoundation.org>
+Subject: [PATCH 5.15 168/731] can: kvaser_usb_leaf: Fix wrong CAN state after stopping
+Date: Wed, 28 Dec 2022 15:34:35 +0100
+Message-Id: <20221228144301.429155654@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -38,47 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
+From: Anssi Hannula <anssi.hannula@bitwise.fi>
 
-[ Upstream commit 4d8586e04602fe42f0a782d2005956f8b6302678 ]
+[ Upstream commit a11249acf802341294557895d8e5f6aef080253f ]
 
-The 'padding' field of the 'rchan_buf' structure is an array of 'size_t'
-elements, but the memory is allocated for an array of 'size_t *' elements.
+0bfd:0124 Kvaser Mini PCI Express 2xHS FW 4.18.778 sends a
+CMD_CHIP_STATE_EVENT indicating bus-off after stopping the device,
+causing a stopped device to appear as CAN_STATE_BUS_OFF instead of
+CAN_STATE_STOPPED.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Fix that by not handling error events on stopped devices.
 
-Link: https://lkml.kernel.org/r/20221129092002.3538384-1-Ilia.Gavrilov@infotecs.ru
-Fixes: b86ff981a825 ("[PATCH] relay: migrate from relayfs to a generic relay API")
-Signed-off-by: Ilia.Gavrilov <Ilia.Gavrilov@infotecs.ru>
-Cc: Colin Ian King <colin.i.king@gmail.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: wuchi <wuchi.zero@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
+Tested-by: Jimmy Assarsson <extja@kvaser.com>
+Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://lore.kernel.org/all/20221010185237.319219-8-extja@kvaser.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/relay.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/relay.c b/kernel/relay.c
-index d1a67fbb819d..6825b8403877 100644
---- a/kernel/relay.c
-+++ b/kernel/relay.c
-@@ -151,13 +151,13 @@ static struct rchan_buf *relay_create_buf(struct rchan *chan)
- {
- 	struct rchan_buf *buf;
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+index b5d06c6b79ae..5888b2fb5eb3 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+@@ -1050,6 +1050,10 @@ static void kvaser_usb_leaf_rx_error(const struct kvaser_usb *dev,
+ 	leaf = priv->sub_priv;
+ 	stats = &priv->netdev->stats;
  
--	if (chan->n_subbufs > KMALLOC_MAX_SIZE / sizeof(size_t *))
-+	if (chan->n_subbufs > KMALLOC_MAX_SIZE / sizeof(size_t))
- 		return NULL;
- 
- 	buf = kzalloc(sizeof(struct rchan_buf), GFP_KERNEL);
- 	if (!buf)
- 		return NULL;
--	buf->padding = kmalloc_array(chan->n_subbufs, sizeof(size_t *),
-+	buf->padding = kmalloc_array(chan->n_subbufs, sizeof(size_t),
- 				     GFP_KERNEL);
- 	if (!buf->padding)
- 		goto free_buf;
++	/* Ignore e.g. state change to bus-off reported just after stopping */
++	if (!netif_running(priv->netdev))
++		return;
++
+ 	/* Update all of the CAN interface's state and error counters before
+ 	 * trying any memory allocation that can actually fail with -ENOMEM.
+ 	 *
 -- 
 2.35.1
 
