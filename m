@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9881863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A70C433D2;
-	Wed, 28 Dec 2022 15:13:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8500A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07588C433D2;
+	Wed, 28 Dec 2022 15:13:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240406;
-	bh=e3vJ42jmL8muRjEOdKQJSOzG4nGphFTTRiXaAuPWlWM=;
+	s=korg; t=1672240409;
+	bh=xLT3ZJgbIclUhF/mgdBW/tR/+K8UNJkMPjVmWCCdR+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=11Iabwx1xR/b2rAImRBTgom2Bb5TpLh8794hsXt8mvYmSLdGwDRpzEiZ05Wus8bYC
-	 SvIywp1b4nCEAg9qBn8lXHsdJ90Issozx3uFrGLXkbZDkCU8djfkcHMxULIrG12OIg
-	 OiCo4sSTejRPyUeOLg+ut+Lw9A7WGTxzxY0yflTk=
+	b=QST51WAogPZYm/rLr7TzaLkIIQMpITVhjBRU0P3ip6+UZROilg9dNTaK6dH7uJ3cK
+	 QvnjjhzRZ4OSW+5r/Wi20l093ZiKqAdqRsHcp+/ws2fUxxkw4M3/zCaROCNrnb/XIC
+	 lUym8U9JsOc1o6b/A599PMVShWgRXjeJ7O3hC/pQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Vishnu Dasa <vdasa@vmware.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Inga Stotland <inga.stotland@intel.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 322/731] net: vmw_vsock: vmci: Check memcpy_from_msg()
-Date: Wed, 28 Dec 2022 15:37:09 +0100
-Message-Id: <20221228144305.908307631@linuxfoundation.org>
+Subject: [PATCH 5.15 346/731] Bluetooth: MGMT: Fix error report for ADD_EXT_ADV_PARAMS
+Date: Wed, 28 Dec 2022 15:37:33 +0100
+Message-Id: <20221228144306.594628188@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -37,45 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+From: Inga Stotland <inga.stotland@intel.com>
 
-[ Upstream commit 44aa5a6dba8283bfda28b1517af4de711c5652a4 ]
+[ Upstream commit 3b1c7c00b8c22b3cb79532252c59eb0b287bb86d ]
 
-vmci_transport_dgram_enqueue() does not check the return value
-of memcpy_from_msg().  If memcpy_from_msg() fails, it is possible that
-uninitialized memory contents are sent unintentionally instead of user's
-message in the datagram to the destination.  Return with an error if
-memcpy_from_msg() fails.
+When validating the parameter length for MGMT_OP_ADD_EXT_ADV_PARAMS
+command, use the correct op code in error status report:
+was MGMT_OP_ADD_ADVERTISING, changed to MGMT_OP_ADD_EXT_ADV_PARAMS.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 0f7db23a07af ("vmci_transport: switch ->enqeue_dgram, ->enqueue_stream and ->dequeue_stream to msghdr")
-Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Vishnu Dasa <vdasa@vmware.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 12410572833a2 ("Bluetooth: Break add adv into two mgmt commands")
+Signed-off-by: Inga Stotland <inga.stotland@intel.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/vmci_transport.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/bluetooth/mgmt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/vmw_vsock/vmci_transport.c b/net/vmw_vsock/vmci_transport.c
-index b17dc9745188..94c1112f1c8c 100644
---- a/net/vmw_vsock/vmci_transport.c
-+++ b/net/vmw_vsock/vmci_transport.c
-@@ -1711,7 +1711,11 @@ static int vmci_transport_dgram_enqueue(
- 	if (!dg)
- 		return -ENOMEM;
+diff --git a/net/bluetooth/mgmt.c b/net/bluetooth/mgmt.c
+index f09f0a78eb7b..04000499f4a2 100644
+--- a/net/bluetooth/mgmt.c
++++ b/net/bluetooth/mgmt.c
+@@ -7971,7 +7971,7 @@ static int add_ext_adv_params(struct sock *sk, struct hci_dev *hdev,
+ 	 * extra parameters we don't know about will be ignored in this request.
+ 	 */
+ 	if (data_len < MGMT_ADD_EXT_ADV_PARAMS_MIN_SIZE)
+-		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_ADD_ADVERTISING,
++		return mgmt_cmd_status(sk, hdev->id, MGMT_OP_ADD_EXT_ADV_PARAMS,
+ 				       MGMT_STATUS_INVALID_PARAMS);
  
--	memcpy_from_msg(VMCI_DG_PAYLOAD(dg), msg, len);
-+	err = memcpy_from_msg(VMCI_DG_PAYLOAD(dg), msg, len);
-+	if (err) {
-+		kfree(dg);
-+		return err;
-+	}
- 
- 	dg->dst = vmci_make_handle(remote_addr->svm_cid,
- 				   remote_addr->svm_port);
+ 	flags = __le32_to_cpu(cp->flags);
 -- 
 2.35.1
 
