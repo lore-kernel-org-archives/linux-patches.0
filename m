@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 225791863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94668C433D2;
-	Wed, 28 Dec 2022 15:04:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C403D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:04:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49C1BC433F0;
+	Wed, 28 Dec 2022 15:04:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239870;
-	bh=ZaxVzrrKeC0+AxsyMBxgRBrWUXjgwt8XTpTbLK7TLBM=;
+	s=korg; t=1672239872;
+	bh=iyu9Upqa+B+/0iUubhYlutIvi5/UDytjojjYFweiQSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NOG6ukoPmgVe3LSNmQ/gRwao9P4reBnHl1ecs0LQmG1EdQVwThbcpK8RcFpx+9VGa
-	 +MC36JGHDfB7ZRslM3mg4XRexKVCDut1dbqOxiHzRGbfT2GvnJELhXzkU+v1R8s1H6
-	 VZZntvZo4u8HEODRDOF//hgodbeJLW4xJz2UO90Q=
+	b=FbIttuM2m2VBXgxb1fHxXZk46/MwQoBebxxraTnF1GJQyFNeEuZ5G2I4pCHZ3Cjb9
+	 GJbllIvWA8DEi6rVYNbVJZH2wQvF4Wjd7LvrBIFS4OmBcX4/dhWHjEVdmQ7PX3mvS3
+	 zL1BT+tfIrTYsdhTZfe+yqmtGcwHIrPaD3+PiRFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eddie James <eajames@linux.ibm.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Joel Stanley <joel@jms.id.au>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0088/1073] tpm: tis_i2c: Fix sanity check interrupt enable mask
-Date: Wed, 28 Dec 2022 15:27:56 +0100
-Message-Id: <20221228144330.448613807@linuxfoundation.org>
+Subject: [PATCH 5.15 280/731] regulator: core: fix resource leak in regulator_register()
+Date: Wed, 28 Dec 2022 15:36:27 +0100
+Message-Id: <20221228144304.689577366@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eddie James <eajames@linux.ibm.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 561d6ef75628db9cce433e573aa3cdb6b3bba903 ]
+[ Upstream commit ba62319a42c50e6254e98b3f316464fac8e77968 ]
 
-The sanity check mask for TPM_INT_ENABLE register was off by 8 bits,
-resulting in failure to probe if the TPM_INT_ENABLE register was a
-valid value.
+I got some resource leak reports while doing fault injection test:
 
-Fixes: bbc23a07b072 ("tpm: Add tpm_tis_i2c backend for tpm_tis_core")
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Tested-by: Joel Stanley <joel@jms.id.au>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+  OF: ERROR: memory leak, expected refcount 1 instead of 100,
+  of_node_get()/of_node_put() unbalanced - destroy cset entry:
+  attach overlay node /i2c/pmic@64/regulators/buck1
+
+unreferenced object 0xffff88810deea000 (size 512):
+  comm "490-i2c-rt5190a", pid 253, jiffies 4294859840 (age 5061.046s)
+  hex dump (first 32 bytes):
+    00 00 00 00 ad 4e ad de ff ff ff ff 00 00 00 00  .....N..........
+    ff ff ff ff ff ff ff ff a0 1e 00 a1 ff ff ff ff  ................
+  backtrace:
+    [<00000000d78541e2>] kmalloc_trace+0x21/0x110
+    [<00000000b343d153>] device_private_init+0x32/0xd0
+    [<00000000be1f0c70>] device_add+0xb2d/0x1030
+    [<00000000e3e6344d>] regulator_register+0xaf2/0x12a0
+    [<00000000e2f5e754>] devm_regulator_register+0x57/0xb0
+    [<000000008b898197>] rt5190a_probe+0x52a/0x861 [rt5190a_regulator]
+
+unreferenced object 0xffff88810b617b80 (size 32):
+  comm "490-i2c-rt5190a", pid 253, jiffies 4294859904 (age 5060.983s)
+  hex dump (first 32 bytes):
+    72 65 67 75 6c 61 74 6f 72 2e 32 38 36 38 2d 53  regulator.2868-S
+    55 50 50 4c 59 00 ff ff 29 00 00 00 2b 00 00 00  UPPLY...)...+...
+  backtrace:
+    [<000000009da9280d>] __kmalloc_node_track_caller+0x44/0x1b0
+    [<0000000025c6a4e5>] kstrdup+0x3a/0x70
+    [<00000000790efb69>] create_regulator+0xc0/0x4e0
+    [<0000000005ed203a>] regulator_resolve_supply+0x2d4/0x440
+    [<0000000045796214>] regulator_register+0x10b3/0x12a0
+    [<00000000e2f5e754>] devm_regulator_register+0x57/0xb0
+    [<000000008b898197>] rt5190a_probe+0x52a/0x861 [rt5190a_regulator]
+
+After calling regulator_resolve_supply(), the 'rdev->supply' is set
+by set_supply(), after this set, in the error path, the resources
+need be released, so call regulator_put() to avoid the leaks.
+
+Fixes: aea6cb99703e ("regulator: resolve supply after creating regulator")
+Fixes: 8a866d527ac0 ("regulator: core: Resolve supply name earlier to prevent double-init")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221202025111.496402-1-yangyingliang@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_tis_i2c.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/char/tpm/tpm_tis_i2c.c b/drivers/char/tpm/tpm_tis_i2c.c
-index ba0911b1d1ff..29f0db41c0b7 100644
---- a/drivers/char/tpm/tpm_tis_i2c.c
-+++ b/drivers/char/tpm/tpm_tis_i2c.c
-@@ -49,7 +49,7 @@
- 
- /* Masks with bits that must be read zero */
- #define TPM_ACCESS_READ_ZERO 0x48
--#define TPM_INT_ENABLE_ZERO 0x7FFFFF6
-+#define TPM_INT_ENABLE_ZERO 0x7FFFFF60
- #define TPM_STS_READ_ZERO 0x23
- #define TPM_INTF_CAPABILITY_ZERO 0x0FFFF000
- #define TPM_I2C_INTERFACE_CAPABILITY_ZERO 0x80000000
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index ab93debb817c..1a5aeb4868aa 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -5548,6 +5548,7 @@ regulator_register(const struct regulator_desc *regulator_desc,
+ 	regulator_remove_coupling(rdev);
+ 	mutex_unlock(&regulator_list_mutex);
+ wash:
++	regulator_put(rdev->supply);
+ 	kfree(rdev->coupling_desc.coupled_rdevs);
+ 	mutex_lock(&regulator_list_mutex);
+ 	regulator_ena_gpio_free(rdev);
 -- 
 2.35.1
 
