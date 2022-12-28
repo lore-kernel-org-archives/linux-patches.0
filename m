@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D98C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69A5C433EF;
-	Wed, 28 Dec 2022 15:25:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53431863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CC41C433EF;
+	Wed, 28 Dec 2022 15:25:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241149;
-	bh=HMeGYSEjaVK0ctRVfTQQyllG7nohyNqEuvaEqfo9ZHQ=;
+	s=korg; t=1672241151;
+	bh=2qceR9AcN3nFhGHT2+Op9iWgbpDKsdi52uZZXhTeoE0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I2FuR0o7P1pj4gAh8F4HGRP84JyapBkWzLaLKVIynYRsDGgIJ7O1YVDJrsOOl8Ub0
-	 LnR+MLxS2furt+Up4/087rnvElncR6hN2eWE8Hj/OB/R/boUzs/QbnA+u4Gx5EF9I5
-	 thAgyovt/lp3dndw4s7I+2wm5+XU+IzB8Oh+LCKA=
+	b=hnm7gKl1g/Cq0BdIVk7KV+EOEG/+u1gZcks+zvsgoRcHXR/7AV4itHVDRV3p3LDHK
+	 ZGiGkPnlCw26DKeAu0RvojYdG7aEqWGdMG4TlHfibkfTOxkYr3d9vOqFZGQsBTcQrO
+	 O028eVQRtOE/QoMt62lMNPVU2fgihXl4JYRZjjwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Anssi Hannula <anssi.hannula@bitwise.fi>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0247/1073] can: kvaser_usb_leaf: Fix bogus restart events
-Date: Wed, 28 Dec 2022 15:30:35 +0100
-Message-Id: <20221228144334.732924480@linuxfoundation.org>
+Subject: [PATCH 6.1 0213/1146] libbpf: Fix null-pointer dereference in find_prog_by_sec_insn()
+Date: Wed, 28 Dec 2022 15:29:12 +0100
+Message-Id: <20221228144335.932302242@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,64 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anssi Hannula <anssi.hannula@bitwise.fi>
+From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 
-[ Upstream commit 90904d326269a38fe5dd895fb2db7c03199654c4 ]
+[ Upstream commit d0d382f95a9270dcf803539d6781d6bd67e3f5b2 ]
 
-When auto-restart is enabled, the kvaser_usb_leaf driver considers
-transition from any state >= CAN_STATE_BUS_OFF as a bus-off recovery
-event (restart).
+When there are no program sections, obj->programs is left unallocated,
+and find_prog_by_sec_insn()'s search lands on &obj->programs[0] == NULL,
+and will cause null-pointer dereference in the following access to
+prog->sec_idx.
 
-However, these events may occur at interface startup time before
-kvaser_usb_open() has set the state to CAN_STATE_ERROR_ACTIVE, causing
-restarts counter to increase and CAN_ERR_RESTARTED to be sent despite no
-actual restart having occurred.
+Guard the search with obj->nr_programs similar to what's being done in
+__bpf_program__iter() to prevent null-pointer access from happening.
 
-Fix that by making the auto-restart condition checks more strict so that
-they only trigger when the interface was actually in the BUS_OFF state.
-
-Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
-Tested-by: Jimmy Assarsson <extja@kvaser.com>
-Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/all/20221010185237.319219-10-extja@kvaser.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: db2b8b06423c ("libbpf: Support CO-RE relocations for multi-prog sections")
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20221012022353.7350-4-shung-hsi.yu@suse.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/lib/bpf/libbpf.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-index 4f9c76f4d0da..fa940be4e1b0 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-@@ -898,7 +898,7 @@ static void kvaser_usb_leaf_tx_acknowledge(const struct kvaser_usb *dev,
- 	context = &priv->tx_contexts[tid % dev->max_tx_urbs];
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index a0d3cc39ea73..b9a29d105376 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -4115,6 +4115,9 @@ static struct bpf_program *find_prog_by_sec_insn(const struct bpf_object *obj,
+ 	int l = 0, r = obj->nr_programs - 1, m;
+ 	struct bpf_program *prog;
  
- 	/* Sometimes the state change doesn't come after a bus-off event */
--	if (priv->can.restart_ms && priv->can.state >= CAN_STATE_BUS_OFF) {
-+	if (priv->can.restart_ms && priv->can.state == CAN_STATE_BUS_OFF) {
- 		struct sk_buff *skb;
- 		struct can_frame *cf;
- 
-@@ -998,7 +998,7 @@ kvaser_usb_leaf_rx_error_update_can_state(struct kvaser_usb_net_priv *priv,
- 	}
- 
- 	if (priv->can.restart_ms &&
--	    cur_state >= CAN_STATE_BUS_OFF &&
-+	    cur_state == CAN_STATE_BUS_OFF &&
- 	    new_state < CAN_STATE_BUS_OFF)
- 		priv->can.can_stats.restarts++;
- 
-@@ -1088,7 +1088,7 @@ static void kvaser_usb_leaf_rx_error(const struct kvaser_usb *dev,
- 		}
- 
- 		if (priv->can.restart_ms &&
--		    old_state >= CAN_STATE_BUS_OFF &&
-+		    old_state == CAN_STATE_BUS_OFF &&
- 		    new_state < CAN_STATE_BUS_OFF) {
- 			cf->can_id |= CAN_ERR_RESTARTED;
- 			netif_carrier_on(priv->netdev);
++	if (!obj->nr_programs)
++		return NULL;
++
+ 	while (l < r) {
+ 		m = l + (r - l + 1) / 2;
+ 		prog = &obj->programs[m];
 -- 
 2.35.1
 
