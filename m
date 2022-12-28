@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56A3E1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BFCC433D2;
-	Wed, 28 Dec 2022 15:57:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A9B1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F94C433D2;
+	Wed, 28 Dec 2022 15:58:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243078;
-	bh=UO2KWIN9lEp9rlsay7SFYUnLpIwAJ6qTyqrbsgEsLyI=;
+	s=korg; t=1672243080;
+	bh=f6uMwpk10iQ6hf7u5EM9uglE3krudtcEF2jqcO8nND4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ws9me/qrjZU/Y3AJM1BVvlVDAufvofF5hggKJuCd12AB+B7trc9F97r0ebZHTVibL
-	 P43b/Wwb2aX3qgSauVYSmbfT86CTO8277N4BlRA14P3rWNyxV4ln4FnEt94cbpDYUL
-	 3fNCEZYyXGJWcttsHM2TXSWB27evLQEXI/5jcvHU=
+	b=G3FDa2u2GgUrghKqoGNRu3Ng07EED0GWZ+mpjjsqzhYomb01mDUoRC3fdFmnUDjZc
+	 UwVxqho4wJSS5Hjny7sC8AhOsUaM1cy3l76AKD/QyyQNwxQnyHaYSWruW95GwpvzGY
+	 lS7A3ZW9kwIdwi6qRHN7/IFt1Q7zEdlut5Zf7m+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Mike Marshall <hubcap@omnibond.com>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 681/731] orangefs: Fix kmemleak in orangefs_prepare_debugfs_help_string()
-Date: Wed, 28 Dec 2022 15:43:08 +0100
-Message-Id: <20221228144316.212466904@linuxfoundation.org>
+Subject: [PATCH 6.1 0449/1146] spi: spidev: mask SPI_CS_HIGH in SPI_IOC_RD_MODE
+Date: Wed, 28 Dec 2022 15:33:08 +0100
+Message-Id: <20221228144342.376843371@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,60 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit d23417a5bf3a3afc55de5442eb46e1e60458b0a1 ]
+[ Upstream commit 7dbfa445ff7393d1c4c066c1727c9e0af1251958 ]
 
-When insert and remove the orangefs module, then debug_help_string will
-be leaked:
+Commit f3186dd87669 ("spi: Optionally use GPIO descriptors for CS GPIOs")
+has changed the user-space interface so that bogus SPI_CS_HIGH started
+to appear in the mask returned by SPI_IOC_RD_MODE even for active-low CS
+pins. Commit 138c9c32f090
+("spi: spidev: Fix CS polarity if GPIO descriptors are used") fixed only
+SPI_IOC_WR_MODE part of the problem. Let's fix SPI_IOC_RD_MODE
+symmetrically.
 
-  unreferenced object 0xffff8881652ba000 (size 4096):
-    comm "insmod", pid 1701, jiffies 4294893639 (age 13218.530s)
-    hex dump (first 32 bytes):
-      43 6c 69 65 6e 74 20 44 65 62 75 67 20 4b 65 79  Client Debug Key
-      77 6f 72 64 73 20 61 72 65 20 75 6e 6b 6e 6f 77  words are unknow
-    backtrace:
-      [<0000000004e6f8e3>] kmalloc_trace+0x27/0xa0
-      [<0000000006f75d85>] orangefs_prepare_debugfs_help_string+0x5e/0x480 [orangefs]
-      [<0000000091270a2a>] _sub_I_65535_1+0x57/0xf70 [crc_itu_t]
-      [<000000004b1ee1a3>] do_one_initcall+0x87/0x2a0
-      [<000000001d0614ae>] do_init_module+0xdf/0x320
-      [<00000000efef068c>] load_module+0x2f98/0x3330
-      [<000000006533b44d>] __do_sys_finit_module+0x113/0x1b0
-      [<00000000a0da6f99>] do_syscall_64+0x35/0x80
-      [<000000007790b19b>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+Test case:
 
-When remove the module, should always free debug_help_string. Should
-always free the allocated buffer when change the free_debug_help_string.
+	#include <sys/ioctl.h>
+	#include <fcntl.h>
+	#include <linux/spi/spidev.h>
 
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+	int main(int argc, char **argv)
+	{
+		char modew = SPI_CPHA;
+		char moder;
+		int f = open("/dev/spidev0.0", O_RDWR);
+
+		if (f < 0)
+			return 1;
+
+		ioctl(f, SPI_IOC_WR_MODE, &modew);
+		ioctl(f, SPI_IOC_RD_MODE, &moder);
+
+		return moder == modew ? 0 : 2;
+	}
+
+Fixes: f3186dd87669 ("spi: Optionally use GPIO descriptors for CS GPIOs")
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://lore.kernel.org/r/20221130162927.539512-1-alexander.sverdlin@siemens.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/orangefs-debugfs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/spi/spidev.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
-index 29eaa4544372..a848b6ef9599 100644
---- a/fs/orangefs/orangefs-debugfs.c
-+++ b/fs/orangefs/orangefs-debugfs.c
-@@ -222,6 +222,8 @@ static void orangefs_kernel_debug_init(void)
- void orangefs_debugfs_cleanup(void)
- {
- 	debugfs_remove_recursive(debug_dir);
-+	kfree(debug_help_string);
-+	debug_help_string = NULL;
- }
- 
- /* open ORANGEFS_KMOD_DEBUG_HELP_FILE */
-@@ -671,6 +673,7 @@ int orangefs_prepare_debugfs_help_string(int at_boot)
- 		memset(debug_help_string, 0, DEBUG_HELP_STRING_SIZE);
- 		strlcat(debug_help_string, new, string_size);
- 		mutex_unlock(&orangefs_help_file_lock);
-+		kfree(new);
- 	}
- 
- 	rc = 0;
+diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
+index b2775d82d2d7..6313e7d0cdf8 100644
+--- a/drivers/spi/spidev.c
++++ b/drivers/spi/spidev.c
+@@ -377,12 +377,23 @@ spidev_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+ 	switch (cmd) {
+ 	/* read requests */
+ 	case SPI_IOC_RD_MODE:
+-		retval = put_user(spi->mode & SPI_MODE_MASK,
+-					(__u8 __user *)arg);
+-		break;
+ 	case SPI_IOC_RD_MODE32:
+-		retval = put_user(spi->mode & SPI_MODE_MASK,
+-					(__u32 __user *)arg);
++		tmp = spi->mode;
++
++		{
++			struct spi_controller *ctlr = spi->controller;
++
++			if (ctlr->use_gpio_descriptors && ctlr->cs_gpiods &&
++			    ctlr->cs_gpiods[spi->chip_select])
++				tmp &= ~SPI_CS_HIGH;
++		}
++
++		if (cmd == SPI_IOC_RD_MODE)
++			retval = put_user(tmp & SPI_MODE_MASK,
++					  (__u8 __user *)arg);
++		else
++			retval = put_user(tmp & SPI_MODE_MASK,
++					  (__u32 __user *)arg);
+ 		break;
+ 	case SPI_IOC_RD_LSB_FIRST:
+ 		retval = put_user((spi->mode & SPI_LSB_FIRST) ?  1 : 0,
 -- 
 2.35.1
 
