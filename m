@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A47A1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18AD0C433EF;
-	Wed, 28 Dec 2022 16:40:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9BA1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E025BC433D2;
+	Wed, 28 Dec 2022 16:40:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245609;
-	bh=kjAbANO2oQ9HRWy1w5jZAbLseyqeRUG7KDXrkkxEhu0=;
+	s=korg; t=1672245612;
+	bh=oK4XDHowo8pk+fzEGgRwIFdrMEojl+jVI5Mt9gJlPyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ced8PlZyLvnLq2xRaIFFsfJNiKq21JfF8Wvn7SEkI12IngK1LBsf0A6+YJ3x1ydvL
-	 kn5hN+o3tp1FGXDhIkntE75W9zm9PlYpw62hoGDb09Vp2JLgBaj2/rArKNju9YFZrN
-	 UyYexQsDDOY1BXmuwtUlgXN3fbzuKf2Y6yi7QvQE=
+	b=2uwUMVBf+O7egng9opFVuIG7ITetoME7KJdkuU08bMy3IIjjqIAHQxO45Uo5B9ajE
+	 1QxCHlcWaxZhkWvf+yqf66Vz8DfQiitIrVghbwrY7ZT5qHr+73Uj32lfiPrisKICkD
+	 bK0OGMKGGr7RkaBwaoIbp//EZOwHBTDuAkfUhwtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+15342c1aa6a00fb7a438@syzkaller.appspotmail.com,
+	Dongliang Mu <mudongliangabcd@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0889/1146] bonding: add missed __rcu annotation for curr_active_slave
-Date: Wed, 28 Dec 2022 15:40:28 +0100
-Message-Id: <20221228144354.327608151@linuxfoundation.org>
+Subject: [PATCH 6.0 0892/1073] fs: jfs: fix shift-out-of-bounds in dbAllocAG
+Date: Wed, 28 Dec 2022 15:41:20 +0100
+Message-Id: <20221228144352.259095516@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +36,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Dongliang Mu <mudongliangabcd@gmail.com>
 
-[ Upstream commit 3d0b738fc5adf9f380702ac1424672e4b32c3781 ]
+[ Upstream commit 898f706695682b9954f280d95e49fa86ffa55d08 ]
 
-There is one direct accesses to bond->curr_active_slave in
-bond_miimon_commit(). Protected it by rcu_access_pointer()
-since the later of this function also use this one.
+Syzbot found a crash : UBSAN: shift-out-of-bounds in dbAllocAG. The
+underlying bug is the missing check of bmp->db_agl2size. The field can
+be greater than 64 and trigger the shift-out-of-bounds.
 
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: e95cc44763a4 ("bonding: do failover when high prio link up")
+Fix this bug by adding a check of bmp->db_agl2size in dbMount since this
+field is used in many following functions. The upper bound for this
+field is L2MAXL2SIZE - L2MAXAG, thanks for the help of Dave Kleikamp.
+Note that, for maintenance, I reorganized error handling code of dbMount.
+
+Reported-by: syzbot+15342c1aa6a00fb7a438@syzkaller.appspotmail.com
+Signed-off-by: Dongliang Mu <mudongliangabcd@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/jfs_dmap.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 29d0a6493b1b..af35a46994cc 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2698,7 +2698,7 @@ static void bond_miimon_commit(struct bonding *bond)
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 6b838d3ae7c2..e1cbfbb60303 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -155,7 +155,7 @@ int dbMount(struct inode *ipbmap)
+ 	struct bmap *bmp;
+ 	struct dbmap_disk *dbmp_le;
+ 	struct metapage *mp;
+-	int i;
++	int i, err;
  
- 			bond_miimon_link_change(bond, slave, BOND_LINK_UP);
+ 	/*
+ 	 * allocate/initialize the in-memory bmap descriptor
+@@ -170,8 +170,8 @@ int dbMount(struct inode *ipbmap)
+ 			   BMAPBLKNO << JFS_SBI(ipbmap->i_sb)->l2nbperpage,
+ 			   PSIZE, 0);
+ 	if (mp == NULL) {
+-		kfree(bmp);
+-		return -EIO;
++		err = -EIO;
++		goto err_kfree_bmp;
+ 	}
  
--			if (!bond->curr_active_slave || slave == primary)
-+			if (!rcu_access_pointer(bond->curr_active_slave) || slave == primary)
- 				goto do_failover;
+ 	/* copy the on-disk bmap descriptor to its in-memory version. */
+@@ -181,9 +181,8 @@ int dbMount(struct inode *ipbmap)
+ 	bmp->db_l2nbperpage = le32_to_cpu(dbmp_le->dn_l2nbperpage);
+ 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
+ 	if (!bmp->db_numag) {
+-		release_metapage(mp);
+-		kfree(bmp);
+-		return -EINVAL;
++		err = -EINVAL;
++		goto err_release_metapage;
+ 	}
  
- 			continue;
+ 	bmp->db_maxlevel = le32_to_cpu(dbmp_le->dn_maxlevel);
+@@ -194,6 +193,11 @@ int dbMount(struct inode *ipbmap)
+ 	bmp->db_agwidth = le32_to_cpu(dbmp_le->dn_agwidth);
+ 	bmp->db_agstart = le32_to_cpu(dbmp_le->dn_agstart);
+ 	bmp->db_agl2size = le32_to_cpu(dbmp_le->dn_agl2size);
++	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG) {
++		err = -EINVAL;
++		goto err_release_metapage;
++	}
++
+ 	for (i = 0; i < MAXAG; i++)
+ 		bmp->db_agfree[i] = le64_to_cpu(dbmp_le->dn_agfree[i]);
+ 	bmp->db_agsize = le64_to_cpu(dbmp_le->dn_agsize);
+@@ -214,6 +218,12 @@ int dbMount(struct inode *ipbmap)
+ 	BMAP_LOCK_INIT(bmp);
+ 
+ 	return (0);
++
++err_release_metapage:
++	release_metapage(mp);
++err_kfree_bmp:
++	kfree(bmp);
++	return err;
+ }
+ 
+ 
 -- 
 2.35.1
 
