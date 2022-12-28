@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB651C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86674C433F2;
-	Wed, 28 Dec 2022 16:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA1E91C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:17:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CF0FC433D2;
+	Wed, 28 Dec 2022 16:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244271;
-	bh=76SbrkjyDdkHkvXCQCqaibBx5NpDPkZFk1cw3Ud3S5o=;
+	s=korg; t=1672244274;
+	bh=3dyoOV2dBFkWLhdt9NL07C/fqvThjgd3Xxn8qEq4kSc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yUyonKNx9TbX+Rkf9DSjk2z9oAnAYwd1xj6Gu+za4odJ6HDW4gZMyVIgFTjllwZ9G
-	 jm3CKKiJ6FgYnLgh9rHU1MzHqETuyv4X3WcROs97aFUttWjia/s7nsDznk3Ca0IYF9
-	 kPKFzlPzOhIc4WEd4L8F9lXBxMTy9Q17CWHNxelA=
+	b=tMFZvi+oi0EoHxDJVLhOYigwVAlFAhA1XsPSZJjfQ8Zcop0V6Vtxrv//QBYw8AHFU
+	 gs5S4IvZhHgi1SRSEpBK64bHdfVR9HMoryN7hlBiNUOpSs+TMBPO83pyk7sAcEoQbi
+	 wKx+WjjQe2rztYNuq24iq91qlBHMh+FObedW7ojc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Marek Vasut <marex@denx.de>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0639/1146] crypto: x86/sha512 - fix possible crash with CFI enabled
-Date: Wed, 28 Dec 2022 15:36:18 +0100
-Message-Id: <20221228144347.519292072@linuxfoundation.org>
+Subject: [PATCH 6.0 0680/1073] extcon: usbc-tusb320: Factor out extcon into dedicated functions
+Date: Wed, 28 Dec 2022 15:37:48 +0100
+Message-Id: <20221228144346.506834117@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,93 +35,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit a1d72fa33186ac69c7d8120c71f41ea4fc23dcc9 ]
+[ Upstream commit 9483811a126a319ecac749f1b767ea5faecc7aed ]
 
-sha512_transform_ssse3(), sha512_transform_avx(), and
-sha512_transform_rorx() are called via indirect function calls.
-Therefore they need to use SYM_TYPED_FUNC_START instead of
-SYM_FUNC_START to cause their type hashes to be emitted when the kernel
-is built with CONFIG_CFI_CLANG=y.  Otherwise, the code crashes with a
-CFI failure (if the compiler didn't happen to optimize out the indirect
-calls).
+Move extcon code into separate functions in preparation for addition of
+USB TYPE-C support. No functional change.
 
-Fixes: ccace936eec7 ("x86: Add types to indirectly called assembly functions")
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Stable-dep-of: 581c848b610d ("extcon: usbc-tusb320: Update state on probe even if no IRQ pending")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/crypto/sha512-avx-asm.S   | 3 ++-
- arch/x86/crypto/sha512-avx2-asm.S  | 3 ++-
- arch/x86/crypto/sha512-ssse3-asm.S | 3 ++-
- 3 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/extcon/extcon-usbc-tusb320.c | 75 +++++++++++++++++-----------
+ 1 file changed, 46 insertions(+), 29 deletions(-)
 
-diff --git a/arch/x86/crypto/sha512-avx-asm.S b/arch/x86/crypto/sha512-avx-asm.S
-index 1fefe6dd3a9e..b0984f19fdb4 100644
---- a/arch/x86/crypto/sha512-avx-asm.S
-+++ b/arch/x86/crypto/sha512-avx-asm.S
-@@ -48,6 +48,7 @@
- ########################################################################
+diff --git a/drivers/extcon/extcon-usbc-tusb320.c b/drivers/extcon/extcon-usbc-tusb320.c
+index 6ba3d89b106d..aced4bbb455d 100644
+--- a/drivers/extcon/extcon-usbc-tusb320.c
++++ b/drivers/extcon/extcon-usbc-tusb320.c
+@@ -184,19 +184,9 @@ static struct tusb320_ops tusb320l_ops = {
+ 	.get_revision = tusb320l_get_revision,
+ };
  
- #include <linux/linkage.h>
-+#include <linux/cfi_types.h>
+-static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
++static void tusb320_extcon_irq_handler(struct tusb320_priv *priv, u8 reg)
+ {
+-	struct tusb320_priv *priv = dev_id;
+ 	int state, polarity;
+-	unsigned reg;
+-
+-	if (regmap_read(priv->regmap, TUSB320_REG9, &reg)) {
+-		dev_err(priv->dev, "error during i2c read!\n");
+-		return IRQ_NONE;
+-	}
+-
+-	if (!(reg & TUSB320_REG9_INTERRUPT_STATUS))
+-		return IRQ_NONE;
  
- .text
+ 	state = (reg >> TUSB320_REG9_ATTACHED_STATE_SHIFT) &
+ 		TUSB320_REG9_ATTACHED_STATE_MASK;
+@@ -219,6 +209,22 @@ static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
+ 	extcon_sync(priv->edev, EXTCON_USB_HOST);
  
-@@ -273,7 +274,7 @@ frame_size = frame_WK + WK_SIZE
- # of SHA512 message blocks.
- # "blocks" is the message length in SHA512 blocks
- ########################################################################
--SYM_FUNC_START(sha512_transform_avx)
-+SYM_TYPED_FUNC_START(sha512_transform_avx)
- 	test msglen, msglen
- 	je nowork
+ 	priv->state = state;
++}
++
++static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
++{
++	struct tusb320_priv *priv = dev_id;
++	unsigned int reg;
++
++	if (regmap_read(priv->regmap, TUSB320_REG9, &reg)) {
++		dev_err(priv->dev, "error during i2c read!\n");
++		return IRQ_NONE;
++	}
++
++	if (!(reg & TUSB320_REG9_INTERRUPT_STATUS))
++		return IRQ_NONE;
++
++	tusb320_extcon_irq_handler(priv, reg);
  
-diff --git a/arch/x86/crypto/sha512-avx2-asm.S b/arch/x86/crypto/sha512-avx2-asm.S
-index 5cdaab7d6901..b1ca99055ef9 100644
---- a/arch/x86/crypto/sha512-avx2-asm.S
-+++ b/arch/x86/crypto/sha512-avx2-asm.S
-@@ -50,6 +50,7 @@
- ########################################################################
+ 	regmap_write(priv->regmap, TUSB320_REG9, reg);
  
- #include <linux/linkage.h>
-+#include <linux/cfi_types.h>
+@@ -230,8 +236,32 @@ static const struct regmap_config tusb320_regmap_config = {
+ 	.val_bits = 8,
+ };
  
- .text
+-static int tusb320_extcon_probe(struct i2c_client *client,
+-				const struct i2c_device_id *id)
++static int tusb320_extcon_probe(struct tusb320_priv *priv)
++{
++	int ret;
++
++	priv->edev = devm_extcon_dev_allocate(priv->dev, tusb320_extcon_cable);
++	if (IS_ERR(priv->edev)) {
++		dev_err(priv->dev, "failed to allocate extcon device\n");
++		return PTR_ERR(priv->edev);
++	}
++
++	ret = devm_extcon_dev_register(priv->dev, priv->edev);
++	if (ret < 0) {
++		dev_err(priv->dev, "failed to register extcon device\n");
++		return ret;
++	}
++
++	extcon_set_property_capability(priv->edev, EXTCON_USB,
++				       EXTCON_PROP_USB_TYPEC_POLARITY);
++	extcon_set_property_capability(priv->edev, EXTCON_USB_HOST,
++				       EXTCON_PROP_USB_TYPEC_POLARITY);
++
++	return 0;
++}
++
++static int tusb320_probe(struct i2c_client *client,
++			 const struct i2c_device_id *id)
+ {
+ 	struct tusb320_priv *priv;
+ 	const void *match_data;
+@@ -257,12 +287,6 @@ static int tusb320_extcon_probe(struct i2c_client *client,
  
-@@ -565,7 +566,7 @@ frame_size = frame_CTX + CTX_SIZE
- # of SHA512 message blocks.
- # "blocks" is the message length in SHA512 blocks
- ########################################################################
--SYM_FUNC_START(sha512_transform_rorx)
-+SYM_TYPED_FUNC_START(sha512_transform_rorx)
- 	# Save GPRs
- 	push	%rbx
- 	push	%r12
-diff --git a/arch/x86/crypto/sha512-ssse3-asm.S b/arch/x86/crypto/sha512-ssse3-asm.S
-index b84c22e06c5f..c06afb5270e5 100644
---- a/arch/x86/crypto/sha512-ssse3-asm.S
-+++ b/arch/x86/crypto/sha512-ssse3-asm.S
-@@ -48,6 +48,7 @@
- ########################################################################
+ 	priv->ops = (struct tusb320_ops*)match_data;
  
- #include <linux/linkage.h>
-+#include <linux/cfi_types.h>
+-	priv->edev = devm_extcon_dev_allocate(priv->dev, tusb320_extcon_cable);
+-	if (IS_ERR(priv->edev)) {
+-		dev_err(priv->dev, "failed to allocate extcon device\n");
+-		return PTR_ERR(priv->edev);
+-	}
+-
+ 	if (priv->ops->get_revision) {
+ 		ret = priv->ops->get_revision(priv, &revision);
+ 		if (ret)
+@@ -272,16 +296,9 @@ static int tusb320_extcon_probe(struct i2c_client *client,
+ 			dev_info(priv->dev, "chip revision %d\n", revision);
+ 	}
  
- .text
+-	ret = devm_extcon_dev_register(priv->dev, priv->edev);
+-	if (ret < 0) {
+-		dev_err(priv->dev, "failed to register extcon device\n");
++	ret = tusb320_extcon_probe(priv);
++	if (ret)
+ 		return ret;
+-	}
+-
+-	extcon_set_property_capability(priv->edev, EXTCON_USB,
+-				       EXTCON_PROP_USB_TYPEC_POLARITY);
+-	extcon_set_property_capability(priv->edev, EXTCON_USB_HOST,
+-				       EXTCON_PROP_USB_TYPEC_POLARITY);
  
-@@ -274,7 +275,7 @@ frame_size = frame_WK + WK_SIZE
- # of SHA512 message blocks.
- # "blocks" is the message length in SHA512 blocks.
- ########################################################################
--SYM_FUNC_START(sha512_transform_ssse3)
-+SYM_TYPED_FUNC_START(sha512_transform_ssse3)
+ 	/* update initial state */
+ 	tusb320_irq_handler(client->irq, priv);
+@@ -313,7 +330,7 @@ static const struct of_device_id tusb320_extcon_dt_match[] = {
+ MODULE_DEVICE_TABLE(of, tusb320_extcon_dt_match);
  
- 	test msglen, msglen
- 	je nowork
+ static struct i2c_driver tusb320_extcon_driver = {
+-	.probe		= tusb320_extcon_probe,
++	.probe		= tusb320_probe,
+ 	.driver		= {
+ 		.name	= "extcon-tusb320",
+ 		.of_match_table = tusb320_extcon_dt_match,
 -- 
 2.35.1
 
