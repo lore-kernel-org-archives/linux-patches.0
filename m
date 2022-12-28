@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750051863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6205C433D2;
-	Wed, 28 Dec 2022 15:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD971863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921EEC433F2;
+	Wed, 28 Dec 2022 15:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241026;
-	bh=it1IqFbAMGrQR55YRJyMG3htlj7dBdDxPU83/mm0UFI=;
+	s=korg; t=1672241028;
+	bh=ln6sAnXo8QtLbXs9g6fTWwpDph2q6sSNhpQjYfhdyVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X5FYNEDUGHWUinBKCyDZpiI+A+kz1GK0GMkWVjlBU9LT7KFu7n2CgjlrZWjEtKOpp
-	 WP4I9Re8/u/Mx2L0mrejKqPWsiKDJgUmxW8haiihLnuzx3f4MWqgkWstrZKUCV/T+N
-	 X7HJVUIeqUiPrWNhxTAAUmcu3bDF7dO44ja3HL3I=
+	b=dFY0ZObPNF+1C+5+Xu4X+FrywprY1UODs2xUbsutzoYHt7TOmUzZVUqaFwgK5lEpR
+	 owDSJe54QFCrcNZqZZcWEQeXEQqTP7DWrEI/8Jy1D9xOTpR7sv2ivwWEPkH5GpYkdS
+	 EgJlq/3kaRvm8EHCA25tT53h1c0hW5fr3Ab+JRMA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Chengchang Tang <tangchengchang@huawei.com>,
+	Haoyue Xu <xuhaoyue1@hisilicon.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0231/1073] media: mediatek: vcodec: fix h264 cavlc bitstream fail
-Date: Wed, 28 Dec 2022 15:30:19 +0100
-Message-Id: <20221228144334.300933794@linuxfoundation.org>
+Subject: [PATCH 5.15 429/731] RDMA/hns: Fix AH attr queried by query_qp
+Date: Wed, 28 Dec 2022 15:38:56 +0100
+Message-Id: <20221228144309.000734739@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,81 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: Chengchang Tang <tangchengchang@huawei.com>
 
-[ Upstream commit d555409dd1b7cc9e7e5b9e2924c0ef4bf23f6c9b ]
+[ Upstream commit bc34c04f7b97c3794dec5a6d6d27ffd5f0e4f5c8 ]
 
-Some cavlc bistream will decode fail when the frame size is less than
-20 bytes. Need to add pending data at the end of the bitstream.
+The queried AH attr is invalid. This patch fix it.
 
-For the minimum size of mapped memory is 256 bytes(16x16), adding four
-bytes data won't lead to access unknown virtual memory.
+This problem is found by rdma-core test test_mr_rereg_pd
 
-Fixes: 59fba9eed5a7 ("media: mediatek: vcodec: support stateless H.264 decoding for mt8192")
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+ERROR: test_mr_rereg_pd (tests.test_mr.MRTest)
+Test that cover rereg MR's PD with this flow:
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "./tests/test_mr.py", line 157, in test_mr_rereg_pd
+    self.restate_qps()
+  File "./tests/test_mr.py", line 113, in restate_qps
+    self.server.qp.to_rts(self.server_qp_attr)
+  File "qp.pyx", line 1137, in pyverbs.qp.QP.to_rts
+  File "qp.pyx", line 1123, in pyverbs.qp.QP.to_rtr
+pyverbs.pyverbs_error.PyverbsRDMAError: Failed to modify QP state to RTR.
+Errno: 22, Invalid argument
+
+Fixes: 926a01dc000d ("RDMA/hns: Add QP operations support for hip08 SoC")
+Link: https://lore.kernel.org/r/20221126102911.2921820-3-xuhaoyue1@hisilicon.com
+Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
+Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../vcodec/vdec/vdec_h264_req_multi_if.c      | 32 +++++++++++++++++--
- 1 file changed, 29 insertions(+), 3 deletions(-)
+ drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c b/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
-index 4cc92700692b..18e048755d11 100644
---- a/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
-+++ b/drivers/media/platform/mediatek/vcodec/vdec/vdec_h264_req_multi_if.c
-@@ -539,6 +539,29 @@ static int vdec_h264_slice_core_decode(struct vdec_lat_buf *lat_buf)
- 	return 0;
- }
+diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+index 94f3a0a87dfd..155ae202b1ec 100644
+--- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
++++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
+@@ -5129,6 +5129,8 @@ static int hns_roce_v2_query_qp(struct ib_qp *ibqp, struct ib_qp_attr *qp_attr,
  
-+static void vdec_h264_insert_startcode(struct mtk_vcodec_dev *vcodec_dev, unsigned char *buf,
-+				       size_t *bs_size, struct mtk_h264_pps_param *pps)
-+{
-+	struct device *dev = &vcodec_dev->plat_dev->dev;
-+
-+	/* Need to add pending data at the end of bitstream when bs_sz is small than
-+	 * 20 bytes for cavlc bitstream, or lat will decode fail. This pending data is
-+	 * useful for mt8192 and mt8195 platform.
-+	 *
-+	 * cavlc bitstream when entropy_coding_mode_flag is false.
-+	 */
-+	if (pps->entropy_coding_mode_flag || *bs_size > 20 ||
-+	    !(of_device_is_compatible(dev->of_node, "mediatek,mt8192-vcodec-dec") ||
-+	    of_device_is_compatible(dev->of_node, "mediatek,mt8195-vcodec-dec")))
-+		return;
-+
-+	buf[*bs_size] = 0;
-+	buf[*bs_size + 1] = 0;
-+	buf[*bs_size + 2] = 1;
-+	buf[*bs_size + 3] = 0xff;
-+	(*bs_size) += 4;
-+}
-+
- static int vdec_h264_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
- 				      struct vdec_fb *fb, bool *res_chg)
- {
-@@ -582,9 +605,6 @@ static int vdec_h264_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
- 	}
- 
- 	inst->vsi->dec.nal_info = buf[nal_start_idx];
--	inst->vsi->dec.bs_buf_addr = (u64)bs->dma_addr;
--	inst->vsi->dec.bs_buf_size = bs->size;
--
- 	lat_buf->src_buf_req = src_buf_info->m2m_buf.vb.vb2_buf.req_obj.req;
- 	v4l2_m2m_buf_copy_metadata(&src_buf_info->m2m_buf.vb, &lat_buf->ts_info, true);
- 
-@@ -592,6 +612,12 @@ static int vdec_h264_slice_lat_decode(void *h_vdec, struct mtk_vcodec_mem *bs,
- 	if (err)
- 		goto err_free_fb_out;
- 
-+	vdec_h264_insert_startcode(inst->ctx->dev, buf, &bs->size,
-+				   &share_info->h264_slice_params.pps);
-+
-+	inst->vsi->dec.bs_buf_addr = (uint64_t)bs->dma_addr;
-+	inst->vsi->dec.bs_buf_size = bs->size;
-+
- 	*res_chg = inst->resolution_changed;
- 	if (inst->resolution_changed) {
- 		mtk_vcodec_debug(inst, "- resolution changed -");
+ 		rdma_ah_set_sl(&qp_attr->ah_attr,
+ 			       hr_reg_read(&context, QPC_SL));
++		rdma_ah_set_port_num(&qp_attr->ah_attr, hr_qp->port + 1);
++		rdma_ah_set_ah_flags(&qp_attr->ah_attr, IB_AH_GRH);
+ 		grh->flow_label = hr_reg_read(&context, QPC_FL);
+ 		grh->sgid_index = hr_reg_read(&context, QPC_GMV_IDX);
+ 		grh->hop_limit = hr_reg_read(&context, QPC_HOPLIMIT);
 -- 
 2.35.1
 
