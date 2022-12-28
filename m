@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1031C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:43:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1DCBC433D2;
-	Wed, 28 Dec 2022 16:43:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E27F41C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:43:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6978AC433D2;
+	Wed, 28 Dec 2022 16:43:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245797;
-	bh=Nwq5g1ESTYBgC8neDArqnPYL2KjnIiBaNb43AqgfEWs=;
+	s=korg; t=1672245799;
+	bh=STWR08XNfDHGIgwVqoMjIcCEx47HDiY/pzVuziTSxrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mlTysRXAwFz1AkQDIXfdkA0H5aoFGqXEzKTY1gCF02qErAv2F0GbUF//beT2Eq9or
-	 kxeMr/0n1v7fVrVi2z+i64fQvPW4+ZqWqk128x0+G0IavpWc3Mhb/qwCu3auvHfj48
-	 BlsjTH8nBnFs3MRFkGo9Xn0oD0wlmSMajve7YNjk=
+	b=rF/7mt+vimmq+qCtV5joNh969fdT4ewWa316R+38IPHB0YZ4+2VvELEJr6CBUTXVp
+	 ppIpIXvwDUhvFD9CCbBasr6oNMMQn2Qa4n+mIWRn6Y7Y4CD3DHdgUK547Xt6oVjc2V
+	 vskrBjuXN9Fy/fcMx09tmYpsM9gd/SL5YGbPSIdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lin Ma <linma@zju.edu.cn>,
-	kernel test robot <lkp@intel.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0956/1073] media: dvbdev: adopts refcnt to avoid UAF
-Date: Wed, 28 Dec 2022 15:42:24 +0100
-Message-Id: <20221228144354.000397012@linuxfoundation.org>
+Subject: [PATCH 6.1 0924/1146] mailbox: mpfs: read the system controllers status
+Date: Wed, 28 Dec 2022 15:41:03 +0100
+Message-Id: <20221228144355.369333270@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,208 +36,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit 0fc044b2b5e2d05a1fa1fb0d7f270367a7855d79 ]
+[ Upstream commit ab47d0bfdf88faac0eb02749e5bfaa306e004300 ]
 
-dvb_unregister_device() is known that prone to use-after-free.
-That is, the cleanup from dvb_unregister_device() releases the dvb_device
-even if there are pointers stored in file->private_data still refer to it.
+Some services explicitly return an error code in their response, but
+others rely on the system controller to set a status in its status
+register. The meaning of the bits varies based on what service is
+requested, so pass it back up to the driver that requested the service
+in the first place. The field in the message struct already existed, but
+was unused until now.
 
-This patch adds a reference counter into struct dvb_device and delays its
-deallocation until no pointer refers to the object.
+If the system controller is busy, in which case we should never actually
+be in the interrupt handler, or if the service fails the mailbox itself
+should not be read. Callers should check the status before operating on
+the response.
 
-Link: https://lore.kernel.org/linux-media/20220807145952.10368-1-linma@zju.edu.cn
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+There's an existing, but unused, #define for the mailbox mask - but it
+was incorrect. It was doing a GENMASK_ULL(32, 16) which should've just
+been a GENMASK(31, 16), so fix that up and start using it.
+
+Fixes: 83d7b1560810 ("mbox: add polarfire soc system controller mailbox")
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvb_ca_en50221.c |  2 +-
- drivers/media/dvb-core/dvb_frontend.c   |  2 +-
- drivers/media/dvb-core/dvbdev.c         | 32 +++++++++++++++++++------
- include/media/dvbdev.h                  | 31 +++++++++++++-----------
- 4 files changed, 44 insertions(+), 23 deletions(-)
+ drivers/mailbox/mailbox-mpfs.c | 31 ++++++++++++++++++++++++++++---
+ 1 file changed, 28 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/dvb-core/dvb_ca_en50221.c b/drivers/media/dvb-core/dvb_ca_en50221.c
-index 15a08d8c69ef..c2d2792227f8 100644
---- a/drivers/media/dvb-core/dvb_ca_en50221.c
-+++ b/drivers/media/dvb-core/dvb_ca_en50221.c
-@@ -157,7 +157,7 @@ static void dvb_ca_private_free(struct dvb_ca_private *ca)
- {
- 	unsigned int i;
+diff --git a/drivers/mailbox/mailbox-mpfs.c b/drivers/mailbox/mailbox-mpfs.c
+index cfacb3f320a6..853901acaeec 100644
+--- a/drivers/mailbox/mailbox-mpfs.c
++++ b/drivers/mailbox/mailbox-mpfs.c
+@@ -2,7 +2,7 @@
+ /*
+  * Microchip PolarFire SoC (MPFS) system controller/mailbox controller driver
+  *
+- * Copyright (c) 2020 Microchip Corporation. All rights reserved.
++ * Copyright (c) 2020-2022 Microchip Corporation. All rights reserved.
+  *
+  * Author: Conor Dooley <conor.dooley@microchip.com>
+  *
+@@ -56,7 +56,7 @@
+ #define SCB_STATUS_NOTIFY_MASK BIT(SCB_STATUS_NOTIFY)
  
--	dvb_free_device(ca->dvbdev);
-+	dvb_device_put(ca->dvbdev);
- 	for (i = 0; i < ca->slot_count; i++)
- 		vfree(ca->slot_info[i].rx_buffer.data);
+ #define SCB_STATUS_POS (16)
+-#define SCB_STATUS_MASK GENMASK_ULL(SCB_STATUS_POS + SCB_MASK_WIDTH, SCB_STATUS_POS)
++#define SCB_STATUS_MASK GENMASK(SCB_STATUS_POS + SCB_MASK_WIDTH - 1, SCB_STATUS_POS)
  
-diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
-index a7792ef4baf8..c41a7e5c2b92 100644
---- a/drivers/media/dvb-core/dvb_frontend.c
-+++ b/drivers/media/dvb-core/dvb_frontend.c
-@@ -136,7 +136,7 @@ static void __dvb_frontend_free(struct dvb_frontend *fe)
- 	struct dvb_frontend_private *fepriv = fe->frontend_priv;
+ struct mpfs_mbox {
+ 	struct mbox_controller controller;
+@@ -130,13 +130,38 @@ static void mpfs_mbox_rx_data(struct mbox_chan *chan)
+ 	struct mpfs_mbox *mbox = (struct mpfs_mbox *)chan->con_priv;
+ 	struct mpfs_mss_response *response = mbox->response;
+ 	u16 num_words = ALIGN((response->resp_size), (4)) / 4U;
+-	u32 i;
++	u32 i, status;
  
- 	if (fepriv)
--		dvb_free_device(fepriv->dvbdev);
-+		dvb_device_put(fepriv->dvbdev);
- 
- 	dvb_frontend_invoke_release(fe, fe->ops.release);
- 
-diff --git a/drivers/media/dvb-core/dvbdev.c b/drivers/media/dvb-core/dvbdev.c
-index 675d877a67b2..14f0e140d541 100644
---- a/drivers/media/dvb-core/dvbdev.c
-+++ b/drivers/media/dvb-core/dvbdev.c
-@@ -97,7 +97,7 @@ static int dvb_device_open(struct inode *inode, struct file *file)
- 		new_fops = fops_get(dvbdev->fops);
- 		if (!new_fops)
- 			goto fail;
--		file->private_data = dvbdev;
-+		file->private_data = dvb_device_get(dvbdev);
- 		replace_fops(file, new_fops);
- 		if (file->f_op->open)
- 			err = file->f_op->open(inode, file);
-@@ -161,6 +161,9 @@ int dvb_generic_release(struct inode *inode, struct file *file)
+ 	if (!response->resp_msg) {
+ 		dev_err(mbox->dev, "failed to assign memory for response %d\n", -ENOMEM);
+ 		return;
  	}
  
- 	dvbdev->users++;
++	/*
++	 * The status is stored in bits 31:16 of the SERVICES_SR register.
++	 * It is only valid when BUSY == 0.
++	 * We should *never* get an interrupt while the controller is
++	 * still in the busy state. If we do, something has gone badly
++	 * wrong & the content of the mailbox would not be valid.
++	 */
++	if (mpfs_mbox_busy(mbox)) {
++		dev_err(mbox->dev, "got an interrupt but system controller is busy\n");
++		response->resp_status = 0xDEAD;
++		return;
++	}
 +
-+	dvb_device_put(dvbdev);
++	status = readl_relaxed(mbox->ctrl_base + SERVICES_SR_OFFSET);
 +
- 	return 0;
- }
- EXPORT_SYMBOL(dvb_generic_release);
-@@ -477,6 +480,7 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
- 		return -ENOMEM;
- 	}
- 
-+	kref_init(&dvbdev->ref);
- 	memcpy(dvbdev, template, sizeof(struct dvb_device));
- 	dvbdev->type = type;
- 	dvbdev->id = id;
-@@ -508,7 +512,7 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
- #endif
- 
- 	dvbdev->minor = minor;
--	dvb_minors[minor] = dvbdev;
-+	dvb_minors[minor] = dvb_device_get(dvbdev);
- 	up_write(&minor_rwsem);
- 
- 	ret = dvb_register_media_device(dvbdev, type, minor, demux_sink_pads);
-@@ -553,6 +557,7 @@ void dvb_remove_device(struct dvb_device *dvbdev)
- 
- 	down_write(&minor_rwsem);
- 	dvb_minors[dvbdev->minor] = NULL;
-+	dvb_device_put(dvbdev);
- 	up_write(&minor_rwsem);
- 
- 	dvb_media_device_free(dvbdev);
-@@ -564,21 +569,34 @@ void dvb_remove_device(struct dvb_device *dvbdev)
- EXPORT_SYMBOL(dvb_remove_device);
- 
- 
--void dvb_free_device(struct dvb_device *dvbdev)
-+static void dvb_free_device(struct kref *ref)
- {
--	if (!dvbdev)
--		return;
-+	struct dvb_device *dvbdev = container_of(ref, struct dvb_device, ref);
- 
- 	kfree (dvbdev->fops);
- 	kfree (dvbdev);
- }
--EXPORT_SYMBOL(dvb_free_device);
++	/*
++	 * If the status of the individual servers is non-zero, the service has
++	 * failed. The contents of the mailbox at this point are not be valid,
++	 * so don't bother reading them. Set the status so that the driver
++	 * implementing the service can handle the result.
++	 */
++	response->resp_status = (status & SCB_STATUS_MASK) >> SCB_STATUS_POS;
++	if (response->resp_status)
++		return;
 +
-+
-+struct dvb_device *dvb_device_get(struct dvb_device *dvbdev)
-+{
-+	kref_get(&dvbdev->ref);
-+	return dvbdev;
-+}
-+EXPORT_SYMBOL(dvb_device_get);
-+
-+
-+void dvb_device_put(struct dvb_device *dvbdev)
-+{
-+	if (dvbdev)
-+		kref_put(&dvbdev->ref, dvb_free_device);
-+}
- 
- 
- void dvb_unregister_device(struct dvb_device *dvbdev)
- {
- 	dvb_remove_device(dvbdev);
--	dvb_free_device(dvbdev);
-+	dvb_device_put(dvbdev);
- }
- EXPORT_SYMBOL(dvb_unregister_device);
- 
-diff --git a/include/media/dvbdev.h b/include/media/dvbdev.h
-index 2f6b0861322a..149b3d33c24b 100644
---- a/include/media/dvbdev.h
-+++ b/include/media/dvbdev.h
-@@ -156,6 +156,7 @@ struct dvb_adapter {
-  */
- struct dvb_device {
- 	struct list_head list_head;
-+	struct kref ref;
- 	const struct file_operations *fops;
- 	struct dvb_adapter *adapter;
- 	enum dvb_device_type type;
-@@ -187,6 +188,20 @@ struct dvb_device {
- 	void *priv;
- };
- 
-+/**
-+ * dvb_device_get - Increase dvb_device reference
-+ *
-+ * @dvbdev:	pointer to struct dvb_device
-+ */
-+struct dvb_device *dvb_device_get(struct dvb_device *dvbdev);
-+
-+/**
-+ * dvb_device_get - Decrease dvb_device reference
-+ *
-+ * @dvbdev:	pointer to struct dvb_device
-+ */
-+void dvb_device_put(struct dvb_device *dvbdev);
-+
- /**
-  * dvb_register_adapter - Registers a new DVB adapter
-  *
-@@ -231,29 +246,17 @@ int dvb_register_device(struct dvb_adapter *adap,
- /**
-  * dvb_remove_device - Remove a registered DVB device
-  *
-- * This does not free memory.  To do that, call dvb_free_device().
-+ * This does not free memory. dvb_free_device() will do that when
-+ * reference counter is empty
-  *
-  * @dvbdev:	pointer to struct dvb_device
-  */
- void dvb_remove_device(struct dvb_device *dvbdev);
- 
--/**
-- * dvb_free_device - Free memory occupied by a DVB device.
-- *
-- * Call dvb_unregister_device() before calling this function.
-- *
-- * @dvbdev:	pointer to struct dvb_device
-- */
--void dvb_free_device(struct dvb_device *dvbdev);
- 
- /**
-  * dvb_unregister_device - Unregisters a DVB device
-  *
-- * This is a combination of dvb_remove_device() and dvb_free_device().
-- * Using this function is usually a mistake, and is often an indicator
-- * for a use-after-free bug (when a userspace process keeps a file
-- * handle to a detached device).
-- *
-  * @dvbdev:	pointer to struct dvb_device
-  */
- void dvb_unregister_device(struct dvb_device *dvbdev);
+ 	if (!mpfs_mbox_busy(mbox)) {
+ 		for (i = 0; i < num_words; i++) {
+ 			response->resp_msg[i] =
 -- 
 2.35.1
 
