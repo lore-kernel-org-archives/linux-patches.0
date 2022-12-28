@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F54D1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:56:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84989C433D2;
-	Wed, 28 Dec 2022 15:56:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFA71875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:56:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EAFCC433F0;
+	Wed, 28 Dec 2022 15:56:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243007;
-	bh=MaduEKFH7wJK2FtAh/uuzeU+w+u4AuEb7WtiXz8s/mU=;
+	s=korg; t=1672243009;
+	bh=G3bF5zDa6UOtDDkVTz9o54tixBLXMzT7gPBIx978YdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vItTvl5zonnkRlmt1SlQIbnVaSX7Z6/OEK+ZhPVjWw+MA0XG2EO/qSYfNGjOmZklA
-	 qG3s/6BRhrqNJu4HMBUD6ycd11tRtZHq/vsVLESEtzBSZHFWDph+8i+RZP/pws078i
-	 /UHOzgzVVShM6om3I2rj9PeTccoECBp7cSgCgrzM=
+	b=VkyYdEmRj9cVaJ4cknp4ng38YBNJ/t4TRAEH61qmAzusFoDcc7w7BupaGS2sUBbTu
+	 S2H7MfYChYo86JeKmj+LiEgFkIM2P263LWmbu2+QIpW6V8JxsRWNkp7mYYwU6weS11
+	 yJ8Qx6WLzRCNU1BwkArwHdSOT2v22WsKKsgS4Dh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0454/1073] clk: qcom: clk-krait: fix wrong div2 functions
-Date: Wed, 28 Dec 2022 15:34:02 +0100
-Message-Id: <20221228144340.368922244@linuxfoundation.org>
+Subject: [PATCH 6.0 0478/1073] mmc: alcor: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:34:26 +0100
+Message-Id: <20221228144341.019491103@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,38 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit d676d3a3717cf726d3affedbe5ba98fc4ccad7b3 ]
+[ Upstream commit e93d1468f429475a753d6baa79b853b7ee5ef8c0 ]
 
-Currently div2 value is applied to the wrong bits. This is caused by a
-bug in the code where the shift is done only for lpl, for anything
-else the mask is not shifted to the correct bits.
+mmc_add_host() may return error, if we ignore its return value, the memory
+that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
+crash because of deleting not added device in the remove path.
 
-Fix this by correctly shift if lpl is not supported.
+So fix this by checking the return value and calling mmc_free_host() in the
+error path.
 
-Fixes: 4d7dc77babfe ("clk: qcom: Add support for Krait clocks")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221108215625.30186-1-ansuelsmth@gmail.com
+Fixes: c5413ad815a6 ("mmc: add new Alcor Micro Cardreader SD/MMC driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221101063023.1664968-2-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-krait.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mmc/host/alcor.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/qcom/clk-krait.c b/drivers/clk/qcom/clk-krait.c
-index 45da736bd5f4..293a9dfa7151 100644
---- a/drivers/clk/qcom/clk-krait.c
-+++ b/drivers/clk/qcom/clk-krait.c
-@@ -114,6 +114,8 @@ static int krait_div2_set_rate(struct clk_hw *hw, unsigned long rate,
+diff --git a/drivers/mmc/host/alcor.c b/drivers/mmc/host/alcor.c
+index bfb8efeb7eb8..d01df01d4b4d 100644
+--- a/drivers/mmc/host/alcor.c
++++ b/drivers/mmc/host/alcor.c
+@@ -1114,7 +1114,10 @@ static int alcor_pci_sdmmc_drv_probe(struct platform_device *pdev)
+ 	alcor_hw_init(host);
  
- 	if (d->lpl)
- 		mask = mask << (d->shift + LPL_SHIFT) | mask << d->shift;
-+	else
-+		mask <<= d->shift;
+ 	dev_set_drvdata(&pdev->dev, host);
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret)
++		goto free_host;
++
+ 	return 0;
  
- 	spin_lock_irqsave(&krait_clock_reg_lock, flags);
- 	val = krait_get_l2_indirect_reg(d->offset);
+ free_host:
 -- 
 2.35.1
 
