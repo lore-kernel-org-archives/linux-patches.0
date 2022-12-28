@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68A641C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:44:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4D1FC433D2;
-	Wed, 28 Dec 2022 16:44:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1521C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:44:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 931E4C433D2;
+	Wed, 28 Dec 2022 16:44:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245863;
-	bh=zitYujnXYzfo8JhZmUa2BzM6dDoIe9uWx+pHaggZLJI=;
+	s=korg; t=1672245865;
+	bh=n+UO3JEjJNtE6E7bl5JwaGCjw+WpyVJcpCgHb+zK70g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1wFyr3IUypUj6dIIH4LJCqvKbt8Xk8PyRH+bDWP/t8kdak71pztX2BhGD0mEHrWDO
-	 1RZ6nGu8NfMSVLiUn564WITwCN/HWt6BaNqwB2kxS8dlEqXnA1oCvSEEdSLwCbDxAu
-	 m6Wsd0Lb0ZuZAtfpgiZMbGOKH3/mazRFtd0+lZn8=
+	b=CofhFlf9s+80h2UB7KVjTKqc6m+D9jj5A/Hk2TAXHzyXNicw6yLogfUGLGOEMeXuo
+	 67H30su6pj+mG31SCXKnKfEjzZ0iUguaPRqo2WKfC5PQuHv0mwFHno98q0TNgRoNtV
+	 HSXWaGQ3LQVHHH3sp9fTLneUqta5usbNO44BCKW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0971/1073] mmc: renesas_sdhi: better reset from HS400 mode
-Date: Wed, 28 Dec 2022 15:42:39 +0100
-Message-Id: <20221228144354.437278364@linuxfoundation.org>
+Subject: [PATCH 6.1 0938/1146] arm64: make is_ttbrX_addr() noinstr-safe
+Date: Wed, 28 Dec 2022 15:41:17 +0100
+Message-Id: <20221228144355.783093949@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,38 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit 0da69dd2155019ed4c444ede0e79ce7a4a6af627 ]
+[ Upstream commit d8c1d798a2e5091128c391c6dadcc9be334af3f5 ]
 
-Up to now, HS400 adjustment mode was only disabled on soft reset when a
-calibration table was in use. It is safer, though, to disable it as soon
-as the instance has an adjustment related quirk set, i.e. bad taps or a
-calibration table.
+We use is_ttbr0_addr() in noinstr code, but as it's only marked as
+inline, it's theoretically possible for the compiler to place it
+out-of-line and instrument it, which would be problematic.
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://lore.kernel.org/r/20221120113457.42010-3-wsa+renesas@sang-engineering.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Mark is_ttbr0_addr() as __always_inline such that that can safely be
+used from noinstr code. For consistency, do the same to is_ttbr1_addr().
+Note that while is_ttbr1_addr() calls arch_kasan_reset_tag(), this is a
+macro (and its callees are either macros or __always_inline), so there
+is not a risk of transient instrumentation.
+
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Will Deacon <will@kernel.org>
+Link: https://lore.kernel.org/r/20221114144042.3001140-1-mark.rutland@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/renesas_sdhi_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/processor.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/host/renesas_sdhi_core.c b/drivers/mmc/host/renesas_sdhi_core.c
-index 22ccef7085f7..e38d0e8b8e0e 100644
---- a/drivers/mmc/host/renesas_sdhi_core.c
-+++ b/drivers/mmc/host/renesas_sdhi_core.c
-@@ -546,7 +546,7 @@ static void renesas_sdhi_reset_hs400_mode(struct tmio_mmc_host *host,
- 			 SH_MOBILE_SDHI_SCC_TMPPORT2_HS400OSEL) &
- 			sd_scc_read32(host, priv, SH_MOBILE_SDHI_SCC_TMPPORT2));
+diff --git a/arch/arm64/include/asm/processor.h b/arch/arm64/include/asm/processor.h
+index 445aa3af3b76..400f8956328b 100644
+--- a/arch/arm64/include/asm/processor.h
++++ b/arch/arm64/include/asm/processor.h
+@@ -308,13 +308,13 @@ static inline void compat_start_thread(struct pt_regs *regs, unsigned long pc,
+ }
+ #endif
  
--	if (priv->adjust_hs400_calib_table)
-+	if (priv->quirks && (priv->quirks->hs400_calib_table || priv->quirks->hs400_bad_taps))
- 		renesas_sdhi_adjust_hs400_mode_disable(host);
+-static inline bool is_ttbr0_addr(unsigned long addr)
++static __always_inline bool is_ttbr0_addr(unsigned long addr)
+ {
+ 	/* entry assembly clears tags for TTBR0 addrs */
+ 	return addr < TASK_SIZE;
+ }
  
- 	sd_ctrl_write16(host, CTL_SD_CARD_CLK_CTL, CLK_CTL_SCLKEN |
+-static inline bool is_ttbr1_addr(unsigned long addr)
++static __always_inline bool is_ttbr1_addr(unsigned long addr)
+ {
+ 	/* TTBR1 addresses may have a tag if KASAN_SW_TAGS is in use */
+ 	return arch_kasan_reset_tag(addr) >= PAGE_OFFSET;
 -- 
 2.35.1
 
