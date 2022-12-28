@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73D7620E7
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:56:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE5C7C433EF;
-	Wed, 28 Dec 2022 16:56:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ACCB20E7
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:56:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B54CC433D2;
+	Wed, 28 Dec 2022 16:56:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246585;
-	bh=zC6lvUdZEtVn13IPbikSY5Yln/XTvATTCPY+B0G6TfE=;
+	s=korg; t=1672246588;
+	bh=xadfa5UUa/VvR7/Q+w8xXinb6FW7rp5NXKRfhIxiI8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B2yWLcDcpSXxDZ8SmZnI41g/9/+F7ZNemwQmH3ib0gwW7HmRVkkcr8cLFVrbo2du8
-	 wcNre1VSMjEbTKppJEFyJxNx/zCB16PI6n26J9rwD9mN3hu2n8o5TEdXPmsmES/1TT
-	 H22vFWXuMC6qY9k4iY7irQR3u612JQdiU4u840o0=
+	b=RbyxinK/0SwTatGs7zkjrpsSZ19pejoAsPQzTDCegHOuIM9fDUXupT3Rshvi/CSMj
+	 lQwDqo9Mf2b1XUf3tP+Owgl61QluRs8t7zyehB6EHbHPxa+ZHDWdpEhaxVhk7pm/+d
+	 WHufqiKCLNMc4t2f81iFz+lb7ILCD9802/NWUIBk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
 	Mike Marshall <hubcap@omnibond.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1063/1146] orangefs: Fix kmemleak in orangefs_sysfs_init()
-Date: Wed, 28 Dec 2022 15:43:22 +0100
-Message-Id: <20221228144359.147697730@linuxfoundation.org>
+Subject: [PATCH 6.1 1064/1146] orangefs: Fix kmemleak in orangefs_{kernel,client}_debug_init()
+Date: Wed, 28 Dec 2022 15:43:23 +0100
+Message-Id: <20221228144359.170809503@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -37,20 +37,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit 1f2c0e8a587bcafad85019a2d80f158d8d41a868 ]
+[ Upstream commit 31720a2b109b3080eb77e97b8f6f50a27b4ae599 ]
 
-When insert and remove the orangefs module, there are kobjects memory
-leaked as below:
+When insert and remove the orangefs module, there are memory leaked
+as below:
 
-unreferenced object 0xffff88810f95af00 (size 64):
+unreferenced object 0xffff88816b0cc000 (size 2048):
   comm "insmod", pid 783, jiffies 4294813439 (age 65.512s)
   hex dump (first 32 bytes):
-    a0 83 af 01 81 88 ff ff 08 af 95 0f 81 88 ff ff  ................
-    08 af 95 0f 81 88 ff ff 00 00 00 00 00 00 00 00  ................
+    6e 6f 6e 65 0a 00 00 00 00 00 00 00 00 00 00 00  none............
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
   backtrace:
     [<0000000031ab7788>] kmalloc_trace+0x27/0xa0
-    [<000000005a6e4dfe>] orangefs_sysfs_init+0x42/0x3a0
-    [<00000000722645ca>] 0xffffffffa02780fe
+    [<000000005b405fee>] orangefs_debugfs_init.cold+0xaf/0x17f
+    [<00000000e5a0085b>] 0xffffffffa02780f9
     [<000000004232d9f7>] do_one_initcall+0x87/0x2a0
     [<0000000054f22384>] do_init_module+0xdf/0x320
     [<000000003263bdea>] load_module+0x2f98/0x3330
@@ -58,242 +58,82 @@ unreferenced object 0xffff88810f95af00 (size 64):
     [<00000000250ae02b>] do_syscall_64+0x35/0x80
     [<00000000f11c03c7>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-unreferenced object 0xffff88810f95ae80 (size 64):
-  comm "insmod", pid 783, jiffies 4294813439 (age 65.512s)
-  hex dump (first 32 bytes):
-    c8 90 0f 02 81 88 ff ff 88 ae 95 0f 81 88 ff ff  ................
-    88 ae 95 0f 81 88 ff ff 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<0000000031ab7788>] kmalloc_trace+0x27/0xa0
-    [<000000001a4841fa>] orangefs_sysfs_init+0xc7/0x3a0
-    [<00000000722645ca>] 0xffffffffa02780fe
-    [<000000004232d9f7>] do_one_initcall+0x87/0x2a0
-    [<0000000054f22384>] do_init_module+0xdf/0x320
-    [<000000003263bdea>] load_module+0x2f98/0x3330
-    [<0000000052cd4153>] __do_sys_finit_module+0x113/0x1b0
-    [<00000000250ae02b>] do_syscall_64+0x35/0x80
-    [<00000000f11c03c7>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-unreferenced object 0xffff88810f95ae00 (size 64):
-  comm "insmod", pid 783, jiffies 4294813440 (age 65.511s)
-  hex dump (first 32 bytes):
-    60 87 a1 00 81 88 ff ff 08 ae 95 0f 81 88 ff ff  `...............
-    08 ae 95 0f 81 88 ff ff 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<0000000031ab7788>] kmalloc_trace+0x27/0xa0
-    [<000000005915e797>] orangefs_sysfs_init+0x12b/0x3a0
-    [<00000000722645ca>] 0xffffffffa02780fe
-    [<000000004232d9f7>] do_one_initcall+0x87/0x2a0
-    [<0000000054f22384>] do_init_module+0xdf/0x320
-    [<000000003263bdea>] load_module+0x2f98/0x3330
-    [<0000000052cd4153>] __do_sys_finit_module+0x113/0x1b0
-    [<00000000250ae02b>] do_syscall_64+0x35/0x80
-    [<00000000f11c03c7>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-unreferenced object 0xffff88810f95ad80 (size 64):
-  comm "insmod", pid 783, jiffies 4294813440 (age 65.511s)
-  hex dump (first 32 bytes):
-    78 90 0f 02 81 88 ff ff 88 ad 95 0f 81 88 ff ff  x...............
-    88 ad 95 0f 81 88 ff ff 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<0000000031ab7788>] kmalloc_trace+0x27/0xa0
-    [<000000007a14eb35>] orangefs_sysfs_init+0x1ac/0x3a0
-    [<00000000722645ca>] 0xffffffffa02780fe
-    [<000000004232d9f7>] do_one_initcall+0x87/0x2a0
-    [<0000000054f22384>] do_init_module+0xdf/0x320
-    [<000000003263bdea>] load_module+0x2f98/0x3330
-    [<0000000052cd4153>] __do_sys_finit_module+0x113/0x1b0
-    [<00000000250ae02b>] do_syscall_64+0x35/0x80
-    [<00000000f11c03c7>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-unreferenced object 0xffff88810f95ac00 (size 64):
-  comm "insmod", pid 783, jiffies 4294813440 (age 65.531s)
-  hex dump (first 32 bytes):
-    e0 ff 67 02 81 88 ff ff 08 ac 95 0f 81 88 ff ff  ..g.............
-    08 ac 95 0f 81 88 ff ff 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<0000000031ab7788>] kmalloc_trace+0x27/0xa0
-    [<000000001f38adcb>] orangefs_sysfs_init+0x291/0x3a0
-    [<00000000722645ca>] 0xffffffffa02780fe
-    [<000000004232d9f7>] do_one_initcall+0x87/0x2a0
-    [<0000000054f22384>] do_init_module+0xdf/0x320
-    [<000000003263bdea>] load_module+0x2f98/0x3330
-    [<0000000052cd4153>] __do_sys_finit_module+0x113/0x1b0
-    [<00000000250ae02b>] do_syscall_64+0x35/0x80
-    [<00000000f11c03c7>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-unreferenced object 0xffff88810f95ab80 (size 64):
-  comm "insmod", pid 783, jiffies 4294813441 (age 65.530s)
-  hex dump (first 32 bytes):
-    50 bf 2f 02 81 88 ff ff 88 ab 95 0f 81 88 ff ff  P./.............
-    88 ab 95 0f 81 88 ff ff 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<0000000031ab7788>] kmalloc_trace+0x27/0xa0
-    [<000000009cc7d95b>] orangefs_sysfs_init+0x2f5/0x3a0
-    [<00000000722645ca>] 0xffffffffa02780fe
-    [<000000004232d9f7>] do_one_initcall+0x87/0x2a0
-    [<0000000054f22384>] do_init_module+0xdf/0x320
-    [<000000003263bdea>] load_module+0x2f98/0x3330
-    [<0000000052cd4153>] __do_sys_finit_module+0x113/0x1b0
-    [<00000000250ae02b>] do_syscall_64+0x35/0x80
-    [<00000000f11c03c7>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Should add release function for each kobject_type to free the memory.
+Use the golbal variable as the buffer rather than dynamic allocate to
+slove the problem.
 
 Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/orangefs-sysfs.c | 71 ++++++++++++++++++++++++++++++++----
- 1 file changed, 63 insertions(+), 8 deletions(-)
+ fs/orangefs/orangefs-debugfs.c | 26 +++-----------------------
+ 1 file changed, 3 insertions(+), 23 deletions(-)
 
-diff --git a/fs/orangefs/orangefs-sysfs.c b/fs/orangefs/orangefs-sysfs.c
-index de80b62553bb..be4ba03a01a0 100644
---- a/fs/orangefs/orangefs-sysfs.c
-+++ b/fs/orangefs/orangefs-sysfs.c
-@@ -896,9 +896,18 @@ static struct attribute *orangefs_default_attrs[] = {
- };
- ATTRIBUTE_GROUPS(orangefs_default);
- 
-+static struct kobject *orangefs_obj;
-+
-+static void orangefs_obj_release(struct kobject *kobj)
-+{
-+	kfree(orangefs_obj);
-+	orangefs_obj = NULL;
-+}
-+
- static struct kobj_type orangefs_ktype = {
- 	.sysfs_ops = &orangefs_sysfs_ops,
- 	.default_groups = orangefs_default_groups,
-+	.release = orangefs_obj_release,
- };
- 
- static struct orangefs_attribute acache_hard_limit_attribute =
-@@ -934,9 +943,18 @@ static struct attribute *acache_orangefs_default_attrs[] = {
- };
- ATTRIBUTE_GROUPS(acache_orangefs_default);
- 
-+static struct kobject *acache_orangefs_obj;
-+
-+static void acache_orangefs_obj_release(struct kobject *kobj)
-+{
-+	kfree(acache_orangefs_obj);
-+	acache_orangefs_obj = NULL;
-+}
-+
- static struct kobj_type acache_orangefs_ktype = {
- 	.sysfs_ops = &orangefs_sysfs_ops,
- 	.default_groups = acache_orangefs_default_groups,
-+	.release = acache_orangefs_obj_release,
- };
- 
- static struct orangefs_attribute capcache_hard_limit_attribute =
-@@ -972,9 +990,18 @@ static struct attribute *capcache_orangefs_default_attrs[] = {
- };
- ATTRIBUTE_GROUPS(capcache_orangefs_default);
- 
-+static struct kobject *capcache_orangefs_obj;
-+
-+static void capcache_orangefs_obj_release(struct kobject *kobj)
-+{
-+	kfree(capcache_orangefs_obj);
-+	capcache_orangefs_obj = NULL;
-+}
-+
- static struct kobj_type capcache_orangefs_ktype = {
- 	.sysfs_ops = &orangefs_sysfs_ops,
- 	.default_groups = capcache_orangefs_default_groups,
-+	.release = capcache_orangefs_obj_release,
- };
- 
- static struct orangefs_attribute ccache_hard_limit_attribute =
-@@ -1010,9 +1037,18 @@ static struct attribute *ccache_orangefs_default_attrs[] = {
- };
- ATTRIBUTE_GROUPS(ccache_orangefs_default);
- 
-+static struct kobject *ccache_orangefs_obj;
-+
-+static void ccache_orangefs_obj_release(struct kobject *kobj)
-+{
-+	kfree(ccache_orangefs_obj);
-+	ccache_orangefs_obj = NULL;
-+}
-+
- static struct kobj_type ccache_orangefs_ktype = {
- 	.sysfs_ops = &orangefs_sysfs_ops,
- 	.default_groups = ccache_orangefs_default_groups,
-+	.release = ccache_orangefs_obj_release,
- };
- 
- static struct orangefs_attribute ncache_hard_limit_attribute =
-@@ -1048,9 +1084,18 @@ static struct attribute *ncache_orangefs_default_attrs[] = {
- };
- ATTRIBUTE_GROUPS(ncache_orangefs_default);
- 
-+static struct kobject *ncache_orangefs_obj;
-+
-+static void ncache_orangefs_obj_release(struct kobject *kobj)
-+{
-+	kfree(ncache_orangefs_obj);
-+	ncache_orangefs_obj = NULL;
-+}
-+
- static struct kobj_type ncache_orangefs_ktype = {
- 	.sysfs_ops = &orangefs_sysfs_ops,
- 	.default_groups = ncache_orangefs_default_groups,
-+	.release = ncache_orangefs_obj_release,
- };
- 
- static struct orangefs_attribute pc_acache_attribute =
-@@ -1079,9 +1124,18 @@ static struct attribute *pc_orangefs_default_attrs[] = {
- };
- ATTRIBUTE_GROUPS(pc_orangefs_default);
- 
-+static struct kobject *pc_orangefs_obj;
-+
-+static void pc_orangefs_obj_release(struct kobject *kobj)
-+{
-+	kfree(pc_orangefs_obj);
-+	pc_orangefs_obj = NULL;
-+}
-+
- static struct kobj_type pc_orangefs_ktype = {
- 	.sysfs_ops = &orangefs_sysfs_ops,
- 	.default_groups = pc_orangefs_default_groups,
-+	.release = pc_orangefs_obj_release,
- };
- 
- static struct orangefs_attribute stats_reads_attribute =
-@@ -1103,19 +1157,20 @@ static struct attribute *stats_orangefs_default_attrs[] = {
- };
- ATTRIBUTE_GROUPS(stats_orangefs_default);
- 
-+static struct kobject *stats_orangefs_obj;
-+
-+static void stats_orangefs_obj_release(struct kobject *kobj)
-+{
-+	kfree(stats_orangefs_obj);
-+	stats_orangefs_obj = NULL;
-+}
-+
- static struct kobj_type stats_orangefs_ktype = {
- 	.sysfs_ops = &orangefs_sysfs_ops,
- 	.default_groups = stats_orangefs_default_groups,
-+	.release = stats_orangefs_obj_release,
- };
- 
--static struct kobject *orangefs_obj;
--static struct kobject *acache_orangefs_obj;
--static struct kobject *capcache_orangefs_obj;
--static struct kobject *ccache_orangefs_obj;
--static struct kobject *ncache_orangefs_obj;
--static struct kobject *pc_orangefs_obj;
--static struct kobject *stats_orangefs_obj;
--
- int orangefs_sysfs_init(void)
+diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
+index a848b6ef9599..1b508f543384 100644
+--- a/fs/orangefs/orangefs-debugfs.c
++++ b/fs/orangefs/orangefs-debugfs.c
+@@ -194,15 +194,10 @@ void orangefs_debugfs_init(int debug_mask)
+  */
+ static void orangefs_kernel_debug_init(void)
  {
- 	int rc = -EINVAL;
+-	int rc = -ENOMEM;
+-	char *k_buffer = NULL;
++	static char k_buffer[ORANGEFS_MAX_DEBUG_STRING_LEN] = { };
+ 
+ 	gossip_debug(GOSSIP_DEBUGFS_DEBUG, "%s: start\n", __func__);
+ 
+-	k_buffer = kzalloc(ORANGEFS_MAX_DEBUG_STRING_LEN, GFP_KERNEL);
+-	if (!k_buffer)
+-		goto out;
+-
+ 	if (strlen(kernel_debug_string) + 1 < ORANGEFS_MAX_DEBUG_STRING_LEN) {
+ 		strcpy(k_buffer, kernel_debug_string);
+ 		strcat(k_buffer, "\n");
+@@ -213,9 +208,6 @@ static void orangefs_kernel_debug_init(void)
+ 
+ 	debugfs_create_file(ORANGEFS_KMOD_DEBUG_FILE, 0444, debug_dir, k_buffer,
+ 			    &kernel_debug_fops);
+-
+-out:
+-	gossip_debug(GOSSIP_DEBUGFS_DEBUG, "%s: rc:%d:\n", __func__, rc);
+ }
+ 
+ 
+@@ -299,18 +291,13 @@ static int help_show(struct seq_file *m, void *v)
+ /*
+  * initialize the client-debug file.
+  */
+-static int orangefs_client_debug_init(void)
++static void orangefs_client_debug_init(void)
+ {
+ 
+-	int rc = -ENOMEM;
+-	char *c_buffer = NULL;
++	static char c_buffer[ORANGEFS_MAX_DEBUG_STRING_LEN] = { };
+ 
+ 	gossip_debug(GOSSIP_DEBUGFS_DEBUG, "%s: start\n", __func__);
+ 
+-	c_buffer = kzalloc(ORANGEFS_MAX_DEBUG_STRING_LEN, GFP_KERNEL);
+-	if (!c_buffer)
+-		goto out;
+-
+ 	if (strlen(client_debug_string) + 1 < ORANGEFS_MAX_DEBUG_STRING_LEN) {
+ 		strcpy(c_buffer, client_debug_string);
+ 		strcat(c_buffer, "\n");
+@@ -324,13 +311,6 @@ static int orangefs_client_debug_init(void)
+ 						  debug_dir,
+ 						  c_buffer,
+ 						  &kernel_debug_fops);
+-
+-	rc = 0;
+-
+-out:
+-
+-	gossip_debug(GOSSIP_DEBUGFS_DEBUG, "%s: rc:%d:\n", __func__, rc);
+-	return rc;
+ }
+ 
+ /* open ORANGEFS_KMOD_DEBUG_FILE or ORANGEFS_CLIENT_DEBUG_FILE.*/
 -- 
 2.35.1
 
