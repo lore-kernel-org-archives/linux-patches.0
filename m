@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C401863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:17:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C872C433EF;
-	Wed, 28 Dec 2022 15:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3751863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:17:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14046C433EF;
+	Wed, 28 Dec 2022 15:17:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240646;
-	bh=Ce5wsrwXVklwECNR+An862ZImLkfgMufqhCRFkyt+Go=;
+	s=korg; t=1672240649;
+	bh=MLRtfCooDebbWIHo2dsGHUY0wjpBQIhx4CKbimFIDYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gMPLe6oF17u2ORbwzIpF2tvtYccTIRzARScky+qaiBnCb2DU9lh/oihTgMUabVapu
-	 jeg3emYu6WuElixf3d0iTCoP1Uu332CI3QDUbMDqDnH93MSxzWjJ09zN+AvCINmgGZ
-	 h3ZxqhPVfgv8dM6+ecgdNu+XCePsMAeLsuAfpljg=
+	b=UQAAIeKQCOfbfu+919pZJQtHgCcYlLF/tgTqQoqcmOGnnMw+auOVZoXXitAFjqHLu
+	 J9nxHtiuvFQ0GTuHteYDNOC2WNlEO4Fiqvd7ex81WgyaRLumQ+eFhnNlpKP4eD9nfE
+	 3J/JXMWJRQqzdC/Rk3tYui4dqLEjK/qQeB5ShL88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Peibao <liupeibao@loongson.cn>,
-	Marc Zyngier <maz@kernel.org>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0149/1146] irqchip/loongson-liointc: Fix improper error handling in liointc_init()
-Date: Wed, 28 Dec 2022 15:28:08 +0100
-Message-Id: <20221228144334.199335378@linuxfoundation.org>
+Subject: [PATCH 5.15 377/731] apparmor: Fix memleak in alloc_ns()
+Date: Wed, 28 Dec 2022 15:38:04 +0100
+Message-Id: <20221228144307.490248094@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,44 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Peibao <liupeibao@loongson.cn>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 4a60a3cdcf1875c965095eb9e22c3d12bbc5a53d ]
+[ Upstream commit e9e6fa49dbab6d84c676666f3fe7d360497fd65b ]
 
-For cores less than 4, eg, loongson2k1000 with 2 cores, the
-of_property_match_string() may return with an error value,
-which causes that liointc could not work. At least isr0 is
-what should be checked like previous commit b2c4c3969fd7
-("irqchip/loongson-liointc: irqchip add 2.0 version") did.
+After changes in commit a1bd627b46d1 ("apparmor: share profile name on
+replacement"), the hname member of struct aa_policy is not valid slab
+object, but a subset of that, it can not be freed by kfree_sensitive(),
+use aa_policy_destroy() to fix it.
 
-Fixes: 0858ed035a85 ("irqchip/loongson-liointc: Add ACPI init support")
-Signed-off-by: Liu Peibao <liupeibao@loongson.cn>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20221104110712.23300-1-liupeibao@loongson.cn
+Fixes: a1bd627b46d1 ("apparmor: share profile name on replacement")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-loongson-liointc.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ security/apparmor/policy_ns.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-loongson-liointc.c b/drivers/irqchip/irq-loongson-liointc.c
-index 0da8716f8f24..c4584e2f0ad3 100644
---- a/drivers/irqchip/irq-loongson-liointc.c
-+++ b/drivers/irqchip/irq-loongson-liointc.c
-@@ -207,10 +207,13 @@ static int liointc_init(phys_addr_t addr, unsigned long size, int revision,
- 					"reg-names", core_reg_names[i]);
+diff --git a/security/apparmor/policy_ns.c b/security/apparmor/policy_ns.c
+index 70921d95fb40..53d24cf63893 100644
+--- a/security/apparmor/policy_ns.c
++++ b/security/apparmor/policy_ns.c
+@@ -121,7 +121,7 @@ static struct aa_ns *alloc_ns(const char *prefix, const char *name)
+ 	return ns;
  
- 			if (index < 0)
--				goto out_iounmap;
-+				continue;
- 
- 			priv->core_isr[i] = of_iomap(node, index);
- 		}
-+
-+		if (!priv->core_isr[0])
-+			goto out_iounmap;
- 	}
- 
- 	/* Setup IRQ domain */
+ fail_unconfined:
+-	kfree_sensitive(ns->base.hname);
++	aa_policy_destroy(&ns->base);
+ fail_ns:
+ 	kfree_sensitive(ns);
+ 	return NULL;
 -- 
 2.35.1
 
