@@ -1,40 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9581C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19AA8C433EF;
-	Wed, 28 Dec 2022 16:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CB41C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D630AC433EF;
+	Wed, 28 Dec 2022 16:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244633;
-	bh=5YTnHYb44Tvh0ZcmQw5FvxR0neV5vVJwQSLYSKZWTEA=;
+	s=korg; t=1672244636;
+	bh=C7fUcCl0MYG6C35XWcB0lDVuuWtKalbjDQBErs8rt1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L86/PM+EfrPK40+N4zkCX8+EOB3c4A3YE5vELuIGlmlJiuMigsY9IEA+dM/InnGmc
-	 kMLq9xh689dVLkZsaMny30ZWDuIXn+oKzYtMHiWlzeI8CFWiPeXKKdxwvTg7AhRX1m
-	 iqBEQeYh87HxtDdKhdnH6W/i3u1+Cu3GjLbhBAaU=
+	b=iwNT9sL1bX3cM/zbZFizsIuRMaFZjDS9FdqANes1cnJfAyWpbWxPQxW5eNqpOGDrR
+	 PNQMdv95AT/MhRKglMgEAo/GUUPyBmOQeQ0WGP2HBN2hkLzGvvhvgRBb6TrmTbizZW
+	 iZ+ixtFsFJzV9eS/uGCdT/p2hKTbE2HT2yrF34bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajay Kaher <akaher@vmware.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Alexey Makhalov <amakhalov@vmware.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Srivatsa S. Bhat" <srivatsab@vmware.com>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
-	Vasavi Sirnapalli <vsirnapalli@vmware.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0745/1073] perf symbol: correction while adjusting symbol
-Date: Wed, 28 Dec 2022 15:38:53 +0100
-Message-Id: <20221228144348.258923138@linuxfoundation.org>
+Subject: [PATCH 6.1 0680/1146] crypto: img-hash - Fix variable dereferenced before check hdev->req
+Date: Wed, 28 Dec 2022 15:36:59 +0100
+Message-Id: <20221228144348.614338539@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -45,74 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ajay Kaher <akaher@vmware.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 6f520ce17920b3cdfbd2479b3ccf27f9706219d0 ]
+[ Upstream commit 04ba54e5af8f8f0137b08cb51a0b3a2e1ea46c94 ]
 
-perf doesn't provide proper symbol information for specially crafted
-.debug files.
+Smatch report warning as follows:
 
-Sometimes .debug file may not have similar program header as runtime
-ELF file. For example if we generate .debug file using objcopy
---only-keep-debug resulting file will not contain .text, .data and
-other runtime sections. That means corresponding program headers will
-have zero FileSiz and modified Offset.
+drivers/crypto/img-hash.c:366 img_hash_dma_task() warn: variable
+dereferenced before check 'hdev->req'
 
-Example: program header of text section of libxxx.so:
+Variable dereferenced should be done after check 'hdev->req',
+fix it.
 
-Type           Offset             VirtAddr           PhysAddr
-               FileSiz            MemSiz              Flags  Align
-LOAD        0x00000000003d3000 0x00000000003d3000 0x00000000003d3000
-            0x000000000055ae80 0x000000000055ae80  R E    0x1000
-
-Same program header after executing:
-objcopy --only-keep-debug libxxx.so libxxx.so.debug
-
-LOAD        0x0000000000001000 0x00000000003d3000 0x00000000003d3000
-            0x0000000000000000 0x000000000055ae80  R E    0x1000
-
-Offset and FileSiz have been changed.
-
-Following formula will not provide correct value, if program header
-taken from .debug file (syms_ss):
-
-    sym.st_value -= phdr.p_vaddr - phdr.p_offset;
-
-Correct program header information is located inside runtime ELF
-file (runtime_ss).
-
-Fixes: 2d86612aacb7805f ("perf symbol: Correct address for bss symbols")
-Signed-off-by: Ajay Kaher <akaher@vmware.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Alexey Makhalov <amakhalov@vmware.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Srivatsa S. Bhat <srivatsab@vmware.com>
-Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Cc: Vasavi Sirnapalli <vsirnapalli@vmware.com>
-Link: http://lore.kernel.org/lkml/1669198696-50547-1-git-send-email-akaher@vmware.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: d358f1abbf71 ("crypto: img-hash - Add Imagination Technologies hw hash accelerator")
+Fixes: 10badea259fa ("crypto: img-hash - Fix null pointer exception")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-elf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/img-hash.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index 647b7dff8ef3..80345695b136 100644
---- a/tools/perf/util/symbol-elf.c
-+++ b/tools/perf/util/symbol-elf.c
-@@ -1303,7 +1303,7 @@ dso__load_sym_internal(struct dso *dso, struct map *map, struct symsrc *syms_ss,
- 			   (!used_opd && syms_ss->adjust_symbols)) {
- 			GElf_Phdr phdr;
+diff --git a/drivers/crypto/img-hash.c b/drivers/crypto/img-hash.c
+index d8e82d69745d..9629e98bd68b 100644
+--- a/drivers/crypto/img-hash.c
++++ b/drivers/crypto/img-hash.c
+@@ -358,12 +358,16 @@ static int img_hash_dma_init(struct img_hash_dev *hdev)
+ static void img_hash_dma_task(unsigned long d)
+ {
+ 	struct img_hash_dev *hdev = (struct img_hash_dev *)d;
+-	struct img_hash_request_ctx *ctx = ahash_request_ctx(hdev->req);
++	struct img_hash_request_ctx *ctx;
+ 	u8 *addr;
+ 	size_t nbytes, bleft, wsend, len, tbc;
+ 	struct scatterlist tsg;
  
--			if (elf_read_program_header(syms_ss->elf,
-+			if (elf_read_program_header(runtime_ss->elf,
- 						    (u64)sym.st_value, &phdr)) {
- 				pr_debug4("%s: failed to find program header for "
- 					   "symbol: %s st_value: %#" PRIx64 "\n",
+-	if (!hdev->req || !ctx->sg)
++	if (!hdev->req)
++		return;
++
++	ctx = ahash_request_ctx(hdev->req);
++	if (!ctx->sg)
+ 		return;
+ 
+ 	addr = sg_virt(ctx->sg);
 -- 
 2.35.1
 
