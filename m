@@ -1,32 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AD01C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:48:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66C04C433D2;
-	Wed, 28 Dec 2022 16:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9756A1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:48:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12824C433D2;
+	Wed, 28 Dec 2022 16:48:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246134;
-	bh=UGuOnxnM7GPmefNXCCPZBE0jOJo+3GsKpHYT1te8Qhc=;
+	s=korg; t=1672246137;
+	bh=vWvS77y3aOqKyCHgi+CB3rdVEMh/eS0ZGnwOuYNBRR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MGD0eceA+aB5eiCriSaGYo8RMt72yUiPgdc4eXDCC6X85+izhCmd+2gnkBhS5Aaq5
-	 03U1h3oCPWU8mfwhp6kdNLYciRR9Tf4+QeCPq3boLxH4ZWPsDEChlYmiOYyyzQkfzA
-	 QNwi3i6/5BZqk5elZjWw+4vbYh35NNkX1b2+eG9A=
+	b=li2nH8xSDKKZnBbVd9j+G5enNoGfHN8GlG21murVLLoNALUUv44dBXe74/4YGpm4n
+	 KOnlEGTAlQzjQrFuPMRux6VzXjrGmn54DyGZwbm/vw8Y9B4/pwdbcAj25ImrVHQfoH
+	 bb8ehnawvsC+KWDpUJZeWP1FZdt/xAv7phx/xX2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Michael Petlan <mpetlan@redhat.com>,
+	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
+	Disha Goel <disgoel@linux.vnet.ibm.com>,
+	Ian Rogers <irogers@google.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Nageswara R Sastry <rnsastry@linux.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0986/1146] drm/meson: Fix return type of meson_encoder_cvbs_mode_valid()
-Date: Wed, 28 Dec 2022 15:42:05 +0100
-Message-Id: <20221228144357.146825840@linuxfoundation.org>
+Subject: [PATCH 6.0 1018/1073] perf test: Fix "all PMU test" to skip parametrized events
+Date: Wed, 28 Dec 2022 15:43:26 +0100
+Message-Id: <20221228144355.834739696@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,57 +40,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Michael Petlan <mpetlan@redhat.com>
 
-[ Upstream commit 6c4e4d35203301906afb53c6d1e1302d4c793c05 ]
+[ Upstream commit b50d691e50e600fab82b423be871860537d75dc9 ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+Parametrized events are not only a powerpc domain. They occur on other
+platforms too (e.g. aarch64). They should be ignored in this testcase,
+since proper setup of the parameters is out of scope of this script.
 
-  drivers/gpu/drm/meson/meson_encoder_cvbs.c:211:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' with an expression of type 'int (struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .mode_valid = meson_encoder_cvbs_mode_valid,
-                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+Let's not filter them out by PMU name, but rather based on the fact that
+they expect a parameter.
 
-->mode_valid() in 'struct drm_bridge_funcs' expects a return type of
-'enum drm_mode_status', not 'int'. Adjust the return type of
-meson_encoder_cvbs_mode_valid() to match the prototype's to resolve the
-warning and CFI failure.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reported-by: Sami Tolvanen <samitolvanen@google.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221102155242.1927166-1-nathan@kernel.org
+Fixes: 451ed8058c69a3fe ("perf test: Fix "all PMU test" to skip hv_24x7/hv_gpci tests on powerpc")
+Signed-off-by: Michael Petlan <mpetlan@redhat.com>
+Cc: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
+Cc: Disha Goel <disgoel@linux.vnet.ibm.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Nageswara R Sastry <rnsastry@linux.ibm.com>
+Link: https://lore.kernel.org/r/20221219163008.9691-1-mpetlan@redhat.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_encoder_cvbs.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ tools/perf/tests/shell/stat_all_pmu.sh | 13 ++-----------
+ 1 file changed, 2 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_encoder_cvbs.c b/drivers/gpu/drm/meson/meson_encoder_cvbs.c
-index 5675bc2a92cf..3f73b211fa8e 100644
---- a/drivers/gpu/drm/meson/meson_encoder_cvbs.c
-+++ b/drivers/gpu/drm/meson/meson_encoder_cvbs.c
-@@ -116,9 +116,10 @@ static int meson_encoder_cvbs_get_modes(struct drm_bridge *bridge,
- 	return i;
- }
+diff --git a/tools/perf/tests/shell/stat_all_pmu.sh b/tools/perf/tests/shell/stat_all_pmu.sh
+index 9c9ef33e0b3c..c77955419173 100755
+--- a/tools/perf/tests/shell/stat_all_pmu.sh
++++ b/tools/perf/tests/shell/stat_all_pmu.sh
+@@ -4,17 +4,8 @@
  
--static int meson_encoder_cvbs_mode_valid(struct drm_bridge *bridge,
--					const struct drm_display_info *display_info,
--					const struct drm_display_mode *mode)
-+static enum drm_mode_status
-+meson_encoder_cvbs_mode_valid(struct drm_bridge *bridge,
-+			      const struct drm_display_info *display_info,
-+			      const struct drm_display_mode *mode)
- {
- 	if (meson_cvbs_get_mode(mode))
- 		return MODE_OK;
+ set -e
+ 
+-for p in $(perf list --raw-dump pmu); do
+-  # In powerpc, skip the events for hv_24x7 and hv_gpci.
+-  # These events needs input values to be filled in for
+-  # core, chip, partition id based on system.
+-  # Example: hv_24x7/CPM_ADJUNCT_INST,domain=?,core=?/
+-  # hv_gpci/event,partition_id=?/
+-  # Hence skip these events for ppc.
+-  if echo "$p" |grep -Eq 'hv_24x7|hv_gpci' ; then
+-    echo "Skipping: Event '$p' in powerpc"
+-    continue
+-  fi
++# Test all PMU events; however exclude parametrized ones (name contains '?')
++for p in $(perf list --raw-dump pmu | sed 's/[[:graph:]]\+?[[:graph:]]\+[[:space:]]//g'); do
+   echo "Testing $p"
+   result=$(perf stat -e "$p" true 2>&1)
+   if ! echo "$result" | grep -q "$p" && ! echo "$result" | grep -q "<not supported>" ; then
 -- 
 2.35.1
 
