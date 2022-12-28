@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6BC1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4657C433D2;
-	Wed, 28 Dec 2022 15:52:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF011875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C376DC43392;
+	Wed, 28 Dec 2022 15:52:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242749;
-	bh=KcnYeku5C3BrNcd6nl2rTnAy0lpy2etHaWln6/lEW2c=;
+	s=korg; t=1672242752;
+	bh=HvhBXNttaTTCxIN6/c+CJYTilJvv/u7LgQqCqzGcXGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GaFY/cJ1YHNu77prGkgHzGoVJD5Q9hazxkkzEYFaRP6g/c0MP6TCdRHXPg79nTKdK
-	 XlC4sIpwKizgZ7PFAKnNQLGyAu0Z0Bme7PeoPhLJ6EvmqnZbz4E/LzjQMQOCHqNm8o
-	 6T3yN2IrbUaLHuCzL/2JWp3t2vytbO7Uc8Xnlvns=
+	b=BSdmhy/Uni2kjbL1RzClDcrFHb0wDhJ4/DqPUlhDgdZ6INa2uoe5PoN+wgTqmOTjm
+	 visYMd7gmhh/66AIsrdpmpij2z0quN6ZzR06CBIjNZte0JL7kgZUGf+BdXiqeXODRH
+	 tvKpenGbC3tKXqvM+/5C5NyXy0sgdHSBpJ/kAjC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0409/1146] media: sun8i-a83t-mipi-csi2: Register async subdev with no sensor attached
-Date: Wed, 28 Dec 2022 15:32:28 +0100
-Message-Id: <20221228144341.274870749@linuxfoundation.org>
+Subject: [PATCH 5.15 641/731] hamradio: baycom_epp: Fix return type of baycom_send_packet()
+Date: Wed, 28 Dec 2022 15:42:28 +0100
+Message-Id: <20221228144315.088354209@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,74 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 614f6e35a9e214c80270ab942bf58d85066a3e34 ]
+[ Upstream commit c5733e5b15d91ab679646ec3149e192996a27d5d ]
 
-This allows the device to probe and register its async subdev without
-a sensor attached.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-The rationale is that the parent driver might otherwise wait for the
-subdev to be registered when it should be available (from the fwnode
-graph endpoint perspective). This is generally not problematic when
-the MIPI CSI-2 bridge is the only device attached to the parent, but
-in the case of a CSI controller that can feed from both MIPI CSI-2
-and parallel, it would prevent using the parallel sensor due to the
-parent waiting for the MIPI CSI-2 subdev to register.
+  drivers/net/hamradio/baycom_epp.c:1119:25: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .ndo_start_xmit      = baycom_send_packet,
+                                ^~~~~~~~~~~~~~~~~~
+  1 error generated.
 
-Fixes: 576d196c522b ("media: sunxi: Add support for the A83T MIPI CSI-2 controller")
-Signed-off-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
+'netdev_tx_t', not 'int'. Adjust the return type of baycom_send_packet()
+to match the prototype's to resolve the warning and CFI failure.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221102160610.1186145-1-nathan@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/net/hamradio/baycom_epp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c b/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
-index 5e1c25db7bc4..d993c09a4820 100644
---- a/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
-+++ b/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
-@@ -536,6 +536,7 @@ sun8i_a83t_mipi_csi2_bridge_setup(struct sun8i_a83t_mipi_csi2_device *csi2_dev)
- 	struct v4l2_async_notifier *notifier = &bridge->notifier;
- 	struct media_pad *pads = bridge->pads;
- 	struct device *dev = csi2_dev->dev;
-+	bool notifier_registered = false;
- 	int ret;
+diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
+index 6b6f28d5b8d5..f9d03f7b9101 100644
+--- a/drivers/net/hamradio/baycom_epp.c
++++ b/drivers/net/hamradio/baycom_epp.c
+@@ -758,7 +758,7 @@ static void epp_bh(struct work_struct *work)
+  * ===================== network driver interface =========================
+  */
  
- 	mutex_init(&bridge->lock);
-@@ -573,12 +574,17 @@ sun8i_a83t_mipi_csi2_bridge_setup(struct sun8i_a83t_mipi_csi2_device *csi2_dev)
- 	notifier->ops = &sun8i_a83t_mipi_csi2_notifier_ops;
+-static int baycom_send_packet(struct sk_buff *skb, struct net_device *dev)
++static netdev_tx_t baycom_send_packet(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct baycom_state *bc = netdev_priv(dev);
  
- 	ret = sun8i_a83t_mipi_csi2_bridge_source_setup(csi2_dev);
--	if (ret)
-+	if (ret && ret != -ENODEV)
- 		goto error_v4l2_notifier_cleanup;
- 
--	ret = v4l2_async_subdev_nf_register(subdev, notifier);
--	if (ret < 0)
--		goto error_v4l2_notifier_cleanup;
-+	/* Only register the notifier when a sensor is connected. */
-+	if (ret != -ENODEV) {
-+		ret = v4l2_async_subdev_nf_register(subdev, notifier);
-+		if (ret < 0)
-+			goto error_v4l2_notifier_cleanup;
-+
-+		notifier_registered = true;
-+	}
- 
- 	/* V4L2 Subdev */
- 
-@@ -589,7 +595,8 @@ sun8i_a83t_mipi_csi2_bridge_setup(struct sun8i_a83t_mipi_csi2_device *csi2_dev)
- 	return 0;
- 
- error_v4l2_notifier_unregister:
--	v4l2_async_nf_unregister(notifier);
-+	if (notifier_registered)
-+		v4l2_async_nf_unregister(notifier);
- 
- error_v4l2_notifier_cleanup:
- 	v4l2_async_nf_cleanup(notifier);
 -- 
 2.35.1
 
