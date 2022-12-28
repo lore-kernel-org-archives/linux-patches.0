@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC2C51863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73076C433D2;
-	Wed, 28 Dec 2022 14:57:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FA51863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A72C433EF;
+	Wed, 28 Dec 2022 14:57:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239466;
-	bh=JPdw15exrtThGlpAOjLkbw8ap8naBIZp3edmxtlE5YM=;
+	s=korg; t=1672239469;
+	bh=zdjZSvUlQos4Eexk/hd0ENgOFCCKp8WpgkAhKYnYH8w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=11YOeM4XwVdDvpl5f1g6NqYO+qSAz0dbSvQ+5EMIyKGwH1EHbcKV3UO2LRIJ3JUf6
-	 3VFy3qa18CT0CifKMqLBGrKr3JBuYU4j/Q3yQXOvaeP+scLGyY2Dp7mIRoks2/9are
-	 zjHjZ3x/Qzfs0HGpZW2Umpm47ZZcxc97Y3BcdgTM=
+	b=mvQpdRqUZiqVapHWpweRN+HoEUDOrBFDHJH97PLTVTvgxuzBl/IXLOUBHRkGFY4+q
+	 0WTH4vNve25wii3QI0WxbdvKvYQzB0p4qbto8PaRTLdUGRIxV3WpmX4eWCz9x/eSRV
+	 ehVW0ONWZIy6CzVjdw4z14yfLQLKKBVsYlfRe0hA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 230/731] ASoC: qcom: Add checks for devm_kcalloc
-Date: Wed, 28 Dec 2022 15:35:37 +0100
-Message-Id: <20221228144303.227949148@linuxfoundation.org>
+Subject: [PATCH 6.0 0008/1073] arm64: dts: renesas: r8a779g0: Fix HSCIF0 "brg_int" clock
+Date: Wed, 28 Dec 2022 15:26:36 +0100
+Message-Id: <20221228144328.394527728@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 1bf5ee979076ceb121ee51c95197d890b1cee7f4 ]
+[ Upstream commit a4290d407aa9fd174d8053878783d466d3124e38 ]
 
-As the devm_kcalloc may return NULL, the return value needs to be checked
-to avoid NULL poineter dereference.
+As serial communication requires a clock signal, the High Speed Serial
+Communication Interfaces with FIFO (HSCIF) are clocked by a clock that
+is not affected by Spread Spectrum or Fractional Multiplication.
 
-Fixes: 24caf8d9eb10 ("ASoC: qcom: lpass-sc7180: Add platform driver for lpass audio")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Link: https://lore.kernel.org/r/20221124140510.63468-1-yuancan@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Hence change the clock input for the HSCIF0 Baud Rate Generator internal
+clock from the S0D3_PER clock to the SASYNCPERD1 clock (which has the
+same clock rate), cfr. R-Car V4H Hardware User's Manual rev. 0.54.
+
+Fixes: 987da486d84a5643 ("arm64: dts: renesas: Add Renesas R8A779G0 SoC support")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/a5bd4148f92806f7c8e577d383370f810315f586.1665155947.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/qcom/lpass-sc7180.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/renesas/r8a779g0.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/qcom/lpass-sc7180.c b/sound/soc/qcom/lpass-sc7180.c
-index 77a556b27cf0..24a1c121cb2e 100644
---- a/sound/soc/qcom/lpass-sc7180.c
-+++ b/sound/soc/qcom/lpass-sc7180.c
-@@ -131,6 +131,9 @@ static int sc7180_lpass_init(struct platform_device *pdev)
- 
- 	drvdata->clks = devm_kcalloc(dev, variant->num_clks,
- 				     sizeof(*drvdata->clks), GFP_KERNEL);
-+	if (!drvdata->clks)
-+		return -ENOMEM;
-+
- 	drvdata->num_clks = variant->num_clks;
- 
- 	for (i = 0; i < drvdata->num_clks; i++)
+diff --git a/arch/arm64/boot/dts/renesas/r8a779g0.dtsi b/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
+index 1c15726cff8b..4bd3cb107b38 100644
+--- a/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
++++ b/arch/arm64/boot/dts/renesas/r8a779g0.dtsi
+@@ -87,7 +87,7 @@ hscif0: serial@e6540000 {
+ 			reg = <0 0xe6540000 0 96>;
+ 			interrupts = <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&cpg CPG_MOD 514>,
+-				 <&cpg CPG_CORE R8A779G0_CLK_S0D3_PER>,
++				 <&cpg CPG_CORE R8A779G0_CLK_SASYNCPERD1>,
+ 				 <&scif_clk>;
+ 			clock-names = "fck", "brg_int", "scif_clk";
+ 			power-domains = <&sysc R8A779G0_PD_ALWAYS_ON>;
 -- 
 2.35.1
 
