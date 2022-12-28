@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DDF1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA642C433D2;
-	Wed, 28 Dec 2022 15:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CC381863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D54C433EF;
+	Wed, 28 Dec 2022 15:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239603;
-	bh=feo39I59bd4Pp6kg/IoV5mJhQOT7RjZVAt3IV0PeY0s=;
+	s=korg; t=1672239605;
+	bh=qHNKDTYQZ7r6fbuZ4CQddHe5QhJgh9PS3kiUugWEc5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RDeWG3E0vpzNM3o+1UfSJn26wfzJ4OpOSkX+XG7VAgstvSVLJRFSki+VaDiJuhO8Z
-	 BtGWG0CpPtsxYJCKl57rFoJe1Y4e2yyqalYPe4NhZvo02SxR6flAVSvmRJ3zE4hcKl
-	 tLce4k+JGtw1FZXS4Ar04WkUVkadB8/x1j0uPd9w=
+	b=xz/SwZeKL9/10h8Szpo7izfjBQayHQS7N20i58CcKRWhxGgj+dsfYmvzbyxshRTwz
+	 B8tW86N5AHjnIf69eQHzF/xjfbgfX5BWsLIOzQ5SqXNzulzxnp2IrW+jvUtDKSiDe6
+	 MrSaV8kBmGTl4yCTjIvvT0nZgNQJ8UlqXXsosZy4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Marek Vasut <marex@denx.de>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 248/731] NFSv4: Fix a deadlock between nfs4_open_recover_helper() and delegreturn
-Date: Wed, 28 Dec 2022 15:35:55 +0100
-Message-Id: <20221228144303.750951713@linuxfoundation.org>
+Subject: [PATCH 6.1 0018/1146] ARM: dts: stm32: Drop stm32mp15xc.dtsi from Avenger96
+Date: Wed, 28 Dec 2022 15:25:57 +0100
+Message-Id: <20221228144330.667452205@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,70 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 51069e4aef6257b0454057359faed0ab0c9af083 ]
+[ Upstream commit 3b835f1b8acef53c8882b25f40f48d7f5982c938 ]
 
-If we're asked to recover open state while a delegation return is
-outstanding, then the state manager thread cannot use a cached open, so
-if the server returns a delegation, we can end up deadlocked behind the
-pending delegreturn.
-To avoid this problem, let's just ask the server not to give us a
-delegation unless we're explicitly reclaiming one.
+The Avenger96 is populated with STM32MP157A DHCOR SoM, drop the
+stm32mp15xc.dtsi which should only be included in DTs of devices
+which are populated with STM32MP15xC/F SoC as the stm32mp15xc.dtsi
+enables CRYP block not present in the STM32MP15xA/D SoC .
 
-Fixes: be36e185bd26 ("NFSv4: nfs4_open_recover_helper() must set share access")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: 7e76f82acd9e1 ("ARM: dts: stm32: Split Avenger96 into DHCOR SoM and Avenger96 board")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+ arch/arm/boot/dts/stm32mp157a-dhcor-avenger96.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 3c9ed63710a9..b6b1fad031c7 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -2144,18 +2144,18 @@ static struct nfs4_opendata *nfs4_open_recoverdata_alloc(struct nfs_open_context
- }
+diff --git a/arch/arm/boot/dts/stm32mp157a-dhcor-avenger96.dts b/arch/arm/boot/dts/stm32mp157a-dhcor-avenger96.dts
+index 2e3c9fbb4eb3..275167f26fd9 100644
+--- a/arch/arm/boot/dts/stm32mp157a-dhcor-avenger96.dts
++++ b/arch/arm/boot/dts/stm32mp157a-dhcor-avenger96.dts
+@@ -13,7 +13,6 @@
+ /dts-v1/;
  
- static int nfs4_open_recover_helper(struct nfs4_opendata *opendata,
--		fmode_t fmode)
-+				    fmode_t fmode)
- {
- 	struct nfs4_state *newstate;
-+	struct nfs_server *server = NFS_SB(opendata->dentry->d_sb);
-+	int openflags = opendata->o_arg.open_flags;
- 	int ret;
+ #include "stm32mp157.dtsi"
+-#include "stm32mp15xc.dtsi"
+ #include "stm32mp15xx-dhcor-som.dtsi"
+ #include "stm32mp15xx-dhcor-avenger96.dtsi"
  
- 	if (!nfs4_mode_match_open_stateid(opendata->state, fmode))
- 		return 0;
--	opendata->o_arg.open_flags = 0;
- 	opendata->o_arg.fmode = fmode;
--	opendata->o_arg.share_access = nfs4_map_atomic_open_share(
--			NFS_SB(opendata->dentry->d_sb),
--			fmode, 0);
-+	opendata->o_arg.share_access =
-+		nfs4_map_atomic_open_share(server, fmode, openflags);
- 	memset(&opendata->o_res, 0, sizeof(opendata->o_res));
- 	memset(&opendata->c_res, 0, sizeof(opendata->c_res));
- 	nfs4_init_opendata_res(opendata);
-@@ -2735,10 +2735,15 @@ static int _nfs4_open_expired(struct nfs_open_context *ctx, struct nfs4_state *s
- 	struct nfs4_opendata *opendata;
- 	int ret;
- 
--	opendata = nfs4_open_recoverdata_alloc(ctx, state,
--			NFS4_OPEN_CLAIM_FH);
-+	opendata = nfs4_open_recoverdata_alloc(ctx, state, NFS4_OPEN_CLAIM_FH);
- 	if (IS_ERR(opendata))
- 		return PTR_ERR(opendata);
-+	/*
-+	 * We're not recovering a delegation, so ask for no delegation.
-+	 * Otherwise the recovery thread could deadlock with an outstanding
-+	 * delegation return.
-+	 */
-+	opendata->o_arg.open_flags = O_DIRECT;
- 	ret = nfs4_open_recover(opendata, state);
- 	if (ret == -ESTALE)
- 		d_drop(ctx->dentry);
 -- 
 2.35.1
 
