@@ -1,31 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99B91863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:22:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDACC433D2;
-	Wed, 28 Dec 2022 15:22:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86471863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:22:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9008C433EF;
+	Wed, 28 Dec 2022 15:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240940;
-	bh=Zi8O9t420gNKOhNMdn4jrylDdiDle4Pac//PLNkysZ0=;
+	s=korg; t=1672240943;
+	bh=hovzrAr0C5geGX7T8gSHxX0Zd5O0iepBHfxie7lVWCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZgtXns/37nUjBqDlCTo2mdImBFismm8fSc9dmgl53AqKqa253bOKcbz5mZdsIY+7P
-	 g0sgBDdgXtMrim8oTEXB5ntn25xPxwv2KUfdVc0ypETNOs2QV5UFtODS+AjrAPxVck
-	 ZYqPGr//OtkXIWYE83+fv31S70vcSEVPwuUEUkoQ=
+	b=eYqQYkPe6PXc9vdNEC8o1PRaDfhiFx4X2IfK8ryZ2km7z5IicAvDO6AzpN8Hu8ViM
+	 rCieXESNdCDwrCnpVeJs2rL9W8tEQaWG7GsEf/UI7a7pgyNDj6YLWXnmF/KdjAFB3d
+	 MEqk3BpmAemHyAU6JmGPxFWu7iGQJ64/rgdBMAhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yonggil Song <yonggil.song@samsung.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Wang Weiyang <wangweiyang2@huawei.com>,
+	Alexandre Bounine <alex.bou9@gmail.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Jakob Koschel <jakobkoschel@gmail.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Matt Porter <mporter@kernel.crashing.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 419/731] f2fs: avoid victim selection from previous victim section
-Date: Wed, 28 Dec 2022 15:38:46 +0100
-Message-Id: <20221228144308.717034591@linuxfoundation.org>
+Subject: [PATCH 6.1 0187/1146] rapidio: fix possible UAF when kfifo_alloc() fails
+Date: Wed, 28 Dec 2022 15:28:46 +0100
+Message-Id: <20221228144335.230878561@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,46 +41,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yonggil Song <yonggil.song@samsung.com>
+From: Wang Weiyang <wangweiyang2@huawei.com>
 
-[ Upstream commit e219aecfd4b766c4e878a3769057e9809f7fcadc ]
+[ Upstream commit 02d7d89f816951e0862147d751b1150d67aaebdd ]
 
-When f2fs chooses GC victim in large section & LFS mode,
-next_victim_seg[gc_type] is referenced first. After segment is freed,
-next_victim_seg[gc_type] has the next segment number.
-However, next_victim_seg[gc_type] still has the last segment number
-even after the last segment of section is freed. In this case, when f2fs
-chooses a victim for the next GC round, the last segment of previous victim
-section is chosen as a victim.
+If kfifo_alloc() fails in mport_cdev_open(), goto err_fifo and just free
+priv. But priv is still in the chdev->file_list, then list traversal
+may cause UAF. This fixes the following smatch warning:
 
-Initialize next_victim_seg[gc_type] to NULL_SEGNO for the last segment in
-large section.
+drivers/rapidio/devices/rio_mport_cdev.c:1930 mport_cdev_open() warn: '&priv->list' not removed from list
 
-Fixes: e3080b0120a1 ("f2fs: support subsectional garbage collection")
-Signed-off-by: Yonggil Song <yonggil.song@samsung.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Link: https://lkml.kernel.org/r/20221123095147.52408-1-wangweiyang2@huawei.com
+Fixes: e8de370188d0 ("rapidio: add mport char device driver")
+Signed-off-by: Wang Weiyang <wangweiyang2@huawei.com>
+Cc: Alexandre Bounine <alex.bou9@gmail.com>
+Cc: Dan Carpenter <error27@gmail.com>
+Cc: Jakob Koschel <jakobkoschel@gmail.com>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Matt Porter <mporter@kernel.crashing.org>
+Cc: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/rapidio/devices/rio_mport_cdev.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 4cbaa6ab083f..7863f8fd3b95 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1673,8 +1673,9 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
- 				get_valid_blocks(sbi, segno, false) == 0)
- 			seg_freed++;
+diff --git a/drivers/rapidio/devices/rio_mport_cdev.c b/drivers/rapidio/devices/rio_mport_cdev.c
+index 3cc83997a1f8..fecf523f36d8 100644
+--- a/drivers/rapidio/devices/rio_mport_cdev.c
++++ b/drivers/rapidio/devices/rio_mport_cdev.c
+@@ -1904,10 +1904,6 @@ static int mport_cdev_open(struct inode *inode, struct file *filp)
  
--		if (__is_large_section(sbi) && segno + 1 < end_segno)
--			sbi->next_victim_seg[gc_type] = segno + 1;
-+		if (__is_large_section(sbi))
-+			sbi->next_victim_seg[gc_type] =
-+				(segno + 1 < end_segno) ? segno + 1 : NULL_SEGNO;
- skip:
- 		f2fs_put_page(sum_page, 0);
- 	}
+ 	priv->md = chdev;
+ 
+-	mutex_lock(&chdev->file_mutex);
+-	list_add_tail(&priv->list, &chdev->file_list);
+-	mutex_unlock(&chdev->file_mutex);
+-
+ 	INIT_LIST_HEAD(&priv->db_filters);
+ 	INIT_LIST_HEAD(&priv->pw_filters);
+ 	spin_lock_init(&priv->fifo_lock);
+@@ -1926,6 +1922,9 @@ static int mport_cdev_open(struct inode *inode, struct file *filp)
+ 	spin_lock_init(&priv->req_lock);
+ 	mutex_init(&priv->dma_lock);
+ #endif
++	mutex_lock(&chdev->file_mutex);
++	list_add_tail(&priv->list, &chdev->file_list);
++	mutex_unlock(&chdev->file_mutex);
+ 
+ 	filp->private_data = priv;
+ 	goto out;
 -- 
 2.35.1
 
