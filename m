@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E081C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AAF8C433EF;
-	Wed, 28 Dec 2022 16:15:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CE591C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22BC4C433D2;
+	Wed, 28 Dec 2022 16:15:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244130;
-	bh=WECNFBqWMgfh/OaxO+PEGaV6v4ab824tu0+YC4JNa/c=;
+	s=korg; t=1672244133;
+	bh=C7fUcCl0MYG6C35XWcB0lDVuuWtKalbjDQBErs8rt1c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dY3Mq7jbgQ/jYXa/KTx07aGXQgh8Ayp3TbdqPTPtEmhgLd+pSFcnOkxWb586IVsdz
-	 5wfCedd9cjVId3ZBweEQ9KkEFvkl99O15AtnH5mEPteLv6l2GBzCDUXbLTs1a61boD
-	 U/ZmXoCGQelq3MJO6dsjoAubm78N/00GrqW+N3y4=
+	b=NfmJ3ROUArQvInT1tvzSPubDvWPN/0sEw74hDxwoK3WcVzr9jmToVeR8+jiZzKGaO
+	 LgDuCUtMM26Fk9d5Pst2QEmB2S8GXBxFfM/1NKYnZAaDIXbqFlLbJf56miQ0aaPjsz
+	 jM0VNUB/gb8GdtO/Ua/WxowCp4jx74/lKOQIH1sU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,12 +19,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gaosheng Cui <cuigaosheng1@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0616/1146] crypto: ccree - Remove debugfs when platform_driver_register failed
-Date: Wed, 28 Dec 2022 15:35:55 +0100
-Message-Id: <20221228144346.900987171@linuxfoundation.org>
+Subject: [PATCH 6.0 0656/1073] crypto: img-hash - Fix variable dereferenced before check hdev->req
+Date: Wed, 28 Dec 2022 15:37:24 +0100
+Message-Id: <20221228144345.863138005@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,45 +37,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 4f1c596df706c9aca662b6c214fad84047ae2a97 ]
+[ Upstream commit 04ba54e5af8f8f0137b08cb51a0b3a2e1ea46c94 ]
 
-When platform_driver_register failed, we need to remove debugfs,
-which will caused a resource leak, fix it.
+Smatch report warning as follows:
 
-Failed logs as follows:
-[   32.606488] debugfs: Directory 'ccree' with parent '/' already present!
+drivers/crypto/img-hash.c:366 img_hash_dma_task() warn: variable
+dereferenced before check 'hdev->req'
 
-Fixes: 4c3f97276e15 ("crypto: ccree - introduce CryptoCell driver")
+Variable dereferenced should be done after check 'hdev->req',
+fix it.
+
+Fixes: d358f1abbf71 ("crypto: img-hash - Add Imagination Technologies hw hash accelerator")
+Fixes: 10badea259fa ("crypto: img-hash - Fix null pointer exception")
 Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccree/cc_driver.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/crypto/img-hash.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/ccree/cc_driver.c b/drivers/crypto/ccree/cc_driver.c
-index cadead18b59e..d489c6f80892 100644
---- a/drivers/crypto/ccree/cc_driver.c
-+++ b/drivers/crypto/ccree/cc_driver.c
-@@ -651,9 +651,17 @@ static struct platform_driver ccree_driver = {
- 
- static int __init ccree_init(void)
+diff --git a/drivers/crypto/img-hash.c b/drivers/crypto/img-hash.c
+index d8e82d69745d..9629e98bd68b 100644
+--- a/drivers/crypto/img-hash.c
++++ b/drivers/crypto/img-hash.c
+@@ -358,12 +358,16 @@ static int img_hash_dma_init(struct img_hash_dev *hdev)
+ static void img_hash_dma_task(unsigned long d)
  {
-+	int rc;
-+
- 	cc_debugfs_global_init();
+ 	struct img_hash_dev *hdev = (struct img_hash_dev *)d;
+-	struct img_hash_request_ctx *ctx = ahash_request_ctx(hdev->req);
++	struct img_hash_request_ctx *ctx;
+ 	u8 *addr;
+ 	size_t nbytes, bleft, wsend, len, tbc;
+ 	struct scatterlist tsg;
  
--	return platform_driver_register(&ccree_driver);
-+	rc = platform_driver_register(&ccree_driver);
-+	if (rc) {
-+		cc_debugfs_global_fini();
-+		return rc;
-+	}
+-	if (!hdev->req || !ctx->sg)
++	if (!hdev->req)
++		return;
 +
-+	return 0;
- }
- module_init(ccree_init);
++	ctx = ahash_request_ctx(hdev->req);
++	if (!ctx->sg)
+ 		return;
  
+ 	addr = sg_virt(ctx->sg);
 -- 
 2.35.1
 
