@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD86E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:19:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 360ACC433EF;
-	Wed, 28 Dec 2022 15:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52B561863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:19:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAD19C433D2;
+	Wed, 28 Dec 2022 15:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240780;
-	bh=1yXF612/I0D0I/N193mVms18DBk1JUiGuTpVj6eFxAE=;
+	s=korg; t=1672240783;
+	bh=1zfWz3ZZnPQybeAfXq4iGspoVH57hLGv28SFq4hdVCI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p592+9l/ij4SEJs2a4Ll6wuR5Xol4tiwFvTME309lVxPhkrMfx4VxNZROvS1v9Lua
-	 q3Oo1s53pCXN8xDmrJ1Y1cz9xvdvxi2ztTcegjruV8/sdKMAFIDduO76iHIggnqgyY
-	 +pJmqrQio3yXD5MZ44S6/8lvfQfYz+f3uEKaQ4Zg=
+	b=IBYwN6n3ssYNbV0fcb6N9I+xluNkXaoBSn3UEYDrha4npz9RbNtTmgYYC+qnBz6BJ
+	 3Oj1slXQxFKkUH+ZJmnK+lXSUhpcLzwC2NvHx4UdkG4hWc8/epha+Nm7NCA8bB6waP
+	 XbC6snpxnbF3RIzD3VkV7uHVNA60UzNLT5qpLIto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0202/1073] selftests/bpf: Fix memory leak caused by not destroying skeleton
-Date: Wed, 28 Dec 2022 15:29:50 +0100
-Message-Id: <20221228144333.505642544@linuxfoundation.org>
+Subject: [PATCH 5.15 397/731] RDMA/hfi: Decrease PCI device reference count in error path
+Date: Wed, 28 Dec 2022 15:38:24 +0100
+Message-Id: <20221228144308.069655147@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,65 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Kuohai <xukuohai@huawei.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 6e8280b958c5d7edc514cf347a800b23b7732b2b ]
+[ Upstream commit 9b51d072da1d27e1193e84708201c48e385ad912 ]
 
-Some test cases does not destroy skeleton object correctly, causing ASAN
-to report memory leak warning. Fix it.
+pci_get_device() will increase the reference count for the returned
+pci_dev, and also decrease the reference count for the input parameter
+*from* if it is not NULL.
 
-Fixes: 0ef6740e9777 ("selftests/bpf: Add tests for kptr_ref refcounting")
-Fixes: 1642a3945e22 ("selftests/bpf: Add struct argument tests with fentry/fexit programs.")
-Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://lore.kernel.org/bpf/20221011120108.782373-4-xukuohai@huaweicloud.com
+If we break out the loop in node_affinity_init() with 'dev' not NULL, we
+need to call pci_dev_put() to decrease the reference count. Add missing
+pci_dev_put() in error path.
+
+Fixes: c513de490f80 ("IB/hfi1: Invalid NUMA node information can cause a divide by zero")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Link: https://lore.kernel.org/r/20221117131546.113280-1-wangxiongfeng2@huawei.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/map_kptr.c       | 3 ++-
- tools/testing/selftests/bpf/prog_tests/tracing_struct.c | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/hfi1/affinity.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/map_kptr.c b/tools/testing/selftests/bpf/prog_tests/map_kptr.c
-index fdcea7a61491..0d66b1524208 100644
---- a/tools/testing/selftests/bpf/prog_tests/map_kptr.c
-+++ b/tools/testing/selftests/bpf/prog_tests/map_kptr.c
-@@ -105,7 +105,7 @@ static void test_map_kptr_success(bool test_run)
- 	ASSERT_OK(opts.retval, "test_map_kptr_ref2 retval");
+diff --git a/drivers/infiniband/hw/hfi1/affinity.c b/drivers/infiniband/hw/hfi1/affinity.c
+index 98c813ba4304..4c403d9e90cb 100644
+--- a/drivers/infiniband/hw/hfi1/affinity.c
++++ b/drivers/infiniband/hw/hfi1/affinity.c
+@@ -178,6 +178,8 @@ int node_affinity_init(void)
+ 	for (node = 0; node < node_affinity.num_possible_nodes; node++)
+ 		hfi1_per_node_cntr[node] = 1;
  
- 	if (test_run)
--		return;
-+		goto exit;
- 
- 	ret = bpf_map__update_elem(skel->maps.array_map,
- 				   &key, sizeof(key), buf, sizeof(buf), 0);
-@@ -132,6 +132,7 @@ static void test_map_kptr_success(bool test_run)
- 	ret = bpf_map__delete_elem(skel->maps.lru_hash_map, &key, sizeof(key), 0);
- 	ASSERT_OK(ret, "lru_hash_map delete");
- 
-+exit:
- 	map_kptr__destroy(skel);
- }
- 
-diff --git a/tools/testing/selftests/bpf/prog_tests/tracing_struct.c b/tools/testing/selftests/bpf/prog_tests/tracing_struct.c
-index d5022b91d1e4..48dc9472e160 100644
---- a/tools/testing/selftests/bpf/prog_tests/tracing_struct.c
-+++ b/tools/testing/selftests/bpf/prog_tests/tracing_struct.c
-@@ -15,7 +15,7 @@ static void test_fentry(void)
- 
- 	err = tracing_struct__attach(skel);
- 	if (!ASSERT_OK(err, "tracing_struct__attach"))
--		return;
-+		goto destroy_skel;
- 
- 	ASSERT_OK(trigger_module_test_read(256), "trigger_read");
- 
-@@ -54,6 +54,7 @@ static void test_fentry(void)
- 	ASSERT_EQ(skel->bss->t5_ret, 1, "t5 ret");
- 
- 	tracing_struct__detach(skel);
-+destroy_skel:
- 	tracing_struct__destroy(skel);
++	pci_dev_put(dev);
++
+ 	return 0;
  }
  
 -- 
