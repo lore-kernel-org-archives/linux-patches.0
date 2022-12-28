@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 877FC1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EED0C433EF;
-	Wed, 28 Dec 2022 15:51:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4322A1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88FBC433D2;
+	Wed, 28 Dec 2022 15:51:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242702;
-	bh=pW/2+44E4DquXjYBO68pLmaOVVQcLKHNIyJzasyyPX4=;
+	s=korg; t=1672242705;
+	bh=Q4ePPxLDI//uhmZaWgeKmx1tpKk4NHDU6bjLyAZX8LQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=19LLouemhOBH9Q2fLLT6bQ2kXmMdTZw1XqnY1tC7UUA2ILiIbSLd5OP+y3CtzeOhp
-	 ir7sJRBMRrbm29wqQhzDGu2jctWWAKk3zaK+rSDuax2pweV9kmR6J+uaJQUH6kHswj
-	 pSwjYwM5VNSX86oM6lnmTYtuS+dPjQJXNZwLv1yU=
+	b=IAii164PBn02q7GLgE5zf0z75MGGm+w47ef9/xDIdNI9IDdY+u7PsxcJBP15eTAdh
+	 w8g1XI7D/EOkWHaygzqZK5ACw1TJGxgoFzisTcyolyX6d+mpWiXSeM+qbABrs6mhwl
+	 SxYJWKxiGgFp9K17kO+orpMjeAljkWAcaNBHhHRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yuchen <zhangyuchen.lcr@bytedance.com>,
-	Corey Minyard <cminyard@mvista.com>,
+	Wei Chen <harperchen1110@gmail.com>,
+	Baisong Zhong <zhongbaisong@huawei.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 635/731] ipmi: fix memleak when unload ipmi driver
-Date: Wed, 28 Dec 2022 15:42:22 +0100
-Message-Id: <20221228144314.922567322@linuxfoundation.org>
+Subject: [PATCH 6.1 0404/1146] media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()
+Date: Wed, 28 Dec 2022 15:32:23 +0100
+Message-Id: <20221228144341.138362583@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,62 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
+From: Baisong Zhong <zhongbaisong@huawei.com>
 
-[ Upstream commit 36992eb6b9b83f7f9cdc8e74fb5799d7b52e83e9 ]
+[ Upstream commit 0ed554fd769a19ea8464bb83e9ac201002ef74ad ]
 
-After the IPMI disconnect problem, the memory kept rising and we tried
-to unload the driver to free the memory. However, only part of the
-free memory is recovered after the driver is uninstalled. Using
-ebpf to hook free functions, we find that neither ipmi_user nor
-ipmi_smi_msg is free, only ipmi_recv_msg is free.
+Wei Chen reports a kernel bug as blew:
 
-We find that the deliver_smi_err_response call in clean_smi_msgs does
-the destroy processing on each message from the xmit_msg queue without
-checking the return value and free ipmi_smi_msg.
+general protection fault, probably for non-canonical address
+KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+...
+Call Trace:
+<TASK>
+__i2c_transfer+0x77e/0x1930 drivers/i2c/i2c-core-base.c:2109
+i2c_transfer+0x1d5/0x3d0 drivers/i2c/i2c-core-base.c:2170
+i2cdev_ioctl_rdwr+0x393/0x660 drivers/i2c/i2c-dev.c:297
+i2cdev_ioctl+0x75d/0x9f0 drivers/i2c/i2c-dev.c:458
+vfs_ioctl fs/ioctl.c:51 [inline]
+__do_sys_ioctl fs/ioctl.c:870 [inline]
+__se_sys_ioctl+0xfb/0x170 fs/ioctl.c:856
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x3d/0x90 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7fd834a8bded
 
-deliver_smi_err_response is called only at this location. Adding the
-free handling has no effect.
+In az6027_i2c_xfer(), if msg[i].addr is 0x99,
+a null-ptr-deref will caused when accessing msg[i].buf.
+For msg[i].len is 0 and msg[i].buf is null.
 
-To verify, try using ebpf to trace the free function.
+Fix this by checking msg[i].len in az6027_i2c_xfer().
 
-  $ bpftrace -e 'kretprobe:ipmi_alloc_recv_msg {printf("alloc rcv
-      %p\n",retval);} kprobe:free_recv_msg {printf("free recv %p\n",
-      arg0)} kretprobe:ipmi_alloc_smi_msg {printf("alloc smi %p\n",
-        retval);} kprobe:free_smi_msg {printf("free smi  %p\n",arg0)}'
+Link: https://lore.kernel.org/lkml/CAO4mrfcPHB5aQJO=mpqV+p8mPLNg-Fok0gw8gZ=zemAfMGTzMg@mail.gmail.com/
 
-Signed-off-by: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
-Message-Id: <20221007092617.87597-4-zhangyuchen.lcr@bytedance.com>
-[Fixed the comment above handle_one_recv_msg().]
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Link: https://lore.kernel.org/linux-media/20221120065918.2160782-1-zhongbaisong@huawei.com
+Fixes: 76f9a820c867 ("V4L/DVB: AZ6027: Initial import of the driver")
+Reported-by: Wei Chen <harperchen1110@gmail.com>
+Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/media/usb/dvb-usb/az6027.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
-index 2badf36d4816..8dbc349a2edd 100644
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -3527,12 +3527,16 @@ static void deliver_smi_err_response(struct ipmi_smi *intf,
- 				     struct ipmi_smi_msg *msg,
- 				     unsigned char err)
- {
-+	int rv;
- 	msg->rsp[0] = msg->data[0] | 4;
- 	msg->rsp[1] = msg->data[1];
- 	msg->rsp[2] = err;
- 	msg->rsp_size = 3;
--	/* It's an error, so it will never requeue, no need to check return. */
--	handle_one_recv_msg(intf, msg);
-+
-+	/* This will never requeue, but it may ask us to free the message. */
-+	rv = handle_one_recv_msg(intf, msg);
-+	if (rv == 0)
-+		ipmi_free_smi_msg(msg);
- }
- 
- static void cleanup_smi_msgs(struct ipmi_smi *intf)
+diff --git a/drivers/media/usb/dvb-usb/az6027.c b/drivers/media/usb/dvb-usb/az6027.c
+index cf15988dfb51..7d78ee09be5e 100644
+--- a/drivers/media/usb/dvb-usb/az6027.c
++++ b/drivers/media/usb/dvb-usb/az6027.c
+@@ -975,6 +975,10 @@ static int az6027_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int n
+ 		if (msg[i].addr == 0x99) {
+ 			req = 0xBE;
+ 			index = 0;
++			if (msg[i].len < 1) {
++				i = -EOPNOTSUPP;
++				break;
++			}
+ 			value = msg[i].buf[0] & 0x00ff;
+ 			length = 1;
+ 			az6027_usb_out_op(d, req, value, index, data, length);
 -- 
 2.35.1
 
