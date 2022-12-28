@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B9D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52299C433F2;
-	Wed, 28 Dec 2022 15:46:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABF01863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1515C433EF;
+	Wed, 28 Dec 2022 15:46:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242397;
-	bh=7V6ft3lVN55IILIFGQj/INz2L50peMHXGVnsJJGkBZ4=;
+	s=korg; t=1672242400;
+	bh=AqhIoQqnJwnFwAVvXarYmRsMbmKVynUhRUC2dEDf1nk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IC3Q1ZyoPyFj7Bk0odE/nR22GyLDkKBNB2fK++ovcr32WcFk6s6uTiv3KUrs9085E
-	 daA0yAH8ie8qr0ph/YQNXAmcVTz0qW/8l4MQXrei9YQJCJUqoA0EmiKe2EJ3uBaBXP
-	 zJD72jmdIscCi+VxF9WQJoFoYLICRt2WSv505W00=
+	b=IPV9mBt8zYxKjRpbahDENO8akzMnuVbdK0kvuzB/i8Wn9WoQEupXRCwlK5cFc5U+k
+	 lydE2EIk8T2EpA8LvJu9t+1HoczRB8g+ZohC2msIwjQf3XNbmBjztRuVuYyAuZQScr
+	 DVL54PlRnQgBpQdd+GB3LcSp2CsKRXn1y62uREA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hou Tao <houtao1@huawei.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Yonghong Song <yhs@fb.com>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0365/1146] bpf: Pin the start cgroup in cgroup_iter_seq_init()
-Date: Wed, 28 Dec 2022 15:31:44 +0100
-Message-Id: <20221228144340.081108605@linuxfoundation.org>
+Subject: [PATCH 5.15 599/731] igc: Lift TAPRIO schedule restriction
+Date: Wed, 28 Dec 2022 15:41:46 +0100
+Message-Id: <20221228144313.902512110@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,65 +37,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hou Tao <houtao1@huawei.com>
+From: Kurt Kanzenbach <kurt@linutronix.de>
 
-[ Upstream commit 1a5160d4d8fe63ba4964cfff4a85831b6af75f2d ]
+[ Upstream commit a5fd39464a4081ce11c801d7e20c4551ba7cb983 ]
 
-bpf_iter_attach_cgroup() has already acquired an extra reference for the
-start cgroup, but the reference may be released if the iterator link fd
-is closed after the creation of iterator fd, and it may lead to
-user-after-free problem when reading the iterator fd.
+Add support for Qbv schedules where one queue stays open
+in consecutive entries. Currently that's not supported.
 
-An alternative fix is pinning iterator link when opening iterator,
-but it will make iterator link being still visible after the close of
-iterator link fd and the behavior is different with other link types, so
-just fixing it by acquiring another reference for the start cgroup.
+Example schedule:
 
-Fixes: d4ccaf58a847 ("bpf: Introduce cgroup iter")
-Signed-off-by: Hou Tao <houtao1@huawei.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/bpf/20221121073440.1828292-2-houtao@huaweicloud.com
+|tc qdisc replace dev ${INTERFACE} handle 100 parent root taprio num_tc 3 \
+|   map 2 2 1 0 2 2 2 2 2 2 2 2 2 2 2 2 \
+|   queues 1@0 1@1 2@2 \
+|   base-time ${BASETIME} \
+|   sched-entry S 0x01 300000 \ # Stream High/Low
+|   sched-entry S 0x06 500000 \ # Management and Best Effort
+|   sched-entry S 0x04 200000 \ # Best Effort
+|   flags 0x02
+
+Signed-off-by: Kurt Kanzenbach <kurt@linutronix.de>
+Reviewed-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Stable-dep-of: 72abeedd8398 ("igc: Set Qbv start_time and end_time to end_time if not being configured in GCL")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/cgroup_iter.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/net/ethernet/intel/igc/igc_main.c | 23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/kernel/bpf/cgroup_iter.c b/kernel/bpf/cgroup_iter.c
-index 9fcf09f2ef00..c187a9e62bdb 100644
---- a/kernel/bpf/cgroup_iter.c
-+++ b/kernel/bpf/cgroup_iter.c
-@@ -164,16 +164,30 @@ static int cgroup_iter_seq_init(void *priv, struct bpf_iter_aux_info *aux)
- 	struct cgroup_iter_priv *p = (struct cgroup_iter_priv *)priv;
- 	struct cgroup *cgrp = aux->cgroup.start;
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index df78aa4fb44b..791f59d09d28 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -5919,9 +5919,10 @@ static bool validate_schedule(struct igc_adapter *adapter,
+ 		return false;
  
-+	/* bpf_iter_attach_cgroup() has already acquired an extra reference
-+	 * for the start cgroup, but the reference may be released after
-+	 * cgroup_iter_seq_init(), so acquire another reference for the
-+	 * start cgroup.
-+	 */
- 	p->start_css = &cgrp->self;
-+	css_get(p->start_css);
- 	p->terminate = false;
- 	p->visited_all = false;
- 	p->order = aux->cgroup.order;
- 	return 0;
- }
+ 	for (n = 0; n < qopt->num_entries; n++) {
+-		const struct tc_taprio_sched_entry *e;
++		const struct tc_taprio_sched_entry *e, *prev;
+ 		int i;
  
-+static void cgroup_iter_seq_fini(void *priv)
-+{
-+	struct cgroup_iter_priv *p = (struct cgroup_iter_priv *)priv;
++		prev = n ? &qopt->entries[n - 1] : NULL;
+ 		e = &qopt->entries[n];
+ 
+ 		/* i225 only supports "global" frame preemption
+@@ -5934,7 +5935,12 @@ static bool validate_schedule(struct igc_adapter *adapter,
+ 			if (e->gate_mask & BIT(i))
+ 				queue_uses[i]++;
+ 
+-			if (queue_uses[i] > 1)
++			/* There are limitations: A single queue cannot be
++			 * opened and closed multiple times per cycle unless the
++			 * gate stays open. Check for it.
++			 */
++			if (queue_uses[i] > 1 &&
++			    !(prev->gate_mask & BIT(i)))
+ 				return false;
+ 		}
+ 	}
+@@ -5978,6 +5984,7 @@ static int igc_tsn_clear_schedule(struct igc_adapter *adapter)
+ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
+ 				 struct tc_taprio_qopt_offload *qopt)
+ {
++	bool queue_configured[IGC_MAX_TX_QUEUES] = { };
+ 	u32 start_time = 0, end_time = 0;
+ 	size_t n;
+ 
+@@ -5998,9 +6005,6 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
+ 	adapter->cycle_time = qopt->cycle_time;
+ 	adapter->base_time = qopt->base_time;
+ 
+-	/* FIXME: be a little smarter about cases when the gate for a
+-	 * queue stays open for more than one entry.
+-	 */
+ 	for (n = 0; n < qopt->num_entries; n++) {
+ 		struct tc_taprio_sched_entry *e = &qopt->entries[n];
+ 		int i;
+@@ -6028,8 +6032,15 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
+ 			if (!(e->gate_mask & BIT(i)))
+ 				continue;
+ 
+-			ring->start_time = start_time;
++			/* Check whether a queue stays open for more than one
++			 * entry. If so, keep the start and advance the end
++			 * time.
++			 */
++			if (!queue_configured[i])
++				ring->start_time = start_time;
+ 			ring->end_time = end_time;
 +
-+	css_put(p->start_css);
-+}
-+
- static const struct bpf_iter_seq_info cgroup_iter_seq_info = {
- 	.seq_ops		= &cgroup_iter_seq_ops,
- 	.init_seq_private	= cgroup_iter_seq_init,
-+	.fini_seq_private	= cgroup_iter_seq_fini,
- 	.seq_priv_size		= sizeof(struct cgroup_iter_priv),
- };
++			queue_configured[i] = true;
+ 		}
  
+ 		start_time += e->interval;
 -- 
 2.35.1
 
