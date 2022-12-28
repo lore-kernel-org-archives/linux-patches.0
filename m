@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56EDC1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2258C433D2;
-	Wed, 28 Dec 2022 15:45:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83671863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BC08C433D2;
+	Wed, 28 Dec 2022 15:45:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242315;
-	bh=9S+nyIw6bNeVT5PxsfGFyVis2ssnl8zcLQld/VqatFs=;
+	s=korg; t=1672242317;
+	bh=grmuduIJoEobr0zOVIsI/nBmbnUiYZvuoaYcymVNqnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L2hDa4l9rnQtreSE9MSxnBp0gguit+hj9n/mBjaC+mtDsTed6wDs4iiCu6PWTne1U
-	 +m5bxfKagHhp5VMDAIFt828Nia2HafSw2pHewQnB4QS3pOoakgMXvwDdYcAmuPriIC
-	 UxWmVWlU1lETGt92oBWGoyQ8wFBw+xXKweUMuXGE=
+	b=JqzVEMVfrBomAfPpT9WYnPy9IEpgERdmsShdUsNF5XEVvSOk9S16BcvJlqW6yUkQU
+	 M7OknvwsX0nmB1uzmfZVtr9F0VVeIjE+yh7MCliYwzudRBOLTbAJtYsZ57VqL3lCpv
+	 hDTI1WJfJRGSqcHrHH2R0utdoYbmdWLK5hLcWaUM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Wang Yufen <wangyufen@huawei.com>,
-	Yonghong Song <yhs@fb.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0327/1146] selftests/bpf: Fix incorrect ASSERT in the tcp_hdr_options test
-Date: Wed, 28 Dec 2022 15:31:06 +0100
-Message-Id: <20221228144339.041115023@linuxfoundation.org>
+Subject: [PATCH 6.1 0323/1146] module: Fix NULL vs IS_ERR checking for module_get_next_page
+Date: Wed, 28 Dec 2022 15:31:02 +0100
+Message-Id: <20221228144338.926514043@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -37,46 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin KaFai Lau <martin.lau@kernel.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 52929912d7bda040b43538e8d88e8d231b76eb4e ]
+[ Upstream commit 45af1d7aae7d5520d2858f8517a1342646f015db ]
 
-This patch fixes the incorrect ASSERT test in tcp_hdr_options during
-the CHECK to ASSERT macro cleanup.
+The module_get_next_page() function return error pointers on error
+instead of NULL.
+Use IS_ERR() to check the return value to fix this.
 
-Fixes: 3082f8cd4ba3 ("selftests/bpf: Convert tcp_hdr_options test to ASSERT_* macros")
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Wang Yufen <wangyufen@huawei.com>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/bpf/20221107230420.4192307-3-martin.lau@linux.dev
+Fixes: b1ae6dc41eaa ("module: add in-kernel support for decompressing")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/prog_tests/tcp_hdr_options.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/module/decompress.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/tcp_hdr_options.c b/tools/testing/selftests/bpf/prog_tests/tcp_hdr_options.c
-index 617bbce6ef8f..57191773572a 100644
---- a/tools/testing/selftests/bpf/prog_tests/tcp_hdr_options.c
-+++ b/tools/testing/selftests/bpf/prog_tests/tcp_hdr_options.c
-@@ -485,7 +485,7 @@ static void misc(void)
- 			goto check_linum;
+diff --git a/kernel/module/decompress.c b/kernel/module/decompress.c
+index c033572d83f0..720e719253cd 100644
+--- a/kernel/module/decompress.c
++++ b/kernel/module/decompress.c
+@@ -114,8 +114,8 @@ static ssize_t module_gzip_decompress(struct load_info *info,
+ 	do {
+ 		struct page *page = module_get_next_page(info);
  
- 		ret = read(sk_fds.passive_fd, recv_msg, sizeof(recv_msg));
--		if (ASSERT_EQ(ret, sizeof(send_msg), "read(msg)"))
-+		if (!ASSERT_EQ(ret, sizeof(send_msg), "read(msg)"))
- 			goto check_linum;
- 	}
+-		if (!page) {
+-			retval = -ENOMEM;
++		if (IS_ERR(page)) {
++			retval = PTR_ERR(page);
+ 			goto out_inflate_end;
+ 		}
  
-@@ -539,7 +539,7 @@ void test_tcp_hdr_options(void)
- 		goto skel_destroy;
+@@ -173,8 +173,8 @@ static ssize_t module_xz_decompress(struct load_info *info,
+ 	do {
+ 		struct page *page = module_get_next_page(info);
  
- 	cg_fd = test__join_cgroup(CG_NAME);
--	if (ASSERT_GE(cg_fd, 0, "join_cgroup"))
-+	if (!ASSERT_GE(cg_fd, 0, "join_cgroup"))
- 		goto skel_destroy;
+-		if (!page) {
+-			retval = -ENOMEM;
++		if (IS_ERR(page)) {
++			retval = PTR_ERR(page);
+ 			goto out;
+ 		}
  
- 	for (i = 0; i < ARRAY_SIZE(tests); i++) {
 -- 
 2.35.1
 
