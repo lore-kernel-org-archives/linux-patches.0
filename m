@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7FC81863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE47C433EF;
-	Wed, 28 Dec 2022 15:38:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F9FE1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0029EC433EF;
+	Wed, 28 Dec 2022 15:38:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241931;
-	bh=N5CI8jTzBIEOejPNB8urGoQ412XHK+6YJj8C6cwehy0=;
+	s=korg; t=1672241934;
+	bh=LHRr5YCQctroXvfVT+S7VT3cgRyTLnyVCf5Elmpn3+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCDK+1dbLkbCmKH2LdgXArjjaSg1Aj0nxKudhYkQ59NxJTuotjpkb1u0lvMGfsSNe
-	 lewixU7bulxvDolw5gW+/poWwd19ITGMrRDOSmAgzPKX6IxIwTx0/ahzMxQb50wCGW
-	 llIJj89xxs9OQvIhEjg/hf2SdYKs7AF9uPNPp/QY=
+	b=LFx3DNKm8akrFSylD01bg9xLmXxUi9OoIC3jLmjYnvRLsPy17MtxY+jFH1sYus8LW
+	 nu2Lehh84swcEKZVFe99dOVIMuScPHt5HuRxqZMfeqdDGmujgTz4v6kQ8TKr8XzWma
+	 KwHu0QVz0QIogxou3rhLy3nr7pzULIIUPRLd34DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0345/1073] media: platform: exynos4-is: Fix error handling in fimc_md_init()
-Date: Wed, 28 Dec 2022 15:32:13 +0100
-Message-Id: <20221228144337.377771845@linuxfoundation.org>
+Subject: [PATCH 5.15 544/731] rtc: cmos: Eliminate forward declarations of some functions
+Date: Wed, 28 Dec 2022 15:40:51 +0100
+Message-Id: <20221228144312.312541862@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,73 +37,360 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit b434422c45282a0573d8123239abc41fa72665d4 ]
+[ Upstream commit dca4d3b71c8a09a16951add656711fbd6f5bfbb0 ]
 
-A problem about modprobe s5p_fimc failed is triggered with the
-following log given:
+Reorder the ACPI-related code before cmos_do_probe() so as to eliminate
+excessive forward declarations of some functions.
 
- [  272.075275] Error: Driver 'exynos4-fimc' is already registered, aborting...
- modprobe: ERROR: could not insert 's5p_fimc': Device or resource busy
+While at it, for consistency, add the inline modifier to the
+definitions of empty stub static funtions and remove it from the
+corresponding definitions of functions with non-empty bodies.
 
-The reason is that fimc_md_init() returns platform_driver_register()
-directly without checking its return value, if platform_driver_register()
-failed, it returns without unregister fimc_driver, resulting the
-s5p_fimc can never be installed later.
-A simple call graph is shown as below:
+No intentional functional impact.
 
- fimc_md_init()
-   fimc_register_driver() # register fimc_driver
-   platform_driver_register()
-     platform_driver_register()
-       driver_register()
-         bus_add_driver()
-           dev = kzalloc(...) # OOM happened
-   # return without unregister fimc_driver
-
-Fix by unregister fimc_driver when platform_driver_register() returns
-error.
-
-Fixes: d3953223b090 ("[media] s5p-fimc: Add the media device driver")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Zhang Rui <rui.zhang@intel.com>
+Tested-by: Zhang Rui <rui.zhang@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/13157911.uLZWGnKmhe@kreacher
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/samsung/exynos4-is/fimc-core.c | 2 +-
- drivers/media/platform/samsung/exynos4-is/media-dev.c | 6 +++++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/rtc/rtc-cmos.c | 304 ++++++++++++++++++++---------------------
+ 1 file changed, 149 insertions(+), 155 deletions(-)
 
-diff --git a/drivers/media/platform/samsung/exynos4-is/fimc-core.c b/drivers/media/platform/samsung/exynos4-is/fimc-core.c
-index 91cc8d58a663..1791100b6935 100644
---- a/drivers/media/platform/samsung/exynos4-is/fimc-core.c
-+++ b/drivers/media/platform/samsung/exynos4-is/fimc-core.c
-@@ -1173,7 +1173,7 @@ int __init fimc_register_driver(void)
- 	return platform_driver_register(&fimc_driver);
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index 583116994a37..2a21d8281aa6 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -744,8 +744,155 @@ static irqreturn_t cmos_interrupt(int irq, void *p)
+ 		return IRQ_NONE;
  }
  
--void __exit fimc_unregister_driver(void)
-+void fimc_unregister_driver(void)
- {
- 	platform_driver_unregister(&fimc_driver);
- }
-diff --git a/drivers/media/platform/samsung/exynos4-is/media-dev.c b/drivers/media/platform/samsung/exynos4-is/media-dev.c
-index 383a1e0ab912..2f3071acb9c9 100644
---- a/drivers/media/platform/samsung/exynos4-is/media-dev.c
-+++ b/drivers/media/platform/samsung/exynos4-is/media-dev.c
-@@ -1584,7 +1584,11 @@ static int __init fimc_md_init(void)
- 	if (ret)
- 		return ret;
- 
--	return platform_driver_register(&fimc_md_driver);
-+	ret = platform_driver_register(&fimc_md_driver);
-+	if (ret)
-+		fimc_unregister_driver();
+-static inline void rtc_wake_setup(struct device *dev);
+-static void cmos_wake_setup(struct device *dev);
++#ifdef	CONFIG_ACPI
 +
-+	return ret;
++#include <linux/acpi.h>
++
++static u32 rtc_handler(void *context)
++{
++	struct device *dev = context;
++	struct cmos_rtc *cmos = dev_get_drvdata(dev);
++	unsigned char rtc_control = 0;
++	unsigned char rtc_intr;
++	unsigned long flags;
++
++
++	/*
++	 * Always update rtc irq when ACPI is used as RTC Alarm.
++	 * Or else, ACPI SCI is enabled during suspend/resume only,
++	 * update rtc irq in that case.
++	 */
++	if (cmos_use_acpi_alarm())
++		cmos_interrupt(0, (void *)cmos->rtc);
++	else {
++		/* Fix me: can we use cmos_interrupt() here as well? */
++		spin_lock_irqsave(&rtc_lock, flags);
++		if (cmos_rtc.suspend_ctrl)
++			rtc_control = CMOS_READ(RTC_CONTROL);
++		if (rtc_control & RTC_AIE) {
++			cmos_rtc.suspend_ctrl &= ~RTC_AIE;
++			CMOS_WRITE(rtc_control, RTC_CONTROL);
++			rtc_intr = CMOS_READ(RTC_INTR_FLAGS);
++			rtc_update_irq(cmos->rtc, 1, rtc_intr);
++		}
++		spin_unlock_irqrestore(&rtc_lock, flags);
++	}
++
++	pm_wakeup_hard_event(dev);
++	acpi_clear_event(ACPI_EVENT_RTC);
++	acpi_disable_event(ACPI_EVENT_RTC, 0);
++	return ACPI_INTERRUPT_HANDLED;
++}
++
++static void rtc_wake_setup(struct device *dev)
++{
++	if (acpi_disabled)
++		return;
++
++	acpi_install_fixed_event_handler(ACPI_EVENT_RTC, rtc_handler, dev);
++	/*
++	 * After the RTC handler is installed, the Fixed_RTC event should
++	 * be disabled. Only when the RTC alarm is set will it be enabled.
++	 */
++	acpi_clear_event(ACPI_EVENT_RTC);
++	acpi_disable_event(ACPI_EVENT_RTC, 0);
++}
++
++static void rtc_wake_on(struct device *dev)
++{
++	acpi_clear_event(ACPI_EVENT_RTC);
++	acpi_enable_event(ACPI_EVENT_RTC, 0);
++}
++
++static void rtc_wake_off(struct device *dev)
++{
++	acpi_disable_event(ACPI_EVENT_RTC, 0);
++}
++
++#ifdef CONFIG_X86
++/* Enable use_acpi_alarm mode for Intel platforms no earlier than 2015 */
++static void use_acpi_alarm_quirks(void)
++{
++	if (boot_cpu_data.x86_vendor != X86_VENDOR_INTEL)
++		return;
++
++	if (!is_hpet_enabled())
++		return;
++
++	if (dmi_get_bios_year() < 2015)
++		return;
++
++	use_acpi_alarm = true;
++}
++#else
++static inline void use_acpi_alarm_quirks(void) { }
++#endif
++
++static void cmos_wake_setup(struct device *dev)
++{
++	if (acpi_disabled)
++		return;
++
++	use_acpi_alarm_quirks();
++
++	cmos_rtc.wake_on = rtc_wake_on;
++	cmos_rtc.wake_off = rtc_wake_off;
++
++	/* ACPI tables bug workaround. */
++	if (acpi_gbl_FADT.month_alarm && !acpi_gbl_FADT.day_alarm) {
++		dev_dbg(dev, "bogus FADT month_alarm (%d)\n",
++			acpi_gbl_FADT.month_alarm);
++		acpi_gbl_FADT.month_alarm = 0;
++	}
++
++	cmos_rtc.day_alrm = acpi_gbl_FADT.day_alarm;
++	cmos_rtc.mon_alrm = acpi_gbl_FADT.month_alarm;
++	cmos_rtc.century = acpi_gbl_FADT.century;
++
++	if (acpi_gbl_FADT.flags & ACPI_FADT_S4_RTC_WAKE)
++		dev_info(dev, "RTC can wake from S4\n");
++
++	/* RTC always wakes from S1/S2/S3, and often S4/STD */
++	device_init_wakeup(dev, 1);
++}
++
++static void cmos_check_acpi_rtc_status(struct device *dev,
++					      unsigned char *rtc_control)
++{
++	struct cmos_rtc *cmos = dev_get_drvdata(dev);
++	acpi_event_status rtc_status;
++	acpi_status status;
++
++	if (acpi_gbl_FADT.flags & ACPI_FADT_FIXED_RTC)
++		return;
++
++	status = acpi_get_event_status(ACPI_EVENT_RTC, &rtc_status);
++	if (ACPI_FAILURE(status)) {
++		dev_err(dev, "Could not get RTC status\n");
++	} else if (rtc_status & ACPI_EVENT_FLAG_SET) {
++		unsigned char mask;
++		*rtc_control &= ~RTC_AIE;
++		CMOS_WRITE(*rtc_control, RTC_CONTROL);
++		mask = CMOS_READ(RTC_INTR_FLAGS);
++		rtc_update_irq(cmos->rtc, 1, mask);
++	}
++}
++
++#else /* !CONFIG_ACPI */
++
++static inline void rtc_wake_setup(struct device *dev)
++{
++}
++
++static inline void cmos_wake_setup(struct device *dev)
++{
++}
++
++static inline void cmos_check_acpi_rtc_status(struct device *dev,
++					      unsigned char *rtc_control)
++{
++}
++#endif /* CONFIG_ACPI */
+ 
+ #ifdef	CONFIG_PNP
+ #define	INITSECTION
+@@ -1140,9 +1287,6 @@ static void cmos_check_wkalrm(struct device *dev)
+ 	}
  }
  
- static void __exit fimc_md_exit(void)
+-static void cmos_check_acpi_rtc_status(struct device *dev,
+-				       unsigned char *rtc_control);
+-
+ static int __maybe_unused cmos_resume(struct device *dev)
+ {
+ 	struct cmos_rtc	*cmos = dev_get_drvdata(dev);
+@@ -1209,156 +1353,6 @@ static SIMPLE_DEV_PM_OPS(cmos_pm_ops, cmos_suspend, cmos_resume);
+  * predate even PNPBIOS should set up platform_bus devices.
+  */
+ 
+-#ifdef	CONFIG_ACPI
+-
+-#include <linux/acpi.h>
+-
+-static u32 rtc_handler(void *context)
+-{
+-	struct device *dev = context;
+-	struct cmos_rtc *cmos = dev_get_drvdata(dev);
+-	unsigned char rtc_control = 0;
+-	unsigned char rtc_intr;
+-	unsigned long flags;
+-
+-
+-	/*
+-	 * Always update rtc irq when ACPI is used as RTC Alarm.
+-	 * Or else, ACPI SCI is enabled during suspend/resume only,
+-	 * update rtc irq in that case.
+-	 */
+-	if (cmos_use_acpi_alarm())
+-		cmos_interrupt(0, (void *)cmos->rtc);
+-	else {
+-		/* Fix me: can we use cmos_interrupt() here as well? */
+-		spin_lock_irqsave(&rtc_lock, flags);
+-		if (cmos_rtc.suspend_ctrl)
+-			rtc_control = CMOS_READ(RTC_CONTROL);
+-		if (rtc_control & RTC_AIE) {
+-			cmos_rtc.suspend_ctrl &= ~RTC_AIE;
+-			CMOS_WRITE(rtc_control, RTC_CONTROL);
+-			rtc_intr = CMOS_READ(RTC_INTR_FLAGS);
+-			rtc_update_irq(cmos->rtc, 1, rtc_intr);
+-		}
+-		spin_unlock_irqrestore(&rtc_lock, flags);
+-	}
+-
+-	pm_wakeup_hard_event(dev);
+-	acpi_clear_event(ACPI_EVENT_RTC);
+-	acpi_disable_event(ACPI_EVENT_RTC, 0);
+-	return ACPI_INTERRUPT_HANDLED;
+-}
+-
+-static inline void rtc_wake_setup(struct device *dev)
+-{
+-	if (acpi_disabled)
+-		return;
+-
+-	acpi_install_fixed_event_handler(ACPI_EVENT_RTC, rtc_handler, dev);
+-	/*
+-	 * After the RTC handler is installed, the Fixed_RTC event should
+-	 * be disabled. Only when the RTC alarm is set will it be enabled.
+-	 */
+-	acpi_clear_event(ACPI_EVENT_RTC);
+-	acpi_disable_event(ACPI_EVENT_RTC, 0);
+-}
+-
+-static void rtc_wake_on(struct device *dev)
+-{
+-	acpi_clear_event(ACPI_EVENT_RTC);
+-	acpi_enable_event(ACPI_EVENT_RTC, 0);
+-}
+-
+-static void rtc_wake_off(struct device *dev)
+-{
+-	acpi_disable_event(ACPI_EVENT_RTC, 0);
+-}
+-
+-#ifdef CONFIG_X86
+-/* Enable use_acpi_alarm mode for Intel platforms no earlier than 2015 */
+-static void use_acpi_alarm_quirks(void)
+-{
+-	if (boot_cpu_data.x86_vendor != X86_VENDOR_INTEL)
+-		return;
+-
+-	if (!is_hpet_enabled())
+-		return;
+-
+-	if (dmi_get_bios_year() < 2015)
+-		return;
+-
+-	use_acpi_alarm = true;
+-}
+-#else
+-static inline void use_acpi_alarm_quirks(void) { }
+-#endif
+-
+-static void cmos_wake_setup(struct device *dev)
+-{
+-	if (acpi_disabled)
+-		return;
+-
+-	use_acpi_alarm_quirks();
+-
+-	cmos_rtc.wake_on = rtc_wake_on;
+-	cmos_rtc.wake_off = rtc_wake_off;
+-
+-	/* ACPI tables bug workaround. */
+-	if (acpi_gbl_FADT.month_alarm && !acpi_gbl_FADT.day_alarm) {
+-		dev_dbg(dev, "bogus FADT month_alarm (%d)\n",
+-			acpi_gbl_FADT.month_alarm);
+-		acpi_gbl_FADT.month_alarm = 0;
+-	}
+-
+-	cmos_rtc.day_alrm = acpi_gbl_FADT.day_alarm;
+-	cmos_rtc.mon_alrm = acpi_gbl_FADT.month_alarm;
+-	cmos_rtc.century = acpi_gbl_FADT.century;
+-
+-	if (acpi_gbl_FADT.flags & ACPI_FADT_S4_RTC_WAKE)
+-		dev_info(dev, "RTC can wake from S4\n");
+-
+-	/* RTC always wakes from S1/S2/S3, and often S4/STD */
+-	device_init_wakeup(dev, 1);
+-}
+-
+-static void cmos_check_acpi_rtc_status(struct device *dev,
+-				       unsigned char *rtc_control)
+-{
+-	struct cmos_rtc *cmos = dev_get_drvdata(dev);
+-	acpi_event_status rtc_status;
+-	acpi_status status;
+-
+-	if (acpi_gbl_FADT.flags & ACPI_FADT_FIXED_RTC)
+-		return;
+-
+-	status = acpi_get_event_status(ACPI_EVENT_RTC, &rtc_status);
+-	if (ACPI_FAILURE(status)) {
+-		dev_err(dev, "Could not get RTC status\n");
+-	} else if (rtc_status & ACPI_EVENT_FLAG_SET) {
+-		unsigned char mask;
+-		*rtc_control &= ~RTC_AIE;
+-		CMOS_WRITE(*rtc_control, RTC_CONTROL);
+-		mask = CMOS_READ(RTC_INTR_FLAGS);
+-		rtc_update_irq(cmos->rtc, 1, mask);
+-	}
+-}
+-
+-#else
+-
+-static void cmos_wake_setup(struct device *dev)
+-{
+-}
+-
+-static void cmos_check_acpi_rtc_status(struct device *dev,
+-				       unsigned char *rtc_control)
+-{
+-}
+-
+-static void rtc_wake_setup(struct device *dev)
+-{
+-}
+-#endif
+-
+ #ifdef	CONFIG_PNP
+ 
+ #include <linux/pnp.h>
 -- 
 2.35.1
 
