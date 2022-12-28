@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946421C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B796C433D2;
-	Wed, 28 Dec 2022 16:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436A21C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE276C433D2;
+	Wed, 28 Dec 2022 16:04:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243440;
-	bh=j9VCBPycalEhpmLtv/MtSgK8qc3wOVsmd0i+c2JzMMk=;
+	s=korg; t=1672243443;
+	bh=ss+jQ5kl6mj6+G0f9dLPvAk08vCqGQW+r0073x108zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q8OfO1t65emLB+rG0nfvj33PPyEa2Lu2CtcMzGCrCSm65DRPMhnoO4Ol++P8D8mtT
-	 /dJtaP0MIYNtSPBQpoGr4e6//T8Rtic1QMNM1TXVGfGkO/7Y8/vpfU8du+QrXDVSGV
-	 TNPJC3/JfQaXp9YFXwqk4d+o0wrlam4oIdRfSJ+0=
+	b=LiCrQR6odznaBsiv8fEaYDG4NmblHTKAg9hkTcfLBXi8sPkmyuLAn3Dx1nmqMj6eU
+	 ARjv6/QPfhXEPiJhOgVS17dkh+ap0Xo1HR82UgyKps7zz8ZZUwn3ToHjk8Q9z7rWD9
+	 LRR5aXGuIKyIQDiMNdVcKj0d01RcP6iCvTsVv8wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 721/731] regulator: core: fix deadlock on regulator enable
-Date: Wed, 28 Dec 2022 15:43:48 +0100
-Message-Id: <20221228144317.344570905@linuxfoundation.org>
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0475/1146] configfs: fix possible memory leak in configfs_create_dir()
+Date: Wed, 28 Dec 2022 15:33:34 +0100
+Message-Id: <20221228144343.085835030@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,65 +35,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-commit cb3543cff90a4448ed560ac86c98033ad5fecda9 upstream.
+[ Upstream commit c65234b283a65cfbfc94619655e820a5e55199eb ]
 
-When updating the operating mode as part of regulator enable, the caller
-has already locked the regulator tree and drms_uA_update() must not try
-to do the same in order not to trigger a deadlock.
+kmemleak reported memory leaks in configfs_create_dir():
 
-The lock inversion is reported by lockdep as:
+unreferenced object 0xffff888009f6af00 (size 192):
+  comm "modprobe", pid 3777, jiffies 4295537735 (age 233.784s)
+  backtrace:
+    kmem_cache_alloc (mm/slub.c:3250 mm/slub.c:3256 mm/slub.c:3263 mm/slub.c:3273)
+    new_fragment (./include/linux/slab.h:600 fs/configfs/dir.c:163)
+    configfs_register_subsystem (fs/configfs/dir.c:1857)
+    basic_write (drivers/hwtracing/stm/p_basic.c:14) stm_p_basic
+    do_one_initcall (init/main.c:1296)
+    do_init_module (kernel/module/main.c:2455)
+    ...
 
-  ======================================================
-  WARNING: possible circular locking dependency detected
-  6.1.0-next-20221215 #142 Not tainted
-  ------------------------------------------------------
-  udevd/154 is trying to acquire lock:
-  ffffc11f123d7e50 (regulator_list_mutex){+.+.}-{3:3}, at: regulator_lock_dependent+0x54/0x280
+unreferenced object 0xffff888003ba7180 (size 96):
+  comm "modprobe", pid 3777, jiffies 4295537735 (age 233.784s)
+  backtrace:
+    kmem_cache_alloc (mm/slub.c:3250 mm/slub.c:3256 mm/slub.c:3263 mm/slub.c:3273)
+    configfs_new_dirent (./include/linux/slab.h:723 fs/configfs/dir.c:194)
+    configfs_make_dirent (fs/configfs/dir.c:248)
+    configfs_create_dir (fs/configfs/dir.c:296)
+    configfs_attach_group.isra.28 (fs/configfs/dir.c:816 fs/configfs/dir.c:852)
+    configfs_register_subsystem (fs/configfs/dir.c:1881)
+    basic_write (drivers/hwtracing/stm/p_basic.c:14) stm_p_basic
+    do_one_initcall (init/main.c:1296)
+    do_init_module (kernel/module/main.c:2455)
+    ...
 
-  but task is already holding lock:
-  ffff80000e4c36e8 (regulator_ww_class_acquire){+.+.}-{0:0}, at: regulator_enable+0x34/0x80
+This is because the refcount is not correct in configfs_make_dirent().
+For normal stage, the refcount is changing as:
 
-  which lock already depends on the new lock.
+configfs_register_subsystem()
+  configfs_create_dir()
+    configfs_make_dirent()
+      configfs_new_dirent() # set s_count = 1
+      dentry->d_fsdata = configfs_get(sd); # s_count = 2
+...
+configfs_unregister_subsystem()
+  configfs_remove_dir()
+    remove_dir()
+      configfs_remove_dirent() # s_count = 1
+    dput() ...
+      *dentry_unlink_inode()*
+        configfs_d_iput() # s_count = 0, release
 
-  ...
+However, if we failed in configfs_create():
 
-   Possible unsafe locking scenario:
+configfs_register_subsystem()
+  configfs_create_dir()
+    configfs_make_dirent() # s_count = 2
+    ...
+    configfs_create() # fail
+    ->out_remove:
+    configfs_remove_dirent(dentry)
+      configfs_put(sd) # s_count = 1
+      return PTR_ERR(inode);
 
-         CPU0                    CPU1
-         ----                    ----
-    lock(regulator_ww_class_acquire);
-                                 lock(regulator_list_mutex);
-                                 lock(regulator_ww_class_acquire);
-    lock(regulator_list_mutex);
+There is no inode in the error path, so the configfs_d_iput() is lost
+and makes sd and fragment memory leaked.
 
-   *** DEADLOCK ***
+To fix this, when we failed in configfs_create(), manually call
+configfs_put(sd) to keep the refcount correct.
 
-just before probe of a Qualcomm UFS controller (occasionally) deadlocks
-when enabling one of its regulators.
-
-Fixes: 9243a195be7a ("regulator: core: Change voltage setting path")
-Fixes: f8702f9e4aa7 ("regulator: core: Use ww_mutex for regulators locking")
-Cc: stable@vger.kernel.org      # 5.0
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20221215104646.19818-1-johan+linaro@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7063fbf22611 ("[PATCH] configfs: User-driven configuration filesystem")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/configfs/dir.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -962,7 +962,7 @@ static int drms_uA_update(struct regulat
- 		/* get input voltage */
- 		input_uV = 0;
- 		if (rdev->supply)
--			input_uV = regulator_get_voltage(rdev->supply);
-+			input_uV = regulator_get_voltage_rdev(rdev->supply->rdev);
- 		if (input_uV <= 0)
- 			input_uV = rdev->constraints->input_uV;
- 		if (input_uV <= 0) {
+diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
+index d1f9d2632202..ec6519e1ca3b 100644
+--- a/fs/configfs/dir.c
++++ b/fs/configfs/dir.c
+@@ -316,6 +316,7 @@ static int configfs_create_dir(struct config_item *item, struct dentry *dentry,
+ 	return 0;
+ 
+ out_remove:
++	configfs_put(dentry->d_fsdata);
+ 	configfs_remove_dirent(dentry);
+ 	return PTR_ERR(inode);
+ }
+@@ -382,6 +383,7 @@ int configfs_create_link(struct configfs_dirent *target, struct dentry *parent,
+ 	return 0;
+ 
+ out_remove:
++	configfs_put(dentry->d_fsdata);
+ 	configfs_remove_dirent(dentry);
+ 	return PTR_ERR(inode);
+ }
+-- 
+2.35.1
+
 
 
