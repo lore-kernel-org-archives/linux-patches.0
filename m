@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B44BD1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:02:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 215F2C433D2;
-	Wed, 28 Dec 2022 16:02:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D881875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:02:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D475C433EF;
+	Wed, 28 Dec 2022 16:02:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243337;
-	bh=vKCceEtCG+j9139TOxtTjlTcNBL8YiZXWWL6QjbaQbE=;
+	s=korg; t=1672243340;
+	bh=sjpGpDgFcpBzwqJY7EG3TWAy2l4mnnD1NnfKFoA2x5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eDfjmhyNpaESIdTimhsVvWre2SV0AMCDSWLL2xnsLZUqs9/j13nGjzxAOS8bf6aQG
-	 mNAWbHJ05j1spvcjQvT/6jIymRmpzeCjVc/dhjowvHHpQwBvOHDqg4Kgs7v9snzhvX
-	 aVFeMxJh4GV6P1cMRzalpF8VPdUYhiOdgobhfODU=
+	b=AHTJuOoNT5yE3VYp0lrgokrWEwvIQuH79RnX6wF/++yYBYecKJN17f5AAeXDxb0rm
+	 B6+5sCUCVCztMK8otPUOnnCJjNdPVJfNYHted51jK+T79i7T/MjQmGl2gPCEZegBR9
+	 Go8pNCzYUGwPfM61ejmzRP82UdjVj2aIAIg5YIxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Ferry Toth <ftoth@exalondelft.nl>
-Subject: [PATCH 5.15 710/731] usb: dwc3: core: defer probe on ulpi_read_id timeout
-Date: Wed, 28 Dec 2022 15:43:37 +0100
-Message-Id: <20221228144317.030579841@linuxfoundation.org>
+	Liu Shixin <liushixin2@huawei.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0482/1146] media: saa7164: fix missing pci_disable_device()
+Date: Wed, 28 Dec 2022 15:33:41 +0100
+Message-Id: <20221228144343.275811957@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,58 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ferry Toth <ftoth@exalondelft.nl>
+From: Liu Shixin <liushixin2@huawei.com>
 
-commit 63130462c919ece0ad0d9bb5a1f795ef8d79687e upstream.
+[ Upstream commit 57fb35d7542384cac8f198cd1c927540ad38b61a ]
 
-Since commit 0f0101719138 ("usb: dwc3: Don't switch OTG -> peripheral
-if extcon is present"), Dual Role support on Intel Merrifield platform
-broke due to rearranging the call to dwc3_get_extcon().
+Add missing pci_disable_device() in the error path in saa7164_initdev().
 
-It appears to be caused by ulpi_read_id() masking the timeout on the first
-test write. In the past dwc3 probe continued by calling dwc3_core_soft_reset()
-followed by dwc3_get_extcon() which happend to return -EPROBE_DEFER.
-On deferred probe ulpi_read_id() finally succeeded. Due to above mentioned
-rearranging -EPROBE_DEFER is not returned and probe completes without phy.
-
-On Intel Merrifield the timeout on the first test write issue is reproducible
-but it is difficult to find the root cause. Using a mainline kernel and
-rootfs with buildroot ulpi_read_id() succeeds. As soon as adding
-ftrace / bootconfig to find out why, ulpi_read_id() fails and we can't
-analyze the flow. Using another rootfs ulpi_read_id() fails even without
-adding ftrace. We suspect the issue is some kind of timing / race, but
-merely retrying ulpi_read_id() does not resolve the issue.
-
-As we now changed ulpi_read_id() to return -ETIMEDOUT in this case, we
-need to handle the error by calling dwc3_core_soft_reset() and request
--EPROBE_DEFER. On deferred probe ulpi_read_id() is retried and succeeds.
-
-Fixes: ef6a7bcfb01c ("usb: ulpi: Support device discovery via DT")
-Cc: stable@vger.kernel.org
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Ferry Toth <ftoth@exalondelft.nl>
-Link: https://lore.kernel.org/r/20221205201527.13525-3-ftoth@exalondelft.nl
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 443c1228d505 ("V4L/DVB (12923): SAA7164: Add support for the NXP SAA7164 silicon")
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/core.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/media/pci/saa7164/saa7164-core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -963,8 +963,13 @@ static int dwc3_core_init(struct dwc3 *d
+diff --git a/drivers/media/pci/saa7164/saa7164-core.c b/drivers/media/pci/saa7164/saa7164-core.c
+index d5f32e3ff544..754c8be1b6d8 100644
+--- a/drivers/media/pci/saa7164/saa7164-core.c
++++ b/drivers/media/pci/saa7164/saa7164-core.c
+@@ -1259,7 +1259,7 @@ static int saa7164_initdev(struct pci_dev *pci_dev,
  
- 	if (!dwc->ulpi_ready) {
- 		ret = dwc3_core_ulpi_init(dwc);
--		if (ret)
-+		if (ret) {
-+			if (ret == -ETIMEDOUT) {
-+				dwc3_core_soft_reset(dwc);
-+				ret = -EPROBE_DEFER;
-+			}
- 			goto err0;
-+		}
- 		dwc->ulpi_ready = true;
+ 	if (saa7164_dev_setup(dev) < 0) {
+ 		err = -EINVAL;
+-		goto fail_free;
++		goto fail_dev;
  	}
  
+ 	/* print pci info */
+@@ -1427,6 +1427,8 @@ static int saa7164_initdev(struct pci_dev *pci_dev,
+ 
+ fail_irq:
+ 	saa7164_dev_unregister(dev);
++fail_dev:
++	pci_disable_device(pci_dev);
+ fail_free:
+ 	v4l2_device_unregister(&dev->v4l2_dev);
+ 	kfree(dev);
+-- 
+2.35.1
+
 
 
