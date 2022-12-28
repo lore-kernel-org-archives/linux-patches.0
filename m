@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF741863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:20:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7076AC433D2;
-	Wed, 28 Dec 2022 15:20:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C791863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D030C433EF;
+	Wed, 28 Dec 2022 15:20:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240857;
-	bh=atgz39YW52gNp5I9pCGqDrmM8hwgOaZIJ6XOZOz845I=;
+	s=korg; t=1672240860;
+	bh=cERqdDbN7Qk86FVzwMQRD2qmuDXA3OEdZrfIZCaxJTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ivhD83hFdGMpKIik5DPJneplVlLbiAoc8pzrLP7PEXDTJR8Wd5pRCeVQizIiOPhE8
-	 r0RhpR8EsZPiDRr81RKWcpU9UWmwWjKol48L1YJV7lCXMTNqZhs5Xcx/AFglzxf3xU
-	 PgOYYvB7FEz1tv/ZZmeke4l+/BKfiRtzpl9L3FCM=
+	b=KDyrqNLYv0+ejGtLss4wZDqU2AlNRyUtyRTA/DMS8HIKkE6P0Qwmi24SGR8xDL3vf
+	 IW1VWU25L8Ax0tCUyDNVK0edIXjXRzTi4PlX65AnUxcVXYi/MorExJ1IrYBFzPZka/
+	 +5iXFpazH9d+oooLcA2qJKrZxXQRYQVMEuafyduY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6f8cd9a0155b366d227f@syzkaller.appspotmail.com,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Yue Hu <huyue2@coolpad.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Chao Yu <chao@kernel.org>,
+	Niklas Cassel <niklas.cassel@wdc.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0175/1146] erofs: Fix pcluster memleak when its block address is zero
-Date: Wed, 28 Dec 2022 15:28:34 +0100
-Message-Id: <20221228144334.909906620@linuxfoundation.org>
+Subject: [PATCH 6.0 0211/1073] ata: libata: fix NCQ autosense logic
+Date: Wed, 28 Dec 2022 15:29:59 +0100
+Message-Id: <20221228144333.750062028@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,65 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Niklas Cassel <niklas.cassel@wdc.com>
 
-[ Upstream commit c42c0ffe81176940bd5dead474216b7198d77675 ]
+[ Upstream commit 7390896b3484d44cbdb8bc4859964314ac66d3c9 ]
 
-syzkaller reported a memleak:
-https://syzkaller.appspot.com/bug?id=62f37ff612f0021641eda5b17f056f1668aa9aed
+Currently, the logic if we should call ata_scsi_set_sense()
+(and set flag ATA_QCFLAG_SENSE_VALID to indicate that we have
+successfully added sense data to the struct ata_queued_cmd)
+looks like this:
 
-unreferenced object 0xffff88811009c7f8 (size 136):
-  ...
-  backtrace:
-    [<ffffffff821db19b>] z_erofs_do_read_page+0x99b/0x1740
-    [<ffffffff821dee9e>] z_erofs_readahead+0x24e/0x580
-    [<ffffffff814bc0d6>] read_pages+0x86/0x3d0
-    ...
+if (dev->class == ATA_DEV_ZAC &&
+    ((qc->result_tf.status & ATA_SENSE) || qc->result_tf.auxiliary))
 
-syzkaller constructed a case: in z_erofs_register_pcluster(),
-ztailpacking = false and map->m_pa = zero. This makes pcl->obj.index be
-zero although pcl is not a inline pcluster.
+The problem with this is that a drive can support the NCQ command
+error log without supporting NCQ autosense.
 
-Then following path adds refcount for grp, but the refcount won't be put
-because pcl is inline.
+On such a drive, if the failing command has sense data, the status
+field in the NCQ command error log will have the ATA_SENSE bit set.
 
-z_erofs_readahead()
-  z_erofs_do_read_page() # for another page
-    z_erofs_collector_begin()
-      erofs_find_workgroup()
-        erofs_workgroup_get()
+It is just that this sense data is not included in the NCQ command
+error log when NCQ autosense is not supported. Instead the sense
+data has to be fetched using the REQUEST SENSE DATA EXT command.
 
-Since it's illegal for the block address of a non-inlined pcluster to
-be zero, add check here to avoid registering the pcluster which would
-be leaked.
+Therefore, we should only add the sense data if the drive supports
+NCQ autosense AND the ATA_SENSE bit is set in the status field.
 
-Fixes: cecf864d3d76 ("erofs: support inline data decompression")
-Reported-by: syzbot+6f8cd9a0155b366d227f@syzkaller.appspotmail.com
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Reviewed-by: Yue Hu <huyue2@coolpad.com>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/r/Y42Kz6sVkf+XqJRB@debian
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Fix this, and at the same time, remove the duplicated ATA_DEV_ZAC
+check. The struct ata_taskfile supplied to ata_eh_read_log_10h()
+is memset:ed before calling the function, so simply checking if
+qc->result_tf.auxiliary is set is sufficient to tell us that the
+log actually contained sense data.
+
+Fixes: d238ffd59d3c ("libata: do not attempt to retrieve sense code twice")
+Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zdata.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ata/libata-sata.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/fs/erofs/zdata.c b/fs/erofs/zdata.c
-index b792d424d774..cf4871834ebb 100644
---- a/fs/erofs/zdata.c
-+++ b/fs/erofs/zdata.c
-@@ -488,7 +488,8 @@ static int z_erofs_register_pcluster(struct z_erofs_decompress_frontend *fe)
- 	struct erofs_workgroup *grp;
- 	int err;
+diff --git a/drivers/ata/libata-sata.c b/drivers/ata/libata-sata.c
+index 13b9d0fdd42c..8e292e2abb04 100644
+--- a/drivers/ata/libata-sata.c
++++ b/drivers/ata/libata-sata.c
+@@ -1392,7 +1392,8 @@ static int ata_eh_read_log_10h(struct ata_device *dev,
+ 	tf->hob_lbah = buf[10];
+ 	tf->nsect = buf[12];
+ 	tf->hob_nsect = buf[13];
+-	if (dev->class == ATA_DEV_ZAC && ata_id_has_ncq_autosense(dev->id))
++	if (dev->class == ATA_DEV_ZAC && ata_id_has_ncq_autosense(dev->id) &&
++	    (tf->status & ATA_SENSE))
+ 		tf->auxiliary = buf[14] << 16 | buf[15] << 8 | buf[16];
  
--	if (!(map->m_flags & EROFS_MAP_ENCODED)) {
-+	if (!(map->m_flags & EROFS_MAP_ENCODED) ||
-+	    (!ztailpacking && !(map->m_pa >> PAGE_SHIFT))) {
- 		DBG_BUGON(1);
- 		return -EFSCORRUPTED;
- 	}
+ 	return 0;
+@@ -1456,8 +1457,12 @@ void ata_eh_analyze_ncq_error(struct ata_link *link)
+ 	memcpy(&qc->result_tf, &tf, sizeof(tf));
+ 	qc->result_tf.flags = ATA_TFLAG_ISADDR | ATA_TFLAG_LBA | ATA_TFLAG_LBA48;
+ 	qc->err_mask |= AC_ERR_DEV | AC_ERR_NCQ;
+-	if (dev->class == ATA_DEV_ZAC &&
+-	    ((qc->result_tf.status & ATA_SENSE) || qc->result_tf.auxiliary)) {
++
++	/*
++	 * If the device supports NCQ autosense, ata_eh_read_log_10h() will have
++	 * stored the sense data in qc->result_tf.auxiliary.
++	 */
++	if (qc->result_tf.auxiliary) {
+ 		char sense_key, asc, ascq;
+ 
+ 		sense_key = (qc->result_tf.auxiliary >> 16) & 0xff;
 -- 
 2.35.1
 
