@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12F7F1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:05:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C692C433D2;
-	Wed, 28 Dec 2022 16:05:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1B151C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:05:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39EB3C433EF;
+	Wed, 28 Dec 2022 16:05:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243506;
-	bh=9SoGPepvjppRXXngI9GOkeLImGE7v0zYpMEXdu2jfxY=;
+	s=korg; t=1672243509;
+	bh=uASIUEgxAFYrKr97B58yUNGm0Q7XyTbyU3pgxmTCmA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yuNpgsyWHGbmrlV+FJJ1PvM5d14dspG0jIMzDlbPpMxRmrDWABJCxQXzszTdPf0C9
-	 q7QeBtcQvXIR4rUV/QMUz5uBEVfsSKGR+yOx1zTC/rOT/EgImrka3Rf3cKTlD9qHia
-	 6llSpwwte4CMAzPscoXSl8I6r6SRKuNI7lTaFCao=
+	b=f/QI7mEJ1mH4p9INaLJnhq858WZsQNBusAIN6I9f8TRk7FEx/NB1SgMJISq97eox9
+	 TDri0wH9x1LI+SONjZFxHqg5I43QJEWiR7zJe3RzVyHHvQ3Yc7+RMDlJNSlctvwCKk
+	 5wGWD9hAi3lE4pwOuNsyFQaDWeWDQY5jObl5TW5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Firo Yang <firo.yang@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0500/1146] mmc: rtsx_usb_sdmmc: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:33:59 +0100
-Message-Id: <20221228144343.759645314@linuxfoundation.org>
+Subject: [PATCH 6.0 0537/1073] sctp: sysctl: make extra pointers netns aware
+Date: Wed, 28 Dec 2022 15:35:25 +0100
+Message-Id: <20221228144342.639974620@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,56 +36,164 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Firo Yang <firo.yang@suse.com>
 
-[ Upstream commit fc38a5a10e9e5a75eb9189854abeb8405b214cc9 ]
+[ Upstream commit da05cecc4939c0410d56c29e252998b192756318 ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+Recently, a customer reported that from their container whose
+net namespace is different to the host's init_net, they can't set
+the container's net.sctp.rto_max to any value smaller than
+init_net.sctp.rto_min.
 
-So fix this by checking the return value and calling mmc_free_host() in the
-error path, besides, led_classdev_unregister() and pm_runtime_disable() also
-need be called.
+For instance,
+Host:
+sudo sysctl net.sctp.rto_min
+net.sctp.rto_min = 1000
 
-Fixes: c7f6558d84af ("mmc: Add realtek USB sdmmc host driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-7-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Container:
+echo 100 > /mnt/proc-net/sctp/rto_min
+echo 400 > /mnt/proc-net/sctp/rto_max
+echo: write error: Invalid argument
+
+This is caused by the check made from this'commit 4f3fdf3bc59c
+("sctp: add check rto_min and rto_max in sysctl")'
+When validating the input value, it's always referring the boundary
+value set for the init_net namespace.
+
+Having container's rto_max smaller than host's init_net.sctp.rto_min
+does make sense. Consider that the rto between two containers on the
+same host is very likely smaller than it for two hosts.
+
+So to fix this problem, as suggested by Marcelo, this patch makes the
+extra pointers of rto_min, rto_max, pf_retrans, and ps_retrans point
+to the corresponding variables from the newly created net namespace while
+the new net namespace is being registered in sctp_sysctl_net_register.
+
+Fixes: 4f3fdf3bc59c ("sctp: add check rto_min and rto_max in sysctl")
+Reviewed-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Reviewed-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+Signed-off-by: Firo Yang <firo.yang@suse.com>
+Link: https://lore.kernel.org/r/20221209054854.23889-1-firo.yang@suse.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/rtsx_usb_sdmmc.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ net/sctp/sysctl.c | 73 ++++++++++++++++++++++++++++-------------------
+ 1 file changed, 44 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/mmc/host/rtsx_usb_sdmmc.c b/drivers/mmc/host/rtsx_usb_sdmmc.c
-index 5798aee06653..2c650cd58693 100644
---- a/drivers/mmc/host/rtsx_usb_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_usb_sdmmc.c
-@@ -1329,6 +1329,7 @@ static int rtsx_usb_sdmmc_drv_probe(struct platform_device *pdev)
- #ifdef RTSX_USB_USE_LEDS_CLASS
- 	int err;
- #endif
-+	int ret;
+diff --git a/net/sctp/sysctl.c b/net/sctp/sysctl.c
+index b46a416787ec..43ebf090029d 100644
+--- a/net/sctp/sysctl.c
++++ b/net/sctp/sysctl.c
+@@ -84,17 +84,18 @@ static struct ctl_table sctp_table[] = {
+ 	{ /* sentinel */ }
+ };
  
- 	ucr = usb_get_intfdata(to_usb_interface(pdev->dev.parent));
- 	if (!ucr)
-@@ -1365,7 +1366,15 @@ static int rtsx_usb_sdmmc_drv_probe(struct platform_device *pdev)
- 	INIT_WORK(&host->led_work, rtsx_usb_update_led);
++/* The following index defines are used in sctp_sysctl_net_register().
++ * If you add new items to the sctp_net_table, please ensure that
++ * the index values of these defines hold the same meaning indicated by
++ * their macro names when they appear in sctp_net_table.
++ */
++#define SCTP_RTO_MIN_IDX       0
++#define SCTP_RTO_MAX_IDX       1
++#define SCTP_PF_RETRANS_IDX    2
++#define SCTP_PS_RETRANS_IDX    3
++
+ static struct ctl_table sctp_net_table[] = {
+-	{
+-		.procname	= "rto_initial",
+-		.data		= &init_net.sctp.rto_initial,
+-		.maxlen		= sizeof(unsigned int),
+-		.mode		= 0644,
+-		.proc_handler	= proc_dointvec_minmax,
+-		.extra1         = SYSCTL_ONE,
+-		.extra2         = &timer_max
+-	},
+-	{
++	[SCTP_RTO_MIN_IDX] = {
+ 		.procname	= "rto_min",
+ 		.data		= &init_net.sctp.rto_min,
+ 		.maxlen		= sizeof(unsigned int),
+@@ -103,7 +104,7 @@ static struct ctl_table sctp_net_table[] = {
+ 		.extra1         = SYSCTL_ONE,
+ 		.extra2         = &init_net.sctp.rto_max
+ 	},
+-	{
++	[SCTP_RTO_MAX_IDX] =  {
+ 		.procname	= "rto_max",
+ 		.data		= &init_net.sctp.rto_max,
+ 		.maxlen		= sizeof(unsigned int),
+@@ -112,6 +113,33 @@ static struct ctl_table sctp_net_table[] = {
+ 		.extra1         = &init_net.sctp.rto_min,
+ 		.extra2         = &timer_max
+ 	},
++	[SCTP_PF_RETRANS_IDX] = {
++		.procname	= "pf_retrans",
++		.data		= &init_net.sctp.pf_retrans,
++		.maxlen		= sizeof(int),
++		.mode		= 0644,
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= SYSCTL_ZERO,
++		.extra2		= &init_net.sctp.ps_retrans,
++	},
++	[SCTP_PS_RETRANS_IDX] = {
++		.procname	= "ps_retrans",
++		.data		= &init_net.sctp.ps_retrans,
++		.maxlen		= sizeof(int),
++		.mode		= 0644,
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1		= &init_net.sctp.pf_retrans,
++		.extra2		= &ps_retrans_max,
++	},
++	{
++		.procname	= "rto_initial",
++		.data		= &init_net.sctp.rto_initial,
++		.maxlen		= sizeof(unsigned int),
++		.mode		= 0644,
++		.proc_handler	= proc_dointvec_minmax,
++		.extra1         = SYSCTL_ONE,
++		.extra2         = &timer_max
++	},
+ 	{
+ 		.procname	= "rto_alpha_exp_divisor",
+ 		.data		= &init_net.sctp.rto_alpha,
+@@ -207,24 +235,6 @@ static struct ctl_table sctp_net_table[] = {
+ 		.extra1		= SYSCTL_ONE,
+ 		.extra2		= SYSCTL_INT_MAX,
+ 	},
+-	{
+-		.procname	= "pf_retrans",
+-		.data		= &init_net.sctp.pf_retrans,
+-		.maxlen		= sizeof(int),
+-		.mode		= 0644,
+-		.proc_handler	= proc_dointvec_minmax,
+-		.extra1		= SYSCTL_ZERO,
+-		.extra2		= &init_net.sctp.ps_retrans,
+-	},
+-	{
+-		.procname	= "ps_retrans",
+-		.data		= &init_net.sctp.ps_retrans,
+-		.maxlen		= sizeof(int),
+-		.mode		= 0644,
+-		.proc_handler	= proc_dointvec_minmax,
+-		.extra1		= &init_net.sctp.pf_retrans,
+-		.extra2		= &ps_retrans_max,
+-	},
+ 	{
+ 		.procname	= "sndbuf_policy",
+ 		.data		= &init_net.sctp.sndbuf_policy,
+@@ -586,6 +596,11 @@ int sctp_sysctl_net_register(struct net *net)
+ 	for (i = 0; table[i].data; i++)
+ 		table[i].data += (char *)(&net->sctp) - (char *)&init_net.sctp;
  
- #endif
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret) {
-+#ifdef RTSX_USB_USE_LEDS_CLASS
-+		led_classdev_unregister(&host->led);
-+#endif
-+		mmc_free_host(mmc);
-+		pm_runtime_disable(&pdev->dev);
-+		return ret;
-+	}
- 
- 	return 0;
- }
++	table[SCTP_RTO_MIN_IDX].extra2 = &net->sctp.rto_max;
++	table[SCTP_RTO_MAX_IDX].extra1 = &net->sctp.rto_min;
++	table[SCTP_PF_RETRANS_IDX].extra2 = &net->sctp.ps_retrans;
++	table[SCTP_PS_RETRANS_IDX].extra1 = &net->sctp.pf_retrans;
++
+ 	net->sctp.sysctl_header = register_net_sysctl(net, "net/sctp", table);
+ 	if (net->sctp.sysctl_header == NULL) {
+ 		kfree(table);
 -- 
 2.35.1
 
