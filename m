@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3670F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0521C433D2;
-	Wed, 28 Dec 2022 15:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C441863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54C68C433D2;
+	Wed, 28 Dec 2022 15:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241018;
-	bh=rLgqm8AkjtP/pV7MG2SgnIVdxklTuEQ4QmDrLwU8k/Q=;
+	s=korg; t=1672241020;
+	bh=IQj4jAtdLDkSaRLYS/ofgyUfK/kIyBl2/qwFt4uRLCg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p8BpMW7I5Z03Rv+as2C2mmWVVZgCTVHrQXkNL9KZED9NY2oyoXy22l8be7RPEQrJe
-	 XoHast8QsJtHjKnhZ/yN7WW5VPaXGjclnu179+QdMWP0u2o8vhV5ZHk8lTrRF7VGr+
-	 Pz9rgitExlvnhSktRrXE+KkIxvYGl3q5rWsywnuQ=
+	b=vOMqjUpK5YjCOB+Y3qn/Af+7GC3drOHV2P5Fur4urrHWoK3178PX8Pzu7GWZzpFWO
+	 J66mSVtoFxeHQO1G7IgThPy3oAdaOWWIBmrt71Uj0GEQx6czv+KzkGj1J9TLDcPlUM
+	 1KFn1i7JdM5IidRfQyN1CS1Qd1m/k+BdVSPpnPdk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Mike Marshall <hubcap@omnibond.com>,
+	Evan Quan <evan.quan@amd.com>,
+	Rafael Mendonca <rafaelmendsr@gmail.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 428/731] orangefs: Fix sysfs not cleanup when dev init failed
-Date: Wed, 28 Dec 2022 15:38:55 +0100
-Message-Id: <20221228144308.971890979@linuxfoundation.org>
+Subject: [PATCH 6.0 0216/1073] drm/amdgpu/powerplay/psm: Fix memory leak in power state init
+Date: Wed, 28 Dec 2022 15:30:04 +0100
+Message-Id: <20221228144333.882963399@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,72 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Rafael Mendonca <rafaelmendsr@gmail.com>
 
-[ Upstream commit ea60a4ad0cf88b411cde6888b8c890935686ecd7 ]
+[ Upstream commit 8f8033d5663b18e6efb33feb61f2287a04605ab5 ]
 
-When the dev init failed, should cleanup the sysfs, otherwise, the
-module will never be loaded since can not create duplicate sysfs
-directory:
+Commit 902bc65de0b3 ("drm/amdgpu/powerplay/psm: return an error in power
+state init") made the power state init function return early in case of
+failure to get an entry from the powerplay table, but it missed to clean up
+the allocated memory for the current power state before returning.
 
-  sysfs: cannot create duplicate filename '/fs/orangefs'
-
-  CPU: 1 PID: 6549 Comm: insmod Tainted: G        W          6.0.0+ #44
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc33 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x34/0x44
-   sysfs_warn_dup.cold+0x17/0x24
-   sysfs_create_dir_ns+0x16d/0x180
-   kobject_add_internal+0x156/0x3a0
-   kobject_init_and_add+0xcf/0x120
-   orangefs_sysfs_init+0x7e/0x3a0 [orangefs]
-   orangefs_init+0xfe/0x1000 [orangefs]
-   do_one_initcall+0x87/0x2a0
-   do_init_module+0xdf/0x320
-   load_module+0x2f98/0x3330
-   __do_sys_finit_module+0x113/0x1b0
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-  kobject_add_internal failed for orangefs with -EEXIST, don't try to register things with the same name in the same directory.
-
-Fixes: 2f83ace37181 ("orangefs: put register_chrdev immediately before register_filesystem")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+Fixes: 902bc65de0b3 ("drm/amdgpu/powerplay/psm: return an error in power state init")
+Reviewed-by: Evan Quan <evan.quan@amd.com>
+Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/orangefs-mod.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/orangefs/orangefs-mod.c b/fs/orangefs/orangefs-mod.c
-index cd7297815f91..5ab741c60b7e 100644
---- a/fs/orangefs/orangefs-mod.c
-+++ b/fs/orangefs/orangefs-mod.c
-@@ -141,7 +141,7 @@ static int __init orangefs_init(void)
- 		gossip_err("%s: could not initialize device subsystem %d!\n",
- 			   __func__,
- 			   ret);
--		goto cleanup_device;
-+		goto cleanup_sysfs;
- 	}
- 
- 	ret = register_filesystem(&orangefs_fs_type);
-@@ -152,11 +152,11 @@ static int __init orangefs_init(void)
- 		goto out;
- 	}
- 
--	orangefs_sysfs_exit();
--
--cleanup_device:
- 	orangefs_dev_cleanup();
- 
-+cleanup_sysfs:
-+	orangefs_sysfs_exit();
-+
- sysfs_init_failed:
- 	orangefs_debugfs_cleanup();
- 
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c
+index 67d7da0b6fed..1d829402cd2e 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/pp_psm.c
+@@ -75,8 +75,10 @@ int psm_init_power_state_table(struct pp_hwmgr *hwmgr)
+ 	for (i = 0; i < table_entries; i++) {
+ 		result = hwmgr->hwmgr_func->get_pp_table_entry(hwmgr, i, state);
+ 		if (result) {
++			kfree(hwmgr->current_ps);
+ 			kfree(hwmgr->request_ps);
+ 			kfree(hwmgr->ps);
++			hwmgr->current_ps = NULL;
+ 			hwmgr->request_ps = NULL;
+ 			hwmgr->ps = NULL;
+ 			return -EINVAL;
 -- 
 2.35.1
 
