@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89C21C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 302C0C433D2;
-	Wed, 28 Dec 2022 16:26:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4842C1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C03B5C433A4;
+	Wed, 28 Dec 2022 16:26:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244793;
-	bh=8zCJVnbkmkAnQE7pr6b8EkU6OWgNcZvsbNpngBmFC5w=;
+	s=korg; t=1672244796;
+	bh=QxSUR4nYeki/U9OxdIBOBvWP0VUu4Wb6oL8wXCjPKmQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uD3wfZQ7yrAvIDVPKvgiwhizkojXzo1+a1m2rYD1oqtauaLX7/uxIwprY54RIPZ5R
-	 Kg9o1a7zNUY/tIBWxQR34Pajxd+PLXggkh+orWJqnB0OhbKRf10wxir0yCuRl1o93k
-	 NNnZSTMD7U8v7F3yP/WtxgaKLjSIS8B4CiFibOrM=
+	b=t/m3FfjRE2DE7VToH6Kz0fMIXmBDAhH72UQ4aM8RMEnpDjCtFF0CYBX8KCASJMiFg
+	 umsxrVLjxmMNV/IFmD/Y7frdlhuV8ZozqoiKxg1Sr5TqnaBVJwW1AKr1pokVoDlxH+
+	 CI5NM4Vr1a9KKntZgo8xUJcc6ShCN1O8PHejv7+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Frederic Barrat <fbarrat@linux.ibm.com>,
+	Justin Chen <justinpopo6@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0715/1146] misc: ocxl: fix possible name leak in ocxl_file_register_afu()
-Date: Wed, 28 Dec 2022 15:37:34 +0100
-Message-Id: <20221228144349.564740837@linuxfoundation.org>
+Subject: [PATCH 6.0 0775/1073] phy: usb: Use slow clock for wake enabled suspend
+Date: Wed, 28 Dec 2022 15:39:23 +0100
+Message-Id: <20221228144349.063603444@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,46 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Justin Chen <justinpopo6@gmail.com>
 
-[ Upstream commit a4cb1004aeed2ab893a058fad00a5b41a12c4691 ]
+[ Upstream commit 700c44b508020a3ea29d297c677f8d4ab14b7e6a ]
 
-If device_register() returns error in ocxl_file_register_afu(),
-the name allocated by dev_set_name() need be freed. As comment
-of device_register() says, it should use put_device() to give
-up the reference in the error path. So fix this by calling
-put_device(), then the name can be freed in kobject_cleanup(),
-and info is freed in info_release().
+The logic was incorrect when switching to slow clock. We want the slow
+clock if wake_enabled is set.
 
-Fixes: 75ca758adbaf ("ocxl: Create a clear delineation between ocxl backend & frontend")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Acked-by: Andrew Donnellan <ajd@linux.ibm.com>
-Acked-by: Frederic Barrat <fbarrat@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221111145929.2429271-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: ae532b2b7aa5 ("phy: usb: Add "wake on" functionality for newer Synopsis XHCI controllers")
+Signed-off-by: Justin Chen <justinpopo6@gmail.com>
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/1665005418-15807-6-git-send-email-justinpopo6@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/ocxl/file.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/misc/ocxl/file.c b/drivers/misc/ocxl/file.c
-index d46dba2df5a1..452d5777a0e4 100644
---- a/drivers/misc/ocxl/file.c
-+++ b/drivers/misc/ocxl/file.c
-@@ -541,8 +541,11 @@ int ocxl_file_register_afu(struct ocxl_afu *afu)
- 		goto err_put;
+diff --git a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
+index d2524b70ea16..b3386e458dd4 100644
+--- a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
++++ b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
+@@ -331,13 +331,12 @@ static void usb_uninit_common_7216(struct brcm_usb_init_params *params)
  
- 	rc = device_register(&info->dev);
--	if (rc)
--		goto err_put;
-+	if (rc) {
-+		free_minor(info);
-+		put_device(&info->dev);
-+		return rc;
-+	}
+ 	pr_debug("%s\n", __func__);
  
- 	rc = ocxl_sysfs_register_afu(info);
- 	if (rc)
+-	if (!params->wake_enabled) {
+-		USB_CTRL_SET(ctrl, USB_PM, USB_PWRDN);
+-
++	if (params->wake_enabled) {
+ 		/* Switch to using slower clock during suspend to save power */
+ 		USB_CTRL_SET(ctrl, USB_PM, XHC_S2_CLK_SWITCH_EN);
+-	} else {
+ 		usb_wake_enable_7216(params, true);
++	} else {
++		USB_CTRL_SET(ctrl, USB_PM, USB_PWRDN);
+ 	}
+ }
+ 
 -- 
 2.35.1
 
