@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84A701C15
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:49:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DABC433F2;
-	Wed, 28 Dec 2022 16:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6A941C15
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:49:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35DE7C433EF;
+	Wed, 28 Dec 2022 16:49:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246156;
-	bh=qPqk/QcI5sKpboJiyW6sjFa4oZHVZvOVZF7qeQ6okJk=;
+	s=korg; t=1672246159;
+	bh=+2w6wsYm1BRXB2I+p+whmvk5bYN+HVXCCZCWA0xuGv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rp8hFsFYgvhaUSpHtzgP0KvSt7tQvWiQRz0st5n216hfpfN5QNulg795IAtr8n1P/
-	 D2YuoGvg7D7teyj6glm4VeHMSgKSKNHywPrTbh6gXuKsDaNpSXFdxNvm8x4CoFMhct
-	 RkhdeaSlWKwYhLurzs4yhDb8HTgzq4L5GqsZuNQo=
+	b=Kxncbcm+Z+eCqShUuUKHVlDbkKAhDHh2jPy0uj0EYzBtbwMzEmd/KzgWCdkUHeFRc
+	 pOttfZMDeZwiujZ+nw7/IUJcmMDbDt7shC3htGid4NsN18+wL811v239PlbQsouNLN
+	 3jMKyCaR0ydpVxWWARUE1/4nno1+9+h297r6J+W8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dokyung Song <dokyungs@yonsei.ac.kr>,
-	Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
-	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
-	Kalle Valo <kvalo@kernel.org>,
+	Jeff LaBundy <jeff@labundy.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0990/1146] wifi: brcmfmac: Fix potential shift-out-of-bounds in brcmf_fw_alloc_request()
-Date: Wed, 28 Dec 2022 15:42:09 +0100
-Message-Id: <20221228144357.254859732@linuxfoundation.org>
+Subject: [PATCH 6.0 1022/1073] Input: iqs7222 - avoid sending empty SYN_REPORT events
+Date: Wed, 28 Dec 2022 15:43:30 +0100
+Message-Id: <20221228144355.949709076@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,146 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+From: Jeff LaBundy <jeff@labundy.com>
 
-[ Upstream commit 81d17f6f3331f03c8eafdacea68ab773426c1e3c ]
+[ Upstream commit 514c13b1faed74e9bc19061b6d7c78d53a3402ba ]
 
-This patch fixes a shift-out-of-bounds in brcmfmac that occurs in
-BIT(chiprev) when a 'chiprev' provided by the device is too large.
-It should also not be equal to or greater than BITS_PER_TYPE(u32)
-as we do bitwise AND with a u32 variable and BIT(chiprev). The patch
-adds a check that makes the function return NULL if that is the case.
-Note that the NULL case is later handled by the bus-specific caller,
-brcmf_usb_probe_cb() or brcmf_usb_reset_resume(), for example.
+Add a check to prevent sending undefined events, which ultimately
+map to SYN_REPORT.
 
-Found by a modified version of syzkaller.
-
-UBSAN: shift-out-of-bounds in drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-shift exponent 151055786 is too large for 64-bit type 'long unsigned int'
-CPU: 0 PID: 1885 Comm: kworker/0:2 Tainted: G           O      5.14.0+ #132
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
-Workqueue: usb_hub_wq hub_event
-Call Trace:
- dump_stack_lvl+0x57/0x7d
- ubsan_epilogue+0x5/0x40
- __ubsan_handle_shift_out_of_bounds.cold+0x53/0xdb
- ? lock_chain_count+0x20/0x20
- brcmf_fw_alloc_request.cold+0x19/0x3ea
- ? brcmf_fw_get_firmwares+0x250/0x250
- ? brcmf_usb_ioctl_resp_wait+0x1a7/0x1f0
- brcmf_usb_get_fwname+0x114/0x1a0
- ? brcmf_usb_reset_resume+0x120/0x120
- ? number+0x6c4/0x9a0
- brcmf_c_process_clm_blob+0x168/0x590
- ? put_dec+0x90/0x90
- ? enable_ptr_key_workfn+0x20/0x20
- ? brcmf_common_pd_remove+0x50/0x50
- ? rcu_read_lock_sched_held+0xa1/0xd0
- brcmf_c_preinit_dcmds+0x673/0xc40
- ? brcmf_c_set_joinpref_default+0x100/0x100
- ? rcu_read_lock_sched_held+0xa1/0xd0
- ? rcu_read_lock_bh_held+0xb0/0xb0
- ? lock_acquire+0x19d/0x4e0
- ? find_held_lock+0x2d/0x110
- ? brcmf_usb_deq+0x1cc/0x260
- ? mark_held_locks+0x9f/0xe0
- ? lockdep_hardirqs_on_prepare+0x273/0x3e0
- ? _raw_spin_unlock_irqrestore+0x47/0x50
- ? trace_hardirqs_on+0x1c/0x120
- ? brcmf_usb_deq+0x1a7/0x260
- ? brcmf_usb_rx_fill_all+0x5a/0xf0
- brcmf_attach+0x246/0xd40
- ? wiphy_new_nm+0x1476/0x1d50
- ? kmemdup+0x30/0x40
- brcmf_usb_probe+0x12de/0x1690
- ? brcmf_usbdev_qinit.constprop.0+0x470/0x470
- usb_probe_interface+0x25f/0x710
- really_probe+0x1be/0xa90
- __driver_probe_device+0x2ab/0x460
- ? usb_match_id.part.0+0x88/0xc0
- driver_probe_device+0x49/0x120
- __device_attach_driver+0x18a/0x250
- ? driver_allows_async_probing+0x120/0x120
- bus_for_each_drv+0x123/0x1a0
- ? bus_rescan_devices+0x20/0x20
- ? lockdep_hardirqs_on_prepare+0x273/0x3e0
- ? trace_hardirqs_on+0x1c/0x120
- __device_attach+0x207/0x330
- ? device_bind_driver+0xb0/0xb0
- ? kobject_uevent_env+0x230/0x12c0
- bus_probe_device+0x1a2/0x260
- device_add+0xa61/0x1ce0
- ? __mutex_unlock_slowpath+0xe7/0x660
- ? __fw_devlink_link_to_suppliers+0x550/0x550
- usb_set_configuration+0x984/0x1770
- ? kernfs_create_link+0x175/0x230
- usb_generic_driver_probe+0x69/0x90
- usb_probe_device+0x9c/0x220
- really_probe+0x1be/0xa90
- __driver_probe_device+0x2ab/0x460
- driver_probe_device+0x49/0x120
- __device_attach_driver+0x18a/0x250
- ? driver_allows_async_probing+0x120/0x120
- bus_for_each_drv+0x123/0x1a0
- ? bus_rescan_devices+0x20/0x20
- ? lockdep_hardirqs_on_prepare+0x273/0x3e0
- ? trace_hardirqs_on+0x1c/0x120
- __device_attach+0x207/0x330
- ? device_bind_driver+0xb0/0xb0
- ? kobject_uevent_env+0x230/0x12c0
- bus_probe_device+0x1a2/0x260
- device_add+0xa61/0x1ce0
- ? __fw_devlink_link_to_suppliers+0x550/0x550
- usb_new_device.cold+0x463/0xf66
- ? hub_disconnect+0x400/0x400
- ? _raw_spin_unlock_irq+0x24/0x30
- hub_event+0x10d5/0x3330
- ? hub_port_debounce+0x280/0x280
- ? __lock_acquire+0x1671/0x5790
- ? wq_calc_node_cpumask+0x170/0x2a0
- ? lock_release+0x640/0x640
- ? rcu_read_lock_sched_held+0xa1/0xd0
- ? rcu_read_lock_bh_held+0xb0/0xb0
- ? lockdep_hardirqs_on_prepare+0x273/0x3e0
- process_one_work+0x873/0x13e0
- ? lock_release+0x640/0x640
- ? pwq_dec_nr_in_flight+0x320/0x320
- ? rwlock_bug.part.0+0x90/0x90
- worker_thread+0x8b/0xd10
- ? __kthread_parkme+0xd9/0x1d0
- ? process_one_work+0x13e0/0x13e0
- kthread+0x379/0x450
- ? _raw_spin_unlock_irq+0x24/0x30
- ? set_kthread_struct+0x100/0x100
- ret_from_fork+0x1f/0x30
-
-Reported-by: Dokyung Song <dokyungs@yonsei.ac.kr>
-Reported-by: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
-Reported-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
-Signed-off-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221024071329.504277-1-linuxlovemin@yonsei.ac.kr
+Fixes: e505edaedcb9 ("Input: add support for Azoteq IQS7222A/B/C")
+Signed-off-by: Jeff LaBundy <jeff@labundy.com>
+Link: https://lore.kernel.org/r/20220908131548.48120-7-jeff@labundy.com
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/input/misc/iqs7222.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-index f2207793f6e2..09d2f2dc2b46 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-@@ -803,6 +803,11 @@ brcmf_fw_alloc_request(u32 chip, u32 chiprev,
- 	u32 i, j;
- 	char end = '\0';
+diff --git a/drivers/input/misc/iqs7222.c b/drivers/input/misc/iqs7222.c
+index 8fd665874a24..0b2bf471b3a0 100644
+--- a/drivers/input/misc/iqs7222.c
++++ b/drivers/input/misc/iqs7222.c
+@@ -2314,6 +2314,9 @@ static int iqs7222_report(struct iqs7222_private *iqs7222)
+ 			int k = 2 + j * (num_chan > 16 ? 2 : 1);
+ 			u16 state = le16_to_cpu(status[k + i / 16]);
  
-+	if (chiprev >= BITS_PER_TYPE(u32)) {
-+		brcmf_err("Invalid chip revision %u\n", chiprev);
-+		return NULL;
-+	}
++			if (!iqs7222->kp_type[i][j])
++				continue;
 +
- 	for (i = 0; i < table_size; i++) {
- 		if (mapping_table[i].chipid == chip &&
- 		    mapping_table[i].revmask & BIT(chiprev))
+ 			input_event(iqs7222->keypad,
+ 				    iqs7222->kp_type[i][j],
+ 				    iqs7222->kp_code[i][j],
 -- 
 2.35.1
 
