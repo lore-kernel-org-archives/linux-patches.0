@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7E91C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5F2EC433D2;
-	Wed, 28 Dec 2022 16:42:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 198CF1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:43:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D2DC433D2;
+	Wed, 28 Dec 2022 16:43:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245778;
-	bh=CwJ34qd6UTI9A6IbPwAliuNehPs83ziqfQ//1dcSAEA=;
+	s=korg; t=1672245780;
+	bh=0JPGoPWFnmeg/u2vBOcTl46VzkGqJqsQ7D5HZdn8OK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s+C+0izPJVOU8Ma/kzpSmaa082qUU0shmK54DiFmJ5nX1Cu/D5y7wrW7zMlNiyn8j
-	 M07az/sq/8UajZVGh7rAwXrL0jpF9SeCEweCFTD1UBSLwY6cxxBsh9T2k5b/3YLg6G
-	 x8lRV0UHyhhb54CEaG43AB/uOmQew7sbfZ6k3ahw=
+	b=lDKTRFibLdBOXIGf3wChShzMcSrls9JXc8Sc50236YTi72nzOo6JVE3fMXrn7/YJb
+	 4WgwUjwIawAdcoewcSfB6PTNMPKuouQL37ibiqbrgRbSjAuNkkj7LI6wNePCJZRvdG
+	 wu81lUT7bAAi1PsQ6FCAH/5ZGpN1x1XNgh9Cr3zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+8dd0551dda6020944c5d@syzkaller.appspotmail.com,
+	Stanislav Fomichev <sdf@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Yonghong Song <yhs@fb.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0926/1073] net: ethernet: ti: Fix return type of netcp_ndo_start_xmit()
-Date: Wed, 28 Dec 2022 15:41:54 +0100
-Message-Id: <20221228144353.179862676@linuxfoundation.org>
+Subject: [PATCH 6.0 0953/1073] bpf: Prevent decl_tag from being referenced in func_proto arg
+Date: Wed, 28 Dec 2022 15:42:21 +0100
+Message-Id: <20221228144353.919647131@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -36,51 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Stanislav Fomichev <sdf@google.com>
 
-[ Upstream commit 63fe6ff674a96cfcfc0fa8df1051a27aa31c70b4 ]
+[ Upstream commit f17472d4599697d701aa239b4c475a506bccfd19 ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+Syzkaller managed to hit another decl_tag issue:
 
-  drivers/net/ethernet/ti/netcp_core.c:1944:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = netcp_ndo_start_xmit,
-                                    ^~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+  btf_func_proto_check kernel/bpf/btf.c:4506 [inline]
+  btf_check_all_types kernel/bpf/btf.c:4734 [inline]
+  btf_parse_type_sec+0x1175/0x1980 kernel/bpf/btf.c:4763
+  btf_parse kernel/bpf/btf.c:5042 [inline]
+  btf_new_fd+0x65a/0xb00 kernel/bpf/btf.c:6709
+  bpf_btf_load+0x6f/0x90 kernel/bpf/syscall.c:4342
+  __sys_bpf+0x50a/0x6c0 kernel/bpf/syscall.c:5034
+  __do_sys_bpf kernel/bpf/syscall.c:5093 [inline]
+  __se_sys_bpf kernel/bpf/syscall.c:5091 [inline]
+  __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:5091
+  do_syscall_64+0x54/0x70 arch/x86/entry/common.c:48
 
-->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-'netdev_tx_t', not 'int'. Adjust the return type of
-netcp_ndo_start_xmit() to match the prototype's to resolve the warning
-and CFI failure.
+This seems similar to commit ea68376c8bed ("bpf: prevent decl_tag from being
+referenced in func_proto") but for the argument.
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221102160933.1601260-1-nathan@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: syzbot+8dd0551dda6020944c5d@syzkaller.appspotmail.com
+Signed-off-by: Stanislav Fomichev <sdf@google.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Yonghong Song <yhs@fb.com>
+Link: https://lore.kernel.org/bpf/20221123035422.872531-2-sdf@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/netcp_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/btf.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/ti/netcp_core.c b/drivers/net/ethernet/ti/netcp_core.c
-index b15d44261e76..267252560942 100644
---- a/drivers/net/ethernet/ti/netcp_core.c
-+++ b/drivers/net/ethernet/ti/netcp_core.c
-@@ -1261,7 +1261,7 @@ static int netcp_tx_submit_skb(struct netcp_intf *netcp,
- }
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index 0d23d4bcd81c..44e93c3abebd 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -4481,6 +4481,11 @@ static int btf_func_proto_check(struct btf_verifier_env *env,
+ 			break;
+ 		}
  
- /* Submit the packet */
--static int netcp_ndo_start_xmit(struct sk_buff *skb, struct net_device *ndev)
-+static netdev_tx_t netcp_ndo_start_xmit(struct sk_buff *skb, struct net_device *ndev)
- {
- 	struct netcp_intf *netcp = netdev_priv(ndev);
- 	struct netcp_stats *tx_stats = &netcp->stats;
++		if (btf_type_is_resolve_source_only(arg_type)) {
++			btf_verifier_log_type(env, t, "Invalid arg#%u", i + 1);
++			return -EINVAL;
++		}
++
+ 		if (args[i].name_off &&
+ 		    (!btf_name_offset_valid(btf, args[i].name_off) ||
+ 		     !btf_name_valid_identifier(btf, args[i].name_off))) {
 -- 
 2.35.1
 
