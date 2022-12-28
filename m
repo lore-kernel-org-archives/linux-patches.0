@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F30251863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A5DDC433EF;
-	Wed, 28 Dec 2022 15:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894761863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E50EC433D2;
+	Wed, 28 Dec 2022 15:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239756;
-	bh=Z/P0ANFPlxpuLpqiZeBxnpCqJHlganbJ3HpCHLkqdhg=;
+	s=korg; t=1672239759;
+	bh=H1OnxuiR4kMHDh2iJioH6K0B+i72KtkJhNhCb8dn/1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b3IKv7cD1mdi6loCuBC1rhpaazh1yFyoAs9etd0laISNl1e9Bki6Z8AokH2vj2xxJ
-	 fC0oHcQqoH+LayIHhIgJ5Dmkp/GTFFnzaayTQX6E94bGSXMKFTpTviiSbUCCEz05oc
-	 8T47HGTFc1yZFTRoMJgcC0DoTAAqvYBncSwB6kOI=
+	b=d9WaAWDIkJ7U23UHex5HJOTywiiHRLBv3rEqc23lJKl94Y5OjEA/hOO/xVP9AtRfB
+	 4Ior67nFNDWK9SP/MFyyufb0sHErxoOCJ8wVJCqVuhQKZGbcMpIq/Oef2ANLnlVVol
+	 5fBkuyk/iKOYNbMlol4Rv5ofthsMylFSWFLDxFEk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0075/1073] ARM: dts: turris-omnia: Add ethernet aliases
-Date: Wed, 28 Dec 2022 15:27:43 +0100
-Message-Id: <20221228144330.113281806@linuxfoundation.org>
+Subject: [PATCH 5.15 267/731] wifi: cfg80211: Fix not unregister reg_pdev when load_builtin_regdb_keys() fails
+Date: Wed, 28 Dec 2022 15:36:14 +0100
+Message-Id: <20221228144304.308511917@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,38 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit f1f3e530c59a7e8c5f06172f4c28b945a6b4bfb8 ]
+[ Upstream commit 833a9fd28c9b7ccb39a334721379e992dc1c0c89 ]
 
-This allows bootloader to correctly pass MAC addresses used by bootloader
-to individual interfaces into kernel device tree.
+In regulatory_init_db(), when it's going to return a error, reg_pdev
+should be unregistered. When load_builtin_regdb_keys() fails it doesn't
+do it and makes cfg80211 can't be reload with report:
 
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Fixes: 26ca8b52d6e1 ("ARM: dts: add support for Turris Omnia")
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+sysfs: cannot create duplicate filename '/devices/platform/regulatory.0'
+ ...
+ <TASK>
+ dump_stack_lvl+0x79/0x9b
+ sysfs_warn_dup.cold+0x1c/0x29
+ sysfs_create_dir_ns+0x22d/0x290
+ kobject_add_internal+0x247/0x800
+ kobject_add+0x135/0x1b0
+ device_add+0x389/0x1be0
+ platform_device_add+0x28f/0x790
+ platform_device_register_full+0x376/0x4b0
+ regulatory_init+0x9a/0x4b2 [cfg80211]
+ cfg80211_init+0x84/0x113 [cfg80211]
+ ...
+
+Fixes: 90a53e4432b1 ("cfg80211: implement regdb signature checking")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Link: https://lore.kernel.org/r/20221109090237.214127-1-chenzhongjin@huawei.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/armada-385-turris-omnia.dts | 6 ++++++
- 1 file changed, 6 insertions(+)
+ net/wireless/reg.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/armada-385-turris-omnia.dts b/arch/arm/boot/dts/armada-385-turris-omnia.dts
-index a41902e3815c..96bd40351c3b 100644
---- a/arch/arm/boot/dts/armada-385-turris-omnia.dts
-+++ b/arch/arm/boot/dts/armada-385-turris-omnia.dts
-@@ -23,6 +23,12 @@ chosen {
- 		stdout-path = &uart0;
- 	};
+diff --git a/net/wireless/reg.c b/net/wireless/reg.c
+index 7b19a2087db9..d0fbe822e793 100644
+--- a/net/wireless/reg.c
++++ b/net/wireless/reg.c
+@@ -4247,8 +4247,10 @@ static int __init regulatory_init_db(void)
+ 		return -EINVAL;
  
-+	aliases {
-+		ethernet0 = &eth0;
-+		ethernet1 = &eth1;
-+		ethernet2 = &eth2;
-+	};
-+
- 	memory {
- 		device_type = "memory";
- 		reg = <0x00000000 0x40000000>; /* 1024 MB */
+ 	err = load_builtin_regdb_keys();
+-	if (err)
++	if (err) {
++		platform_device_unregister(reg_pdev);
+ 		return err;
++	}
+ 
+ 	/* We always try to get an update for the static regdomain */
+ 	err = regulatory_hint_core(cfg80211_world_regdom->alpha2);
 -- 
 2.35.1
 
