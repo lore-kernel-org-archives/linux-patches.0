@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA6D1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:30:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B60D8C433D2;
-	Wed, 28 Dec 2022 16:30:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C131C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:30:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60097C433D2;
+	Wed, 28 Dec 2022 16:30:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245015;
-	bh=H+NjqY+eCG8tBT/cRDyQh1pMzSYauxs9/AH0P+pMNbY=;
+	s=korg; t=1672245017;
+	bh=Qll6mOLQd9hFyC0J26Qi2x/DiIHIBkr6XZaVbG0YleM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vfBZG92fyqeOm5xw9wUFavm/7D+47VJehvINbT0pxAnLePbL/kqMHEdqNF5kgvrP6
-	 rK7/AGmz/slsm5h8mqMNSTw3vP71M/kBfiY8zZd2c6nQnKtufBt81g4Phja2Cml7LT
-	 77I9lNAVKVaoaMdS1JMmyHkfdulJQfc3dg7cIX+w=
+	b=u/BUHyMqaSpMtzXPNXNnnneDQz5x9Q5zawjNPDOCXfwx84lUj1zv76J7t2eP2oyno
+	 I/LO1lZPwlzUHZ/Cj8WbSfM6WVlXA7mAX6KCw4i5/MaAaWlH9Mog/ITanzmWTXyacr
+	 BLACoDF7GThvZHT6PNcZuD4DIW6M47me7h1f/58k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiheng Lin <linqiheng@huawei.com>,
-	Chris Morgan <macromorgan@hotmail.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Emil Renner Berthing <emil.renner.berthing@canonical.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0778/1146] power: supply: Fix refcount leak in rk817_charger_probe
-Date: Wed, 28 Dec 2022 15:38:37 +0100
-Message-Id: <20221228144351.279188279@linuxfoundation.org>
+Subject: [PATCH 6.0 0816/1073] pwm: sifive: Call pwm_sifive_update_clock() while mutex is held
+Date: Wed, 28 Dec 2022 15:40:04 +0100
+Message-Id: <20221228144350.173881300@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,39 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qiheng Lin <linqiheng@huawei.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 54c03bfd094fb74f9533a9c28250219afe182382 ]
+[ Upstream commit 45558b3abb87eeb2cedb8a59cb2699c120b5102a ]
 
-of_get_child_by_name() returns a node pointer with refcount
-incremented, we should use of_node_put() on it when not need anymore.
-Add missing of_node_put() to avoid refcount leak.
+As was documented in commit 0f02f491b786 ("pwm: sifive: Reduce time the
+controller lock is held") a caller of pwm_sifive_update_clock() must
+hold the mutex. So fix pwm_sifive_clock_notifier() to grab the lock.
 
-Fixes: 11cb8da0189b ("power: supply: Add charger driver for Rockchip RK817")
-Signed-off-by: Qiheng Lin <linqiheng@huawei.com>
-Reviewed-by: Chris Morgan <macromorgan@hotmail.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+While this necessity was only documented later, the race exists since
+the driver was introduced.
+
+Fixes: 9e37a53eb051 ("pwm: sifive: Add a driver for SiFive SoC PWM")
+Reported-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Reviewed-by: Emil Renner Berthing <emil.renner.berthing@canonical.com>
+Link: https://lore.kernel.org/r/20221018061656.1428111-1-u.kleine-koenig@pengutronix.de
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/rk817_charger.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/pwm/pwm-sifive.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/rk817_charger.c b/drivers/power/supply/rk817_charger.c
-index f20a6ac584cc..4f9c1c417916 100644
---- a/drivers/power/supply/rk817_charger.c
-+++ b/drivers/power/supply/rk817_charger.c
-@@ -1060,8 +1060,10 @@ static int rk817_charger_probe(struct platform_device *pdev)
- 		return -ENODEV;
+diff --git a/drivers/pwm/pwm-sifive.c b/drivers/pwm/pwm-sifive.c
+index 2d4fa5e5fdd4..bb7239313401 100644
+--- a/drivers/pwm/pwm-sifive.c
++++ b/drivers/pwm/pwm-sifive.c
+@@ -204,8 +204,11 @@ static int pwm_sifive_clock_notifier(struct notifier_block *nb,
+ 	struct pwm_sifive_ddata *ddata =
+ 		container_of(nb, struct pwm_sifive_ddata, notifier);
  
- 	charger = devm_kzalloc(&pdev->dev, sizeof(*charger), GFP_KERNEL);
--	if (!charger)
-+	if (!charger) {
-+		of_node_put(node);
- 		return -ENOMEM;
+-	if (event == POST_RATE_CHANGE)
++	if (event == POST_RATE_CHANGE) {
++		mutex_lock(&ddata->lock);
+ 		pwm_sifive_update_clock(ddata, ndata->new_rate);
++		mutex_unlock(&ddata->lock);
 +	}
  
- 	charger->rk808 = rk808;
- 
+ 	return NOTIFY_OK;
+ }
 -- 
 2.35.1
 
