@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA94D1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DC44C433D2;
-	Wed, 28 Dec 2022 16:27:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 728A91C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E863AC433D2;
+	Wed, 28 Dec 2022 16:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244827;
-	bh=3pDA/mDDRenCnZS72+22hom0EQgnfTq9LBnTB6OMFx8=;
+	s=korg; t=1672244830;
+	bh=yEZa6B1TZCsRS5KFKARCago1rBoKBQG73bW/2H4Z+v8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K8o7BkEvTNf7WP1o+kUaLb+fVc4haSdcyeLHAOs37QzIgO5FqlUNsQtPcXhBLenW6
-	 Wws+yZbW21QQ7i+qa0heyba8jg+m7rgoe7tAUkWIEi1140pLflP0829+nnuEMq1HNn
-	 zgwbqFCmwUvHSTvknu6UEdNvdb5Ky4n6mao8yVuc=
+	b=rrWMlrJUZz1Hgkl3AkUumuLBWv2JOnmOr9KLZ+JLAuhh8OicFVfVyptrw5vouOQjV
+	 +UWDAa3mqW7+loWBrD1FJDa6IjU0R8pB49AFtObIYlVqNOCAewrsEih/UKLdrf+I+r
+	 2LE12ygV+ok8zRU7jb6ow9Dt9NHrTMYZZVymWWIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+b892240eac461e488d51@syzkaller.appspotmail.com,
-	Abdun Nihaal <abdun.nihaal@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Zheyu Ma <zheyuma97@gmail.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0781/1073] fs/ntfs3: Fix slab-out-of-bounds read in ntfs_trim_fs
-Date: Wed, 28 Dec 2022 15:39:29 +0100
-Message-Id: <20221228144349.223466422@linuxfoundation.org>
+Subject: [PATCH 6.1 0743/1146] i2c: ismt: Fix an out-of-bounds bug in ismt_access()
+Date: Wed, 28 Dec 2022 15:38:02 +0100
+Message-Id: <20221228144350.329736920@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,40 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Abdun Nihaal <abdun.nihaal@gmail.com>
+From: Zheyu Ma <zheyuma97@gmail.com>
 
-[ Upstream commit 557d19675a470bb0a98beccec38c5dc3735c20fa ]
+[ Upstream commit 39244cc754829bf707dccd12e2ce37510f5b1f8d ]
 
-Syzbot reports an out of bound access in ntfs_trim_fs.
-The cause of this is using a loop termination condition that compares
-window index (iw) with wnd->nbits instead of wnd->nwnd, due to which the
-index used for wnd->free_bits exceeds the size of the array allocated.
+When the driver does not check the data from the user, the variable
+'data->block[0]' may be very large to cause an out-of-bounds bug.
 
-Fix the loop condition.
+The following log can reveal it:
 
-Fixes: 3f3b442b5ad2 ("fs/ntfs3: Add bitmap")
-Link: https://syzkaller.appspot.com/bug?extid=b892240eac461e488d51
-Reported-by: syzbot+b892240eac461e488d51@syzkaller.appspotmail.com
-Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+[   33.995542] i2c i2c-1: ioctl, cmd=0x720, arg=0x7ffcb3dc3a20
+[   33.995978] ismt_smbus 0000:00:05.0: I2C_SMBUS_BLOCK_DATA:  WRITE
+[   33.996475] ==================================================================
+[   33.996995] BUG: KASAN: out-of-bounds in ismt_access.cold+0x374/0x214b
+[   33.997473] Read of size 18446744073709551615 at addr ffff88810efcfdb1 by task ismt_poc/485
+[   33.999450] Call Trace:
+[   34.001849]  memcpy+0x20/0x60
+[   34.002077]  ismt_access.cold+0x374/0x214b
+[   34.003382]  __i2c_smbus_xfer+0x44f/0xfb0
+[   34.004007]  i2c_smbus_xfer+0x10a/0x390
+[   34.004291]  i2cdev_ioctl_smbus+0x2c8/0x710
+[   34.005196]  i2cdev_ioctl+0x5ec/0x74c
+
+Fix this bug by checking the size of 'data->block[0]' first.
+
+Fixes: 13f35ac14cd0 ("i2c: Adding support for Intel iSMT SMBus 2.0 host controller")
+Signed-off-by: Zheyu Ma <zheyuma97@gmail.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/bitmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-ismt.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/fs/ntfs3/bitmap.c b/fs/ntfs3/bitmap.c
-index 5d44ceac855b..087282cb130b 100644
---- a/fs/ntfs3/bitmap.c
-+++ b/fs/ntfs3/bitmap.c
-@@ -1424,7 +1424,7 @@ int ntfs_trim_fs(struct ntfs_sb_info *sbi, struct fstrim_range *range)
- 
- 	down_read_nested(&wnd->rw_lock, BITMAP_MUTEX_CLUSTERS);
- 
--	for (; iw < wnd->nbits; iw++, wbit = 0) {
-+	for (; iw < wnd->nwnd; iw++, wbit = 0) {
- 		CLST lcn_wnd = iw * wbits;
- 		struct buffer_head *bh;
- 
+diff --git a/drivers/i2c/busses/i2c-ismt.c b/drivers/i2c/busses/i2c-ismt.c
+index fe2349590f75..c74985d77b0e 100644
+--- a/drivers/i2c/busses/i2c-ismt.c
++++ b/drivers/i2c/busses/i2c-ismt.c
+@@ -509,6 +509,9 @@ static int ismt_access(struct i2c_adapter *adap, u16 addr,
+ 		if (read_write == I2C_SMBUS_WRITE) {
+ 			/* Block Write */
+ 			dev_dbg(dev, "I2C_SMBUS_BLOCK_DATA:  WRITE\n");
++			if (data->block[0] < 1 || data->block[0] > I2C_SMBUS_BLOCK_MAX)
++				return -EINVAL;
++
+ 			dma_size = data->block[0] + 1;
+ 			dma_direction = DMA_TO_DEVICE;
+ 			desc->wr_len_cmd = dma_size;
 -- 
 2.35.1
 
