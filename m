@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508E21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9825C433D2;
-	Wed, 28 Dec 2022 15:30:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB001863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 691ECC433D2;
+	Wed, 28 Dec 2022 15:30:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241448;
-	bh=Lo+z/ksi6TJW+4fOI3/ioxvulWTy79WUrGww0ha3Hlo=;
+	s=korg; t=1672241450;
+	bh=rwJjDuJ7Ugwpqgmepqbf4F6LcZ4sDTi3wOE1hcZNbdM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OPU1Fi+/64UQJzxKOK9FMnqO+6cnJePVA5r/oJiYL0WcLsP6ImJl3xw73AdiHsvgt
-	 3IhbaNOIocjYLUsdpZ5BlSl/dew6Im5WFmriwBhSImkkHqtoC0kYq1i2sZSxzb1pVQ
-	 OMhvvgkCyzu91pc4eyN66Aa6x0ToZtt2QJWal8UE=
+	b=diSY+nZo5pkWoxaKVFrD50QlQad4tAvNmVoN3cqvTu52S/M1FuwzbRb3v6dtNy50+
+	 AmWICZ5szmseHRX46t6aGAOdfI+YLA3DH83C2U8tvEv/mbL9ljho8DIajp70vIGFJ3
+	 nLlOfgywyAXF56FXnY4zEY1Yw2zdS6DMImKsPxsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Johannes Thumshirn <jth@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 483/731] drivers: mcb: fix resource leak in mcb_probe()
-Date: Wed, 28 Dec 2022 15:39:50 +0100
-Message-Id: <20221228144310.551485686@linuxfoundation.org>
+Subject: [PATCH 6.0 0285/1073] bpf: propagate precision in ALU/ALU64 operations
+Date: Wed, 28 Dec 2022 15:31:13 +0100
+Message-Id: <20221228144335.759249744@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +35,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit d7237462561fcd224fa687c56ccb68629f50fc0d ]
+[ Upstream commit a3b666bfa9c9edc05bca62a87abafe0936bd7f97 ]
 
-When probe hook function failed in mcb_probe(), it doesn't put the device.
-Compiled test only.
+When processing ALU/ALU64 operations (apart from BPF_MOV, which is
+handled correctly already; and BPF_NEG and BPF_END are special and don't
+have source register), if destination register is already marked
+precise, this causes problem with potentially missing precision tracking
+for the source register. E.g., when we have r1 >>= r5 and r1 is marked
+precise, but r5 isn't, this will lead to r5 staying as imprecise. This
+is due to the precision backtracking logic stopping early when it sees
+r1 is already marked precise. If r1 wasn't precise, we'd keep
+backtracking and would add r5 to the set of registers that need to be
+marked precise. So there is a discrepancy here which can lead to invalid
+and incompatible states matched due to lack of precision marking on r5.
+If r1 wasn't precise, precision backtracking would correctly mark both
+r1 and r5 as precise.
 
-Fixes: 7bc364097a89 ("mcb: Acquire reference to device in probe")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: Johannes Thumshirn <jth@kernel.org>
-Link: https://lore.kernel.org/r/9f87de36bfb85158b506cb78c6fc9db3f6a3bad1.1669624063.git.johannes.thumshirn@wdc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is simple to fix, though. During the forward instruction simulation
+pass, for arithmetic operations of `scalar <op>= scalar` form (where
+<op> is ALU or ALU64 operations), if destination register is already
+precise, mark source register as precise. This applies only when both
+involved registers are SCALARs. `ptr += scalar` and `scalar += ptr`
+cases are already handled correctly.
+
+This does have (negative) effect on some selftest programs and few
+Cilium programs.  ~/baseline-tmp-results.csv are veristat results with
+this patch, while ~/baseline-results.csv is without it. See post
+scriptum for instructions on how to make Cilium programs testable with
+veristat. Correctness has a price.
+
+$ ./veristat -C -e file,prog,insns,states ~/baseline-results.csv ~/baseline-tmp-results.csv | grep -v '+0'
+File                     Program               Total insns (A)  Total insns (B)  Total insns (DIFF)  Total states (A)  Total states (B)  Total states (DIFF)
+-----------------------  --------------------  ---------------  ---------------  ------------------  ----------------  ----------------  -------------------
+bpf_cubic.bpf.linked1.o  bpf_cubic_cong_avoid              997             1700      +703 (+70.51%)                62                90        +28 (+45.16%)
+test_l4lb.bpf.linked1.o  balancer_ingress                 4559             5469      +910 (+19.96%)               118               126          +8 (+6.78%)
+-----------------------  --------------------  ---------------  ---------------  ------------------  ----------------  ----------------  -------------------
+
+$ ./veristat -C -e file,prog,verdict,insns,states ~/baseline-results-cilium.csv ~/baseline-tmp-results-cilium.csv | grep -v '+0'
+File           Program                         Total insns (A)  Total insns (B)  Total insns (DIFF)  Total states (A)  Total states (B)  Total states (DIFF)
+-------------  ------------------------------  ---------------  ---------------  ------------------  ----------------  ----------------  -------------------
+bpf_host.o     tail_nodeport_nat_ingress_ipv6             4448             5261      +813 (+18.28%)               234               247         +13 (+5.56%)
+bpf_host.o     tail_nodeport_nat_ipv6_egress              3396             3446        +50 (+1.47%)               201               203          +2 (+1.00%)
+bpf_lxc.o      tail_nodeport_nat_ingress_ipv6             4448             5261      +813 (+18.28%)               234               247         +13 (+5.56%)
+bpf_overlay.o  tail_nodeport_nat_ingress_ipv6             4448             5261      +813 (+18.28%)               234               247         +13 (+5.56%)
+bpf_xdp.o      tail_lb_ipv4                              71736            73442      +1706 (+2.38%)              4295              4370         +75 (+1.75%)
+-------------  ------------------------------  ---------------  ---------------  ------------------  ----------------  ----------------  -------------------
+
+P.S. To make Cilium ([0]) programs libbpf-compatible and thus
+veristat-loadable, apply changes from topmost commit in [1], which does
+minimal changes to Cilium source code, mostly around SEC() annotations
+and BPF map definitions.
+
+  [0] https://github.com/cilium/cilium/
+  [1] https://github.com/anakryiko/cilium/commits/libbpf-friendliness
+
+Fixes: b5dc0163d8fd ("bpf: precise scalar_value tracking")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20221104163649.121784-2-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mcb/mcb-core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/mcb/mcb-core.c b/drivers/mcb/mcb-core.c
-index cf128b3471d7..0530db548231 100644
---- a/drivers/mcb/mcb-core.c
-+++ b/drivers/mcb/mcb-core.c
-@@ -71,8 +71,10 @@ static int mcb_probe(struct device *dev)
- 
- 	get_device(dev);
- 	ret = mdrv->probe(mdev, found_id);
--	if (ret)
-+	if (ret) {
- 		module_put(carrier_mod);
-+		put_device(dev);
-+	}
- 
- 	return ret;
- }
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 95479562a64a..05414615c008 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -9061,6 +9061,11 @@ static int adjust_reg_min_max_vals(struct bpf_verifier_env *env,
+ 				return err;
+ 			return adjust_ptr_min_max_vals(env, insn,
+ 						       dst_reg, src_reg);
++		} else if (dst_reg->precise) {
++			/* if dst_reg is precise, src_reg should be precise as well */
++			err = mark_chain_precision(env, insn->src_reg);
++			if (err)
++				return err;
+ 		}
+ 	} else {
+ 		/* Pretend the src is a reg with a known value, since we only
 -- 
 2.35.1
 
