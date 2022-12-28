@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AFED1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 966C9C433D2;
-	Wed, 28 Dec 2022 16:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77F51C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA87C433EF;
+	Wed, 28 Dec 2022 16:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244722;
-	bh=2q1vrMX8UCs1gsDCdclOCLM0Gx3S0BaTH5j2LUQGrb8=;
+	s=korg; t=1672244724;
+	bh=IyrntQKuf7TDG7H4RdY3zYDDX97jtif1m/HabaYSVMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2UtS2SUPizQf4M46EyAGtdt1XgbT6uiCRBHGofEwCahvhl1oH/2IvWJ7qvt10xQO4
-	 xhlUgyo7zCe3QRLRxrhK7tIJMQ3WZyt5bJluMq5NwACjBX0tUHcvOwp0STMg9jJT7Z
-	 FrnyPbH8C3tnfkVNvLJYcDapRcbs64bYVY06QvOI=
+	b=VMGtfrHuj/mosl/211GClinJxe0IKTCAkw5ZuUeeilGXUTNW9vTYLKT1Y/5BjJAPL
+	 R/ynqQE73wrDgpeK+Zfi/X0GOUg6bYO7WN7oEtTgX8udAAPSrD6/IS1GN6ntm4ZXBI
+	 igK/66DtIjfldkPeGxVHfFQ7N+Fa9g5l6+X/WDAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Yang Shen <shenyang39@huawei.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0725/1146] coresight: trbe: remove cpuhp instance node before remove cpuhp state
-Date: Wed, 28 Dec 2022 15:37:44 +0100
-Message-Id: <20221228144349.837683915@linuxfoundation.org>
+Subject: [PATCH 6.0 0763/1073] phy: qcom-qmp-pcie: drop bogus register update
+Date: Wed, 28 Dec 2022 15:39:11 +0100
+Message-Id: <20221228144348.738683356@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,58 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Shen <shenyang39@huawei.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 20ee8c223f792947378196307d8e707c9cdc2d61 ]
+[ Upstream commit 2d93887cb4bac0a36ce9e146956f631ab7994680 ]
 
-cpuhp_state_add_instance() and cpuhp_state_remove_instance() should
-be used in pairs. Or there will lead to the warn on
-cpuhp_remove_multi_state() since the cpuhp_step list is not empty.
+Since commit 0d58280cf1e6 ("phy: Update PHY power control sequence") the
+PHY is powered on before configuring the registers and only the MSM8996
+PCIe PHY, which includes the POWER_DOWN_CONTROL register in its PCS
+initialisation table, may possibly require a second update afterwards.
 
-The following is the error log with 'rmmod coresight-trbe':
-Error: Removing state 215 which has instances left.
-Call trace:
-  __cpuhp_remove_state_cpuslocked+0x144/0x160
-  __cpuhp_remove_state+0xac/0x100
-  arm_trbe_device_remove+0x2c/0x60 [coresight_trbe]
-  platform_remove+0x34/0x70
-  device_remove+0x54/0x90
-  device_release_driver_internal+0x1e4/0x250
-  driver_detach+0x5c/0xb0
-  bus_remove_driver+0x64/0xc0
-  driver_unregister+0x3c/0x70
-  platform_driver_unregister+0x20/0x30
-  arm_trbe_exit+0x1c/0x658 [coresight_trbe]
-  __arm64_sys_delete_module+0x1ac/0x24c
-  invoke_syscall+0x50/0x120
-  el0_svc_common.constprop.0+0x58/0x1a0
-  do_el0_svc+0x38/0xd0
-  el0_svc+0x2c/0xc0
-  el0t_64_sync_handler+0x1ac/0x1b0
-  el0t_64_sync+0x19c/0x1a0
- ---[ end trace 0000000000000000 ]---
+To make things worse, the POWER_DOWN_CONTROL register lies at a
+different offset on more recent SoCs so that the second update, which
+still used a hard-coded offset, would write to an unrelated register
+(e.g. a revision-id register on SC8280XP).
 
-Fixes: 3fbf7f011f24 ("coresight: sink: Add TRBE driver")
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Signed-off-by: Yang Shen <shenyang39@huawei.com>
-Signed-off-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20221122090355.23533-1-shenyang39@huawei.com
+As the MSM8996 PCIe PHY is now handled by a separate driver, simply drop
+the bogus register update.
+
+Fixes: e4d8b05ad5f9 ("phy: qcom-qmp: Use proper PWRDOWN offset for sm8150 USB") added support
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> #RB3
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20221017065013.19647-12-johan+linaro@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwtracing/coresight/coresight-trbe.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/drivers/hwtracing/coresight/coresight-trbe.c b/drivers/hwtracing/coresight/coresight-trbe.c
-index 2b386bb848f8..1fc4fd79a1c6 100644
---- a/drivers/hwtracing/coresight/coresight-trbe.c
-+++ b/drivers/hwtracing/coresight/coresight-trbe.c
-@@ -1434,6 +1434,7 @@ static int arm_trbe_probe_cpuhp(struct trbe_drvdata *drvdata)
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+index 2d65e1f56bfc..6d790f2107f5 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+@@ -2077,12 +2077,6 @@ static int qcom_qmp_phy_pcie_power_on(struct phy *phy)
+ 		qcom_qmp_phy_pcie_configure(pcs_misc, cfg->regs, cfg->pcs_misc_tbl_sec,
+ 				       cfg->pcs_misc_tbl_num_sec);
  
- static void arm_trbe_remove_cpuhp(struct trbe_drvdata *drvdata)
- {
-+	cpuhp_state_remove_instance(drvdata->trbe_online, &drvdata->hotplug_node);
- 	cpuhp_remove_multi_state(drvdata->trbe_online);
- }
+-	/*
+-	 * Pull out PHY from POWER DOWN state.
+-	 * This is active low enable signal to power-down PHY.
+-	 */
+-	qphy_setbits(pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL, cfg->pwrdn_ctrl);
+-
+ 	if (cfg->has_pwrdn_delay)
+ 		usleep_range(cfg->pwrdn_delay_min, cfg->pwrdn_delay_max);
  
 -- 
 2.35.1
