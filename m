@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBED21C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FB8FC43392;
-	Wed, 28 Dec 2022 16:18:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7779D1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA34BC433EF;
+	Wed, 28 Dec 2022 16:18:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244291;
-	bh=Eomowx/T3GjyFCvBrMDvjqjHDMzuD2GLU8lAWek0qUw=;
+	s=korg; t=1672244294;
+	bh=gMCIb3VUK28kJJbTXoC/j03I1n/nSjr3xW/J/A+J5bM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PBTdVc7hLpB6SNIFau0EXXl6fjE2bJAY9bfWTSZ8nvKhBzD0bh9netIl7L40akYbf
-	 jhBlKY+7EhWv1Hsn46hSs7jWP2Cpi7jKtWZaRAN3u40Y0jLbtbScCQ4nVcEEcd02ox
-	 IMxnGQDDEEhquUUkLH0ruCS5z70s577N1Q9pLzuE=
+	b=VWWGXOvKhFZWIiLZicuhrf2c+PnMOqqFHGUNHIXFAj39rezhdtHYOOFeRTwWg5s7K
+	 PpAWfCiecbryiay7jVkCtyGlsesQfn8WHopDaDwl3tiZsmA3CRdYtfAPnVBH9Eonze
+	 7g+LTNDthTPQ0DMAZPwjjjhKILQafrC2eEIH362I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Valentin Caron <valentin.caron@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0641/1146] crypto: x86/sm4 - fix crash with CFI enabled
-Date: Wed, 28 Dec 2022 15:36:20 +0100
-Message-Id: <20221228144347.572779132@linuxfoundation.org>
+Subject: [PATCH 6.0 0686/1073] serial: stm32: move dma_request_chan() before clk_prepare_enable()
+Date: Wed, 28 Dec 2022 15:37:54 +0100
+Message-Id: <20221228144346.669480913@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,110 +35,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Valentin Caron <valentin.caron@foss.st.com>
 
-[ Upstream commit 2d203c46a0fa5df0785383b13b722483e1fd27a8 ]
+[ Upstream commit 0d114e9ff940ebad8e88267013bf96c605a6b336 ]
 
-sm4_aesni_avx_ctr_enc_blk8(), sm4_aesni_avx_cbc_dec_blk8(),
-sm4_aesni_avx_cfb_dec_blk8(), sm4_aesni_avx2_ctr_enc_blk16(),
-sm4_aesni_avx2_cbc_dec_blk16(), and sm4_aesni_avx2_cfb_dec_blk16() are
-called via indirect function calls.  Therefore they need to use
-SYM_TYPED_FUNC_START instead of SYM_FUNC_START to cause their type
-hashes to be emitted when the kernel is built with CONFIG_CFI_CLANG=y.
-Otherwise, the code crashes with a CFI failure.
+If dma_request_chan() returns a PROBE_DEFER error, clk_disable_unprepare()
+will be called and USART clock will be disabled. But early console can be
+still active on the same USART.
 
-(Or at least that should be the case.  For some reason the CFI checks in
-sm4_avx_cbc_decrypt(), sm4_avx_cfb_decrypt(), and sm4_avx_ctr_crypt()
-are not always being generated, using current tip-of-tree clang.
-Anyway, this patch is a good idea anyway.)
+While moving dma_request_chan() before clk_prepare_enable(), the clock
+won't be taken in case of a DMA PROBE_DEFER error, and so it doesn't need
+to be disabled. Then USART is still clocked for early console.
 
-Fixes: ccace936eec7 ("x86: Add types to indirectly called assembly functions")
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: a7770a4bfcf4 ("serial: stm32: defer probe for dma devices")
+Reported-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Valentin Caron <valentin.caron@foss.st.com>
+Link: https://lore.kernel.org/r/20221118170602.1057863-1-valentin.caron@foss.st.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/crypto/sm4-aesni-avx-asm_64.S  | 7 ++++---
- arch/x86/crypto/sm4-aesni-avx2-asm_64.S | 7 ++++---
- 2 files changed, 8 insertions(+), 6 deletions(-)
+ drivers/tty/serial/stm32-usart.c | 47 ++++++++++++++++----------------
+ 1 file changed, 23 insertions(+), 24 deletions(-)
 
-diff --git a/arch/x86/crypto/sm4-aesni-avx-asm_64.S b/arch/x86/crypto/sm4-aesni-avx-asm_64.S
-index 4767ab61ff48..22b6560eb9e1 100644
---- a/arch/x86/crypto/sm4-aesni-avx-asm_64.S
-+++ b/arch/x86/crypto/sm4-aesni-avx-asm_64.S
-@@ -14,6 +14,7 @@
-  */
+diff --git a/drivers/tty/serial/stm32-usart.c b/drivers/tty/serial/stm32-usart.c
+index 9a875558f5ef..1f8aad186908 100644
+--- a/drivers/tty/serial/stm32-usart.c
++++ b/drivers/tty/serial/stm32-usart.c
+@@ -1681,22 +1681,10 @@ static int stm32_usart_serial_probe(struct platform_device *pdev)
+ 	if (!stm32port->info)
+ 		return -EINVAL;
  
- #include <linux/linkage.h>
-+#include <linux/cfi_types.h>
- #include <asm/frame.h>
+-	ret = stm32_usart_init_port(stm32port, pdev);
+-	if (ret)
+-		return ret;
+-
+-	if (stm32port->wakeup_src) {
+-		device_set_wakeup_capable(&pdev->dev, true);
+-		ret = dev_pm_set_wake_irq(&pdev->dev, stm32port->port.irq);
+-		if (ret)
+-			goto err_deinit_port;
+-	}
+-
+ 	stm32port->rx_ch = dma_request_chan(&pdev->dev, "rx");
+-	if (PTR_ERR(stm32port->rx_ch) == -EPROBE_DEFER) {
+-		ret = -EPROBE_DEFER;
+-		goto err_wakeirq;
+-	}
++	if (PTR_ERR(stm32port->rx_ch) == -EPROBE_DEFER)
++		return -EPROBE_DEFER;
++
+ 	/* Fall back in interrupt mode for any non-deferral error */
+ 	if (IS_ERR(stm32port->rx_ch))
+ 		stm32port->rx_ch = NULL;
+@@ -1710,6 +1698,17 @@ static int stm32_usart_serial_probe(struct platform_device *pdev)
+ 	if (IS_ERR(stm32port->tx_ch))
+ 		stm32port->tx_ch = NULL;
  
- #define rRIP         (%rip)
-@@ -420,7 +421,7 @@ SYM_FUNC_END(sm4_aesni_avx_crypt8)
-  *                                 const u8 *src, u8 *iv)
-  */
- .align 8
--SYM_FUNC_START(sm4_aesni_avx_ctr_enc_blk8)
-+SYM_TYPED_FUNC_START(sm4_aesni_avx_ctr_enc_blk8)
- 	/* input:
- 	 *	%rdi: round key array, CTX
- 	 *	%rsi: dst (8 blocks)
-@@ -495,7 +496,7 @@ SYM_FUNC_END(sm4_aesni_avx_ctr_enc_blk8)
-  *                                 const u8 *src, u8 *iv)
-  */
- .align 8
--SYM_FUNC_START(sm4_aesni_avx_cbc_dec_blk8)
-+SYM_TYPED_FUNC_START(sm4_aesni_avx_cbc_dec_blk8)
- 	/* input:
- 	 *	%rdi: round key array, CTX
- 	 *	%rsi: dst (8 blocks)
-@@ -545,7 +546,7 @@ SYM_FUNC_END(sm4_aesni_avx_cbc_dec_blk8)
-  *                                 const u8 *src, u8 *iv)
-  */
- .align 8
--SYM_FUNC_START(sm4_aesni_avx_cfb_dec_blk8)
-+SYM_TYPED_FUNC_START(sm4_aesni_avx_cfb_dec_blk8)
- 	/* input:
- 	 *	%rdi: round key array, CTX
- 	 *	%rsi: dst (8 blocks)
-diff --git a/arch/x86/crypto/sm4-aesni-avx2-asm_64.S b/arch/x86/crypto/sm4-aesni-avx2-asm_64.S
-index 4732fe8bb65b..23ee39a8ada8 100644
---- a/arch/x86/crypto/sm4-aesni-avx2-asm_64.S
-+++ b/arch/x86/crypto/sm4-aesni-avx2-asm_64.S
-@@ -14,6 +14,7 @@
-  */
++	ret = stm32_usart_init_port(stm32port, pdev);
++	if (ret)
++		goto err_dma_tx;
++
++	if (stm32port->wakeup_src) {
++		device_set_wakeup_capable(&pdev->dev, true);
++		ret = dev_pm_set_wake_irq(&pdev->dev, stm32port->port.irq);
++		if (ret)
++			goto err_deinit_port;
++	}
++
+ 	if (stm32port->rx_ch && stm32_usart_of_dma_rx_probe(stm32port, pdev)) {
+ 		/* Fall back in interrupt mode */
+ 		dma_release_channel(stm32port->rx_ch);
+@@ -1746,19 +1745,11 @@ static int stm32_usart_serial_probe(struct platform_device *pdev)
+ 	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_runtime_put_noidle(&pdev->dev);
  
- #include <linux/linkage.h>
-+#include <linux/cfi_types.h>
- #include <asm/frame.h>
+-	if (stm32port->tx_ch) {
++	if (stm32port->tx_ch)
+ 		stm32_usart_of_dma_tx_remove(stm32port, pdev);
+-		dma_release_channel(stm32port->tx_ch);
+-	}
+-
+ 	if (stm32port->rx_ch)
+ 		stm32_usart_of_dma_rx_remove(stm32port, pdev);
  
- #define rRIP         (%rip)
-@@ -282,7 +283,7 @@ SYM_FUNC_END(__sm4_crypt_blk16)
-  *                                   const u8 *src, u8 *iv)
-  */
- .align 8
--SYM_FUNC_START(sm4_aesni_avx2_ctr_enc_blk16)
-+SYM_TYPED_FUNC_START(sm4_aesni_avx2_ctr_enc_blk16)
- 	/* input:
- 	 *	%rdi: round key array, CTX
- 	 *	%rsi: dst (16 blocks)
-@@ -395,7 +396,7 @@ SYM_FUNC_END(sm4_aesni_avx2_ctr_enc_blk16)
-  *                                   const u8 *src, u8 *iv)
-  */
- .align 8
--SYM_FUNC_START(sm4_aesni_avx2_cbc_dec_blk16)
-+SYM_TYPED_FUNC_START(sm4_aesni_avx2_cbc_dec_blk16)
- 	/* input:
- 	 *	%rdi: round key array, CTX
- 	 *	%rsi: dst (16 blocks)
-@@ -449,7 +450,7 @@ SYM_FUNC_END(sm4_aesni_avx2_cbc_dec_blk16)
-  *                                   const u8 *src, u8 *iv)
-  */
- .align 8
--SYM_FUNC_START(sm4_aesni_avx2_cfb_dec_blk16)
-+SYM_TYPED_FUNC_START(sm4_aesni_avx2_cfb_dec_blk16)
- 	/* input:
- 	 *	%rdi: round key array, CTX
- 	 *	%rsi: dst (16 blocks)
+-err_dma_rx:
+-	if (stm32port->rx_ch)
+-		dma_release_channel(stm32port->rx_ch);
+-
+-err_wakeirq:
+ 	if (stm32port->wakeup_src)
+ 		dev_pm_clear_wake_irq(&pdev->dev);
+ 
+@@ -1768,6 +1759,14 @@ static int stm32_usart_serial_probe(struct platform_device *pdev)
+ 
+ 	stm32_usart_deinit_port(stm32port);
+ 
++err_dma_tx:
++	if (stm32port->tx_ch)
++		dma_release_channel(stm32port->tx_ch);
++
++err_dma_rx:
++	if (stm32port->rx_ch)
++		dma_release_channel(stm32port->rx_ch);
++
+ 	return ret;
+ }
+ 
 -- 
 2.35.1
 
