@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCF01C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA95C433EF;
-	Wed, 28 Dec 2022 16:12:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9CED1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CA2DC433EF;
+	Wed, 28 Dec 2022 16:12:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243971;
-	bh=OoW6+A9KlidEaPg6LYF0DzCw0G9ropuf4+xsU6mgME4=;
+	s=korg; t=1672243973;
+	bh=DwG8M/84eZXGB5dMY51B9KqIzR5LJKXNshn4WS4m/Ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j71S7f04mYDdsIOVpiFrPg/PfKuzggZ6CjaUaxAOUABYDArHnA8AMl3agjfmCn0XB
-	 Os0QodF7hhHT5m7PXaHt2mBFX9CX+C5b0deiv0WsIFh5r6OcszobVMNrhOiu4mr+XH
-	 q7EdP9AsjL7ep387GX2kfGDDfVlAW9TIHnG2UE/8=
+	b=ipGbksYqeXwVOjS1i+ATJx5uJnQQx70hkHwn5lroQKsxrk4qMmSX4j5JKRzoN08nX
+	 hUd8mNdSOeKSaBSHUdtG7P/lREOELExIRLmZqHKhTTDq7atF+PCJ4Kizwn/jdJmo3y
+	 2L0iqqiuJsXbjz91MQTRcM4oLb/agMXTIlFjbqWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	John Keeping <john@metanate.com>,
+	Corentin Labbe <clabbe@baylibre.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0624/1073] scsi: fcoe: Fix possible name leak when device_register() fails
-Date: Wed, 28 Dec 2022 15:36:52 +0100
-Message-Id: <20221228144344.992729241@linuxfoundation.org>
+Subject: [PATCH 6.1 0588/1146] crypto: rockchip - add fallback for cipher
+Date: Wed, 28 Dec 2022 15:35:27 +0100
+Message-Id: <20221228144346.142735983@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,76 +36,257 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Corentin Labbe <clabbe@baylibre.com>
 
-[ Upstream commit 47b6a122c7b69a876c7ee2fc064a26b09627de9d ]
+[ Upstream commit 68ef8af09a1a912a5ed2cfaa4cca7606f52cef90 ]
 
-If device_register() returns an error, the name allocated by dev_set_name()
-needs to be freed. As the comment of device_register() says, one should use
-put_device() to give up the reference in the error path. Fix this by
-calling put_device(), then the name can be freed in kobject_cleanup().
+The hardware does not handle 0 size length request, let's add a
+fallback.
+Furthermore fallback will be used for all unaligned case the hardware
+cannot handle.
 
-The 'fcf' is freed in fcoe_fcf_device_release(), so the kfree() in the
-error path can be removed.
-
-The 'ctlr' is freed in fcoe_ctlr_device_release(), so don't use the error
-label, just return NULL after calling put_device().
-
-Fixes: 9a74e884ee71 ("[SCSI] libfcoe: Add fcoe_sysfs")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221112094310.3633291-1-yangyingliang@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: ce0183cb6464b ("crypto: rockchip - switch to skcipher API")
+Reviewed-by: John Keeping <john@metanate.com>
+Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/fcoe/fcoe_sysfs.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ drivers/crypto/Kconfig                        |  4 +
+ drivers/crypto/rockchip/rk3288_crypto.h       |  2 +
+ .../crypto/rockchip/rk3288_crypto_skcipher.c  | 97 ++++++++++++++++---
+ 3 files changed, 90 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/scsi/fcoe/fcoe_sysfs.c b/drivers/scsi/fcoe/fcoe_sysfs.c
-index af658aa38fed..6260aa5ea6af 100644
---- a/drivers/scsi/fcoe/fcoe_sysfs.c
-+++ b/drivers/scsi/fcoe/fcoe_sysfs.c
-@@ -830,14 +830,15 @@ struct fcoe_ctlr_device *fcoe_ctlr_device_add(struct device *parent,
+diff --git a/drivers/crypto/Kconfig b/drivers/crypto/Kconfig
+index 55e75fbb658e..113b35f69598 100644
+--- a/drivers/crypto/Kconfig
++++ b/drivers/crypto/Kconfig
+@@ -669,6 +669,10 @@ config CRYPTO_DEV_IMGTEC_HASH
+ config CRYPTO_DEV_ROCKCHIP
+ 	tristate "Rockchip's Cryptographic Engine driver"
+ 	depends on OF && ARCH_ROCKCHIP
++	depends on PM
++	select CRYPTO_ECB
++	select CRYPTO_CBC
++	select CRYPTO_DES
+ 	select CRYPTO_AES
+ 	select CRYPTO_LIB_DES
+ 	select CRYPTO_MD5
+diff --git a/drivers/crypto/rockchip/rk3288_crypto.h b/drivers/crypto/rockchip/rk3288_crypto.h
+index 3e60e3dca1b5..dfff0e2a83e4 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto.h
++++ b/drivers/crypto/rockchip/rk3288_crypto.h
+@@ -246,10 +246,12 @@ struct rk_cipher_ctx {
+ 	struct rk_crypto_info		*dev;
+ 	unsigned int			keylen;
+ 	u8				iv[AES_BLOCK_SIZE];
++	struct crypto_skcipher *fallback_tfm;
+ };
  
- 	dev_set_name(&ctlr->dev, "ctlr_%d", ctlr->id);
- 	error = device_register(&ctlr->dev);
--	if (error)
--		goto out_del_q2;
-+	if (error) {
-+		destroy_workqueue(ctlr->devloss_work_q);
-+		destroy_workqueue(ctlr->work_q);
-+		put_device(&ctlr->dev);
-+		return NULL;
+ struct rk_cipher_rctx {
+ 	u32				mode;
++	struct skcipher_request fallback_req;   // keep at the end
+ };
+ 
+ enum alg_type {
+diff --git a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
+index bbd0bf52bf07..eac5bba66e25 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
++++ b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
+@@ -13,6 +13,63 @@
+ 
+ #define RK_CRYPTO_DEC			BIT(0)
+ 
++static int rk_cipher_need_fallback(struct skcipher_request *req)
++{
++	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
++	unsigned int bs = crypto_skcipher_blocksize(tfm);
++	struct scatterlist *sgs, *sgd;
++	unsigned int stodo, dtodo, len;
++
++	if (!req->cryptlen)
++		return true;
++
++	len = req->cryptlen;
++	sgs = req->src;
++	sgd = req->dst;
++	while (sgs && sgd) {
++		if (!IS_ALIGNED(sgs->offset, sizeof(u32))) {
++			return true;
++		}
++		if (!IS_ALIGNED(sgd->offset, sizeof(u32))) {
++			return true;
++		}
++		stodo = min(len, sgs->length);
++		if (stodo % bs) {
++			return true;
++		}
++		dtodo = min(len, sgd->length);
++		if (dtodo % bs) {
++			return true;
++		}
++		if (stodo != dtodo) {
++			return true;
++		}
++		len -= stodo;
++		sgs = sg_next(sgs);
++		sgd = sg_next(sgd);
 +	}
- 
- 	return ctlr;
- 
--out_del_q2:
--	destroy_workqueue(ctlr->devloss_work_q);
--	ctlr->devloss_work_q = NULL;
- out_del_q:
- 	destroy_workqueue(ctlr->work_q);
- 	ctlr->work_q = NULL;
-@@ -1036,16 +1037,16 @@ struct fcoe_fcf_device *fcoe_fcf_device_add(struct fcoe_ctlr_device *ctlr,
- 	fcf->selected = new_fcf->selected;
- 
- 	error = device_register(&fcf->dev);
--	if (error)
--		goto out_del;
-+	if (error) {
-+		put_device(&fcf->dev);
-+		goto out;
-+	}
- 
- 	fcf->state = FCOE_FCF_STATE_CONNECTED;
- 	list_add_tail(&fcf->peers, &ctlr->fcfs);
- 
- 	return fcf;
- 
--out_del:
--	kfree(fcf);
- out:
- 	return NULL;
++	return false;
++}
++
++static int rk_cipher_fallback(struct skcipher_request *areq)
++{
++	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(areq);
++	struct rk_cipher_ctx *op = crypto_skcipher_ctx(tfm);
++	struct rk_cipher_rctx *rctx = skcipher_request_ctx(areq);
++	int err;
++
++	skcipher_request_set_tfm(&rctx->fallback_req, op->fallback_tfm);
++	skcipher_request_set_callback(&rctx->fallback_req, areq->base.flags,
++				      areq->base.complete, areq->base.data);
++	skcipher_request_set_crypt(&rctx->fallback_req, areq->src, areq->dst,
++				   areq->cryptlen, areq->iv);
++	if (rctx->mode & RK_CRYPTO_DEC)
++		err = crypto_skcipher_decrypt(&rctx->fallback_req);
++	else
++		err = crypto_skcipher_encrypt(&rctx->fallback_req);
++	return err;
++}
++
+ static void rk_crypto_complete(struct crypto_async_request *base, int err)
+ {
+ 	if (base->complete)
+@@ -22,10 +79,10 @@ static void rk_crypto_complete(struct crypto_async_request *base, int err)
+ static int rk_handle_req(struct rk_crypto_info *dev,
+ 			 struct skcipher_request *req)
+ {
+-	if (!IS_ALIGNED(req->cryptlen, dev->align_size))
+-		return -EINVAL;
+-	else
+-		return dev->enqueue(dev, &req->base);
++	if (rk_cipher_need_fallback(req))
++		return rk_cipher_fallback(req);
++
++	return dev->enqueue(dev, &req->base);
  }
+ 
+ static int rk_aes_setkey(struct crypto_skcipher *cipher,
+@@ -39,7 +96,8 @@ static int rk_aes_setkey(struct crypto_skcipher *cipher,
+ 		return -EINVAL;
+ 	ctx->keylen = keylen;
+ 	memcpy_toio(ctx->dev->reg + RK_CRYPTO_AES_KEY_0, key, keylen);
+-	return 0;
++
++	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
+ }
+ 
+ static int rk_des_setkey(struct crypto_skcipher *cipher,
+@@ -54,7 +112,8 @@ static int rk_des_setkey(struct crypto_skcipher *cipher,
+ 
+ 	ctx->keylen = keylen;
+ 	memcpy_toio(ctx->dev->reg + RK_CRYPTO_TDES_KEY1_0, key, keylen);
+-	return 0;
++
++	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
+ }
+ 
+ static int rk_tdes_setkey(struct crypto_skcipher *cipher,
+@@ -69,7 +128,7 @@ static int rk_tdes_setkey(struct crypto_skcipher *cipher,
+ 
+ 	ctx->keylen = keylen;
+ 	memcpy_toio(ctx->dev->reg + RK_CRYPTO_TDES_KEY1_0, key, keylen);
+-	return 0;
++	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
+ }
+ 
+ static int rk_aes_ecb_encrypt(struct skcipher_request *req)
+@@ -394,6 +453,7 @@ static int rk_ablk_init_tfm(struct crypto_skcipher *tfm)
+ {
+ 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
+ 	struct skcipher_alg *alg = crypto_skcipher_alg(tfm);
++	const char *name = crypto_tfm_alg_name(&tfm->base);
+ 	struct rk_crypto_tmp *algt;
+ 
+ 	algt = container_of(alg, struct rk_crypto_tmp, alg.skcipher);
+@@ -407,6 +467,16 @@ static int rk_ablk_init_tfm(struct crypto_skcipher *tfm)
+ 	if (!ctx->dev->addr_vir)
+ 		return -ENOMEM;
+ 
++	ctx->fallback_tfm = crypto_alloc_skcipher(name, 0, CRYPTO_ALG_NEED_FALLBACK);
++	if (IS_ERR(ctx->fallback_tfm)) {
++		dev_err(ctx->dev->dev, "ERROR: Cannot allocate fallback for %s %ld\n",
++			name, PTR_ERR(ctx->fallback_tfm));
++		return PTR_ERR(ctx->fallback_tfm);
++	}
++
++	tfm->reqsize = sizeof(struct rk_cipher_rctx) +
++		crypto_skcipher_reqsize(ctx->fallback_tfm);
++
+ 	return 0;
+ }
+ 
+@@ -415,6 +485,7 @@ static void rk_ablk_exit_tfm(struct crypto_skcipher *tfm)
+ 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
+ 
+ 	free_page((unsigned long)ctx->dev->addr_vir);
++	crypto_free_skcipher(ctx->fallback_tfm);
+ }
+ 
+ struct rk_crypto_tmp rk_ecb_aes_alg = {
+@@ -423,7 +494,7 @@ struct rk_crypto_tmp rk_ecb_aes_alg = {
+ 		.base.cra_name		= "ecb(aes)",
+ 		.base.cra_driver_name	= "ecb-aes-rk",
+ 		.base.cra_priority	= 300,
+-		.base.cra_flags		= CRYPTO_ALG_ASYNC,
++		.base.cra_flags		= CRYPTO_ALG_ASYNC | CRYPTO_ALG_NEED_FALLBACK,
+ 		.base.cra_blocksize	= AES_BLOCK_SIZE,
+ 		.base.cra_ctxsize	= sizeof(struct rk_cipher_ctx),
+ 		.base.cra_alignmask	= 0x0f,
+@@ -445,7 +516,7 @@ struct rk_crypto_tmp rk_cbc_aes_alg = {
+ 		.base.cra_name		= "cbc(aes)",
+ 		.base.cra_driver_name	= "cbc-aes-rk",
+ 		.base.cra_priority	= 300,
+-		.base.cra_flags		= CRYPTO_ALG_ASYNC,
++		.base.cra_flags		= CRYPTO_ALG_ASYNC | CRYPTO_ALG_NEED_FALLBACK,
+ 		.base.cra_blocksize	= AES_BLOCK_SIZE,
+ 		.base.cra_ctxsize	= sizeof(struct rk_cipher_ctx),
+ 		.base.cra_alignmask	= 0x0f,
+@@ -468,7 +539,7 @@ struct rk_crypto_tmp rk_ecb_des_alg = {
+ 		.base.cra_name		= "ecb(des)",
+ 		.base.cra_driver_name	= "ecb-des-rk",
+ 		.base.cra_priority	= 300,
+-		.base.cra_flags		= CRYPTO_ALG_ASYNC,
++		.base.cra_flags		= CRYPTO_ALG_ASYNC | CRYPTO_ALG_NEED_FALLBACK,
+ 		.base.cra_blocksize	= DES_BLOCK_SIZE,
+ 		.base.cra_ctxsize	= sizeof(struct rk_cipher_ctx),
+ 		.base.cra_alignmask	= 0x07,
+@@ -490,7 +561,7 @@ struct rk_crypto_tmp rk_cbc_des_alg = {
+ 		.base.cra_name		= "cbc(des)",
+ 		.base.cra_driver_name	= "cbc-des-rk",
+ 		.base.cra_priority	= 300,
+-		.base.cra_flags		= CRYPTO_ALG_ASYNC,
++		.base.cra_flags		= CRYPTO_ALG_ASYNC | CRYPTO_ALG_NEED_FALLBACK,
+ 		.base.cra_blocksize	= DES_BLOCK_SIZE,
+ 		.base.cra_ctxsize	= sizeof(struct rk_cipher_ctx),
+ 		.base.cra_alignmask	= 0x07,
+@@ -513,7 +584,7 @@ struct rk_crypto_tmp rk_ecb_des3_ede_alg = {
+ 		.base.cra_name		= "ecb(des3_ede)",
+ 		.base.cra_driver_name	= "ecb-des3-ede-rk",
+ 		.base.cra_priority	= 300,
+-		.base.cra_flags		= CRYPTO_ALG_ASYNC,
++		.base.cra_flags		= CRYPTO_ALG_ASYNC | CRYPTO_ALG_NEED_FALLBACK,
+ 		.base.cra_blocksize	= DES_BLOCK_SIZE,
+ 		.base.cra_ctxsize	= sizeof(struct rk_cipher_ctx),
+ 		.base.cra_alignmask	= 0x07,
+@@ -535,7 +606,7 @@ struct rk_crypto_tmp rk_cbc_des3_ede_alg = {
+ 		.base.cra_name		= "cbc(des3_ede)",
+ 		.base.cra_driver_name	= "cbc-des3-ede-rk",
+ 		.base.cra_priority	= 300,
+-		.base.cra_flags		= CRYPTO_ALG_ASYNC,
++		.base.cra_flags		= CRYPTO_ALG_ASYNC | CRYPTO_ALG_NEED_FALLBACK,
+ 		.base.cra_blocksize	= DES_BLOCK_SIZE,
+ 		.base.cra_ctxsize	= sizeof(struct rk_cipher_ctx),
+ 		.base.cra_alignmask	= 0x07,
 -- 
 2.35.1
 
