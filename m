@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D26D1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03320C433EF;
-	Wed, 28 Dec 2022 16:32:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FD41C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97E53C433EF;
+	Wed, 28 Dec 2022 16:32:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245167;
-	bh=/i/jO8lqBGMdg0NVwjFTcwnqMV74SH0Tx0c5CjoSec8=;
+	s=korg; t=1672245170;
+	bh=Rg8+MlLZcxNWeaWneO5vyQy1f/u1KBeebCoUCwQ8y3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sFA8hYjzmqqsIKkY9UKjeDzeJB+RsitkjmPyKkEXmKFEwo+sXz0y+kuy3pYrdb18a
-	 th580GHw/NKU62EHoePYhdTzOBIaCXQbUUp8tznp8o2oqiG/Yob/Amwgncsvugxf7g
-	 F/3Eq69lTrpOvWMJ/+oM7agiRbm60HSP2Krrof14=
+	b=DHAU6kXJGVRwK7m1CHnoq1iUgDZpukDqXUUhHV/SGWEvk3aHc4pECnXvTkslSjbPN
+	 QSGX+8bxzfFVgzL/wNoJ1oXwyDPgOW23ugAuGzwZ3aTyrkY1yML590lmpnpI372LZw
+	 tdBJ5mu22u4v9QwWQIa8a/6NY98KAyM4+KCY35ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Mukesh Ojha <quic_mojha@quicinc.com>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Caleb Connolly <caleb.connolly@linaro.org>,
+	Sibi Sankar <quic_sibis@quicinc.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0844/1073] block, bfq: fix possible uaf for bfqq->bic
-Date: Wed, 28 Dec 2022 15:40:32 +0100
-Message-Id: <20221228144350.946931172@linuxfoundation.org>
+Subject: [PATCH 6.0 0822/1073] remoteproc: qcom_q6v5_pas: disable wakeup on probe fail or remove
+Date: Wed, 28 Dec 2022 15:40:10 +0100
+Message-Id: <20221228144350.341742843@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -36,120 +38,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit 64dc8c732f5c2b406cc752e6aaa1bd5471159cab ]
+[ Upstream commit 9a70551996e699fda262e8d54bbd41739d7aad6d ]
 
-Our test report a uaf for 'bfqq->bic' in 5.10:
+Leaving wakeup enabled during probe fail (-EPROBE_DEFER) or remove makes
+the subsequent probe fail.
 
-==================================================================
-BUG: KASAN: use-after-free in bfq_select_queue+0x378/0xa30
+[    3.749454] remoteproc remoteproc0: releasing 3000000.remoteproc
+[    3.752949] qcom_q6v5_pas: probe of 3000000.remoteproc failed with error -17
+[    3.878935] remoteproc remoteproc0: releasing 4080000.remoteproc
+[    3.887602] qcom_q6v5_pas: probe of 4080000.remoteproc failed with error -17
+[    4.319552] remoteproc remoteproc0: releasing 8300000.remoteproc
+[    4.332716] qcom_q6v5_pas: probe of 8300000.remoteproc failed with error -17
 
-CPU: 6 PID: 2318352 Comm: fsstress Kdump: loaded Not tainted 5.10.0-60.18.0.50.h602.kasan.eulerosv2r11.x86_64 #1
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58-20220320_160524-szxrtosci10000 04/01/2014
-Call Trace:
- bfq_select_queue+0x378/0xa30
- bfq_dispatch_request+0xe8/0x130
- blk_mq_do_dispatch_sched+0x62/0xb0
- __blk_mq_sched_dispatch_requests+0x215/0x2a0
- blk_mq_sched_dispatch_requests+0x8f/0xd0
- __blk_mq_run_hw_queue+0x98/0x180
- __blk_mq_delay_run_hw_queue+0x22b/0x240
- blk_mq_run_hw_queue+0xe3/0x190
- blk_mq_sched_insert_requests+0x107/0x200
- blk_mq_flush_plug_list+0x26e/0x3c0
- blk_finish_plug+0x63/0x90
- __iomap_dio_rw+0x7b5/0x910
- iomap_dio_rw+0x36/0x80
- ext4_dio_read_iter+0x146/0x190 [ext4]
- ext4_file_read_iter+0x1e2/0x230 [ext4]
- new_sync_read+0x29f/0x400
- vfs_read+0x24e/0x2d0
- ksys_read+0xd5/0x1b0
- do_syscall_64+0x33/0x40
- entry_SYSCALL_64_after_hwframe+0x61/0xc6
+Fix this by disabling wakeup in both cases so the driver can properly
+probe on the next try.
 
-Commit 3bc5e683c67d ("bfq: Split shared queues on move between cgroups")
-changes that move process to a new cgroup will allocate a new bfqq to
-use, however, the old bfqq and new bfqq can point to the same bic:
-
-1) Initial state, two process with io in the same cgroup.
-
-Process 1       Process 2
- (BIC1)          (BIC2)
-  |  Λ            |  Λ
-  |  |            |  |
-  V  |            V  |
-  bfqq1           bfqq2
-
-2) bfqq1 is merged to bfqq2.
-
-Process 1       Process 2
- (BIC1)          (BIC2)
-  |               |
-   \-------------\|
-                  V
-  bfqq1           bfqq2(coop)
-
-3) Process 1 exit, then issue new io(denoce IOA) from Process 2.
-
- (BIC2)
-  |  Λ
-  |  |
-  V  |
-  bfqq2(coop)
-
-4) Before IOA is completed, move Process 2 to another cgroup and issue io.
-
-Process 2
- (BIC2)
-   Λ
-   |\--------------\
-   |                V
-  bfqq2           bfqq3
-
-Now that BIC2 points to bfqq3, while bfqq2 and bfqq3 both point to BIC2.
-If all the requests are completed, and Process 2 exit, BIC2 will be
-freed while there is no guarantee that bfqq2 will be freed before BIC2.
-
-Fix the problem by clearing bfqq->bic while bfqq is detached from bic.
-
-Fixes: 3bc5e683c67d ("bfq: Split shared queues on move between cgroups")
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221214030430.3304151-1-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: a781e5aa5911 ("remoteproc: core: Prevent system suspend during remoteproc recovery")
+Fixes: dc86c129b4fb ("remoteproc: qcom: pas: Mark devices as wakeup capable")
+Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
+Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221118090816.100012-1-luca.weiss@fairphone.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bfq-iosched.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/remoteproc/qcom_q6v5_pas.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 68872a61706a..528ca21044a5 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -386,6 +386,12 @@ static void bfq_put_stable_ref(struct bfq_queue *bfqq);
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 6afd0941e552..67f5152e2398 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -556,6 +556,7 @@ static int adsp_probe(struct platform_device *pdev)
+ detach_proxy_pds:
+ 	adsp_pds_detach(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
+ free_rproc:
++	device_init_wakeup(adsp->dev, false);
+ 	rproc_free(rproc);
  
- void bic_set_bfqq(struct bfq_io_cq *bic, struct bfq_queue *bfqq, bool is_sync)
- {
-+	struct bfq_queue *old_bfqq = bic->bfqq[is_sync];
-+
-+	/* Clear bic pointer if bfqq is detached from this bic */
-+	if (old_bfqq && old_bfqq->bic == bic)
-+		old_bfqq->bic = NULL;
-+
- 	/*
- 	 * If bfqq != NULL, then a non-stable queue merge between
- 	 * bic->bfqq and bfqq is happening here. This causes troubles
-@@ -5379,7 +5385,6 @@ static void bfq_exit_icq_bfqq(struct bfq_io_cq *bic, bool is_sync)
- 		unsigned long flags;
+ 	return ret;
+@@ -572,6 +573,7 @@ static int adsp_remove(struct platform_device *pdev)
+ 	qcom_remove_sysmon_subdev(adsp->sysmon);
+ 	qcom_remove_smd_subdev(adsp->rproc, &adsp->smd_subdev);
+ 	qcom_remove_ssr_subdev(adsp->rproc, &adsp->ssr_subdev);
++	device_init_wakeup(adsp->dev, false);
+ 	rproc_free(adsp->rproc);
  
- 		spin_lock_irqsave(&bfqd->lock, flags);
--		bfqq->bic = NULL;
- 		bfq_exit_bfqq(bfqd, bfqq);
- 		bic_set_bfqq(bic, NULL, is_sync);
- 		spin_unlock_irqrestore(&bfqd->lock, flags);
+ 	return 0;
 -- 
 2.35.1
 
