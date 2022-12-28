@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963231863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20477C433F0;
-	Wed, 28 Dec 2022 15:08:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4430D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2CCC433EF;
+	Wed, 28 Dec 2022 15:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240131;
-	bh=nYb4UQqvjImALPt2M8TfH0yoZqqP16LwjY8Y9ApjapM=;
+	s=korg; t=1672240134;
+	bh=B6I3QwotEuoVP9/A5cllJVFQ8PF/X5fd3Xhk7pT5rqg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YaTv3KWjU+ZdVZ2krj874yoil/7fL177FNgJqxjlxocnKuxt+VRjyMpPDMQ7/TB+n
-	 ioDSUgKJAFZenKTdUTMRpvwE7hjWtHMiO/hwkkBtQjmG+vX8Og0yY/0KYkpdYCOLpa
-	 0eb42H32rjE9CImgf/ODXyG8wOrGCHB9Ql6eqezM=
+	b=K1f4rRU5wwAPIdkxIxP32D4ZXGGHwTmlRSzxiSZ50cPBhJOpU4lSk5RJ9KdB1Xwc2
+	 gZz2lbanS30Q4fqwyt3usUIVm5nk66A4K1/kqYWzubSjuqSKhkap2Cbr3DfwmOFf6Y
+	 SktZsynGUg+rEERXBk6Ql0H1w/MaMzKlE/j3oLek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0084/1146] ARM: dts: armada-375: Fix assigned-addresses for every PCIe Root Port
-Date: Wed, 28 Dec 2022 15:27:03 +0100
-Message-Id: <20221228144332.428713623@linuxfoundation.org>
+Subject: [PATCH 5.15 313/731] media: coda: Add check for kmalloc
+Date: Wed, 28 Dec 2022 15:37:00 +0100
+Message-Id: <20221228144305.650526104@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 823956d2436f70ced74c0fe8ab99facd8abfc060 ]
+[ Upstream commit 6e5e5defdb8b0186312c2f855ace175aee6daf9b ]
 
-BDF of resource in DT assigned-addresses property of Marvell PCIe Root Port
-(PCI-to-PCI bridge) should match BDF in address part in that DT node name
-as specified resource belongs to Marvell PCIe Root Port itself.
+As the kmalloc may return NULL pointer,
+it should be better to check the return value
+in order to avoid NULL poineter dereference,
+same as the others.
 
-Fixes: 4de59085091f ("ARM: mvebu: add Device Tree description of the Armada 375 SoC")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Fixes: cb1d3a336371 ("[media] coda: add CODA7541 JPEG support")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/armada-375.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/coda/coda-bit.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/armada-375.dtsi b/arch/arm/boot/dts/armada-375.dtsi
-index 929deaf312a5..c310ef26d1cc 100644
---- a/arch/arm/boot/dts/armada-375.dtsi
-+++ b/arch/arm/boot/dts/armada-375.dtsi
-@@ -592,7 +592,7 @@ pcie0_intc: interrupt-controller {
+diff --git a/drivers/media/platform/coda/coda-bit.c b/drivers/media/platform/coda/coda-bit.c
+index 284608845b85..582a6c581f3c 100644
+--- a/drivers/media/platform/coda/coda-bit.c
++++ b/drivers/media/platform/coda/coda-bit.c
+@@ -1082,10 +1082,16 @@ static int coda_start_encoding(struct coda_ctx *ctx)
+ 	}
  
- 			pcie1: pcie@2,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
-+				assigned-addresses = <0x82001000 0 0x44000 0 0x2000>;
- 				reg = <0x1000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
+ 	if (dst_fourcc == V4L2_PIX_FMT_JPEG) {
+-		if (!ctx->params.jpeg_qmat_tab[0])
++		if (!ctx->params.jpeg_qmat_tab[0]) {
+ 			ctx->params.jpeg_qmat_tab[0] = kmalloc(64, GFP_KERNEL);
+-		if (!ctx->params.jpeg_qmat_tab[1])
++			if (!ctx->params.jpeg_qmat_tab[0])
++				return -ENOMEM;
++		}
++		if (!ctx->params.jpeg_qmat_tab[1]) {
+ 			ctx->params.jpeg_qmat_tab[1] = kmalloc(64, GFP_KERNEL);
++			if (!ctx->params.jpeg_qmat_tab[1])
++				return -ENOMEM;
++		}
+ 		coda_set_jpeg_compression_quality(ctx, ctx->params.jpeg_quality);
+ 	}
+ 
 -- 
 2.35.1
 
