@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5021C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:16:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03955C433EF;
-	Wed, 28 Dec 2022 16:16:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7581C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:16:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DBE7C433D2;
+	Wed, 28 Dec 2022 16:16:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244173;
-	bh=UBiYZJQflnrX/ugP/38MqKoZqY7opr3fP4vuNNpSoPs=;
+	s=korg; t=1672244176;
+	bh=FDnY9memHDK08dNNfY/561sVbx1C03QW5gMzHUsYe7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xWL0xnC2JgxZz2zStIYlrMNwB/2RmmJMhRzsoo21StQl9g2eApUyWTBrjMdh5PJSC
-	 dJY/LMfXIdlnzqJccJYhVhtmrZDd5tBW9j/+1gQQ5EFmn5/hrkgLKYTxi75rsuUKHZ
-	 vhSCSmZrbhwmqMP5lwxn9GUoWx0QR7PGtmptIrSc=
+	b=beobzbVqQUvwNN+QZLM3UREvR9bkssZmz36o5Bk3JVlgnu3al6pNKZt76DxL31Mt2
+	 +5CCFySyWYtzgRWB2//H23jYGwc5WIC9nQfkJtSPdEtuxzi0BYDB4gfmqflAkKN3Zl
+	 Hznc7Znp0AnyBxu/0AFB0+EQSt9/kfO5t9OXzVDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0663/1073] drivers: dio: fix possible memory leak in dio_init()
-Date: Wed, 28 Dec 2022 15:37:31 +0100
-Message-Id: <20221228144346.053047923@linuxfoundation.org>
+Subject: [PATCH 6.1 0624/1146] crypto: ccree - Make cc_debugfs_global_fini() available for module init function
+Date: Wed, 28 Dec 2022 15:36:03 +0100
+Message-Id: <20221228144347.117896226@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,58 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit e63e99397b2613d50a5f4f02ed07307e67a190f1 ]
+[ Upstream commit 8e96729fc26c8967db45a3fb7a60387619f77a22 ]
 
-If device_register() returns error, the 'dev' and name needs be
-freed. Add a release function, and then call put_device() in the
-error path, so the name is freed in kobject_cleanup() and to the
-'dev' is freed in release function.
+ccree_init() calls cc_debugfs_global_fini(), the former is an init
+function and the latter an exit function though.
 
-Fixes: 2e4c77bea3d8 ("m68k: dio - Kill warn_unused_result warnings")
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221109064036.1835346-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+A modular build emits:
+
+	WARNING: modpost: drivers/crypto/ccree/ccree.o: section mismatch in reference: init_module (section: .init.text) -> cc_debugfs_global_fini (section: .exit.text)
+
+(with CONFIG_DEBUG_SECTION_MISMATCH=y).
+
+Fixes: 4f1c596df706 ("crypto: ccree - Remove debugfs when platform_driver_register failed")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dio/dio.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/crypto/ccree/cc_debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dio/dio.c b/drivers/dio/dio.c
-index 0e5a5662d5a4..0a051d656880 100644
---- a/drivers/dio/dio.c
-+++ b/drivers/dio/dio.c
-@@ -109,6 +109,12 @@ static char dio_no_name[] = { 0 };
+diff --git a/drivers/crypto/ccree/cc_debugfs.c b/drivers/crypto/ccree/cc_debugfs.c
+index 7083767602fc..8f008f024f8f 100644
+--- a/drivers/crypto/ccree/cc_debugfs.c
++++ b/drivers/crypto/ccree/cc_debugfs.c
+@@ -55,7 +55,7 @@ void __init cc_debugfs_global_init(void)
+ 	cc_debugfs_dir = debugfs_create_dir("ccree", NULL);
+ }
  
- #endif /* CONFIG_DIO_CONSTANTS */
- 
-+static void dio_dev_release(struct device *dev)
-+{
-+	struct dio_dev *ddev = container_of(dev, typeof(struct dio_dev), dev);
-+	kfree(ddev);
-+}
-+
- int __init dio_find(int deviceid)
+-void __exit cc_debugfs_global_fini(void)
++void cc_debugfs_global_fini(void)
  {
- 	/* Called to find a DIO device before the full bus scan has run.
-@@ -225,6 +231,7 @@ static int __init dio_init(void)
- 		dev->bus = &dio_bus;
- 		dev->dev.parent = &dio_bus.dev;
- 		dev->dev.bus = &dio_bus_type;
-+		dev->dev.release = dio_dev_release;
- 		dev->scode = scode;
- 		dev->resource.start = pa;
- 		dev->resource.end = pa + DIO_SIZE(scode, va);
-@@ -252,6 +259,7 @@ static int __init dio_init(void)
- 		if (error) {
- 			pr_err("DIO: Error registering device %s\n",
- 			       dev->name);
-+			put_device(&dev->dev);
- 			continue;
- 		}
- 		error = dio_create_sysfs_dev_files(dev);
+ 	debugfs_remove(cc_debugfs_dir);
+ }
 -- 
 2.35.1
 
