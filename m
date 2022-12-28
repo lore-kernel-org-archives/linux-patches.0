@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E83001C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:20:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C03CC433EF;
-	Wed, 28 Dec 2022 16:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7221C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:20:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 104BBC433EF;
+	Wed, 28 Dec 2022 16:20:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244435;
-	bh=O4cQUMK7hWJ+FXEHEO6/mZRPa3tQuqcXw+rM/CzyI4U=;
+	s=korg; t=1672244438;
+	bh=HuhbE6NE4mxiR3nqkrr9+D4M4gR4/rGw8e7UU0+8XNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xUZm0hyh7XwHKRmX+DFpL9iPlwULu0XPLKOrTuZaIMgZMFfVcEJpzcUd0M44v1rlR
-	 EZS+Xb433ZMWh46sB+lnZDlwqYVqdhIlnY/GclXrl4Z5g0YlzN4aOnD8PMiaF+W7hb
-	 UN+f5+1FYgOBi9eW6cY2OrSiofIgkrJ/JaUuPSFc=
+	b=NEMBKiGqaifZGhhiANP8gwAVAQd9dRDp0AINGMKKyBCBCMhGRO2EjTqVK5FPFXvE7
+	 LdmcYfSRVjVzBLrbyM9ZibcBDM/oyKmbXmMIa0t1BAUd/h/TXXKHUzZRgo7Izh3fxH
+	 XPrVUgBEKVPkYHFCzD2bkByV1yY8wOPXKtDQ1B2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Nirmal Patel <nirmal.patel@linux.intel.com>,
-	Jonathan Derrick <jonathan.derrick@linux.dev>,
+	Johannes Thumshirn <jth@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0669/1146] PCI: vmd: Fix secondary bus reset for Intel bridges
-Date: Wed, 28 Dec 2022 15:36:48 +0100
-Message-Id: <20221228144348.322067537@linuxfoundation.org>
+Subject: [PATCH 6.0 0710/1073] mcb: mcb-parse: fix error handing in chameleon_parse_gdd()
+Date: Wed, 28 Dec 2022 15:38:18 +0100
+Message-Id: <20221228144347.316787998@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,73 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 0a584655ef89541dae4d48d2c523b1480ae80284 ]
+[ Upstream commit 728ac3389296caf68638628c987aeae6c8851e2d ]
 
-The reset was never applied in the current implementation because Intel
-Bridges owned by VMD are parentless. Internally, pci_reset_bus() applies
-a reset to the parent of the PCI device supplied as argument, but in this
-case it failed because there wasn't a parent.
+If mcb_device_register() returns error in chameleon_parse_gdd(), the refcount
+of bus and device name are leaked. Fix this by calling put_device() to give up
+the reference, so they can be released in mcb_release_dev() and kobject_cleanup().
 
-In more detail, this change allows the VMD driver to enumerate NVMe devices
-in pass-through configurations when guest reboots are performed. There was
-an attempted to fix this, but later we discovered that the code inside
-pci_reset_bus() wasn’t triggering secondary bus resets. Therefore, we
-updated the parameters passed to it, and now NVMe SSDs attached to VMD
-bridges are properly enumerated in VT-d pass-through scenarios.
-
-Link: https://lore.kernel.org/r/20221206001637.4744-1-francisco.munoz.ruiz@linux.intel.com
-Fixes: 6aab5622296b ("PCI: vmd: Clean up domain before enumeration")
-Signed-off-by: Francisco Munoz <francisco.munoz.ruiz@linux.intel.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Nirmal Patel <nirmal.patel@linux.intel.com>
-Reviewed-by: Jonathan Derrick <jonathan.derrick@linux.dev>
+Fixes: 3764e82e5150 ("drivers: Introduce MEN Chameleon Bus")
+Reviewed-by: Johannes Thumshirn <jth@kernel.org>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Johannes Thumshirn <jth@kernel.org>
+Link: https://lore.kernel.org/r/ebfb06e39b19272f0197fa9136b5e4b6f34ad732.1669624063.git.johannes.thumshirn@wdc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/vmd.c | 22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ drivers/mcb/mcb-parse.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pci/controller/vmd.c b/drivers/pci/controller/vmd.c
-index 98e0746e681c..769eedeb8802 100644
---- a/drivers/pci/controller/vmd.c
-+++ b/drivers/pci/controller/vmd.c
-@@ -719,6 +719,7 @@ static int vmd_enable_domain(struct vmd_dev *vmd, unsigned long features)
- 	resource_size_t offset[2] = {0};
- 	resource_size_t membar2_offset = 0x2000;
- 	struct pci_bus *child;
-+	struct pci_dev *dev;
- 	int ret;
+diff --git a/drivers/mcb/mcb-parse.c b/drivers/mcb/mcb-parse.c
+index 0266bfddfbe2..aa6938da0db8 100644
+--- a/drivers/mcb/mcb-parse.c
++++ b/drivers/mcb/mcb-parse.c
+@@ -108,7 +108,7 @@ static int chameleon_parse_gdd(struct mcb_bus *bus,
+ 	return 0;
  
- 	/*
-@@ -859,8 +860,25 @@ static int vmd_enable_domain(struct vmd_dev *vmd, unsigned long features)
+ err:
+-	mcb_free_dev(mdev);
++	put_device(&mdev->dev);
  
- 	pci_scan_child_bus(vmd->bus);
- 	vmd_domain_reset(vmd);
--	list_for_each_entry(child, &vmd->bus->children, node)
--		pci_reset_bus(child->self);
-+
-+	/* When Intel VMD is enabled, the OS does not discover the Root Ports
-+	 * owned by Intel VMD within the MMCFG space. pci_reset_bus() applies
-+	 * a reset to the parent of the PCI device supplied as argument. This
-+	 * is why we pass a child device, so the reset can be triggered at
-+	 * the Intel bridge level and propagated to all the children in the
-+	 * hierarchy.
-+	 */
-+	list_for_each_entry(child, &vmd->bus->children, node) {
-+		if (!list_empty(&child->devices)) {
-+			dev = list_first_entry(&child->devices,
-+					       struct pci_dev, bus_list);
-+			if (pci_reset_bus(dev))
-+				pci_warn(dev, "can't reset device: %d\n", ret);
-+
-+			break;
-+		}
-+	}
-+
- 	pci_assign_unassigned_bus_resources(vmd->bus);
- 
- 	/*
+ 	return ret;
+ }
 -- 
 2.35.1
 
