@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C7A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C96D5C433D2;
-	Wed, 28 Dec 2022 15:43:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB3B1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719ADC433D2;
+	Wed, 28 Dec 2022 15:43:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242204;
-	bh=QuZSC6L8uDtz07DbDVoSKyZPl1gamvPDKwbXQftAIPQ=;
+	s=korg; t=1672242206;
+	bh=8v+EMNxtKi4gzOckFgmgHMjxyI2PGf6ODKXnpVuuKe0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tzyIkyBbBNBDjfX9jCBVeoNII/yn81qE9W3BWVCpLzCgCKb6YDHVukgOIxPU3fo+7
-	 uaI6GYfDqtxyzL7jww/WZ+HVGuHHVzKYdderQFP25pfou2l/DcNVc3Ltnfi0caOlPC
-	 W1QP7P4aKQWkqwIe6QFiTkYLdYQ4SeeTONtcbi7w=
+	b=0+1Bd0cAC87r1TYlRsfOd/dW4/r2GpekE464dISzpR4DzyhGagAReHbjNlQPyr3wz
+	 a8boRSL5/uE+nr0dD2Q89SzDATw6WI+2uCTqsVVdk+TqmBhz4iGSVArAkB2c9hOzBV
+	 5TVvYDJtJv4bFby/0lxawS9Xi45BA7j9Tx9z/V98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Paul Elder <paul.elder@ideasonboard.com>,
-	Rui Miguel Silva <rmfrfs@gmail.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0379/1073] media: imx: imx7-media-csi: Clear BIT_MIPI_DOUBLE_CMPNT for <16b formats
-Date: Wed, 28 Dec 2022 15:32:47 +0100
-Message-Id: <20221228144338.300218239@linuxfoundation.org>
+Subject: [PATCH 6.1 0341/1146] dm: cleanup open_table_device
+Date: Wed, 28 Dec 2022 15:31:20 +0100
+Message-Id: <20221228144339.419409011@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,47 +37,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit cccc08a95ca57624563daafd47df5691e8c38995 ]
+[ Upstream commit b9a785d2dc6567b2fd9fc60057a6a945a276927a ]
 
-Commit 9babbbaaeb87 ("media: imx: imx7-media-csi: Use dual sampling for
-YUV 1X16") set BIT_MIPI_DOUBLE_CMPNT in the CR18 register for 16-bit YUV
-formats in imx7_csi_configure(). The CR18 register is always updated
-with read-modify-write cycles, so if a 16-bit YUV format is selected,
-the bit will stay set forever, even if the format is changed. Fix it by
-clearing the bit at the beginning of the imx7_csi_configure() function.
+Move all the logic for allocation the table_device and linking it into
+the list into the open_table_device.  This keeps the code tidy and
+ensures that the table_devices only exist in fully initialized state.
 
-While at it, swap two of the bits being cleared to match the MSB to LSB
-order. This doesn't cause any functional change.
-
-Fixes: 9babbbaaeb87 ("media: imx: imx7-media-csi: Use dual sampling for YUV 1X16")
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Paul Elder <paul.elder@ideasonboard.com>
-Acked-by: Rui Miguel Silva <rmfrfs@gmail.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lore.kernel.org/r/20221115141054.1051801-4-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 1a581b721699 ("dm: track per-add_disk holder relations in DM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/imx/imx7-media-csi.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/md/dm.c | 56 ++++++++++++++++++++++++-------------------------
+ 1 file changed, 27 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/staging/media/imx/imx7-media-csi.c b/drivers/staging/media/imx/imx7-media-csi.c
-index a0553c24cce4..7eee2f8dca47 100644
---- a/drivers/staging/media/imx/imx7-media-csi.c
-+++ b/drivers/staging/media/imx/imx7-media-csi.c
-@@ -521,9 +521,9 @@ static void imx7_csi_configure(struct imx7_csi *csi)
- 	cr18 = imx7_csi_reg_read(csi, CSI_CSICR18);
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index 95a1ee3d314e..739996499f4d 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -732,28 +732,41 @@ static char *_dm_claim_ptr = "I belong to device-mapper";
+ /*
+  * Open a table device so we can use it as a map destination.
+  */
+-static int open_table_device(struct table_device *td, dev_t dev,
+-			     struct mapped_device *md)
++static struct table_device *open_table_device(struct mapped_device *md,
++		dev_t dev, fmode_t mode)
+ {
++	struct table_device *td;
+ 	struct block_device *bdev;
+ 	u64 part_off;
+ 	int r;
  
- 	cr18 &= ~(BIT_CSI_HW_ENABLE | BIT_MIPI_DATA_FORMAT_MASK |
--		  BIT_DATA_FROM_MIPI | BIT_BASEADDR_CHG_ERR_EN |
--		  BIT_BASEADDR_SWITCH_EN | BIT_BASEADDR_SWITCH_SEL |
--		  BIT_DEINTERLACE_EN);
-+		  BIT_DATA_FROM_MIPI | BIT_MIPI_DOUBLE_CMPNT |
-+		  BIT_BASEADDR_CHG_ERR_EN | BIT_BASEADDR_SWITCH_SEL |
-+		  BIT_BASEADDR_SWITCH_EN | BIT_DEINTERLACE_EN);
+-	BUG_ON(td->dm_dev.bdev);
++	td = kmalloc_node(sizeof(*td), GFP_KERNEL, md->numa_node_id);
++	if (!td)
++		return ERR_PTR(-ENOMEM);
++	refcount_set(&td->count, 1);
  
- 	if (out_pix->field == V4L2_FIELD_INTERLACED) {
- 		cr18 |= BIT_DEINTERLACE_EN;
+-	bdev = blkdev_get_by_dev(dev, td->dm_dev.mode | FMODE_EXCL, _dm_claim_ptr);
+-	if (IS_ERR(bdev))
+-		return PTR_ERR(bdev);
++	bdev = blkdev_get_by_dev(dev, mode | FMODE_EXCL, _dm_claim_ptr);
++	if (IS_ERR(bdev)) {
++		r = PTR_ERR(bdev);
++		goto out_free_td;
++	}
+ 
+ 	r = bd_link_disk_holder(bdev, dm_disk(md));
+-	if (r) {
+-		blkdev_put(bdev, td->dm_dev.mode | FMODE_EXCL);
+-		return r;
+-	}
++	if (r)
++		goto out_blkdev_put;
+ 
++	td->dm_dev.mode = mode;
+ 	td->dm_dev.bdev = bdev;
+ 	td->dm_dev.dax_dev = fs_dax_get_by_bdev(bdev, &part_off, NULL, NULL);
+-	return 0;
++	format_dev_t(td->dm_dev.name, dev);
++	list_add(&td->list, &md->table_devices);
++	return td;
++
++out_blkdev_put:
++	blkdev_put(bdev, mode | FMODE_EXCL);
++out_free_td:
++	kfree(td);
++	return ERR_PTR(r);
+ }
+ 
+ /*
+@@ -786,31 +799,16 @@ static struct table_device *find_table_device(struct list_head *l, dev_t dev,
+ int dm_get_table_device(struct mapped_device *md, dev_t dev, fmode_t mode,
+ 			struct dm_dev **result)
+ {
+-	int r;
+ 	struct table_device *td;
+ 
+ 	mutex_lock(&md->table_devices_lock);
+ 	td = find_table_device(&md->table_devices, dev, mode);
+ 	if (!td) {
+-		td = kmalloc_node(sizeof(*td), GFP_KERNEL, md->numa_node_id);
+-		if (!td) {
+-			mutex_unlock(&md->table_devices_lock);
+-			return -ENOMEM;
+-		}
+-
+-		td->dm_dev.mode = mode;
+-		td->dm_dev.bdev = NULL;
+-
+-		if ((r = open_table_device(td, dev, md))) {
++		td = open_table_device(md, dev, mode);
++		if (IS_ERR(td)) {
+ 			mutex_unlock(&md->table_devices_lock);
+-			kfree(td);
+-			return r;
++			return PTR_ERR(td);
+ 		}
+-
+-		format_dev_t(td->dm_dev.name, dev);
+-
+-		refcount_set(&td->count, 1);
+-		list_add(&td->list, &md->table_devices);
+ 	} else {
+ 		refcount_inc(&td->count);
+ 	}
 -- 
 2.35.1
 
