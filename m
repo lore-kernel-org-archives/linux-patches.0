@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2EA11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4839AC433D2;
-	Wed, 28 Dec 2022 15:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C501863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC1FC433D2;
+	Wed, 28 Dec 2022 15:29:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241349;
-	bh=bQzW7h6bekoElz1XK+P1xXVmzrDgoy8gMGEnVSAz1dU=;
+	s=korg; t=1672241352;
+	bh=n7nBq+t+bWoVTOO4n4naVn+SgWZsHkjWNjq9+BajzMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=apK3biF6i5eUTgOd84uzQr+cTl0hhhlRgLpig/n8Cf5nvd1906VOb6RUFjvajpUEA
-	 t2VBvF5L+UNPuuyFrXRF4VzG5lUIy2qra79UP/OJtTszI1epsdzhsKpfcihMWjtqaj
-	 F9D3eGf5u4LjXpoJ3FvxwfhlC+tAddJhmf+YZDpU=
+	b=V+Mmqy8Va69C8E7v9fauE7M9qWvjVmeheuC6f26L//qxRXYB/WMAWOmusGvIdcJC1
+	 +sL+Wz2FSU4BqZbhMSeknV3/Gbsk92QnJb8x/NzVIkh7KYQ9zQVOWYTlogGpi/iWjE
+	 ngAuGralm5AaQUZzJzHvnpmfGhz2mbmNlv7Lor0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Zheng Wang <zyytlz.wz@163.com>,
+	Dimitri Sivanich <sivanich@hpe.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0211/1146] libbpf: Use elf_getshdrnum() instead of e_shnum
-Date: Wed, 28 Dec 2022 15:29:10 +0100
-Message-Id: <20221228144335.879190172@linuxfoundation.org>
+Subject: [PATCH 5.15 469/731] misc: sgi-gru: fix use-after-free error in gru_set_context_option, gru_fault and gru_handle_user_call_os
+Date: Wed, 28 Dec 2022 15:39:36 +0100
+Message-Id: <20221228144310.144317613@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,85 +35,137 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 51deedc9b8680953437dfe359e5268120de10e30 ]
+[ Upstream commit 643a16a0eb1d6ac23744bb6e90a00fc21148a9dc ]
 
-This commit replace e_shnum with the elf_getshdrnum() helper to fix two
-oss-fuzz-reported heap-buffer overflow in __bpf_object__open. Both
-reports are incorrectly marked as fixed and while still being
-reproducible in the latest libbpf.
+In some bad situation, the gts may be freed gru_check_chiplet_assignment.
+The call chain can be gru_unload_context->gru_free_gru_context->gts_drop
+and kfree finally. However, the caller didn't know if the gts is freed
+or not and use it afterwards. This will trigger a Use after Free bug.
 
-  # clusterfuzz-testcase-minimized-bpf-object-fuzzer-5747922482888704
-  libbpf: loading object 'fuzz-object' from buffer
-  libbpf: sec_cnt is 0
-  libbpf: elf: section(1) .data, size 0, link 538976288, flags 2020202020202020, type=2
-  libbpf: elf: section(2) .data, size 32, link 538976288, flags 202020202020ff20, type=1
-  =================================================================
-  ==13==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x6020000000c0 at pc 0x0000005a7b46 bp 0x7ffd12214af0 sp 0x7ffd12214ae8
-  WRITE of size 4 at 0x6020000000c0 thread T0
-  SCARINESS: 46 (4-byte-write-heap-buffer-overflow-far-from-bounds)
-      #0 0x5a7b45 in bpf_object__elf_collect /src/libbpf/src/libbpf.c:3414:24
-      #1 0x5733c0 in bpf_object_open /src/libbpf/src/libbpf.c:7223:16
-      #2 0x5739fd in bpf_object__open_mem /src/libbpf/src/libbpf.c:7263:20
-      ...
+Fix it by introducing a return value to see if it's in error path or not.
+Free the gts in caller if gru_check_chiplet_assignment check failed.
 
-The issue lie in libbpf's direct use of e_shnum field in ELF header as
-the section header count. Where as libelf implemented an extra logic
-that, when e_shnum == 0 && e_shoff != 0, will use sh_size member of the
-initial section header as the real section header count (part of ELF
-spec to accommodate situation where section header counter is larger
-than SHN_LORESERVE).
-
-The above inconsistency lead to libbpf writing into a zero-entry calloc
-area. So intead of using e_shnum directly, use the elf_getshdrnum()
-helper provided by libelf to retrieve the section header counter into
-sec_cnt.
-
-Fixes: 0d6988e16a12 ("libbpf: Fix section counting logic")
-Fixes: 25bbbd7a444b ("libbpf: Remove assumptions about uniqueness of .rodata/.data/.bss maps")
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=40868
-Link: https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=40957
-Link: https://lore.kernel.org/bpf/20221012022353.7350-2-shung-hsi.yu@suse.com
+Fixes: 55484c45dbec ("gru: allow users to specify gru chiplet 2")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Acked-by: Dimitri Sivanich <sivanich@hpe.com>
+Link: https://lore.kernel.org/r/20221110035033.19498-1-zyytlz.wz@163.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ drivers/misc/sgi-gru/grufault.c  | 13 +++++++++++--
+ drivers/misc/sgi-gru/grumain.c   | 22 ++++++++++++++++++----
+ drivers/misc/sgi-gru/grutables.h |  2 +-
+ 3 files changed, 30 insertions(+), 7 deletions(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 91b7106a4a73..b7fac0df2612 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -597,7 +597,7 @@ struct elf_state {
- 	size_t shstrndx; /* section index for section name strings */
- 	size_t strtabidx;
- 	struct elf_sec_desc *secs;
--	int sec_cnt;
-+	size_t sec_cnt;
- 	int btf_maps_shndx;
- 	__u32 btf_maps_sec_btf_id;
- 	int text_shndx;
-@@ -3312,10 +3312,15 @@ static int bpf_object__elf_collect(struct bpf_object *obj)
- 	Elf64_Shdr *sh;
+diff --git a/drivers/misc/sgi-gru/grufault.c b/drivers/misc/sgi-gru/grufault.c
+index d7ef61e602ed..b836936e9747 100644
+--- a/drivers/misc/sgi-gru/grufault.c
++++ b/drivers/misc/sgi-gru/grufault.c
+@@ -648,6 +648,7 @@ int gru_handle_user_call_os(unsigned long cb)
+ 	if ((cb & (GRU_HANDLE_STRIDE - 1)) || ucbnum >= GRU_NUM_CB)
+ 		return -EINVAL;
  
- 	/* ELF section indices are 0-based, but sec #0 is special "invalid"
--	 * section. e_shnum does include sec #0, so e_shnum is the necessary
--	 * size of an array to keep all the sections.
-+	 * section. Since section count retrieved by elf_getshdrnum() does
-+	 * include sec #0, it is already the necessary size of an array to keep
-+	 * all the sections.
- 	 */
--	obj->efile.sec_cnt = obj->efile.ehdr->e_shnum;
-+	if (elf_getshdrnum(obj->efile.elf, &obj->efile.sec_cnt)) {
-+		pr_warn("elf: failed to get the number of sections for %s: %s\n",
-+			obj->path, elf_errmsg(-1));
-+		return -LIBBPF_ERRNO__FORMAT;
++again:
+ 	gts = gru_find_lock_gts(cb);
+ 	if (!gts)
+ 		return -EINVAL;
+@@ -656,7 +657,11 @@ int gru_handle_user_call_os(unsigned long cb)
+ 	if (ucbnum >= gts->ts_cbr_au_count * GRU_CBR_AU_SIZE)
+ 		goto exit;
+ 
+-	gru_check_context_placement(gts);
++	if (gru_check_context_placement(gts)) {
++		gru_unlock_gts(gts);
++		gru_unload_context(gts, 1);
++		goto again;
 +	}
- 	obj->efile.secs = calloc(obj->efile.sec_cnt, sizeof(*obj->efile.secs));
- 	if (!obj->efile.secs)
- 		return -ENOMEM;
+ 
+ 	/*
+ 	 * CCH may contain stale data if ts_force_cch_reload is set.
+@@ -874,7 +879,11 @@ int gru_set_context_option(unsigned long arg)
+ 		} else {
+ 			gts->ts_user_blade_id = req.val1;
+ 			gts->ts_user_chiplet_id = req.val0;
+-			gru_check_context_placement(gts);
++			if (gru_check_context_placement(gts)) {
++				gru_unlock_gts(gts);
++				gru_unload_context(gts, 1);
++				return ret;
++			}
+ 		}
+ 		break;
+ 	case sco_gseg_owner:
+diff --git a/drivers/misc/sgi-gru/grumain.c b/drivers/misc/sgi-gru/grumain.c
+index 9afda47efbf2..3a16eb8e03f7 100644
+--- a/drivers/misc/sgi-gru/grumain.c
++++ b/drivers/misc/sgi-gru/grumain.c
+@@ -716,9 +716,10 @@ static int gru_check_chiplet_assignment(struct gru_state *gru,
+  * chiplet. Misassignment can occur if the process migrates to a different
+  * blade or if the user changes the selected blade/chiplet.
+  */
+-void gru_check_context_placement(struct gru_thread_state *gts)
++int gru_check_context_placement(struct gru_thread_state *gts)
+ {
+ 	struct gru_state *gru;
++	int ret = 0;
+ 
+ 	/*
+ 	 * If the current task is the context owner, verify that the
+@@ -726,15 +727,23 @@ void gru_check_context_placement(struct gru_thread_state *gts)
+ 	 * references. Pthread apps use non-owner references to the CBRs.
+ 	 */
+ 	gru = gts->ts_gru;
++	/*
++	 * If gru or gts->ts_tgid_owner isn't initialized properly, return
++	 * success to indicate that the caller does not need to unload the
++	 * gru context.The caller is responsible for their inspection and
++	 * reinitialization if needed.
++	 */
+ 	if (!gru || gts->ts_tgid_owner != current->tgid)
+-		return;
++		return ret;
+ 
+ 	if (!gru_check_chiplet_assignment(gru, gts)) {
+ 		STAT(check_context_unload);
+-		gru_unload_context(gts, 1);
++		ret = -EINVAL;
+ 	} else if (gru_retarget_intr(gts)) {
+ 		STAT(check_context_retarget_intr);
+ 	}
++
++	return ret;
+ }
+ 
+ 
+@@ -934,7 +943,12 @@ vm_fault_t gru_fault(struct vm_fault *vmf)
+ 	mutex_lock(&gts->ts_ctxlock);
+ 	preempt_disable();
+ 
+-	gru_check_context_placement(gts);
++	if (gru_check_context_placement(gts)) {
++		preempt_enable();
++		mutex_unlock(&gts->ts_ctxlock);
++		gru_unload_context(gts, 1);
++		return VM_FAULT_NOPAGE;
++	}
+ 
+ 	if (!gts->ts_gru) {
+ 		STAT(load_user_context);
+diff --git a/drivers/misc/sgi-gru/grutables.h b/drivers/misc/sgi-gru/grutables.h
+index e4c067c61251..5c9783150cdf 100644
+--- a/drivers/misc/sgi-gru/grutables.h
++++ b/drivers/misc/sgi-gru/grutables.h
+@@ -638,7 +638,7 @@ extern int gru_user_flush_tlb(unsigned long arg);
+ extern int gru_user_unload_context(unsigned long arg);
+ extern int gru_get_exception_detail(unsigned long arg);
+ extern int gru_set_context_option(unsigned long address);
+-extern void gru_check_context_placement(struct gru_thread_state *gts);
++extern int gru_check_context_placement(struct gru_thread_state *gts);
+ extern int gru_cpu_fault_map_id(void);
+ extern struct vm_area_struct *gru_find_vma(unsigned long vaddr);
+ extern void gru_flush_all_tlb(struct gru_state *gru);
 -- 
 2.35.1
 
