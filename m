@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B697B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CAD1C433EF;
-	Wed, 28 Dec 2022 15:13:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628BB1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4F0C433EF;
+	Wed, 28 Dec 2022 15:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240393;
-	bh=j76NZNX+VuyFiUsR6EsmZCpiE7DtsTkC7Vrl3ZjW4XU=;
+	s=korg; t=1672240396;
+	bh=+p2VAqoFUUaqsPnAyXOiAtc5/NbSfqaVZt+07BMRA6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZyzHo8H7r6yzoQC0CAiBhmvhFvpIOi/JlUgcGo4IPSi/HGoK+s+FkcX4jbDss6QfJ
-	 4Kw2op8U+lxWzQRH+jgTSOvT7QLzo98DoL5KOLwdaeJjNoo5BB8u1oh5uAoD+ai165
-	 J1eKiJxRQkGB/L3yxGUBuwR2jMYLKloaySr0NNu4=
+	b=EY9yJCHMUdJewyxZr/dkUxEq7DqQHnU4lF+VnvWx3WRpvm5S5jhhJve48V9eRHjhM
+	 d++R/yPYRDlVSnD52A9PC2KZ1rD29JZ8zI4PmgXkuO+8jpvoomyxNNDwenLIIIzpaO
+	 cMZyNatsCEjw2Xd73mZMZaUEXspPYjimynOten7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Izbyshev <izbyshev@ispras.ru>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Md Iqbal Hossain <md.iqbal.hossain@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0155/1073] futex: Resend potentially swallowed owner death notification
-Date: Wed, 28 Dec 2022 15:29:03 +0100
-Message-Id: <20221228144332.231482688@linuxfoundation.org>
+Subject: [PATCH 6.1 0117/1146] x86/sgx: Reduce delay and interference of enclave release
+Date: Wed, 28 Dec 2022 15:27:36 +0100
+Message-Id: <20221228144333.335253873@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,102 +36,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexey Izbyshev <izbyshev@ispras.ru>
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-[ Upstream commit 90d758896787048fa3d4209309d4800f3920e66f ]
+[ Upstream commit 7b72c823ddf8aaaec4e9fb28e6fbe4d511e7dad1 ]
 
-Commit ca16d5bee598 ("futex: Prevent robust futex exit race") addressed
-two cases when tasks waiting on a robust non-PI futex remained blocked
-despite the futex not being owned anymore:
+commit 8795359e35bc ("x86/sgx: Silence softlockup detection when
+releasing large enclaves") introduced a cond_resched() during enclave
+release where the EREMOVE instruction is applied to every 4k enclave
+page. Giving other tasks an opportunity to run while tearing down a
+large enclave placates the soft lockup detector but Iqbal found
+that the fix causes a 25% performance degradation of a workload
+run using Gramine.
 
-* if the owner died after writing zero to the futex word, but before
-  waking up a waiter
+Gramine maintains a 1:1 mapping between processes and SGX enclaves.
+That means if a workload in an enclave creates a subprocess then
+Gramine creates a duplicate enclave for that subprocess to run in.
+The consequence is that the release of the enclave used to run
+the subprocess can impact the performance of the workload that is
+run in the original enclave, especially in large enclaves when
+SGX2 is not in use.
 
-* if a task waiting on the futex was woken up, but died before updating
-  the futex word (effectively swallowing the notification without acting
-  on it)
+The workload run by Iqbal behaves as follows:
+Create enclave (enclave "A")
+/* Initialize workload in enclave "A" */
+Create enclave (enclave "B")
+/* Run subprocess in enclave "B" and send result to enclave "A" */
+Release enclave (enclave "B")
+/* Run workload in enclave "A" */
+Release enclave (enclave "A")
 
-In the second case, the task could be woken up either by the previous
-owner (after the futex word was reset to zero) or by the kernel (after
-the OWNER_DIED bit was set and the TID part of the futex word was reset
-to zero) if the previous owner died without the resetting the futex.
+The performance impact of releasing enclave "B" in the above scenario
+is amplified when there is a lot of SGX memory and the enclave size
+matches the SGX memory. When there is 128GB SGX memory and an enclave
+size of 128GB, from the time enclave "B" starts the 128GB SGX memory
+is oversubscribed with a combined demand for 256GB from the two
+enclaves.
 
-Because the referenced commit wakes up a potential waiter only if the
-whole futex word is zero, the latter subcase remains unaddressed.
+Before commit 8795359e35bc ("x86/sgx: Silence softlockup detection when
+releasing large enclaves") enclave release was done in a tight loop
+without giving other tasks a chance to run. Even though the system
+experienced soft lockups the workload (run in enclave "A") obtained
+good performance numbers because when the workload started running
+there was no interference.
 
-Fix this by looking only at the TID part of the futex when deciding
-whether a wake up is needed.
+Commit 8795359e35bc ("x86/sgx: Silence softlockup detection when
+releasing large enclaves") gave other tasks opportunity to run while an
+enclave is released. The impact of this in this scenario is that while
+enclave "B" is released and needing to access each page that belongs
+to it in order to run the SGX EREMOVE instruction on it, enclave "A"
+is attempting to run the workload needing to access the enclave
+pages that belong to it. This causes a lot of swapping due to the
+demand for the oversubscribed SGX memory. Longer latencies are
+experienced by the workload in enclave "A" while enclave "B" is
+released.
 
-Fixes: ca16d5bee598 ("futex: Prevent robust futex exit race")
-Signed-off-by: Alexey Izbyshev <izbyshev@ispras.ru>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20221111215439.248185-1-izbyshev@ispras.ru
+Improve the performance of enclave release while still avoiding the
+soft lockup detector with two enhancements:
+- Only call cond_resched() after XA_CHECK_SCHED iterations.
+- Use the xarray advanced API to keep the xarray locked for
+  XA_CHECK_SCHED iterations instead of locking and unlocking
+  at every iteration.
+
+This batching solution is copied from sgx_encl_may_map() that
+also iterates through all enclave pages using this technique.
+
+With this enhancement the workload experiences a 5%
+performance degradation when compared to a kernel without
+commit 8795359e35bc ("x86/sgx: Silence softlockup detection when
+releasing large enclaves"), an improvement to the reported 25%
+degradation, while still placating the soft lockup detector.
+
+Scenarios with poor performance are still possible even with these
+enhancements. For example, short workloads creating sub processes
+while running in large enclaves. Further performance improvements
+are pursued in user space through avoiding to create duplicate enclaves
+for certain sub processes, and using SGX2 that will do lazy allocation
+of pages as needed so enclaves created for sub processes start quickly
+and release quickly.
+
+Fixes: 8795359e35bc ("x86/sgx: Silence softlockup detection when releasing large enclaves")
+Reported-by: Md Iqbal Hossain <md.iqbal.hossain@intel.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Md Iqbal Hossain <md.iqbal.hossain@intel.com>
+Link: https://lore.kernel.org/all/00efa80dd9e35dc85753e1c5edb0344ac07bb1f0.1667236485.git.reinette.chatre%40intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/futex/core.c | 26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ arch/x86/kernel/cpu/sgx/encl.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/futex/core.c b/kernel/futex/core.c
-index b22ef1efe751..514e4582b863 100644
---- a/kernel/futex/core.c
-+++ b/kernel/futex/core.c
-@@ -638,6 +638,7 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
- 			      bool pi, bool pending_op)
+diff --git a/arch/x86/kernel/cpu/sgx/encl.c b/arch/x86/kernel/cpu/sgx/encl.c
+index 1ec20807de1e..2c258255a629 100644
+--- a/arch/x86/kernel/cpu/sgx/encl.c
++++ b/arch/x86/kernel/cpu/sgx/encl.c
+@@ -680,11 +680,15 @@ const struct vm_operations_struct sgx_vm_ops = {
+ void sgx_encl_release(struct kref *ref)
  {
- 	u32 uval, nval, mval;
-+	pid_t owner;
- 	int err;
- 
- 	/* Futex address must be 32bit aligned */
-@@ -659,6 +660,10 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
- 	 * 2. A woken up waiter is killed before it can acquire the
- 	 *    futex in user space.
- 	 *
-+	 * In the second case, the wake up notification could be generated
-+	 * by the unlock path in user space after setting the futex value
-+	 * to zero or by the kernel after setting the OWNER_DIED bit below.
-+	 *
- 	 * In both cases the TID validation below prevents a wakeup of
- 	 * potential waiters which can cause these waiters to block
- 	 * forever.
-@@ -667,24 +672,27 @@ static int handle_futex_death(u32 __user *uaddr, struct task_struct *curr,
- 	 *
- 	 *	1) task->robust_list->list_op_pending != NULL
- 	 *	   @pending_op == true
--	 *	2) User space futex value == 0
-+	 *	2) The owner part of user space futex value == 0
- 	 *	3) Regular futex: @pi == false
- 	 *
- 	 * If these conditions are met, it is safe to attempt waking up a
- 	 * potential waiter without touching the user space futex value and
--	 * trying to set the OWNER_DIED bit. The user space futex value is
--	 * uncontended and the rest of the user space mutex state is
--	 * consistent, so a woken waiter will just take over the
--	 * uncontended futex. Setting the OWNER_DIED bit would create
--	 * inconsistent state and malfunction of the user space owner died
--	 * handling.
-+	 * trying to set the OWNER_DIED bit. If the futex value is zero,
-+	 * the rest of the user space mutex state is consistent, so a woken
-+	 * waiter will just take over the uncontended futex. Setting the
-+	 * OWNER_DIED bit would create inconsistent state and malfunction
-+	 * of the user space owner died handling. Otherwise, the OWNER_DIED
-+	 * bit is already set, and the woken waiter is expected to deal with
-+	 * this.
- 	 */
--	if (pending_op && !pi && !uval) {
-+	owner = uval & FUTEX_TID_MASK;
+ 	struct sgx_encl *encl = container_of(ref, struct sgx_encl, refcount);
++	unsigned long max_page_index = PFN_DOWN(encl->base + encl->size - 1);
+ 	struct sgx_va_page *va_page;
+ 	struct sgx_encl_page *entry;
+-	unsigned long index;
++	unsigned long count = 0;
 +
-+	if (pending_op && !pi && !owner) {
- 		futex_wake(uaddr, 1, 1, FUTEX_BITSET_MATCH_ANY);
- 		return 0;
++	XA_STATE(xas, &encl->page_array, PFN_DOWN(encl->base));
+ 
+-	xa_for_each(&encl->page_array, index, entry) {
++	xas_lock(&xas);
++	xas_for_each(&xas, entry, max_page_index) {
+ 		if (entry->epc_page) {
+ 			/*
+ 			 * The page and its radix tree entry cannot be freed
+@@ -699,9 +703,20 @@ void sgx_encl_release(struct kref *ref)
+ 		}
+ 
+ 		kfree(entry);
+-		/* Invoke scheduler to prevent soft lockups. */
+-		cond_resched();
++		/*
++		 * Invoke scheduler on every XA_CHECK_SCHED iteration
++		 * to prevent soft lockups.
++		 */
++		if (!(++count % XA_CHECK_SCHED)) {
++			xas_pause(&xas);
++			xas_unlock(&xas);
++
++			cond_resched();
++
++			xas_lock(&xas);
++		}
  	}
++	xas_unlock(&xas);
  
--	if ((uval & FUTEX_TID_MASK) != task_pid_vnr(curr))
-+	if (owner != task_pid_vnr(curr))
- 		return 0;
+ 	xa_destroy(&encl->page_array);
  
- 	/*
 -- 
 2.35.1
 
