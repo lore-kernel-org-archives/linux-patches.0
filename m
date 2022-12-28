@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 630A51863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB554C433D2;
-	Wed, 28 Dec 2022 14:57:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C56B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D43C433D2;
+	Wed, 28 Dec 2022 14:57:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239477;
-	bh=wAJh6NFGxgffYs+GWGWvdFjhTZ2PvIioEJs3elPeJHo=;
+	s=korg; t=1672239479;
+	bh=hmDLBD3LdVKBntNpsRilYRDpyBGcsA/uqmcPj1QGDNE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QMiZ3cSRBuwA9clDj6RoI2bLNZxUcWZP5tk7QN6Eufl3wMtBRGqUNqp9pN7DZjTqg
-	 d6FWTG2q+ZEGsCJZGZapahnGqHyXCDfZ21e4mW1b9TexP93Tlv0I+qGXN/fgU2iFz0
-	 ltBtaMONzKNLJe28eICtD5hFJp85nGG3l5x8dlLg=
+	b=BZpAdCKaSfzaBd0An3Pp0rmrtpn4QaX7X14eApkRUdC5DbdjTvenRqHmzuLsk8gRh
+	 SlWezeF0vFdWRMAe1ZWG2XyGm+fxVKM3218R+IfohahSzC+CDTkPZ0n0aFdJE044a6
+	 q/Cmc/iYqvEDPQMbiUxsEJFiTp+6s6PemfTSSclM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com,
+	Gautam Menghani <gautammenghani201@gmail.com>,
+	Sean Young <sean@mess.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0036/1073] arm64: dts: qcom: msm8996: fix sound card reset line polarity
-Date: Wed, 28 Dec 2022 15:27:04 +0100
-Message-Id: <20221228144329.114374116@linuxfoundation.org>
+Subject: [PATCH 5.15 232/731] media: imon: fix a race condition in send_packet()
+Date: Wed, 28 Dec 2022 15:35:39 +0100
+Message-Id: <20221228144303.287766225@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,37 +37,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Gautam Menghani <gautammenghani201@gmail.com>
 
-[ Upstream commit 76d21ffc5d425bf7ea9888652c49d7dbda15f356 ]
+[ Upstream commit 813ceef062b53d68f296aa3cb944b21a091fabdb ]
 
-When resetting the block, the reset line is being driven low and then
-high, which means that the line in DTS should be annotated as "active
-low". It will become important when wcd9335 driver will be converted
-to gpiod API that respects declared line polarities.
+The function send_packet() has a race condition as follows:
 
-Fixes: f3eb39a55a1f ("arm64: dts: db820c: Add sound card support")
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221027074652.1044235-1-dmitry.torokhov@gmail.com
+func send_packet()
+{
+    // do work
+    call usb_submit_urb()
+    mutex_unlock()
+    wait_for_event_interruptible()  <-- lock gone
+    mutex_lock()
+}
+
+func vfd_write()
+{
+    mutex_lock()
+    call send_packet()  <- prev call is not completed
+    mutex_unlock()
+}
+
+When the mutex is unlocked and the function send_packet() waits for the
+call to complete, vfd_write() can start another call, which leads to the
+"URB submitted while active" warning in usb_submit_urb().
+Fix this by removing the mutex_unlock() call in send_packet() and using
+mutex_lock_interruptible().
+
+Link: https://syzkaller.appspot.com/bug?id=e378e6a51fbe6c5cc43e34f131cc9a315ef0337e
+
+Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
+Reported-by: syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com
+Signed-off-by: Gautam Menghani <gautammenghani201@gmail.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/rc/imon.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index d3cf0677ea28..5cf04c350a62 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -3358,7 +3358,7 @@ wcd9335: codec@1{
- 					interrupt-names = "intr1", "intr2";
- 					interrupt-controller;
- 					#interrupt-cells = <1>;
--					reset-gpios = <&tlmm 64 GPIO_ACTIVE_HIGH>;
-+					reset-gpios = <&tlmm 64 GPIO_ACTIVE_LOW>;
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index 97355e3ebdfd..72e4bb0fb71e 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -646,15 +646,14 @@ static int send_packet(struct imon_context *ictx)
+ 		pr_err_ratelimited("error submitting urb(%d)\n", retval);
+ 	} else {
+ 		/* Wait for transmission to complete (or abort) */
+-		mutex_unlock(&ictx->lock);
+ 		retval = wait_for_completion_interruptible(
+ 				&ictx->tx.finished);
+ 		if (retval) {
+ 			usb_kill_urb(ictx->tx_urb);
+ 			pr_err_ratelimited("task interrupted\n");
+ 		}
+-		mutex_lock(&ictx->lock);
  
- 					slim-ifc-dev = <&tasha_ifd>;
++		ictx->tx.busy = false;
+ 		retval = ictx->tx.status;
+ 		if (retval)
+ 			pr_err_ratelimited("packet tx failed (%d)\n", retval);
+@@ -955,7 +954,8 @@ static ssize_t vfd_write(struct file *file, const char __user *buf,
+ 	if (ictx->disconnected)
+ 		return -ENODEV;
  
+-	mutex_lock(&ictx->lock);
++	if (mutex_lock_interruptible(&ictx->lock))
++		return -ERESTARTSYS;
+ 
+ 	if (!ictx->dev_present_intf0) {
+ 		pr_err_ratelimited("no iMON device present\n");
 -- 
 2.35.1
 
