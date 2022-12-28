@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7961C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4AEC433D2;
-	Wed, 28 Dec 2022 16:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8AC41C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DDC3C433D2;
+	Wed, 28 Dec 2022 16:04:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243483;
-	bh=4mc9xX4HHfv/E+KDKnhH9GX0N48deLGM2D3VoZ2koAg=;
+	s=korg; t=1672243485;
+	bh=8uDFsnOP36YXZtoMFkW0puGChasFFXrut66J8d9tTDs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xTo0YmV3Ilx1c3p9Bh3T4sbNE4XI0nbZFyeqqAgVt8k1odJuS0+EVVwATwp5nfrB7
-	 hidPrkpBXb4G22Ok47WbNh0D12XUgphQN3h6pPL05Ec8gl7x9OHQf80gs6JsKPv5HD
-	 kXRvAjinWo4uQiS0/jH2NxsZQHfka9vNM1N+tczI=
+	b=tBd2g6xgDKAybVoKp+BXLZGTmAS4oG+KDtNO14+zfJi0YjFcQFMMWbTpY1XHL46eJ
+	 YcPdUcChO/OXNdO9OLVq7gYa5K6p8lrVRKusw8tshuYQPqNVRLgnfzfjkZ5S1LXOC4
+	 NjDR/vKAmCdPNajjM889Jq42tg9XIZepdpBuporA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
-	Roger Quadros <rogerq@kernel.org>,
-	Saeed Mahameed <saeed@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0534/1073] net: ethernet: ti: am65-cpsw: Fix PM runtime leakage in am65_cpsw_nuss_ndo_slave_open()
-Date: Wed, 28 Dec 2022 15:35:22 +0100
-Message-Id: <20221228144342.557158363@linuxfoundation.org>
+	syzbot+0b1fb6b0108c27419f9f@syzkaller.appspotmail.com,
+	Josef Bacik <josef@toxicpanda.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 726/731] btrfs: do not BUG_ON() on ENOMEM when dropping extent items for a range
+Date: Wed, 28 Dec 2022 15:43:53 +0100
+Message-Id: <20221228144317.487956694@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,65 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roger Quadros <rogerq@kernel.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-[ Upstream commit 5821504f5073983733465b8bc430049c4343bbd7 ]
+commit 162d053e15fe985f754ef495a96eb3db970c43ed upstream.
 
-Ensure pm_runtime_put() is issued in error path.
+If we get -ENOMEM while dropping file extent items in a given range, at
+btrfs_drop_extents(), due to failure to allocate memory when attempting to
+increment the reference count for an extent or drop the reference count,
+we handle it with a BUG_ON(). This is excessive, instead we can simply
+abort the transaction and return the error to the caller. In fact most
+callers of btrfs_drop_extents(), directly or indirectly, already abort
+the transaction if btrfs_drop_extents() returns any error.
 
-Reported-by: Jakub Kicinski <kuba@kernel.org>
-Fixes: 93a76530316a ("net: ethernet: ti: introduce am65x/j721e gigabit eth subsystem driver")
-Signed-off-by: Roger Quadros <rogerq@kernel.org>
-Reviewed-by: Saeed Mahameed <saeed@kernel.org>
-Link: https://lore.kernel.org/r/20221208105534.63709-1-rogerq@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Also, we already have error paths at btrfs_drop_extents() that may return
+-ENOMEM and in those cases we abort the transaction, like for example
+anything that changes the b+tree may return -ENOMEM due to a failure to
+allocate a new extent buffer when COWing an existing extent buffer, such
+as a call to btrfs_duplicate_item() for example.
+
+So replace the BUG_ON() calls with proper logic to abort the transaction
+and return the error.
+
+Reported-by: syzbot+0b1fb6b0108c27419f9f@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/00000000000089773e05ee4b9cb4@google.com/
+CC: stable@vger.kernel.org # 5.4+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ fs/btrfs/file.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/am65-cpsw-nuss.c b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-index 47da11b9ac28..58678843d794 100644
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -562,13 +562,13 @@ static int am65_cpsw_nuss_ndo_slave_open(struct net_device *ndev)
- 	ret = netif_set_real_num_tx_queues(ndev, common->tx_ch_num);
- 	if (ret) {
- 		dev_err(common->dev, "cannot set real number of tx queues\n");
--		return ret;
-+		goto runtime_put;
- 	}
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -872,7 +872,10 @@ next_slot:
+ 						args->start - extent_offset,
+ 						0, false);
+ 				ret = btrfs_inc_extent_ref(trans, &ref);
+-				BUG_ON(ret); /* -ENOMEM */
++				if (ret) {
++					btrfs_abort_transaction(trans, ret);
++					break;
++				}
+ 			}
+ 			key.offset = args->start;
+ 		}
+@@ -959,7 +962,10 @@ delete_extent_item:
+ 						key.offset - extent_offset, 0,
+ 						false);
+ 				ret = btrfs_free_extent(trans, &ref);
+-				BUG_ON(ret); /* -ENOMEM */
++				if (ret) {
++					btrfs_abort_transaction(trans, ret);
++					break;
++				}
+ 				args->bytes_found += extent_end - key.offset;
+ 			}
  
- 	ret = netif_set_real_num_rx_queues(ndev, AM65_CPSW_MAX_RX_QUEUES);
- 	if (ret) {
- 		dev_err(common->dev, "cannot set real number of rx queues\n");
--		return ret;
-+		goto runtime_put;
- 	}
- 
- 	for (i = 0; i < common->tx_ch_num; i++)
-@@ -576,7 +576,7 @@ static int am65_cpsw_nuss_ndo_slave_open(struct net_device *ndev)
- 
- 	ret = am65_cpsw_nuss_common_open(common, ndev->features);
- 	if (ret)
--		return ret;
-+		goto runtime_put;
- 
- 	common->usage_count++;
- 
-@@ -609,6 +609,10 @@ static int am65_cpsw_nuss_ndo_slave_open(struct net_device *ndev)
- error_cleanup:
- 	am65_cpsw_nuss_ndo_slave_stop(ndev);
- 	return ret;
-+
-+runtime_put:
-+	pm_runtime_put(common->dev);
-+	return ret;
- }
- 
- static void am65_cpsw_nuss_rx_cleanup(void *data, dma_addr_t desc_dma)
--- 
-2.35.1
-
 
 
