@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E26881863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:50:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 694CBC433F0;
-	Wed, 28 Dec 2022 14:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8457F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:50:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09FD1C433D2;
+	Wed, 28 Dec 2022 14:50:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239037;
-	bh=yiVwmsVfBzUXR1ei740Ab4+SRAxnSaihuOAc/5k44TM=;
+	s=korg; t=1672239040;
+	bh=n1/L6LZp8E2IryGAR9z/ZRShETgQoWQB3m7j8dYLsAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zsD/9MLRtU2HJvx4KnjY9fOiAXGni559A4ycksW0daFA4c4leWQdcU3D3vGQ6pWcT
-	 5ycwa2byicoe2oxuX925pDKp40hcZzDToA7e1hDiCQ9nlk4BuAPXVlYKNCObJQIh5H
-	 wxXyE4zWgEqln6avIEyS2TXBnr7uXF9RWyQPr2F0=
+	b=JesSLHS1stcxxmyBw3H+vqVgsRDr3aD80QNbwHElAj2j37C9VQsRo/5RPRkd0fmUl
+	 mxn4nFq122g49ZA/h7s0Ys0BhW6U0e+4jwnj+lP1khlUxxQj/CHLXL5rbfaixro5Lk
+	 IKZSpjnSaJbFINAFmc+wMj5QiP6TqG/4F4QEKawA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhi Li <yieli@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 104/731] nfsd: dont call nfsd_file_put from client states seqfile display
-Date: Wed, 28 Dec 2022 15:33:31 +0100
-Message-Id: <20221228144259.564927968@linuxfoundation.org>
+Subject: [PATCH 5.15 105/731] genirq/irqdesc: Dont try to remove non-existing sysfs files
+Date: Wed, 28 Dec 2022 15:33:32 +0100
+Message-Id: <20221228144259.593844858@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,143 +35,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit e0aa651068bfd520afcd357af8ecd2de005fc83d ]
+[ Upstream commit 9049e1ca41983ab773d7ea244bee86d7835ec9f5 ]
 
-We had a report of this:
+Fault injection tests trigger warnings like this:
 
-    BUG: sleeping function called from invalid context at fs/nfsd/filecache.c:440
+  kernfs: can not remove 'chip_name', no directory
+  WARNING: CPU: 0 PID: 253 at fs/kernfs/dir.c:1616 kernfs_remove_by_name_ns+0xce/0xe0
+  RIP: 0010:kernfs_remove_by_name_ns+0xce/0xe0
+  Call Trace:
+   <TASK>
+   remove_files.isra.1+0x3f/0xb0
+   sysfs_remove_group+0x68/0xe0
+   sysfs_remove_groups+0x41/0x70
+   __kobject_del+0x45/0xc0
+   kobject_del+0x29/0x40
+   free_desc+0x42/0x70
+   irq_free_descs+0x5e/0x90
 
-...with a stack trace showing nfsd_file_put being called from
-nfs4_show_open. This code has always tried to call fput while holding a
-spinlock, but we recently changed this to use the filecache, and that
-started triggering the might_sleep() in nfsd_file_put.
+The reason is that the interrupt descriptor sysfs handling does not roll
+back on a failing kobject_add() during allocation. If the descriptor is
+freed later on, kobject_del() is invoked with a not added kobject resulting
+in the above warnings.
 
-states_start takes and holds the cl_lock while iterating over the
-client's states, and we can't sleep with that held.
+A proper rollback in case of a kobject_add() failure would be the straight
+forward solution. But this is not possible due to the way how interrupt
+descriptor sysfs handling works.
 
-Have the various nfs4_show_* functions instead hold the fi_lock instead
-of taking a nfsd_file reference.
+Interrupt descriptors are allocated before sysfs becomes available. So the
+sysfs files for the early allocated descriptors are added later in the boot
+process. At this point there can be nothing useful done about a failing
+kobject_add(). For consistency the interrupt descriptor allocation always
+treats kobject_add() failures as non-critical and just emits a warning.
 
-Fixes: 78599c42ae3c ("nfsd4: add file to display list of client's opens")
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2138357
-Reported-by: Zhi Li <yieli@redhat.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+To solve this problem, keep track in the interrupt descriptor whether
+kobject_add() was successful or not and make the invocation of
+kobject_del() conditional on that.
+
+[ tglx: Massage changelog, comments and use a state bit. ]
+
+Fixes: ecb3f394c5db ("genirq: Expose interrupt information through sysfs")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20221128151612.1786122-1-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 51 +++++++++++++++++++++++++++++----------------
- 1 file changed, 33 insertions(+), 18 deletions(-)
+ kernel/irq/internals.h |  2 ++
+ kernel/irq/irqdesc.c   | 15 +++++++++------
+ 2 files changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 7b763f146b62..c062728034ad 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -627,15 +627,26 @@ find_any_file(struct nfs4_file *f)
- 	return ret;
+diff --git a/kernel/irq/internals.h b/kernel/irq/internals.h
+index e58342ace11f..f1d83a8b4417 100644
+--- a/kernel/irq/internals.h
++++ b/kernel/irq/internals.h
+@@ -52,6 +52,7 @@ enum {
+  * IRQS_PENDING			- irq is pending and replayed later
+  * IRQS_SUSPENDED		- irq is suspended
+  * IRQS_NMI			- irq line is used to deliver NMIs
++ * IRQS_SYSFS			- descriptor has been added to sysfs
+  */
+ enum {
+ 	IRQS_AUTODETECT		= 0x00000001,
+@@ -64,6 +65,7 @@ enum {
+ 	IRQS_SUSPENDED		= 0x00000800,
+ 	IRQS_TIMINGS		= 0x00001000,
+ 	IRQS_NMI		= 0x00002000,
++	IRQS_SYSFS		= 0x00004000,
+ };
+ 
+ #include "debug.h"
+diff --git a/kernel/irq/irqdesc.c b/kernel/irq/irqdesc.c
+index 21b3ac2a29d2..7a45fd593245 100644
+--- a/kernel/irq/irqdesc.c
++++ b/kernel/irq/irqdesc.c
+@@ -288,22 +288,25 @@ static void irq_sysfs_add(int irq, struct irq_desc *desc)
+ 	if (irq_kobj_base) {
+ 		/*
+ 		 * Continue even in case of failure as this is nothing
+-		 * crucial.
++		 * crucial and failures in the late irq_sysfs_init()
++		 * cannot be rolled back.
+ 		 */
+ 		if (kobject_add(&desc->kobj, irq_kobj_base, "%d", irq))
+ 			pr_warn("Failed to add kobject for irq %d\n", irq);
++		else
++			desc->istate |= IRQS_SYSFS;
+ 	}
  }
  
--static struct nfsd_file *find_deleg_file(struct nfs4_file *f)
-+static struct nfsd_file *find_any_file_locked(struct nfs4_file *f)
+ static void irq_sysfs_del(struct irq_desc *desc)
  {
--	struct nfsd_file *ret = NULL;
-+	lockdep_assert_held(&f->fi_lock);
-+
-+	if (f->fi_fds[O_RDWR])
-+		return f->fi_fds[O_RDWR];
-+	if (f->fi_fds[O_WRONLY])
-+		return f->fi_fds[O_WRONLY];
-+	if (f->fi_fds[O_RDONLY])
-+		return f->fi_fds[O_RDONLY];
-+	return NULL;
-+}
-+
-+static struct nfsd_file *find_deleg_file_locked(struct nfs4_file *f)
-+{
-+	lockdep_assert_held(&f->fi_lock);
- 
--	spin_lock(&f->fi_lock);
- 	if (f->fi_deleg_file)
--		ret = nfsd_file_get(f->fi_deleg_file);
--	spin_unlock(&f->fi_lock);
--	return ret;
-+		return f->fi_deleg_file;
-+	return NULL;
- }
- 
- static atomic_long_t num_delegations;
-@@ -2501,9 +2512,11 @@ static int nfs4_show_open(struct seq_file *s, struct nfs4_stid *st)
- 	ols = openlockstateid(st);
- 	oo = ols->st_stateowner;
- 	nf = st->sc_file;
--	file = find_any_file(nf);
-+
-+	spin_lock(&nf->fi_lock);
-+	file = find_any_file_locked(nf);
- 	if (!file)
--		return 0;
-+		goto out;
- 
- 	seq_printf(s, "- ");
- 	nfs4_show_stateid(s, &st->sc_stateid);
-@@ -2525,8 +2538,8 @@ static int nfs4_show_open(struct seq_file *s, struct nfs4_stid *st)
- 	seq_printf(s, ", ");
- 	nfs4_show_owner(s, oo);
- 	seq_printf(s, " }\n");
--	nfsd_file_put(file);
--
-+out:
-+	spin_unlock(&nf->fi_lock);
- 	return 0;
- }
- 
-@@ -2540,9 +2553,10 @@ static int nfs4_show_lock(struct seq_file *s, struct nfs4_stid *st)
- 	ols = openlockstateid(st);
- 	oo = ols->st_stateowner;
- 	nf = st->sc_file;
--	file = find_any_file(nf);
-+	spin_lock(&nf->fi_lock);
-+	file = find_any_file_locked(nf);
- 	if (!file)
--		return 0;
-+		goto out;
- 
- 	seq_printf(s, "- ");
- 	nfs4_show_stateid(s, &st->sc_stateid);
-@@ -2562,8 +2576,8 @@ static int nfs4_show_lock(struct seq_file *s, struct nfs4_stid *st)
- 	seq_printf(s, ", ");
- 	nfs4_show_owner(s, oo);
- 	seq_printf(s, " }\n");
--	nfsd_file_put(file);
--
-+out:
-+	spin_unlock(&nf->fi_lock);
- 	return 0;
- }
- 
-@@ -2575,9 +2589,10 @@ static int nfs4_show_deleg(struct seq_file *s, struct nfs4_stid *st)
- 
- 	ds = delegstateid(st);
- 	nf = st->sc_file;
--	file = find_deleg_file(nf);
-+	spin_lock(&nf->fi_lock);
-+	file = find_deleg_file_locked(nf);
- 	if (!file)
--		return 0;
-+		goto out;
- 
- 	seq_printf(s, "- ");
- 	nfs4_show_stateid(s, &st->sc_stateid);
-@@ -2593,8 +2608,8 @@ static int nfs4_show_deleg(struct seq_file *s, struct nfs4_stid *st)
- 	seq_printf(s, ", ");
- 	nfs4_show_fname(s, file);
- 	seq_printf(s, " }\n");
--	nfsd_file_put(file);
--
-+out:
-+	spin_unlock(&nf->fi_lock);
- 	return 0;
+ 	/*
+-	 * If irq_sysfs_init() has not yet been invoked (early boot), then
+-	 * irq_kobj_base is NULL and the descriptor was never added.
+-	 * kobject_del() complains about a object with no parent, so make
+-	 * it conditional.
++	 * Only invoke kobject_del() when kobject_add() was successfully
++	 * invoked for the descriptor. This covers both early boot, where
++	 * sysfs is not initialized yet, and the case of a failed
++	 * kobject_add() invocation.
+ 	 */
+-	if (irq_kobj_base)
++	if (desc->istate & IRQS_SYSFS)
+ 		kobject_del(&desc->kobj);
  }
  
 -- 
