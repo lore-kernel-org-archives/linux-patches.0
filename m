@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C80D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F42C433D2;
-	Wed, 28 Dec 2022 15:13:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC9881863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60A70C433D2;
+	Wed, 28 Dec 2022 15:13:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240404;
-	bh=edwJE/5GKdEQLzVNsQcdR/Pm4OtdcjVi6HyhEOraRzQ=;
+	s=korg; t=1672240406;
+	bh=e3vJ42jmL8muRjEOdKQJSOzG4nGphFTTRiXaAuPWlWM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NkottGtAgNmG0bYKxsoRU0b3eVPzoov4TkC9ZcdsIPMJEFhwjVkIpjkXs9o/ou93g
-	 Tdbe+2fQFaNXAI871OP8+kQyCliBGxPYl/II/hNubByQKk+YZHP2uR3s7iwo1wBQHq
-	 ZRIUdZMO4GPWOrFIqXWiE6oIOT3D4B65I99Foe9w=
+	b=11Iabwx1xR/b2rAImRBTgom2Bb5TpLh8794hsXt8mvYmSLdGwDRpzEiZ05Wus8bYC
+	 SvIywp1b4nCEAg9qBn8lXHsdJ90Issozx3uFrGLXkbZDkCU8djfkcHMxULIrG12OIg
+	 OiCo4sSTejRPyUeOLg+ut+Lw9A7WGTxzxY0yflTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xiongxin <xiongxin@kylinos.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Vishnu Dasa <vdasa@vmware.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0118/1146] PM: hibernate: Fix mistake in kerneldoc comment
-Date: Wed, 28 Dec 2022 15:27:37 +0100
-Message-Id: <20221228144333.362964335@linuxfoundation.org>
+Subject: [PATCH 5.15 322/731] net: vmw_vsock: vmci: Check memcpy_from_msg()
+Date: Wed, 28 Dec 2022 15:37:09 +0100
+Message-Id: <20221228144305.908307631@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,43 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: xiongxin <xiongxin@kylinos.cn>
+From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
 
-[ Upstream commit 6e5d7300cbe7c3541bc31f16db3e9266e6027b4b ]
+[ Upstream commit 44aa5a6dba8283bfda28b1517af4de711c5652a4 ]
 
-The actual maximum image size formula in hibernate_preallocate_memory()
-is as follows:
+vmci_transport_dgram_enqueue() does not check the return value
+of memcpy_from_msg().  If memcpy_from_msg() fails, it is possible that
+uninitialized memory contents are sent unintentionally instead of user's
+message in the datagram to the destination.  Return with an error if
+memcpy_from_msg() fails.
 
-max_size = (count - (size + PAGES_FOR_IO)) / 2
-	    - 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE);
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-but the one in the kerneldoc comment of the function is different and
-incorrect.
-
-Fixes: ddeb64870810 ("PM / Hibernate: Add sysfs knob to control size of memory for drivers")
-Signed-off-by: xiongxin <xiongxin@kylinos.cn>
-[ rjw: Subject and changelog rewrite ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 0f7db23a07af ("vmci_transport: switch ->enqeue_dgram, ->enqueue_stream and ->dequeue_stream to msghdr")
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Vishnu Dasa <vdasa@vmware.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/snapshot.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/vmw_vsock/vmci_transport.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/power/snapshot.c b/kernel/power/snapshot.c
-index 2a406753af90..c20ca5fb9adc 100644
---- a/kernel/power/snapshot.c
-+++ b/kernel/power/snapshot.c
-@@ -1723,8 +1723,8 @@ static unsigned long minimum_image_size(unsigned long saveable)
-  * /sys/power/reserved_size, respectively).  To make this happen, we compute the
-  * total number of available page frames and allocate at least
-  *
-- * ([page frames total] + PAGES_FOR_IO + [metadata pages]) / 2
-- *  + 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE)
-+ * ([page frames total] - PAGES_FOR_IO - [metadata pages]) / 2
-+ *  - 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE)
-  *
-  * of them, which corresponds to the maximum size of a hibernation image.
-  *
+diff --git a/net/vmw_vsock/vmci_transport.c b/net/vmw_vsock/vmci_transport.c
+index b17dc9745188..94c1112f1c8c 100644
+--- a/net/vmw_vsock/vmci_transport.c
++++ b/net/vmw_vsock/vmci_transport.c
+@@ -1711,7 +1711,11 @@ static int vmci_transport_dgram_enqueue(
+ 	if (!dg)
+ 		return -ENOMEM;
+ 
+-	memcpy_from_msg(VMCI_DG_PAYLOAD(dg), msg, len);
++	err = memcpy_from_msg(VMCI_DG_PAYLOAD(dg), msg, len);
++	if (err) {
++		kfree(dg);
++		return err;
++	}
+ 
+ 	dg->dst = vmci_make_handle(remote_addr->svm_cid,
+ 				   remote_addr->svm_port);
 -- 
 2.35.1
 
