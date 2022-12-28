@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB92E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:53:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31E0FC433D2;
-	Wed, 28 Dec 2022 14:53:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8981863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:53:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCD68C433D2;
+	Wed, 28 Dec 2022 14:53:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239200;
-	bh=yruAiydkoe2rm6p5nOjFrbK3Grz8jYDgSc9KqQIyRWg=;
+	s=korg; t=1672239203;
+	bh=ODsTsYmcglnQCN6gjPfBgID3WIYJsMRdwFXk/NMbGIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gy0+9V+gOw+wYd7ZTg7xPN/HyZhjaRdSshJgHfOXzjm7H4iUMXoOBT4mRxtH7TGtH
-	 teUjy38ubzTyTWxm42Cl2xhEvDEQUjb/HTOFi3VS/DONpJ3nZZTsaPdKgzC6aki7rK
-	 +bdjmD7kUWhGMWtA6PmIPgUQmG0mNuVttunagKBs=
+	b=EcJwDngBabtXeyx1vUNZZj/CUtCjqWAIkE83al0SeGbsnU9ue/ZQ3Cw6wXVrpecWG
+	 /tp0lZ/5aumKJYocL2Om1gp73NbDOUFGP+zCqsLfXjlpJwKQiJh4GXhaTlLjAZO0Of
+	 VvNuCQyiW/NAJd1hgrVJv45ALtmD/SNBTOhTjVik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	James Hurley <jahurley@nvidia.com>,
+	David Thompson <davthompson@nvidia.com>,
+	Shravan Kumar Ramani <shravankr@nvidia.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 166/731] can: kvaser_usb: make use of units.h in assignment of frequency
-Date: Wed, 28 Dec 2022 15:34:33 +0100
-Message-Id: <20221228144301.373109056@linuxfoundation.org>
+Subject: [PATCH 5.15 140/731] platform/mellanox: mlxbf-pmc: Fix event typo
+Date: Wed, 28 Dec 2022 15:34:07 +0100
+Message-Id: <20221228144300.607345401@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,110 +37,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jimmy Assarsson <extja@kvaser.com>
+From: James Hurley <jahurley@nvidia.com>
 
-[ Upstream commit b8f91799687eeb6ffe73b66420db46d8c0292295 ]
+[ Upstream commit b0b698b80c56b0712f0d4346d51bf0363ba03068 ]
 
-Use the MEGA define plus the comment /* Hz */ when assigning
-frequencies.
+Had a duplicate event typo, so just fixed the 1 character typo.
 
-Link: https://lore.kernel.org/all/20211210075803.343841-1-mkl@pengutronix.de
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
-Stable-dep-of: 8d21f5927ae6 ("can: kvaser_usb_leaf: Fix improved state not being reported")
+Fixes: 1a218d312e65 ("platform/mellanox: mlxbf-pmc: Add Mellanox BlueField PMC driver")
+Signed-off-by: James Hurley <jahurley@nvidia.com>
+Reviewed-by: David Thompson <davthompson@nvidia.com>
+Reviewed-by: Shravan Kumar Ramani <shravankr@nvidia.com>
+Link: https://lore.kernel.org/r/aadacdbbd3186c55e74ea9456fe011b77938eb6c.1670535330.git.jahurley@nvidia.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c | 7 ++++---
- drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c  | 9 +++++----
- 2 files changed, 9 insertions(+), 7 deletions(-)
+ drivers/platform/mellanox/mlxbf-pmc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-index 215f2b48db24..b485f0bc2e6b 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c
-@@ -22,6 +22,7 @@
- #include <linux/spinlock.h>
- #include <linux/string.h>
- #include <linux/types.h>
-+#include <linux/units.h>
- #include <linux/usb.h>
- 
- #include <linux/can.h>
-@@ -2049,7 +2050,7 @@ const struct kvaser_usb_dev_ops kvaser_usb_hydra_dev_ops = {
- 
- static const struct kvaser_usb_dev_cfg kvaser_usb_hydra_dev_cfg_kcan = {
- 	.clock = {
--		.freq = 80000000,
-+		.freq = 80 * MEGA /* Hz */,
- 	},
- 	.timestamp_freq = 80,
- 	.bittiming_const = &kvaser_usb_hydra_kcan_bittiming_c,
-@@ -2058,7 +2059,7 @@ static const struct kvaser_usb_dev_cfg kvaser_usb_hydra_dev_cfg_kcan = {
- 
- static const struct kvaser_usb_dev_cfg kvaser_usb_hydra_dev_cfg_flexc = {
- 	.clock = {
--		.freq = 24000000,
-+		.freq = 24 * MEGA /* Hz */,
- 	},
- 	.timestamp_freq = 1,
- 	.bittiming_const = &kvaser_usb_flexc_bittiming_const,
-@@ -2066,7 +2067,7 @@ static const struct kvaser_usb_dev_cfg kvaser_usb_hydra_dev_cfg_flexc = {
- 
- static const struct kvaser_usb_dev_cfg kvaser_usb_hydra_dev_cfg_rt = {
- 	.clock = {
--		.freq = 80000000,
-+		.freq = 80 * MEGA /* Hz */,
- 	},
- 	.timestamp_freq = 24,
- 	.bittiming_const = &kvaser_usb_hydra_rt_bittiming_c,
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-index a653318f583a..6d64d566873d 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-@@ -19,6 +19,7 @@
- #include <linux/spinlock.h>
- #include <linux/string.h>
- #include <linux/types.h>
-+#include <linux/units.h>
- #include <linux/usb.h>
- 
- #include <linux/can.h>
-@@ -446,7 +447,7 @@ static const struct can_bittiming_const kvaser_usb_leaf_m32c_bittiming_const = {
- 
- static const struct kvaser_usb_dev_cfg kvaser_usb_leaf_usbcan_dev_cfg = {
- 	.clock = {
--		.freq = 8000000,
-+		.freq = 8 * MEGA /* Hz */,
- 	},
- 	.timestamp_freq = 1,
- 	.bittiming_const = &kvaser_usb_leaf_m16c_bittiming_const,
-@@ -454,7 +455,7 @@ static const struct kvaser_usb_dev_cfg kvaser_usb_leaf_usbcan_dev_cfg = {
- 
- static const struct kvaser_usb_dev_cfg kvaser_usb_leaf_m32c_dev_cfg = {
- 	.clock = {
--		.freq = 16000000,
-+		.freq = 16 * MEGA /* Hz */,
- 	},
- 	.timestamp_freq = 1,
- 	.bittiming_const = &kvaser_usb_leaf_m32c_bittiming_const,
-@@ -470,7 +471,7 @@ static const struct kvaser_usb_dev_cfg kvaser_usb_leaf_imx_dev_cfg_16mhz = {
- 
- static const struct kvaser_usb_dev_cfg kvaser_usb_leaf_imx_dev_cfg_24mhz = {
- 	.clock = {
--		.freq = 24000000,
-+		.freq = 24 * MEGA /* Hz */,
- 	},
- 	.timestamp_freq = 1,
- 	.bittiming_const = &kvaser_usb_flexc_bittiming_const,
-@@ -478,7 +479,7 @@ static const struct kvaser_usb_dev_cfg kvaser_usb_leaf_imx_dev_cfg_24mhz = {
- 
- static const struct kvaser_usb_dev_cfg kvaser_usb_leaf_imx_dev_cfg_32mhz = {
- 	.clock = {
--		.freq = 32000000,
-+		.freq = 32 * MEGA /* Hz */,
- 	},
- 	.timestamp_freq = 1,
- 	.bittiming_const = &kvaser_usb_flexc_bittiming_const,
+diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
+index 65b4a819f1bd..c2c9b0d3244c 100644
+--- a/drivers/platform/mellanox/mlxbf-pmc.c
++++ b/drivers/platform/mellanox/mlxbf-pmc.c
+@@ -358,7 +358,7 @@ static const struct mlxbf_pmc_events mlxbf_pmc_hnfnet_events[] = {
+ 	{ 0x32, "DDN_DIAG_W_INGRESS" },
+ 	{ 0x33, "DDN_DIAG_C_INGRESS" },
+ 	{ 0x34, "DDN_DIAG_CORE_SENT" },
+-	{ 0x35, "NDN_DIAG_S_OUT_OF_CRED" },
++	{ 0x35, "NDN_DIAG_N_OUT_OF_CRED" },
+ 	{ 0x36, "NDN_DIAG_S_OUT_OF_CRED" },
+ 	{ 0x37, "NDN_DIAG_E_OUT_OF_CRED" },
+ 	{ 0x38, "NDN_DIAG_W_OUT_OF_CRED" },
 -- 
 2.35.1
 
