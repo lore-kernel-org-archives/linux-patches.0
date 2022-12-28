@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B440D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3363CC433EF;
-	Wed, 28 Dec 2022 15:43:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50C7A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C96D5C433D2;
+	Wed, 28 Dec 2022 15:43:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242201;
-	bh=KHzEcZE2k1pRm8RztkLsclhbLBR1oLAIU4UFuSVxwr4=;
+	s=korg; t=1672242204;
+	bh=QuZSC6L8uDtz07DbDVoSKyZPl1gamvPDKwbXQftAIPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GJ7e4Y2fnsoUV1PAx88xcEOsS4YX19Dg5kPPwJCROx0WeXfzJCW8Ptq2nb9gAbbcZ
-	 zHssnVXi6wNdVszEP5h0nvM1D0/LCEcRU9fE0rdbaUxQYm12yxjXQ9O5GvxtbyGjky
-	 jLAFmqLXvflfYEW6fcTuKZE7hE2n1fL1eiBCADXk=
+	b=tzyIkyBbBNBDjfX9jCBVeoNII/yn81qE9W3BWVCpLzCgCKb6YDHVukgOIxPU3fo+7
+	 uaI6GYfDqtxyzL7jww/WZ+HVGuHHVzKYdderQFP25pfou2l/DcNVc3Ltnfi0caOlPC
+	 W1QP7P4aKQWkqwIe6QFiTkYLdYQ4SeeTONtcbi7w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baisong Zhong <zhongbaisong@huawei.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Paul Elder <paul.elder@ideasonboard.com>,
+	Rui Miguel Silva <rmfrfs@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0364/1073] ALSA: seq: fix undefined behavior in bit shift for SNDRV_SEQ_FILTER_USE_EVENT
-Date: Wed, 28 Dec 2022 15:32:32 +0100
-Message-Id: <20221228144337.889352806@linuxfoundation.org>
+Subject: [PATCH 6.0 0379/1073] media: imx: imx7-media-csi: Clear BIT_MIPI_DOUBLE_CMPNT for <16b formats
+Date: Wed, 28 Dec 2022 15:32:47 +0100
+Message-Id: <20221228144338.300218239@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,63 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baisong Zhong <zhongbaisong@huawei.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit cf59e1e4c79bf741905484cdb13c130b53576a16 ]
+[ Upstream commit cccc08a95ca57624563daafd47df5691e8c38995 ]
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned. The UBSAN warning calltrace like below:
+Commit 9babbbaaeb87 ("media: imx: imx7-media-csi: Use dual sampling for
+YUV 1X16") set BIT_MIPI_DOUBLE_CMPNT in the CR18 register for 16-bit YUV
+formats in imx7_csi_configure(). The CR18 register is always updated
+with read-modify-write cycles, so if a 16-bit YUV format is selected,
+the bit will stay set forever, even if the format is changed. Fix it by
+clearing the bit at the beginning of the imx7_csi_configure() function.
 
-UBSAN: shift-out-of-bounds in sound/core/seq/seq_clientmgr.c:509:22
-left shift of 1 by 31 places cannot be represented in type 'int'
-...
-Call Trace:
- <TASK>
- dump_stack_lvl+0x8d/0xcf
- ubsan_epilogue+0xa/0x44
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x208
- snd_seq_deliver_single_event.constprop.21+0x191/0x2f0
- snd_seq_deliver_event+0x1a2/0x350
- snd_seq_kernel_client_dispatch+0x8b/0xb0
- snd_seq_client_notify_subscription+0x72/0xa0
- snd_seq_ioctl_subscribe_port+0x128/0x160
- snd_seq_kernel_client_ctl+0xce/0xf0
- snd_seq_oss_create_client+0x109/0x15b
- alsa_seq_oss_init+0x11c/0x1aa
- do_one_initcall+0x80/0x440
- kernel_init_freeable+0x370/0x3c3
- kernel_init+0x1b/0x190
- ret_from_fork+0x1f/0x30
- </TASK>
+While at it, swap two of the bits being cleared to match the MSB to LSB
+order. This doesn't cause any functional change.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
-Link: https://lore.kernel.org/r/20221121111630.3119259-1-zhongbaisong@huawei.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 9babbbaaeb87 ("media: imx: imx7-media-csi: Use dual sampling for YUV 1X16")
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Paul Elder <paul.elder@ideasonboard.com>
+Acked-by: Rui Miguel Silva <rmfrfs@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/sound/asequencer.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/staging/media/imx/imx7-media-csi.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/uapi/sound/asequencer.h b/include/uapi/sound/asequencer.h
-index a75e14edc957..dbd60f48b4b0 100644
---- a/include/uapi/sound/asequencer.h
-+++ b/include/uapi/sound/asequencer.h
-@@ -344,10 +344,10 @@ typedef int __bitwise snd_seq_client_type_t;
- #define	KERNEL_CLIENT	((__force snd_seq_client_type_t) 2)
-                         
- 	/* event filter flags */
--#define SNDRV_SEQ_FILTER_BROADCAST	(1<<0)	/* accept broadcast messages */
--#define SNDRV_SEQ_FILTER_MULTICAST	(1<<1)	/* accept multicast messages */
--#define SNDRV_SEQ_FILTER_BOUNCE		(1<<2)	/* accept bounce event in error */
--#define SNDRV_SEQ_FILTER_USE_EVENT	(1<<31)	/* use event filter */
-+#define SNDRV_SEQ_FILTER_BROADCAST	(1U<<0)	/* accept broadcast messages */
-+#define SNDRV_SEQ_FILTER_MULTICAST	(1U<<1)	/* accept multicast messages */
-+#define SNDRV_SEQ_FILTER_BOUNCE		(1U<<2)	/* accept bounce event in error */
-+#define SNDRV_SEQ_FILTER_USE_EVENT	(1U<<31)	/* use event filter */
+diff --git a/drivers/staging/media/imx/imx7-media-csi.c b/drivers/staging/media/imx/imx7-media-csi.c
+index a0553c24cce4..7eee2f8dca47 100644
+--- a/drivers/staging/media/imx/imx7-media-csi.c
++++ b/drivers/staging/media/imx/imx7-media-csi.c
+@@ -521,9 +521,9 @@ static void imx7_csi_configure(struct imx7_csi *csi)
+ 	cr18 = imx7_csi_reg_read(csi, CSI_CSICR18);
  
- struct snd_seq_client_info {
- 	int client;			/* client number to inquire */
+ 	cr18 &= ~(BIT_CSI_HW_ENABLE | BIT_MIPI_DATA_FORMAT_MASK |
+-		  BIT_DATA_FROM_MIPI | BIT_BASEADDR_CHG_ERR_EN |
+-		  BIT_BASEADDR_SWITCH_EN | BIT_BASEADDR_SWITCH_SEL |
+-		  BIT_DEINTERLACE_EN);
++		  BIT_DATA_FROM_MIPI | BIT_MIPI_DOUBLE_CMPNT |
++		  BIT_BASEADDR_CHG_ERR_EN | BIT_BASEADDR_SWITCH_SEL |
++		  BIT_BASEADDR_SWITCH_EN | BIT_DEINTERLACE_EN);
+ 
+ 	if (out_pix->field == V4L2_FIELD_INTERLACED) {
+ 		cr18 |= BIT_DEINTERLACE_EN;
 -- 
 2.35.1
 
