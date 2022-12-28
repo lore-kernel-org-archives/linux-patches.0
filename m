@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F62F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E352EC433D2;
-	Wed, 28 Dec 2022 15:34:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 166CA1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:34:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89BCCC433D2;
+	Wed, 28 Dec 2022 15:34:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241679;
-	bh=dI78X4+JRfwLn7DLho4ytF6hGZAUmP8/pHSuFy7Fho0=;
+	s=korg; t=1672241681;
+	bh=iCIgmZeyVgW2U7zvjqK90AJ3FwEtEIKU7+2c3T9hRxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QTAvxq9sfYbDiHh2Ojsv9+IuLPSb8syK8+iFz7I2IXCLuvrSkQzy519JymHkNc0DQ
-	 u61SGpe236SYQruwxJy2jwKr8zvu+Uf4BlhQL+FRYr6C0+kMDRd9FJTpOR6d83oIn6
-	 XVd4+vO54JRrV+gE/Pa53FEWm4wCdlLgrWfRHX+Y=
+	b=1gGJZHGMAU5VAzX0hXt088GigJWeJSjOTUGYhQSIOp1v4fT6Qie32QVPFt+Aoexun
+	 WQQmxhlKrHjiklncU2dIB76tfczuFzxLKfZwxaqCOXKOR0N4YylwUEf+Eg3TrNYgaL
+	 19xPlThYEnR79pNtEZ4N7Cizer8jURgepUw7aLVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0276/1146] bpf: Fix slot type check in check_stack_write_var_off
-Date: Wed, 28 Dec 2022 15:30:15 +0100
-Message-Id: <20221228144337.632432018@linuxfoundation.org>
+Subject: [PATCH 6.0 0315/1073] module: Fix NULL vs IS_ERR checking for module_get_next_page
+Date: Wed, 28 Dec 2022 15:31:43 +0100
+Message-Id: <20221228144336.563375392@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,55 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kumar Kartikeya Dwivedi <memxor@gmail.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit f5e477a861e4a20d8a1c5f7a245f3a3c3c376b03 ]
+[ Upstream commit 45af1d7aae7d5520d2858f8517a1342646f015db ]
 
-For the case where allow_ptr_leaks is false, code is checking whether
-slot type is STACK_INVALID and STACK_SPILL and rejecting other cases.
-This is a consequence of incorrectly checking for register type instead
-of the slot type (NOT_INIT and SCALAR_VALUE respectively). Fix the
-check.
+The module_get_next_page() function return error pointers on error
+instead of NULL.
+Use IS_ERR() to check the return value to fix this.
 
-Fixes: 01f810ace9ed ("bpf: Allow variable-offset stack access")
-Signed-off-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Link: https://lore.kernel.org/r/20221103191013.1236066-5-memxor@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: b1ae6dc41eaa ("module: add in-kernel support for decompressing")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Dmitry Torokhov <dmitry.torokhov@gmail.com
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 19 +++++++++++--------
- 1 file changed, 11 insertions(+), 8 deletions(-)
+ kernel/module/decompress.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 146056c79cc9..d533488b75c6 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -3186,14 +3186,17 @@ static int check_stack_write_var_off(struct bpf_verifier_env *env,
- 		stype = &state->stack[spi].slot_type[slot % BPF_REG_SIZE];
- 		mark_stack_slot_scratched(env, spi);
+diff --git a/kernel/module/decompress.c b/kernel/module/decompress.c
+index 4d0bcb3d9e44..82c07b1d9797 100644
+--- a/kernel/module/decompress.c
++++ b/kernel/module/decompress.c
+@@ -114,8 +114,8 @@ static ssize_t module_gzip_decompress(struct load_info *info,
+ 	do {
+ 		struct page *page = module_get_next_page(info);
  
--		if (!env->allow_ptr_leaks
--				&& *stype != NOT_INIT
--				&& *stype != SCALAR_VALUE) {
--			/* Reject the write if there's are spilled pointers in
--			 * range. If we didn't reject here, the ptr status
--			 * would be erased below (even though not all slots are
--			 * actually overwritten), possibly opening the door to
--			 * leaks.
-+		if (!env->allow_ptr_leaks && *stype != STACK_MISC && *stype != STACK_ZERO) {
-+			/* Reject the write if range we may write to has not
-+			 * been initialized beforehand. If we didn't reject
-+			 * here, the ptr status would be erased below (even
-+			 * though not all slots are actually overwritten),
-+			 * possibly opening the door to leaks.
-+			 *
-+			 * We do however catch STACK_INVALID case below, and
-+			 * only allow reading possibly uninitialized memory
-+			 * later for CAP_PERFMON, as the write may not happen to
-+			 * that slot.
- 			 */
- 			verbose(env, "spilled ptr in range of var-offset stack write; insn %d, ptr off: %d",
- 				insn_idx, i);
+-		if (!page) {
+-			retval = -ENOMEM;
++		if (IS_ERR(page)) {
++			retval = PTR_ERR(page);
+ 			goto out_inflate_end;
+ 		}
+ 
+@@ -173,8 +173,8 @@ static ssize_t module_xz_decompress(struct load_info *info,
+ 	do {
+ 		struct page *page = module_get_next_page(info);
+ 
+-		if (!page) {
+-			retval = -ENOMEM;
++		if (IS_ERR(page)) {
++			retval = PTR_ERR(page);
+ 			goto out;
+ 		}
+ 
 -- 
 2.35.1
 
