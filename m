@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179171863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F972C433EF;
-	Wed, 28 Dec 2022 15:12:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD1D81863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FBDFC433D2;
+	Wed, 28 Dec 2022 15:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240361;
-	bh=qY16RBtuxcD3RstD6hVr5F6RiT/+hNpK2zQhV3Y6A1k=;
+	s=korg; t=1672240364;
+	bh=4j8H0VEGe8dFvw+jGsodxBJGbFvHSYzj64b0IBIVgHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gnydmrogOT9MWU82VKOhsNDS/do511JZWxqR9xqG1+YPfe7fzAqefBLgqBoBR//ly
-	 CnL78Eu70KgIa/Suom7W4IM0hdzJJe4MLY/eys0F45QFfhEI8E+mPVwHnFRaCbicL+
-	 P+BXRejr89mHEIGZrpnmh8p6rarEo8n48Lfy5648=
+	b=kx9j8IPY8UQZVlVyqUwF8bAYt9CyzZjNe2PPs73VKr/7vHyDGM48MmIDzq0CGSUOs
+	 8wkiy+YkHCDD9MdgYbkskSXKpGcsyTCikwnNsw2I+07LlfLbKDZ0aj83+r3z0skMYY
+	 +jBkDDMhZlNJ4sAABenGBlSQDnyhpdsoLSUganmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Vivek Yadav <vivek.2311@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0113/1146] cpuidle: dt: Return the correct numbers of parsed idle states
-Date: Wed, 28 Dec 2022 15:27:32 +0100
-Message-Id: <20221228144333.223947542@linuxfoundation.org>
+Subject: [PATCH 5.15 341/731] can: m_can: Call the RAM init directly from m_can_chip_config
+Date: Wed, 28 Dec 2022 15:37:28 +0100
+Message-Id: <20221228144306.451373259@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,42 +35,139 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Vivek Yadav <vivek.2311@samsung.com>
 
-[ Upstream commit ee3c2c8ad6ba6785f14a60e4081d7c82e88162a2 ]
+[ Upstream commit eaacfeaca7ad0804b9a6eff7afeba93a87db7638 ]
 
-While we correctly skips to initialize an idle state from a disabled idle
-state node in DT, the returned value from dt_init_idle_driver() don't get
-adjusted accordingly. Instead the number of found idle state nodes are
-returned, while the callers are expecting the number of successfully
-initialized idle states from DT.
+When we try to access the mcan message ram addresses during the probe,
+hclk is gated by any other drivers or disabled, because of that probe
+gets failed.
 
-This leads to cpuidle drivers unnecessarily continues to initialize their
-idle state specific data. Moreover, in the case when all idle states have
-been disabled in DT, we would end up registering a cpuidle driver, rather
-than relying on the default arch specific idle call.
+Move the mram init functionality to mcan chip config called by
+m_can_start from mcan open function, by that time clocks are
+enabled.
 
-Fixes: 9f14da345599 ("drivers: cpuidle: implement DT based idle states infrastructure")
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Suggested-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Vivek Yadav <vivek.2311@samsung.com>
+Link: https://lore.kernel.org/all/20221207100632.96200-2-vivek.2311@samsung.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Stable-dep-of: 67727a17a6b3 ("can: tcan4x5x: Fix use of register error status mask")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/dt_idle_states.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/m_can/m_can.c          | 32 +++++++++++++++++++++-----
+ drivers/net/can/m_can/m_can_platform.c |  4 ----
+ drivers/net/can/m_can/tcan4x5x-core.c  |  5 ----
+ 3 files changed, 26 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/cpuidle/dt_idle_states.c b/drivers/cpuidle/dt_idle_states.c
-index 252f2a9686a6..448bc796b0b4 100644
---- a/drivers/cpuidle/dt_idle_states.c
-+++ b/drivers/cpuidle/dt_idle_states.c
-@@ -223,6 +223,6 @@ int dt_init_idle_driver(struct cpuidle_driver *drv,
- 	 * also be 0 on platforms with missing DT idle states or legacy DT
- 	 * configuration predating the DT idle states bindings.
- 	 */
--	return i;
-+	return state_idx - start_idx;
+diff --git a/drivers/net/can/m_can/m_can.c b/drivers/net/can/m_can/m_can.c
+index 46ab6155795c..e027229c1955 100644
+--- a/drivers/net/can/m_can/m_can.c
++++ b/drivers/net/can/m_can/m_can.c
+@@ -1248,10 +1248,17 @@ static int m_can_set_bittiming(struct net_device *dev)
+  * - setup bittiming
+  * - configure timestamp generation
+  */
+-static void m_can_chip_config(struct net_device *dev)
++static int m_can_chip_config(struct net_device *dev)
+ {
+ 	struct m_can_classdev *cdev = netdev_priv(dev);
+ 	u32 cccr, test;
++	int err;
++
++	err = m_can_init_ram(cdev);
++	if (err) {
++		dev_err(cdev->dev, "Message RAM configuration failed\n");
++		return err;
++	}
+ 
+ 	m_can_config_endisable(cdev, true);
+ 
+@@ -1375,18 +1382,25 @@ static void m_can_chip_config(struct net_device *dev)
+ 
+ 	if (cdev->ops->init)
+ 		cdev->ops->init(cdev);
++
++	return 0;
  }
- EXPORT_SYMBOL_GPL(dt_init_idle_driver);
+ 
+-static void m_can_start(struct net_device *dev)
++static int m_can_start(struct net_device *dev)
+ {
+ 	struct m_can_classdev *cdev = netdev_priv(dev);
++	int ret;
+ 
+ 	/* basic m_can configuration */
+-	m_can_chip_config(dev);
++	ret = m_can_chip_config(dev);
++	if (ret)
++		return ret;
+ 
+ 	cdev->can.state = CAN_STATE_ERROR_ACTIVE;
+ 
+ 	m_can_enable_all_interrupts(cdev);
++
++	return 0;
+ }
+ 
+ static int m_can_set_mode(struct net_device *dev, enum can_mode mode)
+@@ -1824,7 +1838,9 @@ static int m_can_open(struct net_device *dev)
+ 	}
+ 
+ 	/* start the m_can controller */
+-	m_can_start(dev);
++	err = m_can_start(dev);
++	if (err)
++		goto exit_irq_fail;
+ 
+ 	can_led_event(dev, CAN_LED_EVENT_OPEN);
+ 
+@@ -2082,9 +2098,13 @@ int m_can_class_resume(struct device *dev)
+ 		ret = m_can_clk_start(cdev);
+ 		if (ret)
+ 			return ret;
++		ret  = m_can_start(ndev);
++		if (ret) {
++			m_can_clk_stop(cdev);
++
++			return ret;
++		}
+ 
+-		m_can_init_ram(cdev);
+-		m_can_start(ndev);
+ 		netif_device_attach(ndev);
+ 		netif_start_queue(ndev);
+ 	}
+diff --git a/drivers/net/can/m_can/m_can_platform.c b/drivers/net/can/m_can/m_can_platform.c
+index eee47bad0592..de6d8e01bf2e 100644
+--- a/drivers/net/can/m_can/m_can_platform.c
++++ b/drivers/net/can/m_can/m_can_platform.c
+@@ -140,10 +140,6 @@ static int m_can_plat_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, mcan_class);
+ 
+-	ret = m_can_init_ram(mcan_class);
+-	if (ret)
+-		goto probe_fail;
+-
+ 	pm_runtime_enable(mcan_class->dev);
+ 	ret = m_can_class_register(mcan_class);
+ 	if (ret)
+diff --git a/drivers/net/can/m_can/tcan4x5x-core.c b/drivers/net/can/m_can/tcan4x5x-core.c
+index 9b735eccec8a..a0eee69e52ea 100644
+--- a/drivers/net/can/m_can/tcan4x5x-core.c
++++ b/drivers/net/can/m_can/tcan4x5x-core.c
+@@ -229,11 +229,6 @@ static int tcan4x5x_init(struct m_can_classdev *cdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	/* Zero out the MCAN buffers */
+-	ret = m_can_init_ram(cdev);
+-	if (ret)
+-		return ret;
+-
+ 	ret = regmap_update_bits(tcan4x5x->regmap, TCAN4X5X_CONFIG,
+ 				 TCAN4X5X_MODE_SEL_MASK, TCAN4X5X_MODE_NORMAL);
+ 	if (ret)
 -- 
 2.35.1
 
