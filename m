@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFDA1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9CD3C433D2;
-	Wed, 28 Dec 2022 16:29:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D5781C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88797C433F0;
+	Wed, 28 Dec 2022 16:29:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244991;
-	bh=fYGogO0W5og6kOolC05ykxiXLbbUq0VIOR0T8RkaTGE=;
+	s=korg; t=1672244993;
+	bh=0U853qzJ/DPe+ViHdeRKey9xUYRZw2Gn0TeYA3x0vI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xdya4JT7PQGWAcDjhz2a0Mg4Fnr5E5cZh9vvu+YO0JVceDcbjdnQ4+hHJkvSK78Q3
-	 cmS52VXpDfYWZXvmUAuE05+NTE5G3gYKemHz5YedjwC0qPkJpgVXHLEiIZiPhLdd/H
-	 Gdtz22WVNZdWD/QDKt50C1gpMybnqKN+/q9GFhno=
+	b=o+vQF9WfLUE8+5qH/MGRL9c/vqdREc0s5n1Ie3UoKbuUCEwLqv6cVdjpqDx6mbMiT
+	 VZfkddFI9yzIuvCjqKWVLWilo/ImZPW9EJcqAAw+yQTaQ1IyUzrefHp85IabDI7BFl
+	 r9i1h9hewld3wZDHanJJie4J7CyOlCD5RVRGKY/M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Qilong <zhangqilong3@huawei.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Yong Wu <yong.wu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0774/1146] power: supply: z2_battery: Fix possible memleak in z2_batt_probe()
-Date: Wed, 28 Dec 2022 15:38:33 +0100
-Message-Id: <20221228144351.172301188@linuxfoundation.org>
+Subject: [PATCH 6.0 0812/1073] iommu/mediatek: Use component_match_add
+Date: Wed, 28 Dec 2022 15:40:00 +0100
+Message-Id: <20221228144350.063012800@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,42 +38,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Qilong <zhangqilong3@huawei.com>
+From: Yong Wu <yong.wu@mediatek.com>
 
-[ Upstream commit 955bee204f3dd307642c101b75e370662987e735 ]
+[ Upstream commit b5765a1b44bea9dfcae69c53ffeb4c689d0922a7 ]
 
-If devm_gpiod_get_optional() returns error, the charger should be
-freed before z2_batt_probe returns according to the context. We
-fix it by just gotoing to 'err' branch.
+In order to simplify the error patch(avoid call of_node_put), Use
+component_match_add instead component_match_add_release since we are only
+interested in the "device" here. Then we could always call of_node_put in
+normal path.
 
-Fixes: a3b4388ea19b ("power: supply: z2_battery: Convert to GPIO descriptors")
-Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Strictly this is not a fixes patch, but it is a prepare for adding the
+error path, thus I add a Fixes tag too.
+
+Fixes: d2e9a1102cfc ("iommu/mediatek: Contain MM IOMMU flow with the MM TYPE")
+Suggested-by: Robin Murphy <robin.murphy@arm.com>
+Signed-off-by: Yong Wu <yong.wu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Link: https://lore.kernel.org/r/20221018024258.19073-3-yong.wu@mediatek.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/z2_battery.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/iommu/mtk_iommu.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/power/supply/z2_battery.c b/drivers/power/supply/z2_battery.c
-index 1897c2984860..d033c1d3ee42 100644
---- a/drivers/power/supply/z2_battery.c
-+++ b/drivers/power/supply/z2_battery.c
-@@ -206,10 +206,12 @@ static int z2_batt_probe(struct i2c_client *client,
+diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
+index 93005e63fc7f..ce9288695f9b 100644
+--- a/drivers/iommu/mtk_iommu.c
++++ b/drivers/iommu/mtk_iommu.c
+@@ -1066,19 +1066,17 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
+ 			id = i;
  
- 	charger->charge_gpiod = devm_gpiod_get_optional(&client->dev,
- 							NULL, GPIOD_IN);
--	if (IS_ERR(charger->charge_gpiod))
--		return dev_err_probe(&client->dev,
-+	if (IS_ERR(charger->charge_gpiod)) {
-+		ret = dev_err_probe(&client->dev,
- 				     PTR_ERR(charger->charge_gpiod),
- 				     "failed to get charge GPIO\n");
-+		goto err;
-+	}
+ 		plarbdev = of_find_device_by_node(larbnode);
+-		if (!plarbdev) {
+-			of_node_put(larbnode);
++		of_node_put(larbnode);
++		if (!plarbdev)
+ 			return -ENODEV;
+-		}
++
+ 		if (!plarbdev->dev.driver) {
+-			of_node_put(larbnode);
+ 			platform_device_put(plarbdev);
+ 			return -EPROBE_DEFER;
+ 		}
+ 		data->larb_imu[id].dev = &plarbdev->dev;
  
- 	if (charger->charge_gpiod) {
- 		gpiod_set_consumer_name(charger->charge_gpiod, "BATT CHRG");
+-		component_match_add_release(dev, match, component_release_of,
+-					    component_compare_of, larbnode);
++		component_match_add(dev, match, component_compare_dev, &plarbdev->dev);
+ 		platform_device_put(plarbdev);
+ 	}
+ 
 -- 
 2.35.1
 
