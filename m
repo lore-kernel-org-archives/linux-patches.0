@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A70631C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26D57C433EF;
-	Wed, 28 Dec 2022 16:42:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7E91C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5F2EC433D2;
+	Wed, 28 Dec 2022 16:42:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245775;
-	bh=pWgMsXXWZbplDqiPAiAXyV7mqEl7grS9pY9AUJwoY/4=;
+	s=korg; t=1672245778;
+	bh=CwJ34qd6UTI9A6IbPwAliuNehPs83ziqfQ//1dcSAEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=StbS13Wj2o+mTDQBWny97HRujDTxZZfxXzoAM9M5A5nEmos1O9pZo3VAObrdnWaHs
-	 CrQN589H7kxnVWkw2bZIYUX5MTTEbYn0OEPYUE1K6t3QXHTXdxVOEClxnaIBJZpqxO
-	 TwTc/Uq+TaqYkL0/EP8yGREY5tNT3r/AzBhPDIaE=
+	b=s+C+0izPJVOU8Ma/kzpSmaa082qUU0shmK54DiFmJ5nX1Cu/D5y7wrW7zMlNiyn8j
+	 M07az/sq/8UajZVGh7rAwXrL0jpF9SeCEweCFTD1UBSLwY6cxxBsh9T2k5b/3YLg6G
+	 x8lRV0UHyhhb54CEaG43AB/uOmQew7sbfZ6k3ahw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chun-Jie Chen <chun-jie.chen@mediatek.com>,
-	Allen-KH Cheng <allen-kh.cheng@mediatek.com>,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	Miles Chen <miles.chen@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0920/1146] soc: mediatek: pm-domains: Fix the power glitch issue
-Date: Wed, 28 Dec 2022 15:40:59 +0100
-Message-Id: <20221228144355.248396260@linuxfoundation.org>
+Subject: [PATCH 6.0 0926/1073] net: ethernet: ti: Fix return type of netcp_ndo_start_xmit()
+Date: Wed, 28 Dec 2022 15:41:54 +0100
+Message-Id: <20221228144353.179862676@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,42 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chun-Jie Chen <chun-jie.chen@mediatek.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit dba8eb83af9dd757ef645b52200775e86883d858 ]
+[ Upstream commit 63fe6ff674a96cfcfc0fa8df1051a27aa31c70b4 ]
 
-Power reset maybe generate unexpected signal. In order to avoid
-the glitch issue, we need to enable isolation first to guarantee the
-stable signal when power reset is triggered.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-Fixes: 59b644b01cf4 ("soc: mediatek: Add MediaTek SCPSYS power domains")
-Signed-off-by: Chun-Jie Chen <chun-jie.chen@mediatek.com>
-Signed-off-by: Allen-KH Cheng <allen-kh.cheng@mediatek.com>
-Reviewed-by: Chen-Yu Tsai <wenst@chromium.org>
-Reviewed-by: Miles Chen <miles.chen@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221014102029.1162-1-allen-kh.cheng@mediatek.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+  drivers/net/ethernet/ti/netcp_core.c:1944:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .ndo_start_xmit         = netcp_ndo_start_xmit,
+                                    ^~~~~~~~~~~~~~~~~~~~
+  1 error generated.
+
+->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
+'netdev_tx_t', not 'int'. Adjust the return type of
+netcp_ndo_start_xmit() to match the prototype's to resolve the warning
+and CFI failure.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221102160933.1601260-1-nathan@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/mediatek/mtk-pm-domains.c | 2 +-
+ drivers/net/ethernet/ti/netcp_core.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/mediatek/mtk-pm-domains.c b/drivers/soc/mediatek/mtk-pm-domains.c
-index 09e3c38b8466..474b272f9b02 100644
---- a/drivers/soc/mediatek/mtk-pm-domains.c
-+++ b/drivers/soc/mediatek/mtk-pm-domains.c
-@@ -275,9 +275,9 @@ static int scpsys_power_off(struct generic_pm_domain *genpd)
- 	clk_bulk_disable_unprepare(pd->num_subsys_clks, pd->subsys_clks);
+diff --git a/drivers/net/ethernet/ti/netcp_core.c b/drivers/net/ethernet/ti/netcp_core.c
+index b15d44261e76..267252560942 100644
+--- a/drivers/net/ethernet/ti/netcp_core.c
++++ b/drivers/net/ethernet/ti/netcp_core.c
+@@ -1261,7 +1261,7 @@ static int netcp_tx_submit_skb(struct netcp_intf *netcp,
+ }
  
- 	/* subsys power off */
--	regmap_clear_bits(scpsys->base, pd->data->ctl_offs, PWR_RST_B_BIT);
- 	regmap_set_bits(scpsys->base, pd->data->ctl_offs, PWR_ISO_BIT);
- 	regmap_set_bits(scpsys->base, pd->data->ctl_offs, PWR_CLK_DIS_BIT);
-+	regmap_clear_bits(scpsys->base, pd->data->ctl_offs, PWR_RST_B_BIT);
- 	regmap_clear_bits(scpsys->base, pd->data->ctl_offs, PWR_ON_2ND_BIT);
- 	regmap_clear_bits(scpsys->base, pd->data->ctl_offs, PWR_ON_BIT);
- 
+ /* Submit the packet */
+-static int netcp_ndo_start_xmit(struct sk_buff *skb, struct net_device *ndev)
++static netdev_tx_t netcp_ndo_start_xmit(struct sk_buff *skb, struct net_device *ndev)
+ {
+ 	struct netcp_intf *netcp = netdev_priv(ndev);
+ 	struct netcp_stats *tx_stats = &netcp->stats;
 -- 
 2.35.1
 
