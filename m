@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09311863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:31:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77E20C433EF;
-	Wed, 28 Dec 2022 15:31:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A182B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:31:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25DACC433D2;
+	Wed, 28 Dec 2022 15:31:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241503;
-	bh=jlSUhT+K12LRFqJ6Czu35IlY4al7w7pAaj4buxo22TY=;
+	s=korg; t=1672241506;
+	bh=MOdTA/n7QCSYNBuwUQuCizjc6BfwcOYQZPhbdP2gk40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w9Q+ssZRN2jML5qzBzP218ql3fwUzYRsOhWL6Y3Pxsgxf4gzCqLhm0d26y3nViD4q
-	 fRwftW+q3cB86ol/sJwJEYIbJzeXrKvnmFezZ+OQ2ALuAPZ+2eteO4HzmlsBgJw5ZL
-	 9ko7A1C6r17napNk0JnFzJ7dR3VZMIo7COuxHXko=
+	b=oq7tWj8cKRulQUl71BWvulZ+KTYjmFIiavJmmYu/81iYwuTALi/iWGKHSyqW1gcxI
+	 hhVEinOkPK0P6TuzBIvM+odVLC8MEewNgW9Dte3wduPoEUMt+glJ0jwOFPBsscG4g/
+	 b4ZUMOwNZ5ZqvkZwaJmcEdTtPLtKsv55r9pOKfAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Bartosz Golaszewski <brgl@bgdev.pl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0254/1146] clk: renesas: r8a779f0: Fix SD0H clock name
-Date: Wed, 28 Dec 2022 15:29:53 +0100
-Message-Id: <20221228144337.037105508@linuxfoundation.org>
+Subject: [PATCH 5.15 490/731] gpiolib: Get rid of redundant else
+Date: Wed, 28 Dec 2022 15:39:57 +0100
+Message-Id: <20221228144310.750983905@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,34 +35,189 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 99c05a2b710f16ea592ccb63ef5fe5f1f6b15db9 ]
+[ Upstream commit 1cef8b5019769d46725932eeace7a383bca97905 ]
 
-Correct the misspelled textual name of the SD0H clock.
+In the snippets like the following
 
-Fixes: 9b5dd1ff705c6854 ("clk: renesas: r8a779f0: Add SDH0 clock")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://lore.kernel.org/r/1f682d338f133608f138ae87323707436ad8c748.1665558014.git.geert+renesas@glider.be
+	if (...)
+		return / goto / break / continue ...;
+	else
+		...
+
+the 'else' is redundant. Get rid of it. In case of IOCTLs use
+switch-case pattern that seems the usual in such cases.
+
+While at it, clarify necessity of else in gpiod_direction_output()
+by attaching else if to the closing curly brace on a previous line.
+
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Bartosz Golaszewski <brgl@bgdev.pl>
+Stable-dep-of: 533aae7c94db ("gpiolib: cdev: fix NULL-pointer dereferences")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/renesas/r8a779f0-cpg-mssr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpio/gpiolib-cdev.c | 66 ++++++++++++++++++++-----------------
+ drivers/gpio/gpiolib.c      | 12 +++----
+ 2 files changed, 40 insertions(+), 38 deletions(-)
 
-diff --git a/drivers/clk/renesas/r8a779f0-cpg-mssr.c b/drivers/clk/renesas/r8a779f0-cpg-mssr.c
-index 4baf355e26d8..9504497caaf2 100644
---- a/drivers/clk/renesas/r8a779f0-cpg-mssr.c
-+++ b/drivers/clk/renesas/r8a779f0-cpg-mssr.c
-@@ -113,7 +113,7 @@ static const struct cpg_core_clk r8a779f0_core_clks[] __initconst = {
- 	DEF_FIXED("sasyncperd2", R8A779F0_CLK_SASYNCPERD2, R8A779F0_CLK_SASYNCPERD1, 2, 1),
- 	DEF_FIXED("sasyncperd4", R8A779F0_CLK_SASYNCPERD4, R8A779F0_CLK_SASYNCPERD1, 4, 1),
+diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
+index 937e7a8dd8a9..a20396a6448b 100644
+--- a/drivers/gpio/gpiolib-cdev.c
++++ b/drivers/gpio/gpiolib-cdev.c
+@@ -197,16 +197,15 @@ static long linehandle_ioctl(struct file *file, unsigned int cmd,
+ 	void __user *ip = (void __user *)arg;
+ 	struct gpiohandle_data ghd;
+ 	DECLARE_BITMAP(vals, GPIOHANDLES_MAX);
+-	int i;
++	unsigned int i;
++	int ret;
  
--	DEF_GEN4_SDH("sdh0",	R8A779F0_CLK_SD0H,	CLK_SDSRC,	   0x870),
-+	DEF_GEN4_SDH("sd0h",	R8A779F0_CLK_SD0H,	CLK_SDSRC,	   0x870),
- 	DEF_GEN4_SD("sd0",	R8A779F0_CLK_SD0,	R8A779F0_CLK_SD0H, 0x870),
+-	if (cmd == GPIOHANDLE_GET_LINE_VALUES_IOCTL) {
+-		/* NOTE: It's ok to read values of output lines. */
+-		int ret = gpiod_get_array_value_complex(false,
+-							true,
+-							lh->num_descs,
+-							lh->descs,
+-							NULL,
+-							vals);
++	switch (cmd) {
++	case GPIOHANDLE_GET_LINE_VALUES_IOCTL:
++		/* NOTE: It's okay to read values of output lines */
++		ret = gpiod_get_array_value_complex(false, true,
++						    lh->num_descs, lh->descs,
++						    NULL, vals);
+ 		if (ret)
+ 			return ret;
  
- 	DEF_BASE("rpc",		R8A779F0_CLK_RPC,	CLK_TYPE_GEN4_RPC, CLK_RPCSRC),
+@@ -218,7 +217,7 @@ static long linehandle_ioctl(struct file *file, unsigned int cmd,
+ 			return -EFAULT;
+ 
+ 		return 0;
+-	} else if (cmd == GPIOHANDLE_SET_LINE_VALUES_IOCTL) {
++	case GPIOHANDLE_SET_LINE_VALUES_IOCTL:
+ 		/*
+ 		 * All line descriptors were created at once with the same
+ 		 * flags so just check if the first one is really output.
+@@ -240,10 +239,11 @@ static long linehandle_ioctl(struct file *file, unsigned int cmd,
+ 						     lh->descs,
+ 						     NULL,
+ 						     vals);
+-	} else if (cmd == GPIOHANDLE_SET_CONFIG_IOCTL) {
++	case GPIOHANDLE_SET_CONFIG_IOCTL:
+ 		return linehandle_set_config(lh, ip);
++	default:
++		return -EINVAL;
+ 	}
+-	return -EINVAL;
+ }
+ 
+ #ifdef CONFIG_COMPAT
+@@ -1188,14 +1188,16 @@ static long linereq_ioctl(struct file *file, unsigned int cmd,
+ 	struct linereq *lr = file->private_data;
+ 	void __user *ip = (void __user *)arg;
+ 
+-	if (cmd == GPIO_V2_LINE_GET_VALUES_IOCTL)
++	switch (cmd) {
++	case GPIO_V2_LINE_GET_VALUES_IOCTL:
+ 		return linereq_get_values(lr, ip);
+-	else if (cmd == GPIO_V2_LINE_SET_VALUES_IOCTL)
++	case GPIO_V2_LINE_SET_VALUES_IOCTL:
+ 		return linereq_set_values(lr, ip);
+-	else if (cmd == GPIO_V2_LINE_SET_CONFIG_IOCTL)
++	case GPIO_V2_LINE_SET_CONFIG_IOCTL:
+ 		return linereq_set_config(lr, ip);
+-
+-	return -EINVAL;
++	default:
++		return -EINVAL;
++	}
+ }
+ 
+ #ifdef CONFIG_COMPAT
+@@ -2114,28 +2116,30 @@ static long gpio_ioctl(struct file *file, unsigned int cmd, unsigned long arg)
+ 		return -ENODEV;
+ 
+ 	/* Fill in the struct and pass to userspace */
+-	if (cmd == GPIO_GET_CHIPINFO_IOCTL) {
++	switch (cmd) {
++	case GPIO_GET_CHIPINFO_IOCTL:
+ 		return chipinfo_get(cdev, ip);
+ #ifdef CONFIG_GPIO_CDEV_V1
+-	} else if (cmd == GPIO_GET_LINEHANDLE_IOCTL) {
++	case GPIO_GET_LINEHANDLE_IOCTL:
+ 		return linehandle_create(gdev, ip);
+-	} else if (cmd == GPIO_GET_LINEEVENT_IOCTL) {
++	case GPIO_GET_LINEEVENT_IOCTL:
+ 		return lineevent_create(gdev, ip);
+-	} else if (cmd == GPIO_GET_LINEINFO_IOCTL ||
+-		   cmd == GPIO_GET_LINEINFO_WATCH_IOCTL) {
+-		return lineinfo_get_v1(cdev, ip,
+-				       cmd == GPIO_GET_LINEINFO_WATCH_IOCTL);
++	case GPIO_GET_LINEINFO_IOCTL:
++		return lineinfo_get_v1(cdev, ip, false);
++	case GPIO_GET_LINEINFO_WATCH_IOCTL:
++		return lineinfo_get_v1(cdev, ip, true);
+ #endif /* CONFIG_GPIO_CDEV_V1 */
+-	} else if (cmd == GPIO_V2_GET_LINEINFO_IOCTL ||
+-		   cmd == GPIO_V2_GET_LINEINFO_WATCH_IOCTL) {
+-		return lineinfo_get(cdev, ip,
+-				    cmd == GPIO_V2_GET_LINEINFO_WATCH_IOCTL);
+-	} else if (cmd == GPIO_V2_GET_LINE_IOCTL) {
++	case GPIO_V2_GET_LINEINFO_IOCTL:
++		return lineinfo_get(cdev, ip, false);
++	case GPIO_V2_GET_LINEINFO_WATCH_IOCTL:
++		return lineinfo_get(cdev, ip, true);
++	case GPIO_V2_GET_LINE_IOCTL:
+ 		return linereq_create(gdev, ip);
+-	} else if (cmd == GPIO_GET_LINEINFO_UNWATCH_IOCTL) {
++	case GPIO_GET_LINEINFO_UNWATCH_IOCTL:
+ 		return lineinfo_unwatch(cdev, ip);
++	default:
++		return -EINVAL;
+ 	}
+-	return -EINVAL;
+ }
+ 
+ #ifdef CONFIG_COMPAT
+diff --git a/drivers/gpio/gpiolib.c b/drivers/gpio/gpiolib.c
+index 67bc96403a4e..fdca300f6003 100644
+--- a/drivers/gpio/gpiolib.c
++++ b/drivers/gpio/gpiolib.c
+@@ -189,9 +189,8 @@ static int gpiochip_find_base(int ngpio)
+ 		/* found a free space? */
+ 		if (gdev->base + gdev->ngpio <= base)
+ 			break;
+-		else
+-			/* nope, check the space right before the chip */
+-			base = gdev->base - ngpio;
++		/* nope, check the space right before the chip */
++		base = gdev->base - ngpio;
+ 	}
+ 
+ 	if (gpio_is_valid(base)) {
+@@ -2410,8 +2409,7 @@ int gpiod_direction_output(struct gpio_desc *desc, int value)
+ 			ret = gpiod_direction_input(desc);
+ 			goto set_output_flag;
+ 		}
+-	}
+-	else if (test_bit(FLAG_OPEN_SOURCE, &desc->flags)) {
++	} else if (test_bit(FLAG_OPEN_SOURCE, &desc->flags)) {
+ 		ret = gpio_set_config(desc, PIN_CONFIG_DRIVE_OPEN_SOURCE);
+ 		if (!ret)
+ 			goto set_output_value;
+@@ -2568,9 +2566,9 @@ static int gpiod_get_raw_value_commit(const struct gpio_desc *desc)
+ static int gpio_chip_get_multiple(struct gpio_chip *gc,
+ 				  unsigned long *mask, unsigned long *bits)
+ {
+-	if (gc->get_multiple) {
++	if (gc->get_multiple)
+ 		return gc->get_multiple(gc, mask, bits);
+-	} else if (gc->get) {
++	if (gc->get) {
+ 		int i, value;
+ 
+ 		for_each_set_bit(i, mask, gc->ngpio) {
 -- 
 2.35.1
 
