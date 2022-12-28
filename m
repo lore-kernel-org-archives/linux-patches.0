@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6121C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:39:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 094DDC433D2;
-	Wed, 28 Dec 2022 16:39:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DD01C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:39:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AF6EC433EF;
+	Wed, 28 Dec 2022 16:39:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245559;
-	bh=/WL07LK3cI0ugCJwgyw52PX4hwTm7I7iO8famkK5JNo=;
+	s=korg; t=1672245562;
+	bh=mjBAZQAoIFRCA8kFTE+Z9mTUJWFLiwAtDPkEr+hzzTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ds+aMUIfRH3Kvz2Zsc0jOHpN2YtWHZ04uUlsGVM/tg9x7hH4cgROFUQAFqqi0Mo1G
-	 R03wXEKpiOA1PWCEvyvalzNh16tpv2XyHdeZOIbFGZGUiRAVXN6U0SIYCmayzYiH9+
-	 P/qrGaIeEauxR0Z70p4X6w+Xm0BdEJOIvhEEpJio=
+	b=gDLRzUFF6JrPkvpC0Qylb3qsPbsvTgoApzGhzf6rn8M0YELrCBHPXjAEU1u7H8Ko3
+	 DhCPwUwV7QK/esbdvcKggKvoptdLQbga1sMT6gP1lUGy8m6yAr+pQENgmeHe0ATLLc
+	 w4yP+kq8VbeQUkSfdZWJpweLrtow56h+q8JKmWOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
-	Guru Das Srinagesh <gurus@codeaurora.org>,
-	Lee Jones <lee@kernel.org>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	gehao <gehao@kylinos.cn>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0881/1146] mfd: pm8008: Fix return value check in pm8008_probe()
-Date: Wed, 28 Dec 2022 15:40:20 +0100
-Message-Id: <20221228144354.093430465@linuxfoundation.org>
+Subject: [PATCH 6.0 0915/1073] drm/amd/display: prevent memory leak
+Date: Wed, 28 Dec 2022 15:41:43 +0100
+Message-Id: <20221228144352.881939831@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,40 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: gehao <gehao@kylinos.cn>
 
-[ Upstream commit 14f8c55d48e02157519fbcb3a5de557abd8a06e2 ]
+[ Upstream commit d232afb1f3417ae8194ccf19ad3a8360e70e104e ]
 
-In case of error, the function devm_regmap_init_i2c() returns
-ERR_PTR() and never returns NULL. The NULL test in the return
-value check should be replaced with IS_ERR().
+In dce6(0,1,4)_create_resource_pool and dce80_create_resource_pool
+the allocated memory should be released if construct pool fails.
 
-Fixes: 6b149f3310a4 ("mfd: pm8008: Add driver for QCOM PM8008 PMIC")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Acked-by: Guru Das Srinagesh <gurus@codeaurora.org>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20221125073626.1868229-1-yangyingliang@huawei.com
+Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: gehao <gehao@kylinos.cn>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/qcom-pm8008.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c | 3 +++
+ drivers/gpu/drm/amd/display/dc/dce80/dce80_resource.c | 2 ++
+ 2 files changed, 5 insertions(+)
 
-diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
-index 4b8ff947762f..9f3c4a01b4c1 100644
---- a/drivers/mfd/qcom-pm8008.c
-+++ b/drivers/mfd/qcom-pm8008.c
-@@ -215,8 +215,8 @@ static int pm8008_probe(struct i2c_client *client)
+diff --git a/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c b/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
+index fc6aa098bda0..8db9f7514466 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
+@@ -1128,6 +1128,7 @@ struct resource_pool *dce60_create_resource_pool(
+ 	if (dce60_construct(num_virtual_links, dc, pool))
+ 		return &pool->base;
  
- 	dev = &client->dev;
- 	regmap = devm_regmap_init_i2c(client, &qcom_mfd_regmap_cfg);
--	if (!regmap)
--		return -ENODEV;
-+	if (IS_ERR(regmap))
-+		return PTR_ERR(regmap);
++	kfree(pool);
+ 	BREAK_TO_DEBUGGER();
+ 	return NULL;
+ }
+@@ -1325,6 +1326,7 @@ struct resource_pool *dce61_create_resource_pool(
+ 	if (dce61_construct(num_virtual_links, dc, pool))
+ 		return &pool->base;
  
- 	i2c_set_clientdata(client, regmap);
++	kfree(pool);
+ 	BREAK_TO_DEBUGGER();
+ 	return NULL;
+ }
+@@ -1518,6 +1520,7 @@ struct resource_pool *dce64_create_resource_pool(
+ 	if (dce64_construct(num_virtual_links, dc, pool))
+ 		return &pool->base;
  
++	kfree(pool);
+ 	BREAK_TO_DEBUGGER();
+ 	return NULL;
+ }
+diff --git a/drivers/gpu/drm/amd/display/dc/dce80/dce80_resource.c b/drivers/gpu/drm/amd/display/dc/dce80/dce80_resource.c
+index b28025960050..5825e6f412bd 100644
+--- a/drivers/gpu/drm/amd/display/dc/dce80/dce80_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dce80/dce80_resource.c
+@@ -1137,6 +1137,7 @@ struct resource_pool *dce80_create_resource_pool(
+ 	if (dce80_construct(num_virtual_links, dc, pool))
+ 		return &pool->base;
+ 
++	kfree(pool);
+ 	BREAK_TO_DEBUGGER();
+ 	return NULL;
+ }
+@@ -1336,6 +1337,7 @@ struct resource_pool *dce81_create_resource_pool(
+ 	if (dce81_construct(num_virtual_links, dc, pool))
+ 		return &pool->base;
+ 
++	kfree(pool);
+ 	BREAK_TO_DEBUGGER();
+ 	return NULL;
+ }
 -- 
 2.35.1
 
