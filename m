@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995911C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F165C433F1;
-	Wed, 28 Dec 2022 16:55:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70EFC1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCBD9C433D2;
+	Wed, 28 Dec 2022 16:55:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246517;
-	bh=6hNtsvNtlbAmQhmIbElNYaqU9o3xYRJRWiGhNZj/Uh0=;
+	s=korg; t=1672246520;
+	bh=t4w4tTd+jxKas6MdnngrVvTCpDcYkbpW0+KPNov1NfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=garzJG9RKib69wClxyECbGAvJVFgPyhvCvt4h9xXI/YLvgiIobYQpKaBpYHQjmAdz
-	 oTJ1kN0qB5LU7AsXm29CvzFS8/R/+IrtE/Yl1iELzBp89iY3nbANOhL6GuE9t6wRy+
-	 DdD20b2RnQ+X2UTJlu5xyDgJasHaPNOKtw3oGdic=
+	b=2GApleOwVgLNUaePhz8pgUacUDqI0b2SRTjDCMbGsM2Br/bnRNV87sBvBGzeJcJiN
+	 qotMfHyP2VwYUrhjFYPu7cwuxZ51Kn75KlU4ZMxjZhQJAhClTjsw00jr0Ij+jODoNy
+	 y9nD/K6eCy44ZRd7yzWB7MM05deSqzrf9H/0Tih0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wesley Chalmers <Wesley.Chalmers@amd.com>,
-	Tom Chung <chiahsuan.chung@amd.com>,
-	Martin Leung <Martin.Leung@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.0 1067/1073] drm/amd/display: revert Disable DRR actions during state commit
-Date: Wed, 28 Dec 2022 15:44:15 +0100
-Message-Id: <20221228144357.220813341@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.0 1061/1073] io_uring/net: fix cleanup after recycle
+Date: Wed, 28 Dec 2022 15:44:09 +0100
+Message-Id: <20221228144357.053975266@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -37,35 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Leung <Martin.Leung@amd.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 6f8816261db9251f2635533572f95ab8e530266c upstream.
+commit 6c3e8955d4bd9811a6e1761eea412a14fb51a2e6 upstream.
 
-why and how:
-causes unstable on certain surface format/mpo transitions
+Don't access io_async_msghdr io_netmsg_recycle(), it may be reallocated.
 
-This reverts commit de020e5fa9ebc6fc32e82ae6ccb0282451ed937c
-
-Reviewed-by: Wesley Chalmers <Wesley.Chalmers@amd.com>
-Acked-by: Tom Chung <chiahsuan.chung@amd.com>
-Signed-off-by: Martin Leung <Martin.Leung@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
+Fixes: 9bb66906f23e5 ("io_uring: support multishot in recvmsg")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/9e326f4ad4046ddadf15bf34bf3fa58c6372f6b5.1671461985.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c |    3 +++
- 1 file changed, 3 insertions(+)
+ io_uring/net.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
-@@ -973,5 +973,8 @@ void dcn30_prepare_bandwidth(struct dc *
- 			dc->clk_mgr->funcs->set_max_memclk(dc->clk_mgr, dc->clk_mgr->bw_params->clk_table.entries[dc->clk_mgr->bw_params->clk_table.num_entries - 1].memclk_mhz);
+--- a/io_uring/net.c
++++ b/io_uring/net.c
+@@ -772,10 +772,10 @@ retry_multishot:
+ 		goto retry_multishot;
  
- 	dcn20_prepare_bandwidth(dc, context);
-+
-+	dc_dmub_srv_p_state_delegate(dc,
-+		context->bw_ctx.bw.dcn.clk.fw_based_mclk_switching, context);
- }
+ 	if (mshot_finished) {
+-		io_netmsg_recycle(req, issue_flags);
+ 		/* fast path, check for non-NULL to avoid function call */
+ 		if (kmsg->free_iov)
+ 			kfree(kmsg->free_iov);
++		io_netmsg_recycle(req, issue_flags);
+ 		req->flags &= ~REQ_F_NEED_CLEANUP;
+ 	}
  
 
 
