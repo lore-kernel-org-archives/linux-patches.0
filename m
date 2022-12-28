@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7B31863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB6CC433D2;
-	Wed, 28 Dec 2022 15:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0872D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C6DC433EF;
+	Wed, 28 Dec 2022 15:10:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240224;
-	bh=WJ9GgLXTmZgPEQtJ2/dn7GZJ5+tBSpp626XgOS4o5Kc=;
+	s=korg; t=1672240226;
+	bh=LVfGN92gWg8D37EC0qoo7xa1xxd46DRrRGWQGV0stTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G42EueKT/ZYeOfSrzwif4/6sAcdyIQn6hVTCl/4a7G9bAG1meYH7cXgGcZORNAo+B
-	 aCHHtziH7SlC2pC//ZkjMXI9b1r/cgJTENqyxgb093DMd2EQFWjYkzAHAwlRuUNYoP
-	 H6na312dV5INRQTt9KXeqYAIJXFUUfXDvn1B2388=
+	b=X0GxtTzDrFsLqUvIlMvZizL4AI+4pszqk4zxmrazaWhmH5Aa9QCUMR2fTzfNMjeYl
+	 rXvYjjGtVpF4T5JPYy7JrH8k7Skai/rK4zZCIx1t9+eB3gNLbB3NjDWy9KVSttxIqn
+	 +VXSbJCz+IwWd1BKy758hIQy5P07n/ZOfsE7Qde4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 325/731] net: stmmac: fix possible memory leak in stmmac_dvr_probe()
-Date: Wed, 28 Dec 2022 15:37:12 +0100
-Message-Id: <20221228144305.994647646@linuxfoundation.org>
+Subject: [PATCH 6.0 0136/1073] irqchip: gic-pm: Use pm_runtime_resume_and_get() in gic_probe()
+Date: Wed, 28 Dec 2022 15:28:44 +0100
+Message-Id: <20221228144331.725462168@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,44 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit a137f3f27f9290933fe7e40e6dc8a445781c31a2 ]
+[ Upstream commit f9ee20c85b3a3ba0afd3672630ec4f93d339f015 ]
 
-The bitmap_free() should be called to free priv->af_xdp_zc_qps
-when create_singlethread_workqueue() fails, otherwise there will
-be a memory leak, so we add the err path error_wq_init to fix it.
+gic_probe() calls pm_runtime_get_sync() and added fail path as
+rpm_put to put usage_counter. However, pm_runtime_get_sync()
+will increment usage_counter even it failed. Fix it by replacing it with
+pm_runtime_resume_and_get() to keep usage counter balanced.
 
-Fixes: bba2556efad6 ("net: stmmac: Enable RX via AF_XDP zero-copy")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 9c8edddfc992 ("irqchip/gic: Add platform driver for non-root GICs that require RPM")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20221124065150.22809-1-shangxiaojing@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-pm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index eba97adaf1fb..d987ca727a21 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -7046,7 +7046,7 @@ int stmmac_dvr_probe(struct device *device,
- 	priv->wq = create_singlethread_workqueue("stmmac_wq");
- 	if (!priv->wq) {
- 		dev_err(priv->device, "failed to create workqueue\n");
--		return -ENOMEM;
-+		goto error_wq_init;
- 	}
+diff --git a/drivers/irqchip/irq-gic-pm.c b/drivers/irqchip/irq-gic-pm.c
+index b60e1853593f..3989d16f997b 100644
+--- a/drivers/irqchip/irq-gic-pm.c
++++ b/drivers/irqchip/irq-gic-pm.c
+@@ -102,7 +102,7 @@ static int gic_probe(struct platform_device *pdev)
  
- 	INIT_WORK(&priv->service_task, stmmac_service_task);
-@@ -7273,6 +7273,7 @@ int stmmac_dvr_probe(struct device *device,
- 	stmmac_napi_del(ndev);
- error_hw_init:
- 	destroy_workqueue(priv->wq);
-+error_wq_init:
- 	bitmap_free(priv->af_xdp_zc_qps);
+ 	pm_runtime_enable(dev);
  
- 	return ret;
+-	ret = pm_runtime_get_sync(dev);
++	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret < 0)
+ 		goto rpm_disable;
+ 
 -- 
 2.35.1
 
