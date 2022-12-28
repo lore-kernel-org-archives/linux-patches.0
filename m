@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341591863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFA68C433D2;
-	Wed, 28 Dec 2022 15:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB9A11863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA1AC433D2;
+	Wed, 28 Dec 2022 15:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241395;
-	bh=ChnsUKKDnFmNipXJOhYnkSERFRBkgVNIQqoFI1HDekQ=;
+	s=korg; t=1672241397;
+	bh=t6Mf8C73r4LJ/2rWzLEn/DbP86+4qJCpSCMITIWCRC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l0WKJ6nYnKVOmLGVHwYfMK8AyIqFh5irqLTRLxuckC++I0Q2B+clavQAqWmYYt72U
-	 rWzAoICB0MHhkrKbIbJpChGNqxe6/q5w4B21XxS+3FWmaDwhjlxU4KH/AGDKYyTBKD
-	 UnngZrbJy1+vf1U3i2SZ445FmkIueWO0vP1qc8VM=
+	b=r+NZ+uy3R3P4OTkRw6co3C2qBURqhfcKzebkwxi7tm7/XW725PKA5JcPmui0l0i42
+	 FE70aFy0PzUnmKydbeLe+lcOwd2x/QRvtcm8fzeWF0ZVq2kIyq0Ou9NhBDsxIYeEDL
+	 CrRNwHg00cCyl1S0r9U0UeDHUoHfOp9uEuE8eFlc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ramona Bolboaca <ramona.bolboaca@analog.com>,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 477/731] iio: adis: add __adis_enable_irq() implementation
-Date: Wed, 28 Dec 2022 15:39:44 +0100
-Message-Id: <20221228144310.379301463@linuxfoundation.org>
+Subject: [PATCH 6.0 0279/1073] drm/msm/dsi: Account for DSCs bits_per_pixel having 4 fractional bits
+Date: Wed, 28 Dec 2022 15:31:07 +0100
+Message-Id: <20221228144335.599890092@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,134 +36,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ramona Bolboaca <ramona.bolboaca@analog.com>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit 99c05e4283a19a02a256f14100ca4ec3b2da3f62 ]
+[ Upstream commit d2c277c61986942e99680cb67ce26423d0f42f11 ]
 
-Add '__adis_enable_irq()' implementation which is the unlocked
-version of 'adis_enable_irq()'.
-Call '__adis_enable_irq()' instead of 'adis_enable_irq()' from
-'__adis_intial_startup()' to keep the expected unlocked functionality.
+drm_dsc_config's bits_per_pixel field holds a fractional value with 4
+bits, which all panel drivers should adhere to for
+drm_dsc_pps_payload_pack() to generate a valid payload.  All code in the
+DSI driver here seems to assume that this field doesn't contain any
+fractional bits, hence resulting in the wrong values being computed.
+Since none of the calculations leave any room for fractional bits or
+seem to indicate any possible area of support, disallow such values
+altogether.  calculate_rc_params() in intel_vdsc.c performs an identical
+bitshift to get at this integer value.
 
-This fix is needed to remove a deadlock for all devices which are
-using 'adis_initial_startup()'. The deadlock occurs because the
-same mutex is acquired twice, without releasing it.
-The mutex is acquired once inside 'adis_initial_startup()', before
-calling '__adis_initial_startup()', and once inside
-'adis_enable_irq()', which is called by '__adis_initial_startup()'.
-The deadlock is removed by calling '__adis_enable_irq()', instead of
-'adis_enable_irq()' from within '__adis_initial_startup()'.
-
-Fixes: b600bd7eb3335 ("iio: adis: do not disabe IRQs in 'adis_init()'")
-Signed-off-by: Ramona Bolboaca <ramona.bolboaca@analog.com>
-Reviewed-by: Nuno Sá <nuno.sa@analog.com>
-Link: https://lore.kernel.org/r/20221122082757.449452-2-ramona.bolboaca@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Patchwork: https://patchwork.freedesktop.org/patch/508938/
+Link: https://lore.kernel.org/r/20221026182824.876933-8-marijn.suijten@somainline.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/adis.c       | 28 ++++++++++------------------
- include/linux/iio/imu/adis.h | 13 ++++++++++++-
- 2 files changed, 22 insertions(+), 19 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/iio/imu/adis.c b/drivers/iio/imu/adis.c
-index f7fcfd04f659..bc40240b29e2 100644
---- a/drivers/iio/imu/adis.c
-+++ b/drivers/iio/imu/adis.c
-@@ -270,23 +270,19 @@ EXPORT_SYMBOL_NS(adis_debugfs_reg_access, IIO_ADISLIB);
- #endif
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 0c80d0797a6a..27fef5169bed 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -34,7 +34,7 @@
  
- /**
-- * adis_enable_irq() - Enable or disable data ready IRQ
-+ * __adis_enable_irq() - Enable or disable data ready IRQ (unlocked)
-  * @adis: The adis device
-  * @enable: Whether to enable the IRQ
-  *
-  * Returns 0 on success, negative error code otherwise
-  */
--int adis_enable_irq(struct adis *adis, bool enable)
-+int __adis_enable_irq(struct adis *adis, bool enable)
+ #define DSI_RESET_TOGGLE_DELAY_MS 20
+ 
+-static int dsi_populate_dsc_params(struct drm_dsc_config *dsc);
++static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc_config *dsc);
+ 
+ static int dsi_get_version(const void __iomem *base, u32 *major, u32 *minor)
  {
--	int ret = 0;
+@@ -984,6 +984,7 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 	u32 va_end = va_start + mode->vdisplay;
+ 	u32 hdisplay = mode->hdisplay;
+ 	u32 wc;
 +	int ret;
- 	u16 msc;
  
--	mutex_lock(&adis->state_lock);
--
--	if (adis->data->enable_irq) {
--		ret = adis->data->enable_irq(adis, enable);
--		goto out_unlock;
--	}
-+	if (adis->data->enable_irq)
-+		return adis->data->enable_irq(adis, enable);
+ 	DBG("");
  
- 	if (adis->data->unmasked_drdy) {
- 		if (enable)
-@@ -294,12 +290,12 @@ int adis_enable_irq(struct adis *adis, bool enable)
- 		else
- 			disable_irq(adis->spi->irq);
+@@ -1019,7 +1020,9 @@ static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_bonded_dsi)
+ 		/* we do the calculations for dsc parameters here so that
+ 		 * panel can use these parameters
+ 		 */
+-		dsi_populate_dsc_params(dsc);
++		ret = dsi_populate_dsc_params(msm_host, dsc);
++		if (ret)
++			return;
  
--		goto out_unlock;
-+		return 0;
+ 		/* Divide the display by 3 but keep back/font porch and
+ 		 * pulse width same
+@@ -1835,9 +1838,15 @@ static char bpg_offset[DSC_NUM_BUF_RANGES] = {
+ 	2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -12, -12, -12
+ };
+ 
+-static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
++static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc_config *dsc)
+ {
+ 	int i;
++	u16 bpp = dsc->bits_per_pixel >> 4;
++
++	if (dsc->bits_per_pixel & 0xf) {
++		DRM_DEV_ERROR(&msm_host->pdev->dev, "DSI does not support fractional bits_per_pixel\n");
++		return -EINVAL;
++	}
+ 
+ 	dsc->rc_model_size = 8192;
+ 	dsc->first_line_bpg_offset = 12;
+@@ -1858,8 +1867,8 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
+ 		dsc->rc_range_params[i].range_bpg_offset = bpg_offset[i];
  	}
  
- 	ret = __adis_read_reg_16(adis, adis->data->msc_ctrl_reg, &msc);
- 	if (ret)
--		goto out_unlock;
-+		return ret;
+-	dsc->initial_offset = 6144; /* Not bpp 12 */
+-	if (dsc->bits_per_pixel != 8)
++	dsc->initial_offset = 6144;		/* Not bpp 12 */
++	if (bpp != 8)
+ 		dsc->initial_offset = 2048;	/* bpp = 12 */
  
- 	msc |= ADIS_MSC_CTRL_DATA_RDY_POL_HIGH;
- 	msc &= ~ADIS_MSC_CTRL_DATA_RDY_DIO2;
-@@ -308,13 +304,9 @@ int adis_enable_irq(struct adis *adis, bool enable)
- 	else
- 		msc &= ~ADIS_MSC_CTRL_DATA_RDY_EN;
- 
--	ret = __adis_write_reg_16(adis, adis->data->msc_ctrl_reg, msc);
--
--out_unlock:
--	mutex_unlock(&adis->state_lock);
--	return ret;
-+	return __adis_write_reg_16(adis, adis->data->msc_ctrl_reg, msc);
- }
--EXPORT_SYMBOL_NS(adis_enable_irq, IIO_ADISLIB);
-+EXPORT_SYMBOL_NS(__adis_enable_irq, IIO_ADISLIB);
- 
- /**
-  * __adis_check_status() - Check the device for error conditions (unlocked)
-@@ -445,7 +437,7 @@ int __adis_initial_startup(struct adis *adis)
- 	 * with 'IRQF_NO_AUTOEN' anyways.
- 	 */
- 	if (!adis->data->unmasked_drdy)
--		adis_enable_irq(adis, false);
-+		__adis_enable_irq(adis, false);
- 
- 	if (!adis->data->prod_id_reg)
- 		return 0;
-diff --git a/include/linux/iio/imu/adis.h b/include/linux/iio/imu/adis.h
-index 6193f9a6fbc2..8210a9e68215 100644
---- a/include/linux/iio/imu/adis.h
-+++ b/include/linux/iio/imu/adis.h
-@@ -406,9 +406,20 @@ static inline int adis_update_bits_base(struct adis *adis, unsigned int reg,
- 		__adis_update_bits_base(adis, reg, mask, val, 2));	\
- })
- 
--int adis_enable_irq(struct adis *adis, bool enable);
- int __adis_check_status(struct adis *adis);
- int __adis_initial_startup(struct adis *adis);
-+int __adis_enable_irq(struct adis *adis, bool enable);
-+
-+static inline int adis_enable_irq(struct adis *adis, bool enable)
-+{
-+	int ret;
-+
-+	mutex_lock(&adis->state_lock);
-+	ret = __adis_enable_irq(adis, enable);
-+	mutex_unlock(&adis->state_lock);
-+
-+	return ret;
-+}
- 
- static inline int adis_check_status(struct adis *adis)
- {
+ 	if (dsc->bits_per_component <= 10)
 -- 
 2.35.1
 
