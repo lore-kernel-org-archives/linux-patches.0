@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DE11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1356DC433D2;
-	Wed, 28 Dec 2022 15:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28AAC1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4ED8C433D2;
+	Wed, 28 Dec 2022 15:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240152;
-	bh=cwQ4M/FEja/VD4o82zMsuHB53100mEGIfAEgmcrZGjM=;
+	s=korg; t=1672240155;
+	bh=NwpmSBB8E6VbdEyBKNLEtjrA8uAaF0ZUtLvneo0GimE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l5ZvOKT08WnHM7kqCUj9hiU9wz5YgbE/8WGMdD/3bGuhAWx1BnI4pT7qqtBzwPJ8i
-	 3oF8ykd/Tdn2H+MJRD5S3sZEpspENC+fXSIn6pwy1jLRODkfPRbHfrrgEeGX8XbY2O
-	 RmrkXB3L2BTeyYj5mPNWI4poIGBhKIVfuLBljm50=
+	b=UBSw6SGGDowRstoHOw4AOGqu1Ea0FUifoJApGhTAdsyTeN5V77YMlVmenK/PvTt4V
+	 jSjsjPKhTB3FQFe4FaP5ws1wmSwjcuTqGbqXGNnzQT3L1ucOKAKILVEyCHhTQN356M
+	 d6AhpSf4VqLLFOz/MnS5fCqvCwmyK8nVf0E0JSDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kris Bahnsen <kris@embeddedTS.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zhao Gongyi <zhaogongyi@huawei.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 315/731] spi: spi-gpio: Dont set MOSI as an input if not 3WIRE mode
-Date: Wed, 28 Dec 2022 15:37:02 +0100
-Message-Id: <20221228144305.707028554@linuxfoundation.org>
+Subject: [PATCH 6.0 0124/1073] selftests/efivarfs: Add checking of the test return value
+Date: Wed, 28 Dec 2022 15:28:32 +0100
+Message-Id: <20221228144331.405474935@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,62 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kris Bahnsen <kris@embeddedTS.com>
+From: Zhao Gongyi <zhaogongyi@huawei.com>
 
-[ Upstream commit 3a6f994f848a69deb2bf3cd9d130dd0c09730e55 ]
+[ Upstream commit c93924267fe6f2b44af1849f714ae9cd8117a9cd ]
 
-The addition of 3WIRE support would affect MOSI direction even
-when still in standard (4 wire) mode. This can lead to MOSI being
-at an invalid logic level when a device driver sets an SPI
-message with a NULL tx_buf.
+Add checking of the test return value, otherwise it will report success
+forever for test_create_read().
 
-spi.h states that if tx_buf is NULL then "zeros will be shifted
-out ... " If MOSI is tristated then the data shifted out is subject
-to pull resistors, keepers, or in the absence of those, noise.
-
-This issue came to light when using spi-gpio connected to an
-ADS7843 touchscreen controller. MOSI pulled high when clocking
-MISO data in caused the SPI device to interpret this as a command
-which would put the device in an unexpected and non-functional
-state.
-
-Fixes: 4b859db2c606 ("spi: spi-gpio: add SPI_3WIRE support")
-Fixes: 5132b3d28371 ("spi: gpio: Support 3WIRE high-impedance turn-around")
-Signed-off-by: Kris Bahnsen <kris@embeddedTS.com>
-Link: https://lore.kernel.org/r/20221207230853.6174-1-kris@embeddedTS.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: dff6d2ae56d0 ("selftests/efivarfs: clean up test files from test_create*()")
+Signed-off-by: Zhao Gongyi <zhaogongyi@huawei.com>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-gpio.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ tools/testing/selftests/efivarfs/efivarfs.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/spi/spi-gpio.c b/drivers/spi/spi-gpio.c
-index 0584f4d2fde2..3ffdab6caac2 100644
---- a/drivers/spi/spi-gpio.c
-+++ b/drivers/spi/spi-gpio.c
-@@ -244,9 +244,19 @@ static int spi_gpio_set_direction(struct spi_device *spi, bool output)
- 	if (output)
- 		return gpiod_direction_output(spi_gpio->mosi, 1);
+diff --git a/tools/testing/selftests/efivarfs/efivarfs.sh b/tools/testing/selftests/efivarfs/efivarfs.sh
+index a90f394f9aa9..d374878cc0ba 100755
+--- a/tools/testing/selftests/efivarfs/efivarfs.sh
++++ b/tools/testing/selftests/efivarfs/efivarfs.sh
+@@ -87,6 +87,11 @@ test_create_read()
+ {
+ 	local file=$efivarfs_mount/$FUNCNAME-$test_guid
+ 	./create-read $file
++	if [ $? -ne 0 ]; then
++		echo "create and read $file failed"
++		file_cleanup $file
++		exit 1
++	fi
+ 	file_cleanup $file
+ }
  
--	ret = gpiod_direction_input(spi_gpio->mosi);
--	if (ret)
--		return ret;
-+	/*
-+	 * Only change MOSI to an input if using 3WIRE mode.
-+	 * Otherwise, MOSI could be left floating if there is
-+	 * no pull resistor connected to the I/O pin, or could
-+	 * be left logic high if there is a pull-up. Transmitting
-+	 * logic high when only clocking MISO data in can put some
-+	 * SPI devices in to a bad state.
-+	 */
-+	if (spi->mode & SPI_3WIRE) {
-+		ret = gpiod_direction_input(spi_gpio->mosi);
-+		if (ret)
-+			return ret;
-+	}
- 	/*
- 	 * Send a turnaround high impedance cycle when switching
- 	 * from output to input. Theoretically there should be
 -- 
 2.35.1
 
