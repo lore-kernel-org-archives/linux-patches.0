@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B56A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC4F3C433EF;
-	Wed, 28 Dec 2022 15:37:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A331863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4E8FC433EF;
+	Wed, 28 Dec 2022 15:37:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241821;
-	bh=R5w2tSuKQPyFFf2DN8pOguaXsraKwUDvKIpjTuHbwp8=;
+	s=korg; t=1672241824;
+	bh=4h8fdag6PiD4pASxuEOiuNSqNb3x9Xu2YOvM4cTWoIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jUDOL7bui7yow5ihWomefyDDxLdspNA0Vkkcyz4eIuCUMdb4oexqpSHL5uMNpoYas
-	 nl9LyA4F7zHNVgzZvftskoyxt72RJWcszCS/2K0pqCcioXb4QbqpGITIZv23iSNA1P
-	 PbL2LRInduln2a2eejRJLXLKuYF0KOfLBVR6li4c=
+	b=fmuTjzHqXVwz8kftzOVvLkVt5X8SvG+t9g3+AL1mKvfA0PeurSw8knU5yizUIVeLh
+	 s5khoqOmjMijc+nktfsN19C20q/tDI6HOMDFnCsHutaX/3cGVVwpiL+0DpLFexjjlc
+	 R05E2WW4B9C5eVSizEFV/3HdbR7q7s3eFm/Oa0+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0307/1073] drm/radeon: Add the missed acpi_put_table() to fix memory leak
-Date: Wed, 28 Dec 2022 15:31:35 +0100
-Message-Id: <20221228144336.347718170@linuxfoundation.org>
+Subject: [PATCH 6.0 0331/1073] dm: cleanup open_table_device
+Date: Wed, 28 Dec 2022 15:31:59 +0100
+Message-Id: <20221228144336.994508625@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,84 +37,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hanjun Guo <guohanjun@huawei.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 10276a20be1115e1f76c189330da2992df980eee ]
+[ Upstream commit b9a785d2dc6567b2fd9fc60057a6a945a276927a ]
 
-When the radeon driver reads the bios information from ACPI
-table in radeon_acpi_vfct_bios(), it misses to call acpi_put_table()
-to release the ACPI memory after the init, so add acpi_put_table()
-properly to fix the memory leak.
+Move all the logic for allocation the table_device and linking it into
+the list into the open_table_device.  This keeps the code tidy and
+ensures that the table_devices only exist in fully initialized state.
 
-v2: fix text formatting (Alex)
-
-Fixes: 268ba0a99f89 ("drm/radeon: implement ACPI VFCT vbios fetch (v3)")
-Signed-off-by: Hanjun Guo <guohanjun@huawei.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lore.kernel.org/r/20221115141054.1051801-4-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 1a581b721699 ("dm: track per-add_disk holder relations in DM")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/radeon/radeon_bios.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/md/dm.c | 56 ++++++++++++++++++++++++-------------------------
+ 1 file changed, 27 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/gpu/drm/radeon/radeon_bios.c b/drivers/gpu/drm/radeon/radeon_bios.c
-index 33121655d50b..1d99c9a2b56e 100644
---- a/drivers/gpu/drm/radeon/radeon_bios.c
-+++ b/drivers/gpu/drm/radeon/radeon_bios.c
-@@ -612,13 +612,14 @@ static bool radeon_acpi_vfct_bios(struct radeon_device *rdev)
- 	acpi_size tbl_size;
- 	UEFI_ACPI_VFCT *vfct;
- 	unsigned offset;
-+	bool r = false;
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index b4a2cb5333fc..1903afa4618a 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -732,28 +732,41 @@ static char *_dm_claim_ptr = "I belong to device-mapper";
+ /*
+  * Open a table device so we can use it as a map destination.
+  */
+-static int open_table_device(struct table_device *td, dev_t dev,
+-			     struct mapped_device *md)
++static struct table_device *open_table_device(struct mapped_device *md,
++		dev_t dev, fmode_t mode)
+ {
++	struct table_device *td;
+ 	struct block_device *bdev;
+ 	u64 part_off;
+ 	int r;
  
- 	if (!ACPI_SUCCESS(acpi_get_table("VFCT", 1, &hdr)))
- 		return false;
- 	tbl_size = hdr->length;
- 	if (tbl_size < sizeof(UEFI_ACPI_VFCT)) {
- 		DRM_ERROR("ACPI VFCT table present but broken (too short #1)\n");
--		return false;
-+		goto out;
- 	}
+-	BUG_ON(td->dm_dev.bdev);
++	td = kmalloc_node(sizeof(*td), GFP_KERNEL, md->numa_node_id);
++	if (!td)
++		return ERR_PTR(-ENOMEM);
++	refcount_set(&td->count, 1);
  
- 	vfct = (UEFI_ACPI_VFCT *)hdr;
-@@ -631,13 +632,13 @@ static bool radeon_acpi_vfct_bios(struct radeon_device *rdev)
- 		offset += sizeof(VFCT_IMAGE_HEADER);
- 		if (offset > tbl_size) {
- 			DRM_ERROR("ACPI VFCT image header truncated\n");
--			return false;
-+			goto out;
- 		}
+-	bdev = blkdev_get_by_dev(dev, td->dm_dev.mode | FMODE_EXCL, _dm_claim_ptr);
+-	if (IS_ERR(bdev))
+-		return PTR_ERR(bdev);
++	bdev = blkdev_get_by_dev(dev, mode | FMODE_EXCL, _dm_claim_ptr);
++	if (IS_ERR(bdev)) {
++		r = PTR_ERR(bdev);
++		goto out_free_td;
++	}
  
- 		offset += vhdr->ImageLength;
- 		if (offset > tbl_size) {
- 			DRM_ERROR("ACPI VFCT image truncated\n");
--			return false;
-+			goto out;
- 		}
+ 	r = bd_link_disk_holder(bdev, dm_disk(md));
+-	if (r) {
+-		blkdev_put(bdev, td->dm_dev.mode | FMODE_EXCL);
+-		return r;
+-	}
++	if (r)
++		goto out_blkdev_put;
  
- 		if (vhdr->ImageLength &&
-@@ -649,15 +650,18 @@ static bool radeon_acpi_vfct_bios(struct radeon_device *rdev)
- 			rdev->bios = kmemdup(&vbios->VbiosContent,
- 					     vhdr->ImageLength,
- 					     GFP_KERNEL);
-+			if (rdev->bios)
-+				r = true;
- 
--			if (!rdev->bios)
--				return false;
--			return true;
-+			goto out;
- 		}
- 	}
- 
- 	DRM_ERROR("ACPI VFCT table present but broken (too short #2)\n");
--	return false;
++	td->dm_dev.mode = mode;
+ 	td->dm_dev.bdev = bdev;
+ 	td->dm_dev.dax_dev = fs_dax_get_by_bdev(bdev, &part_off, NULL, NULL);
+-	return 0;
++	format_dev_t(td->dm_dev.name, dev);
++	list_add(&td->list, &md->table_devices);
++	return td;
 +
-+out:
-+	acpi_put_table(hdr);
-+	return r;
++out_blkdev_put:
++	blkdev_put(bdev, mode | FMODE_EXCL);
++out_free_td:
++	kfree(td);
++	return ERR_PTR(r);
  }
- #else
- static inline bool radeon_acpi_vfct_bios(struct radeon_device *rdev)
+ 
+ /*
+@@ -786,31 +799,16 @@ static struct table_device *find_table_device(struct list_head *l, dev_t dev,
+ int dm_get_table_device(struct mapped_device *md, dev_t dev, fmode_t mode,
+ 			struct dm_dev **result)
+ {
+-	int r;
+ 	struct table_device *td;
+ 
+ 	mutex_lock(&md->table_devices_lock);
+ 	td = find_table_device(&md->table_devices, dev, mode);
+ 	if (!td) {
+-		td = kmalloc_node(sizeof(*td), GFP_KERNEL, md->numa_node_id);
+-		if (!td) {
+-			mutex_unlock(&md->table_devices_lock);
+-			return -ENOMEM;
+-		}
+-
+-		td->dm_dev.mode = mode;
+-		td->dm_dev.bdev = NULL;
+-
+-		if ((r = open_table_device(td, dev, md))) {
++		td = open_table_device(md, dev, mode);
++		if (IS_ERR(td)) {
+ 			mutex_unlock(&md->table_devices_lock);
+-			kfree(td);
+-			return r;
++			return PTR_ERR(td);
+ 		}
+-
+-		format_dev_t(td->dm_dev.name, dev);
+-
+-		refcount_set(&td->count, 1);
+-		list_add(&td->list, &md->table_devices);
+ 	} else {
+ 		refcount_inc(&td->count);
+ 	}
 -- 
 2.35.1
 
