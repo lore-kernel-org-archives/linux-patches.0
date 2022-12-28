@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 207E81C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EA4AC433D2;
-	Wed, 28 Dec 2022 16:46:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8BF11C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 678D4C433D2;
+	Wed, 28 Dec 2022 16:46:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245985;
-	bh=UO2KWIN9lEp9rlsay7SFYUnLpIwAJ6qTyqrbsgEsLyI=;
+	s=korg; t=1672245987;
+	bh=7/UN4rxCVt3+fYonT/vt3KbqXzFbTHIWNP6ebRLf9q4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KnVOcbsEnk+2m3pf9hXf+ovJo3XNJ5JQeLMXj8pCHoBGkS94VGpXpF4BZOj9r8iV/
-	 IzMzRh0IZT3lCjb+0zRIw7jTM9vQyj3YWdbMSMozWVzNSosL2i9L5P+X4sbFOXFjNP
-	 pCn8I422TCUNq29bZ5M09G7sKxjbbZNhUYOaaPlA=
+	b=fC+PYVxF8SPMhenkFyq2wAcYOmAfCycBLpQPbfH8+TRPX75fZ4AjpfCW4gCf34Eqr
+	 hCcJTOnTxRkPeubbRZAjo4yaI7wYksQMxAAhuYx3/lqjsBtTA2OoGxxpg4pDXay5KS
+	 uZCmZJcJOqU6+9uHcteKhBS0Pi9f62deR9J0f8ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Mike Marshall <hubcap@omnibond.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0991/1073] orangefs: Fix kmemleak in orangefs_prepare_debugfs_help_string()
-Date: Wed, 28 Dec 2022 15:42:59 +0100
-Message-Id: <20221228144355.027195984@linuxfoundation.org>
+Subject: [PATCH 6.1 0958/1146] nilfs2: fix shift-out-of-bounds due to too large exponent of block size
+Date: Wed, 28 Dec 2022 15:41:37 +0100
+Message-Id: <20221228144356.341466390@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,60 +35,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit d23417a5bf3a3afc55de5442eb46e1e60458b0a1 ]
+[ Upstream commit ebeccaaef67a4895d2496ab8d9c2fb8d89201211 ]
 
-When insert and remove the orangefs module, then debug_help_string will
-be leaked:
+If field s_log_block_size of superblock data is corrupted and too large,
+init_nilfs() and load_nilfs() still can trigger a shift-out-of-bounds
+warning followed by a kernel panic (if panic_on_warn is set):
 
-  unreferenced object 0xffff8881652ba000 (size 4096):
-    comm "insmod", pid 1701, jiffies 4294893639 (age 13218.530s)
-    hex dump (first 32 bytes):
-      43 6c 69 65 6e 74 20 44 65 62 75 67 20 4b 65 79  Client Debug Key
-      77 6f 72 64 73 20 61 72 65 20 75 6e 6b 6e 6f 77  words are unknow
-    backtrace:
-      [<0000000004e6f8e3>] kmalloc_trace+0x27/0xa0
-      [<0000000006f75d85>] orangefs_prepare_debugfs_help_string+0x5e/0x480 [orangefs]
-      [<0000000091270a2a>] _sub_I_65535_1+0x57/0xf70 [crc_itu_t]
-      [<000000004b1ee1a3>] do_one_initcall+0x87/0x2a0
-      [<000000001d0614ae>] do_init_module+0xdf/0x320
-      [<00000000efef068c>] load_module+0x2f98/0x3330
-      [<000000006533b44d>] __do_sys_finit_module+0x113/0x1b0
-      [<00000000a0da6f99>] do_syscall_64+0x35/0x80
-      [<000000007790b19b>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+ shift exponent 38973 is too large for 32-bit type 'int'
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0xcd/0x134
+  ubsan_epilogue+0xb/0x50
+  __ubsan_handle_shift_out_of_bounds.cold.12+0x17b/0x1f5
+  init_nilfs.cold.11+0x18/0x1d [nilfs2]
+  nilfs_mount+0x9b5/0x12b0 [nilfs2]
+  ...
 
-When remove the module, should always free debug_help_string. Should
-always free the allocated buffer when change the free_debug_help_string.
+This fixes the issue by adding and using a new helper function for getting
+block size with sanity check.
 
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+Link: https://lkml.kernel.org/r/20221027044306.42774-3-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/orangefs-debugfs.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/nilfs2/the_nilfs.c | 42 ++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 38 insertions(+), 4 deletions(-)
 
-diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
-index 29eaa4544372..a848b6ef9599 100644
---- a/fs/orangefs/orangefs-debugfs.c
-+++ b/fs/orangefs/orangefs-debugfs.c
-@@ -222,6 +222,8 @@ static void orangefs_kernel_debug_init(void)
- void orangefs_debugfs_cleanup(void)
- {
- 	debugfs_remove_recursive(debug_dir);
-+	kfree(debug_help_string);
-+	debug_help_string = NULL;
+diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
+index a7c829a7d4f1..2064e6473d30 100644
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -193,6 +193,34 @@ static int nilfs_store_log_cursor(struct the_nilfs *nilfs,
+ 	return ret;
  }
  
- /* open ORANGEFS_KMOD_DEBUG_HELP_FILE */
-@@ -671,6 +673,7 @@ int orangefs_prepare_debugfs_help_string(int at_boot)
- 		memset(debug_help_string, 0, DEBUG_HELP_STRING_SIZE);
- 		strlcat(debug_help_string, new, string_size);
- 		mutex_unlock(&orangefs_help_file_lock);
-+		kfree(new);
- 	}
++/**
++ * nilfs_get_blocksize - get block size from raw superblock data
++ * @sb: super block instance
++ * @sbp: superblock raw data buffer
++ * @blocksize: place to store block size
++ *
++ * nilfs_get_blocksize() calculates the block size from the block size
++ * exponent information written in @sbp and stores it in @blocksize,
++ * or aborts with an error message if it's too large.
++ *
++ * Return Value: On success, 0 is returned. If the block size is too
++ * large, -EINVAL is returned.
++ */
++static int nilfs_get_blocksize(struct super_block *sb,
++			       struct nilfs_super_block *sbp, int *blocksize)
++{
++	unsigned int shift_bits = le32_to_cpu(sbp->s_log_block_size);
++
++	if (unlikely(shift_bits >
++		     ilog2(NILFS_MAX_BLOCK_SIZE) - BLOCK_SIZE_BITS)) {
++		nilfs_err(sb, "too large filesystem blocksize: 2 ^ %u KiB",
++			  shift_bits);
++		return -EINVAL;
++	}
++	*blocksize = BLOCK_SIZE << shift_bits;
++	return 0;
++}
++
+ /**
+  * load_nilfs - load and recover the nilfs
+  * @nilfs: the_nilfs structure to be released
+@@ -246,11 +274,15 @@ int load_nilfs(struct the_nilfs *nilfs, struct super_block *sb)
+ 		nilfs->ns_sbwtime = le64_to_cpu(sbp[0]->s_wtime);
  
- 	rc = 0;
+ 		/* verify consistency between two super blocks */
+-		blocksize = BLOCK_SIZE << le32_to_cpu(sbp[0]->s_log_block_size);
++		err = nilfs_get_blocksize(sb, sbp[0], &blocksize);
++		if (err)
++			goto scan_error;
++
+ 		if (blocksize != nilfs->ns_blocksize) {
+ 			nilfs_warn(sb,
+ 				   "blocksize differs between two super blocks (%d != %d)",
+ 				   blocksize, nilfs->ns_blocksize);
++			err = -EINVAL;
+ 			goto scan_error;
+ 		}
+ 
+@@ -609,9 +641,11 @@ int init_nilfs(struct the_nilfs *nilfs, struct super_block *sb, char *data)
+ 	if (err)
+ 		goto failed_sbh;
+ 
+-	blocksize = BLOCK_SIZE << le32_to_cpu(sbp->s_log_block_size);
+-	if (blocksize < NILFS_MIN_BLOCK_SIZE ||
+-	    blocksize > NILFS_MAX_BLOCK_SIZE) {
++	err = nilfs_get_blocksize(sb, sbp, &blocksize);
++	if (err)
++		goto failed_sbh;
++
++	if (blocksize < NILFS_MIN_BLOCK_SIZE) {
+ 		nilfs_err(sb,
+ 			  "couldn't mount because of unsupported filesystem blocksize %d",
+ 			  blocksize);
 -- 
 2.35.1
 
