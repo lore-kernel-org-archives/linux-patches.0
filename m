@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895B41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:15:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF41C433D2;
-	Wed, 28 Dec 2022 15:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365751863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:16:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE71C433EF;
+	Wed, 28 Dec 2022 15:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240558;
-	bh=IqJZ+mc+y1zrA9Wz06cUVtD47RJVvdK8LZZdWL57Zj4=;
+	s=korg; t=1672240561;
+	bh=Hi6BFIMRcUjPEp2sL+IcqtBoaRRu7/3k8oGvrd7hHKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YGUlA6ohSREFSHukb3K11XGtRCTp0MQzsMv+cnmARWy30Wnk3po37bJjHDr/Ka9Fx
-	 gL0/q1X5R7QVWhLTPPnPYHfKn+XI6kcT4XUgCOglaVaLwz/SuUR4aXgiUqxHeOkQLY
-	 s8GEnyRW/w8pfl4fPAtLSfJTTqFX9aVcLqUM5oF4=
+	b=ZaZTCZ/Ab/YSITpNp5vz5GqUSul/NJUpQ67DkzI6oFzg4hkUR3jk1eNPLIDhEzOuG
+	 OA9LATOruzbqNtWd4O4v2PVPpXiMOkE8nivtX1HdXRk3+vGZZbVwUEIqhXHWsCXK1o
+	 jQw2TpLvdHG1oOnyNf/vECm81LQntliXe36yxN8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
-	Chen Yu <yu.c.chen@intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0139/1146] ACPI: pfr_update: use ACPI_FREE() to free acpi_object
-Date: Wed, 28 Dec 2022 15:27:58 +0100
-Message-Id: <20221228144333.923857107@linuxfoundation.org>
+Subject: [PATCH 5.15 367/731] RDMA/core: Fix order of nldev_exit call
+Date: Wed, 28 Dec 2022 15:37:54 +0100
+Message-Id: <20221228144307.199336345@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,55 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang ShaoBo <bobo.shaobowang@huawei.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit e335beed78ec82656dcb554f9fe560709f0dc408 ]
+[ Upstream commit 4508d32ccced24c972bc4592104513e1ff8439b5 ]
 
-acpi_evaluate_dsm_typed()/acpi_evaluate_dsm() should be coupled with
-ACPI_FREE() to free the ACPI memory, because we need to track the
-allocation of acpi_object when ACPI_DBG_TRACK_ALLOCATIONS enabled,
-so use ACPI_FREE() instead of kfree().
+Create symmetrical exit flow by calling to nldev_exit() after
+call to rdma_nl_unregister(RDMA_NL_LS).
 
-Fixes: 0db89fa243e5 ("ACPI: Introduce Platform Firmware Runtime Update device driver")
-Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
-Reviewed-by: Chen Yu <yu.c.chen@intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 6c80b41abe22 ("RDMA/netlink: Add nldev initialization flows")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/64e676774a53a406f4cde265d5a4cfd6b8e97df9.1666683334.git.leonro@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/pfr_update.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/core/device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/pfr_update.c b/drivers/acpi/pfr_update.c
-index 6bb0b778b5da..9d2bdc13253a 100644
---- a/drivers/acpi/pfr_update.c
-+++ b/drivers/acpi/pfr_update.c
-@@ -178,7 +178,7 @@ static int query_capability(struct pfru_update_cap_info *cap_hdr,
- 	ret = 0;
- 
- free_acpi_buffer:
--	kfree(out_obj);
-+	ACPI_FREE(out_obj);
- 
- 	return ret;
- }
-@@ -224,7 +224,7 @@ static int query_buffer(struct pfru_com_buf_info *info,
- 	ret = 0;
- 
- free_acpi_buffer:
--	kfree(out_obj);
-+	ACPI_FREE(out_obj);
- 
- 	return ret;
- }
-@@ -385,7 +385,7 @@ static int start_update(int action, struct pfru_device *pfru_dev)
- 	ret = 0;
- 
- free_acpi_buffer:
--	kfree(out_obj);
-+	ACPI_FREE(out_obj);
- 
- 	return ret;
- }
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index 1519379b116e..ab2106a09f9c 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -2848,8 +2848,8 @@ static int __init ib_core_init(void)
+ static void __exit ib_core_cleanup(void)
+ {
+ 	roce_gid_mgmt_cleanup();
+-	nldev_exit();
+ 	rdma_nl_unregister(RDMA_NL_LS);
++	nldev_exit();
+ 	unregister_pernet_device(&rdma_dev_net_ops);
+ 	unregister_blocking_lsm_notifier(&ibdev_lsm_nb);
+ 	ib_sa_cleanup();
 -- 
 2.35.1
 
