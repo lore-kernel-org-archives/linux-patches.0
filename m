@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5313A1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:55:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6C13C433D2;
-	Wed, 28 Dec 2022 15:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9A01875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:55:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C01C433D2;
+	Wed, 28 Dec 2022 15:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242901;
-	bh=xFDclNvplgYnbL3uJh3dyEBsxCIi4aefQA4vqwNoo4E=;
+	s=korg; t=1672242903;
+	bh=FoxYHp9WbO8yNbj/wlK5JvWJiKXSe9+l6W+iEX6c9Cc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yGfuxXEU3kAuvAW+bLUfiZKWReF2OfVlzbgIiAwR3RT2v9l193k9WfDTPSG8jKX5V
-	 yWfg3BClt6BhzNyPZQo8CcMSUNEWTsKP53ffFK80lqbapQ7Lmuv3842t1OejOW8bCX
-	 /IbgZ+koEI1LjAuJPUrktsYs9FRlzmyzvRlrfIZc=
+	b=aqIxoPIEo+0pew/uunlrTjjyoKBT6nO4ir5x8lMRlbuVv1GOB7RiSwHGe465E8FCk
+	 Vn7Tbmoh9LFxs5NhNhV/rvd0K2zkm2WKLdwb8BZuQEFHbx2t+I/QJdd5Cjtkv4SQ7W
+	 4C/NKVwp1rkNx9n5jxpTLJX1+2lQHVMD7qh+ANfo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Mackerras <paulus@samba.org>,
-	linux-ppp@vger.kernel.org,
-	syzbot+41cab52ab62ee99ed24a@syzkaller.appspotmail.com,
-	Stanislav Fomichev <sdf@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 659/731] ppp: associate skb with a device at tx
-Date: Wed, 28 Dec 2022 15:42:46 +0100
-Message-Id: <20221228144315.595464158@linuxfoundation.org>
+Subject: [PATCH 6.1 0429/1146] ALSA: asihpi: fix missing pci_disable_device()
+Date: Wed, 28 Dec 2022 15:32:48 +0100
+Message-Id: <20221228144341.835358891@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,60 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanislav Fomichev <sdf@google.com>
+From: Liu Shixin <liushixin2@huawei.com>
 
-[ Upstream commit 9f225444467b98579cf28d94f4ad053460dfdb84 ]
+[ Upstream commit 9d86515c3d4c0564a0c31a2df87d735353a1971e ]
 
-Syzkaller triggered flow dissector warning with the following:
+pci_disable_device() need be called while module exiting, switch to use
+pcim_enable(), pci_disable_device() will be called in pcim_release().
 
-r0 = openat$ppp(0xffffffffffffff9c, &(0x7f0000000000), 0xc0802, 0x0)
-ioctl$PPPIOCNEWUNIT(r0, 0xc004743e, &(0x7f00000000c0))
-ioctl$PPPIOCSACTIVE(r0, 0x40107446, &(0x7f0000000240)={0x2, &(0x7f0000000180)=[{0x20, 0x0, 0x0, 0xfffff034}, {0x6}]})
-pwritev(r0, &(0x7f0000000040)=[{&(0x7f0000000140)='\x00!', 0x2}], 0x1, 0x0, 0x0)
-
-[    9.485814] WARNING: CPU: 3 PID: 329 at net/core/flow_dissector.c:1016 __skb_flow_dissect+0x1ee0/0x1fa0
-[    9.485929]  skb_get_poff+0x53/0xa0
-[    9.485937]  bpf_skb_get_pay_offset+0xe/0x20
-[    9.485944]  ? ppp_send_frame+0xc2/0x5b0
-[    9.485949]  ? _raw_spin_unlock_irqrestore+0x40/0x60
-[    9.485958]  ? __ppp_xmit_process+0x7a/0xe0
-[    9.485968]  ? ppp_xmit_process+0x5b/0xb0
-[    9.485974]  ? ppp_write+0x12a/0x190
-[    9.485981]  ? do_iter_write+0x18e/0x2d0
-[    9.485987]  ? __import_iovec+0x30/0x130
-[    9.485997]  ? do_pwritev+0x1b6/0x240
-[    9.486016]  ? trace_hardirqs_on+0x47/0x50
-[    9.486023]  ? __x64_sys_pwritev+0x24/0x30
-[    9.486026]  ? do_syscall_64+0x3d/0x80
-[    9.486031]  ? entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Flow dissector tries to find skb net namespace either via device
-or via socket. Neigher is set in ppp_send_frame, so let's manually
-use ppp->dev.
-
-Cc: Paul Mackerras <paulus@samba.org>
-Cc: linux-ppp@vger.kernel.org
-Reported-by: syzbot+41cab52ab62ee99ed24a@syzkaller.appspotmail.com
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 3285ea10e9b0 ("ALSA: asihpi - Interrelated HPI tidy up.")
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Link: https://lore.kernel.org/r/20221126021429.3029562-1-liushixin2@huawei.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/pci/asihpi/hpioctl.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index 829d6ada1704..c1f11d1df4cd 100644
---- a/drivers/net/ppp/ppp_generic.c
-+++ b/drivers/net/ppp/ppp_generic.c
-@@ -1742,6 +1742,8 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
- 	int len;
- 	unsigned char *cp;
+diff --git a/sound/pci/asihpi/hpioctl.c b/sound/pci/asihpi/hpioctl.c
+index bb31b7fe867d..477a5b4b50bc 100644
+--- a/sound/pci/asihpi/hpioctl.c
++++ b/sound/pci/asihpi/hpioctl.c
+@@ -361,7 +361,7 @@ int asihpi_adapter_probe(struct pci_dev *pci_dev,
+ 		pci_dev->device, pci_dev->subsystem_vendor,
+ 		pci_dev->subsystem_device, pci_dev->devfn);
  
-+	skb->dev = ppp->dev;
-+
- 	if (proto < 0x8000) {
- #ifdef CONFIG_PPP_FILTER
- 		/* check if we should pass this packet */
+-	if (pci_enable_device(pci_dev) < 0) {
++	if (pcim_enable_device(pci_dev) < 0) {
+ 		dev_err(&pci_dev->dev,
+ 			"pci_enable_device failed, disabling device\n");
+ 		return -EIO;
 -- 
 2.35.1
 
