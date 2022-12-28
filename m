@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 353C61C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9E8C433D2;
-	Wed, 28 Dec 2022 16:46:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF0A1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81560C433EF;
+	Wed, 28 Dec 2022 16:46:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245999;
-	bh=iEnE92SLTgM8ZrAJ0JBLwuGFmy2fEuNEkWwiceKkZXk=;
+	s=korg; t=1672246001;
+	bh=kIPkRcL7vg8/igWD/iLUOEIINTGgR0Al5u+fgeEOQ8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PwZebmZiRkK43TbyL/P2+8zBG8k1L1YT0CyRgNwG0eXThWbjmCOa4HFxIDEjGRHcA
-	 PgmBU36fyjpqlp7sufJwz/Y9dvwRff+Gn+Oz+zGOYHltgb0lbo5knIjO4hQJ/1AT1W
-	 2DxiQFR5TMT5RgDqASpVpDYSrUOCEaW9JEvrkOas=
+	b=qltWf1aWOGXeNAKUcZ9TsI2iYVvyC8+iL7UiFCxjgulx5Y5S+DZHiqmsFrHESnZbB
+	 K4uWTQsIdw6TI3+M4URw8KDfQRWSZRw86e4RtzYvLlmLaLM0khECc4z4ntiDcrzXG2
+	 ddSaUP5qZA0yUOJihqKlGaOHo7mJjUXOc23pwQTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	"David S. Miller" <davem@davemloft.net>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0929/1146] myri10ge: Fix an error handling path in myri10ge_probe()
-Date: Wed, 28 Dec 2022 15:41:08 +0100
-Message-Id: <20221228144355.515000010@linuxfoundation.org>
+Subject: [PATCH 6.0 0963/1073] libbpf: Avoid enum forward-declarations in public API in C++ mode
+Date: Wed, 28 Dec 2022 15:42:31 +0100
+Message-Id: <20221228144354.202101158@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit d83b950d44d2982c0e62e3d81b0f35ab09431008 ]
+[ Upstream commit b42693415b86f608049cf1b4870adc1dc65e58b0 ]
 
-Some memory allocated in myri10ge_probe_slices() is not released in the
-error handling path of myri10ge_probe().
+C++ enum forward declarations are fundamentally not compatible with pure
+C enum definitions, and so libbpf's use of `enum bpf_stats_type;`
+forward declaration in libbpf/bpf.h public API header is causing C++
+compilation issues.
 
-Add the corresponding kfree(), as already done in the remove function.
+More details can be found in [0], but it comes down to C++ supporting
+enum forward declaration only with explicitly specified backing type:
 
-Fixes: 0dcffac1a329 ("myri10ge: add multislices support")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+  enum bpf_stats_type: int;
+
+In C (and I believe it's a GCC extension also), such forward declaration
+is simply:
+
+  enum bpf_stats_type;
+
+Further, in Linux UAPI this enum is defined in pure C way:
+
+enum bpf_stats_type { BPF_STATS_RUN_TIME = 0; }
+
+And even though in both cases backing type is int, which can be
+confirmed by looking at DWARF information, for C++ compiler actual enum
+definition and forward declaration are incompatible.
+
+To eliminate this problem, for C++ mode define input argument as int,
+which makes enum unnecessary in libbpf public header. This solves the
+issue and as demonstrated by next patch doesn't cause any unwanted
+compiler warnings, at least with default warnings setting.
+
+  [0] https://stackoverflow.com/questions/42766839/c11-enum-forward-causes-underlying-type-mismatch
+  [1] Closes: https://github.com/libbpf/libbpf/issues/249
+
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20221130200013.2997831-1-andrii@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/myricom/myri10ge/myri10ge.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/lib/bpf/bpf.h | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/net/ethernet/myricom/myri10ge/myri10ge.c b/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
-index 9063e2e22cd5..9a9341a348c0 100644
---- a/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
-+++ b/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
-@@ -3913,6 +3913,7 @@ static int myri10ge_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	myri10ge_free_slices(mgp);
+diff --git a/tools/lib/bpf/bpf.h b/tools/lib/bpf/bpf.h
+index 9c50beabdd14..fddc05c667b5 100644
+--- a/tools/lib/bpf/bpf.h
++++ b/tools/lib/bpf/bpf.h
+@@ -393,8 +393,15 @@ LIBBPF_API int bpf_task_fd_query(int pid, int fd, __u32 flags, char *buf,
+ 				 __u32 *buf_len, __u32 *prog_id, __u32 *fd_type,
+ 				 __u64 *probe_offset, __u64 *probe_addr);
  
- abort_with_firmware:
-+	kfree(mgp->msix_vectors);
- 	myri10ge_dummy_rdma(mgp, 0);
++#ifdef __cplusplus
++/* forward-declaring enums in C++ isn't compatible with pure C enums, so
++ * instead define bpf_enable_stats() as accepting int as an input
++ */
++LIBBPF_API int bpf_enable_stats(int type);
++#else
+ enum bpf_stats_type; /* defined in up-to-date linux/bpf.h */
+ LIBBPF_API int bpf_enable_stats(enum bpf_stats_type type);
++#endif
  
- abort_with_ioremap:
+ struct bpf_prog_bind_opts {
+ 	size_t sz; /* size of this struct for forward/backward compatibility */
 -- 
 2.35.1
 
