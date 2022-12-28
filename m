@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4523C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D644C433F0;
-	Wed, 28 Dec 2022 15:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0F81863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:36:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 415B6C433D2;
+	Wed, 28 Dec 2022 15:36:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241805;
-	bh=KzbOqu0S9jUEVPFhOZpxJcEZDgSm+A3Hd0Wzrm6/Wl8=;
+	s=korg; t=1672241807;
+	bh=A0GLa7IYOgKrsrsaqYWQiahu5kUHQPMYK+uaOGENjMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=piBCgdP5nDmm/Ma4E4Pm0avBB0ZghaeTIMTToRPkdPWa/tneusOsjBIZcFpP0V2CH
-	 Sues6JHTaUcfq8RvIBxJ4yOQc+GcDopYaABbEq3sJH5kL/UqysuaL7yvsSryBefGby
-	 EZjZB+WmCjM3WzuCcak6paOcdrtRdaSdJqbtVsb4=
+	b=yPFjGJSNcDe3zka0Zzqy0vNRDTlrhGhGfDzl5D/Vh2nYniv3nmot9gC+IjissAMvJ
+	 SI0Wr+AXQ4XmIVl3QGszaoZmGN3HGOo39SY2Y0aM0jInZcMH9wDNwSdoxx6HvKhJvd
+	 IcJXaMGTJ04B79GeDOc/DcwN0rbQE7Z3vrQfgncw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0329/1073] ima: Fix misuse of dereference of pointer in template_desc_init_fields()
-Date: Wed, 28 Dec 2022 15:31:57 +0100
-Message-Id: <20221228144336.941422753@linuxfoundation.org>
+Subject: [PATCH 6.1 0291/1146] media: vivid: fix compose size exceed boundary
+Date: Wed, 28 Dec 2022 15:30:30 +0100
+Message-Id: <20221228144338.043903404@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,44 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Liu Shixin <liushixin2@huawei.com>
 
-[ Upstream commit 25369175ce84813dd99d6604e710dc2491f68523 ]
+[ Upstream commit 94a7ad9283464b75b12516c5512541d467cefcf8 ]
 
-The input parameter @fields is type of struct ima_template_field ***, so
-when allocates array memory for @fields, the size of element should be
-sizeof(**field) instead of sizeof(*field).
+syzkaller found a bug:
 
-Actually the original code would not cause any runtime error, but it's
-better to make it logically right.
+ BUG: unable to handle page fault for address: ffffc9000a3b1000
+ #PF: supervisor write access in kernel mode
+ #PF: error_code(0x0002) - not-present page
+ PGD 100000067 P4D 100000067 PUD 10015f067 PMD 1121ca067 PTE 0
+ Oops: 0002 [#1] PREEMPT SMP
+ CPU: 0 PID: 23489 Comm: vivid-000-vid-c Not tainted 6.1.0-rc1+ #512
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+ RIP: 0010:memcpy_erms+0x6/0x10
+[...]
+ Call Trace:
+  <TASK>
+  ? tpg_fill_plane_buffer+0x856/0x15b0
+  vivid_fillbuff+0x8ac/0x1110
+  vivid_thread_vid_cap_tick+0x361/0xc90
+  vivid_thread_vid_cap+0x21a/0x3a0
+  kthread+0x143/0x180
+  ret_from_fork+0x1f/0x30
+  </TASK>
 
-Fixes: adf53a778a0a ("ima: new templates management mechanism")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+This is because we forget to check boundary after adjust compose->height
+int V4L2_SEL_TGT_CROP case. Add v4l2_rect_map_inside() to fix this problem
+for this case.
+
+Fixes: ef834f7836ec ("[media] vivid: add the video capture and output parts")
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/ima_template.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/test-drivers/vivid/vivid-vid-cap.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/security/integrity/ima/ima_template.c b/security/integrity/ima/ima_template.c
-index c25079faa208..195ac18f0927 100644
---- a/security/integrity/ima/ima_template.c
-+++ b/security/integrity/ima/ima_template.c
-@@ -245,11 +245,11 @@ int template_desc_init_fields(const char *template_fmt,
- 	}
- 
- 	if (fields && num_fields) {
--		*fields = kmalloc_array(i, sizeof(*fields), GFP_KERNEL);
-+		*fields = kmalloc_array(i, sizeof(**fields), GFP_KERNEL);
- 		if (*fields == NULL)
- 			return -ENOMEM;
- 
--		memcpy(*fields, found_fields, i * sizeof(*fields));
-+		memcpy(*fields, found_fields, i * sizeof(**fields));
- 		*num_fields = i;
- 	}
- 
+diff --git a/drivers/media/test-drivers/vivid/vivid-vid-cap.c b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+index 11620eaf941e..c0999581c599 100644
+--- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
++++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
+@@ -973,6 +973,7 @@ int vivid_vid_cap_s_selection(struct file *file, void *fh, struct v4l2_selection
+ 			if (dev->has_compose_cap) {
+ 				v4l2_rect_set_min_size(compose, &min_rect);
+ 				v4l2_rect_set_max_size(compose, &max_rect);
++				v4l2_rect_map_inside(compose, &fmt);
+ 			}
+ 			dev->fmt_cap_rect = fmt;
+ 			tpg_s_buf_height(&dev->tpg, fmt.height);
 -- 
 2.35.1
 
