@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50E501C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:31:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD10AC433EF;
-	Wed, 28 Dec 2022 16:31:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1A701C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:31:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74CF2C433D2;
+	Wed, 28 Dec 2022 16:31:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245072;
-	bh=c25+kbYfNpd8xPvTch9vIqkTNYBqRyqfYiC+xIWBuTw=;
+	s=korg; t=1672245074;
+	bh=OO/IKjdkhfzXgaba/1sSlehygQc52J/jkKERn6B57+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NH33BmovzmVa7pLuNdImWP6PfNmGcKRsavluy+obN2Wmi6pwbpak4TmXjHshUqpnJ
-	 zRVrbh0tQOcfa1abQZW3eaB0BbTKBav5TT95LNJSwMf4dqNrPLtCCbdTJjzUXuD9LK
-	 xUW/T8ZrrHGXcc8k547QbcgeGHNGc7ywIZ3DJhmE=
+	b=XS0ADVPzOqacbQyPZoQKmfMjXNzxgM6SVPlumnDNB6aXiT7g3nunsnXb9BERvDnxa
+	 2Akr0fT/ZVSEEMS7K4hFeKyh3tsplKxncBcT17zqZNoq96AaJwOq2o4WOQHYAXa5bt
+	 ZMYb/3IrSAE4Vt3U08Oj6KAnmcqd3KY0ezpdeFfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel@sholland.org>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
-	Lee Jones <lee@kernel.org>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0828/1073] mfd: axp20x: Do not sleep in the power off handler
-Date: Wed, 28 Dec 2022 15:40:16 +0100
-Message-Id: <20221228144350.504992111@linuxfoundation.org>
+Subject: [PATCH 6.1 0792/1146] phy: marvell: phy-mvebu-a3700-comphy: Reset COMPHY registers before USB 3.0 power on
+Date: Wed, 28 Dec 2022 15:38:51 +0100
+Message-Id: <20221228144351.660712528@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +37,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Samuel Holland <samuel@sholland.org>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 3f37d4f695cff180033254b9ed5adc8ab927cba9 ]
+[ Upstream commit b01d622d76134e9401970ffd3fbbb9a7051f976a ]
 
-Since commit 856c288b0039 ("ARM: Use do_kernel_power_off()"), the
-function axp20x_power_off() now runs inside a RCU read-side critical
-section, so it is not allowed to call msleep(). Use mdelay() instead.
+Turris MOX board with older ARM Trusted Firmware version v1.5 is not able
+to detect any USB 3.0 device connected to USB-A port on Mox-A module after
+commit 0a6fc70d76bd ("phy: marvell: phy-mvebu-a3700-comphy: Remove broken
+reset support"). On the other hand USB 2.0 devices connected to the same
+USB-A port are working fine.
 
-Fixes: 856c288b0039 ("ARM: Use do_kernel_power_off()")
-Signed-off-by: Samuel Holland <samuel@sholland.org>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20221105212909.6526-1-samuel@sholland.org
+It looks as if the older firmware configures COMPHY registers for USB 3.0
+somehow incompatibly for kernel driver. Experiments show that resetting
+COMPHY registers via setting SFT_RST auto-clearing bit in COMPHY_SFT_RESET
+register fixes this issue.
+
+Reset the COMPHY in mvebu_a3700_comphy_usb3_power_on() function as a first
+step after selecting COMPHY lane and USB 3.0 function. With this change
+Turris MOX board can successfully detect USB 3.0 devices again.
+
+Before the above mentioned commit this reset was implemented in PHY reset
+method, so this is the reason why there was no issue with older firmware
+version then.
+
+Fixes: 0a6fc70d76bd ("phy: marvell: phy-mvebu-a3700-comphy: Remove broken reset support")
+Reported-by: Marek Behún <kabel@kernel.org>
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Tested-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Link: https://lore.kernel.org/r/20220920121154.30115-1-pali@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/axp20x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/marvell/phy-mvebu-a3700-comphy.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/mfd/axp20x.c b/drivers/mfd/axp20x.c
-index 88a212a8168c..880c41fa7021 100644
---- a/drivers/mfd/axp20x.c
-+++ b/drivers/mfd/axp20x.c
-@@ -842,7 +842,7 @@ static void axp20x_power_off(void)
- 		     AXP20X_OFF);
+diff --git a/drivers/phy/marvell/phy-mvebu-a3700-comphy.c b/drivers/phy/marvell/phy-mvebu-a3700-comphy.c
+index 67712c77d806..d641b345afa3 100644
+--- a/drivers/phy/marvell/phy-mvebu-a3700-comphy.c
++++ b/drivers/phy/marvell/phy-mvebu-a3700-comphy.c
+@@ -826,6 +826,9 @@ mvebu_a3700_comphy_usb3_power_on(struct mvebu_a3700_comphy_lane *lane)
+ 	if (ret)
+ 		return ret;
  
- 	/* Give capacitors etc. time to drain to avoid kernel panic msg. */
--	msleep(500);
-+	mdelay(500);
- }
- 
- int axp20x_match_device(struct axp20x_dev *axp20x)
++	/* COMPHY register reset (cleared automatically) */
++	comphy_lane_reg_set(lane, COMPHY_SFT_RESET, SFT_RST, SFT_RST);
++
+ 	/*
+ 	 * 0. Set PHY OTG Control(0x5d034), bit 4, Power up OTG module The
+ 	 * register belong to UTMI module, so it is set in UTMI phy driver.
 -- 
 2.35.1
 
