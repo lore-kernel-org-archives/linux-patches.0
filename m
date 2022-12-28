@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D81F1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:13:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5ED2C433F0;
-	Wed, 28 Dec 2022 16:13:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7C11C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:13:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94300C433D2;
+	Wed, 28 Dec 2022 16:13:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243984;
-	bh=E3DFW+lNHelMJDUaAEh6db0obghbC4BF8bq34TLnXiM=;
+	s=korg; t=1672243987;
+	bh=GCAwWLTS2dS7azZOv1nhK2HejKNwVOj1082OnAyfARU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UYSJi/K9UqEQP7YTiaA0a4Wt1YIMRZHyi8gcHXcM8HnTgOJi6ZZvibuwHaaRb8bK/
-	 6G0P9cNjTqJ2VOFRKh8H2VMRp85s3K69BSymoifCBllo29gmWWGw60sXOzKixqlRnY
-	 aGl2Cu3Nv72tmCTR+KcvJQG6zam46P7N1jXyBOiE=
+	b=Rssb0jYTzlh0Qb+9iHNcQaE4sWqzKFJvOX0CgTU6jY3edffvjlqdMu0quYb/E8alM
+	 xW8bkjMhMlBNC/oC94tvOKvlDPktkXSRXSBWd4AQckKw+0xGeZOm/zpq3WdyVu+E3P
+	 h12SThD7irSKLJSYAlvqY015aojczuUCqD88l2Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <john@metanate.com>,
-	Corentin Labbe <clabbe@baylibre.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0590/1146] crypto: rockchip - better handle cipher key
-Date: Wed, 28 Dec 2022 15:35:29 +0100
-Message-Id: <20221228144346.195863598@linuxfoundation.org>
+Subject: [PATCH 6.0 0627/1073] scsi: fcoe: Fix transport not deattached when fcoe_if_init() fails
+Date: Wed, 28 Dec 2022 15:36:55 +0100
+Message-Id: <20221228144345.072571960@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,92 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corentin Labbe <clabbe@baylibre.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit d6b23ccef82816050c2fd458c9dabfa0e0af09b9 ]
+[ Upstream commit 4155658cee394b22b24c6d64e49247bf26d95b92 ]
 
-The key should not be set in hardware too much in advance, this will
-fail it 2 TFM with different keys generate alternative requests.
-The key should be stored and used just before doing cipher operations.
+fcoe_init() calls fcoe_transport_attach(&fcoe_sw_transport), but when
+fcoe_if_init() fails, &fcoe_sw_transport is not detached and leaves freed
+&fcoe_sw_transport on fcoe_transports list. This causes panic when
+reinserting module.
 
-Fixes: ce0183cb6464b ("crypto: rockchip - switch to skcipher API")
-Reviewed-by: John Keeping <john@metanate.com>
-Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+ BUG: unable to handle page fault for address: fffffbfff82e2213
+ RIP: 0010:fcoe_transport_attach+0xe1/0x230 [libfcoe]
+ Call Trace:
+  <TASK>
+  do_one_initcall+0xd0/0x4e0
+  load_module+0x5eee/0x7210
+  ...
+
+Fixes: 78a582463c1e ("[SCSI] fcoe: convert fcoe.ko to become an fcoe transport provider driver")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Link: https://lore.kernel.org/r/20221115092442.133088-1-chenzhongjin@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/rockchip/rk3288_crypto.h          |  1 +
- drivers/crypto/rockchip/rk3288_crypto_skcipher.c | 10 +++++++---
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/scsi/fcoe/fcoe.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/crypto/rockchip/rk3288_crypto.h b/drivers/crypto/rockchip/rk3288_crypto.h
-index dfff0e2a83e4..665cc0bb2264 100644
---- a/drivers/crypto/rockchip/rk3288_crypto.h
-+++ b/drivers/crypto/rockchip/rk3288_crypto.h
-@@ -245,6 +245,7 @@ struct rk_ahash_rctx {
- struct rk_cipher_ctx {
- 	struct rk_crypto_info		*dev;
- 	unsigned int			keylen;
-+	u8				key[AES_MAX_KEY_SIZE];
- 	u8				iv[AES_BLOCK_SIZE];
- 	struct crypto_skcipher *fallback_tfm;
- };
-diff --git a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
-index eac5bba66e25..1ef94f8db2c5 100644
---- a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
-+++ b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
-@@ -95,7 +95,7 @@ static int rk_aes_setkey(struct crypto_skcipher *cipher,
- 	    keylen != AES_KEYSIZE_256)
- 		return -EINVAL;
- 	ctx->keylen = keylen;
--	memcpy_toio(ctx->dev->reg + RK_CRYPTO_AES_KEY_0, key, keylen);
-+	memcpy(ctx->key, key, keylen);
+diff --git a/drivers/scsi/fcoe/fcoe.c b/drivers/scsi/fcoe/fcoe.c
+index 6ec296321ffc..38774a272e62 100644
+--- a/drivers/scsi/fcoe/fcoe.c
++++ b/drivers/scsi/fcoe/fcoe.c
+@@ -2491,6 +2491,7 @@ static int __init fcoe_init(void)
  
- 	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
- }
-@@ -111,7 +111,7 @@ static int rk_des_setkey(struct crypto_skcipher *cipher,
- 		return err;
- 
- 	ctx->keylen = keylen;
--	memcpy_toio(ctx->dev->reg + RK_CRYPTO_TDES_KEY1_0, key, keylen);
-+	memcpy(ctx->key, key, keylen);
- 
- 	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
- }
-@@ -127,7 +127,8 @@ static int rk_tdes_setkey(struct crypto_skcipher *cipher,
- 		return err;
- 
- 	ctx->keylen = keylen;
--	memcpy_toio(ctx->dev->reg + RK_CRYPTO_TDES_KEY1_0, key, keylen);
-+	memcpy(ctx->key, key, keylen);
-+
- 	return crypto_skcipher_setkey(ctx->fallback_tfm, key, keylen);
- }
- 
-@@ -283,6 +284,7 @@ static void rk_ablk_hw_init(struct rk_crypto_info *dev)
- 			     RK_CRYPTO_TDES_BYTESWAP_IV;
- 		CRYPTO_WRITE(dev, RK_CRYPTO_TDES_CTRL, rctx->mode);
- 		memcpy_toio(dev->reg + RK_CRYPTO_TDES_IV_0, req->iv, ivsize);
-+		memcpy_toio(ctx->dev->reg + RK_CRYPTO_TDES_KEY1_0, ctx->key, ctx->keylen);
- 		conf_reg = RK_CRYPTO_DESSEL;
- 	} else {
- 		rctx->mode |= RK_CRYPTO_AES_FIFO_MODE |
-@@ -295,6 +297,7 @@ static void rk_ablk_hw_init(struct rk_crypto_info *dev)
- 			rctx->mode |= RK_CRYPTO_AES_256BIT_key;
- 		CRYPTO_WRITE(dev, RK_CRYPTO_AES_CTRL, rctx->mode);
- 		memcpy_toio(dev->reg + RK_CRYPTO_AES_IV_0, req->iv, ivsize);
-+		memcpy_toio(ctx->dev->reg + RK_CRYPTO_AES_KEY_0, ctx->key, ctx->keylen);
- 	}
- 	conf_reg |= RK_CRYPTO_BYTESWAP_BTFIFO |
- 		    RK_CRYPTO_BYTESWAP_BRFIFO;
-@@ -484,6 +487,7 @@ static void rk_ablk_exit_tfm(struct crypto_skcipher *tfm)
- {
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
- 
-+	memzero_explicit(ctx->key, ctx->keylen);
- 	free_page((unsigned long)ctx->dev->addr_vir);
- 	crypto_free_skcipher(ctx->fallback_tfm);
- }
+ out_free:
+ 	mutex_unlock(&fcoe_config_mutex);
++	fcoe_transport_detach(&fcoe_sw_transport);
+ out_destroy:
+ 	destroy_workqueue(fcoe_wq);
+ 	return rc;
 -- 
 2.35.1
 
