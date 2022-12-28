@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01A9B1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F94C433D2;
-	Wed, 28 Dec 2022 15:58:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB811875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287EEC433D2;
+	Wed, 28 Dec 2022 15:58:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243080;
-	bh=f6uMwpk10iQ6hf7u5EM9uglE3krudtcEF2jqcO8nND4=;
+	s=korg; t=1672243083;
+	bh=KsNsRnhHCmEaauer6ON5uqFqhQpEjYpmwUIzIoIbukM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G3FDa2u2GgUrghKqoGNRu3Ng07EED0GWZ+mpjjsqzhYomb01mDUoRC3fdFmnUDjZc
-	 UwVxqho4wJSS5Hjny7sC8AhOsUaM1cy3l76AKD/QyyQNwxQnyHaYSWruW95GwpvzGY
-	 lS7A3ZW9kwIdwi6qRHN7/IFt1Q7zEdlut5Zf7m+0=
+	b=ARS+kAnhOjL1//f1Z3U8R7Zo97uvf42Tm/9UILVf4YQyeKfT9/DdkswE+qVXWA7Gh
+	 f7jk9lS11lY2ytTcHjcVGuQeY6UMLbVp5LI5aWaf0CUZOQdP054SuRtkjFAmJfizPb
+	 f1luj5u0oAr0swEE+pNS8Mv4Zlxcv452RWQvGvK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0449/1146] spi: spidev: mask SPI_CS_HIGH in SPI_IOC_RD_MODE
-Date: Wed, 28 Dec 2022 15:33:08 +0100
-Message-Id: <20221228144342.376843371@linuxfoundation.org>
+Subject: [PATCH 6.0 0488/1073] mmc: atmel-mci: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:34:36 +0100
+Message-Id: <20221228144341.290873714@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,81 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 7dbfa445ff7393d1c4c066c1727c9e0af1251958 ]
+[ Upstream commit 9e6e8c43726673ca2abcaac87640b9215fd72f4c ]
 
-Commit f3186dd87669 ("spi: Optionally use GPIO descriptors for CS GPIOs")
-has changed the user-space interface so that bogus SPI_CS_HIGH started
-to appear in the mask returned by SPI_IOC_RD_MODE even for active-low CS
-pins. Commit 138c9c32f090
-("spi: spidev: Fix CS polarity if GPIO descriptors are used") fixed only
-SPI_IOC_WR_MODE part of the problem. Let's fix SPI_IOC_RD_MODE
-symmetrically.
+mmc_add_host() may return error, if we ignore its return value,
+it will lead two issues:
+1. The memory that allocated in mmc_alloc_host() is leaked.
+2. In the remove() path, mmc_remove_host() will be called to
+   delete device, but it's not added yet, it will lead a kernel
+   crash because of null-ptr-deref in device_del().
 
-Test case:
+So fix this by checking the return value and calling mmc_free_host()
+in the error path.
 
-	#include <sys/ioctl.h>
-	#include <fcntl.h>
-	#include <linux/spi/spidev.h>
-
-	int main(int argc, char **argv)
-	{
-		char modew = SPI_CPHA;
-		char moder;
-		int f = open("/dev/spidev0.0", O_RDWR);
-
-		if (f < 0)
-			return 1;
-
-		ioctl(f, SPI_IOC_WR_MODE, &modew);
-		ioctl(f, SPI_IOC_RD_MODE, &moder);
-
-		return moder == modew ? 0 : 2;
-	}
-
-Fixes: f3186dd87669 ("spi: Optionally use GPIO descriptors for CS GPIOs")
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
-Link: https://lore.kernel.org/r/20221130162927.539512-1-alexander.sverdlin@siemens.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 7d2be0749a59 ("atmel-mci: Driver for Atmel on-chip MMC controllers")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221108122819.429975-1-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spidev.c | 21 ++++++++++++++++-----
- 1 file changed, 16 insertions(+), 5 deletions(-)
+ drivers/mmc/host/atmel-mci.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
-index b2775d82d2d7..6313e7d0cdf8 100644
---- a/drivers/spi/spidev.c
-+++ b/drivers/spi/spidev.c
-@@ -377,12 +377,23 @@ spidev_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
- 	switch (cmd) {
- 	/* read requests */
- 	case SPI_IOC_RD_MODE:
--		retval = put_user(spi->mode & SPI_MODE_MASK,
--					(__u8 __user *)arg);
--		break;
- 	case SPI_IOC_RD_MODE32:
--		retval = put_user(spi->mode & SPI_MODE_MASK,
--					(__u32 __user *)arg);
-+		tmp = spi->mode;
-+
-+		{
-+			struct spi_controller *ctlr = spi->controller;
-+
-+			if (ctlr->use_gpio_descriptors && ctlr->cs_gpiods &&
-+			    ctlr->cs_gpiods[spi->chip_select])
-+				tmp &= ~SPI_CS_HIGH;
-+		}
-+
-+		if (cmd == SPI_IOC_RD_MODE)
-+			retval = put_user(tmp & SPI_MODE_MASK,
-+					  (__u8 __user *)arg);
-+		else
-+			retval = put_user(tmp & SPI_MODE_MASK,
-+					  (__u32 __user *)arg);
- 		break;
- 	case SPI_IOC_RD_LSB_FIRST:
- 		retval = put_user((spi->mode & SPI_LSB_FIRST) ?  1 : 0,
+diff --git a/drivers/mmc/host/atmel-mci.c b/drivers/mmc/host/atmel-mci.c
+index 91d52ba7a39f..bb9bbf1c927b 100644
+--- a/drivers/mmc/host/atmel-mci.c
++++ b/drivers/mmc/host/atmel-mci.c
+@@ -2222,6 +2222,7 @@ static int atmci_init_slot(struct atmel_mci *host,
+ {
+ 	struct mmc_host			*mmc;
+ 	struct atmel_mci_slot		*slot;
++	int ret;
+ 
+ 	mmc = mmc_alloc_host(sizeof(struct atmel_mci_slot), &host->pdev->dev);
+ 	if (!mmc)
+@@ -2305,11 +2306,13 @@ static int atmci_init_slot(struct atmel_mci *host,
+ 
+ 	host->slot[id] = slot;
+ 	mmc_regulator_get_supply(mmc);
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret) {
++		mmc_free_host(mmc);
++		return ret;
++	}
+ 
+ 	if (gpio_is_valid(slot->detect_pin)) {
+-		int ret;
+-
+ 		timer_setup(&slot->detect_timer, atmci_detect_change, 0);
+ 
+ 		ret = request_irq(gpio_to_irq(slot->detect_pin),
 -- 
 2.35.1
 
