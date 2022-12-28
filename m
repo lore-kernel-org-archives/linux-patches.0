@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 248461875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:06:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B508C433D2;
-	Wed, 28 Dec 2022 16:06:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDF051875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:06:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42161C433D2;
+	Wed, 28 Dec 2022 16:06:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243611;
-	bh=3AtLsjgzJDvSm2EVzBLhC2WyZm9bM8+fvOs22Fr/sWc=;
+	s=korg; t=1672243613;
+	bh=VGi6d0KV4g/yo2f7z6fe2QaLPXyZ9kc+nqHCO4xi3aY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M75/quX9hwcl7HFlgEtl0BSzWwt3vId6P66kbuf7K08MxYkef9HcPAFPFDZhCJ0jP
-	 ijtdBuI98VfxVRgOwGd3A9oIJGGSsr3xnb0ioSGLj43kIw2V11sYziT8aLCrLMWOVl
-	 4IJIIr0hCyY2QH9sMP6MswoD15ckHJEWH6uHW92Q=
+	b=CJvSrGmGF1NhgwbKcGK7y7l7sfVuYgF1CCuYyBVXpmaYAnPpa2qNINsnp2oouKQwE
+	 6Ta4QUxM4tKw5WZ6ir/6ef+XPo2TJjROIhbFl6Ozct0TT7qNpZa0Z0Ge3I5cVNAVso
+	 AzYr9qzWJ4ZmVIoje1KSy0rgQsWXJVgNlEtTuaLE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kris Bahnsen <kris@embeddedTS.com>,
-	Mark Brown <broonie@kernel.org>,
+	Weili Qian <qianweili@huawei.com>,
+	Yang Shen <shenyang39@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0521/1146] spi: spi-gpio: Dont set MOSI as an input if not 3WIRE mode
-Date: Wed, 28 Dec 2022 15:34:20 +0100
-Message-Id: <20221228144344.326133355@linuxfoundation.org>
+Subject: [PATCH 6.0 0557/1073] crypto: hisilicon/qm - fix missing destroy qp_idr
+Date: Wed, 28 Dec 2022 15:35:45 +0100
+Message-Id: <20221228144343.184880055@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,62 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kris Bahnsen <kris@embeddedTS.com>
+From: Weili Qian <qianweili@huawei.com>
 
-[ Upstream commit 3a6f994f848a69deb2bf3cd9d130dd0c09730e55 ]
+[ Upstream commit 116be08f6e4e385733d42360a33c3d883d2dd702 ]
 
-The addition of 3WIRE support would affect MOSI direction even
-when still in standard (4 wire) mode. This can lead to MOSI being
-at an invalid logic level when a device driver sets an SPI
-message with a NULL tx_buf.
+In the function hisi_qm_memory_init(), if resource alloc fails after
+idr_init, the initialized qp_idr needs to be destroyed.
 
-spi.h states that if tx_buf is NULL then "zeros will be shifted
-out ... " If MOSI is tristated then the data shifted out is subject
-to pull resistors, keepers, or in the absence of those, noise.
-
-This issue came to light when using spi-gpio connected to an
-ADS7843 touchscreen controller. MOSI pulled high when clocking
-MISO data in caused the SPI device to interpret this as a command
-which would put the device in an unexpected and non-functional
-state.
-
-Fixes: 4b859db2c606 ("spi: spi-gpio: add SPI_3WIRE support")
-Fixes: 5132b3d28371 ("spi: gpio: Support 3WIRE high-impedance turn-around")
-Signed-off-by: Kris Bahnsen <kris@embeddedTS.com>
-Link: https://lore.kernel.org/r/20221207230853.6174-1-kris@embeddedTS.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Weili Qian <qianweili@huawei.com>
+Signed-off-by: Yang Shen <shenyang39@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Stable-dep-of: ee1537fe3dd8 ("crypto: hisilicon/qm - re-enable communicate interrupt before notifying PF")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-gpio.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/crypto/hisilicon/qm.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/spi/spi-gpio.c b/drivers/spi/spi-gpio.c
-index 4b12c4964a66..9c8c7948044e 100644
---- a/drivers/spi/spi-gpio.c
-+++ b/drivers/spi/spi-gpio.c
-@@ -268,9 +268,19 @@ static int spi_gpio_set_direction(struct spi_device *spi, bool output)
- 	if (output)
- 		return gpiod_direction_output(spi_gpio->mosi, 1);
+diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
+index 9fa2efe60153..bdb7d5ba23b8 100644
+--- a/drivers/crypto/hisilicon/qm.c
++++ b/drivers/crypto/hisilicon/qm.c
+@@ -6143,8 +6143,8 @@ static int hisi_qm_memory_init(struct hisi_qm *qm)
+ 					 GFP_ATOMIC);
+ 	dev_dbg(dev, "allocate qm dma buf size=%zx)\n", qm->qdma.size);
+ 	if (!qm->qdma.va) {
+-		ret =  -ENOMEM;
+-		goto err_alloc_qdma;
++		ret = -ENOMEM;
++		goto err_destroy_idr;
+ 	}
  
--	ret = gpiod_direction_input(spi_gpio->mosi);
--	if (ret)
--		return ret;
-+	/*
-+	 * Only change MOSI to an input if using 3WIRE mode.
-+	 * Otherwise, MOSI could be left floating if there is
-+	 * no pull resistor connected to the I/O pin, or could
-+	 * be left logic high if there is a pull-up. Transmitting
-+	 * logic high when only clocking MISO data in can put some
-+	 * SPI devices in to a bad state.
-+	 */
-+	if (spi->mode & SPI_3WIRE) {
-+		ret = gpiod_direction_input(spi_gpio->mosi);
-+		if (ret)
-+			return ret;
-+	}
- 	/*
- 	 * Send a turnaround high impedance cycle when switching
- 	 * from output to input. Theoretically there should be
+ 	QM_INIT_BUF(qm, eqe, QM_EQ_DEPTH);
+@@ -6160,7 +6160,8 @@ static int hisi_qm_memory_init(struct hisi_qm *qm)
+ 
+ err_alloc_qp_array:
+ 	dma_free_coherent(dev, qm->qdma.size, qm->qdma.va, qm->qdma.dma);
+-err_alloc_qdma:
++err_destroy_idr:
++	idr_destroy(&qm->qp_idr);
+ 	kfree(qm->factor);
+ 
+ 	return ret;
 -- 
 2.35.1
 
