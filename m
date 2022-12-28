@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58CF1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C88AC433F0;
-	Wed, 28 Dec 2022 15:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619641863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC0D0C433D2;
+	Wed, 28 Dec 2022 15:09:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240160;
-	bh=jJwJIcYfZdNguDt5FsDyqadpbOHpqtMpZ8oFNZvPm2Q=;
+	s=korg; t=1672240163;
+	bh=AXPXLxh17Tug/qn92KC4ufziprryzeaMVNCXJJh7qCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CLl0bTQefoAeocn40PC6r6KVl6SkvfSt0K2TJxF1AACCL7Ffr1MIRiP7xmb08rnsD
-	 q1taMFCYdmDBeyMIfD9EQDc/R/HjoKQNfTU+sdKj1jBYpeeoo7VazTAuGyC+2qZwT2
-	 FTDQthwWwbOOjvujg8U/xdx6hrOb9VXCGI6uEnZc=
+	b=Fel2ZmXxw8OMnVqBgkI6deviQDWfA2a0wUS/6qlbzdWxIb/E9jUUCJl19f+b8K+cM
+	 nQCUWMnmeIlsXux8mbQ1LAYqyW6YVwqd6Nvl/lR8M4s6pBvM1CdvklCMQwjFRWFTCa
+	 5scO9XoQpyjhY6tK9N3++ofH5Y4tk5gjl3AhdVeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 316/731] wifi: rtl8xxxu: Add __packed to struct rtl8723bu_c2h
-Date: Wed, 28 Dec 2022 15:37:03 +0100
-Message-Id: <20221228144305.735821031@linuxfoundation.org>
+Subject: [PATCH 6.0 0125/1073] PNP: fix name memory leak in pnp_alloc_dev()
+Date: Wed, 28 Dec 2022 15:28:33 +0100
+Message-Id: <20221228144331.431958984@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,38 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit dd469a754afdb782ba3033cee102147493dc39f4 ]
+[ Upstream commit 110d7b0325c55ff3620073ba4201845f59e22ebf ]
 
-This struct is used to access a sequence of bytes received from the
-wifi chip. It must not have any padding bytes between the members.
+After commit 1fa5ae857bb1 ("driver core: get rid of struct device's
+bus_id string array"), the name of device is allocated dynamically,
+move dev_set_name() after pnp_add_id() to avoid memory leak.
 
-This doesn't change anything on my system, possibly because currently
-none of the members need more than byte alignment.
-
-Fixes: b2b43b7837ba ("rtl8xxxu: Initial functionality to handle C2H events for 8723bu")
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/1a270918-da22-ff5f-29fc-7855f740c5ba@gmail.com
+Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pnp/core.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-index 7ddce3c3f0c4..cd3ff9847ced 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-@@ -1190,7 +1190,7 @@ struct rtl8723bu_c2h {
- 			u8 bw;
- 		} __packed ra_report;
- 	};
--};
-+} __packed;
+diff --git a/drivers/pnp/core.c b/drivers/pnp/core.c
+index 4df5aa6a309c..6a60c5d83383 100644
+--- a/drivers/pnp/core.c
++++ b/drivers/pnp/core.c
+@@ -148,14 +148,14 @@ struct pnp_dev *pnp_alloc_dev(struct pnp_protocol *protocol, int id,
+ 	dev->dev.coherent_dma_mask = dev->dma_mask;
+ 	dev->dev.release = &pnp_release_device;
  
- struct rtl8xxxu_fileops;
+-	dev_set_name(&dev->dev, "%02x:%02x", dev->protocol->number, dev->number);
+-
+ 	dev_id = pnp_add_id(dev, pnpid);
+ 	if (!dev_id) {
+ 		kfree(dev);
+ 		return NULL;
+ 	}
+ 
++	dev_set_name(&dev->dev, "%02x:%02x", dev->protocol->number, dev->number);
++
+ 	return dev;
+ }
  
 -- 
 2.35.1
