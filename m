@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A5941863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:47:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEBCC433D2;
-	Wed, 28 Dec 2022 15:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD76D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:47:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3487BC433EF;
+	Wed, 28 Dec 2022 15:47:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242466;
-	bh=J5Od7YALa/hq23/+T6cu9swVfU4oJMnR0f8eH49DHrc=;
+	s=korg; t=1672242469;
+	bh=mENYC5g2HqOxzqqvRtFT3mgeP8kUvIJdOJhIm/iwziE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ewMBjzmAKvJK6pEEqxejyJw365NWzyh0AiMChCCzgpAzFlWfxAchLxXTl9hUKDf6
-	 cpefsLuHWkCBdc3s+Byfpw/Yu3eAL+DjFQtn2TUGLN75/s2kV1tLPnrCH2kasAMtq7
-	 eB/jxtBKS5sYucGiSrvJRPFEifDgU1ToIojmKHu8=
+	b=bRdLnbL1KBatp9+0Bba2nPK6LMgpWWmkbi91srEcUxfxi8t9CO54QPFagLrvwgAJL
+	 uKEtEuZqaj0wsy4J7jBYi45oZlD5JrZdKhOrVx2hh8M8rMd3EYBfQvFQ/PK8X2W0b0
+	 EdgbN7z6VzZATT03SxX3aJicQo+LS6R5ufa/WYqs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Zong-Zhe Yang <kevin_yang@realtek.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0355/1146] media: solo6x10: fix possible memory leak in solo_sysfs_init()
-Date: Wed, 28 Dec 2022 15:31:34 +0100
-Message-Id: <20221228144339.804362518@linuxfoundation.org>
+Subject: [PATCH 6.1 0373/1146] wifi: rtw89: fix physts IE page check
+Date: Wed, 28 Dec 2022 15:31:52 +0100
+Message-Id: <20221228144340.294370748@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,36 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Zong-Zhe Yang <kevin_yang@realtek.com>
 
-[ Upstream commit 7f5866dd96d95b74e439f6ee17b8abd8195179fb ]
+[ Upstream commit 9e2f177de1bfb7d891bf38140bda54831ecef30d ]
 
-If device_register() returns error in solo_sysfs_init(), the
-name allocated by dev_set_name() need be freed. As comment of
-device_register() says, it should use put_device() to give up
-the reference in the error path. So fix this by calling
-put_device(), then the name can be freed in kobject_cleanup().
+The index RTW89_PHYSTS_BITMAP_NUM is not a valid physts IE page.
+So, fix the check condition.
 
-Fixes: dcae5dacbce5 ("[media] solo6x10: sync to latest code from Bluecherry's git repo")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: eb4e52b3f38d ("rtw89: fix incorrect channel info during scan")
+Signed-off-by: Zong-Zhe Yang <kevin_yang@realtek.com>
+Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221118042322.26794-1-pkshih@realtek.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/solo6x10/solo6x10-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/realtek/rtw89/phy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/pci/solo6x10/solo6x10-core.c b/drivers/media/pci/solo6x10/solo6x10-core.c
-index 4a546eeefe38..6d87fbb0ee04 100644
---- a/drivers/media/pci/solo6x10/solo6x10-core.c
-+++ b/drivers/media/pci/solo6x10/solo6x10-core.c
-@@ -420,6 +420,7 @@ static int solo_sysfs_init(struct solo_dev *solo_dev)
- 		     solo_dev->nr_chans);
+diff --git a/drivers/net/wireless/realtek/rtw89/phy.c b/drivers/net/wireless/realtek/rtw89/phy.c
+index 6a6bdc652e09..c894a2b614eb 100644
+--- a/drivers/net/wireless/realtek/rtw89/phy.c
++++ b/drivers/net/wireless/realtek/rtw89/phy.c
+@@ -3139,7 +3139,7 @@ void rtw89_phy_env_monitor_track(struct rtw89_dev *rtwdev)
  
- 	if (device_register(dev)) {
-+		put_device(dev);
- 		dev->parent = NULL;
- 		return -ENOMEM;
- 	}
+ static bool rtw89_physts_ie_page_valid(enum rtw89_phy_status_bitmap *ie_page)
+ {
+-	if (*ie_page > RTW89_PHYSTS_BITMAP_NUM ||
++	if (*ie_page >= RTW89_PHYSTS_BITMAP_NUM ||
+ 	    *ie_page == RTW89_RSVD_9)
+ 		return false;
+ 	else if (*ie_page > RTW89_RSVD_9)
 -- 
 2.35.1
 
