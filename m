@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61C161863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:54:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC46AC433D2;
-	Wed, 28 Dec 2022 14:54:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00DC01863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:54:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DFEDC433D2;
+	Wed, 28 Dec 2022 14:54:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239253;
-	bh=99BfMRPu7/3RPJ2AwMrjRv29yfHdsEoDqPjzJxCfDQM=;
+	s=korg; t=1672239255;
+	bh=yyBeemMh7SHz2UU8auWCUtpr1CQoYBH0weA+nhdRoXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tkGy91XcEYMVetMxZGZcma+sOUYntYnz15bkxtz2pG4DFoe74QRnveg5VTa9qKmLq
-	 BQel08NGrZUV9rLv6CoTip3fLRj08Q8/ItwcZeF+HbqOoD/TE4RkaIVXzbTh2CFOo5
-	 eIpSCKk9YG5IdFzAORVUf0NNuQKahHtUjCob+KDQ=
+	b=F6NUk/z+KOmAgkm9ICWR/aZ7H2c1BiYZKBARJGTRHjk3anaDRPsSyq0NjC8J7wkpa
+	 Uw1RNAmhurQHl6Q+vbQLmVwkJG07+qe/NjPSa2ECA+CAPgVEhJ9aiiQhmjWBCcxnj/
+	 jQwu3fARIQ09AP49P5gGsZ6Mm81U2+ehHta9p5T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Anssi Hannula <anssi.hannula@bitwise.fi>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	kernel test robot <lkp@intel.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 169/731] can: kvaser_usb_leaf: Fix bogus restart events
-Date: Wed, 28 Dec 2022 15:34:36 +0100
-Message-Id: <20221228144301.462138746@linuxfoundation.org>
+Subject: [PATCH 5.15 187/731] Input: joystick - fix Kconfig warning for JOYSTICK_ADC
+Date: Wed, 28 Dec 2022 15:34:54 +0100
+Message-Id: <20221228144301.980734260@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,64 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anssi Hannula <anssi.hannula@bitwise.fi>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 90904d326269a38fe5dd895fb2db7c03199654c4 ]
+[ Upstream commit 6100a19c4fcfe154dd32f8a8ef4e8c0b1f607c75 ]
 
-When auto-restart is enabled, the kvaser_usb_leaf driver considers
-transition from any state >= CAN_STATE_BUS_OFF as a bus-off recovery
-event (restart).
+Fix a Kconfig warning for JOYSTICK_ADC by also selecting
+IIO_BUFFER.
 
-However, these events may occur at interface startup time before
-kvaser_usb_open() has set the state to CAN_STATE_ERROR_ACTIVE, causing
-restarts counter to increase and CAN_ERR_RESTARTED to be sent despite no
-actual restart having occurred.
+WARNING: unmet direct dependencies detected for IIO_BUFFER_CB
+  Depends on [n]: IIO [=y] && IIO_BUFFER [=n]
+  Selected by [y]:
+  - JOYSTICK_ADC [=y] && INPUT [=y] && INPUT_JOYSTICK [=y] && IIO [=y]
 
-Fix that by making the auto-restart condition checks more strict so that
-they only trigger when the interface was actually in the BUS_OFF state.
-
-Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
-Tested-by: Jimmy Assarsson <extja@kvaser.com>
-Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/all/20221010185237.319219-10-extja@kvaser.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 2c2b364fddd5 ("Input: joystick - add ADC attached joystick driver.")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20221104201238.31628-1-rdunlap@infradead.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/input/joystick/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-index 5888b2fb5eb3..b44a9ca22136 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-@@ -900,7 +900,7 @@ static void kvaser_usb_leaf_tx_acknowledge(const struct kvaser_usb *dev,
- 	context = &priv->tx_contexts[tid % dev->max_tx_urbs];
- 
- 	/* Sometimes the state change doesn't come after a bus-off event */
--	if (priv->can.restart_ms && priv->can.state >= CAN_STATE_BUS_OFF) {
-+	if (priv->can.restart_ms && priv->can.state == CAN_STATE_BUS_OFF) {
- 		struct sk_buff *skb;
- 		struct can_frame *cf;
- 
-@@ -1003,7 +1003,7 @@ kvaser_usb_leaf_rx_error_update_can_state(struct kvaser_usb_net_priv *priv,
- 	}
- 
- 	if (priv->can.restart_ms &&
--	    cur_state >= CAN_STATE_BUS_OFF &&
-+	    cur_state == CAN_STATE_BUS_OFF &&
- 	    new_state < CAN_STATE_BUS_OFF)
- 		priv->can.can_stats.restarts++;
- 
-@@ -1093,7 +1093,7 @@ static void kvaser_usb_leaf_rx_error(const struct kvaser_usb *dev,
- 		}
- 
- 		if (priv->can.restart_ms &&
--		    old_state >= CAN_STATE_BUS_OFF &&
-+		    old_state == CAN_STATE_BUS_OFF &&
- 		    new_state < CAN_STATE_BUS_OFF) {
- 			cf->can_id |= CAN_ERR_RESTARTED;
- 			netif_carrier_on(priv->netdev);
+diff --git a/drivers/input/joystick/Kconfig b/drivers/input/joystick/Kconfig
+index 3b23078bc7b5..db4135bbd279 100644
+--- a/drivers/input/joystick/Kconfig
++++ b/drivers/input/joystick/Kconfig
+@@ -46,6 +46,7 @@ config JOYSTICK_A3D
+ config JOYSTICK_ADC
+ 	tristate "Simple joystick connected over ADC"
+ 	depends on IIO
++	select IIO_BUFFER
+ 	select IIO_BUFFER_CB
+ 	help
+ 	  Say Y here if you have a simple joystick connected over ADC.
 -- 
 2.35.1
 
