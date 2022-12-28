@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7DB1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7F44C433D2;
-	Wed, 28 Dec 2022 16:52:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2AE81C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 713E2C433EF;
+	Wed, 28 Dec 2022 16:52:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246334;
-	bh=piS8tyGSI6BeipkkMuzxfgWTZq4RvjXEzat5xh+KRDk=;
+	s=korg; t=1672246336;
+	bh=Nwq5g1ESTYBgC8neDArqnPYL2KjnIiBaNb43AqgfEWs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nw0XezXhIRMiGlMopwEfHws8xvM/WjUXUTl/AaHck3ZDa39fGRs93DJ+I/1Oif/je
-	 7Dky1GQrGAk6p3frdkCOwSRzntOrL3FMPUiYogS9ZZU0qOLeLhadvIKCJu860K/LQ9
-	 EhxwWnWPA05CvGl/mQSgTmRzF/P08BbzDZDKAAuM=
+	b=j5ouA/CaUMocURANq+CrrI3YwioCPsHbLzlKbuKF6Rt4TaK2cfjYmxAnfZTq7aJWc
+	 vI5cF3PAgpDQWue8X0BviJxQnGYrc5Ic6vz5iQXOY7l6xqB2c0XgYM7KEVNe3KIbHu
+	 /iRDe4Fh5It2I9HosVDVvNkt0vZYJs0QB6kcaKRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.0 1051/1073] regulator: core: fix deadlock on regulator enable
-Date: Wed, 28 Dec 2022 15:43:59 +0100
-Message-Id: <20221228144356.764690067@linuxfoundation.org>
+	Lin Ma <linma@zju.edu.cn>,
+	kernel test robot <lkp@intel.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1023/1146] media: dvbdev: adopts refcnt to avoid UAF
+Date: Wed, 28 Dec 2022 15:42:42 +0100
+Message-Id: <20221228144358.155650456@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,65 +36,210 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Lin Ma <linma@zju.edu.cn>
 
-commit cb3543cff90a4448ed560ac86c98033ad5fecda9 upstream.
+[ Upstream commit 0fc044b2b5e2d05a1fa1fb0d7f270367a7855d79 ]
 
-When updating the operating mode as part of regulator enable, the caller
-has already locked the regulator tree and drms_uA_update() must not try
-to do the same in order not to trigger a deadlock.
+dvb_unregister_device() is known that prone to use-after-free.
+That is, the cleanup from dvb_unregister_device() releases the dvb_device
+even if there are pointers stored in file->private_data still refer to it.
 
-The lock inversion is reported by lockdep as:
+This patch adds a reference counter into struct dvb_device and delays its
+deallocation until no pointer refers to the object.
 
-  ======================================================
-  WARNING: possible circular locking dependency detected
-  6.1.0-next-20221215 #142 Not tainted
-  ------------------------------------------------------
-  udevd/154 is trying to acquire lock:
-  ffffc11f123d7e50 (regulator_list_mutex){+.+.}-{3:3}, at: regulator_lock_dependent+0x54/0x280
-
-  but task is already holding lock:
-  ffff80000e4c36e8 (regulator_ww_class_acquire){+.+.}-{0:0}, at: regulator_enable+0x34/0x80
-
-  which lock already depends on the new lock.
-
-  ...
-
-   Possible unsafe locking scenario:
-
-         CPU0                    CPU1
-         ----                    ----
-    lock(regulator_ww_class_acquire);
-                                 lock(regulator_list_mutex);
-                                 lock(regulator_ww_class_acquire);
-    lock(regulator_list_mutex);
-
-   *** DEADLOCK ***
-
-just before probe of a Qualcomm UFS controller (occasionally) deadlocks
-when enabling one of its regulators.
-
-Fixes: 9243a195be7a ("regulator: core: Change voltage setting path")
-Fixes: f8702f9e4aa7 ("regulator: core: Use ww_mutex for regulators locking")
-Cc: stable@vger.kernel.org      # 5.0
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20221215104646.19818-1-johan+linaro@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/linux-media/20220807145952.10368-1-linma@zju.edu.cn
+Signed-off-by: Lin Ma <linma@zju.edu.cn>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/dvb-core/dvb_ca_en50221.c |  2 +-
+ drivers/media/dvb-core/dvb_frontend.c   |  2 +-
+ drivers/media/dvb-core/dvbdev.c         | 32 +++++++++++++++++++------
+ include/media/dvbdev.h                  | 31 +++++++++++++-----------
+ 4 files changed, 44 insertions(+), 23 deletions(-)
 
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -987,7 +987,7 @@ static int drms_uA_update(struct regulat
- 		/* get input voltage */
- 		input_uV = 0;
- 		if (rdev->supply)
--			input_uV = regulator_get_voltage(rdev->supply);
-+			input_uV = regulator_get_voltage_rdev(rdev->supply->rdev);
- 		if (input_uV <= 0)
- 			input_uV = rdev->constraints->input_uV;
- 		if (input_uV <= 0) {
+diff --git a/drivers/media/dvb-core/dvb_ca_en50221.c b/drivers/media/dvb-core/dvb_ca_en50221.c
+index 15a08d8c69ef..c2d2792227f8 100644
+--- a/drivers/media/dvb-core/dvb_ca_en50221.c
++++ b/drivers/media/dvb-core/dvb_ca_en50221.c
+@@ -157,7 +157,7 @@ static void dvb_ca_private_free(struct dvb_ca_private *ca)
+ {
+ 	unsigned int i;
+ 
+-	dvb_free_device(ca->dvbdev);
++	dvb_device_put(ca->dvbdev);
+ 	for (i = 0; i < ca->slot_count; i++)
+ 		vfree(ca->slot_info[i].rx_buffer.data);
+ 
+diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
+index a7792ef4baf8..c41a7e5c2b92 100644
+--- a/drivers/media/dvb-core/dvb_frontend.c
++++ b/drivers/media/dvb-core/dvb_frontend.c
+@@ -136,7 +136,7 @@ static void __dvb_frontend_free(struct dvb_frontend *fe)
+ 	struct dvb_frontend_private *fepriv = fe->frontend_priv;
+ 
+ 	if (fepriv)
+-		dvb_free_device(fepriv->dvbdev);
++		dvb_device_put(fepriv->dvbdev);
+ 
+ 	dvb_frontend_invoke_release(fe, fe->ops.release);
+ 
+diff --git a/drivers/media/dvb-core/dvbdev.c b/drivers/media/dvb-core/dvbdev.c
+index 675d877a67b2..14f0e140d541 100644
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -97,7 +97,7 @@ static int dvb_device_open(struct inode *inode, struct file *file)
+ 		new_fops = fops_get(dvbdev->fops);
+ 		if (!new_fops)
+ 			goto fail;
+-		file->private_data = dvbdev;
++		file->private_data = dvb_device_get(dvbdev);
+ 		replace_fops(file, new_fops);
+ 		if (file->f_op->open)
+ 			err = file->f_op->open(inode, file);
+@@ -161,6 +161,9 @@ int dvb_generic_release(struct inode *inode, struct file *file)
+ 	}
+ 
+ 	dvbdev->users++;
++
++	dvb_device_put(dvbdev);
++
+ 	return 0;
+ }
+ EXPORT_SYMBOL(dvb_generic_release);
+@@ -477,6 +480,7 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
+ 		return -ENOMEM;
+ 	}
+ 
++	kref_init(&dvbdev->ref);
+ 	memcpy(dvbdev, template, sizeof(struct dvb_device));
+ 	dvbdev->type = type;
+ 	dvbdev->id = id;
+@@ -508,7 +512,7 @@ int dvb_register_device(struct dvb_adapter *adap, struct dvb_device **pdvbdev,
+ #endif
+ 
+ 	dvbdev->minor = minor;
+-	dvb_minors[minor] = dvbdev;
++	dvb_minors[minor] = dvb_device_get(dvbdev);
+ 	up_write(&minor_rwsem);
+ 
+ 	ret = dvb_register_media_device(dvbdev, type, minor, demux_sink_pads);
+@@ -553,6 +557,7 @@ void dvb_remove_device(struct dvb_device *dvbdev)
+ 
+ 	down_write(&minor_rwsem);
+ 	dvb_minors[dvbdev->minor] = NULL;
++	dvb_device_put(dvbdev);
+ 	up_write(&minor_rwsem);
+ 
+ 	dvb_media_device_free(dvbdev);
+@@ -564,21 +569,34 @@ void dvb_remove_device(struct dvb_device *dvbdev)
+ EXPORT_SYMBOL(dvb_remove_device);
+ 
+ 
+-void dvb_free_device(struct dvb_device *dvbdev)
++static void dvb_free_device(struct kref *ref)
+ {
+-	if (!dvbdev)
+-		return;
++	struct dvb_device *dvbdev = container_of(ref, struct dvb_device, ref);
+ 
+ 	kfree (dvbdev->fops);
+ 	kfree (dvbdev);
+ }
+-EXPORT_SYMBOL(dvb_free_device);
++
++
++struct dvb_device *dvb_device_get(struct dvb_device *dvbdev)
++{
++	kref_get(&dvbdev->ref);
++	return dvbdev;
++}
++EXPORT_SYMBOL(dvb_device_get);
++
++
++void dvb_device_put(struct dvb_device *dvbdev)
++{
++	if (dvbdev)
++		kref_put(&dvbdev->ref, dvb_free_device);
++}
+ 
+ 
+ void dvb_unregister_device(struct dvb_device *dvbdev)
+ {
+ 	dvb_remove_device(dvbdev);
+-	dvb_free_device(dvbdev);
++	dvb_device_put(dvbdev);
+ }
+ EXPORT_SYMBOL(dvb_unregister_device);
+ 
+diff --git a/include/media/dvbdev.h b/include/media/dvbdev.h
+index 2f6b0861322a..149b3d33c24b 100644
+--- a/include/media/dvbdev.h
++++ b/include/media/dvbdev.h
+@@ -156,6 +156,7 @@ struct dvb_adapter {
+  */
+ struct dvb_device {
+ 	struct list_head list_head;
++	struct kref ref;
+ 	const struct file_operations *fops;
+ 	struct dvb_adapter *adapter;
+ 	enum dvb_device_type type;
+@@ -187,6 +188,20 @@ struct dvb_device {
+ 	void *priv;
+ };
+ 
++/**
++ * dvb_device_get - Increase dvb_device reference
++ *
++ * @dvbdev:	pointer to struct dvb_device
++ */
++struct dvb_device *dvb_device_get(struct dvb_device *dvbdev);
++
++/**
++ * dvb_device_get - Decrease dvb_device reference
++ *
++ * @dvbdev:	pointer to struct dvb_device
++ */
++void dvb_device_put(struct dvb_device *dvbdev);
++
+ /**
+  * dvb_register_adapter - Registers a new DVB adapter
+  *
+@@ -231,29 +246,17 @@ int dvb_register_device(struct dvb_adapter *adap,
+ /**
+  * dvb_remove_device - Remove a registered DVB device
+  *
+- * This does not free memory.  To do that, call dvb_free_device().
++ * This does not free memory. dvb_free_device() will do that when
++ * reference counter is empty
+  *
+  * @dvbdev:	pointer to struct dvb_device
+  */
+ void dvb_remove_device(struct dvb_device *dvbdev);
+ 
+-/**
+- * dvb_free_device - Free memory occupied by a DVB device.
+- *
+- * Call dvb_unregister_device() before calling this function.
+- *
+- * @dvbdev:	pointer to struct dvb_device
+- */
+-void dvb_free_device(struct dvb_device *dvbdev);
+ 
+ /**
+  * dvb_unregister_device - Unregisters a DVB device
+  *
+- * This is a combination of dvb_remove_device() and dvb_free_device().
+- * Using this function is usually a mistake, and is often an indicator
+- * for a use-after-free bug (when a userspace process keeps a file
+- * handle to a detached device).
+- *
+  * @dvbdev:	pointer to struct dvb_device
+  */
+ void dvb_unregister_device(struct dvb_device *dvbdev);
+-- 
+2.35.1
+
 
 
