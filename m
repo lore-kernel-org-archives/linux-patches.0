@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB521863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21FE2C433D2;
-	Wed, 28 Dec 2022 15:43:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 406A51863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8BFDC433D2;
+	Wed, 28 Dec 2022 15:43:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242222;
-	bh=QLQrOk/rUplvZ08j7gxCLQixWSeoLkiiQGJVzptBF/0=;
+	s=korg; t=1672242225;
+	bh=/WL07LK3cI0ugCJwgyw52PX4hwTm7I7iO8famkK5JNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JkVC+2FIeFGP816YFl1Yx1tzN6+icPyYhzMMRY0HQ5VKIAyPSPbQYrZoXM+UuPrFG
-	 rntax+yHDyj/ygnoXDAg4oVnc5pUvjjnssdSyTqrJ7HK/12mdFgddqGeUDeGbKR6vg
-	 THKlUCbALCDWkAsF7lh8QNx38h/Mbls0G3vXFbyc=
+	b=dZFS9wOdKi3uXFRohBOvdVILA0cJJEMsPaenkX+zHIHEJiJfA1LgbRjlem7O1a8ta
+	 A4mK4M+qGtv7ihfbODhR294n1b3xGP+b6CY3Oj1ZQkT/abG1h0mdBI5ZRNegYknEcX
+	 FCJKAFtpZdY/wAgr0QcMTozZ+VKe040h+R1/Ss9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Mike Snitzer <snitzer@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Guru Das Srinagesh <gurus@codeaurora.org>,
+	Lee Jones <lee@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0343/1146] dm: make sure create and remove dm device wont race with open and close table
-Date: Wed, 28 Dec 2022 15:31:22 +0100
-Message-Id: <20221228144339.476150340@linuxfoundation.org>
+Subject: [PATCH 5.15 577/731] mfd: pm8008: Fix return value check in pm8008_probe()
+Date: Wed, 28 Dec 2022 15:41:24 +0100
+Message-Id: <20221228144313.279402224@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,71 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit d563792c8933a810d28ce0f2831f0726c2b15a31 ]
+[ Upstream commit 14f8c55d48e02157519fbcb3a5de557abd8a06e2 ]
 
-open_table_device() and close_table_device() is protected by
-table_devices_lock, hence use it to protect add_disk() and
-del_gendisk().
+In case of error, the function devm_regmap_init_i2c() returns
+ERR_PTR() and never returns NULL. The NULL test in the return
+value check should be replaced with IS_ERR().
 
-Prepare to track per-add_disk holder relations in dm.
-
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Mike Snitzer <snitzer@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20221115141054.1051801-6-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 1a581b721699 ("dm: track per-add_disk holder relations in DM")
+Fixes: 6b149f3310a4 ("mfd: pm8008: Add driver for QCOM PM8008 PMIC")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Acked-by: Guru Das Srinagesh <gurus@codeaurora.org>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/20221125073626.1868229-1-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/mfd/qcom-pm8008.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/dm.c b/drivers/md/dm.c
-index 8fb0b97b2df1..f10ac680cef4 100644
---- a/drivers/md/dm.c
-+++ b/drivers/md/dm.c
-@@ -1965,7 +1965,14 @@ static void cleanup_mapped_device(struct mapped_device *md)
- 		spin_unlock(&_minor_lock);
- 		if (dm_get_md_type(md) != DM_TYPE_NONE) {
- 			dm_sysfs_exit(md);
-+
-+			/*
-+			 * Hold lock to make sure del_gendisk() won't concurrent
-+			 * with open/close_table_device().
-+			 */
-+			mutex_lock(&md->table_devices_lock);
- 			del_gendisk(md->disk);
-+			mutex_unlock(&md->table_devices_lock);
- 		}
- 		dm_queue_destroy_crypto_profile(md->queue);
- 		put_disk(md->disk);
-@@ -2325,15 +2332,24 @@ int dm_setup_md_queue(struct mapped_device *md, struct dm_table *t)
- 	if (r)
- 		return r;
+diff --git a/drivers/mfd/qcom-pm8008.c b/drivers/mfd/qcom-pm8008.c
+index 4b8ff947762f..9f3c4a01b4c1 100644
+--- a/drivers/mfd/qcom-pm8008.c
++++ b/drivers/mfd/qcom-pm8008.c
+@@ -215,8 +215,8 @@ static int pm8008_probe(struct i2c_client *client)
  
-+	/*
-+	 * Hold lock to make sure add_disk() and del_gendisk() won't concurrent
-+	 * with open_table_device() and close_table_device().
-+	 */
-+	mutex_lock(&md->table_devices_lock);
- 	r = add_disk(md->disk);
-+	mutex_unlock(&md->table_devices_lock);
- 	if (r)
- 		return r;
+ 	dev = &client->dev;
+ 	regmap = devm_regmap_init_i2c(client, &qcom_mfd_regmap_cfg);
+-	if (!regmap)
+-		return -ENODEV;
++	if (IS_ERR(regmap))
++		return PTR_ERR(regmap);
  
- 	r = dm_sysfs_init(md);
- 	if (r) {
-+		mutex_lock(&md->table_devices_lock);
- 		del_gendisk(md->disk);
-+		mutex_unlock(&md->table_devices_lock);
- 		return r;
- 	}
-+
- 	md->type = type;
- 	return 0;
- }
+ 	i2c_set_clientdata(client, regmap);
+ 
 -- 
 2.35.1
 
