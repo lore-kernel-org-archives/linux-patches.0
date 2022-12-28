@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3AB1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31996C433EF;
-	Wed, 28 Dec 2022 15:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802841863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D745AC433EF;
+	Wed, 28 Dec 2022 15:06:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239978;
-	bh=9AtMiHKpoUlY9QO0Us6J1m6vzVBDH68xDzgmgBMi2Qw=;
+	s=korg; t=1672239981;
+	bh=E94tIr8VF5Gcq9Jt72HTq+kB9HuTQbiSzV3P+XEg5Ak=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d2W8zCHpxyB/vIMSXgnXNOz73TcB9WD/McXfQ1GLP4yaAKGTA8npenBhQmJTuTDET
-	 ODxyPvJZdH4pfs3mFkwTdz88XObHsUHZcwdOCaRIDixYUIPzzEgpEXP+VBVufkeH82
-	 vAj34G9ohA5hiGcZFK3py1VoumLMSjEqZSChte40=
+	b=A+G5PgEf/uUtK8cHDjsoruF83xUBoOHWuLgVvQhVanOjmHAyiOE39YuDRETwFFu8D
+	 GY4Y+6Y2HsAdi3PE5oj7Ornbb40BAelhg7p5tcGPAsJ5LmKUnWHJvlscfC5SJ89TVk
+	 Aa9AjwxPjACs0bd8wFC4P3VUZDfGT9pzI7r6wWd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Conor Dooley <conor.dooley@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 295/731] mmc: rtsx_pci: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:36:42 +0100
-Message-Id: <20221228144305.124742500@linuxfoundation.org>
+Subject: [PATCH 6.1 0067/1146] riscv: dts: microchip: remove pcie node from the sev kit
+Date: Wed, 28 Dec 2022 15:26:46 +0100
+Message-Id: <20221228144331.977463313@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,53 +34,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-[ Upstream commit 0c87db77423a282b3b38b8a6daf057b822680516 ]
+[ Upstream commit 1150f4cff831e1d7db673417bcb81833d6544cf8 ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+The SEV kit reference design does not hook up the PCIe root port to the
+core complex including it is misleading.
+The entry is a re-use mistake - I was not aware of this when I moved
+the PCIe node out of mpfs.dtsi so that individual bistreams could
+connect it to different fics etc.
 
-So fix this by checking the return value and calling mmc_free_host() in the
-error path, beside, runtime PM also needs be disabled.
+The node is disabled, so there should be no functional change here.
 
-Fixes: ff984e57d36e ("mmc: Add realtek pcie sdmmc host driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-6-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 978a17d1a688 ("riscv: dts: microchip: add sevkit device tree")
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/rtsx_pci_sdmmc.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ .../dts/microchip/mpfs-sev-kit-fabric.dtsi    | 29 -------------------
+ 1 file changed, 29 deletions(-)
 
-diff --git a/drivers/mmc/host/rtsx_pci_sdmmc.c b/drivers/mmc/host/rtsx_pci_sdmmc.c
-index e1580f78c6b2..8098726dcc0b 100644
---- a/drivers/mmc/host/rtsx_pci_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
-@@ -1474,6 +1474,7 @@ static int rtsx_pci_sdmmc_drv_probe(struct platform_device *pdev)
- 	struct realtek_pci_sdmmc *host;
- 	struct rtsx_pcr *pcr;
- 	struct pcr_handle *handle = pdev->dev.platform_data;
-+	int ret;
- 
- 	if (!handle)
- 		return -ENXIO;
-@@ -1511,7 +1512,13 @@ static int rtsx_pci_sdmmc_drv_probe(struct platform_device *pdev)
- 	pm_runtime_mark_last_busy(&pdev->dev);
- 	pm_runtime_use_autosuspend(&pdev->dev);
- 
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret) {
-+		pm_runtime_dont_use_autosuspend(&pdev->dev);
-+		pm_runtime_disable(&pdev->dev);
-+		mmc_free_host(mmc);
-+		return ret;
-+	}
- 
- 	return 0;
- }
+diff --git a/arch/riscv/boot/dts/microchip/mpfs-sev-kit-fabric.dtsi b/arch/riscv/boot/dts/microchip/mpfs-sev-kit-fabric.dtsi
+index 8545baf4d129..39a77df489ab 100644
+--- a/arch/riscv/boot/dts/microchip/mpfs-sev-kit-fabric.dtsi
++++ b/arch/riscv/boot/dts/microchip/mpfs-sev-kit-fabric.dtsi
+@@ -13,33 +13,4 @@ fabric_clk1: fabric-clk1 {
+ 		#clock-cells = <0>;
+ 		clock-frequency = <125000000>;
+ 	};
+-
+-	pcie: pcie@2000000000 {
+-		compatible = "microchip,pcie-host-1.0";
+-		#address-cells = <0x3>;
+-		#interrupt-cells = <0x1>;
+-		#size-cells = <0x2>;
+-		device_type = "pci";
+-		reg = <0x20 0x0 0x0 0x8000000>, <0x0 0x43000000 0x0 0x10000>;
+-		reg-names = "cfg", "apb";
+-		bus-range = <0x0 0x7f>;
+-		interrupt-parent = <&plic>;
+-		interrupts = <119>;
+-		interrupt-map = <0 0 0 1 &pcie_intc 0>,
+-				<0 0 0 2 &pcie_intc 1>,
+-				<0 0 0 3 &pcie_intc 2>,
+-				<0 0 0 4 &pcie_intc 3>;
+-		interrupt-map-mask = <0 0 0 7>;
+-		clocks = <&fabric_clk1>, <&fabric_clk1>, <&fabric_clk3>;
+-		clock-names = "fic0", "fic1", "fic3";
+-		ranges = <0x3000000 0x0 0x8000000 0x20 0x8000000 0x0 0x80000000>;
+-		msi-parent = <&pcie>;
+-		msi-controller;
+-		status = "disabled";
+-		pcie_intc: interrupt-controller {
+-			#address-cells = <0>;
+-			#interrupt-cells = <1>;
+-			interrupt-controller;
+-		};
+-	};
+ };
 -- 
 2.35.1
 
