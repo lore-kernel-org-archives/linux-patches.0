@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A236C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2830BC433EF;
-	Wed, 28 Dec 2022 15:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5044A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7846C433D2;
+	Wed, 28 Dec 2022 15:02:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239772;
-	bh=NM7+/03/Ofmj9VSJlLDbfWwJTWwmxRfjZeorAgHJtnE=;
+	s=korg; t=1672239775;
+	bh=Hoa7/5auRty9GH+3CoCIj2AkJ2hYuMCvUkoIBQbYcRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pO2meCd6deEg+3NYsauoavurdifztGsUjpX+HkYSV8JgGr+MApZuMISH6bTaTVuyv
-	 lJqoBRSO8phqXkhjLdxhkaGDJTP845zdxMMJinrqwOW6R5dGubFc1iG6jRJPT2JZNM
-	 AY6qOfV2rOFNcWOxa0xLTPUbnOIVWZ9B9axQdp84=
+	b=FNG8l7lDP+Q5YCJXKEh7gj2yhKnBfR2sIVTNrkSDnns/jiJDPNRIaHLP5ffhVtUi2
+	 QhJWumF1tH852kHpj8n/KvddX4VoLWz8PrNJkoJQ+REViW07+/epFHr82u1SGyfRsi
+	 e81pWo9Kz2XIU+qnFIRtCZx7U+yRqvPsdnz2HTuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0041/1146] arm64: dts: renesas: r8a779f0: Fix SCIF "brg_int" clock
-Date: Wed, 28 Dec 2022 15:26:20 +0100
-Message-Id: <20221228144331.279576270@linuxfoundation.org>
+Subject: [PATCH 6.0 0077/1073] ARM: dts: armada-38x: Fix compatible string for gpios
+Date: Wed, 28 Dec 2022 15:27:45 +0100
+Message-Id: <20221228144330.163854383@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,69 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 64416ef0b0c4d73349035d1b3206eed3d2047ee0 ]
+[ Upstream commit c4de4667f15d04ef5920bacf41e514ec7d1ef03d ]
 
-As serial communication requires a clean clock signal, the Serial
-Communication Interfaces with FIFO (SCIF) are clocked by a clock that is
-not affected by Spread Spectrum or Fractional Multiplication.
+Armada 38x supports per CPU interrupts for gpios, like Armada XP. Pre-XP
+variants like Armada 370 do not support per CPU interrupts for gpios.
 
-Hence change the clock input for the SCIF Baud Rate Generator internal
-clock from the S0D3_PER clock to the SASYNCPERD1 clock (which has the
-same clock rate), cfr. R-Car S4-8 Hardware User's Manual rev. 0.81.
+So change compatible string for Armada 38x from "marvell,armada-370-gpio"
+which indicates pre-XP variant to "marvell,armadaxp-gpio" which indicates
+XP variant or new.
 
-Fixes: c62331e8222f ("arm64: dts: renesas: Add Renesas R8A779F0 SoC support")
-Fixes: 40753144256b ("arm64: dts: renesas: r8a779f0: Add SCIF nodes")
-Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Link: https://lore.kernel.org/r/20221103143440.46449-5-wsa+renesas@sang-engineering.com
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Driver gpio-mvebu.c which handles both pre-XP and XP variants already
+provides support for per CPU interrupts on XP and newer variants.
+
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Fixes: 7cb2acb3fbae ("ARM: dts: mvebu: Add PWM properties for armada-38x")
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/renesas/r8a779f0.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/armada-38x.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/renesas/r8a779f0.dtsi b/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
-index 3be577dc9a93..4092c0016035 100644
---- a/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
-+++ b/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
-@@ -657,7 +657,7 @@ scif0: serial@e6e60000 {
- 			reg = <0 0xe6e60000 0 64>;
- 			interrupts = <GIC_SPI 249 IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&cpg CPG_MOD 702>,
--				 <&cpg CPG_CORE R8A779F0_CLK_S0D3_PER>,
-+				 <&cpg CPG_CORE R8A779F0_CLK_SASYNCPERD1>,
- 				 <&scif_clk>;
- 			clock-names = "fck", "brg_int", "scif_clk";
- 			dmas = <&dmac0 0x51>, <&dmac0 0x50>,
-@@ -674,7 +674,7 @@ scif1: serial@e6e68000 {
- 			reg = <0 0xe6e68000 0 64>;
- 			interrupts = <GIC_SPI 250 IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&cpg CPG_MOD 703>,
--				 <&cpg CPG_CORE R8A779F0_CLK_S0D3_PER>,
-+				 <&cpg CPG_CORE R8A779F0_CLK_SASYNCPERD1>,
- 				 <&scif_clk>;
- 			clock-names = "fck", "brg_int", "scif_clk";
- 			dmas = <&dmac0 0x53>, <&dmac0 0x52>,
-@@ -691,7 +691,7 @@ scif3: serial@e6c50000 {
- 			reg = <0 0xe6c50000 0 64>;
- 			interrupts = <GIC_SPI 252 IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&cpg CPG_MOD 704>,
--				 <&cpg CPG_CORE R8A779F0_CLK_S0D3_PER>,
-+				 <&cpg CPG_CORE R8A779F0_CLK_SASYNCPERD1>,
- 				 <&scif_clk>;
- 			clock-names = "fck", "brg_int", "scif_clk";
- 			dmas = <&dmac0 0x57>, <&dmac0 0x56>,
-@@ -708,7 +708,7 @@ scif4: serial@e6c40000 {
- 			reg = <0 0xe6c40000 0 64>;
- 			interrupts = <GIC_SPI 253 IRQ_TYPE_LEVEL_HIGH>;
- 			clocks = <&cpg CPG_MOD 705>,
--				 <&cpg CPG_CORE R8A779F0_CLK_S0D3_PER>,
-+				 <&cpg CPG_CORE R8A779F0_CLK_SASYNCPERD1>,
- 				 <&scif_clk>;
- 			clock-names = "fck", "brg_int", "scif_clk";
- 			dmas = <&dmac0 0x59>, <&dmac0 0x58>,
+diff --git a/arch/arm/boot/dts/armada-38x.dtsi b/arch/arm/boot/dts/armada-38x.dtsi
+index df3c8d1d8f64..9343de6947b3 100644
+--- a/arch/arm/boot/dts/armada-38x.dtsi
++++ b/arch/arm/boot/dts/armada-38x.dtsi
+@@ -292,7 +292,7 @@ sata3_pins: sata-pins-3 {
+ 			};
+ 
+ 			gpio0: gpio@18100 {
+-				compatible = "marvell,armada-370-gpio",
++				compatible = "marvell,armadaxp-gpio",
+ 					     "marvell,orion-gpio";
+ 				reg = <0x18100 0x40>, <0x181c0 0x08>;
+ 				reg-names = "gpio", "pwm";
+@@ -310,7 +310,7 @@ gpio0: gpio@18100 {
+ 			};
+ 
+ 			gpio1: gpio@18140 {
+-				compatible = "marvell,armada-370-gpio",
++				compatible = "marvell,armadaxp-gpio",
+ 					     "marvell,orion-gpio";
+ 				reg = <0x18140 0x40>, <0x181c8 0x08>;
+ 				reg-names = "gpio", "pwm";
 -- 
 2.35.1
 
