@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B3D1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:00:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 799EDC433D2;
-	Wed, 28 Dec 2022 16:00:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41C89187A
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:01:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F70BC433EF;
+	Wed, 28 Dec 2022 16:01:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243259;
-	bh=zrLGZ7ro5zvgwPpc2dk8woCRO7b4s8v5+kXF4UJZj/8=;
+	s=korg; t=1672243262;
+	bh=Ct+mYGhl3hN88rg24PYTXGECb/qTwT8CyWyh/9w1Ojg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C5uIu/qZEb/r1UCPOqSHGi47Mm3rlDKKSWu+ZjWQ5M+Qw7MfzqyfOqSbPuYxbP8s+
-	 a1NWoJIE9q4MKDozKMchZz5cn0NuFnn6qIQunANhFyftw+D/HouYc7VYnU/LwVjoOK
-	 K5FUzVXCPeyQOMm+9dXgQh9jTZ0B3EraUvybBxmg=
+	b=X+1oHC2BjCznzJHqATCcd7TsHgoGXibeYY9gbkyMh9uQe8Yfxmpu9d4UWUL56ZQHO
+	 7mnpa7dRT/vACdsT8sK85fVQ8mdD+AAMTH2LCJeFYfbsaaAfmCuCXMlqOG3nNJXyp9
+	 KXI2frNbi0buOK/4ZFxx3I8HdlPiJ5pWfAzSo3h8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0483/1073] mmc: rtsx_usb_sdmmc: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:34:31 +0100
-Message-Id: <20221228144341.156654013@linuxfoundation.org>
+Subject: [PATCH 6.0 0507/1073] blktrace: Fix output non-blktrace event when blk_classic option enabled
+Date: Wed, 28 Dec 2022 15:34:55 +0100
+Message-Id: <20221228144341.819410129@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,56 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-[ Upstream commit fc38a5a10e9e5a75eb9189854abeb8405b214cc9 ]
+[ Upstream commit f596da3efaf4130ff61cd029558845808df9bf99 ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+When the blk_classic option is enabled, non-blktrace events must be
+filtered out. Otherwise, events of other types are output in the blktrace
+classic format, which is unexpected.
 
-So fix this by checking the return value and calling mmc_free_host() in the
-error path, besides, led_classdev_unregister() and pm_runtime_disable() also
-need be called.
+The problem can be triggered in the following ways:
 
-Fixes: c7f6558d84af ("mmc: Add realtek USB sdmmc host driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-7-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+  # echo 1 > /sys/kernel/debug/tracing/options/blk_classic
+  # echo 1 > /sys/kernel/debug/tracing/events/enable
+  # echo blk > /sys/kernel/debug/tracing/current_tracer
+  # cat /sys/kernel/debug/tracing/trace_pipe
+
+Fixes: c71a89615411 ("blktrace: add ftrace plugin")
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Link: https://lore.kernel.org/r/20221122040410.85113-1-yangjihong1@huawei.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/rtsx_usb_sdmmc.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ kernel/trace/blktrace.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/rtsx_usb_sdmmc.c b/drivers/mmc/host/rtsx_usb_sdmmc.c
-index 5fe4528e296e..1be3a355f10d 100644
---- a/drivers/mmc/host/rtsx_usb_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_usb_sdmmc.c
-@@ -1332,6 +1332,7 @@ static int rtsx_usb_sdmmc_drv_probe(struct platform_device *pdev)
- #ifdef RTSX_USB_USE_LEDS_CLASS
- 	int err;
- #endif
-+	int ret;
+diff --git a/kernel/trace/blktrace.c b/kernel/trace/blktrace.c
+index 7f5eb295fe19..ee22a3b1c181 100644
+--- a/kernel/trace/blktrace.c
++++ b/kernel/trace/blktrace.c
+@@ -1546,7 +1546,8 @@ blk_trace_event_print_binary(struct trace_iterator *iter, int flags,
  
- 	ucr = usb_get_intfdata(to_usb_interface(pdev->dev.parent));
- 	if (!ucr)
-@@ -1368,7 +1369,15 @@ static int rtsx_usb_sdmmc_drv_probe(struct platform_device *pdev)
- 	INIT_WORK(&host->led_work, rtsx_usb_update_led);
+ static enum print_line_t blk_tracer_print_line(struct trace_iterator *iter)
+ {
+-	if (!(blk_tracer_flags.val & TRACE_BLK_OPT_CLASSIC))
++	if ((iter->ent->type != TRACE_BLK) ||
++	    !(blk_tracer_flags.val & TRACE_BLK_OPT_CLASSIC))
+ 		return TRACE_TYPE_UNHANDLED;
  
- #endif
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret) {
-+#ifdef RTSX_USB_USE_LEDS_CLASS
-+		led_classdev_unregister(&host->led);
-+#endif
-+		mmc_free_host(mmc);
-+		pm_runtime_disable(&pdev->dev);
-+		return ret;
-+	}
- 
- 	return 0;
- }
+ 	return print_one_line(iter, true);
 -- 
 2.35.1
 
