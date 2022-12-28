@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 114C41C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:47:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7D5C433EF;
-	Wed, 28 Dec 2022 16:47:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF181C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:47:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C34DC433EF;
+	Wed, 28 Dec 2022 16:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246023;
-	bh=kWEVcH5O+hKgB0S2fgJ4MlILuIU5/n0ZX5d9X2+ZWeg=;
+	s=korg; t=1672246026;
+	bh=uefpNLQQG6P2rtBOBLFYAfyECZaJ2CLTwbyat+ozhDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tDALMCo9td28Twf9QspGMF3nYAFD70e8l7q+BveKSW+L7w8exbcK5S7tuCCzpitDf
-	 xwL9ukRRLhBAR4MWVexW5wQAw65FkTaDi41LvWA7vUTngCaeICrVkPpPt9xQsL1RPn
-	 LAbEP7yov4VLPJccKm94lVil0Pw391isvNHl2GpI=
+	b=Gdqzog+AMA/7wXKFmGrvo9m2+E05LLS8LtYvXWR/Kj7l1FsahjnOUkTLfAybYFEF4
+	 wtU6Y4w4w0YRCT5Q1133FYnqOCjHvxnHn/sEjR6QBndv6AUZ40oDjuAzhZMsXo51cc
+	 67aIQjcA5cOQg4FqCC0GrlmpPEePC67/+rEczN8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Wang Yufen <wangyufen@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0968/1146] wifi: ath9k: verify the expected usb_endpoints are present
-Date: Wed, 28 Dec 2022 15:41:47 +0100
-Message-Id: <20221228144356.624117525@linuxfoundation.org>
+Subject: [PATCH 6.0 1000/1073] ASoC: mediatek: mt8173-rt5650-rt5514: fix refcount leak in mt8173_rt5650_rt5514_dev_probe()
+Date: Wed, 28 Dec 2022 15:43:08 +0100
+Message-Id: <20221228144355.298686229@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,75 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit 16ef02bad239f11f322df8425d302be62f0443ce ]
+[ Upstream commit 3327d721114c109ba0575f86f8fda3b525404054 ]
 
-The bug arises when a USB device claims to be an ATH9K but doesn't
-have the expected endpoints. (In this case there was an interrupt
-endpoint where the driver expected a bulk endpoint.) The kernel
-needs to be able to handle such devices without getting an internal error.
+The node returned by of_parse_phandle() with refcount incremented,
+of_node_put() needs be called when finish using it. So add it in the
+error path in mt8173_rt5650_rt5514_dev_probe().
 
-usb 1-1: BOGUS urb xfer, pipe 3 != type 1
-WARNING: CPU: 3 PID: 500 at drivers/usb/core/urb.c:493 usb_submit_urb+0xce2/0x1430 drivers/usb/core/urb.c:493
-Modules linked in:
-CPU: 3 PID: 500 Comm: kworker/3:2 Not tainted 5.10.135-syzkaller #0
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
-Workqueue: events request_firmware_work_func
-RIP: 0010:usb_submit_urb+0xce2/0x1430 drivers/usb/core/urb.c:493
-Call Trace:
- ath9k_hif_usb_alloc_rx_urbs drivers/net/wireless/ath/ath9k/hif_usb.c:908 [inline]
- ath9k_hif_usb_alloc_urbs+0x75e/0x1010 drivers/net/wireless/ath/ath9k/hif_usb.c:1019
- ath9k_hif_usb_dev_init drivers/net/wireless/ath/ath9k/hif_usb.c:1109 [inline]
- ath9k_hif_usb_firmware_cb+0x142/0x530 drivers/net/wireless/ath/ath9k/hif_usb.c:1242
- request_firmware_work_func+0x12e/0x240 drivers/base/firmware_loader/main.c:1097
- process_one_work+0x9af/0x1600 kernel/workqueue.c:2279
- worker_thread+0x61d/0x12f0 kernel/workqueue.c:2425
- kthread+0x3b4/0x4a0 kernel/kthread.c:313
- ret_from_fork+0x22/0x30 arch/x86/entry/entry_64.S:299
-
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Suggested-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20221008211532.74583-1-pchelkin@ispras.ru
+Fixes: 0d1d7a664288 ("ASoC: mediatek: Refine mt8173 driver and change config option")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Link: https://lore.kernel.org/r/1670234664-24246-1-git-send-email-wangyufen@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath9k/hif_usb.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
-index 6c653d46136e..1a2e0c7eeb02 100644
---- a/drivers/net/wireless/ath/ath9k/hif_usb.c
-+++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
-@@ -1327,10 +1327,24 @@ static int send_eject_command(struct usb_interface *interface)
- static int ath9k_hif_usb_probe(struct usb_interface *interface,
- 			       const struct usb_device_id *id)
- {
-+	struct usb_endpoint_descriptor *bulk_in, *bulk_out, *int_in, *int_out;
- 	struct usb_device *udev = interface_to_usbdev(interface);
-+	struct usb_host_interface *alt;
- 	struct hif_device_usb *hif_dev;
- 	int ret = 0;
+diff --git a/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c b/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c
+index 12f40c81b101..f803f121659d 100644
+--- a/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c
++++ b/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c
+@@ -200,14 +200,16 @@ static int mt8173_rt5650_rt5514_dev_probe(struct platform_device *pdev)
+ 	if (!mt8173_rt5650_rt5514_dais[DAI_LINK_CODEC_I2S].codecs[0].of_node) {
+ 		dev_err(&pdev->dev,
+ 			"Property 'audio-codec' missing or invalid\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto out;
+ 	}
+ 	mt8173_rt5650_rt5514_dais[DAI_LINK_CODEC_I2S].codecs[1].of_node =
+ 		of_parse_phandle(pdev->dev.of_node, "mediatek,audio-codec", 1);
+ 	if (!mt8173_rt5650_rt5514_dais[DAI_LINK_CODEC_I2S].codecs[1].of_node) {
+ 		dev_err(&pdev->dev,
+ 			"Property 'audio-codec' missing or invalid\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto out;
+ 	}
+ 	mt8173_rt5650_rt5514_codec_conf[0].dlc.of_node =
+ 		mt8173_rt5650_rt5514_dais[DAI_LINK_CODEC_I2S].codecs[1].of_node;
+@@ -216,6 +218,7 @@ static int mt8173_rt5650_rt5514_dev_probe(struct platform_device *pdev)
  
-+	/* Verify the expected endpoints are present */
-+	alt = interface->cur_altsetting;
-+	if (usb_find_common_endpoints(alt, &bulk_in, &bulk_out, &int_in, &int_out) < 0 ||
-+	    usb_endpoint_num(bulk_in) != USB_WLAN_RX_PIPE ||
-+	    usb_endpoint_num(bulk_out) != USB_WLAN_TX_PIPE ||
-+	    usb_endpoint_num(int_in) != USB_REG_IN_PIPE ||
-+	    usb_endpoint_num(int_out) != USB_REG_OUT_PIPE) {
-+		dev_err(&udev->dev,
-+			"ath9k_htc: Device endpoint numbers are not the expected ones\n");
-+		return -ENODEV;
-+	}
-+
- 	if (id->driver_info == STORAGE_DEVICE)
- 		return send_eject_command(interface);
+ 	ret = devm_snd_soc_register_card(&pdev->dev, card);
  
++out:
+ 	of_node_put(platform_node);
+ 	return ret;
+ }
 -- 
 2.35.1
 
