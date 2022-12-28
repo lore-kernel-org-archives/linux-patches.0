@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F9F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE681C433EF;
-	Wed, 28 Dec 2022 15:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 099551863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B14C433F0;
+	Wed, 28 Dec 2022 15:01:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239667;
-	bh=HNr5cZ0HXuOmL8WptTmahKluPWfhOTJ/MVIJ6lu5TcY=;
+	s=korg; t=1672239669;
+	bh=35cZwjIkshA2Ay9vlvOfvedHRYE1QOuN38cd7osSdl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ICxJ339OBMM/Gby2mSQQmHWwPqA5da8+5nEAYrhH91xcETtcbUnL4dLTH5DacS1p5
-	 25cJMMwxJVRH7l6Gx2NM06yQCh0OFyUiGdbelCuFN+J8e3iDTO+Kve5ZKl0pHTfttR
-	 VRb0WI9K+C7vVdjN1dG38SpZCzBqr3JsEczhQIyg=
+	b=z1NTAj4i9R8v7UMJGhYgkMmkzgCzXt7xga1G72SVz6c5Vgd+jGeLYXb5MMPW7anf0
+	 5SYC3UalyWEJU4IDUy2eWEMeTE4E+TYM7WK2QvVUx5DPYDcjqU00kYbz13P9Tm4sZm
+	 +cG9MdQZtBvm3yhY3aCgvJbBabqNMDDX6RfCFziU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Anderson <dianders@chromium.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0025/1146] arm64: dts: qcom: sc7180-trogdor-homestar: fully configure secondary I2S pins
-Date: Wed, 28 Dec 2022 15:26:04 +0100
-Message-Id: <20221228144330.856247425@linuxfoundation.org>
+Subject: [PATCH 6.0 0062/1073] arm64: dts: mt6779: Fix devicetree build warnings
+Date: Wed, 28 Dec 2022 15:27:30 +0100
+Message-Id: <20221228144329.780344108@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,46 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 59e787935cfe6f562fbb9117e2df4076eaf810d8 ]
+[ Upstream commit 4d759c524c15dc4151e40b9e3f368147fda7b789 ]
 
-The Trogdor Homestar DTSI adds additional GPIO52 pin to secondary I2S pins
-("sec_mi2s_active") and configures it to "mi2s_1" function.
+Rename fixed-clock oscillators to oscillator-26m and oscillator-32k
+and remove the unit address to fix the unit_address_vs_reg warning;
+fix the unit address for interrupt and intpol controllers by
+removing a leading zero in their unit address.
 
-The Trogdor DTSI (which is included by Homestar) configures drive
-strength and bias for all "sec_mi2s_active" pins, thus the intention was
-to apply this configuration also to GPIO52 on Homestar.
+This commit fixes the following warnings:
 
-Reported-by: Doug Anderson <dianders@chromium.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Fixes: be0416a3f917 ("arm64: dts: qcom: Add sc7180-trogdor-homestar")
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221020225135.31750-2-krzysztof.kozlowski@linaro.org
+(unit_address_vs_reg): /oscillator@0: node has a unit name, but
+no reg or ranges property
+(unit_address_vs_reg): /oscillator@1: node has a unit name, but
+no reg or ranges property
+(simple_bus_reg): /soc/interrupt-controller@0c000000: simple-bus
+unit address format error, expected "c000000"
+(simple_bus_reg): /soc/intpol-controller@0c53a650: simple-bus
+unit address format error, expected "c53a650"
+
+Fixes: 4c7a6260775d ("arm64: dts: add dts nodes for MT6779")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221013152212.416661-3-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/boot/dts/mediatek/mt6779.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-index 1bd6c7dcd9e9..bfab67f4a7c9 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
-@@ -194,6 +194,12 @@ pinmux {
- 		pins = "gpio49", "gpio50", "gpio51", "gpio52";
- 		function = "mi2s_1";
+diff --git a/arch/arm64/boot/dts/mediatek/mt6779.dtsi b/arch/arm64/boot/dts/mediatek/mt6779.dtsi
+index 9bdf5145966c..dde9ce137b4f 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6779.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt6779.dtsi
+@@ -88,14 +88,14 @@ pmu {
+ 		interrupts = <GIC_PPI 7 IRQ_TYPE_LEVEL_LOW 0>;
  	};
-+
-+	pinconf {
-+		pins = "gpio49", "gpio50", "gpio51", "gpio52";
-+		drive-strength = <2>;
-+		bias-pull-down;
-+	};
- };
  
- &ts_reset_l {
+-	clk26m: oscillator@0 {
++	clk26m: oscillator-26m {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <26000000>;
+ 		clock-output-names = "clk26m";
+ 	};
+ 
+-	clk32k: oscillator@1 {
++	clk32k: oscillator-32k {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <32768>;
+@@ -117,7 +117,7 @@ soc {
+ 		compatible = "simple-bus";
+ 		ranges;
+ 
+-		gic: interrupt-controller@0c000000 {
++		gic: interrupt-controller@c000000 {
+ 			compatible = "arm,gic-v3";
+ 			#interrupt-cells = <4>;
+ 			interrupt-parent = <&gic>;
+@@ -138,7 +138,7 @@ ppi_cluster1: interrupt-partition-1 {
+ 
+ 		};
+ 
+-		sysirq: intpol-controller@0c53a650 {
++		sysirq: intpol-controller@c53a650 {
+ 			compatible = "mediatek,mt6779-sysirq",
+ 				     "mediatek,mt6577-sysirq";
+ 			interrupt-controller;
 -- 
 2.35.1
 
