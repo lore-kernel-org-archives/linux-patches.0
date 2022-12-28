@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 342141875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A68DDC433D2;
-	Wed, 28 Dec 2022 15:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E331875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56332C433F0;
+	Wed, 28 Dec 2022 15:52:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242755;
-	bh=jwhWFO95Z5txRdFKTTaHRjRyqj17/pJyEnieqZZEd2Y=;
+	s=korg; t=1672242757;
+	bh=wqHBlWwDhEXSeeSSCMDc2kQD+kY2BGT9fPT2b3UzNNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=179IouAIqV6evsSty/6tArKF3mhXWurTmCWOjfkCg6/y1UIFhKQS2H7beLIuPdhOZ
-	 ZgYxb+iQqStrXevHOyCaHGH55e17/TUlrDxf+pYuKWsQ+XMwTfTbYZ6Z5RzbI40KBk
-	 5NpGsyND7LVSMK/IwNH7pF3pQD5gMfem5nLfUC8s=
+	b=H4SXvQX4khJeJqq84cXQn1V+9/4XF8/D2dTnAfehngpj5KS3W0DA9j1YFCOWW+7KW
+	 2NXa1x6jpqwgMwMN1Xi803R9cCOTsiziDpucNzz5b3j7OkzjwYhcF60zndesa+GCa1
+	 aTa4IWtqUSMrT/cknigTtR8/Ih0BQfed3ta0XynY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Herring <robh@kernel.org>,
-	Taniya Das <quic_tdas@quicinc.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Ming Qian <ming.qian@nxp.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0448/1073] dt-bindings: clock: Add resets for LPASS audio clock controller for SC7280
-Date: Wed, 28 Dec 2022 15:33:56 +0100
-Message-Id: <20221228144340.200778866@linuxfoundation.org>
+Subject: [PATCH 6.1 0410/1146] media: amphion: try to wakeup vpu core to avoid failure
+Date: Wed, 28 Dec 2022 15:32:29 +0100
+Message-Id: <20221228144341.304181116@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,113 +36,137 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Taniya Das <quic_tdas@quicinc.com>
+From: Ming Qian <ming.qian@nxp.com>
 
-[ Upstream commit be9439df235352a41605bf2cc8ba10aa0fc40d29 ]
+[ Upstream commit 082744433f7b96db7214a98202ed96f367684693 ]
 
-Add support for LPASS audio clock gating for RX/TX/SWA core bus clocks
-for SC7280. Update reg property min/max items in YAML schema.
+firmware should be waked up by start or configure command,
+but there is a very small chance that firmware failed to wakeup.
+in such case, try to wakeup firmware again by sending a noop command
 
-Fixes: 4185b27b3bef ("dt-bindings: clock: Add YAML schemas for LPASS clocks on SC7280")
-Acked-by: Rob Herring <robh@kernel.org>
-Signed-off-by: Taniya Das <quic_tdas@quicinc.com>
-Reviewed-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/1662005846-4838-4-git-send-email-quic_c_skakit@quicinc.com
-Stable-dep-of: d470be3c4f30 ("clk: qcom: lpass-sc7280: Fix pm_runtime usage")
+Fixes: 6de8d628df6e ("media: amphion: add v4l2 m2m vpu decoder stateful driver")
+Signed-off-by: Ming Qian <ming.qian@nxp.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../clock/qcom,sc7280-lpasscorecc.yaml        | 19 ++++++++++++++++---
- .../clock/qcom,lpassaudiocc-sc7280.h          |  5 +++++
- 2 files changed, 21 insertions(+), 3 deletions(-)
+ drivers/media/platform/amphion/vpu.h         |  1 +
+ drivers/media/platform/amphion/vpu_cmds.c    | 39 ++++++++++++++++++--
+ drivers/media/platform/amphion/vpu_malone.c  |  1 +
+ drivers/media/platform/amphion/vpu_windsor.c |  1 +
+ 4 files changed, 38 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-index bad9135489de..1d20cdcc69ff 100644
---- a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-+++ b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscorecc.yaml
-@@ -22,6 +22,8 @@ properties:
+diff --git a/drivers/media/platform/amphion/vpu.h b/drivers/media/platform/amphion/vpu.h
+index beac0309ca8d..048c23c2bf4d 100644
+--- a/drivers/media/platform/amphion/vpu.h
++++ b/drivers/media/platform/amphion/vpu.h
+@@ -13,6 +13,7 @@
+ #include <linux/mailbox_controller.h>
+ #include <linux/kfifo.h>
  
-   clock-names: true
++#define VPU_TIMEOUT_WAKEUP	msecs_to_jiffies(200)
+ #define VPU_TIMEOUT		msecs_to_jiffies(1000)
+ #define VPU_INST_NULL_ID	(-1L)
+ #define VPU_MSG_BUFFER_SIZE	(8192)
+diff --git a/drivers/media/platform/amphion/vpu_cmds.c b/drivers/media/platform/amphion/vpu_cmds.c
+index f4d7ca78a621..fa581ba6bab2 100644
+--- a/drivers/media/platform/amphion/vpu_cmds.c
++++ b/drivers/media/platform/amphion/vpu_cmds.c
+@@ -269,7 +269,7 @@ static bool check_is_responsed(struct vpu_inst *inst, unsigned long key)
+ 	return flag;
+ }
  
-+  reg: true
+-static int sync_session_response(struct vpu_inst *inst, unsigned long key)
++static int sync_session_response(struct vpu_inst *inst, unsigned long key, long timeout, int try)
+ {
+ 	struct vpu_core *core;
+ 
+@@ -279,10 +279,12 @@ static int sync_session_response(struct vpu_inst *inst, unsigned long key)
+ 	core = inst->core;
+ 
+ 	call_void_vop(inst, wait_prepare);
+-	wait_event_timeout(core->ack_wq, check_is_responsed(inst, key), VPU_TIMEOUT);
++	wait_event_timeout(core->ack_wq, check_is_responsed(inst, key), timeout);
+ 	call_void_vop(inst, wait_finish);
+ 
+ 	if (!check_is_responsed(inst, key)) {
++		if (try)
++			return -EINVAL;
+ 		dev_err(inst->dev, "[%d] sync session timeout\n", inst->id);
+ 		set_bit(inst->id, &core->hang_mask);
+ 		mutex_lock(&inst->core->cmd_lock);
+@@ -294,6 +296,19 @@ static int sync_session_response(struct vpu_inst *inst, unsigned long key)
+ 	return 0;
+ }
+ 
++static void vpu_core_keep_active(struct vpu_core *core)
++{
++	struct vpu_rpc_event pkt;
 +
-   compatible:
-     enum:
-       - qcom,sc7280-lpassaoncc
-@@ -38,8 +40,8 @@ properties:
-   '#power-domain-cells':
-     const: 1
- 
--  reg:
--    maxItems: 1
-+  '#reset-cells':
-+    const: 1
- 
- required:
-   - compatible
-@@ -69,6 +71,11 @@ allOf:
-           items:
-             - const: bi_tcxo
-             - const: lpass_aon_cc_main_rcg_clk_src
++	memset(&pkt, 0, sizeof(pkt));
++	vpu_iface_pack_cmd(core, &pkt, 0, VPU_CMD_ID_NOOP, NULL);
 +
-+        reg:
-+          items:
-+            - description: lpass core cc register
-+            - description: lpass audio csr register
-   - if:
-       properties:
-         compatible:
-@@ -90,6 +97,8 @@ allOf:
-             - const: bi_tcxo_ao
-             - const: iface
- 
-+        reg:
-+          maxItems: 1
-   - if:
-       properties:
-         compatible:
-@@ -108,6 +117,8 @@ allOf:
-           items:
-             - const: bi_tcxo
- 
-+        reg:
-+          maxItems: 1
- examples:
-   - |
-     #include <dt-bindings/clock/qcom,rpmh.h>
-@@ -116,13 +127,15 @@ examples:
-     #include <dt-bindings/clock/qcom,lpasscorecc-sc7280.h>
-     lpass_audiocc: clock-controller@3300000 {
-       compatible = "qcom,sc7280-lpassaudiocc";
--      reg = <0x3300000 0x30000>;
-+      reg = <0x3300000 0x30000>,
-+            <0x32a9000 0x1000>;
-       clocks = <&rpmhcc RPMH_CXO_CLK>,
-                <&lpass_aon LPASS_AON_CC_MAIN_RCG_CLK_SRC>;
-       clock-names = "bi_tcxo", "lpass_aon_cc_main_rcg_clk_src";
-       power-domains = <&lpass_aon LPASS_AON_CC_LPASS_AUDIO_HM_GDSC>;
-       #clock-cells = <1>;
-       #power-domain-cells = <1>;
-+      #reset-cells = <1>;
-     };
- 
-   - |
-diff --git a/include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h b/include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h
-index 20ef2ea673f3..22dcd47d4513 100644
---- a/include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h
-+++ b/include/dt-bindings/clock/qcom,lpassaudiocc-sc7280.h
-@@ -24,6 +24,11 @@
- #define LPASS_AUDIO_CC_RX_MCLK_CLK			14
- #define LPASS_AUDIO_CC_RX_MCLK_CLK_SRC			15
- 
-+/* LPASS AUDIO CC CSR */
-+#define LPASS_AUDIO_SWR_RX_CGCR				0
-+#define LPASS_AUDIO_SWR_TX_CGCR				1
-+#define LPASS_AUDIO_SWR_WSA_CGCR			2
++	dev_dbg(core->dev, "try to wake up\n");
++	mutex_lock(&core->cmd_lock);
++	vpu_cmd_send(core, &pkt);
++	mutex_unlock(&core->cmd_lock);
++}
 +
- /* LPASS_AON_CC clocks */
- #define LPASS_AON_CC_PLL				0
- #define LPASS_AON_CC_PLL_OUT_EVEN			1
+ static int vpu_session_send_cmd(struct vpu_inst *inst, u32 id, void *data)
+ {
+ 	unsigned long key;
+@@ -304,9 +319,25 @@ static int vpu_session_send_cmd(struct vpu_inst *inst, u32 id, void *data)
+ 		return -EINVAL;
+ 
+ 	ret = vpu_request_cmd(inst, id, data, &key, &sync);
+-	if (!ret && sync)
+-		ret = sync_session_response(inst, key);
++	if (ret)
++		goto exit;
++
++	/* workaround for a firmware issue,
++	 * firmware should be waked up by start or configure command,
++	 * but there is a very small change that firmware failed to wakeup.
++	 * in such case, try to wakeup firmware again by sending a noop command
++	 */
++	if (sync && (id == VPU_CMD_ID_CONFIGURE_CODEC || id == VPU_CMD_ID_START)) {
++		if (sync_session_response(inst, key, VPU_TIMEOUT_WAKEUP, 1))
++			vpu_core_keep_active(inst->core);
++		else
++			goto exit;
++	}
++
++	if (sync)
++		ret = sync_session_response(inst, key, VPU_TIMEOUT, 0);
+ 
++exit:
+ 	if (ret)
+ 		dev_err(inst->dev, "[%d] send cmd(0x%x) fail\n", inst->id, id);
+ 
+diff --git a/drivers/media/platform/amphion/vpu_malone.c b/drivers/media/platform/amphion/vpu_malone.c
+index 51e0702f9ae1..9f2890730fd7 100644
+--- a/drivers/media/platform/amphion/vpu_malone.c
++++ b/drivers/media/platform/amphion/vpu_malone.c
+@@ -692,6 +692,7 @@ int vpu_malone_set_decode_params(struct vpu_shared_addr *shared,
+ }
+ 
+ static struct vpu_pair malone_cmds[] = {
++	{VPU_CMD_ID_NOOP, VID_API_CMD_NULL},
+ 	{VPU_CMD_ID_START, VID_API_CMD_START},
+ 	{VPU_CMD_ID_STOP, VID_API_CMD_STOP},
+ 	{VPU_CMD_ID_ABORT, VID_API_CMD_ABORT},
+diff --git a/drivers/media/platform/amphion/vpu_windsor.c b/drivers/media/platform/amphion/vpu_windsor.c
+index 1526af2ef9da..b93c8cfdee7f 100644
+--- a/drivers/media/platform/amphion/vpu_windsor.c
++++ b/drivers/media/platform/amphion/vpu_windsor.c
+@@ -658,6 +658,7 @@ int vpu_windsor_get_stream_buffer_size(struct vpu_shared_addr *shared)
+ }
+ 
+ static struct vpu_pair windsor_cmds[] = {
++	{VPU_CMD_ID_NOOP, GTB_ENC_CMD_NOOP},
+ 	{VPU_CMD_ID_CONFIGURE_CODEC, GTB_ENC_CMD_CONFIGURE_CODEC},
+ 	{VPU_CMD_ID_START, GTB_ENC_CMD_STREAM_START},
+ 	{VPU_CMD_ID_STOP, GTB_ENC_CMD_STREAM_STOP},
 -- 
 2.35.1
 
