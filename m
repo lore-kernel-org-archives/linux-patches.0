@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D597A1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A205C433D2;
-	Wed, 28 Dec 2022 16:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC3531C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:28:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31847C433EF;
+	Wed, 28 Dec 2022 16:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244879;
-	bh=Pnf9XD4XvEC6KCYmfGfHJiQ9Ts8ejEgSvRNs+LSI2B8=;
+	s=korg; t=1672244882;
+	bh=P/yqFWzpRP1MUCTMMFFZHoiJC4V0gyYh77CB16B4cZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TQbXjQb8FZZ15s52AN/vnp7wl7WZygp6I65kKU1z/dlZHt7TsSl2/C9Jirt6/aCAQ
-	 L8j609ZZzM5xksjK7+xjIaodc4P1DHWZc9/gcPiWGDEW1KSuk71mY6+5xDadkoXaTg
-	 bxUsDO+sBoHC1mKVN4Ut85jXGh5YCZAvAfGJwTBU=
+	b=P90Inyd9olBs3+O4BkLxWRPQo36PpjxcO3L1M1swAVTalbLU3hNpws9j/TvFdaGg9
+	 53UXbLd/YNa3Es121plQpLZ5NTXSXYqIPFYVX7DPeqM7PC+ss3xQe4Wm4YBF4Sh+9N
+	 XMbPoYimHb13GMX/dSeRF8ErV+aFE/cIWlSPWqFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	Helge Deller <deller@gmx.de>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0755/1146] fbdev: pm2fb: fix missing pci_disable_device()
-Date: Wed, 28 Dec 2022 15:38:14 +0100
-Message-Id: <20221228144350.652038798@linuxfoundation.org>
+Subject: [PATCH 6.0 0793/1073] iommu/amd: Fix pci device refcount leak in ppr_notifier()
+Date: Wed, 28 Dec 2022 15:39:41 +0100
+Message-Id: <20221228144349.549983124@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,52 +37,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit ed359a464846b48f76ea6cc5cd8257e545ac97f4 ]
+[ Upstream commit 6cf0981c2233f97d56938d9d61845383d6eb227c ]
 
-Add missing pci_disable_device() in error path of probe() and remove() path.
+As comment of pci_get_domain_bus_and_slot() says, it returns
+a pci device with refcount increment, when finish using it,
+the caller must decrement the reference count by calling
+pci_dev_put(). So call it before returning from ppr_notifier()
+to avoid refcount leak.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: daae2d25a477 ("iommu/amd: Don't copy GCR3 table root pointer")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Link: https://lore.kernel.org/r/20221118093604.216371-1-yangyingliang@huawei.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/pm2fb.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/iommu/amd/iommu_v2.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/video/fbdev/pm2fb.c b/drivers/video/fbdev/pm2fb.c
-index 7da715d31a93..7a8609c40ae9 100644
---- a/drivers/video/fbdev/pm2fb.c
-+++ b/drivers/video/fbdev/pm2fb.c
-@@ -1533,8 +1533,10 @@ static int pm2fb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	}
+diff --git a/drivers/iommu/amd/iommu_v2.c b/drivers/iommu/amd/iommu_v2.c
+index 6a1f02c62dff..9f7fab49a5a9 100644
+--- a/drivers/iommu/amd/iommu_v2.c
++++ b/drivers/iommu/amd/iommu_v2.c
+@@ -587,6 +587,7 @@ static int ppr_notifier(struct notifier_block *nb, unsigned long e, void *data)
+ 	put_device_state(dev_state);
  
- 	info = framebuffer_alloc(sizeof(struct pm2fb_par), &pdev->dev);
--	if (!info)
--		return -ENOMEM;
-+	if (!info) {
-+		err = -ENOMEM;
-+		goto err_exit_disable;
-+	}
- 	default_par = info->par;
- 
- 	switch (pdev->device) {
-@@ -1715,6 +1717,8 @@ static int pm2fb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	release_mem_region(pm2fb_fix.mmio_start, pm2fb_fix.mmio_len);
-  err_exit_neither:
- 	framebuffer_release(info);
-+ err_exit_disable:
-+	pci_disable_device(pdev);
- 	return retval;
+ out:
++	pci_dev_put(pdev);
+ 	return ret;
  }
  
-@@ -1739,6 +1743,7 @@ static void pm2fb_remove(struct pci_dev *pdev)
- 	fb_dealloc_cmap(&info->cmap);
- 	kfree(info->pixmap.addr);
- 	framebuffer_release(info);
-+	pci_disable_device(pdev);
- }
- 
- static const struct pci_device_id pm2fb_id_table[] = {
 -- 
 2.35.1
 
