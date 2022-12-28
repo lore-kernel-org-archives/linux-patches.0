@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C2F81C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:36:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24999C433EF;
-	Wed, 28 Dec 2022 16:36:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DF41C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:37:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1E7AC433D2;
+	Wed, 28 Dec 2022 16:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245417;
-	bh=eZ2p5/ltQ9FlwI0FEwRaUY7sV4JC5v1Bu6GG5amWVNI=;
+	s=korg; t=1672245420;
+	bh=ycJSdmVsD2NsqhaOtsUZjC5inYto8Cl7HedkvgHN6Ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O9H8pTpMtAoCyTbFfnoQYmSY4pe+LeTHqt+75ZZN8AlQC1JHM4QKbsrqZpLOo26Mo
-	 HEtHv2gFbtQYx1AiPl/7ICBYivaXVwAQInxY0wK+encDzY+0avt8+VWsk0zKjEN6ne
-	 Xsn4Ma/YcZXzrwNbMJN6XA7u5OSrqAxy/n56QGDE=
+	b=T45F8PVioYRxdEv7cxXkQT41lr1Ni7UIjCbBwG+vBkkxLtMVh/BW2+zi6dOh9nENQ
+	 N90vWeiBz91Atjj0PUHtMRMhOn1NwTl0VS+eVJDmQ+c91IjlB9OcL+BRpc0o6xiFwo
+	 EGZbZFoLo/u2JYKnSV4mMmVd1wiEvHAyWPBC59Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Justin Chen <justinpopo6@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0858/1073] block: mark blk_put_queue as potentially blocking
-Date: Wed, 28 Dec 2022 15:40:46 +0100
-Message-Id: <20221228144351.323678813@linuxfoundation.org>
+Subject: [PATCH 6.1 0819/1146] phy: usb: Fix clock imbalance for suspend/resume
+Date: Wed, 28 Dec 2022 15:39:18 +0100
+Message-Id: <20221228144352.401411679@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,50 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Justin Chen <justinpopo6@gmail.com>
 
-[ Upstream commit 63f93fd6fa5717769a78d6d7bea6f7f9a1ccca8e ]
+[ Upstream commit 8484199c09347bdd5d81ee8a2bc530850f900797 ]
 
-We can't just say that the last reference release may block, as any
-reference dropped could be the last one.  So move the might_sleep() from
-blk_free_queue to blk_put_queue and update the documentation.
+We should be disabling clocks when wake from USB is not needed. Since
+this wasn't done, we had a clock imbalance since clocks were always
+being enabled on resume.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20221114042637.1009333-6-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: d36a9ea5e776 ("block: fix use-after-free of q->q_usage_counter")
+Fixes: ae532b2b7aa5 ("phy: usb: Add "wake on" functionality for newer Synopsis XHCI controllers")
+Fixes: b0c0b66c0b43 ("phy: usb: Add support for wake and USB low power mode for 7211 S2/S5")
+Signed-off-by: Justin Chen <justinpopo6@gmail.com>
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/1665005418-15807-7-git-send-email-justinpopo6@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-core.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c | 2 --
+ drivers/phy/broadcom/phy-brcm-usb-init.h          | 1 -
+ drivers/phy/broadcom/phy-brcm-usb.c               | 8 +++++---
+ 3 files changed, 5 insertions(+), 6 deletions(-)
 
-diff --git a/block/blk-core.c b/block/blk-core.c
-index 3920e101654f..818002b8be7c 100644
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -261,8 +261,6 @@ static void blk_free_queue_rcu(struct rcu_head *rcu_head)
+diff --git a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
+index b3386e458dd4..3b374b37b965 100644
+--- a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
++++ b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
+@@ -424,7 +424,6 @@ void brcm_usb_dvr_init_7216(struct brcm_usb_init_params *params)
  
- static void blk_free_queue(struct request_queue *q)
- {
--	might_sleep();
--
- 	percpu_ref_exit(&q->q_usage_counter);
- 
- 	if (q->poll_stat)
-@@ -286,11 +284,11 @@ static void blk_free_queue(struct request_queue *q)
-  * Decrements the refcount of the request_queue and free it when the refcount
-  * reaches 0.
-  *
-- * Context: Any context, but the last reference must not be dropped from
-- *          atomic context.
-+ * Context: Can sleep.
-  */
- void blk_put_queue(struct request_queue *q)
- {
-+	might_sleep();
- 	if (refcount_dec_and_test(&q->refs))
- 		blk_free_queue(q);
+ 	params->family_name = "7216";
+ 	params->ops = &bcm7216_ops;
+-	params->suspend_with_clocks = true;
  }
+ 
+ void brcm_usb_dvr_init_7211b0(struct brcm_usb_init_params *params)
+@@ -434,5 +433,4 @@ void brcm_usb_dvr_init_7211b0(struct brcm_usb_init_params *params)
+ 
+ 	params->family_name = "7211";
+ 	params->ops = &bcm7211b0_ops;
+-	params->suspend_with_clocks = true;
+ }
+diff --git a/drivers/phy/broadcom/phy-brcm-usb-init.h b/drivers/phy/broadcom/phy-brcm-usb-init.h
+index 1ccb5ddab865..3236e9498842 100644
+--- a/drivers/phy/broadcom/phy-brcm-usb-init.h
++++ b/drivers/phy/broadcom/phy-brcm-usb-init.h
+@@ -61,7 +61,6 @@ struct  brcm_usb_init_params {
+ 	const struct brcm_usb_init_ops *ops;
+ 	struct regmap *syscon_piarbctl;
+ 	bool wake_enabled;
+-	bool suspend_with_clocks;
+ };
+ 
+ void brcm_usb_dvr_init_4908(struct brcm_usb_init_params *params);
+diff --git a/drivers/phy/broadcom/phy-brcm-usb.c b/drivers/phy/broadcom/phy-brcm-usb.c
+index c0c3ab9b2a15..2bfd78e2d8fd 100644
+--- a/drivers/phy/broadcom/phy-brcm-usb.c
++++ b/drivers/phy/broadcom/phy-brcm-usb.c
+@@ -598,7 +598,7 @@ static int brcm_usb_phy_suspend(struct device *dev)
+ 		 * and newer XHCI->2.0-clks/3.0-clks.
+ 		 */
+ 
+-		if (!priv->ini.suspend_with_clocks) {
++		if (!priv->ini.wake_enabled) {
+ 			if (priv->phys[BRCM_USB_PHY_3_0].inited)
+ 				clk_disable_unprepare(priv->usb_30_clk);
+ 			if (priv->phys[BRCM_USB_PHY_2_0].inited ||
+@@ -615,8 +615,10 @@ static int brcm_usb_phy_resume(struct device *dev)
+ {
+ 	struct brcm_usb_phy_data *priv = dev_get_drvdata(dev);
+ 
+-	clk_prepare_enable(priv->usb_20_clk);
+-	clk_prepare_enable(priv->usb_30_clk);
++	if (!priv->ini.wake_enabled) {
++		clk_prepare_enable(priv->usb_20_clk);
++		clk_prepare_enable(priv->usb_30_clk);
++	}
+ 	brcm_usb_init_ipp(&priv->ini);
+ 
+ 	/*
 -- 
 2.35.1
 
