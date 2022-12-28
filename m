@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8965E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 109FBC433D2;
-	Wed, 28 Dec 2022 15:21:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC611863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8C7EC433D2;
+	Wed, 28 Dec 2022 15:21:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240879;
-	bh=AQ7MP6f+CuDS6fauakVT89JofHP49/7d93CCjvJoE9M=;
+	s=korg; t=1672240882;
+	bh=nFxOc1XNvVZFR1/aX+3ddg/bNF0MDaD3f8yHQ31RcyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h/IV2jXJpwFoEjJ0nc629ilgkKhP5TiHh5ipQiVQhatfSb0G58oQDTJJmn7Ghp6+q
-	 GJ64KlOPTof6bqbu4uQ7zfASo2odFAaVC4lqtETK4CaEPBr4VgYR9Zz1ILpRmuTfMC
-	 D55y7QopNQG9Jcq0COtQsHHWglblDc4OlYmfdYHY=
+	b=H3lLQ/DUE/qCrcde9RIuv6x5aD3Azja5GQxmHGX/inogOyLu21GXpjrvBGYbHezz6
+	 GNyfQg9UBEhqnMq0+F6PoDAOo0gwmXscNy/I/cZAp2y1u+iJTK8bpesf8zQxwxx5WG
+	 haLW3Fof2Djygj+KoDPeba32ago+LFAMdVNyl2D8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0213/1073] ASoC: Intel: avs: Fix DMA mask assignment
-Date: Wed, 28 Dec 2022 15:30:01 +0100
-Message-Id: <20221228144333.803144509@linuxfoundation.org>
+Subject: [PATCH 5.15 408/731] scsi: hpsa: Fix error handling in hpsa_add_sas_host()
+Date: Wed, 28 Dec 2022 15:38:35 +0100
+Message-Id: <20221228144308.397332528@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,34 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 83375566a7a7042cb34b24986d100f46bfa0c1e5 ]
+[ Upstream commit 4ef174a3ad9b5d73c1b6573e244ebba2b0d86eac ]
 
-Spelling error leads to incorrect behavior when setting up DMA mask.
+hpsa_sas_port_add_phy() does:
+  ...
+  sas_phy_add()  -> may return error here
+  sas_port_add_phy()
+  ...
 
-Fixes: a5bbbde2b81e ("ASoC: Intel: avs: Use helper function to set up DMA")
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://lore.kernel.org/r/20221010121955.718168-2-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Whereas hpsa_free_sas_phy() does:
+  ...
+  sas_port_delete_phy()
+  sas_phy_delete()
+  ...
+
+If hpsa_sas_port_add_phy() returns an error, hpsa_free_sas_phy() can not be
+called to free the memory because the port and the phy have not been added
+yet.
+
+Replace hpsa_free_sas_phy() with sas_phy_free() and kfree() to avoid kernel
+crash in this case.
+
+Fixes: d04e62b9d63a ("hpsa: add in sas transport class")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221110151129.394389-1-yangyingliang@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/avs/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/hpsa.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/avs/core.c b/sound/soc/intel/avs/core.c
-index c50c20fd681a..58db13374166 100644
---- a/sound/soc/intel/avs/core.c
-+++ b/sound/soc/intel/avs/core.c
-@@ -440,7 +440,7 @@ static int avs_pci_probe(struct pci_dev *pci, const struct pci_device_id *id)
- 	if (bus->mlcap)
- 		snd_hdac_ext_bus_get_ml_capabilities(bus);
+diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
+index 74d563950c64..a4a00944b290 100644
+--- a/drivers/scsi/hpsa.c
++++ b/drivers/scsi/hpsa.c
+@@ -9788,7 +9788,8 @@ static int hpsa_add_sas_host(struct ctlr_info *h)
+ 	return 0;
  
--	if (!dma_set_mask_and_coherent(dev, DMA_BIT_MASK(64)))
-+	if (dma_set_mask_and_coherent(dev, DMA_BIT_MASK(64)))
- 		dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
- 	dma_set_max_seg_size(dev, UINT_MAX);
- 
+ free_sas_phy:
+-	hpsa_free_sas_phy(hpsa_sas_phy);
++	sas_phy_free(hpsa_sas_phy->phy);
++	kfree(hpsa_sas_phy);
+ free_sas_port:
+ 	hpsa_free_sas_port(hpsa_sas_port);
+ free_sas_node:
 -- 
 2.35.1
 
