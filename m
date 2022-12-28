@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57D6023AF
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:59:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF26FC433EF;
-	Wed, 28 Dec 2022 16:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE88F23AF
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:59:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7428EC433D2;
+	Wed, 28 Dec 2022 16:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246753;
-	bh=ChABwfarEnxpiZ8bKwylaKD1+QV4NBac45YFxo79hTM=;
+	s=korg; t=1672246755;
+	bh=zpUQ9nAi9tFdUUmnpPGcOyH7K4jnTIhrgBuAki78Sv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PvuxIqhKeiCxa6bVoeKCFykHiKmmIjdaRjYY7PK8KPUIDPs04F5S/qq8t0aiFdRm6
-	 1Q1K+zGx39UOS/ZwwqcWRVAcTzyOk9K52c4Unr491ajBr4a5zPHknN9NNNesHs8WWR
-	 Fu5VTSiOk+2RjMsE9ShzwOk9Moy2iaBgodFStJhk=
+	b=fjcgF9qUipCV7RaGFJ4fLRwht6k94U/7nfhWDdHcLhl5LD6RJ73QC9rj/x/Kia5yw
+	 Ol6oMbf+Mk7V6GimhuYjqFBBCAwPzBdyyMXcxgCZiNzq0LiRq7wzIkK+tO0eXYIlMq
+	 Bd9PSIA14XSqu9zt/DWKX5xqb2tjbR6dk+FHhv9c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rickard x Andersson <rickaran@axis.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Martin Liska <mliska@suse.cz>,
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	Andrei Vagin <avagin@gmail.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 1126/1146] gcov: add support for checksum field
-Date: Wed, 28 Dec 2022 15:44:25 +0100
-Message-Id: <20221228144400.730451246@linuxfoundation.org>
+Subject: [PATCH 6.1 1127/1146] test_maple_tree: add test for mas_spanning_rebalance() on insufficient data
+Date: Wed, 28 Dec 2022 15:44:26 +0100
+Message-Id: <20221228144400.756203147@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -36,49 +37,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rickard x Andersson <rickaran@axis.com>
+From: Liam Howlett <liam.howlett@oracle.com>
 
-commit e96b95c2b7a63a454b6498e2df67aac14d046d13 upstream.
+commit c5651b31f51584bd1199b3a552c8211a8523d6e1 upstream.
 
-In GCC version 12.1 a checksum field was added.
+Add a test to the maple tree test suite for the spanning rebalance
+insufficient node issue does not go undetected again.
 
-This patch fixes a kernel crash occurring during boot when using
-gcov-kernel with GCC version 12.2.  The crash occurred on a system running
-on i.MX6SX.
-
-Link: https://lkml.kernel.org/r/20221220102318.3418501-1-rickaran@axis.com
-Fixes: 977ef30a7d88 ("gcov: support GCC 12.1 and newer compilers")
-Signed-off-by: Rickard x Andersson <rickaran@axis.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Tested-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Reviewed-by: Martin Liska <mliska@suse.cz>
+Link: https://lkml.kernel.org/r/20221219161922.2708732-3-Liam.Howlett@oracle.com
+Fixes: 54a611b60590 ("Maple Tree: add new data structure")
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Cc: Andrei Vagin <avagin@gmail.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Muhammad Usama Anjum <usama.anjum@collabora.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/gcov/gcc_4_7.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ lib/test_maple_tree.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
---- a/kernel/gcov/gcc_4_7.c
-+++ b/kernel/gcov/gcc_4_7.c
-@@ -82,6 +82,7 @@ struct gcov_fn_info {
-  * @version: gcov version magic indicating the gcc version used for compilation
-  * @next: list head for a singly-linked list
-  * @stamp: uniquifying time stamp
-+ * @checksum: unique object checksum
-  * @filename: name of the associated gcov data file
-  * @merge: merge functions (null for unused counter type)
-  * @n_functions: number of instrumented functions
-@@ -94,6 +95,10 @@ struct gcov_info {
- 	unsigned int version;
- 	struct gcov_info *next;
- 	unsigned int stamp;
-+ /* Since GCC 12.1 a checksum field is added. */
-+#if (__GNUC__ >= 12)
-+	unsigned int checksum;
-+#endif
- 	const char *filename;
- 	void (*merge[GCOV_COUNTERS])(gcov_type *, unsigned int);
- 	unsigned int n_functions;
+diff --git a/lib/test_maple_tree.c b/lib/test_maple_tree.c
+index f425f169ef08..497fc93ccf9e 100644
+--- a/lib/test_maple_tree.c
++++ b/lib/test_maple_tree.c
+@@ -2498,6 +2498,25 @@ static noinline void check_dup(struct maple_tree *mt)
+ 	}
+ }
+ 
++static noinline void check_bnode_min_spanning(struct maple_tree *mt)
++{
++	int i = 50;
++	MA_STATE(mas, mt, 0, 0);
++
++	mt_set_non_kernel(9999);
++	mas_lock(&mas);
++	do {
++		mas_set_range(&mas, i*10, i*10+9);
++		mas_store(&mas, check_bnode_min_spanning);
++	} while (i--);
++
++	mas_set_range(&mas, 240, 509);
++	mas_store(&mas, NULL);
++	mas_unlock(&mas);
++	mas_destroy(&mas);
++	mt_set_non_kernel(0);
++}
++
+ static DEFINE_MTREE(tree);
+ static int maple_tree_seed(void)
+ {
+@@ -2742,6 +2761,10 @@ static int maple_tree_seed(void)
+ 	check_dup(&tree);
+ 	mtree_destroy(&tree);
+ 
++	mt_init_flags(&tree, MT_FLAGS_ALLOC_RANGE);
++	check_bnode_min_spanning(&tree);
++	mtree_destroy(&tree);
++
+ #if defined(BENCH)
+ skip:
+ #endif
+-- 
+2.39.0
+
 
 
