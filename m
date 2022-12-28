@@ -1,30 +1,49 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C710A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46B55C433D2;
-	Wed, 28 Dec 2022 15:29:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74EE01863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C68C4C433D2;
+	Wed, 28 Dec 2022 15:29:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241360;
-	bh=Q7QIBx8B3bOXxoI7XjnJtQq9CABP8wRuiDR0mwf3l8U=;
+	s=korg; t=1672241363;
+	bh=LbPBkLsQ7kmazh9kDWXgxYRjhKF5eyLSrujJg/KWihc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PkPFmG3NL+3fydhHLSmnFb3Fu+NY0jV7k2GYX7QqgAidY7gn37Kopr2svgdTCPl1m
-	 ZOJdOFWJO5eu6yPm8JtKl0yWX8VDn1xF0tkkCg2x5ubDdr7DlxEanjAsvgLO7HAly0
-	 /Z66yYshKofRhbw5xA3tKSYPSPLVciJImDvLzBsM=
+	b=YrWzzCUIi+oJGPmr3fvXol5I0VQi1H8Ak3wDpDUFjFCk89s4qtDJTEGVQj/6Fl1it
+	 ZN9EXtFjozrRvtLHjDXoElV3lkbdwxtlDFOB69LVhOwY2IZW7jefR2zf7lOyEfPVtS
+	 Emu/gAm0qlLoz/92/ZN6XFrrBMza3vdLYwOM240Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Joel Savitz <jsavitz@redhat.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Aravind Iddamsetty <aravind.iddamsetty@intel.com>,
+	Matt Roper <matthew.d.roper@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Jason Ekstrand <jason@jlekstrand.net>,
+	=?UTF-8?q?Micha=C5=82=20Winiarski?= <michal.winiarski@intel.com>,
+	Matthew Brost <matthew.brost@intel.com>,
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Tejas Upadhyay <tejaskumarx.surendrakumar.upadhyay@intel.com>,
+	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Stuart Summers <stuart.summers@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Ramalingam C <ramalingam.c@intel.com>,
+	Akeem G Abodunrin <akeem.g.abodunrin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 470/731] firmware: raspberrypi: fix possible memory leak in rpi_firmware_probe()
-Date: Wed, 28 Dec 2022 15:39:37 +0100
-Message-Id: <20221228144310.177190535@linuxfoundation.org>
+Subject: [PATCH 6.1 0237/1146] drm/i915: Fix compute pre-emption w/a to apply to compute engines
+Date: Wed, 28 Dec 2022 15:29:36 +0100
+Message-Id: <20221228144336.575818881@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +54,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: John Harrison <John.C.Harrison@Intel.com>
 
-[ Upstream commit 7b51161696e803fd5f9ad55b20a64c2df313f95c ]
+[ Upstream commit c3bd49cd9a1043b963331e7fd874b380bed3f2bd ]
 
-In rpi_firmware_probe(), if mbox_request_channel() fails, the 'fw' will
-not be freed through rpi_firmware_delete(), fix this leak by calling
-kfree() in the error path.
+An earlier patch added support for compute engines. However, it missed
+enabling the anti-pre-emption w/a for the new engine class. So move
+the 'compute capable' flag earlier and use it for the pre-emption w/a
+test.
 
-Fixes: 1e7c57355a3b ("firmware: raspberrypi: Keep count of all consumers")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221117070636.3849773-1-yangyingliang@huawei.com
-Acked-by: Joel Savitz <jsavitz@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c674c5b9342e ("drm/i915/xehp: CCS should use RCS setup functions")
+Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Cc: Aravind Iddamsetty <aravind.iddamsetty@intel.com>
+Cc: Matt Roper <matthew.d.roper@intel.com>
+Cc: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Lucas De Marchi <lucas.demarchi@intel.com>
+Cc: John Harrison <John.C.Harrison@Intel.com>
+Cc: Jason Ekstrand <jason@jlekstrand.net>
+Cc: "Michał Winiarski" <michal.winiarski@intel.com>
+Cc: Matthew Brost <matthew.brost@intel.com>
+Cc: Chris Wilson <chris@chris-wilson.co.uk>
+Cc: Tejas Upadhyay <tejaskumarx.surendrakumar.upadhyay@intel.com>
+Cc: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
+Cc: "Thomas Hellström" <thomas.hellstrom@linux.intel.com>
+Cc: Stuart Summers <stuart.summers@intel.com>
+Cc: Matthew Auld <matthew.auld@intel.com>
+Cc: Jani Nikula <jani.nikula@intel.com>
+Cc: Ramalingam C <ramalingam.c@intel.com>
+Cc: Akeem G Abodunrin <akeem.g.abodunrin@intel.com>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221006213813.1563435-3-John.C.Harrison@Intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/raspberrypi.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/i915/gt/intel_engine_cs.c | 24 +++++++++++------------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/firmware/raspberrypi.c b/drivers/firmware/raspberrypi.c
-index 4b8978b254f9..dba315f675bc 100644
---- a/drivers/firmware/raspberrypi.c
-+++ b/drivers/firmware/raspberrypi.c
-@@ -272,6 +272,7 @@ static int rpi_firmware_probe(struct platform_device *pdev)
- 		int ret = PTR_ERR(fw->chan);
- 		if (ret != -EPROBE_DEFER)
- 			dev_err(dev, "Failed to get mbox channel: %d\n", ret);
-+		kfree(fw);
- 		return ret;
- 	}
+diff --git a/drivers/gpu/drm/i915/gt/intel_engine_cs.c b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
+index d6cc90ae70c9..83bfeb872bda 100644
+--- a/drivers/gpu/drm/i915/gt/intel_engine_cs.c
++++ b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
+@@ -486,6 +486,17 @@ static int intel_engine_setup(struct intel_gt *gt, enum intel_engine_id id,
+ 	engine->logical_mask = BIT(logical_instance);
+ 	__sprint_engine_name(engine);
  
++	if ((engine->class == COMPUTE_CLASS && !RCS_MASK(engine->gt) &&
++	     __ffs(CCS_MASK(engine->gt)) == engine->instance) ||
++	     engine->class == RENDER_CLASS)
++		engine->flags |= I915_ENGINE_FIRST_RENDER_COMPUTE;
++
++	/* features common between engines sharing EUs */
++	if (engine->class == RENDER_CLASS || engine->class == COMPUTE_CLASS) {
++		engine->flags |= I915_ENGINE_HAS_RCS_REG_STATE;
++		engine->flags |= I915_ENGINE_HAS_EU_PRIORITY;
++	}
++
+ 	engine->props.heartbeat_interval_ms =
+ 		CONFIG_DRM_I915_HEARTBEAT_INTERVAL;
+ 	engine->props.max_busywait_duration_ns =
+@@ -498,20 +509,9 @@ static int intel_engine_setup(struct intel_gt *gt, enum intel_engine_id id,
+ 		CONFIG_DRM_I915_TIMESLICE_DURATION;
+ 
+ 	/* Override to uninterruptible for OpenCL workloads. */
+-	if (GRAPHICS_VER(i915) == 12 && engine->class == RENDER_CLASS)
++	if (GRAPHICS_VER(i915) == 12 && (engine->flags & I915_ENGINE_HAS_RCS_REG_STATE))
+ 		engine->props.preempt_timeout_ms = 0;
+ 
+-	if ((engine->class == COMPUTE_CLASS && !RCS_MASK(engine->gt) &&
+-	     __ffs(CCS_MASK(engine->gt)) == engine->instance) ||
+-	     engine->class == RENDER_CLASS)
+-		engine->flags |= I915_ENGINE_FIRST_RENDER_COMPUTE;
+-
+-	/* features common between engines sharing EUs */
+-	if (engine->class == RENDER_CLASS || engine->class == COMPUTE_CLASS) {
+-		engine->flags |= I915_ENGINE_HAS_RCS_REG_STATE;
+-		engine->flags |= I915_ENGINE_HAS_EU_PRIORITY;
+-	}
+-
+ 	/* Cap properties according to any system limits */
+ #define CLAMP_PROP(field) \
+ 	do { \
 -- 
 2.35.1
 
