@@ -1,79 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 619A26D39
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 19:44:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPS id 19ED9C433F1;
-	Wed, 28 Dec 2022 19:44:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1672256651;
-	bh=pKEmLVzCCnoF36/wLQbSAGOm4oNLhFE2rrntvg0ty04=;
-	h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-	b=M033N6tKhdhqCernrFuq6Py4Z/KhyyAt6tGUUny1qWLXzPJW9wjgSO7qcWMCExi5C
-	 4ooktyfhNoDIPzlvOkO5RSiWqJY0Cm5yF1LJx4DskRR5c9v/d1uw/dtnWtmHGEaKdT
-	 H6ZKmAwTRIl8aLH2Fyt4zeUqKYbf3gLSx8BuGNfMCSUDKn8JXNL9gZfOvcES2KAo+5
-	 050GUcIQmpiB77sduxI0z1U4bTlcTbvexfErJxflv0yxaVgRYLGfJwNKBSRNKm1dzB
-	 EY7GHg1UhfSx9rffFwYx++hw0fDPp6zMQdUnM4Eji8hOdUfL+QPJiItkQkpIWAlFmM
-	 FK/bBk0mK2LcA==
-Received: from aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-	by aws-us-west-2-korg-oddjob-1.ci.codeaurora.org (Postfix) with ESMTP id 02CBEE50D71;
-	Wed, 28 Dec 2022 19:44:11 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567556D24
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 20:04:00 +0000 (UTC)
+Received: by mail-pl1-f179.google.com with SMTP id 20so3530460plo.3
+        for <patches@lists.linux.dev>; Wed, 28 Dec 2022 12:04:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=D9hw1tyF2xNwFWyPmio8njtMOWA8uIyfYQ81GU7PQ4g=;
+        b=l5hSqSw7DhDVM2wKiPZ9RYMs20w2cvUUZhLOO00+ql252Nm0olrX0Rv9xmU7vqHR9O
+         LIRe6eWgrqlHrYUPH6OiRi4Q7e9fQ9fO0elhONz3PQ1X7oq0PuaMjwSnXeMV1nkJ5NCg
+         1PGR683ce+XaMymj5D6i1neHgegICCGOO0Oh8W84QDxYUMX7SQqNCCMvv1OE529fve2s
+         4deFw1HB8r23vK/YoMdKhIaOTVy566MgadmYlZpO0e5obxEmwuxIQnZ7cniERQBnRJhk
+         GA2+0O68FtQz8I/lonnmxobdxon3TsFtre6KLTdcgGgZhlqv5mYIA7fdnlj+s609WLs2
+         sD1w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=D9hw1tyF2xNwFWyPmio8njtMOWA8uIyfYQ81GU7PQ4g=;
+        b=6kNVtFtpZ1HpHnP5Q2Z2Hgk/K+P1TAODr0w5fUKF0BxbQtMfWfyUCHXcWkZ84Y2y4G
+         u7/EeE8vRnBIRd8VIn5vrGe17WuacOFxziWADNhvTpbu5uPfOcQSJLMG8DYDW9DHPnBG
+         opkLqg0jF5Z0L/lAlTy0wW1g/INwn+ofYHa56ZkLhTA3jkRE9kyqrgTyJ9nkhzVpAa+9
+         jy4OTjp9SZi93t+A9RL4id1aF0XhS2Nx7W0u/a93T+BcwL0VUZGb5jzXDzLJ9EggVXLO
+         U/iiQ6wHtcd4ZARBqUfXj1SglLnn6GKoNz34MxdVB+sVL0mUtGF79xDIXnaGGMMb71PD
+         3Wbg==
+X-Gm-Message-State: AFqh2kqKi9TKTpGpPt8iFjqMsTDU3sprusIdkGiaB+Fgu9O4p63jalxV
+	Msnc0lWYdFVMNgOx3i2pSOk=
+X-Google-Smtp-Source: AMrXdXvaLyIZDB2S9vQZlF3OIaI/XmryotvyVvLG8GaQ4k7gCNGscNcXAEniNr9iPcBPOU3EdJJIzA==
+X-Received: by 2002:a17:90a:780d:b0:219:ccbc:ed8e with SMTP id w13-20020a17090a780d00b00219ccbced8emr30058109pjk.20.1672257839728;
+        Wed, 28 Dec 2022 12:03:59 -0800 (PST)
+Received: from [192.168.1.3] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
+        by smtp.gmail.com with ESMTPSA id q60-20020a17090a4fc200b00225d963fbc2sm7056781pjh.34.2022.12.28.12.03.58
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Dec 2022 12:03:59 -0800 (PST)
+Message-ID: <6e00e703-f0ff-a739-75b5-bbca484ab74a@gmail.com>
+Date: Wed, 28 Dec 2022 12:03:57 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH 6.1 0307/1146] net,
- proc: Provide PROC_FS=n fallback for proc_create_net_single_write()
-From: patchwork-bot+netdevbpf@kernel.org
-Message-Id: 
- <167225665100.25140.12972215493523003630.git-patchwork-notify@kernel.org>
-Date: Wed, 28 Dec 2022 19:44:11 +0000
-References: <20221228144338.493695497@linuxfoundation.org>
-In-Reply-To: <20221228144338.493695497@linuxfoundation.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, lkp@intel.com,
- dhowells@redhat.com, marc.dionne@auristor.com, linux-afs@lists.infradead.org,
- netdev@vger.kernel.org, sashal@kernel.org
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 6.1 0000/1146] 6.1.2-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20221228144330.180012208@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello:
 
-This series was applied to bpf/bpf.git (master)
-by Arnaldo Carvalho de Melo <acme@redhat.com>:
 
-On Wed, 28 Dec 2022 15:30:46 +0100 you wrote:
-> From: David Howells <dhowells@redhat.com>
+On 12/28/2022 6:25 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.2 release.
+> There are 1146 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> [ Upstream commit c3d96f690a790074b508fe183a41e36a00cd7ddd ]
+> Responses should be made by Fri, 30 Dec 2022 14:41:29 +0000.
+> Anything received after that time might be too late.
 > 
-> Provide a CONFIG_PROC_FS=n fallback for proc_create_net_single_write().
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.2-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 > 
-> Also provide a fallback for proc_create_net_data_write().
+> thanks,
 > 
-> [...]
+> greg k-h
 
-Here is the summary with links:
-  - [6.1,0307/1146] net, proc: Provide PROC_FS=n fallback for proc_create_net_single_write()
-    (no matching commit)
-  - [6.1,0770/1146] perf trace: Return error if a system call doesnt exist
-    https://git.kernel.org/bpf/bpf/c/d4223e1776c3
-  - [6.1,0771/1146] perf trace: Use macro RAW_SYSCALL_ARGS_NUM to replace number
-    https://git.kernel.org/bpf/bpf/c/eadcab4c7a66
-  - [6.1,0772/1146] perf trace: Handle failure when trace point folder is missed
-    https://git.kernel.org/bpf/bpf/c/03e9a5d8eb55
-  - [6.1,0786/1146] perf off_cpu: Fix a typo in BTF tracepoint name, it should be btf_trace_sched_switch
-    https://git.kernel.org/bpf/bpf/c/167b266bf66c
-  - [6.1,0975/1146] bnx2: Use kmalloc_size_roundup() to match ksize() usage
-    (no matching commit)
-  - [6.1,0994/1146] igb: Do not free q_vector unless new one was allocated
-    (no matching commit)
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-You are awesome, thank you!
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
 -- 
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
-
+Florian
