@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C69F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92051C433D2;
-	Wed, 28 Dec 2022 15:48:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00651863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34AC1C433D2;
+	Wed, 28 Dec 2022 15:48:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242506;
-	bh=Z2ckRWTzViCVmEP3HHe6noxfScnOfOBfJzVUa+ToXeU=;
+	s=korg; t=1672242509;
+	bh=A4grCHYkvKB4uATlfMPV9R11Sw+LzLAckFqjEiTKo8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pBj9DTkjvyeLLcqtlZ2QtBIHCMKbF3JMKNCJEPBoezQOwInqiFETulIkIoXx5+3ie
-	 o8/Qxi/ES5N2+umIGfAWKVCnALSIvGMA3HR1s7fawD5SuoyxdaFmYFoS54AxeHCdaD
-	 vIpKpSqHKDzI3BJTr8hrqpPuJmlEUWjrkDy1Ju7o=
+	b=hSv8QOs0XtPNh7/6ierwL0t+fVHL8N77YPNZKnJJEDGEmGCyxiL9kW++S5T1jt5up
+	 NGXaM0dsosZOZiKctRT/6LGBW8eXkUEkqVmuOVX6cHYxuESNzTErO/hza6Lh9qlKUx
+	 pIeBe527ossOmNIvXGhzVCiJc6ShzL8WLocnRJOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	"David S. Miller" <davem@davemloft.net>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 611/731] rxrpc: Fix missing unlock in rxrpc_do_sendmsg()
-Date: Wed, 28 Dec 2022 15:41:58 +0100
-Message-Id: <20221228144314.246739993@linuxfoundation.org>
+Subject: [PATCH 6.0 0418/1073] ASoC: mediatek: mt8173: Enable IRQ when pdata is ready
+Date: Wed, 28 Dec 2022 15:33:26 +0100
+Message-Id: <20221228144339.375751997@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,45 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 4feb2c44629e6f9b459b41a5a60491069d346a95 ]
+[ Upstream commit 4cbb264d4e9136acab2c8fd39e39ab1b1402b84b ]
 
-One of the error paths in rxrpc_do_sendmsg() doesn't unlock the call mutex
-before returning.  Fix it to do this.
+If the device does not come straight from reset, we might receive an IRQ
+before we are ready to handle it.
 
-Note that this still doesn't get rid of the checker warning:
+Fixes:
 
-   ../net/rxrpc/sendmsg.c:617:5: warning: context imbalance in 'rxrpc_do_sendmsg' - wrong count at exit
+[    2.334737] Unable to handle kernel read from unreadable memory at virtual address 00000000000001e4
+[    2.522601] Call trace:
+[    2.525040]  regmap_read+0x1c/0x80
+[    2.528434]  mt8173_afe_irq_handler+0x40/0xf0
+...
+[    2.598921]  start_kernel+0x338/0x42c
 
-I think the interplay between the socket lock and the call's user_mutex may
-be too complicated for checker to analyse, especially as
-rxrpc_new_client_call_for_sendmsg(), which it calls, returns with the
-call's user_mutex if successful but unconditionally drops the socket lock.
-
-Fixes: e754eba685aa ("rxrpc: Provide a cmsg to specify the amount of Tx data for a call")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Fixes: ee0bcaff109f ("ASoC: mediatek: Add AFE platform driver")
+Link: https://lore.kernel.org/r/20221128-mt8173-afe-v1-0-70728221628f@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/sendmsg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/mediatek/mt8173/mt8173-afe-pcm.c | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/net/rxrpc/sendmsg.c b/net/rxrpc/sendmsg.c
-index 3c3a626459de..d4e4e94f4f98 100644
---- a/net/rxrpc/sendmsg.c
-+++ b/net/rxrpc/sendmsg.c
-@@ -716,7 +716,7 @@ int rxrpc_do_sendmsg(struct rxrpc_sock *rx, struct msghdr *msg, size_t len)
- 			if (call->tx_total_len != -1 ||
- 			    call->tx_pending ||
- 			    call->tx_top != 0)
--				goto error_put;
-+				goto out_put_unlock;
- 			call->tx_total_len = p.call.tx_total_len;
- 		}
- 	}
+diff --git a/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c b/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
+index dcaeeeb8aac7..bc155dd937e0 100644
+--- a/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
++++ b/sound/soc/mediatek/mt8173/mt8173-afe-pcm.c
+@@ -1070,16 +1070,6 @@ static int mt8173_afe_pcm_dev_probe(struct platform_device *pdev)
+ 
+ 	afe->dev = &pdev->dev;
+ 
+-	irq_id = platform_get_irq(pdev, 0);
+-	if (irq_id <= 0)
+-		return irq_id < 0 ? irq_id : -ENXIO;
+-	ret = devm_request_irq(afe->dev, irq_id, mt8173_afe_irq_handler,
+-			       0, "Afe_ISR_Handle", (void *)afe);
+-	if (ret) {
+-		dev_err(afe->dev, "could not request_irq\n");
+-		return ret;
+-	}
+-
+ 	afe->base_addr = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(afe->base_addr))
+ 		return PTR_ERR(afe->base_addr);
+@@ -1185,6 +1175,16 @@ static int mt8173_afe_pcm_dev_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_cleanup_components;
+ 
++	irq_id = platform_get_irq(pdev, 0);
++	if (irq_id <= 0)
++		return irq_id < 0 ? irq_id : -ENXIO;
++	ret = devm_request_irq(afe->dev, irq_id, mt8173_afe_irq_handler,
++			       0, "Afe_ISR_Handle", (void *)afe);
++	if (ret) {
++		dev_err(afe->dev, "could not request_irq\n");
++		goto err_pm_disable;
++	}
++
+ 	dev_info(&pdev->dev, "MT8173 AFE driver initialized.\n");
+ 	return 0;
+ 
 -- 
 2.35.1
 
