@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61B21875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:56:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1665CC433EF;
-	Wed, 28 Dec 2022 15:56:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAFBD1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28B08C433EF;
+	Wed, 28 Dec 2022 15:57:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243018;
-	bh=pIvTbqYetTh7+SYJiQ8FiLsngdD7fn0kVTwx86Wz7hc=;
+	s=korg; t=1672243022;
+	bh=/+UuJAjFEjapQYnf+bpUs6VXLAIZiYcE0CkzyaZZO3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lPMaFE6KUKNy7RArF2pTSyCEUeTMVZUWiewzPTP7Af+XWFbjIBrsYZdXmVH8Kmz2e
-	 YDefT+/W3DOGJXYYmMX1bXzevjBYLAg7aSJYeA0QmkEuP0yKvpOpN1srq0CjDkmkLC
-	 XUsP6/0qYIoh2cBD4ri6LahMMaky0dUfR54XodJw=
+	b=j0EwG60ktHL3u/E1fsYMbMyAsJMsCsDahPXbV5/9oFmOKSVnFr2ZheuwVA8tLv2uC
+	 fRwQynQI29My5UV5Qt73zsKhnU4UNArlJyvJCyzIHp7Wy49cTGhzAZ+PwV1HUG6DDa
+	 3jkDpOOsu8PfLBMSUbPfS0eP+wUwTnIJocMEWbZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Zhang Qilong <zhangqilong3@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0479/1073] mmc: moxart: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:34:27 +0100
-Message-Id: <20221228144341.046550286@linuxfoundation.org>
+Subject: [PATCH 6.1 0441/1146] ASoC: pcm512x: Fix PM disable depth imbalance in pcm512x_probe
+Date: Wed, 28 Dec 2022 15:33:00 +0100
+Message-Id: <20221228144342.159003136@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,41 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Zhang Qilong <zhangqilong3@huawei.com>
 
-[ Upstream commit 0ca18d09c744fb030ae9bc5836c3e357e0237dea ]
+[ Upstream commit 97b801be6f8e53676b9f2b105f54e35c745c1b22 ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+The pm_runtime_enable will increase power disable depth. Thus
+a pairing decrement is needed on the error handling path to
+keep it balanced according to context. We fix it by going to
+err_pm instead of err_clk.
 
-So fix this by checking the return value and goto error path which will call
-mmc_free_host().
+Fixes:f086ba9d5389c ("ASoC: pcm512x: Support mastering BCLK/LRCLK using the PLL")
 
-Fixes: 1b66e94e6b99 ("mmc: moxart: Add MOXA ART SD/MMC driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-3-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+Link: https://lore.kernel.org/r/20220928160402.126140-1-zhangqilong3@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/moxart-mmc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/codecs/pcm512x.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mmc/host/moxart-mmc.c b/drivers/mmc/host/moxart-mmc.c
-index dfc3ffd5b1f8..52ed30f2d9f4 100644
---- a/drivers/mmc/host/moxart-mmc.c
-+++ b/drivers/mmc/host/moxart-mmc.c
-@@ -665,7 +665,9 @@ static int moxart_probe(struct platform_device *pdev)
- 		goto out;
- 
- 	dev_set_drvdata(dev, mmc);
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret)
-+		goto out;
- 
- 	dev_dbg(dev, "IRQ=%d, FIFO is %d bytes\n", irq, host->fifo_width);
- 
+diff --git a/sound/soc/codecs/pcm512x.c b/sound/soc/codecs/pcm512x.c
+index 767463e82665..89059a673cf0 100644
+--- a/sound/soc/codecs/pcm512x.c
++++ b/sound/soc/codecs/pcm512x.c
+@@ -1634,7 +1634,7 @@ int pcm512x_probe(struct device *dev, struct regmap *regmap)
+ 			if (val > 6) {
+ 				dev_err(dev, "Invalid pll-in\n");
+ 				ret = -EINVAL;
+-				goto err_clk;
++				goto err_pm;
+ 			}
+ 			pcm512x->pll_in = val;
+ 		}
+@@ -1643,7 +1643,7 @@ int pcm512x_probe(struct device *dev, struct regmap *regmap)
+ 			if (val > 6) {
+ 				dev_err(dev, "Invalid pll-out\n");
+ 				ret = -EINVAL;
+-				goto err_clk;
++				goto err_pm;
+ 			}
+ 			pcm512x->pll_out = val;
+ 		}
+@@ -1652,12 +1652,12 @@ int pcm512x_probe(struct device *dev, struct regmap *regmap)
+ 			dev_err(dev,
+ 				"Error: both pll-in and pll-out, or none\n");
+ 			ret = -EINVAL;
+-			goto err_clk;
++			goto err_pm;
+ 		}
+ 		if (pcm512x->pll_in && pcm512x->pll_in == pcm512x->pll_out) {
+ 			dev_err(dev, "Error: pll-in == pll-out\n");
+ 			ret = -EINVAL;
+-			goto err_clk;
++			goto err_pm;
+ 		}
+ 	}
+ #endif
 -- 
 2.35.1
 
