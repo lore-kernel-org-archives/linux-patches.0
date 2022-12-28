@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 054CA1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA03C433EF;
-	Wed, 28 Dec 2022 15:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A65921863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D591C433EF;
+	Wed, 28 Dec 2022 15:41:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242094;
-	bh=7X3EPHkrS1AJxEX5e9jWv5DSJfhPuqDUQ+9HC7IiKVU=;
+	s=korg; t=1672242097;
+	bh=RYc/kThGKmz4l+8HTPcND0yU5YHMcBhLtKlKASwdUPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sUVsCep0cJFB16a2QmAuLaYoV72nC08Cv685ggLod519Gw7H0RPUUCIZYthYcOUW/
-	 nSlMIkyt95+c4mKXZxSKPqVr6cQ3l50wT6saZVPLWb6ZrCba0Lgv4tuwvVR+RppQ6P
-	 ueUAH2WIUGoLqtx7zswIV9TfRJmKRVEh5Q5NeW48=
+	b=Ya8XTS7MHt1WSfnjffs8Z3mrSx3GWBR/0f8pjOazqh6LC4yz+7WzMU2feyuR8XcYX
+	 aPmBDMQqkcM019Qig3brzhGLeJYUjsVOzSCUukOfyCvBXLdmtEl/CtQ3qqy5Vl2cSL
+	 HCbgPHQfLULz49swGtCsIn0bHgdZTO4/CoJpmB2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Evan Quan <evan.quan@amd.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 562/731] iommu/sun50i: Remove IOMMU_DOMAIN_IDENTITY
-Date: Wed, 28 Dec 2022 15:41:09 +0100
-Message-Id: <20221228144312.854540737@linuxfoundation.org>
+Subject: [PATCH 6.0 0367/1073] drm/amdgpu: fix pci device refcount leak
+Date: Wed, 28 Dec 2022 15:32:35 +0100
+Message-Id: <20221228144337.972158829@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,41 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Gunthorpe <jgg@nvidia.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit ef5bb8e7a7127218f826b9ccdf7508e7a339f4c2 ]
+[ Upstream commit b85e285e3d6352b02947fc1b72303673dfacb0aa ]
 
-This driver treats IOMMU_DOMAIN_IDENTITY the same as UNMANAGED, which
-cannot possibly be correct.
+As comment of pci_get_domain_bus_and_slot() says, it returns
+a pci device with refcount increment, when finish using it,
+the caller must decrement the reference count by calling
+pci_dev_put().
 
-UNMANAGED domains are required to start out blocking all DMAs. This seems
-to be what this driver does as it allocates a first level 'dt' for the IO
-page table that is 0 filled.
+So before returning from amdgpu_device_resume|suspend_display_audio(),
+pci_dev_put() is called to avoid refcount leak.
 
-Thus UNMANAGED looks like a working IO page table, and so IDENTITY must be
-a mistake. Remove it.
-
-Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/0-v1-97f0adf27b5e+1f0-s50_identity_jgg@nvidia.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 3f12acc8d6d4 ("drm/amdgpu: put the audio codec into suspend state before gpu reset V3")
+Reviewed-by: Evan Quan <evan.quan@amd.com>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/sun50i-iommu.c | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-index ece3d4b4d7ca..ed3574195599 100644
---- a/drivers/iommu/sun50i-iommu.c
-+++ b/drivers/iommu/sun50i-iommu.c
-@@ -602,7 +602,6 @@ static struct iommu_domain *sun50i_iommu_domain_alloc(unsigned type)
- 	struct sun50i_iommu_domain *sun50i_domain;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+index e0c960cc1d2e..f04e698e631c 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -5004,6 +5004,8 @@ static void amdgpu_device_resume_display_audio(struct amdgpu_device *adev)
+ 		pm_runtime_enable(&(p->dev));
+ 		pm_runtime_resume(&(p->dev));
+ 	}
++
++	pci_dev_put(p);
+ }
  
- 	if (type != IOMMU_DOMAIN_DMA &&
--	    type != IOMMU_DOMAIN_IDENTITY &&
- 	    type != IOMMU_DOMAIN_UNMANAGED)
- 		return NULL;
+ static int amdgpu_device_suspend_display_audio(struct amdgpu_device *adev)
+@@ -5042,6 +5044,7 @@ static int amdgpu_device_suspend_display_audio(struct amdgpu_device *adev)
+ 
+ 		if (expires < ktime_get_mono_fast_ns()) {
+ 			dev_warn(adev->dev, "failed to suspend display audio\n");
++			pci_dev_put(p);
+ 			/* TODO: abort the succeeding gpu reset? */
+ 			return -ETIMEDOUT;
+ 		}
+@@ -5049,6 +5052,7 @@ static int amdgpu_device_suspend_display_audio(struct amdgpu_device *adev)
+ 
+ 	pm_runtime_disable(&(p->dev));
+ 
++	pci_dev_put(p);
+ 	return 0;
+ }
  
 -- 
 2.35.1
