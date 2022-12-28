@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB571863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2D26C433EF;
-	Wed, 28 Dec 2022 15:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E809A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683B0C433EF;
+	Wed, 28 Dec 2022 15:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242614;
-	bh=qmrueYJijRJSOJtq3XPBXwwDuSzM496o343p/ZAk2Q8=;
+	s=korg; t=1672242616;
+	bh=StcPfUUdDaQzi5w94fHj5dtTk7Mgrw2VBBDWuDBtZW4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DpNoKfevCXxJpAnbaycca2dih5m890OjlenaQZkMqV/ZGzks2Ror9GsaWd09hNf4v
-	 Kp4iXS9JcsNe+4qB06aLZrGsmu+Ak/siSvoTtmQ9NwUt60bKzPyFtRS4qP4MJ5B8Qo
-	 tm0E21hkTwav+Sd/i6uh7q3rEbYlyUtTjwIwqALk=
+	b=YATu/bIV0yXYBm0imbhWb3I/z8idLQR/k2aMvAoNSYUZHZtmT7xCZnUQ0I1LSdoHF
+	 3gJ5rATgcKSFF0Ck73gfk9/IdTS7yiXuLx499vVSnn4PE3keqsLE+BdQWqpiPfrT2I
+	 Ln3JsKtbFi2G4nTrIUwdsa49g0/+GSiTHSh6kQLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+e91619dd4c11c4960706@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>,
+	syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com,
+	Gautam Menghani <gautammenghani201@gmail.com>,
+	Sean Young <sean@mess.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 625/731] nilfs2: fix shift-out-of-bounds/overflow in nilfs_sb2_bad_offset()
-Date: Wed, 28 Dec 2022 15:42:12 +0100
-Message-Id: <20221228144314.646392508@linuxfoundation.org>
+Subject: [PATCH 6.1 0394/1146] media: imon: fix a race condition in send_packet()
+Date: Wed, 28 Dec 2022 15:32:13 +0100
+Message-Id: <20221228144340.866799595@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,112 +37,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Gautam Menghani <gautammenghani201@gmail.com>
 
-[ Upstream commit 610a2a3d7d8be3537458a378ec69396a76c385b6 ]
+[ Upstream commit 813ceef062b53d68f296aa3cb944b21a091fabdb ]
 
-Patch series "nilfs2: fix UBSAN shift-out-of-bounds warnings on mount
-time".
+The function send_packet() has a race condition as follows:
 
-The first patch fixes a bug reported by syzbot, and the second one fixes
-the remaining bug of the same kind.  Although they are triggered by the
-same super block data anomaly, I divided it into the above two because the
-details of the issues and how to fix it are different.
+func send_packet()
+{
+    // do work
+    call usb_submit_urb()
+    mutex_unlock()
+    wait_for_event_interruptible()  <-- lock gone
+    mutex_lock()
+}
 
-Both are required to eliminate the shift-out-of-bounds issues at mount
-time.
+func vfd_write()
+{
+    mutex_lock()
+    call send_packet()  <- prev call is not completed
+    mutex_unlock()
+}
 
-This patch (of 2):
+When the mutex is unlocked and the function send_packet() waits for the
+call to complete, vfd_write() can start another call, which leads to the
+"URB submitted while active" warning in usb_submit_urb().
+Fix this by removing the mutex_unlock() call in send_packet() and using
+mutex_lock_interruptible().
 
-If the block size exponent information written in an on-disk superblock is
-corrupted, nilfs_sb2_bad_offset helper function can trigger
-shift-out-of-bounds warning followed by a kernel panic (if panic_on_warn
-is set):
+Link: https://syzkaller.appspot.com/bug?id=e378e6a51fbe6c5cc43e34f131cc9a315ef0337e
 
- shift exponent 38983 is too large for 64-bit type 'unsigned long long'
- Call Trace:
-  <TASK>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
-  ubsan_epilogue lib/ubsan.c:151 [inline]
-  __ubsan_handle_shift_out_of_bounds+0x33d/0x3b0 lib/ubsan.c:322
-  nilfs_sb2_bad_offset fs/nilfs2/the_nilfs.c:449 [inline]
-  nilfs_load_super_block+0xdf5/0xe00 fs/nilfs2/the_nilfs.c:523
-  init_nilfs+0xb7/0x7d0 fs/nilfs2/the_nilfs.c:577
-  nilfs_fill_super+0xb1/0x5d0 fs/nilfs2/super.c:1047
-  nilfs_mount+0x613/0x9b0 fs/nilfs2/super.c:1317
-  ...
-
-In addition, since nilfs_sb2_bad_offset() performs multiplication without
-considering the upper bound, the computation may overflow if the disk
-layout parameters are not normal.
-
-This fixes these issues by inserting preliminary sanity checks for those
-parameters and by converting the comparison from one involving
-multiplication and left bit-shifting to one using division and right
-bit-shifting.
-
-Link: https://lkml.kernel.org/r/20221027044306.42774-1-konishi.ryusuke@gmail.com
-Link: https://lkml.kernel.org/r/20221027044306.42774-2-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+e91619dd4c11c4960706@syzkaller.appspotmail.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
+Reported-by: syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com
+Signed-off-by: Gautam Menghani <gautammenghani201@gmail.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/the_nilfs.c | 31 +++++++++++++++++++++++++++----
- 1 file changed, 27 insertions(+), 4 deletions(-)
+ drivers/media/rc/imon.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
-index 16994598a8db..6a86acd35696 100644
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -13,6 +13,7 @@
- #include <linux/blkdev.h>
- #include <linux/backing-dev.h>
- #include <linux/random.h>
-+#include <linux/log2.h>
- #include <linux/crc32.h>
- #include "nilfs.h"
- #include "segment.h"
-@@ -443,11 +444,33 @@ static int nilfs_valid_sb(struct nilfs_super_block *sbp)
- 	return crc == le32_to_cpu(sbp->s_sum);
- }
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index 5edfd8a9e849..74546f7e3469 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -646,15 +646,14 @@ static int send_packet(struct imon_context *ictx)
+ 		pr_err_ratelimited("error submitting urb(%d)\n", retval);
+ 	} else {
+ 		/* Wait for transmission to complete (or abort) */
+-		mutex_unlock(&ictx->lock);
+ 		retval = wait_for_completion_interruptible(
+ 				&ictx->tx.finished);
+ 		if (retval) {
+ 			usb_kill_urb(ictx->tx_urb);
+ 			pr_err_ratelimited("task interrupted\n");
+ 		}
+-		mutex_lock(&ictx->lock);
  
--static int nilfs_sb2_bad_offset(struct nilfs_super_block *sbp, u64 offset)
-+/**
-+ * nilfs_sb2_bad_offset - check the location of the second superblock
-+ * @sbp: superblock raw data buffer
-+ * @offset: byte offset of second superblock calculated from device size
-+ *
-+ * nilfs_sb2_bad_offset() checks if the position on the second
-+ * superblock is valid or not based on the filesystem parameters
-+ * stored in @sbp.  If @offset points to a location within the segment
-+ * area, or if the parameters themselves are not normal, it is
-+ * determined to be invalid.
-+ *
-+ * Return Value: true if invalid, false if valid.
-+ */
-+static bool nilfs_sb2_bad_offset(struct nilfs_super_block *sbp, u64 offset)
- {
--	return offset < ((le64_to_cpu(sbp->s_nsegments) *
--			  le32_to_cpu(sbp->s_blocks_per_segment)) <<
--			 (le32_to_cpu(sbp->s_log_block_size) + 10));
-+	unsigned int shift_bits = le32_to_cpu(sbp->s_log_block_size);
-+	u32 blocks_per_segment = le32_to_cpu(sbp->s_blocks_per_segment);
-+	u64 nsegments = le64_to_cpu(sbp->s_nsegments);
-+	u64 index;
-+
-+	if (blocks_per_segment < NILFS_SEG_MIN_BLOCKS ||
-+	    shift_bits > ilog2(NILFS_MAX_BLOCK_SIZE) - BLOCK_SIZE_BITS)
-+		return true;
-+
-+	index = offset >> (shift_bits + BLOCK_SIZE_BITS);
-+	do_div(index, blocks_per_segment);
-+	return index < nsegments;
- }
++		ictx->tx.busy = false;
+ 		retval = ictx->tx.status;
+ 		if (retval)
+ 			pr_err_ratelimited("packet tx failed (%d)\n", retval);
+@@ -953,7 +952,8 @@ static ssize_t vfd_write(struct file *file, const char __user *buf,
+ 	if (ictx->disconnected)
+ 		return -ENODEV;
  
- static void nilfs_release_super_block(struct the_nilfs *nilfs)
+-	mutex_lock(&ictx->lock);
++	if (mutex_lock_interruptible(&ictx->lock))
++		return -ERESTARTSYS;
+ 
+ 	if (!ictx->dev_present_intf0) {
+ 		pr_err_ratelimited("no iMON device present\n");
 -- 
 2.35.1
 
