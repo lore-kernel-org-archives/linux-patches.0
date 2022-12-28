@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFDB1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03642C433D2;
-	Wed, 28 Dec 2022 16:26:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157EC1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90F7AC433D2;
+	Wed, 28 Dec 2022 16:26:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244801;
-	bh=ycJSdmVsD2NsqhaOtsUZjC5inYto8Cl7HedkvgHN6Ds=;
+	s=korg; t=1672244803;
+	bh=O9NNWypXwAwRRicH9itlr12SJUVpM2EnKCDFM+2Xq5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TeK5tEvJGxIc5Bz7zKY3qbzkLFa7aYgocV21xeRuVG5L9IVJdvD72xYGhJk3V3Pfp
-	 Laa1D66Eu+q4zWBkJPfxkkArIAj3MW68qDCraDkz+v5U9Kc4svXbox07qBmefff6bl
-	 5GJGqbNHQ1RuL4ZbLiz8n9QbsdI0yakg6VP1a2xY=
+	b=n0hupGoo5zrbb6EH2Gyj/c6JY6fPN5obFuGcuYyJdf4cU7GsKKcP64YTBQUJDJxmk
+	 6r0G75jArOQNttgadjQWbyDu4FmqFXnymxwPyVmfPaDts8ld55dqRxvpmpgSdAtpWi
+	 DJeFcNyMh1VrscCprS6ysMVukRjLAFw4e4BzM9cY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Justin Chen <justinpopo6@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0776/1073] phy: usb: Fix clock imbalance for suspend/resume
-Date: Wed, 28 Dec 2022 15:39:24 +0100
-Message-Id: <20221228144349.089935820@linuxfoundation.org>
+Subject: [PATCH 6.1 0739/1146] vme: Fix error not catched in fake_init()
+Date: Wed, 28 Dec 2022 15:37:58 +0100
+Message-Id: <20221228144350.220143881@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,83 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Justin Chen <justinpopo6@gmail.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 8484199c09347bdd5d81ee8a2bc530850f900797 ]
+[ Upstream commit 7bef797d707f1744f71156b21d41e3b8c946631f ]
 
-We should be disabling clocks when wake from USB is not needed. Since
-this wasn't done, we had a clock imbalance since clocks were always
-being enabled on resume.
+In fake_init(), __root_device_register() is possible to fail but it's
+ignored, which can cause unregistering vme_root fail when exit.
 
-Fixes: ae532b2b7aa5 ("phy: usb: Add "wake on" functionality for newer Synopsis XHCI controllers")
-Fixes: b0c0b66c0b43 ("phy: usb: Add support for wake and USB low power mode for 7211 S2/S5")
-Signed-off-by: Justin Chen <justinpopo6@gmail.com>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/1665005418-15807-7-git-send-email-justinpopo6@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+ general protection fault,
+ probably for non-canonical address 0xdffffc000000008c
+ KASAN: null-ptr-deref in range [0x0000000000000460-0x0000000000000467]
+ RIP: 0010:root_device_unregister+0x26/0x60
+ Call Trace:
+  <TASK>
+  __x64_sys_delete_module+0x34f/0x540
+  do_syscall_64+0x38/0x90
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Return error when __root_device_register() fails.
+
+Fixes: 658bcdae9c67 ("vme: Adding Fake VME driver")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Link: https://lore.kernel.org/r/20221205084805.147436-1-chenzhongjin@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c | 2 --
- drivers/phy/broadcom/phy-brcm-usb-init.h          | 1 -
- drivers/phy/broadcom/phy-brcm-usb.c               | 8 +++++---
- 3 files changed, 5 insertions(+), 6 deletions(-)
+ drivers/staging/vme_user/vme_fake.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-index b3386e458dd4..3b374b37b965 100644
---- a/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-+++ b/drivers/phy/broadcom/phy-brcm-usb-init-synopsys.c
-@@ -424,7 +424,6 @@ void brcm_usb_dvr_init_7216(struct brcm_usb_init_params *params)
+diff --git a/drivers/staging/vme_user/vme_fake.c b/drivers/staging/vme_user/vme_fake.c
+index dd646b0c531d..1ee432c223e2 100644
+--- a/drivers/staging/vme_user/vme_fake.c
++++ b/drivers/staging/vme_user/vme_fake.c
+@@ -1073,6 +1073,8 @@ static int __init fake_init(void)
  
- 	params->family_name = "7216";
- 	params->ops = &bcm7216_ops;
--	params->suspend_with_clocks = true;
- }
+ 	/* We need a fake parent device */
+ 	vme_root = __root_device_register("vme", THIS_MODULE);
++	if (IS_ERR(vme_root))
++		return PTR_ERR(vme_root);
  
- void brcm_usb_dvr_init_7211b0(struct brcm_usb_init_params *params)
-@@ -434,5 +433,4 @@ void brcm_usb_dvr_init_7211b0(struct brcm_usb_init_params *params)
- 
- 	params->family_name = "7211";
- 	params->ops = &bcm7211b0_ops;
--	params->suspend_with_clocks = true;
- }
-diff --git a/drivers/phy/broadcom/phy-brcm-usb-init.h b/drivers/phy/broadcom/phy-brcm-usb-init.h
-index 1ccb5ddab865..3236e9498842 100644
---- a/drivers/phy/broadcom/phy-brcm-usb-init.h
-+++ b/drivers/phy/broadcom/phy-brcm-usb-init.h
-@@ -61,7 +61,6 @@ struct  brcm_usb_init_params {
- 	const struct brcm_usb_init_ops *ops;
- 	struct regmap *syscon_piarbctl;
- 	bool wake_enabled;
--	bool suspend_with_clocks;
- };
- 
- void brcm_usb_dvr_init_4908(struct brcm_usb_init_params *params);
-diff --git a/drivers/phy/broadcom/phy-brcm-usb.c b/drivers/phy/broadcom/phy-brcm-usb.c
-index c0c3ab9b2a15..2bfd78e2d8fd 100644
---- a/drivers/phy/broadcom/phy-brcm-usb.c
-+++ b/drivers/phy/broadcom/phy-brcm-usb.c
-@@ -598,7 +598,7 @@ static int brcm_usb_phy_suspend(struct device *dev)
- 		 * and newer XHCI->2.0-clks/3.0-clks.
- 		 */
- 
--		if (!priv->ini.suspend_with_clocks) {
-+		if (!priv->ini.wake_enabled) {
- 			if (priv->phys[BRCM_USB_PHY_3_0].inited)
- 				clk_disable_unprepare(priv->usb_30_clk);
- 			if (priv->phys[BRCM_USB_PHY_2_0].inited ||
-@@ -615,8 +615,10 @@ static int brcm_usb_phy_resume(struct device *dev)
- {
- 	struct brcm_usb_phy_data *priv = dev_get_drvdata(dev);
- 
--	clk_prepare_enable(priv->usb_20_clk);
--	clk_prepare_enable(priv->usb_30_clk);
-+	if (!priv->ini.wake_enabled) {
-+		clk_prepare_enable(priv->usb_20_clk);
-+		clk_prepare_enable(priv->usb_30_clk);
-+	}
- 	brcm_usb_init_ipp(&priv->ini);
- 
- 	/*
+ 	/* If we want to support more than one bridge at some point, we need to
+ 	 * dynamically allocate this so we get one per device.
 -- 
 2.35.1
 
