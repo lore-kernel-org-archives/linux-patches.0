@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2151863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 554B0C433D2;
-	Wed, 28 Dec 2022 15:43:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 937ED1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7244C433D2;
+	Wed, 28 Dec 2022 15:43:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242193;
-	bh=wK5rzT72np5XETtHMRR5L8dBvUrFeT3UP7y0SQOT1Nc=;
+	s=korg; t=1672242196;
+	bh=dphZquzQEN4X40CbJqYa9ytytPF4j34DwDcptIZW7/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XaFE1C+RQibZYjGTn5jdsuFfZkZM35Se1Wtx3HeC29O7uQ1wXtbh35sTKsfrE6WMq
-	 zZK3nl4eUmWuIu6Q6WQfYHGhUc06AyRG4WhSeApT1hiGdCNvWhfimPx2VihehMzy1t
-	 +wln3Arj5+TBnIC6Ru+DHStMyWRb6sXnf8svdksQ=
+	b=mJ/64E1n+c/1YrziGDFWSUweeLUBwmkhi5wm3oQwa8U4lqL8ddh/E/dbxdN/2Tj/I
+	 DmpMxHCBclJf1C5ofpm1kc/3WssZnV5aleLhEFmePnbM/KK0GnlPF7nO/0kcCRrKrR
+	 mdLi2ctxyNNMe/WqA0ZOSrwMGLIUjERGscz6R1ZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com,
-	Gautam Menghani <gautammenghani201@gmail.com>,
-	Sean Young <sean@mess.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0378/1073] media: imon: fix a race condition in send_packet()
-Date: Wed, 28 Dec 2022 15:32:46 +0100
-Message-Id: <20221228144338.269961455@linuxfoundation.org>
+Subject: [PATCH 6.1 0340/1146] block: clear ->slave_dir when dropping the main slave_dir reference
+Date: Wed, 28 Dec 2022 15:31:19 +0100
+Message-Id: <20221228144339.392666871@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,77 +37,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gautam Menghani <gautammenghani201@gmail.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 813ceef062b53d68f296aa3cb944b21a091fabdb ]
+[ Upstream commit d90db3b1c8676bc88b4309c5a571333de2263b8e ]
 
-The function send_packet() has a race condition as follows:
+Zero out the pointer to ->slave_dir so that the holder code doesn't
+incorrectly treat the object as alive when add_disk failed or after
+del_gendisk was called.
 
-func send_packet()
-{
-    // do work
-    call usb_submit_urb()
-    mutex_unlock()
-    wait_for_event_interruptible()  <-- lock gone
-    mutex_lock()
-}
-
-func vfd_write()
-{
-    mutex_lock()
-    call send_packet()  <- prev call is not completed
-    mutex_unlock()
-}
-
-When the mutex is unlocked and the function send_packet() waits for the
-call to complete, vfd_write() can start another call, which leads to the
-"URB submitted while active" warning in usb_submit_urb().
-Fix this by removing the mutex_unlock() call in send_packet() and using
-mutex_lock_interruptible().
-
-Link: https://syzkaller.appspot.com/bug?id=e378e6a51fbe6c5cc43e34f131cc9a315ef0337e
-
-Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
-Reported-by: syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com
-Signed-off-by: Gautam Menghani <gautammenghani201@gmail.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 89f871af1b26 ("dm: delay registering the gendisk")
+Reported-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lore.kernel.org/r/20221115141054.1051801-2-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/imon.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ block/genhd.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
-index 735b925da998..91d8056666ec 100644
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -646,15 +646,14 @@ static int send_packet(struct imon_context *ictx)
- 		pr_err_ratelimited("error submitting urb(%d)\n", retval);
- 	} else {
- 		/* Wait for transmission to complete (or abort) */
--		mutex_unlock(&ictx->lock);
- 		retval = wait_for_completion_interruptible(
- 				&ictx->tx.finished);
- 		if (retval) {
- 			usb_kill_urb(ictx->tx_urb);
- 			pr_err_ratelimited("task interrupted\n");
- 		}
--		mutex_lock(&ictx->lock);
+diff --git a/block/genhd.c b/block/genhd.c
+index 0f9769db2de8..647f7d8d8831 100644
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -530,6 +530,7 @@ int __must_check device_add_disk(struct device *parent, struct gendisk *disk,
+ 	rq_qos_exit(disk->queue);
+ out_put_slave_dir:
+ 	kobject_put(disk->slave_dir);
++	disk->slave_dir = NULL;
+ out_put_holder_dir:
+ 	kobject_put(disk->part0->bd_holder_dir);
+ out_del_integrity:
+@@ -629,6 +630,7 @@ void del_gendisk(struct gendisk *disk)
  
-+		ictx->tx.busy = false;
- 		retval = ictx->tx.status;
- 		if (retval)
- 			pr_err_ratelimited("packet tx failed (%d)\n", retval);
-@@ -955,7 +954,8 @@ static ssize_t vfd_write(struct file *file, const char __user *buf,
- 	if (ictx->disconnected)
- 		return -ENODEV;
+ 	kobject_put(disk->part0->bd_holder_dir);
+ 	kobject_put(disk->slave_dir);
++	disk->slave_dir = NULL;
  
--	mutex_lock(&ictx->lock);
-+	if (mutex_lock_interruptible(&ictx->lock))
-+		return -ERESTARTSYS;
- 
- 	if (!ictx->dev_present_intf0) {
- 		pr_err_ratelimited("no iMON device present\n");
+ 	part_stat_set_all(disk->part0, 0);
+ 	disk->part0->bd_stamp = 0;
 -- 
 2.35.1
 
