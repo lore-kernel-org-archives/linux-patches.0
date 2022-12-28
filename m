@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71931875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:54:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B2DC433D2;
-	Wed, 28 Dec 2022 15:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844FA1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:54:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0622DC433F0;
+	Wed, 28 Dec 2022 15:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242867;
-	bh=+3N8A5ehwRNw1+D/NJfYjY1m1IDAkBhYXXBjXr/Pbu0=;
+	s=korg; t=1672242870;
+	bh=76OIiZE+s4qxSlgHGf48T1DXekFgMb1lpPVjUNBeT6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gabd3jQ3RWuajJZbdZZ7OAI37lVcYbPXIcwE1vJn1rZwHixbeUBstQkaBDVmFLajc
-	 nKs6Mz5bMlTX2NFJztuYdkkgghKb6IWuhZSqOxOGvAq6ZT8uPLr2YP7f8fSNUruS7k
-	 sxFnjjQR2lHYTpObe3yAySqFcaK65psCHsJRPaAI=
+	b=EDmVbyOd3qz4/JqhCdhk3XJdqtXwmEK9VmVHpdUBlRExDYy9U1c0wcaOa7wEI5NqU
+	 0GiyiSx7mwmhej883qRu48BYRe0YJlsZLcCrKbrtwlw/LAYJqjqouBhzsQq58y8tym
+	 DZiSUMt7sg8B9DZaNRSrIqPBl1D2MC2JfQs6nOI0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0425/1146] NFSv4.2: Fix initialisation of struct nfs4_label
-Date: Wed, 28 Dec 2022 15:32:44 +0100
-Message-Id: <20221228144341.719847079@linuxfoundation.org>
+Subject: [PATCH 6.0 0464/1073] hwmon: (jc42) Restore the min/max/critical temperatures on resume
+Date: Wed, 28 Dec 2022 15:34:12 +0100
+Message-Id: <20221228144340.638680672@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,81 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-[ Upstream commit c528f70f504434eaff993a5ddd52203a2010d51f ]
+[ Upstream commit 084ed144c448fd5bc8ed5a58247153fbbfd115c3 ]
 
-The call to nfs4_label_init_security() should return a fully initialised
-label.
+The JC42 compatible thermal sensor on Kingston KSM32ES8/16ME DIMMs
+(using Micron E-Die) is an ST Microelectronics STTS2004 (manufacturer
+0x104a, device 0x2201). It does not keep the previously programmed
+minimum, maximum and critical temperatures after system suspend and
+resume (which is a shutdown / startup cycle for the JC42 temperature
+sensor). This results in an alarm on system resume because the hardware
+default for these values is 0°C (so any environment temperature greater
+than 0°C will trigger the alarm).
 
-Fixes: aa9c2669626c ("NFS: Client implementation of Labeled-NFS")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Example before system suspend:
+  jc42-i2c-0-1a
+  Adapter: SMBus PIIX4 adapter port 0 at 0b00
+  temp1:        +34.8°C  (low  =  +0.0°C)
+                         (high = +85.0°C, hyst = +85.0°C)
+                         (crit = +95.0°C, hyst = +95.0°C)
+
+Example after system resume (without this change):
+  jc42-i2c-0-1a
+  Adapter: SMBus PIIX4 adapter port 0 at 0b00
+  temp1:        +34.8°C  (low  =  +0.0°C)             ALARM (HIGH, CRIT)
+                         (high =  +0.0°C, hyst =  +0.0°C)
+                         (crit =  +0.0°C, hyst =  +0.0°C)
+
+Apply the cached values from the JC42_REG_TEMP_UPPER,
+JC42_REG_TEMP_LOWER, JC42_REG_TEMP_CRITICAL and JC42_REG_SMBUS (where
+the SMBUS register is not related to this issue but a side-effect of
+using regcache_sync() during system resume with the previously
+cached/programmed values. This fixes the alarm due to the hardware
+defaults of 0°C because the previously applied limits (set by userspace)
+are re-applied on system resume.
+
+Fixes: 175c490c9e7f ("hwmon: (jc42) Add support for STTS2004 and AT30TSE004")
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20221023213157.11078-3-martin.blumenstingl@googlemail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/hwmon/jc42.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 86ed5c0142c3..98a867092039 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -122,6 +122,11 @@ nfs4_label_init_security(struct inode *dir, struct dentry *dentry,
- 	if (nfs_server_capable(dir, NFS_CAP_SECURITY_LABEL) == 0)
- 		return NULL;
+diff --git a/drivers/hwmon/jc42.c b/drivers/hwmon/jc42.c
+index 96bffd5b5866..5004b17c5682 100644
+--- a/drivers/hwmon/jc42.c
++++ b/drivers/hwmon/jc42.c
+@@ -579,6 +579,10 @@ static int jc42_suspend(struct device *dev)
  
-+	label->lfs = 0;
-+	label->pi = 0;
-+	label->len = 0;
-+	label->label = NULL;
+ 	data->config |= JC42_CFG_SHUTDOWN;
+ 	regmap_write(data->regmap, JC42_REG_CONFIG, data->config);
 +
- 	err = security_dentry_init_security(dentry, sattr->ia_mode,
- 				&dentry->d_name, NULL,
- 				(void **)&label->label, &label->len);
-@@ -3796,7 +3801,7 @@ nfs4_atomic_open(struct inode *dir, struct nfs_open_context *ctx,
- 		int open_flags, struct iattr *attr, int *opened)
++	regcache_cache_only(data->regmap, true);
++	regcache_mark_dirty(data->regmap);
++
+ 	return 0;
+ }
+ 
+@@ -586,9 +590,13 @@ static int jc42_resume(struct device *dev)
  {
- 	struct nfs4_state *state;
--	struct nfs4_label l = {0, 0, 0, NULL}, *label = NULL;
-+	struct nfs4_label l, *label;
+ 	struct jc42_data *data = dev_get_drvdata(dev);
  
- 	label = nfs4_label_init_security(dir, ctx->dentry, attr, &l);
++	regcache_cache_only(data->regmap, false);
++
+ 	data->config &= ~JC42_CFG_SHUTDOWN;
+ 	regmap_write(data->regmap, JC42_REG_CONFIG, data->config);
+-	return 0;
++
++	/* Restore cached register values to hardware */
++	return regcache_sync(data->regmap);
+ }
  
-@@ -4682,7 +4687,7 @@ nfs4_proc_create(struct inode *dir, struct dentry *dentry, struct iattr *sattr,
- 		 int flags)
- {
- 	struct nfs_server *server = NFS_SERVER(dir);
--	struct nfs4_label l, *ilabel = NULL;
-+	struct nfs4_label l, *ilabel;
- 	struct nfs_open_context *ctx;
- 	struct nfs4_state *state;
- 	int status = 0;
-@@ -5033,7 +5038,7 @@ static int nfs4_proc_symlink(struct inode *dir, struct dentry *dentry,
- 	struct nfs4_exception exception = {
- 		.interruptible = true,
- 	};
--	struct nfs4_label l, *label = NULL;
-+	struct nfs4_label l, *label;
- 	int err;
- 
- 	label = nfs4_label_init_security(dir, dentry, sattr, &l);
-@@ -5074,7 +5079,7 @@ static int nfs4_proc_mkdir(struct inode *dir, struct dentry *dentry,
- 	struct nfs4_exception exception = {
- 		.interruptible = true,
- 	};
--	struct nfs4_label l, *label = NULL;
-+	struct nfs4_label l, *label;
- 	int err;
- 
- 	label = nfs4_label_init_security(dir, dentry, sattr, &l);
-@@ -5193,7 +5198,7 @@ static int nfs4_proc_mknod(struct inode *dir, struct dentry *dentry,
- 	struct nfs4_exception exception = {
- 		.interruptible = true,
- 	};
--	struct nfs4_label l, *label = NULL;
-+	struct nfs4_label l, *label;
- 	int err;
- 
- 	label = nfs4_label_init_security(dir, dentry, sattr, &l);
+ static const struct dev_pm_ops jc42_dev_pm_ops = {
 -- 
 2.35.1
 
