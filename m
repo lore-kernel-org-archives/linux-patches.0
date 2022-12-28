@@ -1,32 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8A71C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 113EBC433EF;
-	Wed, 28 Dec 2022 16:29:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC241C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FBC5C433D2;
+	Wed, 28 Dec 2022 16:29:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244975;
-	bh=lJ5DHcfO1xOKSXz83OpP0zmNaE8wzMtxO9ycAOEL6YI=;
+	s=korg; t=1672244978;
+	bh=OJ3yI59KOaUxL2roXJTkbg+W3fSj4YnlpoTOkwllJaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pkA/JGhupiTPE2CssRu/S02Q7y4K4HzQFmfCMg8k/Ra/HakOPjpg4bIMC4puGFRPR
-	 y2ugKQPhaKnoC21cxu62X7GSGbp+3VVe6STf+VBq24AKIC8BlAi/m3GDX4ZnNRjasf
-	 uRvvDUa1XrTIi7T+fx1hub/q4sUBoF6PhpUo37KA=
+	b=yF3kZjKjC3D6HVlw2moSXXOl63LXEpLZ6acW0Gh6fmKePZQEY8uZckflDs6iIMmSD
+	 GfePBUhGR4vDXVahQQRZaVabxpXm8oDe2ULu7GNJj/K2m9aX5GfcVGWehzEQkPoa1Q
+	 64UG8hsIgqykGYvwAIYeOHmeA+9qifRhxA6BmfLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kajol Jain <kjain@linux.ibm.com>,
-	Madhavan Srinivasan <maddy@linux.ibm.com>,
-	Athira Rajeev <atrajeev@linux.vnet.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Leo Yan <leo.yan@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	bpf@vger.kernel.org,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0809/1073] powerpc/hv-gpci: Fix hv_gpci event list
-Date: Wed, 28 Dec 2022 15:39:57 +0100
-Message-Id: <20221228144349.983459269@linuxfoundation.org>
+Subject: [PATCH 6.1 0772/1146] perf trace: Handle failure when trace point folder is missed
+Date: Wed, 28 Dec 2022 15:38:31 +0100
+Message-Id: <20221228144351.117918625@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,175 +43,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kajol Jain <kjain@linux.ibm.com>
+From: Leo Yan <leo.yan@linaro.org>
 
-[ Upstream commit 03f7c1d2a49acd30e38789cd809d3300721e9b0e ]
+[ Upstream commit 03e9a5d8eb552a1bf692a9c8a5ecd50f4e428006 ]
 
-Based on getPerfCountInfo v1.018 documentation, some of the
-hv_gpci events were deprecated for platform firmware that
-supports counter_info_version 0x8 or above.
+On Arm64 a case is perf tools fails to find the corresponding trace
+point folder for system calls listed in the table 'syscalltbl_arm64',
+e.g. the generated system call table contains "lookup_dcookie" but we
+cannot find out the matched trace point folder for it.
 
-Fix the hv_gpci event list by adding a new attribute group
-called "hv_gpci_event_attrs_v6" and a "ENABLE_EVENTS_COUNTERINFO_V6"
-macro to enable these events for platform firmware
-that supports counter_info_version 0x6 or below. And assigning
-the hv_gpci event list based on output counter info version
-of underlying plaform.
+We need to figure out if there have any issue for the generated system
+call table, on the other hand, we need to handle the case when trace
+point folder is missed under sysfs, this patch sets the flag
+syscall::nonexistent as true and returns the error from
+trace__read_syscall_info().
 
-Fixes: 97bf2640184f ("powerpc/perf/hv-gpci: add the remaining gpci requests")
-Signed-off-by: Kajol Jain <kjain@linux.ibm.com>
-Reviewed-by: Madhavan Srinivasan <maddy@linux.ibm.com>
-Reviewed-by: Athira Rajeev <atrajeev@linux.vnet.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20221130174513.87501-1-kjain@linux.ibm.com
+Another problem is for trace__syscall_info(), it returns two different
+values if a system call doesn't exist: at the first time calling
+trace__syscall_info() it returns NULL when the system call doesn't exist,
+later if call trace__syscall_info() again for the same missed system
+call, it returns pointer of syscall.  trace__syscall_info() checks the
+condition 'syscalls.table[id].name == NULL', but the name will be
+assigned in the first invoking even the system call is not found.
+
+So checking system call's name in trace__syscall_info() is not the right
+thing to do, this patch simply checks flag syscall::nonexistent to make
+decision if a system call exists or not, finally trace__syscall_info()
+returns the consistent result (NULL) if a system call doesn't existed.
+
+Fixes: b8b1033fcaa091d8 ("perf trace: Mark syscall ids that are not allocated to avoid unnecessary error messages")
+Signed-off-by: Leo Yan <leo.yan@linaro.org>
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: bpf@vger.kernel.org
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20221121075237.127706-4-leo.yan@linaro.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/perf/hv-gpci-requests.h |  4 ++++
- arch/powerpc/perf/hv-gpci.c          | 35 ++++++++++++++++++++++++++--
- arch/powerpc/perf/hv-gpci.h          |  1 +
- arch/powerpc/perf/req-gen/perf.h     | 20 ++++++++++++++++
- 4 files changed, 58 insertions(+), 2 deletions(-)
+ tools/perf/builtin-trace.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/arch/powerpc/perf/hv-gpci-requests.h b/arch/powerpc/perf/hv-gpci-requests.h
-index 8965b4463d43..5e86371a20c7 100644
---- a/arch/powerpc/perf/hv-gpci-requests.h
-+++ b/arch/powerpc/perf/hv-gpci-requests.h
-@@ -79,6 +79,7 @@ REQUEST(__field(0,	8,	partition_id)
- )
- #include I(REQUEST_END)
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index 40123f5688b2..3dcf6aed1ef7 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -1811,13 +1811,19 @@ static int trace__read_syscall_info(struct trace *trace, int id)
+ 		sc->tp_format = trace_event__tp_format("syscalls", tp_name);
+ 	}
  
-+#ifdef ENABLE_EVENTS_COUNTERINFO_V6
- /*
-  * Not available for counter_info_version >= 0x8, use
-  * run_instruction_cycles_by_partition(0x100) instead.
-@@ -92,6 +93,7 @@ REQUEST(__field(0,	8,	partition_id)
- 	__count(0x10,	8,	cycles)
- )
- #include I(REQUEST_END)
-+#endif
- 
- #define REQUEST_NAME system_performance_capabilities
- #define REQUEST_NUM 0x40
-@@ -103,6 +105,7 @@ REQUEST(__field(0,	1,	perf_collect_privileged)
- )
- #include I(REQUEST_END)
- 
-+#ifdef ENABLE_EVENTS_COUNTERINFO_V6
- #define REQUEST_NAME processor_bus_utilization_abc_links
- #define REQUEST_NUM 0x50
- #define REQUEST_IDX_KIND "hw_chip_id=?"
-@@ -194,6 +197,7 @@ REQUEST(__field(0,	4,	phys_processor_idx)
- 	__count(0x28,	8,	instructions_completed)
- )
- #include I(REQUEST_END)
-+#endif
- 
- /* Processor_core_power_mode (0x95) skipped, no counters */
- /* Affinity_domain_information_by_virtual_processor (0xA0) skipped,
-diff --git a/arch/powerpc/perf/hv-gpci.c b/arch/powerpc/perf/hv-gpci.c
-index 5eb60ed5b5e8..7ff8ff3509f5 100644
---- a/arch/powerpc/perf/hv-gpci.c
-+++ b/arch/powerpc/perf/hv-gpci.c
-@@ -70,9 +70,9 @@ static const struct attribute_group format_group = {
- 	.attrs = format_attrs,
- };
- 
--static const struct attribute_group event_group = {
-+static struct attribute_group event_group = {
- 	.name  = "events",
--	.attrs = hv_gpci_event_attrs,
-+	/* .attrs is set in init */
- };
- 
- #define HV_CAPS_ATTR(_name, _format)				\
-@@ -330,6 +330,7 @@ static int hv_gpci_init(void)
- 	int r;
- 	unsigned long hret;
- 	struct hv_perf_caps caps;
-+	struct hv_gpci_request_buffer *arg;
- 
- 	hv_gpci_assert_offsets_correct();
- 
-@@ -353,6 +354,36 @@ static int hv_gpci_init(void)
- 	/* sampling not supported */
- 	h_gpci_pmu.capabilities |= PERF_PMU_CAP_NO_INTERRUPT;
- 
-+	arg = (void *)get_cpu_var(hv_gpci_reqb);
-+	memset(arg, 0, HGPCI_REQ_BUFFER_SIZE);
-+
 +	/*
-+	 * hcall H_GET_PERF_COUNTER_INFO populates the output
-+	 * counter_info_version value based on the system hypervisor.
-+	 * Pass the counter request 0x10 corresponds to request type
-+	 * 'Dispatch_timebase_by_processor', to get the supported
-+	 * counter_info_version.
++	 * Fails to read trace point format via sysfs node, so the trace point
++	 * doesn't exist.  Set the 'nonexistent' flag as true.
 +	 */
-+	arg->params.counter_request = cpu_to_be32(0x10);
-+
-+	r = plpar_hcall_norets(H_GET_PERF_COUNTER_INFO,
-+			virt_to_phys(arg), HGPCI_REQ_BUFFER_SIZE);
-+	if (r) {
-+		pr_devel("hcall failed, can't get supported counter_info_version: 0x%x\n", r);
-+		arg->params.counter_info_version_out = 0x8;
++	if (IS_ERR(sc->tp_format)) {
++		sc->nonexistent = true;
++		return PTR_ERR(sc->tp_format);
 +	}
 +
-+	/*
-+	 * Use counter_info_version_out value to assign
-+	 * required hv-gpci event list.
-+	 */
-+	if (arg->params.counter_info_version_out >= 0x8)
-+		event_group.attrs = hv_gpci_event_attrs;
-+	else
-+		event_group.attrs = hv_gpci_event_attrs_v6;
-+
-+	put_cpu_var(hv_gpci_reqb);
-+
- 	r = perf_pmu_register(&h_gpci_pmu, h_gpci_pmu.name, -1);
- 	if (r)
- 		return r;
-diff --git a/arch/powerpc/perf/hv-gpci.h b/arch/powerpc/perf/hv-gpci.h
-index 4d108262bed7..c72020912dea 100644
---- a/arch/powerpc/perf/hv-gpci.h
-+++ b/arch/powerpc/perf/hv-gpci.h
-@@ -26,6 +26,7 @@ enum {
- #define REQUEST_FILE "../hv-gpci-requests.h"
- #define NAME_LOWER hv_gpci
- #define NAME_UPPER HV_GPCI
-+#define ENABLE_EVENTS_COUNTERINFO_V6
- #include "req-gen/perf.h"
- #undef REQUEST_FILE
- #undef NAME_LOWER
-diff --git a/arch/powerpc/perf/req-gen/perf.h b/arch/powerpc/perf/req-gen/perf.h
-index fa9bc804e67a..6b2a59fefffa 100644
---- a/arch/powerpc/perf/req-gen/perf.h
-+++ b/arch/powerpc/perf/req-gen/perf.h
-@@ -139,6 +139,26 @@ PMU_EVENT_ATTR_STRING(							\
- #define REQUEST_(r_name, r_value, r_idx_1, r_fields)			\
- 	r_fields
+ 	if (syscall__alloc_arg_fmts(sc, IS_ERR(sc->tp_format) ?
+ 					RAW_SYSCALL_ARGS_NUM : sc->tp_format->format.nr_fields))
+ 		return -ENOMEM;
  
-+/* Generate event list for platforms with counter_info_version 0x6 or below */
-+static __maybe_unused struct attribute *hv_gpci_event_attrs_v6[] = {
-+#include REQUEST_FILE
-+	NULL
-+};
-+
-+/*
-+ * Based on getPerfCountInfo v1.018 documentation, some of the hv-gpci
-+ * events were deprecated for platform firmware that supports
-+ * counter_info_version 0x8 or above.
-+ * Those deprecated events are still part of platform firmware that
-+ * support counter_info_version 0x6 and below. As per the getPerfCountInfo
-+ * v1.018 documentation there is no counter_info_version 0x7.
-+ * Undefining macro ENABLE_EVENTS_COUNTERINFO_V6, to disable the addition of
-+ * deprecated events in "hv_gpci_event_attrs" attribute group, for platforms
-+ * that supports counter_info_version 0x8 or above.
-+ */
-+#undef ENABLE_EVENTS_COUNTERINFO_V6
-+
-+/* Generate event list for platforms with counter_info_version 0x8 or above*/
- static __maybe_unused struct attribute *hv_gpci_event_attrs[] = {
- #include REQUEST_FILE
- 	NULL
+-	if (IS_ERR(sc->tp_format))
+-		return PTR_ERR(sc->tp_format);
+-
+ 	sc->args = sc->tp_format->format.fields;
+ 	/*
+ 	 * We need to check and discard the first variable '__syscall_nr'
+@@ -2134,11 +2140,8 @@ static struct syscall *trace__syscall_info(struct trace *trace,
+ 	    (err = trace__read_syscall_info(trace, id)) != 0)
+ 		goto out_cant_read;
+ 
+-	if (trace->syscalls.table[id].name == NULL) {
+-		if (trace->syscalls.table[id].nonexistent)
+-			return NULL;
++	if (trace->syscalls.table && trace->syscalls.table[id].nonexistent)
+ 		goto out_cant_read;
+-	}
+ 
+ 	return &trace->syscalls.table[id];
+ 
 -- 
 2.35.1
 
