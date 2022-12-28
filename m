@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3BE11C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:45:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B606C433D2;
-	Wed, 28 Dec 2022 16:45:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E0C1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:45:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09BFFC433D2;
+	Wed, 28 Dec 2022 16:45:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245904;
-	bh=nvnkWN3BEN2p39C1nsMomAZZQoBsELZOox29IxQ0/Cc=;
+	s=korg; t=1672245907;
+	bh=oK4XDHowo8pk+fzEGgRwIFdrMEojl+jVI5Mt9gJlPyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ub7c/uvQACu4JnCncZudOnyB+pFzH6RkNKjRJR7SgB8XvRC1hSlxQ5aa7h+C6r0B8
-	 MA5EC11Lfb79ziSsPbZQKZyCdNOlqdgc2CJ9GGpcchM6eSDz3OI/n35CyFL0R/OccG
-	 ZMimvaFngoSXaBEbitQNJ6FWfq7saTMoz7mFsDDI=
+	b=UYDQfSobGW8RHyX1t64knpAWfwSbZDBQf2Y/aP4U53opb5LO9ePGmUis7HY/IGKzl
+	 I3JO3YOszcOdkwkwIWrZ9ftljDR+zXVEj4kLx5i2YJsDH88ifh/Syq/yM3Mqh5HzpI
+	 tnbOpHQ9ZAn0OmPGBEFTlOVQxOFjK/UjORR2mGpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	ChiYuan Huang <cy_huang@richtek.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+15342c1aa6a00fb7a438@syzkaller.appspotmail.com,
+	Dongliang Mu <mudongliangabcd@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0978/1073] regulator: core: Fix resolve supply lookup issue
-Date: Wed, 28 Dec 2022 15:42:46 +0100
-Message-Id: <20221228144354.639722671@linuxfoundation.org>
+Subject: [PATCH 6.1 0945/1146] fs: jfs: fix shift-out-of-bounds in dbAllocAG
+Date: Wed, 28 Dec 2022 15:41:24 +0100
+Message-Id: <20221228144355.985841772@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,44 +36,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ChiYuan Huang <cy_huang@richtek.com>
+From: Dongliang Mu <mudongliangabcd@gmail.com>
 
-[ Upstream commit 0debed5b117d11e33cba52870c4dcb64f5911891 ]
+[ Upstream commit 898f706695682b9954f280d95e49fa86ffa55d08 ]
 
->From Marek's log, the previous change modify the parent of rdev.
-https://lore.kernel.org/all/58b92e75-f373-dae7-7031-8abd465bb874@samsung.com/
+Syzbot found a crash : UBSAN: shift-out-of-bounds in dbAllocAG. The
+underlying bug is the missing check of bmp->db_agl2size. The field can
+be greater than 64 and trigger the shift-out-of-bounds.
 
-In 'regulator_resolve_supply', it uses the parent DT node of rdev as the
-DT-lookup starting node. But the parent DT node may not exist. This will
-cause the NULL supply issue.
+Fix this bug by adding a check of bmp->db_agl2size in dbMount since this
+field is used in many following functions. The upper bound for this
+field is L2MAXL2SIZE - L2MAXAG, thanks for the help of Dave Kleikamp.
+Note that, for maintenance, I reorganized error handling code of dbMount.
 
-This patch modify the parent of rdev back to the device that provides
-from 'regulator_config' in 'regulator_register'.
-
-Fixes: 8f3cbcd6b440 ("regulator: core: Use different devices for resource allocation and DT lookup")
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Signed-off-by: ChiYuan Huang <cy_huang@richtek.com>
-Link: https://lore.kernel.org/r/1670981831-12583-1-git-send-email-u0084500@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reported-by: syzbot+15342c1aa6a00fb7a438@syzkaller.appspotmail.com
+Signed-off-by: Dongliang Mu <mudongliangabcd@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/jfs/jfs_dmap.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index c095ca9f01e8..93da2b4cbc72 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -5531,7 +5531,7 @@ regulator_register(struct device *dev,
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index 6b838d3ae7c2..e1cbfbb60303 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -155,7 +155,7 @@ int dbMount(struct inode *ipbmap)
+ 	struct bmap *bmp;
+ 	struct dbmap_disk *dbmp_le;
+ 	struct metapage *mp;
+-	int i;
++	int i, err;
  
- 	/* register with sysfs */
- 	rdev->dev.class = &regulator_class;
--	rdev->dev.parent = dev;
-+	rdev->dev.parent = config->dev;
- 	dev_set_name(&rdev->dev, "regulator.%lu",
- 		    (unsigned long) atomic_inc_return(&regulator_no));
- 	dev_set_drvdata(&rdev->dev, rdev);
+ 	/*
+ 	 * allocate/initialize the in-memory bmap descriptor
+@@ -170,8 +170,8 @@ int dbMount(struct inode *ipbmap)
+ 			   BMAPBLKNO << JFS_SBI(ipbmap->i_sb)->l2nbperpage,
+ 			   PSIZE, 0);
+ 	if (mp == NULL) {
+-		kfree(bmp);
+-		return -EIO;
++		err = -EIO;
++		goto err_kfree_bmp;
+ 	}
+ 
+ 	/* copy the on-disk bmap descriptor to its in-memory version. */
+@@ -181,9 +181,8 @@ int dbMount(struct inode *ipbmap)
+ 	bmp->db_l2nbperpage = le32_to_cpu(dbmp_le->dn_l2nbperpage);
+ 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
+ 	if (!bmp->db_numag) {
+-		release_metapage(mp);
+-		kfree(bmp);
+-		return -EINVAL;
++		err = -EINVAL;
++		goto err_release_metapage;
+ 	}
+ 
+ 	bmp->db_maxlevel = le32_to_cpu(dbmp_le->dn_maxlevel);
+@@ -194,6 +193,11 @@ int dbMount(struct inode *ipbmap)
+ 	bmp->db_agwidth = le32_to_cpu(dbmp_le->dn_agwidth);
+ 	bmp->db_agstart = le32_to_cpu(dbmp_le->dn_agstart);
+ 	bmp->db_agl2size = le32_to_cpu(dbmp_le->dn_agl2size);
++	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG) {
++		err = -EINVAL;
++		goto err_release_metapage;
++	}
++
+ 	for (i = 0; i < MAXAG; i++)
+ 		bmp->db_agfree[i] = le64_to_cpu(dbmp_le->dn_agfree[i]);
+ 	bmp->db_agsize = le64_to_cpu(dbmp_le->dn_agsize);
+@@ -214,6 +218,12 @@ int dbMount(struct inode *ipbmap)
+ 	BMAP_LOCK_INIT(bmp);
+ 
+ 	return (0);
++
++err_release_metapage:
++	release_metapage(mp);
++err_kfree_bmp:
++	kfree(bmp);
++	return err;
+ }
+ 
+ 
 -- 
 2.35.1
 
