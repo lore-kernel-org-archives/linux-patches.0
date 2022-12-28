@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446CD1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:15:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1B6C433EF;
-	Wed, 28 Dec 2022 15:15:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01B431863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:15:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76BFEC433D2;
+	Wed, 28 Dec 2022 15:15:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240537;
-	bh=Mh7Iu9p6n+1zJIb6xZi19HETjBy9hXzuQapIFL17wgA=;
+	s=korg; t=1672240539;
+	bh=1o4b6ux47ElfBz8ppsDDtaebJJOsA5dNlSdP9KGmD74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DNgoRoarLK3rBrBo0LquTk1vly18FGJGROB9uyhmbO+KWo3leGJ82hTeDOOtmr9IV
-	 1bb+SV2H2iXYGQb7rMi6km/pCyLUS/WbFxNsIgI5Jf0RC0zNNGEmLagDSy1CZYZn64
-	 HKrbrh2fuWbFjOv9uMdP45ftd+2ohhx2a3OT+Ab4=
+	b=uUn5itE0UOdS2+JZp9Xw3+WjK0s7OrngPkS3fbctpR9ZP9SMnUqU2KUkOnqpBLE3C
+	 5cjsUcX3Ta7rhLEc/jOICU3689ReLwFkP8D+OpVyQ6rNKfxsMVwT+sx4Am9rmooN7p
+	 DrR1J8F4jcNqc7jfRZhfgELcBHLeiz7N6dRDUuMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Victor Ding <victording@chromium.org>,
-	Prashant Malani <pmalani@chromium.org>,
-	Tzung-Bi Shih <tzungbi@kernel.org>,
+	Huisong Li <lihuisong@huawei.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0172/1073] platform/chrome: cros_ec_typec: zero out stale pointers
-Date: Wed, 28 Dec 2022 15:29:20 +0100
-Message-Id: <20221228144332.685249709@linuxfoundation.org>
+Subject: [PATCH 6.1 0137/1146] mailbox: pcc: Reset pcc_chan_count to zero in case of PCC probe failure
+Date: Wed, 28 Dec 2022 15:27:56 +0100
+Message-Id: <20221228144333.870987602@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,46 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Victor Ding <victording@chromium.org>
+From: Huisong Li <lihuisong@huawei.com>
 
-[ Upstream commit 9a8aadcf0b459c1257b9477fd6402e1d5952ae07 ]
+[ Upstream commit 6d7d3c287410c0ad499e478e2338dc3d7e3392b1 ]
 
-`cros_typec_get_switch_handles` allocates four pointers when obtaining
-type-c switch handles. These pointers are all freed if failing to obtain
-any of them; therefore, pointers in `port` become stale. The stale
-pointers eventually cause use-after-free or double free in later code
-paths. Zeroing out all pointer fields after freeing to eliminate these
-stale pointers.
+Currently, 'pcc_chan_count' is remains set to a non-zero value if PCC
+subspaces are parsed successfully but something else fail later during
+the initial PCC probing phase. This will result in pcc_mbox_request_channel
+trying to access the resources that are not initialised or allocated and
+may end up in a system crash.
 
-Fixes: f28adb41dab4 ("platform/chrome: cros_ec_typec: Register Type C switches")
-Fixes: 1a8912caba02 ("platform/chrome: cros_ec_typec: Get retimer handle")
-Signed-off-by: Victor Ding <victording@chromium.org>
-Acked-by: Prashant Malani <pmalani@chromium.org>
-Signed-off-by: Tzung-Bi Shih <tzungbi@kernel.org>
-Link: https://lore.kernel.org/r/20221207093924.v2.1.I1864b6a7ee98824118b93677868d22d3750f439b@changeid
+Reset pcc_chan_count to 0 when the PCC probe fails in order to prevent
+the possible issue as described above.
+
+Fixes: ce028702ddbc ("mailbox: pcc: Move bulk of PCCT parsing into pcc_mbox_probe")
+Signed-off-by: Huisong Li <lihuisong@huawei.com>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/chrome/cros_ec_typec.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mailbox/pcc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/chrome/cros_ec_typec.c b/drivers/platform/chrome/cros_ec_typec.c
-index 00208ffbe2e7..a54bf964521f 100644
---- a/drivers/platform/chrome/cros_ec_typec.c
-+++ b/drivers/platform/chrome/cros_ec_typec.c
-@@ -168,10 +168,13 @@ static int cros_typec_get_switch_handles(struct cros_typec_port *port,
+diff --git a/drivers/mailbox/pcc.c b/drivers/mailbox/pcc.c
+index 3c2bc0ca454c..105d46c9801b 100644
+--- a/drivers/mailbox/pcc.c
++++ b/drivers/mailbox/pcc.c
+@@ -743,6 +743,7 @@ static int __init pcc_init(void)
  
- role_sw_err:
- 	typec_switch_put(port->ori_sw);
-+	port->ori_sw = NULL;
- ori_sw_err:
- 	typec_retimer_put(port->retimer);
-+	port->retimer = NULL;
- retimer_sw_err:
- 	typec_mux_put(port->mux);
-+	port->mux = NULL;
- mux_err:
- 	return -ENODEV;
- }
+ 	if (IS_ERR(pcc_pdev)) {
+ 		pr_debug("Err creating PCC platform bundle\n");
++		pcc_chan_count = 0;
+ 		return PTR_ERR(pcc_pdev);
+ 	}
+ 
 -- 
 2.35.1
 
