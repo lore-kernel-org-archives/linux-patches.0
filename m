@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 151A51863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FF23C433EF;
-	Wed, 28 Dec 2022 15:43:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B440D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3363CC433EF;
+	Wed, 28 Dec 2022 15:43:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242198;
-	bh=YxqzG76YSezYNd/K2pWXjHzfN7YLBUbnOlr+uEnneh0=;
+	s=korg; t=1672242201;
+	bh=KHzEcZE2k1pRm8RztkLsclhbLBR1oLAIU4UFuSVxwr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MtvLPYXryeDzyFAYcFJgVAtuXcXVvKSd8JCrZIEysQzitWEmXdMVeMUYGf0EtRULq
-	 iLI8+37EJNlUP8Yo7h6CJ1GVx6HbbFpocQ36D1go1VEqE8Ti8HUpPVQ6mu/QB9myMl
-	 nxdj50/kT4R7rilX4/d8splZw+nvaPkFsqGNJM/s=
+	b=GJ7e4Y2fnsoUV1PAx88xcEOsS4YX19Dg5kPPwJCROx0WeXfzJCW8Ptq2nb9gAbbcZ
+	 zHssnVXi6wNdVszEP5h0nvM1D0/LCEcRU9fE0rdbaUxQYm12yxjXQ9O5GvxtbyGjky
+	 jLAFmqLXvflfYEW6fcTuKZE7hE2n1fL1eiBCADXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>,
-	Lee Jones <lee@kernel.org>,
+	Baisong Zhong <zhongbaisong@huawei.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 574/731] mfd: bd957x: Fix Kconfig dependency on REGMAP_IRQ
-Date: Wed, 28 Dec 2022 15:41:21 +0100
-Message-Id: <20221228144313.193738268@linuxfoundation.org>
+Subject: [PATCH 6.0 0364/1073] ALSA: seq: fix undefined behavior in bit shift for SNDRV_SEQ_FILTER_USE_EVENT
+Date: Wed, 28 Dec 2022 15:32:32 +0100
+Message-Id: <20221228144337.889352806@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,34 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
+From: Baisong Zhong <zhongbaisong@huawei.com>
 
-[ Upstream commit 85842c46fd47fa6bd78681c154223bed27d5fd19 ]
+[ Upstream commit cf59e1e4c79bf741905484cdb13c130b53576a16 ]
 
-The BD957x driver uses REGMAP_IRQ but does not 'select' to depend on
-it. This can cause build failures.  Select REGMAP_IRQ for BD957X.
+Shifting signed 32-bit value by 31 bits is undefined, so changing
+significant bit to unsigned. The UBSAN warning calltrace like below:
 
-Fixes: 0e9692607f94 ("mfd: bd9576: Add IRQ support")
-Signed-off-by: Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/Y3SdCWkRr1L64SWK@dc75zzyyyyyyyyyyyyydt-3.rev.dnainternet.fi
+UBSAN: shift-out-of-bounds in sound/core/seq/seq_clientmgr.c:509:22
+left shift of 1 by 31 places cannot be represented in type 'int'
+...
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x8d/0xcf
+ ubsan_epilogue+0xa/0x44
+ __ubsan_handle_shift_out_of_bounds+0x1e7/0x208
+ snd_seq_deliver_single_event.constprop.21+0x191/0x2f0
+ snd_seq_deliver_event+0x1a2/0x350
+ snd_seq_kernel_client_dispatch+0x8b/0xb0
+ snd_seq_client_notify_subscription+0x72/0xa0
+ snd_seq_ioctl_subscribe_port+0x128/0x160
+ snd_seq_kernel_client_ctl+0xce/0xf0
+ snd_seq_oss_create_client+0x109/0x15b
+ alsa_seq_oss_init+0x11c/0x1aa
+ do_one_initcall+0x80/0x440
+ kernel_init_freeable+0x370/0x3c3
+ kernel_init+0x1b/0x190
+ ret_from_fork+0x1f/0x30
+ </TASK>
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
+Link: https://lore.kernel.org/r/20221121111630.3119259-1-zhongbaisong@huawei.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ include/uapi/sound/asequencer.h | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mfd/Kconfig b/drivers/mfd/Kconfig
-index d2f345245538..5dd7ea0ebd46 100644
---- a/drivers/mfd/Kconfig
-+++ b/drivers/mfd/Kconfig
-@@ -1995,6 +1995,7 @@ config MFD_ROHM_BD957XMUF
- 	depends on I2C=y
- 	depends on OF
- 	select REGMAP_I2C
-+	select REGMAP_IRQ
- 	select MFD_CORE
- 	help
- 	  Select this option to get support for the ROHM BD9576MUF and
+diff --git a/include/uapi/sound/asequencer.h b/include/uapi/sound/asequencer.h
+index a75e14edc957..dbd60f48b4b0 100644
+--- a/include/uapi/sound/asequencer.h
++++ b/include/uapi/sound/asequencer.h
+@@ -344,10 +344,10 @@ typedef int __bitwise snd_seq_client_type_t;
+ #define	KERNEL_CLIENT	((__force snd_seq_client_type_t) 2)
+                         
+ 	/* event filter flags */
+-#define SNDRV_SEQ_FILTER_BROADCAST	(1<<0)	/* accept broadcast messages */
+-#define SNDRV_SEQ_FILTER_MULTICAST	(1<<1)	/* accept multicast messages */
+-#define SNDRV_SEQ_FILTER_BOUNCE		(1<<2)	/* accept bounce event in error */
+-#define SNDRV_SEQ_FILTER_USE_EVENT	(1<<31)	/* use event filter */
++#define SNDRV_SEQ_FILTER_BROADCAST	(1U<<0)	/* accept broadcast messages */
++#define SNDRV_SEQ_FILTER_MULTICAST	(1U<<1)	/* accept multicast messages */
++#define SNDRV_SEQ_FILTER_BOUNCE		(1U<<2)	/* accept bounce event in error */
++#define SNDRV_SEQ_FILTER_USE_EVENT	(1U<<31)	/* use event filter */
+ 
+ struct snd_seq_client_info {
+ 	int client;			/* client number to inquire */
 -- 
 2.35.1
 
