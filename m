@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E8F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A36DC433D2;
-	Wed, 28 Dec 2022 14:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293541863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6FC0C433D2;
+	Wed, 28 Dec 2022 14:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239595;
-	bh=oQvsVna1y/xnbTGfs/quJeZI6PNmyp5Z8hnh91+wNLU=;
+	s=korg; t=1672239598;
+	bh=93v984cUWXu1YOXGhU9QycAI1L8bB0yg294XvL5CFf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fdFGP4dWEHl/In/Zbs3h45HyIA8DHdfoHDKJb0C5V42k5O8WTph7RnW2xVJLZQK3G
-	 a+wYWOIX8wz04b8xPbCDxadbUJrsAvFWgeBr4Xj/v17kIuA7PZYmgOQuVD7BO/wrk0
-	 Hbax6ZnFzeg6ZO97PH7OIwo8Ysnv0TREsBrUEsJA=
+	b=JZ1CREIVpvzI155Hz7DguqdprHr3YXqxhvS9OEgKZptsNggJfovbD01y47J/eNJvG
+	 vKNUUjEARWB0iYj6r/ot18isdVV4GfEWmZyVtJ3xy1bZe/WO7zvo0FTmNvGVKdtwEE
+	 y9d/Wotm/2zCC+G2QA453v1K3McA86Nl4ntwFp2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Marco Elver <elver@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0042/1073] arm64: dts: qcom: sm6125: fix SDHCI CQE reg names
-Date: Wed, 28 Dec 2022 15:27:10 +0100
-Message-Id: <20221228144329.269046269@linuxfoundation.org>
+Subject: [PATCH 6.1 0017/1146] objtool, kcsan: Add volatile read/write instrumentation to whitelist
+Date: Wed, 28 Dec 2022 15:25:56 +0100
+Message-Id: <20221228144330.641078152@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Marco Elver <elver@google.com>
 
-[ Upstream commit 3de1172624b3c4ca65730bc34333ab493510b3e1 ]
+[ Upstream commit 63646fcba5bb4b59a19031c21913f94e46a3d0d4 ]
 
-SM6125 comes with SDCC (SDHCI controller) v5, so the second range of
-registers is cqhci, not core.
+Adds KCSAN's volatile instrumentation to objtool's uaccess whitelist.
 
-Fixes: cff4bbaf2a2d ("arm64: dts: qcom: Add support for SM6125")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Tested-by: Marijn Suijten <marijn.suijten@somainline.org> # Sony Xperia 10 II
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221026163646.37433-1-krzysztof.kozlowski@linaro.org
+Recent kernel change have shown that this was missing from the uaccess
+whitelist (since the first upstreamed version of KCSAN):
+
+  mm/gup.o: warning: objtool: fault_in_readable+0x101: call to __tsan_volatile_write1() with UACCESS enabled
+
+Fixes: 75d75b7a4d54 ("kcsan: Support distinguishing volatile accesses")
+Signed-off-by: Marco Elver <elver@google.com>
+Reviewed-by: Dmitry Vyukov <dvyukov@google.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm6125.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/objtool/check.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-index 8c582a9e4ada..012722408682 100644
---- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-@@ -458,7 +458,7 @@ rpm_msg_ram: sram@45f0000 {
- 		sdhc_1: mmc@4744000 {
- 			compatible = "qcom,sm6125-sdhci", "qcom,sdhci-msm-v5";
- 			reg = <0x04744000 0x1000>, <0x04745000 0x1000>;
--			reg-names = "hc", "core";
-+			reg-names = "hc", "cqhci";
- 
- 			interrupts = <GIC_SPI 348 IRQ_TYPE_LEVEL_HIGH>,
- 				     <GIC_SPI 352 IRQ_TYPE_LEVEL_HIGH>;
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index 43ec14c29a60..a7f1e6c8bb0a 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -999,6 +999,16 @@ static const char *uaccess_safe_builtin[] = {
+ 	"__tsan_read_write4",
+ 	"__tsan_read_write8",
+ 	"__tsan_read_write16",
++	"__tsan_volatile_read1",
++	"__tsan_volatile_read2",
++	"__tsan_volatile_read4",
++	"__tsan_volatile_read8",
++	"__tsan_volatile_read16",
++	"__tsan_volatile_write1",
++	"__tsan_volatile_write2",
++	"__tsan_volatile_write4",
++	"__tsan_volatile_write8",
++	"__tsan_volatile_write16",
+ 	"__tsan_atomic8_load",
+ 	"__tsan_atomic16_load",
+ 	"__tsan_atomic32_load",
 -- 
 2.35.1
 
