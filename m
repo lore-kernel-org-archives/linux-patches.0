@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6287A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:11:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2BF9C433D2;
-	Wed, 28 Dec 2022 15:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8331863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:11:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E8CDC433D2;
+	Wed, 28 Dec 2022 15:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240277;
-	bh=PK9DHjeDqa+7dXSz8ls1e+rVW8Q40/ZB2ysndfLFgf4=;
+	s=korg; t=1672240279;
+	bh=XhIkxpjGl+KN0Xta15eL1+uI4jJqKZPhMhOir7GTUos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y23Sp3d3kXDhIdJ9JxBqMjDtzbYG0j5dz1wek2+hBQNcKvG3hEBUaOEG3uIPRr2oN
-	 +W8lPr/hV7DIAi01orxK/E97hj1teQ4gauhgcr3j7ygKmC2kG0I/vRtEyeeqXgTnf7
-	 ZcQBlcQlW/wHUGdLPaYMK3oBIb5mS5y0w9hygg2M=
+	b=1+bLYbDad4XNa05tvXFqumpuxZWhXBNw+Y9uu4fMTKpqMuAqanG+jtknV6sAXGRcz
+	 GHqL2ndx6tkxJQ9JWtDot9yxWmmQMPbxzi8npHXru33UOsVpIuSUKadpFcmu7AeXmN
+	 OCOHwseZFsNmS2a/WMCeiaZpZIMp75329SCZeZi4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Zhi Li <yieli@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 331/731] net: apple: mace: dont call dev_kfree_skb() under spin_lock_irqsave()
-Date: Wed, 28 Dec 2022 15:37:18 +0100
-Message-Id: <20221228144306.166590972@linuxfoundation.org>
+Subject: [PATCH 6.0 0142/1073] nfsd: dont call nfsd_file_put from client states seqfile display
+Date: Wed, 28 Dec 2022 15:28:50 +0100
+Message-Id: <20221228144331.885472634@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,42 +36,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 3dfe3486c1cd4f82b466b7d307f23777137b8acc ]
+[ Upstream commit e0aa651068bfd520afcd357af8ecd2de005fc83d ]
 
-It is not allowed to call kfree_skb() or consume_skb() from hardware
-interrupt context or with hardware interrupts being disabled.
+We had a report of this:
 
-It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
-The difference between them is free reason, dev_kfree_skb_irq() means
-the SKB is dropped in error and dev_consume_skb_irq() means the SKB
-is consumed in normal.
+    BUG: sleeping function called from invalid context at fs/nfsd/filecache.c:440
 
-In this case, dev_kfree_skb() is called in mace_tx_timeout() to drop
-the SKB, when tx timeout, so replace it with dev_kfree_skb_irq().
+...with a stack trace showing nfsd_file_put being called from
+nfs4_show_open. This code has always tried to call fput while holding a
+spinlock, but we recently changed this to use the filecache, and that
+started triggering the might_sleep() in nfsd_file_put.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+states_start takes and holds the cl_lock while iterating over the
+client's states, and we can't sleep with that held.
+
+Have the various nfs4_show_* functions instead hold the fi_lock instead
+of taking a nfsd_file reference.
+
+Fixes: 78599c42ae3c ("nfsd4: add file to display list of client's opens")
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2138357
+Reported-by: Zhi Li <yieli@redhat.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/apple/mace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/nfsd/nfs4state.c | 51 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 33 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/net/ethernet/apple/mace.c b/drivers/net/ethernet/apple/mace.c
-index 4b80e3a52a19..44037e9e197f 100644
---- a/drivers/net/ethernet/apple/mace.c
-+++ b/drivers/net/ethernet/apple/mace.c
-@@ -841,7 +841,7 @@ static void mace_tx_timeout(struct timer_list *t)
-     if (mp->tx_bad_runt) {
- 	mp->tx_bad_runt = 0;
-     } else if (i != mp->tx_fill) {
--	dev_kfree_skb(mp->tx_bufs[i]);
-+	dev_kfree_skb_irq(mp->tx_bufs[i]);
- 	if (++i >= N_TX_RING)
- 	    i = 0;
- 	mp->tx_empty = i;
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index ddb2bf078fda..94420fad4c41 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -664,15 +664,26 @@ find_any_file(struct nfs4_file *f)
+ 	return ret;
+ }
+ 
+-static struct nfsd_file *find_deleg_file(struct nfs4_file *f)
++static struct nfsd_file *find_any_file_locked(struct nfs4_file *f)
+ {
+-	struct nfsd_file *ret = NULL;
++	lockdep_assert_held(&f->fi_lock);
++
++	if (f->fi_fds[O_RDWR])
++		return f->fi_fds[O_RDWR];
++	if (f->fi_fds[O_WRONLY])
++		return f->fi_fds[O_WRONLY];
++	if (f->fi_fds[O_RDONLY])
++		return f->fi_fds[O_RDONLY];
++	return NULL;
++}
++
++static struct nfsd_file *find_deleg_file_locked(struct nfs4_file *f)
++{
++	lockdep_assert_held(&f->fi_lock);
+ 
+-	spin_lock(&f->fi_lock);
+ 	if (f->fi_deleg_file)
+-		ret = nfsd_file_get(f->fi_deleg_file);
+-	spin_unlock(&f->fi_lock);
+-	return ret;
++		return f->fi_deleg_file;
++	return NULL;
+ }
+ 
+ static atomic_long_t num_delegations;
+@@ -2606,9 +2617,11 @@ static int nfs4_show_open(struct seq_file *s, struct nfs4_stid *st)
+ 	ols = openlockstateid(st);
+ 	oo = ols->st_stateowner;
+ 	nf = st->sc_file;
+-	file = find_any_file(nf);
++
++	spin_lock(&nf->fi_lock);
++	file = find_any_file_locked(nf);
+ 	if (!file)
+-		return 0;
++		goto out;
+ 
+ 	seq_printf(s, "- ");
+ 	nfs4_show_stateid(s, &st->sc_stateid);
+@@ -2630,8 +2643,8 @@ static int nfs4_show_open(struct seq_file *s, struct nfs4_stid *st)
+ 	seq_printf(s, ", ");
+ 	nfs4_show_owner(s, oo);
+ 	seq_printf(s, " }\n");
+-	nfsd_file_put(file);
+-
++out:
++	spin_unlock(&nf->fi_lock);
+ 	return 0;
+ }
+ 
+@@ -2645,9 +2658,10 @@ static int nfs4_show_lock(struct seq_file *s, struct nfs4_stid *st)
+ 	ols = openlockstateid(st);
+ 	oo = ols->st_stateowner;
+ 	nf = st->sc_file;
+-	file = find_any_file(nf);
++	spin_lock(&nf->fi_lock);
++	file = find_any_file_locked(nf);
+ 	if (!file)
+-		return 0;
++		goto out;
+ 
+ 	seq_printf(s, "- ");
+ 	nfs4_show_stateid(s, &st->sc_stateid);
+@@ -2667,8 +2681,8 @@ static int nfs4_show_lock(struct seq_file *s, struct nfs4_stid *st)
+ 	seq_printf(s, ", ");
+ 	nfs4_show_owner(s, oo);
+ 	seq_printf(s, " }\n");
+-	nfsd_file_put(file);
+-
++out:
++	spin_unlock(&nf->fi_lock);
+ 	return 0;
+ }
+ 
+@@ -2680,9 +2694,10 @@ static int nfs4_show_deleg(struct seq_file *s, struct nfs4_stid *st)
+ 
+ 	ds = delegstateid(st);
+ 	nf = st->sc_file;
+-	file = find_deleg_file(nf);
++	spin_lock(&nf->fi_lock);
++	file = find_deleg_file_locked(nf);
+ 	if (!file)
+-		return 0;
++		goto out;
+ 
+ 	seq_printf(s, "- ");
+ 	nfs4_show_stateid(s, &st->sc_stateid);
+@@ -2698,8 +2713,8 @@ static int nfs4_show_deleg(struct seq_file *s, struct nfs4_stid *st)
+ 	seq_printf(s, ", ");
+ 	nfs4_show_fname(s, file);
+ 	seq_printf(s, " }\n");
+-	nfsd_file_put(file);
+-
++out:
++	spin_unlock(&nf->fi_lock);
+ 	return 0;
+ }
+ 
 -- 
 2.35.1
 
