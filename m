@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F481C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E54D0C433EF;
-	Wed, 28 Dec 2022 16:12:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FCF01C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA95C433EF;
+	Wed, 28 Dec 2022 16:12:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243968;
-	bh=0Rg55PiCAd68EtVqrIcCWw+uLfOchtldwvyo6bQN5n8=;
+	s=korg; t=1672243971;
+	bh=OoW6+A9KlidEaPg6LYF0DzCw0G9ropuf4+xsU6mgME4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zIHGApqPB3P1J98FXMiZ9RaEk1ilfRsbYEODTp59fLMhfxpS59w5dArJFpV5/KjZG
-	 StPc8ZK2sETSHPRn8feTTYaFtzua3gQSDLwGybGzDLo4ta1dE05bY/SUrzaXZSyZER
-	 AWHwIvKR0F3FTM98/Vop6agmuw5XVxx/o6S5aDZs=
+	b=j71S7f04mYDdsIOVpiFrPg/PfKuzggZ6CjaUaxAOUABYDArHnA8AMl3agjfmCn0XB
+	 Os0QodF7hhHT5m7PXaHt2mBFX9CX+C5b0deiv0WsIFh5r6OcszobVMNrhOiu4mr+XH
+	 q7EdP9AsjL7ep387GX2kfGDDfVlAW9TIHnG2UE/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0610/1073] RDMA/rxe: Fix NULL-ptr-deref in rxe_qp_do_cleanup() when socket create failed
-Date: Wed, 28 Dec 2022 15:36:38 +0100
-Message-Id: <20221228144344.614379371@linuxfoundation.org>
+Subject: [PATCH 6.0 0624/1073] scsi: fcoe: Fix possible name leak when device_register() fails
+Date: Wed, 28 Dec 2022 15:36:52 +0100
+Message-Id: <20221228144344.992729241@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,75 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit f67376d801499f4fa0838c18c1efcad8840e550d ]
+[ Upstream commit 47b6a122c7b69a876c7ee2fc064a26b09627de9d ]
 
-There is a null-ptr-deref when mount.cifs over rdma:
+If device_register() returns an error, the name allocated by dev_set_name()
+needs to be freed. As the comment of device_register() says, one should use
+put_device() to give up the reference in the error path. Fix this by
+calling put_device(), then the name can be freed in kobject_cleanup().
 
-  BUG: KASAN: null-ptr-deref in rxe_qp_do_cleanup+0x2f3/0x360 [rdma_rxe]
-  Read of size 8 at addr 0000000000000018 by task mount.cifs/3046
+The 'fcf' is freed in fcoe_fcf_device_release(), so the kfree() in the
+error path can be removed.
 
-  CPU: 2 PID: 3046 Comm: mount.cifs Not tainted 6.1.0-rc5+ #62
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc3
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x34/0x44
-   kasan_report+0xad/0x130
-   rxe_qp_do_cleanup+0x2f3/0x360 [rdma_rxe]
-   execute_in_process_context+0x25/0x90
-   __rxe_cleanup+0x101/0x1d0 [rdma_rxe]
-   rxe_create_qp+0x16a/0x180 [rdma_rxe]
-   create_qp.part.0+0x27d/0x340
-   ib_create_qp_kernel+0x73/0x160
-   rdma_create_qp+0x100/0x230
-   _smbd_get_connection+0x752/0x20f0
-   smbd_get_connection+0x21/0x40
-   cifs_get_tcp_session+0x8ef/0xda0
-   mount_get_conns+0x60/0x750
-   cifs_mount+0x103/0xd00
-   cifs_smb3_do_mount+0x1dd/0xcb0
-   smb3_get_tree+0x1d5/0x300
-   vfs_get_tree+0x41/0xf0
-   path_mount+0x9b3/0xdd0
-   __x64_sys_mount+0x190/0x1d0
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+The 'ctlr' is freed in fcoe_ctlr_device_release(), so don't use the error
+label, just return NULL after calling put_device().
 
-The root cause of the issue is the socket create failed in
-rxe_qp_init_req().
-
-So move the reset rxe_qp_do_cleanup() after the NULL ptr check.
-
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Link: https://lore.kernel.org/r/20221122151437.1057671-1-zhangxiaoxu5@huawei.com
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 9a74e884ee71 ("[SCSI] libfcoe: Add fcoe_sysfs")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221112094310.3633291-1-yangyingliang@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_qp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/scsi/fcoe/fcoe_sysfs.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
-index d776dfda43b1..e9c573fe7155 100644
---- a/drivers/infiniband/sw/rxe/rxe_qp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_qp.c
-@@ -830,12 +830,12 @@ static void rxe_qp_do_cleanup(struct work_struct *work)
- 	if (qp->resp.mr)
- 		rxe_put(qp->resp.mr);
+diff --git a/drivers/scsi/fcoe/fcoe_sysfs.c b/drivers/scsi/fcoe/fcoe_sysfs.c
+index af658aa38fed..6260aa5ea6af 100644
+--- a/drivers/scsi/fcoe/fcoe_sysfs.c
++++ b/drivers/scsi/fcoe/fcoe_sysfs.c
+@@ -830,14 +830,15 @@ struct fcoe_ctlr_device *fcoe_ctlr_device_add(struct device *parent,
  
--	if (qp_type(qp) == IB_QPT_RC)
--		sk_dst_reset(qp->sk->sk);
--
- 	free_rd_atomic_resources(qp);
+ 	dev_set_name(&ctlr->dev, "ctlr_%d", ctlr->id);
+ 	error = device_register(&ctlr->dev);
+-	if (error)
+-		goto out_del_q2;
++	if (error) {
++		destroy_workqueue(ctlr->devloss_work_q);
++		destroy_workqueue(ctlr->work_q);
++		put_device(&ctlr->dev);
++		return NULL;
++	}
  
- 	if (qp->sk) {
-+		if (qp_type(qp) == IB_QPT_RC)
-+			sk_dst_reset(qp->sk->sk);
-+
- 		kernel_sock_shutdown(qp->sk, SHUT_RDWR);
- 		sock_release(qp->sk);
- 	}
+ 	return ctlr;
+ 
+-out_del_q2:
+-	destroy_workqueue(ctlr->devloss_work_q);
+-	ctlr->devloss_work_q = NULL;
+ out_del_q:
+ 	destroy_workqueue(ctlr->work_q);
+ 	ctlr->work_q = NULL;
+@@ -1036,16 +1037,16 @@ struct fcoe_fcf_device *fcoe_fcf_device_add(struct fcoe_ctlr_device *ctlr,
+ 	fcf->selected = new_fcf->selected;
+ 
+ 	error = device_register(&fcf->dev);
+-	if (error)
+-		goto out_del;
++	if (error) {
++		put_device(&fcf->dev);
++		goto out;
++	}
+ 
+ 	fcf->state = FCOE_FCF_STATE_CONNECTED;
+ 	list_add_tail(&fcf->peers, &ctlr->fcfs);
+ 
+ 	return fcf;
+ 
+-out_del:
+-	kfree(fcf);
+ out:
+ 	return NULL;
+ }
 -- 
 2.35.1
 
