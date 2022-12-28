@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2CE11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:33:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356FAC433F0;
-	Wed, 28 Dec 2022 15:33:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDC11863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:33:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D792EC433EF;
+	Wed, 28 Dec 2022 15:33:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241610;
-	bh=7OqLrE8VqfaKw/7UH8Ppl+h4W6SzmKut1joDfri5VkA=;
+	s=korg; t=1672241613;
+	bh=ZuJ9isrl1KwnhfHq+fPWeJhnSf7HMwfdDsitIztRlPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MUC0ooNmVT5zC7loX2fTsTsZUJrwX8/cP8A08vgrs6gF7nEQEXOBlgsXYv00skynF
-	 l/w8H7sFkDyq/sPOqH7YPaXbZXKp8/59cA+0RHeNsCPaKzmL1GEhiHc8fVP11euAh7
-	 wTh97bEdJLNVIn9rG5KfqscmItGRqeiSq/m042Qk=
+	b=ra+IqlsU1GPmBu8HvvO0rD3vLtM0WbyA8wlIVXb2ePAMWf8XiQr0FkzC2mtrjkzqC
+	 IFWNzvKej5NGIrWcnnnnk7+3pLzLBy7OMzEeCRUP6Az8bciy4/ilJl9OLPASO/lNTx
+	 9Ly3mSHFVAd3IyNbs5CMJUvz05VZmjz9JTIo7uJw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yassine Oudjana <y.oudjana@protonmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0304/1073] regmap-irq: Use the new num_config_regs property in regmap_add_irq_chip_fwnode
-Date: Wed, 28 Dec 2022 15:31:32 +0100
-Message-Id: <20221228144336.268373551@linuxfoundation.org>
+Subject: [PATCH 5.15 503/731] fbdev: ssd1307fb: Drop optional dependency
+Date: Wed, 28 Dec 2022 15:40:10 +0100
+Message-Id: <20221228144311.128286962@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,78 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yassine Oudjana <y.oudjana@protonmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 84498d1fb35de6ab71bdfdb6270a464fb4a0951b ]
+[ Upstream commit 025e3b507a3a8e1ee96a3112bb67495c77d6cdb6 ]
 
-Commit faa87ce9196d ("regmap-irq: Introduce config registers for irq
-types") added the num_config_regs, then commit 9edd4f5aee84 ("regmap-irq:
-Deprecate type registers and virtual registers") suggested to replace
-num_type_reg with it. However, regmap_add_irq_chip_fwnode wasn't modified
-to use the new property. Later on, commit 255a03bb1bb3 ("ASoC: wcd9335:
-Convert irq chip to config regs") removed the old num_type_reg property
-from the WCD9335 driver's struct regmap_irq_chip, causing a null pointer
-dereference in regmap_irq_set_type when it tried to index d->type_buf as
-it was never allocated in regmap_add_irq_chip_fwnode:
+Only a single out of three devices need a PWM, so from driver it's
+optional. Moreover it's a single driver in the entire kernel that
+currently selects PWM. Unfortunately this selection is a root cause
+of the circular dependencies when we want to enable optional PWM
+for some other drivers that select GPIOLIB.
 
-[   39.199374] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000
-
-[   39.200006] Call trace:
-[   39.200014]  regmap_irq_set_type+0x84/0x1c0
-[   39.200026]  __irq_set_trigger+0x60/0x1c0
-[   39.200040]  __setup_irq+0x2f4/0x78c
-[   39.200051]  request_threaded_irq+0xe8/0x1a0
-
-Use num_config_regs in regmap_add_irq_chip_fwnode instead of num_type_reg,
-and fall back to it if num_config_regs isn't defined to maintain backward
-compatibility.
-
-Fixes: faa87ce9196d ("regmap-irq: Introduce config registers for irq types")
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-Link: https://lore.kernel.org/r/20221107202114.823975-1-y.oudjana@protonmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: a2ed00da5047 ("drivers/video: add support for the Solomon SSD1307 OLED Controller")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/regmap/regmap-irq.c | 15 +++++++++++----
- 1 file changed, 11 insertions(+), 4 deletions(-)
+ drivers/video/fbdev/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/base/regmap/regmap-irq.c b/drivers/base/regmap/regmap-irq.c
-index 4ef9488d05cd..3de89795f584 100644
---- a/drivers/base/regmap/regmap-irq.c
-+++ b/drivers/base/regmap/regmap-irq.c
-@@ -722,6 +722,7 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
- 	int i;
- 	int ret = -ENOMEM;
- 	int num_type_reg;
-+	int num_regs;
- 	u32 reg;
- 
- 	if (chip->num_regs <= 0)
-@@ -796,14 +797,20 @@ int regmap_add_irq_chip_fwnode(struct fwnode_handle *fwnode,
- 			goto err_alloc;
- 	}
- 
--	num_type_reg = chip->type_in_mask ? chip->num_regs : chip->num_type_reg;
--	if (num_type_reg) {
--		d->type_buf_def = kcalloc(num_type_reg,
-+	/*
-+	 * Use num_config_regs if defined, otherwise fall back to num_type_reg
-+	 * to maintain backward compatibility.
-+	 */
-+	num_type_reg = chip->num_config_regs ? chip->num_config_regs
-+			: chip->num_type_reg;
-+	num_regs = chip->type_in_mask ? chip->num_regs : num_type_reg;
-+	if (num_regs) {
-+		d->type_buf_def = kcalloc(num_regs,
- 					  sizeof(*d->type_buf_def), GFP_KERNEL);
- 		if (!d->type_buf_def)
- 			goto err_alloc;
- 
--		d->type_buf = kcalloc(num_type_reg, sizeof(*d->type_buf),
-+		d->type_buf = kcalloc(num_regs, sizeof(*d->type_buf),
- 				      GFP_KERNEL);
- 		if (!d->type_buf)
- 			goto err_alloc;
+diff --git a/drivers/video/fbdev/Kconfig b/drivers/video/fbdev/Kconfig
+index 6ed5e608dd04..5050a9f8e879 100644
+--- a/drivers/video/fbdev/Kconfig
++++ b/drivers/video/fbdev/Kconfig
+@@ -2218,7 +2218,6 @@ config FB_SSD1307
+ 	select FB_SYS_COPYAREA
+ 	select FB_SYS_IMAGEBLIT
+ 	select FB_DEFERRED_IO
+-	select PWM
+ 	select FB_BACKLIGHT
+ 	help
+ 	  This driver implements support for the Solomon SSD1307
 -- 
 2.35.1
 
