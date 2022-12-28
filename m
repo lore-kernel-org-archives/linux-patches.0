@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB73C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:20:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322B1C433EF;
-	Wed, 28 Dec 2022 15:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 506761863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:20:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B61C433D2;
+	Wed, 28 Dec 2022 15:20:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240852;
-	bh=QXRs9cy1VSHV67JP2WA2HF8wuo12XqBoOATJGQpR0tA=;
+	s=korg; t=1672240855;
+	bh=hjmvw9sYrkHjcpnlocA9U6ErG2j5QcaPwaRRFsbduD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=clTIGVUFpC3nxYq4bUEYpBNy7FEuKz6PAzYVk2tEQ3AWOEZ4GRyoJX3lauRlWazVT
-	 gFE5HkbPstPo4Uvc6TLFlZt1I217+v8TA+I4ihAbSXcjJBY4MDxohSSTNVP3RxD2Gl
-	 DOqDAfVrv/Qu5bdEYSprOudHG3fX0alVUXbHQ328=
+	b=JAl2YtUGtOaO5cPAku713ULK0eK6tPPZiwWBL3pR37w3egew5hrTvGeDMbq/IJuS/
+	 lTOOIUWZKZ8NEKsnW7QQoRFXZ/MmiwRQWnkuX5W82vFD0C19CLJIhsyvoKLPbbJFwX
+	 n9LAf6Ad+9za3H/5LERmX+FMUElhUjZCpTS32EnU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Marek Vasut <marex@denx.de>,
-	Kieran Bingham <kieran.bingham@ideasonboard.com>,
-	Liu Ying <victor.liu@nxp.com>,
+	syzbot+bc05445bc14148d51915@syzkaller.appspotmail.com,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0210/1073] drm: lcdif: Switch to limited range for RGB to YUV conversion
-Date: Wed, 28 Dec 2022 15:29:58 +0100
-Message-Id: <20221228144333.723225565@linuxfoundation.org>
+Subject: [PATCH 5.15 405/731] padata: Always leave BHs disabled when running ->parallel()
+Date: Wed, 28 Dec 2022 15:38:32 +0100
+Message-Id: <20221228144308.307424420@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,68 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+From: Daniel Jordan <daniel.m.jordan@oracle.com>
 
-[ Upstream commit ec39dee8b25229a646271815cc86a8fc865525cf ]
+[ Upstream commit 34c3a47d20ae55b3600fed733bf96eafe9c500d5 ]
 
-Up to and including v1.3, HDMI supported limited quantization range only
-for YCbCr. HDMI v1.4 introduced selectable quantization ranges, but this
-feature isn't supported in the dw-hdmi driver that is used in
-conjunction with the LCDIF in the i.MX8MP. The HDMI YCbCr output is thus
-always advertised in the AVI infoframe as limited range.
+A deadlock can happen when an overloaded system runs ->parallel() in the
+context of the current task:
 
-The LCDIF driver, on the other hand, configures the CSC to produce full
-range YCbCr. This mismatch results in loss of details and incorrect
-colours. Fix it by switching to limited range YCbCr.
+    padata_do_parallel
+      ->parallel()
+        pcrypt_aead_enc/dec
+          padata_do_serial
+            spin_lock(&reorder->lock) // BHs still enabled
+              <interrupt>
+                ...
+                  __do_softirq
+                    ...
+                      padata_do_serial
+                        spin_lock(&reorder->lock)
 
-The coefficients are copied from drivers/media/platforms/nxp/imx-pxp.c
-for coherency, as the hardware is most likely identical.
+It's a bug for BHs to be on in _do_serial as Steffen points out, so
+ensure they're off in the "current task" case like they are in
+padata_parallel_worker to avoid this situation.
 
-Fixes: 9db35bb349a0 ("drm: lcdif: Add support for i.MX8MP LCDIF variant")
-Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
-Reviewed-by: Liu Ying <victor.liu@nxp.com>
-Signed-off-by: Marek Vasut <marex@denx.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220930083955.31580-4-laurent.pinchart@ideasonboard.com
+Reported-by: syzbot+bc05445bc14148d51915@syzkaller.appspotmail.com
+Fixes: 4611ce224688 ("padata: allocate work structures for parallel jobs from a pool")
+Signed-off-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Acked-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mxsfb/lcdif_kms.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ kernel/padata.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/mxsfb/lcdif_kms.c b/drivers/gpu/drm/mxsfb/lcdif_kms.c
-index 1bec1279c8b5..11f881554f74 100644
---- a/drivers/gpu/drm/mxsfb/lcdif_kms.c
-+++ b/drivers/gpu/drm/mxsfb/lcdif_kms.c
-@@ -53,16 +53,22 @@ static void lcdif_set_formats(struct lcdif_drm_private *lcdif,
- 		writel(DISP_PARA_LINE_PATTERN_UYVY_H,
- 		       lcdif->base + LCDC_V8_DISP_PARA);
+diff --git a/kernel/padata.c b/kernel/padata.c
+index 18d3a5c699d8..9395b77fabb1 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -207,14 +207,16 @@ int padata_do_parallel(struct padata_shell *ps,
+ 	pw = padata_work_alloc();
+ 	spin_unlock(&padata_works_lock);
  
--		/* CSC: BT.601 Full Range RGB to YCbCr coefficients. */
--		writel(CSC0_COEF0_A2(0x096) | CSC0_COEF0_A1(0x04c),
-+		/*
-+		 * CSC: BT.601 Limited Range RGB to YCbCr coefficients.
-+		 *
-+		 * |Y |   | 0.2568  0.5041  0.0979|   |R|   |16 |
-+		 * |Cb| = |-0.1482 -0.2910  0.4392| * |G| + |128|
-+		 * |Cr|   | 0.4392  0.4392 -0.3678|   |B|   |128|
-+		 */
-+		writel(CSC0_COEF0_A2(0x081) | CSC0_COEF0_A1(0x041),
- 		       lcdif->base + LCDC_V8_CSC0_COEF0);
--		writel(CSC0_COEF1_B1(0x7d5) | CSC0_COEF1_A3(0x01d),
-+		writel(CSC0_COEF1_B1(0x7db) | CSC0_COEF1_A3(0x019),
- 		       lcdif->base + LCDC_V8_CSC0_COEF1);
--		writel(CSC0_COEF2_B3(0x080) | CSC0_COEF2_B2(0x7ac),
-+		writel(CSC0_COEF2_B3(0x070) | CSC0_COEF2_B2(0x7b6),
- 		       lcdif->base + LCDC_V8_CSC0_COEF2);
--		writel(CSC0_COEF3_C2(0x795) | CSC0_COEF3_C1(0x080),
-+		writel(CSC0_COEF3_C2(0x7a2) | CSC0_COEF3_C1(0x070),
- 		       lcdif->base + LCDC_V8_CSC0_COEF3);
--		writel(CSC0_COEF4_D1(0x000) | CSC0_COEF4_C3(0x7ec),
-+		writel(CSC0_COEF4_D1(0x010) | CSC0_COEF4_C3(0x7ee),
- 		       lcdif->base + LCDC_V8_CSC0_COEF4);
- 		writel(CSC0_COEF5_D3(0x080) | CSC0_COEF5_D2(0x080),
- 		       lcdif->base + LCDC_V8_CSC0_COEF5);
++	if (!pw) {
++		/* Maximum works limit exceeded, run in the current task. */
++		padata->parallel(padata);
++	}
++
+ 	rcu_read_unlock_bh();
+ 
+ 	if (pw) {
+ 		padata_work_init(pw, padata_parallel_worker, padata, 0);
+ 		queue_work(pinst->parallel_wq, &pw->pw_work);
+-	} else {
+-		/* Maximum works limit exceeded, run in the current task. */
+-		padata->parallel(padata);
+ 	}
+ 
+ 	return 0;
 -- 
 2.35.1
 
