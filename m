@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FD21875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:59:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F284CC433EF;
-	Wed, 28 Dec 2022 15:59:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D84B1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:59:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4CCCC433D2;
+	Wed, 28 Dec 2022 15:59:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243149;
-	bh=yIf4KSem7E/fWvBQLQCsiwU7oK+kb5gqbt+mhSoTSqE=;
+	s=korg; t=1672243152;
+	bh=JYNMgYr1uiS2PGSjM4RIyuhqaeX8EwuHEPm5BgNNkrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r7VY6PGg6lcZN1etcPeYqIXatACoAdyH8RovS2qrJEJcygOM++0LDbZ32MJo9kUUY
-	 D3a8Gf5Dgeh93GxvUiWlN7XEcW8V7IeJRXLShQSkQpGZyOrRfmaDwBeRbj3ZOTbynL
-	 Z9wchba60Lb49pUAxaVy++UXeNCXG/V253wTLC0Y=
+	b=SA8IjWHwJyDklvlAjZ1QRkep9ARSJZQILvsaanrMZ33dg+oBFpQnBO7LcpnNWJpoH
+	 kHfzUlWm/fgNkneVLSBCfkutU5VzPJ9FIdV2aVe1mKwuK5RT6yibY+lPO1yO2gwiDE
+	 w5ivhuZ6bzjtE4zZ/LoCFhob0P4hUywNGmKtOdKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	Felix Fietkau <nbd@nbd.name>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0456/1146] wifi: mt76: mt7915: fix reporting of TX AGGR histogram
-Date: Wed, 28 Dec 2022 15:33:15 +0100
-Message-Id: <20221228144342.567501682@linuxfoundation.org>
+Subject: [PATCH 6.0 0495/1073] memstick/ms_block: Add check for alloc_ordered_workqueue
+Date: Wed, 28 Dec 2022 15:34:43 +0100
+Message-Id: <20221228144341.481819125@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,33 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 528d13e7f033b54d50e0077922dd52f005d648cf ]
+[ Upstream commit 4f431a047a5c8698ed4b67e2760cfbeb5fffb69d ]
 
-Fix stats clash between bins [4-7] in 802.11 tx aggregation histogram.
+As the alloc_ordered_workqueue may return NULL pointer, it should be better
+to add check for the return value. Moreover, the msb->io_queue should be
+freed if error occurs later.
 
-Fixes: e57b7901469fc ("mt76: add mac80211 driver for MT7915 PCIe-based chipsets")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Fixes: 0ab30494bc4f ("memstick: add support for legacy memorysticks")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20221126012558.34374-1-jiasheng@iscas.ac.cn
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/mediatek/mt76/mt7915/mac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/memstick/core/ms_block.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-index 7ae9c4bd9c86..e6bf6e04d4b9 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
-@@ -1609,7 +1609,7 @@ void mt7915_mac_update_stats(struct mt7915_phy *phy)
+diff --git a/drivers/memstick/core/ms_block.c b/drivers/memstick/core/ms_block.c
+index ba8414519515..04115cd92433 100644
+--- a/drivers/memstick/core/ms_block.c
++++ b/drivers/memstick/core/ms_block.c
+@@ -2116,6 +2116,11 @@ static int msb_init_disk(struct memstick_dev *card)
+ 	dbg("Set total disk size to %lu sectors", capacity);
  
- 	aggr0 = phy->band_idx ? ARRAY_SIZE(dev->mt76.aggr_stats) / 2 : 0;
- 	if (is_mt7915(&dev->mt76)) {
--		for (i = 0, aggr1 = aggr0 + 4; i < 4; i++) {
-+		for (i = 0, aggr1 = aggr0 + 8; i < 4; i++) {
- 			val = mt76_rr(dev, MT_MIB_MB_SDR1(phy->band_idx, (i << 4)));
- 			mib->ba_miss_cnt +=
- 				FIELD_GET(MT_MIB_BA_MISS_COUNT_MASK, val);
+ 	msb->io_queue = alloc_ordered_workqueue("ms_block", WQ_MEM_RECLAIM);
++	if (!msb->io_queue) {
++		rc = -ENOMEM;
++		goto out_cleanup_disk;
++	}
++
+ 	INIT_WORK(&msb->io_work, msb_io_work);
+ 	sg_init_table(msb->prealloc_sg, MS_BLOCK_MAX_SEGS+1);
+ 
+@@ -2125,10 +2130,12 @@ static int msb_init_disk(struct memstick_dev *card)
+ 	msb_start(card);
+ 	rc = device_add_disk(&card->dev, msb->disk, NULL);
+ 	if (rc)
+-		goto out_cleanup_disk;
++		goto out_destroy_workqueue;
+ 	dbg("Disk added");
+ 	return 0;
+ 
++out_destroy_workqueue:
++	destroy_workqueue(msb->io_queue);
+ out_cleanup_disk:
+ 	put_disk(msb->disk);
+ out_free_tag_set:
 -- 
 2.35.1
 
