@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91D21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:26:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDCAC433D2;
-	Wed, 28 Dec 2022 15:26:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 007431863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:26:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79821C433EF;
+	Wed, 28 Dec 2022 15:26:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241204;
-	bh=w6tSwtVJrogUQ5n0DUJP5EJxltSvzFUg5JYhh3jG4IE=;
+	s=korg; t=1672241207;
+	bh=uZv/CWK8frLiw1+sihoCOGHynh4EZc70d5vM5HvSZGg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbl4ig2/04lbzvamxRfcaubc5/TnMc2HoCPNtLy9ZMRQJMuKgcFgeW4kyE1I5aksb
-	 Noci5gcw6i9glZYe8OlVTyDw0fkbTnyxwaWjg4qtwdvYPgNy3yqeuMroz3G8VcKdBc
-	 XM6EfxL4b/iyJuvVc6UqDAztPWOdU2c6KqcoCY7E=
+	b=S4Wc5LZV7Ou8vc+aeX+qgk4ucAkHMxl4yeczY3+D2aB5PahLBwuT1PNkyuX4u6wVb
+	 e8fuvmzIGOfWIWGbs073r6p+A++HyFNhxE6F3Y5ilIup177iCpGk4U2SRVzFUG2ESS
+	 jd9jbhWnljJqGSQvjkARMuc+JgbXDINaoPR9Z9Qk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Jeffery <andrew@aj.id.au>,
-	Joel Stanley <joel@jms.id.au>,
-	Corey Minyard <cminyard@mvista.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Alan Previn <alan.previn.teres.alexis@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0219/1146] ipmi: kcs: Poll OBF briefly to reduce OBE latency
-Date: Wed, 28 Dec 2022 15:29:18 +0100
-Message-Id: <20221228144336.094957522@linuxfoundation.org>
+Subject: [PATCH 6.0 0253/1073] drm/i915/guc: Fix capture size warning and bump the size
+Date: Wed, 28 Dec 2022 15:30:41 +0100
+Message-Id: <20221228144334.892515755@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,69 +35,168 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Jeffery <andrew@aj.id.au>
+From: John Harrison <John.C.Harrison@Intel.com>
 
-[ Upstream commit f90bc0f97f2b65af233a37b2e32fc81871a1e3cf ]
+[ Upstream commit 56c7f0e2026328e56106b54cb0e2fe3a7e70ce4f ]
 
-The ASPEED KCS devices don't provide a BMC-side interrupt for the host
-reading the output data register (ODR). The act of the host reading ODR
-clears the output buffer full (OBF) flag in the status register (STR),
-informing the BMC it can transmit a subsequent byte.
+There was a size check to warn if the GuC error state capture buffer
+allocation would be too small to fit a reasonable amount of capture
+data for the current platform. Unfortunately, the test was done too
+early in the boot sequence and was actually testing 'if(-ENODEV >
+size)'.
 
-On the BMC side the KCS client must enable the OBE event *and* perform a
-subsequent read of STR anyway to avoid races - the polling provides a
-window for the host to read ODR if data was freshly written while
-minimising BMC-side latency.
+Move the check to be later. The check is only used to print a warning
+message, so it doesn't really matter how early or late it is done.
+Note that it is not possible to dynamically size the buffer because
+the allocation needs to be done before the engine information is
+available (at least, it would be in the intended two-phase GuC init
+process).
 
-Fixes: 28651e6c4237 ("ipmi: kcs_bmc: Allow clients to control KCS IRQ state")
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
-Reviewed-by: Joel Stanley <joel@jms.id.au>
-Message-Id: <20220812144741.240315-1-andrew@aj.id.au>
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Now that the check works, it is reporting size too small for newer
+platforms. The check includes a 3x oversample multiplier to allow for
+multiple error captures to be bufferd by GuC before i915 has a chance
+to read them out. This is less important than simply being big enough
+to fit the first capture.
+
+So a) bump the default size to be large enough for one capture minimum
+and b) make the warning only if one capture won't fit, instead use a
+notice for the 3x size.
+
+Note that the size estimate is a worst case scenario. Actual captures
+will likely be smaller.
+
+Lastly, use drm_warn istead of DRM_WARN as the former provides more
+infmration and the latter is deprecated.
+
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Reviewed-by: Alan Previn <alan.previn.teres.alexis@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20220728022028.2190627-3-John.C.Harrison@Intel.com
+Stable-dep-of: befb231d5de2 ("drm/i915/guc: Fix GuC error capture sizing estimation and reporting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/kcs_bmc_aspeed.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+ .../gpu/drm/i915/gt/uc/intel_guc_capture.c    | 40 ++++++++++++++-----
+ .../gpu/drm/i915/gt/uc/intel_guc_capture.h    |  1 -
+ drivers/gpu/drm/i915/gt/uc/intel_guc_log.c    |  4 --
+ drivers/gpu/drm/i915/gt/uc/intel_guc_log.h    |  4 +-
+ 4 files changed, 31 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/char/ipmi/kcs_bmc_aspeed.c b/drivers/char/ipmi/kcs_bmc_aspeed.c
-index 19c32bf50e0e..2dea8cd5a09a 100644
---- a/drivers/char/ipmi/kcs_bmc_aspeed.c
-+++ b/drivers/char/ipmi/kcs_bmc_aspeed.c
-@@ -406,13 +406,31 @@ static void aspeed_kcs_check_obe(struct timer_list *timer)
- static void aspeed_kcs_irq_mask_update(struct kcs_bmc_device *kcs_bmc, u8 mask, u8 state)
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
+index 75257bd20ff0..b54b7883320b 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
+@@ -600,10 +600,8 @@ intel_guc_capture_getnullheader(struct intel_guc *guc,
+ 	return 0;
+ }
+ 
+-#define GUC_CAPTURE_OVERBUFFER_MULTIPLIER 3
+-
+-int
+-intel_guc_capture_output_min_size_est(struct intel_guc *guc)
++static int
++guc_capture_output_min_size_est(struct intel_guc *guc)
  {
- 	struct aspeed_kcs_bmc *priv = to_aspeed_kcs_bmc(kcs_bmc);
-+	int rc;
-+	u8 str;
+ 	struct intel_gt *gt = guc_to_gt(guc);
+ 	struct intel_engine_cs *engine;
+@@ -623,13 +621,8 @@ intel_guc_capture_output_min_size_est(struct intel_guc *guc)
+ 	 * For each engine instance, there would be 1 x guc_state_capture_group_t output
+ 	 * followed by 3 x guc_state_capture_t lists. The latter is how the register
+ 	 * dumps are split across different register types (where the '3' are global vs class
+-	 * vs instance). Finally, let's multiply the whole thing by 3x (just so we are
+-	 * not limited to just 1 round of data in a worst case full register dump log)
+-	 *
+-	 * NOTE: intel_guc_log that allocates the log buffer would round this size up to
+-	 * a power of two.
++	 * vs instance).
+ 	 */
+-
+ 	for_each_engine(engine, gt, id) {
+ 		worst_min_size += sizeof(struct guc_state_capture_group_header_t) +
+ 					 (3 * sizeof(struct guc_state_capture_header_t));
+@@ -649,7 +642,30 @@ intel_guc_capture_output_min_size_est(struct intel_guc *guc)
  
- 	/* We don't have an OBE IRQ, emulate it */
- 	if (mask & KCS_BMC_EVENT_TYPE_OBE) {
--		if (KCS_BMC_EVENT_TYPE_OBE & state)
--			mod_timer(&priv->obe.timer, jiffies + OBE_POLL_PERIOD);
--		else
-+		if (KCS_BMC_EVENT_TYPE_OBE & state) {
-+			/*
-+			 * Given we don't have an OBE IRQ, delay by polling briefly to see if we can
-+			 * observe such an event before returning to the caller. This is not
-+			 * incorrect because OBF may have already become clear before enabling the
-+			 * IRQ if we had one, under which circumstance no event will be propagated
-+			 * anyway.
-+			 *
-+			 * The onus is on the client to perform a race-free check that it hasn't
-+			 * missed the event.
-+			 */
-+			rc = read_poll_timeout_atomic(aspeed_kcs_inb, str,
-+						      !(str & KCS_BMC_STR_OBF), 1, 100, false,
-+						      &priv->kcs_bmc, priv->kcs_bmc.ioreg.str);
-+			/* Time for the slow path? */
-+			if (rc == -ETIMEDOUT)
-+				mod_timer(&priv->obe.timer, jiffies + OBE_POLL_PERIOD);
-+		} else {
- 			del_timer(&priv->obe.timer);
-+		}
- 	}
+ 	worst_min_size += (num_regs * sizeof(struct guc_mmio_reg));
  
- 	if (mask & KCS_BMC_EVENT_TYPE_IBF) {
+-	return (worst_min_size * GUC_CAPTURE_OVERBUFFER_MULTIPLIER);
++	return worst_min_size;
++}
++
++/*
++ * Add on a 3x multiplier to allow for multiple back-to-back captures occurring
++ * before the i915 can read the data out and process it
++ */
++#define GUC_CAPTURE_OVERBUFFER_MULTIPLIER 3
++
++static void check_guc_capture_size(struct intel_guc *guc)
++{
++	struct drm_i915_private *i915 = guc_to_gt(guc)->i915;
++	int min_size = guc_capture_output_min_size_est(guc);
++	int spare_size = min_size * GUC_CAPTURE_OVERBUFFER_MULTIPLIER;
++
++	if (min_size < 0)
++		drm_warn(&i915->drm, "Failed to calculate GuC error state capture buffer minimum size: %d!\n",
++			 min_size);
++	else if (min_size > CAPTURE_BUFFER_SIZE)
++		drm_warn(&i915->drm, "GuC error state capture buffer is too small: %d < %d\n",
++			 CAPTURE_BUFFER_SIZE, min_size);
++	else if (spare_size > CAPTURE_BUFFER_SIZE)
++		drm_notice(&i915->drm, "GuC error state capture buffer maybe too small: %d < %d (min = %d)\n",
++			   CAPTURE_BUFFER_SIZE, spare_size, min_size);
+ }
+ 
+ /*
+@@ -1580,5 +1596,7 @@ int intel_guc_capture_init(struct intel_guc *guc)
+ 	INIT_LIST_HEAD(&guc->capture->outlist);
+ 	INIT_LIST_HEAD(&guc->capture->cachelist);
+ 
++	check_guc_capture_size(guc);
++
+ 	return 0;
+ }
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.h b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.h
+index d3d7bd0b6db6..fbd3713c7832 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.h
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.h
+@@ -21,7 +21,6 @@ int intel_guc_capture_print_engine_node(struct drm_i915_error_state_buf *m,
+ void intel_guc_capture_get_matching_node(struct intel_gt *gt, struct intel_engine_coredump *ee,
+ 					 struct intel_context *ce);
+ void intel_guc_capture_process(struct intel_guc *guc);
+-int intel_guc_capture_output_min_size_est(struct intel_guc *guc);
+ int intel_guc_capture_getlist(struct intel_guc *guc, u32 owner, u32 type, u32 classid,
+ 			      void **outptr);
+ int intel_guc_capture_getlistsize(struct intel_guc *guc, u32 owner, u32 type, u32 classid,
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_log.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_log.c
+index 492bbf419d4d..991d4a02248d 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_log.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_log.c
+@@ -487,10 +487,6 @@ int intel_guc_log_create(struct intel_guc_log *log)
+ 
+ 	GEM_BUG_ON(log->vma);
+ 
+-	if (intel_guc_capture_output_min_size_est(guc) > CAPTURE_BUFFER_SIZE)
+-		DRM_WARN("GuC log buffer for state_capture maybe too small. %d < %d\n",
+-			 CAPTURE_BUFFER_SIZE, intel_guc_capture_output_min_size_est(guc));
+-
+ 	guc_log_size = intel_guc_log_size(log);
+ 
+ 	vma = intel_guc_allocate_vma(guc, guc_log_size);
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_log.h b/drivers/gpu/drm/i915/gt/uc/intel_guc_log.h
+index 18007e639be9..dc9715411d62 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_log.h
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_log.h
+@@ -22,11 +22,11 @@ struct intel_guc;
+ #elif defined(CONFIG_DRM_I915_DEBUG_GEM)
+ #define CRASH_BUFFER_SIZE	SZ_1M
+ #define DEBUG_BUFFER_SIZE	SZ_2M
+-#define CAPTURE_BUFFER_SIZE	SZ_1M
++#define CAPTURE_BUFFER_SIZE	SZ_4M
+ #else
+ #define CRASH_BUFFER_SIZE	SZ_8K
+ #define DEBUG_BUFFER_SIZE	SZ_64K
+-#define CAPTURE_BUFFER_SIZE	SZ_16K
++#define CAPTURE_BUFFER_SIZE	SZ_2M
+ #endif
+ 
+ /*
 -- 
 2.35.1
 
