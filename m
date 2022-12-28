@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBBA1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FB25C433D2;
-	Wed, 28 Dec 2022 14:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D95A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12873C433D2;
+	Wed, 28 Dec 2022 14:59:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239579;
-	bh=fjc/4DGVZxqMcISWjliLD6wf7N4uSoglUxuDfc+tnw8=;
+	s=korg; t=1672239582;
+	bh=uZ6ZuLO19ugKrCxi/sMb0dv4W7Z0CJdCwCGGKbw4xW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DY66JKILVJu8Un4ck3LAVjCiSNXneDYBRz6gu91ElgZP2VcCzrf+QfAhbY0/kwgLD
-	 0S7gM84Moo0OH7BdEjukcU0sB1weVm5V01ezTMI/3LK7R9+7sBQIdRALh4qCiBuUSX
-	 UdaqKFJ4OCSITEZJa9ZUCbayxGrA6MFYmYgPVbXw=
+	b=eWmHLqHakunOpMVbnIEXfl2o2pGJveTiufgiLNzWJJ/7484nwqx+ZjZxHsP2luHpZ
+	 HfsPgnwKPRi42BScYFBWgylWrBOrBX6H2/4IXZZ5uJpiY1zRyGO/EY+vrE5TccGg30
+	 EA+erHKLdARRYaW6jQFhRuOXsDdxS4rw7dIghPT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Will Deacon <will@kernel.org>,
+	Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0052/1073] perf: arm_dsu: Fix hotplug callback leak in dsu_pmu_init()
-Date: Wed, 28 Dec 2022 15:27:20 +0100
-Message-Id: <20221228144329.524370882@linuxfoundation.org>
+Subject: [PATCH 6.1 0015/1146] arm64: dts: fsd: fix drive strength values as per FSD HW UM
+Date: Wed, 28 Dec 2022 15:25:54 +0100
+Message-Id: <20221228144330.588881724@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,44 +36,132 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
 
-[ Upstream commit facafab7611f7b872c6b9eeaff53461ef11f482e ]
+[ Upstream commit 21f6546e8bf68a847601e2710378e2224bf49704 ]
 
-dsu_pmu_init() won't remove the callback added by cpuhp_setup_state_multi()
-when platform_driver_register() failed. Remove the callback by
-cpuhp_remove_multi_state() in fail path.
+Drive strength values used for HSI2C, SPI and UART are not reflecting
+the default values recommended by FSD HW UM.
 
-Similar to the handling of arm_ccn_init() in commit 26242b330093 ("bus:
-arm-ccn: Prevent hotplug callback leak")
-
-Fixes: 7520fa99246d ("perf: ARM DynamIQ Shared Unit PMU support")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20221115070207.32634-2-yuancan@huawei.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 684dac402f21 ("arm64: dts: fsd: Add initial pinctrl support")
+Signed-off-by: Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
+Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+Link: https://lore.kernel.org/r/20221013104024.50179-3-p.rajanbabu@samsung.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm_dsu_pmu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi | 26 +++++++++++-----------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/perf/arm_dsu_pmu.c b/drivers/perf/arm_dsu_pmu.c
-index a36698a90d2f..54b8ba032c78 100644
---- a/drivers/perf/arm_dsu_pmu.c
-+++ b/drivers/perf/arm_dsu_pmu.c
-@@ -858,7 +858,11 @@ static int __init dsu_pmu_init(void)
- 	if (ret < 0)
- 		return ret;
- 	dsu_pmu_cpuhp_state = ret;
--	return platform_driver_register(&dsu_pmu_driver);
-+	ret = platform_driver_register(&dsu_pmu_driver);
-+	if (ret)
-+		cpuhp_remove_multi_state(dsu_pmu_cpuhp_state);
-+
-+	return ret;
- }
+diff --git a/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi b/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi
+index 4e151d419909..e3852c946352 100644
+--- a/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi
++++ b/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi
+@@ -253,91 +253,91 @@ hs_i2c0_bus: hs-i2c0-bus-pins {
+ 		samsung,pins = "gpb0-0", "gpb0-1";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
  
- static void __exit dsu_pmu_exit(void)
+ 	hs_i2c1_bus: hs-i2c1-bus-pins {
+ 		samsung,pins = "gpb0-2", "gpb0-3";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	hs_i2c2_bus: hs-i2c2-bus-pins {
+ 		samsung,pins = "gpb0-4", "gpb0-5";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	hs_i2c3_bus: hs-i2c3-bus-pins {
+ 		samsung,pins = "gpb0-6", "gpb0-7";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	hs_i2c4_bus: hs-i2c4-bus-pins {
+ 		samsung,pins = "gpb1-0", "gpb1-1";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	hs_i2c5_bus: hs-i2c5-bus-pins {
+ 		samsung,pins = "gpb1-2", "gpb1-3";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	hs_i2c6_bus: hs-i2c6-bus-pins {
+ 		samsung,pins = "gpb1-4", "gpb1-5";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	hs_i2c7_bus: hs-i2c7-bus-pins {
+ 		samsung,pins = "gpb1-6", "gpb1-7";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	uart0_data: uart0-data-pins {
+ 		samsung,pins = "gpb7-0", "gpb7-1";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_NONE>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	uart1_data: uart1-data-pins {
+ 		samsung,pins = "gpb7-4", "gpb7-5";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_NONE>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	spi0_bus: spi0-bus-pins {
+ 		samsung,pins = "gpb4-0", "gpb4-2", "gpb4-3";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	spi1_bus: spi1-bus-pins {
+ 		samsung,pins = "gpb4-4", "gpb4-6", "gpb4-7";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ 
+ 	spi2_bus: spi2-bus-pins {
+ 		samsung,pins = "gpb5-0", "gpb5-2", "gpb5-3";
+ 		samsung,pin-function = <FSD_PIN_FUNC_2>;
+ 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
+-		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
++		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	};
+ };
+ 
 -- 
 2.35.1
 
