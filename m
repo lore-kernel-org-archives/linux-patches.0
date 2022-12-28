@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1347B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:16:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAACC433EF;
-	Wed, 28 Dec 2022 15:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82C111863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:16:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E557DC433F0;
+	Wed, 28 Dec 2022 15:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240587;
-	bh=RfNxRfPBceNid/hZZzR5/5fHQA6SSSAnWhGevBKkqNQ=;
+	s=korg; t=1672240593;
+	bh=NaX9lVHV3ViQPF2J7kvtfOtQ0W+iwzMLAjy6GUNUaII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QToJOOlGMd3tmq7d7gVfX/LPPwNWDX1/sATCe+E+H39KZXN6Pj8yu25B6dYpWlG5j
-	 rcyUDWlI+AhGTxCqYV7SU7/fr5ZLTWXOit4ynvsRzZFLj5Os4B8efeWce9fCsxDqFw
-	 nCs9EnMA4WpugbC7h53pta9OHUnKg3wStWU4CSHo=
+	b=rGRhyQL1aRXJYOY+9RKi9tA5Gl6lO8xS4ZoJRZpJJXERSSIq+tiokJOdpXDY7qI9K
+	 AS3kk9bOCMww7IVe6mtceVkwdywpLhIJc2Q1Sme8dElzm7dd/j7cegWav7NN9N0VxZ
+	 gDDocptZhupt4z0tug1J67N8B42iIjNrKgCmFIR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Keeping <john@metanate.com>,
-	Corentin Labbe <clabbe@baylibre.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 370/731] crypto: rockchip - do not do custom power management
-Date: Wed, 28 Dec 2022 15:37:57 +0100
-Message-Id: <20221228144307.287000429@linuxfoundation.org>
+Subject: [PATCH 6.1 0143/1146] perf/x86/intel/uncore: Fix reference count leak in __uncore_imc_init_box()
+Date: Wed, 28 Dec 2022 15:28:02 +0100
+Message-Id: <20221228144334.029379527@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,109 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corentin Labbe <clabbe@baylibre.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit c50ef1411c8cbad0c7db100c477126076b6e3348 ]
+[ Upstream commit 17b8d847b92d815d1638f0de154654081d66b281 ]
 
-The clock enable/disable at tfm init/exit is fragile,
-if 2 tfm are init in the same time and one is removed just after,
-it will leave the hardware uncloked even if a user remains.
+pci_get_device() will increase the reference count for the returned
+pci_dev, so tgl_uncore_get_mc_dev() will return a pci_dev with its
+reference count increased. We need to call pci_dev_put() to decrease the
+reference count before exiting from __uncore_imc_init_box(). Add
+pci_dev_put() for both normal and error path.
 
-Instead simply enable clocks at probe time.
-We will do PM later.
-
-Fixes: ce0183cb6464b ("crypto: rockchip - switch to skcipher API")
-Reviewed-by: John Keeping <john@metanate.com>
-Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: fdb64822443e ("perf/x86: Add Intel Tiger Lake uncore support")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lore.kernel.org/r/20221118063137.121512-5-wangxiongfeng2@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/rockchip/rk3288_crypto.c          | 4 ++--
- drivers/crypto/rockchip/rk3288_crypto.h          | 2 --
- drivers/crypto/rockchip/rk3288_crypto_ahash.c    | 3 +--
- drivers/crypto/rockchip/rk3288_crypto_skcipher.c | 5 +++--
- 4 files changed, 6 insertions(+), 8 deletions(-)
+ arch/x86/events/intel/uncore_snb.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/crypto/rockchip/rk3288_crypto.c b/drivers/crypto/rockchip/rk3288_crypto.c
-index 35d73061d156..5f8444b9633a 100644
---- a/drivers/crypto/rockchip/rk3288_crypto.c
-+++ b/drivers/crypto/rockchip/rk3288_crypto.c
-@@ -395,8 +395,7 @@ static int rk_crypto_probe(struct platform_device *pdev)
- 		     rk_crypto_done_task_cb, (unsigned long)crypto_info);
- 	crypto_init_queue(&crypto_info->queue, 50);
- 
--	crypto_info->enable_clk = rk_crypto_enable_clk;
--	crypto_info->disable_clk = rk_crypto_disable_clk;
-+	rk_crypto_enable_clk(crypto_info);
- 	crypto_info->load_data = rk_load_data;
- 	crypto_info->unload_data = rk_unload_data;
- 	crypto_info->enqueue = rk_crypto_enqueue;
-@@ -423,6 +422,7 @@ static int rk_crypto_remove(struct platform_device *pdev)
- 	struct rk_crypto_info *crypto_tmp = platform_get_drvdata(pdev);
- 
- 	rk_crypto_unregister();
-+	rk_crypto_disable_clk(crypto_tmp);
- 	tasklet_kill(&crypto_tmp->done_task);
- 	tasklet_kill(&crypto_tmp->queue_task);
- 	return 0;
-diff --git a/drivers/crypto/rockchip/rk3288_crypto.h b/drivers/crypto/rockchip/rk3288_crypto.h
-index 97278c2574ff..2fa7131e4060 100644
---- a/drivers/crypto/rockchip/rk3288_crypto.h
-+++ b/drivers/crypto/rockchip/rk3288_crypto.h
-@@ -220,8 +220,6 @@ struct rk_crypto_info {
- 	int (*start)(struct rk_crypto_info *dev);
- 	int (*update)(struct rk_crypto_info *dev);
- 	void (*complete)(struct crypto_async_request *base, int err);
--	int (*enable_clk)(struct rk_crypto_info *dev);
--	void (*disable_clk)(struct rk_crypto_info *dev);
- 	int (*load_data)(struct rk_crypto_info *dev,
- 			 struct scatterlist *sg_src,
- 			 struct scatterlist *sg_dst);
-diff --git a/drivers/crypto/rockchip/rk3288_crypto_ahash.c b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
-index ed03058497bc..49017d1fb510 100644
---- a/drivers/crypto/rockchip/rk3288_crypto_ahash.c
-+++ b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
-@@ -301,7 +301,7 @@ static int rk_cra_hash_init(struct crypto_tfm *tfm)
- 				 sizeof(struct rk_ahash_rctx) +
- 				 crypto_ahash_reqsize(tctx->fallback_tfm));
- 
--	return tctx->dev->enable_clk(tctx->dev);
-+	return 0;
+diff --git a/arch/x86/events/intel/uncore_snb.c b/arch/x86/events/intel/uncore_snb.c
+index 1ef4f7861e2e..1f4869227efb 100644
+--- a/arch/x86/events/intel/uncore_snb.c
++++ b/arch/x86/events/intel/uncore_snb.c
+@@ -1338,6 +1338,7 @@ static void __uncore_imc_init_box(struct intel_uncore_box *box,
+ 	/* MCHBAR is disabled */
+ 	if (!(mch_bar & BIT(0))) {
+ 		pr_warn("perf uncore: MCHBAR is disabled. Failed to map IMC free-running counters.\n");
++		pci_dev_put(pdev);
+ 		return;
+ 	}
+ 	mch_bar &= ~BIT(0);
+@@ -1352,6 +1353,8 @@ static void __uncore_imc_init_box(struct intel_uncore_box *box,
+ 	box->io_addr = ioremap(addr, type->mmio_map_size);
+ 	if (!box->io_addr)
+ 		pr_warn("perf uncore: Failed to ioremap for %s.\n", type->name);
++
++	pci_dev_put(pdev);
  }
  
- static void rk_cra_hash_exit(struct crypto_tfm *tfm)
-@@ -309,7 +309,6 @@ static void rk_cra_hash_exit(struct crypto_tfm *tfm)
- 	struct rk_ahash_ctx *tctx = crypto_tfm_ctx(tfm);
- 
- 	free_page((unsigned long)tctx->dev->addr_vir);
--	return tctx->dev->disable_clk(tctx->dev);
- }
- 
- struct rk_crypto_tmp rk_ahash_sha1 = {
-diff --git a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
-index 5bbf0d2722e1..8c44a19eab75 100644
---- a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
-+++ b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
-@@ -388,8 +388,10 @@ static int rk_ablk_init_tfm(struct crypto_skcipher *tfm)
- 	ctx->dev->update = rk_ablk_rx;
- 	ctx->dev->complete = rk_crypto_complete;
- 	ctx->dev->addr_vir = (char *)__get_free_page(GFP_KERNEL);
-+	if (!ctx->dev->addr_vir)
-+		return -ENOMEM;
- 
--	return ctx->dev->addr_vir ? ctx->dev->enable_clk(ctx->dev) : -ENOMEM;
-+	return 0;
- }
- 
- static void rk_ablk_exit_tfm(struct crypto_skcipher *tfm)
-@@ -397,7 +399,6 @@ static void rk_ablk_exit_tfm(struct crypto_skcipher *tfm)
- 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
- 
- 	free_page((unsigned long)ctx->dev->addr_vir);
--	ctx->dev->disable_clk(ctx->dev);
- }
- 
- struct rk_crypto_tmp rk_ecb_aes_alg = {
+ static void tgl_uncore_imc_freerunning_init_box(struct intel_uncore_box *box)
 -- 
 2.35.1
 
