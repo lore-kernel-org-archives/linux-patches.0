@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 539871875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:01:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3AFC433D2;
-	Wed, 28 Dec 2022 16:01:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E745A1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:01:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D520C433EF;
+	Wed, 28 Dec 2022 16:01:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243287;
-	bh=EMGTs2CiTzTav5yWj5PLgl4miUln49624MWwLzHyE5M=;
+	s=korg; t=1672243289;
+	bh=vo4S1oHrSDm2h7clVrV2HPzMdc4C2dejZJFSz/7FoP4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2QudOu69hmYAwwZGzzVkWS2VuQfWk60HHMgxtZozIbMeDyc7oxpbv02tlxGTddJoy
-	 cIxxvvGKEPcfrCTbXUjvKGxFLTa9mlFTR/WePhV976b/cGmnP5v85Km6wv4GZIPoWG
-	 FGlx/1M252nZ36JVTI4yZumhy3gEdfduAAMo13Zw=
+	b=VTiw5MPGc13/Y9xhs45fDWm+AOOBURYbbCpK4W5KF4ft73mjo8wCZiE2O7IKN3Kr/
+	 UIGdQfIhH+rNx9qhGG0rojwzHJQEPM7qZds/vW1OWzA0ZQL/ufCF0jL4pdGQZTTGDd
+	 NuAafXPvoQhMI4UrpvGNZLG87MSfusPBZTo9jBoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 673/731] clk: st: Fix memory leak in st_of_quadfs_setup()
-Date: Wed, 28 Dec 2022 15:43:00 +0100
-Message-Id: <20221228144315.989339735@linuxfoundation.org>
+Subject: [PATCH 6.1 0472/1146] hsr: Disable netpoll.
+Date: Wed, 28 Dec 2022 15:33:31 +0100
+Message-Id: <20221228144343.003909220@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,39 +35,128 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit cfd3ffb36f0d566846163118651d868e607300ba ]
+[ Upstream commit d5c7652eb16fa203d82546e0285136d7b321ffa9 ]
 
-If st_clk_register_quadfs_pll() fails, @lock should be freed before goto
-@err_exit, otherwise will cause meory leak issue, fix it.
+The hsr device is a software device. Its
+net_device_ops::ndo_start_xmit() routine will process the packet and
+then pass the resulting skb to dev_queue_xmit().
+During processing, hsr acquires a lock with spin_lock_bh()
+(hsr_add_node()) which needs to be promoted to the _irq() suffix in
+order to avoid a potential deadlock.
+Then there are the warnings in dev_queue_xmit() (due to
+local_bh_disable() with disabled interrupts) left.
 
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Link: https://lore.kernel.org/r/20221122133614.184910-1-xiujianfeng@huawei.com
-Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Instead trying to address those (there is qdisc and…) for netpoll sake,
+just disable netpoll on hsr.
+
+Disable netpoll on hsr and replace the _irqsave() locking with _bh().
+
+Fixes: f421436a591d3 ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/st/clkgen-fsyn.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ net/hsr/hsr_device.c  | 14 ++++++--------
+ net/hsr/hsr_forward.c |  5 ++---
+ 2 files changed, 8 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/clk/st/clkgen-fsyn.c b/drivers/clk/st/clkgen-fsyn.c
-index 164285d6be97..ba18e58f0aae 100644
---- a/drivers/clk/st/clkgen-fsyn.c
-+++ b/drivers/clk/st/clkgen-fsyn.c
-@@ -1008,9 +1008,10 @@ static void __init st_of_quadfs_setup(struct device_node *np,
+diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
+index 7518f7e93043..84fba2a402a5 100644
+--- a/net/hsr/hsr_device.c
++++ b/net/hsr/hsr_device.c
+@@ -278,7 +278,6 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
+ 	__u8 type = HSR_TLV_LIFE_CHECK;
+ 	struct hsr_sup_payload *hsr_sp;
+ 	struct hsr_sup_tag *hsr_stag;
+-	unsigned long irqflags;
+ 	struct sk_buff *skb;
  
- 	clk = st_clk_register_quadfs_pll(pll_name, clk_parent_name, datac->data,
- 			reg, lock);
--	if (IS_ERR(clk))
-+	if (IS_ERR(clk)) {
-+		kfree(lock);
- 		goto err_exit;
--	else
-+	} else
- 		pr_debug("%s: parent %s rate %u\n",
- 			__clk_get_name(clk),
- 			__clk_get_name(clk_get_parent(clk)),
+ 	*interval = msecs_to_jiffies(HSR_LIFE_CHECK_INTERVAL);
+@@ -299,7 +298,7 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
+ 	set_hsr_stag_HSR_ver(hsr_stag, hsr->prot_version);
+ 
+ 	/* From HSRv1 on we have separate supervision sequence numbers. */
+-	spin_lock_irqsave(&master->hsr->seqnr_lock, irqflags);
++	spin_lock_bh(&hsr->seqnr_lock);
+ 	if (hsr->prot_version > 0) {
+ 		hsr_stag->sequence_nr = htons(hsr->sup_sequence_nr);
+ 		hsr->sup_sequence_nr++;
+@@ -307,7 +306,7 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
+ 		hsr_stag->sequence_nr = htons(hsr->sequence_nr);
+ 		hsr->sequence_nr++;
+ 	}
+-	spin_unlock_irqrestore(&master->hsr->seqnr_lock, irqflags);
++	spin_unlock_bh(&hsr->seqnr_lock);
+ 
+ 	hsr_stag->tlv.HSR_TLV_type = type;
+ 	/* TODO: Why 12 in HSRv0? */
+@@ -332,7 +331,6 @@ static void send_prp_supervision_frame(struct hsr_port *master,
+ 	struct hsr_priv *hsr = master->hsr;
+ 	struct hsr_sup_payload *hsr_sp;
+ 	struct hsr_sup_tag *hsr_stag;
+-	unsigned long irqflags;
+ 	struct sk_buff *skb;
+ 
+ 	skb = hsr_init_skb(master);
+@@ -347,7 +345,7 @@ static void send_prp_supervision_frame(struct hsr_port *master,
+ 	set_hsr_stag_HSR_ver(hsr_stag, (hsr->prot_version ? 1 : 0));
+ 
+ 	/* From HSRv1 on we have separate supervision sequence numbers. */
+-	spin_lock_irqsave(&master->hsr->seqnr_lock, irqflags);
++	spin_lock_bh(&hsr->seqnr_lock);
+ 	hsr_stag->sequence_nr = htons(hsr->sup_sequence_nr);
+ 	hsr->sup_sequence_nr++;
+ 	hsr_stag->tlv.HSR_TLV_type = PRP_TLV_LIFE_CHECK_DD;
+@@ -358,11 +356,11 @@ static void send_prp_supervision_frame(struct hsr_port *master,
+ 	ether_addr_copy(hsr_sp->macaddress_A, master->dev->dev_addr);
+ 
+ 	if (skb_put_padto(skb, ETH_ZLEN)) {
+-		spin_unlock_irqrestore(&master->hsr->seqnr_lock, irqflags);
++		spin_unlock_bh(&hsr->seqnr_lock);
+ 		return;
+ 	}
+ 
+-	spin_unlock_irqrestore(&master->hsr->seqnr_lock, irqflags);
++	spin_unlock_bh(&hsr->seqnr_lock);
+ 
+ 	hsr_forward_skb(skb, master);
+ }
+@@ -444,7 +442,7 @@ void hsr_dev_setup(struct net_device *dev)
+ 	dev->header_ops = &hsr_header_ops;
+ 	dev->netdev_ops = &hsr_device_ops;
+ 	SET_NETDEV_DEVTYPE(dev, &hsr_type);
+-	dev->priv_flags |= IFF_NO_QUEUE;
++	dev->priv_flags |= IFF_NO_QUEUE | IFF_DISABLE_NETPOLL;
+ 
+ 	dev->needs_free_netdev = true;
+ 
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index a8befa35841e..a828221335bd 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -500,7 +500,6 @@ static void handle_std_frame(struct sk_buff *skb,
+ {
+ 	struct hsr_port *port = frame->port_rcv;
+ 	struct hsr_priv *hsr = port->hsr;
+-	unsigned long irqflags;
+ 
+ 	frame->skb_hsr = NULL;
+ 	frame->skb_prp = NULL;
+@@ -510,10 +509,10 @@ static void handle_std_frame(struct sk_buff *skb,
+ 		frame->is_from_san = true;
+ 	} else {
+ 		/* Sequence nr for the master node */
+-		spin_lock_irqsave(&hsr->seqnr_lock, irqflags);
++		spin_lock_bh(&hsr->seqnr_lock);
+ 		frame->sequence_nr = hsr->sequence_nr;
+ 		hsr->sequence_nr++;
+-		spin_unlock_irqrestore(&hsr->seqnr_lock, irqflags);
++		spin_unlock_bh(&hsr->seqnr_lock);
+ 	}
+ }
+ 
 -- 
 2.35.1
 
