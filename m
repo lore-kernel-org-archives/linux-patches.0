@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F251F1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:37:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78F7CC433D2;
-	Wed, 28 Dec 2022 16:37:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DAD1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:37:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D392C433D2;
+	Wed, 28 Dec 2022 16:37:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245444;
-	bh=dIguU8EAz5SPQFZusL+Z8bJhWfheX1iIw5bpo6Y0HAw=;
+	s=korg; t=1672245447;
+	bh=5vaWDwz7db1tekg6KURlXdrTRU47MVIY4DCQplwXCkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wDBbPGEtg8IOMke+hQpYSXjQjopCqn2vOon4dIJmKitWhAgR68g+pDY39x4OXF6Lh
-	 kXXP6sYTAWWiDP1WwJg4Avo1SAu1z1Z292cHYI3UwAiKyZ/9i5OVuDjDmGu/G2FoSh
-	 KjT+0NzldjlOhcExdx/sL1loybNC4IbL6hri8eQk=
+	b=eYm+8E0S/8bJGZ+tYlxuM4RTNPTV07+Hsol2Ams2Z6puejyVSXmtrbhL1uFaD+bDL
+	 H7sdif1/r7ailrur3JU0ItWML2P40wFP3TkJh9rzYu3IIV2yhCebdhZG1fyqsNPqVR
+	 LiQ1E+VFyv0VvdByJF6bDFwfxDB7L1hInLrLlwRY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mia Kanashi <chad@redpilled.dev>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Yong Wu <yong.wu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0897/1073] ACPI: EC: Add quirk for the HP Pavilion Gaming 15-cx0041ur
-Date: Wed, 28 Dec 2022 15:41:25 +0100
-Message-Id: <20221228144352.393556127@linuxfoundation.org>
+Subject: [PATCH 6.1 0863/1146] iommu/mediatek: Add error path for loop of mm_dts_parse
+Date: Wed, 28 Dec 2022 15:40:02 +0100
+Message-Id: <20221228144353.602201085@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,44 +37,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mia Kanashi <chad@redpilled.dev>
+From: Yong Wu <yong.wu@mediatek.com>
 
-[ Upstream commit b423f240a66ad928c4cb5ec6055dfc90ce8d894e ]
+[ Upstream commit 26593928564cf5b576ff05d3cbd958f57c9534bb ]
 
-Added GPE quirk entry for the HP Pavilion Gaming 15-cx0041ur.
-There is a quirk entry for the 15-cx0xxx laptops, but this one has
-different DMI_PRODUCT_NAME.
+The mtk_iommu_mm_dts_parse will parse the smi larbs nodes. if the i+1
+larb is parsed fail, we should put_device for the i..0 larbs.
 
-Notably backlight keys and other ACPI events now function correctly.
+There are two places need to comment:
+1) The larbid may be not linear mapping, we should loop whole
+   the array in the error path.
+2) I move this line position: "data->larb_imu[id].dev = &plarbdev->dev;"
+   before "if (!plarbdev->dev.driver)", That means set
+   data->larb_imu[id].dev before the error path. then we don't need
+   "platform_device_put(plarbdev)" again in probe_defer case. All depend
+   on "put_device" of the error path in error cases.
 
-Signed-off-by: Mia Kanashi <chad@redpilled.dev>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: d2e9a1102cfc ("iommu/mediatek: Contain MM IOMMU flow with the MM TYPE")
+Signed-off-by: Yong Wu <yong.wu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Link: https://lore.kernel.org/r/20221018024258.19073-4-yong.wu@mediatek.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/ec.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/iommu/mtk_iommu.c | 27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/acpi/ec.c b/drivers/acpi/ec.c
-index c95e535035a0..fdc760e1e09e 100644
---- a/drivers/acpi/ec.c
-+++ b/drivers/acpi/ec.c
-@@ -1879,6 +1879,16 @@ static const struct dmi_system_id ec_dmi_table[] __initconst = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "HP Pavilion Gaming Laptop 15-cx0xxx"),
- 		},
- 	},
-+	{
-+		/*
-+		 * HP Pavilion Gaming Laptop 15-cx0041ur
-+		 */
-+		.callback = ec_honor_dsdt_gpe,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "HP"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "HP 15-cx0041ur"),
-+		},
-+	},
- 	{
- 		/*
- 		 * Samsung hardware
+diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
+index ba5abfc2890c..f4a315da4535 100644
+--- a/drivers/iommu/mtk_iommu.c
++++ b/drivers/iommu/mtk_iommu.c
+@@ -1056,8 +1056,10 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
+ 		u32 id;
+ 
+ 		larbnode = of_parse_phandle(dev->of_node, "mediatek,larbs", i);
+-		if (!larbnode)
+-			return -EINVAL;
++		if (!larbnode) {
++			ret = -EINVAL;
++			goto err_larbdev_put;
++		}
+ 
+ 		if (!of_device_is_available(larbnode)) {
+ 			of_node_put(larbnode);
+@@ -1070,14 +1072,16 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
+ 
+ 		plarbdev = of_find_device_by_node(larbnode);
+ 		of_node_put(larbnode);
+-		if (!plarbdev)
+-			return -ENODEV;
++		if (!plarbdev) {
++			ret = -ENODEV;
++			goto err_larbdev_put;
++		}
++		data->larb_imu[id].dev = &plarbdev->dev;
+ 
+ 		if (!plarbdev->dev.driver) {
+-			platform_device_put(plarbdev);
+-			return -EPROBE_DEFER;
++			ret = -EPROBE_DEFER;
++			goto err_larbdev_put;
+ 		}
+-		data->larb_imu[id].dev = &plarbdev->dev;
+ 
+ 		component_match_add(dev, match, component_compare_dev, &plarbdev->dev);
+ 		platform_device_put(plarbdev);
+@@ -1112,6 +1116,15 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
+ 		return -EINVAL;
+ 	}
+ 	return 0;
++
++err_larbdev_put:
++	/* id may be not linear mapping, loop whole the array */
++	for (i = MTK_LARB_NR_MAX - 1; i >= 0; i++) {
++		if (!data->larb_imu[i].dev)
++			continue;
++		put_device(data->larb_imu[i].dev);
++	}
++	return ret;
+ }
+ 
+ static int mtk_iommu_probe(struct platform_device *pdev)
 -- 
 2.35.1
 
