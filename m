@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293991C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99EA0C433EF;
-	Wed, 28 Dec 2022 16:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98B01C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC7AC433D2;
+	Wed, 28 Dec 2022 16:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245629;
-	bh=UYhx+evpP8ZHfD9IL8KQ848NFyz7PIEsaO34Dd8PASY=;
+	s=korg; t=1672245631;
+	bh=sp0I2+HMB3bd4EfxF/sCoyB+SJvJ5A3c9dd2kESsz+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fvqR6KoKCzCJHZsa5klOEer8MmS+VajXXS3pQLVNKG/ukuSNSEzZu3koe/ctUFM15
-	 pVITtzDXA9Q0c3KjXCTsqLIiDzK8Bh5+8tfQaFZHrL2nXN+Aq7CeJCvxRd4Ris4V6v
-	 JuPzVEA3lC7ByM3ojUmu94Pk5VT6hgzEmgI5ohDk=
+	b=WEjSaVcck23ctKQ1Wn+hh1PCdN0eaMnZk7Y+9YEXqdCJJlcK0DQ13WxH+gUpglLXs
+	 eCyPsMt82RUAvz6kNZEi697lj2LzBi2IIw4kX5SjLeI6iFf+WwwPbV9rTvddbaZR65
+	 GJvPRDZPkzrkbThXpMpsXSzdhNb+mOOqA8Ho3Qfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dokyung Song <dokyungs@yonsei.ac.kr>,
-	Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
-	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
-	Kalle Valo <kvalo@kernel.org>,
+	Milan Landaverde <milan@mdaverde.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Stanislav Fomichev <sdf@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0928/1073] wifi: brcmfmac: Fix potential shift-out-of-bounds in brcmf_fw_alloc_request()
-Date: Wed, 28 Dec 2022 15:41:56 +0100
-Message-Id: <20221228144353.233553653@linuxfoundation.org>
+Subject: [PATCH 6.1 0896/1146] bpf: prevent leak of lsm program after failed attach
+Date: Wed, 28 Dec 2022 15:40:35 +0100
+Message-Id: <20221228144354.534129610@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,146 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+From: Milan Landaverde <milan@mdaverde.com>
 
-[ Upstream commit 81d17f6f3331f03c8eafdacea68ab773426c1e3c ]
+[ Upstream commit e89f3edffb860a0f54a9ed16deadb7a4a1fa3862 ]
 
-This patch fixes a shift-out-of-bounds in brcmfmac that occurs in
-BIT(chiprev) when a 'chiprev' provided by the device is too large.
-It should also not be equal to or greater than BITS_PER_TYPE(u32)
-as we do bitwise AND with a u32 variable and BIT(chiprev). The patch
-adds a check that makes the function return NULL if that is the case.
-Note that the NULL case is later handled by the bus-specific caller,
-brcmf_usb_probe_cb() or brcmf_usb_reset_resume(), for example.
+In [0], we added the ability to bpf_prog_attach LSM programs to cgroups,
+but in our validation to make sure the prog is meant to be attached to
+BPF_LSM_CGROUP, we return too early if the check fails. This results in
+lack of decrementing prog's refcnt (through bpf_prog_put)
+leaving the LSM program alive past the point of the expected lifecycle.
+This fix allows for the decrement to take place.
 
-Found by a modified version of syzkaller.
+[0] https://lore.kernel.org/all/20220628174314.1216643-4-sdf@google.com/
 
-UBSAN: shift-out-of-bounds in drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-shift exponent 151055786 is too large for 64-bit type 'long unsigned int'
-CPU: 0 PID: 1885 Comm: kworker/0:2 Tainted: G           O      5.14.0+ #132
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
-Workqueue: usb_hub_wq hub_event
-Call Trace:
- dump_stack_lvl+0x57/0x7d
- ubsan_epilogue+0x5/0x40
- __ubsan_handle_shift_out_of_bounds.cold+0x53/0xdb
- ? lock_chain_count+0x20/0x20
- brcmf_fw_alloc_request.cold+0x19/0x3ea
- ? brcmf_fw_get_firmwares+0x250/0x250
- ? brcmf_usb_ioctl_resp_wait+0x1a7/0x1f0
- brcmf_usb_get_fwname+0x114/0x1a0
- ? brcmf_usb_reset_resume+0x120/0x120
- ? number+0x6c4/0x9a0
- brcmf_c_process_clm_blob+0x168/0x590
- ? put_dec+0x90/0x90
- ? enable_ptr_key_workfn+0x20/0x20
- ? brcmf_common_pd_remove+0x50/0x50
- ? rcu_read_lock_sched_held+0xa1/0xd0
- brcmf_c_preinit_dcmds+0x673/0xc40
- ? brcmf_c_set_joinpref_default+0x100/0x100
- ? rcu_read_lock_sched_held+0xa1/0xd0
- ? rcu_read_lock_bh_held+0xb0/0xb0
- ? lock_acquire+0x19d/0x4e0
- ? find_held_lock+0x2d/0x110
- ? brcmf_usb_deq+0x1cc/0x260
- ? mark_held_locks+0x9f/0xe0
- ? lockdep_hardirqs_on_prepare+0x273/0x3e0
- ? _raw_spin_unlock_irqrestore+0x47/0x50
- ? trace_hardirqs_on+0x1c/0x120
- ? brcmf_usb_deq+0x1a7/0x260
- ? brcmf_usb_rx_fill_all+0x5a/0xf0
- brcmf_attach+0x246/0xd40
- ? wiphy_new_nm+0x1476/0x1d50
- ? kmemdup+0x30/0x40
- brcmf_usb_probe+0x12de/0x1690
- ? brcmf_usbdev_qinit.constprop.0+0x470/0x470
- usb_probe_interface+0x25f/0x710
- really_probe+0x1be/0xa90
- __driver_probe_device+0x2ab/0x460
- ? usb_match_id.part.0+0x88/0xc0
- driver_probe_device+0x49/0x120
- __device_attach_driver+0x18a/0x250
- ? driver_allows_async_probing+0x120/0x120
- bus_for_each_drv+0x123/0x1a0
- ? bus_rescan_devices+0x20/0x20
- ? lockdep_hardirqs_on_prepare+0x273/0x3e0
- ? trace_hardirqs_on+0x1c/0x120
- __device_attach+0x207/0x330
- ? device_bind_driver+0xb0/0xb0
- ? kobject_uevent_env+0x230/0x12c0
- bus_probe_device+0x1a2/0x260
- device_add+0xa61/0x1ce0
- ? __mutex_unlock_slowpath+0xe7/0x660
- ? __fw_devlink_link_to_suppliers+0x550/0x550
- usb_set_configuration+0x984/0x1770
- ? kernfs_create_link+0x175/0x230
- usb_generic_driver_probe+0x69/0x90
- usb_probe_device+0x9c/0x220
- really_probe+0x1be/0xa90
- __driver_probe_device+0x2ab/0x460
- driver_probe_device+0x49/0x120
- __device_attach_driver+0x18a/0x250
- ? driver_allows_async_probing+0x120/0x120
- bus_for_each_drv+0x123/0x1a0
- ? bus_rescan_devices+0x20/0x20
- ? lockdep_hardirqs_on_prepare+0x273/0x3e0
- ? trace_hardirqs_on+0x1c/0x120
- __device_attach+0x207/0x330
- ? device_bind_driver+0xb0/0xb0
- ? kobject_uevent_env+0x230/0x12c0
- bus_probe_device+0x1a2/0x260
- device_add+0xa61/0x1ce0
- ? __fw_devlink_link_to_suppliers+0x550/0x550
- usb_new_device.cold+0x463/0xf66
- ? hub_disconnect+0x400/0x400
- ? _raw_spin_unlock_irq+0x24/0x30
- hub_event+0x10d5/0x3330
- ? hub_port_debounce+0x280/0x280
- ? __lock_acquire+0x1671/0x5790
- ? wq_calc_node_cpumask+0x170/0x2a0
- ? lock_release+0x640/0x640
- ? rcu_read_lock_sched_held+0xa1/0xd0
- ? rcu_read_lock_bh_held+0xb0/0xb0
- ? lockdep_hardirqs_on_prepare+0x273/0x3e0
- process_one_work+0x873/0x13e0
- ? lock_release+0x640/0x640
- ? pwq_dec_nr_in_flight+0x320/0x320
- ? rwlock_bug.part.0+0x90/0x90
- worker_thread+0x8b/0xd10
- ? __kthread_parkme+0xd9/0x1d0
- ? process_one_work+0x13e0/0x13e0
- kthread+0x379/0x450
- ? _raw_spin_unlock_irq+0x24/0x30
- ? set_kthread_struct+0x100/0x100
- ret_from_fork+0x1f/0x30
-
-Reported-by: Dokyung Song <dokyungs@yonsei.ac.kr>
-Reported-by: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
-Reported-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
-Signed-off-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221024071329.504277-1-linuxlovemin@yonsei.ac.kr
+Fixes: 69fd337a975c ("bpf: per-cgroup lsm flavor")
+Signed-off-by: Milan Landaverde <milan@mdaverde.com>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/r/20221213175714.31963-1-milan@mdaverde.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ kernel/bpf/syscall.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-index b8379e4034a4..55d538978e9c 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-@@ -737,6 +737,11 @@ brcmf_fw_alloc_request(u32 chip, u32 chiprev,
- 	u32 i, j;
- 	char end = '\0';
- 
-+	if (chiprev >= BITS_PER_TYPE(u32)) {
-+		brcmf_err("Invalid chip revision %u\n", chiprev);
-+		return NULL;
-+	}
-+
- 	for (i = 0; i < table_size; i++) {
- 		if (mapping_table[i].chipid == chip &&
- 		    mapping_table[i].revmask & BIT(chiprev))
+diff --git a/kernel/bpf/syscall.c b/kernel/bpf/syscall.c
+index 7b373a5e861f..439ed7e5a82b 100644
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -3504,9 +3504,9 @@ static int bpf_prog_attach(const union bpf_attr *attr)
+ 	case BPF_PROG_TYPE_LSM:
+ 		if (ptype == BPF_PROG_TYPE_LSM &&
+ 		    prog->expected_attach_type != BPF_LSM_CGROUP)
+-			return -EINVAL;
+-
+-		ret = cgroup_bpf_prog_attach(attr, ptype, prog);
++			ret = -EINVAL;
++		else
++			ret = cgroup_bpf_prog_attach(attr, ptype, prog);
+ 		break;
+ 	default:
+ 		ret = -EINVAL;
 -- 
 2.35.1
 
