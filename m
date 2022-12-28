@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4851C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C607EC433EF;
-	Wed, 28 Dec 2022 16:41:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E82211C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 675AFC433F0;
+	Wed, 28 Dec 2022 16:41:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245698;
-	bh=l2BHkVYWLw6jHX/Jme7hFuVqDpH+K+HDSS1syf4jgOc=;
+	s=korg; t=1672245700;
+	bh=WeOOt14tkYeELBrtRWfPT2/q6Bw4lnOCH2VvxZFmpcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rMSKeQmBzxjqjTDLi12vvx3itiDgp1una0OYe1kQO+xo0Pk/CwCOAxrkmYxnlevGO
-	 jhrHC9ALhSlqK36Dc/fr3BeB8956QrpgySA1DmjjXsmHOmt3tui6roHKkuMY8qX+RY
-	 p1/Z461if4j5wVpdbU/FjtfafggOd0l2JIRC5vXU=
+	b=lV+2QkYDNLUmlvllrdwiqmhQ2J/k9/i442nGD9GPfdt4RBeEINYRV36OwApoujpa9
+	 PBnxkyEZUqV63NfeEq92jGlCDVOZ8pF6qIShIjyW+2iXPNMnTL/eUV8syp8Z++ul+h
+	 9dfYVSSImIeO8Hsm3s25Jc+caFJ2Pk7Il4eUv/Kc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0907/1146] block: mark blk_put_queue as potentially blocking
-Date: Wed, 28 Dec 2022 15:40:46 +0100
-Message-Id: <20221228144354.856607879@linuxfoundation.org>
+Subject: [PATCH 6.0 0940/1073] drm/mediatek: Fix return type of mtk_hdmi_bridge_mode_valid()
+Date: Wed, 28 Dec 2022 15:42:08 +0100
+Message-Id: <20221228144353.568355688@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,50 +38,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 63f93fd6fa5717769a78d6d7bea6f7f9a1ccca8e ]
+[ Upstream commit 890d637523eec9d730e3885532fa1228ba678880 ]
 
-We can't just say that the last reference release may block, as any
-reference dropped could be the last one.  So move the might_sleep() from
-blk_free_queue to blk_put_queue and update the documentation.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20221114042637.1009333-6-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: d36a9ea5e776 ("block: fix use-after-free of q->q_usage_counter")
+  drivers/gpu/drm/mediatek/mtk_hdmi.c:1407:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' with an expression of type 'int (struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .mode_valid = mtk_hdmi_bridge_mode_valid,
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
+
+->mode_valid() in 'struct drm_bridge_funcs' expects a return type of
+'enum drm_mode_status', not 'int'. Adjust the return type of
+mtk_hdmi_bridge_mode_valid() to match the prototype's to resolve the
+warning and CFI failure.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Reported-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-core.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/mediatek/mtk_hdmi.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/block/blk-core.c b/block/blk-core.c
-index 7de1bb16e9a7..815ffce6b988 100644
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -260,8 +260,6 @@ static void blk_free_queue_rcu(struct rcu_head *rcu_head)
- 
- static void blk_free_queue(struct request_queue *q)
- {
--	might_sleep();
--
- 	percpu_ref_exit(&q->q_usage_counter);
- 
- 	if (q->poll_stat)
-@@ -285,11 +283,11 @@ static void blk_free_queue(struct request_queue *q)
-  * Decrements the refcount of the request_queue and free it when the refcount
-  * reaches 0.
-  *
-- * Context: Any context, but the last reference must not be dropped from
-- *          atomic context.
-+ * Context: Can sleep.
-  */
- void blk_put_queue(struct request_queue *q)
- {
-+	might_sleep();
- 	if (refcount_dec_and_test(&q->refs))
- 		blk_free_queue(q);
+diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi.c b/drivers/gpu/drm/mediatek/mtk_hdmi.c
+index 3196189429bc..7613b0fa2be6 100644
+--- a/drivers/gpu/drm/mediatek/mtk_hdmi.c
++++ b/drivers/gpu/drm/mediatek/mtk_hdmi.c
+@@ -1203,9 +1203,10 @@ static enum drm_connector_status mtk_hdmi_detect(struct mtk_hdmi *hdmi)
+ 	return mtk_hdmi_update_plugged_status(hdmi);
  }
+ 
+-static int mtk_hdmi_bridge_mode_valid(struct drm_bridge *bridge,
+-				      const struct drm_display_info *info,
+-				      const struct drm_display_mode *mode)
++static enum drm_mode_status
++mtk_hdmi_bridge_mode_valid(struct drm_bridge *bridge,
++			   const struct drm_display_info *info,
++			   const struct drm_display_mode *mode)
+ {
+ 	struct mtk_hdmi *hdmi = hdmi_ctx_from_bridge(bridge);
+ 	struct drm_bridge *next_bridge;
 -- 
 2.35.1
 
