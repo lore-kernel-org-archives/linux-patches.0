@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DA231863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:50:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03032C433D2;
-	Wed, 28 Dec 2022 14:50:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363791863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:50:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F53C433EF;
+	Wed, 28 Dec 2022 14:50:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239027;
-	bh=WKv8zFcSKSXuZRIJ8FZVNeNpus1f0H31HopYeYN6o8w=;
+	s=korg; t=1672239029;
+	bh=G7A3c3AZmJLOyiYgx8y+tvh+Xti2Ojp1Fhw10sKfLa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ny6Wy2wiJeseNtuPf4nwSlS9p/N8EeFjiUjz5kfVH8U6ix8VnSbR3cHOaO5FLYLcG
-	 alCwPOsrNNc50UaMkZ53PKlxgrsmbBfOutLL0NbR1/cOYWICK4BLUz8T5cK3jljgSN
-	 BjkdFtIVJRaODdrV9OiAUUbhHx196ijFoRd2NKEc=
+	b=DmJGc64q2fd1RLQuW2CAsbMmEG5u7ZXkJFgtkwPDkPciVNU2m6lyH+8YV9UN/l/Sk
+	 sKsrgTpr5VTD+p8oxPhOyynIDBr5hRvUPZj1g+t/pJ535v80fkgtrTsom5fjN7bKeG
+	 Jj79vgHmNQniS1sBvfejaQIBN5mmKM48rXuKa5yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Yongjun <weiyongjun1@huawei.com>,
-	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-	Marc Zyngier <maz@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
+	Tony Luck <tony.luck@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 100/731] irqchip/wpcm450: Fix memory leak in wpcm450_aic_of_init()
-Date: Wed, 28 Dec 2022 15:33:27 +0100
-Message-Id: <20221228144259.450635751@linuxfoundation.org>
+Subject: [PATCH 5.15 101/731] EDAC/i10nm: fix refcount leak in pci_get_dev_wrapper()
+Date: Wed, 28 Dec 2022 15:33:28 +0100
+Message-Id: <20221228144259.479274648@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,34 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Yongjun <weiyongjun1@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 4208d4faf36573a507b5e5de17abe342e9276759 ]
+[ Upstream commit 9c8921555907f4d723f01ed2d859b66f2d14f08e ]
 
-If of_iomap() failed, 'aic' should be freed before return. Otherwise
-there is a memory leak.
+As the comment of pci_get_domain_bus_and_slot() says, it returns
+a PCI device with refcount incremented, so it doesn't need to
+call an extra pci_dev_get() in pci_get_dev_wrapper(), and the PCI
+device needs to be put in the error path.
 
-Fixes: fead4dd49663 ("irqchip: Add driver for WPCM450 interrupt controller")
-Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
-Reviewed-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20221115092532.1704032-1-weiyongjun@huaweicloud.com
+Fixes: d4dc89d069aa ("EDAC, i10nm: Add a driver for Intel 10nm server processors")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
+Signed-off-by: Tony Luck <tony.luck@intel.com>
+Link: https://lore.kernel.org/r/20221128065512.3572550-1-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-wpcm450-aic.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/edac/i10nm_base.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/irqchip/irq-wpcm450-aic.c b/drivers/irqchip/irq-wpcm450-aic.c
-index f3ac392d5bc8..36d0d0cf3fa2 100644
---- a/drivers/irqchip/irq-wpcm450-aic.c
-+++ b/drivers/irqchip/irq-wpcm450-aic.c
-@@ -146,6 +146,7 @@ static int __init wpcm450_aic_of_init(struct device_node *node,
- 	aic->regs = of_iomap(node, 0);
- 	if (!aic->regs) {
- 		pr_err("Failed to map WPCM450 AIC registers\n");
-+		kfree(aic);
- 		return -ENOMEM;
+diff --git a/drivers/edac/i10nm_base.c b/drivers/edac/i10nm_base.c
+index 6cf50ee0b77c..e0af60833d28 100644
+--- a/drivers/edac/i10nm_base.c
++++ b/drivers/edac/i10nm_base.c
+@@ -198,11 +198,10 @@ static struct pci_dev *pci_get_dev_wrapper(int dom, unsigned int bus,
+ 	if (unlikely(pci_enable_device(pdev) < 0)) {
+ 		edac_dbg(2, "Failed to enable device %02x:%02x.%x\n",
+ 			 bus, dev, fun);
++		pci_dev_put(pdev);
+ 		return NULL;
  	}
+ 
+-	pci_dev_get(pdev);
+-
+ 	return pdev;
+ }
  
 -- 
 2.35.1
