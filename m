@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 492071863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2138C433D2;
-	Wed, 28 Dec 2022 15:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFCE1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627B8C433D2;
+	Wed, 28 Dec 2022 15:12:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240375;
-	bh=UHBlDUhsez1dcACx8Ck0SuPtBxLNYo6KvdxCrrVZH9g=;
+	s=korg; t=1672240377;
+	bh=Qnz2Q2W1D4s7Im2sMTjlrRPEJ7DyXob3fGrWZMetkvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DSek/YUmSjXXF1+Ig5ILb3WF7pjqGTZo+4ah6kDPcB9x/7OOHuvYDN5JGdX3Bhduh
-	 tq6AIWag1mZ0gouQnUzxhm29RTaXzs4Iwi4vo345hg1nOb2uEbR0Ben0uklkeP8xsN
-	 KhL947DlG5pksos2wX4SqgOccEH3el8GPoHRVJ/s=
+	b=Nfsdg2FrCRBoGxEkfo++OndEJsJI/f89/dKOyb/OXreoroXulxb5ZfxYMFl55tNBB
+	 YQTnBD9fOUy8etCSaIcwj6u//oxIhKfixV82yTP2UiHHkiw524lHK3on2Msuvfd+AU
+	 /oSACVKZ3DhstbMokvfUKajLET+SPHcwmPAk+Y20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Thomson <git@johnthomson.fastmail.com.au>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0153/1073] mips: ralink: mt7621: soc queries and tests as functions
-Date: Wed, 28 Dec 2022 15:29:01 +0100
-Message-Id: <20221228144332.177500316@linuxfoundation.org>
+Subject: [PATCH 6.1 0094/1146] drivers/perf: hisi: Fix some event id for hisi-pcie-pmu
+Date: Wed, 28 Dec 2022 15:27:13 +0100
+Message-Id: <20221228144332.696298975@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,148 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Thomson <git@johnthomson.fastmail.com.au>
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-[ Upstream commit b4767d4c072583dec987225b6fe3f5524a735f42 ]
+[ Upstream commit 6b4bb4f38dbfe85247f006f06135ba46450d5bf0 ]
 
-Move the SoC register value queries and tests to specific functions,
-to remove repetition of logic
-No functional changes intended
+Some event id of hisi-pcie-pmu is incorrect, fix them.
 
-Signed-off-by: John Thomson <git@johnthomson.fastmail.com.au>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
-Stable-dep-of: 7c18b64bba3b ("mips: ralink: mt7621: do not use kzalloc too early")
+Fixes: 8404b0fbc7fb ("drivers/perf: hisi: Add driver for HiSilicon PCIe PMU")
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+Link: https://lore.kernel.org/r/20221117084136.53572-2-yangyicong@huawei.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/ralink/mt7621.c | 86 +++++++++++++++++++++++++++------------
- 1 file changed, 61 insertions(+), 25 deletions(-)
+ drivers/perf/hisilicon/hisi_pcie_pmu.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/mips/ralink/mt7621.c b/arch/mips/ralink/mt7621.c
-index 17dbf28897e0..6e126f570f0c 100644
---- a/arch/mips/ralink/mt7621.c
-+++ b/arch/mips/ralink/mt7621.c
-@@ -97,7 +97,57 @@ void __init ralink_of_remap(void)
- 		panic("Failed to remap core resources");
- }
+diff --git a/drivers/perf/hisilicon/hisi_pcie_pmu.c b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+index 21771708597d..071e63d9a9ac 100644
+--- a/drivers/perf/hisilicon/hisi_pcie_pmu.c
++++ b/drivers/perf/hisilicon/hisi_pcie_pmu.c
+@@ -693,10 +693,10 @@ static struct attribute *hisi_pcie_pmu_events_attr[] = {
+ 	HISI_PCIE_PMU_EVENT_ATTR(rx_mrd_cnt, 0x10210),
+ 	HISI_PCIE_PMU_EVENT_ATTR(tx_mrd_latency, 0x0011),
+ 	HISI_PCIE_PMU_EVENT_ATTR(tx_mrd_cnt, 0x10011),
+-	HISI_PCIE_PMU_EVENT_ATTR(rx_mrd_flux, 0x1005),
+-	HISI_PCIE_PMU_EVENT_ATTR(rx_mrd_time, 0x11005),
+-	HISI_PCIE_PMU_EVENT_ATTR(tx_mrd_flux, 0x2004),
+-	HISI_PCIE_PMU_EVENT_ATTR(tx_mrd_time, 0x12004),
++	HISI_PCIE_PMU_EVENT_ATTR(rx_mrd_flux, 0x0804),
++	HISI_PCIE_PMU_EVENT_ATTR(rx_mrd_time, 0x10804),
++	HISI_PCIE_PMU_EVENT_ATTR(tx_mrd_flux, 0x0405),
++	HISI_PCIE_PMU_EVENT_ATTR(tx_mrd_time, 0x10405),
+ 	NULL
+ };
  
--static void soc_dev_init(struct ralink_soc_info *soc_info, u32 rev)
-+static unsigned int __init mt7621_get_soc_name0(void)
-+{
-+	return __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_NAME0);
-+}
-+
-+static unsigned int __init mt7621_get_soc_name1(void)
-+{
-+	return __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_NAME1);
-+}
-+
-+static bool __init mt7621_soc_valid(void)
-+{
-+	if (mt7621_get_soc_name0() == MT7621_CHIP_NAME0 &&
-+			mt7621_get_soc_name1() == MT7621_CHIP_NAME1)
-+		return true;
-+	else
-+		return false;
-+}
-+
-+static const char __init *mt7621_get_soc_id(void)
-+{
-+	if (mt7621_soc_valid())
-+		return "MT7621";
-+	else
-+		return "invalid";
-+}
-+
-+static unsigned int __init mt7621_get_soc_rev(void)
-+{
-+	return __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_REV);
-+}
-+
-+static unsigned int __init mt7621_get_soc_ver(void)
-+{
-+	return (mt7621_get_soc_rev() >> CHIP_REV_VER_SHIFT) & CHIP_REV_VER_MASK;
-+}
-+
-+static unsigned int __init mt7621_get_soc_eco(void)
-+{
-+	return (mt7621_get_soc_rev() & CHIP_REV_ECO_MASK);
-+}
-+
-+static const char __init *mt7621_get_soc_revision(void)
-+{
-+	if (mt7621_get_soc_rev() == 1 && mt7621_get_soc_eco() == 1)
-+		return "E2";
-+	else
-+		return "E1";
-+}
-+
-+static void soc_dev_init(struct ralink_soc_info *soc_info)
- {
- 	struct soc_device *soc_dev;
- 	struct soc_device_attribute *soc_dev_attr;
-@@ -108,12 +158,7 @@ static void soc_dev_init(struct ralink_soc_info *soc_info, u32 rev)
- 
- 	soc_dev_attr->soc_id = "mt7621";
- 	soc_dev_attr->family = "Ralink";
--
--	if (((rev >> CHIP_REV_VER_SHIFT) & CHIP_REV_VER_MASK) == 1 &&
--	    (rev & CHIP_REV_ECO_MASK) == 1)
--		soc_dev_attr->revision = "E2";
--	else
--		soc_dev_attr->revision = "E1";
-+	soc_dev_attr->revision = mt7621_get_soc_revision();
- 
- 	soc_dev_attr->data = soc_info;
- 
-@@ -126,11 +171,6 @@ static void soc_dev_init(struct ralink_soc_info *soc_info, u32 rev)
- 
- void __init prom_soc_init(struct ralink_soc_info *soc_info)
- {
--	unsigned char *name = NULL;
--	u32 n0;
--	u32 n1;
--	u32 rev;
--
- 	/* Early detection of CMP support */
- 	mips_cm_probe();
- 	mips_cpc_probe();
-@@ -153,27 +193,23 @@ void __init prom_soc_init(struct ralink_soc_info *soc_info)
- 		__sync();
- 	}
- 
--	n0 = __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_NAME0);
--	n1 = __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_NAME1);
--
--	if (n0 == MT7621_CHIP_NAME0 && n1 == MT7621_CHIP_NAME1) {
--		name = "MT7621";
-+	if (mt7621_soc_valid())
- 		soc_info->compatible = "mediatek,mt7621-soc";
--	} else {
--		panic("mt7621: unknown SoC, n0:%08x n1:%08x\n", n0, n1);
--	}
-+	else
-+		panic("mt7621: unknown SoC, n0:%08x n1:%08x\n",
-+				mt7621_get_soc_name0(),
-+				mt7621_get_soc_name1());
- 	ralink_soc = MT762X_SOC_MT7621AT;
--	rev = __raw_readl(MT7621_SYSC_BASE + SYSC_REG_CHIP_REV);
- 
- 	snprintf(soc_info->sys_type, RAMIPS_SYS_TYPE_LEN,
- 		"MediaTek %s ver:%u eco:%u",
--		name,
--		(rev >> CHIP_REV_VER_SHIFT) & CHIP_REV_VER_MASK,
--		(rev & CHIP_REV_ECO_MASK));
-+		mt7621_get_soc_id(),
-+		mt7621_get_soc_ver(),
-+		mt7621_get_soc_eco());
- 
- 	soc_info->mem_detect = mt7621_memory_detect;
- 
--	soc_dev_init(soc_info, rev);
-+	soc_dev_init(soc_info);
- 
- 	if (!register_cps_smp_ops())
- 		return;
 -- 
 2.35.1
 
