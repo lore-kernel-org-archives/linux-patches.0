@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47AE61863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDA2C433D2;
-	Wed, 28 Dec 2022 15:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15161863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A17C433D2;
+	Wed, 28 Dec 2022 15:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240994;
-	bh=MGeFGa+t+de0D4N0m5cs3jCD0iHHSXGXUzRPsSh/mYs=;
+	s=korg; t=1672240996;
+	bh=ODsTsYmcglnQCN6gjPfBgID3WIYJsMRdwFXk/NMbGIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gCdfU6ERDxzJx7SOGTLw3PYUjpio7Q6nsujMeT+Dd9h1REHcpgo/LGyNcZA5bcLKM
-	 DRkS2NdnlbWpxgXhVcQLv0f3M5l4UFCtxszFfoCuPlh0/Z/eGWjl6ekgr7qR9hvCsz
-	 heMdl2jbFZV6sN+pf2Eb1nNefXMBWJQgXX4ZIxR0=
+	b=qGUiALBKENkD+8CkGaOXFgRpXjhQAqUVVg9WGOb8quB4hp8nAilpJwVNYcsv+o1de
+	 WPC7ECmq9+yIwVOx1BF4DQx4US+Ho12Mqvr8ty3h7GiZNPJqow19UGHR4bGMRONrmf
+	 y+zdTCXJxpOkuLIVqn+ArLunBhaUvVsB8Bv0OfCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Leon Romanovsky <leon@kernel.org>,
+	James Hurley <jahurley@nvidia.com>,
+	David Thompson <davthompson@nvidia.com>,
+	Shravan Kumar Ramani <shravankr@nvidia.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 425/731] RDMA/srp: Fix error return code in srp_parse_options()
-Date: Wed, 28 Dec 2022 15:38:52 +0100
-Message-Id: <20221228144308.886921594@linuxfoundation.org>
+Subject: [PATCH 6.1 0193/1146] platform/mellanox: mlxbf-pmc: Fix event typo
+Date: Wed, 28 Dec 2022 15:28:52 +0100
+Message-Id: <20221228144335.389105088@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,239 +37,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: James Hurley <jahurley@nvidia.com>
 
-[ Upstream commit ed461b30b22c8fa85c25189c14cb89f29595cd14 ]
+[ Upstream commit b0b698b80c56b0712f0d4346d51bf0363ba03068 ]
 
-In the previous iteration of the while loop, the "ret" may have been
-assigned a value of 0, so the error return code -EINVAL may have been
-incorrectly set to 0. To fix set valid return code before calling to
-goto. Also investigate each case separately as Andy suggessted.
+Had a duplicate event typo, so just fixed the 1 character typo.
 
-Fixes: e711f968c49c ("IB/srp: replace custom implementation of hex2bin()")
-Fixes: 2a174df0c602 ("IB/srp: Use kstrtoull() instead of simple_strtoull()")
-Fixes: 19f313438c77 ("IB/srp: Add RDMA/CM support")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Link: https://lore.kernel.org/r/1669953638-11747-2-git-send-email-wangyufen@huawei.com
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 1a218d312e65 ("platform/mellanox: mlxbf-pmc: Add Mellanox BlueField PMC driver")
+Signed-off-by: James Hurley <jahurley@nvidia.com>
+Reviewed-by: David Thompson <davthompson@nvidia.com>
+Reviewed-by: Shravan Kumar Ramani <shravankr@nvidia.com>
+Link: https://lore.kernel.org/r/aadacdbbd3186c55e74ea9456fe011b77938eb6c.1670535330.git.jahurley@nvidia.com
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srp/ib_srp.c | 96 ++++++++++++++++++++++++-----
- 1 file changed, 82 insertions(+), 14 deletions(-)
+ drivers/platform/mellanox/mlxbf-pmc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/ulp/srp/ib_srp.c b/drivers/infiniband/ulp/srp/ib_srp.c
-index 2f4991cea98c..a6117a7d0ab1 100644
---- a/drivers/infiniband/ulp/srp/ib_srp.c
-+++ b/drivers/infiniband/ulp/srp/ib_srp.c
-@@ -3397,7 +3397,8 @@ static int srp_parse_options(struct net *net, const char *buf,
- 			break;
- 
- 		case SRP_OPT_PKEY:
--			if (match_hex(args, &token)) {
-+			ret = match_hex(args, &token);
-+			if (ret) {
- 				pr_warn("bad P_Key parameter '%s'\n", p);
- 				goto out;
- 			}
-@@ -3457,7 +3458,8 @@ static int srp_parse_options(struct net *net, const char *buf,
- 			break;
- 
- 		case SRP_OPT_MAX_SECT:
--			if (match_int(args, &token)) {
-+			ret = match_int(args, &token);
-+			if (ret) {
- 				pr_warn("bad max sect parameter '%s'\n", p);
- 				goto out;
- 			}
-@@ -3465,8 +3467,15 @@ static int srp_parse_options(struct net *net, const char *buf,
- 			break;
- 
- 		case SRP_OPT_QUEUE_SIZE:
--			if (match_int(args, &token) || token < 1) {
-+			ret = match_int(args, &token);
-+			if (ret) {
-+				pr_warn("match_int() failed for queue_size parameter '%s', Error %d\n",
-+					p, ret);
-+				goto out;
-+			}
-+			if (token < 1) {
- 				pr_warn("bad queue_size parameter '%s'\n", p);
-+				ret = -EINVAL;
- 				goto out;
- 			}
- 			target->scsi_host->can_queue = token;
-@@ -3477,25 +3486,40 @@ static int srp_parse_options(struct net *net, const char *buf,
- 			break;
- 
- 		case SRP_OPT_MAX_CMD_PER_LUN:
--			if (match_int(args, &token) || token < 1) {
-+			ret = match_int(args, &token);
-+			if (ret) {
-+				pr_warn("match_int() failed for max cmd_per_lun parameter '%s', Error %d\n",
-+					p, ret);
-+				goto out;
-+			}
-+			if (token < 1) {
- 				pr_warn("bad max cmd_per_lun parameter '%s'\n",
- 					p);
-+				ret = -EINVAL;
- 				goto out;
- 			}
- 			target->scsi_host->cmd_per_lun = token;
- 			break;
- 
- 		case SRP_OPT_TARGET_CAN_QUEUE:
--			if (match_int(args, &token) || token < 1) {
-+			ret = match_int(args, &token);
-+			if (ret) {
-+				pr_warn("match_int() failed for max target_can_queue parameter '%s', Error %d\n",
-+					p, ret);
-+				goto out;
-+			}
-+			if (token < 1) {
- 				pr_warn("bad max target_can_queue parameter '%s'\n",
- 					p);
-+				ret = -EINVAL;
- 				goto out;
- 			}
- 			target->target_can_queue = token;
- 			break;
- 
- 		case SRP_OPT_IO_CLASS:
--			if (match_hex(args, &token)) {
-+			ret = match_hex(args, &token);
-+			if (ret) {
- 				pr_warn("bad IO class parameter '%s'\n", p);
- 				goto out;
- 			}
-@@ -3504,6 +3528,7 @@ static int srp_parse_options(struct net *net, const char *buf,
- 				pr_warn("unknown IO class parameter value %x specified (use %x or %x).\n",
- 					token, SRP_REV10_IB_IO_CLASS,
- 					SRP_REV16A_IB_IO_CLASS);
-+				ret = -EINVAL;
- 				goto out;
- 			}
- 			target->io_class = token;
-@@ -3526,16 +3551,24 @@ static int srp_parse_options(struct net *net, const char *buf,
- 			break;
- 
- 		case SRP_OPT_CMD_SG_ENTRIES:
--			if (match_int(args, &token) || token < 1 || token > 255) {
-+			ret = match_int(args, &token);
-+			if (ret) {
-+				pr_warn("match_int() failed for max cmd_sg_entries parameter '%s', Error %d\n",
-+					p, ret);
-+				goto out;
-+			}
-+			if (token < 1 || token > 255) {
- 				pr_warn("bad max cmd_sg_entries parameter '%s'\n",
- 					p);
-+				ret = -EINVAL;
- 				goto out;
- 			}
- 			target->cmd_sg_cnt = token;
- 			break;
- 
- 		case SRP_OPT_ALLOW_EXT_SG:
--			if (match_int(args, &token)) {
-+			ret = match_int(args, &token);
-+			if (ret) {
- 				pr_warn("bad allow_ext_sg parameter '%s'\n", p);
- 				goto out;
- 			}
-@@ -3543,43 +3576,77 @@ static int srp_parse_options(struct net *net, const char *buf,
- 			break;
- 
- 		case SRP_OPT_SG_TABLESIZE:
--			if (match_int(args, &token) || token < 1 ||
--					token > SG_MAX_SEGMENTS) {
-+			ret = match_int(args, &token);
-+			if (ret) {
-+				pr_warn("match_int() failed for max sg_tablesize parameter '%s', Error %d\n",
-+					p, ret);
-+				goto out;
-+			}
-+			if (token < 1 || token > SG_MAX_SEGMENTS) {
- 				pr_warn("bad max sg_tablesize parameter '%s'\n",
- 					p);
-+				ret = -EINVAL;
- 				goto out;
- 			}
- 			target->sg_tablesize = token;
- 			break;
- 
- 		case SRP_OPT_COMP_VECTOR:
--			if (match_int(args, &token) || token < 0) {
-+			ret = match_int(args, &token);
-+			if (ret) {
-+				pr_warn("match_int() failed for comp_vector parameter '%s', Error %d\n",
-+					p, ret);
-+				goto out;
-+			}
-+			if (token < 0) {
- 				pr_warn("bad comp_vector parameter '%s'\n", p);
-+				ret = -EINVAL;
- 				goto out;
- 			}
- 			target->comp_vector = token;
- 			break;
- 
- 		case SRP_OPT_TL_RETRY_COUNT:
--			if (match_int(args, &token) || token < 2 || token > 7) {
-+			ret = match_int(args, &token);
-+			if (ret) {
-+				pr_warn("match_int() failed for tl_retry_count parameter '%s', Error %d\n",
-+					p, ret);
-+				goto out;
-+			}
-+			if (token < 2 || token > 7) {
- 				pr_warn("bad tl_retry_count parameter '%s' (must be a number between 2 and 7)\n",
- 					p);
-+				ret = -EINVAL;
- 				goto out;
- 			}
- 			target->tl_retry_count = token;
- 			break;
- 
- 		case SRP_OPT_MAX_IT_IU_SIZE:
--			if (match_int(args, &token) || token < 0) {
-+			ret = match_int(args, &token);
-+			if (ret) {
-+				pr_warn("match_int() failed for max it_iu_size parameter '%s', Error %d\n",
-+					p, ret);
-+				goto out;
-+			}
-+			if (token < 0) {
- 				pr_warn("bad maximum initiator to target IU size '%s'\n", p);
-+				ret = -EINVAL;
- 				goto out;
- 			}
- 			target->max_it_iu_size = token;
- 			break;
- 
- 		case SRP_OPT_CH_COUNT:
--			if (match_int(args, &token) || token < 1) {
-+			ret = match_int(args, &token);
-+			if (ret) {
-+				pr_warn("match_int() failed for channel count parameter '%s', Error %d\n",
-+					p, ret);
-+				goto out;
-+			}
-+			if (token < 1) {
- 				pr_warn("bad channel count %s\n", p);
-+				ret = -EINVAL;
- 				goto out;
- 			}
- 			target->ch_count = token;
-@@ -3588,6 +3655,7 @@ static int srp_parse_options(struct net *net, const char *buf,
- 		default:
- 			pr_warn("unknown parameter or missing value '%s' in target creation request\n",
- 				p);
-+			ret = -EINVAL;
- 			goto out;
- 		}
- 	}
+diff --git a/drivers/platform/mellanox/mlxbf-pmc.c b/drivers/platform/mellanox/mlxbf-pmc.c
+index 65b4a819f1bd..c2c9b0d3244c 100644
+--- a/drivers/platform/mellanox/mlxbf-pmc.c
++++ b/drivers/platform/mellanox/mlxbf-pmc.c
+@@ -358,7 +358,7 @@ static const struct mlxbf_pmc_events mlxbf_pmc_hnfnet_events[] = {
+ 	{ 0x32, "DDN_DIAG_W_INGRESS" },
+ 	{ 0x33, "DDN_DIAG_C_INGRESS" },
+ 	{ 0x34, "DDN_DIAG_CORE_SENT" },
+-	{ 0x35, "NDN_DIAG_S_OUT_OF_CRED" },
++	{ 0x35, "NDN_DIAG_N_OUT_OF_CRED" },
+ 	{ 0x36, "NDN_DIAG_S_OUT_OF_CRED" },
+ 	{ 0x37, "NDN_DIAG_E_OUT_OF_CRED" },
+ 	{ 0x38, "NDN_DIAG_W_OUT_OF_CRED" },
 -- 
 2.35.1
 
