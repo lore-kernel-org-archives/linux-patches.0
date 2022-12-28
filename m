@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF621863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:11:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB6E1C433D2;
-	Wed, 28 Dec 2022 15:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CA91868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:11:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D117C433D2;
+	Wed, 28 Dec 2022 15:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240285;
-	bh=gmRKBULf56ziykZZhfQ8sd3G8y0trbOp9Vhqe9IeIqE=;
+	s=korg; t=1672240287;
+	bh=eEbXV94pvx5BZfJiSaNBcTTmcABP0yAII+7+j3TtbGs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pZ1aHAbnqH7S6n0BRJ3yPFoqnjCHgdRzDY/pbhSJfQ/3uyIZCGtvXk38+ifYk0A1I
-	 v7Md1Er7UPzs8hN51qoTymQYuELDKYDZfiUrGnQOPYa5jn29gojDcTqXHtMoo6yftS
-	 PXYMGaDG+kGCVb6LMjEP9LmH3oh5OLj9bhdbvmbg=
+	b=iEAzlVsmsQb3O+474AExgkMHpwz2xjhjIAlTsq6kDc3H4ORBnzERQCyUsr7x7fbl6
+	 EEP3JHjbxotFKfbtZSBR+6BpJCi00fvMgBOhHH41gtgQSu7lKMS0doZ8G+GrNqcTp6
+	 LR9exvlUQ+LxsCcLCbx+S+tala7HLY3oEdPrzD1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 332/731] net: apple: bmac: dont call dev_kfree_skb() under spin_lock_irqsave()
-Date: Wed, 28 Dec 2022 15:37:19 +0100
-Message-Id: <20221228144306.194666503@linuxfoundation.org>
+Subject: [PATCH 6.0 0143/1073] genirq/irqdesc: Dont try to remove non-existing sysfs files
+Date: Wed, 28 Dec 2022 15:28:51 +0100
+Message-Id: <20221228144331.911892851@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,40 +37,111 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 5fe02e046e6422c4adfdbc50206ec7186077da24 ]
+[ Upstream commit 9049e1ca41983ab773d7ea244bee86d7835ec9f5 ]
 
-It is not allowed to call kfree_skb() or consume_skb() from hardware
-interrupt context or with hardware interrupts being disabled.
+Fault injection tests trigger warnings like this:
 
-It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
-The difference between them is free reason, dev_kfree_skb_irq() means
-the SKB is dropped in error and dev_consume_skb_irq() means the SKB
-is consumed in normal.
+  kernfs: can not remove 'chip_name', no directory
+  WARNING: CPU: 0 PID: 253 at fs/kernfs/dir.c:1616 kernfs_remove_by_name_ns+0xce/0xe0
+  RIP: 0010:kernfs_remove_by_name_ns+0xce/0xe0
+  Call Trace:
+   <TASK>
+   remove_files.isra.1+0x3f/0xb0
+   sysfs_remove_group+0x68/0xe0
+   sysfs_remove_groups+0x41/0x70
+   __kobject_del+0x45/0xc0
+   kobject_del+0x29/0x40
+   free_desc+0x42/0x70
+   irq_free_descs+0x5e/0x90
 
-In this case, dev_kfree_skb() is called in bmac_tx_timeout() to drop
-the SKB, when tx timeout, so replace it with dev_kfree_skb_irq().
+The reason is that the interrupt descriptor sysfs handling does not roll
+back on a failing kobject_add() during allocation. If the descriptor is
+freed later on, kobject_del() is invoked with a not added kobject resulting
+in the above warnings.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+A proper rollback in case of a kobject_add() failure would be the straight
+forward solution. But this is not possible due to the way how interrupt
+descriptor sysfs handling works.
+
+Interrupt descriptors are allocated before sysfs becomes available. So the
+sysfs files for the early allocated descriptors are added later in the boot
+process. At this point there can be nothing useful done about a failing
+kobject_add(). For consistency the interrupt descriptor allocation always
+treats kobject_add() failures as non-critical and just emits a warning.
+
+To solve this problem, keep track in the interrupt descriptor whether
+kobject_add() was successful or not and make the invocation of
+kobject_del() conditional on that.
+
+[ tglx: Massage changelog, comments and use a state bit. ]
+
+Fixes: ecb3f394c5db ("genirq: Expose interrupt information through sysfs")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20221128151612.1786122-1-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/apple/bmac.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/irq/internals.h |  2 ++
+ kernel/irq/irqdesc.c   | 15 +++++++++------
+ 2 files changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/apple/bmac.c b/drivers/net/ethernet/apple/bmac.c
-index a989d2df59ad..7a966361d83f 100644
---- a/drivers/net/ethernet/apple/bmac.c
-+++ b/drivers/net/ethernet/apple/bmac.c
-@@ -1511,7 +1511,7 @@ static void bmac_tx_timeout(struct timer_list *t)
- 	i = bp->tx_empty;
- 	++dev->stats.tx_errors;
- 	if (i != bp->tx_fill) {
--		dev_kfree_skb(bp->tx_bufs[i]);
-+		dev_kfree_skb_irq(bp->tx_bufs[i]);
- 		bp->tx_bufs[i] = NULL;
- 		if (++i >= N_TX_RING) i = 0;
- 		bp->tx_empty = i;
+diff --git a/kernel/irq/internals.h b/kernel/irq/internals.h
+index f09c60393e55..5fdc0b557579 100644
+--- a/kernel/irq/internals.h
++++ b/kernel/irq/internals.h
+@@ -52,6 +52,7 @@ enum {
+  * IRQS_PENDING			- irq is pending and replayed later
+  * IRQS_SUSPENDED		- irq is suspended
+  * IRQS_NMI			- irq line is used to deliver NMIs
++ * IRQS_SYSFS			- descriptor has been added to sysfs
+  */
+ enum {
+ 	IRQS_AUTODETECT		= 0x00000001,
+@@ -64,6 +65,7 @@ enum {
+ 	IRQS_SUSPENDED		= 0x00000800,
+ 	IRQS_TIMINGS		= 0x00001000,
+ 	IRQS_NMI		= 0x00002000,
++	IRQS_SYSFS		= 0x00004000,
+ };
+ 
+ #include "debug.h"
+diff --git a/kernel/irq/irqdesc.c b/kernel/irq/irqdesc.c
+index 5db0230aa6b5..c797d4054d0e 100644
+--- a/kernel/irq/irqdesc.c
++++ b/kernel/irq/irqdesc.c
+@@ -288,22 +288,25 @@ static void irq_sysfs_add(int irq, struct irq_desc *desc)
+ 	if (irq_kobj_base) {
+ 		/*
+ 		 * Continue even in case of failure as this is nothing
+-		 * crucial.
++		 * crucial and failures in the late irq_sysfs_init()
++		 * cannot be rolled back.
+ 		 */
+ 		if (kobject_add(&desc->kobj, irq_kobj_base, "%d", irq))
+ 			pr_warn("Failed to add kobject for irq %d\n", irq);
++		else
++			desc->istate |= IRQS_SYSFS;
+ 	}
+ }
+ 
+ static void irq_sysfs_del(struct irq_desc *desc)
+ {
+ 	/*
+-	 * If irq_sysfs_init() has not yet been invoked (early boot), then
+-	 * irq_kobj_base is NULL and the descriptor was never added.
+-	 * kobject_del() complains about a object with no parent, so make
+-	 * it conditional.
++	 * Only invoke kobject_del() when kobject_add() was successfully
++	 * invoked for the descriptor. This covers both early boot, where
++	 * sysfs is not initialized yet, and the case of a failed
++	 * kobject_add() invocation.
+ 	 */
+-	if (irq_kobj_base)
++	if (desc->istate & IRQS_SYSFS)
+ 		kobject_del(&desc->kobj);
+ }
+ 
 -- 
 2.35.1
 
