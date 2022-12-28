@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865691863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BFE5C433D2;
-	Wed, 28 Dec 2022 15:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469CD1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C20C433D2;
+	Wed, 28 Dec 2022 15:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242108;
-	bh=bmwe9hza0Kq2PcA9tFkgJDySBGKlVx+NuVKGOQmv3Mg=;
+	s=korg; t=1672242111;
+	bh=XgXKQ4lJt3xgbn4wnwUGVj4qQSLeGJDxzzr5jcmLDYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2uX/Aa9HhD8Gdr9g44u4pOXMBOUdmtEFyCr4FIWN02yuDtmIy06gq6P5wA/gO3lea
-	 gtOrANMcmezwp/YZe4EHlSQkFRJBBGPzh6dXlHuRGArLhA7KsEAMiEtm6/CyKQkRD0
-	 JdoLTUmR1mILFK0ShN2/wD+fMhfKh34VlZKCE/SE=
+	b=1QCMxslalt0/NVQRsVtmPS4vVSW26ct2Lqj38NAAZ0Qwy/HSpAftH7cvjdihi0/pU
+	 EcfhMQAskyqcuAVs6VlvPgTif2SoAIuk2HFyDmtHRBL/rqpd3qyRP8jiiPHfoQB6Go
+	 C4//+3w3eiqA2CKMnYyIByrV0fN2VzdXl0xZcsuQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	xinlei lee <xinlei.lee@mediatek.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0330/1146] nvmet: only allocate a single slab for bvecs
-Date: Wed, 28 Dec 2022 15:31:09 +0100
-Message-Id: <20221228144339.122726509@linuxfoundation.org>
+Subject: [PATCH 5.15 564/731] pwm: mtk-disp: Fix the parameters calculated by the enabled flag of disp_pwm
+Date: Wed, 28 Dec 2022 15:41:11 +0100
+Message-Id: <20221228144312.910624656@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,164 +37,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: xinlei lee <xinlei.lee@mediatek.com>
 
-[ Upstream commit fa8f9ac42350edd3ce82d0d148a60f0fa088f995 ]
+[ Upstream commit 0b5ef3429d8f78427558ab0dcbfd862098ba2a63 ]
 
-There is no need to have a separate slab cache for each namespace,
-and having separate ones creates duplicate debugs file names as well.
+In the original mtk_disp_pwm_get_state() function wrongly uses bit 0 of
+CON0 to judge if the PWM is enabled.
+However that is indicated by a bit (at a machine dependent position) in
+the DISP_PWM_EN register. Fix this accordingly.
 
-Fixes: d5eff33ee6f8 ("nvmet: add simple file backed ns support")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 3f2b16734914 ("pwm: mtk-disp: Implement atomic API .get_state()")
+Signed-off-by: xinlei lee <xinlei.lee@mediatek.com>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/1666172538-11652-1-git-send-email-xinlei.lee@mediatek.com
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/core.c        | 22 ++++++++++++++--------
- drivers/nvme/target/io-cmd-file.c | 16 +++-------------
- drivers/nvme/target/nvmet.h       |  3 ++-
- 3 files changed, 19 insertions(+), 22 deletions(-)
+ drivers/pwm/pwm-mtk-disp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/target/core.c b/drivers/nvme/target/core.c
-index aecb5853f8da..683b75a992b3 100644
---- a/drivers/nvme/target/core.c
-+++ b/drivers/nvme/target/core.c
-@@ -15,6 +15,7 @@
- 
- #include "nvmet.h"
- 
-+struct kmem_cache *nvmet_bvec_cache;
- struct workqueue_struct *buffered_io_wq;
- struct workqueue_struct *zbd_wq;
- static const struct nvmet_fabrics_ops *nvmet_transports[NVMF_TRTYPE_MAX];
-@@ -1631,26 +1632,28 @@ void nvmet_subsys_put(struct nvmet_subsys *subsys)
- 
- static int __init nvmet_init(void)
+diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
+index c605013e4114..3fbb4bae93a4 100644
+--- a/drivers/pwm/pwm-mtk-disp.c
++++ b/drivers/pwm/pwm-mtk-disp.c
+@@ -178,7 +178,7 @@ static void mtk_disp_pwm_get_state(struct pwm_chip *chip,
  {
--	int error;
-+	int error = -ENOMEM;
+ 	struct mtk_disp_pwm *mdp = to_mtk_disp_pwm(chip);
+ 	u64 rate, period, high_width;
+-	u32 clk_div, con0, con1;
++	u32 clk_div, pwm_en, con0, con1;
+ 	int err;
  
- 	nvmet_ana_group_enabled[NVMET_DEFAULT_ANA_GRPID] = 1;
- 
-+	nvmet_bvec_cache = kmem_cache_create("nvmet-bvec",
-+			NVMET_MAX_MPOOL_BVEC * sizeof(struct bio_vec), 0,
-+			SLAB_HWCACHE_ALIGN, NULL);
-+	if (!nvmet_bvec_cache)
-+		return -ENOMEM;
-+
- 	zbd_wq = alloc_workqueue("nvmet-zbd-wq", WQ_MEM_RECLAIM, 0);
- 	if (!zbd_wq)
--		return -ENOMEM;
-+		goto out_destroy_bvec_cache;
- 
- 	buffered_io_wq = alloc_workqueue("nvmet-buffered-io-wq",
- 			WQ_MEM_RECLAIM, 0);
--	if (!buffered_io_wq) {
--		error = -ENOMEM;
-+	if (!buffered_io_wq)
- 		goto out_free_zbd_work_queue;
--	}
- 
- 	nvmet_wq = alloc_workqueue("nvmet-wq", WQ_MEM_RECLAIM, 0);
--	if (!nvmet_wq) {
--		error = -ENOMEM;
-+	if (!nvmet_wq)
- 		goto out_free_buffered_work_queue;
--	}
- 
- 	error = nvmet_init_discovery();
- 	if (error)
-@@ -1669,6 +1672,8 @@ static int __init nvmet_init(void)
- 	destroy_workqueue(buffered_io_wq);
- out_free_zbd_work_queue:
- 	destroy_workqueue(zbd_wq);
-+out_destroy_bvec_cache:
-+	kmem_cache_destroy(nvmet_bvec_cache);
- 	return error;
- }
- 
-@@ -1680,6 +1685,7 @@ static void __exit nvmet_exit(void)
- 	destroy_workqueue(nvmet_wq);
- 	destroy_workqueue(buffered_io_wq);
- 	destroy_workqueue(zbd_wq);
-+	kmem_cache_destroy(nvmet_bvec_cache);
- 
- 	BUILD_BUG_ON(sizeof(struct nvmf_disc_rsp_page_entry) != 1024);
- 	BUILD_BUG_ON(sizeof(struct nvmf_disc_rsp_page_hdr) != 1024);
-diff --git a/drivers/nvme/target/io-cmd-file.c b/drivers/nvme/target/io-cmd-file.c
-index 64b47e2a4633..e55ec6fefd7f 100644
---- a/drivers/nvme/target/io-cmd-file.c
-+++ b/drivers/nvme/target/io-cmd-file.c
-@@ -11,7 +11,6 @@
- #include <linux/fs.h>
- #include "nvmet.h"
- 
--#define NVMET_MAX_MPOOL_BVEC		16
- #define NVMET_MIN_MPOOL_OBJ		16
- 
- void nvmet_file_ns_revalidate(struct nvmet_ns *ns)
-@@ -26,8 +25,6 @@ void nvmet_file_ns_disable(struct nvmet_ns *ns)
- 			flush_workqueue(buffered_io_wq);
- 		mempool_destroy(ns->bvec_pool);
- 		ns->bvec_pool = NULL;
--		kmem_cache_destroy(ns->bvec_cache);
--		ns->bvec_cache = NULL;
- 		fput(ns->file);
- 		ns->file = NULL;
- 	}
-@@ -59,16 +56,8 @@ int nvmet_file_ns_enable(struct nvmet_ns *ns)
- 	ns->blksize_shift = min_t(u8,
- 			file_inode(ns->file)->i_blkbits, 12);
- 
--	ns->bvec_cache = kmem_cache_create("nvmet-bvec",
--			NVMET_MAX_MPOOL_BVEC * sizeof(struct bio_vec),
--			0, SLAB_HWCACHE_ALIGN, NULL);
--	if (!ns->bvec_cache) {
--		ret = -ENOMEM;
--		goto err;
--	}
--
- 	ns->bvec_pool = mempool_create(NVMET_MIN_MPOOL_OBJ, mempool_alloc_slab,
--			mempool_free_slab, ns->bvec_cache);
-+			mempool_free_slab, nvmet_bvec_cache);
- 
- 	if (!ns->bvec_pool) {
- 		ret = -ENOMEM;
-@@ -77,9 +66,10 @@ int nvmet_file_ns_enable(struct nvmet_ns *ns)
- 
- 	return ret;
- err:
-+	fput(ns->file);
-+	ns->file = NULL;
- 	ns->size = 0;
- 	ns->blksize_shift = 0;
--	nvmet_file_ns_disable(ns);
- 	return ret;
- }
- 
-diff --git a/drivers/nvme/target/nvmet.h b/drivers/nvme/target/nvmet.h
-index dfe3894205aa..bda1c1f71f39 100644
---- a/drivers/nvme/target/nvmet.h
-+++ b/drivers/nvme/target/nvmet.h
-@@ -77,7 +77,6 @@ struct nvmet_ns {
- 
- 	struct completion	disable_done;
- 	mempool_t		*bvec_pool;
--	struct kmem_cache	*bvec_cache;
- 
- 	int			use_p2pmem;
- 	struct pci_dev		*p2p_dev;
-@@ -393,6 +392,8 @@ struct nvmet_req {
- 	u64			error_slba;
- };
- 
-+#define NVMET_MAX_MPOOL_BVEC		16
-+extern struct kmem_cache *nvmet_bvec_cache;
- extern struct workqueue_struct *buffered_io_wq;
- extern struct workqueue_struct *zbd_wq;
- extern struct workqueue_struct *nvmet_wq;
+ 	err = clk_prepare_enable(mdp->clk_main);
+@@ -197,7 +197,8 @@ static void mtk_disp_pwm_get_state(struct pwm_chip *chip,
+ 	rate = clk_get_rate(mdp->clk_main);
+ 	con0 = readl(mdp->base + mdp->data->con0);
+ 	con1 = readl(mdp->base + mdp->data->con1);
+-	state->enabled = !!(con0 & BIT(0));
++	pwm_en = readl(mdp->base + DISP_PWM_EN);
++	state->enabled = !!(pwm_en & mdp->data->enable_mask);
+ 	clk_div = FIELD_GET(PWM_CLKDIV_MASK, con0);
+ 	period = FIELD_GET(PWM_PERIOD_MASK, con1);
+ 	/*
 -- 
 2.35.1
 
