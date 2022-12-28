@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 446F11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:47:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF285C433EF;
-	Wed, 28 Dec 2022 14:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDF7A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:47:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645C3C433EF;
+	Wed, 28 Dec 2022 14:47:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672238846;
-	bh=+/9+k3HOnbZRS0kmOnJiB7eIkfHebWElTNIkgumUp58=;
+	s=korg; t=1672238848;
+	bh=fjc/4DGVZxqMcISWjliLD6wf7N4uSoglUxuDfc+tnw8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=poxGp9bLNn/CYKF3orAa7rn+TTNs0Fw5HMLIztly0paN1G+5EElb7E3DQfg1ME5LD
-	 RA+KazPBYUuWAgTuqRW4J1OBhSmjSE47mkSjEAarxCTFXunNZtVd5xkQvvO7qP2qJ8
-	 aAZED9wryosFQqR8lWUwq8xeOJUNBIdAjaDfMiSM=
+	b=1CQoYtwiXIDyPPCyjbyNTscZ1PUkBUQQcfjER3ekQEgxSXje5E/SLX/rZtlW7Ihll
+	 0r+gC9jmMu/1HDYkcRTk3B+IUxfAUP+yxB8YPwD7Z9/v2MSlBd2g4zP1JwzXO6jdqc
+	 SgILYBnLVL5GZXPtgj5rjNx5IQtItoMNWsu2jyeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Alexander Potapenko <glider@google.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Marco Elver <elver@google.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
 	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 032/731] arm64: mm: kfence: only handle translation faults
-Date: Wed, 28 Dec 2022 15:32:19 +0100
-Message-Id: <20221228144257.481469320@linuxfoundation.org>
+Subject: [PATCH 5.15 033/731] perf: arm_dsu: Fix hotplug callback leak in dsu_pmu_init()
+Date: Wed, 28 Dec 2022 15:32:20 +0100
+Message-Id: <20221228144257.511514483@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -38,64 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 0bb1fbffc631064db567ccaeb9ed6b6df6342b66 ]
+[ Upstream commit facafab7611f7b872c6b9eeaff53461ef11f482e ]
 
-Alexander noted that KFENCE only expects to handle faults from invalid page
-table entries (i.e. translation faults), but arm64's fault handling logic will
-call kfence_handle_page_fault() for other types of faults, including alignment
-faults caused by unaligned atomics. This has the unfortunate property of
-causing those other faults to be reported as "KFENCE: use-after-free",
-which is misleading and hinders debugging.
+dsu_pmu_init() won't remove the callback added by cpuhp_setup_state_multi()
+when platform_driver_register() failed. Remove the callback by
+cpuhp_remove_multi_state() in fail path.
 
-Fix this by only forwarding unhandled translation faults to the KFENCE
-code, similar to what x86 does already.
+Similar to the handling of arm_ccn_init() in commit 26242b330093 ("bus:
+arm-ccn: Prevent hotplug callback leak")
 
-Alexander has verified that this passes all the tests in the KFENCE test
-suite and avoids bogus reports on misaligned atomics.
-
-Link: https://lore.kernel.org/all/20221102081620.1465154-1-zhongbaisong@huawei.com/
-Fixes: 840b23986344 ("arm64, kfence: enable KFENCE for ARM64")
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Reviewed-by: Alexander Potapenko <glider@google.com>
-Tested-by: Alexander Potapenko <glider@google.com>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Marco Elver <elver@google.com>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20221114104411.2853040-1-mark.rutland@arm.com
+Fixes: 7520fa99246d ("perf: ARM DynamIQ Shared Unit PMU support")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20221115070207.32634-2-yuancan@huawei.com
 Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/mm/fault.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/perf/arm_dsu_pmu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/mm/fault.c b/arch/arm64/mm/fault.c
-index e38e7dc0f8f5..d09b21faa0b2 100644
---- a/arch/arm64/mm/fault.c
-+++ b/arch/arm64/mm/fault.c
-@@ -350,6 +350,11 @@ static bool is_el1_mte_sync_tag_check_fault(unsigned long esr)
- 	return false;
+diff --git a/drivers/perf/arm_dsu_pmu.c b/drivers/perf/arm_dsu_pmu.c
+index a36698a90d2f..54b8ba032c78 100644
+--- a/drivers/perf/arm_dsu_pmu.c
++++ b/drivers/perf/arm_dsu_pmu.c
+@@ -858,7 +858,11 @@ static int __init dsu_pmu_init(void)
+ 	if (ret < 0)
+ 		return ret;
+ 	dsu_pmu_cpuhp_state = ret;
+-	return platform_driver_register(&dsu_pmu_driver);
++	ret = platform_driver_register(&dsu_pmu_driver);
++	if (ret)
++		cpuhp_remove_multi_state(dsu_pmu_cpuhp_state);
++
++	return ret;
  }
  
-+static bool is_translation_fault(unsigned long esr)
-+{
-+	return (esr & ESR_ELx_FSC_TYPE) == ESR_ELx_FSC_FAULT;
-+}
-+
- static void __do_kernel_fault(unsigned long addr, unsigned long esr,
- 			      struct pt_regs *regs)
- {
-@@ -382,7 +387,8 @@ static void __do_kernel_fault(unsigned long addr, unsigned long esr,
- 	} else if (addr < PAGE_SIZE) {
- 		msg = "NULL pointer dereference";
- 	} else {
--		if (kfence_handle_page_fault(addr, esr & ESR_ELx_WNR, regs))
-+		if (is_translation_fault(esr) &&
-+		    kfence_handle_page_fault(addr, esr & ESR_ELx_WNR, regs))
- 			return;
- 
- 		msg = "paging request";
+ static void __exit dsu_pmu_exit(void)
 -- 
 2.35.1
 
