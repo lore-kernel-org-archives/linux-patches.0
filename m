@@ -1,34 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173601C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C114C433D2;
-	Wed, 28 Dec 2022 16:41:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56A61C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6569AC433D2;
+	Wed, 28 Dec 2022 16:41:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245714;
-	bh=QCaEffZw+OKfbpLHcxslteLVVuAHCTWPK4Gnh1qU9C0=;
+	s=korg; t=1672245717;
+	bh=h6N02KAVLUDk1BoL5HBbL376NjpfHaFl2lI5YviZGbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1CHpTeBUIVf0qK8mEySsHh8tzmNfX8+0fuwR9u8MJX4S/Y1eWV3xqvtQJ+3j6zM6K
-	 YN0yFkhjTBpr0UxDqU/Ojy8K8zWp5hRWZ8wdzklZZ9XIrchlhIM8FTF3H85LHA3qgO
-	 LxiyLnWIfeotJmLUbfKIfkPDTuGKOyw2UXOu8s1c=
+	b=RgGVqgwFPrU3UGH+U5tDyecfc28avVoDGs656Y+Sa+hAtFixOH2BCGytfMX1Z9dl/
+	 c7MS7JrYZtpnkYBQRWE/GDRJCgPIhxgnZsP1hRB9WoL5OZ7emiI2acgVqc7WTUJvMl
+	 vdAwDwN4YWwflUSxKM5M7Bc1qYzc/pUWCCBK2xQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Malli C <mallikarjuna.chilakala@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Eric Dumazet <edumazet@google.com>,
+	syzbot+f635e86ec3fa0a37e019@syzkaller.appspotmail.com,
+	Stanislav Fomichev <sdf@google.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0910/1146] igc: Enhance Qbv scheduling by using first flag bit
-Date: Wed, 28 Dec 2022 15:40:49 +0100
-Message-Id: <20221228144354.946562184@linuxfoundation.org>
+Subject: [PATCH 6.0 0925/1073] bpf: make sure skb->len != 0 when redirecting to a tunneling device
+Date: Wed, 28 Dec 2022 15:41:53 +0100
+Message-Id: <20221228144353.152665553@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -39,429 +38,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Stanislav Fomichev <sdf@google.com>
 
-[ Upstream commit db0b124f02ba68de6517ac303d431af220ccfe9f ]
+[ Upstream commit 07ec7b502800ba9f7b8b15cb01dd6556bb41aaca ]
 
-The I225 hardware has a limitation that packets can only be scheduled
-in the [0, cycle-time] interval. So, scheduling a packet to the start
-of the next cycle doesn't usually work.
+syzkaller managed to trigger another case where skb->len == 0
+when we enter __dev_queue_xmit:
 
-To overcome this, we use the Transmit Descriptor first flag to indicates
-that a packet should be the first packet (from a queue) in a cycle
-according to the section 7.5.2.9.3.4 The First Packet on Each QBV Cycle
-in Intel Discrete I225/6 User Manual.
+WARNING: CPU: 0 PID: 2470 at include/linux/skbuff.h:2576 skb_assert_len include/linux/skbuff.h:2576 [inline]
+WARNING: CPU: 0 PID: 2470 at include/linux/skbuff.h:2576 __dev_queue_xmit+0x2069/0x35e0 net/core/dev.c:4295
 
-But this only works if there was any packet from that queue during the
-current cycle, to avoid this issue, we issue an empty packet if that's
-not the case. Also require one more descriptor to be available, to take
-into account the empty packet that might be issued.
+Call Trace:
+ dev_queue_xmit+0x17/0x20 net/core/dev.c:4406
+ __bpf_tx_skb net/core/filter.c:2115 [inline]
+ __bpf_redirect_no_mac net/core/filter.c:2140 [inline]
+ __bpf_redirect+0x5fb/0xda0 net/core/filter.c:2163
+ ____bpf_clone_redirect net/core/filter.c:2447 [inline]
+ bpf_clone_redirect+0x247/0x390 net/core/filter.c:2419
+ bpf_prog_48159a89cb4a9a16+0x59/0x5e
+ bpf_dispatcher_nop_func include/linux/bpf.h:897 [inline]
+ __bpf_prog_run include/linux/filter.h:596 [inline]
+ bpf_prog_run include/linux/filter.h:603 [inline]
+ bpf_test_run+0x46c/0x890 net/bpf/test_run.c:402
+ bpf_prog_test_run_skb+0xbdc/0x14c0 net/bpf/test_run.c:1170
+ bpf_prog_test_run+0x345/0x3c0 kernel/bpf/syscall.c:3648
+ __sys_bpf+0x43a/0x6c0 kernel/bpf/syscall.c:5005
+ __do_sys_bpf kernel/bpf/syscall.c:5091 [inline]
+ __se_sys_bpf kernel/bpf/syscall.c:5089 [inline]
+ __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:5089
+ do_syscall_64+0x54/0x70 arch/x86/entry/common.c:48
+ entry_SYSCALL_64_after_hwframe+0x61/0xc6
 
-Test Setup:
+The reproducer doesn't really reproduce outside of syzkaller
+environment, so I'm taking a guess here. It looks like we
+do generate correct ETH_HLEN-sized packet, but we redirect
+the packet to the tunneling device. Before we do so, we
+__skb_pull l2 header and arrive again at skb->len == 0.
+Doesn't seem like we can do anything better than having
+an explicit check after __skb_pull?
 
-Talker: Use l2_tai to generate the launchtime into packet load.
-
-Listener: Use timedump.c to compute the delta between packet arrival
-and LaunchTime packet payload.
-
-Test Result:
-
-Before:
-
-1666000610127300000,1666000610127300096,96,621273
-1666000610127400000,1666000610127400192,192,621274
-1666000610127500000,1666000610127500032,32,621275
-1666000610127600000,1666000610127600128,128,621276
-1666000610127700000,1666000610127700224,224,621277
-1666000610127800000,1666000610127800064,64,621278
-1666000610127900000,1666000610127900160,160,621279
-1666000610128000000,1666000610128000000,0,621280
-1666000610128100000,1666000610128100096,96,621281
-1666000610128200000,1666000610128200192,192,621282
-1666000610128300000,1666000610128300032,32,621283
-1666000610128400000,1666000610128301056,-98944,621284
-1666000610128500000,1666000610128302080,-197920,621285
-1666000610128600000,1666000610128302848,-297152,621286
-1666000610128700000,1666000610128303872,-396128,621287
-1666000610128800000,1666000610128304896,-495104,621288
-1666000610128900000,1666000610128305664,-594336,621289
-1666000610129000000,1666000610128306688,-693312,621290
-1666000610129100000,1666000610128307712,-792288,621291
-1666000610129200000,1666000610128308480,-891520,621292
-1666000610129300000,1666000610128309504,-990496,621293
-1666000610129400000,1666000610128310528,-1089472,621294
-1666000610129500000,1666000610128311296,-1188704,621295
-1666000610129600000,1666000610128312320,-1287680,621296
-1666000610129700000,1666000610128313344,-1386656,621297
-1666000610129800000,1666000610128314112,-1485888,621298
-1666000610129900000,1666000610128315136,-1584864,621299
-1666000610130000000,1666000610128316160,-1683840,621300
-1666000610130100000,1666000610128316928,-1783072,621301
-1666000610130200000,1666000610128317952,-1882048,621302
-1666000610130300000,1666000610128318976,-1981024,621303
-1666000610130400000,1666000610128319744,-2080256,621304
-1666000610130500000,1666000610128320768,-2179232,621305
-1666000610130600000,1666000610128321792,-2278208,621306
-1666000610130700000,1666000610128322816,-2377184,621307
-1666000610130800000,1666000610128323584,-2476416,621308
-1666000610130900000,1666000610128324608,-2575392,621309
-1666000610131000000,1666000610128325632,-2674368,621310
-1666000610131100000,1666000610128326400,-2773600,621311
-1666000610131200000,1666000610128327424,-2872576,621312
-1666000610131300000,1666000610128328448,-2971552,621313
-1666000610131400000,1666000610128329216,-3070784,621314
-1666000610131500000,1666000610131500032,32,621315
-1666000610131600000,1666000610131600128,128,621316
-1666000610131700000,1666000610131700224,224,621317
-
-After:
-
-1666073510646200000,1666073510646200064,64,2676462
-1666073510646300000,1666073510646300160,160,2676463
-1666073510646400000,1666073510646400256,256,2676464
-1666073510646500000,1666073510646500096,96,2676465
-1666073510646600000,1666073510646600192,192,2676466
-1666073510646700000,1666073510646700032,32,2676467
-1666073510646800000,1666073510646800128,128,2676468
-1666073510646900000,1666073510646900224,224,2676469
-1666073510647000000,1666073510647000064,64,2676470
-1666073510647100000,1666073510647100160,160,2676471
-1666073510647200000,1666073510647200256,256,2676472
-1666073510647300000,1666073510647300096,96,2676473
-1666073510647400000,1666073510647400192,192,2676474
-1666073510647500000,1666073510647500032,32,2676475
-1666073510647600000,1666073510647600128,128,2676476
-1666073510647700000,1666073510647700224,224,2676477
-1666073510647800000,1666073510647800064,64,2676478
-1666073510647900000,1666073510647900160,160,2676479
-1666073510648000000,1666073510648000000,0,2676480
-1666073510648100000,1666073510648100096,96,2676481
-1666073510648200000,1666073510648200192,192,2676482
-1666073510648300000,1666073510648300032,32,2676483
-1666073510648400000,1666073510648400128,128,2676484
-1666073510648500000,1666073510648500224,224,2676485
-1666073510648600000,1666073510648600064,64,2676486
-1666073510648700000,1666073510648700160,160,2676487
-1666073510648800000,1666073510648800000,0,2676488
-1666073510648900000,1666073510648900096,96,2676489
-1666073510649000000,1666073510649000192,192,2676490
-1666073510649100000,1666073510649100032,32,2676491
-1666073510649200000,1666073510649200128,128,2676492
-1666073510649300000,1666073510649300224,224,2676493
-1666073510649400000,1666073510649400064,64,2676494
-1666073510649500000,1666073510649500160,160,2676495
-1666073510649600000,1666073510649600000,0,2676496
-1666073510649700000,1666073510649700096,96,2676497
-1666073510649800000,1666073510649800192,192,2676498
-1666073510649900000,1666073510649900032,32,2676499
-1666073510650000000,1666073510650000128,128,2676500
-
-Fixes: 82faa9b79950 ("igc: Add support for ETF offloading")
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Co-developed-by: Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>
-Signed-off-by: Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>
-Co-developed-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Signed-off-by: Malli C <mallikarjuna.chilakala@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Cc: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot+f635e86ec3fa0a37e019@syzkaller.appspotmail.com
+Signed-off-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/r/20221027225537.353077-1-sdf@google.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc.h         |   2 +
- drivers/net/ethernet/intel/igc/igc_defines.h |   2 +
- drivers/net/ethernet/intel/igc/igc_main.c    | 176 ++++++++++++++++---
- 3 files changed, 151 insertions(+), 29 deletions(-)
+ net/core/filter.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc.h b/drivers/net/ethernet/intel/igc/igc.h
-index 1e7e7071f64d..66a57636d329 100644
---- a/drivers/net/ethernet/intel/igc/igc.h
-+++ b/drivers/net/ethernet/intel/igc/igc.h
-@@ -94,6 +94,8 @@ struct igc_ring {
- 	u8 queue_index;                 /* logical index of the ring*/
- 	u8 reg_idx;                     /* physical index of the ring */
- 	bool launchtime_enable;         /* true if LaunchTime is enabled */
-+	ktime_t last_tx_cycle;          /* end of the cycle with a launchtime transmission */
-+	ktime_t last_ff_cycle;          /* Last cycle with an active first flag */
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 5ac3ecc2edb8..3aae1885b970 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2130,6 +2130,10 @@ static int __bpf_redirect_no_mac(struct sk_buff *skb, struct net_device *dev,
  
- 	u32 start_time;
- 	u32 end_time;
-diff --git a/drivers/net/ethernet/intel/igc/igc_defines.h b/drivers/net/ethernet/intel/igc/igc_defines.h
-index 4f9d7f013a95..4ad35fbdc02e 100644
---- a/drivers/net/ethernet/intel/igc/igc_defines.h
-+++ b/drivers/net/ethernet/intel/igc/igc_defines.h
-@@ -321,6 +321,8 @@
- #define IGC_ADVTXD_L4LEN_SHIFT	8  /* Adv ctxt L4LEN shift */
- #define IGC_ADVTXD_MSS_SHIFT	16 /* Adv ctxt MSS shift */
- 
-+#define IGC_ADVTXD_TSN_CNTX_FIRST	0x00000080
-+
- /* Transmit Control */
- #define IGC_TCTL_EN		0x00000002 /* enable Tx */
- #define IGC_TCTL_PSP		0x00000008 /* pad short packets */
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index 34889be63e78..4bad986fb038 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -1000,25 +1000,118 @@ static int igc_write_mc_addr_list(struct net_device *netdev)
- 	return netdev_mc_count(netdev);
- }
- 
--static __le32 igc_tx_launchtime(struct igc_adapter *adapter, ktime_t txtime)
-+static __le32 igc_tx_launchtime(struct igc_ring *ring, ktime_t txtime,
-+				bool *first_flag, bool *insert_empty)
- {
-+	struct igc_adapter *adapter = netdev_priv(ring->netdev);
- 	ktime_t cycle_time = adapter->cycle_time;
- 	ktime_t base_time = adapter->base_time;
-+	ktime_t now = ktime_get_clocktai();
-+	ktime_t baset_est, end_of_cycle;
- 	u32 launchtime;
-+	s64 n;
- 
--	/* FIXME: when using ETF together with taprio, we may have a
--	 * case where 'delta' is larger than the cycle_time, this may
--	 * cause problems if we don't read the current value of
--	 * IGC_BASET, as the value writen into the launchtime
--	 * descriptor field may be misinterpreted.
-+	n = div64_s64(ktime_sub_ns(now, base_time), cycle_time);
-+
-+	baset_est = ktime_add_ns(base_time, cycle_time * (n));
-+	end_of_cycle = ktime_add_ns(baset_est, cycle_time);
-+
-+	if (ktime_compare(txtime, end_of_cycle) >= 0) {
-+		if (baset_est != ring->last_ff_cycle) {
-+			*first_flag = true;
-+			ring->last_ff_cycle = baset_est;
-+
-+			if (ktime_compare(txtime, ring->last_tx_cycle) > 0)
-+				*insert_empty = true;
+ 	if (mlen) {
+ 		__skb_pull(skb, mlen);
++		if (unlikely(!skb->len)) {
++			kfree_skb(skb);
++			return -ERANGE;
 +		}
-+	}
-+
-+	/* Introducing a window at end of cycle on which packets
-+	 * potentially not honor launchtime. Window of 5us chosen
-+	 * considering software update the tail pointer and packets
-+	 * are dma'ed to packet buffer.
- 	 */
--	div_s64_rem(ktime_sub_ns(txtime, base_time), cycle_time, &launchtime);
-+	if ((ktime_sub_ns(end_of_cycle, now) < 5 * NSEC_PER_USEC))
-+		netdev_warn(ring->netdev, "Packet with txtime=%llu may not be honoured\n",
-+			    txtime);
-+
-+	ring->last_tx_cycle = end_of_cycle;
-+
-+	launchtime = ktime_sub_ns(txtime, baset_est);
-+	if (launchtime > 0)
-+		div_s64_rem(launchtime, cycle_time, &launchtime);
-+	else
-+		launchtime = 0;
  
- 	return cpu_to_le32(launchtime);
- }
- 
-+static int igc_init_empty_frame(struct igc_ring *ring,
-+				struct igc_tx_buffer *buffer,
-+				struct sk_buff *skb)
-+{
-+	unsigned int size;
-+	dma_addr_t dma;
-+
-+	size = skb_headlen(skb);
-+
-+	dma = dma_map_single(ring->dev, skb->data, size, DMA_TO_DEVICE);
-+	if (dma_mapping_error(ring->dev, dma)) {
-+		netdev_err_once(ring->netdev, "Failed to map DMA for TX\n");
-+		return -ENOMEM;
-+	}
-+
-+	buffer->skb = skb;
-+	buffer->protocol = 0;
-+	buffer->bytecount = skb->len;
-+	buffer->gso_segs = 1;
-+	buffer->time_stamp = jiffies;
-+	dma_unmap_len_set(buffer, len, skb->len);
-+	dma_unmap_addr_set(buffer, dma, dma);
-+
-+	return 0;
-+}
-+
-+static int igc_init_tx_empty_descriptor(struct igc_ring *ring,
-+					struct sk_buff *skb,
-+					struct igc_tx_buffer *first)
-+{
-+	union igc_adv_tx_desc *desc;
-+	u32 cmd_type, olinfo_status;
-+	int err;
-+
-+	if (!igc_desc_unused(ring))
-+		return -EBUSY;
-+
-+	err = igc_init_empty_frame(ring, first, skb);
-+	if (err)
-+		return err;
-+
-+	cmd_type = IGC_ADVTXD_DTYP_DATA | IGC_ADVTXD_DCMD_DEXT |
-+		   IGC_ADVTXD_DCMD_IFCS | IGC_TXD_DCMD |
-+		   first->bytecount;
-+	olinfo_status = first->bytecount << IGC_ADVTXD_PAYLEN_SHIFT;
-+
-+	desc = IGC_TX_DESC(ring, ring->next_to_use);
-+	desc->read.cmd_type_len = cpu_to_le32(cmd_type);
-+	desc->read.olinfo_status = cpu_to_le32(olinfo_status);
-+	desc->read.buffer_addr = cpu_to_le64(dma_unmap_addr(first, dma));
-+
-+	netdev_tx_sent_queue(txring_txq(ring), skb->len);
-+
-+	first->next_to_watch = desc;
-+
-+	ring->next_to_use++;
-+	if (ring->next_to_use == ring->count)
-+		ring->next_to_use = 0;
-+
-+	return 0;
-+}
-+
-+#define IGC_EMPTY_FRAME_SIZE 60
-+
- static void igc_tx_ctxtdesc(struct igc_ring *tx_ring,
--			    struct igc_tx_buffer *first,
-+			    __le32 launch_time, bool first_flag,
- 			    u32 vlan_macip_lens, u32 type_tucmd,
- 			    u32 mss_l4len_idx)
- {
-@@ -1037,26 +1130,17 @@ static void igc_tx_ctxtdesc(struct igc_ring *tx_ring,
- 	if (test_bit(IGC_RING_FLAG_TX_CTX_IDX, &tx_ring->flags))
- 		mss_l4len_idx |= tx_ring->reg_idx << 4;
- 
-+	if (first_flag)
-+		mss_l4len_idx |= IGC_ADVTXD_TSN_CNTX_FIRST;
-+
- 	context_desc->vlan_macip_lens	= cpu_to_le32(vlan_macip_lens);
- 	context_desc->type_tucmd_mlhl	= cpu_to_le32(type_tucmd);
- 	context_desc->mss_l4len_idx	= cpu_to_le32(mss_l4len_idx);
--
--	/* We assume there is always a valid Tx time available. Invalid times
--	 * should have been handled by the upper layers.
--	 */
--	if (tx_ring->launchtime_enable) {
--		struct igc_adapter *adapter = netdev_priv(tx_ring->netdev);
--		ktime_t txtime = first->skb->tstamp;
--
--		skb_txtime_consumed(first->skb);
--		context_desc->launch_time = igc_tx_launchtime(adapter,
--							      txtime);
--	} else {
--		context_desc->launch_time = 0;
--	}
-+	context_desc->launch_time	= launch_time;
- }
- 
--static void igc_tx_csum(struct igc_ring *tx_ring, struct igc_tx_buffer *first)
-+static void igc_tx_csum(struct igc_ring *tx_ring, struct igc_tx_buffer *first,
-+			__le32 launch_time, bool first_flag)
- {
- 	struct sk_buff *skb = first->skb;
- 	u32 vlan_macip_lens = 0;
-@@ -1096,7 +1180,8 @@ static void igc_tx_csum(struct igc_ring *tx_ring, struct igc_tx_buffer *first)
- 	vlan_macip_lens |= skb_network_offset(skb) << IGC_ADVTXD_MACLEN_SHIFT;
- 	vlan_macip_lens |= first->tx_flags & IGC_TX_FLAGS_VLAN_MASK;
- 
--	igc_tx_ctxtdesc(tx_ring, first, vlan_macip_lens, type_tucmd, 0);
-+	igc_tx_ctxtdesc(tx_ring, launch_time, first_flag,
-+			vlan_macip_lens, type_tucmd, 0);
- }
- 
- static int __igc_maybe_stop_tx(struct igc_ring *tx_ring, const u16 size)
-@@ -1320,6 +1405,7 @@ static int igc_tx_map(struct igc_ring *tx_ring,
- 
- static int igc_tso(struct igc_ring *tx_ring,
- 		   struct igc_tx_buffer *first,
-+		   __le32 launch_time, bool first_flag,
- 		   u8 *hdr_len)
- {
- 	u32 vlan_macip_lens, type_tucmd, mss_l4len_idx;
-@@ -1406,8 +1492,8 @@ static int igc_tso(struct igc_ring *tx_ring,
- 	vlan_macip_lens |= (ip.hdr - skb->data) << IGC_ADVTXD_MACLEN_SHIFT;
- 	vlan_macip_lens |= first->tx_flags & IGC_TX_FLAGS_VLAN_MASK;
- 
--	igc_tx_ctxtdesc(tx_ring, first, vlan_macip_lens,
--			type_tucmd, mss_l4len_idx);
-+	igc_tx_ctxtdesc(tx_ring, launch_time, first_flag,
-+			vlan_macip_lens, type_tucmd, mss_l4len_idx);
- 
- 	return 1;
- }
-@@ -1415,11 +1501,14 @@ static int igc_tso(struct igc_ring *tx_ring,
- static netdev_tx_t igc_xmit_frame_ring(struct sk_buff *skb,
- 				       struct igc_ring *tx_ring)
- {
-+	bool first_flag = false, insert_empty = false;
- 	u16 count = TXD_USE_COUNT(skb_headlen(skb));
- 	__be16 protocol = vlan_get_protocol(skb);
- 	struct igc_tx_buffer *first;
-+	__le32 launch_time = 0;
- 	u32 tx_flags = 0;
- 	unsigned short f;
-+	ktime_t txtime;
- 	u8 hdr_len = 0;
- 	int tso = 0;
- 
-@@ -1433,11 +1522,40 @@ static netdev_tx_t igc_xmit_frame_ring(struct sk_buff *skb,
- 		count += TXD_USE_COUNT(skb_frag_size(
- 						&skb_shinfo(skb)->frags[f]));
- 
--	if (igc_maybe_stop_tx(tx_ring, count + 3)) {
-+	if (igc_maybe_stop_tx(tx_ring, count + 5)) {
- 		/* this is a hard error */
- 		return NETDEV_TX_BUSY;
- 	}
- 
-+	if (!tx_ring->launchtime_enable)
-+		goto done;
-+
-+	txtime = skb->tstamp;
-+	skb->tstamp = ktime_set(0, 0);
-+	launch_time = igc_tx_launchtime(tx_ring, txtime, &first_flag, &insert_empty);
-+
-+	if (insert_empty) {
-+		struct igc_tx_buffer *empty_info;
-+		struct sk_buff *empty;
-+		void *data;
-+
-+		empty_info = &tx_ring->tx_buffer_info[tx_ring->next_to_use];
-+		empty = alloc_skb(IGC_EMPTY_FRAME_SIZE, GFP_ATOMIC);
-+		if (!empty)
-+			goto done;
-+
-+		data = skb_put(empty, IGC_EMPTY_FRAME_SIZE);
-+		memset(data, 0, IGC_EMPTY_FRAME_SIZE);
-+
-+		igc_tx_ctxtdesc(tx_ring, 0, false, 0, 0, 0);
-+
-+		if (igc_init_tx_empty_descriptor(tx_ring,
-+						 empty,
-+						 empty_info) < 0)
-+			dev_kfree_skb_any(empty);
-+	}
-+
-+done:
- 	/* record the location of the first descriptor for this packet */
- 	first = &tx_ring->tx_buffer_info[tx_ring->next_to_use];
- 	first->type = IGC_TX_BUFFER_TYPE_SKB;
-@@ -1474,11 +1592,11 @@ static netdev_tx_t igc_xmit_frame_ring(struct sk_buff *skb,
- 	first->tx_flags = tx_flags;
- 	first->protocol = protocol;
- 
--	tso = igc_tso(tx_ring, first, &hdr_len);
-+	tso = igc_tso(tx_ring, first, launch_time, first_flag, &hdr_len);
- 	if (tso < 0)
- 		goto out_drop;
- 	else if (!tso)
--		igc_tx_csum(tx_ring, first);
-+		igc_tx_csum(tx_ring, first, launch_time, first_flag);
- 
- 	igc_tx_map(tx_ring, first, hdr_len);
- 
+ 		/* At ingress, the mac header has already been pulled once.
+ 		 * At egress, skb_pospull_rcsum has to be done in case that
 -- 
 2.35.1
 
