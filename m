@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17D0A1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:06:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68721C433D2;
-	Wed, 28 Dec 2022 16:06:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89A71C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:06:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD52C433F0;
+	Wed, 28 Dec 2022 16:06:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243573;
-	bh=NSnjBrBZ+AWvoKzJjSIouAQFi7wI3pN0wxopmdHS8LY=;
+	s=korg; t=1672243576;
+	bh=W/Xnmc97F+AtLcG8E2pp6biNEpuKZmfhp14G8o0Nryc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WBvBIp0MLzvgMhX9k686HeBU/g6UQl4tBOOAoUH+T2AbOfWKT9vGdp8Vkpgy2iguB
-	 mE7D1J9ZsTd/MdlXnf/1DLqOXe7rd7GO3mBPs7pPXzxPwOHixg5o5TfKskwtMSYdzH
-	 PXA9LM1FEVN0ZKbNAxedR3LKcPlimudJieyqdh8k=
+	b=klaeowJPk9L+mNapfiw80onytyhAJyXYgXSnQLvjyXsDjB+R8ocpvrWaQA3c3EWYn
+	 /ob+Ej6lBBp5Hjkrpyxn+apoyid/hTQPFp9UncLO1sw8/kLzZ4Tp9A/5ldzwrROvnl
+	 6OxnL6eglTd0UCbfQb6sTQyuBmcRTxQtVejLwYxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piergiorgio Beruto <piergiorgio.beruto@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yuan Can <yuancan@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0550/1073] stmmac: fix potential division by 0
-Date: Wed, 28 Dec 2022 15:35:38 +0100
-Message-Id: <20221228144342.993205541@linuxfoundation.org>
+Subject: [PATCH 6.1 0515/1146] regulator: qcom-labibb: Fix missing of_node_put() in qcom_labibb_regulator_probe()
+Date: Wed, 28 Dec 2022 15:34:14 +0100
+Message-Id: <20221228144344.163200385@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,87 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Piergiorgio Beruto <piergiorgio.beruto@gmail.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit ede5a389852d3640a28e7187fb32b7f204380901 ]
+[ Upstream commit cf34ac6aa2b12fb0c3aacfdcae8acd7904b949ec ]
 
-When the MAC is connected to a 10 Mb/s PHY and the PTP clock is derived
-from the MAC reference clock (default), the clk_ptp_rate becomes too
-small and the calculated sub second increment becomes 0 when computed by
-the stmmac_config_sub_second_increment() function within
-stmmac_init_tstamp_counter().
+The reg_node needs to be released through of_node_put() in the error
+handling path when of_irq_get_byname() failed.
 
-Therefore, the subsequent div_u64 in stmmac_init_tstamp_counter()
-operation triggers a divide by 0 exception as shown below.
-
-[   95.062067] socfpga-dwmac ff700000.ethernet eth0: Register MEM_TYPE_PAGE_POOL RxQ-0
-[   95.076440] socfpga-dwmac ff700000.ethernet eth0: PHY [stmmac-0:08] driver [NCN26000] (irq=49)
-[   95.095964] dwmac1000: Master AXI performs any burst length
-[   95.101588] socfpga-dwmac ff700000.ethernet eth0: No Safety Features support found
-[   95.109428] Division by zero in kernel.
-[   95.113447] CPU: 0 PID: 239 Comm: ifconfig Not tainted 6.1.0-rc7-centurion3-1.0.3.0-01574-gb624218205b7-dirty #77
-[   95.123686] Hardware name: Altera SOCFPGA
-[   95.127695]  unwind_backtrace from show_stack+0x10/0x14
-[   95.132938]  show_stack from dump_stack_lvl+0x40/0x4c
-[   95.137992]  dump_stack_lvl from Ldiv0+0x8/0x10
-[   95.142527]  Ldiv0 from __aeabi_uidivmod+0x8/0x18
-[   95.147232]  __aeabi_uidivmod from div_u64_rem+0x1c/0x40
-[   95.152552]  div_u64_rem from stmmac_init_tstamp_counter+0xd0/0x164
-[   95.158826]  stmmac_init_tstamp_counter from stmmac_hw_setup+0x430/0xf00
-[   95.165533]  stmmac_hw_setup from __stmmac_open+0x214/0x2d4
-[   95.171117]  __stmmac_open from stmmac_open+0x30/0x44
-[   95.176182]  stmmac_open from __dev_open+0x11c/0x134
-[   95.181172]  __dev_open from __dev_change_flags+0x168/0x17c
-[   95.186750]  __dev_change_flags from dev_change_flags+0x14/0x50
-[   95.192662]  dev_change_flags from devinet_ioctl+0x2b4/0x604
-[   95.198321]  devinet_ioctl from inet_ioctl+0x1ec/0x214
-[   95.203462]  inet_ioctl from sock_ioctl+0x14c/0x3c4
-[   95.208354]  sock_ioctl from vfs_ioctl+0x20/0x38
-[   95.212984]  vfs_ioctl from sys_ioctl+0x250/0x844
-[   95.217691]  sys_ioctl from ret_fast_syscall+0x0/0x4c
-[   95.222743] Exception stack(0xd0ee1fa8 to 0xd0ee1ff0)
-[   95.227790] 1fa0:                   00574c4f be9aeca4 00000003 00008914 be9aeca4 be9aec50
-[   95.235945] 1fc0: 00574c4f be9aeca4 0059f078 00000036 be9aee8c be9aef7a 00000015 00000000
-[   95.244096] 1fe0: 005a01f0 be9aec38 004d7484 b6e67d74
-
-Signed-off-by: Piergiorgio Beruto <piergiorgio.beruto@gmail.com>
-Fixes: 91a2559c1dc5 ("net: stmmac: Fix sub-second increment")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/de4c64ccac9084952c56a06a8171d738604c4770.1670678513.git.piergiorgio.beruto@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 390af53e0411 ("regulator: qcom-labibb: Implement short-circuit and over-current IRQs")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20221203062109.115043-1-yuancan@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c | 3 ++-
- drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h      | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ drivers/regulator/qcom-labibb-regulator.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-index 764832f4dae1..8b50f03056b7 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-@@ -47,7 +47,8 @@ static void config_sub_second_increment(void __iomem *ioaddr,
- 	if (!(value & PTP_TCR_TSCTRLSSR))
- 		data = (data * 1000) / 465;
+diff --git a/drivers/regulator/qcom-labibb-regulator.c b/drivers/regulator/qcom-labibb-regulator.c
+index 639b71eb41ff..bcf7140f3bc9 100644
+--- a/drivers/regulator/qcom-labibb-regulator.c
++++ b/drivers/regulator/qcom-labibb-regulator.c
+@@ -822,6 +822,7 @@ static int qcom_labibb_regulator_probe(struct platform_device *pdev)
+ 			if (irq == 0)
+ 				irq = -EINVAL;
  
--	data &= PTP_SSIR_SSINC_MASK;
-+	if (data > PTP_SSIR_SSINC_MAX)
-+		data = PTP_SSIR_SSINC_MAX;
- 
- 	reg_value = data;
- 	if (gmac4)
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
-index 53172a439810..bf619295d079 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
-@@ -64,7 +64,7 @@
- #define	PTP_TCR_TSENMACADDR	BIT(18)
- 
- /* SSIR defines */
--#define	PTP_SSIR_SSINC_MASK		0xff
-+#define	PTP_SSIR_SSINC_MAX		0xff
- #define	GMAC4_PTP_SSIR_SSINC_SHIFT	16
- 
- /* Auxiliary Control defines */
++			of_node_put(reg_node);
+ 			return dev_err_probe(vreg->dev, irq,
+ 					     "Short-circuit irq not found.\n");
+ 		}
 -- 
 2.35.1
 
