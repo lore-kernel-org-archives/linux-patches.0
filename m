@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160511863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:54:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 904B1C433D2;
-	Wed, 28 Dec 2022 14:54:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88241863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:54:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31420C433D2;
+	Wed, 28 Dec 2022 14:54:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239268;
-	bh=zBbt05Kt2GDSAY+Qg8DEhUEf/rDv5JoKLA/XP5bfIc4=;
+	s=korg; t=1672239271;
+	bh=R5w2tSuKQPyFFf2DN8pOguaXsraKwUDvKIpjTuHbwp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZUHJ8/X00GxdaILbeGdYwmEgXiX/wfW73t38KBw1UG+bU1jWURB5z7pHm85cHt1V+
-	 URHxrC1lFzRblqhsdv0U3MiwO0w5Vts0oSozfGU33gYTNTiO5IU05nLgPOMrsJBGMh
-	 Vioxmz6PHjgfjbPkyU/mxXpLUvYXAwoxu3diWns0=
+	b=fQePLxrOH4Oyj8o1cTv6M1xhMMZEbwlAZv5W3wLaGaaKhXhzIJRoeTgMW4pi8vPKs
+	 5nvN4Bvj9M0DB/SMoNIO0Uy0IY85/3ainjAjaAZor/Lca8q2tO+7HSb1CQO4KE4Paw
+	 kXjJqY4mIoU3VCS3O7GgBrIpdpq1dxN6P7ESmlpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Khazhismel Kumykov <khazhy@google.com>,
-	Jan Kara <jack@suse.cz>,
-	Jens Axboe <axboe@kernel.dk>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 192/731] bfq: fix waker_bfqq inconsistency crash
-Date: Wed, 28 Dec 2022 15:34:59 +0100
-Message-Id: <20221228144302.123505294@linuxfoundation.org>
+Subject: [PATCH 5.15 193/731] drm/radeon: Add the missed acpi_put_table() to fix memory leak
+Date: Wed, 28 Dec 2022 15:35:00 +0100
+Message-Id: <20221228144302.151825935@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,75 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Khazhismel Kumykov <khazhy@chromium.org>
+From: Hanjun Guo <guohanjun@huawei.com>
 
-[ Upstream commit a1795c2ccb1e4c49220d2a0d381540024d71647c ]
+[ Upstream commit 10276a20be1115e1f76c189330da2992df980eee ]
 
-This fixes crashes in bfq_add_bfqq_busy due to waker_bfqq being NULL,
-but woken_list_node still being hashed. This would happen when
-bfq_init_rq() expects a brand new allocated queue to be returned from
-bfq_get_bfqq_handle_split() and unconditionally updates waker_bfqq
-without resetting woken_list_node. Since we can always return oom_bfqq
-when attempting to allocate, we cannot assume waker_bfqq starts as NULL.
+When the radeon driver reads the bios information from ACPI
+table in radeon_acpi_vfct_bios(), it misses to call acpi_put_table()
+to release the ACPI memory after the init, so add acpi_put_table()
+properly to fix the memory leak.
 
-Avoid setting woken_bfqq for oom_bfqq entirely, as it's not useful.
+v2: fix text formatting (Alex)
 
-Crashes would have a stacktrace like:
-[160595.656560]  bfq_add_bfqq_busy+0x110/0x1ec
-[160595.661142]  bfq_add_request+0x6bc/0x980
-[160595.666602]  bfq_insert_request+0x8ec/0x1240
-[160595.671762]  bfq_insert_requests+0x58/0x9c
-[160595.676420]  blk_mq_sched_insert_request+0x11c/0x198
-[160595.682107]  blk_mq_submit_bio+0x270/0x62c
-[160595.686759]  __submit_bio_noacct_mq+0xec/0x178
-[160595.691926]  submit_bio+0x120/0x184
-[160595.695990]  ext4_mpage_readpages+0x77c/0x7c8
-[160595.701026]  ext4_readpage+0x60/0xb0
-[160595.705158]  filemap_read_page+0x54/0x114
-[160595.711961]  filemap_fault+0x228/0x5f4
-[160595.716272]  do_read_fault+0xe0/0x1f0
-[160595.720487]  do_fault+0x40/0x1c8
-
-Tested by injecting random failures into bfq_get_queue, crashes go away
-completely.
-
-Fixes: 8ef3fc3a043c ("block, bfq: make shared queues inherit wakers")
-Signed-off-by: Khazhismel Kumykov <khazhy@google.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221108181030.1611703-1-khazhy@google.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 268ba0a99f89 ("drm/radeon: implement ACPI VFCT vbios fetch (v3)")
+Signed-off-by: Hanjun Guo <guohanjun@huawei.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bfq-iosched.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/radeon/radeon_bios.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
 
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 7d8fe13573f6..f21b861a0d66 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -6630,6 +6630,12 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
- 				bfqq = bfq_get_bfqq_handle_split(bfqd, bic, bio,
- 								 true, is_sync,
- 								 NULL);
-+				if (unlikely(bfqq == &bfqd->oom_bfqq))
-+					bfqq_already_existing = true;
-+			} else
-+				bfqq_already_existing = true;
-+
-+			if (!bfqq_already_existing) {
- 				bfqq->waker_bfqq = old_bfqq->waker_bfqq;
- 				bfqq->tentative_waker_bfqq = NULL;
+diff --git a/drivers/gpu/drm/radeon/radeon_bios.c b/drivers/gpu/drm/radeon/radeon_bios.c
+index 33121655d50b..1d99c9a2b56e 100644
+--- a/drivers/gpu/drm/radeon/radeon_bios.c
++++ b/drivers/gpu/drm/radeon/radeon_bios.c
+@@ -612,13 +612,14 @@ static bool radeon_acpi_vfct_bios(struct radeon_device *rdev)
+ 	acpi_size tbl_size;
+ 	UEFI_ACPI_VFCT *vfct;
+ 	unsigned offset;
++	bool r = false;
  
-@@ -6643,8 +6649,7 @@ static struct bfq_queue *bfq_init_rq(struct request *rq)
- 				if (bfqq->waker_bfqq)
- 					hlist_add_head(&bfqq->woken_list_node,
- 						       &bfqq->waker_bfqq->woken_list);
--			} else
--				bfqq_already_existing = true;
-+			}
+ 	if (!ACPI_SUCCESS(acpi_get_table("VFCT", 1, &hdr)))
+ 		return false;
+ 	tbl_size = hdr->length;
+ 	if (tbl_size < sizeof(UEFI_ACPI_VFCT)) {
+ 		DRM_ERROR("ACPI VFCT table present but broken (too short #1)\n");
+-		return false;
++		goto out;
+ 	}
+ 
+ 	vfct = (UEFI_ACPI_VFCT *)hdr;
+@@ -631,13 +632,13 @@ static bool radeon_acpi_vfct_bios(struct radeon_device *rdev)
+ 		offset += sizeof(VFCT_IMAGE_HEADER);
+ 		if (offset > tbl_size) {
+ 			DRM_ERROR("ACPI VFCT image header truncated\n");
+-			return false;
++			goto out;
+ 		}
+ 
+ 		offset += vhdr->ImageLength;
+ 		if (offset > tbl_size) {
+ 			DRM_ERROR("ACPI VFCT image truncated\n");
+-			return false;
++			goto out;
+ 		}
+ 
+ 		if (vhdr->ImageLength &&
+@@ -649,15 +650,18 @@ static bool radeon_acpi_vfct_bios(struct radeon_device *rdev)
+ 			rdev->bios = kmemdup(&vbios->VbiosContent,
+ 					     vhdr->ImageLength,
+ 					     GFP_KERNEL);
++			if (rdev->bios)
++				r = true;
+ 
+-			if (!rdev->bios)
+-				return false;
+-			return true;
++			goto out;
  		}
  	}
  
+ 	DRM_ERROR("ACPI VFCT table present but broken (too short #2)\n");
+-	return false;
++
++out:
++	acpi_put_table(hdr);
++	return r;
+ }
+ #else
+ static inline bool radeon_acpi_vfct_bios(struct radeon_device *rdev)
 -- 
 2.35.1
 
