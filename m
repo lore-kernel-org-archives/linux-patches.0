@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066731875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:07:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D389C433EF;
-	Wed, 28 Dec 2022 16:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985C21875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:07:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1875DC433EF;
+	Wed, 28 Dec 2022 16:07:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243661;
-	bh=xFZx9leuCJgbMXiiX9g1ARpxtzdYalSiEPvhxz40504=;
+	s=korg; t=1672243664;
+	bh=Jjmn+cly577mIBtdrHbVjmakA1xfXxsj/1hf5RIR99I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0SQD7EEZ8oBKbZe5qM4vxKaRLgAG0PKz3NZP8eLGo0bzVBy2XVWOJA8MixtI3UmcK
-	 QeLtqe1if4HA0B8lctIw/2FlcvTdaimm06rAGfy/UJxSGjdXNpm6TYV2im0i+jt+El
-	 OlUp1hY0IrGb7IPauvBJ4EJlyqEbg2Ol5pbfmp7I=
+	b=E1D4W3oRVSipmPZZEaECjhIi/RmqAxrxLjXKC00uhmwbp0Mo9j/CdL4EaAigSyDL5
+	 EWypu7isfaHUtxc2baFs0DsoNAYrkKy7YEnyxk0zVpID5HtbQqURnoGAmvaWmKYbJ3
+	 AdLp1lcsll/nX7YbdHMo4R3PcOJysOp3OJVGFLzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vidya Sagar <vidyas@nvidia.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Jingoo Han <jingoohan1@gmail.com>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0565/1073] PCI: dwc: Fix n_fts[] array overrun
-Date: Wed, 28 Dec 2022 15:35:53 +0100
-Message-Id: <20221228144343.402787549@linuxfoundation.org>
+Subject: [PATCH 6.1 0530/1146] net: stmmac: selftests: fix potential memleak in stmmac_test_arpoffload()
+Date: Wed, 28 Dec 2022 15:34:29 +0100
+Message-Id: <20221228144344.571802075@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,40 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vidya Sagar <vidyas@nvidia.com>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit 66110361281b2f7da0c8bd51eaf1f152f4236035 ]
+[ Upstream commit f150b63f3fa5fdd81e0dd6151e8850268e29438c ]
 
-commit aeaa0bfe89654 ("PCI: dwc: Move N_FTS setup to common setup")
-incorrectly uses pci->link_gen in deriving the index to the
-n_fts[] array also introducing the issue of accessing beyond the
-boundaries of array for greater than Gen-2 speeds. This change fixes
-that issue.
+The skb allocated by stmmac_test_get_arp_skb() hasn't been released in
+some error handling case, which will lead to a memory leak. Fix this up
+by adding kfree_skb() to release skb.
 
-Link: https://lore.kernel.org/r/20220926111923.22487-1-vidyas@nvidia.com
-Fixes: aeaa0bfe8965 ("PCI: dwc: Move N_FTS setup to common setup")
-Signed-off-by: Vidya Sagar <vidyas@nvidia.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Acked-by: Jingoo Han <jingoohan1@gmail.com>
+Compile tested only.
+
+Fixes: 5e3fb0a6e2b3 ("net: stmmac: selftests: Implement the ARP Offload test")
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/controller/dwc/pcie-designware.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pci/controller/dwc/pcie-designware.c b/drivers/pci/controller/dwc/pcie-designware.c
-index c6725c519a47..9e4d96e5a3f5 100644
---- a/drivers/pci/controller/dwc/pcie-designware.c
-+++ b/drivers/pci/controller/dwc/pcie-designware.c
-@@ -641,7 +641,7 @@ void dw_pcie_setup(struct dw_pcie *pci)
- 	if (pci->n_fts[1]) {
- 		val = dw_pcie_readl_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL);
- 		val &= ~PORT_LOGIC_N_FTS_MASK;
--		val |= pci->n_fts[pci->link_gen - 1];
-+		val |= pci->n_fts[1];
- 		dw_pcie_writel_dbi(pci, PCIE_LINK_WIDTH_SPEED_CONTROL, val);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+index 49af7e78b7f5..687f43cd466c 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+@@ -1654,12 +1654,16 @@ static int stmmac_test_arpoffload(struct stmmac_priv *priv)
  	}
  
+ 	ret = stmmac_set_arp_offload(priv, priv->hw, true, ip_addr);
+-	if (ret)
++	if (ret) {
++		kfree_skb(skb);
+ 		goto cleanup;
++	}
+ 
+ 	ret = dev_set_promiscuity(priv->dev, 1);
+-	if (ret)
++	if (ret) {
++		kfree_skb(skb);
+ 		goto cleanup;
++	}
+ 
+ 	ret = dev_direct_xmit(skb, 0);
+ 	if (ret)
 -- 
 2.35.1
 
