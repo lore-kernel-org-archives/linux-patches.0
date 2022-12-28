@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9592F1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:08:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18C50C43396;
-	Wed, 28 Dec 2022 16:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6E91C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:08:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C406EC4339E;
+	Wed, 28 Dec 2022 16:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243699;
-	bh=4PNDDJZmArPkClOrlBSTTJGNXsNvzCzJ1ewJlq8/RAQ=;
+	s=korg; t=1672243702;
+	bh=ekM7PxMiAF1QhFuSLHpNpPze+NPIKVh0kSGq6/Xp3+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yO6vulpi3clyx7V4IujdbyxGyEWobyguI2MZhTlpPtFXJ1WqAPQbBuEMMWsTSpT9W
-	 FItrEB31L0D5PPf7pgvZsEFQxumsNJw+Nk+j00c2T00gCRBoXZHTwZGwNKjzxdMGlr
-	 5rFq94z/ETgVLJQPY/6t/fO9DbRg9qhmGWndWrYc=
+	b=ctuRXvFM89vS6OR6ADZ/A+syZBbg7nwqsFQzU9C3HTs1DzJOWzYfzBhS2mY6NvTHn
+	 A+jGfh5Qa/FuZG5LFK/g8hUy5SWqM2g38aIdDQYwQkLBDChMqSHGj4U3HXsg1TtSoM
+	 f7qpYoKqC+Y0QE/vlGE6cCKf3+LKi3ExOr2HPfSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zetao <lizetao1@huawei.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	John Keeping <john@metanate.com>,
+	Corentin Labbe <clabbe@baylibre.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0536/1146] net: farsync: Fix kmemleak when rmmods farsync
-Date: Wed, 28 Dec 2022 15:34:35 +0100
-Message-Id: <20221228144344.733657049@linuxfoundation.org>
+Subject: [PATCH 6.0 0572/1073] crypto: rockchip - add fallback for ahash
+Date: Wed, 28 Dec 2022 15:36:00 +0100
+Message-Id: <20221228144343.590341092@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,73 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Zetao <lizetao1@huawei.com>
+From: Corentin Labbe <clabbe@baylibre.com>
 
-[ Upstream commit 2f623aaf9f31de968dea6169849706a2f9be444c ]
+[ Upstream commit 816600485cb597b3ff7d6806a95a78512839f775 ]
 
-There are two memory leaks reported by kmemleak:
+Adds a fallback for all case hardware cannot handle.
 
-  unreferenced object 0xffff888114b20200 (size 128):
-    comm "modprobe", pid 4846, jiffies 4295146524 (age 401.345s)
-    hex dump (first 32 bytes):
-      e0 62 57 09 81 88 ff ff e0 62 57 09 81 88 ff ff  .bW......bW.....
-      01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    backtrace:
-      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
-      [<ffffffff83d35c78>] __hw_addr_add_ex+0x198/0x6c0
-      [<ffffffff83d3989d>] dev_addr_init+0x13d/0x230
-      [<ffffffff83d1063d>] alloc_netdev_mqs+0x10d/0xe50
-      [<ffffffff82b4a06e>] alloc_hdlcdev+0x2e/0x80
-      [<ffffffffa016a741>] fst_add_one+0x601/0x10e0 [farsync]
-      ...
-
-  unreferenced object 0xffff88810b85b000 (size 1024):
-    comm "modprobe", pid 4846, jiffies 4295146523 (age 401.346s)
-    hex dump (first 32 bytes):
-      00 00 b0 02 00 c9 ff ff 00 70 0a 00 00 c9 ff ff  .........p......
-      00 00 00 f2 00 00 00 f3 0a 00 00 00 02 00 00 00  ................
-    backtrace:
-      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
-      [<ffffffffa016a294>] fst_add_one+0x154/0x10e0 [farsync]
-      [<ffffffff82060e83>] local_pci_probe+0xd3/0x170
-      ...
-
-The root cause is traced to the netdev and fst_card_info are not freed
-when removes one fst in fst_remove_one(), which may trigger oom if
-repeated insmod and rmmod module.
-
-Fix it by adding free_netdev() and kfree() in fst_remove_one(), just as
-the operations on the error handling path in fst_add_one().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Li Zetao <lizetao1@huawei.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: ce0183cb6464b ("crypto: rockchip - switch to skcipher API")
+Reviewed-by: John Keeping <john@metanate.com>
+Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wan/farsync.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/crypto/rockchip/rk3288_crypto_ahash.c | 38 +++++++++++++++++++
+ 1 file changed, 38 insertions(+)
 
-diff --git a/drivers/net/wan/farsync.c b/drivers/net/wan/farsync.c
-index 6a212c085435..5b01642ca44e 100644
---- a/drivers/net/wan/farsync.c
-+++ b/drivers/net/wan/farsync.c
-@@ -2545,6 +2545,7 @@ fst_remove_one(struct pci_dev *pdev)
- 		struct net_device *dev = port_to_dev(&card->ports[i]);
+diff --git a/drivers/crypto/rockchip/rk3288_crypto_ahash.c b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
+index 49017d1fb510..16009bb0bf16 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto_ahash.c
++++ b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
+@@ -16,6 +16,40 @@
+  * so we put the fixed hash out when met zero message.
+  */
  
- 		unregister_hdlc_device(dev);
-+		free_netdev(dev);
- 	}
++static bool rk_ahash_need_fallback(struct ahash_request *req)
++{
++	struct scatterlist *sg;
++
++	sg = req->src;
++	while (sg) {
++		if (!IS_ALIGNED(sg->offset, sizeof(u32))) {
++			return true;
++		}
++		if (sg->length % 4) {
++			return true;
++		}
++		sg = sg_next(sg);
++	}
++	return false;
++}
++
++static int rk_ahash_digest_fb(struct ahash_request *areq)
++{
++	struct rk_ahash_rctx *rctx = ahash_request_ctx(areq);
++	struct crypto_ahash *tfm = crypto_ahash_reqtfm(areq);
++	struct rk_ahash_ctx *tfmctx = crypto_ahash_ctx(tfm);
++
++	ahash_request_set_tfm(&rctx->fallback_req, tfmctx->fallback_tfm);
++	rctx->fallback_req.base.flags = areq->base.flags &
++					CRYPTO_TFM_REQ_MAY_SLEEP;
++
++	rctx->fallback_req.nbytes = areq->nbytes;
++	rctx->fallback_req.src = areq->src;
++	rctx->fallback_req.result = areq->result;
++
++	return crypto_ahash_digest(&rctx->fallback_req);
++}
++
+ static int zero_message_process(struct ahash_request *req)
+ {
+ 	struct crypto_ahash *tfm = crypto_ahash_reqtfm(req);
+@@ -167,6 +201,9 @@ static int rk_ahash_digest(struct ahash_request *req)
+ 	struct rk_ahash_ctx *tctx = crypto_tfm_ctx(req->base.tfm);
+ 	struct rk_crypto_info *dev = tctx->dev;
  
- 	fst_disable_intr(card);
-@@ -2564,6 +2565,7 @@ fst_remove_one(struct pci_dev *pdev)
- 				  card->tx_dma_handle_card);
- 	}
- 	fst_card_array[card->card_no] = NULL;
-+	kfree(card);
++	if (rk_ahash_need_fallback(req))
++		return rk_ahash_digest_fb(req);
++
+ 	if (!req->nbytes)
+ 		return zero_message_process(req);
+ 	else
+@@ -309,6 +346,7 @@ static void rk_cra_hash_exit(struct crypto_tfm *tfm)
+ 	struct rk_ahash_ctx *tctx = crypto_tfm_ctx(tfm);
+ 
+ 	free_page((unsigned long)tctx->dev->addr_vir);
++	crypto_free_ahash(tctx->fallback_tfm);
  }
  
- static struct pci_driver fst_driver = {
+ struct rk_crypto_tmp rk_ahash_sha1 = {
 -- 
 2.35.1
 
