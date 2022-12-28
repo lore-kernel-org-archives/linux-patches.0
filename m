@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538C51C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:16:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBCE7C433F0;
-	Wed, 28 Dec 2022 16:16:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148D21C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:16:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7158DC433D2;
+	Wed, 28 Dec 2022 16:16:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244184;
-	bh=FT4N1aMzM8pZb8mQNTjaDfiFq8UWFOlBIazXhZGXa3I=;
+	s=korg; t=1672244186;
+	bh=Tb/biD9tF9fdsYz9RjtBO/7A1mIYzWTOS+IRfhhp5iA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NEjZaMttM3U1VX7SW+7f9zjnwzBYZXTk8uP9rNMoV1tOIhJ4K9cMDnBL3Jxnp4wZc
-	 5iGV4fn63fZhiqC+hNErWXAq8tlWTyPc7TJYJWgNI63P4wX2SzuOvM53TPnG6M+fJ+
-	 ppkA359WHCGe2QhAcwntezgbjkBTFwXYGMw30mjE=
+	b=QYEIDdOI71cFt/6hFItP5zN2zqxPZsJyYaaaUbiZw6W3SwJjXw4MXE6XSqS5GiFQL
+	 ByMeBD2m7JkMf6f2g0ABw/jOQWgy2c8aeSAWf+mVzcWdzL1jJSbZzjGot58kGxzL0T
+	 PqyARjUq4+EmjBXqFO3d9V0vHBwexAa+MY4Loml8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0665/1073] serial: 8250_bcm7271: Fix error handling in brcmuart_init()
-Date: Wed, 28 Dec 2022 15:37:33 +0100
-Message-Id: <20221228144346.106341931@linuxfoundation.org>
+Subject: [PATCH 6.1 0608/1146] RDMA/restrack: Release MR restrack when delete
+Date: Wed, 28 Dec 2022 15:35:47 +0100
+Message-Id: <20221228144346.685829257@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,62 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Mark Zhang <markzhang@nvidia.com>
 
-[ Upstream commit 6a3ff858915fa8ca36c7eb02c87c9181ae2fc333 ]
+[ Upstream commit dac153f2802db1ad46207283cb9b2aae3d707a45 ]
 
-A problem about 8250_bcm7271 create debugfs failed is triggered with the
-following log given:
+The MR restrack also needs to be released when delete it, otherwise it
+cause memory leak as the task struct won't be released.
 
- [  324.516635] debugfs: Directory 'bcm7271-uart' with parent '/' already present!
-
-The reason is that brcmuart_init() returns platform_driver_register()
-directly without checking its return value, if platform_driver_register()
-failed, it returns without destroy the newly created debugfs, resulting
-the debugfs of 8250_bcm7271 can never be created later.
-
- brcmuart_init()
-   debugfs_create_dir() # create debugfs directory
-   platform_driver_register()
-     driver_register()
-       bus_add_driver()
-         priv = kzalloc(...) # OOM happened
-   # return without destroy debugfs directory
-
-Fix by removing debugfs when platform_driver_register() returns error.
-
-Fixes: 41a469482de2 ("serial: 8250: Add new 8250-core based Broadcom STB driver")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Link: https://lore.kernel.org/r/20221109072110.117291-2-yuancan@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 13ef5539def7 ("RDMA/restrack: Count references to the verbs objects")
+Signed-off-by: Mark Zhang <markzhang@nvidia.com>
+Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
+Link: https://lore.kernel.org/r/703db18e8d4ef628691fb93980a709be673e62e3.1667810736.git.leonro@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/8250/8250_bcm7271.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/restrack.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/tty/serial/8250/8250_bcm7271.c b/drivers/tty/serial/8250/8250_bcm7271.c
-index 8efdc271eb75..5e0ffd6c4789 100644
---- a/drivers/tty/serial/8250/8250_bcm7271.c
-+++ b/drivers/tty/serial/8250/8250_bcm7271.c
-@@ -1212,9 +1212,17 @@ static struct platform_driver brcmuart_platform_driver = {
+diff --git a/drivers/infiniband/core/restrack.c b/drivers/infiniband/core/restrack.c
+index 1f935d9f6178..01a499a8b88d 100644
+--- a/drivers/infiniband/core/restrack.c
++++ b/drivers/infiniband/core/restrack.c
+@@ -343,8 +343,6 @@ void rdma_restrack_del(struct rdma_restrack_entry *res)
+ 	rt = &dev->res[res->type];
  
- static int __init brcmuart_init(void)
- {
-+	int ret;
-+
- 	brcmuart_debugfs_root = debugfs_create_dir(
- 		brcmuart_platform_driver.driver.name, NULL);
--	return platform_driver_register(&brcmuart_platform_driver);
-+	ret = platform_driver_register(&brcmuart_platform_driver);
-+	if (ret) {
-+		debugfs_remove_recursive(brcmuart_debugfs_root);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- module_init(brcmuart_init);
+ 	old = xa_erase(&rt->xa, res->id);
+-	if (res->type == RDMA_RESTRACK_MR)
+-		return;
+ 	WARN_ON(old != res);
  
+ out:
 -- 
 2.35.1
 
