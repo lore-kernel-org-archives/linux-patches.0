@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82ADB1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:30:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06DA8C433D2;
-	Wed, 28 Dec 2022 16:30:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231F81C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:30:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BA05C433D2;
+	Wed, 28 Dec 2022 16:30:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245020;
-	bh=4hEtNKm4C3mnB40PXHEoFjhTSymawBm29/B8KKyP6Z8=;
+	s=korg; t=1672245023;
+	bh=XgXKQ4lJt3xgbn4wnwUGVj4qQSLeGJDxzzr5jcmLDYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EudtIygM7G0P47ByqJ2KDfV5hXVEa3xk0raxaQ1AO5r4DLFD0KTEvWJGyQHFXoX6K
-	 R58HQvkw+1DCAVzF+u84vsuG+O50TbECYTH0Fm3SaAQyPYSZz/jYZKtZQ7WulGaTny
-	 pKYOYKku4lKq1xp4z5nedO0XXX0BXj840TgFDOP8=
+	b=tH3eyOPGJGOohZtFepFR6822fByGTpzpEDyi54JPgF8iukxyKfXB+t22l+ab5T30r
+	 4Enu2IXtRhJQ9NRhZlS+TBZe6nOJZ+rkO3KumnZfkFdD6wbSnU4k0a7jTaO5w4YLvg
+	 2FPhC9/ztI62ALVAKIMsWt+G93wYoyvgoJpy3Y2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Marek Vasut <marex@denx.de>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	xinlei lee <xinlei.lee@mediatek.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0779/1146] power: supply: bq25890: Factor out regulator registration code
-Date: Wed, 28 Dec 2022 15:38:38 +0100
-Message-Id: <20221228144351.307102068@linuxfoundation.org>
+Subject: [PATCH 6.0 0817/1073] pwm: mtk-disp: Fix the parameters calculated by the enabled flag of disp_pwm
+Date: Wed, 28 Dec 2022 15:40:05 +0100
+Message-Id: <20221228144350.203092401@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,100 +37,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: xinlei lee <xinlei.lee@mediatek.com>
 
-[ Upstream commit 5f5c10ecaf3fdeba9b2b0af5301977420c2c4df0 ]
+[ Upstream commit 0b5ef3429d8f78427558ab0dcbfd862098ba2a63 ]
 
-Pull the regulator registration code into separate function, so it can
-be extended to register more regulators later. Currently this is only
-moving ifdeffery into one place and other preparatory changes. The
-dev_err_probe() output string is changed to explicitly list vbus
-regulator failure, so that once more regulators are registered, it
-would be clear which one failed.
+In the original mtk_disp_pwm_get_state() function wrongly uses bit 0 of
+CON0 to judge if the PWM is enabled.
+However that is indicated by a bit (at a machine dependent position) in
+the DISP_PWM_EN register. Fix this accordingly.
 
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
-Stable-dep-of: a7aaa80098d5 ("power: supply: bq25890: Ensure pump_express_work is cancelled on remove")
+Fixes: 3f2b16734914 ("pwm: mtk-disp: Implement atomic API .get_state()")
+Signed-off-by: xinlei lee <xinlei.lee@mediatek.com>
+Reviewed-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/1666172538-11652-1-git-send-email-xinlei.lee@mediatek.com
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/bq25890_charger.c | 51 ++++++++++++++++++--------
- 1 file changed, 35 insertions(+), 16 deletions(-)
+ drivers/pwm/pwm-mtk-disp.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/power/supply/bq25890_charger.c b/drivers/power/supply/bq25890_charger.c
-index 6020b58c641d..624e466e2cfa 100644
---- a/drivers/power/supply/bq25890_charger.c
-+++ b/drivers/power/supply/bq25890_charger.c
-@@ -1049,6 +1049,36 @@ static const struct regulator_desc bq25890_vbus_desc = {
- 	.fixed_uV = 5000000,
- 	.n_voltages = 1,
- };
-+
-+static int bq25890_register_regulator(struct bq25890_device *bq)
-+{
-+	struct bq25890_platform_data *pdata = dev_get_platdata(bq->dev);
-+	struct regulator_config cfg = {
-+		.dev = bq->dev,
-+		.driver_data = bq,
-+	};
-+	struct regulator_dev *reg;
-+
-+	if (!IS_ERR_OR_NULL(bq->usb_phy))
-+		return 0;
-+
-+	if (pdata)
-+		cfg.init_data = pdata->regulator_init_data;
-+
-+	reg = devm_regulator_register(bq->dev, &bq25890_vbus_desc, &cfg);
-+	if (IS_ERR(reg)) {
-+		return dev_err_probe(bq->dev, PTR_ERR(reg),
-+				     "registering vbus regulator");
-+	}
-+
-+	return 0;
-+}
-+#else
-+static inline int
-+bq25890_register_regulator(struct bq25890_device *bq)
-+{
-+	return 0;
-+}
- #endif
+diff --git a/drivers/pwm/pwm-mtk-disp.c b/drivers/pwm/pwm-mtk-disp.c
+index c605013e4114..3fbb4bae93a4 100644
+--- a/drivers/pwm/pwm-mtk-disp.c
++++ b/drivers/pwm/pwm-mtk-disp.c
+@@ -178,7 +178,7 @@ static void mtk_disp_pwm_get_state(struct pwm_chip *chip,
+ {
+ 	struct mtk_disp_pwm *mdp = to_mtk_disp_pwm(chip);
+ 	u64 rate, period, high_width;
+-	u32 clk_div, con0, con1;
++	u32 clk_div, pwm_en, con0, con1;
+ 	int err;
  
- static int bq25890_get_chip_version(struct bq25890_device *bq)
-@@ -1244,27 +1274,16 @@ static int bq25890_probe(struct i2c_client *client,
- 
- 	/* OTG reporting */
- 	bq->usb_phy = devm_usb_get_phy(dev, USB_PHY_TYPE_USB2);
-+
-+	ret = bq25890_register_regulator(bq);
-+	if (ret)
-+		return ret;
-+
- 	if (!IS_ERR_OR_NULL(bq->usb_phy)) {
- 		INIT_WORK(&bq->usb_work, bq25890_usb_work);
- 		bq->usb_nb.notifier_call = bq25890_usb_notifier;
- 		usb_register_notifier(bq->usb_phy, &bq->usb_nb);
- 	}
--#ifdef CONFIG_REGULATOR
--	else {
--		struct bq25890_platform_data *pdata = dev_get_platdata(dev);
--		struct regulator_config cfg = { };
--		struct regulator_dev *reg;
--
--		cfg.dev = dev;
--		cfg.driver_data = bq;
--		if (pdata)
--			cfg.init_data = pdata->regulator_init_data;
--
--		reg = devm_regulator_register(dev, &bq25890_vbus_desc, &cfg);
--		if (IS_ERR(reg))
--			return dev_err_probe(dev, PTR_ERR(reg), "registering regulator");
--	}
--#endif
- 
- 	ret = bq25890_power_supply_init(bq);
- 	if (ret < 0) {
+ 	err = clk_prepare_enable(mdp->clk_main);
+@@ -197,7 +197,8 @@ static void mtk_disp_pwm_get_state(struct pwm_chip *chip,
+ 	rate = clk_get_rate(mdp->clk_main);
+ 	con0 = readl(mdp->base + mdp->data->con0);
+ 	con1 = readl(mdp->base + mdp->data->con1);
+-	state->enabled = !!(con0 & BIT(0));
++	pwm_en = readl(mdp->base + DISP_PWM_EN);
++	state->enabled = !!(pwm_en & mdp->data->enable_mask);
+ 	clk_div = FIELD_GET(PWM_CLKDIV_MASK, con0);
+ 	period = FIELD_GET(PWM_PERIOD_MASK, con1);
+ 	/*
 -- 
 2.35.1
 
