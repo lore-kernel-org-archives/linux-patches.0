@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66C501863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC1FC433D2;
-	Wed, 28 Dec 2022 15:29:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A1391863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 952D3C433EF;
+	Wed, 28 Dec 2022 15:29:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241352;
-	bh=n7nBq+t+bWoVTOO4n4naVn+SgWZsHkjWNjq9+BajzMw=;
+	s=korg; t=1672241355;
+	bh=l0ttpRFS91HIfeDDorZljoXnod3bRHzIilWSHiWyPDE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V+Mmqy8Va69C8E7v9fauE7M9qWvjVmeheuC6f26L//qxRXYB/WMAWOmusGvIdcJC1
-	 +sL+Wz2FSU4BqZbhMSeknV3/Gbsk92QnJb8x/NzVIkh7KYQ9zQVOWYTlogGpi/iWjE
-	 ngAuGralm5AaQUZzJzHvnpmfGhz2mbmNlv7Lor0Y=
+	b=Jb1or0VHfDuMXxbdocgvl5Z++yZ5ABqaBx4dAK7LmZsvmDtCcsEtYX62MalWlQwWR
+	 yKp42GPBMcURuJ4QG1zZT9Wru6D2tDPlNlJYTNb3JXchospcppfiSHyFVQ/IcIwdFq
+	 yTa3J1dBbEIawrMngYH+feI4v1Hg0HorEWA+aF4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Dimitri Sivanich <sivanich@hpe.com>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 469/731] misc: sgi-gru: fix use-after-free error in gru_set_context_option, gru_fault and gru_handle_user_call_os
-Date: Wed, 28 Dec 2022 15:39:36 +0100
-Message-Id: <20221228144310.144317613@linuxfoundation.org>
+Subject: [PATCH 6.1 0236/1146] drm/i915/guc: Limit scheduling properties to avoid overflow
+Date: Wed, 28 Dec 2022 15:29:35 +0100
+Message-Id: <20221228144336.548392805@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,137 +36,294 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: John Harrison <John.C.Harrison@Intel.com>
 
-[ Upstream commit 643a16a0eb1d6ac23744bb6e90a00fc21148a9dc ]
+[ Upstream commit 568944af44e7538ed5d1389dabf56e938afdaf4f ]
 
-In some bad situation, the gts may be freed gru_check_chiplet_assignment.
-The call chain can be gru_unload_context->gru_free_gru_context->gts_drop
-and kfree finally. However, the caller didn't know if the gts is freed
-or not and use it afterwards. This will trigger a Use after Free bug.
+GuC converts the pre-emption timeout and timeslice quantum values into
+clock ticks internally. That significantly reduces the point of 32bit
+overflow. On current platforms, worst case scenario is approximately
+110 seconds. Rather than allowing the user to set higher values and
+then get confused by early timeouts, add limits when setting these
+values.
 
-Fix it by introducing a return value to see if it's in error path or not.
-Free the gts in caller if gru_check_chiplet_assignment check failed.
+v2: Add helper functions for clamping (review feedback from Tvrtko).
+v3: Add a bunch of BUG_ON range checks in addition to the checks
+already in the clamping functions (Tvrtko)
 
-Fixes: 55484c45dbec ("gru: allow users to specify gru chiplet 2")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Acked-by: Dimitri Sivanich <sivanich@hpe.com>
-Link: https://lore.kernel.org/r/20221110035033.19498-1-zyytlz.wz@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
+Acked-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221006213813.1563435-2-John.C.Harrison@Intel.com
+Stable-dep-of: c3bd49cd9a10 ("drm/i915: Fix compute pre-emption w/a to apply to compute engines")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/sgi-gru/grufault.c  | 13 +++++++++++--
- drivers/misc/sgi-gru/grumain.c   | 22 ++++++++++++++++++----
- drivers/misc/sgi-gru/grutables.h |  2 +-
- 3 files changed, 30 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_engine.h        |  6 ++
+ drivers/gpu/drm/i915/gt/intel_engine_cs.c     | 69 +++++++++++++++++++
+ drivers/gpu/drm/i915/gt/sysfs_engines.c       | 25 ++++---
+ drivers/gpu/drm/i915/gt/uc/intel_guc_fwif.h   | 21 ++++++
+ .../gpu/drm/i915/gt/uc/intel_guc_submission.c |  8 +++
+ 5 files changed, 119 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/misc/sgi-gru/grufault.c b/drivers/misc/sgi-gru/grufault.c
-index d7ef61e602ed..b836936e9747 100644
---- a/drivers/misc/sgi-gru/grufault.c
-+++ b/drivers/misc/sgi-gru/grufault.c
-@@ -648,6 +648,7 @@ int gru_handle_user_call_os(unsigned long cb)
- 	if ((cb & (GRU_HANDLE_STRIDE - 1)) || ucbnum >= GRU_NUM_CB)
- 		return -EINVAL;
- 
-+again:
- 	gts = gru_find_lock_gts(cb);
- 	if (!gts)
- 		return -EINVAL;
-@@ -656,7 +657,11 @@ int gru_handle_user_call_os(unsigned long cb)
- 	if (ucbnum >= gts->ts_cbr_au_count * GRU_CBR_AU_SIZE)
- 		goto exit;
- 
--	gru_check_context_placement(gts);
-+	if (gru_check_context_placement(gts)) {
-+		gru_unlock_gts(gts);
-+		gru_unload_context(gts, 1);
-+		goto again;
-+	}
- 
- 	/*
- 	 * CCH may contain stale data if ts_force_cch_reload is set.
-@@ -874,7 +879,11 @@ int gru_set_context_option(unsigned long arg)
- 		} else {
- 			gts->ts_user_blade_id = req.val1;
- 			gts->ts_user_chiplet_id = req.val0;
--			gru_check_context_placement(gts);
-+			if (gru_check_context_placement(gts)) {
-+				gru_unlock_gts(gts);
-+				gru_unload_context(gts, 1);
-+				return ret;
-+			}
- 		}
- 		break;
- 	case sco_gseg_owner:
-diff --git a/drivers/misc/sgi-gru/grumain.c b/drivers/misc/sgi-gru/grumain.c
-index 9afda47efbf2..3a16eb8e03f7 100644
---- a/drivers/misc/sgi-gru/grumain.c
-+++ b/drivers/misc/sgi-gru/grumain.c
-@@ -716,9 +716,10 @@ static int gru_check_chiplet_assignment(struct gru_state *gru,
-  * chiplet. Misassignment can occur if the process migrates to a different
-  * blade or if the user changes the selected blade/chiplet.
-  */
--void gru_check_context_placement(struct gru_thread_state *gts)
-+int gru_check_context_placement(struct gru_thread_state *gts)
- {
- 	struct gru_state *gru;
-+	int ret = 0;
- 
- 	/*
- 	 * If the current task is the context owner, verify that the
-@@ -726,15 +727,23 @@ void gru_check_context_placement(struct gru_thread_state *gts)
- 	 * references. Pthread apps use non-owner references to the CBRs.
- 	 */
- 	gru = gts->ts_gru;
-+	/*
-+	 * If gru or gts->ts_tgid_owner isn't initialized properly, return
-+	 * success to indicate that the caller does not need to unload the
-+	 * gru context.The caller is responsible for their inspection and
-+	 * reinitialization if needed.
-+	 */
- 	if (!gru || gts->ts_tgid_owner != current->tgid)
--		return;
-+		return ret;
- 
- 	if (!gru_check_chiplet_assignment(gru, gts)) {
- 		STAT(check_context_unload);
--		gru_unload_context(gts, 1);
-+		ret = -EINVAL;
- 	} else if (gru_retarget_intr(gts)) {
- 		STAT(check_context_retarget_intr);
- 	}
-+
-+	return ret;
+diff --git a/drivers/gpu/drm/i915/gt/intel_engine.h b/drivers/gpu/drm/i915/gt/intel_engine.h
+index 04e435bce79b..cbc8b857d5f7 100644
+--- a/drivers/gpu/drm/i915/gt/intel_engine.h
++++ b/drivers/gpu/drm/i915/gt/intel_engine.h
+@@ -348,4 +348,10 @@ intel_engine_get_hung_context(struct intel_engine_cs *engine)
+ 	return engine->hung_ce;
  }
  
++u64 intel_clamp_heartbeat_interval_ms(struct intel_engine_cs *engine, u64 value);
++u64 intel_clamp_max_busywait_duration_ns(struct intel_engine_cs *engine, u64 value);
++u64 intel_clamp_preempt_timeout_ms(struct intel_engine_cs *engine, u64 value);
++u64 intel_clamp_stop_timeout_ms(struct intel_engine_cs *engine, u64 value);
++u64 intel_clamp_timeslice_duration_ms(struct intel_engine_cs *engine, u64 value);
++
+ #endif /* _INTEL_RINGBUFFER_H_ */
+diff --git a/drivers/gpu/drm/i915/gt/intel_engine_cs.c b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
+index 1f7188129cd1..d6cc90ae70c9 100644
+--- a/drivers/gpu/drm/i915/gt/intel_engine_cs.c
++++ b/drivers/gpu/drm/i915/gt/intel_engine_cs.c
+@@ -512,6 +512,26 @@ static int intel_engine_setup(struct intel_gt *gt, enum intel_engine_id id,
+ 		engine->flags |= I915_ENGINE_HAS_EU_PRIORITY;
+ 	}
  
-@@ -934,7 +943,12 @@ vm_fault_t gru_fault(struct vm_fault *vmf)
- 	mutex_lock(&gts->ts_ctxlock);
- 	preempt_disable();
++	/* Cap properties according to any system limits */
++#define CLAMP_PROP(field) \
++	do { \
++		u64 clamp = intel_clamp_##field(engine, engine->props.field); \
++		if (clamp != engine->props.field) { \
++			drm_notice(&engine->i915->drm, \
++				   "Warning, clamping %s to %lld to prevent overflow\n", \
++				   #field, clamp); \
++			engine->props.field = clamp; \
++		} \
++	} while (0)
++
++	CLAMP_PROP(heartbeat_interval_ms);
++	CLAMP_PROP(max_busywait_duration_ns);
++	CLAMP_PROP(preempt_timeout_ms);
++	CLAMP_PROP(stop_timeout_ms);
++	CLAMP_PROP(timeslice_duration_ms);
++
++#undef CLAMP_PROP
++
+ 	engine->defaults = engine->props; /* never to change again */
  
--	gru_check_context_placement(gts);
-+	if (gru_check_context_placement(gts)) {
-+		preempt_enable();
-+		mutex_unlock(&gts->ts_ctxlock);
-+		gru_unload_context(gts, 1);
-+		return VM_FAULT_NOPAGE;
-+	}
+ 	engine->context_size = intel_engine_context_size(gt, engine->class);
+@@ -534,6 +554,55 @@ static int intel_engine_setup(struct intel_gt *gt, enum intel_engine_id id,
+ 	return 0;
+ }
  
- 	if (!gts->ts_gru) {
- 		STAT(load_user_context);
-diff --git a/drivers/misc/sgi-gru/grutables.h b/drivers/misc/sgi-gru/grutables.h
-index e4c067c61251..5c9783150cdf 100644
---- a/drivers/misc/sgi-gru/grutables.h
-+++ b/drivers/misc/sgi-gru/grutables.h
-@@ -638,7 +638,7 @@ extern int gru_user_flush_tlb(unsigned long arg);
- extern int gru_user_unload_context(unsigned long arg);
- extern int gru_get_exception_detail(unsigned long arg);
- extern int gru_set_context_option(unsigned long address);
--extern void gru_check_context_placement(struct gru_thread_state *gts);
-+extern int gru_check_context_placement(struct gru_thread_state *gts);
- extern int gru_cpu_fault_map_id(void);
- extern struct vm_area_struct *gru_find_vma(unsigned long vaddr);
- extern void gru_flush_all_tlb(struct gru_state *gru);
++u64 intel_clamp_heartbeat_interval_ms(struct intel_engine_cs *engine, u64 value)
++{
++	value = min_t(u64, value, jiffies_to_msecs(MAX_SCHEDULE_TIMEOUT));
++
++	return value;
++}
++
++u64 intel_clamp_max_busywait_duration_ns(struct intel_engine_cs *engine, u64 value)
++{
++	value = min(value, jiffies_to_nsecs(2));
++
++	return value;
++}
++
++u64 intel_clamp_preempt_timeout_ms(struct intel_engine_cs *engine, u64 value)
++{
++	/*
++	 * NB: The GuC API only supports 32bit values. However, the limit is further
++	 * reduced due to internal calculations which would otherwise overflow.
++	 */
++	if (intel_guc_submission_is_wanted(&engine->gt->uc.guc))
++		value = min_t(u64, value, guc_policy_max_preempt_timeout_ms());
++
++	value = min_t(u64, value, jiffies_to_msecs(MAX_SCHEDULE_TIMEOUT));
++
++	return value;
++}
++
++u64 intel_clamp_stop_timeout_ms(struct intel_engine_cs *engine, u64 value)
++{
++	value = min_t(u64, value, jiffies_to_msecs(MAX_SCHEDULE_TIMEOUT));
++
++	return value;
++}
++
++u64 intel_clamp_timeslice_duration_ms(struct intel_engine_cs *engine, u64 value)
++{
++	/*
++	 * NB: The GuC API only supports 32bit values. However, the limit is further
++	 * reduced due to internal calculations which would otherwise overflow.
++	 */
++	if (intel_guc_submission_is_wanted(&engine->gt->uc.guc))
++		value = min_t(u64, value, guc_policy_max_exec_quantum_ms());
++
++	value = min_t(u64, value, jiffies_to_msecs(MAX_SCHEDULE_TIMEOUT));
++
++	return value;
++}
++
+ static void __setup_engine_capabilities(struct intel_engine_cs *engine)
+ {
+ 	struct drm_i915_private *i915 = engine->i915;
+diff --git a/drivers/gpu/drm/i915/gt/sysfs_engines.c b/drivers/gpu/drm/i915/gt/sysfs_engines.c
+index 967031056202..f2d9858d827c 100644
+--- a/drivers/gpu/drm/i915/gt/sysfs_engines.c
++++ b/drivers/gpu/drm/i915/gt/sysfs_engines.c
+@@ -144,7 +144,7 @@ max_spin_store(struct kobject *kobj, struct kobj_attribute *attr,
+ 	       const char *buf, size_t count)
+ {
+ 	struct intel_engine_cs *engine = kobj_to_engine(kobj);
+-	unsigned long long duration;
++	unsigned long long duration, clamped;
+ 	int err;
+ 
+ 	/*
+@@ -168,7 +168,8 @@ max_spin_store(struct kobject *kobj, struct kobj_attribute *attr,
+ 	if (err)
+ 		return err;
+ 
+-	if (duration > jiffies_to_nsecs(2))
++	clamped = intel_clamp_max_busywait_duration_ns(engine, duration);
++	if (duration != clamped)
+ 		return -EINVAL;
+ 
+ 	WRITE_ONCE(engine->props.max_busywait_duration_ns, duration);
+@@ -203,7 +204,7 @@ timeslice_store(struct kobject *kobj, struct kobj_attribute *attr,
+ 		const char *buf, size_t count)
+ {
+ 	struct intel_engine_cs *engine = kobj_to_engine(kobj);
+-	unsigned long long duration;
++	unsigned long long duration, clamped;
+ 	int err;
+ 
+ 	/*
+@@ -218,7 +219,8 @@ timeslice_store(struct kobject *kobj, struct kobj_attribute *attr,
+ 	if (err)
+ 		return err;
+ 
+-	if (duration > jiffies_to_msecs(MAX_SCHEDULE_TIMEOUT))
++	clamped = intel_clamp_timeslice_duration_ms(engine, duration);
++	if (duration != clamped)
+ 		return -EINVAL;
+ 
+ 	WRITE_ONCE(engine->props.timeslice_duration_ms, duration);
+@@ -256,7 +258,7 @@ stop_store(struct kobject *kobj, struct kobj_attribute *attr,
+ 	   const char *buf, size_t count)
+ {
+ 	struct intel_engine_cs *engine = kobj_to_engine(kobj);
+-	unsigned long long duration;
++	unsigned long long duration, clamped;
+ 	int err;
+ 
+ 	/*
+@@ -272,7 +274,8 @@ stop_store(struct kobject *kobj, struct kobj_attribute *attr,
+ 	if (err)
+ 		return err;
+ 
+-	if (duration > jiffies_to_msecs(MAX_SCHEDULE_TIMEOUT))
++	clamped = intel_clamp_stop_timeout_ms(engine, duration);
++	if (duration != clamped)
+ 		return -EINVAL;
+ 
+ 	WRITE_ONCE(engine->props.stop_timeout_ms, duration);
+@@ -306,7 +309,7 @@ preempt_timeout_store(struct kobject *kobj, struct kobj_attribute *attr,
+ 		      const char *buf, size_t count)
+ {
+ 	struct intel_engine_cs *engine = kobj_to_engine(kobj);
+-	unsigned long long timeout;
++	unsigned long long timeout, clamped;
+ 	int err;
+ 
+ 	/*
+@@ -322,7 +325,8 @@ preempt_timeout_store(struct kobject *kobj, struct kobj_attribute *attr,
+ 	if (err)
+ 		return err;
+ 
+-	if (timeout > jiffies_to_msecs(MAX_SCHEDULE_TIMEOUT))
++	clamped = intel_clamp_preempt_timeout_ms(engine, timeout);
++	if (timeout != clamped)
+ 		return -EINVAL;
+ 
+ 	WRITE_ONCE(engine->props.preempt_timeout_ms, timeout);
+@@ -362,7 +366,7 @@ heartbeat_store(struct kobject *kobj, struct kobj_attribute *attr,
+ 		const char *buf, size_t count)
+ {
+ 	struct intel_engine_cs *engine = kobj_to_engine(kobj);
+-	unsigned long long delay;
++	unsigned long long delay, clamped;
+ 	int err;
+ 
+ 	/*
+@@ -379,7 +383,8 @@ heartbeat_store(struct kobject *kobj, struct kobj_attribute *attr,
+ 	if (err)
+ 		return err;
+ 
+-	if (delay >= jiffies_to_msecs(MAX_SCHEDULE_TIMEOUT))
++	clamped = intel_clamp_heartbeat_interval_ms(engine, delay);
++	if (delay != clamped)
+ 		return -EINVAL;
+ 
+ 	err = intel_engine_set_heartbeat(engine, delay);
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_fwif.h b/drivers/gpu/drm/i915/gt/uc/intel_guc_fwif.h
+index 323b055e5db9..502e7cb5a302 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_fwif.h
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_fwif.h
+@@ -305,6 +305,27 @@ struct guc_update_context_policy {
+ 
+ #define GLOBAL_POLICY_DEFAULT_DPC_PROMOTE_TIME_US 500000
+ 
++/*
++ * GuC converts the timeout to clock ticks internally. Different platforms have
++ * different GuC clocks. Thus, the maximum value before overflow is platform
++ * dependent. Current worst case scenario is about 110s. So, the spec says to
++ * limit to 100s to be safe.
++ */
++#define GUC_POLICY_MAX_EXEC_QUANTUM_US		(100 * 1000 * 1000UL)
++#define GUC_POLICY_MAX_PREEMPT_TIMEOUT_US	(100 * 1000 * 1000UL)
++
++static inline u32 guc_policy_max_exec_quantum_ms(void)
++{
++	BUILD_BUG_ON(GUC_POLICY_MAX_EXEC_QUANTUM_US >= UINT_MAX);
++	return GUC_POLICY_MAX_EXEC_QUANTUM_US / 1000;
++}
++
++static inline u32 guc_policy_max_preempt_timeout_ms(void)
++{
++	BUILD_BUG_ON(GUC_POLICY_MAX_PREEMPT_TIMEOUT_US >= UINT_MAX);
++	return GUC_POLICY_MAX_PREEMPT_TIMEOUT_US / 1000;
++}
++
+ struct guc_policies {
+ 	u32 submission_queue_depth[GUC_MAX_ENGINE_CLASSES];
+ 	/* In micro seconds. How much time to allow before DPC processing is
+diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
+index 1db59eeb34db..1a23e901cc66 100644
+--- a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
++++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
+@@ -2429,6 +2429,10 @@ static int guc_context_policy_init_v70(struct intel_context *ce, bool loop)
+ 	int ret;
+ 
+ 	/* NB: For both of these, zero means disabled. */
++	GEM_BUG_ON(overflows_type(engine->props.timeslice_duration_ms * 1000,
++				  execution_quantum));
++	GEM_BUG_ON(overflows_type(engine->props.preempt_timeout_ms * 1000,
++				  preemption_timeout));
+ 	execution_quantum = engine->props.timeslice_duration_ms * 1000;
+ 	preemption_timeout = engine->props.preempt_timeout_ms * 1000;
+ 
+@@ -2462,6 +2466,10 @@ static void guc_context_policy_init_v69(struct intel_engine_cs *engine,
+ 		desc->policy_flags |= CONTEXT_POLICY_FLAG_PREEMPT_TO_IDLE_V69;
+ 
+ 	/* NB: For both of these, zero means disabled. */
++	GEM_BUG_ON(overflows_type(engine->props.timeslice_duration_ms * 1000,
++				  desc->execution_quantum));
++	GEM_BUG_ON(overflows_type(engine->props.preempt_timeout_ms * 1000,
++				  desc->preemption_timeout));
+ 	desc->execution_quantum = engine->props.timeslice_duration_ms * 1000;
+ 	desc->preemption_timeout = engine->props.preempt_timeout_ms * 1000;
+ }
 -- 
 2.35.1
 
