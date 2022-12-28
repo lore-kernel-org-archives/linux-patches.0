@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E781863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67A84C433EF;
-	Wed, 28 Dec 2022 15:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 858601863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:31:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B06FC433EF;
+	Wed, 28 Dec 2022 15:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241458;
-	bh=BX2uNUkWPMCYw2peGS1ZQCi2+CspRTvDZ+2gvoy/nSM=;
+	s=korg; t=1672241461;
+	bh=sp159iaMXyRIQCLC75S/T8IgDsXNctfN+Cp1tV5LlnE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C/zqej8oDnPAQsrRZnzcMZmktOM5y1qvpwP3RBT5cvopkwG+DWUgwdgxcgq5B7HAj
-	 LXAMnEATyMs/sLCs03OAVgJzQGPvsVN2Bm6dhUe+QHu11wV51pI8D+zDK1saXDFhRo
-	 cWepABXhW0OA1BcYRdWbIqwXUBNquguSiiqxhbLk=
+	b=Ex4kvDxECMSW6xdSybugrCqTzKM/eEaa3FmwYak/ZmGeOxwzQY6JwcVlTCIPIOD8n
+	 3rEjs9XJ1DZbP+NvP+bG+eCBuHZrVrXfk/grK00bemmZxEhANGEu4nTMsKg/IUjR/s
+	 UvWgOYlEmeIEqNtAKJ7ufYvFyCxxa4NEdisLQXWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Jimmy Assarsson <extja@kvaser.com>,
+	Anssi Hannula <anssi.hannula@bitwise.fi>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0286/1073] bpf: propagate precision across all frames, not just the last one
-Date: Wed, 28 Dec 2022 15:31:14 +0100
-Message-Id: <20221228144335.786307958@linuxfoundation.org>
+Subject: [PATCH 6.1 0249/1146] can: kvaser_usb_leaf: Fix improved state not being reported
+Date: Wed, 28 Dec 2022 15:29:48 +0100
+Message-Id: <20221228144336.900087045@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,158 +36,257 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Anssi Hannula <anssi.hannula@bitwise.fi>
 
-[ Upstream commit 529409ea92d590659be487ba0839710329bd8074 ]
+[ Upstream commit 8d21f5927ae604881f98587fabf6753f88730968 ]
 
-When equivalent completed state is found and it has additional precision
-restrictions, BPF verifier propagates precision to
-currently-being-verified state chain (i.e., including parent states) so
-that if some of the states in the chain are not yet completed, necessary
-precision restrictions are enforced.
+The tested 0bfd:0017 Kvaser Memorator Professional HS/HS FW 2.0.50 and
+0bfd:0124 Kvaser Mini PCI Express 2xHS FW 4.18.778 do not seem to send
+any unsolicited events when error counters decrease or when the device
+transitions from ERROR_PASSIVE to ERROR_ACTIVE (or WARNING).
 
-Unfortunately, right now this happens only for the last frame (deepest
-active subprogram's frame), not all the frames. This can lead to
-incorrect matching of states due to missing precision marker. Currently
-this doesn't seem possible as BPF verifier forces everything to precise
-when validated BPF program has any subprograms. But with the next patch
-lifting this restriction, this becomes problematic.
+This causes the interface to e.g. indefinitely stay in the ERROR_PASSIVE
+state.
 
-In fact, without this fix, we'll start getting failure in one of the
-existing test_verifier test cases:
+Fix that by asking for chip state (inc. counters) event every 0.5 secs
+when error counters are non-zero.
 
-  #906/p precise: cross frame pruning FAIL
-  Unexpected success to load!
-  verification time 48 usec
-  stack depth 0+0
-  processed 26 insns (limit 1000000) max_states_per_insn 3 total_states 17 peak_states 17 mark_read 8
+Since there are non-error-counter devices, also always poll in
+ERROR_PASSIVE even if the counters show zero.
 
-This patch adds precision propagation across all frames.
-
-Fixes: a3ce685dd01a ("bpf: fix precision tracking")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20221104163649.121784-3-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
+Tested-by: Jimmy Assarsson <extja@kvaser.com>
+Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://lore.kernel.org/all/20221010185237.319219-7-extja@kvaser.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 71 ++++++++++++++++++++++++-------------------
- 1 file changed, 39 insertions(+), 32 deletions(-)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb.h   |  7 +++
+ .../net/can/usb/kvaser_usb/kvaser_usb_core.c  | 19 +++++-
+ .../net/can/usb/kvaser_usb/kvaser_usb_leaf.c  | 58 +++++++++++++++++++
+ 3 files changed, 81 insertions(+), 3 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 05414615c008..7a1ca0e58043 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2751,7 +2751,7 @@ static void mark_all_scalars_precise(struct bpf_verifier_env *env,
- 		}
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb.h b/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
+index f6c0938027ec..d9c5dd5da908 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
+@@ -104,6 +104,9 @@ struct kvaser_usb_net_priv {
+ 	struct can_priv can;
+ 	struct can_berr_counter bec;
+ 
++	/* subdriver-specific data */
++	void *sub_priv;
++
+ 	struct kvaser_usb *dev;
+ 	struct net_device *netdev;
+ 	int channel;
+@@ -125,6 +128,8 @@ struct kvaser_usb_net_priv {
+  *
+  * @dev_setup_endpoints:	setup USB in and out endpoints
+  * @dev_init_card:		initialize card
++ * @dev_init_channel:		initialize channel
++ * @dev_remove_channel:		uninitialize channel
+  * @dev_get_software_info:	get software info
+  * @dev_get_software_details:	get software details
+  * @dev_get_card_info:		get card info
+@@ -146,6 +151,8 @@ struct kvaser_usb_dev_ops {
+ 				    struct can_berr_counter *bec);
+ 	int (*dev_setup_endpoints)(struct kvaser_usb *dev);
+ 	int (*dev_init_card)(struct kvaser_usb *dev);
++	int (*dev_init_channel)(struct kvaser_usb_net_priv *priv);
++	void (*dev_remove_channel)(struct kvaser_usb_net_priv *priv);
+ 	int (*dev_get_software_info)(struct kvaser_usb *dev);
+ 	int (*dev_get_software_details)(struct kvaser_usb *dev);
+ 	int (*dev_get_card_info)(struct kvaser_usb *dev);
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
+index 802e27c0eced..0ebdfb77c50f 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
+@@ -684,6 +684,7 @@ static const struct ethtool_ops kvaser_usb_ethtool_ops_hwts = {
+ 
+ static void kvaser_usb_remove_interfaces(struct kvaser_usb *dev)
+ {
++	const struct kvaser_usb_dev_ops *ops = dev->driver_info->ops;
+ 	int i;
+ 
+ 	for (i = 0; i < dev->nchannels; i++) {
+@@ -699,6 +700,9 @@ static void kvaser_usb_remove_interfaces(struct kvaser_usb *dev)
+ 		if (!dev->nets[i])
+ 			continue;
+ 
++		if (ops->dev_remove_channel)
++			ops->dev_remove_channel(dev->nets[i]);
++
+ 		free_candev(dev->nets[i]->netdev);
+ 	}
+ }
+@@ -772,17 +776,26 @@ static int kvaser_usb_init_one(struct kvaser_usb *dev, int channel)
+ 
+ 	dev->nets[channel] = priv;
+ 
++	if (ops->dev_init_channel) {
++		err = ops->dev_init_channel(priv);
++		if (err)
++			goto err;
++	}
++
+ 	err = register_candev(netdev);
+ 	if (err) {
+ 		dev_err(&dev->intf->dev, "Failed to register CAN device\n");
+-		free_candev(netdev);
+-		dev->nets[channel] = NULL;
+-		return err;
++		goto err;
+ 	}
+ 
+ 	netdev_dbg(netdev, "device registered\n");
+ 
+ 	return 0;
++
++err:
++	free_candev(netdev);
++	dev->nets[channel] = NULL;
++	return err;
  }
  
--static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
-+static int __mark_chain_precision(struct bpf_verifier_env *env, int frame, int regno,
- 				  int spi)
- {
- 	struct bpf_verifier_state *st = env->cur_state;
-@@ -2768,7 +2768,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
- 	if (!env->bpf_capable)
- 		return 0;
+ static int kvaser_usb_probe(struct usb_interface *intf,
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+index a6a26085bc15..993fcc19637d 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+@@ -21,6 +21,7 @@
+ #include <linux/types.h>
+ #include <linux/units.h>
+ #include <linux/usb.h>
++#include <linux/workqueue.h>
  
--	func = st->frame[st->curframe];
-+	func = st->frame[frame];
- 	if (regno >= 0) {
- 		reg = &func->regs[regno];
- 		if (reg->type != SCALAR_VALUE) {
-@@ -2849,7 +2849,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
- 			break;
+ #include <linux/can.h>
+ #include <linux/can/dev.h>
+@@ -56,6 +57,7 @@
+ #define CMD_RX_EXT_MESSAGE		14
+ #define CMD_TX_EXT_MESSAGE		15
+ #define CMD_SET_BUS_PARAMS		16
++#define CMD_GET_CHIP_STATE		19
+ #define CMD_CHIP_STATE_EVENT		20
+ #define CMD_SET_CTRL_MODE		21
+ #define CMD_RESET_CHIP			24
+@@ -421,6 +423,12 @@ struct kvaser_usb_err_summary {
+ 	};
+ };
  
- 		new_marks = false;
--		func = st->frame[st->curframe];
-+		func = st->frame[frame];
- 		bitmap_from_u64(mask, reg_mask);
- 		for_each_set_bit(i, mask, 32) {
- 			reg = &func->regs[i];
-@@ -2915,12 +2915,17 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
- 
- static int mark_chain_precision(struct bpf_verifier_env *env, int regno)
- {
--	return __mark_chain_precision(env, regno, -1);
-+	return __mark_chain_precision(env, env->cur_state->curframe, regno, -1);
++struct kvaser_usb_net_leaf_priv {
++	struct kvaser_usb_net_priv *net;
++
++	struct delayed_work chip_state_req_work;
++};
++
+ static const struct can_bittiming_const kvaser_usb_leaf_m16c_bittiming_const = {
+ 	.name = "kvaser_usb_ucii",
+ 	.tseg1_min = 4,
+@@ -943,6 +951,16 @@ static int kvaser_usb_leaf_simple_cmd_async(struct kvaser_usb_net_priv *priv,
+ 	return err;
  }
  
--static int mark_chain_precision_stack(struct bpf_verifier_env *env, int spi)
-+static int mark_chain_precision_frame(struct bpf_verifier_env *env, int frame, int regno)
- {
--	return __mark_chain_precision(env, -1, spi);
-+	return __mark_chain_precision(env, frame, regno, -1);
++static void kvaser_usb_leaf_chip_state_req_work(struct work_struct *work)
++{
++	struct kvaser_usb_net_leaf_priv *leaf =
++		container_of(work, struct kvaser_usb_net_leaf_priv,
++			     chip_state_req_work.work);
++	struct kvaser_usb_net_priv *priv = leaf->net;
++
++	kvaser_usb_leaf_simple_cmd_async(priv, CMD_GET_CHIP_STATE);
 +}
 +
-+static int mark_chain_precision_stack_frame(struct bpf_verifier_env *env, int frame, int spi)
-+{
-+	return __mark_chain_precision(env, frame, -1, spi);
- }
+ static void
+ kvaser_usb_leaf_rx_error_update_can_state(struct kvaser_usb_net_priv *priv,
+ 					const struct kvaser_usb_err_summary *es,
+@@ -1014,6 +1032,7 @@ static void kvaser_usb_leaf_rx_error(const struct kvaser_usb *dev,
+ 	struct sk_buff *skb;
+ 	struct net_device_stats *stats;
+ 	struct kvaser_usb_net_priv *priv;
++	struct kvaser_usb_net_leaf_priv *leaf;
+ 	enum can_state old_state, new_state;
  
- static bool is_spillable_regtype(enum bpf_reg_type type)
-@@ -11702,34 +11707,36 @@ static int propagate_precision(struct bpf_verifier_env *env,
- {
- 	struct bpf_reg_state *state_reg;
- 	struct bpf_func_state *state;
--	int i, err = 0;
-+	int i, err = 0, fr;
- 
--	state = old->frame[old->curframe];
--	state_reg = state->regs;
--	for (i = 0; i < BPF_REG_FP; i++, state_reg++) {
--		if (state_reg->type != SCALAR_VALUE ||
--		    !state_reg->precise)
--			continue;
--		if (env->log.level & BPF_LOG_LEVEL2)
--			verbose(env, "propagating r%d\n", i);
--		err = mark_chain_precision(env, i);
--		if (err < 0)
--			return err;
--	}
-+	for (fr = old->curframe; fr >= 0; fr--) {
-+		state = old->frame[fr];
-+		state_reg = state->regs;
-+		for (i = 0; i < BPF_REG_FP; i++, state_reg++) {
-+			if (state_reg->type != SCALAR_VALUE ||
-+			    !state_reg->precise)
-+				continue;
-+			if (env->log.level & BPF_LOG_LEVEL2)
-+				verbose(env, "frame %d: propagating r%d\n", i, fr);
-+			err = mark_chain_precision_frame(env, fr, i);
-+			if (err < 0)
-+				return err;
-+		}
- 
--	for (i = 0; i < state->allocated_stack / BPF_REG_SIZE; i++) {
--		if (!is_spilled_reg(&state->stack[i]))
--			continue;
--		state_reg = &state->stack[i].spilled_ptr;
--		if (state_reg->type != SCALAR_VALUE ||
--		    !state_reg->precise)
--			continue;
--		if (env->log.level & BPF_LOG_LEVEL2)
--			verbose(env, "propagating fp%d\n",
--				(-i - 1) * BPF_REG_SIZE);
--		err = mark_chain_precision_stack(env, i);
--		if (err < 0)
--			return err;
-+		for (i = 0; i < state->allocated_stack / BPF_REG_SIZE; i++) {
-+			if (!is_spilled_reg(&state->stack[i]))
-+				continue;
-+			state_reg = &state->stack[i].spilled_ptr;
-+			if (state_reg->type != SCALAR_VALUE ||
-+			    !state_reg->precise)
-+				continue;
-+			if (env->log.level & BPF_LOG_LEVEL2)
-+				verbose(env, "frame %d: propagating fp%d\n",
-+					(-i - 1) * BPF_REG_SIZE, fr);
-+			err = mark_chain_precision_stack_frame(env, fr, i);
-+			if (err < 0)
-+				return err;
-+		}
+ 	if (es->channel >= dev->nchannels) {
+@@ -1023,6 +1042,7 @@ static void kvaser_usb_leaf_rx_error(const struct kvaser_usb *dev,
  	}
+ 
+ 	priv = dev->nets[es->channel];
++	leaf = priv->sub_priv;
+ 	stats = &priv->netdev->stats;
+ 
+ 	/* Update all of the CAN interface's state and error counters before
+@@ -1039,6 +1059,14 @@ static void kvaser_usb_leaf_rx_error(const struct kvaser_usb *dev,
+ 	kvaser_usb_leaf_rx_error_update_can_state(priv, es, &tmp_cf);
+ 	new_state = priv->can.state;
+ 
++	/* If there are errors, request status updates periodically as we do
++	 * not get automatic notifications of improved state.
++	 */
++	if (new_state < CAN_STATE_BUS_OFF &&
++	    (es->rxerr || es->txerr || new_state == CAN_STATE_ERROR_PASSIVE))
++		schedule_delayed_work(&leaf->chip_state_req_work,
++				      msecs_to_jiffies(500));
++
+ 	skb = alloc_can_err_skb(priv->netdev, &cf);
+ 	if (!skb) {
+ 		stats->rx_dropped++;
+@@ -1573,10 +1601,13 @@ static int kvaser_usb_leaf_start_chip(struct kvaser_usb_net_priv *priv)
+ 
+ static int kvaser_usb_leaf_stop_chip(struct kvaser_usb_net_priv *priv)
+ {
++	struct kvaser_usb_net_leaf_priv *leaf = priv->sub_priv;
+ 	int err;
+ 
+ 	reinit_completion(&priv->stop_comp);
+ 
++	cancel_delayed_work(&leaf->chip_state_req_work);
++
+ 	err = kvaser_usb_leaf_send_simple_cmd(priv->dev, CMD_STOP_CHIP,
+ 					      priv->channel);
+ 	if (err)
+@@ -1623,6 +1654,31 @@ static int kvaser_usb_leaf_init_card(struct kvaser_usb *dev)
  	return 0;
  }
+ 
++static int kvaser_usb_leaf_init_channel(struct kvaser_usb_net_priv *priv)
++{
++	struct kvaser_usb_net_leaf_priv *leaf;
++
++	leaf = devm_kzalloc(&priv->dev->intf->dev, sizeof(*leaf), GFP_KERNEL);
++	if (!leaf)
++		return -ENOMEM;
++
++	leaf->net = priv;
++	INIT_DELAYED_WORK(&leaf->chip_state_req_work,
++			  kvaser_usb_leaf_chip_state_req_work);
++
++	priv->sub_priv = leaf;
++
++	return 0;
++}
++
++static void kvaser_usb_leaf_remove_channel(struct kvaser_usb_net_priv *priv)
++{
++	struct kvaser_usb_net_leaf_priv *leaf = priv->sub_priv;
++
++	if (leaf)
++		cancel_delayed_work_sync(&leaf->chip_state_req_work);
++}
++
+ static int kvaser_usb_leaf_set_bittiming(struct net_device *netdev)
+ {
+ 	struct kvaser_usb_net_priv *priv = netdev_priv(netdev);
+@@ -1720,6 +1776,8 @@ const struct kvaser_usb_dev_ops kvaser_usb_leaf_dev_ops = {
+ 	.dev_get_berr_counter = kvaser_usb_leaf_get_berr_counter,
+ 	.dev_setup_endpoints = kvaser_usb_leaf_setup_endpoints,
+ 	.dev_init_card = kvaser_usb_leaf_init_card,
++	.dev_init_channel = kvaser_usb_leaf_init_channel,
++	.dev_remove_channel = kvaser_usb_leaf_remove_channel,
+ 	.dev_get_software_info = kvaser_usb_leaf_get_software_info,
+ 	.dev_get_software_details = NULL,
+ 	.dev_get_card_info = kvaser_usb_leaf_get_card_info,
 -- 
 2.35.1
 
