@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 112E41C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:05:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89BA5C433F0;
-	Wed, 28 Dec 2022 16:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAF571C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:05:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31883C433D2;
+	Wed, 28 Dec 2022 16:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243554;
-	bh=srj6Gp5QUbnHnyG7z5QFgJqp+ysqnVibefccxYqMc4A=;
+	s=korg; t=1672243557;
+	bh=JYNMgYr1uiS2PGSjM4RIyuhqaeX8EwuHEPm5BgNNkrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DS2ayjCZ7AiyF1lqacvxoVvDfwou8MIHmLw9Xc0zp8WYsmbagOFIA8bOSGfLsz3B3
-	 0EamZHr0rg8w2nNKauoLnVbEo3mXQIQ0FpOU9WOL949leUEfmuOWkxT8q7rZK2Pyet
-	 cXkzbSRyvMpbBe1a7b/AVoBGgKUOnI5OFPonPQ3c=
+	b=SrUwa0saUVmgjYOJx0KaI0D5fqlIOgY/VK4XO/F0rE6LKab3gTdgQKUy711ivXTDW
+	 jL4QYKwzNmVSiyRLDiqOl8rmAAX1iEEb8YK5gJnM/qrg5UO3RJxSbHhmGG8BX89MnR
+	 J17nfnmGsX0kd2vg7kvhASqMTRcQ1ldQAKnVgrMI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0547/1073] Bluetooth: hci_bcsp: dont call kfree_skb() under spin_lock_irqsave()
-Date: Wed, 28 Dec 2022 15:35:35 +0100
-Message-Id: <20221228144342.912568839@linuxfoundation.org>
+Subject: [PATCH 6.1 0512/1146] memstick/ms_block: Add check for alloc_ordered_workqueue
+Date: Wed, 28 Dec 2022 15:34:11 +0100
+Message-Id: <20221228144344.081946584@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 7b503e339c1a80bf0051ec2d19c3bc777014ac61 ]
+[ Upstream commit 4f431a047a5c8698ed4b67e2760cfbeb5fffb69d ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with interrupts being disabled. So replace kfree_skb()
-with dev_kfree_skb_irq() under spin_lock_irqsave().
+As the alloc_ordered_workqueue may return NULL pointer, it should be better
+to add check for the return value. Moreover, the msb->io_queue should be
+freed if error occurs later.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 0ab30494bc4f ("memstick: add support for legacy memorysticks")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20221126012558.34374-1-jiasheng@iscas.ac.cn
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_bcsp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/memstick/core/ms_block.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/hci_bcsp.c b/drivers/bluetooth/hci_bcsp.c
-index cf4a56095817..8055f63603f4 100644
---- a/drivers/bluetooth/hci_bcsp.c
-+++ b/drivers/bluetooth/hci_bcsp.c
-@@ -378,7 +378,7 @@ static void bcsp_pkt_cull(struct bcsp_struct *bcsp)
- 		i++;
+diff --git a/drivers/memstick/core/ms_block.c b/drivers/memstick/core/ms_block.c
+index ba8414519515..04115cd92433 100644
+--- a/drivers/memstick/core/ms_block.c
++++ b/drivers/memstick/core/ms_block.c
+@@ -2116,6 +2116,11 @@ static int msb_init_disk(struct memstick_dev *card)
+ 	dbg("Set total disk size to %lu sectors", capacity);
  
- 		__skb_unlink(skb, &bcsp->unack);
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
- 	}
+ 	msb->io_queue = alloc_ordered_workqueue("ms_block", WQ_MEM_RECLAIM);
++	if (!msb->io_queue) {
++		rc = -ENOMEM;
++		goto out_cleanup_disk;
++	}
++
+ 	INIT_WORK(&msb->io_work, msb_io_work);
+ 	sg_init_table(msb->prealloc_sg, MS_BLOCK_MAX_SEGS+1);
  
- 	if (skb_queue_empty(&bcsp->unack))
+@@ -2125,10 +2130,12 @@ static int msb_init_disk(struct memstick_dev *card)
+ 	msb_start(card);
+ 	rc = device_add_disk(&card->dev, msb->disk, NULL);
+ 	if (rc)
+-		goto out_cleanup_disk;
++		goto out_destroy_workqueue;
+ 	dbg("Disk added");
+ 	return 0;
+ 
++out_destroy_workqueue:
++	destroy_workqueue(msb->io_queue);
+ out_cleanup_disk:
+ 	put_disk(msb->disk);
+ out_free_tag_set:
 -- 
 2.35.1
 
