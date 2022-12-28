@@ -1,30 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9DBD1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3773DC43392;
-	Wed, 28 Dec 2022 16:23:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675A21C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C7AC433EF;
+	Wed, 28 Dec 2022 16:23:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244614;
-	bh=Fzen1X2nxP3bIyKqMjdY6S9lKbA1bv5WP00OtNn+BYY=;
+	s=korg; t=1672244617;
+	bh=uAQ25lT/y5CE0rqvxmfHtuHfoaWivQVoi0JYOmOjNUA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eV+ZmdWeG1LRcgu8Sf9fHFmuh7kATjGGM0kryYfoELaZ2RhnT3mVxrVcUfuiFCMBd
-	 zmXxb1vouLI2esmGKppl3XVhahbpY9OkqOinSissi8QnHVSdZBNjseLsv6/k+4maAW
-	 KNugqx+XzzqJzS8RjO7uEYPZ2LY1y4BX/qXlkZas=
+	b=F6cIKphrWMreknLrh2Mkm2WQRk6BEUvwn5lUq9YL6brlCBH/v9AmZB0kr4IcgOXcA
+	 Aky+E6zGisqxzA+mp0L6Qg66wA74n69e2Lb5tF2/pyTByfSfSVca6rdOaKEOPsEk6C
+	 z3Cg359RdeDxQomx4sy5hq1ecWpiTurnxnaZFYf4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Peter <sven@svenpeter.dev>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Leo Yan <leo.yan@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	bpf@vger.kernel.org,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0703/1146] usb: typec: tipd: Fix typec_unregister_port error paths
-Date: Wed, 28 Dec 2022 15:37:22 +0100
-Message-Id: <20221228144349.240705853@linuxfoundation.org>
+Subject: [PATCH 6.0 0742/1073] perf trace: Return error if a system call doesnt exist
+Date: Wed, 28 Dec 2022 15:38:50 +0100
+Message-Id: <20221228144348.177160426@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,56 +43,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Peter <sven@svenpeter.dev>
+From: Leo Yan <leo.yan@linaro.org>
 
-[ Upstream commit 4c8f27ba9ede0118cac9d775204f9b0ecdb877b0 ]
+[ Upstream commit d4223e1776c30b2ce8d0e6eaadcbf696e60fca3c ]
 
-typec_unregister_port is only called for some error paths after
-typec_register_port was successful. Ensure it's called in all
-cases.
+When a system call is not detected, the reason is either because the
+system call ID is out of scope or failure to find the corresponding path
+in the sysfs, trace__read_syscall_info() returns zero.  Finally, without
+returning an error value it introduces confusion for the caller.
 
-Fixes: 92440202a880 ("usb: typec: tipd: Only update power status on IRQ")
-Signed-off-by: Sven Peter <sven@svenpeter.dev>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20221114174449.34634-3-sven@svenpeter.dev
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch lets the function trace__read_syscall_info() to return
+-EEXIST when a system call doesn't exist.
+
+Fixes: b8b1033fcaa091d8 ("perf trace: Mark syscall ids that are not allocated to avoid unnecessary error messages")
+Signed-off-by: Leo Yan <leo.yan@linaro.org>
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: bpf@vger.kernel.org
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20221121075237.127706-3-leo.yan@linaro.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/tipd/core.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ tools/perf/builtin-trace.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/typec/tipd/core.c b/drivers/usb/typec/tipd/core.c
-index 59059310ba74..195c9c16f817 100644
---- a/drivers/usb/typec/tipd/core.c
-+++ b/drivers/usb/typec/tipd/core.c
-@@ -826,7 +826,7 @@ static int tps6598x_probe(struct i2c_client *client)
- 		ret = tps6598x_read16(tps, TPS_REG_POWER_STATUS, &tps->pwr_status);
- 		if (ret < 0) {
- 			dev_err(tps->dev, "failed to read power status: %d\n", ret);
--			goto err_role_put;
-+			goto err_unregister_port;
- 		}
- 		ret = tps6598x_connect(tps, status);
- 		if (ret)
-@@ -839,8 +839,7 @@ static int tps6598x_probe(struct i2c_client *client)
- 					dev_name(&client->dev), tps);
- 	if (ret) {
- 		tps6598x_disconnect(tps, 0);
--		typec_unregister_port(tps->port);
--		goto err_role_put;
-+		goto err_unregister_port;
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index 0bd9d01c0df9..cf3b6ca4af96 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -1794,11 +1794,11 @@ static int trace__read_syscall_info(struct trace *trace, int id)
+ #endif
+ 	sc = trace->syscalls.table + id;
+ 	if (sc->nonexistent)
+-		return 0;
++		return -EEXIST;
+ 
+ 	if (name == NULL) {
+ 		sc->nonexistent = true;
+-		return 0;
++		return -EEXIST;
  	}
  
- 	i2c_set_clientdata(client, tps);
-@@ -848,6 +847,8 @@ static int tps6598x_probe(struct i2c_client *client)
- 
- 	return 0;
- 
-+err_unregister_port:
-+	typec_unregister_port(tps->port);
- err_role_put:
- 	usb_role_switch_put(tps->role_sw);
- err_fwnode_put:
+ 	sc->name = name;
 -- 
 2.35.1
 
