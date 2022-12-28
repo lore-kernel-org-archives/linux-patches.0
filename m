@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76A6B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:44:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9D58C433D2;
-	Wed, 28 Dec 2022 15:44:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3975A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:44:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B252AC433D2;
+	Wed, 28 Dec 2022 15:44:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242283;
-	bh=DKJRdtPNrTkiw0/j7ZSX+2H5Pv6CQ1nLG9LHau3f/eY=;
+	s=korg; t=1672242286;
+	bh=/svUdjy+2Bu2DEreRcgZbU5kaBlZnKEoLdUFwLpB3b8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fAfvIzIX4kQqZlZ12+3WFbe1xw9Rgub9mpwe1YkylQPKilLvZVwFG3E8US8Qkm7qY
-	 LtXuz8YUjhN1DlJOhP6pWwfHM8jpPfedf6J8UxleaB7eUh9PkFiUiqnVN47C91txoq
-	 89LjKLtqrKFTvJrIslfZLAQXM/1xIHXbsR8zWwZw=
+	b=HkJ8KoorLcN5V6wVATMtvbX3bO6wVm/ltvBpT1YfEV7dvXCgEJaQVPsFiU/DBA6Rv
+	 WA0MTgacuGlpQ/Kx3NrmNaQLrbQ0zMgGOLJylyeR0cfleD/z9fNFdrE5oC1zOGGjqd
+	 /3TK4MO9KzrblrveKgQESbxqVKqa3GZMnKe3qaNs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0350/1146] ASoC: amd: acp: Fix possible UAF in acp_dma_open
-Date: Wed, 28 Dec 2022 15:31:29 +0100
-Message-Id: <20221228144339.670673301@linuxfoundation.org>
+Subject: [PATCH 5.15 584/731] mISDN: hfcsusb: dont call dev_kfree_skb/kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:41:31 +0100
+Message-Id: <20221228144313.476449820@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,57 +36,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 3420fdb8ae99f0a08d78d2b80f42a71971cf478d ]
+[ Upstream commit ddc9648db162eee556edd5222d2808fe33730203 ]
 
-Smatch report warning as follows:
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-sound/soc/amd/acp/acp-platform.c:199 acp_dma_open() warn:
-  '&stream->list' not removed from list
+It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
+The difference between them is free reason, dev_kfree_skb_irq() means
+the SKB is dropped in error and dev_consume_skb_irq() means the SKB
+is consumed in normal.
 
-If snd_pcm_hw_constraint_integer() fails in acp_dma_open(),
-stream will be freed, but stream->list will not be removed from
-adata->stream_list, then list traversal may cause UAF.
+skb_queue_purge() is called under spin_lock_irqsave() in hfcusb_l2l1D(),
+kfree_skb() is called in it, to fix this, use skb_queue_splice_init()
+to move the dch->squeue to a free queue, also enqueue the tx_skb and
+rx_skb, at last calling __skb_queue_purge() to free the SKBs afer unlock.
 
-Fix by adding the newly allocated stream to the list once it's fully
-initialised.
+In tx_iso_complete(), dev_kfree_skb() is called to consume the transmitted
+SKB, so replace it with dev_consume_skb_irq().
 
-Fixes: 7929985cfe36 ("ASoC: amd: acp: Initialize list to store acp_stream during pcm_open")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://lore.kernel.org/r/20221118030056.3135960-1-cuigaosheng1@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 69f52adb2d53 ("mISDN: Add HFC USB driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/acp/acp-platform.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/isdn/hardware/mISDN/hfcsusb.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/sound/soc/amd/acp/acp-platform.c b/sound/soc/amd/acp/acp-platform.c
-index 85a81add4ef9..447612a7a762 100644
---- a/sound/soc/amd/acp/acp-platform.c
-+++ b/sound/soc/amd/acp/acp-platform.c
-@@ -184,10 +184,6 @@ static int acp_dma_open(struct snd_soc_component *component, struct snd_pcm_subs
+diff --git a/drivers/isdn/hardware/mISDN/hfcsusb.c b/drivers/isdn/hardware/mISDN/hfcsusb.c
+index cd5642cef01f..e8b37bd5e34a 100644
+--- a/drivers/isdn/hardware/mISDN/hfcsusb.c
++++ b/drivers/isdn/hardware/mISDN/hfcsusb.c
+@@ -326,20 +326,24 @@ hfcusb_l2l1D(struct mISDNchannel *ch, struct sk_buff *skb)
+ 		test_and_clear_bit(FLG_L2_ACTIVATED, &dch->Flags);
  
- 	stream->substream = substream;
- 
--	spin_lock_irq(&adata->acp_lock);
--	list_add_tail(&stream->list, &adata->stream_list);
--	spin_unlock_irq(&adata->acp_lock);
--
- 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
- 		runtime->hw = acp_pcm_hardware_playback;
- 	else
-@@ -203,6 +199,10 @@ static int acp_dma_open(struct snd_soc_component *component, struct snd_pcm_subs
- 
- 	writel(1, ACP_EXTERNAL_INTR_ENB(adata));
- 
-+	spin_lock_irq(&adata->acp_lock);
-+	list_add_tail(&stream->list, &adata->stream_list);
-+	spin_unlock_irq(&adata->acp_lock);
+ 		if (hw->protocol == ISDN_P_NT_S0) {
++			struct sk_buff_head free_queue;
 +
- 	return ret;
- }
++			__skb_queue_head_init(&free_queue);
+ 			hfcsusb_ph_command(hw, HFC_L1_DEACTIVATE_NT);
+ 			spin_lock_irqsave(&hw->lock, flags);
+-			skb_queue_purge(&dch->squeue);
++			skb_queue_splice_init(&dch->squeue, &free_queue);
+ 			if (dch->tx_skb) {
+-				dev_kfree_skb(dch->tx_skb);
++				__skb_queue_tail(&free_queue, dch->tx_skb);
+ 				dch->tx_skb = NULL;
+ 			}
+ 			dch->tx_idx = 0;
+ 			if (dch->rx_skb) {
+-				dev_kfree_skb(dch->rx_skb);
++				__skb_queue_tail(&free_queue, dch->rx_skb);
+ 				dch->rx_skb = NULL;
+ 			}
+ 			test_and_clear_bit(FLG_TX_BUSY, &dch->Flags);
+ 			spin_unlock_irqrestore(&hw->lock, flags);
++			__skb_queue_purge(&free_queue);
+ #ifdef FIXME
+ 			if (test_and_clear_bit(FLG_L1_BUSY, &dch->Flags))
+ 				dchannel_sched_event(&hc->dch, D_CLEARBUSY);
+@@ -1330,7 +1334,7 @@ tx_iso_complete(struct urb *urb)
+ 					printk("\n");
+ 				}
  
+-				dev_kfree_skb(tx_skb);
++				dev_consume_skb_irq(tx_skb);
+ 				tx_skb = NULL;
+ 				if (fifo->dch && get_next_dframe(fifo->dch))
+ 					tx_skb = fifo->dch->tx_skb;
 -- 
 2.35.1
 
