@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 059341C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D24EC433EF;
-	Wed, 28 Dec 2022 16:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBF31C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:25:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32695C433EF;
+	Wed, 28 Dec 2022 16:25:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244697;
-	bh=WanpE9m9zFHmVT5JVV7xlaXvmG6gaVQFTxMqa4NNWlM=;
+	s=korg; t=1672244700;
+	bh=qNLVgOCpTLN32DhSLdvueH8qqG8sjzSc6ai5ptu6FbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C7N55krqipxxstEg5nhSha+ryOa+76/Eo+Gfo9FjP9W1pO3XPbqcaYBta78MZJc47
-	 TuS9sBqx0G0V9qEjFWhr04XYPVCqScd6jdIT7rYzx33WJRZ3xdGIxlteFkNbYc7JoG
-	 uwWmlACtOXGSYG4aO2muI8VGXuoBd6EVRs2vUIH4=
+	b=rEMLE8KG2JM9nGOg/u30kuuDoDc3/KYxcKk3FWzJpq9lRs9k6rnArRkpwmv7lXcom
+	 WjpWZbEPby5IMB3xxtPQbbSSg7pfpNGvSpPUyprvM8UVVs1us85zogeGy8TJEFufwB
+	 BsxH9uq/ko5zYZf7SbeLfcguQusrOoJQjGNlwSwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Frederic Barrat <fbarrat@linux.ibm.com>,
-	Andrew Donnellan <ajd@linux.ibm.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Bernard Metzler <bmt@zurich.ibm.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0721/1146] cxl: fix possible null-ptr-deref in cxl_pci_init_afu|adapter()
-Date: Wed, 28 Dec 2022 15:37:40 +0100
-Message-Id: <20221228144349.729813099@linuxfoundation.org>
+Subject: [PATCH 6.0 0759/1073] RDMA/siw: Fix pointer cast warning
+Date: Wed, 28 Dec 2022 15:39:07 +0100
+Message-Id: <20221228144348.631979433@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,92 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 02cd3032b154fa02fdf90e7467abaeed889330b2 ]
+[ Upstream commit 5244ca88671a1981ceec09c5c8809f003e6a62aa ]
 
-If device_register() fails in cxl_pci_afu|adapter(), the device
-is not added, device_unregister() can not be called in the error
-path, otherwise it will cause a null-ptr-deref because of removing
-not added device.
+The previous build fix left a remaining issue in configurations with
+64-bit dma_addr_t on 32-bit architectures:
 
-As comment of device_register() says, it should use put_device() to give
-up the reference in the error path. So split device_unregister() into
-device_del() and put_device(), then goes to put dev when register fails.
+drivers/infiniband/sw/siw/siw_qp_tx.c: In function 'siw_get_pblpage':
+drivers/infiniband/sw/siw/siw_qp_tx.c:32:37: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+   32 |                 return virt_to_page((void *)paddr);
+      |                                     ^
 
-Fixes: f204e0b8cedd ("cxl: Driver code for powernv PCIe based cards for userspace access")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Acked-by: Frederic Barrat <fbarrat@linux.ibm.com>
-Acked-by: Andrew Donnellan <ajd@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221111145440.2426970-2-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Use the same double cast here that the driver uses elsewhere to convert
+between dma_addr_t and void*.
+
+Fixes: 0d1b756acf60 ("RDMA/siw: Pass a pointer to virt_to_page()")
+Link: https://lore.kernel.org/r/20221215170347.2612403-1-arnd@kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Bernard Metzler <bmt@zurich.ibm.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/cxl/pci.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/infiniband/sw/siw/siw_qp_tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/misc/cxl/pci.c b/drivers/misc/cxl/pci.c
-index 3de0aea62ade..6d495d641c95 100644
---- a/drivers/misc/cxl/pci.c
-+++ b/drivers/misc/cxl/pci.c
-@@ -1164,10 +1164,10 @@ static int pci_init_afu(struct cxl *adapter, int slice, struct pci_dev *dev)
- 	 * if it returns an error!
- 	 */
- 	if ((rc = cxl_register_afu(afu)))
--		goto err_put1;
-+		goto err_put_dev;
+diff --git a/drivers/infiniband/sw/siw/siw_qp_tx.c b/drivers/infiniband/sw/siw/siw_qp_tx.c
+index 7d47b521070b..05052b49107f 100644
+--- a/drivers/infiniband/sw/siw/siw_qp_tx.c
++++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
+@@ -29,7 +29,7 @@ static struct page *siw_get_pblpage(struct siw_mem *mem, u64 addr, int *idx)
+ 	dma_addr_t paddr = siw_pbl_get_buffer(pbl, offset, NULL, idx);
  
- 	if ((rc = cxl_sysfs_afu_add(afu)))
--		goto err_put1;
-+		goto err_del_dev;
+ 	if (paddr)
+-		return virt_to_page((void *)paddr);
++		return virt_to_page((void *)(uintptr_t)paddr);
  
- 	adapter->afu[afu->slice] = afu;
- 
-@@ -1176,10 +1176,12 @@ static int pci_init_afu(struct cxl *adapter, int slice, struct pci_dev *dev)
- 
- 	return 0;
- 
--err_put1:
-+err_del_dev:
-+	device_del(&afu->dev);
-+err_put_dev:
- 	pci_deconfigure_afu(afu);
- 	cxl_debugfs_afu_remove(afu);
--	device_unregister(&afu->dev);
-+	put_device(&afu->dev);
- 	return rc;
- 
- err_free_native:
-@@ -1667,23 +1669,25 @@ static struct cxl *cxl_pci_init_adapter(struct pci_dev *dev)
- 	 * even if it returns an error!
- 	 */
- 	if ((rc = cxl_register_adapter(adapter)))
--		goto err_put1;
-+		goto err_put_dev;
- 
- 	if ((rc = cxl_sysfs_adapter_add(adapter)))
--		goto err_put1;
-+		goto err_del_dev;
- 
- 	/* Release the context lock as adapter is configured */
- 	cxl_adapter_context_unlock(adapter);
- 
- 	return adapter;
- 
--err_put1:
-+err_del_dev:
-+	device_del(&adapter->dev);
-+err_put_dev:
- 	/* This should mirror cxl_remove_adapter, except without the
- 	 * sysfs parts
- 	 */
- 	cxl_debugfs_adapter_remove(adapter);
- 	cxl_deconfigure_adapter(adapter);
--	device_unregister(&adapter->dev);
-+	put_device(&adapter->dev);
- 	return ERR_PTR(rc);
- 
- err_release:
+ 	return NULL;
+ }
 -- 
 2.35.1
 
