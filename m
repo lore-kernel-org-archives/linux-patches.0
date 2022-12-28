@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD491863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0717C433EF;
-	Wed, 28 Dec 2022 15:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A251863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:29:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A702C433D2;
+	Wed, 28 Dec 2022 15:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241387;
-	bh=XGUY2vKQlHbct94xX1+yTxtC0goDttCGVV4NX+By5rY=;
+	s=korg; t=1672241389;
+	bh=TYzj7agvMaacvfHIqG0qbfuuGfwibsm6BCwUUx6GH/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CWBK6fsLs11VBkHX1evwPPzJ36w3rqImjiQK/Xh9D8PMG6SfaASbATedxMP2fjGZ5
-	 t7tuAooSBm28NauyBUga+pte4b+ObQvIrRVrw+3q1OYKmN6TiibwJTV6t5/CUw+AVg
-	 Y6oHnA/bMwwZ/r+lSUc+hybniR6qN1Gyd5StrinQ=
+	b=VOm8SsRj36rhHc4iSgxFq1ZS20bmfk1UtG75k1jAmO4yt+9YdzQn1qQ/d8SzjfOWo
+	 VncLh1+EoAFXKBnr9LZY14AQWXXs56Jj+NTvrU4aaF7Otm5ZGpB6/AOdEvl14JANCf
+	 AROHLOdwSltCwJxv7oyP9adjNI/TD7FAwN61m5Nc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Lars-Peter Clausen <lars@metafoo.de>,
-	"Song Bao Hua (Barry Song)" <song.bao.hua@hisilicon.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 476/731] iio:imu:adis: Move exports into IIO_ADISLIB namespace
-Date: Wed, 28 Dec 2022 15:39:43 +0100
-Message-Id: <20221228144310.350313045@linuxfoundation.org>
+Subject: [PATCH 6.0 0278/1073] drm/msm/dsi: Migrate to drm_dsc_compute_rc_parameters()
+Date: Wed, 28 Dec 2022 15:31:06 +0100
+Message-Id: <20221228144335.571947961@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,252 +36,138 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit 6c9304d6af122f9afea41885ad82ed627e9442a8 ]
+[ Upstream commit c3a1aabce2d4087255de90100c3dad492e7d925c ]
 
-In order to avoid unneessary pollution of the global symbol namespace
-move the common/library functions into a specific namespace and import
-that into the various specific device drivers that use them.
+As per the FIXME this code is entirely duplicate with what is already
+provided inside drm_dsc_compute_rc_parameters(), supposedly because that
+function was yielding "incorrect" results while in reality the panel
+driver(s?) used for testing were providing incorrect parameters.
 
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Lars-Peter Clausen <lars@metafoo.de>
-Cc: Song Bao Hua (Barry Song) <song.bao.hua@hisilicon.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Link: https://lore.kernel.org/r/20220130205701.334592-9-jic23@kernel.org
-Stable-dep-of: 99c05e4283a1 ("iio: adis: add '__adis_enable_irq()' implementation")
+For example, this code from downstream assumed dsc->bits_per_pixel to
+contain an integer value, whereas the upstream drm_dsc_config struct
+stores it with 4 fractional bits.  drm_dsc_compute_rc_parameters()
+already accounts for this feat while the panel driver used for testing
+[1] wasn't, hence making drm_dsc_compute_rc_parameters() seem like it
+was returning an incorrect result.
+Other users of dsc->bits_per_pixel inside dsi_populate_dsc_params() also
+treat it in the same erroneous way, and will be addressed in a separate
+patch.
+In the end, using drm_dsc_compute_rc_parameters() spares both a lot of
+duplicate code and erratic behaviour.
+
+[1]: https://git.linaro.org/people/vinod.koul/kernel.git/commit/?h=topic/pixel3_5.18-rc1&id=1d7d98ad564f1ec69e7525e07418918d90f247a1
+
+Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/508939/
+Link: https://lore.kernel.org/r/20221026182824.876933-7-marijn.suijten@somainline.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/accel/adis16201.c         |  1 +
- drivers/iio/accel/adis16209.c         |  1 +
- drivers/iio/gyro/adis16136.c          |  1 +
- drivers/iio/gyro/adis16260.c          |  1 +
- drivers/iio/imu/adis.c                | 20 ++++++++++----------
- drivers/iio/imu/adis16400.c           |  1 +
- drivers/iio/imu/adis16460.c           |  1 +
- drivers/iio/imu/adis16475.c           |  1 +
- drivers/iio/imu/adis16480.c           |  1 +
- drivers/iio/imu/adis_buffer.c         |  4 ++--
- drivers/iio/imu/adis_trigger.c        |  2 +-
- drivers/staging/iio/accel/adis16203.c |  1 +
- drivers/staging/iio/accel/adis16240.c |  1 +
- 13 files changed, 23 insertions(+), 13 deletions(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 64 +++---------------------------
+ 1 file changed, 6 insertions(+), 58 deletions(-)
 
-diff --git a/drivers/iio/accel/adis16201.c b/drivers/iio/accel/adis16201.c
-index 7a434e2884d4..dfb8e2e5bdf5 100644
---- a/drivers/iio/accel/adis16201.c
-+++ b/drivers/iio/accel/adis16201.c
-@@ -300,3 +300,4 @@ MODULE_AUTHOR("Barry Song <21cnbao@gmail.com>");
- MODULE_DESCRIPTION("Analog Devices ADIS16201 Dual-Axis Digital Inclinometer and Accelerometer");
- MODULE_LICENSE("GPL v2");
- MODULE_ALIAS("spi:adis16201");
-+MODULE_IMPORT_NS(IIO_ADISLIB);
-diff --git a/drivers/iio/accel/adis16209.c b/drivers/iio/accel/adis16209.c
-index ac08e866d612..5a9c6e2296f1 100644
---- a/drivers/iio/accel/adis16209.c
-+++ b/drivers/iio/accel/adis16209.c
-@@ -310,3 +310,4 @@ MODULE_AUTHOR("Barry Song <21cnbao@gmail.com>");
- MODULE_DESCRIPTION("Analog Devices ADIS16209 Dual-Axis Digital Inclinometer and Accelerometer");
- MODULE_LICENSE("GPL v2");
- MODULE_ALIAS("spi:adis16209");
-+MODULE_IMPORT_NS(IIO_ADISLIB);
-diff --git a/drivers/iio/gyro/adis16136.c b/drivers/iio/gyro/adis16136.c
-index 36879f01e28c..71295709f2b9 100644
---- a/drivers/iio/gyro/adis16136.c
-+++ b/drivers/iio/gyro/adis16136.c
-@@ -591,3 +591,4 @@ module_spi_driver(adis16136_driver);
- MODULE_AUTHOR("Lars-Peter Clausen <lars@metafoo.de>");
- MODULE_DESCRIPTION("Analog Devices ADIS16133/ADIS16135/ADIS16136 gyroscope driver");
- MODULE_LICENSE("GPL v2");
-+MODULE_IMPORT_NS(IIO_ADISLIB);
-diff --git a/drivers/iio/gyro/adis16260.c b/drivers/iio/gyro/adis16260.c
-index 66b6b7bd5e1b..eaf57bd339ed 100644
---- a/drivers/iio/gyro/adis16260.c
-+++ b/drivers/iio/gyro/adis16260.c
-@@ -433,3 +433,4 @@ module_spi_driver(adis16260_driver);
- MODULE_AUTHOR("Barry Song <21cnbao@gmail.com>");
- MODULE_DESCRIPTION("Analog Devices ADIS16260/5 Digital Gyroscope Sensor");
- MODULE_LICENSE("GPL v2");
-+MODULE_IMPORT_NS(IIO_ADISLIB);
-diff --git a/drivers/iio/imu/adis.c b/drivers/iio/imu/adis.c
-index 638957001653..f7fcfd04f659 100644
---- a/drivers/iio/imu/adis.c
-+++ b/drivers/iio/imu/adis.c
-@@ -121,7 +121,7 @@ int __adis_write_reg(struct adis *adis, unsigned int reg, unsigned int value,
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index 5e5eb1a10f94..0c80d0797a6a 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -21,6 +21,7 @@
  
- 	return ret;
- }
--EXPORT_SYMBOL_GPL(__adis_write_reg);
-+EXPORT_SYMBOL_NS_GPL(__adis_write_reg, IIO_ADISLIB);
+ #include <video/mipi_display.h>
  
- /**
-  * __adis_read_reg() - read N bytes from register (unlocked version)
-@@ -218,7 +218,7 @@ int __adis_read_reg(struct adis *adis, unsigned int reg, unsigned int *val,
++#include <drm/display/drm_dsc_helper.h>
+ #include <drm/drm_of.h>
  
- 	return ret;
- }
--EXPORT_SYMBOL_GPL(__adis_read_reg);
-+EXPORT_SYMBOL_NS_GPL(__adis_read_reg, IIO_ADISLIB);
- /**
-  * __adis_update_bits_base() - ADIS Update bits function - Unlocked version
-  * @adis: The adis device
-@@ -243,7 +243,7 @@ int __adis_update_bits_base(struct adis *adis, unsigned int reg, const u32 mask,
+ #include "dsi.h"
+@@ -1836,14 +1837,6 @@ static char bpg_offset[DSC_NUM_BUF_RANGES] = {
  
- 	return __adis_write_reg(adis, reg, __val, size);
- }
--EXPORT_SYMBOL_GPL(__adis_update_bits_base);
-+EXPORT_SYMBOL_NS_GPL(__adis_update_bits_base, IIO_ADISLIB);
- 
- #ifdef CONFIG_DEBUG_FS
- 
-@@ -265,7 +265,7 @@ int adis_debugfs_reg_access(struct iio_dev *indio_dev, unsigned int reg,
- 
- 	return adis_write_reg_16(adis, reg, writeval);
- }
--EXPORT_SYMBOL(adis_debugfs_reg_access);
-+EXPORT_SYMBOL_NS(adis_debugfs_reg_access, IIO_ADISLIB);
- 
- #endif
- 
-@@ -314,7 +314,7 @@ int adis_enable_irq(struct adis *adis, bool enable)
- 	mutex_unlock(&adis->state_lock);
- 	return ret;
- }
--EXPORT_SYMBOL(adis_enable_irq);
-+EXPORT_SYMBOL_NS(adis_enable_irq, IIO_ADISLIB);
- 
- /**
-  * __adis_check_status() - Check the device for error conditions (unlocked)
-@@ -346,7 +346,7 @@ int __adis_check_status(struct adis *adis)
- 
- 	return -EIO;
- }
--EXPORT_SYMBOL_GPL(__adis_check_status);
-+EXPORT_SYMBOL_NS_GPL(__adis_check_status, IIO_ADISLIB);
- 
- /**
-  * __adis_reset() - Reset the device (unlocked version)
-@@ -370,7 +370,7 @@ int __adis_reset(struct adis *adis)
- 
- 	return 0;
- }
--EXPORT_SYMBOL_GPL(__adis_reset);
-+EXPORT_SYMBOL_NS_GPL(__adis_reset, IIO_ADIS_LIB);
- 
- static int adis_self_test(struct adis *adis)
+ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
  {
-@@ -461,7 +461,7 @@ int __adis_initial_startup(struct adis *adis)
+-	int mux_words_size;
+-	int groups_per_line, groups_total;
+-	int min_rate_buffer_size;
+-	int hrd_delay;
+-	int pre_num_extra_mux_bits, num_extra_mux_bits;
+-	int slice_bits;
+-	int data;
+-	int final_value, final_scale;
+ 	int i;
  
- 	return 0;
+ 	dsc->rc_model_size = 8192;
+@@ -1869,11 +1862,11 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
+ 	if (dsc->bits_per_pixel != 8)
+ 		dsc->initial_offset = 2048;	/* bpp = 12 */
+ 
+-	mux_words_size = 48;		/* bpc == 8/10 */
+-	if (dsc->bits_per_component == 12)
+-		mux_words_size = 64;
++	if (dsc->bits_per_component <= 10)
++		dsc->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
++	else
++		dsc->mux_word_size = DSC_MUX_WORD_SIZE_12_BPC;
+ 
+-	dsc->mux_word_size = mux_words_size;
+ 	dsc->initial_xmit_delay = 512;
+ 	dsc->initial_scale_value = 32;
+ 	dsc->first_line_bpg_offset = 12;
+@@ -1885,52 +1878,7 @@ static int dsi_populate_dsc_params(struct drm_dsc_config *dsc)
+ 	dsc->rc_quant_incr_limit0 = 11;
+ 	dsc->rc_quant_incr_limit1 = 11;
+ 
+-	/* FIXME: need to call drm_dsc_compute_rc_parameters() so that rest of
+-	 * params are calculated
+-	 */
+-	groups_per_line = DIV_ROUND_UP(dsc->slice_width, 3);
+-	dsc->slice_chunk_size = DIV_ROUND_UP(dsc->slice_width * dsc->bits_per_pixel, 8);
+-
+-	/* rbs-min */
+-	min_rate_buffer_size =  dsc->rc_model_size - dsc->initial_offset +
+-				dsc->initial_xmit_delay * dsc->bits_per_pixel +
+-				groups_per_line * dsc->first_line_bpg_offset;
+-
+-	hrd_delay = DIV_ROUND_UP(min_rate_buffer_size, dsc->bits_per_pixel);
+-
+-	dsc->initial_dec_delay = hrd_delay - dsc->initial_xmit_delay;
+-
+-	dsc->initial_scale_value = 8 * dsc->rc_model_size /
+-				       (dsc->rc_model_size - dsc->initial_offset);
+-
+-	slice_bits = 8 * dsc->slice_chunk_size * dsc->slice_height;
+-
+-	groups_total = groups_per_line * dsc->slice_height;
+-
+-	data = dsc->first_line_bpg_offset * 2048;
+-
+-	dsc->nfl_bpg_offset = DIV_ROUND_UP(data, (dsc->slice_height - 1));
+-
+-	pre_num_extra_mux_bits = 3 * (mux_words_size + (4 * dsc->bits_per_component + 4) - 2);
+-
+-	num_extra_mux_bits = pre_num_extra_mux_bits - (mux_words_size -
+-			     ((slice_bits - pre_num_extra_mux_bits) % mux_words_size));
+-
+-	data = 2048 * (dsc->rc_model_size - dsc->initial_offset + num_extra_mux_bits);
+-	dsc->slice_bpg_offset = DIV_ROUND_UP(data, groups_total);
+-
+-	data = dsc->initial_xmit_delay * dsc->bits_per_pixel;
+-	final_value =  dsc->rc_model_size - data + num_extra_mux_bits;
+-	dsc->final_offset = final_value;
+-
+-	final_scale = 8 * dsc->rc_model_size / (dsc->rc_model_size - final_value);
+-
+-	data = (final_scale - 9) * (dsc->nfl_bpg_offset + dsc->slice_bpg_offset);
+-	dsc->scale_increment_interval = (2048 * dsc->final_offset) / data;
+-
+-	dsc->scale_decrement_interval = groups_per_line / (dsc->initial_scale_value - 8);
+-
+-	return 0;
++	return drm_dsc_compute_rc_parameters(dsc);
  }
--EXPORT_SYMBOL_GPL(__adis_initial_startup);
-+EXPORT_SYMBOL_NS_GPL(__adis_initial_startup, IIO_ADISLIB);
  
- /**
-  * adis_single_conversion() - Performs a single sample conversion
-@@ -509,7 +509,7 @@ int adis_single_conversion(struct iio_dev *indio_dev,
- 	mutex_unlock(&adis->state_lock);
- 	return ret;
- }
--EXPORT_SYMBOL_GPL(adis_single_conversion);
-+EXPORT_SYMBOL_NS_GPL(adis_single_conversion, IIO_ADISLIB);
- 
- /**
-  * adis_init() - Initialize adis device structure
-@@ -546,7 +546,7 @@ int adis_init(struct adis *adis, struct iio_dev *indio_dev,
- 
- 	return 0;
- }
--EXPORT_SYMBOL_GPL(adis_init);
-+EXPORT_SYMBOL_NS_GPL(adis_init, IIO_ADISLIB);
- 
- MODULE_LICENSE("GPL");
- MODULE_AUTHOR("Lars-Peter Clausen <lars@metafoo.de>");
-diff --git a/drivers/iio/imu/adis16400.c b/drivers/iio/imu/adis16400.c
-index b12917a7cb60..9bcd9a9261b9 100644
---- a/drivers/iio/imu/adis16400.c
-+++ b/drivers/iio/imu/adis16400.c
-@@ -1230,3 +1230,4 @@ module_spi_driver(adis16400_driver);
- MODULE_AUTHOR("Manuel Stahl <manuel.stahl@iis.fraunhofer.de>");
- MODULE_DESCRIPTION("Analog Devices ADIS16400/5 IMU SPI driver");
- MODULE_LICENSE("GPL v2");
-+MODULE_IMPORT_NS(IIO_ADISLIB);
-diff --git a/drivers/iio/imu/adis16460.c b/drivers/iio/imu/adis16460.c
-index a6f9fba3e03f..40fc0e582a9f 100644
---- a/drivers/iio/imu/adis16460.c
-+++ b/drivers/iio/imu/adis16460.c
-@@ -444,3 +444,4 @@ module_spi_driver(adis16460_driver);
- MODULE_AUTHOR("Dragos Bogdan <dragos.bogdan@analog.com>");
- MODULE_DESCRIPTION("Analog Devices ADIS16460 IMU driver");
- MODULE_LICENSE("GPL");
-+MODULE_IMPORT_NS(IIO_ADISLIB);
-diff --git a/drivers/iio/imu/adis16475.c b/drivers/iio/imu/adis16475.c
-index 287fff39a927..9d28534db3b0 100644
---- a/drivers/iio/imu/adis16475.c
-+++ b/drivers/iio/imu/adis16475.c
-@@ -1382,3 +1382,4 @@ module_spi_driver(adis16475_driver);
- MODULE_AUTHOR("Nuno Sa <nuno.sa@analog.com>");
- MODULE_DESCRIPTION("Analog Devices ADIS16475 IMU driver");
- MODULE_LICENSE("GPL");
-+MODULE_IMPORT_NS(IIO_ADISLIB);
-diff --git a/drivers/iio/imu/adis16480.c b/drivers/iio/imu/adis16480.c
-index f9b4540db1f4..44bbe3d19907 100644
---- a/drivers/iio/imu/adis16480.c
-+++ b/drivers/iio/imu/adis16480.c
-@@ -1538,3 +1538,4 @@ module_spi_driver(adis16480_driver);
- MODULE_AUTHOR("Lars-Peter Clausen <lars@metafoo.de>");
- MODULE_DESCRIPTION("Analog Devices ADIS16480 IMU driver");
- MODULE_LICENSE("GPL v2");
-+MODULE_IMPORT_NS(IIO_ADISLIB);
-diff --git a/drivers/iio/imu/adis_buffer.c b/drivers/iio/imu/adis_buffer.c
-index d3527cf5ed37..928933027ae3 100644
---- a/drivers/iio/imu/adis_buffer.c
-+++ b/drivers/iio/imu/adis_buffer.c
-@@ -124,7 +124,7 @@ int adis_update_scan_mode(struct iio_dev *indio_dev,
- 
- 	return 0;
- }
--EXPORT_SYMBOL_GPL(adis_update_scan_mode);
-+EXPORT_SYMBOL_NS_GPL(adis_update_scan_mode, IIO_ADISLIB);
- 
- static irqreturn_t adis_trigger_handler(int irq, void *p)
- {
-@@ -212,5 +212,5 @@ devm_adis_setup_buffer_and_trigger(struct adis *adis, struct iio_dev *indio_dev,
- 	return devm_add_action_or_reset(&adis->spi->dev, adis_buffer_cleanup,
- 					adis);
- }
--EXPORT_SYMBOL_GPL(devm_adis_setup_buffer_and_trigger);
-+EXPORT_SYMBOL_NS_GPL(devm_adis_setup_buffer_and_trigger, IIO_ADISLIB);
- 
-diff --git a/drivers/iio/imu/adis_trigger.c b/drivers/iio/imu/adis_trigger.c
-index 0e7fb00ba241..f890bf842db8 100644
---- a/drivers/iio/imu/adis_trigger.c
-+++ b/drivers/iio/imu/adis_trigger.c
-@@ -87,5 +87,5 @@ int devm_adis_probe_trigger(struct adis *adis, struct iio_dev *indio_dev)
- 
- 	return devm_iio_trigger_register(&adis->spi->dev, adis->trig);
- }
--EXPORT_SYMBOL_GPL(devm_adis_probe_trigger);
-+EXPORT_SYMBOL_NS_GPL(devm_adis_probe_trigger, IIO_ADISLIB);
- 
-diff --git a/drivers/staging/iio/accel/adis16203.c b/drivers/staging/iio/accel/adis16203.c
-index 1d3026dae827..62d5397ff1f9 100644
---- a/drivers/staging/iio/accel/adis16203.c
-+++ b/drivers/staging/iio/accel/adis16203.c
-@@ -312,3 +312,4 @@ MODULE_AUTHOR("Barry Song <21cnbao@gmail.com>");
- MODULE_DESCRIPTION("Analog Devices ADIS16203 Programmable 360 Degrees Inclinometer");
- MODULE_LICENSE("GPL v2");
- MODULE_ALIAS("spi:adis16203");
-+MODULE_IMPORT_NS(IIO_ADISLIB);
-diff --git a/drivers/staging/iio/accel/adis16240.c b/drivers/staging/iio/accel/adis16240.c
-index 2a8aa83b8d9e..bca857eef92e 100644
---- a/drivers/staging/iio/accel/adis16240.c
-+++ b/drivers/staging/iio/accel/adis16240.c
-@@ -440,3 +440,4 @@ MODULE_AUTHOR("Barry Song <21cnbao@gmail.com>");
- MODULE_DESCRIPTION("Analog Devices Programmable Impact Sensor and Recorder");
- MODULE_LICENSE("GPL v2");
- MODULE_ALIAS("spi:adis16240");
-+MODULE_IMPORT_NS(IIO_ADISLIB);
+ static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
 -- 
 2.35.1
 
