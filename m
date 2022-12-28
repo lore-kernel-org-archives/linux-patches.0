@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F2A1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:59:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232A4C433D2;
-	Wed, 28 Dec 2022 15:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FD21875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:59:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F284CC433EF;
+	Wed, 28 Dec 2022 15:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243146;
-	bh=TePuMiNa2pNC63XpVcgQ1xVINJebu79XDAKz+0GVs9Y=;
+	s=korg; t=1672243149;
+	bh=yIf4KSem7E/fWvBQLQCsiwU7oK+kb5gqbt+mhSoTSqE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u3t7m5LehrV9tKR13OVerPt6xGw0/ZaoKoIc1PXsrwmceS0h6kvVyBAz2rizrAPju
-	 IEB/Seq8UN25jwve1LPCdIgPrzpTn/uyka3A8GDISHdfPrYDj6rug525f5YbqBBKIW
-	 FNFISW6PNmDF4hEVyuB63XFUNA+hWyEj2w2Vq7s4=
+	b=r7VY6PGg6lcZN1etcPeYqIXatACoAdyH8RovS2qrJEJcygOM++0LDbZ32MJo9kUUY
+	 D3a8Gf5Dgeh93GxvUiWlN7XEcW8V7IeJRXLShQSkQpGZyOrRfmaDwBeRbj3ZOTbynL
+	 Z9wchba60Lb49pUAxaVy++UXeNCXG/V253wTLC0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Lukasz Majczak <lma@semihlaf.com>,
-	Mark Brown <broonie@kernel.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 688/731] ASoC: Intel: Skylake: Fix driver hang during shutdown
-Date: Wed, 28 Dec 2022 15:43:15 +0100
-Message-Id: <20221228144316.408959382@linuxfoundation.org>
+Subject: [PATCH 6.1 0456/1146] wifi: mt76: mt7915: fix reporting of TX AGGR histogram
+Date: Wed, 28 Dec 2022 15:33:15 +0100
+Message-Id: <20221228144342.567501682@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,39 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 171107237246d66bce04f3769d33648f896b4ce3 ]
+[ Upstream commit 528d13e7f033b54d50e0077922dd52f005d648cf ]
 
-AudioDSP cores and HDAudio links need to be turned off on shutdown to
-ensure no communication or data transfer occurs during the procedure.
+Fix stats clash between bins [4-7] in 802.11 tx aggregation histogram.
 
-Fixes: c5a76a246989 ("ASoC: Intel: Skylake: Add shutdown callback")
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Tested-by: Lukasz Majczak <lma@semihlaf.com>
-Link: https://lore.kernel.org/r/20221205085330.857665-6-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: e57b7901469fc ("mt76: add mac80211 driver for MT7915 PCIe-based chipsets")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/skylake/skl.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/sound/soc/intel/skylake/skl.c b/sound/soc/intel/skylake/skl.c
-index 148ddf4cace0..46bb3b8bd5af 100644
---- a/sound/soc/intel/skylake/skl.c
-+++ b/sound/soc/intel/skylake/skl.c
-@@ -1096,7 +1096,10 @@ static void skl_shutdown(struct pci_dev *pci)
- 	if (!skl->init_done)
- 		return;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+index 7ae9c4bd9c86..e6bf6e04d4b9 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+@@ -1609,7 +1609,7 @@ void mt7915_mac_update_stats(struct mt7915_phy *phy)
  
--	snd_hdac_stop_streams_and_chip(bus);
-+	snd_hdac_stop_streams(bus);
-+	snd_hdac_ext_bus_link_power_down_all(bus);
-+	skl_dsp_sleep(skl->dsp);
-+
- 	list_for_each_entry(s, &bus->stream_list, list) {
- 		stream = stream_to_hdac_ext_stream(s);
- 		snd_hdac_ext_stream_decouple(bus, stream, false);
+ 	aggr0 = phy->band_idx ? ARRAY_SIZE(dev->mt76.aggr_stats) / 2 : 0;
+ 	if (is_mt7915(&dev->mt76)) {
+-		for (i = 0, aggr1 = aggr0 + 4; i < 4; i++) {
++		for (i = 0, aggr1 = aggr0 + 8; i < 4; i++) {
+ 			val = mt76_rr(dev, MT_MIB_MB_SDR1(phy->band_idx, (i << 4)));
+ 			mib->ba_miss_cnt +=
+ 				FIELD_GET(MT_MIB_BA_MISS_COUNT_MASK, val);
 -- 
 2.35.1
 
