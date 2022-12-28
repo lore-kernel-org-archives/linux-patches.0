@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D01151C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:13:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 550C1C433EF;
-	Wed, 28 Dec 2022 16:13:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B991C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:13:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2260DC433EF;
+	Wed, 28 Dec 2022 16:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244013;
-	bh=7kazqvFCVqQzdRC/lN1d7cHC8UUGT86XNZHb2Ah8ox8=;
+	s=korg; t=1672244016;
+	bh=wRClq7SGljjCXZoLOyDzzzCHYBZoHBsHr568OPeKIwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cCWQ089ulcrd62RwjAItuGiXJeWIUb6yrUKQS7aE+Q6TZzQZh63X0ZFpWxaKpQKlD
-	 UwH8H0u11hhoxt9Xirv34fWqSCVtx9zlPCoNQypVLrbC+69utjXyAPS0VFFWPqL8M6
-	 sGbx2E8zqthTD6LbOt2/UlgrWGYCxdbSgBFH7KSA=
+	b=R93JVyHzL1cvLWZxHindu7r7wEkDj9SCw15r4kXbP29BnEfM/aN5nrWG0o2EEmaPU
+	 UX76LHDIfijQZEmLuRZMOBYGwINUlOkScqmLglLQAE0x+HjXpRxZ1zHOWzXyUaw7fE
+	 A0SgnG7PORgCkFQ6colUMYF8HqsqokSX0oilNvHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+035a381ea1afb63f098d@syzkaller.appspotmail.com,
-	syzbot+729c925c2d9fc495ddee@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Yuan Can <yuancan@huawei.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0595/1146] f2fs: fix to invalidate dcc->f2fs_issue_discard in error path
-Date: Wed, 28 Dec 2022 15:35:34 +0100
-Message-Id: <20221228144346.331287518@linuxfoundation.org>
+Subject: [PATCH 6.0 0632/1073] RDMA/nldev: Add checks for nla_nest_start() in fill_stat_counter_qps()
+Date: Wed, 28 Dec 2022 15:37:00 +0100
+Message-Id: <20221228144345.207774577@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,68 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 91586ce0d39a05f88795aa8814fb99b1387236b3 ]
+[ Upstream commit ea5ef136e215fdef35f14010bc51fcd6686e6922 ]
 
-Syzbot reports a NULL pointer dereference issue as below:
+As the nla_nest_start() may fail with NULL returned, the return value needs
+to be checked.
 
- __refcount_add include/linux/refcount.h:193 [inline]
- __refcount_inc include/linux/refcount.h:250 [inline]
- refcount_inc include/linux/refcount.h:267 [inline]
- get_task_struct include/linux/sched/task.h:110 [inline]
- kthread_stop+0x34/0x1c0 kernel/kthread.c:703
- f2fs_stop_discard_thread+0x3c/0x5c fs/f2fs/segment.c:1638
- kill_f2fs_super+0x5c/0x194 fs/f2fs/super.c:4522
- deactivate_locked_super+0x70/0xe8 fs/super.c:332
- deactivate_super+0xd0/0xd4 fs/super.c:363
- cleanup_mnt+0x1f8/0x234 fs/namespace.c:1186
- __cleanup_mnt+0x20/0x30 fs/namespace.c:1193
- task_work_run+0xc4/0x14c kernel/task_work.c:177
- exit_task_work include/linux/task_work.h:38 [inline]
- do_exit+0x26c/0xbe0 kernel/exit.c:795
- do_group_exit+0x60/0xe8 kernel/exit.c:925
- __do_sys_exit_group kernel/exit.c:936 [inline]
- __se_sys_exit_group kernel/exit.c:934 [inline]
- __wake_up_parent+0x0/0x40 kernel/exit.c:934
- __invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
- invoke_syscall arch/arm64/kernel/syscall.c:52 [inline]
- el0_svc_common+0x138/0x220 arch/arm64/kernel/syscall.c:142
- do_el0_svc+0x48/0x164 arch/arm64/kernel/syscall.c:206
- el0_svc+0x58/0x150 arch/arm64/kernel/entry-common.c:636
- el0t_64_sync_handler+0x84/0xf0 arch/arm64/kernel/entry-common.c:654
- el0t_64_sync+0x18c/0x190 arch/arm64/kernel/entry.S:581
-
-The root cause of this issue is in error path of f2fs_start_discard_thread(),
-it missed to invalidate dcc->f2fs_issue_discard, later kthread_stop() may
-access invalid pointer.
-
-Fixes: 4d67490498ac ("f2fs: Don't create discard thread when device doesn't support realtime discard")
-Reported-by: syzbot+035a381ea1afb63f098d@syzkaller.appspotmail.com
-Reported-by: syzbot+729c925c2d9fc495ddee@syzkaller.appspotmail.com
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: c4ffee7c9bdb ("RDMA/netlink: Implement counter dumpit calback")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20221126043410.85632-1-yuancan@huawei.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/segment.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/nldev.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
-index acf3d3fa4363..7a4f7c88b8b9 100644
---- a/fs/f2fs/segment.c
-+++ b/fs/f2fs/segment.c
-@@ -2025,8 +2025,10 @@ int f2fs_start_discard_thread(struct f2fs_sb_info *sbi)
+diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
+index f1e0755cd56e..54d4e693e03b 100644
+--- a/drivers/infiniband/core/nldev.c
++++ b/drivers/infiniband/core/nldev.c
+@@ -894,6 +894,8 @@ static int fill_stat_counter_qps(struct sk_buff *msg,
+ 	int ret = 0;
  
- 	dcc->f2fs_issue_discard = kthread_run(issue_discard_thread, sbi,
- 				"f2fs_discard-%u:%u", MAJOR(dev), MINOR(dev));
--	if (IS_ERR(dcc->f2fs_issue_discard))
-+	if (IS_ERR(dcc->f2fs_issue_discard)) {
- 		err = PTR_ERR(dcc->f2fs_issue_discard);
-+		dcc->f2fs_issue_discard = NULL;
-+	}
+ 	table_attr = nla_nest_start(msg, RDMA_NLDEV_ATTR_RES_QP);
++	if (!table_attr)
++		return -EMSGSIZE;
  
- 	return err;
- }
+ 	rt = &counter->device->res[RDMA_RESTRACK_QP];
+ 	xa_lock(&rt->xa);
 -- 
 2.35.1
 
