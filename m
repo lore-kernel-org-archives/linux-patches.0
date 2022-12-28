@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97FF51863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DC95C433D2;
-	Wed, 28 Dec 2022 15:06:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AAD91863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A64C1C433D2;
+	Wed, 28 Dec 2022 15:06:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239994;
-	bh=xUQTlc1D4KPn3pxvsRl1F29e784Z/ZcyQb7a0L/HTl4=;
+	s=korg; t=1672239997;
+	bh=Q8Zd8I+IfY4VtHDMeRmgfaFo1o+CwB8+C1bUV/CcvLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ehbmH1SZMaW+2jutkkZM6woIwp08ndxRd1WwzAhQHUw+rjenA+W9lHM3x15Ttv3iH
-	 sXn9lG1/P7mKFaNfY15MMZjVsOfpYx7GEd/8mX1LL36ZZFFYOAko9ibBHAXjLywGNF
-	 48kMZsk46BePMGbLMs0YMoeWn+VUjJajiPPBcTDo=
+	b=IeYX1unTP9onN9XFJjGsIqZtGAiQfe6TnVM2AX+N0vDBPygGOiL7Yse89N0cdClQs
+	 Dr+7NLlJZ0S1kGYBgRo/FW7uq7Ym+ZLuVDGcrRrlHWLew5B8IC2qln8P/BV9H2q6wm
+	 51oe6Jg4dI6+N5Ygjm68t0nllGXf3Zt02kExoWQY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 297/731] mmc: toshsd: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:36:44 +0100
-Message-Id: <20221228144305.183175304@linuxfoundation.org>
+Subject: [PATCH 6.1 0069/1146] arm64: dts: mediatek: mt8195: Fix CPUs capacity-dmips-mhz
+Date: Wed, 28 Dec 2022 15:26:48 +0100
+Message-Id: <20221228144332.031209433@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,50 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit f670744a316ea983113a65313dcd387b5a992444 ]
+[ Upstream commit 513c43328b189874fdfee3ae99cac81e5502e7f7 ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+The capacity-dmips-mhz parameter was miscalculated: this SoC runs
+the first (Cortex-A55) cluster at a maximum of 2000MHz and the
+second (Cortex-A78) cluster at a maximum of 3000MHz.
 
-So fix this by checking the return value and goto error path which will call
-mmc_free_host(), besides, free_irq() also needs be called.
+In order to calculate the right capacity-dmips-mhz, the following
+test was performed:
+1. CPUFREQ governor was set to 'performance' on both clusters
+2. Ran dhrystone with 500000000 iterations for 10 times on each cluster
+3. Calculate the mean result for each cluster
+4. Calculate DMIPS/MHz: dmips_mhz = dmips_per_second / cpu_mhz
+5. Scale results to 1024:
+   result_c0 = (dmips_mhz_c0 - min_dmips_mhz(c0, c1)) /
+               (max_dmips_mhz(c0, c1) - min_dmips_mhz(c0, c1)) * 1024
 
-Fixes: a5eb8bbd66cc ("mmc: add Toshiba PCI SD controller driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-8-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+The mean results for this SoC are:
+Cluster 0 (LITTLE): 11990400 Dhry/s
+Cluster 1 (BIG): 59809036 Dhry/s
+
+The calculated scaled results are:
+Cluster 0: 307,934312801831 (rounded to 308)
+Cluster 1: 1024
+
+Fixes: 37f2582883be ("arm64: dts: Add mediatek SoC mt8195 and evaluation board")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221005093404.33102-1-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/toshsd.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt8195.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mmc/host/toshsd.c b/drivers/mmc/host/toshsd.c
-index 8d037c2071ab..497791ffada6 100644
---- a/drivers/mmc/host/toshsd.c
-+++ b/drivers/mmc/host/toshsd.c
-@@ -651,7 +651,9 @@ static int toshsd_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	if (ret)
- 		goto unmap;
- 
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret)
-+		goto free_irq;
- 
- 	base = pci_resource_start(pdev, 0);
- 	dev_dbg(&pdev->dev, "MMIO %pa, IRQ %d\n", &base, pdev->irq);
-@@ -660,6 +662,8 @@ static int toshsd_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 
- 	return 0;
- 
-+free_irq:
-+	free_irq(pdev->irq, host);
- unmap:
- 	pci_iounmap(pdev, host->ioaddr);
- release:
+diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+index 905d1a90b406..0b85b5874a4f 100644
+--- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
+@@ -36,7 +36,7 @@ cpu0: cpu@0 {
+ 			enable-method = "psci";
+ 			performance-domains = <&performance 0>;
+ 			clock-frequency = <1701000000>;
+-			capacity-dmips-mhz = <578>;
++			capacity-dmips-mhz = <308>;
+ 			cpu-idle-states = <&cpu_off_l &cluster_off_l>;
+ 			next-level-cache = <&l2_0>;
+ 			#cooling-cells = <2>;
+@@ -49,7 +49,7 @@ cpu1: cpu@100 {
+ 			enable-method = "psci";
+ 			performance-domains = <&performance 0>;
+ 			clock-frequency = <1701000000>;
+-			capacity-dmips-mhz = <578>;
++			capacity-dmips-mhz = <308>;
+ 			cpu-idle-states = <&cpu_off_l &cluster_off_l>;
+ 			next-level-cache = <&l2_0>;
+ 			#cooling-cells = <2>;
+@@ -62,7 +62,7 @@ cpu2: cpu@200 {
+ 			enable-method = "psci";
+ 			performance-domains = <&performance 0>;
+ 			clock-frequency = <1701000000>;
+-			capacity-dmips-mhz = <578>;
++			capacity-dmips-mhz = <308>;
+ 			cpu-idle-states = <&cpu_off_l &cluster_off_l>;
+ 			next-level-cache = <&l2_0>;
+ 			#cooling-cells = <2>;
+@@ -75,7 +75,7 @@ cpu3: cpu@300 {
+ 			enable-method = "psci";
+ 			performance-domains = <&performance 0>;
+ 			clock-frequency = <1701000000>;
+-			capacity-dmips-mhz = <578>;
++			capacity-dmips-mhz = <308>;
+ 			cpu-idle-states = <&cpu_off_l &cluster_off_l>;
+ 			next-level-cache = <&l2_0>;
+ 			#cooling-cells = <2>;
 -- 
 2.35.1
 
