@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B7F41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00E7BC433D2;
-	Wed, 28 Dec 2022 15:39:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32D4C1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC1D3C433D2;
+	Wed, 28 Dec 2022 15:39:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241969;
-	bh=vN7+nw468i9Uj88enQI+sxQT378K1ipRLkWW1xecTQc=;
+	s=korg; t=1672241972;
+	bh=TTgh3nof+qRtikzAzm32Sm9gSnJCpYLiGe180JzSmu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y6kjwPT6zgkRPZc/7P2V3GVqjs7sYWJRHMemGL/NxS/haxqmQ2MFzaZyuA8yXRdbi
-	 FldDEUwwONsIcLyeTpBsotTWkEctW8B4i/K72GlvhAsDfJcOUuHTL990uKNyo8mHYc
-	 GikuVbLmXFWx+dbtC6P0YK5eICQKdFctpChbVTMc=
+	b=bnQ5j0dUn9AmY3sL+xlhTyC8Fla7xB642D0qCVQw9JW8fIQXUFWgHcUeMIAna1jPV
+	 BKp+coSyuYgvdePQRHHmINT/oPq4U4+SiW4huXbJVNqSbljajdSDBT5Rb1jP8hfzBt
+	 G2XUOc6OwtfUQVpVe4fpoCNXb/TY9NAQY4V/uBvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Cooper <alcooperx@gmail.com>,
-	Justin Chen <justinpopo6@gmail.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 533/731] phy: usb: s2 WoL wakeup_count not incremented for USB->Eth devices
-Date: Wed, 28 Dec 2022 15:40:40 +0100
-Message-Id: <20221228144311.993056913@linuxfoundation.org>
+Subject: [PATCH 5.15 548/731] rtc: pcf85063: Fix reading alarm
+Date: Wed, 28 Dec 2022 15:40:55 +0100
+Message-Id: <20221228144312.425700375@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -37,52 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Cooper <alcooperx@gmail.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit f7fc5b7090372fc4dd7798c874635ca41b8ba733 ]
+[ Upstream commit a6ceee26fd5ed9b5bd37322b1ca88e4548cee4a3 ]
 
-The PHY's "wakeup_count" is not incrementing when waking from
-WoL. The wakeup count can be found in sysfs at:
-/sys/bus/platform/devices/rdb/*.usb-phy/power/wakeup_count.
-The problem is that the system wakup event handler was being passed
-the wrong "device" by the PHY driver.
+If the alarms are disabled the topmost bit (AEN_*) is set in the alarm
+registers. This is also interpreted in BCD number leading to this warning:
+rtc rtc0: invalid alarm value: 2022-09-21T80:80:80
 
-Fixes: f1c0db40a3ad ("phy: usb: Add "wake on" functionality")
-Signed-off-by: Al Cooper <alcooperx@gmail.com>
-Signed-off-by: Justin Chen <justinpopo6@gmail.com>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/1665005418-15807-3-git-send-email-justinpopo6@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fix this by masking alarm enabling and reserved bits.
+
+Fixes: 05cb3a56ee8c ("rtc: pcf85063: add alarm support")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20220921074141.3903104-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/broadcom/phy-brcm-usb.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/rtc/rtc-pcf85063.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/phy/broadcom/phy-brcm-usb.c b/drivers/phy/broadcom/phy-brcm-usb.c
-index 2cb3779fcdf8..c0c3ab9b2a15 100644
---- a/drivers/phy/broadcom/phy-brcm-usb.c
-+++ b/drivers/phy/broadcom/phy-brcm-usb.c
-@@ -102,9 +102,9 @@ static int brcm_pm_notifier(struct notifier_block *notifier,
+diff --git a/drivers/rtc/rtc-pcf85063.c b/drivers/rtc/rtc-pcf85063.c
+index 14da4ab30104..3e2837722667 100644
+--- a/drivers/rtc/rtc-pcf85063.c
++++ b/drivers/rtc/rtc-pcf85063.c
+@@ -167,10 +167,10 @@ static int pcf85063_rtc_read_alarm(struct device *dev, struct rtc_wkalrm *alrm)
+ 	if (ret)
+ 		return ret;
  
- static irqreturn_t brcm_usb_phy_wake_isr(int irq, void *dev_id)
- {
--	struct phy *gphy = dev_id;
-+	struct device *dev = dev_id;
+-	alrm->time.tm_sec = bcd2bin(buf[0]);
+-	alrm->time.tm_min = bcd2bin(buf[1]);
+-	alrm->time.tm_hour = bcd2bin(buf[2]);
+-	alrm->time.tm_mday = bcd2bin(buf[3]);
++	alrm->time.tm_sec = bcd2bin(buf[0] & 0x7f);
++	alrm->time.tm_min = bcd2bin(buf[1] & 0x7f);
++	alrm->time.tm_hour = bcd2bin(buf[2] & 0x3f);
++	alrm->time.tm_mday = bcd2bin(buf[3] & 0x3f);
  
--	pm_wakeup_event(&gphy->dev, 0);
-+	pm_wakeup_event(dev, 0);
- 
- 	return IRQ_HANDLED;
- }
-@@ -451,7 +451,7 @@ static int brcm_usb_phy_dvr_init(struct platform_device *pdev,
- 	if (priv->wake_irq >= 0) {
- 		err = devm_request_irq(dev, priv->wake_irq,
- 				       brcm_usb_phy_wake_isr, 0,
--				       dev_name(dev), gphy);
-+				       dev_name(dev), dev);
- 		if (err < 0)
- 			return err;
- 		device_set_wakeup_capable(dev, 1);
+ 	ret = regmap_read(pcf85063->regmap, PCF85063_REG_CTRL2, &val);
+ 	if (ret)
 -- 
 2.35.1
 
