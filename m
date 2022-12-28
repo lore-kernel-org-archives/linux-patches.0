@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174C81C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 908B0C433D2;
-	Wed, 28 Dec 2022 16:55:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B17481C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35F4DC433EF;
+	Wed, 28 Dec 2022 16:55:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246548;
-	bh=wks1ap0L0Hh1oGAToVjd5pGJz4gg8sTFWm8Tit59i80=;
+	s=korg; t=1672246551;
+	bh=kCD7HIioD2lG850CCyOVW4T7rE7c2036hA/ylMNGFi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ehO/dxSDCSxqSqeVLMSla4gp8JpjdNmKFm9teaTSwVIoIKyvbHApiAZRiC85vgvOA
-	 dUHtUA/yijtfgCgzeCA2rUL/w+HjqYiGCLR3tJoRUN3IJyOODlJImUCY/pmbGr0MQv
-	 96NXQFPlMBBPhOIvELo5aFAxeIid4pwC7H6kPMy4=
+	b=It8zd2XtqFOxq9/PV3CKjSfZtNi8BSHav1AcXrfYkS801fEVdKuNG18FI4mtLN+zp
+	 oAKcA8bX/K/vk9njUewpuQmboOykFG9IXj/OrjxykptGu0nr0k+NY7ijd1QAhH8Egy
+	 eEcNtA1tgFtGW6IEg+9AAbFkbRJp3jefAK0obips=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Deak <imre.deak@intel.com>,
-	Clint Taylor <clinton.a.taylor@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Khaled Almahallawy <khaled.almahallawy@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Paul Moore <paul@paul-moore.com>,
+	James Morris <jmorris@namei.org>,
+	"Serge E. Hallyn" <serge@hallyn.com>,
+	linux-security-module@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1078/1146] drm/i915/display: Dont disable DDI/Transcoder when setting phy test pattern
-Date: Wed, 28 Dec 2022 15:43:37 +0100
-Message-Id: <20221228144359.500751030@linuxfoundation.org>
+Subject: [PATCH 6.1 1079/1146] LoadPin: Ignore the "contents" argument of the LSM hooks
+Date: Wed, 28 Dec 2022 15:43:38 +0100
+Message-Id: <20221228144359.524935039@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -38,119 +39,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Khaled Almahallawy <khaled.almahallawy@intel.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 3153eebb7a76e663ac76d6670dc113296de96622 ]
+[ Upstream commit 1a17e5b513ceebf21100027745b8731b4728edf7 ]
 
-Bspecs has updated recently to remove the restriction to disable
-DDI/Transcoder before setting PHY test pattern. This update is to
-address PHY compliance test failures observed on a port with LTTPR.
-The issue is that when Transc. is disabled, the main link signals fed
-to LTTPR will be dropped invalidating link training, which will affect
-the quality of the phy test pattern when the transcoder is enabled again.
+LoadPin only enforces the read-only origin of kernel file reads. Whether
+or not it was a partial read isn't important. Remove the overly
+conservative checks so that things like partial firmware reads will
+succeed (i.e. reading a firmware header).
 
-v2: Update commit message (Clint)
-v3: Add missing Signed-off in v2
-v4: Update Bspec and commit message for pre-gen12 (Jani)
-
-Bspec: 50482, 7555
-Fixes: 8cdf72711928 ("drm/i915/dp: Program vswing, pre-emphasis, test-pattern")
-Cc: Imre Deak <imre.deak@intel.com>
-Cc: Clint Taylor <clinton.a.taylor@intel.com>
-CC: Jani Nikula <jani.nikula@intel.com>
-Tested-by: Khaled Almahallawy <khaled.almahallawy@intel.com>
-Reviewed-by: Clint Taylor <clinton.a.taylor@intel.com>
-Signed-off-by: Khaled Almahallawy <khaled.almahallawy@intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221123220926.170034-1-khaled.almahallawy@intel.com
-(cherry picked from commit be4a847652056b067d6dc6fe0fc024a9e2e987ca)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 2039bda1fa8d ("LSM: Add "contents" flag to kernel_read_file hook")
+Cc: Paul Moore <paul@paul-moore.com>
+Cc: James Morris <jmorris@namei.org>
+Cc: "Serge E. Hallyn" <serge@hallyn.com>
+Cc: linux-security-module@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Acked-by: Serge Hallyn <serge@hallyn.com>
+Tested-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://lore.kernel.org/r/20221209195453.never.494-kees@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c | 59 -------------------------
- 1 file changed, 59 deletions(-)
+ security/loadpin/loadpin.c | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
-index 2b5bc95a8b0d..78b3427471bd 100644
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -3675,61 +3675,6 @@ static void intel_dp_phy_pattern_update(struct intel_dp *intel_dp,
+diff --git a/security/loadpin/loadpin.c b/security/loadpin/loadpin.c
+index de41621f4998..110a5ab2b46b 100644
+--- a/security/loadpin/loadpin.c
++++ b/security/loadpin/loadpin.c
+@@ -122,21 +122,11 @@ static void loadpin_sb_free_security(struct super_block *mnt_sb)
  	}
  }
  
--static void
--intel_dp_autotest_phy_ddi_disable(struct intel_dp *intel_dp,
--				  const struct intel_crtc_state *crtc_state)
--{
--	struct intel_digital_port *dig_port = dp_to_dig_port(intel_dp);
--	struct drm_device *dev = dig_port->base.base.dev;
--	struct drm_i915_private *dev_priv = to_i915(dev);
--	struct intel_crtc *crtc = to_intel_crtc(dig_port->base.base.crtc);
--	enum pipe pipe = crtc->pipe;
--	u32 trans_ddi_func_ctl_value, trans_conf_value, dp_tp_ctl_value;
--
--	trans_ddi_func_ctl_value = intel_de_read(dev_priv,
--						 TRANS_DDI_FUNC_CTL(pipe));
--	trans_conf_value = intel_de_read(dev_priv, PIPECONF(pipe));
--	dp_tp_ctl_value = intel_de_read(dev_priv, TGL_DP_TP_CTL(pipe));
--
--	trans_ddi_func_ctl_value &= ~(TRANS_DDI_FUNC_ENABLE |
--				      TGL_TRANS_DDI_PORT_MASK);
--	trans_conf_value &= ~PIPECONF_ENABLE;
--	dp_tp_ctl_value &= ~DP_TP_CTL_ENABLE;
--
--	intel_de_write(dev_priv, PIPECONF(pipe), trans_conf_value);
--	intel_de_write(dev_priv, TRANS_DDI_FUNC_CTL(pipe),
--		       trans_ddi_func_ctl_value);
--	intel_de_write(dev_priv, TGL_DP_TP_CTL(pipe), dp_tp_ctl_value);
--}
--
--static void
--intel_dp_autotest_phy_ddi_enable(struct intel_dp *intel_dp,
--				 const struct intel_crtc_state *crtc_state)
--{
--	struct intel_digital_port *dig_port = dp_to_dig_port(intel_dp);
--	struct drm_device *dev = dig_port->base.base.dev;
--	struct drm_i915_private *dev_priv = to_i915(dev);
--	enum port port = dig_port->base.port;
--	struct intel_crtc *crtc = to_intel_crtc(dig_port->base.base.crtc);
--	enum pipe pipe = crtc->pipe;
--	u32 trans_ddi_func_ctl_value, trans_conf_value, dp_tp_ctl_value;
--
--	trans_ddi_func_ctl_value = intel_de_read(dev_priv,
--						 TRANS_DDI_FUNC_CTL(pipe));
--	trans_conf_value = intel_de_read(dev_priv, PIPECONF(pipe));
--	dp_tp_ctl_value = intel_de_read(dev_priv, TGL_DP_TP_CTL(pipe));
--
--	trans_ddi_func_ctl_value |= TRANS_DDI_FUNC_ENABLE |
--				    TGL_TRANS_DDI_SELECT_PORT(port);
--	trans_conf_value |= PIPECONF_ENABLE;
--	dp_tp_ctl_value |= DP_TP_CTL_ENABLE;
--
--	intel_de_write(dev_priv, PIPECONF(pipe), trans_conf_value);
--	intel_de_write(dev_priv, TGL_DP_TP_CTL(pipe), dp_tp_ctl_value);
--	intel_de_write(dev_priv, TRANS_DDI_FUNC_CTL(pipe),
--		       trans_ddi_func_ctl_value);
--}
--
- static void intel_dp_process_phy_request(struct intel_dp *intel_dp,
- 					 const struct intel_crtc_state *crtc_state)
+-static int loadpin_read_file(struct file *file, enum kernel_read_file_id id,
+-			     bool contents)
++static int loadpin_check(struct file *file, enum kernel_read_file_id id)
  {
-@@ -3748,14 +3693,10 @@ static void intel_dp_process_phy_request(struct intel_dp *intel_dp,
- 	intel_dp_get_adjust_train(intel_dp, crtc_state, DP_PHY_DPRX,
- 				  link_status);
+ 	struct super_block *load_root;
+ 	const char *origin = kernel_read_file_id_str(id);
  
--	intel_dp_autotest_phy_ddi_disable(intel_dp, crtc_state);
+-	/*
+-	 * If we will not know that we'll be seeing the full contents
+-	 * then we cannot trust a load will be complete and unchanged
+-	 * off disk. Treat all contents=false hooks as if there were
+-	 * no associated file struct.
+-	 */
+-	if (!contents)
+-		file = NULL;
 -
- 	intel_dp_set_signal_levels(intel_dp, crtc_state, DP_PHY_DPRX);
+ 	/* If the file id is excluded, ignore the pinning. */
+ 	if ((unsigned int)id < ARRAY_SIZE(ignore_read_file_id) &&
+ 	    ignore_read_file_id[id]) {
+@@ -192,9 +182,25 @@ static int loadpin_read_file(struct file *file, enum kernel_read_file_id id,
+ 	return 0;
+ }
  
- 	intel_dp_phy_pattern_update(intel_dp, crtc_state);
++static int loadpin_read_file(struct file *file, enum kernel_read_file_id id,
++			     bool contents)
++{
++	/*
++	 * LoadPin only cares about the _origin_ of a file, not its
++	 * contents, so we can ignore the "are full contents available"
++	 * argument here.
++	 */
++	return loadpin_check(file, id);
++}
++
+ static int loadpin_load_data(enum kernel_load_data_id id, bool contents)
+ {
+-	return loadpin_read_file(NULL, (enum kernel_read_file_id) id, contents);
++	/*
++	 * LoadPin only cares about the _origin_ of a file, not its
++	 * contents, so a NULL file is passed, and we can ignore the
++	 * state of "contents".
++	 */
++	return loadpin_check(NULL, (enum kernel_read_file_id) id);
+ }
  
--	intel_dp_autotest_phy_ddi_enable(intel_dp, crtc_state);
--
- 	drm_dp_dpcd_write(&intel_dp->aux, DP_TRAINING_LANE0_SET,
- 			  intel_dp->train_set, crtc_state->lane_count);
- 
+ static struct security_hook_list loadpin_hooks[] __lsm_ro_after_init = {
 -- 
 2.35.1
 
