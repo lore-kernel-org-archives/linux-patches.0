@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DFF51875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 928C5C433D2;
-	Wed, 28 Dec 2022 15:52:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C56C81875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45737C433D2;
+	Wed, 28 Dec 2022 15:52:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242729;
-	bh=qS3sQKPxUY+CWKSVE4dLqFIwyaZ2m2NE5iWvu3ZYrf4=;
+	s=korg; t=1672242731;
+	bh=xjvKoBeLivq6v7P9u5FJry/N2JD0b8tlAlmnyi/28TA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=npLkahThC5Sv88lbkfvw2hm4gJwYKkq29O9xvx6ZBUcAKkfKdzv0W92Fb/AMGBxWt
-	 rJlVHOvm4H4XVVSmZxB7BBdtdmUVfn/AvCc2L7zB+ZLiQJ5dxYCx87+/3K36gsnJZG
-	 OUz+/5SHE9uniATol79bgZIIKblXxVMr+RQgYssk=
+	b=AX39rCJS9k4sdEzlIw783qpx9TvWAOVRoMRcl00DAUrbMIrhcr7elxIdReYj6eXQp
+	 ndYRXHKgsT91TkW3Q4JoNIw7X9bt/loYxhXdVM3FqU7nmoDNdTFdjRW1pnjCxuc4/L
+	 t++dwes83c9NqVaypDzVAgRVpNYpMtpIBfyao6zk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Paul Kocialkowski <paul.kocialkowski@bootlin.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0386/1146] mtd: core: Fix refcount error in del_mtd_device()
-Date: Wed, 28 Dec 2022 15:32:05 +0100
-Message-Id: <20221228144340.649044052@linuxfoundation.org>
+Subject: [PATCH 6.1 0407/1146] media: sun8i-a83t-mipi-csi2: Require both pads to be connected for streaming
+Date: Wed, 28 Dec 2022 15:32:26 +0100
+Message-Id: <20221228144341.221631933@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,92 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
 
-[ Upstream commit 56570bdad5e31c5c538cd6efff5c4510256e1bb4 ]
+[ Upstream commit 8985fc724ba89d9b00694304b3f9faf69f4073d0 ]
 
-del_mtd_device() will call of_node_put() to mtd_get_of_node(mtd), which
-is mtd->dev.of_node. However, memset(&mtd->dev, 0) is called before
-of_node_put(). As the result, of_node_put() won't do anything in
-del_mtd_device(), and causes the refcount leak.
+The bridge needs both its pads connected to be able to stream data.
+Enforcing this is useful to produce an error when no sensor is
+connected.
 
-del_mtd_device()
-    memset(&mtd->dev, 0, sizeof(mtd->dev) # clear mtd->dev
-    of_node_put()
-        mtd_get_of_node(mtd) # mtd->dev is cleared, can't locate of_node
-                             # of_node_put(NULL) won't do anything
-
-Fix the error by caching the pointer of the device_node.
-
-OF: ERROR: memory leak, expected refcount 1 instead of 2,
-of_node_get()/of_node_put() unbalanced - destroy cset entry: attach
-overlay node /spi/spi-sram@0
-CPU: 3 PID: 275 Comm: python3 Tainted: G N 6.1.0-rc3+ #54
-    0d8a1edddf51f172ff5226989a7565c6313b08e2
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014
-Call Trace:
-<TASK>
-    dump_stack_lvl+0x67/0x83
-    kobject_get+0x155/0x160
-    of_node_get+0x1f/0x30
-    of_fwnode_get+0x43/0x70
-    fwnode_handle_get+0x54/0x80
-    fwnode_get_nth_parent+0xc9/0xe0
-    fwnode_full_name_string+0x3f/0xa0
-    device_node_string+0x30f/0x750
-    pointer+0x598/0x7a0
-    vsnprintf+0x62d/0x9b0
-    ...
-    cfs_overlay_release+0x30/0x90
-    config_item_release+0xbe/0x1a0
-    config_item_put+0x5e/0x80
-    configfs_rmdir+0x3bd/0x540
-    vfs_rmdir+0x18c/0x320
-    do_rmdir+0x198/0x330
-    __x64_sys_rmdir+0x2c/0x40
-    do_syscall_64+0x37/0x90
-    entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Fixes: 00596576a051 ("mtd: core: clear out unregistered devices a bit more")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-[<miquel.raynal@bootlin.com>: Light reword of the commit log]
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20221119063915.11108-1-shangxiaojing@huawei.com
+Fixes: 576d196c522b ("media: sunxi: Add support for the A83T MIPI CSI-2 controller")
+Signed-off-by: Paul Kocialkowski <paul.kocialkowski@bootlin.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdcore.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c       | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
-index 675305139a54..686ada1a63e9 100644
---- a/drivers/mtd/mtdcore.c
-+++ b/drivers/mtd/mtdcore.c
-@@ -776,6 +776,7 @@ int del_mtd_device(struct mtd_info *mtd)
- {
- 	int ret;
- 	struct mtd_notifier *not;
-+	struct device_node *mtd_of_node;
+diff --git a/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c b/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
+index b032ec13a683..5e1c25db7bc4 100644
+--- a/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
++++ b/drivers/media/platform/sunxi/sun8i-a83t-mipi-csi2/sun8i_a83t_mipi_csi2.c
+@@ -557,8 +557,10 @@ sun8i_a83t_mipi_csi2_bridge_setup(struct sun8i_a83t_mipi_csi2_device *csi2_dev)
  
- 	mutex_lock(&mtd_table_mutex);
+ 	/* Media Pads */
  
-@@ -794,6 +795,7 @@ int del_mtd_device(struct mtd_info *mtd)
- 		       mtd->index, mtd->name, mtd->usecount);
- 		ret = -EBUSY;
- 	} else {
-+		mtd_of_node = mtd_get_of_node(mtd);
- 		debugfs_remove_recursive(mtd->dbg.dfs_dir);
+-	pads[SUN8I_A83T_MIPI_CSI2_PAD_SINK].flags = MEDIA_PAD_FL_SINK;
+-	pads[SUN8I_A83T_MIPI_CSI2_PAD_SOURCE].flags = MEDIA_PAD_FL_SOURCE;
++	pads[SUN8I_A83T_MIPI_CSI2_PAD_SINK].flags = MEDIA_PAD_FL_SINK |
++						    MEDIA_PAD_FL_MUST_CONNECT;
++	pads[SUN8I_A83T_MIPI_CSI2_PAD_SOURCE].flags = MEDIA_PAD_FL_SOURCE |
++						      MEDIA_PAD_FL_MUST_CONNECT;
  
- 		/* Try to remove the NVMEM provider */
-@@ -805,7 +807,7 @@ int del_mtd_device(struct mtd_info *mtd)
- 		memset(&mtd->dev, 0, sizeof(mtd->dev));
- 
- 		idr_remove(&mtd_idr, mtd->index);
--		of_node_put(mtd_get_of_node(mtd));
-+		of_node_put(mtd_of_node);
- 
- 		module_put(THIS_MODULE);
- 		ret = 0;
+ 	ret = media_entity_pads_init(&subdev->entity,
+ 				     SUN8I_A83T_MIPI_CSI2_PAD_COUNT, pads);
 -- 
 2.35.1
 
