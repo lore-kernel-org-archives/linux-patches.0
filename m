@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16091863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64D4CC433D2;
-	Wed, 28 Dec 2022 15:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DCA71863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 046AAC433F0;
+	Wed, 28 Dec 2022 15:08:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240136;
-	bh=J7FwzpysjjsFN+SjVMjARPC9GfDv8COCLZ5rdinsQKo=;
+	s=korg; t=1672240139;
+	bh=2zKy84RmyRpjwSVC1XTMAYPM9Q+32qlA7CIizcGBS10=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VBHCOFZvl4FsjTvMZlBLEzeNviCtPzL05phrg1/VhN5NL+yT9IuimUveu45q75JTQ
-	 ZgRgr+15CcAcsi9W1Ho6NclezHuylX8zZONO3mbQKGWMI+EWF8dUPpQYUqfMJAfb4W
-	 4JNqnIu8UooPtFTebR+AoYsBNQi8R6jmxu2KRbrY=
+	b=TAp67xkAFs50H7xBkakBowtmyaylk7uAzMfPeXpkK8TxWvKAyeQhrzPjjWYQSkHe5
+	 +8ygwX+0y9gBLgqpnfqNrAh9MANQ2qOwO4FH+hxHcyGG4zR0MWAnkOfOMlMrg8SjbX
+	 +ZzKo8dANPC5XPrCdwgImTgbNeLdzA/Uoo784twU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0122/1073] MIPS: vpe-mt: fix possible memory leak while module exiting
-Date: Wed, 28 Dec 2022 15:28:30 +0100
-Message-Id: <20221228144331.351468095@linuxfoundation.org>
+Subject: [PATCH 6.1 0085/1146] ARM: dts: armada-38x: Fix assigned-addresses for every PCIe Root Port
+Date: Wed, 28 Dec 2022 15:27:04 +0100
+Message-Id: <20221228144332.455668694@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,54 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 5822e8cc84ee37338ab0bdc3124f6eec04dc232d ]
+[ Upstream commit 44f47b7a8fa4678ce4c38ea74837e4996b9df6d6 ]
 
-Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's
-bus_id string array"), the name of device is allocated dynamically,
-it need be freed when module exiting, call put_device() to give up
-reference, so that it can be freed in kobject_cleanup() when the
-refcount hit to 0. The vpe_device is static, so remove kfree() from
-vpe_device_release().
+BDF of resource in DT assigned-addresses property of Marvell PCIe Root Port
+(PCI-to-PCI bridge) should match BDF in address part in that DT node name
+as specified resource belongs to Marvell PCIe Root Port itself.
 
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 0d3d96ab0059 ("ARM: mvebu: add Device Tree description of the Armada 380/385 SoCs")
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/kernel/vpe-mt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/armada-380.dtsi | 4 ++--
+ arch/arm/boot/dts/armada-385.dtsi | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/mips/kernel/vpe-mt.c b/arch/mips/kernel/vpe-mt.c
-index bad6b0891b2b..84a82b551ec3 100644
---- a/arch/mips/kernel/vpe-mt.c
-+++ b/arch/mips/kernel/vpe-mt.c
-@@ -313,7 +313,6 @@ ATTRIBUTE_GROUPS(vpe);
- 
- static void vpe_device_release(struct device *cd)
- {
--	kfree(cd);
- }
- 
- static struct class vpe_class = {
-@@ -497,6 +496,7 @@ int __init vpe_module_init(void)
- 	device_del(&vpe_device);
- 
- out_class:
-+	put_device(&vpe_device);
- 	class_unregister(&vpe_class);
- 
- out_chrdev:
-@@ -509,7 +509,7 @@ void __exit vpe_module_exit(void)
- {
- 	struct vpe *v, *n;
- 
--	device_del(&vpe_device);
-+	device_unregister(&vpe_device);
- 	class_unregister(&vpe_class);
- 	unregister_chrdev(major, VPE_MODULE_NAME);
- 
+diff --git a/arch/arm/boot/dts/armada-380.dtsi b/arch/arm/boot/dts/armada-380.dtsi
+index ce1dddb2269b..e94f22b0e9b5 100644
+--- a/arch/arm/boot/dts/armada-380.dtsi
++++ b/arch/arm/boot/dts/armada-380.dtsi
+@@ -89,7 +89,7 @@ pcie1_intc: interrupt-controller {
+ 			/* x1 port */
+ 			pcie@2,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x40000 0 0x2000>;
++				assigned-addresses = <0x82001000 0 0x40000 0 0x2000>;
+ 				reg = <0x1000 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
+@@ -118,7 +118,7 @@ pcie2_intc: interrupt-controller {
+ 			/* x1 port */
+ 			pcie@3,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
++				assigned-addresses = <0x82001800 0 0x44000 0 0x2000>;
+ 				reg = <0x1800 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
+diff --git a/arch/arm/boot/dts/armada-385.dtsi b/arch/arm/boot/dts/armada-385.dtsi
+index 83392b92dae2..be8d607c59b2 100644
+--- a/arch/arm/boot/dts/armada-385.dtsi
++++ b/arch/arm/boot/dts/armada-385.dtsi
+@@ -93,7 +93,7 @@ pcie1_intc: interrupt-controller {
+ 			/* x1 port */
+ 			pcie2: pcie@2,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x40000 0 0x2000>;
++				assigned-addresses = <0x82001000 0 0x40000 0 0x2000>;
+ 				reg = <0x1000 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
+@@ -121,7 +121,7 @@ pcie2_intc: interrupt-controller {
+ 			/* x1 port */
+ 			pcie3: pcie@3,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
++				assigned-addresses = <0x82001800 0 0x44000 0 0x2000>;
+ 				reg = <0x1800 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
+@@ -152,7 +152,7 @@ pcie3_intc: interrupt-controller {
+ 			 */
+ 			pcie4: pcie@4,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x48000 0 0x2000>;
++				assigned-addresses = <0x82002000 0 0x48000 0 0x2000>;
+ 				reg = <0x2000 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
 -- 
 2.35.1
 
