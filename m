@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DEE31863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:40:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF1DC433EF;
-	Wed, 28 Dec 2022 15:40:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B55341863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:40:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39B4EC433D2;
+	Wed, 28 Dec 2022 15:40:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242031;
-	bh=SH6F0mFkqLs3sX2KdaXvWAv/0Z0t7EwRNUkyKpQqVqE=;
+	s=korg; t=1672242033;
+	bh=7VCj/D8hGGJ+I2TargVpu+S6ndr052GG1Gmqki9ZZvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GY00vI8NtbFKcueFOBFRiM67aWcfhxodCCBUAmo24etZBtV5Ario3ngm37y+lOUj6
-	 +y9hVR/AdyKcsZxaZMlvHsWfljqrak1fo8H1ol/GbXh+J0/dpKdwSYhPM15ntZEwd2
-	 8Xwqn38zow2mx7T9Btxq+BqoUnIV/WKVYSeatBIg=
+	b=iJWe6MAdmEOPBQ86MOJdWPY4bqd9fTEclHdR9ilNTup8PzbaJnKFjusn4geiiKsWZ
+	 fakHvk0Y6iBcfuUxT9VMAjx3UoKQAs7Y0jcNl6NY1ucU72lgMVltToWO85X9fjtOpW
+	 4GAizzwsdM/iWudZlaMNDdl+pUP2HZRSH33MELog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Li <ye.li@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0356/1073] clk: imx93: correct enet clock
-Date: Wed, 28 Dec 2022 15:32:24 +0100
-Message-Id: <20221228144337.673383529@linuxfoundation.org>
+Subject: [PATCH 5.15 555/731] powerpc/xmon: Fix -Wswitch-unreachable warning in bpt_cmds
+Date: Wed, 28 Dec 2022 15:41:02 +0100
+Message-Id: <20221228144312.625348976@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peng Fan <peng.fan@nxp.com>
+From: Gustavo A. R. Silva <gustavoars@kernel.org>
 
-[ Upstream commit 4be5d91b9433f1dc76de485e240ca6aaa2d19f65 ]
+[ Upstream commit 1c4a4a4c8410be4a231a58b23e7a30923ff954ac ]
 
-Per update Reference Mannual, correct the enet clock parent to
-wakeup_axi_root.
+When building with automatic stack variable initialization, GCC 12
+complains about variables defined outside of switch case statements.
+Move the variable into the case that uses it, which silences the warning:
 
-Fixes: 24defbe194b6 ("clk: imx: add i.MX93 clk")
-Reviewed-by: Ye Li <ye.li@nxp.com>
-Signed-off-by: Peng Fan <peng.fan@nxp.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20221028095211.2598312-3-peng.fan@oss.nxp.com
+arch/powerpc/xmon/xmon.c: In function ‘bpt_cmds’:
+arch/powerpc/xmon/xmon.c:1529:13: warning: statement will never be executed [-Wswitch-unreachable]
+ 1529 |         int mode;
+      |             ^~~~
+
+Fixes: 09b6c1129f89 ("powerpc/xmon: Fix compile error with PPC_8xx=y")
+Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/YySE6FHiOcbWWR+9@work
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx93.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/xmon/xmon.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx93.c b/drivers/clk/imx/clk-imx93.c
-index 8d67b065f7b6..2e99c3443d3c 100644
---- a/drivers/clk/imx/clk-imx93.c
-+++ b/drivers/clk/imx/clk-imx93.c
-@@ -229,7 +229,7 @@ static const struct imx93_clk_ccgr {
- 	{ IMX93_CLK_AUD_XCVR_GATE,	"aud_xcvr",	"audio_xcvr_root",	0x9b80, },
- 	{ IMX93_CLK_SPDIF_GATE,		"spdif",	"spdif_root",		0x9c00, },
- 	{ IMX93_CLK_HSIO_32K_GATE,	"hsio_32k",	"osc_32k",		0x9dc0, },
--	{ IMX93_CLK_ENET1_GATE,		"enet1",	"enet_root",		0x9e00, },
-+	{ IMX93_CLK_ENET1_GATE,		"enet1",	"wakeup_axi_root",	0x9e00, },
- 	{ IMX93_CLK_ENET_QOS_GATE,	"enet_qos",	"wakeup_axi_root",	0x9e40, },
- 	{ IMX93_CLK_SYS_CNT_GATE,	"sys_cnt",	"osc_24m",		0x9e80, },
- 	{ IMX93_CLK_TSTMR1_GATE,	"tstmr1",	"bus_aon_root",		0x9ec0, },
+diff --git a/arch/powerpc/xmon/xmon.c b/arch/powerpc/xmon/xmon.c
+index 8b28ff9d98d1..3c085e1e5232 100644
+--- a/arch/powerpc/xmon/xmon.c
++++ b/arch/powerpc/xmon/xmon.c
+@@ -1528,9 +1528,9 @@ bpt_cmds(void)
+ 	cmd = inchar();
+ 
+ 	switch (cmd) {
+-	static const char badaddr[] = "Only kernel addresses are permitted for breakpoints\n";
+-	int mode;
+-	case 'd':	/* bd - hardware data breakpoint */
++	case 'd': {	/* bd - hardware data breakpoint */
++		static const char badaddr[] = "Only kernel addresses are permitted for breakpoints\n";
++		int mode;
+ 		if (xmon_is_ro) {
+ 			printf(xmon_ro_msg);
+ 			break;
+@@ -1563,6 +1563,7 @@ bpt_cmds(void)
+ 
+ 		force_enable_xmon();
+ 		break;
++	}
+ 
+ 	case 'i':	/* bi - hardware instr breakpoint */
+ 		if (xmon_is_ro) {
 -- 
 2.35.1
 
