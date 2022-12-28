@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310691863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC2A9C433EF;
-	Wed, 28 Dec 2022 15:10:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755411863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF29AC433D2;
+	Wed, 28 Dec 2022 15:10:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240232;
-	bh=HYvGODctq/5rLDUBG29sPClg+MD7Rh8TIZ7V34lHyK4=;
+	s=korg; t=1672240237;
+	bh=In8AWe4cx5K5Jc3dbiscc2C85Y+3tmNLBFVVzKEGWHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f9ytx+4vqXCwuR3trtyEHZlc+omZhxbs4NzLnaOjULZ7EAnp+YwX63XLSYACUI365
-	 sxnVAnqQbtzNgu2Cx/XHkH7fDFbfnk/d28xxChJpMH8qy76pV533Ofhi4SRRvyM/IP
-	 BvD4Ed7GHQxTMl+44NKOP7hFeYIya6ziNZW0aIgM=
+	b=gmvz/aCDKnUPUel4nBsjNU7NN0Kg7hLX7yWk4Anb6XaUwj25bjzibTDRlO/3ETolg
+	 HxHctWYf3tzobXYWAFqgV7wNm8iGFV3prRwWhOcLEsiNs8bpk4Ou0HVIS4Wk2AYU1h
+	 MzkGHrCDtBZINUohhjxiUM3BcZZu7xuwfO+x0Ki0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Sven Peter <sven@svenpeter.dev>,
-	Hector Martin <marcan@marcan.st>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0092/1146] soc: apple: sart: Stop casting function pointer signatures
-Date: Wed, 28 Dec 2022 15:27:11 +0100
-Message-Id: <20221228144332.641934526@linuxfoundation.org>
+Subject: [PATCH 6.0 0137/1073] irqchip/wpcm450: Fix memory leak in wpcm450_aic_of_init()
+Date: Wed, 28 Dec 2022 15:28:45 +0100
+Message-Id: <20221228144331.752114235@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,44 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Peter <sven@svenpeter.dev>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit 422d0b860dc223b5dfc6d083697cae258bb5a4a1 ]
+[ Upstream commit 4208d4faf36573a507b5e5de17abe342e9276759 ]
 
-Fixes: b170143ae111 ("soc: apple: Add SART driver")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Sven Peter <sven@svenpeter.dev>
-Signed-off-by: Hector Martin <marcan@marcan.st>
+If of_iomap() failed, 'aic' should be freed before return. Otherwise
+there is a memory leak.
+
+Fixes: fead4dd49663 ("irqchip: Add driver for WPCM450 interrupt controller")
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Reviewed-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20221115092532.1704032-1-weiyongjun@huaweicloud.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/apple/sart.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-wpcm450-aic.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/soc/apple/sart.c b/drivers/soc/apple/sart.c
-index 83804b16ad03..afa111736899 100644
---- a/drivers/soc/apple/sart.c
-+++ b/drivers/soc/apple/sart.c
-@@ -164,6 +164,11 @@ static int apple_sart_probe(struct platform_device *pdev)
- 	return 0;
- }
- 
-+static void apple_sart_put_device(void *dev)
-+{
-+	put_device(dev);
-+}
-+
- struct apple_sart *devm_apple_sart_get(struct device *dev)
- {
- 	struct device_node *sart_node;
-@@ -187,7 +192,7 @@ struct apple_sart *devm_apple_sart_get(struct device *dev)
- 		return ERR_PTR(-EPROBE_DEFER);
+diff --git a/drivers/irqchip/irq-wpcm450-aic.c b/drivers/irqchip/irq-wpcm450-aic.c
+index 0dcbeb1a05a1..91df62a64cd9 100644
+--- a/drivers/irqchip/irq-wpcm450-aic.c
++++ b/drivers/irqchip/irq-wpcm450-aic.c
+@@ -146,6 +146,7 @@ static int __init wpcm450_aic_of_init(struct device_node *node,
+ 	aic->regs = of_iomap(node, 0);
+ 	if (!aic->regs) {
+ 		pr_err("Failed to map WPCM450 AIC registers\n");
++		kfree(aic);
+ 		return -ENOMEM;
  	}
  
--	ret = devm_add_action_or_reset(dev, (void (*)(void *))put_device,
-+	ret = devm_add_action_or_reset(dev, apple_sart_put_device,
- 				       &sart_pdev->dev);
- 	if (ret)
- 		return ERR_PTR(ret);
 -- 
 2.35.1
 
