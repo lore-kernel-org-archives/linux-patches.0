@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1B101863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:44:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47FC8C433EF;
-	Wed, 28 Dec 2022 15:44:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6601E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:44:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC147C433EF;
+	Wed, 28 Dec 2022 15:44:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242248;
-	bh=sppACabbvLVZMSWXDsVX8ygqNvPOOwa3+S49rvibeFo=;
+	s=korg; t=1672242251;
+	bh=vguymVk6W8AEmYcmqZEk9CMx6BepfOetrT5xctjC3zo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gy5kgVIo/qCbxSv6Cn6OrWsvmKUVdc0HpTXhqoNtq1iorTsellmvR1eiYlBJNNxcj
-	 9zN13xjcD4oD2uapKVprCyrgjw7R8PfY9Ouh26VQ4Rik588dcibu2yKXYTH40bbfV0
-	 l5nddX7wc1wmikHp34/6JCyq2VsqHHSyeCbr5TjI=
+	b=w+9dXwopec1MRM2gSux4g31zU1bOomAWW4CgseK4W9uJb+itsNeyIvo4HpbjFpvp3
+	 qzKrMfiLMxErR5DlhNxQFCaBIABlVae7iFxpH2h6Q0qwobyDEreq+k9SNVpe+0fNjj
+	 gpkb2YIGgTMS0PuvEZYHpXC8BZ2xCBdr3Psxr8JE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0346/1146] wifi: ath10k: Fix return value in ath10k_pci_init()
-Date: Wed, 28 Dec 2022 15:31:25 +0100
-Message-Id: <20221228144339.558771380@linuxfoundation.org>
+Subject: [PATCH 5.15 580/731] rtc: pic32: Move devm_rtc_allocate_device earlier in pic32_rtc_probe()
+Date: Wed, 28 Dec 2022 15:41:27 +0100
+Message-Id: <20221228144313.364733178@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,61 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 2af7749047d8d6ad43feff69f555a13a6a6c2831 ]
+[ Upstream commit 90cd5c88830140c9fade92a8027e0fb2c6e4cc49 ]
 
-This driver is attempting to register to support two different buses.
-if either of these is successful then ath10k_pci_init() should return 0
-so that hardware attached to the successful bus can be probed and
-supported. only if both of these are unsuccessful should ath10k_pci_init()
-return an errno.
+The pic32_rtc_enable(pdata, 0) and clk_disable_unprepare(pdata->clk)
+should be called in the error handling of devm_rtc_allocate_device(),
+so we should move devm_rtc_allocate_device earlier in pic32_rtc_probe()
+to fix it.
 
-Fixes: 0b523ced9a3c ("ath10k: add basic skeleton to support ahb")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Reviewed-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20221110061926.18163-1-xiujianfeng@huawei.com
+Fixes: 6515e23b9fde ("rtc: pic32: convert to devm_rtc_allocate_device")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221123015953.1998521-1-cuigaosheng1@huawei.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/pci.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/rtc/rtc-pic32.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
-index e56c6a6b1379..728d607289c3 100644
---- a/drivers/net/wireless/ath/ath10k/pci.c
-+++ b/drivers/net/wireless/ath/ath10k/pci.c
-@@ -3792,18 +3792,22 @@ static struct pci_driver ath10k_pci_driver = {
+diff --git a/drivers/rtc/rtc-pic32.c b/drivers/rtc/rtc-pic32.c
+index 7fb9145c43bd..fa351ac20158 100644
+--- a/drivers/rtc/rtc-pic32.c
++++ b/drivers/rtc/rtc-pic32.c
+@@ -324,16 +324,16 @@ static int pic32_rtc_probe(struct platform_device *pdev)
  
- static int __init ath10k_pci_init(void)
- {
--	int ret;
-+	int ret1, ret2;
+ 	spin_lock_init(&pdata->alarm_lock);
  
--	ret = pci_register_driver(&ath10k_pci_driver);
--	if (ret)
-+	ret1 = pci_register_driver(&ath10k_pci_driver);
-+	if (ret1)
- 		printk(KERN_ERR "failed to register ath10k pci driver: %d\n",
--		       ret);
-+		       ret1);
- 
--	ret = ath10k_ahb_init();
--	if (ret)
--		printk(KERN_ERR "ahb init failed: %d\n", ret);
-+	ret2 = ath10k_ahb_init();
-+	if (ret2)
-+		printk(KERN_ERR "ahb init failed: %d\n", ret2);
- 
--	return ret;
-+	if (ret1 && ret2)
-+		return ret1;
++	pdata->rtc = devm_rtc_allocate_device(&pdev->dev);
++	if (IS_ERR(pdata->rtc))
++		return PTR_ERR(pdata->rtc);
 +
-+	/* registered to at least one bus */
-+	return 0;
- }
- module_init(ath10k_pci_init);
+ 	clk_prepare_enable(pdata->clk);
  
+ 	pic32_rtc_enable(pdata, 1);
+ 
+ 	device_init_wakeup(&pdev->dev, 1);
+ 
+-	pdata->rtc = devm_rtc_allocate_device(&pdev->dev);
+-	if (IS_ERR(pdata->rtc))
+-		return PTR_ERR(pdata->rtc);
+-
+ 	pdata->rtc->ops = &pic32_rtcops;
+ 	pdata->rtc->range_min = RTC_TIMESTAMP_BEGIN_2000;
+ 	pdata->rtc->range_max = RTC_TIMESTAMP_END_2099;
 -- 
 2.35.1
 
