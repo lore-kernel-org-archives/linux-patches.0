@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96C241875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:53:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18556C433D2;
-	Wed, 28 Dec 2022 15:53:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562B01875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:53:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5AC3C433D2;
+	Wed, 28 Dec 2022 15:53:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242831;
-	bh=i4kn/bkOE2FWuqdT+xmrCUi/bo4Ef6WDtqiFk35+D7k=;
+	s=korg; t=1672242834;
+	bh=ynHIJx1I+Jux3bkepZzlnnnuecWyGY1/PIgBQuaKz48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rweTbBBIdR+6FQHZkfGcyh28rFuanjuDH53xlEpSzG2iDO3Y7hin+SBX9jhR4tF8k
-	 uIsT1Wd0FSRKhsnGq5DmUMQJRYswtbAT4twAgzqK9b7w8dnKJ+JsxdyDnmm131H9D5
-	 2Ml6kYLZvbU/+P1U5ZSKauIpE5bwOba50iWQgmT4=
+	b=t1zfq/HDgGkPO8aJubxRzi98PCkA+E7t6HIeAQk41V9p4VxlzOEEzcMm35OEikQnP
+	 2plsBUxZ+TH/53DpLRAeGjqXvOpgA7A76wgkd4hnYsvuu76fowrlORYbxYIsdPioin
+	 weddfHrbeDoYjsNikV4mSf4ThFbiYvG5ypfRp6Ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0421/1146] drm/msm/mdp5: fix reading hw revision on db410c platform
-Date: Wed, 28 Dec 2022 15:32:40 +0100
-Message-Id: <20221228144341.610082955@linuxfoundation.org>
+Subject: [PATCH 6.0 0460/1073] hsr: Synchronize sequence number updates.
+Date: Wed, 28 Dec 2022 15:34:08 +0100
+Message-Id: <20221228144340.531851334@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,71 +35,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 5d8c0417ea62fed3cec7f5daed06a20477efeb39 ]
+[ Upstream commit 5c7aa13210c3abdd34fd421f62347665ec6eb551 ]
 
-Since the commit commit c6122688f265 ("drm/msm/mdp5: stop overriding
-drvdata") reading the MDP5 hw revision on db410c will crash the board
-as the MDSS_GDSC is not enabled. Revert a part of the offending commit
-(moving rpm enablement) and set priv->kms earlier. This make it possible
-to use pm_runtime_get_sync() during read_mdp_hw_revision(), which will
-power up both the MDP5 and MDSS devices.
+hsr_register_frame_out() compares new sequence_nr vs the old one
+recorded in hsr_node::seq_out and if the new sequence_nr is higher then
+it will be written to hsr_node::seq_out as the new value.
 
-Fixes: c6122688f265 ("drm/msm/mdp5: stop overriding drvdata")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/512985/
-Link: https://lore.kernel.org/r/20221125000213.252115-1-dmitry.baryshkov@linaro.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+This operation isn't locked so it is possible that two frames with the
+same sequence number arrive (via the two slave devices) and are fed to
+hsr_register_frame_out() at the same time. Both will pass the check and
+update the sequence counter later to the same value. As a result the
+content of the same packet is fed into the stack twice.
+
+This was noticed by running ping and observing DUP being reported from
+time to time.
+
+Instead of using the hsr_priv::seqnr_lock for the whole receive path (as
+it is for sending in the master node) add an additional lock that is only
+used for sequence number checks and updates.
+
+Add a per-node lock that is used during sequence number reads and
+updates.
+
+Fixes: f421436a591d3 ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ net/hsr/hsr_framereg.c | 9 ++++++++-
+ net/hsr/hsr_framereg.h | 2 ++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index b46f983f2b46..29ae5c9613f3 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -519,10 +519,9 @@ static void read_mdp_hw_revision(struct mdp5_kms *mdp5_kms,
- 	struct device *dev = &mdp5_kms->pdev->dev;
- 	u32 version;
+diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
+index f2dd846ff903..39a6088080e9 100644
+--- a/net/hsr/hsr_framereg.c
++++ b/net/hsr/hsr_framereg.c
+@@ -157,6 +157,7 @@ static struct hsr_node *hsr_add_node(struct hsr_priv *hsr,
+ 		return NULL;
  
--	/* Manually enable the MDP5, as pm runtime isn't usable yet. */
--	mdp5_enable(mdp5_kms);
-+	pm_runtime_get_sync(dev);
- 	version = mdp5_read(mdp5_kms, REG_MDP5_HW_VERSION);
--	mdp5_disable(mdp5_kms);
-+	pm_runtime_put_sync(dev);
+ 	ether_addr_copy(new_node->macaddress_A, addr);
++	spin_lock_init(&new_node->seq_out_lock);
  
- 	*major = FIELD(version, MDP5_HW_VERSION_MAJOR);
- 	*minor = FIELD(version, MDP5_HW_VERSION_MINOR);
-@@ -839,6 +838,12 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
- 	 */
- 	clk_set_rate(mdp5_kms->core_clk, 200000000);
+ 	/* We are only interested in time diffs here, so use current jiffies
+ 	 * as initialization. (0 could trigger an spurious ring error warning).
+@@ -353,6 +354,7 @@ void hsr_handle_sup_frame(struct hsr_frame_info *frame)
+ 	}
  
-+	/* set uninit-ed kms */
-+	priv->kms = &mdp5_kms->base.base;
-+
-+	pm_runtime_enable(&pdev->dev);
-+	mdp5_kms->rpm_enabled = true;
-+
- 	read_mdp_hw_revision(mdp5_kms, &major, &minor);
+ 	ether_addr_copy(node_real->macaddress_B, ethhdr->h_source);
++	spin_lock_bh(&node_real->seq_out_lock);
+ 	for (i = 0; i < HSR_PT_PORTS; i++) {
+ 		if (!node_curr->time_in_stale[i] &&
+ 		    time_after(node_curr->time_in[i], node_real->time_in[i])) {
+@@ -363,6 +365,7 @@ void hsr_handle_sup_frame(struct hsr_frame_info *frame)
+ 		if (seq_nr_after(node_curr->seq_out[i], node_real->seq_out[i]))
+ 			node_real->seq_out[i] = node_curr->seq_out[i];
+ 	}
++	spin_unlock_bh(&node_real->seq_out_lock);
+ 	node_real->addr_B_port = port_rcv->type;
  
- 	mdp5_kms->cfg = mdp5_cfg_init(mdp5_kms, major, minor);
-@@ -887,12 +892,6 @@ static int mdp5_init(struct platform_device *pdev, struct drm_device *dev)
- 	if (ret)
- 		goto fail;
+ 	spin_lock_bh(&hsr->list_lock);
+@@ -456,13 +459,17 @@ void hsr_register_frame_in(struct hsr_node *node, struct hsr_port *port,
+ int hsr_register_frame_out(struct hsr_port *port, struct hsr_node *node,
+ 			   u16 sequence_nr)
+ {
++	spin_lock_bh(&node->seq_out_lock);
+ 	if (seq_nr_before_or_eq(sequence_nr, node->seq_out[port->type]) &&
+ 	    time_is_after_jiffies(node->time_out[port->type] +
+-	    msecs_to_jiffies(HSR_ENTRY_FORGET_TIME)))
++	    msecs_to_jiffies(HSR_ENTRY_FORGET_TIME))) {
++		spin_unlock_bh(&node->seq_out_lock);
+ 		return 1;
++	}
  
--	/* set uninit-ed kms */
--	priv->kms = &mdp5_kms->base.base;
--
--	pm_runtime_enable(&pdev->dev);
--	mdp5_kms->rpm_enabled = true;
--
+ 	node->time_out[port->type] = jiffies;
+ 	node->seq_out[port->type] = sequence_nr;
++	spin_unlock_bh(&node->seq_out_lock);
  	return 0;
- fail:
- 	if (mdp5_kms)
+ }
+ 
+diff --git a/net/hsr/hsr_framereg.h b/net/hsr/hsr_framereg.h
+index b5f902397bf1..b23556251d62 100644
+--- a/net/hsr/hsr_framereg.h
++++ b/net/hsr/hsr_framereg.h
+@@ -69,6 +69,8 @@ void prp_update_san_info(struct hsr_node *node, bool is_sup);
+ 
+ struct hsr_node {
+ 	struct list_head	mac_list;
++	/* Protect R/W access to seq_out */
++	spinlock_t		seq_out_lock;
+ 	unsigned char		macaddress_A[ETH_ALEN];
+ 	unsigned char		macaddress_B[ETH_ALEN];
+ 	/* Local slave through which AddrB frames are received from this node */
 -- 
 2.35.1
 
