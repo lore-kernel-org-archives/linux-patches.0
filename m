@@ -1,30 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1654B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DEDFC433D2;
-	Wed, 28 Dec 2022 15:08:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A622B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05A77C433D2;
+	Wed, 28 Dec 2022 15:08:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240107;
-	bh=W/Xnmc97F+AtLcG8E2pp6biNEpuKZmfhp14G8o0Nryc=;
+	s=korg; t=1672240110;
+	bh=eccMzzW7OTu/ILpwwXrtUuwxSel4GtIOVIcZ8FAaf2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A8X2Q2TqJa+KEs1Zg/y5O8RINkGtsRNp/EjT6nfhsbOuqnc6blHuqIHBG1tCk84dN
-	 T0SQhiImXGEK54oRdQr9DIBbMUiQkuI2bM+rhSZucpzyjkZW4Isan7KgP1ENYsPp2D
-	 Eqq0vZxabflvhjGiZXqKF36glvnsZrzVnNQKIHdw=
+	b=OiitDJH3mFaD7kw7Voe+YDsb+v93J/Zj7eEwxXShShVoN41U4/t0KYRKXZmeWYx6P
+	 uPgdzcPDYgPIWNo/6vXSd/Kx/oISctHMZj0v3VnvinQFszJwMjgPU4snp6mYnLa9u/
+	 DzTU9X9IPu+kgrpT7gRS7PRxCwfkWpun/g+c/LBw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 310/731] regulator: qcom-labibb: Fix missing of_node_put() in qcom_labibb_regulator_probe()
-Date: Wed, 28 Dec 2022 15:36:57 +0100
-Message-Id: <20221228144305.563372224@linuxfoundation.org>
+Subject: [PATCH 6.0 0119/1073] ocfs2: fix memory leak in ocfs2_stack_glue_init()
+Date: Wed, 28 Dec 2022 15:28:27 +0100
+Message-Id: <20221228144331.271093656@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,34 +42,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit cf34ac6aa2b12fb0c3aacfdcae8acd7904b949ec ]
+[ Upstream commit 13b6269dd022aaa69ca8d1df374ab327504121cf ]
 
-The reg_node needs to be released through of_node_put() in the error
-handling path when of_irq_get_byname() failed.
+ocfs2_table_header should be free in ocfs2_stack_glue_init() if
+ocfs2_sysfs_init() failed, otherwise kmemleak will report memleak.
 
-Fixes: 390af53e0411 ("regulator: qcom-labibb: Implement short-circuit and over-current IRQs")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Link: https://lore.kernel.org/r/20221203062109.115043-1-yuancan@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+BUG: memory leak
+unreferenced object 0xffff88810eeb5800 (size 128):
+  comm "modprobe", pid 4507, jiffies 4296182506 (age 55.888s)
+  hex dump (first 32 bytes):
+    c0 40 14 a0 ff ff ff ff 00 00 00 00 01 00 00 00  .@..............
+    01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<000000001e59e1cd>] __register_sysctl_table+0xca/0xef0
+    [<00000000c04f70f7>] 0xffffffffa0050037
+    [<000000001bd12912>] do_one_initcall+0xdb/0x480
+    [<0000000064f766c9>] do_init_module+0x1cf/0x680
+    [<000000002ba52db0>] load_module+0x6441/0x6f20
+    [<000000009772580d>] __do_sys_finit_module+0x12f/0x1c0
+    [<00000000380c1f22>] do_syscall_64+0x3f/0x90
+    [<000000004cf473bc>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Link: https://lkml.kernel.org/r/41651ca1-432a-db34-eb97-d35744559de1@linux.alibaba.com
+Fixes: 3878f110f71a ("ocfs2: Move the hb_ctl_path sysctl into the stack glue.")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/qcom-labibb-regulator.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/ocfs2/stackglue.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/qcom-labibb-regulator.c b/drivers/regulator/qcom-labibb-regulator.c
-index 639b71eb41ff..bcf7140f3bc9 100644
---- a/drivers/regulator/qcom-labibb-regulator.c
-+++ b/drivers/regulator/qcom-labibb-regulator.c
-@@ -822,6 +822,7 @@ static int qcom_labibb_regulator_probe(struct platform_device *pdev)
- 			if (irq == 0)
- 				irq = -EINVAL;
+diff --git a/fs/ocfs2/stackglue.c b/fs/ocfs2/stackglue.c
+index dd77b7aaabf5..3633da5f7117 100644
+--- a/fs/ocfs2/stackglue.c
++++ b/fs/ocfs2/stackglue.c
+@@ -669,6 +669,8 @@ static struct ctl_table_header *ocfs2_table_header;
  
-+			of_node_put(reg_node);
- 			return dev_err_probe(vreg->dev, irq,
- 					     "Short-circuit irq not found.\n");
- 		}
+ static int __init ocfs2_stack_glue_init(void)
+ {
++	int ret;
++
+ 	strcpy(cluster_stack_name, OCFS2_STACK_PLUGIN_O2CB);
+ 
+ 	ocfs2_table_header = register_sysctl("fs/ocfs2/nm", ocfs2_nm_table);
+@@ -678,7 +680,11 @@ static int __init ocfs2_stack_glue_init(void)
+ 		return -ENOMEM; /* or something. */
+ 	}
+ 
+-	return ocfs2_sysfs_init();
++	ret = ocfs2_sysfs_init();
++	if (ret)
++		unregister_sysctl_table(ocfs2_table_header);
++
++	return ret;
+ }
+ 
+ static void __exit ocfs2_stack_glue_exit(void)
 -- 
 2.35.1
 
