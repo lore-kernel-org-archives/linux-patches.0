@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D611863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C977C433D2;
-	Wed, 28 Dec 2022 15:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92D241863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:00:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13AA3C433EF;
+	Wed, 28 Dec 2022 15:00:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239653;
-	bh=GhP9v5VqYMAKXSxuD2sUvd1aiHKyS/1RUvVoJhU0uoQ=;
+	s=korg; t=1672239656;
+	bh=YZHBE/QsmYJTIOgxlNvDplpzhbgG3WKEoKETH6NkGUU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kef8uGJj/W4+yXQXE2IQkjnC06tWzu7fYKVIH3SmnSuNhXRU7K25l0cGtT8uCbwex
-	 aXAdau8LtkpWWuJwFKfe7WrxjyhS2rhkbRtNaiYy/Mv6iSp8Yy8BWxM6RmT9wGW1j7
-	 yAGHx68TlJFlx/aYQXFBbtsWKRg0ZOLloZMoY+P8=
+	b=PHKMIYvcRd4bjw5OkL6Vi/A8CJtl6jfnNkitw9YYOSvFZw2xBKftXEOjhe4Aztwiw
+	 bxTKgEZeyfaotkg8lv3MjMrZH6+us3tuL06ErfVzF2VfrU5TuEr80K4m7eSEWnfD10
+	 5S1yk7TIPHY/hnPp9focWj2jifI8xib6tFS5xPNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Guchun Chen <guchun.chen@amd.com>,
+	Evan Quan <evan.quan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 236/731] clk: imx8mn: fix imx8mn_enet_phy_sels clocks list
-Date: Wed, 28 Dec 2022 15:35:43 +0100
-Message-Id: <20221228144303.406253484@linuxfoundation.org>
+Subject: [PATCH 5.15 254/731] drm/amd/pm/smu11: BACO is supported when its in BACO state
+Date: Wed, 28 Dec 2022 15:36:01 +0100
+Message-Id: <20221228144303.925084741@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,54 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Guchun Chen <guchun.chen@amd.com>
 
-[ Upstream commit 2626cf67f20b28446dfc3a5b9493dd535cdb747b ]
+[ Upstream commit 6dca7efe6e522bf213c7dab691fa580d82f48f74 ]
 
-According to the "Clock Root" table of the reference manual (document
-IMX8MNRM Rev 2, 07/2022):
+Return true early if ASIC is in BACO state already, no need
+to talk to SMU. It can fix the issue that driver was not
+calling BACO exit at all in runtime pm resume, and a timing
+issue leading to a PCI AER error happened eventually.
 
-     Clock Root         offset     Source Select (CCM_TARGET_ROOTn[MUX])
-        ...              ...                    ...
- ENET_PHY_REF_CLK_ROOT  0xAA80            000 - 24M_REF_CLK
-                                          001 - SYSTEM_PLL2_DIV20
-                                          010 - SYSTEM_PLL2_DIV8
-                                          011 - SYSTEM_PLL2_DIV5
-                                          100 - SYSTEM_PLL2_DIV2
-                                          101 - AUDIO_PLL1_CLK
-                                          110 - VIDEO_PLL_CLK
-                                          111 - AUDIO_PLL2_CLK
-        ...              ...                    ...
-
-while the imx8mn_enet_phy_sels list didn't contained audio_pll1_out for
-source select bits 101b.
-
-Fixes: 96d6392b54dbb ("clk: imx: Add support for i.MX8MN clock driver")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Acked-by: Marco Felsch <m.felsch@pengutronix.de>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20221117113637.1978703-6-dario.binacchi@amarulasolutions.com
+Fixes: 8795e182b02d ("PCI/portdrv: Don't disable AER reporting in get_port_device_capability()")
+Suggested-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Guchun Chen <guchun.chen@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Reviewed-by: Evan Quan <evan.quan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mn.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/clk/imx/clk-imx8mn.c b/drivers/clk/imx/clk-imx8mn.c
-index 4016fb124932..52903146fdba 100644
---- a/drivers/clk/imx/clk-imx8mn.c
-+++ b/drivers/clk/imx/clk-imx8mn.c
-@@ -140,8 +140,8 @@ static const char * const imx8mn_enet_timer_sels[] = {"osc_24m", "sys_pll2_100m"
- 						      "clk_ext4", "video_pll1_out", };
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c b/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
+index 614c3d049514..83fa3d20a1d5 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu11/smu_v11_0.c
+@@ -1595,6 +1595,10 @@ bool smu_v11_0_baco_is_support(struct smu_context *smu)
+ 	if (amdgpu_sriov_vf(smu->adev) || !smu_baco->platform_support)
+ 		return false;
  
- static const char * const imx8mn_enet_phy_sels[] = {"osc_24m", "sys_pll2_50m", "sys_pll2_125m",
--						    "sys_pll2_200m", "sys_pll2_500m", "video_pll1_out",
--						    "audio_pll2_out", };
-+						    "sys_pll2_200m", "sys_pll2_500m", "audio_pll1_out",
-+						    "video_pll_out", "audio_pll2_out", };
- 
- static const char * const imx8mn_nand_sels[] = {"osc_24m", "sys_pll2_500m", "audio_pll1_out",
- 						"sys_pll1_400m", "audio_pll2_out", "sys_pll3_out",
++	/* return true if ASIC is in BACO state already */
++	if (smu_v11_0_baco_get_state(smu) == SMU_BACO_STATE_ENTER)
++		return true;
++
+ 	/* Arcturus does not support this bit mask */
+ 	if (smu_cmn_feature_is_supported(smu, SMU_FEATURE_BACO_BIT) &&
+ 	   !smu_cmn_feature_is_enabled(smu, SMU_FEATURE_BACO_BIT))
 -- 
 2.35.1
 
