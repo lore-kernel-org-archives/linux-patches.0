@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5522F1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:38:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9512C433EF;
-	Wed, 28 Dec 2022 16:38:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E575C1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:38:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6741EC433D2;
+	Wed, 28 Dec 2022 16:38:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245504;
-	bh=Rg8+MlLZcxNWeaWneO5vyQy1f/u1KBeebCoUCwQ8y3I=;
+	s=korg; t=1672245506;
+	bh=gWX7FAuymLzIe0lTlL9cbB0Xr8qLpez2pdwNDs2A8Yw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dy5X2mRqdFQBf410vk4fGl4ZQMmUAA4JRj3QriajjLrLCdeqNPlZUinEc4PUkNQUF
-	 VitgfrHFCwhkT8m68/A2/NO92Wt8/hualCHg01Lh7yncRGpQDdSFl5HIebeY03rHwp
-	 iULGOvCPcufm3GGiFJkt87ymGHTH+/TlvLPi3k5s=
+	b=shyLc7LfRCwtq9dw3aOk9yvXq0HVvYRFmbjiDUHEmzBEWRbSJWyVloGkxXULIjhw4
+	 KDnVs7BOS754JvBYcd/P4OYnxea7s2+TbayW9F1SUN2F5PGYzA6ElvWsNBmancvGVE
+	 trDRTE0WzzS/DFc4QB5WMnTOHEtaQYegGgrVRDmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mukesh Ojha <quic_mojha@quicinc.com>,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	Sibi Sankar <quic_sibis@quicinc.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Doug Brown <doug@schmorgal.com>,
+	Christian Gmeiner <christian.gmeiner@gmail.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0872/1146] remoteproc: qcom_q6v5_pas: disable wakeup on probe fail or remove
-Date: Wed, 28 Dec 2022 15:40:11 +0100
-Message-Id: <20221228144353.851882344@linuxfoundation.org>
+Subject: [PATCH 6.0 0906/1073] drm/etnaviv: add missing quirks for GC300
+Date: Wed, 28 Dec 2022 15:41:34 +0100
+Message-Id: <20221228144352.639673697@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,56 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Doug Brown <doug@schmorgal.com>
 
-[ Upstream commit 9a70551996e699fda262e8d54bbd41739d7aad6d ]
+[ Upstream commit cc7d3fb446a91f24978a6aa59cbb578f92e22242 ]
 
-Leaving wakeup enabled during probe fail (-EPROBE_DEFER) or remove makes
-the subsequent probe fail.
+The GC300's features register doesn't specify that a 2D pipe is
+available, and like the GC600, its idle register reports zero bits where
+modules aren't present.
 
-[    3.749454] remoteproc remoteproc0: releasing 3000000.remoteproc
-[    3.752949] qcom_q6v5_pas: probe of 3000000.remoteproc failed with error -17
-[    3.878935] remoteproc remoteproc0: releasing 4080000.remoteproc
-[    3.887602] qcom_q6v5_pas: probe of 4080000.remoteproc failed with error -17
-[    4.319552] remoteproc remoteproc0: releasing 8300000.remoteproc
-[    4.332716] qcom_q6v5_pas: probe of 8300000.remoteproc failed with error -17
-
-Fix this by disabling wakeup in both cases so the driver can properly
-probe on the next try.
-
-Fixes: a781e5aa5911 ("remoteproc: core: Prevent system suspend during remoteproc recovery")
-Fixes: dc86c129b4fb ("remoteproc: qcom: pas: Mark devices as wakeup capable")
-Reviewed-by: Mukesh Ojha <quic_mojha@quicinc.com>
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Reviewed-by: Caleb Connolly <caleb.connolly@linaro.org>
-Reviewed-by: Sibi Sankar <quic_sibis@quicinc.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221118090816.100012-1-luca.weiss@fairphone.com
+Signed-off-by: Doug Brown <doug@schmorgal.com>
+Reviewed-by: Christian Gmeiner <christian.gmeiner@gmail.com>
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_pas.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/etnaviv/etnaviv_gpu.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
-index 6afd0941e552..67f5152e2398 100644
---- a/drivers/remoteproc/qcom_q6v5_pas.c
-+++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -556,6 +556,7 @@ static int adsp_probe(struct platform_device *pdev)
- detach_proxy_pds:
- 	adsp_pds_detach(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
- free_rproc:
-+	device_init_wakeup(adsp->dev, false);
- 	rproc_free(rproc);
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
+index 37018bc55810..f667e7906d1f 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
+@@ -416,6 +416,12 @@ static void etnaviv_hw_identify(struct etnaviv_gpu *gpu)
+ 	if (gpu->identity.model == chipModel_GC700)
+ 		gpu->identity.features &= ~chipFeatures_FAST_CLEAR;
  
- 	return ret;
-@@ -572,6 +573,7 @@ static int adsp_remove(struct platform_device *pdev)
- 	qcom_remove_sysmon_subdev(adsp->sysmon);
- 	qcom_remove_smd_subdev(adsp->rproc, &adsp->smd_subdev);
- 	qcom_remove_ssr_subdev(adsp->rproc, &adsp->ssr_subdev);
-+	device_init_wakeup(adsp->dev, false);
- 	rproc_free(adsp->rproc);
++	/* These models/revisions don't have the 2D pipe bit */
++	if ((gpu->identity.model == chipModel_GC500 &&
++	     gpu->identity.revision <= 2) ||
++	    gpu->identity.model == chipModel_GC300)
++		gpu->identity.features |= chipFeatures_PIPE_2D;
++
+ 	if ((gpu->identity.model == chipModel_GC500 &&
+ 	     gpu->identity.revision < 2) ||
+ 	    (gpu->identity.model == chipModel_GC300 &&
+@@ -449,8 +455,9 @@ static void etnaviv_hw_identify(struct etnaviv_gpu *gpu)
+ 				gpu_read(gpu, VIVS_HI_CHIP_MINOR_FEATURE_5);
+ 	}
  
- 	return 0;
+-	/* GC600 idle register reports zero bits where modules aren't present */
+-	if (gpu->identity.model == chipModel_GC600)
++	/* GC600/300 idle register reports zero bits where modules aren't present */
++	if (gpu->identity.model == chipModel_GC600 ||
++	    gpu->identity.model == chipModel_GC300)
+ 		gpu->idle_mask = VIVS_HI_IDLE_STATE_TX |
+ 				 VIVS_HI_IDLE_STATE_RA |
+ 				 VIVS_HI_IDLE_STATE_SE |
 -- 
 2.35.1
 
