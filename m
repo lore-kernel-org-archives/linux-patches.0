@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F9031863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:52:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26355C433EF;
-	Wed, 28 Dec 2022 14:52:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E2411863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:52:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88DFC433EF;
+	Wed, 28 Dec 2022 14:52:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239166;
-	bh=pe5eKJ6QFQLexdOIxDequbId2uIwFad5KU1W1iWG8Jw=;
+	s=korg; t=1672239169;
+	bh=Hde8ztJAGCanVAl6Rfu/OkUXsy61SOw4nTBUErOeMfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mzq3jDrUxUNiQXuqSIA61G4xOUwsDCAWbDYeNwHnPfVj5swRsuAIDczcfsPgN7itE
-	 QUayRySS5lv4BPCoy4N+0he3apyqEqstwQU3GTkOzU1AgtB5pZc3b5mxbyybCW6qYF
-	 ncxCNnKrmG5R5+XTuE2MaTWprgYN99kdmtDQja3w=
+	b=pXDdYqxCZK7JVIoGubtNa4kVtQFg+dkh54iVeQGVmqxVAY13jP9r2PMVFC4sw0rDL
+	 4RI38fvgJE6iIHmjFAbG9vFQQpsFwmZOZhdZdQ3eIEKSZ9yhLVo9LDEzkZHpeUIaDx
+	 16T4Ics1UCy66jES8/tI4nOIPAJP3znChQ73AGko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 154/731] media: coda: jpeg: Add check for kmalloc
-Date: Wed, 28 Dec 2022 15:34:21 +0100
-Message-Id: <20221228144301.021102960@linuxfoundation.org>
+Subject: [PATCH 5.15 155/731] media: adv748x: afe: Select input port when initializing AFE
+Date: Wed, 28 Dec 2022 15:34:22 +0100
+Message-Id: <20221228144301.050689299@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,45 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
 
-[ Upstream commit f30ce3d3760b22ee33c8d9c2e223764ad30bdc5f ]
+[ Upstream commit 23ddb85dafefdace1ad79d1a30b0a4e7c4b5cd8d ]
 
-As kmalloc can return NULL pointer, it should be better to
-check the return value and return error, same as
-coda_jpeg_decode_header.
+When moving the input selection to adv748x_reset() it was missed that
+during probe the device is reset _before_ the initialization and parsing
+of DT by the AFE subdevice. This can lead to the wrong input port (in
+case it's not port 0) being selected until the device is reset for the
+first time.
 
-Fixes: 96f6f62c4656 ("media: coda: jpeg: add CODA960 JPEG encoder support")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Fix this by restoring the call to adv748x_afe_s_input() in the AFE
+initialization while also keeping it in the adv748x_reset().
+
+Fixes: c30ed81afe89 ("media: adv748x: afe: Select input port when device is reset")
+Signed-off-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/coda/coda-jpeg.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/media/i2c/adv748x/adv748x-afe.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/platform/coda/coda-jpeg.c b/drivers/media/platform/coda/coda-jpeg.c
-index a72f4655e5ad..b7bf529f18f7 100644
---- a/drivers/media/platform/coda/coda-jpeg.c
-+++ b/drivers/media/platform/coda/coda-jpeg.c
-@@ -1052,10 +1052,16 @@ static int coda9_jpeg_start_encoding(struct coda_ctx *ctx)
- 		v4l2_err(&dev->v4l2_dev, "error loading Huffman tables\n");
- 		return ret;
+diff --git a/drivers/media/i2c/adv748x/adv748x-afe.c b/drivers/media/i2c/adv748x/adv748x-afe.c
+index 02eabe10ab97..00095c7762c2 100644
+--- a/drivers/media/i2c/adv748x/adv748x-afe.c
++++ b/drivers/media/i2c/adv748x/adv748x-afe.c
+@@ -521,6 +521,10 @@ int adv748x_afe_init(struct adv748x_afe *afe)
+ 		}
  	}
--	if (!ctx->params.jpeg_qmat_tab[0])
-+	if (!ctx->params.jpeg_qmat_tab[0]) {
- 		ctx->params.jpeg_qmat_tab[0] = kmalloc(64, GFP_KERNEL);
--	if (!ctx->params.jpeg_qmat_tab[1])
-+		if (!ctx->params.jpeg_qmat_tab[0])
-+			return -ENOMEM;
-+	}
-+	if (!ctx->params.jpeg_qmat_tab[1]) {
- 		ctx->params.jpeg_qmat_tab[1] = kmalloc(64, GFP_KERNEL);
-+		if (!ctx->params.jpeg_qmat_tab[1])
-+			return -ENOMEM;
-+	}
- 	coda_set_jpeg_compression_quality(ctx, ctx->params.jpeg_quality);
  
- 	return 0;
++	adv748x_afe_s_input(afe, afe->input);
++
++	adv_dbg(state, "AFE Default input set to %d\n", afe->input);
++
+ 	/* Entity pads and sinks are 0-indexed to match the pads */
+ 	for (i = ADV748X_AFE_SINK_AIN0; i <= ADV748X_AFE_SINK_AIN7; i++)
+ 		afe->pads[i].flags = MEDIA_PAD_FL_SINK;
 -- 
 2.35.1
 
