@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA2DC1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:56:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36AEAC433D2;
-	Wed, 28 Dec 2022 15:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BFFE1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:56:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA949C433EF;
+	Wed, 28 Dec 2022 15:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242998;
-	bh=lpQ8B1U73HEGKoTlv0d+gH6ZvNC31CO0SaHYvF7Sh54=;
+	s=korg; t=1672243001;
+	bh=bJJ6Zp2quwahM0XtjAChBt0n2I78Wy17pydxmk6KLDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U02PgAeUQCCdF0LCWBazIrTtXGS80nuF0F1bS/Br0cvx3lvoah1+CwPqnGFpV3qSP
-	 fzRbgi9aNZ6x+y59Flu9nbXOvgKq/+aUJ+sm0pqwiJWYTdoaF7Ur+Gw0jlUgZl2aQj
-	 R+HfVYRzkis0IBWjotLFekDROoJRFdezWSSSA9mg=
+	b=NolR8u5+0JLRNkZ/RBHzZO0ocTUU+Oxz3qnFFVbPOsjQkPxpA6MRy2Fe0ADk6TVwZ
+	 eZTRDXWKTi58HOi78bkwMJ8MUWBypi8vS+oIGEPidSdxJ0z4XmWP0mqZk+ANKgKykj
+	 z0Nh+4MogNg0jWZQ0zM/cCQA2+CWJEpEqpLlxemE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
+	Konstantin Meskhidze <konstantin.meskhidze@huawei.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0477/1073] bpftool: Fix memory leak in do_build_table_cb
-Date: Wed, 28 Dec 2022 15:34:25 +0100
-Message-Id: <20221228144340.992943949@linuxfoundation.org>
+Subject: [PATCH 6.1 0439/1146] drm/amdkfd: Fix memory leakage
+Date: Wed, 28 Dec 2022 15:32:58 +0100
+Message-Id: <20221228144342.105325202@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,32 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
 
-[ Upstream commit fa55ef14ef4fe06198c0ce811b603aec24134bc2 ]
+[ Upstream commit 75818afff631e1ea785a82c3e8bb82eb0dee539c ]
 
-strdup() allocates memory for path. We need to release the memory in the
-following error path. Add free() to avoid memory leak.
+This patch fixes potential memory leakage and seg fault
+in  _gpuvm_import_dmabuf() function
 
-Fixes: 8f184732b60b ("bpftool: Switch to libbpf's hashmap for pinned paths of BPF objects")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/bpf/20221206071906.806384-1-linmq006@gmail.com
+Fixes: d4ec4bdc0bd5 ("drm/amdkfd: Allow access for mmapping KFD BOs")
+Signed-off-by: Konstantin Meskhidze <konstantin.meskhidze@huawei.com>
+Signed-off-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/bpf/bpftool/common.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/bpf/bpftool/common.c b/tools/bpf/bpftool/common.c
-index 3bdbc0ce75b1..e54487e4005d 100644
---- a/tools/bpf/bpftool/common.c
-+++ b/tools/bpf/bpftool/common.c
-@@ -499,6 +499,7 @@ static int do_build_table_cb(const char *fpath, const struct stat *sb,
- 	if (err) {
- 		p_err("failed to append entry to hashmap for ID %u, path '%s': %s",
- 		      pinned_info.id, path, strerror(errno));
-+		free(path);
- 		goto out_close;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+index 1f76e27f1a35..fe87b3402f06 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
+@@ -2256,7 +2256,7 @@ int amdgpu_amdkfd_gpuvm_import_dmabuf(struct amdgpu_device *adev,
+ 
+ 	ret = drm_vma_node_allow(&obj->vma_node, drm_priv);
+ 	if (ret) {
+-		kfree(mem);
++		kfree(*mem);
+ 		return ret;
  	}
  
 -- 
