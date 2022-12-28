@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAE111C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:34:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A133C433EF;
-	Wed, 28 Dec 2022 16:34:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DA8D1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:35:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B45ABC433D2;
+	Wed, 28 Dec 2022 16:34:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245297;
-	bh=eaOwSv+3XBadN/R82Qgs8EsZxZJrwetMDpKKRJq7L3I=;
+	s=korg; t=1672245300;
+	bh=9x8K+ZDgF+rIxwLRPezL21+j8zdaxC1xR6bRxeweS7A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zoSL4ieLTergK3Elqi+Cb70lIxYDnvwlpGKMvRDQ9zLue2cpDrihxwJ3rH7Rr4Yl9
-	 2sx2nEG73cWMR6DB8iOrWk6BcFKZme8mFR1NHcj6OfYf4coMdi0B7oaNoZl0xx+RI/
-	 ARnEZgJypsLgDFLG1/6nh7ZYW+2wbovc/RYttnyg=
+	b=HZWi9a0g6c6XXqz8XeuW7K9FodAJP6W+7yZVkLnPd7Zwi0RO3XPH1S/p8hfOZEMMN
+	 Yp20xmA4i1OkkxnawysyLzy0qp6vIVMu3JZXMaKTuXa0WKTpI53HXHbO5+qSG/Aqdf
+	 3Cwcj11s4MgvOACy/b8OyQq1rURjFfjWChA438Go=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0855/1073] block: factor out a blk_debugfs_remove helper
-Date: Wed, 28 Dec 2022 15:40:43 +0100
-Message-Id: <20221228144351.242463308@linuxfoundation.org>
+Subject: [PATCH 6.1 0835/1146] rtc: cmos: Call rtc_wake_setup() from cmos_do_probe()
+Date: Wed, 28 Dec 2022 15:39:34 +0100
+Message-Id: <20221228144352.836838647@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,59 +37,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 6fc75f309d291d328b4ea2f91bef0ff56e4bc7c2 ]
+[ Upstream commit 375bbba09692fe4c5218eddee8e312dd733fa846 ]
 
-Split the debugfs removal from blk_unregister_queue into a helper so that
-the it can be reused for blk_register_queue error handling.
+To reduce code duplication, move the invocation of rtc_wake_setup()
+into cmos_do_probe() and simplify the callers of the latter.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20221114042637.1009333-3-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: d36a9ea5e776 ("block: fix use-after-free of q->q_usage_counter")
+No intentional functional impact.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Zhang Rui <rui.zhang@intel.com>
+Tested-by: Zhang Rui <rui.zhang@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/2143522.irdbgypaU6@kreacher
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-sysfs.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/rtc/rtc-cmos.c | 28 ++++++++++++----------------
+ 1 file changed, 12 insertions(+), 16 deletions(-)
 
-diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
-index c8a1119c3950..4825eaa4363a 100644
---- a/block/blk-sysfs.c
-+++ b/block/blk-sysfs.c
-@@ -797,6 +797,19 @@ struct kobj_type blk_queue_ktype = {
- 	.release	= blk_release_queue,
- };
- 
-+static void blk_debugfs_remove(struct gendisk *disk)
-+{
-+	struct request_queue *q = disk->queue;
-+
-+	mutex_lock(&q->debugfs_mutex);
-+	blk_trace_shutdown(q);
-+	debugfs_remove_recursive(q->debugfs_dir);
-+	q->debugfs_dir = NULL;
-+	q->sched_debugfs_dir = NULL;
-+	q->rqos_debugfs_dir = NULL;
-+	mutex_unlock(&q->debugfs_mutex);
-+}
-+
- /**
-  * blk_register_queue - register a block layer queue with sysfs
-  * @disk: Disk of which the request queue should be registered with sysfs.
-@@ -922,11 +935,5 @@ void blk_unregister_queue(struct gendisk *disk)
- 	kobject_del(&q->kobj);
- 	mutex_unlock(&q->sysfs_dir_lock);
- 
--	mutex_lock(&q->debugfs_mutex);
--	blk_trace_shutdown(q);
--	debugfs_remove_recursive(q->debugfs_dir);
--	q->debugfs_dir = NULL;
--	q->sched_debugfs_dir = NULL;
--	q->rqos_debugfs_dir = NULL;
--	mutex_unlock(&q->debugfs_mutex);
-+	blk_debugfs_remove(disk);
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index a84262265d6d..583116994a37 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -744,6 +744,7 @@ static irqreturn_t cmos_interrupt(int irq, void *p)
+ 		return IRQ_NONE;
  }
+ 
++static inline void rtc_wake_setup(struct device *dev);
+ static void cmos_wake_setup(struct device *dev);
+ 
+ #ifdef	CONFIG_PNP
+@@ -938,6 +939,13 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+ 	nvmem_cfg.size = address_space - NVRAM_OFFSET;
+ 	devm_rtc_nvmem_register(cmos_rtc.rtc, &nvmem_cfg);
+ 
++	/*
++	 * Everything has gone well so far, so by default register a handler for
++	 * the ACPI RTC fixed event.
++	 */
++	if (!info)
++		rtc_wake_setup(dev);
++
+ 	dev_info(dev, "%s%s, %d bytes nvram%s\n",
+ 		 !is_valid_irq(rtc_irq) ? "no alarms" :
+ 		 cmos_rtc.mon_alrm ? "alarms up to one year" :
+@@ -1357,7 +1365,7 @@ static void rtc_wake_setup(struct device *dev)
+ 
+ static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
+ {
+-	int irq, ret;
++	int irq;
+ 
+ 	if (pnp_port_start(pnp, 0) == 0x70 && !pnp_irq_valid(pnp, 0)) {
+ 		irq = 0;
+@@ -1373,13 +1381,7 @@ static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
+ 		irq = pnp_irq(pnp, 0);
+ 	}
+ 
+-	ret = cmos_do_probe(&pnp->dev, pnp_get_resource(pnp, IORESOURCE_IO, 0), irq);
+-	if (ret)
+-		return ret;
+-
+-	rtc_wake_setup(&pnp->dev);
+-
+-	return 0;
++	return cmos_do_probe(&pnp->dev, pnp_get_resource(pnp, IORESOURCE_IO, 0), irq);
+ }
+ 
+ static void cmos_pnp_remove(struct pnp_dev *pnp)
+@@ -1463,7 +1465,7 @@ static inline void cmos_of_init(struct platform_device *pdev) {}
+ static int __init cmos_platform_probe(struct platform_device *pdev)
+ {
+ 	struct resource *resource;
+-	int irq, ret;
++	int irq;
+ 
+ 	cmos_of_init(pdev);
+ 
+@@ -1475,13 +1477,7 @@ static int __init cmos_platform_probe(struct platform_device *pdev)
+ 	if (irq < 0)
+ 		irq = -1;
+ 
+-	ret = cmos_do_probe(&pdev->dev, resource, irq);
+-	if (ret)
+-		return ret;
+-
+-	rtc_wake_setup(&pdev->dev);
+-
+-	return 0;
++	return cmos_do_probe(&pdev->dev, resource, irq);
+ }
+ 
+ static int cmos_platform_remove(struct platform_device *pdev)
 -- 
 2.35.1
 
