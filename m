@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A9851C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:13:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92F48C433D2;
-	Wed, 28 Dec 2022 16:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6502D1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:13:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB880C433D2;
+	Wed, 28 Dec 2022 16:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244026;
-	bh=+kmADvufavP2PZw3Dyc68PmielJOz4YxEOaq3ySOW7I=;
+	s=korg; t=1672244032;
+	bh=rTuHuNPhpGbfiz00yJnLqN0l1eECxgJVrAOuYPMspio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RyN37l4/YCYZu1Em27Nq6qGhva0d9lBSqXKV49uR6PPlOz9rQS8wbSRh+EYjH3hiP
-	 msSNjhK1aUIxBkfvhFwiv1loKgxwr58+jxk4AciW+7gJu8S/H0IliBfMlOPa4otwfn
-	 iKOt30PY0H/JAEZocm1J0BNDdMneMUbhQf79HJv0=
+	b=wd8tFe5yRaFigf3Td12v4DJHsTI9RQZu2kp59HKFWltWNherrN1asNpEV0ns+W/hq
+	 g9krc6360G2XAz9fj2Wi8rkfRMnuc8RwcmErZ+ouFL7OdOdt8oMueh04/HDgGKNbhg
+	 oO3Ufa0hUpxCWKIxE/KfJv/CRSHl5u9t4Rp4PyGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Weili Qian <qianweili@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0575/1146] crypto: hisilicon/qm - fix incorrect parameters usage
-Date: Wed, 28 Dec 2022 15:35:14 +0100
-Message-Id: <20221228144345.790867341@linuxfoundation.org>
+Subject: [PATCH 6.1 0598/1146] f2fs: allow to set compression for inlined file
+Date: Wed, 28 Dec 2022 15:35:37 +0100
+Message-Id: <20221228144346.412442977@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,38 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Weili Qian <qianweili@huawei.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-[ Upstream commit f57e292897cac13b6ddee078aea21173b234ecb7 ]
+[ Upstream commit a995627e6dd81d4485d40ce64880017a080d71e6 ]
 
-In qm_get_xqc_depth(), parameters low_bits and high_bits save
-the values of the corresponding bits. However, the values saved by the
-two parameters are opposite. As a result, the values returned to the
-callers are incorrect.
+The below commit disallows to set compression on empty created file which
+has a inline_data. Let's fix it.
 
-Fixes: 129a9f340172 ("crypto: hisilicon/qm - get qp num and depth from hardware registers")
-Signed-off-by: Weili Qian <qianweili@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 7165841d578e ("f2fs: fix to check inline_data during compressed inode conversion")
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/qm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/f2fs/file.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
-index 8b387de69d22..c7e7fc49ec06 100644
---- a/drivers/crypto/hisilicon/qm.c
-+++ b/drivers/crypto/hisilicon/qm.c
-@@ -909,8 +909,8 @@ static void qm_get_xqc_depth(struct hisi_qm *qm, u16 *low_bits,
- 	u32 depth;
- 
- 	depth = hisi_qm_get_hw_info(qm, qm_basic_info, type, qm->cap_ver);
--	*high_bits = depth & QM_XQ_DEPTH_MASK;
--	*low_bits = (depth >> QM_XQ_DEPTH_SHIFT) & QM_XQ_DEPTH_MASK;
-+	*low_bits = depth & QM_XQ_DEPTH_MASK;
-+	*high_bits = (depth >> QM_XQ_DEPTH_SHIFT) & QM_XQ_DEPTH_MASK;
- }
- 
- static u32 qm_get_irq_num(struct hisi_qm *qm)
+diff --git a/fs/f2fs/file.c b/fs/f2fs/file.c
+index 82cda1258227..f96bbfa8b399 100644
+--- a/fs/f2fs/file.c
++++ b/fs/f2fs/file.c
+@@ -1915,6 +1915,10 @@ static int f2fs_setflags_common(struct inode *inode, u32 iflags, u32 mask)
+ 			if (!f2fs_disable_compressed_file(inode))
+ 				return -EINVAL;
+ 		} else {
++			/* try to convert inline_data to support compression */
++			int err = f2fs_convert_inline_inode(inode);
++			if (err)
++				return err;
+ 			if (!f2fs_may_compress(inode))
+ 				return -EINVAL;
+ 			if (S_ISREG(inode->i_mode) && F2FS_HAS_BLOCKS(inode))
 -- 
 2.35.1
 
