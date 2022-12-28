@@ -1,38 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18C461C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69E5EC433D2;
-	Wed, 28 Dec 2022 16:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBCD1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36D4EC433D2;
+	Wed, 28 Dec 2022 16:33:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245230;
-	bh=+HuI+g0asqjES+zSD1OTyZ0hRb5dGmMVacV0sRnOiRE=;
+	s=korg; t=1672245233;
+	bh=0yZi8jFDCBEDUZL6d7RxL5mQsYs00S36dgR+MnEeqLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P9yWgK2gBGvNF8Kn7hXhbjJzU+MHmh89jN6bk24CgmTF/vKXnfQC12WO7CEtxWZAY
-	 YVQBigtBOMJNHTZx++7+SA2x9gvxhWLYuf86teDEQKNikdka7xmmbBwvOoAZz1h2AF
-	 oDP3i4M+v/oCpRQ6JlHTzrWN0sxiYVHX/FwPSHWc=
+	b=cqjajcc0oUOjqxKT2iKpXiSzewCndgb3zcGNIP7lQPAHxHS1RMcpqkommzmJio223
+	 KCRMEYUKdrKMqELDqF9h1H/I9qXXKU9+9U8EH+FvL5mAwD50A8mghgz7mUoLqqHfQ6
+	 fG7FTEp2mWkGnq6pOPgSvb1DQSPwmW7j+F+ewaQs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Nomura <nomurak@google.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0788/1146] perf stat: Do not delay the workload with --delay
-Date: Wed, 28 Dec 2022 15:38:47 +0100
-Message-Id: <20221228144351.550442048@linuxfoundation.org>
+Subject: [PATCH 6.0 0824/1073] remoteproc: qcom_q6v5_pas: Fix missing of_node_put() in adsp_alloc_memory_region()
+Date: Wed, 28 Dec 2022 15:40:12 +0100
+Message-Id: <20221228144350.396530977@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -43,135 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit c587e77e100fa40eb6af10e00497c67acf493f33 ]
+[ Upstream commit 38e7d9c19276832ebb0277f415b9214bf7baeb37 ]
 
-The -D/--delay option is to delay the measure after the program starts.
-But the current code goes to sleep before starting the program so the
-program is delayed too.  This is not the intention, let's fix it.
+The pointer node is returned by of_parse_phandle() with refcount
+incremented. We should use of_node_put() on it when done.
 
-Before:
-
-  $ time sudo ./perf stat -a -e cycles -D 3000 sleep 4
-  Events disabled
-  Events enabled
-
-   Performance counter stats for 'system wide':
-
-       4,326,949,337      cycles
-
-         4.007494118 seconds time elapsed
-
-  real	0m7.474s
-  user	0m0.356s
-  sys	0m0.120s
-
-It ran the workload for 4 seconds and gave the 3 second delay.  So it
-should skip the first 3 second and measure the last 1 second only.  But
-as you can see, it delays 3 seconds and ran the workload after that for
-4 seconds.  So the total time (real) was 7 seconds.
-
-After:
-
-  $ time sudo ./perf stat -a -e cycles -D 3000 sleep 4
-  Events disabled
-  Events enabled
-
-   Performance counter stats for 'system wide':
-
-       1,063,551,013      cycles
-
-         1.002769510 seconds time elapsed
-
-  real	0m4.484s
-  user	0m0.385s
-  sys	0m0.086s
-
-The bug was introduced when it changed enablement of system-wide events
-with a command line workload.  But it should've considered the initial
-delay case.  The code was reworked since then (in bb8bc52e7578) so I'm
-afraid it won't be applied cleanly.
-
-Fixes: d0a0a511493d2695 ("perf stat: Fix forked applications enablement of counters")
-Reported-by: Kevin Nomura <nomurak@google.com>
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Tested-by: Thomas Richter <tmricht@linux.ibm.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Sumanth Korikkar <sumanthk@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221212230820.901382-1-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: b9e718e950c3 ("remoteproc: Introduce Qualcomm ADSP PIL")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221203070639.15128-1-yuancan@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-stat.c | 33 +++++++++++++++++----------------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+ drivers/remoteproc/qcom_q6v5_pas.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
-index 265b05157972..d726c3d3d83c 100644
---- a/tools/perf/builtin-stat.c
-+++ b/tools/perf/builtin-stat.c
-@@ -528,26 +528,14 @@ static int enable_counters(void)
- 			return err;
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index a14ff1142e76..dc6f07ca8341 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -449,6 +449,7 @@ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
  	}
  
--	if (stat_config.initial_delay < 0) {
--		pr_info(EVLIST_DISABLED_MSG);
--		return 0;
--	}
--
--	if (stat_config.initial_delay > 0) {
--		pr_info(EVLIST_DISABLED_MSG);
--		usleep(stat_config.initial_delay * USEC_PER_MSEC);
--	}
--
- 	/*
- 	 * We need to enable counters only if:
- 	 * - we don't have tracee (attaching to task or cpu)
- 	 * - we have initial delay configured
- 	 */
--	if (!target__none(&target) || stat_config.initial_delay) {
-+	if (!target__none(&target)) {
- 		if (!all_counters_use_bpf)
- 			evlist__enable(evsel_list);
--		if (stat_config.initial_delay > 0)
--			pr_info(EVLIST_ENABLED_MSG);
- 	}
- 	return 0;
- }
-@@ -918,14 +906,27 @@ static int __run_perf_stat(int argc, const char **argv, int run_idx)
- 			return err;
- 	}
- 
--	err = enable_counters();
--	if (err)
--		return -1;
-+	if (stat_config.initial_delay) {
-+		pr_info(EVLIST_DISABLED_MSG);
-+	} else {
-+		err = enable_counters();
-+		if (err)
-+			return -1;
-+	}
- 
- 	/* Exec the command, if any */
- 	if (forks)
- 		evlist__start_workload(evsel_list);
- 
-+	if (stat_config.initial_delay > 0) {
-+		usleep(stat_config.initial_delay * USEC_PER_MSEC);
-+		err = enable_counters();
-+		if (err)
-+			return -1;
-+
-+		pr_info(EVLIST_ENABLED_MSG);
-+	}
-+
- 	t0 = rdclock();
- 	clock_gettime(CLOCK_MONOTONIC, &ref_time);
+ 	ret = of_address_to_resource(node, 0, &r);
++	of_node_put(node);
+ 	if (ret)
+ 		return ret;
  
 -- 
 2.35.1
