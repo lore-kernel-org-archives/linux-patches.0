@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45DC1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 586B3C433EF;
-	Wed, 28 Dec 2022 16:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994981C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D313C433D2;
+	Wed, 28 Dec 2022 16:27:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244871;
-	bh=rmVJhHKZMH1FTxKYZ4Mv4xjq0qkgcS+ycGLygZcWE9Y=;
+	s=korg; t=1672244874;
+	bh=UGrJQkGLYnITeM1Zh1Zc8PyDtNFRBhOBeZLvoF7bcVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1gM6NTB69RwQ0Y8Uung9dJdezw7LXC4avi3Ap/IGBfNtUu583WnldKbYb9njeTDIg
-	 m4ODUDv+rJicJXVpTyqXig5MG/vns+pESkzLjiQuKrj6suzd5G81fmTAVOvGMFgBl2
-	 05L2/R2mroPOaQb5qTXw1XKWKCh0QH9AV49b46qk=
+	b=gvh0Q73fLazGXI3a7kYUZdqZLNpc2B9cIWszNepXXDLA65fCuz2dmk96HE2fRV1KL
+	 fpOLvzUd98qp275ixSJuTd0RUwIxFY1sB1ok6pPhWYPXS0NinTkVNP6mUUA/vBTBi9
+	 X3cy8kt81DxOMX6YpGyoXllm12XA9FyoL3/1EMbo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0791/1073] rtc: pcf85063: Fix reading alarm
-Date: Wed, 28 Dec 2022 15:39:39 +0100
-Message-Id: <20221228144349.496650584@linuxfoundation.org>
+Subject: [PATCH 6.1 0754/1146] fbdev: ssd1307fb: Drop optional dependency
+Date: Wed, 28 Dec 2022 15:38:13 +0100
+Message-Id: <20221228144350.624716474@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,44 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit a6ceee26fd5ed9b5bd37322b1ca88e4548cee4a3 ]
+[ Upstream commit 025e3b507a3a8e1ee96a3112bb67495c77d6cdb6 ]
 
-If the alarms are disabled the topmost bit (AEN_*) is set in the alarm
-registers. This is also interpreted in BCD number leading to this warning:
-rtc rtc0: invalid alarm value: 2022-09-21T80:80:80
+Only a single out of three devices need a PWM, so from driver it's
+optional. Moreover it's a single driver in the entire kernel that
+currently selects PWM. Unfortunately this selection is a root cause
+of the circular dependencies when we want to enable optional PWM
+for some other drivers that select GPIOLIB.
 
-Fix this by masking alarm enabling and reserved bits.
-
-Fixes: 05cb3a56ee8c ("rtc: pcf85063: add alarm support")
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Link: https://lore.kernel.org/r/20220921074141.3903104-1-alexander.stein@ew.tq-group.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: a2ed00da5047 ("drivers/video: add support for the Solomon SSD1307 OLED Controller")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf85063.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/video/fbdev/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-pcf85063.c b/drivers/rtc/rtc-pcf85063.c
-index 095891999da1..99f9cc57c7b3 100644
---- a/drivers/rtc/rtc-pcf85063.c
-+++ b/drivers/rtc/rtc-pcf85063.c
-@@ -169,10 +169,10 @@ static int pcf85063_rtc_read_alarm(struct device *dev, struct rtc_wkalrm *alrm)
- 	if (ret)
- 		return ret;
- 
--	alrm->time.tm_sec = bcd2bin(buf[0]);
--	alrm->time.tm_min = bcd2bin(buf[1]);
--	alrm->time.tm_hour = bcd2bin(buf[2]);
--	alrm->time.tm_mday = bcd2bin(buf[3]);
-+	alrm->time.tm_sec = bcd2bin(buf[0] & 0x7f);
-+	alrm->time.tm_min = bcd2bin(buf[1] & 0x7f);
-+	alrm->time.tm_hour = bcd2bin(buf[2] & 0x3f);
-+	alrm->time.tm_mday = bcd2bin(buf[3] & 0x3f);
- 
- 	ret = regmap_read(pcf85063->regmap, PCF85063_REG_CTRL2, &val);
- 	if (ret)
+diff --git a/drivers/video/fbdev/Kconfig b/drivers/video/fbdev/Kconfig
+index cfc55273dc5d..9497fe929162 100644
+--- a/drivers/video/fbdev/Kconfig
++++ b/drivers/video/fbdev/Kconfig
+@@ -2217,7 +2217,6 @@ config FB_SSD1307
+ 	select FB_SYS_COPYAREA
+ 	select FB_SYS_IMAGEBLIT
+ 	select FB_DEFERRED_IO
+-	select PWM
+ 	select FB_BACKLIGHT
+ 	help
+ 	  This driver implements support for the Solomon SSD1307
 -- 
 2.35.1
 
