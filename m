@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69CFF1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E106CC433D2;
-	Wed, 28 Dec 2022 15:35:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07B061863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8330DC433EF;
+	Wed, 28 Dec 2022 15:35:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241751;
-	bh=j63kxRJw3hF1ULdmPYa1KQ/4pfa/wnh2PWXETgS8TdI=;
+	s=korg; t=1672241753;
+	bh=papQIDW4JSpVVO8bJDvnuPBr9IByYZ+9llNrpSBn7Pg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u7Tr5pe2x0pf53dQQbt57MrtPEWE0dA7muAM7KAheTWpUlhW5nrMQ70ZzwlLiFIV1
-	 RJjEQKK77DJf/+/N4tTZFB4du73mDymS0OxzmP0zD3IOlizF+vuh99D11cUxMCZHTU
-	 KRwH8HYZmKsC6zz10IIXKo0szoJKDe1QIEYlJ3tY=
+	b=cg8GgQn9EPr8ex9/HNNxC18YVWsHcxCEM6OvJ46+DyYyF/Xbdejx68Uyupljqc4BY
+	 xnnwD6k7vIWii5p9B4EIBQxHPyiJTMtRhT3H2inenaH9rlarTVoabx18N1/2Uc9VnX
+	 LdpW1AJuomRyFxG5xeiPXOQ1dIpz3Zm7uVa8L15o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Marijn Suijten <marijn.suijten@somainline.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0323/1073] amdgpu/pm: prevent array underflow in vega20_odn_edit_dpm_table()
-Date: Wed, 28 Dec 2022 15:31:51 +0100
-Message-Id: <20221228144336.781205363@linuxfoundation.org>
+Subject: [PATCH 6.1 0285/1146] drm/msm/dsi: Disallow 8 BPC DSC configuration for alternative BPC values
+Date: Wed, 28 Dec 2022 15:30:24 +0100
+Message-Id: <20221228144337.881757585@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Marijn Suijten <marijn.suijten@somainline.org>
 
-[ Upstream commit d27252b5706e51188aed7647126e44dcf9e940c1 ]
+[ Upstream commit d053fbc449c47517b1f6516dbce2f917f2a9f51d ]
 
-In the PP_OD_EDIT_VDDC_CURVE case the "input_index" variable is capped at
-2 but not checked for negative values so it results in an out of bounds
-read.  This value comes from the user via sysfs.
+According to the `/* bpc 8 */` comment below only values for a
+bits_per_component of 8 are currently hardcoded in place.  This is
+further confirmed by downstream sources [1] containing different
+constants for other BPC values (and different initial_offset too,
+with an extra dependency on bits_per_pixel).  Prevent future mishaps by
+explicitly disallowing any other bits_per_component value until the
+right parameters are put in place and tested.
 
-Fixes: d5bf26539494 ("drm/amd/powerplay: added vega20 overdrive support V3")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+[1]: https://git.codelinaro.org/clo/la/platform/vendor/opensource/display-drivers/-/blob/DISPLAY.LA.2.0.r1-08000-WAIPIO.0/msm/sde_dsc_helper.c#L110-139
+
+Fixes: b9080324d6ca ("drm/msm/dsi: add support for dsc data")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Patchwork: https://patchwork.freedesktop.org/patch/508942/
+Link: https://lore.kernel.org/r/20221026182824.876933-9-marijn.suijten@somainline.org
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dsi/dsi_host.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
-index 97b3ad369046..b30684c84e20 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega20_hwmgr.c
-@@ -2961,7 +2961,8 @@ static int vega20_odn_edit_dpm_table(struct pp_hwmgr *hwmgr,
- 			data->od8_settings.od8_settings_array;
- 	OverDriveTable_t *od_table =
- 			&(data->smc_state_table.overdrive_table);
--	int32_t input_index, input_clk, input_vol, i;
-+	int32_t input_clk, input_vol, i;
-+	uint32_t input_index;
- 	int od8_id;
- 	int ret;
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index de00925c94e8..c229cf6eeb9c 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -1761,6 +1761,11 @@ static int dsi_populate_dsc_params(struct msm_dsi_host *msm_host, struct drm_dsc
+ 		return -EINVAL;
+ 	}
  
++	if (dsc->bits_per_component != 8) {
++		DRM_DEV_ERROR(&msm_host->pdev->dev, "DSI does not support bits_per_component != 8 yet\n");
++		return -EOPNOTSUPP;
++	}
++
+ 	dsc->rc_model_size = 8192;
+ 	dsc->first_line_bpg_offset = 12;
+ 	dsc->rc_edge_factor = 6;
 -- 
 2.35.1
 
