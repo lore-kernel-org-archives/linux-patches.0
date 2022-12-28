@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F19F1868
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E7C6C433EF;
-	Wed, 28 Dec 2022 15:41:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420C31868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC2C6C433F0;
+	Wed, 28 Dec 2022 15:41:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242066;
-	bh=H5nfNj6i2aBjx1sIE6dF/39prsVVVi+kb+2ZnFvZ8IU=;
+	s=korg; t=1672242069;
+	bh=CqQRcsSQq058uT3OMgNYfTs9DiLJtY+KpGVWtVw1EFc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mQhMCOva2godZaWAqpAcjNzIfOo+HUQ4NY3wziS+Hp1Po+/GyW/QeHEkYzSHn8O0M
-	 aeP6y+NAuwtYOcZ4KJsGPxOoPjfUydtiDBRpOvtRhyuYyG2JmzbyedLEp30W3ZraYB
-	 I1Er9gofDeecfK7eU6bVboVn0UTgDzwBVOaNJJ4s=
+	b=BmKQWEvkRy1bXM/6GUo7iFxBnsYya6wVQ15tB7ZM9iRU0l8tshCrjNj9HsbXsg8ET
+	 awOwZRpUaRHxgM6f1EWyl10kAd0V/yf9ioKt3L7+e3NPvpy/RwigAKj7eErASyuQg0
+	 lTleu1izc9iqmWLWA44+R9cu3oG8jpaaRy9cmy9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 558/731] powerpc/perf: callchain validate kernel stack pointer bounds
-Date: Wed, 28 Dec 2022 15:41:05 +0100
-Message-Id: <20221228144312.740805254@linuxfoundation.org>
+Subject: [PATCH 6.1 0322/1146] wifi: iwlwifi: mei: fix potential NULL-ptr deref after clone
+Date: Wed, 28 Dec 2022 15:31:01 +0100
+Message-Id: <20221228144338.900054101@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,44 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 32c5209214bd8d4f8c4e9d9b630ef4c671f58e79 ]
+[ Upstream commit d3df49dda431f7ae4132a9a0ac25a5134c04e812 ]
 
-The interrupt frame detection and loads from the hypothetical pt_regs
-are not bounds-checked. The next-frame validation only bounds-checks
-STACK_FRAME_OVERHEAD, which does not include the pt_regs. Add another
-test for this.
+If cloning the SKB fails, don't try to use it, but rather return
+as if we should pass it.
 
-The user could set r1 to be equal to the address matching the first
-interrupt frame - STACK_INT_FRAME_SIZE, which is in the previous page
-due to the kernel redzone, and induce the kernel to load the marker from
-there. Possibly this could cause a crash at least. If the user could
-induce the previous page to contain a valid marker, then it might be
-able to direct perf to read specific memory addresses in a way that
-could be transmitted back to the user in the perf data.
+Coverity CID: 1503456
 
-Fixes: 20002ded4d93 ("perf_counter: powerpc: Add callchain support")
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20221127124942.1665522-4-npiggin@gmail.com
+Fixes: 2da4366f9e2c ("iwlwifi: mei: add the driver to allow cooperation with CSME")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Link: https://lore.kernel.org/r/20221030191011.0ce03ba99601.I87960b7cb0a3d16b9fd8d9144027e7e2587f5a58@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/perf/callchain.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/intel/iwlwifi/mei/net.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/arch/powerpc/perf/callchain.c b/arch/powerpc/perf/callchain.c
-index 082f6d0308a4..8718289c051d 100644
---- a/arch/powerpc/perf/callchain.c
-+++ b/arch/powerpc/perf/callchain.c
-@@ -61,6 +61,7 @@ perf_callchain_kernel(struct perf_callchain_entry_ctx *entry, struct pt_regs *re
- 		next_sp = fp[0];
+diff --git a/drivers/net/wireless/intel/iwlwifi/mei/net.c b/drivers/net/wireless/intel/iwlwifi/mei/net.c
+index 3472167c8370..eac46d1a397a 100644
+--- a/drivers/net/wireless/intel/iwlwifi/mei/net.c
++++ b/drivers/net/wireless/intel/iwlwifi/mei/net.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /*
+- * Copyright (C) 2021 Intel Corporation
++ * Copyright (C) 2021-2022 Intel Corporation
+  */
  
- 		if (next_sp == sp + STACK_INT_FRAME_SIZE &&
-+		    validate_sp(sp, current, STACK_INT_FRAME_SIZE) &&
- 		    fp[STACK_FRAME_MARKER] == STACK_FRAME_REGS_MARKER) {
- 			/*
- 			 * This looks like an interrupt frame for an
+ #include <uapi/linux/if_ether.h>
+@@ -337,10 +337,14 @@ rx_handler_result_t iwl_mei_rx_filter(struct sk_buff *orig_skb,
+ 	if (!*pass_to_csme)
+ 		return RX_HANDLER_PASS;
+ 
+-	if (ret == RX_HANDLER_PASS)
++	if (ret == RX_HANDLER_PASS) {
+ 		skb = skb_copy(orig_skb, GFP_ATOMIC);
+-	else
++
++		if (!skb)
++			return RX_HANDLER_PASS;
++	} else {
+ 		skb = orig_skb;
++	}
+ 
+ 	/* CSME wants the MAC header as well, push it back */
+ 	skb_push(skb, skb->data - skb_mac_header(skb));
 -- 
 2.35.1
 
