@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC6E1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A21C433EF;
-	Wed, 28 Dec 2022 16:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132001C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:15:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8630AC433D2;
+	Wed, 28 Dec 2022 16:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244112;
-	bh=l2jNa5CvIfj279X0bc5z8ryD3Xk2y88TBTCdnyyrcvA=;
+	s=korg; t=1672244114;
+	bh=xRj2zAE3lEOGlozonGI9PfAv12yBVV/t3FQ8OXG8rNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZywLHE7J2YzCzXQpqNbcA0C4x4ZWyRjenb/RH4EzygkUy4S/wEp7CWBo8YN9Pe6qt
-	 ME3cpHPzzE4R8H5yNiNl2+eSRDFXX0zKxFAccjzpU3WpS3cGl4eXwdeIum3rkwlCxX
-	 UJD5fiGdIUdZKxNAxd1/F3aY8Gjm1P2nHLdsofuo=
+	b=cEgrhxD6udTaqcNKp87ukC91kC/c8IWdkoSgm5LGIUW3Lr2XPNMI4rhFg62MP1g65
+	 xesu4BVdVtX+HJiQf24OZwswZrJ+krHxLLI0hBjN6ckghhIUtnbwwctc2mximmFTfb
+	 JfA7j8hRkCNpV31q7hUEm+RDuaDGDzio3j6Dy7Zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mustafa Ismail <mustafa.ismail@intel.com>,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Andrew Bresticker <abrestic@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0613/1146] RDMA/irdma: Fix RQ completion opcode
-Date: Wed, 28 Dec 2022 15:35:52 +0100
-Message-Id: <20221228144346.819650976@linuxfoundation.org>
+Subject: [PATCH 6.0 0653/1073] RISC-V: Fix unannoted hardirqs-on in return to userspace slow-path
+Date: Wed, 28 Dec 2022 15:37:21 +0100
+Message-Id: <20221228144345.783119307@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,272 +35,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mustafa Ismail <mustafa.ismail@intel.com>
+From: Andrew Bresticker <abrestic@rivosinc.com>
 
-[ Upstream commit 24419777e9431137d5923a747f546facb1e49b1f ]
+[ Upstream commit b0f4c74eadbf69a3298f38566bfaa2e202541f2f ]
 
-The opcode written by HW, in the RQ CQE, is the
-RoCEv2/iWARP protocol opcode from the received
-packet and not the SW opcode as currently assumed.
-Fix this by returning the raw operation type and
-queue type in the CQE to irdma_process_cqe and add
-2 helpers set_ib_wc_op_sq set_ib_wc_op_rq to map
-IRDMA HW op types to IB op types.
+The return to userspace path in entry.S may enable interrupts without the
+corresponding lockdep annotation, producing a splat[0] when DEBUG_LOCKDEP
+is enabled. Simply calling __trace_hardirqs_on() here gets a bit messy
+due to the use of RA to point back to ret_from_exception, so just move
+the whole slow-path loop into C. It's more readable and it lets us use
+local_irq_{enable,disable}(), avoiding the need for manual annotations
+altogether.
 
-Note that for iWARP, only Write with Immediate is
-supported so the opcode can only be IB_WC_RECV_RDMA_WITH_IMM
-when there is immediate data present.
+[0]:
+  ------------[ cut here ]------------
+  DEBUG_LOCKS_WARN_ON(!lockdep_hardirqs_enabled())
+  WARNING: CPU: 2 PID: 1 at kernel/locking/lockdep.c:5512 check_flags+0x10a/0x1e0
+  Modules linked in:
+  CPU: 2 PID: 1 Comm: init Not tainted 6.1.0-rc4-00160-gb56b6e2b4f31 #53
+  Hardware name: riscv-virtio,qemu (DT)
+  epc : check_flags+0x10a/0x1e0
+  ra : check_flags+0x10a/0x1e0
+  <snip>
+   status: 0000000200000100 badaddr: 0000000000000000 cause: 0000000000000003
+  [<ffffffff808edb90>] lock_is_held_type+0x78/0x14e
+  [<ffffffff8003dae2>] __might_resched+0x26/0x22c
+  [<ffffffff8003dd24>] __might_sleep+0x3c/0x66
+  [<ffffffff80022c60>] get_signal+0x9e/0xa70
+  [<ffffffff800054a2>] do_notify_resume+0x6e/0x422
+  [<ffffffff80003c68>] ret_from_exception+0x0/0x10
+  irq event stamp: 44512
+  hardirqs last  enabled at (44511): [<ffffffff808f901c>] _raw_spin_unlock_irqrestore+0x54/0x62
+  hardirqs last disabled at (44512): [<ffffffff80008200>] __trace_hardirqs_off+0xc/0x14
+  softirqs last  enabled at (44472): [<ffffffff808f9fbe>] __do_softirq+0x3de/0x51e
+  softirqs last disabled at (44467): [<ffffffff80017760>] irq_exit+0xd6/0x104
+  ---[ end trace 0000000000000000 ]---
+  possible reason: unannotated irqs-on.
 
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Signed-off-by: Mustafa Ismail <mustafa.ismail@intel.com>
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Link: https://lore.kernel.org/r/20221115011701.1379-3-shiraz.saleem@intel.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Andrew Bresticker <abrestic@rivosinc.com>
+Fixes: 3c4697982982 ("riscv: Enable LOCKDEP_SUPPORT & fixup TRACE_IRQFLAGS_SUPPORT")
+Link: https://lore.kernel.org/r/20221111223108.1976562-1-abrestic@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/uk.c    | 21 +++++-------
- drivers/infiniband/hw/irdma/user.h  |  1 +
- drivers/infiniband/hw/irdma/utils.c |  2 ++
- drivers/infiniband/hw/irdma/verbs.c | 39 ++++-----------------
- drivers/infiniband/hw/irdma/verbs.h | 53 +++++++++++++++++++++++++++++
- 5 files changed, 71 insertions(+), 45 deletions(-)
+ arch/riscv/kernel/entry.S  | 18 +++++-------------
+ arch/riscv/kernel/signal.c | 34 +++++++++++++++++++++-------------
+ 2 files changed, 26 insertions(+), 26 deletions(-)
 
-diff --git a/drivers/infiniband/hw/irdma/uk.c b/drivers/infiniband/hw/irdma/uk.c
-index 1a57ed9d77ff..16183e894da7 100644
---- a/drivers/infiniband/hw/irdma/uk.c
-+++ b/drivers/infiniband/hw/irdma/uk.c
-@@ -1049,11 +1049,10 @@ int irdma_uk_cq_poll_cmpl(struct irdma_cq_uk *cq,
- 	__le64 *cqe;
- 	struct irdma_qp_uk *qp;
- 	struct irdma_ring *pring = NULL;
--	u32 wqe_idx, q_type;
-+	u32 wqe_idx;
- 	int ret_code;
- 	bool move_cq_head = true;
- 	u8 polarity;
--	u8 op_type;
- 	bool ext_valid;
- 	__le64 *ext_cqe;
+diff --git a/arch/riscv/kernel/entry.S b/arch/riscv/kernel/entry.S
+index 186abd146eaf..3221a9e5f372 100644
+--- a/arch/riscv/kernel/entry.S
++++ b/arch/riscv/kernel/entry.S
+@@ -263,12 +263,11 @@ ret_from_exception:
+ #endif
+ 	bnez s0, resume_kernel
  
-@@ -1121,7 +1120,7 @@ int irdma_uk_cq_poll_cmpl(struct irdma_cq_uk *cq,
- 		info->ud_vlan_valid = false;
- 	}
+-resume_userspace:
+ 	/* Interrupts must be disabled here so flags are checked atomically */
+ 	REG_L s0, TASK_TI_FLAGS(tp) /* current_thread_info->flags */
+ 	andi s1, s0, _TIF_WORK_MASK
+-	bnez s1, work_pending
+-
++	bnez s1, resume_userspace_slow
++resume_userspace:
+ #ifdef CONFIG_CONTEXT_TRACKING_USER
+ 	call user_enter_callable
+ #endif
+@@ -368,19 +367,12 @@ resume_kernel:
+ 	j restore_all
+ #endif
  
--	q_type = (u8)FIELD_GET(IRDMA_CQ_SQ, qword3);
-+	info->q_type = (u8)FIELD_GET(IRDMA_CQ_SQ, qword3);
- 	info->error = (bool)FIELD_GET(IRDMA_CQ_ERROR, qword3);
- 	info->push_dropped = (bool)FIELD_GET(IRDMACQ_PSHDROP, qword3);
- 	info->ipv4 = (bool)FIELD_GET(IRDMACQ_IPV4, qword3);
-@@ -1160,8 +1159,9 @@ int irdma_uk_cq_poll_cmpl(struct irdma_cq_uk *cq,
- 	}
- 	wqe_idx = (u32)FIELD_GET(IRDMA_CQ_WQEIDX, qword3);
- 	info->qp_handle = (irdma_qp_handle)(unsigned long)qp;
-+	info->op_type = (u8)FIELD_GET(IRDMA_CQ_SQ, qword3);
+-work_pending:
++resume_userspace_slow:
+ 	/* Enter slow path for supplementary processing */
+-	la ra, ret_from_exception
+-	andi s1, s0, _TIF_NEED_RESCHED
+-	bnez s1, work_resched
+-work_notifysig:
+-	/* Handle pending signals and notify-resume requests */
+-	csrs CSR_STATUS, SR_IE /* Enable interrupts for do_notify_resume() */
+ 	move a0, sp /* pt_regs */
+ 	move a1, s0 /* current_thread_info->flags */
+-	tail do_notify_resume
+-work_resched:
+-	tail schedule
++	call do_work_pending
++	j resume_userspace
  
--	if (q_type == IRDMA_CQE_QTYPE_RQ) {
-+	if (info->q_type == IRDMA_CQE_QTYPE_RQ) {
- 		u32 array_idx;
- 
- 		array_idx = wqe_idx / qp->rq_wqe_size_multiplier;
-@@ -1181,10 +1181,6 @@ int irdma_uk_cq_poll_cmpl(struct irdma_cq_uk *cq,
- 
- 		info->bytes_xfered = (u32)FIELD_GET(IRDMACQ_PAYLDLEN, qword0);
- 
--		if (info->imm_valid)
--			info->op_type = IRDMA_OP_TYPE_REC_IMM;
--		else
--			info->op_type = IRDMA_OP_TYPE_REC;
- 		if (qword3 & IRDMACQ_STAG) {
- 			info->stag_invalid_set = true;
- 			info->inv_stag = (u32)FIELD_GET(IRDMACQ_INVSTAG, qword2);
-@@ -1242,17 +1238,18 @@ int irdma_uk_cq_poll_cmpl(struct irdma_cq_uk *cq,
- 				sw_wqe = qp->sq_base[tail].elem;
- 				get_64bit_val(sw_wqe, 24,
- 					      &wqe_qword);
--				op_type = (u8)FIELD_GET(IRDMAQPSQ_OPCODE, wqe_qword);
--				info->op_type = op_type;
-+				info->op_type = (u8)FIELD_GET(IRDMAQPSQ_OPCODE,
-+							      wqe_qword);
- 				IRDMA_RING_SET_TAIL(qp->sq_ring,
- 						    tail + qp->sq_wrtrk_array[tail].quanta);
--				if (op_type != IRDMAQP_OP_NOP) {
-+				if (info->op_type != IRDMAQP_OP_NOP) {
- 					info->wr_id = qp->sq_wrtrk_array[tail].wrid;
- 					info->bytes_xfered = qp->sq_wrtrk_array[tail].wr_len;
- 					break;
- 				}
- 			} while (1);
--			if (op_type == IRDMA_OP_TYPE_BIND_MW && info->minor_err == FLUSH_PROT_ERR)
-+			if (info->op_type == IRDMA_OP_TYPE_BIND_MW &&
-+			    info->minor_err == FLUSH_PROT_ERR)
- 				info->minor_err = FLUSH_MW_BIND_ERR;
- 			qp->sq_flush_seen = true;
- 			if (!IRDMA_RING_MORE_WORK(qp->sq_ring))
-diff --git a/drivers/infiniband/hw/irdma/user.h b/drivers/infiniband/hw/irdma/user.h
-index 424d4aa8cdcd..d0cdf609f5e0 100644
---- a/drivers/infiniband/hw/irdma/user.h
-+++ b/drivers/infiniband/hw/irdma/user.h
-@@ -245,6 +245,7 @@ struct irdma_cq_poll_info {
- 	u16 ud_vlan;
- 	u8 ud_smac[6];
- 	u8 op_type;
-+	u8 q_type;
- 	bool stag_invalid_set:1; /* or L_R_Key set */
- 	bool push_dropped:1;
- 	bool error:1;
-diff --git a/drivers/infiniband/hw/irdma/utils.c b/drivers/infiniband/hw/irdma/utils.c
-index 8dfc9e154d73..445e69e86409 100644
---- a/drivers/infiniband/hw/irdma/utils.c
-+++ b/drivers/infiniband/hw/irdma/utils.c
-@@ -2591,6 +2591,7 @@ void irdma_generate_flush_completions(struct irdma_qp *iwqp)
- 			sw_wqe = qp->sq_base[wqe_idx].elem;
- 			get_64bit_val(sw_wqe, 24, &wqe_qword);
- 			cmpl->cpi.op_type = (u8)FIELD_GET(IRDMAQPSQ_OPCODE, IRDMAQPSQ_OPCODE);
-+			cmpl->cpi.q_type = IRDMA_CQE_QTYPE_SQ;
- 			/* remove the SQ WR by moving SQ tail*/
- 			IRDMA_RING_SET_TAIL(*sq_ring,
- 				sq_ring->tail + qp->sq_wrtrk_array[sq_ring->tail].quanta);
-@@ -2629,6 +2630,7 @@ void irdma_generate_flush_completions(struct irdma_qp *iwqp)
- 
- 			cmpl->cpi.wr_id = qp->rq_wrid_array[wqe_idx];
- 			cmpl->cpi.op_type = IRDMA_OP_TYPE_REC;
-+			cmpl->cpi.q_type = IRDMA_CQE_QTYPE_RQ;
- 			/* remove the RQ WR by moving RQ tail */
- 			IRDMA_RING_SET_TAIL(*rq_ring, rq_ring->tail + 1);
- 			ibdev_dbg(iwqp->iwrcq->ibcq.device,
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index e252f431e2ac..01d0dc4b5649 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -3334,7 +3334,6 @@ static enum ib_wc_status irdma_flush_err_to_ib_wc_status(enum irdma_flush_opcode
- static void irdma_process_cqe(struct ib_wc *entry,
- 			      struct irdma_cq_poll_info *cq_poll_info)
- {
--	struct irdma_qp *iwqp;
- 	struct irdma_sc_qp *qp;
- 
- 	entry->wc_flags = 0;
-@@ -3342,7 +3341,6 @@ static void irdma_process_cqe(struct ib_wc *entry,
- 	entry->wr_id = cq_poll_info->wr_id;
- 
- 	qp = cq_poll_info->qp_handle;
--	iwqp = qp->qp_uk.back_qp;
- 	entry->qp = qp->qp_uk.back_qp;
- 
- 	if (cq_poll_info->error) {
-@@ -3375,42 +3373,17 @@ static void irdma_process_cqe(struct ib_wc *entry,
- 		}
- 	}
- 
--	switch (cq_poll_info->op_type) {
--	case IRDMA_OP_TYPE_RDMA_WRITE:
--	case IRDMA_OP_TYPE_RDMA_WRITE_SOL:
--		entry->opcode = IB_WC_RDMA_WRITE;
--		break;
--	case IRDMA_OP_TYPE_RDMA_READ_INV_STAG:
--	case IRDMA_OP_TYPE_RDMA_READ:
--		entry->opcode = IB_WC_RDMA_READ;
--		break;
--	case IRDMA_OP_TYPE_SEND_INV:
--	case IRDMA_OP_TYPE_SEND_SOL:
--	case IRDMA_OP_TYPE_SEND_SOL_INV:
--	case IRDMA_OP_TYPE_SEND:
--		entry->opcode = IB_WC_SEND;
--		break;
--	case IRDMA_OP_TYPE_FAST_REG_NSMR:
--		entry->opcode = IB_WC_REG_MR;
--		break;
--	case IRDMA_OP_TYPE_INV_STAG:
--		entry->opcode = IB_WC_LOCAL_INV;
--		break;
--	case IRDMA_OP_TYPE_REC_IMM:
--	case IRDMA_OP_TYPE_REC:
--		entry->opcode = cq_poll_info->op_type == IRDMA_OP_TYPE_REC_IMM ?
--			IB_WC_RECV_RDMA_WITH_IMM : IB_WC_RECV;
-+	if (cq_poll_info->q_type == IRDMA_CQE_QTYPE_SQ) {
-+		set_ib_wc_op_sq(cq_poll_info, entry);
-+	} else {
-+		set_ib_wc_op_rq(cq_poll_info, entry,
-+				qp->qp_uk.qp_caps & IRDMA_SEND_WITH_IMM ?
-+				true : false);
- 		if (qp->qp_uk.qp_type != IRDMA_QP_TYPE_ROCE_UD &&
- 		    cq_poll_info->stag_invalid_set) {
- 			entry->ex.invalidate_rkey = cq_poll_info->inv_stag;
- 			entry->wc_flags |= IB_WC_WITH_INVALIDATE;
- 		}
--		break;
--	default:
--		ibdev_err(&iwqp->iwdev->ibdev,
--			  "Invalid opcode = %d in CQE\n", cq_poll_info->op_type);
--		entry->status = IB_WC_GENERAL_ERR;
--		return;
- 	}
- 
- 	if (qp->qp_uk.qp_type == IRDMA_QP_TYPE_ROCE_UD) {
-diff --git a/drivers/infiniband/hw/irdma/verbs.h b/drivers/infiniband/hw/irdma/verbs.h
-index 4309b7159f42..a536e9fa85eb 100644
---- a/drivers/infiniband/hw/irdma/verbs.h
-+++ b/drivers/infiniband/hw/irdma/verbs.h
-@@ -232,6 +232,59 @@ static inline u16 irdma_fw_minor_ver(struct irdma_sc_dev *dev)
- 	return (u16)FIELD_GET(IRDMA_FW_VER_MINOR, dev->feature_info[IRDMA_FEATURE_FW_INFO]);
+ /* Slow paths for ptrace. */
+ handle_syscall_trace_enter:
+diff --git a/arch/riscv/kernel/signal.c b/arch/riscv/kernel/signal.c
+index 5c591123c440..bfb2afa4135f 100644
+--- a/arch/riscv/kernel/signal.c
++++ b/arch/riscv/kernel/signal.c
+@@ -313,19 +313,27 @@ static void do_signal(struct pt_regs *regs)
  }
  
-+static inline void set_ib_wc_op_sq(struct irdma_cq_poll_info *cq_poll_info,
-+				   struct ib_wc *entry)
-+{
-+	switch (cq_poll_info->op_type) {
-+	case IRDMA_OP_TYPE_RDMA_WRITE:
-+	case IRDMA_OP_TYPE_RDMA_WRITE_SOL:
-+		entry->opcode = IB_WC_RDMA_WRITE;
-+		break;
-+	case IRDMA_OP_TYPE_RDMA_READ_INV_STAG:
-+	case IRDMA_OP_TYPE_RDMA_READ:
-+		entry->opcode = IB_WC_RDMA_READ;
-+		break;
-+	case IRDMA_OP_TYPE_SEND_SOL:
-+	case IRDMA_OP_TYPE_SEND_SOL_INV:
-+	case IRDMA_OP_TYPE_SEND_INV:
-+	case IRDMA_OP_TYPE_SEND:
-+		entry->opcode = IB_WC_SEND;
-+		break;
-+	case IRDMA_OP_TYPE_FAST_REG_NSMR:
-+		entry->opcode = IB_WC_REG_MR;
-+		break;
-+	case IRDMA_OP_TYPE_INV_STAG:
-+		entry->opcode = IB_WC_LOCAL_INV;
-+		break;
-+	default:
-+		entry->status = IB_WC_GENERAL_ERR;
-+	}
-+}
-+
-+static inline void set_ib_wc_op_rq(struct irdma_cq_poll_info *cq_poll_info,
-+				   struct ib_wc *entry, bool send_imm_support)
-+{
-+	/**
-+	 * iWARP does not support sendImm, so the presence of Imm data
-+	 * must be WriteImm.
-+	 */
-+	if (!send_imm_support) {
-+		entry->opcode = cq_poll_info->imm_valid ?
-+					IB_WC_RECV_RDMA_WITH_IMM :
-+					IB_WC_RECV;
-+		return;
-+	}
-+
-+	switch (cq_poll_info->op_type) {
-+	case IB_OPCODE_RDMA_WRITE_ONLY_WITH_IMMEDIATE:
-+	case IB_OPCODE_RDMA_WRITE_LAST_WITH_IMMEDIATE:
-+		entry->opcode = IB_WC_RECV_RDMA_WITH_IMM;
-+		break;
-+	default:
-+		entry->opcode = IB_WC_RECV;
-+	}
-+}
-+
- void irdma_mcast_mac(u32 *ip_addr, u8 *mac, bool ipv4);
- int irdma_ib_register_device(struct irdma_device *iwdev);
- void irdma_ib_unregister_device(struct irdma_device *iwdev);
+ /*
+- * notification of userspace execution resumption
+- * - triggered by the _TIF_WORK_MASK flags
++ * Handle any pending work on the resume-to-userspace path, as indicated by
++ * _TIF_WORK_MASK. Entered from assembly with IRQs off.
+  */
+-asmlinkage __visible void do_notify_resume(struct pt_regs *regs,
+-					   unsigned long thread_info_flags)
++asmlinkage __visible void do_work_pending(struct pt_regs *regs,
++					  unsigned long thread_info_flags)
+ {
+-	if (thread_info_flags & _TIF_UPROBE)
+-		uprobe_notify_resume(regs);
+-
+-	/* Handle pending signal delivery */
+-	if (thread_info_flags & (_TIF_SIGPENDING | _TIF_NOTIFY_SIGNAL))
+-		do_signal(regs);
+-
+-	if (thread_info_flags & _TIF_NOTIFY_RESUME)
+-		resume_user_mode_work(regs);
++	do {
++		if (thread_info_flags & _TIF_NEED_RESCHED) {
++			schedule();
++		} else {
++			local_irq_enable();
++			if (thread_info_flags & _TIF_UPROBE)
++				uprobe_notify_resume(regs);
++			/* Handle pending signal delivery */
++			if (thread_info_flags & (_TIF_SIGPENDING |
++						 _TIF_NOTIFY_SIGNAL))
++				do_signal(regs);
++			if (thread_info_flags & _TIF_NOTIFY_RESUME)
++				resume_user_mode_work(regs);
++		}
++		local_irq_disable();
++		thread_info_flags = read_thread_flags();
++	} while (thread_info_flags & _TIF_WORK_MASK);
+ }
 -- 
 2.35.1
 
