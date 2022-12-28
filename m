@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61051875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:00:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA4EC433EF;
-	Wed, 28 Dec 2022 16:00:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DA551875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:00:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C71EFC433D2;
+	Wed, 28 Dec 2022 16:00:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243223;
-	bh=3AtLsjgzJDvSm2EVzBLhC2WyZm9bM8+fvOs22Fr/sWc=;
+	s=korg; t=1672243226;
+	bh=aUQxVDz3y30kaWOk7AXpRHyrMOSjZ8DJ+ldZR2Fp/4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D8AWUuw3EIli9DRiWocp4tlA0zJEqagroYUgx+DYt+Qkex8mDwqcqzeeT3qFI/uyB
-	 euarePTR+fqt4sqbcgQUR96U0SKVGFMrWoqxqbz9pdRxJtEdwW0lzzRcSdAuJOu8jV
-	 2JXMDBOMRT2xlx7AfbtzVNEKXU4ydYabnBuGg8KU=
+	b=moYUkItKUkXQ4iTobZkq8PVJuFFXfp6KQ4xUIGWXzkrVuMn8JIMsx708s/cQr66xr
+	 fHs4AGb8M+oylkw/jzsxVN5Q88VXkFUv23iW/5si+F8c7nJV0ODBvl8DFAyTCA1Q6m
+	 BOh2LuYp4rXI86DPy3SGJdcOT/RWDctHegtZH7rc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kris Bahnsen <kris@embeddedTS.com>,
-	Mark Brown <broonie@kernel.org>,
+	Paul Moore <paul@paul-moore.com>,
+	James Morris <jmorris@namei.org>,
+	"Serge E. Hallyn" <serge@hallyn.com>,
+	linux-security-module@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>,
+	Ping-Ke Shih <pkshih@realtek.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0503/1073] spi: spi-gpio: Dont set MOSI as an input if not 3WIRE mode
-Date: Wed, 28 Dec 2022 15:34:51 +0100
-Message-Id: <20221228144341.702579436@linuxfoundation.org>
+Subject: [PATCH 5.15 697/731] LoadPin: Ignore the "contents" argument of the LSM hooks
+Date: Wed, 28 Dec 2022 15:43:24 +0100
+Message-Id: <20221228144316.667589916@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,62 +39,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kris Bahnsen <kris@embeddedTS.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 3a6f994f848a69deb2bf3cd9d130dd0c09730e55 ]
+[ Upstream commit 1a17e5b513ceebf21100027745b8731b4728edf7 ]
 
-The addition of 3WIRE support would affect MOSI direction even
-when still in standard (4 wire) mode. This can lead to MOSI being
-at an invalid logic level when a device driver sets an SPI
-message with a NULL tx_buf.
+LoadPin only enforces the read-only origin of kernel file reads. Whether
+or not it was a partial read isn't important. Remove the overly
+conservative checks so that things like partial firmware reads will
+succeed (i.e. reading a firmware header).
 
-spi.h states that if tx_buf is NULL then "zeros will be shifted
-out ... " If MOSI is tristated then the data shifted out is subject
-to pull resistors, keepers, or in the absence of those, noise.
-
-This issue came to light when using spi-gpio connected to an
-ADS7843 touchscreen controller. MOSI pulled high when clocking
-MISO data in caused the SPI device to interpret this as a command
-which would put the device in an unexpected and non-functional
-state.
-
-Fixes: 4b859db2c606 ("spi: spi-gpio: add SPI_3WIRE support")
-Fixes: 5132b3d28371 ("spi: gpio: Support 3WIRE high-impedance turn-around")
-Signed-off-by: Kris Bahnsen <kris@embeddedTS.com>
-Link: https://lore.kernel.org/r/20221207230853.6174-1-kris@embeddedTS.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 2039bda1fa8d ("LSM: Add "contents" flag to kernel_read_file hook")
+Cc: Paul Moore <paul@paul-moore.com>
+Cc: James Morris <jmorris@namei.org>
+Cc: "Serge E. Hallyn" <serge@hallyn.com>
+Cc: linux-security-module@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Acked-by: Serge Hallyn <serge@hallyn.com>
+Tested-by: Ping-Ke Shih <pkshih@realtek.com>
+Link: https://lore.kernel.org/r/20221209195453.never.494-kees@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spi-gpio.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ security/loadpin/loadpin.c | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/spi/spi-gpio.c b/drivers/spi/spi-gpio.c
-index 4b12c4964a66..9c8c7948044e 100644
---- a/drivers/spi/spi-gpio.c
-+++ b/drivers/spi/spi-gpio.c
-@@ -268,9 +268,19 @@ static int spi_gpio_set_direction(struct spi_device *spi, bool output)
- 	if (output)
- 		return gpiod_direction_output(spi_gpio->mosi, 1);
+diff --git a/security/loadpin/loadpin.c b/security/loadpin/loadpin.c
+index b12f7d986b1e..5fce105a372d 100644
+--- a/security/loadpin/loadpin.c
++++ b/security/loadpin/loadpin.c
+@@ -118,21 +118,11 @@ static void loadpin_sb_free_security(struct super_block *mnt_sb)
+ 	}
+ }
  
--	ret = gpiod_direction_input(spi_gpio->mosi);
--	if (ret)
--		return ret;
+-static int loadpin_read_file(struct file *file, enum kernel_read_file_id id,
+-			     bool contents)
++static int loadpin_check(struct file *file, enum kernel_read_file_id id)
+ {
+ 	struct super_block *load_root;
+ 	const char *origin = kernel_read_file_id_str(id);
+ 
+-	/*
+-	 * If we will not know that we'll be seeing the full contents
+-	 * then we cannot trust a load will be complete and unchanged
+-	 * off disk. Treat all contents=false hooks as if there were
+-	 * no associated file struct.
+-	 */
+-	if (!contents)
+-		file = NULL;
+-
+ 	/* If the file id is excluded, ignore the pinning. */
+ 	if ((unsigned int)id < ARRAY_SIZE(ignore_read_file_id) &&
+ 	    ignore_read_file_id[id]) {
+@@ -187,9 +177,25 @@ static int loadpin_read_file(struct file *file, enum kernel_read_file_id id,
+ 	return 0;
+ }
+ 
++static int loadpin_read_file(struct file *file, enum kernel_read_file_id id,
++			     bool contents)
++{
 +	/*
-+	 * Only change MOSI to an input if using 3WIRE mode.
-+	 * Otherwise, MOSI could be left floating if there is
-+	 * no pull resistor connected to the I/O pin, or could
-+	 * be left logic high if there is a pull-up. Transmitting
-+	 * logic high when only clocking MISO data in can put some
-+	 * SPI devices in to a bad state.
++	 * LoadPin only cares about the _origin_ of a file, not its
++	 * contents, so we can ignore the "are full contents available"
++	 * argument here.
 +	 */
-+	if (spi->mode & SPI_3WIRE) {
-+		ret = gpiod_direction_input(spi_gpio->mosi);
-+		if (ret)
-+			return ret;
-+	}
- 	/*
- 	 * Send a turnaround high impedance cycle when switching
- 	 * from output to input. Theoretically there should be
++	return loadpin_check(file, id);
++}
++
+ static int loadpin_load_data(enum kernel_load_data_id id, bool contents)
+ {
+-	return loadpin_read_file(NULL, (enum kernel_read_file_id) id, contents);
++	/*
++	 * LoadPin only cares about the _origin_ of a file, not its
++	 * contents, so a NULL file is passed, and we can ignore the
++	 * state of "contents".
++	 */
++	return loadpin_check(NULL, (enum kernel_read_file_id) id);
+ }
+ 
+ static struct security_hook_list loadpin_hooks[] __lsm_ro_after_init = {
 -- 
 2.35.1
 
