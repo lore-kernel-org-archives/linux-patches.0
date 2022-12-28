@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A941863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC4D5C433D2;
-	Wed, 28 Dec 2022 15:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161581863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9124EC433D2;
+	Wed, 28 Dec 2022 15:37:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241835;
-	bh=nhtrcT3aazaoMzkUoWIWkMfWFVvKSwuQauzPzW2bZY4=;
+	s=korg; t=1672241837;
+	bh=wHvCMiDEAvVz8k7yAsD88jMAnGezdXv8HKXJaKfbMCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i1ua1+vViEge9ZIuBwN3hsgrD2k61Jdh7Ix0aUHUyB9tkaug4ZFDHaUlCgKg7VYwg
-	 qZr4VVxbmMn/aKsJZ0z0w229+j5If29hUqwl/igvpp/udxEZY05W7yMTMO9a+YeOM+
-	 6g/uXd884pzIDXN1BbpRwiIa7S921lpGipG3bGJI=
+	b=e7MyjMGiTiXm4D+6cua4XQixxT0fxSr5MNUXN/MvRPMlL/XXNwSWqEAcCOEIV1ouk
+	 61XeTU3G+cPi/7ktdmAdo/Bj6FuikV/pf4atGk03IAe1WK62db55CbgTFDf/KQRbZa
+	 eI6SJe7q8TE975BN5PZbF6KUJiyO0SRicDSTCxkQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0294/1146] bpf: propagate precision across all frames, not just the last one
-Date: Wed, 28 Dec 2022 15:30:33 +0100
-Message-Id: <20221228144338.125183550@linuxfoundation.org>
+Subject: [PATCH 5.15 528/731] iommu/sun50i: Fix reset release
+Date: Wed, 28 Dec 2022 15:40:35 +0100
+Message-Id: <20221228144311.850001534@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,158 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 529409ea92d590659be487ba0839710329bd8074 ]
+[ Upstream commit 9ad0c1252e84dbc664f0462707182245ed603237 ]
 
-When equivalent completed state is found and it has additional precision
-restrictions, BPF verifier propagates precision to
-currently-being-verified state chain (i.e., including parent states) so
-that if some of the states in the chain are not yet completed, necessary
-precision restrictions are enforced.
+Reset signal is asserted by writing 0 to the corresponding locations of
+masters we want to reset. So in order to deassert all reset signals, we
+should write 1's to all locations.
 
-Unfortunately, right now this happens only for the last frame (deepest
-active subprogram's frame), not all the frames. This can lead to
-incorrect matching of states due to missing precision marker. Currently
-this doesn't seem possible as BPF verifier forces everything to precise
-when validated BPF program has any subprograms. But with the next patch
-lifting this restriction, this becomes problematic.
+Current code writes 1's to locations of masters which were just reset
+which is good. However, at the same time it also writes 0's to other
+locations and thus asserts reset signals of remaining masters. Fix code
+by writing all 1's when we want to deassert all reset signals.
 
-In fact, without this fix, we'll start getting failure in one of the
-existing test_verifier test cases:
+This bug was discovered when working with Cedrus (video decoder). When
+it faulted, display went blank due to reset signal assertion.
 
-  #906/p precise: cross frame pruning FAIL
-  Unexpected success to load!
-  verification time 48 usec
-  stack depth 0+0
-  processed 26 insns (limit 1000000) max_states_per_insn 3 total_states 17 peak_states 17 mark_read 8
-
-This patch adds precision propagation across all frames.
-
-Fixes: a3ce685dd01a ("bpf: fix precision tracking")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20221104163649.121784-3-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://lore.kernel.org/r/20221025165415.307591-2-jernej.skrabec@gmail.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 71 ++++++++++++++++++++++++-------------------
- 1 file changed, 39 insertions(+), 32 deletions(-)
+ drivers/iommu/sun50i-iommu.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 110d306df4ed..5bd27b5196cb 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2768,7 +2768,7 @@ static void mark_all_scalars_precise(struct bpf_verifier_env *env,
- 		}
- }
+diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
+index 92997021e188..3fd1ee147953 100644
+--- a/drivers/iommu/sun50i-iommu.c
++++ b/drivers/iommu/sun50i-iommu.c
+@@ -27,6 +27,7 @@
+ #include <linux/types.h>
  
--static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
-+static int __mark_chain_precision(struct bpf_verifier_env *env, int frame, int regno,
- 				  int spi)
- {
- 	struct bpf_verifier_state *st = env->cur_state;
-@@ -2785,7 +2785,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
- 	if (!env->bpf_capable)
- 		return 0;
+ #define IOMMU_RESET_REG			0x010
++#define IOMMU_RESET_RELEASE_ALL			0xffffffff
+ #define IOMMU_ENABLE_REG		0x020
+ #define IOMMU_ENABLE_ENABLE			BIT(0)
  
--	func = st->frame[st->curframe];
-+	func = st->frame[frame];
- 	if (regno >= 0) {
- 		reg = &func->regs[regno];
- 		if (reg->type != SCALAR_VALUE) {
-@@ -2866,7 +2866,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
- 			break;
+@@ -894,7 +895,7 @@ static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
+ 	iommu_write(iommu, IOMMU_INT_CLR_REG, status);
  
- 		new_marks = false;
--		func = st->frame[st->curframe];
-+		func = st->frame[frame];
- 		bitmap_from_u64(mask, reg_mask);
- 		for_each_set_bit(i, mask, 32) {
- 			reg = &func->regs[i];
-@@ -2932,12 +2932,17 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
+ 	iommu_write(iommu, IOMMU_RESET_REG, ~status);
+-	iommu_write(iommu, IOMMU_RESET_REG, status);
++	iommu_write(iommu, IOMMU_RESET_REG, IOMMU_RESET_RELEASE_ALL);
  
- int mark_chain_precision(struct bpf_verifier_env *env, int regno)
- {
--	return __mark_chain_precision(env, regno, -1);
-+	return __mark_chain_precision(env, env->cur_state->curframe, regno, -1);
- }
+ 	spin_unlock(&iommu->iommu_lock);
  
--static int mark_chain_precision_stack(struct bpf_verifier_env *env, int spi)
-+static int mark_chain_precision_frame(struct bpf_verifier_env *env, int frame, int regno)
- {
--	return __mark_chain_precision(env, -1, spi);
-+	return __mark_chain_precision(env, frame, regno, -1);
-+}
-+
-+static int mark_chain_precision_stack_frame(struct bpf_verifier_env *env, int frame, int spi)
-+{
-+	return __mark_chain_precision(env, frame, -1, spi);
- }
- 
- static bool is_spillable_regtype(enum bpf_reg_type type)
-@@ -11856,34 +11861,36 @@ static int propagate_precision(struct bpf_verifier_env *env,
- {
- 	struct bpf_reg_state *state_reg;
- 	struct bpf_func_state *state;
--	int i, err = 0;
-+	int i, err = 0, fr;
- 
--	state = old->frame[old->curframe];
--	state_reg = state->regs;
--	for (i = 0; i < BPF_REG_FP; i++, state_reg++) {
--		if (state_reg->type != SCALAR_VALUE ||
--		    !state_reg->precise)
--			continue;
--		if (env->log.level & BPF_LOG_LEVEL2)
--			verbose(env, "propagating r%d\n", i);
--		err = mark_chain_precision(env, i);
--		if (err < 0)
--			return err;
--	}
-+	for (fr = old->curframe; fr >= 0; fr--) {
-+		state = old->frame[fr];
-+		state_reg = state->regs;
-+		for (i = 0; i < BPF_REG_FP; i++, state_reg++) {
-+			if (state_reg->type != SCALAR_VALUE ||
-+			    !state_reg->precise)
-+				continue;
-+			if (env->log.level & BPF_LOG_LEVEL2)
-+				verbose(env, "frame %d: propagating r%d\n", i, fr);
-+			err = mark_chain_precision_frame(env, fr, i);
-+			if (err < 0)
-+				return err;
-+		}
- 
--	for (i = 0; i < state->allocated_stack / BPF_REG_SIZE; i++) {
--		if (!is_spilled_reg(&state->stack[i]))
--			continue;
--		state_reg = &state->stack[i].spilled_ptr;
--		if (state_reg->type != SCALAR_VALUE ||
--		    !state_reg->precise)
--			continue;
--		if (env->log.level & BPF_LOG_LEVEL2)
--			verbose(env, "propagating fp%d\n",
--				(-i - 1) * BPF_REG_SIZE);
--		err = mark_chain_precision_stack(env, i);
--		if (err < 0)
--			return err;
-+		for (i = 0; i < state->allocated_stack / BPF_REG_SIZE; i++) {
-+			if (!is_spilled_reg(&state->stack[i]))
-+				continue;
-+			state_reg = &state->stack[i].spilled_ptr;
-+			if (state_reg->type != SCALAR_VALUE ||
-+			    !state_reg->precise)
-+				continue;
-+			if (env->log.level & BPF_LOG_LEVEL2)
-+				verbose(env, "frame %d: propagating fp%d\n",
-+					(-i - 1) * BPF_REG_SIZE, fr);
-+			err = mark_chain_precision_stack_frame(env, fr, i);
-+			if (err < 0)
-+				return err;
-+		}
- 	}
- 	return 0;
- }
 -- 
 2.35.1
 
