@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987261C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1868EC433D2;
-	Wed, 28 Dec 2022 16:33:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9D31C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B87C5C433F0;
+	Wed, 28 Dec 2022 16:33:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245199;
-	bh=OtbdnXf8AMHhVC2PqsqD5usQffCcLsQMlwfdyb+QX5Y=;
+	s=korg; t=1672245202;
+	bh=fw++7RX2Jh6jaWeiTi+IiOF0NuEYx/2Xj+uHqo9B5Xk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U575dmPISPRgFhECJILq/ymN22WkAxUnss+5BItfZltbvtpowzNYHb0txTfry+LgC
-	 Vg3x8zbcUdFtESHCqmXERN8YNCkVZ0V74MLtfEmm1z7M9H8Vrax0JSYlEHDm42vCph
-	 6gYs+G6livxGSY/e4g10+TZtQfRCMhJtjL+BFMV0=
+	b=TFNc3vZsrKTRqQuX44B07hesAR3u4vae9Re4cASxnJX4Zj2NPmstENnS+odyyn9J0
+	 1aU0qyvLCdRkPGXPmBnSw1mNm0YTB01XYiWO3lI87c4+wWvNZQioxiMv52SG78akck
+	 9BYghhcEEpdYXSkSFDAgH6IL+iv9EewCN562eNYQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Will Deacon <will@kernel.org>,
+	Michael Riesch <michael.riesch@wolfvision.net>,
+	Heiko Stuebner <heiko@sntech.de>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0787/1146] ftrace: Allow WITH_ARGS flavour of graph tracer with shadow call stack
-Date: Wed, 28 Dec 2022 15:38:46 +0100
-Message-Id: <20221228144351.523602183@linuxfoundation.org>
+Subject: [PATCH 6.1 0814/1146] iommu/rockchip: fix permission bits in page table entries v2
+Date: Wed, 28 Dec 2022 15:39:13 +0100
+Message-Id: <20221228144352.262573288@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -37,43 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Michael Riesch <michael.riesch@wolfvision.net>
 
-[ Upstream commit 38792972de4294163f44d6360fd221e6f2c22a05 ]
+[ Upstream commit 7eb99841f340b80be0d0973b0deb592d75fb8928 ]
 
-The recent switch on arm64 from DYNAMIC_FTRACE_WITH_REGS to
-DYNAMIC_FTRACE_WITH_ARGS failed to take into account that we currently
-require the former in order to allow the function graph tracer to be
-enabled in combination with shadow call stacks. This means that this is
-no longer permitted at all, in spite of the fact that either flavour of
-ftrace works perfectly fine in this combination.
+As pointed out in the corresponding downstream fix [0], the permission bits
+of the page table entries are compatible between v1 and v2 of the IOMMU.
+This is in contrast to the current mainline code that incorrectly assumes
+that the read and write permission bits are switched. Fix the permission
+bits by reusing the v1 bit defines.
 
-So permit WITH_ARGS as well as WITH_REGS.
+[0] https://github.com/rockchip-linux/kernel/commit/e3bc123a2260145e34b57454da3db0edd117eb8e
 
-Fixes: ddc9863e9e90 ("scs: Disable when function graph tracing is enabled")
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Link: https://lore.kernel.org/r/20221213132407.1485025-1-ardb@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: c55356c534aa ("iommu: rockchip: Add support for iommu v2")
+Signed-off-by: Michael Riesch <michael.riesch@wolfvision.net>
+Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20221102063553.2464161-1-michael.riesch@wolfvision.net
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/rockchip-iommu.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/arch/Kconfig b/arch/Kconfig
-index 8f138e580d1a..81599f5c17b0 100644
---- a/arch/Kconfig
-+++ b/arch/Kconfig
-@@ -635,7 +635,7 @@ config ARCH_SUPPORTS_SHADOW_CALL_STACK
- config SHADOW_CALL_STACK
- 	bool "Shadow Call Stack"
- 	depends on ARCH_SUPPORTS_SHADOW_CALL_STACK
--	depends on DYNAMIC_FTRACE_WITH_REGS || !FUNCTION_GRAPH_TRACER
-+	depends on DYNAMIC_FTRACE_WITH_ARGS || DYNAMIC_FTRACE_WITH_REGS || !FUNCTION_GRAPH_TRACER
- 	help
- 	  This option enables the compiler's Shadow Call Stack, which
- 	  uses a shadow stack to protect function return addresses from
+diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
+index a3fc59b814ab..a68eadd64f38 100644
+--- a/drivers/iommu/rockchip-iommu.c
++++ b/drivers/iommu/rockchip-iommu.c
+@@ -280,19 +280,17 @@ static u32 rk_mk_pte(phys_addr_t page, int prot)
+  *  11:9 - Page address bit 34:32
+  *   8:4 - Page address bit 39:35
+  *     3 - Security
+- *     2 - Readable
+- *     1 - Writable
++ *     2 - Writable
++ *     1 - Readable
+  *     0 - 1 if Page @ Page address is valid
+  */
+-#define RK_PTE_PAGE_READABLE_V2      BIT(2)
+-#define RK_PTE_PAGE_WRITABLE_V2      BIT(1)
+ 
+ static u32 rk_mk_pte_v2(phys_addr_t page, int prot)
+ {
+ 	u32 flags = 0;
+ 
+-	flags |= (prot & IOMMU_READ) ? RK_PTE_PAGE_READABLE_V2 : 0;
+-	flags |= (prot & IOMMU_WRITE) ? RK_PTE_PAGE_WRITABLE_V2 : 0;
++	flags |= (prot & IOMMU_READ) ? RK_PTE_PAGE_READABLE : 0;
++	flags |= (prot & IOMMU_WRITE) ? RK_PTE_PAGE_WRITABLE : 0;
+ 
+ 	return rk_mk_dte_v2(page) | flags;
+ }
 -- 
 2.35.1
 
