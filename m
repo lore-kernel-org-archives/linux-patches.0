@@ -1,38 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 098D41C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:22:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A570C433D2;
-	Wed, 28 Dec 2022 16:22:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967471C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:22:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20791C433D2;
+	Wed, 28 Dec 2022 16:22:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244568;
-	bh=l6SZ1o3XablMRreE/05h9qlGf3szz8R5it9zAPOMn0Y=;
+	s=korg; t=1672244571;
+	bh=tCKhIKES01vCm26ZLEvARUQHAFuL/43QG7Or5OiUYno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wXAUdFOM2Nh6pIocMHZ1Ur7MzWMg28W9WuIAgeToNieGRT65sReAmjT273Mg0vjT+
-	 lTjjwiZZNPD2Bw626gAqETbtodeo5stHCce+YZsJhxi60fMD29d5NNqv9z783nydpf
-	 gti/00Md91d/uRGOipe47sFN2jD+0u16b5bgHRos=
+	b=x0SPvMhWrJORFBY6N2KQkc0hpLLcwxdmlQ8GjJNThOnnif5Gz+7OFDrcdQ1BUwn4Y
+	 g3zfoytNgpjfWHaAySFNC1VAx9n2adKTRnXSa8bso3B+fNA3ilgX5M6vySeVDSQRo7
+	 iDgwIgusRgocqbijXwbgUAKK1wdkGAFh+IayFjJg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Richard Weinberger <richard@nod.at>,
-	linux-um@lists.infradead.org,
-	Daniel Vetter <daniel@ffwll.ch>,
-	Helge Deller <deller@gmx.de>,
-	linux-fbdev@vger.kernel.org,
-	dri-devel@lists.freedesktop.org,
-	Andres Salomon <dilinger@queued.net>,
-	linux-geode@lists.infradead.org,
+	kernel test robot <lkp@intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0734/1073] fbdev: geode: dont build on UML
-Date: Wed, 28 Dec 2022 15:38:42 +0100
-Message-Id: <20221228144347.960024744@linuxfoundation.org>
+Subject: [PATCH 6.1 0696/1146] usb: fotg210-udc: Fix ages old endianness issues
+Date: Wed, 28 Dec 2022 15:37:15 +0100
+Message-Id: <20221228144349.048773011@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -43,65 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Linus Walleij <linus.walleij@linaro.org>
 
-[ Upstream commit 71c53e19226b0166ba387d3c590d0509f541a0a1 ]
+[ Upstream commit 46ed6026ca2181c917c8334a82e3eaf40a6234dd ]
 
-The geode fbdev driver uses struct cpuinfo fields that are not present
-on ARCH=um, so don't allow this driver to be built on UML.
+The code in the FOTG210 driver isn't entirely endianness-agnostic
+as reported by the kernel robot sparse testing. This came to
+the surface while moving the files around.
 
-Prevents these build errors:
+The driver is only used on little-endian systems, so this causes
+no real-world regression, but it is nice to be strict and have
+some compile coverage also on big endian machines, so fix it
+up with the right LE accessors.
 
-In file included from ../arch/x86/include/asm/olpc.h:7:0,
-                 from ../drivers/mfd/cs5535-mfd.c:17:
-../arch/x86/include/asm/geode.h: In function ‘is_geode_gx’:
-../arch/x86/include/asm/geode.h:16:24: error: ‘struct cpuinfo_um’ has no member named ‘x86_vendor’
-  return ((boot_cpu_data.x86_vendor == X86_VENDOR_NSC) &&
-../arch/x86/include/asm/geode.h:16:39: error: ‘X86_VENDOR_NSC’ undeclared (first use in this function); did you mean ‘X86_VENDOR_ANY’?
-  return ((boot_cpu_data.x86_vendor == X86_VENDOR_NSC) &&
-../arch/x86/include/asm/geode.h:17:17: error: ‘struct cpuinfo_um’ has no member named ‘x86’
-   (boot_cpu_data.x86 == 5) &&
-../arch/x86/include/asm/geode.h:18:17: error: ‘struct cpuinfo_um’ has no member named ‘x86_model’
-   (boot_cpu_data.x86_model == 5));
-../arch/x86/include/asm/geode.h: In function ‘is_geode_lx’:
-../arch/x86/include/asm/geode.h:23:24: error: ‘struct cpuinfo_um’ has no member named ‘x86_vendor’
-  return ((boot_cpu_data.x86_vendor == X86_VENDOR_AMD) &&
-../arch/x86/include/asm/geode.h:23:39: error: ‘X86_VENDOR_AMD’ undeclared (first use in this function); did you mean ‘X86_VENDOR_ANY’?
-  return ((boot_cpu_data.x86_vendor == X86_VENDOR_AMD) &&
-../arch/x86/include/asm/geode.h:24:17: error: ‘struct cpuinfo_um’ has no member named ‘x86’
-   (boot_cpu_data.x86 == 5) &&
-../arch/x86/include/asm/geode.h:25:17: error: ‘struct cpuinfo_um’ has no member named ‘x86_model’
-   (boot_cpu_data.x86_model == 10));
-
-Fixes: 68f5d3f3b654 ("um: add PCI over virtio emulation driver")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Johannes Berg <johannes@sipsolutions.net>
-Cc: Richard Weinberger <richard@nod.at>
-Cc: linux-um@lists.infradead.org
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Helge Deller <deller@gmx.de>
-Cc: linux-fbdev@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: Andres Salomon <dilinger@queued.net>
-Cc: linux-geode@lists.infradead.org
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: b84a8dee23fd ("usb: gadget: add Faraday fotg210_udc driver")
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/linux-usb/202211110910.0dJ7nZCn-lkp@intel.com/
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Link: https://lore.kernel.org/r/20221111090317.94228-1-linus.walleij@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/geode/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/gadget/udc/fotg210-udc.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/video/fbdev/geode/Kconfig b/drivers/video/fbdev/geode/Kconfig
-index ac9c860592aa..85bc14b6faf6 100644
---- a/drivers/video/fbdev/geode/Kconfig
-+++ b/drivers/video/fbdev/geode/Kconfig
-@@ -5,6 +5,7 @@
- config FB_GEODE
- 	bool "AMD Geode family framebuffer support"
- 	depends on FB && PCI && (X86_32 || (X86 && COMPILE_TEST))
-+	depends on !UML
- 	help
- 	  Say 'Y' here to allow you to select framebuffer drivers for
- 	  the AMD Geode family of processors.
+diff --git a/drivers/usb/gadget/udc/fotg210-udc.c b/drivers/usb/gadget/udc/fotg210-udc.c
+index fdca28e72a3b..d0e051beb3af 100644
+--- a/drivers/usb/gadget/udc/fotg210-udc.c
++++ b/drivers/usb/gadget/udc/fotg210-udc.c
+@@ -629,10 +629,10 @@ static void fotg210_request_error(struct fotg210_udc *fotg210)
+ static void fotg210_set_address(struct fotg210_udc *fotg210,
+ 				struct usb_ctrlrequest *ctrl)
+ {
+-	if (ctrl->wValue >= 0x0100) {
++	if (le16_to_cpu(ctrl->wValue) >= 0x0100) {
+ 		fotg210_request_error(fotg210);
+ 	} else {
+-		fotg210_set_dev_addr(fotg210, ctrl->wValue);
++		fotg210_set_dev_addr(fotg210, le16_to_cpu(ctrl->wValue));
+ 		fotg210_set_cxdone(fotg210);
+ 	}
+ }
+@@ -713,17 +713,17 @@ static void fotg210_get_status(struct fotg210_udc *fotg210,
+ 
+ 	switch (ctrl->bRequestType & USB_RECIP_MASK) {
+ 	case USB_RECIP_DEVICE:
+-		fotg210->ep0_data = 1 << USB_DEVICE_SELF_POWERED;
++		fotg210->ep0_data = cpu_to_le16(1 << USB_DEVICE_SELF_POWERED);
+ 		break;
+ 	case USB_RECIP_INTERFACE:
+-		fotg210->ep0_data = 0;
++		fotg210->ep0_data = cpu_to_le16(0);
+ 		break;
+ 	case USB_RECIP_ENDPOINT:
+ 		epnum = ctrl->wIndex & USB_ENDPOINT_NUMBER_MASK;
+ 		if (epnum)
+ 			fotg210->ep0_data =
+-				fotg210_is_epnstall(fotg210->ep[epnum])
+-				<< USB_ENDPOINT_HALT;
++				cpu_to_le16(fotg210_is_epnstall(fotg210->ep[epnum])
++					    << USB_ENDPOINT_HALT);
+ 		else
+ 			fotg210_request_error(fotg210);
+ 		break;
 -- 
 2.35.1
 
