@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A871863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA528C433D2;
-	Wed, 28 Dec 2022 14:56:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 161B21863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 662B2C433D2;
+	Wed, 28 Dec 2022 14:56:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239388;
-	bh=6mjoa0UUO+VjLIgUKRi7R2TLiowgOOeAG487pIy3nus=;
+	s=korg; t=1672239390;
+	bh=p+HTs6bOvzPzTxsN5kukdUQxz9y+aivu3aMHZf4t6CM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wmxw2CQgbNtFMWMruO47BPbU+6TuZ35PAx6k8mG8hi+Lpkvy1vccaYarNteZm1Dbf
-	 8TRXWlyYr1qSbXDEeUAg56vi4PWKCHvZp/blAxxnHz3S4NZsbNV2b/jZBfjGaXIGOp
-	 YcdtPTyI+i/rURCC1hoIubaXyH8rTJZAo6nJLh4Q=
+	b=V5scA9ONgbY/502uhGkzGTzJpfPWnZR3gOVnkFigIgbXawpsVwvO4b/Dv1GWXAd3D
+	 U7EX0pQSbRHEb9hTo+zDcbIy4JrFwllAF06ytorbqzUtG1rokP5JYwfhWrPx7Xnbkw
+	 e3jY6VjCdIGLNe7HTqnWG6z5zlhh6YABplSzMDDw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <michael@walle.cc>,
-	Tudor Ambarus <tudor.ambarus@microchip.com>,
-	Takahiro Kuwano <Takahiro.Kuwano@infineon.com>,
+	Cong Dang <cong.dang.xn@renesas.com>,
+	Hai Pham <hai.pham.ud@renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 216/731] mtd: spi-nor: hide jedec_id sysfs attribute if not present
-Date: Wed, 28 Dec 2022 15:35:23 +0100
-Message-Id: <20221228144302.817710195@linuxfoundation.org>
+Subject: [PATCH 6.0 0021/1073] memory: renesas-rpc-if: Clear HS bit during hardware initialization
+Date: Wed, 28 Dec 2022 15:26:49 +0100
+Message-Id: <20221228144328.728837821@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,70 +38,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Walle <michael@walle.cc>
+From: Cong Dang <cong.dang.xn@renesas.com>
 
-[ Upstream commit 7d388551b6888f3725e6c957f472526b35161a5b ]
+[ Upstream commit 5192481f908e576be42bd39ec12979b79e11f7e0 ]
 
-Some non-jedec compliant flashes (like the Everspin flashes) don't have
-an ID at all. Hide the attribute in this case.
+According to the datasheet, HS bit should be specified to 1 when using
+DMA transfer. As DMA transfer is not supported, it should be cleared to
+0.
 
-Fixes: 36ac02286265 ("mtd: spi-nor: add initial sysfs support")
-Signed-off-by: Michael Walle <michael@walle.cc>
-Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
-Reviewed-by: Takahiro Kuwano <Takahiro.Kuwano@infineon.com>
-Link: https://lore.kernel.org/r/20220810220654.1297699-2-michael@walle.cc
+Previously, the driver relied on the HS bit being cleared by prior
+firmware but this is not always the case.
+
+Fix this by ensuring the bit is cleared during hardware initialization.
+
+Fixes: ca7d8b980b67 ("memory: add Renesas RPC-IF driver")
+Signed-off-by: Cong Dang <cong.dang.xn@renesas.com>
+Signed-off-by: Hai Pham <hai.pham.ud@renesas.com>
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/08d9fb10b3051decebf871267a6e2e7cb2d4faf9.1665583089.git.geert+renesas@glider.be
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ABI/testing/sysfs-bus-spi-devices-spi-nor      |  3 +++
- drivers/mtd/spi-nor/sysfs.c                        | 14 ++++++++++++++
- 2 files changed, 17 insertions(+)
+ drivers/memory/renesas-rpc-if.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-spi-devices-spi-nor b/Documentation/ABI/testing/sysfs-bus-spi-devices-spi-nor
-index d76cd3946434..e9ef69aef20b 100644
---- a/Documentation/ABI/testing/sysfs-bus-spi-devices-spi-nor
-+++ b/Documentation/ABI/testing/sysfs-bus-spi-devices-spi-nor
-@@ -5,6 +5,9 @@ Contact:	linux-mtd@lists.infradead.org
- Description:	(RO) The JEDEC ID of the SPI NOR flash as reported by the
- 		flash device.
+diff --git a/drivers/memory/renesas-rpc-if.c b/drivers/memory/renesas-rpc-if.c
+index 4316988d791a..61c288d40375 100644
+--- a/drivers/memory/renesas-rpc-if.c
++++ b/drivers/memory/renesas-rpc-if.c
+@@ -317,6 +317,9 @@ int rpcif_hw_init(struct rpcif *rpc, bool hyperflash)
+ 	regmap_update_bits(rpc->regmap, RPCIF_PHYCNT, RPCIF_PHYCNT_PHYMEM_MASK,
+ 			   RPCIF_PHYCNT_PHYMEM(hyperflash ? 3 : 0));
  
-+		The attribute is not present if the flash doesn't support
-+		the "Read JEDEC ID" command (9Fh). This is the case for
-+		non-JEDEC compliant flashes.
- 
- What:		/sys/bus/spi/devices/.../spi-nor/manufacturer
- Date:		April 2021
-diff --git a/drivers/mtd/spi-nor/sysfs.c b/drivers/mtd/spi-nor/sysfs.c
-index 9aec9d8a98ad..4c3b351aef24 100644
---- a/drivers/mtd/spi-nor/sysfs.c
-+++ b/drivers/mtd/spi-nor/sysfs.c
-@@ -67,6 +67,19 @@ static struct bin_attribute *spi_nor_sysfs_bin_entries[] = {
- 	NULL
- };
- 
-+static umode_t spi_nor_sysfs_is_visible(struct kobject *kobj,
-+					struct attribute *attr, int n)
-+{
-+	struct spi_device *spi = to_spi_device(kobj_to_dev(kobj));
-+	struct spi_mem *spimem = spi_get_drvdata(spi);
-+	struct spi_nor *nor = spi_mem_get_drvdata(spimem);
++	/* DMA Transfer is not supported */
++	regmap_update_bits(rpc->regmap, RPCIF_PHYCNT, RPCIF_PHYCNT_HS, 0);
 +
-+	if (attr == &dev_attr_jedec_id.attr && !nor->info->id_len)
-+		return 0;
-+
-+	return 0444;
-+}
-+
- static umode_t spi_nor_sysfs_is_bin_visible(struct kobject *kobj,
- 					    struct bin_attribute *attr, int n)
- {
-@@ -82,6 +95,7 @@ static umode_t spi_nor_sysfs_is_bin_visible(struct kobject *kobj,
- 
- static const struct attribute_group spi_nor_sysfs_group = {
- 	.name		= "spi-nor",
-+	.is_visible	= spi_nor_sysfs_is_visible,
- 	.is_bin_visible	= spi_nor_sysfs_is_bin_visible,
- 	.attrs		= spi_nor_sysfs_entries,
- 	.bin_attrs	= spi_nor_sysfs_bin_entries,
+ 	if (rpc->type == RPCIF_RCAR_GEN3)
+ 		regmap_update_bits(rpc->regmap, RPCIF_PHYCNT,
+ 				   RPCIF_PHYCNT_STRTIM(7), RPCIF_PHYCNT_STRTIM(7));
 -- 
 2.35.1
 
