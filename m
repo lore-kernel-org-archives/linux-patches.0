@@ -1,37 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F9D21C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B052CC433F0;
-	Wed, 28 Dec 2022 16:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E99871C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70E53C433EF;
+	Wed, 28 Dec 2022 16:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243925;
-	bh=mZIWfc1chnC7TDaTounEGqghzCuSV1iXo+lK+0d1ylo=;
+	s=korg; t=1672243927;
+	bh=4fwTmJSony6tMREeZYaqH9q0yVlRdm4LJSLAbp406no=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EVvjF8GRmTJHK3+byQ0wl5HO7TeXVzX/KBon5eio5p+OQQlcrw9vJWmCY11PdLWVs
-	 nbROtk5CtYgUNDGZGPNPYXeJfVgNqPyg2ln4r0w9RSw+cyaZv/+VBwQ0+zbeG0Jz64
-	 gchN4vuLbb/kEirBVW7dTY8vPZQaJzuUjfC4eDqM=
+	b=pbZabZzxomQNKUjLQbYaXnGO87d8edcnNUcN/lb7hyg5xcyB2Ve3q5Vd8g/H9J11J
+	 +kxiCGURKv6quwtskfU27D0P6rkTH3mlXsCgXxDikRUWil6WNzw35U/TKELgC4b8si
+	 IKia+lSrB8mg+xaHruX84ZpbqOf2N7X9w8qwvQZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Christie <michael.christie@oracle.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Ming Lei <ming.lei@redhat.com>,
-	John Garry <john.garry@huawei.com>,
-	Hannes Reinecke <hare@suse.de>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Bart Van Assche <bvanassche@acm.org>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0580/1146] scsi: core: Fix a race between scsi_done() and scsi_timeout()
-Date: Wed, 28 Dec 2022 15:35:19 +0100
-Message-Id: <20221228144345.928741077@linuxfoundation.org>
+Subject: [PATCH 6.0 0617/1073] padata: Fix list iterator in padata_do_serial()
+Date: Wed, 28 Dec 2022 15:36:45 +0100
+Message-Id: <20221228144344.801669372@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -42,62 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bart Van Assche <bvanassche@acm.org>
+From: Daniel Jordan <daniel.m.jordan@oracle.com>
 
-[ Upstream commit 978b7922d3dca672b41bb4b8ce6c06ab77112741 ]
+[ Upstream commit 57ddfecc72a6c9941d159543e1c0c0a74fe9afdd ]
 
-If there is a race between scsi_done() and scsi_timeout() and if
-scsi_timeout() loses the race, scsi_timeout() should not reset the request
-timer. Hence change the return value for this case from BLK_EH_RESET_TIMER
-into BLK_EH_DONE.
+list_for_each_entry_reverse() assumes that the iterated list is nonempty
+and that every list_head is embedded in the same type, but its use in
+padata_do_serial() breaks both rules.
 
-Although the block layer holds a reference on a request (req->ref) while
-calling a timeout handler, restarting the timer (blk_add_timer()) while a
-request is being completed is racy.
+This doesn't cause any issues now because padata_priv and padata_list
+happen to have their list fields at the same offset, but we really
+shouldn't be relying on that.
 
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Cc: Keith Busch <kbusch@kernel.org>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Ming Lei <ming.lei@redhat.com>
-Cc: John Garry <john.garry@huawei.com>
-Cc: Hannes Reinecke <hare@suse.de>
-Reported-by: Adrian Hunter <adrian.hunter@intel.com>
-Fixes: 15f73f5b3e59 ("blk-mq: move failure injection out of blk_mq_complete_request")
-Signed-off-by: Bart Van Assche <bvanassche@acm.org>
-Link: https://lore.kernel.org/r/20221018202958.1902564-2-bvanassche@acm.org
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: bfde23ce200e ("padata: unbind parallel jobs from specific CPUs")
+Signed-off-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_error.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ kernel/padata.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/scsi_error.c b/drivers/scsi/scsi_error.c
-index 6995c8979230..02520f912306 100644
---- a/drivers/scsi/scsi_error.c
-+++ b/drivers/scsi/scsi_error.c
-@@ -343,19 +343,11 @@ enum blk_eh_timer_return scsi_timeout(struct request *req)
+diff --git a/kernel/padata.c b/kernel/padata.c
+index 97f51e0c1776..de90af5fcbe6 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -390,13 +390,16 @@ void padata_do_serial(struct padata_priv *padata)
+ 	int hashed_cpu = padata_cpu_hash(pd, padata->seq_nr);
+ 	struct padata_list *reorder = per_cpu_ptr(pd->reorder_list, hashed_cpu);
+ 	struct padata_priv *cur;
++	struct list_head *pos;
  
- 	if (rtn == BLK_EH_DONE) {
- 		/*
--		 * Set the command to complete first in order to prevent a real
--		 * completion from releasing the command while error handling
--		 * is using it. If the command was already completed, then the
--		 * lower level driver beat the timeout handler, and it is safe
--		 * to return without escalating error recovery.
--		 *
--		 * If timeout handling lost the race to a real completion, the
--		 * block layer may ignore that due to a fake timeout injection,
--		 * so return RESET_TIMER to allow error handling another shot
--		 * at this command.
-+		 * If scsi_done() has already set SCMD_STATE_COMPLETE, do not
-+		 * modify *scmd.
- 		 */
- 		if (test_and_set_bit(SCMD_STATE_COMPLETE, &scmd->state))
--			return BLK_EH_RESET_TIMER;
-+			return BLK_EH_DONE;
- 		if (scsi_abort_command(scmd) != SUCCESS) {
- 			set_host_byte(scmd, DID_TIME_OUT);
- 			scsi_eh_scmd_add(scmd);
+ 	spin_lock(&reorder->lock);
+ 	/* Sort in ascending order of sequence number. */
+-	list_for_each_entry_reverse(cur, &reorder->list, list)
++	list_for_each_prev(pos, &reorder->list) {
++		cur = list_entry(pos, struct padata_priv, list);
+ 		if (cur->seq_nr < padata->seq_nr)
+ 			break;
+-	list_add(&padata->list, &cur->list);
++	}
++	list_add(&padata->list, pos);
+ 	spin_unlock(&reorder->lock);
+ 
+ 	/*
 -- 
 2.35.1
 
