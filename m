@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAF241C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0E3C43396;
-	Wed, 28 Dec 2022 16:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A971C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F72DC433EF;
+	Wed, 28 Dec 2022 16:32:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245172;
-	bh=upYayHbt3XOkj1mJcC9v6XS0DGuWRxmZebHhlb/fJN8=;
+	s=korg; t=1672245175;
+	bh=AfvHtbMwYDOMVDXunr4Q9QQh8V5hKEEPkEHGOfW1KAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=puZ+0VC1Akz5hCemo53W10X0KcmXvyuWF67ahVoysiWDmFxYELGYxCVmFVVPYRibf
-	 G8jV0rsRKEU8v21B3Knxx68wH7zMaeZszBoEtN8ZzKNNlvJEYV/VZFalXxyExsdshf
-	 GoSS6+dFNhX/YB7tRGU0tpmNaChUUbVGgh++btG4=
+	b=pFpglaPalpngK9+++WdpH5v/nPyw5sdqqRK2ZXeTmbSqXQK+FhWPZDuY4HEE6HvY1
+	 msRUiWCieYzSCH0kpo70NNv5bcNVels3n1LQ/mw5XZC6xn+6PX9/cp5fOZc3/U8vS2
+	 ccM3ERs83loBXnFFqSYIhFOV0v16WIjgJzGSNjeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	=?UTF-8?q?Daniel=20M=C3=BCller?= <deso@posteo.net>,
+	Song Liu <song@kernel.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0809/1146] iommu/sun50i: Fix reset release
-Date: Wed, 28 Dec 2022 15:39:08 +0100
-Message-Id: <20221228144352.126693640@linuxfoundation.org>
+Subject: [PATCH 6.0 0845/1073] selftests/bpf: Select CONFIG_FUNCTION_ERROR_INJECTION
+Date: Wed, 28 Dec 2022 15:40:33 +0100
+Message-Id: <20221228144350.973778252@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,52 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Song Liu <song@kernel.org>
 
-[ Upstream commit 9ad0c1252e84dbc664f0462707182245ed603237 ]
+[ Upstream commit a8dfde09c90109e3a98af54847e91bde7dc2d5c2 ]
 
-Reset signal is asserted by writing 0 to the corresponding locations of
-masters we want to reset. So in order to deassert all reset signals, we
-should write 1's to all locations.
+BPF selftests require CONFIG_FUNCTION_ERROR_INJECTION to work. However,
+CONFIG_FUNCTION_ERROR_INJECTION is no longer 'y' by default after recent
+changes. As a result, we are seeing errors like the following from BPF CI:
 
-Current code writes 1's to locations of masters which were just reset
-which is good. However, at the same time it also writes 0's to other
-locations and thus asserts reset signals of remaining masters. Fix code
-by writing all 1's when we want to deassert all reset signals.
+   bpf_testmod_test_read() is not modifiable
+   __x64_sys_setdomainname is not sleepable
+   __x64_sys_getpgid is not sleepable
 
-This bug was discovered when working with Cedrus (video decoder). When
-it faulted, display went blank due to reset signal assertion.
+Fix this by explicitly selecting CONFIG_FUNCTION_ERROR_INJECTION in the
+selftest config.
 
-Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://lore.kernel.org/r/20221025165415.307591-2-jernej.skrabec@gmail.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: a4412fdd49dc ("error-injection: Add prompt for function error injection")
+Reported-by: Daniel Müller <deso@posteo.net>
+Signed-off-by: Song Liu <song@kernel.org>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Daniel Müller <deso@posteo.net>
+Link: https://lore.kernel.org/bpf/20221213220500.3427947-1-song@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/sun50i-iommu.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/bpf/config | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-index cd9b74ee24de..270204a6ec4a 100644
---- a/drivers/iommu/sun50i-iommu.c
-+++ b/drivers/iommu/sun50i-iommu.c
-@@ -27,6 +27,7 @@
- #include <linux/types.h>
- 
- #define IOMMU_RESET_REG			0x010
-+#define IOMMU_RESET_RELEASE_ALL			0xffffffff
- #define IOMMU_ENABLE_REG		0x020
- #define IOMMU_ENABLE_ENABLE			BIT(0)
- 
-@@ -893,7 +894,7 @@ static irqreturn_t sun50i_iommu_irq(int irq, void *dev_id)
- 	iommu_write(iommu, IOMMU_INT_CLR_REG, status);
- 
- 	iommu_write(iommu, IOMMU_RESET_REG, ~status);
--	iommu_write(iommu, IOMMU_RESET_REG, status);
-+	iommu_write(iommu, IOMMU_RESET_REG, IOMMU_RESET_RELEASE_ALL);
- 
- 	spin_unlock(&iommu->iommu_lock);
- 
+diff --git a/tools/testing/selftests/bpf/config b/tools/testing/selftests/bpf/config
+index fabf0c014349..c5c5fc2a3ce7 100644
+--- a/tools/testing/selftests/bpf/config
++++ b/tools/testing/selftests/bpf/config
+@@ -13,6 +13,7 @@ CONFIG_CRYPTO_USER_API_HASH=m
+ CONFIG_DYNAMIC_FTRACE=y
+ CONFIG_FPROBE=y
+ CONFIG_FTRACE_SYSCALLS=y
++CONFIG_FUNCTION_ERROR_INJECTION=y
+ CONFIG_FUNCTION_TRACER=y
+ CONFIG_GENEVE=y
+ CONFIG_IKCONFIG=y
 -- 
 2.35.1
 
