@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 825A21C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:06:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06916C433EF;
-	Wed, 28 Dec 2022 16:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29B751C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:06:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EA43C433EF;
+	Wed, 28 Dec 2022 16:06:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243600;
-	bh=mlSQAw8rAge/PTnJ2+GOdF6ePheixqxhMkCwFWIKhRE=;
+	s=korg; t=1672243603;
+	bh=NCDusXs63H3DTZi81Gd9ZlJEWUg7qva/XiXOrTJPvg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w7Bg+NVz9sh0iUvudhMVTCe/UldmCl6AqsbwuoISsWn/9JCXDvNf7CdkJhHBmW5iw
-	 MdFaPBwOoslMLTYZJZ01udTU07RQKxfnbIjr3IAJhsyB6is/SpavrR7IWnjw7hOV9z
-	 gV4n8K5JNQeB7d67foNwLOMq3s3dguRqGmvOVsfA=
+	b=QkTjZYDxU6l+i1xbQ0+tf3WEgZnnTh/ZIjm2D47oONc3NfbDL27cb9krGulSAi9Xs
+	 7CMKw5ZBQsUfQ01c5TPRNXiK1WfNRmkMZiwM+ohdYwYUkAW9o5eG8ICHNOhkfU7iB6
+	 PgJAybKDNwkN73Y1tIR322HoC11/3ShZmK+9ftKY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0519/1146] media: staging: stkwebcam: Restore MEDIA_{USB,CAMERA}_SUPPORT dependencies
-Date: Wed, 28 Dec 2022 15:34:18 +0100
-Message-Id: <20221228144344.272934426@linuxfoundation.org>
+Subject: [PATCH 6.0 0555/1073] apparmor: Fix abi check to include v8 abi
+Date: Wed, 28 Dec 2022 15:35:43 +0100
+Message-Id: <20221228144343.130558143@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,35 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit faaf901727eddcfbe889fe172ec9cdb5e63c8236 ]
+[ Upstream commit 1b5a6198f5a9d0aa5497da0dc4bcd4fc166ee516 ]
 
-By moving support for the USB Syntek DC1125 Camera to staging, the
-dependencies on MEDIA_USB_SUPPORT and MEDIA_CAMERA_SUPPORT were lost.
+The v8 abi is supported by the kernel but the userspace supported
+version check does not allow for it. This was missed when v8 was added
+due to a bug in the userspace compiler which was setting an older abi
+version for v8 encoding (which is forward compatible except on the
+network encoding). However it is possible to detect the network
+encoding by checking the policydb network support which the code
+does. The end result was that missing the abi flag worked until
+userspace was fixed and began correctly checking for the v8 abi
+version.
 
-Fixes: 56280c64ecac ("media: stkwebcam: deprecate driver, move to staging")
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 56974a6fcfef ("apparmor: add base infastructure for socket mediation")
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/media/deprecated/stkwebcam/Kconfig | 2 +-
+ security/apparmor/policy_unpack.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/media/deprecated/stkwebcam/Kconfig b/drivers/staging/media/deprecated/stkwebcam/Kconfig
-index 4450403dff41..7234498e634a 100644
---- a/drivers/staging/media/deprecated/stkwebcam/Kconfig
-+++ b/drivers/staging/media/deprecated/stkwebcam/Kconfig
-@@ -2,7 +2,7 @@
- config VIDEO_STKWEBCAM
- 	tristate "USB Syntek DC1125 Camera support (DEPRECATED)"
- 	depends on VIDEO_DEV
--	depends on USB
-+	depends on MEDIA_USB_SUPPORT && MEDIA_CAMERA_SUPPORT
- 	help
- 	  Say Y here if you want to use this type of camera.
- 	  Supported devices are typically found in some Asus laptops,
+diff --git a/security/apparmor/policy_unpack.c b/security/apparmor/policy_unpack.c
+index 55d31bac4f35..9d26bbb90133 100644
+--- a/security/apparmor/policy_unpack.c
++++ b/security/apparmor/policy_unpack.c
+@@ -972,7 +972,7 @@ static int verify_header(struct aa_ext *e, int required, const char **ns)
+ 	 * if not specified use previous version
+ 	 * Mask off everything that is not kernel abi version
+ 	 */
+-	if (VERSION_LT(e->version, v5) || VERSION_GT(e->version, v7)) {
++	if (VERSION_LT(e->version, v5) || VERSION_GT(e->version, v8)) {
+ 		audit_iface(NULL, NULL, NULL, "unsupported interface version",
+ 			    e, error);
+ 		return error;
 -- 
 2.35.1
 
