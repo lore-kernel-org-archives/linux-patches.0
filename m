@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90AFD1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:50:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97B1C433F0;
-	Wed, 28 Dec 2022 14:50:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B4881863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:50:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96084C433D2;
+	Wed, 28 Dec 2022 14:50:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239019;
-	bh=eiTWlq2arxovgy0ikInutqzted+mKoa9/WJaOrpmpT0=;
+	s=korg; t=1672239021;
+	bh=4AjZPYIngutGlWr0f4CqedX5psR2DyI2/NdMi8XVdgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZYqfz6/QL36rpg2MCLHOnoE2VM30yf33Gw2n1yaA+UCLwOeR/em7NzLH2YpzFF5f/
-	 IUP5ejFU1f589hCDshI/a4E3Kfvn0h3pULI6KB3V/ElMyMUuX0T79g3NcwMIB/yEPB
-	 ST0gegvVsSl9EUfliVC/OJjuvGnLvBm3+BnbNckc=
+	b=D7WxCu5yFhypMwQtCaGPvA94fp92TgrvSxCN9vj1Zz+/Olc4+PtV9o8QPC0J/wa0Q
+	 fPBqmB96qcQ7KLvklFd1fe4uhegc8r8x8QN18W/l6MrDWYwaSLXQKpYkgi34vr5IEP
+	 sYCwnW0Z/T2ngUzV9kcGFpraH/Nov+wlmrSHF9Qc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Yipeng Zou <zouyipeng@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 098/731] thermal: core: fix some possible name leaks in error paths
-Date: Wed, 28 Dec 2022 15:33:25 +0100
-Message-Id: <20221228144259.390790216@linuxfoundation.org>
+Subject: [PATCH 5.15 081/731] selftests/ftrace: event_triggers: wait longer for test_event_enable
+Date: Wed, 28 Dec 2022 15:33:08 +0100
+Message-Id: <20221228144258.900150397@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,73 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Yipeng Zou <zouyipeng@huawei.com>
 
-[ Upstream commit 4748f9687caaeefab8578285b97b2f30789fc4b4 ]
+[ Upstream commit a1d6cd88c8973cfb08ee85722488b1d6d5d16327 ]
 
-In some error paths before device_register(), the names allocated
-by dev_set_name() are not freed. Move dev_set_name() front to
-device_register(), so the name can be freed while calling
-put_device().
+In some platform, the schedule event may came slowly, delay 100ms can't
+cover it.
 
-Fixes: 1dd7128b839f ("thermal/core: Fix null pointer dereference in thermal_release()")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+I was notice that on my board which running in low cpu_freq,and this
+selftests allways gose fail.
+
+So maybe we can check more times here to wait longer.
+
+Fixes: 43bb45da82f9 ("selftests: ftrace: Add a selftest to test event enable/disable func trigger")
+Signed-off-by: Yipeng Zou <zouyipeng@huawei.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ .../ftrace/test.d/ftrace/func_event_triggers.tc   | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index 867c8aa92b3a..38082fdc4fde 100644
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -905,10 +905,6 @@ __thermal_cooling_device_register(struct device_node *np,
- 	cdev->id = ret;
- 	id = ret;
+diff --git a/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc b/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
+index 3145b0f1835c..27a68bbe778b 100644
+--- a/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
++++ b/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
+@@ -38,11 +38,18 @@ cnt_trace() {
  
--	ret = dev_set_name(&cdev->device, "cooling_device%d", cdev->id);
--	if (ret)
--		goto out_ida_remove;
--
- 	cdev->type = kstrdup(type ? type : "", GFP_KERNEL);
- 	if (!cdev->type) {
- 		ret = -ENOMEM;
-@@ -923,6 +919,11 @@ __thermal_cooling_device_register(struct device_node *np,
- 	cdev->device.class = &thermal_class;
- 	cdev->devdata = devdata;
- 	thermal_cooling_device_setup_sysfs(cdev);
-+	ret = dev_set_name(&cdev->device, "cooling_device%d", cdev->id);
-+	if (ret) {
-+		thermal_cooling_device_destroy_sysfs(cdev);
-+		goto out_kfree_type;
-+	}
- 	ret = device_register(&cdev->device);
- 	if (ret)
- 		goto out_kfree_type;
-@@ -1235,10 +1236,6 @@ thermal_zone_device_register(const char *type, int trips, int mask,
- 	tz->id = id;
- 	strlcpy(tz->type, type, sizeof(tz->type));
+ test_event_enabled() {
+     val=$1
++    check_times=10		# wait for 10 * SLEEP_TIME at most
  
--	result = dev_set_name(&tz->device, "thermal_zone%d", tz->id);
--	if (result)
--		goto remove_id;
--
- 	if (!ops->critical)
- 		ops->critical = thermal_zone_device_critical;
+-    e=`cat $EVENT_ENABLE`
+-    if [ "$e" != $val ]; then
+-	fail "Expected $val but found $e"
+-    fi
++    while [ $check_times -ne 0 ]; do
++	e=`cat $EVENT_ENABLE`
++	if [ "$e" == $val ]; then
++	    return 0
++	fi
++	sleep $SLEEP_TIME
++	check_times=$((check_times - 1))
++    done
++
++    fail "Expected $val but found $e"
+ }
  
-@@ -1260,6 +1257,11 @@ thermal_zone_device_register(const char *type, int trips, int mask,
- 	/* A new thermal zone needs to be updated anyway. */
- 	atomic_set(&tz->need_update, 1);
- 
-+	result = dev_set_name(&tz->device, "thermal_zone%d", tz->id);
-+	if (result) {
-+		thermal_zone_destroy_device_groups(tz);
-+		goto remove_id;
-+	}
- 	result = device_register(&tz->device);
- 	if (result)
- 		goto release_device;
+ run_enable_disable() {
 -- 
 2.35.1
 
