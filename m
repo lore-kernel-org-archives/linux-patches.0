@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 278831875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:07:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A14C5C433F0;
-	Wed, 28 Dec 2022 16:07:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1E31875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:07:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43CAEC433EF;
+	Wed, 28 Dec 2022 16:07:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243675;
-	bh=0NR62xpQmLXGMFrzOugU88C4JdzBZ6902uIU3zqCOgA=;
+	s=korg; t=1672243677;
+	bh=aVQDBF5UZRcD4LY+cDsLA6JkPaJ954vkwqWl5qyAyyU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aGONJQbGgTrBkIT8PdbbPoACsKOTvZgYbMAHXuo6l0ZkQxfJKT4pjrZA1AzZgAF/a
-	 wsgNaPmEPee9sC27OQeYhZOvCd44ODutAGrekxUbvx82W9uGvrU3FBrqm3H91TAk3r
-	 kpIXH2VW1IHR5DyMkp88l5hI/oAiP2kroX9BjE/g=
+	b=NpMA1KTjoEiRXoPi6LPnyOuHSnYqO8zxg8vKKt9HwEPDbFPTrOK/NJJdcnDjH8c7I
+	 QAi1IM6O8eiZSzm2lYb1PzYIAScZnPIZkUJ6la8bJ5qJiKh564elQvmamLof4hHNJR
+	 GU/M1Fby0xv0UADyaETTW6g9F+3+uMmB2uAuBGMY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Zhang Qilong <zhangqilong3@huawei.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0532/1146] drivers: net: qlcnic: Fix potential memory leak in qlcnic_sriov_init()
-Date: Wed, 28 Dec 2022 15:34:31 +0100
-Message-Id: <20221228144344.625852128@linuxfoundation.org>
+Subject: [PATCH 6.0 0568/1073] f2fs: Fix the race condition of resize flag between resizefs
+Date: Wed, 28 Dec 2022 15:35:56 +0100
+Message-Id: <20221228144343.483025561@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,35 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Zhang Qilong <zhangqilong3@huawei.com>
 
-[ Upstream commit 01de1123322e4fe1bbd0fcdf0982511b55519c03 ]
+[ Upstream commit 28fc4e9077ce59ab28c89c20dc6be5154473218f ]
 
-If vp alloc failed in qlcnic_sriov_init(), all previously allocated vp
-needs to be freed.
+Because the set/clear SBI_IS_RESIZEFS flag not between any locks,
+In the following case:
+  thread1			thread2
+   ->ioctl(resizefs)
+    ->set RESIZEFS flag		 ->ioctl(resizefs)
+    ...                   	  ->set RESIZEFS flag
+    ->clear RESIZEFS flag
+    				  ->resizefs stream
+				    # No RESIZEFS flag in the stream
 
-Fixes: f197a7aa6288 ("qlcnic: VF-PF communication channel implementation")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Also before freeze_super, the resizefs not started, we should not set
+the SBI_IS_RESIZEFS flag.
+
+So move the set/clear SBI_IS_RESIZEFS flag between the cp_mutex and
+gc_lock.
+
+Fixes: b4b10061ef98 ("f2fs: refactor resize_fs to avoid meta updates in progress")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/f2fs/gc.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-index 9282321c2e7f..f9dd50152b1e 100644
---- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-+++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-@@ -221,6 +221,8 @@ int qlcnic_sriov_init(struct qlcnic_adapter *adapter, int num_vfs)
- 	return 0;
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 73881314bdda..af915f801455 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -2127,8 +2127,6 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
+ 	if (err)
+ 		return err;
  
- qlcnic_destroy_async_wq:
-+	while (i--)
-+		kfree(sriov->vf_info[i].vp);
- 	destroy_workqueue(bc->bc_async_wq);
+-	set_sbi_flag(sbi, SBI_IS_RESIZEFS);
+-
+ 	freeze_super(sbi->sb);
+ 	f2fs_down_write(&sbi->gc_lock);
+ 	f2fs_down_write(&sbi->cp_global_sem);
+@@ -2144,6 +2142,7 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
+ 	if (err)
+ 		goto out_err;
  
- qlcnic_destroy_trans_wq:
++	set_sbi_flag(sbi, SBI_IS_RESIZEFS);
+ 	err = free_segment_range(sbi, secs, false);
+ 	if (err)
+ 		goto recover_out;
+@@ -2167,6 +2166,7 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
+ 		f2fs_commit_super(sbi, false);
+ 	}
+ recover_out:
++	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
+ 	if (err) {
+ 		set_sbi_flag(sbi, SBI_NEED_FSCK);
+ 		f2fs_err(sbi, "resize_fs failed, should run fsck to repair!");
+@@ -2179,6 +2179,5 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
+ 	f2fs_up_write(&sbi->cp_global_sem);
+ 	f2fs_up_write(&sbi->gc_lock);
+ 	thaw_super(sbi->sb);
+-	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
+ 	return err;
+ }
 -- 
 2.35.1
 
