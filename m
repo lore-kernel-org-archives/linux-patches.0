@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587861C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C44C433D2;
-	Wed, 28 Dec 2022 16:27:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69E721C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB086C433D2;
+	Wed, 28 Dec 2022 16:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244854;
-	bh=srbhyofZhUa3gEkfsQwea/xtykDIeRGFFJLXt2xcoOo=;
+	s=korg; t=1672244857;
+	bh=N0wOss2sXsEJ1JrPeouKT2TQdEIfFK+X0WORntzDtfw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hypij1+uUZjx3/HftGTMzpRVBzThznbTcIYPV1u6xcD9bTJWaP7nVP3U7ulCle9Oq
-	 gzeat1nYHrltbpQwgA71DTkX781VU7lLz7EYLyRRBsCLchJZRr2+9OIQbqUvU7zZ6q
-	 ggZLX6yN6N0wdmRqstT9Oj1NksEbQaOlZ5zLs7Zo=
+	b=NSk0UYd1mpJ2fEaL45RMnrIYT32q0xlpU2yhQGXCCFskkTyYXFjfUhOacJ2nY4SpS
+	 ibHLzkKVkvb/y2ycVKJuo8IJMpOIp/57KJozRUYhPHTOw/aaJu8rBeH3a4qnBNqmun
+	 Te/3tBym2oTOj2gk88OZjkyE+/viuriAN26iq7tg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	ruanjinjie <ruanjinjie@huawei.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0785/1073] rtc: cmos: Call cmos_wake_setup() from cmos_do_probe()
-Date: Wed, 28 Dec 2022 15:39:33 +0100
-Message-Id: <20221228144349.332950236@linuxfoundation.org>
+Subject: [PATCH 6.0 0754/1073] power: supply: fix null pointer dereferencing in power_supply_get_battery_info
+Date: Wed, 28 Dec 2022 15:39:02 +0100
+Message-Id: <20221228144348.498895716@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -37,145 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: ruanjinjie <ruanjinjie@huawei.com>
 
-[ Upstream commit 508ccdfb86b21da37ad091003a4d4567709d5dfb ]
+[ Upstream commit 104bb8a663451404a26331263ce5b96c34504049 ]
 
-Notice that cmos_wake_setup() is the only user of acpi_rtc_info and it
-can operate on the cmos_rtc variable directly, so it need not set the
-platform_data pointer before cmos_do_probe() is called.  Instead, it
-can be called by cmos_do_probe() in the case when the platform_data
-pointer is not set to implement the default behavior (which is to use
-the FADT information as long as ACPI support is enabled).
+when kmalloc() fail to allocate memory in kasprintf(), propname
+will be NULL, strcmp() called by of_get_property() will cause
+null pointer dereference.
 
-Modify the code accordingly.
+So return ENOMEM if kasprintf() return NULL pointer.
 
-While at it, drop a comment that doesn't really match the code it is
-supposed to be describing.
-
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Zhang Rui <rui.zhang@intel.com>
-Tested-by: Zhang Rui <rui.zhang@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/4803444.31r3eYUQgx@kreacher
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
+Fixes: 3afb50d7125b ("power: supply: core: Add some helpers to use the battery OCV capacity table")
+Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 47 ++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 25 deletions(-)
+ drivers/power/supply/power_supply_core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 58cc2bae2f8a..a84262265d6d 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -744,6 +744,8 @@ static irqreturn_t cmos_interrupt(int irq, void *p)
- 		return IRQ_NONE;
- }
+diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
+index 9bae94d2ea3a..01d1ac79d982 100644
+--- a/drivers/power/supply/power_supply_core.c
++++ b/drivers/power/supply/power_supply_core.c
+@@ -750,6 +750,11 @@ int power_supply_get_battery_info(struct power_supply *psy,
+ 		int i, tab_len, size;
  
-+static void cmos_wake_setup(struct device *dev);
-+
- #ifdef	CONFIG_PNP
- #define	INITSECTION
- 
-@@ -827,19 +829,27 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
- 		if (info->address_space)
- 			address_space = info->address_space;
- 
--		if (info->rtc_day_alarm && info->rtc_day_alarm < 128)
--			cmos_rtc.day_alrm = info->rtc_day_alarm;
--		if (info->rtc_mon_alarm && info->rtc_mon_alarm < 128)
--			cmos_rtc.mon_alrm = info->rtc_mon_alarm;
--		if (info->rtc_century && info->rtc_century < 128)
--			cmos_rtc.century = info->rtc_century;
-+		cmos_rtc.day_alrm = info->rtc_day_alarm;
-+		cmos_rtc.mon_alrm = info->rtc_mon_alarm;
-+		cmos_rtc.century = info->rtc_century;
- 
- 		if (info->wake_on && info->wake_off) {
- 			cmos_rtc.wake_on = info->wake_on;
- 			cmos_rtc.wake_off = info->wake_off;
- 		}
-+	} else {
-+		cmos_wake_setup(dev);
- 	}
- 
-+	if (cmos_rtc.day_alrm >= 128)
-+		cmos_rtc.day_alrm = 0;
-+
-+	if (cmos_rtc.mon_alrm >= 128)
-+		cmos_rtc.mon_alrm = 0;
-+
-+	if (cmos_rtc.century >= 128)
-+		cmos_rtc.century = 0;
-+
- 	cmos_rtc.dev = dev;
- 	dev_set_drvdata(dev, &cmos_rtc);
- 
-@@ -1275,13 +1285,6 @@ static void use_acpi_alarm_quirks(void)
- static inline void use_acpi_alarm_quirks(void) { }
- #endif
- 
--/* Every ACPI platform has a mc146818 compatible "cmos rtc".  Here we find
-- * its device node and pass extra config data.  This helps its driver use
-- * capabilities that the now-obsolete mc146818 didn't have, and informs it
-- * that this board's RTC is wakeup-capable (per ACPI spec).
-- */
--static struct cmos_rtc_board_info acpi_rtc_info;
--
- static void cmos_wake_setup(struct device *dev)
- {
- 	if (acpi_disabled)
-@@ -1289,26 +1292,23 @@ static void cmos_wake_setup(struct device *dev)
- 
- 	use_acpi_alarm_quirks();
- 
--	acpi_rtc_info.wake_on = rtc_wake_on;
--	acpi_rtc_info.wake_off = rtc_wake_off;
-+	cmos_rtc.wake_on = rtc_wake_on;
-+	cmos_rtc.wake_off = rtc_wake_off;
- 
--	/* workaround bug in some ACPI tables */
-+	/* ACPI tables bug workaround. */
- 	if (acpi_gbl_FADT.month_alarm && !acpi_gbl_FADT.day_alarm) {
- 		dev_dbg(dev, "bogus FADT month_alarm (%d)\n",
- 			acpi_gbl_FADT.month_alarm);
- 		acpi_gbl_FADT.month_alarm = 0;
- 	}
- 
--	acpi_rtc_info.rtc_day_alarm = acpi_gbl_FADT.day_alarm;
--	acpi_rtc_info.rtc_mon_alarm = acpi_gbl_FADT.month_alarm;
--	acpi_rtc_info.rtc_century = acpi_gbl_FADT.century;
-+	cmos_rtc.day_alrm = acpi_gbl_FADT.day_alarm;
-+	cmos_rtc.mon_alrm = acpi_gbl_FADT.month_alarm;
-+	cmos_rtc.century = acpi_gbl_FADT.century;
- 
--	/* NOTE:  S4_RTC_WAKE is NOT currently useful to Linux */
- 	if (acpi_gbl_FADT.flags & ACPI_FADT_S4_RTC_WAKE)
- 		dev_info(dev, "RTC can wake from S4\n");
- 
--	dev->platform_data = &acpi_rtc_info;
--
- 	/* RTC always wakes from S1/S2/S3, and often S4/STD */
- 	device_init_wakeup(dev, 1);
- }
-@@ -1359,8 +1359,6 @@ static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
- {
- 	int irq, ret;
- 
--	cmos_wake_setup(&pnp->dev);
--
- 	if (pnp_port_start(pnp, 0) == 0x70 && !pnp_irq_valid(pnp, 0)) {
- 		irq = 0;
- #ifdef CONFIG_X86
-@@ -1468,7 +1466,6 @@ static int __init cmos_platform_probe(struct platform_device *pdev)
- 	int irq, ret;
- 
- 	cmos_of_init(pdev);
--	cmos_wake_setup(&pdev->dev);
- 
- 	if (RTC_IOMAPPED)
- 		resource = platform_get_resource(pdev, IORESOURCE_IO, 0);
+ 		propname = kasprintf(GFP_KERNEL, "ocv-capacity-table-%d", index);
++		if (!propname) {
++			power_supply_put_battery_info(psy, info);
++			err = -ENOMEM;
++			goto out_put_node;
++		}
+ 		list = of_get_property(battery_np, propname, &size);
+ 		if (!list || !size) {
+ 			dev_err(&psy->dev, "failed to get %s\n", propname);
 -- 
 2.35.1
 
