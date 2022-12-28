@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6758C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3053C43392;
-	Wed, 28 Dec 2022 15:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086601863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82C94C433D2;
+	Wed, 28 Dec 2022 15:45:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242328;
-	bh=lxG/BseRpMSvx4WZ3vOTYKABrcCbTH0xZN/XOm6jfsQ=;
+	s=korg; t=1672242330;
+	bh=gaX2EA+0i5+uWOb8V/ekuvtOzAQeu4uTFtlGJmSCzm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nDxRjjXf/bk3REBgJhzssMID/if1CTbDT6Vl9md/n54DZFtxgiL4DlZkcDpeyR3Vt
-	 po9SlZwYbxl5fQceZJQ98ovEe1SFVT/Zc94H+IEbkfHLycbHwbHZlFpPvFY/bJwFZE
-	 X16oioJW9+8kcbllt9zKelgxTpIAZOAEJO3qb9gk=
+	b=gYnSK/Ui4jTEDO4unGgB/HzY82LU1WmBF+CX56ALn2sENlnyllqyr3TUCVYv1Cvkn
+	 Dj2VuDYLIdbtI4MNvV8SlE0UtI1Qn6FugfhKEL01c4sjVwh1r8z3+ygYHYVUb+Isv1
+	 w5oo54NOX6ZleevufdS2fX8PmHG7BwxgcaijvRSI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	ming_qian <ming.qian@nxp.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Kirill Tkhai <tkhai@ya.ru>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0357/1146] media: amphion: Fix error handling in vpu_driver_init()
-Date: Wed, 28 Dec 2022 15:31:36 +0100
-Message-Id: <20221228144339.858486431@linuxfoundation.org>
+Subject: [PATCH 5.15 591/731] unix: Fix race in SOCK_SEQPACKETs unix_dgram_sendmsg()
+Date: Wed, 28 Dec 2022 15:41:38 +0100
+Message-Id: <20221228144313.674498074@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,60 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Kirill Tkhai <tkhai@ya.ru>
 
-[ Upstream commit a95cc6d11aae16a7b2d043b073a40de81bbea689 ]
+[ Upstream commit 3ff8bff704f4de125dca2262e5b5b963a3da1d87 ]
 
-A problem about modprobe amphion-vpu failed is triggered with the
-following log given:
+There is a race resulting in alive SOCK_SEQPACKET socket
+may change its state from TCP_ESTABLISHED to TCP_CLOSE:
 
- [ 2208.634841] Error: Driver 'amphion-vpu' is already registered, aborting...
- modprobe: ERROR: could not insert 'amphion_vpu': Device or resource busy
+unix_release_sock(peer)                  unix_dgram_sendmsg(sk)
+  sock_orphan(peer)
+    sock_set_flag(peer, SOCK_DEAD)
+                                           sock_alloc_send_pskb()
+                                             if !(sk->sk_shutdown & SEND_SHUTDOWN)
+                                               OK
+                                           if sock_flag(peer, SOCK_DEAD)
+                                             sk->sk_state = TCP_CLOSE
+  sk->sk_shutdown = SHUTDOWN_MASK
 
-The reason is that vpu_driver_init() returns vpu_core_driver_init()
-directly without checking its return value, if vpu_core_driver_init()
-failed, it returns without unregister amphion_vpu_driver, resulting the
-amphion-vpu can never be installed later.
-A simple call graph is shown as below:
+After that socket sk remains almost normal: it is able to connect, listen, accept
+and recvmsg, while it can't sendmsg.
 
- vpu_driver_init()
-   platform_driver_register() # register amphion_vpu_driver
-   vpu_core_driver_init()
-     platform_driver_register()
-       driver_register()
-         bus_add_driver()
-           dev = kzalloc(...) # OOM happened
-   # return without unregister amphion_vpu_driver
+Since this is the only possibility for alive SOCK_SEQPACKET to change
+the state in such way, we should better fix this strange and potentially
+danger corner case.
 
-Fix by unregister amphion_vpu_driver when vpu_core_driver_init() returns
-error.
+Note, that we will return EPIPE here like this is normally done in sock_alloc_send_pskb().
+Originally used ECONNREFUSED looks strange, since it's strange to return
+a specific retval in dependence of race in kernel, when user can't affect on this.
 
-Fixes: b50a64fc54af ("media: amphion: add amphion vpu device driver")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: ming_qian <ming.qian@nxp.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Also, move TCP_CLOSE assignment for SOCK_DGRAM sockets under state lock
+to fix race with unix_dgram_connect():
+
+unix_dgram_connect(other)            unix_dgram_sendmsg(sk)
+                                       unix_peer(sk) = NULL
+                                       unix_state_unlock(sk)
+  unix_state_double_lock(sk, other)
+  sk->sk_state  = TCP_ESTABLISHED
+  unix_peer(sk) = other
+  unix_state_double_unlock(sk, other)
+                                       sk->sk_state  = TCP_CLOSED
+
+This patch fixes both of these races.
+
+Fixes: 83301b5367a9 ("af_unix: Set TCP_ESTABLISHED for datagram sockets too")
+Signed-off-by: Kirill Tkhai <tkhai@ya.ru>
+Link: https://lore.kernel.org/r/135fda25-22d5-837a-782b-ceee50e19844@ya.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/amphion/vpu_drv.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/unix/af_unix.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/amphion/vpu_drv.c b/drivers/media/platform/amphion/vpu_drv.c
-index 9d5a5075343d..f01ce49d27e8 100644
---- a/drivers/media/platform/amphion/vpu_drv.c
-+++ b/drivers/media/platform/amphion/vpu_drv.c
-@@ -245,7 +245,11 @@ static int __init vpu_driver_init(void)
- 	if (ret)
- 		return ret;
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index 545823c1d5ed..0a59a00cb581 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1865,13 +1865,20 @@ static int unix_dgram_sendmsg(struct socket *sock, struct msghdr *msg,
+ 			unix_state_lock(sk);
  
--	return vpu_core_driver_init();
-+	ret = vpu_core_driver_init();
-+	if (ret)
-+		platform_driver_unregister(&amphion_vpu_driver);
-+
-+	return ret;
- }
+ 		err = 0;
+-		if (unix_peer(sk) == other) {
++		if (sk->sk_type == SOCK_SEQPACKET) {
++			/* We are here only when racing with unix_release_sock()
++			 * is clearing @other. Never change state to TCP_CLOSE
++			 * unlike SOCK_DGRAM wants.
++			 */
++			unix_state_unlock(sk);
++			err = -EPIPE;
++		} else if (unix_peer(sk) == other) {
+ 			unix_peer(sk) = NULL;
+ 			unix_dgram_peer_wake_disconnect_wakeup(sk, other);
  
- static void __exit vpu_driver_exit(void)
++			sk->sk_state = TCP_CLOSE;
+ 			unix_state_unlock(sk);
+ 
+-			sk->sk_state = TCP_CLOSE;
+ 			unix_dgram_disconnected(sk, other);
+ 			sock_put(other);
+ 			err = -ECONNREFUSED;
 -- 
 2.35.1
 
