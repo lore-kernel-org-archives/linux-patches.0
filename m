@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0F5E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:47:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 353DAC433D2;
-	Wed, 28 Dec 2022 14:47:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 562C81863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:47:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF3AC433D2;
+	Wed, 28 Dec 2022 14:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672238869;
-	bh=WEmTKAh+yQ4BBPrEBaGs+/pD5VE6wJurxv04t/LRfQQ=;
+	s=korg; t=1672238872;
+	bh=+aShuWJnoeQCpTRFj6mwfySD+k18PtTWtoou0do7/Mk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pd3IpVHPo6nf6/T4W/drw7sN2m1Ch4Lc0dbqPEYP3t1opcOjm7EG+j04p2AzQL9eg
-	 ZgLsslQNC9fezrKS7hZayE2nEUVbJ4p63d+hTTtc3mjkMXSXPW3B30k8fdr1eF1pOo
-	 w4aeLs0KMw4KGD0tgpXYH6jIDvgF9Mzt00sj8lFk=
+	b=cZEEFvnA+U8iUYZRRswowKGxBpk1tXgsRE3MflD4zjGlMcfptA+OUU751Z2Brt/Lm
+	 p070ksI6oVgJAT1lPHT0pDKaJgUQgok6LHC9Ow6l80cdBV7qYjWDu2TUWNcpvnR5mZ
+	 5VLV8aVg/7hpqpfrI+nGTUk6UWixh8G78rZhmik0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 040/731] arm64: dts: mt2712e: Fix unit_address_vs_reg warning for oscillators
-Date: Wed, 28 Dec 2022 15:32:27 +0100
-Message-Id: <20221228144257.716687349@linuxfoundation.org>
+Subject: [PATCH 5.15 041/731] arm64: dts: mt2712e: Fix unit address for pinctrl node
+Date: Wed, 28 Dec 2022 15:32:28 +0100
+Message-Id: <20221228144257.745040307@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -37,106 +37,38 @@ Content-Transfer-Encoding: 8bit
 
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit e4495a0a8b3d84816c9a46edf3ce060bbf267475 ]
+[ Upstream commit 1d4516f53a611b362db7ba7a8889923d469f57e1 ]
 
-Rename the fixed-clock oscillators to remove the unit address.
+The unit address for the pinctrl node is (0x)1000b000 and not
+(0x)10005000, which is the syscfg_pctl_a address instead.
 
-This solves unit_address_vs_reg warnings.
+This fixes the following warning:
+arch/arm64/boot/dts/mediatek/mt2712e.dtsi:264.40-267.4: Warning
+(unique_unit_address): /syscfg_pctl_a@10005000: duplicate
+unit-address (also used in node /pinctrl@10005000)
 
-Fixes: 5d4839709c8e ("arm64: dts: mt2712: Add clock controller device nodes")
+Fixes: f0c64340b748 ("arm64: dts: mt2712: add pintcrl device node.")
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221013152212.416661-4-angelogioacchino.delregno@collabora.com
+Link: https://lore.kernel.org/r/20221013152212.416661-5-angelogioacchino.delregno@collabora.com
 Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt2712e.dtsi | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ arch/arm64/boot/dts/mediatek/mt2712e.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
-index a9cca9c146fd..1c55689383b8 100644
+index 1c55689383b8..993a03d7fff1 100644
 --- a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
 +++ b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
-@@ -160,70 +160,70 @@ sys_clk: dummyclk {
- 		#clock-cells = <0>;
+@@ -266,7 +266,7 @@ syscfg_pctl_a: syscfg_pctl_a@10005000 {
+ 		reg = <0 0x10005000 0 0x1000>;
  	};
  
--	clk26m: oscillator@0 {
-+	clk26m: oscillator-26m {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <26000000>;
- 		clock-output-names = "clk26m";
- 	};
- 
--	clk32k: oscillator@1 {
-+	clk32k: oscillator-32k {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <32768>;
- 		clock-output-names = "clk32k";
- 	};
- 
--	clkfpc: oscillator@2 {
-+	clkfpc: oscillator-50m {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <50000000>;
- 		clock-output-names = "clkfpc";
- 	};
- 
--	clkaud_ext_i_0: oscillator@3 {
-+	clkaud_ext_i_0: oscillator-aud0 {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <6500000>;
- 		clock-output-names = "clkaud_ext_i_0";
- 	};
- 
--	clkaud_ext_i_1: oscillator@4 {
-+	clkaud_ext_i_1: oscillator-aud1 {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <196608000>;
- 		clock-output-names = "clkaud_ext_i_1";
- 	};
- 
--	clkaud_ext_i_2: oscillator@5 {
-+	clkaud_ext_i_2: oscillator-aud2 {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <180633600>;
- 		clock-output-names = "clkaud_ext_i_2";
- 	};
- 
--	clki2si0_mck_i: oscillator@6 {
-+	clki2si0_mck_i: oscillator-i2s0 {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <30000000>;
- 		clock-output-names = "clki2si0_mck_i";
- 	};
- 
--	clki2si1_mck_i: oscillator@7 {
-+	clki2si1_mck_i: oscillator-i2s1 {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <30000000>;
- 		clock-output-names = "clki2si1_mck_i";
- 	};
- 
--	clki2si2_mck_i: oscillator@8 {
-+	clki2si2_mck_i: oscillator-i2s2 {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <30000000>;
- 		clock-output-names = "clki2si2_mck_i";
- 	};
- 
--	clktdmin_mclk_i: oscillator@9 {
-+	clktdmin_mclk_i: oscillator-mclk {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <30000000>;
+-	pio: pinctrl@10005000 {
++	pio: pinctrl@1000b000 {
+ 		compatible = "mediatek,mt2712-pinctrl";
+ 		reg = <0 0x1000b000 0 0x1000>;
+ 		mediatek,pctl-regmap = <&syscfg_pctl_a>;
 -- 
 2.35.1
 
