@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 010011863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71E14C433D2;
-	Wed, 28 Dec 2022 15:32:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 974D41863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17E18C433EF;
+	Wed, 28 Dec 2022 15:32:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241572;
-	bh=q105xRqxZikIOkvgMp4BgO/aQMyJ5kujQvzxvPi/V6s=;
+	s=korg; t=1672241575;
+	bh=i+FxZC7eaVkFPDHW+LHw3Z/h2CMkCeNb8O9v0DMTFcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m6zeutHTIZl+YtjgSyHYCFaNDM5Mo6/TLK7eyWW6RPOVStrul5AAOvB3NJbkwl0zc
-	 Nmqtgljs+dX6sPyTao5B+dJM/7uIlxU930ywyijpBqtaHBl5yGEnm5c7IIuzABe4tL
-	 3syz8A7AblizhtIRm2EkBslje3KT9jRK+KzSMlgE=
+	b=doPIY/MCWf1D9/gnET0AalAP6xmUyS4dW2YlV7l//0iKtIL6pdg4xSxAtBXCbzmIW
+	 rdweetobh7t0f3fpg3fxVO8uM/MBEXOjMVufAdHakRWGioHLAyHTjG0ZF23BSdn2LS
+	 41XPZyaBo1FO3BS5siWcQbIcfqCxVcEl+PfN4Egw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0262/1146] drm/i915: Handle all GTs on driver (un)load paths
-Date: Wed, 28 Dec 2022 15:30:01 +0100
-Message-Id: <20221228144337.253874090@linuxfoundation.org>
+Subject: [PATCH 5.15 498/731] ksmbd: Fix resource leak in ksmbd_session_rpc_open()
+Date: Wed, 28 Dec 2022 15:40:05 +0100
+Message-Id: <20221228144310.982495557@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,139 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit f569ae759472fbe1f6fdddc7398360d43fdcc199 ]
+[ Upstream commit bc044414fa0326a4e5c3c509c00b1fcaf621b5f4 ]
 
-This, along with the changes already landed in commit 1c66a12ab431
-("drm/i915: Handle each GT on init/release and suspend/resume") makes
-engines from all GTs actually known to the driver.
+When ksmbd_rpc_open() fails then it must call ksmbd_rpc_id_free() to
+undo the result of ksmbd_ipc_id_alloc().
 
-To accomplish this we need to sprinkle a lot of for_each_gt calls around
-but is otherwise pretty un-eventuful.
-
-v2:
- - Consolidate adjacent GT loops in a couple places.  (Daniele)
-
-Cc: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220915232654.3283095-5-matthew.d.roper@intel.com
-Stable-dep-of: 1cacd6894d5f ("drm/i915/dgfx: Grab wakeref at i915_ttm_unmap_virtual")
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/i915_driver.c |  3 ++-
- drivers/gpu/drm/i915/i915_gem.c    | 43 +++++++++++++++++++++---------
- 2 files changed, 33 insertions(+), 13 deletions(-)
+ fs/ksmbd/mgmt/user_session.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/i915_driver.c b/drivers/gpu/drm/i915/i915_driver.c
-index f2a15d8155f4..2ce30cff461a 100644
---- a/drivers/gpu/drm/i915/i915_driver.c
-+++ b/drivers/gpu/drm/i915/i915_driver.c
-@@ -1662,7 +1662,8 @@ static int intel_runtime_suspend(struct device *kdev)
+diff --git a/fs/ksmbd/mgmt/user_session.c b/fs/ksmbd/mgmt/user_session.c
+index 8d8ffd8c6f19..0fa467f2c897 100644
+--- a/fs/ksmbd/mgmt/user_session.c
++++ b/fs/ksmbd/mgmt/user_session.c
+@@ -106,15 +106,17 @@ int ksmbd_session_rpc_open(struct ksmbd_session *sess, char *rpc_name)
+ 	entry->method = method;
+ 	entry->id = ksmbd_ipc_id_alloc();
+ 	if (entry->id < 0)
+-		goto error;
++		goto free_entry;
  
- 		intel_runtime_pm_enable_interrupts(dev_priv);
+ 	resp = ksmbd_rpc_open(sess, entry->id);
+ 	if (!resp)
+-		goto error;
++		goto free_id;
  
--		intel_gt_runtime_resume(to_gt(dev_priv));
-+		for_each_gt(gt, dev_priv, i)
-+			intel_gt_runtime_resume(gt);
- 
- 		enable_rpm_wakeref_asserts(rpm);
- 
-diff --git a/drivers/gpu/drm/i915/i915_gem.c b/drivers/gpu/drm/i915/i915_gem.c
-index 2bdddb61ebd7..88df9a35e0fe 100644
---- a/drivers/gpu/drm/i915/i915_gem.c
-+++ b/drivers/gpu/drm/i915/i915_gem.c
-@@ -1128,6 +1128,8 @@ void i915_gem_drain_workqueue(struct drm_i915_private *i915)
- 
- int i915_gem_init(struct drm_i915_private *dev_priv)
- {
-+	struct intel_gt *gt;
-+	unsigned int i;
- 	int ret;
- 
- 	/* We need to fallback to 4K pages if host doesn't support huge gtt. */
-@@ -1158,9 +1160,11 @@ int i915_gem_init(struct drm_i915_private *dev_priv)
- 	 */
- 	intel_init_clock_gating(dev_priv);
- 
--	ret = intel_gt_init(to_gt(dev_priv));
--	if (ret)
--		goto err_unlock;
-+	for_each_gt(gt, dev_priv, i) {
-+		ret = intel_gt_init(gt);
-+		if (ret)
-+			goto err_unlock;
-+	}
- 
- 	return 0;
- 
-@@ -1173,8 +1177,13 @@ int i915_gem_init(struct drm_i915_private *dev_priv)
- err_unlock:
- 	i915_gem_drain_workqueue(dev_priv);
- 
--	if (ret != -EIO)
--		intel_uc_cleanup_firmwares(&to_gt(dev_priv)->uc);
-+	if (ret != -EIO) {
-+		for_each_gt(gt, dev_priv, i) {
-+			intel_gt_driver_remove(gt);
-+			intel_gt_driver_release(gt);
-+			intel_uc_cleanup_firmwares(&gt->uc);
-+		}
-+	}
- 
- 	if (ret == -EIO) {
- 		/*
-@@ -1182,10 +1191,12 @@ int i915_gem_init(struct drm_i915_private *dev_priv)
- 		 * as wedged. But we only want to do this when the GPU is angry,
- 		 * for all other failure, such as an allocation failure, bail.
- 		 */
--		if (!intel_gt_is_wedged(to_gt(dev_priv))) {
--			i915_probe_error(dev_priv,
--					 "Failed to initialize GPU, declaring it wedged!\n");
--			intel_gt_set_wedged(to_gt(dev_priv));
-+		for_each_gt(gt, dev_priv, i) {
-+			if (!intel_gt_is_wedged(gt)) {
-+				i915_probe_error(dev_priv,
-+						 "Failed to initialize GPU, declaring it wedged!\n");
-+				intel_gt_set_wedged(gt);
-+			}
- 		}
- 
- 		/* Minimal basic recovery for KMS */
-@@ -1213,10 +1224,14 @@ void i915_gem_driver_unregister(struct drm_i915_private *i915)
- 
- void i915_gem_driver_remove(struct drm_i915_private *dev_priv)
- {
-+	struct intel_gt *gt;
-+	unsigned int i;
-+
- 	intel_wakeref_auto_fini(&to_gt(dev_priv)->userfault_wakeref);
- 
- 	i915_gem_suspend_late(dev_priv);
--	intel_gt_driver_remove(to_gt(dev_priv));
-+	for_each_gt(gt, dev_priv, i)
-+		intel_gt_driver_remove(gt);
- 	dev_priv->uabi_engines = RB_ROOT;
- 
- 	/* Flush any outstanding unpin_work. */
-@@ -1227,9 +1242,13 @@ void i915_gem_driver_remove(struct drm_i915_private *dev_priv)
- 
- void i915_gem_driver_release(struct drm_i915_private *dev_priv)
- {
--	intel_gt_driver_release(to_gt(dev_priv));
-+	struct intel_gt *gt;
-+	unsigned int i;
- 
--	intel_uc_cleanup_firmwares(&to_gt(dev_priv)->uc);
-+	for_each_gt(gt, dev_priv, i) {
-+		intel_gt_driver_release(gt);
-+		intel_uc_cleanup_firmwares(&gt->uc);
-+	}
- 
- 	/* Flush any outstanding work, including i915_gem_context.release_work. */
- 	i915_gem_drain_workqueue(dev_priv);
+ 	kvfree(resp);
+ 	return entry->id;
+-error:
++free_id:
++	ksmbd_rpc_id_free(entry->id);
++free_entry:
+ 	list_del(&entry->list);
+ 	kfree(entry);
+ 	return -EINVAL;
 -- 
 2.35.1
 
