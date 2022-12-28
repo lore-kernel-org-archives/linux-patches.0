@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4172E1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:08:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9CB4C433EF;
-	Wed, 28 Dec 2022 16:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F911C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:08:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A280C433D2;
+	Wed, 28 Dec 2022 16:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243718;
-	bh=BtLffO+3Gb4T0px8/3Ad1Wxi+x0cyol3HvDsLe14VPc=;
+	s=korg; t=1672243720;
+	bh=Vg9m1UugLFgy1mxbnN2fHTmyqdAUjKmup5+MfJUsP94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EtVaMIPGrr5ESEKkTx9sMmNGul3pb5D0bgHKMA0W6KLn7OtF2PyteewavDNb4K2nd
-	 YiEHiyUpNMRZt+QHXV73W5Fa0tezgbc42iqXphqtXZImCr4v7wJgVUHTYvGRHi5JlW
-	 XaCb1IOK1ZV6fKxY7Vs5SvR0FGrBTnQ/9Wx9jlNg=
+	b=rOapJadkpU3Oq1iarqSxNsKWPDn7x9g9CmyTtIOWjiehxjtHEwiPS3FZJ/vMAPm8U
+	 aG9VBHMltE+00JRWa7eDkon02BJeUamVIu3OnlzjC4NyD2nrjSEG4anmlVhW6aegxs
+	 yhm/NjSURKuE/BTaxIRM8Agaqfj5IujrQvU5DcBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yassine Oudjana <y.oudjana@protonmail.com>,
-	Marek Vasut <marex@denx.de>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.15 731/731] extcon: usbc-tusb320: Call the Type-C IRQ handler only if a port is registered
-Date: Wed, 28 Dec 2022 15:43:58 +0100
-Message-Id: <20221228144317.630974485@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0539/1146] net: apple: bmac: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:34:38 +0100
+Message-Id: <20221228144344.812989727@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,42 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yassine Oudjana <y.oudjana@protonmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 341fd15e2e18c24d5c738496cfc3d7a272241201 upstream.
+[ Upstream commit 5fe02e046e6422c4adfdbc50206ec7186077da24 ]
 
-Commit bf7571c00dca ("extcon: usbc-tusb320: Add USB TYPE-C support")
-added an optional Type-C interface to the driver but missed to check
-if it is in use when calling the IRQ handler. This causes an oops on
-devices currently using the old extcon interface. Check if a Type-C
-port is registered before calling the Type-C IRQ handler.
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-Fixes: bf7571c00dca ("extcon: usbc-tusb320: Add USB TYPE-C support")
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
-Reviewed-by: Marek Vasut <marex@denx.de>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20221107153317.657803-1-y.oudjana@protonmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
+The difference between them is free reason, dev_kfree_skb_irq() means
+the SKB is dropped in error and dev_consume_skb_irq() means the SKB
+is consumed in normal.
+
+In this case, dev_kfree_skb() is called in bmac_tx_timeout() to drop
+the SKB, when tx timeout, so replace it with dev_kfree_skb_irq().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/extcon/extcon-usbc-tusb320.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/apple/bmac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/extcon/extcon-usbc-tusb320.c
-+++ b/drivers/extcon/extcon-usbc-tusb320.c
-@@ -327,7 +327,13 @@ static irqreturn_t tusb320_state_update_
- 		return IRQ_NONE;
- 
- 	tusb320_extcon_irq_handler(priv, reg);
--	tusb320_typec_irq_handler(priv, reg);
-+
-+	/*
-+	 * Type-C support is optional. Only call the Type-C handler if a
-+	 * port had been registered previously.
-+	 */
-+	if (priv->port)
-+		tusb320_typec_irq_handler(priv, reg);
- 
- 	regmap_write(priv->regmap, TUSB320_REG9, reg);
- 
+diff --git a/drivers/net/ethernet/apple/bmac.c b/drivers/net/ethernet/apple/bmac.c
+index 334de0d93c89..9e653e2925f7 100644
+--- a/drivers/net/ethernet/apple/bmac.c
++++ b/drivers/net/ethernet/apple/bmac.c
+@@ -1510,7 +1510,7 @@ static void bmac_tx_timeout(struct timer_list *t)
+ 	i = bp->tx_empty;
+ 	++dev->stats.tx_errors;
+ 	if (i != bp->tx_fill) {
+-		dev_kfree_skb(bp->tx_bufs[i]);
++		dev_kfree_skb_irq(bp->tx_bufs[i]);
+ 		bp->tx_bufs[i] = NULL;
+ 		if (++i >= N_TX_RING) i = 0;
+ 		bp->tx_empty = i;
+-- 
+2.35.1
+
 
 
