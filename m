@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A8631863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00289C433F1;
-	Wed, 28 Dec 2022 15:37:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36A0B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB398C433D2;
+	Wed, 28 Dec 2022 15:37:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241873;
-	bh=rJidGOASI21CnwPAr8do/50wsEnGYMJOUvCNeFFlXLs=;
+	s=korg; t=1672241876;
+	bh=sANT4joCYRlb/n4eDVFKHSm8n6PjJqMc+EMYCTBEYis=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u8rhtsfewuuh/aenxBCEGlo/VQoC2LOYqAk5+vF6rsZhbCDfOkWDprduq8o8i5cz1
-	 aqf1Nvv5WEi50vz2VeP5lg7hKo5Kg0e/r8zn5k03UB0HKtoCElW5WwGAn4ZM82/jUf
-	 5IKO5q8v+kDl/jYAiVFpogHYwTHFNnH7s9cDEvxI=
+	b=VdJJZ7f0IwgSs1x7uvpgDmYPLAMPCKs/pWR/waH3o2WK2eO72emZer83NqWp74DaH
+	 L2iyM06SWphfWEwTcnJT8zj9l/TQUvRFuLxiX4C6ZnOqOvJqZPIeqEw02KXQCS3TGd
+	 dqPfE1Ag3EDRbG12FxmhMv0zFYrlwr+v6THoz6X0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nirav N Shah <nirav.n.shah@intel.com>,
-	Fenghua Yu <fenghua.yu@intel.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 537/731] dmaengine: idxd: Fix crc_val field for completion record
-Date: Wed, 28 Dec 2022 15:40:44 +0100
-Message-Id: <20221228144312.111278086@linuxfoundation.org>
+Subject: [PATCH 6.1 0300/1146] Input: joystick - fix Kconfig warning for JOYSTICK_ADC
+Date: Wed, 28 Dec 2022 15:30:39 +0100
+Message-Id: <20221228144338.289643540@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,36 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fenghua Yu <fenghua.yu@intel.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit dc901d98b1fe6e52ab81cd3e0879379168e06daa ]
+[ Upstream commit 6100a19c4fcfe154dd32f8a8ef4e8c0b1f607c75 ]
 
-The crc_val in the completion record should be 64 bits and not 32 bits.
+Fix a Kconfig warning for JOYSTICK_ADC by also selecting
+IIO_BUFFER.
 
-Fixes: 4ac823e9cd85 ("dmaengine: idxd: fix delta_rec and crc size field for completion record")
-Reported-by: Nirav N Shah <nirav.n.shah@intel.com>
-Signed-off-by: Fenghua Yu <fenghua.yu@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20221111012715.2031481-1-fenghua.yu@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+WARNING: unmet direct dependencies detected for IIO_BUFFER_CB
+  Depends on [n]: IIO [=y] && IIO_BUFFER [=n]
+  Selected by [y]:
+  - JOYSTICK_ADC [=y] && INPUT [=y] && INPUT_JOYSTICK [=y] && IIO [=y]
+
+Fixes: 2c2b364fddd5 ("Input: joystick - add ADC attached joystick driver.")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Link: https://lore.kernel.org/r/20221104201238.31628-1-rdunlap@infradead.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/idxd.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/input/joystick/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/uapi/linux/idxd.h b/include/uapi/linux/idxd.h
-index c750eac09fc9..f7c01709cb0f 100644
---- a/include/uapi/linux/idxd.h
-+++ b/include/uapi/linux/idxd.h
-@@ -272,7 +272,7 @@ struct dsa_completion_record {
- 		};
- 
- 		uint32_t	delta_rec_size;
--		uint32_t	crc_val;
-+		uint64_t	crc_val;
- 
- 		/* DIF check & strip */
- 		struct {
+diff --git a/drivers/input/joystick/Kconfig b/drivers/input/joystick/Kconfig
+index 9dcf3f51f2dd..04ca3d1c2816 100644
+--- a/drivers/input/joystick/Kconfig
++++ b/drivers/input/joystick/Kconfig
+@@ -46,6 +46,7 @@ config JOYSTICK_A3D
+ config JOYSTICK_ADC
+ 	tristate "Simple joystick connected over ADC"
+ 	depends on IIO
++	select IIO_BUFFER
+ 	select IIO_BUFFER_CB
+ 	help
+ 	  Say Y here if you have a simple joystick connected over ADC.
 -- 
 2.35.1
 
