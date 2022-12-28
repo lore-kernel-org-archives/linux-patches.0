@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46901C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:44:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6490AC433F1;
-	Wed, 28 Dec 2022 16:44:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F411C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:44:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 182C2C433D2;
+	Wed, 28 Dec 2022 16:44:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245868;
-	bh=L8aI6zpMCK6k+RVf1stpAquGtD/tHaTUqbsuYkzbmi0=;
+	s=korg; t=1672245871;
+	bh=l/uTSJpkb7iF9/bwE+UEqemQYnCtWxrWUH9JUkWJkGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HdipC2fKhfl1qav5C/8NRBT2kHWes84ZxAuY0YWmiXENHHXnr+dUW6CzQRWfTUKhj
-	 ZdrdwWrdD9q8D02894/R3WaEJK0lzC3HS1pJsa/491bhLDEvkRtPO7L55QbdMNNnFE
-	 op6lsK9d4OzRBKbyEDlcz9sjUqq8h+i9E2H05Vvw=
+	b=Wud6W2vj5cuaj2hRP6qaEUY9CPIaUVuWaluAJ9U+wgKJJHjmpgFFax/K3RveYd8x7
+	 rjgdh8ZidCWOBix9sjzhnHVXfxHy6/afkdUncT8+i0E3qf1KEnN1kcyIFCstCvtwP/
+	 IF/wPGBfwHM3cHx3Pt8pgUvwCR8fu7Mt151oAVJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9ca7a12fd736d93e0232@syzkaller.appspotmail.com,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Adriana Kobylak <anoo@us.ibm.com>,
+	Andrew Jeffery <andrew@aj.id.au>,
+	Joel Stanley <joel@jms.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0972/1073] media: si470x: Fix use-after-free in si470x_int_in_callback()
-Date: Wed, 28 Dec 2022 15:42:40 +0100
-Message-Id: <20221228144354.466133352@linuxfoundation.org>
+Subject: [PATCH 6.1 0939/1146] ARM: dts: aspeed: rainier,everest: Move reserved memory regions
+Date: Wed, 28 Dec 2022 15:41:18 +0100
+Message-Id: <20221228144355.811960718@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,62 +36,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Adriana Kobylak <anoo@us.ibm.com>
 
-[ Upstream commit 7d21e0b1b41b21d628bf2afce777727bd4479aa5 ]
+[ Upstream commit e184d42a6e085f95f5c4f1a4fbabebab2984cb68 ]
 
-syzbot reported use-after-free in si470x_int_in_callback() [1].  This
-indicates that urb->context, which contains struct si470x_device
-object, is freed when si470x_int_in_callback() is called.
+Move the reserved regions to account for a decrease in DRAM when ECC is
+enabled. ECC takes 1/9th of memory.
 
-The cause of this issue is that si470x_int_in_callback() is called for
-freed urb.
+Running on HW with ECC off, u-boot prints:
+DRAM:  already initialized, 1008 MiB (capacity:1024 MiB, VGA:16 MiB, ECC:off)
 
-si470x_usb_driver_probe() calls si470x_start_usb(), which then calls
-usb_submit_urb() and si470x_start().  If si470x_start_usb() fails,
-si470x_usb_driver_probe() doesn't kill urb, but it just frees struct
-si470x_device object, as depicted below:
+And with ECC on, u-boot prints:
+DRAM:  already initialized, 896 MiB (capacity:1024 MiB, VGA:16 MiB, ECC:on, ECC size:896 MiB)
 
-si470x_usb_driver_probe()
-  ...
-  si470x_start_usb()
-    ...
-    usb_submit_urb()
-    retval = si470x_start()
-    return retval
-  if (retval < 0)
-    free struct si470x_device object, but don't kill urb
+This implies that MCR54 is configured for ECC to be bounded at the
+bottom of a 16MiB VGA memory region:
 
-This patch fixes this issue by killing urb when si470x_start_usb()
-fails and urb is submitted.  If si470x_start_usb() fails and urb is
-not submitted, i.e. submitting usb fails, it just frees struct
-si470x_device object.
+1024MiB - 16MiB (VGA) = 1008MiB
+1008MiB / 9 (for ECC) = 112MiB
+1008MiB - 112MiB = 896MiB (available DRAM)
 
-Reported-by: syzbot+9ca7a12fd736d93e0232@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=94ed6dddd5a55e90fd4bab942aa4bb297741d977 [1]
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+The flash_memory region currently starts at offset 896MiB:
+0xb8000000 (flash_memory offset) - 0x80000000 (base memory address) = 0x38000000 = 896MiB
+
+This is the end of the available DRAM with ECC enabled and therefore it
+needs to be moved.
+
+Since the flash_memory is 64MiB in size and needs to be 64MiB aligned,
+it can just be moved up by 64MiB and would sit right at the end of the
+available DRAM buffer.
+
+The ramoops region currently follows the flash_memory, but it can be
+moved to sit above flash_memory which would minimize the address-space
+fragmentation.
+
+Signed-off-by: Adriana Kobylak <anoo@us.ibm.com>
+Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+Link: https://lore.kernel.org/r/20220916195535.1020185-1-anoo@linux.ibm.com
+Signed-off-by: Joel Stanley <joel@jms.id.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/radio/si470x/radio-si470x-usb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 17 ++++++++---------
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 16 +++++++++-------
+ 2 files changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/media/radio/si470x/radio-si470x-usb.c b/drivers/media/radio/si470x/radio-si470x-usb.c
-index 6b2768623c88..aa7a580dbecc 100644
---- a/drivers/media/radio/si470x/radio-si470x-usb.c
-+++ b/drivers/media/radio/si470x/radio-si470x-usb.c
-@@ -727,8 +727,10 @@ static int si470x_usb_driver_probe(struct usb_interface *intf,
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
+index a6a2bc3b855c..fcc890e3ad73 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
+@@ -162,16 +162,9 @@ reserved-memory {
+ 		#size-cells = <1>;
+ 		ranges;
  
- 	/* start radio */
- 	retval = si470x_start_usb(radio);
--	if (retval < 0)
-+	if (retval < 0 && !radio->int_in_running)
- 		goto err_buf;
-+	else if (retval < 0)	/* in case of radio->int_in_running == 1 */
-+		goto err_all;
+-		/* LPC FW cycle bridge region requires natural alignment */
+-		flash_memory: region@b8000000 {
+-			no-map;
+-			reg = <0xb8000000 0x04000000>; /* 64M */
+-		};
+-
+-		/* 48MB region from the end of flash to start of vga memory */
+-		ramoops@bc000000 {
++		ramoops@b3e00000 {
+ 			compatible = "ramoops";
+-			reg = <0xbc000000 0x200000>; /* 16 * (4 * 0x8000) */
++			reg = <0xb3e00000 0x200000>; /* 16 * (4 * 0x8000) */
+ 			record-size = <0x8000>;
+ 			console-size = <0x8000>;
+ 			ftrace-size = <0x8000>;
+@@ -179,6 +172,12 @@ ramoops@bc000000 {
+ 			max-reason = <3>; /* KMSG_DUMP_EMERG */
+ 		};
  
- 	/* set initial frequency */
- 	si470x_set_freq(radio, 87.5 * FREQ_MUL); /* available in all regions */
++		/* LPC FW cycle bridge region requires natural alignment */
++		flash_memory: region@b4000000 {
++			no-map;
++			reg = <0xb4000000 0x04000000>; /* 64M */
++		};
++
+ 		/* VGA region is dictated by hardware strapping */
+ 		vga_memory: region@bf000000 {
+ 			no-map;
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index bf59a9962379..4879da4cdbd2 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -95,14 +95,9 @@ reserved-memory {
+ 		#size-cells = <1>;
+ 		ranges;
+ 
+-		flash_memory: region@b8000000 {
+-			no-map;
+-			reg = <0xb8000000 0x04000000>; /* 64M */
+-		};
+-
+-		ramoops@bc000000 {
++		ramoops@b3e00000 {
+ 			compatible = "ramoops";
+-			reg = <0xbc000000 0x200000>; /* 16 * (4 * 0x8000) */
++			reg = <0xb3e00000 0x200000>; /* 16 * (4 * 0x8000) */
+ 			record-size = <0x8000>;
+ 			console-size = <0x8000>;
+ 			ftrace-size = <0x8000>;
+@@ -110,6 +105,13 @@ ramoops@bc000000 {
+ 			max-reason = <3>; /* KMSG_DUMP_EMERG */
+ 		};
+ 
++		/* LPC FW cycle bridge region requires natural alignment */
++		flash_memory: region@b4000000 {
++			no-map;
++			reg = <0xb4000000 0x04000000>; /* 64M */
++		};
++
++		/* VGA region is dictated by hardware strapping */
+ 		vga_memory: region@bf000000 {
+ 			no-map;
+ 			compatible = "shared-dma-pool";
 -- 
 2.35.1
 
