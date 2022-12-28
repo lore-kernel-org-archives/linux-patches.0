@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 157EC1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90F7AC433D2;
-	Wed, 28 Dec 2022 16:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E7A1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE8AC433EF;
+	Wed, 28 Dec 2022 16:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244803;
-	bh=O9NNWypXwAwRRicH9itlr12SJUVpM2EnKCDFM+2Xq5c=;
+	s=korg; t=1672244806;
+	bh=d7qnGsQb5nXdXTgUtUwCiB+xdXkn/m9UY8KHFauaA40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n0hupGoo5zrbb6EH2Gyj/c6JY6fPN5obFuGcuYyJdf4cU7GsKKcP64YTBQUJDJxmk
-	 6r0G75jArOQNttgadjQWbyDu4FmqFXnymxwPyVmfPaDts8ld55dqRxvpmpgSdAtpWi
-	 DJeFcNyMh1VrscCprS6ysMVukRjLAFw4e4BzM9cY=
+	b=KcJJyTzR4NDcGY5+akOKG7/Wyk64wxXXB4Wg3IXpdIgCufGgzk4q3hnMuLI+Rgzku
+	 M/XpQumyL5XtFaSyAfnXFOeCGIYt4n089VNK5wmh8W6DwZRp5LGEzw5mTYY3IDRhZy
+	 8JW6EPOFkWQfLauLRORU6y0raKAaVbNKEJcwz9wI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Matt Redfearn <matt.redfearn@mips.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	=?UTF-8?q?Petr=20Van=C4=9Bk?= <arkamar@atlas.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0739/1146] vme: Fix error not catched in fake_init()
-Date: Wed, 28 Dec 2022 15:37:58 +0100
-Message-Id: <20221228144350.220143881@linuxfoundation.org>
+Subject: [PATCH 6.0 0777/1073] include/uapi/linux/swab: Fix potentially missing __always_inline
+Date: Wed, 28 Dec 2022 15:39:25 +0100
+Message-Id: <20221228144349.116513618@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,47 +38,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Matt Redfearn <matt.redfearn@mips.com>
 
-[ Upstream commit 7bef797d707f1744f71156b21d41e3b8c946631f ]
+[ Upstream commit defbab270d45e32b068e7e73c3567232d745c60f ]
 
-In fake_init(), __root_device_register() is possible to fail but it's
-ignored, which can cause unregistering vme_root fail when exit.
+Commit bc27fb68aaad ("include/uapi/linux/byteorder, swab: force inlining
+of some byteswap operations") added __always_inline to swab functions
+and commit 283d75737837 ("uapi/linux/stddef.h: Provide __always_inline to
+userspace headers") added a definition of __always_inline for use in
+exported headers when the kernel's compiler.h is not available.
 
- general protection fault,
- probably for non-canonical address 0xdffffc000000008c
- KASAN: null-ptr-deref in range [0x0000000000000460-0x0000000000000467]
- RIP: 0010:root_device_unregister+0x26/0x60
- Call Trace:
-  <TASK>
-  __x64_sys_delete_module+0x34f/0x540
-  do_syscall_64+0x38/0x90
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+However, since swab.h does not include stddef.h, if the header soup does
+not indirectly include it, the definition of __always_inline is missing,
+resulting in a compilation failure, which was observed compiling the
+perf tool using exported headers containing this commit:
 
-Return error when __root_device_register() fails.
+In file included from /usr/include/linux/byteorder/little_endian.h:12:0,
+                 from /usr/include/asm/byteorder.h:14,
+                 from tools/include/uapi/linux/perf_event.h:20,
+                 from perf.h:8,
+                 from builtin-bench.c:18:
+/usr/include/linux/swab.h:160:8: error: unknown type name `__always_inline'
+ static __always_inline __u16 __swab16p(const __u16 *p)
 
-Fixes: 658bcdae9c67 ("vme: Adding Fake VME driver")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221205084805.147436-1-chenzhongjin@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by replacing the inclusion of linux/compiler.h with
+linux/stddef.h to ensure that we pick up that definition if required,
+without relying on it's indirect inclusion. compiler.h is then included
+indirectly, via stddef.h.
+
+Fixes: 283d75737837 ("uapi/linux/stddef.h: Provide __always_inline to userspace headers")
+Signed-off-by: Matt Redfearn <matt.redfearn@mips.com>
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Petr Vaněk <arkamar@atlas.cz>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/vme_user/vme_fake.c | 2 ++
- 1 file changed, 2 insertions(+)
+ include/uapi/linux/swab.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/vme_user/vme_fake.c b/drivers/staging/vme_user/vme_fake.c
-index dd646b0c531d..1ee432c223e2 100644
---- a/drivers/staging/vme_user/vme_fake.c
-+++ b/drivers/staging/vme_user/vme_fake.c
-@@ -1073,6 +1073,8 @@ static int __init fake_init(void)
+diff --git a/include/uapi/linux/swab.h b/include/uapi/linux/swab.h
+index 0723a9cce747..01717181339e 100644
+--- a/include/uapi/linux/swab.h
++++ b/include/uapi/linux/swab.h
+@@ -3,7 +3,7 @@
+ #define _UAPI_LINUX_SWAB_H
  
- 	/* We need a fake parent device */
- 	vme_root = __root_device_register("vme", THIS_MODULE);
-+	if (IS_ERR(vme_root))
-+		return PTR_ERR(vme_root);
+ #include <linux/types.h>
+-#include <linux/compiler.h>
++#include <linux/stddef.h>
+ #include <asm/bitsperlong.h>
+ #include <asm/swab.h>
  
- 	/* If we want to support more than one bridge at some point, we need to
- 	 * dynamically allocate this so we get one per device.
 -- 
 2.35.1
 
