@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC7D51875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:59:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44418C433D2;
-	Wed, 28 Dec 2022 15:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A29D31875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:59:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F05DAC433D2;
+	Wed, 28 Dec 2022 15:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243165;
-	bh=bfVACty6wrQMY9FGTLJ2CbgpKEkw+xMGqWk0IQOrlSU=;
+	s=korg; t=1672243168;
+	bh=9AtMiHKpoUlY9QO0Us6J1m6vzVBDH68xDzgmgBMi2Qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gW6RjzL+bF0Mdhjv3HIrmLcQ+EzJdI/wkXMnRSkM6/P7Py6qRNtkVnxLFnSP708XP
-	 jjpSH910D3RjjxQVv9uNNmblHaX2OY/nPWWSBRAAlqYShWKG2W1oNa0TEOF1+a1aWT
-	 hkJICoUIKjuYeUhWtLq35K7w/2l3ccCuk1HOw1bE=
+	b=gtfFgxIuzVVdAP6K8IscloZyQgk54PN79yCgPIei3iK/m2n7Lvhrm5PgVp3eZndYB
+	 qwLd7ZUUcKNmorbsGfg8VZ18077JAwvWB5gxVPSOap+mBep9sgHP6naKo5pDE211Jg
+	 Ag2FD84wCvfy+iBJE+G057jYobIzUTeKBZKnQZn0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shayne Chen <shayne.chen@mediatek.com>,
-	Felix Fietkau <nbd@nbd.name>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0458/1146] wifi: mt76: mt7915: rework eeprom tx paths and streams init
-Date: Wed, 28 Dec 2022 15:33:17 +0100
-Message-Id: <20221228144342.623004958@linuxfoundation.org>
+Subject: [PATCH 6.0 0482/1073] mmc: rtsx_pci: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:34:30 +0100
+Message-Id: <20221228144341.129229896@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,127 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shayne Chen <shayne.chen@mediatek.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit a7ec8bcf00034ce84d4c9a15dffd7577fbed4db2 ]
+[ Upstream commit 0c87db77423a282b3b38b8a6daf057b822680516 ]
 
-Rework tx paths and streams init part to improve readability, and make
-sure that the available tx streams should be smaller than or equal to
-the available tx paths.
+mmc_add_host() may return error, if we ignore its return value, the memory
+that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
+crash because of deleting not added device in the remove path.
 
-Signed-off-by: Shayne Chen <shayne.chen@mediatek.com>
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Stable-dep-of: de147cc28985 ("wifi: mt76: mt7915: Fix chainmask calculation on mt7915 DBDC")
+So fix this by checking the return value and calling mmc_free_host() in the
+error path, beside, runtime PM also needs be disabled.
+
+Fixes: ff984e57d36e ("mmc: Add realtek pcie sdmmc host driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221101063023.1664968-6-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/mediatek/mt76/mt7915/eeprom.c    | 57 ++++++++-----------
- .../wireless/mediatek/mt76/mt7915/eeprom.h    |  5 --
- 2 files changed, 23 insertions(+), 39 deletions(-)
+ drivers/mmc/host/rtsx_pci_sdmmc.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
-index 4b1a9811646f..83bced0c0785 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.c
-@@ -173,60 +173,49 @@ static void mt7915_eeprom_parse_band_config(struct mt7915_phy *phy)
- void mt7915_eeprom_parse_hw_cap(struct mt7915_dev *dev,
- 				struct mt7915_phy *phy)
- {
--	u8 nss, nss_band, nss_band_max, *eeprom = dev->mt76.eeprom.data;
-+	u8 path, nss, nss_max = 4, *eeprom = dev->mt76.eeprom.data;
- 	struct mt76_phy *mphy = phy->mt76;
--	bool ext_phy = phy != &dev->phy;
+diff --git a/drivers/mmc/host/rtsx_pci_sdmmc.c b/drivers/mmc/host/rtsx_pci_sdmmc.c
+index e1580f78c6b2..8098726dcc0b 100644
+--- a/drivers/mmc/host/rtsx_pci_sdmmc.c
++++ b/drivers/mmc/host/rtsx_pci_sdmmc.c
+@@ -1474,6 +1474,7 @@ static int rtsx_pci_sdmmc_drv_probe(struct platform_device *pdev)
+ 	struct realtek_pci_sdmmc *host;
+ 	struct rtsx_pcr *pcr;
+ 	struct pcr_handle *handle = pdev->dev.platform_data;
++	int ret;
  
- 	mt7915_eeprom_parse_band_config(phy);
+ 	if (!handle)
+ 		return -ENXIO;
+@@ -1511,7 +1512,13 @@ static int rtsx_pci_sdmmc_drv_probe(struct platform_device *pdev)
+ 	pm_runtime_mark_last_busy(&pdev->dev);
+ 	pm_runtime_use_autosuspend(&pdev->dev);
  
--	/* read tx/rx mask from eeprom */
-+	/* read tx/rx path from eeprom */
- 	if (is_mt7915(&dev->mt76)) {
--		nss = FIELD_GET(MT_EE_WIFI_CONF0_TX_PATH,
--				eeprom[MT_EE_WIFI_CONF]);
-+		path = FIELD_GET(MT_EE_WIFI_CONF0_TX_PATH,
-+				 eeprom[MT_EE_WIFI_CONF]);
- 	} else {
--		nss = FIELD_GET(MT_EE_WIFI_CONF0_TX_PATH,
--				eeprom[MT_EE_WIFI_CONF + phy->band_idx]);
-+		path = FIELD_GET(MT_EE_WIFI_CONF0_TX_PATH,
-+				 eeprom[MT_EE_WIFI_CONF + phy->band_idx]);
- 	}
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret) {
++		pm_runtime_dont_use_autosuspend(&pdev->dev);
++		pm_runtime_disable(&pdev->dev);
++		mmc_free_host(mmc);
++		return ret;
++	}
  
--	if (!nss || nss > 4)
--		nss = 4;
-+	if (!path || path > 4)
-+		path = 4;
- 
- 	/* read tx/rx stream */
--	nss_band = nss;
--
-+	nss = path;
- 	if (dev->dbdc_support) {
- 		if (is_mt7915(&dev->mt76)) {
--			nss_band = FIELD_GET(MT_EE_WIFI_CONF3_TX_PATH_B0,
--					     eeprom[MT_EE_WIFI_CONF + 3]);
-+			nss = FIELD_GET(MT_EE_WIFI_CONF3_TX_PATH_B0,
-+					eeprom[MT_EE_WIFI_CONF + 3]);
- 			if (phy->band_idx)
--				nss_band = FIELD_GET(MT_EE_WIFI_CONF3_TX_PATH_B1,
--						     eeprom[MT_EE_WIFI_CONF + 3]);
-+				nss = FIELD_GET(MT_EE_WIFI_CONF3_TX_PATH_B1,
-+						eeprom[MT_EE_WIFI_CONF + 3]);
- 		} else {
--			nss_band = FIELD_GET(MT_EE_WIFI_CONF_STREAM_NUM,
--					     eeprom[MT_EE_WIFI_CONF + 2 + phy->band_idx]);
-+			nss = FIELD_GET(MT_EE_WIFI_CONF_STREAM_NUM,
-+					eeprom[MT_EE_WIFI_CONF + 2 + phy->band_idx]);
- 		}
- 
--		nss_band_max = is_mt7986(&dev->mt76) ?
--			       MT_EE_NSS_MAX_DBDC_MA7986 : MT_EE_NSS_MAX_DBDC_MA7915;
--	} else {
--		nss_band_max = is_mt7986(&dev->mt76) ?
--			       MT_EE_NSS_MAX_MA7986 : MT_EE_NSS_MAX_MA7915;
-+		if (!is_mt7986(&dev->mt76))
-+			nss_max = 2;
- 	}
- 
--	if (!nss_band || nss_band > nss_band_max)
--		nss_band = nss_band_max;
--
--	if (nss_band > nss) {
--		dev_warn(dev->mt76.dev,
--			 "nss mismatch, nss(%d) nss_band(%d) band(%d) ext_phy(%d)\n",
--			 nss, nss_band, phy->band_idx, ext_phy);
--		nss = nss_band;
--	}
-+	if (!nss)
-+		nss = nss_max;
-+	nss = min_t(u8, min_t(u8, nss_max, nss), path);
- 
--	mphy->chainmask = BIT(nss) - 1;
--	if (ext_phy)
-+	mphy->chainmask = BIT(path) - 1;
-+	if (phy->band_idx)
- 		mphy->chainmask <<= dev->chainshift;
--	mphy->antenna_mask = BIT(nss_band) - 1;
-+	mphy->antenna_mask = BIT(nss) - 1;
- 	dev->chainmask |= mphy->chainmask;
- 	dev->chainshift = hweight8(dev->mphy.chainmask);
+ 	return 0;
  }
-diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
-index 7578ac6d0be6..f3e56817d36e 100644
---- a/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
-+++ b/drivers/net/wireless/mediatek/mt76/mt7915/eeprom.h
-@@ -58,11 +58,6 @@ enum mt7915_eeprom_field {
- #define MT_EE_RATE_DELTA_SIGN			BIT(6)
- #define MT_EE_RATE_DELTA_EN			BIT(7)
- 
--#define MT_EE_NSS_MAX_MA7915			4
--#define MT_EE_NSS_MAX_DBDC_MA7915		2
--#define MT_EE_NSS_MAX_MA7986			4
--#define MT_EE_NSS_MAX_DBDC_MA7986		4
--
- enum mt7915_adie_sku {
- 	MT7976_ONE_ADIE_DBDC = 0x7,
- 	MT7975_ONE_ADIE	= 0x8,
 -- 
 2.35.1
 
