@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6651B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2412C433F0;
-	Wed, 28 Dec 2022 15:02:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7D81863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F934C433F0;
+	Wed, 28 Dec 2022 15:02:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239738;
-	bh=q/xbrCOGSPYNH9TVapXx+pUJmemXqHT+snAIei8Q1ZY=;
+	s=korg; t=1672239740;
+	bh=GvYOdyMW2LWb4c+OOOy02McPr3TdKMze3wjftwhEmvA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LSIxkvHerpPmu+kigXpifnAhdZEMjLuZJqD2/w9F+lwtuFdk4YLEqz6r53UQ632lk
-	 L9eyoaLC2aWlTWF2MIogJK/qol33OmZ4T4BqQqZ1kg+omMcEMOAUIIholEz8NSAPZC
-	 wxyTX81vgHHYUYR+tNuAaRgl3C+1rH91KrdIv8sg=
+	b=hQnuD57XA2IJ6ys3StSjRc8aLtwnBs0NtqAr6nriXNSuoE4mOl+HQyYVd24tM7SBr
+	 AFrWElI26161Tlw1wbrvoMDI+D+q02IYEhEOEksPXsGWlmuO0vRJXDn3gdjsKtPTNs
+	 sPc1o87Ymy0MtF9sLWZzNSNzvc3tyItW2d8Bv70o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0040/1073] soc: qcom: apr: Add check for idr_alloc and of_property_read_string_index
-Date: Wed, 28 Dec 2022 15:27:08 +0100
-Message-Id: <20221228144329.218163694@linuxfoundation.org>
+Subject: [PATCH 6.1 0034/1146] arm64: dts: qcom: sc7280: fix codec reset line polarity for CRD 1.0/2.0
+Date: Wed, 28 Dec 2022 15:26:13 +0100
+Message-Id: <20221228144331.093984203@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,61 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 6d7860f5750d73da2fa1a1f6c9405058a593fa32 ]
+[ Upstream commit b8f298d4f69d82119ac0d22809a17c80b1f188d1 ]
 
-As idr_alloc() and of_property_read_string_index() can return negative
-numbers, it should be better to check the return value and deal with
-the exception.
-Therefore, it should be better to use goto statement to stop and return
-error.
+The driver for the codec, when resetting the chip, first drives the line
+low, and then high. This means that the line is active low. Change the
+annotation in the DTS accordingly.
 
-Fixes: 6adba21eb434 ("soc: qcom: Add APR bus driver")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Fixes: f8b4eb64f200 ("arm64: dts: qcom: sc7280: Add wcd9385 codec node for CRD 1.0/2.0 and IDP boards")
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221107014403.3606-1-jiasheng@iscas.ac.cn
+Link: https://lore.kernel.org/r/20221027074652.1044235-5-dmitry.torokhov@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/apr.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/apr.c b/drivers/soc/qcom/apr.c
-index b4046f393575..cd44f17dad3d 100644
---- a/drivers/soc/qcom/apr.c
-+++ b/drivers/soc/qcom/apr.c
-@@ -454,11 +454,19 @@ static int apr_add_device(struct device *dev, struct device_node *np,
- 	adev->dev.driver = NULL;
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+index cd432a2856a7..7772dfba94ec 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+@@ -34,7 +34,7 @@ wcd9385: audio-codec-1 {
+ 		pinctrl-0 = <&wcd_reset_n>;
+ 		pinctrl-1 = <&wcd_reset_n_sleep>;
  
- 	spin_lock(&apr->svcs_lock);
--	idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
-+	ret = idr_alloc(&apr->svcs_idr, svc, svc_id, svc_id + 1, GFP_ATOMIC);
- 	spin_unlock(&apr->svcs_lock);
-+	if (ret < 0) {
-+		dev_err(dev, "idr_alloc failed: %d\n", ret);
-+		goto out;
-+	}
+-		reset-gpios = <&tlmm 83 GPIO_ACTIVE_HIGH>;
++		reset-gpios = <&tlmm 83 GPIO_ACTIVE_LOW>;
  
--	of_property_read_string_index(np, "qcom,protection-domain",
--				      1, &adev->service_path);
-+	ret = of_property_read_string_index(np, "qcom,protection-domain",
-+					    1, &adev->service_path);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to read second value of qcom,protection-domain\n");
-+		goto out;
-+	}
- 
- 	dev_info(dev, "Adding APR/GPR dev: %s\n", dev_name(&adev->dev));
- 
-@@ -468,6 +476,7 @@ static int apr_add_device(struct device *dev, struct device_node *np,
- 		put_device(&adev->dev);
- 	}
- 
-+out:
- 	return ret;
- }
- 
+ 		qcom,rx-device = <&wcd_rx>;
+ 		qcom,tx-device = <&wcd_tx>;
 -- 
 2.35.1
 
