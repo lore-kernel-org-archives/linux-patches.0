@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B4031C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:14:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 964B1C433EF;
-	Wed, 28 Dec 2022 16:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D13571C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:14:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5762EC433EF;
+	Wed, 28 Dec 2022 16:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244046;
-	bh=UM2gO9+o7hnCGwcUNaEeEQAPY079Neovmli6/kdR7V4=;
+	s=korg; t=1672244048;
+	bh=cIG+b7oz0ag4bmz9oA82CvOdSzxhBnQsHmyAQz7rd20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a6Etal0rtT+NSm3i/KnBkRQDFF9gkpP4ft0EhKwtXgaQIQrPdEFZpHWYyPUXvz8/k
-	 NcYBwRESIVndmpO9aV4gES/cslk/Qvchtn3K7RD46C1qpSRGxexNHT5LkglLYsUjl7
-	 R6wA/PYHO5kFBB11EAjWWGl4PmiS5q+hdLXit5I0=
+	b=MoXG9DrvxhA+x7nzzVYNgdJosF/XljBUemXe4gOxMqqSV8e5wDViW+n0/r5FPds/q
+	 r+3I3ZX//+kp6bBUFuza/FKmHmPnn0ocJnibnkVMirP/MUpfnabt3UycJ48ysqju3f
+	 MWdt+0s7CKdat3X0ZMuF1G6mTy5yKs+0KUBu9zzM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
-	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Kamal Heib <kamalheib1@gmail.com>,
+	Shiraz Saleem <shiraz.saleem@intel.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0637/1073] crypto: qat - fix error return code in adf_probe
-Date: Wed, 28 Dec 2022 15:37:05 +0100
-Message-Id: <20221228144345.342380648@linuxfoundation.org>
+Subject: [PATCH 6.1 0601/1146] RDMA/irdma: Report the correct link speed
+Date: Wed, 28 Dec 2022 15:35:40 +0100
+Message-Id: <20221228144346.497580974@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,33 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: Shiraz Saleem <shiraz.saleem@intel.com>
 
-[ Upstream commit 31f81401e23fb88cc030cd586abd28740e6c8136 ]
+[ Upstream commit 4eace75e0853273755b878ffa9cce6de84df975a ]
 
-Fix to return a negative error code -EINVAL instead of 0.
+The active link speed is currently hard-coded in irdma_query_port due
+to which the port rate in ibstatus does reflect the active link speed.
 
-Fixes: 0cec19c761e5 ("crypto: qat - add support for compression for 4xxx")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Acked-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Call ib_get_eth_speed in irdma_query_port to get the active link speed.
+
+Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
+Reported-by: Kamal Heib <kamalheib1@gmail.com>
+Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
+Link: https://lore.kernel.org/r/20221104234957.1135-1-shiraz.saleem@intel.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/qat/qat_4xxx/adf_drv.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/hw/irdma/verbs.c | 35 +++--------------------------
+ 1 file changed, 3 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/crypto/qat/qat_4xxx/adf_drv.c b/drivers/crypto/qat/qat_4xxx/adf_drv.c
-index 2f212561acc4..670a58b25cb1 100644
---- a/drivers/crypto/qat/qat_4xxx/adf_drv.c
-+++ b/drivers/crypto/qat/qat_4xxx/adf_drv.c
-@@ -261,6 +261,7 @@ static int adf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	hw_data->accel_capabilities_mask = hw_data->get_accel_cap(accel_dev);
- 	if (!hw_data->accel_capabilities_mask) {
- 		dev_err(&pdev->dev, "Failed to get capabilities mask.\n");
-+		ret = -EINVAL;
- 		goto out_err;
- 	}
+diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
+index a22afbb25bc5..434241789f12 100644
+--- a/drivers/infiniband/hw/irdma/verbs.c
++++ b/drivers/infiniband/hw/irdma/verbs.c
+@@ -63,36 +63,6 @@ static int irdma_query_device(struct ib_device *ibdev,
+ 	return 0;
+ }
  
+-/**
+- * irdma_get_eth_speed_and_width - Get IB port speed and width from netdev speed
+- * @link_speed: netdev phy link speed
+- * @active_speed: IB port speed
+- * @active_width: IB port width
+- */
+-static void irdma_get_eth_speed_and_width(u32 link_speed, u16 *active_speed,
+-					  u8 *active_width)
+-{
+-	if (link_speed <= SPEED_1000) {
+-		*active_width = IB_WIDTH_1X;
+-		*active_speed = IB_SPEED_SDR;
+-	} else if (link_speed <= SPEED_10000) {
+-		*active_width = IB_WIDTH_1X;
+-		*active_speed = IB_SPEED_FDR10;
+-	} else if (link_speed <= SPEED_20000) {
+-		*active_width = IB_WIDTH_4X;
+-		*active_speed = IB_SPEED_DDR;
+-	} else if (link_speed <= SPEED_25000) {
+-		*active_width = IB_WIDTH_1X;
+-		*active_speed = IB_SPEED_EDR;
+-	} else if (link_speed <= SPEED_40000) {
+-		*active_width = IB_WIDTH_4X;
+-		*active_speed = IB_SPEED_FDR10;
+-	} else {
+-		*active_width = IB_WIDTH_4X;
+-		*active_speed = IB_SPEED_EDR;
+-	}
+-}
+-
+ /**
+  * irdma_query_port - get port attributes
+  * @ibdev: device pointer from stack
+@@ -120,8 +90,9 @@ static int irdma_query_port(struct ib_device *ibdev, u32 port,
+ 		props->state = IB_PORT_DOWN;
+ 		props->phys_state = IB_PORT_PHYS_STATE_DISABLED;
+ 	}
+-	irdma_get_eth_speed_and_width(SPEED_100000, &props->active_speed,
+-				      &props->active_width);
++
++	ib_get_eth_speed(ibdev, port, &props->active_speed,
++			 &props->active_width);
+ 
+ 	if (rdma_protocol_roce(ibdev, 1)) {
+ 		props->gid_tbl_len = 32;
 -- 
 2.35.1
 
