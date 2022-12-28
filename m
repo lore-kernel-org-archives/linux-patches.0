@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 233101863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C32CC433D2;
-	Wed, 28 Dec 2022 15:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C95771863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5CEC433D2;
+	Wed, 28 Dec 2022 15:38:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241884;
-	bh=Xc63G8dGoxAVjT2qzei02rNsp6d7k7JLzIa7j1RRwek=;
+	s=korg; t=1672241886;
+	bh=WdydrDjmFfmFi2uwdAoP3asV+PVKKKriPAKw0MdvNAw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R7EbAw6iymmUZYbxcbyjqM8ewuaoSQr6LLT7yWAfLWQjxj9RTgy727GFVqVQiS8K1
-	 p37y8BZM4T7f1EXgs3FDwgGUjjtfWeAwzYqnPIErF5c5YQwCxQ4yXzug/SG6VLRCKv
-	 fQWN4QozFhoJmR9oD0FJmF0XABnfn1eCoBKB/z4I=
+	b=FdScqF2N2jTPT3pWJHxDU/LyeVPOnJJPvsDFG03rR0CiiTYFSLvBvJt/PGjmm6jAq
+	 9oLKV128YIl20W77KFvTWK+dZ+pgMOWcmq6hrETvZMcip4hKRQmgubZEuSiEkeGC5L
+	 SYFnh/TP7c5KFIwahFQ85ByNVww3Mb2cab2xVboY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Marek Vasut <marex@denx.de>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 538/731] rtc: rtc-cmos: Do not check ACPI_FADT_LOW_POWER_S0
-Date: Wed, 28 Dec 2022 15:40:45 +0100
-Message-Id: <20221228144312.138059715@linuxfoundation.org>
+Subject: [PATCH 6.1 0301/1146] wifi: rsi: Fix handling of 802.3 EAPOL frames sent via control port
+Date: Wed, 28 Dec 2022 15:30:40 +0100
+Message-Id: <20221228144338.316185921@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,56 +35,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 6492fed7d8c95f53b0b804ef541324d924d95d41 ]
+[ Upstream commit b8f6efccbb9dc0ff5dee7e20d69a4747298ee603 ]
 
-The ACPI_FADT_LOW_POWER_S0 flag merely means that it is better to
-use low-power S0 idle on the given platform than S3 (provided that
-the latter is supported) and it doesn't preclude using either of
-them (which of them will be used depends on the choices made by user
-space).
+When using wpa_supplicant v2.10, this driver is no longer able to
+associate with any AP and fails in the EAPOL 4-way handshake while
+sending the 2/4 message to the AP. The problem is not present in
+wpa_supplicant v2.9 or older. The problem stems from HostAP commit
+144314eaa ("wpa_supplicant: Send EAPOL frames over nl80211 where available")
+which changes the way EAPOL frames are sent, from them being send
+at L2 frames to them being sent via nl80211 control port.
 
-For this reason, there is no benefit from checking that flag in
-use_acpi_alarm_quirks().
+An EAPOL frame sent as L2 frame is passed to the WiFi driver with
+skb->protocol ETH_P_PAE, while EAPOL frame sent via nl80211 control
+port has skb->protocol set to ETH_P_802_3 . The later happens in
+ieee80211_tx_control_port(), where the EAPOL frame is encapsulated
+into 802.3 frame.
 
-First off, it cannot be a bug to do S3 with use_acpi_alarm set,
-because S3 can be used on systems with ACPI_FADT_LOW_POWER_S0 and it
-must work if really supported, so the ACPI_FADT_LOW_POWER_S0 check is
-not needed to protect the S3-capable systems from failing.
+The rsi_91x driver handles ETH_P_PAE EAPOL frames as high-priority
+frames and sends them via highest-priority transmit queue, while
+the ETH_P_802_3 frames are sent as regular frames. The EAPOL 4-way
+handshake frames must be sent as highest-priority, otherwise the
+4-way handshake times out.
 
-Second, suspend-to-idle can be carried out on a system with
-ACPI_FADT_LOW_POWER_S0 unset and it is expected to work, so if setting
-use_acpi_alarm is needed to handle that case correctly, it should be
-set regardless of the ACPI_FADT_LOW_POWER_S0 value.
+Therefore, to fix this problem, inspect the skb control flags and
+if flag IEEE80211_TX_CTRL_PORT_CTRL_PROTO is set, assume this is
+an EAPOL frame and transmit the frame via high-priority queue just
+like other ETH_P_PAE frames.
 
-Accordingly, drop the ACPI_FADT_LOW_POWER_S0 check from
-use_acpi_alarm_quirks().
-
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Link: https://lore.kernel.org/r/12054246.O9o76ZdvQC@kreacher
-Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
+Fixes: 0eb42586cf87 ("rsi: data packet descriptor enhancements")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221104163339.227432-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/net/wireless/rsi/rsi_91x_core.c | 4 +++-
+ drivers/net/wireless/rsi/rsi_91x_hal.c  | 6 +++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 7c006c2b125f..bdb1df843c78 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -1260,9 +1260,6 @@ static void use_acpi_alarm_quirks(void)
- 	if (boot_cpu_data.x86_vendor != X86_VENDOR_INTEL)
- 		return;
+diff --git a/drivers/net/wireless/rsi/rsi_91x_core.c b/drivers/net/wireless/rsi/rsi_91x_core.c
+index 0f3a80f66b61..ead4d4e04328 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_core.c
++++ b/drivers/net/wireless/rsi/rsi_91x_core.c
+@@ -466,7 +466,9 @@ void rsi_core_xmit(struct rsi_common *common, struct sk_buff *skb)
+ 							      tid, 0);
+ 			}
+ 		}
+-		if (skb->protocol == cpu_to_be16(ETH_P_PAE)) {
++
++		if (IEEE80211_SKB_CB(skb)->control.flags &
++		    IEEE80211_TX_CTRL_PORT_CTRL_PROTO) {
+ 			q_num = MGMT_SOFT_Q;
+ 			skb->priority = q_num;
+ 		}
+diff --git a/drivers/net/wireless/rsi/rsi_91x_hal.c b/drivers/net/wireless/rsi/rsi_91x_hal.c
+index c61f83a7333b..c7460fbba014 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_hal.c
++++ b/drivers/net/wireless/rsi/rsi_91x_hal.c
+@@ -162,12 +162,16 @@ int rsi_prepare_data_desc(struct rsi_common *common, struct sk_buff *skb)
+ 	u8 header_size;
+ 	u8 vap_id = 0;
+ 	u8 dword_align_bytes;
++	bool tx_eapol;
+ 	u16 seq_num;
  
--	if (!(acpi_gbl_FADT.flags & ACPI_FADT_LOW_POWER_S0))
--		return;
--
- 	if (!is_hpet_enabled())
- 		return;
+ 	info = IEEE80211_SKB_CB(skb);
+ 	vif = info->control.vif;
+ 	tx_params = (struct skb_info *)info->driver_data;
  
++	tx_eapol = IEEE80211_SKB_CB(skb)->control.flags &
++		   IEEE80211_TX_CTRL_PORT_CTRL_PROTO;
++
+ 	header_size = FRAME_DESC_SZ + sizeof(struct rsi_xtended_desc);
+ 	if (header_size > skb_headroom(skb)) {
+ 		rsi_dbg(ERR_ZONE, "%s: Unable to send pkt\n", __func__);
+@@ -231,7 +235,7 @@ int rsi_prepare_data_desc(struct rsi_common *common, struct sk_buff *skb)
+ 		}
+ 	}
+ 
+-	if (skb->protocol == cpu_to_be16(ETH_P_PAE)) {
++	if (tx_eapol) {
+ 		rsi_dbg(INFO_ZONE, "*** Tx EAPOL ***\n");
+ 
+ 		data_desc->frame_info = cpu_to_le16(RATE_INFO_ENABLE);
 -- 
 2.35.1
 
