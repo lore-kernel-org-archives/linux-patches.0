@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E13B1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C10DFC433D2;
-	Wed, 28 Dec 2022 16:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C971C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CAD8C433EF;
+	Wed, 28 Dec 2022 16:42:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245748;
-	bh=d0MDth/qfY9cxyxy3Zk9k5EtCVwww8sBDvtx9JZk5d8=;
+	s=korg; t=1672245750;
+	bh=ze/hjDCetRTpF5CnNOyu0uEER1CQCq3lURK9DI/ns9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q0KKiqxPkqdP+VWaakrhtmGWkJGpvNth8IgWoDxOmHU2iIjXYgXLSwi3ly/Ea+iQM
-	 fEYjr8vhPu0PboZiRulrfpoHWsSgrLXFuajcr7XAP/rfAnxQTa8a/QLaff72brQdiy
-	 MMBAHb4V/40yh03N9ozOlacsx1FOmR5FQdqnN2BI=
+	b=e6wwOQnwLAWUkA1BSYdiE/RNpDmqP259DJmN0YoIo42sBsI4Rn2IfTsGTjC2CCsHN
+	 X95J4E/+slOFkuJlneD8rABk2+kG1NVup6NGU76oGYhvMjJumQrxGOWoDyzTYMIK2m
+	 MZYtJGwG4q+2fEFGdrHu6vPdgTGqul3W5Sz/WfMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0893/1146] mISDN: hfcmulti: dont call dev_kfree_skb/kfree_skb() under spin_lock_irqsave()
-Date: Wed, 28 Dec 2022 15:40:32 +0100
-Message-Id: <20221228144354.445126884@linuxfoundation.org>
+Subject: [PATCH 6.0 0948/1073] ipv6/sit: use DEV_STATS_INC() to avoid data-races
+Date: Wed, 28 Dec 2022 15:42:16 +0100
+Message-Id: <20221228144353.786162064@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,109 +36,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 1232946cf522b8de9e398828bde325d7c41f29dd ]
+[ Upstream commit cb34b7cf17ecf33499c9298943f85af247abc1e9 ]
 
-It is not allowed to call kfree_skb() or consume_skb() from hardware
-interrupt context or with hardware interrupts being disabled.
+syzbot/KCSAN reported that multiple cpus are updating dev->stats.tx_error
+concurrently.
 
-skb_queue_purge() is called under spin_lock_irqsave() in handle_dmsg()
-and hfcm_l1callback(), kfree_skb() is called in them, to fix this, use
-skb_queue_splice_init() to move the dch->squeue to a free queue, also
-enqueue the tx_skb and rx_skb, at last calling __skb_queue_purge() to
-free the SKBs afer unlock.
+This is because sit tunnels are NETIF_F_LLTX, meaning their ndo_start_xmit()
+is not protected by a spinlock.
 
-Fixes: af69fb3a8ffa ("Add mISDN HFC multiport driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+While original KCSAN report was about tx path, rx path has the same issue.
+
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/isdn/hardware/mISDN/hfcmulti.c | 19 +++++++++++++------
- 1 file changed, 13 insertions(+), 6 deletions(-)
+ net/ipv6/sit.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/isdn/hardware/mISDN/hfcmulti.c b/drivers/isdn/hardware/mISDN/hfcmulti.c
-index 4f7eaa17fb27..e840609c50eb 100644
---- a/drivers/isdn/hardware/mISDN/hfcmulti.c
-+++ b/drivers/isdn/hardware/mISDN/hfcmulti.c
-@@ -3217,6 +3217,7 @@ static int
- hfcm_l1callback(struct dchannel *dch, u_int cmd)
- {
- 	struct hfc_multi	*hc = dch->hw;
-+	struct sk_buff_head	free_queue;
- 	u_long	flags;
+diff --git a/net/ipv6/sit.c b/net/ipv6/sit.c
+index 59b2d9a6210c..ccb39b1e730f 100644
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -694,7 +694,7 @@ static int ipip6_rcv(struct sk_buff *skb)
+ 		skb->dev = tunnel->dev;
  
- 	switch (cmd) {
-@@ -3245,6 +3246,7 @@ hfcm_l1callback(struct dchannel *dch, u_int cmd)
- 		l1_event(dch->l1, HW_POWERUP_IND);
- 		break;
- 	case HW_DEACT_REQ:
-+		__skb_queue_head_init(&free_queue);
- 		/* start deactivation */
- 		spin_lock_irqsave(&hc->lock, flags);
- 		if (hc->ctype == HFC_TYPE_E1) {
-@@ -3264,20 +3266,21 @@ hfcm_l1callback(struct dchannel *dch, u_int cmd)
- 				plxsd_checksync(hc, 0);
+ 		if (packet_is_spoofed(skb, iph, tunnel)) {
+-			tunnel->dev->stats.rx_errors++;
++			DEV_STATS_INC(tunnel->dev, rx_errors);
+ 			goto out;
+ 		}
+ 
+@@ -714,8 +714,8 @@ static int ipip6_rcv(struct sk_buff *skb)
+ 				net_info_ratelimited("non-ECT from %pI4 with TOS=%#x\n",
+ 						     &iph->saddr, iph->tos);
+ 			if (err > 1) {
+-				++tunnel->dev->stats.rx_frame_errors;
+-				++tunnel->dev->stats.rx_errors;
++				DEV_STATS_INC(tunnel->dev, rx_frame_errors);
++				DEV_STATS_INC(tunnel->dev, rx_errors);
+ 				goto out;
  			}
  		}
--		skb_queue_purge(&dch->squeue);
-+		skb_queue_splice_init(&dch->squeue, &free_queue);
- 		if (dch->tx_skb) {
--			dev_kfree_skb(dch->tx_skb);
-+			__skb_queue_tail(&free_queue, dch->tx_skb);
- 			dch->tx_skb = NULL;
+@@ -942,7 +942,7 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
+ 	if (!rt) {
+ 		rt = ip_route_output_flow(tunnel->net, &fl4, NULL);
+ 		if (IS_ERR(rt)) {
+-			dev->stats.tx_carrier_errors++;
++			DEV_STATS_INC(dev, tx_carrier_errors);
+ 			goto tx_error_icmp;
  		}
- 		dch->tx_idx = 0;
- 		if (dch->rx_skb) {
--			dev_kfree_skb(dch->rx_skb);
-+			__skb_queue_tail(&free_queue, dch->rx_skb);
- 			dch->rx_skb = NULL;
+ 		dst_cache_set_ip4(&tunnel->dst_cache, &rt->dst, fl4.saddr);
+@@ -950,14 +950,14 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
+ 
+ 	if (rt->rt_type != RTN_UNICAST && rt->rt_type != RTN_LOCAL) {
+ 		ip_rt_put(rt);
+-		dev->stats.tx_carrier_errors++;
++		DEV_STATS_INC(dev, tx_carrier_errors);
+ 		goto tx_error_icmp;
+ 	}
+ 	tdev = rt->dst.dev;
+ 
+ 	if (tdev == dev) {
+ 		ip_rt_put(rt);
+-		dev->stats.collisions++;
++		DEV_STATS_INC(dev, collisions);
+ 		goto tx_error;
+ 	}
+ 
+@@ -970,7 +970,7 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
+ 		mtu = dst_mtu(&rt->dst) - t_hlen;
+ 
+ 		if (mtu < IPV4_MIN_MTU) {
+-			dev->stats.collisions++;
++			DEV_STATS_INC(dev, collisions);
+ 			ip_rt_put(rt);
+ 			goto tx_error;
  		}
- 		test_and_clear_bit(FLG_TX_BUSY, &dch->Flags);
- 		if (test_and_clear_bit(FLG_BUSY_TIMER, &dch->Flags))
- 			del_timer(&dch->timer);
- 		spin_unlock_irqrestore(&hc->lock, flags);
-+		__skb_queue_purge(&free_queue);
- 		break;
- 	case HW_POWERUP_REQ:
- 		spin_lock_irqsave(&hc->lock, flags);
-@@ -3384,6 +3387,9 @@ handle_dmsg(struct mISDNchannel *ch, struct sk_buff *skb)
- 	case PH_DEACTIVATE_REQ:
- 		test_and_clear_bit(FLG_L2_ACTIVATED, &dch->Flags);
- 		if (dch->dev.D.protocol != ISDN_P_TE_S0) {
-+			struct sk_buff_head free_queue;
-+
-+			__skb_queue_head_init(&free_queue);
- 			spin_lock_irqsave(&hc->lock, flags);
- 			if (debug & DEBUG_HFCMULTI_MSG)
- 				printk(KERN_DEBUG
-@@ -3405,14 +3411,14 @@ handle_dmsg(struct mISDNchannel *ch, struct sk_buff *skb)
- 				/* deactivate */
- 				dch->state = 1;
- 			}
--			skb_queue_purge(&dch->squeue);
-+			skb_queue_splice_init(&dch->squeue, &free_queue);
- 			if (dch->tx_skb) {
--				dev_kfree_skb(dch->tx_skb);
-+				__skb_queue_tail(&free_queue, dch->tx_skb);
- 				dch->tx_skb = NULL;
- 			}
- 			dch->tx_idx = 0;
- 			if (dch->rx_skb) {
--				dev_kfree_skb(dch->rx_skb);
-+				__skb_queue_tail(&free_queue, dch->rx_skb);
- 				dch->rx_skb = NULL;
- 			}
- 			test_and_clear_bit(FLG_TX_BUSY, &dch->Flags);
-@@ -3424,6 +3430,7 @@ handle_dmsg(struct mISDNchannel *ch, struct sk_buff *skb)
- #endif
- 			ret = 0;
- 			spin_unlock_irqrestore(&hc->lock, flags);
-+			__skb_queue_purge(&free_queue);
- 		} else
- 			ret = l1_event(dch->l1, hh->prim);
- 		break;
+@@ -1009,7 +1009,7 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
+ 		struct sk_buff *new_skb = skb_realloc_headroom(skb, max_headroom);
+ 		if (!new_skb) {
+ 			ip_rt_put(rt);
+-			dev->stats.tx_dropped++;
++			DEV_STATS_INC(dev, tx_dropped);
+ 			kfree_skb(skb);
+ 			return NETDEV_TX_OK;
+ 		}
+@@ -1039,7 +1039,7 @@ static netdev_tx_t ipip6_tunnel_xmit(struct sk_buff *skb,
+ 	dst_link_failure(skb);
+ tx_error:
+ 	kfree_skb(skb);
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	return NETDEV_TX_OK;
+ }
+ 
+@@ -1058,7 +1058,7 @@ static netdev_tx_t sit_tunnel_xmit__(struct sk_buff *skb,
+ 	return NETDEV_TX_OK;
+ tx_error:
+ 	kfree_skb(skb);
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	return NETDEV_TX_OK;
+ }
+ 
+@@ -1087,7 +1087,7 @@ static netdev_tx_t sit_tunnel_xmit(struct sk_buff *skb,
+ 	return NETDEV_TX_OK;
+ 
+ tx_err:
+-	dev->stats.tx_errors++;
++	DEV_STATS_INC(dev, tx_errors);
+ 	kfree_skb(skb);
+ 	return NETDEV_TX_OK;
+ 
 -- 
 2.35.1
 
