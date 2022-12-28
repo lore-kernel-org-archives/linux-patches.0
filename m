@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 584771C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1F62C433D2;
-	Wed, 28 Dec 2022 16:27:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A541C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AEBCC433D2;
+	Wed, 28 Dec 2022 16:27:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244846;
-	bh=PHGuHIM1Wlw3cFSP3Z0RTUG8LbXNJFIPI/SbgqvEhl0=;
+	s=korg; t=1672244848;
+	bh=GtikZnRZ4OaT2m0mUo8jo9s7mJwxMQk3RZknu1q13mo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=homUfbhhmeXGJo7GQAaAG8YNK+f/JQdURY3a0lQgCYiWlKon/F8N409u+VnwmvqhG
-	 wdRMECKms9bxDyPvJXEdwfceuadBZ+7CUwHoqFNhmSkDFxKg3z4PHsULwxwta2AyCR
-	 NVYx8SzFrksoCWQMueMKuhUj1x6dRy37qZJyBLts=
+	b=W72qYqmxpu+VxsOmURv4bzeRi9MK8RDcLnlWF0ujfoj2hZ6LgmpCyLP7BG2fvadH+
+	 Fe8HAJG85dQPldAEt5gQYILqIxrz4kPHEi+Z73kwhCvMm/3A9OmmyIDpHZH/UWO8de
+	 f1O8oUYOwj06Ac+YoRhbER9lFrWmoZCkIEGsR4bE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0784/1073] rtc: class: Fix potential memleak in devm_rtc_allocate_device()
-Date: Wed, 28 Dec 2022 15:39:32 +0100
-Message-Id: <20221228144349.305465856@linuxfoundation.org>
+Subject: [PATCH 6.1 0747/1146] ksmbd: Fix resource leak in ksmbd_session_rpc_open()
+Date: Wed, 28 Dec 2022 15:38:06 +0100
+Message-Id: <20221228144350.436287025@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,66 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 60da73808298ff2cfa9f165d55eb3d7aa7078601 ]
+[ Upstream commit bc044414fa0326a4e5c3c509c00b1fcaf621b5f4 ]
 
-devm_rtc_allocate_device() will alloc a rtc_device first, and then run
-dev_set_name(). If dev_set_name() failed, the rtc_device will memleak.
-Move devm_add_action_or_reset() in front of dev_set_name() to prevent
-memleak.
+When ksmbd_rpc_open() fails then it must call ksmbd_rpc_id_free() to
+undo the result of ksmbd_ipc_id_alloc().
 
-unreferenced object 0xffff888110a53000 (size 2048):
-  comm "python3", pid 470, jiffies 4296078308 (age 58.882s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 08 30 a5 10 81 88 ff ff  .........0......
-    08 30 a5 10 81 88 ff ff 00 00 00 00 00 00 00 00  .0..............
-  backtrace:
-    [<000000004aac0364>] kmalloc_trace+0x21/0x110
-    [<000000000ff02202>] devm_rtc_allocate_device+0xd4/0x400
-    [<000000001bdf5639>] devm_rtc_device_register+0x1a/0x80
-    [<00000000351bf81c>] rx4581_probe+0xdd/0x110 [rtc_rx4581]
-    [<00000000f0eba0ae>] spi_probe+0xde/0x130
-    [<00000000bff89ee8>] really_probe+0x175/0x3f0
-    [<00000000128e8d84>] __driver_probe_device+0xe6/0x170
-    [<00000000ee5bf913>] device_driver_attach+0x32/0x80
-    [<00000000f3f28f92>] bind_store+0x10b/0x1a0
-    [<000000009ff812d8>] drv_attr_store+0x49/0x70
-    [<000000008139c323>] sysfs_kf_write+0x8d/0xb0
-    [<00000000b6146e01>] kernfs_fop_write_iter+0x214/0x2d0
-    [<00000000ecbe3895>] vfs_write+0x61a/0x7d0
-    [<00000000aa2196ea>] ksys_write+0xc8/0x190
-    [<0000000046a600f5>] do_syscall_64+0x37/0x90
-    [<00000000541a336f>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Fixes: 24d23181e43d ("rtc: class: check return value when calling dev_set_name()")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Reviewed-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221110090810.11225-1-shangxiaojing@huawei.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/class.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ksmbd/mgmt/user_session.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/rtc/class.c b/drivers/rtc/class.c
-index e48223c00c67..e5b7b48cffac 100644
---- a/drivers/rtc/class.c
-+++ b/drivers/rtc/class.c
-@@ -374,11 +374,11 @@ struct rtc_device *devm_rtc_allocate_device(struct device *dev)
+diff --git a/fs/ksmbd/mgmt/user_session.c b/fs/ksmbd/mgmt/user_session.c
+index 3fa2139a0b30..92b1603b5abe 100644
+--- a/fs/ksmbd/mgmt/user_session.c
++++ b/fs/ksmbd/mgmt/user_session.c
+@@ -108,15 +108,17 @@ int ksmbd_session_rpc_open(struct ksmbd_session *sess, char *rpc_name)
+ 	entry->method = method;
+ 	entry->id = ksmbd_ipc_id_alloc();
+ 	if (entry->id < 0)
+-		goto error;
++		goto free_entry;
  
- 	rtc->id = id;
- 	rtc->dev.parent = dev;
--	err = dev_set_name(&rtc->dev, "rtc%d", id);
-+	err = devm_add_action_or_reset(dev, devm_rtc_release_device, rtc);
- 	if (err)
- 		return ERR_PTR(err);
+ 	resp = ksmbd_rpc_open(sess, entry->id);
+ 	if (!resp)
+-		goto error;
++		goto free_id;
  
--	err = devm_add_action_or_reset(dev, devm_rtc_release_device, rtc);
-+	err = dev_set_name(&rtc->dev, "rtc%d", id);
- 	if (err)
- 		return ERR_PTR(err);
- 
+ 	kvfree(resp);
+ 	return entry->id;
+-error:
++free_id:
++	ksmbd_rpc_id_free(entry->id);
++free_entry:
+ 	list_del(&entry->list);
+ 	kfree(entry);
+ 	return -EINVAL;
 -- 
 2.35.1
 
