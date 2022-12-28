@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 954C71863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C472C433F0;
-	Wed, 28 Dec 2022 15:32:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F931863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B226AC433F0;
+	Wed, 28 Dec 2022 15:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241522;
-	bh=LrijrRkamTXm/fyIFKXldWvqEgQd8xUIFUrCGkQKVuQ=;
+	s=korg; t=1672241525;
+	bh=RbrP1irQ8j/Lcj9YrEfwriYCsl+nOfxlvSAUHujHDsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jPmnlRv8nYQlsq78YBVLOmg8k18wiYDuXKWHSXGqsKUaqcHQVeKwMugDSN+xiT8SI
-	 rhJFh17KaZ4g5xzBNpwpg8HG7XxkjYExrrGm1aHmb18kB4bB0p6sifU5kDh8HJsO1N
-	 iPMCw5XkuRxdXGYmIJ1w6q//xnb8ObwrUiYzg6lM=
+	b=tdPHV5ArtsREqVRoAzksmdaarZCjqNxOLUYKcWXtgGQRWR5sS6HIz5cuog+rqM+p/
+	 GsdRqdDsTXaUdezoirWZ+z9RGFe38gAjgULCNkkIkQ0TcyLPFPJxkhgQvZ+QtbrALj
+	 VObemFyQGjUXnmQ6l3MDmmgmxjXePC715ZIS3cuA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Bartosz Golaszewski <brgl@bgdev.pl>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 492/731] gpiolib: make struct comments into real kernel docs
-Date: Wed, 28 Dec 2022 15:39:59 +0100
-Message-Id: <20221228144310.809663723@linuxfoundation.org>
+Subject: [PATCH 5.15 474/731] iio: adis: handle devices that cannot unmask the drdy pin
+Date: Wed, 28 Dec 2022 15:39:41 +0100
+Message-Id: <20221228144310.289809844@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,142 +35,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bartosz Golaszewski <brgl@bgdev.pl>
+From: Nuno Sá <nuno.sa@analog.com>
 
-[ Upstream commit 4398693a9e24bcab0b99ea219073917991d0792b ]
+[ Upstream commit 31fa357ac809affd9f9a7d0b5d1991951e16beec ]
 
-We have several comments that start with '/**' but don't conform to the
-kernel doc standard. Add proper detailed descriptions for the affected
-definitions and move the docs from the forward declarations to the
-struct definitions where applicable.
+Some devices can't mask/unmask the data ready pin and in those cases
+each driver was just calling '{dis}enable_irq()' to control the trigger
+state. This change, moves that handling into the library by introducing
+a new boolean in the data structure that tells the library that the
+device cannot unmask the pin.
 
-Reported-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Bartosz Golaszewski <brgl@bgdev.pl>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Tested-by: Randy Dunlap <rdunlap@infradead.org>
-Stable-dep-of: bdbbae241a04 ("gpiolib: protect the GPIO device against being dropped while in use by user-space")
+On top of controlling the trigger state, we can also use this flag to
+automatically request the IRQ with 'IRQF_NO_AUTOEN' in case it is set.
+So far, all users of the library want to start operation with IRQs/DRDY
+pin disabled so it should be fairly safe to do this inside the library.
+
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20210903141423.517028-3-nuno.sa@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 99c05e4283a1 ("iio: adis: add '__adis_enable_irq()' implementation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib.h        | 34 ++++++++++++++++++++++++++++++++++
- include/linux/gpio/consumer.h | 35 ++++++++++++++++-------------------
- 2 files changed, 50 insertions(+), 19 deletions(-)
+ drivers/iio/imu/adis.c         | 15 ++++++++++++++-
+ drivers/iio/imu/adis_trigger.c |  4 ++++
+ include/linux/iio/imu/adis.h   |  2 ++
+ 3 files changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib.h b/drivers/gpio/gpiolib.h
-index c31f4626915d..d77be9d1da80 100644
---- a/drivers/gpio/gpiolib.h
-+++ b/drivers/gpio/gpiolib.h
-@@ -37,6 +37,9 @@
-  * or name of the IP component in a System on Chip.
-  * @data: per-instance data assigned by the driver
-  * @list: links gpio_device:s together for traversal
-+ * @notifier: used to notify subscribers about lines being requested, released
-+ *            or reconfigured
-+ * @pin_ranges: range of pins served by the GPIO driver
-  *
-  * This state container holds most of the runtime variable data
-  * for a GPIO device and can hold references and live on after the
-@@ -72,6 +75,20 @@ struct gpio_device {
- /* gpio suffixes used for ACPI and device tree lookup */
- static __maybe_unused const char * const gpio_suffixes[] = { "gpios", "gpio" };
- 
-+/**
-+ * struct gpio_array - Opaque descriptor for a structure of GPIO array attributes
-+ *
-+ * @desc:		Array of pointers to the GPIO descriptors
-+ * @size:		Number of elements in desc
-+ * @chip:		Parent GPIO chip
-+ * @get_mask:		Get mask used in fastpath
-+ * @set_mask:		Set mask used in fastpath
-+ * @invert_mask:	Invert mask used in fastpath
-+ *
-+ * This structure is attached to struct gpiod_descs obtained from
-+ * gpiod_get_array() and can be passed back to get/set array functions in order
-+ * to activate fast processing path if applicable.
-+ */
- struct gpio_array {
- 	struct gpio_desc	**desc;
- 	unsigned int		size;
-@@ -96,6 +113,23 @@ int gpiod_set_array_value_complex(bool raw, bool can_sleep,
- extern spinlock_t gpio_lock;
- extern struct list_head gpio_devices;
- 
+diff --git a/drivers/iio/imu/adis.c b/drivers/iio/imu/adis.c
+index d4e692b187cd..cb0d66bf6561 100644
+--- a/drivers/iio/imu/adis.c
++++ b/drivers/iio/imu/adis.c
+@@ -286,6 +286,13 @@ int adis_enable_irq(struct adis *adis, bool enable)
+ 	if (adis->data->enable_irq) {
+ 		ret = adis->data->enable_irq(adis, enable);
+ 		goto out_unlock;
++	} else if (adis->data->unmasked_drdy) {
++		if (enable)
++			enable_irq(adis->spi->irq);
++		else
++			disable_irq(adis->spi->irq);
 +
-+/**
-+ * struct gpio_desc - Opaque descriptor for a GPIO
-+ *
-+ * @gdev:		Pointer to the parent GPIO device
-+ * @flags:		Binary descriptor flags
-+ * @label:		Name of the consumer
-+ * @name:		Line name
-+ * @hog:		Pointer to the device node that hogs this line (if any)
-+ * @debounce_period_us:	Debounce period in microseconds
-+ *
-+ * These are obtained using gpiod_get() and are preferable to the old
-+ * integer-based handles.
-+ *
-+ * Contrary to integers, a pointer to a &struct gpio_desc is guaranteed to be
-+ * valid until the GPIO is released.
-+ */
- struct gpio_desc {
- 	struct gpio_device	*gdev;
- 	unsigned long		flags;
-diff --git a/include/linux/gpio/consumer.h b/include/linux/gpio/consumer.h
-index 97a28ad3393b..369902d52f9c 100644
---- a/include/linux/gpio/consumer.h
-+++ b/include/linux/gpio/consumer.h
-@@ -8,27 +8,16 @@
- #include <linux/err.h>
++		goto out_unlock;
+ 	}
  
- struct device;
--
--/**
-- * Opaque descriptor for a GPIO. These are obtained using gpiod_get() and are
-- * preferable to the old integer-based handles.
-- *
-- * Contrary to integers, a pointer to a gpio_desc is guaranteed to be valid
-- * until the GPIO is released.
-- */
- struct gpio_desc;
--
--/**
-- * Opaque descriptor for a structure of GPIO array attributes.  This structure
-- * is attached to struct gpiod_descs obtained from gpiod_get_array() and can be
-- * passed back to get/set array functions in order to activate fast processing
-- * path if applicable.
-- */
- struct gpio_array;
+ 	ret = __adis_read_reg_16(adis, adis->data->msc_ctrl_reg, &msc);
+@@ -430,7 +437,13 @@ int __adis_initial_startup(struct adis *adis)
+ 	if (ret)
+ 		return ret;
  
- /**
-- * Struct containing an array of descriptors that can be obtained using
-- * gpiod_get_array().
-+ * struct gpio_descs - Struct containing an array of descriptors that can be
-+ *                     obtained using gpiod_get_array()
-+ *
-+ * @info:	Pointer to the opaque gpio_array structure
-+ * @ndescs:	Number of held descriptors
-+ * @desc:	Array of pointers to GPIO descriptors
-  */
- struct gpio_descs {
- 	struct gpio_array *info;
-@@ -43,8 +32,16 @@ struct gpio_descs {
- #define GPIOD_FLAGS_BIT_NONEXCLUSIVE	BIT(4)
+-	adis_enable_irq(adis, false);
++	/*
++	 * don't bother calling this if we can't unmask the IRQ as in this case
++	 * the IRQ is most likely not yet requested and we will request it
++	 * with 'IRQF_NO_AUTOEN' anyways.
++	 */
++	if (!adis->data->unmasked_drdy)
++		adis_enable_irq(adis, false);
  
- /**
-- * Optional flags that can be passed to one of gpiod_* to configure direction
-- * and output value. These values cannot be OR'd.
-+ * enum gpiod_flags - Optional flags that can be passed to one of gpiod_* to
-+ *                    configure direction and output value. These values
-+ *                    cannot be OR'd.
-+ *
-+ * @GPIOD_ASIS:			Don't change anything
-+ * @GPIOD_IN:			Set lines to input mode
-+ * @GPIOD_OUT_LOW:		Set lines to output and drive them low
-+ * @GPIOD_OUT_HIGH:		Set lines to output and drive them high
-+ * @GPIOD_OUT_LOW_OPEN_DRAIN:	Set lines to open-drain output and drive them low
-+ * @GPIOD_OUT_HIGH_OPEN_DRAIN:	Set lines to open-drain output and drive them high
-  */
- enum gpiod_flags {
- 	GPIOD_ASIS	= 0,
+ 	if (!adis->data->prod_id_reg)
+ 		return 0;
+diff --git a/drivers/iio/imu/adis_trigger.c b/drivers/iio/imu/adis_trigger.c
+index 48eedc29b28a..c461bd1e8e69 100644
+--- a/drivers/iio/imu/adis_trigger.c
++++ b/drivers/iio/imu/adis_trigger.c
+@@ -30,6 +30,10 @@ static const struct iio_trigger_ops adis_trigger_ops = {
+ static int adis_validate_irq_flag(struct adis *adis)
+ {
+ 	unsigned long direction = adis->irq_flag & IRQF_TRIGGER_MASK;
++
++	/* We cannot mask the interrupt so ensure it's not enabled at request */
++	if (adis->data->unmasked_drdy)
++		adis->irq_flag |= IRQF_NO_AUTOEN;
+ 	/*
+ 	 * Typically this devices have data ready either on the rising edge or
+ 	 * on the falling edge of the data ready pin. This checks enforces that
+diff --git a/include/linux/iio/imu/adis.h b/include/linux/iio/imu/adis.h
+index cf49997d5903..7c02f5292eea 100644
+--- a/include/linux/iio/imu/adis.h
++++ b/include/linux/iio/imu/adis.h
+@@ -49,6 +49,7 @@ struct adis_timeout {
+  * @status_error_mask: Bitmask of errors supported by the device
+  * @timeouts: Chip specific delays
+  * @enable_irq: Hook for ADIS devices that have a special IRQ enable/disable
++ * @unmasked_drdy: True for devices that cannot mask/unmask the data ready pin
+  * @has_paging: True if ADIS device has paged registers
+  * @burst_reg_cmd:	Register command that triggers burst
+  * @burst_len:		Burst size in the SPI RX buffer. If @burst_max_len is defined,
+@@ -78,6 +79,7 @@ struct adis_data {
+ 	unsigned int status_error_mask;
+ 
+ 	int (*enable_irq)(struct adis *adis, bool enable);
++	bool unmasked_drdy;
+ 
+ 	bool has_paging;
+ 
 -- 
 2.35.1
 
