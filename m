@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E8B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E43C433D2;
-	Wed, 28 Dec 2022 15:08:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75BC11863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEC97C433F0;
+	Wed, 28 Dec 2022 15:08:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240102;
-	bh=HPmIDxaoMR6U9pgJ5s3dbnjhjWZLgiwkRCFGedtKinE=;
+	s=korg; t=1672240105;
+	bh=ND+BedeYHZbCMv73VCEgQu6HL1RjoTLG7dn1UPClbsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PHZYrLos7F5zkZgHiPM6bDUeihFTosJDEJf6RLGFxm7KcZSazaho7g90qshwaTBGA
-	 9NWgBUxRJUUvZJ52dnT6/H/iOd0OG7fEgobCaH8xy8KkhIzueUwZkpr/cW4/6HES7a
-	 258qmS0O6Kh4QnBrvUousqwOqV2xsq+hFUyO3G+s=
+	b=LRX3aPJ8SAHsXugAi7WXci81Opjzs3t5pkjo4pNO8sstNQFys5Wx06Pa1z+LRzIBH
+	 rIHWnC1lp9/taTKdVqBRmZIKujDoow7eXOYVoWQcDLYn8aXvd3dCpezId1lOYPraEP
+	 gmpZCFPW2yK2Fwq2vyk0521qDTUTKWyVTvc8rcrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0118/1073] lib/fonts: fix undefined behavior in bit shift for get_default_font
-Date: Wed, 28 Dec 2022 15:28:26 +0100
-Message-Id: <20221228144331.243764026@linuxfoundation.org>
+Subject: [PATCH 6.1 0081/1146] ARM: dts: dove: Fix assigned-addresses for every PCIe Root Port
+Date: Wed, 28 Dec 2022 15:27:00 +0100
+Message-Id: <20221228144332.345995072@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,77 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 6fe888c4d2fb174408e4540bb2d5602b9f507f90 ]
+[ Upstream commit dcc7d8c72b64a479b8017e4332d99179deb8802d ]
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned.  The UBSAN warning calltrace like below:
+BDF of resource in DT assigned-addresses property of Marvell PCIe Root Port
+(PCI-to-PCI bridge) should match BDF in address part in that DT node name
+as specified resource belongs to Marvell PCIe Root Port itself.
 
-UBSAN: shift-out-of-bounds in lib/fonts/fonts.c:139:20
-left shift of 1 by 31 places cannot be represented in type 'int'
- <TASK>
- dump_stack_lvl+0x7d/0xa5
- dump_stack+0x15/0x1b
- ubsan_epilogue+0xe/0x4e
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
- get_default_font+0x1c7/0x1f0
- fbcon_startup+0x347/0x3a0
- do_take_over_console+0xce/0x270
- do_fbcon_takeover+0xa1/0x170
- do_fb_registered+0x2a8/0x340
- fbcon_fb_registered+0x47/0xe0
- register_framebuffer+0x294/0x4a0
- __drm_fb_helper_initial_config_and_unlock+0x43c/0x880 [drm_kms_helper]
- drm_fb_helper_initial_config+0x52/0x80 [drm_kms_helper]
- drm_fbdev_client_hotplug+0x156/0x1b0 [drm_kms_helper]
- drm_fbdev_generic_setup+0xfc/0x290 [drm_kms_helper]
- bochs_pci_probe+0x6ca/0x772 [bochs]
- local_pci_probe+0x4d/0xb0
- pci_device_probe+0x119/0x320
- really_probe+0x181/0x550
- __driver_probe_device+0xc6/0x220
- driver_probe_device+0x32/0x100
- __driver_attach+0x195/0x200
- bus_for_each_dev+0xbb/0x120
- driver_attach+0x27/0x30
- bus_add_driver+0x22e/0x2f0
- driver_register+0xa9/0x190
- __pci_register_driver+0x90/0xa0
- bochs_pci_driver_init+0x52/0x1000 [bochs]
- do_one_initcall+0x76/0x430
- do_init_module+0x61/0x28a
- load_module+0x1f82/0x2e50
- __do_sys_finit_module+0xf8/0x190
- __x64_sys_finit_module+0x23/0x30
- do_syscall_64+0x58/0x80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
- </TASK>
-
-Link: https://lkml.kernel.org/r/20221031113829.4183153-1-cuigaosheng1@huawei.com
-Fixes: c81f717cb9e0 ("fbcon: Fix typo and bogus logic in get_default_font")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 74ecaa403a74 ("ARM: dove: add PCIe controllers to SoC DT")
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/fonts/fonts.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/dove.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/fonts/fonts.c b/lib/fonts/fonts.c
-index 5f4b07b56cd9..973866438608 100644
---- a/lib/fonts/fonts.c
-+++ b/lib/fonts/fonts.c
-@@ -135,8 +135,8 @@ const struct font_desc *get_default_font(int xres, int yres, u32 font_w,
- 		if (res > 20)
- 			c += 20 - res;
- 
--		if ((font_w & (1 << (f->width - 1))) &&
--		    (font_h & (1 << (f->height - 1))))
-+		if ((font_w & (1U << (f->width - 1))) &&
-+		    (font_h & (1U << (f->height - 1))))
- 			c += 1000;
- 
- 		if (c > cc) {
+diff --git a/arch/arm/boot/dts/dove.dtsi b/arch/arm/boot/dts/dove.dtsi
+index 00a36fba2fd2..9aee3cfd3e98 100644
+--- a/arch/arm/boot/dts/dove.dtsi
++++ b/arch/arm/boot/dts/dove.dtsi
+@@ -139,7 +139,7 @@ pcie0_intc: interrupt-controller {
+ 			pcie1: pcie@2 {
+ 				device_type = "pci";
+ 				status = "disabled";
+-				assigned-addresses = <0x82002800 0 0x80000 0 0x2000>;
++				assigned-addresses = <0x82001000 0 0x80000 0 0x2000>;
+ 				reg = <0x1000 0 0 0 0>;
+ 				clocks = <&gate_clk 5>;
+ 				marvell,pcie-port = <1>;
 -- 
 2.35.1
 
