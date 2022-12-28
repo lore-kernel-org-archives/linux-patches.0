@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4121875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:03:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50002C433D2;
-	Wed, 28 Dec 2022 16:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79D331875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:03:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF6E6C433F0;
+	Wed, 28 Dec 2022 16:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243386;
-	bh=G82L8OnPeSh6wKX+YWpL2lG1HVq4fQck5GyMBoMylro=;
+	s=korg; t=1672243389;
+	bh=yoj//D37v82aTDnUCc2h2XHFMHJuk2hrvtsKDHa7EKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FLWdWClOyj79w142RZKgdn2DdBVOopstwKwxJ32saWJRjNvgGixg3PC2t6OlResTb
-	 gqq0mX+g4eyOPXkkqtCSmIvYaiFTKzgHE3JYYbNMntVltTLks04RrKRV+q4w7Nrv+G
-	 6ommnTddGUSSf4h3wJewiju1VGKhboswyYVQh36A=
+	b=KzEYSjsa0SVTK7MWEfzZhfnOmwde/fsX1iqJERLS4RrOJV9/wYw0q6+traDwVX+ku
+	 /2L8UqA5fLJyuT7JeLuvCWdRhL9WZxZbKA+YMLC+kqHyPgptyiB3s9555ZY0znWU8k
+	 Oa9lvYDRVxgOii0Fw+I+5yPCXAkVrqB5zoC46Jl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0487/1146] SUNRPC: Fix missing release socket in rpc_sockname()
-Date: Wed, 28 Dec 2022 15:33:46 +0100
-Message-Id: <20221228144343.413114286@linuxfoundation.org>
+Subject: [PATCH 6.0 0524/1073] net: ethernet: dnet: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:35:12 +0100
+Message-Id: <20221228144342.277188811@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang ShaoBo <bobo.shaobowang@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 50fa355bc0d75911fe9d5072a5ba52cdb803aff7 ]
+[ Upstream commit f07fadcbee2a5e84caa67c7c445424200bffb60b ]
 
-socket dynamically created is not released when getting an unintended
-address family type in rpc_sockname(), direct to out_release for calling
-sock_release().
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-Fixes: 2e738fdce22f ("SUNRPC: Add API to acquire source address")
-Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+In this case, the lock is used to protected 'bp', so we can move
+dev_kfree_skb() after the spin_unlock_irqrestore().
+
+Fixes: 4796417417a6 ("dnet: Dave DNET ethernet controller driver (updated)")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/clnt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/dnet.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index 993acf38af87..0b0b9f1eed46 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -1442,7 +1442,7 @@ static int rpc_sockname(struct net *net, struct sockaddr *sap, size_t salen,
- 		break;
- 	default:
- 		err = -EAFNOSUPPORT;
--		goto out;
-+		goto out_release;
- 	}
- 	if (err < 0) {
- 		dprintk("RPC:       can't bind UDP socket (%d)\n", err);
+diff --git a/drivers/net/ethernet/dnet.c b/drivers/net/ethernet/dnet.c
+index 92462ed87bc4..d9f0c297ae2a 100644
+--- a/drivers/net/ethernet/dnet.c
++++ b/drivers/net/ethernet/dnet.c
+@@ -550,11 +550,11 @@ static netdev_tx_t dnet_start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 
+ 	skb_tx_timestamp(skb);
+ 
++	spin_unlock_irqrestore(&bp->lock, flags);
++
+ 	/* free the buffer */
+ 	dev_kfree_skb(skb);
+ 
+-	spin_unlock_irqrestore(&bp->lock, flags);
+-
+ 	return NETDEV_TX_OK;
+ }
+ 
 -- 
 2.35.1
 
