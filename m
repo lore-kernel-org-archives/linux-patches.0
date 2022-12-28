@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436A21C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE276C433D2;
-	Wed, 28 Dec 2022 16:04:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECC7E1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71F74C433EF;
+	Wed, 28 Dec 2022 16:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243443;
-	bh=ss+jQ5kl6mj6+G0f9dLPvAk08vCqGQW+r0073x108zc=;
+	s=korg; t=1672243445;
+	bh=Mt7l8+L5QgrPjlxFpDR+rjN5Kt/xAd1P+D68Wtizxw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LiCrQR6odznaBsiv8fEaYDG4NmblHTKAg9hkTcfLBXi8sPkmyuLAn3Dx1nmqMj6eU
-	 ARjv6/QPfhXEPiJhOgVS17dkh+ap0Xo1HR82UgyKps7zz8ZZUwn3ToHjk8Q9z7rWD9
-	 LRR5aXGuIKyIQDiMNdVcKj0d01RcP6iCvTsVv8wk=
+	b=XT7LZrfPHQhdV4PTgYN4oESKJFKzGtcQxc0jIdagSefZjTFIcqfXwLbcddaj4NlU4
+	 t1I7FRWyoSWF4y+bUBPqavYj4SPvTmgjuI6iNDUL1tSYZbfonkO1SX5Vk2lEWsFLqA
+	 Q5IW9k/vO+vkQC7bNsi+YKffCcyNiGtntIhHRN9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Xingjiang Qiao <nanpuyue@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0475/1146] configfs: fix possible memory leak in configfs_create_dir()
-Date: Wed, 28 Dec 2022 15:33:34 +0100
-Message-Id: <20221228144343.085835030@linuxfoundation.org>
+Subject: [PATCH 6.1 0493/1146] hwmon: (emc2305) fix unable to probe emc2301/2/3
+Date: Wed, 28 Dec 2022 15:33:52 +0100
+Message-Id: <20221228144343.573518348@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,100 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Xingjiang Qiao <nanpuyue@gmail.com>
 
-[ Upstream commit c65234b283a65cfbfc94619655e820a5e55199eb ]
+[ Upstream commit 4d50591ebf60ccf79380fff3a4c23659c61c482f ]
 
-kmemleak reported memory leaks in configfs_create_dir():
+The definitions of 'EMC2305_REG_PRODUCT_ID' and 'EMC2305_REG_DEVICE' are
+both '0xfd', they actually return the same value, but the values returned
+by emc2301/2/3/5 are different, so probe emc2301/2/3 will fail, This patch
+fixes that.
 
-unreferenced object 0xffff888009f6af00 (size 192):
-  comm "modprobe", pid 3777, jiffies 4295537735 (age 233.784s)
-  backtrace:
-    kmem_cache_alloc (mm/slub.c:3250 mm/slub.c:3256 mm/slub.c:3263 mm/slub.c:3273)
-    new_fragment (./include/linux/slab.h:600 fs/configfs/dir.c:163)
-    configfs_register_subsystem (fs/configfs/dir.c:1857)
-    basic_write (drivers/hwtracing/stm/p_basic.c:14) stm_p_basic
-    do_one_initcall (init/main.c:1296)
-    do_init_module (kernel/module/main.c:2455)
-    ...
-
-unreferenced object 0xffff888003ba7180 (size 96):
-  comm "modprobe", pid 3777, jiffies 4295537735 (age 233.784s)
-  backtrace:
-    kmem_cache_alloc (mm/slub.c:3250 mm/slub.c:3256 mm/slub.c:3263 mm/slub.c:3273)
-    configfs_new_dirent (./include/linux/slab.h:723 fs/configfs/dir.c:194)
-    configfs_make_dirent (fs/configfs/dir.c:248)
-    configfs_create_dir (fs/configfs/dir.c:296)
-    configfs_attach_group.isra.28 (fs/configfs/dir.c:816 fs/configfs/dir.c:852)
-    configfs_register_subsystem (fs/configfs/dir.c:1881)
-    basic_write (drivers/hwtracing/stm/p_basic.c:14) stm_p_basic
-    do_one_initcall (init/main.c:1296)
-    do_init_module (kernel/module/main.c:2455)
-    ...
-
-This is because the refcount is not correct in configfs_make_dirent().
-For normal stage, the refcount is changing as:
-
-configfs_register_subsystem()
-  configfs_create_dir()
-    configfs_make_dirent()
-      configfs_new_dirent() # set s_count = 1
-      dentry->d_fsdata = configfs_get(sd); # s_count = 2
-...
-configfs_unregister_subsystem()
-  configfs_remove_dir()
-    remove_dir()
-      configfs_remove_dirent() # s_count = 1
-    dput() ...
-      *dentry_unlink_inode()*
-        configfs_d_iput() # s_count = 0, release
-
-However, if we failed in configfs_create():
-
-configfs_register_subsystem()
-  configfs_create_dir()
-    configfs_make_dirent() # s_count = 2
-    ...
-    configfs_create() # fail
-    ->out_remove:
-    configfs_remove_dirent(dentry)
-      configfs_put(sd) # s_count = 1
-      return PTR_ERR(inode);
-
-There is no inode in the error path, so the configfs_d_iput() is lost
-and makes sd and fragment memory leaked.
-
-To fix this, when we failed in configfs_create(), manually call
-configfs_put(sd) to keep the refcount correct.
-
-Fixes: 7063fbf22611 ("[PATCH] configfs: User-driven configuration filesystem")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Xingjiang Qiao <nanpuyue@gmail.com>
+Link: https://lore.kernel.org/r/20221206055331.170459-1-nanpuyue@gmail.com
+Fixes: 0d8400c5a2ce1 ("hwmon: (emc2305) add support for EMC2301/2/3/5 RPM-based PWM Fan Speed Controller.")
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/configfs/dir.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/hwmon/emc2305.c | 7 +------
+ 1 file changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
-index d1f9d2632202..ec6519e1ca3b 100644
---- a/fs/configfs/dir.c
-+++ b/fs/configfs/dir.c
-@@ -316,6 +316,7 @@ static int configfs_create_dir(struct config_item *item, struct dentry *dentry,
- 	return 0;
+diff --git a/drivers/hwmon/emc2305.c b/drivers/hwmon/emc2305.c
+index aa1f25add0b6..9a78ca22541e 100644
+--- a/drivers/hwmon/emc2305.c
++++ b/drivers/hwmon/emc2305.c
+@@ -16,7 +16,6 @@ static const unsigned short
+ emc2305_normal_i2c[] = { 0x27, 0x2c, 0x2d, 0x2e, 0x2f, 0x4c, 0x4d, I2C_CLIENT_END };
  
- out_remove:
-+	configfs_put(dentry->d_fsdata);
- 	configfs_remove_dirent(dentry);
- 	return PTR_ERR(inode);
- }
-@@ -382,6 +383,7 @@ int configfs_create_link(struct configfs_dirent *target, struct dentry *parent,
- 	return 0;
+ #define EMC2305_REG_DRIVE_FAIL_STATUS	0x27
+-#define EMC2305_REG_DEVICE		0xfd
+ #define EMC2305_REG_VENDOR		0xfe
+ #define EMC2305_FAN_MAX			0xff
+ #define EMC2305_FAN_MIN			0x00
+@@ -524,7 +523,7 @@ static int emc2305_probe(struct i2c_client *client, const struct i2c_device_id *
+ 	struct device *dev = &client->dev;
+ 	struct emc2305_data *data;
+ 	struct emc2305_platform_data *pdata;
+-	int vendor, device;
++	int vendor;
+ 	int ret;
+ 	int i;
  
- out_remove:
-+	configfs_put(dentry->d_fsdata);
- 	configfs_remove_dirent(dentry);
- 	return PTR_ERR(inode);
- }
+@@ -535,10 +534,6 @@ static int emc2305_probe(struct i2c_client *client, const struct i2c_device_id *
+ 	if (vendor != EMC2305_VENDOR)
+ 		return -ENODEV;
+ 
+-	device = i2c_smbus_read_byte_data(client, EMC2305_REG_DEVICE);
+-	if (device != EMC2305_DEVICE)
+-		return -ENODEV;
+-
+ 	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+ 	if (!data)
+ 		return -ENOMEM;
 -- 
 2.35.1
 
