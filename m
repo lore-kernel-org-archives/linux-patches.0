@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E711C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB26C433D2;
-	Wed, 28 Dec 2022 16:42:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BF681C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 838B7C433D2;
+	Wed, 28 Dec 2022 16:42:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245767;
-	bh=JQkNrYxNccafkooCq8unRqC3PodZ5psPvaDCz7dH4FA=;
+	s=korg; t=1672245769;
+	bh=Wxpn4VT2sG5tdkERScDr+DU3aoj/og+kDGTWbXqoHhA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rLAMsE9Pj5jsA91W/0+TcwD5HQ7LIZkFMvzGmoOCr/i+Bio/ObYEcF7khPZ1cdM0s
-	 EOIspfqt7DO3ZYhOF4qeOhrvtER99S6XpwsOiNgA7KlZ6F2MjLghXyXIgg3N+rWuUl
-	 jNYbFKZw3CRbh6cxYbECckdU2TsDpPwk2lUNxps4=
+	b=DbSE5aMr4YYayF7fzVT/U5IRa2+vaSOGzIZ1u2vMmjeqKg/sZcvrG3r4HNB3bgx07
+	 VuHGO/CBrFHGI7wWwVfQTdX81vSZbIoE2ThpROZ3nSQEHuHM0f9u2JsdJhJwtL+0KT
+	 ZqTC+4sKUCt4f0/UOsy8YyB/oFeI5Mx+o5QcP/9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Mackerras <paulus@samba.org>,
-	linux-ppp@vger.kernel.org,
-	syzbot+41cab52ab62ee99ed24a@syzkaller.appspotmail.com,
-	Stanislav Fomichev <sdf@google.com>,
+	Eelco Chaudron <echaudro@redhat.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0951/1073] ppp: associate skb with a device at tx
-Date: Wed, 28 Dec 2022 15:42:19 +0100
-Message-Id: <20221228144353.865454701@linuxfoundation.org>
+Subject: [PATCH 6.1 0919/1146] openvswitch: Fix flow lookup to use unmasked key
+Date: Wed, 28 Dec 2022 15:40:58 +0100
+Message-Id: <20221228144355.218444336@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,60 +35,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanislav Fomichev <sdf@google.com>
+From: Eelco Chaudron <echaudro@redhat.com>
 
-[ Upstream commit 9f225444467b98579cf28d94f4ad053460dfdb84 ]
+[ Upstream commit 68bb10101e6b0a6bb44e9c908ef795fc4af99eae ]
 
-Syzkaller triggered flow dissector warning with the following:
+The commit mentioned below causes the ovs_flow_tbl_lookup() function
+to be called with the masked key. However, it's supposed to be called
+with the unmasked key. This due to the fact that the datapath supports
+installing wider flows, and OVS relies on this behavior. For example
+if ipv4(src=1.1.1.1/192.0.0.0, dst=1.1.1.2/192.0.0.0) exists, a wider
+flow (smaller mask) of ipv4(src=192.1.1.1/128.0.0.0,dst=192.1.1.2/
+128.0.0.0) is allowed to be added.
 
-r0 = openat$ppp(0xffffffffffffff9c, &(0x7f0000000000), 0xc0802, 0x0)
-ioctl$PPPIOCNEWUNIT(r0, 0xc004743e, &(0x7f00000000c0))
-ioctl$PPPIOCSACTIVE(r0, 0x40107446, &(0x7f0000000240)={0x2, &(0x7f0000000180)=[{0x20, 0x0, 0x0, 0xfffff034}, {0x6}]})
-pwritev(r0, &(0x7f0000000040)=[{&(0x7f0000000140)='\x00!', 0x2}], 0x1, 0x0, 0x0)
+However, if we try to add a wildcard rule, the installation fails:
 
-[    9.485814] WARNING: CPU: 3 PID: 329 at net/core/flow_dissector.c:1016 __skb_flow_dissect+0x1ee0/0x1fa0
-[    9.485929]  skb_get_poff+0x53/0xa0
-[    9.485937]  bpf_skb_get_pay_offset+0xe/0x20
-[    9.485944]  ? ppp_send_frame+0xc2/0x5b0
-[    9.485949]  ? _raw_spin_unlock_irqrestore+0x40/0x60
-[    9.485958]  ? __ppp_xmit_process+0x7a/0xe0
-[    9.485968]  ? ppp_xmit_process+0x5b/0xb0
-[    9.485974]  ? ppp_write+0x12a/0x190
-[    9.485981]  ? do_iter_write+0x18e/0x2d0
-[    9.485987]  ? __import_iovec+0x30/0x130
-[    9.485997]  ? do_pwritev+0x1b6/0x240
-[    9.486016]  ? trace_hardirqs_on+0x47/0x50
-[    9.486023]  ? __x64_sys_pwritev+0x24/0x30
-[    9.486026]  ? do_syscall_64+0x3d/0x80
-[    9.486031]  ? entry_SYSCALL_64_after_hwframe+0x63/0xcd
+$ ovs-appctl dpctl/add-flow system@myDP "in_port(1),eth_type(0x0800), \
+  ipv4(src=1.1.1.1/192.0.0.0,dst=1.1.1.2/192.0.0.0,frag=no)" 2
+$ ovs-appctl dpctl/add-flow system@myDP "in_port(1),eth_type(0x0800), \
+  ipv4(src=192.1.1.1/0.0.0.0,dst=49.1.1.2/0.0.0.0,frag=no)" 2
+ovs-vswitchd: updating flow table (File exists)
 
-Flow dissector tries to find skb net namespace either via device
-or via socket. Neigher is set in ppp_send_frame, so let's manually
-use ppp->dev.
+The reason is that the key used to determine if the flow is already
+present in the system uses the original key ANDed with the mask.
+This results in the IP address not being part of the (miniflow) key,
+i.e., being substituted with an all-zero value. When doing the actual
+lookup, this results in the key wrongfully matching the first flow,
+and therefore the flow does not get installed.
 
-Cc: Paul Mackerras <paulus@samba.org>
-Cc: linux-ppp@vger.kernel.org
-Reported-by: syzbot+41cab52ab62ee99ed24a@syzkaller.appspotmail.com
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
+This change reverses the commit below, but rather than having the key
+on the stack, it's allocated.
+
+Fixes: 190aa3e77880 ("openvswitch: Fix Frame-size larger than 1024 bytes warning.")
+
+Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/openvswitch/datapath.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index 9206c660a72e..d4c821c8cf57 100644
---- a/drivers/net/ppp/ppp_generic.c
-+++ b/drivers/net/ppp/ppp_generic.c
-@@ -1743,6 +1743,8 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
- 	int len;
- 	unsigned char *cp;
+diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
+index 8b84869eb2ac..fa0f1952d763 100644
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -948,6 +948,7 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	struct sw_flow_mask mask;
+ 	struct sk_buff *reply;
+ 	struct datapath *dp;
++	struct sw_flow_key *key;
+ 	struct sw_flow_actions *acts;
+ 	struct sw_flow_match match;
+ 	u32 ufid_flags = ovs_nla_get_ufid_flags(a[OVS_FLOW_ATTR_UFID_FLAGS]);
+@@ -975,24 +976,26 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	}
  
-+	skb->dev = ppp->dev;
+ 	/* Extract key. */
+-	ovs_match_init(&match, &new_flow->key, false, &mask);
++	key = kzalloc(sizeof(*key), GFP_KERNEL);
++	if (!key) {
++		error = -ENOMEM;
++		goto err_kfree_key;
++	}
 +
- 	if (proto < 0x8000) {
- #ifdef CONFIG_PPP_FILTER
- 		/* check if we should pass this packet */
++	ovs_match_init(&match, key, false, &mask);
+ 	error = ovs_nla_get_match(net, &match, a[OVS_FLOW_ATTR_KEY],
+ 				  a[OVS_FLOW_ATTR_MASK], log);
+ 	if (error)
+ 		goto err_kfree_flow;
+ 
++	ovs_flow_mask_key(&new_flow->key, key, true, &mask);
++
+ 	/* Extract flow identifier. */
+ 	error = ovs_nla_get_identifier(&new_flow->id, a[OVS_FLOW_ATTR_UFID],
+-				       &new_flow->key, log);
++				       key, log);
+ 	if (error)
+ 		goto err_kfree_flow;
+ 
+-	/* unmasked key is needed to match when ufid is not used. */
+-	if (ovs_identifier_is_key(&new_flow->id))
+-		match.key = new_flow->id.unmasked_key;
+-
+-	ovs_flow_mask_key(&new_flow->key, &new_flow->key, true, &mask);
+-
+ 	/* Validate actions. */
+ 	error = ovs_nla_copy_actions(net, a[OVS_FLOW_ATTR_ACTIONS],
+ 				     &new_flow->key, &acts, log);
+@@ -1019,7 +1022,7 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	if (ovs_identifier_is_ufid(&new_flow->id))
+ 		flow = ovs_flow_tbl_lookup_ufid(&dp->table, &new_flow->id);
+ 	if (!flow)
+-		flow = ovs_flow_tbl_lookup(&dp->table, &new_flow->key);
++		flow = ovs_flow_tbl_lookup(&dp->table, key);
+ 	if (likely(!flow)) {
+ 		rcu_assign_pointer(new_flow->sf_acts, acts);
+ 
+@@ -1089,6 +1092,8 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	if (reply)
+ 		ovs_notify(&dp_flow_genl_family, reply, info);
++
++	kfree(key);
+ 	return 0;
+ 
+ err_unlock_ovs:
+@@ -1098,6 +1103,8 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	ovs_nla_free_flow_actions(acts);
+ err_kfree_flow:
+ 	ovs_flow_free(new_flow, false);
++err_kfree_key:
++	kfree(key);
+ error:
+ 	return error;
+ }
 -- 
 2.35.1
 
