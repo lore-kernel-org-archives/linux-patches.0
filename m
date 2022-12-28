@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 066D21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 803A3C433D2;
-	Wed, 28 Dec 2022 15:12:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABBB11863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:12:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3253AC433D2;
+	Wed, 28 Dec 2022 15:12:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240369;
-	bh=cPiucVB+lQ5BIgLNGhp1LWwg126blwaS1B5Ekx4K8kM=;
+	s=korg; t=1672240372;
+	bh=aHWKULzj3U3S4emToSKQRDMI+L6IMqOnnpO6EOPGC1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VrphcOaR8+84mN3im7+jxr2W4dpAqYM+P0w29qIc5QvziszRPe/ddlG27UPHHiQaT
-	 cy2BF6ytyWFarLzrBet1hkj5O8qGX+ujHA6a9E7QIZM0yTXFtRxjR9b6Obb7PsAFwy
-	 KRWq8l99NLJs4UZ3KumYhwd6MKW8VCC5xTzRGd+Q=
+	b=nwTN70ZirJXN7wyNQWZm21syN6vOdMN1FqDP09XJr0+JSb0jRp0ODKJCb7HFmWBeF
+	 igkNqqfgOOvmV5XHbr8FNziXuGG9Me21rE6L5lKXTXQRtQ2zRQ6F/o969BcX3WtFPn
+	 oieUBNKFr0ad4X2pnfHWRQsQtBlOwiKKMG6BX/V4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Markus Schneider-Pargmann <msp@baylibre.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0114/1146] alpha: fix TIF_NOTIFY_SIGNAL handling
-Date: Wed, 28 Dec 2022 15:27:33 +0100
-Message-Id: <20221228144333.250983943@linuxfoundation.org>
+Subject: [PATCH 5.15 342/731] can: tcan4x5x: Fix use of register error status mask
+Date: Wed, 28 Dec 2022 15:37:29 +0100
+Message-Id: <20221228144306.480225943@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,33 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Markus Schneider-Pargmann <msp@baylibre.com>
 
-[ Upstream commit e2c7554cc6d85f95e3c6635f270ec839ab9fe05e ]
+[ Upstream commit 67727a17a6b375d68fe569b77e6516b034b834c0 ]
 
-it needs to be added to _TIF_WORK_MASK, or we might not reach
-do_work_pending() in the first place...
+TCAN4X5X_ERROR_STATUS is not a status register that needs clearing
+during interrupt handling. Instead this is a masking register that masks
+error interrupts. Writing TCAN4X5X_CLEAR_ALL_INT to this register
+effectively masks everything.
 
-Fixes: 5a9a8897c253a "alpha: add support for TIF_NOTIFY_SIGNAL"
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Rename the register and mask all error interrupts only once by writing
+to the register in tcan4x5x_init.
+
+Fixes: 5443c226ba91 ("can: tcan4x5x: Add tcan4x5x driver to the kernel")
+Signed-off-by: Markus Schneider-Pargmann <msp@baylibre.com>
+Link: https://lore.kernel.org/all/20221206115728.1056014-10-msp@baylibre.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/include/asm/thread_info.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/m_can/tcan4x5x-core.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/arch/alpha/include/asm/thread_info.h b/arch/alpha/include/asm/thread_info.h
-index fdc485d7787a..084c27cb0c70 100644
---- a/arch/alpha/include/asm/thread_info.h
-+++ b/arch/alpha/include/asm/thread_info.h
-@@ -75,7 +75,7 @@ register struct thread_info *__current_thread_info __asm__("$8");
+diff --git a/drivers/net/can/m_can/tcan4x5x-core.c b/drivers/net/can/m_can/tcan4x5x-core.c
+index a0eee69e52ea..c83b347be1cf 100644
+--- a/drivers/net/can/m_can/tcan4x5x-core.c
++++ b/drivers/net/can/m_can/tcan4x5x-core.c
+@@ -10,7 +10,7 @@
+ #define TCAN4X5X_DEV_ID1 0x04
+ #define TCAN4X5X_REV 0x08
+ #define TCAN4X5X_STATUS 0x0C
+-#define TCAN4X5X_ERROR_STATUS 0x10
++#define TCAN4X5X_ERROR_STATUS_MASK 0x10
+ #define TCAN4X5X_CONTROL 0x14
  
- /* Work to do on interrupt/exception return.  */
- #define _TIF_WORK_MASK		(_TIF_SIGPENDING | _TIF_NEED_RESCHED | \
--				 _TIF_NOTIFY_RESUME)
-+				 _TIF_NOTIFY_RESUME | _TIF_NOTIFY_SIGNAL)
+ #define TCAN4X5X_CONFIG 0x800
+@@ -204,12 +204,7 @@ static int tcan4x5x_clear_interrupts(struct m_can_classdev *cdev)
+ 	if (ret)
+ 		return ret;
  
- /* Work to do on any return to userspace.  */
- #define _TIF_ALLWORK_MASK	(_TIF_WORK_MASK		\
+-	ret = tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_INT_FLAGS,
+-				      TCAN4X5X_CLEAR_ALL_INT);
+-	if (ret)
+-		return ret;
+-
+-	return tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_ERROR_STATUS,
++	return tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_INT_FLAGS,
+ 				       TCAN4X5X_CLEAR_ALL_INT);
+ }
+ 
+@@ -229,6 +224,11 @@ static int tcan4x5x_init(struct m_can_classdev *cdev)
+ 	if (ret)
+ 		return ret;
+ 
++	ret = tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_ERROR_STATUS_MASK,
++				      TCAN4X5X_CLEAR_ALL_INT);
++	if (ret)
++		return ret;
++
+ 	ret = regmap_update_bits(tcan4x5x->regmap, TCAN4X5X_CONFIG,
+ 				 TCAN4X5X_MODE_SEL_MASK, TCAN4X5X_MODE_NORMAL);
+ 	if (ret)
 -- 
 2.35.1
 
