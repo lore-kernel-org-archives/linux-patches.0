@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F18A1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:16:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1389DC433EF;
-	Wed, 28 Dec 2022 16:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 360C01C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:16:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE904C433D2;
+	Wed, 28 Dec 2022 16:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244165;
-	bh=fE3QMOo2s3TQgHsLdMZsi7UgSOkYnFXOB8fBJmKgvsM=;
+	s=korg; t=1672244168;
+	bh=+vZNcwnTcRQqjUzQHdUFdM5gSLlmZ0HxnhFErN0E+5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hyp0TrzkOs1hBgooGQ4BrQJspympKuCcUEdYi3unI6LfelGTSgQz3FL3ultkpHt/d
-	 90Gxo2V18dft9qBMlqFZluXo6MUB4eYKz2ITjunfnguO8EcO5I5mi/oUBhcs7Z44Yk
-	 jEXLWx7tNPWQ5s42uYKifBHvTF2kGmNef2tLfWAE=
+	b=EBKQrsokd/2vVonzNjs+pR0rDX5tQ9cfFkMo6G9ZeU459V4vRJHTCo7Bex7YEsem3
+	 fOdRb/iA/HR5TZ/31qSLvdl0ONDJmN3PQEKyu1L/FeSPHRW4xHmRuYae4/tMPt4eBz
+	 ffWLPnjPkO9Sfdx4Z4K7USW6AyJbFowezEeCkJec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Alexandre Ghiti <alexghiti@rivosinc.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0622/1146] PCI: Check for alloc failure in pci_request_irq()
-Date: Wed, 28 Dec 2022 15:36:01 +0100
-Message-Id: <20221228144347.064138818@linuxfoundation.org>
+Subject: [PATCH 6.0 0662/1073] riscv: Fix P4D_SHIFT definition for 3-level page table mode
+Date: Wed, 28 Dec 2022 15:37:30 +0100
+Message-Id: <20221228144346.026219656@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Alexandre Ghiti <alexghiti@rivosinc.com>
 
-[ Upstream commit 2d9cd957d40c3ac491b358e7cff0515bb07a3a9c ]
+[ Upstream commit 71fc3621efc38ace9640ee6a0db3300900689592 ]
 
-When kvasprintf() fails to allocate memory, it returns a NULL pointer.
-Return error from pci_request_irq() so we don't dereference it.
+RISC-V kernels support 3,4,5-level page tables at runtime by folding
+upper levels.
 
-[bhelgaas: commit log]
-Fixes: 704e8953d3e9 ("PCI/irq: Add pci_request_irq() and pci_free_irq() helpers")
-Link: https://lore.kernel.org/r/20221121020029.3759444-1-zengheng4@huawei.com
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+In case of a 3-level page table, PGDIR is folded into P4D which in turn
+is folded into PUD: PGDIR_SHIFT value is correctly set to the same value
+as PUD_SHIFT, but P4D_SHIFT is not, then any use of P4D_SHIFT will access
+invalid address bits (all set to 1).
+
+Fix this by dynamically defining P4D_SHIFT value, like we already do for
+PGDIR_SHIFT.
+
+Fixes: d10efa21a937 ("riscv: mm: Control p4d's folding by pgtable_l5_enabled")
+Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
+Link: https://lore.kernel.org/r/20221201135128.1482189-2-alexghiti@rivosinc.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/irq.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/riscv/include/asm/pgtable-64.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pci/irq.c b/drivers/pci/irq.c
-index 12ecd0aaa28d..0050e8f6814e 100644
---- a/drivers/pci/irq.c
-+++ b/drivers/pci/irq.c
-@@ -44,6 +44,8 @@ int pci_request_irq(struct pci_dev *dev, unsigned int nr, irq_handler_t handler,
- 	va_start(ap, fmt);
- 	devname = kvasprintf(GFP_KERNEL, fmt, ap);
- 	va_end(ap);
-+	if (!devname)
-+		return -ENOMEM;
+diff --git a/arch/riscv/include/asm/pgtable-64.h b/arch/riscv/include/asm/pgtable-64.h
+index dc42375c2357..42a042c0e13e 100644
+--- a/arch/riscv/include/asm/pgtable-64.h
++++ b/arch/riscv/include/asm/pgtable-64.h
+@@ -25,7 +25,11 @@ extern bool pgtable_l5_enabled;
+ #define PGDIR_MASK      (~(PGDIR_SIZE - 1))
  
- 	ret = request_threaded_irq(pci_irq_vector(dev, nr), handler, thread_fn,
- 				   irqflags, devname, dev_id);
+ /* p4d is folded into pgd in case of 4-level page table */
+-#define P4D_SHIFT      39
++#define P4D_SHIFT_L3   30
++#define P4D_SHIFT_L4   39
++#define P4D_SHIFT_L5   39
++#define P4D_SHIFT      (pgtable_l5_enabled ? P4D_SHIFT_L5 : \
++		(pgtable_l4_enabled ? P4D_SHIFT_L4 : P4D_SHIFT_L3))
+ #define P4D_SIZE       (_AC(1, UL) << P4D_SHIFT)
+ #define P4D_MASK       (~(P4D_SIZE - 1))
+ 
 -- 
 2.35.1
 
