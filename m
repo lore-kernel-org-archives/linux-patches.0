@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B67741863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A903C433F0;
-	Wed, 28 Dec 2022 15:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C8B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF24C433F0;
+	Wed, 28 Dec 2022 15:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241103;
-	bh=4MlXIaLIHA1YBZCXzVwfEewuw4wq8F+Z59/O8zBEtz0=;
+	s=korg; t=1672241106;
+	bh=o9YxICuFMvvYQ/GvolBsBBnSKS84R61gGbQ6MfyMcM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YllcW/sa0RkyOtoDXFhP95yHJZ4or5n3lFJNuCW+frGX7fX0E/ni8U1ppQOeIhXi3
-	 JwS6WQmDQHLnCJCeGQi3e2KcZbpWN5lpSaRKOihbnl7pn9K267jUmTJzg5xFhBrXIK
-	 HyIZHH09w6NfPGT33Klw3T5eUkcRerJg5E0P8hMk=
+	b=nbGjpYi/Tfj4Pk7TEuRifKkZScFYDinH6RW0kSWhKADcQZo5a1AtrUWePhfXic3zd
+	 DU6h4bQMHtQvxjcoA73PnKnX/jfRCRZnXx5WMcOZN7bgqa7eUmhG3IUKZkJJSS564g
+	 6TM2WtrKkg5iTqDrlEubirNU054/JaMskSQhKe/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0240/1073] libbpf: Btf dedup identical struct test needs check for nested structs/arrays
-Date: Wed, 28 Dec 2022 15:30:28 +0100
-Message-Id: <20221228144334.546179410@linuxfoundation.org>
+Subject: [PATCH 5.15 438/731] drivers: dio: fix possible memory leak in dio_init()
+Date: Wed, 28 Dec 2022 15:39:05 +0100
+Message-Id: <20221228144309.256690473@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,91 +34,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit f3c51fe02c55bd944662714e5b91b96dc271ad9f ]
+[ Upstream commit e63e99397b2613d50a5f4f02ed07307e67a190f1 ]
 
-When examining module BTF, it is common to see core kernel structures
-such as sk_buff, net_device duplicated in the module.  After adding
-debug messaging to BTF it turned out that much of the problem
-was down to the identical struct test failing during deduplication;
-sometimes the compiler adds identical structs.  However
-it turns out sometimes that type ids of identical struct members
-can also differ, even when the containing structs are still identical.
+If device_register() returns error, the 'dev' and name needs be
+freed. Add a release function, and then call put_device() in the
+error path, so the name is freed in kobject_cleanup() and to the
+'dev' is freed in release function.
 
-To take an example, for struct sk_buff, debug messaging revealed
-that the identical struct matching was failing for the anon
-struct "headers"; specifically for the first field:
-
-__u8       __pkt_type_offset[0]; /*   128     0 */
-
-Looking at the code in BTF deduplication, we have code that guards
-against the possibility of identical struct definitions, down to
-type ids, and identical array definitions.  However in this case
-we have a struct which is being defined twice but does not have
-identical type ids since each duplicate struct has separate type
-ids for the above array member.   A similar problem (though not
-observed) could occur for struct-in-struct.
-
-The solution is to make the "identical struct" test check members
-not just for matching ids, but to also check if they in turn are
-identical structs or arrays.
-
-The results of doing this are quite dramatic (for some modules
-at least); I see the number of type ids drop from around 10000
-to just over 1000 in one module for example.
-
-For testing use latest pahole or apply [1], otherwise dedups
-can fail for the reasons described there.
-
-Also fix return type of btf_dedup_identical_arrays() as
-suggested by Andrii to match boolean return type used
-elsewhere.
-
-Fixes: efdd3eb8015e ("libbpf: Accommodate DWARF/compiler bug with duplicated structs")
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/1666622309-22289-1-git-send-email-alan.maguire@oracle.com
-
-[1] https://lore.kernel.org/bpf/1666364523-9648-1-git-send-email-alan.maguire
-
+Fixes: 2e4c77bea3d8 ("m68k: dio - Kill warn_unused_result warnings")
+Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221109064036.1835346-1-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/dio/dio.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-index 2d14f1a52d7a..9b18cf3128ac 100644
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -3889,14 +3889,14 @@ static inline __u16 btf_fwd_kind(struct btf_type *t)
- }
+diff --git a/drivers/dio/dio.c b/drivers/dio/dio.c
+index 4c06c93c93d3..c7f7134adc21 100644
+--- a/drivers/dio/dio.c
++++ b/drivers/dio/dio.c
+@@ -110,6 +110,12 @@ static char dio_no_name[] = { 0 };
  
- /* Check if given two types are identical ARRAY definitions */
--static int btf_dedup_identical_arrays(struct btf_dedup *d, __u32 id1, __u32 id2)
-+static bool btf_dedup_identical_arrays(struct btf_dedup *d, __u32 id1, __u32 id2)
+ #endif /* CONFIG_DIO_CONSTANTS */
+ 
++static void dio_dev_release(struct device *dev)
++{
++	struct dio_dev *ddev = container_of(dev, typeof(struct dio_dev), dev);
++	kfree(ddev);
++}
++
+ int __init dio_find(int deviceid)
  {
- 	struct btf_type *t1, *t2;
- 
- 	t1 = btf_type_by_id(d->btf, id1);
- 	t2 = btf_type_by_id(d->btf, id2);
- 	if (!btf_is_array(t1) || !btf_is_array(t2))
--		return 0;
-+		return false;
- 
- 	return btf_equal_array(t1, t2);
- }
-@@ -3920,7 +3920,9 @@ static bool btf_dedup_identical_structs(struct btf_dedup *d, __u32 id1, __u32 id
- 	m1 = btf_members(t1);
- 	m2 = btf_members(t2);
- 	for (i = 0, n = btf_vlen(t1); i < n; i++, m1++, m2++) {
--		if (m1->type != m2->type)
-+		if (m1->type != m2->type &&
-+		    !btf_dedup_identical_arrays(d, m1->type, m2->type) &&
-+		    !btf_dedup_identical_structs(d, m1->type, m2->type))
- 			return false;
- 	}
- 	return true;
+ 	/* Called to find a DIO device before the full bus scan has run.
+@@ -224,6 +230,7 @@ static int __init dio_init(void)
+ 		dev->bus = &dio_bus;
+ 		dev->dev.parent = &dio_bus.dev;
+ 		dev->dev.bus = &dio_bus_type;
++		dev->dev.release = dio_dev_release;
+ 		dev->scode = scode;
+ 		dev->resource.start = pa;
+ 		dev->resource.end = pa + DIO_SIZE(scode, va);
+@@ -251,6 +258,7 @@ static int __init dio_init(void)
+ 		if (error) {
+ 			pr_err("DIO: Error registering device %s\n",
+ 			       dev->name);
++			put_device(&dev->dev);
+ 			continue;
+ 		}
+ 		error = dio_create_sysfs_dev_files(dev);
 -- 
 2.35.1
 
