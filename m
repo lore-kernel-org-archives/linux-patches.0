@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E31A1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 121CAC433D2;
-	Wed, 28 Dec 2022 15:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580AB1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC760C433D2;
+	Wed, 28 Dec 2022 15:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243069;
-	bh=rkLBp7T6HCTqky4JiL2uDPw+MUHvb3s2k95hlO4iD8E=;
+	s=korg; t=1672243072;
+	bh=qjiTGWOS3os2I4xTFQgzFxJQ+oNP6o6VhnguMNaazcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pmjVj7GLcgM/DhmyDEbf+EcdGD5Wl8BcOBhXBLHo2kvOL5WTRsVV1YEttT3pL85Yy
-	 yGl8o7DMRSifBUrkJCwNDatgxgz6ivS0FXV9iS+Rq7ORFhOp7ar/aiJgUY7CZ+HoQw
-	 DRVb2HpizGKBqdim/GXmCQpYdAQLmhGig4mawuvw=
+	b=ZjDwQeoWneBw/CcgRn7VGUBqHxjV2D3f0TEc/P56PetTqV3kuzWxhdEzEVwGx2RUk
+	 1AIo7fX1CyiCFw9JruWGd0QSb2NrJ9P2LkcgdS3Fg90Ig9G2jIBRvuwqx32OTMtBwv
+	 lO83R9xSUvphxH9OyiRz7wSDZAZBrrcUnutD2J/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Jay Vosburgh <jay.vosburgh@canonical.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0448/1146] bonding: uninitialized variable in bond_miimon_inspect()
-Date: Wed, 28 Dec 2022 15:33:07 +0100
-Message-Id: <20221228144342.349636334@linuxfoundation.org>
+Subject: [PATCH 6.0 0481/1073] mmc: pxamci: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:34:29 +0100
+Message-Id: <20221228144341.102537713@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,39 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit e5214f363dabca240446272dac54d404501ad5e5 ]
+[ Upstream commit 80e1ef3afb8bfbe768380b70ffe1b6cab87d1a3b ]
 
-The "ignore_updelay" variable needs to be initialized to false.
+mmc_add_host() may return error, if we ignore its return value, the memory
+that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
+crash because of deleting not added device in the remove path.
 
-Fixes: f8a65ab2f3ff ("bonding: fix link recovery in mode 2 when updelay is nonzero")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
-Link: https://lore.kernel.org/r/Y4SWJlh3ohJ6EPTL@kili
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+So fix this by checking the return value and goto error path which will call
+mmc_free_host(), besides, ->exit() need be called to uninit the pdata.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221101063023.1664968-5-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/pxamci.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index c527f8b37ae6..29d0a6493b1b 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2531,10 +2531,10 @@ static int bond_slave_info_query(struct net_device *bond_dev, struct ifslave *in
- /* called with rcu_read_lock() */
- static int bond_miimon_inspect(struct bonding *bond)
- {
-+	bool ignore_updelay = false;
- 	int link_state, commit = 0;
- 	struct list_head *iter;
- 	struct slave *slave;
--	bool ignore_updelay;
+diff --git a/drivers/mmc/host/pxamci.c b/drivers/mmc/host/pxamci.c
+index e4003f6058eb..2a988f942b6c 100644
+--- a/drivers/mmc/host/pxamci.c
++++ b/drivers/mmc/host/pxamci.c
+@@ -763,7 +763,12 @@ static int pxamci_probe(struct platform_device *pdev)
+ 			dev_warn(dev, "gpio_ro and get_ro() both defined\n");
+ 	}
  
- 	if (BOND_MODE(bond) == BOND_MODE_ACTIVEBACKUP) {
- 		ignore_updelay = !rcu_dereference(bond->curr_active_slave);
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret) {
++		if (host->pdata && host->pdata->exit)
++			host->pdata->exit(dev, mmc);
++		goto out;
++	}
+ 
+ 	return 0;
+ 
 -- 
 2.35.1
 
