@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7545C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF865C433D2;
-	Wed, 28 Dec 2022 15:43:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 187E81863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:43:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90D13C433D2;
+	Wed, 28 Dec 2022 15:43:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242230;
-	bh=sGVVIK4wuD62Nq6JWtIWKzv/fFl0Fx+0d8fHuDQ5Ed4=;
+	s=korg; t=1672242232;
+	bh=xBH2Ta0JdDm2ZQTTHy4fWztn5V5aVxdqhRoeLP1CPI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=okwCdg6rTz4qXXDbhbbW1KGuIroi3Cmrf61tf+5gKtNvN4lDKaBqN1tNgZOBYHXOD
-	 0ziDQfm/hdQUKAqCF76Z3ifNUxMKa7dhUrQWosjs0LYqxZ5LD9tDlQzPajaW2eHBSF
-	 gCp25hAgYzMg2iTKBzd1tK1BKUBa0Jsno+jrLcMQ=
+	b=V1L6S/bG8gE7gDteK6QwDnkvXxT8AEKzY/qDjtum2UeV/IFhG9IRFGeN4opzUMXFU
+	 MquqIzTHWZpqi0tqsIVPOtx7xTA3O9PQqnS2Iwb4GkzwFgnJfsRT64KMNa3SytZKdb
+	 lwAmGieEKHxUYHEfoG74z443wuMAnuIxT0ihaKyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Yonghong Song <yhs@fb.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0326/1146] selftests/bpf: Fix xdp_synproxy compilation failure in 32-bit arch
-Date: Wed, 28 Dec 2022 15:31:05 +0100
-Message-Id: <20221228144339.013141406@linuxfoundation.org>
+Subject: [PATCH 6.1 0344/1146] dm: track per-add_disk holder relations in DM
+Date: Wed, 28 Dec 2022 15:31:23 +0100
+Message-Id: <20221228144339.503706784@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -36,56 +37,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Jihong <yangjihong1@huawei.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit e4c9cf0ce8c413c2030e8fb215551d7e0582ee7b ]
+[ Upstream commit 1a581b72169968f4154b5793828f3bc28b258b35 ]
 
-xdp_synproxy fails to be compiled in the 32-bit arch, log is as follows:
+dm is a bit special in that it opens the underlying devices.  Commit
+89f871af1b26 ("dm: delay registering the gendisk") tried to accommodate
+that by allowing to add the holder to the list before add_gendisk and
+then just add them to sysfs once add_disk is called.  But that leads to
+really odd lifetime problems and error handling problems as we can't
+know the state of the kobjects and don't unwind properly.  To fix this
+switch to just registering all existing table_devices with the holder
+code right after add_disk, and remove them before calling del_gendisk.
 
-  xdp_synproxy.c: In function 'parse_options':
-  xdp_synproxy.c:175:36: error: left shift count >= width of type [-Werror=shift-count-overflow]
-    175 |                 *tcpipopts = (mss6 << 32) | (ttl << 24) | (wscale << 16) | mss4;
-        |                                    ^~
-  xdp_synproxy.c: In function 'syncookie_open_bpf_maps':
-  xdp_synproxy.c:289:28: error: cast from pointer to integer of different size [-Werror=pointer-to-int-cast]
-    289 |                 .map_ids = (__u64)map_ids,
-        |                            ^
-
-Fix it.
-
-Fixes: fb5cd0ce70d4 ("selftests/bpf: Add selftests for raw syncookie helpers")
-Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/bpf/20221111030836.37632-1-yangjihong1@huawei.com
+Fixes: 89f871af1b26 ("dm: delay registering the gendisk")
+Reported-by: Yu Kuai <yukuai3@huawei.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lore.kernel.org/r/20221115141054.1051801-7-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/xdp_synproxy.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/md/dm.c | 49 +++++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 39 insertions(+), 10 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/xdp_synproxy.c b/tools/testing/selftests/bpf/xdp_synproxy.c
-index ff35320d2be9..410a1385a01d 100644
---- a/tools/testing/selftests/bpf/xdp_synproxy.c
-+++ b/tools/testing/selftests/bpf/xdp_synproxy.c
-@@ -104,7 +104,8 @@ static void parse_options(int argc, char *argv[], unsigned int *ifindex, __u32 *
- 		{ "tc", no_argument, NULL, 'c' },
- 		{ NULL, 0, NULL, 0 },
- 	};
--	unsigned long mss4, mss6, wscale, ttl;
-+	unsigned long mss4, wscale, ttl;
-+	unsigned long long mss6;
- 	unsigned int tcpipopts_mask = 0;
+diff --git a/drivers/md/dm.c b/drivers/md/dm.c
+index f10ac680cef4..e30c2d2bc9c7 100644
+--- a/drivers/md/dm.c
++++ b/drivers/md/dm.c
+@@ -751,9 +751,16 @@ static struct table_device *open_table_device(struct mapped_device *md,
+ 		goto out_free_td;
+ 	}
  
- 	if (argc < 2)
-@@ -286,7 +287,7 @@ static int syncookie_open_bpf_maps(__u32 prog_id, int *values_map_fd, int *ports
+-	r = bd_link_disk_holder(bdev, dm_disk(md));
+-	if (r)
+-		goto out_blkdev_put;
++	/*
++	 * We can be called before the dm disk is added.  In that case we can't
++	 * register the holder relation here.  It will be done once add_disk was
++	 * called.
++	 */
++	if (md->disk->slave_dir) {
++		r = bd_link_disk_holder(bdev, md->disk);
++		if (r)
++			goto out_blkdev_put;
++	}
  
- 	prog_info = (struct bpf_prog_info) {
- 		.nr_map_ids = 8,
--		.map_ids = (__u64)map_ids,
-+		.map_ids = (__u64)(unsigned long)map_ids,
- 	};
- 	info_len = sizeof(prog_info);
+ 	td->dm_dev.mode = mode;
+ 	td->dm_dev.bdev = bdev;
+@@ -774,7 +781,8 @@ static struct table_device *open_table_device(struct mapped_device *md,
+  */
+ static void close_table_device(struct table_device *td, struct mapped_device *md)
+ {
+-	bd_unlink_disk_holder(td->dm_dev.bdev, dm_disk(md));
++	if (md->disk->slave_dir)
++		bd_unlink_disk_holder(td->dm_dev.bdev, md->disk);
+ 	blkdev_put(td->dm_dev.bdev, td->dm_dev.mode | FMODE_EXCL);
+ 	put_dax(td->dm_dev.dax_dev);
+ 	list_del(&td->list);
+@@ -1964,7 +1972,13 @@ static void cleanup_mapped_device(struct mapped_device *md)
+ 		md->disk->private_data = NULL;
+ 		spin_unlock(&_minor_lock);
+ 		if (dm_get_md_type(md) != DM_TYPE_NONE) {
++			struct table_device *td;
++
+ 			dm_sysfs_exit(md);
++			list_for_each_entry(td, &md->table_devices, list) {
++				bd_unlink_disk_holder(td->dm_dev.bdev,
++						      md->disk);
++			}
  
+ 			/*
+ 			 * Hold lock to make sure del_gendisk() won't concurrent
+@@ -2304,6 +2318,7 @@ int dm_setup_md_queue(struct mapped_device *md, struct dm_table *t)
+ {
+ 	enum dm_queue_mode type = dm_table_get_type(t);
+ 	struct queue_limits limits;
++	struct table_device *td;
+ 	int r;
+ 
+ 	switch (type) {
+@@ -2342,16 +2357,30 @@ int dm_setup_md_queue(struct mapped_device *md, struct dm_table *t)
+ 	if (r)
+ 		return r;
+ 
+-	r = dm_sysfs_init(md);
+-	if (r) {
+-		mutex_lock(&md->table_devices_lock);
+-		del_gendisk(md->disk);
+-		mutex_unlock(&md->table_devices_lock);
+-		return r;
++	/*
++	 * Register the holder relationship for devices added before the disk
++	 * was live.
++	 */
++	list_for_each_entry(td, &md->table_devices, list) {
++		r = bd_link_disk_holder(td->dm_dev.bdev, md->disk);
++		if (r)
++			goto out_undo_holders;
+ 	}
+ 
++	r = dm_sysfs_init(md);
++	if (r)
++		goto out_undo_holders;
++
+ 	md->type = type;
+ 	return 0;
++
++out_undo_holders:
++	list_for_each_entry_continue_reverse(td, &md->table_devices, list)
++		bd_unlink_disk_holder(td->dm_dev.bdev, md->disk);
++	mutex_lock(&md->table_devices_lock);
++	del_gendisk(md->disk);
++	mutex_unlock(&md->table_devices_lock);
++	return r;
+ }
+ 
+ struct mapped_device *dm_get_md(dev_t dev)
 -- 
 2.35.1
 
