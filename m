@@ -1,31 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1C4E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A4C2C433EF;
-	Wed, 28 Dec 2022 15:35:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7553B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F97C433F0;
+	Wed, 28 Dec 2022 15:35:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241708;
-	bh=Z8IlqknPx/sa6wj/y1s6KEd1TUYEWPZi3PG+vRcPg/Y=;
+	s=korg; t=1672241711;
+	bh=dubQICoRUaMZoxPUUNZWHpXkhoid96dHvEkNtoni8vA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gx4q4FQtj9jgIoERsJhPchOIYgBm2ctJ1Az9fxwE6tez8I2sgEwIFGCsPfFeYesf8
-	 Qule+Ls7oQxljIAAYFmVkOMk2jjsR7AA9kfJeVRv2LdvGMVk2qqRGLs0+5szfRs1j5
-	 j320bxFJjAuAN0rLmvB38y03BuRWGG+wdwJctWA8=
+	b=uR/zRPmfzKmIF8IwlhrC+1PYbeufJz11WMtJjfJMQP+x+19nv7Ppj0/yNIR3hFHpv
+	 X0GuqfSnBt2/QG50wG1Qo1jtFbPp9e0t7tZWOG3COt4yo8x7e+1ax3DFSX6l6cf8pR
+	 Soo8yXjj6W0zM4wxG8uzE1r2NKR0B7MCd7otki88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Yonghong Song <yhs@fb.com>,
+	Leo Yan <leo.yan@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	bpf@vger.kernel.org,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0318/1073] selftests/bpf: Fix xdp_synproxy compilation failure in 32-bit arch
-Date: Wed, 28 Dec 2022 15:31:46 +0100
-Message-Id: <20221228144336.646439338@linuxfoundation.org>
+Subject: [PATCH 5.15 514/731] perf trace: Return error if a system call doesnt exist
+Date: Wed, 28 Dec 2022 15:40:21 +0100
+Message-Id: <20221228144311.443765467@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,56 +43,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Jihong <yangjihong1@huawei.com>
+From: Leo Yan <leo.yan@linaro.org>
 
-[ Upstream commit e4c9cf0ce8c413c2030e8fb215551d7e0582ee7b ]
+[ Upstream commit d4223e1776c30b2ce8d0e6eaadcbf696e60fca3c ]
 
-xdp_synproxy fails to be compiled in the 32-bit arch, log is as follows:
+When a system call is not detected, the reason is either because the
+system call ID is out of scope or failure to find the corresponding path
+in the sysfs, trace__read_syscall_info() returns zero.  Finally, without
+returning an error value it introduces confusion for the caller.
 
-  xdp_synproxy.c: In function 'parse_options':
-  xdp_synproxy.c:175:36: error: left shift count >= width of type [-Werror=shift-count-overflow]
-    175 |                 *tcpipopts = (mss6 << 32) | (ttl << 24) | (wscale << 16) | mss4;
-        |                                    ^~
-  xdp_synproxy.c: In function 'syncookie_open_bpf_maps':
-  xdp_synproxy.c:289:28: error: cast from pointer to integer of different size [-Werror=pointer-to-int-cast]
-    289 |                 .map_ids = (__u64)map_ids,
-        |                            ^
+This patch lets the function trace__read_syscall_info() to return
+-EEXIST when a system call doesn't exist.
 
-Fix it.
-
-Fixes: fb5cd0ce70d4 ("selftests/bpf: Add selftests for raw syncookie helpers")
-Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/bpf/20221111030836.37632-1-yangjihong1@huawei.com
+Fixes: b8b1033fcaa091d8 ("perf trace: Mark syscall ids that are not allocated to avoid unnecessary error messages")
+Signed-off-by: Leo Yan <leo.yan@linaro.org>
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: bpf@vger.kernel.org
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20221121075237.127706-3-leo.yan@linaro.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/xdp_synproxy.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/perf/builtin-trace.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/xdp_synproxy.c b/tools/testing/selftests/bpf/xdp_synproxy.c
-index d874ddfb39c4..8432836f3be2 100644
---- a/tools/testing/selftests/bpf/xdp_synproxy.c
-+++ b/tools/testing/selftests/bpf/xdp_synproxy.c
-@@ -104,7 +104,8 @@ static void parse_options(int argc, char *argv[], unsigned int *ifindex, __u32 *
- 		{ "tc", no_argument, NULL, 'c' },
- 		{ NULL, 0, NULL, 0 },
- 	};
--	unsigned long mss4, mss6, wscale, ttl;
-+	unsigned long mss4, wscale, ttl;
-+	unsigned long long mss6;
- 	unsigned int tcpipopts_mask = 0;
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index 2bf21194c7b3..aaa465d7f011 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -1782,11 +1782,11 @@ static int trace__read_syscall_info(struct trace *trace, int id)
+ #endif
+ 	sc = trace->syscalls.table + id;
+ 	if (sc->nonexistent)
+-		return 0;
++		return -EEXIST;
  
- 	if (argc < 2)
-@@ -286,7 +287,7 @@ static int syncookie_open_bpf_maps(__u32 prog_id, int *values_map_fd, int *ports
+ 	if (name == NULL) {
+ 		sc->nonexistent = true;
+-		return 0;
++		return -EEXIST;
+ 	}
  
- 	prog_info = (struct bpf_prog_info) {
- 		.nr_map_ids = 8,
--		.map_ids = (__u64)map_ids,
-+		.map_ids = (__u64)(unsigned long)map_ids,
- 	};
- 	info_len = sizeof(prog_info);
- 
+ 	sc->name = name;
 -- 
 2.35.1
 
