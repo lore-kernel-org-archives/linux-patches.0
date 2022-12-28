@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AD351C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:19:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2153C433D2;
-	Wed, 28 Dec 2022 16:19:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02B61C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:19:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42EB1C433D2;
+	Wed, 28 Dec 2022 16:19:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244355;
-	bh=WLDGT/GW5tGPQh8LPYl0BLk2g65808iGqEqgj9PR3m0=;
+	s=korg; t=1672244357;
+	bh=kHYnQcbDkTQfgJl0KpLUriDVaVrup0eOHrDTsP8DpgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u0ciK3WJJmYHj1QuFHlxWU03Z21gLZRyAXytK0qBKlXSaEBGVKUdhxAm1lbwzgvIB
-	 2U5GL2qVmh7L4JNiD/Bx4WgWofdq8ysWaGeUDqJBaqvgCfeZbSmM1rWMLiz3uNUjEH
-	 Vt7iwEMPkQtLrAeoYLAEhJBXBTnv5HrVR+ZAgfGE=
+	b=f4vbqS09vo3ePZ9z3pLZ/ovQb+mDh+VjyCkBdT+/5FDne0tbgZxtQuO4txv5eIQF/
+	 qX7ooMNu6PnarDnfOz3Gh5Wzd/7FKUM03e7R4LkznDy6anY6knQ8OTngcU+3NhDnMS
+	 eRIP17Z/HcViR3N8gqj8GcLocx89zXw1hbZFjlSk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Dimitri Sivanich <sivanich@hpe.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0696/1073] misc: sgi-gru: fix use-after-free error in gru_set_context_option, gru_fault and gru_handle_user_call_os
-Date: Wed, 28 Dec 2022 15:38:04 +0100
-Message-Id: <20221228144346.935955295@linuxfoundation.org>
+Subject: [PATCH 6.1 0656/1146] scsi: ufs: core: Fix the polling implementation
+Date: Wed, 28 Dec 2022 15:36:35 +0100
+Message-Id: <20221228144347.976904298@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,137 +36,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: Bart Van Assche <bvanassche@acm.org>
 
-[ Upstream commit 643a16a0eb1d6ac23744bb6e90a00fc21148a9dc ]
+[ Upstream commit ee8c88cab4afbd5ee10a127d6cbecd6b200185a5 ]
 
-In some bad situation, the gts may be freed gru_check_chiplet_assignment.
-The call chain can be gru_unload_context->gru_free_gru_context->gts_drop
-and kfree finally. However, the caller didn't know if the gts is freed
-or not and use it afterwards. This will trigger a Use after Free bug.
+Fix the following issues in ufshcd_poll():
 
-Fix it by introducing a return value to see if it's in error path or not.
-Free the gts in caller if gru_check_chiplet_assignment check failed.
+ - If polling succeeds, return a positive value.
 
-Fixes: 55484c45dbec ("gru: allow users to specify gru chiplet 2")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Acked-by: Dimitri Sivanich <sivanich@hpe.com>
-Link: https://lore.kernel.org/r/20221110035033.19498-1-zyytlz.wz@163.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+ - Do not complete polling requests from interrupt context because the
+   block layer expects these requests to be completed from thread
+   context. From block/bio.c:
+
+     If REQ_ALLOC_CACHE is set, the final put of the bio MUST be done from
+     process context, not hard/soft IRQ.
+
+Fixes: eaab9b573054 ("scsi: ufs: Implement polling support")
+Signed-off-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20221118233717.441298-1-bvanassche@acm.org
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/sgi-gru/grufault.c  | 13 +++++++++++--
- drivers/misc/sgi-gru/grumain.c   | 22 ++++++++++++++++++----
- drivers/misc/sgi-gru/grutables.h |  2 +-
- 3 files changed, 30 insertions(+), 7 deletions(-)
+ drivers/ufs/core/ufshcd.c | 28 ++++++++++++++++++++++++++--
+ 1 file changed, 26 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/misc/sgi-gru/grufault.c b/drivers/misc/sgi-gru/grufault.c
-index d7ef61e602ed..b836936e9747 100644
---- a/drivers/misc/sgi-gru/grufault.c
-+++ b/drivers/misc/sgi-gru/grufault.c
-@@ -648,6 +648,7 @@ int gru_handle_user_call_os(unsigned long cb)
- 	if ((cb & (GRU_HANDLE_STRIDE - 1)) || ucbnum >= GRU_NUM_CB)
- 		return -EINVAL;
- 
-+again:
- 	gts = gru_find_lock_gts(cb);
- 	if (!gts)
- 		return -EINVAL;
-@@ -656,7 +657,11 @@ int gru_handle_user_call_os(unsigned long cb)
- 	if (ucbnum >= gts->ts_cbr_au_count * GRU_CBR_AU_SIZE)
- 		goto exit;
- 
--	gru_check_context_placement(gts);
-+	if (gru_check_context_placement(gts)) {
-+		gru_unlock_gts(gts);
-+		gru_unload_context(gts, 1);
-+		goto again;
-+	}
- 
- 	/*
- 	 * CCH may contain stale data if ts_force_cch_reload is set.
-@@ -874,7 +879,11 @@ int gru_set_context_option(unsigned long arg)
- 		} else {
- 			gts->ts_user_blade_id = req.val1;
- 			gts->ts_user_chiplet_id = req.val0;
--			gru_check_context_placement(gts);
-+			if (gru_check_context_placement(gts)) {
-+				gru_unlock_gts(gts);
-+				gru_unload_context(gts, 1);
-+				return ret;
-+			}
- 		}
- 		break;
- 	case sco_gseg_owner:
-diff --git a/drivers/misc/sgi-gru/grumain.c b/drivers/misc/sgi-gru/grumain.c
-index 9afda47efbf2..3a16eb8e03f7 100644
---- a/drivers/misc/sgi-gru/grumain.c
-+++ b/drivers/misc/sgi-gru/grumain.c
-@@ -716,9 +716,10 @@ static int gru_check_chiplet_assignment(struct gru_state *gru,
-  * chiplet. Misassignment can occur if the process migrates to a different
-  * blade or if the user changes the selected blade/chiplet.
-  */
--void gru_check_context_placement(struct gru_thread_state *gts)
-+int gru_check_context_placement(struct gru_thread_state *gts)
- {
- 	struct gru_state *gru;
-+	int ret = 0;
- 
- 	/*
- 	 * If the current task is the context owner, verify that the
-@@ -726,15 +727,23 @@ void gru_check_context_placement(struct gru_thread_state *gts)
- 	 * references. Pthread apps use non-owner references to the CBRs.
- 	 */
- 	gru = gts->ts_gru;
-+	/*
-+	 * If gru or gts->ts_tgid_owner isn't initialized properly, return
-+	 * success to indicate that the caller does not need to unload the
-+	 * gru context.The caller is responsible for their inspection and
-+	 * reinitialization if needed.
-+	 */
- 	if (!gru || gts->ts_tgid_owner != current->tgid)
--		return;
-+		return ret;
- 
- 	if (!gru_check_chiplet_assignment(gru, gts)) {
- 		STAT(check_context_unload);
--		gru_unload_context(gts, 1);
-+		ret = -EINVAL;
- 	} else if (gru_retarget_intr(gts)) {
- 		STAT(check_context_retarget_intr);
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index b1f59a5fe632..5432be4cd0ed 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -5382,6 +5382,26 @@ static void __ufshcd_transfer_req_compl(struct ufs_hba *hba,
  	}
-+
-+	return ret;
  }
  
- 
-@@ -934,7 +943,12 @@ vm_fault_t gru_fault(struct vm_fault *vmf)
- 	mutex_lock(&gts->ts_ctxlock);
- 	preempt_disable();
- 
--	gru_check_context_placement(gts);
-+	if (gru_check_context_placement(gts)) {
-+		preempt_enable();
-+		mutex_unlock(&gts->ts_ctxlock);
-+		gru_unload_context(gts, 1);
-+		return VM_FAULT_NOPAGE;
++/* Any value that is not an existing queue number is fine for this constant. */
++enum {
++	UFSHCD_POLL_FROM_INTERRUPT_CONTEXT = -1
++};
++
++static void ufshcd_clear_polled(struct ufs_hba *hba,
++				unsigned long *completed_reqs)
++{
++	int tag;
++
++	for_each_set_bit(tag, completed_reqs, hba->nutrs) {
++		struct scsi_cmnd *cmd = hba->lrb[tag].cmd;
++
++		if (!cmd)
++			continue;
++		if (scsi_cmd_to_rq(cmd)->cmd_flags & REQ_POLLED)
++			__clear_bit(tag, completed_reqs);
 +	}
++}
++
+ /*
+  * Returns > 0 if one or more commands have been completed or 0 if no
+  * requests have been completed.
+@@ -5398,13 +5418,17 @@ static int ufshcd_poll(struct Scsi_Host *shost, unsigned int queue_num)
+ 	WARN_ONCE(completed_reqs & ~hba->outstanding_reqs,
+ 		  "completed: %#lx; outstanding: %#lx\n", completed_reqs,
+ 		  hba->outstanding_reqs);
++	if (queue_num == UFSHCD_POLL_FROM_INTERRUPT_CONTEXT) {
++		/* Do not complete polled requests from interrupt context. */
++		ufshcd_clear_polled(hba, &completed_reqs);
++	}
+ 	hba->outstanding_reqs &= ~completed_reqs;
+ 	spin_unlock_irqrestore(&hba->outstanding_lock, flags);
  
- 	if (!gts->ts_gru) {
- 		STAT(load_user_context);
-diff --git a/drivers/misc/sgi-gru/grutables.h b/drivers/misc/sgi-gru/grutables.h
-index 5efc869fe59a..f4a5a787685f 100644
---- a/drivers/misc/sgi-gru/grutables.h
-+++ b/drivers/misc/sgi-gru/grutables.h
-@@ -632,7 +632,7 @@ extern int gru_user_flush_tlb(unsigned long arg);
- extern int gru_user_unload_context(unsigned long arg);
- extern int gru_get_exception_detail(unsigned long arg);
- extern int gru_set_context_option(unsigned long address);
--extern void gru_check_context_placement(struct gru_thread_state *gts);
-+extern int gru_check_context_placement(struct gru_thread_state *gts);
- extern int gru_cpu_fault_map_id(void);
- extern struct vm_area_struct *gru_find_vma(unsigned long vaddr);
- extern void gru_flush_all_tlb(struct gru_state *gru);
+ 	if (completed_reqs)
+ 		__ufshcd_transfer_req_compl(hba, completed_reqs);
+ 
+-	return completed_reqs;
++	return completed_reqs != 0;
+ }
+ 
+ /**
+@@ -5435,7 +5459,7 @@ static irqreturn_t ufshcd_transfer_req_compl(struct ufs_hba *hba)
+ 	 * Ignore the ufshcd_poll() return value and return IRQ_HANDLED since we
+ 	 * do not want polling to trigger spurious interrupt complaints.
+ 	 */
+-	ufshcd_poll(hba->host, 0);
++	ufshcd_poll(hba->host, UFSHCD_POLL_FROM_INTERRUPT_CONTEXT);
+ 
+ 	return IRQ_HANDLED;
+ }
 -- 
 2.35.1
 
