@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E56A61C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6569AC433D2;
-	Wed, 28 Dec 2022 16:41:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939811C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E2BC433D2;
+	Wed, 28 Dec 2022 16:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245717;
-	bh=h6N02KAVLUDk1BoL5HBbL376NjpfHaFl2lI5YviZGbI=;
+	s=korg; t=1672245720;
+	bh=5xvXsTOLzHlAJIewX3mcwQxGPCuRzuNZW0UpJ8JmGrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RgGVqgwFPrU3UGH+U5tDyecfc28avVoDGs656Y+Sa+hAtFixOH2BCGytfMX1Z9dl/
-	 c7MS7JrYZtpnkYBQRWE/GDRJCgPIhxgnZsP1hRB9WoL5OZ7emiI2acgVqc7WTUJvMl
-	 vdAwDwN4YWwflUSxKM5M7Bc1qYzc/pUWCCBK2xQE=
+	b=P5pdFOk+8HoO+RO+GvuhKc7kmtjERLvBsn3ji2bjGIP+Xibabb/FngxaGMDYTXd6H
+	 FcUpRZq4QNP2CGvsgWpnluuvZA2CI8G5k4oLc2jWALfYQH2xt4E2Ll1Xx4rqiYRNPb
+	 zq/HFsWdcGsHE9QY+O0yK9yxvgvpSKB9qMujnBlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	syzbot+f635e86ec3fa0a37e019@syzkaller.appspotmail.com,
-	Stanislav Fomichev <sdf@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Jiang Li <jiang.li@ugreen.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0925/1073] bpf: make sure skb->len != 0 when redirecting to a tunneling device
-Date: Wed, 28 Dec 2022 15:41:53 +0100
-Message-Id: <20221228144353.152665553@linuxfoundation.org>
+Subject: [PATCH 6.0 0943/1073] md/raid1: stop mdx_raid1 thread when raid1 array run failed
+Date: Wed, 28 Dec 2022 15:42:11 +0100
+Message-Id: <20221228144353.652140913@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -38,71 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanislav Fomichev <sdf@google.com>
+From: Jiang Li <jiang.li@ugreen.com>
 
-[ Upstream commit 07ec7b502800ba9f7b8b15cb01dd6556bb41aaca ]
+[ Upstream commit b611ad14006e5be2170d9e8e611bf49dff288911 ]
 
-syzkaller managed to trigger another case where skb->len == 0
-when we enter __dev_queue_xmit:
+fail run raid1 array when we assemble array with the inactive disk only,
+but the mdx_raid1 thread were not stop, Even if the associated resources
+have been released. it will caused a NULL dereference when we do poweroff.
 
-WARNING: CPU: 0 PID: 2470 at include/linux/skbuff.h:2576 skb_assert_len include/linux/skbuff.h:2576 [inline]
-WARNING: CPU: 0 PID: 2470 at include/linux/skbuff.h:2576 __dev_queue_xmit+0x2069/0x35e0 net/core/dev.c:4295
+This causes the following Oops:
+    [  287.587787] BUG: kernel NULL pointer dereference, address: 0000000000000070
+    [  287.594762] #PF: supervisor read access in kernel mode
+    [  287.599912] #PF: error_code(0x0000) - not-present page
+    [  287.605061] PGD 0 P4D 0
+    [  287.607612] Oops: 0000 [#1] SMP NOPTI
+    [  287.611287] CPU: 3 PID: 5265 Comm: md0_raid1 Tainted: G     U            5.10.146 #0
+    [  287.619029] Hardware name: xxxxxxx/To be filled by O.E.M, BIOS 5.19 06/16/2022
+    [  287.626775] RIP: 0010:md_check_recovery+0x57/0x500 [md_mod]
+    [  287.632357] Code: fe 01 00 00 48 83 bb 10 03 00 00 00 74 08 48 89 ......
+    [  287.651118] RSP: 0018:ffffc90000433d78 EFLAGS: 00010202
+    [  287.656347] RAX: 0000000000000000 RBX: ffff888105986800 RCX: 0000000000000000
+    [  287.663491] RDX: ffffc90000433bb0 RSI: 00000000ffffefff RDI: ffff888105986800
+    [  287.670634] RBP: ffffc90000433da0 R08: 0000000000000000 R09: c0000000ffffefff
+    [  287.677771] R10: 0000000000000001 R11: ffffc90000433ba8 R12: ffff888105986800
+    [  287.684907] R13: 0000000000000000 R14: fffffffffffffe00 R15: ffff888100b6b500
+    [  287.692052] FS:  0000000000000000(0000) GS:ffff888277f80000(0000) knlGS:0000000000000000
+    [  287.700149] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+    [  287.705897] CR2: 0000000000000070 CR3: 000000000320a000 CR4: 0000000000350ee0
+    [  287.713033] Call Trace:
+    [  287.715498]  raid1d+0x6c/0xbbb [raid1]
+    [  287.719256]  ? __schedule+0x1ff/0x760
+    [  287.722930]  ? schedule+0x3b/0xb0
+    [  287.726260]  ? schedule_timeout+0x1ed/0x290
+    [  287.730456]  ? __switch_to+0x11f/0x400
+    [  287.734219]  md_thread+0xe9/0x140 [md_mod]
+    [  287.738328]  ? md_thread+0xe9/0x140 [md_mod]
+    [  287.742601]  ? wait_woken+0x80/0x80
+    [  287.746097]  ? md_register_thread+0xe0/0xe0 [md_mod]
+    [  287.751064]  kthread+0x11a/0x140
+    [  287.754300]  ? kthread_park+0x90/0x90
+    [  287.757974]  ret_from_fork+0x1f/0x30
 
-Call Trace:
- dev_queue_xmit+0x17/0x20 net/core/dev.c:4406
- __bpf_tx_skb net/core/filter.c:2115 [inline]
- __bpf_redirect_no_mac net/core/filter.c:2140 [inline]
- __bpf_redirect+0x5fb/0xda0 net/core/filter.c:2163
- ____bpf_clone_redirect net/core/filter.c:2447 [inline]
- bpf_clone_redirect+0x247/0x390 net/core/filter.c:2419
- bpf_prog_48159a89cb4a9a16+0x59/0x5e
- bpf_dispatcher_nop_func include/linux/bpf.h:897 [inline]
- __bpf_prog_run include/linux/filter.h:596 [inline]
- bpf_prog_run include/linux/filter.h:603 [inline]
- bpf_test_run+0x46c/0x890 net/bpf/test_run.c:402
- bpf_prog_test_run_skb+0xbdc/0x14c0 net/bpf/test_run.c:1170
- bpf_prog_test_run+0x345/0x3c0 kernel/bpf/syscall.c:3648
- __sys_bpf+0x43a/0x6c0 kernel/bpf/syscall.c:5005
- __do_sys_bpf kernel/bpf/syscall.c:5091 [inline]
- __se_sys_bpf kernel/bpf/syscall.c:5089 [inline]
- __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:5089
- do_syscall_64+0x54/0x70 arch/x86/entry/common.c:48
- entry_SYSCALL_64_after_hwframe+0x61/0xc6
+In fact, when raid1 array run fail, we need to do
+md_unregister_thread() before raid1_free().
 
-The reproducer doesn't really reproduce outside of syzkaller
-environment, so I'm taking a guess here. It looks like we
-do generate correct ETH_HLEN-sized packet, but we redirect
-the packet to the tunneling device. Before we do so, we
-__skb_pull l2 header and arrive again at skb->len == 0.
-Doesn't seem like we can do anything better than having
-an explicit check after __skb_pull?
-
-Cc: Eric Dumazet <edumazet@google.com>
-Reported-by: syzbot+f635e86ec3fa0a37e019@syzkaller.appspotmail.com
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
-Link: https://lore.kernel.org/r/20221027225537.353077-1-sdf@google.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Jiang Li <jiang.li@ugreen.com>
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/md/raid1.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 5ac3ecc2edb8..3aae1885b970 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2130,6 +2130,10 @@ static int __bpf_redirect_no_mac(struct sk_buff *skb, struct net_device *dev,
- 
- 	if (mlen) {
- 		__skb_pull(skb, mlen);
-+		if (unlikely(!skb->len)) {
-+			kfree_skb(skb);
-+			return -ERANGE;
-+		}
- 
- 		/* At ingress, the mac header has already been pulled once.
- 		 * At egress, skb_pospull_rcsum has to be done in case that
+diff --git a/drivers/md/raid1.c b/drivers/md/raid1.c
+index 05d8438cfec8..58f705f42948 100644
+--- a/drivers/md/raid1.c
++++ b/drivers/md/raid1.c
+@@ -3159,6 +3159,7 @@ static int raid1_run(struct mddev *mddev)
+ 	 * RAID1 needs at least one disk in active
+ 	 */
+ 	if (conf->raid_disks - mddev->degraded < 1) {
++		md_unregister_thread(&conf->thread);
+ 		ret = -EINVAL;
+ 		goto abort;
+ 	}
 -- 
 2.35.1
 
