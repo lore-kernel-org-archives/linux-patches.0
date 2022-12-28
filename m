@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A89091C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26CF9C433D2;
-	Wed, 28 Dec 2022 16:42:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E711C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB26C433D2;
+	Wed, 28 Dec 2022 16:42:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245764;
-	bh=hWWyl7jUQijlVAmDgfQH9uGQhvU0smuLPmuN63nxNYA=;
+	s=korg; t=1672245767;
+	bh=JQkNrYxNccafkooCq8unRqC3PodZ5psPvaDCz7dH4FA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SRsCsVMM3lJG92y5P9Q2+vgz6vG39RK0ry2yXok2xTVh4Jg+aHRo+WQZnlh9VprdO
-	 kaVPrg9DWf/bZlpltNJ6F58VPjqr7BiDu1XNKCmShR13hU+WUPTW0aO9f4OdPieZAl
-	 ue+vNadIoGqa62iC1+gUZwy01l514ZiZ2dQXBZD8=
+	b=rLAMsE9Pj5jsA91W/0+TcwD5HQ7LIZkFMvzGmoOCr/i+Bio/ObYEcF7khPZ1cdM0s
+	 EOIspfqt7DO3ZYhOF4qeOhrvtER99S6XpwsOiNgA7KlZ6F2MjLghXyXIgg3N+rWuUl
+	 jNYbFKZw3CRbh6cxYbECckdU2TsDpPwk2lUNxps4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jakub Kicinski <kuba@kernel.org>,
+	Paul Mackerras <paulus@samba.org>,
+	linux-ppp@vger.kernel.org,
+	syzbot+41cab52ab62ee99ed24a@syzkaller.appspotmail.com,
+	Stanislav Fomichev <sdf@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0918/1146] selftests: devlink: fix the fd redirect in dummy_reporter_test
-Date: Wed, 28 Dec 2022 15:40:57 +0100
-Message-Id: <20221228144355.187505470@linuxfoundation.org>
+Subject: [PATCH 6.0 0951/1073] ppp: associate skb with a device at tx
+Date: Wed, 28 Dec 2022 15:42:19 +0100
+Message-Id: <20221228144353.865454701@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,43 +38,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Stanislav Fomichev <sdf@google.com>
 
-[ Upstream commit 2fc60e2ff972d3dca836bff0b08cbe503c4ca1ce ]
+[ Upstream commit 9f225444467b98579cf28d94f4ad053460dfdb84 ]
 
-$number + > bash means redirect FD $number, e.g. commonly
-used 2> redirects stderr (fd 2). The test uses 8192> to
-write the number 8192 to a file, this results in:
+Syzkaller triggered flow dissector warning with the following:
 
-  ./devlink.sh: line 499: 8192: Bad file descriptor
+r0 = openat$ppp(0xffffffffffffff9c, &(0x7f0000000000), 0xc0802, 0x0)
+ioctl$PPPIOCNEWUNIT(r0, 0xc004743e, &(0x7f00000000c0))
+ioctl$PPPIOCSACTIVE(r0, 0x40107446, &(0x7f0000000240)={0x2, &(0x7f0000000180)=[{0x20, 0x0, 0x0, 0xfffff034}, {0x6}]})
+pwritev(r0, &(0x7f0000000040)=[{&(0x7f0000000140)='\x00!', 0x2}], 0x1, 0x0, 0x0)
 
-Oddly the test also papers over this issue by checking
-for failure (expecting an error rather than success)
-so it passes, anyway.
+[    9.485814] WARNING: CPU: 3 PID: 329 at net/core/flow_dissector.c:1016 __skb_flow_dissect+0x1ee0/0x1fa0
+[    9.485929]  skb_get_poff+0x53/0xa0
+[    9.485937]  bpf_skb_get_pay_offset+0xe/0x20
+[    9.485944]  ? ppp_send_frame+0xc2/0x5b0
+[    9.485949]  ? _raw_spin_unlock_irqrestore+0x40/0x60
+[    9.485958]  ? __ppp_xmit_process+0x7a/0xe0
+[    9.485968]  ? ppp_xmit_process+0x5b/0xb0
+[    9.485974]  ? ppp_write+0x12a/0x190
+[    9.485981]  ? do_iter_write+0x18e/0x2d0
+[    9.485987]  ? __import_iovec+0x30/0x130
+[    9.485997]  ? do_pwritev+0x1b6/0x240
+[    9.486016]  ? trace_hardirqs_on+0x47/0x50
+[    9.486023]  ? __x64_sys_pwritev+0x24/0x30
+[    9.486026]  ? do_syscall_64+0x3d/0x80
+[    9.486031]  ? entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fixes: ff18176ad806 ("selftests: Add a test of large binary to devlink health test")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Flow dissector tries to find skb net namespace either via device
+or via socket. Neigher is set in ppp_send_frame, so let's manually
+use ppp->dev.
+
+Cc: Paul Mackerras <paulus@samba.org>
+Cc: linux-ppp@vger.kernel.org
+Reported-by: syzbot+41cab52ab62ee99ed24a@syzkaller.appspotmail.com
+Signed-off-by: Stanislav Fomichev <sdf@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/drivers/net/netdevsim/devlink.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ppp/ppp_generic.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/drivers/net/netdevsim/devlink.sh b/tools/testing/selftests/drivers/net/netdevsim/devlink.sh
-index 9de1d123f4f5..a08c02abde12 100755
---- a/tools/testing/selftests/drivers/net/netdevsim/devlink.sh
-+++ b/tools/testing/selftests/drivers/net/netdevsim/devlink.sh
-@@ -496,8 +496,8 @@ dummy_reporter_test()
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index 9206c660a72e..d4c821c8cf57 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -1743,6 +1743,8 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
+ 	int len;
+ 	unsigned char *cp;
  
- 	check_reporter_info dummy healthy 3 3 10 true
- 
--	echo 8192> $DEBUGFS_DIR/health/binary_len
--	check_fail $? "Failed set dummy reporter binary len to 8192"
-+	echo 8192 > $DEBUGFS_DIR/health/binary_len
-+	check_err $? "Failed set dummy reporter binary len to 8192"
- 
- 	local dump=$(devlink health dump show $DL_HANDLE reporter dummy -j)
- 	check_err $? "Failed show dump of dummy reporter"
++	skb->dev = ppp->dev;
++
+ 	if (proto < 0x8000) {
+ #ifdef CONFIG_PPP_FILTER
+ 		/* check if we should pass this packet */
 -- 
 2.35.1
 
