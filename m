@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 580AB1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC760C433D2;
-	Wed, 28 Dec 2022 15:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C42F1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:57:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5534C433D2;
+	Wed, 28 Dec 2022 15:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243072;
-	bh=qjiTGWOS3os2I4xTFQgzFxJQ+oNP6o6VhnguMNaazcs=;
+	s=korg; t=1672243075;
+	bh=jA5Lh04MvNxyrxnmTEl1cwIoiZqzyvMPI9M/23RBUKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZjDwQeoWneBw/CcgRn7VGUBqHxjV2D3f0TEc/P56PetTqV3kuzWxhdEzEVwGx2RUk
-	 1AIo7fX1CyiCFw9JruWGd0QSb2NrJ9P2LkcgdS3Fg90Ig9G2jIBRvuwqx32OTMtBwv
-	 lO83R9xSUvphxH9OyiRz7wSDZAZBrrcUnutD2J/w=
+	b=r0E0WpKyRr4zYMqKmN3wVs+6XYGdgqY+2K3RFUdnCkh5BJ2/EJWcpXTWRt0/i9Fh9
+	 BCNBbnyJgYoT982Jg2Ixk7l1nTvCcJ6JONAwmTVi8f/d6kSoYrIVKw1jFQjuaY9GTC
+	 TLmb47gJghs3kQRsN9Vt2a3jHyVoQc5ggW4DgIAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Gabriel Somlo <gsomlo@gmail.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0481/1073] mmc: pxamci: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:34:29 +0100
-Message-Id: <20221228144341.102537713@linuxfoundation.org>
+Subject: [PATCH 6.0 0487/1073] mmc: litex_mmc: ensure `host->irq == 0` if polling
+Date: Wed, 28 Dec 2022 15:34:35 +0100
+Message-Id: <20221228144341.264206021@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,43 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Gabriel Somlo <gsomlo@gmail.com>
 
-[ Upstream commit 80e1ef3afb8bfbe768380b70ffe1b6cab87d1a3b ]
+[ Upstream commit 5c1a2b77cd1b59112cf22b3e338f7e416797ad32 ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+Ensure the flag is explicitly set to 0 if we determine that polling is
+needed during driver probe, to cover all possible cases.
 
-So fix this by checking the return value and goto error path which will call
-mmc_free_host(), besides, ->exit() need be called to uninit the pdata.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-5-yangyingliang@huawei.com
+Fixes: 92e099104729 ("mmc: Add driver for LiteX's LiteSDCard interface")
+Signed-off-by: Gabriel Somlo <gsomlo@gmail.com>
+Link: https://lore.kernel.org/r/20221107155516.2535912-1-gsomlo@gmail.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/pxamci.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/mmc/host/litex_mmc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mmc/host/pxamci.c b/drivers/mmc/host/pxamci.c
-index e4003f6058eb..2a988f942b6c 100644
---- a/drivers/mmc/host/pxamci.c
-+++ b/drivers/mmc/host/pxamci.c
-@@ -763,7 +763,12 @@ static int pxamci_probe(struct platform_device *pdev)
- 			dev_warn(dev, "gpio_ro and get_ro() both defined\n");
- 	}
+diff --git a/drivers/mmc/host/litex_mmc.c b/drivers/mmc/host/litex_mmc.c
+index 6ba0d63b8c07..39c6707fdfdb 100644
+--- a/drivers/mmc/host/litex_mmc.c
++++ b/drivers/mmc/host/litex_mmc.c
+@@ -502,6 +502,7 @@ static int litex_mmc_irq_init(struct platform_device *pdev,
  
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret) {
-+		if (host->pdata && host->pdata->exit)
-+			host->pdata->exit(dev, mmc);
-+		goto out;
-+	}
- 
+ use_polling:
+ 	host->mmc->caps |= MMC_CAP_NEEDS_POLL;
++	host->irq = 0;
  	return 0;
+ }
  
 -- 
 2.35.1
