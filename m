@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFDB1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 619F9C433F0;
-	Wed, 28 Dec 2022 16:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273CF1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A841C433EF;
+	Wed, 28 Dec 2022 16:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244865;
-	bh=9x8K+ZDgF+rIxwLRPezL21+j8zdaxC1xR6bRxeweS7A=;
+	s=korg; t=1672244869;
+	bh=6DWDjo+onS9Kmg/vNF6YJAbCDqtveaJBwccFfAlaeYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nzlwAho5HcDhxOJ80+UJBBAHxbNVDv/c+XiwKpC8j42961UiaCCYG8SIjs/YGqlSu
-	 gMPkfLJhytONNaD3KC2XqdNlqleisywh0vglTgwtmts6BWvFSPw22r/BvaRVvmabrO
-	 PfzPGmY0HwQtRYGj8ANLB2KLiYm2Ho19nlUqjpJg=
+	b=PUcItqWhttqiShn143BoCuwqMOEHQiqSmPcsegrfNZawDyFcvI3kA7nXRBR7CWl8m
+	 KSuU9Wh7wXGlsqdo0btRBfRLUEDe8e7VroFRF+fbZ6S9sUt07JbStJb81zvJsi75g9
+	 kABX/UUorrRCrvJgTVspZ7aBsjylQZDXwWGxlkyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0786/1073] rtc: cmos: Call rtc_wake_setup() from cmos_do_probe()
-Date: Wed, 28 Dec 2022 15:39:34 +0100
-Message-Id: <20221228144349.361492529@linuxfoundation.org>
+Subject: [PATCH 6.1 0753/1146] thermal/drivers/qcom/lmh: Fix irq handler return value
+Date: Wed, 28 Dec 2022 15:38:12 +0100
+Message-Id: <20221228144350.597440618@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,101 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-[ Upstream commit 375bbba09692fe4c5218eddee8e312dd733fa846 ]
+[ Upstream commit 46a891e45be97c6781ac34f5ec777d69370e252b ]
 
-To reduce code duplication, move the invocation of rtc_wake_setup()
-into cmos_do_probe() and simplify the callers of the latter.
+After enough invocations the LMh irq is eventually reported as bad, because the
+handler doesn't return IRQ_HANDLED, fix this.
 
-No intentional functional impact.
-
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Zhang Rui <rui.zhang@intel.com>
-Tested-by: Zhang Rui <rui.zhang@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/2143522.irdbgypaU6@kreacher
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
+Fixes: 53bca371cdf7 ("thermal/drivers/qcom: Add support for LMh driver")
+Reported-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20220316180322.88132-1-bjorn.andersson@linaro.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 28 ++++++++++++----------------
- 1 file changed, 12 insertions(+), 16 deletions(-)
+ drivers/thermal/qcom/lmh.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index a84262265d6d..583116994a37 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -744,6 +744,7 @@ static irqreturn_t cmos_interrupt(int irq, void *p)
- 		return IRQ_NONE;
- }
+diff --git a/drivers/thermal/qcom/lmh.c b/drivers/thermal/qcom/lmh.c
+index d3d9b9fa49e8..4122a51e9874 100644
+--- a/drivers/thermal/qcom/lmh.c
++++ b/drivers/thermal/qcom/lmh.c
+@@ -45,7 +45,7 @@ static irqreturn_t lmh_handle_irq(int hw_irq, void *data)
+ 	if (irq)
+ 		generic_handle_irq(irq);
  
-+static inline void rtc_wake_setup(struct device *dev);
- static void cmos_wake_setup(struct device *dev);
- 
- #ifdef	CONFIG_PNP
-@@ -938,6 +939,13 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
- 	nvmem_cfg.size = address_space - NVRAM_OFFSET;
- 	devm_rtc_nvmem_register(cmos_rtc.rtc, &nvmem_cfg);
- 
-+	/*
-+	 * Everything has gone well so far, so by default register a handler for
-+	 * the ACPI RTC fixed event.
-+	 */
-+	if (!info)
-+		rtc_wake_setup(dev);
-+
- 	dev_info(dev, "%s%s, %d bytes nvram%s\n",
- 		 !is_valid_irq(rtc_irq) ? "no alarms" :
- 		 cmos_rtc.mon_alrm ? "alarms up to one year" :
-@@ -1357,7 +1365,7 @@ static void rtc_wake_setup(struct device *dev)
- 
- static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
- {
--	int irq, ret;
-+	int irq;
- 
- 	if (pnp_port_start(pnp, 0) == 0x70 && !pnp_irq_valid(pnp, 0)) {
- 		irq = 0;
-@@ -1373,13 +1381,7 @@ static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
- 		irq = pnp_irq(pnp, 0);
- 	}
- 
--	ret = cmos_do_probe(&pnp->dev, pnp_get_resource(pnp, IORESOURCE_IO, 0), irq);
--	if (ret)
--		return ret;
--
--	rtc_wake_setup(&pnp->dev);
--
 -	return 0;
-+	return cmos_do_probe(&pnp->dev, pnp_get_resource(pnp, IORESOURCE_IO, 0), irq);
++	return IRQ_HANDLED;
  }
  
- static void cmos_pnp_remove(struct pnp_dev *pnp)
-@@ -1463,7 +1465,7 @@ static inline void cmos_of_init(struct platform_device *pdev) {}
- static int __init cmos_platform_probe(struct platform_device *pdev)
- {
- 	struct resource *resource;
--	int irq, ret;
-+	int irq;
- 
- 	cmos_of_init(pdev);
- 
-@@ -1475,13 +1477,7 @@ static int __init cmos_platform_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		irq = -1;
- 
--	ret = cmos_do_probe(&pdev->dev, resource, irq);
--	if (ret)
--		return ret;
--
--	rtc_wake_setup(&pdev->dev);
--
--	return 0;
-+	return cmos_do_probe(&pdev->dev, resource, irq);
- }
- 
- static int cmos_platform_remove(struct platform_device *pdev)
+ static void lmh_enable_interrupt(struct irq_data *d)
 -- 
 2.35.1
 
