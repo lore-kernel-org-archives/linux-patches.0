@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 388271C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:16:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B19A8C433F0;
-	Wed, 28 Dec 2022 16:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF5C91C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:16:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56373C433D2;
+	Wed, 28 Dec 2022 16:16:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244203;
-	bh=NUaF6/Ic8zSpYed2waLkMzHSDkpF78etaq6nDNjK23o=;
+	s=korg; t=1672244205;
+	bh=K0YOuC+M8aF8XcBEKcJIg0z82Uzjl1kl0ANjhO5Ouyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WR/tZRuCZFLH7F+ea/wC9u0Z8yioLkQHuMNQwMAHOydB9es3p9qSaDA7z6PuKpNBJ
-	 0AZ18ee1jjalXkjcfEXM+BdF7PsLhwIiyNpDWeeVamue/dC//p+w0tCP96bjLR+Qui
-	 am+vjxArMR4ikGlEDVaTdVF/WR0tmfI5mUP2ZjVs=
+	b=DrkKB9h8gFNDokL4p+6PfQpycraW4JQB5kivezDp55Yd2oNoFXqsWwypwEs2MKQT7
+	 zuQzf0gBwl/NFeW0YQKW9a4zCqLDa0Xs9RZMI0wBiOfrlyIFqAheyO1/29J/VJfznK
+	 N76VO9rXyBm76E2PXxAh1OP75A2ADlNeEVAlPtRA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Mendonca <rafaelmendsr@gmail.com>,
-	Eric Auger <eric.auger@redhat.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
+	Lorenzo Pieralisi <lpieralisi@kernel.org>,
+	Rob Herring <robh@kernel.org>,
+	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0668/1073] vfio: platform: Do not pass return buffer to ACPI _RST method
-Date: Wed, 28 Dec 2022 15:37:36 +0100
-Message-Id: <20221228144346.186014289@linuxfoundation.org>
+Subject: [PATCH 6.1 0629/1146] dt-bindings: visconti-pcie: Fix interrupts array max constraints
+Date: Wed, 28 Dec 2022 15:36:08 +0100
+Message-Id: <20221228144347.253845277@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,41 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael Mendonca <rafaelmendsr@gmail.com>
+From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 
-[ Upstream commit e67e070632a665c932d534b8b800477bb3111449 ]
+[ Upstream commit 4cf4b9b70ab2785461190c08a3542d2d74c28b46 ]
 
-The ACPI _RST method has no return value, there's no need to pass a return
-buffer to acpi_evaluate_object().
+In accordance with the way the device DT-node is actually defined in
+arch/arm64/boot/dts/toshiba/tmpv7708.dtsi and the way the device is probed
+by the DW PCIe driver there are two IRQs it actually has. It's MSI IRQ the
+DT-bindings lack. Let's extend the interrupts property constraints then
+and fix the schema example so one would be acceptable by the actual device
+DT-bindings.
 
-Fixes: d30daa33ec1d ("vfio: platform: call _RST method when using ACPI")
-Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Link: https://lore.kernel.org/r/20221018152825.891032-1-rafaelmendsr@gmail.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Link: https://lore.kernel.org/r/20221113191301.5526-3-Sergey.Semin@baikalelectronics.ru
+Fixes: 17c1b16340f0 ("dt-bindings: pci: Add DT binding for Toshiba Visconti PCIe controller")
+Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
+Acked-by: Rob Herring <robh@kernel.org>
+Acked-by: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/platform/vfio_platform_common.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ .../devicetree/bindings/pci/toshiba,visconti-pcie.yaml     | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/vfio/platform/vfio_platform_common.c b/drivers/vfio/platform/vfio_platform_common.c
-index 256f55b84e70..a8d374205a0e 100644
---- a/drivers/vfio/platform/vfio_platform_common.c
-+++ b/drivers/vfio/platform/vfio_platform_common.c
-@@ -72,12 +72,11 @@ static int vfio_platform_acpi_call_reset(struct vfio_platform_device *vdev,
- 				  const char **extra_dbg)
- {
- #ifdef CONFIG_ACPI
--	struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
- 	struct device *dev = vdev->device;
- 	acpi_handle handle = ACPI_HANDLE(dev);
- 	acpi_status acpi_ret;
+diff --git a/Documentation/devicetree/bindings/pci/toshiba,visconti-pcie.yaml b/Documentation/devicetree/bindings/pci/toshiba,visconti-pcie.yaml
+index 48ed227fc5b9..53da2edd7c9a 100644
+--- a/Documentation/devicetree/bindings/pci/toshiba,visconti-pcie.yaml
++++ b/Documentation/devicetree/bindings/pci/toshiba,visconti-pcie.yaml
+@@ -36,7 +36,7 @@ properties:
+       - const: mpu
  
--	acpi_ret = acpi_evaluate_object(handle, "_RST", NULL, &buffer);
-+	acpi_ret = acpi_evaluate_object(handle, "_RST", NULL, NULL);
- 	if (ACPI_FAILURE(acpi_ret)) {
- 		if (extra_dbg)
- 			*extra_dbg = acpi_format_exception(acpi_ret);
+   interrupts:
+-    maxItems: 1
++    maxItems: 2
+ 
+   clocks:
+     items:
+@@ -94,8 +94,9 @@ examples:
+             #interrupt-cells = <1>;
+             ranges = <0x81000000 0 0x40000000 0 0x40000000 0 0x00010000>,
+                      <0x82000000 0 0x50000000 0 0x50000000 0 0x20000000>;
+-            interrupts = <GIC_SPI 215 IRQ_TYPE_LEVEL_HIGH>;
+-            interrupt-names = "intr";
++            interrupts = <GIC_SPI 211 IRQ_TYPE_LEVEL_HIGH>,
++                         <GIC_SPI 215 IRQ_TYPE_LEVEL_HIGH>;
++            interrupt-names = "msi", "intr";
+             interrupt-map-mask = <0 0 0 7>;
+             interrupt-map =
+                 <0 0 0 1 &gic GIC_SPI 215 IRQ_TYPE_LEVEL_HIGH
 -- 
 2.35.1
 
