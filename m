@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D8C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26180C433D2;
-	Wed, 28 Dec 2022 15:10:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FE71863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4CD0C433EF;
+	Wed, 28 Dec 2022 15:10:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240205;
-	bh=PEzqnv/g0IwVl556ORdc3h+lNfyt/OGUZ7XwCHfcnzw=;
+	s=korg; t=1672240208;
+	bh=51Rqx1WPVXnS+wf9KH1RZOfJkMtQvR2Y9Ss86ZSmUQk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PfCNkodw8BH1/fomRFGVUw8ALrPIRmOcNodPtOS4gwYDaTjvIHnRrlbVZNlK/M+a0
-	 +c3E5wDAbETnUkx7TfP5FKDatB8MSrkmR+zNzR3efgO/7QzpVaE/gyv/VvYSIEg5Oi
-	 VPH1TcEyqAlYMs4qPgrQdEzkPF6H+TApTXfgRMuI=
+	b=TtGsyde8UG2V97cM/UdVWMVPEGX72kYCCMXIIC2tG/dSPwHnVDYc6MSqaqxS8GI/q
+	 dEXxB56MzuYUfrDw7AvqLReG6ff4EZLncpBNne9QwS3x5M6AJ7I1nOvGLPFj2JWAu+
+	 kVscDqoV7Bj/aqFzBerXNY4bbtJztt8vSqgz+0Q8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ab17848fe269b573eb71@syzkaller.appspotmail.com,
-	Ayushman Dutta <ayudutta@amazon.com>,
-	Kees Cook <keescook@chromium.org>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Yongqiang Liu <liuyongqiang13@huawei.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0095/1146] seccomp: Move copy_seccomp() to no failure path.
-Date: Wed, 28 Dec 2022 15:27:14 +0100
-Message-Id: <20221228144332.722897904@linuxfoundation.org>
+Subject: [PATCH 5.15 323/731] net: defxx: Fix missing err handling in dfx_init()
+Date: Wed, 28 Dec 2022 15:37:10 +0100
+Message-Id: <20221228144305.936334100@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,177 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Yongqiang Liu <liuyongqiang13@huawei.com>
 
-[ Upstream commit a1140cb215fa13dcec06d12ba0c3ee105633b7c4 ]
+[ Upstream commit ae18dcdff0f8d7e84cd3fd9f496518b5e72d185d ]
 
-Our syzbot instance reported memory leaks in do_seccomp() [0], similar
-to the report [1].  It shows that we miss freeing struct seccomp_filter
-and some objects included in it.
+When eisa_driver_register() or tc_register_driver() failed,
+the modprobe defxx would fail with some err log as follows:
 
-We can reproduce the issue with the program below [2] which calls one
-seccomp() and two clone() syscalls.
+ Error: Driver 'defxx' is already registered, aborting...
 
-The first clone()d child exits earlier than its parent and sends a
-signal to kill it during the second clone(), more precisely before the
-fatal_signal_pending() test in copy_process().  When the parent receives
-the signal, it has to destroy the embryonic process and return -EINTR to
-user space.  In the failure path, we have to call seccomp_filter_release()
-to decrement the filter's refcount.
+Fix this issue by adding err hanling in dfx_init().
 
-Initially, we called it in free_task() called from the failure path, but
-the commit 3a15fb6ed92c ("seccomp: release filter after task is fully
-dead") moved it to release_task() to notify user space as early as possible
-that the filter is no longer used.
-
-To keep the change and current seccomp refcount semantics, let's move
-copy_seccomp() just after the signal check and add a WARN_ON_ONCE() in
-free_task() for future debugging.
-
-[0]:
-unreferenced object 0xffff8880063add00 (size 256):
-  comm "repro_seccomp", pid 230, jiffies 4294687090 (age 9.914s)
-  hex dump (first 32 bytes):
-    01 00 00 00 01 00 00 00 00 00 00 00 00 00 00 00  ................
-    ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff  ................
-  backtrace:
-    do_seccomp (./include/linux/slab.h:600 ./include/linux/slab.h:733 kernel/seccomp.c:666 kernel/seccomp.c:708 kernel/seccomp.c:1871 kernel/seccomp.c:1991)
-    do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
-    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
-unreferenced object 0xffffc90000035000 (size 4096):
-  comm "repro_seccomp", pid 230, jiffies 4294687090 (age 9.915s)
-  hex dump (first 32 bytes):
-    01 00 00 00 00 00 00 00 00 00 00 00 05 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    __vmalloc_node_range (mm/vmalloc.c:3226)
-    __vmalloc_node (mm/vmalloc.c:3261 (discriminator 4))
-    bpf_prog_alloc_no_stats (kernel/bpf/core.c:91)
-    bpf_prog_alloc (kernel/bpf/core.c:129)
-    bpf_prog_create_from_user (net/core/filter.c:1414)
-    do_seccomp (kernel/seccomp.c:671 kernel/seccomp.c:708 kernel/seccomp.c:1871 kernel/seccomp.c:1991)
-    do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
-    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
-unreferenced object 0xffff888003fa1000 (size 1024):
-  comm "repro_seccomp", pid 230, jiffies 4294687090 (age 9.915s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    bpf_prog_alloc_no_stats (./include/linux/slab.h:600 ./include/linux/slab.h:733 kernel/bpf/core.c:95)
-    bpf_prog_alloc (kernel/bpf/core.c:129)
-    bpf_prog_create_from_user (net/core/filter.c:1414)
-    do_seccomp (kernel/seccomp.c:671 kernel/seccomp.c:708 kernel/seccomp.c:1871 kernel/seccomp.c:1991)
-    do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
-    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
-unreferenced object 0xffff888006360240 (size 16):
-  comm "repro_seccomp", pid 230, jiffies 4294687090 (age 9.915s)
-  hex dump (first 16 bytes):
-    01 00 37 00 76 65 72 6c e0 83 01 06 80 88 ff ff  ..7.verl........
-  backtrace:
-    bpf_prog_store_orig_filter (net/core/filter.c:1137)
-    bpf_prog_create_from_user (net/core/filter.c:1428)
-    do_seccomp (kernel/seccomp.c:671 kernel/seccomp.c:708 kernel/seccomp.c:1871 kernel/seccomp.c:1991)
-    do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
-    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
-unreferenced object 0xffff8880060183e0 (size 8):
-  comm "repro_seccomp", pid 230, jiffies 4294687090 (age 9.915s)
-  hex dump (first 8 bytes):
-    06 00 00 00 00 00 ff 7f                          ........
-  backtrace:
-    kmemdup (mm/util.c:129)
-    bpf_prog_store_orig_filter (net/core/filter.c:1144)
-    bpf_prog_create_from_user (net/core/filter.c:1428)
-    do_seccomp (kernel/seccomp.c:671 kernel/seccomp.c:708 kernel/seccomp.c:1871 kernel/seccomp.c:1991)
-    do_syscall_64 (arch/x86/entry/common.c:50 arch/x86/entry/common.c:80)
-    entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
-
-[1]: https://syzkaller.appspot.com/bug?id=2809bb0ac77ad9aa3f4afe42d6a610aba594a987
-
-[2]:
-#define _GNU_SOURCE
-#include <sched.h>
-#include <signal.h>
-#include <unistd.h>
-#include <sys/syscall.h>
-#include <linux/filter.h>
-#include <linux/seccomp.h>
-
-void main(void)
-{
-	struct sock_filter filter[] = {
-		BPF_STMT(BPF_RET | BPF_K, SECCOMP_RET_ALLOW),
-	};
-	struct sock_fprog fprog = {
-		.len = sizeof(filter) / sizeof(filter[0]),
-		.filter = filter,
-	};
-	long i, pid;
-
-	syscall(__NR_seccomp, SECCOMP_SET_MODE_FILTER, 0, &fprog);
-
-	for (i = 0; i < 2; i++) {
-		pid = syscall(__NR_clone, CLONE_NEWNET | SIGKILL, NULL, NULL, 0);
-		if (pid == 0)
-			return;
-	}
-}
-
-Fixes: 3a15fb6ed92c ("seccomp: release filter after task is fully dead")
-Reported-by: syzbot+ab17848fe269b573eb71@syzkaller.appspotmail.com
-Reported-by: Ayushman Dutta <ayudutta@amazon.com>
-Suggested-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20220823154532.82913-1-kuniyu@amazon.com
+Fixes: e89a2cfb7d7b5 ("[TC] defxx: TURBOchannel support")
+Signed-off-by: Yongqiang Liu <liuyongqiang13@huawei.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/fork.c | 17 +++++++++++------
- 1 file changed, 11 insertions(+), 6 deletions(-)
+ drivers/net/fddi/defxx.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/fork.c b/kernel/fork.c
-index 08969f5aa38d..844dfdc8c639 100644
---- a/kernel/fork.c
-+++ b/kernel/fork.c
-@@ -535,6 +535,9 @@ void put_task_stack(struct task_struct *tsk)
+diff --git a/drivers/net/fddi/defxx.c b/drivers/net/fddi/defxx.c
+index 6d1e3f49a3d3..ebf502290e5f 100644
+--- a/drivers/net/fddi/defxx.c
++++ b/drivers/net/fddi/defxx.c
+@@ -3831,10 +3831,24 @@ static int dfx_init(void)
+ 	int status;
  
- void free_task(struct task_struct *tsk)
- {
-+#ifdef CONFIG_SECCOMP
-+	WARN_ON_ONCE(tsk->seccomp.filter);
-+#endif
- 	release_user_cpus_ptr(tsk);
- 	scs_release(tsk);
- 
-@@ -2406,12 +2409,6 @@ static __latent_entropy struct task_struct *copy_process(
- 
- 	spin_lock(&current->sighand->siglock);
- 
--	/*
--	 * Copy seccomp details explicitly here, in case they were changed
--	 * before holding sighand lock.
--	 */
--	copy_seccomp(p);
--
- 	rv_task_fork(p);
- 
- 	rseq_fork(p, clone_flags);
-@@ -2428,6 +2425,14 @@ static __latent_entropy struct task_struct *copy_process(
- 		goto bad_fork_cancel_cgroup;
- 	}
- 
-+	/* No more failure paths after this point. */
+ 	status = pci_register_driver(&dfx_pci_driver);
+-	if (!status)
+-		status = eisa_driver_register(&dfx_eisa_driver);
+-	if (!status)
+-		status = tc_register_driver(&dfx_tc_driver);
++	if (status)
++		goto err_pci_register;
 +
-+	/*
-+	 * Copy seccomp details explicitly here, in case they were changed
-+	 * before holding sighand lock.
-+	 */
-+	copy_seccomp(p);
++	status = eisa_driver_register(&dfx_eisa_driver);
++	if (status)
++		goto err_eisa_register;
 +
- 	init_task_pid_links(p);
- 	if (likely(p->pid)) {
- 		ptrace_init_task(p, (clone_flags & CLONE_PTRACE) || trace);
++	status = tc_register_driver(&dfx_tc_driver);
++	if (status)
++		goto err_tc_register;
++
++	return 0;
++
++err_tc_register:
++	eisa_driver_unregister(&dfx_eisa_driver);
++err_eisa_register:
++	pci_unregister_driver(&dfx_pci_driver);
++err_pci_register:
+ 	return status;
+ }
+ 
 -- 
 2.35.1
 
