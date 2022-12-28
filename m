@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67741C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:14:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A445C433EF;
-	Wed, 28 Dec 2022 16:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD1F1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:14:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00952C433D2;
+	Wed, 28 Dec 2022 16:14:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244056;
-	bh=lV8BVZtD0eHnwAEuUs7Ehw9QERV+KVmNiw3i/+e3R00=;
+	s=korg; t=1672244059;
+	bh=1aiuqXzAUbXCXR6zYgO47XOSzuBiFFmc+yBqMG/3uyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=miQmdBmIzDBrz9iD2udUQvKriOnFobNXquSzkrvjSjnkIJABGINMQiWX7s/y9VtAg
-	 sOj+fppO35Ltl5NtMTjOZ/ILw+UPyFPBXaBiRx8nmdJS1L/91XhiMMY87BR2cB4iNU
-	 HNNc/0uWb0pStAYmYuFQmTMevzh4OvQkvOWbgzDc=
+	b=gur/YqBEPEdcEfOdalcp4qWcWtrjXbXoCtTxHsfTonq4h3nPoygEgnqw3/ZxF4Uwr
+	 x+31yKSqDanZVmLCrCfmFCXPRIINWYS29nVw+tV/pPpqQgQDXPJotPJh02/2No5Vgv
+	 By8C8tLKOLCyGKb66Baj19WqSpWJ6m3W8/bd/F9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Mark Greer <mgreer@animalcreek.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0612/1073] dt-bindings: visconti-pcie: Fix interrupts array max constraints
-Date: Wed, 28 Dec 2022 15:36:40 +0100
-Message-Id: <20221228144344.667886524@linuxfoundation.org>
+Subject: [PATCH 6.0 0639/1073] crypto: omap-sham - Use pm_runtime_resume_and_get() in omap_sham_probe()
+Date: Wed, 28 Dec 2022 15:37:07 +0100
+Message-Id: <20221228144345.397208004@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -37,53 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 4cf4b9b70ab2785461190c08a3542d2d74c28b46 ]
+[ Upstream commit 7bcceb4c9896b1b672b636ae70fe75110d6bf1ad ]
 
-In accordance with the way the device DT-node is actually defined in
-arch/arm64/boot/dts/toshiba/tmpv7708.dtsi and the way the device is probed
-by the DW PCIe driver there are two IRQs it actually has. It's MSI IRQ the
-DT-bindings lack. Let's extend the interrupts property constraints then
-and fix the schema example so one would be acceptable by the actual device
-DT-bindings.
+omap_sham_probe() calls pm_runtime_get_sync() and calls
+pm_runtime_put_sync() latter to put usage_counter. However,
+pm_runtime_get_sync() will increment usage_counter even it failed. Fix
+it by replacing it with pm_runtime_resume_and_get() to keep usage
+counter balanced.
 
-Link: https://lore.kernel.org/r/20221113191301.5526-3-Sergey.Semin@baikalelectronics.ru
-Fixes: 17c1b16340f0 ("dt-bindings: pci: Add DT binding for Toshiba Visconti PCIe controller")
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Acked-by: Rob Herring <robh@kernel.org>
-Acked-by: Nobuhiro Iwamatsu <nobuhiro1.iwamatsu@toshiba.co.jp>
+Fixes: b359f034c8bf ("crypto: omap-sham - Convert to use pm_runtime API")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Acked-by: Mark Greer <mgreer@animalcreek.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../devicetree/bindings/pci/toshiba,visconti-pcie.yaml     | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/crypto/omap-sham.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/pci/toshiba,visconti-pcie.yaml b/Documentation/devicetree/bindings/pci/toshiba,visconti-pcie.yaml
-index 30b6396d83c8..aea0e2bcdd77 100644
---- a/Documentation/devicetree/bindings/pci/toshiba,visconti-pcie.yaml
-+++ b/Documentation/devicetree/bindings/pci/toshiba,visconti-pcie.yaml
-@@ -36,7 +36,7 @@ properties:
-       - const: mpu
+diff --git a/drivers/crypto/omap-sham.c b/drivers/crypto/omap-sham.c
+index 655a7f5a406a..cbeda59c6b19 100644
+--- a/drivers/crypto/omap-sham.c
++++ b/drivers/crypto/omap-sham.c
+@@ -2114,7 +2114,7 @@ static int omap_sham_probe(struct platform_device *pdev)
  
-   interrupts:
--    maxItems: 1
-+    maxItems: 2
+ 	pm_runtime_enable(dev);
  
-   clocks:
-     items:
-@@ -94,8 +94,9 @@ examples:
-             #interrupt-cells = <1>;
-             ranges = <0x81000000 0 0x40000000 0 0x40000000 0 0x00010000>,
-                      <0x82000000 0 0x50000000 0 0x50000000 0 0x20000000>;
--            interrupts = <GIC_SPI 215 IRQ_TYPE_LEVEL_HIGH>;
--            interrupt-names = "intr";
-+            interrupts = <GIC_SPI 211 IRQ_TYPE_LEVEL_HIGH>,
-+                         <GIC_SPI 215 IRQ_TYPE_LEVEL_HIGH>;
-+            interrupt-names = "msi", "intr";
-             interrupt-map-mask = <0 0 0 7>;
-             interrupt-map =
-                 <0 0 0 1 &gic GIC_SPI 215 IRQ_TYPE_LEVEL_HIGH
+-	err = pm_runtime_get_sync(dev);
++	err = pm_runtime_resume_and_get(dev);
+ 	if (err < 0) {
+ 		dev_err(dev, "failed to get sync: %d\n", err);
+ 		goto err_pm;
 -- 
 2.35.1
 
