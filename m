@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC4E41C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D8F4C433D2;
-	Wed, 28 Dec 2022 16:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67CE11C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3DFFC433EF;
+	Wed, 28 Dec 2022 16:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246281;
-	bh=wOFtaFfbin/F9piaUo/SC8mmvkBuDNV3uovhAfMsm1U=;
+	s=korg; t=1672246284;
+	bh=w0AQCeb0yYf39Kw3tKxoT5lKjM18ur1nYb/ED68sKwo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dqmd7+8Tav0uQYXhvGKvgtDwiVrdn4p1th7g0l9fwds8euqjgZVq5gAk9fhNmUd2q
-	 1i1oeeq1/xktUa9ZjLS8aKpwf2bZBlWMCFHv30vG0DhegVjGa0rPVWyMLfH/xlgJZP
-	 40WAoi4aJQU7lqo/cpndx9RHlFUbD4VPSpGbmy4Y=
+	b=V6ykFKgE9tMqR7JMh1F9D0N+w82ucmkh7rw1+VLNahYm34CYRR0KOwMg0/xy6Djtf
+	 Uqz0sfknc1pnf+Z9EskzgvPLRqTq5JUAFQ8sPyYE8I6vRYvzGOfxMul3phvPA7Nn/M
+	 QPI/ANdYfdbXppPrpV5MAyCrKjgbpMIb7kUSSp+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1015/1146] net: ethernet: mtk_eth_soc: drop packets to WDMA if the ring is full
-Date: Wed, 28 Dec 2022 15:42:34 +0100
-Message-Id: <20221228144357.935876412@linuxfoundation.org>
+	syzbot+8f1060e2aaf8ca55220b@syzkaller.appspotmail.com,
+	Schspa Shi <schspa@gmail.com>,
+	Christian Schoenebeck <linux_oss@crudebyte.com>,
+	Dominique Martinet <asmadeus@codewreck.org>
+Subject: [PATCH 6.0 1044/1073] 9p: set req refcount to zero to avoid uninitialized usage
+Date: Wed, 28 Dec 2022 15:43:52 +0100
+Message-Id: <20221228144356.555205675@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,54 +36,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Schspa Shi <schspa@gmail.com>
 
-[ Upstream commit f4b2fa2c25e1ade78f766aa82e733a0b5198d484 ]
+commit 26273ade77f54716e30dfd40ac6e85ceb54ac0f9 upstream.
 
-Improves handling of DMA ring overflow.
-Clarify other WDMA drop related comment.
+When a new request is allocated, the refcount will be zero if it is
+reused, but if the request is newly allocated from slab, it is not fully
+initialized before being added to idr.
 
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://lore.kernel.org/r/20221116080734.44013-3-nbd@nbd.name
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+If the p9_read_work got a response before the refcount initiated. It will
+use a uninitialized req, which will result in a bad request data struct.
+
+Here is the logs from syzbot.
+
+Corrupted memory at 0xffff88807eade00b [ 0xff 0x07 0x00 0x00 0x00 0x00
+0x00 0x00 . . . . . . . . ] (in kfence-#110):
+ p9_fcall_fini net/9p/client.c:248 [inline]
+ p9_req_put net/9p/client.c:396 [inline]
+ p9_req_put+0x208/0x250 net/9p/client.c:390
+ p9_client_walk+0x247/0x540 net/9p/client.c:1165
+ clone_fid fs/9p/fid.h:21 [inline]
+ v9fs_fid_xattr_set+0xe4/0x2b0 fs/9p/xattr.c:118
+ v9fs_xattr_set fs/9p/xattr.c:100 [inline]
+ v9fs_xattr_handler_set+0x6f/0x120 fs/9p/xattr.c:159
+ __vfs_setxattr+0x119/0x180 fs/xattr.c:182
+ __vfs_setxattr_noperm+0x129/0x5f0 fs/xattr.c:216
+ __vfs_setxattr_locked+0x1d3/0x260 fs/xattr.c:277
+ vfs_setxattr+0x143/0x340 fs/xattr.c:309
+ setxattr+0x146/0x160 fs/xattr.c:617
+ path_setxattr+0x197/0x1c0 fs/xattr.c:636
+ __do_sys_setxattr fs/xattr.c:652 [inline]
+ __se_sys_setxattr fs/xattr.c:648 [inline]
+ __ia32_sys_setxattr+0xc0/0x160 fs/xattr.c:648
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0x65/0xf0 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x33/0x70 arch/x86/entry/common.c:203
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
+
+Below is a similar scenario, the scenario in the syzbot log looks more
+complicated than this one, but this patch can fix it.
+
+     T21124                   p9_read_work
+======================== second trans =================================
+p9_client_walk
+  p9_client_rpc
+    p9_client_prepare_req
+      p9_tag_alloc
+        req = kmem_cache_alloc(p9_req_cache, GFP_NOFS);
+        tag = idr_alloc
+        << preempted >>
+        req->tc.tag = tag;
+                            /* req->[refcount/tag] == uninitialized */
+                            m->rreq = p9_tag_lookup(m->client, m->rc.tag);
+                              /* increments uninitalized refcount */
+
+        refcount_set(&req->refcount, 2);
+                            /* cb drops one ref */
+                            p9_client_cb(req)
+                            /* reader thread drops its ref:
+                               request is incorrectly freed */
+                            p9_req_put(req)
+    /* use after free and ref underflow */
+    p9_req_put(req)
+
+To fix it, we can initialize the refcount to zero before add to idr.
+
+Link: https://lkml.kernel.org/r/20221201033310.18589-1-schspa@gmail.com
+Cc: stable@vger.kernel.org # 6.0+ due to 6cda12864cb0 ("9p: Drop kref usage")
+Fixes: 728356dedeff ("9p: Add refcount to p9_req_t")
+Reported-by: syzbot+8f1060e2aaf8ca55220b@syzkaller.appspotmail.com
+Signed-off-by: Schspa Shi <schspa@gmail.com>
+Reviewed-by: Christian Schoenebeck <linux_oss@crudebyte.com>
+Signed-off-by: Dominique Martinet <asmadeus@codewreck.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 5 ++++-
- drivers/net/ethernet/mediatek/mtk_eth_soc.h | 1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ net/9p/client.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 864452e4426b..9aa1892a609c 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -3364,9 +3364,12 @@ static int mtk_hw_init(struct mtk_eth *eth)
- 	mtk_w32(eth, 0x21021000, MTK_FE_INT_GRP);
+--- a/net/9p/client.c
++++ b/net/9p/client.c
+@@ -279,6 +279,11 @@ p9_tag_alloc(struct p9_client *c, int8_t
+ 	p9pdu_reset(&req->rc);
+ 	req->t_err = 0;
+ 	req->status = REQ_STATUS_ALLOC;
++	/* refcount needs to be set to 0 before inserting into the idr
++	 * so p9_tag_lookup does not accept a request that is not fully
++	 * initialized. refcount_set to 2 below will mark request ready.
++	 */
++	refcount_set(&req->refcount, 0);
+ 	init_waitqueue_head(&req->wq);
+ 	INIT_LIST_HEAD(&req->req_list);
  
- 	if (MTK_HAS_CAPS(eth->soc->caps, MTK_NETSYS_V2)) {
--		/* PSE should not drop port8 and port9 packets */
-+		/* PSE should not drop port8 and port9 packets from WDMA Tx */
- 		mtk_w32(eth, 0x00000300, PSE_DROP_CFG);
- 
-+		/* PSE should drop packets to port 8/9 on WDMA Rx ring full */
-+		mtk_w32(eth, 0x00000300, PSE_PPE0_DROP);
-+
- 		/* PSE Free Queue Flow Control  */
- 		mtk_w32(eth, 0x01fa01f4, PSE_FQFC_CFG2);
- 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-index 9eaca55a106e..306fdc2c608a 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
-@@ -120,6 +120,7 @@
- #define PSE_FQFC_CFG1		0x100
- #define PSE_FQFC_CFG2		0x104
- #define PSE_DROP_CFG		0x108
-+#define PSE_PPE0_DROP		0x110
- 
- /* PSE Input Queue Reservation Register*/
- #define PSE_IQ_REV(x)		(0x140 + (((x) - 1) << 2))
--- 
-2.35.1
-
 
 
