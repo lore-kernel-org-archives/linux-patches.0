@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945721863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186AAC433D2;
-	Wed, 28 Dec 2022 14:57:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DADA1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6C00C433EF;
+	Wed, 28 Dec 2022 14:57:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239448;
-	bh=bXRfog05CwSknXipuD/5LcMr+RjwnUgf8CwCrGr4VEc=;
+	s=korg; t=1672239451;
+	bh=S8B+7BUL+uRwVISrw8I+/MgAHOjDqUc4NVsmGQ2/cNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CqBixcogS/WCCJ0+xMXtEcZfl8NTOrroZ97HUar2HCVil6vbTSBzzjvIcZunc7YkH
-	 mNDSlCeGx30D1MUSO5Z8D/3ZrEebqAiNW2ISwaajMrPkmDYM7/YppMcIg+wspX8a+N
-	 a+zlQXnODB/46NU74OZiRSK1O+D4cirrxmKf+QZo=
+	b=MtLbQDV5kjHA5j91QtdxMkENRV7U+opb3RYXSJJO3cgb7J7giwcKen4rvYkBAfy4l
+	 wmU3hSo/H8hOXgvr/pCyL+MlGBB5Hfcsh+x+Nvwo2V6+u2Zds/mMtqB1M3Q2AfBFpq
+	 /+RAZpZCOgfQPljPTP5uTRRSLZvpJfouVYRqDaig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Zheng Yongjun <zhengyongjun3@huawei.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0031/1073] arm64: dts: qcom: sm8150: fix UFS PHY registers
-Date: Wed, 28 Dec 2022 15:26:59 +0100
-Message-Id: <20221228144328.987016251@linuxfoundation.org>
+Subject: [PATCH 5.15 227/731] mtd: maps: pxa2xx-flash: fix memory leak in probe
+Date: Wed, 28 Dec 2022 15:35:34 +0100
+Message-Id: <20221228144303.142397818@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,46 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Zheng Yongjun <zhengyongjun3@huawei.com>
 
-[ Upstream commit 36a31b3a8d9ba1707a23de8d8dc1ceaef4eda695 ]
+[ Upstream commit 2399401feee27c639addc5b7e6ba519d3ca341bf ]
 
-The sizes of the UFS PHY register regions are too small and does
-specifically not cover all registers used by the Linux driver.
+Free 'info' upon remapping error to avoid a memory leak.
 
-As Linux maps these regions as full pages this is currently not an issue
-on Linux, but let's update the sizes to match the vendor driver.
-
-Fixes: 3834a2e92229 ("arm64: dts: qcom: sm8150: Add ufs nodes")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221024091507.20342-2-johan+linaro@kernel.org
+Fixes: e644f7d62894 ("[MTD] MAPS: Merge Lubbock and Mainstone drivers into common PXA2xx driver")
+Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
+[<miquel.raynal@bootlin.com>: Reword the commit log]
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20221119073307.22929-1-zhengyongjun3@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/mtd/maps/pxa2xx-flash.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 916f12b799b7..3df80dde9249 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -2038,11 +2038,11 @@ ufs_mem_phy: phy@1d87000 {
- 			status = "disabled";
- 
- 			ufs_mem_phy_lanes: phy@1d87400 {
--				reg = <0 0x01d87400 0 0x108>,
--				      <0 0x01d87600 0 0x1e0>,
--				      <0 0x01d87c00 0 0x1dc>,
--				      <0 0x01d87800 0 0x108>,
--				      <0 0x01d87a00 0 0x1e0>;
-+				reg = <0 0x01d87400 0 0x16c>,
-+				      <0 0x01d87600 0 0x200>,
-+				      <0 0x01d87c00 0 0x200>,
-+				      <0 0x01d87800 0 0x16c>,
-+				      <0 0x01d87a00 0 0x200>;
- 				#phy-cells = <0>;
- 			};
- 		};
+diff --git a/drivers/mtd/maps/pxa2xx-flash.c b/drivers/mtd/maps/pxa2xx-flash.c
+index 7d96758a8f04..6e5e55755970 100644
+--- a/drivers/mtd/maps/pxa2xx-flash.c
++++ b/drivers/mtd/maps/pxa2xx-flash.c
+@@ -66,6 +66,7 @@ static int pxa2xx_flash_probe(struct platform_device *pdev)
+ 	if (!info->map.virt) {
+ 		printk(KERN_WARNING "Failed to ioremap %s\n",
+ 		       info->map.name);
++		kfree(info);
+ 		return -ENOMEM;
+ 	}
+ 	info->map.cached = ioremap_cache(info->map.phys, info->map.size);
+@@ -87,6 +88,7 @@ static int pxa2xx_flash_probe(struct platform_device *pdev)
+ 		iounmap((void *)info->map.virt);
+ 		if (info->map.cached)
+ 			iounmap(info->map.cached);
++		kfree(info);
+ 		return -EIO;
+ 	}
+ 	info->mtd->dev.parent = &pdev->dev;
 -- 
 2.35.1
 
