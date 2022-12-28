@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583371C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:38:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17D2C433F2;
-	Wed, 28 Dec 2022 16:38:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD421C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:38:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB54C433D2;
+	Wed, 28 Dec 2022 16:38:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245523;
-	bh=j0yrMKeJO2r/tfnUtHUOregZlgkJhmlss1ORUpzt048=;
+	s=korg; t=1672245526;
+	bh=kWEVcH5O+hKgB0S2fgJ4MlILuIU5/n0ZX5d9X2+ZWeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HEpqQ073I9HqqJA8IfqR3jQaRXCwkoCDcARx7HO7Epcf9TaDKe3598SSsIsGgOg7x
-	 wGY9xilDUQIqZX04bIORkv+NlgdFPZTEvkVkn/oD3xc8RWFTymSTVGr0cVjDzhhkbZ
-	 M+tVPfCq6U01FMXuCPLmeJ4/XovIaI3ssC9x3Z+s=
+	b=1+rCVeGyxKUReLkK1J3zLFN5guDlx8Q4D9T8tK9mUg9HYHsbKoKXmxf1nfKGngdhu
+	 YFqq7IOcy3/cBejA4lH8K765QFXsQIJ96T4SKO9Jz+yeeVIgK/7DWSmnIV2yZHXrq6
+	 yeVPRaRVOdx6zuuqVMNwpt5F5EE0ovcMVWU3piF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0875/1146] remoteproc: qcom: q6v5: Fix missing clk_disable_unprepare() in q6v5_wcss_qcs404_power_on()
-Date: Wed, 28 Dec 2022 15:40:14 +0100
-Message-Id: <20221228144353.932643309@linuxfoundation.org>
+Subject: [PATCH 6.0 0909/1073] wifi: ath9k: verify the expected usb_endpoints are present
+Date: Wed, 28 Dec 2022 15:41:37 +0100
+Message-Id: <20221228144352.720613856@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,43 +38,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 7ff5d60f18bba5cbaf17b2926aa9da44d5beca01 ]
+[ Upstream commit 16ef02bad239f11f322df8425d302be62f0443ce ]
 
-q6v5_wcss_qcs404_power_on() have no fail path for readl_poll_timeout().
-Add fail path for readl_poll_timeout().
+The bug arises when a USB device claims to be an ATH9K but doesn't
+have the expected endpoints. (In this case there was an interrupt
+endpoint where the driver expected a bulk endpoint.) The kernel
+needs to be able to handle such devices without getting an internal error.
 
-Fixes: 0af65b9b915e ("remoteproc: qcom: wcss: Add non pas wcss Q6 support for QCS404")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221204082757.18850-1-shangxiaojing@huawei.com
+usb 1-1: BOGUS urb xfer, pipe 3 != type 1
+WARNING: CPU: 3 PID: 500 at drivers/usb/core/urb.c:493 usb_submit_urb+0xce2/0x1430 drivers/usb/core/urb.c:493
+Modules linked in:
+CPU: 3 PID: 500 Comm: kworker/3:2 Not tainted 5.10.135-syzkaller #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
+Workqueue: events request_firmware_work_func
+RIP: 0010:usb_submit_urb+0xce2/0x1430 drivers/usb/core/urb.c:493
+Call Trace:
+ ath9k_hif_usb_alloc_rx_urbs drivers/net/wireless/ath/ath9k/hif_usb.c:908 [inline]
+ ath9k_hif_usb_alloc_urbs+0x75e/0x1010 drivers/net/wireless/ath/ath9k/hif_usb.c:1019
+ ath9k_hif_usb_dev_init drivers/net/wireless/ath/ath9k/hif_usb.c:1109 [inline]
+ ath9k_hif_usb_firmware_cb+0x142/0x530 drivers/net/wireless/ath/ath9k/hif_usb.c:1242
+ request_firmware_work_func+0x12e/0x240 drivers/base/firmware_loader/main.c:1097
+ process_one_work+0x9af/0x1600 kernel/workqueue.c:2279
+ worker_thread+0x61d/0x12f0 kernel/workqueue.c:2425
+ kthread+0x3b4/0x4a0 kernel/kthread.c:313
+ ret_from_fork+0x22/0x30 arch/x86/entry/entry_64.S:299
+
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20221008211532.74583-1-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_q6v5_wcss.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath9k/hif_usb.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/remoteproc/qcom_q6v5_wcss.c b/drivers/remoteproc/qcom_q6v5_wcss.c
-index de232337e082..ba24d745b2d6 100644
---- a/drivers/remoteproc/qcom_q6v5_wcss.c
-+++ b/drivers/remoteproc/qcom_q6v5_wcss.c
-@@ -351,7 +351,7 @@ static int q6v5_wcss_qcs404_power_on(struct q6v5_wcss *wcss)
- 	if (ret) {
- 		dev_err(wcss->dev,
- 			"xo cbcr enabling timed out (rc:%d)\n", ret);
--		return ret;
-+		goto disable_xo_cbcr_clk;
- 	}
+diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
+index 6c653d46136e..1a2e0c7eeb02 100644
+--- a/drivers/net/wireless/ath/ath9k/hif_usb.c
++++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
+@@ -1327,10 +1327,24 @@ static int send_eject_command(struct usb_interface *interface)
+ static int ath9k_hif_usb_probe(struct usb_interface *interface,
+ 			       const struct usb_device_id *id)
+ {
++	struct usb_endpoint_descriptor *bulk_in, *bulk_out, *int_in, *int_out;
+ 	struct usb_device *udev = interface_to_usbdev(interface);
++	struct usb_host_interface *alt;
+ 	struct hif_device_usb *hif_dev;
+ 	int ret = 0;
  
- 	writel(0, wcss->reg_base + Q6SS_CGC_OVERRIDE);
-@@ -417,6 +417,7 @@ static int q6v5_wcss_qcs404_power_on(struct q6v5_wcss *wcss)
- 	val = readl(wcss->reg_base + Q6SS_SLEEP_CBCR);
- 	val &= ~Q6SS_CLK_ENABLE;
- 	writel(val, wcss->reg_base + Q6SS_SLEEP_CBCR);
-+disable_xo_cbcr_clk:
- 	val = readl(wcss->reg_base + Q6SS_XO_CBCR);
- 	val &= ~Q6SS_CLK_ENABLE;
- 	writel(val, wcss->reg_base + Q6SS_XO_CBCR);
++	/* Verify the expected endpoints are present */
++	alt = interface->cur_altsetting;
++	if (usb_find_common_endpoints(alt, &bulk_in, &bulk_out, &int_in, &int_out) < 0 ||
++	    usb_endpoint_num(bulk_in) != USB_WLAN_RX_PIPE ||
++	    usb_endpoint_num(bulk_out) != USB_WLAN_TX_PIPE ||
++	    usb_endpoint_num(int_in) != USB_REG_IN_PIPE ||
++	    usb_endpoint_num(int_out) != USB_REG_OUT_PIPE) {
++		dev_err(&udev->dev,
++			"ath9k_htc: Device endpoint numbers are not the expected ones\n");
++		return -ENODEV;
++	}
++
+ 	if (id->driver_info == STORAGE_DEVICE)
+ 		return send_eject_command(interface);
+ 
 -- 
 2.35.1
 
