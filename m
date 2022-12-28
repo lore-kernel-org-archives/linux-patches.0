@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 527891875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:00:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9E6AC433D2;
-	Wed, 28 Dec 2022 16:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E0801875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:00:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8832AC433D2;
+	Wed, 28 Dec 2022 16:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243218;
-	bh=t5mGLbpNT5DCWhg/P4ibk1NCU+6t0ogggYFa2OyyLpk=;
+	s=korg; t=1672243220;
+	bh=g5v0OlgzeQOaGOTUNW+bZSLeBXEvTLsWUFqBCLefFi0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=im7AXQPVKA02GalvAN4m5rBbG6n943+uRFZBl9MH8sraQ/EZfaOJdD/GAeTa64DQn
-	 l5oQDIeY4frSBTb1Eep03qQxl9qTHZmsxf+hkjo1HtWwZuUcNHe/J/zg+eULc8MTb/
-	 ugj3NzUmGmDurxt6shiil/3fqryaxlfZ2EOoMAfE=
+	b=P9G5rLaThdRtK+I/SKCCTcR9zj4uM5S/PpNfbkLHQTo3BzL51Fo58uwrt/zbrzaO5
+	 bYF5zL7R8HP/C5KQhA95gKdpcNIzpFiM9lmtEqbh9Gy5N70TrKlP5xtnFDGo2iTk0j
+	 jT3Bcme07awaCWRYP4dKyttG9Dt7Q+bIDa2mt+Jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Imre Deak <imre.deak@intel.com>,
-	Clint Taylor <clinton.a.taylor@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Khaled Almahallawy <khaled.almahallawy@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 696/731] drm/i915/display: Dont disable DDI/Transcoder when setting phy test pattern
-Date: Wed, 28 Dec 2022 15:43:23 +0100
-Message-Id: <20221228144316.639314377@linuxfoundation.org>
+Subject: [PATCH 6.1 0464/1146] mt76: mt7915: Fix PCI device refcount leak in mt7915_pci_init_hif2()
+Date: Wed, 28 Dec 2022 15:33:23 +0100
+Message-Id: <20221228144342.789501462@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,119 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Khaled Almahallawy <khaled.almahallawy@intel.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 3153eebb7a76e663ac76d6670dc113296de96622 ]
+[ Upstream commit 5938196cc188ba4323bc6357f5ac55127d715888 ]
 
-Bspecs has updated recently to remove the restriction to disable
-DDI/Transcoder before setting PHY test pattern. This update is to
-address PHY compliance test failures observed on a port with LTTPR.
-The issue is that when Transc. is disabled, the main link signals fed
-to LTTPR will be dropped invalidating link training, which will affect
-the quality of the phy test pattern when the transcoder is enabled again.
+As comment of pci_get_device() says, it returns a pci_device with its
+refcount increased. We need to call pci_dev_put() to decrease the
+refcount. Save the return value of pci_get_device() and call
+pci_dev_put() to decrease the refcount.
 
-v2: Update commit message (Clint)
-v3: Add missing Signed-off in v2
-v4: Update Bspec and commit message for pre-gen12 (Jani)
-
-Bspec: 50482, 7555
-Fixes: 8cdf72711928 ("drm/i915/dp: Program vswing, pre-emphasis, test-pattern")
-Cc: Imre Deak <imre.deak@intel.com>
-Cc: Clint Taylor <clinton.a.taylor@intel.com>
-CC: Jani Nikula <jani.nikula@intel.com>
-Tested-by: Khaled Almahallawy <khaled.almahallawy@intel.com>
-Reviewed-by: Clint Taylor <clinton.a.taylor@intel.com>
-Signed-off-by: Khaled Almahallawy <khaled.almahallawy@intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221123220926.170034-1-khaled.almahallawy@intel.com
-(cherry picked from commit be4a847652056b067d6dc6fe0fc024a9e2e987ca)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 9093cfff72e3 ("mt76: mt7915: add support for using a secondary PCIe link for gen1")
+Fixes: 2e30db0dde61 ("mt76: mt7915: add device id for mt7916")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_dp.c | 59 -------------------------
- 1 file changed, 59 deletions(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/pci.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_dp.c b/drivers/gpu/drm/i915/display/intel_dp.c
-index 1ccdf2da042b..64a15b636e8d 100644
---- a/drivers/gpu/drm/i915/display/intel_dp.c
-+++ b/drivers/gpu/drm/i915/display/intel_dp.c
-@@ -3245,61 +3245,6 @@ static void intel_dp_phy_pattern_update(struct intel_dp *intel_dp,
- 	}
- }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
+index 728a879c3b00..3808ce1647d9 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/pci.c
+@@ -65,10 +65,17 @@ static void mt7915_put_hif2(struct mt7915_hif *hif)
  
--static void
--intel_dp_autotest_phy_ddi_disable(struct intel_dp *intel_dp,
--				  const struct intel_crtc_state *crtc_state)
--{
--	struct intel_digital_port *dig_port = dp_to_dig_port(intel_dp);
--	struct drm_device *dev = dig_port->base.base.dev;
--	struct drm_i915_private *dev_priv = to_i915(dev);
--	struct intel_crtc *crtc = to_intel_crtc(dig_port->base.base.crtc);
--	enum pipe pipe = crtc->pipe;
--	u32 trans_ddi_func_ctl_value, trans_conf_value, dp_tp_ctl_value;
--
--	trans_ddi_func_ctl_value = intel_de_read(dev_priv,
--						 TRANS_DDI_FUNC_CTL(pipe));
--	trans_conf_value = intel_de_read(dev_priv, PIPECONF(pipe));
--	dp_tp_ctl_value = intel_de_read(dev_priv, TGL_DP_TP_CTL(pipe));
--
--	trans_ddi_func_ctl_value &= ~(TRANS_DDI_FUNC_ENABLE |
--				      TGL_TRANS_DDI_PORT_MASK);
--	trans_conf_value &= ~PIPECONF_ENABLE;
--	dp_tp_ctl_value &= ~DP_TP_CTL_ENABLE;
--
--	intel_de_write(dev_priv, PIPECONF(pipe), trans_conf_value);
--	intel_de_write(dev_priv, TRANS_DDI_FUNC_CTL(pipe),
--		       trans_ddi_func_ctl_value);
--	intel_de_write(dev_priv, TGL_DP_TP_CTL(pipe), dp_tp_ctl_value);
--}
--
--static void
--intel_dp_autotest_phy_ddi_enable(struct intel_dp *intel_dp,
--				 const struct intel_crtc_state *crtc_state)
--{
--	struct intel_digital_port *dig_port = dp_to_dig_port(intel_dp);
--	struct drm_device *dev = dig_port->base.base.dev;
--	struct drm_i915_private *dev_priv = to_i915(dev);
--	enum port port = dig_port->base.port;
--	struct intel_crtc *crtc = to_intel_crtc(dig_port->base.base.crtc);
--	enum pipe pipe = crtc->pipe;
--	u32 trans_ddi_func_ctl_value, trans_conf_value, dp_tp_ctl_value;
--
--	trans_ddi_func_ctl_value = intel_de_read(dev_priv,
--						 TRANS_DDI_FUNC_CTL(pipe));
--	trans_conf_value = intel_de_read(dev_priv, PIPECONF(pipe));
--	dp_tp_ctl_value = intel_de_read(dev_priv, TGL_DP_TP_CTL(pipe));
--
--	trans_ddi_func_ctl_value |= TRANS_DDI_FUNC_ENABLE |
--				    TGL_TRANS_DDI_SELECT_PORT(port);
--	trans_conf_value |= PIPECONF_ENABLE;
--	dp_tp_ctl_value |= DP_TP_CTL_ENABLE;
--
--	intel_de_write(dev_priv, PIPECONF(pipe), trans_conf_value);
--	intel_de_write(dev_priv, TGL_DP_TP_CTL(pipe), dp_tp_ctl_value);
--	intel_de_write(dev_priv, TRANS_DDI_FUNC_CTL(pipe),
--		       trans_ddi_func_ctl_value);
--}
--
- static void intel_dp_process_phy_request(struct intel_dp *intel_dp,
- 					 const struct intel_crtc_state *crtc_state)
+ static struct mt7915_hif *mt7915_pci_init_hif2(struct pci_dev *pdev)
  {
-@@ -3317,14 +3262,10 @@ static void intel_dp_process_phy_request(struct intel_dp *intel_dp,
- 	intel_dp_get_adjust_train(intel_dp, crtc_state, DP_PHY_DPRX,
- 				  link_status);
++	struct pci_dev *tmp_pdev;
++
+ 	hif_idx++;
+-	if (!pci_get_device(PCI_VENDOR_ID_MEDIATEK, 0x7916, NULL) &&
+-	    !pci_get_device(PCI_VENDOR_ID_MEDIATEK, 0x790a, NULL))
+-		return NULL;
++
++	tmp_pdev = pci_get_device(PCI_VENDOR_ID_MEDIATEK, 0x7916, NULL);
++	if (!tmp_pdev) {
++		tmp_pdev = pci_get_device(PCI_VENDOR_ID_MEDIATEK, 0x790a, NULL);
++		if (!tmp_pdev)
++			return NULL;
++	}
++	pci_dev_put(tmp_pdev);
  
--	intel_dp_autotest_phy_ddi_disable(intel_dp, crtc_state);
--
- 	intel_dp_set_signal_levels(intel_dp, crtc_state, DP_PHY_DPRX);
- 
- 	intel_dp_phy_pattern_update(intel_dp, crtc_state);
- 
--	intel_dp_autotest_phy_ddi_enable(intel_dp, crtc_state);
--
- 	drm_dp_dpcd_write(&intel_dp->aux, DP_TRAINING_LANE0_SET,
- 			  intel_dp->train_set, crtc_state->lane_count);
- 
+ 	writel(hif_idx | MT_PCIE_RECOG_ID_SEM,
+ 	       pcim_iomap_table(pdev)[0] + MT_PCIE_RECOG_ID);
 -- 
 2.35.1
 
