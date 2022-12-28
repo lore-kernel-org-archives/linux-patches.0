@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F2181C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:54:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60DE9C433D2;
-	Wed, 28 Dec 2022 16:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B95971C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D9D0C433D2;
+	Wed, 28 Dec 2022 16:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246497;
-	bh=Y/Vay+/JbI8G6+W5iGyTt9B8uqjSBD3oCJgRX1GagCw=;
+	s=korg; t=1672246500;
+	bh=NEUP6zN9OADZm5zNxMnUdUs2DJSQYC2jc+XVsX3Rf54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mGJCbUsH/iWobUkTttmCJuoya5Dd55G+xKSX+694M3/pz3Tps0j2p0UUV3HRV9oDw
-	 cDXjy2nP7xrD0TxSNM6vgtaVzSkD6oTygvHmyQGNQRueB2TNouWZz33BAoRQL83jdV
-	 hfQ81HU+QBAe/CGzPcdVLGCPss3XPsV4XbS3DFkQ=
+	b=neNNJHlnLzvtFIHqQ2WU/Iunbh3GC+GF3uezfXwTaOzZzwdxmMn6u113M7tyULXex
+	 fR9OhRzK1QTBjqEJNwkWhci/Vsno89nDctJ9AmWRDQmTBu74Tw1nAhSugsqocSjNYD
+	 pfO7932coI8WgaeVjIk1exzp7azaPdtMDfHJ+9aE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Scott Benesh <scott.benesh@microchip.com>,
-	Scott Teel <scott.teel@microchip.com>,
-	Mike Mcgowan <mike.mcgowan@microchip.com>,
-	Kevin Barnett <kevin.barnett@microchip.com>,
-	Kumar Meiyappan <Kumar.Meiyappan@microchip.com>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1058/1146] scsi: smartpqi: Correct device removal for multi-actuator devices
-Date: Wed, 28 Dec 2022 15:43:17 +0100
-Message-Id: <20221228144359.027054019@linuxfoundation.org>
+Subject: [PATCH 6.1 1059/1146] drm/fsl-dcu: Fix return type of fsl_dcu_drm_connector_mode_valid()
+Date: Wed, 28 Dec 2022 15:43:18 +0100
+Message-Id: <20221228144359.051852570@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -40,126 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kumar Meiyappan <Kumar.Meiyappan@microchip.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit cc9befcbbb5ebce77726f938508700d913530035 ]
+[ Upstream commit 96d845a67b7e406cfed7880a724c8ca6121e022e ]
 
-Correct device count for multi-actuator drives which can cause kernel
-panics.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-Reviewed-by: Scott Benesh <scott.benesh@microchip.com>
-Reviewed-by: Scott Teel <scott.teel@microchip.com>
-Reviewed-by: Mike Mcgowan <mike.mcgowan@microchip.com>
-Reviewed-by: Kevin Barnett <kevin.barnett@microchip.com>
-Signed-off-by: Kumar Meiyappan <Kumar.Meiyappan@microchip.com>
-Signed-off-by: Don Brace <don.brace@microchip.com>
-Link: https://lore.kernel.org/r/166793531872.322537.9003385780343419275.stgit@brunhilda
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+  drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c:74:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .mode_valid = fsl_dcu_drm_connector_mode_valid,
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
+
+->mode_valid() in 'struct drm_connector_helper_funcs' expects a return
+type of 'enum drm_mode_status', not 'int'. Adjust the return type of
+fsl_dcu_drm_connector_mode_valid() to match the prototype's to resolve
+the warning and CFI failure.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Reported-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221102154215.78059-1-nathan@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/smartpqi/smartpqi.h      |  2 +-
- drivers/scsi/smartpqi/smartpqi_init.c | 33 +++++++++++++++++++--------
- 2 files changed, 25 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/smartpqi/smartpqi.h b/drivers/scsi/smartpqi/smartpqi.h
-index e550b12e525a..c8235f15728b 100644
---- a/drivers/scsi/smartpqi/smartpqi.h
-+++ b/drivers/scsi/smartpqi/smartpqi.h
-@@ -1130,7 +1130,7 @@ struct pqi_scsi_dev {
- 	u8	phy_id;
- 	u8	ncq_prio_enable;
- 	u8	ncq_prio_support;
--	u8	multi_lun_device_lun_count;
-+	u8	lun_count;
- 	bool	raid_bypass_configured;	/* RAID bypass configured */
- 	bool	raid_bypass_enabled;	/* RAID bypass enabled */
- 	u32	next_bypass_group[RAID_MAP_MAX_DATA_DISKS_PER_ROW];
-diff --git a/drivers/scsi/smartpqi/smartpqi_init.c b/drivers/scsi/smartpqi/smartpqi_init.c
-index 78fc743f46e4..9f0f69c1ed66 100644
---- a/drivers/scsi/smartpqi/smartpqi_init.c
-+++ b/drivers/scsi/smartpqi/smartpqi_init.c
-@@ -1610,9 +1610,7 @@ static int pqi_get_physical_device_info(struct pqi_ctrl_info *ctrl_info,
- 		&id_phys->alternate_paths_phys_connector,
- 		sizeof(device->phys_connector));
- 	device->bay = id_phys->phys_bay_in_box;
--	device->multi_lun_device_lun_count = id_phys->multi_lun_device_lun_count;
--	if (!device->multi_lun_device_lun_count)
--		device->multi_lun_device_lun_count = 1;
-+	device->lun_count = id_phys->multi_lun_device_lun_count;
- 	if ((id_phys->even_more_flags & PQI_DEVICE_PHY_MAP_SUPPORTED) &&
- 		id_phys->phy_count)
- 		device->phy_id =
-@@ -1746,7 +1744,7 @@ static bool pqi_keep_device_offline(struct pqi_ctrl_info *ctrl_info,
- 	return offline;
+diff --git a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
+index 4d4a715b429d..2c2b92324a2e 100644
+--- a/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
++++ b/drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_rgb.c
+@@ -60,8 +60,9 @@ static int fsl_dcu_drm_connector_get_modes(struct drm_connector *connector)
+ 	return drm_panel_get_modes(fsl_connector->panel, connector);
  }
  
--static int pqi_get_device_info(struct pqi_ctrl_info *ctrl_info,
-+static int pqi_get_device_info_phys_logical(struct pqi_ctrl_info *ctrl_info,
- 	struct pqi_scsi_dev *device,
- 	struct bmic_identify_physical_device *id_phys)
+-static int fsl_dcu_drm_connector_mode_valid(struct drm_connector *connector,
+-					    struct drm_display_mode *mode)
++static enum drm_mode_status
++fsl_dcu_drm_connector_mode_valid(struct drm_connector *connector,
++				 struct drm_display_mode *mode)
  {
-@@ -1763,6 +1761,20 @@ static int pqi_get_device_info(struct pqi_ctrl_info *ctrl_info,
- 	return rc;
- }
- 
-+static int pqi_get_device_info(struct pqi_ctrl_info *ctrl_info,
-+	struct pqi_scsi_dev *device,
-+	struct bmic_identify_physical_device *id_phys)
-+{
-+	int rc;
-+
-+	rc = pqi_get_device_info_phys_logical(ctrl_info, device, id_phys);
-+
-+	if (rc == 0 && device->lun_count == 0)
-+		device->lun_count = 1;
-+
-+	return rc;
-+}
-+
- static void pqi_show_volume_status(struct pqi_ctrl_info *ctrl_info,
- 	struct pqi_scsi_dev *device)
- {
-@@ -1897,7 +1909,7 @@ static inline void pqi_remove_device(struct pqi_ctrl_info *ctrl_info, struct pqi
- 	int rc;
- 	int lun;
- 
--	for (lun = 0; lun < device->multi_lun_device_lun_count; lun++) {
-+	for (lun = 0; lun < device->lun_count; lun++) {
- 		rc = pqi_device_wait_for_pending_io(ctrl_info, device, lun,
- 			PQI_REMOVE_DEVICE_PENDING_IO_TIMEOUT_MSECS);
- 		if (rc)
-@@ -2076,6 +2088,7 @@ static void pqi_scsi_update_device(struct pqi_ctrl_info *ctrl_info,
- 	existing_device->sas_address = new_device->sas_address;
- 	existing_device->queue_depth = new_device->queue_depth;
- 	existing_device->device_offline = false;
-+	existing_device->lun_count = new_device->lun_count;
- 
- 	if (pqi_is_logical_device(existing_device)) {
- 		existing_device->is_external_raid_device = new_device->is_external_raid_device;
-@@ -2108,10 +2121,6 @@ static void pqi_scsi_update_device(struct pqi_ctrl_info *ctrl_info,
- 		existing_device->phy_connected_dev_type = new_device->phy_connected_dev_type;
- 		memcpy(existing_device->box, new_device->box, sizeof(existing_device->box));
- 		memcpy(existing_device->phys_connector, new_device->phys_connector, sizeof(existing_device->phys_connector));
--
--		existing_device->multi_lun_device_lun_count = new_device->multi_lun_device_lun_count;
--		if (existing_device->multi_lun_device_lun_count == 0)
--			existing_device->multi_lun_device_lun_count = 1;
- 	}
- }
- 
-@@ -6484,6 +6493,12 @@ static void pqi_slave_destroy(struct scsi_device *sdev)
- 		return;
- 	}
- 
-+	device->lun_count--;
-+	if (device->lun_count > 0) {
-+		mutex_unlock(&ctrl_info->scan_mutex);
-+		return;
-+	}
-+
- 	spin_lock_irqsave(&ctrl_info->scsi_device_list_lock, flags);
- 	list_del(&device->scsi_device_list_entry);
- 	spin_unlock_irqrestore(&ctrl_info->scsi_device_list_lock, flags);
+ 	if (mode->hdisplay & 0xf)
+ 		return MODE_ERROR;
 -- 
 2.35.1
 
