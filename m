@@ -1,30 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3751863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:17:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14046C433EF;
-	Wed, 28 Dec 2022 15:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 357081863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:17:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A39C433D2;
+	Wed, 28 Dec 2022 15:17:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240649;
-	bh=MLRtfCooDebbWIHo2dsGHUY0wjpBQIhx4CKbimFIDYw=;
+	s=korg; t=1672240652;
+	bh=oxfABhci5gs/8s/M57gp5G+i+xxADjCS/c7aI3kVfYk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UQAAIeKQCOfbfu+919pZJQtHgCcYlLF/tgTqQoqcmOGnnMw+auOVZoXXitAFjqHLu
-	 J9nxHtiuvFQ0GTuHteYDNOC2WNlEO4Fiqvd7ex81WgyaRLumQ+eFhnNlpKP4eD9nfE
-	 3J/JXMWJRQqzdC/Rk3tYui4dqLEjK/qQeB5ShL88=
+	b=PX4L1m2HrBuZ00kARELWU0T62g0r+CFQWBkPqo3ZI+mQPin7Yt3bluvlIVNpo87Gs
+	 3H3P0S2hokZMGMJ/Bk/WfjdUdqlrzgrDFlD08b4rpcy1akIJTvgc2jyxR4DPgsUEdy
+	 abWdOfxxGDK5HgRGNfo6u68mLO0kc4SjacCZmoZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Cai Xinchen <caixinchen1@huawei.com>,
+	Alexandre Bounine <alex.bou9@gmail.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Jakob Koschel <jakobkoschel@gmail.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Matt Porter <mporter@kernel.crashing.org>,
+	Wang Weiyang <wangweiyang2@huawei.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 377/731] apparmor: Fix memleak in alloc_ns()
-Date: Wed, 28 Dec 2022 15:38:04 +0100
-Message-Id: <20221228144307.490248094@linuxfoundation.org>
+Subject: [PATCH 6.0 0185/1073] rapidio: devices: fix missing put_device in mport_cdev_open
+Date: Wed, 28 Dec 2022 15:29:33 +0100
+Message-Id: <20221228144333.036814049@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +42,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Cai Xinchen <caixinchen1@huawei.com>
 
-[ Upstream commit e9e6fa49dbab6d84c676666f3fe7d360497fd65b ]
+[ Upstream commit d5b6e6eba3af11cb2a2791fa36a2524990fcde1a ]
 
-After changes in commit a1bd627b46d1 ("apparmor: share profile name on
-replacement"), the hname member of struct aa_policy is not valid slab
-object, but a subset of that, it can not be freed by kfree_sensitive(),
-use aa_policy_destroy() to fix it.
+When kfifo_alloc fails, the refcount of chdev->dev is left incremental.
+We should use put_device(&chdev->dev) to decrease the ref count of
+chdev->dev to avoid refcount leak.
 
-Fixes: a1bd627b46d1 ("apparmor: share profile name on replacement")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+Link: https://lkml.kernel.org/r/20221203085721.13146-1-caixinchen1@huawei.com
+Fixes: e8de370188d0 ("rapidio: add mport char device driver")
+Signed-off-by: Cai Xinchen <caixinchen1@huawei.com>
+Cc: Alexandre Bounine <alex.bou9@gmail.com>
+Cc: Dan Carpenter <error27@gmail.com>
+Cc: Jakob Koschel <jakobkoschel@gmail.com>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Matt Porter <mporter@kernel.crashing.org>
+Cc: Wang Weiyang <wangweiyang2@huawei.com>
+Cc: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy_ns.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rapidio/devices/rio_mport_cdev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/security/apparmor/policy_ns.c b/security/apparmor/policy_ns.c
-index 70921d95fb40..53d24cf63893 100644
---- a/security/apparmor/policy_ns.c
-+++ b/security/apparmor/policy_ns.c
-@@ -121,7 +121,7 @@ static struct aa_ns *alloc_ns(const char *prefix, const char *name)
- 	return ns;
- 
- fail_unconfined:
--	kfree_sensitive(ns->base.hname);
-+	aa_policy_destroy(&ns->base);
- fail_ns:
- 	kfree_sensitive(ns);
- 	return NULL;
+diff --git a/drivers/rapidio/devices/rio_mport_cdev.c b/drivers/rapidio/devices/rio_mport_cdev.c
+index fecf523f36d8..43db495f1986 100644
+--- a/drivers/rapidio/devices/rio_mport_cdev.c
++++ b/drivers/rapidio/devices/rio_mport_cdev.c
+@@ -1912,6 +1912,7 @@ static int mport_cdev_open(struct inode *inode, struct file *filp)
+ 			  sizeof(struct rio_event) * MPORT_EVENT_DEPTH,
+ 			  GFP_KERNEL);
+ 	if (ret < 0) {
++		put_device(&chdev->dev);
+ 		dev_err(&chdev->dev, DRV_NAME ": kfifo_alloc failed\n");
+ 		ret = -ENOMEM;
+ 		goto err_fifo;
 -- 
 2.35.1
 
