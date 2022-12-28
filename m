@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FD141C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C64F2C433D2;
-	Wed, 28 Dec 2022 16:32:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDFBF1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63F37C433EF;
+	Wed, 28 Dec 2022 16:32:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245146;
-	bh=3xfmAbgDp0pb9e+o8FWPcwq7g1r+c+qVzn4YvrQLp08=;
+	s=korg; t=1672245148;
+	bh=U8OW2JTaqhl1eh0qeb5Cl7Hp18Obm5wbV2z950c9jCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z2GUcJrjYwUc+oWZ0kJtTqICQ0tYqr4fhTqpuvMGdWX/TCXD7oRLHUC9Pa/dUnfOK
-	 Lx1GYNNpF1fp5wJKuHkLGMKT2nnrxrM06oOt0x7+S6AimamLIB420OEpm56YYT1o+N
-	 0YkCnS3PXN1emXEUGrmtRy8XaKpMTlqlTfjbdD3M=
+	b=qCaHZFozVRIchzFyrsyGvAgkcbPfBbPvtUFmYWTqDSiOeVaI0dNbiWqMCeR/rJ6tr
+	 VY2DnsiamSS5jfawb1yxdH9B7HrTJWNYwo1TDM/oucnTtjFpGGmEDn8+4XJtiBgcQd
+	 4YF2Qoi6vbsVz+ExjalBESxf8f50cUA2OzIovTUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang Li <liali@redhat.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0840/1073] bonding: do failover when high prio link up
-Date: Wed, 28 Dec 2022 15:40:28 +0100
-Message-Id: <20221228144350.836586427@linuxfoundation.org>
+Subject: [PATCH 6.1 0805/1146] phy: qcom-qmp-usb: clean up status polling
+Date: Wed, 28 Dec 2022 15:39:04 +0100
+Message-Id: <20221228144352.019169847@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,112 +36,185 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit e95cc44763a41d5c715ef16742bcb1d8e6524a62 ]
+[ Upstream commit f5ef85adece529a6cd1e7563081c41038923a9ed ]
 
-Currently, when a high prio link enslaved, or when current link down,
-the high prio port could be selected. But when high prio link up, the
-new active slave reselection is not triggered. Fix it by checking link's
-prio when getting up. Making the do_failover after looping all slaves as
-there may be multi high prio slaves up.
+Clean up the PHY status polling by dropping the configuration mask which
+is no longer needed since the QMP driver split.
 
-Reported-by: Liang Li <liali@redhat.com>
-Fixes: 0a2ff7cc8ad4 ("Bonding: add per-port priority for failover re-selection")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20221012085002.24099-13-johan+linaro@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 922adfd59efd ("phy: qcom-qmp-usb: correct registers layout for IPQ8074 USB3 PHY")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 24 +++++++++++++++---------
- 1 file changed, 15 insertions(+), 9 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 25 ++-----------------------
+ 1 file changed, 2 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 36a8db140388..771f2a533d3f 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2653,8 +2653,9 @@ static void bond_miimon_link_change(struct bonding *bond,
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+index f8a300f0aec3..a551ef4b5777 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+@@ -1458,8 +1458,6 @@ struct qmp_phy_cfg {
  
- static void bond_miimon_commit(struct bonding *bond)
- {
--	struct list_head *iter;
- 	struct slave *slave, *primary;
-+	bool do_failover = false;
-+	struct list_head *iter;
+ 	unsigned int start_ctrl;
+ 	unsigned int pwrdn_ctrl;
+-	/* bit offset of PHYSTATUS in QPHY_PCS_STATUS register */
+-	unsigned int phy_status;
  
- 	bond_for_each_slave(bond, slave, iter) {
- 		switch (slave->link_new_state) {
-@@ -2698,8 +2699,9 @@ static void bond_miimon_commit(struct bonding *bond)
+ 	/* true, if PHY needs delay after POWER_DOWN */
+ 	bool has_pwrdn_delay;
+@@ -1617,7 +1615,6 @@ static const struct qmp_phy_cfg ipq8074_usb3phy_cfg = {
  
- 			bond_miimon_link_change(bond, slave, BOND_LINK_UP);
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.phy_status		= PHYSTATUS,
+ };
  
--			if (!rcu_access_pointer(bond->curr_active_slave) || slave == primary)
--				goto do_failover;
-+			if (!rcu_access_pointer(bond->curr_active_slave) || slave == primary ||
-+			    slave->prio > rcu_dereference(bond->curr_active_slave)->prio)
-+				do_failover = true;
+ static const struct qmp_phy_cfg msm8996_usb3phy_cfg = {
+@@ -1641,7 +1638,6 @@ static const struct qmp_phy_cfg msm8996_usb3phy_cfg = {
  
- 			continue;
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.phy_status		= PHYSTATUS,
+ };
  
-@@ -2720,7 +2722,7 @@ static void bond_miimon_commit(struct bonding *bond)
- 			bond_miimon_link_change(bond, slave, BOND_LINK_DOWN);
+ static const struct qmp_phy_cfg qmp_v3_usb3phy_cfg = {
+@@ -1665,7 +1661,6 @@ static const struct qmp_phy_cfg qmp_v3_usb3phy_cfg = {
  
- 			if (slave == rcu_access_pointer(bond->curr_active_slave))
--				goto do_failover;
-+				do_failover = true;
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.phy_status		= PHYSTATUS,
  
- 			continue;
+ 	.has_pwrdn_delay	= true,
+ 	.has_phy_dp_com_ctrl	= true,
+@@ -1692,7 +1687,6 @@ static const struct qmp_phy_cfg sc7180_usb3phy_cfg = {
  
-@@ -2731,8 +2733,9 @@ static void bond_miimon_commit(struct bonding *bond)
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.phy_status		= PHYSTATUS,
  
- 			continue;
- 		}
-+	}
+ 	.has_pwrdn_delay	= true,
+ 	.has_phy_dp_com_ctrl	= true,
+@@ -1719,7 +1713,6 @@ static const struct qmp_phy_cfg sc8280xp_usb3_uniphy_cfg = {
  
--do_failover:
-+	if (do_failover) {
- 		block_netpoll_tx();
- 		bond_select_active_slave(bond);
- 		unblock_netpoll_tx();
-@@ -3530,6 +3533,7 @@ static int bond_ab_arp_inspect(struct bonding *bond)
-  */
- static void bond_ab_arp_commit(struct bonding *bond)
- {
-+	bool do_failover = false;
- 	struct list_head *iter;
- 	unsigned long last_tx;
- 	struct slave *slave;
-@@ -3559,8 +3563,9 @@ static void bond_ab_arp_commit(struct bonding *bond)
- 				slave_info(bond->dev, slave->dev, "link status definitely up\n");
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.phy_status		= PHYSTATUS,
+ };
  
- 				if (!rtnl_dereference(bond->curr_active_slave) ||
--				    slave == rtnl_dereference(bond->primary_slave))
--					goto do_failover;
-+				    slave == rtnl_dereference(bond->primary_slave) ||
-+				    slave->prio > rtnl_dereference(bond->curr_active_slave)->prio)
-+					do_failover = true;
+ static const struct qmp_phy_cfg qmp_v3_usb3_uniphy_cfg = {
+@@ -1743,7 +1736,6 @@ static const struct qmp_phy_cfg qmp_v3_usb3_uniphy_cfg = {
  
- 			}
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.phy_status		= PHYSTATUS,
  
-@@ -3579,7 +3584,7 @@ static void bond_ab_arp_commit(struct bonding *bond)
+ 	.has_pwrdn_delay	= true,
+ };
+@@ -1769,7 +1761,6 @@ static const struct qmp_phy_cfg msm8998_usb3phy_cfg = {
  
- 			if (slave == rtnl_dereference(bond->curr_active_slave)) {
- 				RCU_INIT_POINTER(bond->current_arp_slave, NULL);
--				goto do_failover;
-+				do_failover = true;
- 			}
+ 	.start_ctrl             = SERDES_START | PCS_START,
+ 	.pwrdn_ctrl             = SW_PWRDN,
+-	.phy_status		= PHYSTATUS,
+ };
  
- 			continue;
-@@ -3603,8 +3608,9 @@ static void bond_ab_arp_commit(struct bonding *bond)
- 				  slave->link_new_state);
- 			continue;
- 		}
-+	}
+ static const struct qmp_phy_cfg sm8150_usb3phy_cfg = {
+@@ -1796,7 +1787,6 @@ static const struct qmp_phy_cfg sm8150_usb3phy_cfg = {
  
--do_failover:
-+	if (do_failover) {
- 		block_netpoll_tx();
- 		bond_select_active_slave(bond);
- 		unblock_netpoll_tx();
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+ 	.has_phy_dp_com_ctrl	= true,
+@@ -1826,7 +1816,6 @@ static const struct qmp_phy_cfg sm8150_usb3_uniphy_cfg = {
+ 
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+ };
+@@ -1855,7 +1844,6 @@ static const struct qmp_phy_cfg sm8250_usb3phy_cfg = {
+ 
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+ 	.has_phy_dp_com_ctrl	= true,
+@@ -1885,7 +1873,6 @@ static const struct qmp_phy_cfg sm8250_usb3_uniphy_cfg = {
+ 
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+ };
+@@ -1914,7 +1901,6 @@ static const struct qmp_phy_cfg sdx55_usb3_uniphy_cfg = {
+ 
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+ };
+@@ -1943,7 +1929,6 @@ static const struct qmp_phy_cfg sdx65_usb3_uniphy_cfg = {
+ 
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+ };
+@@ -1972,7 +1957,6 @@ static const struct qmp_phy_cfg sm8350_usb3phy_cfg = {
+ 
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+ 	.has_phy_dp_com_ctrl	= true,
+@@ -2002,7 +1986,6 @@ static const struct qmp_phy_cfg sm8350_usb3_uniphy_cfg = {
+ 
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+ };
+@@ -2028,7 +2011,6 @@ static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
+ 
+ 	.start_ctrl		= SERDES_START | PCS_START,
+ 	.pwrdn_ctrl		= SW_PWRDN,
+-	.phy_status		= PHYSTATUS,
+ };
+ 
+ static void qmp_usb_configure_lane(void __iomem *base,
+@@ -2166,7 +2148,7 @@ static int qmp_usb_power_on(struct phy *phy)
+ 	void __iomem *rx = qphy->rx;
+ 	void __iomem *pcs = qphy->pcs;
+ 	void __iomem *status;
+-	unsigned int mask, val, ready;
++	unsigned int val;
+ 	int ret;
+ 
+ 	qmp_usb_serdes_init(qphy);
+@@ -2205,10 +2187,7 @@ static int qmp_usb_power_on(struct phy *phy)
+ 	qphy_setbits(pcs, cfg->regs[QPHY_START_CTRL], cfg->start_ctrl);
+ 
+ 	status = pcs + cfg->regs[QPHY_PCS_STATUS];
+-	mask = cfg->phy_status;
+-	ready = 0;
+-
+-	ret = readl_poll_timeout(status, val, (val & mask) == ready, 10,
++	ret = readl_poll_timeout(status, val, !(val & PHYSTATUS), 10,
+ 				 PHY_INIT_COMPLETE_TIMEOUT);
+ 	if (ret) {
+ 		dev_err(qmp->dev, "phy initialization timed-out\n");
 -- 
 2.35.1
 
