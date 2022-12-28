@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A24D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE4A2C433EF;
-	Wed, 28 Dec 2022 15:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6C81863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:28:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 733E3C433D2;
+	Wed, 28 Dec 2022 15:28:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241320;
-	bh=sp159iaMXyRIQCLC75S/T8IgDsXNctfN+Cp1tV5LlnE=;
+	s=korg; t=1672241322;
+	bh=q39LaOa2W43HErDuWLiPWEb7xwgNIST8ul/1nBzXxHk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SzDD9WQGKaEIwAixn6sQZoNQ+1o321leMUMkDrcKod3ahULtj5rFzREf558o9Y277
-	 coCMoPJoKdn20Thli1/Tiakg9aLkf5GAhbQE1TUs8Ec/6Gww8bzV2gebscTjGszYC2
-	 CV+pdtseXB3qYAzp+PEWAzUqmjPB1wao0u/VXk6o=
+	b=sDmpGNS2atHZfP378C0jTJpQf8lp6HJq2gvAZr0Ma0eWD4fZqfBxs+WM6/FdXKA4v
+	 e3cgUoYYOvuaPdM2ti61mYqmdbMSCHtYjgMDoHX7QJlv9yB8L5wbR/UdhVTgTw0JNA
+	 DOGV8aAUktmLfTmVsQw0e21zP9GGldvy0eJc4170=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Anssi Hannula <anssi.hannula@bitwise.fi>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	GUO Zihua <guozihua@huawei.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0245/1073] can: kvaser_usb_leaf: Fix improved state not being reported
-Date: Wed, 28 Dec 2022 15:30:33 +0100
-Message-Id: <20221228144334.679481994@linuxfoundation.org>
+Subject: [PATCH 6.0 0266/1073] ima: Handle -ESTALE returned by ima_filter_rule_match()
+Date: Wed, 28 Dec 2022 15:30:54 +0100
+Message-Id: <20221228144335.245557331@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -36,257 +36,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anssi Hannula <anssi.hannula@bitwise.fi>
+From: GUO Zihua <guozihua@huawei.com>
 
-[ Upstream commit 8d21f5927ae604881f98587fabf6753f88730968 ]
+[ Upstream commit c7423dbdbc9ecef7fff5239d144cad4b9887f4de ]
 
-The tested 0bfd:0017 Kvaser Memorator Professional HS/HS FW 2.0.50 and
-0bfd:0124 Kvaser Mini PCI Express 2xHS FW 4.18.778 do not seem to send
-any unsolicited events when error counters decrease or when the device
-transitions from ERROR_PASSIVE to ERROR_ACTIVE (or WARNING).
+IMA relies on the blocking LSM policy notifier callback to update the
+LSM based IMA policy rules.
 
-This causes the interface to e.g. indefinitely stay in the ERROR_PASSIVE
-state.
+When SELinux update its policies, IMA would be notified and starts
+updating all its lsm rules one-by-one. During this time, -ESTALE would
+be returned by ima_filter_rule_match() if it is called with a LSM rule
+that has not yet been updated. In ima_match_rules(), -ESTALE is not
+handled, and the LSM rule is considered a match, causing extra files
+to be measured by IMA.
 
-Fix that by asking for chip state (inc. counters) event every 0.5 secs
-when error counters are non-zero.
+Fix it by re-initializing a temporary rule if -ESTALE is returned by
+ima_filter_rule_match(). The origin rule in the rule list would be
+updated by the LSM policy notifier callback.
 
-Since there are non-error-counter devices, also always poll in
-ERROR_PASSIVE even if the counters show zero.
-
-Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
-Tested-by: Jimmy Assarsson <extja@kvaser.com>
-Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/all/20221010185237.319219-7-extja@kvaser.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: b16942455193 ("ima: use the lsm policy update notifier")
+Signed-off-by: GUO Zihua <guozihua@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb.h   |  7 +++
- .../net/can/usb/kvaser_usb/kvaser_usb_core.c  | 19 +++++-
- .../net/can/usb/kvaser_usb/kvaser_usb_leaf.c  | 58 +++++++++++++++++++
- 3 files changed, 81 insertions(+), 3 deletions(-)
+ security/integrity/ima/ima_policy.c | 41 ++++++++++++++++++++++-------
+ 1 file changed, 32 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb.h b/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
-index f6c0938027ec..d9c5dd5da908 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb.h
-@@ -104,6 +104,9 @@ struct kvaser_usb_net_priv {
- 	struct can_priv can;
- 	struct can_berr_counter bec;
- 
-+	/* subdriver-specific data */
-+	void *sub_priv;
-+
- 	struct kvaser_usb *dev;
- 	struct net_device *netdev;
- 	int channel;
-@@ -125,6 +128,8 @@ struct kvaser_usb_net_priv {
-  *
-  * @dev_setup_endpoints:	setup USB in and out endpoints
-  * @dev_init_card:		initialize card
-+ * @dev_init_channel:		initialize channel
-+ * @dev_remove_channel:		uninitialize channel
-  * @dev_get_software_info:	get software info
-  * @dev_get_software_details:	get software details
-  * @dev_get_card_info:		get card info
-@@ -146,6 +151,8 @@ struct kvaser_usb_dev_ops {
- 				    struct can_berr_counter *bec);
- 	int (*dev_setup_endpoints)(struct kvaser_usb *dev);
- 	int (*dev_init_card)(struct kvaser_usb *dev);
-+	int (*dev_init_channel)(struct kvaser_usb_net_priv *priv);
-+	void (*dev_remove_channel)(struct kvaser_usb_net_priv *priv);
- 	int (*dev_get_software_info)(struct kvaser_usb *dev);
- 	int (*dev_get_software_details)(struct kvaser_usb *dev);
- 	int (*dev_get_card_info)(struct kvaser_usb *dev);
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
-index 802e27c0eced..0ebdfb77c50f 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_core.c
-@@ -684,6 +684,7 @@ static const struct ethtool_ops kvaser_usb_ethtool_ops_hwts = {
- 
- static void kvaser_usb_remove_interfaces(struct kvaser_usb *dev)
+diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
+index a8802b8da946..bb3707160b01 100644
+--- a/security/integrity/ima/ima_policy.c
++++ b/security/integrity/ima/ima_policy.c
+@@ -549,6 +549,9 @@ static bool ima_match_rules(struct ima_rule_entry *rule,
+ 			    const char *func_data)
  {
-+	const struct kvaser_usb_dev_ops *ops = dev->driver_info->ops;
  	int i;
++	bool result = false;
++	struct ima_rule_entry *lsm_rule = rule;
++	bool rule_reinitialized = false;
  
- 	for (i = 0; i < dev->nchannels; i++) {
-@@ -699,6 +700,9 @@ static void kvaser_usb_remove_interfaces(struct kvaser_usb *dev)
- 		if (!dev->nets[i])
- 			continue;
+ 	if ((rule->flags & IMA_FUNC) &&
+ 	    (rule->func != func && func != POST_SETATTR))
+@@ -610,35 +613,55 @@ static bool ima_match_rules(struct ima_rule_entry *rule,
+ 		int rc = 0;
+ 		u32 osid;
  
-+		if (ops->dev_remove_channel)
-+			ops->dev_remove_channel(dev->nets[i]);
+-		if (!rule->lsm[i].rule) {
+-			if (!rule->lsm[i].args_p)
++		if (!lsm_rule->lsm[i].rule) {
++			if (!lsm_rule->lsm[i].args_p)
+ 				continue;
+ 			else
+ 				return false;
+ 		}
 +
- 		free_candev(dev->nets[i]->netdev);
++retry:
+ 		switch (i) {
+ 		case LSM_OBJ_USER:
+ 		case LSM_OBJ_ROLE:
+ 		case LSM_OBJ_TYPE:
+ 			security_inode_getsecid(inode, &osid);
+-			rc = ima_filter_rule_match(osid, rule->lsm[i].type,
++			rc = ima_filter_rule_match(osid, lsm_rule->lsm[i].type,
+ 						   Audit_equal,
+-						   rule->lsm[i].rule);
++						   lsm_rule->lsm[i].rule);
+ 			break;
+ 		case LSM_SUBJ_USER:
+ 		case LSM_SUBJ_ROLE:
+ 		case LSM_SUBJ_TYPE:
+-			rc = ima_filter_rule_match(secid, rule->lsm[i].type,
++			rc = ima_filter_rule_match(secid, lsm_rule->lsm[i].type,
+ 						   Audit_equal,
+-						   rule->lsm[i].rule);
++						   lsm_rule->lsm[i].rule);
+ 			break;
+ 		default:
+ 			break;
+ 		}
+-		if (!rc)
+-			return false;
++
++		if (rc == -ESTALE && !rule_reinitialized) {
++			lsm_rule = ima_lsm_copy_rule(rule);
++			if (lsm_rule) {
++				rule_reinitialized = true;
++				goto retry;
++			}
++		}
++		if (!rc) {
++			result = false;
++			goto out;
++		}
  	}
- }
-@@ -772,17 +776,26 @@ static int kvaser_usb_init_one(struct kvaser_usb *dev, int channel)
- 
- 	dev->nets[channel] = priv;
- 
-+	if (ops->dev_init_channel) {
-+		err = ops->dev_init_channel(priv);
-+		if (err)
-+			goto err;
+-	return true;
++	result = true;
++
++out:
++	if (rule_reinitialized) {
++		for (i = 0; i < MAX_LSM_RULES; i++)
++			ima_filter_rule_free(lsm_rule->lsm[i].rule);
++		kfree(lsm_rule);
 +	}
-+
- 	err = register_candev(netdev);
- 	if (err) {
- 		dev_err(&dev->intf->dev, "Failed to register CAN device\n");
--		free_candev(netdev);
--		dev->nets[channel] = NULL;
--		return err;
-+		goto err;
- 	}
- 
- 	netdev_dbg(netdev, "device registered\n");
- 
- 	return 0;
-+
-+err:
-+	free_candev(netdev);
-+	dev->nets[channel] = NULL;
-+	return err;
++	return result;
  }
  
- static int kvaser_usb_probe(struct usb_interface *intf,
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-index a6a26085bc15..993fcc19637d 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-@@ -21,6 +21,7 @@
- #include <linux/types.h>
- #include <linux/units.h>
- #include <linux/usb.h>
-+#include <linux/workqueue.h>
- 
- #include <linux/can.h>
- #include <linux/can/dev.h>
-@@ -56,6 +57,7 @@
- #define CMD_RX_EXT_MESSAGE		14
- #define CMD_TX_EXT_MESSAGE		15
- #define CMD_SET_BUS_PARAMS		16
-+#define CMD_GET_CHIP_STATE		19
- #define CMD_CHIP_STATE_EVENT		20
- #define CMD_SET_CTRL_MODE		21
- #define CMD_RESET_CHIP			24
-@@ -421,6 +423,12 @@ struct kvaser_usb_err_summary {
- 	};
- };
- 
-+struct kvaser_usb_net_leaf_priv {
-+	struct kvaser_usb_net_priv *net;
-+
-+	struct delayed_work chip_state_req_work;
-+};
-+
- static const struct can_bittiming_const kvaser_usb_leaf_m16c_bittiming_const = {
- 	.name = "kvaser_usb_ucii",
- 	.tseg1_min = 4,
-@@ -943,6 +951,16 @@ static int kvaser_usb_leaf_simple_cmd_async(struct kvaser_usb_net_priv *priv,
- 	return err;
- }
- 
-+static void kvaser_usb_leaf_chip_state_req_work(struct work_struct *work)
-+{
-+	struct kvaser_usb_net_leaf_priv *leaf =
-+		container_of(work, struct kvaser_usb_net_leaf_priv,
-+			     chip_state_req_work.work);
-+	struct kvaser_usb_net_priv *priv = leaf->net;
-+
-+	kvaser_usb_leaf_simple_cmd_async(priv, CMD_GET_CHIP_STATE);
-+}
-+
- static void
- kvaser_usb_leaf_rx_error_update_can_state(struct kvaser_usb_net_priv *priv,
- 					const struct kvaser_usb_err_summary *es,
-@@ -1014,6 +1032,7 @@ static void kvaser_usb_leaf_rx_error(const struct kvaser_usb *dev,
- 	struct sk_buff *skb;
- 	struct net_device_stats *stats;
- 	struct kvaser_usb_net_priv *priv;
-+	struct kvaser_usb_net_leaf_priv *leaf;
- 	enum can_state old_state, new_state;
- 
- 	if (es->channel >= dev->nchannels) {
-@@ -1023,6 +1042,7 @@ static void kvaser_usb_leaf_rx_error(const struct kvaser_usb *dev,
- 	}
- 
- 	priv = dev->nets[es->channel];
-+	leaf = priv->sub_priv;
- 	stats = &priv->netdev->stats;
- 
- 	/* Update all of the CAN interface's state and error counters before
-@@ -1039,6 +1059,14 @@ static void kvaser_usb_leaf_rx_error(const struct kvaser_usb *dev,
- 	kvaser_usb_leaf_rx_error_update_can_state(priv, es, &tmp_cf);
- 	new_state = priv->can.state;
- 
-+	/* If there are errors, request status updates periodically as we do
-+	 * not get automatic notifications of improved state.
-+	 */
-+	if (new_state < CAN_STATE_BUS_OFF &&
-+	    (es->rxerr || es->txerr || new_state == CAN_STATE_ERROR_PASSIVE))
-+		schedule_delayed_work(&leaf->chip_state_req_work,
-+				      msecs_to_jiffies(500));
-+
- 	skb = alloc_can_err_skb(priv->netdev, &cf);
- 	if (!skb) {
- 		stats->rx_dropped++;
-@@ -1573,10 +1601,13 @@ static int kvaser_usb_leaf_start_chip(struct kvaser_usb_net_priv *priv)
- 
- static int kvaser_usb_leaf_stop_chip(struct kvaser_usb_net_priv *priv)
- {
-+	struct kvaser_usb_net_leaf_priv *leaf = priv->sub_priv;
- 	int err;
- 
- 	reinit_completion(&priv->stop_comp);
- 
-+	cancel_delayed_work(&leaf->chip_state_req_work);
-+
- 	err = kvaser_usb_leaf_send_simple_cmd(priv->dev, CMD_STOP_CHIP,
- 					      priv->channel);
- 	if (err)
-@@ -1623,6 +1654,31 @@ static int kvaser_usb_leaf_init_card(struct kvaser_usb *dev)
- 	return 0;
- }
- 
-+static int kvaser_usb_leaf_init_channel(struct kvaser_usb_net_priv *priv)
-+{
-+	struct kvaser_usb_net_leaf_priv *leaf;
-+
-+	leaf = devm_kzalloc(&priv->dev->intf->dev, sizeof(*leaf), GFP_KERNEL);
-+	if (!leaf)
-+		return -ENOMEM;
-+
-+	leaf->net = priv;
-+	INIT_DELAYED_WORK(&leaf->chip_state_req_work,
-+			  kvaser_usb_leaf_chip_state_req_work);
-+
-+	priv->sub_priv = leaf;
-+
-+	return 0;
-+}
-+
-+static void kvaser_usb_leaf_remove_channel(struct kvaser_usb_net_priv *priv)
-+{
-+	struct kvaser_usb_net_leaf_priv *leaf = priv->sub_priv;
-+
-+	if (leaf)
-+		cancel_delayed_work_sync(&leaf->chip_state_req_work);
-+}
-+
- static int kvaser_usb_leaf_set_bittiming(struct net_device *netdev)
- {
- 	struct kvaser_usb_net_priv *priv = netdev_priv(netdev);
-@@ -1720,6 +1776,8 @@ const struct kvaser_usb_dev_ops kvaser_usb_leaf_dev_ops = {
- 	.dev_get_berr_counter = kvaser_usb_leaf_get_berr_counter,
- 	.dev_setup_endpoints = kvaser_usb_leaf_setup_endpoints,
- 	.dev_init_card = kvaser_usb_leaf_init_card,
-+	.dev_init_channel = kvaser_usb_leaf_init_channel,
-+	.dev_remove_channel = kvaser_usb_leaf_remove_channel,
- 	.dev_get_software_info = kvaser_usb_leaf_get_software_info,
- 	.dev_get_software_details = NULL,
- 	.dev_get_card_info = kvaser_usb_leaf_get_card_info,
+ /*
 -- 
 2.35.1
 
