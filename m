@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4257B1868
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:33:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 943D1C433EF;
-	Wed, 28 Dec 2022 15:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56CE41863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:33:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0D5FC433D2;
+	Wed, 28 Dec 2022 15:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241597;
-	bh=jeOSHteDiIvJJeJcSRj4KpxFzP0oa5ghNss+BUgdy1M=;
+	s=korg; t=1672241594;
+	bh=72Wh5J16EpVtZQMTyye0rh1CNnnfej2Qm+l0VhW9Oa0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FRfIQywJfvQYxEE1e8NMPqS18uFScW0POnfyz79F1CpfTUFaKcwEyxgAt10YAYR2w
-	 WRuqCiUoGw/QGDHtg3ZTyrLjxh7zzveKuQSHnV2QPJ2qBvowhekl0YfE3aU1leRy+i
-	 nnbnWkbJ+QOSCPlTNkXpESFP/J82Mg7F5hEO3kSo=
+	b=Uw2vUXu0PdeaBQsGW6UUKpdS1HB9KZuBD2JDdhT8RyCgpiSBxSEN3eDKC6R9J9rib
+	 W8+iv/+OwazMM98BNn9cSramqZtsuZdZTzJc2rR7LM2GpgoqwUIGClQ1LoeES5SDFC
+	 6sTLzJ9oz+iGpgtXbQ8RCDw2yK4uX2qAJkqliPaY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	coverity-bot <keescook+coverity-bot@chromium.org>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Marcus Folkesson <marcus.folkesson@gmail.com>,
+	Jacky Bai <ping.bai@nxp.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0302/1073] wifi: rtw89: use u32_encode_bits() to fill MAC quota value
-Date: Wed, 28 Dec 2022 15:31:30 +0100
-Message-Id: <20221228144336.214693724@linuxfoundation.org>
+Subject: [PATCH 5.15 500/731] thermal/drivers/imx8mm_thermal: Validate temperature range
+Date: Wed, 28 Dec 2022 15:40:07 +0100
+Message-Id: <20221228144311.041052589@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,51 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Marcus Folkesson <marcus.folkesson@gmail.com>
 
-[ Upstream commit 525c06c81d75690a9b795cc62a758838c1a6b6fe ]
+[ Upstream commit d37edc7370273306d8747097fafa62436c1cfe16 ]
 
-Coverity reported shift 16 bits could cause sign extension and might get
-an unexpected value. Since the input values are predefined and no this
-kind of case, original code is safe so far. But, still changing them to
-use u32_encode_bits() will be more clear and prevent mistakes in the
-future.
+Check against the upper temperature limit (125 degrees C) before
+consider the temperature valid.
 
-The original message of Coverity is:
-  Suspicious implicit sign extension: "max_cfg->cma0_dma" with type "u16"
-  (16 bits, unsigned) is promoted in "max_cfg->cma0_dma << 16" to type
-  "int" (32 bits, signed), then sign-extended to type "unsigned long"
-  (64 bits, unsigned).  If "max_cfg->cma0_dma << 16" is greater than
-  0x7FFFFFFF, the upper bits of the result will all be 1."
-
-Reported-by: coverity-bot <keescook+coverity-bot@chromium.org>
-Addresses-Coverity-ID: 1527095 ("Integer handling issues")
-Fixes: e3ec7017f6a2 ("rtw89: add Realtek 802.11ax driver")
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221108013858.10806-1-pkshih@realtek.com
+Fixes: 5eed800a6811 ("thermal: imx8mm: Add support for i.MX8MM thermal monitoring unit")
+Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
+Reviewed-by: Jacky Bai <ping.bai@nxp.com>
+Link: https://lore.kernel.org/r/20221014073507.1594844-1-marcus.folkesson@gmail.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/mac.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/thermal/imx8mm_thermal.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
-index 93124b815825..1afc14531194 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac.c
-@@ -1387,10 +1387,8 @@ static int dle_mix_cfg(struct rtw89_dev *rtwdev, const struct rtw89_dle_mem *cfg
- #define INVALID_QT_WCPU U16_MAX
- #define SET_QUOTA_VAL(_min_x, _max_x, _module, _idx)			\
- 	do {								\
--		val = ((_min_x) &					\
--		       B_AX_ ## _module ## _MIN_SIZE_MASK) |		\
--		      (((_max_x) << 16) &				\
--		       B_AX_ ## _module ## _MAX_SIZE_MASK);		\
-+		val = u32_encode_bits(_min_x, B_AX_ ## _module ## _MIN_SIZE_MASK) | \
-+		      u32_encode_bits(_max_x, B_AX_ ## _module ## _MAX_SIZE_MASK);  \
- 		rtw89_write32(rtwdev,					\
- 			      R_AX_ ## _module ## _QTA ## _idx ## _CFG,	\
- 			      val);					\
+diff --git a/drivers/thermal/imx8mm_thermal.c b/drivers/thermal/imx8mm_thermal.c
+index af666bd9e8d4..c5cd873c6e01 100644
+--- a/drivers/thermal/imx8mm_thermal.c
++++ b/drivers/thermal/imx8mm_thermal.c
+@@ -65,8 +65,14 @@ static int imx8mm_tmu_get_temp(void *data, int *temp)
+ 	u32 val;
+ 
+ 	val = readl_relaxed(tmu->base + TRITSR) & TRITSR_TEMP0_VAL_MASK;
++
++	/*
++	 * Do not validate against the V bit (bit 31) due to errata
++	 * ERR051272: TMU: Bit 31 of registers TMU_TSCR/TMU_TRITSR/TMU_TRATSR invalid
++	 */
++
+ 	*temp = val * 1000;
+-	if (*temp < VER1_TEMP_LOW_LIMIT)
++	if (*temp < VER1_TEMP_LOW_LIMIT || *temp > VER2_TEMP_HIGH_LIMIT)
+ 		return -EAGAIN;
+ 
+ 	return 0;
 -- 
 2.35.1
 
