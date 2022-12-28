@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D7BD1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6286C433D2;
-	Wed, 28 Dec 2022 16:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84161C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D260C433D2;
+	Wed, 28 Dec 2022 16:11:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243896;
-	bh=dJgZaAXz44OcIoZ8lj2GbfgRiJ7+2jo3eYjnptDEBUI=;
+	s=korg; t=1672243898;
+	bh=O1Epqf9tOVdNCCmYh0t9PPPe26T4Uroi/i6UibERRc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j+rTi37Rw7h9A3HH9df81v4tpf8kMejpob3q30rnnBekyQsW9pkeHMv5sMAXIK0VL
-	 D0R4/FKD8NQHs3AetVOzsZhiGLrqQXKmR4jOexCzESUmYJKsB75aRC3DfGv3rmxxnG
-	 /ptkapQ5kXBFxRI/+KAVy26kdHQV0GU5kVbexYY0=
+	b=zEb957B9wmo7Tg0OUpQxg3VyLd3gdvS5mSEj85lLeEsj815LgcVwFuBFDgLfJTVJv
+	 /i6/L5U7h59xC0fYKTMcy4Kx9btFaQYJ7y5IKFZTI3xybjdzJWegXon7kcrJ06coBc
+	 CX0nb9SuEP9DCvQCj30OL9gW7ItVF8jwTYjxkHlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Johansen <john.johansen@canonical.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0574/1146] apparmor: Fix regression in stacking due to label flags
-Date: Wed, 28 Dec 2022 15:35:13 +0100
-Message-Id: <20221228144345.763098284@linuxfoundation.org>
+Subject: [PATCH 6.1 0543/1146] net: amd: lance: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:34:42 +0100
+Message-Id: <20221228144344.923332898@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -34,58 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Johansen <john.johansen@canonical.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 1f939c6bd1512d0b39b470396740added3cb403f ]
+[ Upstream commit 6151d105dfce8c23edf30eed35e97f3d9b96a35c ]
 
-The unconfined label flag is not being computed correctly. It
-should only be set if all the profiles in the vector are set, which
-is different than what is required for the debug and stale flag
-that are set if any on the profile flags are set.
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-Fixes: c1ed5da19765 ("apparmor: allow label to carry debug flags")
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
+The difference between them is free reason, dev_kfree_skb_irq() means
+the SKB is dropped in error and dev_consume_skb_irq() means the SKB
+is consumed in normal.
+
+In these two cases, dev_kfree_skb() is called consume the xmited SKB,
+so replace it with dev_consume_skb_irq().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/label.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/amd/atarilance.c | 2 +-
+ drivers/net/ethernet/amd/lance.c      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/security/apparmor/label.c b/security/apparmor/label.c
-index 0f36ee907438..a67c5897ee25 100644
---- a/security/apparmor/label.c
-+++ b/security/apparmor/label.c
-@@ -197,15 +197,18 @@ static bool vec_is_stale(struct aa_profile **vec, int n)
- 	return false;
- }
- 
--static long union_vec_flags(struct aa_profile **vec, int n, long mask)
-+static long accum_vec_flags(struct aa_profile **vec, int n)
- {
--	long u = 0;
-+	long u = FLAG_UNCONFINED;
- 	int i;
- 
- 	AA_BUG(!vec);
- 
- 	for (i = 0; i < n; i++) {
--		u |= vec[i]->label.flags & mask;
-+		u |= vec[i]->label.flags & (FLAG_DEBUG1 | FLAG_DEBUG2 |
-+					    FLAG_STALE);
-+		if (!(u & vec[i]->label.flags & FLAG_UNCONFINED))
-+			u &= ~FLAG_UNCONFINED;
- 	}
- 
- 	return u;
-@@ -1097,8 +1100,7 @@ static struct aa_label *label_merge_insert(struct aa_label *new,
- 		else if (k == b->size)
- 			return aa_get_label(b);
- 	}
--	new->flags |= union_vec_flags(new->vec, new->size, FLAG_UNCONFINED |
--					      FLAG_DEBUG1 | FLAG_DEBUG2);
-+	new->flags |= accum_vec_flags(new->vec, new->size);
- 	ls = labels_set(new);
- 	write_lock_irqsave(&ls->lock, flags);
- 	label = __label_insert(labels_set(new), new, false);
+diff --git a/drivers/net/ethernet/amd/atarilance.c b/drivers/net/ethernet/amd/atarilance.c
+index 3222c48ce6ae..ec704222925d 100644
+--- a/drivers/net/ethernet/amd/atarilance.c
++++ b/drivers/net/ethernet/amd/atarilance.c
+@@ -824,7 +824,7 @@ lance_start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	lp->memcpy_f( PKTBUF_ADDR(head), (void *)skb->data, skb->len );
+ 	head->flag = TMD1_OWN_CHIP | TMD1_ENP | TMD1_STP;
+ 	dev->stats.tx_bytes += skb->len;
+-	dev_kfree_skb( skb );
++	dev_consume_skb_irq(skb);
+ 	lp->cur_tx++;
+ 	while( lp->cur_tx >= TX_RING_SIZE && lp->dirty_tx >= TX_RING_SIZE ) {
+ 		lp->cur_tx -= TX_RING_SIZE;
+diff --git a/drivers/net/ethernet/amd/lance.c b/drivers/net/ethernet/amd/lance.c
+index fb8686214a32..8971665a4b2a 100644
+--- a/drivers/net/ethernet/amd/lance.c
++++ b/drivers/net/ethernet/amd/lance.c
+@@ -1001,7 +1001,7 @@ static netdev_tx_t lance_start_xmit(struct sk_buff *skb,
+ 		skb_copy_from_linear_data(skb, &lp->tx_bounce_buffs[entry], skb->len);
+ 		lp->tx_ring[entry].base =
+ 			((u32)isa_virt_to_bus((lp->tx_bounce_buffs + entry)) & 0xffffff) | 0x83000000;
+-		dev_kfree_skb(skb);
++		dev_consume_skb_irq(skb);
+ 	} else {
+ 		lp->tx_skbuff[entry] = skb;
+ 		lp->tx_ring[entry].base = ((u32)isa_virt_to_bus(skb->data) & 0xffffff) | 0x83000000;
 -- 
 2.35.1
 
