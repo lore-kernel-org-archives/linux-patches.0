@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 328AA1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A89F4C433EF;
-	Wed, 28 Dec 2022 16:40:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D21D71C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:40:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EA7FC433D2;
+	Wed, 28 Dec 2022 16:40:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245651;
-	bh=qyKiVUx5zu3jpD5VHqL60Pcg8UYVn/ip1Dbjq39eS0Y=;
+	s=korg; t=1672245653;
+	bh=Hln3OcNAJSj6OQZ6OZoMgGqi4OW8XP9X8jkvduahby0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LnGFmhb/cym80lTkGEBUMj/rvS4jtWAcvesrksAjCrLH/SBDUaAleOegq34ytRswS
-	 ddPfThzWi3wfNtZCj3zOjEV5w6SISSRn7+d+hMcBZgRohiKrNOzvF8O2C6U2xq3LuO
-	 SgEK0qp/Lm/D968e5nF87xP9+7tmUp/r+k2kBxc0=
+	b=SNuQZf0Bi0pI54QDyi/1Z9klsRGFO+y6lGcFUsWBZoreiGeYuMk3ol1VTtrnRAYvJ
+	 /vxIfMn3rtPdCpS2UvncLuIZfyaBo7na3q47bD19AMQ51scV5hJvjGw4PfMq10HOuG
+	 TwI8iR99UgXnsuN+5xu5RyYbrmiN2FW+9M86U8R0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Kirill Tkhai <tkhai@ya.ru>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0932/1073] drm/amdgpu: Fix type of second parameter in odn_edit_dpm_table() callback
-Date: Wed, 28 Dec 2022 15:42:00 +0100
-Message-Id: <20221228144353.343786775@linuxfoundation.org>
+Subject: [PATCH 6.1 0900/1146] unix: Fix race in SOCK_SEQPACKETs unix_dgram_sendmsg()
+Date: Wed, 28 Dec 2022 15:40:39 +0100
+Message-Id: <20221228144354.652582564@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,75 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Kirill Tkhai <tkhai@ya.ru>
 
-[ Upstream commit e4d0ef752081e7aa6ffb7ccac11c499c732a2e05 ]
+[ Upstream commit 3ff8bff704f4de125dca2262e5b5b963a3da1d87 ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+There is a race resulting in alive SOCK_SEQPACKET socket
+may change its state from TCP_ESTABLISHED to TCP_CLOSE:
 
-  drivers/gpu/drm/amd/amdgpu/../pm/swsmu/amdgpu_smu.c:3008:29: error: incompatible function pointer types initializing 'int (*)(void *, uint32_t, long *, uint32_t)' (aka 'int (*)(void *, unsigned int, long *, unsigned int)') with an expression of type 'int (void *, enum PP_OD_DPM_TABLE_COMMAND, long *, uint32_t)' (aka 'int (void *, enum PP_OD_DPM_TABLE_COMMAND, long *, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
-          .odn_edit_dpm_table      = smu_od_edit_dpm_table,
-                                     ^~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+unix_release_sock(peer)                  unix_dgram_sendmsg(sk)
+  sock_orphan(peer)
+    sock_set_flag(peer, SOCK_DEAD)
+                                           sock_alloc_send_pskb()
+                                             if !(sk->sk_shutdown & SEND_SHUTDOWN)
+                                               OK
+                                           if sock_flag(peer, SOCK_DEAD)
+                                             sk->sk_state = TCP_CLOSE
+  sk->sk_shutdown = SHUTDOWN_MASK
 
-There are only two implementations of ->odn_edit_dpm_table() in 'struct
-amd_pm_funcs': smu_od_edit_dpm_table() and pp_odn_edit_dpm_table(). One
-has a second parameter type of 'enum PP_OD_DPM_TABLE_COMMAND' and the
-other uses 'u32'. Ultimately, smu_od_edit_dpm_table() calls
-->od_edit_dpm_table() from 'struct pptable_funcs' and
-pp_odn_edit_dpm_table() calls ->odn_edit_dpm_table() from 'struct
-pp_hwmgr_func', which both have a second parameter type of 'enum
-PP_OD_DPM_TABLE_COMMAND'.
+After that socket sk remains almost normal: it is able to connect, listen, accept
+and recvmsg, while it can't sendmsg.
 
-Update the type parameter in both the prototype in 'struct amd_pm_funcs'
-and pp_odn_edit_dpm_table() to 'enum PP_OD_DPM_TABLE_COMMAND', which
-cleans up the warning.
+Since this is the only possibility for alive SOCK_SEQPACKET to change
+the state in such way, we should better fix this strange and potentially
+danger corner case.
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reported-by: Sami Tolvanen <samitolvanen@google.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Note, that we will return EPIPE here like this is normally done in sock_alloc_send_pskb().
+Originally used ECONNREFUSED looks strange, since it's strange to return
+a specific retval in dependence of race in kernel, when user can't affect on this.
+
+Also, move TCP_CLOSE assignment for SOCK_DGRAM sockets under state lock
+to fix race with unix_dgram_connect():
+
+unix_dgram_connect(other)            unix_dgram_sendmsg(sk)
+                                       unix_peer(sk) = NULL
+                                       unix_state_unlock(sk)
+  unix_state_double_lock(sk, other)
+  sk->sk_state  = TCP_ESTABLISHED
+  unix_peer(sk) = other
+  unix_state_double_unlock(sk, other)
+                                       sk->sk_state  = TCP_CLOSED
+
+This patch fixes both of these races.
+
+Fixes: 83301b5367a9 ("af_unix: Set TCP_ESTABLISHED for datagram sockets too")
+Signed-off-by: Kirill Tkhai <tkhai@ya.ru>
+Link: https://lore.kernel.org/r/135fda25-22d5-837a-782b-ceee50e19844@ya.ru
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/include/kgd_pp_interface.h   | 3 ++-
- drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c | 3 ++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ net/unix/af_unix.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/include/kgd_pp_interface.h b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
-index 7e3231c2191c..ffe19883b2ee 100644
---- a/drivers/gpu/drm/amd/include/kgd_pp_interface.h
-+++ b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
-@@ -354,7 +354,8 @@ struct amd_pm_funcs {
- 	int (*get_power_profile_mode)(void *handle, char *buf);
- 	int (*set_power_profile_mode)(void *handle, long *input, uint32_t size);
- 	int (*set_fine_grain_clk_vol)(void *handle, uint32_t type, long *input, uint32_t size);
--	int (*odn_edit_dpm_table)(void *handle, uint32_t type, long *input, uint32_t size);
-+	int (*odn_edit_dpm_table)(void *handle, enum PP_OD_DPM_TABLE_COMMAND type,
-+				  long *input, uint32_t size);
- 	int (*set_mp1_state)(void *handle, enum pp_mp1_state mp1_state);
- 	int (*smu_i2c_bus_access)(void *handle, bool acquire);
- 	int (*gfx_state_change_set)(void *handle, uint32_t state);
-diff --git a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-index 1eb4e613b27a..6562978de84a 100644
---- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
-@@ -838,7 +838,8 @@ static int pp_set_fine_grain_clk_vol(void *handle, uint32_t type, long *input, u
- 	return hwmgr->hwmgr_func->set_fine_grain_clk_vol(hwmgr, type, input, size);
- }
+diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
+index ede2b2a140a4..f0c2293f1d3b 100644
+--- a/net/unix/af_unix.c
++++ b/net/unix/af_unix.c
+@@ -1999,13 +1999,20 @@ static int unix_dgram_sendmsg(struct socket *sock, struct msghdr *msg,
+ 			unix_state_lock(sk);
  
--static int pp_odn_edit_dpm_table(void *handle, uint32_t type, long *input, uint32_t size)
-+static int pp_odn_edit_dpm_table(void *handle, enum PP_OD_DPM_TABLE_COMMAND type,
-+				 long *input, uint32_t size)
- {
- 	struct pp_hwmgr *hwmgr = handle;
+ 		err = 0;
+-		if (unix_peer(sk) == other) {
++		if (sk->sk_type == SOCK_SEQPACKET) {
++			/* We are here only when racing with unix_release_sock()
++			 * is clearing @other. Never change state to TCP_CLOSE
++			 * unlike SOCK_DGRAM wants.
++			 */
++			unix_state_unlock(sk);
++			err = -EPIPE;
++		} else if (unix_peer(sk) == other) {
+ 			unix_peer(sk) = NULL;
+ 			unix_dgram_peer_wake_disconnect_wakeup(sk, other);
  
++			sk->sk_state = TCP_CLOSE;
+ 			unix_state_unlock(sk);
+ 
+-			sk->sk_state = TCP_CLOSE;
+ 			unix_dgram_disconnected(sk, other);
+ 			sock_put(other);
+ 			err = -ECONNREFUSED;
 -- 
 2.35.1
 
