@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFB811875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 287EEC433D2;
-	Wed, 28 Dec 2022 15:58:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADC01875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9703CC433D2;
+	Wed, 28 Dec 2022 15:58:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243083;
-	bh=KsNsRnhHCmEaauer6ON5uqFqhQpEjYpmwUIzIoIbukM=;
+	s=korg; t=1672243086;
+	bh=xadfa5UUa/VvR7/Q+w8xXinb6FW7rp5NXKRfhIxiI8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ARS+kAnhOjL1//f1Z3U8R7Zo97uvf42Tm/9UILVf4YQyeKfT9/DdkswE+qVXWA7Gh
-	 f7jk9lS11lY2ytTcHjcVGuQeY6UMLbVp5LI5aWaf0CUZOQdP054SuRtkjFAmJfizPb
-	 f1luj5u0oAr0swEE+pNS8Mv4Zlxcv452RWQvGvK0=
+	b=wSVsAHwvbjxAs0LeR1fsrMp/kH8Q9sEj65EXvq9e34T5SZWfGBNbjzzcEgcQ9mdvb
+	 tO3LPhCWDIWF9M9Wxwc1k/if4Wi4OLdSm+VknrNYEfOEb5kocc0VEw8X9bH/K9NAez
+	 y9dEnHbMz6hBZwiolIX2cNSfVY+R+YHJYIRiFWA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Mike Marshall <hubcap@omnibond.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0488/1073] mmc: atmel-mci: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:34:36 +0100
-Message-Id: <20221228144341.290873714@linuxfoundation.org>
+Subject: [PATCH 5.15 682/731] orangefs: Fix kmemleak in orangefs_{kernel,client}_debug_init()
+Date: Wed, 28 Dec 2022 15:43:09 +0100
+Message-Id: <20221228144316.241254170@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,58 +35,105 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit 9e6e8c43726673ca2abcaac87640b9215fd72f4c ]
+[ Upstream commit 31720a2b109b3080eb77e97b8f6f50a27b4ae599 ]
 
-mmc_add_host() may return error, if we ignore its return value,
-it will lead two issues:
-1. The memory that allocated in mmc_alloc_host() is leaked.
-2. In the remove() path, mmc_remove_host() will be called to
-   delete device, but it's not added yet, it will lead a kernel
-   crash because of null-ptr-deref in device_del().
+When insert and remove the orangefs module, there are memory leaked
+as below:
 
-So fix this by checking the return value and calling mmc_free_host()
-in the error path.
+unreferenced object 0xffff88816b0cc000 (size 2048):
+  comm "insmod", pid 783, jiffies 4294813439 (age 65.512s)
+  hex dump (first 32 bytes):
+    6e 6f 6e 65 0a 00 00 00 00 00 00 00 00 00 00 00  none............
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<0000000031ab7788>] kmalloc_trace+0x27/0xa0
+    [<000000005b405fee>] orangefs_debugfs_init.cold+0xaf/0x17f
+    [<00000000e5a0085b>] 0xffffffffa02780f9
+    [<000000004232d9f7>] do_one_initcall+0x87/0x2a0
+    [<0000000054f22384>] do_init_module+0xdf/0x320
+    [<000000003263bdea>] load_module+0x2f98/0x3330
+    [<0000000052cd4153>] __do_sys_finit_module+0x113/0x1b0
+    [<00000000250ae02b>] do_syscall_64+0x35/0x80
+    [<00000000f11c03c7>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Fixes: 7d2be0749a59 ("atmel-mci: Driver for Atmel on-chip MMC controllers")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221108122819.429975-1-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Use the golbal variable as the buffer rather than dynamic allocate to
+slove the problem.
+
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/atmel-mci.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ fs/orangefs/orangefs-debugfs.c | 26 +++-----------------------
+ 1 file changed, 3 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/mmc/host/atmel-mci.c b/drivers/mmc/host/atmel-mci.c
-index 91d52ba7a39f..bb9bbf1c927b 100644
---- a/drivers/mmc/host/atmel-mci.c
-+++ b/drivers/mmc/host/atmel-mci.c
-@@ -2222,6 +2222,7 @@ static int atmci_init_slot(struct atmel_mci *host,
+diff --git a/fs/orangefs/orangefs-debugfs.c b/fs/orangefs/orangefs-debugfs.c
+index a848b6ef9599..1b508f543384 100644
+--- a/fs/orangefs/orangefs-debugfs.c
++++ b/fs/orangefs/orangefs-debugfs.c
+@@ -194,15 +194,10 @@ void orangefs_debugfs_init(int debug_mask)
+  */
+ static void orangefs_kernel_debug_init(void)
  {
- 	struct mmc_host			*mmc;
- 	struct atmel_mci_slot		*slot;
-+	int ret;
+-	int rc = -ENOMEM;
+-	char *k_buffer = NULL;
++	static char k_buffer[ORANGEFS_MAX_DEBUG_STRING_LEN] = { };
  
- 	mmc = mmc_alloc_host(sizeof(struct atmel_mci_slot), &host->pdev->dev);
- 	if (!mmc)
-@@ -2305,11 +2306,13 @@ static int atmci_init_slot(struct atmel_mci *host,
+ 	gossip_debug(GOSSIP_DEBUGFS_DEBUG, "%s: start\n", __func__);
  
- 	host->slot[id] = slot;
- 	mmc_regulator_get_supply(mmc);
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret) {
-+		mmc_free_host(mmc);
-+		return ret;
-+	}
- 
- 	if (gpio_is_valid(slot->detect_pin)) {
--		int ret;
+-	k_buffer = kzalloc(ORANGEFS_MAX_DEBUG_STRING_LEN, GFP_KERNEL);
+-	if (!k_buffer)
+-		goto out;
 -
- 		timer_setup(&slot->detect_timer, atmci_detect_change, 0);
+ 	if (strlen(kernel_debug_string) + 1 < ORANGEFS_MAX_DEBUG_STRING_LEN) {
+ 		strcpy(k_buffer, kernel_debug_string);
+ 		strcat(k_buffer, "\n");
+@@ -213,9 +208,6 @@ static void orangefs_kernel_debug_init(void)
  
- 		ret = request_irq(gpio_to_irq(slot->detect_pin),
+ 	debugfs_create_file(ORANGEFS_KMOD_DEBUG_FILE, 0444, debug_dir, k_buffer,
+ 			    &kernel_debug_fops);
+-
+-out:
+-	gossip_debug(GOSSIP_DEBUGFS_DEBUG, "%s: rc:%d:\n", __func__, rc);
+ }
+ 
+ 
+@@ -299,18 +291,13 @@ static int help_show(struct seq_file *m, void *v)
+ /*
+  * initialize the client-debug file.
+  */
+-static int orangefs_client_debug_init(void)
++static void orangefs_client_debug_init(void)
+ {
+ 
+-	int rc = -ENOMEM;
+-	char *c_buffer = NULL;
++	static char c_buffer[ORANGEFS_MAX_DEBUG_STRING_LEN] = { };
+ 
+ 	gossip_debug(GOSSIP_DEBUGFS_DEBUG, "%s: start\n", __func__);
+ 
+-	c_buffer = kzalloc(ORANGEFS_MAX_DEBUG_STRING_LEN, GFP_KERNEL);
+-	if (!c_buffer)
+-		goto out;
+-
+ 	if (strlen(client_debug_string) + 1 < ORANGEFS_MAX_DEBUG_STRING_LEN) {
+ 		strcpy(c_buffer, client_debug_string);
+ 		strcat(c_buffer, "\n");
+@@ -324,13 +311,6 @@ static int orangefs_client_debug_init(void)
+ 						  debug_dir,
+ 						  c_buffer,
+ 						  &kernel_debug_fops);
+-
+-	rc = 0;
+-
+-out:
+-
+-	gossip_debug(GOSSIP_DEBUGFS_DEBUG, "%s: rc:%d:\n", __func__, rc);
+-	return rc;
+ }
+ 
+ /* open ORANGEFS_KMOD_DEBUG_FILE or ORANGEFS_CLIENT_DEBUG_FILE.*/
 -- 
 2.35.1
 
