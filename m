@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87651863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70066C433F0;
-	Wed, 28 Dec 2022 14:57:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945721863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:57:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 186AAC433D2;
+	Wed, 28 Dec 2022 14:57:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239445;
-	bh=qd9gRWds5YnWnAS9h8v/neaOVhSFbYmkeCfObYcoaz8=;
+	s=korg; t=1672239448;
+	bh=bXRfog05CwSknXipuD/5LcMr+RjwnUgf8CwCrGr4VEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s4tdvkNuDEIqbCXZ4jMdhxKs190Bu3z6CkHMorXYmqU6lzT6vRzLwYownWvbIbdif
-	 5zJqRO4mDqxkPGzacBAI0WawTzaBP2eBw8HaRhU7EQGX/LsH0YUKeACXZi9g5uwSu/
-	 Tc8I7dFptXVBqN7ttnJtVLAa9Up11Ar8v6ag9yYU=
+	b=CqBixcogS/WCCJ0+xMXtEcZfl8NTOrroZ97HUar2HCVil6vbTSBzzjvIcZunc7YkH
+	 mNDSlCeGx30D1MUSO5Z8D/3ZrEebqAiNW2ISwaajMrPkmDYM7/YppMcIg+wspX8a+N
+	 a+zlQXnODB/46NU74OZiRSK1O+D4cirrxmKf+QZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Toppins <jtoppins@redhat.com>,
-	Jay Vosburgh <jay.vosburgh@canonical.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 226/731] bonding: fix link recovery in mode 2 when updelay is nonzero
-Date: Wed, 28 Dec 2022 15:35:33 +0100
-Message-Id: <20221228144303.112281212@linuxfoundation.org>
+Subject: [PATCH 6.0 0031/1073] arm64: dts: qcom: sm8150: fix UFS PHY registers
+Date: Wed, 28 Dec 2022 15:26:59 +0100
+Message-Id: <20221228144328.987016251@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,47 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Toppins <jtoppins@redhat.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit f8a65ab2f3ff7410921ebbf0dc55453102c33c56 ]
+[ Upstream commit 36a31b3a8d9ba1707a23de8d8dc1ceaef4eda695 ]
 
-Before this change when a bond in mode 2 lost link, all of its slaves
-lost link, the bonding device would never recover even after the
-expiration of updelay. This change removes the updelay when the bond
-currently has no usable links. Conforming to bonding.txt section 13.1
-paragraph 4.
+The sizes of the UFS PHY register regions are too small and does
+specifically not cover all registers used by the Linux driver.
 
-Fixes: 41f891004063 ("bonding: ignore updelay param when there is no active slave")
-Signed-off-by: Jonathan Toppins <jtoppins@redhat.com>
-Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+As Linux maps these regions as full pages this is currently not an issue
+on Linux, but let's update the sizes to match the vendor driver.
+
+Fixes: 3834a2e92229 ("arm64: dts: qcom: sm8150: Add ufs nodes")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221024091507.20342-2-johan+linaro@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index 402dffc508ef..6dca5bfe8247 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2504,7 +2504,16 @@ static int bond_miimon_inspect(struct bonding *bond)
- 	struct slave *slave;
- 	bool ignore_updelay;
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index 916f12b799b7..3df80dde9249 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -2038,11 +2038,11 @@ ufs_mem_phy: phy@1d87000 {
+ 			status = "disabled";
  
--	ignore_updelay = !rcu_dereference(bond->curr_active_slave);
-+	if (BOND_MODE(bond) == BOND_MODE_ACTIVEBACKUP) {
-+		ignore_updelay = !rcu_dereference(bond->curr_active_slave);
-+	} else {
-+		struct bond_up_slave *usable_slaves;
-+
-+		usable_slaves = rcu_dereference(bond->usable_slaves);
-+
-+		if (usable_slaves && usable_slaves->count == 0)
-+			ignore_updelay = true;
-+	}
- 
- 	bond_for_each_slave_rcu(bond, slave, iter) {
- 		bond_propose_link_state(slave, BOND_LINK_NOCHANGE);
+ 			ufs_mem_phy_lanes: phy@1d87400 {
+-				reg = <0 0x01d87400 0 0x108>,
+-				      <0 0x01d87600 0 0x1e0>,
+-				      <0 0x01d87c00 0 0x1dc>,
+-				      <0 0x01d87800 0 0x108>,
+-				      <0 0x01d87a00 0 0x1e0>;
++				reg = <0 0x01d87400 0 0x16c>,
++				      <0 0x01d87600 0 0x200>,
++				      <0 0x01d87c00 0 0x200>,
++				      <0 0x01d87800 0 0x16c>,
++				      <0 0x01d87a00 0 0x200>;
+ 				#phy-cells = <0>;
+ 			};
+ 		};
 -- 
 2.35.1
 
