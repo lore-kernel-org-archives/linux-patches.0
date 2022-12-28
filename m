@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5450F1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C60C4C433D2;
-	Wed, 28 Dec 2022 16:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0929DECA
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:30:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F133C433EF;
+	Wed, 28 Dec 2022 16:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244999;
-	bh=48eXULuY7uQlPhiWiZHOXvMLCxUfQFUOGMaZy7Spq00=;
+	s=korg; t=1672245001;
+	bh=Q3y9vALH9h1rU+RebOmrtFuTgf/yZ+V4xxFKJAIgKHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CIu254YxV0qU/sUKEhSjEzp+mxe5Pd9y/y2YGOBz12VG/xc7w2yUHmARzMy0xwwQM
-	 Oyb1wbnrYDgqjUzdKRgYR1EB3eyxTLcCKUavMXkIRj/QRbyb2NKyQDezLktqxHvYjv
-	 P3tzVqfpB7WeE16nQwqqLE1s8uTMckqXvA8dET4g=
+	b=WwtU2CtQhmfJwhMjxhpkF1xQGyejvqvg9bD+cMkVLOgq5KLxzE9MBvZ7JKm5RwAz3
+	 NMId2geYNZplYHjhc3AtmanPPns+jXm/UQj0L1dOIdqvB5tgxN18/psoGGQNt3NNoS
+	 LhUuwn/1R5lwrAvM5pwgW36YZQR9knYcAluHT8zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yong Wu <yong.wu@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Yuan Can <yuancan@huawei.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0813/1073] iommu/mediatek: Add error path for loop of mm_dts_parse
-Date: Wed, 28 Dec 2022 15:40:01 +0100
-Message-Id: <20221228144350.090579100@linuxfoundation.org>
+Subject: [PATCH 6.1 0776/1146] HSI: omap_ssi_core: Fix error handling in ssi_init()
+Date: Wed, 28 Dec 2022 15:38:35 +0100
+Message-Id: <20221228144351.225589140@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,88 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yong Wu <yong.wu@mediatek.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 26593928564cf5b576ff05d3cbd958f57c9534bb ]
+[ Upstream commit 3ffa9f713c39a213a08d9ff13ab983a8aa5d8b5d ]
 
-The mtk_iommu_mm_dts_parse will parse the smi larbs nodes. if the i+1
-larb is parsed fail, we should put_device for the i..0 larbs.
+The ssi_init() returns the platform_driver_register() directly without
+checking its return value, if platform_driver_register() failed, the
+ssi_pdriver is not unregistered.
+Fix by unregister ssi_pdriver when the last platform_driver_register()
+failed.
 
-There are two places need to comment:
-1) The larbid may be not linear mapping, we should loop whole
-   the array in the error path.
-2) I move this line position: "data->larb_imu[id].dev = &plarbdev->dev;"
-   before "if (!plarbdev->dev.driver)", That means set
-   data->larb_imu[id].dev before the error path. then we don't need
-   "platform_device_put(plarbdev)" again in probe_defer case. All depend
-   on "put_device" of the error path in error cases.
-
-Fixes: d2e9a1102cfc ("iommu/mediatek: Contain MM IOMMU flow with the MM TYPE")
-Signed-off-by: Yong Wu <yong.wu@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
-Link: https://lore.kernel.org/r/20221018024258.19073-4-yong.wu@mediatek.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 0fae198988b8 ("HSI: omap_ssi: built omap_ssi and omap_ssi_port into one module")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/mtk_iommu.c | 27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ drivers/hsi/controllers/omap_ssi_core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
-index ce9288695f9b..39f4c79e9c71 100644
---- a/drivers/iommu/mtk_iommu.c
-+++ b/drivers/iommu/mtk_iommu.c
-@@ -1053,8 +1053,10 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
- 		u32 id;
+diff --git a/drivers/hsi/controllers/omap_ssi_core.c b/drivers/hsi/controllers/omap_ssi_core.c
+index 052cf3e92dd6..26f2c3c01297 100644
+--- a/drivers/hsi/controllers/omap_ssi_core.c
++++ b/drivers/hsi/controllers/omap_ssi_core.c
+@@ -631,7 +631,13 @@ static int __init ssi_init(void) {
+ 	if (ret)
+ 		return ret;
  
- 		larbnode = of_parse_phandle(dev->of_node, "mediatek,larbs", i);
--		if (!larbnode)
--			return -EINVAL;
-+		if (!larbnode) {
-+			ret = -EINVAL;
-+			goto err_larbdev_put;
-+		}
- 
- 		if (!of_device_is_available(larbnode)) {
- 			of_node_put(larbnode);
-@@ -1067,14 +1069,16 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
- 
- 		plarbdev = of_find_device_by_node(larbnode);
- 		of_node_put(larbnode);
--		if (!plarbdev)
--			return -ENODEV;
-+		if (!plarbdev) {
-+			ret = -ENODEV;
-+			goto err_larbdev_put;
-+		}
-+		data->larb_imu[id].dev = &plarbdev->dev;
- 
- 		if (!plarbdev->dev.driver) {
--			platform_device_put(plarbdev);
--			return -EPROBE_DEFER;
-+			ret = -EPROBE_DEFER;
-+			goto err_larbdev_put;
- 		}
--		data->larb_imu[id].dev = &plarbdev->dev;
- 
- 		component_match_add(dev, match, component_compare_dev, &plarbdev->dev);
- 		platform_device_put(plarbdev);
-@@ -1109,6 +1113,15 @@ static int mtk_iommu_mm_dts_parse(struct device *dev, struct component_match **m
- 		return -EINVAL;
- 	}
- 	return 0;
-+
-+err_larbdev_put:
-+	/* id may be not linear mapping, loop whole the array */
-+	for (i = MTK_LARB_NR_MAX - 1; i >= 0; i++) {
-+		if (!data->larb_imu[i].dev)
-+			continue;
-+		put_device(data->larb_imu[i].dev);
+-	return platform_driver_register(&ssi_port_pdriver);
++	ret = platform_driver_register(&ssi_port_pdriver);
++	if (ret) {
++		platform_driver_unregister(&ssi_pdriver);
++		return ret;
 +	}
-+	return ret;
++
++	return 0;
  }
+ module_init(ssi_init);
  
- static int mtk_iommu_probe(struct platform_device *pdev)
 -- 
 2.35.1
 
