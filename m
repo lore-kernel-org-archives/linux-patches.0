@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D59931863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5029DC433D2;
-	Wed, 28 Dec 2022 15:39:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7827B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F12D4C433D2;
+	Wed, 28 Dec 2022 15:39:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241974;
-	bh=tEIvPMp4kMwLUPXD94BTnRMBf26PojhQFnfwSWUfszU=;
+	s=korg; t=1672241977;
+	bh=3HDWe89flz0DMmrZtFI4A9NZWaSAp+gsSQhoGexSq5g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oLr1WSXOP572CZxhctcxCf6cPg54/xBXOKF95Iyf2OOfIYMKuwW115q6TcdC41xOW
-	 ghMnPhzFCAqgDzrJzK9KjCn/ODNIFPX5jE2AxZnrMQvOQqzJYAUkjqgz0+UOzb+8EJ
-	 SJFVhIH/LnRzNsv9WMNZBPDWE5YAI9Vv1gCZeQzc=
+	b=fe6rjvH4ryWJekbGAMG9rHk0+XCGEK8vvS3gZfAZv8PNnjY6EtKMe1vkXwVXCbf/Q
+	 6AGp1wyvbLbsLzJOqUMT9j8pf82WGA0pU76gQ4xUlEL8vzWYcEVKD57rhlgrEd0ZcZ
+	 DIkYfnMtfwDE8J7kxAbzQZIG7mfSuo6SDZINxs6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0311/1146] drm: rcar-du: Drop leftovers dependencies from Kconfig
-Date: Wed, 28 Dec 2022 15:30:50 +0100
-Message-Id: <20221228144338.602451184@linuxfoundation.org>
+Subject: [PATCH 6.0 0350/1073] net: Return errno in sk->sk_prot->get_port().
+Date: Wed, 28 Dec 2022 15:32:18 +0100
+Message-Id: <20221228144337.512799851@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +35,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 1760eb547276299ab0c6a6cd3d29469e54ade615 ]
+[ Upstream commit 7a7160edf1bfde25422262fb26851cef65f695d3 ]
 
-Commit 841281fe52a7 ("drm: rcar-du: Drop LVDS device tree backward
-compatibility") has removed device tree overlay sources used for
-backward compatibility with old bindings, but forgot to remove related
-dependencies from Kconfig. Fix it.
+We assume the correct errno is -EADDRINUSE when sk->sk_prot->get_port()
+fails, so some ->get_port() functions return just 1 on failure and the
+callers return -EADDRINUSE instead.
 
-Fixes: 841281fe52a7 ("drm: rcar-du: Drop LVDS device tree backward compatibility")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+However, mptcp_get_port() can return -EINVAL.  Let's not ignore the error.
+
+Note the only exception is inet_autobind(), all of whose callers return
+-EAGAIN instead.
+
+Fixes: cec37a6e41aa ("mptcp: Handle MP_CAPABLE options for outgoing connections")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rcar-du/Kconfig | 2 --
- 1 file changed, 2 deletions(-)
+ net/ipv4/af_inet.c              | 4 ++--
+ net/ipv4/inet_connection_sock.c | 5 +++--
+ net/ipv4/ping.c                 | 2 +-
+ net/ipv4/udp.c                  | 2 +-
+ net/ipv6/af_inet6.c             | 4 ++--
+ 5 files changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/gpu/drm/rcar-du/Kconfig b/drivers/gpu/drm/rcar-du/Kconfig
-index fd2c2eaee26b..a5518e90d689 100644
---- a/drivers/gpu/drm/rcar-du/Kconfig
-+++ b/drivers/gpu/drm/rcar-du/Kconfig
-@@ -41,8 +41,6 @@ config DRM_RCAR_LVDS
- 	depends on DRM_RCAR_USE_LVDS
- 	select DRM_KMS_HELPER
- 	select DRM_PANEL
--	select OF_FLATTREE
--	select OF_OVERLAY
+diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
+index 7f6d7c355e38..4c8782df8eef 100644
+--- a/net/ipv4/af_inet.c
++++ b/net/ipv4/af_inet.c
+@@ -522,9 +522,9 @@ int __inet_bind(struct sock *sk, struct sockaddr *uaddr, int addr_len,
+ 	/* Make sure we are allowed to bind here. */
+ 	if (snum || !(inet->bind_address_no_port ||
+ 		      (flags & BIND_FORCE_ADDRESS_NO_PORT))) {
+-		if (sk->sk_prot->get_port(sk, snum)) {
++		err = sk->sk_prot->get_port(sk, snum);
++		if (err) {
+ 			inet->inet_saddr = inet->inet_rcv_saddr = 0;
+-			err = -EADDRINUSE;
+ 			goto out_release_sock;
+ 		}
+ 		if (!(flags & BIND_FROM_BPF)) {
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index eb31c7158b39..971969cc7e17 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1041,7 +1041,7 @@ int inet_csk_listen_start(struct sock *sk)
+ {
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
+ 	struct inet_sock *inet = inet_sk(sk);
+-	int err = -EADDRINUSE;
++	int err;
  
- config DRM_RCAR_USE_MIPI_DSI
- 	bool "R-Car DU MIPI DSI Encoder Support"
+ 	reqsk_queue_alloc(&icsk->icsk_accept_queue);
+ 
+@@ -1057,7 +1057,8 @@ int inet_csk_listen_start(struct sock *sk)
+ 	 * after validation is complete.
+ 	 */
+ 	inet_sk_state_store(sk, TCP_LISTEN);
+-	if (!sk->sk_prot->get_port(sk, inet->inet_num)) {
++	err = sk->sk_prot->get_port(sk, inet->inet_num);
++	if (!err) {
+ 		inet->inet_sport = htons(inet->inet_num);
+ 
+ 		sk_dst_reset(sk);
+diff --git a/net/ipv4/ping.c b/net/ipv4/ping.c
+index 3b2420829c23..948f4801f993 100644
+--- a/net/ipv4/ping.c
++++ b/net/ipv4/ping.c
+@@ -142,7 +142,7 @@ int ping_get_port(struct sock *sk, unsigned short ident)
+ 
+ fail:
+ 	spin_unlock(&ping_table.lock);
+-	return 1;
++	return -EADDRINUSE;
+ }
+ EXPORT_SYMBOL_GPL(ping_get_port);
+ 
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index c04a26339bd1..7fe0ba3f0933 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -235,7 +235,7 @@ int udp_lib_get_port(struct sock *sk, unsigned short snum,
+ 	struct udp_table *udptable = sk->sk_prot->h.udp_table;
+ 	struct udp_hslot *hslot, *hslot2;
+ 	struct net *net = sock_net(sk);
+-	int error = 1;
++	int error = -EADDRINUSE;
+ 
+ 	if (!snum) {
+ 		DECLARE_BITMAP(bitmap, PORTS_PER_CHAIN);
+diff --git a/net/ipv6/af_inet6.c b/net/ipv6/af_inet6.c
+index dbb1430d6cc2..cceda5c83302 100644
+--- a/net/ipv6/af_inet6.c
++++ b/net/ipv6/af_inet6.c
+@@ -403,10 +403,10 @@ static int __inet6_bind(struct sock *sk, struct sockaddr *uaddr, int addr_len,
+ 	/* Make sure we are allowed to bind here. */
+ 	if (snum || !(inet->bind_address_no_port ||
+ 		      (flags & BIND_FORCE_ADDRESS_NO_PORT))) {
+-		if (sk->sk_prot->get_port(sk, snum)) {
++		err = sk->sk_prot->get_port(sk, snum);
++		if (err) {
+ 			sk->sk_ipv6only = saved_ipv6only;
+ 			inet_reset_saddr(sk);
+-			err = -EADDRINUSE;
+ 			goto out;
+ 		}
+ 		if (!(flags & BIND_FROM_BPF)) {
 -- 
 2.35.1
 
