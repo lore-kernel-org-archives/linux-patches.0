@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EB081863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6DE4C433D2;
-	Wed, 28 Dec 2022 15:45:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B031863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C4FC433D2;
+	Wed, 28 Dec 2022 15:45:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242323;
-	bh=ZOE02vKDq6FNxiaeU+CC5JpGqnKB2F+100TdzBcV7NY=;
+	s=korg; t=1672242325;
+	bh=6WPVI2RzqdiPWNz6u8FMFbRCToeTpaZF137s1wsRmk8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ibIZsCOKjdK0BMeRtAS+wAHMaq6c3R0cHQ4gN2T/CwOl/5le/0ftvphsCGfYr4tlI
-	 suMzb09YJ7vuSGcUB+FmgT8v+pIHmk72ifQYOWGJ947N2mSTznHEYhl7Kwg4JWD+an
-	 5pHuMU1vxP0XlfoBYdD497SwFvcNsBYQ0ALeUe/8=
+	b=uQEPkDlVKwWFh0p0y/Tay/buZDnN/k3v4dJ+IpiyzwqdalzDhJlrRGauQ5F0rPvra
+	 2Lr//AimxZYah4C76B3u2BvVczw2ukipPSO8cAcRQtwQ2Ojh8/JjQb9HIxP+u+/Qjb
+	 7aRm263j2iqSk8Z/0JrdiE5t9eOTEL9mV3LeAl9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yunfei Dong <yunfei.dong@mediatek.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 590/731] nfc: pn533: Clear nfc_target before being used
-Date: Wed, 28 Dec 2022 15:41:37 +0100
-Message-Id: <20221228144313.646703174@linuxfoundation.org>
+Subject: [PATCH 6.0 0397/1073] media: mediatek: vcodec: Fix getting NULL pointer for dst buffer
+Date: Wed, 28 Dec 2022 15:33:05 +0100
+Message-Id: <20221228144338.801201091@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,71 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+From: Yunfei Dong <yunfei.dong@mediatek.com>
 
-[ Upstream commit 9f28157778ede0d4f183f7ab3b46995bb400abbe ]
+[ Upstream commit d879f770e4d1d5f0d9b692d3a2702f23ee441dbb ]
 
-Fix a slab-out-of-bounds read that occurs in nla_put() called from
-nfc_genl_send_target() when target->sensb_res_len, which is duplicated
-from an nfc_target in pn533, is too large as the nfc_target is not
-properly initialized and retains garbage values. Clear nfc_targets with
-memset() before they are used.
+The driver may can't get v4l2 buffer when lat or core decode timeout,
+will lead to crash when call v4l2_m2m_buf_done to set dst buffer
+(NULL pointer) done.
 
-Found by a modified version of syzkaller.
-
-BUG: KASAN: slab-out-of-bounds in nla_put
-Call Trace:
- memcpy
- nla_put
- nfc_genl_dump_targets
- genl_lock_dumpit
- netlink_dump
- __netlink_dump_start
- genl_family_rcv_msg_dumpit
- genl_rcv_msg
- netlink_rcv_skb
- genl_rcv
- netlink_unicast
- netlink_sendmsg
- sock_sendmsg
- ____sys_sendmsg
- ___sys_sendmsg
- __sys_sendmsg
- do_syscall_64
-
-Fixes: 673088fb42d0 ("NFC: pn533: Send ATR_REQ directly for active device detection")
-Fixes: 361f3cb7f9cf ("NFC: DEP link hook implementation for pn533")
-Signed-off-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20221214015139.119673-1-linuxlovemin@yonsei.ac.kr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 7b182b8d9c85 ("media: mediatek: vcodec: Refactor get and put capture buffer flow")
+Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/pn533/pn533.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ .../mediatek/vcodec/mtk_vcodec_dec_stateless.c        | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/nfc/pn533/pn533.c b/drivers/nfc/pn533/pn533.c
-index 6dc0af63440f..939d27652a4c 100644
---- a/drivers/nfc/pn533/pn533.c
-+++ b/drivers/nfc/pn533/pn533.c
-@@ -1297,6 +1297,8 @@ static int pn533_poll_dep_complete(struct pn533 *dev, void *arg,
- 	if (IS_ERR(resp))
- 		return PTR_ERR(resp);
+diff --git a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
+index c45bd2599bb2..e86809052a9f 100644
+--- a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
++++ b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
+@@ -138,10 +138,13 @@ static void mtk_vdec_stateless_cap_to_disp(struct mtk_vcodec_ctx *ctx, int error
+ 		state = VB2_BUF_STATE_DONE;
  
-+	memset(&nfc_target, 0, sizeof(struct nfc_target));
-+
- 	rsp = (struct pn533_cmd_jump_dep_response *)resp->data;
+ 	vb2_dst = v4l2_m2m_dst_buf_remove(ctx->m2m_ctx);
+-	v4l2_m2m_buf_done(vb2_dst, state);
+-
+-	mtk_v4l2_debug(2, "free frame buffer id:%d to done list",
+-		       vb2_dst->vb2_buf.index);
++	if (vb2_dst) {
++		v4l2_m2m_buf_done(vb2_dst, state);
++		mtk_v4l2_debug(2, "free frame buffer id:%d to done list",
++			       vb2_dst->vb2_buf.index);
++	} else {
++		mtk_v4l2_err("dst buffer is NULL");
++	}
  
- 	rc = rsp->status & PN533_CMD_RET_MASK;
-@@ -1928,6 +1930,8 @@ static int pn533_in_dep_link_up_complete(struct pn533 *dev, void *arg,
- 
- 		dev_dbg(dev->dev, "Creating new target\n");
- 
-+		memset(&nfc_target, 0, sizeof(struct nfc_target));
-+
- 		nfc_target.supported_protocols = NFC_PROTO_NFC_DEP_MASK;
- 		nfc_target.nfcid1_len = 10;
- 		memcpy(nfc_target.nfcid1, rsp->nfcid3t, nfc_target.nfcid1_len);
+ 	if (src_buf_req)
+ 		v4l2_ctrl_request_complete(src_buf_req, &ctx->ctrl_hdl);
 -- 
 2.35.1
 
