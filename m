@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 972EB1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:28:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A96C433D2;
-	Wed, 28 Dec 2022 16:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBF51C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:28:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7499C433F0;
+	Wed, 28 Dec 2022 16:28:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244898;
-	bh=MtJxME0daBU8mxhlgoTcfsB+TZFPAlcvqI2POhUuFIA=;
+	s=korg; t=1672244901;
+	bh=X0hgkm9GaYB7WJBQeBOv0mpFuJQF232PPMR9F5CfBkg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NP6b/ZYRJ3CSbdPUWUpMp8DDv0tVc+SKA2h9rvfwyn83JxVF58ogvdHfGTRaWYsGc
-	 EozlR9bI24NEurBu4rVqda0TgHwA6OsA2IQ+EHuX6Vulf88vHlr0HYzP2nmXkzluTF
-	 UnyLi0tBeCsWgMOJg6zMdKWgbQkIk0uV2+6SCHT8=
+	b=qBW/wljHQaNbnzS83BNRQDAZBY9XxMxHImkI5YXe3BxY6xNPLsODeEuJ0Vb+c7SbP
+	 Q6PGTxpb7TG8qmgRHoRWRVoFkRYJbAyVRCMh+3BllojkRbFhnn457UPwL0jUQYoMEz
+	 lqYBzF3HWGohNfiiW4SIMhMlLvXwXszdz5ivI+Ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Helge Deller <deller@gmx.de>,
+	Hacash Robot <hacashRobot@santino.com>,
+	Xie Shaowen <studentxswpy@163.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0758/1146] fbdev: ep93xx-fb: Add missing clk_disable_unprepare in ep93xxfb_probe()
-Date: Wed, 28 Dec 2022 15:38:17 +0100
-Message-Id: <20221228144350.732963002@linuxfoundation.org>
+Subject: [PATCH 6.0 0796/1073] macintosh/macio-adb: check the return value of ioremap()
+Date: Wed, 28 Dec 2022 15:39:44 +0100
+Message-Id: <20221228144349.629987897@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,41 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Xie Shaowen <studentxswpy@163.com>
 
-[ Upstream commit c84bf485a5aaf9aa0764a58832b7ef4375c29f03 ]
+[ Upstream commit dbaa3105736d4d73063ea0a3b01cd7fafce924e6 ]
 
-The clk_disable_unprepare() should be called in the error handling
-of register_framebuffer(), fix it.
+The function ioremap() in macio_init() can fail, so its return value
+should be checked.
 
-Fixes: 0937a7b3625d ("video: ep93xx: Prepare clock before using it")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 36874579dbf4c ("[PATCH] powerpc: macio-adb build fix")
+Reported-by: Hacash Robot <hacashRobot@santino.com>
+Signed-off-by: Xie Shaowen <studentxswpy@163.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20220802074148.3213659-1-studentxswpy@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/ep93xx-fb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/macintosh/macio-adb.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/video/fbdev/ep93xx-fb.c b/drivers/video/fbdev/ep93xx-fb.c
-index 2398b3d48fed..305f1587bd89 100644
---- a/drivers/video/fbdev/ep93xx-fb.c
-+++ b/drivers/video/fbdev/ep93xx-fb.c
-@@ -552,12 +552,14 @@ static int ep93xxfb_probe(struct platform_device *pdev)
+diff --git a/drivers/macintosh/macio-adb.c b/drivers/macintosh/macio-adb.c
+index 9b63bd2551c6..cd4e34d15c26 100644
+--- a/drivers/macintosh/macio-adb.c
++++ b/drivers/macintosh/macio-adb.c
+@@ -108,6 +108,10 @@ int macio_init(void)
+ 		return -ENXIO;
+ 	}
+ 	adb = ioremap(r.start, sizeof(struct adb_regs));
++	if (!adb) {
++		of_node_put(adbs);
++		return -ENOMEM;
++	}
  
- 	err = register_framebuffer(info);
- 	if (err)
--		goto failed_check;
-+		goto failed_framebuffer;
- 
- 	dev_info(info->dev, "registered. Mode = %dx%d-%d\n",
- 		 info->var.xres, info->var.yres, info->var.bits_per_pixel);
- 	return 0;
- 
-+failed_framebuffer:
-+	clk_disable_unprepare(fbi->clk);
- failed_check:
- 	if (fbi->mach_info->teardown)
- 		fbi->mach_info->teardown(pdev);
+ 	out_8(&adb->ctrl.r, 0);
+ 	out_8(&adb->intr.r, 0);
 -- 
 2.35.1
 
