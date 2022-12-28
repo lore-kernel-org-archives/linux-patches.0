@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76171C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46E92C433D2;
-	Wed, 28 Dec 2022 16:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E861C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:26:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9EEDC433D2;
+	Wed, 28 Dec 2022 16:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244785;
-	bh=2s8+8v+kwfXxbFXzf6BDPF3hKKV7A9BpshUDpveIOhI=;
+	s=korg; t=1672244788;
+	bh=vN7+nw468i9Uj88enQI+sxQT378K1ipRLkWW1xecTQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EpCSrM5SAqhbk+r1LtG2wDJpDKCkyjXAeIqBdDgpKRGGVz/+ntSI/386H6zEcOXlp
-	 BWwFdTtmXAewe+G7skL3puB/8MoFEifFjwVHsrvL2kzQiQYSTwnBRTnxPS+K8MeMO9
-	 Cpby2OQP1lGN+ggRG9nCkejEq17Dn/VnUl1tI8Ts=
+	b=e2ohTiypUmDte2aWycwzrwv2ngh7SFaq3ZXvnYFC94Vi5W13EseT2+HIzPZ7GnwMU
+	 1U03MEE3fSwDMbM5x2aTxNhfS8LpXQihZQd1p7II1A9xtvR2mqdrJno6OvqjSWA/L0
+	 FZntGe9lDN+RNLwTWQjoz+eBFAf6zQ1NIac+CObY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Tang <tanghui20@huawei.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Al Cooper <alcooperx@gmail.com>,
+	Justin Chen <justinpopo6@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0736/1146] i2c: pxa-pci: fix missing pci_disable_device() on error in ce4100_i2c_probe
-Date: Wed, 28 Dec 2022 15:37:55 +0100
-Message-Id: <20221228144350.139836817@linuxfoundation.org>
+Subject: [PATCH 6.0 0774/1073] phy: usb: s2 WoL wakeup_count not incremented for USB->Eth devices
+Date: Wed, 28 Dec 2022 15:39:22 +0100
+Message-Id: <20221228144349.037263310@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,55 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hui Tang <tanghui20@huawei.com>
+From: Al Cooper <alcooperx@gmail.com>
 
-[ Upstream commit d78a167332e1ca8113268ed922c1212fd71b73ad ]
+[ Upstream commit f7fc5b7090372fc4dd7798c874635ca41b8ba733 ]
 
-Using pcim_enable_device() to avoid missing pci_disable_device().
+The PHY's "wakeup_count" is not incrementing when waking from
+WoL. The wakeup count can be found in sysfs at:
+/sys/bus/platform/devices/rdb/*.usb-phy/power/wakeup_count.
+The problem is that the system wakup event handler was being passed
+the wrong "device" by the PHY driver.
 
-Fixes: 7e94dd154e93 ("i2c-pxa2xx: Add PCI support for PXA I2C controller")
-Signed-off-by: Hui Tang <tanghui20@huawei.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Fixes: f1c0db40a3ad ("phy: usb: Add "wake on" functionality")
+Signed-off-by: Al Cooper <alcooperx@gmail.com>
+Signed-off-by: Justin Chen <justinpopo6@gmail.com>
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/1665005418-15807-3-git-send-email-justinpopo6@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-pxa-pci.c | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
+ drivers/phy/broadcom/phy-brcm-usb.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-pxa-pci.c b/drivers/i2c/busses/i2c-pxa-pci.c
-index f614cade432b..30e38bc8b6db 100644
---- a/drivers/i2c/busses/i2c-pxa-pci.c
-+++ b/drivers/i2c/busses/i2c-pxa-pci.c
-@@ -105,7 +105,7 @@ static int ce4100_i2c_probe(struct pci_dev *dev,
- 	int i;
- 	struct ce4100_devices *sds;
+diff --git a/drivers/phy/broadcom/phy-brcm-usb.c b/drivers/phy/broadcom/phy-brcm-usb.c
+index 2cb3779fcdf8..c0c3ab9b2a15 100644
+--- a/drivers/phy/broadcom/phy-brcm-usb.c
++++ b/drivers/phy/broadcom/phy-brcm-usb.c
+@@ -102,9 +102,9 @@ static int brcm_pm_notifier(struct notifier_block *notifier,
  
--	ret = pci_enable_device_mem(dev);
-+	ret = pcim_enable_device(dev);
- 	if (ret)
- 		return ret;
+ static irqreturn_t brcm_usb_phy_wake_isr(int irq, void *dev_id)
+ {
+-	struct phy *gphy = dev_id;
++	struct device *dev = dev_id;
  
-@@ -114,10 +114,8 @@ static int ce4100_i2c_probe(struct pci_dev *dev,
- 		return -EINVAL;
- 	}
- 	sds = kzalloc(sizeof(*sds), GFP_KERNEL);
--	if (!sds) {
--		ret = -ENOMEM;
--		goto err_mem;
--	}
-+	if (!sds)
-+		return -ENOMEM;
+-	pm_wakeup_event(&gphy->dev, 0);
++	pm_wakeup_event(dev, 0);
  
- 	for (i = 0; i < ARRAY_SIZE(sds->pdev); i++) {
- 		sds->pdev[i] = add_i2c_device(dev, i);
-@@ -133,8 +131,6 @@ static int ce4100_i2c_probe(struct pci_dev *dev,
- 
- err_dev_add:
- 	kfree(sds);
--err_mem:
--	pci_disable_device(dev);
- 	return ret;
+ 	return IRQ_HANDLED;
  }
- 
+@@ -451,7 +451,7 @@ static int brcm_usb_phy_dvr_init(struct platform_device *pdev,
+ 	if (priv->wake_irq >= 0) {
+ 		err = devm_request_irq(dev, priv->wake_irq,
+ 				       brcm_usb_phy_wake_isr, 0,
+-				       dev_name(dev), gphy);
++				       dev_name(dev), dev);
+ 		if (err < 0)
+ 			return err;
+ 		device_set_wakeup_capable(dev, 1);
 -- 
 2.35.1
 
