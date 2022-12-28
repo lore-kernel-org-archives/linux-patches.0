@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C1D91C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:31:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23903C433D2;
-	Wed, 28 Dec 2022 16:31:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583E31C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:31:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B65B1C433D2;
+	Wed, 28 Dec 2022 16:31:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245114;
-	bh=XCYAUkk25tpzYLrY7z26zSUToMa1wnEdXMCbDROI2m4=;
+	s=korg; t=1672245117;
+	bh=v875tMKwwAeXW+bic6yRinnmQxsfzhGoBFpUxv4aiRM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hzG8XQ6eknAFF7fVgpzzsComGFHhcgSaB2Rn+U4VpktMsBDu/ZmP2WrgwnUuJXAIs
-	 fGZwJzcQhFPL7IbpFFFMjtV/xVeK0qW99+94uTL5640TA82vzbIm/Rx1PolhAvAPWY
-	 lVcU4Ac99OhwNrR+3duwA2DA78Rf2MapGpvJGXkQ=
+	b=QoFsV7aUgCidzYhij6zYI8pZmtV2LM+fhbmoYfWDQ6qhHCqHp8l0g//6Jj4QKh3MB
+	 IWBI6Ni5AQ4xZyrIHoiI36e5SyxN01tVYvXQ3SKcrbRW3sAjWvVzTHRXt3mDFgytci
+	 6W+U3BtaG7BVKssH8hnL1A0j0txTrx4fbgSPmDNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Terho <janne.terho@ouman.fi>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0835/1073] rtc: pcf85063: fix pcf85063_clkout_control
-Date: Wed, 28 Dec 2022 15:40:23 +0100
-Message-Id: <20221228144350.697476599@linuxfoundation.org>
+Subject: [PATCH 6.1 0799/1146] phy: qcom-qmp-pcie: fix sc8180x initialisation
+Date: Wed, 28 Dec 2022 15:38:58 +0100
+Message-Id: <20221228144351.852243121@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit c2d12e85336f6d4172fb2bab5935027c446d7343 ]
+[ Upstream commit 4a9eac5ae2200f1b208dd33738777f89f93dc0fe ]
 
-pcf85063_clkout_control reads the wrong register but then update the
-correct one.
+The phy_status mask was never set for SC8180X which meant that the
+driver would not wait for the PHY to be initialised during power-on and
+would never detect PHY initialisation timeouts.
 
-Reported-by: Janne Terho <janne.terho@ouman.fi>
-Fixes: 8c229ab6048b ("rtc: pcf85063: Add pcf85063 clkout control to common clock framework")
-Link: https://lore.kernel.org/r/20221211223553.59955-1-alexandre.belloni@bootlin.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: f839f14e24f2 ("phy: qcom-qmp: Add sc8180x PCIe support")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20221012085002.24099-1-johan+linaro@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf85063.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-pcie.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/rtc/rtc-pcf85063.c b/drivers/rtc/rtc-pcf85063.c
-index 99f9cc57c7b3..754e03984f98 100644
---- a/drivers/rtc/rtc-pcf85063.c
-+++ b/drivers/rtc/rtc-pcf85063.c
-@@ -424,7 +424,7 @@ static int pcf85063_clkout_control(struct clk_hw *hw, bool enable)
- 	unsigned int buf;
- 	int ret;
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+index 764029b3a26b..4b85b0c027d5 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-pcie.c
+@@ -1693,6 +1693,7 @@ static const struct qmp_phy_cfg sc8180x_pciephy_cfg = {
  
--	ret = regmap_read(pcf85063->regmap, PCF85063_REG_OFFSET, &buf);
-+	ret = regmap_read(pcf85063->regmap, PCF85063_REG_CTRL2, &buf);
- 	if (ret < 0)
- 		return ret;
- 	buf &= PCF85063_REG_CLKO_F_MASK;
+ 	.start_ctrl		= PCS_START | SERDES_START,
+ 	.pwrdn_ctrl		= SW_PWRDN | REFCLK_DRV_DSBL,
++	.phy_status		= PHYSTATUS,
+ };
+ 
+ static const struct qmp_phy_cfg sdx55_qmp_pciephy_cfg = {
 -- 
 2.35.1
 
