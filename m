@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E43781863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:44:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 674D7C433D2;
-	Wed, 28 Dec 2022 15:44:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935111863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:44:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19987C433D2;
+	Wed, 28 Dec 2022 15:44:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242261;
-	bh=LPUCkWdKAf58dDEL5vYdlQ86UCsRXdY1X7UX56dTgbI=;
+	s=korg; t=1672242264;
+	bh=4D5mQ6goGwcec4+foq5xSItBup7/X+41QmEMPozvQdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EsF48+njmCx/OVI7Bf50o/8VXFq2ZgPXj3necG096H4lPDzjwRJIQobxVSkdIaAGE
-	 6Ca4uG/Z2ZeIG6AlYjTbEzDwNopbq/X77HJOAbgcqkbE9ClUX5KJM0AkfPxh1u+ThT
-	 22do2VILQOM6eavRe/sN5iRPeAV3RTv0V6VoYae4=
+	b=zBVVME7Hx9qSpnaerMLiFZ9hvXkmCH66DHmHYA4twpv1k/WCuXEmGoFC2g6o8FC2m
+	 aXLcozWs+AqDQcUIw7mlzzASBOQsJhT8sEaBTya+htEQ99Lur6KYSBbVg8Nyd59SQy
+	 s6LezpkZc+docpwsd94vE1eLFHNeBleZ04tQP+ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Janne Terho <janne.terho@ouman.fi>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	ZhangPeng <zhangpeng362@huawei.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 581/731] rtc: pcf85063: fix pcf85063_clkout_control
-Date: Wed, 28 Dec 2022 15:41:28 +0100
-Message-Id: <20221228144313.392617901@linuxfoundation.org>
+Subject: [PATCH 6.0 0386/1073] pinctrl: pinconf-generic: add missing of_node_put()
+Date: Wed, 28 Dec 2022 15:32:54 +0100
+Message-Id: <20221228144338.494326939@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+From: ZhangPeng <zhangpeng362@huawei.com>
 
-[ Upstream commit c2d12e85336f6d4172fb2bab5935027c446d7343 ]
+[ Upstream commit 5ead93289815a075d43c415e35c8beafafb801c9 ]
 
-pcf85063_clkout_control reads the wrong register but then update the
-correct one.
+of_node_put() needs to be called when jumping out of the loop, since
+for_each_available_child_of_node() will increase the refcount of node.
 
-Reported-by: Janne Terho <janne.terho@ouman.fi>
-Fixes: 8c229ab6048b ("rtc: pcf85063: Add pcf85063 clkout control to common clock framework")
-Link: https://lore.kernel.org/r/20221211223553.59955-1-alexandre.belloni@bootlin.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: c7289500e29d ("pinctrl: pinconf-generic: scan also referenced phandle node")
+Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
+Link: https://lore.kernel.org/r/20221125070156.3535855-1-zhangpeng362@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-pcf85063.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinconf-generic.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-pcf85063.c b/drivers/rtc/rtc-pcf85063.c
-index 3e2837722667..bf2e370907b7 100644
---- a/drivers/rtc/rtc-pcf85063.c
-+++ b/drivers/rtc/rtc-pcf85063.c
-@@ -422,7 +422,7 @@ static int pcf85063_clkout_control(struct clk_hw *hw, bool enable)
- 	unsigned int buf;
- 	int ret;
+diff --git a/drivers/pinctrl/pinconf-generic.c b/drivers/pinctrl/pinconf-generic.c
+index 415d1df8f46a..365c4b0ca465 100644
+--- a/drivers/pinctrl/pinconf-generic.c
++++ b/drivers/pinctrl/pinconf-generic.c
+@@ -395,8 +395,10 @@ int pinconf_generic_dt_node_to_map(struct pinctrl_dev *pctldev,
+ 	for_each_available_child_of_node(np_config, np) {
+ 		ret = pinconf_generic_dt_subnode_to_map(pctldev, np, map,
+ 					&reserved_maps, num_maps, type);
+-		if (ret < 0)
++		if (ret < 0) {
++			of_node_put(np);
+ 			goto exit;
++		}
+ 	}
+ 	return 0;
  
--	ret = regmap_read(pcf85063->regmap, PCF85063_REG_OFFSET, &buf);
-+	ret = regmap_read(pcf85063->regmap, PCF85063_REG_CTRL2, &buf);
- 	if (ret < 0)
- 		return ret;
- 	buf &= PCF85063_REG_CLKO_F_MASK;
 -- 
 2.35.1
 
