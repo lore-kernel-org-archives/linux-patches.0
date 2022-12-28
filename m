@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACBD11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30465C433D2;
-	Wed, 28 Dec 2022 15:51:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 538D01863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAAADC433D2;
+	Wed, 28 Dec 2022 15:51:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242670;
-	bh=cwW1JDZkj7fyOCeQCCALGD2p2Gzu8nzCk1xuTf+vgxU=;
+	s=korg; t=1672242673;
+	bh=i5o0O0w+IiaeCvWsDJUEXBmUaY0CSiK8cY0u6qqBa4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PTE4BSP50KWruDD/ErUk64K7szVfqVbCtPwBN7Q+f37YuoPcuBR9ANcJs7lCS3OcN
-	 xpBcbKk+ZWnr7gFx1qWHoAP4Lt5qWYhP0knbKacldL7+mLTaenz32CIaarN+vrMwEs
-	 pZTUi52eHB2+zxAe6dk0AveYzIXgsDy//7r/5KLc=
+	b=emcCcZUR8vE1ko64qTIl3MIyHBn6bc2FdsFcBcuogOWxsTPTokwHrrH97IGw0DS5E
+	 HaM0BHizlyaLDsJvcPrPgQA00gYgnXQ9LigMMYWjaMtjuhSh1YnNAyF8YwZv0QcFlc
+	 TGkJDziDa4CdW2NTNdb/9FS7SWCrIDsCksvV7RYE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0423/1073] drm/amdgpu: Fix PCI device refcount leak in amdgpu_atrm_get_bios()
-Date: Wed, 28 Dec 2022 15:33:31 +0100
-Message-Id: <20221228144339.512023677@linuxfoundation.org>
+Subject: [PATCH 6.0 0438/1073] wifi: cfg80211: Fix not unregister reg_pdev when load_builtin_regdb_keys() fails
+Date: Wed, 28 Dec 2022 15:33:46 +0100
+Message-Id: <20221228144339.923335190@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,38 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit ca54639c7752edf1304d92ff4d0c049d4efc9ba0 ]
+[ Upstream commit 833a9fd28c9b7ccb39a334721379e992dc1c0c89 ]
 
-As comment of pci_get_class() says, it returns a pci_device with its
-refcount increased and decreased the refcount for the input parameter
-@from if it is not NULL.
+In regulatory_init_db(), when it's going to return a error, reg_pdev
+should be unregistered. When load_builtin_regdb_keys() fails it doesn't
+do it and makes cfg80211 can't be reload with report:
 
-If we break the loop in amdgpu_atrm_get_bios() with 'pdev' not NULL, we
-need to call pci_dev_put() to decrease the refcount. Add the missing
-pci_dev_put() to avoid refcount leak.
+sysfs: cannot create duplicate filename '/devices/platform/regulatory.0'
+ ...
+ <TASK>
+ dump_stack_lvl+0x79/0x9b
+ sysfs_warn_dup.cold+0x1c/0x29
+ sysfs_create_dir_ns+0x22d/0x290
+ kobject_add_internal+0x247/0x800
+ kobject_add+0x135/0x1b0
+ device_add+0x389/0x1be0
+ platform_device_add+0x28f/0x790
+ platform_device_register_full+0x376/0x4b0
+ regulatory_init+0x9a/0x4b2 [cfg80211]
+ cfg80211_init+0x84/0x113 [cfg80211]
+ ...
 
-Fixes: d38ceaf99ed0 ("drm/amdgpu: add core driver (v4)")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Fixes: 90a53e4432b1 ("cfg80211: implement regdb signature checking")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Link: https://lore.kernel.org/r/20221109090237.214127-1-chenzhongjin@huawei.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/reg.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-index e363f56c72af..30c28a69e847 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_bios.c
-@@ -317,6 +317,7 @@ static bool amdgpu_atrm_get_bios(struct amdgpu_device *adev)
+diff --git a/net/wireless/reg.c b/net/wireless/reg.c
+index c3d950d29432..4f3f31244e8b 100644
+--- a/net/wireless/reg.c
++++ b/net/wireless/reg.c
+@@ -4311,8 +4311,10 @@ static int __init regulatory_init_db(void)
+ 		return -EINVAL;
  
- 	if (!found)
- 		return false;
-+	pci_dev_put(pdev);
+ 	err = load_builtin_regdb_keys();
+-	if (err)
++	if (err) {
++		platform_device_unregister(reg_pdev);
+ 		return err;
++	}
  
- 	adev->bios = kmalloc(size, GFP_KERNEL);
- 	if (!adev->bios) {
+ 	/* We always try to get an update for the static regdomain */
+ 	err = regulatory_hint_core(cfg80211_world_regdom->alpha2);
 -- 
 2.35.1
 
