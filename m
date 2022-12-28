@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 882AB1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:05:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C2A9C433D2;
-	Wed, 28 Dec 2022 16:05:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BC991C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:05:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A78ECC433D2;
+	Wed, 28 Dec 2022 16:05:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243533;
-	bh=oyl127HXmqtHfp/cgiU0zfcaX050uHC9XbWrQ5TgbzE=;
+	s=korg; t=1672243536;
+	bh=W9wUOoN8RjUY0goWAA4qXdYTiG1MYt93A2fnmLO/5aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QKhm0Wu8mtg0ozziHkz2LUWHIeuFyf+RCJp4x5TnY7/FC+km8XV43TQrfwfaWa1Ox
-	 B8voNBmIGBejcIBZaT+PUYNK95jH3mEPnQHVl7c5rQIWcUp8K5mTpeyUKwAH8qPvcP
-	 o7MaMH+76TmBMFMqRKQrnB3U2/hR+3+3BOaU73G8=
+	b=wEC+aICCZGZd0x6wtrBoM5OlmwGabQMt2c4TI3ZVmrGXKH4KyIsr/qo4tqz/a37za
+	 6NhPU6SM+h+hlTm3wChOrfcCUktw1gv8xMxoK8bIej4d6S+DLdD0PPdSK+hsK1RdD2
+	 PUXjn0XRHQpBIxHWGruFA/WGT4CpaLSnElZFWRP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yang Yingliang <yangyingliang@huawei.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0503/1146] mmc: wmt-sdmmc: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:34:02 +0100
-Message-Id: <20221228144343.839652733@linuxfoundation.org>
+Subject: [PATCH 6.1 0508/1146] mmc: via-sdmmc: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:34:07 +0100
+Message-Id: <20221228144343.973882410@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -37,45 +37,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 29276d56f6ed138db0f38cd31aedc0b725c8c76c ]
+[ Upstream commit e4e46fb61e3bb4628170810d3f2b996b709b90d9 ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+mmc_add_host() may return error, if we ignore its return value,
+it will lead two issues:
+1. The memory that allocated in mmc_alloc_host() is leaked.
+2. In the remove() path, mmc_remove_host() will be called to
+   delete device, but it's not added yet, it will lead a kernel
+   crash because of null-ptr-deref in device_del().
 
-So fix this by checking the return value and goto error path which will call
-mmc_free_host(), besides, clk_disable_unprepare() also needs be called.
+Fix this by checking the return value and goto error path which
+will call mmc_free_host().
 
-Fixes: 3a96dff0f828 ("mmc: SD/MMC Host Controller for Wondermedia WM8505/WM8650")
+Fixes: f0bf7f61b840 ("mmc: Add new via-sdmmc host controller driver")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-10-yangyingliang@huawei.com
+Link: https://lore.kernel.org/r/20221108130949.1067699-1-yangyingliang@huawei.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/wmt-sdmmc.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/mmc/host/via-sdmmc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/wmt-sdmmc.c b/drivers/mmc/host/wmt-sdmmc.c
-index 9b5c503e3a3f..9aa3027ca25e 100644
---- a/drivers/mmc/host/wmt-sdmmc.c
-+++ b/drivers/mmc/host/wmt-sdmmc.c
-@@ -856,11 +856,15 @@ static int wmt_mci_probe(struct platform_device *pdev)
- 	/* configure the controller to a known 'ready' state */
- 	wmt_reset_hardware(mmc);
+diff --git a/drivers/mmc/host/via-sdmmc.c b/drivers/mmc/host/via-sdmmc.c
+index 88662a90ed96..a2b0d9461665 100644
+--- a/drivers/mmc/host/via-sdmmc.c
++++ b/drivers/mmc/host/via-sdmmc.c
+@@ -1151,7 +1151,9 @@ static int via_sd_probe(struct pci_dev *pcidev,
+ 	    pcidev->subsystem_device == 0x3891)
+ 		sdhost->quirks = VIA_CRDR_QUIRK_300MS_PWRDELAY;
  
 -	mmc_add_host(mmc);
 +	ret = mmc_add_host(mmc);
 +	if (ret)
-+		goto fail7;
- 
- 	dev_info(&pdev->dev, "WMT SDHC Controller initialized\n");
++		goto unmap;
  
  	return 0;
-+fail7:
-+	clk_disable_unprepare(priv->clk_sdmmc);
- fail6:
- 	clk_put(priv->clk_sdmmc);
- fail5_and_a_half:
+ 
 -- 
 2.35.1
 
