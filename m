@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24A251C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A95BC433D2;
-	Wed, 28 Dec 2022 16:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988F21C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E5FAC433D2;
+	Wed, 28 Dec 2022 16:23:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244587;
-	bh=klFy7AXjHXGz564pvfCV6fTFf/FUGAlNJIEEtUEHjlA=;
+	s=korg; t=1672244590;
+	bh=xywG0XWy9xHqG27Lvsj4AS/kh+Wewvozb4pqlK1NiBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cLKL3/2RBRSrSq2XnDYJ3Q5qVIm3HAYPCXcnYrK6qwgN5tneGtB16Uw05ZFSoub2w
-	 tbcfIYysgUwKTETTxwvat3TSXvFdD3caR5ebPAxp5ed1XctcsTid6kYrkDY0c2BWuH
-	 ky1NKdZNiTaq5IZjAD5m4Jcj579Pa39Ocw1YyLuw=
+	b=LJoli8uTeHEhtc6tllh0Ec637qqpTpQkw+jayf4JqjSbLSUeGzD9ApRV6trcEesEW
+	 xNU2b4CBPmun+rlvqMKqGKspwDtKxwBnH2XOqJrRbC4C7r67n4iCzj+6bD8hBA1VoO
+	 nauGdpmBpxGbWx3zG48X5jkPZV2BXFqweLPAfuok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Pavel Machek <pavel@ucw.cz>,
+	Sven Peter <sven@svenpeter.dev>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0737/1073] led: qcom-lpg: Fix sleeping in atomic
-Date: Wed, 28 Dec 2022 15:38:45 +0100
-Message-Id: <20221228144348.043370408@linuxfoundation.org>
+Subject: [PATCH 6.1 0699/1146] usb: typec: Check for ops->exit instead of ops->enter in altmode_exit
+Date: Wed, 28 Dec 2022 15:37:18 +0100
+Message-Id: <20221228144349.131250455@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,127 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Sven Peter <sven@svenpeter.dev>
 
-[ Upstream commit 3031993b3474794ecb71b6f969a3e60e4bda9d8a ]
+[ Upstream commit b6ddd180e3d9f92c1e482b3cdeec7dda086b1341 ]
 
-lpg_brighness_set() function can sleep, while led's brightness_set()
-callback must be non-blocking. Change LPG driver to use
-brightness_set_blocking() instead.
+typec_altmode_exit checks if ops->enter is not NULL but then calls
+ops->exit a few lines below. Fix that and check for the function
+pointer it's about to call instead.
 
-BUG: sleeping function called from invalid context at kernel/locking/mutex.c:580
-in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 0, name: swapper/0
-preempt_count: 101, expected: 0
-INFO: lockdep is turned off.
-CPU: 0 PID: 0 Comm: swapper/0 Tainted: G        W          6.1.0-rc1-00014-gbe99b089c6fc-dirty #85
-Hardware name: Qualcomm Technologies, Inc. DB820c (DT)
-Call trace:
- dump_backtrace.part.0+0xe4/0xf0
- show_stack+0x18/0x40
- dump_stack_lvl+0x88/0xb4
- dump_stack+0x18/0x34
- __might_resched+0x170/0x254
- __might_sleep+0x48/0x9c
- __mutex_lock+0x4c/0x400
- mutex_lock_nested+0x2c/0x40
- lpg_brightness_single_set+0x40/0x90
- led_set_brightness_nosleep+0x34/0x60
- led_heartbeat_function+0x80/0x170
- call_timer_fn+0xb8/0x340
- __run_timers.part.0+0x20c/0x254
- run_timer_softirq+0x3c/0x7c
- _stext+0x14c/0x578
- ____do_softirq+0x10/0x20
- call_on_irq_stack+0x2c/0x5c
- do_softirq_own_stack+0x1c/0x30
- __irq_exit_rcu+0x164/0x170
- irq_exit_rcu+0x10/0x40
- el1_interrupt+0x38/0x50
- el1h_64_irq_handler+0x18/0x2c
- el1h_64_irq+0x64/0x68
- cpuidle_enter_state+0xc8/0x380
- cpuidle_enter+0x38/0x50
- do_idle+0x244/0x2d0
- cpu_startup_entry+0x24/0x30
- rest_init+0x128/0x1a0
- arch_post_acpi_subsys_init+0x0/0x18
- start_kernel+0x6f4/0x734
- __primary_switched+0xbc/0xc4
-
-Fixes: 24e2d05d1b68 ("leds: Add driver for Qualcomm LPG")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Pavel Machek <pavel@ucw.cz>
+Fixes: 8a37d87d72f0 ("usb: typec: Bus type for alternate modes")
+Signed-off-by: Sven Peter <sven@svenpeter.dev>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20221114165924.33487-1-sven@svenpeter.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/rgb/leds-qcom-lpg.c | 18 +++++++++++-------
- 1 file changed, 11 insertions(+), 7 deletions(-)
+ drivers/usb/typec/bus.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/leds/rgb/leds-qcom-lpg.c b/drivers/leds/rgb/leds-qcom-lpg.c
-index 02f51cc61837..c1a56259226f 100644
---- a/drivers/leds/rgb/leds-qcom-lpg.c
-+++ b/drivers/leds/rgb/leds-qcom-lpg.c
-@@ -602,8 +602,8 @@ static void lpg_brightness_set(struct lpg_led *led, struct led_classdev *cdev,
- 		lpg_lut_sync(lpg, lut_mask);
- }
+diff --git a/drivers/usb/typec/bus.c b/drivers/usb/typec/bus.c
+index 26ea2fdec17d..31c2a3130cad 100644
+--- a/drivers/usb/typec/bus.c
++++ b/drivers/usb/typec/bus.c
+@@ -134,7 +134,7 @@ int typec_altmode_exit(struct typec_altmode *adev)
+ 	if (!adev || !adev->active)
+ 		return 0;
  
--static void lpg_brightness_single_set(struct led_classdev *cdev,
--				      enum led_brightness value)
-+static int lpg_brightness_single_set(struct led_classdev *cdev,
-+				     enum led_brightness value)
- {
- 	struct lpg_led *led = container_of(cdev, struct lpg_led, cdev);
- 	struct mc_subled info;
-@@ -614,10 +614,12 @@ static void lpg_brightness_single_set(struct led_classdev *cdev,
- 	lpg_brightness_set(led, cdev, &info);
+-	if (!pdev->ops || !pdev->ops->enter)
++	if (!pdev->ops || !pdev->ops->exit)
+ 		return -EOPNOTSUPP;
  
- 	mutex_unlock(&led->lpg->lock);
-+
-+	return 0;
- }
- 
--static void lpg_brightness_mc_set(struct led_classdev *cdev,
--				  enum led_brightness value)
-+static int lpg_brightness_mc_set(struct led_classdev *cdev,
-+				 enum led_brightness value)
- {
- 	struct led_classdev_mc *mc = lcdev_to_mccdev(cdev);
- 	struct lpg_led *led = container_of(mc, struct lpg_led, mcdev);
-@@ -628,6 +630,8 @@ static void lpg_brightness_mc_set(struct led_classdev *cdev,
- 	lpg_brightness_set(led, cdev, mc->subled_info);
- 
- 	mutex_unlock(&led->lpg->lock);
-+
-+	return 0;
- }
- 
- static int lpg_blink_set(struct lpg_led *led,
-@@ -1118,7 +1122,7 @@ static int lpg_add_led(struct lpg *lpg, struct device_node *np)
- 		led->mcdev.num_colors = num_channels;
- 
- 		cdev = &led->mcdev.led_cdev;
--		cdev->brightness_set = lpg_brightness_mc_set;
-+		cdev->brightness_set_blocking = lpg_brightness_mc_set;
- 		cdev->blink_set = lpg_blink_mc_set;
- 
- 		/* Register pattern accessors only if we have a LUT block */
-@@ -1132,7 +1136,7 @@ static int lpg_add_led(struct lpg *lpg, struct device_node *np)
- 			return ret;
- 
- 		cdev = &led->cdev;
--		cdev->brightness_set = lpg_brightness_single_set;
-+		cdev->brightness_set_blocking = lpg_brightness_single_set;
- 		cdev->blink_set = lpg_blink_single_set;
- 
- 		/* Register pattern accessors only if we have a LUT block */
-@@ -1151,7 +1155,7 @@ static int lpg_add_led(struct lpg *lpg, struct device_node *np)
- 	else
- 		cdev->brightness = LED_OFF;
- 
--	cdev->brightness_set(cdev, cdev->brightness);
-+	cdev->brightness_set_blocking(cdev, cdev->brightness);
- 
- 	init_data.fwnode = of_fwnode_handle(np);
- 
+ 	/* Moving to USB Safe State */
 -- 
 2.35.1
 
