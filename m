@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4C1A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58EDDC433D2;
-	Wed, 28 Dec 2022 15:25:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8705B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BE9CC433D2;
+	Wed, 28 Dec 2022 15:25:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241111;
-	bh=O4CxeNPEV5eLv/DcTRzwBruZmVuTTM/YybLnINaUCys=;
+	s=korg; t=1672241114;
+	bh=OvuDAZCYkMmEL1dhU8haUAx29v9SUcJq7cF7xXpcilo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ybitUfwM7AZVQyQ+bWl7uYw8lLpEWN9EKvJZEbaQNYr4zZOB8eVdKFvvN31HDCZBr
-	 jKQJDx2NmGbGcGq1/FeidQrV0HoBRwFZyTgM9suSQi9G3mrN3wf7LjmQJSCb7HhDA5
-	 xaUi2eyz8/D5D8AurIXJ5vGQTLxbqa6H+M8pPOTc=
+	b=CCB1gkPq4qAIZpWb+5nhxO2krVBQKT8bNc4bHleC3yXRYLKfGqhjkmB8r0CZGSmZE
+	 7wQ0qAryi24/Sx0dj9tR/sndwWHGJTsXJ+vTtMcanp19MC/RU3oESR7wsuO38urIM8
+	 yPeTUHTTt54tFzoOsouZFyU6nVsLKif2MJ99dk2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xu Kuohai <xukuohai@huawei.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Anssi Hannula <anssi.hannula@bitwise.fi>,
+	Jimmy Assarsson <extja@kvaser.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0206/1146] libbpf: Fix memory leak in parse_usdt_arg()
-Date: Wed, 28 Dec 2022 15:29:05 +0100
-Message-Id: <20221228144335.743297154@linuxfoundation.org>
+Subject: [PATCH 6.0 0241/1073] can: kvaser_usb: kvaser_usb_leaf: Get capabilities from device
+Date: Wed, 28 Dec 2022 15:30:29 +0100
+Message-Id: <20221228144334.573796121@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,70 +36,229 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xu Kuohai <xukuohai@huawei.com>
+From: Jimmy Assarsson <extja@kvaser.com>
 
-[ Upstream commit 0dc9254e03704c75f2ebc9cbef2ce4de83fba603 ]
+[ Upstream commit 35364f5b41a4917fe94a3f393d149b63ec583297 ]
 
-In the arm64 version of parse_usdt_arg(), when sscanf returns 2, reg_name
-is allocated but not freed. Fix it.
+Use the CMD_GET_CAPABILITIES_REQ command to query the device for certain
+capabilities. We are only interested in LISTENONLY mode and wither the
+device reports CAN error counters.
 
-Fixes: 0f8619929c57 ("libbpf: Usdt aarch64 arg parsing support")
-Signed-off-by: Xu Kuohai <xukuohai@huawei.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://lore.kernel.org/bpf/20221011120108.782373-3-xukuohai@huaweicloud.com
+Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
+Reported-by: Anssi Hannula <anssi.hannula@bitwise.fi>
+Tested-by: Anssi Hannula <anssi.hannula@bitwise.fi>
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://lore.kernel.org/all/20221010185237.319219-3-extja@kvaser.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/usdt.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ .../net/can/usb/kvaser_usb/kvaser_usb_leaf.c  | 144 +++++++++++++++++-
+ 1 file changed, 143 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/usdt.c b/tools/lib/bpf/usdt.c
-index e83b497c2245..49f3c3b7f609 100644
---- a/tools/lib/bpf/usdt.c
-+++ b/tools/lib/bpf/usdt.c
-@@ -1348,25 +1348,23 @@ static int calc_pt_regs_off(const char *reg_name)
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+index 19958037720f..33ff62cd1729 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+@@ -74,6 +74,8 @@
+ #define CMD_TX_ACKNOWLEDGE		50
+ #define CMD_CAN_ERROR_EVENT		51
+ #define CMD_FLUSH_QUEUE_REPLY		68
++#define CMD_GET_CAPABILITIES_REQ	95
++#define CMD_GET_CAPABILITIES_RESP	96
  
- static int parse_usdt_arg(const char *arg_str, int arg_num, struct usdt_arg_spec *arg)
+ #define CMD_LEAF_LOG_MESSAGE		106
+ 
+@@ -83,6 +85,8 @@
+ #define KVASER_USB_LEAF_SWOPTION_FREQ_32_MHZ_CLK BIT(5)
+ #define KVASER_USB_LEAF_SWOPTION_FREQ_24_MHZ_CLK BIT(6)
+ 
++#define KVASER_USB_LEAF_SWOPTION_EXT_CAP BIT(12)
++
+ /* error factors */
+ #define M16C_EF_ACKE			BIT(0)
+ #define M16C_EF_CRCE			BIT(1)
+@@ -278,6 +282,28 @@ struct leaf_cmd_log_message {
+ 	u8 data[8];
+ } __packed;
+ 
++/* Sub commands for cap_req and cap_res */
++#define KVASER_USB_LEAF_CAP_CMD_LISTEN_MODE 0x02
++#define KVASER_USB_LEAF_CAP_CMD_ERR_REPORT 0x05
++struct kvaser_cmd_cap_req {
++	__le16 padding0;
++	__le16 cap_cmd;
++	__le16 padding1;
++	__le16 channel;
++} __packed;
++
++/* Status codes for cap_res */
++#define KVASER_USB_LEAF_CAP_STAT_OK 0x00
++#define KVASER_USB_LEAF_CAP_STAT_NOT_IMPL 0x01
++#define KVASER_USB_LEAF_CAP_STAT_UNAVAIL 0x02
++struct kvaser_cmd_cap_res {
++	__le16 padding;
++	__le16 cap_cmd;
++	__le16 status;
++	__le32 mask;
++	__le32 value;
++} __packed;
++
+ struct kvaser_cmd {
+ 	u8 len;
+ 	u8 id;
+@@ -295,6 +321,8 @@ struct kvaser_cmd {
+ 			struct leaf_cmd_chip_state_event chip_state_event;
+ 			struct leaf_cmd_error_event error_event;
+ 			struct leaf_cmd_log_message log_message;
++			struct kvaser_cmd_cap_req cap_req;
++			struct kvaser_cmd_cap_res cap_res;
+ 		} __packed leaf;
+ 
+ 		union {
+@@ -324,6 +352,7 @@ static const u8 kvaser_usb_leaf_cmd_sizes_leaf[] = {
+ 	[CMD_LEAF_LOG_MESSAGE]		= kvaser_fsize(u.leaf.log_message),
+ 	[CMD_CHIP_STATE_EVENT]		= kvaser_fsize(u.leaf.chip_state_event),
+ 	[CMD_CAN_ERROR_EVENT]		= kvaser_fsize(u.leaf.error_event),
++	[CMD_GET_CAPABILITIES_RESP]	= kvaser_fsize(u.leaf.cap_res),
+ 	/* ignored events: */
+ 	[CMD_FLUSH_QUEUE_REPLY]		= CMD_SIZE_ANY,
+ };
+@@ -606,6 +635,9 @@ static void kvaser_usb_leaf_get_software_info_leaf(struct kvaser_usb *dev,
+ 	dev->fw_version = le32_to_cpu(softinfo->fw_version);
+ 	dev->max_tx_urbs = le16_to_cpu(softinfo->max_outstanding_tx);
+ 
++	if (sw_options & KVASER_USB_LEAF_SWOPTION_EXT_CAP)
++		dev->card_data.capabilities |= KVASER_USB_CAP_EXT_CAP;
++
+ 	if (dev->driver_info->quirks & KVASER_USB_QUIRK_IGNORE_CLK_FREQ) {
+ 		/* Firmware expects bittiming parameters calculated for 16MHz
+ 		 * clock, regardless of the actual clock
+@@ -693,6 +725,116 @@ static int kvaser_usb_leaf_get_card_info(struct kvaser_usb *dev)
+ 	return 0;
+ }
+ 
++static int kvaser_usb_leaf_get_single_capability(struct kvaser_usb *dev,
++						 u16 cap_cmd_req, u16 *status)
++{
++	struct kvaser_usb_dev_card_data *card_data = &dev->card_data;
++	struct kvaser_cmd *cmd;
++	u32 value = 0;
++	u32 mask = 0;
++	u16 cap_cmd_res;
++	int err;
++	int i;
++
++	cmd = kzalloc(sizeof(*cmd), GFP_KERNEL);
++	if (!cmd)
++		return -ENOMEM;
++
++	cmd->id = CMD_GET_CAPABILITIES_REQ;
++	cmd->u.leaf.cap_req.cap_cmd = cpu_to_le16(cap_cmd_req);
++	cmd->len = CMD_HEADER_LEN + sizeof(struct kvaser_cmd_cap_req);
++
++	err = kvaser_usb_send_cmd(dev, cmd, cmd->len);
++	if (err)
++		goto end;
++
++	err = kvaser_usb_leaf_wait_cmd(dev, CMD_GET_CAPABILITIES_RESP, cmd);
++	if (err)
++		goto end;
++
++	*status = le16_to_cpu(cmd->u.leaf.cap_res.status);
++
++	if (*status != KVASER_USB_LEAF_CAP_STAT_OK)
++		goto end;
++
++	cap_cmd_res = le16_to_cpu(cmd->u.leaf.cap_res.cap_cmd);
++	switch (cap_cmd_res) {
++	case KVASER_USB_LEAF_CAP_CMD_LISTEN_MODE:
++	case KVASER_USB_LEAF_CAP_CMD_ERR_REPORT:
++		value = le32_to_cpu(cmd->u.leaf.cap_res.value);
++		mask = le32_to_cpu(cmd->u.leaf.cap_res.mask);
++		break;
++	default:
++		dev_warn(&dev->intf->dev, "Unknown capability command %u\n",
++			 cap_cmd_res);
++		break;
++	}
++
++	for (i = 0; i < dev->nchannels; i++) {
++		if (BIT(i) & (value & mask)) {
++			switch (cap_cmd_res) {
++			case KVASER_USB_LEAF_CAP_CMD_LISTEN_MODE:
++				card_data->ctrlmode_supported |=
++						CAN_CTRLMODE_LISTENONLY;
++				break;
++			case KVASER_USB_LEAF_CAP_CMD_ERR_REPORT:
++				card_data->capabilities |=
++						KVASER_USB_CAP_BERR_CAP;
++				break;
++			}
++		}
++	}
++
++end:
++	kfree(cmd);
++
++	return err;
++}
++
++static int kvaser_usb_leaf_get_capabilities_leaf(struct kvaser_usb *dev)
++{
++	int err;
++	u16 status;
++
++	if (!(dev->card_data.capabilities & KVASER_USB_CAP_EXT_CAP)) {
++		dev_info(&dev->intf->dev,
++			 "No extended capability support. Upgrade device firmware.\n");
++		return 0;
++	}
++
++	err = kvaser_usb_leaf_get_single_capability(dev,
++						    KVASER_USB_LEAF_CAP_CMD_LISTEN_MODE,
++						    &status);
++	if (err)
++		return err;
++	if (status)
++		dev_info(&dev->intf->dev,
++			 "KVASER_USB_LEAF_CAP_CMD_LISTEN_MODE failed %u\n",
++			 status);
++
++	err = kvaser_usb_leaf_get_single_capability(dev,
++						    KVASER_USB_LEAF_CAP_CMD_ERR_REPORT,
++						    &status);
++	if (err)
++		return err;
++	if (status)
++		dev_info(&dev->intf->dev,
++			 "KVASER_USB_LEAF_CAP_CMD_ERR_REPORT failed %u\n",
++			 status);
++
++	return 0;
++}
++
++static int kvaser_usb_leaf_get_capabilities(struct kvaser_usb *dev)
++{
++	int err = 0;
++
++	if (dev->driver_info->family == KVASER_LEAF)
++		err = kvaser_usb_leaf_get_capabilities_leaf(dev);
++
++	return err;
++}
++
+ static void kvaser_usb_leaf_tx_acknowledge(const struct kvaser_usb *dev,
+ 					   const struct kvaser_cmd *cmd)
  {
--	char *reg_name = NULL;
-+	char reg_name[16];
- 	int arg_sz, len, reg_off;
- 	long off;
- 
--	if (sscanf(arg_str, " %d @ \[ %m[a-z0-9], %ld ] %n", &arg_sz, &reg_name, &off, &len) == 3) {
-+	if (sscanf(arg_str, " %d @ \[ %15[a-z0-9], %ld ] %n", &arg_sz, reg_name, &off, &len) == 3) {
- 		/* Memory dereference case, e.g., -4@[sp, 96] */
- 		arg->arg_type = USDT_ARG_REG_DEREF;
- 		arg->val_off = off;
- 		reg_off = calc_pt_regs_off(reg_name);
--		free(reg_name);
- 		if (reg_off < 0)
- 			return reg_off;
- 		arg->reg_off = reg_off;
--	} else if (sscanf(arg_str, " %d @ \[ %m[a-z0-9] ] %n", &arg_sz, &reg_name, &len) == 2) {
-+	} else if (sscanf(arg_str, " %d @ \[ %15[a-z0-9] ] %n", &arg_sz, reg_name, &len) == 2) {
- 		/* Memory dereference case, e.g., -4@[sp] */
- 		arg->arg_type = USDT_ARG_REG_DEREF;
- 		arg->val_off = 0;
- 		reg_off = calc_pt_regs_off(reg_name);
--		free(reg_name);
- 		if (reg_off < 0)
- 			return reg_off;
- 		arg->reg_off = reg_off;
-@@ -1375,12 +1373,11 @@ static int parse_usdt_arg(const char *arg_str, int arg_num, struct usdt_arg_spec
- 		arg->arg_type = USDT_ARG_CONST;
- 		arg->val_off = off;
- 		arg->reg_off = 0;
--	} else if (sscanf(arg_str, " %d @ %m[a-z0-9] %n", &arg_sz, &reg_name, &len) == 2) {
-+	} else if (sscanf(arg_str, " %d @ %15[a-z0-9] %n", &arg_sz, reg_name, &len) == 2) {
- 		/* Register read case, e.g., -8@x4 */
- 		arg->arg_type = USDT_ARG_REG;
- 		arg->val_off = 0;
- 		reg_off = calc_pt_regs_off(reg_name);
--		free(reg_name);
- 		if (reg_off < 0)
- 			return reg_off;
- 		arg->reg_off = reg_off;
+@@ -1486,7 +1628,7 @@ const struct kvaser_usb_dev_ops kvaser_usb_leaf_dev_ops = {
+ 	.dev_get_software_info = kvaser_usb_leaf_get_software_info,
+ 	.dev_get_software_details = NULL,
+ 	.dev_get_card_info = kvaser_usb_leaf_get_card_info,
+-	.dev_get_capabilities = NULL,
++	.dev_get_capabilities = kvaser_usb_leaf_get_capabilities,
+ 	.dev_set_opt_mode = kvaser_usb_leaf_set_opt_mode,
+ 	.dev_start_chip = kvaser_usb_leaf_start_chip,
+ 	.dev_stop_chip = kvaser_usb_leaf_stop_chip,
 -- 
 2.35.1
 
