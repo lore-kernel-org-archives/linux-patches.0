@@ -1,38 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FB61C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:49:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B29C6C433EF;
-	Wed, 28 Dec 2022 16:49:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD661C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:49:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86307C433EF;
+	Wed, 28 Dec 2022 16:49:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246148;
-	bh=IqGOLkZDuMkQFoWswRPL+TSHcMlupgZGnwiOJf+mk80=;
+	s=korg; t=1672246150;
+	bh=jlpB92qp8qPbGD3eBHDDa59gnNq7MLHT6unlOv+GfzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qtcxYEUhiEnubAdYp94lq7BPM0zysjnn7tXplKJEqShyLQ0lUDg6DZypj3YDFPhhF
-	 6bue53nQKXSsfV9n5AvLiCLqFsU3+WZIkp4UQwqSe8ihLemtq1E00vnG6yrK9giC98
-	 fGZi/bBiluYT53YypM9DcNZ/Q+0YY21K2DtKTUDM=
+	b=LSVeWPZmCelAMSM3lP4zJWPcKtcbgAi0Ca9j2dXq9UgE05oh7/hE56W3qfIzxRgQ6
+	 K65AYpcA36tF5mqpn6admHMunfenMqtgCenRzct5tTIywK92TvDSiKTETPoKui+fzf
+	 9vILStcngqd0Igbj4aHfAGdcd1iIsoZJ83qHLiKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Wang <wvw@google.com>,
-	Midas Chien <midaschieh@google.com>,
-	Connor OBrien <connoro@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Kees Cook <keescook@chromium.org>,
-	Anton Vorontsov <anton@enomsg.org>,
-	Colin Cross <ccross@android.com>,
-	Tony Luck <tony.luck@intel.com>,
-	kernel test robot <lkp@intel.com>,
-	kernel-team@android.com,
-	John Stultz <jstultz@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 1020/1073] pstore: Make sure CONFIG_PSTORE_PMSG selects CONFIG_RT_MUTEXES
-Date: Wed, 28 Dec 2022 15:43:28 +0100
-Message-Id: <20221228144355.893262991@linuxfoundation.org>
+Subject: [PATCH 6.1 0989/1146] hamradio: baycom_epp: Fix return type of baycom_send_packet()
+Date: Wed, 28 Dec 2022 15:42:08 +0100
+Message-Id: <20221228144357.227513619@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -43,51 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Stultz <jstultz@google.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 2f4fec5943407318b9523f01ce1f5d668c028332 ]
+[ Upstream commit c5733e5b15d91ab679646ec3149e192996a27d5d ]
 
-In commit 76d62f24db07 ("pstore: Switch pmsg_lock to an rt_mutex
-to avoid priority inversion") I changed a lock to an rt_mutex.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-However, its possible that CONFIG_RT_MUTEXES is not enabled,
-which then results in a build failure, as the 0day bot detected:
-  https://lore.kernel.org/linux-mm/202212211244.TwzWZD3H-lkp@intel.com/
+  drivers/net/hamradio/baycom_epp.c:1119:25: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .ndo_start_xmit      = baycom_send_packet,
+                                ^~~~~~~~~~~~~~~~~~
+  1 error generated.
 
-Thus this patch changes CONFIG_PSTORE_PMSG to select
-CONFIG_RT_MUTEXES, which ensures the build will not fail.
+->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
+'netdev_tx_t', not 'int'. Adjust the return type of baycom_send_packet()
+to match the prototype's to resolve the warning and CFI failure.
 
-Cc: Wei Wang <wvw@google.com>
-Cc: Midas Chien<midaschieh@google.com>
-Cc: Connor O'Brien <connoro@google.com>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Anton Vorontsov <anton@enomsg.org>
-Cc: Colin Cross <ccross@android.com>
-Cc: Tony Luck <tony.luck@intel.com>
-Cc: kernel test robot <lkp@intel.com>
-Cc: kernel-team@android.com
-Fixes: 76d62f24db07 ("pstore: Switch pmsg_lock to an rt_mutex to avoid priority inversion")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: John Stultz <jstultz@google.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221221051855.15761-1-jstultz@google.com
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221102160610.1186145-1-nathan@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/hamradio/baycom_epp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/pstore/Kconfig b/fs/pstore/Kconfig
-index 8adabde685f1..c49d554cc9ae 100644
---- a/fs/pstore/Kconfig
-+++ b/fs/pstore/Kconfig
-@@ -126,6 +126,7 @@ config PSTORE_CONSOLE
- config PSTORE_PMSG
- 	bool "Log user space messages"
- 	depends on PSTORE
-+	select RT_MUTEXES
- 	help
- 	  When the option is enabled, pstore will export a character
- 	  interface /dev/pmsg0 to log user space messages. On reboot
+diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
+index 791b4a53d69f..bd3b0c2655a2 100644
+--- a/drivers/net/hamradio/baycom_epp.c
++++ b/drivers/net/hamradio/baycom_epp.c
+@@ -758,7 +758,7 @@ static void epp_bh(struct work_struct *work)
+  * ===================== network driver interface =========================
+  */
+ 
+-static int baycom_send_packet(struct sk_buff *skb, struct net_device *dev)
++static netdev_tx_t baycom_send_packet(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct baycom_state *bc = netdev_priv(dev);
+ 
 -- 
 2.35.1
 
