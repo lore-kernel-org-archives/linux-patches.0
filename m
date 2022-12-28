@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D90961C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F3CC433EF;
-	Wed, 28 Dec 2022 16:21:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87C7C1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:21:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 016DEC433F0;
+	Wed, 28 Dec 2022 16:21:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244470;
-	bh=XxLKgFgoNcQp7be6upQ841LFm2YS2BxHL6FXiJeiwFM=;
+	s=korg; t=1672244473;
+	bh=YouEOGUM/DdUuI29B6fQVpCzMYI26j2mBLdDb8TgWfY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gqST3ZBQ/+ly/HwRLlSDsSqwdBnC2G3fiI0XyffHpG+JNFOPYm2I6W55NgSu2Xj+4
-	 iGZ7RFHYso1atz7mKZHkFtNlgKc2/t0bLledvs639Gxywuo2GcFknMWP6u5jr38T5Q
-	 eMmM7OxsO6kq7UEF2bFoEcvOCTWbmHsok1A8+pSI=
+	b=z7gNkvCiH71cWMle4pM+X+4TmUDo/OW6JTcH82TNsf8QT8foHi9aqdJUUah96MZGO
+	 WMEZF3lwgqmNqgVwNl2V2AOp9/PHRuR4Nq9RMBspFpSgC4RxCN5bVPvJmIXlUM/bB5
+	 dCkxgPNnc7QTll3crM3sZHWXAIeGd1lma8ObcAQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Haoyue Xu <xuhaoyue1@hisilicon.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Weili Qian <qianweili@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0675/1146] RDMA/hns: Fix error code of CMD
-Date: Wed, 28 Dec 2022 15:36:54 +0100
-Message-Id: <20221228144348.481515361@linuxfoundation.org>
+Subject: [PATCH 6.1 0644/1146] crypto: hisilicon/qm - fix QM_XEQ_DEPTH_CAP mask value
+Date: Wed, 28 Dec 2022 15:36:23 +0100
+Message-Id: <20221228144347.652775486@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -36,84 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Weili Qian <qianweili@huawei.com>
 
-[ Upstream commit 667d6164b84884c64de3fc18670cd5a98b0b10cf ]
+[ Upstream commit 3901355624d14afe3230252cb36bc3da8ff6890e ]
 
-The error code is fixed to EIO when CMD fails to excute. This patch
-converts the error status reported by firmware to linux errno.
+'QM_XEQ_DEPTH_CAP' mask value is GENMASK(31, 0) instead of GENMASK(15, 0).
+If the mask value is incorrect, will cause abnormal events cannot be
+handled. So fix it.
 
-Fixes: a04ff739f2a9 ("RDMA/hns: Add command queue support for hip08 RoCE driver")
-Link: https://lore.kernel.org/r/20221126102911.2921820-6-xuhaoyue1@hisilicon.com
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 129a9f340172 ("crypto: hisilicon/qm - get qp num and depth from hardware registers")
+Signed-off-by: Weili Qian <qianweili@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 26 +++++++++++++++++++++-
- drivers/infiniband/hw/hns/hns_roce_hw_v2.h |  5 +++++
- 2 files changed, 30 insertions(+), 1 deletion(-)
+ drivers/crypto/hisilicon/qm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index fbdaf95fd82b..d21c23bcc0de 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -1273,6 +1273,30 @@ static void update_cmdq_status(struct hns_roce_dev *hr_dev)
- 		hr_dev->cmd.state = HNS_ROCE_CMDQ_STATE_FATAL_ERR;
- }
- 
-+static int hns_roce_cmd_err_convert_errno(u16 desc_ret)
-+{
-+	struct hns_roce_cmd_errcode errcode_table[] = {
-+		{CMD_EXEC_SUCCESS, 0},
-+		{CMD_NO_AUTH, -EPERM},
-+		{CMD_NOT_EXIST, -EOPNOTSUPP},
-+		{CMD_CRQ_FULL, -EXFULL},
-+		{CMD_NEXT_ERR, -ENOSR},
-+		{CMD_NOT_EXEC, -ENOTBLK},
-+		{CMD_PARA_ERR, -EINVAL},
-+		{CMD_RESULT_ERR, -ERANGE},
-+		{CMD_TIMEOUT, -ETIME},
-+		{CMD_HILINK_ERR, -ENOLINK},
-+		{CMD_INFO_ILLEGAL, -ENXIO},
-+		{CMD_INVALID, -EBADR},
-+	};
-+	u16 i;
-+
-+	for (i = 0; i < ARRAY_SIZE(errcode_table); i++)
-+		if (desc_ret == errcode_table[i].return_status)
-+			return errcode_table[i].errno;
-+	return -EIO;
-+}
-+
- static int __hns_roce_cmq_send(struct hns_roce_dev *hr_dev,
- 			       struct hns_roce_cmq_desc *desc, int num)
- {
-@@ -1318,7 +1342,7 @@ static int __hns_roce_cmq_send(struct hns_roce_dev *hr_dev,
- 			dev_err_ratelimited(hr_dev->dev,
- 					    "Cmdq IO error, opcode = 0x%x, return = 0x%x.\n",
- 					    desc->opcode, desc_ret);
--			ret = -EIO;
-+			ret = hns_roce_cmd_err_convert_errno(desc_ret);
- 		}
- 	} else {
- 		/* FW/HW reset or incorrect number of desc */
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-index 6d23c8617e0f..b1b3e1e0b84e 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.h
-@@ -272,6 +272,11 @@ enum hns_roce_cmd_return_status {
- 	CMD_OTHER_ERR = 0xff
- };
- 
-+struct hns_roce_cmd_errcode {
-+	enum hns_roce_cmd_return_status return_status;
-+	int errno;
-+};
-+
- enum hns_roce_sgid_type {
- 	GID_TYPE_FLAG_ROCE_V1 = 0,
- 	GID_TYPE_FLAG_ROCE_V2_IPV4,
+diff --git a/drivers/crypto/hisilicon/qm.c b/drivers/crypto/hisilicon/qm.c
+index e5fefc466ac8..9282506d10c3 100644
+--- a/drivers/crypto/hisilicon/qm.c
++++ b/drivers/crypto/hisilicon/qm.c
+@@ -359,7 +359,7 @@ static const struct hisi_qm_cap_info qm_cap_info_vf[] = {
+ static const struct hisi_qm_cap_info qm_basic_info[] = {
+ 	{QM_TOTAL_QP_NUM_CAP,   0x100158, 0,  GENMASK(10, 0), 0x1000,    0x400,     0x400},
+ 	{QM_FUNC_MAX_QP_CAP,    0x100158, 11, GENMASK(10, 0), 0x1000,    0x400,     0x400},
+-	{QM_XEQ_DEPTH_CAP,      0x3104,   0,  GENMASK(15, 0), 0x800,     0x4000800, 0x4000800},
++	{QM_XEQ_DEPTH_CAP,      0x3104,   0,  GENMASK(31, 0), 0x800,     0x4000800, 0x4000800},
+ 	{QM_QP_DEPTH_CAP,       0x3108,   0,  GENMASK(31, 0), 0x4000400, 0x4000400, 0x4000400},
+ 	{QM_EQ_IRQ_TYPE_CAP,    0x310c,   0,  GENMASK(31, 0), 0x10000,   0x10000,   0x10000},
+ 	{QM_AEQ_IRQ_TYPE_CAP,   0x3110,   0,  GENMASK(31, 0), 0x0,       0x10001,   0x10001},
 -- 
 2.35.1
 
