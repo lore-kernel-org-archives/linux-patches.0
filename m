@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 565021C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:19:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAB62C433D2;
-	Wed, 28 Dec 2022 16:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2928B1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:19:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28E7C433D2;
+	Wed, 28 Dec 2022 16:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244391;
-	bh=hSIoES5rzG2Tzt9r1wVnmAUajaDyRxb32MmR8W8cvoY=;
+	s=korg; t=1672244394;
+	bh=UM2gO9+o7hnCGwcUNaEeEQAPY079Neovmli6/kdR7V4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vi10HXgfX6+vb/AIN41aYaK1X+b2pQpIEznOghsW5EHYmsOVOkcsW84naQdIg97YJ
-	 PCWsa3iYsI+tvsZhmL9e8NtUhOG0oSnKPFukJMSfshvgBbOD7DkdlIzNiumot84and
-	 7jZmOxQdmTYuyEmgZTt1ixbb9vJnALAJvxCaxL7M=
+	b=CRBaGNneXrlyYZrI5otiB4sgj+Vyj6Jb98GKMf7tsxK1q8xQkCL0+aWBMpvYZSWII
+	 PB7xEpq9EsNlpoga7aOcUsG/4xOpwBiTQTLpN40yuMN3SwY6mZnQPhIdLJSWEkizWu
+	 ntOosf2JqLUFiKl9P7uEeXui3rEO5W9tOSyRJPRU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	William Breathitt Gray <william.gray@linaro.org>,
+	Wang Yufen <wangyufen@huawei.com>,
+	Giovanni Cabiddu <giovanni.cabiddu@intel.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0702/1073] counter: stm32-lptimer-cnt: fix the check on arr and cmp registers update
-Date: Wed, 28 Dec 2022 15:38:10 +0100
-Message-Id: <20221228144347.100215827@linuxfoundation.org>
+Subject: [PATCH 6.1 0662/1146] crypto: qat - fix error return code in adf_probe
+Date: Wed, 28 Dec 2022 15:36:41 +0100
+Message-Id: <20221228144348.134590622@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit fd5ac974fc25feed084c2d1599d0dddb4e0556bc ]
+[ Upstream commit 31f81401e23fb88cc030cd586abd28740e6c8136 ]
 
-The ARR (auto reload register) and CMP (compare) registers are
-successively written. The status bits to check the update of these
-registers are polled together with regmap_read_poll_timeout().
-The condition to end the loop may become true, even if one of the register
-isn't correctly updated.
-So ensure both status bits are set before clearing them.
+Fix to return a negative error code -EINVAL instead of 0.
 
-Fixes: d8958824cf07 ("iio: counter: Add support for STM32 LPTimer")
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Link: https://lore.kernel.org/r/20221123133609.465614-1-fabrice.gasnier@foss.st.com/
-Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
+Fixes: 0cec19c761e5 ("crypto: qat - add support for compression for 4xxx")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Acked-by: Giovanni Cabiddu <giovanni.cabiddu@intel.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/counter/stm32-lptimer-cnt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/qat/qat_4xxx/adf_drv.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/counter/stm32-lptimer-cnt.c b/drivers/counter/stm32-lptimer-cnt.c
-index 68031d93ce89..aee3b1a8aaa7 100644
---- a/drivers/counter/stm32-lptimer-cnt.c
-+++ b/drivers/counter/stm32-lptimer-cnt.c
-@@ -69,7 +69,7 @@ static int stm32_lptim_set_enable_state(struct stm32_lptim_cnt *priv,
+diff --git a/drivers/crypto/qat/qat_4xxx/adf_drv.c b/drivers/crypto/qat/qat_4xxx/adf_drv.c
+index 2f212561acc4..670a58b25cb1 100644
+--- a/drivers/crypto/qat/qat_4xxx/adf_drv.c
++++ b/drivers/crypto/qat/qat_4xxx/adf_drv.c
+@@ -261,6 +261,7 @@ static int adf_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	hw_data->accel_capabilities_mask = hw_data->get_accel_cap(accel_dev);
+ 	if (!hw_data->accel_capabilities_mask) {
+ 		dev_err(&pdev->dev, "Failed to get capabilities mask.\n");
++		ret = -EINVAL;
+ 		goto out_err;
+ 	}
  
- 	/* ensure CMP & ARR registers are properly written */
- 	ret = regmap_read_poll_timeout(priv->regmap, STM32_LPTIM_ISR, val,
--				       (val & STM32_LPTIM_CMPOK_ARROK),
-+				       (val & STM32_LPTIM_CMPOK_ARROK) == STM32_LPTIM_CMPOK_ARROK,
- 				       100, 1000);
- 	if (ret)
- 		return ret;
 -- 
 2.35.1
 
