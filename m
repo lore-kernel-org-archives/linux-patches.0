@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7221C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:20:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 104BBC433EF;
-	Wed, 28 Dec 2022 16:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339111C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:20:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACAFCC433D2;
+	Wed, 28 Dec 2022 16:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244438;
-	bh=HuhbE6NE4mxiR3nqkrr9+D4M4gR4/rGw8e7UU0+8XNQ=;
+	s=korg; t=1672244441;
+	bh=rLgqm8AkjtP/pV7MG2SgnIVdxklTuEQ4QmDrLwU8k/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NEMBKiGqaifZGhhiANP8gwAVAQd9dRDp0AINGMKKyBCBCMhGRO2EjTqVK5FPFXvE7
-	 LdmcYfSRVjVzBLrbyM9ZibcBDM/oyKmbXmMIa0t1BAUd/h/TXXKHUzZRgo7Izh3fxH
-	 XPrVUgBEKVPkYHFCzD2bkByV1yY8wOPXKtDQ1B2g=
+	b=O84VaQDsobkDi9aM2cBUAW6XZ7sD7ZeOVkqcl1DocqYy7K7rJQ9rVzXWVogKxfOIy
+	 p4USolAgiVXwajWe5LoIQlkvuqgkruVj4tCjAkqKPisZOsqouIM3TsF9191XzwQgs/
+	 RrjfVEZ5c0yYYO3+5i88aOwbtdLswNM95fcCxbd8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <jth@kernel.org>,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Mike Marshall <hubcap@omnibond.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0710/1073] mcb: mcb-parse: fix error handing in chameleon_parse_gdd()
-Date: Wed, 28 Dec 2022 15:38:18 +0100
-Message-Id: <20221228144347.316787998@linuxfoundation.org>
+Subject: [PATCH 6.1 0670/1146] orangefs: Fix sysfs not cleanup when dev init failed
+Date: Wed, 28 Dec 2022 15:36:49 +0100
+Message-Id: <20221228144348.348109556@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,38 +35,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit 728ac3389296caf68638628c987aeae6c8851e2d ]
+[ Upstream commit ea60a4ad0cf88b411cde6888b8c890935686ecd7 ]
 
-If mcb_device_register() returns error in chameleon_parse_gdd(), the refcount
-of bus and device name are leaked. Fix this by calling put_device() to give up
-the reference, so they can be released in mcb_release_dev() and kobject_cleanup().
+When the dev init failed, should cleanup the sysfs, otherwise, the
+module will never be loaded since can not create duplicate sysfs
+directory:
 
-Fixes: 3764e82e5150 ("drivers: Introduce MEN Chameleon Bus")
-Reviewed-by: Johannes Thumshirn <jth@kernel.org>
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Johannes Thumshirn <jth@kernel.org>
-Link: https://lore.kernel.org/r/ebfb06e39b19272f0197fa9136b5e4b6f34ad732.1669624063.git.johannes.thumshirn@wdc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  sysfs: cannot create duplicate filename '/fs/orangefs'
+
+  CPU: 1 PID: 6549 Comm: insmod Tainted: G        W          6.0.0+ #44
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc33 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x34/0x44
+   sysfs_warn_dup.cold+0x17/0x24
+   sysfs_create_dir_ns+0x16d/0x180
+   kobject_add_internal+0x156/0x3a0
+   kobject_init_and_add+0xcf/0x120
+   orangefs_sysfs_init+0x7e/0x3a0 [orangefs]
+   orangefs_init+0xfe/0x1000 [orangefs]
+   do_one_initcall+0x87/0x2a0
+   do_init_module+0xdf/0x320
+   load_module+0x2f98/0x3330
+   __do_sys_finit_module+0x113/0x1b0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+  kobject_add_internal failed for orangefs with -EEXIST, don't try to register things with the same name in the same directory.
+
+Fixes: 2f83ace37181 ("orangefs: put register_chrdev immediately before register_filesystem")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mcb/mcb-parse.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/orangefs/orangefs-mod.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/mcb/mcb-parse.c b/drivers/mcb/mcb-parse.c
-index 0266bfddfbe2..aa6938da0db8 100644
---- a/drivers/mcb/mcb-parse.c
-+++ b/drivers/mcb/mcb-parse.c
-@@ -108,7 +108,7 @@ static int chameleon_parse_gdd(struct mcb_bus *bus,
- 	return 0;
+diff --git a/fs/orangefs/orangefs-mod.c b/fs/orangefs/orangefs-mod.c
+index cd7297815f91..5ab741c60b7e 100644
+--- a/fs/orangefs/orangefs-mod.c
++++ b/fs/orangefs/orangefs-mod.c
+@@ -141,7 +141,7 @@ static int __init orangefs_init(void)
+ 		gossip_err("%s: could not initialize device subsystem %d!\n",
+ 			   __func__,
+ 			   ret);
+-		goto cleanup_device;
++		goto cleanup_sysfs;
+ 	}
  
- err:
--	mcb_free_dev(mdev);
-+	put_device(&mdev->dev);
+ 	ret = register_filesystem(&orangefs_fs_type);
+@@ -152,11 +152,11 @@ static int __init orangefs_init(void)
+ 		goto out;
+ 	}
  
- 	return ret;
- }
+-	orangefs_sysfs_exit();
+-
+-cleanup_device:
+ 	orangefs_dev_cleanup();
+ 
++cleanup_sysfs:
++	orangefs_sysfs_exit();
++
+ sysfs_init_failed:
+ 	orangefs_debugfs_cleanup();
+ 
 -- 
 2.35.1
 
