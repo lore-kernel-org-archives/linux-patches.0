@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D65C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:33:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81EE1C433EF;
-	Wed, 28 Dec 2022 15:33:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A93DD1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:33:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 322F2C433F0;
+	Wed, 28 Dec 2022 15:33:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241615;
-	bh=h7Ai2CixuiWV9kMofQNhiA9BdUYGPBYbLSFyd2Ft4uw=;
+	s=korg; t=1672241618;
+	bh=3LOufCYBkv8xmNsnZDxXmA4q64T22Cl+cBX7LCGZnv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ky+4fccSEBKIrcgkoC+0zbD9Z6HM9VMRbikOo64D1xa5CB64v837RHuAECBWKw+zX
-	 ErXJ/v5IouTZZo4uNxqI9jt1/ghox6itTX92ZKpiFvI3RG1kKYh3E0ZueuDH9EyENv
-	 gAIzbO2E6FjAe3nt2w1JtoZhkZDeJsagu6Gq8E5A=
+	b=1torga+MicgJB+trk1rXQ6I1n7RuCjZ7Szd0i9m1INsSmUc5QWQw7QGU9oPo6Cz99
+	 1XZB1iQyoD9KX4JYyFjfTere5ts7YYY9gXYsOJJALzSVdNoFYhAFeJ3jy3zhuuGuE/
+	 qLjYji77qRzUcvTLZ6lHperkLQ+tIMd0Q/sx4Xvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Shih <sam.shih@mediatek.com>,
-	Frank Wunderlich <frank-w@public-files.de>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0308/1073] dt-bindings: pinctrl: update uart/mmc bindings for MT7986 SoC
-Date: Wed, 28 Dec 2022 15:31:36 +0100
-Message-Id: <20221228144336.373899592@linuxfoundation.org>
+Subject: [PATCH 5.15 504/731] fbdev: pm2fb: fix missing pci_disable_device()
+Date: Wed, 28 Dec 2022 15:40:11 +0100
+Message-Id: <20221228144311.157949863@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,121 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frank Wunderlich <frank-w@public-files.de>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit c115e7f51e685536ecb885854bdd4b3f225ff3e4 ]
+[ Upstream commit ed359a464846b48f76ea6cc5cd8257e545ac97f4 ]
 
-Fix mmc and uart pins after uart splitting.
+Add missing pci_disable_device() in error path of probe() and remove() path.
 
-Some pinmux pins of the mt7986 pinctrl driver is composed of multiple
-pinctrl groups, the original binding only allows one pinctrl group
-per dts node, this patch sets "maxItems" for these groups and add new
-examples to the binding documentation.
-
-Fixes: 65916a1ca90a ("dt-bindings: pinctrl: update bindings for MT7986 SoC")
-Signed-off-by: Sam Shih <sam.shih@mediatek.com>
-Signed-off-by: Frank Wunderlich <frank-w@public-files.de>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20221106080114.7426-3-linux@fw-web.de
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../pinctrl/mediatek,mt7986-pinctrl.yaml      | 46 +++++++++++++++++--
- 1 file changed, 41 insertions(+), 5 deletions(-)
+ drivers/video/fbdev/pm2fb.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/mediatek,mt7986-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/mediatek,mt7986-pinctrl.yaml
-index 4eadea55df10..41abfa94877f 100644
---- a/Documentation/devicetree/bindings/pinctrl/mediatek,mt7986-pinctrl.yaml
-+++ b/Documentation/devicetree/bindings/pinctrl/mediatek,mt7986-pinctrl.yaml
-@@ -87,6 +87,8 @@ patternProperties:
-           "wifi_led"        "led"       1, 2
-           "i2c"             "i2c"       3, 4
-           "uart1_0"         "uart"      7, 8, 9, 10
-+          "uart1_rx_tx"     "uart"      42, 43
-+          "uart1_cts_rts"   "uart"      44, 45
-           "pcie_clk"        "pcie"      9
-           "pcie_wake"       "pcie"      10
-           "spi1_0"          "spi"       11, 12, 13, 14
-@@ -98,9 +100,11 @@ patternProperties:
-           "emmc_45"         "emmc"      22, 23, 24, 25, 26, 27, 28, 29, 30,
-                                         31, 32
-           "spi1_1"          "spi"       23, 24, 25, 26
--          "uart1_2"         "uart"      29, 30, 31, 32
-+          "uart1_2_rx_tx"   "uart"      29, 30
-+          "uart1_2_cts_rts" "uart"      31, 32
-           "uart1_1"         "uart"      23, 24, 25, 26
--          "uart2_0"         "uart"      29, 30, 31, 32
-+          "uart2_0_rx_tx"   "uart"      29, 30
-+          "uart2_0_cts_rts" "uart"      31, 32
-           "spi0"            "spi"       33, 34, 35, 36
-           "spi0_wp_hold"    "spi"       37, 38
-           "uart1_3_rx_tx"   "uart"      35, 36
-@@ -153,7 +157,7 @@ patternProperties:
-             then:
-               properties:
-                 groups:
--                  enum: [emmc, emmc_rst]
-+                  enum: [emmc_45, emmc_51]
-           - if:
-               properties:
-                 function:
-@@ -217,8 +221,12 @@ patternProperties:
-             then:
-               properties:
-                 groups:
--                  enum: [uart1_0, uart1_1, uart1_2, uart1_3_rx_tx,
--                         uart1_3_cts_rts, uart2_0, uart2_1, uart0, uart1, uart2]
-+                  items:
-+                    enum: [uart1_0, uart1_rx_tx, uart1_cts_rts, uart1_1,
-+                           uart1_2_rx_tx, uart1_2_cts_rts, uart1_3_rx_tx,
-+                           uart1_3_cts_rts, uart2_0_rx_tx, uart2_0_cts_rts,
-+                           uart2_1, uart0, uart1, uart2]
-+                  maxItems: 2
-           - if:
-               properties:
-                 function:
-@@ -348,6 +356,27 @@ examples:
-         interrupt-parent = <&gic>;
-         #interrupt-cells = <2>;
+diff --git a/drivers/video/fbdev/pm2fb.c b/drivers/video/fbdev/pm2fb.c
+index cbcf112c88d3..e8690f7aea05 100644
+--- a/drivers/video/fbdev/pm2fb.c
++++ b/drivers/video/fbdev/pm2fb.c
+@@ -1530,8 +1530,10 @@ static int pm2fb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	}
  
-+        pcie_pins: pcie-pins {
-+          mux {
-+            function = "pcie";
-+            groups = "pcie_clk", "pcie_wake", "pcie_pereset";
-+          };
-+        };
-+
-+        pwm_pins: pwm-pins {
-+          mux {
-+            function = "pwm";
-+            groups = "pwm0", "pwm1_0";
-+          };
-+        };
-+
-+        spi0_pins: spi0-pins {
-+          mux {
-+            function = "spi";
-+            groups = "spi0", "spi0_wp_hold";
-+          };
-+        };
-+
-         uart1_pins: uart1-pins {
-           mux {
-             function = "uart";
-@@ -355,6 +384,13 @@ examples:
-           };
-         };
+ 	info = framebuffer_alloc(sizeof(struct pm2fb_par), &pdev->dev);
+-	if (!info)
+-		return -ENOMEM;
++	if (!info) {
++		err = -ENOMEM;
++		goto err_exit_disable;
++	}
+ 	default_par = info->par;
  
-+        uart1_3_pins: uart1-3-pins {
-+          mux {
-+            function = "uart";
-+            groups = "uart1_3_rx_tx", "uart1_3_cts_rts";
-+          };
-+        };
-+
-         uart2_pins: uart2-pins {
-           mux {
-             function = "uart";
+ 	switch (pdev->device) {
+@@ -1712,6 +1714,8 @@ static int pm2fb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	release_mem_region(pm2fb_fix.mmio_start, pm2fb_fix.mmio_len);
+  err_exit_neither:
+ 	framebuffer_release(info);
++ err_exit_disable:
++	pci_disable_device(pdev);
+ 	return retval;
+ }
+ 
+@@ -1738,6 +1742,7 @@ static void pm2fb_remove(struct pci_dev *pdev)
+ 	fb_dealloc_cmap(&info->cmap);
+ 	kfree(info->pixmap.addr);
+ 	framebuffer_release(info);
++	pci_disable_device(pdev);
+ }
+ 
+ static const struct pci_device_id pm2fb_id_table[] = {
 -- 
 2.35.1
 
