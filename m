@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B7D81863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F934C433F0;
-	Wed, 28 Dec 2022 15:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D233F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F69BC433EF;
+	Wed, 28 Dec 2022 15:02:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239740;
-	bh=GvYOdyMW2LWb4c+OOOy02McPr3TdKMze3wjftwhEmvA=;
+	s=korg; t=1672239743;
+	bh=RZgT13r0C0UHc8MnRmKRotKW3JtMjnobg/7ezojmLD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hQnuD57XA2IJ6ys3StSjRc8aLtwnBs0NtqAr6nriXNSuoE4mOl+HQyYVd24tM7SBr
-	 AFrWElI26161Tlw1wbrvoMDI+D+q02IYEhEOEksPXsGWlmuO0vRJXDn3gdjsKtPTNs
-	 sPc1o87Ymy0MtF9sLWZzNSNzvc3tyItW2d8Bv70o=
+	b=MTD4LGfOyIPxYpbOulE0e9GOQMPfqxp9dtiOb8yPz5th32GiTTUCQENnUxV1PqDpj
+	 Ae89IU6JK2dVLU+7ZKjiejEDolxa6tIe80VWgZE1aGjbFSRSC7JYKJM98rovzX3I2d
+	 uGk7SwC9SPnsNXt2IXOKkoMw7ibA1AJci0Z1oKoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0034/1146] arm64: dts: qcom: sc7280: fix codec reset line polarity for CRD 1.0/2.0
-Date: Wed, 28 Dec 2022 15:26:13 +0100
-Message-Id: <20221228144331.093984203@linuxfoundation.org>
+Subject: [PATCH 5.15 265/731] spi: spidev: mask SPI_CS_HIGH in SPI_IOC_RD_MODE
+Date: Wed, 28 Dec 2022 15:36:12 +0100
+Message-Id: <20221228144304.244412323@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit b8f298d4f69d82119ac0d22809a17c80b1f188d1 ]
+[ Upstream commit 7dbfa445ff7393d1c4c066c1727c9e0af1251958 ]
 
-The driver for the codec, when resetting the chip, first drives the line
-low, and then high. This means that the line is active low. Change the
-annotation in the DTS accordingly.
+Commit f3186dd87669 ("spi: Optionally use GPIO descriptors for CS GPIOs")
+has changed the user-space interface so that bogus SPI_CS_HIGH started
+to appear in the mask returned by SPI_IOC_RD_MODE even for active-low CS
+pins. Commit 138c9c32f090
+("spi: spidev: Fix CS polarity if GPIO descriptors are used") fixed only
+SPI_IOC_WR_MODE part of the problem. Let's fix SPI_IOC_RD_MODE
+symmetrically.
 
-Fixes: f8b4eb64f200 ("arm64: dts: qcom: sc7280: Add wcd9385 codec node for CRD 1.0/2.0 and IDP boards")
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221027074652.1044235-5-dmitry.torokhov@gmail.com
+Test case:
+
+	#include <sys/ioctl.h>
+	#include <fcntl.h>
+	#include <linux/spi/spidev.h>
+
+	int main(int argc, char **argv)
+	{
+		char modew = SPI_CPHA;
+		char moder;
+		int f = open("/dev/spidev0.0", O_RDWR);
+
+		if (f < 0)
+			return 1;
+
+		ioctl(f, SPI_IOC_WR_MODE, &modew);
+		ioctl(f, SPI_IOC_RD_MODE, &moder);
+
+		return moder == modew ? 0 : 2;
+	}
+
+Fixes: f3186dd87669 ("spi: Optionally use GPIO descriptors for CS GPIOs")
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://lore.kernel.org/r/20221130162927.539512-1-alexander.sverdlin@siemens.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/spi/spidev.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index cd432a2856a7..7772dfba94ec 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -34,7 +34,7 @@ wcd9385: audio-codec-1 {
- 		pinctrl-0 = <&wcd_reset_n>;
- 		pinctrl-1 = <&wcd_reset_n_sleep>;
- 
--		reset-gpios = <&tlmm 83 GPIO_ACTIVE_HIGH>;
-+		reset-gpios = <&tlmm 83 GPIO_ACTIVE_LOW>;
- 
- 		qcom,rx-device = <&wcd_rx>;
- 		qcom,tx-device = <&wcd_tx>;
+diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
+index 1bd73e322b7b..d233e2424ad1 100644
+--- a/drivers/spi/spidev.c
++++ b/drivers/spi/spidev.c
+@@ -376,12 +376,23 @@ spidev_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+ 	switch (cmd) {
+ 	/* read requests */
+ 	case SPI_IOC_RD_MODE:
+-		retval = put_user(spi->mode & SPI_MODE_MASK,
+-					(__u8 __user *)arg);
+-		break;
+ 	case SPI_IOC_RD_MODE32:
+-		retval = put_user(spi->mode & SPI_MODE_MASK,
+-					(__u32 __user *)arg);
++		tmp = spi->mode;
++
++		{
++			struct spi_controller *ctlr = spi->controller;
++
++			if (ctlr->use_gpio_descriptors && ctlr->cs_gpiods &&
++			    ctlr->cs_gpiods[spi->chip_select])
++				tmp &= ~SPI_CS_HIGH;
++		}
++
++		if (cmd == SPI_IOC_RD_MODE)
++			retval = put_user(tmp & SPI_MODE_MASK,
++					  (__u8 __user *)arg);
++		else
++			retval = put_user(tmp & SPI_MODE_MASK,
++					  (__u32 __user *)arg);
+ 		break;
+ 	case SPI_IOC_RD_LSB_FIRST:
+ 		retval = put_user((spi->mode & SPI_LSB_FIRST) ?  1 : 0,
 -- 
 2.35.1
 
