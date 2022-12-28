@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B1941863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4D27C433D2;
-	Wed, 28 Dec 2022 15:37:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19981863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51909C433EF;
+	Wed, 28 Dec 2022 15:37:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241868;
-	bh=4wxmTFFM2ifTlmTRmB/Qnje9Zc56oi5muRoYkLJ4SDM=;
+	s=korg; t=1672241870;
+	bh=7ljlnLcKf9jbkj65tY/z1q7swUbRQNxZMhQJK4+O5Pw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZrYPGmJRnvX0x7ByVIFDf9VP5Owh62c1y4mhrRINjq7lIHs2NlmB0YafgtOUMRHc+
-	 RjpXv9bOVqFKfOIghClPWwE4ak8pf5zp+Ea7UlHX0ZbBAeKEo6or++grpJa/3CQiap
-	 06BXOryNEwVCXCwFHA3as2J+KvAVGqDrFT4jZUno=
+	b=ytwdHkz++0qJyRwqf0HzI51PmXBfKJVGVR043WUN98zod7Tx7o+IzH0zegSpJBgOe
+	 pmz4UnOfxwhEH6vMa4Ut6Hv1T1RcEp9gyzLM59dpsKWKQC3xbDAu2sR0c2WHaL3khg
+	 WVFyho1FuZa+l7fi/6G+rKNZWXJHV7OtMAYEwSxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Hui Tang <tanghui20@huawei.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0299/1146] mtd: core: fix possible resource leak in init_mtd()
-Date: Wed, 28 Dec 2022 15:30:38 +0100
-Message-Id: <20221228144338.263431438@linuxfoundation.org>
+Subject: [PATCH 6.0 0338/1073] mtd: lpddr2_nvm: Fix possible null-ptr-deref
+Date: Wed, 28 Dec 2022 15:32:06 +0100
+Message-Id: <20221228144337.185888238@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,62 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Hui Tang <tanghui20@huawei.com>
 
-[ Upstream commit 1aadf01e5076b9ab6bf294b9622335c651314895 ]
+[ Upstream commit 6bdd45d795adf9e73b38ced5e7f750cd199499ff ]
 
-I got the error report while inject fault in init_mtd():
+It will cause null-ptr-deref when resource_size(add_range) invoked,
+if platform_get_resource() returns NULL.
 
-sysfs: cannot create duplicate filename '/devices/virtual/bdi/mtd-0'
-Call Trace:
- <TASK>
- dump_stack_lvl+0x67/0x83
- sysfs_warn_dup+0x60/0x70
- sysfs_create_dir_ns+0x109/0x120
- kobject_add_internal+0xce/0x2f0
- kobject_add+0x98/0x110
- device_add+0x179/0xc00
- device_create_groups_vargs+0xf4/0x100
- device_create+0x7b/0xb0
- bdi_register_va.part.13+0x58/0x2d0
- bdi_register+0x9b/0xb0
- init_mtd+0x62/0x171 [mtd]
- do_one_initcall+0x6c/0x3c0
- do_init_module+0x58/0x222
- load_module+0x268e/0x27d0
- __do_sys_finit_module+0xd5/0x140
- do_syscall_64+0x37/0x90
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
- </TASK>
-kobject_add_internal failed for mtd-0 with -EEXIST, don't try to register
-	things with the same name in the same directory.
-Error registering mtd class or bdi: -17
-
-If init_mtdchar() fails in init_mtd(), mtd_bdi will not be unregistered,
-as a result, we can't load the mtd module again, to fix this by calling
-bdi_unregister(mtd_bdi) after out_procfs label.
-
-Fixes: 445caaa20c4d ("mtd: Allocate bdi objects dynamically")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Fixes: 96ba9dd65788 ("mtd: lpddr: add driver for LPDDR2-NVM PCM memories")
+Signed-off-by: Hui Tang <tanghui20@huawei.com>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20221024065109.2050705-1-cuigaosheng1@huawei.com
+Link: https://lore.kernel.org/linux-mtd/20221114090240.244172-1-tanghui20@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/mtdcore.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mtd/lpddr/lpddr2_nvm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
-index a16627455c1d..675305139a54 100644
---- a/drivers/mtd/mtdcore.c
-+++ b/drivers/mtd/mtdcore.c
-@@ -2485,6 +2485,7 @@ static int __init init_mtd(void)
- out_procfs:
- 	if (proc_mtd)
- 		remove_proc_entry("mtd", NULL);
-+	bdi_unregister(mtd_bdi);
- 	bdi_put(mtd_bdi);
- err_bdi:
- 	class_unregister(&mtd_class);
+diff --git a/drivers/mtd/lpddr/lpddr2_nvm.c b/drivers/mtd/lpddr/lpddr2_nvm.c
+index 367e2d906de0..e71af4c49096 100644
+--- a/drivers/mtd/lpddr/lpddr2_nvm.c
++++ b/drivers/mtd/lpddr/lpddr2_nvm.c
+@@ -433,6 +433,8 @@ static int lpddr2_nvm_probe(struct platform_device *pdev)
+ 
+ 	/* lpddr2_nvm address range */
+ 	add_range = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	if (!add_range)
++		return -ENODEV;
+ 
+ 	/* Populate map_info data structure */
+ 	*map = (struct map_info) {
 -- 
 2.35.1
 
