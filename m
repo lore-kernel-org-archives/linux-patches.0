@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F9DE1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:01:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0C67C433F0;
-	Wed, 28 Dec 2022 16:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E44551875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:01:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A81FC433EF;
+	Wed, 28 Dec 2022 16:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243303;
-	bh=fCTy5XsnxXJd1DH8S1nEC1bP1x0RlusDZgk6MB26vuw=;
+	s=korg; t=1672243305;
+	bh=4x5nPSakHFER6z1DMfUR4fPr10NRcPTZUGi0WrEwWRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F8Ba60BX6ZKP1YvhnFySk+FV2Wqap/o+1muNSjmSCpIh6LQpaGA7iPDwR+F8bQuMH
-	 UFNf1Aa+NSnPynmdOd2LvVDK2lT7PDURp1u0eCEY/N55PsjJh/OLdL/zWyuKJd8AMo
-	 DQc9Xa/iAESah9GP0wh50keJy9Q7cjAnOxSVsylU=
+	b=m/2BU3PgCAIOL3LOHUI76dxz0QmtmmQaseMYCG5zG1CRA6c2Md/NUr74BirCXIFrx
+	 VY4KfhLw3/PbEnkwzrdRddCTxqN48Drzjo43BnaHBGSfX9WZ7S2LlNbTc2djQ0suj3
+	 OIYt/2ioX+YyPgO6sTKwFR+1VnWOIenOXRN7Tdzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Chen <peter.chen@kernel.org>,
-	Pawel Laszczak <pawell@cadence.com>
-Subject: [PATCH 5.15 706/731] usb: cdnsp: fix lack of ZLP for ep0
-Date: Wed, 28 Dec 2022 15:43:33 +0100
-Message-Id: <20221228144316.920532572@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0478/1146] hwmon: (jc42) Restore the min/max/critical temperatures on resume
+Date: Wed, 28 Dec 2022 15:33:37 +0100
+Message-Id: <20221228144343.166594422@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,104 +35,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pawel Laszczak <pawell@cadence.com>
+From: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 
-commit ae423ef5d095e09970f52c08020fdbf7f9d87c22 upstream.
+[ Upstream commit 084ed144c448fd5bc8ed5a58247153fbbfd115c3 ]
 
-Patch implements the handling of ZLP for control transfer.
-To send the ZLP driver must prepare the extra TRB in TD with
-length set to zero and TRB type to TRB_NORMAL.
-The first TRB must have set TRB_CHAIN flag, TD_SIZE = 1
-and TRB type to TRB_DATA.
+The JC42 compatible thermal sensor on Kingston KSM32ES8/16ME DIMMs
+(using Micron E-Die) is an ST Microelectronics STTS2004 (manufacturer
+0x104a, device 0x2201). It does not keep the previously programmed
+minimum, maximum and critical temperatures after system suspend and
+resume (which is a shutdown / startup cycle for the JC42 temperature
+sensor). This results in an alarm on system resume because the hardware
+default for these values is 0°C (so any environment temperature greater
+than 0°C will trigger the alarm).
 
-Fixes: 3d82904559f4 ("usb: cdnsp: cdns3 Add main part of Cadence USBSSP DRD Driver")
-cc: <stable@vger.kernel.org>
-Reviewed-by: Peter Chen <peter.chen@kernel.org>
-Signed-off-by: Pawel Laszczak <pawell@cadence.com>
-Link: https://lore.kernel.org/r/20221122085138.332434-1-pawell@cadence.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Example before system suspend:
+  jc42-i2c-0-1a
+  Adapter: SMBus PIIX4 adapter port 0 at 0b00
+  temp1:        +34.8°C  (low  =  +0.0°C)
+                         (high = +85.0°C, hyst = +85.0°C)
+                         (crit = +95.0°C, hyst = +95.0°C)
+
+Example after system resume (without this change):
+  jc42-i2c-0-1a
+  Adapter: SMBus PIIX4 adapter port 0 at 0b00
+  temp1:        +34.8°C  (low  =  +0.0°C)             ALARM (HIGH, CRIT)
+                         (high =  +0.0°C, hyst =  +0.0°C)
+                         (crit =  +0.0°C, hyst =  +0.0°C)
+
+Apply the cached values from the JC42_REG_TEMP_UPPER,
+JC42_REG_TEMP_LOWER, JC42_REG_TEMP_CRITICAL and JC42_REG_SMBUS (where
+the SMBUS register is not related to this issue but a side-effect of
+using regcache_sync() during system resume with the previously
+cached/programmed values. This fixes the alarm due to the hardware
+defaults of 0°C because the previously applied limits (set by userspace)
+are re-applied on system resume.
+
+Fixes: 175c490c9e7f ("hwmon: (jc42) Add support for STTS2004 and AT30TSE004")
+Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Link: https://lore.kernel.org/r/20221023213157.11078-3-martin.blumenstingl@googlemail.com
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/cdns3/cdnsp-ring.c |   42 +++++++++++++++++++++++++++++++----------
- 1 file changed, 32 insertions(+), 10 deletions(-)
+ drivers/hwmon/jc42.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/cdns3/cdnsp-ring.c
-+++ b/drivers/usb/cdns3/cdnsp-ring.c
-@@ -2006,10 +2006,11 @@ int cdnsp_queue_bulk_tx(struct cdnsp_dev
+diff --git a/drivers/hwmon/jc42.c b/drivers/hwmon/jc42.c
+index 355639d208d0..0554b41c32bc 100644
+--- a/drivers/hwmon/jc42.c
++++ b/drivers/hwmon/jc42.c
+@@ -578,6 +578,10 @@ static int jc42_suspend(struct device *dev)
  
- int cdnsp_queue_ctrl_tx(struct cdnsp_device *pdev, struct cdnsp_request *preq)
+ 	data->config |= JC42_CFG_SHUTDOWN;
+ 	regmap_write(data->regmap, JC42_REG_CONFIG, data->config);
++
++	regcache_cache_only(data->regmap, true);
++	regcache_mark_dirty(data->regmap);
++
+ 	return 0;
+ }
+ 
+@@ -585,9 +589,13 @@ static int jc42_resume(struct device *dev)
  {
--	u32 field, length_field, remainder;
-+	u32 field, length_field, zlp = 0;
- 	struct cdnsp_ep *pep = preq->pep;
- 	struct cdnsp_ring *ep_ring;
- 	int num_trbs;
-+	u32 maxp;
- 	int ret;
+ 	struct jc42_data *data = dev_get_drvdata(dev);
  
- 	ep_ring = cdnsp_request_to_transfer_ring(pdev, preq);
-@@ -2019,26 +2020,33 @@ int cdnsp_queue_ctrl_tx(struct cdnsp_dev
- 	/* 1 TRB for data, 1 for status */
- 	num_trbs = (pdev->three_stage_setup) ? 2 : 1;
- 
-+	maxp = usb_endpoint_maxp(pep->endpoint.desc);
++	regcache_cache_only(data->regmap, false);
 +
-+	if (preq->request.zero && preq->request.length &&
-+	    (preq->request.length % maxp == 0)) {
-+		num_trbs++;
-+		zlp = 1;
-+	}
+ 	data->config &= ~JC42_CFG_SHUTDOWN;
+ 	regmap_write(data->regmap, JC42_REG_CONFIG, data->config);
+-	return 0;
 +
- 	ret = cdnsp_prepare_transfer(pdev, preq, num_trbs);
- 	if (ret)
- 		return ret;
++	/* Restore cached register values to hardware */
++	return regcache_sync(data->regmap);
+ }
  
- 	/* If there's data, queue data TRBs */
--	if (pdev->ep0_expect_in)
--		field = TRB_TYPE(TRB_DATA) | TRB_IOC;
--	else
--		field = TRB_ISP | TRB_TYPE(TRB_DATA) | TRB_IOC;
--
- 	if (preq->request.length > 0) {
--		remainder = cdnsp_td_remainder(pdev, 0, preq->request.length,
--					       preq->request.length, preq, 1, 0);
-+		field = TRB_TYPE(TRB_DATA);
- 
--		length_field = TRB_LEN(preq->request.length) |
--				TRB_TD_SIZE(remainder) | TRB_INTR_TARGET(0);
-+		if (zlp)
-+			field |= TRB_CHAIN;
-+		else
-+			field |= TRB_IOC | (pdev->ep0_expect_in ? 0 : TRB_ISP);
- 
- 		if (pdev->ep0_expect_in)
- 			field |= TRB_DIR_IN;
- 
-+		length_field = TRB_LEN(preq->request.length) |
-+			       TRB_TD_SIZE(zlp) | TRB_INTR_TARGET(0);
-+
- 		cdnsp_queue_trb(pdev, ep_ring, true,
- 				lower_32_bits(preq->request.dma),
- 				upper_32_bits(preq->request.dma), length_field,
-@@ -2046,6 +2054,20 @@ int cdnsp_queue_ctrl_tx(struct cdnsp_dev
- 				TRB_SETUPID(pdev->setup_id) |
- 				pdev->setup_speed);
- 
-+		if (zlp) {
-+			field = TRB_TYPE(TRB_NORMAL) | TRB_IOC;
-+
-+			if (!pdev->ep0_expect_in)
-+				field = TRB_ISP;
-+
-+			cdnsp_queue_trb(pdev, ep_ring, true,
-+					lower_32_bits(preq->request.dma),
-+					upper_32_bits(preq->request.dma), 0,
-+					field | ep_ring->cycle_state |
-+					TRB_SETUPID(pdev->setup_id) |
-+					pdev->setup_speed);
-+		}
-+
- 		pdev->ep0_stage = CDNSP_DATA_STAGE;
- 	}
- 
+ static const struct dev_pm_ops jc42_dev_pm_ops = {
+-- 
+2.35.1
+
 
 
