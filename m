@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EE61863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B79C433F0;
-	Wed, 28 Dec 2022 15:06:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 652D11863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:06:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2CDC433EF;
+	Wed, 28 Dec 2022 15:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239999;
-	bh=Cn/iLxEOY1k0LjoDopD0exFBCAzW66QnvGomx05uHFs=;
+	s=korg; t=1672240002;
+	bh=4gnc21u2MeC9tksPega8MnAeysAZlSBrzqq0p5EGUWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QtkQ3bkhi/WKgYcibfUSrdXRwO4Aj4Yu0m6CX/YYZwbjh/l1HLKkEG1JquKPOo6rw
-	 36fh1Cz6O8jXZWHBdiLoiptOrFDKKrAS+VkEImtLyRISBSUffUs8zQ6w6hC10gyOo5
-	 r1jM+DkrXz9FN7p/kPNleCT4bG7q0ccNfsv1on04=
+	b=bx0nDjCsSLaS6C9Nz6o9pcEUu2lkiGS8urnaT5mEvw7Y67itdkS4ztuIqoH43ncjc
+	 4KacLkja8rReWchJmQd3Wa+Mfpip7E7pIwznHrv7rqrxiG8ju9z+/LxtrwEA1p46/V
+	 kYDAssoYQxPNtWwY98GEjKHg/OyKsicaUdFDsT+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qais Yousef <qais.yousef@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Md Iqbal Hossain <md.iqbal.hossain@intel.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0100/1073] sched/uclamp: Make cpu_overutilized() use util_fits_cpu()
-Date: Wed, 28 Dec 2022 15:28:08 +0100
-Message-Id: <20221228144330.764969616@linuxfoundation.org>
+Subject: [PATCH 6.0 0106/1073] x86/sgx: Reduce delay and interference of enclave release
+Date: Wed, 28 Dec 2022 15:28:14 +0100
+Message-Id: <20221228144330.923835383@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,54 +36,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qais Yousef <qais.yousef@arm.com>
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-[ Upstream commit c56ab1b3506ba0e7a872509964b100912bde165d ]
+[ Upstream commit 7b72c823ddf8aaaec4e9fb28e6fbe4d511e7dad1 ]
 
-So that it is now uclamp aware.
+commit 8795359e35bc ("x86/sgx: Silence softlockup detection when
+releasing large enclaves") introduced a cond_resched() during enclave
+release where the EREMOVE instruction is applied to every 4k enclave
+page. Giving other tasks an opportunity to run while tearing down a
+large enclave placates the soft lockup detector but Iqbal found
+that the fix causes a 25% performance degradation of a workload
+run using Gramine.
 
-This fixes a major problem of busy tasks capped with UCLAMP_MAX keeping
-the system in overutilized state which disables EAS and leads to wasting
-energy in the long run.
+Gramine maintains a 1:1 mapping between processes and SGX enclaves.
+That means if a workload in an enclave creates a subprocess then
+Gramine creates a duplicate enclave for that subprocess to run in.
+The consequence is that the release of the enclave used to run
+the subprocess can impact the performance of the workload that is
+run in the original enclave, especially in large enclaves when
+SGX2 is not in use.
 
-Without this patch running a busy background activity like JIT
-compilation on Pixel 6 causes the system to be in overutilized state
-74.5% of the time.
+The workload run by Iqbal behaves as follows:
+Create enclave (enclave "A")
+/* Initialize workload in enclave "A" */
+Create enclave (enclave "B")
+/* Run subprocess in enclave "B" and send result to enclave "A" */
+Release enclave (enclave "B")
+/* Run workload in enclave "A" */
+Release enclave (enclave "A")
 
-With this patch this goes down to  9.79%.
+The performance impact of releasing enclave "B" in the above scenario
+is amplified when there is a lot of SGX memory and the enclave size
+matches the SGX memory. When there is 128GB SGX memory and an enclave
+size of 128GB, from the time enclave "B" starts the 128GB SGX memory
+is oversubscribed with a combined demand for 256GB from the two
+enclaves.
 
-It also fixes another problem when long running tasks that have their
-UCLAMP_MIN changed while running such that they need to upmigrate to
-honour the new UCLAMP_MIN value. The upmigration doesn't get triggered
-because overutilized state never gets set in this state, hence misfit
-migration never happens at tick in this case until the task wakes up
-again.
+Before commit 8795359e35bc ("x86/sgx: Silence softlockup detection when
+releasing large enclaves") enclave release was done in a tight loop
+without giving other tasks a chance to run. Even though the system
+experienced soft lockups the workload (run in enclave "A") obtained
+good performance numbers because when the workload started running
+there was no interference.
 
-Fixes: af24bde8df202 ("sched/uclamp: Add uclamp support to energy_compute()")
-Signed-off-by: Qais Yousef <qais.yousef@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20220804143609.515789-7-qais.yousef@arm.com
+Commit 8795359e35bc ("x86/sgx: Silence softlockup detection when
+releasing large enclaves") gave other tasks opportunity to run while an
+enclave is released. The impact of this in this scenario is that while
+enclave "B" is released and needing to access each page that belongs
+to it in order to run the SGX EREMOVE instruction on it, enclave "A"
+is attempting to run the workload needing to access the enclave
+pages that belong to it. This causes a lot of swapping due to the
+demand for the oversubscribed SGX memory. Longer latencies are
+experienced by the workload in enclave "A" while enclave "B" is
+released.
+
+Improve the performance of enclave release while still avoiding the
+soft lockup detector with two enhancements:
+- Only call cond_resched() after XA_CHECK_SCHED iterations.
+- Use the xarray advanced API to keep the xarray locked for
+  XA_CHECK_SCHED iterations instead of locking and unlocking
+  at every iteration.
+
+This batching solution is copied from sgx_encl_may_map() that
+also iterates through all enclave pages using this technique.
+
+With this enhancement the workload experiences a 5%
+performance degradation when compared to a kernel without
+commit 8795359e35bc ("x86/sgx: Silence softlockup detection when
+releasing large enclaves"), an improvement to the reported 25%
+degradation, while still placating the soft lockup detector.
+
+Scenarios with poor performance are still possible even with these
+enhancements. For example, short workloads creating sub processes
+while running in large enclaves. Further performance improvements
+are pursued in user space through avoiding to create duplicate enclaves
+for certain sub processes, and using SGX2 that will do lazy allocation
+of pages as needed so enclaves created for sub processes start quickly
+and release quickly.
+
+Fixes: 8795359e35bc ("x86/sgx: Silence softlockup detection when releasing large enclaves")
+Reported-by: Md Iqbal Hossain <md.iqbal.hossain@intel.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Tested-by: Md Iqbal Hossain <md.iqbal.hossain@intel.com>
+Link: https://lore.kernel.org/all/00efa80dd9e35dc85753e1c5edb0344ac07bb1f0.1667236485.git.reinette.chatre%40intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/sgx/encl.c | 23 +++++++++++++++++++----
+ 1 file changed, 19 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index cb4d47441a41..2e782d79e80f 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -5807,7 +5807,10 @@ static inline void hrtick_update(struct rq *rq)
- #ifdef CONFIG_SMP
- static inline bool cpu_overutilized(int cpu)
+diff --git a/arch/x86/kernel/cpu/sgx/encl.c b/arch/x86/kernel/cpu/sgx/encl.c
+index 8bdeae2fc309..6942a3d8b578 100644
+--- a/arch/x86/kernel/cpu/sgx/encl.c
++++ b/arch/x86/kernel/cpu/sgx/encl.c
+@@ -677,11 +677,15 @@ const struct vm_operations_struct sgx_vm_ops = {
+ void sgx_encl_release(struct kref *ref)
  {
--	return !fits_capacity(cpu_util_cfs(cpu), capacity_of(cpu));
-+	unsigned long rq_util_min = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MIN);
-+	unsigned long rq_util_max = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MAX);
+ 	struct sgx_encl *encl = container_of(ref, struct sgx_encl, refcount);
++	unsigned long max_page_index = PFN_DOWN(encl->base + encl->size - 1);
+ 	struct sgx_va_page *va_page;
+ 	struct sgx_encl_page *entry;
+-	unsigned long index;
++	unsigned long count = 0;
 +
-+	return !util_fits_cpu(cpu_util_cfs(cpu), rq_util_min, rq_util_max, cpu);
- }
++	XA_STATE(xas, &encl->page_array, PFN_DOWN(encl->base));
  
- static inline void update_overutilized_status(struct rq *rq)
+-	xa_for_each(&encl->page_array, index, entry) {
++	xas_lock(&xas);
++	xas_for_each(&xas, entry, max_page_index) {
+ 		if (entry->epc_page) {
+ 			/*
+ 			 * The page and its radix tree entry cannot be freed
+@@ -696,9 +700,20 @@ void sgx_encl_release(struct kref *ref)
+ 		}
+ 
+ 		kfree(entry);
+-		/* Invoke scheduler to prevent soft lockups. */
+-		cond_resched();
++		/*
++		 * Invoke scheduler on every XA_CHECK_SCHED iteration
++		 * to prevent soft lockups.
++		 */
++		if (!(++count % XA_CHECK_SCHED)) {
++			xas_pause(&xas);
++			xas_unlock(&xas);
++
++			cond_resched();
++
++			xas_lock(&xas);
++		}
+ 	}
++	xas_unlock(&xas);
+ 
+ 	xa_destroy(&encl->page_array);
+ 
 -- 
 2.35.1
 
