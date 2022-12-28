@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9E81863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:49:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FAAFC433D2;
-	Wed, 28 Dec 2022 14:49:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52231863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:49:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 297AAC433EF;
+	Wed, 28 Dec 2022 14:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672238950;
-	bh=KW4nSEj+6YHvbq7HG7eXvlWAw63935c1hTZCBUj10rA=;
+	s=korg; t=1672238953;
+	bh=51SR3cgmQ9NrNe9rZ1Im14jN1BWzg+BKcbDbE734HZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GVcz8m2mn8fWFiDjcmrxKM/fG3wBstI5WnlGx9z2iFn9eIcXNIZ4K5cH1/OLGsBwT
-	 IKlEftjsHTT6M23ACECekqyfLfcZ8OYLVnZ2Yln/VB0Lk2dDLjAjE8mP2Ymid9qygo
-	 v9fmjJg2UfLLQvPerB9HiHGeFSUNblNytvHrWS3Y=
+	b=N4PGvIkO7EyUWO33hjKS+Gkk2NKd89vFlYAh5wLuoqBz7u+mXeRh1DJCBf7EavT2o
+	 lFlDhnReDkV527TJjYLs2pr8Z/9sXZjCTjAisRe0uQ307Jw9blakWFMYKLtXEascTS
+	 9Q4wXklnXflwCXGqZAU/5677l4E56mKBqMFnHiRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Mel Gorman <mgorman@suse.de>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 071/731] sched/fair: Removed useless update of p->recent_used_cpu
-Date: Wed, 28 Dec 2022 15:32:58 +0100
-Message-Id: <20221228144258.609114431@linuxfoundation.org>
+Subject: [PATCH 5.15 072/731] sched/core: Introduce sched_asym_cpucap_active()
+Date: Wed, 28 Dec 2022 15:32:59 +0100
+Message-Id: <20221228144258.637952426@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,40 +35,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vincent Guittot <vincent.guittot@linaro.org>
+From: Dietmar Eggemann <dietmar.eggemann@arm.com>
 
-[ Upstream commit a7ba894821b6ade7bb420455f87020b2838d6180 ]
+[ Upstream commit 740cf8a760b73e8375bfb4bedcbe9746183350f9 ]
 
-Since commit 89aafd67f28c ("sched/fair: Use prev instead of new target as recent_used_cpu"),
-p->recent_used_cpu is unconditionnaly set with prev.
+Create an inline helper for conditional code to be only executed on
+asymmetric CPU capacity systems. This makes these (currently ~10 and
+future) conditions a lot more readable.
 
-Fixes: 89aafd67f28c ("sched/fair: Use prev instead of new target as recent_used_cpu")
-Signed-off-by: Vincent Guittot <vincent.guittot@linaro.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Acked-by: Mel Gorman <mgorman@suse.de>
-Link: https://lkml.kernel.org/r/20210928103544.27489-1-vincent.guittot@linaro.org
+Signed-off-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20220729111305.1275158-2-dietmar.eggemann@arm.com
 Stable-dep-of: a2e7f03ed28f ("sched/uclamp: Make asym_fits_capacity() use util_fits_cpu()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 5 -----
- 1 file changed, 5 deletions(-)
+ kernel/sched/cpudeadline.c | 2 +-
+ kernel/sched/deadline.c    | 4 ++--
+ kernel/sched/fair.c        | 8 ++++----
+ kernel/sched/rt.c          | 4 ++--
+ kernel/sched/sched.h       | 5 +++++
+ 5 files changed, 14 insertions(+), 9 deletions(-)
 
+diff --git a/kernel/sched/cpudeadline.c b/kernel/sched/cpudeadline.c
+index ceb03d76c0cc..221ca1050573 100644
+--- a/kernel/sched/cpudeadline.c
++++ b/kernel/sched/cpudeadline.c
+@@ -124,7 +124,7 @@ int cpudl_find(struct cpudl *cp, struct task_struct *p,
+ 		unsigned long cap, max_cap = 0;
+ 		int cpu, max_cpu = -1;
+ 
+-		if (!static_branch_unlikely(&sched_asym_cpucapacity))
++		if (!sched_asym_cpucap_active())
+ 			return 1;
+ 
+ 		/* Ensure the capacity of the CPUs fits the task. */
+diff --git a/kernel/sched/deadline.c b/kernel/sched/deadline.c
+index 147b757d162b..2a2f32eaffcc 100644
+--- a/kernel/sched/deadline.c
++++ b/kernel/sched/deadline.c
+@@ -112,7 +112,7 @@ static inline unsigned long __dl_bw_capacity(int i)
+  */
+ static inline unsigned long dl_bw_capacity(int i)
+ {
+-	if (!static_branch_unlikely(&sched_asym_cpucapacity) &&
++	if (!sched_asym_cpucap_active() &&
+ 	    capacity_orig_of(i) == SCHED_CAPACITY_SCALE) {
+ 		return dl_bw_cpus(i) << SCHED_CAPACITY_SHIFT;
+ 	} else {
+@@ -1703,7 +1703,7 @@ select_task_rq_dl(struct task_struct *p, int cpu, int flags)
+ 	 * Take the capacity of the CPU into account to
+ 	 * ensure it fits the requirement of the task.
+ 	 */
+-	if (static_branch_unlikely(&sched_asym_cpucapacity))
++	if (sched_asym_cpucap_active())
+ 		select_rq |= !dl_task_fits_capacity(p, cpu);
+ 
+ 	if (select_rq) {
 diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 9e2c6e38342c..d706c1a8453a 100644
+index d706c1a8453a..619fc7bd65e2 100644
 --- a/kernel/sched/fair.c
 +++ b/kernel/sched/fair.c
-@@ -6595,11 +6595,6 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
- 	    (available_idle_cpu(recent_used_cpu) || sched_idle_cpu(recent_used_cpu)) &&
- 	    cpumask_test_cpu(p->recent_used_cpu, p->cpus_ptr) &&
- 	    asym_fits_capacity(task_util, recent_used_cpu)) {
--		/*
--		 * Replace recent_used_cpu with prev as it is a potential
--		 * candidate for the next wake:
--		 */
--		p->recent_used_cpu = prev;
- 		return recent_used_cpu;
- 	}
+@@ -4253,7 +4253,7 @@ static inline int task_fits_cpu(struct task_struct *p, int cpu)
  
+ static inline void update_misfit_status(struct task_struct *p, struct rq *rq)
+ {
+-	if (!static_branch_unlikely(&sched_asym_cpucapacity))
++	if (!sched_asym_cpucap_active())
+ 		return;
+ 
+ 	if (!p || p->nr_cpus_allowed == 1) {
+@@ -6528,7 +6528,7 @@ select_idle_capacity(struct task_struct *p, struct sched_domain *sd, int target)
+ 
+ static inline bool asym_fits_capacity(unsigned long task_util, int cpu)
+ {
+-	if (static_branch_unlikely(&sched_asym_cpucapacity))
++	if (sched_asym_cpucap_active())
+ 		return fits_capacity(task_util, capacity_of(cpu));
+ 
+ 	return true;
+@@ -6548,7 +6548,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
+ 	 * On asymmetric system, update task utilization because we will check
+ 	 * that the task fits with cpu's capacity.
+ 	 */
+-	if (static_branch_unlikely(&sched_asym_cpucapacity)) {
++	if (sched_asym_cpucap_active()) {
+ 		sync_entity_load_avg(&p->se);
+ 		task_util = uclamp_task_util(p);
+ 	}
+@@ -6602,7 +6602,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
+ 	 * For asymmetric CPU capacity systems, our domain of interest is
+ 	 * sd_asym_cpucapacity rather than sd_llc.
+ 	 */
+-	if (static_branch_unlikely(&sched_asym_cpucapacity)) {
++	if (sched_asym_cpucap_active()) {
+ 		sd = rcu_dereference(per_cpu(sd_asym_cpucapacity, target));
+ 		/*
+ 		 * On an asymmetric CPU capacity system where an exclusive
+diff --git a/kernel/sched/rt.c b/kernel/sched/rt.c
+index f75dcd3537b8..add67f811e00 100644
+--- a/kernel/sched/rt.c
++++ b/kernel/sched/rt.c
+@@ -473,7 +473,7 @@ static inline bool rt_task_fits_capacity(struct task_struct *p, int cpu)
+ 	unsigned int cpu_cap;
+ 
+ 	/* Only heterogeneous systems can benefit from this check */
+-	if (!static_branch_unlikely(&sched_asym_cpucapacity))
++	if (!sched_asym_cpucap_active())
+ 		return true;
+ 
+ 	min_cap = uclamp_eff_value(p, UCLAMP_MIN);
+@@ -1736,7 +1736,7 @@ static int find_lowest_rq(struct task_struct *task)
+ 	 * If we're on asym system ensure we consider the different capacities
+ 	 * of the CPUs when searching for the lowest_mask.
+ 	 */
+-	if (static_branch_unlikely(&sched_asym_cpucapacity)) {
++	if (sched_asym_cpucap_active()) {
+ 
+ 		ret = cpupri_find_fitness(&task_rq(task)->rd->cpupri,
+ 					  task, lowest_mask,
+diff --git a/kernel/sched/sched.h b/kernel/sched/sched.h
+index 4a98bb9fd881..fffb45bdddcc 100644
+--- a/kernel/sched/sched.h
++++ b/kernel/sched/sched.h
+@@ -1788,6 +1788,11 @@ DECLARE_PER_CPU(struct sched_domain __rcu *, sd_asym_packing);
+ DECLARE_PER_CPU(struct sched_domain __rcu *, sd_asym_cpucapacity);
+ extern struct static_key_false sched_asym_cpucapacity;
+ 
++static __always_inline bool sched_asym_cpucap_active(void)
++{
++	return static_branch_unlikely(&sched_asym_cpucapacity);
++}
++
+ struct sched_group_capacity {
+ 	atomic_t		ref;
+ 	/*
 -- 
 2.35.1
 
