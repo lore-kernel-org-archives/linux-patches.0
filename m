@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 547F41C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0D50C433EF;
-	Wed, 28 Dec 2022 16:46:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3225D1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1F62C433D2;
+	Wed, 28 Dec 2022 16:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245979;
-	bh=meXrmIHc4uB22MVvnpTkZ0t6/lXPGSax7WRu1NPzbQo=;
+	s=korg; t=1672245982;
+	bh=3UcKbcofwLkR8kAs0YAUDXkw+/DMlnfihZ75Bgz68dI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ti4m6rScRMGdYc9DhaJP/nnMfKgaG2pQdgxpFr0IN0jloX3iLDSmfNwJvLClWoO3i
-	 Lr5q3fyq59cb0mrK16qzFWgfvsv05efDH3camPBJTSWKAxl7n5ngufVMcCMegOXPbA
-	 6WLy7xCjXcGWLlX+StoH2YFnSoBOfnMTvsFz3yPo=
+	b=XXQ1GAXCiKKFcnLLI/SizhfYNI0B9UMN+qSAho/usNZcHsjZy/mm9hhEHipkTnIZ9
+	 eHIaos+OAtcPQhQ0ClPEGA1rz1s+z1XowijtguISZaapQMy/K8kYBlmbtp0wLTMOD5
+	 qnKo1xT/bbs1yZHGKESedLabasP41IMBUH2+u0qs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+e91619dd4c11c4960706@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0990/1073] scsi: target: iscsi: Fix a race condition between login_work and the login thread
-Date: Wed, 28 Dec 2022 15:42:58 +0100
-Message-Id: <20221228144354.996907584@linuxfoundation.org>
+Subject: [PATCH 6.1 0957/1146] nilfs2: fix shift-out-of-bounds/overflow in nilfs_sb2_bad_offset()
+Date: Wed, 28 Dec 2022 15:41:36 +0100
+Message-Id: <20221228144356.314872722@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,79 +36,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit fec1b2fa62c162d03f5dcd7b03e3c89d3116d49f ]
+[ Upstream commit 610a2a3d7d8be3537458a378ec69396a76c385b6 ]
 
-In case a malicious initiator sends some random data immediately after a
-login PDU; the iscsi_target_sk_data_ready() callback will schedule the
-login_work and, at the same time, the negotiation may end without clearing
-the LOGIN_FLAGS_INITIAL_PDU flag (because no additional PDU exchanges are
-required to complete the login).
+Patch series "nilfs2: fix UBSAN shift-out-of-bounds warnings on mount
+time".
 
-The login has been completed but the login_work function will find the
-LOGIN_FLAGS_INITIAL_PDU flag set and will never stop from rescheduling
-itself; at this point, if the initiator drops the connection, the
-iscsit_conn structure will be freed, login_work will dereference a released
-socket structure and the kernel crashes.
+The first patch fixes a bug reported by syzbot, and the second one fixes
+the remaining bug of the same kind.  Although they are triggered by the
+same super block data anomaly, I divided it into the above two because the
+details of the issues and how to fix it are different.
 
-BUG: kernel NULL pointer dereference, address: 0000000000000230
-PF: supervisor write access in kernel mode
-PF: error_code(0x0002) - not-present page
-Workqueue: events iscsi_target_do_login_rx [iscsi_target_mod]
-RIP: 0010:_raw_read_lock_bh+0x15/0x30
-Call trace:
- iscsi_target_do_login_rx+0x75/0x3f0 [iscsi_target_mod]
- process_one_work+0x1e8/0x3c0
+Both are required to eliminate the shift-out-of-bounds issues at mount
+time.
 
-Fix this bug by forcing login_work to stop after the login has been
-completed and the socket callbacks have been restored.
+This patch (of 2):
 
-Add a comment to clearify the return values of iscsi_target_do_login()
+If the block size exponent information written in an on-disk superblock is
+corrupted, nilfs_sb2_bad_offset helper function can trigger
+shift-out-of-bounds warning followed by a kernel panic (if panic_on_warn
+is set):
 
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Link: https://lore.kernel.org/r/20221115125638.102517-1-mlombard@redhat.com
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+ shift exponent 38983 is too large for 64-bit type 'unsigned long long'
+ Call Trace:
+  <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
+  ubsan_epilogue lib/ubsan.c:151 [inline]
+  __ubsan_handle_shift_out_of_bounds+0x33d/0x3b0 lib/ubsan.c:322
+  nilfs_sb2_bad_offset fs/nilfs2/the_nilfs.c:449 [inline]
+  nilfs_load_super_block+0xdf5/0xe00 fs/nilfs2/the_nilfs.c:523
+  init_nilfs+0xb7/0x7d0 fs/nilfs2/the_nilfs.c:577
+  nilfs_fill_super+0xb1/0x5d0 fs/nilfs2/super.c:1047
+  nilfs_mount+0x613/0x9b0 fs/nilfs2/super.c:1317
+  ...
+
+In addition, since nilfs_sb2_bad_offset() performs multiplication without
+considering the upper bound, the computation may overflow if the disk
+layout parameters are not normal.
+
+This fixes these issues by inserting preliminary sanity checks for those
+parameters and by converting the comparison from one involving
+multiplication and left bit-shifting to one using division and right
+bit-shifting.
+
+Link: https://lkml.kernel.org/r/20221027044306.42774-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20221027044306.42774-2-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+e91619dd4c11c4960706@syzkaller.appspotmail.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/iscsi/iscsi_target_nego.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/nilfs2/the_nilfs.c | 31 +++++++++++++++++++++++++++----
+ 1 file changed, 27 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/target/iscsi/iscsi_target_nego.c b/drivers/target/iscsi/iscsi_target_nego.c
-index f2919319ad38..ff49c8f3fe24 100644
---- a/drivers/target/iscsi/iscsi_target_nego.c
-+++ b/drivers/target/iscsi/iscsi_target_nego.c
-@@ -1018,6 +1018,13 @@ static int iscsi_target_handle_csg_one(struct iscsit_conn *conn, struct iscsi_lo
- 	return 0;
+diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
+index c8b89b4f94e0..a7c829a7d4f1 100644
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -13,6 +13,7 @@
+ #include <linux/blkdev.h>
+ #include <linux/backing-dev.h>
+ #include <linux/random.h>
++#include <linux/log2.h>
+ #include <linux/crc32.h>
+ #include "nilfs.h"
+ #include "segment.h"
+@@ -443,11 +444,33 @@ static int nilfs_valid_sb(struct nilfs_super_block *sbp)
+ 	return crc == le32_to_cpu(sbp->s_sum);
  }
  
-+/*
-+ * RETURN VALUE:
+-static int nilfs_sb2_bad_offset(struct nilfs_super_block *sbp, u64 offset)
++/**
++ * nilfs_sb2_bad_offset - check the location of the second superblock
++ * @sbp: superblock raw data buffer
++ * @offset: byte offset of second superblock calculated from device size
 + *
-+ *  1 = Login successful
-+ * -1 = Login failed
-+ *  0 = More PDU exchanges required
++ * nilfs_sb2_bad_offset() checks if the position on the second
++ * superblock is valid or not based on the filesystem parameters
++ * stored in @sbp.  If @offset points to a location within the segment
++ * area, or if the parameters themselves are not normal, it is
++ * determined to be invalid.
++ *
++ * Return Value: true if invalid, false if valid.
 + */
- static int iscsi_target_do_login(struct iscsit_conn *conn, struct iscsi_login *login)
++static bool nilfs_sb2_bad_offset(struct nilfs_super_block *sbp, u64 offset)
  {
- 	int pdu_count = 0;
-@@ -1363,12 +1370,13 @@ int iscsi_target_start_negotiation(
- 		ret = -1;
- 
- 	if (ret < 0) {
--		cancel_delayed_work_sync(&conn->login_work);
- 		iscsi_target_restore_sock_callbacks(conn);
- 		iscsi_remove_failed_auth_entry(conn);
- 	}
--	if (ret != 0)
-+	if (ret != 0) {
-+		cancel_delayed_work_sync(&conn->login_work);
- 		iscsi_target_nego_release(conn);
-+	}
- 
- 	return ret;
+-	return offset < ((le64_to_cpu(sbp->s_nsegments) *
+-			  le32_to_cpu(sbp->s_blocks_per_segment)) <<
+-			 (le32_to_cpu(sbp->s_log_block_size) + 10));
++	unsigned int shift_bits = le32_to_cpu(sbp->s_log_block_size);
++	u32 blocks_per_segment = le32_to_cpu(sbp->s_blocks_per_segment);
++	u64 nsegments = le64_to_cpu(sbp->s_nsegments);
++	u64 index;
++
++	if (blocks_per_segment < NILFS_SEG_MIN_BLOCKS ||
++	    shift_bits > ilog2(NILFS_MAX_BLOCK_SIZE) - BLOCK_SIZE_BITS)
++		return true;
++
++	index = offset >> (shift_bits + BLOCK_SIZE_BITS);
++	do_div(index, blocks_per_segment);
++	return index < nsegments;
  }
+ 
+ static void nilfs_release_super_block(struct the_nilfs *nilfs)
 -- 
 2.35.1
 
