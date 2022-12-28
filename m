@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD971863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 921EEC433F2;
-	Wed, 28 Dec 2022 15:23:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5AB41863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE11C433F1;
+	Wed, 28 Dec 2022 15:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241028;
-	bh=ln6sAnXo8QtLbXs9g6fTWwpDph2q6sSNhpQjYfhdyVY=;
+	s=korg; t=1672241031;
+	bh=gthM6um44mZb5EFyVhOGTV2i6JfL/mbGdjXhQvjqsw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dFY0ZObPNF+1C+5+Xu4X+FrywprY1UODs2xUbsutzoYHt7TOmUzZVUqaFwgK5lEpR
-	 owDSJe54QFCrcNZqZZcWEQeXEQqTP7DWrEI/8Jy1D9xOTpR7sv2ivwWEPkH5GpYkdS
-	 EgJlq/3kaRvm8EHCA25tT53h1c0hW5fr3Ab+JRMA=
+	b=fSeFwiCel82zBqbjB+0cYdAzh+7JEtB0Z7M7vIDqIEW+KSizdkmnDd27tyFATkiJ6
+	 A2DImOGydVPbvhM2KWvyQ+PtIJHH70YQzOLJY5tu4QY80I8DT4WrpXIEG1U7YRSIxY
+	 vUvD+bmjp6C/dPezH9Ol3U2w8li2TzHWDSqRvjDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Haoyue Xu <xuhaoyue1@hisilicon.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 429/731] RDMA/hns: Fix AH attr queried by query_qp
-Date: Wed, 28 Dec 2022 15:38:56 +0100
-Message-Id: <20221228144309.000734739@linuxfoundation.org>
+Subject: [PATCH 6.1 0197/1146] wifi: mac80211: check link ID in auth/assoc continuation
+Date: Wed, 28 Dec 2022 15:28:56 +0100
+Message-Id: <20221228144335.497080119@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,50 +34,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit bc34c04f7b97c3794dec5a6d6d27ffd5f0e4f5c8 ]
+[ Upstream commit 85176a3fcd9748558cff72d4cdff5465b8732282 ]
 
-The queried AH attr is invalid. This patch fix it.
+Ensure that the link ID matches in auth/assoc continuation,
+otherwise we need to reset all the data.
 
-This problem is found by rdma-core test test_mr_rereg_pd
-
-ERROR: test_mr_rereg_pd (tests.test_mr.MRTest)
-Test that cover rereg MR's PD with this flow:
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "./tests/test_mr.py", line 157, in test_mr_rereg_pd
-    self.restate_qps()
-  File "./tests/test_mr.py", line 113, in restate_qps
-    self.server.qp.to_rts(self.server_qp_attr)
-  File "qp.pyx", line 1137, in pyverbs.qp.QP.to_rts
-  File "qp.pyx", line 1123, in pyverbs.qp.QP.to_rtr
-pyverbs.pyverbs_error.PyverbsRDMAError: Failed to modify QP state to RTR.
-Errno: 22, Invalid argument
-
-Fixes: 926a01dc000d ("RDMA/hns: Add QP operations support for hip08 SoC")
-Link: https://lore.kernel.org/r/20221126102911.2921820-3-xuhaoyue1@hisilicon.com
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 81151ce462e5 ("wifi: mac80211: support MLO authentication/association with one link")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/ieee80211_i.h | 1 +
+ net/mac80211/mlme.c        | 7 +++++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 94f3a0a87dfd..155ae202b1ec 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -5129,6 +5129,8 @@ static int hns_roce_v2_query_qp(struct ib_qp *ibqp, struct ib_qp_attr *qp_attr,
+diff --git a/net/mac80211/ieee80211_i.h b/net/mac80211/ieee80211_i.h
+index a842f2e1c230..de7b8a4d4bbb 100644
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -390,6 +390,7 @@ struct ieee80211_mgd_auth_data {
+ 	bool done, waiting;
+ 	bool peer_confirmed;
+ 	bool timeout_started;
++	int link_id;
  
- 		rdma_ah_set_sl(&qp_attr->ah_attr,
- 			       hr_reg_read(&context, QPC_SL));
-+		rdma_ah_set_port_num(&qp_attr->ah_attr, hr_qp->port + 1);
-+		rdma_ah_set_ah_flags(&qp_attr->ah_attr, IB_AH_GRH);
- 		grh->flow_label = hr_reg_read(&context, QPC_FL);
- 		grh->sgid_index = hr_reg_read(&context, QPC_GMV_IDX);
- 		grh->hop_limit = hr_reg_read(&context, QPC_HOPLIMIT);
+ 	u8 ap_addr[ETH_ALEN] __aligned(2);
+ 
+diff --git a/net/mac80211/mlme.c b/net/mac80211/mlme.c
+index 1fff44ddda8a..0125b3e6175b 100644
+--- a/net/mac80211/mlme.c
++++ b/net/mac80211/mlme.c
+@@ -6644,6 +6644,7 @@ int ieee80211_mgd_auth(struct ieee80211_sub_if_data *sdata,
+ 	       req->ap_mld_addr ?: req->bss->bssid,
+ 	       ETH_ALEN);
+ 	auth_data->bss = req->bss;
++	auth_data->link_id = req->link_id;
+ 
+ 	if (req->auth_data_len >= 4) {
+ 		if (req->auth_type == NL80211_AUTHTYPE_SAE) {
+@@ -6662,7 +6663,8 @@ int ieee80211_mgd_auth(struct ieee80211_sub_if_data *sdata,
+ 	 * removal and re-addition of the STA entry in
+ 	 * ieee80211_prep_connection().
+ 	 */
+-	cont_auth = ifmgd->auth_data && req->bss == ifmgd->auth_data->bss;
++	cont_auth = ifmgd->auth_data && req->bss == ifmgd->auth_data->bss &&
++		    ifmgd->auth_data->link_id == req->link_id;
+ 
+ 	if (req->ie && req->ie_len) {
+ 		memcpy(&auth_data->data[auth_data->data_len],
+@@ -6986,7 +6988,8 @@ int ieee80211_mgd_assoc(struct ieee80211_sub_if_data *sdata,
+ 
+ 		/* keep sta info, bssid if matching */
+ 		match = ether_addr_equal(ifmgd->auth_data->ap_addr,
+-					 assoc_data->ap_addr);
++					 assoc_data->ap_addr) &&
++			ifmgd->auth_data->link_id == req->link_id;
+ 		ieee80211_destroy_auth_data(sdata, match);
+ 	}
+ 
 -- 
 2.35.1
 
