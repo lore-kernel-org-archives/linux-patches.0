@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440701863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:55:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD47C433D2;
-	Wed, 28 Dec 2022 14:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CEFD1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:55:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B18AC433D2;
+	Wed, 28 Dec 2022 14:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239340;
-	bh=XgFeTa220N2NpGRV84aUNCHedg3qYGSsjgMk0T/IRg4=;
+	s=korg; t=1672239342;
+	bh=AEb70Q1MeoX8gIrWrw8ekroLnKt8Vaic7XkzL2DG5/o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yob7XInulFbcTpkAACPvCCMhBbwIrHpUZKrTl1qfSHqG/MbtzLU8KvNnmkwb2LIQO
-	 EJMidl3Os/sz6Rg2cX1dn2lZQ/JvEe5pCUk9BKjQcwZnZTNtnhsM0hDZyTnh2zz4NZ
-	 AEzqcgTAnp1wgW/Pwpll7i8eCrKBKo/YscjP7PtU=
+	b=FIz455uy1eLlSiDm/hOVbU/AkE4MkPcXQoa0YnrDoX6tXNmnhwyf+hSV9RA2EH1gL
+	 Qj8ytKQOCHCojHPP7ipBMZ3WKeQ3XUOkJ3Vvdt39i/WikWyIjYwda4bu9mOVuckf5j
+	 0uC5osILbXXS/AcW0pUZjKVtRTlfO+HaqfCGN4n0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 208/731] drm/msm/a6xx: Fix speed-bin detection vs probe-defer
-Date: Wed, 28 Dec 2022 15:35:15 +0100
-Message-Id: <20221228144302.588737590@linuxfoundation.org>
+Subject: [PATCH 6.0 0013/1073] arm64: dts: qcom: msm8996: fix supported-hw in cpufreq OPP tables
+Date: Wed, 28 Dec 2022 15:26:41 +0100
+Message-Id: <20221228144328.524229362@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,71 +36,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit f6d1918794ef92b4e26b80c3d40365347b76b1fd ]
+[ Upstream commit 0154caaa2b748e7414a4ec3c6ee60e8f483b2d4f ]
 
-If we get an error (other than -ENOENT) we need to propagate that up the
-stack.  Otherwise if the nvmem driver hasn't probed yet, we'll end up
-end up claiming that we support all the OPPs which is not likely to be
-true (and on some generations impossible to be true, ie. if there are
-conflicting OPPs).
+Adjust MSM8996 cpufreq tables according to tables in msm-3.18. Some of
+the frequencies are not supported on speed bins other than 0. Also other
+speed bins support intermediate topmost frequencies, not supported on
+speed bin 0. Implement all these differencies.
 
-v2: Update commit msg, gc unused label, etc
-v3: Add previously missing \n's
-
-Fixes: fe7952c629da ("drm/msm: Add speed-bin support to a618 gpu")
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/511690/
-Link: https://lore.kernel.org/r/20221115154637.1613968-1-robdclark@gmail.com
+Fixes: 90173a954a22 ("arm64: dts: qcom: msm8996: Add CPU opps")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20220724140421.1933004-5-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 12 +++++-------
- 1 file changed, 5 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 38 ++++++++++++++++++++-------
+ 1 file changed, 29 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index c0dec5b919d4..2d07c02c59f1 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1746,7 +1746,7 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_rev rev, u32 fuse)
- 
- 	if (val == UINT_MAX) {
- 		DRM_DEV_ERROR(dev,
--			"missing support for speed-bin: %u. Some OPPs may not be supported by hardware",
-+			"missing support for speed-bin: %u. Some OPPs may not be supported by hardware\n",
- 			fuse);
- 		return UINT_MAX;
- 	}
-@@ -1756,7 +1756,7 @@ static u32 fuse_to_supp_hw(struct device *dev, struct adreno_rev rev, u32 fuse)
- 
- static int a6xx_set_supported_hw(struct device *dev, struct adreno_rev rev)
- {
--	u32 supp_hw = UINT_MAX;
-+	u32 supp_hw;
- 	u32 speedbin;
- 	int ret;
- 
-@@ -1768,15 +1768,13 @@ static int a6xx_set_supported_hw(struct device *dev, struct adreno_rev rev)
- 	if (ret == -ENOENT) {
- 		return 0;
- 	} else if (ret) {
--		DRM_DEV_ERROR(dev,
--			      "failed to read speed-bin (%d). Some OPPs may not be supported by hardware",
--			      ret);
--		goto done;
-+		dev_err_probe(dev, ret,
-+			      "failed to read speed-bin. Some OPPs may not be supported by hardware\n");
-+		return ret;
- 	}
- 
- 	supp_hw = fuse_to_supp_hw(dev, rev, speedbin);
- 
--done:
- 	ret = devm_pm_opp_set_supported_hw(dev, &supp_hw, 1);
- 	if (ret)
- 		return ret;
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index 41c09895268e..24791ed436c5 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -203,22 +203,32 @@ opp-1228800000 {
+ 		};
+ 		opp-1324800000 {
+ 			opp-hz = /bits/ 64 <1324800000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x5>;
++			clock-latency-ns = <200000>;
++		};
++		opp-1363200000 {
++			opp-hz = /bits/ 64 <1363200000>;
++			opp-supported-hw = <0x2>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 		opp-1401600000 {
+ 			opp-hz = /bits/ 64 <1401600000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x5>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 		opp-1478400000 {
+ 			opp-hz = /bits/ 64 <1478400000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x1>;
++			clock-latency-ns = <200000>;
++		};
++		opp-1497600000 {
++			opp-hz = /bits/ 64 <1497600000>;
++			opp-supported-hw = <0x04>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 		opp-1593600000 {
+ 			opp-hz = /bits/ 64 <1593600000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x1>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 	};
+@@ -329,29 +339,39 @@ opp-1785600000 {
+ 			opp-supported-hw = <0x7>;
+ 			clock-latency-ns = <200000>;
+ 		};
++		opp-1804800000 {
++			opp-hz = /bits/ 64 <1804800000>;
++			opp-supported-hw = <0x6>;
++			clock-latency-ns = <200000>;
++		};
+ 		opp-1824000000 {
+ 			opp-hz = /bits/ 64 <1824000000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x1>;
++			clock-latency-ns = <200000>;
++		};
++		opp-1900800000 {
++			opp-hz = /bits/ 64 <1900800000>;
++			opp-supported-hw = <0x4>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 		opp-1920000000 {
+ 			opp-hz = /bits/ 64 <1920000000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x1>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 		opp-1996800000 {
+ 			opp-hz = /bits/ 64 <1996800000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x1>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 		opp-2073600000 {
+ 			opp-hz = /bits/ 64 <2073600000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x1>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 		opp-2150400000 {
+ 			opp-hz = /bits/ 64 <2150400000>;
+-			opp-supported-hw = <0x7>;
++			opp-supported-hw = <0x1>;
+ 			clock-latency-ns = <200000>;
+ 		};
+ 	};
 -- 
 2.35.1
 
