@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F0C91863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88259C433D2;
-	Wed, 28 Dec 2022 15:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9B71863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:32:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE11C433D2;
+	Wed, 28 Dec 2022 15:32:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241564;
-	bh=GGEAZCiZMUh8tECm3Q/1mQ8BDuVYn8aXuNNcpXiaEwA=;
+	s=korg; t=1672241567;
+	bh=w3AIrqbbCWpmo6zLkLqjIUKmSA9nMsTDhY8B3CwdRIM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CunkVF3E6x/opqGDkhzXOrg2wf6siX7eFWVOKTSRWIzUOU3nUjV/SBQAYLtR9jB6k
-	 jmEKGtuyAvxxLUB2BJrEpsnCMNCrZRt2RM6CPc2Hktrz9goMYVOr/b3/0zpeiDAdMZ
-	 twGUtS2nQN0nBEXUuNF+qMW808vAmRCjuORQkdXM=
+	b=MammXX2eOHrQJlQrb2/tZW+i6YQITM22wPQBWKi11DYjv1UjaRxW4LQ62zhnAG2/o
+	 PUa+E/P741Kzh5F2zJoYM0PgK4QdnoUzC0G7fkeY+pPj4ZnEFj/o/w6zW4QDMuwUWh
+	 1QV8YQKWF2fElOV8tlEY6j3AfpWgrgNMHz51Dr1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Qilong <zhangqilong3@huawei.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	mhiramat@kernel.org,
+	zanussi@kernel.org,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0261/1146] drm/rockchip: lvds: fix PM usage counter unbalance in poweron
-Date: Wed, 28 Dec 2022 15:30:00 +0100
-Message-Id: <20221228144337.227314931@linuxfoundation.org>
+Subject: [PATCH 5.15 497/731] tracing/hist: Fix issue of losting command info in error_log
+Date: Wed, 28 Dec 2022 15:40:04 +0100
+Message-Id: <20221228144310.952819347@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,61 +37,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Qilong <zhangqilong3@huawei.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit 4dba27f1a14592ac4cf71c3bc1cc1fd05dea8015 ]
+[ Upstream commit 608c6ed3337850c767ab0dd6c583477922233e29 ]
 
-pm_runtime_get_sync will increment pm usage counter even it failed.
-Forgetting to putting operation will result in reference leak here.
-We fix it by replacing it with the newest pm_runtime_resume_and_get
-to keep usage counter balanced.
+When input some constructed invalid 'trigger' command, command info
+in 'error_log' are lost [1].
 
-Fixes: 34cc0aa25456 ("drm/rockchip: Add support for Rockchip Soc LVDS")
-Fixes: cca1705c3d89 ("drm/rockchip: lvds: Add PX30 support")
-Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220922132107.105419-3-zhangqilong3@huawei.com
+The root cause is that there is a path that event_hist_trigger_parse()
+is recursely called once and 'last_cmd' which save origin command is
+cleared, then later calling of hist_err() will no longer record origin
+command info:
+
+  event_hist_trigger_parse() {
+    last_cmd_set()  // <1> 'last_cmd' save origin command here at first
+    create_actions() {
+      onmatch_create() {
+        action_create() {
+          trace_action_create() {
+            trace_action_create_field_var() {
+              create_field_var_hist() {
+                event_hist_trigger_parse() {  // <2> recursely called once
+                  hist_err_clear()  // <3> 'last_cmd' is cleared here
+                }
+                hist_err()  // <4> No longer find origin command!!!
+
+Since 'glob' is empty string while running into the recurse call, we
+can trickly check it and bypass the call of hist_err_clear() to solve it.
+
+[1]
+ # cd /sys/kernel/tracing
+ # echo "my_synth_event int v1; int v2; int v3;" >> synthetic_events
+ # echo 'hist:keys=pid' >> events/sched/sched_waking/trigger
+ # echo "hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(\
+pid,pid1)" >> events/sched/sched_switch/trigger
+ # cat error_log
+[  8.405018] hist:sched:sched_switch: error: Couldn't find synthetic event
+  Command:
+hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(pid,pid1)
+                                                          ^
+[  8.816902] hist:sched:sched_switch: error: Couldn't find field
+  Command:
+hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(pid,pid1)
+                          ^
+[  8.816902] hist:sched:sched_switch: error: Couldn't parse field variable
+  Command:
+hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(pid,pid1)
+                          ^
+[  8.999880] : error: Couldn't find field
+  Command:
+           ^
+[  8.999880] : error: Couldn't parse field variable
+  Command:
+           ^
+[  8.999880] : error: Couldn't find field
+  Command:
+           ^
+[  8.999880] : error: Couldn't create histogram for field
+  Command:
+           ^
+
+Link: https://lore.kernel.org/linux-trace-kernel/20221207135326.3483216-1-zhengyejian1@huawei.com
+
+Cc: <mhiramat@kernel.org>
+Cc: <zanussi@kernel.org>
+Fixes: f404da6e1d46 ("tracing: Add 'last error' error facility for hist triggers")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rockchip/rockchip_lvds.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ kernel/trace/trace_events_hist.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/rockchip/rockchip_lvds.c b/drivers/gpu/drm/rockchip/rockchip_lvds.c
-index 5a284332ec49..68f6ebb33460 100644
---- a/drivers/gpu/drm/rockchip/rockchip_lvds.c
-+++ b/drivers/gpu/drm/rockchip/rockchip_lvds.c
-@@ -152,7 +152,7 @@ static int rk3288_lvds_poweron(struct rockchip_lvds *lvds)
- 		DRM_DEV_ERROR(lvds->dev, "failed to enable lvds pclk %d\n", ret);
- 		return ret;
- 	}
--	ret = pm_runtime_get_sync(lvds->dev);
-+	ret = pm_runtime_resume_and_get(lvds->dev);
- 	if (ret < 0) {
- 		DRM_DEV_ERROR(lvds->dev, "failed to get pm runtime: %d\n", ret);
- 		clk_disable(lvds->pclk);
-@@ -336,16 +336,20 @@ static int px30_lvds_poweron(struct rockchip_lvds *lvds)
- {
- 	int ret;
+diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
+index 31e3e0bbd129..6397285883fa 100644
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -5954,7 +5954,7 @@ static int event_hist_trigger_func(struct event_command *cmd_ops,
+ 	/* Just return zero, not the number of registered triggers */
+ 	ret = 0;
+  out:
+-	if (ret == 0)
++	if (ret == 0 && glob[0])
+ 		hist_err_clear();
  
--	ret = pm_runtime_get_sync(lvds->dev);
-+	ret = pm_runtime_resume_and_get(lvds->dev);
- 	if (ret < 0) {
- 		DRM_DEV_ERROR(lvds->dev, "failed to get pm runtime: %d\n", ret);
- 		return ret;
- 	}
- 
- 	/* Enable LVDS mode */
--	return regmap_update_bits(lvds->grf, PX30_LVDS_GRF_PD_VO_CON1,
-+	ret = regmap_update_bits(lvds->grf, PX30_LVDS_GRF_PD_VO_CON1,
- 				  PX30_LVDS_MODE_EN(1) | PX30_LVDS_P2S_EN(1),
- 				  PX30_LVDS_MODE_EN(1) | PX30_LVDS_P2S_EN(1));
-+	if (ret)
-+		pm_runtime_put(lvds->dev);
-+
-+	return ret;
- }
- 
- static void px30_lvds_poweroff(struct rockchip_lvds *lvds)
+ 	return ret;
 -- 
 2.35.1
 
