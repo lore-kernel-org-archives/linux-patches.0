@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47EAD1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:08:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0DC7C433D2;
-	Wed, 28 Dec 2022 16:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086991875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:08:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 684BAC433EF;
+	Wed, 28 Dec 2022 16:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243683;
-	bh=Pt9IqEVq/A7EzfIxKLHCBnesx/gJuuUACvHJzfVOcbU=;
+	s=korg; t=1672243685;
+	bh=RfNxRfPBceNid/hZZzR5/5fHQA6SSSAnWhGevBKkqNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FFWlr9vDZQq5XFum3FCI0t2ucPVGtJfwQc42qiUdgsmqQpSO8ZaxaxvU6uW3uk+Lx
-	 AiOenH2AciVAE4Kn0tHDzyKfgPwyFtaLJ8C/QnlvVM6+1yQD+dJm/JH+rcQd0PH2zF
-	 v50339BTXCEt9VV4fXJfAtR1gYR/X9ASL16daAS4=
+	b=tDbhzIgk3u78rBmJ1rSJ8e8I6KN0ykZ7KhnXoVFA54wsgJoP0hol+NiAFoYp/K6RO
+	 LRW73w3/fbS20+2mGMaKnzS1VJ97FR7R2vEleQ7L9lLthgXw1w2pt8kvUBZli6xVPx
+	 lC/hOfQ6AsqXI2SQWHBI22q+m06inyXMhy76R5yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Julian Anastasov <ja@ssi.bg>,
-	yunhong-cgl jiang <xintian1976@gmail.com>,
-	"dust.li" <dust.li@linux.alibaba.com>,
-	Jiri Wiesner <jwiesner@suse.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	John Keeping <john@metanate.com>,
+	Corentin Labbe <clabbe@baylibre.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0533/1146] ipvs: use u64_stats_t for the per-cpu counters
-Date: Wed, 28 Dec 2022 15:34:32 +0100
-Message-Id: <20221228144344.652984737@linuxfoundation.org>
+Subject: [PATCH 6.0 0569/1073] crypto: rockchip - do not do custom power management
+Date: Wed, 28 Dec 2022 15:35:57 +0100
+Message-Id: <20221228144343.509472982@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,189 +36,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Corentin Labbe <clabbe@baylibre.com>
 
-[ Upstream commit 1dbd8d9a82e3f26b9d063292d47ece673f48fce2 ]
+[ Upstream commit c50ef1411c8cbad0c7db100c477126076b6e3348 ]
 
-Use the provided u64_stats_t type to avoid
-load/store tearing.
+The clock enable/disable at tfm init/exit is fragile,
+if 2 tfm are init in the same time and one is removed just after,
+it will leave the hardware uncloked even if a user remains.
 
-Fixes: 316580b69d0a ("u64_stats: provide u64_stats_t type")
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Cc: yunhong-cgl jiang <xintian1976@gmail.com>
-Cc: "dust.li" <dust.li@linux.alibaba.com>
-Reviewed-by: Jiri Wiesner <jwiesner@suse.de>
-Tested-by: Jiri Wiesner <jwiesner@suse.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Instead simply enable clocks at probe time.
+We will do PM later.
+
+Fixes: ce0183cb6464b ("crypto: rockchip - switch to skcipher API")
+Reviewed-by: John Keeping <john@metanate.com>
+Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/ip_vs.h             | 10 +++++-----
- net/netfilter/ipvs/ip_vs_core.c | 30 +++++++++++++++---------------
- net/netfilter/ipvs/ip_vs_ctl.c  | 10 +++++-----
- net/netfilter/ipvs/ip_vs_est.c  | 20 ++++++++++----------
- 4 files changed, 35 insertions(+), 35 deletions(-)
+ drivers/crypto/rockchip/rk3288_crypto.c          | 4 ++--
+ drivers/crypto/rockchip/rk3288_crypto.h          | 2 --
+ drivers/crypto/rockchip/rk3288_crypto_ahash.c    | 3 +--
+ drivers/crypto/rockchip/rk3288_crypto_skcipher.c | 5 +++--
+ 4 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
-index ff1804a0c469..1fca6a88114a 100644
---- a/include/net/ip_vs.h
-+++ b/include/net/ip_vs.h
-@@ -351,11 +351,11 @@ struct ip_vs_seq {
+diff --git a/drivers/crypto/rockchip/rk3288_crypto.c b/drivers/crypto/rockchip/rk3288_crypto.c
+index 35d73061d156..5f8444b9633a 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto.c
++++ b/drivers/crypto/rockchip/rk3288_crypto.c
+@@ -395,8 +395,7 @@ static int rk_crypto_probe(struct platform_device *pdev)
+ 		     rk_crypto_done_task_cb, (unsigned long)crypto_info);
+ 	crypto_init_queue(&crypto_info->queue, 50);
  
- /* counters per cpu */
- struct ip_vs_counters {
--	__u64		conns;		/* connections scheduled */
--	__u64		inpkts;		/* incoming packets */
--	__u64		outpkts;	/* outgoing packets */
--	__u64		inbytes;	/* incoming bytes */
--	__u64		outbytes;	/* outgoing bytes */
-+	u64_stats_t	conns;		/* connections scheduled */
-+	u64_stats_t	inpkts;		/* incoming packets */
-+	u64_stats_t	outpkts;	/* outgoing packets */
-+	u64_stats_t	inbytes;	/* incoming bytes */
-+	u64_stats_t	outbytes;	/* outgoing bytes */
- };
- /* Stats per cpu */
- struct ip_vs_cpu_stats {
-diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
-index 51ad557a525b..b5ae419661b8 100644
---- a/net/netfilter/ipvs/ip_vs_core.c
-+++ b/net/netfilter/ipvs/ip_vs_core.c
-@@ -132,21 +132,21 @@ ip_vs_in_stats(struct ip_vs_conn *cp, struct sk_buff *skb)
+-	crypto_info->enable_clk = rk_crypto_enable_clk;
+-	crypto_info->disable_clk = rk_crypto_disable_clk;
++	rk_crypto_enable_clk(crypto_info);
+ 	crypto_info->load_data = rk_load_data;
+ 	crypto_info->unload_data = rk_unload_data;
+ 	crypto_info->enqueue = rk_crypto_enqueue;
+@@ -423,6 +422,7 @@ static int rk_crypto_remove(struct platform_device *pdev)
+ 	struct rk_crypto_info *crypto_tmp = platform_get_drvdata(pdev);
  
- 		s = this_cpu_ptr(dest->stats.cpustats);
- 		u64_stats_update_begin(&s->syncp);
--		s->cnt.inpkts++;
--		s->cnt.inbytes += skb->len;
-+		u64_stats_inc(&s->cnt.inpkts);
-+		u64_stats_add(&s->cnt.inbytes, skb->len);
- 		u64_stats_update_end(&s->syncp);
+ 	rk_crypto_unregister();
++	rk_crypto_disable_clk(crypto_tmp);
+ 	tasklet_kill(&crypto_tmp->done_task);
+ 	tasklet_kill(&crypto_tmp->queue_task);
+ 	return 0;
+diff --git a/drivers/crypto/rockchip/rk3288_crypto.h b/drivers/crypto/rockchip/rk3288_crypto.h
+index 97278c2574ff..2fa7131e4060 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto.h
++++ b/drivers/crypto/rockchip/rk3288_crypto.h
+@@ -220,8 +220,6 @@ struct rk_crypto_info {
+ 	int (*start)(struct rk_crypto_info *dev);
+ 	int (*update)(struct rk_crypto_info *dev);
+ 	void (*complete)(struct crypto_async_request *base, int err);
+-	int (*enable_clk)(struct rk_crypto_info *dev);
+-	void (*disable_clk)(struct rk_crypto_info *dev);
+ 	int (*load_data)(struct rk_crypto_info *dev,
+ 			 struct scatterlist *sg_src,
+ 			 struct scatterlist *sg_dst);
+diff --git a/drivers/crypto/rockchip/rk3288_crypto_ahash.c b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
+index ed03058497bc..49017d1fb510 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto_ahash.c
++++ b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
+@@ -301,7 +301,7 @@ static int rk_cra_hash_init(struct crypto_tfm *tfm)
+ 				 sizeof(struct rk_ahash_rctx) +
+ 				 crypto_ahash_reqsize(tctx->fallback_tfm));
  
- 		svc = rcu_dereference(dest->svc);
- 		s = this_cpu_ptr(svc->stats.cpustats);
- 		u64_stats_update_begin(&s->syncp);
--		s->cnt.inpkts++;
--		s->cnt.inbytes += skb->len;
-+		u64_stats_inc(&s->cnt.inpkts);
-+		u64_stats_add(&s->cnt.inbytes, skb->len);
- 		u64_stats_update_end(&s->syncp);
+-	return tctx->dev->enable_clk(tctx->dev);
++	return 0;
+ }
  
- 		s = this_cpu_ptr(ipvs->tot_stats.cpustats);
- 		u64_stats_update_begin(&s->syncp);
--		s->cnt.inpkts++;
--		s->cnt.inbytes += skb->len;
-+		u64_stats_inc(&s->cnt.inpkts);
-+		u64_stats_add(&s->cnt.inbytes, skb->len);
- 		u64_stats_update_end(&s->syncp);
+ static void rk_cra_hash_exit(struct crypto_tfm *tfm)
+@@ -309,7 +309,6 @@ static void rk_cra_hash_exit(struct crypto_tfm *tfm)
+ 	struct rk_ahash_ctx *tctx = crypto_tfm_ctx(tfm);
  
- 		local_bh_enable();
-@@ -168,21 +168,21 @@ ip_vs_out_stats(struct ip_vs_conn *cp, struct sk_buff *skb)
+ 	free_page((unsigned long)tctx->dev->addr_vir);
+-	return tctx->dev->disable_clk(tctx->dev);
+ }
  
- 		s = this_cpu_ptr(dest->stats.cpustats);
- 		u64_stats_update_begin(&s->syncp);
--		s->cnt.outpkts++;
--		s->cnt.outbytes += skb->len;
-+		u64_stats_inc(&s->cnt.outpkts);
-+		u64_stats_add(&s->cnt.outbytes, skb->len);
- 		u64_stats_update_end(&s->syncp);
+ struct rk_crypto_tmp rk_ahash_sha1 = {
+diff --git a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
+index 5bbf0d2722e1..8c44a19eab75 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
++++ b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
+@@ -388,8 +388,10 @@ static int rk_ablk_init_tfm(struct crypto_skcipher *tfm)
+ 	ctx->dev->update = rk_ablk_rx;
+ 	ctx->dev->complete = rk_crypto_complete;
+ 	ctx->dev->addr_vir = (char *)__get_free_page(GFP_KERNEL);
++	if (!ctx->dev->addr_vir)
++		return -ENOMEM;
  
- 		svc = rcu_dereference(dest->svc);
- 		s = this_cpu_ptr(svc->stats.cpustats);
- 		u64_stats_update_begin(&s->syncp);
--		s->cnt.outpkts++;
--		s->cnt.outbytes += skb->len;
-+		u64_stats_inc(&s->cnt.outpkts);
-+		u64_stats_add(&s->cnt.outbytes, skb->len);
- 		u64_stats_update_end(&s->syncp);
+-	return ctx->dev->addr_vir ? ctx->dev->enable_clk(ctx->dev) : -ENOMEM;
++	return 0;
+ }
  
- 		s = this_cpu_ptr(ipvs->tot_stats.cpustats);
- 		u64_stats_update_begin(&s->syncp);
--		s->cnt.outpkts++;
--		s->cnt.outbytes += skb->len;
-+		u64_stats_inc(&s->cnt.outpkts);
-+		u64_stats_add(&s->cnt.outbytes, skb->len);
- 		u64_stats_update_end(&s->syncp);
+ static void rk_ablk_exit_tfm(struct crypto_skcipher *tfm)
+@@ -397,7 +399,6 @@ static void rk_ablk_exit_tfm(struct crypto_skcipher *tfm)
+ 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
  
- 		local_bh_enable();
-@@ -200,17 +200,17 @@ ip_vs_conn_stats(struct ip_vs_conn *cp, struct ip_vs_service *svc)
+ 	free_page((unsigned long)ctx->dev->addr_vir);
+-	ctx->dev->disable_clk(ctx->dev);
+ }
  
- 	s = this_cpu_ptr(cp->dest->stats.cpustats);
- 	u64_stats_update_begin(&s->syncp);
--	s->cnt.conns++;
-+	u64_stats_inc(&s->cnt.conns);
- 	u64_stats_update_end(&s->syncp);
- 
- 	s = this_cpu_ptr(svc->stats.cpustats);
- 	u64_stats_update_begin(&s->syncp);
--	s->cnt.conns++;
-+	u64_stats_inc(&s->cnt.conns);
- 	u64_stats_update_end(&s->syncp);
- 
- 	s = this_cpu_ptr(ipvs->tot_stats.cpustats);
- 	u64_stats_update_begin(&s->syncp);
--	s->cnt.conns++;
-+	u64_stats_inc(&s->cnt.conns);
- 	u64_stats_update_end(&s->syncp);
- 
- 	local_bh_enable();
-diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
-index 988222fff9f0..03af6a2ffd56 100644
---- a/net/netfilter/ipvs/ip_vs_ctl.c
-+++ b/net/netfilter/ipvs/ip_vs_ctl.c
-@@ -2297,11 +2297,11 @@ static int ip_vs_stats_percpu_show(struct seq_file *seq, void *v)
- 
- 		do {
- 			start = u64_stats_fetch_begin_irq(&u->syncp);
--			conns = u->cnt.conns;
--			inpkts = u->cnt.inpkts;
--			outpkts = u->cnt.outpkts;
--			inbytes = u->cnt.inbytes;
--			outbytes = u->cnt.outbytes;
-+			conns = u64_stats_read(&u->cnt.conns);
-+			inpkts = u64_stats_read(&u->cnt.inpkts);
-+			outpkts = u64_stats_read(&u->cnt.outpkts);
-+			inbytes = u64_stats_read(&u->cnt.inbytes);
-+			outbytes = u64_stats_read(&u->cnt.outbytes);
- 		} while (u64_stats_fetch_retry_irq(&u->syncp, start));
- 
- 		seq_printf(seq, "%3X %8LX %8LX %8LX %16LX %16LX\n",
-diff --git a/net/netfilter/ipvs/ip_vs_est.c b/net/netfilter/ipvs/ip_vs_est.c
-index 9a1a7af6a186..f53150d82a92 100644
---- a/net/netfilter/ipvs/ip_vs_est.c
-+++ b/net/netfilter/ipvs/ip_vs_est.c
-@@ -67,11 +67,11 @@ static void ip_vs_read_cpu_stats(struct ip_vs_kstats *sum,
- 		if (add) {
- 			do {
- 				start = u64_stats_fetch_begin(&s->syncp);
--				conns = s->cnt.conns;
--				inpkts = s->cnt.inpkts;
--				outpkts = s->cnt.outpkts;
--				inbytes = s->cnt.inbytes;
--				outbytes = s->cnt.outbytes;
-+				conns = u64_stats_read(&s->cnt.conns);
-+				inpkts = u64_stats_read(&s->cnt.inpkts);
-+				outpkts = u64_stats_read(&s->cnt.outpkts);
-+				inbytes = u64_stats_read(&s->cnt.inbytes);
-+				outbytes = u64_stats_read(&s->cnt.outbytes);
- 			} while (u64_stats_fetch_retry(&s->syncp, start));
- 			sum->conns += conns;
- 			sum->inpkts += inpkts;
-@@ -82,11 +82,11 @@ static void ip_vs_read_cpu_stats(struct ip_vs_kstats *sum,
- 			add = true;
- 			do {
- 				start = u64_stats_fetch_begin(&s->syncp);
--				sum->conns = s->cnt.conns;
--				sum->inpkts = s->cnt.inpkts;
--				sum->outpkts = s->cnt.outpkts;
--				sum->inbytes = s->cnt.inbytes;
--				sum->outbytes = s->cnt.outbytes;
-+				sum->conns = u64_stats_read(&s->cnt.conns);
-+				sum->inpkts = u64_stats_read(&s->cnt.inpkts);
-+				sum->outpkts = u64_stats_read(&s->cnt.outpkts);
-+				sum->inbytes = u64_stats_read(&s->cnt.inbytes);
-+				sum->outbytes = u64_stats_read(&s->cnt.outbytes);
- 			} while (u64_stats_fetch_retry(&s->syncp, start));
- 		}
- 	}
+ struct rk_crypto_tmp rk_ecb_aes_alg = {
 -- 
 2.35.1
 
