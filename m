@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C19E51875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:01:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BE5CC433D2;
-	Wed, 28 Dec 2022 16:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BC441875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:01:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2BBEC433D2;
+	Wed, 28 Dec 2022 16:01:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243313;
-	bh=zRmOWPRb49a4R/+sFUKzNRYqucu/8Fs+8TYCMg8/Wuk=;
+	s=korg; t=1672243316;
+	bh=L1ICOmezN/HAnWLrPH2HXhwqI9K9sqtnDxq5kNpIiJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b4PGgA1RCGY0FGyMpAAoXIqu8EvAtoxvgswCLhMAeS8U4Ewc6l2q8FMAlKRGYOYIS
-	 05m2VxyYdHbvCgh8eOn+vIqZpSi1Dw9RA9O/Ocu4wX/lm9CSU+Ow1bvwf4uMjbuvuB
-	 TJvJcyxECY0gOB8DYIa8j0UcnWpUPDuRlD2QVBEQ=
+	b=wUoPNOssCkWMez5CxVPkJIz7CeCq7il/nZhjbOzko8t+3xdbNF+IhX5uhJZJFkna0
+	 3GTJ+y7MeNz3c13IAu5+hnBisErOAiAu2u5+Kp9OGe9Vvq4BgykpZ2yKiv1Z53aa1Q
+	 NVzH4Ucz00SsT4EIAcay2J23RsA98yZByDdy6Hjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Julian Anastasov <ja@ssi.bg>,
+	yunhong-cgl jiang <xintian1976@gmail.com>,
+	"dust.li" <dust.li@linux.alibaba.com>,
+	Jiri Wiesner <jwiesner@suse.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0479/1146] bpf: Add dummy type reference to nf_conn___init to fix type deduplication
-Date: Wed, 28 Dec 2022 15:33:38 +0100
-Message-Id: <20221228144343.193341417@linuxfoundation.org>
+Subject: [PATCH 6.0 0516/1073] ipvs: use u64_stats_t for the per-cpu counters
+Date: Wed, 28 Dec 2022 15:35:04 +0100
+Message-Id: <20221228144342.060076176@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,72 +38,189 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Julian Anastasov <ja@ssi.bg>
 
-[ Upstream commit 578ce69ffda49d6c1a252490553290d1f27199f0 ]
+[ Upstream commit 1dbd8d9a82e3f26b9d063292d47ece673f48fce2 ]
 
-The bpf_ct_set_nat_info() kfunc is defined in the nf_nat.ko module, and
-takes as a parameter the nf_conn___init struct, which is allocated through
-the bpf_xdp_ct_alloc() helper defined in the nf_conntrack.ko module.
-However, because kernel modules can't deduplicate BTF types between each
-other, and the nf_conn___init struct is not referenced anywhere in vmlinux
-BTF, this leads to two distinct BTF IDs for the same type (one in each
-module). This confuses the verifier, as described here:
+Use the provided u64_stats_t type to avoid
+load/store tearing.
 
-https://lore.kernel.org/all/87leoh372s.fsf@toke.dk/
-
-As a workaround, add an explicit BTF_TYPE_EMIT for the type in
-net/filter.c, so the type definition gets included in vmlinux BTF. This
-way, both modules can refer to the same type ID (as they both build on top
-of vmlinux BTF), and the verifier is no longer confused.
-
-v2:
-
-- Use BTF_TYPE_EMIT (which is a statement so it has to be inside a function
-  definition; use xdp_func_proto() for this, since this is mostly
-  xdp-related).
-
-Fixes: 820dc0523e05 ("net: netfilter: move bpf_ct_set_nat_info kfunc in nf_nat_bpf.c")
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://lore.kernel.org/r/20221201123939.696558-1-toke@redhat.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 316580b69d0a ("u64_stats: provide u64_stats_t type")
+Signed-off-by: Julian Anastasov <ja@ssi.bg>
+Cc: yunhong-cgl jiang <xintian1976@gmail.com>
+Cc: "dust.li" <dust.li@linux.alibaba.com>
+Reviewed-by: Jiri Wiesner <jwiesner@suse.de>
+Tested-by: Jiri Wiesner <jwiesner@suse.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ include/net/ip_vs.h             | 10 +++++-----
+ net/netfilter/ipvs/ip_vs_core.c | 30 +++++++++++++++---------------
+ net/netfilter/ipvs/ip_vs_ctl.c  | 10 +++++-----
+ net/netfilter/ipvs/ip_vs_est.c  | 20 ++++++++++----------
+ 4 files changed, 35 insertions(+), 35 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index b35f642d117f..9b2e18c0d299 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -80,6 +80,7 @@
- #include <net/tls.h>
- #include <net/xdp.h>
- #include <net/mptcp.h>
-+#include <net/netfilter/nf_conntrack_bpf.h>
+diff --git a/include/net/ip_vs.h b/include/net/ip_vs.h
+index ff1804a0c469..1fca6a88114a 100644
+--- a/include/net/ip_vs.h
++++ b/include/net/ip_vs.h
+@@ -351,11 +351,11 @@ struct ip_vs_seq {
  
- static const struct bpf_func_proto *
- bpf_sk_base_func_proto(enum bpf_func_id func_id);
-@@ -7988,6 +7989,19 @@ xdp_func_proto(enum bpf_func_id func_id, const struct bpf_prog *prog)
- 	default:
- 		return bpf_sk_base_func_proto(func_id);
+ /* counters per cpu */
+ struct ip_vs_counters {
+-	__u64		conns;		/* connections scheduled */
+-	__u64		inpkts;		/* incoming packets */
+-	__u64		outpkts;	/* outgoing packets */
+-	__u64		inbytes;	/* incoming bytes */
+-	__u64		outbytes;	/* outgoing bytes */
++	u64_stats_t	conns;		/* connections scheduled */
++	u64_stats_t	inpkts;		/* incoming packets */
++	u64_stats_t	outpkts;	/* outgoing packets */
++	u64_stats_t	inbytes;	/* incoming bytes */
++	u64_stats_t	outbytes;	/* outgoing bytes */
+ };
+ /* Stats per cpu */
+ struct ip_vs_cpu_stats {
+diff --git a/net/netfilter/ipvs/ip_vs_core.c b/net/netfilter/ipvs/ip_vs_core.c
+index 51ad557a525b..b5ae419661b8 100644
+--- a/net/netfilter/ipvs/ip_vs_core.c
++++ b/net/netfilter/ipvs/ip_vs_core.c
+@@ -132,21 +132,21 @@ ip_vs_in_stats(struct ip_vs_conn *cp, struct sk_buff *skb)
+ 
+ 		s = this_cpu_ptr(dest->stats.cpustats);
+ 		u64_stats_update_begin(&s->syncp);
+-		s->cnt.inpkts++;
+-		s->cnt.inbytes += skb->len;
++		u64_stats_inc(&s->cnt.inpkts);
++		u64_stats_add(&s->cnt.inbytes, skb->len);
+ 		u64_stats_update_end(&s->syncp);
+ 
+ 		svc = rcu_dereference(dest->svc);
+ 		s = this_cpu_ptr(svc->stats.cpustats);
+ 		u64_stats_update_begin(&s->syncp);
+-		s->cnt.inpkts++;
+-		s->cnt.inbytes += skb->len;
++		u64_stats_inc(&s->cnt.inpkts);
++		u64_stats_add(&s->cnt.inbytes, skb->len);
+ 		u64_stats_update_end(&s->syncp);
+ 
+ 		s = this_cpu_ptr(ipvs->tot_stats.cpustats);
+ 		u64_stats_update_begin(&s->syncp);
+-		s->cnt.inpkts++;
+-		s->cnt.inbytes += skb->len;
++		u64_stats_inc(&s->cnt.inpkts);
++		u64_stats_add(&s->cnt.inbytes, skb->len);
+ 		u64_stats_update_end(&s->syncp);
+ 
+ 		local_bh_enable();
+@@ -168,21 +168,21 @@ ip_vs_out_stats(struct ip_vs_conn *cp, struct sk_buff *skb)
+ 
+ 		s = this_cpu_ptr(dest->stats.cpustats);
+ 		u64_stats_update_begin(&s->syncp);
+-		s->cnt.outpkts++;
+-		s->cnt.outbytes += skb->len;
++		u64_stats_inc(&s->cnt.outpkts);
++		u64_stats_add(&s->cnt.outbytes, skb->len);
+ 		u64_stats_update_end(&s->syncp);
+ 
+ 		svc = rcu_dereference(dest->svc);
+ 		s = this_cpu_ptr(svc->stats.cpustats);
+ 		u64_stats_update_begin(&s->syncp);
+-		s->cnt.outpkts++;
+-		s->cnt.outbytes += skb->len;
++		u64_stats_inc(&s->cnt.outpkts);
++		u64_stats_add(&s->cnt.outbytes, skb->len);
+ 		u64_stats_update_end(&s->syncp);
+ 
+ 		s = this_cpu_ptr(ipvs->tot_stats.cpustats);
+ 		u64_stats_update_begin(&s->syncp);
+-		s->cnt.outpkts++;
+-		s->cnt.outbytes += skb->len;
++		u64_stats_inc(&s->cnt.outpkts);
++		u64_stats_add(&s->cnt.outbytes, skb->len);
+ 		u64_stats_update_end(&s->syncp);
+ 
+ 		local_bh_enable();
+@@ -200,17 +200,17 @@ ip_vs_conn_stats(struct ip_vs_conn *cp, struct ip_vs_service *svc)
+ 
+ 	s = this_cpu_ptr(cp->dest->stats.cpustats);
+ 	u64_stats_update_begin(&s->syncp);
+-	s->cnt.conns++;
++	u64_stats_inc(&s->cnt.conns);
+ 	u64_stats_update_end(&s->syncp);
+ 
+ 	s = this_cpu_ptr(svc->stats.cpustats);
+ 	u64_stats_update_begin(&s->syncp);
+-	s->cnt.conns++;
++	u64_stats_inc(&s->cnt.conns);
+ 	u64_stats_update_end(&s->syncp);
+ 
+ 	s = this_cpu_ptr(ipvs->tot_stats.cpustats);
+ 	u64_stats_update_begin(&s->syncp);
+-	s->cnt.conns++;
++	u64_stats_inc(&s->cnt.conns);
+ 	u64_stats_update_end(&s->syncp);
+ 
+ 	local_bh_enable();
+diff --git a/net/netfilter/ipvs/ip_vs_ctl.c b/net/netfilter/ipvs/ip_vs_ctl.c
+index 5a7349002508..65bda976845d 100644
+--- a/net/netfilter/ipvs/ip_vs_ctl.c
++++ b/net/netfilter/ipvs/ip_vs_ctl.c
+@@ -2297,11 +2297,11 @@ static int ip_vs_stats_percpu_show(struct seq_file *seq, void *v)
+ 
+ 		do {
+ 			start = u64_stats_fetch_begin(&u->syncp);
+-			conns = u->cnt.conns;
+-			inpkts = u->cnt.inpkts;
+-			outpkts = u->cnt.outpkts;
+-			inbytes = u->cnt.inbytes;
+-			outbytes = u->cnt.outbytes;
++			conns = u64_stats_read(&u->cnt.conns);
++			inpkts = u64_stats_read(&u->cnt.inpkts);
++			outpkts = u64_stats_read(&u->cnt.outpkts);
++			inbytes = u64_stats_read(&u->cnt.inbytes);
++			outbytes = u64_stats_read(&u->cnt.outbytes);
+ 		} while (u64_stats_fetch_retry(&u->syncp, start));
+ 
+ 		seq_printf(seq, "%3X %8LX %8LX %8LX %16LX %16LX\n",
+diff --git a/net/netfilter/ipvs/ip_vs_est.c b/net/netfilter/ipvs/ip_vs_est.c
+index 9a1a7af6a186..f53150d82a92 100644
+--- a/net/netfilter/ipvs/ip_vs_est.c
++++ b/net/netfilter/ipvs/ip_vs_est.c
+@@ -67,11 +67,11 @@ static void ip_vs_read_cpu_stats(struct ip_vs_kstats *sum,
+ 		if (add) {
+ 			do {
+ 				start = u64_stats_fetch_begin(&s->syncp);
+-				conns = s->cnt.conns;
+-				inpkts = s->cnt.inpkts;
+-				outpkts = s->cnt.outpkts;
+-				inbytes = s->cnt.inbytes;
+-				outbytes = s->cnt.outbytes;
++				conns = u64_stats_read(&s->cnt.conns);
++				inpkts = u64_stats_read(&s->cnt.inpkts);
++				outpkts = u64_stats_read(&s->cnt.outpkts);
++				inbytes = u64_stats_read(&s->cnt.inbytes);
++				outbytes = u64_stats_read(&s->cnt.outbytes);
+ 			} while (u64_stats_fetch_retry(&s->syncp, start));
+ 			sum->conns += conns;
+ 			sum->inpkts += inpkts;
+@@ -82,11 +82,11 @@ static void ip_vs_read_cpu_stats(struct ip_vs_kstats *sum,
+ 			add = true;
+ 			do {
+ 				start = u64_stats_fetch_begin(&s->syncp);
+-				sum->conns = s->cnt.conns;
+-				sum->inpkts = s->cnt.inpkts;
+-				sum->outpkts = s->cnt.outpkts;
+-				sum->inbytes = s->cnt.inbytes;
+-				sum->outbytes = s->cnt.outbytes;
++				sum->conns = u64_stats_read(&s->cnt.conns);
++				sum->inpkts = u64_stats_read(&s->cnt.inpkts);
++				sum->outpkts = u64_stats_read(&s->cnt.outpkts);
++				sum->inbytes = u64_stats_read(&s->cnt.inbytes);
++				sum->outbytes = u64_stats_read(&s->cnt.outbytes);
+ 			} while (u64_stats_fetch_retry(&s->syncp, start));
+ 		}
  	}
-+
-+#if IS_MODULE(CONFIG_NF_CONNTRACK) && IS_ENABLED(CONFIG_DEBUG_INFO_BTF_MODULES)
-+	/* The nf_conn___init type is used in the NF_CONNTRACK kfuncs. The
-+	 * kfuncs are defined in two different modules, and we want to be able
-+	 * to use them interchangably with the same BTF type ID. Because modules
-+	 * can't de-duplicate BTF IDs between each other, we need the type to be
-+	 * referenced in the vmlinux BTF or the verifier will get confused about
-+	 * the different types. So we add this dummy type reference which will
-+	 * be included in vmlinux BTF, allowing both modules to refer to the
-+	 * same type ID.
-+	 */
-+	BTF_TYPE_EMIT(struct nf_conn___init);
-+#endif
- }
- 
- const struct bpf_func_proto bpf_sock_map_update_proto __weak;
 -- 
 2.35.1
 
