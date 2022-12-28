@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 189301C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:50:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D997C433D2;
-	Wed, 28 Dec 2022 16:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BB11C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:50:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 397ECC433D2;
+	Wed, 28 Dec 2022 16:50:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246219;
-	bh=mpxhm3WwiWR1yI6Z7dfSSCK3d/XpiW+WSTrFtijRPgM=;
+	s=korg; t=1672246222;
+	bh=TS6A5ZOQGUXz9X3NHgMs6UdXwnt/OuPwzrlDqsHA4LM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cXeyCxOrQM2O0XmlQ+a9GhIHFye2SMrV0FEpwasCU9KWERREvQ5nJGK9973dM6OJi
-	 qXlRG/VOWc2cNFSijX1dAlhZiMWkdyqDrWBEo8iu0rQy6Kj70uSfeJZ3D7UU7+9Xle
-	 w9+/K82OC/MH1sXrU/EY0vh9v/FakAQYem5EIZkQ=
+	b=S5viKh2FYlRgosVAjTyn4LHvG3HPL9OipLQ7FBmGtCjadvdeRX8MO5DjwYCDRzGf+
+	 odTnGxaWYPNSUpLaqsfbMh08K6052b2VdJnJjZK0XKNVrfw4gosvyUb07N8EgT5Qiy
+	 xtnWJ1GDN/iS/W+dIJ5daPo2G/lnMRi5zlYqjRT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunfeng Yun <chunfeng.yun@mediatek.com>
-Subject: [PATCH 6.0 1033/1073] usb: xhci-mtk: fix leakage of shared hcd when fail to set wakeup irq
-Date: Wed, 28 Dec 2022 15:43:41 +0100
-Message-Id: <20221228144356.250740190@linuxfoundation.org>
+	Sami Tolvanen <samitolvanen@google.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1005/1146] drm/mediatek: Fix return type of mtk_hdmi_bridge_mode_valid()
+Date: Wed, 28 Dec 2022 15:42:24 +0100
+Message-Id: <20221228144357.669535676@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -33,31 +38,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chunfeng Yun <chunfeng.yun@mediatek.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 03a88b0bafbe3f548729d970d8366f48718c9b19 upstream.
+[ Upstream commit 890d637523eec9d730e3885532fa1228ba678880 ]
 
-Can not set the @shared_hcd to NULL before decrease the usage count
-by usb_put_hcd(), this will cause the shared hcd not released.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-Fixes: 04284eb74e0c ("usb: xhci-mtk: add support runtime PM")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Chunfeng Yun <chunfeng.yun@mediatek.com>
-Link: https://lore.kernel.org/r/20221128063337.18124-1-chunfeng.yun@mediatek.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  drivers/gpu/drm/mediatek/mtk_hdmi.c:1407:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' with an expression of type 'int (struct drm_bridge *, const struct drm_display_info *, const struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .mode_valid = mtk_hdmi_bridge_mode_valid,
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
+
+->mode_valid() in 'struct drm_bridge_funcs' expects a return type of
+'enum drm_mode_status', not 'int'. Adjust the return type of
+mtk_hdmi_bridge_mode_valid() to match the prototype's to resolve the
+warning and CFI failure.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Reported-by: Sami Tolvanen <samitolvanen@google.com>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-mtk.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/gpu/drm/mediatek/mtk_hdmi.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/host/xhci-mtk.c
-+++ b/drivers/usb/host/xhci-mtk.c
-@@ -639,7 +639,6 @@ static int xhci_mtk_probe(struct platfor
+diff --git a/drivers/gpu/drm/mediatek/mtk_hdmi.c b/drivers/gpu/drm/mediatek/mtk_hdmi.c
+index 4c80b6896dc3..6e8f99554f54 100644
+--- a/drivers/gpu/drm/mediatek/mtk_hdmi.c
++++ b/drivers/gpu/drm/mediatek/mtk_hdmi.c
+@@ -1202,9 +1202,10 @@ static enum drm_connector_status mtk_hdmi_detect(struct mtk_hdmi *hdmi)
+ 	return mtk_hdmi_update_plugged_status(hdmi);
+ }
  
- dealloc_usb3_hcd:
- 	usb_remove_hcd(xhci->shared_hcd);
--	xhci->shared_hcd = NULL;
- 
- dealloc_usb2_hcd:
- 	usb_remove_hcd(hcd);
+-static int mtk_hdmi_bridge_mode_valid(struct drm_bridge *bridge,
+-				      const struct drm_display_info *info,
+-				      const struct drm_display_mode *mode)
++static enum drm_mode_status
++mtk_hdmi_bridge_mode_valid(struct drm_bridge *bridge,
++			   const struct drm_display_info *info,
++			   const struct drm_display_mode *mode)
+ {
+ 	struct mtk_hdmi *hdmi = hdmi_ctx_from_bridge(bridge);
+ 	struct drm_bridge *next_bridge;
+-- 
+2.35.1
+
 
 
