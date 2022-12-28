@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 894761863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E50EC433D2;
-	Wed, 28 Dec 2022 15:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20C221863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E8E6C433D2;
+	Wed, 28 Dec 2022 15:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239759;
-	bh=H1OnxuiR4kMHDh2iJioH6K0B+i72KtkJhNhCb8dn/1Y=;
+	s=korg; t=1672239762;
+	bh=QKQhX1psIxlBPogiPxu1D8wYuaKcSXNfACdGTVtWaj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d9WaAWDIkJ7U23UHex5HJOTywiiHRLBv3rEqc23lJKl94Y5OjEA/hOO/xVP9AtRfB
-	 4Ior67nFNDWK9SP/MFyyufb0sHErxoOCJ8wVJCqVuhQKZGbcMpIq/Oef2ANLnlVVol
-	 5fBkuyk/iKOYNbMlol4Rv5ofthsMylFSWFLDxFEk=
+	b=IeI+XCJgYryYkpmcWQE9xj1qPAGA2jxKZeBs5YzGavAtC/z51vGWzIHw/qIJBzF7m
+	 MiMsakJkrE+G3o27MaUM8aRKXvZABRvd0klZuIyG4s3tGnuikXg+1Oc+dRstlwk3ZY
+	 DIW8JcRNVW/ElSZRbNOzIN8ejQA50ByKDTDB1szM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 267/731] wifi: cfg80211: Fix not unregister reg_pdev when load_builtin_regdb_keys() fails
-Date: Wed, 28 Dec 2022 15:36:14 +0100
-Message-Id: <20221228144304.308511917@linuxfoundation.org>
+Subject: [PATCH 6.1 0040/1146] arm64: dts: renesas: r8a779f0: Fix HSCIF "brg_int" clock
+Date: Wed, 28 Dec 2022 15:26:19 +0100
+Message-Id: <20221228144331.253240084@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,54 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 833a9fd28c9b7ccb39a334721379e992dc1c0c89 ]
+[ Upstream commit a5101ef18b4d0751588f61d939694bad183cc240 ]
 
-In regulatory_init_db(), when it's going to return a error, reg_pdev
-should be unregistered. When load_builtin_regdb_keys() fails it doesn't
-do it and makes cfg80211 can't be reload with report:
+As serial communication requires a clean clock signal, the High Speed
+Serial Communication Interfaces with FIFO (HSCIF) are clocked by a clock
+that is not affected by Spread Spectrum or Fractional Multiplication.
 
-sysfs: cannot create duplicate filename '/devices/platform/regulatory.0'
- ...
- <TASK>
- dump_stack_lvl+0x79/0x9b
- sysfs_warn_dup.cold+0x1c/0x29
- sysfs_create_dir_ns+0x22d/0x290
- kobject_add_internal+0x247/0x800
- kobject_add+0x135/0x1b0
- device_add+0x389/0x1be0
- platform_device_add+0x28f/0x790
- platform_device_register_full+0x376/0x4b0
- regulatory_init+0x9a/0x4b2 [cfg80211]
- cfg80211_init+0x84/0x113 [cfg80211]
- ...
+Hence change the clock input for the HSCIF Baud Rate Generator internal
+clock from the S0D3_PER clock to the SASYNCPERD1 clock (which has the
+same clock rate), cfr. R-Car S4-8 Hardware User's Manual rev. 0.81.
 
-Fixes: 90a53e4432b1 ("cfg80211: implement regdb signature checking")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221109090237.214127-1-chenzhongjin@huawei.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 01a787f78bfd ("arm64: dts: renesas: r8a779f0: Add HSCIF nodes")
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/20221103143440.46449-4-wsa+renesas@sang-engineering.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/reg.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/renesas/r8a779f0.dtsi | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/wireless/reg.c b/net/wireless/reg.c
-index 7b19a2087db9..d0fbe822e793 100644
---- a/net/wireless/reg.c
-+++ b/net/wireless/reg.c
-@@ -4247,8 +4247,10 @@ static int __init regulatory_init_db(void)
- 		return -EINVAL;
- 
- 	err = load_builtin_regdb_keys();
--	if (err)
-+	if (err) {
-+		platform_device_unregister(reg_pdev);
- 		return err;
-+	}
- 
- 	/* We always try to get an update for the static regdomain */
- 	err = regulatory_hint_core(cfg80211_world_regdom->alpha2);
+diff --git a/arch/arm64/boot/dts/renesas/r8a779f0.dtsi b/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
+index c2f152bcf10e..3be577dc9a93 100644
+--- a/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
++++ b/arch/arm64/boot/dts/renesas/r8a779f0.dtsi
+@@ -577,7 +577,7 @@ hscif0: serial@e6540000 {
+ 			reg = <0 0xe6540000 0 0x60>;
+ 			interrupts = <GIC_SPI 245 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&cpg CPG_MOD 514>,
+-				 <&cpg CPG_CORE R8A779F0_CLK_S0D3>,
++				 <&cpg CPG_CORE R8A779F0_CLK_SASYNCPERD1>,
+ 				 <&scif_clk>;
+ 			clock-names = "fck", "brg_int", "scif_clk";
+ 			dmas = <&dmac0 0x31>, <&dmac0 0x30>,
+@@ -594,7 +594,7 @@ hscif1: serial@e6550000 {
+ 			reg = <0 0xe6550000 0 0x60>;
+ 			interrupts = <GIC_SPI 246 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&cpg CPG_MOD 515>,
+-				 <&cpg CPG_CORE R8A779F0_CLK_S0D3>,
++				 <&cpg CPG_CORE R8A779F0_CLK_SASYNCPERD1>,
+ 				 <&scif_clk>;
+ 			clock-names = "fck", "brg_int", "scif_clk";
+ 			dmas = <&dmac0 0x33>, <&dmac0 0x32>,
+@@ -611,7 +611,7 @@ hscif2: serial@e6560000 {
+ 			reg = <0 0xe6560000 0 0x60>;
+ 			interrupts = <GIC_SPI 247 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&cpg CPG_MOD 516>,
+-				 <&cpg CPG_CORE R8A779F0_CLK_S0D3>,
++				 <&cpg CPG_CORE R8A779F0_CLK_SASYNCPERD1>,
+ 				 <&scif_clk>;
+ 			clock-names = "fck", "brg_int", "scif_clk";
+ 			dmas = <&dmac0 0x35>, <&dmac0 0x34>,
+@@ -628,7 +628,7 @@ hscif3: serial@e66a0000 {
+ 			reg = <0 0xe66a0000 0 0x60>;
+ 			interrupts = <GIC_SPI 248 IRQ_TYPE_LEVEL_HIGH>;
+ 			clocks = <&cpg CPG_MOD 517>,
+-				 <&cpg CPG_CORE R8A779F0_CLK_S0D3>,
++				 <&cpg CPG_CORE R8A779F0_CLK_SASYNCPERD1>,
+ 				 <&scif_clk>;
+ 			clock-names = "fck", "brg_int", "scif_clk";
+ 			dmas = <&dmac0 0x37>, <&dmac0 0x36>,
 -- 
 2.35.1
 
