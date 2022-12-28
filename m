@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC621C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:09:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F14E0C433D2;
-	Wed, 28 Dec 2022 16:09:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DFC71C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:09:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95662C433D2;
+	Wed, 28 Dec 2022 16:09:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243763;
-	bh=cIG+b7oz0ag4bmz9oA82CvOdSzxhBnQsHmyAQz7rd20=;
+	s=korg; t=1672243766;
+	bh=zoYsJftXnDQVKmTJq+3a7LB9uuQIqnEEmrEctpwhHWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xvcvamzD11do94OacSv5GZo7lbGQ+sWbT8snsTjaWjovrt3Fdp0vmGEqrjdtgFaai
-	 H1I72k86bnRCMv/kHafOzo8S/I9mnBb6V2NKihRtS+Jc1PIjwXfmxRCO/FXm5vWmDz
-	 IItOcZdw3Km1kvE6TQEPUzGVj+tx59OapPQ9PcYM=
+	b=N95BJKW9yCqakOcBtJdrqzlHbdJfwXilGRXJN908y049QzPrBEELKmDos1pkrBNjK
+	 82YjGniPuZFq440sdotMyZlgeljuK3VU1bOp1V7p+nnHGhxwGLSHMEcuCd2MEKfghl
+	 LTAKzm+2nPKKnpOHTf6qu7HwGsg8QT0h0kpadyjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kamal Heib <kamalheib1@gmail.com>,
-	Shiraz Saleem <shiraz.saleem@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jerry Ray <jerry.ray@microchip.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0584/1073] RDMA/irdma: Report the correct link speed
-Date: Wed, 28 Dec 2022 15:36:12 +0100
-Message-Id: <20221228144343.909532533@linuxfoundation.org>
+Subject: [PATCH 6.1 0552/1146] net: lan9303: Fix read error execution path
+Date: Wed, 28 Dec 2022 15:34:51 +0100
+Message-Id: <20221228144345.163466318@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,78 +37,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shiraz Saleem <shiraz.saleem@intel.com>
+From: Jerry Ray <jerry.ray@microchip.com>
 
-[ Upstream commit 4eace75e0853273755b878ffa9cce6de84df975a ]
+[ Upstream commit 8964916d206071b058c6351f88b1966bd58cbde0 ]
 
-The active link speed is currently hard-coded in irdma_query_port due
-to which the port rate in ibstatus does reflect the active link speed.
+This patch fixes an issue where a read failure of a port statistic counter
+will return unknown results.  While it is highly unlikely the read will
+ever fail, it is much cleaner to return a zero for the stat count.
 
-Call ib_get_eth_speed in irdma_query_port to get the active link speed.
-
-Fixes: b48c24c2d710 ("RDMA/irdma: Implement device supported verb APIs")
-Reported-by: Kamal Heib <kamalheib1@gmail.com>
-Signed-off-by: Shiraz Saleem <shiraz.saleem@intel.com>
-Link: https://lore.kernel.org/r/20221104234957.1135-1-shiraz.saleem@intel.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: a1292595e006 ("net: dsa: add new DSA switch driver for the SMSC-LAN9303")
+Signed-off-by: Jerry Ray <jerry.ray@microchip.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/20221209153502.7429-1-jerry.ray@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/verbs.c | 35 +++--------------------------
- 1 file changed, 3 insertions(+), 32 deletions(-)
+ drivers/net/dsa/lan9303-core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/irdma/verbs.c b/drivers/infiniband/hw/irdma/verbs.c
-index a22afbb25bc5..434241789f12 100644
---- a/drivers/infiniband/hw/irdma/verbs.c
-+++ b/drivers/infiniband/hw/irdma/verbs.c
-@@ -63,36 +63,6 @@ static int irdma_query_device(struct ib_device *ibdev,
- 	return 0;
- }
+diff --git a/drivers/net/dsa/lan9303-core.c b/drivers/net/dsa/lan9303-core.c
+index 80f07bd20593..2e270b479143 100644
+--- a/drivers/net/dsa/lan9303-core.c
++++ b/drivers/net/dsa/lan9303-core.c
+@@ -1005,9 +1005,11 @@ static void lan9303_get_ethtool_stats(struct dsa_switch *ds, int port,
+ 		ret = lan9303_read_switch_port(
+ 			chip, port, lan9303_mib[u].offset, &reg);
  
--/**
-- * irdma_get_eth_speed_and_width - Get IB port speed and width from netdev speed
-- * @link_speed: netdev phy link speed
-- * @active_speed: IB port speed
-- * @active_width: IB port width
-- */
--static void irdma_get_eth_speed_and_width(u32 link_speed, u16 *active_speed,
--					  u8 *active_width)
--{
--	if (link_speed <= SPEED_1000) {
--		*active_width = IB_WIDTH_1X;
--		*active_speed = IB_SPEED_SDR;
--	} else if (link_speed <= SPEED_10000) {
--		*active_width = IB_WIDTH_1X;
--		*active_speed = IB_SPEED_FDR10;
--	} else if (link_speed <= SPEED_20000) {
--		*active_width = IB_WIDTH_4X;
--		*active_speed = IB_SPEED_DDR;
--	} else if (link_speed <= SPEED_25000) {
--		*active_width = IB_WIDTH_1X;
--		*active_speed = IB_SPEED_EDR;
--	} else if (link_speed <= SPEED_40000) {
--		*active_width = IB_WIDTH_4X;
--		*active_speed = IB_SPEED_FDR10;
--	} else {
--		*active_width = IB_WIDTH_4X;
--		*active_speed = IB_SPEED_EDR;
--	}
--}
--
- /**
-  * irdma_query_port - get port attributes
-  * @ibdev: device pointer from stack
-@@ -120,8 +90,9 @@ static int irdma_query_port(struct ib_device *ibdev, u32 port,
- 		props->state = IB_PORT_DOWN;
- 		props->phys_state = IB_PORT_PHYS_STATE_DISABLED;
+-		if (ret)
++		if (ret) {
+ 			dev_warn(chip->dev, "Reading status port %d reg %u failed\n",
+ 				 port, lan9303_mib[u].offset);
++			reg = 0;
++		}
+ 		data[u] = reg;
  	}
--	irdma_get_eth_speed_and_width(SPEED_100000, &props->active_speed,
--				      &props->active_width);
-+
-+	ib_get_eth_speed(ibdev, port, &props->active_speed,
-+			 &props->active_width);
- 
- 	if (rdma_protocol_roce(ibdev, 1)) {
- 		props->gid_tbl_len = 32;
+ }
 -- 
 2.35.1
 
