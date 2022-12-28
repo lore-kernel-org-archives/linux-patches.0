@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A2AD1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 111EBC433D2;
-	Wed, 28 Dec 2022 16:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F051C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:11:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F8EFC433D2;
+	Wed, 28 Dec 2022 16:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243901;
-	bh=EIj8sJGijWRFsfgtNCgCcLWUcJjmrtfZbMz2oLgw5qE=;
+	s=korg; t=1672243904;
+	bh=cX+wMTyhYScw4iy2M8vV03P9zVumoBhGCoBlIjXFqiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l1ItS8efH9eUAAPoLTn7xEc9zdqhzHeMwW0uFuqVc021NXtKaEuhENJoIFigWRoxS
-	 iNkwelcytkj0y55/Y5tFTR6ZO0yrYiNJ8sweKXlHAoSoijO0Zsw4T8NxHTTgvJLZOk
-	 Cv4n3LtN7U5g6qO6iUSc2vlVG/hUCtOWSqF/0u2Q=
+	b=lWxg5B/ODratJ6344vsaY1oZQ0moxd7I6bLZ2J7Ey/xGGkNZCQ4EP8viOG4WW0nxx
+	 flFNDlzFUPnvY+AJ8bS36Pnc+oEdFT8uMe7yEWVTwkJ2yRzWou+HDFFa1ggK+SYm+p
+	 581eMxp+DrabzNTWYS6TH65Z1GXRC88v/LZwELiw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	John Johansen <john.johansen@canonical.com>,
+	kernel test robot <oliver.sang@intel.com>,
+	Richard Gobert <richardbgobert@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0576/1073] apparmor: Fix memleak in alloc_ns()
-Date: Wed, 28 Dec 2022 15:36:04 +0100
-Message-Id: <20221228144343.697015764@linuxfoundation.org>
+Subject: [PATCH 6.1 0544/1146] net: setsockopt: fix IPV6_UNICAST_IF option for connected sockets
+Date: Wed, 28 Dec 2022 15:34:43 +0100
+Message-Id: <20221228144344.949648745@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +37,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Richard Gobert <richardbgobert@gmail.com>
 
-[ Upstream commit e9e6fa49dbab6d84c676666f3fe7d360497fd65b ]
+[ Upstream commit 526682b458b1b56d2e0db027df535cb5cdcfde59 ]
 
-After changes in commit a1bd627b46d1 ("apparmor: share profile name on
-replacement"), the hname member of struct aa_policy is not valid slab
-object, but a subset of that, it can not be freed by kfree_sensitive(),
-use aa_policy_destroy() to fix it.
+Change the behaviour of ip6_datagram_connect to consider the interface
+set by the IPV6_UNICAST_IF socket option, similarly to udpv6_sendmsg.
 
-Fixes: a1bd627b46d1 ("apparmor: share profile name on replacement")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+This change is the IPv6 counterpart of the fix for IP_UNICAST_IF.
+The tests introduced by that patch showed that the incorrect
+behavior is present in IPv6 as well.
+This patch fixes the broken test.
+
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Link: https://lore.kernel.org/r/202210062117.c7eef1a3-oliver.sang@intel.com
+Fixes: 0e4d354762ce ("net-next: Fix IP_UNICAST_IF option behavior for connected sockets")
+
+Signed-off-by: Richard Gobert <richardbgobert@gmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/policy_ns.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/datagram.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/security/apparmor/policy_ns.c b/security/apparmor/policy_ns.c
-index 43beaad083fe..78700d94b453 100644
---- a/security/apparmor/policy_ns.c
-+++ b/security/apparmor/policy_ns.c
-@@ -134,7 +134,7 @@ static struct aa_ns *alloc_ns(const char *prefix, const char *name)
- 	return ns;
+diff --git a/net/ipv6/datagram.c b/net/ipv6/datagram.c
+index 5ecb56522f9d..ba28aeb7cade 100644
+--- a/net/ipv6/datagram.c
++++ b/net/ipv6/datagram.c
+@@ -42,24 +42,29 @@ static void ip6_datagram_flow_key_init(struct flowi6 *fl6, struct sock *sk)
+ {
+ 	struct inet_sock *inet = inet_sk(sk);
+ 	struct ipv6_pinfo *np = inet6_sk(sk);
++	int oif = sk->sk_bound_dev_if;
  
- fail_unconfined:
--	kfree_sensitive(ns->base.hname);
-+	aa_policy_destroy(&ns->base);
- fail_ns:
- 	kfree_sensitive(ns);
- 	return NULL;
+ 	memset(fl6, 0, sizeof(*fl6));
+ 	fl6->flowi6_proto = sk->sk_protocol;
+ 	fl6->daddr = sk->sk_v6_daddr;
+ 	fl6->saddr = np->saddr;
+-	fl6->flowi6_oif = sk->sk_bound_dev_if;
+ 	fl6->flowi6_mark = sk->sk_mark;
+ 	fl6->fl6_dport = inet->inet_dport;
+ 	fl6->fl6_sport = inet->inet_sport;
+ 	fl6->flowlabel = np->flow_label;
+ 	fl6->flowi6_uid = sk->sk_uid;
+ 
+-	if (!fl6->flowi6_oif)
+-		fl6->flowi6_oif = np->sticky_pktinfo.ipi6_ifindex;
++	if (!oif)
++		oif = np->sticky_pktinfo.ipi6_ifindex;
+ 
+-	if (!fl6->flowi6_oif && ipv6_addr_is_multicast(&fl6->daddr))
+-		fl6->flowi6_oif = np->mcast_oif;
++	if (!oif) {
++		if (ipv6_addr_is_multicast(&fl6->daddr))
++			oif = np->mcast_oif;
++		else
++			oif = np->ucast_oif;
++	}
+ 
++	fl6->flowi6_oif = oif;
+ 	security_sk_classify_flow(sk, flowi6_to_flowi_common(fl6));
+ }
+ 
 -- 
 2.35.1
 
