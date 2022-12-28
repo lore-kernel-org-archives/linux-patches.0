@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638D91863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:42:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD8CC433D2;
-	Wed, 28 Dec 2022 15:42:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094CE1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:42:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DF6C433EF;
+	Wed, 28 Dec 2022 15:42:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242122;
-	bh=5V9D/yePDhYw4ca0MNLRKL0nFPjL0FyosZNzrKHH7QE=;
+	s=korg; t=1672242124;
+	bh=cKC6eQzjUg6SWHCU9NHxI2+SD1ifHbmHAdZq3G8vfko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VNMjdjKrBEiMT49au5at2hOh33kDBoMmZAFJwBoBc9zcW//rNz0EJ5h1JxqPLTsXz
-	 FMmC3AKzc5tanQphV8WVUCtapogvBTvjGQ6R9m6jgPoW72yKwqEYWACLirxpVF1WCY
-	 N68c2X4Ur/xGDWNrfqO6s165fHy6nnndzvdllJFQ=
+	b=cLyCI+O6PLbeeEwJD1lDfLFHNIQHP/b8zfaScO1bvlEi1dF8NqoyquCzF94kaK1cl
+	 qh4yWyzQzldKnUa375Vr9JV0U30NwC8ue9/S5abDjyUgJnne4Zja283VXfUlodmsbB
+	 Z1dluqgJkhqQ8p7BgI+GYMFsW8DbDEtYtikj7els=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Golle <daniel@makrotopia.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Thierry Reding <thierry.reding@gmail.com>,
+	Jiri Olsa <olsajiri@gmail.com>,
+	Stanislav Fomichev <sdf@google.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 565/731] pwm: mediatek: always use bus clock for PWM on MT7622
-Date: Wed, 28 Dec 2022 15:41:12 +0100
-Message-Id: <20221228144312.937785806@linuxfoundation.org>
+Subject: [PATCH 6.0 0370/1073] selftests/bpf: Mount debugfs in setns_by_fd
+Date: Wed, 28 Dec 2022 15:32:38 +0100
+Message-Id: <20221228144338.053404059@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,44 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Golle <daniel@makrotopia.org>
+From: Stanislav Fomichev <sdf@google.com>
 
-[ Upstream commit aa3c668f2f98856af96e13f44da6ca4f26f0b98c ]
+[ Upstream commit 8ac88eece8009428e2577c345080a458e4507e2f ]
 
-According to MT7622 Reference Manual for Development Board v1.0 the PWM
-unit found in the MT7622 SoC also comes with the PWM_CK_26M_SEL register
-at offset 0x210 just like other modern MediaTek ARM64 SoCs.
-And also MT7622 sets that register to 0x00000001 on reset which is
-described as 'Select 26M fix CLK as BCLK' in the datasheet.
-Hence set has_ck_26m_sel to true also for MT7622 which results in the
-driver writing 0 to the PWM_CK_26M_SEL register which is described as
-'Select bus CLK as BCLK'.
+Jiri reports broken test_progs after recent commit 68f8e3d4b916
+("selftests/bpf: Make sure zero-len skbs aren't redirectable").
+Apparently we don't remount debugfs when we switch back networking namespace.
+Let's explicitly mount /sys/kernel/debug.
 
-Fixes: 0c0ead76235db0 ("pwm: mediatek: Always use bus clock")
-Signed-off-by: Daniel Golle <daniel@makrotopia.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/Y1iF2slvSblf6bYK@makrotopia.org
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
+0: https://lore.kernel.org/bpf/63b85917-a2ea-8e35-620c-808560910819@meta.com/T/#ma66ca9c92e99eee0a25e40f422489b26ee0171c1
+
+Fixes: a30338840fa5 ("selftests/bpf: Move open_netns() and close_netns() into network_helpers.c")
+Reported-by: Jiri Olsa <olsajiri@gmail.com>
+Signed-off-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/r/20221123200829.2226254-1-sdf@google.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pwm/pwm-mediatek.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/bpf/network_helpers.c            | 4 ++++
+ tools/testing/selftests/bpf/prog_tests/empty_skb.c       | 2 +-
+ tools/testing/selftests/bpf/prog_tests/xdp_do_redirect.c | 2 +-
+ tools/testing/selftests/bpf/prog_tests/xdp_synproxy.c    | 2 +-
+ 4 files changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pwm/pwm-mediatek.c b/drivers/pwm/pwm-mediatek.c
-index 0d4dd80e9f07..f8f9a7489129 100644
---- a/drivers/pwm/pwm-mediatek.c
-+++ b/drivers/pwm/pwm-mediatek.c
-@@ -275,7 +275,7 @@ static const struct pwm_mediatek_of_data mt2712_pwm_data = {
- static const struct pwm_mediatek_of_data mt7622_pwm_data = {
- 	.num_pwms = 6,
- 	.pwm45_fixup = false,
--	.has_ck_26m_sel = false,
-+	.has_ck_26m_sel = true,
- };
+diff --git a/tools/testing/selftests/bpf/network_helpers.c b/tools/testing/selftests/bpf/network_helpers.c
+index bec15558fd93..1f37adff7632 100644
+--- a/tools/testing/selftests/bpf/network_helpers.c
++++ b/tools/testing/selftests/bpf/network_helpers.c
+@@ -426,6 +426,10 @@ static int setns_by_fd(int nsfd)
+ 	if (!ASSERT_OK(err, "mount /sys/fs/bpf"))
+ 		return err;
  
- static const struct pwm_mediatek_of_data mt7623_pwm_data = {
++	err = mount("debugfs", "/sys/kernel/debug", "debugfs", 0, NULL);
++	if (!ASSERT_OK(err, "mount /sys/kernel/debug"))
++		return err;
++
+ 	return 0;
+ }
+ 
+diff --git a/tools/testing/selftests/bpf/prog_tests/empty_skb.c b/tools/testing/selftests/bpf/prog_tests/empty_skb.c
+index 32dd731e9070..0613f3bb8b5e 100644
+--- a/tools/testing/selftests/bpf/prog_tests/empty_skb.c
++++ b/tools/testing/selftests/bpf/prog_tests/empty_skb.c
+@@ -9,7 +9,7 @@
+ 		goto out; \
+ })
+ 
+-void test_empty_skb(void)
++void serial_test_empty_skb(void)
+ {
+ 	LIBBPF_OPTS(bpf_test_run_opts, tattr);
+ 	struct empty_skb *bpf_obj = NULL;
+diff --git a/tools/testing/selftests/bpf/prog_tests/xdp_do_redirect.c b/tools/testing/selftests/bpf/prog_tests/xdp_do_redirect.c
+index a50971c6cf4a..9ac6f6a268db 100644
+--- a/tools/testing/selftests/bpf/prog_tests/xdp_do_redirect.c
++++ b/tools/testing/selftests/bpf/prog_tests/xdp_do_redirect.c
+@@ -85,7 +85,7 @@ static void test_max_pkt_size(int fd)
+ }
+ 
+ #define NUM_PKTS 10000
+-void test_xdp_do_redirect(void)
++void serial_test_xdp_do_redirect(void)
+ {
+ 	int err, xdp_prog_fd, tc_prog_fd, ifindex_src, ifindex_dst;
+ 	char data[sizeof(pkt_udp) + sizeof(__u32)];
+diff --git a/tools/testing/selftests/bpf/prog_tests/xdp_synproxy.c b/tools/testing/selftests/bpf/prog_tests/xdp_synproxy.c
+index 874a846e298c..b49d14580e51 100644
+--- a/tools/testing/selftests/bpf/prog_tests/xdp_synproxy.c
++++ b/tools/testing/selftests/bpf/prog_tests/xdp_synproxy.c
+@@ -174,7 +174,7 @@ static void test_synproxy(bool xdp)
+ 	system("ip netns del synproxy");
+ }
+ 
+-void test_xdp_synproxy(void)
++void serial_test_xdp_synproxy(void)
+ {
+ 	if (test__start_subtest("xdp"))
+ 		test_synproxy(true);
 -- 
 2.35.1
 
