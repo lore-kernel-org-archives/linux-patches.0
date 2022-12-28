@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E7061C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C75E1C433EF;
-	Wed, 28 Dec 2022 16:24:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06D821C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7411DC433D2;
+	Wed, 28 Dec 2022 16:24:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244660;
-	bh=+6qmzlIrWMJhKoHB9YehrQ9YjJEayWtc33mGqAyxRtc=;
+	s=korg; t=1672244662;
+	bh=0wxqIuC41VHbvzGNAJLK3kvZBi15ChrR6wbomyFkiaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tHFoz8uwz4kBwgarsujmhFROLfCREKk5ezOZP62NNmVIf1WVGN2z5v1K+h7vNVcgs
-	 8/YCxIUMJkXAzN+8kUe5hod3Ev1SRaSb5zrEbN8+j+2wsJZbPzdzTHPYOc2dyKVgtT
-	 taSFPerlXSUyWsVxpnfgwvufENFBplZ+igjHvKjw=
+	b=GgjslxlJCZ9ulOFqPx0X01novNn1a8mLik2RbY8RxHo0fpCVP5FN7yrE8DQa6o1it
+	 8LAUHbVjXz5byeQ3aPNbiWXkhSpt4e7CcdekEB7a1e3sSGSf9MTXhcG/6/vdqvqkDV
+	 glB64bJvTmElvB7cIJ241GYWG8Avt+JBH44U0CWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gabriel Somlo <gsomlo@gmail.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0711/1146] serial: altera_uart: fix locking in polling mode
-Date: Wed, 28 Dec 2022 15:37:30 +0100
-Message-Id: <20221228144349.457756658@linuxfoundation.org>
+Subject: [PATCH 6.0 0750/1073] power: supply: ab8500: Fix error handling in ab8500_charger_init()
+Date: Wed, 28 Dec 2022 15:38:58 +0100
+Message-Id: <20221228144348.392706285@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,49 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gabriel Somlo <gsomlo@gmail.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 1307c5d33cce8a41dd77c2571e4df65a5b627feb ]
+[ Upstream commit c4d33381b134da188ccd1084aef21e2b8c3c422e ]
 
-Since altera_uart_interrupt() may also be called from
-a poll timer in "serving_softirq" context, use
-spin_[lock_irqsave|unlock_irqrestore] variants, which
-are appropriate for both softirq and hardware interrupt
-contexts.
+The ab8500_charger_init() returns the platform_driver_register() directly
+without checking its return value, if platform_driver_register() failed,
+all ab8500_charger_component_drivers are not unregistered.
 
-Fixes: 2f8b9c15cd88 ("altera_uart: Add support for polling mode (IRQ-less)")
-Signed-off-by: Gabriel Somlo <gsomlo@gmail.com>
-Link: https://lore.kernel.org/r/20221122200426.888349-1-gsomlo@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix by unregister ab8500_charger_component_drivers when
+platform_driver_register() failed.
+
+Fixes: 1c1f13a006ed ("power: supply: ab8500: Move to componentized binding")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/altera_uart.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/power/supply/ab8500_charger.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/tty/serial/altera_uart.c b/drivers/tty/serial/altera_uart.c
-index 82f2790de28d..1203d1e08cd6 100644
---- a/drivers/tty/serial/altera_uart.c
-+++ b/drivers/tty/serial/altera_uart.c
-@@ -278,16 +278,17 @@ static irqreturn_t altera_uart_interrupt(int irq, void *data)
- {
- 	struct uart_port *port = data;
- 	struct altera_uart *pp = container_of(port, struct altera_uart, port);
-+	unsigned long flags;
- 	unsigned int isr;
+diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
+index c19c50442761..58757a5799f8 100644
+--- a/drivers/power/supply/ab8500_charger.c
++++ b/drivers/power/supply/ab8500_charger.c
+@@ -3719,7 +3719,14 @@ static int __init ab8500_charger_init(void)
+ 	if (ret)
+ 		return ret;
  
- 	isr = altera_uart_readl(port, ALTERA_UART_STATUS_REG) & pp->imr;
- 
--	spin_lock(&port->lock);
-+	spin_lock_irqsave(&port->lock, flags);
- 	if (isr & ALTERA_UART_STATUS_RRDY_MSK)
- 		altera_uart_rx_chars(port);
- 	if (isr & ALTERA_UART_STATUS_TRDY_MSK)
- 		altera_uart_tx_chars(port);
--	spin_unlock(&port->lock);
-+	spin_unlock_irqrestore(&port->lock, flags);
- 
- 	return IRQ_RETVAL(isr);
+-	return platform_driver_register(&ab8500_charger_driver);
++	ret = platform_driver_register(&ab8500_charger_driver);
++	if (ret) {
++		platform_unregister_drivers(ab8500_charger_component_drivers,
++				ARRAY_SIZE(ab8500_charger_component_drivers));
++		return ret;
++	}
++
++	return 0;
  }
+ 
+ static void __exit ab8500_charger_exit(void)
 -- 
 2.35.1
 
