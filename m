@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2164A1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:43:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97B4DC433D2;
-	Wed, 28 Dec 2022 16:43:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B35841C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:43:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3913BC433D2;
+	Wed, 28 Dec 2022 16:43:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245835;
-	bh=3swcK/NmKUbI4gOk2irO20suKHXcAyadUszm2JI/quQ=;
+	s=korg; t=1672245838;
+	bh=X9QyHZW0/Q7y1ozPfSbuoElW40mP7FohwywJd74HR88=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ivi3aI6e2ctSdRyH1jWcix8xgVlhEFKGsYU1m0W37m1hfoVkdEhAn1AoqpG/ZKdzH
-	 l9mrLql9kleXXGfBzmt14u4SQL4mLBUWduUVIwhOlCE2MJTKC+MHCu2rbCVjGTpOT+
-	 pn7//WWGCTSCkTiKChZtwnlmNmrVQBRVfU0eFAw0=
+	b=SGEJaMrFeyTCKxupYFqIdRmA8GVtCtW4K86c85eZegjHCZqw9JyJnyMAIz719FI4j
+	 f++wClKUAUzQeSfDG7hvuDqTFYDTr45i8RjVsSCLYT9WyhVNpe1+yEOTMmCOU155GD
+	 C/yLo+TvcUethhPF2cUY8tZSLj0z8Is1Uk0gjiiM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Eggers <ceggers@arri.de>,
-	Arun Ramadoss <arun.ramadoss@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	James Hilliard <james.hilliard1@gmail.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0933/1146] net: dsa: microchip: remove IRQF_TRIGGER_FALLING in request_threaded_irq
-Date: Wed, 28 Dec 2022 15:41:12 +0100
-Message-Id: <20221228144355.635079983@linuxfoundation.org>
+Subject: [PATCH 6.0 0967/1073] selftests/bpf: Fix conflicts with built-in functions in bpf_iter_ksym
+Date: Wed, 28 Dec 2022 15:42:35 +0100
+Message-Id: <20221228144354.319168408@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,39 +36,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arun Ramadoss <arun.ramadoss@microchip.com>
+From: James Hilliard <james.hilliard1@gmail.com>
 
-[ Upstream commit 62e027fb0e5293d95e8d36655757ef4687c8795d ]
+[ Upstream commit ab0350c743d5c93fd88742f02b3dff12168ab435 ]
 
-KSZ swithes used interrupts for detecting the phy link up and down.
-During registering the interrupt handler, it used IRQF_TRIGGER_FALLING
-flag. But this flag has to be retrieved from device tree instead of hard
-coding in the driver, so removing the flag.
+Both tolower and toupper are built in c functions, we should not
+redefine them as this can result in a build error.
 
-Fixes: ff319a644829 ("net: dsa: microchip: move interrupt handling logic from lan937x to ksz_common")
-Reported-by: Christian Eggers <ceggers@arri.de>
-Signed-off-by: Arun Ramadoss <arun.ramadoss@microchip.com>
-Link: https://lore.kernel.org/r/20221213101440.24667-1-arun.ramadoss@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes the following errors:
+progs/bpf_iter_ksym.c:10:20: error: conflicting types for built-in function 'tolower'; expected 'int(int)' [-Werror=builtin-declaration-mismatch]
+   10 | static inline char tolower(char c)
+      |                    ^~~~~~~
+progs/bpf_iter_ksym.c:5:1: note: 'tolower' is declared in header '<ctype.h>'
+    4 | #include <bpf/bpf_helpers.h>
+  +++ |+#include <ctype.h>
+    5 |
+progs/bpf_iter_ksym.c:17:20: error: conflicting types for built-in function 'toupper'; expected 'int(int)' [-Werror=builtin-declaration-mismatch]
+   17 | static inline char toupper(char c)
+      |                    ^~~~~~~
+progs/bpf_iter_ksym.c:17:20: note: 'toupper' is declared in header '<ctype.h>'
+
+See background on this sort of issue:
+https://stackoverflow.com/a/20582607
+https://gcc.gnu.org/bugzilla/show_bug.cgi?id=12213
+
+(C99, 7.1.3p1) "All identifiers with external linkage in any of the
+following subclauses (including the future library directions) are
+always reserved for use as identifiers with external linkage."
+
+This is documented behavior in GCC:
+https://gcc.gnu.org/onlinedocs/gcc/Other-Builtins.html#index-std-2
+
+Signed-off-by: James Hilliard <james.hilliard1@gmail.com>
+Acked-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20221203010847.2191265-1-james.hilliard1@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/microchip/ksz_common.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ tools/testing/selftests/bpf/progs/bpf_iter_ksym.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/dsa/microchip/ksz_common.c b/drivers/net/dsa/microchip/ksz_common.c
-index d612181b3226..c68f48cd1ec0 100644
---- a/drivers/net/dsa/microchip/ksz_common.c
-+++ b/drivers/net/dsa/microchip/ksz_common.c
-@@ -1883,8 +1883,7 @@ static int ksz_irq_common_setup(struct ksz_device *dev, struct ksz_irq *kirq)
- 		irq_create_mapping(kirq->domain, n);
+diff --git a/tools/testing/selftests/bpf/progs/bpf_iter_ksym.c b/tools/testing/selftests/bpf/progs/bpf_iter_ksym.c
+index 285c008cbf9c..9ba14c37bbcc 100644
+--- a/tools/testing/selftests/bpf/progs/bpf_iter_ksym.c
++++ b/tools/testing/selftests/bpf/progs/bpf_iter_ksym.c
+@@ -7,14 +7,14 @@ char _license[] SEC("license") = "GPL";
  
- 	ret = request_threaded_irq(kirq->irq_num, NULL, ksz_irq_thread_fn,
--				   IRQF_ONESHOT | IRQF_TRIGGER_FALLING,
--				   kirq->name, kirq);
-+				   IRQF_ONESHOT, kirq->name, kirq);
- 	if (ret)
- 		goto out;
+ unsigned long last_sym_value = 0;
  
+-static inline char tolower(char c)
++static inline char to_lower(char c)
+ {
+ 	if (c >= 'A' && c <= 'Z')
+ 		c += ('a' - 'A');
+ 	return c;
+ }
+ 
+-static inline char toupper(char c)
++static inline char to_upper(char c)
+ {
+ 	if (c >= 'a' && c <= 'z')
+ 		c -= ('a' - 'A');
+@@ -54,7 +54,7 @@ int dump_ksym(struct bpf_iter__ksym *ctx)
+ 	type = iter->type;
+ 
+ 	if (iter->module_name[0]) {
+-		type = iter->exported ? toupper(type) : tolower(type);
++		type = iter->exported ? to_upper(type) : to_lower(type);
+ 		BPF_SEQ_PRINTF(seq, "0x%llx %c %s [ %s ] ",
+ 			       value, type, iter->name, iter->module_name);
+ 	} else {
 -- 
 2.35.1
 
