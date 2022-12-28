@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4C501C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:10:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F54C433EF;
-	Wed, 28 Dec 2022 16:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6951C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:10:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5478C433D2;
+	Wed, 28 Dec 2022 16:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243847;
-	bh=WECNFBqWMgfh/OaxO+PEGaV6v4ab824tu0+YC4JNa/c=;
+	s=korg; t=1672243850;
+	bh=bktM29YH+mPA5FP70SplWDHXMJ7rWJmJi2Y4vZ8tldo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PlyjQyfyI8w5LklUvtT5XV0U7MBX9GbGyW2YB+OhCz/dolaKF5il8amGRZSsWX7Ar
-	 waMPzhxaEhcgapi1QjFKCd2eGQXvhgMnkYlOr9q/iFHv9+O5s6fp58/ARnnlFDogno
-	 GuWPJfyfzc56haQy3CmX1NQyWJ6G8ANTyTZ5iW94=
+	b=cJsTahmJoToWro5Lgj62TnXrIvOeyhGCkeJqsMYY7TdYRTbRdUzmHno4INf0mvhSW
+	 r+jgOWb0Q6ZhvICdsWi2UZpwrG+WRTUWzdePGv18Ou2xJbCreLUk2A+mlDXxaqeiAG
+	 gSAz5Fg3VN32703Dtcb2UvOIsbm53Po5ARb1z17Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0598/1073] crypto: ccree - Remove debugfs when platform_driver_register failed
-Date: Wed, 28 Dec 2022 15:36:26 +0100
-Message-Id: <20221228144344.289823046@linuxfoundation.org>
+Subject: [PATCH 6.1 0566/1146] Bluetooth: RFCOMM: dont call kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:35:05 +0100
+Message-Id: <20221228144345.540321760@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,46 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 4f1c596df706c9aca662b6c214fad84047ae2a97 ]
+[ Upstream commit 0ba18967d4544955b2eff2fbc4f2a8750c4df90a ]
 
-When platform_driver_register failed, we need to remove debugfs,
-which will caused a resource leak, fix it.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with interrupts being disabled. So replace kfree_skb()
+with dev_kfree_skb_irq() under spin_lock_irqsave().
 
-Failed logs as follows:
-[   32.606488] debugfs: Directory 'ccree' with parent '/' already present!
-
-Fixes: 4c3f97276e15 ("crypto: ccree - introduce CryptoCell driver")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 81be03e026dc ("Bluetooth: RFCOMM: Replace use of memcpy_from_msg with bt_skb_sendmmsg")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccree/cc_driver.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ net/bluetooth/rfcomm/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/ccree/cc_driver.c b/drivers/crypto/ccree/cc_driver.c
-index cadead18b59e..d489c6f80892 100644
---- a/drivers/crypto/ccree/cc_driver.c
-+++ b/drivers/crypto/ccree/cc_driver.c
-@@ -651,9 +651,17 @@ static struct platform_driver ccree_driver = {
+diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
+index 7324764384b6..8d6fce9005bd 100644
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -590,7 +590,7 @@ int rfcomm_dlc_send(struct rfcomm_dlc *d, struct sk_buff *skb)
  
- static int __init ccree_init(void)
- {
-+	int rc;
-+
- 	cc_debugfs_global_init();
- 
--	return platform_driver_register(&ccree_driver);
-+	rc = platform_driver_register(&ccree_driver);
-+	if (rc) {
-+		cc_debugfs_global_fini();
-+		return rc;
-+	}
-+
-+	return 0;
- }
- module_init(ccree_init);
+ 		ret = rfcomm_dlc_send_frag(d, frag);
+ 		if (ret < 0) {
+-			kfree_skb(frag);
++			dev_kfree_skb_irq(frag);
+ 			goto unlock;
+ 		}
  
 -- 
 2.35.1
