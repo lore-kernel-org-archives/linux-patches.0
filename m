@@ -1,31 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACDE1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:49:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 430C7C433EF;
-	Wed, 28 Dec 2022 16:49:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63FB61C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:49:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B29C6C433EF;
+	Wed, 28 Dec 2022 16:49:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246145;
-	bh=P6Vv4HWUGMloQZ7EzWAIoXrADR6KamKu1l8cHYJ5V+0=;
+	s=korg; t=1672246148;
+	bh=IqGOLkZDuMkQFoWswRPL+TSHcMlupgZGnwiOJf+mk80=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HNih+pBkROXC+sOcIYpCa5RcTRKm9LinuvRdSuf3PTg8WhrpPaXfBJG8w+E+kwXor
-	 ZGotTY6SDUmyFlyf0owWIThYWBYVuqw8ZznpXH+ECHeBAZCkzqfNLOO+jBKxxbsui0
-	 WUQlB8IiWR+McgSN6ofyCHmjynH9RtUYik+OnEUg=
+	b=qtcxYEUhiEnubAdYp94lq7BPM0zysjnn7tXplKJEqShyLQ0lUDg6DZypj3YDFPhhF
+	 6bue53nQKXSsfV9n5AvLiCLqFsU3+WZIkp4UQwqSe8ihLemtq1E00vnG6yrK9giC98
+	 fGZi/bBiluYT53YypM9DcNZ/Q+0YY21K2DtKTUDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
+	Wei Wang <wvw@google.com>,
+	Midas Chien <midaschieh@google.com>,
+	Connor OBrien <connoro@google.com>,
 	Kees Cook <keescook@chromium.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Anton Vorontsov <anton@enomsg.org>,
+	Colin Cross <ccross@android.com>,
+	Tony Luck <tony.luck@intel.com>,
+	kernel test robot <lkp@intel.com>,
+	kernel-team@android.com,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0988/1146] net: ethernet: ti: Fix return type of netcp_ndo_start_xmit()
-Date: Wed, 28 Dec 2022 15:42:07 +0100
-Message-Id: <20221228144357.200202436@linuxfoundation.org>
+Subject: [PATCH 6.0 1020/1073] pstore: Make sure CONFIG_PSTORE_PMSG selects CONFIG_RT_MUTEXES
+Date: Wed, 28 Dec 2022 15:43:28 +0100
+Message-Id: <20221228144355.893262991@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,51 +43,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: John Stultz <jstultz@google.com>
 
-[ Upstream commit 63fe6ff674a96cfcfc0fa8df1051a27aa31c70b4 ]
+[ Upstream commit 2f4fec5943407318b9523f01ce1f5d668c028332 ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+In commit 76d62f24db07 ("pstore: Switch pmsg_lock to an rt_mutex
+to avoid priority inversion") I changed a lock to an rt_mutex.
 
-  drivers/net/ethernet/ti/netcp_core.c:1944:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = netcp_ndo_start_xmit,
-                                    ^~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+However, its possible that CONFIG_RT_MUTEXES is not enabled,
+which then results in a build failure, as the 0day bot detected:
+  https://lore.kernel.org/linux-mm/202212211244.TwzWZD3H-lkp@intel.com/
 
-->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-'netdev_tx_t', not 'int'. Adjust the return type of
-netcp_ndo_start_xmit() to match the prototype's to resolve the warning
-and CFI failure.
+Thus this patch changes CONFIG_PSTORE_PMSG to select
+CONFIG_RT_MUTEXES, which ensures the build will not fail.
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221102160933.1601260-1-nathan@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Wei Wang <wvw@google.com>
+Cc: Midas Chien<midaschieh@google.com>
+Cc: Connor O'Brien <connoro@google.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Anton Vorontsov <anton@enomsg.org>
+Cc: Colin Cross <ccross@android.com>
+Cc: Tony Luck <tony.luck@intel.com>
+Cc: kernel test robot <lkp@intel.com>
+Cc: kernel-team@android.com
+Fixes: 76d62f24db07 ("pstore: Switch pmsg_lock to an rt_mutex to avoid priority inversion")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: John Stultz <jstultz@google.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221221051855.15761-1-jstultz@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/netcp_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/pstore/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/ti/netcp_core.c b/drivers/net/ethernet/ti/netcp_core.c
-index aba70bef4894..9eb9eaff4dc9 100644
---- a/drivers/net/ethernet/ti/netcp_core.c
-+++ b/drivers/net/ethernet/ti/netcp_core.c
-@@ -1261,7 +1261,7 @@ static int netcp_tx_submit_skb(struct netcp_intf *netcp,
- }
- 
- /* Submit the packet */
--static int netcp_ndo_start_xmit(struct sk_buff *skb, struct net_device *ndev)
-+static netdev_tx_t netcp_ndo_start_xmit(struct sk_buff *skb, struct net_device *ndev)
- {
- 	struct netcp_intf *netcp = netdev_priv(ndev);
- 	struct netcp_stats *tx_stats = &netcp->stats;
+diff --git a/fs/pstore/Kconfig b/fs/pstore/Kconfig
+index 8adabde685f1..c49d554cc9ae 100644
+--- a/fs/pstore/Kconfig
++++ b/fs/pstore/Kconfig
+@@ -126,6 +126,7 @@ config PSTORE_CONSOLE
+ config PSTORE_PMSG
+ 	bool "Log user space messages"
+ 	depends on PSTORE
++	select RT_MUTEXES
+ 	help
+ 	  When the option is enabled, pstore will export a character
+ 	  interface /dev/pmsg0 to log user space messages. On reboot
 -- 
 2.35.1
 
