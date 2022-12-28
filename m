@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BA61863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AAD8C433D2;
-	Wed, 28 Dec 2022 15:10:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E7B31863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEB6CC433D2;
+	Wed, 28 Dec 2022 15:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240221;
-	bh=Zj9v1liHklHYKjP0Yes7cbUTORLjQ//yW9lHFa/qzgU=;
+	s=korg; t=1672240224;
+	bh=WJ9GgLXTmZgPEQtJ2/dn7GZJ5+tBSpp626XgOS4o5Kc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k9o6q8OeguqiL/4Hrk9qFup2kK+OGznHXtwPKchxQs1aXMp/GnULS+Kqu1Psg8x/H
-	 hh6jaKVsZnBxN5WG3EX4SHr2WcdEl+0z0cFHm4AWGs9wwDo9po58A8bkZdpza7nV5l
-	 YRuBCJxKv9EWBxn2IdJQ7MqhbPiFaqNDGWUAub8Q=
+	b=G42EueKT/ZYeOfSrzwif4/6sAcdyIQn6hVTCl/4a7G9bAG1meYH7cXgGcZORNAo+B
+	 aCHHtziH7SlC2pC//ZkjMXI9b1r/cgJTENqyxgb093DMd2EQFWjYkzAHAwlRuUNYoP
+	 H6na312dV5INRQTt9KXeqYAIJXFUUfXDvn1B2388=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Brown <doug@schmorgal.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0097/1146] ARM: mmp: fix timer_read delay
-Date: Wed, 28 Dec 2022 15:27:16 +0100
-Message-Id: <20221228144332.776190080@linuxfoundation.org>
+Subject: [PATCH 5.15 325/731] net: stmmac: fix possible memory leak in stmmac_dvr_probe()
+Date: Wed, 28 Dec 2022 15:37:12 +0100
+Message-Id: <20221228144305.994647646@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,57 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Doug Brown <doug@schmorgal.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit e348b4014c31041e13ff370669ba3348c4d385e3 ]
+[ Upstream commit a137f3f27f9290933fe7e40e6dc8a445781c31a2 ]
 
-timer_read() was using an empty 100-iteration loop to wait for the
-TMR_CVWR register to capture the latest timer counter value. The delay
-wasn't long enough. This resulted in CPU idle time being extremely
-underreported on PXA168 with CONFIG_NO_HZ_IDLE=y.
+The bitmap_free() should be called to free priv->af_xdp_zc_qps
+when create_singlethread_workqueue() fails, otherwise there will
+be a memory leak, so we add the err path error_wq_init to fix it.
 
-Switch to the approach used in the vendor kernel, which implements the
-capture delay by reading TMR_CVWR a few times instead.
-
-Fixes: 49cbe78637eb ("[ARM] pxa: add base support for Marvell's PXA168 processor line")
-Signed-off-by: Doug Brown <doug@schmorgal.com>
-Link: https://lore.kernel.org/r/20221204005117.53452-3-doug@schmorgal.com
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Fixes: bba2556efad6 ("net: stmmac: Enable RX via AF_XDP zero-copy")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-mmp/time.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-mmp/time.c b/arch/arm/mach-mmp/time.c
-index 41b2e8abc9e6..708816caf859 100644
---- a/arch/arm/mach-mmp/time.c
-+++ b/arch/arm/mach-mmp/time.c
-@@ -43,18 +43,21 @@
- static void __iomem *mmp_timer_base = TIMERS_VIRT_BASE;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index eba97adaf1fb..d987ca727a21 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -7046,7 +7046,7 @@ int stmmac_dvr_probe(struct device *device,
+ 	priv->wq = create_singlethread_workqueue("stmmac_wq");
+ 	if (!priv->wq) {
+ 		dev_err(priv->device, "failed to create workqueue\n");
+-		return -ENOMEM;
++		goto error_wq_init;
+ 	}
  
- /*
-- * FIXME: the timer needs some delay to stablize the counter capture
-+ * Read the timer through the CVWR register. Delay is required after requesting
-+ * a read. The CR register cannot be directly read due to metastability issues
-+ * documented in the PXA168 software manual.
-  */
- static inline uint32_t timer_read(void)
- {
--	int delay = 100;
-+	uint32_t val;
-+	int delay = 3;
+ 	INIT_WORK(&priv->service_task, stmmac_service_task);
+@@ -7273,6 +7273,7 @@ int stmmac_dvr_probe(struct device *device,
+ 	stmmac_napi_del(ndev);
+ error_hw_init:
+ 	destroy_workqueue(priv->wq);
++error_wq_init:
+ 	bitmap_free(priv->af_xdp_zc_qps);
  
- 	__raw_writel(1, mmp_timer_base + TMR_CVWR(1));
- 
- 	while (delay--)
--		cpu_relax();
-+		val = __raw_readl(mmp_timer_base + TMR_CVWR(1));
- 
--	return __raw_readl(mmp_timer_base + TMR_CVWR(1));
-+	return val;
- }
- 
- static u64 notrace mmp_read_sched_clock(void)
+ 	return ret;
 -- 
 2.35.1
 
