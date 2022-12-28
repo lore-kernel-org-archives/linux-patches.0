@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3726D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A87E9C433D2;
-	Wed, 28 Dec 2022 15:38:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7FC81863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AE47C433EF;
+	Wed, 28 Dec 2022 15:38:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241929;
-	bh=jPTkkaYuH0DswnGejV9IOCH+RcQYHlma1W2FmPDhEKY=;
+	s=korg; t=1672241931;
+	bh=N5CI8jTzBIEOejPNB8urGoQ412XHK+6YJj8C6cwehy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g/OTTqWq0tKuEwNt/lMonD4NybyoRelMi+E2P8e/ODUbnoA9n8dFZXPpleEQsDrf7
-	 ix4VAsFD46qICabKMCTVagKX8XUCQUvVXQcpFc3uo81ycbpyLVGsGAmqIzzo/8ub3V
-	 y2N/zM33/kFn+WwHIVk3P5QbEb72FTwxqZrnIp9w=
+	b=cCDK+1dbLkbCmKH2LdgXArjjaSg1Aj0nxKudhYkQ59NxJTuotjpkb1u0lvMGfsSNe
+	 lewixU7bulxvDolw5gW+/poWwd19ITGMrRDOSmAgzPKX6IxIwTx0/ahzMxQb50wCGW
+	 llIJj89xxs9OQvIhEjg/hf2SdYKs7AF9uPNPp/QY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cole Robinson <crobinso@redhat.com>,
-	Borislav Petkov <bp@suse.de>,
-	Tom Lendacky <thomas.lendacky@amd.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0306/1146] virt/sev-guest: Add a MODULE_ALIAS
-Date: Wed, 28 Dec 2022 15:30:45 +0100
-Message-Id: <20221228144338.466107745@linuxfoundation.org>
+Subject: [PATCH 6.0 0345/1073] media: platform: exynos4-is: Fix error handling in fimc_md_init()
+Date: Wed, 28 Dec 2022 15:32:13 +0100
+Message-Id: <20221228144337.377771845@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,34 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cole Robinson <crobinso@redhat.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 2874529b3513bdc90299c90f40713602da685e35 ]
+[ Upstream commit b434422c45282a0573d8123239abc41fa72665d4 ]
 
-Autoload the driver when, for example, SNP init code creates the
-corresponding platform device.
+A problem about modprobe s5p_fimc failed is triggered with the
+following log given:
 
-  [ bp: Rewrite commit message. ]
+ [  272.075275] Error: Driver 'exynos4-fimc' is already registered, aborting...
+ modprobe: ERROR: could not insert 's5p_fimc': Device or resource busy
 
-Fixes: fce96cf04430 ("virt: Add SEV-SNP guest driver")
-Signed-off-by: Cole Robinson <crobinso@redhat.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
-Link: https://lore.kernel.org/r/ff480c5e688eb0a72a4db0a29c7b1bb54c45bfd4.1667594253.git.crobinso@redhat.com
+The reason is that fimc_md_init() returns platform_driver_register()
+directly without checking its return value, if platform_driver_register()
+failed, it returns without unregister fimc_driver, resulting the
+s5p_fimc can never be installed later.
+A simple call graph is shown as below:
+
+ fimc_md_init()
+   fimc_register_driver() # register fimc_driver
+   platform_driver_register()
+     platform_driver_register()
+       driver_register()
+         bus_add_driver()
+           dev = kzalloc(...) # OOM happened
+   # return without unregister fimc_driver
+
+Fix by unregister fimc_driver when platform_driver_register() returns
+error.
+
+Fixes: d3953223b090 ("[media] s5p-fimc: Add the media device driver")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virt/coco/sev-guest/sev-guest.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/platform/samsung/exynos4-is/fimc-core.c | 2 +-
+ drivers/media/platform/samsung/exynos4-is/media-dev.c | 6 +++++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/virt/coco/sev-guest/sev-guest.c b/drivers/virt/coco/sev-guest/sev-guest.c
-index 1ea6d2e5b218..99d6062afe72 100644
---- a/drivers/virt/coco/sev-guest/sev-guest.c
-+++ b/drivers/virt/coco/sev-guest/sev-guest.c
-@@ -800,3 +800,4 @@ MODULE_AUTHOR("Brijesh Singh <brijesh.singh@amd.com>");
- MODULE_LICENSE("GPL");
- MODULE_VERSION("1.0.0");
- MODULE_DESCRIPTION("AMD SEV Guest Driver");
-+MODULE_ALIAS("platform:sev-guest");
+diff --git a/drivers/media/platform/samsung/exynos4-is/fimc-core.c b/drivers/media/platform/samsung/exynos4-is/fimc-core.c
+index 91cc8d58a663..1791100b6935 100644
+--- a/drivers/media/platform/samsung/exynos4-is/fimc-core.c
++++ b/drivers/media/platform/samsung/exynos4-is/fimc-core.c
+@@ -1173,7 +1173,7 @@ int __init fimc_register_driver(void)
+ 	return platform_driver_register(&fimc_driver);
+ }
+ 
+-void __exit fimc_unregister_driver(void)
++void fimc_unregister_driver(void)
+ {
+ 	platform_driver_unregister(&fimc_driver);
+ }
+diff --git a/drivers/media/platform/samsung/exynos4-is/media-dev.c b/drivers/media/platform/samsung/exynos4-is/media-dev.c
+index 383a1e0ab912..2f3071acb9c9 100644
+--- a/drivers/media/platform/samsung/exynos4-is/media-dev.c
++++ b/drivers/media/platform/samsung/exynos4-is/media-dev.c
+@@ -1584,7 +1584,11 @@ static int __init fimc_md_init(void)
+ 	if (ret)
+ 		return ret;
+ 
+-	return platform_driver_register(&fimc_md_driver);
++	ret = platform_driver_register(&fimc_md_driver);
++	if (ret)
++		fimc_unregister_driver();
++
++	return ret;
+ }
+ 
+ static void __exit fimc_md_exit(void)
 -- 
 2.35.1
 
