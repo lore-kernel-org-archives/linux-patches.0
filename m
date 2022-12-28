@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34F561863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD6D3C433F0;
-	Wed, 28 Dec 2022 15:23:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4701863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:23:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5267DC433F0;
+	Wed, 28 Dec 2022 15:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241037;
-	bh=sDHlsdPxoHtrjE+KOGxmKB4sLbLBuUPDjfVXfdwxAIM=;
+	s=korg; t=1672241039;
+	bh=YG6lVsrVTqRNh+4M9kK0c7vwuigfw/2hwuvyqQ5C5Wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bhhXPfVCoKuQJ80Q88L43yWjYHJ5vw1WOkHNbYFs/xGmUh35VoRGZViEBDnGFRSzq
-	 LBDTPMrcfoM6m95PxXuSYkQW2UNz2XGK8rYAwrjR4/FKr/m39AMtbBfPn/BX/g74pN
-	 Hv9rGazm3On+F/CJkJ9PfhU3fSnAcx+YX4OUms8A=
+	b=rWX6xYpoTZFS3X4O1cEQ4n6Jrz5jRQhcxFSkLxG3i0VhW+MdxVeYHuP6SsmAX/gm/
+	 gaWgIRDC2dY9gUn3PA9ArjbJKHYxuc3aiHOjq4Fvb0vFlViXoGKqds1CWZRnZj4t+Z
+	 QifBSMOy52oVPzynfsqW+cB7t6z5KtamfFe/W2M8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chengchang Tang <tangchengchang@huawei.com>,
-	Haoyue Xu <xuhaoyue1@hisilicon.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 430/731] RDMA/hns: Fix PBL page MTR find
-Date: Wed, 28 Dec 2022 15:38:57 +0100
-Message-Id: <20221228144309.029731058@linuxfoundation.org>
+Subject: [PATCH 6.1 0198/1146] wifi: mac80211: fix ifdef symbol name
+Date: Wed, 28 Dec 2022 15:28:57 +0100
+Message-Id: <20221228144335.523267711@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,39 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chengchang Tang <tangchengchang@huawei.com>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 9fb39ef2ff3e18f1740625ba04093dfbef086d2b ]
+[ Upstream commit 9d13aff91ecd3f077b432df35291c945bde585be ]
 
-Now, The address of the first two pages in the MR will be searched, which
-use to speed up the lookup of the pbl table for hardware.  An exception
-will occur when there is only one page in this MR.  This patch fix the
-number of page to search.
+This should of course be CONFIG_, not CPTCFG_, which is an
+artifact from working with backports.
 
-Fixes: 9b2cf76c9f05 ("RDMA/hns: Optimize PBL buffer allocation process")
-Link: https://lore.kernel.org/r/20221126102911.2921820-4-xuhaoyue1@hisilicon.com
-Signed-off-by: Chengchang Tang <tangchengchang@huawei.com>
-Signed-off-by: Haoyue Xu <xuhaoyue1@hisilicon.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 9dd1953846c7 ("wifi: nl80211/mac80211: clarify link ID in control port TX")
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_hw_v2.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/mac80211/tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-index 155ae202b1ec..b9557be812b7 100644
---- a/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_hw_v2.c
-@@ -3024,7 +3024,8 @@ static int set_mtpt_pbl(struct hns_roce_dev *hr_dev,
- 	int i, count;
+diff --git a/net/mac80211/tx.c b/net/mac80211/tx.c
+index 874f2a4d831d..cc10ee1ff8e9 100644
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -2973,7 +2973,7 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
  
- 	count = hns_roce_mtr_find(hr_dev, &mr->pbl_mtr, 0, pages,
--				  ARRAY_SIZE(pages), &pbl_ba);
-+				  min_t(int, ARRAY_SIZE(pages), mr->npages),
-+				  &pbl_ba);
- 	if (count < 1) {
- 		ibdev_err(ibdev, "failed to find PBL mtr, count = %d.\n",
- 			  count);
+ 		if (pre_conf_link_id != link_id &&
+ 		    link_id != IEEE80211_LINK_UNSPECIFIED) {
+-#ifdef CPTCFG_MAC80211_VERBOSE_DEBUG
++#ifdef CONFIG_MAC80211_VERBOSE_DEBUG
+ 			net_info_ratelimited("%s: dropped frame to %pM with bad link ID request (%d vs. %d)\n",
+ 					     sdata->name, hdr.addr1,
+ 					     pre_conf_link_id, link_id);
 -- 
 2.35.1
 
