@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C32F01863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:31:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4919FC433EF;
-	Wed, 28 Dec 2022 15:31:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2BC1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:31:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E88BEC433D2;
+	Wed, 28 Dec 2022 15:31:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241466;
-	bh=kcQgg9ehBOzyXNlFza6/yPpkNfY3mOMvIREc/aWgUCM=;
+	s=korg; t=1672241469;
+	bh=pflqptXIswItlr5+JwuUkH37rwc7vDGlWVLQV8q1BOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WtPly31/8986AqQVPdm5kJU26bfTuwnKz9LckEcSfhjJRBkRi6WconWhbVVQpDoYJ
-	 ejAkKKkHc+Ey3EHWhFG458wcS20OhUecG3duV0qe0n0T+NAefmV/2lU9zZsxTM23CD
-	 WDthQTzwkUe/8dKB7KUdsW7HllPVLkCngO1KZnWE=
+	b=UNz211UXI1xiOowh0g9+nqIwCL7kl7kq5wzewuH8GSPB5Y16eTKn6v7hmHYjODpDI
+	 HIXHKMH5XjPI9oPxTNv6v0eLQmJD7eKl7yTuLAHWG8S4lqtDk1KD1esYp0XxNCig/8
+	 7GM+zzUb2ZQVsEl7cdE1D5WhfwnVcIghLuLVidCE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cosmin Tanislav <cosmin.tanislav@analog.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 473/731] iio: temperature: ltc2983: make bulk write buffer DMA-safe
-Date: Wed, 28 Dec 2022 15:39:40 +0100
-Message-Id: <20221228144310.261135296@linuxfoundation.org>
+Subject: [PATCH 6.0 0287/1073] clk: qcom: gcc-ipq806x: use parent_data for the last remaining entry
+Date: Wed, 28 Dec 2022 15:31:15 +0100
+Message-Id: <20221228144335.813079812@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,59 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cosmin Tanislav <cosmin.tanislav@analog.com>
+From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-[ Upstream commit 5e0176213949724fbe9a8e4a39817edce337b8a0 ]
+[ Upstream commit 55307e522cc7a4dddc3d231ca5cb7e68e9668f66 ]
 
-regmap_bulk_write() does not guarantee implicit DMA-safety,
-even though the current implementation duplicates the given
-buffer. Do not rely on it.
+Use parent_data for the last remaining entry (pll4). This clock is
+provided by the lcc device.
 
-Fixes: f110f3188e56 ("iio: temperature: Add support for LTC2983")
-Signed-off-by: Cosmin Tanislav <cosmin.tanislav@analog.com>
-Link: https://lore.kernel.org/r/20221103130041.2153295-2-demonsingur@gmail.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: cb02866f9a74 ("clk: qcom: gcc-ipq806x: convert parent_names to parent_data")
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20220927113826.246241-3-dmitry.baryshkov@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/temperature/ltc2983.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/clk/qcom/gcc-ipq806x.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/iio/temperature/ltc2983.c b/drivers/iio/temperature/ltc2983.c
-index 8306daa77908..b2ae2d2c7eef 100644
---- a/drivers/iio/temperature/ltc2983.c
-+++ b/drivers/iio/temperature/ltc2983.c
-@@ -205,6 +205,7 @@ struct ltc2983_data {
- 	 * Holds the converted temperature
- 	 */
- 	__be32 temp ____cacheline_aligned;
-+	__be32 chan_val;
- };
- 
- struct ltc2983_sensor {
-@@ -309,19 +310,18 @@ static int __ltc2983_fault_handler(const struct ltc2983_data *st,
- 	return 0;
- }
- 
--static int __ltc2983_chan_assign_common(const struct ltc2983_data *st,
-+static int __ltc2983_chan_assign_common(struct ltc2983_data *st,
- 					const struct ltc2983_sensor *sensor,
- 					u32 chan_val)
- {
- 	u32 reg = LTC2983_CHAN_START_ADDR(sensor->chan);
--	__be32 __chan_val;
- 
- 	chan_val |= LTC2983_CHAN_TYPE(sensor->type);
- 	dev_dbg(&st->spi->dev, "Assign reg:0x%04X, val:0x%08X\n", reg,
- 		chan_val);
--	__chan_val = cpu_to_be32(chan_val);
--	return regmap_bulk_write(st->regmap, reg, &__chan_val,
--				 sizeof(__chan_val));
-+	st->chan_val = cpu_to_be32(chan_val);
-+	return regmap_bulk_write(st->regmap, reg, &st->chan_val,
-+				 sizeof(st->chan_val));
- }
- 
- static int __ltc2983_chan_custom_sensor_assign(struct ltc2983_data *st,
+diff --git a/drivers/clk/qcom/gcc-ipq806x.c b/drivers/clk/qcom/gcc-ipq806x.c
+index 718de17a1e60..6447f3e81b55 100644
+--- a/drivers/clk/qcom/gcc-ipq806x.c
++++ b/drivers/clk/qcom/gcc-ipq806x.c
+@@ -79,7 +79,9 @@ static struct clk_regmap pll4_vote = {
+ 	.enable_mask = BIT(4),
+ 	.hw.init = &(struct clk_init_data){
+ 		.name = "pll4_vote",
+-		.parent_names = (const char *[]){ "pll4" },
++		.parent_data = &(const struct clk_parent_data){
++			.fw_name = "pll4", .name = "pll4",
++		},
+ 		.num_parents = 1,
+ 		.ops = &clk_pll_vote_ops,
+ 	},
 -- 
 2.35.1
 
