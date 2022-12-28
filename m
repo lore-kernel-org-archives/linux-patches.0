@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B36E1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDE9C433D2;
-	Wed, 28 Dec 2022 16:51:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6F21C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9341C433D2;
+	Wed, 28 Dec 2022 16:51:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246301;
-	bh=L4T6co3qEhFUImBGVuk1Cgsr93LNnaOLn11IL9Q4Eqk=;
+	s=korg; t=1672246305;
+	bh=+wPILuLBCbghQ1iyYlen45uCRSTuLfYQ5KIGVelLKwk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZW6jPlPyDwySLQzVciEXLCNSuV9KOKxvou+BzwbWGJi1dUtOO57tUQNrfLS+5BQ+u
-	 gpDgzokmiu2EyTg13qbnifERTOPh7MBeWeQZ4OGh4hG8guZmcdFJY3AsQGUCGckG6A
-	 M768a2j1swfsgrssozG8/c1mMDdp+8Kk/9Yl/1AA=
+	b=k++NwVCjoeix3NGBjWdujgdlgXsRn5j/wyn3jqypR52uqdg6XyhPox5sxk7ZNlbda
+	 2ZIyWaMZ2JqDQCaFPhzuiuvyDNmv9JrA/KezrY1gkIQfcIXkTNzWkjVmBRQUT2Wnqi
+	 0nlrzt5zkB5Ri+xxOt9N3XLVrglwTZnDQuTU9QOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Mahoney <jeffm@suse.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.0 1046/1073] reiserfs: Add missing calls to reiserfs_security_free()
-Date: Wed, 28 Dec 2022 15:43:54 +0100
-Message-Id: <20221228144356.613381339@linuxfoundation.org>
+	Dillon Varone <Dillon.Varone@amd.com>,
+	Brian Chang <Brian.Chang@amd.com>,
+	Ilya Bakoulin <Ilya.Bakoulin@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1018/1146] drm/amd/display: Fix display corruption w/ VSR enable
+Date: Wed, 28 Dec 2022 15:42:37 +0100
+Message-Id: <20221228144358.016911494@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,89 +38,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Ilya Bakoulin <Ilya.Bakoulin@amd.com>
 
-commit 572302af1258459e124437b8f3369357447afac7 upstream.
+[ Upstream commit e643cd384270fd3a4b66f65f15dafc8db0607adc ]
 
-Commit 57fe60df6241 ("reiserfs: add atomic addition of selinux attributes
-during inode creation") defined reiserfs_security_free() to free the name
-and value of a security xattr allocated by the active LSM through
-security_old_inode_init_security(). However, this function is not called
-in the reiserfs code.
+[Why]
+Brief corruption is observed on hotplug/unplug with certain display
+configurations when VSR is enabled.
 
-Thus, add a call to reiserfs_security_free() whenever
-reiserfs_security_init() is called, and initialize value to NULL, to avoid
-to call kfree() on an uninitialized pointer.
+[How]
+Work around the issue by avoiding 2to1 ODM when stream plane_count is 0.
 
-Finally, remove the kfree() for the xattr name, as it is not allocated
-anymore.
-
-Fixes: 57fe60df6241 ("reiserfs: add atomic addition of selinux attributes during inode creation")
-Cc: stable@vger.kernel.org
-Cc: Jeff Mahoney <jeffm@suse.com>
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reported-by: Mimi Zohar <zohar@linux.ibm.com>
-Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Dillon Varone <Dillon.Varone@amd.com>
+Acked-by: Brian Chang <Brian.Chang@amd.com>
+Signed-off-by: Ilya Bakoulin <Ilya.Bakoulin@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/reiserfs/namei.c          |    4 ++++
- fs/reiserfs/xattr_security.c |    2 +-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/reiserfs/namei.c
-+++ b/fs/reiserfs/namei.c
-@@ -696,6 +696,7 @@ static int reiserfs_create(struct user_n
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+index d1598e3131f6..33ab6fdc3617 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
+@@ -1901,7 +1901,7 @@ int dcn32_populate_dml_pipes_from_context(
  
- out_failed:
- 	reiserfs_write_unlock(dir->i_sb);
-+	reiserfs_security_free(&security);
- 	return retval;
- }
- 
-@@ -779,6 +780,7 @@ static int reiserfs_mknod(struct user_na
- 
- out_failed:
- 	reiserfs_write_unlock(dir->i_sb);
-+	reiserfs_security_free(&security);
- 	return retval;
- }
- 
-@@ -878,6 +880,7 @@ static int reiserfs_mkdir(struct user_na
- 	retval = journal_end(&th);
- out_failed:
- 	reiserfs_write_unlock(dir->i_sb);
-+	reiserfs_security_free(&security);
- 	return retval;
- }
- 
-@@ -1194,6 +1197,7 @@ static int reiserfs_symlink(struct user_
- 	retval = journal_end(&th);
- out_failed:
- 	reiserfs_write_unlock(parent_dir->i_sb);
-+	reiserfs_security_free(&security);
- 	return retval;
- }
- 
---- a/fs/reiserfs/xattr_security.c
-+++ b/fs/reiserfs/xattr_security.c
-@@ -50,6 +50,7 @@ int reiserfs_security_init(struct inode
- 	int error;
- 
- 	sec->name = NULL;
-+	sec->value = NULL;
- 
- 	/* Don't add selinux attributes on xattrs - they'll never get used */
- 	if (IS_PRIVATE(dir))
-@@ -95,7 +96,6 @@ int reiserfs_security_write(struct reise
- 
- void reiserfs_security_free(struct reiserfs_security_handle *sec)
- {
--	kfree(sec->name);
- 	kfree(sec->value);
- 	sec->name = NULL;
- 	sec->value = NULL;
+ 		pipes[pipe_cnt].pipe.dest.odm_combine_policy = dm_odm_combine_policy_dal;
+ 		if (context->stream_count == 1 &&
+-				context->stream_status[0].plane_count <= 1 &&
++				context->stream_status[0].plane_count == 1 &&
+ 				!dc_is_hdmi_signal(res_ctx->pipe_ctx[i].stream->signal) &&
+ 				is_h_timing_divisible_by_2(res_ctx->pipe_ctx[i].stream) &&
+ 				pipe->stream->timing.pix_clk_100hz * 100 > DCN3_2_VMIN_DISPCLK_HZ &&
+-- 
+2.35.1
+
 
 
