@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8A3C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BAE1C433EF;
-	Wed, 28 Dec 2022 15:37:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF371863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:37:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5859C433D2;
+	Wed, 28 Dec 2022 15:37:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241849;
-	bh=SxhX8RRTugluLrIwxcNtKr6LnnBhcPBA0pudhYJip5c=;
+	s=korg; t=1672241852;
+	bh=QojJVyt77FT8ZU9gk/lUuJ9cIu9f+wBThYUjDEo6nDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M+tZzE4l/fXFl5eg72oQDqD1ZkLUvIOm7IW7q3kcnSITmzB2hLusZzRy5oVr/RBFp
-	 Z/5zYWlftwRcRwsus8sAHFNPAvgi1nNp7px6t+d1nuBW2sgj8szfgUsSYzjh8czr/h
-	 6xyvczaX1BTOoeECIJ5nnu4dIr52P09I4A8XmiR4=
+	b=pPzMXmXNDnUz10zxmrbracnJ/3MN+C0fcVSI4296NyOm0onrnzEr8HIdBHuNtQ6my
+	 AIHIjCIPLOW+R1UBAr0ZMT6hRCZCfLEMRhygIo2P0C5Qh+5IgCNkvm85KJgJcrpsg6
+	 o2DXmtzU+em+LED9c8jkEsGyyd22KiYr9azVZkSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0303/1073] drm: rcar-du: Drop leftovers dependencies from Kconfig
-Date: Wed, 28 Dec 2022 15:31:31 +0100
-Message-Id: <20221228144336.241661335@linuxfoundation.org>
+Subject: [PATCH 5.15 530/731] iommu/sun50i: Fix R/W permission check
+Date: Wed, 28 Dec 2022 15:40:37 +0100
+Message-Id: <20221228144311.906241144@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit 1760eb547276299ab0c6a6cd3d29469e54ade615 ]
+[ Upstream commit eac0104dc69be50bed86926d6f32e82b44f8c921 ]
 
-Commit 841281fe52a7 ("drm: rcar-du: Drop LVDS device tree backward
-compatibility") has removed device tree overlay sources used for
-backward compatibility with old bindings, but forgot to remove related
-dependencies from Kconfig. Fix it.
+Because driver has enum type permissions and iommu subsystem has bitmap
+type, we have to be careful how check for combined read and write
+permissions is done. In such case, we have to mask both permissions and
+check that both are set at the same time.
 
-Fixes: 841281fe52a7 ("drm: rcar-du: Drop LVDS device tree backward compatibility")
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Reviewed-by: Kieran Bingham <kieran.bingham+renesas@ideasonboard.com>
-Signed-off-by: Laurent Pinchart <laurent.pinchart+renesas@ideasonboard.com>
+Current code just masks both flags but doesn't check that both are set.
+In short, it always sets R/W permission, regardles if requested
+permissions were RO, WO or RW. Fix that.
+
+Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://lore.kernel.org/r/20221025165415.307591-4-jernej.skrabec@gmail.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/rcar-du/Kconfig | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/iommu/sun50i-iommu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/rcar-du/Kconfig b/drivers/gpu/drm/rcar-du/Kconfig
-index f6e6a6d5d987..b3c29ca7726e 100644
---- a/drivers/gpu/drm/rcar-du/Kconfig
-+++ b/drivers/gpu/drm/rcar-du/Kconfig
-@@ -41,8 +41,6 @@ config DRM_RCAR_LVDS
- 	depends on DRM_RCAR_USE_LVDS
- 	select DRM_KMS_HELPER
- 	select DRM_PANEL
--	select OF_FLATTREE
--	select OF_OVERLAY
+diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
+index 5b87672c689f..16bfba1faee1 100644
+--- a/drivers/iommu/sun50i-iommu.c
++++ b/drivers/iommu/sun50i-iommu.c
+@@ -271,7 +271,7 @@ static u32 sun50i_mk_pte(phys_addr_t page, int prot)
+ 	enum sun50i_iommu_aci aci;
+ 	u32 flags = 0;
  
- config DRM_RCAR_MIPI_DSI
- 	tristate "R-Car DU MIPI DSI Encoder Support"
+-	if (prot & (IOMMU_READ | IOMMU_WRITE))
++	if ((prot & (IOMMU_READ | IOMMU_WRITE)) == (IOMMU_READ | IOMMU_WRITE))
+ 		aci = SUN50I_IOMMU_ACI_RD_WR;
+ 	else if (prot & IOMMU_READ)
+ 		aci = SUN50I_IOMMU_ACI_RD;
 -- 
 2.35.1
 
