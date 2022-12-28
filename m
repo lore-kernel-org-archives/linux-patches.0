@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C0020E7
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:56:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46A8C433EF;
-	Wed, 28 Dec 2022 16:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04B820E7
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:56:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15AA2C433D2;
+	Wed, 28 Dec 2022 16:56:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246599;
-	bh=uefpNLQQG6P2rtBOBLFYAfyECZaJ2CLTwbyat+ozhDQ=;
+	s=korg; t=1672246602;
+	bh=jqMMhqC+KUWqMG/6MO7S3vc5GtA11Uto8FtPzb7BOKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tuyRIhSVT3RuyI2bze9fXBFJAnDdTHBvH+3VLAqpdXOdi41lW1mAJiJ6mkUn4YpWY
-	 uSBxGcyuMLQFR0+qjZHaepWWLV7MAa234z4wHMcqCltyMnv4o4yNZp5sthDyYOoxtM
-	 v2BNUh7AgAuy2qIux0fUxofox/5B4aouCh9O9Udk=
+	b=jT0FsQNhpKHr4KYhxxujbA04bYcaZt84UCVXxgh4ZqyKgWpL7Tip27F7bK+vjEVif
+	 fsiwjUaE5deJ+/0qo0NpETNo+tN93mtvNWKT7n6sfNpitPKe5EMUOoQhKEQzDaF6BO
+	 7dZDQu7aU1MS/OKjOaCmDpoW6JooVkmeH5GuUTEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Wang Yufen <wangyufen@huawei.com>,
+	Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1068/1146] ASoC: mediatek: mt8173-rt5650-rt5514: fix refcount leak in mt8173_rt5650_rt5514_dev_probe()
-Date: Wed, 28 Dec 2022 15:43:27 +0100
-Message-Id: <20221228144359.266437680@linuxfoundation.org>
+Subject: [PATCH 6.1 1069/1146] ASoC: audio-graph-card: fix refcount leak of cpu_ep in __graph_for_each_link()
+Date: Wed, 28 Dec 2022 15:43:28 +0100
+Message-Id: <20221228144359.289991374@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -37,52 +38,38 @@ Content-Transfer-Encoding: 8bit
 
 From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit 3327d721114c109ba0575f86f8fda3b525404054 ]
+[ Upstream commit 8ab2d12c726f0fde0692fa5d81d8019b3dcd62d0 ]
 
-The node returned by of_parse_phandle() with refcount incremented,
-of_node_put() needs be called when finish using it. So add it in the
-error path in mt8173_rt5650_rt5514_dev_probe().
+The of_get_next_child() returns a node with refcount incremented, and
+decrements the refcount of prev. So in the error path of the while loop,
+of_node_put() needs be called for cpu_ep.
 
-Fixes: 0d1d7a664288 ("ASoC: mediatek: Refine mt8173 driver and change config option")
+Fixes: fce9b90c1ab7 ("ASoC: audio-graph-card: cleanup DAI link loop method - step2")
 Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Link: https://lore.kernel.org/r/1670234664-24246-1-git-send-email-wangyufen@huawei.com
+Acked-by: Kuninori Morimoto <kuninori.morimoto.gx@renesas.com>
+Link: https://lore.kernel.org/r/1670228127-13835-1-git-send-email-wangyufen@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ sound/soc/generic/audio-graph-card.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c b/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c
-index 12f40c81b101..f803f121659d 100644
---- a/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c
-+++ b/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c
-@@ -200,14 +200,16 @@ static int mt8173_rt5650_rt5514_dev_probe(struct platform_device *pdev)
- 	if (!mt8173_rt5650_rt5514_dais[DAI_LINK_CODEC_I2S].codecs[0].of_node) {
- 		dev_err(&pdev->dev,
- 			"Property 'audio-codec' missing or invalid\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto out;
- 	}
- 	mt8173_rt5650_rt5514_dais[DAI_LINK_CODEC_I2S].codecs[1].of_node =
- 		of_parse_phandle(pdev->dev.of_node, "mediatek,audio-codec", 1);
- 	if (!mt8173_rt5650_rt5514_dais[DAI_LINK_CODEC_I2S].codecs[1].of_node) {
- 		dev_err(&pdev->dev,
- 			"Property 'audio-codec' missing or invalid\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto out;
- 	}
- 	mt8173_rt5650_rt5514_codec_conf[0].dlc.of_node =
- 		mt8173_rt5650_rt5514_dais[DAI_LINK_CODEC_I2S].codecs[1].of_node;
-@@ -216,6 +218,7 @@ static int mt8173_rt5650_rt5514_dev_probe(struct platform_device *pdev)
+diff --git a/sound/soc/generic/audio-graph-card.c b/sound/soc/generic/audio-graph-card.c
+index fe7cf972d44c..5daa824a4ffc 100644
+--- a/sound/soc/generic/audio-graph-card.c
++++ b/sound/soc/generic/audio-graph-card.c
+@@ -485,8 +485,10 @@ static int __graph_for_each_link(struct asoc_simple_priv *priv,
+ 			of_node_put(codec_ep);
+ 			of_node_put(codec_port);
  
- 	ret = devm_snd_soc_register_card(&pdev->dev, card);
+-			if (ret < 0)
++			if (ret < 0) {
++				of_node_put(cpu_ep);
+ 				return ret;
++			}
  
-+out:
- 	of_node_put(platform_node);
- 	return ret;
- }
+ 			codec_port_old = codec_port;
+ 		}
 -- 
 2.35.1
 
