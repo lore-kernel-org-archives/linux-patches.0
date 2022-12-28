@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59CC41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2AF3C433EF;
-	Wed, 28 Dec 2022 15:50:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F6371863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B982DC433D2;
+	Wed, 28 Dec 2022 15:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242622;
-	bh=uqAdmF1FaDGQ10Ckz+SV5eiJjH+tRdfj9Fty0e54Wpw=;
+	s=korg; t=1672242625;
+	bh=RzFKg73NmVg4QrdkjnmU8dVPSIa3qh7CBkbkM4yKjO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bKQgYBzMe5ajLPUWrpTPY0ZKSc4DK5BNejOo1rWCiPVfE2yjcl9Mv2h8g+BvJmEEW
-	 PSFh/tCr6ZzmslQlQgR5W0DG8Bp5xKCP076mjtjPQeVLfEtRL+JAdjM2u+BUTDpwLt
-	 2SHcYv/ldwRmoxZVWXdxTyDcFV/8ZYHy24Cl4Hbg=
+	b=iUO3nwQ8vkYjgIkftJVsbWqyy/hZzj+DRCQqIJmXtq4e5RQ6s+Z1IDSCAUMJKNMsT
+	 IJw8e73PXU6RdcZBhoWkmsiJ+BgR8varveD/2aK1o0xp1uz8Mr2fWu/NSpDPTDAxO/
+	 rki/lgSaZ2ztkKQ7IPNLzJYOu57o0u8hDwLTnuds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Paul Elder <paul.elder@ideasonboard.com>,
+	Rui Miguel Silva <rmfrfs@gmail.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 626/731] nilfs2: fix shift-out-of-bounds due to too large exponent of block size
-Date: Wed, 28 Dec 2022 15:42:13 +0100
-Message-Id: <20221228144314.673006624@linuxfoundation.org>
+Subject: [PATCH 6.1 0395/1146] media: imx: imx7-media-csi: Clear BIT_MIPI_DOUBLE_CMPNT for <16b formats
+Date: Wed, 28 Dec 2022 15:32:14 +0100
+Message-Id: <20221228144340.894146501@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,107 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 
-[ Upstream commit ebeccaaef67a4895d2496ab8d9c2fb8d89201211 ]
+[ Upstream commit cccc08a95ca57624563daafd47df5691e8c38995 ]
 
-If field s_log_block_size of superblock data is corrupted and too large,
-init_nilfs() and load_nilfs() still can trigger a shift-out-of-bounds
-warning followed by a kernel panic (if panic_on_warn is set):
+Commit 9babbbaaeb87 ("media: imx: imx7-media-csi: Use dual sampling for
+YUV 1X16") set BIT_MIPI_DOUBLE_CMPNT in the CR18 register for 16-bit YUV
+formats in imx7_csi_configure(). The CR18 register is always updated
+with read-modify-write cycles, so if a 16-bit YUV format is selected,
+the bit will stay set forever, even if the format is changed. Fix it by
+clearing the bit at the beginning of the imx7_csi_configure() function.
 
- shift exponent 38973 is too large for 32-bit type 'int'
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0xcd/0x134
-  ubsan_epilogue+0xb/0x50
-  __ubsan_handle_shift_out_of_bounds.cold.12+0x17b/0x1f5
-  init_nilfs.cold.11+0x18/0x1d [nilfs2]
-  nilfs_mount+0x9b5/0x12b0 [nilfs2]
-  ...
+While at it, swap two of the bits being cleared to match the MSB to LSB
+order. This doesn't cause any functional change.
 
-This fixes the issue by adding and using a new helper function for getting
-block size with sanity check.
-
-Link: https://lkml.kernel.org/r/20221027044306.42774-3-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 9babbbaaeb87 ("media: imx: imx7-media-csi: Use dual sampling for YUV 1X16")
+Signed-off-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Paul Elder <paul.elder@ideasonboard.com>
+Acked-by: Rui Miguel Silva <rmfrfs@gmail.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/the_nilfs.c | 42 ++++++++++++++++++++++++++++++++++++++----
- 1 file changed, 38 insertions(+), 4 deletions(-)
+ drivers/staging/media/imx/imx7-media-csi.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
-index 6a86acd35696..6aa6cef0757f 100644
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -193,6 +193,34 @@ static int nilfs_store_log_cursor(struct the_nilfs *nilfs,
- 	return ret;
- }
+diff --git a/drivers/staging/media/imx/imx7-media-csi.c b/drivers/staging/media/imx/imx7-media-csi.c
+index e5b550ccfa22..c77401f184d7 100644
+--- a/drivers/staging/media/imx/imx7-media-csi.c
++++ b/drivers/staging/media/imx/imx7-media-csi.c
+@@ -521,9 +521,9 @@ static void imx7_csi_configure(struct imx7_csi *csi)
+ 	cr18 = imx7_csi_reg_read(csi, CSI_CSICR18);
  
-+/**
-+ * nilfs_get_blocksize - get block size from raw superblock data
-+ * @sb: super block instance
-+ * @sbp: superblock raw data buffer
-+ * @blocksize: place to store block size
-+ *
-+ * nilfs_get_blocksize() calculates the block size from the block size
-+ * exponent information written in @sbp and stores it in @blocksize,
-+ * or aborts with an error message if it's too large.
-+ *
-+ * Return Value: On success, 0 is returned. If the block size is too
-+ * large, -EINVAL is returned.
-+ */
-+static int nilfs_get_blocksize(struct super_block *sb,
-+			       struct nilfs_super_block *sbp, int *blocksize)
-+{
-+	unsigned int shift_bits = le32_to_cpu(sbp->s_log_block_size);
-+
-+	if (unlikely(shift_bits >
-+		     ilog2(NILFS_MAX_BLOCK_SIZE) - BLOCK_SIZE_BITS)) {
-+		nilfs_err(sb, "too large filesystem blocksize: 2 ^ %u KiB",
-+			  shift_bits);
-+		return -EINVAL;
-+	}
-+	*blocksize = BLOCK_SIZE << shift_bits;
-+	return 0;
-+}
-+
- /**
-  * load_nilfs - load and recover the nilfs
-  * @nilfs: the_nilfs structure to be released
-@@ -246,11 +274,15 @@ int load_nilfs(struct the_nilfs *nilfs, struct super_block *sb)
- 		nilfs->ns_sbwtime = le64_to_cpu(sbp[0]->s_wtime);
+ 	cr18 &= ~(BIT_CSI_HW_ENABLE | BIT_MIPI_DATA_FORMAT_MASK |
+-		  BIT_DATA_FROM_MIPI | BIT_BASEADDR_CHG_ERR_EN |
+-		  BIT_BASEADDR_SWITCH_EN | BIT_BASEADDR_SWITCH_SEL |
+-		  BIT_DEINTERLACE_EN);
++		  BIT_DATA_FROM_MIPI | BIT_MIPI_DOUBLE_CMPNT |
++		  BIT_BASEADDR_CHG_ERR_EN | BIT_BASEADDR_SWITCH_SEL |
++		  BIT_BASEADDR_SWITCH_EN | BIT_DEINTERLACE_EN);
  
- 		/* verify consistency between two super blocks */
--		blocksize = BLOCK_SIZE << le32_to_cpu(sbp[0]->s_log_block_size);
-+		err = nilfs_get_blocksize(sb, sbp[0], &blocksize);
-+		if (err)
-+			goto scan_error;
-+
- 		if (blocksize != nilfs->ns_blocksize) {
- 			nilfs_warn(sb,
- 				   "blocksize differs between two super blocks (%d != %d)",
- 				   blocksize, nilfs->ns_blocksize);
-+			err = -EINVAL;
- 			goto scan_error;
- 		}
- 
-@@ -609,9 +641,11 @@ int init_nilfs(struct the_nilfs *nilfs, struct super_block *sb, char *data)
- 	if (err)
- 		goto failed_sbh;
- 
--	blocksize = BLOCK_SIZE << le32_to_cpu(sbp->s_log_block_size);
--	if (blocksize < NILFS_MIN_BLOCK_SIZE ||
--	    blocksize > NILFS_MAX_BLOCK_SIZE) {
-+	err = nilfs_get_blocksize(sb, sbp, &blocksize);
-+	if (err)
-+		goto failed_sbh;
-+
-+	if (blocksize < NILFS_MIN_BLOCK_SIZE) {
- 		nilfs_err(sb,
- 			  "couldn't mount because of unsupported filesystem blocksize %d",
- 			  blocksize);
+ 	if (out_pix->field == V4L2_FIELD_INTERLACED) {
+ 		cr18 |= BIT_DEINTERLACE_EN;
 -- 
 2.35.1
 
