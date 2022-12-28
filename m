@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AADE81863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:41:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F713C433D2;
-	Wed, 28 Dec 2022 15:41:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 638D91863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:42:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD8CC433D2;
+	Wed, 28 Dec 2022 15:42:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242119;
-	bh=ubWeeaA8fsgBEhF+PVzwUK5e0SKPTu5LKDQzOw58iIA=;
+	s=korg; t=1672242122;
+	bh=5V9D/yePDhYw4ca0MNLRKL0nFPjL0FyosZNzrKHH7QE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vacUoRehfOnYvPTITUhBKp7AhZqy0sbGO/t/wMtlPFtnM1yNNNiyzBpIVA1HFaRAC
-	 bbJuD54CPFf1bLP9LwI3QtwHuPrht5ZOQpcuejw5BQyH5lXHFIUkgoYiqMb8ysqM56
-	 zNO1kq2YCjNPBIFF+5mgSjHJJvww5cq/HJDD3i3g=
+	b=VNMjdjKrBEiMT49au5at2hOh33kDBoMmZAFJwBoBc9zcW//rNz0EJ5h1JxqPLTsXz
+	 FMmC3AKzc5tanQphV8WVUCtapogvBTvjGQ6R9m6jgPoW72yKwqEYWACLirxpVF1WCY
+	 N68c2X4Ur/xGDWNrfqO6s165fHy6nnndzvdllJFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Daniel Golle <daniel@makrotopia.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Thierry Reding <thierry.reding@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0331/1146] regulator: core: fix unbalanced of node refcount in regulator_dev_lookup()
-Date: Wed, 28 Dec 2022 15:31:10 +0100
-Message-Id: <20221228144339.149581889@linuxfoundation.org>
+Subject: [PATCH 5.15 565/731] pwm: mediatek: always use bus clock for PWM on MT7622
+Date: Wed, 28 Dec 2022 15:41:12 +0100
+Message-Id: <20221228144312.937785806@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,40 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit f2b41b748c19962b82709d9f23c6b2b0ce9d2f91 ]
+[ Upstream commit aa3c668f2f98856af96e13f44da6ca4f26f0b98c ]
 
-I got the the following report:
+According to MT7622 Reference Manual for Development Board v1.0 the PWM
+unit found in the MT7622 SoC also comes with the PWM_CK_26M_SEL register
+at offset 0x210 just like other modern MediaTek ARM64 SoCs.
+And also MT7622 sets that register to 0x00000001 on reset which is
+described as 'Select 26M fix CLK as BCLK' in the datasheet.
+Hence set has_ck_26m_sel to true also for MT7622 which results in the
+driver writing 0 to the PWM_CK_26M_SEL register which is described as
+'Select bus CLK as BCLK'.
 
-  OF: ERROR: memory leak, expected refcount 1 instead of 2,
-  of_node_get()/of_node_put() unbalanced - destroy cset entry:
-  attach overlay node /i2c/pmic@62/regulators/exten
-
-In of_get_regulator(), the node is returned from of_parse_phandle()
-with refcount incremented, after using it, of_node_put() need be called.
-
-Fixes: 69511a452e6d ("regulator: map consumer regulator based on device tree")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221115091508.900752-1-yangyingliang@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0c0ead76235db0 ("pwm: mediatek: Always use bus clock")
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/Y1iF2slvSblf6bYK@makrotopia.org
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Thierry Reding <thierry.reding@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/pwm/pwm-mediatek.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index e8c00a884f1f..bc4bba899aea 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -1943,6 +1943,7 @@ static struct regulator_dev *regulator_dev_lookup(struct device *dev,
- 		node = of_get_regulator(dev, supply);
- 		if (node) {
- 			r = of_find_regulator_by_node(node);
-+			of_node_put(node);
- 			if (r)
- 				return r;
+diff --git a/drivers/pwm/pwm-mediatek.c b/drivers/pwm/pwm-mediatek.c
+index 0d4dd80e9f07..f8f9a7489129 100644
+--- a/drivers/pwm/pwm-mediatek.c
++++ b/drivers/pwm/pwm-mediatek.c
+@@ -275,7 +275,7 @@ static const struct pwm_mediatek_of_data mt2712_pwm_data = {
+ static const struct pwm_mediatek_of_data mt7622_pwm_data = {
+ 	.num_pwms = 6,
+ 	.pwm45_fixup = false,
+-	.has_ck_26m_sel = false,
++	.has_ck_26m_sel = true,
+ };
  
+ static const struct pwm_mediatek_of_data mt7623_pwm_data = {
 -- 
 2.35.1
 
