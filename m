@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A7B81863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:40:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7354C433EF;
-	Wed, 28 Dec 2022 15:40:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B18511868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:40:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 245F0C433EF;
+	Wed, 28 Dec 2022 15:40:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242052;
-	bh=Hzszc/GtUqFEvoxto5YfhgAmKhqqPYvO/qwSglXLCFc=;
+	s=korg; t=1672242058;
+	bh=iipozZfwKxuvFHMN2/LylZ200fRqCNZUPm8J4aIeik0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WI6g3pgA/x7Q4159MV3Mey8e8gd0LXj0CzGxpy4tCQQMCDonTpd0ZSQuKyb4f1Aji
-	 OGK52r7HI5MC3aZUwH4p/bSnabPuHsarwGYO3vnfDFJkpEzCWXP5H/uZpehLGzCPJu
-	 bN9w2LniqGjidxNCF5SiFA+6Y8N5Pve3hEkxUz/c=
+	b=e2j7hsPcB3DJOfSbDZhObpsTxyrqp4J5AhpTndkqeLYsG1S2QgjTzqfJjIrqWWpOL
+	 0U7CFutXgmXT4oEnO/2XqJz6HYC7mhaG6QVW0DweB5yh+LI05UIAaQdJjCzBlpAN0l
+	 teKXJvQ0q4kE5UokpBrdx5i4CLT4TOralkpjm0Yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Taube <mr.bossman075@gmail.com>,
-	Giulio Benetti <giulio.benetti@benettiengineering.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Matt Redfearn <matt.redfearn@mips.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	=?UTF-8?q?Petr=20Van=C4=9Bk?= <arkamar@atlas.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0359/1073] clk: imx: imxrt1050: fix IMXRT1050_CLK_LCDIF_APB offsets
-Date: Wed, 28 Dec 2022 15:32:27 +0100
-Message-Id: <20221228144337.753555215@linuxfoundation.org>
+Subject: [PATCH 5.15 534/731] include/uapi/linux/swab: Fix potentially missing __always_inline
+Date: Wed, 28 Dec 2022 15:40:41 +0100
+Message-Id: <20221228144312.022247946@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,36 +38,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Giulio Benetti <giulio.benetti@benettiengineering.com>
+From: Matt Redfearn <matt.redfearn@mips.com>
 
-[ Upstream commit 3095c02f95e537c553e0b30948c2f6c7cbed87ee ]
+[ Upstream commit defbab270d45e32b068e7e73c3567232d745c60f ]
 
-Fix IMXRT1050_CLK_LCDIF_APB offsets.
+Commit bc27fb68aaad ("include/uapi/linux/byteorder, swab: force inlining
+of some byteswap operations") added __always_inline to swab functions
+and commit 283d75737837 ("uapi/linux/stddef.h: Provide __always_inline to
+userspace headers") added a definition of __always_inline for use in
+exported headers when the kernel's compiler.h is not available.
 
-Fixes: 7154b046d8f3 ("clk: imx: Add initial support for i.MXRT1050 clock driver")
-Cc: Jesse Taube <mr.bossman075@gmail.com>
-Signed-off-by: Giulio Benetti <giulio.benetti@benettiengineering.com>
-Reviewed-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20221117181014.851505-1-giulio.benetti@benettiengineering.com
+However, since swab.h does not include stddef.h, if the header soup does
+not indirectly include it, the definition of __always_inline is missing,
+resulting in a compilation failure, which was observed compiling the
+perf tool using exported headers containing this commit:
+
+In file included from /usr/include/linux/byteorder/little_endian.h:12:0,
+                 from /usr/include/asm/byteorder.h:14,
+                 from tools/include/uapi/linux/perf_event.h:20,
+                 from perf.h:8,
+                 from builtin-bench.c:18:
+/usr/include/linux/swab.h:160:8: error: unknown type name `__always_inline'
+ static __always_inline __u16 __swab16p(const __u16 *p)
+
+Fix this by replacing the inclusion of linux/compiler.h with
+linux/stddef.h to ensure that we pick up that definition if required,
+without relying on it's indirect inclusion. compiler.h is then included
+indirectly, via stddef.h.
+
+Fixes: 283d75737837 ("uapi/linux/stddef.h: Provide __always_inline to userspace headers")
+Signed-off-by: Matt Redfearn <matt.redfearn@mips.com>
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Petr Vaněk <arkamar@atlas.cz>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imxrt1050.c | 2 +-
+ include/uapi/linux/swab.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/clk/imx/clk-imxrt1050.c b/drivers/clk/imx/clk-imxrt1050.c
-index 9539d35588ee..26108e9f7e67 100644
---- a/drivers/clk/imx/clk-imxrt1050.c
-+++ b/drivers/clk/imx/clk-imxrt1050.c
-@@ -140,7 +140,7 @@ static int imxrt1050_clocks_probe(struct platform_device *pdev)
- 	hws[IMXRT1050_CLK_USDHC1] = imx_clk_hw_gate2("usdhc1", "usdhc1_podf", ccm_base + 0x80, 2);
- 	hws[IMXRT1050_CLK_USDHC2] = imx_clk_hw_gate2("usdhc2", "usdhc2_podf", ccm_base + 0x80, 4);
- 	hws[IMXRT1050_CLK_LPUART1] = imx_clk_hw_gate2("lpuart1", "lpuart_podf", ccm_base + 0x7c, 24);
--	hws[IMXRT1050_CLK_LCDIF_APB] = imx_clk_hw_gate2("lcdif", "lcdif_podf", ccm_base + 0x74, 10);
-+	hws[IMXRT1050_CLK_LCDIF_APB] = imx_clk_hw_gate2("lcdif", "lcdif_podf", ccm_base + 0x70, 28);
- 	hws[IMXRT1050_CLK_DMA] = imx_clk_hw_gate("dma", "ipg", ccm_base + 0x7C, 6);
- 	hws[IMXRT1050_CLK_DMA_MUX] = imx_clk_hw_gate("dmamux0", "ipg", ccm_base + 0x7C, 7);
- 	imx_check_clk_hws(hws, IMXRT1050_CLK_END);
+diff --git a/include/uapi/linux/swab.h b/include/uapi/linux/swab.h
+index 7272f85d6d6a..3736f2fe1541 100644
+--- a/include/uapi/linux/swab.h
++++ b/include/uapi/linux/swab.h
+@@ -3,7 +3,7 @@
+ #define _UAPI_LINUX_SWAB_H
+ 
+ #include <linux/types.h>
+-#include <linux/compiler.h>
++#include <linux/stddef.h>
+ #include <asm/bitsperlong.h>
+ #include <asm/swab.h>
+ 
 -- 
 2.35.1
 
