@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563DC1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:52:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B61F7C433D2;
-	Wed, 28 Dec 2022 15:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90D31875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:53:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597ABC43396;
+	Wed, 28 Dec 2022 15:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242779;
-	bh=To1zNpXD0KVKRva4FzasldUmR2gCcvIZD+yhSo2fdVQ=;
+	s=korg; t=1672242781;
+	bh=iv68qWuwZhSAhJiol+KNif9+UsN3ck260qQGw6e9kYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nj2gGWLU1WxG4mSLulnhx1M7c+0TezGX7yuwfoEl1aWZ0z9jj/kDOSopUcpgKRPOL
-	 FRIY2nVUZ+CXr181/+ijtUpRAptf5kgy3ofMXTE2CwrRpLoOIC1dxP3MItIlYp15g6
-	 GRyo3bt69TEeGB/bCh17VfsNFNSeVyYkPpF/a+fQ=
+	b=esIExnxfroij22/PrV0RFGhVbGhAdcZWeCjX1fcgPaxpmSiXXyAX0Tdqdh/EZ817b
+	 iHgmtp3+9xVnOJ5BDXlgMT3sWa6Qokz+7nJ2WAIfoQJ7MIFHUo1P/Qaboex67rB/tQ
+	 8JobGT98u/xR7SYSReK8h/cXoCFa0XqFEqxymBwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Gaurav Kohli <gauravkohli@linux.microsoft.com>,
+	Michael Kelley <mikelley@microsoft.com>,
+	Wei Liu <wei.liu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 644/731] drm/amdgpu: Fix type of second parameter in trans_msg() callback
-Date: Wed, 28 Dec 2022 15:42:31 +0100
-Message-Id: <20221228144315.176366505@linuxfoundation.org>
+Subject: [PATCH 5.15 618/731] x86/hyperv: Remove unregister syscore call from Hyper-V cleanup
+Date: Wed, 28 Dec 2022 15:42:05 +0100
+Message-Id: <20221228144314.445993345@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -37,64 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Gaurav Kohli <gauravkohli@linux.microsoft.com>
 
-[ Upstream commit f0d0f1087333714ee683cc134a95afe331d7ddd9 ]
+[ Upstream commit 32c97d980e2eef25465d453f2956a9ca68926a3c ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+Hyper-V cleanup code comes under panic path where preemption and irq
+is already disabled. So calling of unregister_syscore_ops might schedule
+out the thread even for the case where mutex lock is free.
+hyperv_cleanup
+	unregister_syscore_ops
+			mutex_lock(&syscore_ops_lock)
+				might_sleep
+Here might_sleep might schedule out this thread, where voluntary preemption
+config is on and this thread will never comes back. And also this was added
+earlier to maintain the symmetry which is not required as this can comes
+during crash shutdown path only.
 
-  drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c:412:15: error: incompatible function pointer types initializing 'void (*)(struct amdgpu_device *, u32, u32, u32, u32)' (aka 'void (*)(struct amdgpu_device *, unsigned int, unsigned int, unsigned int, unsigned int)') with an expression of type 'void (struct amdgpu_device *, enum idh_request, u32, u32, u32)' (aka 'void (struct amdgpu_device *, enum idh_request, unsigned int, unsigned int, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
-          .trans_msg = xgpu_ai_mailbox_trans_msg,
-                      ^~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+To prevent the same, removing unregister_syscore_ops function call.
 
-  drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c:435:15: error: incompatible function pointer types initializing 'void (*)(struct amdgpu_device *, u32, u32, u32, u32)' (aka 'void (*)(struct amdgpu_device *, unsigned int, unsigned int, unsigned int, unsigned int)') with an expression of type 'void (struct amdgpu_device *, enum idh_request, u32, u32, u32)' (aka 'void (struct amdgpu_device *, enum idh_request, unsigned int, unsigned int, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
-          .trans_msg = xgpu_nv_mailbox_trans_msg,
-                      ^~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
-
-The type of the second parameter in the prototype should be 'enum
-idh_request' instead of 'u32'. Update it to clear up the warnings.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reported-by: Sami Tolvanen <samitolvanen@google.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Gaurav Kohli <gauravkohli@linux.microsoft.com>
+Reviewed-by: Michael Kelley <mikelley@microsoft.com>
+Link: https://lore.kernel.org/r/1669443291-2575-1-git-send-email-gauravkohli@linux.microsoft.com
+Signed-off-by: Wei Liu <wei.liu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/hyperv/hv_init.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-index ce31d4fdee93..4af3610f4a82 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-@@ -62,6 +62,8 @@ struct amdgpu_vf_error_buffer {
- 	uint64_t data[AMDGPU_VF_ERROR_ENTRY_SIZE];
- };
+diff --git a/arch/x86/hyperv/hv_init.c b/arch/x86/hyperv/hv_init.c
+index 762f10cdfb7a..95f98af74fdc 100644
+--- a/arch/x86/hyperv/hv_init.c
++++ b/arch/x86/hyperv/hv_init.c
+@@ -469,8 +469,6 @@ void hyperv_cleanup(void)
+ {
+ 	union hv_x64_msr_hypercall_contents hypercall_msr;
  
-+enum idh_request;
-+
- /**
-  * struct amdgpu_virt_ops - amdgpu device virt operations
-  */
-@@ -71,7 +73,8 @@ struct amdgpu_virt_ops {
- 	int (*req_init_data)(struct amdgpu_device *adev);
- 	int (*reset_gpu)(struct amdgpu_device *adev);
- 	int (*wait_reset)(struct amdgpu_device *adev);
--	void (*trans_msg)(struct amdgpu_device *adev, u32 req, u32 data1, u32 data2, u32 data3);
-+	void (*trans_msg)(struct amdgpu_device *adev, enum idh_request req,
-+			  u32 data1, u32 data2, u32 data3);
- };
+-	unregister_syscore_ops(&hv_syscore_ops);
+-
+ 	/* Reset our OS id */
+ 	wrmsrl(HV_X64_MSR_GUEST_OS_ID, 0);
  
- /*
 -- 
 2.35.1
 
