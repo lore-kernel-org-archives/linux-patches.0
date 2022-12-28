@@ -1,40 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E191C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25B62C433D2;
-	Wed, 28 Dec 2022 15:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A7D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3A4C433EF;
+	Wed, 28 Dec 2022 15:35:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241740;
-	bh=A6323jvDmhC2+1qRiHJup+KmUJxHXazqxMFikHkIEk8=;
+	s=korg; t=1672241743;
+	bh=CnJIP+7HNgtRkeMvU1Jphc57d55liuHX4V8fAu37zSQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=djRqcBmNS5i+1v7MsQnwTES+KfL5oS3haO+vYImxfD6F8Q7rYeNeWsKXdONkQ2mNp
-	 MD/h/JEqn3FGHNGYKvXiAMMORqQrsE3B+jbWnGeVOuaG/L4JbTJaK9vwHro2yc1MU+
-	 3p7S1Cc28YCvctD1r6DEPzg6S0iHpOr1KaZJgxFE=
+	b=JeDU5ftSjvBzUkRFB83y9RoqBlIYMar485c9XZE1oJvXjdKWEVHEndpIyyOsM2e14
+	 Pt5EiYoiD5P8cN5aUwhEWue8XeN9NjC1EAW0pFxl+kjD85wetjqM6898ToXqXGxF4s
+	 I852l+oiEqcqrkBg8x1cnyg2LRmx8MghkvCKw0w0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajay Kaher <akaher@vmware.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Alexey Makhalov <amakhalov@vmware.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Srivatsa S. Bhat" <srivatsab@vmware.com>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
-	Vasavi Sirnapalli <vsirnapalli@vmware.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 517/731] perf symbol: correction while adjusting symbol
-Date: Wed, 28 Dec 2022 15:40:24 +0100
-Message-Id: <20221228144311.534545793@linuxfoundation.org>
+Subject: [PATCH 6.0 0322/1073] regulator: core: fix unbalanced of node refcount in regulator_dev_lookup()
+Date: Wed, 28 Dec 2022 15:31:50 +0100
+Message-Id: <20221228144336.754115108@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -45,74 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ajay Kaher <akaher@vmware.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 6f520ce17920b3cdfbd2479b3ccf27f9706219d0 ]
+[ Upstream commit f2b41b748c19962b82709d9f23c6b2b0ce9d2f91 ]
 
-perf doesn't provide proper symbol information for specially crafted
-.debug files.
+I got the the following report:
 
-Sometimes .debug file may not have similar program header as runtime
-ELF file. For example if we generate .debug file using objcopy
---only-keep-debug resulting file will not contain .text, .data and
-other runtime sections. That means corresponding program headers will
-have zero FileSiz and modified Offset.
+  OF: ERROR: memory leak, expected refcount 1 instead of 2,
+  of_node_get()/of_node_put() unbalanced - destroy cset entry:
+  attach overlay node /i2c/pmic@62/regulators/exten
 
-Example: program header of text section of libxxx.so:
+In of_get_regulator(), the node is returned from of_parse_phandle()
+with refcount incremented, after using it, of_node_put() need be called.
 
-Type           Offset             VirtAddr           PhysAddr
-               FileSiz            MemSiz              Flags  Align
-LOAD        0x00000000003d3000 0x00000000003d3000 0x00000000003d3000
-            0x000000000055ae80 0x000000000055ae80  R E    0x1000
-
-Same program header after executing:
-objcopy --only-keep-debug libxxx.so libxxx.so.debug
-
-LOAD        0x0000000000001000 0x00000000003d3000 0x00000000003d3000
-            0x0000000000000000 0x000000000055ae80  R E    0x1000
-
-Offset and FileSiz have been changed.
-
-Following formula will not provide correct value, if program header
-taken from .debug file (syms_ss):
-
-    sym.st_value -= phdr.p_vaddr - phdr.p_offset;
-
-Correct program header information is located inside runtime ELF
-file (runtime_ss).
-
-Fixes: 2d86612aacb7805f ("perf symbol: Correct address for bss symbols")
-Signed-off-by: Ajay Kaher <akaher@vmware.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Alexey Makhalov <amakhalov@vmware.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Srivatsa S. Bhat <srivatsab@vmware.com>
-Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Cc: Vasavi Sirnapalli <vsirnapalli@vmware.com>
-Link: http://lore.kernel.org/lkml/1669198696-50547-1-git-send-email-akaher@vmware.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 69511a452e6d ("regulator: map consumer regulator based on device tree")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221115091508.900752-1-yangyingliang@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-elf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/regulator/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index 6c183df191aa..fd42f768e584 100644
---- a/tools/perf/util/symbol-elf.c
-+++ b/tools/perf/util/symbol-elf.c
-@@ -1292,7 +1292,7 @@ dso__load_sym_internal(struct dso *dso, struct map *map, struct symsrc *syms_ss,
- 			   (!used_opd && syms_ss->adjust_symbols)) {
- 			GElf_Phdr phdr;
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index c0f368f1b49f..afd17b13de7c 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1925,6 +1925,7 @@ static struct regulator_dev *regulator_dev_lookup(struct device *dev,
+ 		node = of_get_regulator(dev, supply);
+ 		if (node) {
+ 			r = of_find_regulator_by_node(node);
++			of_node_put(node);
+ 			if (r)
+ 				return r;
  
--			if (elf_read_program_header(syms_ss->elf,
-+			if (elf_read_program_header(runtime_ss->elf,
- 						    (u64)sym.st_value, &phdr)) {
- 				pr_debug4("%s: failed to find program header for "
- 					   "symbol: %s st_value: %#" PRIx64 "\n",
 -- 
 2.35.1
 
