@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3A81875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13804C433EF;
-	Wed, 28 Dec 2022 15:51:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3980A1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0147C433D2;
+	Wed, 28 Dec 2022 15:51:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242710;
-	bh=9cMVz/7RUy1bBNQ+ZXNVi7CT5W2f04dwS8UO0J5cu94=;
+	s=korg; t=1672242713;
+	bh=cNy/qBhiLryIni7L98PP9GXkNFp0xRZoNh2nM6FRMT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OWWKC+cjgsMYKF6weaRHaj/E2svdWmqSAbLTaMV9OnWmlMftvLGg5Fcg1zQOkJgZW
-	 riyRGMoGd3pRvbhORnjNwz/cYCeqWcayi6kZOwAusJCViQHloBkyISlFVOZf8w3Pwq
-	 dxW9mA5+OKkUCQ9RHGQNKim5WyNMHA1kEVJwyqe8=
+	b=b4grwl0RJpqkjpF9N6WViG3V6/uX86bOsL9Te8f2ocVxC1Krm+caCDwuz1CDLKddb
+	 RnExBFvl7BKK51J2dw1+P33c+Q0AHV4IqmCtuEYujr8eSocN+RYpy/70Q+xZgFJPLy
+	 p59CE9vPTpnqsSaLUmIpq5/3KoLMz/tBmaI8U0us=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	gehao <gehao@kylinos.cn>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	Juergen Gross <jgross@suse.com>,
+	Borislav Petkov <bp@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 636/731] drm/amd/display: prevent memory leak
-Date: Wed, 28 Dec 2022 15:42:23 +0100
-Message-Id: <20221228144314.949376335@linuxfoundation.org>
+Subject: [PATCH 6.1 0405/1146] x86/boot: Skip realmode init code when running as Xen PV guest
+Date: Wed, 28 Dec 2022 15:32:24 +0100
+Message-Id: <20221228144341.166263584@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,71 +36,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: gehao <gehao@kylinos.cn>
+From: Juergen Gross <jgross@suse.com>
 
-[ Upstream commit d232afb1f3417ae8194ccf19ad3a8360e70e104e ]
+[ Upstream commit f1e525009493cbd569e7c8dd7d58157855f8658d ]
 
-In dce6(0,1,4)_create_resource_pool and dce80_create_resource_pool
-the allocated memory should be released if construct pool fails.
+When running as a Xen PV guest there is no need for setting up the
+realmode trampoline, as realmode isn't supported in this environment.
 
-Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: gehao <gehao@kylinos.cn>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Trying to setup the trampoline has been proven to be problematic in
+some cases, especially when trying to debug early boot problems with
+Xen requiring to keep the EFI boot-services memory mapped (some
+firmware variants seem to claim basically all memory below 1Mb for boot
+services).
+
+Introduce new x86_platform_ops operations for that purpose, which can
+be set to a NOP by the Xen PV specific kernel boot code.
+
+  [ bp: s/call_init_real_mode/do_init_real_mode/ ]
+
+Fixes: 084ee1c641a0 ("x86, realmode: Relocator for realmode code")
+Suggested-by: H. Peter Anvin <hpa@zytor.com>
+Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Link: https://lore.kernel.org/r/20221123114523.3467-1-jgross@suse.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c | 3 +++
- drivers/gpu/drm/amd/display/dc/dce80/dce80_resource.c | 2 ++
- 2 files changed, 5 insertions(+)
+ arch/x86/include/asm/realmode.h | 1 +
+ arch/x86/include/asm/x86_init.h | 4 ++++
+ arch/x86/kernel/setup.c         | 2 +-
+ arch/x86/kernel/x86_init.c      | 3 +++
+ arch/x86/realmode/init.c        | 8 ++++++--
+ arch/x86/xen/enlighten_pv.c     | 2 ++
+ 6 files changed, 17 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c b/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
-index dcfa0a3efa00..bf72d3f60d7f 100644
---- a/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce60/dce60_resource.c
-@@ -1127,6 +1127,7 @@ struct resource_pool *dce60_create_resource_pool(
- 	if (dce60_construct(num_virtual_links, dc, pool))
- 		return &pool->base;
+diff --git a/arch/x86/include/asm/realmode.h b/arch/x86/include/asm/realmode.h
+index fd6f6e5b755a..a336feef0af1 100644
+--- a/arch/x86/include/asm/realmode.h
++++ b/arch/x86/include/asm/realmode.h
+@@ -91,6 +91,7 @@ static inline void set_real_mode_mem(phys_addr_t mem)
  
-+	kfree(pool);
- 	BREAK_TO_DEBUGGER();
- 	return NULL;
- }
-@@ -1324,6 +1325,7 @@ struct resource_pool *dce61_create_resource_pool(
- 	if (dce61_construct(num_virtual_links, dc, pool))
- 		return &pool->base;
+ void reserve_real_mode(void);
+ void load_trampoline_pgtable(void);
++void init_real_mode(void);
  
-+	kfree(pool);
- 	BREAK_TO_DEBUGGER();
- 	return NULL;
- }
-@@ -1517,6 +1519,7 @@ struct resource_pool *dce64_create_resource_pool(
- 	if (dce64_construct(num_virtual_links, dc, pool))
- 		return &pool->base;
+ #endif /* __ASSEMBLY__ */
  
-+	kfree(pool);
- 	BREAK_TO_DEBUGGER();
- 	return NULL;
- }
-diff --git a/drivers/gpu/drm/amd/display/dc/dce80/dce80_resource.c b/drivers/gpu/drm/amd/display/dc/dce80/dce80_resource.c
-index 725d92e40cd3..52d1f9746e8c 100644
---- a/drivers/gpu/drm/amd/display/dc/dce80/dce80_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dce80/dce80_resource.c
-@@ -1138,6 +1138,7 @@ struct resource_pool *dce80_create_resource_pool(
- 	if (dce80_construct(num_virtual_links, dc, pool))
- 		return &pool->base;
+diff --git a/arch/x86/include/asm/x86_init.h b/arch/x86/include/asm/x86_init.h
+index e9170457697e..c1c8c581759d 100644
+--- a/arch/x86/include/asm/x86_init.h
++++ b/arch/x86/include/asm/x86_init.h
+@@ -285,6 +285,8 @@ struct x86_hyper_runtime {
+  * 				possible in x86_early_init_platform_quirks() by
+  * 				only using the current x86_hardware_subarch
+  * 				semantics.
++ * @realmode_reserve:		reserve memory for realmode trampoline
++ * @realmode_init:		initialize realmode trampoline
+  * @hyper:			x86 hypervisor specific runtime callbacks
+  */
+ struct x86_platform_ops {
+@@ -301,6 +303,8 @@ struct x86_platform_ops {
+ 	void (*apic_post_init)(void);
+ 	struct x86_legacy_features legacy;
+ 	void (*set_legacy_features)(void);
++	void (*realmode_reserve)(void);
++	void (*realmode_init)(void);
+ 	struct x86_hyper_runtime hyper;
+ 	struct x86_guest guest;
+ };
+diff --git a/arch/x86/kernel/setup.c b/arch/x86/kernel/setup.c
+index 216fee7144ee..892609cde4a2 100644
+--- a/arch/x86/kernel/setup.c
++++ b/arch/x86/kernel/setup.c
+@@ -1175,7 +1175,7 @@ void __init setup_arch(char **cmdline_p)
+ 	 * Moreover, on machines with SandyBridge graphics or in setups that use
+ 	 * crashkernel the entire 1M is reserved anyway.
+ 	 */
+-	reserve_real_mode();
++	x86_platform.realmode_reserve();
  
-+	kfree(pool);
- 	BREAK_TO_DEBUGGER();
- 	return NULL;
- }
-@@ -1337,6 +1338,7 @@ struct resource_pool *dce81_create_resource_pool(
- 	if (dce81_construct(num_virtual_links, dc, pool))
- 		return &pool->base;
+ 	init_mem_mapping();
  
-+	kfree(pool);
- 	BREAK_TO_DEBUGGER();
- 	return NULL;
+diff --git a/arch/x86/kernel/x86_init.c b/arch/x86/kernel/x86_init.c
+index 57353519bc11..ef80d361b463 100644
+--- a/arch/x86/kernel/x86_init.c
++++ b/arch/x86/kernel/x86_init.c
+@@ -25,6 +25,7 @@
+ #include <asm/iommu.h>
+ #include <asm/mach_traps.h>
+ #include <asm/irqdomain.h>
++#include <asm/realmode.h>
+ 
+ void x86_init_noop(void) { }
+ void __init x86_init_uint_noop(unsigned int unused) { }
+@@ -145,6 +146,8 @@ struct x86_platform_ops x86_platform __ro_after_init = {
+ 	.get_nmi_reason			= default_get_nmi_reason,
+ 	.save_sched_clock_state		= tsc_save_sched_clock_state,
+ 	.restore_sched_clock_state	= tsc_restore_sched_clock_state,
++	.realmode_reserve		= reserve_real_mode,
++	.realmode_init			= init_real_mode,
+ 	.hyper.pin_vcpu			= x86_op_int_noop,
+ 
+ 	.guest = {
+diff --git a/arch/x86/realmode/init.c b/arch/x86/realmode/init.c
+index 41d7669a97ad..af565816d2ba 100644
+--- a/arch/x86/realmode/init.c
++++ b/arch/x86/realmode/init.c
+@@ -200,14 +200,18 @@ static void __init set_real_mode_permissions(void)
+ 	set_memory_x((unsigned long) text_start, text_size >> PAGE_SHIFT);
  }
+ 
+-static int __init init_real_mode(void)
++void __init init_real_mode(void)
+ {
+ 	if (!real_mode_header)
+ 		panic("Real mode trampoline was not allocated");
+ 
+ 	setup_real_mode();
+ 	set_real_mode_permissions();
++}
+ 
++static int __init do_init_real_mode(void)
++{
++	x86_platform.realmode_init();
+ 	return 0;
+ }
+-early_initcall(init_real_mode);
++early_initcall(do_init_real_mode);
+diff --git a/arch/x86/xen/enlighten_pv.c b/arch/x86/xen/enlighten_pv.c
+index 038da45f057a..8944726255c9 100644
+--- a/arch/x86/xen/enlighten_pv.c
++++ b/arch/x86/xen/enlighten_pv.c
+@@ -1266,6 +1266,8 @@ asmlinkage __visible void __init xen_start_kernel(struct start_info *si)
+ 	xen_vcpu_info_reset(0);
+ 
+ 	x86_platform.get_nmi_reason = xen_get_nmi_reason;
++	x86_platform.realmode_reserve = x86_init_noop;
++	x86_platform.realmode_init = x86_init_noop;
+ 
+ 	x86_init.resources.memory_setup = xen_memory_setup;
+ 	x86_init.irqs.intr_mode_select	= x86_init_noop;
 -- 
 2.35.1
 
