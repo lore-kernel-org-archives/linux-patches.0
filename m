@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87DCB1856
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:31:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09433C433F2;
-	Wed, 28 Dec 2022 16:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AFDF1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:31:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A12A0C433D2;
+	Wed, 28 Dec 2022 16:31:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245093;
-	bh=xZF1AMIuzsmzbnTtIe4XZoN7KKdcvNwQ07f34y/pFE8=;
+	s=korg; t=1672245096;
+	bh=mt5AZ1mURiWfYgcw7WIIujrgKsaHmkt9OYdGE26JT7U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ieKhVfXNyozpaOKzUQhsnOWbaercKm5KUQ+/Pqy7XJuOsqu1UPblplHFj5tNLhSww
-	 66vPDpY0Qye/KNf/Cn8aA/NEJRaXeMDmLMhlo+RHJFFiRXo3uBLx3aPmLcJFHPlDWy
-	 5Kw8o+b5V1y24fMsEPwIBh/J3BdUEbCD5FqjKkns=
+	b=gKZQM6S9hpkmd5q4+Grw3b/zqLtuBAaWRlhwWT0qngf9OxU0ssyax7syrjU6c6cHO
+	 Mn5sjTpc5VRyfcnP32WO+jZ/xokwzdludLBRgVXlKV+a7rdfWI4RH6llMrGxTuwKy8
+	 ASDparOnfGK8q7AfxJXjCl44KKsPFzFuSpPPv1DM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Martin=20Povi=C5=A1er?= <povik+lin@cutebit.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Qingfang DENG <dqfext@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0795/1146] dmaengine: apple-admac: Allocate cache SRAM to channels
-Date: Wed, 28 Dec 2022 15:38:54 +0100
-Message-Id: <20221228144351.742841523@linuxfoundation.org>
+Subject: [PATCH 6.0 0832/1073] netfilter: flowtable: really fix NAT IPv6 offload
+Date: Wed, 28 Dec 2022 15:40:20 +0100
+Message-Id: <20221228144350.615022194@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,213 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin Povišer <povik+lin@cutebit.org>
+From: Qingfang DENG <dqfext@gmail.com>
 
-[ Upstream commit 568aa6dd641f63166bb60d769e256789b3ac42d4 ]
+[ Upstream commit 5fb45f95eec682621748b7cb012c6a8f0f981e6a ]
 
-There's a previously unknown part of the controller interface: We have
-to assign SRAM carveouts to channels to store their in-flight samples
-in. So, obtain the size of the SRAM from a read-only register and divide
-it into 2K blocks for allocation to channels. The FIFO depths we
-configure will always fit into 2K.
+The for-loop was broken from the start. It translates to:
 
-(This fixes audio artifacts during simultaneous playback/capture on
-multiple channels -- which looking back is fully accounted for by having
-had the caches in the DMA controller overlap in memory.)
+	for (i = 0; i < 4; i += 4)
 
-Fixes: b127315d9a78 ("dmaengine: apple-admac: Add Apple ADMAC driver")
-Signed-off-by: Martin Povišer <povik+lin@cutebit.org>
-Link: https://lore.kernel.org/r/20221019132324.8585-2-povik+lin@cutebit.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+which means the loop statement is run only once, so only the highest
+32-bit of the IPv6 address gets mangled.
+
+Fix the loop increment.
+
+Fixes: 0e07e25b481a ("netfilter: flowtable: fix NAT IPv6 offload mangling")
+Fixes: 5c27d8d76ce8 ("netfilter: nf_flow_table_offload: add IPv6 support")
+Signed-off-by: Qingfang DENG <dqfext@gmail.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/apple-admac.c | 102 +++++++++++++++++++++++++++++++++++++-
- 1 file changed, 101 insertions(+), 1 deletion(-)
+ net/netfilter/nf_flow_table_offload.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/apple-admac.c b/drivers/dma/apple-admac.c
-index a2cc520225d3..90f28bda29c8 100644
---- a/drivers/dma/apple-admac.c
-+++ b/drivers/dma/apple-admac.c
-@@ -21,6 +21,12 @@
- #define NCHANNELS_MAX	64
- #define IRQ_NOUTPUTS	4
- 
-+/*
-+ * For allocation purposes we split the cache
-+ * memory into blocks of fixed size (given in bytes).
-+ */
-+#define SRAM_BLOCK	2048
-+
- #define RING_WRITE_SLOT		GENMASK(1, 0)
- #define RING_READ_SLOT		GENMASK(5, 4)
- #define RING_FULL		BIT(9)
-@@ -36,6 +42,9 @@
- #define REG_TX_STOP		0x0004
- #define REG_RX_START		0x0008
- #define REG_RX_STOP		0x000c
-+#define REG_IMPRINT		0x0090
-+#define REG_TX_SRAM_SIZE	0x0094
-+#define REG_RX_SRAM_SIZE	0x0098
- 
- #define REG_CHAN_CTL(ch)	(0x8000 + (ch) * 0x200)
- #define REG_CHAN_CTL_RST_RINGS	BIT(0)
-@@ -53,7 +62,9 @@
- #define BUS_WIDTH_FRAME_2_WORDS	0x10
- #define BUS_WIDTH_FRAME_4_WORDS	0x20
- 
--#define CHAN_BUFSIZE		0x8000
-+#define REG_CHAN_SRAM_CARVEOUT(ch)	(0x8050 + (ch) * 0x200)
-+#define CHAN_SRAM_CARVEOUT_SIZE		GENMASK(31, 16)
-+#define CHAN_SRAM_CARVEOUT_BASE		GENMASK(15, 0)
- 
- #define REG_CHAN_FIFOCTL(ch)	(0x8054 + (ch) * 0x200)
- #define CHAN_FIFOCTL_LIMIT	GENMASK(31, 16)
-@@ -76,6 +87,8 @@ struct admac_chan {
- 	struct dma_chan chan;
- 	struct tasklet_struct tasklet;
- 
-+	u32 carveout;
-+
- 	spinlock_t lock;
- 	struct admac_tx *current_tx;
- 	int nperiod_acks;
-@@ -92,12 +105,24 @@ struct admac_chan {
- 	struct list_head to_free;
- };
- 
-+struct admac_sram {
-+	u32 size;
-+	/*
-+	 * SRAM_CARVEOUT has 16-bit fields, so the SRAM cannot be larger than
-+	 * 64K and a 32-bit bitfield over 2K blocks covers it.
-+	 */
-+	u32 allocated;
-+};
-+
- struct admac_data {
- 	struct dma_device dma;
- 	struct device *dev;
- 	__iomem void *base;
- 	struct reset_control *rstc;
- 
-+	struct mutex cache_alloc_lock;
-+	struct admac_sram txcache, rxcache;
-+
- 	int irq;
- 	int irq_index;
- 	int nchannels;
-@@ -118,6 +143,60 @@ struct admac_tx {
- 	struct list_head node;
- };
- 
-+static int admac_alloc_sram_carveout(struct admac_data *ad,
-+				     enum dma_transfer_direction dir,
-+				     u32 *out)
-+{
-+	struct admac_sram *sram;
-+	int i, ret = 0, nblocks;
-+
-+	if (dir == DMA_MEM_TO_DEV)
-+		sram = &ad->txcache;
-+	else
-+		sram = &ad->rxcache;
-+
-+	mutex_lock(&ad->cache_alloc_lock);
-+
-+	nblocks = sram->size / SRAM_BLOCK;
-+	for (i = 0; i < nblocks; i++)
-+		if (!(sram->allocated & BIT(i)))
-+			break;
-+
-+	if (i < nblocks) {
-+		*out = FIELD_PREP(CHAN_SRAM_CARVEOUT_BASE, i * SRAM_BLOCK) |
-+			FIELD_PREP(CHAN_SRAM_CARVEOUT_SIZE, SRAM_BLOCK);
-+		sram->allocated |= BIT(i);
-+	} else {
-+		ret = -EBUSY;
-+	}
-+
-+	mutex_unlock(&ad->cache_alloc_lock);
-+
-+	return ret;
-+}
-+
-+static void admac_free_sram_carveout(struct admac_data *ad,
-+				     enum dma_transfer_direction dir,
-+				     u32 carveout)
-+{
-+	struct admac_sram *sram;
-+	u32 base = FIELD_GET(CHAN_SRAM_CARVEOUT_BASE, carveout);
+diff --git a/net/netfilter/nf_flow_table_offload.c b/net/netfilter/nf_flow_table_offload.c
+index 0fdcdb2c9ae4..4d9b99abe37d 100644
+--- a/net/netfilter/nf_flow_table_offload.c
++++ b/net/netfilter/nf_flow_table_offload.c
+@@ -383,12 +383,12 @@ static void flow_offload_ipv6_mangle(struct nf_flow_rule *flow_rule,
+ 				     const __be32 *addr, const __be32 *mask)
+ {
+ 	struct flow_action_entry *entry;
+-	int i, j;
 +	int i;
-+
-+	if (dir == DMA_MEM_TO_DEV)
-+		sram = &ad->txcache;
-+	else
-+		sram = &ad->rxcache;
-+
-+	if (WARN_ON(base >= sram->size))
-+		return;
-+
-+	mutex_lock(&ad->cache_alloc_lock);
-+	i = base / SRAM_BLOCK;
-+	sram->allocated &= ~BIT(i);
-+	mutex_unlock(&ad->cache_alloc_lock);
-+}
-+
- static void admac_modify(struct admac_data *ad, int reg, u32 mask, u32 val)
- {
- 	void __iomem *addr = ad->base + reg;
-@@ -466,15 +545,28 @@ static void admac_synchronize(struct dma_chan *chan)
- static int admac_alloc_chan_resources(struct dma_chan *chan)
- {
- 	struct admac_chan *adchan = to_admac_chan(chan);
-+	struct admac_data *ad = adchan->host;
-+	int ret;
  
- 	dma_cookie_init(&adchan->chan);
-+	ret = admac_alloc_sram_carveout(ad, admac_chan_direction(adchan->no),
-+					&adchan->carveout);
-+	if (ret < 0)
-+		return ret;
-+
-+	writel_relaxed(adchan->carveout,
-+		       ad->base + REG_CHAN_SRAM_CARVEOUT(adchan->no));
- 	return 0;
- }
- 
- static void admac_free_chan_resources(struct dma_chan *chan)
- {
-+	struct admac_chan *adchan = to_admac_chan(chan);
-+
- 	admac_terminate_all(chan);
- 	admac_synchronize(chan);
-+	admac_free_sram_carveout(adchan->host, admac_chan_direction(adchan->no),
-+				 adchan->carveout);
- }
- 
- static struct dma_chan *admac_dma_of_xlate(struct of_phandle_args *dma_spec,
-@@ -712,6 +804,7 @@ static int admac_probe(struct platform_device *pdev)
- 	platform_set_drvdata(pdev, ad);
- 	ad->dev = &pdev->dev;
- 	ad->nchannels = nchannels;
-+	mutex_init(&ad->cache_alloc_lock);
- 
- 	/*
- 	 * The controller has 4 IRQ outputs. Try them all until
-@@ -801,6 +894,13 @@ static int admac_probe(struct platform_device *pdev)
- 		goto free_irq;
+-	for (i = 0, j = 0; i < sizeof(struct in6_addr) / sizeof(u32); i += sizeof(u32), j++) {
++	for (i = 0; i < sizeof(struct in6_addr) / sizeof(u32); i++) {
+ 		entry = flow_action_entry_next(flow_rule);
+ 		flow_offload_mangle(entry, FLOW_ACT_MANGLE_HDR_TYPE_IP6,
+-				    offset + i, &addr[j], mask);
++				    offset + i * sizeof(u32), &addr[i], mask);
  	}
+ }
  
-+	ad->txcache.size = readl_relaxed(ad->base + REG_TX_SRAM_SIZE);
-+	ad->rxcache.size = readl_relaxed(ad->base + REG_RX_SRAM_SIZE);
-+
-+	dev_info(&pdev->dev, "Audio DMA Controller\n");
-+	dev_info(&pdev->dev, "imprint %x TX cache %u RX cache %u\n",
-+		 readl_relaxed(ad->base + REG_IMPRINT), ad->txcache.size, ad->rxcache.size);
-+
- 	return 0;
- 
- free_irq:
 -- 
 2.35.1
 
