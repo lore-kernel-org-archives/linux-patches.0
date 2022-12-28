@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE6B41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43F35C433EF;
-	Wed, 28 Dec 2022 15:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 632991863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9842C433D2;
+	Wed, 28 Dec 2022 15:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240197;
-	bh=e3OsxW13efZx5c2lO7pbpoPbHRXeTSQvQ1JS+fLpk50=;
+	s=korg; t=1672240200;
+	bh=zNy7dK0/Oxb5jdNssSMEOqWdVoQ44y/IpBndXNKaHJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qcniUxQVW6zUisN0d8j5VjHCj78vjpPXMpchsxOGQhoT5znqmyvoARUJU8Qr+s7Mp
-	 McdXQ7lhSVt18CQr+JYr60jKkuMjpMV8YFAU/lluudFWr/f2yga+HjpSplBzJS3jI8
-	 F26sV+AY4NDiyzBxeQE1O5pg86OcoJi+9raiJh2g=
+	b=bMdxuQd6ctaKYsaZPrb9Az/N0fjXF5FgXhasScBrxyFZgyHO4fpfmPzhD8SdGMuvQ
+	 Vm5RuJpnVKx+heZygO3/zDPqxJzYnZA8WBT6BE+nPncKv9k1Bjbh2kpiqKy6ITj7Hq
+	 q7TRWlqkiRbKt+LyuPVRGBnwRl222fSpBjwUxon0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Qais Yousef <qais.yousef@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 294/731] mmc: pxamci: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:36:41 +0100
-Message-Id: <20221228144305.096091950@linuxfoundation.org>
+Subject: [PATCH 6.0 0099/1073] sched/uclamp: Make asym_fits_capacity() use util_fits_cpu()
+Date: Wed, 28 Dec 2022 15:28:07 +0100
+Message-Id: <20221228144330.738360355@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,43 +35,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Qais Yousef <qais.yousef@arm.com>
 
-[ Upstream commit 80e1ef3afb8bfbe768380b70ffe1b6cab87d1a3b ]
+[ Upstream commit a2e7f03ed28fce26c78b985f87913b6ce3accf9d ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+Use the new util_fits_cpu() to ensure migration margin and capacity
+pressure are taken into account correctly when uclamp is being used
+otherwise we will fail to consider CPUs as fitting in scenarios where
+they should.
 
-So fix this by checking the return value and goto error path which will call
-mmc_free_host(), besides, ->exit() need be called to uninit the pdata.
+s/asym_fits_capacity/asym_fits_cpu/ to better reflect what it does now.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-5-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: b4c9c9f15649 ("sched/fair: Prefer prev cpu in asymmetric wakeup path")
+Signed-off-by: Qais Yousef <qais.yousef@arm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20220804143609.515789-6-qais.yousef@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/pxamci.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ kernel/sched/fair.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/mmc/host/pxamci.c b/drivers/mmc/host/pxamci.c
-index 55868b6b8658..e25e9bb34eb3 100644
---- a/drivers/mmc/host/pxamci.c
-+++ b/drivers/mmc/host/pxamci.c
-@@ -763,7 +763,12 @@ static int pxamci_probe(struct platform_device *pdev)
- 			dev_warn(dev, "gpio_ro and get_ro() both defined\n");
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 1fe3f3b96251..cb4d47441a41 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -6631,10 +6631,13 @@ select_idle_capacity(struct task_struct *p, struct sched_domain *sd, int target)
+ 	return best_cpu;
+ }
+ 
+-static inline bool asym_fits_capacity(unsigned long task_util, int cpu)
++static inline bool asym_fits_cpu(unsigned long util,
++				 unsigned long util_min,
++				 unsigned long util_max,
++				 int cpu)
+ {
+ 	if (sched_asym_cpucap_active())
+-		return fits_capacity(task_util, capacity_of(cpu));
++		return util_fits_cpu(util, util_min, util_max, cpu);
+ 
+ 	return true;
+ }
+@@ -6646,7 +6649,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
+ {
+ 	bool has_idle_core = false;
+ 	struct sched_domain *sd;
+-	unsigned long task_util;
++	unsigned long task_util, util_min, util_max;
+ 	int i, recent_used_cpu;
+ 
+ 	/*
+@@ -6655,7 +6658,9 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
+ 	 */
+ 	if (sched_asym_cpucap_active()) {
+ 		sync_entity_load_avg(&p->se);
+-		task_util = uclamp_task_util(p);
++		task_util = task_util_est(p);
++		util_min = uclamp_eff_value(p, UCLAMP_MIN);
++		util_max = uclamp_eff_value(p, UCLAMP_MAX);
  	}
  
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret) {
-+		if (host->pdata && host->pdata->exit)
-+			host->pdata->exit(dev, mmc);
-+		goto out;
-+	}
+ 	/*
+@@ -6664,7 +6669,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
+ 	lockdep_assert_irqs_disabled();
  
- 	return 0;
+ 	if ((available_idle_cpu(target) || sched_idle_cpu(target)) &&
+-	    asym_fits_capacity(task_util, target))
++	    asym_fits_cpu(task_util, util_min, util_max, target))
+ 		return target;
+ 
+ 	/*
+@@ -6672,7 +6677,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
+ 	 */
+ 	if (prev != target && cpus_share_cache(prev, target) &&
+ 	    (available_idle_cpu(prev) || sched_idle_cpu(prev)) &&
+-	    asym_fits_capacity(task_util, prev))
++	    asym_fits_cpu(task_util, util_min, util_max, prev))
+ 		return prev;
+ 
+ 	/*
+@@ -6687,7 +6692,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
+ 	    in_task() &&
+ 	    prev == smp_processor_id() &&
+ 	    this_rq()->nr_running <= 1 &&
+-	    asym_fits_capacity(task_util, prev)) {
++	    asym_fits_cpu(task_util, util_min, util_max, prev)) {
+ 		return prev;
+ 	}
+ 
+@@ -6699,7 +6704,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
+ 	    cpus_share_cache(recent_used_cpu, target) &&
+ 	    (available_idle_cpu(recent_used_cpu) || sched_idle_cpu(recent_used_cpu)) &&
+ 	    cpumask_test_cpu(p->recent_used_cpu, p->cpus_ptr) &&
+-	    asym_fits_capacity(task_util, recent_used_cpu)) {
++	    asym_fits_cpu(task_util, util_min, util_max, recent_used_cpu)) {
+ 		return recent_used_cpu;
+ 	}
  
 -- 
 2.35.1
