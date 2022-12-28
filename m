@@ -1,31 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BE121C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B987DC433D2;
-	Wed, 28 Dec 2022 16:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B81C1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:24:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABB97C433EF;
+	Wed, 28 Dec 2022 16:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244692;
-	bh=pUmOk+/0Cxv748eGMVKBCkBuUc34CYUoMToL6P/7IVc=;
+	s=korg; t=1672244695;
+	bh=y+Tgw53TjPC3I7qincX96GVE3X+m51HLOHYg9KeeNhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UfEQEm6Hh44SjIr4dfzwU5HfV7Df1RN4moU7f4w1WXTCabN7A/bxShkVr3mm/atFQ
-	 F49EnH5wFREvvHUvVIt2rZexpCHgz4RyB1v3hhnXcYmXZ8Qcq7HmANQYVOdejxKOtC
-	 rUdrTeoXOEPHTi1QdqYPLyDVwJgb8aaMi7Gmr3rc=
+	b=VxMYufWzXmuhcuMAK/hzvpd7d0GerBRAtACEgCnD8uIwWnwqyG0fM33H8N/OMdLiQ
+	 j6NyqfGlyxLwkbIsEddmUxiCUrf1qhODKmbG/cb9j4/3yE32ki4ivCy7hUTUoRCjh8
+	 MT6yh+yE9vG2Z6nYyOQm0c7xelawYSGqxotDaSRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Frederic Barrat <fbarrat@linux.ibm.com>,
+	Kevin Nomura <nomurak@google.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0720/1146] cxl: fix possible null-ptr-deref in cxl_guest_init_afu|adapter()
-Date: Wed, 28 Dec 2022 15:37:39 +0100
-Message-Id: <20221228144349.702132198@linuxfoundation.org>
+Subject: [PATCH 6.0 0758/1073] perf stat: Do not delay the workload with --delay
+Date: Wed, 28 Dec 2022 15:39:06 +0100
+Message-Id: <20221228144348.605440016@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,97 +43,136 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit 61c80d1c3833e196256fb060382db94f24d3d9a7 ]
+[ Upstream commit c587e77e100fa40eb6af10e00497c67acf493f33 ]
 
-If device_register() fails in cxl_register_afu|adapter(), the device
-is not added, device_unregister() can not be called in the error path,
-otherwise it will cause a null-ptr-deref because of removing not added
-device.
+The -D/--delay option is to delay the measure after the program starts.
+But the current code goes to sleep before starting the program so the
+program is delayed too.  This is not the intention, let's fix it.
 
-As comment of device_register() says, it should use put_device() to give
-up the reference in the error path. So split device_unregister() into
-device_del() and put_device(), then goes to put dev when register fails.
+Before:
 
-Fixes: 14baf4d9c739 ("cxl: Add guest-specific code")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Acked-by: Andrew Donnellan <ajd@linux.ibm.com>
-Acked-by: Frederic Barrat <fbarrat@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221111145440.2426970-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  $ time sudo ./perf stat -a -e cycles -D 3000 sleep 4
+  Events disabled
+  Events enabled
+
+   Performance counter stats for 'system wide':
+
+       4,326,949,337      cycles
+
+         4.007494118 seconds time elapsed
+
+  real	0m7.474s
+  user	0m0.356s
+  sys	0m0.120s
+
+It ran the workload for 4 seconds and gave the 3 second delay.  So it
+should skip the first 3 second and measure the last 1 second only.  But
+as you can see, it delays 3 seconds and ran the workload after that for
+4 seconds.  So the total time (real) was 7 seconds.
+
+After:
+
+  $ time sudo ./perf stat -a -e cycles -D 3000 sleep 4
+  Events disabled
+  Events enabled
+
+   Performance counter stats for 'system wide':
+
+       1,063,551,013      cycles
+
+         1.002769510 seconds time elapsed
+
+  real	0m4.484s
+  user	0m0.385s
+  sys	0m0.086s
+
+The bug was introduced when it changed enablement of system-wide events
+with a command line workload.  But it should've considered the initial
+delay case.  The code was reworked since then (in bb8bc52e7578) so I'm
+afraid it won't be applied cleanly.
+
+Fixes: d0a0a511493d2695 ("perf stat: Fix forked applications enablement of counters")
+Reported-by: Kevin Nomura <nomurak@google.com>
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Tested-by: Thomas Richter <tmricht@linux.ibm.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Sumanth Korikkar <sumanthk@linux.ibm.com>
+Link: https://lore.kernel.org/r/20221212230820.901382-1-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/cxl/guest.c | 24 ++++++++++++++----------
- 1 file changed, 14 insertions(+), 10 deletions(-)
+ tools/perf/builtin-stat.c | 33 +++++++++++++++++----------------
+ 1 file changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/misc/cxl/guest.c b/drivers/misc/cxl/guest.c
-index 375f692ae9d6..fb95a2d5cef4 100644
---- a/drivers/misc/cxl/guest.c
-+++ b/drivers/misc/cxl/guest.c
-@@ -965,10 +965,10 @@ int cxl_guest_init_afu(struct cxl *adapter, int slice, struct device_node *afu_n
- 	 * if it returns an error!
- 	 */
- 	if ((rc = cxl_register_afu(afu)))
--		goto err_put1;
-+		goto err_put_dev;
+diff --git a/tools/perf/builtin-stat.c b/tools/perf/builtin-stat.c
+index 0b4a62e4ff67..cab6b70e95e2 100644
+--- a/tools/perf/builtin-stat.c
++++ b/tools/perf/builtin-stat.c
+@@ -573,26 +573,14 @@ static int enable_counters(void)
+ 			return err;
+ 	}
  
- 	if ((rc = cxl_sysfs_afu_add(afu)))
--		goto err_put1;
-+		goto err_del_dev;
- 
+-	if (stat_config.initial_delay < 0) {
+-		pr_info(EVLIST_DISABLED_MSG);
+-		return 0;
+-	}
+-
+-	if (stat_config.initial_delay > 0) {
+-		pr_info(EVLIST_DISABLED_MSG);
+-		usleep(stat_config.initial_delay * USEC_PER_MSEC);
+-	}
+-
  	/*
- 	 * pHyp doesn't expose the programming models supported by the
-@@ -984,7 +984,7 @@ int cxl_guest_init_afu(struct cxl *adapter, int slice, struct device_node *afu_n
- 		afu->modes_supported = CXL_MODE_DIRECTED;
- 
- 	if ((rc = cxl_afu_select_best_mode(afu)))
--		goto err_put2;
-+		goto err_remove_sysfs;
- 
- 	adapter->afu[afu->slice] = afu;
- 
-@@ -1004,10 +1004,12 @@ int cxl_guest_init_afu(struct cxl *adapter, int slice, struct device_node *afu_n
- 
- 	return 0;
- 
--err_put2:
-+err_remove_sysfs:
- 	cxl_sysfs_afu_remove(afu);
--err_put1:
--	device_unregister(&afu->dev);
-+err_del_dev:
-+	device_del(&afu->dev);
-+err_put_dev:
-+	put_device(&afu->dev);
- 	free = false;
- 	guest_release_serr_irq(afu);
- err2:
-@@ -1141,18 +1143,20 @@ struct cxl *cxl_guest_init_adapter(struct device_node *np, struct platform_devic
- 	 * even if it returns an error!
+ 	 * We need to enable counters only if:
+ 	 * - we don't have tracee (attaching to task or cpu)
+ 	 * - we have initial delay configured
  	 */
- 	if ((rc = cxl_register_adapter(adapter)))
--		goto err_put1;
-+		goto err_put_dev;
+-	if (!target__none(&target) || stat_config.initial_delay) {
++	if (!target__none(&target)) {
+ 		if (!all_counters_use_bpf)
+ 			evlist__enable(evsel_list);
+-		if (stat_config.initial_delay > 0)
+-			pr_info(EVLIST_ENABLED_MSG);
+ 	}
+ 	return 0;
+ }
+@@ -967,14 +955,27 @@ static int __run_perf_stat(int argc, const char **argv, int run_idx)
+ 			return err;
+ 	}
  
- 	if ((rc = cxl_sysfs_adapter_add(adapter)))
--		goto err_put1;
-+		goto err_del_dev;
+-	err = enable_counters();
+-	if (err)
+-		return -1;
++	if (stat_config.initial_delay) {
++		pr_info(EVLIST_DISABLED_MSG);
++	} else {
++		err = enable_counters();
++		if (err)
++			return -1;
++	}
  
- 	/* release the context lock as the adapter is configured */
- 	cxl_adapter_context_unlock(adapter);
+ 	/* Exec the command, if any */
+ 	if (forks)
+ 		evlist__start_workload(evsel_list);
  
- 	return adapter;
++	if (stat_config.initial_delay > 0) {
++		usleep(stat_config.initial_delay * USEC_PER_MSEC);
++		err = enable_counters();
++		if (err)
++			return -1;
++
++		pr_info(EVLIST_ENABLED_MSG);
++	}
++
+ 	t0 = rdclock();
+ 	clock_gettime(CLOCK_MONOTONIC, &ref_time);
  
--err_put1:
--	device_unregister(&adapter->dev);
-+err_del_dev:
-+	device_del(&adapter->dev);
-+err_put_dev:
-+	put_device(&adapter->dev);
- 	free = false;
- 	cxl_guest_remove_chardev(adapter);
- err1:
 -- 
 2.35.1
 
