@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD0031C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32C55C433D2;
-	Wed, 28 Dec 2022 16:27:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 587861C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:27:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C44C433D2;
+	Wed, 28 Dec 2022 16:27:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244851;
-	bh=IEHtdTtIRZLVgA0FAEWcFUoxODgJWkPXHc+W3Kknhhc=;
+	s=korg; t=1672244854;
+	bh=srbhyofZhUa3gEkfsQwea/xtykDIeRGFFJLXt2xcoOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2oQvo/t753hcizCVdQuCvZkZfxdqT7lRUwCv8sciJX7vC/mS3T0GbPUksXTJQJSUm
-	 nPjsPrOaGfcjyB6MwX9Ki6ZH2o0Qq0Lpa53VrI+L5VFiv2YuhXekm653N/heaFfW3x
-	 XaHQzBjc+f8uly86mFD30VQ8LfUI3/DngK3HNzm4=
+	b=Hypij1+uUZjx3/HftGTMzpRVBzThznbTcIYPV1u6xcD9bTJWaP7nVP3U7ulCle9Oq
+	 gzeat1nYHrltbpQwgA71DTkX781VU7lLz7EYLyRRBsCLchJZRr2+9OIQbqUvU7zZ6q
+	 ggZLX6yN6N0wdmRqstT9Oj1NksEbQaOlZ5zLs7Zo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0716/1146] ocxl: fix pci device refcount leak when calling get_function_0()
-Date: Wed, 28 Dec 2022 15:37:35 +0100
-Message-Id: <20221228144349.591689409@linuxfoundation.org>
+Subject: [PATCH 6.0 0785/1073] rtc: cmos: Call cmos_wake_setup() from cmos_do_probe()
+Date: Wed, 28 Dec 2022 15:39:33 +0100
+Message-Id: <20221228144349.332950236@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,85 +37,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 27158c72678b39ee01cc01de1aba6b51c71abe2f ]
+[ Upstream commit 508ccdfb86b21da37ad091003a4d4567709d5dfb ]
 
-get_function_0() calls pci_get_domain_bus_and_slot(), as comment
-says, it returns a pci device with refcount increment, so after
-using it, pci_dev_put() needs be called.
+Notice that cmos_wake_setup() is the only user of acpi_rtc_info and it
+can operate on the cmos_rtc variable directly, so it need not set the
+platform_data pointer before cmos_do_probe() is called.  Instead, it
+can be called by cmos_do_probe() in the case when the platform_data
+pointer is not set to implement the default behavior (which is to use
+the FADT information as long as ACPI support is enabled).
 
-Get the device reference when get_function_0() is not called, so
-pci_dev_put() can be called in the error path and callers
-unconditionally. And add comment above get_dvsec_vendor0() to tell
-callers to call pci_dev_put().
+Modify the code accordingly.
 
-Fixes: 87db7579ebd5 ("ocxl: control via sysfs whether the FPGA is reloaded on a link reset")
-Suggested-by: Andrew Donnellan <ajd@linux.ibm.com>
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Acked-by: Andrew Donnellan <ajd@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221121154339.4088935-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+While at it, drop a comment that doesn't really match the code it is
+supposed to be describing.
+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Zhang Rui <rui.zhang@intel.com>
+Tested-by: Zhang Rui <rui.zhang@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/4803444.31r3eYUQgx@kreacher
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/misc/ocxl/config.c | 20 +++++++++++++++++++-
- 1 file changed, 19 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-cmos.c | 47 ++++++++++++++++++++----------------------
+ 1 file changed, 22 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/misc/ocxl/config.c b/drivers/misc/ocxl/config.c
-index e401a51596b9..92ab49705f64 100644
---- a/drivers/misc/ocxl/config.c
-+++ b/drivers/misc/ocxl/config.c
-@@ -193,6 +193,18 @@ static int read_dvsec_vendor(struct pci_dev *dev)
- 	return 0;
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index 58cc2bae2f8a..a84262265d6d 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -744,6 +744,8 @@ static irqreturn_t cmos_interrupt(int irq, void *p)
+ 		return IRQ_NONE;
  }
  
-+/**
-+ * get_dvsec_vendor0() - Find a related PCI device (function 0)
-+ * @dev: PCI device to match
-+ * @dev0: The PCI device (function 0) found
-+ * @out_pos: The position of PCI device (function 0)
-+ *
-+ * Returns 0 on success, negative on failure.
-+ *
-+ * NOTE: If it's successful, the reference of dev0 is increased,
-+ * so after using it, the callers must call pci_dev_put() to give
-+ * up the reference.
-+ */
- static int get_dvsec_vendor0(struct pci_dev *dev, struct pci_dev **dev0,
- 			     int *out_pos)
- {
-@@ -202,10 +214,14 @@ static int get_dvsec_vendor0(struct pci_dev *dev, struct pci_dev **dev0,
- 		dev = get_function_0(dev);
- 		if (!dev)
- 			return -1;
++static void cmos_wake_setup(struct device *dev);
++
+ #ifdef	CONFIG_PNP
+ #define	INITSECTION
+ 
+@@ -827,19 +829,27 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+ 		if (info->address_space)
+ 			address_space = info->address_space;
+ 
+-		if (info->rtc_day_alarm && info->rtc_day_alarm < 128)
+-			cmos_rtc.day_alrm = info->rtc_day_alarm;
+-		if (info->rtc_mon_alarm && info->rtc_mon_alarm < 128)
+-			cmos_rtc.mon_alrm = info->rtc_mon_alarm;
+-		if (info->rtc_century && info->rtc_century < 128)
+-			cmos_rtc.century = info->rtc_century;
++		cmos_rtc.day_alrm = info->rtc_day_alarm;
++		cmos_rtc.mon_alrm = info->rtc_mon_alarm;
++		cmos_rtc.century = info->rtc_century;
+ 
+ 		if (info->wake_on && info->wake_off) {
+ 			cmos_rtc.wake_on = info->wake_on;
+ 			cmos_rtc.wake_off = info->wake_off;
+ 		}
 +	} else {
-+		dev = pci_dev_get(dev);
++		cmos_wake_setup(dev);
  	}
- 	pos = find_dvsec(dev, OCXL_DVSEC_VENDOR_ID);
--	if (!pos)
-+	if (!pos) {
-+		pci_dev_put(dev);
- 		return -1;
-+	}
- 	*dev0 = dev;
- 	*out_pos = pos;
- 	return 0;
-@@ -222,6 +238,7 @@ int ocxl_config_get_reset_reload(struct pci_dev *dev, int *val)
  
- 	pci_read_config_dword(dev0, pos + OCXL_DVSEC_VENDOR_RESET_RELOAD,
- 			      &reset_reload);
-+	pci_dev_put(dev0);
- 	*val = !!(reset_reload & BIT(0));
- 	return 0;
- }
-@@ -243,6 +260,7 @@ int ocxl_config_set_reset_reload(struct pci_dev *dev, int val)
- 		reset_reload &= ~BIT(0);
- 	pci_write_config_dword(dev0, pos + OCXL_DVSEC_VENDOR_RESET_RELOAD,
- 			       reset_reload);
-+	pci_dev_put(dev0);
- 	return 0;
- }
++	if (cmos_rtc.day_alrm >= 128)
++		cmos_rtc.day_alrm = 0;
++
++	if (cmos_rtc.mon_alrm >= 128)
++		cmos_rtc.mon_alrm = 0;
++
++	if (cmos_rtc.century >= 128)
++		cmos_rtc.century = 0;
++
+ 	cmos_rtc.dev = dev;
+ 	dev_set_drvdata(dev, &cmos_rtc);
  
+@@ -1275,13 +1285,6 @@ static void use_acpi_alarm_quirks(void)
+ static inline void use_acpi_alarm_quirks(void) { }
+ #endif
+ 
+-/* Every ACPI platform has a mc146818 compatible "cmos rtc".  Here we find
+- * its device node and pass extra config data.  This helps its driver use
+- * capabilities that the now-obsolete mc146818 didn't have, and informs it
+- * that this board's RTC is wakeup-capable (per ACPI spec).
+- */
+-static struct cmos_rtc_board_info acpi_rtc_info;
+-
+ static void cmos_wake_setup(struct device *dev)
+ {
+ 	if (acpi_disabled)
+@@ -1289,26 +1292,23 @@ static void cmos_wake_setup(struct device *dev)
+ 
+ 	use_acpi_alarm_quirks();
+ 
+-	acpi_rtc_info.wake_on = rtc_wake_on;
+-	acpi_rtc_info.wake_off = rtc_wake_off;
++	cmos_rtc.wake_on = rtc_wake_on;
++	cmos_rtc.wake_off = rtc_wake_off;
+ 
+-	/* workaround bug in some ACPI tables */
++	/* ACPI tables bug workaround. */
+ 	if (acpi_gbl_FADT.month_alarm && !acpi_gbl_FADT.day_alarm) {
+ 		dev_dbg(dev, "bogus FADT month_alarm (%d)\n",
+ 			acpi_gbl_FADT.month_alarm);
+ 		acpi_gbl_FADT.month_alarm = 0;
+ 	}
+ 
+-	acpi_rtc_info.rtc_day_alarm = acpi_gbl_FADT.day_alarm;
+-	acpi_rtc_info.rtc_mon_alarm = acpi_gbl_FADT.month_alarm;
+-	acpi_rtc_info.rtc_century = acpi_gbl_FADT.century;
++	cmos_rtc.day_alrm = acpi_gbl_FADT.day_alarm;
++	cmos_rtc.mon_alrm = acpi_gbl_FADT.month_alarm;
++	cmos_rtc.century = acpi_gbl_FADT.century;
+ 
+-	/* NOTE:  S4_RTC_WAKE is NOT currently useful to Linux */
+ 	if (acpi_gbl_FADT.flags & ACPI_FADT_S4_RTC_WAKE)
+ 		dev_info(dev, "RTC can wake from S4\n");
+ 
+-	dev->platform_data = &acpi_rtc_info;
+-
+ 	/* RTC always wakes from S1/S2/S3, and often S4/STD */
+ 	device_init_wakeup(dev, 1);
+ }
+@@ -1359,8 +1359,6 @@ static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
+ {
+ 	int irq, ret;
+ 
+-	cmos_wake_setup(&pnp->dev);
+-
+ 	if (pnp_port_start(pnp, 0) == 0x70 && !pnp_irq_valid(pnp, 0)) {
+ 		irq = 0;
+ #ifdef CONFIG_X86
+@@ -1468,7 +1466,6 @@ static int __init cmos_platform_probe(struct platform_device *pdev)
+ 	int irq, ret;
+ 
+ 	cmos_of_init(pdev);
+-	cmos_wake_setup(&pdev->dev);
+ 
+ 	if (RTC_IOMAPPED)
+ 		resource = platform_get_resource(pdev, IORESOURCE_IO, 0);
 -- 
 2.35.1
 
