@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19BB01C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CD75C433D2;
-	Wed, 28 Dec 2022 16:42:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD0801C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:42:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435EDC433EF;
+	Wed, 28 Dec 2022 16:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245736;
-	bh=aDWG8fbGBA74watHfo590CXtwV6HBAc+NsS3rF7zHhI=;
+	s=korg; t=1672245739;
+	bh=IuNm5xc86Gp3tyD1/J34a+y0sA7unQ2Mjmcz2YtI4us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1+UO/Z/KZqngOe9fR7iEZFPNeBPtKxyiEWz0bqfev27/lYyQU3nnusjIqysxhCryx
-	 bhWl0J//SQkdV5tFtmhA+3fcyNlHhkvHM+ZBMHcpXjEgTA/mdyp3PhPvOabJ0PsU4f
-	 wuCoAOa4j9VvhcwsDXHsvrUTBznvfqNzCt+6iuyg=
+	b=QpEr7O8bob5Jz9q3EQ4qk1yO4BL2ZXn/W0o6uEXJa7yTmm5gFej09bpAxOkocA/re
+	 DgBN3936qaLHqjKuLdVsWe9tzxWajUJImDstlgpITW9WvtMpQ0016s0QU7ITrFi/CL
+	 vgXol5/W4yw91FZCQvTKZJzrvnOAJ9cXxsIqFyXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hannes Reinecke <hare@suse.de>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Tan Tee Min <tee.min.tan@linux.intel.com>,
+	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0946/1073] nvme-auth: dont override ctrl keys before validation
-Date: Wed, 28 Dec 2022 15:42:14 +0100
-Message-Id: <20221228144353.733225720@linuxfoundation.org>
+Subject: [PATCH 6.1 0914/1146] igc: recalculate Qbv end_time by considering cycle time
+Date: Wed, 28 Dec 2022 15:40:53 +0100
+Message-Id: <20221228144355.065938769@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,64 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sagi Grimberg <sagi@grimberg.me>
+From: Tan Tee Min <tee.min.tan@linux.intel.com>
 
-[ Upstream commit 01604350e14560d4d69323eb1ba12a257a643ea8 ]
+[ Upstream commit 6d05251d537a4d3835959a8cdd8cbbbdcdc0c904 ]
 
-Replace ctrl ctrl_key/host_key only after nvme_auth_generate_key is successful.
-Also, this fixes a bug where the keys are leaked.
+Qbv users can specify a cycle time that is not equal to the total GCL
+intervals. Hence, recalculation is necessary here to exclude the time
+interval that exceeds the cycle time. As those GCL which exceeds the
+cycle time will be truncated.
 
-Reviewed-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+According to IEEE Std. 802.1Q-2018 section 8.6.9.2, once the end of
+the list is reached, it will switch to the END_OF_CYCLE state and
+leave the gates in the same state until the next cycle is started.
+
+Fixes: ec50a9d437f0 ("igc: Add support for taprio offloading")
+Signed-off-by: Tan Tee Min <tee.min.tan@linux.intel.com>
+Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_main.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index cd2e2bfeae82..3582a28a1dce 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -3739,13 +3739,17 @@ static ssize_t nvme_ctrl_dhchap_secret_store(struct device *dev,
- 	memcpy(dhchap_secret, buf, count);
- 	nvme_auth_stop(ctrl);
- 	if (strcmp(dhchap_secret, opts->dhchap_secret)) {
-+		struct nvme_dhchap_key *key, *host_key;
- 		int ret;
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index d666b3aab523..06c22ff54d31 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -6060,6 +6060,21 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
  
--		ret = nvme_auth_generate_key(dhchap_secret, &ctrl->host_key);
-+		ret = nvme_auth_generate_key(dhchap_secret, &key);
- 		if (ret)
- 			return ret;
- 		kfree(opts->dhchap_secret);
- 		opts->dhchap_secret = dhchap_secret;
-+		host_key = ctrl->host_key;
-+		ctrl->host_key = key;
-+		nvme_auth_free_key(host_key);
- 		/* Key has changed; re-authentication with new key */
- 		nvme_auth_reset(ctrl);
- 	}
-@@ -3789,13 +3793,17 @@ static ssize_t nvme_ctrl_dhchap_ctrl_secret_store(struct device *dev,
- 	memcpy(dhchap_secret, buf, count);
- 	nvme_auth_stop(ctrl);
- 	if (strcmp(dhchap_secret, opts->dhchap_ctrl_secret)) {
-+		struct nvme_dhchap_key *key, *ctrl_key;
- 		int ret;
+ 		end_time += e->interval;
  
--		ret = nvme_auth_generate_key(dhchap_secret, &ctrl->ctrl_key);
-+		ret = nvme_auth_generate_key(dhchap_secret, &key);
- 		if (ret)
- 			return ret;
- 		kfree(opts->dhchap_ctrl_secret);
- 		opts->dhchap_ctrl_secret = dhchap_secret;
-+		ctrl_key = ctrl->ctrl_key;
-+		ctrl->ctrl_key = key;
-+		nvme_auth_free_key(ctrl_key);
- 		/* Key has changed; re-authentication with new key */
- 		nvme_auth_reset(ctrl);
- 	}
++		/* If any of the conditions below are true, we need to manually
++		 * control the end time of the cycle.
++		 * 1. Qbv users can specify a cycle time that is not equal
++		 * to the total GCL intervals. Hence, recalculation is
++		 * necessary here to exclude the time interval that
++		 * exceeds the cycle time.
++		 * 2. According to IEEE Std. 802.1Q-2018 section 8.6.9.2,
++		 * once the end of the list is reached, it will switch
++		 * to the END_OF_CYCLE state and leave the gates in the
++		 * same state until the next cycle is started.
++		 */
++		if (end_time > adapter->cycle_time ||
++		    n + 1 == qopt->num_entries)
++			end_time = adapter->cycle_time;
++
+ 		for (i = 0; i < adapter->num_tx_queues; i++) {
+ 			struct igc_ring *ring = adapter->tx_ring[i];
+ 
 -- 
 2.35.1
 
