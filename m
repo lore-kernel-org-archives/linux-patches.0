@@ -1,31 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DBA21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5250C433D2;
-	Wed, 28 Dec 2022 15:35:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182EC1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:35:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69432C433D2;
+	Wed, 28 Dec 2022 15:35:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241719;
-	bh=qGdU3DEytzY1Hd1QqzYoHqygoTR3yuU/e6cUa74W2TQ=;
+	s=korg; t=1672241721;
+	bh=JM9gF150SiFLYZZz7onMGQzXCLySd/ngSrYhvCa1ibE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sZh8WHGvpxsSPJOCVVt+dpfgaTb5b5BQCTDAzhb9EKWUQQQMjPXPACplEzklBd5mM
-	 MKywaR/uZGRMnFwdlJWtf9N6f3pwWmvqfA+CWGCQYIlAvaqksc4C48rdG7uFlZdCvO
-	 0K84aId6+4+wN/jfpd7VIumbTWCtxIskF5AsKdkA=
+	b=Q4eflKTcrpq88f/7AHBDnoh86IFj7yGGkerqeLv0/7Iqlu2aDhFxeCuElS1aRTRMD
+	 RAbgRoZ7bKzIgrvCr6rLuRZ3vmD+1O76DOHaZYYaQvnkGZZMy1i8jAjay3aoKxsm+i
+	 wAnSENOnFR+hVRvO6zg83qHygPWDPvMahZEELGDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
+	Leo Yan <leo.yan@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	bpf@vger.kernel.org,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0281/1146] drm/msm/dsi: Reuse earlier computed dsc->slice_chunk_size
-Date: Wed, 28 Dec 2022 15:30:20 +0100
-Message-Id: <20221228144337.771266159@linuxfoundation.org>
+Subject: [PATCH 5.15 515/731] perf trace: Use macro RAW_SYSCALL_ARGS_NUM to replace number
+Date: Wed, 28 Dec 2022 15:40:22 +0100
+Message-Id: <20221228144311.472336950@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,60 +43,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marijn Suijten <marijn.suijten@somainline.org>
+From: Leo Yan <leo.yan@linaro.org>
 
-[ Upstream commit e443459e2e6b8e0d3187dd0d09ef7fcea87531d2 ]
+[ Upstream commit eadcab4c7a66e1df03d32da0db55d89fd9343fcc ]
 
-dsi_populate_dsc_params() is called prior to dsi_update_dsc_timing() and
-already computes a value for slice_chunk_size, whose value doesn't need
-to be recomputed and re-set here.
+This patch defines a macro RAW_SYSCALL_ARGS_NUM to replace the open
+coded number '6'.
 
-Fixes: 08802f515c3c ("drm/msm/dsi: Add support for DSC configuration")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Patchwork: https://patchwork.freedesktop.org/patch/508934/
-Link: https://lore.kernel.org/r/20221026182824.876933-5-marijn.suijten@somainline.org
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Leo Yan <leo.yan@linaro.org>
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: bpf@vger.kernel.org
+Link: https://lore.kernel.org/r/20221121075237.127706-2-leo.yan@linaro.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 03e9a5d8eb55 ("perf trace: Handle failure when trace point folder is missed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dsi/dsi_host.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ tools/perf/builtin-trace.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 88c8aa5c6b80..c3156e9066f5 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -845,7 +845,6 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 	u32 reg, reg_ctrl, reg_ctrl2;
- 	u32 slice_per_intf, total_bytes_per_intf;
- 	u32 pkt_per_line;
--	u32 bytes_in_slice;
- 	u32 eol_byte_num;
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index aaa465d7f011..c1db48ff01a5 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -87,6 +87,8 @@
+ # define F_LINUX_SPECIFIC_BASE	1024
+ #endif
  
- 	/* first calculate dsc parameters and then program
-@@ -860,11 +859,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 	if (slice_per_intf > dsc->slice_count)
- 		dsc->slice_count = 1;
++#define RAW_SYSCALL_ARGS_NUM	6
++
+ /*
+  * strtoul: Go from a string to a value, i.e. for msr: MSR_FS_BASE to 0xc0000100
+  */
+@@ -107,7 +109,7 @@ struct syscall_fmt {
+ 		const char *sys_enter,
+ 			   *sys_exit;
+ 	}	   bpf_prog_name;
+-	struct syscall_arg_fmt arg[6];
++	struct syscall_arg_fmt arg[RAW_SYSCALL_ARGS_NUM];
+ 	u8	   nr_args;
+ 	bool	   errpid;
+ 	bool	   timeout;
+@@ -1224,7 +1226,7 @@ struct syscall {
+  */
+ struct bpf_map_syscall_entry {
+ 	bool	enabled;
+-	u16	string_args_len[6];
++	u16	string_args_len[RAW_SYSCALL_ARGS_NUM];
+ };
  
--	bytes_in_slice = DIV_ROUND_UP(dsc->slice_width * dsc->bits_per_pixel, 8);
--
--	dsc->slice_chunk_size = bytes_in_slice;
--
--	total_bytes_per_intf = bytes_in_slice * slice_per_intf;
-+	total_bytes_per_intf = dsc->slice_chunk_size * slice_per_intf;
+ /*
+@@ -1649,7 +1651,7 @@ static int syscall__alloc_arg_fmts(struct syscall *sc, int nr_args)
+ {
+ 	int idx;
  
- 	eol_byte_num = total_bytes_per_intf % 3;
- 	pkt_per_line = slice_per_intf / dsc->slice_count;
-@@ -890,7 +885,7 @@ static void dsi_update_dsc_timing(struct msm_dsi_host *msm_host, bool is_cmd_mod
- 		reg_ctrl |= reg;
+-	if (nr_args == 6 && sc->fmt && sc->fmt->nr_args != 0)
++	if (nr_args == RAW_SYSCALL_ARGS_NUM && sc->fmt && sc->fmt->nr_args != 0)
+ 		nr_args = sc->fmt->nr_args;
  
- 		reg_ctrl2 &= ~DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM0_SLICE_WIDTH__MASK;
--		reg_ctrl2 |= DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM0_SLICE_WIDTH(bytes_in_slice);
-+		reg_ctrl2 |= DSI_COMMAND_COMPRESSION_MODE_CTRL2_STREAM0_SLICE_WIDTH(dsc->slice_chunk_size);
+ 	sc->arg_fmt = calloc(nr_args, sizeof(*sc->arg_fmt));
+@@ -1800,7 +1802,8 @@ static int trace__read_syscall_info(struct trace *trace, int id)
+ 		sc->tp_format = trace_event__tp_format("syscalls", tp_name);
+ 	}
  
- 		dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL, reg_ctrl);
- 		dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2, reg_ctrl2);
+-	if (syscall__alloc_arg_fmts(sc, IS_ERR(sc->tp_format) ? 6 : sc->tp_format->format.nr_fields))
++	if (syscall__alloc_arg_fmts(sc, IS_ERR(sc->tp_format) ?
++					RAW_SYSCALL_ARGS_NUM : sc->tp_format->format.nr_fields))
+ 		return -ENOMEM;
+ 
+ 	if (IS_ERR(sc->tp_format))
 -- 
 2.35.1
 
