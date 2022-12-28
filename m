@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A262C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:31:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25F2AC433EF;
-	Wed, 28 Dec 2022 15:31:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DC7E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:31:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D429CC433EF;
+	Wed, 28 Dec 2022 15:31:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241498;
-	bh=cYKpT8JglNn0RlDKOQ9mj4eNl6hxGc7+A3CVt9rJlL4=;
+	s=korg; t=1672241501;
+	bh=r1GAJSewigeviLBCeAFUN/U32cZE68w24A3nr97AUx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R7jTeWj+Bxp1YXyCu/V7ciOd97I3TRaKMXscqsW3//1GeqhxKijIlebgQwY6C2pzF
-	 tui1xkCEFpo1pVb4tV1RjNlsSVLD7jAlSBTA6Cr5h9cfDxx5xLQt8kbKFrFc1G83xC
-	 a/+Um8JwyhskTAc56PqBs++KRo3zDJ3cB1+yJH7Y=
+	b=VE/8wz/bTwqeiLwtbq9SkWzPTVx1PtvIjvf3RoR/s1Vu4AfyBNt9q3npL1kwxF1dF
+	 a54PmdXyshsFRPNm7zhQq1XS04pWVqSNuWA8L4C/rC2rsrGYVCamOkCWGPBfXvVm5u
+	 lXDFhm3Rk8yS2+XBx8e42n3UOcRlFO41bo+E4uio=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 489/731] vme: Fix error not catched in fake_init()
-Date: Wed, 28 Dec 2022 15:39:56 +0100
-Message-Id: <20221228144310.722401631@linuxfoundation.org>
+Subject: [PATCH 6.0 0291/1073] mtd: core: fix possible resource leak in init_mtd()
+Date: Wed, 28 Dec 2022 15:31:19 +0100
+Message-Id: <20221228144335.919543495@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,47 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 7bef797d707f1744f71156b21d41e3b8c946631f ]
+[ Upstream commit 1aadf01e5076b9ab6bf294b9622335c651314895 ]
 
-In fake_init(), __root_device_register() is possible to fail but it's
-ignored, which can cause unregistering vme_root fail when exit.
+I got the error report while inject fault in init_mtd():
 
- general protection fault,
- probably for non-canonical address 0xdffffc000000008c
- KASAN: null-ptr-deref in range [0x0000000000000460-0x0000000000000467]
- RIP: 0010:root_device_unregister+0x26/0x60
- Call Trace:
-  <TASK>
-  __x64_sys_delete_module+0x34f/0x540
-  do_syscall_64+0x38/0x90
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+sysfs: cannot create duplicate filename '/devices/virtual/bdi/mtd-0'
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x67/0x83
+ sysfs_warn_dup+0x60/0x70
+ sysfs_create_dir_ns+0x109/0x120
+ kobject_add_internal+0xce/0x2f0
+ kobject_add+0x98/0x110
+ device_add+0x179/0xc00
+ device_create_groups_vargs+0xf4/0x100
+ device_create+0x7b/0xb0
+ bdi_register_va.part.13+0x58/0x2d0
+ bdi_register+0x9b/0xb0
+ init_mtd+0x62/0x171 [mtd]
+ do_one_initcall+0x6c/0x3c0
+ do_init_module+0x58/0x222
+ load_module+0x268e/0x27d0
+ __do_sys_finit_module+0xd5/0x140
+ do_syscall_64+0x37/0x90
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ </TASK>
+kobject_add_internal failed for mtd-0 with -EEXIST, don't try to register
+	things with the same name in the same directory.
+Error registering mtd class or bdi: -17
 
-Return error when __root_device_register() fails.
+If init_mtdchar() fails in init_mtd(), mtd_bdi will not be unregistered,
+as a result, we can't load the mtd module again, to fix this by calling
+bdi_unregister(mtd_bdi) after out_procfs label.
 
-Fixes: 658bcdae9c67 ("vme: Adding Fake VME driver")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221205084805.147436-1-chenzhongjin@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 445caaa20c4d ("mtd: Allocate bdi objects dynamically")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20221024065109.2050705-1-cuigaosheng1@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vme/bridges/vme_fake.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mtd/mtdcore.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/vme/bridges/vme_fake.c b/drivers/vme/bridges/vme_fake.c
-index 6a1bc284f297..eae78366eb02 100644
---- a/drivers/vme/bridges/vme_fake.c
-+++ b/drivers/vme/bridges/vme_fake.c
-@@ -1073,6 +1073,8 @@ static int __init fake_init(void)
- 
- 	/* We need a fake parent device */
- 	vme_root = __root_device_register("vme", THIS_MODULE);
-+	if (IS_ERR(vme_root))
-+		return PTR_ERR(vme_root);
- 
- 	/* If we want to support more than one bridge at some point, we need to
- 	 * dynamically allocate this so we get one per device.
+diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
+index cc7e1fd1ef10..37050c551880 100644
+--- a/drivers/mtd/mtdcore.c
++++ b/drivers/mtd/mtdcore.c
+@@ -2452,6 +2452,7 @@ static int __init init_mtd(void)
+ out_procfs:
+ 	if (proc_mtd)
+ 		remove_proc_entry("mtd", NULL);
++	bdi_unregister(mtd_bdi);
+ 	bdi_put(mtd_bdi);
+ err_bdi:
+ 	class_unregister(&mtd_class);
 -- 
 2.35.1
 
