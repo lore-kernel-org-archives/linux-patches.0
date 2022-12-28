@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D135A1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59B9DC433D2;
-	Wed, 28 Dec 2022 16:33:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AA51C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E727DC433D2;
+	Wed, 28 Dec 2022 16:33:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245204;
-	bh=TUh3zcjqJXcPH8Ndvikh/WKp9PyCEtQbYfKbxmwZ1KI=;
+	s=korg; t=1672245207;
+	bh=5Q6EOdHHdb7v57Kcm3OpxqH9JtcDWtT9XCaGiSmVKPY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EEmJABoRofEbP6JB+HdRyOjJ6qXPpO3XwO9UeYR03DUpqpheFFTm24Pd/qY7Lk0XH
-	 g06WTJ07HUmKC+JPztZaHFPGjToPIN7gicsh2c5HAZNASkuNDYPmiF70Hdwe/M8gyO
-	 5jmp4dBYWp9dSW37iyqj/r4Eq9nOFcvBkHQY0v4Q=
+	b=PXrAlnRwk++jSNW5e/eKxq62RL0O5f3r4KzhFBgQLpVDdcNJlGASspVXr89QLpHZC
+	 R2i00eYoAJ0EV/AQPcumCk6mkQzZqCOciyhHXmi4Hx3QTx020sR/TBdeKGNL0qjyYf
+	 SLCRFVaCV9rEvlydUEOuYFoHXQZcHKrWr3WRLyVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kirill Tkhai <tkhai@ya.ru>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xiaochen Shen <xiaochen.shen@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0850/1073] unix: Fix race in SOCK_SEQPACKETs unix_dgram_sendmsg()
-Date: Wed, 28 Dec 2022 15:40:38 +0100
-Message-Id: <20221228144351.107161324@linuxfoundation.org>
+Subject: [PATCH 6.1 0815/1146] dmaengine: idxd: Make read buffer sysfs attributes invisible for Intel IAA
+Date: Wed, 28 Dec 2022 15:39:14 +0100
+Message-Id: <20221228144352.289479356@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,84 +36,160 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kirill Tkhai <tkhai@ya.ru>
+From: Xiaochen Shen <xiaochen.shen@intel.com>
 
-[ Upstream commit 3ff8bff704f4de125dca2262e5b5b963a3da1d87 ]
+[ Upstream commit 9a8ddb35a9d5d3ad76784a012459b256a9d7de7e ]
 
-There is a race resulting in alive SOCK_SEQPACKET socket
-may change its state from TCP_ESTABLISHED to TCP_CLOSE:
+In current code, the following sysfs attributes are exposed to user to
+show or update the values:
+  max_read_buffers (max_tokens)
+  read_buffer_limit (token_limit)
+  group/read_buffers_allowed (group/tokens_allowed)
+  group/read_buffers_reserved (group/tokens_reserved)
+  group/use_read_buffer_limit (group/use_token_limit)
 
-unix_release_sock(peer)                  unix_dgram_sendmsg(sk)
-  sock_orphan(peer)
-    sock_set_flag(peer, SOCK_DEAD)
-                                           sock_alloc_send_pskb()
-                                             if !(sk->sk_shutdown & SEND_SHUTDOWN)
-                                               OK
-                                           if sock_flag(peer, SOCK_DEAD)
-                                             sk->sk_state = TCP_CLOSE
-  sk->sk_shutdown = SHUTDOWN_MASK
+>From Intel IAA spec [1], Intel IAA does not support Read Buffer
+allocation control. So these sysfs attributes should not be supported on
+IAA device.
 
-After that socket sk remains almost normal: it is able to connect, listen, accept
-and recvmsg, while it can't sendmsg.
+Fix this issue by making these sysfs attributes invisible through
+is_visible() filter when the device is IAA.
 
-Since this is the only possibility for alive SOCK_SEQPACKET to change
-the state in such way, we should better fix this strange and potentially
-danger corner case.
+Add description in the ABI documentation to mention that these
+attributes are not visible when the device does not support Read Buffer
+allocation control.
 
-Note, that we will return EPIPE here like this is normally done in sock_alloc_send_pskb().
-Originally used ECONNREFUSED looks strange, since it's strange to return
-a specific retval in dependence of race in kernel, when user can't affect on this.
+[1]: https://cdrdv2.intel.com/v1/dl/getContent/721858
 
-Also, move TCP_CLOSE assignment for SOCK_DGRAM sockets under state lock
-to fix race with unix_dgram_connect():
-
-unix_dgram_connect(other)            unix_dgram_sendmsg(sk)
-                                       unix_peer(sk) = NULL
-                                       unix_state_unlock(sk)
-  unix_state_double_lock(sk, other)
-  sk->sk_state  = TCP_ESTABLISHED
-  unix_peer(sk) = other
-  unix_state_double_unlock(sk, other)
-                                       sk->sk_state  = TCP_CLOSED
-
-This patch fixes both of these races.
-
-Fixes: 83301b5367a9 ("af_unix: Set TCP_ESTABLISHED for datagram sockets too")
-Signed-off-by: Kirill Tkhai <tkhai@ya.ru>
-Link: https://lore.kernel.org/r/135fda25-22d5-837a-782b-ceee50e19844@ya.ru
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: fde212e44f45 ("dmaengine: idxd: deprecate token sysfs attributes for read buffers")
+Fixes: c52ca478233c ("dmaengine: idxd: add configuration component of driver")
+Signed-off-by: Xiaochen Shen <xiaochen.shen@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Link: https://lore.kernel.org/r/20221022074949.11719-1-xiaochen.shen@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/unix/af_unix.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ .../ABI/stable/sysfs-driver-dma-idxd          | 10 ++++++
+ drivers/dma/idxd/sysfs.c                      | 36 +++++++++++++++++++
+ 2 files changed, 46 insertions(+)
 
-diff --git a/net/unix/af_unix.c b/net/unix/af_unix.c
-index 02fad8e8f4cd..48cc8223b06b 100644
---- a/net/unix/af_unix.c
-+++ b/net/unix/af_unix.c
-@@ -1969,13 +1969,20 @@ static int unix_dgram_sendmsg(struct socket *sock, struct msghdr *msg,
- 			unix_state_lock(sk);
+diff --git a/Documentation/ABI/stable/sysfs-driver-dma-idxd b/Documentation/ABI/stable/sysfs-driver-dma-idxd
+index 69e2d9155e0d..3becc9a82bdf 100644
+--- a/Documentation/ABI/stable/sysfs-driver-dma-idxd
++++ b/Documentation/ABI/stable/sysfs-driver-dma-idxd
+@@ -50,6 +50,8 @@ Description:    The total number of read buffers supported by this device.
+ 		The read buffers represent resources within the DSA
+ 		implementation, and these resources are allocated by engines to
+ 		support operations. See DSA spec v1.2 9.2.4 Total Read Buffers.
++		It's not visible when the device does not support Read Buffer
++		allocation control.
  
- 		err = 0;
--		if (unix_peer(sk) == other) {
-+		if (sk->sk_type == SOCK_SEQPACKET) {
-+			/* We are here only when racing with unix_release_sock()
-+			 * is clearing @other. Never change state to TCP_CLOSE
-+			 * unlike SOCK_DGRAM wants.
-+			 */
-+			unix_state_unlock(sk);
-+			err = -EPIPE;
-+		} else if (unix_peer(sk) == other) {
- 			unix_peer(sk) = NULL;
- 			unix_dgram_peer_wake_disconnect_wakeup(sk, other);
+ What:           /sys/bus/dsa/devices/dsa<m>/max_transfer_size
+ Date:           Oct 25, 2019
+@@ -123,6 +125,8 @@ Contact:        dmaengine@vger.kernel.org
+ Description:    The maximum number of read buffers that may be in use at
+ 		one time by operations that access low bandwidth memory in the
+ 		device. See DSA spec v1.2 9.2.8 GENCFG on Global Read Buffer Limit.
++		It's not visible when the device does not support Read Buffer
++		allocation control.
  
-+			sk->sk_state = TCP_CLOSE;
- 			unix_state_unlock(sk);
+ What:		/sys/bus/dsa/devices/dsa<m>/cmd_status
+ Date:		Aug 28, 2020
+@@ -252,6 +256,8 @@ KernelVersion:	5.17.0
+ Contact:	dmaengine@vger.kernel.org
+ Description:	Enable the use of global read buffer limit for the group. See DSA
+ 		spec v1.2 9.2.18 GRPCFG Use Global Read Buffer Limit.
++		It's not visible when the device does not support Read Buffer
++		allocation control.
  
--			sk->sk_state = TCP_CLOSE;
- 			unix_dgram_disconnected(sk, other);
- 			sock_put(other);
- 			err = -ECONNREFUSED;
+ What:		/sys/bus/dsa/devices/group<m>.<n>/read_buffers_allowed
+ Date:		Dec 10, 2021
+@@ -260,6 +266,8 @@ Contact:	dmaengine@vger.kernel.org
+ Description:	Indicates max number of read buffers that may be in use at one time
+ 		by all engines in the group. See DSA spec v1.2 9.2.18 GRPCFG Read
+ 		Buffers Allowed.
++		It's not visible when the device does not support Read Buffer
++		allocation control.
+ 
+ What:		/sys/bus/dsa/devices/group<m>.<n>/read_buffers_reserved
+ Date:		Dec 10, 2021
+@@ -268,6 +276,8 @@ Contact:	dmaengine@vger.kernel.org
+ Description:	Indicates the number of Read Buffers reserved for the use of
+ 		engines in the group. See DSA spec v1.2 9.2.18 GRPCFG Read Buffers
+ 		Reserved.
++		It's not visible when the device does not support Read Buffer
++		allocation control.
+ 
+ What:		/sys/bus/dsa/devices/group<m>.<n>/desc_progress_limit
+ Date:		Sept 14, 2022
+diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+index 7909767e9836..3229dfc78650 100644
+--- a/drivers/dma/idxd/sysfs.c
++++ b/drivers/dma/idxd/sysfs.c
+@@ -528,6 +528,22 @@ static bool idxd_group_attr_progress_limit_invisible(struct attribute *attr,
+ 		!idxd->hw.group_cap.progress_limit;
+ }
+ 
++static bool idxd_group_attr_read_buffers_invisible(struct attribute *attr,
++						   struct idxd_device *idxd)
++{
++	/*
++	 * Intel IAA does not support Read Buffer allocation control,
++	 * make these attributes invisible.
++	 */
++	return (attr == &dev_attr_group_use_token_limit.attr ||
++		attr == &dev_attr_group_use_read_buffer_limit.attr ||
++		attr == &dev_attr_group_tokens_allowed.attr ||
++		attr == &dev_attr_group_read_buffers_allowed.attr ||
++		attr == &dev_attr_group_tokens_reserved.attr ||
++		attr == &dev_attr_group_read_buffers_reserved.attr) &&
++		idxd->data->type == IDXD_TYPE_IAX;
++}
++
+ static umode_t idxd_group_attr_visible(struct kobject *kobj,
+ 				       struct attribute *attr, int n)
+ {
+@@ -538,6 +554,9 @@ static umode_t idxd_group_attr_visible(struct kobject *kobj,
+ 	if (idxd_group_attr_progress_limit_invisible(attr, idxd))
+ 		return 0;
+ 
++	if (idxd_group_attr_read_buffers_invisible(attr, idxd))
++		return 0;
++
+ 	return attr->mode;
+ }
+ 
+@@ -1552,6 +1571,20 @@ static bool idxd_device_attr_max_batch_size_invisible(struct attribute *attr,
+ 	       idxd->data->type == IDXD_TYPE_IAX;
+ }
+ 
++static bool idxd_device_attr_read_buffers_invisible(struct attribute *attr,
++						    struct idxd_device *idxd)
++{
++	/*
++	 * Intel IAA does not support Read Buffer allocation control,
++	 * make these attributes invisible.
++	 */
++	return (attr == &dev_attr_max_tokens.attr ||
++		attr == &dev_attr_max_read_buffers.attr ||
++		attr == &dev_attr_token_limit.attr ||
++		attr == &dev_attr_read_buffer_limit.attr) &&
++		idxd->data->type == IDXD_TYPE_IAX;
++}
++
+ static umode_t idxd_device_attr_visible(struct kobject *kobj,
+ 					struct attribute *attr, int n)
+ {
+@@ -1561,6 +1594,9 @@ static umode_t idxd_device_attr_visible(struct kobject *kobj,
+ 	if (idxd_device_attr_max_batch_size_invisible(attr, idxd))
+ 		return 0;
+ 
++	if (idxd_device_attr_read_buffers_invisible(attr, idxd))
++		return 0;
++
+ 	return attr->mode;
+ }
+ 
 -- 
 2.35.1
 
