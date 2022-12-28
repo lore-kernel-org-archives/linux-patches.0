@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C73AA23AF
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:57:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E1DAC433EF;
-	Wed, 28 Dec 2022 16:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E80423AF
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:57:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 015F5C433EF;
+	Wed, 28 Dec 2022 16:57:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246668;
-	bh=rFQeT95BxuX8c9BrMV2yY9WpOgCL7RSD88LtoDvjkHI=;
+	s=korg; t=1672246671;
+	bh=TMjMsjHmMhbl2ZFSTDpsbYNl/eWUpsAJug78mago/Y0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SaLqScb4VCyBCct8ga9PYDm45woEccA9REf+dfTvIYj7B1wfnWDuZP5hIJXjaZprv
-	 CDjWMlx6qPqaI7NCfvg/+rEix/x+Io5gvST2/5E75Y3HBAUzjC7i7x4UiIFqNDLR04
-	 HjIaVltrS2aRuE4XnKg2CySs2yRBX8eoOl6yhXRs=
+	b=PMc1yEemlm7qL1yMug5JcOLO20eD7aB/vHo87zulAihuWB7LvW4HU5jBs7zGaN/Gm
+	 wqrLJhgsjeInOLmmJOnyXbIQccFXR/dzWWTBfOuRZ3GmR3DCYshhZj9rwlPOplPBBc
+	 I/rJ9sCQrNmmJt3NdtxtbcR66klkz1gOFGjnGQjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 1119/1146] iio: fix memory leak in iio_device_register_eventset()
-Date: Wed, 28 Dec 2022 15:44:18 +0100
-Message-Id: <20221228144400.544071882@linuxfoundation.org>
+	Jeff LaBundy <jeff@labundy.com>,
+	Mattijs Korpershoek <mkorpershoek@baylibre.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1093/1146] Input: iqs7222 - report malformed properties
+Date: Wed, 28 Dec 2022 15:43:52 +0100
+Message-Id: <20221228144359.863076746@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,52 +36,143 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Jeff LaBundy <jeff@labundy.com>
 
-commit 86fdd15e10e404e70ecb2a3bff24d70356d42b36 upstream.
+[ Upstream commit 404f3b48e65f058d94429e4a1ec16a1f82ff3b2f ]
 
-When iio_device_register_sysfs_group() returns failed,
-iio_device_register_eventset() needs to free attrs array.
+Nonzero return values of several calls to fwnode_property_read_u32()
+are silently ignored, leaving no way to know the properties were not
+applied in the event of an error.
 
-Otherwise, kmemleak would scan & report memory leak as below:
+Solve this problem by evaluating fwnode_property_read_u32()'s return
+value, and reporting an error for any nonzero return value not equal
+to -EINVAL which indicates the property was absent altogether.
 
-unreferenced object 0xffff88810a1cc3c0 (size 32):
-  comm "100-i2c-vcnl302", pid 728, jiffies 4295052307 (age 156.027s)
-  backtrace:
-    __kmalloc+0x46/0x1b0
-    iio_device_register_eventset at drivers/iio/industrialio-event.c:541
-    __iio_device_register at drivers/iio/industrialio-core.c:1959
-    __devm_iio_device_register at drivers/iio/industrialio-core.c:2040
-
-Fixes: 32f171724e5c ("iio: core: rework iio device group creation")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Link: https://lore.kernel.org/r/20221115023712.3726854-1-zengheng4@huawei.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e505edaedcb9 ("Input: add support for Azoteq IQS7222A/B/C")
+Signed-off-by: Jeff LaBundy <jeff@labundy.com>
+Reviewed-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
+Link: https://lore.kernel.org/r/Y1SRRrpQXvkETjfm@nixie71
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/industrialio-event.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/input/misc/iqs7222.c | 44 +++++++++++++++++++++++++++++-------
+ 1 file changed, 36 insertions(+), 8 deletions(-)
 
---- a/drivers/iio/industrialio-event.c
-+++ b/drivers/iio/industrialio-event.c
-@@ -556,7 +556,7 @@ int iio_device_register_eventset(struct
+diff --git a/drivers/input/misc/iqs7222.c b/drivers/input/misc/iqs7222.c
+index 1c450ba4fdc3..6af25dfd1d2a 100644
+--- a/drivers/input/misc/iqs7222.c
++++ b/drivers/input/misc/iqs7222.c
+@@ -1807,8 +1807,9 @@ static int iqs7222_parse_chan(struct iqs7222_private *iqs7222,
+ 		chan_setup[0] |= IQS7222_CHAN_SETUP_0_REF_MODE_FOLLOW;
+ 		chan_setup[4] = val * 42 + 1048;
  
- 	ret = iio_device_register_sysfs_group(indio_dev, &ev_int->group);
- 	if (ret)
--		goto error_free_setup_event_lines;
-+		goto error_free_group_attrs;
+-		if (!fwnode_property_read_u32(chan_node, "azoteq,ref-weight",
+-					      &val)) {
++		error = fwnode_property_read_u32(chan_node, "azoteq,ref-weight",
++						 &val);
++		if (!error) {
+ 			if (val > U16_MAX) {
+ 				dev_err(&client->dev,
+ 					"Invalid %s reference weight: %u\n",
+@@ -1817,6 +1818,11 @@ static int iqs7222_parse_chan(struct iqs7222_private *iqs7222,
+ 			}
  
- 	ev_int->ioctl_handler.ioctl = iio_event_ioctl;
- 	iio_device_ioctl_handler_register(&iio_dev_opaque->indio_dev,
-@@ -564,6 +564,8 @@ int iio_device_register_eventset(struct
+ 			chan_setup[5] = val;
++		} else if (error != -EINVAL) {
++			dev_err(&client->dev,
++				"Failed to read %s reference weight: %d\n",
++				fwnode_get_name(chan_node), error);
++			return error;
+ 		}
  
- 	return 0;
+ 		/*
+@@ -1889,9 +1895,10 @@ static int iqs7222_parse_chan(struct iqs7222_private *iqs7222,
+ 		if (!event_node)
+ 			continue;
  
-+error_free_group_attrs:
-+	kfree(ev_int->group.attrs);
- error_free_setup_event_lines:
- 	iio_free_chan_devattr_list(&ev_int->dev_attr_list);
- 	kfree(ev_int);
+-		if (!fwnode_property_read_u32(event_node,
+-					      "azoteq,timeout-press-ms",
+-					      &val)) {
++		error = fwnode_property_read_u32(event_node,
++						 "azoteq,timeout-press-ms",
++						 &val);
++		if (!error) {
+ 			/*
+ 			 * The IQS7222B employs a global pair of press timeout
+ 			 * registers as opposed to channel-specific registers.
+@@ -1911,6 +1918,12 @@ static int iqs7222_parse_chan(struct iqs7222_private *iqs7222,
+ 
+ 			*setup &= ~(U8_MAX << i * 8);
+ 			*setup |= (val / 500 << i * 8);
++		} else if (error != -EINVAL) {
++			dev_err(&client->dev,
++				"Failed to read %s press timeout: %d\n",
++				fwnode_get_name(event_node), error);
++			fwnode_handle_put(event_node);
++			return error;
+ 		}
+ 
+ 		error = iqs7222_parse_event(iqs7222, event_node, chan_index,
+@@ -2009,7 +2022,8 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
+ 	if (fwnode_property_present(sldr_node, "azoteq,use-prox"))
+ 		sldr_setup[4 + reg_offset] -= 2;
+ 
+-	if (!fwnode_property_read_u32(sldr_node, "azoteq,slider-size", &val)) {
++	error = fwnode_property_read_u32(sldr_node, "azoteq,slider-size", &val);
++	if (!error) {
+ 		if (val > dev_desc->sldr_res) {
+ 			dev_err(&client->dev, "Invalid %s size: %u\n",
+ 				fwnode_get_name(sldr_node), val);
+@@ -2023,6 +2037,10 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
+ 			sldr_setup[2] |= (val / 16 <<
+ 					  IQS7222_SLDR_SETUP_2_RES_SHIFT);
+ 		}
++	} else if (error != -EINVAL) {
++		dev_err(&client->dev, "Failed to read %s size: %d\n",
++			fwnode_get_name(sldr_node), error);
++		return error;
+ 	}
+ 
+ 	if (!(reg_offset ? sldr_setup[3]
+@@ -2032,7 +2050,8 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
+ 		return -EINVAL;
+ 	}
+ 
+-	if (!fwnode_property_read_u32(sldr_node, "azoteq,top-speed", &val)) {
++	error = fwnode_property_read_u32(sldr_node, "azoteq,top-speed", &val);
++	if (!error) {
+ 		if (val > (reg_offset ? U16_MAX : U8_MAX * 4)) {
+ 			dev_err(&client->dev, "Invalid %s top speed: %u\n",
+ 				fwnode_get_name(sldr_node), val);
+@@ -2045,9 +2064,14 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
+ 			sldr_setup[2] &= ~IQS7222_SLDR_SETUP_2_TOP_SPEED_MASK;
+ 			sldr_setup[2] |= (val / 4);
+ 		}
++	} else if (error != -EINVAL) {
++		dev_err(&client->dev, "Failed to read %s top speed: %d\n",
++			fwnode_get_name(sldr_node), error);
++		return error;
+ 	}
+ 
+-	if (!fwnode_property_read_u32(sldr_node, "linux,axis", &val)) {
++	error = fwnode_property_read_u32(sldr_node, "linux,axis", &val);
++	if (!error) {
+ 		u16 sldr_max = sldr_setup[3] - 1;
+ 
+ 		if (!reg_offset) {
+@@ -2061,6 +2085,10 @@ static int iqs7222_parse_sldr(struct iqs7222_private *iqs7222,
+ 
+ 		input_set_abs_params(iqs7222->keypad, val, 0, sldr_max, 0, 0);
+ 		iqs7222->sl_axis[sldr_index] = val;
++	} else if (error != -EINVAL) {
++		dev_err(&client->dev, "Failed to read %s axis: %d\n",
++			fwnode_get_name(sldr_node), error);
++		return error;
+ 	}
+ 
+ 	if (dev_desc->wheel_enable) {
+-- 
+2.35.1
+
 
 
