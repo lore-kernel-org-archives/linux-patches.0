@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 998D11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E4AAC433D2;
-	Wed, 28 Dec 2022 15:01:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41EB31863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8707C433D2;
+	Wed, 28 Dec 2022 15:01:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239714;
-	bh=+e4kKoYMfsgLA0QIIilo188036g+bAIfSq9Ae03fcaw=;
+	s=korg; t=1672239717;
+	bh=l1bysOw6NrWjJjnsTbcRQktRrXpUHoGc7pNnnLvvdHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u3TTUHHGxVS5DLe7sZgb/754DyAmZFvYSg9iTeGxs6rgxrueWt+UCFyXpQRTSiis2
-	 Ni562vnIpruf3vwzouK9BSZrlV8B5gPS68tvFcEHQXvGEeSiZsANi7e70oox7CFlRj
-	 Zbgc5Mhb5O6T4BpP66uXBWKgpUqwSt11kIGEGkXA=
+	b=yvjeonZ36+FR1CttcNZ67Ma8ReNZCbHun9+/XeKpRNmeySl8NFzOd6YWfSdmp3eWK
+	 tAKKg3DcLDReyrDGjxctLRucS4JCPyTlJ7+ITAuX05G38yARvhhbC1PYNPHnigkO1V
+	 LWH49haRc2yHxj5YrU0Z5Er9UJfT5O6f9oXv4Tc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Pengcheng Yang <yangpc@wangsu.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0067/1073] arm64: dts: mediatek: pumpkin-common: Fix devicetree warnings
-Date: Wed, 28 Dec 2022 15:27:35 +0100
-Message-Id: <20221228144329.907804859@linuxfoundation.org>
+Subject: [PATCH 5.15 261/731] bpf, sockmap: Fix repeated calls to sock_put() when msg has more_data
+Date: Wed, 28 Dec 2022 15:36:08 +0100
+Message-Id: <20221228144304.127942138@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,53 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Pengcheng Yang <yangpc@wangsu.com>
 
-[ Upstream commit 509438336ce75c8b4e6ce8e8d507dc77d0783bdd ]
+[ Upstream commit 7a9841ca025275b5b0edfb0b618934abb6ceec15 ]
 
-Fix the pinctrl submodes and optee node to remove unneeded unit address,
-fixing all unit_address_vs_reg warnings.
+In tcp_bpf_send_verdict() redirection, the eval variable is assigned to
+__SK_REDIRECT after the apply_bytes data is sent, if msg has more_data,
+sock_put() will be called multiple times.
 
-Fixes: 9983822c8cf9 ("arm64: dts: mediatek: add pumpkin board dts")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221013152212.416661-8-angelogioacchino.delregno@collabora.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+We should reset the eval variable to __SK_NONE every time more_data
+starts.
+
+This causes:
+
+IPv4: Attempt to release TCP socket in state 1 00000000b4c925d7
+------------[ cut here ]------------
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 5 PID: 4482 at lib/refcount.c:25 refcount_warn_saturate+0x7d/0x110
+Modules linked in:
+CPU: 5 PID: 4482 Comm: sockhash_bypass Kdump: loaded Not tainted 6.0.0 #1
+Hardware name: Red Hat KVM, BIOS 1.11.0-2.el7 04/01/2014
+Call Trace:
+ <TASK>
+ __tcp_transmit_skb+0xa1b/0xb90
+ ? __alloc_skb+0x8c/0x1a0
+ ? __kmalloc_node_track_caller+0x184/0x320
+ tcp_write_xmit+0x22a/0x1110
+ __tcp_push_pending_frames+0x32/0xf0
+ do_tcp_sendpages+0x62d/0x640
+ tcp_bpf_push+0xae/0x2c0
+ tcp_bpf_sendmsg_redir+0x260/0x410
+ ? preempt_count_add+0x70/0xa0
+ tcp_bpf_send_verdict+0x386/0x4b0
+ tcp_bpf_sendmsg+0x21b/0x3b0
+ sock_sendmsg+0x58/0x70
+ __sys_sendto+0xfa/0x170
+ ? xfd_validate_state+0x1d/0x80
+ ? switch_fpu_return+0x59/0xe0
+ __x64_sys_sendto+0x24/0x30
+ do_syscall_64+0x37/0x90
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Fixes: cd9733f5d75c ("tcp_bpf: Fix one concurrency problem in the tcp_bpf_send_verdict function")
+Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/1669718441-2654-2-git-send-email-yangpc@wangsu.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/ipv4/tcp_bpf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi b/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi
-index 8ee1529683a3..ec8dfb3d1c6d 100644
---- a/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/pumpkin-common.dtsi
-@@ -17,7 +17,7 @@ chosen {
- 	};
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index 5194c6870273..a38db402994d 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -280,7 +280,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
+ 	bool cork = false, enospc = sk_msg_full(msg);
+ 	struct sock *sk_redir;
+ 	u32 tosend, origsize, sent, delta = 0;
+-	u32 eval = __SK_NONE;
++	u32 eval;
+ 	int ret;
  
- 	firmware {
--		optee: optee@4fd00000 {
-+		optee: optee {
- 			compatible = "linaro,optee-tz";
- 			method = "smc";
- 		};
-@@ -209,7 +209,7 @@ pins_cmd_dat {
- 		};
- 	};
+ more_data:
+@@ -311,6 +311,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
+ 	tosend = msg->sg.size;
+ 	if (psock->apply_bytes && psock->apply_bytes < tosend)
+ 		tosend = psock->apply_bytes;
++	eval = __SK_NONE;
  
--	i2c0_pins_a: i2c0@0 {
-+	i2c0_pins_a: i2c0 {
- 		pins1 {
- 			pinmux = <MT8516_PIN_58_SDA0__FUNC_SDA0_0>,
- 				 <MT8516_PIN_59_SCL0__FUNC_SCL0_0>;
-@@ -217,7 +217,7 @@ pins1 {
- 		};
- 	};
- 
--	i2c2_pins_a: i2c2@0 {
-+	i2c2_pins_a: i2c2 {
- 		pins1 {
- 			pinmux = <MT8516_PIN_60_SDA2__FUNC_SDA2_0>,
- 				 <MT8516_PIN_61_SCL2__FUNC_SCL2_0>;
+ 	switch (psock->eval) {
+ 	case __SK_PASS:
 -- 
 2.35.1
 
