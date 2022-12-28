@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28F51875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:59:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DBDDC433D2;
-	Wed, 28 Dec 2022 15:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 838BE1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:59:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FF0C433D2;
+	Wed, 28 Dec 2022 15:59:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243187;
-	bh=eDbWn71aRWwVcwiDi/qVVaz6H1Ukv+lN2M+lNniK5Ck=;
+	s=korg; t=1672243190;
+	bh=/z8x4pS6M7ZxfvM80BmNyf2GC0jrCMhmsJJE+g//gIQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v8r4FAFyniD9n/zNrxU1zlUmz1XF0aLefYcPZJesB4UVuSxcmp8+EfUoxuR23ZGFs
-	 4jWl6ducKXzsotr9m7re0jQ3g4mINxqvOupfJaQAtDMFzEoGyIbOas89Hw3NWP7QLA
-	 tJXyELRzhadmRYxRBgp3GZPGxtN4+iRytYjyH+Yw=
+	b=Y9Lou4ArT3IiV4PT8TFnvOlgP32rkQOCDJVaGMEhsx2Qqg9Iu8oNc/1+mNqjVVKPL
+	 fpOj8AvEVjXWKDinM5wDPUOj/Z5F/NGRBjEl73FeIZbnGxSVja3bhv1iEBcZ0kjDFd
+	 xplP7ndWufdCffoWtjB87tcQoOZuIBjaMf1JXeoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0499/1073] media: coda: Add check for dcoda_iram_alloc
-Date: Wed, 28 Dec 2022 15:34:47 +0100
-Message-Id: <20221228144341.589506837@linuxfoundation.org>
+Subject: [PATCH 5.15 693/731] ASoC: wm8994: Fix potential deadlock
+Date: Wed, 28 Dec 2022 15:43:20 +0100
+Message-Id: <20221228144316.550895792@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,45 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit 6b8082238fb8bb20f67e46388123e67a5bbc558d ]
+[ Upstream commit 9529dc167ffcdfd201b9f0eda71015f174095f7e ]
 
-As the coda_iram_alloc may return NULL pointer,
-it should be better to check the return value
-in order to avoid NULL poineter dereference,
-same as the others.
+Fix this by dropping wm8994->accdet_lock while calling
+cancel_delayed_work_sync(&wm8994->mic_work) in wm1811_jackdet_irq().
 
-Fixes: b313bcc9a467 ("[media] coda: simplify IRAM setup")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: c0cc3f166525 ("ASoC: wm8994: Allow a delay between jack insertion and microphone detect")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20221209091657.1183-1-m.szyprowski@samsung.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/chips-media/coda-bit.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/wm8994.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/media/platform/chips-media/coda-bit.c b/drivers/media/platform/chips-media/coda-bit.c
-index 2736a902e3df..6d816fd69a17 100644
---- a/drivers/media/platform/chips-media/coda-bit.c
-+++ b/drivers/media/platform/chips-media/coda-bit.c
-@@ -854,7 +854,7 @@ static void coda_setup_iram(struct coda_ctx *ctx)
- 		/* Only H.264BP and H.263P3 are considered */
- 		iram_info->buf_dbk_y_use = coda_iram_alloc(iram_info, w64);
- 		iram_info->buf_dbk_c_use = coda_iram_alloc(iram_info, w64);
--		if (!iram_info->buf_dbk_c_use)
-+		if (!iram_info->buf_dbk_y_use || !iram_info->buf_dbk_c_use)
- 			goto out;
- 		iram_info->axi_sram_use |= dbk_bits;
+diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
+index f117ec0c489f..6759db92f6c4 100644
+--- a/sound/soc/codecs/wm8994.c
++++ b/sound/soc/codecs/wm8994.c
+@@ -3853,7 +3853,12 @@ static irqreturn_t wm1811_jackdet_irq(int irq, void *data)
+ 	} else {
+ 		dev_dbg(component->dev, "Jack not detected\n");
  
-@@ -878,7 +878,7 @@ static void coda_setup_iram(struct coda_ctx *ctx)
++		/* Release wm8994->accdet_lock to avoid deadlock:
++		 * cancel_delayed_work_sync() takes wm8994->mic_work internal
++		 * lock and wm1811_mic_work takes wm8994->accdet_lock */
++		mutex_unlock(&wm8994->accdet_lock);
+ 		cancel_delayed_work_sync(&wm8994->mic_work);
++		mutex_lock(&wm8994->accdet_lock);
  
- 		iram_info->buf_dbk_y_use = coda_iram_alloc(iram_info, w128);
- 		iram_info->buf_dbk_c_use = coda_iram_alloc(iram_info, w128);
--		if (!iram_info->buf_dbk_c_use)
-+		if (!iram_info->buf_dbk_y_use || !iram_info->buf_dbk_c_use)
- 			goto out;
- 		iram_info->axi_sram_use |= dbk_bits;
- 
+ 		snd_soc_component_update_bits(component, WM8958_MICBIAS2,
+ 				    WM8958_MICB2_DISCH, WM8958_MICB2_DISCH);
 -- 
 2.35.1
 
