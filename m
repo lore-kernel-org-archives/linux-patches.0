@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 602F41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9001C433EF;
-	Wed, 28 Dec 2022 15:50:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D63881863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CA6BC433D2;
+	Wed, 28 Dec 2022 15:50:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242649;
-	bh=kvU+2fSgBjunwK2CfNT1L4BIgyAbAMZJL4sX1ZHUArQ=;
+	s=korg; t=1672242651;
+	bh=ZXSA5oaRgfG2idKcke4QroHb3mxOgdIVEraQJ4fswjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IwD7U9Rvoklv+TigtP3pHpEEizjLVw+xovPbTKwvgDGfJpkiRqu62ROEVo523qpvw
-	 Zhx6JF9TvS4zMr/UnzhCiCERSXA00j2WThOYW7d/LjUnWjdA9/RjmtvMGWRLmR8v/z
-	 wtilA3DBJQZPWjeb/LJKaXB9xNxegfytDn4q4AE0=
+	b=2FkVqph5fI9jOJ1ZCOCvUgOnAvkFv5ehDcaoAeRw5Z+fbjY0k60ynyX6EokB+qi+o
+	 bVGydrB+h7nHfLnOCC1/gHHg28/eEVkFj6W6XeZcTaI6JCfahwkgjcnPS0oAhzeUlQ
+	 cpPl3141/7PBHss25DeLjbPKC76jyRt4imxJv3kA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Brown <doug@schmorgal.com>,
-	Christian Gmeiner <christian.gmeiner@gmail.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
+	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
+	Marco Felsch <m.felsch@pengutronix.de>,
+	Abel Vesa <abel.vesa@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 629/731] drm/etnaviv: add missing quirks for GC300
-Date: Wed, 28 Dec 2022 15:42:16 +0100
-Message-Id: <20221228144314.757100455@linuxfoundation.org>
+Subject: [PATCH 6.1 0398/1146] clk: imx: replace osc_hdmi with dummy
+Date: Wed, 28 Dec 2022 15:32:17 +0100
+Message-Id: <20221228144340.973859570@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,51 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Doug Brown <doug@schmorgal.com>
+From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
 
-[ Upstream commit cc7d3fb446a91f24978a6aa59cbb578f92e22242 ]
+[ Upstream commit e7fa365ff66f16772dc06b480cd78f858d10856b ]
 
-The GC300's features register doesn't specify that a 2D pipe is
-available, and like the GC600, its idle register reports zero bits where
-modules aren't present.
+There is no occurrence of the hdmi oscillator in the reference manual
+(document IMX8MNRM Rev 2, 07/2022). Further, if we consider the indexes
+76-81 and 134 of the "Clock Root" table of chapter 5 of the RM, there is
+no entry for the source select bits 101b, which is the setting referenced
+by "osc_hdmi".
+Fix by renaming "osc_hdmi" with "dummy", a clock which has already been
+used for missing source select bits.
 
-Signed-off-by: Doug Brown <doug@schmorgal.com>
-Reviewed-by: Christian Gmeiner <christian.gmeiner@gmail.com>
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Tested on the BSH SystemMaster (SMM) S2 board.
+
+Fixes: 96d6392b54dbb ("clk: imx: Add support for i.MX8MN clock driver")
+Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+Acked-by: Marco Felsch <m.felsch@pengutronix.de>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/20221117113637.1978703-3-dario.binacchi@amarulasolutions.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gpu.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/clk/imx/clk-imx8mn.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-index cc5b07f86346..e8ff70be449a 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-@@ -416,6 +416,12 @@ static void etnaviv_hw_identify(struct etnaviv_gpu *gpu)
- 	if (gpu->identity.model == chipModel_GC700)
- 		gpu->identity.features &= ~chipFeatures_FAST_CLEAR;
+diff --git a/drivers/clk/imx/clk-imx8mn.c b/drivers/clk/imx/clk-imx8mn.c
+index 72f9563a0ff6..0fae97e61e2c 100644
+--- a/drivers/clk/imx/clk-imx8mn.c
++++ b/drivers/clk/imx/clk-imx8mn.c
+@@ -108,27 +108,27 @@ static const char * const imx8mn_disp_pixel_sels[] = {"osc_24m", "video_pll1_out
+ 						      "sys_pll3_out", "clk_ext4", };
  
-+	/* These models/revisions don't have the 2D pipe bit */
-+	if ((gpu->identity.model == chipModel_GC500 &&
-+	     gpu->identity.revision <= 2) ||
-+	    gpu->identity.model == chipModel_GC300)
-+		gpu->identity.features |= chipFeatures_PIPE_2D;
-+
- 	if ((gpu->identity.model == chipModel_GC500 &&
- 	     gpu->identity.revision < 2) ||
- 	    (gpu->identity.model == chipModel_GC300 &&
-@@ -449,8 +455,9 @@ static void etnaviv_hw_identify(struct etnaviv_gpu *gpu)
- 				gpu_read(gpu, VIVS_HI_CHIP_MINOR_FEATURE_5);
- 	}
+ static const char * const imx8mn_sai2_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
+-						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
++						"video_pll1_out", "sys_pll1_133m", "dummy",
+ 						"clk_ext3", "clk_ext4", };
  
--	/* GC600 idle register reports zero bits where modules aren't present */
--	if (gpu->identity.model == chipModel_GC600)
-+	/* GC600/300 idle register reports zero bits where modules aren't present */
-+	if (gpu->identity.model == chipModel_GC600 ||
-+	    gpu->identity.model == chipModel_GC300)
- 		gpu->idle_mask = VIVS_HI_IDLE_STATE_TX |
- 				 VIVS_HI_IDLE_STATE_RA |
- 				 VIVS_HI_IDLE_STATE_SE |
+ static const char * const imx8mn_sai3_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
+-						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
++						"video_pll1_out", "sys_pll1_133m", "dummy",
+ 						"clk_ext3", "clk_ext4", };
+ 
+ static const char * const imx8mn_sai5_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
+-						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
++						"video_pll1_out", "sys_pll1_133m", "dummy",
+ 						"clk_ext2", "clk_ext3", };
+ 
+ static const char * const imx8mn_sai6_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
+-						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
++						"video_pll1_out", "sys_pll1_133m", "dummy",
+ 						"clk_ext3", "clk_ext4", };
+ 
+ static const char * const imx8mn_sai7_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
+-						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
++						"video_pll1_out", "sys_pll1_133m", "dummy",
+ 						"clk_ext3", "clk_ext4", };
+ 
+ static const char * const imx8mn_spdif1_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
+-						  "video_pll1_out", "sys_pll1_133m", "osc_hdmi",
++						  "video_pll1_out", "sys_pll1_133m", "dummy",
+ 						  "clk_ext2", "clk_ext3", };
+ 
+ static const char * const imx8mn_enet_ref_sels[] = {"osc_24m", "sys_pll2_125m", "sys_pll2_50m",
 -- 
 2.35.1
 
