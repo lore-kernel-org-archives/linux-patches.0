@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0F21C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4D99C433D2;
-	Wed, 28 Dec 2022 16:29:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C65E41C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:29:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E178C433D2;
+	Wed, 28 Dec 2022 16:29:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244957;
-	bh=bbE/MAX1gX6lzAw0fJ4igsuaQGEAsqCDqF8RDE3Cq7c=;
+	s=korg; t=1672244959;
+	bh=dRCMaNydInFQ/tG2XTzF+1HqvwiZ6fy+vxvxIUa9J6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hatSOT+lAc5SB7WH7HSduLBzOEbfYmBG6fkHza6TJ7HKTdNH0MUnONvGjxNZtBe/r
-	 lRklrgIVGZQdWl7ke/76ZEELmlUT1fwPZl5fYuK7RiZUJU/KM9WtYa8bKnamkKASYl
-	 VwbGbUbCYciU/JxlS+D1ZPHfgp9DJA8g0GKfYDxY=
+	b=cVEo7OTFjVgk7GAcdpXzkk/WACmePulQ1TsLqqsOf/yLzXI3Rlm483SgoYtdUDYa5
+	 VjYmpc8JFw/wBMuDRYAxXbjWiZGB26q7A+0yocsNfcJZoCqxrKijzIGHQv5nhWZhFj
+	 1RMtu2RKAdE8wtVA8gkLU9JrrS3DsWfJjf8eFjiU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	=?UTF-8?q?Marek=20Beh=C3=BAn?= <kabel@kernel.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0768/1146] power: supply: fix residue sysfs file in error handle route of __power_supply_register()
-Date: Wed, 28 Dec 2022 15:38:27 +0100
-Message-Id: <20221228144351.010552141@linuxfoundation.org>
+Subject: [PATCH 6.0 0806/1073] powerpc: dts: turris1x.dts: Add channel labels for temperature sensor
+Date: Wed, 28 Dec 2022 15:39:54 +0100
+Message-Id: <20221228144349.901420480@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,47 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 5b79480ce1978864ac3f06f2134dfa3b6691fe74 ]
+[ Upstream commit 67bbb62f61e810734da0a1577a9802ddaed24140 ]
 
-If device_add() succeeds, we should call device_del() when want to
-get rid of it, so move it into proper jump symbol.
+Channel 0 of SA56004ED chip refers to internal SA56004ED chip sensor (chip
+itself is located on the board) and channel 1 of SA56004ED chip refers to
+external sensor which is connected to temperature diode of the P2020 CPU.
 
-Otherwise, when __power_supply_register() returns fail and goto
-wakeup_init_failed to exit, there is still residue device file in sysfs.
-When attempt to probe device again, sysfs would complain as below:
-
-sysfs: cannot create duplicate filename '/devices/platform/i2c/i2c-0/0-001c/power_supply/adp5061'
-Call Trace:
- dump_stack_lvl+0x68/0x85
- sysfs_warn_dup.cold+0x1c/0x29
- sysfs_create_dir_ns+0x1b1/0x1d0
- kobject_add_internal+0x143/0x390
- kobject_add+0x108/0x170
-
-Fixes: 80c6463e2fa3 ("power_supply: Fix Oops from NULL pointer dereference from wakeup_source_activate")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: 54c15ec3b738 ("powerpc: dts: Add DTS file for CZ.NIC Turris 1.x routers")
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Reviewed-by: Marek Behún <kabel@kernel.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20220930123901.10251-1-pali@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/power_supply_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/boot/dts/turris1x.dts | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
-index 4b5fb172fa99..9bae94d2ea3a 100644
---- a/drivers/power/supply/power_supply_core.c
-+++ b/drivers/power/supply/power_supply_core.c
-@@ -1387,8 +1387,8 @@ __power_supply_register(struct device *parent,
- register_cooler_failed:
- 	psy_unregister_thermal(psy);
- register_thermal_failed:
--	device_del(dev);
- wakeup_init_failed:
-+	device_del(dev);
- device_add_failed:
- check_supplies_failed:
- dev_set_name_failed:
+diff --git a/arch/powerpc/boot/dts/turris1x.dts b/arch/powerpc/boot/dts/turris1x.dts
+index 045af668e928..e9cda34a140e 100644
+--- a/arch/powerpc/boot/dts/turris1x.dts
++++ b/arch/powerpc/boot/dts/turris1x.dts
+@@ -69,6 +69,20 @@ temperature-sensor@4c {
+ 				interrupt-parent = <&gpio>;
+ 				interrupts = <12 IRQ_TYPE_LEVEL_LOW>, /* GPIO12 - ALERT pin */
+ 					     <13 IRQ_TYPE_LEVEL_LOW>; /* GPIO13 - CRIT pin */
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				/* Local temperature sensor (SA56004ED internal) */
++				channel@0 {
++					reg = <0>;
++					label = "board";
++				};
++
++				/* Remote temperature sensor (D+/D- connected to P2020 CPU Temperature Diode) */
++				channel@1 {
++					reg = <1>;
++					label = "cpu";
++				};
+ 			};
+ 
+ 			/* DDR3 SPD/EEPROM */
 -- 
 2.35.1
 
