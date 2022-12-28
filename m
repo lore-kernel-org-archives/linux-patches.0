@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A90D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0674C433D2;
-	Wed, 28 Dec 2022 15:47:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E8AC1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9811DC433D2;
+	Wed, 28 Dec 2022 15:48:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242480;
-	bh=d266scq9zGpyNUQ6Afw40j9FICaRCkGtoyqNTb3E5IQ=;
+	s=korg; t=1672242483;
+	bh=gsWReIOGe45tATKyEE5K46shtw4sISddqYCRBYxUrLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1/9+DJ+jOexkykEdaLCbc1WrWRRxuMUt6fOXHejKi3hfg3MSs1+OsvODod/tiZGom
-	 KpikYEaJlgds6/6c5n11zwVx8wBCLLAMlFn/xbIfqcEUpxiHG0pQhOHBOZxik0B08f
-	 uqVfljjWK6pABctUQpKo4tuKWYrr6U54Vft9fXPE=
+	b=f7s1ube6ucXre1wT6IFGyfc5pzNmhFnKss6aYTrEb7T9ffuXD5QZPG4NpXkY0MEeO
+	 2cP1jXyM3E7gTeW+QFdFFJ7OLRBbMVgCqvU6O/DfLhn6J8PC3hZpa+3wiVpljlc8H/
+	 /59ILLNB8FjKWwQmip2Or5c8F7xxHMkTg/eOa7mQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Jassi Brar <jaswinder.singh@linaro.org>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 608/731] mailbox: arm_mhuv2: Fix return value check in mhuv2_probe()
-Date: Wed, 28 Dec 2022 15:41:55 +0100
-Message-Id: <20221228144314.162919435@linuxfoundation.org>
+Subject: [PATCH 6.0 0415/1073] wifi: rtl8xxxu: Fix use after rcu_read_unlock in rtl8xxxu_bss_info_changed
+Date: Wed, 28 Dec 2022 15:33:23 +0100
+Message-Id: <20221228144339.294712368@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,38 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 165b7643f2df890066b1b4e8a387888a600ca9bf ]
+[ Upstream commit 7927afb5e27baac694f585b59c436ba323528dc2 ]
 
-If devm_of_iomap() fails, it returns ERR_PTR() and never
-return NULL, so replace NULL pointer check with IS_ERR()
-to fix this problem.
+Commit a8b5aef2cca1 ("wifi: rtl8xxxu: gen2: Enable 40 MHz channel width")
+introduced a line where the pointer returned by ieee80211_find_sta() is
+used after rcu_read_unlock().
 
-Fixes: 5a6338cce9f4 ("mailbox: arm_mhuv2: Add driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Signed-off-by: Jassi Brar <jaswinder.singh@linaro.org>
+Move rcu_read_unlock() a bit lower to fix this.
+
+Fixes: a8b5aef2cca1 ("wifi: rtl8xxxu: gen2: Enable 40 MHz channel width")
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/3c82ad09-7593-3be1-1d2c-e58505fb43cb@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mailbox/arm_mhuv2.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/arm_mhuv2.c b/drivers/mailbox/arm_mhuv2.c
-index d997f8ebfa98..3af15083a25a 100644
---- a/drivers/mailbox/arm_mhuv2.c
-+++ b/drivers/mailbox/arm_mhuv2.c
-@@ -1061,8 +1061,8 @@ static int mhuv2_probe(struct amba_device *adev, const struct amba_id *id)
- 	int ret = -EINVAL;
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+index 2286119ba3d5..e85c6325199b 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -4654,7 +4654,6 @@ rtl8xxxu_bss_info_changed(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 			if (sta->deflink.ht_cap.cap &
+ 			    (IEEE80211_HT_CAP_SGI_40 | IEEE80211_HT_CAP_SGI_20))
+ 				sgi = 1;
+-			rcu_read_unlock();
  
- 	reg = devm_of_iomap(dev, dev->of_node, 0, NULL);
--	if (!reg)
--		return -ENOMEM;
-+	if (IS_ERR(reg))
-+		return PTR_ERR(reg);
- 
- 	mhu = devm_kzalloc(dev, sizeof(*mhu), GFP_KERNEL);
- 	if (!mhu)
+ 			highest_rate = fls(ramask) - 1;
+ 			if (highest_rate < DESC_RATE_MCS0) {
+@@ -4679,6 +4678,7 @@ rtl8xxxu_bss_info_changed(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
+ 				else
+ 					rarpt->txrate.bw = RATE_INFO_BW_20;
+ 			}
++			rcu_read_unlock();
+ 			bit_rate = cfg80211_calculate_bitrate(&rarpt->txrate);
+ 			rarpt->bit_rate = bit_rate;
+ 			rarpt->desc_rate = highest_rate;
 -- 
 2.35.1
 
