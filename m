@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 121A81C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:03:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82A43C433EF;
-	Wed, 28 Dec 2022 16:03:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 946421C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B796C433D2;
+	Wed, 28 Dec 2022 16:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243437;
-	bh=pDYmob6WaIS91pyoxGGAyqw7p191uVHX15Av8NEccFc=;
+	s=korg; t=1672243440;
+	bh=j9VCBPycalEhpmLtv/MtSgK8qc3wOVsmd0i+c2JzMMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jXDpvN1pWtK48CzuxdqLpftCikknvrhzwc0dx8l9h9TyUvNOjnzzCjX6yEB4MXxU/
-	 Gk2Q2/OzMUvWq5HoybCOaRIN/jhXO9QoCvTQVR+Hbklm35AvhfoKXF7ixMEfYg3hzc
-	 GEPFFzXR45foZzjCF6OpAbBwWUT0vTQO3xTpk7VE=
+	b=q8OfO1t65emLB+rG0nfvj33PPyEa2Lu2CtcMzGCrCSm65DRPMhnoO4Ol++P8D8mtT
+	 /dJtaP0MIYNtSPBQpoGr4e6//T8Rtic1QMNM1TXVGfGkO/7Y8/vpfU8du+QrXDVSGV
+	 TNPJC3/JfQaXp9YFXwqk4d+o0wrlam4oIdRfSJ+0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0529/1073] net: amd-xgbe: Fix logic around active and passive cables
-Date: Wed, 28 Dec 2022 15:35:17 +0100
-Message-Id: <20221228144342.413306645@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 721/731] regulator: core: fix deadlock on regulator enable
+Date: Wed, 28 Dec 2022 15:43:48 +0100
+Message-Id: <20221228144317.344570905@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,63 +34,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tom Lendacky <thomas.lendacky@amd.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 4998006c73afe44e2f639d55bd331c6c26eb039f ]
+commit cb3543cff90a4448ed560ac86c98033ad5fecda9 upstream.
 
-SFP+ active and passive cables are copper cables with fixed SFP+ end
-connectors. Due to a misinterpretation of this, SFP+ active cables could
-end up not being recognized, causing the driver to fail to establish a
-connection.
+When updating the operating mode as part of regulator enable, the caller
+has already locked the regulator tree and drms_uA_update() must not try
+to do the same in order not to trigger a deadlock.
 
-Introduce a new enum in SFP+ cable types, XGBE_SFP_CABLE_FIBER, that is
-the default cable type, and handle active and passive cables when they are
-specifically detected.
+The lock inversion is reported by lockdep as:
 
-Fixes: abf0a1c2b26a ("amd-xgbe: Add support for SFP+ modules")
-Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  ======================================================
+  WARNING: possible circular locking dependency detected
+  6.1.0-next-20221215 #142 Not tainted
+  ------------------------------------------------------
+  udevd/154 is trying to acquire lock:
+  ffffc11f123d7e50 (regulator_list_mutex){+.+.}-{3:3}, at: regulator_lock_dependent+0x54/0x280
+
+  but task is already holding lock:
+  ffff80000e4c36e8 (regulator_ww_class_acquire){+.+.}-{0:0}, at: regulator_enable+0x34/0x80
+
+  which lock already depends on the new lock.
+
+  ...
+
+   Possible unsafe locking scenario:
+
+         CPU0                    CPU1
+         ----                    ----
+    lock(regulator_ww_class_acquire);
+                                 lock(regulator_list_mutex);
+                                 lock(regulator_ww_class_acquire);
+    lock(regulator_list_mutex);
+
+   *** DEADLOCK ***
+
+just before probe of a Qualcomm UFS controller (occasionally) deadlocks
+when enabling one of its regulators.
+
+Fixes: 9243a195be7a ("regulator: core: Change voltage setting path")
+Fixes: f8702f9e4aa7 ("regulator: core: Use ww_mutex for regulators locking")
+Cc: stable@vger.kernel.org      # 5.0
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20221215104646.19818-1-johan+linaro@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/regulator/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-index 601a9f2fa9bf..c7b0d69ee62f 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-@@ -189,6 +189,7 @@ enum xgbe_sfp_cable {
- 	XGBE_SFP_CABLE_UNKNOWN = 0,
- 	XGBE_SFP_CABLE_ACTIVE,
- 	XGBE_SFP_CABLE_PASSIVE,
-+	XGBE_SFP_CABLE_FIBER,
- };
- 
- enum xgbe_sfp_base {
-@@ -1149,16 +1150,18 @@ static void xgbe_phy_sfp_parse_eeprom(struct xgbe_prv_data *pdata)
- 	phy_data->sfp_tx_fault = xgbe_phy_check_sfp_tx_fault(phy_data);
- 	phy_data->sfp_rx_los = xgbe_phy_check_sfp_rx_los(phy_data);
- 
--	/* Assume ACTIVE cable unless told it is PASSIVE */
-+	/* Assume FIBER cable unless told otherwise */
- 	if (sfp_base[XGBE_SFP_BASE_CABLE] & XGBE_SFP_BASE_CABLE_PASSIVE) {
- 		phy_data->sfp_cable = XGBE_SFP_CABLE_PASSIVE;
- 		phy_data->sfp_cable_len = sfp_base[XGBE_SFP_BASE_CU_CABLE_LEN];
--	} else {
-+	} else if (sfp_base[XGBE_SFP_BASE_CABLE] & XGBE_SFP_BASE_CABLE_ACTIVE) {
- 		phy_data->sfp_cable = XGBE_SFP_CABLE_ACTIVE;
-+	} else {
-+		phy_data->sfp_cable = XGBE_SFP_CABLE_FIBER;
- 	}
- 
- 	/* Determine the type of SFP */
--	if (phy_data->sfp_cable == XGBE_SFP_CABLE_PASSIVE &&
-+	if (phy_data->sfp_cable != XGBE_SFP_CABLE_FIBER &&
- 	    xgbe_phy_sfp_bit_rate(sfp_eeprom, XGBE_SFP_SPEED_10000))
- 		phy_data->sfp_base = XGBE_SFP_BASE_10000_CR;
- 	else if (sfp_base[XGBE_SFP_BASE_10GBE_CC] & XGBE_SFP_BASE_10GBE_CC_SR)
--- 
-2.35.1
-
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -962,7 +962,7 @@ static int drms_uA_update(struct regulat
+ 		/* get input voltage */
+ 		input_uV = 0;
+ 		if (rdev->supply)
+-			input_uV = regulator_get_voltage(rdev->supply);
++			input_uV = regulator_get_voltage_rdev(rdev->supply->rdev);
+ 		if (input_uV <= 0)
+ 			input_uV = rdev->constraints->input_uV;
+ 		if (input_uV <= 0) {
 
 
