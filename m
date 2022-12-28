@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A216F1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:14:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B058C433F0;
-	Wed, 28 Dec 2022 15:14:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49B311863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:14:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1821C433EF;
+	Wed, 28 Dec 2022 15:14:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240454;
-	bh=c4r1Zm/FgUma0g3oPmZakWrd1RXZiJunM4pxr5SeT5w=;
+	s=korg; t=1672240457;
+	bh=sjzpE6TxXOaGfUktNUd1mvH/NHxqVsA8dOzS25AlQig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DkzlqR8s6CmXtKnakKBmGtgWVBUKmxiQgPyER4QvALCrHTcpcrxB9G/GjzsXmbJvi
-	 3pklDKOS7r43HHlO7hKM0esXggvtznVryPbNSLN0sQt6QKhw+zyMjWxuErLMWZzJHb
-	 OB2h3qcJfCj6sDWMwQNmtNFIgrVQsPcxZ3gJ400M=
+	b=VTHD1EDK+X/ZTmIdDNnX8hiU4Pd6z+Nr5Aam1y53TXUW+qQ8NBE6wRvqRAjwobNMz
+	 28MyvlGDxt36e7vvoj3awbpZsoG2rSsfEdEiyvOWvhVYHqMIgQdTu6BEYrtOB/vQe6
+	 bV8M/N4HmQCp5oQCJfnzBZGoJ0rBEAwOU8isSqO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piergiorgio Beruto <piergiorgio.beruto@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 355/731] stmmac: fix potential division by 0
-Date: Wed, 28 Dec 2022 15:37:42 +0100
-Message-Id: <20221228144306.853194689@linuxfoundation.org>
+Subject: [PATCH 6.0 0163/1073] x86/xen: Fix memory leak in xen_init_lock_cpu()
+Date: Wed, 28 Dec 2022 15:29:11 +0100
+Message-Id: <20221228144332.444526630@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,87 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Piergiorgio Beruto <piergiorgio.beruto@gmail.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit ede5a389852d3640a28e7187fb32b7f204380901 ]
+[ Upstream commit ca84ce153d887b1dc8b118029976cc9faf2a9b40 ]
 
-When the MAC is connected to a 10 Mb/s PHY and the PTP clock is derived
-from the MAC reference clock (default), the clk_ptp_rate becomes too
-small and the calculated sub second increment becomes 0 when computed by
-the stmmac_config_sub_second_increment() function within
-stmmac_init_tstamp_counter().
+In xen_init_lock_cpu(), the @name has allocated new string by kasprintf(),
+if bind_ipi_to_irqhandler() fails, it should be freed, otherwise may lead
+to a memory leak issue, fix it.
 
-Therefore, the subsequent div_u64 in stmmac_init_tstamp_counter()
-operation triggers a divide by 0 exception as shown below.
-
-[   95.062067] socfpga-dwmac ff700000.ethernet eth0: Register MEM_TYPE_PAGE_POOL RxQ-0
-[   95.076440] socfpga-dwmac ff700000.ethernet eth0: PHY [stmmac-0:08] driver [NCN26000] (irq=49)
-[   95.095964] dwmac1000: Master AXI performs any burst length
-[   95.101588] socfpga-dwmac ff700000.ethernet eth0: No Safety Features support found
-[   95.109428] Division by zero in kernel.
-[   95.113447] CPU: 0 PID: 239 Comm: ifconfig Not tainted 6.1.0-rc7-centurion3-1.0.3.0-01574-gb624218205b7-dirty #77
-[   95.123686] Hardware name: Altera SOCFPGA
-[   95.127695]  unwind_backtrace from show_stack+0x10/0x14
-[   95.132938]  show_stack from dump_stack_lvl+0x40/0x4c
-[   95.137992]  dump_stack_lvl from Ldiv0+0x8/0x10
-[   95.142527]  Ldiv0 from __aeabi_uidivmod+0x8/0x18
-[   95.147232]  __aeabi_uidivmod from div_u64_rem+0x1c/0x40
-[   95.152552]  div_u64_rem from stmmac_init_tstamp_counter+0xd0/0x164
-[   95.158826]  stmmac_init_tstamp_counter from stmmac_hw_setup+0x430/0xf00
-[   95.165533]  stmmac_hw_setup from __stmmac_open+0x214/0x2d4
-[   95.171117]  __stmmac_open from stmmac_open+0x30/0x44
-[   95.176182]  stmmac_open from __dev_open+0x11c/0x134
-[   95.181172]  __dev_open from __dev_change_flags+0x168/0x17c
-[   95.186750]  __dev_change_flags from dev_change_flags+0x14/0x50
-[   95.192662]  dev_change_flags from devinet_ioctl+0x2b4/0x604
-[   95.198321]  devinet_ioctl from inet_ioctl+0x1ec/0x214
-[   95.203462]  inet_ioctl from sock_ioctl+0x14c/0x3c4
-[   95.208354]  sock_ioctl from vfs_ioctl+0x20/0x38
-[   95.212984]  vfs_ioctl from sys_ioctl+0x250/0x844
-[   95.217691]  sys_ioctl from ret_fast_syscall+0x0/0x4c
-[   95.222743] Exception stack(0xd0ee1fa8 to 0xd0ee1ff0)
-[   95.227790] 1fa0:                   00574c4f be9aeca4 00000003 00008914 be9aeca4 be9aec50
-[   95.235945] 1fc0: 00574c4f be9aeca4 0059f078 00000036 be9aee8c be9aef7a 00000015 00000000
-[   95.244096] 1fe0: 005a01f0 be9aec38 004d7484 b6e67d74
-
-Signed-off-by: Piergiorgio Beruto <piergiorgio.beruto@gmail.com>
-Fixes: 91a2559c1dc5 ("net: stmmac: Fix sub-second increment")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/de4c64ccac9084952c56a06a8171d738604c4770.1670678513.git.piergiorgio.beruto@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2d9e1e2f58b5 ("xen: implement Xen-specific spinlocks")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/20221123155858.11382-3-xiujianfeng@huawei.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c | 3 ++-
- drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h      | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ arch/x86/xen/spinlock.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-index d68ef72dcdde..4538e4fd8189 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-@@ -47,7 +47,8 @@ static void config_sub_second_increment(void __iomem *ioaddr,
- 	if (!(value & PTP_TCR_TSCTRLSSR))
- 		data = (data * 1000) / 465;
+diff --git a/arch/x86/xen/spinlock.c b/arch/x86/xen/spinlock.c
+index 043c73dfd2c9..5c6fc16e4b92 100644
+--- a/arch/x86/xen/spinlock.c
++++ b/arch/x86/xen/spinlock.c
+@@ -75,6 +75,7 @@ void xen_init_lock_cpu(int cpu)
+ 	     cpu, per_cpu(lock_kicker_irq, cpu));
  
--	data &= PTP_SSIR_SSINC_MASK;
-+	if (data > PTP_SSIR_SSINC_MAX)
-+		data = PTP_SSIR_SSINC_MAX;
+ 	name = kasprintf(GFP_KERNEL, "spinlock%d", cpu);
++	per_cpu(irq_name, cpu) = name;
+ 	irq = bind_ipi_to_irqhandler(XEN_SPIN_UNLOCK_VECTOR,
+ 				     cpu,
+ 				     dummy_handler,
+@@ -85,7 +86,6 @@ void xen_init_lock_cpu(int cpu)
+ 	if (irq >= 0) {
+ 		disable_irq(irq); /* make sure it's never delivered */
+ 		per_cpu(lock_kicker_irq, cpu) = irq;
+-		per_cpu(irq_name, cpu) = name;
+ 	}
  
- 	reg_value = data;
- 	if (gmac4)
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
-index 53172a439810..bf619295d079 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
-@@ -64,7 +64,7 @@
- #define	PTP_TCR_TSENMACADDR	BIT(18)
+ 	printk("cpu %d spinlock event irq %d\n", cpu, irq);
+@@ -98,6 +98,8 @@ void xen_uninit_lock_cpu(int cpu)
+ 	if (!xen_pvspin)
+ 		return;
  
- /* SSIR defines */
--#define	PTP_SSIR_SSINC_MASK		0xff
-+#define	PTP_SSIR_SSINC_MAX		0xff
- #define	GMAC4_PTP_SSIR_SSINC_SHIFT	16
++	kfree(per_cpu(irq_name, cpu));
++	per_cpu(irq_name, cpu) = NULL;
+ 	/*
+ 	 * When booting the kernel with 'mitigations=auto,nosmt', the secondary
+ 	 * CPUs are not activated, and lock_kicker_irq is not initialized.
+@@ -108,8 +110,6 @@ void xen_uninit_lock_cpu(int cpu)
  
- /* Auxiliary Control defines */
+ 	unbind_from_irqhandler(irq, NULL);
+ 	per_cpu(lock_kicker_irq, cpu) = -1;
+-	kfree(per_cpu(irq_name, cpu));
+-	per_cpu(irq_name, cpu) = NULL;
+ }
+ 
+ PV_CALLEE_SAVE_REGS_THUNK(xen_vcpu_stolen);
 -- 
 2.35.1
 
