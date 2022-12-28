@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 509051C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6BCCC433EF;
-	Wed, 28 Dec 2022 16:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC7461C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FC2AC433D2;
+	Wed, 28 Dec 2022 16:12:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243941;
-	bh=GQQoqsWxINXLAuto5/4CBdsU9UUk9QEIksc3iqnFy0A=;
+	s=korg; t=1672243943;
+	bh=6gaFzpbNBuKCYHNiaOjBQ0Brj58UlasotkKJa1eCM9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EDjGpRyALxyaZSR62QD4yhcHwzbYzyfZXShCFm9LKnCGo8WgTqxzqXQOKpaRENoEs
-	 gbqg0gtmq0cGK/iIIaMugA8iVXjumRiSL2k79eJpgdP2SKxBAPiofxNAxmQbFhuO+N
-	 6+f5Z0oJWu1bRKTi+39gTGCU/6cPPoPbdo2IGDEc=
+	b=Hc7INQiZrs/BW1aB5Oal25jKO8f5TMtprgWLPfofi+fyy1JrWzmi0uAnl2BDWAPV+
+	 mHP8z9xE06LVEdeVkv6TawrosUreY7s/lb1U04zfg3pmmC2W+VDSeMnWVIhJVon9yQ
+	 yEAhW22PVfc+57+kw758ScKPTennAsTzX07UXYR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0619/1073] scsi: hpsa: Fix error handling in hpsa_add_sas_host()
-Date: Wed, 28 Dec 2022 15:36:47 +0100
-Message-Id: <20221228144344.857666519@linuxfoundation.org>
+Subject: [PATCH 6.1 0583/1146] RDMA/core: Fix order of nldev_exit call
+Date: Wed, 28 Dec 2022 15:35:22 +0100
+Message-Id: <20221228144346.009339336@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,52 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Leon Romanovsky <leonro@nvidia.com>
 
-[ Upstream commit 4ef174a3ad9b5d73c1b6573e244ebba2b0d86eac ]
+[ Upstream commit 4508d32ccced24c972bc4592104513e1ff8439b5 ]
 
-hpsa_sas_port_add_phy() does:
-  ...
-  sas_phy_add()  -> may return error here
-  sas_port_add_phy()
-  ...
+Create symmetrical exit flow by calling to nldev_exit() after
+call to rdma_nl_unregister(RDMA_NL_LS).
 
-Whereas hpsa_free_sas_phy() does:
-  ...
-  sas_port_delete_phy()
-  sas_phy_delete()
-  ...
-
-If hpsa_sas_port_add_phy() returns an error, hpsa_free_sas_phy() can not be
-called to free the memory because the port and the phy have not been added
-yet.
-
-Replace hpsa_free_sas_phy() with sas_phy_free() and kfree() to avoid kernel
-crash in this case.
-
-Fixes: d04e62b9d63a ("hpsa: add in sas transport class")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221110151129.394389-1-yangyingliang@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 6c80b41abe22 ("RDMA/netlink: Add nldev initialization flows")
+Signed-off-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/64e676774a53a406f4cde265d5a4cfd6b8e97df9.1666683334.git.leonro@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hpsa.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/infiniband/core/device.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
-index 99dbb48fc94f..0feb58fe73d2 100644
---- a/drivers/scsi/hpsa.c
-+++ b/drivers/scsi/hpsa.c
-@@ -9790,7 +9790,8 @@ static int hpsa_add_sas_host(struct ctlr_info *h)
- 	return 0;
- 
- free_sas_phy:
--	hpsa_free_sas_phy(hpsa_sas_phy);
-+	sas_phy_free(hpsa_sas_phy->phy);
-+	kfree(hpsa_sas_phy);
- free_sas_port:
- 	hpsa_free_sas_port(hpsa_sas_port);
- free_sas_node:
+diff --git a/drivers/infiniband/core/device.c b/drivers/infiniband/core/device.c
+index b69e2c4e4d2a..3c422698a51c 100644
+--- a/drivers/infiniband/core/device.c
++++ b/drivers/infiniband/core/device.c
+@@ -2851,8 +2851,8 @@ static int __init ib_core_init(void)
+ static void __exit ib_core_cleanup(void)
+ {
+ 	roce_gid_mgmt_cleanup();
+-	nldev_exit();
+ 	rdma_nl_unregister(RDMA_NL_LS);
++	nldev_exit();
+ 	unregister_pernet_device(&rdma_dev_net_ops);
+ 	unregister_blocking_lsm_notifier(&ibdev_lsm_nb);
+ 	ib_sa_cleanup();
 -- 
 2.35.1
 
