@@ -1,30 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192151C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907B4C433EF;
-	Wed, 28 Dec 2022 16:23:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9581C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19AA8C433EF;
+	Wed, 28 Dec 2022 16:23:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244630;
-	bh=ZDPtHCi+qzo0de6C5Ur2Nat4s2JnI3zoml3f1C3ca+4=;
+	s=korg; t=1672244633;
+	bh=5YTnHYb44Tvh0ZcmQw5FvxR0neV5vVJwQSLYSKZWTEA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fy6MgZ5No9vrAETKWJbOWjvW3mPn07vFF04g3/6pOHz/udEohx0D0JaUr9pUjduCT
-	 wG+e9SA80qgCdPucmdD0Fsir9BdLdoIO7+2qjpAi/sBj28aqPvM/W22vCrQcmpAiOs
-	 Hs4TSjIz70eHiM14ux51UwEx0kluAQqk9IhCZ4ck=
+	b=L86/PM+EfrPK40+N4zkCX8+EOB3c4A3YE5vELuIGlmlJiuMigsY9IEA+dM/InnGmc
+	 kMLq9xh689dVLkZsaMny30ZWDuIXn+oKzYtMHiWlzeI8CFWiPeXKKdxwvTg7AhRX1m
+	 iqBEQeYh87HxtDdKhdnH6W/i3u1+Cu3GjLbhBAaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiantao Zhang <water.zhangjiantao@huawei.com>,
-	TaoXue <xuetao09@huawei.com>,
+	Ajay Kaher <akaher@vmware.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Alexey Makhalov <amakhalov@vmware.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Leo Yan <leo.yan@linaro.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	"Srivatsa S. Bhat" <srivatsab@vmware.com>,
+	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
+	Vasavi Sirnapalli <vsirnapalli@vmware.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0706/1146] USB: gadget: Fix use-after-free during usb config switch
-Date: Wed, 28 Dec 2022 15:37:25 +0100
-Message-Id: <20221228144349.323554674@linuxfoundation.org>
+Subject: [PATCH 6.0 0745/1073] perf symbol: correction while adjusting symbol
+Date: Wed, 28 Dec 2022 15:38:53 +0100
+Message-Id: <20221228144348.258923138@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,95 +45,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiantao Zhang <water.zhangjiantao@huawei.com>
+From: Ajay Kaher <akaher@vmware.com>
 
-[ Upstream commit afdc12887f2b2ecf20d065a7d81ad29824155083 ]
+[ Upstream commit 6f520ce17920b3cdfbd2479b3ccf27f9706219d0 ]
 
-In the process of switching USB config from rndis to other config,
-if the hardware does not support the ->pullup callback, or the
-hardware encounters a low probability fault, both of them may cause
-the ->pullup callback to fail, which will then cause a system panic
-(use after free).
+perf doesn't provide proper symbol information for specially crafted
+.debug files.
 
-The gadget drivers sometimes need to be unloaded regardless of the
-hardware's behavior.
+Sometimes .debug file may not have similar program header as runtime
+ELF file. For example if we generate .debug file using objcopy
+--only-keep-debug resulting file will not contain .text, .data and
+other runtime sections. That means corresponding program headers will
+have zero FileSiz and modified Offset.
 
-Analysis as follows:
-=======================================================================
-(1) write /config/usb_gadget/g1/UDC "none"
+Example: program header of text section of libxxx.so:
 
-gether_disconnect+0x2c/0x1f8
-rndis_disable+0x4c/0x74
-composite_disconnect+0x74/0xb0
-configfs_composite_disconnect+0x60/0x7c
-usb_gadget_disconnect+0x70/0x124
-usb_gadget_unregister_driver+0xc8/0x1d8
-gadget_dev_desc_UDC_store+0xec/0x1e4
+Type           Offset             VirtAddr           PhysAddr
+               FileSiz            MemSiz              Flags  Align
+LOAD        0x00000000003d3000 0x00000000003d3000 0x00000000003d3000
+            0x000000000055ae80 0x000000000055ae80  R E    0x1000
 
-(2) rm /config/usb_gadget/g1/configs/b.1/f1
+Same program header after executing:
+objcopy --only-keep-debug libxxx.so libxxx.so.debug
 
-rndis_deregister+0x28/0x54
-rndis_free+0x44/0x7c
-usb_put_function+0x14/0x1c
-config_usb_cfg_unlink+0xc4/0xe0
-configfs_unlink+0x124/0x1c8
-vfs_unlink+0x114/0x1dc
+LOAD        0x0000000000001000 0x00000000003d3000 0x00000000003d3000
+            0x0000000000000000 0x000000000055ae80  R E    0x1000
 
-(3) rmdir /config/usb_gadget/g1/functions/rndis.gs4
+Offset and FileSiz have been changed.
 
-panic+0x1fc/0x3d0
-do_page_fault+0xa8/0x46c
-do_mem_abort+0x3c/0xac
-el1_sync_handler+0x40/0x78
-0xffffff801138f880
-rndis_close+0x28/0x34
-eth_stop+0x74/0x110
-dev_close_many+0x48/0x194
-rollback_registered_many+0x118/0x814
-unregister_netdev+0x20/0x30
-gether_cleanup+0x1c/0x38
-rndis_attr_release+0xc/0x14
-kref_put+0x74/0xb8
-configfs_rmdir+0x314/0x374
+Following formula will not provide correct value, if program header
+taken from .debug file (syms_ss):
 
-If gadget->ops->pullup() return an error, function rndis_close() will be
-called, then it will causes a use-after-free problem.
-=======================================================================
+    sym.st_value -= phdr.p_vaddr - phdr.p_offset;
 
-Fixes: 0a55187a1ec8 ("USB: gadget core: Issue ->disconnect() callback from usb_gadget_disconnect()")
-Signed-off-by: Jiantao Zhang <water.zhangjiantao@huawei.com>
-Signed-off-by: TaoXue <xuetao09@huawei.com>
-Link: https://lore.kernel.org/r/20221121130805.10735-1-water.zhangjiantao@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Correct program header information is located inside runtime ELF
+file (runtime_ss).
+
+Fixes: 2d86612aacb7805f ("perf symbol: Correct address for bss symbols")
+Signed-off-by: Ajay Kaher <akaher@vmware.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Alexey Makhalov <amakhalov@vmware.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Srivatsa S. Bhat <srivatsab@vmware.com>
+Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Cc: Vasavi Sirnapalli <vsirnapalli@vmware.com>
+Link: http://lore.kernel.org/lkml/1669198696-50547-1-git-send-email-akaher@vmware.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/core.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ tools/perf/util/symbol-elf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/udc/core.c b/drivers/usb/gadget/udc/core.c
-index c63c0c2cf649..bf9878e1a72a 100644
---- a/drivers/usb/gadget/udc/core.c
-+++ b/drivers/usb/gadget/udc/core.c
-@@ -734,13 +734,13 @@ int usb_gadget_disconnect(struct usb_gadget *gadget)
- 	}
+diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
+index 647b7dff8ef3..80345695b136 100644
+--- a/tools/perf/util/symbol-elf.c
++++ b/tools/perf/util/symbol-elf.c
+@@ -1303,7 +1303,7 @@ dso__load_sym_internal(struct dso *dso, struct map *map, struct symsrc *syms_ss,
+ 			   (!used_opd && syms_ss->adjust_symbols)) {
+ 			GElf_Phdr phdr;
  
- 	ret = gadget->ops->pullup(gadget, 0);
--	if (!ret) {
-+	if (!ret)
- 		gadget->connected = 0;
--		mutex_lock(&udc_lock);
--		if (gadget->udc->driver)
--			gadget->udc->driver->disconnect(gadget);
--		mutex_unlock(&udc_lock);
--	}
-+
-+	mutex_lock(&udc_lock);
-+	if (gadget->udc->driver)
-+		gadget->udc->driver->disconnect(gadget);
-+	mutex_unlock(&udc_lock);
- 
- out:
- 	trace_usb_gadget_disconnect(gadget, ret);
+-			if (elf_read_program_header(syms_ss->elf,
++			if (elf_read_program_header(runtime_ss->elf,
+ 						    (u64)sym.st_value, &phdr)) {
+ 				pr_debug4("%s: failed to find program header for "
+ 					   "symbol: %s st_value: %#" PRIx64 "\n",
 -- 
 2.35.1
 
