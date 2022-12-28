@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101181C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC2FC433EF;
-	Wed, 28 Dec 2022 16:46:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2561C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5822FC433D2;
+	Wed, 28 Dec 2022 16:46:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246004;
-	bh=P3WyXf/dSs53dEmUuSCUh+K09nP3kH1MZb9L2SNHszw=;
+	s=korg; t=1672246007;
+	bh=2z+F95vK9xmILr9GtTPCrdh3zuzMsw/9bsWbAfXOKuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dG1BsAit6QfTr+WsLwwV3OXb7evyBHfavpPLfRwK3K6SyB6Xxoulv0Nua9nuQfa+6
-	 17XpYUBxKceE9hPLIQ01LvKx/UbZKUM2Nfh2o0eipPNbjUGsfcBXdYv2TlrxITcrb2
-	 /iaE2CXv7oTA72ByzS4YYjzXdpneJRRk5aWFAKC4=
+	b=H1GM6PospJa2C7ZBTXKZFUPEemTIH8eHNJWiEQwUfDCr/g+TE2VSQ3tGFtzv2E4B8
+	 3M4Y7WUk9GMdUcJhRyh4WpQnzn6cBr+yZoEiotTTH1aVF3dtmc+oppTz79C991ng9K
+	 nR9VQUtILjS97JNAPoK18tg91GHd5xHOXYtRkg+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changheon Lee <darklight2357@icloud.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ye Bin <yebin10@huawei.com>,
+	Ming Lei <ming.lei@redhat.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0930/1146] net: stream: purge sk_error_queue in sk_stream_kill_queues()
-Date: Wed, 28 Dec 2022 15:41:09 +0100
-Message-Id: <20221228144355.544126930@linuxfoundation.org>
+Subject: [PATCH 6.0 0959/1073] blk-mq: fix possible memleak when register hctx failed
+Date: Wed, 28 Dec 2022 15:42:27 +0100
+Message-Id: <20221228144354.085038815@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,66 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit e0c8bccd40fc1c19e1d246c39bcf79e357e1ada3 ]
+[ Upstream commit 4b7a21c57b14fbcd0e1729150189e5933f5088e9 ]
 
-Changheon Lee reported TCP socket leaks, with a nice repro.
+There's issue as follows when do fault injection test:
+unreferenced object 0xffff888132a9f400 (size 512):
+  comm "insmod", pid 308021, jiffies 4324277909 (age 509.733s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 08 f4 a9 32 81 88 ff ff  ...........2....
+    08 f4 a9 32 81 88 ff ff 00 00 00 00 00 00 00 00  ...2............
+  backtrace:
+    [<00000000e8952bb4>] kmalloc_node_trace+0x22/0xa0
+    [<00000000f9980e0f>] blk_mq_alloc_and_init_hctx+0x3f1/0x7e0
+    [<000000002e719efa>] blk_mq_realloc_hw_ctxs+0x1e6/0x230
+    [<000000004f1fda40>] blk_mq_init_allocated_queue+0x27e/0x910
+    [<00000000287123ec>] __blk_mq_alloc_disk+0x67/0xf0
+    [<00000000a2a34657>] 0xffffffffa2ad310f
+    [<00000000b173f718>] 0xffffffffa2af824a
+    [<0000000095a1dabb>] do_one_initcall+0x87/0x2a0
+    [<00000000f32fdf93>] do_init_module+0xdf/0x320
+    [<00000000cbe8541e>] load_module+0x3006/0x3390
+    [<0000000069ed1bdb>] __do_sys_finit_module+0x113/0x1b0
+    [<00000000a1a29ae8>] do_syscall_64+0x35/0x80
+    [<000000009cd878b0>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-It seems we leak TCP sockets with the following sequence:
+Fault injection context as follows:
+ kobject_add
+ blk_mq_register_hctx
+ blk_mq_sysfs_register
+ blk_register_queue
+ device_add_disk
+ null_add_dev.part.0 [null_blk]
 
-1) SOF_TIMESTAMPING_TX_ACK is enabled on the socket.
+As 'blk_mq_register_hctx' may already add some objects when failed halfway,
+but there isn't do fallback, caller don't know which objects add failed.
+To solve above issue just do fallback when add objects failed halfway in
+'blk_mq_register_hctx'.
 
-   Each ACK will cook an skb put in error queue, from __skb_tstamp_tx().
-   __skb_tstamp_tx() is using skb_clone(), unless
-   SOF_TIMESTAMPING_OPT_TSONLY was also requested.
-
-2) If the application is also using MSG_ZEROCOPY, then we put in the
-   error queue cloned skbs that had a struct ubuf_info attached to them.
-
-   Whenever an struct ubuf_info is allocated, sock_zerocopy_alloc()
-   does a sock_hold().
-
-   As long as the cloned skbs are still in sk_error_queue,
-   socket refcount is kept elevated.
-
-3) Application closes the socket, while error queue is not empty.
-
-Since tcp_close() no longer purges the socket error queue,
-we might end up with a TCP socket with at least one skb in
-error queue keeping the socket alive forever.
-
-This bug can be (ab)used to consume all kernel memory
-and freeze the host.
-
-We need to purge the error queue, with proper synchronization
-against concurrent writers.
-
-Fixes: 24bcbe1cc69f ("net: stream: don't purge sk_error_queue in sk_stream_kill_queues()")
-Reported-by: Changheon Lee <darklight2357@icloud.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20221117022940.873959-1-yebin@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/stream.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ block/blk-mq-sysfs.c | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/stream.c b/net/core/stream.c
-index 75fded8495f5..516895f48235 100644
---- a/net/core/stream.c
-+++ b/net/core/stream.c
-@@ -196,6 +196,12 @@ void sk_stream_kill_queues(struct sock *sk)
- 	/* First the read buffer. */
- 	__skb_queue_purge(&sk->sk_receive_queue);
+diff --git a/block/blk-mq-sysfs.c b/block/blk-mq-sysfs.c
+index 93997d297d42..4515288fbe35 100644
+--- a/block/blk-mq-sysfs.c
++++ b/block/blk-mq-sysfs.c
+@@ -185,7 +185,7 @@ static int blk_mq_register_hctx(struct blk_mq_hw_ctx *hctx)
+ {
+ 	struct request_queue *q = hctx->queue;
+ 	struct blk_mq_ctx *ctx;
+-	int i, ret;
++	int i, j, ret;
  
-+	/* Next, the error queue.
-+	 * We need to use queue lock, because other threads might
-+	 * add packets to the queue without socket lock being held.
-+	 */
-+	skb_queue_purge(&sk->sk_error_queue);
-+
- 	/* Next, the write queue. */
- 	WARN_ON_ONCE(!skb_queue_empty(&sk->sk_write_queue));
+ 	if (!hctx->nr_ctx)
+ 		return 0;
+@@ -197,9 +197,16 @@ static int blk_mq_register_hctx(struct blk_mq_hw_ctx *hctx)
+ 	hctx_for_each_ctx(hctx, ctx, i) {
+ 		ret = kobject_add(&ctx->kobj, &hctx->kobj, "cpu%u", ctx->cpu);
+ 		if (ret)
+-			break;
++			goto out;
+ 	}
+ 
++	return 0;
++out:
++	hctx_for_each_ctx(hctx, ctx, j) {
++		if (j < i)
++			kobject_del(&ctx->kobj);
++	}
++	kobject_del(&hctx->kobj);
+ 	return ret;
+ }
  
 -- 
 2.35.1
