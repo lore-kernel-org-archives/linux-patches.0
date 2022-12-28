@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9DFB1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:20:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CDC9C433D2;
-	Wed, 28 Dec 2022 15:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BAA81863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:20:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED32C433F0;
+	Wed, 28 Dec 2022 15:20:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240809;
-	bh=CP7a1J3UzcHjL/T2hHMHh/H4J7EkKLK09p9FIS0JKqU=;
+	s=korg; t=1672240812;
+	bh=IfPflDG+ZaVaSOscySthoebKOop/xJfzVWLKsJqdltw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gFAFEDTVvQ4AehPS9euCSUysQ1zjBVld3u7jSGoXYe1Nsil/4E193xRgztMILJOT2
-	 BoYC0v96cTEDa9NKAQeqVW/4MOihAq4ij2143z8PM9MH9PI+SnrKkjCuxVVj9VkVjT
-	 p1HDr4cW7Xdsd+iBRMz+ZxDVMHbM4v7ADb5DNW8o=
+	b=Xl057t9YxziUaWa7/C3lhh6uyJjnwtWuhcTD/0m1tP2IghFTW9XwC8v3eOfDOfO/q
+	 9bUk/hwFVz9g11Haqoc4LhxtbAIjkahb9EerMk/CH66ERDWwYnnpaiVKabRqer69JG
+	 zWXTc3KYLWs0If4gF3AyInmWqiP4+nIGn9YnzzA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 400/731] RDMA/rxe: Fix NULL-ptr-deref in rxe_qp_do_cleanup() when socket create failed
-Date: Wed, 28 Dec 2022 15:38:27 +0100
-Message-Id: <20221228144308.160899631@linuxfoundation.org>
+Subject: [PATCH 6.1 0170/1146] x86/xen: Fix memory leak in xen_smp_intr_init{_pv}()
+Date: Wed, 28 Dec 2022 15:28:29 +0100
+Message-Id: <20221228144334.776972688@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,75 +35,176 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit f67376d801499f4fa0838c18c1efcad8840e550d ]
+[ Upstream commit 69143f60868b3939ddc89289b29db593b647295e ]
 
-There is a null-ptr-deref when mount.cifs over rdma:
+These local variables @{resched|pmu|callfunc...}_name saves the new
+string allocated by kasprintf(), and when bind_{v}ipi_to_irqhandler()
+fails, it goes to the @fail tag, and calls xen_smp_intr_free{_pv}() to
+free resource, however the new string is not saved, which cause a memory
+leak issue. fix it.
 
-  BUG: KASAN: null-ptr-deref in rxe_qp_do_cleanup+0x2f3/0x360 [rdma_rxe]
-  Read of size 8 at addr 0000000000000018 by task mount.cifs/3046
-
-  CPU: 2 PID: 3046 Comm: mount.cifs Not tainted 6.1.0-rc5+ #62
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc3
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x34/0x44
-   kasan_report+0xad/0x130
-   rxe_qp_do_cleanup+0x2f3/0x360 [rdma_rxe]
-   execute_in_process_context+0x25/0x90
-   __rxe_cleanup+0x101/0x1d0 [rdma_rxe]
-   rxe_create_qp+0x16a/0x180 [rdma_rxe]
-   create_qp.part.0+0x27d/0x340
-   ib_create_qp_kernel+0x73/0x160
-   rdma_create_qp+0x100/0x230
-   _smbd_get_connection+0x752/0x20f0
-   smbd_get_connection+0x21/0x40
-   cifs_get_tcp_session+0x8ef/0xda0
-   mount_get_conns+0x60/0x750
-   cifs_mount+0x103/0xd00
-   cifs_smb3_do_mount+0x1dd/0xcb0
-   smb3_get_tree+0x1d5/0x300
-   vfs_get_tree+0x41/0xf0
-   path_mount+0x9b3/0xdd0
-   __x64_sys_mount+0x190/0x1d0
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-The root cause of the issue is the socket create failed in
-rxe_qp_init_req().
-
-So move the reset rxe_qp_do_cleanup() after the NULL ptr check.
-
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Link: https://lore.kernel.org/r/20221122151437.1057671-1-zhangxiaoxu5@huawei.com
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Fixes: 9702785a747a ("i386: move xen")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/20221123155858.11382-2-xiujianfeng@huawei.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_qp.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/xen/smp.c    | 24 ++++++++++++------------
+ arch/x86/xen/smp_pv.c | 12 ++++++------
+ 2 files changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
-index 57ebf4871608..d7a968356a9b 100644
---- a/drivers/infiniband/sw/rxe/rxe_qp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_qp.c
-@@ -830,12 +830,12 @@ static void rxe_qp_do_cleanup(struct work_struct *work)
- 		qp->resp.mr = NULL;
+diff --git a/arch/x86/xen/smp.c b/arch/x86/xen/smp.c
+index c3e1f9a7d43a..4b0d6fff88de 100644
+--- a/arch/x86/xen/smp.c
++++ b/arch/x86/xen/smp.c
+@@ -32,30 +32,30 @@ static irqreturn_t xen_reschedule_interrupt(int irq, void *dev_id)
+ 
+ void xen_smp_intr_free(unsigned int cpu)
+ {
++	kfree(per_cpu(xen_resched_irq, cpu).name);
++	per_cpu(xen_resched_irq, cpu).name = NULL;
+ 	if (per_cpu(xen_resched_irq, cpu).irq >= 0) {
+ 		unbind_from_irqhandler(per_cpu(xen_resched_irq, cpu).irq, NULL);
+ 		per_cpu(xen_resched_irq, cpu).irq = -1;
+-		kfree(per_cpu(xen_resched_irq, cpu).name);
+-		per_cpu(xen_resched_irq, cpu).name = NULL;
+ 	}
++	kfree(per_cpu(xen_callfunc_irq, cpu).name);
++	per_cpu(xen_callfunc_irq, cpu).name = NULL;
+ 	if (per_cpu(xen_callfunc_irq, cpu).irq >= 0) {
+ 		unbind_from_irqhandler(per_cpu(xen_callfunc_irq, cpu).irq, NULL);
+ 		per_cpu(xen_callfunc_irq, cpu).irq = -1;
+-		kfree(per_cpu(xen_callfunc_irq, cpu).name);
+-		per_cpu(xen_callfunc_irq, cpu).name = NULL;
+ 	}
++	kfree(per_cpu(xen_debug_irq, cpu).name);
++	per_cpu(xen_debug_irq, cpu).name = NULL;
+ 	if (per_cpu(xen_debug_irq, cpu).irq >= 0) {
+ 		unbind_from_irqhandler(per_cpu(xen_debug_irq, cpu).irq, NULL);
+ 		per_cpu(xen_debug_irq, cpu).irq = -1;
+-		kfree(per_cpu(xen_debug_irq, cpu).name);
+-		per_cpu(xen_debug_irq, cpu).name = NULL;
+ 	}
++	kfree(per_cpu(xen_callfuncsingle_irq, cpu).name);
++	per_cpu(xen_callfuncsingle_irq, cpu).name = NULL;
+ 	if (per_cpu(xen_callfuncsingle_irq, cpu).irq >= 0) {
+ 		unbind_from_irqhandler(per_cpu(xen_callfuncsingle_irq, cpu).irq,
+ 				       NULL);
+ 		per_cpu(xen_callfuncsingle_irq, cpu).irq = -1;
+-		kfree(per_cpu(xen_callfuncsingle_irq, cpu).name);
+-		per_cpu(xen_callfuncsingle_irq, cpu).name = NULL;
+ 	}
+ }
+ 
+@@ -65,6 +65,7 @@ int xen_smp_intr_init(unsigned int cpu)
+ 	char *resched_name, *callfunc_name, *debug_name;
+ 
+ 	resched_name = kasprintf(GFP_KERNEL, "resched%d", cpu);
++	per_cpu(xen_resched_irq, cpu).name = resched_name;
+ 	rc = bind_ipi_to_irqhandler(XEN_RESCHEDULE_VECTOR,
+ 				    cpu,
+ 				    xen_reschedule_interrupt,
+@@ -74,9 +75,9 @@ int xen_smp_intr_init(unsigned int cpu)
+ 	if (rc < 0)
+ 		goto fail;
+ 	per_cpu(xen_resched_irq, cpu).irq = rc;
+-	per_cpu(xen_resched_irq, cpu).name = resched_name;
+ 
+ 	callfunc_name = kasprintf(GFP_KERNEL, "callfunc%d", cpu);
++	per_cpu(xen_callfunc_irq, cpu).name = callfunc_name;
+ 	rc = bind_ipi_to_irqhandler(XEN_CALL_FUNCTION_VECTOR,
+ 				    cpu,
+ 				    xen_call_function_interrupt,
+@@ -86,10 +87,10 @@ int xen_smp_intr_init(unsigned int cpu)
+ 	if (rc < 0)
+ 		goto fail;
+ 	per_cpu(xen_callfunc_irq, cpu).irq = rc;
+-	per_cpu(xen_callfunc_irq, cpu).name = callfunc_name;
+ 
+ 	if (!xen_fifo_events) {
+ 		debug_name = kasprintf(GFP_KERNEL, "debug%d", cpu);
++		per_cpu(xen_debug_irq, cpu).name = debug_name;
+ 		rc = bind_virq_to_irqhandler(VIRQ_DEBUG, cpu,
+ 					     xen_debug_interrupt,
+ 					     IRQF_PERCPU | IRQF_NOBALANCING,
+@@ -97,10 +98,10 @@ int xen_smp_intr_init(unsigned int cpu)
+ 		if (rc < 0)
+ 			goto fail;
+ 		per_cpu(xen_debug_irq, cpu).irq = rc;
+-		per_cpu(xen_debug_irq, cpu).name = debug_name;
  	}
  
--	if (qp_type(qp) == IB_QPT_RC)
--		sk_dst_reset(qp->sk->sk);
--
- 	free_rd_atomic_resources(qp);
+ 	callfunc_name = kasprintf(GFP_KERNEL, "callfuncsingle%d", cpu);
++	per_cpu(xen_callfuncsingle_irq, cpu).name = callfunc_name;
+ 	rc = bind_ipi_to_irqhandler(XEN_CALL_FUNCTION_SINGLE_VECTOR,
+ 				    cpu,
+ 				    xen_call_function_single_interrupt,
+@@ -110,7 +111,6 @@ int xen_smp_intr_init(unsigned int cpu)
+ 	if (rc < 0)
+ 		goto fail;
+ 	per_cpu(xen_callfuncsingle_irq, cpu).irq = rc;
+-	per_cpu(xen_callfuncsingle_irq, cpu).name = callfunc_name;
  
- 	if (qp->sk) {
-+		if (qp_type(qp) == IB_QPT_RC)
-+			sk_dst_reset(qp->sk->sk);
-+
- 		kernel_sock_shutdown(qp->sk, SHUT_RDWR);
- 		sock_release(qp->sk);
+ 	return 0;
+ 
+diff --git a/arch/x86/xen/smp_pv.c b/arch/x86/xen/smp_pv.c
+index 480be82e9b7b..6175f2c5c822 100644
+--- a/arch/x86/xen/smp_pv.c
++++ b/arch/x86/xen/smp_pv.c
+@@ -97,18 +97,18 @@ asmlinkage __visible void cpu_bringup_and_idle(void)
+ 
+ void xen_smp_intr_free_pv(unsigned int cpu)
+ {
++	kfree(per_cpu(xen_irq_work, cpu).name);
++	per_cpu(xen_irq_work, cpu).name = NULL;
+ 	if (per_cpu(xen_irq_work, cpu).irq >= 0) {
+ 		unbind_from_irqhandler(per_cpu(xen_irq_work, cpu).irq, NULL);
+ 		per_cpu(xen_irq_work, cpu).irq = -1;
+-		kfree(per_cpu(xen_irq_work, cpu).name);
+-		per_cpu(xen_irq_work, cpu).name = NULL;
  	}
+ 
++	kfree(per_cpu(xen_pmu_irq, cpu).name);
++	per_cpu(xen_pmu_irq, cpu).name = NULL;
+ 	if (per_cpu(xen_pmu_irq, cpu).irq >= 0) {
+ 		unbind_from_irqhandler(per_cpu(xen_pmu_irq, cpu).irq, NULL);
+ 		per_cpu(xen_pmu_irq, cpu).irq = -1;
+-		kfree(per_cpu(xen_pmu_irq, cpu).name);
+-		per_cpu(xen_pmu_irq, cpu).name = NULL;
+ 	}
+ }
+ 
+@@ -118,6 +118,7 @@ int xen_smp_intr_init_pv(unsigned int cpu)
+ 	char *callfunc_name, *pmu_name;
+ 
+ 	callfunc_name = kasprintf(GFP_KERNEL, "irqwork%d", cpu);
++	per_cpu(xen_irq_work, cpu).name = callfunc_name;
+ 	rc = bind_ipi_to_irqhandler(XEN_IRQ_WORK_VECTOR,
+ 				    cpu,
+ 				    xen_irq_work_interrupt,
+@@ -127,10 +128,10 @@ int xen_smp_intr_init_pv(unsigned int cpu)
+ 	if (rc < 0)
+ 		goto fail;
+ 	per_cpu(xen_irq_work, cpu).irq = rc;
+-	per_cpu(xen_irq_work, cpu).name = callfunc_name;
+ 
+ 	if (is_xen_pmu) {
+ 		pmu_name = kasprintf(GFP_KERNEL, "pmu%d", cpu);
++		per_cpu(xen_pmu_irq, cpu).name = pmu_name;
+ 		rc = bind_virq_to_irqhandler(VIRQ_XENPMU, cpu,
+ 					     xen_pmu_irq_handler,
+ 					     IRQF_PERCPU|IRQF_NOBALANCING,
+@@ -138,7 +139,6 @@ int xen_smp_intr_init_pv(unsigned int cpu)
+ 		if (rc < 0)
+ 			goto fail;
+ 		per_cpu(xen_pmu_irq, cpu).irq = rc;
+-		per_cpu(xen_pmu_irq, cpu).name = pmu_name;
+ 	}
+ 
+ 	return 0;
 -- 
 2.35.1
 
