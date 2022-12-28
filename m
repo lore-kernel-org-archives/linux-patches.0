@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C8B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CF24C433F0;
-	Wed, 28 Dec 2022 15:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405881863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7809C433D2;
+	Wed, 28 Dec 2022 15:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241106;
-	bh=o9YxICuFMvvYQ/GvolBsBBnSKS84R61gGbQ6MfyMcM0=;
+	s=korg; t=1672241109;
+	bh=S4MofCqekZZLQeDNlqqTmspwwgyyYMA449UzYiU88zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nbGjpYi/Tfj4Pk7TEuRifKkZScFYDinH6RW0kSWhKADcQZo5a1AtrUWePhfXic3zd
-	 DU6h4bQMHtQvxjcoA73PnKnX/jfRCRZnXx5WMcOZN7bgqa7eUmhG3IUKZkJJSS564g
-	 6TM2WtrKkg5iTqDrlEubirNU054/JaMskSQhKe/I=
+	b=TODeH6pM3EpoRa2v62Y9PFJnel4Vvl0w/1uV/YYNA3Vr8Vq3uUDac7gIRJnc8Rd8X
+	 YAuDcDNxqEp3mNB01ih9vdvg/dBsON8loRrsmEOKDtl+QtEPRRslHLmdpKcSPwL5O6
+	 pi/o/NE6MZiZQGAJZP0+CFd6yoOCKBzfZVOlfX6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Sean Anderson <sean.anderson@seco.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 438/731] drivers: dio: fix possible memory leak in dio_init()
-Date: Wed, 28 Dec 2022 15:39:05 +0100
-Message-Id: <20221228144309.256690473@linuxfoundation.org>
+Subject: [PATCH 6.0 0217/1073] powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G
+Date: Wed, 28 Dec 2022 15:30:05 +0100
+Message-Id: <20221228144333.909761804@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,58 +35,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Sean Anderson <sean.anderson@seco.com>
 
-[ Upstream commit e63e99397b2613d50a5f4f02ed07307e67a190f1 ]
+[ Upstream commit 36926a7d70c2d462fca1ed85bfee000d17fd8662 ]
 
-If device_register() returns error, the 'dev' and name needs be
-freed. Add a release function, and then call put_device() in the
-error path, so the name is freed in kobject_cleanup() and to the
-'dev' is freed in release function.
+On the T208X SoCs, MAC1 and MAC2 support XGMII. Add some new MAC dtsi
+fragments, and mark the QMAN ports as 10G.
 
-Fixes: 2e4c77bea3d8 ("m68k: dio - Kill warn_unused_result warnings")
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221109064036.1835346-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: da414bb923d9 ("powerpc/mpc85xx: Add FSL QorIQ DPAA FMan support to the SoC device tree(s)")
+Signed-off-by: Sean Anderson <sean.anderson@seco.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dio/dio.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ .../boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi     | 44 +++++++++++++++++++
+ .../boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi     | 44 +++++++++++++++++++
+ arch/powerpc/boot/dts/fsl/t2081si-post.dtsi   |  4 +-
+ 3 files changed, 90 insertions(+), 2 deletions(-)
+ create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
+ create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
 
-diff --git a/drivers/dio/dio.c b/drivers/dio/dio.c
-index 4c06c93c93d3..c7f7134adc21 100644
---- a/drivers/dio/dio.c
-+++ b/drivers/dio/dio.c
-@@ -110,6 +110,12 @@ static char dio_no_name[] = { 0 };
- 
- #endif /* CONFIG_DIO_CONSTANTS */
- 
-+static void dio_dev_release(struct device *dev)
-+{
-+	struct dio_dev *ddev = container_of(dev, typeof(struct dio_dev), dev);
-+	kfree(ddev);
-+}
+diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
+new file mode 100644
+index 000000000000..437dab3fc017
+--- /dev/null
++++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
+@@ -0,0 +1,44 @@
++// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
++/*
++ * QorIQ FMan v3 10g port #2 device tree stub [ controller @ offset 0x400000 ]
++ *
++ * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
++ * Copyright 2012 - 2015 Freescale Semiconductor Inc.
++ */
 +
- int __init dio_find(int deviceid)
- {
- 	/* Called to find a DIO device before the full bus scan has run.
-@@ -224,6 +230,7 @@ static int __init dio_init(void)
- 		dev->bus = &dio_bus;
- 		dev->dev.parent = &dio_bus.dev;
- 		dev->dev.bus = &dio_bus_type;
-+		dev->dev.release = dio_dev_release;
- 		dev->scode = scode;
- 		dev->resource.start = pa;
- 		dev->resource.end = pa + DIO_SIZE(scode, va);
-@@ -251,6 +258,7 @@ static int __init dio_init(void)
- 		if (error) {
- 			pr_err("DIO: Error registering device %s\n",
- 			       dev->name);
-+			put_device(&dev->dev);
- 			continue;
- 		}
- 		error = dio_create_sysfs_dev_files(dev);
++fman@400000 {
++	fman0_rx_0x08: port@88000 {
++		cell-index = <0x8>;
++		compatible = "fsl,fman-v3-port-rx";
++		reg = <0x88000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	fman0_tx_0x28: port@a8000 {
++		cell-index = <0x28>;
++		compatible = "fsl,fman-v3-port-tx";
++		reg = <0xa8000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	ethernet@e0000 {
++		cell-index = <0>;
++		compatible = "fsl,fman-memac";
++		reg = <0xe0000 0x1000>;
++		fsl,fman-ports = <&fman0_rx_0x08 &fman0_tx_0x28>;
++		ptp-timer = <&ptp_timer0>;
++		pcsphy-handle = <&pcsphy0>;
++	};
++
++	mdio@e1000 {
++		#address-cells = <1>;
++		#size-cells = <0>;
++		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
++		reg = <0xe1000 0x1000>;
++		fsl,erratum-a011043; /* must ignore read errors */
++
++		pcsphy0: ethernet-phy@0 {
++			reg = <0x0>;
++		};
++	};
++};
+diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
+new file mode 100644
+index 000000000000..ad116b17850a
+--- /dev/null
++++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
+@@ -0,0 +1,44 @@
++// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
++/*
++ * QorIQ FMan v3 10g port #3 device tree stub [ controller @ offset 0x400000 ]
++ *
++ * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
++ * Copyright 2012 - 2015 Freescale Semiconductor Inc.
++ */
++
++fman@400000 {
++	fman0_rx_0x09: port@89000 {
++		cell-index = <0x9>;
++		compatible = "fsl,fman-v3-port-rx";
++		reg = <0x89000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	fman0_tx_0x29: port@a9000 {
++		cell-index = <0x29>;
++		compatible = "fsl,fman-v3-port-tx";
++		reg = <0xa9000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	ethernet@e2000 {
++		cell-index = <1>;
++		compatible = "fsl,fman-memac";
++		reg = <0xe2000 0x1000>;
++		fsl,fman-ports = <&fman0_rx_0x09 &fman0_tx_0x29>;
++		ptp-timer = <&ptp_timer0>;
++		pcsphy-handle = <&pcsphy1>;
++	};
++
++	mdio@e3000 {
++		#address-cells = <1>;
++		#size-cells = <0>;
++		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
++		reg = <0xe3000 0x1000>;
++		fsl,erratum-a011043; /* must ignore read errors */
++
++		pcsphy1: ethernet-phy@0 {
++			reg = <0x0>;
++		};
++	};
++};
+diff --git a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
+index ecbb447920bc..74e17e134387 100644
+--- a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
++++ b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
+@@ -609,8 +609,8 @@ usb1: usb@211000 {
+ /include/ "qoriq-bman1.dtsi"
+ 
+ /include/ "qoriq-fman3-0.dtsi"
+-/include/ "qoriq-fman3-0-1g-0.dtsi"
+-/include/ "qoriq-fman3-0-1g-1.dtsi"
++/include/ "qoriq-fman3-0-10g-2.dtsi"
++/include/ "qoriq-fman3-0-10g-3.dtsi"
+ /include/ "qoriq-fman3-0-1g-2.dtsi"
+ /include/ "qoriq-fman3-0-1g-3.dtsi"
+ /include/ "qoriq-fman3-0-1g-4.dtsi"
 -- 
 2.35.1
 
