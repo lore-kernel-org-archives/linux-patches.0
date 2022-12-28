@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B58B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E58F2C433D2;
-	Wed, 28 Dec 2022 15:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0692C1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DEEC433EF;
+	Wed, 28 Dec 2022 15:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241889;
-	bh=kfOOReeHPylVqvOvxlkDqxMX1wJw3onM4qmZ7+pQgGQ=;
+	s=korg; t=1672241891;
+	bh=DDk4+06B47Uoq1ujpyTdqwBDT1EF6lfJcHThzqhsqqs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJjwDkVhBqR0yt4F75uchW4KlAytwRiTcQXUeJVnq62cp7m0lcxTWGHNkREcZ3Jwn
-	 lyQRWn7bhtapOWbtQ9oXe1EnS4OABkUcGR+KqAZ/gMBtVBih36fJ5bXGit+Q6+wems
-	 tYoH3JoV66VT4lvbYj5tmfw/nfpYWLfwLAcg58Zg=
+	b=1R/mtcqQL/Y8hdOi2YPwaJUPiFTIvterYhL2d4hfqsKXCWKRqYfe0m/6vDeeBayMb
+	 5vb6TAVVofkbfM0blpDfavTscXzAlYbUCcY0TrGdPZ/j7CpghF1b/Us6V+UR16f58p
+	 ZdVZKb4PucC8SIaQALyAxff42vmuCuo7IbTz0EGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Lorenzo Bianconi <lorenzo@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Mel Gorman <mgorman@techsingularity.net>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0340/1073] net: ethernet: mtk_eth_soc: do not overwrite mtu configuration running reset routine
-Date: Wed, 28 Dec 2022 15:32:08 +0100
-Message-Id: <20221228144337.241421297@linuxfoundation.org>
+Subject: [PATCH 5.15 539/731] rtc: cmos: Fix event handler registration ordering issue
+Date: Wed, 28 Dec 2022 15:40:46 +0100
+Message-Id: <20221228144312.166908966@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,108 +37,122 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lorenzo Bianconi <lorenzo@kernel.org>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit b677d6c7a695dad1b02d2e0e428c39b3b344f270 ]
+[ Upstream commit 4919d3eb2ec0ee364f7e3cf2d99646c1b224fae8 ]
 
-Restore user configured MTU running mtk_hw_init() during tx timeout routine
-since it will be overwritten after a hw reset.
+Because acpi_install_fixed_event_handler() enables the event
+automatically on success, it is incorrect to call it before the
+handler routine passed to it is ready to handle events.
 
-Reported-by: Felix Fietkau <nbd@nbd.name>
-Fixes: 9ea4d311509f ("net: ethernet: mediatek: add the whole ethernet reset into the reset process")
-Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Unfortunately, the rtc-cmos driver does exactly the incorrect thing
+by calling cmos_wake_setup(), which passes rtc_handler() to
+acpi_install_fixed_event_handler(), before cmos_do_probe(), because
+rtc_handler() uses dev_get_drvdata() to get to the cmos object
+pointer and the driver data pointer is only populated in
+cmos_do_probe().
+
+This leads to a NULL pointer dereference in rtc_handler() on boot
+if the RTC fixed event happens to be active at the init time.
+
+To address this issue, change the initialization ordering of the
+driver so that cmos_wake_setup() is always called after a successful
+cmos_do_probe() call.
+
+While at it, change cmos_pnp_probe() to call cmos_do_probe() after
+the initial if () statement used for computing the IRQ argument to
+be passed to cmos_do_probe() which is cleaner than calling it in
+each branch of that if () (local variable "irq" can be of type int,
+because it is passed to that function as an argument of type int).
+
+Note that commit 6492fed7d8c9 ("rtc: rtc-cmos: Do not check
+ACPI_FADT_LOW_POWER_S0") caused this issue to affect a larger number
+of systems, because previously it only affected systems with
+ACPI_FADT_LOW_POWER_S0 set, but it is present regardless of that
+commit.
+
+Fixes: 6492fed7d8c9 ("rtc: rtc-cmos: Do not check ACPI_FADT_LOW_POWER_S0")
+Fixes: a474aaedac99 ("rtc-cmos: move wake setup from ACPI glue into RTC driver")
+Link: https://lore.kernel.org/linux-acpi/20221010141630.zfzi7mk7zvnmclzy@techsingularity.net/
+Reported-by: Mel Gorman <mgorman@techsingularity.net>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Bjorn Helgaas <bhelgaas@google.com>
+Tested-by: Mel Gorman <mgorman@techsingularity.net>
+Link: https://lore.kernel.org/r/5629262.DvuYhMxLoT@kreacher
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mediatek/mtk_eth_soc.c | 53 +++++++++++++--------
- 1 file changed, 34 insertions(+), 19 deletions(-)
+ drivers/rtc/rtc-cmos.c | 29 +++++++++++++++++++----------
+ 1 file changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-index 5380caf0acc2..26e0a2af64cf 100644
---- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-+++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
-@@ -3209,6 +3209,30 @@ static void mtk_dim_tx(struct work_struct *work)
- 	dim->state = DIM_START_MEASURE;
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index bdb1df843c78..610413b4e9ca 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -1352,10 +1352,10 @@ static void cmos_check_acpi_rtc_status(struct device *dev,
+ 
+ static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
+ {
+-	cmos_wake_setup(&pnp->dev);
++	int irq, ret;
+ 
+ 	if (pnp_port_start(pnp, 0) == 0x70 && !pnp_irq_valid(pnp, 0)) {
+-		unsigned int irq = 0;
++		irq = 0;
+ #ifdef CONFIG_X86
+ 		/* Some machines contain a PNP entry for the RTC, but
+ 		 * don't define the IRQ. It should always be safe to
+@@ -1364,13 +1364,17 @@ static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
+ 		if (nr_legacy_irqs())
+ 			irq = RTC_IRQ;
+ #endif
+-		return cmos_do_probe(&pnp->dev,
+-				pnp_get_resource(pnp, IORESOURCE_IO, 0), irq);
+ 	} else {
+-		return cmos_do_probe(&pnp->dev,
+-				pnp_get_resource(pnp, IORESOURCE_IO, 0),
+-				pnp_irq(pnp, 0));
++		irq = pnp_irq(pnp, 0);
+ 	}
++
++	ret = cmos_do_probe(&pnp->dev, pnp_get_resource(pnp, IORESOURCE_IO, 0), irq);
++	if (ret)
++		return ret;
++
++	cmos_wake_setup(&pnp->dev);
++
++	return 0;
  }
  
-+static void mtk_set_mcr_max_rx(struct mtk_mac *mac, u32 val)
-+{
-+	struct mtk_eth *eth = mac->hw;
-+	u32 mcr_cur, mcr_new;
-+
-+	if (MTK_HAS_CAPS(eth->soc->caps, MTK_SOC_MT7628))
-+		return;
-+
-+	mcr_cur = mtk_r32(mac->hw, MTK_MAC_MCR(mac->id));
-+	mcr_new = mcr_cur & ~MAC_MCR_MAX_RX_MASK;
-+
-+	if (val <= 1518)
-+		mcr_new |= MAC_MCR_MAX_RX(MAC_MCR_MAX_RX_1518);
-+	else if (val <= 1536)
-+		mcr_new |= MAC_MCR_MAX_RX(MAC_MCR_MAX_RX_1536);
-+	else if (val <= 1552)
-+		mcr_new |= MAC_MCR_MAX_RX(MAC_MCR_MAX_RX_1552);
-+	else
-+		mcr_new |= MAC_MCR_MAX_RX(MAC_MCR_MAX_RX_2048);
-+
-+	if (mcr_new != mcr_cur)
-+		mtk_w32(mac->hw, mcr_new, MTK_MAC_MCR(mac->id));
-+}
-+
- static int mtk_hw_init(struct mtk_eth *eth)
+ static void cmos_pnp_remove(struct pnp_dev *pnp)
+@@ -1454,10 +1458,9 @@ static inline void cmos_of_init(struct platform_device *pdev) {}
+ static int __init cmos_platform_probe(struct platform_device *pdev)
  {
- 	u32 dma_mask = ETHSYS_DMA_AG_MAP_PDMA | ETHSYS_DMA_AG_MAP_QDMA |
-@@ -3283,8 +3307,16 @@ static int mtk_hw_init(struct mtk_eth *eth)
- 	 * up with the more appropriate value when mtk_mac_config call is being
- 	 * invoked.
- 	 */
--	for (i = 0; i < MTK_MAC_COUNT; i++)
-+	for (i = 0; i < MTK_MAC_COUNT; i++) {
-+		struct net_device *dev = eth->netdev[i];
+ 	struct resource *resource;
+-	int irq;
++	int irq, ret;
+ 
+ 	cmos_of_init(pdev);
+-	cmos_wake_setup(&pdev->dev);
+ 
+ 	if (RTC_IOMAPPED)
+ 		resource = platform_get_resource(pdev, IORESOURCE_IO, 0);
+@@ -1467,7 +1470,13 @@ static int __init cmos_platform_probe(struct platform_device *pdev)
+ 	if (irq < 0)
+ 		irq = -1;
+ 
+-	return cmos_do_probe(&pdev->dev, resource, irq);
++	ret = cmos_do_probe(&pdev->dev, resource, irq);
++	if (ret)
++		return ret;
 +
- 		mtk_w32(eth, MAC_MCR_FORCE_LINK_DOWN, MTK_MAC_MCR(i));
-+		if (dev) {
-+			struct mtk_mac *mac = netdev_priv(dev);
++	cmos_wake_setup(&pdev->dev);
 +
-+			mtk_set_mcr_max_rx(mac, dev->mtu + MTK_RX_ETH_HLEN);
-+		}
-+	}
++	return 0;
+ }
  
- 	/* Indicates CDM to parse the MTK special tag from CPU
- 	 * which also is working out for untag packets.
-@@ -3400,7 +3432,6 @@ static int mtk_change_mtu(struct net_device *dev, int new_mtu)
- 	int length = new_mtu + MTK_RX_ETH_HLEN;
- 	struct mtk_mac *mac = netdev_priv(dev);
- 	struct mtk_eth *eth = mac->hw;
--	u32 mcr_cur, mcr_new;
- 
- 	if (rcu_access_pointer(eth->prog) &&
- 	    length > MTK_PP_MAX_BUF_SIZE) {
-@@ -3408,23 +3439,7 @@ static int mtk_change_mtu(struct net_device *dev, int new_mtu)
- 		return -EINVAL;
- 	}
- 
--	if (!MTK_HAS_CAPS(eth->soc->caps, MTK_SOC_MT7628)) {
--		mcr_cur = mtk_r32(mac->hw, MTK_MAC_MCR(mac->id));
--		mcr_new = mcr_cur & ~MAC_MCR_MAX_RX_MASK;
--
--		if (length <= 1518)
--			mcr_new |= MAC_MCR_MAX_RX(MAC_MCR_MAX_RX_1518);
--		else if (length <= 1536)
--			mcr_new |= MAC_MCR_MAX_RX(MAC_MCR_MAX_RX_1536);
--		else if (length <= 1552)
--			mcr_new |= MAC_MCR_MAX_RX(MAC_MCR_MAX_RX_1552);
--		else
--			mcr_new |= MAC_MCR_MAX_RX(MAC_MCR_MAX_RX_2048);
--
--		if (mcr_new != mcr_cur)
--			mtk_w32(mac->hw, mcr_new, MTK_MAC_MCR(mac->id));
--	}
--
-+	mtk_set_mcr_max_rx(mac, length);
- 	dev->mtu = new_mtu;
- 
- 	return 0;
+ static int cmos_platform_remove(struct platform_device *pdev)
 -- 
 2.35.1
 
