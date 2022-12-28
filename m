@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22B711863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9955EC433D2;
-	Wed, 28 Dec 2022 15:48:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C015F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:48:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 464C1C433EF;
+	Wed, 28 Dec 2022 15:48:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242515;
-	bh=TCMoROXGKoCTP8SYU5/0uHkBdWIOXp8jn1WaNk2fkQM=;
+	s=korg; t=1672242517;
+	bh=yNKJ/JeG4BRvN8dpUNfGYLvAJuWcMDBqAXq8Tf3Wt2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vZrKq6dhxws6fB+c4hf//sfaWsxtSx5W8D257WeMy3sGckRfbjC+Fdff7GEQBwxzs
-	 Ndk/TcuDweYZEs2RAVe0CqQKAQSAx2yaEBKnbTJdukVMsiK/9H2UTw8LEMTVA4DZBT
-	 BsZL2np5ibKFSbnEOupnaPK+PS9IjDhj6Q/Sh7Q0=
+	b=q5/CNyBaYmb23d0nl0PGx5GyIMaDWHkD5fzvp6Sv1vuhr8cy4dSjUpz8ytGZQqsY6
+	 H6aGY8da+Onq+fOd/TrJ2U7ZzpMI0XMcBsBVMWMxPTq/PxO/d9yphGEDMsHA9kSKvW
+	 sKxL/ZpHXImJXe33F3h0nVFydZDUHI9SR9Bg50FI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	"David S. Miller" <davem@davemloft.net>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Chen-Yu Tsai <wenst@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 612/731] myri10ge: Fix an error handling path in myri10ge_probe()
-Date: Wed, 28 Dec 2022 15:41:59 +0100
-Message-Id: <20221228144314.273400084@linuxfoundation.org>
+Subject: [PATCH 6.0 0419/1073] clk: mediatek: fix dependency of MT7986 ADC clocks
+Date: Wed, 28 Dec 2022 15:33:27 +0100
+Message-Id: <20221228144339.402151299@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Daniel Golle <daniel@makrotopia.org>
 
-[ Upstream commit d83b950d44d2982c0e62e3d81b0f35ab09431008 ]
+[ Upstream commit a46315295489933209e902638cd287aeb5f982ab ]
 
-Some memory allocated in myri10ge_probe_slices() is not released in the
-error handling path of myri10ge_probe().
+It seems like CLK_INFRA_ADC_FRC_CK always need to be enabled for
+CLK_INFRA_ADC_26M_CK to work. Instead of adding this dependency to the
+mtk-thermal and mt6577_auxadc drivers, add dependency to the clock
+driver clk-mt7986-infracfg.c.
 
-Add the corresponding kfree(), as already done in the remove function.
-
-Fixes: 0dcffac1a329 ("myri10ge: add multislices support")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: ec97d23c8e22 ("clk: mediatek: add mt7986 clock support")
+Suggested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Signed-off-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://lore.kernel.org/r/5e55012567da74870e1fb2edc2dc513b5821e523.1666801017.git.daniel@makrotopia.org
+Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/myricom/myri10ge/myri10ge.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/clk/mediatek/clk-mt7986-infracfg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/myricom/myri10ge/myri10ge.c b/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
-index 052696ce5096..97c2604df019 100644
---- a/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
-+++ b/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
-@@ -3923,6 +3923,7 @@ static int myri10ge_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	myri10ge_free_slices(mgp);
- 
- abort_with_firmware:
-+	kfree(mgp->msix_vectors);
- 	myri10ge_dummy_rdma(mgp, 0);
- 
- abort_with_ioremap:
+diff --git a/drivers/clk/mediatek/clk-mt7986-infracfg.c b/drivers/clk/mediatek/clk-mt7986-infracfg.c
+index d90727a53283..49666047bf0e 100644
+--- a/drivers/clk/mediatek/clk-mt7986-infracfg.c
++++ b/drivers/clk/mediatek/clk-mt7986-infracfg.c
+@@ -153,7 +153,7 @@ static const struct mtk_gate infra_clks[] = {
+ 		    18),
+ 	GATE_INFRA1(CLK_INFRA_MSDC_66M_CK, "infra_msdc_66m", "infra_sysaxi_d2",
+ 		    19),
+-	GATE_INFRA1(CLK_INFRA_ADC_26M_CK, "infra_adc_26m", "csw_f26m_sel", 20),
++	GATE_INFRA1(CLK_INFRA_ADC_26M_CK, "infra_adc_26m", "infra_adc_frc", 20),
+ 	GATE_INFRA1(CLK_INFRA_ADC_FRC_CK, "infra_adc_frc", "csw_f26m_sel", 21),
+ 	GATE_INFRA1(CLK_INFRA_FBIST2FPC_CK, "infra_fbist2fpc", "nfi1x_sel", 23),
+ 	/* INFRA2 */
 -- 
 2.35.1
 
