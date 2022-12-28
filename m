@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D69CB1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:40:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5903FC433D2;
-	Wed, 28 Dec 2022 15:40:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 802EC1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:40:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04306C433D2;
+	Wed, 28 Dec 2022 15:40:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242025;
-	bh=DLSz5Pj/0Pn7jVFOYAyYYpiRTb9Zpm9HtjmhzdKQEhs=;
+	s=korg; t=1672242028;
+	bh=ewhZL2tHn2SOQzvBTF5or+PQfMteZJMpwQ6I7vLoelk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N6g3fd7448isr0IgzJwthSZQZV4ESnp4T0uex1RgPC221iXDWuFBx860/YzBD+3O+
-	 z/2lm8zDC0tsABx5On5D7RWhI4b2dINhonhRPRB2MzdzQQ+9SsDh5AEjmUkgguVn4Y
-	 zBQESUEeu2pOilJom6mGnh8XBE/HGDmqk+Ipcaes=
+	b=P3+suhJuu+n05jWxUsiepj0U/wntA9cNvHfPCsT4u1JBHM0+tfhyqs0ld1mqrArdO
+	 XlykHqaG4h5d57h/9JC7IsExO8eZm4WE47AcS6onn0jSlJ9WSP9p0VMu93jLTeInFY
+	 JyBOeaID5fY0tCP1bcoDCntuNqAuBnJ2VuNyGcjw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sam Shih <sam.shih@mediatek.com>,
-	Frank Wunderlich <frank-w@public-files.de>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Wang Yufen <wangyufen@huawei.com>,
+	Stanislav Fomichev <sdf@google.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0317/1146] pinctrl: mediatek: fix the pinconf register offset of some pins
-Date: Wed, 28 Dec 2022 15:30:56 +0100
-Message-Id: <20221228144338.764139923@linuxfoundation.org>
+Subject: [PATCH 6.0 0335/1073] selftests/bpf: fix memory leak of lsm_cgroup
+Date: Wed, 28 Dec 2022 15:32:03 +0100
+Message-Id: <20221228144337.102144613@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,74 +36,132 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sam Shih <sam.shih@mediatek.com>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit 3476b354c65db442580ef355885c69e60c546ef0 ]
+[ Upstream commit c453e64cbc9532c0c2edfa999c35d29dad16b8bb ]
 
-Correct the bias-pull-up, bias-pull-down and bias-disable register
-offset of mt7986 pin-42 to pin-49, in the original driver, the
-relative offset value was erroneously decremented by 1.
+kmemleak reports this issue:
 
-Fixes: 360de6728064 ("pinctrl: mediatek: add support for MT7986 SoC")
-Signed-off-by: Sam Shih <sam.shih@mediatek.com>
-Signed-off-by: Frank Wunderlich <frank-w@public-files.de>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221106080114.7426-5-linux@fw-web.de
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+unreferenced object 0xffff88810b7835c0 (size 32):
+  comm "test_progs", pid 270, jiffies 4294969007 (age 1621.315s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    03 00 00 00 03 00 00 00 0f 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<00000000376cdeab>] kmalloc_trace+0x27/0x110
+    [<000000003bcdb3b6>] selinux_sk_alloc_security+0x66/0x110
+    [<000000003959008f>] security_sk_alloc+0x47/0x80
+    [<00000000e7bc6668>] sk_prot_alloc+0xbd/0x1a0
+    [<0000000002d6343a>] sk_alloc+0x3b/0x940
+    [<000000009812a46d>] unix_create1+0x8f/0x3d0
+    [<000000005ed0976b>] unix_create+0xa1/0x150
+    [<0000000086a1d27f>] __sock_create+0x233/0x4a0
+    [<00000000cffe3a73>] __sys_socket_create.part.0+0xaa/0x110
+    [<0000000007c63f20>] __sys_socket+0x49/0xf0
+    [<00000000b08753c8>] __x64_sys_socket+0x42/0x50
+    [<00000000b56e26b3>] do_syscall_64+0x3b/0x90
+    [<000000009b4871b8>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+The issue occurs in the following scenarios:
+
+unix_create1()
+  sk_alloc()
+    sk_prot_alloc()
+      security_sk_alloc()
+        call_int_hook()
+          hlist_for_each_entry()
+            entry1->hook.sk_alloc_security
+            <-- selinux_sk_alloc_security() succeeded,
+            <-- sk->security alloced here.
+            entry2->hook.sk_alloc_security
+            <-- bpf_lsm_sk_alloc_security() failed
+      goto out_free;
+        ...    <-- the sk->security not freed, memleak
+
+The core problem is that the LSM is not yet fully stacked (work is
+actively going on in this space) which means that some LSM hooks do
+not support multiple LSMs at the same time. To fix, skip the
+"EPERM" test when it runs in the environments that already have
+non-bpf lsms installed
+
+Fixes: dca85aac8895 ("selftests/bpf: lsm_cgroup functional test")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Cc: Stanislav Fomichev <sdf@google.com>
+Acked-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/r/1668482980-16163-1-git-send-email-wangyufen@huawei.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/mediatek/pinctrl-mt7986.c | 24 +++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ .../selftests/bpf/prog_tests/lsm_cgroup.c       | 17 +++++++++++++----
+ tools/testing/selftests/bpf/progs/lsm_cgroup.c  |  8 ++++++++
+ 2 files changed, 21 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/mediatek/pinctrl-mt7986.c b/drivers/pinctrl/mediatek/pinctrl-mt7986.c
-index 50cb736f9f11..b58729969748 100644
---- a/drivers/pinctrl/mediatek/pinctrl-mt7986.c
-+++ b/drivers/pinctrl/mediatek/pinctrl-mt7986.c
-@@ -316,10 +316,10 @@ static const struct mtk_pin_field_calc mt7986_pin_pupd_range[] = {
- 	PIN_FIELD_BASE(38, 38, IOCFG_LT_BASE, 0x30, 0x10, 9, 1),
- 	PIN_FIELD_BASE(39, 40, IOCFG_RB_BASE, 0x60, 0x10, 18, 1),
- 	PIN_FIELD_BASE(41, 41, IOCFG_RB_BASE, 0x60, 0x10, 12, 1),
--	PIN_FIELD_BASE(42, 43, IOCFG_RB_BASE, 0x60, 0x10, 22, 1),
--	PIN_FIELD_BASE(44, 45, IOCFG_RB_BASE, 0x60, 0x10, 20, 1),
--	PIN_FIELD_BASE(46, 47, IOCFG_RB_BASE, 0x60, 0x10, 26, 1),
--	PIN_FIELD_BASE(48, 49, IOCFG_RB_BASE, 0x60, 0x10, 24, 1),
-+	PIN_FIELD_BASE(42, 43, IOCFG_RB_BASE, 0x60, 0x10, 23, 1),
-+	PIN_FIELD_BASE(44, 45, IOCFG_RB_BASE, 0x60, 0x10, 21, 1),
-+	PIN_FIELD_BASE(46, 47, IOCFG_RB_BASE, 0x60, 0x10, 27, 1),
-+	PIN_FIELD_BASE(48, 49, IOCFG_RB_BASE, 0x60, 0x10, 25, 1),
- 	PIN_FIELD_BASE(50, 57, IOCFG_RT_BASE, 0x40, 0x10, 2, 1),
- 	PIN_FIELD_BASE(58, 58, IOCFG_RT_BASE, 0x40, 0x10, 1, 1),
- 	PIN_FIELD_BASE(59, 59, IOCFG_RT_BASE, 0x40, 0x10, 0, 1),
-@@ -354,10 +354,10 @@ static const struct mtk_pin_field_calc mt7986_pin_r0_range[] = {
- 	PIN_FIELD_BASE(38, 38, IOCFG_LT_BASE, 0x40, 0x10, 9, 1),
- 	PIN_FIELD_BASE(39, 40, IOCFG_RB_BASE, 0x70, 0x10, 18, 1),
- 	PIN_FIELD_BASE(41, 41, IOCFG_RB_BASE, 0x70, 0x10, 12, 1),
--	PIN_FIELD_BASE(42, 43, IOCFG_RB_BASE, 0x70, 0x10, 22, 1),
--	PIN_FIELD_BASE(44, 45, IOCFG_RB_BASE, 0x70, 0x10, 20, 1),
--	PIN_FIELD_BASE(46, 47, IOCFG_RB_BASE, 0x70, 0x10, 26, 1),
--	PIN_FIELD_BASE(48, 49, IOCFG_RB_BASE, 0x70, 0x10, 24, 1),
-+	PIN_FIELD_BASE(42, 43, IOCFG_RB_BASE, 0x70, 0x10, 23, 1),
-+	PIN_FIELD_BASE(44, 45, IOCFG_RB_BASE, 0x70, 0x10, 21, 1),
-+	PIN_FIELD_BASE(46, 47, IOCFG_RB_BASE, 0x70, 0x10, 27, 1),
-+	PIN_FIELD_BASE(48, 49, IOCFG_RB_BASE, 0x70, 0x10, 25, 1),
- 	PIN_FIELD_BASE(50, 57, IOCFG_RT_BASE, 0x50, 0x10, 2, 1),
- 	PIN_FIELD_BASE(58, 58, IOCFG_RT_BASE, 0x50, 0x10, 1, 1),
- 	PIN_FIELD_BASE(59, 59, IOCFG_RT_BASE, 0x50, 0x10, 0, 1),
-@@ -392,10 +392,10 @@ static const struct mtk_pin_field_calc mt7986_pin_r1_range[] = {
- 	PIN_FIELD_BASE(38, 38, IOCFG_LT_BASE, 0x50, 0x10, 9, 1),
- 	PIN_FIELD_BASE(39, 40, IOCFG_RB_BASE, 0x80, 0x10, 18, 1),
- 	PIN_FIELD_BASE(41, 41, IOCFG_RB_BASE, 0x80, 0x10, 12, 1),
--	PIN_FIELD_BASE(42, 43, IOCFG_RB_BASE, 0x80, 0x10, 22, 1),
--	PIN_FIELD_BASE(44, 45, IOCFG_RB_BASE, 0x80, 0x10, 20, 1),
--	PIN_FIELD_BASE(46, 47, IOCFG_RB_BASE, 0x80, 0x10, 26, 1),
--	PIN_FIELD_BASE(48, 49, IOCFG_RB_BASE, 0x80, 0x10, 24, 1),
-+	PIN_FIELD_BASE(42, 43, IOCFG_RB_BASE, 0x80, 0x10, 23, 1),
-+	PIN_FIELD_BASE(44, 45, IOCFG_RB_BASE, 0x80, 0x10, 21, 1),
-+	PIN_FIELD_BASE(46, 47, IOCFG_RB_BASE, 0x80, 0x10, 27, 1),
-+	PIN_FIELD_BASE(48, 49, IOCFG_RB_BASE, 0x80, 0x10, 25, 1),
- 	PIN_FIELD_BASE(50, 57, IOCFG_RT_BASE, 0x60, 0x10, 2, 1),
- 	PIN_FIELD_BASE(58, 58, IOCFG_RT_BASE, 0x60, 0x10, 1, 1),
- 	PIN_FIELD_BASE(59, 59, IOCFG_RT_BASE, 0x60, 0x10, 0, 1),
+diff --git a/tools/testing/selftests/bpf/prog_tests/lsm_cgroup.c b/tools/testing/selftests/bpf/prog_tests/lsm_cgroup.c
+index 1102e4f42d2d..f117bfef68a1 100644
+--- a/tools/testing/selftests/bpf/prog_tests/lsm_cgroup.c
++++ b/tools/testing/selftests/bpf/prog_tests/lsm_cgroup.c
+@@ -173,10 +173,12 @@ static void test_lsm_cgroup_functional(void)
+ 	ASSERT_EQ(query_prog_cnt(cgroup_fd, NULL), 4, "total prog count");
+ 	ASSERT_EQ(query_prog_cnt(cgroup_fd2, NULL), 1, "total prog count");
+ 
+-	/* AF_UNIX is prohibited. */
+-
+ 	fd = socket(AF_UNIX, SOCK_STREAM, 0);
+-	ASSERT_LT(fd, 0, "socket(AF_UNIX)");
++	if (!(skel->kconfig->CONFIG_SECURITY_APPARMOR
++	    || skel->kconfig->CONFIG_SECURITY_SELINUX
++	    || skel->kconfig->CONFIG_SECURITY_SMACK))
++		/* AF_UNIX is prohibited. */
++		ASSERT_LT(fd, 0, "socket(AF_UNIX)");
+ 	close(fd);
+ 
+ 	/* AF_INET6 gets default policy (sk_priority). */
+@@ -233,11 +235,18 @@ static void test_lsm_cgroup_functional(void)
+ 
+ 	/* AF_INET6+SOCK_STREAM
+ 	 * AF_PACKET+SOCK_RAW
++	 * AF_UNIX+SOCK_RAW if already have non-bpf lsms installed
+ 	 * listen_fd
+ 	 * client_fd
+ 	 * accepted_fd
+ 	 */
+-	ASSERT_EQ(skel->bss->called_socket_post_create2, 5, "called_create2");
++	if (skel->kconfig->CONFIG_SECURITY_APPARMOR
++	    || skel->kconfig->CONFIG_SECURITY_SELINUX
++	    || skel->kconfig->CONFIG_SECURITY_SMACK)
++		/* AF_UNIX+SOCK_RAW if already have non-bpf lsms installed */
++		ASSERT_EQ(skel->bss->called_socket_post_create2, 6, "called_create2");
++	else
++		ASSERT_EQ(skel->bss->called_socket_post_create2, 5, "called_create2");
+ 
+ 	/* start_server
+ 	 * bind(ETH_P_ALL)
+diff --git a/tools/testing/selftests/bpf/progs/lsm_cgroup.c b/tools/testing/selftests/bpf/progs/lsm_cgroup.c
+index 4f2d60b87b75..02c11d16b692 100644
+--- a/tools/testing/selftests/bpf/progs/lsm_cgroup.c
++++ b/tools/testing/selftests/bpf/progs/lsm_cgroup.c
+@@ -7,6 +7,10 @@
+ 
+ char _license[] SEC("license") = "GPL";
+ 
++extern bool CONFIG_SECURITY_SELINUX __kconfig __weak;
++extern bool CONFIG_SECURITY_SMACK __kconfig __weak;
++extern bool CONFIG_SECURITY_APPARMOR __kconfig __weak;
++
+ #ifndef AF_PACKET
+ #define AF_PACKET 17
+ #endif
+@@ -140,6 +144,10 @@ SEC("lsm_cgroup/sk_alloc_security")
+ int BPF_PROG(socket_alloc, struct sock *sk, int family, gfp_t priority)
+ {
+ 	called_socket_alloc++;
++	/* if already have non-bpf lsms installed, EPERM will cause memory leak of non-bpf lsms */
++	if (CONFIG_SECURITY_SELINUX || CONFIG_SECURITY_SMACK || CONFIG_SECURITY_APPARMOR)
++		return 1;
++
+ 	if (family == AF_UNIX)
+ 		return 0; /* EPERM */
+ 
 -- 
 2.35.1
 
