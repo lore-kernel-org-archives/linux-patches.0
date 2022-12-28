@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 687C91C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C2DC433EF;
-	Wed, 28 Dec 2022 16:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 037B01C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:33:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C21DC433EF;
+	Wed, 28 Dec 2022 16:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245194;
-	bh=FTfFEAqRyYqCK5F9fTmFa+b+MvSP0d1BLJiJKPPu/zs=;
+	s=korg; t=1672245196;
+	bh=cmtKgn86exmHAmSRo4zDb/zf9WnHvRGB3TuwMpOcczY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HAIczoC4rcnINX5DlP92OrLdoINNWojo04+BqcnMvuLC1igQ0exDGpdoRlCLcm6ls
-	 vq/qBazPzWNRRzeLkm9pXoH2j4DQtT2rJ9Mm0Ynu/0DFVJRjM2IMRyBMCs5c1JAtmN
-	 tZOkCp+ceEXWon9vdVOQxlwo2VRJvTcBvKI2RVCw=
+	b=KqYx1iSIfcft6r3HdZiZ5EiO6sadHDjGVce0c5yeo8QZQ+YRYeN2LPCvG/Pv30gqa
+	 FWuI8ZxoAnaCV+xoVIIi9NKXSRgnU1q4Q11U3VRNKkOihnfStmEYoCLgu0Ej64dIry
+	 57xe39DeUto7viNdhacBFRtK3+4wOLMRITMdHjdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0813/1146] iommu/sun50i: Implement .iotlb_sync_map
-Date: Wed, 28 Dec 2022 15:39:12 +0100
-Message-Id: <20221228144352.236097833@linuxfoundation.org>
+Subject: [PATCH 6.0 0849/1073] nfc: pn533: Clear nfc_target before being used
+Date: Wed, 28 Dec 2022 15:40:37 +0100
+Message-Id: <20221228144351.080161975@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,141 +36,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jernej Skrabec <jernej.skrabec@gmail.com>
+From: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
 
-[ Upstream commit e563cc0c787c85a4d9def0a77078dc5d3f445e3d ]
+[ Upstream commit 9f28157778ede0d4f183f7ab3b46995bb400abbe ]
 
-Allocated iova ranges need to be invalidated immediately or otherwise
-they might or might not work when used by master or CPU. This was
-discovered when running video decoder conformity test with Cedrus. Some
-videos were now and then decoded incorrectly and generated page faults.
+Fix a slab-out-of-bounds read that occurs in nla_put() called from
+nfc_genl_send_target() when target->sensb_res_len, which is duplicated
+from an nfc_target in pn533, is too large as the nfc_target is not
+properly initialized and retains garbage values. Clear nfc_targets with
+memset() before they are used.
 
-According to vendor driver, it's enough to invalidate just start and end
-TLB and PTW cache lines. Documentation says that neighbouring lines must
-be invalidated too. Finally, when page fault occurs, that iova must be
-invalidated the same way, according to documentation.
+Found by a modified version of syzkaller.
 
-Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://lore.kernel.org/r/20221025165415.307591-6-jernej.skrabec@gmail.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+BUG: KASAN: slab-out-of-bounds in nla_put
+Call Trace:
+ memcpy
+ nla_put
+ nfc_genl_dump_targets
+ genl_lock_dumpit
+ netlink_dump
+ __netlink_dump_start
+ genl_family_rcv_msg_dumpit
+ genl_rcv_msg
+ netlink_rcv_skb
+ genl_rcv
+ netlink_unicast
+ netlink_sendmsg
+ sock_sendmsg
+ ____sys_sendmsg
+ ___sys_sendmsg
+ __sys_sendmsg
+ do_syscall_64
+
+Fixes: 673088fb42d0 ("NFC: pn533: Send ATR_REQ directly for active device detection")
+Fixes: 361f3cb7f9cf ("NFC: DEP link hook implementation for pn533")
+Signed-off-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20221214015139.119673-1-linuxlovemin@yonsei.ac.kr
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/sun50i-iommu.c | 73 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 73 insertions(+)
+ drivers/nfc/pn533/pn533.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
-index e62e245060ac..5cb2d44dfb92 100644
---- a/drivers/iommu/sun50i-iommu.c
-+++ b/drivers/iommu/sun50i-iommu.c
-@@ -93,6 +93,8 @@
- #define NUM_PT_ENTRIES			256
- #define PT_SIZE				(NUM_PT_ENTRIES * PT_ENTRY_SIZE)
+diff --git a/drivers/nfc/pn533/pn533.c b/drivers/nfc/pn533/pn533.c
+index d9f6367b9993..f0cac1900552 100644
+--- a/drivers/nfc/pn533/pn533.c
++++ b/drivers/nfc/pn533/pn533.c
+@@ -1295,6 +1295,8 @@ static int pn533_poll_dep_complete(struct pn533 *dev, void *arg,
+ 	if (IS_ERR(resp))
+ 		return PTR_ERR(resp);
  
-+#define SPAGE_SIZE			4096
++	memset(&nfc_target, 0, sizeof(struct nfc_target));
 +
- struct sun50i_iommu {
- 	struct iommu_device iommu;
+ 	rsp = (struct pn533_cmd_jump_dep_response *)resp->data;
  
-@@ -295,6 +297,62 @@ static void sun50i_table_flush(struct sun50i_iommu_domain *sun50i_domain,
- 	dma_sync_single_for_device(iommu->dev, dma, size, DMA_TO_DEVICE);
- }
+ 	rc = rsp->status & PN533_CMD_RET_MASK;
+@@ -1926,6 +1928,8 @@ static int pn533_in_dep_link_up_complete(struct pn533 *dev, void *arg,
  
-+static void sun50i_iommu_zap_iova(struct sun50i_iommu *iommu,
-+				  unsigned long iova)
-+{
-+	u32 reg;
-+	int ret;
-+
-+	iommu_write(iommu, IOMMU_TLB_IVLD_ADDR_REG, iova);
-+	iommu_write(iommu, IOMMU_TLB_IVLD_ADDR_MASK_REG, GENMASK(31, 12));
-+	iommu_write(iommu, IOMMU_TLB_IVLD_ENABLE_REG,
-+		    IOMMU_TLB_IVLD_ENABLE_ENABLE);
-+
-+	ret = readl_poll_timeout_atomic(iommu->base + IOMMU_TLB_IVLD_ENABLE_REG,
-+					reg, !reg, 1, 2000);
-+	if (ret)
-+		dev_warn(iommu->dev, "TLB invalidation timed out!\n");
-+}
-+
-+static void sun50i_iommu_zap_ptw_cache(struct sun50i_iommu *iommu,
-+				       unsigned long iova)
-+{
-+	u32 reg;
-+	int ret;
-+
-+	iommu_write(iommu, IOMMU_PC_IVLD_ADDR_REG, iova);
-+	iommu_write(iommu, IOMMU_PC_IVLD_ENABLE_REG,
-+		    IOMMU_PC_IVLD_ENABLE_ENABLE);
-+
-+	ret = readl_poll_timeout_atomic(iommu->base + IOMMU_PC_IVLD_ENABLE_REG,
-+					reg, !reg, 1, 2000);
-+	if (ret)
-+		dev_warn(iommu->dev, "PTW cache invalidation timed out!\n");
-+}
-+
-+static void sun50i_iommu_zap_range(struct sun50i_iommu *iommu,
-+				   unsigned long iova, size_t size)
-+{
-+	assert_spin_locked(&iommu->iommu_lock);
-+
-+	iommu_write(iommu, IOMMU_AUTO_GATING_REG, 0);
-+
-+	sun50i_iommu_zap_iova(iommu, iova);
-+	sun50i_iommu_zap_iova(iommu, iova + SPAGE_SIZE);
-+	if (size > SPAGE_SIZE) {
-+		sun50i_iommu_zap_iova(iommu, iova + size);
-+		sun50i_iommu_zap_iova(iommu, iova + size + SPAGE_SIZE);
-+	}
-+	sun50i_iommu_zap_ptw_cache(iommu, iova);
-+	sun50i_iommu_zap_ptw_cache(iommu, iova + SZ_1M);
-+	if (size > SZ_1M) {
-+		sun50i_iommu_zap_ptw_cache(iommu, iova + size);
-+		sun50i_iommu_zap_ptw_cache(iommu, iova + size + SZ_1M);
-+	}
-+
-+	iommu_write(iommu, IOMMU_AUTO_GATING_REG, IOMMU_AUTO_GATING_ENABLE);
-+}
-+
- static int sun50i_iommu_flush_all_tlb(struct sun50i_iommu *iommu)
- {
- 	u32 reg;
-@@ -344,6 +402,18 @@ static void sun50i_iommu_flush_iotlb_all(struct iommu_domain *domain)
- 	spin_unlock_irqrestore(&iommu->iommu_lock, flags);
- }
+ 		dev_dbg(dev->dev, "Creating new target\n");
  
-+static void sun50i_iommu_iotlb_sync_map(struct iommu_domain *domain,
-+					unsigned long iova, size_t size)
-+{
-+	struct sun50i_iommu_domain *sun50i_domain = to_sun50i_domain(domain);
-+	struct sun50i_iommu *iommu = sun50i_domain->iommu;
-+	unsigned long flags;
++		memset(&nfc_target, 0, sizeof(struct nfc_target));
 +
-+	spin_lock_irqsave(&iommu->iommu_lock, flags);
-+	sun50i_iommu_zap_range(iommu, iova, size);
-+	spin_unlock_irqrestore(&iommu->iommu_lock, flags);
-+}
-+
- static void sun50i_iommu_iotlb_sync(struct iommu_domain *domain,
- 				    struct iommu_iotlb_gather *gather)
- {
-@@ -767,6 +837,7 @@ static const struct iommu_ops sun50i_iommu_ops = {
- 		.attach_dev	= sun50i_iommu_attach_device,
- 		.detach_dev	= sun50i_iommu_detach_device,
- 		.flush_iotlb_all = sun50i_iommu_flush_iotlb_all,
-+		.iotlb_sync_map = sun50i_iommu_iotlb_sync_map,
- 		.iotlb_sync	= sun50i_iommu_iotlb_sync,
- 		.iova_to_phys	= sun50i_iommu_iova_to_phys,
- 		.map		= sun50i_iommu_map,
-@@ -786,6 +857,8 @@ static void sun50i_iommu_report_fault(struct sun50i_iommu *iommu,
- 		report_iommu_fault(iommu->domain, iommu->dev, iova, prot);
- 	else
- 		dev_err(iommu->dev, "Page fault while iommu not attached to any domain?\n");
-+
-+	sun50i_iommu_zap_range(iommu, iova, SPAGE_SIZE);
- }
- 
- static phys_addr_t sun50i_iommu_handle_pt_irq(struct sun50i_iommu *iommu,
+ 		nfc_target.supported_protocols = NFC_PROTO_NFC_DEP_MASK;
+ 		nfc_target.nfcid1_len = 10;
+ 		memcpy(nfc_target.nfcid1, rsp->nfcid3t, nfc_target.nfcid1_len);
 -- 
 2.35.1
 
