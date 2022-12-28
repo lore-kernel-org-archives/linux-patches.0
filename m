@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88D11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 703E9C433D2;
-	Wed, 28 Dec 2022 15:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEDD51863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 215EEC433D2;
+	Wed, 28 Dec 2022 15:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241223;
-	bh=OsehrfCVepzrLYG4MYBET54fV+NhEi8UBELSWQAqfRM=;
+	s=korg; t=1672241226;
+	bh=VF51YmkDxATqsFCETLHveetRd36bk08yzG4OAyJ556g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XeBTskXfWXiL4VhSwGaBuID3wTCb1Ze5nyOj08IKb4F+RsPkISaNLOJykD6HpDpC5
-	 jPk+z5S0ByOMCwKcURA+DdQFUEAQLBuR3DxdeLtxbfXw144wmnXD2D7XsJEosPcg4p
-	 iS2gc5YEzLXzd16+SkExIGyV3lBi0h22KU8gh7Eg=
+	b=f+1H1Yo2CXh603nGwRj8cO2Dkziy19/01B/uQezfqyuvBvIcvCq7C27n60rExKQIb
+	 tTdeMlaJ1LD8eOxYF2bo8yrH6QaYKoJqEES8XGMfZT+9QGssZ7UucS5UUYrfZZmLwK
+	 tgLY85WwyZd/bCzMZuoM78xsQZmOc/MJ3WZGDK+U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Previn <alan.previn.teres.alexis@intel.com>,
-	John Harrison <John.C.Harrison@Intel.com>,
+	Marek Vasut <marex@denx.de>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	=?UTF-8?q?Alvin=20=C5=A0ipraga?= <alsi@bang-olufsen.dk>,
+	Chanwoo Choi <cw00.choi@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0255/1073] drm/i915/guc: Add error-capture init warnings when needed
-Date: Wed, 28 Dec 2022 15:30:43 +0100
-Message-Id: <20221228144334.946333873@linuxfoundation.org>
+Subject: [PATCH 5.15 455/731] extcon: usbc-tusb320: Add USB TYPE-C support
+Date: Wed, 28 Dec 2022 15:39:22 +0100
+Message-Id: <20221228144309.742163422@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,168 +37,262 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Previn <alan.previn.teres.alexis@intel.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit a894077890ad118de88c97c03f67a611ca60882a ]
+[ Upstream commit bf7571c00dca0a9c5af3f5125ef5a89a40b13cd5 ]
 
-If GuC is being used and we initialized GuC-error-capture,
-we need to be warning if we don't provide an error-capture
-register list in the firmware ADS, for valid GT engines.
-A warning makes sense as this would impact debugability
-without realizing why a reglist wasn't retrieved and reported
-by GuC.
+The TI TUSB320 seems like a better fit for USB TYPE-C subsystem,
+which can expose details collected by the TUSB320 in a far more
+precise way than extcon. Since there are existing users in the
+kernel and in DT which depend on the extcon interface, keep it
+for now.
 
-However, depending on the platform, we might have certain
-engines that have a register list for engine instance error state
-but not for engine class. Thus, add a check only to warn if the
-register list was non existent vs an empty list (use the
-empty lists to skip the warning).
+Add TYPE-C interface and expose the supported supply current,
+direction and connector polarity via the TYPE-C interface.
 
-NOTE: if a future platform were to introduce new registers
-in place of what was an empty list on existing / legacy hardware
-engines no warning is provided as the empty list is meant
-to be used intentionally. As an example, if a future hardware
-were to add blitter engine-class-registers (new) on top
-of the legacy blitter engine-instance-register (HEAD, TAIL, etc.),
-no warning is generated.
-
-Signed-off-by: Alan Previn <alan.previn.teres.alexis@intel.com>
-Reviewed-by: John Harrison <John.C.Harrison@Intel.com>
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221019072930.17755-2-alan.previn.teres.alexis@intel.com
-Stable-dep-of: befb231d5de2 ("drm/i915/guc: Fix GuC error capture sizing estimation and reporting")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Reviewed-by: Alvin Šipraga <alsi@bang-olufsen.dk>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
+Stable-dep-of: 581c848b610d ("extcon: usbc-tusb320: Update state on probe even if no IRQ pending")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../gpu/drm/i915/gt/uc/intel_guc_capture.c    | 78 ++++++++++++++++---
- 1 file changed, 69 insertions(+), 9 deletions(-)
+ drivers/extcon/Kconfig               |   2 +-
+ drivers/extcon/extcon-usbc-tusb320.c | 159 +++++++++++++++++++++++++++
+ 2 files changed, 160 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-index d2ac53d4f3b6..c398bdd5403a 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_capture.c
-@@ -419,6 +419,44 @@ guc_capture_get_device_reglist(struct intel_guc *guc)
- 	return default_lists;
- }
+diff --git a/drivers/extcon/Kconfig b/drivers/extcon/Kconfig
+index c69d40ae5619..7684b3afa630 100644
+--- a/drivers/extcon/Kconfig
++++ b/drivers/extcon/Kconfig
+@@ -180,7 +180,7 @@ config EXTCON_USBC_CROS_EC
  
-+static const char *
-+__stringify_type(u32 type)
-+{
-+	switch (type) {
-+	case GUC_CAPTURE_LIST_TYPE_GLOBAL:
-+		return "Global";
-+	case GUC_CAPTURE_LIST_TYPE_ENGINE_CLASS:
-+		return "Class";
-+	case GUC_CAPTURE_LIST_TYPE_ENGINE_INSTANCE:
-+		return "Instance";
-+	default:
-+		break;
-+	}
+ config EXTCON_USBC_TUSB320
+ 	tristate "TI TUSB320 USB-C extcon support"
+-	depends on I2C
++	depends on I2C && TYPEC
+ 	select REGMAP_I2C
+ 	help
+ 	  Say Y here to enable support for USB Type C cable detection extcon
+diff --git a/drivers/extcon/extcon-usbc-tusb320.c b/drivers/extcon/extcon-usbc-tusb320.c
+index aced4bbb455d..edb8c3f997c9 100644
+--- a/drivers/extcon/extcon-usbc-tusb320.c
++++ b/drivers/extcon/extcon-usbc-tusb320.c
+@@ -6,6 +6,7 @@
+  * Author: Michael Auchter <michael.auchter@ni.com>
+  */
+ 
++#include <linux/bitfield.h>
+ #include <linux/extcon-provider.h>
+ #include <linux/i2c.h>
+ #include <linux/init.h>
+@@ -13,6 +14,24 @@
+ #include <linux/kernel.h>
+ #include <linux/module.h>
+ #include <linux/regmap.h>
++#include <linux/usb/typec.h>
 +
-+	return "unknown";
++#define TUSB320_REG8				0x8
++#define TUSB320_REG8_CURRENT_MODE_ADVERTISE	GENMASK(7, 6)
++#define TUSB320_REG8_CURRENT_MODE_ADVERTISE_USB	0x0
++#define TUSB320_REG8_CURRENT_MODE_ADVERTISE_15A	0x1
++#define TUSB320_REG8_CURRENT_MODE_ADVERTISE_30A	0x2
++#define TUSB320_REG8_CURRENT_MODE_DETECT	GENMASK(5, 4)
++#define TUSB320_REG8_CURRENT_MODE_DETECT_DEF	0x0
++#define TUSB320_REG8_CURRENT_MODE_DETECT_MED	0x1
++#define TUSB320_REG8_CURRENT_MODE_DETECT_ACC	0x2
++#define TUSB320_REG8_CURRENT_MODE_DETECT_HI	0x3
++#define TUSB320_REG8_ACCESSORY_CONNECTED	GENMASK(3, 2)
++#define TUSB320_REG8_ACCESSORY_CONNECTED_NONE	0x0
++#define TUSB320_REG8_ACCESSORY_CONNECTED_AUDIO	0x4
++#define TUSB320_REG8_ACCESSORY_CONNECTED_ACC	0x5
++#define TUSB320_REG8_ACCESSORY_CONNECTED_DEBUG	0x6
++#define TUSB320_REG8_ACTIVE_CABLE_DETECTION	BIT(0)
+ 
+ #define TUSB320_REG9				0x9
+ #define TUSB320_REG9_ATTACHED_STATE_SHIFT	6
+@@ -55,6 +74,10 @@ struct tusb320_priv {
+ 	struct extcon_dev *edev;
+ 	struct tusb320_ops *ops;
+ 	enum tusb320_attached_state state;
++	struct typec_port *port;
++	struct typec_capability	cap;
++	enum typec_port_type port_type;
++	enum typec_pwr_opmode pwr_opmode;
+ };
+ 
+ static const char * const tusb_attached_states[] = {
+@@ -184,6 +207,44 @@ static struct tusb320_ops tusb320l_ops = {
+ 	.get_revision = tusb320l_get_revision,
+ };
+ 
++static int tusb320_set_adv_pwr_mode(struct tusb320_priv *priv)
++{
++	u8 mode;
++
++	if (priv->pwr_opmode == TYPEC_PWR_MODE_USB)
++		mode = TUSB320_REG8_CURRENT_MODE_ADVERTISE_USB;
++	else if (priv->pwr_opmode == TYPEC_PWR_MODE_1_5A)
++		mode = TUSB320_REG8_CURRENT_MODE_ADVERTISE_15A;
++	else if (priv->pwr_opmode == TYPEC_PWR_MODE_3_0A)
++		mode = TUSB320_REG8_CURRENT_MODE_ADVERTISE_30A;
++	else	/* No other mode is supported. */
++		return -EINVAL;
++
++	return regmap_write_bits(priv->regmap, TUSB320_REG8,
++				 TUSB320_REG8_CURRENT_MODE_ADVERTISE,
++				 FIELD_PREP(TUSB320_REG8_CURRENT_MODE_ADVERTISE,
++					    mode));
 +}
 +
-+static const char *
-+__stringify_engclass(u32 class)
++static int tusb320_port_type_set(struct typec_port *port,
++				 enum typec_port_type type)
 +{
-+	switch (class) {
-+	case GUC_RENDER_CLASS:
-+		return "Render";
-+	case GUC_VIDEO_CLASS:
-+		return "Video";
-+	case GUC_VIDEOENHANCE_CLASS:
-+		return "VideoEnhance";
-+	case GUC_BLITTER_CLASS:
-+		return "Blitter";
-+	case GUC_COMPUTE_CLASS:
-+		return "Compute";
-+	default:
-+		break;
-+	}
++	struct tusb320_priv *priv = typec_get_drvdata(port);
 +
-+	return "unknown";
++	if (type == TYPEC_PORT_SRC)
++		return priv->ops->set_mode(priv, TUSB320_MODE_DFP);
++	else if (type == TYPEC_PORT_SNK)
++		return priv->ops->set_mode(priv, TUSB320_MODE_UFP);
++	else if (type == TYPEC_PORT_DRP)
++		return priv->ops->set_mode(priv, TUSB320_MODE_DRP);
++	else
++		return priv->ops->set_mode(priv, TUSB320_MODE_PORT);
 +}
 +
- static int
- guc_capture_list_init(struct intel_guc *guc, u32 owner, u32 type, u32 classid,
- 		      struct guc_mmio_reg *ptr, u16 num_entries)
-@@ -482,23 +520,38 @@ guc_cap_list_num_regs(struct intel_guc_state_capture *gc, u32 owner, u32 type, u
- 	return num_regs;
- }
- 
--int
--intel_guc_capture_getlistsize(struct intel_guc *guc, u32 owner, u32 type, u32 classid,
--			      size_t *size)
-+static int
-+guc_capture_getlistsize(struct intel_guc *guc, u32 owner, u32 type, u32 classid,
-+			size_t *size, bool is_purpose_est)
++static const struct typec_operations tusb320_typec_ops = {
++	.port_type_set	= tusb320_port_type_set,
++};
++
+ static void tusb320_extcon_irq_handler(struct tusb320_priv *priv, u8 reg)
  {
- 	struct intel_guc_state_capture *gc = guc->capture;
-+	struct drm_i915_private *i915 = guc_to_gt(guc)->i915;
- 	struct __guc_capture_ads_cache *cache = &gc->ads_cache[owner][type][classid];
- 	int num_regs;
+ 	int state, polarity;
+@@ -211,6 +272,47 @@ static void tusb320_extcon_irq_handler(struct tusb320_priv *priv, u8 reg)
+ 	priv->state = state;
+ }
  
--	if (!gc->reglists)
-+	if (!gc->reglists) {
-+		drm_warn(&i915->drm, "GuC-capture: No reglist on this device\n");
- 		return -ENODEV;
-+	}
- 
- 	if (cache->is_valid) {
- 		*size = cache->size;
- 		return cache->status;
- 	}
- 
-+	if (!is_purpose_est && owner == GUC_CAPTURE_LIST_INDEX_PF &&
-+	    !guc_capture_get_one_list(gc->reglists, owner, type, classid)) {
-+		if (type == GUC_CAPTURE_LIST_TYPE_GLOBAL)
-+			drm_warn(&i915->drm, "Missing GuC-Err-Cap reglist Global!\n");
-+		else
-+			drm_warn(&i915->drm, "Missing GuC-Err-Cap reglist %s(%u):%s(%u)!\n",
-+				 __stringify_type(type), type,
-+				 __stringify_engclass(classid), classid);
-+		return -ENODATA;
++static void tusb320_typec_irq_handler(struct tusb320_priv *priv, u8 reg9)
++{
++	struct typec_port *port = priv->port;
++	struct device *dev = priv->dev;
++	u8 mode, role, state;
++	int ret, reg8;
++	bool ori;
++
++	ori = reg9 & TUSB320_REG9_CABLE_DIRECTION;
++	typec_set_orientation(port, ori ? TYPEC_ORIENTATION_REVERSE :
++					  TYPEC_ORIENTATION_NORMAL);
++
++	state = (reg9 >> TUSB320_REG9_ATTACHED_STATE_SHIFT) &
++		TUSB320_REG9_ATTACHED_STATE_MASK;
++	if (state == TUSB320_ATTACHED_STATE_DFP)
++		role = TYPEC_SOURCE;
++	else
++		role = TYPEC_SINK;
++
++	typec_set_vconn_role(port, role);
++	typec_set_pwr_role(port, role);
++	typec_set_data_role(port, role == TYPEC_SOURCE ?
++				  TYPEC_HOST : TYPEC_DEVICE);
++
++	ret = regmap_read(priv->regmap, TUSB320_REG8, &reg8);
++	if (ret) {
++		dev_err(dev, "error during reg8 i2c read, ret=%d!\n", ret);
++		return;
 +	}
 +
- 	num_regs = guc_cap_list_num_regs(gc, owner, type, classid);
-+	/* intentional empty lists can exist depending on hw config */
- 	if (!num_regs)
- 		return -ENODATA;
++	mode = FIELD_GET(TUSB320_REG8_CURRENT_MODE_DETECT, reg8);
++	if (mode == TUSB320_REG8_CURRENT_MODE_DETECT_DEF)
++		typec_set_pwr_opmode(port, TYPEC_PWR_MODE_USB);
++	else if (mode == TUSB320_REG8_CURRENT_MODE_DETECT_MED)
++		typec_set_pwr_opmode(port, TYPEC_PWR_MODE_1_5A);
++	else if (mode == TUSB320_REG8_CURRENT_MODE_DETECT_HI)
++		typec_set_pwr_opmode(port, TYPEC_PWR_MODE_3_0A);
++	else	/* Charge through accessory */
++		typec_set_pwr_opmode(port, TYPEC_PWR_MODE_USB);
++}
++
+ static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
+ {
+ 	struct tusb320_priv *priv = dev_id;
+@@ -225,6 +327,7 @@ static irqreturn_t tusb320_irq_handler(int irq, void *dev_id)
+ 		return IRQ_NONE;
  
-@@ -508,6 +561,13 @@ intel_guc_capture_getlistsize(struct intel_guc *guc, u32 owner, u32 type, u32 cl
+ 	tusb320_extcon_irq_handler(priv, reg);
++	tusb320_typec_irq_handler(priv, reg);
+ 
+ 	regmap_write(priv->regmap, TUSB320_REG9, reg);
+ 
+@@ -260,6 +363,58 @@ static int tusb320_extcon_probe(struct tusb320_priv *priv)
  	return 0;
  }
  
-+int
-+intel_guc_capture_getlistsize(struct intel_guc *guc, u32 owner, u32 type, u32 classid,
-+			      size_t *size)
++static int tusb320_typec_probe(struct i2c_client *client,
++			       struct tusb320_priv *priv)
 +{
-+	return guc_capture_getlistsize(guc, owner, type, classid, size, false);
++	struct fwnode_handle *connector;
++	const char *cap_str;
++	int ret;
++
++	/* The Type-C connector is optional, for backward compatibility. */
++	connector = device_get_named_child_node(&client->dev, "connector");
++	if (!connector)
++		return 0;
++
++	/* Type-C connector found. */
++	ret = typec_get_fw_cap(&priv->cap, connector);
++	if (ret)
++		return ret;
++
++	priv->port_type = priv->cap.type;
++
++	/* This goes into register 0x8 field CURRENT_MODE_ADVERTISE */
++	ret = fwnode_property_read_string(connector, "typec-power-opmode", &cap_str);
++	if (ret)
++		return ret;
++
++	ret = typec_find_pwr_opmode(cap_str);
++	if (ret < 0)
++		return ret;
++	if (ret == TYPEC_PWR_MODE_PD)
++		return -EINVAL;
++
++	priv->pwr_opmode = ret;
++
++	/* Initialize the hardware with the devicetree settings. */
++	ret = tusb320_set_adv_pwr_mode(priv);
++	if (ret)
++		return ret;
++
++	priv->cap.revision		= USB_TYPEC_REV_1_1;
++	priv->cap.accessory[0]		= TYPEC_ACCESSORY_AUDIO;
++	priv->cap.accessory[1]		= TYPEC_ACCESSORY_DEBUG;
++	priv->cap.orientation_aware	= true;
++	priv->cap.driver_data		= priv;
++	priv->cap.ops			= &tusb320_typec_ops;
++	priv->cap.fwnode		= connector;
++
++	priv->port = typec_register_port(&client->dev, &priv->cap);
++	if (IS_ERR(priv->port))
++		return PTR_ERR(priv->port);
++
++	return 0;
 +}
 +
- static void guc_capture_create_prealloc_nodes(struct intel_guc *guc);
+ static int tusb320_probe(struct i2c_client *client,
+ 			 const struct i2c_device_id *id)
+ {
+@@ -300,6 +455,10 @@ static int tusb320_probe(struct i2c_client *client,
+ 	if (ret)
+ 		return ret;
  
- int
-@@ -627,15 +687,15 @@ guc_capture_output_min_size_est(struct intel_guc *guc)
- 		worst_min_size += sizeof(struct guc_state_capture_group_header_t) +
- 					 (3 * sizeof(struct guc_state_capture_header_t));
++	ret = tusb320_typec_probe(client, priv);
++	if (ret)
++		return ret;
++
+ 	/* update initial state */
+ 	tusb320_irq_handler(client->irq, priv);
  
--		if (!intel_guc_capture_getlistsize(guc, 0, GUC_CAPTURE_LIST_TYPE_GLOBAL, 0, &tmp))
-+		if (!guc_capture_getlistsize(guc, 0, GUC_CAPTURE_LIST_TYPE_GLOBAL, 0, &tmp, true))
- 			num_regs += tmp;
- 
--		if (!intel_guc_capture_getlistsize(guc, 0, GUC_CAPTURE_LIST_TYPE_ENGINE_CLASS,
--						   engine->class, &tmp)) {
-+		if (!guc_capture_getlistsize(guc, 0, GUC_CAPTURE_LIST_TYPE_ENGINE_CLASS,
-+					     engine->class, &tmp, true)) {
- 			num_regs += tmp;
- 		}
--		if (!intel_guc_capture_getlistsize(guc, 0, GUC_CAPTURE_LIST_TYPE_ENGINE_INSTANCE,
--						   engine->class, &tmp)) {
-+		if (!guc_capture_getlistsize(guc, 0, GUC_CAPTURE_LIST_TYPE_ENGINE_INSTANCE,
-+					     engine->class, &tmp, true)) {
- 			num_regs += tmp;
- 		}
- 	}
 -- 
 2.35.1
 
