@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 462D31863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C062BC433EF;
-	Wed, 28 Dec 2022 15:45:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE4D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:45:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E701C433D2;
+	Wed, 28 Dec 2022 15:45:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242336;
-	bh=d3qJe/k0GOSsbjQ7kRv8Gec6oJ6gw1cdFtLiMadFhJk=;
+	s=korg; t=1672242338;
+	bh=rwTORcYzMSj9EzeW/RZiJ10NSZ4RksZDVEhzgVEqFxo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iSjBnS663IOYOKV7kS5mK/QJMsCTGWwkjL/b4ymJEHTXMQx5HSZRzrrH/Tvj1gEYS
-	 INSFgXYueUvo1dcLyCffFnuQWZixcsxhLVXzEyHysWiSB0p08xkelHSt2pvJvhvrTT
-	 mmzIKAF48I55dxV8zb7eC2kGnpjJfEssl1NYpfh8=
+	b=YLFdRVWDY0cexJFCYlA++ghWNHpMIiaq+qddn41laUvo0YoWz+a3nRhIGbuRg04Pp
+	 M4o6Zz7gaF9+UK2IK6ptCtCKzfRU0P/PL5opxYy35eg+fK1EcoK5LOgwloWcAFRQAm
+	 wsmNDuEqWtwLwd5gZyhftOr1KzJStq/8ZX3jq9mI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
+	Li Zetao <lizetao1@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0358/1146] media: videobuf-dma-contig: use dma_mmap_coherent
-Date: Wed, 28 Dec 2022 15:31:37 +0100
-Message-Id: <20221228144339.885203981@linuxfoundation.org>
+Subject: [PATCH 5.15 592/731] r6040: Fix kmemleak in probe and remove
+Date: Wed, 28 Dec 2022 15:41:39 +0100
+Message-Id: <20221228144313.702655608@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,85 +36,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit b3dc3f8e49577840dc8ac8a365c5b3da4edb10b8 ]
+[ Upstream commit 7e43039a49c2da45edc1d9d7c9ede4003ab45a5f ]
 
-dma_alloc_coherent does not return a physical address, but a DMA address,
-which might be remapped or have an offset.  Passing the DMA address to
-vm_iomap_memory is thus broken.
+There is a memory leaks reported by kmemleak:
 
-Use the proper dma_mmap_coherent helper instead, and stop passing
-__GFP_COMP to dma_alloc_coherent, as the memory management inside the
-DMA allocator is hidden from the callers and does not require it.
+  unreferenced object 0xffff888116111000 (size 2048):
+    comm "modprobe", pid 817, jiffies 4294759745 (age 76.502s)
+    hex dump (first 32 bytes):
+      00 c4 0a 04 81 88 ff ff 08 10 11 16 81 88 ff ff  ................
+      08 10 11 16 81 88 ff ff 00 00 00 00 00 00 00 00  ................
+    backtrace:
+      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
+      [<ffffffff827e20ee>] phy_device_create+0x4e/0x90
+      [<ffffffff827e6072>] get_phy_device+0xd2/0x220
+      [<ffffffff827e7844>] mdiobus_scan+0xa4/0x2e0
+      [<ffffffff827e8be2>] __mdiobus_register+0x482/0x8b0
+      [<ffffffffa01f5d24>] r6040_init_one+0x714/0xd2c [r6040]
+      ...
 
-With this the gfp_t argument to __videobuf_dc_alloc can be removed and
-hard coded to GFP_KERNEL.
+The problem occurs in probe process as follows:
+  r6040_init_one:
+    mdiobus_register
+      mdiobus_scan    <- alloc and register phy_device,
+                         the reference count of phy_device is 3
+    r6040_mii_probe
+      phy_connect     <- connect to the first phy_device,
+                         so the reference count of the first
+                         phy_device is 4, others are 3
+    register_netdev   <- fault inject succeeded, goto error handling path
 
-Fixes: a8f3c203e19b ("[media] videobuf-dma-contig: add cache support")
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+    // error handling path
+    err_out_mdio_unregister:
+      mdiobus_unregister(lp->mii_bus);
+    err_out_mdio:
+      mdiobus_free(lp->mii_bus);    <- the reference count of the first
+                                       phy_device is 1, it is not released
+                                       and other phy_devices are released
+  // similarly, the remove process also has the same problem
+
+The root cause is traced to the phy_device is not disconnected when
+removes one r6040 device in r6040_remove_one() or on error handling path
+after r6040_mii probed successfully. In r6040_mii_probe(), a net ethernet
+device is connected to the first PHY device of mii_bus, in order to
+notify the connected driver when the link status changes, which is the
+default behavior of the PHY infrastructure to handle everything.
+Therefore the phy_device should be disconnected when removes one r6040
+device or on error handling path.
+
+Fix it by adding phy_disconnect() when removes one r6040 device or on
+error handling path after r6040_mii probed successfully.
+
+Fixes: 3831861b4ad8 ("r6040: implement phylib")
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20221213125614.927754-1-lizetao1@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/v4l2-core/videobuf-dma-contig.c | 22 +++++++------------
- 1 file changed, 8 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/rdc/r6040.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/v4l2-core/videobuf-dma-contig.c b/drivers/media/v4l2-core/videobuf-dma-contig.c
-index 52312ce2ba05..f2c439359557 100644
---- a/drivers/media/v4l2-core/videobuf-dma-contig.c
-+++ b/drivers/media/v4l2-core/videobuf-dma-contig.c
-@@ -36,12 +36,11 @@ struct videobuf_dma_contig_memory {
+diff --git a/drivers/net/ethernet/rdc/r6040.c b/drivers/net/ethernet/rdc/r6040.c
+index 01ef5efd7bc2..5a8a6977ec9a 100644
+--- a/drivers/net/ethernet/rdc/r6040.c
++++ b/drivers/net/ethernet/rdc/r6040.c
+@@ -1159,10 +1159,12 @@ static int r6040_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	err = register_netdev(dev);
+ 	if (err) {
+ 		dev_err(&pdev->dev, "Failed to register net device\n");
+-		goto err_out_mdio_unregister;
++		goto err_out_phy_disconnect;
+ 	}
+ 	return 0;
  
- static int __videobuf_dc_alloc(struct device *dev,
- 			       struct videobuf_dma_contig_memory *mem,
--			       unsigned long size, gfp_t flags)
-+			       unsigned long size)
- {
- 	mem->size = size;
--	mem->vaddr = dma_alloc_coherent(dev, mem->size,
--					&mem->dma_handle, flags);
--
-+	mem->vaddr = dma_alloc_coherent(dev, mem->size, &mem->dma_handle,
-+					GFP_KERNEL);
- 	if (!mem->vaddr) {
- 		dev_err(dev, "memory alloc size %ld failed\n", mem->size);
- 		return -ENOMEM;
-@@ -258,8 +257,7 @@ static int __videobuf_iolock(struct videobuf_queue *q,
- 			return videobuf_dma_contig_user_get(mem, vb);
++err_out_phy_disconnect:
++	phy_disconnect(dev->phydev);
+ err_out_mdio_unregister:
+ 	mdiobus_unregister(lp->mii_bus);
+ err_out_mdio:
+@@ -1186,6 +1188,7 @@ static void r6040_remove_one(struct pci_dev *pdev)
+ 	struct r6040_private *lp = netdev_priv(dev);
  
- 		/* allocate memory for the read() method */
--		if (__videobuf_dc_alloc(q->dev, mem, PAGE_ALIGN(vb->size),
--					GFP_KERNEL))
-+		if (__videobuf_dc_alloc(q->dev, mem, PAGE_ALIGN(vb->size)))
- 			return -ENOMEM;
- 		break;
- 	case V4L2_MEMORY_OVERLAY:
-@@ -295,22 +293,18 @@ static int __videobuf_mmap_mapper(struct videobuf_queue *q,
- 	BUG_ON(!mem);
- 	MAGIC_CHECK(mem->magic, MAGIC_DC_MEM);
- 
--	if (__videobuf_dc_alloc(q->dev, mem, PAGE_ALIGN(buf->bsize),
--				GFP_KERNEL | __GFP_COMP))
-+	if (__videobuf_dc_alloc(q->dev, mem, PAGE_ALIGN(buf->bsize)))
- 		goto error;
- 
--	/* Try to remap memory */
--	vma->vm_page_prot = pgprot_noncached(vma->vm_page_prot);
--
- 	/* the "vm_pgoff" is just used in v4l2 to find the
- 	 * corresponding buffer data structure which is allocated
- 	 * earlier and it does not mean the offset from the physical
- 	 * buffer start address as usual. So set it to 0 to pass
--	 * the sanity check in vm_iomap_memory().
-+	 * the sanity check in dma_mmap_coherent().
- 	 */
- 	vma->vm_pgoff = 0;
--
--	retval = vm_iomap_memory(vma, mem->dma_handle, mem->size);
-+	retval = dma_mmap_coherent(q->dev, vma, mem->vaddr, mem->dma_handle,
-+				   mem->size);
- 	if (retval) {
- 		dev_err(q->dev, "mmap: remap failed with error %d. ",
- 			retval);
+ 	unregister_netdev(dev);
++	phy_disconnect(dev->phydev);
+ 	mdiobus_unregister(lp->mii_bus);
+ 	mdiobus_free(lp->mii_bus);
+ 	netif_napi_del(&lp->napi);
 -- 
 2.35.1
 
