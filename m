@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54144ECA
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:30:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2D2AC433EF;
-	Wed, 28 Dec 2022 16:30:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B4F10E9
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:30:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B763C433EF;
+	Wed, 28 Dec 2022 16:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245007;
-	bh=0wxqIuC41VHbvzGNAJLK3kvZBi15ChrR6wbomyFkiaE=;
+	s=korg; t=1672245009;
+	bh=vKaZSK5O3xjBuWvuSPFnIXobmetEYXklgh6CZ0eCcC0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BRFFzyjp3I/rTQQdaVdUKGu4MBtXTJ34WNq3vZhPIiRmmdlNQNu7MqSMSJOAT/uV/
-	 h3JLRWurGOHPBMU/YEyeQQdQZvhI/Qt3UNbly0LX9u32F0IWnqggNUYPvAEHbPUwsy
-	 VQ8Nm8g3ZaZAuP4Fd0KRo5lNd+kLX4+bxgyWCIZU=
+	b=uH3MZVsJLiV7I2Vvr30uEwnhvQPBWDosJeNRYJHBaozbcqqmpGpDU6T9zZiikPv7E
+	 4+mxzkI9sJIttVsYgUgvbfST1G2fgsrRnY7fNMxunMs0xdNSsenEDAAkG5E8P+oZZz
+	 FyvsCXm+OdeCwx2rkIennTN+EOpTT/KX6DpDe5So=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0777/1146] power: supply: ab8500: Fix error handling in ab8500_charger_init()
-Date: Wed, 28 Dec 2022 15:38:36 +0100
-Message-Id: <20221228144351.252249662@linuxfoundation.org>
+Subject: [PATCH 6.0 0815/1073] iommu/sun50i: Remove IOMMU_DOMAIN_IDENTITY
+Date: Wed, 28 Dec 2022 15:40:03 +0100
+Message-Id: <20221228144350.145451244@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,45 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Jason Gunthorpe <jgg@nvidia.com>
 
-[ Upstream commit c4d33381b134da188ccd1084aef21e2b8c3c422e ]
+[ Upstream commit ef5bb8e7a7127218f826b9ccdf7508e7a339f4c2 ]
 
-The ab8500_charger_init() returns the platform_driver_register() directly
-without checking its return value, if platform_driver_register() failed,
-all ab8500_charger_component_drivers are not unregistered.
+This driver treats IOMMU_DOMAIN_IDENTITY the same as UNMANAGED, which
+cannot possibly be correct.
 
-Fix by unregister ab8500_charger_component_drivers when
-platform_driver_register() failed.
+UNMANAGED domains are required to start out blocking all DMAs. This seems
+to be what this driver does as it allocates a first level 'dt' for the IO
+page table that is 0 filled.
 
-Fixes: 1c1f13a006ed ("power: supply: ab8500: Move to componentized binding")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Thus UNMANAGED looks like a working IO page table, and so IDENTITY must be
+a mistake. Remove it.
+
+Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/0-v1-97f0adf27b5e+1f0-s50_identity_jgg@nvidia.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/ab8500_charger.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/iommu/sun50i-iommu.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply/ab8500_charger.c
-index c19c50442761..58757a5799f8 100644
---- a/drivers/power/supply/ab8500_charger.c
-+++ b/drivers/power/supply/ab8500_charger.c
-@@ -3719,7 +3719,14 @@ static int __init ab8500_charger_init(void)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
+index d7c5e9b1a087..1d81a6aa939b 100644
+--- a/drivers/iommu/sun50i-iommu.c
++++ b/drivers/iommu/sun50i-iommu.c
+@@ -672,7 +672,6 @@ static struct iommu_domain *sun50i_iommu_domain_alloc(unsigned type)
+ 	struct sun50i_iommu_domain *sun50i_domain;
  
--	return platform_driver_register(&ab8500_charger_driver);
-+	ret = platform_driver_register(&ab8500_charger_driver);
-+	if (ret) {
-+		platform_unregister_drivers(ab8500_charger_component_drivers,
-+				ARRAY_SIZE(ab8500_charger_component_drivers));
-+		return ret;
-+	}
-+
-+	return 0;
- }
+ 	if (type != IOMMU_DOMAIN_DMA &&
+-	    type != IOMMU_DOMAIN_IDENTITY &&
+ 	    type != IOMMU_DOMAIN_UNMANAGED)
+ 		return NULL;
  
- static void __exit ab8500_charger_exit(void)
 -- 
 2.35.1
 
