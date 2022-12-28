@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86AA11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:05:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01841C433EF;
-	Wed, 28 Dec 2022 15:05:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 231ED1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:05:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98B11C433EF;
+	Wed, 28 Dec 2022 15:05:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239904;
-	bh=Xp1YokSJ9Gw+G79YFW3oEKOgvxy5p1aLvCDTGPe0NSY=;
+	s=korg; t=1672239906;
+	bh=A81OPmsbg3MY1IXMU7guZBwmSFZMZT9M/mVvPlZmTrE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=klZsAa9YzVOC7rFIAZ+waObjF2jxMz/X6aRu2yiZNTYkeCR6QpJyIuXyUAbVKeAQK
-	 NdwZvFAZ1LG1dRAOceyej9MdfavtLM3NYz+nqAB0CH8s4la+s2qI6S0w1IAql/apop
-	 kOe6UpNDjOBvNZGrOBrKPN3+jX5A0GAqPG4kCfDg=
+	b=z4XOI3TA4BG8y+5XkzTDLvYbPr7lWI1O4RpAaLvWTR/VG/U4/AEpONJJUa3j4x/Dk
+	 6WeCsUoZ4WpfDw1HfQe3VOe3EXcoGkKqJeo7fE3adJgM6Qrk3aTp3eTKpvNlE4f0BA
+	 vxT+OxtNhPaTYwR/3UuKQQ1bUwGou9fWrCZe3X6M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miklos Szeredi <mszeredi@redhat.com>,
-	Amir Goldstein <amir73il@gmail.com>,
-	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0092/1073] ovl: remove privs in ovl_copyfile()
-Date: Wed, 28 Dec 2022 15:28:00 +0100
-Message-Id: <20221228144330.552593666@linuxfoundation.org>
+Subject: [PATCH 5.15 284/731] ALSA: pcm: Set missing stop_operating flag at undoing trigger start
+Date: Wed, 28 Dec 2022 15:36:31 +0100
+Message-Id: <20221228144304.804347993@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,64 +34,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amir Goldstein <amir73il@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit b306e90ffabdaa7e3b3350dbcd19b7663e71ab17 ]
+[ Upstream commit 5c8cc93b06d1ff860327a273abf3ac006290d242 ]
 
-Underlying fs doesn't remove privs because copy_range/remap_range are
-called with privileged mounter credentials.
+When a PCM trigger-start fails at snd_pcm_do_start(), PCM core tries
+to undo the action at snd_pcm_undo_start() by issuing the trigger STOP
+manually.  At that point, we forgot to set the stop_operating flag,
+hence the sync-stop won't be issued at the next prepare or other
+calls.
 
-This fixes some failures in fstest generic/673.
+This patch adds the missing stop_operating flag at
+snd_pcm_undo_start().
 
-Fixes: 8ede205541ff ("ovl: add reflink/copyfile/dedup support")
-Acked-by: Miklos Szeredi <mszeredi@redhat.com>
-Signed-off-by: Amir Goldstein <amir73il@gmail.com>
-Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Fixes: 1e850beea278 ("ALSA: pcm: Add the support for sync-stop operation")
+Link: https://lore.kernel.org/r/b4e71631-4a94-613-27b2-fb595792630@carlh.net
+Link: https://lore.kernel.org/r/20221205132124.11585-2-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/overlayfs/file.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ sound/core/pcm_native.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/overlayfs/file.c b/fs/overlayfs/file.c
-index daff601b5c41..362a4eed92b5 100644
---- a/fs/overlayfs/file.c
-+++ b/fs/overlayfs/file.c
-@@ -567,14 +567,23 @@ static loff_t ovl_copyfile(struct file *file_in, loff_t pos_in,
- 	const struct cred *old_cred;
- 	loff_t ret;
- 
-+	inode_lock(inode_out);
-+	if (op != OVL_DEDUPE) {
-+		/* Update mode */
-+		ovl_copyattr(inode_out);
-+		ret = file_remove_privs(file_out);
-+		if (ret)
-+			goto out_unlock;
+diff --git a/sound/core/pcm_native.c b/sound/core/pcm_native.c
+index f38c2e5e9a29..44e06ef4ff0b 100644
+--- a/sound/core/pcm_native.c
++++ b/sound/core/pcm_native.c
+@@ -1419,8 +1419,10 @@ static int snd_pcm_do_start(struct snd_pcm_substream *substream,
+ static void snd_pcm_undo_start(struct snd_pcm_substream *substream,
+ 			       snd_pcm_state_t state)
+ {
+-	if (substream->runtime->trigger_master == substream)
++	if (substream->runtime->trigger_master == substream) {
+ 		substream->ops->trigger(substream, SNDRV_PCM_TRIGGER_STOP);
++		substream->runtime->stop_operating = true;
 +	}
-+
- 	ret = ovl_real_fdget(file_out, &real_out);
- 	if (ret)
--		return ret;
-+		goto out_unlock;
- 
- 	ret = ovl_real_fdget(file_in, &real_in);
- 	if (ret) {
- 		fdput(real_out);
--		return ret;
-+		goto out_unlock;
- 	}
- 
- 	old_cred = ovl_override_creds(file_inode(file_out)->i_sb);
-@@ -603,6 +612,9 @@ static loff_t ovl_copyfile(struct file *file_in, loff_t pos_in,
- 	fdput(real_in);
- 	fdput(real_out);
- 
-+out_unlock:
-+	inode_unlock(inode_out);
-+
- 	return ret;
  }
  
+ static void snd_pcm_post_start(struct snd_pcm_substream *substream,
 -- 
 2.35.1
 
