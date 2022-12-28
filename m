@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8A01863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A69ADC433D2;
-	Wed, 28 Dec 2022 15:13:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0151863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:13:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF6DC433F0;
+	Wed, 28 Dec 2022 15:13:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240412;
-	bh=Vw7eGgi4X9x8X+5+bEB3oWCqSQzC5RkvsWNIiNf1iLY=;
+	s=korg; t=1672240414;
+	bh=BIHmUzAcX4hDhLpvD8ZHjANh2lgWr97eLzaScnF+CHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pTzQKyUm+x/jU18jMTc20DgPtVtJdEUi7tJPMRiga8E/QBxeFvaSS9H4wcsc9Ut25
-	 F0dUR9R8zE+b9ydwTk7JI9E6nXctbIDVoShl/DU304720bWAaPJ0vfaxRpe/RSXALB
-	 UjbOCIspdw8oPZSfSnzUAZ30XyJRfDlW2rZ+jNyg=
+	b=2mcqRLnCKwaRdyjHNr3EXo8NxGHQZ6kAWMF2QS/PQyqky0XSqsbksxTNK3Kxyfp7I
+	 P9WGb0+877i1nC1NFM+yfmUXDiAa93S2+yMg5i/w7zAyLbljFyjWbyEmLVABYHbBzS
+	 +aATzjHlH4a5zOY/BQXWT3hL8MhBWAJbxB4Gstik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Derek Dolney <z23@posteo.net>,
-	Vincent Donnefort <vdonnefort@google.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Valentin Schneider <vschneid@redhat.com>,
+	Martin Pitt <mpitt@redhat.com>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0157/1073] cpu/hotplug: Do not bail-out in DYING/STARTING sections
-Date: Wed, 28 Dec 2022 15:29:05 +0100
-Message-Id: <20221228144332.285131290@linuxfoundation.org>
+Subject: [PATCH 6.1 0119/1146] fs: dont audit the capability check in simple_xattr_list()
+Date: Wed, 28 Dec 2022 15:27:38 +0100
+Message-Id: <20221228144333.389781721@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,139 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vincent Donnefort <vdonnefort@google.com>
+From: Ondrej Mosnacek <omosnace@redhat.com>
 
-[ Upstream commit 6f855b39e4602b6b42a8e5cbcfefb8a1b8b5f0be ]
+[ Upstream commit e7eda157c4071cd1e69f4b1687b0fbe1ae5e6f46 ]
 
-The DYING/STARTING callbacks are not expected to fail. However, as reported
-by Derek, buggy drivers such as tboot are still free to return errors
-within those sections, which halts the hot(un)plug and leaves the CPU in an
-unrecoverable state.
+The check being unconditional may lead to unwanted denials reported by
+LSMs when a process has the capability granted by DAC, but denied by an
+LSM. In the case of SELinux such denials are a problem, since they can't
+be effectively filtered out via the policy and when not silenced, they
+produce noise that may hide a true problem or an attack.
 
-As there is no rollback possible, only log the failures and proceed with
-the following steps.
+Checking for the capability only if any trusted xattr is actually
+present wouldn't really address the issue, since calling listxattr(2) on
+such node on its own doesn't indicate an explicit attempt to see the
+trusted xattrs. Additionally, it could potentially leak the presence of
+trusted xattrs to an unprivileged user if they can check for the denials
+(e.g. through dmesg).
 
-This restores the hotplug behaviour prior to commit 453e41085183
-("cpu/hotplug: Add cpuhp_invoke_callback_range()")
+Therefore, it's best (and simplest) to keep the check unconditional and
+instead use ns_capable_noaudit() that will silence any associated LSM
+denials.
 
-Fixes: 453e41085183 ("cpu/hotplug: Add cpuhp_invoke_callback_range()")
-Reported-by: Derek Dolney <z23@posteo.net>
-Signed-off-by: Vincent Donnefort <vdonnefort@google.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Derek Dolney <z23@posteo.net>
-Reviewed-by: Valentin Schneider <vschneid@redhat.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=215867
-Link: https://lore.kernel.org/r/20220927101259.1149636-1-vdonnefort@google.com
+Fixes: 38f38657444d ("xattr: extract simple_xattr code from tmpfs")
+Reported-by: Martin Pitt <mpitt@redhat.com>
+Suggested-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
+Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Reviewed-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/cpu.c | 56 +++++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 40 insertions(+), 16 deletions(-)
+ fs/xattr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/cpu.c b/kernel/cpu.c
-index 979de993f853..98a7a7b1471b 100644
---- a/kernel/cpu.c
-+++ b/kernel/cpu.c
-@@ -663,21 +663,51 @@ static bool cpuhp_next_state(bool bringup,
- 	return true;
- }
- 
--static int cpuhp_invoke_callback_range(bool bringup,
--				       unsigned int cpu,
--				       struct cpuhp_cpu_state *st,
--				       enum cpuhp_state target)
-+static int __cpuhp_invoke_callback_range(bool bringup,
-+					 unsigned int cpu,
-+					 struct cpuhp_cpu_state *st,
-+					 enum cpuhp_state target,
-+					 bool nofail)
+diff --git a/fs/xattr.c b/fs/xattr.c
+index 61107b6bbed2..427b8cea1f96 100644
+--- a/fs/xattr.c
++++ b/fs/xattr.c
+@@ -1140,7 +1140,7 @@ static int xattr_list_one(char **buffer, ssize_t *remaining_size,
+ ssize_t simple_xattr_list(struct inode *inode, struct simple_xattrs *xattrs,
+ 			  char *buffer, size_t size)
  {
- 	enum cpuhp_state state;
--	int err = 0;
-+	int ret = 0;
- 
- 	while (cpuhp_next_state(bringup, &state, st, target)) {
-+		int err;
-+
- 		err = cpuhp_invoke_callback(cpu, state, bringup, NULL, NULL);
--		if (err)
-+		if (!err)
-+			continue;
-+
-+		if (nofail) {
-+			pr_warn("CPU %u %s state %s (%d) failed (%d)\n",
-+				cpu, bringup ? "UP" : "DOWN",
-+				cpuhp_get_step(st->state)->name,
-+				st->state, err);
-+			ret = -1;
-+		} else {
-+			ret = err;
- 			break;
-+		}
- 	}
- 
--	return err;
-+	return ret;
-+}
-+
-+static inline int cpuhp_invoke_callback_range(bool bringup,
-+					      unsigned int cpu,
-+					      struct cpuhp_cpu_state *st,
-+					      enum cpuhp_state target)
-+{
-+	return __cpuhp_invoke_callback_range(bringup, cpu, st, target, false);
-+}
-+
-+static inline void cpuhp_invoke_callback_range_nofail(bool bringup,
-+						      unsigned int cpu,
-+						      struct cpuhp_cpu_state *st,
-+						      enum cpuhp_state target)
-+{
-+	__cpuhp_invoke_callback_range(bringup, cpu, st, target, true);
- }
- 
- static inline bool can_rollback_cpu(struct cpuhp_cpu_state *st)
-@@ -999,7 +1029,6 @@ static int take_cpu_down(void *_param)
- 	struct cpuhp_cpu_state *st = this_cpu_ptr(&cpuhp_state);
- 	enum cpuhp_state target = max((int)st->target, CPUHP_AP_OFFLINE);
- 	int err, cpu = smp_processor_id();
--	int ret;
- 
- 	/* Ensure this CPU doesn't handle any more interrupts. */
- 	err = __cpu_disable();
-@@ -1012,13 +1041,10 @@ static int take_cpu_down(void *_param)
- 	 */
- 	WARN_ON(st->state != (CPUHP_TEARDOWN_CPU - 1));
- 
--	/* Invoke the former CPU_DYING callbacks */
--	ret = cpuhp_invoke_callback_range(false, cpu, st, target);
--
- 	/*
--	 * DYING must not fail!
-+	 * Invoke the former CPU_DYING callbacks. DYING must not fail!
- 	 */
--	WARN_ON_ONCE(ret);
-+	cpuhp_invoke_callback_range_nofail(false, cpu, st, target);
- 
- 	/* Give up timekeeping duties */
- 	tick_handover_do_timer();
-@@ -1296,16 +1322,14 @@ void notify_cpu_starting(unsigned int cpu)
- {
- 	struct cpuhp_cpu_state *st = per_cpu_ptr(&cpuhp_state, cpu);
- 	enum cpuhp_state target = min((int)st->target, CPUHP_AP_ONLINE);
--	int ret;
- 
- 	rcu_cpu_starting(cpu);	/* Enables RCU usage on this CPU. */
- 	cpumask_set_cpu(cpu, &cpus_booted_once_mask);
--	ret = cpuhp_invoke_callback_range(true, cpu, st, target);
- 
- 	/*
- 	 * STARTING must not fail!
- 	 */
--	WARN_ON_ONCE(ret);
-+	cpuhp_invoke_callback_range_nofail(true, cpu, st, target);
- }
- 
- /*
+-	bool trusted = capable(CAP_SYS_ADMIN);
++	bool trusted = ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN);
+ 	struct simple_xattr *xattr;
+ 	ssize_t remaining_size = size;
+ 	int err = 0;
 -- 
 2.35.1
 
