@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D311863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:33:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37F2CC433F0;
-	Wed, 28 Dec 2022 15:33:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6742D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:33:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9D62C43396;
+	Wed, 28 Dec 2022 15:33:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241583;
-	bh=pwLQVnQXuo6aDeMwwm6BhF7DQVLZXnMoP7Png546+Cg=;
+	s=korg; t=1672241586;
+	bh=HRL0szz7m3tX6TfUqS2i3vmZRRETeIWr52yGzkEUzXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CtnOSfnxG9HeTCtD4Pq4qCmkXay9Ngdiovy5eThSe5V1WoEbVogI6RrSmkckwfl0e
-	 r9VhJqGZ144cUmRbvhmbCNe1QjT+YLE3Tldz7NdsmCN5wHC/nxyKLbpUaiuM/NcQZg
-	 /Ou+M7sR0EI/rXpiDODgPH1gsJ8rZkFHPf7mJndw=
+	b=JWse75ZBKCSn9SNXwExjs2JvccBgz9NY/DS/hHkj58BX3OJpIQI/gnFr8XIb3Dxhm
+	 IWlWoYzhzMCWCVtVr+AfMI6F1G2I1c0zb0HM1OSrOoLP+AzmyrI9uRTU8L9laphaIv
+	 2q5UHGvQPKFGt6eZgQ6q22d01BlBGO54rtMOLGZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0239/1146] media: i2c: ad5820: Fix error path
-Date: Wed, 28 Dec 2022 15:29:38 +0100
-Message-Id: <20221228144336.630103292@linuxfoundation.org>
+Subject: [PATCH 5.15 499/731] samples: vfio-mdev: Fix missing pci_disable_device() in mdpy_fb_probe()
+Date: Wed, 28 Dec 2022 15:40:06 +0100
+Message-Id: <20221228144311.012237551@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,49 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 9fce241660f37d9e95e93c0ae6fba8cfefa5797b ]
+[ Upstream commit d1f0f50fbbbbca1e3e8157e51934613bf88f6d44 ]
 
-Error path seems to be swaped. Fix the order and provide some meaningful
-names.
+Add missing pci_disable_device() in fail path of mdpy_fb_probe().
+Besides, fix missing release functions in mdpy_fb_remove().
 
-Fixes: bee3d5115611 ("[media] ad5820: Add driver for auto-focus coil")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Fixes: cacade1946a4 ("sample: vfio mdev display - guest driver")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Link: https://lore.kernel.org/r/20221208013341.3999-1-shangxiaojing@huawei.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ad5820.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ samples/vfio-mdev/mdpy-fb.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/ad5820.c b/drivers/media/i2c/ad5820.c
-index 516de278cc49..a12fedcc3a1c 100644
---- a/drivers/media/i2c/ad5820.c
-+++ b/drivers/media/i2c/ad5820.c
-@@ -327,18 +327,18 @@ static int ad5820_probe(struct i2c_client *client,
+diff --git a/samples/vfio-mdev/mdpy-fb.c b/samples/vfio-mdev/mdpy-fb.c
+index 9ec93d90e8a5..4eb7aa11cfbb 100644
+--- a/samples/vfio-mdev/mdpy-fb.c
++++ b/samples/vfio-mdev/mdpy-fb.c
+@@ -109,7 +109,7 @@ static int mdpy_fb_probe(struct pci_dev *pdev,
  
- 	ret = media_entity_pads_init(&coil->subdev.entity, 0, NULL);
+ 	ret = pci_request_regions(pdev, "mdpy-fb");
  	if (ret < 0)
--		goto cleanup2;
-+		goto clean_mutex;
+-		return ret;
++		goto err_disable_dev;
  
- 	ret = v4l2_async_register_subdev(&coil->subdev);
- 	if (ret < 0)
--		goto cleanup;
-+		goto clean_entity;
+ 	pci_read_config_dword(pdev, MDPY_FORMAT_OFFSET, &format);
+ 	pci_read_config_dword(pdev, MDPY_WIDTH_OFFSET,	&width);
+@@ -191,6 +191,9 @@ static int mdpy_fb_probe(struct pci_dev *pdev,
+ err_release_regions:
+ 	pci_release_regions(pdev);
  
- 	return ret;
- 
--cleanup2:
--	mutex_destroy(&coil->power_lock);
--cleanup:
-+clean_entity:
- 	media_entity_cleanup(&coil->subdev.entity);
-+clean_mutex:
-+	mutex_destroy(&coil->power_lock);
++err_disable_dev:
++	pci_disable_device(pdev);
++
  	return ret;
  }
  
+@@ -199,7 +202,10 @@ static void mdpy_fb_remove(struct pci_dev *pdev)
+ 	struct fb_info *info = pci_get_drvdata(pdev);
+ 
+ 	unregister_framebuffer(info);
++	iounmap(info->screen_base);
+ 	framebuffer_release(info);
++	pci_release_regions(pdev);
++	pci_disable_device(pdev);
+ }
+ 
+ static struct pci_device_id mdpy_fb_pci_table[] = {
 -- 
 2.35.1
 
