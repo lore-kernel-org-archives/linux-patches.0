@@ -1,30 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFBED1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:18:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30462C433D2;
-	Wed, 28 Dec 2022 15:18:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C9971863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:18:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A966AC433EF;
+	Wed, 28 Dec 2022 15:18:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240708;
-	bh=YB0JO5wa4WIkRmrXgnzwLPoxgR82+OvvjwEP/0XFvCk=;
+	s=korg; t=1672240711;
+	bh=czY5fFUobZe4djTQze+1Ku0RbqxKIEMWMj4BSLxAV2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N+LED0LuXqy1J3f+CQ1vRv2wBCyOrWixaY4vXNHkxOtCJwBDHPFHR/WQ0LGcnqaAl
-	 WXTpaCcMtqFaRU4+QkClbbXHT/XETLZOmedyU7p6WSnFVmp+k5r0TkuQpZYMIqJzRj
-	 kcsnEPON/7QCNZG3FlRb9IYuC9rom+dtbhqKOxbY=
+	b=K3tosQtQRc05s4uGUYmNVgnpkgjXCztMDtaM+uQAIvCBorbQtRYBleEWYPUIA24Fm
+	 gcZCZFTB1MoRhLZIG4/xvTBLliuWMYWkrlwIiHOAJDzkNOhxH8JTo36GTwtD1MqvbX
+	 6ZAqFy5/A4BZT1yxMQLCxnB1sZsZcBsUA3G6qoV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Zhang <markzhang@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Akinobu Mita <akinobu.mita@gmail.com>,
+	Zhao Gongyi <zhaogongyi@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Oscar Salvador <osalvador@suse.de>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 388/731] RDMA/nldev: Return "-EAGAIN" if the cm_id isnt from expected port
-Date: Wed, 28 Dec 2022 15:38:15 +0100
-Message-Id: <20221228144307.807966255@linuxfoundation.org>
+Subject: [PATCH 6.1 0158/1146] debugfs: fix error when writing negative value to atomic_t debugfs file
+Date: Wed, 28 Dec 2022 15:28:17 +0100
+Message-Id: <20221228144334.450137015@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,49 +44,195 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Zhang <markzhang@nvidia.com>
+From: Akinobu Mita <akinobu.mita@gmail.com>
 
-[ Upstream commit ecacb3751f254572af0009b9501e2cdc83a30b6a ]
+[ Upstream commit d472cf797c4e268613dbce5ec9b95d0bcae19ecb ]
 
-When filling a cm_id entry, return "-EAGAIN" instead of 0 if the cm_id
-doesn'the have the same port as requested, otherwise an incomplete entry
-may be returned, which causes "rdam res show cm_id" to return an error.
+The simple attribute files do not accept a negative value since the commit
+488dac0c9237 ("libfs: fix error cast of negative value in
+simple_attr_write()"), so we have to use a 64-bit value to write a
+negative value for a debugfs file created by debugfs_create_atomic_t().
 
-For example on a machine with two rdma devices with "rping -C 1 -v -s"
-running background, the "rdma" command fails:
-  $ rdma -V
-  rdma utility, iproute2-5.19.0
-  $ rdma res show cm_id
-  link mlx5_0/- cm-idn 0 state LISTEN ps TCP pid 28056 comm rping src-addr 0.0.0.0:7174
-  error: Protocol not available
+This restores the previous behaviour by introducing
+DEFINE_DEBUGFS_ATTRIBUTE_SIGNED for a signed value.
 
-While with this fix it succeeds:
-  $ rdma res show cm_id
-  link mlx5_0/- cm-idn 0 state LISTEN ps TCP pid 26395 comm rping src-addr 0.0.0.0:7174
-  link mlx5_1/- cm-idn 0 state LISTEN ps TCP pid 26395 comm rping src-addr 0.0.0.0:7174
-
-Fixes: 00313983cda6 ("RDMA/nldev: provide detailed CM_ID information")
-Signed-off-by: Mark Zhang <markzhang@nvidia.com>
-Link: https://lore.kernel.org/r/a08e898cdac5e28428eb749a99d9d981571b8ea7.1667810736.git.leonro@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Link: https://lkml.kernel.org/r/20220919172418.45257-4-akinobu.mita@gmail.com
+Fixes: 488dac0c9237 ("libfs: fix error cast of negative value in simple_attr_write()")
+Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
+Reported-by: Zhao Gongyi <zhaogongyi@huawei.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Rafael J. Wysocki <rafael@kernel.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Wei Yongjun <weiyongjun1@huawei.com>
+Cc: Yicong Yang <yangyicong@hisilicon.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/nldev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../fault-injection/fault-injection.rst       | 10 +++----
+ fs/debugfs/file.c                             | 28 +++++++++++++++----
+ include/linux/debugfs.h                       | 19 +++++++++++--
+ 3 files changed, 43 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
-index cd89e59cbe33..6f3799698634 100644
---- a/drivers/infiniband/core/nldev.c
-+++ b/drivers/infiniband/core/nldev.c
-@@ -550,7 +550,7 @@ static int fill_res_cm_id_entry(struct sk_buff *msg, bool has_cap_net_admin,
- 	struct rdma_cm_id *cm_id = &id_priv->id;
+diff --git a/Documentation/fault-injection/fault-injection.rst b/Documentation/fault-injection/fault-injection.rst
+index 17779a2772e5..5f6454b9dbd4 100644
+--- a/Documentation/fault-injection/fault-injection.rst
++++ b/Documentation/fault-injection/fault-injection.rst
+@@ -83,9 +83,7 @@ configuration of fault-injection capabilities.
+ - /sys/kernel/debug/fail*/times:
  
- 	if (port && port != cm_id->port_num)
--		return 0;
-+		return -EAGAIN;
+ 	specifies how many times failures may happen at most. A value of -1
+-	means "no limit". Note, though, that this file only accepts unsigned
+-	values. So, if you want to specify -1, you better use 'printf' instead
+-	of 'echo', e.g.: $ printf %#x -1 > times
++	means "no limit".
  
- 	if (cm_id->port_num &&
- 	    nla_put_u32(msg, RDMA_NLDEV_ATTR_PORT_INDEX, cm_id->port_num))
+ - /sys/kernel/debug/fail*/space:
+ 
+@@ -284,7 +282,7 @@ Application Examples
+     echo Y > /sys/kernel/debug/$FAILTYPE/task-filter
+     echo 10 > /sys/kernel/debug/$FAILTYPE/probability
+     echo 100 > /sys/kernel/debug/$FAILTYPE/interval
+-    printf %#x -1 > /sys/kernel/debug/$FAILTYPE/times
++    echo -1 > /sys/kernel/debug/$FAILTYPE/times
+     echo 0 > /sys/kernel/debug/$FAILTYPE/space
+     echo 2 > /sys/kernel/debug/$FAILTYPE/verbose
+     echo Y > /sys/kernel/debug/$FAILTYPE/ignore-gfp-wait
+@@ -338,7 +336,7 @@ Application Examples
+     echo N > /sys/kernel/debug/$FAILTYPE/task-filter
+     echo 10 > /sys/kernel/debug/$FAILTYPE/probability
+     echo 100 > /sys/kernel/debug/$FAILTYPE/interval
+-    printf %#x -1 > /sys/kernel/debug/$FAILTYPE/times
++    echo -1 > /sys/kernel/debug/$FAILTYPE/times
+     echo 0 > /sys/kernel/debug/$FAILTYPE/space
+     echo 2 > /sys/kernel/debug/$FAILTYPE/verbose
+     echo Y > /sys/kernel/debug/$FAILTYPE/ignore-gfp-wait
+@@ -369,7 +367,7 @@ Application Examples
+     echo N > /sys/kernel/debug/$FAILTYPE/task-filter
+     echo 100 > /sys/kernel/debug/$FAILTYPE/probability
+     echo 0 > /sys/kernel/debug/$FAILTYPE/interval
+-    printf %#x -1 > /sys/kernel/debug/$FAILTYPE/times
++    echo -1 > /sys/kernel/debug/$FAILTYPE/times
+     echo 0 > /sys/kernel/debug/$FAILTYPE/space
+     echo 1 > /sys/kernel/debug/$FAILTYPE/verbose
+ 
+diff --git a/fs/debugfs/file.c b/fs/debugfs/file.c
+index ddb3fc258df9..b54f470e0d03 100644
+--- a/fs/debugfs/file.c
++++ b/fs/debugfs/file.c
+@@ -378,8 +378,8 @@ ssize_t debugfs_attr_read(struct file *file, char __user *buf,
+ }
+ EXPORT_SYMBOL_GPL(debugfs_attr_read);
+ 
+-ssize_t debugfs_attr_write(struct file *file, const char __user *buf,
+-			 size_t len, loff_t *ppos)
++static ssize_t debugfs_attr_write_xsigned(struct file *file, const char __user *buf,
++			 size_t len, loff_t *ppos, bool is_signed)
+ {
+ 	struct dentry *dentry = F_DENTRY(file);
+ 	ssize_t ret;
+@@ -387,12 +387,28 @@ ssize_t debugfs_attr_write(struct file *file, const char __user *buf,
+ 	ret = debugfs_file_get(dentry);
+ 	if (unlikely(ret))
+ 		return ret;
+-	ret = simple_attr_write(file, buf, len, ppos);
++	if (is_signed)
++		ret = simple_attr_write_signed(file, buf, len, ppos);
++	else
++		ret = simple_attr_write(file, buf, len, ppos);
+ 	debugfs_file_put(dentry);
+ 	return ret;
+ }
++
++ssize_t debugfs_attr_write(struct file *file, const char __user *buf,
++			 size_t len, loff_t *ppos)
++{
++	return debugfs_attr_write_xsigned(file, buf, len, ppos, false);
++}
+ EXPORT_SYMBOL_GPL(debugfs_attr_write);
+ 
++ssize_t debugfs_attr_write_signed(struct file *file, const char __user *buf,
++			 size_t len, loff_t *ppos)
++{
++	return debugfs_attr_write_xsigned(file, buf, len, ppos, true);
++}
++EXPORT_SYMBOL_GPL(debugfs_attr_write_signed);
++
+ static struct dentry *debugfs_create_mode_unsafe(const char *name, umode_t mode,
+ 					struct dentry *parent, void *value,
+ 					const struct file_operations *fops,
+@@ -738,11 +754,11 @@ static int debugfs_atomic_t_get(void *data, u64 *val)
+ 	*val = atomic_read((atomic_t *)data);
+ 	return 0;
+ }
+-DEFINE_DEBUGFS_ATTRIBUTE(fops_atomic_t, debugfs_atomic_t_get,
++DEFINE_DEBUGFS_ATTRIBUTE_SIGNED(fops_atomic_t, debugfs_atomic_t_get,
+ 			debugfs_atomic_t_set, "%lld\n");
+-DEFINE_DEBUGFS_ATTRIBUTE(fops_atomic_t_ro, debugfs_atomic_t_get, NULL,
++DEFINE_DEBUGFS_ATTRIBUTE_SIGNED(fops_atomic_t_ro, debugfs_atomic_t_get, NULL,
+ 			"%lld\n");
+-DEFINE_DEBUGFS_ATTRIBUTE(fops_atomic_t_wo, NULL, debugfs_atomic_t_set,
++DEFINE_DEBUGFS_ATTRIBUTE_SIGNED(fops_atomic_t_wo, NULL, debugfs_atomic_t_set,
+ 			"%lld\n");
+ 
+ /**
+diff --git a/include/linux/debugfs.h b/include/linux/debugfs.h
+index f60674692d36..ea2d919fd9c7 100644
+--- a/include/linux/debugfs.h
++++ b/include/linux/debugfs.h
+@@ -45,7 +45,7 @@ struct debugfs_u32_array {
+ 
+ extern struct dentry *arch_debugfs_dir;
+ 
+-#define DEFINE_DEBUGFS_ATTRIBUTE(__fops, __get, __set, __fmt)		\
++#define DEFINE_DEBUGFS_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, __is_signed)	\
+ static int __fops ## _open(struct inode *inode, struct file *file)	\
+ {									\
+ 	__simple_attr_check_format(__fmt, 0ull);			\
+@@ -56,10 +56,16 @@ static const struct file_operations __fops = {				\
+ 	.open	 = __fops ## _open,					\
+ 	.release = simple_attr_release,					\
+ 	.read	 = debugfs_attr_read,					\
+-	.write	 = debugfs_attr_write,					\
++	.write	 = (__is_signed) ? debugfs_attr_write_signed : debugfs_attr_write,	\
+ 	.llseek  = no_llseek,						\
+ }
+ 
++#define DEFINE_DEBUGFS_ATTRIBUTE(__fops, __get, __set, __fmt)		\
++	DEFINE_DEBUGFS_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, false)
++
++#define DEFINE_DEBUGFS_ATTRIBUTE_SIGNED(__fops, __get, __set, __fmt)	\
++	DEFINE_DEBUGFS_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, true)
++
+ typedef struct vfsmount *(*debugfs_automount_t)(struct dentry *, void *);
+ 
+ #if defined(CONFIG_DEBUG_FS)
+@@ -102,6 +108,8 @@ ssize_t debugfs_attr_read(struct file *file, char __user *buf,
+ 			size_t len, loff_t *ppos);
+ ssize_t debugfs_attr_write(struct file *file, const char __user *buf,
+ 			size_t len, loff_t *ppos);
++ssize_t debugfs_attr_write_signed(struct file *file, const char __user *buf,
++			size_t len, loff_t *ppos);
+ 
+ struct dentry *debugfs_rename(struct dentry *old_dir, struct dentry *old_dentry,
+                 struct dentry *new_dir, const char *new_name);
+@@ -254,6 +262,13 @@ static inline ssize_t debugfs_attr_write(struct file *file,
+ 	return -ENODEV;
+ }
+ 
++static inline ssize_t debugfs_attr_write_signed(struct file *file,
++					const char __user *buf,
++					size_t len, loff_t *ppos)
++{
++	return -ENODEV;
++}
++
+ static inline struct dentry *debugfs_rename(struct dentry *old_dir, struct dentry *old_dentry,
+                 struct dentry *new_dir, char *new_name)
+ {
 -- 
 2.35.1
 
