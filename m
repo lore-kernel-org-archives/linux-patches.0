@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284031863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1490C433D2;
-	Wed, 28 Dec 2022 15:02:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48B91863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ACA4C433D2;
+	Wed, 28 Dec 2022 15:02:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239749;
-	bh=T4r12HL+ymn7zLPbpeyo4FAJM7jFaXoK2bTcvEYzD2o=;
+	s=korg; t=1672239751;
+	bh=222BZMOFZZjvAP0LBSSj2syLf2ST6zQETqrGb5PKcU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Evzgn+ALqxSAmRGewHeGx0IOe4/2fViAb9kuOqP7AXaiaPcW+ekDQiobjUG088n0+
-	 cVkAOAL4myFFjpl4PyNZR+X4D72jlVcwH3pA6Ju2HSaPOw2tPOaWKI1sGUcRQcu7aC
-	 4O3zwDlwmbr+BZaBFklC8CUDgWErjSTJxtH2Zcoc=
+	b=Pr3bKSVF5dV5qaVje7LK6ruy6S15f8lP3+83bRbnwHUubp0nwsMyfHRaUx+0DdI0w
+	 Pb0OaRZIQk/ZY4hgJPrjIdTDuTPItbl7VVstn8M6Xx+8aV9+OGwL9dNDwr7ZW5WS80
+	 g9RoKX7i1yBP6sxSBegs9x9zYmIuBeBvR/a/i2KY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0074/1073] ARM: dts: armada-39x: Fix assigned-addresses for every PCIe Root Port
-Date: Wed, 28 Dec 2022 15:27:42 +0100
-Message-Id: <20221228144330.087969525@linuxfoundation.org>
+Subject: [PATCH 5.15 266/731] wifi: mac80211: fix memory leak in ieee80211_if_add()
+Date: Wed, 28 Dec 2022 15:36:13 +0100
+Message-Id: <20221228144304.277595311@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,53 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 69236d2391b4d7324b11c3252921571577892e7b ]
+[ Upstream commit 13e5afd3d773c6fc6ca2b89027befaaaa1ea7293 ]
 
-BDF of resource in DT assigned-addresses property of Marvell PCIe Root Port
-(PCI-to-PCI bridge) should match BDF in address part in that DT node name
-as specified resource belongs to Marvell PCIe Root Port itself.
+When register_netdevice() failed in ieee80211_if_add(), ndev->tstats
+isn't released. Fix it.
 
-Fixes: 538da83ddbea ("ARM: mvebu: add Device Tree files for Armada 39x SoC and board")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Fixes: 5a490510ba5f ("mac80211: use per-CPU TX/RX statistics")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Link: https://lore.kernel.org/r/20221117064500.319983-1-shaozhengchao@huawei.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/armada-39x.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/mac80211/iface.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm/boot/dts/armada-39x.dtsi b/arch/arm/boot/dts/armada-39x.dtsi
-index e0b7c2099831..9525e7b7f436 100644
---- a/arch/arm/boot/dts/armada-39x.dtsi
-+++ b/arch/arm/boot/dts/armada-39x.dtsi
-@@ -453,7 +453,7 @@ pcie@1,0 {
- 			/* x1 port */
- 			pcie@2,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x40000 0 0x2000>;
-+				assigned-addresses = <0x82001000 0 0x40000 0 0x2000>;
- 				reg = <0x1000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -472,7 +472,7 @@ pcie@2,0 {
- 			/* x1 port */
- 			pcie@3,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
-+				assigned-addresses = <0x82001800 0 0x44000 0 0x2000>;
- 				reg = <0x1800 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -494,7 +494,7 @@ pcie@3,0 {
- 			 */
- 			pcie@4,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x48000 0 0x2000>;
-+				assigned-addresses = <0x82002000 0 0x48000 0 0x2000>;
- 				reg = <0x2000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index 041859b5b71d..a3347f245782 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -2059,6 +2059,7 @@ int ieee80211_if_add(struct ieee80211_local *local, const char *name,
+ 
+ 		ret = cfg80211_register_netdevice(ndev);
+ 		if (ret) {
++			ieee80211_if_free(ndev);
+ 			free_netdev(ndev);
+ 			return ret;
+ 		}
 -- 
 2.35.1
 
