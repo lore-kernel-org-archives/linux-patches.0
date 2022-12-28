@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31C6D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80896C433EF;
-	Wed, 28 Dec 2022 15:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D492E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:30:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57FD2C433F0;
+	Wed, 28 Dec 2022 15:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241419;
-	bh=xNoU7NTr0kGWQZE8bzcq4Lq8MYZaAKLZd0qCwQNS2y4=;
+	s=korg; t=1672241421;
+	bh=inN9e4ytR+NXrAHnhQ1/s4gFHfne7lWj4TQ3jrvLG2c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M5QXUuPZiKVB7Cb+CayEwCQfshTeQp+JXsRiMNBsVuMqXO9bD0C2IV0lWV+w+L7SE
-	 90ei2xsOcZGnWr/H4eVxUR80zr++yf7707yxmg10hapMkoP198kRxL1nkqkbWuk4x4
-	 m9cFbeu1po4o8fHna2lt2cj7tvGJLXd5+XW72dXE=
+	b=g1PcDbddBif2sOaK8bLkgRZsOkHmODgeguDp4Yrzndn1veffJamDbsbA/UoNKPNW5
+	 cGMkdHfvFw6iiFlgvIA2HhgKX63cNquwQd83HWMbzX8fkFbId43aP75K4OefsZmnIi
+	 jXaGqAgva/gj01E2KBeQifFF4z0Dld6JtZgtz714=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Maguire <alan.maguire@oracle.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0244/1146] libbpf: Btf dedup identical struct test needs check for nested structs/arrays
-Date: Wed, 28 Dec 2022 15:29:43 +0100
-Message-Id: <20221228144336.763224788@linuxfoundation.org>
+Subject: [PATCH 5.15 480/731] usb: roles: fix of node refcount leak in usb_role_switch_is_parent()
+Date: Wed, 28 Dec 2022 15:39:47 +0100
+Message-Id: <20221228144310.465359082@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,91 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Maguire <alan.maguire@oracle.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit f3c51fe02c55bd944662714e5b91b96dc271ad9f ]
+[ Upstream commit 1ab30c610630da5391a373cddb8a065bf4c4bc01 ]
 
-When examining module BTF, it is common to see core kernel structures
-such as sk_buff, net_device duplicated in the module.  After adding
-debug messaging to BTF it turned out that much of the problem
-was down to the identical struct test failing during deduplication;
-sometimes the compiler adds identical structs.  However
-it turns out sometimes that type ids of identical struct members
-can also differ, even when the containing structs are still identical.
+I got the following report while doing device(mt6370-tcpc) load
+test with CONFIG_OF_UNITTEST and CONFIG_OF_DYNAMIC enabled:
 
-To take an example, for struct sk_buff, debug messaging revealed
-that the identical struct matching was failing for the anon
-struct "headers"; specifically for the first field:
+  OF: ERROR: memory leak, expected refcount 1 instead of 2,
+  of_node_get()/of_node_put() unbalanced - destroy cset entry:
+  attach overlay node /i2c/pmic@34
 
-__u8       __pkt_type_offset[0]; /*   128     0 */
+The 'parent' returned by fwnode_get_parent() with refcount incremented.
+it needs be put after using.
 
-Looking at the code in BTF deduplication, we have code that guards
-against the possibility of identical struct definitions, down to
-type ids, and identical array definitions.  However in this case
-we have a struct which is being defined twice but does not have
-identical type ids since each duplicate struct has separate type
-ids for the above array member.   A similar problem (though not
-observed) could occur for struct-in-struct.
-
-The solution is to make the "identical struct" test check members
-not just for matching ids, but to also check if they in turn are
-identical structs or arrays.
-
-The results of doing this are quite dramatic (for some modules
-at least); I see the number of type ids drop from around 10000
-to just over 1000 in one module for example.
-
-For testing use latest pahole or apply [1], otherwise dedups
-can fail for the reasons described there.
-
-Also fix return type of btf_dedup_identical_arrays() as
-suggested by Andrii to match boolean return type used
-elsewhere.
-
-Fixes: efdd3eb8015e ("libbpf: Accommodate DWARF/compiler bug with duplicated structs")
-Signed-off-by: Alan Maguire <alan.maguire@oracle.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/1666622309-22289-1-git-send-email-alan.maguire@oracle.com
-
-[1] https://lore.kernel.org/bpf/1666364523-9648-1-git-send-email-alan.maguire
-
+Fixes: 6fadd72943b8 ("usb: roles: get usb-role-switch from parent")
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221122111226.251588-1-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/btf.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/usb/roles/class.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/tools/lib/bpf/btf.c b/tools/lib/bpf/btf.c
-index d88647da2c7f..675a0df5c840 100644
---- a/tools/lib/bpf/btf.c
-+++ b/tools/lib/bpf/btf.c
-@@ -3887,14 +3887,14 @@ static inline __u16 btf_fwd_kind(struct btf_type *t)
+diff --git a/drivers/usb/roles/class.c b/drivers/usb/roles/class.c
+index dfaed7eee94f..32e6d19f7011 100644
+--- a/drivers/usb/roles/class.c
++++ b/drivers/usb/roles/class.c
+@@ -106,10 +106,13 @@ usb_role_switch_is_parent(struct fwnode_handle *fwnode)
+ 	struct fwnode_handle *parent = fwnode_get_parent(fwnode);
+ 	struct device *dev;
+ 
+-	if (!parent || !fwnode_property_present(parent, "usb-role-switch"))
++	if (!fwnode_property_present(parent, "usb-role-switch")) {
++		fwnode_handle_put(parent);
+ 		return NULL;
++	}
+ 
+ 	dev = class_find_device_by_fwnode(role_class, parent);
++	fwnode_handle_put(parent);
+ 	return dev ? to_role_switch(dev) : ERR_PTR(-EPROBE_DEFER);
  }
  
- /* Check if given two types are identical ARRAY definitions */
--static int btf_dedup_identical_arrays(struct btf_dedup *d, __u32 id1, __u32 id2)
-+static bool btf_dedup_identical_arrays(struct btf_dedup *d, __u32 id1, __u32 id2)
- {
- 	struct btf_type *t1, *t2;
- 
- 	t1 = btf_type_by_id(d->btf, id1);
- 	t2 = btf_type_by_id(d->btf, id2);
- 	if (!btf_is_array(t1) || !btf_is_array(t2))
--		return 0;
-+		return false;
- 
- 	return btf_equal_array(t1, t2);
- }
-@@ -3918,7 +3918,9 @@ static bool btf_dedup_identical_structs(struct btf_dedup *d, __u32 id1, __u32 id
- 	m1 = btf_members(t1);
- 	m2 = btf_members(t2);
- 	for (i = 0, n = btf_vlen(t1); i < n; i++, m1++, m2++) {
--		if (m1->type != m2->type)
-+		if (m1->type != m2->type &&
-+		    !btf_dedup_identical_arrays(d, m1->type, m2->type) &&
-+		    !btf_dedup_identical_structs(d, m1->type, m2->type))
- 			return false;
- 	}
- 	return true;
 -- 
 2.35.1
 
