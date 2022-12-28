@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D95A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12873C433D2;
-	Wed, 28 Dec 2022 14:59:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293D41863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48FBC433D2;
+	Wed, 28 Dec 2022 14:59:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239582;
-	bh=uZ6ZuLO19ugKrCxi/sMb0dv4W7Z0CJdCwCGGKbw4xW0=;
+	s=korg; t=1672239585;
+	bh=Ul749KApQqZjHWBGEB6EBlQimx0rDXL3aiAdp88aRYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eWmHLqHakunOpMVbnIEXfl2o2pGJveTiufgiLNzWJJ/7484nwqx+ZjZxHsP2luHpZ
-	 HfsPgnwKPRi42BScYFBWgylWrBOrBX6H2/4IXZZ5uJpiY1zRyGO/EY+vrE5TccGg30
-	 EA+erHKLdARRYaW6jQFhRuOXsDdxS4rw7dIghPT4=
+	b=bWb1JFQ7Ph/q8LGYUcRZUpY7+iPug8IjmT9RzN5RHDpZGClYet+Vu84yR9m7C7W37
+	 HPlhOYlHmPE9xUUoKitXu5e+PLxAsAEramtS7hS2UFLdVunsXd5EdJPiPcLFrx7z2b
+	 ix7vKmt+Jtbx9xqNCtlklD45MCmwdcQuZkY9BO84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0015/1146] arm64: dts: fsd: fix drive strength values as per FSD HW UM
-Date: Wed, 28 Dec 2022 15:25:54 +0100
-Message-Id: <20221228144330.588881724@linuxfoundation.org>
+Subject: [PATCH 5.15 246/731] NFSv4.2: Fix initialisation of struct nfs4_label
+Date: Wed, 28 Dec 2022 15:35:53 +0100
+Message-Id: <20221228144303.692991488@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,132 +34,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 21f6546e8bf68a847601e2710378e2224bf49704 ]
+[ Upstream commit c528f70f504434eaff993a5ddd52203a2010d51f ]
 
-Drive strength values used for HSI2C, SPI and UART are not reflecting
-the default values recommended by FSD HW UM.
+The call to nfs4_label_init_security() should return a fully initialised
+label.
 
-Fixes: 684dac402f21 ("arm64: dts: fsd: Add initial pinctrl support")
-Signed-off-by: Padmanabhan Rajanbabu <p.rajanbabu@samsung.com>
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
-Link: https://lore.kernel.org/r/20221013104024.50179-3-p.rajanbabu@samsung.com
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Fixes: aa9c2669626c ("NFS: Client implementation of Labeled-NFS")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi | 26 +++++++++++-----------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ fs/nfs/nfs4proc.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi b/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi
-index 4e151d419909..e3852c946352 100644
---- a/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi
-+++ b/arch/arm64/boot/dts/tesla/fsd-pinctrl.dtsi
-@@ -253,91 +253,91 @@ hs_i2c0_bus: hs-i2c0-bus-pins {
- 		samsung,pins = "gpb0-0", "gpb0-1";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index dc03924b6b71..dcc0677d1546 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -126,6 +126,11 @@ nfs4_label_init_security(struct inode *dir, struct dentry *dentry,
+ 	if (nfs_server_capable(dir, NFS_CAP_SECURITY_LABEL) == 0)
+ 		return NULL;
  
- 	hs_i2c1_bus: hs-i2c1-bus-pins {
- 		samsung,pins = "gpb0-2", "gpb0-3";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
++	label->lfs = 0;
++	label->pi = 0;
++	label->len = 0;
++	label->label = NULL;
++
+ 	err = security_dentry_init_security(dentry, sattr->ia_mode,
+ 				&dentry->d_name, (void **)&label->label, &label->len);
+ 	if (err == 0)
+@@ -3823,7 +3828,7 @@ nfs4_atomic_open(struct inode *dir, struct nfs_open_context *ctx,
+ 		int open_flags, struct iattr *attr, int *opened)
+ {
+ 	struct nfs4_state *state;
+-	struct nfs4_label l = {0, 0, 0, NULL}, *label = NULL;
++	struct nfs4_label l, *label;
  
- 	hs_i2c2_bus: hs-i2c2-bus-pins {
- 		samsung,pins = "gpb0-4", "gpb0-5";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
+ 	label = nfs4_label_init_security(dir, ctx->dentry, attr, &l);
  
- 	hs_i2c3_bus: hs-i2c3-bus-pins {
- 		samsung,pins = "gpb0-6", "gpb0-7";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+@@ -4657,7 +4662,7 @@ nfs4_proc_create(struct inode *dir, struct dentry *dentry, struct iattr *sattr,
+ 		 int flags)
+ {
+ 	struct nfs_server *server = NFS_SERVER(dir);
+-	struct nfs4_label l, *ilabel = NULL;
++	struct nfs4_label l, *ilabel;
+ 	struct nfs_open_context *ctx;
+ 	struct nfs4_state *state;
+ 	int status = 0;
+@@ -5017,7 +5022,7 @@ static int nfs4_proc_symlink(struct inode *dir, struct dentry *dentry,
+ 	struct nfs4_exception exception = {
+ 		.interruptible = true,
  	};
+-	struct nfs4_label l, *label = NULL;
++	struct nfs4_label l, *label;
+ 	int err;
  
- 	hs_i2c4_bus: hs-i2c4-bus-pins {
- 		samsung,pins = "gpb1-0", "gpb1-1";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	label = nfs4_label_init_security(dir, dentry, sattr, &l);
+@@ -5058,7 +5063,7 @@ static int nfs4_proc_mkdir(struct inode *dir, struct dentry *dentry,
+ 	struct nfs4_exception exception = {
+ 		.interruptible = true,
  	};
+-	struct nfs4_label l, *label = NULL;
++	struct nfs4_label l, *label;
+ 	int err;
  
- 	hs_i2c5_bus: hs-i2c5-bus-pins {
- 		samsung,pins = "gpb1-2", "gpb1-3";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
+ 	label = nfs4_label_init_security(dir, dentry, sattr, &l);
+@@ -5177,7 +5182,7 @@ static int nfs4_proc_mknod(struct inode *dir, struct dentry *dentry,
+ 	struct nfs4_exception exception = {
+ 		.interruptible = true,
  	};
+-	struct nfs4_label l, *label = NULL;
++	struct nfs4_label l, *label;
+ 	int err;
  
- 	hs_i2c6_bus: hs-i2c6-bus-pins {
- 		samsung,pins = "gpb1-4", "gpb1-5";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	hs_i2c7_bus: hs-i2c7-bus-pins {
- 		samsung,pins = "gpb1-6", "gpb1-7";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	uart0_data: uart0-data-pins {
- 		samsung,pins = "gpb7-0", "gpb7-1";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_NONE>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	uart1_data: uart1-data-pins {
- 		samsung,pins = "gpb7-4", "gpb7-5";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_NONE>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	spi0_bus: spi0-bus-pins {
- 		samsung,pins = "gpb4-0", "gpb4-2", "gpb4-3";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	spi1_bus: spi1-bus-pins {
- 		samsung,pins = "gpb4-4", "gpb4-6", "gpb4-7";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- 
- 	spi2_bus: spi2-bus-pins {
- 		samsung,pins = "gpb5-0", "gpb5-2", "gpb5-3";
- 		samsung,pin-function = <FSD_PIN_FUNC_2>;
- 		samsung,pin-pud = <FSD_PIN_PULL_UP>;
--		samsung,pin-drv = <FSD_PIN_DRV_LV1>;
-+		samsung,pin-drv = <FSD_PIN_DRV_LV4>;
- 	};
- };
- 
+ 	label = nfs4_label_init_security(dir, dentry, sattr, &l);
 -- 
 2.35.1
 
