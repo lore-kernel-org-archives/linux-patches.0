@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4D71875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61C21C433EF;
-	Wed, 28 Dec 2022 15:58:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 921CE1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:58:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17049C433EF;
+	Wed, 28 Dec 2022 15:58:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243135;
-	bh=c9zh7T+S24+eNrta3F0Vql0/ZsdX3kGpM0UtwQVuO74=;
+	s=korg; t=1672243138;
+	bh=j70oovOAnzydGEjGIVxrDnsFcwXl8sgvwoJ4d4R1vzA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X4wFUZF16Y431f26l1wRp8xaYDubUDViR6PcFNAoLwdC/G5fLx1dBi317/zWd7H+l
-	 i9t16rl4d0Oh7RN7qdn1D2hFe6pKsEcMADiI8c+JBHR60ZBGfrjo75NswazN8j2uDz
-	 9AKC8nLjafyaXQA5sD2G2FdQHfwcrYjDlPC2/WaI=
+	b=hDxzK85yO9Gz8bEytwtck1/3NYDynqYGwpzcGTbj+9cnhjN87cnUdklXPwPiwNNDg
+	 IslJ0hrkSFWG1l8pVKuURzaeYrtpP0/nWUkgYtKFr56WbEuHo2L/OQP/0T3Y5Txp4A
+	 D39VgzyOhpi8crUeFl2/t+OSi8dfync7vFElpUDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
-	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Eric Garver <eric@garver.life>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 687/731] ALSA: hda: add snd_hdac_stop_streams() helper
-Date: Wed, 28 Dec 2022 15:43:14 +0100
-Message-Id: <20221228144316.380931879@linuxfoundation.org>
+Subject: [PATCH 6.1 0443/1146] netfilter: conntrack: set icmpv6 redirects as RELATED
+Date: Wed, 28 Dec 2022 15:33:02 +0100
+Message-Id: <20221228144342.213179123@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,90 +36,171 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 24ad3835a6db4f8857975effa6bf47730371a5ff ]
+[ Upstream commit 7d7cfb48d81353e826493d24c7cec7360950968f ]
 
-Minor code reuse, no functionality change.
+icmp conntrack will set icmp redirects as RELATED, but icmpv6 will not
+do this.
 
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Reviewed-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Link: https://lore.kernel.org/r/20220919121041.43463-6-pierre-louis.bossart@linux.intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Stable-dep-of: 171107237246 ("ASoC: Intel: Skylake: Fix driver hang during shutdown")
+For icmpv6, only icmp errors (code <= 128) are examined for RELATED state.
+ICMPV6 Redirects are part of neighbour discovery mechanism, those are
+handled by marking a selected subset (e.g.  neighbour solicitations) as
+UNTRACKED, but not REDIRECT -- they will thus be flagged as INVALID.
+
+Add minimal support for REDIRECTs.  No parsing of neighbour options is
+added for simplicity, so this will only check that we have the embeeded
+original header (ND_OPT_REDIRECT_HDR), and then attempt to do a flow
+lookup for this tuple.
+
+Also extend the existing test case to cover redirects.
+
+Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
+Reported-by: Eric Garver <eric@garver.life>
+Link: https://github.com/firewalld/firewalld/issues/1046
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Acked-by: Eric Garver <eric@garver.life>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/sound/hdaudio.h        |  1 +
- sound/hda/hdac_stream.c        | 17 ++++++++++++++---
- sound/pci/hda/hda_controller.c |  4 +---
- 3 files changed, 16 insertions(+), 6 deletions(-)
+ net/netfilter/nf_conntrack_proto_icmpv6.c     | 53 +++++++++++++++++++
+ .../netfilter/conntrack_icmp_related.sh       | 36 ++++++++++++-
+ 2 files changed, 87 insertions(+), 2 deletions(-)
 
-diff --git a/include/sound/hdaudio.h b/include/sound/hdaudio.h
-index 6a90ce405e60..658fccdc8660 100644
---- a/include/sound/hdaudio.h
-+++ b/include/sound/hdaudio.h
-@@ -558,6 +558,7 @@ int snd_hdac_stream_set_params(struct hdac_stream *azx_dev,
- void snd_hdac_stream_start(struct hdac_stream *azx_dev, bool fresh_start);
- void snd_hdac_stream_clear(struct hdac_stream *azx_dev);
- void snd_hdac_stream_stop(struct hdac_stream *azx_dev);
-+void snd_hdac_stop_streams(struct hdac_bus *bus);
- void snd_hdac_stop_streams_and_chip(struct hdac_bus *bus);
- void snd_hdac_stream_reset(struct hdac_stream *azx_dev);
- void snd_hdac_stream_sync_trigger(struct hdac_stream *azx_dev, bool set,
-diff --git a/sound/hda/hdac_stream.c b/sound/hda/hdac_stream.c
-index f3582012d22f..eea22cf72aef 100644
---- a/sound/hda/hdac_stream.c
-+++ b/sound/hda/hdac_stream.c
-@@ -142,17 +142,28 @@ void snd_hdac_stream_stop(struct hdac_stream *azx_dev)
+diff --git a/net/netfilter/nf_conntrack_proto_icmpv6.c b/net/netfilter/nf_conntrack_proto_icmpv6.c
+index 61e3b05cf02c..1020d67600a9 100644
+--- a/net/netfilter/nf_conntrack_proto_icmpv6.c
++++ b/net/netfilter/nf_conntrack_proto_icmpv6.c
+@@ -129,6 +129,56 @@ static void icmpv6_error_log(const struct sk_buff *skb,
+ 	nf_l4proto_log_invalid(skb, state, IPPROTO_ICMPV6, "%s", msg);
  }
- EXPORT_SYMBOL_GPL(snd_hdac_stream_stop);
  
-+/**
-+ * snd_hdac_stop_streams - stop all streams
-+ * @bus: HD-audio core bus
-+ */
-+void snd_hdac_stop_streams(struct hdac_bus *bus)
++static noinline_for_stack int
++nf_conntrack_icmpv6_redirect(struct nf_conn *tmpl, struct sk_buff *skb,
++			     unsigned int dataoff,
++			     const struct nf_hook_state *state)
 +{
-+	struct hdac_stream *stream;
++	u8 hl = ipv6_hdr(skb)->hop_limit;
++	union nf_inet_addr outer_daddr;
++	union {
++		struct nd_opt_hdr nd_opt;
++		struct rd_msg rd_msg;
++	} tmp;
++	const struct nd_opt_hdr *nd_opt;
++	const struct rd_msg *rd_msg;
 +
-+	list_for_each_entry(stream, &bus->stream_list, list)
-+		snd_hdac_stream_stop(stream);
++	rd_msg = skb_header_pointer(skb, dataoff, sizeof(*rd_msg), &tmp.rd_msg);
++	if (!rd_msg) {
++		icmpv6_error_log(skb, state, "short redirect");
++		return -NF_ACCEPT;
++	}
++
++	if (rd_msg->icmph.icmp6_code != 0)
++		return NF_ACCEPT;
++
++	if (hl != 255 || !(ipv6_addr_type(&ipv6_hdr(skb)->saddr) & IPV6_ADDR_LINKLOCAL)) {
++		icmpv6_error_log(skb, state, "invalid saddr or hoplimit for redirect");
++		return -NF_ACCEPT;
++	}
++
++	dataoff += sizeof(*rd_msg);
++
++	/* warning: rd_msg no longer usable after this call */
++	nd_opt = skb_header_pointer(skb, dataoff, sizeof(*nd_opt), &tmp.nd_opt);
++	if (!nd_opt || nd_opt->nd_opt_len == 0) {
++		icmpv6_error_log(skb, state, "redirect without options");
++		return -NF_ACCEPT;
++	}
++
++	/* We could call ndisc_parse_options(), but it would need
++	 * skb_linearize() and a bit more work.
++	 */
++	if (nd_opt->nd_opt_type != ND_OPT_REDIRECT_HDR)
++		return NF_ACCEPT;
++
++	memcpy(&outer_daddr.ip6, &ipv6_hdr(skb)->daddr,
++	       sizeof(outer_daddr.ip6));
++	dataoff += 8;
++	return nf_conntrack_inet_error(tmpl, skb, dataoff, state,
++				       IPPROTO_ICMPV6, &outer_daddr);
 +}
-+EXPORT_SYMBOL_GPL(snd_hdac_stop_streams);
 +
- /**
-  * snd_hdac_stop_streams_and_chip - stop all streams and chip if running
-  * @bus: HD-audio core bus
-  */
- void snd_hdac_stop_streams_and_chip(struct hdac_bus *bus)
- {
--	struct hdac_stream *stream;
+ int nf_conntrack_icmpv6_error(struct nf_conn *tmpl,
+ 			      struct sk_buff *skb,
+ 			      unsigned int dataoff,
+@@ -159,6 +209,9 @@ int nf_conntrack_icmpv6_error(struct nf_conn *tmpl,
+ 		return NF_ACCEPT;
+ 	}
  
- 	if (bus->chip_init) {
--		list_for_each_entry(stream, &bus->stream_list, list)
--			snd_hdac_stream_stop(stream);
-+		snd_hdac_stop_streams(bus);
- 		snd_hdac_bus_stop_chip(bus);
++	if (icmp6h->icmp6_type == NDISC_REDIRECT)
++		return nf_conntrack_icmpv6_redirect(tmpl, skb, dataoff, state);
++
+ 	/* is not error message ? */
+ 	if (icmp6h->icmp6_type >= 128)
+ 		return NF_ACCEPT;
+diff --git a/tools/testing/selftests/netfilter/conntrack_icmp_related.sh b/tools/testing/selftests/netfilter/conntrack_icmp_related.sh
+index b48e1833bc89..76645aaf2b58 100755
+--- a/tools/testing/selftests/netfilter/conntrack_icmp_related.sh
++++ b/tools/testing/selftests/netfilter/conntrack_icmp_related.sh
+@@ -35,6 +35,8 @@ cleanup() {
+ 	for i in 1 2;do ip netns del nsrouter$i;done
+ }
+ 
++trap cleanup EXIT
++
+ ipv4() {
+     echo -n 192.168.$1.2
+ }
+@@ -146,11 +148,17 @@ ip netns exec nsclient1 nft -f - <<EOF
+ table inet filter {
+ 	counter unknown { }
+ 	counter related { }
++	counter redir4 { }
++	counter redir6 { }
+ 	chain input {
+ 		type filter hook input priority 0; policy accept;
+-		meta l4proto { icmp, icmpv6 } ct state established,untracked accept
+ 
++		icmp type "redirect" ct state "related" counter name "redir4" accept
++		icmpv6 type "nd-redirect" ct state "related" counter name "redir6" accept
++
++		meta l4proto { icmp, icmpv6 } ct state established,untracked accept
+ 		meta l4proto { icmp, icmpv6 } ct state "related" counter name "related" accept
++
+ 		counter name "unknown" drop
  	}
  }
-diff --git a/sound/pci/hda/hda_controller.c b/sound/pci/hda/hda_controller.c
-index 75dcb14ff20a..0ff286b7b66b 100644
---- a/sound/pci/hda/hda_controller.c
-+++ b/sound/pci/hda/hda_controller.c
-@@ -1033,10 +1033,8 @@ EXPORT_SYMBOL_GPL(azx_init_chip);
- void azx_stop_all_streams(struct azx *chip)
- {
- 	struct hdac_bus *bus = azx_bus(chip);
--	struct hdac_stream *s;
+@@ -279,5 +287,29 @@ else
+ 	echo "ERROR: icmp error RELATED state test has failed"
+ fi
  
--	list_for_each_entry(s, &bus->stream_list, list)
--		snd_hdac_stream_stop(s);
-+	snd_hdac_stop_streams(bus);
- }
- EXPORT_SYMBOL_GPL(azx_stop_all_streams);
- 
+-cleanup
++# add 'bad' route,  expect icmp REDIRECT to be generated
++ip netns exec nsclient1 ip route add 192.168.1.42 via 192.168.1.1
++ip netns exec nsclient1 ip route add dead:1::42 via dead:1::1
++
++ip netns exec "nsclient1" ping -q -c 2 192.168.1.42 > /dev/null
++
++expect="packets 1 bytes 112"
++check_counter nsclient1 "redir4" "$expect"
++if [ $? -ne 0 ];then
++	ret=1
++fi
++
++ip netns exec "nsclient1" ping -c 1 dead:1::42 > /dev/null
++expect="packets 1 bytes 192"
++check_counter nsclient1 "redir6" "$expect"
++if [ $? -ne 0 ];then
++	ret=1
++fi
++
++if [ $ret -eq 0 ];then
++	echo "PASS: icmp redirects had RELATED state"
++else
++	echo "ERROR: icmp redirect RELATED state test has failed"
++fi
++
+ exit $ret
 -- 
 2.35.1
 
