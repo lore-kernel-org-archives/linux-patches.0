@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872701863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 066CAC433EF;
-	Wed, 28 Dec 2022 15:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49ABD1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:07:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C47E9C433F0;
+	Wed, 28 Dec 2022 15:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240065;
-	bh=2+uw9nlOWVTxotTIgee2xt4OQ2BWqqvRhNbMTd2aLrg=;
+	s=korg; t=1672240068;
+	bh=NiptSmm1Izwv4ZrmHEeZGc306A/GVdhTjv/BY+YFM/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sY12X35TKacYeeLWvmXaREzI6aYm3kCYV/vct2/Id0J06FZ64icPJYmqWJoqIimJK
-	 0GxLtKvWCaoj+FlvEHeIA04wMiLTeWDkZWveZZUCUGQOFrB3PUtyfWnPW/TK9ElOuA
-	 34qpT+QQ5S4Db60i58aMuvnFnuZM5Fksy92C/kz8=
+	b=NYcxOk0KjN+02bqfwoi3E68SNziVNDjvg64fnZLzSbUn9TNRbZnDzlSNbuEOESjiT
+	 uye+j3Jxo6I60/ABQcnlV5wEDH2JPFuLCwM5JGSIQsmknV6afDn431MzsU/H380kwz
+	 Y8ydw1zbRHA0OoJmDC/MfAlOnb6H8pkuzz/3TTLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	wuchi <wuchi.zero@gmail.com>,
+	Waiman Long <longman@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Christoph Hellwig <hch@lst.de>,
+	Kees Cook <keescook@chromium.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 305/731] mmc: mmci: fix return value check of mmc_add_host()
-Date: Wed, 28 Dec 2022 15:36:52 +0100
-Message-Id: <20221228144305.415938932@linuxfoundation.org>
+Subject: [PATCH 6.0 0114/1073] lib/debugobjects: fix stat count and optimize debug_objects_mem_init
+Date: Wed, 28 Dec 2022 15:28:22 +0100
+Message-Id: <20221228144331.136877682@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,44 +39,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: wuchi <wuchi.zero@gmail.com>
 
-[ Upstream commit b38a20f29a49ae04d23750d104b25400b792b98c ]
+[ Upstream commit eabb7f1ace53e127309407b2b5e74e8199e85270 ]
 
-mmc_add_host() may return error, if we ignore its return value,
-it will lead two issues:
-1. The memory that allocated in mmc_alloc_host() is leaked.
-2. In the remove() path, mmc_remove_host() will be called to
-   delete device, but it's not added yet, it will lead a kernel
-   crash because of null-ptr-deref in device_del().
+1. Var debug_objects_allocated tracks valid kmem_cache_alloc calls, so
+   track it in debug_objects_replace_static_objects.  Do similar things in
+   object_cpu_offline.
 
-So fix this by checking the return value and goto error path which
-will call mmc_free_host().
+2. In debug_objects_mem_init, there is no need to call function
+   cpuhp_setup_state_nocalls when debug_objects_enabled = 0 (out of
+   memory).
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221109133539.3275664-1-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Link: https://lkml.kernel.org/r/20220611130634.99741-1-wuchi.zero@gmail.com
+Fixes: 634d61f45d6f ("debugobjects: Percpu pool lookahead freeing/allocation")
+Fixes: c4b73aabd098 ("debugobjects: Track number of kmem_cache_alloc/kmem_cache_free done")
+Signed-off-by: wuchi <wuchi.zero@gmail.com>
+Reviewed-by: Waiman Long <longman@redhat.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Kees Cook <keescook@chromium.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mmci.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ lib/debugobjects.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/mmc/host/mmci.c b/drivers/mmc/host/mmci.c
-index 3765e2f4ad98..2c4eda83ca18 100644
---- a/drivers/mmc/host/mmci.c
-+++ b/drivers/mmc/host/mmci.c
-@@ -2254,7 +2254,9 @@ static int mmci_probe(struct amba_device *dev,
- 	pm_runtime_set_autosuspend_delay(&dev->dev, 50);
- 	pm_runtime_use_autosuspend(&dev->dev);
+diff --git a/lib/debugobjects.c b/lib/debugobjects.c
+index 337d797a7141..6f8e5dd1dcd0 100644
+--- a/lib/debugobjects.c
++++ b/lib/debugobjects.c
+@@ -437,6 +437,7 @@ static int object_cpu_offline(unsigned int cpu)
+ 	struct debug_percpu_free *percpu_pool;
+ 	struct hlist_node *tmp;
+ 	struct debug_obj *obj;
++	unsigned long flags;
  
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret)
-+		goto clk_disable;
+ 	/* Remote access is safe as the CPU is dead already */
+ 	percpu_pool = per_cpu_ptr(&percpu_obj_pool, cpu);
+@@ -444,6 +445,12 @@ static int object_cpu_offline(unsigned int cpu)
+ 		hlist_del(&obj->node);
+ 		kmem_cache_free(obj_cache, obj);
+ 	}
++
++	raw_spin_lock_irqsave(&pool_lock, flags);
++	obj_pool_used -= percpu_pool->obj_free;
++	debug_objects_freed += percpu_pool->obj_free;
++	raw_spin_unlock_irqrestore(&pool_lock, flags);
++
+ 	percpu_pool->obj_free = 0;
  
- 	pm_runtime_put(&dev->dev);
  	return 0;
+@@ -1318,6 +1325,8 @@ static int __init debug_objects_replace_static_objects(void)
+ 		hlist_add_head(&obj->node, &objects);
+ 	}
+ 
++	debug_objects_allocated += i;
++
+ 	/*
+ 	 * debug_objects_mem_init() is now called early that only one CPU is up
+ 	 * and interrupts have been disabled, so it is safe to replace the
+@@ -1386,6 +1395,7 @@ void __init debug_objects_mem_init(void)
+ 		debug_objects_enabled = 0;
+ 		kmem_cache_destroy(obj_cache);
+ 		pr_warn("out of memory.\n");
++		return;
+ 	} else
+ 		debug_objects_selftest();
+ 
 -- 
 2.35.1
 
