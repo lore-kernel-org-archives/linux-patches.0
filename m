@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B2DF1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EFAFC433D2;
-	Wed, 28 Dec 2022 15:02:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FBCD1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:02:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5EB7C433D2;
+	Wed, 28 Dec 2022 15:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239722;
-	bh=/LwiEVsMHxiCwIBQRqfirym4OWaQMf+8G/ygFjOrNOA=;
+	s=korg; t=1672239725;
+	bh=dJnKCnr+KJel3KkIA9uRHw1fiqj2jlgofhaqxUKk4Zw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c9mkVCxblw29Gia/e/O+EusrB8l+mZrbCp1qgVZn5h82M0dwRAMyVHiA0hV7s5ze5
-	 tcNYs7s0qoj+zNNn7b2emBWxOUwjHT3Q7zYSBmS7/ydWcui3AFinSCF4ZngBjzFjYM
-	 LWjd0B/FYMwX9LrsJp03Df0O+44DsbDZ8OYzKLPg=
+	b=xamnxJlmcCZDIdQ1mBRyTk/2pABlddhgqr57eHEtTGGKxCeVfK+D6NcMzPUms13uX
+	 j5wcI5svQuBiRmJKMg9+IYCBuZOIIhMvuNRWIcnxT6MqMub+NFuPLu71xNDMLRpri6
+	 MhdFAFV+yVdiMW0FyGoUZvMBwVmJPoDbwdLvZAvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	Pengcheng Yang <yangpc@wangsu.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0068/1073] arm64: dts: mediatek: mt6797: Fix 26M oscillator unit name
-Date: Wed, 28 Dec 2022 15:27:36 +0100
-Message-Id: <20221228144329.934057841@linuxfoundation.org>
+Subject: [PATCH 5.15 262/731] bpf, sockmap: Fix missing BPF_F_INGRESS flag when using apply_bytes
+Date: Wed, 28 Dec 2022 15:36:09 +0100
+Message-Id: <20221228144304.157958153@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,35 +36,159 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+From: Pengcheng Yang <yangpc@wangsu.com>
 
-[ Upstream commit 5f535cc583759c9c60d4cc9b8d221762e2d75387 ]
+[ Upstream commit a351d6087bf7d3d8440d58d3bf244ec64b89394a ]
 
-Update its unit name to oscillator-26m and remove the unneeded unit
-address to fix a unit_address_vs_reg warning.
+When redirecting, we use sk_msg_to_ingress() to get the BPF_F_INGRESS
+flag from the msg->flags. If apply_bytes is used and it is larger than
+the current data being processed, sk_psock_msg_verdict() will not be
+called when sendmsg() is called again. At this time, the msg->flags is 0,
+and we lost the BPF_F_INGRESS flag.
 
-Fixes: 464c510f60c6 ("arm64: dts: mediatek: add mt6797 support")
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221013152212.416661-9-angelogioacchino.delregno@collabora.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+So we need to save the BPF_F_INGRESS flag in sk_psock and use it when
+redirection.
+
+Fixes: 8934ce2fd081 ("bpf: sockmap redirect ingress support")
+Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/1669718441-2654-3-git-send-email-yangpc@wangsu.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt6797.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/skmsg.h |  1 +
+ include/net/tcp.h     |  4 ++--
+ net/core/skmsg.c      |  9 ++++++---
+ net/ipv4/tcp_bpf.c    | 11 ++++++-----
+ net/tls/tls_sw.c      |  6 ++++--
+ 5 files changed, 19 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt6797.dtsi b/arch/arm64/boot/dts/mediatek/mt6797.dtsi
-index 15616231022a..c3677d77e0a4 100644
---- a/arch/arm64/boot/dts/mediatek/mt6797.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt6797.dtsi
-@@ -95,7 +95,7 @@ cpu9: cpu@201 {
- 		};
- 	};
+diff --git a/include/linux/skmsg.h b/include/linux/skmsg.h
+index ba015a77238a..6e18ca234f81 100644
+--- a/include/linux/skmsg.h
++++ b/include/linux/skmsg.h
+@@ -83,6 +83,7 @@ struct sk_psock {
+ 	u32				apply_bytes;
+ 	u32				cork_bytes;
+ 	u32				eval;
++	bool				redir_ingress; /* undefined if sk_redir is null */
+ 	struct sk_msg			*cork;
+ 	struct sk_psock_progs		progs;
+ #if IS_ENABLED(CONFIG_BPF_STREAM_PARSER)
+diff --git a/include/net/tcp.h b/include/net/tcp.h
+index 81ef95dc27ba..fdac6913b6c8 100644
+--- a/include/net/tcp.h
++++ b/include/net/tcp.h
+@@ -2243,8 +2243,8 @@ int tcp_bpf_update_proto(struct sock *sk, struct sk_psock *psock, bool restore);
+ void tcp_bpf_clone(const struct sock *sk, struct sock *newsk);
+ #endif /* CONFIG_BPF_SYSCALL */
  
--	clk26m: oscillator@0 {
-+	clk26m: oscillator-26m {
- 		compatible = "fixed-clock";
- 		#clock-cells = <0>;
- 		clock-frequency = <26000000>;
+-int tcp_bpf_sendmsg_redir(struct sock *sk, struct sk_msg *msg, u32 bytes,
+-			  int flags);
++int tcp_bpf_sendmsg_redir(struct sock *sk, bool ingress,
++			  struct sk_msg *msg, u32 bytes, int flags);
+ #endif /* CONFIG_NET_SOCK_MSG */
+ 
+ #if !defined(CONFIG_BPF_SYSCALL) || !defined(CONFIG_NET_SOCK_MSG)
+diff --git a/net/core/skmsg.c b/net/core/skmsg.c
+index f562f7e2bdc7..dc9b93d8f0d3 100644
+--- a/net/core/skmsg.c
++++ b/net/core/skmsg.c
+@@ -880,13 +880,16 @@ int sk_psock_msg_verdict(struct sock *sk, struct sk_psock *psock,
+ 	ret = sk_psock_map_verd(ret, msg->sk_redir);
+ 	psock->apply_bytes = msg->apply_bytes;
+ 	if (ret == __SK_REDIRECT) {
+-		if (psock->sk_redir)
++		if (psock->sk_redir) {
+ 			sock_put(psock->sk_redir);
+-		psock->sk_redir = msg->sk_redir;
+-		if (!psock->sk_redir) {
++			psock->sk_redir = NULL;
++		}
++		if (!msg->sk_redir) {
+ 			ret = __SK_DROP;
+ 			goto out;
+ 		}
++		psock->redir_ingress = sk_msg_to_ingress(msg);
++		psock->sk_redir = msg->sk_redir;
+ 		sock_hold(psock->sk_redir);
+ 	}
+ out:
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index a38db402994d..2db868ca32af 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -131,10 +131,9 @@ static int tcp_bpf_push_locked(struct sock *sk, struct sk_msg *msg,
+ 	return ret;
+ }
+ 
+-int tcp_bpf_sendmsg_redir(struct sock *sk, struct sk_msg *msg,
+-			  u32 bytes, int flags)
++int tcp_bpf_sendmsg_redir(struct sock *sk, bool ingress,
++			  struct sk_msg *msg, u32 bytes, int flags)
+ {
+-	bool ingress = sk_msg_to_ingress(msg);
+ 	struct sk_psock *psock = sk_psock_get(sk);
+ 	int ret;
+ 
+@@ -277,7 +276,7 @@ static int tcp_bpf_recvmsg(struct sock *sk, struct msghdr *msg, size_t len,
+ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
+ 				struct sk_msg *msg, int *copied, int flags)
+ {
+-	bool cork = false, enospc = sk_msg_full(msg);
++	bool cork = false, enospc = sk_msg_full(msg), redir_ingress;
+ 	struct sock *sk_redir;
+ 	u32 tosend, origsize, sent, delta = 0;
+ 	u32 eval;
+@@ -323,6 +322,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
+ 		sk_msg_apply_bytes(psock, tosend);
+ 		break;
+ 	case __SK_REDIRECT:
++		redir_ingress = psock->redir_ingress;
+ 		sk_redir = psock->sk_redir;
+ 		sk_msg_apply_bytes(psock, tosend);
+ 		if (!psock->apply_bytes) {
+@@ -339,7 +339,8 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
+ 		release_sock(sk);
+ 
+ 		origsize = msg->sg.size;
+-		ret = tcp_bpf_sendmsg_redir(sk_redir, msg, tosend, flags);
++		ret = tcp_bpf_sendmsg_redir(sk_redir, redir_ingress,
++					    msg, tosend, flags);
+ 		sent = origsize - msg->sg.size;
+ 
+ 		if (eval == __SK_REDIRECT)
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 794ef3b3d7d4..c0fea678abb1 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -801,7 +801,7 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
+ 	struct sk_psock *psock;
+ 	struct sock *sk_redir;
+ 	struct tls_rec *rec;
+-	bool enospc, policy;
++	bool enospc, policy, redir_ingress;
+ 	int err = 0, send;
+ 	u32 delta = 0;
+ 
+@@ -846,6 +846,7 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
+ 		}
+ 		break;
+ 	case __SK_REDIRECT:
++		redir_ingress = psock->redir_ingress;
+ 		sk_redir = psock->sk_redir;
+ 		memcpy(&msg_redir, msg, sizeof(*msg));
+ 		if (msg->apply_bytes < send)
+@@ -855,7 +856,8 @@ static int bpf_exec_tx_verdict(struct sk_msg *msg, struct sock *sk,
+ 		sk_msg_return_zero(sk, msg, send);
+ 		msg->sg.size -= send;
+ 		release_sock(sk);
+-		err = tcp_bpf_sendmsg_redir(sk_redir, &msg_redir, send, flags);
++		err = tcp_bpf_sendmsg_redir(sk_redir, redir_ingress,
++					    &msg_redir, send, flags);
+ 		lock_sock(sk);
+ 		if (err < 0) {
+ 			*copied -= sk_msg_free_nocharge(sk, &msg_redir);
 -- 
 2.35.1
 
