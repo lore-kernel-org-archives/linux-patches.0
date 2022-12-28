@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5F41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53EACC433D2;
-	Wed, 28 Dec 2022 14:56:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FCDF1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:56:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95D6C433D2;
+	Wed, 28 Dec 2022 14:56:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239398;
-	bh=8X3BOSCVSt9qX7U7xKTdL9+lkBopTscmsePnf1c/US4=;
+	s=korg; t=1672239401;
+	bh=qHNKDTYQZ7r6fbuZ4CQddHe5QhJgh9PS3kiUugWEc5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DtsQJzmcL5NGcbUHwjkCApflQjC9leiF1k2BT00g8Ghm13h8Zc6SmZFMyOtWI/O1u
-	 W8XnA00pnCQWqSq83XbeTywE+oJOBrvz8TawYLOz2/Bpzxhgyw/F6CUr8jGz+gTK4Q
-	 jntZSLRh36AiZkTGnKWUgrBgM3Yr78RQ0QEoYIBE=
+	b=HlYkNt1wbU1PEiAyjJiLvtpSgvWuiBHmM5j90YoI9B+iYazsdA7Ibkl1/mKbXxNca
+	 lSQEeRnXshETPuk1yvteSYX7QTk6tRBnsLvZRjf8py07adozGY5pRomJr4GG0NFy6P
+	 lbvmRE/XAjOheQSudefXDEWMvHe1axMP0WaXVhEg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Fomichev <sdf@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Marek Vasut <marex@denx.de>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 218/731] bpf: Move skb->len == 0 checks into __bpf_redirect
-Date: Wed, 28 Dec 2022 15:35:25 +0100
-Message-Id: <20221228144302.880021309@linuxfoundation.org>
+Subject: [PATCH 6.0 0023/1073] ARM: dts: stm32: Drop stm32mp15xc.dtsi from Avenger96
+Date: Wed, 28 Dec 2022 15:26:51 +0100
+Message-Id: <20221228144328.780644220@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,64 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanislav Fomichev <sdf@google.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 114039b342014680911c35bd6b72624180fd669a ]
+[ Upstream commit 3b835f1b8acef53c8882b25f40f48d7f5982c938 ]
 
-To avoid potentially breaking existing users.
+The Avenger96 is populated with STM32MP157A DHCOR SoM, drop the
+stm32mp15xc.dtsi which should only be included in DTs of devices
+which are populated with STM32MP15xC/F SoC as the stm32mp15xc.dtsi
+enables CRYP block not present in the STM32MP15xA/D SoC .
 
-Both mac/no-mac cases have to be amended; mac_header >= network_header
-is not enough (verified with a new test, see next patch).
-
-Fixes: fd1894224407 ("bpf: Don't redirect packets with invalid pkt_len")
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
-Link: https://lore.kernel.org/r/20221121180340.1983627-1-sdf@google.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: 7e76f82acd9e1 ("ARM: dts: stm32: Split Avenger96 into DHCOR SoM and Avenger96 board")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
+Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c | 3 ---
- net/core/filter.c  | 7 ++++++-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ arch/arm/boot/dts/stm32mp157a-dhcor-avenger96.dts | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index 7583ee98c35b..11d254ce3581 100644
---- a/net/bpf/test_run.c
-+++ b/net/bpf/test_run.c
-@@ -470,9 +470,6 @@ static int convert___skb_to_skb(struct sk_buff *skb, struct __sk_buff *__skb)
- {
- 	struct qdisc_skb_cb *cb = (struct qdisc_skb_cb *)skb->cb;
+diff --git a/arch/arm/boot/dts/stm32mp157a-dhcor-avenger96.dts b/arch/arm/boot/dts/stm32mp157a-dhcor-avenger96.dts
+index 2e3c9fbb4eb3..275167f26fd9 100644
+--- a/arch/arm/boot/dts/stm32mp157a-dhcor-avenger96.dts
++++ b/arch/arm/boot/dts/stm32mp157a-dhcor-avenger96.dts
+@@ -13,7 +13,6 @@
+ /dts-v1/;
  
--	if (!skb->len)
--		return -EINVAL;
--
- 	if (!__skb)
- 		return 0;
+ #include "stm32mp157.dtsi"
+-#include "stm32mp15xc.dtsi"
+ #include "stm32mp15xx-dhcor-som.dtsi"
+ #include "stm32mp15xx-dhcor-avenger96.dtsi"
  
-diff --git a/net/core/filter.c b/net/core/filter.c
-index fb5b9dbf3bc0..68b1509e6188 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2123,6 +2123,11 @@ static int __bpf_redirect_no_mac(struct sk_buff *skb, struct net_device *dev,
- {
- 	unsigned int mlen = skb_network_offset(skb);
- 
-+	if (unlikely(skb->len <= mlen)) {
-+		kfree_skb(skb);
-+		return -ERANGE;
-+	}
-+
- 	if (mlen) {
- 		__skb_pull(skb, mlen);
- 
-@@ -2144,7 +2149,7 @@ static int __bpf_redirect_common(struct sk_buff *skb, struct net_device *dev,
- 				 u32 flags)
- {
- 	/* Verify that a link layer header is carried */
--	if (unlikely(skb->mac_header >= skb->network_header)) {
-+	if (unlikely(skb->mac_header >= skb->network_header || skb->len == 0)) {
- 		kfree_skb(skb);
- 		return -ERANGE;
- 	}
 -- 
 2.35.1
 
