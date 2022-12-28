@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A268A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A46CC433D2;
-	Wed, 28 Dec 2022 15:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABC61863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:46:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C325EC433EF;
+	Wed, 28 Dec 2022 15:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242373;
-	bh=XcA2ZsjJlxy7qZFuh/l+mK6SP8pgIj4XPvAQroOHx0g=;
+	s=korg; t=1672242376;
+	bh=QR6MxQrldUdDWMfrKT93GGo/bMaTZQ2jwrNxGnVBOgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xV3BPF+0mqeBq09G15UIU6KB7A5fInQi1OARuOJPX9tEQmShlUFIdaAMsWZL43sdw
-	 tq1FdATR7m3hEaxhNeB8m0psNVWLhK2IjqoQ2EbnXKkkRv6q7O+oAM218xdaspBaea
-	 qVqcJgDeJgJXKf1ERNWB5BK9/HMDGw/oalvXgfEs=
+	b=cbG382x9biq3yUIBv81dFvAlq9pZ9W7Ib1i1gYuICmyiS68zMC571b6ak/tYpxS7K
+	 YRi22g9ydN/jgf06oLNc97TWie8IxbvtcDD49JefVdmGSwCuWkJdXIFaxhsV0s43hY
+	 DTfYf6yuM7D8XZGVd5UCbtsaNHXAu/IRzzGA0wU8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 596/731] igc: Add checking for basetime less than zero
-Date: Wed, 28 Dec 2022 15:41:43 +0100
-Message-Id: <20221228144313.817776830@linuxfoundation.org>
+Subject: [PATCH 6.0 0403/1073] ASoC: dt-bindings: wcd9335: fix reset line polarity in example
+Date: Wed, 28 Dec 2022 15:33:11 +0100
+Message-Id: <20221228144338.963397716@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,37 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 3b61764fb49a6e147ac90d71dccdddc9d5508ba1 ]
+[ Upstream commit 34cb111f8a7b98b5fec809dd194003bca20ef1b2 ]
 
-Using the tc qdisc command, the user can set basetime to any value.
-Checking should be done on the driver's side to prevent registering
-basetime values that are less than zero.
+When resetting the block, the reset line is being driven low and then
+high, which means that the line in DTS should be annotated as "active
+low".
 
-Fixes: ec50a9d437f0 ("igc: Add support for taprio offloading")
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: 1877c9fda1b7 ("ASoC: dt-bindings: add dt bindings for wcd9335 audio codec")
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20221027074652.1044235-2-dmitry.torokhov@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_main.c | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/devicetree/bindings/sound/qcom,wcd9335.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
-index af55e2f62e47..26dd710fba8f 100644
---- a/drivers/net/ethernet/intel/igc/igc_main.c
-+++ b/drivers/net/ethernet/intel/igc/igc_main.c
-@@ -5984,6 +5984,9 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
- 	if (!qopt->enable)
- 		return igc_tsn_clear_schedule(adapter);
- 
-+	if (qopt->base_time < 0)
-+		return -ERANGE;
-+
- 	if (adapter->base_time)
- 		return -EALREADY;
- 
+diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd9335.txt b/Documentation/devicetree/bindings/sound/qcom,wcd9335.txt
+index 5d6ea66a863f..1f75feec3dec 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,wcd9335.txt
++++ b/Documentation/devicetree/bindings/sound/qcom,wcd9335.txt
+@@ -109,7 +109,7 @@ audio-codec@1{
+ 	reg  = <1 0>;
+ 	interrupts = <&msmgpio 54 IRQ_TYPE_LEVEL_HIGH>;
+ 	interrupt-names = "intr2"
+-	reset-gpios = <&msmgpio 64 0>;
++	reset-gpios = <&msmgpio 64 GPIO_ACTIVE_LOW>;
+ 	slim-ifc-dev  = <&wc9335_ifd>;
+ 	clock-names = "mclk", "native";
+ 	clocks = <&rpmcc RPM_SMD_DIV_CLK1>,
 -- 
 2.35.1
 
