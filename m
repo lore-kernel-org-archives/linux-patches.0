@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7F21C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:06:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44F90C433D2;
-	Wed, 28 Dec 2022 16:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FD131C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:06:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A75C433EF;
+	Wed, 28 Dec 2022 16:06:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243565;
-	bh=D/0aBaHzn5SFB1NyUoKmFvLKw/eY2lz8Z++VcCbMTJY=;
+	s=korg; t=1672243568;
+	bh=bktM29YH+mPA5FP70SplWDHXMJ7rWJmJi2Y4vZ8tldo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BRIupK5qH3fcDEVuwH0dYBL0ipinw4LalOi59LJ95OaPiu/OTPzv9kCoq8aD7mGtm
-	 ER5xkUfk3U4M07xB6iSebJ+aUDqEjp68YNfrpDxNM6hYZ1c3vlXUv6V6VDCGBSXeTO
-	 sEY1ybn2rAnm9YvydgbCTx6kCncvgyAtN+1HW6qI=
+	b=pAF7nynKbvkhu0An/wLGkyCcn5pC9XECAE/DSQaohR4UR4y+L9iqNAUP3LrTOLYU9
+	 ZAUJmx8O+lIKX9mtTZEBrwc2bunpv7dvDnA0drTtEgt0SrhEUTtPaAD2sDOUF++T8N
+	 yd5VQ/RKxybsodNJ8/gJlVOxAYqGgRElqPJ2os5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Lei <thunder.leizhen@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0513/1146] mmc: core: Normalize the error handling branch in sd_read_ext_regs()
-Date: Wed, 28 Dec 2022 15:34:12 +0100
-Message-Id: <20221228144344.109237786@linuxfoundation.org>
+Subject: [PATCH 6.0 0549/1073] Bluetooth: RFCOMM: dont call kfree_skb() under spin_lock_irqsave()
+Date: Wed, 28 Dec 2022 15:35:37 +0100
+Message-Id: <20221228144342.966353068@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,59 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhen Lei <thunder.leizhen@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit fc02e2b52389c8fde02852b2f959c0b45f042bbd ]
+[ Upstream commit 0ba18967d4544955b2eff2fbc4f2a8750c4df90a ]
 
-Let's use pr_err() to output the error messages and let's extend a comment
-to clarify why returning 0 (success) in one case make sense.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with interrupts being disabled. So replace kfree_skb()
+with dev_kfree_skb_irq() under spin_lock_irqsave().
 
-Fixes: c784f92769ae ("mmc: core: Read the SD function extension registers for power management")
-Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
-[Ulf: Clarified the comment and the commit-msg]
-Link: https://lore.kernel.org/r/20221130134920.2109-1-thunder.leizhen@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 81be03e026dc ("Bluetooth: RFCOMM: Replace use of memcpy_from_msg with bt_skb_sendmmsg")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/core/sd.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ net/bluetooth/rfcomm/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/core/sd.c b/drivers/mmc/core/sd.c
-index 3662bf5320ce..72b664ed90cf 100644
---- a/drivers/mmc/core/sd.c
-+++ b/drivers/mmc/core/sd.c
-@@ -1259,7 +1259,7 @@ static int sd_read_ext_regs(struct mmc_card *card)
- 	 */
- 	err = sd_read_ext_reg(card, 0, 0, 0, 512, gen_info_buf);
- 	if (err) {
--		pr_warn("%s: error %d reading general info of SD ext reg\n",
-+		pr_err("%s: error %d reading general info of SD ext reg\n",
- 			mmc_hostname(card->host), err);
- 		goto out;
- 	}
-@@ -1273,7 +1273,12 @@ static int sd_read_ext_regs(struct mmc_card *card)
- 	/* Number of extensions to be find. */
- 	num_ext = gen_info_buf[4];
+diff --git a/net/bluetooth/rfcomm/core.c b/net/bluetooth/rfcomm/core.c
+index 7324764384b6..8d6fce9005bd 100644
+--- a/net/bluetooth/rfcomm/core.c
++++ b/net/bluetooth/rfcomm/core.c
+@@ -590,7 +590,7 @@ int rfcomm_dlc_send(struct rfcomm_dlc *d, struct sk_buff *skb)
  
--	/* We support revision 0, but limit it to 512 bytes for simplicity. */
-+	/*
-+	 * We only support revision 0 and limit it to 512 bytes for simplicity.
-+	 * No matter what, let's return zero to allow us to continue using the
-+	 * card, even if we can't support the features from the SD function
-+	 * extensions registers.
-+	 */
- 	if (rev != 0 || len > 512) {
- 		pr_warn("%s: non-supported SD ext reg layout\n",
- 			mmc_hostname(card->host));
-@@ -1288,7 +1293,7 @@ static int sd_read_ext_regs(struct mmc_card *card)
- 	for (i = 0; i < num_ext; i++) {
- 		err = sd_parse_ext_reg(card, gen_info_buf, &next_ext_addr);
- 		if (err) {
--			pr_warn("%s: error %d parsing SD ext reg\n",
-+			pr_err("%s: error %d parsing SD ext reg\n",
- 				mmc_hostname(card->host), err);
- 			goto out;
+ 		ret = rfcomm_dlc_send_frag(d, frag);
+ 		if (ret < 0) {
+-			kfree_skb(frag);
++			dev_kfree_skb_irq(frag);
+ 			goto unlock;
  		}
+ 
 -- 
 2.35.1
 
