@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D84D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:58:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94330C433D2;
-	Wed, 28 Dec 2022 14:58:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2D711863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:58:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 374F5C433D2;
+	Wed, 28 Dec 2022 14:58:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239529;
-	bh=PM5GTuthM+VY8X6eS+/TJUOiGsL4DzmLrac7ERzPjSw=;
+	s=korg; t=1672239532;
+	bh=3ZwUhQVVkfHkv3IqI1JcB4ce266Ty7SK39pQUTSEV0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=13R2YrxV6lGthbIytqMRifH0HscHy5Uah/pQHKTHLJqdnyJ56d9XCN+jKGkou1utH
-	 NarLP9j0ckdyiSkP6dxv2DJZU2TKxwD9mA0JNaNzZ62AW6BIBS/+Dg1Ij/msqwUiMQ
-	 eAA5nTEc2rgy6mulpHA7kZc5ODAl4IbKzPqWeh2Q=
+	b=0ZVXKpqkXkM6INaTZzaH0j4Kn3gghJLXjagRca9Qn7deFTcRxnA52EBq4A/b91QsX
+	 DitxE0/WY099gqgF32E+LSo/MbcoRrz82Bb/z878r1gQt++nM7xd5q9boYPiEckSLb
+	 +ylSLrLAKLxO7AYeDidl46X3fvr6mg94Nx4od4Hs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Aakarsh Jain <aakarsh.jain@samsung.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0009/1146] arm64: dts: qcom: msm8996: fix GPU OPP table
-Date: Wed, 28 Dec 2022 15:25:48 +0100
-Message-Id: <20221228144330.435138187@linuxfoundation.org>
+Subject: [PATCH 5.15 240/731] media: s5p-mfc: Add variant data for MFC v7 hardware for Exynos 3250 SoC
+Date: Wed, 28 Dec 2022 15:35:47 +0100
+Message-Id: <20221228144303.520070640@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,50 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Aakarsh Jain <aakarsh.jain@samsung.com>
 
-[ Upstream commit 0d440d811e6e2f37093e54db55bc27fe66678170 ]
+[ Upstream commit f50ebe10f5d8092c37e2bd430c78e03bf38b1e20 ]
 
-Fix Adreno OPP table according to the msm-3.18. Enable 624 MHz for the
-speed bin 3 and 560 MHz for bins 2 and 3.
+Commit 5441e9dafdfc6dc40 ("[media] s5p-mfc: Core support for MFC v7")
+which adds mfc v7 support for Exynos3250 and use the same compatible
+string as used by Exynos5240 but both the IPs are a bit different in
+terms of IP clock.
+Add variant driver data based on the new compatible string
+"samsung,exynos3250-mfc" for Exynos3250 SoC.
 
-Fixes: 69cc3114ab0f ("arm64: dts: Add Adreno GPU definitions")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20220724140421.1933004-7-dmitry.baryshkov@linaro.org
+Suggested-by: Alim Akhtar <alim.akhtar@samsung.com>
+Fixes: 5441e9dafdfc ("[media] s5p-mfc: Core support for MFC v7")
+Signed-off-by: Aakarsh Jain <aakarsh.jain@samsung.com>
+Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/media/platform/s5p-mfc/s5p_mfc.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 7cc93329b93c..67f0167dfda2 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -1233,17 +1233,17 @@ gpu_opp_table: opp-table {
- 				compatible = "operating-points-v2";
+diff --git a/drivers/media/platform/s5p-mfc/s5p_mfc.c b/drivers/media/platform/s5p-mfc/s5p_mfc.c
+index 4fc135d9f38b..4c511b026bd7 100644
+--- a/drivers/media/platform/s5p-mfc/s5p_mfc.c
++++ b/drivers/media/platform/s5p-mfc/s5p_mfc.c
+@@ -1583,8 +1583,18 @@ static struct s5p_mfc_variant mfc_drvdata_v7 = {
+ 	.port_num	= MFC_NUM_PORTS_V7,
+ 	.buf_size	= &buf_size_v7,
+ 	.fw_name[0]     = "s5p-mfc-v7.fw",
+-	.clk_names	= {"mfc", "sclk_mfc"},
+-	.num_clocks	= 2,
++	.clk_names	= {"mfc"},
++	.num_clocks	= 1,
++};
++
++static struct s5p_mfc_variant mfc_drvdata_v7_3250 = {
++	.version        = MFC_VERSION_V7,
++	.version_bit    = MFC_V7_BIT,
++	.port_num       = MFC_NUM_PORTS_V7,
++	.buf_size       = &buf_size_v7,
++	.fw_name[0]     = "s5p-mfc-v7.fw",
++	.clk_names      = {"mfc", "sclk_mfc"},
++	.num_clocks     = 2,
+ };
  
- 				/*
--				 * 624Mhz and 560Mhz are only available on speed
--				 * bin (1 << 0). All the rest are available on
--				 * all bins of the hardware
-+				 * 624Mhz is only available on speed bins 0 and 3.
-+				 * 560Mhz is only available on speed bins 0, 2 and 3.
-+				 * All the rest are available on all bins of the hardware.
- 				 */
- 				opp-624000000 {
- 					opp-hz = /bits/ 64 <624000000>;
--					opp-supported-hw = <0x01>;
-+					opp-supported-hw = <0x09>;
- 				};
- 				opp-560000000 {
- 					opp-hz = /bits/ 64 <560000000>;
--					opp-supported-hw = <0x01>;
-+					opp-supported-hw = <0x0d>;
- 				};
- 				opp-510000000 {
- 					opp-hz = /bits/ 64 <510000000>;
+ static struct s5p_mfc_buf_size_v6 mfc_buf_size_v8 = {
+@@ -1654,6 +1664,9 @@ static const struct of_device_id exynos_mfc_match[] = {
+ 	}, {
+ 		.compatible = "samsung,mfc-v7",
+ 		.data = &mfc_drvdata_v7,
++	}, {
++		.compatible = "samsung,exynos3250-mfc",
++		.data = &mfc_drvdata_v7_3250,
+ 	}, {
+ 		.compatible = "samsung,mfc-v8",
+ 		.data = &mfc_drvdata_v8,
 -- 
 2.35.1
 
