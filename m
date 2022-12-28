@@ -1,34 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06341C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CD8BC433D2;
-	Wed, 28 Dec 2022 16:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28D21C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:56:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66571C433D2;
+	Wed, 28 Dec 2022 16:56:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246559;
-	bh=k58RRflD6JGFt7EF93aoHdhUah760czXjm3Zmz65dMQ=;
+	s=korg; t=1672246562;
+	bh=RfH9LmeSmRyUFA/u+LvjDwVJ2qp3eFFU8aKEIPlYbZI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bb6Pa6D06+fHpW8axTjIwMcMUhjFH5ZmUxk5H5hOHWwCC6hOsu2gEz2AHPvO+/NWj
-	 KkHU0WOb9JJ02yw+tUkSToDsyz/hVAhYl7oVozyM2GIfZzrkipbRhPEv6QV9plwquy
-	 P4cKcwFFtw69bcMJGTDlQ2bblWZ0armx558R9cDE=
+	b=0vudCecNKcyRO3ArKHbQRg2wxk68Ezs9QnlYkqhk0NOEJfGlsrNt52Gmq07b1oAyD
+	 DZeme3NqDpZK5k2B17mr+7i1CJBU2eJ2zrblazDuDbC55vDcUYwLP+YZQhHHZOHALg
+	 /yF7MUowzIbNp/VtMbKo8TklDPn34IZmxkCmrwX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Wang <wvw@google.com>,
-	Midas Chien <midaschieh@google.com>,
-	Connor OBrien <connoro@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Anton Vorontsov <anton@enomsg.org>,
-	Colin Cross <ccross@android.com>,
-	Tony Luck <tony.luck@intel.com>,
-	kernel-team@android.com,
-	John Stultz <jstultz@google.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1081/1146] pstore: Switch pmsg_lock to an rt_mutex to avoid priority inversion
-Date: Wed, 28 Dec 2022 15:43:40 +0100
-Message-Id: <20221228144359.574112911@linuxfoundation.org>
+Subject: [PATCH 6.1 1082/1146] drm/amd/pm: avoid large variable on kernel stack
+Date: Wed, 28 Dec 2022 15:43:41 +0100
+Message-Id: <20221228144359.598935733@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -42,68 +35,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Stultz <jstultz@google.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 76d62f24db07f22ccf9bc18ca793c27d4ebef721 ]
+[ Upstream commit d118b18fb1da02b41df2da78cb2794b3638d89cd ]
 
-Wei Wang reported seeing priority inversion caused latencies
-caused by contention on pmsg_lock, and suggested it be switched
-to a rt_mutex.
+The activity_monitor_external[] array is too big to fit on the
+kernel stack, resulting in this warning with clang:
 
-I was initially hesitant this would help, as the tasks in that
-trace all seemed to be SCHED_NORMAL, so the benefit would be
-limited to only nice boosting.
+drivers/gpu/drm/amd/amdgpu/../pm/swsmu/smu13/smu_v13_0_7_ppt.c:1438:12: error: stack frame size (1040) exceeds limit (1024) in 'smu_v13_0_7_get_power_profile_mode' [-Werror,-Wframe-larger-than]
 
-However, another similar issue was raised where the priority
-inversion was seen did involve a blocked RT task so it is clear
-this would be helpful in that case.
+Use dynamic allocation instead. It should also be possible to
+have single element here instead of the array, but this seems
+easier.
 
-Cc: Wei Wang <wvw@google.com>
-Cc: Midas Chien<midaschieh@google.com>
-Cc: Connor O'Brien <connoro@google.com>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Anton Vorontsov <anton@enomsg.org>
-Cc: Colin Cross <ccross@android.com>
-Cc: Tony Luck <tony.luck@intel.com>
-Cc: kernel-team@android.com
-Fixes: 9d5438f462ab ("pstore: Add pmsg - user-space accessible pstore object")
-Reported-by: Wei Wang <wvw@google.com>
-Signed-off-by: John Stultz <jstultz@google.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221214231834.3711880-1-jstultz@google.com
+v2: fix up argument to sizeof() (Alex)
+
+Fixes: 334682ae8151 ("drm/amd/pm: enable workload type change on smu_v13_0_7")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/pmsg.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ .../drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c  | 21 ++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/fs/pstore/pmsg.c b/fs/pstore/pmsg.c
-index d8542ec2f38c..18cf94b597e0 100644
---- a/fs/pstore/pmsg.c
-+++ b/fs/pstore/pmsg.c
-@@ -7,9 +7,10 @@
- #include <linux/device.h>
- #include <linux/fs.h>
- #include <linux/uaccess.h>
-+#include <linux/rtmutex.h>
- #include "internal.h"
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+index d74debc584f8..39deb06a86ba 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+@@ -1436,7 +1436,7 @@ static int smu_v13_0_7_get_power_limit(struct smu_context *smu,
  
--static DEFINE_MUTEX(pmsg_lock);
-+static DEFINE_RT_MUTEX(pmsg_lock);
+ static int smu_v13_0_7_get_power_profile_mode(struct smu_context *smu, char *buf)
+ {
+-	DpmActivityMonitorCoeffIntExternal_t activity_monitor_external[PP_SMC_POWER_PROFILE_COUNT];
++	DpmActivityMonitorCoeffIntExternal_t *activity_monitor_external;
+ 	uint32_t i, j, size = 0;
+ 	int16_t workload_type = 0;
+ 	int result = 0;
+@@ -1444,6 +1444,12 @@ static int smu_v13_0_7_get_power_profile_mode(struct smu_context *smu, char *buf
+ 	if (!buf)
+ 		return -EINVAL;
  
- static ssize_t write_pmsg(struct file *file, const char __user *buf,
- 			  size_t count, loff_t *ppos)
-@@ -28,9 +29,9 @@ static ssize_t write_pmsg(struct file *file, const char __user *buf,
- 	if (!access_ok(buf, count))
- 		return -EFAULT;
++	activity_monitor_external = kcalloc(PP_SMC_POWER_PROFILE_COUNT,
++					    sizeof(*activity_monitor_external),
++					    GFP_KERNEL);
++	if (!activity_monitor_external)
++		return -ENOMEM;
++
+ 	size += sysfs_emit_at(buf, size, "                              ");
+ 	for (i = 0; i <= PP_SMC_POWER_PROFILE_WINDOW3D; i++)
+ 		size += sysfs_emit_at(buf, size, "%-14s%s", amdgpu_pp_profile_name[i],
+@@ -1456,15 +1462,17 @@ static int smu_v13_0_7_get_power_profile_mode(struct smu_context *smu, char *buf
+ 		workload_type = smu_cmn_to_asic_specific_index(smu,
+ 							       CMN2ASIC_MAPPING_WORKLOAD,
+ 							       i);
+-		if (workload_type < 0)
+-			return -EINVAL;
++		if (workload_type < 0) {
++			result = -EINVAL;
++			goto out;
++		}
  
--	mutex_lock(&pmsg_lock);
-+	rt_mutex_lock(&pmsg_lock);
- 	ret = psinfo->write_user(&record, buf);
--	mutex_unlock(&pmsg_lock);
-+	rt_mutex_unlock(&pmsg_lock);
- 	return ret ? ret : count;
+ 		result = smu_cmn_update_table(smu,
+ 					  SMU_TABLE_ACTIVITY_MONITOR_COEFF, workload_type,
+ 					  (void *)(&activity_monitor_external[i]), false);
+ 		if (result) {
+ 			dev_err(smu->adev->dev, "[%s] Failed to get activity monitor!", __func__);
+-			return result;
++			goto out;
+ 		}
+ 	}
+ 
+@@ -1492,7 +1500,10 @@ do {													\
+ 	PRINT_DPM_MONITOR(Fclk_BoosterFreq);
+ #undef PRINT_DPM_MONITOR
+ 
+-	return size;
++	result = size;
++out:
++	kfree(activity_monitor_external);
++	return result;
  }
  
+ static int smu_v13_0_7_set_power_profile_mode(struct smu_context *smu, long *input, uint32_t size)
 -- 
 2.35.1
 
