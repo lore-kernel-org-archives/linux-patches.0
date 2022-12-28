@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07301C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:38:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2035DC433D2;
-	Wed, 28 Dec 2022 16:38:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D5E1C15
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:38:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A12C433F0;
+	Wed, 28 Dec 2022 16:38:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245484;
-	bh=EG+e9gZtWBtSxd40PAuJyMF+fz0eBwH1KLEtrXDgJ8E=;
+	s=korg; t=1672245493;
+	bh=AJI6k/9Bs1e+aX6ppx/bBe1+BG7dZm6i6FA2mQ1gwcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cm5FeJugZriOyz/Eq7cNxeCsD2rlsHAsK981wlX+OZgjVD+vJPmRVaVnAWqd57SUc
-	 Gsl6pcwkZoc+mog9NTkYxMykhEsNdrUKyMeZkL13qwabJiDCIfSPPt6KV1Py58VfE4
-	 FYy86ZQw4oyATnMnm0YyX8zTCmaR+It2TKmeyqok=
+	b=HoN0uMdNP9xszvSEMScpBAvnE4es46RHcRzQRIkhd0Utwis5kYAiim5L1cLPG7dZJ
+	 E873LqsVUAT6Pln0hRlZZ7SWVx65OEdlx7eALWUc9KxVHI1lY6vEWcBrG5TjlBcOol
+	 hx8HOLIFbHe/26fh7j2TaatAyslgplwv5kI7KH+Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Kees Cook <keescook@chromium.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0890/1073] binfmt_misc: fix shift-out-of-bounds in check_special_flags
-Date: Wed, 28 Dec 2022 15:41:18 +0100
-Message-Id: <20221228144352.202048329@linuxfoundation.org>
+Subject: [PATCH 6.1 0870/1146] remoteproc: sysmon: fix memory leak in qcom_add_sysmon_subdev()
+Date: Wed, 28 Dec 2022 15:40:09 +0100
+Message-Id: <20221228144353.799074997@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,59 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 6a46bf558803dd2b959ca7435a5c143efe837217 ]
+[ Upstream commit e01ce676aaef3b13d02343d7e70f9637d93a3367 ]
 
-UBSAN reported a shift-out-of-bounds warning:
+The kfree() should be called when of_irq_get_byname() fails or
+devm_request_threaded_irq() fails in qcom_add_sysmon_subdev(),
+otherwise there will be a memory leak, so add kfree() to fix it.
 
- left shift of 1 by 31 places cannot be represented in type 'int'
- Call Trace:
-  <TASK>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x8d/0xcf lib/dump_stack.c:106
-  ubsan_epilogue+0xa/0x44 lib/ubsan.c:151
-  __ubsan_handle_shift_out_of_bounds+0x1e7/0x208 lib/ubsan.c:322
-  check_special_flags fs/binfmt_misc.c:241 [inline]
-  create_entry fs/binfmt_misc.c:456 [inline]
-  bm_register_write+0x9d3/0xa20 fs/binfmt_misc.c:654
-  vfs_write+0x11e/0x580 fs/read_write.c:582
-  ksys_write+0xcf/0x120 fs/read_write.c:637
-  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-  do_syscall_64+0x34/0x80 arch/x86/entry/common.c:80
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
- RIP: 0033:0x4194e1
-
-Since the type of Node's flags is unsigned long, we should define these
-macros with same type too.
-
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221102025123.1117184-1-liushixin2@huawei.com
+Fixes: 027045a6e2b7 ("remoteproc: qcom: Add shutdown-ack irq")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221129105650.1539187-1-cuigaosheng1@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/binfmt_misc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/remoteproc/qcom_sysmon.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/fs/binfmt_misc.c b/fs/binfmt_misc.c
-index e1eae7ea823a..bb202ad369d5 100644
---- a/fs/binfmt_misc.c
-+++ b/fs/binfmt_misc.c
-@@ -44,10 +44,10 @@ static LIST_HEAD(entries);
- static int enabled = 1;
- 
- enum {Enabled, Magic};
--#define MISC_FMT_PRESERVE_ARGV0 (1 << 31)
--#define MISC_FMT_OPEN_BINARY (1 << 30)
--#define MISC_FMT_CREDENTIALS (1 << 29)
--#define MISC_FMT_OPEN_FILE (1 << 28)
-+#define MISC_FMT_PRESERVE_ARGV0 (1UL << 31)
-+#define MISC_FMT_OPEN_BINARY (1UL << 30)
-+#define MISC_FMT_CREDENTIALS (1UL << 29)
-+#define MISC_FMT_OPEN_FILE (1UL << 28)
- 
- typedef struct {
- 	struct list_head list;
+diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
+index 57dde2a69b9d..15af52f8499e 100644
+--- a/drivers/remoteproc/qcom_sysmon.c
++++ b/drivers/remoteproc/qcom_sysmon.c
+@@ -652,7 +652,9 @@ struct qcom_sysmon *qcom_add_sysmon_subdev(struct rproc *rproc,
+ 		if (sysmon->shutdown_irq != -ENODATA) {
+ 			dev_err(sysmon->dev,
+ 				"failed to retrieve shutdown-ack IRQ\n");
+-			return ERR_PTR(sysmon->shutdown_irq);
++			ret = sysmon->shutdown_irq;
++			kfree(sysmon);
++			return ERR_PTR(ret);
+ 		}
+ 	} else {
+ 		ret = devm_request_threaded_irq(sysmon->dev,
+@@ -663,6 +665,7 @@ struct qcom_sysmon *qcom_add_sysmon_subdev(struct rproc *rproc,
+ 		if (ret) {
+ 			dev_err(sysmon->dev,
+ 				"failed to acquire shutdown-ack IRQ\n");
++			kfree(sysmon);
+ 			return ERR_PTR(ret);
+ 		}
+ 	}
 -- 
 2.35.1
 
