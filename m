@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466F21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0718C433D2;
-	Wed, 28 Dec 2022 15:21:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6C4B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66BCAC433D2;
+	Wed, 28 Dec 2022 15:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240914;
-	bh=KGcrcTkUbY8EFFmP+e/OwPeGFcOksViAhEGhZOkMAfo=;
+	s=korg; t=1672240916;
+	bh=qEW4P3ShBw/O+nZDvlRl8XZKAB8zq7fIQbrLg6RyqFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bRZcpMegoyCro3vrJLLikJp8y8QAcscj9RyaJxQfXLkTSMZ5YanrIb/LX4UR2w/yI
-	 Mcok5zBH4fY4Eu0bJWnWDvFRwG4OzQC9XrPu6E+03AUa1cmTSanUah8tk4qidALjnL
-	 4KzhVgUdxAdQYrOAaFnNQ2bi4o7fCR4sMg3Gz+PE=
+	b=rl1PXrd+Gg3j2dTKUc9IQLFpsJtygWTFFmNJLxZtUv4sKHrE0aUlvBXNs6VHKpt0P
+	 CfUIerTWFAjJNlssEjMDVW/sAYkK6TYsfxX9bEnyVzI3kSa2n39DcYr0PqKX/szKxD
+	 tNvtLHVA9qUdLcNrVFPwyVzlZDlZ7wQckBeUJSfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Neil Brown <neilb@suse.de>,
+	Yongcheng Yang <yoyang@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 416/731] scsi: fcoe: Fix transport not deattached when fcoe_if_init() fails
-Date: Wed, 28 Dec 2022 15:38:43 +0100
-Message-Id: <20221228144308.630431656@linuxfoundation.org>
+Subject: [PATCH 6.1 0184/1146] nfsd: return error if nfs4_setacl fails
+Date: Wed, 28 Dec 2022 15:28:43 +0100
+Message-Id: <20221228144335.149523183@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,44 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 4155658cee394b22b24c6d64e49247bf26d95b92 ]
+[ Upstream commit 01d53a88c08951f88f2a42f1f1e6568928e0590e ]
 
-fcoe_init() calls fcoe_transport_attach(&fcoe_sw_transport), but when
-fcoe_if_init() fails, &fcoe_sw_transport is not detached and leaves freed
-&fcoe_sw_transport on fcoe_transports list. This causes panic when
-reinserting module.
+With the addition of POSIX ACLs to struct nfsd_attrs, we no longer
+return an error if setting the ACL fails. Ensure we return the na_aclerr
+error on SETATTR if there is one.
 
- BUG: unable to handle page fault for address: fffffbfff82e2213
- RIP: 0010:fcoe_transport_attach+0xe1/0x230 [libfcoe]
- Call Trace:
-  <TASK>
-  do_one_initcall+0xd0/0x4e0
-  load_module+0x5eee/0x7210
-  ...
-
-Fixes: 78a582463c1e ("[SCSI] fcoe: convert fcoe.ko to become an fcoe transport provider driver")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221115092442.133088-1-chenzhongjin@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: c0cbe70742f4 ("NFSD: add posix ACLs to struct nfsd_attrs")
+Cc: Neil Brown <neilb@suse.de>
+Reported-by: Yongcheng Yang <yoyang@redhat.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/fcoe/fcoe.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/nfsd/nfs4proc.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/scsi/fcoe/fcoe.c b/drivers/scsi/fcoe/fcoe.c
-index 5ae6c207d3ac..76dbdae0e987 100644
---- a/drivers/scsi/fcoe/fcoe.c
-+++ b/drivers/scsi/fcoe/fcoe.c
-@@ -2501,6 +2501,7 @@ static int __init fcoe_init(void)
- 
- out_free:
- 	mutex_unlock(&fcoe_config_mutex);
-+	fcoe_transport_detach(&fcoe_sw_transport);
- out_destroy:
- 	destroy_workqueue(fcoe_wq);
- 	return rc;
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 8beb2bc4c328..e91d0918592c 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1133,6 +1133,8 @@ nfsd4_setattr(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 				0, (time64_t)0);
+ 	if (!status)
+ 		status = nfserrno(attrs.na_labelerr);
++	if (!status)
++		status = nfserrno(attrs.na_aclerr);
+ out:
+ 	nfsd_attrs_free(&attrs);
+ 	fh_drop_write(&cstate->current_fh);
 -- 
 2.35.1
 
