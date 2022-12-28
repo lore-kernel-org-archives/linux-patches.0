@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C721863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:15:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6795FC433EF;
-	Wed, 28 Dec 2022 15:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 895B41863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:15:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EF41C433D2;
+	Wed, 28 Dec 2022 15:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240555;
-	bh=ZLE2dTYV+lTi+iWjawH28UFbuT+bslTSaaoHl5vZ0D4=;
+	s=korg; t=1672240558;
+	bh=IqJZ+mc+y1zrA9Wz06cUVtD47RJVvdK8LZZdWL57Zj4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zlh2wv/5kiLtquPYD5wOWEWEcS7+/2JPz+zYZS9BD4UfugWvoDf7de70SNS0gXEgt
-	 JXcpeOuhoJ/uf9cwAUWszR2IYcG8a42OMhy/ShmhwsNAepWohbJKBPzejxc/3c/thV
-	 aIkpYMIFaV2V0GsInj40eaZxRHUReMWxCkdPMTy8=
+	b=YGUlA6ohSREFSHukb3K11XGtRCTp0MQzsMv+cnmARWy30Wnk3po37bJjHDr/Ka9Fx
+	 gL0/q1X5R7QVWhLTPPnPYHfKn+XI6kcT4XUgCOglaVaLwz/SuUR4aXgiUqxHeOkQLY
+	 s8GEnyRW/w8pfl4fPAtLSfJTTqFX9aVcLqUM5oF4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0174/1073] platform/x86: intel_scu_ipc: fix possible name leak in __intel_scu_ipc_register()
-Date: Wed, 28 Dec 2022 15:29:22 +0100
-Message-Id: <20221228144332.738651913@linuxfoundation.org>
+Subject: [PATCH 6.1 0139/1146] ACPI: pfr_update: use ACPI_FREE() to free acpi_object
+Date: Wed, 28 Dec 2022 15:27:58 +0100
+Message-Id: <20221228144333.923857107@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,45 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Wang ShaoBo <bobo.shaobowang@huawei.com>
 
-[ Upstream commit 0b3d0cb7c0bed2fd6454f77ed75e7a662c6efd12 ]
+[ Upstream commit e335beed78ec82656dcb554f9fe560709f0dc408 ]
 
-In some error paths before device_register(), the names allocated
-by dev_set_name() are not freed. Move dev_set_name() front to
-device_register(), so the name can be freed while calling
-put_device().
+acpi_evaluate_dsm_typed()/acpi_evaluate_dsm() should be coupled with
+ACPI_FREE() to free the ACPI memory, because we need to track the
+allocation of acpi_object when ACPI_DBG_TRACK_ALLOCATIONS enabled,
+so use ACPI_FREE() instead of kfree().
 
-Fixes: 54b34aa0a729 ("platform/x86: intel_scu_ipc: Split out SCU IPC functionality from the SCU driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221208151916.2404977-1-yangyingliang@huawei.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 0db89fa243e5 ("ACPI: Introduce Platform Firmware Runtime Update device driver")
+Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/intel_scu_ipc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/pfr_update.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/intel_scu_ipc.c b/drivers/platform/x86/intel_scu_ipc.c
-index 7cc9089d1e14..e7a3e3402817 100644
---- a/drivers/platform/x86/intel_scu_ipc.c
-+++ b/drivers/platform/x86/intel_scu_ipc.c
-@@ -583,7 +583,6 @@ __intel_scu_ipc_register(struct device *parent,
- 	scu->dev.parent = parent;
- 	scu->dev.class = &intel_scu_ipc_class;
- 	scu->dev.release = intel_scu_ipc_release;
--	dev_set_name(&scu->dev, "intel_scu_ipc");
+diff --git a/drivers/acpi/pfr_update.c b/drivers/acpi/pfr_update.c
+index 6bb0b778b5da..9d2bdc13253a 100644
+--- a/drivers/acpi/pfr_update.c
++++ b/drivers/acpi/pfr_update.c
+@@ -178,7 +178,7 @@ static int query_capability(struct pfru_update_cap_info *cap_hdr,
+ 	ret = 0;
  
- 	if (!request_mem_region(scu_data->mem.start, resource_size(&scu_data->mem),
- 				"intel_scu_ipc")) {
-@@ -612,6 +611,7 @@ __intel_scu_ipc_register(struct device *parent,
- 	 * After this point intel_scu_ipc_release() takes care of
- 	 * releasing the SCU IPC resources once refcount drops to zero.
- 	 */
-+	dev_set_name(&scu->dev, "intel_scu_ipc");
- 	err = device_register(&scu->dev);
- 	if (err) {
- 		put_device(&scu->dev);
+ free_acpi_buffer:
+-	kfree(out_obj);
++	ACPI_FREE(out_obj);
+ 
+ 	return ret;
+ }
+@@ -224,7 +224,7 @@ static int query_buffer(struct pfru_com_buf_info *info,
+ 	ret = 0;
+ 
+ free_acpi_buffer:
+-	kfree(out_obj);
++	ACPI_FREE(out_obj);
+ 
+ 	return ret;
+ }
+@@ -385,7 +385,7 @@ static int start_update(int action, struct pfru_device *pfru_dev)
+ 	ret = 0;
+ 
+ free_acpi_buffer:
+-	kfree(out_obj);
++	ACPI_FREE(out_obj);
+ 
+ 	return ret;
+ }
 -- 
 2.35.1
 
