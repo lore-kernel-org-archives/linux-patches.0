@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFDFC1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:07:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50B97C433F1;
-	Wed, 28 Dec 2022 16:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 636591875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:07:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD378C433F1;
+	Wed, 28 Dec 2022 16:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243656;
-	bh=7sjJ4Fdw+MreHOFVvOgpuhnwdQJ4IvbE2qMzOYOLmPE=;
+	s=korg; t=1672243659;
+	bh=85omXn5FVO11lwaIPOdLpY9zVnj8HCnM54sZwW8BRuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FriYpyEhDaKeH/xmfdn+7OhHE7CZ8AW5+EmI3Pk2DUG6yDsuAzmfOxj+PtmSia1LT
-	 ceWykw/KjVle3woPPwI5Q8mhjScBAtL18ccKoxJRc7Y/RC0exkqgGEGIsh9K3yLjWj
-	 1Dw4s1m0+oYbeEnfJIHptN6yIzbKiwYzs8pm0V1k=
+	b=GUzOErOI4gM3zfD5WAiHOkdBWQjhF5yMAfC7LoTBhIF2hppY7k4Q3Zb4Nhxq213VN
+	 FPPzEy1RqLCYbK1RNK+pyqM1hC7Ma/xGIbK7RqC5t3za4nS9VW7BOcNMZnNaOPn6w7
+	 g2+eYsTRmzM1JqT+ne2sXkezuVck7SYZekCdYdeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	John Johansen <john.johansen@canonical.com>,
+	Yongqiang Liu <liuyongqiang13@huawei.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0564/1073] apparmor: Use pointer to struct aa_label for lbs_cred
-Date: Wed, 28 Dec 2022 15:35:52 +0100
-Message-Id: <20221228144343.376332163@linuxfoundation.org>
+Subject: [PATCH 6.1 0529/1146] net: defxx: Fix missing err handling in dfx_init()
+Date: Wed, 28 Dec 2022 15:34:28 +0100
+Message-Id: <20221228144344.545099471@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,39 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Yongqiang Liu <liuyongqiang13@huawei.com>
 
-[ Upstream commit 37923d4321b1e38170086da2c117f78f2b0f49c6 ]
+[ Upstream commit ae18dcdff0f8d7e84cd3fd9f496518b5e72d185d ]
 
-According to the implementations of cred_label() and set_cred_label(),
-we should use pointer to struct aa_label for lbs_cred instead of struct
-aa_task_ctx, this patch fixes it.
+When eisa_driver_register() or tc_register_driver() failed,
+the modprobe defxx would fail with some err log as follows:
 
-Fixes: bbd3662a8348 ("Infrastructure management of the cred security blob")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Signed-off-by: John Johansen <john.johansen@canonical.com>
+ Error: Driver 'defxx' is already registered, aborting...
+
+Fix this issue by adding err hanling in dfx_init().
+
+Fixes: e89a2cfb7d7b5 ("[TC] defxx: TURBOchannel support")
+Signed-off-by: Yongqiang Liu <liuyongqiang13@huawei.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/apparmor/lsm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/fddi/defxx.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
-index e29cade7b662..9eb7972e08e4 100644
---- a/security/apparmor/lsm.c
-+++ b/security/apparmor/lsm.c
-@@ -1194,10 +1194,10 @@ static int apparmor_inet_conn_request(const struct sock *sk, struct sk_buff *skb
- #endif
+diff --git a/drivers/net/fddi/defxx.c b/drivers/net/fddi/defxx.c
+index b584ffe38ad6..1fef8a9b1a0f 100644
+--- a/drivers/net/fddi/defxx.c
++++ b/drivers/net/fddi/defxx.c
+@@ -3831,10 +3831,24 @@ static int dfx_init(void)
+ 	int status;
  
- /*
-- * The cred blob is a pointer to, not an instance of, an aa_task_ctx.
-+ * The cred blob is a pointer to, not an instance of, an aa_label.
-  */
- struct lsm_blob_sizes apparmor_blob_sizes __lsm_ro_after_init = {
--	.lbs_cred = sizeof(struct aa_task_ctx *),
-+	.lbs_cred = sizeof(struct aa_label *),
- 	.lbs_file = sizeof(struct aa_file_ctx),
- 	.lbs_task = sizeof(struct aa_task_ctx),
- };
+ 	status = pci_register_driver(&dfx_pci_driver);
+-	if (!status)
+-		status = eisa_driver_register(&dfx_eisa_driver);
+-	if (!status)
+-		status = tc_register_driver(&dfx_tc_driver);
++	if (status)
++		goto err_pci_register;
++
++	status = eisa_driver_register(&dfx_eisa_driver);
++	if (status)
++		goto err_eisa_register;
++
++	status = tc_register_driver(&dfx_tc_driver);
++	if (status)
++		goto err_tc_register;
++
++	return 0;
++
++err_tc_register:
++	eisa_driver_unregister(&dfx_eisa_driver);
++err_eisa_register:
++	pci_unregister_driver(&dfx_pci_driver);
++err_pci_register:
+ 	return status;
+ }
+ 
 -- 
 2.35.1
 
