@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E67C1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA000C433D2;
-	Wed, 28 Dec 2022 16:04:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122791C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C17BC433D2;
+	Wed, 28 Dec 2022 16:04:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243459;
-	bh=ChABwfarEnxpiZ8bKwylaKD1+QV4NBac45YFxo79hTM=;
+	s=korg; t=1672243461;
+	bh=G3bF5zDa6UOtDDkVTz9o54tixBLXMzT7gPBIx978YdA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H6aruB1u6KL3Ebxu+uJcDzGo3w2bCL828f1kbWRezEeGQHCZPdifle5t4XfwYxC++
-	 kWGXDiN6l7rhdfHaCGbUr3rkf054oxQ0JFNiuNx9+zgBBcUjfh0s4QqmSAHO1SlEYx
-	 ncv4wTHSg3EZuh6Yr8lp/C14Uy/1pCQ3I8K2AQkY=
+	b=P0Gz6c6OiFnmRGON+JhWDanlb1emwqvcpHrsAhCgJU5Vb1WoYX/r0PzodRaCgLWk1
+	 h+tjWUBJamgxcpyjuw7V6MOYTEooiwb2m91PQ7RHtmCwCsfF1rNH8N4BHg3kuPfF4m
+	 UOx+ZRKNNcFr6jlh2qAb+AE0VWRlSSRshWWWiG4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rickard x Andersson <rickaran@axis.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Martin Liska <mliska@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.15 723/731] gcov: add support for checksum field
-Date: Wed, 28 Dec 2022 15:43:50 +0100
-Message-Id: <20221228144317.404616527@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0495/1146] mmc: alcor: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:33:54 +0100
+Message-Id: <20221228144343.627409690@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,49 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rickard x Andersson <rickaran@axis.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit e96b95c2b7a63a454b6498e2df67aac14d046d13 upstream.
+[ Upstream commit e93d1468f429475a753d6baa79b853b7ee5ef8c0 ]
 
-In GCC version 12.1 a checksum field was added.
+mmc_add_host() may return error, if we ignore its return value, the memory
+that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
+crash because of deleting not added device in the remove path.
 
-This patch fixes a kernel crash occurring during boot when using
-gcov-kernel with GCC version 12.2.  The crash occurred on a system running
-on i.MX6SX.
+So fix this by checking the return value and calling mmc_free_host() in the
+error path.
 
-Link: https://lkml.kernel.org/r/20221220102318.3418501-1-rickaran@axis.com
-Fixes: 977ef30a7d88 ("gcov: support GCC 12.1 and newer compilers")
-Signed-off-by: Rickard x Andersson <rickaran@axis.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Tested-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Reviewed-by: Martin Liska <mliska@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c5413ad815a6 ("mmc: add new Alcor Micro Cardreader SD/MMC driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221101063023.1664968-2-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/gcov/gcc_4_7.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/mmc/host/alcor.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/kernel/gcov/gcc_4_7.c
-+++ b/kernel/gcov/gcc_4_7.c
-@@ -82,6 +82,7 @@ struct gcov_fn_info {
-  * @version: gcov version magic indicating the gcc version used for compilation
-  * @next: list head for a singly-linked list
-  * @stamp: uniquifying time stamp
-+ * @checksum: unique object checksum
-  * @filename: name of the associated gcov data file
-  * @merge: merge functions (null for unused counter type)
-  * @n_functions: number of instrumented functions
-@@ -94,6 +95,10 @@ struct gcov_info {
- 	unsigned int version;
- 	struct gcov_info *next;
- 	unsigned int stamp;
-+ /* Since GCC 12.1 a checksum field is added. */
-+#if (__GNUC__ >= 12)
-+	unsigned int checksum;
-+#endif
- 	const char *filename;
- 	void (*merge[GCOV_COUNTERS])(gcov_type *, unsigned int);
- 	unsigned int n_functions;
+diff --git a/drivers/mmc/host/alcor.c b/drivers/mmc/host/alcor.c
+index bfb8efeb7eb8..d01df01d4b4d 100644
+--- a/drivers/mmc/host/alcor.c
++++ b/drivers/mmc/host/alcor.c
+@@ -1114,7 +1114,10 @@ static int alcor_pci_sdmmc_drv_probe(struct platform_device *pdev)
+ 	alcor_hw_init(host);
+ 
+ 	dev_set_drvdata(&pdev->dev, host);
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret)
++		goto free_host;
++
+ 	return 0;
+ 
+ free_host:
+-- 
+2.35.1
+
 
 
