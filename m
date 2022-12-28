@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABAC1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C331EC433F0;
-	Wed, 28 Dec 2022 15:25:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02D71863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:25:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75AD1C433D2;
+	Wed, 28 Dec 2022 15:25:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241141;
-	bh=c63AvY7EiMllCaX1dYzzbfLMwnTOuLYomnFjkQ2hMrI=;
+	s=korg; t=1672241143;
+	bh=fVSjJaNKR0aJWETif8l37jwbfBwN3cYR/5VXZm1Pi1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G76bd4XGkzKU27mplnphb3B0CzYfiBvcwC5UUkHeC7Eh6eLRxp9FVMh7PbONjDUqz
-	 0bYWi9l87drZGPFkgYdhsbEmnhCt6AE3MuAsdRVD5zYDFKbYN/SHUTvnV0dEqWSURk
-	 kB9BPJA8z70OxCjSNSuZr0n6k+gskN85Z4Eewipw=
+	b=LVMEfUXy07JXT14ayIxHfTNb+0irxV9JWBu6OPYUpraQ5+2MCFNdS5G7V8DXpB+ic
+	 U/TYRdg9SkygqrNtWnOzyb6EnpHfpXJ5FDx1qJRm1O28lNM4kM/nNBabS2c3oYwuVo
+	 OJ7/IhKNn5sY6LHDjffksUzMShrAPaTHWhMzJ6hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Anssi Hannula <anssi.hannula@bitwise.fi>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
+	Andrii Nakryiko <andrii@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0246/1073] can: kvaser_usb_leaf: Fix wrong CAN state after stopping
-Date: Wed, 28 Dec 2022 15:30:34 +0100
-Message-Id: <20221228144334.705989485@linuxfoundation.org>
+Subject: [PATCH 6.1 0212/1146] libbpf: Deal with section with no data gracefully
+Date: Wed, 28 Dec 2022 15:29:11 +0100
+Message-Id: <20221228144335.905462353@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,43 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anssi Hannula <anssi.hannula@bitwise.fi>
+From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
 
-[ Upstream commit a11249acf802341294557895d8e5f6aef080253f ]
+[ Upstream commit 35a855509e6ee3442477c8ebc6827b5b5d32a7b5 ]
 
-0bfd:0124 Kvaser Mini PCI Express 2xHS FW 4.18.778 sends a
-CMD_CHIP_STATE_EVENT indicating bus-off after stopping the device,
-causing a stopped device to appear as CAN_STATE_BUS_OFF instead of
-CAN_STATE_STOPPED.
+ELF section data pointer returned by libelf may be NULL (if section has
+SHT_NOBITS), so null check section data pointer before attempting to
+copy license and kversion section.
 
-Fix that by not handling error events on stopped devices.
-
-Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
-Tested-by: Jimmy Assarsson <extja@kvaser.com>
-Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/all/20221010185237.319219-8-extja@kvaser.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: cb1e5e961991 ("bpf tools: Collect version and license from ELF sections")
+Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/bpf/20221012022353.7350-3-shung-hsi.yu@suse.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ tools/lib/bpf/libbpf.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-index 993fcc19637d..4f9c76f4d0da 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-@@ -1045,6 +1045,10 @@ static void kvaser_usb_leaf_rx_error(const struct kvaser_usb *dev,
- 	leaf = priv->sub_priv;
- 	stats = &priv->netdev->stats;
+diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
+index b7fac0df2612..a0d3cc39ea73 100644
+--- a/tools/lib/bpf/libbpf.c
++++ b/tools/lib/bpf/libbpf.c
+@@ -1408,6 +1408,10 @@ static int bpf_object__check_endianness(struct bpf_object *obj)
+ static int
+ bpf_object__init_license(struct bpf_object *obj, void *data, size_t size)
+ {
++	if (!data) {
++		pr_warn("invalid license section in %s\n", obj->path);
++		return -LIBBPF_ERRNO__FORMAT;
++	}
+ 	/* libbpf_strlcpy() only copies first N - 1 bytes, so size + 1 won't
+ 	 * go over allowed ELF data section buffer
+ 	 */
+@@ -1421,7 +1425,7 @@ bpf_object__init_kversion(struct bpf_object *obj, void *data, size_t size)
+ {
+ 	__u32 kver;
  
-+	/* Ignore e.g. state change to bus-off reported just after stopping */
-+	if (!netif_running(priv->netdev))
-+		return;
-+
- 	/* Update all of the CAN interface's state and error counters before
- 	 * trying any memory allocation that can actually fail with -ENOMEM.
- 	 *
+-	if (size != sizeof(kver)) {
++	if (!data || size != sizeof(kver)) {
+ 		pr_warn("invalid kver section in %s\n", obj->path);
+ 		return -LIBBPF_ERRNO__FORMAT;
+ 	}
 -- 
 2.35.1
 
