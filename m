@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FFB01863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C3BFC433D2;
-	Wed, 28 Dec 2022 15:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E8B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E43C433D2;
+	Wed, 28 Dec 2022 15:08:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240100;
-	bh=ZfqrHiCEGiV7vExI9qbA+EiaJlDYqbhK+PQWPeueR1Q=;
+	s=korg; t=1672240102;
+	bh=HPmIDxaoMR6U9pgJ5s3dbnjhjWZLgiwkRCFGedtKinE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DG3Y64RFleSX0myJJrk+JWxCsIN7iVOX55/og8bkHlGbqyuUvBDfJRRLrwyPSwsls
-	 HwaRHMyMJ/sWHCjS2F0mp2SC4+cI8xSE0808SRSoPQ7ORSWf3zbq4lz5aqiMRviFcN
-	 m43C1UqxRigQGKSUEYbUJXtQ5Q+BYhKDsiKI1j34=
+	b=PHZYrLos7F5zkZgHiPM6bDUeihFTosJDEJf6RLGFxm7KcZSazaho7g90qshwaTBGA
+	 9NWgBUxRJUUvZJ52dnT6/H/iOd0OG7fEgobCaH8xy8KkhIzueUwZkpr/cW4/6HES7a
+	 258qmS0O6Kh4QnBrvUousqwOqV2xsq+hFUyO3G+s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhen Lei <thunder.leizhen@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 309/731] mmc: core: Normalize the error handling branch in sd_read_ext_regs()
-Date: Wed, 28 Dec 2022 15:36:56 +0100
-Message-Id: <20221228144305.534317948@linuxfoundation.org>
+Subject: [PATCH 6.0 0118/1073] lib/fonts: fix undefined behavior in bit shift for get_default_font
+Date: Wed, 28 Dec 2022 15:28:26 +0100
+Message-Id: <20221228144331.243764026@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,59 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhen Lei <thunder.leizhen@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit fc02e2b52389c8fde02852b2f959c0b45f042bbd ]
+[ Upstream commit 6fe888c4d2fb174408e4540bb2d5602b9f507f90 ]
 
-Let's use pr_err() to output the error messages and let's extend a comment
-to clarify why returning 0 (success) in one case make sense.
+Shifting signed 32-bit value by 31 bits is undefined, so changing
+significant bit to unsigned.  The UBSAN warning calltrace like below:
 
-Fixes: c784f92769ae ("mmc: core: Read the SD function extension registers for power management")
-Signed-off-by: Zhen Lei <thunder.leizhen@huawei.com>
-[Ulf: Clarified the comment and the commit-msg]
-Link: https://lore.kernel.org/r/20221130134920.2109-1-thunder.leizhen@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+UBSAN: shift-out-of-bounds in lib/fonts/fonts.c:139:20
+left shift of 1 by 31 places cannot be represented in type 'int'
+ <TASK>
+ dump_stack_lvl+0x7d/0xa5
+ dump_stack+0x15/0x1b
+ ubsan_epilogue+0xe/0x4e
+ __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
+ get_default_font+0x1c7/0x1f0
+ fbcon_startup+0x347/0x3a0
+ do_take_over_console+0xce/0x270
+ do_fbcon_takeover+0xa1/0x170
+ do_fb_registered+0x2a8/0x340
+ fbcon_fb_registered+0x47/0xe0
+ register_framebuffer+0x294/0x4a0
+ __drm_fb_helper_initial_config_and_unlock+0x43c/0x880 [drm_kms_helper]
+ drm_fb_helper_initial_config+0x52/0x80 [drm_kms_helper]
+ drm_fbdev_client_hotplug+0x156/0x1b0 [drm_kms_helper]
+ drm_fbdev_generic_setup+0xfc/0x290 [drm_kms_helper]
+ bochs_pci_probe+0x6ca/0x772 [bochs]
+ local_pci_probe+0x4d/0xb0
+ pci_device_probe+0x119/0x320
+ really_probe+0x181/0x550
+ __driver_probe_device+0xc6/0x220
+ driver_probe_device+0x32/0x100
+ __driver_attach+0x195/0x200
+ bus_for_each_dev+0xbb/0x120
+ driver_attach+0x27/0x30
+ bus_add_driver+0x22e/0x2f0
+ driver_register+0xa9/0x190
+ __pci_register_driver+0x90/0xa0
+ bochs_pci_driver_init+0x52/0x1000 [bochs]
+ do_one_initcall+0x76/0x430
+ do_init_module+0x61/0x28a
+ load_module+0x1f82/0x2e50
+ __do_sys_finit_module+0xf8/0x190
+ __x64_sys_finit_module+0x23/0x30
+ do_syscall_64+0x58/0x80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ </TASK>
+
+Link: https://lkml.kernel.org/r/20221031113829.4183153-1-cuigaosheng1@huawei.com
+Fixes: c81f717cb9e0 ("fbcon: Fix typo and bogus logic in get_default_font")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/core/sd.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ lib/fonts/fonts.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/core/sd.c b/drivers/mmc/core/sd.c
-index 86a8a1f56583..592166e53dce 100644
---- a/drivers/mmc/core/sd.c
-+++ b/drivers/mmc/core/sd.c
-@@ -1252,7 +1252,7 @@ static int sd_read_ext_regs(struct mmc_card *card)
- 	 */
- 	err = sd_read_ext_reg(card, 0, 0, 0, 512, gen_info_buf);
- 	if (err) {
--		pr_warn("%s: error %d reading general info of SD ext reg\n",
-+		pr_err("%s: error %d reading general info of SD ext reg\n",
- 			mmc_hostname(card->host), err);
- 		goto out;
- 	}
-@@ -1266,7 +1266,12 @@ static int sd_read_ext_regs(struct mmc_card *card)
- 	/* Number of extensions to be find. */
- 	num_ext = gen_info_buf[4];
+diff --git a/lib/fonts/fonts.c b/lib/fonts/fonts.c
+index 5f4b07b56cd9..973866438608 100644
+--- a/lib/fonts/fonts.c
++++ b/lib/fonts/fonts.c
+@@ -135,8 +135,8 @@ const struct font_desc *get_default_font(int xres, int yres, u32 font_w,
+ 		if (res > 20)
+ 			c += 20 - res;
  
--	/* We support revision 0, but limit it to 512 bytes for simplicity. */
-+	/*
-+	 * We only support revision 0 and limit it to 512 bytes for simplicity.
-+	 * No matter what, let's return zero to allow us to continue using the
-+	 * card, even if we can't support the features from the SD function
-+	 * extensions registers.
-+	 */
- 	if (rev != 0 || len > 512) {
- 		pr_warn("%s: non-supported SD ext reg layout\n",
- 			mmc_hostname(card->host));
-@@ -1281,7 +1286,7 @@ static int sd_read_ext_regs(struct mmc_card *card)
- 	for (i = 0; i < num_ext; i++) {
- 		err = sd_parse_ext_reg(card, gen_info_buf, &next_ext_addr);
- 		if (err) {
--			pr_warn("%s: error %d parsing SD ext reg\n",
-+			pr_err("%s: error %d parsing SD ext reg\n",
- 				mmc_hostname(card->host), err);
- 			goto out;
- 		}
+-		if ((font_w & (1 << (f->width - 1))) &&
+-		    (font_h & (1 << (f->height - 1))))
++		if ((font_w & (1U << (f->width - 1))) &&
++		    (font_h & (1U << (f->height - 1))))
+ 			c += 1000;
+ 
+ 		if (c > cc) {
 -- 
 2.35.1
 
