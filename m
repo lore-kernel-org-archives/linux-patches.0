@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 293D41863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A48FBC433D2;
-	Wed, 28 Dec 2022 14:59:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF5841863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D5CAC433D2;
+	Wed, 28 Dec 2022 14:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239585;
-	bh=Ul749KApQqZjHWBGEB6EBlQimx0rDXL3aiAdp88aRYc=;
+	s=korg; t=1672239587;
+	bh=yXaZLheoiO4PxKdoSQgLF1jcKV5ev5XwmmUT8LYPM/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bWb1JFQ7Ph/q8LGYUcRZUpY7+iPug8IjmT9RzN5RHDpZGClYet+Vu84yR9m7C7W37
-	 HPlhOYlHmPE9xUUoKitXu5e+PLxAsAEramtS7hS2UFLdVunsXd5EdJPiPcLFrx7z2b
-	 ix7vKmt+Jtbx9xqNCtlklD45MCmwdcQuZkY9BO84=
+	b=ALnkcTTeQDu9y3CZc8Ht2RILhOJxKi18H98WRryWCYDHexxf01Z/xxNKqgyuFghFG
+	 j7oDUd3TuPQmJh1Pc+/Fjw/blCTA97wfwORTSqtO3wX8ygG80hYpGnVFnldkMpq2PM
+	 TGgWHLwY2olUTsfFslkvndpB2VvxWG3B/DItpZl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 246/731] NFSv4.2: Fix initialisation of struct nfs4_label
-Date: Wed, 28 Dec 2022 15:35:53 +0100
-Message-Id: <20221228144303.692991488@linuxfoundation.org>
+Subject: [PATCH 6.0 0053/1073] drivers: perf: marvell_cn10k: Fix hotplug callback leak in tad_pmu_init()
+Date: Wed, 28 Dec 2022 15:27:21 +0100
+Message-Id: <20221228144329.549663710@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,81 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit c528f70f504434eaff993a5ddd52203a2010d51f ]
+[ Upstream commit 973ae93d80d9d262f695eb485a1902b74c4b9098 ]
 
-The call to nfs4_label_init_security() should return a fully initialised
-label.
+tad_pmu_init() won't remove the callback added by cpuhp_setup_state_multi()
+when platform_driver_register() failed. Remove the callback by
+cpuhp_remove_multi_state() in fail path.
 
-Fixes: aa9c2669626c ("NFS: Client implementation of Labeled-NFS")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Similar to the handling of arm_ccn_init() in commit 26242b330093 ("bus:
+arm-ccn: Prevent hotplug callback leak")
+
+Fixes: 036a7584bede ("drivers: perf: Add LLC-TAD perf counter support")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20221115070207.32634-3-yuancan@huawei.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/perf/marvell_cn10k_tad_pmu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index dc03924b6b71..dcc0677d1546 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -126,6 +126,11 @@ nfs4_label_init_security(struct inode *dir, struct dentry *dentry,
- 	if (nfs_server_capable(dir, NFS_CAP_SECURITY_LABEL) == 0)
- 		return NULL;
- 
-+	label->lfs = 0;
-+	label->pi = 0;
-+	label->len = 0;
-+	label->label = NULL;
+diff --git a/drivers/perf/marvell_cn10k_tad_pmu.c b/drivers/perf/marvell_cn10k_tad_pmu.c
+index 69c3050a4348..a1166afb3702 100644
+--- a/drivers/perf/marvell_cn10k_tad_pmu.c
++++ b/drivers/perf/marvell_cn10k_tad_pmu.c
+@@ -408,7 +408,11 @@ static int __init tad_pmu_init(void)
+ 	if (ret < 0)
+ 		return ret;
+ 	tad_pmu_cpuhp_state = ret;
+-	return platform_driver_register(&tad_pmu_driver);
++	ret = platform_driver_register(&tad_pmu_driver);
++	if (ret)
++		cpuhp_remove_multi_state(tad_pmu_cpuhp_state);
 +
- 	err = security_dentry_init_security(dentry, sattr->ia_mode,
- 				&dentry->d_name, (void **)&label->label, &label->len);
- 	if (err == 0)
-@@ -3823,7 +3828,7 @@ nfs4_atomic_open(struct inode *dir, struct nfs_open_context *ctx,
- 		int open_flags, struct iattr *attr, int *opened)
- {
- 	struct nfs4_state *state;
--	struct nfs4_label l = {0, 0, 0, NULL}, *label = NULL;
-+	struct nfs4_label l, *label;
++	return ret;
+ }
  
- 	label = nfs4_label_init_security(dir, ctx->dentry, attr, &l);
- 
-@@ -4657,7 +4662,7 @@ nfs4_proc_create(struct inode *dir, struct dentry *dentry, struct iattr *sattr,
- 		 int flags)
- {
- 	struct nfs_server *server = NFS_SERVER(dir);
--	struct nfs4_label l, *ilabel = NULL;
-+	struct nfs4_label l, *ilabel;
- 	struct nfs_open_context *ctx;
- 	struct nfs4_state *state;
- 	int status = 0;
-@@ -5017,7 +5022,7 @@ static int nfs4_proc_symlink(struct inode *dir, struct dentry *dentry,
- 	struct nfs4_exception exception = {
- 		.interruptible = true,
- 	};
--	struct nfs4_label l, *label = NULL;
-+	struct nfs4_label l, *label;
- 	int err;
- 
- 	label = nfs4_label_init_security(dir, dentry, sattr, &l);
-@@ -5058,7 +5063,7 @@ static int nfs4_proc_mkdir(struct inode *dir, struct dentry *dentry,
- 	struct nfs4_exception exception = {
- 		.interruptible = true,
- 	};
--	struct nfs4_label l, *label = NULL;
-+	struct nfs4_label l, *label;
- 	int err;
- 
- 	label = nfs4_label_init_security(dir, dentry, sattr, &l);
-@@ -5177,7 +5182,7 @@ static int nfs4_proc_mknod(struct inode *dir, struct dentry *dentry,
- 	struct nfs4_exception exception = {
- 		.interruptible = true,
- 	};
--	struct nfs4_label l, *label = NULL;
-+	struct nfs4_label l, *label;
- 	int err;
- 
- 	label = nfs4_label_init_security(dir, dentry, sattr, &l);
+ static void __exit tad_pmu_exit(void)
 -- 
 2.35.1
 
