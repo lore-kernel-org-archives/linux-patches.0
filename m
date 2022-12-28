@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D12A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4A6DC433EF;
-	Wed, 28 Dec 2022 15:08:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C22381863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:08:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47AD0C433F0;
+	Wed, 28 Dec 2022 15:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240084;
-	bh=yQi0KKFy++VnQxeN1EaZEtnH9V/nrQBt/zrBPeiXXF4=;
+	s=korg; t=1672240086;
+	bh=/c9C9mJ9CKkjQftVYdYFu9De2QD1xum/wepONp3i3Po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RaJoyB9ZBUzo9oEFBz1tT+cE5Xo6CZXMonlUZ1D7LLLr/5+3znzfovOmpW/OoiBww
-	 wtIuRrR+/uI7ysLapYYEsrxPSedCPj5MLYjvq6fzSGrxn6mOaK4JSBWymUhied7fvp
-	 dKFCfAMIH2eeQL5sz3Q0a7EgT7n3YQ2kLOyVRJ2o=
+	b=VQrlvTJMDKUwIgk+sn/TqJkfxdb0TFW1dQw4ww6Jj19mspNQ2qf2wtdumG2rRdFk9
+	 i9zShMreZiQuD3i1oOwxPDPGXu03ff07krWY/fhiJoOeHXpef4Rry741d7voSfG8vT
+	 9MUThVQL2Nrz44LIKWuh80LpcdO9iTCW8IP6e1lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Qais Yousef <qais.yousef@arm.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0116/1073] timerqueue: Use rb_entry_safe() in timerqueue_getnext()
-Date: Wed, 28 Dec 2022 15:28:24 +0100
-Message-Id: <20221228144331.189719533@linuxfoundation.org>
+Subject: [PATCH 6.0 0101/1073] sched/uclamp: Cater for uclamp in find_energy_efficient_cpu()s early exit condition
+Date: Wed, 28 Dec 2022 15:28:09 +0100
+Message-Id: <20221228144330.791861087@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,39 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Barnabás Pőcze <pobrn@protonmail.com>
+From: Qais Yousef <qais.yousef@arm.com>
 
-[ Upstream commit 2f117484329b233455ee278f2d9b0a4356835060 ]
+[ Upstream commit d81304bc6193554014d4372a01debdf65e1e9a4d ]
 
-When `timerqueue_getnext()` is called on an empty timer queue, it will
-use `rb_entry()` on a NULL pointer, which is invalid. Fix that by using
-`rb_entry_safe()` which handles NULL pointers.
+If the utilization of the woken up task is 0, we skip the energy
+calculation because it has no impact.
 
-This has not caused any issues so far because the offset of the `rb_node`
-member in `timerqueue_node` is 0, so `rb_entry()` is essentially a no-op.
+But if the task is boosted (uclamp_min != 0) will have an impact on task
+placement and frequency selection. Only skip if the util is truly
+0 after applying uclamp values.
 
-Fixes: 511885d7061e ("lib/timerqueue: Rely on rbtree semantics for next timer")
-Signed-off-by: Barnabás Pőcze <pobrn@protonmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20221114195421.342929-1-pobrn@protonmail.com
+Change uclamp_task_cpu() signature to avoid unnecessary additional calls
+to uclamp_eff_get(). feec() is the only user now.
+
+Fixes: 732cd75b8c920 ("sched/fair: Select an energy-efficient CPU on task wake-up")
+Signed-off-by: Qais Yousef <qais.yousef@arm.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20220804143609.515789-8-qais.yousef@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/timerqueue.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/sched/fair.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/include/linux/timerqueue.h b/include/linux/timerqueue.h
-index 93884086f392..adc80e29168e 100644
---- a/include/linux/timerqueue.h
-+++ b/include/linux/timerqueue.h
-@@ -35,7 +35,7 @@ struct timerqueue_node *timerqueue_getnext(struct timerqueue_head *head)
- {
- 	struct rb_node *leftmost = rb_first_cached(&head->rb_root);
- 
--	return rb_entry(leftmost, struct timerqueue_node, node);
-+	return rb_entry_safe(leftmost, struct timerqueue_node, node);
+diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
+index 2e782d79e80f..532e6cdf706d 100644
+--- a/kernel/sched/fair.c
++++ b/kernel/sched/fair.c
+@@ -4108,14 +4108,16 @@ static inline unsigned long task_util_est(struct task_struct *p)
  }
  
- static inline void timerqueue_init(struct timerqueue_node *node)
+ #ifdef CONFIG_UCLAMP_TASK
+-static inline unsigned long uclamp_task_util(struct task_struct *p)
++static inline unsigned long uclamp_task_util(struct task_struct *p,
++					     unsigned long uclamp_min,
++					     unsigned long uclamp_max)
+ {
+-	return clamp(task_util_est(p),
+-		     uclamp_eff_value(p, UCLAMP_MIN),
+-		     uclamp_eff_value(p, UCLAMP_MAX));
++	return clamp(task_util_est(p), uclamp_min, uclamp_max);
+ }
+ #else
+-static inline unsigned long uclamp_task_util(struct task_struct *p)
++static inline unsigned long uclamp_task_util(struct task_struct *p,
++					     unsigned long uclamp_min,
++					     unsigned long uclamp_max)
+ {
+ 	return task_util_est(p);
+ }
+@@ -7029,7 +7031,7 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
+ 	target = prev_cpu;
+ 
+ 	sync_entity_load_avg(&p->se);
+-	if (!task_util_est(p))
++	if (!uclamp_task_util(p, p_util_min, p_util_max))
+ 		goto unlock;
+ 
+ 	eenv_task_busy_time(&eenv, p, prev_cpu);
 -- 
 2.35.1
 
