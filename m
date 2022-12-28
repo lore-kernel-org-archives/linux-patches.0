@@ -1,38 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8125D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D023FC433EF;
-	Wed, 28 Dec 2022 15:50:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28DBA1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:50:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0BECC433D2;
+	Wed, 28 Dec 2022 15:50:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242638;
-	bh=6Rt66En4YR4+WeH4ZMOpmV4L4n4yDPPXElFggyH37Wc=;
+	s=korg; t=1672242641;
+	bh=uQYc6Tzfchw3IidOWW+HWTuXrYssLkLX8Ndx4090s5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TUZHcvPNgAniTxN9J0yEhwxptIyEd5ZDWtJfBn7JQjWQfEIKNLUsKE7qixUFZjsfl
-	 NNQcTVb+ZqfQyJjOvenH3s1T9JDnzOt7aJAAnnPjfDPz4WQJ+XaIZiTGuLfMqo1TJQ
-	 8+X3XsaS3+I3LzQT/5NbaXdjsVMKgdaeCUOurxW8=
+	b=uOmtJcowcwXQxxPvbqJV2n8ddBlKwoiEU7KoAiGpKrI1CKWnwy/6tKIcciHUtoL6a
+	 oTJJhSb7/H4AES0DiASrh75vjeqrVz7oc6k3c6vBSzm0lJrAneVT+J7n9R6Ki0k0L7
+	 nUoJKmG2qs2XOaaMRZTQb4c8BObHqjBycSPtrWEQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhangPeng <zhangpeng362@huawei.com>,
-	syzbot+e836ff7133ac02be825f@syzkaller.appspotmail.com,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Nanyong Sun <sunnanyong@huawei.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Hui Tang <tanghui20@huawei.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 628/731] hfs: fix OOB Read in __hfs_brec_find
-Date: Wed, 28 Dec 2022 15:42:15 +0100
-Message-Id: <20221228144314.727665133@linuxfoundation.org>
+Subject: [PATCH 6.1 0385/1146] clk: microchip: check for null return of devm_kzalloc()
+Date: Wed, 28 Dec 2022 15:32:04 +0100
+Message-Id: <20221228144340.622198913@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -43,79 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangPeng <zhangpeng362@huawei.com>
+From: Hui Tang <tanghui20@huawei.com>
 
-[ Upstream commit 8d824e69d9f3fa3121b2dda25053bae71e2460d2 ]
+[ Upstream commit e2e6a217a84d09785848a82599729c9a41566e3a ]
 
-Syzbot reported a OOB read bug:
+Because of the possible failure of devm_kzalloc(), name might be NULL and
+will cause null pointer dereference later.
 
-==================================================================
-BUG: KASAN: slab-out-of-bounds in hfs_strcmp+0x117/0x190
-fs/hfs/string.c:84
-Read of size 1 at addr ffff88807eb62c4e by task kworker/u4:1/11
-CPU: 1 PID: 11 Comm: kworker/u4:1 Not tainted
-6.1.0-rc6-syzkaller-00308-g644e9524388a #0
-Workqueue: writeback wb_workfn (flush-7:0)
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
- print_address_description+0x74/0x340 mm/kasan/report.c:284
- print_report+0x107/0x1f0 mm/kasan/report.c:395
- kasan_report+0xcd/0x100 mm/kasan/report.c:495
- hfs_strcmp+0x117/0x190 fs/hfs/string.c:84
- __hfs_brec_find+0x213/0x5c0 fs/hfs/bfind.c:75
- hfs_brec_find+0x276/0x520 fs/hfs/bfind.c:138
- hfs_write_inode+0x34c/0xb40 fs/hfs/inode.c:462
- write_inode fs/fs-writeback.c:1440 [inline]
+Therefore, it might be better to check it and directly return -ENOMEM.
 
-If the input inode of hfs_write_inode() is incorrect:
-struct inode
-  struct hfs_inode_info
-    struct hfs_cat_key
-      struct hfs_name
-        u8 len # len is greater than HFS_NAMELEN(31) which is the
-maximum length of an HFS filename
-
-OOB read occurred:
-hfs_write_inode()
-  hfs_brec_find()
-    __hfs_brec_find()
-      hfs_cat_keycmp()
-        hfs_strcmp() # OOB read occurred due to len is too large
-
-Fix this by adding a Check on len in hfs_write_inode() before calling
-hfs_brec_find().
-
-Link: https://lkml.kernel.org/r/20221130065959.2168236-1-zhangpeng362@huawei.com
-Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
-Reported-by: <syzbot+e836ff7133ac02be825f@syzkaller.appspotmail.com>
-Cc: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Cc: Ira Weiny <ira.weiny@intel.com>
-Cc: Jeff Layton <jlayton@kernel.org>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Nanyong Sun <sunnanyong@huawei.com>
-Cc: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: d39fb172760e ("clk: microchip: add PolarFire SoC fabric clock support")
+Signed-off-by: Hui Tang <tanghui20@huawei.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+[claudiu.beznea: s/refrence/reference/, s/possilble/possible]
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20221119054858.178629-1-tanghui20@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfs/inode.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/microchip/clk-mpfs-ccc.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/hfs/inode.c b/fs/hfs/inode.c
-index 4a95a92546a0..a58a5b733224 100644
---- a/fs/hfs/inode.c
-+++ b/fs/hfs/inode.c
-@@ -456,6 +456,8 @@ int hfs_write_inode(struct inode *inode, struct writeback_control *wbc)
- 		/* panic? */
- 		return -EIO;
+diff --git a/drivers/clk/microchip/clk-mpfs-ccc.c b/drivers/clk/microchip/clk-mpfs-ccc.c
+index 7be028dced63..32aae880a14f 100644
+--- a/drivers/clk/microchip/clk-mpfs-ccc.c
++++ b/drivers/clk/microchip/clk-mpfs-ccc.c
+@@ -166,6 +166,9 @@ static int mpfs_ccc_register_outputs(struct device *dev, struct mpfs_ccc_out_hw_
+ 		struct mpfs_ccc_out_hw_clock *out_hw = &out_hws[i];
+ 		char *name = devm_kzalloc(dev, 23, GFP_KERNEL);
  
-+	if (HFS_I(main_inode)->cat_key.CName.len > HFS_NAMELEN)
-+		return -EIO;
- 	fd.search_key->cat = HFS_I(main_inode)->cat_key;
- 	if (hfs_brec_find(&fd))
- 		/* panic? */
++		if (!name)
++			return -ENOMEM;
++
+ 		snprintf(name, 23, "%s_out%u", parent->name, i);
+ 		out_hw->divider.hw.init = CLK_HW_INIT_HW(name, &parent->hw, &clk_divider_ops, 0);
+ 		out_hw->divider.reg = data->pll_base[i / MPFS_CCC_OUTPUTS_PER_PLL] +
+@@ -200,6 +203,9 @@ static int mpfs_ccc_register_plls(struct device *dev, struct mpfs_ccc_pll_hw_clo
+ 		struct mpfs_ccc_pll_hw_clock *pll_hw = &pll_hws[i];
+ 		char *name = devm_kzalloc(dev, 18, GFP_KERNEL);
+ 
++		if (!name)
++			return -ENOMEM;
++
+ 		pll_hw->base = data->pll_base[i];
+ 		snprintf(name, 18, "ccc%s_pll%u", strchrnul(dev->of_node->full_name, '@'), i);
+ 		pll_hw->name = (const char *)name;
 -- 
 2.35.1
 
