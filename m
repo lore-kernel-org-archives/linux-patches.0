@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E3DA1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB973C433EF;
-	Wed, 28 Dec 2022 14:59:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F14B41863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:59:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 750F5C433D2;
+	Wed, 28 Dec 2022 14:59:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239548;
-	bh=eM1vUOOB9D/mHF6oH+HM/vO8jjfQ3NFw7teRhELzvxE=;
+	s=korg; t=1672239550;
+	bh=QR6MxQrldUdDWMfrKT93GGo/bMaTZQ2jwrNxGnVBOgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cV0FQwuE8XOqlktcrVNywfvlkgtBfxZNHr5pwQYm1iaxaLN68FAaMxVYAcNmF48yz
-	 97R79yqHbY8KJatcrd0LAbnkENiDi1jROT+acwqQkapiML7gkuQ2T8+36d1wMv32Te
-	 wajYvywFwMq0I8L8ag7CG3I41wUDs4ZmRZ/52qt0=
+	b=QRzPnwcMzbZ5fRj6tTLzn3ugLncHFF46pWLvZqD53mZcz6spdSG7tfMdrapEpEvDF
+	 cQx8ToV/cX2CE8Iz0YviLh4xSDT+Mh8juMfcLxEGOZtJ+i02qaegvoR2AurM15mntN
+	 p0Al9SdIcMnwfB2z+1n9dE7laXQiPEHm0mAZMpbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0011/1146] arm64: dts: qcom: sdm630: fix UART1 pin bias
-Date: Wed, 28 Dec 2022 15:25:50 +0100
-Message-Id: <20221228144330.485877759@linuxfoundation.org>
+Subject: [PATCH 5.15 242/731] ASoC: dt-bindings: wcd9335: fix reset line polarity in example
+Date: Wed, 28 Dec 2022 15:35:49 +0100
+Message-Id: <20221228144303.578718924@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,36 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 780f836fe071a9e8703fe6a05ae00129acf83391 ]
+[ Upstream commit 34cb111f8a7b98b5fec809dd194003bca20ef1b2 ]
 
-There is no "bias-no-pull" property.  Assume intentions were disabling
-bias.
+When resetting the block, the reset line is being driven low and then
+high, which means that the line in DTS should be annotated as "active
+low".
 
-Fixes: b190fb010664 ("arm64: dts: qcom: sdm630: Add sdm630 dts file")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221010114417.29859-1-krzysztof.kozlowski@linaro.org
+Fixes: 1877c9fda1b7 ("ASoC: dt-bindings: add dt bindings for wcd9335 audio codec")
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20221027074652.1044235-2-dmitry.torokhov@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 2 +-
+ Documentation/devicetree/bindings/sound/qcom,wcd9335.txt | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index b51b85f583e5..e119060ac56c 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -779,7 +779,7 @@ rx-cts-rts {
- 					pins = "gpio17", "gpio18", "gpio19";
- 					function = "gpio";
- 					drive-strength = <2>;
--					bias-no-pull;
-+					bias-disable;
- 				};
- 			};
- 
+diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd9335.txt b/Documentation/devicetree/bindings/sound/qcom,wcd9335.txt
+index 5d6ea66a863f..1f75feec3dec 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,wcd9335.txt
++++ b/Documentation/devicetree/bindings/sound/qcom,wcd9335.txt
+@@ -109,7 +109,7 @@ audio-codec@1{
+ 	reg  = <1 0>;
+ 	interrupts = <&msmgpio 54 IRQ_TYPE_LEVEL_HIGH>;
+ 	interrupt-names = "intr2"
+-	reset-gpios = <&msmgpio 64 0>;
++	reset-gpios = <&msmgpio 64 GPIO_ACTIVE_LOW>;
+ 	slim-ifc-dev  = <&wc9335_ifd>;
+ 	clock-names = "mclk", "native";
+ 	clocks = <&rpmcc RPM_SMD_DIV_CLK1>,
 -- 
 2.35.1
 
