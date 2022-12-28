@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25F21875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:53:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F78C433EF;
-	Wed, 28 Dec 2022 15:53:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67DAF1875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:53:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFB5AC433EF;
+	Wed, 28 Dec 2022 15:53:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242798;
-	bh=NOapnwRvF1kxmYK8Zm2Y22YSLJTDcv2aaVj5LhFVnRw=;
+	s=korg; t=1672242801;
+	bh=8dK7rJkxMZus90gChjkmzO0PWJFlcJGoPqqrUrqRcmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gs6fJ/J4pg2vO32xQgQTnfv+hAi1nSWBmYIj3xXtBjDMV5fZ5J1IOIbZCfy9JEnKy
-	 BKHvTzwQydXfNsccUDkcO8izzNgmyEpEpquoBAhfZ9RDfNeflwvZIybeJc+HsRkbBY
-	 IjX64C5iaYJgqZcyziBHW01St/qWdpboM9MOuelM=
+	b=NspEGP+Vg4t/yDt66pWG/+haZ5cZBboXZQNZKdI/TRgtgqTsTx0BTn4ft1b5XKk4Z
+	 ldL9jz8urX/giVT7C1psyjMfZRbp2qSfGC2MI/J3WXTosuuePwko80f+VHbo3JiehE
+	 sH0LT2Y2veOshBoxU6J46LlFlQpScBENoSY2867Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Kees Cook <keescook@chromium.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 648/731] s390/lcs: Fix return type of lcs_start_xmit()
-Date: Wed, 28 Dec 2022 15:42:35 +0100
-Message-Id: <20221228144315.291568821@linuxfoundation.org>
+Subject: [PATCH 6.0 0456/1073] hsr: Add a rcu-read lock to hsr_forward_skb().
+Date: Wed, 28 Dec 2022 15:34:04 +0100
+Message-Id: <20221228144340.425154048@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,66 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit bb16db8393658e0978c3f0d30ae069e878264fa3 ]
+[ Upstream commit 5aa2820177af650293b2f9f1873c1f6f8e4ad7a4 ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+hsr_forward_skb() a skb and keeps information in an on-stack
+hsr_frame_info. hsr_get_node() assigns hsr_frame_info::node_src which is
+from a RCU list. This pointer is used later in hsr_forward_do().
+I don't see a reason why this pointer can't vanish midway since there is
+no guarantee that hsr_forward_skb() is invoked from an RCU read section.
 
-  drivers/s390/net/lcs.c:2090:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = lcs_start_xmit,
-                                    ^~~~~~~~~~~~~~
-  drivers/s390/net/lcs.c:2097:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = lcs_start_xmit,
-                                    ^~~~~~~~~~~~~~
+Use rcu_read_lock() to protect hsr_frame_info::node_src from its
+assignment until it is no longer used.
 
-->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-'netdev_tx_t', not 'int'. Adjust the return type of lcs_start_xmit() to
-match the prototype's to resolve the warning and potential CFI failure,
-should s390 select ARCH_SUPPORTS_CFI_CLANG in the future.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: f266a683a4804 ("net/hsr: Better frame dispatch")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/net/lcs.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ net/hsr/hsr_forward.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/s390/net/lcs.c b/drivers/s390/net/lcs.c
-index 06a322bdced6..7e743f4717a9 100644
---- a/drivers/s390/net/lcs.c
-+++ b/drivers/s390/net/lcs.c
-@@ -1518,9 +1518,8 @@ lcs_txbuffer_cb(struct lcs_channel *channel, struct lcs_buffer *buffer)
- /**
-  * Packet transmit function called by network stack
-  */
--static int
--__lcs_start_xmit(struct lcs_card *card, struct sk_buff *skb,
--		 struct net_device *dev)
-+static netdev_tx_t __lcs_start_xmit(struct lcs_card *card, struct sk_buff *skb,
-+				    struct net_device *dev)
+diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
+index 3e58d310b4d4..a8befa35841e 100644
+--- a/net/hsr/hsr_forward.c
++++ b/net/hsr/hsr_forward.c
+@@ -614,11 +614,13 @@ void hsr_forward_skb(struct sk_buff *skb, struct hsr_port *port)
  {
- 	struct lcs_header *header;
- 	int rc = NETDEV_TX_OK;
-@@ -1581,8 +1580,7 @@ __lcs_start_xmit(struct lcs_card *card, struct sk_buff *skb,
- 	return rc;
- }
+ 	struct hsr_frame_info frame;
  
--static int
--lcs_start_xmit(struct sk_buff *skb, struct net_device *dev)
-+static netdev_tx_t lcs_start_xmit(struct sk_buff *skb, struct net_device *dev)
- {
- 	struct lcs_card *card;
- 	int rc;
++	rcu_read_lock();
+ 	if (fill_frame_info(&frame, skb, port) < 0)
+ 		goto out_drop;
+ 
+ 	hsr_register_frame_in(frame.node_src, port, frame.sequence_nr);
+ 	hsr_forward_do(&frame);
++	rcu_read_unlock();
+ 	/* Gets called for ingress frames as well as egress from master port.
+ 	 * So check and increment stats for master port only here.
+ 	 */
+@@ -633,6 +635,7 @@ void hsr_forward_skb(struct sk_buff *skb, struct hsr_port *port)
+ 	return;
+ 
+ out_drop:
++	rcu_read_unlock();
+ 	port->dev->stats.tx_dropped++;
+ 	kfree_skb(skb);
+ }
 -- 
 2.35.1
 
