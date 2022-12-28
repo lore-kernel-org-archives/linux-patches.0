@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0692C1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83DEEC433EF;
-	Wed, 28 Dec 2022 15:38:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEE3A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32B93C433EF;
+	Wed, 28 Dec 2022 15:38:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241891;
-	bh=DDk4+06B47Uoq1ujpyTdqwBDT1EF6lfJcHThzqhsqqs=;
+	s=korg; t=1672241894;
+	bh=ds3eCcpdginc4ug2YeaenO+SBOWQllEdDcqHmmnSRko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1R/mtcqQL/Y8hdOi2YPwaJUPiFTIvterYhL2d4hfqsKXCWKRqYfe0m/6vDeeBayMb
-	 5vb6TAVVofkbfM0blpDfavTscXzAlYbUCcY0TrGdPZ/j7CpghF1b/Us6V+UR16f58p
-	 ZdVZKb4PucC8SIaQALyAxff42vmuCuo7IbTz0EGA=
+	b=eRJKcpAyf0AsoFq6Rqhdt6lxpqRwMdlQxypSPwkvVVvRWbTlyBQz5HFIy0repfCQd
+	 LoE+7t+TMh3roa5DUvIbnqZ8sbkTRuMy8KNGfb/HKoF0Tdd6A38fjXvlHUVskW21GF
+	 nTu0HuNx5TYEhQnL1E/7M/QFwcSW1yZbyBUD7BNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mel Gorman <mgorman@techsingularity.net>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Robert Foss <robert.foss@linaro.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 539/731] rtc: cmos: Fix event handler registration ordering issue
-Date: Wed, 28 Dec 2022 15:40:46 +0100
-Message-Id: <20221228144312.166908966@linuxfoundation.org>
+Subject: [PATCH 6.1 0302/1146] media: camss: Clean up received buffers on failed start of streaming
+Date: Wed, 28 Dec 2022 15:30:41 +0100
+Message-Id: <20221228144338.350638089@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,122 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit 4919d3eb2ec0ee364f7e3cf2d99646c1b224fae8 ]
+[ Upstream commit c8f3582345e6a69da65ab588f7c4c2d1685b0e80 ]
 
-Because acpi_install_fixed_event_handler() enables the event
-automatically on success, it is incorrect to call it before the
-handler routine passed to it is ready to handle events.
+It is required to return the received buffers, if streaming can not be
+started. For instance media_pipeline_start() may fail with EPIPE, if
+a link validation between entities is not passed, and in such a case
+a user gets a kernel warning:
 
-Unfortunately, the rtc-cmos driver does exactly the incorrect thing
-by calling cmos_wake_setup(), which passes rtc_handler() to
-acpi_install_fixed_event_handler(), before cmos_do_probe(), because
-rtc_handler() uses dev_get_drvdata() to get to the cmos object
-pointer and the driver data pointer is only populated in
-cmos_do_probe().
+  WARNING: CPU: 1 PID: 520 at drivers/media/common/videobuf2/videobuf2-core.c:1592 vb2_start_streaming+0xec/0x160
+  <snip>
+  Call trace:
+   vb2_start_streaming+0xec/0x160
+   vb2_core_streamon+0x9c/0x1a0
+   vb2_ioctl_streamon+0x68/0xbc
+   v4l_streamon+0x30/0x3c
+   __video_do_ioctl+0x184/0x3e0
+   video_usercopy+0x37c/0x7b0
+   video_ioctl2+0x24/0x40
+   v4l2_ioctl+0x4c/0x70
 
-This leads to a NULL pointer dereference in rtc_handler() on boot
-if the RTC fixed event happens to be active at the init time.
+The fix is to correct the error path in video_start_streaming() of camss.
 
-To address this issue, change the initialization ordering of the
-driver so that cmos_wake_setup() is always called after a successful
-cmos_do_probe() call.
-
-While at it, change cmos_pnp_probe() to call cmos_do_probe() after
-the initial if () statement used for computing the IRQ argument to
-be passed to cmos_do_probe() which is cleaner than calling it in
-each branch of that if () (local variable "irq" can be of type int,
-because it is passed to that function as an argument of type int).
-
-Note that commit 6492fed7d8c9 ("rtc: rtc-cmos: Do not check
-ACPI_FADT_LOW_POWER_S0") caused this issue to affect a larger number
-of systems, because previously it only affected systems with
-ACPI_FADT_LOW_POWER_S0 set, but it is present regardless of that
-commit.
-
-Fixes: 6492fed7d8c9 ("rtc: rtc-cmos: Do not check ACPI_FADT_LOW_POWER_S0")
-Fixes: a474aaedac99 ("rtc-cmos: move wake setup from ACPI glue into RTC driver")
-Link: https://lore.kernel.org/linux-acpi/20221010141630.zfzi7mk7zvnmclzy@techsingularity.net/
-Reported-by: Mel Gorman <mgorman@techsingularity.net>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Bjorn Helgaas <bhelgaas@google.com>
-Tested-by: Mel Gorman <mgorman@techsingularity.net>
-Link: https://lore.kernel.org/r/5629262.DvuYhMxLoT@kreacher
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
+Fixes: 0ac2586c410f ("media: camss: Add files which handle the video device nodes")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 29 +++++++++++++++++++----------
- 1 file changed, 19 insertions(+), 10 deletions(-)
+ drivers/media/platform/qcom/camss/camss-video.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index bdb1df843c78..610413b4e9ca 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -1352,10 +1352,10 @@ static void cmos_check_acpi_rtc_status(struct device *dev,
+diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
+index 81fb3a5bc1d5..41deda232e4a 100644
+--- a/drivers/media/platform/qcom/camss/camss-video.c
++++ b/drivers/media/platform/qcom/camss/camss-video.c
+@@ -495,7 +495,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
  
- static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
- {
--	cmos_wake_setup(&pnp->dev);
-+	int irq, ret;
+ 	ret = video_device_pipeline_start(vdev, &video->pipe);
+ 	if (ret < 0)
+-		return ret;
++		goto flush_buffers;
  
- 	if (pnp_port_start(pnp, 0) == 0x70 && !pnp_irq_valid(pnp, 0)) {
--		unsigned int irq = 0;
-+		irq = 0;
- #ifdef CONFIG_X86
- 		/* Some machines contain a PNP entry for the RTC, but
- 		 * don't define the IRQ. It should always be safe to
-@@ -1364,13 +1364,17 @@ static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
- 		if (nr_legacy_irqs())
- 			irq = RTC_IRQ;
- #endif
--		return cmos_do_probe(&pnp->dev,
--				pnp_get_resource(pnp, IORESOURCE_IO, 0), irq);
- 	} else {
--		return cmos_do_probe(&pnp->dev,
--				pnp_get_resource(pnp, IORESOURCE_IO, 0),
--				pnp_irq(pnp, 0));
-+		irq = pnp_irq(pnp, 0);
- 	}
-+
-+	ret = cmos_do_probe(&pnp->dev, pnp_get_resource(pnp, IORESOURCE_IO, 0), irq);
-+	if (ret)
-+		return ret;
-+
-+	cmos_wake_setup(&pnp->dev);
-+
-+	return 0;
- }
+ 	ret = video_check_format(video);
+ 	if (ret < 0)
+@@ -524,6 +524,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
+ error:
+ 	video_device_pipeline_stop(vdev);
  
- static void cmos_pnp_remove(struct pnp_dev *pnp)
-@@ -1454,10 +1458,9 @@ static inline void cmos_of_init(struct platform_device *pdev) {}
- static int __init cmos_platform_probe(struct platform_device *pdev)
- {
- 	struct resource *resource;
--	int irq;
-+	int irq, ret;
++flush_buffers:
+ 	video->ops->flush_buffers(video, VB2_BUF_STATE_QUEUED);
  
- 	cmos_of_init(pdev);
--	cmos_wake_setup(&pdev->dev);
- 
- 	if (RTC_IOMAPPED)
- 		resource = platform_get_resource(pdev, IORESOURCE_IO, 0);
-@@ -1467,7 +1470,13 @@ static int __init cmos_platform_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		irq = -1;
- 
--	return cmos_do_probe(&pdev->dev, resource, irq);
-+	ret = cmos_do_probe(&pdev->dev, resource, irq);
-+	if (ret)
-+		return ret;
-+
-+	cmos_wake_setup(&pdev->dev);
-+
-+	return 0;
- }
- 
- static int cmos_platform_remove(struct platform_device *pdev)
+ 	return ret;
 -- 
 2.35.1
 
