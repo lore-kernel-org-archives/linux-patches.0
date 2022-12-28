@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08E51C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 360C6C433EF;
-	Wed, 28 Dec 2022 16:12:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919EA1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:12:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF479C433D2;
+	Wed, 28 Dec 2022 16:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243954;
-	bh=9ByHS5rdBQSK/3m+Pz9D9FtxqECs/qtdtiFHnVbC/ng=;
+	s=korg; t=1672243957;
+	bh=8jvAjcf/lfd4jbxmi86lR8uOaOjt4H4vhAARLh26D1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U8dFLRSev6DibasfbWiu2FYOCgd8c+gmNqABuS2JRfpr91Fdz3m0E5WE77aLsKdJS
-	 6TizKS0iGz3/eeSwQGVflEXUB1GOPhiUflMf9o+FAdT9DAvNyuy2bKH+WCBcOyw/3x
-	 PN7s9kXASm0U5xzLdeIgzw87JK6HAVClkLQBx1mY=
+	b=MEEDpxiuR1iYZJEB1HHbehVNCeD83FnB9jpcsLBHyRnw0ATCmsxzpbKyVkci8DAUY
+	 RnChE/txceC9Ob4iPXuNLNORrDoLJ81KQog7c85y0dlyF39Rt4AfomTVXPNRT6k7t/
+	 jPhpo9jy0hOsCthu8cyEs+VTikrgM3lqsqJ7cfoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Zhang Qilong <zhangqilong3@huawei.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0585/1146] f2fs: Fix the race condition of resize flag between resizefs
-Date: Wed, 28 Dec 2022 15:35:24 +0100
-Message-Id: <20221228144346.062514599@linuxfoundation.org>
+Subject: [PATCH 6.0 0622/1073] scsi: scsi_debug: Fix a warning in resp_verify()
+Date: Wed, 28 Dec 2022 15:36:50 +0100
+Message-Id: <20221228144344.938782344@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,72 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Qilong <zhangqilong3@huawei.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit 28fc4e9077ce59ab28c89c20dc6be5154473218f ]
+[ Upstream commit ed0f17b748b20271cb568c7ca0b23b120316a47d ]
 
-Because the set/clear SBI_IS_RESIZEFS flag not between any locks,
-In the following case:
-  thread1			thread2
-   ->ioctl(resizefs)
-    ->set RESIZEFS flag		 ->ioctl(resizefs)
-    ...                   	  ->set RESIZEFS flag
-    ->clear RESIZEFS flag
-    				  ->resizefs stream
-				    # No RESIZEFS flag in the stream
+As 'vnum' is controlled by user, so if user tries to allocate memory larger
+than(>=) MAX_ORDER, then kcalloc() will fail, it creates a stack trace and
+messes up dmesg with a warning.
 
-Also before freeze_super, the resizefs not started, we should not set
-the SBI_IS_RESIZEFS flag.
+Add __GFP_NOWARN in order to avoid too large allocation warning.  This is
+detected by static analysis using smatch.
 
-So move the set/clear SBI_IS_RESIZEFS flag between the cp_mutex and
-gc_lock.
-
-Fixes: b4b10061ef98 ("f2fs: refactor resize_fs to avoid meta updates in progress")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: c3e2fe9222d4 ("scsi: scsi_debug: Implement VERIFY(10), add VERIFY(16)")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Link: https://lore.kernel.org/r/20221112070031.2121068-1-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/scsi/scsi_debug.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 4546e01b2ee0..2a9d825b84f7 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -2133,8 +2133,6 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
- 	if (err)
- 		return err;
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index 1355820b9733..077782eb55e7 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -4436,7 +4436,7 @@ static int resp_verify(struct scsi_cmnd *scp, struct sdebug_dev_info *devip)
+ 	if (ret)
+ 		return ret;
  
--	set_sbi_flag(sbi, SBI_IS_RESIZEFS);
--
- 	freeze_super(sbi->sb);
- 	f2fs_down_write(&sbi->gc_lock);
- 	f2fs_down_write(&sbi->cp_global_sem);
-@@ -2150,6 +2148,7 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
- 	if (err)
- 		goto out_err;
- 
-+	set_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	err = free_segment_range(sbi, secs, false);
- 	if (err)
- 		goto recover_out;
-@@ -2173,6 +2172,7 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
- 		f2fs_commit_super(sbi, false);
- 	}
- recover_out:
-+	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	if (err) {
- 		set_sbi_flag(sbi, SBI_NEED_FSCK);
- 		f2fs_err(sbi, "resize_fs failed, should run fsck to repair!");
-@@ -2185,6 +2185,5 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
- 	f2fs_up_write(&sbi->cp_global_sem);
- 	f2fs_up_write(&sbi->gc_lock);
- 	thaw_super(sbi->sb);
--	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	return err;
- }
+-	arr = kcalloc(lb_size, vnum, GFP_ATOMIC);
++	arr = kcalloc(lb_size, vnum, GFP_ATOMIC | __GFP_NOWARN);
+ 	if (!arr) {
+ 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INSUFF_RES_ASC,
+ 				INSUFF_RES_ASCQ);
 -- 
 2.35.1
 
