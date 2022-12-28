@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDCF21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7276FC433D2;
-	Wed, 28 Dec 2022 15:21:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33261863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20EE6C433D2;
+	Wed, 28 Dec 2022 15:21:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240908;
-	bh=2Xm07eXL0JB3MV9MymMDGxCYhaoEiXUc0TxK5crAAJw=;
+	s=korg; t=1672240911;
+	bh=Jd8K+jkkZkbgbn3LMA0FQ8m7KSnhp/xrdIKxgjwQKow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=06CfuOvMBCwiMnHFpJw3C1xwQHEPjnyVaeIGmLAi8kUxsZT+Dmvqqj57e7B5sSoz8
-	 vtL90+UyhiUacg6s/OhHcFhW8cjP/ql3LnkhfuBeaVjpm3kLQSdjRkuxWOj6oiw0T1
-	 i+KB8D4onuedbIc4dCIybAgrDpZeQ/x/oixBzmeY=
+	b=BlaZe98RpWbG5nEUdMB3HKTa/SIUlWGYWujNjfb/xni5oWvIQs/T4gdNXN3rzxMwq
+	 bWi+bZ/jqd+8Yzg0huMRvLlrw7jLoRclG8h7W96JV9SGuCLWW2kO8TuPTwUYwod3Ic
+	 NGaGCbaiAuFSyNO0t9rXFrLybBSTmPOXE3EoQF/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerhard Engleder <gerhard@engleder-embedded.com>,
-	Song Liu <song@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0218/1073] samples/bpf: Fix map iteration in xdp1_user
-Date: Wed, 28 Dec 2022 15:30:06 +0100
-Message-Id: <20221228144333.936132595@linuxfoundation.org>
+Subject: [PATCH 6.1 0183/1146] lockd: set other missing fields when unlocking files
+Date: Wed, 28 Dec 2022 15:28:42 +0100
+Message-Id: <20221228144335.122963892@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,50 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gerhard Engleder <gerhard@engleder-embedded.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 05ee658c654bacda03f7fecef367e62aaf8e1cfe ]
+[ Upstream commit 18ebd35b61b4693a0ddc270b6d4f18def232e770 ]
 
-BPF map iteration in xdp1_user results in endless loop without any
-output, because the return value of bpf_map_get_next_key() is checked
-against the wrong value.
+vfs_lock_file() expects the struct file_lock to be fully initialised by
+the caller. Re-exported NFSv3 has been seen to Oops if the fl_file field
+is NULL.
 
-Other call locations of bpf_map_get_next_key() check for equal 0 for
-continuing the iteration. xdp1_user checks against unequal -1. This is
-wrong for a function which can return arbitrary negative errno values,
-because a return value of e.g. -2 results in an endless loop.
-
-With this fix xdp1_user is printing statistics again:
-proto 0:          1 pkt/s
-proto 0:          1 pkt/s
-proto 17:     107383 pkt/s
-proto 17:     881655 pkt/s
-proto 17:     882083 pkt/s
-proto 17:     881758 pkt/s
-
-Fixes: bd054102a8c7 ("libbpf: enforce strict libbpf 1.0 behaviors")
-Signed-off-by: Gerhard Engleder <gerhard@engleder-embedded.com>
-Acked-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20221013200922.17167-1-gerhard@engleder-embedded.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: aec158242b87 ("lockd: set fl_owner when unlocking files")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216582
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/bpf/xdp1_user.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/lockd/svcsubs.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/samples/bpf/xdp1_user.c b/samples/bpf/xdp1_user.c
-index ac370e638fa3..281dc964de8d 100644
---- a/samples/bpf/xdp1_user.c
-+++ b/samples/bpf/xdp1_user.c
-@@ -51,7 +51,7 @@ static void poll_stats(int map_fd, int interval)
+diff --git a/fs/lockd/svcsubs.c b/fs/lockd/svcsubs.c
+index e1c4617de771..3515f17eaf3f 100644
+--- a/fs/lockd/svcsubs.c
++++ b/fs/lockd/svcsubs.c
+@@ -176,7 +176,7 @@ nlm_delete_file(struct nlm_file *file)
+ 	}
+ }
  
- 		sleep(interval);
+-static int nlm_unlock_files(struct nlm_file *file, fl_owner_t owner)
++static int nlm_unlock_files(struct nlm_file *file, const struct file_lock *fl)
+ {
+ 	struct file_lock lock;
  
--		while (bpf_map_get_next_key(map_fd, &key, &key) != -1) {
-+		while (bpf_map_get_next_key(map_fd, &key, &key) == 0) {
- 			__u64 sum = 0;
+@@ -184,12 +184,15 @@ static int nlm_unlock_files(struct nlm_file *file, fl_owner_t owner)
+ 	lock.fl_type  = F_UNLCK;
+ 	lock.fl_start = 0;
+ 	lock.fl_end   = OFFSET_MAX;
+-	lock.fl_owner = owner;
+-	if (file->f_file[O_RDONLY] &&
+-	    vfs_lock_file(file->f_file[O_RDONLY], F_SETLK, &lock, NULL))
++	lock.fl_owner = fl->fl_owner;
++	lock.fl_pid   = fl->fl_pid;
++	lock.fl_flags = FL_POSIX;
++
++	lock.fl_file = file->f_file[O_RDONLY];
++	if (lock.fl_file && vfs_lock_file(lock.fl_file, F_SETLK, &lock, NULL))
+ 		goto out_err;
+-	if (file->f_file[O_WRONLY] &&
+-	    vfs_lock_file(file->f_file[O_WRONLY], F_SETLK, &lock, NULL))
++	lock.fl_file = file->f_file[O_WRONLY];
++	if (lock.fl_file && vfs_lock_file(lock.fl_file, F_SETLK, &lock, NULL))
+ 		goto out_err;
+ 	return 0;
+ out_err:
+@@ -226,7 +229,7 @@ nlm_traverse_locks(struct nlm_host *host, struct nlm_file *file,
+ 		if (match(lockhost, host)) {
  
- 			assert(bpf_map_lookup_elem(map_fd, &key, values) == 0);
+ 			spin_unlock(&flctx->flc_lock);
+-			if (nlm_unlock_files(file, fl->fl_owner))
++			if (nlm_unlock_files(file, fl))
+ 				return 1;
+ 			goto again;
+ 		}
 -- 
 2.35.1
 
