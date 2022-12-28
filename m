@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358C61C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2EB1C433D2;
-	Wed, 28 Dec 2022 16:04:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE39B1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:04:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B22BC433EF;
+	Wed, 28 Dec 2022 16:04:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243451;
-	bh=Ep1LP9pPDoV+Knr4iC2+D7JKSWohoR/hKJvTo0Q0jwU=;
+	s=korg; t=1672243453;
+	bh=GtGUespz73Msntrkr/dZFTKE3v0k/IKlkzEYMTCrpdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NZUmwIulXyuORAUlgVZehVL1Jlj2PSnSg1SnJQ44g1Kc0fZwZoc54R5et2V6oyHFM
-	 lDexMCOO2lYe2namJsBfd3OBfe/MvVD6UMVnBSkzcZuc+sFAOTKRk//3iK1yeDKxKj
-	 5YB1WgbMH8g8WPv0dzEdS1eTJ7E2iOqGCc7mAnGc=
+	b=l2HF/yJdZ4ot1BcAM5AneL5B+8UNZIo6MDZJ6g7npQNW5aCMGxDaH1wsI7Li2+ZiJ
+	 Mp5oQgEy9fyGeaiN4T6PWTsmT5iuaAtwLGs+pEgQUZOezKFS5x0dCBaMJLG/mllIX3
+	 OJyukUjNtfdCL8dOvlclFVfL+F4WHUswcw4q+6zE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Denis Efremov <efremov@linux.com>
-Subject: [PATCH 5.15 722/731] floppy: Fix memory leak in do_floppy_init()
-Date: Wed, 28 Dec 2022 15:43:49 +0100
-Message-Id: <20221228144317.372691362@linuxfoundation.org>
+	Xingjiang Qiao <nanpuyue@gmail.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0494/1146] hwmon: (emc2305) fix pwm never being able to set lower
+Date: Wed, 28 Dec 2022 15:33:53 +0100
+Message-Id: <20221228144343.601473483@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,90 +35,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Xingjiang Qiao <nanpuyue@gmail.com>
 
-commit f8ace2e304c5dd8a7328db9cd2b8a4b1b98d83ec upstream.
+[ Upstream commit 364ffd2537c44cb6914ff5669153f4a86fffad29 ]
 
-A memory leak was reported when floppy_alloc_disk() failed in
-do_floppy_init().
+There are fields 'last_hwmon_state' and 'last_thermal_state' in the
+structure 'emc2305_cdev_data', which respectively store the cooling state
+set by the 'hwmon' and 'thermal' subsystem, and the driver author hopes
+that if the state set by 'hwmon' is lower than the value set by 'thermal',
+the driver will just save it without actually setting the pwm. Currently,
+the 'last_thermal_state' also be updated by 'hwmon', which will cause the
+cooling state to never be set to a lower value. This patch fixes that.
 
-unreferenced object 0xffff888115ed25a0 (size 8):
-  comm "modprobe", pid 727, jiffies 4295051278 (age 25.529s)
-  hex dump (first 8 bytes):
-    00 ac 67 5b 81 88 ff ff                          ..g[....
-  backtrace:
-    [<000000007f457abb>] __kmalloc_node+0x4c/0xc0
-    [<00000000a87bfa9e>] blk_mq_realloc_tag_set_tags.part.0+0x6f/0x180
-    [<000000006f02e8b1>] blk_mq_alloc_tag_set+0x573/0x1130
-    [<0000000066007fd7>] 0xffffffffc06b8b08
-    [<0000000081f5ac40>] do_one_initcall+0xd0/0x4f0
-    [<00000000e26d04ee>] do_init_module+0x1a4/0x680
-    [<000000001bb22407>] load_module+0x6249/0x7110
-    [<00000000ad31ac4d>] __do_sys_finit_module+0x140/0x200
-    [<000000007bddca46>] do_syscall_64+0x35/0x80
-    [<00000000b5afec39>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
-unreferenced object 0xffff88810fc30540 (size 32):
-  comm "modprobe", pid 727, jiffies 4295051278 (age 25.529s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<000000007f457abb>] __kmalloc_node+0x4c/0xc0
-    [<000000006b91eab4>] blk_mq_alloc_tag_set+0x393/0x1130
-    [<0000000066007fd7>] 0xffffffffc06b8b08
-    [<0000000081f5ac40>] do_one_initcall+0xd0/0x4f0
-    [<00000000e26d04ee>] do_init_module+0x1a4/0x680
-    [<000000001bb22407>] load_module+0x6249/0x7110
-    [<00000000ad31ac4d>] __do_sys_finit_module+0x140/0x200
-    [<000000007bddca46>] do_syscall_64+0x35/0x80
-    [<00000000b5afec39>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-If the floppy_alloc_disk() failed, disks of current drive will not be set,
-thus the lastest allocated set->tag cannot be freed in the error handling
-path. A simple call graph shown as below:
-
- floppy_module_init()
-   floppy_init()
-     do_floppy_init()
-       for (drive = 0; drive < N_DRIVE; drive++)
-         blk_mq_alloc_tag_set()
-           blk_mq_alloc_tag_set_tags()
-             blk_mq_realloc_tag_set_tags() # set->tag allocated
-         floppy_alloc_disk()
-           blk_mq_alloc_disk() # error occurred, disks failed to allocated
-
-       ->out_put_disk:
-       for (drive = 0; drive < N_DRIVE; drive++)
-         if (!disks[drive][0]) # the last disks is not set and loop break
-           break;
-         blk_mq_free_tag_set() # the latest allocated set->tag leaked
-
-Fix this problem by free the set->tag of current drive before jump to
-error handling path.
-
-Cc: stable@vger.kernel.org
-Fixes: 302cfee15029 ("floppy: use a separate gendisk for each media format")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-[efremov: added stable list, changed title]
-Signed-off-by: Denis Efremov <efremov@linux.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Xingjiang Qiao <nanpuyue@gmail.com>
+Link: https://lore.kernel.org/r/20221206055331.170459-2-nanpuyue@gmail.com
+Fixes: 0d8400c5a2ce1 ("hwmon: (emc2305) add support for EMC2301/2/3/5 RPM-based PWM Fan Speed Controller.")
+[groeck: renamed emc2305_set_cur_state_shim -> __emc2305_set_cur_state]
+Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/floppy.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/hwmon/emc2305.c | 37 ++++++++++++++++++++++++-------------
+ 1 file changed, 24 insertions(+), 13 deletions(-)
 
---- a/drivers/block/floppy.c
-+++ b/drivers/block/floppy.c
-@@ -4587,8 +4587,10 @@ static int __init do_floppy_init(void)
- 			goto out_put_disk;
+diff --git a/drivers/hwmon/emc2305.c b/drivers/hwmon/emc2305.c
+index 9a78ca22541e..e42ae43f3de4 100644
+--- a/drivers/hwmon/emc2305.c
++++ b/drivers/hwmon/emc2305.c
+@@ -171,22 +171,12 @@ static int emc2305_get_max_state(struct thermal_cooling_device *cdev, unsigned l
+ 	return 0;
+ }
  
- 		err = floppy_alloc_disk(drive, 0);
--		if (err)
-+		if (err) {
-+			blk_mq_free_tag_set(&tag_sets[drive]);
- 			goto out_put_disk;
-+		}
+-static int emc2305_set_cur_state(struct thermal_cooling_device *cdev, unsigned long state)
++static int __emc2305_set_cur_state(struct emc2305_data *data, int cdev_idx, unsigned long state)
+ {
+-	int cdev_idx, ret;
+-	struct emc2305_data *data = cdev->devdata;
++	int ret;
+ 	struct i2c_client *client = data->client;
+ 	u8 val, i;
  
- 		timer_setup(&motor_off_timer[drive], motor_off_callback, 0);
- 	}
+-	if (state > data->max_state)
+-		return -EINVAL;
+-
+-	cdev_idx =  emc2305_get_cdev_idx(cdev);
+-	if (cdev_idx < 0)
+-		return cdev_idx;
+-
+-	/* Save thermal state. */
+-	data->cdev_data[cdev_idx].last_thermal_state = state;
+ 	state = max_t(unsigned long, state, data->cdev_data[cdev_idx].last_hwmon_state);
+ 
+ 	val = EMC2305_PWM_STATE2DUTY(state, data->max_state, EMC2305_FAN_MAX);
+@@ -211,6 +201,27 @@ static int emc2305_set_cur_state(struct thermal_cooling_device *cdev, unsigned l
+ 	return 0;
+ }
+ 
++static int emc2305_set_cur_state(struct thermal_cooling_device *cdev, unsigned long state)
++{
++	int cdev_idx, ret;
++	struct emc2305_data *data = cdev->devdata;
++
++	if (state > data->max_state)
++		return -EINVAL;
++
++	cdev_idx =  emc2305_get_cdev_idx(cdev);
++	if (cdev_idx < 0)
++		return cdev_idx;
++
++	/* Save thermal state. */
++	data->cdev_data[cdev_idx].last_thermal_state = state;
++	ret = __emc2305_set_cur_state(data, cdev_idx, state);
++	if (ret < 0)
++		return ret;
++
++	return 0;
++}
++
+ static const struct thermal_cooling_device_ops emc2305_cooling_ops = {
+ 	.get_max_state = emc2305_get_max_state,
+ 	.get_cur_state = emc2305_get_cur_state,
+@@ -401,7 +412,7 @@ emc2305_write(struct device *dev, enum hwmon_sensor_types type, u32 attr, int ch
+ 				 */
+ 				if (data->cdev_data[cdev_idx].last_hwmon_state >=
+ 				    data->cdev_data[cdev_idx].last_thermal_state)
+-					return emc2305_set_cur_state(data->cdev_data[cdev_idx].cdev,
++					return __emc2305_set_cur_state(data, cdev_idx,
+ 							data->cdev_data[cdev_idx].last_hwmon_state);
+ 				return 0;
+ 			}
+-- 
+2.35.1
+
 
 
