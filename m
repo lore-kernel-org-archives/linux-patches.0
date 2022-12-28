@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 776F21C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:47:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F269DC433D2;
-	Wed, 28 Dec 2022 16:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C491C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:47:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B798C433D2;
+	Wed, 28 Dec 2022 16:47:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246038;
-	bh=XKNp2vgdkZOqvb8ZpnkkTc35WysmYrXuZPl5CpeHkwQ=;
+	s=korg; t=1672246041;
+	bh=SsZLdHxV3v0ozemZuINALEFC99IXb8xrVlBR4IvXihw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0rP+7OFjoYAZupPKRRAFMO0jKdauBQbEh6H5ru3WNHJWGN1F6lDgOh/UOKcViKXJd
-	 Yh5jQ4yX8iajt3rAyqSuEFKDovEjnR3QBJ3g8/AHyVzPUunB9OEnHkyioRTxFMNasC
-	 S554wTZx9XuurcJZTmqSkxrtc+IbPM9/vMdUdiMY=
+	b=yrwqo+hgf6NIHuJyJIhRLSk/aVTU1+7SxiOvv/Hx5PkZGHy+zCw/wGDPJI5x4xyCZ
+	 pZ7ypDR2vOSbFAFAuJB71N8WmZOEEnvqCICDBq9MOp9++kZ5QQP8pS47/XivyZRH5K
+	 ist6pYX2OVMUIOq9xGbwJ9CMNWB04iR8z0/T9oVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Jingjin <wangjingjin1@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 1002/1073] ASoC: rockchip: pdm: Add missing clk_disable_unprepare() in rockchip_pdm_runtime_resume()
-Date: Wed, 28 Dec 2022 15:43:10 +0100
-Message-Id: <20221228144355.356618308@linuxfoundation.org>
+Subject: [PATCH 6.1 0962/1146] btrfs: do not panic if we cant allocate a prealloc extent state
+Date: Wed, 28 Dec 2022 15:41:41 +0100
+Message-Id: <20221228144356.449916844@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,34 +35,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Jingjin <wangjingjin1@huawei.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-[ Upstream commit ef0a098efb36660326c133af9b5a04a96a00e3ca ]
+[ Upstream commit 5a75034e71ef5ec0fce983afcb6c9cb0147cd5b9 ]
 
-The clk_disable_unprepare() should be called in the error handling of
-rockchip_pdm_runtime_resume().
+We sometimes have to allocate new extent states when clearing or setting
+new bits in an extent io tree.  Generally we preallocate this before
+taking the tree spin lock, but we can use this preallocated extent state
+sometimes and then need to try to do a GFP_ATOMIC allocation under the
+lock.
 
-Fixes: fc05a5b22253 ("ASoC: rockchip: add support for pdm controller")
-Signed-off-by: Wang Jingjin <wangjingjin1@huawei.com>
-Link: https://lore.kernel.org/r/20221205032802.2422983-1-wangjingjin1@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Unfortunately sometimes this fails, and then we hit the BUG_ON() and
+bring the box down.  This happens roughly 20 times a week in our fleet.
+
+However the vast majority of callers use GFP_NOFS, which means that if
+this GFP_ATOMIC allocation fails, we could simply drop the spin lock, go
+back and allocate a new extent state with our given gfp mask, and begin
+again from where we left off.
+
+For the remaining callers that do not use GFP_NOFS, they are generally
+using GFP_NOWAIT, which still allows for some reclaim.  So allow these
+allocations to attempt to happen outside of the spin lock so we don't
+need to rely on GFP_ATOMIC allocations.
+
+This in essence creates an infinite loop for anything that isn't
+GFP_NOFS.  To address this we may want to migrate to using mempools for
+extent states so that we will always have emergency reserves in order to
+make our allocations.
+
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/rockchip/rockchip_pdm.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/extent-io-tree.c | 22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/rockchip/rockchip_pdm.c b/sound/soc/rockchip/rockchip_pdm.c
-index a7549f827235..5b1e47bdc376 100644
---- a/sound/soc/rockchip/rockchip_pdm.c
-+++ b/sound/soc/rockchip/rockchip_pdm.c
-@@ -431,6 +431,7 @@ static int rockchip_pdm_runtime_resume(struct device *dev)
+diff --git a/fs/btrfs/extent-io-tree.c b/fs/btrfs/extent-io-tree.c
+index 83cb0378096f..3676580c2d97 100644
+--- a/fs/btrfs/extent-io-tree.c
++++ b/fs/btrfs/extent-io-tree.c
+@@ -572,7 +572,7 @@ int __clear_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
+ 	if (bits & (EXTENT_LOCKED | EXTENT_BOUNDARY))
+ 		clear = 1;
+ again:
+-	if (!prealloc && gfpflags_allow_blocking(mask)) {
++	if (!prealloc) {
+ 		/*
+ 		 * Don't care for allocation failure here because we might end
+ 		 * up not needing the pre-allocated extent state at all, which
+@@ -636,7 +636,8 @@ int __clear_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
  
- 	ret = clk_prepare_enable(pdm->hclk);
- 	if (ret) {
-+		clk_disable_unprepare(pdm->clk);
- 		dev_err(pdm->dev, "hclock enable failed %d\n", ret);
- 		return ret;
- 	}
+ 	if (state->start < start) {
+ 		prealloc = alloc_extent_state_atomic(prealloc);
+-		BUG_ON(!prealloc);
++		if (!prealloc)
++			goto search_again;
+ 		err = split_state(tree, state, prealloc, start);
+ 		if (err)
+ 			extent_io_tree_panic(tree, err);
+@@ -657,7 +658,8 @@ int __clear_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
+ 	 */
+ 	if (state->start <= end && state->end > end) {
+ 		prealloc = alloc_extent_state_atomic(prealloc);
+-		BUG_ON(!prealloc);
++		if (!prealloc)
++			goto search_again;
+ 		err = split_state(tree, state, prealloc, end + 1);
+ 		if (err)
+ 			extent_io_tree_panic(tree, err);
+@@ -966,7 +968,7 @@ static int __set_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
+ 	else
+ 		ASSERT(failed_start == NULL);
+ again:
+-	if (!prealloc && gfpflags_allow_blocking(mask)) {
++	if (!prealloc) {
+ 		/*
+ 		 * Don't care for allocation failure here because we might end
+ 		 * up not needing the pre-allocated extent state at all, which
+@@ -991,7 +993,8 @@ static int __set_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
+ 	state = tree_search_for_insert(tree, start, &p, &parent);
+ 	if (!state) {
+ 		prealloc = alloc_extent_state_atomic(prealloc);
+-		BUG_ON(!prealloc);
++		if (!prealloc)
++			goto search_again;
+ 		prealloc->start = start;
+ 		prealloc->end = end;
+ 		insert_state_fast(tree, prealloc, p, parent, bits, changeset);
+@@ -1062,7 +1065,8 @@ static int __set_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
+ 		}
+ 
+ 		prealloc = alloc_extent_state_atomic(prealloc);
+-		BUG_ON(!prealloc);
++		if (!prealloc)
++			goto search_again;
+ 		err = split_state(tree, state, prealloc, start);
+ 		if (err)
+ 			extent_io_tree_panic(tree, err);
+@@ -1099,7 +1103,8 @@ static int __set_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
+ 			this_end = last_start - 1;
+ 
+ 		prealloc = alloc_extent_state_atomic(prealloc);
+-		BUG_ON(!prealloc);
++		if (!prealloc)
++			goto search_again;
+ 
+ 		/*
+ 		 * Avoid to free 'prealloc' if it can be merged with the later
+@@ -1130,7 +1135,8 @@ static int __set_extent_bit(struct extent_io_tree *tree, u64 start, u64 end,
+ 		}
+ 
+ 		prealloc = alloc_extent_state_atomic(prealloc);
+-		BUG_ON(!prealloc);
++		if (!prealloc)
++			goto search_again;
+ 		err = split_state(tree, state, prealloc, end + 1);
+ 		if (err)
+ 			extent_io_tree_panic(tree, err);
 -- 
 2.35.1
 
