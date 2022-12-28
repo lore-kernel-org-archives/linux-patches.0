@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D6E1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:53:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2798C433F1;
-	Wed, 28 Dec 2022 15:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D401875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:53:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A032EC433EF;
+	Wed, 28 Dec 2022 15:53:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242787;
-	bh=6WPVI2RzqdiPWNz6u8FMFbRCToeTpaZF137s1wsRmk8=;
+	s=korg; t=1672242790;
+	bh=XxQQLr0tUW5kW3XWYe6ahiX6YhC3EZPRsH+zK9vC2sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YAveAhLr8WHxkqG6/Wxu66G6g3HQLaI1Zyi/RKW0ifImvIzXKdPZVTujcXYwuEdCu
-	 Q/DYC+lva5spn+pmXi2FNyzOx3KZIBWY2S3JKu+P2/tF6oP7lPwp68u5LDiVpGFZUr
-	 KLts3b/byYYR4YWL4PhFwC766k11NkeUJAwHg6zo=
+	b=tYAjItzLmugrNRpsdHY8IPD8lQOeCLZaOWSng5FvtjFKWB6DUTiC8mJMbWxoCvkYi
+	 bkNhC7DpK8R2AXMq77qRUmG0zMBNbZUkEUtDJNWPdZAG9uOkUXXPv5oummslsQL98c
+	 mUWx442HAGbW5COmQ92WPBim6Ord27bJWDaqHonw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yunfei Dong <yunfei.dong@mediatek.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Kees Cook <keescook@chromium.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0413/1146] media: mediatek: vcodec: Fix getting NULL pointer for dst buffer
-Date: Wed, 28 Dec 2022 15:32:32 +0100
-Message-Id: <20221228144341.386152893@linuxfoundation.org>
+Subject: [PATCH 5.15 647/731] s390/netiucv: Fix return type of netiucv_tx()
+Date: Wed, 28 Dec 2022 15:42:34 +0100
+Message-Id: <20221228144315.263664441@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,45 +37,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yunfei Dong <yunfei.dong@mediatek.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit d879f770e4d1d5f0d9b692d3a2702f23ee441dbb ]
+[ Upstream commit 88d86d18d7cf7e9137c95f9d212bb9fff8a1b4be ]
 
-The driver may can't get v4l2 buffer when lat or core decode timeout,
-will lead to crash when call v4l2_m2m_buf_done to set dst buffer
-(NULL pointer) done.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-Fixes: 7b182b8d9c85 ("media: mediatek: vcodec: Refactor get and put capture buffer flow")
-Signed-off-by: Yunfei Dong <yunfei.dong@mediatek.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+  drivers/s390/net/netiucv.c:1854:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .ndo_start_xmit         = netiucv_tx,
+                                    ^~~~~~~~~~
+
+->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
+'netdev_tx_t', not 'int'. Adjust the return type of netiucv_tx() to
+match the prototype's to resolve the warning and potential CFI failure,
+should s390 select ARCH_SUPPORTS_CFI_CLANG in the future.
+
+Additionally, while in the area, remove a comment block that is no
+longer relevant.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mediatek/vcodec/mtk_vcodec_dec_stateless.c        | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+ drivers/s390/net/netiucv.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
-index c45bd2599bb2..e86809052a9f 100644
---- a/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
-+++ b/drivers/media/platform/mediatek/vcodec/mtk_vcodec_dec_stateless.c
-@@ -138,10 +138,13 @@ static void mtk_vdec_stateless_cap_to_disp(struct mtk_vcodec_ctx *ctx, int error
- 		state = VB2_BUF_STATE_DONE;
- 
- 	vb2_dst = v4l2_m2m_dst_buf_remove(ctx->m2m_ctx);
--	v4l2_m2m_buf_done(vb2_dst, state);
--
--	mtk_v4l2_debug(2, "free frame buffer id:%d to done list",
--		       vb2_dst->vb2_buf.index);
-+	if (vb2_dst) {
-+		v4l2_m2m_buf_done(vb2_dst, state);
-+		mtk_v4l2_debug(2, "free frame buffer id:%d to done list",
-+			       vb2_dst->vb2_buf.index);
-+	} else {
-+		mtk_v4l2_err("dst buffer is NULL");
-+	}
- 
- 	if (src_buf_req)
- 		v4l2_ctrl_request_complete(src_buf_req, &ctx->ctrl_hdl);
+diff --git a/drivers/s390/net/netiucv.c b/drivers/s390/net/netiucv.c
+index 5a0c2f07a3a2..ce5f0ffd6cc8 100644
+--- a/drivers/s390/net/netiucv.c
++++ b/drivers/s390/net/netiucv.c
+@@ -1252,15 +1252,8 @@ static int netiucv_close(struct net_device *dev)
+ /**
+  * Start transmission of a packet.
+  * Called from generic network device layer.
+- *
+- * @param skb Pointer to buffer containing the packet.
+- * @param dev Pointer to interface struct.
+- *
+- * @return 0 if packet consumed, !0 if packet rejected.
+- *         Note: If we return !0, then the packet is free'd by
+- *               the generic network layer.
+  */
+-static int netiucv_tx(struct sk_buff *skb, struct net_device *dev)
++static netdev_tx_t netiucv_tx(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct netiucv_priv *privptr = netdev_priv(dev);
+ 	int rc;
 -- 
 2.35.1
 
