@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0872D1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C6DC433EF;
-	Wed, 28 Dec 2022 15:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A175D1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:10:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27B03C433D2;
+	Wed, 28 Dec 2022 15:10:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240226;
-	bh=LVfGN92gWg8D37EC0qoo7xa1xxd46DRrRGWQGV0stTo=;
+	s=korg; t=1672240229;
+	bh=fvZFWVyORokyld+Tbq4AN6GoVcBPXYffrLMyHFnmco4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X0GxtTzDrFsLqUvIlMvZizL4AI+4pszqk4zxmrazaWhmH5Aa9QCUMR2fTzfNMjeYl
-	 rXvYjjGtVpF4T5JPYy7JrH8k7Skai/rK4zZCIx1t9+eB3gNLbB3NjDWy9KVSttxIqn
-	 +VXSbJCz+IwWd1BKy758hIQy5P07n/ZOfsE7Qde4=
+	b=cw7taDvsNgTaLzKiqKnYkKNHHOwvCn/nnUQ9LZsTB4dPjT2/yoOz4fSxGRz+9qtwj
+	 ExbY1ZZ5xU57PT9Hj90DPpdQS4UYnIIHs1PFQX3NHg9jQRaMArBS3OdyTFCzyWQUqe
+	 2BrK7p45wbOxcitnL9AncuVmwv2w5TzjDzR0Wp4c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Brian Geffon <bgeffon@google.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0136/1073] irqchip: gic-pm: Use pm_runtime_resume_and_get() in gic_probe()
-Date: Wed, 28 Dec 2022 15:28:44 +0100
-Message-Id: <20221228144331.725462168@linuxfoundation.org>
+Subject: [PATCH 6.1 0098/1146] pstore: Avoid kcore oops by vmap()ing with VM_IOREMAP
+Date: Wed, 28 Dec 2022 15:27:17 +0100
+Message-Id: <20221228144332.806137582@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,37 +38,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Stephen Boyd <swboyd@chromium.org>
 
-[ Upstream commit f9ee20c85b3a3ba0afd3672630ec4f93d339f015 ]
+[ Upstream commit e6b842741b4f39007215fd7e545cb55aa3d358a2 ]
 
-gic_probe() calls pm_runtime_get_sync() and added fail path as
-rpm_put to put usage_counter. However, pm_runtime_get_sync()
-will increment usage_counter even it failed. Fix it by replacing it with
-pm_runtime_resume_and_get() to keep usage counter balanced.
+An oops can be induced by running 'cat /proc/kcore > /dev/null' on
+devices using pstore with the ram backend because kmap_atomic() assumes
+lowmem pages are accessible with __va().
 
-Fixes: 9c8edddfc992 ("irqchip/gic: Add platform driver for non-root GICs that require RPM")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20221124065150.22809-1-shangxiaojing@huawei.com
+ Unable to handle kernel paging request at virtual address ffffff807ff2b000
+ Mem abort info:
+ ESR = 0x96000006
+ EC = 0x25: DABT (current EL), IL = 32 bits
+ SET = 0, FnV = 0
+ EA = 0, S1PTW = 0
+ FSC = 0x06: level 2 translation fault
+ Data abort info:
+ ISV = 0, ISS = 0x00000006
+ CM = 0, WnR = 0
+ swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000081d87000
+ [ffffff807ff2b000] pgd=180000017fe18003, p4d=180000017fe18003, pud=180000017fe18003, pmd=0000000000000000
+ Internal error: Oops: 96000006 [#1] PREEMPT SMP
+ Modules linked in: dm_integrity
+ CPU: 7 PID: 21179 Comm: perf Not tainted 5.15.67-10882-ge4eb2eb988cd #1 baa443fb8e8477896a370b31a821eb2009f9bfba
+ Hardware name: Google Lazor (rev3 - 8) (DT)
+ pstate: a0400009 (NzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : __memcpy+0x110/0x260
+ lr : vread+0x194/0x294
+ sp : ffffffc013ee39d0
+ x29: ffffffc013ee39f0 x28: 0000000000001000 x27: ffffff807ff2b000
+ x26: 0000000000001000 x25: ffffffc0085a2000 x24: ffffff802d4b3000
+ x23: ffffff80f8a60000 x22: ffffff802d4b3000 x21: ffffffc0085a2000
+ x20: ffffff8080b7bc68 x19: 0000000000001000 x18: 0000000000000000
+ x17: 0000000000000000 x16: 0000000000000000 x15: ffffffd3073f2e60
+ x14: ffffffffad588000 x13: 0000000000000000 x12: 0000000000000001
+ x11: 00000000000001a2 x10: 00680000fff2bf0b x9 : 03fffffff807ff2b
+ x8 : 0000000000000001 x7 : 0000000000000000 x6 : 0000000000000000
+ x5 : ffffff802d4b4000 x4 : ffffff807ff2c000 x3 : ffffffc013ee3a78
+ x2 : 0000000000001000 x1 : ffffff807ff2b000 x0 : ffffff802d4b3000
+ Call trace:
+ __memcpy+0x110/0x260
+ read_kcore+0x584/0x778
+ proc_reg_read+0xb4/0xe4
+
+During early boot, memblock reserves the pages for the ramoops reserved
+memory node in DT that would otherwise be part of the direct lowmem
+mapping. Pstore's ram backend reuses those reserved pages to change the
+memory type (writeback or non-cached) by passing the pages to vmap()
+(see pfn_to_page() usage in persistent_ram_vmap() for more details) with
+specific flags. When read_kcore() starts iterating over the vmalloc
+region, it runs over the virtual address that vmap() returned for
+ramoops. In aligned_vread() the virtual address is passed to
+vmalloc_to_page() which returns the page struct for the reserved lowmem
+area. That lowmem page is passed to kmap_atomic(), which effectively
+calls page_to_virt() that assumes a lowmem page struct must be directly
+accessible with __va() and friends. These pages are mapped via vmap()
+though, and the lowmem mapping was never made, so accessing them via the
+lowmem virtual address oopses like above.
+
+Let's side-step this problem by passing VM_IOREMAP to vmap(). This will
+tell vread() to not include the ramoops region in the kcore. Instead the
+area will look like a bunch of zeros. The alternative is to teach kmap()
+about vmalloc areas that intersect with lowmem. Presumably such a change
+isn't a one-liner, and there isn't much interest in inspecting the
+ramoops region in kcore files anyway, so the most expedient route is
+taken for now.
+
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 404a6043385d ("staging: android: persistent_ram: handle reserving and mapping memory")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221205233136.3420802-1-swboyd@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-pm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/pstore/ram_core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/irqchip/irq-gic-pm.c b/drivers/irqchip/irq-gic-pm.c
-index b60e1853593f..3989d16f997b 100644
---- a/drivers/irqchip/irq-gic-pm.c
-+++ b/drivers/irqchip/irq-gic-pm.c
-@@ -102,7 +102,7 @@ static int gic_probe(struct platform_device *pdev)
+diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
+index a89e33719fcf..8bf09886e7e6 100644
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -439,7 +439,11 @@ static void *persistent_ram_vmap(phys_addr_t start, size_t size,
+ 		phys_addr_t addr = page_start + i * PAGE_SIZE;
+ 		pages[i] = pfn_to_page(addr >> PAGE_SHIFT);
+ 	}
+-	vaddr = vmap(pages, page_count, VM_MAP, prot);
++	/*
++	 * VM_IOREMAP used here to bypass this region during vread()
++	 * and kmap_atomic() (i.e. kcore) to avoid __va() failures.
++	 */
++	vaddr = vmap(pages, page_count, VM_MAP | VM_IOREMAP, prot);
+ 	kfree(pages);
  
- 	pm_runtime_enable(dev);
- 
--	ret = pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
- 	if (ret < 0)
- 		goto rpm_disable;
- 
+ 	/*
 -- 
 2.35.1
 
