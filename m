@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D0181C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:05:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C78FBC433D2;
-	Wed, 28 Dec 2022 16:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06EDC1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:05:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE58C433D2;
+	Wed, 28 Dec 2022 16:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243520;
-	bh=L5ZrilAx5jf6RcAS90Y8P9B0ybULVQKJV3TNiqw/meM=;
+	s=korg; t=1672243522;
+	bh=aNoUJxHkrs5Gf/DNei8WBoulFD7PDdaQ3IBmis583kA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WfSbubJZHZLSLBH+wj4EhyyTqCH34RuPrYV8Ci3Pn4SNcA0laUNkx5BXAgAU0ukeF
-	 /ZGmRthVI7DBnOb8+nz1pLGOv3UYhOeUvi1a37MUgO1WmlfLOuAVfKOIBIkxLl+gvf
-	 qlT7DQDfsLPe6SjOSr6Hhpv0rO89T531CSjG01eE=
+	b=ami4+u7usei/ax2HI1e6v7JB9J2ebxbZwLFyuA79QF/KUJMGpe8OctJB8u2GkgMQ1
+	 d5ITswPKRU1KsHEBFuglinx1GqmYrATPz5HSs9D1zlcm4LFq+lxEm8TiqOEAWwr8kl
+	 gE/ahFuDGx+LSeASIQ35/JFBahnWJYxzicnZ2QHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fce48a3dd3368645bd6c@syzkaller.appspotmail.com,
-	Lin Ma <linma@zju.edu.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 5.15 730/731] media: dvbdev: fix refcnt bug
-Date: Wed, 28 Dec 2022 15:43:57 +0100
-Message-Id: <20221228144317.603160512@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 0502/1146] mmc: vub300: fix return value check of mmc_add_host()
+Date: Wed, 28 Dec 2022 15:34:01 +0100
+Message-Id: <20221228144343.812854642@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,63 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 3a664569b71b0a52be5ffb9fb87cc4f83d29bd71 upstream.
+[ Upstream commit 0613ad2401f88bdeae5594c30afe318e93b14676 ]
 
-Previous commit initialize the dvbdev->ref before the template copy,
-which will overwrite the reference and cause refcnt bug.
+mmc_add_host() may return error, if we ignore its return value, the memory
+that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
+crash because of deleting not added device in the remove path.
 
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 0 PID: 1 at lib/refcount.c:25 refcount_warn_saturate+0x17c/0x1f0 lib/refcount.c:25
-Modules linked in:
-CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.1.0-rc6-next-20221128-syzkaller #0
-...
-RIP: 0010:refcount_warn_saturate+0x17c/0x1f0 lib/refcount.c:25
-RSP: 0000:ffffc900000678d0 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
-RDX: ffff88813ff58000 RSI: ffffffff81660e7c RDI: fffff5200000cf0c
-RBP: ffff888022a45010 R08: 0000000000000005 R09: 0000000000000000
-R10: 0000000080000000 R11: 0000000000000000 R12: 0000000000000001
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000001
-FS:  0000000000000000(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffff88823ffff000 CR3: 000000000c48e000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- __refcount_add include/linux/refcount.h:199 [inline]
- __refcount_inc include/linux/refcount.h:250 [inline]
- refcount_inc include/linux/refcount.h:267 [inline]
- kref_get include/linux/kref.h:45 [inline]
- dvb_device_get drivers/media/dvb-core/dvbdev.c:585 [inline]
- dvb_register_device+0xe83/0x16e0 drivers/media/dvb-core/dvbdev.c:517
-...
+So fix this by checking the return value and goto error path which will call
+mmc_free_host(), besides, the timer added before mmc_add_host() needs be del.
 
-Just place the kref_init at correct position.
+And this patch fixes another missing call mmc_free_host() if usb_control_msg()
+fails.
 
-Reported-by: syzbot+fce48a3dd3368645bd6c@syzkaller.appspotmail.com
-Fixes: 0fc044b2b5e2 ("media: dvbdev: adopts refcnt to avoid UAF")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221101063023.1664968-9-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvbdev.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/vub300.c | 11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/media/dvb-core/dvbdev.c
-+++ b/drivers/media/dvb-core/dvbdev.c
-@@ -490,8 +490,8 @@ int dvb_register_device(struct dvb_adapt
- 		return -ENOMEM;
+diff --git a/drivers/mmc/host/vub300.c b/drivers/mmc/host/vub300.c
+index 97beece62fec..ab36ec479747 100644
+--- a/drivers/mmc/host/vub300.c
++++ b/drivers/mmc/host/vub300.c
+@@ -2299,14 +2299,14 @@ static int vub300_probe(struct usb_interface *interface,
+ 				0x0000, 0x0000, &vub300->system_port_status,
+ 				sizeof(vub300->system_port_status), 1000);
+ 	if (retval < 0) {
+-		goto error4;
++		goto error5;
+ 	} else if (sizeof(vub300->system_port_status) == retval) {
+ 		vub300->card_present =
+ 			(0x0001 & vub300->system_port_status.port_flags) ? 1 : 0;
+ 		vub300->read_only =
+ 			(0x0010 & vub300->system_port_status.port_flags) ? 1 : 0;
+ 	} else {
+-		goto error4;
++		goto error5;
  	}
- 
--	kref_init(&dvbdev->ref);
- 	memcpy(dvbdev, template, sizeof(struct dvb_device));
-+	kref_init(&dvbdev->ref);
- 	dvbdev->type = type;
- 	dvbdev->id = id;
- 	dvbdev->adapter = adap;
+ 	usb_set_intfdata(interface, vub300);
+ 	INIT_DELAYED_WORK(&vub300->pollwork, vub300_pollwork_thread);
+@@ -2329,8 +2329,13 @@ static int vub300_probe(struct usb_interface *interface,
+ 			 "USB vub300 remote SDIO host controller[%d]"
+ 			 "connected with no SD/SDIO card inserted\n",
+ 			 interface_to_InterfaceNumber(interface));
+-	mmc_add_host(mmc);
++	retval = mmc_add_host(mmc);
++	if (retval)
++		goto error6;
++
+ 	return 0;
++error6:
++	del_timer_sync(&vub300->inactivity_timer);
+ error5:
+ 	mmc_free_host(mmc);
+ 	/*
+-- 
+2.35.1
+
 
 
