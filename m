@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F34421C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:30:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64515C43392;
-	Wed, 28 Dec 2022 16:30:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E1D21C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:30:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68D85C433D2;
+	Wed, 28 Dec 2022 16:30:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245041;
-	bh=KwKXfZxx3BpPf4NQPS+b85R1s5ASnGewBVbenXMEt2Q=;
+	s=korg; t=1672245044;
+	bh=Rot839j5bGkGS38ssq/DbKfOFarLeXaWcMqbdNHXJL8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EVcVASrOXI71HVaUO4WzrOp6QXaZKaDXmEeBZe3d0BiDoWMiNRW6nqQddX1YfMm5a
-	 proc5votNgzNwPJgfj+RSN72nyhaDbSTra9w4fEnKh4Y2Ml9OoiqDOTBLM6IdUBeLo
-	 FN0BOzxpN+6lhR0MXEpCRc5B+s8YoOTcIYTKoOR8=
+	b=vSnPl4kmltuE3tFPcHJlJCeKjD+i4DaODl6Ng2QoONhWCluM6X7snVs21Rfg2GxI/
+	 K5m9IH/AUFGFYRgUwzZp283cMJesu14m0nhZxM2ayheOIOcqOHVje9240gVH86t4Rf
+	 XPESmZYXecYn7QVkTuvD/kfNdPw7Ozzav7LXIibg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Amit Kucheria <amitk@kernel.org>,
+	Daniel Lezcano <daniel.lezcano@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0789/1073] rtc: cmos: Disable ACPI RTC event on removal
-Date: Wed, 28 Dec 2022 15:39:37 +0100
-Message-Id: <20221228144349.442341450@linuxfoundation.org>
+Subject: [PATCH 6.1 0752/1146] thermal/drivers/qcom/temp-alarm: Fix inaccurate warning for gen2
+Date: Wed, 28 Dec 2022 15:38:11 +0100
+Message-Id: <20221228144350.569831681@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,66 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Luca Weiss <luca.weiss@fairphone.com>
 
-[ Upstream commit 83ebb7b3036d151ee39a4a752018665648fc3bd4 ]
+[ Upstream commit 8763f8acbf8aef22a2321d4c978cd078aa3b8f64 ]
 
-Make cmos_do_remove() drop the ACPI RTC fixed event handler so as to
-prevent it from operating on stale data in case the event triggers
-after driver removal.
+On gen2 chips the stage2 threshold is not 140 degC but 125 degC.
 
-Fixes: 311ee9c151ad ("rtc: cmos: allow using ACPI for RTC alarm instead of HPET")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Zhang Rui <rui.zhang@intel.com>
-Tested-by: Zhang Rui <rui.zhang@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/2224609.iZASKD2KPV@kreacher
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Make the warning message clearer by using this variable and also by
+including the temperature that was checked for.
+
+Fixes: aa92b3310c55 ("thermal/drivers/qcom-spmi-temp-alarm: Add support for GEN2 rev 1 PMIC peripherals")
+Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
+Reviewed-by: Amit Kucheria <amitk@kernel.org>
+Link: https://lore.kernel.org/r/20221020145237.942146-1-luca.weiss@fairphone.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/thermal/qcom/qcom-spmi-temp-alarm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 039486bfedf4..00e2ca7374ec 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -798,6 +798,14 @@ static void acpi_rtc_event_setup(struct device *dev)
- 	acpi_disable_event(ACPI_EVENT_RTC, 0);
- }
- 
-+static void acpi_rtc_event_cleanup(void)
-+{
-+	if (acpi_disabled)
-+		return;
-+
-+	acpi_remove_fixed_event_handler(ACPI_EVENT_RTC, rtc_handler);
-+}
-+
- static void rtc_wake_on(struct device *dev)
- {
- 	acpi_clear_event(ACPI_EVENT_RTC);
-@@ -884,6 +892,10 @@ static inline void acpi_rtc_event_setup(struct device *dev)
- {
- }
- 
-+static inline void acpi_rtc_event_cleanup(void)
-+{
-+}
-+
- static inline void acpi_cmos_wake_setup(struct device *dev)
- {
- }
-@@ -1138,6 +1150,9 @@ static void cmos_do_remove(struct device *dev)
- 			hpet_unregister_irq_handler(cmos_interrupt);
+diff --git a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+index be785ab37e53..ad84978109e6 100644
+--- a/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
++++ b/drivers/thermal/qcom/qcom-spmi-temp-alarm.c
+@@ -252,7 +252,8 @@ static int qpnp_tm_update_critical_trip_temp(struct qpnp_tm_chip *chip,
+ 			disable_s2_shutdown = true;
+ 		else
+ 			dev_warn(chip->dev,
+-				 "No ADC is configured and critical temperature is above the maximum stage 2 threshold of 140 C! Configuring stage 2 shutdown at 140 C.\n");
++				 "No ADC is configured and critical temperature %d mC is above the maximum stage 2 threshold of %ld mC! Configuring stage 2 shutdown at %ld mC.\n",
++				 temp, stage2_threshold_max, stage2_threshold_max);
  	}
  
-+	if (!dev_get_platdata(dev))
-+		acpi_rtc_event_cleanup();
-+
- 	cmos->rtc = NULL;
- 
- 	ports = cmos->iomem;
+ skip:
 -- 
 2.35.1
 
