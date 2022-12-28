@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C791863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D030C433EF;
-	Wed, 28 Dec 2022 15:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B99A1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:21:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3FF6C433D2;
+	Wed, 28 Dec 2022 15:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240860;
-	bh=cERqdDbN7Qk86FVzwMQRD2qmuDXA3OEdZrfIZCaxJTc=;
+	s=korg; t=1672240863;
+	bh=SpplAcP5SsV8jObAZEOlluCC6KQaKtQuIXsUf0AWnBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KDyrqNLYv0+ejGtLss4wZDqU2AlNRyUtyRTA/DMS8HIKkE6P0Qwmi24SGR8xDL3vf
-	 IW1VWU25L8Ax0tCUyDNVK0edIXjXRzTi4PlX65AnUxcVXYi/MorExJ1IrYBFzPZka/
-	 +5iXFpazH9d+oooLcA2qJKrZxXQRYQVMEuafyduY=
+	b=1PUa9FIeGY9wnpDiAVca1GCTLNcvqbmA9Lf86UKHgbyFyGG0B2TOFKRyyfsD9YMcN
+	 jl75aIMthV253fomg0yM5PdsLBQ0/YEj+E7rx+c9Htsys1s9+0s8jVnjG+GDHUyFfN
+	 ttxBW8VeGSy5U32qjk42Qk1v1rxqjwbemMoRMDhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0211/1073] ata: libata: fix NCQ autosense logic
-Date: Wed, 28 Dec 2022 15:29:59 +0100
-Message-Id: <20221228144333.750062028@linuxfoundation.org>
+Subject: [PATCH 5.15 406/731] padata: Fix list iterator in padata_do_serial()
+Date: Wed, 28 Dec 2022 15:38:33 +0100
+Message-Id: <20221228144308.336193822@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,74 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Cassel <niklas.cassel@wdc.com>
+From: Daniel Jordan <daniel.m.jordan@oracle.com>
 
-[ Upstream commit 7390896b3484d44cbdb8bc4859964314ac66d3c9 ]
+[ Upstream commit 57ddfecc72a6c9941d159543e1c0c0a74fe9afdd ]
 
-Currently, the logic if we should call ata_scsi_set_sense()
-(and set flag ATA_QCFLAG_SENSE_VALID to indicate that we have
-successfully added sense data to the struct ata_queued_cmd)
-looks like this:
+list_for_each_entry_reverse() assumes that the iterated list is nonempty
+and that every list_head is embedded in the same type, but its use in
+padata_do_serial() breaks both rules.
 
-if (dev->class == ATA_DEV_ZAC &&
-    ((qc->result_tf.status & ATA_SENSE) || qc->result_tf.auxiliary))
+This doesn't cause any issues now because padata_priv and padata_list
+happen to have their list fields at the same offset, but we really
+shouldn't be relying on that.
 
-The problem with this is that a drive can support the NCQ command
-error log without supporting NCQ autosense.
-
-On such a drive, if the failing command has sense data, the status
-field in the NCQ command error log will have the ATA_SENSE bit set.
-
-It is just that this sense data is not included in the NCQ command
-error log when NCQ autosense is not supported. Instead the sense
-data has to be fetched using the REQUEST SENSE DATA EXT command.
-
-Therefore, we should only add the sense data if the drive supports
-NCQ autosense AND the ATA_SENSE bit is set in the status field.
-
-Fix this, and at the same time, remove the duplicated ATA_DEV_ZAC
-check. The struct ata_taskfile supplied to ata_eh_read_log_10h()
-is memset:ed before calling the function, so simply checking if
-qc->result_tf.auxiliary is set is sufficient to tell us that the
-log actually contained sense data.
-
-Fixes: d238ffd59d3c ("libata: do not attempt to retrieve sense code twice")
-Signed-off-by: Niklas Cassel <niklas.cassel@wdc.com>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Fixes: bfde23ce200e ("padata: unbind parallel jobs from specific CPUs")
+Signed-off-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-sata.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ kernel/padata.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ata/libata-sata.c b/drivers/ata/libata-sata.c
-index 13b9d0fdd42c..8e292e2abb04 100644
---- a/drivers/ata/libata-sata.c
-+++ b/drivers/ata/libata-sata.c
-@@ -1392,7 +1392,8 @@ static int ata_eh_read_log_10h(struct ata_device *dev,
- 	tf->hob_lbah = buf[10];
- 	tf->nsect = buf[12];
- 	tf->hob_nsect = buf[13];
--	if (dev->class == ATA_DEV_ZAC && ata_id_has_ncq_autosense(dev->id))
-+	if (dev->class == ATA_DEV_ZAC && ata_id_has_ncq_autosense(dev->id) &&
-+	    (tf->status & ATA_SENSE))
- 		tf->auxiliary = buf[14] << 16 | buf[15] << 8 | buf[16];
+diff --git a/kernel/padata.c b/kernel/padata.c
+index 9395b77fabb1..c17f772cc315 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -390,13 +390,16 @@ void padata_do_serial(struct padata_priv *padata)
+ 	int hashed_cpu = padata_cpu_hash(pd, padata->seq_nr);
+ 	struct padata_list *reorder = per_cpu_ptr(pd->reorder_list, hashed_cpu);
+ 	struct padata_priv *cur;
++	struct list_head *pos;
  
- 	return 0;
-@@ -1456,8 +1457,12 @@ void ata_eh_analyze_ncq_error(struct ata_link *link)
- 	memcpy(&qc->result_tf, &tf, sizeof(tf));
- 	qc->result_tf.flags = ATA_TFLAG_ISADDR | ATA_TFLAG_LBA | ATA_TFLAG_LBA48;
- 	qc->err_mask |= AC_ERR_DEV | AC_ERR_NCQ;
--	if (dev->class == ATA_DEV_ZAC &&
--	    ((qc->result_tf.status & ATA_SENSE) || qc->result_tf.auxiliary)) {
-+
-+	/*
-+	 * If the device supports NCQ autosense, ata_eh_read_log_10h() will have
-+	 * stored the sense data in qc->result_tf.auxiliary.
-+	 */
-+	if (qc->result_tf.auxiliary) {
- 		char sense_key, asc, ascq;
+ 	spin_lock(&reorder->lock);
+ 	/* Sort in ascending order of sequence number. */
+-	list_for_each_entry_reverse(cur, &reorder->list, list)
++	list_for_each_prev(pos, &reorder->list) {
++		cur = list_entry(pos, struct padata_priv, list);
+ 		if (cur->seq_nr < padata->seq_nr)
+ 			break;
+-	list_add(&padata->list, &cur->list);
++	}
++	list_add(&padata->list, pos);
+ 	spin_unlock(&reorder->lock);
  
- 		sense_key = (qc->result_tf.auxiliary >> 16) & 0xff;
+ 	/*
 -- 
 2.35.1
 
