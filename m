@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949D61863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:58:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AB21C433F1;
-	Wed, 28 Dec 2022 14:58:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D481863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:58:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B9CC433D2;
+	Wed, 28 Dec 2022 14:58:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239490;
-	bh=sWRMUQOmGXPMDEGjyJdkqFYDwJYOlv81EffLH/nUy4s=;
+	s=korg; t=1672239493;
+	bh=PJWZcfOsEMmvedelveXm8G+SS9VZuYnXoioqc5fHs5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eKzw7wsgarSVMnW4/uUgpFu84VCLV/29V/zKEcg4GkpO9Gl97KTcGSsJV+AJk7l1y
-	 /Gv+9kKM6w3mEgJB+yDoX66hwtF9p8ShtKezA5w9ZUlJuTBI8fi7sQBXwKWhsmP8wu
-	 lubgHH5VyE12WSuvruio2HA97ufRcRHvjUpaaEoM=
+	b=E+43/EBTf10C4A7Swkq/A0nM2h8/K0aQmAeJ5gnu5MiM+cozmT94iyWi9fzRVN9Ea
+	 ewjoYujkyCCbVgy19TeLA/8zSRwjqDBCYUdghlkBogxr2Bdct5y+kQVXVSkwaqkmZh
+	 WqtY7TylybUz/LBTu7af10rmeAyu7ifJ3GSWFZfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 234/731] clk: imx: replace osc_hdmi with dummy
-Date: Wed, 28 Dec 2022 15:35:41 +0100
-Message-Id: <20221228144303.344466587@linuxfoundation.org>
+Subject: [PATCH 6.0 0039/1073] arm64: dts: qcom: sm6350: drop bogus DP PHY clock
+Date: Wed, 28 Dec 2022 15:27:07 +0100
+Message-Id: <20221228144329.191164054@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,68 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit e7fa365ff66f16772dc06b480cd78f858d10856b ]
+[ Upstream commit 95fade4016cbd57ee050ab226c8f0483af1753c4 ]
 
-There is no occurrence of the hdmi oscillator in the reference manual
-(document IMX8MNRM Rev 2, 07/2022). Further, if we consider the indexes
-76-81 and 134 of the "Clock Root" table of chapter 5 of the RM, there is
-no entry for the source select bits 101b, which is the setting referenced
-by "osc_hdmi".
-Fix by renaming "osc_hdmi" with "dummy", a clock which has already been
-used for missing source select bits.
+The QMP pipe clock is used by the USB part of the PHY so drop the
+corresponding properties from the DP child node.
 
-Tested on the BSH SystemMaster (SMM) S2 board.
-
-Fixes: 96d6392b54dbb ("clk: imx: Add support for i.MX8MN clock driver")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Acked-by: Marco Felsch <m.felsch@pengutronix.de>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20221117113637.1978703-3-dario.binacchi@amarulasolutions.com
+Fixes: 23737b9557fe ("arm64: dts: qcom: sm6350: Add USB1 nodes")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221026152511.9661-3-johan+linaro@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mn.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/drivers/clk/imx/clk-imx8mn.c b/drivers/clk/imx/clk-imx8mn.c
-index 4f5f368ef25b..dfba853335fd 100644
---- a/drivers/clk/imx/clk-imx8mn.c
-+++ b/drivers/clk/imx/clk-imx8mn.c
-@@ -108,27 +108,27 @@ static const char * const imx8mn_disp_pixel_sels[] = {"osc_24m", "video_pll1_out
- 						      "sys_pll3_out", "clk_ext4", };
+diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+index d06aefdf3d9e..ec64b6a12e20 100644
+--- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
+@@ -1011,9 +1011,6 @@ dp_phy: dp-phy@88ea200 {
+ 				      <0 0x088eaa00 0 0x100>;
+ 				#phy-cells = <0>;
+ 				#clock-cells = <1>;
+-				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+-				clock-names = "pipe0";
+-				clock-output-names = "usb3_phy_pipe_clk_src";
+ 			};
+ 		};
  
- static const char * const imx8mn_sai2_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext3", "clk_ext4", };
- 
- static const char * const imx8mn_sai3_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext3", "clk_ext4", };
- 
- static const char * const imx8mn_sai5_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext2", "clk_ext3", };
- 
- static const char * const imx8mn_sai6_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext3", "clk_ext4", };
- 
- static const char * const imx8mn_sai7_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext3", "clk_ext4", };
- 
- static const char * const imx8mn_spdif1_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						  "video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						  "video_pll1_out", "sys_pll1_133m", "dummy",
- 						  "clk_ext2", "clk_ext3", };
- 
- static const char * const imx8mn_enet_ref_sels[] = {"osc_24m", "sys_pll2_125m", "sys_pll2_50m",
 -- 
 2.35.1
 
