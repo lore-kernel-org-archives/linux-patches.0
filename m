@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2BC1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:31:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E88BEC433D2;
-	Wed, 28 Dec 2022 15:31:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 241791863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:31:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99E52C43392;
+	Wed, 28 Dec 2022 15:31:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241469;
-	bh=pflqptXIswItlr5+JwuUkH37rwc7vDGlWVLQV8q1BOA=;
+	s=korg; t=1672241472;
+	bh=c63AvY7EiMllCaX1dYzzbfLMwnTOuLYomnFjkQ2hMrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNz211UXI1xiOowh0g9+nqIwCL7kl7kq5wzewuH8GSPB5Y16eTKn6v7hmHYjODpDI
-	 HIXHKMH5XjPI9oPxTNv6v0eLQmJD7eKl7yTuLAHWG8S4lqtDk1KD1esYp0XxNCig/8
-	 7GM+zzUb2ZQVsEl7cdE1D5WhfwnVcIghLuLVidCE=
+	b=qZhkdkxPahJMSpIKqhwAb8md1LvuGWzXmK441L+ueu8NgjJBo7LOC9Xf3IcW9eoG9
+	 JRW4wQfs0BmbkdEesKDQdkMFooSfxdZUuun1h4sDITNxGD1QnTSsLlv/Op80VFTxio
+	 7vZT/+SJ4zrM82UT1hVRzc79RoyLBIq6+Yzullfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Jimmy Assarsson <extja@kvaser.com>,
+	Anssi Hannula <anssi.hannula@bitwise.fi>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0287/1073] clk: qcom: gcc-ipq806x: use parent_data for the last remaining entry
-Date: Wed, 28 Dec 2022 15:31:15 +0100
-Message-Id: <20221228144335.813079812@linuxfoundation.org>
+Subject: [PATCH 6.1 0250/1146] can: kvaser_usb_leaf: Fix wrong CAN state after stopping
+Date: Wed, 28 Dec 2022 15:29:49 +0100
+Message-Id: <20221228144336.929090846@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,38 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Anssi Hannula <anssi.hannula@bitwise.fi>
 
-[ Upstream commit 55307e522cc7a4dddc3d231ca5cb7e68e9668f66 ]
+[ Upstream commit a11249acf802341294557895d8e5f6aef080253f ]
 
-Use parent_data for the last remaining entry (pll4). This clock is
-provided by the lcc device.
+0bfd:0124 Kvaser Mini PCI Express 2xHS FW 4.18.778 sends a
+CMD_CHIP_STATE_EVENT indicating bus-off after stopping the device,
+causing a stopped device to appear as CAN_STATE_BUS_OFF instead of
+CAN_STATE_STOPPED.
 
-Fixes: cb02866f9a74 ("clk: qcom: gcc-ipq806x: convert parent_names to parent_data")
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20220927113826.246241-3-dmitry.baryshkov@linaro.org
+Fix that by not handling error events on stopped devices.
+
+Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
+Tested-by: Jimmy Assarsson <extja@kvaser.com>
+Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
+Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
+Link: https://lore.kernel.org/all/20221010185237.319219-8-extja@kvaser.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/gcc-ipq806x.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/clk/qcom/gcc-ipq806x.c b/drivers/clk/qcom/gcc-ipq806x.c
-index 718de17a1e60..6447f3e81b55 100644
---- a/drivers/clk/qcom/gcc-ipq806x.c
-+++ b/drivers/clk/qcom/gcc-ipq806x.c
-@@ -79,7 +79,9 @@ static struct clk_regmap pll4_vote = {
- 	.enable_mask = BIT(4),
- 	.hw.init = &(struct clk_init_data){
- 		.name = "pll4_vote",
--		.parent_names = (const char *[]){ "pll4" },
-+		.parent_data = &(const struct clk_parent_data){
-+			.fw_name = "pll4", .name = "pll4",
-+		},
- 		.num_parents = 1,
- 		.ops = &clk_pll_vote_ops,
- 	},
+diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+index 993fcc19637d..4f9c76f4d0da 100644
+--- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
++++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
+@@ -1045,6 +1045,10 @@ static void kvaser_usb_leaf_rx_error(const struct kvaser_usb *dev,
+ 	leaf = priv->sub_priv;
+ 	stats = &priv->netdev->stats;
+ 
++	/* Ignore e.g. state change to bus-off reported just after stopping */
++	if (!netif_running(priv->netdev))
++		return;
++
+ 	/* Update all of the CAN interface's state and error counters before
+ 	 * trying any memory allocation that can actually fail with -ENOMEM.
+ 	 *
 -- 
 2.35.1
 
