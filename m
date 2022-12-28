@@ -1,36 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C41B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:18:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9DEC433D2;
-	Wed, 28 Dec 2022 15:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9681863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:18:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7460CC433EF;
+	Wed, 28 Dec 2022 15:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240695;
-	bh=xnncnqnNxEXQ71qlNDAGrOqAbIWOZBwesnFOzhzptFU=;
+	s=korg; t=1672240697;
+	bh=SFyELqxAungLCBJWr11Vko1GyVBAGq39GjSip9XVsFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wJ3k0Assu2Ll9cdQ0deZdujb40b7fTD+4T3kTlPW3n7iRCmpozv6j9uVWJsCKKtjH
-	 lgV3krSZ63Ps7VQxXE99WpWH8bB3d8Qk9ejHs09fwmW9ZXph16XFPYdAIRbWJK4lCG
-	 RGLfEUx7M5MyQEJfSsKBAR0ib1cIN/7mh+iJ3sCw=
+	b=AL6uAd68spqEVf//OAgTtW4Z8KnbFjbyCnSXqJD8BS+PTeoXFKBOOwuVbrclmI1Wv
+	 R/i42w7hFQBPRuazQ7Py6QvLS5Hbt+bmUzYTPceKisowrCtJDfzubOvWiueL2mrx65
+	 KyZ3btinx+2bBZC5xwy7v7SwHM+VxVPNKInNVS5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Jocelyn Falempe <jfalempe@redhat.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	David Airlie <airlied@linux.ie>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	dri-devel@lists.freedesktop.org,
+	Mark Zhang <markzhang@nvidia.com>,
+	Michael Guralnik <michaelgur@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0192/1073] drm/atomic-helper: Dont allocate new plane state in CRTC check
-Date: Wed, 28 Dec 2022 15:29:40 +0100
-Message-Id: <20221228144333.228471808@linuxfoundation.org>
+Subject: [PATCH 5.15 387/731] RDMA/core: Make sure "ib_port" is valid when access sysfs node
+Date: Wed, 28 Dec 2022 15:38:14 +0100
+Message-Id: <20221228144307.779272567@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -41,76 +36,128 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Zimmermann <tzimmermann@suse.de>
+From: Mark Zhang <markzhang@nvidia.com>
 
-[ Upstream commit dbbf933d365da1a76a540211bee3d57bde520194 ]
+[ Upstream commit 5e15ff29b156bbbdeadae230c8ecd5ecd8ca2477 ]
 
-In drm_atomic_helper_check_crtc_state(), do not add a new plane state
-to the global state if it does not exist already. Adding a new plane
-state will result in overhead for the plane during the atomic-commit
-step.
+The "ib_port" structure must be set before adding the sysfs kobject,
+and reset after removing it, otherwise it may crash when accessing
+the sysfs node:
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000050
+  Mem abort info:
+    ESR = 0x96000006
+    Exception class = DABT (current EL), IL = 32 bits
+    SET = 0, FnV = 0
+    EA = 0, S1PTW = 0
+  Data abort info:
+    ISV = 0, ISS = 0x00000006
+    CM = 0, WnR = 0
+  user pgtable: 4k pages, 48-bit VAs, pgdp = 00000000e85f5ba5
+  [0000000000000050] pgd=0000000848fd9003, pud=000000085b387003, pmd=0000000000000000
+  Internal error: Oops: 96000006 [#2] PREEMPT SMP
+  Modules linked in: ib_umad(O) mlx5_ib(O) nfnetlink_cttimeout(E) nfnetlink(E) act_gact(E) cls_flower(E) sch_ingress(E) openvswitch(E) nsh(E) nf_nat_ipv6(E) nf_nat_ipv4(E) nf_conncount(E) nf_nat(E) nf_conntrack(E) nf_defrag_ipv6(E) nf_defrag_ipv4(E) mst_pciconf(O) ipmi_devintf(E) ipmi_msghandler(E) ipmb_dev_int(OE) mlx5_core(O) mlxfw(O) mlxdevm(O) auxiliary(O) ib_uverbs(O) ib_core(O) mlx_compat(O) psample(E) sbsa_gwdt(E) uio_pdrv_genirq(E) uio(E) mlxbf_pmc(OE) mlxbf_gige(OE) mlxbf_tmfifo(OE) gpio_mlxbf2(OE) pwr_mlxbf(OE) mlx_trio(OE) i2c_mlxbf(OE) mlx_bootctl(OE) bluefield_edac(OE) knem(O) ip_tables(E) ipv6(E) crc_ccitt(E) [last unloaded: mst_pci]
+  Process grep (pid: 3372, stack limit = 0x0000000022055c92)
+  CPU: 5 PID: 3372 Comm: grep Tainted: G      D    OE     4.19.161-mlnx.47.gadcd9e3 #1
+  Hardware name: https://www.mellanox.com BlueField SoC/BlueField SoC, BIOS BlueField:3.9.2-15-ga2403ab Sep  8 2022
+  pstate: 40000005 (nZcv daif -PAN -UAO)
+  pc : hw_stat_port_show+0x4c/0x80 [ib_core]
+  lr : port_attr_show+0x40/0x58 [ib_core]
+  sp : ffff000029f43b50
+  x29: ffff000029f43b50 x28: 0000000019375000
+  x27: ffff8007b821a540 x26: ffff000029f43e30
+  x25: 0000000000008000 x24: ffff000000eaa958
+  x23: 0000000000001000 x22: ffff8007a4ce3000
+  x21: ffff8007baff8000 x20: ffff8007b9066ac0
+  x19: ffff8007bae97578 x18: 0000000000000000
+  x17: 0000000000000000 x16: 0000000000000000
+  x15: 0000000000000000 x14: 0000000000000000
+  x13: 0000000000000000 x12: 0000000000000000
+  x11: 0000000000000000 x10: 0000000000000000
+  x9 : 0000000000000000 x8 : ffff8007a4ce4000
+  x7 : 0000000000000000 x6 : 000000000000003f
+  x5 : ffff000000e6a280 x4 : ffff8007a4ce3000
+  x3 : 0000000000000000 x2 : aaaaaaaaaaaaaaab
+  x1 : ffff8007b9066a10 x0 : ffff8007baff8000
+  Call trace:
+   hw_stat_port_show+0x4c/0x80 [ib_core]
+   port_attr_show+0x40/0x58 [ib_core]
+   sysfs_kf_seq_show+0x8c/0x150
+   kernfs_seq_show+0x44/0x50
+   seq_read+0x1b4/0x45c
+   kernfs_fop_read+0x148/0x1d8
+   __vfs_read+0x58/0x180
+   vfs_read+0x94/0x154
+   ksys_read+0x68/0xd8
+   __arm64_sys_read+0x28/0x34
+   el0_svc_common+0x88/0x18c
+   el0_svc_handler+0x78/0x94
+   el0_svc+0x8/0xe8
+  Code: f2955562 aa1603e4 aa1503e0 f9405683 (f9402861)
 
-For the test in drm_atomic_helper_check_crtc_state() to succeed, it
-is important that the CRTC has an enabled primary plane after the
-commit. Simply testing the CRTC state's plane_mask for a primary plane
-is sufficient.
-
-Note that the helper still only tests for an attached primary plane.
-Drivers have to ensure that the plane contains valid pixel information.
-
-v5:
-	* fix commit description (Javier)
-v3:
-	* test for a primary plane in plane_mask (Ville)
-v2:
-	* remove unnecessary test for plane->crtc (Ville)
-	* inline drm_atomic_get_next_plane_state() (Ville)
-	* acquire plane lock before accessing plane->state (Ville)
-
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Reviewed-by: Javier Martinez Canillas <javierm@redhat.com>
-Fixes: d6b9af1097fe ("drm/atomic-helper: Add helper drm_atomic_helper_check_crtc_state()")
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Jocelyn Falempe <jfalempe@redhat.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: David Airlie <airlied@linux.ie>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: dri-devel@lists.freedesktop.org
-Link: https://patchwork.freedesktop.org/patch/msgid/20221007124338.24152-2-tzimmermann@suse.de
+Fixes: d8a5883814b9 ("RDMA/core: Replace the ib_port_data hw_stats pointers with a ib_port pointer")
+Signed-off-by: Mark Zhang <markzhang@nvidia.com>
+Reviewed-by: Michael Guralnik <michaelgur@nvidia.com>
+Link: https://lore.kernel.org/r/88867e705c42c1cd2011e45201c25eecdb9fef94.1667810736.git.leonro@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_atomic_helper.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ drivers/infiniband/core/sysfs.c | 17 +++++++++++------
+ 1 file changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
-index 8bf41aa24068..6526d6ade04b 100644
---- a/drivers/gpu/drm/drm_atomic_helper.c
-+++ b/drivers/gpu/drm/drm_atomic_helper.c
-@@ -899,7 +899,6 @@ int drm_atomic_helper_check_crtc_state(struct drm_crtc_state *crtc_state,
- 				       bool can_disable_primary_planes)
- {
- 	struct drm_device *dev = crtc_state->crtc->dev;
--	struct drm_atomic_state *state = crtc_state->state;
+diff --git a/drivers/infiniband/core/sysfs.c b/drivers/infiniband/core/sysfs.c
+index 8d709986b88c..253ccaf343f6 100644
+--- a/drivers/infiniband/core/sysfs.c
++++ b/drivers/infiniband/core/sysfs.c
+@@ -1198,6 +1198,9 @@ static struct ib_port *setup_port(struct ib_core_device *coredev, int port_num,
+ 	p->port_num = port_num;
+ 	kobject_init(&p->kobj, &port_type);
  
- 	if (!crtc_state->enable)
- 		return 0;
-@@ -910,14 +909,7 @@ int drm_atomic_helper_check_crtc_state(struct drm_crtc_state *crtc_state,
- 		struct drm_plane *plane;
++	if (device->port_data && is_full_dev)
++		device->port_data[port_num].sysfs = p;
++
+ 	cur_group = p->groups_list;
+ 	ret = alloc_port_table_group("gids", &p->groups[0], p->attrs_list,
+ 				     attr->gid_tbl_len, show_port_gid);
+@@ -1243,9 +1246,6 @@ static struct ib_port *setup_port(struct ib_core_device *coredev, int port_num,
+ 	}
  
- 		drm_for_each_plane_mask(plane, dev, crtc_state->plane_mask) {
--			struct drm_plane_state *plane_state;
+ 	list_add_tail(&p->kobj.entry, &coredev->port_list);
+-	if (device->port_data && is_full_dev)
+-		device->port_data[port_num].sysfs = p;
 -
--			if (plane->type != DRM_PLANE_TYPE_PRIMARY)
--				continue;
--			plane_state = drm_atomic_get_plane_state(state, plane);
--			if (IS_ERR(plane_state))
--				return PTR_ERR(plane_state);
--			if (plane_state->fb && plane_state->crtc) {
-+			if (plane->type == DRM_PLANE_TYPE_PRIMARY) {
- 				has_primary_plane = true;
- 				break;
- 			}
+ 	return p;
+ 
+ err_groups:
+@@ -1253,6 +1253,8 @@ static struct ib_port *setup_port(struct ib_core_device *coredev, int port_num,
+ err_del:
+ 	kobject_del(&p->kobj);
+ err_put:
++	if (device->port_data && is_full_dev)
++		device->port_data[port_num].sysfs = NULL;
+ 	kobject_put(&p->kobj);
+ 	return ERR_PTR(ret);
+ }
+@@ -1261,14 +1263,17 @@ static void destroy_port(struct ib_core_device *coredev, struct ib_port *port)
+ {
+ 	bool is_full_dev = &port->ibdev->coredev == coredev;
+ 
+-	if (port->ibdev->port_data &&
+-	    port->ibdev->port_data[port->port_num].sysfs == port)
+-		port->ibdev->port_data[port->port_num].sysfs = NULL;
+ 	list_del(&port->kobj.entry);
+ 	if (is_full_dev)
+ 		sysfs_remove_groups(&port->kobj, port->ibdev->ops.port_groups);
++
+ 	sysfs_remove_groups(&port->kobj, port->groups_list);
+ 	kobject_del(&port->kobj);
++
++	if (port->ibdev->port_data &&
++	    port->ibdev->port_data[port->port_num].sysfs == port)
++		port->ibdev->port_data[port->port_num].sysfs = NULL;
++
+ 	kobject_put(&port->kobj);
+ }
+ 
 -- 
 2.35.1
 
