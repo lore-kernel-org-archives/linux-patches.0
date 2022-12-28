@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C97D11863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:54:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DFE5C433D2;
-	Wed, 28 Dec 2022 14:54:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4A21863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:54:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0C16C433D2;
+	Wed, 28 Dec 2022 14:54:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239263;
-	bh=SCzWZlT7d8fyEv3RmfHSfvPwWwLzMm2gkCVM57ca0MA=;
+	s=korg; t=1672239266;
+	bh=sQYlt14kTXoF7bYBiGRFGQUH5Ue0wqhvUFVZGIfzbco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FsFg1ZMaAwGE86nP96tEAq+DmLrejkC4UQ5uy3ufxyKd2t/WH0Lp3qzjX9e+CZDFt
-	 30vrhPZ+QRpEGLdf77d7/8jNoWfV7gwuVTi1o9mTCnGVZc1db/6coEsYO3CRQhmUr8
-	 dSSTDteOU1UjvwbvU29zGn+PLOSUGOEPTu4OHVVo=
+	b=Me4CBS9wgD5iA4Cp3qqCY6V8ushC3TAslStHiUxIINjHHKmriKFCtdV4EMZQLAH/I
+	 YJnfkN91beQUGkiS2U/zMvhkJ1Tuiu0NPW056z2CbWCLXzPLWEd9RSsIIm0ydDTofE
+	 LF9KnNEueh6ycyS+d45aUgu+wa0BFiZjZ+WTOfcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
+	Jeffrey Altman <jaltman@auristor.com>,
 	David Howells <dhowells@redhat.com>,
 	Marc Dionne <marc.dionne@auristor.com>,
 	linux-afs@lists.infradead.org,
-	netdev@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 190/731] net, proc: Provide PROC_FS=n fallback for proc_create_net_single_write()
-Date: Wed, 28 Dec 2022 15:34:57 +0100
-Message-Id: <20221228144302.066590087@linuxfoundation.org>
+Subject: [PATCH 5.15 191/731] rxrpc: Fix ack.bufferSize to be 0 when generating an ack
+Date: Wed, 28 Dec 2022 15:34:58 +0100
+Message-Id: <20221228144302.095239374@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -40,38 +39,33 @@ Content-Transfer-Encoding: 8bit
 
 From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit c3d96f690a790074b508fe183a41e36a00cd7ddd ]
+[ Upstream commit 8889a711f9b4dcf4dd1330fa493081beebd118c9 ]
 
-Provide a CONFIG_PROC_FS=n fallback for proc_create_net_single_write().
+ack.bufferSize should be set to 0 when generating an ack.
 
-Also provide a fallback for proc_create_net_data_write().
-
-Fixes: 564def71765c ("proc: Add a way to make network proc files writable")
-Reported-by: kernel test robot <lkp@intel.com>
+Fixes: 8d94aa381dab ("rxrpc: Calls shouldn't hold socket refs")
+Reported-by: Jeffrey Altman <jaltman@auristor.com>
 Signed-off-by: David Howells <dhowells@redhat.com>
 cc: Marc Dionne <marc.dionne@auristor.com>
 cc: linux-afs@lists.infradead.org
-cc: netdev@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/proc_fs.h | 2 ++
- 1 file changed, 2 insertions(+)
+ net/rxrpc/output.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/proc_fs.h b/include/linux/proc_fs.h
-index 069c7fd95396..a2f25b26ae1e 100644
---- a/include/linux/proc_fs.h
-+++ b/include/linux/proc_fs.h
-@@ -191,8 +191,10 @@ static inline void proc_remove(struct proc_dir_entry *de) {}
- static inline int remove_proc_subtree(const char *name, struct proc_dir_entry *parent) { return 0; }
+diff --git a/net/rxrpc/output.c b/net/rxrpc/output.c
+index 9683617db704..08c117bc083e 100644
+--- a/net/rxrpc/output.c
++++ b/net/rxrpc/output.c
+@@ -93,7 +93,7 @@ static size_t rxrpc_fill_out_ack(struct rxrpc_connection *conn,
+ 	*_hard_ack = hard_ack;
+ 	*_top = top;
  
- #define proc_create_net_data(name, mode, parent, ops, state_size, data) ({NULL;})
-+#define proc_create_net_data_write(name, mode, parent, ops, write, state_size, data) ({NULL;})
- #define proc_create_net(name, mode, parent, state_size, ops) ({NULL;})
- #define proc_create_net_single(name, mode, parent, show, data) ({NULL;})
-+#define proc_create_net_single_write(name, mode, parent, show, write, data) ({NULL;})
- 
- static inline struct pid *tgid_pidfd_to_pid(const struct file *file)
- {
+-	pkt->ack.bufferSpace	= htons(8);
++	pkt->ack.bufferSpace	= htons(0);
+ 	pkt->ack.maxSkew	= htons(0);
+ 	pkt->ack.firstPacket	= htonl(hard_ack + 1);
+ 	pkt->ack.previousPacket	= htonl(call->ackr_highest_seq);
 -- 
 2.35.1
 
