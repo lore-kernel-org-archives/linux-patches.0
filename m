@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 831341C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:54:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02BBFC433EF;
-	Wed, 28 Dec 2022 16:54:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7391C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:54:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C91D1C433D2;
+	Wed, 28 Dec 2022 16:54:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246465;
-	bh=r1Tr7Ex1lfuWB1lk5cCRThE2qppV0fzq6eYgqDGwVGc=;
+	s=korg; t=1672246468;
+	bh=zuivJDDa6t3bP4XeCrzKE0ZbuKINDY+r/1FxTcakRjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C1K/uGjRk8SwivjVzgwfXu3iMJPTqczwPWGnT3EoZxxMmVqxCNFcQEHMcXcJy4C4h
-	 j0A6RRmhEt5isOLGTP2cbfiMPYG3IOlHCTRPl0hp9OW5yavkLXZiXQC2sqehs2L0DY
-	 MTEShdfEDlnd5dQglQCcGBEb9qIb0Ce2sozmPtFI=
+	b=JqppctlsZwPdRS3De4KRBdl4cqtbAXh23WYV6ERw8yTgkQyYQWGwlekJ8Knoq1dIz
+	 UHcEgS7aYTfeXpGrbEAVv+5mshgPNSTnCm2a2NMS9se87+a1u8iuh8LgWDA3DVAspK
+	 4P/ChGjE46n7xK/jsn/IqmITq7BlQtXFz6meGUfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Sven Peter <sven@svenpeter.dev>,
 	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1047/1146] Bluetooth: Add quirk to disable extended scanning
-Date: Wed, 28 Dec 2022 15:43:06 +0100
-Message-Id: <20221228144358.762922328@linuxfoundation.org>
+Subject: [PATCH 6.1 1048/1146] Bluetooth: Add quirk to disable MWS Transport Configuration
+Date: Wed, 28 Dec 2022 15:43:07 +0100
+Message-Id: <20221228144358.787121053@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -37,79 +37,85 @@ Content-Transfer-Encoding: 8bit
 
 From: Sven Peter <sven@svenpeter.dev>
 
-[ Upstream commit 392fca352c7a95e2828d49e7500e26d0c87ca265 ]
+[ Upstream commit ffcb0a445ec2d5753751437706aa0a7ea8351099 ]
 
-Broadcom 4377 controllers found in Apple x86 Macs with the T2 chip
-claim to support extended scanning when querying supported states,
+Broadcom 4378/4387 controllers found in Apple Silicon Macs claim to
+support getting MWS Transport Layer Configuration,
 
-< HCI Command: LE Read Supported St.. (0x08|0x001c) plen 0
-> HCI Event: Command Complete (0x0e) plen 12
-      LE Read Supported States (0x08|0x001c) ncmd 1
+< HCI Command: Read Local Supported... (0x04|0x0002) plen 0
+> HCI Event: Command Complete (0x0e) plen 68
+      Read Local Supported Commands (0x04|0x0002) ncmd 1
         Status: Success (0x00)
-        States: 0x000003ffffffffff
 [...]
-          LE Set Extended Scan Parameters (Octet 37 - Bit 5)
-          LE Set Extended Scan Enable (Octet 37 - Bit 6)
+          Get MWS Transport Layer Configuration (Octet 30 - Bit 3)]
 [...]
 
-, but then fail to actually implement the extended scanning:
+, but then don't actually allow the required command:
 
-< HCI Command: LE Set Extended Sca.. (0x08|0x0041) plen 8
-        Own address type: Random (0x01)
-        Filter policy: Accept all advertisement (0x00)
-        PHYs: 0x01
-        Entry 0: LE 1M
-          Type: Active (0x01)
-          Interval: 11.250 msec (0x0012)
-          Window: 11.250 msec (0x0012)
-> HCI Event: Command Complete (0x0e) plen 4
-      LE Set Extended Scan Parameters (0x08|0x0041) ncmd 1
-        Status: Unknown HCI Command (0x01)
+> HCI Event: Command Complete (0x0e) plen 15
+      Get MWS Transport Layer Configuration (0x05|0x000c) ncmd 1
+        Status: Command Disallowed (0x0c)
+        Number of transports: 0
+        Baud rate list: 0 entries
+        00 00 00 00 00 00 00 00 00 00
 
 Signed-off-by: Sven Peter <sven@svenpeter.dev>
 Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
  include/net/bluetooth/hci.h      | 10 ++++++++++
- include/net/bluetooth/hci_core.h |  4 +++-
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ include/net/bluetooth/hci_core.h |  3 +++
+ net/bluetooth/hci_sync.c         |  2 +-
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
 diff --git a/include/net/bluetooth/hci.h b/include/net/bluetooth/hci.h
-index 684f1cd28730..d8abeac2fc1e 100644
+index d8abeac2fc1e..7a381fcef939 100644
 --- a/include/net/bluetooth/hci.h
 +++ b/include/net/bluetooth/hci.h
-@@ -274,6 +274,16 @@ enum {
+@@ -284,6 +284,16 @@ enum {
  	 * during the hdev->setup vendor callback.
  	 */
- 	HCI_QUIRK_BROKEN_ENHANCED_SETUP_SYNC_CONN,
+ 	HCI_QUIRK_BROKEN_EXT_SCAN,
 +
 +	/*
-+	 * When this quirk is set, the HCI_OP_LE_SET_EXT_SCAN_ENABLE command is
++	 * When this quirk is set, the HCI_OP_GET_MWS_TRANSPORT_CONFIG command is
 +	 * disabled. This is required for some Broadcom controllers which
-+	 * erroneously claim to support extended scanning.
++	 * erroneously claim to support MWS Transport Layer Configuration.
 +	 *
 +	 * This quirk can be set before hci_register_dev is called or
 +	 * during the hdev->setup vendor callback.
 +	 */
-+	HCI_QUIRK_BROKEN_EXT_SCAN,
++	HCI_QUIRK_BROKEN_MWS_TRANSPORT_CONFIG,
  };
  
  /* HCI device flags */
 diff --git a/include/net/bluetooth/hci_core.h b/include/net/bluetooth/hci_core.h
-index c54bc71254af..3cd00be0fcd2 100644
+index 3cd00be0fcd2..7f585e5dd71b 100644
 --- a/include/net/bluetooth/hci_core.h
 +++ b/include/net/bluetooth/hci_core.h
-@@ -1689,7 +1689,9 @@ void hci_conn_del_sysfs(struct hci_conn *conn);
+@@ -1719,6 +1719,9 @@ void hci_conn_del_sysfs(struct hci_conn *conn);
+ 	((dev)->le_features[3] & HCI_LE_CIS_PERIPHERAL)
+ #define bis_capable(dev) ((dev)->le_features[3] & HCI_LE_ISO_BROADCASTER)
  
- /* Use ext scanning if set ext scan param and ext scan enable is supported */
- #define use_ext_scan(dev) (((dev)->commands[37] & 0x20) && \
--			   ((dev)->commands[37] & 0x40))
-+			   ((dev)->commands[37] & 0x40) && \
-+			   !test_bit(HCI_QUIRK_BROKEN_EXT_SCAN, &(dev)->quirks))
++#define mws_transport_config_capable(dev) (((dev)->commands[30] & 0x08) && \
++	(!test_bit(HCI_QUIRK_BROKEN_MWS_TRANSPORT_CONFIG, &(dev)->quirks)))
 +
- /* Use ext create connection if command is supported */
- #define use_ext_conn(dev) ((dev)->commands[37] & 0x80)
+ /* ----- HCI protocols ----- */
+ #define HCI_PROTO_DEFER             0x01
  
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 1fc693122a47..3a68d9bc43b8 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -4261,7 +4261,7 @@ static int hci_read_local_pairing_opts_sync(struct hci_dev *hdev)
+ /* Get MWS transport configuration if the HCI command is supported */
+ static int hci_get_mws_transport_config_sync(struct hci_dev *hdev)
+ {
+-	if (!(hdev->commands[30] & 0x08))
++	if (!mws_transport_config_capable(hdev))
+ 		return 0;
+ 
+ 	return __hci_cmd_sync_status(hdev, HCI_OP_GET_MWS_TRANSPORT_CONFIG,
 -- 
 2.35.1
 
