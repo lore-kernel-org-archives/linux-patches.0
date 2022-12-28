@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E5B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:20:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16148C433D2;
-	Wed, 28 Dec 2022 15:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D1F91863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:20:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2BE2C433D2;
+	Wed, 28 Dec 2022 15:20:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240820;
-	bh=97hNrtNMwWStLxyxyymCbSjmvd30Tn7tZX31a4RuoOk=;
+	s=korg; t=1672240823;
+	bh=sjzpE6TxXOaGfUktNUd1mvH/NHxqVsA8dOzS25AlQig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mNi9pT8wwEIR42wK2cOR/EAb4g1hvC4ecrRVUHm4Wy1pnR+Mh9u2l7PNgOhGB9eOP
-	 DFajx81xurW3WleZJ8JpSU6pc/RHfTXq4EiDKEnCxYrwPey5zT3W66oXa2sdqidAiO
-	 ChPQ8OHi87DctHnrRj3+Zni6INz+nOKBEZmHNYcg=
+	b=SWViMmjCToVUYnn0j+qezNy0VbsqwAfW0yG49F/DOv7V8qEV9zIzBOZ9fniqBngOB
+	 X90zCGAdzdbJtIBLuXuyfSqbzfKTKnHN6jvZWjBF1k/YLZieAT6ygm6aahnVWcHWOF
+	 VRO5i2zIn8ly8eFBEbZ5OqF5p/FrO16c5VZpxGS4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Rob Herring <robh@kernel.org>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 401/731] dt-bindings: imx6q-pcie: Fix clock names for imx6sx and imx8mq
-Date: Wed, 28 Dec 2022 15:38:28 +0100
-Message-Id: <20221228144308.190413304@linuxfoundation.org>
+Subject: [PATCH 6.1 0171/1146] x86/xen: Fix memory leak in xen_init_lock_cpu()
+Date: Wed, 28 Dec 2022 15:28:30 +0100
+Message-Id: <20221228144334.803412167@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,100 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit b8a83e600bdde93e7da41ea3204b2b3832a3c99b ]
+[ Upstream commit ca84ce153d887b1dc8b118029976cc9faf2a9b40 ]
 
-Originally as it was defined the legacy bindings the pcie_inbound_axi and
-pcie_aux clock names were supposed to be used in the fsl,imx6sx-pcie and
-fsl,imx8mq-pcie devices respectively. But the bindings conversion has been
-incorrectly so now the fourth clock name is defined as "pcie_inbound_axi
-for imx6sx-pcie, pcie_aux for imx8mq-pcie", which is completely wrong.
-Let's fix that by conditionally apply the clock-names constraints based on
-the compatible string content.
+In xen_init_lock_cpu(), the @name has allocated new string by kasprintf(),
+if bind_ipi_to_irqhandler() fails, it should be freed, otherwise may lead
+to a memory leak issue, fix it.
 
-Link: https://lore.kernel.org/r/20221113191301.5526-2-Sergey.Semin@baikalelectronics.ru
-Fixes: 751ca492f131 ("dt-bindings: PCI: imx6: convert the imx pcie controller to dtschema")
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
-Acked-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Fixes: 2d9e1e2f58b5 ("xen: implement Xen-specific spinlocks")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/20221123155858.11382-3-xiujianfeng@huawei.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bindings/pci/fsl,imx6q-pcie.yaml          | 46 +++++++++++++++++--
- 1 file changed, 42 insertions(+), 4 deletions(-)
+ arch/x86/xen/spinlock.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie.yaml b/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie.yaml
-index acea1cd444fd..9b0548264a39 100644
---- a/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie.yaml
-+++ b/Documentation/devicetree/bindings/pci/fsl,imx6q-pcie.yaml
-@@ -14,9 +14,6 @@ description: |+
-   This PCIe host controller is based on the Synopsys DesignWare PCIe IP
-   and thus inherits all the common properties defined in snps,dw-pcie.yaml.
+diff --git a/arch/x86/xen/spinlock.c b/arch/x86/xen/spinlock.c
+index 043c73dfd2c9..5c6fc16e4b92 100644
+--- a/arch/x86/xen/spinlock.c
++++ b/arch/x86/xen/spinlock.c
+@@ -75,6 +75,7 @@ void xen_init_lock_cpu(int cpu)
+ 	     cpu, per_cpu(lock_kicker_irq, cpu));
  
--allOf:
--  - $ref: /schemas/pci/snps,dw-pcie.yaml#
--
- properties:
-   compatible:
-     enum:
-@@ -59,7 +56,7 @@ properties:
-       - const: pcie
-       - const: pcie_bus
-       - const: pcie_phy
--      - const: pcie_inbound_axi for imx6sx-pcie, pcie_aux for imx8mq-pcie
-+      - enum: [ pcie_inbound_axi, pcie_aux ]
+ 	name = kasprintf(GFP_KERNEL, "spinlock%d", cpu);
++	per_cpu(irq_name, cpu) = name;
+ 	irq = bind_ipi_to_irqhandler(XEN_SPIN_UNLOCK_VECTOR,
+ 				     cpu,
+ 				     dummy_handler,
+@@ -85,7 +86,6 @@ void xen_init_lock_cpu(int cpu)
+ 	if (irq >= 0) {
+ 		disable_irq(irq); /* make sure it's never delivered */
+ 		per_cpu(lock_kicker_irq, cpu) = irq;
+-		per_cpu(irq_name, cpu) = name;
+ 	}
  
-   num-lanes:
-     const: 1
-@@ -166,6 +163,47 @@ required:
-   - clocks
-   - clock-names
+ 	printk("cpu %d spinlock event irq %d\n", cpu, irq);
+@@ -98,6 +98,8 @@ void xen_uninit_lock_cpu(int cpu)
+ 	if (!xen_pvspin)
+ 		return;
  
-+allOf:
-+  - $ref: /schemas/pci/snps,dw-pcie.yaml#
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: fsl,imx6sx-pcie
-+    then:
-+      properties:
-+        clock-names:
-+          items:
-+            - {}
-+            - {}
-+            - {}
-+            - const: pcie_inbound_axi
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const: fsl,imx8mq-pcie
-+    then:
-+      properties:
-+        clock-names:
-+          items:
-+            - {}
-+            - {}
-+            - {}
-+            - const: pcie_aux
-+  - if:
-+      properties:
-+        compatible:
-+          not:
-+            contains:
-+              enum:
-+                - fsl,imx6sx-pcie
-+                - fsl,imx8mq-pcie
-+    then:
-+      properties:
-+        clock-names:
-+          maxItems: 3
-+
- unevaluatedProperties: false
++	kfree(per_cpu(irq_name, cpu));
++	per_cpu(irq_name, cpu) = NULL;
+ 	/*
+ 	 * When booting the kernel with 'mitigations=auto,nosmt', the secondary
+ 	 * CPUs are not activated, and lock_kicker_irq is not initialized.
+@@ -108,8 +110,6 @@ void xen_uninit_lock_cpu(int cpu)
  
- examples:
+ 	unbind_from_irqhandler(irq, NULL);
+ 	per_cpu(lock_kicker_irq, cpu) = -1;
+-	kfree(per_cpu(irq_name, cpu));
+-	per_cpu(irq_name, cpu) = NULL;
+ }
+ 
+ PV_CALLEE_SAVE_REGS_THUNK(xen_vcpu_stolen);
 -- 
 2.35.1
 
