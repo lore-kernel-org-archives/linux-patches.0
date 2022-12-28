@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62D5A1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB03AC433EF;
-	Wed, 28 Dec 2022 15:09:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0855B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:09:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81231C433EF;
+	Wed, 28 Dec 2022 15:09:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672240179;
-	bh=095ijK6dK7KGR4GzKlhZPUj70DOD/SG3NIiDCIcRLxA=;
+	s=korg; t=1672240181;
+	bh=XLnQrrv0n0qLt+falotwTKdhlXBgb5ff7UCWk2stfrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RI2iibT1WciIPB+mlQd6ZviMXAXqow/Yr67oyWCMTYzTyY2xGUzF3ph7G8TTMArnO
-	 O2JAFNyk3TFzcq/oqPjxYU1cI886iUcvQyAoDfwLeHXJsTYIaEj/8iDOe4RhoEX0R5
-	 FVQ++tZy3h4Sjw4rXQH47nnSPaBL7K80R8BqSccY=
+	b=Y76mhLjwKSmGwKbaL/+QxiKXwN7rSXYg/A/nArn1psua4I9Q3KEMBXEahPnIKNSz5
+	 LRsae/W36uekFCojFg7evvdhDCiJXD1hmzrAcL1tc5P6bd72CCUPz1Rf5tIr9M+FbR
+	 JwG+0xWKLUyY0t/04hEPnUExtYwWC4qIkivnZfEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Chen Yu <yu.c.chen@intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 318/731] wifi: brcmfmac: Fix error return code in brcmf_sdio_download_firmware()
-Date: Wed, 28 Dec 2022 15:37:05 +0100
-Message-Id: <20221228144305.793892306@linuxfoundation.org>
+Subject: [PATCH 6.0 0127/1073] ACPI: pfr_telemetry: use ACPI_FREE() to free acpi_object
+Date: Wed, 28 Dec 2022 15:28:35 +0100
+Message-Id: <20221228144331.486406860@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,50 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: Wang ShaoBo <bobo.shaobowang@huawei.com>
 
-[ Upstream commit c2f2924bc7f9ea75ef8d95863e710168f8196256 ]
+[ Upstream commit 0f2aa7fc2a9aee05bafb965d5b1638d3e74b4c61 ]
 
-Fix to return a negative error code instead of 0 when
-brcmf_chip_set_active() fails. In addition, change the return
-value for brcmf_pcie_exit_download_state() to keep consistent.
+acpi_evaluate_dsm_typed()/acpi_evaluate_dsm() should be coupled
+with ACPI_FREE() to free the ACPI memory, because we need to
+track the allocation of acpi_object when ACPI_DBG_TRACK_ALLOCATIONS
+enabled, so use ACPI_FREE() instead of kfree().
 
-Fixes: d380ebc9b6fb ("brcmfmac: rename chip download functions")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/1669959342-27144-1-git-send-email-wangyufen@huawei.com
+Fixes: b0013e037a8b ("ACPI: Introduce Platform Firmware Runtime Telemetry driver")
+Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Reviewed-by: Chen Yu <yu.c.chen@intel.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 2 +-
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/acpi/pfr_telemetry.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-index 3ff4997e1c97..358021a33b8a 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-@@ -626,7 +626,7 @@ static int brcmf_pcie_exit_download_state(struct brcmf_pciedev_info *devinfo,
- 	}
+diff --git a/drivers/acpi/pfr_telemetry.c b/drivers/acpi/pfr_telemetry.c
+index 9abf350bd7a5..27fb6cdad75f 100644
+--- a/drivers/acpi/pfr_telemetry.c
++++ b/drivers/acpi/pfr_telemetry.c
+@@ -144,7 +144,7 @@ static int get_pfrt_log_data_info(struct pfrt_log_data_info *data_info,
+ 	ret = 0;
  
- 	if (!brcmf_chip_set_active(devinfo->ci, resetintr))
--		return -EINVAL;
-+		return -EIO;
- 	return 0;
+ free_acpi_buffer:
+-	kfree(out_obj);
++	ACPI_FREE(out_obj);
+ 
+ 	return ret;
  }
- 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-index f7961b22e051..5006aa831751 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -3411,6 +3411,7 @@ static int brcmf_sdio_download_firmware(struct brcmf_sdio *bus,
- 	/* Take arm out of reset */
- 	if (!brcmf_chip_set_active(bus->ci, rstvec)) {
- 		brcmf_err("error getting out of ARM core reset\n");
-+		bcmerror = -EIO;
- 		goto err;
+@@ -180,7 +180,7 @@ static int set_pfrt_log_level(int level, struct pfrt_log_device *pfrt_log_dev)
+ 		ret = -EBUSY;
  	}
  
+-	kfree(out_obj);
++	ACPI_FREE(out_obj);
+ 
+ 	return ret;
+ }
+@@ -218,7 +218,7 @@ static int get_pfrt_log_level(struct pfrt_log_device *pfrt_log_dev)
+ 	ret = obj->integer.value;
+ 
+ free_acpi_buffer:
+-	kfree(out_obj);
++	ACPI_FREE(out_obj);
+ 
+ 	return ret;
+ }
 -- 
 2.35.1
 
