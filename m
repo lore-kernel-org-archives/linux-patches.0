@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48D1E1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:53:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2DC5C433F0;
-	Wed, 28 Dec 2022 16:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB4E1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:53:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F8F3C433EF;
+	Wed, 28 Dec 2022 16:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246392;
-	bh=VD6GBjq3zdp8wQ6etnsD14tWeHJVLxbgVHF2WdcfFdI=;
+	s=korg; t=1672246394;
+	bh=kIPkRcL7vg8/igWD/iLUOEIINTGgR0Al5u+fgeEOQ8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BMu6Jb0uknH2TY6eBa6+F22uFC5y7o289S6xpkkCG8mJBhFU8BsJvdtsFZRu/safz
-	 j4bGlNE4s1Dxak3dbH+yu+H0EZkPKiDNpulTHMtL1t08TtTKVajNp9sd/e3A1Z7tAF
-	 jqLvfRrpbb+Ogv8sujYdHGFr6EC2FD/a5X7GXzx4=
+	b=ZO+B/VNtpkdaj95A1o2OYUR+1wnpJwT0UPWhCoBxhN4jtfNSZzNKY5fpb1vcsfhpG
+	 lQjjbuT0szhVYKaKHxqO9T3X5cJLs1lTLgbH3EITk3gdLhkLYFZz0rCRsRX0avKlmt
+	 BXCod1FhPak/sCIkXuq4wkvZeJ4YGs4rAHDJEXE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.0 1060/1073] io_uring: improve io_double_lock_ctx fail handling
-Date: Wed, 28 Dec 2022 15:44:08 +0100
-Message-Id: <20221228144357.026350517@linuxfoundation.org>
+	Andrii Nakryiko <andrii@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 1032/1146] libbpf: Avoid enum forward-declarations in public API in C++ mode
+Date: Wed, 28 Dec 2022 15:42:51 +0100
+Message-Id: <20221228144358.388563709@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,32 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-commit 4c979eaefa4356d385b7c7d2877dc04d7fe88969 upstream.
+[ Upstream commit b42693415b86f608049cf1b4870adc1dc65e58b0 ]
 
-msg_ring will fail the request if it can't lock rings, instead punt it
-to io-wq as was originally intended.
+C++ enum forward declarations are fundamentally not compatible with pure
+C enum definitions, and so libbpf's use of `enum bpf_stats_type;`
+forward declaration in libbpf/bpf.h public API header is causing C++
+compilation issues.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/4697f05afcc37df5c8f89e2fe6d9c7c19f0241f9.1670384893.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+More details can be found in [0], but it comes down to C++ supporting
+enum forward declaration only with explicitly specified backing type:
+
+  enum bpf_stats_type: int;
+
+In C (and I believe it's a GCC extension also), such forward declaration
+is simply:
+
+  enum bpf_stats_type;
+
+Further, in Linux UAPI this enum is defined in pure C way:
+
+enum bpf_stats_type { BPF_STATS_RUN_TIME = 0; }
+
+And even though in both cases backing type is int, which can be
+confirmed by looking at DWARF information, for C++ compiler actual enum
+definition and forward declaration are incompatible.
+
+To eliminate this problem, for C++ mode define input argument as int,
+which makes enum unnecessary in libbpf public header. This solves the
+issue and as demonstrated by next patch doesn't cause any unwanted
+compiler warnings, at least with default warnings setting.
+
+  [0] https://stackoverflow.com/questions/42766839/c11-enum-forward-causes-underlying-type-mismatch
+  [1] Closes: https://github.com/libbpf/libbpf/issues/249
+
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20221130200013.2997831-1-andrii@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/msg_ring.c |    2 ++
- 1 file changed, 2 insertions(+)
+ tools/lib/bpf/bpf.h | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/io_uring/msg_ring.c
-+++ b/io_uring/msg_ring.c
-@@ -164,6 +164,8 @@ int io_msg_ring(struct io_kiocb *req, un
- 	}
+diff --git a/tools/lib/bpf/bpf.h b/tools/lib/bpf/bpf.h
+index 9c50beabdd14..fddc05c667b5 100644
+--- a/tools/lib/bpf/bpf.h
++++ b/tools/lib/bpf/bpf.h
+@@ -393,8 +393,15 @@ LIBBPF_API int bpf_task_fd_query(int pid, int fd, __u32 flags, char *buf,
+ 				 __u32 *buf_len, __u32 *prog_id, __u32 *fd_type,
+ 				 __u64 *probe_offset, __u64 *probe_addr);
  
- done:
-+	if (ret == -EAGAIN)
-+		return -EAGAIN;
- 	if (ret < 0)
- 		req_set_fail(req);
- 	io_req_set_res(req, ret, 0);
++#ifdef __cplusplus
++/* forward-declaring enums in C++ isn't compatible with pure C enums, so
++ * instead define bpf_enable_stats() as accepting int as an input
++ */
++LIBBPF_API int bpf_enable_stats(int type);
++#else
+ enum bpf_stats_type; /* defined in up-to-date linux/bpf.h */
+ LIBBPF_API int bpf_enable_stats(enum bpf_stats_type type);
++#endif
+ 
+ struct bpf_prog_bind_opts {
+ 	size_t sz; /* size of this struct for forward/backward compatibility */
+-- 
+2.35.1
+
 
 
