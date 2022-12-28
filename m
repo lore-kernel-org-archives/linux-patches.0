@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0BB1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC5BC433D2;
-	Wed, 28 Dec 2022 15:39:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55281863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF42C433D2;
+	Wed, 28 Dec 2022 15:39:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241964;
-	bh=x8dmkCqTND2Sk1j97ww3Lgpjzn3k7kpZ5uGEQVuEeZQ=;
+	s=korg; t=1672241966;
+	bh=DCIihgFT80+IqazgE7ukiBMeBXKr8+49+RDi5PHR/3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fk6NNsIWxmI9z64A952N0xU1kcTpn3lHP4Y0dBfiRiyG//+DxeFmpROaHQwsceB1N
-	 kEsg3sHRIDBgy/ZE9jl+52Z3DKH5HXVHn10dXS00jQf9uzQkDtKK4eg0PU2148YLqk
-	 JJ8ao2T1b30KddpuOUa6MvsepwDmFhCRSRm7Iieo=
+	b=OXssefUq0gzZHg9pHJDuMFeBrTyqv9fi9Nh7iB17Bjc6IcnIo1RNHfPyWCOI6f4Tp
+	 A7wbef+PgqPHzC6VZX8WrvjzO6DAwn5vknZ1v9lDiulVGCUovf90MELbb7QfA7XK0P
+	 NTzpSo6CiVUbDn2HrVkNOKAvpHfWPsAotTyj1fLo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	coverity-bot <keescook+coverity-bot@chromium.org>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0310/1146] wifi: rtw89: use u32_encode_bits() to fill MAC quota value
-Date: Wed, 28 Dec 2022 15:30:49 +0100
-Message-Id: <20221228144338.575236777@linuxfoundation.org>
+Subject: [PATCH 6.0 0349/1073] udp: Clean up some functions.
+Date: Wed, 28 Dec 2022 15:32:17 +0100
+Message-Id: <20221228144337.485604300@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,51 +35,149 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit 525c06c81d75690a9b795cc62a758838c1a6b6fe ]
+[ Upstream commit 919dfa0b20ae56060dce0436eb710717f8987d18 ]
 
-Coverity reported shift 16 bits could cause sign extension and might get
-an unexpected value. Since the input values are predefined and no this
-kind of case, original code is safe so far. But, still changing them to
-use u32_encode_bits() will be more clear and prevent mistakes in the
-future.
+This patch adds no functional change and cleans up some functions
+that the following patches touch around so that we make them tidy
+and easy to review/revert.  The change is mainly to keep reverse
+christmas tree order.
 
-The original message of Coverity is:
-  Suspicious implicit sign extension: "max_cfg->cma0_dma" with type "u16"
-  (16 bits, unsigned) is promoted in "max_cfg->cma0_dma << 16" to type
-  "int" (32 bits, signed), then sign-extended to type "unsigned long"
-  (64 bits, unsigned).  If "max_cfg->cma0_dma << 16" is greater than
-  0x7FFFFFFF, the upper bits of the result will all be 1."
-
-Reported-by: coverity-bot <keescook+coverity-bot@chromium.org>
-Addresses-Coverity-ID: 1527095 ("Integer handling issues")
-Fixes: e3ec7017f6a2 ("rtw89: add Realtek 802.11ax driver")
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221108013858.10806-1-pkshih@realtek.com
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 7a7160edf1bf ("net: Return errno in sk->sk_prot->get_port().")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/mac.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ net/ipv4/udp.c | 39 +++++++++++++++++++++++----------------
+ net/ipv6/udp.c | 12 ++++++++----
+ 2 files changed, 31 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/mac.c b/drivers/net/wireless/realtek/rtw89/mac.c
-index 0508dfca8edf..077fddc5fa1e 100644
---- a/drivers/net/wireless/realtek/rtw89/mac.c
-+++ b/drivers/net/wireless/realtek/rtw89/mac.c
-@@ -1429,10 +1429,8 @@ static int dle_mix_cfg(struct rtw89_dev *rtwdev, const struct rtw89_dle_mem *cfg
- #define INVALID_QT_WCPU U16_MAX
- #define SET_QUOTA_VAL(_min_x, _max_x, _module, _idx)			\
- 	do {								\
--		val = ((_min_x) &					\
--		       B_AX_ ## _module ## _MIN_SIZE_MASK) |		\
--		      (((_max_x) << 16) &				\
--		       B_AX_ ## _module ## _MAX_SIZE_MASK);		\
-+		val = u32_encode_bits(_min_x, B_AX_ ## _module ## _MIN_SIZE_MASK) | \
-+		      u32_encode_bits(_max_x, B_AX_ ## _module ## _MAX_SIZE_MASK);  \
- 		rtw89_write32(rtwdev,					\
- 			      R_AX_ ## _module ## _QTA ## _idx ## _CFG,	\
- 			      val);					\
+diff --git a/net/ipv4/udp.c b/net/ipv4/udp.c
+index d9099754ac69..c04a26339bd1 100644
+--- a/net/ipv4/udp.c
++++ b/net/ipv4/udp.c
+@@ -232,16 +232,16 @@ static int udp_reuseport_add_sock(struct sock *sk, struct udp_hslot *hslot)
+ int udp_lib_get_port(struct sock *sk, unsigned short snum,
+ 		     unsigned int hash2_nulladdr)
+ {
+-	struct udp_hslot *hslot, *hslot2;
+ 	struct udp_table *udptable = sk->sk_prot->h.udp_table;
+-	int    error = 1;
++	struct udp_hslot *hslot, *hslot2;
+ 	struct net *net = sock_net(sk);
++	int error = 1;
+ 
+ 	if (!snum) {
++		DECLARE_BITMAP(bitmap, PORTS_PER_CHAIN);
++		unsigned short first, last;
+ 		int low, high, remaining;
+ 		unsigned int rand;
+-		unsigned short first, last;
+-		DECLARE_BITMAP(bitmap, PORTS_PER_CHAIN);
+ 
+ 		inet_get_local_port_range(net, &low, &high);
+ 		remaining = (high - low) + 1;
+@@ -2527,10 +2527,13 @@ static struct sock *__udp4_lib_mcast_demux_lookup(struct net *net,
+ 						  __be16 rmt_port, __be32 rmt_addr,
+ 						  int dif, int sdif)
+ {
+-	struct sock *sk, *result;
+ 	unsigned short hnum = ntohs(loc_port);
+-	unsigned int slot = udp_hashfn(net, hnum, udp_table.mask);
+-	struct udp_hslot *hslot = &udp_table.hash[slot];
++	struct sock *sk, *result;
++	struct udp_hslot *hslot;
++	unsigned int slot;
++
++	slot = udp_hashfn(net, hnum, udp_table.mask);
++	hslot = &udp_table.hash[slot];
+ 
+ 	/* Do not bother scanning a too big list */
+ 	if (hslot->count > 10)
+@@ -2558,14 +2561,18 @@ static struct sock *__udp4_lib_demux_lookup(struct net *net,
+ 					    __be16 rmt_port, __be32 rmt_addr,
+ 					    int dif, int sdif)
+ {
+-	unsigned short hnum = ntohs(loc_port);
+-	unsigned int hash2 = ipv4_portaddr_hash(net, loc_addr, hnum);
+-	unsigned int slot2 = hash2 & udp_table.mask;
+-	struct udp_hslot *hslot2 = &udp_table.hash2[slot2];
+ 	INET_ADDR_COOKIE(acookie, rmt_addr, loc_addr);
+-	const __portpair ports = INET_COMBINED_PORTS(rmt_port, hnum);
++	unsigned short hnum = ntohs(loc_port);
++	unsigned int hash2, slot2;
++	struct udp_hslot *hslot2;
++	__portpair ports;
+ 	struct sock *sk;
+ 
++	hash2 = ipv4_portaddr_hash(net, loc_addr, hnum);
++	slot2 = hash2 & udp_table.mask;
++	hslot2 = &udp_table.hash2[slot2];
++	ports = INET_COMBINED_PORTS(rmt_port, hnum);
++
+ 	udp_portaddr_for_each_entry_rcu(sk, &hslot2->head) {
+ 		if (inet_match(net, sk, acookie, ports, dif, sdif))
+ 			return sk;
+@@ -2966,10 +2973,10 @@ EXPORT_SYMBOL(udp_prot);
+ 
+ static struct sock *udp_get_first(struct seq_file *seq, int start)
+ {
+-	struct sock *sk;
+-	struct udp_seq_afinfo *afinfo;
+ 	struct udp_iter_state *state = seq->private;
+ 	struct net *net = seq_file_net(seq);
++	struct udp_seq_afinfo *afinfo;
++	struct sock *sk;
+ 
+ 	if (state->bpf_seq_afinfo)
+ 		afinfo = state->bpf_seq_afinfo;
+@@ -3000,9 +3007,9 @@ static struct sock *udp_get_first(struct seq_file *seq, int start)
+ 
+ static struct sock *udp_get_next(struct seq_file *seq, struct sock *sk)
+ {
+-	struct udp_seq_afinfo *afinfo;
+ 	struct udp_iter_state *state = seq->private;
+ 	struct net *net = seq_file_net(seq);
++	struct udp_seq_afinfo *afinfo;
+ 
+ 	if (state->bpf_seq_afinfo)
+ 		afinfo = state->bpf_seq_afinfo;
+@@ -3058,8 +3065,8 @@ EXPORT_SYMBOL(udp_seq_next);
+ 
+ void udp_seq_stop(struct seq_file *seq, void *v)
+ {
+-	struct udp_seq_afinfo *afinfo;
+ 	struct udp_iter_state *state = seq->private;
++	struct udp_seq_afinfo *afinfo;
+ 
+ 	if (state->bpf_seq_afinfo)
+ 		afinfo = state->bpf_seq_afinfo;
+diff --git a/net/ipv6/udp.c b/net/ipv6/udp.c
+index fb667e02e976..d917d62e662d 100644
+--- a/net/ipv6/udp.c
++++ b/net/ipv6/udp.c
+@@ -1039,12 +1039,16 @@ static struct sock *__udp6_lib_demux_lookup(struct net *net,
+ 			int dif, int sdif)
+ {
+ 	unsigned short hnum = ntohs(loc_port);
+-	unsigned int hash2 = ipv6_portaddr_hash(net, loc_addr, hnum);
+-	unsigned int slot2 = hash2 & udp_table.mask;
+-	struct udp_hslot *hslot2 = &udp_table.hash2[slot2];
+-	const __portpair ports = INET_COMBINED_PORTS(rmt_port, hnum);
++	unsigned int hash2, slot2;
++	struct udp_hslot *hslot2;
++	__portpair ports;
+ 	struct sock *sk;
+ 
++	hash2 = ipv6_portaddr_hash(net, loc_addr, hnum);
++	slot2 = hash2 & udp_table.mask;
++	hslot2 = &udp_table.hash2[slot2];
++	ports = INET_COMBINED_PORTS(rmt_port, hnum);
++
+ 	udp_portaddr_for_each_entry_rcu(sk, &hslot2->head) {
+ 		if (sk->sk_state == TCP_ESTABLISHED &&
+ 		    inet6_match(net, sk, rmt_addr, loc_addr, ports, dif, sdif))
 -- 
 2.35.1
 
