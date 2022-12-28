@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C02E71C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2284EC433EF;
-	Wed, 28 Dec 2022 16:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4851C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C607EC433EF;
+	Wed, 28 Dec 2022 16:41:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245695;
-	bh=ai9Dl+ViSUHNRfzUgoHRUybCXR2fgv0q8wVs0578jWo=;
+	s=korg; t=1672245698;
+	bh=l2BHkVYWLw6jHX/Jme7hFuVqDpH+K+HDSS1syf4jgOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mUCycgO64Zwl+LQWU0MPz8JFR8QySQArx/J1FlbeYJ/ubHRxn9fspUi5Cay9DZBQl
-	 03D979bE/Ebve/7Ouc6GhBR7RwWu2xcf8Ufojer0OKS7kywtPN2okD2sKE99jCLMXN
-	 Dxi5l9/JbUwk8D/uT+6hyr5vmLa5PhSnpoYpvE4U=
+	b=rMSKeQmBzxjqjTDLi12vvx3itiDgp1una0OYe1kQO+xo0Pk/CwCOAxrkmYxnlevGO
+	 jhrHC9ALhSlqK36Dc/fr3BeB8956QrpgySA1DmjjXsmHOmt3tui6roHKkuMY8qX+RY
+	 p1/Z461if4j5wVpdbU/FjtfafggOd0l2JIRC5vXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0939/1073] drm/sti: Use drm_mode_copy()
-Date: Wed, 28 Dec 2022 15:42:07 +0100
-Message-Id: <20221228144353.535842257@linuxfoundation.org>
+Subject: [PATCH 6.1 0907/1146] block: mark blk_put_queue as potentially blocking
+Date: Wed, 28 Dec 2022 15:40:46 +0100
+Message-Id: <20221228144354.856607879@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,116 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 442cf8e22ba25a77cb9092d78733fdbac9844e50 ]
+[ Upstream commit 63f93fd6fa5717769a78d6d7bea6f7f9a1ccca8e ]
 
-struct drm_display_mode embeds a list head, so overwriting
-the full struct with another one will corrupt the list
-(if the destination mode is on a list). Use drm_mode_copy()
-instead which explicitly preserves the list head of
-the destination mode.
+We can't just say that the last reference release may block, as any
+reference dropped could be the last one.  So move the might_sleep() from
+blk_free_queue to blk_put_queue and update the documentation.
 
-Even if we know the destination mode is not on any list
-using drm_mode_copy() seems decent as it sets a good
-example. Bad examples of not using it might eventually
-get copied into code where preserving the list head
-actually matters.
-
-Obviously one case not covered here is when the mode
-itself is embedded in a larger structure and the whole
-structure is copied. But if we are careful when copying
-into modes embedded in structures I think we can be a
-little more reassured that bogus list heads haven't been
-propagated in.
-
-@is_mode_copy@
-@@
-drm_mode_copy(...)
-{
-...
-}
-
-@depends on !is_mode_copy@
-struct drm_display_mode *mode;
-expression E, S;
-@@
-(
-- *mode = E
-+ drm_mode_copy(mode, &E)
-|
-- memcpy(mode, E, S)
-+ drm_mode_copy(mode, E)
-)
-
-@depends on !is_mode_copy@
-struct drm_display_mode mode;
-expression E;
-@@
-(
-- mode = E
-+ drm_mode_copy(&mode, &E)
-|
-- memcpy(&mode, E, S)
-+ drm_mode_copy(&mode, E)
-)
-
-@@
-struct drm_display_mode *mode;
-@@
-- &*mode
-+ mode
-
-Cc: Alain Volmat <alain.volmat@foss.st.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221107192545.9896-8-ville.syrjala@linux.intel.com
-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20221114042637.1009333-6-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: d36a9ea5e776 ("block: fix use-after-free of q->q_usage_counter")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sti/sti_dvo.c  | 2 +-
- drivers/gpu/drm/sti/sti_hda.c  | 2 +-
- drivers/gpu/drm/sti/sti_hdmi.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ block/blk-core.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/sti/sti_dvo.c b/drivers/gpu/drm/sti/sti_dvo.c
-index b6ee8a82e656..f3a5616b7daf 100644
---- a/drivers/gpu/drm/sti/sti_dvo.c
-+++ b/drivers/gpu/drm/sti/sti_dvo.c
-@@ -288,7 +288,7 @@ static void sti_dvo_set_mode(struct drm_bridge *bridge,
+diff --git a/block/blk-core.c b/block/blk-core.c
+index 7de1bb16e9a7..815ffce6b988 100644
+--- a/block/blk-core.c
++++ b/block/blk-core.c
+@@ -260,8 +260,6 @@ static void blk_free_queue_rcu(struct rcu_head *rcu_head)
  
- 	DRM_DEBUG_DRIVER("\n");
+ static void blk_free_queue(struct request_queue *q)
+ {
+-	might_sleep();
+-
+ 	percpu_ref_exit(&q->q_usage_counter);
  
--	memcpy(&dvo->mode, mode, sizeof(struct drm_display_mode));
-+	drm_mode_copy(&dvo->mode, mode);
- 
- 	/* According to the path used (main or aux), the dvo clocks should
- 	 * have a different parent clock. */
-diff --git a/drivers/gpu/drm/sti/sti_hda.c b/drivers/gpu/drm/sti/sti_hda.c
-index 03cc401ed593..ec6656b9ee7c 100644
---- a/drivers/gpu/drm/sti/sti_hda.c
-+++ b/drivers/gpu/drm/sti/sti_hda.c
-@@ -524,7 +524,7 @@ static void sti_hda_set_mode(struct drm_bridge *bridge,
- 
- 	DRM_DEBUG_DRIVER("\n");
- 
--	memcpy(&hda->mode, mode, sizeof(struct drm_display_mode));
-+	drm_mode_copy(&hda->mode, mode);
- 
- 	if (!hda_get_mode_idx(hda->mode, &mode_idx)) {
- 		DRM_ERROR("Undefined mode\n");
-diff --git a/drivers/gpu/drm/sti/sti_hdmi.c b/drivers/gpu/drm/sti/sti_hdmi.c
-index cb82622877d2..fcc2194869d6 100644
---- a/drivers/gpu/drm/sti/sti_hdmi.c
-+++ b/drivers/gpu/drm/sti/sti_hdmi.c
-@@ -941,7 +941,7 @@ static void sti_hdmi_set_mode(struct drm_bridge *bridge,
- 	DRM_DEBUG_DRIVER("\n");
- 
- 	/* Copy the drm display mode in the connector local structure */
--	memcpy(&hdmi->mode, mode, sizeof(struct drm_display_mode));
-+	drm_mode_copy(&hdmi->mode, mode);
- 
- 	/* Update clock framerate according to the selected mode */
- 	ret = clk_set_rate(hdmi->clk_pix, mode->clock * 1000);
+ 	if (q->poll_stat)
+@@ -285,11 +283,11 @@ static void blk_free_queue(struct request_queue *q)
+  * Decrements the refcount of the request_queue and free it when the refcount
+  * reaches 0.
+  *
+- * Context: Any context, but the last reference must not be dropped from
+- *          atomic context.
++ * Context: Can sleep.
+  */
+ void blk_put_queue(struct request_queue *q)
+ {
++	might_sleep();
+ 	if (refcount_dec_and_test(&q->refs))
+ 		blk_free_queue(q);
+ }
 -- 
 2.35.1
 
