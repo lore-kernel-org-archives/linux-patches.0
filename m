@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB621C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67AE1C433F1;
-	Wed, 28 Dec 2022 16:55:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 995911C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:55:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F165C433F1;
+	Wed, 28 Dec 2022 16:55:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246514;
-	bh=wE2XrpPeJUTqefW0cp6dsPgxCFB6idxcSUHfgSjbmQc=;
+	s=korg; t=1672246517;
+	bh=6hNtsvNtlbAmQhmIbElNYaqU9o3xYRJRWiGhNZj/Uh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pzGeCbLcc2EIYtjGj5LiTJaEWcF7QJmASQPfNbBX1HU1oxctvIGMWz35hRg1eoDRZ
-	 Rh87qKyp8KwKSPci+t/LYHGSoNvOF+dBel19dnwXqBH7R9PX7t+LvY1stMT+KZP5+K
-	 To/AczTvTfO0mjCjsnXuNaYjvKSoda96tuOxLj3M=
+	b=garzJG9RKib69wClxyECbGAvJVFgPyhvCvt4h9xXI/YLvgiIobYQpKaBpYHQjmAdz
+	 oTJ1kN0qB5LU7AsXm29CvzFS8/R/+IrtE/Yl1iELzBp89iY3nbANOhL6GuE9t6wRy+
+	 DdD20b2RnQ+X2UTJlu5xyDgJasHaPNOKtw3oGdic=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Pauk <pauk.denis@gmail.com>,
-	yutesdb <mundanedefoliation@gmail.com>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1035/1146] hwmon: (nct6775) add ASUS CROSSHAIR VIII/TUF/ProArt B550M
-Date: Wed, 28 Dec 2022 15:42:54 +0100
-Message-Id: <20221228144358.469548779@linuxfoundation.org>
+	Wesley Chalmers <Wesley.Chalmers@amd.com>,
+	Tom Chung <chiahsuan.chung@amd.com>,
+	Martin Leung <Martin.Leung@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.0 1067/1073] drm/amd/display: revert Disable DRR actions during state commit
+Date: Wed, 28 Dec 2022 15:44:15 +0100
+Message-Id: <20221228144357.220813341@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,73 +37,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Denis Pauk <pauk.denis@gmail.com>
+From: Martin Leung <Martin.Leung@amd.com>
 
-[ Upstream commit 1864069c695d475e0ce98a335c62274b81be57b4 ]
+commit 6f8816261db9251f2635533572f95ab8e530266c upstream.
 
-Boards such as
-* ProArt B550-CREATOR
-* ProArt Z490-CREATOR 10G
-* ROG CROSSHAIR VIII EXTREME
-* ROG CROSSHAIR VIII HERO (WI-FI)
-* TUF GAMING B550M-E
-* TUF GAMING B550M-E (WI-FI)
-* TUF GAMING B550M-PLUS WIFI II
-have got a nct6775 chip, but by default there's no use of it
-because of resource conflict with WMI method.
+why and how:
+causes unstable on certain surface format/mpo transitions
 
-This commit adds such boards to the WMI monitoring list.
+This reverts commit de020e5fa9ebc6fc32e82ae6ccb0282451ed937c
 
-BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=204807
-Signed-off-by: Denis Pauk <pauk.denis@gmail.com>
-Reported-by: yutesdb <mundanedefoliation@gmail.com>
-Tested-by: yutesdb <mundanedefoliation@gmail.com>
-Link: https://lore.kernel.org/r/20221114214456.3891-1-pauk.denis@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Wesley Chalmers <Wesley.Chalmers@amd.com>
+Acked-by: Tom Chung <chiahsuan.chung@amd.com>
+Signed-off-by: Martin Leung <Martin.Leung@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hwmon/nct6775-platform.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/hwmon/nct6775-platform.c b/drivers/hwmon/nct6775-platform.c
-index b34783784213..bf43f73dc835 100644
---- a/drivers/hwmon/nct6775-platform.c
-+++ b/drivers/hwmon/nct6775-platform.c
-@@ -1043,7 +1043,9 @@ static struct platform_device *pdev[2];
+--- a/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn30/dcn30_hwseq.c
+@@ -973,5 +973,8 @@ void dcn30_prepare_bandwidth(struct dc *
+ 			dc->clk_mgr->funcs->set_max_memclk(dc->clk_mgr, dc->clk_mgr->bw_params->clk_table.entries[dc->clk_mgr->bw_params->clk_table.num_entries - 1].memclk_mhz);
  
- static const char * const asus_wmi_boards[] = {
- 	"PRO H410T",
-+	"ProArt B550-CREATOR",
- 	"ProArt X570-CREATOR WIFI",
-+	"ProArt Z490-CREATOR 10G",
- 	"Pro B550M-C",
- 	"Pro WS X570-ACE",
- 	"PRIME B360-PLUS",
-@@ -1055,8 +1057,10 @@ static const char * const asus_wmi_boards[] = {
- 	"PRIME X570-P",
- 	"PRIME X570-PRO",
- 	"ROG CROSSHAIR VIII DARK HERO",
-+	"ROG CROSSHAIR VIII EXTREME",
- 	"ROG CROSSHAIR VIII FORMULA",
- 	"ROG CROSSHAIR VIII HERO",
-+	"ROG CROSSHAIR VIII HERO (WI-FI)",
- 	"ROG CROSSHAIR VIII IMPACT",
- 	"ROG STRIX B550-A GAMING",
- 	"ROG STRIX B550-E GAMING",
-@@ -1080,8 +1084,11 @@ static const char * const asus_wmi_boards[] = {
- 	"ROG STRIX Z490-G GAMING (WI-FI)",
- 	"ROG STRIX Z490-H GAMING",
- 	"ROG STRIX Z490-I GAMING",
-+	"TUF GAMING B550M-E",
-+	"TUF GAMING B550M-E (WI-FI)",
- 	"TUF GAMING B550M-PLUS",
- 	"TUF GAMING B550M-PLUS (WI-FI)",
-+	"TUF GAMING B550M-PLUS WIFI II",
- 	"TUF GAMING B550-PLUS",
- 	"TUF GAMING B550-PLUS WIFI II",
- 	"TUF GAMING B550-PRO",
--- 
-2.35.1
-
+ 	dcn20_prepare_bandwidth(dc, context);
++
++	dc_dmub_srv_p_state_delegate(dc,
++		context->bw_ctx.bw.dcn.clk.fw_based_mclk_switching, context);
+ }
+ 
 
 
