@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B731863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17D66C433D2;
-	Wed, 28 Dec 2022 15:38:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E2661863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:38:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D43C433D2;
+	Wed, 28 Dec 2022 15:38:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241910;
-	bh=+BcBWFIfmpfxX+bozeJww/U2XiKBWratuyo/4KW339o=;
+	s=korg; t=1672241913;
+	bh=UfMPzCVzGrow/+bBjfRgfwOs03pviK4RhyZEeHAT7GQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ze8Gn9UHGJaDMDvLL7bF5jYvs8zLfDbSKellXUqVHRZpmmmXyoPoyRP09FAs6+b5d
-	 6eQcWzhlVG4rooTNS7KThuEBzsObE6K7GW8jYscJVNFL0YLBetBL+LMdbqrulAbGK2
-	 Dd6hC5aSlQSI1cthol3ann8SjBIGAaA55+ohwPY8=
+	b=r2G34cd7q93a1mu7sfLcMXzUHFzkqW4QkC/PmFFE8akC6w6qcSkZESBnrWhS3tRS8
+	 IdmQ/XUqtbaYFZZi6/v3X4ErWwg/EA2K4d8RG/iO+JfFTqXiC8/fq6PFjeBEK2FWnW
+	 JM/W3LnnHfkUoh8JmpU1vpmuKBrwjwnftrBrq978=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Riesch <michael.riesch@wolfvision.net>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Joerg Roedel <jroedel@suse.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Wolfram Sang <wsa+renesas@sang-engineering.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 532/731] iommu/rockchip: fix permission bits in page table entries v2
-Date: Wed, 28 Dec 2022 15:40:39 +0100
-Message-Id: <20221228144311.963677707@linuxfoundation.org>
+Subject: [PATCH 6.1 0304/1146] clk: renesas: r8a779f0: Fix HSCIF parent clocks
+Date: Wed, 28 Dec 2022 15:30:43 +0100
+Message-Id: <20221228144338.410556521@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
-References: <20221228144256.536395940@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,56 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Riesch <michael.riesch@wolfvision.net>
+From: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-[ Upstream commit 7eb99841f340b80be0d0973b0deb592d75fb8928 ]
+[ Upstream commit c258e3ab639112d8f5ae9df9a873750ae2623ce2 ]
 
-As pointed out in the corresponding downstream fix [0], the permission bits
-of the page table entries are compatible between v1 and v2 of the IOMMU.
-This is in contrast to the current mainline code that incorrectly assumes
-that the read and write permission bits are switched. Fix the permission
-bits by reusing the v1 bit defines.
+As serial communication requires a clean clock signal, the High Speed
+Serial Communication Interfaces with FIFO (HSCIF) are clocked by a clock
+that is not affected by Spread Spectrum or Fractional Multiplication.
 
-[0] https://github.com/rockchip-linux/kernel/commit/e3bc123a2260145e34b57454da3db0edd117eb8e
+Hence change the parent clocks for the HSCIF modules from the S0D3_PER
+clock to the SASYNCPERD1 clock (which has the same clock rate), cfr.
+R-Car S4-8 Hardware User's Manual rev. 0.81.
 
-Fixes: c55356c534aa ("iommu: rockchip: Add support for iommu v2")
-Signed-off-by: Michael Riesch <michael.riesch@wolfvision.net>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Link: https://lore.kernel.org/r/20221102063553.2464161-1-michael.riesch@wolfvision.net
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: 080bcd8d5997 ("clk: renesas: r8a779f0: Add HSCIF clocks")
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
+Link: https://lore.kernel.org/r/20221103143440.46449-2-wsa+renesas@sang-engineering.com
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/rockchip-iommu.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/clk/renesas/r8a779f0-cpg-mssr.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/rockchip-iommu.c b/drivers/iommu/rockchip-iommu.c
-index 7f23ad61c094..823f1a7d8c6e 100644
---- a/drivers/iommu/rockchip-iommu.c
-+++ b/drivers/iommu/rockchip-iommu.c
-@@ -280,19 +280,17 @@ static u32 rk_mk_pte(phys_addr_t page, int prot)
-  *  11:9 - Page address bit 34:32
-  *   8:4 - Page address bit 39:35
-  *     3 - Security
-- *     2 - Readable
-- *     1 - Writable
-+ *     2 - Writable
-+ *     1 - Readable
-  *     0 - 1 if Page @ Page address is valid
-  */
--#define RK_PTE_PAGE_READABLE_V2      BIT(2)
--#define RK_PTE_PAGE_WRITABLE_V2      BIT(1)
+diff --git a/drivers/clk/renesas/r8a779f0-cpg-mssr.c b/drivers/clk/renesas/r8a779f0-cpg-mssr.c
+index 9504497caaf2..f293a8a54fb2 100644
+--- a/drivers/clk/renesas/r8a779f0-cpg-mssr.c
++++ b/drivers/clk/renesas/r8a779f0-cpg-mssr.c
+@@ -126,10 +126,10 @@ static const struct cpg_core_clk r8a779f0_core_clks[] __initconst = {
+ };
  
- static u32 rk_mk_pte_v2(phys_addr_t page, int prot)
- {
- 	u32 flags = 0;
- 
--	flags |= (prot & IOMMU_READ) ? RK_PTE_PAGE_READABLE_V2 : 0;
--	flags |= (prot & IOMMU_WRITE) ? RK_PTE_PAGE_WRITABLE_V2 : 0;
-+	flags |= (prot & IOMMU_READ) ? RK_PTE_PAGE_READABLE : 0;
-+	flags |= (prot & IOMMU_WRITE) ? RK_PTE_PAGE_WRITABLE : 0;
- 
- 	return rk_mk_dte_v2(page) | flags;
- }
+ static const struct mssr_mod_clk r8a779f0_mod_clks[] __initconst = {
+-	DEF_MOD("hscif0",	514,	R8A779F0_CLK_S0D3),
+-	DEF_MOD("hscif1",	515,	R8A779F0_CLK_S0D3),
+-	DEF_MOD("hscif2",	516,	R8A779F0_CLK_S0D3),
+-	DEF_MOD("hscif3",	517,	R8A779F0_CLK_S0D3),
++	DEF_MOD("hscif0",	514,	R8A779F0_CLK_SASYNCPERD1),
++	DEF_MOD("hscif1",	515,	R8A779F0_CLK_SASYNCPERD1),
++	DEF_MOD("hscif2",	516,	R8A779F0_CLK_SASYNCPERD1),
++	DEF_MOD("hscif3",	517,	R8A779F0_CLK_SASYNCPERD1),
+ 	DEF_MOD("i2c0",		518,	R8A779F0_CLK_S0D6_PER),
+ 	DEF_MOD("i2c1",		519,	R8A779F0_CLK_S0D6_PER),
+ 	DEF_MOD("i2c2",		520,	R8A779F0_CLK_S0D6_PER),
 -- 
 2.35.1
 
