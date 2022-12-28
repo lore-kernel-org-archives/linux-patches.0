@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF1A21863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72A50C433D2;
-	Wed, 28 Dec 2022 15:39:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E2B1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:39:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C853C433D2;
+	Wed, 28 Dec 2022 15:39:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241955;
-	bh=eVNT0s0v+/VvCyHi9lL/8u/23MNG4PMW3ip0XnAKemk=;
+	s=korg; t=1672241958;
+	bh=os/Td5PwHSmMXNaM+DcoJz8j98yfo7xt2eyBCbTzniI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zx25SLzz6rAhVmrlKMTgqLGP0v1F+PTJmLVME4re3YtTAcK2nvsGpV94lPFYjDlD6
-	 +YsGTpVH6N/gUp+D8Mj8qDOqGC42Jw14TBJrV6AcfODCZvyIM9FvJ4E1Xr+/Kc9xdY
-	 ptAc5SwXkEGEWec0Q5S7wOuR+SzdLpjXQ7jHNdmU=
+	b=uT4t5MRd1fA+43IXd4sHArUpK6Cv/f+XL06VGIm74GB/ZkmBYQxH4/y+sJYxEpZ/x
+	 59X8vrYL/O+0qrHL4YMqVJ/7xoixKBMHmfB/3P0eXSPd0lB2c8pwU/UqugLh8Ta75H
+	 0sysChgHK7jyxY0xq53tJFW/5ZeKweBxAw6q86dY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Liu Ying <victor.liu@nxp.com>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0309/1146] drm: lcdif: Set and enable FIFO Panic threshold
-Date: Wed, 28 Dec 2022 15:30:48 +0100
-Message-Id: <20221228144338.547670854@linuxfoundation.org>
+Subject: [PATCH 6.0 0348/1073] net: ethernet: mtk_eth_soc: fix RSTCTRL_PPE{0,1} definitions
+Date: Wed, 28 Dec 2022 15:32:16 +0100
+Message-Id: <20221228144337.458763377@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,87 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit e3cac8f7749f78dacdf19c00ed5862a1db52239f ]
+[ Upstream commit ef8c373bd91df3cf70596497da0955d218961ead ]
 
-In case the LCDIFv3 is used to drive a 4k panel via i.MX8MP HDMI bridge,
-the LCDIFv3 becomes susceptible to FIFO underflows, these lead to nasty
-flicker of the image on the panel, or image being shifted by half frame
-horizontally every second frame. The flicker can be easily triggered by
-running 3D application on top of weston compositor, like neverball or
-chromium. Surprisingly glmark2-es2-wayland or glmark2-es2-drm does not
-trigger this effect so easily.
+Fix RSTCTRL_PPE0 and RSTCTRL_PPE1 register mask definitions for
+MTK_NETSYS_V2.
+Remove duplicated definitions.
 
-Configure the FIFO Panic threshold register and enable the FIFO Panic
-mode, which internally boosts the NoC interconnect priority for LCDIFv3
-transactions in case of possible underflow. This mitigates the flicker
-effect on 4k panels as well.
-
-Fixes: 9db35bb349a0 ("drm: lcdif: Add support for i.MX8MP LCDIF variant")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Tested-by: Liu Ying <victor.liu@nxp.com> # i.MX8mp EVK
-Reviewed-by: Liu Ying <victor.liu@nxp.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221101152629.21768-1-marex@denx.de
+Fixes: 160d3a9b1929 ("net: ethernet: mtk_eth_soc: introduce MTK_NETSYS_V2 support")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mxsfb/lcdif_kms.c  | 16 ++++++++++++++++
- drivers/gpu/drm/mxsfb/lcdif_regs.h |  1 +
- 2 files changed, 17 insertions(+)
+ drivers/net/ethernet/mediatek/mtk_eth_soc.c | 13 +++++++------
+ drivers/net/ethernet/mediatek/mtk_eth_soc.h | 10 +++-------
+ 2 files changed, 10 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/gpu/drm/mxsfb/lcdif_kms.c b/drivers/gpu/drm/mxsfb/lcdif_kms.c
-index d594938a6c8d..71546a5d0a48 100644
---- a/drivers/gpu/drm/mxsfb/lcdif_kms.c
-+++ b/drivers/gpu/drm/mxsfb/lcdif_kms.c
-@@ -5,6 +5,7 @@
-  * This code is based on drivers/gpu/drm/mxsfb/mxsfb*
-  */
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.c b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+index 26e0a2af64cf..4c16f2df566f 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.c
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.c
+@@ -3272,16 +3272,17 @@ static int mtk_hw_init(struct mtk_eth *eth)
+ 		return 0;
+ 	}
  
-+#include <linux/bitfield.h>
- #include <linux/clk.h>
- #include <linux/io.h>
- #include <linux/iopoll.h>
-@@ -166,6 +167,18 @@ static void lcdif_enable_controller(struct lcdif_drm_private *lcdif)
- {
- 	u32 reg;
+-	val = RSTCTRL_FE | RSTCTRL_PPE;
+ 	if (MTK_HAS_CAPS(eth->soc->caps, MTK_NETSYS_V2)) {
+ 		regmap_write(eth->ethsys, ETHSYS_FE_RST_CHK_IDLE_EN, 0);
+-
+-		val |= RSTCTRL_ETH;
+-		if (MTK_HAS_CAPS(eth->soc->caps, MTK_RSTCTRL_PPE1))
+-			val |= RSTCTRL_PPE1;
++		val = RSTCTRL_PPE0_V2;
++	} else {
++		val = RSTCTRL_PPE0;
+ 	}
  
-+	/* Set FIFO Panic watermarks, low 1/3, high 2/3 . */
-+	writel(FIELD_PREP(PANIC0_THRES_LOW_MASK, 1 * PANIC0_THRES_MAX / 3) |
-+	       FIELD_PREP(PANIC0_THRES_HIGH_MASK, 2 * PANIC0_THRES_MAX / 3),
-+	       lcdif->base + LCDC_V8_PANIC0_THRES);
+-	ethsys_reset(eth, val);
++	if (MTK_HAS_CAPS(eth->soc->caps, MTK_RSTCTRL_PPE1))
++		val |= RSTCTRL_PPE1;
 +
-+	/*
-+	 * Enable FIFO Panic, this does not generate interrupt, but
-+	 * boosts NoC priority based on FIFO Panic watermarks.
-+	 */
-+	writel(INT_ENABLE_D1_PLANE_PANIC_EN,
-+	       lcdif->base + LCDC_V8_INT_ENABLE_D1);
-+
- 	reg = readl(lcdif->base + LCDC_V8_DISP_PARA);
- 	reg |= DISP_PARA_DISP_ON;
- 	writel(reg, lcdif->base + LCDC_V8_DISP_PARA);
-@@ -193,6 +206,9 @@ static void lcdif_disable_controller(struct lcdif_drm_private *lcdif)
- 	reg = readl(lcdif->base + LCDC_V8_DISP_PARA);
- 	reg &= ~DISP_PARA_DISP_ON;
- 	writel(reg, lcdif->base + LCDC_V8_DISP_PARA);
-+
-+	/* Disable FIFO Panic NoC priority booster. */
-+	writel(0, lcdif->base + LCDC_V8_INT_ENABLE_D1);
- }
++	ethsys_reset(eth, RSTCTRL_ETH | RSTCTRL_FE | val);
  
- static void lcdif_reset_block(struct lcdif_drm_private *lcdif)
-diff --git a/drivers/gpu/drm/mxsfb/lcdif_regs.h b/drivers/gpu/drm/mxsfb/lcdif_regs.h
-index 8e8bef175bf2..37f0d9a06b10 100644
---- a/drivers/gpu/drm/mxsfb/lcdif_regs.h
-+++ b/drivers/gpu/drm/mxsfb/lcdif_regs.h
-@@ -252,6 +252,7 @@
+ 	if (MTK_HAS_CAPS(eth->soc->caps, MTK_NETSYS_V2)) {
+ 		regmap_write(eth->ethsys, ETHSYS_FE_RST_CHK_IDLE_EN,
+diff --git a/drivers/net/ethernet/mediatek/mtk_eth_soc.h b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+index 0f9668a4079d..da261dd49d6f 100644
+--- a/drivers/net/ethernet/mediatek/mtk_eth_soc.h
++++ b/drivers/net/ethernet/mediatek/mtk_eth_soc.h
+@@ -451,18 +451,14 @@
+ /* ethernet reset control register */
+ #define ETHSYS_RSTCTRL			0x34
+ #define RSTCTRL_FE			BIT(6)
+-#define RSTCTRL_PPE			BIT(31)
+-#define RSTCTRL_PPE1			BIT(30)
++#define RSTCTRL_PPE0			BIT(31)
++#define RSTCTRL_PPE0_V2			BIT(30)
++#define RSTCTRL_PPE1			BIT(31)
+ #define RSTCTRL_ETH			BIT(23)
  
- #define PANIC0_THRES_LOW_MASK		GENMASK(24, 16)
- #define PANIC0_THRES_HIGH_MASK		GENMASK(8, 0)
-+#define PANIC0_THRES_MAX		511
+ /* ethernet reset check idle register */
+ #define ETHSYS_FE_RST_CHK_IDLE_EN	0x28
  
- #define LCDIF_MIN_XRES			120
- #define LCDIF_MIN_YRES			120
+-/* ethernet reset control register */
+-#define ETHSYS_RSTCTRL		0x34
+-#define RSTCTRL_FE		BIT(6)
+-#define RSTCTRL_PPE		BIT(31)
+-
+ /* ethernet dma channel agent map */
+ #define ETHSYS_DMA_AG_MAP	0x408
+ #define ETHSYS_DMA_AG_MAP_PDMA	BIT(0)
 -- 
 2.35.1
 
