@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4322A1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B88FBC433D2;
-	Wed, 28 Dec 2022 15:51:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB8071875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:51:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA55C433EF;
+	Wed, 28 Dec 2022 15:51:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672242705;
-	bh=Q4ePPxLDI//uhmZaWgeKmx1tpKk4NHDU6bjLyAZX8LQ=;
+	s=korg; t=1672242707;
+	bh=Me0nmIbEVVccwb+8rYj6t4kc+25Zhlj26GzdAUnhDsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IAii164PBn02q7GLgE5zf0z75MGGm+w47ef9/xDIdNI9IDdY+u7PsxcJBP15eTAdh
-	 w8g1XI7D/EOkWHaygzqZK5ACw1TJGxgoFzisTcyolyX6d+mpWiXSeM+qbABrs6mhwl
-	 SxYJWKxiGgFp9K17kO+orpMjeAljkWAcaNBHhHRk=
+	b=kryJZeaBHjYfxINIBXJCfvGBdwuM0vD2R+o1ZSUvqSktzpfvVddQGSfGevsnbQVih
+	 VoOYLnuFRbL3xS9WUTBGrhY9JQov2gHTXyjmt/EEJMK6JzGRcekiwTzPvG8JpZv4pL
+	 0iGrM2tZ8WpH3IaSC2hO4zdcNvWDbcxNcqS3yh44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Baisong Zhong <zhongbaisong@huawei.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Lorenzo Bianconi <lorenzo@kernel.org>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0404/1146] media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()
-Date: Wed, 28 Dec 2022 15:32:23 +0100
-Message-Id: <20221228144341.138362583@linuxfoundation.org>
+Subject: [PATCH 6.0 0442/1073] wifi: mt76: mt7921: fix reporting of TX AGGR histogram
+Date: Wed, 28 Dec 2022 15:33:50 +0100
+Message-Id: <20221228144340.036152554@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,62 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baisong Zhong <zhongbaisong@huawei.com>
+From: Lorenzo Bianconi <lorenzo@kernel.org>
 
-[ Upstream commit 0ed554fd769a19ea8464bb83e9ac201002ef74ad ]
+[ Upstream commit 028b4f22b37b88821fd87b56ce47b180583c774e ]
 
-Wei Chen reports a kernel bug as blew:
+Similar to mt7915, fix stats clash between bins [4-7] in 802.11 tx
+aggregation histogram.
 
-general protection fault, probably for non-canonical address
-KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
-...
-Call Trace:
-<TASK>
-__i2c_transfer+0x77e/0x1930 drivers/i2c/i2c-core-base.c:2109
-i2c_transfer+0x1d5/0x3d0 drivers/i2c/i2c-core-base.c:2170
-i2cdev_ioctl_rdwr+0x393/0x660 drivers/i2c/i2c-dev.c:297
-i2cdev_ioctl+0x75d/0x9f0 drivers/i2c/i2c-dev.c:458
-vfs_ioctl fs/ioctl.c:51 [inline]
-__do_sys_ioctl fs/ioctl.c:870 [inline]
-__se_sys_ioctl+0xfb/0x170 fs/ioctl.c:856
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x3d/0x90 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7fd834a8bded
-
-In az6027_i2c_xfer(), if msg[i].addr is 0x99,
-a null-ptr-deref will caused when accessing msg[i].buf.
-For msg[i].len is 0 and msg[i].buf is null.
-
-Fix this by checking msg[i].len in az6027_i2c_xfer().
-
-Link: https://lore.kernel.org/lkml/CAO4mrfcPHB5aQJO=mpqV+p8mPLNg-Fok0gw8gZ=zemAfMGTzMg@mail.gmail.com/
-
-Link: https://lore.kernel.org/linux-media/20221120065918.2160782-1-zhongbaisong@huawei.com
-Fixes: 76f9a820c867 ("V4L/DVB: AZ6027: Initial import of the driver")
-Reported-by: Wei Chen <harperchen1110@gmail.com>
-Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 163f4d22c118d ("mt76: mt7921: add MAC support")
+Signed-off-by: Lorenzo Bianconi <lorenzo@kernel.org>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/az6027.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/wireless/mediatek/mt76/mt7921/mac.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/dvb-usb/az6027.c b/drivers/media/usb/dvb-usb/az6027.c
-index cf15988dfb51..7d78ee09be5e 100644
---- a/drivers/media/usb/dvb-usb/az6027.c
-+++ b/drivers/media/usb/dvb-usb/az6027.c
-@@ -975,6 +975,10 @@ static int az6027_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int n
- 		if (msg[i].addr == 0x99) {
- 			req = 0xBE;
- 			index = 0;
-+			if (msg[i].len < 1) {
-+				i = -EOPNOTSUPP;
-+				break;
-+			}
- 			value = msg[i].buf[0] & 0x00ff;
- 			length = 1;
- 			az6027_usb_out_op(d, req, value, index, data, length);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
+index dd8479adbcc9..5b0eba4cb421 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7921/mac.c
+@@ -852,7 +852,7 @@ void mt7921_mac_update_mib_stats(struct mt7921_phy *phy)
+ 		mib->tx_amsdu_cnt += val;
+ 	}
+ 
+-	for (i = 0, aggr1 = aggr0 + 4; i < 4; i++) {
++	for (i = 0, aggr1 = aggr0 + 8; i < 4; i++) {
+ 		u32 val2;
+ 
+ 		val = mt76_rr(dev, MT_TX_AGG_CNT(0, i));
 -- 
 2.35.1
 
