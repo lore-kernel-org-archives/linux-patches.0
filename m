@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A9A31863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:49:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1810C433D2;
-	Wed, 28 Dec 2022 14:49:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0374F1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:49:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8188FC433D2;
+	Wed, 28 Dec 2022 14:49:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672238956;
-	bh=Tcr/fbaPDctUwdeETfq69pAcKTvIiZpqQsJY9NYw3oU=;
+	s=korg; t=1672238958;
+	bh=qY16RBtuxcD3RstD6hVr5F6RiT/+hNpK2zQhV3Y6A1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pv7uC9dwuPYTavkgJ8SfknmcVAN0GsvV8wBtPwKZ7M+ZC0FrpgLB7hoQq8Qdvot39
-	 eYVrvp8ThuEts09L1FI3x7kIo4gDxiV+cT5pYU/Z+L1RvCI/9BGZ7DAfPlDzxvSwbz
-	 jx1u02fd34Rz+cLOS8mpgiDhlbPWXMSMkui1KCPc=
+	b=DhqOAtal/yWem/vqeplcq8hR20cQwjXboI0lS7x9xCgGng8Ucb0SfQ8rrTfUCiH6j
+	 /mUdjseL2T78HQx/m/qy2+4PSfAWCCovhFKVDT1MtPWx9UZ4EFuyK1z6/1unW+GgAi
+	 2EaYoYj5odMWSeEX/xxpXsUJPiLm5jLmovDiPQ3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qais Yousef <qais.yousef@arm.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 073/731] sched/uclamp: Make asym_fits_capacity() use util_fits_cpu()
-Date: Wed, 28 Dec 2022 15:33:00 +0100
-Message-Id: <20221228144258.669454782@linuxfoundation.org>
+Subject: [PATCH 5.15 074/731] cpuidle: dt: Return the correct numbers of parsed idle states
+Date: Wed, 28 Dec 2022 15:33:01 +0100
+Message-Id: <20221228144258.698041966@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -35,102 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qais Yousef <qais.yousef@arm.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-[ Upstream commit a2e7f03ed28fce26c78b985f87913b6ce3accf9d ]
+[ Upstream commit ee3c2c8ad6ba6785f14a60e4081d7c82e88162a2 ]
 
-Use the new util_fits_cpu() to ensure migration margin and capacity
-pressure are taken into account correctly when uclamp is being used
-otherwise we will fail to consider CPUs as fitting in scenarios where
-they should.
+While we correctly skips to initialize an idle state from a disabled idle
+state node in DT, the returned value from dt_init_idle_driver() don't get
+adjusted accordingly. Instead the number of found idle state nodes are
+returned, while the callers are expecting the number of successfully
+initialized idle states from DT.
 
-s/asym_fits_capacity/asym_fits_cpu/ to better reflect what it does now.
+This leads to cpuidle drivers unnecessarily continues to initialize their
+idle state specific data. Moreover, in the case when all idle states have
+been disabled in DT, we would end up registering a cpuidle driver, rather
+than relying on the default arch specific idle call.
 
-Fixes: b4c9c9f15649 ("sched/fair: Prefer prev cpu in asymmetric wakeup path")
-Signed-off-by: Qais Yousef <qais.yousef@arm.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20220804143609.515789-6-qais.yousef@arm.com
+Fixes: 9f14da345599 ("drivers: cpuidle: implement DT based idle states infrastructure")
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 21 +++++++++++++--------
- 1 file changed, 13 insertions(+), 8 deletions(-)
+ drivers/cpuidle/dt_idle_states.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index 619fc7bd65e2..6648683cd964 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -6526,10 +6526,13 @@ select_idle_capacity(struct task_struct *p, struct sched_domain *sd, int target)
- 	return best_cpu;
- }
- 
--static inline bool asym_fits_capacity(unsigned long task_util, int cpu)
-+static inline bool asym_fits_cpu(unsigned long util,
-+				 unsigned long util_min,
-+				 unsigned long util_max,
-+				 int cpu)
- {
- 	if (sched_asym_cpucap_active())
--		return fits_capacity(task_util, capacity_of(cpu));
-+		return util_fits_cpu(util, util_min, util_max, cpu);
- 
- 	return true;
- }
-@@ -6541,7 +6544,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
- {
- 	bool has_idle_core = false;
- 	struct sched_domain *sd;
--	unsigned long task_util;
-+	unsigned long task_util, util_min, util_max;
- 	int i, recent_used_cpu;
- 
- 	/*
-@@ -6550,7 +6553,9 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
+diff --git a/drivers/cpuidle/dt_idle_states.c b/drivers/cpuidle/dt_idle_states.c
+index 252f2a9686a6..448bc796b0b4 100644
+--- a/drivers/cpuidle/dt_idle_states.c
++++ b/drivers/cpuidle/dt_idle_states.c
+@@ -223,6 +223,6 @@ int dt_init_idle_driver(struct cpuidle_driver *drv,
+ 	 * also be 0 on platforms with missing DT idle states or legacy DT
+ 	 * configuration predating the DT idle states bindings.
  	 */
- 	if (sched_asym_cpucap_active()) {
- 		sync_entity_load_avg(&p->se);
--		task_util = uclamp_task_util(p);
-+		task_util = task_util_est(p);
-+		util_min = uclamp_eff_value(p, UCLAMP_MIN);
-+		util_max = uclamp_eff_value(p, UCLAMP_MAX);
- 	}
- 
- 	/*
-@@ -6559,7 +6564,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
- 	lockdep_assert_irqs_disabled();
- 
- 	if ((available_idle_cpu(target) || sched_idle_cpu(target)) &&
--	    asym_fits_capacity(task_util, target))
-+	    asym_fits_cpu(task_util, util_min, util_max, target))
- 		return target;
- 
- 	/*
-@@ -6567,7 +6572,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
- 	 */
- 	if (prev != target && cpus_share_cache(prev, target) &&
- 	    (available_idle_cpu(prev) || sched_idle_cpu(prev)) &&
--	    asym_fits_capacity(task_util, prev))
-+	    asym_fits_cpu(task_util, util_min, util_max, prev))
- 		return prev;
- 
- 	/*
-@@ -6582,7 +6587,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
- 	    in_task() &&
- 	    prev == smp_processor_id() &&
- 	    this_rq()->nr_running <= 1 &&
--	    asym_fits_capacity(task_util, prev)) {
-+	    asym_fits_cpu(task_util, util_min, util_max, prev)) {
- 		return prev;
- 	}
- 
-@@ -6594,7 +6599,7 @@ static int select_idle_sibling(struct task_struct *p, int prev, int target)
- 	    cpus_share_cache(recent_used_cpu, target) &&
- 	    (available_idle_cpu(recent_used_cpu) || sched_idle_cpu(recent_used_cpu)) &&
- 	    cpumask_test_cpu(p->recent_used_cpu, p->cpus_ptr) &&
--	    asym_fits_capacity(task_util, recent_used_cpu)) {
-+	    asym_fits_cpu(task_util, util_min, util_max, recent_used_cpu)) {
- 		return recent_used_cpu;
- 	}
- 
+-	return i;
++	return state_idx - start_idx;
+ }
+ EXPORT_SYMBOL_GPL(dt_init_idle_driver);
 -- 
 2.35.1
 
