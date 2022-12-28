@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1FBF1C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:51:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5387FC433D2;
-	Wed, 28 Dec 2022 16:51:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94DCB1C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:52:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BDC6C433D2;
+	Wed, 28 Dec 2022 16:51:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672246317;
-	bh=uV3F62b8LiJeE/6/KhTOB1CoQxYS9dIxHaP5SGwle4o=;
+	s=korg; t=1672246320;
+	bh=Beho72zEVdcA+Q/Ms4VmRxqwz4TJRsRFyog/dttscfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R9dqrbJoxviVvAYVd5V6y7zAFl4Gv+rj9mS2YbMZcPKAhE7ZPj3J//WQbNK707o1k
-	 RTKyYnc35j/r811PZeOCTQ45MtrslTV0p/r8TQDsf5yfhsYoM6FkfvYZYx/wDdqNKU
-	 RZdYtVtDL2hy6M+kUa53gWAKhxWuxCfI8in77O7o=
+	b=jo2v4s5FKqdWQMr4fbS0JLbEwhhqYH56/hIkDyf40QL/bxJx1H8dx+ciFO5ZGi9tf
+	 F9YKivqQqfvs/h0Cefo+tQkLjM2P11iBa4cSpL9polQccYPKLYqCcVZxVD1ApS60rI
+	 YbZ2FLcHHQgNPjDJ3BEm2X6j29Iw5bQzsrVxRMqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8dd0551dda6020944c5d@syzkaller.appspotmail.com,
-	Stanislav Fomichev <sdf@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Yonghong Song <yhs@fb.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 1020/1146] bpf: Prevent decl_tag from being referenced in func_proto arg
-Date: Wed, 28 Dec 2022 15:42:39 +0100
-Message-Id: <20221228144358.071208704@linuxfoundation.org>
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.0 1049/1073] iio: adc128s052: add proper .data members in adc128_of_match table
+Date: Wed, 28 Dec 2022 15:43:57 +0100
+Message-Id: <20221228144356.706129151@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,55 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanislav Fomichev <sdf@google.com>
+From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
 
-[ Upstream commit f17472d4599697d701aa239b4c475a506bccfd19 ]
+commit e2af60f5900c6ade53477b494ffb54690eee11f5 upstream.
 
-Syzkaller managed to hit another decl_tag issue:
+Prior to commit bd5d54e4d49d ("iio: adc128s052: add ACPI _HID
+AANT1280"), the driver unconditionally used spi_get_device_id() to get
+the index into the adc128_config array.
 
-  btf_func_proto_check kernel/bpf/btf.c:4506 [inline]
-  btf_check_all_types kernel/bpf/btf.c:4734 [inline]
-  btf_parse_type_sec+0x1175/0x1980 kernel/bpf/btf.c:4763
-  btf_parse kernel/bpf/btf.c:5042 [inline]
-  btf_new_fd+0x65a/0xb00 kernel/bpf/btf.c:6709
-  bpf_btf_load+0x6f/0x90 kernel/bpf/syscall.c:4342
-  __sys_bpf+0x50a/0x6c0 kernel/bpf/syscall.c:5034
-  __do_sys_bpf kernel/bpf/syscall.c:5093 [inline]
-  __se_sys_bpf kernel/bpf/syscall.c:5091 [inline]
-  __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:5091
-  do_syscall_64+0x54/0x70 arch/x86/entry/common.c:48
+However, with that commit, OF-based boards now incorrectly treat all
+supported sensors as if they are an adc128s052, because all the .data
+members of the adc128_of_match table are implicitly 0. Our board,
+which has an adc122s021, thus exposes 8 channels whereas it really
+only has two.
 
-This seems similar to commit ea68376c8bed ("bpf: prevent decl_tag from being
-referenced in func_proto") but for the argument.
-
-Reported-by: syzbot+8dd0551dda6020944c5d@syzkaller.appspotmail.com
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/bpf/20221123035422.872531-2-sdf@google.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: bd5d54e4d49d ("iio: adc128s052: add ACPI _HID AANT1280")
+Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20221115132324.1078169-1-linux@rasmusvillemoes.dk
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/btf.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/iio/adc/ti-adc128s052.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 35c07afac924..efdbba2a0230 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -4481,6 +4481,11 @@ static int btf_func_proto_check(struct btf_verifier_env *env,
- 			break;
- 		}
+--- a/drivers/iio/adc/ti-adc128s052.c
++++ b/drivers/iio/adc/ti-adc128s052.c
+@@ -181,13 +181,13 @@ static int adc128_probe(struct spi_devic
+ }
  
-+		if (btf_type_is_resolve_source_only(arg_type)) {
-+			btf_verifier_log_type(env, t, "Invalid arg#%u", i + 1);
-+			return -EINVAL;
-+		}
-+
- 		if (args[i].name_off &&
- 		    (!btf_name_offset_valid(btf, args[i].name_off) ||
- 		     !btf_name_valid_identifier(btf, args[i].name_off))) {
--- 
-2.35.1
-
+ static const struct of_device_id adc128_of_match[] = {
+-	{ .compatible = "ti,adc128s052", },
+-	{ .compatible = "ti,adc122s021", },
+-	{ .compatible = "ti,adc122s051", },
+-	{ .compatible = "ti,adc122s101", },
+-	{ .compatible = "ti,adc124s021", },
+-	{ .compatible = "ti,adc124s051", },
+-	{ .compatible = "ti,adc124s101", },
++	{ .compatible = "ti,adc128s052", .data = (void*)0L, },
++	{ .compatible = "ti,adc122s021", .data = (void*)1L, },
++	{ .compatible = "ti,adc122s051", .data = (void*)1L, },
++	{ .compatible = "ti,adc122s101", .data = (void*)1L, },
++	{ .compatible = "ti,adc124s021", .data = (void*)2L, },
++	{ .compatible = "ti,adc124s051", .data = (void*)2L, },
++	{ .compatible = "ti,adc124s101", .data = (void*)2L, },
+ 	{ /* sentinel */ },
+ };
+ MODULE_DEVICE_TABLE(of, adc128_of_match);
 
 
