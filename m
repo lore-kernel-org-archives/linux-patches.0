@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F3B71C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:31:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAF46C433D2;
-	Wed, 28 Dec 2022 16:31:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2954C1C15
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:31:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C497C433F1;
+	Wed, 28 Dec 2022 16:31:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245085;
-	bh=cjIJxS9k4HTen9XfVR+HlMZWIPloiFETeSCexC526SQ=;
+	s=korg; t=1672245088;
+	bh=80sPUJKPp03E1ruakYIIwa7Oza+XeI8kmICmIsueIcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xmS0UPOzeBzuRWshvEK7+tUA3dZ2gaRfs1cqclRm8tM7xJX6++trgIPJMLth0PlYw
-	 h/fBayssRKcruY2NU5b7LOH2mCbHnX0kK/dyQkaLh8U0k0jISLfmaHBERheNVGlWRK
-	 FDA/hKB3fJDktr6C7SN3JqEXuly22zaPzt3lvYuI=
+	b=bknTOdD/TGjhi4+zoWhYR1k2BGFvQYkIej+nKv7fB9Tg5BISnbJ/TgKuibmMMLcOH
+	 pWhQ0vQONvPq3HUAAKvPPxW71/uuSL4fZYFrU+UkWfJmXri4V0NGkGjtXhBT9kjeDl
+	 1IlUEpzAt8Xc6eEl49cnvJ9uI1OSDZAkwm5SbcJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Lee Jones <lee@kernel.org>,
+	Xiaochen Shen <xiaochen.shen@intel.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Fenghua Yu <fenghua.yu@intel.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0830/1073] mfd: qcom_rpm: Fix an error handling path in qcom_rpm_probe()
-Date: Wed, 28 Dec 2022 15:40:18 +0100
-Message-Id: <20221228144350.560236395@linuxfoundation.org>
+Subject: [PATCH 6.1 0794/1146] dmaengine: idxd: Make max batch size attributes in sysfs invisible for Intel IAA
+Date: Wed, 28 Dec 2022 15:38:53 +0100
+Message-Id: <20221228144351.716771499@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,53 +37,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Xiaochen Shen <xiaochen.shen@intel.com>
 
-[ Upstream commit 36579aca877a62f67ecd77eb3edefc4c86292406 ]
+[ Upstream commit 91123b37e8a99cc489d5bdcfebd1c25f29382504 ]
 
-If an error occurs after the clk_prepare_enable() call, a corresponding
-clk_disable_unprepare() should be called.
+In current code, dev.max_batch_size and wq.max_batch_size attributes in
+sysfs are exposed to user to show or update the values.
 
-Simplify code and switch to devm_clk_get_enabled() to fix it.
+>From Intel IAA spec [1], Intel IAA does not support batch processing. So
+these sysfs attributes should not be supported on IAA device.
 
-Fixes: 3526403353c2 ("mfd: qcom_rpm: Handle message RAM clock")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/e39752476d02605b2be46cab7115f71255ce13a8.1668949256.git.christophe.jaillet@wanadoo.fr
+Fix this issue by making the attributes of max_batch_size invisible in
+sysfs through is_visible() filter when the device is IAA.
+
+Add description in the ABI documentation to mention that the attributes
+are not visible when the device does not support batch.
+
+[1]: https://cdrdv2.intel.com/v1/dl/getContent/721858
+
+Fixes: e7184b159dd3 ("dmaengine: idxd: add support for configurable max wq batch size")
+Fixes: c52ca478233c ("dmaengine: idxd: add configuration component of driver")
+Signed-off-by: Xiaochen Shen <xiaochen.shen@intel.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Fenghua Yu <fenghua.yu@intel.com>
+Link: https://lore.kernel.org/r/20220930201528.18621-3-xiaochen.shen@intel.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mfd/qcom_rpm.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ .../ABI/stable/sysfs-driver-dma-idxd          |  2 ++
+ drivers/dma/idxd/sysfs.c                      | 32 +++++++++++++++++++
+ 2 files changed, 34 insertions(+)
 
-diff --git a/drivers/mfd/qcom_rpm.c b/drivers/mfd/qcom_rpm.c
-index 71bc34b74bc9..ea5eb94427c4 100644
---- a/drivers/mfd/qcom_rpm.c
-+++ b/drivers/mfd/qcom_rpm.c
-@@ -547,7 +547,7 @@ static int qcom_rpm_probe(struct platform_device *pdev)
- 	init_completion(&rpm->ack);
+diff --git a/Documentation/ABI/stable/sysfs-driver-dma-idxd b/Documentation/ABI/stable/sysfs-driver-dma-idxd
+index 8e2c2c405db2..69e2d9155e0d 100644
+--- a/Documentation/ABI/stable/sysfs-driver-dma-idxd
++++ b/Documentation/ABI/stable/sysfs-driver-dma-idxd
+@@ -22,6 +22,7 @@ Date:           Oct 25, 2019
+ KernelVersion:  5.6.0
+ Contact:        dmaengine@vger.kernel.org
+ Description:    The largest number of work descriptors in a batch.
++                It's not visible when the device does not support batch.
  
- 	/* Enable message RAM clock */
--	rpm->ramclk = devm_clk_get(&pdev->dev, "ram");
-+	rpm->ramclk = devm_clk_get_enabled(&pdev->dev, "ram");
- 	if (IS_ERR(rpm->ramclk)) {
- 		ret = PTR_ERR(rpm->ramclk);
- 		if (ret == -EPROBE_DEFER)
-@@ -558,7 +558,6 @@ static int qcom_rpm_probe(struct platform_device *pdev)
- 		 */
- 		rpm->ramclk = NULL;
- 	}
--	clk_prepare_enable(rpm->ramclk); /* Accepts NULL */
+ What:           /sys/bus/dsa/devices/dsa<m>/max_work_queues_size
+ Date:           Oct 25, 2019
+@@ -205,6 +206,7 @@ KernelVersion:	5.10.0
+ Contact:	dmaengine@vger.kernel.org
+ Description:	The max batch size for this workqueue. Cannot exceed device
+ 		max batch size. Configurable parameter.
++		It's not visible when the device does not support batch.
  
- 	irq_ack = platform_get_irq_byname(pdev, "ack");
- 	if (irq_ack < 0)
-@@ -681,7 +680,6 @@ static int qcom_rpm_remove(struct platform_device *pdev)
- 	struct qcom_rpm *rpm = dev_get_drvdata(&pdev->dev);
- 
- 	of_platform_depopulate(&pdev->dev);
--	clk_disable_unprepare(rpm->ramclk);
- 
- 	return 0;
+ What:		/sys/bus/dsa/devices/wq<m>.<n>/ats_disable
+ Date:		Nov 13, 2020
+diff --git a/drivers/dma/idxd/sysfs.c b/drivers/dma/idxd/sysfs.c
+index 7269bd54554f..7909767e9836 100644
+--- a/drivers/dma/idxd/sysfs.c
++++ b/drivers/dma/idxd/sysfs.c
+@@ -1233,6 +1233,14 @@ static bool idxd_wq_attr_op_config_invisible(struct attribute *attr,
+ 	       !idxd->hw.wq_cap.op_config;
  }
+ 
++static bool idxd_wq_attr_max_batch_size_invisible(struct attribute *attr,
++						  struct idxd_device *idxd)
++{
++	/* Intel IAA does not support batch processing, make it invisible */
++	return attr == &dev_attr_wq_max_batch_size.attr &&
++	       idxd->data->type == IDXD_TYPE_IAX;
++}
++
+ static umode_t idxd_wq_attr_visible(struct kobject *kobj,
+ 				    struct attribute *attr, int n)
+ {
+@@ -1243,6 +1251,9 @@ static umode_t idxd_wq_attr_visible(struct kobject *kobj,
+ 	if (idxd_wq_attr_op_config_invisible(attr, idxd))
+ 		return 0;
+ 
++	if (idxd_wq_attr_max_batch_size_invisible(attr, idxd))
++		return 0;
++
+ 	return attr->mode;
+ }
+ 
+@@ -1533,6 +1544,26 @@ static ssize_t cmd_status_store(struct device *dev, struct device_attribute *att
+ }
+ static DEVICE_ATTR_RW(cmd_status);
+ 
++static bool idxd_device_attr_max_batch_size_invisible(struct attribute *attr,
++						      struct idxd_device *idxd)
++{
++	/* Intel IAA does not support batch processing, make it invisible */
++	return attr == &dev_attr_max_batch_size.attr &&
++	       idxd->data->type == IDXD_TYPE_IAX;
++}
++
++static umode_t idxd_device_attr_visible(struct kobject *kobj,
++					struct attribute *attr, int n)
++{
++	struct device *dev = container_of(kobj, struct device, kobj);
++	struct idxd_device *idxd = confdev_to_idxd(dev);
++
++	if (idxd_device_attr_max_batch_size_invisible(attr, idxd))
++		return 0;
++
++	return attr->mode;
++}
++
+ static struct attribute *idxd_device_attributes[] = {
+ 	&dev_attr_version.attr,
+ 	&dev_attr_max_groups.attr,
+@@ -1560,6 +1591,7 @@ static struct attribute *idxd_device_attributes[] = {
+ 
+ static const struct attribute_group idxd_device_attribute_group = {
+ 	.attrs = idxd_device_attributes,
++	.is_visible = idxd_device_attr_visible,
+ };
+ 
+ static const struct attribute_group *idxd_attribute_groups[] = {
 -- 
 2.35.1
 
