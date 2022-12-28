@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E96F1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99662C433EF;
-	Wed, 28 Dec 2022 16:18:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC351C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:18:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4056CC433D2;
+	Wed, 28 Dec 2022 16:18:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244327;
-	bh=OoW6+A9KlidEaPg6LYF0DzCw0G9ropuf4+xsU6mgME4=;
+	s=korg; t=1672244329;
+	bh=PsdoUCgKGoT+qjsLcICgMpI7tNh7jj7sNMm4wCZduN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yREK4lH30LEoj7bg7CBKK0VkibaLOsYvVcM/kCa/55hvL4BlGB4KwnrVySAs5AAs/
-	 4QACuIIq8TfLNuxe6XoLCiBh5hPAwCWG8SbBl9+/YjMepiTASmwJbd4gWJegr+wni+
-	 YBaXEXiulz106U8ZIsOiK36j692T3E0zhFNAZQ4U=
+	b=HiuMrtNBm8VNbw+T+aTg2KNPiDXLuuFhZ9tpWAkr91zc0gGBR+ZdZkypo2hjeR0Rw
+	 7GMockJ/l0PjM50f0FPQ/xJKwqDGByRdxwN0A0GeAmai2Yj/lgAzch30p8U3q3TUUY
+	 V2cfTmOInNY4fg7DM+mGDhHiLPSM6a70hO0l6B0o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0651/1146] scsi: fcoe: Fix possible name leak when device_register() fails
-Date: Wed, 28 Dec 2022 15:36:30 +0100
-Message-Id: <20221228144347.841319124@linuxfoundation.org>
+Subject: [PATCH 6.0 0692/1073] test_firmware: fix memory leak in test_firmware_init()
+Date: Wed, 28 Dec 2022 15:38:00 +0100
+Message-Id: <20221228144346.829738056@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,76 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 47b6a122c7b69a876c7ee2fc064a26b09627de9d ]
+[ Upstream commit 7610615e8cdb3f6f5bbd9d8e7a5d8a63e3cabf2e ]
 
-If device_register() returns an error, the name allocated by dev_set_name()
-needs to be freed. As the comment of device_register() says, one should use
-put_device() to give up the reference in the error path. Fix this by
-calling put_device(), then the name can be freed in kobject_cleanup().
+When misc_register() failed in test_firmware_init(), the memory pointed
+by test_fw_config->name is not released. The memory leak information is
+as follows:
+unreferenced object 0xffff88810a34cb00 (size 32):
+  comm "insmod", pid 7952, jiffies 4294948236 (age 49.060s)
+  hex dump (first 32 bytes):
+    74 65 73 74 2d 66 69 72 6d 77 61 72 65 2e 62 69  test-firmware.bi
+    6e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  n...............
+  backtrace:
+    [<ffffffff81b21fcb>] __kmalloc_node_track_caller+0x4b/0xc0
+    [<ffffffff81affb96>] kstrndup+0x46/0xc0
+    [<ffffffffa0403a49>] __test_firmware_config_init+0x29/0x380 [test_firmware]
+    [<ffffffffa040f068>] 0xffffffffa040f068
+    [<ffffffff81002c41>] do_one_initcall+0x141/0x780
+    [<ffffffff816a72c3>] do_init_module+0x1c3/0x630
+    [<ffffffff816adb9e>] load_module+0x623e/0x76a0
+    [<ffffffff816af471>] __do_sys_finit_module+0x181/0x240
+    [<ffffffff89978f99>] do_syscall_64+0x39/0xb0
+    [<ffffffff89a0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-The 'fcf' is freed in fcoe_fcf_device_release(), so the kfree() in the
-error path can be removed.
-
-The 'ctlr' is freed in fcoe_ctlr_device_release(), so don't use the error
-label, just return NULL after calling put_device().
-
-Fixes: 9a74e884ee71 ("[SCSI] libfcoe: Add fcoe_sysfs")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221112094310.3633291-1-yangyingliang@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: c92316bf8e94 ("test_firmware: add batched firmware tests")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Acked-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lore.kernel.org/r/20221119035721.18268-1-shaozhengchao@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/fcoe/fcoe_sysfs.c | 19 ++++++++++---------
- 1 file changed, 10 insertions(+), 9 deletions(-)
+ lib/test_firmware.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/fcoe/fcoe_sysfs.c b/drivers/scsi/fcoe/fcoe_sysfs.c
-index af658aa38fed..6260aa5ea6af 100644
---- a/drivers/scsi/fcoe/fcoe_sysfs.c
-+++ b/drivers/scsi/fcoe/fcoe_sysfs.c
-@@ -830,14 +830,15 @@ struct fcoe_ctlr_device *fcoe_ctlr_device_add(struct device *parent,
+diff --git a/lib/test_firmware.c b/lib/test_firmware.c
+index c82b65947ce6..1c5a2adb16ef 100644
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -1491,6 +1491,7 @@ static int __init test_firmware_init(void)
  
- 	dev_set_name(&ctlr->dev, "ctlr_%d", ctlr->id);
- 	error = device_register(&ctlr->dev);
--	if (error)
--		goto out_del_q2;
-+	if (error) {
-+		destroy_workqueue(ctlr->devloss_work_q);
-+		destroy_workqueue(ctlr->work_q);
-+		put_device(&ctlr->dev);
-+		return NULL;
-+	}
- 
- 	return ctlr;
- 
--out_del_q2:
--	destroy_workqueue(ctlr->devloss_work_q);
--	ctlr->devloss_work_q = NULL;
- out_del_q:
- 	destroy_workqueue(ctlr->work_q);
- 	ctlr->work_q = NULL;
-@@ -1036,16 +1037,16 @@ struct fcoe_fcf_device *fcoe_fcf_device_add(struct fcoe_ctlr_device *ctlr,
- 	fcf->selected = new_fcf->selected;
- 
- 	error = device_register(&fcf->dev);
--	if (error)
--		goto out_del;
-+	if (error) {
-+		put_device(&fcf->dev);
-+		goto out;
-+	}
- 
- 	fcf->state = FCOE_FCF_STATE_CONNECTED;
- 	list_add_tail(&fcf->peers, &ctlr->fcfs);
- 
- 	return fcf;
- 
--out_del:
--	kfree(fcf);
- out:
- 	return NULL;
- }
+ 	rc = misc_register(&test_fw_misc_device);
+ 	if (rc) {
++		__test_firmware_config_free();
+ 		kfree(test_fw_config);
+ 		pr_err("could not register misc device: %d\n", rc);
+ 		return rc;
 -- 
 2.35.1
 
