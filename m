@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0C4D1C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:08:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56FF2C433D2;
-	Wed, 28 Dec 2022 16:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC4D1C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:08:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00AB0C433EF;
+	Wed, 28 Dec 2022 16:08:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243736;
-	bh=hyGk5xAxOG7JgeXooe7Mer+qdbGqEGgLz6wJzdEmU3E=;
+	s=korg; t=1672243739;
+	bh=b0mLw23YEEGO5QtvlzuDhKg7RuVactZgpj4TokLm3RE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MXE6BkjqlBzFNMZSKEio8t9Ci3B6a/SEyjt+/a0j7eAWa4kqmGhf0RC5i1IPFpVlC
-	 cL3JRTn+21nA0lkLjS8buawtiNpMJavV/BpsfJrv0zvdwNyya/TSK9yg/3ur1ARE1Q
-	 TVqiDWIfGsIXyw+YzfG0sNgsCqGpfNTbp++4+EjY=
+	b=zbDVnAxHdNcHfFS4Oc+WTatsrPiyZK1YMqyVUa2tBrg1BKxRz3SJC4uP59vkG7suy
+	 PObpAhdbawAkrCkDbYEtnm+kJhP9eWNPWd7oq5wMZtReKE6HUeGJZBDTYN+tXsBEif
+	 XoDrxcLGz0W1oml1CrNmPsMGDlz6FSYmjo4kWPuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Lendacky <thomas.lendacky@amd.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dongdong Zhang <zhangdongdong1@oppo.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0547/1146] net: amd-xgbe: Check only the minimum speed for active/passive cables
-Date: Wed, 28 Dec 2022 15:34:46 +0100
-Message-Id: <20221228144345.029121893@linuxfoundation.org>
+Subject: [PATCH 6.0 0580/1073] f2fs: fix normal discard process
+Date: Wed, 28 Dec 2022 15:36:08 +0100
+Message-Id: <20221228144343.803060388@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,73 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tom Lendacky <thomas.lendacky@amd.com>
+From: Dongdong Zhang <zhangdongdong1@oppo.com>
 
-[ Upstream commit f8ab263d4d48e6dab752029bf562f20a2ee630ed ]
+[ Upstream commit b5f1a218ae5e4339130d6e733f0e63d623e09a2c ]
 
-There are cables that exist that can support speeds in excess of 10GbE.
-The driver, however, restricts the EEPROM advertised nominal bitrate to
-a specific range, which can prevent usage of cables that can support,
-for example, up to 25GbE.
+In the DPOLICY_BG mode, there is a conflict between
+the two conditions "i + 1 < dpolicy->granularity" and
+"i < DEFAULT_DISCARD_GRANULARITY". If i = 15, the first
+condition is false, it will enter the second condition
+and dispatch all small granularity discards in function
+ __issue_discard_cmd_orderly. The restrictive effect
+of the first condition to small discards will be
+invalidated. These two conditions should align.
 
-Rather than checking that an active or passive cable supports a specific
-range, only check for a minimum supported speed.
-
-Fixes: abf0a1c2b26a ("amd-xgbe: Add support for SFP+ modules")
-Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 20ee4382322c ("f2fs: issue small discard by LBA order")
+Signed-off-by: Dongdong Zhang <zhangdongdong1@oppo.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 14 ++------------
- 1 file changed, 2 insertions(+), 12 deletions(-)
+ fs/f2fs/segment.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-index 868a768f424c..c731a04731f8 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
-@@ -237,10 +237,7 @@ enum xgbe_sfp_speed {
+diff --git a/fs/f2fs/segment.c b/fs/f2fs/segment.c
+index 10d8bc81cff7..27690f757913 100644
+--- a/fs/f2fs/segment.c
++++ b/fs/f2fs/segment.c
+@@ -1449,7 +1449,7 @@ static int __issue_discard_cmd(struct f2fs_sb_info *sbi,
+ 		if (i + 1 < dpolicy->granularity)
+ 			break;
  
- #define XGBE_SFP_BASE_BR			12
- #define XGBE_SFP_BASE_BR_1GBE_MIN		0x0a
--#define XGBE_SFP_BASE_BR_1GBE_MAX		0x0d
- #define XGBE_SFP_BASE_BR_10GBE_MIN		0x64
--#define XGBE_SFP_BASE_BR_10GBE_MAX		0x68
--#define XGBE_MOLEX_SFP_BASE_BR_10GBE_MAX	0x78
+-		if (i < DEFAULT_DISCARD_GRANULARITY && dpolicy->ordered)
++		if (i + 1 < DEFAULT_DISCARD_GRANULARITY && dpolicy->ordered)
+ 			return __issue_discard_cmd_orderly(sbi, dpolicy);
  
- #define XGBE_SFP_BASE_CU_CABLE_LEN		18
- 
-@@ -827,29 +824,22 @@ static void xgbe_phy_sfp_phy_settings(struct xgbe_prv_data *pdata)
- static bool xgbe_phy_sfp_bit_rate(struct xgbe_sfp_eeprom *sfp_eeprom,
- 				  enum xgbe_sfp_speed sfp_speed)
- {
--	u8 *sfp_base, min, max;
-+	u8 *sfp_base, min;
- 
- 	sfp_base = sfp_eeprom->base;
- 
- 	switch (sfp_speed) {
- 	case XGBE_SFP_SPEED_1000:
- 		min = XGBE_SFP_BASE_BR_1GBE_MIN;
--		max = XGBE_SFP_BASE_BR_1GBE_MAX;
- 		break;
- 	case XGBE_SFP_SPEED_10000:
- 		min = XGBE_SFP_BASE_BR_10GBE_MIN;
--		if (memcmp(&sfp_eeprom->base[XGBE_SFP_BASE_VENDOR_NAME],
--			   XGBE_MOLEX_VENDOR, XGBE_SFP_BASE_VENDOR_NAME_LEN) == 0)
--			max = XGBE_MOLEX_SFP_BASE_BR_10GBE_MAX;
--		else
--			max = XGBE_SFP_BASE_BR_10GBE_MAX;
- 		break;
- 	default:
- 		return false;
- 	}
- 
--	return ((sfp_base[XGBE_SFP_BASE_BR] >= min) &&
--		(sfp_base[XGBE_SFP_BASE_BR] <= max));
-+	return sfp_base[XGBE_SFP_BASE_BR] >= min;
- }
- 
- static void xgbe_phy_free_phy_device(struct xgbe_prv_data *pdata)
+ 		pend_list = &dcc->pend_list[i];
 -- 
 2.35.1
 
