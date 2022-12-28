@@ -1,34 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122671C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6511FC433D2;
-	Wed, 28 Dec 2022 16:32:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A96B71C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:32:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3287FC433D2;
+	Wed, 28 Dec 2022 16:32:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245140;
-	bh=/a+SXPPtV/sZYt6jUgZnWoKDg+jEjL4j84pPZqvDavE=;
+	s=korg; t=1672245143;
+	bh=/AHHOdoLzcrD52RGjtnjAQ9DBXB1+BjJqMs0H06wsVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZjEAfZY6F5bxgytI1+M5sb7kjldAgQRTb2v/BQDbvcrJQECDm9WfVoBAEPy9aXjsM
-	 RXWt7WRVJtgzQOGCUONm1Qn6dk+FrgDDwqoGpgJ2+02zYCeG+l9DnKDj4qjBFpjhWC
-	 3nNxZRttv5IfzDymDSwYGfiPHGA2qsAOHZK9bjLI=
+	b=taguZCBD0PeroKbp4NfXmmhp3F8ojgnA0aH+bdO7q2eQT5tX/AiCiK/m8qJTKyZ7U
+	 p+nbV71KVrPS9Edd8VotPiyEeVE2cyusHEnISR46cnSv5TasTUWgQppj/569J3RCEl
+	 bcj0YvmAKBET5nRFjIpenihYx09oag8GVzOO1JfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	bpf@vger.kernel.org,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Song Liu <song@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0786/1146] perf off_cpu: Fix a typo in BTF tracepoint name, it should be btf_trace_sched_switch
-Date: Wed, 28 Dec 2022 15:38:45 +0100
-Message-Id: <20221228144351.496508011@linuxfoundation.org>
+Subject: [PATCH 6.1 0804/1146] phy: qcom-qmp-usb: drop power-down delay config
+Date: Wed, 28 Dec 2022 15:39:03 +0100
+Message-Id: <20221228144351.988018678@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -42,45 +36,172 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 167b266bf66c5b93171011ef9d1f09b070c2c537 ]
+[ Upstream commit 38cd167d1fc6b5bf038229b1fa02bb1f551a564f ]
 
-In BTF, tracepoint definitions have the "btf_trace_" prefix.  The
-off-cpu profiler needs to check the signature of the sched_switch event
-using that definition.  But there's a typo (s/bpf/btf/) so it failed
-always.
+The power-down delay was included in the first version of the QMP driver
+as an optional delay after powering on the PHY (using
+POWER_DOWN_CONTROL) and just before starting it. Later changes modified
+this sequence by powering on before initialising the PHY, but the
+optional delay stayed where it was (i.e. before starting the PHY).
 
-Fixes: b36888f71c8542cd ("perf record: Handle argument change in sched_switch")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: bpf@vger.kernel.org
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20221208182636.524139-1-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+The vendor driver does not use a delay before starting the PHY and this
+is likely not needed on any platform unless there is a corresponding
+delay in the vendor kernel init sequence tables (i.e. in devicetree).
+
+Let's keep the delay for now, but drop the redundant delay period
+configuration while increasing the unnecessarily low timer slack
+somewhat.
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20221012081241.18273-15-johan+linaro@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Stable-dep-of: 922adfd59efd ("phy: qcom-qmp-usb: correct registers layout for IPQ8074 USB3 PHY")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf_off_cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-usb.c | 35 +------------------------
+ 1 file changed, 1 insertion(+), 34 deletions(-)
 
-diff --git a/tools/perf/util/bpf_off_cpu.c b/tools/perf/util/bpf_off_cpu.c
-index c257813e674e..01f70b8e705a 100644
---- a/tools/perf/util/bpf_off_cpu.c
-+++ b/tools/perf/util/bpf_off_cpu.c
-@@ -102,7 +102,7 @@ static void check_sched_switch_args(void)
- 	const struct btf_type *t1, *t2, *t3;
- 	u32 type_id;
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+index 935d271f28a7..f8a300f0aec3 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-usb.c
+@@ -63,8 +63,6 @@
+ #define CLAMP_EN				BIT(0) /* enables i/o clamp_n */
  
--	type_id = btf__find_by_name_kind(btf, "bpf_trace_sched_switch",
-+	type_id = btf__find_by_name_kind(btf, "btf_trace_sched_switch",
- 					 BTF_KIND_TYPEDEF);
- 	if ((s32)type_id < 0)
- 		return;
+ #define PHY_INIT_COMPLETE_TIMEOUT		10000
+-#define POWER_DOWN_DELAY_US_MIN			10
+-#define POWER_DOWN_DELAY_US_MAX			11
+ 
+ struct qmp_phy_init_tbl {
+ 	unsigned int offset;
+@@ -1465,9 +1463,6 @@ struct qmp_phy_cfg {
+ 
+ 	/* true, if PHY needs delay after POWER_DOWN */
+ 	bool has_pwrdn_delay;
+-	/* power_down delay in usec */
+-	int pwrdn_delay_min;
+-	int pwrdn_delay_max;
+ 
+ 	/* true, if PHY has a separate DP_COM control block */
+ 	bool has_phy_dp_com_ctrl;
+@@ -1673,9 +1668,6 @@ static const struct qmp_phy_cfg qmp_v3_usb3phy_cfg = {
+ 	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+-	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
+-	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
+-
+ 	.has_phy_dp_com_ctrl	= true,
+ };
+ 
+@@ -1703,9 +1695,6 @@ static const struct qmp_phy_cfg sc7180_usb3phy_cfg = {
+ 	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+-	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
+-	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
+-
+ 	.has_phy_dp_com_ctrl	= true,
+ };
+ 
+@@ -1757,8 +1746,6 @@ static const struct qmp_phy_cfg qmp_v3_usb3_uniphy_cfg = {
+ 	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+-	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
+-	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
+ };
+ 
+ static const struct qmp_phy_cfg msm8998_usb3phy_cfg = {
+@@ -1811,11 +1798,7 @@ static const struct qmp_phy_cfg sm8150_usb3phy_cfg = {
+ 	.pwrdn_ctrl		= SW_PWRDN,
+ 	.phy_status		= PHYSTATUS,
+ 
+-
+ 	.has_pwrdn_delay	= true,
+-	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
+-	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
+-
+ 	.has_phy_dp_com_ctrl	= true,
+ };
+ 
+@@ -1846,8 +1829,6 @@ static const struct qmp_phy_cfg sm8150_usb3_uniphy_cfg = {
+ 	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+-	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
+-	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
+ };
+ 
+ static const struct qmp_phy_cfg sm8250_usb3phy_cfg = {
+@@ -1877,9 +1858,6 @@ static const struct qmp_phy_cfg sm8250_usb3phy_cfg = {
+ 	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+-	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
+-	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
+-
+ 	.has_phy_dp_com_ctrl	= true,
+ };
+ 
+@@ -1910,8 +1888,6 @@ static const struct qmp_phy_cfg sm8250_usb3_uniphy_cfg = {
+ 	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+-	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
+-	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
+ };
+ 
+ static const struct qmp_phy_cfg sdx55_usb3_uniphy_cfg = {
+@@ -1941,8 +1917,6 @@ static const struct qmp_phy_cfg sdx55_usb3_uniphy_cfg = {
+ 	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+-	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
+-	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
+ };
+ 
+ static const struct qmp_phy_cfg sdx65_usb3_uniphy_cfg = {
+@@ -1972,8 +1946,6 @@ static const struct qmp_phy_cfg sdx65_usb3_uniphy_cfg = {
+ 	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+-	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
+-	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
+ };
+ 
+ static const struct qmp_phy_cfg sm8350_usb3phy_cfg = {
+@@ -2003,9 +1975,6 @@ static const struct qmp_phy_cfg sm8350_usb3phy_cfg = {
+ 	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+-	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
+-	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
+-
+ 	.has_phy_dp_com_ctrl	= true,
+ };
+ 
+@@ -2036,8 +2005,6 @@ static const struct qmp_phy_cfg sm8350_usb3_uniphy_cfg = {
+ 	.phy_status		= PHYSTATUS,
+ 
+ 	.has_pwrdn_delay	= true,
+-	.pwrdn_delay_min	= POWER_DOWN_DELAY_US_MIN,
+-	.pwrdn_delay_max	= POWER_DOWN_DELAY_US_MAX,
+ };
+ 
+ static const struct qmp_phy_cfg qcm2290_usb3phy_cfg = {
+@@ -2229,7 +2196,7 @@ static int qmp_usb_power_on(struct phy *phy)
+ 	qmp_usb_configure(pcs, cfg->regs, cfg->pcs_tbl, cfg->pcs_tbl_num);
+ 
+ 	if (cfg->has_pwrdn_delay)
+-		usleep_range(cfg->pwrdn_delay_min, cfg->pwrdn_delay_max);
++		usleep_range(10, 20);
+ 
+ 	/* Pull PHY out of reset state */
+ 	qphy_clrbits(pcs, cfg->regs[QPHY_SW_RESET], SW_RESET);
 -- 
 2.35.1
 
