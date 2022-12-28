@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15A141C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4585DC433EF;
-	Wed, 28 Dec 2022 16:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87751C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:46:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41170C433EF;
+	Wed, 28 Dec 2022 16:46:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245970;
-	bh=Z1+QdG5qxU2B1H5u1JGOnxupPA9gwVz/YGQf95Ij7Rs=;
+	s=korg; t=1672245973;
+	bh=bYTO8f79VhUFwCe0/0lc1FTUnlxGf6ZcfH1wWvAJPEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LHvjkq5ftoHdjG4EJbiXyc2SFQ9C5X0R2dqpA5V4IuhT1bvDMyGVK9I5pP0JgyFOF
-	 LDBS7VfLZQDJVRjdUpR9F5P2OL4Qq+lHqymC6BoZG8JVHH3DV1z3ARQeBM4RlR96q3
-	 PRRlWpIh5QA30a7mNRyq0GWN1zONu5dl+af9Kcb0=
+	b=GCYOAnWmUg23gxqw/7xt8olJBcqqJlirFSba9EVdb4axd8GADIq23NaSrEvEVnbdA
+	 JBjETdVbirNsnK9x+IsWPu0mgekfpwvIhWjGmPBZL/YsR2/Bl5o/raeYjSputNMKp6
+	 ZOEhpIsx/KvrMV4hRJWFAuFEks6cD6ioaR/KQjh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Lukyanov <dukzcry@ya.ru>,
-	Mark Brown <broonie@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0962/1073] ASoC: amd: yc: Add Xiaomi Redmi Book Pro 14 2022 into DMI table
-Date: Wed, 28 Dec 2022 15:42:30 +0100
-Message-Id: <20221228144354.170800371@linuxfoundation.org>
+Subject: [PATCH 6.0 0989/1073] drm/sti: Fix return type of sti_{dvo,hda,hdmi}_connector_mode_valid()
+Date: Wed, 28 Dec 2022 15:42:57 +0100
+Message-Id: <20221228144354.967915535@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,40 +35,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Artem Lukyanov <dukzcry@ya.ru>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit c1dd6bf6199752890d8c59d895dd45094da51d1f ]
+[ Upstream commit 0ad811cc08a937d875cbad0149c1bab17f84ba05 ]
 
-This model requires an additional detection quirk to enable the
-internal microphone - BIOS doesn't seem to support AcpDmicConnected
-(nothing in acpidump output).
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-Signed-off-by: Artem Lukyanov <dukzcry@ya.ru>
-Link: https://lore.kernel.org/r/20221130085247.85126-1-dukzcry@ya.ru
-Signed-off-by: Mark Brown <broonie@kernel.org>
+  drivers/gpu/drm/sti/sti_hda.c:637:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .mode_valid = sti_hda_connector_mode_valid,
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/gpu/drm/sti/sti_dvo.c:376:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .mode_valid = sti_dvo_connector_mode_valid,
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/gpu/drm/sti/sti_hdmi.c:1035:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .mode_valid = sti_hdmi_connector_mode_valid,
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+->mode_valid() in 'struct drm_connector_helper_funcs' expects a return
+type of 'enum drm_mode_status', not 'int'. Adjust the return type of
+sti_{dvo,hda,hdmi}_connector_mode_valid() to match the prototype's to
+resolve the warning and CFI failure.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221102155623.3042869-1-nathan@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/gpu/drm/sti/sti_dvo.c  | 5 +++--
+ drivers/gpu/drm/sti/sti_hda.c  | 5 +++--
+ drivers/gpu/drm/sti/sti_hdmi.c | 5 +++--
+ 3 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
-index d9715bea965e..1f0b5527c594 100644
---- a/sound/soc/amd/yc/acp6x-mach.c
-+++ b/sound/soc/amd/yc/acp6x-mach.c
-@@ -213,6 +213,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Alienware m17 R5 AMD"),
- 		}
- 	},
-+	{
-+		.driver_data = &acp6x_card,
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "TIMI"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Redmi Book Pro 14 2022"),
-+		}
-+	},
- 	{}
- };
+diff --git a/drivers/gpu/drm/sti/sti_dvo.c b/drivers/gpu/drm/sti/sti_dvo.c
+index f3a5616b7daf..577c477b5f46 100644
+--- a/drivers/gpu/drm/sti/sti_dvo.c
++++ b/drivers/gpu/drm/sti/sti_dvo.c
+@@ -346,8 +346,9 @@ static int sti_dvo_connector_get_modes(struct drm_connector *connector)
  
+ #define CLK_TOLERANCE_HZ 50
+ 
+-static int sti_dvo_connector_mode_valid(struct drm_connector *connector,
+-					struct drm_display_mode *mode)
++static enum drm_mode_status
++sti_dvo_connector_mode_valid(struct drm_connector *connector,
++			     struct drm_display_mode *mode)
+ {
+ 	int target = mode->clock * 1000;
+ 	int target_min = target - CLK_TOLERANCE_HZ;
+diff --git a/drivers/gpu/drm/sti/sti_hda.c b/drivers/gpu/drm/sti/sti_hda.c
+index ec6656b9ee7c..15097ac67931 100644
+--- a/drivers/gpu/drm/sti/sti_hda.c
++++ b/drivers/gpu/drm/sti/sti_hda.c
+@@ -601,8 +601,9 @@ static int sti_hda_connector_get_modes(struct drm_connector *connector)
+ 
+ #define CLK_TOLERANCE_HZ 50
+ 
+-static int sti_hda_connector_mode_valid(struct drm_connector *connector,
+-					struct drm_display_mode *mode)
++static enum drm_mode_status
++sti_hda_connector_mode_valid(struct drm_connector *connector,
++			     struct drm_display_mode *mode)
+ {
+ 	int target = mode->clock * 1000;
+ 	int target_min = target - CLK_TOLERANCE_HZ;
+diff --git a/drivers/gpu/drm/sti/sti_hdmi.c b/drivers/gpu/drm/sti/sti_hdmi.c
+index fcc2194869d6..8539fe1fedc4 100644
+--- a/drivers/gpu/drm/sti/sti_hdmi.c
++++ b/drivers/gpu/drm/sti/sti_hdmi.c
+@@ -1004,8 +1004,9 @@ static int sti_hdmi_connector_get_modes(struct drm_connector *connector)
+ 
+ #define CLK_TOLERANCE_HZ 50
+ 
+-static int sti_hdmi_connector_mode_valid(struct drm_connector *connector,
+-					struct drm_display_mode *mode)
++static enum drm_mode_status
++sti_hdmi_connector_mode_valid(struct drm_connector *connector,
++			      struct drm_display_mode *mode)
+ {
+ 	int target = mode->clock * 1000;
+ 	int target_min = target - CLK_TOLERANCE_HZ;
 -- 
 2.35.1
 
