@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CB41C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D630AC433EF;
-	Wed, 28 Dec 2022 16:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41621C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:23:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A20CC433D2;
+	Wed, 28 Dec 2022 16:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672244636;
-	bh=C7fUcCl0MYG6C35XWcB0lDVuuWtKalbjDQBErs8rt1c=;
+	s=korg; t=1672244638;
+	bh=gfBly2bgLQ5BnXuh+j2nBQUonX4hNM1F8R43OTWCtNQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iwNT9sL1bX3cM/zbZFizsIuRMaFZjDS9FdqANes1cnJfAyWpbWxPQxW5eNqpOGDrR
-	 PNQMdv95AT/MhRKglMgEAo/GUUPyBmOQeQ0WGP2HBN2hkLzGvvhvgRBb6TrmTbizZW
-	 iZ+ixtFsFJzV9eS/uGCdT/p2hKTbE2HT2yrF34bo=
+	b=tX/KwNbGA1Ktz2r0hUTVjPBKil7gxxtbXRYHNU5hLgjOqUWFN45SQ3hCYLO2jk4no
+	 4vQ0B1Cx4rjwd/nere3m7tpV30aUuJZk4VDl1HRDlriQjiIVlksuCwxqMGfuCl3mwr
+	 lTeTvisNeyxlVz3+pf0MkzGkknQq41xha0hJuHlM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Jiamei Xie <jiamei.xie@arm.com>,
+	Andre Przywara <andre.przywara@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0680/1146] crypto: img-hash - Fix variable dereferenced before check hdev->req
-Date: Wed, 28 Dec 2022 15:36:59 +0100
-Message-Id: <20221228144348.614338539@linuxfoundation.org>
+Subject: [PATCH 6.1 0707/1146] serial: amba-pl011: avoid SBSA UART accessing DMACR register
+Date: Wed, 28 Dec 2022 15:37:26 +0100
+Message-Id: <20221228144349.350744944@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 References: <20221228144330.180012208@linuxfoundation.org>
@@ -35,50 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Jiamei Xie <jiamei.xie@arm.com>
 
-[ Upstream commit 04ba54e5af8f8f0137b08cb51a0b3a2e1ea46c94 ]
+[ Upstream commit 94cdb9f33698478b0e7062586633c42c6158a786 ]
 
-Smatch report warning as follows:
+Chapter "B Generic UART" in "ARM Server Base System Architecture" [1]
+documentation describes a generic UART interface. Such generic UART
+does not support DMA. In current code, sbsa_uart_pops and
+amba_pl011_pops share the same stop_rx operation, which will invoke
+pl011_dma_rx_stop, leading to an access of the DMACR register. This
+commit adds a using_rx_dma check in pl011_dma_rx_stop to avoid the
+access to DMACR register for SBSA UARTs which does not support DMA.
 
-drivers/crypto/img-hash.c:366 img_hash_dma_task() warn: variable
-dereferenced before check 'hdev->req'
+When the kernel enables DMA engine with "CONFIG_DMA_ENGINE=y", Linux
+SBSA PL011 driver will access PL011 DMACR register in some functions.
+For most real SBSA Pl011 hardware implementations, the DMACR write
+behaviour will be ignored. So these DMACR operations will not cause
+obvious problems. But for some virtual SBSA PL011 hardware, like Xen
+virtual SBSA PL011 (vpl011) device, the behaviour might be different.
+Xen vpl011 emulation will inject a data abort to guest, when guest is
+accessing an unimplemented UART register. As Xen VPL011 is SBSA
+compatible, it will not implement DMACR register. So when Linux SBSA
+PL011 driver access DMACR register, it will get an unhandled data abort
+fault and the application will get a segmentation fault:
+Unhandled fault at 0xffffffc00944d048
+Mem abort info:
+  ESR = 0x96000000
+  EC = 0x25: DABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+  FSC = 0x00: ttbr address size fault
+Data abort info:
+  ISV = 0, ISS = 0x00000000
+  CM = 0, WnR = 0
+swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000020e2e000
+[ffffffc00944d048] pgd=100000003ffff803, p4d=100000003ffff803, pud=100000003ffff803, pmd=100000003fffa803, pte=006800009c090f13
+Internal error: ttbr address size fault: 96000000 [#1] PREEMPT SMP
+...
+Call trace:
+ pl011_stop_rx+0x70/0x80
+ tty_port_shutdown+0x7c/0xb4
+ tty_port_close+0x60/0xcc
+ uart_close+0x34/0x8c
+ tty_release+0x144/0x4c0
+ __fput+0x78/0x220
+ ____fput+0x1c/0x30
+ task_work_run+0x88/0xc0
+ do_notify_resume+0x8d0/0x123c
+ el0_svc+0xa8/0xc0
+ el0t_64_sync_handler+0xa4/0x130
+ el0t_64_sync+0x1a0/0x1a4
+Code: b9000083 b901f001 794038a0 8b000042 (b9000041)
+---[ end trace 83dd93df15c3216f ]---
+note: bootlogd[132] exited with preempt_count 1
+/etc/rcS.d/S07bootlogd: line 47: 132 Segmentation fault start-stop-daemon
 
-Variable dereferenced should be done after check 'hdev->req',
-fix it.
+This has been discussed in the Xen community, and we think it should fix
+this in Linux. See [2] for more information.
 
-Fixes: d358f1abbf71 ("crypto: img-hash - Add Imagination Technologies hw hash accelerator")
-Fixes: 10badea259fa ("crypto: img-hash - Fix null pointer exception")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+[1] https://developer.arm.com/documentation/den0094/c/?lang=en
+[2] https://lists.xenproject.org/archives/html/xen-devel/2022-11/msg00543.html
+
+Fixes: 0dd1e247fd39 (drivers: PL011: add support for the ARM SBSA generic UART)
+Signed-off-by: Jiamei Xie <jiamei.xie@arm.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://lore.kernel.org/r/20221117103237.86856-1-jiamei.xie@arm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/img-hash.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/tty/serial/amba-pl011.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/crypto/img-hash.c b/drivers/crypto/img-hash.c
-index d8e82d69745d..9629e98bd68b 100644
---- a/drivers/crypto/img-hash.c
-+++ b/drivers/crypto/img-hash.c
-@@ -358,12 +358,16 @@ static int img_hash_dma_init(struct img_hash_dev *hdev)
- static void img_hash_dma_task(unsigned long d)
+diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
+index 5cdced39eafd..5b97645be667 100644
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -1045,6 +1045,9 @@ static void pl011_dma_rx_callback(void *data)
+  */
+ static inline void pl011_dma_rx_stop(struct uart_amba_port *uap)
  {
- 	struct img_hash_dev *hdev = (struct img_hash_dev *)d;
--	struct img_hash_request_ctx *ctx = ahash_request_ctx(hdev->req);
-+	struct img_hash_request_ctx *ctx;
- 	u8 *addr;
- 	size_t nbytes, bleft, wsend, len, tbc;
- 	struct scatterlist tsg;
- 
--	if (!hdev->req || !ctx->sg)
-+	if (!hdev->req)
++	if (!uap->using_rx_dma)
 +		return;
 +
-+	ctx = ahash_request_ctx(hdev->req);
-+	if (!ctx->sg)
- 		return;
- 
- 	addr = sg_virt(ctx->sg);
+ 	/* FIXME.  Just disable the DMA enable */
+ 	uap->dmacr &= ~UART011_RXDMAE;
+ 	pl011_write(uap->dmacr, uap, REG_DMACR);
 -- 
 2.35.1
 
