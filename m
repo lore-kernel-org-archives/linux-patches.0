@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3893E1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:50:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB8CDC433EF;
-	Wed, 28 Dec 2022 14:50:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBC5E1863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 14:50:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F48CC433EF;
+	Wed, 28 Dec 2022 14:50:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239014;
-	bh=J/wsoV+dYZdd7ozc0KjL4fhK/Q1P4JJF9tENRhqZxwQ=;
+	s=korg; t=1672239016;
+	bh=rMCigio10321HoUB6g+Ix0Omaua0lh61YivxJcqtbdU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A6ns7BzwvpyfqsuwRsS0O5bm2E+5X9ThMBQ+skM+9uA1f9tpf+NnvrbnixJUuV73D
-	 GI4ZSpN5xKinJ+6geOq7cUZjZd1jdj5qwyRdH42VbK8xyMJY9WCe8Is6HyVuRzdmq/
-	 JvfaqPd2Yf58MgZaljVhVNtqib5/a1/m5GJjgIhs=
+	b=tJ2uOMJhzvaORJg9RTUHzK9qs+kL/ih1XHLoW6vA3Og0Oz2MHodaEYiNDsV+3kk5k
+	 9ey16tvyCDFe2JmFSmYP5u9B5z5kcxD1H+twXmXI3vJWEYfktrTtGgU+Ph2k27vFh4
+	 YQSuMR2QLb3olm0WHfkIgXif1Pm2vyd2n5tq3So8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Brian Norris <briannorris@chromium.org>,
+	Prashant Malani <pmalani@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 096/731] perf/x86/intel/uncore: Fix reference count leak in __uncore_imc_init_box()
-Date: Wed, 28 Dec 2022 15:33:23 +0100
-Message-Id: <20221228144259.333168167@linuxfoundation.org>
+Subject: [PATCH 5.15 097/731] platform/chrome: cros_usbpd_notify: Fix error handling in cros_usbpd_notify_init()
+Date: Wed, 28 Dec 2022 15:33:24 +0100
+Message-Id: <20221228144259.362228815@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
 References: <20221228144256.536395940@linuxfoundation.org>
@@ -36,47 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 17b8d847b92d815d1638f0de154654081d66b281 ]
+[ Upstream commit 5a2d96623670155d94aca72c320c0ac27bdc6bd2 ]
 
-pci_get_device() will increase the reference count for the returned
-pci_dev, so tgl_uncore_get_mc_dev() will return a pci_dev with its
-reference count increased. We need to call pci_dev_put() to decrease the
-reference count before exiting from __uncore_imc_init_box(). Add
-pci_dev_put() for both normal and error path.
+The following WARNING message was given when rmmod cros_usbpd_notify:
 
-Fixes: fdb64822443e ("perf/x86: Add Intel Tiger Lake uncore support")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20221118063137.121512-5-wangxiongfeng2@huawei.com
+ Unexpected driver unregister!
+ WARNING: CPU: 0 PID: 253 at drivers/base/driver.c:270 driver_unregister+0x8a/0xb0
+ Modules linked in: cros_usbpd_notify(-)
+ CPU: 0 PID: 253 Comm: rmmod Not tainted 6.1.0-rc3 #24
+ ...
+ Call Trace:
+  <TASK>
+  cros_usbpd_notify_exit+0x11/0x1e [cros_usbpd_notify]
+  __x64_sys_delete_module+0x3c7/0x570
+  ? __ia32_sys_delete_module+0x570/0x570
+  ? lock_is_held_type+0xe3/0x140
+  ? syscall_enter_from_user_mode+0x17/0x50
+  ? rcu_read_lock_sched_held+0xa0/0xd0
+  ? syscall_enter_from_user_mode+0x1c/0x50
+  do_syscall_64+0x37/0x90
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ RIP: 0033:0x7f333fe9b1b7
+
+The reason is that the cros_usbpd_notify_init() does not check the return
+value of platform_driver_register(), and the cros_usbpd_notify can
+install successfully even if platform_driver_register() failed.
+
+Fix by checking the return value of platform_driver_register() and
+unregister cros_usbpd_notify_plat_driver when it failed.
+
+Fixes: ec2daf6e33f9 ("platform: chrome: Add cros-usbpd-notify driver")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Brian Norris <briannorris@chromium.org>
+Link: https://lore.kernel.org/r/20221117080823.77549-1-yuancan@huawei.com
+Signed-off-by: Prashant Malani <pmalani@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore_snb.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/platform/chrome/cros_usbpd_notify.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/uncore_snb.c b/arch/x86/events/intel/uncore_snb.c
-index dc3ae55f79e0..912fb3821a6b 100644
---- a/arch/x86/events/intel/uncore_snb.c
-+++ b/arch/x86/events/intel/uncore_snb.c
-@@ -1423,6 +1423,7 @@ static void tgl_uncore_imc_freerunning_init_box(struct intel_uncore_box *box)
- 	/* MCHBAR is disabled */
- 	if (!(mch_bar & BIT(0))) {
- 		pr_warn("perf uncore: MCHBAR is disabled. Failed to map IMC free-running counters.\n");
-+		pci_dev_put(pdev);
- 		return;
- 	}
- 	mch_bar &= ~BIT(0);
-@@ -1436,6 +1437,8 @@ static void tgl_uncore_imc_freerunning_init_box(struct intel_uncore_box *box)
- 	box->io_addr = ioremap(addr, type->mmio_map_size);
- 	if (!box->io_addr)
- 		pr_warn("perf uncore: Failed to ioremap for %s.\n", type->name);
-+
-+	pci_dev_put(pdev);
- }
+diff --git a/drivers/platform/chrome/cros_usbpd_notify.c b/drivers/platform/chrome/cros_usbpd_notify.c
+index 48a6617aa12f..de76de6f5090 100644
+--- a/drivers/platform/chrome/cros_usbpd_notify.c
++++ b/drivers/platform/chrome/cros_usbpd_notify.c
+@@ -285,7 +285,11 @@ static int __init cros_usbpd_notify_init(void)
+ 		return ret;
  
- static struct intel_uncore_ops tgl_uncore_imc_freerunning_ops = {
+ #ifdef CONFIG_ACPI
+-	platform_driver_register(&cros_usbpd_notify_acpi_driver);
++	ret = platform_driver_register(&cros_usbpd_notify_acpi_driver);
++	if (ret) {
++		platform_driver_unregister(&cros_usbpd_notify_plat_driver);
++		return ret;
++	}
+ #endif
+ 	return 0;
+ }
 -- 
 2.35.1
 
