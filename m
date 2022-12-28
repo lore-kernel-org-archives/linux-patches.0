@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42E4B1863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE011C433D2;
-	Wed, 28 Dec 2022 15:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAB81863
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:01:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53F5BC433F0;
+	Wed, 28 Dec 2022 15:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672239675;
-	bh=s8mJ35BDQb/eLYnJsSnnpayVTwaIWsDSpERXuMk82wU=;
+	s=korg; t=1672239677;
+	bh=jRbeFBzx2Kgv/hzgpUvMlaoNDixqCWpOdj4UHWO3d3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jAr5kRqCl3rhRhNCyZyVSvq/in2UaATIr6nbslJY+cWTXRmH5edzWlkk5Of2uClBm
-	 5M95okmZlDuxtm6ZXb2v4Yd8vgfOtKQjPGLq+wr1wYLx02+OU6DT8kwojBrUmlzosg
-	 IzA33xnuQnGk/7iQ15GBeexbLuOALLYFM2T9GXE8=
+	b=nVljsY4EGROJHKuUAyZ9X982GKWWY7EUAJf1PnyHcJ0vYTakBN5UDot3CGI3kjHhp
+	 Vhyf92eKT8tIKCm1F2EUwijlTpEjtHdHEFIcgQ5xg6j/zS/PAE3ChD0d+I4dmgmeGP
+	 lW9RGdU8nWC3l/YfIYXcLmjkYAe7RUQ8xx+kmRjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0026/1146] soc: qcom: llcc: make irq truly optional
-Date: Wed, 28 Dec 2022 15:26:05 +0100
-Message-Id: <20221228144330.882475224@linuxfoundation.org>
+Subject: [PATCH 6.0 0063/1073] arm64: dts: mt2712e: Fix unit_address_vs_reg warning for oscillators
+Date: Wed, 28 Dec 2022 15:27:31 +0100
+Message-Id: <20221228144329.805359627@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,38 +35,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit c882c899ead3545102a4d71b5fbe73b9e4bc2657 ]
+[ Upstream commit e4495a0a8b3d84816c9a46edf3ce060bbf267475 ]
 
-The function platform_get_irq prints an error message into the kernel
-log when the irq isn't found.
+Rename the fixed-clock oscillators to remove the unit address.
 
-Since the interrupt is actually optional and not provided by some SoCs,
-use platform_get_irq_optional which does not print an error message.
+This solves unit_address_vs_reg warnings.
 
-Fixes: c081f3060fab ("soc: qcom: Add support to register LLCC EDAC driver")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221104153041.412020-1-luca.weiss@fairphone.com
+Fixes: 5d4839709c8e ("arm64: dts: mt2712: Add clock controller device nodes")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221013152212.416661-4-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/llcc-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt2712e.dtsi | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 8b7e8118f3ce..82c3cfdcc560 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -849,7 +849,7 @@ static int qcom_llcc_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err;
+diff --git a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
+index 4797537cb368..dcd3df8eb4da 100644
+--- a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
+@@ -160,70 +160,70 @@ sys_clk: dummyclk {
+ 		#clock-cells = <0>;
+ 	};
  
--	drv_data->ecc_irq = platform_get_irq(pdev, 0);
-+	drv_data->ecc_irq = platform_get_irq_optional(pdev, 0);
- 	if (drv_data->ecc_irq >= 0) {
- 		llcc_edac = platform_device_register_data(&pdev->dev,
- 						"qcom_llcc_edac", -1, drv_data,
+-	clk26m: oscillator@0 {
++	clk26m: oscillator-26m {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <26000000>;
+ 		clock-output-names = "clk26m";
+ 	};
+ 
+-	clk32k: oscillator@1 {
++	clk32k: oscillator-32k {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <32768>;
+ 		clock-output-names = "clk32k";
+ 	};
+ 
+-	clkfpc: oscillator@2 {
++	clkfpc: oscillator-50m {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <50000000>;
+ 		clock-output-names = "clkfpc";
+ 	};
+ 
+-	clkaud_ext_i_0: oscillator@3 {
++	clkaud_ext_i_0: oscillator-aud0 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <6500000>;
+ 		clock-output-names = "clkaud_ext_i_0";
+ 	};
+ 
+-	clkaud_ext_i_1: oscillator@4 {
++	clkaud_ext_i_1: oscillator-aud1 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <196608000>;
+ 		clock-output-names = "clkaud_ext_i_1";
+ 	};
+ 
+-	clkaud_ext_i_2: oscillator@5 {
++	clkaud_ext_i_2: oscillator-aud2 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <180633600>;
+ 		clock-output-names = "clkaud_ext_i_2";
+ 	};
+ 
+-	clki2si0_mck_i: oscillator@6 {
++	clki2si0_mck_i: oscillator-i2s0 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <30000000>;
+ 		clock-output-names = "clki2si0_mck_i";
+ 	};
+ 
+-	clki2si1_mck_i: oscillator@7 {
++	clki2si1_mck_i: oscillator-i2s1 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <30000000>;
+ 		clock-output-names = "clki2si1_mck_i";
+ 	};
+ 
+-	clki2si2_mck_i: oscillator@8 {
++	clki2si2_mck_i: oscillator-i2s2 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <30000000>;
+ 		clock-output-names = "clki2si2_mck_i";
+ 	};
+ 
+-	clktdmin_mclk_i: oscillator@9 {
++	clktdmin_mclk_i: oscillator-mclk {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <30000000>;
 -- 
 2.35.1
 
