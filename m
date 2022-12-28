@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA5C1875
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:03:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5BC3C433D2;
-	Wed, 28 Dec 2022 16:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169641875
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:03:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 864A8C433EF;
+	Wed, 28 Dec 2022 16:03:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243397;
-	bh=PtDSLNanIfOzV4mA5u2ccUYXJx/xTNPRPfJhxviddWE=;
+	s=korg; t=1672243399;
+	bh=L4T6co3qEhFUImBGVuk1Cgsr93LNnaOLn11IL9Q4Eqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0+svlLp02ygmF0L6WHMRSXNLAOJS9Sd4JzO03iFe4SDawWTOKZ7VvRE5aJtwyjCxQ
-	 sBf4l+XhJF3vPFUswFI5+4suAIyHkoPGWC76dalu6xxH6pYNkdy7KdFnrLZ8QdDvcT
-	 T8W6RR/Pxkodlv672UcXzfuqgEZoBQbe6+VzZhaw=
+	b=rjnatgJveGORGPVfkyZOlFtfQCQcVggGfJIIBHkCc69bq3MRbsWa6tl3spOuyckAV
+	 djcQjuhh6sROlOwM0Y6j4lGf0aTDcfw1b0Nj7/TGabJXu4IEt2gq+QQ2HsgvwgqtDA
+	 y81FxfGxIGBwJ30G9XhtOXlWv3+SVxwkDI4UPsaM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0525/1073] hamradio: dont call dev_kfree_skb() under spin_lock_irqsave()
-Date: Wed, 28 Dec 2022 15:35:13 +0100
-Message-Id: <20221228144342.305207861@linuxfoundation.org>
+	Jeff Mahoney <jeffm@suse.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Mimi Zohar <zohar@linux.ibm.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 5.15 717/731] reiserfs: Add missing calls to reiserfs_security_free()
+Date: Wed, 28 Dec 2022 15:43:44 +0100
+Message-Id: <20221228144317.226604351@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
-References: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,62 +37,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-[ Upstream commit 3727f742915f04f6fc550b80cf406999bd4e90d0 ]
+commit 572302af1258459e124437b8f3369357447afac7 upstream.
 
-It is not allowed to call kfree_skb() or consume_skb() from hardware
-interrupt context or with hardware interrupts being disabled.
+Commit 57fe60df6241 ("reiserfs: add atomic addition of selinux attributes
+during inode creation") defined reiserfs_security_free() to free the name
+and value of a security xattr allocated by the active LSM through
+security_old_inode_init_security(). However, this function is not called
+in the reiserfs code.
 
-It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
-The difference between them is free reason, dev_kfree_skb_irq() means
-the SKB is dropped in error and dev_consume_skb_irq() means the SKB
-is consumed in normal.
+Thus, add a call to reiserfs_security_free() whenever
+reiserfs_security_init() is called, and initialize value to NULL, to avoid
+to call kfree() on an uninitialized pointer.
 
-In scc_discard_buffers(), dev_kfree_skb() is called to discard the SKBs,
-so replace it with dev_kfree_skb_irq().
+Finally, remove the kfree() for the xattr name, as it is not allocated
+anymore.
 
-In scc_net_tx(), dev_kfree_skb() is called to drop the SKB that exceed
-queue length, so replace it with dev_kfree_skb_irq().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 57fe60df6241 ("reiserfs: add atomic addition of selinux attributes during inode creation")
+Cc: stable@vger.kernel.org
+Cc: Jeff Mahoney <jeffm@suse.com>
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reported-by: Mimi Zohar <zohar@linux.ibm.com>
+Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/hamradio/scc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/reiserfs/namei.c          |    4 ++++
+ fs/reiserfs/xattr_security.c |    2 +-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/hamradio/scc.c b/drivers/net/hamradio/scc.c
-index f90830d3dfa6..a9184a78650b 100644
---- a/drivers/net/hamradio/scc.c
-+++ b/drivers/net/hamradio/scc.c
-@@ -302,12 +302,12 @@ static inline void scc_discard_buffers(struct scc_channel *scc)
- 	spin_lock_irqsave(&scc->lock, flags);	
- 	if (scc->tx_buff != NULL)
- 	{
--		dev_kfree_skb(scc->tx_buff);
-+		dev_kfree_skb_irq(scc->tx_buff);
- 		scc->tx_buff = NULL;
- 	}
- 	
- 	while (!skb_queue_empty(&scc->tx_queue))
--		dev_kfree_skb(skb_dequeue(&scc->tx_queue));
-+		dev_kfree_skb_irq(skb_dequeue(&scc->tx_queue));
+--- a/fs/reiserfs/namei.c
++++ b/fs/reiserfs/namei.c
+@@ -696,6 +696,7 @@ static int reiserfs_create(struct user_n
  
- 	spin_unlock_irqrestore(&scc->lock, flags);
+ out_failed:
+ 	reiserfs_write_unlock(dir->i_sb);
++	reiserfs_security_free(&security);
+ 	return retval;
  }
-@@ -1668,7 +1668,7 @@ static netdev_tx_t scc_net_tx(struct sk_buff *skb, struct net_device *dev)
- 	if (skb_queue_len(&scc->tx_queue) > scc->dev->tx_queue_len) {
- 		struct sk_buff *skb_del;
- 		skb_del = skb_dequeue(&scc->tx_queue);
--		dev_kfree_skb(skb_del);
-+		dev_kfree_skb_irq(skb_del);
- 	}
- 	skb_queue_tail(&scc->tx_queue, skb);
- 	netif_trans_update(dev);
--- 
-2.35.1
-
+ 
+@@ -779,6 +780,7 @@ static int reiserfs_mknod(struct user_na
+ 
+ out_failed:
+ 	reiserfs_write_unlock(dir->i_sb);
++	reiserfs_security_free(&security);
+ 	return retval;
+ }
+ 
+@@ -878,6 +880,7 @@ static int reiserfs_mkdir(struct user_na
+ 	retval = journal_end(&th);
+ out_failed:
+ 	reiserfs_write_unlock(dir->i_sb);
++	reiserfs_security_free(&security);
+ 	return retval;
+ }
+ 
+@@ -1194,6 +1197,7 @@ static int reiserfs_symlink(struct user_
+ 	retval = journal_end(&th);
+ out_failed:
+ 	reiserfs_write_unlock(parent_dir->i_sb);
++	reiserfs_security_free(&security);
+ 	return retval;
+ }
+ 
+--- a/fs/reiserfs/xattr_security.c
++++ b/fs/reiserfs/xattr_security.c
+@@ -50,6 +50,7 @@ int reiserfs_security_init(struct inode
+ 	int error;
+ 
+ 	sec->name = NULL;
++	sec->value = NULL;
+ 
+ 	/* Don't add selinux attributes on xattrs - they'll never get used */
+ 	if (IS_PRIVATE(dir))
+@@ -95,7 +96,6 @@ int reiserfs_security_write(struct reise
+ 
+ void reiserfs_security_free(struct reiserfs_security_handle *sec)
+ {
+-	kfree(sec->name);
+ 	kfree(sec->value);
+ 	sec->name = NULL;
+ 	sec->value = NULL;
 
 
