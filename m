@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B8A41C07
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:03:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0282DC433D2;
-	Wed, 28 Dec 2022 16:03:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4E71C07
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:03:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A511DC433D2;
+	Wed, 28 Dec 2022 16:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672243405;
-	bh=AUNv4Z887qHvzpEifxMftsN+gO1fimH5MRbEkobYItI=;
+	s=korg; t=1672243408;
+	bh=85omXn5FVO11lwaIPOdLpY9zVnj8HCnM54sZwW8BRuw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UFBJE2pRyb+PZi4ULClvXjVVpFgnq8Z2l+IMDCESujk4g1eXVYdy05FyARk8lVFGn
-	 Z/6Bu0tXOLgaKDAAVFNpNo/wNAvkRfaJ0OcNh6w5WIvz4pvwEaVR7VpY/O6rKlGyUX
-	 LZZPmUU3prdHQkMsz9yF3gKMOLe/p7HQjNvhKMQ8=
+	b=yhcQIF8lFyx6hqNNjyHzkTgSR/rjiVwmnHBtSqfBLuYT2qkJPPf/9K9bEweuYZgI9
+	 Jens71Smkv4UAYWzG5/GLXWtFZzkU56es8x+FgZlYkJB72Gcv4INseBi16M3i+4yAF
+	 qOLbImuysEq0ALR0pCF+hksLFwuw6GCVY8S2h39w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Yongqiang Liu <liuyongqiang13@huawei.com>,
+	Jiri Pirko <jiri@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 0526/1073] net: amd: lance: dont call dev_kfree_skb() under spin_lock_irqsave()
-Date: Wed, 28 Dec 2022 15:35:14 +0100
-Message-Id: <20221228144342.332242390@linuxfoundation.org>
+Subject: [PATCH 6.0 0511/1073] net: defxx: Fix missing err handling in dfx_init()
+Date: Wed, 28 Dec 2022 15:34:59 +0100
+Message-Id: <20221228144341.925570705@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
 References: <20221228144328.162723588@linuxfoundation.org>
@@ -35,56 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Yongqiang Liu <liuyongqiang13@huawei.com>
 
-[ Upstream commit 6151d105dfce8c23edf30eed35e97f3d9b96a35c ]
+[ Upstream commit ae18dcdff0f8d7e84cd3fd9f496518b5e72d185d ]
 
-It is not allowed to call kfree_skb() or consume_skb() from hardware
-interrupt context or with hardware interrupts being disabled.
+When eisa_driver_register() or tc_register_driver() failed,
+the modprobe defxx would fail with some err log as follows:
 
-It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
-The difference between them is free reason, dev_kfree_skb_irq() means
-the SKB is dropped in error and dev_consume_skb_irq() means the SKB
-is consumed in normal.
+ Error: Driver 'defxx' is already registered, aborting...
 
-In these two cases, dev_kfree_skb() is called consume the xmited SKB,
-so replace it with dev_consume_skb_irq().
+Fix this issue by adding err hanling in dfx_init().
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Fixes: e89a2cfb7d7b5 ("[TC] defxx: TURBOchannel support")
+Signed-off-by: Yongqiang Liu <liuyongqiang13@huawei.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/atarilance.c | 2 +-
- drivers/net/ethernet/amd/lance.c      | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/fddi/defxx.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/atarilance.c b/drivers/net/ethernet/amd/atarilance.c
-index 27869164c6e6..ca12f9f48839 100644
---- a/drivers/net/ethernet/amd/atarilance.c
-+++ b/drivers/net/ethernet/amd/atarilance.c
-@@ -824,7 +824,7 @@ lance_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	lp->memcpy_f( PKTBUF_ADDR(head), (void *)skb->data, skb->len );
- 	head->flag = TMD1_OWN_CHIP | TMD1_ENP | TMD1_STP;
- 	dev->stats.tx_bytes += skb->len;
--	dev_kfree_skb( skb );
-+	dev_consume_skb_irq(skb);
- 	lp->cur_tx++;
- 	while( lp->cur_tx >= TX_RING_SIZE && lp->dirty_tx >= TX_RING_SIZE ) {
- 		lp->cur_tx -= TX_RING_SIZE;
-diff --git a/drivers/net/ethernet/amd/lance.c b/drivers/net/ethernet/amd/lance.c
-index 462016666752..e3b8de9fc728 100644
---- a/drivers/net/ethernet/amd/lance.c
-+++ b/drivers/net/ethernet/amd/lance.c
-@@ -1001,7 +1001,7 @@ static netdev_tx_t lance_start_xmit(struct sk_buff *skb,
- 		skb_copy_from_linear_data(skb, &lp->tx_bounce_buffs[entry], skb->len);
- 		lp->tx_ring[entry].base =
- 			((u32)isa_virt_to_bus((lp->tx_bounce_buffs + entry)) & 0xffffff) | 0x83000000;
--		dev_kfree_skb(skb);
-+		dev_consume_skb_irq(skb);
- 	} else {
- 		lp->tx_skbuff[entry] = skb;
- 		lp->tx_ring[entry].base = ((u32)isa_virt_to_bus(skb->data) & 0xffffff) | 0x83000000;
+diff --git a/drivers/net/fddi/defxx.c b/drivers/net/fddi/defxx.c
+index b584ffe38ad6..1fef8a9b1a0f 100644
+--- a/drivers/net/fddi/defxx.c
++++ b/drivers/net/fddi/defxx.c
+@@ -3831,10 +3831,24 @@ static int dfx_init(void)
+ 	int status;
+ 
+ 	status = pci_register_driver(&dfx_pci_driver);
+-	if (!status)
+-		status = eisa_driver_register(&dfx_eisa_driver);
+-	if (!status)
+-		status = tc_register_driver(&dfx_tc_driver);
++	if (status)
++		goto err_pci_register;
++
++	status = eisa_driver_register(&dfx_eisa_driver);
++	if (status)
++		goto err_eisa_register;
++
++	status = tc_register_driver(&dfx_tc_driver);
++	if (status)
++		goto err_tc_register;
++
++	return 0;
++
++err_tc_register:
++	eisa_driver_unregister(&dfx_eisa_driver);
++err_eisa_register:
++	pci_unregister_driver(&dfx_pci_driver);
++err_pci_register:
+ 	return status;
+ }
+ 
 -- 
 2.35.1
 
