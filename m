@@ -1,30 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37D031C08
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C03C433D2;
-	Wed, 28 Dec 2022 16:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9BE81C08
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 16:41:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DE7AC433D2;
+	Wed, 28 Dec 2022 16:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672245679;
-	bh=5cSXQd1kUirWD2KjvQIt7gsYW93YphZeCiFw9YuNZ8c=;
+	s=korg; t=1672245681;
+	bh=I9Gx9m76r4Ac5f8DVvtK63xglKXDOM6E0OjZCYSrZJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dBm2d9v2cCKd2bedYsNjWxSg8k8MdeMhZNMt1+ZgORcJxDH9ZrD2ybV+kcAH79hmV
-	 Nf2yCun+YfE3IXY7Hw2WHDeSrmPlx6u1eX9Uxvea0rRoS9P3PybYD6sLO43pYK74yo
-	 kehDJEf5Ramg2b7gi150gjeiRTaa36yINqtsv05c=
+	b=mLY25z9V0Ax80WB5biEifGkfb4prtQ9MaEErlhyNUYy6xM21oRgxyL0tKEATqGvXc
+	 cR5P8ImsgzWL26REr7XHuB9oqv8PWdaKQyJOhVcVvF9epRdRDt8S9lGC0jKCJUTMnw
+	 p2b/OkLN9bHe6yQHLW2mP+nyqi/VgbaGHVagVelc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Rob Clark <robdclark@gmail.com>,
+	Sean Paul <sean@poorly.run>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	linux-arm-msm@vger.kernel.org,
+	freedreno@lists.freedesktop.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0904/1146] block: factor out a blk_debugfs_remove helper
-Date: Wed, 28 Dec 2022 15:40:43 +0100
-Message-Id: <20221228144354.769197269@linuxfoundation.org>
+Subject: [PATCH 6.0 0937/1073] drm/msm: Use drm_mode_copy()
+Date: Wed, 28 Dec 2022 15:42:05 +0100
+Message-Id: <20221228144353.479905766@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+References: <20221228144328.162723588@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,59 +41,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 6fc75f309d291d328b4ea2f91bef0ff56e4bc7c2 ]
+[ Upstream commit b2a1c5ca50db22b3677676dd5bad5f6092429acf ]
 
-Split the debugfs removal from blk_unregister_queue into a helper so that
-the it can be reused for blk_register_queue error handling.
+struct drm_display_mode embeds a list head, so overwriting
+the full struct with another one will corrupt the list
+(if the destination mode is on a list). Use drm_mode_copy()
+instead which explicitly preserves the list head of
+the destination mode.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20221114042637.1009333-3-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: d36a9ea5e776 ("block: fix use-after-free of q->q_usage_counter")
+Even if we know the destination mode is not on any list
+using drm_mode_copy() seems decent as it sets a good
+example. Bad examples of not using it might eventually
+get copied into code where preserving the list head
+actually matters.
+
+Obviously one case not covered here is when the mode
+itself is embedded in a larger structure and the whole
+structure is copied. But if we are careful when copying
+into modes embedded in structures I think we can be a
+little more reassured that bogus list heads haven't been
+propagated in.
+
+@is_mode_copy@
+@@
+drm_mode_copy(...)
+{
+...
+}
+
+@depends on !is_mode_copy@
+struct drm_display_mode *mode;
+expression E, S;
+@@
+(
+- *mode = E
++ drm_mode_copy(mode, &E)
+|
+- memcpy(mode, E, S)
++ drm_mode_copy(mode, E)
+)
+
+@depends on !is_mode_copy@
+struct drm_display_mode mode;
+expression E;
+@@
+(
+- mode = E
++ drm_mode_copy(&mode, &E)
+|
+- memcpy(&mode, E, S)
++ drm_mode_copy(&mode, E)
+)
+
+@@
+struct drm_display_mode *mode;
+@@
+- &*mode
++ mode
+
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: freedreno@lists.freedesktop.org
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221107192545.9896-5-ville.syrjala@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-sysfs.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
-index 2b1cf0b2a5c7..3d6951a0b4e7 100644
---- a/block/blk-sysfs.c
-+++ b/block/blk-sysfs.c
-@@ -797,6 +797,19 @@ struct kobj_type blk_queue_ktype = {
- 	.release	= blk_release_queue,
- };
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index a49f6dbbe888..c9d9b384ddd0 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -857,7 +857,7 @@ static int dp_display_set_mode(struct msm_dp *dp_display,
  
-+static void blk_debugfs_remove(struct gendisk *disk)
-+{
-+	struct request_queue *q = disk->queue;
-+
-+	mutex_lock(&q->debugfs_mutex);
-+	blk_trace_shutdown(q);
-+	debugfs_remove_recursive(q->debugfs_dir);
-+	q->debugfs_dir = NULL;
-+	q->sched_debugfs_dir = NULL;
-+	q->rqos_debugfs_dir = NULL;
-+	mutex_unlock(&q->debugfs_mutex);
-+}
-+
- /**
-  * blk_register_queue - register a block layer queue with sysfs
-  * @disk: Disk of which the request queue should be registered with sysfs.
-@@ -922,11 +935,5 @@ void blk_unregister_queue(struct gendisk *disk)
- 	kobject_del(&q->kobj);
- 	mutex_unlock(&q->sysfs_dir_lock);
+ 	dp = container_of(dp_display, struct dp_display_private, dp_display);
  
--	mutex_lock(&q->debugfs_mutex);
--	blk_trace_shutdown(q);
--	debugfs_remove_recursive(q->debugfs_dir);
--	q->debugfs_dir = NULL;
--	q->sched_debugfs_dir = NULL;
--	q->rqos_debugfs_dir = NULL;
--	mutex_unlock(&q->debugfs_mutex);
-+	blk_debugfs_remove(disk);
- }
+-	dp->panel->dp_mode.drm_mode = mode->drm_mode;
++	drm_mode_copy(&dp->panel->dp_mode.drm_mode, &mode->drm_mode);
+ 	dp->panel->dp_mode.bpp = mode->bpp;
+ 	dp->panel->dp_mode.capabilities = mode->capabilities;
+ 	dp_panel_init_panel_info(dp->panel);
 -- 
 2.35.1
 
