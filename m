@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616061863
-	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB801C433D2;
-	Wed, 28 Dec 2022 15:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E961868
+	for <patches@lists.linux.dev>; Wed, 28 Dec 2022 15:27:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2524CC433F0;
+	Wed, 28 Dec 2022 15:27:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672241248;
-	bh=2Xm07eXL0JB3MV9MymMDGxCYhaoEiXUc0TxK5crAAJw=;
+	s=korg; t=1672241253;
+	bh=d5AT1t18jRg+EHlRlDa4fgW/bB1AD/80ldiTVQYxRzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JDkntrWsZB8ZzgXs3xhCTFvRi/ryOggv7Tnv9iPPoYU3HySbKYEUxNoPSQbjiDfO2
-	 gGnMC5y/u0WAf/0HHMueYhu4gLz1TGGty3JfJX7EG+B3ce+p/4xbEf/XWNGV/Li/E1
-	 j4BC86aD5NJyMElxc8/GWwWDQC5UOvGazqR6LLII=
+	b=wWmAcxt3sqyCeE/SshUE5JZ9X/sw36I2Bvd9zMY5KsirZAu1tPeYfjmE/4/AHjRjs
+	 3uB3aUGERstwlDbraW15CE9BdmCTtnsABSdF2zmZJabXakdqGpKcWBcRVVbXWs7qAz
+	 zn1hzYUc6tBjs5z6itOvhcx34cU7Ppcx1Z1Q6XsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerhard Engleder <gerhard@engleder-embedded.com>,
-	Song Liu <song@kernel.org>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	delisun <delisun@pateo.com.cn>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 0224/1146] samples/bpf: Fix map iteration in xdp1_user
-Date: Wed, 28 Dec 2022 15:29:23 +0100
-Message-Id: <20221228144336.227899276@linuxfoundation.org>
+Subject: [PATCH 5.15 458/731] serial: pl011: Do not clear RX FIFO & RX interrupt in unthrottle.
+Date: Wed, 28 Dec 2022 15:39:25 +0100
+Message-Id: <20221228144309.829191330@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
-References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144256.536395940@linuxfoundation.org>
+References: <20221228144256.536395940@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,50 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gerhard Engleder <gerhard@engleder-embedded.com>
+From: delisun <delisun@pateo.com.cn>
 
-[ Upstream commit 05ee658c654bacda03f7fecef367e62aaf8e1cfe ]
+[ Upstream commit 032d5a71ed378ffc6a2d41a187d8488a4f9fe415 ]
 
-BPF map iteration in xdp1_user results in endless loop without any
-output, because the return value of bpf_map_get_next_key() is checked
-against the wrong value.
+Clearing the RX FIFO will cause data loss.
+Copy the pl011_enabl_interrupts implementation, and remove the clear
+interrupt and FIFO part of the code.
 
-Other call locations of bpf_map_get_next_key() check for equal 0 for
-continuing the iteration. xdp1_user checks against unequal -1. This is
-wrong for a function which can return arbitrary negative errno values,
-because a return value of e.g. -2 results in an endless loop.
-
-With this fix xdp1_user is printing statistics again:
-proto 0:          1 pkt/s
-proto 0:          1 pkt/s
-proto 17:     107383 pkt/s
-proto 17:     881655 pkt/s
-proto 17:     882083 pkt/s
-proto 17:     881758 pkt/s
-
-Fixes: bd054102a8c7 ("libbpf: enforce strict libbpf 1.0 behaviors")
-Signed-off-by: Gerhard Engleder <gerhard@engleder-embedded.com>
-Acked-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20221013200922.17167-1-gerhard@engleder-embedded.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Fixes: 211565b10099 ("serial: pl011: UPSTAT_AUTORTS requires .throttle/unthrottle")
+Signed-off-by: delisun <delisun@pateo.com.cn>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20221110020108.7700-1-delisun@pateo.com.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/bpf/xdp1_user.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/amba-pl011.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/samples/bpf/xdp1_user.c b/samples/bpf/xdp1_user.c
-index ac370e638fa3..281dc964de8d 100644
---- a/samples/bpf/xdp1_user.c
-+++ b/samples/bpf/xdp1_user.c
-@@ -51,7 +51,7 @@ static void poll_stats(int map_fd, int interval)
+diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
+index ca105e9baa42..7c8515f83f0a 100644
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -1836,8 +1836,17 @@ static void pl011_enable_interrupts(struct uart_amba_port *uap)
+ static void pl011_unthrottle_rx(struct uart_port *port)
+ {
+ 	struct uart_amba_port *uap = container_of(port, struct uart_amba_port, port);
++	unsigned long flags;
  
- 		sleep(interval);
+-	pl011_enable_interrupts(uap);
++	spin_lock_irqsave(&uap->port.lock, flags);
++
++	uap->im = UART011_RTIM;
++	if (!pl011_dma_rx_running(uap))
++		uap->im |= UART011_RXIM;
++
++	pl011_write(uap->im, uap, REG_IMSC);
++
++	spin_unlock_irqrestore(&uap->port.lock, flags);
+ }
  
--		while (bpf_map_get_next_key(map_fd, &key, &key) != -1) {
-+		while (bpf_map_get_next_key(map_fd, &key, &key) == 0) {
- 			__u64 sum = 0;
- 
- 			assert(bpf_map_lookup_elem(map_fd, &key, values) == 0);
+ static int pl011_startup(struct uart_port *port)
 -- 
 2.35.1
 
