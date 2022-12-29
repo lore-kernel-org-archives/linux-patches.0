@@ -1,263 +1,233 @@
-Received: from EUR03-DBA-obe.outbound.protection.outlook.com (mail-dbaeur03on2085.outbound.protection.outlook.com [40.107.104.85])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f41.google.com (mail-vs1-f41.google.com [209.85.217.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001D16FC7
-	for <patches@lists.linux.dev>; Thu, 29 Dec 2022 16:00:27 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=YEtQdxDUXrVpjF52mT8wodAlPFUjGwTpj5mxGWIvKj7rS1TwoTL3HM/DpOOP0CZ4Mo+hC7G19+RWayQJIIldmSIundx6KnG71wvjyYVSLlc3t22FinrHCIjWptQowovkDocPfngBZjsv5Dpa0o+nxFcIl3KNtRB2Z3NdWzyFYUpfbZK3NMy6xdHDvKfSPHJvWzIju6h+VLcOtF9LNwHlbBBGua7nbnjFMF4txjyHvKzm3k2siJOmteLy3EuS9/XE/Qc8SpWixOWEV+8mg8SaKi1k4IfkuVbFtrup6vP+s8BEG2ORvgFmYt9lPJ2yfyOf69C9aFdZ/zmXu5mdmP5rAg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cxA1dewoEQYsBBIfqqg+pBAzR2DlA1j9ZrcSXi2VvHA=;
- b=BaVIPt44SobX/DLfnGOK9nLTDbCm65Au9Ca0BggL81qsIJOrhM8OwJyMhKce/dZfiCbcmFNE2AZDhEqG3F6BiJjPzN+/8FwPoNQOcF8GhcYZCd3w4pJwBQsE36paQWx/mcoy4Eklr/GQfqrDyAS5UlJSNLl6xBjP0qwJMYagFYMKrbixOfJAznWtsi/pqOh7HJMeDl/5vUJDiIcbvbBdwZr1jl8ZNbcvN27bQ4ekfSzds4yLyVmgEvoZxxUFBQcUS9dTLjkHitej7vPLZT5ccZRNho8KMP7HHFeGr4XGpNytjYHtb6Z47js1T/G8f13KqA023hyeOrDdurAn2ojL0w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=seco.com; dmarc=pass action=none header.from=seco.com;
- dkim=pass header.d=seco.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=seco.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cxA1dewoEQYsBBIfqqg+pBAzR2DlA1j9ZrcSXi2VvHA=;
- b=wSW1gMg+JK3TBTAqOlNo700BVMK+N1td7rVP7ciMwRlEdjMCfX/rWvARc078W/hqB8cjBm2+JsmMIgJdep1Sg6khJQyEaIoN3jk0XemqgTYaNB4VNqiCe9mTKoLTEBpXLY9MAJqIVbiQVdNfSyRZIV/rpflkJmvOriTr7jXq8QuoOzlHwtX5fVnR2g2AvUdwvfB/JvfRAQM1VwnKTTMHPoDD0gwIj075xGeynTeQfZE2brzG5QNAHAmHdef9W+uRf06XHSSyFYGUEbXeTVJK0Loa/UVTEv5Kxg0uQTcHnRK6QD0Z81J0YosPVNWNumZqVaC4fjLPe9BUFwGXY2Gf6w==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=seco.com;
-Received: from DB9PR03MB8847.eurprd03.prod.outlook.com (2603:10a6:10:3dd::13)
- by PA4PR03MB7391.eurprd03.prod.outlook.com (2603:10a6:102:bd::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5944.16; Thu, 29 Dec
- 2022 16:00:25 +0000
-Received: from DB9PR03MB8847.eurprd03.prod.outlook.com
- ([fe80::2b95:1fe4:5d8f:22fb]) by DB9PR03MB8847.eurprd03.prod.outlook.com
- ([fe80::2b95:1fe4:5d8f:22fb%8]) with mapi id 15.20.5944.016; Thu, 29 Dec 2022
- 16:00:25 +0000
-Message-ID: <c46e40a7-d110-0968-e331-987e77c565a5@seco.com>
-Date: Thu, 29 Dec 2022 11:00:19 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.0
-Subject: Re: [PATCH 5.15 152/731] powerpc: dts: t208x: Mark MAC1 and MAC2 as
- 10G
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, "David S. Miller" <davem@davemloft.net>,
- Sasha Levin <sashal@kernel.org>
-References: <20221228144256.536395940@linuxfoundation.org>
- <20221228144300.959873542@linuxfoundation.org>
-From: Sean Anderson <sean.anderson@seco.com>
-In-Reply-To: <20221228144300.959873542@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BL1PR13CA0433.namprd13.prod.outlook.com
- (2603:10b6:208:2c3::18) To DB9PR03MB8847.eurprd03.prod.outlook.com
- (2603:10a6:10:3dd::13)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 990A879C3
+	for <patches@lists.linux.dev>; Thu, 29 Dec 2022 16:22:12 +0000 (UTC)
+Received: by mail-vs1-f41.google.com with SMTP id 128so18886901vsz.12
+        for <patches@lists.linux.dev>; Thu, 29 Dec 2022 08:22:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bQOSh25SYMN2/P2PglP6We39JwwFuMW1Z/fACD73SKY=;
+        b=J/6WobU1v+s8e5z29bJ9esEMLBgYVMQmSUMb9TgVjVRXOm7oUYxI5ZEfjZWLmrVebb
+         /qQGll/SVAe49l1t40CN23HNVKbOe+0XgAuzpEjD3ohLNE7dQcSZlsCwd6KkX3DA8zU2
+         j94G2RwGERusZILOLo7S5IUS9xAjZwfX/zNVCQup0athfFmK+ac4j8PW6CtlgI5lTt6C
+         LPruFBS8KpCLCxMhXIZOFuzmkcnyWa0zdZsanTQJP2ndXdU5Y6YMGQU4uI3ZnTUa6+HB
+         VmI4iJ9ocFNh43vP30ipB16AoCxlL9KvxKjHQgYLBKeaQ5+fSVfFJeeoCv04MLVVkfi+
+         LUmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bQOSh25SYMN2/P2PglP6We39JwwFuMW1Z/fACD73SKY=;
+        b=1DHZMeQSwTby1cEDmeQEzW2NJpIZ6P9QeosnlRwyh2wB6kcFYsZ7i+8/+zq4MEySZL
+         v0wRtJn7S+rLP+5eGp+br/0yvhRSmKxCb8gOb1oRRomutx7/aBVPGVMOmhEq8UBxqjsW
+         +qwT5NhE1WoShL3sAoiRZHcDTl2lD70m8jnP+eIFYjRKVAZsPm6bkFoV2iublEV1aUbS
+         0pvVbsWZARfJ2vdiLzhzn139TtgQPDfxmVTgMBE1Hd7PR6I+DO8GArKB+3Z8H2caG7s6
+         E/4CPR6B9+9YtjVSsoC9wiFvVdMiVe7/4pZKNsE7SvDbQEPtZFEAe3u0H3RSUYjt+KGs
+         hniQ==
+X-Gm-Message-State: AFqh2kp733nZfLTdPIS1yxrbtwlOV8wW7lk4eBCx/FvMk1vXdCPrhPxW
+	vAcuKzQCaaELlC/M1aEmLw/5+B3Bx9gk9lGA9Q+ezA==
+X-Google-Smtp-Source: AMrXdXtGwLt1Gol5wxxu86/UY71kBoCq1sZn7FJVRDs67bdPu/eoxqTbmwHM62M33VtlUGvJLy7OfKQH+//RXqEChdI=
+X-Received: by 2002:a67:ec94:0:b0:3b5:32d0:edcc with SMTP id
+ h20-20020a67ec94000000b003b532d0edccmr3224449vsp.24.1672330931315; Thu, 29
+ Dec 2022 08:22:11 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DB9PR03MB8847:EE_|PA4PR03MB7391:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4ff640f9-1021-4866-0656-08dae9b5cc3e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	0nHF3NcYTudgwEAMf0Uz6rOO3H1oMPITJYFvYP41Hrul2NeKDi5H8KIurNwixUosu/uOe1FUFriAZOlbk3fc+MHrcDGQ0ySvYxoi2+6MbcGATahfPFpCErUgIfDLDVbI+kB1pOfWE7geAyOOoyUZXxllxFV8AwaNhZvhQsMhCB9CHyNXkUtstyDOTpll6zlSqyTsUALo9A1qzIcXr2xSCJjeF8EHkGTLB0fp1s3XcI58znmA6ZZdE7phydZOw7EPTKGl0sFLLU0qiQCP3WX1SJvWwnksCkrUNzFg3Uz3s39K2pgMdzWeBPp0OvF4sn7BalRVYIZQXC4JWCL+4J7/aYjmH/hWoZeZTlpYknNQdTk+p/PTEV2Gm2g/mriK/i9jmsxvNCrjaAnUTbm8TP7rMtgbUaGszOMpp3nCQQqtJQ09lLUACzpEURKAQUV6yGPo5QnpKrOnn23l6UAVeM04bNpEFEPjlIH2px4VIiOd+kuJ2cpoW3PxfkCqMpGki0+okmyuYTobNml45DndYpX6BFvG+NA5h6tqcy0RpZ+SDzsQmSDRMnlSRpDh2HCCm8c0Owb8YM4VQaBa8HwQ005Af57iM1RjTyRECTANMz7CuA5DLW+P6ywqRWa3/3/ubZ7LW3Kv7WXseqD/1oQtYQzAJR6VASslabsdNAgcK0bmzNl6MaJafeaVRmRkZYZFlvvgHo3yWoD+AFiDWJBPJavyJBsMeu9apoXO+FsBSAemFRZ7Q7lab9JtfUCOWpylFPRkX5qxAqit9vsBtxVJYAvemJs/UnyUQyntpRz/3+sIRn4=
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DB9PR03MB8847.eurprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(136003)(396003)(366004)(39850400004)(376002)(346002)(451199015)(83380400001)(52116002)(966005)(2616005)(36756003)(6486002)(6512007)(478600001)(26005)(53546011)(6666004)(6506007)(86362001)(31696002)(38350700002)(5660300002)(31686004)(38100700002)(186003)(66946007)(8936002)(44832011)(2906002)(54906003)(316002)(4326008)(66556008)(8676002)(41300700001)(66476007)(45980500001)(43740500002);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?QTRCbGo3dGJzMU5ycVhBK21tTjQwTEZUT2NxNFVmV2wzdnU3SzdzNmV1bU1q?=
- =?utf-8?B?ZFNsM3hjRTF6ODFuSXhNYTJlYkwwWjZ0SGhRdmJZT3IwZVBsd3dWQkwxOTll?=
- =?utf-8?B?QWtPdUR6V1lsb2VocGsveVVEOW5oNmdYYUVCZkpZZ1Fzc21sc1YxL0dSSEJm?=
- =?utf-8?B?VVo4TVdpSjhpaURJd3A1T09Wc1gvYnhIUzI4eklTa0dDbmUzeFZ4L3JPdUpv?=
- =?utf-8?B?aFZSYTdlbHFjeGsyaW5ya09PbEVGTHprbXRyVEJ4QjB1SUVWc3Vpck1WTGNT?=
- =?utf-8?B?WTVmWGtjS00rVHVRcUtMWHoxdGgrbWMrR2dORlk3bUUzczNldmN6UVBsaC8w?=
- =?utf-8?B?emgyaXFqWWY0ajZnRENkUUU3amRTSmp5RzlwczRVTk9QV0lIV2ZoL3VmaERN?=
- =?utf-8?B?aGZzVXA1NS9TMTE2N2swUDExOXFYa0MyTkR6b0d6Ri91cUU3N0dFSXNaMTkx?=
- =?utf-8?B?WVhZTWFobnE1RUUwbWpnaW9McC9KT0h4NnBwSEdhS1hoc04yaDdoR3JKamVP?=
- =?utf-8?B?SHVUQWY4VEFoNXV0VDhJTVZ2RW8zTjlGVkp3L1BXTnVubFlPeFZuMGNlRG8w?=
- =?utf-8?B?WDBaWUFneURCQ2tuOUgrR2pHSEYvVlpqUXk2RkFRUjI3YktDU0lEZlJRa3Mv?=
- =?utf-8?B?L1FwZnkrY1ZwVDRkSjZubHFjWjl6Q1JkOHRkQ3ltOFZBRXpWc2dKUFRBZW8v?=
- =?utf-8?B?Zm4xclV2RFZ6dHZGcHJ0Rm9XTWt4cE1kR2pEaitxWDZRVGZZVkxTUEVLalBX?=
- =?utf-8?B?N3FlU0lUK3VIeTFYbmxJNzVuVmthYnVRV08rSHdtR0lIK0hhMkJ2WTVUNFQr?=
- =?utf-8?B?QTV4L0JtWHl1cHUra3E0N3NWcENpU216b0dwMzlMaXFWQXlKMUtRODkwYVdn?=
- =?utf-8?B?cU45RWM2ak95S0VQMTBLNmIwNTljMDJGV3FGR2x3SHg5dktOMUM0a1lVTHZN?=
- =?utf-8?B?RGdXellpMVBpNFZvWUFTaEpWYTVrb1hzWDhsUWVyTWNyZ2RBcWlBNHh3NGNL?=
- =?utf-8?B?QXRHTlV0YVVqOHFWa0RINU5VSVora3hSNlB1WFNiRWw4OTdUR2pmbGkrMXVw?=
- =?utf-8?B?QXVjT2NwUHgybitZcTdxQVI3a0FFakFGNE5FaWRFdXRpOFlEWUV3S0tCNE9p?=
- =?utf-8?B?VkFRczBEL0ZiTURMOURNeVhCMFpGa0NUcGpXQVpWQ1RocEhWT00vOHV5c0VG?=
- =?utf-8?B?bVQzNU5QT1FzeHlGWUFadjZZV2JQZTIvVnpTdjBEdy9DTFBXREc1NjVOVDVt?=
- =?utf-8?B?ZkI2eTdqb3RRbWlsNnByb2d2MnVJZHIvSzhxclVPbU13Zk9ZdVNhak1raVF4?=
- =?utf-8?B?TEtnZzVCbEZ4OE8vK0FEbUtmT284N3Nvc0doemdpRVFiTVk1QTN0dXZKcklI?=
- =?utf-8?B?cDB5Qko3QnBXWiszRzNDM2FGY3lrYVhFNXZPTm9UR2VML1Z4TjZOYzhoR0Yv?=
- =?utf-8?B?ODBOL2NWOUtsdUtaMWhTS0FEZ0NIRkR2TjlMb20zMGFkTjBqMWZ3ZTVkZHR0?=
- =?utf-8?B?bEFnamtpUU9ZbFo4SmRNVjZhRno2WFVNcVNpTDMxOFJZOHVVdERjak03U2or?=
- =?utf-8?B?eFZoQTNlU0ppTnZoVHJPeG9raUlPTFBtY0ZsYkxKZGlseFFrZXYwZXN0ckpp?=
- =?utf-8?B?RWVZaU9HdUNiZU85cXFKWVllVWNMZ082OEZWcVdndUhTS3lTeDVnNUhVaU5r?=
- =?utf-8?B?SlJxWFVONHVuKzlwOXY1QUJ4Y0x4Z3VIU2puaG5NS2x0cUdBZSt1Z24rTC9C?=
- =?utf-8?B?Q0hTRVBmSllmRnhtNmUzbnlRSldCMlg3Z252cGRIM0NLdkZJRUZ0VGErYm9S?=
- =?utf-8?B?aWhwTkFOTHJYaHJ6Tlc2NVUzRUdXMUpiUVcwYXY5S3ZiY2NyaC9BeDJXSFRF?=
- =?utf-8?B?R2t3NkFYTFowOWxxZFRNeFAveEJvQUcrQ3JFUCs4bEFwN01Ib1BDcGNRVFYx?=
- =?utf-8?B?L1BmV2NTdlpDRnN6SmRCRVJISTArQVFOS3pQSkhWbzlsUjFrMWlVeFQwSEE4?=
- =?utf-8?B?U25zcmxGU015YUQ3MDBFenRjWm1rMkg3S0YzbTdWeVkxQnp5YXVCVGpuQ2VX?=
- =?utf-8?B?MG45dTFvLzNPdVI2TFlCSDUwRXhRWWE2TVJhMUhWZFJWVnFMU3JzcmRCeldx?=
- =?utf-8?B?VW84dlhZSUpTdk0vTjZBMTZnSXFCd0lkaEI0KzluNWY2Z041b2FKckl4bmJU?=
- =?utf-8?B?MFE9PQ==?=
-X-OriginatorOrg: seco.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4ff640f9-1021-4866-0656-08dae9b5cc3e
-X-MS-Exchange-CrossTenant-AuthSource: DB9PR03MB8847.eurprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Dec 2022 16:00:25.2877
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bebe97c3-6438-442e-ade3-ff17aa50e733
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: +clcYhdYfuXaJbueenkJz8AHbJjQ8l01bZmcF/kLjLdj3yze2yBDVmcmyF9QAe5QMt6E6+4eYM8h3l0G9OTfBw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR03MB7391
+References: <20221228144330.180012208@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Thu, 29 Dec 2022 21:51:59 +0530
+Message-ID: <CA+G9fYuZL8iMgz1XPnsTdXR7Afa=rNXiJR2C55+rZ_zu0y74xw@mail.gmail.com>
+Subject: Re: [PATCH 6.1 0000/1146] 6.1.2-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Greg,
+On Wed, 28 Dec 2022 at 20:15, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.2 release.
+> There are 1146 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 30 Dec 2022 14:41:29 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.1.2-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-On 12/28/22 09:34, Greg Kroah-Hartman wrote:
-> From: Sean Anderson <sean.anderson@seco.com>
-> 
-> [ Upstream commit 36926a7d70c2d462fca1ed85bfee000d17fd8662 ]
-> 
-> On the T208X SoCs, MAC1 and MAC2 support XGMII. Add some new MAC dtsi
-> fragments, and mark the QMAN ports as 10G.
-> 
-> Fixes: da414bb923d9 ("powerpc/mpc85xx: Add FSL QorIQ DPAA FMan support to the SoC device tree(s)")
-> Signed-off-by: Sean Anderson <sean.anderson@seco.com>
-> Signed-off-by: David S. Miller <davem@davemloft.net>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-This shouldn't be backported without [1].
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-That said, this fix isn't necessary for kernels which don't use phylink for this ethernet driver. 
+NOTE:
+Daniel D=C3=ADaz reported allmodconfig failures [1].
+[1] https://lore.kernel.org/stable/c3c2ef47-b46d-b446-5475-366867954528@lin=
+aro.org/
 
---Sean
+## Build
+* kernel: 6.1.2-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.1.y
+* git commit: aa2ec258c437267ab5178442982d02c59186cf96
+* git describe: v6.1.1-1147-gaa2ec258c437
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.1=
+-1147-gaa2ec258c437
 
-[1] https://lore.kernel.org/netdev/20221216172937.2960054-1-sean.anderson@seco.com/
+## Test Regressions (compared to v6.1-26-g4478ff938eb5)
 
-> ---
->  .../boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi     | 44 +++++++++++++++++++
->  .../boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi     | 44 +++++++++++++++++++
->  arch/powerpc/boot/dts/fsl/t2081si-post.dtsi   |  4 +-
->  3 files changed, 90 insertions(+), 2 deletions(-)
->  create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
->  create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
-> 
-> diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
-> new file mode 100644
-> index 000000000000..437dab3fc017
-> --- /dev/null
-> +++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
-> @@ -0,0 +1,44 @@
-> +// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
-> +/*
-> + * QorIQ FMan v3 10g port #2 device tree stub [ controller @ offset 0x400000 ]
-> + *
-> + * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
-> + * Copyright 2012 - 2015 Freescale Semiconductor Inc.
-> + */
-> +
-> +fman@400000 {
-> +	fman0_rx_0x08: port@88000 {
-> +		cell-index = <0x8>;
-> +		compatible = "fsl,fman-v3-port-rx";
-> +		reg = <0x88000 0x1000>;
-> +		fsl,fman-10g-port;
-> +	};
-> +
-> +	fman0_tx_0x28: port@a8000 {
-> +		cell-index = <0x28>;
-> +		compatible = "fsl,fman-v3-port-tx";
-> +		reg = <0xa8000 0x1000>;
-> +		fsl,fman-10g-port;
-> +	};
-> +
-> +	ethernet@e0000 {
-> +		cell-index = <0>;
-> +		compatible = "fsl,fman-memac";
-> +		reg = <0xe0000 0x1000>;
-> +		fsl,fman-ports = <&fman0_rx_0x08 &fman0_tx_0x28>;
-> +		ptp-timer = <&ptp_timer0>;
-> +		pcsphy-handle = <&pcsphy0>;
-> +	};
-> +
-> +	mdio@e1000 {
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
-> +		reg = <0xe1000 0x1000>;
-> +		fsl,erratum-a011043; /* must ignore read errors */
-> +
-> +		pcsphy0: ethernet-phy@0 {
-> +			reg = <0x0>;
-> +		};
-> +	};
-> +};
-> diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
-> new file mode 100644
-> index 000000000000..ad116b17850a
-> --- /dev/null
-> +++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
-> @@ -0,0 +1,44 @@
-> +// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
-> +/*
-> + * QorIQ FMan v3 10g port #3 device tree stub [ controller @ offset 0x400000 ]
-> + *
-> + * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
-> + * Copyright 2012 - 2015 Freescale Semiconductor Inc.
-> + */
-> +
-> +fman@400000 {
-> +	fman0_rx_0x09: port@89000 {
-> +		cell-index = <0x9>;
-> +		compatible = "fsl,fman-v3-port-rx";
-> +		reg = <0x89000 0x1000>;
-> +		fsl,fman-10g-port;
-> +	};
-> +
-> +	fman0_tx_0x29: port@a9000 {
-> +		cell-index = <0x29>;
-> +		compatible = "fsl,fman-v3-port-tx";
-> +		reg = <0xa9000 0x1000>;
-> +		fsl,fman-10g-port;
-> +	};
-> +
-> +	ethernet@e2000 {
-> +		cell-index = <1>;
-> +		compatible = "fsl,fman-memac";
-> +		reg = <0xe2000 0x1000>;
-> +		fsl,fman-ports = <&fman0_rx_0x09 &fman0_tx_0x29>;
-> +		ptp-timer = <&ptp_timer0>;
-> +		pcsphy-handle = <&pcsphy1>;
-> +	};
-> +
-> +	mdio@e3000 {
-> +		#address-cells = <1>;
-> +		#size-cells = <0>;
-> +		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
-> +		reg = <0xe3000 0x1000>;
-> +		fsl,erratum-a011043; /* must ignore read errors */
-> +
-> +		pcsphy1: ethernet-phy@0 {
-> +			reg = <0x0>;
-> +		};
-> +	};
-> +};
-> diff --git a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
-> index ecbb447920bc..74e17e134387 100644
-> --- a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
-> +++ b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
-> @@ -609,8 +609,8 @@ usb1: usb@211000 {
->  /include/ "qoriq-bman1.dtsi"
->  
->  /include/ "qoriq-fman3-0.dtsi"
-> -/include/ "qoriq-fman3-0-1g-0.dtsi"
-> -/include/ "qoriq-fman3-0-1g-1.dtsi"
-> +/include/ "qoriq-fman3-0-10g-2.dtsi"
-> +/include/ "qoriq-fman3-0-10g-3.dtsi"
->  /include/ "qoriq-fman3-0-1g-2.dtsi"
->  /include/ "qoriq-fman3-0-1g-3.dtsi"
->  /include/ "qoriq-fman3-0-1g-4.dtsi"
+## Metric Regressions (compared to v6.1-26-g4478ff938eb5)
 
+## Test Fixes (compared to v6.1-26-g4478ff938eb5)
+
+## Metric Fixes (compared to v6.1-26-g4478ff938eb5)
+
+## Test result summary
+total: 164885, pass: 147138, fail: 3231, skip: 14516, xfail: 0
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 151 total, 144 passed, 7 failed
+* arm64: 51 total, 47 passed, 4 failed
+* i386: 39 total, 35 passed, 4 failed
+* mips: 30 total, 27 passed, 3 failed
+* parisc: 8 total, 7 passed, 1 failed
+* powerpc: 38 total, 32 passed, 6 failed
+* riscv: 16 total, 15 passed, 1 failed
+* s390: 16 total, 14 passed, 2 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 44 total, 44 passed, 0 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-fpu
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cv
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ip
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-nptl++
+* ltp-open-posix-tests
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* packetdrill
+* perf
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
