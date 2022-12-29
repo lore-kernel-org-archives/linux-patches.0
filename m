@@ -1,45 +1,45 @@
-Received: from mail-ot1-f48.google.com (mail-ot1-f48.google.com [209.85.210.48])
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA1E33F0
-	for <patches@lists.linux.dev>; Thu, 29 Dec 2022 13:43:30 +0000 (UTC)
-Received: by mail-ot1-f48.google.com with SMTP id x44-20020a05683040ac00b006707c74330eso11475776ott.10
-        for <patches@lists.linux.dev>; Thu, 29 Dec 2022 05:43:30 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA19F33F0
+	for <patches@lists.linux.dev>; Thu, 29 Dec 2022 13:44:08 +0000 (UTC)
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-14455716674so21700692fac.7
+        for <patches@lists.linux.dev>; Thu, 29 Dec 2022 05:44:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=c/AKNkpjG3AzcQVd4ZQ2WSvobV2zMcJthzt1GCCuMa8=;
-        b=lx51HzEUMKRJNqK+LwX1Y783CIcF1MdK99uBpWNybmnsDgUNqgcC9xnqH3vMjqvE05
-         aJdGTrehGxkhMKHJHrHOpvGztuLhOx1mMSrACKXV0yRPlPwme+t2CGuvAsVbyTghEWtR
-         DBZUPsZAgYbzfkGZwiXlIYlJNTltoRB4VKe0GggcTJJ+H8RSJkvMP/XznQ1zCx+BSkgd
-         Z0DoPPkVZxFUGp46d0xkdgzJAqd+T+76DvozceDGkor1ZVJtHpMamoReswERHjg8JHHC
-         AoW+pLmx7u5l9vIG6SuxneBp15snj9SpOBLqLNU0W8q1s/LHH26bwkOqaobso/CyN8I6
-         OMvg==
+        bh=p5TdyggQQ831ouqpy9GdepiRIBVOP4+BVRsOEdk0o6M=;
+        b=XyxYblCiZYIjAfnLhUh2kjW/c9ssR/PFbnnsxxGBGgJETUFgP9SK9EnMI+TvkfU72Q
+         8PmD3QHrKOfdW6M5Yv/HEqCjyvlB2pqED9h6Zgcl1OEij7dM2POWoqPOmtzRlvdl88yi
+         VWhuHzhTnLEyGqraKZaDx9mJ47Yr8Q25x1ufPJS2SsizQi9jjYqEGWVbJ1hgUZu4pNEC
+         mbZs4kJM78CmG1yZRzqp304kajshuszUUQ8hVB0MBD0hFYc54SesLDgtF+TgI8f89vQV
+         JkzBsnJzIweoFbs3rCNWgmZDg7PS17xlh5QZjyrpvMLbVde8skWYKGmXMhc7VzMUI6NB
+         EcbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=c/AKNkpjG3AzcQVd4ZQ2WSvobV2zMcJthzt1GCCuMa8=;
-        b=HiTbpHyUT1ihiTLkKZIVCBbePMC8N1NYUTAj20I+grSjeB8qB5OfoCIfYz7un7qJR4
-         PwBfO/+89CpI3IuzfzN3MxwrV/lXJv1IoCdso06u/ExzR+XLRUeznHcwryDYv29MqHVi
-         0foPGA94K5O95kT+ZNkhmvDuocU+vXa5fX2lsYwtit+d6WS6PU1O7HiqmEx+iUYlGY8a
-         DZqsSI2rQ/Of1KNDHGwrrKHUakMZU24Wn29JEB/uKzt6omLL8zURntg8PTQ55OD3siCU
-         pReu7opdGR+QL71VDRogLiax31h4vn9OiCjtMN7zLTXklEuluwzcM7Yb3Rx5DzivAn6M
-         cs3A==
-X-Gm-Message-State: AFqh2kpGhj/3RZpFVmzs4pdrLGZw/cCbJqQc6kpgFFBmlAn88jcopDmx
-	a3C+t7XT5sgBiniV4Qwcvj8=
-X-Google-Smtp-Source: AMrXdXvdz3WgDc5KZ8RSpx3y8x+2pyRuWkgjB81V/gHbU5qzSVNz9Fk5odUxbxUXLOQiozcJJzEnVw==
-X-Received: by 2002:a05:6830:611:b0:676:205a:605d with SMTP id w17-20020a056830061100b00676205a605dmr13867016oti.37.1672321409656;
-        Thu, 29 Dec 2022 05:43:29 -0800 (PST)
+        bh=p5TdyggQQ831ouqpy9GdepiRIBVOP4+BVRsOEdk0o6M=;
+        b=JAWXoXSm/Lu6KyfrTv8+YL+e3uvY30NtojBhEg4/XDF/grDFIzSD9RD4GN8USAQnFV
+         tfvtKbvxm/6Rwls7D8O8Q81KgciyWbN1KzxQm/8Y35sIalRZxR9bSeNG388Qw0AIByKL
+         0F+AaRAxQ44N7K4NAMkhnLIJ5YKsydS+zRYLJZpPrA2I7H8n79rb/qXWXtytvhUDANpt
+         UhxUlTAAoAjlzFsX4NL+5PoBzHpVPNEdMlSv5wW7F8h3yBZcO463MO4+xjdBuazabYIg
+         ugFDH9SaDtdmuLn2WSjmJwLySAj0Ck8qUq0fTSxJhkUlI4rT5iu+jYDAJrGG3QBEeyt+
+         2ojg==
+X-Gm-Message-State: AFqh2kqLjFwo5Nm3AoBy91zasLYmuqWQRshKbtMJz/VbxPgdY5R/PA8u
+	MhsTS4wq0Kc+sQx925AVZL0=
+X-Google-Smtp-Source: AMrXdXtI/wi1CpRUU4wui3GW6T680nHk/LXELiCQc3j3TJAPRrBg910RqlomTfOYb2bwIq15N7pnJQ==
+X-Received: by 2002:a05:6870:d393:b0:144:1a42:fcfc with SMTP id k19-20020a056870d39300b001441a42fcfcmr21118284oag.28.1672321447925;
+        Thu, 29 Dec 2022 05:44:07 -0800 (PST)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id m12-20020a9d400c000000b0066e80774203sm9169354ote.43.2022.12.29.05.43.28
+        by smtp.gmail.com with ESMTPSA id l8-20020a056870204800b001417f672787sm8529365oad.36.2022.12.29.05.44.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Dec 2022 05:43:29 -0800 (PST)
+        Thu, 29 Dec 2022 05:44:07 -0800 (PST)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Thu, 29 Dec 2022 05:43:28 -0800
+Date: Thu, 29 Dec 2022 05:44:06 -0800
 From: Guenter Roeck <linux@roeck-us.net>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -48,9 +48,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.0 0000/1073] 6.0.16-rc1 review
-Message-ID: <20221229134328.GB16547@roeck-us.net>
-References: <20221228144328.162723588@linuxfoundation.org>
+Subject: Re: [PATCH 6.1 0000/1146] 6.1.2-rc1 review
+Message-ID: <20221229134406.GC16547@roeck-us.net>
+References: <20221228144330.180012208@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -59,15 +59,15 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20221228144328.162723588@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
 
-On Wed, Dec 28, 2022 at 03:26:28PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.0.16 release.
-> There are 1073 patches in this series, all will be posted as a response
+On Wed, Dec 28, 2022 at 03:25:39PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.2 release.
+> There are 1146 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
-> Responses should be made by Fri, 30 Dec 2022 14:41:34 +0000.
+> Responses should be made by Fri, 30 Dec 2022 14:41:29 +0000.
 > Anything received after that time might be too late.
 > 
 
