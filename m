@@ -1,70 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC9631FAF
-	for <patches@lists.linux.dev>; Thu, 29 Dec 2022 16:56:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66131C433EF;
-	Thu, 29 Dec 2022 16:56:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1672333010;
-	bh=ViY2BQZiltKQ4jvkmjytVNSOGiM2TZgrElzKyBr36hI=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=il2VIfqB0ez0Rmb8rH8N8IDk4hm1ko30z46bpjv8Rg9GUkfXEeZbMhhL0NBzyw7Be
-	 7Qj1a23+u68ocrKbH/Ulo2wwMFN0I6kYWMu/XOTRpxNRVIEQ3u6lQv4s7uJViJ/x5a
-	 tL4qJBgqrQLGzDWbiLoPjYCfo1fzvPmJxjm6pZF0Xp03wjAU++P3v+j2EixzHLhPIs
-	 ZpdJKbaT2VXdDAh+vEiXbFxquISfD4ySjIz7qZSZlXW9xToM2UbhVO7YrLzaZf113s
-	 hNIvwVnW+IyikoDTK2Y3arQLyAT9eDZpN3ab145lcY1npyZCoyOwclqfjScbTRbtHq
-	 oLfLjOEte7dvw==
-Date: Thu, 29 Dec 2022 09:56:47 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Pavel Machek <pavel@denx.de>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, andrii@kernel.org,
-	dave.stevenson@raspberrypi.com, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.15 000/731] 5.15.86-rc1 review
-Message-ID: <Y63Gz7Jpms95bz15@dev-arch.thelio-3990X>
-References: <20221228144256.536395940@linuxfoundation.org>
- <Y62m85tYWONgSWmm@duo.ucw.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386BE8C14
+	for <patches@lists.linux.dev>; Thu, 29 Dec 2022 23:24:20 +0000 (UTC)
+Received: by mail-io1-f54.google.com with SMTP id d123so10400750iof.6
+        for <patches@lists.linux.dev>; Thu, 29 Dec 2022 15:24:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=EKWr2Oqn4+KbfBpOg8OfYaJAhn+fXb/cSvl2sD2pWvw=;
+        b=G1OO+7KSmmiwUcrRssIY4eqX3xS5Y4JnvkJMYoE7vkNc9EHanx+JhRTYAJtjvbg3Z7
+         vdRGHr4aTZJvVzCwWauWUHn4HVRp877G09OkfQ+ChYHZqOMJreKkoytpjJpzdXXUerV/
+         LXHdIAo5+svAlhbFA1AgVoTrl6V0ef4mbfLhA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=EKWr2Oqn4+KbfBpOg8OfYaJAhn+fXb/cSvl2sD2pWvw=;
+        b=A5sIoPiGZxeWN6+Gxi7/1TKg/x/NhAsDbErjgYYkScXpJKExpdO4XANl9wqqajNnIk
+         LvZSBRQm086YTM4qRdqkFqPBpCpHqXSYoJ17dzml7MoulM7yduvGlNnJleIM8cso0QT3
+         Lxfdh9sFuhaLLzqTuEKs49S91ugn/kZBKvsCmkdeS/a+pccszaJBKdUDFqIYvkIkuWGQ
+         tUCagiV3Q9TnaLFqWGKyyCEBZWZnQDCmA7PLotc9B8kURshYqhd4QXD2KLkIWG66tYlc
+         6qcDNVsri2Zz/3MU88ic/Qc7oJ6funAPTU+wI4LV2ko/i8PkChfwmC9spq6VCu42Ir2H
+         qnZg==
+X-Gm-Message-State: AFqh2kpoXmz3kx9lQ7iRtWeAbkqhXa8dYxXUvu/Mlq0KhatSElzvkf3k
+	3/4OYijX7ilytRabkNggYPwjmA==
+X-Google-Smtp-Source: AMrXdXtlKlZSAuUaSVEw7pdrAhUjFDCakVbS0qZBml8qKztAB2FaGTxtccOMXkLmUJaUZ7HThFJ04A==
+X-Received: by 2002:a6b:e812:0:b0:6f3:fed4:aa36 with SMTP id f18-20020a6be812000000b006f3fed4aa36mr2749575ioh.1.1672356259094;
+        Thu, 29 Dec 2022 15:24:19 -0800 (PST)
+Received: from [192.168.1.128] ([38.15.45.1])
+        by smtp.gmail.com with ESMTPSA id u5-20020a5d9f45000000b006884b050a0asm6983365iot.18.2022.12.29.15.24.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Dec 2022 15:24:18 -0800 (PST)
+Message-ID: <9cfe1554-a060-8966-844f-52a7c9cf4bd2@linuxfoundation.org>
+Date: Thu, 29 Dec 2022 16:24:17 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y62m85tYWONgSWmm@duo.ucw.cz>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 6.1 0000/1146] 6.1.2-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
+References: <20221228144330.180012208@linuxfoundation.org>
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20221228144330.180012208@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Dec 29, 2022 at 03:40:51PM +0100, Pavel Machek wrote:
-> Hi!
+On 12/28/22 07:25, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.2 release.
+> There are 1146 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> > This is the start of the stable review cycle for the 5.15.86 release.
-> > There are 731 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
+> Responses should be made by Fri, 30 Dec 2022 14:41:29 +0000.
+> Anything received after that time might be too late.
 > 
-> These are just kCFI annotations. I don't believe we need them in 5.10
-> (and 5.15).
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.2-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-The original CFI implementation exists in 5.15 and the problem described
-in those patches should still trigger with that implementation just like
-kCFI, so they should likely still go to 5.15. However, they were
-AUTOSEL'd and we have not had any reports of problems that are solved
-with these patches (although that is likely because nobody who is using
-this hardware has tried running a CONFIG_CFI_CLANG kernel), so I do not
-really care if they are applied or not.
+Compiled and booted on my test system. No dmesg regressions.
 
-> > Nathan Chancellor <nathan@kernel.org>
-> >     net: ethernet: ti: Fix return type of netcp_ndo_start_xmit()
-> > Nathan Chancellor <nathan@kernel.org>
-> >     drm/fsl-dcu: Fix return type of fsl_dcu_drm_connector_mode_valid()
-> > Nathan Chancellor <nathan@kernel.org>
-> >     drm/sti: Fix return type of sti_{dvo,hda,hdmi}_connector_mode_valid()
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-Cheers,
-Nathan
+thanks,
+-- Shuah
+
+
