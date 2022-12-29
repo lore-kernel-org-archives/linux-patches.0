@@ -1,149 +1,135 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on2049.outbound.protection.outlook.com [40.107.101.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF18A1389
-	for <patches@lists.linux.dev>; Thu, 29 Dec 2022 07:09:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B07DFC433D2;
-	Thu, 29 Dec 2022 07:09:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672297766;
-	bh=VDIcM/qkw5mTEEc0H1KNyAj0dRgYpS69OnRANnygUIM=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=C7E7e6IJxx3AUPTH+ulylNEEdfuHNWxQDn7sXCyAAwwj61/prZhph1MynvjtRFngO
-	 xgHnCvpnxJUFKAPqc2TOPA6iBWF8Cs+584aozmFUV0GpoamIEBuM8bjtSsrT6XhVkx
-	 Hnbvb0Iz2a/3tkjbF1n4UyUxnkXr7HPjNNJpgU1w=
-Date: Thu, 29 Dec 2022 08:09:17 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Wang Yugui <wangyugui@e16-tech.com>
-Cc: yukuai3@huawei.com, hch@lst.de, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 0000/1146] 6.1.2-rc1 review
-Message-ID: <Y609HVxcOn+rtP1O@kroah.com>
-References: <20221228144330.180012208@linuxfoundation.org>
- <20221229115707.098A.409509F4@e16-tech.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEC171389
+	for <patches@lists.linux.dev>; Thu, 29 Dec 2022 07:36:20 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=NRbKImvxw4kKmLqoG494Zzn0sEemKLsGZPsp/yN03neSXKk/P/iT1uyeleZ4NiK1pffLyZoZ52tpjCNqdq5pDATuuD8HXw8Qv4H7VKrdzU7t7hyWgH60jBqARj6Hp9XRz4YfWH6NeeqBe+DXe7PwKTtxwNPGbfH5QVOKZu9UpqEQ4Te9VD6LeS1CjQ2USjNVEcxDZzPABjTjjulcDwMwp5Ila0flcYYr0Qoccz9uGLXiDdBZ4WIV7jN9PBj86EcR1TDqPfdbxDz04R85uIwnBmOlfi3NeeNpY2Z+XV7iZNbl3R9kKxPSwWqUfwx6wMq6wNHIFsMjfZaB8TLtwD7WUA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HShoMvEBtnfqSL+jtkU7x0f8yJWWxyO3v5XYzh7Mr+U=;
+ b=hqblRLzrx3B0dAHMNE9XzldYIjBfaVf0antigHs9dsxTL+pT+p4TrC6kg1iEevJFkM/kCUz/JIv0xmcb4qR4AOmPkVmiI9IhiT7Ugvq3F6qwVwwS2+Fp9xQjilYEmOIASVnBm8+UqqtJhFYSnKL/e9ygFsvh0RPOfRhe1wPrfwajsJVWnMQ0k/RGdA6vlXFao8j5rtVsUmu7KdUhs3AO0ShSUaIpVTz4kdKlUfBJn2xk9X6gpY576OC4soBcJ+HuvzQP0g4VjluaQRWw1Xw3Dtoe0wbppEIgMGMWloOGdx8u5zIuAHv4G/2vr3pdgie94vMMULBTxQwuZwalgz4txw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HShoMvEBtnfqSL+jtkU7x0f8yJWWxyO3v5XYzh7Mr+U=;
+ b=LFy0ff9QaPsrtPTBJi0Gh348NJl3xjwUwg7JYFtmDK0tcehx6YaBLRfI+qMaZ7vdYmPGHTl8WuNg/Dz984grJ7UyE14FKPU9k9RwOHEVJhm2zA5HyYzCj/zr6aTEPCD47Qb1I+PPs6sJq3SSc7B+EJK2H9EN9aMetFvnGX6wpzLuZQ+RFgJpvoYX4qX9/aYENkVZIpf1RR7eVOhHlS2f5Z38j/xh5O1IqsDcgXkr2L7JQWb97IaFcf+E0NIrnwUHOB0viq4Qvc6AsvwV5iSRSwpL79nVM0jlAYMgT6Ajh3D5y8Y1EXCLuwwdHJEn4RXsG3LU8k0AI++x7dPCCBxv9A==
+Received: from MW4P220CA0013.NAMP220.PROD.OUTLOOK.COM (2603:10b6:303:115::18)
+ by BL1PR12MB5174.namprd12.prod.outlook.com (2603:10b6:208:31c::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5944.16; Thu, 29 Dec
+ 2022 07:36:16 +0000
+Received: from CO1NAM11FT104.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:303:115:cafe::4d) by MW4P220CA0013.outlook.office365.com
+ (2603:10b6:303:115::18) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5944.17 via Frontend
+ Transport; Thu, 29 Dec 2022 07:36:16 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ CO1NAM11FT104.mail.protection.outlook.com (10.13.174.220) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5944.17 via Frontend Transport; Thu, 29 Dec 2022 07:36:15 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 28 Dec
+ 2022 23:36:04 -0800
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Wed, 28 Dec 2022 23:36:04 -0800
+Received: from orome.fritz.box (10.127.8.9) by mail.nvidia.com
+ (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36 via Frontend
+ Transport; Wed, 28 Dec 2022 23:36:00 -0800
+From: Thierry Reding <treding@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <linux-tegra@vger.kernel.org>
+Subject: Re: [PATCH 6.1 00/25] 6.1.1-rc1 review
+In-Reply-To: <20221219182943.395169070@linuxfoundation.org>
+References: <20221219182943.395169070@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221229115707.098A.409509F4@e16-tech.com>
+Message-ID: <7906b589-d73d-4b0a-935e-7a15a1bcbe9a@drhqmail201.nvidia.com>
+Date: Wed, 28 Dec 2022 23:36:00 -0800
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1NAM11FT104:EE_|BL1PR12MB5174:EE_
+X-MS-Office365-Filtering-Correlation-Id: b3d49088-edca-4069-28c6-08dae96f5e2e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	p7RfBrNg1qX/d5bUWc+kLAKRzRE3c6GtfCKQ46lBpTgraJqoOIM0mrXg1jm4GVaA3+JUgtCE78h+37C76wriccxncPyOEFXAJKJx0ZoxC4UULiKv8oskAmnsjXmVP+zGyVvtgIJMLczUCUx/3o2la0OWfGdcbXwHtfb3d6QLrSDFaOUL2gsB8NYdsHT+LgIjsRGrirgKgVjlPLRmRv3+zXO+Ivyczri0U034KxjjVfoCRlmpW2lZVCMEvVAF06bddDMCw8aDgqjfqclGWa4ETww2Y7CoVGM3DWdoNRrdUBTzTJbzcHYpQPM2H09K6Kf4rvnugbESdN5p9JI5HNEkufXBbvIaoIce8XIKxtwlvI+P6KCijjkwFKGUGAeme8AukATpf+2ruSY+2VdDX2mJgUNjVDsxy/6sCmTnhA59RxpBANv/KhriGM7UOi+QJUjjcAVGj2WGcX7OAKMT8CgkqElCZN/45my3ihVnJB0NXLIdjUs1JV+GMewLNJpw0w05Wpa5YQPMgokKXcm1tskWpGv/AuZq9dVz9iEATi5ntweCajYkixzJfgnh6yIgcZZ1FKUgtQxB4ZyxsdbFFdp17aVdH/jahNJ8GW/IlYvPG7ZQzs3MW6BKYuzr4vZtFvc3On04j0aXvdxJoF6ON3MEClr1uOkwKMYMNv3Ep6VHXu/YCZXerGvTLb79ZKce/taQ5ndl3LEBRgfws8VzhvSicp+M0vSrWhelpV4owaGAxcFkkYSXZ96lZJRzY5N4J0p6/BH1loAcZLt+swXFj0oq+toyxt0OO+BYuejAVUB0DI0=
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.232;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge1.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(39860400002)(376002)(136003)(396003)(346002)(451199015)(40470700004)(46966006)(36840700001)(6916009)(40460700003)(54906003)(7416002)(316002)(2906002)(82740400003)(478600001)(356005)(186003)(26005)(82310400005)(47076005)(966005)(336012)(7636003)(426003)(40480700001)(4326008)(8676002)(70586007)(70206006)(31696002)(41300700001)(86362001)(31686004)(8936002)(5660300002)(36860700001);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Dec 2022 07:36:15.6134
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b3d49088-edca-4069-28c6-08dae96f5e2e
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.232];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1NAM11FT104.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5174
 
-On Thu, Dec 29, 2022 at 11:57:09AM +0800, Wang Yugui wrote:
-> Hi,
-> 
-> > This is the start of the stable review cycle for the 6.1.2 release.
-> > There are 1146 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Fri, 30 Dec 2022 14:41:29 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.2-rc1.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > and the diffstat can be found below.
-> 
-> fstests(btrfs/056) hit a panic with the patch-6.1.2-rc1.
-> 
-> [  926.026568] run fstests btrfs/056 at 2022-12-29 08:35:25
-> [  926.254689] BTRFS info (device sdb1): using crc32c (crc32c-intel) checksum algorithm
-> [  926.263606] BTRFS info (device sdb1): using free space tree
-> [  926.273951] BTRFS info (device sdb1): enabling ssd optimizations
-> [  926.842618] BTRFS: device fsid 4c66cb1b-1661-4b5e-9446-1c610b079eb4 devid 1 transid 6 /dev/sdb2 scanned by systemd-udevd (342727)
-> [  926.924311] BTRFS info (device dm-0): using crc32c (crc32c-intel) checksum algorithm
-> [  926.933217] BTRFS info (device dm-0): using free space tree
-> [  926.941727] BTRFS info (device dm-0): enabling ssd optimizations
-> [  926.949066] BTRFS info (device dm-0): checking UUID tree
-> [  927.025958] BTRFS info: devid 1 device path /dev/mapper/flakey-test changed to /dev/dm-0 scanned by systemd-udevd (342802)
-> [  927.038851] BTRFS info: devid 1 device path /dev/dm-0 changed to /dev/mapper/flakey-test scanned by systemd-udevd (342802)
-> [  927.130611] BTRFS info (device dm-0): using crc32c (crc32c-intel) checksum algorithm
-> [  927.139316] BTRFS info (device dm-0): using free space tree
-> [  927.148273] BTRFS info (device dm-0): enabling ssd optimizations
-> [  927.155220] BTRFS info (device dm-0): start tree-log replay
-> [  927.177434] BTRFS info (device dm-0): checking UUID tree
-> [  927.239312] BUG: kernel NULL pointer dereference, address: 0000000000000058
-> [  927.246268] #PF: supervisor read access in kernel mode
-> [  927.253259] #PF: error_code(0x0000) - not-present page
-> [  927.259256] PGD 0 P4D 0
-> [  927.262261] Oops: 0000 [#1] PREEMPT SMP NOPTI
-> [  927.267251] CPU: 29 PID: 342867 Comm: dmsetup Not tainted 6.1.2-0.3.el7.x86_64 #1
-> [  927.275253] Hardware name: Dell Inc. Precision T7610/0NK70N, BIOS A18 09/11/2019
-> [  927.283253] RIP: 0010:blk_mq_wait_quiesce_done+0xc/0x30
-> [  927.290262] Code: 00 00 00 e8 c6 48 ff ff 4c 89 e6 5b 48 89 ef 5d 41 5c e9 f7 c5 66 00 0f 1f 80 00 00 00 00 0f 1f 44 00 00 48 8b 87 18 03 00 00 <f6> 40 58 20 74 0c 48 8b b8 a8 00 00 00 e9 f2 74 c4 ff e9 dd ef c4
-> [  927.311254] RSP: 0018:ffffbc5a8e41bc60 EFLAGS: 00010286
-> [  927.317255] RAX: 0000000000000000 RBX: ffffa0cf2a2fb000 RCX: 0000000000000000
-> [  927.325274] RDX: 0000000000000000 RSI: 0000000000000246 RDI: ffffa0cfa08e2260
-> [  927.333257] RBP: ffffa0cfa08e2260 R08: ffffa0b048488000 R09: ffffa0ceca2e5000
-> [  927.341253] R10: 0000000000000001 R11: ffffa0cf2a2fa800 R12: 0000000000000000
-> [  927.350258] R13: ffffa0cf9e4d0c80 R14: ffffa0d0130ab200 R15: ffffffffc19dc560
-> [  927.358261] FS:  00007f16c58cc580(0000) GS:ffffa0ce2fcc0000(0000) knlGS:0000000000000000
-> [  927.367251] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> [  927.373265] CR2: 0000000000000058 CR3: 00000001a0b8c005 CR4: 00000000001706e0
-> [  927.382265] Call Trace:
-> [  927.385256]  <TASK>
-> [  927.388264]  del_gendisk+0x1ec/0x2c0
-> [  927.393254]  cleanup_mapped_device+0x130/0x140 [dm_mod]
-> [  927.399253]  __dm_destroy+0x13d/0x1e0 [dm_mod]
-> [  927.403254]  ? remove_all+0x30/0x30 [dm_mod]
-> [  927.410259]  dev_remove+0x117/0x190 [dm_mod]
-> [  927.415253]  ctl_ioctl+0x1ee/0x520 [dm_mod]
-> [  927.419258]  ? ipc_addid+0x37c/0x460
-> [  927.423252]  dm_ctl_ioctl+0xa/0x20 [dm_mod]
-> [  927.430291]  __x64_sys_ioctl+0x89/0xc0
-> [  927.434263]  do_syscall_64+0x58/0x80
-> [  927.439268]  ? syscall_exit_to_user_mode+0x12/0x30
-> [  927.445257]  ? do_syscall_64+0x67/0x80
-> [  927.449255]  ? exc_page_fault+0x64/0x140
-> [  927.454262]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-> [  927.459253] RIP: 0033:0x7f16c3a397cb
-> [  927.465253] Code: 73 01 c3 48 8b 0d bd 66 38 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa b8 10 00 00 00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 8d 66 38 00 f7 d8 64 89 01 48
-> [  927.485254] RSP: 002b:00007fffd5f91a98 EFLAGS: 00000206 ORIG_RAX: 0000000000000010
-> [  927.494267] RAX: ffffffffffffffda RBX: 00007f16c520e1f0 RCX: 00007f16c3a397cb
-> [  927.502268] RDX: 000055bace7bbb40 RSI: 00000000c138fd04 RDI: 0000000000000003
-> [  927.510263] RBP: 00007f16c524a143 R08: 00007f16c524ad38 R09: 00007fffd5f918f0
-> [  927.518262] R10: 0000000000000006 R11: 0000000000000206 R12: 000055bace7bbb40
-> [  927.526266] R13: 000055bace7bbbf0 R14: 000055bace7bb940 R15: 0000000000000001
-> [  927.535253]  </TASK>
-> [  927.538260] Modules linked in: dm_flakey ext4 mbcache jbd2 loop rpcsec_gss_krb5 nfsv4 dns_resolver nfs fscache netfs rpcrdma rdma_cm iw_cm ib_cm rfkill ib_core dm_multipath dm_mod intel_rapl_msr intel_rapl_common snd_hda_codec_realtek snd_hda_codec_generic ledtrig_audio snd_hda_codec_hdmi snd_hda_intel sb_edac snd_intel_dspcfg x86_pkg_temp_thermal intel_powerclamp snd_intel_sdw_acpi coretemp snd_hda_codec kvm_intel snd_hda_core mei_wdt snd_hwdep dcdbas iTCO_wdt btrfs iTCO_vendor_support kvm dell_smm_hwmon snd_seq irqbypass snd_seq_device crct10dif_pclmul crc32_pclmul blake2b_generic xor ghash_clmulni_intel snd_pcm raid6_pq snd_timer rapl zstd_compress intel_cstate snd mei_me i2c_i801 intel_uncore pcspkr lpc_ich i2c_smbus mei soundcore nfsd auth_rpcgss nfs_acl lockd grace sunrpc xfs sd_mod t10_pi amdgpu iommu_v2 gpu_sched drm_buddy sr_mod cdrom sg radeon video ahci drm_ttm_helper ttm libahci bnx2x mpt3sas libata drm_display_helper e1000e crc32c_intel mdio raid_class cec
-> [  927.538260]  scsi_transport_sas wmi i2c_dev
-> [  927.637256] CR2: 0000000000000058
-> [  927.642269] ---[ end trace 0000000000000000 ]---
-> [  927.822578] RIP: 0010:blk_mq_wait_quiesce_done+0xc/0x30
-> [  927.828966] Code: 00 00 00 e8 c6 48 ff ff 4c 89 e6 5b 48 89 ef 5d 41 5c e9 f7 c5 66 00 0f 1f 80 00 00 00 00 0f 1f 44 00 00 48 8b 87 18 03 00 00 <f6> 40 58 20 74 0c 48 8b b8 a8 00 00 00 e9 f2 74 c4 ff e9 dd ef c4
-> [  927.850187] RSP: 0018:ffffbc5a8e41bc60 EFLAGS: 00010286
-> [  927.856631] RAX: 0000000000000000 RBX: ffffa0cf2a2fb000 RCX: 0000000000000000
-> [  927.864996] RDX: 0000000000000000 RSI: 0000000000000246 RDI: ffffa0cfa08e2260
-> [  927.873366] RBP: ffffa0cfa08e2260 R08: ffffa0b048488000 R09: ffffa0ceca2e5000
-> [  927.881735] R10: 0000000000000001 R11: ffffa0cf2a2fa800 R12: 0000000000000000
-> [  927.890105] R13: ffffa0cf9e4d0c80 R14: ffffa0d0130ab200 R15: ffffffffc19dc560
-> [  927.898477] FS:  00007f16c58cc580(0000) GS:ffffa0ce2fcc0000(0000) knlGS:0000000000000000
-> [  927.907809] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-> [  927.914794] CR2: 0000000000000058 CR3: 00000001a0b8c005 CR4: 00000000001706e0
-> [  927.923182] Kernel panic - not syncing: Fatal exception
-> [  927.928253] Kernel Offset: 0x15800000 from 0xffffffff81000000 (relocation range: 0xffffffff80000000-0xffffffffbfffffff)
-> [  927.928253] Rebooting in 15 seconds..
-> 
-> the reason is yet not clear.
-> 
-> It still happen without these 4 patches.
-> dm-cleanup-open_table_device.patch
-> dm-cleanup-close_table_device.patch
-> dm-make-sure-create-and-remove-dm-device-won-t-race-.patch
-> dm-track-per-add_disk-holder-relations-in-dm.patch
+On Mon, 19 Dec 2022 20:22:39 +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.1 release.
+> There are 25 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
+> Responses should be made by Wed, 21 Dec 2022 18:29:31 +0000.
+> Anything received after that time might be too late.
+>=20
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.1-rc1=
+.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git l=
+inux-6.1.y
+> and the diffstat can be found below.
+>=20
+> thanks,
+>=20
+> greg k-h
 
-So this is also an issue with 6.1.1?  Can you use git bisect to track
-down the offending change?
+All tests passing for Tegra ...
 
-thanks,
+Test results for stable-v6.1:
+    11 builds:	11 pass, 0 fail
+    28 boots:	28 pass, 0 fail
+    130 tests:	130 pass, 0 fail
 
-greg k-h
+Linux version:	6.1.1-rc1-g4478ff938eb5
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
+
+Tested-by: Thierry Reding <treding@nvidia.com>
+
