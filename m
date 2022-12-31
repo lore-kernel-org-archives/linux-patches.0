@@ -1,81 +1,97 @@
-Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D048215A4
-	for <patches@lists.linux.dev>; Sat, 31 Dec 2022 00:18:55 +0000 (UTC)
-Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-14ffd3c5b15so14794227fac.3
-        for <patches@lists.linux.dev>; Fri, 30 Dec 2022 16:18:55 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B2A7E
+	for <patches@lists.linux.dev>; Sat, 31 Dec 2022 03:47:18 +0000 (UTC)
+Received: by mail-pl1-f171.google.com with SMTP id d15so23688766pls.6
+        for <patches@lists.linux.dev>; Fri, 30 Dec 2022 19:47:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=U65gfQUYRoplG6TAS3ktSDbsYgSOOmACnI2ukxtDlsY=;
-        b=IlemQu/qq80xBMvKyMaTOjQE4pvyH4fOBgWLG50ekYVT6p6q7zpu43bRoyO56pMJQG
-         V3YKsSwgwYhq4CIXVF6HYvb7N+VF3N6/tbg5YoLclz8LRzGRSivcoPXubM5SE313qEkn
-         s6A75rM//ch5SkaMcC/6Am5saNT6HojhWrrdoGBoObGoSK5Wp/H92ZudbGvuNzNtxyB6
-         pB+MuR2//GRg8Z3rYO2/qYe7ygLoMH7cYQhlONcEXUJQUKlPcTJCO7m6QNExtC6q9M+5
-         7rh03WBRhPPitZk/I75C6pgA9myx1BeTDr2xkmRp2JzzsTXhFV5jOgIxbDs3ibdOX8im
-         1LSg==
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WZ17yhKWFDqZ+SHQRDJxc5imX3OxMscf0OQsvoIBMJ0=;
+        b=YUUeuIyRPRAiwZ4Uj1PPCzN5xynaLcmz4yhKPneT65KMv4YTOyNIXneP+AH9L8Gp7p
+         Q0OsMo7knRuYGCDy1RlxdzyDi9Ct0pBvhRzKkWguf7o40xsHPKUvLWg1D6gHpxNrw/xQ
+         y/8e2BVgTHcpM1rtjYQa6LOnZW0jBdg9qGKxrm1XbAReYxivRO2HPE5SNb9L2FmDCuIq
+         o0CCXaOBN8fbU2PQvCmaJw877fnBT6jyLSWwepyhzvN+MhaS/XLDjFKGLsn1mbgiFUHG
+         XNkRa+A8NlW9YyYieOfMDcfSTR9NLyA6rFtjKcJqcokKd1LFLvN+0YcBAi3jSeYuj+lJ
+         h/XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=U65gfQUYRoplG6TAS3ktSDbsYgSOOmACnI2ukxtDlsY=;
-        b=jSRbjfnE5nD9TWQjkGs0w0v4YxnwTM2alvMuuNxn6Ps4wJICysy7daLXOkGESPleGw
-         PJIAu9c6+tFMm+WfYWfUA+funwzFGm/sdQ8/4wwZfT6zVast/8Vfu/yQ7mXAlvO13Zlm
-         aOtU3n2iLF4Rlt9EONyEi5O3sXNupA/PX13YApw9cCGyqL2tY6IeLYOHGgt+sz0cvkoI
-         gTyu1CdKXQGcZj4tWOVv0GahGfo8+kEztojbZ0iX5d/+2Rb/YOW1jjBI4bHmJT6dxyDh
-         ov723L2llsqyI+YI4XfF4AW9/jGe4EZGK60EPNGaphk14tlDWaFuJYRFINOqqaQov/oF
-         V2UA==
-X-Gm-Message-State: AFqh2koy7NfXqQwmj9GkTy+vNrLWeLZZmwM4tW4c/NrTChhdVq5z9BQo
-	W5isrdpGqDQ7iXq57Rxk580=
-X-Google-Smtp-Source: AMrXdXsWY3VWmDmV6hLbhsL6BYH2lvTNsv8dDWthRzf7qn5EoGWPcHNEPSMYBz/yEiSMMnYwpQ2gvg==
-X-Received: by 2002:a05:6870:8a21:b0:14c:8b5d:493c with SMTP id p33-20020a0568708a2100b0014c8b5d493cmr18225299oaq.0.1672445934915;
-        Fri, 30 Dec 2022 16:18:54 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id eo32-20020a056870eca000b00130d060ce80sm10440198oab.31.2022.12.30.16.18.54
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WZ17yhKWFDqZ+SHQRDJxc5imX3OxMscf0OQsvoIBMJ0=;
+        b=as6x0wvnNp41zn6kX7Q9vNRAXXNggq8UfaoyqocKQxzlDNTIshK0gRmbKm0yVkHmZs
+         KqEEyRtZgUsvxcdL88qoM6zAOd3t7I7qlvtB7NLUdlURttgSBkJyUKtmQHlE+7IimmQV
+         UMPQgvaB8BBGtIWnaQasyvi6zevMQpbUEQ8TaWqjwY3VOVj/8ngg3HGfRqdiF+3A/fTk
+         KBA4hI89KRAIV/wO010eLTSlpxRZI3JXsHO+/C5UZ3anxoz9UKY/d8d7VKV0QxY+81qz
+         er6gDINlG/3Qe/UumJNx8PQBuq4+n7OGrNljuXZRX2XlLuNsq9vcpEU2/Bb2eBNAUh3/
+         gwHQ==
+X-Gm-Message-State: AFqh2koO4pGHgkrHeZEnOGuvGalBVRvJSRDkpH9mEbxVAsvffjJG8GC8
+	lSHdQCSp4imFm7zRADE2gps=
+X-Google-Smtp-Source: AMrXdXuJwqh6YlF5u+ffcokw3pTMt9MRkwVQOwRHLfVqRrCDcstzwf/lM31BpGjcW2vUs4wqSiKpiA==
+X-Received: by 2002:a17:90a:a594:b0:225:fa96:c744 with SMTP id b20-20020a17090aa59400b00225fa96c744mr20670478pjq.37.1672458437822;
+        Fri, 30 Dec 2022 19:47:17 -0800 (PST)
+Received: from debian.me (subs03-180-214-233-72.three.co.id. [180.214.233.72])
+        by smtp.gmail.com with ESMTPSA id m7-20020a17090a668700b0020aacde1964sm12129432pjj.32.2022.12.30.19.47.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Dec 2022 16:18:54 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Fri, 30 Dec 2022 16:18:53 -0800
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+        Fri, 30 Dec 2022 19:47:17 -0800 (PST)
+Received: by debian.me (Postfix, from userid 1000)
+	id DAE2F10403B; Sat, 31 Dec 2022 10:47:13 +0700 (WIB)
+Date: Sat, 31 Dec 2022 10:47:13 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
 	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 0000/1140] 6.1.2-rc2 review
-Message-ID: <20221231001853.GC2916712@roeck-us.net>
-References: <20221230094107.317705320@linuxfoundation.org>
+Subject: Re: [PATCH 6.0 0000/1066] 6.0.16-rc2 review
+Message-ID: <Y6+wwW5qSFrsqFg3@debian.me>
+References: <20221230094059.698032393@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="aczY2dE2gsUMA0vR"
 Content-Disposition: inline
-In-Reply-To: <20221230094107.317705320@linuxfoundation.org>
+In-Reply-To: <20221230094059.698032393@linuxfoundation.org>
 
-On Fri, Dec 30, 2022 at 10:49:32AM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.2 release.
-> There are 1140 patches in this series, all will be posted as a response
+
+--aczY2dE2gsUMA0vR
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Dec 30, 2022 at 10:49:23AM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.0.16 release.
+> There are 1066 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Sun, 01 Jan 2023 09:38:41 +0000.
-> Anything received after that time might be too late.
-> 
+>=20
 
-Build results:
-	total: 155 pass: 155 fail: 0
-Qemu test results:
-	total: 500 pass: 500 fail: 0
+Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
+powerpc (ps3_defconfig, GCC 12.2.0).
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
-Guenter
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--aczY2dE2gsUMA0vR
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCY6+wuQAKCRD2uYlJVVFO
+o5xzAQDrZbiTSMDPBdNuyLOv+1ad51pMftpgbo5ghiSqKTInBAEAzqf+jwoFvsE+
+lSfOx2NeuzSSl+7m/BD/O+RaIZrBjA8=
+=xQX4
+-----END PGP SIGNATURE-----
+
+--aczY2dE2gsUMA0vR--
