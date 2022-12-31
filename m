@@ -1,111 +1,97 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F1115B6
-	for <patches@lists.linux.dev>; Sat, 31 Dec 2022 05:52:06 +0000 (UTC)
-Received: by mail-oi1-f173.google.com with SMTP id i127so20913914oif.8
-        for <patches@lists.linux.dev>; Fri, 30 Dec 2022 21:52:06 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8DE715A4
+	for <patches@lists.linux.dev>; Sat, 31 Dec 2022 08:31:54 +0000 (UTC)
+Received: by mail-pj1-f48.google.com with SMTP id n12so11655449pjp.1
+        for <patches@lists.linux.dev>; Sat, 31 Dec 2022 00:31:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NVipoNjby+BOws8FLX/AuDw7QSwId0oY3eFy8ssadWI=;
-        b=Eodyx5tiVTgtD0iNxx8DYyUGkHEntoWu1TG1qrjaBUm+kuFF6/s1zfxpkLRP55sGyH
-         zeJjGoc50wi67Sp2edBB8Xhg9xIpZ5eEoFJonjGY+xKFFspl+/gpAtQRpo6i2J4xUr1y
-         BeOlGKbCn6t4NkYEGcI/LiticrnM7TYHvUSax5K2vBL8CUs8LeeH1oD4SCeio5XRYiqX
-         cFE2i0u7O1d2dH1PRfv2/bw8Jv5vPWD8Pb+XslWZtpFHQgghZ8pegJYbxvjJrXZPf+ke
-         L9AkfbxYZWnn2fbd4rOvrstKGDEe4psvGw6CTyIAg39rszhNRyNvBHoMbHj6xyvCL4P4
-         ulqA==
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=Qyj2rgBFpnRPFUlJLTEsD7ZQxIggwzsrs3Z/jAozoGs=;
+        b=YQP0nrh5V+KeSIJ68OIdNF/0SiC4Jmh4QZmhuUwcXtSfQzl0dXBn142QhkQ9r7tdeQ
+         yyFY87dvKVIBDnSXHSyLHug55mxB0yDMiRwS+Ol5q5yoU4st2DuN0O7U9GD8gGfF/p5H
+         /78N+v6KGSmdeTDnOYY1plBpToQw+EWYPQwBke43LRzUnrrLoApVH30MPkCbKdXTb4Y5
+         sYl3gpcpZp/0smVEeAx99G9RYPTV0vrD3vQYMzleyAOKZDFvHjtYO++Ay03EafCtCBwQ
+         qjR+qRa8BXI2SFGYO+RAsipP+zqR0/3dHrlxZ79R6km38zjW98NadPzYGUd7RfAViYgP
+         qBQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=NVipoNjby+BOws8FLX/AuDw7QSwId0oY3eFy8ssadWI=;
-        b=Sm2A94/+t0Wac6UI8cIoJTji1Va7L5Co3EOiP8F9fqkP69m4phTXSBsweHryPk0lTw
-         8+W9QZco8aY/40p6SdN3he+J49wD3s3YWT0Y7BDI2Fo8aeAJeUfAuO/uIxUcrFU4309W
-         tgFCuRdFK/mjlqkz7L+p5/WBtRlHNlocsECEOza+KVpTvvtnEZlqPhKPPR2svJmfiIeq
-         JFwuphHOLLVWaW82yglHb71M9k67xRZUW4bqzaGxw7pxRYojt3zh42NgXHFUR5Z5ORAR
-         iFMa6d+vngKl9OXcOgfR37nQi1AV2oW/g+K4kutE2CoPLiPQICixrIH0KISK0IaxGEDv
-         TIVA==
-X-Gm-Message-State: AFqh2kpM+0WkD59f4/bw1LuUQJxtLCLZ5zBxnngz4Jk71C62aeq1umny
-	W74WhWO3N8DRwWNrfJ/bnl0=
-X-Google-Smtp-Source: AMrXdXtyY8bch1tU7KCYxUTZMycyXm3sZrdzNi/A9dT2d64rPBgLOwCeg3fUd5Ot7Wr6FfCcnQjRgw==
-X-Received: by 2002:a05:6808:208e:b0:360:d179:97b4 with SMTP id s14-20020a056808208e00b00360d17997b4mr19372178oiw.35.1672465925515;
-        Fri, 30 Dec 2022 21:52:05 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id j9-20020a056808056900b0034d9042758fsm9883340oig.24.2022.12.30.21.52.04
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Qyj2rgBFpnRPFUlJLTEsD7ZQxIggwzsrs3Z/jAozoGs=;
+        b=0PNRN49g7pVumZudXCVhJTdno2t5JfFl0YeU4uKGIlpTD8Bw0zHmcDWGMAxaCAggFC
+         uWri9qf6sxSYInSqp5pbmIXoTwIbgNxsp1VvrYS7uW9eChfSbfwAvrh/6PVlpjPy3njg
+         ETnjz1MuKPkShSp72rCpg2wpibb9qgiHpVIAL5NvMBERL5szHSHzX5IaeeJAz0fYRbeq
+         J6fuMILTx0u5NWoni5Rti62mqgRkG+hqlbf4iOiQ7xW38g/lomp3er5EJERs1v0fk7jq
+         XxtKizjKRbhRuTfwNPL41QgUsI9u6jgcFxlTXAPRO4AdinYdd94Bn4R5zqhy6f2DL6Tm
+         KKOA==
+X-Gm-Message-State: AFqh2kpmGQ+95sIEGGik/wkEN2GN9TUtVSm3GqIy/DYoQ03/F+NA2e2F
+	rpG6sOin3XhIXGbyQVaCx44=
+X-Google-Smtp-Source: AMrXdXtOHN4azErC+YEw2kfd3lU2BAPDkYn89mJl4iSoprjWXvTA3BwXBhJEJTVclwPiKT5amDnAdQ==
+X-Received: by 2002:a17:902:d3cc:b0:192:9141:ace5 with SMTP id w12-20020a170902d3cc00b001929141ace5mr14868542plb.13.1672475514218;
+        Sat, 31 Dec 2022 00:31:54 -0800 (PST)
+Received: from debian.me (subs28-116-206-12-54.three.co.id. [116.206.12.54])
+        by smtp.gmail.com with ESMTPSA id e11-20020a170902784b00b0017d97d13b18sm16272758pln.65.2022.12.31.00.31.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Dec 2022 21:52:04 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Fri, 30 Dec 2022 21:52:03 -0800
-From: Guenter Roeck <linux@roeck-us.net>
-To: Conor Dooley <conor@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+        Sat, 31 Dec 2022 00:31:53 -0800 (PST)
+Received: by debian.me (Postfix, from userid 1000)
+	id 6C6151017FB; Sat, 31 Dec 2022 15:31:48 +0700 (WIB)
+Date: Sat, 31 Dec 2022 15:31:48 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
 	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	shuah@kernel.org, patches@kernelci.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
 	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.0 0000/1066] 6.0.16-rc2 review
-Message-ID: <20221231055203.GA2926213@roeck-us.net>
-References: <20221230094059.698032393@linuxfoundation.org>
- <Y699qYnUYUwFuQ/E@spud>
+Subject: Re: [PATCH 6.1 0000/1140] 6.1.2-rc2 review
+Message-ID: <Y6/zdJ722IxFptkB@debian.me>
+References: <20221230094107.317705320@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="djV721w+vT9VwHqn"
 Content-Disposition: inline
-In-Reply-To: <Y699qYnUYUwFuQ/E@spud>
-
-On Sat, Dec 31, 2022 at 12:09:13AM +0000, Conor Dooley wrote:
-> Hey Greg,
-> 
-> On Fri, Dec 30, 2022 at 10:49:23AM +0100, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.0.16 release.
-> > There are 1066 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Sun, 01 Jan 2023 09:38:41 +0000.
-> > Anything received after that time might be too late.
-> 
-> > Paulo Alcantara <pc@cjr.nz>
-> >     cifs: improve symlink handling for smb2+
-> 
-> This patch here appears to fail allmodconfig + LLVM on RISC-V:
-> ../fs/cifs/smb2inode.c:419:4: error: variable 'idata' is uninitialized when used here [-Werror,-Wuninitialized]
->                         idata->symlink_target = kstrdup(cfile->symlink_target, GFP_KERNEL);
->                         ^~~~~
-> ../fs/cifs/smb2inode.c:76:35: note: initialize the variable 'idata' to silence this warning
->         struct cifs_open_info_data *idata;
->                                          ^
->                                           = NULL
-> 1 error generated.
-
-Fixed with upstream commit 69ccafdd35cdf ("cifs: fix uninitialised var in
-smb2_compound_op()").
-
-Guenter
-
-> 
-> It looks like this was reported as a smatch error on Christmas Day:
-> https://lore.kernel.org/all/202212250020.fyWQFNzF-lkp@intel.com/
-> 
-> Given the day in question, missing that report seems pretty
-> understandable :)
-> 
-> I tried to see if this had been reported already against the patches
-> themselves, rather than Sasha's queue, but given the size of the patchset
-> I may have missed it. Apologies for the noise if I have.
-> 
-> Thanks,
-> Conor.
-> 
+In-Reply-To: <20221230094107.317705320@linuxfoundation.org>
 
 
+--djV721w+vT9VwHqn
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Dec 30, 2022 at 10:49:32AM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.2 release.
+> There are 1140 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
+
+Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
+powerpc (ps3_defconfig, GCC 12.2.0).
+
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--djV721w+vT9VwHqn
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEARYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCY6/zbAAKCRD2uYlJVVFO
+o5WaAP4lJgxhIHBXpTKQTc8hbvRoFqWRaniEzbD1cUKdMkwOGAD9FpY4v6iKmJgg
+xjrsMCGEigSsg5YF0tDEkBLyEfjhkwQ=
+=cKJS
+-----END PGP SIGNATURE-----
+
+--djV721w+vT9VwHqn--
