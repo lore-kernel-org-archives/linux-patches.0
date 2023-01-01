@@ -1,61 +1,92 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2553928E2
-	for <patches@lists.linux.dev>; Sat, 31 Dec 2022 11:56:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26361C433EF;
-	Sat, 31 Dec 2022 11:56:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672487792;
-	bh=y7FDnjFBu3e/3H0LEwXpx2IH6IV/Qn2D78/Sz5JDXxk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=zl1n9N4gsKVmhzdtgaRiGnR9ka6rm+pUt49sAmz2j0b0C3kvi+hFbheByvN7z4bt6
-	 VGxjDHR+D3ZrbmBDVpfGB5SK8ycqRJr8cUfZvTFAwIq3CjdDO2bTh214kU/T5T49MJ
-	 xos5+hLJAx9ujrx13yX9jNIpdC+F7JyG6KafNT5Y=
-Date: Sat, 31 Dec 2022 12:56:29 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 557/731] phy: qcom-qmp: create copies of QMP PHY
- driver
-Message-ID: <Y7Ajbc0hKami540L@kroah.com>
-References: <20221228144256.536395940@linuxfoundation.org>
- <20221228144312.695000223@linuxfoundation.org>
- <Y6xzgWqijrtJl6oJ@matsya>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F12C2F2C
+	for <patches@lists.linux.dev>; Sun,  1 Jan 2023 15:53:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C939C433D2;
+	Sun,  1 Jan 2023 15:53:29 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="Q1YDlcfG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1672588406;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=w7UU0k0+xf0ESl7F6PUtPt9RVh2TOoL9Y1ZzrlTOJWs=;
+	b=Q1YDlcfGuFuaizpFcR+VS2iOzsWuc2XGQ76b6FNCb2ve/qXwRXskQpzX6fe4dIo2VSXGvd
+	AdPTIU8dkipKeO4rB7O0ciD4YfWuRcp+GKIEgSeayokyTiP+/QQIQDuMuA7o8csFfoQsbY
+	qSSJWB4ppa4BwJ+XjwIaflxTe1okobo=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 7183c114 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Sun, 1 Jan 2023 15:53:26 +0000 (UTC)
+Date: Sun, 1 Jan 2023 16:53:22 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Eric Biggers <ebiggers@kernel.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	tglx@linutronix.de, linux-crypto@vger.kernel.org,
+	linux-api@vger.kernel.org, x86@kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: Re: [PATCH v13 6/7] random: introduce generic vDSO getrandom()
+ implementation
+Message-ID: <Y7GschU1qZPFZAhm@zx2c4.com>
+References: <20221221142327.126451-1-Jason@zx2c4.com>
+ <20221221142327.126451-7-Jason@zx2c4.com>
+ <Y6OHa196S8e1mImg@sol.localdomain>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <Y6xzgWqijrtJl6oJ@matsya>
+In-Reply-To: <Y6OHa196S8e1mImg@sol.localdomain>
 
-On Wed, Dec 28, 2022 at 10:19:05PM +0530, Vinod Koul wrote:
-> On 28-12-22, 15:41, Greg Kroah-Hartman wrote:
-> > From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > 
-> > [ Upstream commit 94a407cc17a445ddb3f7315cee0b0916d35d177c ]
-> > 
-> > In order to split and cleanup the single monstrous QMP PHY driver,
-> > create blind copies of the current file. They will be used for:
-> > - PCIe (and a separate msm8996 PCIe PHY driver)
-> > - UFS
-> > - USB
-> > - Combo DP + USB
+On Wed, Dec 21, 2022 at 02:23:39PM -0800, Eric Biggers wrote:
+> On Wed, Dec 21, 2022 at 03:23:26PM +0100, Jason A. Donenfeld wrote:
+> > diff --git a/drivers/char/random.c b/drivers/char/random.c
+> > index 6425f5f838e0..660cd15b6228 100644
+> > --- a/drivers/char/random.c
+> > +++ b/drivers/char/random.c
+> > @@ -60,6 +60,7 @@
+> >  #include <crypto/blake2s.h>
+> >  #ifdef CONFIG_VDSO_GETRANDOM
+> >  #include <vdso/getrandom.h>
+> > +#include <vdso/datapage.h>
+> >  #endif
+> >  #include <asm/archrandom.h>
+> >  #include <asm/processor.h>
+> > @@ -407,6 +408,9 @@ static void crng_reseed(struct work_struct *work)
+> >	/*
+> >	 * We copy the new key into the base_crng, overwriting the old one,
+> >	 * and update the generation counter. We avoid hitting ULONG_MAX,
+> >	 * because the per-cpu crngs are initialized to ULONG_MAX, so this
+> >	 * forces new CPUs that come online to always initialize.
+> >	 */
+> >	spin_lock_irqsave(&base_crng.lock, flags);
+> >	memcpy(base_crng.key, key, sizeof(base_crng.key));
+> >	next_gen = base_crng.generation + 1;
+> >  	if (next_gen == ULONG_MAX)
+> >  		++next_gen;
+> >  	WRITE_ONCE(base_crng.generation, next_gen);
+> > +#ifdef CONFIG_VDSO_GETRANDOM
+> > +	smp_store_release(&_vdso_rng_data.generation, next_gen + 1);
+> > +#endif
 > 
-> Greg,
+> It's confusing that "uninitialized generation" is ULONG_MAX in the per-cpu
+> crngs, but 0 in the vdso_rng_data.  That results in a weird off-by one thing,
+> where the vdso_rng_data generation number has to be 1 higher.
 > 
-> Please drop this. This is a full driver rework and code reorg thus not
-> suitable for stable
+> Would it be possible to use 0 for both?
 
-Now dropped, something went wrong with Sasha's scripts in that the
-"dep-of" is not in the tree here so this isn't needed either.
+It might be, but this will involve some changes to how the batching
+works too, so I think I'd like to do that separately, if at all.
+However, I'll add a comment there noting what's happening so it's a bit
+less confusing.
 
-thanks,
-
-greg k-h
+Jason
