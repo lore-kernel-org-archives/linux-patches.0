@@ -1,152 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f182.google.com (mail-pl1-f182.google.com [209.85.214.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF5B28EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:30:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01233C433EF;
-	Mon,  2 Jan 2023 11:30:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672659006;
-	bh=hVP9hppalFoxEyMc/MrU3ur0YK6Vixt6XX7v7RUcVO4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M6H+IbR0c/3qQdBxCARJaO2hu/0rVgAdiVpGEckp1k0tyEiiHpuAfjhmO/ktEniCE
-	 ASVtj2I8r1HbvkW4erpUZ+3hplVGOHNUtydlsd8ZThznBAutpiphR7DksgGBBe3O07
-	 UOJOKxZbIs58I3WYmZbJU94TALuZ1/WdGVCyKBY0=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.0 68/74] block: Do not reread partition table on exclusively open device
-Date: Mon,  2 Jan 2023 12:22:41 +0100
-Message-Id: <20230102110554.997273585@linuxfoundation.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
-References: <20230102110552.061937047@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E8183208
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 23:14:40 +0000 (UTC)
+Received: by mail-pl1-f182.google.com with SMTP id d3so30844813plr.10
+        for <patches@lists.linux.dev>; Mon, 02 Jan 2023 15:14:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=heitbaum.com; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=yY1/fILcvpRKU0bivqO7pZp67LzV2ztHWexSOMGIEMA=;
+        b=TCRnubnPXGHQLhXQlKNrDr/X2lJwe0KUUl8A8CkpznfvxckOmJDG5eAUFg48aSiMSJ
+         YssUAUVY6FBfgbpCoZqRobxlaOtmnscYOR0FLoLlZgykZzMD7IOWTQjPqXiW13erE6gT
+         RD7JB+qoAASDKQb9mA3vDEG4RGwdZA1EHQuTY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=yY1/fILcvpRKU0bivqO7pZp67LzV2ztHWexSOMGIEMA=;
+        b=ER4iiDU2OGhK0C0FVsrgpJ/sB1xDkVZqiMXBA2i0a4LI7olF0X6YkBhBreCMDG6hrA
+         A7eDYPhctbStMMJ4vXfm4SNLr+16yn6azleSV0807QWXpQAiumY2aN+Wf1CIYnhmlQ+X
+         0dBkTcUf9tXywwIKSV1HozhF2p64daxwOpgC64yP2TGMvdNmcPCyd02MMfBepLE/4xfH
+         t2ilyVLfnHwIfsB+CQGpsus38DMVpUiB8+unO5k+4mbggkbPMXzSPVTs6yO6W+RseBDN
+         AUEnP0J59ohp672paQAo5hzy77cWhvGvHNMSxh/25dx+iQ1t8MtLXqbHVpnARTrlxcB4
+         v/BA==
+X-Gm-Message-State: AFqh2kqKWS65f/pji/aZmZhV5IhnfKcoX8VghW/tNUq7ubvbLlKfPbTr
+	gqZyutmM2164ve5WaLBELO/e5Q==
+X-Google-Smtp-Source: AMrXdXtoAYcG8xDuM42hw4tVM/z8D/1RnpRghd3d33P7z8/RaL1+pkP0JK9AATFXvQhQePTOBpj0mg==
+X-Received: by 2002:a05:6a20:e61b:b0:af:7ed7:d370 with SMTP id my27-20020a056a20e61b00b000af7ed7d370mr49572017pzb.43.1672701280240;
+        Mon, 02 Jan 2023 15:14:40 -0800 (PST)
+Received: from 911e562c0830 (lma3293270.lnk.telstra.net. [60.231.90.117])
+        by smtp.gmail.com with ESMTPSA id n25-20020a6563d9000000b00477bfac06b7sm17516769pgv.34.2023.01.02.15.14.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Jan 2023 15:14:38 -0800 (PST)
+Date: Mon, 2 Jan 2023 23:14:24 +0000
+From: Rudi Heitbaum <rudi@heitbaum.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 00/71] 6.1.3-rc1 review
+Message-ID: <20230102231424.GA8@911e562c0830>
+References: <20230102110551.509937186@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230102110551.509937186@linuxfoundation.org>
 
-From: Jan Kara <jack@suse.cz>
+On Mon, Jan 02, 2023 at 12:21:25PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.3 release.
+> There are 71 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 04 Jan 2023 11:05:34 +0000.
+> Anything received after that time might be too late.
 
-commit 36369f46e91785688a5f39d7a5590e3f07981316 upstream.
+Hi Greg,
 
-Since commit 10c70d95c0f2 ("block: remove the bd_openers checks in
-blk_drop_partitions") we allow rereading of partition table although
-there are users of the block device. This has an undesirable consequence
-that e.g. if sda and sdb are assembled to a RAID1 device md0 with
-partitions, BLKRRPART ioctl on sda will rescan partition table and
-create sda1 device. This partition device under a raid device confuses
-some programs (such as libstorage-ng used for initial partitioning for
-distribution installation) leading to failures.
+6.1.3-rc1 tested.
 
-Fix the problem refusing to rescan partitions if there is another user
-that has the block device exclusively open.
+Run tested on:
+- Allwinner H6 (Tanix TX6)
+- Intel Alder Lake x86_64 (nuc12 i7-1260P)
+- SolidRun Cubox-i Dual/Quad - NXP iMX6 (Cubox-i4Pro)
 
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/20221130135344.2ul4cyfstfs3znxg@quack3
-Fixes: 10c70d95c0f2 ("block: remove the bd_openers checks in blk_drop_partitions")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221130175653.24299-1-jack@suse.cz
-[axboe: fold in followup fix]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- block/blk.h   |    2 +-
- block/genhd.c |    7 +++++--
- block/ioctl.c |   12 +++++++-----
- 3 files changed, 13 insertions(+), 8 deletions(-)
+In addition - build tested for:
+- Allwinner A64
+- Allwinner H3
+- Allwinner H5
+- NXP iMX8
+- Qualcomm Dragonboard
+- Rockchip RK3288
+- Rockchip RK3328
+- Rockchip RK3399pro
+- Samsung Exynos
 
---- a/block/blk.h
-+++ b/block/blk.h
-@@ -429,7 +429,7 @@ static inline struct kmem_cache *blk_get
- }
- struct request_queue *blk_alloc_queue(int node_id, bool alloc_srcu);
- 
--int disk_scan_partitions(struct gendisk *disk, fmode_t mode);
-+int disk_scan_partitions(struct gendisk *disk, fmode_t mode, void *owner);
- 
- int disk_alloc_events(struct gendisk *disk);
- void disk_add_events(struct gendisk *disk);
---- a/block/genhd.c
-+++ b/block/genhd.c
-@@ -356,7 +356,7 @@ void disk_uevent(struct gendisk *disk, e
- }
- EXPORT_SYMBOL_GPL(disk_uevent);
- 
--int disk_scan_partitions(struct gendisk *disk, fmode_t mode)
-+int disk_scan_partitions(struct gendisk *disk, fmode_t mode, void *owner)
- {
- 	struct block_device *bdev;
- 
-@@ -366,6 +366,9 @@ int disk_scan_partitions(struct gendisk
- 		return -EINVAL;
- 	if (disk->open_partitions)
- 		return -EBUSY;
-+	/* Someone else has bdev exclusively open? */
-+	if (disk->part0->bd_holder && disk->part0->bd_holder != owner)
-+		return -EBUSY;
- 
- 	set_bit(GD_NEED_PART_SCAN, &disk->state);
- 	bdev = blkdev_get_by_dev(disk_devt(disk), mode, NULL);
-@@ -499,7 +502,7 @@ int __must_check device_add_disk(struct
- 
- 		bdev_add(disk->part0, ddev->devt);
- 		if (get_capacity(disk))
--			disk_scan_partitions(disk, FMODE_READ);
-+			disk_scan_partitions(disk, FMODE_READ, NULL);
- 
- 		/*
- 		 * Announce the disk and partitions after all partitions are
---- a/block/ioctl.c
-+++ b/block/ioctl.c
-@@ -467,9 +467,10 @@ static int blkdev_bszset(struct block_de
-  * user space. Note the separate arg/argp parameters that are needed
-  * to deal with the compat_ptr() conversion.
-  */
--static int blkdev_common_ioctl(struct block_device *bdev, fmode_t mode,
--				unsigned cmd, unsigned long arg, void __user *argp)
-+static int blkdev_common_ioctl(struct file *file, fmode_t mode, unsigned cmd,
-+			       unsigned long arg, void __user *argp)
- {
-+	struct block_device *bdev = I_BDEV(file->f_mapping->host);
- 	unsigned int max_sectors;
- 
- 	switch (cmd) {
-@@ -527,7 +528,8 @@ static int blkdev_common_ioctl(struct bl
- 			return -EACCES;
- 		if (bdev_is_partition(bdev))
- 			return -EINVAL;
--		return disk_scan_partitions(bdev->bd_disk, mode & ~FMODE_EXCL);
-+		return disk_scan_partitions(bdev->bd_disk, mode & ~FMODE_EXCL,
-+					    file);
- 	case BLKTRACESTART:
- 	case BLKTRACESTOP:
- 	case BLKTRACETEARDOWN:
-@@ -605,7 +607,7 @@ long blkdev_ioctl(struct file *file, uns
- 		break;
- 	}
- 
--	ret = blkdev_common_ioctl(bdev, mode, cmd, arg, argp);
-+	ret = blkdev_common_ioctl(file, mode, cmd, arg, argp);
- 	if (ret != -ENOIOCTLCMD)
- 		return ret;
- 
-@@ -674,7 +676,7 @@ long compat_blkdev_ioctl(struct file *fi
- 		break;
- 	}
- 
--	ret = blkdev_common_ioctl(bdev, mode, cmd, arg, argp);
-+	ret = blkdev_common_ioctl(file, mode, cmd, arg, argp);
- 	if (ret == -ENOIOCTLCMD && disk->fops->compat_ioctl)
- 		ret = disk->fops->compat_ioctl(bdev, mode, cmd, arg);
- 
-
-
+Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
+--
+Rudi
