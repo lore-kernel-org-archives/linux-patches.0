@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2728828EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:27:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA54C433EF;
-	Mon,  2 Jan 2023 11:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DF428EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:27:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4296EC433D2;
+	Mon,  2 Jan 2023 11:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658821;
-	bh=LFcNYpLyI29e/cvimqjo2FIsGXTD9Fj8wyk2araQHQ8=;
+	s=korg; t=1672658823;
+	bh=K1PhWsGbQ5gNgxpKSIIlbiJAhdzV+dwMm3aemV00wSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Geg9sYMqWuPvRHq4lkhyxt55b4dW0kZMJe2dZBIGc3NbeXIxmHRa5RynSAl3/Ors3
-	 d6CR8K36Wr6RjhsM7ZDkZyvTp0/nQBStVcWxfkDtfEJM5BfSBdFlxFiCnpDT3fzFi0
-	 COEaqxwuR8Gjp5a5K6Y3ce5oY4xEPs8Gee6LYm1I=
+	b=Tef9CF6b6vkAmvVgnG8bJpapexleEUgBHCLxHpdseRp9ynQgjFk60Untx53URS/yt
+	 m9+3bplwz57m/sdn9e5sSVffBGXu2JZbWgbhf1iiWhUj7yylnkIl+cOxv+rwZRlAMj
+	 BfrkGamSrhJlry+n6qhPzupje+iKK06UDByVhJZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Klaus Jensen <k.jensen@samsung.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Keith Busch <kbusch@kernel.org>,
+	Kanchan Joshi <joshi.k@samsung.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 12/74] nvme-pci: fix doorbell buffer value endianness
-Date: Mon,  2 Jan 2023 12:21:45 +0100
-Message-Id: <20230102110552.562892632@linuxfoundation.org>
+Subject: [PATCH 6.0 13/74] nvme-pci: fix mempool alloc size
+Date: Mon,  2 Jan 2023 12:21:46 +0100
+Message-Id: <20230102110552.605423337@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
 References: <20230102110552.061937047@linuxfoundation.org>
@@ -36,97 +38,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit b5f96cb719d8ba220b565ddd3ba4ac0d8bcfb130 ]
+[ Upstream commit c89a529e823d51dd23c7ec0c047c7a454a428541 ]
 
-When using shadow doorbells, the event index and the doorbell values are
-written to host memory. Prior to this patch, the values written would
-erroneously be written in host endianness. This causes trouble on
-big-endian platforms. Fix this by adding missing endian conversions.
+Convert the max size to bytes to match the units of the divisor that
+calculates the worst-case number of PRP entries.
 
-This issue was noticed by Guenter while testing various big-endian
-platforms under QEMU[1]. A similar fix required for hw/nvme in QEMU is
-up for review as well[2].
+The result is used to determine how many PRP Lists are required. The
+code was previously rounding this to 1 list, but we can require 2 in the
+worst case. In that scenario, the driver would corrupt memory beyond the
+size provided by the mempool.
 
-  [1]: https://lore.kernel.org/qemu-devel/20221209110022.GA3396194@roeck-us.net/
-  [2]: https://lore.kernel.org/qemu-devel/20221212114409.34972-4-its@irrelevant.dk/
+While unlikely to occur (you'd need a 4MB in exactly 127 phys segments
+on a queue that doesn't support SGLs), this memory corruption has been
+observed by kfence.
 
-Fixes: f9f38e33389c ("nvme: improve performance for virtual NVMe devices")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+Cc: Jens Axboe <axboe@kernel.dk>
+Fixes: 943e942e6266f ("nvme-pci: limit max IO size and segments to avoid high order allocations")
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ drivers/nvme/host/pci.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 6867620bcc98..0b97e8ce13e4 100644
+index 0b97e8ce13e4..b128e2e36b68 100644
 --- a/drivers/nvme/host/pci.c
 +++ b/drivers/nvme/host/pci.c
-@@ -144,9 +144,9 @@ struct nvme_dev {
- 	mempool_t *iod_mempool;
- 
- 	/* shadow doorbell buffer support: */
--	u32 *dbbuf_dbs;
-+	__le32 *dbbuf_dbs;
- 	dma_addr_t dbbuf_dbs_dma_addr;
--	u32 *dbbuf_eis;
-+	__le32 *dbbuf_eis;
- 	dma_addr_t dbbuf_eis_dma_addr;
- 
- 	/* host memory buffer support: */
-@@ -210,10 +210,10 @@ struct nvme_queue {
- #define NVMEQ_SQ_CMB		1
- #define NVMEQ_DELETE_ERROR	2
- #define NVMEQ_POLLED		3
--	u32 *dbbuf_sq_db;
--	u32 *dbbuf_cq_db;
--	u32 *dbbuf_sq_ei;
--	u32 *dbbuf_cq_ei;
-+	__le32 *dbbuf_sq_db;
-+	__le32 *dbbuf_cq_db;
-+	__le32 *dbbuf_sq_ei;
-+	__le32 *dbbuf_cq_ei;
- 	struct completion delete_done;
- };
- 
-@@ -340,11 +340,11 @@ static inline int nvme_dbbuf_need_event(u16 event_idx, u16 new_idx, u16 old)
- }
- 
- /* Update dbbuf and return true if an MMIO is required */
--static bool nvme_dbbuf_update_and_check_event(u16 value, u32 *dbbuf_db,
--					      volatile u32 *dbbuf_ei)
-+static bool nvme_dbbuf_update_and_check_event(u16 value, __le32 *dbbuf_db,
-+					      volatile __le32 *dbbuf_ei)
+@@ -378,8 +378,8 @@ static bool nvme_dbbuf_update_and_check_event(u16 value, __le32 *dbbuf_db,
+  */
+ static int nvme_pci_npages_prp(void)
  {
- 	if (dbbuf_db) {
--		u16 old_value;
-+		u16 old_value, event_idx;
- 
- 		/*
- 		 * Ensure that the queue is written before updating
-@@ -352,8 +352,8 @@ static bool nvme_dbbuf_update_and_check_event(u16 value, u32 *dbbuf_db,
- 		 */
- 		wmb();
- 
--		old_value = *dbbuf_db;
--		*dbbuf_db = value;
-+		old_value = le32_to_cpu(*dbbuf_db);
-+		*dbbuf_db = cpu_to_le32(value);
- 
- 		/*
- 		 * Ensure that the doorbell is updated before reading the event
-@@ -363,7 +363,8 @@ static bool nvme_dbbuf_update_and_check_event(u16 value, u32 *dbbuf_db,
- 		 */
- 		mb();
- 
--		if (!nvme_dbbuf_need_event(*dbbuf_ei, value, old_value))
-+		event_idx = le32_to_cpu(*dbbuf_ei);
-+		if (!nvme_dbbuf_need_event(event_idx, value, old_value))
- 			return false;
- 	}
+-	unsigned nprps = DIV_ROUND_UP(NVME_MAX_KB_SZ + NVME_CTRL_PAGE_SIZE,
+-				      NVME_CTRL_PAGE_SIZE);
++	unsigned max_bytes = (NVME_MAX_KB_SZ * 1024) + NVME_CTRL_PAGE_SIZE;
++	unsigned nprps = DIV_ROUND_UP(max_bytes, NVME_CTRL_PAGE_SIZE);
+ 	return DIV_ROUND_UP(8 * nprps, PAGE_SIZE - 8);
+ }
  
 -- 
 2.35.1
