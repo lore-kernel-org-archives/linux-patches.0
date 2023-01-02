@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F265728EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:25:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775ABC433EF;
-	Mon,  2 Jan 2023 11:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A8028EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:25:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10CE9C433EF;
+	Mon,  2 Jan 2023 11:25:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658721;
-	bh=OJxtv8Lu4/H79MRZceI+ffMKtRC/yFWX/+WKxj2GxG4=;
+	s=korg; t=1672658724;
+	bh=Wsc5TiXFv+6K2LLujXTsw0TuH3R2sxsc0KweF37smBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BOmomBraq45X3edF+YeRvWNrCYjlgm+xVCdhfmKYOlpHURPZNbyOark5mScHqdWf8
-	 ootNw57mAsFedHx4/2bwey/Pgg0e5jg3JjCf3KZ7s4Etu36ipaF0N4R6W8o6rIVtxC
-	 60GX1fG+6fgyOPIm7LpO3msw/+vFo8keeMSRPSc0=
+	b=195Hf+AUeEa3dtdjgSc2BT4JP9NFTxP4RC1NqgOEZwmrnAzBhtyl+XGCSSYt6jsiW
+	 wwljyJ+vxZ3r1ptVaCJwScij7NNUi/dqeyug9BVHmgvJHp1QwAeGp/h4s4xf7M3/zk
+	 3nue2nd0jhXS5MEfdJ6Jn9e3FbLGTyV5df6Bh/GY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Aditya Garg <gargaditya08@live.com>
-Subject: [PATCH 6.1 10/71] ACPI: video: Fix Apple GMUX backlight detection
-Date: Mon,  2 Jan 2023 12:21:35 +0100
-Message-Id: <20230102110551.907189699@linuxfoundation.org>
+	Yi Zhang <yi.zhang@redhat.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 11/71] block, bfq: fix uaf for bfqq in bfq_exit_icq_bfqq
+Date: Mon,  2 Jan 2023 12:21:36 +0100
+Message-Id: <20230102110551.940852386@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110551.509937186@linuxfoundation.org>
 References: <20230102110551.509937186@linuxfoundation.org>
@@ -36,94 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 3cf3b7f012f3ea8bdc56196e367cf07c10424855 ]
+[ Upstream commit 246cf66e300b76099b5dbd3fdd39e9a5dbc53f02 ]
 
-The apple-gmux driver only binds to old GMUX devices which have an
-IORESOURCE_IO resource (using inb()/outb()) rather then memory-mapped
-IO (IORESOURCE_MEM).
+Commit 64dc8c732f5c ("block, bfq: fix possible uaf for 'bfqq->bic'")
+will access 'bic->bfqq' in bic_set_bfqq(), however, bfq_exit_icq_bfqq()
+can free bfqq first, and then call bic_set_bfqq(), which will cause uaf.
 
-T2 MacBooks use the new style GMUX devices (with IORESOURCE_MEM access),
-so these are not supported by the apple-gmux driver. This is not a problem
-since they have working ACPI video backlight support.
+Fix the problem by moving bfq_exit_bfqq() behind bic_set_bfqq().
 
-But the apple_gmux_present() helper only checks if an ACPI device with
-the "APP000B" HID is present, causing acpi_video_get_backlight_type()
-to return acpi_backlight_apple_gmux disabling the acpi_video backlight
-device.
-
-Add a new apple_gmux_backlight_present() helper which checks that
-the "APP000B" device actually is an old GMUX device with an IORESOURCE_IO
-resource.
-
-This fixes the acpi_video0 backlight no longer registering on T2 MacBooks.
-
-Note people are working to add support for the new style GMUX to Linux:
-https://github.com/kekrby/linux-t2/commits/wip/hybrid-graphics
-
-Once this lands this patch should be reverted so that
-acpi_video_get_backlight_type() also prefers the gmux on new style GMUX
-MacBooks, but for now this is necessary to avoid regressing backlight
-control on T2 Macs.
-
-Fixes: 21245df307cb ("ACPI: video: Add Apple GMUX brightness control detection")
-Reported-and-tested-by: Aditya Garg <gargaditya08@live.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 64dc8c732f5c ("block, bfq: fix possible uaf for 'bfqq->bic'")
+Reported-by: Yi Zhang <yi.zhang@redhat.com>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20221226030605.1437081-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/video_detect.c | 23 ++++++++++++++++++++++-
- 1 file changed, 22 insertions(+), 1 deletion(-)
+ block/bfq-iosched.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
-index ffa19d418847..13f10fbcd7f0 100644
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -34,6 +34,7 @@
- #include <linux/module.h>
- #include <linux/pci.h>
- #include <linux/platform_data/x86/nvidia-wmi-ec-backlight.h>
-+#include <linux/pnp.h>
- #include <linux/types.h>
- #include <linux/workqueue.h>
- #include <acpi/video.h>
-@@ -105,6 +106,26 @@ static bool nvidia_wmi_ec_supported(void)
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index 3e3bd1a46646..7b894df32e32 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -5383,8 +5383,8 @@ static void bfq_exit_icq_bfqq(struct bfq_io_cq *bic, bool is_sync)
+ 		unsigned long flags;
+ 
+ 		spin_lock_irqsave(&bfqd->lock, flags);
+-		bfq_exit_bfqq(bfqd, bfqq);
+ 		bic_set_bfqq(bic, NULL, is_sync);
++		bfq_exit_bfqq(bfqd, bfqq);
+ 		spin_unlock_irqrestore(&bfqd->lock, flags);
+ 	}
  }
- #endif
- 
-+static bool apple_gmux_backlight_present(void)
-+{
-+	struct acpi_device *adev;
-+	struct device *dev;
-+
-+	adev = acpi_dev_get_first_match_dev(GMUX_ACPI_HID, NULL, -1);
-+	if (!adev)
-+		return false;
-+
-+	dev = acpi_get_first_physical_node(adev);
-+	if (!dev)
-+		return false;
-+
-+	/*
-+	 * drivers/platform/x86/apple-gmux.c only supports old style
-+	 * Apple GMUX with an IO-resource.
-+	 */
-+	return pnp_get_resource(to_pnp_dev(dev), IORESOURCE_IO, 0) != NULL;
-+}
-+
- /* Force to use vendor driver when the ACPI device is known to be
-  * buggy */
- static int video_detect_force_vendor(const struct dmi_system_id *d)
-@@ -755,7 +776,7 @@ static enum acpi_backlight_type __acpi_video_get_backlight_type(bool native)
- 	if (nvidia_wmi_ec_present)
- 		return acpi_backlight_nvidia_wmi_ec;
- 
--	if (apple_gmux_present())
-+	if (apple_gmux_backlight_present())
- 		return acpi_backlight_apple_gmux;
- 
- 	/* Chromebooks should always prefer native backlight control. */
 -- 
 2.35.1
 
