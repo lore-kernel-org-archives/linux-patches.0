@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA74528EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:24:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D17C433D2;
-	Mon,  2 Jan 2023 11:24:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDB228EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:24:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69A5C433D2;
+	Mon,  2 Jan 2023 11:24:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658690;
-	bh=n7R4tCUM4XxevYaYZQau8RGY/VJ9WE0hCkmZ/lhFkXU=;
+	s=korg; t=1672658693;
+	bh=R3xd0iOQ9PqLaoTc61j078SgU9cnRJs8lym2J15gr4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L1hA26P/jPodmmncgOzB5SYfs95pC8YKJe5r3BkM5WTvKSfATo41Fy+HmIKOscfDL
-	 MHuDB0Y2NhItkmMkV0PvNQJgjihKp0akFNb+8GgRgUIwYu5f+HqCeUx8qRC9TFLh6e
-	 t/IzmqZqP8KMnOqiQT7i53ZnRYZb46q+7BhFAIhw=
+	b=lxeulZlOCLOnBb8TwBv+/NELfARXuj8ODyPk/oBD4CXjqFShqAe3tmhs1v+VZ6dNp
+	 IsjNlf5X+ByVKU9SXJZY7rVlGhksKgEs7wPPXp2X66UoO4WZ7sdc6kz8nXWdCUqvoe
+	 UZOrKm+/DsOZXL1Z+TJgNScEIIewd++uKmoGeLRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	"Naveen N. Rao" <naveen.n.rao@linux.vnet.ibm.com>,
+	Josh Poimboeuf <jpoimboe@kernel.org>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 06/71] nvme-pci: fix page size checks
-Date: Mon,  2 Jan 2023 12:21:31 +0100
-Message-Id: <20230102110551.760153609@linuxfoundation.org>
+Subject: [PATCH 6.1 33/71] objtool: Fix SEGFAULT
+Date: Mon,  2 Jan 2023 12:21:58 +0100
+Message-Id: <20230102110552.845028725@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110551.509937186@linuxfoundation.org>
 References: <20230102110551.509937186@linuxfoundation.org>
@@ -35,61 +38,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Keith Busch <kbusch@kernel.org>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 841734234a28fd5cd0889b84bd4d93a0988fa11e ]
+[ Upstream commit efb11fdb3e1a9f694fa12b70b21e69e55ec59c36 ]
 
-The size allocated out of the dma pool is at most NVME_CTRL_PAGE_SIZE,
-which may be smaller than the PAGE_SIZE.
+find_insn() will return NULL in case of failure. Check insn in order
+to avoid a kernel Oops for NULL pointer dereference.
 
-Fixes: c61b82c7b7134 ("nvme-pci: fix PRP pool size")
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Tested-by: Naveen N. Rao <naveen.n.rao@linux.vnet.ibm.com>
+Reviewed-by: Naveen N. Rao <naveen.n.rao@linux.vnet.ibm.com>
+Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20221114175754.1131267-9-sv@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tools/objtool/check.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 3116a0e2ec27..115d81def567 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -35,7 +35,7 @@
- #define SQ_SIZE(q)	((q)->q_depth << (q)->sqes)
- #define CQ_SIZE(q)	((q)->q_depth * sizeof(struct nvme_completion))
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index a7f1e6c8bb0a..51494c3002d9 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -207,7 +207,7 @@ static bool __dead_end_function(struct objtool_file *file, struct symbol *func,
+ 		return false;
  
--#define SGES_PER_PAGE	(PAGE_SIZE / sizeof(struct nvme_sgl_desc))
-+#define SGES_PER_PAGE	(NVME_CTRL_PAGE_SIZE / sizeof(struct nvme_sgl_desc))
+ 	insn = find_insn(file, func->sec, func->offset);
+-	if (!insn->func)
++	if (!insn || !insn->func)
+ 		return false;
  
- /*
-  * These can be higher, but we need to ensure that any command doesn't
-@@ -380,7 +380,7 @@ static int nvme_pci_npages_prp(void)
- {
- 	unsigned max_bytes = (NVME_MAX_KB_SZ * 1024) + NVME_CTRL_PAGE_SIZE;
- 	unsigned nprps = DIV_ROUND_UP(max_bytes, NVME_CTRL_PAGE_SIZE);
--	return DIV_ROUND_UP(8 * nprps, PAGE_SIZE - 8);
-+	return DIV_ROUND_UP(8 * nprps, NVME_CTRL_PAGE_SIZE - 8);
- }
- 
- /*
-@@ -390,7 +390,7 @@ static int nvme_pci_npages_prp(void)
- static int nvme_pci_npages_sgl(void)
- {
- 	return DIV_ROUND_UP(NVME_MAX_SEGS * sizeof(struct nvme_sgl_desc),
--			PAGE_SIZE);
-+			NVME_CTRL_PAGE_SIZE);
- }
- 
- static size_t nvme_pci_iod_alloc_size(void)
-@@ -714,7 +714,7 @@ static void nvme_pci_sgl_set_seg(struct nvme_sgl_desc *sge,
- 		sge->length = cpu_to_le32(entries * sizeof(*sge));
- 		sge->type = NVME_SGL_FMT_LAST_SEG_DESC << 4;
- 	} else {
--		sge->length = cpu_to_le32(PAGE_SIZE);
-+		sge->length = cpu_to_le32(NVME_CTRL_PAGE_SIZE);
- 		sge->type = NVME_SGL_FMT_SEG_DESC << 4;
- 	}
- }
+ 	func_for_each_insn(file, func, insn) {
 -- 
 2.35.1
 
