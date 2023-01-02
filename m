@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 363A328EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:28:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1791C433EF;
-	Mon,  2 Jan 2023 11:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D069A28EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:28:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5365FC433EF;
+	Mon,  2 Jan 2023 11:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658904;
-	bh=HYHTOz+gZ8jJ07uHB+VCWckL1wzW/MmeNEyEI8TydXQ=;
+	s=korg; t=1672658906;
+	bh=AbnPlA2rxyD6/fEDBrUH2gyFaqCrUGv4i5hDuU+QrME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F+1G/jYC/dArIDKtFn2pPTabXtUcy3ZWCff5Hz3FarpkVezfC0lh6z8vHyFaj7bt2
-	 Qp+b929m5NdKViZKKirtUYl/7V98ZNMDNkAPYZbFXJGt8KB7LvzYqrlO+sSIBVFfgf
-	 GfDUNtHhf3VCh97xtdw7SgrtTMGLhwz++dV4kEr4=
+	b=hiX+M2od5r/YR2m9bVzDQbwKphTzksrpsGOaxtGqYP8UXEqJPFvclaTJEv/oqzx//
+	 zB3T1ViIHaz8FXAmnNKT4Kzgivc0FDc/lRFc4T3xwbEwA39mErBrl+ROh94ozpHFlb
+	 EnY82GJmuEJAoj3wQwmn49faNLayGE3QhmFD7YAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wuqiang <wuqiang.matt@bytedance.com>,
-	Solar Designer <solar@openwall.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
+	Akito <the@akito.ooo>,
+	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 44/74] kprobes: kretprobe events missing on 2-core KVM guest
-Date: Mon,  2 Jan 2023 12:22:17 +0100
-Message-Id: <20230102110553.979933957@linuxfoundation.org>
+Subject: [PATCH 6.0 45/74] HID: multitouch: fix Asus ExpertBook P2 P2451FA trackpoint
+Date: Mon,  2 Jan 2023 12:22:18 +0100
+Message-Id: <20230102110554.020929844@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
 References: <20230102110552.061937047@linuxfoundation.org>
@@ -36,78 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: wuqiang <wuqiang.matt@bytedance.com>
+From: José Expósito <jose.exposito89@gmail.com>
 
-[ Upstream commit 3b7ddab8a19aefc768f345fd3782af35b4a68d9b ]
+[ Upstream commit 4eab1c2fe06c98a4dff258dd64800b6986c101e9 ]
 
-Default value of maxactive is set as num_possible_cpus() for nonpreemptable
-systems. For a 2-core system, only 2 kretprobe instances would be allocated
-in default, then these 2 instances for execve kretprobe are very likely to
-be used up with a pipelined command.
+The HID descriptor of this device contains two mouse collections, one
+for mouse emulation and the other for the trackpoint.
 
-Here's the testcase: a shell script was added to crontab, and the content
-of the script is:
+Both collections get merged and, because the first one defines X and Y,
+the movemenent events reported by the trackpoint collection are
+ignored.
 
-  #!/bin/sh
-  do_something_magic `tr -dc a-z < /dev/urandom | head -c 10`
+Set the MT_CLS_WIN_8_FORCE_MULTI_INPUT class for this device to be able
+to receive its reports.
 
-cron will trigger a series of program executions (4 times every hour). Then
-events loss would be noticed normally after 3-4 hours of testings.
+This fix is similar to/based on commit 40d5bb87377a ("HID: multitouch:
+enable multi-input as a quirk for some devices").
 
-The issue is caused by a burst of series of execve requests. The best number
-of kretprobe instances could be different case by case, and should be user's
-duty to determine, but num_possible_cpus() as the default value is inadequate
-especially for systems with small number of cpus.
-
-This patch enables the logic for preemption as default, thus increases the
-minimum of maxactive to 10 for nonpreemptable systems.
-
-Link: https://lore.kernel.org/all/20221110081502.492289-1-wuqiang.matt@bytedance.com/
-
-Signed-off-by: wuqiang <wuqiang.matt@bytedance.com>
-Reviewed-by: Solar Designer <solar@openwall.com>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://gitlab.freedesktop.org/libinput/libinput/-/issues/825
+Reported-by: Akito <the@akito.ooo>
+Tested-by: Akito <the@akito.ooo>
+Signed-off-by: José Expósito <jose.exposito89@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/trace/kprobes.rst | 3 +--
- kernel/kprobes.c                | 8 ++------
- 2 files changed, 3 insertions(+), 8 deletions(-)
+ drivers/hid/hid-multitouch.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/Documentation/trace/kprobes.rst b/Documentation/trace/kprobes.rst
-index f318bceda1e6..97d086b23ce8 100644
---- a/Documentation/trace/kprobes.rst
-+++ b/Documentation/trace/kprobes.rst
-@@ -131,8 +131,7 @@ For example, if the function is non-recursive and is called with a
- spinlock held, maxactive = 1 should be enough.  If the function is
- non-recursive and can never relinquish the CPU (e.g., via a semaphore
- or preemption), NR_CPUS should be enough.  If maxactive <= 0, it is
--set to a default value.  If CONFIG_PREEMPT is enabled, the default
--is max(10, 2*NR_CPUS).  Otherwise, the default is NR_CPUS.
-+set to a default value: max(10, 2*NR_CPUS).
+diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
+index 91a4d3fc30e0..372cbdd223e0 100644
+--- a/drivers/hid/hid-multitouch.c
++++ b/drivers/hid/hid-multitouch.c
+@@ -1967,6 +1967,10 @@ static const struct hid_device_id mt_devices[] = {
+ 		HID_DEVICE(BUS_I2C, HID_GROUP_MULTITOUCH_WIN_8,
+ 			USB_VENDOR_ID_ELAN, 0x313a) },
  
- It's not a disaster if you set maxactive too low; you'll just miss
- some probes.  In the kretprobe struct, the nmissed field is set to
-diff --git a/kernel/kprobes.c b/kernel/kprobes.c
-index 771fcce54fac..fb88278978fe 100644
---- a/kernel/kprobes.c
-+++ b/kernel/kprobes.c
-@@ -2209,13 +2209,9 @@ int register_kretprobe(struct kretprobe *rp)
- 	rp->kp.post_handler = NULL;
- 
- 	/* Pre-allocate memory for max kretprobe instances */
--	if (rp->maxactive <= 0) {
--#ifdef CONFIG_PREEMPTION
-+	if (rp->maxactive <= 0)
- 		rp->maxactive = max_t(unsigned int, 10, 2*num_possible_cpus());
--#else
--		rp->maxactive = num_possible_cpus();
--#endif
--	}
++	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
++		HID_DEVICE(BUS_I2C, HID_GROUP_MULTITOUCH_WIN_8,
++			USB_VENDOR_ID_ELAN, 0x3148) },
 +
- #ifdef CONFIG_KRETPROBE_ON_RETHOOK
- 	rp->rh = rethook_alloc((void *)rp, kretprobe_rethook_handler);
- 	if (!rp->rh)
+ 	/* Elitegroup panel */
+ 	{ .driver_data = MT_CLS_SERIAL,
+ 		MT_USB_DEVICE(USB_VENDOR_ID_ELITEGROUP,
 -- 
 2.35.1
 
