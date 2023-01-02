@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E7C628EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:28:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E98B1C433D2;
-	Mon,  2 Jan 2023 11:28:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F83E28EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:28:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B280C433D2;
+	Mon,  2 Jan 2023 11:28:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658909;
-	bh=HcNlw0sV985CkL9RCLbDX+ViHmJfJ7nheAEoEtu/r8E=;
+	s=korg; t=1672658912;
+	bh=QtDZwUD3WY+gBj8kJWuA4ReBZW/eE2aMsMuocdidAEY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JK2kVSsVjeN4WZ4QmWTfxLA2jkH9hmPh+6fRMpzjVD/pme94kzUQLuhElkAaT0koL
-	 eLb7PR1c5AX+TvnELXqdDaCX0oYK5Ly2mVZhYTZLgKuyZ/HwivZYxxSavyJ2YyBbvL
-	 b/eZfj7k59ymRTM0/FBL73CdF1jHa0ZKHMeay+6k=
+	b=LucLI+omxhn7+h3u9HvWd4rgoFlj0pXpe6mnWMkiHG7KD4syCVVR2Jm5ULjiekIUb
+	 X/qolAgWch1crZKJ4VM4+YnQkj202wScH4mSJie9QLVvsdPGqSvbeYyOFQxaG3vu5h
+	 6nsIMxayjTABdsBqUra2qYsUddZbcUvbPx32Fh9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Terry Junge <linuxhid@cosmicgizmosystems.com>,
-	Jiri Kosina <jkosina@suse.cz>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 46/74] HID: plantronics: Additional PIDs for double volume key presses quirk
-Date: Mon,  2 Jan 2023 12:22:19 +0100
-Message-Id: <20230102110554.057781800@linuxfoundation.org>
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Davidlohr Bueso <dave@stgolabs.net>
+Subject: [PATCH 6.0 47/74] futex: Fix futex_waitv() hrtimer debug object leak on kcalloc error
+Date: Mon,  2 Jan 2023 12:22:20 +0100
+Message-Id: <20230102110554.097673578@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
 References: <20230102110552.061937047@linuxfoundation.org>
@@ -35,81 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Terry Junge <linuxhid@cosmicgizmosystems.com>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-[ Upstream commit 3d57f36c89d8ba32b2c312f397a37fd1a2dc7cfc ]
+commit 94cd8fa09f5f1ebdd4e90964b08b7f2cc4b36c43 upstream.
 
-I no longer work for Plantronics (aka Poly, aka HP) and do not have
-access to the headsets in order to test. However, as noted by Maxim,
-the other 32xx models that share the same base code set as the 3220
-would need the same quirk. This patch adds the PIDs for the rest of
-the Blackwire 32XX product family that require the quirk.
+In a scenario where kcalloc() fails to allocate memory, the futex_waitv
+system call immediately returns -ENOMEM without invoking
+destroy_hrtimer_on_stack(). When CONFIG_DEBUG_OBJECTS_TIMERS=y, this
+results in leaking a timer debug object.
 
-Plantronics Blackwire 3210 Series (047f:c055)
-Plantronics Blackwire 3215 Series (047f:c057)
-Plantronics Blackwire 3225 Series (047f:c058)
-
-Quote from previous patch by Maxim Mikityanskiy
-Plantronics Blackwire 3220 Series (047f:c056) sends HID reports twice
-for each volume key press. This patch adds a quirk to hid-plantronics
-for this product ID, which will ignore the second volume key press if
-it happens within 5 ms from the last one that was handled.
-
-The patch was tested on the mentioned model only, it shouldn't affect
-other models, however, this quirk might be needed for them too.
-Auto-repeat (when a key is held pressed) is not affected, because the
-rate is about 3 times per second, which is far less frequent than once
-in 5 ms.
-End quote
-
-Signed-off-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: bf69bad38cf6 ("futex: Implement sys_futex_waitv()")
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # v5.16+
+Link: https://lore.kernel.org/r/20221214222008.200393-1-mathieu.desnoyers@efficios.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-ids.h         | 3 +++
- drivers/hid/hid-plantronics.c | 9 +++++++++
- 2 files changed, 12 insertions(+)
+ kernel/futex/syscalls.c |   11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 86e754b9400f..5680543e97fd 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -995,7 +995,10 @@
- #define USB_DEVICE_ID_ORTEK_IHOME_IMAC_A210S	0x8003
+--- a/kernel/futex/syscalls.c
++++ b/kernel/futex/syscalls.c
+@@ -286,19 +286,22 @@ SYSCALL_DEFINE5(futex_waitv, struct fute
+ 	}
  
- #define USB_VENDOR_ID_PLANTRONICS	0x047f
-+#define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3210_SERIES	0xc055
- #define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3220_SERIES	0xc056
-+#define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3215_SERIES	0xc057
-+#define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3225_SERIES	0xc058
+ 	futexv = kcalloc(nr_futexes, sizeof(*futexv), GFP_KERNEL);
+-	if (!futexv)
+-		return -ENOMEM;
++	if (!futexv) {
++		ret = -ENOMEM;
++		goto destroy_timer;
++	}
  
- #define USB_VENDOR_ID_PANASONIC		0x04da
- #define USB_DEVICE_ID_PANABOARD_UBT780	0x1044
-diff --git a/drivers/hid/hid-plantronics.c b/drivers/hid/hid-plantronics.c
-index e81b7cec2d12..3d414ae194ac 100644
---- a/drivers/hid/hid-plantronics.c
-+++ b/drivers/hid/hid-plantronics.c
-@@ -198,9 +198,18 @@ static int plantronics_probe(struct hid_device *hdev,
+ 	ret = futex_parse_waitv(futexv, waiters, nr_futexes);
+ 	if (!ret)
+ 		ret = futex_wait_multiple(futexv, nr_futexes, timeout ? &to : NULL);
+ 
++	kfree(futexv);
++
++destroy_timer:
+ 	if (timeout) {
+ 		hrtimer_cancel(&to.timer);
+ 		destroy_hrtimer_on_stack(&to.timer);
+ 	}
+-
+-	kfree(futexv);
+ 	return ret;
  }
  
- static const struct hid_device_id plantronics_devices[] = {
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
-+					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3210_SERIES),
-+		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
- 					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3220_SERIES),
- 		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
-+					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3215_SERIES),
-+		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
-+					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3225_SERIES),
-+		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS, HID_ANY_ID) },
- 	{ }
- };
--- 
-2.35.1
-
 
 
