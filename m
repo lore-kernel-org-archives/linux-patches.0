@@ -1,34 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C0828EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:25:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0207BC433D2;
-	Mon,  2 Jan 2023 11:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AA8E28EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:25:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D222EC433D2;
+	Mon,  2 Jan 2023 11:25:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658703;
-	bh=ox2BEnfMPBNYHHyGMIa+nrsHjfNFzw5LZfghfX3ovzY=;
+	s=korg; t=1672658706;
+	bh=5ESaYueSwS0c6WXjWuORuylx//yXLV5QlYjDpSx3YQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rdvg800cxhrACAGbQ/3Sl8YkbJJw1eLHG6LG+WOd1sLReBiz9ep8OU5e+Yc4ZV8Uu
-	 GRiu7xiD8150CqEmgo9oJHLTdlKMEvZC0TIMVlPxLvbRWnAwibHMaG5Hr+c/b/B1+u
-	 LsHmGqBYDMcyFreHoIZv5otjI3utEe5eSe6bdCAQ=
+	b=paJ7jaunRViA7SAynQkPrd/SqTHP9ZkQipTTwUc6I8zKX64adIkkZmg8rCqV4mk5j
+	 WZigLQDAtTlgQeLPk+CKH8YO44PiUTCzN8tdaYxathdB/6fXw/spFFEB+uEPQi5XC5
+	 zkWUSn+uzQnYR+T5vAFWkwIisnL4Ca0LIc3Q2w98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Daniel Palmer <daniel@thingy.jp>,
-	Romain Perier <romain.perier@gmail.com>,
-	Alessandro Zummo <a.zummo@towertech.it>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-rtc@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
+	Xingyuan Mo <hdthky0@gmail.com>,
+	Dai Ngo <dai.ngo@oracle.com>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 37/71] rtc: msc313: Fix function prototype mismatch in msc313_rtc_probe()
-Date: Mon,  2 Jan 2023 12:22:02 +0100
-Message-Id: <20230102110553.024510844@linuxfoundation.org>
+Subject: [PATCH 6.1 38/71] NFSD: fix use-after-free in __nfs42_ssc_open()
+Date: Mon,  2 Jan 2023 12:22:03 +0100
+Message-Id: <20230102110553.067559977@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110551.509937186@linuxfoundation.org>
 References: <20230102110551.509937186@linuxfoundation.org>
@@ -42,71 +36,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Dai Ngo <dai.ngo@oracle.com>
 
-[ Upstream commit 21b8a1dd56a163825e5749b303858fb902ebf198 ]
+[ Upstream commit 75333d48f92256a0dec91dbf07835e804fc411c0 ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed.
+Problem caused by source's vfsmount being unmounted but remains
+on the delayed unmount list. This happens when nfs42_ssc_open()
+return errors.
 
-msc313_rtc_probe() was passing clk_disable_unprepare() directly, which
-did not have matching prototypes for devm_add_action_or_reset()'s
-callback argument. Refactor to use devm_clk_get_enabled() instead.
+Fixed by removing nfsd4_interssc_connect(), leave the vfsmount
+for the laundromat to unmount when idle time expires.
 
-This was found as a result of Clang's new -Wcast-function-type-strict
-flag, which is more sensitive than the simpler -Wcast-function-type,
-which only checks for type width mismatches.
+We don't need to call nfs_do_sb_deactive when nfs42_ssc_open
+return errors since the file was not opened so nfs_server->active
+was not incremented. Same as in nfsd4_copy, if we fail to
+launch nfsd4_do_async_copy thread then there's no need to
+call nfs_do_sb_deactive
 
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/lkml/202211041527.HD8TLSE1-lkp@intel.com
-Suggested-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Cc: Daniel Palmer <daniel@thingy.jp>
-Cc: Romain Perier <romain.perier@gmail.com>
-Cc: Alessandro Zummo <a.zummo@towertech.it>
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Cc: linux-arm-kernel@lists.infradead.org
-Cc: linux-rtc@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Daniel Palmer <daniel@thingy.jp>
-Tested-by: Daniel Palmer <daniel@thingy.jp>
-Link: https://lore.kernel.org/r/20221202184525.gonna.423-kees@kernel.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Reported-by: Xingyuan Mo <hdthky0@gmail.com>
+Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Tested-by: Xingyuan Mo <hdthky0@gmail.com>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-msc313.c | 12 +-----------
- 1 file changed, 1 insertion(+), 11 deletions(-)
+ fs/nfsd/nfs4proc.c | 20 +++++---------------
+ 1 file changed, 5 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/rtc/rtc-msc313.c b/drivers/rtc/rtc-msc313.c
-index f3fde013c4b8..8d7737e0e2e0 100644
---- a/drivers/rtc/rtc-msc313.c
-+++ b/drivers/rtc/rtc-msc313.c
-@@ -212,22 +212,12 @@ static int msc313_rtc_probe(struct platform_device *pdev)
- 		return ret;
- 	}
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index 32fe7cbfb28b..34d1cd5883fb 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -1465,13 +1465,6 @@ nfsd4_interssc_connect(struct nl4_server *nss, struct svc_rqst *rqstp,
+ 	return status;
+ }
  
--	clk = devm_clk_get(dev, NULL);
-+	clk = devm_clk_get_enabled(dev, NULL);
- 	if (IS_ERR(clk)) {
- 		dev_err(dev, "No input reference clock\n");
- 		return PTR_ERR(clk);
- 	}
+-static void
+-nfsd4_interssc_disconnect(struct vfsmount *ss_mnt)
+-{
+-	nfs_do_sb_deactive(ss_mnt->mnt_sb);
+-	mntput(ss_mnt);
+-}
+-
+ /*
+  * Verify COPY destination stateid.
+  *
+@@ -1574,11 +1567,6 @@ nfsd4_cleanup_inter_ssc(struct vfsmount *ss_mnt, struct file *filp,
+ {
+ }
  
--	ret = clk_prepare_enable(clk);
--	if (ret) {
--		dev_err(dev, "Failed to enable the reference clock, %d\n", ret);
--		return ret;
--	}
+-static void
+-nfsd4_interssc_disconnect(struct vfsmount *ss_mnt)
+-{
+-}
 -
--	ret = devm_add_action_or_reset(dev, (void (*) (void *))clk_disable_unprepare, clk);
--	if (ret)
--		return ret;
--
- 	rate = clk_get_rate(clk);
- 	writew(rate & 0xFFFF, priv->rtc_base + REG_RTC_FREQ_CW_L);
- 	writew((rate >> 16) & 0xFFFF, priv->rtc_base + REG_RTC_FREQ_CW_H);
+ static struct file *nfs42_ssc_open(struct vfsmount *ss_mnt,
+ 				   struct nfs_fh *src_fh,
+ 				   nfs4_stateid *stateid)
+@@ -1774,7 +1762,7 @@ static int nfsd4_do_async_copy(void *data)
+ 			default:
+ 				nfserr = nfserr_offload_denied;
+ 			}
+-			nfsd4_interssc_disconnect(copy->ss_mnt);
++			/* ss_mnt will be unmounted by the laundromat */
+ 			goto do_callback;
+ 		}
+ 		nfserr = nfsd4_do_copy(copy, filp, copy->nf_dst->nf_file,
+@@ -1855,8 +1843,10 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	if (async_copy)
+ 		cleanup_async_copy(async_copy);
+ 	status = nfserrno(-ENOMEM);
+-	if (nfsd4_ssc_is_inter(copy))
+-		nfsd4_interssc_disconnect(copy->ss_mnt);
++	/*
++	 * source's vfsmount of inter-copy will be unmounted
++	 * by the laundromat
++	 */
+ 	goto out;
+ }
+ 
 -- 
 2.35.1
 
