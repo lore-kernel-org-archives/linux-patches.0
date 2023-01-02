@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FDB228EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:24:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C69A5C433D2;
-	Mon,  2 Jan 2023 11:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBC9328EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:24:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606E2C433EF;
+	Mon,  2 Jan 2023 11:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658693;
-	bh=R3xd0iOQ9PqLaoTc61j078SgU9cnRJs8lym2J15gr4Y=;
+	s=korg; t=1672658695;
+	bh=JhN2Iea+VXgvHgkZDNOwIxXibeDSZgRFckfMme4NHkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lxeulZlOCLOnBb8TwBv+/NELfARXuj8ODyPk/oBD4CXjqFShqAe3tmhs1v+VZ6dNp
-	 IsjNlf5X+ByVKU9SXJZY7rVlGhksKgEs7wPPXp2X66UoO4WZ7sdc6kz8nXWdCUqvoe
-	 UZOrKm+/DsOZXL1Z+TJgNScEIIewd++uKmoGeLRM=
+	b=i7GL9t83zGG8N59ypWSpyEiDuzpLn/9TawtrpUDb12kTxE8lwVjbRdnEUAd/8SrqZ
+	 +6gd+OqZYO+KYYVKevO4II1nOPt2mnGl/pc9HBC5AtCCAbdNZZYR87dAxyiJjITDnw
+	 HC3GUVLFq19R45t4oIdBPvodpn3C8dKQhCNgfNno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Naveen N. Rao" <naveen.n.rao@linux.vnet.ibm.com>,
-	Josh Poimboeuf <jpoimboe@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 33/71] objtool: Fix SEGFAULT
-Date: Mon,  2 Jan 2023 12:21:58 +0100
-Message-Id: <20230102110552.845028725@linuxfoundation.org>
+Subject: [PATCH 6.1 34/71] iommu/mediatek: Fix crash on isr after kexec()
+Date: Mon,  2 Jan 2023 12:21:59 +0100
+Message-Id: <20230102110552.885832838@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110551.509937186@linuxfoundation.org>
 References: <20230102110551.509937186@linuxfoundation.org>
@@ -38,38 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit efb11fdb3e1a9f694fa12b70b21e69e55ec59c36 ]
+[ Upstream commit 00ef8885a945c37551547d8ac8361cacd20c4e42 ]
 
-find_insn() will return NULL in case of failure. Check insn in order
-to avoid a kernel Oops for NULL pointer dereference.
+If the system is rebooted via isr(), the IRQ handler might
+be triggered before the domain is initialized. Resulting on
+an invalid memory access error.
 
-Tested-by: Naveen N. Rao <naveen.n.rao@linux.vnet.ibm.com>
-Reviewed-by: Naveen N. Rao <naveen.n.rao@linux.vnet.ibm.com>
-Acked-by: Josh Poimboeuf <jpoimboe@kernel.org>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20221114175754.1131267-9-sv@linux.ibm.com
+Fix:
+[    0.500930] Unable to handle kernel read from unreadable memory at virtual address 0000000000000070
+[    0.501166] Call trace:
+[    0.501174]  report_iommu_fault+0x28/0xfc
+[    0.501180]  mtk_iommu_isr+0x10c/0x1c0
+
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/20221125-mtk-iommu-v2-0-e168dff7d43e@chromium.org
+[ joro: Fixed spelling in commit message ]
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/check.c | 2 +-
+ drivers/iommu/mtk_iommu.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index a7f1e6c8bb0a..51494c3002d9 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -207,7 +207,7 @@ static bool __dead_end_function(struct objtool_file *file, struct symbol *func,
- 		return false;
+diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
+index dad2f238ffbf..56d007582b6f 100644
+--- a/drivers/iommu/mtk_iommu.c
++++ b/drivers/iommu/mtk_iommu.c
+@@ -454,7 +454,7 @@ static irqreturn_t mtk_iommu_isr(int irq, void *dev_id)
+ 		fault_larb = data->plat_data->larbid_remap[fault_larb][sub_comm];
+ 	}
  
- 	insn = find_insn(file, func->sec, func->offset);
--	if (!insn->func)
-+	if (!insn || !insn->func)
- 		return false;
- 
- 	func_for_each_insn(file, func, insn) {
+-	if (report_iommu_fault(&dom->domain, bank->parent_dev, fault_iova,
++	if (!dom || report_iommu_fault(&dom->domain, bank->parent_dev, fault_iova,
+ 			       write ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ)) {
+ 		dev_err_ratelimited(
+ 			bank->parent_dev,
 -- 
 2.35.1
 
