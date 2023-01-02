@@ -1,27 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEAE128EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:28:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 345A1C433D2;
-	Mon,  2 Jan 2023 11:28:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A59328EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:28:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB6DCC433D2;
+	Mon,  2 Jan 2023 11:28:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658914;
-	bh=6jeyAYwb6wJwpbOI9L8YlEuhm7BWD1bw7/7XRTOae2k=;
+	s=korg; t=1672658917;
+	bh=RBkTt8QNg2ZO1olscYqpcA9tJe+hT/P+gMH3HMG0A9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=noNbsfDS5PvAeEPBCg1w5qLMiNBPclueja+tXc7yIQDHZ/d5KIGUvzaLJsjaaZDzX
-	 bP8U2NkLXE8T7+mzIuJPhMGiUV9Krm94FaPE3DIpu9L/L3vVEHmLzZINHIIPlpmITi
-	 /9/FFXr1RzYyS09ELK2wyAeTy6Q3tFfRS+FO5rmg=
+	b=I6iqw53ZGPrI0FR5vElybz2jykCSeG5Br7Sc1hmLuD0fT4OwCokYbCsVF8STm+Mvw
+	 LUJ22rPYnWM77Of5AihHtjy8m6s8PlQsrK3wMKjM9744m58Vban8g2kC3NpgSuusrs
+	 nLWxoV7/WzFNCTasMocjZO3IYUf+8pVHpBAblXl0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	"Aneesh Kumar K.V" <aneesh.kumar@linux.ibm.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Feng Tang <feng.tang@intel.com>,
+	Michal Hocko <mhocko@kernel.org>,
+	Andrea Arcangeli <aarcange@redhat.com>,
 	Mel Gorman <mgorman@techsingularity.net>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.0 48/74] rtmutex: Add acquire semantics for rtmutex lock acquisition slow path
-Date: Mon,  2 Jan 2023 12:22:21 +0100
-Message-Id: <20230102110554.140526437@linuxfoundation.org>
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Andi Kleen <ak@linux.intel.com>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.0 49/74] mm/mempolicy: fix memory leak in set_mempolicy_home_node system call
+Date: Mon,  2 Jan 2023 12:22:22 +0100
+Message-Id: <20230102110554.172194568@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
 References: <20230102110552.061937047@linuxfoundation.org>
@@ -35,219 +47,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mel Gorman <mgorman@techsingularity.net>
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 
-commit 1c0908d8e441631f5b8ba433523cf39339ee2ba0 upstream.
+commit 38ce7c9bdfc228c14d7621ba36d3eebedd9d4f76 upstream.
 
-Jan Kara reported the following bug triggering on 6.0.5-rt14 running dbench
-on XFS on arm64.
+When encountering any vma in the range with policy other than MPOL_BIND or
+MPOL_PREFERRED_MANY, an error is returned without issuing a mpol_put on
+the policy just allocated with mpol_dup().
 
- kernel BUG at fs/inode.c:625!
- Internal error: Oops - BUG: 0 [#1] PREEMPT_RT SMP
- CPU: 11 PID: 6611 Comm: dbench Tainted: G            E   6.0.0-rt14-rt+ #1
- pc : clear_inode+0xa0/0xc0
- lr : clear_inode+0x38/0xc0
- Call trace:
-  clear_inode+0xa0/0xc0
-  evict+0x160/0x180
-  iput+0x154/0x240
-  do_unlinkat+0x184/0x300
-  __arm64_sys_unlinkat+0x48/0xc0
-  el0_svc_common.constprop.4+0xe4/0x2c0
-  do_el0_svc+0xac/0x100
-  el0_svc+0x78/0x200
-  el0t_64_sync_handler+0x9c/0xc0
-  el0t_64_sync+0x19c/0x1a0
+This allows arbitrary users to leak kernel memory.
 
-It also affects 6.1-rc7-rt5 and affects a preempt-rt fork of 5.14 so this
-is likely a bug that existed forever and only became visible when ARM
-support was added to preempt-rt. The same problem does not occur on x86-64
-and he also reported that converting sb->s_inode_wblist_lock to
-raw_spinlock_t makes the problem disappear indicating that the RT spinlock
-variant is the problem.
-
-Which in turn means that RT mutexes on ARM64 and any other weakly ordered
-architecture are affected by this independent of RT.
-
-Will Deacon observed:
-
-  "I'd be more inclined to be suspicious of the slowpath tbh, as we need to
-   make sure that we have acquire semantics on all paths where the lock can
-   be taken. Looking at the rtmutex code, this really isn't obvious to me
-   -- for example, try_to_take_rt_mutex() appears to be able to return via
-   the 'takeit' label without acquire semantics and it looks like we might
-   be relying on the caller's subsequent _unlock_ of the wait_lock for
-   ordering, but that will give us release semantics which aren't correct."
-
-Sebastian Andrzej Siewior prototyped a fix that does work based on that
-comment but it was a little bit overkill and added some fences that should
-not be necessary.
-
-The lock owner is updated with an IRQ-safe raw spinlock held, but the
-spin_unlock does not provide acquire semantics which are needed when
-acquiring a mutex.
-
-Adds the necessary acquire semantics for lock owner updates in the slow path
-acquisition and the waiter bit logic.
-
-It successfully completed 10 iterations of the dbench workload while the
-vanilla kernel fails on the first iteration.
-
-[ bigeasy@linutronix.de: Initial prototype fix ]
-
-Fixes: 700318d1d7b38 ("locking/rtmutex: Use acquire/release semantics")
-Fixes: 23f78d4a03c5 ("[PATCH] pi-futex: rt mutex core")
-Reported-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Mel Gorman <mgorman@techsingularity.net>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221202100223.6mevpbl7i6x5udfd@techsingularity.net
+Link: https://lkml.kernel.org/r/20221215194621.202816-1-mathieu.desnoyers@efficios.com
+Fixes: c6018b4b2549 ("mm/mempolicy: add set_mempolicy_home_node syscall")
+Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
+Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
+Reviewed-by: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Aneesh Kumar K.V <aneesh.kumar@linux.ibm.com>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: Feng Tang <feng.tang@intel.com>
+Cc: Michal Hocko <mhocko@kernel.org>
+Cc: Andrea Arcangeli <aarcange@redhat.com>
+Cc: Mel Gorman <mgorman@techsingularity.net>
+Cc: Mike Kravetz <mike.kravetz@oracle.com>
+Cc: Randy Dunlap <rdunlap@infradead.org>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Dan Williams <dan.j.williams@intel.com>
+Cc: Huang Ying <ying.huang@intel.com>
+Cc: <stable@vger.kernel.org>	[5.17+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/locking/rtmutex.c     |   55 +++++++++++++++++++++++++++++++++++--------
- kernel/locking/rtmutex_api.c |    6 ++--
- 2 files changed, 49 insertions(+), 12 deletions(-)
+ mm/mempolicy.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/locking/rtmutex.c
-+++ b/kernel/locking/rtmutex.c
-@@ -89,15 +89,31 @@ static inline int __ww_mutex_check_kill(
-  * set this bit before looking at the lock.
-  */
- 
--static __always_inline void
--rt_mutex_set_owner(struct rt_mutex_base *lock, struct task_struct *owner)
-+static __always_inline struct task_struct *
-+rt_mutex_owner_encode(struct rt_mutex_base *lock, struct task_struct *owner)
- {
- 	unsigned long val = (unsigned long)owner;
- 
- 	if (rt_mutex_has_waiters(lock))
- 		val |= RT_MUTEX_HAS_WAITERS;
- 
--	WRITE_ONCE(lock->owner, (struct task_struct *)val);
-+	return (struct task_struct *)val;
-+}
-+
-+static __always_inline void
-+rt_mutex_set_owner(struct rt_mutex_base *lock, struct task_struct *owner)
-+{
-+	/*
-+	 * lock->wait_lock is held but explicit acquire semantics are needed
-+	 * for a new lock owner so WRITE_ONCE is insufficient.
-+	 */
-+	xchg_acquire(&lock->owner, rt_mutex_owner_encode(lock, owner));
-+}
-+
-+static __always_inline void rt_mutex_clear_owner(struct rt_mutex_base *lock)
-+{
-+	/* lock->wait_lock is held so the unlock provides release semantics. */
-+	WRITE_ONCE(lock->owner, rt_mutex_owner_encode(lock, NULL));
- }
- 
- static __always_inline void clear_rt_mutex_waiters(struct rt_mutex_base *lock)
-@@ -106,7 +122,8 @@ static __always_inline void clear_rt_mut
- 			((unsigned long)lock->owner & ~RT_MUTEX_HAS_WAITERS);
- }
- 
--static __always_inline void fixup_rt_mutex_waiters(struct rt_mutex_base *lock)
-+static __always_inline void
-+fixup_rt_mutex_waiters(struct rt_mutex_base *lock, bool acquire_lock)
- {
- 	unsigned long owner, *p = (unsigned long *) &lock->owner;
- 
-@@ -172,8 +189,21 @@ static __always_inline void fixup_rt_mut
- 	 * still set.
- 	 */
- 	owner = READ_ONCE(*p);
--	if (owner & RT_MUTEX_HAS_WAITERS)
--		WRITE_ONCE(*p, owner & ~RT_MUTEX_HAS_WAITERS);
-+	if (owner & RT_MUTEX_HAS_WAITERS) {
-+		/*
-+		 * See rt_mutex_set_owner() and rt_mutex_clear_owner() on
-+		 * why xchg_acquire() is used for updating owner for
-+		 * locking and WRITE_ONCE() for unlocking.
-+		 *
-+		 * WRITE_ONCE() would work for the acquire case too, but
-+		 * in case that the lock acquisition failed it might
-+		 * force other lockers into the slow path unnecessarily.
-+		 */
-+		if (acquire_lock)
-+			xchg_acquire(p, owner & ~RT_MUTEX_HAS_WAITERS);
-+		else
-+			WRITE_ONCE(*p, owner & ~RT_MUTEX_HAS_WAITERS);
-+	}
- }
- 
- /*
-@@ -208,6 +238,13 @@ static __always_inline void mark_rt_mute
- 		owner = *p;
- 	} while (cmpxchg_relaxed(p, owner,
- 				 owner | RT_MUTEX_HAS_WAITERS) != owner);
-+
-+	/*
-+	 * The cmpxchg loop above is relaxed to avoid back-to-back ACQUIRE
-+	 * operations in the event of contention. Ensure the successful
-+	 * cmpxchg is visible.
-+	 */
-+	smp_mb__after_atomic();
- }
- 
- /*
-@@ -1243,7 +1280,7 @@ static int __sched __rt_mutex_slowtryloc
- 	 * try_to_take_rt_mutex() sets the lock waiters bit
- 	 * unconditionally. Clean this up.
- 	 */
--	fixup_rt_mutex_waiters(lock);
-+	fixup_rt_mutex_waiters(lock, true);
- 
- 	return ret;
- }
-@@ -1604,7 +1641,7 @@ static int __sched __rt_mutex_slowlock(s
- 	 * try_to_take_rt_mutex() sets the waiter bit
- 	 * unconditionally. We might have to fix that up.
- 	 */
--	fixup_rt_mutex_waiters(lock);
-+	fixup_rt_mutex_waiters(lock, true);
- 
- 	trace_contention_end(lock, ret);
- 
-@@ -1719,7 +1756,7 @@ static void __sched rtlock_slowlock_lock
- 	 * try_to_take_rt_mutex() sets the waiter bit unconditionally.
- 	 * We might have to fix that up:
- 	 */
--	fixup_rt_mutex_waiters(lock);
-+	fixup_rt_mutex_waiters(lock, true);
- 	debug_rt_mutex_free_waiter(&waiter);
- 
- 	trace_contention_end(lock, 0);
---- a/kernel/locking/rtmutex_api.c
-+++ b/kernel/locking/rtmutex_api.c
-@@ -267,7 +267,7 @@ void __sched rt_mutex_init_proxy_locked(
- void __sched rt_mutex_proxy_unlock(struct rt_mutex_base *lock)
- {
- 	debug_rt_mutex_proxy_unlock(lock);
--	rt_mutex_set_owner(lock, NULL);
-+	rt_mutex_clear_owner(lock);
- }
- 
- /**
-@@ -382,7 +382,7 @@ int __sched rt_mutex_wait_proxy_lock(str
- 	 * try_to_take_rt_mutex() sets the waiter bit unconditionally. We might
- 	 * have to fix that up.
- 	 */
--	fixup_rt_mutex_waiters(lock);
-+	fixup_rt_mutex_waiters(lock, true);
- 	raw_spin_unlock_irq(&lock->wait_lock);
- 
- 	return ret;
-@@ -438,7 +438,7 @@ bool __sched rt_mutex_cleanup_proxy_lock
- 	 * try_to_take_rt_mutex() sets the waiter bit unconditionally. We might
- 	 * have to fix that up.
- 	 */
--	fixup_rt_mutex_waiters(lock);
-+	fixup_rt_mutex_waiters(lock, false);
- 
- 	raw_spin_unlock_irq(&lock->wait_lock);
- 
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -1525,6 +1525,7 @@ SYSCALL_DEFINE4(set_mempolicy_home_node,
+ 		 * the home node for vmas we already updated before.
+ 		 */
+ 		if (new->mode != MPOL_BIND && new->mode != MPOL_PREFERRED_MANY) {
++			mpol_put(new);
+ 			err = -EOPNOTSUPP;
+ 			break;
+ 		}
 
 
