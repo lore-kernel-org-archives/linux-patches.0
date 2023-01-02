@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B1D28EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:29:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC26CC433EF;
-	Mon,  2 Jan 2023 11:29:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E32A28EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:29:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B495C433D2;
+	Mon,  2 Jan 2023 11:29:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658980;
-	bh=8UzLM8lk4JXvM4Q8xVHemJEOKdJIpQYeSnpkKm/eAzU=;
+	s=korg; t=1672658983;
+	bh=0wY3rcBMiKqya1495ZaBY5wlc8cLBa4SQUoFWG6M7h8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wf2tVXtGZiktiO/R/UFZaErh/Q9vUOISuQMdaiQjUEmo3F70ZYgog8YzO1X/pniEB
-	 H+wPUXf61t1cKhRf2cKR0zChdGvFGASacJ+Zwe8+0ybK9TGz/duNaaaCU8rmtIjsG3
-	 3EyUWnKEGDN1O1PCez02Q/rWVGBJPYLWAGGWwbNI=
+	b=A3I8UMbm9PAjSCSZMeG/ix1+BiPznnohqbgl/TgE005XFKmnY3xzHDWESjNWMAn0Q
+	 ILzRVjAPVxnSWvh3lJW0Hxy3PlMKJZPcWmfBaVTZawx6Duvwc8iF0U1DRpgkIjlwXd
+	 YEKd/h9F842kt1bJAjGKCDieBqzbXqgk1mZfgkVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Nathan Lynch <nathanl@linux.ibm.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Andrew Donnellan <ajd@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 40/74] iommu/mediatek: Fix crash on isr after kexec()
-Date: Mon,  2 Jan 2023 12:22:13 +0100
-Message-Id: <20230102110553.814296693@linuxfoundation.org>
+Subject: [PATCH 6.0 41/74] powerpc/rtas: avoid device tree lookups in rtas_os_term()
+Date: Mon,  2 Jan 2023 12:22:14 +0100
+Message-Id: <20230102110553.859954996@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
 References: <20230102110552.061937047@linuxfoundation.org>
@@ -37,44 +37,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Nathan Lynch <nathanl@linux.ibm.com>
 
-[ Upstream commit 00ef8885a945c37551547d8ac8361cacd20c4e42 ]
+[ Upstream commit ed2213bfb192ab51f09f12e9b49b5d482c6493f3 ]
 
-If the system is rebooted via isr(), the IRQ handler might
-be triggered before the domain is initialized. Resulting on
-an invalid memory access error.
+rtas_os_term() is called during panic. Its behavior depends on a couple
+of conditions in the /rtas node of the device tree, the traversal of
+which entails locking and local IRQ state changes. If the kernel panics
+while devtree_lock is held, rtas_os_term() as currently written could
+hang.
 
-Fix:
-[    0.500930] Unable to handle kernel read from unreadable memory at virtual address 0000000000000070
-[    0.501166] Call trace:
-[    0.501174]  report_iommu_fault+0x28/0xfc
-[    0.501180]  mtk_iommu_isr+0x10c/0x1c0
+Instead of discovering the relevant characteristics at panic time,
+cache them in file-static variables at boot. Note the lookup for
+"ibm,extended-os-term" is converted to of_property_read_bool() since it
+is a boolean property, not an RTAS function token.
 
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Link: https://lore.kernel.org/r/20221125-mtk-iommu-v2-0-e168dff7d43e@chromium.org
-[ joro: Fixed spelling in commit message ]
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Andrew Donnellan <ajd@linux.ibm.com>
+[mpe: Incorporate suggested change from Nick]
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20221118150751.469393-4-nathanl@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/mtk_iommu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/kernel/rtas.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/iommu/mtk_iommu.c b/drivers/iommu/mtk_iommu.c
-index ec73720e239b..15fa380b1f84 100644
---- a/drivers/iommu/mtk_iommu.c
-+++ b/drivers/iommu/mtk_iommu.c
-@@ -452,7 +452,7 @@ static irqreturn_t mtk_iommu_isr(int irq, void *dev_id)
- 		fault_larb = data->plat_data->larbid_remap[fault_larb][sub_comm];
- 	}
+diff --git a/arch/powerpc/kernel/rtas.c b/arch/powerpc/kernel/rtas.c
+index 0b8a858aa847..082b0c9e0c8a 100644
+--- a/arch/powerpc/kernel/rtas.c
++++ b/arch/powerpc/kernel/rtas.c
+@@ -875,6 +875,7 @@ void __noreturn rtas_halt(void)
  
--	if (report_iommu_fault(&dom->domain, bank->parent_dev, fault_iova,
-+	if (!dom || report_iommu_fault(&dom->domain, bank->parent_dev, fault_iova,
- 			       write ? IOMMU_FAULT_WRITE : IOMMU_FAULT_READ)) {
- 		dev_err_ratelimited(
- 			bank->parent_dev,
+ /* Must be in the RMO region, so we place it here */
+ static char rtas_os_term_buf[2048];
++static s32 ibm_os_term_token = RTAS_UNKNOWN_SERVICE;
+ 
+ void rtas_os_term(char *str)
+ {
+@@ -886,14 +887,13 @@ void rtas_os_term(char *str)
+ 	 * this property may terminate the partition which we want to avoid
+ 	 * since it interferes with panic_timeout.
+ 	 */
+-	if (RTAS_UNKNOWN_SERVICE == rtas_token("ibm,os-term") ||
+-	    RTAS_UNKNOWN_SERVICE == rtas_token("ibm,extended-os-term"))
++	if (ibm_os_term_token == RTAS_UNKNOWN_SERVICE)
+ 		return;
+ 
+ 	snprintf(rtas_os_term_buf, 2048, "OS panic: %s", str);
+ 
+ 	do {
+-		status = rtas_call(rtas_token("ibm,os-term"), 1, 1, NULL,
++		status = rtas_call(ibm_os_term_token, 1, 1, NULL,
+ 				   __pa(rtas_os_term_buf));
+ 	} while (rtas_busy_delay(status));
+ 
+@@ -1255,6 +1255,13 @@ void __init rtas_initialize(void)
+ 	no_entry = of_property_read_u32(rtas.dev, "linux,rtas-entry", &entry);
+ 	rtas.entry = no_entry ? rtas.base : entry;
+ 
++	/*
++	 * Discover these now to avoid device tree lookups in the
++	 * panic path.
++	 */
++	if (of_property_read_bool(rtas.dev, "ibm,extended-os-term"))
++		ibm_os_term_token = rtas_token("ibm,os-term");
++
+ 	/* If RTAS was found, allocate the RMO buffer for it and look for
+ 	 * the stop-self token if any
+ 	 */
 -- 
 2.35.1
 
