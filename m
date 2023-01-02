@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C391528EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:24:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48B69C433D2;
-	Mon,  2 Jan 2023 11:24:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 745EA28EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:24:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAD24C433EF;
+	Mon,  2 Jan 2023 11:24:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658669;
-	bh=/BbpzhDYMphEHBAQuZT/NpHTPQH7dEvj3hXsXcq8IaE=;
+	s=korg; t=1672658672;
+	bh=Cw70npNCrYgOUOKEX+03N24pA9AGSIUhXwgU3cP1C4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ySzdB6MJGVhvBkrHv1gizCBy8BkWmzTFYSLsCb26rA3l32q1Vz74JS/oHhyPifSeV
-	 1xX1JMmooTp1SbGtUl6yyuB+gEOF9WR9YIdzFdoanYiRYZe+uzCielhz2fojAK30bL
-	 PNSXbLUz3mNuxwP2PKQBehtgj0hPI1AcGrw+LXh0=
+	b=tk22deDrsZBuUJMCG/o2hJgJiXgcAahw3WOV1QKHfe7vgPwOzaYk9CFWxcjYuZdOb
+	 DBC1qO348tiNhOHien3O5S0Y2mfs5C1NRm3ppPfMKmUhs30tm3y9KOAOKFdcwZguAx
+	 kht38oyvBHUolj/LMm8PBTSpdxer1JeHP2zjQd5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Andre Przywara <andre.przywara@arm.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 25/71] soundwire: dmi-quirks: add quirk variant for LAPBC710 NUC15
-Date: Mon,  2 Jan 2023 12:21:50 +0100
-Message-Id: <20230102110552.502929563@linuxfoundation.org>
+Subject: [PATCH 6.1 26/71] phy: sun4i-usb: Introduce port2 SIDDQ quirk
+Date: Mon,  2 Jan 2023 12:21:51 +0100
+Message-Id: <20230102110552.550178684@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110551.509937186@linuxfoundation.org>
 References: <20230102110551.509937186@linuxfoundation.org>
@@ -37,43 +35,122 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Andre Przywara <andre.przywara@arm.com>
 
-[ Upstream commit f74495761df10c25a98256d16ea7465191b6e2cd ]
+[ Upstream commit b45c6d80325bec2b78c716629a518b6442d8bdc6 ]
 
-Some NUC15 LAPBC710 devices don't expose the same DMI information as
-the Intel reference, add additional entry in the match table.
+At least the Allwinner H616 SoC requires a weird quirk to make most
+USB PHYs work: Only port2 works out of the box, but all other ports
+need some help from this port2 to work correctly: The CLK_BUS_PHY2 and
+RST_USB_PHY2 clock and reset need to be enabled, and the SIDDQ bit in
+the PMU PHY control register needs to be cleared. For this register to
+be accessible, CLK_BUS_ECHI2 needs to be ungated. Don't ask ....
 
-BugLink: https://github.com/thesofproject/linux/issues/3885
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Link: https://lore.kernel.org/r/20221018012500.1592994-1-yung-chuan.liao@linux.intel.com
+Instead of disguising this as some generic feature, treat it more like
+a quirk (what it really is):
+If the quirk bit is set, and we initialise a PHY other than PHY2, ungate
+this one special clock, and clear the SIDDQ bit. We also pick the clock
+and reset from PHY2 and enable them as well.
+
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://lore.kernel.org/r/20221031111358.3387297-4-andre.przywara@arm.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soundwire/dmi-quirks.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/phy/allwinner/phy-sun4i-usb.c | 59 +++++++++++++++++++++++++++
+ 1 file changed, 59 insertions(+)
 
-diff --git a/drivers/soundwire/dmi-quirks.c b/drivers/soundwire/dmi-quirks.c
-index f81cdd83ec26..7969881f126d 100644
---- a/drivers/soundwire/dmi-quirks.c
-+++ b/drivers/soundwire/dmi-quirks.c
-@@ -90,6 +90,14 @@ static const struct dmi_system_id adr_remap_quirk_table[] = {
- 		},
- 		.driver_data = (void *)intel_tgl_bios,
- 	},
-+	{
-+		/* quirk used for NUC15 LAPBC710 skew */
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_VENDOR, "Intel Corporation"),
-+			DMI_MATCH(DMI_BOARD_NAME, "LAPBC710"),
-+		},
-+		.driver_data = (void *)intel_tgl_bios,
-+	},
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_SYS_VENDOR, "Dell Inc"),
+diff --git a/drivers/phy/allwinner/phy-sun4i-usb.c b/drivers/phy/allwinner/phy-sun4i-usb.c
+index 3a3831f6059a..e39f5ad62cc1 100644
+--- a/drivers/phy/allwinner/phy-sun4i-usb.c
++++ b/drivers/phy/allwinner/phy-sun4i-usb.c
+@@ -120,6 +120,7 @@ struct sun4i_usb_phy_cfg {
+ 	u8 phyctl_offset;
+ 	bool dedicated_clocks;
+ 	bool phy0_dual_route;
++	bool needs_phy2_siddq;
+ 	int missing_phys;
+ };
+ 
+@@ -289,6 +290,50 @@ static int sun4i_usb_phy_init(struct phy *_phy)
+ 		return ret;
+ 	}
+ 
++	/* Some PHYs on some SoCs need the help of PHY2 to work. */
++	if (data->cfg->needs_phy2_siddq && phy->index != 2) {
++		struct sun4i_usb_phy *phy2 = &data->phys[2];
++
++		ret = clk_prepare_enable(phy2->clk);
++		if (ret) {
++			reset_control_assert(phy->reset);
++			clk_disable_unprepare(phy->clk2);
++			clk_disable_unprepare(phy->clk);
++			return ret;
++		}
++
++		ret = reset_control_deassert(phy2->reset);
++		if (ret) {
++			clk_disable_unprepare(phy2->clk);
++			reset_control_assert(phy->reset);
++			clk_disable_unprepare(phy->clk2);
++			clk_disable_unprepare(phy->clk);
++			return ret;
++		}
++
++		/*
++		 * This extra clock is just needed to access the
++		 * REG_HCI_PHY_CTL PMU register for PHY2.
++		 */
++		ret = clk_prepare_enable(phy2->clk2);
++		if (ret) {
++			reset_control_assert(phy2->reset);
++			clk_disable_unprepare(phy2->clk);
++			reset_control_assert(phy->reset);
++			clk_disable_unprepare(phy->clk2);
++			clk_disable_unprepare(phy->clk);
++			return ret;
++		}
++
++		if (phy2->pmu && data->cfg->hci_phy_ctl_clear) {
++			val = readl(phy2->pmu + REG_HCI_PHY_CTL);
++			val &= ~data->cfg->hci_phy_ctl_clear;
++			writel(val, phy2->pmu + REG_HCI_PHY_CTL);
++		}
++
++		clk_disable_unprepare(phy->clk2);
++	}
++
+ 	if (phy->pmu && data->cfg->hci_phy_ctl_clear) {
+ 		val = readl(phy->pmu + REG_HCI_PHY_CTL);
+ 		val &= ~data->cfg->hci_phy_ctl_clear;
+@@ -354,6 +399,13 @@ static int sun4i_usb_phy_exit(struct phy *_phy)
+ 		data->phy0_init = false;
+ 	}
+ 
++	if (data->cfg->needs_phy2_siddq && phy->index != 2) {
++		struct sun4i_usb_phy *phy2 = &data->phys[2];
++
++		clk_disable_unprepare(phy2->clk);
++		reset_control_assert(phy2->reset);
++	}
++
+ 	sun4i_usb_phy_passby(phy, 0);
+ 	reset_control_assert(phy->reset);
+ 	clk_disable_unprepare(phy->clk2);
+@@ -785,6 +837,13 @@ static int sun4i_usb_phy_probe(struct platform_device *pdev)
+ 				dev_err(dev, "failed to get clock %s\n", name);
+ 				return PTR_ERR(phy->clk2);
+ 			}
++		} else {
++			snprintf(name, sizeof(name), "pmu%d_clk", i);
++			phy->clk2 = devm_clk_get_optional(dev, name);
++			if (IS_ERR(phy->clk2)) {
++				dev_err(dev, "failed to get clock %s\n", name);
++				return PTR_ERR(phy->clk2);
++			}
+ 		}
+ 
+ 		snprintf(name, sizeof(name), "usb%d_reset", i);
 -- 
 2.35.1
 
