@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E52A928EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:28:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7B6C433EF;
-	Mon,  2 Jan 2023 11:28:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E15A28EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:28:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA444C433EF;
+	Mon,  2 Jan 2023 11:28:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658932;
-	bh=GIolATIKk840jQEdXy1XAO1iPCjtDBumvx+yGs4YaP0=;
+	s=korg; t=1672658935;
+	bh=5H1Ok/Poarh9aLhw8CMO1K9S/MtgNlF0gCLmX4szP68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GdiE2uUd1vBfmNaMEmmKgmR47ANR7xK7vg3ixcBiS22qTjeRRAIGJ9VA1S9JhABRm
-	 vYJQE0ecjVUhAXFBRg578L3eHREuMH8xjVgftzof1BI0PUcv/1o5REKMqIHzwrjWGS
-	 JPIbEiPcm0tJfunN/jTp99JGmusSn+4NsttzraHk=
+	b=bUFMwpLA20t+w5u+h5gJI41QDobhE/DZOCdFkCXGUOFB7XsJjVyjNNt9RNT9SEuBQ
+	 iPB9xMnUdb8gr3NUcLPSFbVjz33OtKD6M2V1Ffp3tkzwd+VIuR6FlgNW6pxR5LreJF
+	 Js0xcXei/tvFDoy3SQ1WRKCAc8RE5adzilaX91Jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.0 54/74] eventfd: provide a eventfd_signal_mask() helper
-Date: Mon,  2 Jan 2023 12:22:27 +0100
-Message-Id: <20230102110554.407060232@linuxfoundation.org>
+Subject: [PATCH 6.0 55/74] io_uring: dont remove file from msg_ring reqs
+Date: Mon,  2 Jan 2023 12:22:28 +0100
+Message-Id: <20230102110554.449273607@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
 References: <20230102110552.061937047@linuxfoundation.org>
@@ -33,120 +34,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 03e02acda8e267a8183e1e0ed289ff1ef9cd7ed8 upstream.
+commit ef0ec1ad03119b8b46b035dad42bca7d6da7c2e5 upstream.
 
-This is identical to eventfd_signal(), but it allows the caller to pass
-in a mask to be used for the poll wakeup key. The use case is avoiding
-repeated multishot triggers if we have a dependency between eventfd and
-io_uring.
+We should not be messing with req->file outside of core paths. Clearing
+it makes msg_ring non reentrant, i.e. luckily io_msg_send_fd() fails the
+request on failed io_double_lock_ctx() but clearly was originally
+intended to do retries instead.
 
-If we setup an eventfd context and register that as the io_uring eventfd,
-and at the same time queue a multishot poll request for the eventfd
-context, then any CQE posted will repeatedly trigger the multishot request
-until it terminates when the CQ ring overflows.
-
-In preparation for io_uring detecting this circular dependency, add the
-mentioned helper so that io_uring can pass in EPOLL_URING as part of the
-poll wakeup key.
-
-Cc: stable@vger.kernel.org # 6.0
-[axboe: fold in !CONFIG_EVENTFD fix from Zhang Qilong]
+Cc: stable@vger.kernel.org
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/e5ac9edadb574fe33f6d727cb8f14ce68262a684.1670384893.git.asml.silence@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/eventfd.c            | 37 +++++++++++++++++++++----------------
- include/linux/eventfd.h |  7 +++++++
- 2 files changed, 28 insertions(+), 16 deletions(-)
+ io_uring/io_uring.c |    2 +-
+ io_uring/msg_ring.c |    4 ----
+ io_uring/opdef.c    |    7 +++++++
+ io_uring/opdef.h    |    2 ++
+ 4 files changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/fs/eventfd.c b/fs/eventfd.c
-index c0ffee99ad23..249ca6c0b784 100644
---- a/fs/eventfd.c
-+++ b/fs/eventfd.c
-@@ -43,21 +43,7 @@ struct eventfd_ctx {
- 	int id;
- };
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1607,7 +1607,7 @@ static int io_issue_sqe(struct io_kiocb
+ 		return ret;
  
--/**
-- * eventfd_signal - Adds @n to the eventfd counter.
-- * @ctx: [in] Pointer to the eventfd context.
-- * @n: [in] Value of the counter to be added to the eventfd internal counter.
-- *          The value cannot be negative.
-- *
-- * This function is supposed to be called by the kernel in paths that do not
-- * allow sleeping. In this function we allow the counter to reach the ULLONG_MAX
-- * value, and we signal this as overflow condition by returning a EPOLLERR
-- * to poll(2).
-- *
-- * Returns the amount by which the counter was incremented.  This will be less
-- * than @n if the counter has overflowed.
-- */
--__u64 eventfd_signal(struct eventfd_ctx *ctx, __u64 n)
-+__u64 eventfd_signal_mask(struct eventfd_ctx *ctx, __u64 n, unsigned mask)
- {
- 	unsigned long flags;
+ 	/* If the op doesn't have a file, we're not polling for it */
+-	if ((req->ctx->flags & IORING_SETUP_IOPOLL) && req->file)
++	if ((req->ctx->flags & IORING_SETUP_IOPOLL) && def->iopoll_queue)
+ 		io_iopoll_req_issued(req, issue_flags);
  
-@@ -78,12 +64,31 @@ __u64 eventfd_signal(struct eventfd_ctx *ctx, __u64 n)
- 		n = ULLONG_MAX - ctx->count;
- 	ctx->count += n;
- 	if (waitqueue_active(&ctx->wqh))
--		wake_up_locked_poll(&ctx->wqh, EPOLLIN);
-+		wake_up_locked_poll(&ctx->wqh, EPOLLIN | mask);
- 	current->in_eventfd = 0;
- 	spin_unlock_irqrestore(&ctx->wqh.lock, flags);
- 
- 	return n;
+ 	return 0;
+--- a/io_uring/msg_ring.c
++++ b/io_uring/msg_ring.c
+@@ -169,9 +169,5 @@ done:
+ 	if (ret < 0)
+ 		req_set_fail(req);
+ 	io_req_set_res(req, ret, 0);
+-	/* put file to avoid an attempt to IOPOLL the req */
+-	if (!(req->flags & REQ_F_FIXED_FILE))
+-		io_put_file(req->file);
+-	req->file = NULL;
+ 	return IOU_OK;
  }
-+
-+/**
-+ * eventfd_signal - Adds @n to the eventfd counter.
-+ * @ctx: [in] Pointer to the eventfd context.
-+ * @n: [in] Value of the counter to be added to the eventfd internal counter.
-+ *          The value cannot be negative.
-+ *
-+ * This function is supposed to be called by the kernel in paths that do not
-+ * allow sleeping. In this function we allow the counter to reach the ULLONG_MAX
-+ * value, and we signal this as overflow condition by returning a EPOLLERR
-+ * to poll(2).
-+ *
-+ * Returns the amount by which the counter was incremented.  This will be less
-+ * than @n if the counter has overflowed.
-+ */
-+__u64 eventfd_signal(struct eventfd_ctx *ctx, __u64 n)
-+{
-+	return eventfd_signal_mask(ctx, n, 0);
-+}
- EXPORT_SYMBOL_GPL(eventfd_signal);
- 
- static void eventfd_free_ctx(struct eventfd_ctx *ctx)
-diff --git a/include/linux/eventfd.h b/include/linux/eventfd.h
-index 30eb30d6909b..786824f58d3d 100644
---- a/include/linux/eventfd.h
-+++ b/include/linux/eventfd.h
-@@ -40,6 +40,7 @@ struct file *eventfd_fget(int fd);
- struct eventfd_ctx *eventfd_ctx_fdget(int fd);
- struct eventfd_ctx *eventfd_ctx_fileget(struct file *file);
- __u64 eventfd_signal(struct eventfd_ctx *ctx, __u64 n);
-+__u64 eventfd_signal_mask(struct eventfd_ctx *ctx, __u64 n, unsigned mask);
- int eventfd_ctx_remove_wait_queue(struct eventfd_ctx *ctx, wait_queue_entry_t *wait,
- 				  __u64 *cnt);
- void eventfd_ctx_do_read(struct eventfd_ctx *ctx, __u64 *cnt);
-@@ -66,6 +67,12 @@ static inline int eventfd_signal(struct eventfd_ctx *ctx, int n)
- 	return -ENOSYS;
- }
- 
-+static inline int eventfd_signal_mask(struct eventfd_ctx *ctx, __u64 n,
-+				      unsigned mask)
-+{
-+	return -ENOSYS;
-+}
-+
- static inline void eventfd_ctx_put(struct eventfd_ctx *ctx)
- {
- 
--- 
-2.39.0
-
+--- a/io_uring/opdef.c
++++ b/io_uring/opdef.c
+@@ -63,6 +63,7 @@ const struct io_op_def io_op_defs[] = {
+ 		.audit_skip		= 1,
+ 		.ioprio			= 1,
+ 		.iopoll			= 1,
++		.iopoll_queue		= 1,
+ 		.async_size		= sizeof(struct io_async_rw),
+ 		.name			= "READV",
+ 		.prep			= io_prep_rw,
+@@ -80,6 +81,7 @@ const struct io_op_def io_op_defs[] = {
+ 		.audit_skip		= 1,
+ 		.ioprio			= 1,
+ 		.iopoll			= 1,
++		.iopoll_queue		= 1,
+ 		.async_size		= sizeof(struct io_async_rw),
+ 		.name			= "WRITEV",
+ 		.prep			= io_prep_rw,
+@@ -103,6 +105,7 @@ const struct io_op_def io_op_defs[] = {
+ 		.audit_skip		= 1,
+ 		.ioprio			= 1,
+ 		.iopoll			= 1,
++		.iopoll_queue		= 1,
+ 		.async_size		= sizeof(struct io_async_rw),
+ 		.name			= "READ_FIXED",
+ 		.prep			= io_prep_rw,
+@@ -118,6 +121,7 @@ const struct io_op_def io_op_defs[] = {
+ 		.audit_skip		= 1,
+ 		.ioprio			= 1,
+ 		.iopoll			= 1,
++		.iopoll_queue		= 1,
+ 		.async_size		= sizeof(struct io_async_rw),
+ 		.name			= "WRITE_FIXED",
+ 		.prep			= io_prep_rw,
+@@ -275,6 +279,7 @@ const struct io_op_def io_op_defs[] = {
+ 		.audit_skip		= 1,
+ 		.ioprio			= 1,
+ 		.iopoll			= 1,
++		.iopoll_queue		= 1,
+ 		.async_size		= sizeof(struct io_async_rw),
+ 		.name			= "READ",
+ 		.prep			= io_prep_rw,
+@@ -290,6 +295,7 @@ const struct io_op_def io_op_defs[] = {
+ 		.audit_skip		= 1,
+ 		.ioprio			= 1,
+ 		.iopoll			= 1,
++		.iopoll_queue		= 1,
+ 		.async_size		= sizeof(struct io_async_rw),
+ 		.name			= "WRITE",
+ 		.prep			= io_prep_rw,
+@@ -475,6 +481,7 @@ const struct io_op_def io_op_defs[] = {
+ 		.needs_file		= 1,
+ 		.plug			= 1,
+ 		.name			= "URING_CMD",
++		.iopoll_queue		= 1,
+ 		.async_size		= uring_cmd_pdu_size(1),
+ 		.prep			= io_uring_cmd_prep,
+ 		.issue			= io_uring_cmd,
+--- a/io_uring/opdef.h
++++ b/io_uring/opdef.h
+@@ -25,6 +25,8 @@ struct io_op_def {
+ 	unsigned		ioprio : 1;
+ 	/* supports iopoll */
+ 	unsigned		iopoll : 1;
++	/* have to be put into the iopoll list */
++	unsigned		iopoll_queue : 1;
+ 	/* opcode specific path will handle ->async_data allocation if needed */
+ 	unsigned		manual_alloc : 1;
+ 	/* size of async data needed, if any */
 
 
