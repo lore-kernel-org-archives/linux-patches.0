@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4675428EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:27:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F0CC433EF;
-	Mon,  2 Jan 2023 11:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D930228EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:27:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E0C2C433D2;
+	Mon,  2 Jan 2023 11:27:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658870;
-	bh=YJy36GgUFuwVa9epmvWsRdS/BP4DZC3VsA6nXtMkFkA=;
+	s=korg; t=1672658872;
+	bh=mu54Xusiy5/W9RAjGszJFENqdsjPf3EFwtWsBKZipx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xafK1pjjr/P1n4rOj0/Ef9GfNo7SfwmMWSmeFZn91Zlhp8paAEHC1j1qTJaBv0rpX
-	 X5o8BAGmJPHfu2DCQhdaoJEQAliHVMY6KakMSfN23E41GRwe5YMjh3r7c7hhW01wNN
-	 DLSiFGY5CmNxXLypPzs1VpJhv7FRqsNAxuJL/JGs=
+	b=jiPQUb1wE3PbJfq6m+RNCbZ9S+mZ3g41OWeNEEf534MsDFnOJd8h2znTofDmhVVSZ
+	 lRdUlNYqN30j2q3srD/6WlhJ991mYKajnO6L7fiOD3vGun6v6H8ti44QFqV/ajPfib
+	 l+2ocj7M74UsIyC3vhuRlq4FcWtErzijISn+TKoQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Andreas Herrmann <aherrmann@suse.de>,
-	Tejun Heo <tj@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Edward Lo <edward.lo@ambergroup.io>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 03/74] blk-cgroup: remove blk_queue_root_blkg
-Date: Mon,  2 Jan 2023 12:21:36 +0100
-Message-Id: <20230102110552.208383783@linuxfoundation.org>
+Subject: [PATCH 6.0 30/74] fs/ntfs3: Validate buffer length while parsing index
+Date: Mon,  2 Jan 2023 12:22:03 +0100
+Message-Id: <20230102110553.365906105@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
 References: <20230102110552.061937047@linuxfoundation.org>
@@ -37,70 +35,159 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Edward Lo <edward.lo@ambergroup.io>
 
-[ Upstream commit 928f6f00a91ecbef6cb1fe59474831ceaf205290 ]
+[ Upstream commit 4d42ecda239cc13738d6fd84d098a32e67b368b9 ]
 
-Just open code it in the only caller and drop the unused !BLK_CGROUP
-stub.
+indx_read is called when we have some NTFS directory operations that
+need more information from the index buffers. This adds a sanity check
+to make sure the returned index buffer length is legit, or we may have
+some out-of-bound memory accesses.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Andreas Herrmann <aherrmann@suse.de>
-Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20220921180501.1539876-3-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 813e693023ba ("blk-iolatency: Fix memory leak on add_disk() failures")
+[  560.897595] BUG: KASAN: slab-out-of-bounds in hdr_find_e.isra.0+0x10c/0x320
+[  560.898321] Read of size 2 at addr ffff888009497238 by task exp/245
+[  560.898760]
+[  560.899129] CPU: 0 PID: 245 Comm: exp Not tainted 6.0.0-rc6 #37
+[  560.899505] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
+[  560.900170] Call Trace:
+[  560.900407]  <TASK>
+[  560.900732]  dump_stack_lvl+0x49/0x63
+[  560.901108]  print_report.cold+0xf5/0x689
+[  560.901395]  ? hdr_find_e.isra.0+0x10c/0x320
+[  560.901716]  kasan_report+0xa7/0x130
+[  560.901950]  ? hdr_find_e.isra.0+0x10c/0x320
+[  560.902208]  __asan_load2+0x68/0x90
+[  560.902427]  hdr_find_e.isra.0+0x10c/0x320
+[  560.902846]  ? cmp_uints+0xe0/0xe0
+[  560.903363]  ? cmp_sdh+0x90/0x90
+[  560.903883]  ? ntfs_bread_run+0x190/0x190
+[  560.904196]  ? rwsem_down_read_slowpath+0x750/0x750
+[  560.904969]  ? ntfs_fix_post_read+0xe0/0x130
+[  560.905259]  ? __kasan_check_write+0x14/0x20
+[  560.905599]  ? up_read+0x1a/0x90
+[  560.905853]  ? indx_read+0x22c/0x380
+[  560.906096]  indx_find+0x2ef/0x470
+[  560.906352]  ? indx_find_buffer+0x2d0/0x2d0
+[  560.906692]  ? __kasan_kmalloc+0x88/0xb0
+[  560.906977]  dir_search_u+0x196/0x2f0
+[  560.907220]  ? ntfs_nls_to_utf16+0x450/0x450
+[  560.907464]  ? __kasan_check_write+0x14/0x20
+[  560.907747]  ? mutex_lock+0x8f/0xe0
+[  560.907970]  ? __mutex_lock_slowpath+0x20/0x20
+[  560.908214]  ? kmem_cache_alloc+0x143/0x4b0
+[  560.908459]  ntfs_lookup+0xe0/0x100
+[  560.908788]  __lookup_slow+0x116/0x220
+[  560.909050]  ? lookup_fast+0x1b0/0x1b0
+[  560.909309]  ? lookup_fast+0x13f/0x1b0
+[  560.909601]  walk_component+0x187/0x230
+[  560.909944]  link_path_walk.part.0+0x3f0/0x660
+[  560.910285]  ? handle_lookup_down+0x90/0x90
+[  560.910618]  ? path_init+0x642/0x6e0
+[  560.911084]  ? percpu_counter_add_batch+0x6e/0xf0
+[  560.912559]  ? __alloc_file+0x114/0x170
+[  560.913008]  path_openat+0x19c/0x1d10
+[  560.913419]  ? getname_flags+0x73/0x2b0
+[  560.913815]  ? kasan_save_stack+0x3a/0x50
+[  560.914125]  ? kasan_save_stack+0x26/0x50
+[  560.914542]  ? __kasan_slab_alloc+0x6d/0x90
+[  560.914924]  ? kmem_cache_alloc+0x143/0x4b0
+[  560.915339]  ? getname_flags+0x73/0x2b0
+[  560.915647]  ? getname+0x12/0x20
+[  560.916114]  ? __x64_sys_open+0x4c/0x60
+[  560.916460]  ? path_lookupat.isra.0+0x230/0x230
+[  560.916867]  ? __isolate_free_page+0x2e0/0x2e0
+[  560.917194]  do_filp_open+0x15c/0x1f0
+[  560.917448]  ? may_open_dev+0x60/0x60
+[  560.917696]  ? expand_files+0xa4/0x3a0
+[  560.917923]  ? __kasan_check_write+0x14/0x20
+[  560.918185]  ? _raw_spin_lock+0x88/0xdb
+[  560.918409]  ? _raw_spin_lock_irqsave+0x100/0x100
+[  560.918783]  ? _find_next_bit+0x4a/0x130
+[  560.919026]  ? _raw_spin_unlock+0x19/0x40
+[  560.919276]  ? alloc_fd+0x14b/0x2d0
+[  560.919635]  do_sys_openat2+0x32a/0x4b0
+[  560.920035]  ? file_open_root+0x230/0x230
+[  560.920336]  ? __rcu_read_unlock+0x5b/0x280
+[  560.920813]  do_sys_open+0x99/0xf0
+[  560.921208]  ? filp_open+0x60/0x60
+[  560.921482]  ? exit_to_user_mode_prepare+0x49/0x180
+[  560.921867]  __x64_sys_open+0x4c/0x60
+[  560.922128]  do_syscall_64+0x3b/0x90
+[  560.922369]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[  560.923030] RIP: 0033:0x7f7dff2e4469
+[  560.923681] Code: 00 f3 c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 088
+[  560.924451] RSP: 002b:00007ffd41a210b8 EFLAGS: 00000206 ORIG_RAX: 0000000000000002
+[  560.925168] RAX: ffffffffffffffda RBX: 0000000000000000 RCX: 00007f7dff2e4469
+[  560.925655] RDX: 0000000000000000 RSI: 0000000000000002 RDI: 00007ffd41a211f0
+[  560.926085] RBP: 00007ffd41a252a0 R08: 00007f7dff60fba0 R09: 00007ffd41a25388
+[  560.926405] R10: 0000000000400b80 R11: 0000000000000206 R12: 00000000004004e0
+[  560.926867] R13: 00007ffd41a25380 R14: 0000000000000000 R15: 0000000000000000
+[  560.927241]  </TASK>
+[  560.927491]
+[  560.927755] Allocated by task 245:
+[  560.928409]  kasan_save_stack+0x26/0x50
+[  560.929271]  __kasan_kmalloc+0x88/0xb0
+[  560.929778]  __kmalloc+0x192/0x320
+[  560.930023]  indx_read+0x249/0x380
+[  560.930224]  indx_find+0x2a2/0x470
+[  560.930695]  dir_search_u+0x196/0x2f0
+[  560.930892]  ntfs_lookup+0xe0/0x100
+[  560.931115]  __lookup_slow+0x116/0x220
+[  560.931323]  walk_component+0x187/0x230
+[  560.931570]  link_path_walk.part.0+0x3f0/0x660
+[  560.931791]  path_openat+0x19c/0x1d10
+[  560.932008]  do_filp_open+0x15c/0x1f0
+[  560.932226]  do_sys_openat2+0x32a/0x4b0
+[  560.932413]  do_sys_open+0x99/0xf0
+[  560.932709]  __x64_sys_open+0x4c/0x60
+[  560.933417]  do_syscall_64+0x3b/0x90
+[  560.933776]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[  560.934235]
+[  560.934486] The buggy address belongs to the object at ffff888009497000
+[  560.934486]  which belongs to the cache kmalloc-512 of size 512
+[  560.935239] The buggy address is located 56 bytes to the right of
+[  560.935239]  512-byte region [ffff888009497000, ffff888009497200)
+[  560.936153]
+[  560.937326] The buggy address belongs to the physical page:
+[  560.938228] page:0000000062a3dfae refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x9496
+[  560.939616] head:0000000062a3dfae order:1 compound_mapcount:0 compound_pincount:0
+[  560.940219] flags: 0xfffffc0010200(slab|head|node=0|zone=1|lastcpupid=0x1fffff)
+[  560.942702] raw: 000fffffc0010200 ffffea0000164f80 dead000000000005 ffff888001041c80
+[  560.943932] raw: 0000000000000000 0000000080080008 00000001ffffffff 0000000000000000
+[  560.944568] page dumped because: kasan: bad access detected
+[  560.945735]
+[  560.946112] Memory state around the buggy address:
+[  560.946870]  ffff888009497100: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[  560.947242]  ffff888009497180: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+[  560.947611] >ffff888009497200: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[  560.947915]                                         ^
+[  560.948249]  ffff888009497280: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+[  560.948687]  ffff888009497300: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+
+Signed-off-by: Edward Lo <edward.lo@ambergroup.io>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c |  3 +--
- block/blk-cgroup.h | 13 -------------
- 2 files changed, 1 insertion(+), 15 deletions(-)
+ fs/ntfs3/index.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index bcd3873ac5ff..11f256214928 100644
---- a/block/blk-cgroup.c
-+++ b/block/blk-cgroup.c
-@@ -915,8 +915,7 @@ static void blkcg_fill_root_iostats(void)
- 	class_dev_iter_init(&iter, &block_class, NULL, &disk_type);
- 	while ((dev = class_dev_iter_next(&iter))) {
- 		struct block_device *bdev = dev_to_bdev(dev);
--		struct blkcg_gq *blkg =
--			blk_queue_root_blkg(bdev_get_queue(bdev));
-+		struct blkcg_gq *blkg = bdev->bd_disk->queue->root_blkg;
- 		struct blkg_iostat tmp;
- 		int cpu;
- 		unsigned long flags;
-diff --git a/block/blk-cgroup.h b/block/blk-cgroup.h
-index d2724d1dd7c9..c1fb00a1dfc0 100644
---- a/block/blk-cgroup.h
-+++ b/block/blk-cgroup.h
-@@ -268,17 +268,6 @@ static inline struct blkcg_gq *blkg_lookup(struct blkcg *blkcg,
- 	return __blkg_lookup(blkcg, q, false);
- }
+diff --git a/fs/ntfs3/index.c b/fs/ntfs3/index.c
+index 440328147e7e..c27b4fe57513 100644
+--- a/fs/ntfs3/index.c
++++ b/fs/ntfs3/index.c
+@@ -1017,6 +1017,12 @@ int indx_read(struct ntfs_index *indx, struct ntfs_inode *ni, CLST vbn,
+ 		err = 0;
+ 	}
  
--/**
-- * blk_queue_root_blkg - return blkg for the (blkcg_root, @q) pair
-- * @q: request_queue of interest
-- *
-- * Lookup blkg for @q at the root level. See also blkg_lookup().
-- */
--static inline struct blkcg_gq *blk_queue_root_blkg(struct request_queue *q)
--{
--	return q->root_blkg;
--}
--
- /**
-  * blkg_to_pdata - get policy private data
-  * @blkg: blkg of interest
-@@ -507,8 +496,6 @@ struct blkcg {
- };
++	/* check for index header length */
++	if (offsetof(struct INDEX_BUFFER, ihdr) + ib->ihdr.used > bytes) {
++		err = -EINVAL;
++		goto out;
++	}
++
+ 	in->index = ib;
+ 	*node = in;
  
- static inline struct blkcg_gq *blkg_lookup(struct blkcg *blkcg, void *key) { return NULL; }
--static inline struct blkcg_gq *blk_queue_root_blkg(struct request_queue *q)
--{ return NULL; }
- static inline int blkcg_init_queue(struct request_queue *q) { return 0; }
- static inline void blkcg_exit_queue(struct request_queue *q) { }
- static inline int blkcg_policy_register(struct blkcg_policy *pol) { return 0; }
 -- 
 2.35.1
 
