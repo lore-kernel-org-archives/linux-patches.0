@@ -1,113 +1,155 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129E719B
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 10:39:36 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 6936B205F5;
-	Mon,  2 Jan 2023 10:39:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1672655975; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=9xe2eMFnILH/jDMx9pAFzxHyWx3I3CkIiF3DU9xLhJ8=;
-	b=0TVeymCcyKqOOeieQacnsxkc9lkFjJHsY0Bx+WH8TpER8kYx6pSvC3p95SUxNqBmRJXXZu
-	oEDQh+trA1qBRrZPcdeQ/yBTOvyd1Jd8mP0/ivtD4rN64oLaPW6fL65YsdvIr0kAcV8ns5
-	Ax0WsI+B+EeBeOWoLo8F6TaJLo9nAus=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1672655975;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
-	bh=9xe2eMFnILH/jDMx9pAFzxHyWx3I3CkIiF3DU9xLhJ8=;
-	b=WsrHznqV/LCPAzulNABvB/gmrJzHu2rHQcOoBbLOw1q/9xrgv/YG3zOFUhtVwZhbL4Rh4E
-	j0zynpfNBY+XZ6Bw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 3F2F013427;
-	Mon,  2 Jan 2023 10:39:35 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id wIbCDme0smP3WgAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Mon, 02 Jan 2023 10:39:35 +0000
-From: Vlastimil Babka <vbabka@suse.cz>
-To: Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Cc: x86@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C412128EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:23:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24BF1C433EF;
+	Mon,  2 Jan 2023 11:23:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1672658624;
+	bh=Zq0VlsjpJLtLzhpPCbTOcq4Opkx1taiaxwdr0EzaKKA=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=GLcovltD8KV01K3RBhtrzGNqHBufJt0KXZXpm+nN1if6EiLNtCuyicYtv22Dkg95/
+	 ja0rozRNj0k4FtdtrCbyudal67RuSa2nIiIvWfXzZ367ihFEfA2DT80Pc+QBSSHNJ3
+	 5VlQgP5iEEcSSpRDFq45wROIh7YhUbfvWNW5u0k4=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-mm@kvack.org,
-	linux-kernel@vger.kernel.org,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Baoquan He <bhe@redhat.com>,
-	Dave Young <dyoung@redhat.com>,
-	stable@vger.kernel.org
-Subject: [PATCH] x86/kexec: fix double vfree of image->elf_headers
-Date: Mon,  2 Jan 2023 11:39:17 +0100
-Message-Id: <20230102103917.20987-1-vbabka@suse.cz>
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 01/71] eventpoll: add EPOLL_URING_WAKE poll wakeup flag
+Date: Mon,  2 Jan 2023 12:21:26 +0100
+Message-Id: <20230102110551.575618108@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230102110551.509937186@linuxfoundation.org>
+References: <20230102110551.509937186@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-An investigation of a "Trying to vfree() nonexistent vm area" bug
-occurring in arch_kimage_file_post_load_cleanup() doing a
-vfree(image->elf_headers) in our 5.14-based kernel yielded the following
-double vfree() scenario, also present in mainline:
+From: Jens Axboe <axboe@kernel.dk>
 
-SYSCALL_DEFINE5(kexec_file_load)
-  kimage_file_alloc_init()
-    kimage_file_prepare_segments()
-      arch_kexec_kernel_image_probe()
-        kexec_image_load_default()
-          kexec_bzImage64_ops.load()
-            bzImage64_load()
-              crash_load_segments()
-                prepare_elf_headers(image, &kbuf.buffer, &kbuf.bufsz);
-                image->elf_headers = kbuf.buffer;
-		ret = kexec_add_buffer(&kbuf);
-		if (ret) vfree((void *)image->elf_headers); // first vfree()
-      if (ret) kimage_file_post_load_cleanup()
-        vfree(image->elf_headers);                          // second vfree()
+[ Upstream commit caf1aeaffc3b09649a56769e559333ae2c4f1802 ]
 
-AFAICS the scenario is possible since v5.19 commit b3e34a47f989
-("x86/kexec: fix memory leak of elf header buffer") that was marked for
-stable and also was backported to our kernel.
+We can have dependencies between epoll and io_uring. Consider an epoll
+context, identified by the epfd file descriptor, and an io_uring file
+descriptor identified by iofd. If we add iofd to the epfd context, and
+arm a multishot poll request for epfd with iofd, then the multishot
+poll request will repeatedly trigger and generate events until terminated
+by CQ ring overflow. This isn't a desired behavior.
 
-Fix the problem by setting the pointer to NULL after the first vfree().
-Also set elf_headers_sz to 0, as kimage_file_post_load_cleanup() does.
+Add EPOLL_URING so that io_uring can pass it in as part of the poll wakeup
+key, and io_uring can check for that to detect a potential recursive
+invocation.
 
-Fixes: b3e34a47f989 ("x86/kexec: fix memory leak of elf header buffer")
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Dave Young <dyoung@redhat.com>
-Cc: <stable@vger.kernel.org>
+Cc: stable@vger.kernel.org # 6.0
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 4464853277d0 ("io_uring: pass in EPOLL_URING_WAKE for eventfd signaling and wakeups")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/crash.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/eventpoll.c                 | 18 ++++++++++--------
+ include/uapi/linux/eventpoll.h |  6 ++++++
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/arch/x86/kernel/crash.c b/arch/x86/kernel/crash.c
-index 9730c88530fc..0d651c05a49e 100644
---- a/arch/x86/kernel/crash.c
-+++ b/arch/x86/kernel/crash.c
-@@ -403,6 +403,8 @@ int crash_load_segments(struct kimage *image)
- 	ret = kexec_add_buffer(&kbuf);
- 	if (ret) {
- 		vfree((void *)image->elf_headers);
-+		image->elf_headers = NULL;
-+		image->elf_headers_sz = 0;
- 		return ret;
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index 52954d4637b5..64659b110973 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -491,7 +491,8 @@ static inline void ep_set_busy_poll_napi_id(struct epitem *epi)
+  */
+ #ifdef CONFIG_DEBUG_LOCK_ALLOC
+ 
+-static void ep_poll_safewake(struct eventpoll *ep, struct epitem *epi)
++static void ep_poll_safewake(struct eventpoll *ep, struct epitem *epi,
++			     unsigned pollflags)
+ {
+ 	struct eventpoll *ep_src;
+ 	unsigned long flags;
+@@ -522,16 +523,17 @@ static void ep_poll_safewake(struct eventpoll *ep, struct epitem *epi)
  	}
- 	image->elf_load_addr = kbuf.mem;
+ 	spin_lock_irqsave_nested(&ep->poll_wait.lock, flags, nests);
+ 	ep->nests = nests + 1;
+-	wake_up_locked_poll(&ep->poll_wait, EPOLLIN);
++	wake_up_locked_poll(&ep->poll_wait, EPOLLIN | pollflags);
+ 	ep->nests = 0;
+ 	spin_unlock_irqrestore(&ep->poll_wait.lock, flags);
+ }
+ 
+ #else
+ 
+-static void ep_poll_safewake(struct eventpoll *ep, struct epitem *epi)
++static void ep_poll_safewake(struct eventpoll *ep, struct epitem *epi,
++			     unsigned pollflags)
+ {
+-	wake_up_poll(&ep->poll_wait, EPOLLIN);
++	wake_up_poll(&ep->poll_wait, EPOLLIN | pollflags);
+ }
+ 
+ #endif
+@@ -742,7 +744,7 @@ static void ep_free(struct eventpoll *ep)
+ 
+ 	/* We need to release all tasks waiting for these file */
+ 	if (waitqueue_active(&ep->poll_wait))
+-		ep_poll_safewake(ep, NULL);
++		ep_poll_safewake(ep, NULL, 0);
+ 
+ 	/*
+ 	 * We need to lock this because we could be hit by
+@@ -1208,7 +1210,7 @@ static int ep_poll_callback(wait_queue_entry_t *wait, unsigned mode, int sync, v
+ 
+ 	/* We have to call this outside the lock */
+ 	if (pwake)
+-		ep_poll_safewake(ep, epi);
++		ep_poll_safewake(ep, epi, pollflags & EPOLL_URING_WAKE);
+ 
+ 	if (!(epi->event.events & EPOLLEXCLUSIVE))
+ 		ewake = 1;
+@@ -1553,7 +1555,7 @@ static int ep_insert(struct eventpoll *ep, const struct epoll_event *event,
+ 
+ 	/* We have to call this outside the lock */
+ 	if (pwake)
+-		ep_poll_safewake(ep, NULL);
++		ep_poll_safewake(ep, NULL, 0);
+ 
+ 	return 0;
+ }
+@@ -1629,7 +1631,7 @@ static int ep_modify(struct eventpoll *ep, struct epitem *epi,
+ 
+ 	/* We have to call this outside the lock */
+ 	if (pwake)
+-		ep_poll_safewake(ep, NULL);
++		ep_poll_safewake(ep, NULL, 0);
+ 
+ 	return 0;
+ }
+diff --git a/include/uapi/linux/eventpoll.h b/include/uapi/linux/eventpoll.h
+index 8a3432d0f0dc..e687658843b1 100644
+--- a/include/uapi/linux/eventpoll.h
++++ b/include/uapi/linux/eventpoll.h
+@@ -41,6 +41,12 @@
+ #define EPOLLMSG	(__force __poll_t)0x00000400
+ #define EPOLLRDHUP	(__force __poll_t)0x00002000
+ 
++/*
++ * Internal flag - wakeup generated by io_uring, used to detect recursion back
++ * into the io_uring poll handler.
++ */
++#define EPOLL_URING_WAKE	((__force __poll_t)(1U << 27))
++
+ /* Set exclusive wakeup mode for the target file descriptor */
+ #define EPOLLEXCLUSIVE	((__force __poll_t)(1U << 28))
+ 
 -- 
-2.39.0
+2.35.1
+
+
 
