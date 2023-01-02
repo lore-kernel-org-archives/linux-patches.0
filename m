@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31AF228F6
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:23:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 937F9C433F2;
-	Mon,  2 Jan 2023 11:23:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDEB828EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:23:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2145AC433D2;
+	Mon,  2 Jan 2023 11:23:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658632;
-	bh=u0tD76QRYzEq+J3wGOBYxeS9BkF2bX9aPEXWQFHQ0Og=;
+	s=korg; t=1672658635;
+	bh=egLcPMtC1BmgOJ7gOI7wLJM/GnGw55En/8tTERN4lJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gBvoTbCuLfxCiK9Lp0uJ+vqTUC2iEjblP7mqM0kX1zQgVKnCtg6rFxQ+iDpy93Ta+
-	 7tsgXvjjc6DHat1vZtP4esJ+gv02wH2Due1PhHB8lnl3xvIBkOefFCpsDkNIz4qbct
-	 YkOrefwoW+bA5b+TOXD8rKDedmsOlWbMQOI8df3M=
+	b=hJplU3IxFIstK0ZKCa3Cpx8tqMwSDjdGDPCSsvVX1J4eMk561609ArW6W9t5VpoKt
+	 1V/Xhs9I6XZttuS11HtZ6CUlAfr3lRFfoPYlcZpUYIzIeGXhJGX59EQwcL4RQ9ilxP
+	 tvgTuOsBFE2hvPd/VsGH3BfdIt6ts+d5gqxXXiG0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guenter Roeck <linux@roeck-us.net>,
-	Klaus Jensen <k.jensen@samsung.com>,
 	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Kanchan Joshi <joshi.k@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 04/71] nvme-pci: fix doorbell buffer value endianness
-Date: Mon,  2 Jan 2023 12:21:29 +0100
-Message-Id: <20230102110551.690453038@linuxfoundation.org>
+Subject: [PATCH 6.1 13/71] nvme: fix the NVME_CMD_EFFECTS_CSE_MASK definition
+Date: Mon,  2 Jan 2023 12:21:38 +0100
+Message-Id: <20230102110552.016900028@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110551.509937186@linuxfoundation.org>
 References: <20230102110551.509937186@linuxfoundation.org>
@@ -36,97 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Klaus Jensen <k.jensen@samsung.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit b5f96cb719d8ba220b565ddd3ba4ac0d8bcfb130 ]
+[ Upstream commit 685e6311637e46f3212439ce2789f8a300e5050f ]
 
-When using shadow doorbells, the event index and the doorbell values are
-written to host memory. Prior to this patch, the values written would
-erroneously be written in host endianness. This causes trouble on
-big-endian platforms. Fix this by adding missing endian conversions.
+3 << 16 does not generate the correct mask for bits 16, 17 and 18.
+Use the GENMASK macro to generate the correct mask instead.
 
-This issue was noticed by Guenter while testing various big-endian
-platforms under QEMU[1]. A similar fix required for hw/nvme in QEMU is
-up for review as well[2].
-
-  [1]: https://lore.kernel.org/qemu-devel/20221209110022.GA3396194@roeck-us.net/
-  [2]: https://lore.kernel.org/qemu-devel/20221212114409.34972-4-its@irrelevant.dk/
-
-Fixes: f9f38e33389c ("nvme: improve performance for virtual NVMe devices")
-Reported-by: Guenter Roeck <linux@roeck-us.net>
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+Fixes: 84fef62d135b ("nvme: check admin passthru command effects")
 Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 25 +++++++++++++------------
- 1 file changed, 13 insertions(+), 12 deletions(-)
+ include/linux/nvme.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 488ad7dabeb8..4ed8a14e2803 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -144,9 +144,9 @@ struct nvme_dev {
- 	mempool_t *iod_mempool;
+diff --git a/include/linux/nvme.h b/include/linux/nvme.h
+index 050d7d0cd81b..d9fbc5afeaf7 100644
+--- a/include/linux/nvme.h
++++ b/include/linux/nvme.h
+@@ -7,6 +7,7 @@
+ #ifndef _LINUX_NVME_H
+ #define _LINUX_NVME_H
  
- 	/* shadow doorbell buffer support: */
--	u32 *dbbuf_dbs;
-+	__le32 *dbbuf_dbs;
- 	dma_addr_t dbbuf_dbs_dma_addr;
--	u32 *dbbuf_eis;
-+	__le32 *dbbuf_eis;
- 	dma_addr_t dbbuf_eis_dma_addr;
++#include <linux/bits.h>
+ #include <linux/types.h>
+ #include <linux/uuid.h>
  
- 	/* host memory buffer support: */
-@@ -210,10 +210,10 @@ struct nvme_queue {
- #define NVMEQ_SQ_CMB		1
- #define NVMEQ_DELETE_ERROR	2
- #define NVMEQ_POLLED		3
--	u32 *dbbuf_sq_db;
--	u32 *dbbuf_cq_db;
--	u32 *dbbuf_sq_ei;
--	u32 *dbbuf_cq_ei;
-+	__le32 *dbbuf_sq_db;
-+	__le32 *dbbuf_cq_db;
-+	__le32 *dbbuf_sq_ei;
-+	__le32 *dbbuf_cq_ei;
- 	struct completion delete_done;
+@@ -639,7 +640,7 @@ enum {
+ 	NVME_CMD_EFFECTS_NCC		= 1 << 2,
+ 	NVME_CMD_EFFECTS_NIC		= 1 << 3,
+ 	NVME_CMD_EFFECTS_CCC		= 1 << 4,
+-	NVME_CMD_EFFECTS_CSE_MASK	= 3 << 16,
++	NVME_CMD_EFFECTS_CSE_MASK	= GENMASK(18, 16),
+ 	NVME_CMD_EFFECTS_UUID_SEL	= 1 << 19,
  };
- 
-@@ -340,11 +340,11 @@ static inline int nvme_dbbuf_need_event(u16 event_idx, u16 new_idx, u16 old)
- }
- 
- /* Update dbbuf and return true if an MMIO is required */
--static bool nvme_dbbuf_update_and_check_event(u16 value, u32 *dbbuf_db,
--					      volatile u32 *dbbuf_ei)
-+static bool nvme_dbbuf_update_and_check_event(u16 value, __le32 *dbbuf_db,
-+					      volatile __le32 *dbbuf_ei)
- {
- 	if (dbbuf_db) {
--		u16 old_value;
-+		u16 old_value, event_idx;
- 
- 		/*
- 		 * Ensure that the queue is written before updating
-@@ -352,8 +352,8 @@ static bool nvme_dbbuf_update_and_check_event(u16 value, u32 *dbbuf_db,
- 		 */
- 		wmb();
- 
--		old_value = *dbbuf_db;
--		*dbbuf_db = value;
-+		old_value = le32_to_cpu(*dbbuf_db);
-+		*dbbuf_db = cpu_to_le32(value);
- 
- 		/*
- 		 * Ensure that the doorbell is updated before reading the event
-@@ -363,7 +363,8 @@ static bool nvme_dbbuf_update_and_check_event(u16 value, u32 *dbbuf_db,
- 		 */
- 		mb();
- 
--		if (!nvme_dbbuf_need_event(*dbbuf_ei, value, old_value))
-+		event_idx = le32_to_cpu(*dbbuf_ei);
-+		if (!nvme_dbbuf_need_event(event_idx, value, old_value))
- 			return false;
- 	}
  
 -- 
 2.35.1
