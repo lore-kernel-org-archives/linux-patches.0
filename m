@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB73228EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:29:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0734FC433D2;
-	Mon,  2 Jan 2023 11:29:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC6228EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:29:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC78FC433EF;
+	Mon,  2 Jan 2023 11:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658956;
-	bh=eyeVpSgs7yyNN4VmDie4YgP3ASJGu3G+9zEUJiQqs5M=;
+	s=korg; t=1672658959;
+	bh=28HnGYvLUBH0VcEp2wUB5MgJsMx54LSkc1ou7ocB4qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L1vsgR8aulcDi9A14ymAS7rynYqabj2oYh7tQJz+sBSdqQkimuGM+EnyR8n92uj9w
-	 KDfPGqnOOtYOwKeMaG9BPrven43NXaJ1Xk1nzawpy0rPccD65CZbz1kzJQ6i3kCXS2
-	 PsGb7DD7RVpMCea2rB/YaKhwaNoir8PDfqU6He10=
+	b=WkAewXN2DaC1MmLWLqYZBeM3GLMnd7f4oBT6Z0wDCrU54yLG5Hkr0sZ79/I0NWQU7
+	 WvQCcKXbhhyfCP6PYvxigKHyy1Arx4SmKN1YN2l1kmNZhBf2nhXY9Wt5wGzBSmv5Mg
+	 1SfZff0SiaY/QSyUNrSjIh4Zy1spxj5S0Vks1W8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzot <syzbot+33f3faaa0c08744f7d40@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 36/74] fs/ntfs3: Use __GFP_NOWARN allocation at ntfs_fill_super()
-Date: Mon,  2 Jan 2023 12:22:09 +0100
-Message-Id: <20230102110553.635406796@linuxfoundation.org>
+	ChiYuan Huang <cy_huang@richtek.com>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 6.0 63/74] mfd: mt6360: Add bounds checking in Regmap read/write call-backs
+Date: Mon,  2 Jan 2023 12:22:36 +0100
+Message-Id: <20230102110554.790969287@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
 References: <20230102110552.061937047@linuxfoundation.org>
@@ -36,39 +34,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: ChiYuan Huang <cy_huang@richtek.com>
 
-[ Upstream commit 59bfd7a483da36bd202532a3d9ea1f14f3bf3aaf ]
+commit 5f4f94e9f26cca6514474b307b59348b8485e711 upstream.
 
-syzbot is reporting too large allocation at ntfs_fill_super() [1], for a
-crafted filesystem can contain bogus inode->i_size. Add __GFP_NOWARN in
-order to avoid too large allocation warning, than exhausting memory by
-using kvmalloc().
+Fix the potential risk of OOB read if bank index is over the maximum.
 
-Link: https://syzkaller.appspot.com/bug?extid=33f3faaa0c08744f7d40 [1]
-Reported-by: syzot <syzbot+33f3faaa0c08744f7d40@syzkaller.appspotmail.com>
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Refer to the discussion list for the experiment result on mt6370.
+https://lore.kernel.org/all/20220914013345.GA5802@cyhuang-hp-elitebook-840-g3.rt/
+If not to check the bound, there is the same issue on mt6360.
+
+Cc: stable@vger.kernel.org
+Fixes: 3b0850440a06c (mfd: mt6360: Merge different sub-devices I2C read/write)
+Signed-off-by: ChiYuan Huang <cy_huang@richtek.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
+Link: https://lore.kernel.org/r/1664416817-31590-1-git-send-email-u0084500@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mfd/mt6360-core.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index 94f9e4b775a7..8e2fe0f69203 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -1141,7 +1141,7 @@ static int ntfs_fill_super(struct super_block *sb, struct fs_context *fc)
- 		goto put_inode_out;
- 	}
- 	bytes = inode->i_size;
--	sbi->def_table = t = kmalloc(bytes, GFP_NOFS);
-+	sbi->def_table = t = kmalloc(bytes, GFP_NOFS | __GFP_NOWARN);
- 	if (!t) {
- 		err = -ENOMEM;
- 		goto put_inode_out;
--- 
-2.35.1
-
+--- a/drivers/mfd/mt6360-core.c
++++ b/drivers/mfd/mt6360-core.c
+@@ -402,7 +402,7 @@ static int mt6360_regmap_read(void *cont
+ 	struct mt6360_ddata *ddata = context;
+ 	u8 bank = *(u8 *)reg;
+ 	u8 reg_addr = *(u8 *)(reg + 1);
+-	struct i2c_client *i2c = ddata->i2c[bank];
++	struct i2c_client *i2c;
+ 	bool crc_needed = false;
+ 	u8 *buf;
+ 	int buf_len = MT6360_ALLOC_READ_SIZE(val_size);
+@@ -410,6 +410,11 @@ static int mt6360_regmap_read(void *cont
+ 	u8 crc;
+ 	int ret;
+ 
++	if (bank >= MT6360_SLAVE_MAX)
++		return -EINVAL;
++
++	i2c = ddata->i2c[bank];
++
+ 	if (bank == MT6360_SLAVE_PMIC || bank == MT6360_SLAVE_LDO) {
+ 		crc_needed = true;
+ 		ret = mt6360_xlate_pmicldo_addr(&reg_addr, val_size);
+@@ -453,13 +458,18 @@ static int mt6360_regmap_write(void *con
+ 	struct mt6360_ddata *ddata = context;
+ 	u8 bank = *(u8 *)val;
+ 	u8 reg_addr = *(u8 *)(val + 1);
+-	struct i2c_client *i2c = ddata->i2c[bank];
++	struct i2c_client *i2c;
+ 	bool crc_needed = false;
+ 	u8 *buf;
+ 	int buf_len = MT6360_ALLOC_WRITE_SIZE(val_size);
+ 	int write_size = val_size - MT6360_REGMAP_REG_BYTE_SIZE;
+ 	int ret;
+ 
++	if (bank >= MT6360_SLAVE_MAX)
++		return -EINVAL;
++
++	i2c = ddata->i2c[bank];
++
+ 	if (bank == MT6360_SLAVE_PMIC || bank == MT6360_SLAVE_LDO) {
+ 		crc_needed = true;
+ 		ret = mt6360_xlate_pmicldo_addr(&reg_addr, val_size - MT6360_REGMAP_REG_BYTE_SIZE);
 
 
