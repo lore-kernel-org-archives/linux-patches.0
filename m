@@ -1,381 +1,169 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E0828EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:28:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAAAFC433D2;
-	Mon,  2 Jan 2023 11:28:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FC5828EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:28:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC7BC433D2;
+	Mon,  2 Jan 2023 11:28:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658896;
-	bh=diQ4GLTq9QEbwfOfC9Xd6GNCUQsJbERyRzIRC2+Osdg=;
-	h=From:To:Cc:Subject:Date:From;
-	b=rEzCiAx2ZBY9UkpxApmxqom3DVNOxci47w7dA6+T7wArhardEs1HB876PxZm5mgux
-	 eRY2nSR/OzHB18JC0lvCyzn4FJlpCwMYahepaRdDsv+M9iY4dwgNQtdY3AvQYv695e
-	 tjHbXiQmKomy6O0BvyA/eQ6bKBFuBdH9AsbW9vu0=
+	s=korg; t=1672658898;
+	bh=DoZgocSswo2oFd5OrhlfE+vmBGIwJURjPYMLTpkZIJM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=X+cUwcQARmPjJEuxULrrHcWiCywk1uXRcKPDCk0tf+54uGmapYG4nj+i/3vdWolAe
+	 TGvpjaAQZXaZSyWct+/VWMlsnwDjS5V8PZdvKO/e5+eg5qAe2Ot6J1OR5WIywAHSPC
+	 snmgW7H+cwwnpgbT6C5ZcKb3ltdWkKWrkldD+yuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 6.0 00/74] 6.0.17-rc1 review
-Date: Mon,  2 Jan 2023 12:21:33 +0100
-Message-Id: <20230102110552.061937047@linuxfoundation.org>
+	Edward Lo <edward.lo@ambergroup.io>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 34/74] fs/ntfs3: Validate index root when initialize NTFS security
+Date: Mon,  2 Jan 2023 12:22:07 +0100
+Message-Id: <20230102110553.532125588@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
+References: <20230102110552.061937047@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.17-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.0.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.0.17-rc1
-X-KernelTest-Deadline: 2023-01-04T11:05+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.0.17 release.
-There are 74 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Edward Lo <edward.lo@ambergroup.io>
+
+[ Upstream commit bfcdbae0523bd95eb75a739ffb6221a37109881e ]
+
+This enhances the sanity check for $SDH and $SII while initializing NTFS
+security, guarantees these index root are legit.
+
+[  162.459513] BUG: KASAN: use-after-free in hdr_find_e.isra.0+0x10c/0x320
+[  162.460176] Read of size 2 at addr ffff8880037bca99 by task mount/243
+[  162.460851]
+[  162.461252] CPU: 0 PID: 243 Comm: mount Not tainted 6.0.0-rc7 #42
+[  162.461744] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
+[  162.462609] Call Trace:
+[  162.462954]  <TASK>
+[  162.463276]  dump_stack_lvl+0x49/0x63
+[  162.463822]  print_report.cold+0xf5/0x689
+[  162.464608]  ? unwind_get_return_address+0x3a/0x60
+[  162.465766]  ? hdr_find_e.isra.0+0x10c/0x320
+[  162.466975]  kasan_report+0xa7/0x130
+[  162.467506]  ? _raw_spin_lock_irq+0xc0/0xf0
+[  162.467998]  ? hdr_find_e.isra.0+0x10c/0x320
+[  162.468536]  __asan_load2+0x68/0x90
+[  162.468923]  hdr_find_e.isra.0+0x10c/0x320
+[  162.469282]  ? cmp_uints+0xe0/0xe0
+[  162.469557]  ? cmp_sdh+0x90/0x90
+[  162.469864]  ? ni_find_attr+0x214/0x300
+[  162.470217]  ? ni_load_mi+0x80/0x80
+[  162.470479]  ? entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[  162.470931]  ? ntfs_bread_run+0x190/0x190
+[  162.471307]  ? indx_get_root+0xe4/0x190
+[  162.471556]  ? indx_get_root+0x140/0x190
+[  162.471833]  ? indx_init+0x1e0/0x1e0
+[  162.472069]  ? fnd_clear+0x115/0x140
+[  162.472363]  ? _raw_spin_lock_irqsave+0x100/0x100
+[  162.472731]  indx_find+0x184/0x470
+[  162.473461]  ? sysvec_apic_timer_interrupt+0x57/0xc0
+[  162.474429]  ? indx_find_buffer+0x2d0/0x2d0
+[  162.474704]  ? do_syscall_64+0x3b/0x90
+[  162.474962]  dir_search_u+0x196/0x2f0
+[  162.475381]  ? ntfs_nls_to_utf16+0x450/0x450
+[  162.475661]  ? ntfs_security_init+0x3d6/0x440
+[  162.475906]  ? is_sd_valid+0x180/0x180
+[  162.476191]  ntfs_extend_init+0x13f/0x2c0
+[  162.476496]  ? ntfs_fix_post_read+0x130/0x130
+[  162.476861]  ? iput.part.0+0x286/0x320
+[  162.477325]  ntfs_fill_super+0x11e0/0x1b50
+[  162.477709]  ? put_ntfs+0x1d0/0x1d0
+[  162.477970]  ? vsprintf+0x20/0x20
+[  162.478258]  ? set_blocksize+0x95/0x150
+[  162.478538]  get_tree_bdev+0x232/0x370
+[  162.478789]  ? put_ntfs+0x1d0/0x1d0
+[  162.479038]  ntfs_fs_get_tree+0x15/0x20
+[  162.479374]  vfs_get_tree+0x4c/0x130
+[  162.479729]  path_mount+0x654/0xfe0
+[  162.480124]  ? putname+0x80/0xa0
+[  162.480484]  ? finish_automount+0x2e0/0x2e0
+[  162.480894]  ? putname+0x80/0xa0
+[  162.481467]  ? kmem_cache_free+0x1c4/0x440
+[  162.482280]  ? putname+0x80/0xa0
+[  162.482714]  do_mount+0xd6/0xf0
+[  162.483264]  ? path_mount+0xfe0/0xfe0
+[  162.484782]  ? __kasan_check_write+0x14/0x20
+[  162.485593]  __x64_sys_mount+0xca/0x110
+[  162.486024]  do_syscall_64+0x3b/0x90
+[  162.486543]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[  162.487141] RIP: 0033:0x7f9d374e948a
+[  162.488324] Code: 48 8b 0d 11 fa 2a 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 49 89 ca b8 a5 00 00 008
+[  162.489728] RSP: 002b:00007ffe30e73d18 EFLAGS: 00000206 ORIG_RAX: 00000000000000a5
+[  162.490971] RAX: ffffffffffffffda RBX: 0000561cdb43a060 RCX: 00007f9d374e948a
+[  162.491669] RDX: 0000561cdb43a260 RSI: 0000561cdb43a2e0 RDI: 0000561cdb442af0
+[  162.492050] RBP: 0000000000000000 R08: 0000561cdb43a280 R09: 0000000000000020
+[  162.492459] R10: 00000000c0ed0000 R11: 0000000000000206 R12: 0000561cdb442af0
+[  162.493183] R13: 0000561cdb43a260 R14: 0000000000000000 R15: 00000000ffffffff
+[  162.493644]  </TASK>
+[  162.493908]
+[  162.494214] The buggy address belongs to the physical page:
+[  162.494761] page:000000003e38a3d5 refcount:0 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x37bc
+[  162.496064] flags: 0xfffffc0000000(node=0|zone=1|lastcpupid=0x1fffff)
+[  162.497278] raw: 000fffffc0000000 ffffea00000df1c8 ffffea00000df008 0000000000000000
+[  162.498928] raw: 0000000000000000 0000000000240000 00000000ffffffff 0000000000000000
+[  162.500542] page dumped because: kasan: bad access detected
+[  162.501057]
+[  162.501242] Memory state around the buggy address:
+[  162.502230]  ffff8880037bc980: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+[  162.502977]  ffff8880037bca00: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+[  162.503522] >ffff8880037bca80: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+[  162.503963]                             ^
+[  162.504370]  ffff8880037bcb00: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+[  162.504766]  ffff8880037bcb80: ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff
+
+Signed-off-by: Edward Lo <edward.lo@ambergroup.io>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/ntfs3/fsntfs.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/fs/ntfs3/fsntfs.c b/fs/ntfs3/fsntfs.c
+index 4ed15f64b17f..b6e22bcb929b 100644
+--- a/fs/ntfs3/fsntfs.c
++++ b/fs/ntfs3/fsntfs.c
+@@ -1849,9 +1849,10 @@ int ntfs_security_init(struct ntfs_sb_info *sbi)
+ 		goto out;
+ 	}
+ 
+-	root_sdh = resident_data(attr);
++	root_sdh = resident_data_ex(attr, sizeof(struct INDEX_ROOT));
+ 	if (root_sdh->type != ATTR_ZERO ||
+-	    root_sdh->rule != NTFS_COLLATION_TYPE_SECURITY_HASH) {
++	    root_sdh->rule != NTFS_COLLATION_TYPE_SECURITY_HASH ||
++	    offsetof(struct INDEX_ROOT, ihdr) + root_sdh->ihdr.used > attr->res.data_size) {
+ 		err = -EINVAL;
+ 		goto out;
+ 	}
+@@ -1867,9 +1868,10 @@ int ntfs_security_init(struct ntfs_sb_info *sbi)
+ 		goto out;
+ 	}
+ 
+-	root_sii = resident_data(attr);
++	root_sii = resident_data_ex(attr, sizeof(struct INDEX_ROOT));
+ 	if (root_sii->type != ATTR_ZERO ||
+-	    root_sii->rule != NTFS_COLLATION_TYPE_UINT) {
++	    root_sii->rule != NTFS_COLLATION_TYPE_UINT ||
++	    offsetof(struct INDEX_ROOT, ihdr) + root_sii->ihdr.used > attr->res.data_size) {
+ 		err = -EINVAL;
+ 		goto out;
+ 	}
+-- 
+2.35.1
 
-Responses should be made by Wed, 04 Jan 2023 11:05:34 +0000.
-Anything received after that time might be too late.
-
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.17-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
-and the diffstat can be found below.
-
-thanks,
-
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.0.17-rc1
-
-Marco Elver <elver@google.com>
-    kcsan: Instrument memcpy/memset/memmove with newer Clang
-
-Chuck Lever <chuck.lever@oracle.com>
-    SUNRPC: Don't leak netobj memory when gss_read_proxy_verf() fails
-
-Hanjun Guo <guohanjun@huawei.com>
-    tpm: tpm_tis: Add the missed acpi_put_table() to fix memory leak
-
-Hanjun Guo <guohanjun@huawei.com>
-    tpm: tpm_crb: Add the missed acpi_put_table() to fix memory leak
-
-Hanjun Guo <guohanjun@huawei.com>
-    tpm: acpi: Call acpi_put_table() to fix memory leak
-
-Deren Wu <deren.wu@mediatek.com>
-    mmc: vub300: fix warning - do not call blocking ops when !TASK_RUNNING
-
-Jan Kara <jack@suse.cz>
-    block: Do not reread partition table on exclusively open device
-
-Jaegeuk Kim <jaegeuk@kernel.org>
-    f2fs: allow to read node block after shutdown
-
-Pavel Machek <pavel@denx.de>
-    f2fs: should put a page when checking the summary info
-
-NARIBAYASHI Akira <a.naribayashi@fujitsu.com>
-    mm, compaction: fix fast_isolate_around() to stay within boundaries
-
-Mikulas Patocka <mpatocka@redhat.com>
-    md: fix a crash in mempool_free
-
-ChiYuan Huang <cy_huang@richtek.com>
-    mfd: mt6360: Add bounds checking in Regmap read/write call-backs
-
-Christian Brauner <brauner@kernel.org>
-    pnode: terminate at peers of source
-
-Takashi Iwai <tiwai@suse.de>
-    ALSA: hda/hdmi: Static PCM mapping again with AMD HDMI codecs
-
-Artem Egorkine <arteme@gmail.com>
-    ALSA: line6: fix stack overflow in line6_midi_transmit
-
-Artem Egorkine <arteme@gmail.com>
-    ALSA: line6: correct midi status byte when receiving data from podxt
-
-Al Viro <viro@zeniv.linux.org.uk>
-    ovl: update ->f_iocb_flags when ovl_change_flags() modifies ->f_flags
-
-Zhang Tianci <zhangtianci.1997@bytedance.com>
-    ovl: Use ovl mounter's fsuid and fsgid in ovl_link()
-
-Wang Yufen <wangyufen@huawei.com>
-    binfmt: Fix error return code in load_elf_fdpic_binary()
-
-Pavel Begunkov <asml.silence@gmail.com>
-    io_uring: dont remove file from msg_ring reqs
-
-Jens Axboe <axboe@kernel.dk>
-    eventfd: provide a eventfd_signal_mask() helper
-
-Jens Axboe <axboe@kernel.dk>
-    eventpoll: add EPOLL_URING_WAKE poll wakeup flag
-
-Aditya Garg <gargaditya08@live.com>
-    hfsplus: fix bug causing custom uid and gid being unable to be assigned with mount
-
-Qiujun Huang <hqjagain@gmail.com>
-    pstore/zone: Use GFP_ATOMIC to allocate zone buffer
-
-Luca Stefani <luca@osomprivacy.com>
-    pstore: Properly assign mem_type property
-
-Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-    mm/mempolicy: fix memory leak in set_mempolicy_home_node system call
-
-Mel Gorman <mgorman@techsingularity.net>
-    rtmutex: Add acquire semantics for rtmutex lock acquisition slow path
-
-Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-    futex: Fix futex_waitv() hrtimer debug object leak on kcalloc error
-
-Terry Junge <linuxhid@cosmicgizmosystems.com>
-    HID: plantronics: Additional PIDs for double volume key presses quirk
-
-José Expósito <jose.exposito89@gmail.com>
-    HID: multitouch: fix Asus ExpertBook P2 P2451FA trackpoint
-
-wuqiang <wuqiang.matt@bytedance.com>
-    kprobes: kretprobe events missing on 2-core KVM guest
-
-Kees Cook <keescook@chromium.org>
-    rtc: msc313: Fix function prototype mismatch in msc313_rtc_probe()
-
-Nathan Lynch <nathanl@linux.ibm.com>
-    powerpc/rtas: avoid scheduling in rtas_os_term()
-
-Nathan Lynch <nathanl@linux.ibm.com>
-    powerpc/rtas: avoid device tree lookups in rtas_os_term()
-
-Ricardo Ribalda <ribalda@chromium.org>
-    iommu/mediatek: Fix crash on isr after kexec()
-
-Christophe Leroy <christophe.leroy@csgroup.eu>
-    objtool: Fix SEGFAULT
-
-Yin Xiujiang <yinxiujiang@kylinos.cn>
-    fs/ntfs3: Fix slab-out-of-bounds in r_page
-
-Dan Carpenter <dan.carpenter@oracle.com>
-    fs/ntfs3: Delete duplicate condition in ntfs_read_mft()
-
-Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-    fs/ntfs3: Use __GFP_NOWARN allocation at ntfs_fill_super()
-
-Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-    fs/ntfs3: Use __GFP_NOWARN allocation at wnd_init()
-
-Edward Lo <edward.lo@ambergroup.io>
-    fs/ntfs3: Validate index root when initialize NTFS security
-
-Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-    soundwire: dmi-quirks: add quirk variant for LAPBC710 NUC15
-
-Hawkins Jiawei <yin31149@gmail.com>
-    fs/ntfs3: Fix slab-out-of-bounds read in run_unpack
-
-Edward Lo <edward.lo@ambergroup.io>
-    fs/ntfs3: Validate resident attribute name
-
-Edward Lo <edward.lo@ambergroup.io>
-    fs/ntfs3: Validate buffer length while parsing index
-
-Edward Lo <edward.lo@ambergroup.io>
-    fs/ntfs3: Validate attribute name offset
-
-Edward Lo <edward.lo@ambergroup.io>
-    fs/ntfs3: Add null pointer check for inode operations
-
-Shigeru Yoshida <syoshida@redhat.com>
-    fs/ntfs3: Fix memory leak on ntfs_fill_super() error path
-
-Edward Lo <edward.lo@ambergroup.io>
-    fs/ntfs3: Add null pointer check to attr_load_runs_vcn
-
-Edward Lo <edward.lo@ambergroup.io>
-    fs/ntfs3: Validate data run offset
-
-edward lo <edward.lo@ambergroup.io>
-    fs/ntfs3: Add overflow check for attribute size
-
-edward lo <edward.lo@ambergroup.io>
-    fs/ntfs3: Validate BOOT record_size
-
-Christoph Hellwig <hch@lst.de>
-    nvmet: don't defer passthrough commands with trivial effects to the workqueue
-
-Christoph Hellwig <hch@lst.de>
-    nvme: fix the NVME_CMD_EFFECTS_CSE_MASK definition
-
-Adam Vodopjan <grozzly@protonmail.com>
-    ata: ahci: Fix PCS quirk application for suspend
-
-Yu Kuai <yukuai3@huawei.com>
-    block, bfq: fix uaf for bfqq in bfq_exit_icq_bfqq
-
-Adrian Freund <adrian@freund.io>
-    ACPI: resource: do IRQ override on Lenovo 14ALC7
-
-Erik Schumacher <ofenfisch@googlemail.com>
-    ACPI: resource: do IRQ override on XMG Core 15
-
-Jiri Slaby (SUSE) <jirislaby@kernel.org>
-    ACPI: resource: do IRQ override on LENOVO IdeaPad
-
-Tamim Khan <tamim@fusetak.com>
-    ACPI: resource: Skip IRQ override on Asus Vivobook K3402ZA/K3502ZA
-
-Keith Busch <kbusch@kernel.org>
-    nvme-pci: fix page size checks
-
-Keith Busch <kbusch@kernel.org>
-    nvme-pci: fix mempool alloc size
-
-Klaus Jensen <k.jensen@samsung.com>
-    nvme-pci: fix doorbell buffer value endianness
-
-Paulo Alcantara <pc@cjr.nz>
-    cifs: don't leak -ENOMEM in smb2_open_file()
-
-Paulo Alcantara <pc@cjr.nz>
-    cifs: fix static checker warning
-
-Tejun Heo <tj@kernel.org>
-    blk-iolatency: Fix memory leak on add_disk() failures
-
-Christoph Hellwig <hch@lst.de>
-    blk-cgroup: pass a gendisk to blkg_destroy_all
-
-Christoph Hellwig <hch@lst.de>
-    blk-throttle: pass a gendisk to blk_throtl_init and blk_throtl_exit
-
-Christoph Hellwig <hch@lst.de>
-    blk-cgroup: pass a gendisk to blkcg_init_queue and blkcg_exit_queue
-
-Christoph Hellwig <hch@lst.de>
-    blk-cgroup: cleanup the blkg_lookup family of functions
-
-Christoph Hellwig <hch@lst.de>
-    blk-cgroup: remove open coded blkg_lookup instances
-
-Christoph Hellwig <hch@lst.de>
-    blk-cgroup: remove blk_queue_root_blkg
-
-Christoph Hellwig <hch@lst.de>
-    blk-cgroup: fix error unwinding in blkcg_init_queue
-
-Miaoqian Lin <linmq006@gmail.com>
-    usb: dwc3: qcom: Fix memory leak in dwc3_qcom_interconnect_init
-
-
--------------
-
-Diffstat:
-
- Documentation/trace/kprobes.rst   |   3 +-
- Makefile                          |   4 +-
- arch/powerpc/kernel/rtas.c        |  20 ++++++--
- block/bfq-iosched.c               |   2 +-
- block/blk-cgroup.c                | 100 ++++++++++++++------------------------
- block/blk-cgroup.h                |  68 ++++++++------------------
- block/blk-throttle.c              |   7 ++-
- block/blk-throttle.h              |   8 +--
- block/blk.h                       |   2 +-
- block/genhd.c                     |  12 +++--
- block/ioctl.c                     |  12 +++--
- drivers/acpi/resource.c           |  78 ++++++++++++++++++++++++-----
- drivers/ata/ahci.c                |  32 ++++++++----
- drivers/char/tpm/eventlog/acpi.c  |  12 +++--
- drivers/char/tpm/tpm_crb.c        |  29 +++++++----
- drivers/char/tpm/tpm_tis.c        |   9 ++--
- drivers/hid/hid-ids.h             |   3 ++
- drivers/hid/hid-multitouch.c      |   4 ++
- drivers/hid/hid-plantronics.c     |   9 ++++
- drivers/iommu/mtk_iommu.c         |   2 +-
- drivers/md/md.c                   |   9 ++--
- drivers/mfd/mt6360-core.c         |  14 +++++-
- drivers/mmc/host/vub300.c         |   2 +
- drivers/nvme/host/pci.c           |  37 +++++++-------
- drivers/nvme/target/passthru.c    |  11 ++---
- drivers/rtc/rtc-msc313.c          |  12 +----
- drivers/soundwire/dmi-quirks.c    |   8 +++
- drivers/usb/dwc3/dwc3-qcom.c      |  13 +++--
- fs/binfmt_elf_fdpic.c             |   5 +-
- fs/cifs/smb2file.c                |   4 +-
- fs/eventfd.c                      |  37 ++++++++------
- fs/eventpoll.c                    |  18 ++++---
- fs/f2fs/gc.c                      |   1 +
- fs/f2fs/node.c                    |   3 +-
- fs/hfsplus/hfsplus_fs.h           |   2 +
- fs/hfsplus/inode.c                |   4 +-
- fs/hfsplus/options.c              |   4 ++
- fs/ntfs3/attrib.c                 |  18 +++++++
- fs/ntfs3/attrlist.c               |   5 ++
- fs/ntfs3/bitmap.c                 |   2 +-
- fs/ntfs3/frecord.c                |  14 ++++++
- fs/ntfs3/fslog.c                  |  35 +++++--------
- fs/ntfs3/fsntfs.c                 |  10 ++--
- fs/ntfs3/index.c                  |   6 +++
- fs/ntfs3/inode.c                  |   9 ++++
- fs/ntfs3/record.c                 |  10 ++++
- fs/ntfs3/super.c                  |   9 ++--
- fs/overlayfs/dir.c                |  46 ++++++++++++------
- fs/overlayfs/file.c               |   1 +
- fs/pnode.c                        |   2 +-
- fs/pstore/ram.c                   |   2 +-
- fs/pstore/zone.c                  |   2 +-
- include/linux/eventfd.h           |   7 +++
- include/linux/nvme.h              |   3 +-
- include/uapi/linux/eventpoll.h    |   6 +++
- io_uring/io_uring.c               |   2 +-
- io_uring/msg_ring.c               |   4 --
- io_uring/opdef.c                  |   7 +++
- io_uring/opdef.h                  |   2 +
- kernel/futex/syscalls.c           |  11 +++--
- kernel/kcsan/core.c               |  50 +++++++++++++++++++
- kernel/kprobes.c                  |   8 +--
- kernel/locking/rtmutex.c          |  55 +++++++++++++++++----
- kernel/locking/rtmutex_api.c      |   6 +--
- mm/compaction.c                   |  18 ++-----
- mm/mempolicy.c                    |   1 +
- net/sunrpc/auth_gss/svcauth_gss.c |   9 +++-
- sound/pci/hda/patch_hdmi.c        |  27 +++++++---
- sound/usb/line6/driver.c          |   3 +-
- sound/usb/line6/midi.c            |   6 ++-
- sound/usb/line6/midibuf.c         |  25 +++++++---
- sound/usb/line6/midibuf.h         |   5 +-
- sound/usb/line6/pod.c             |   3 +-
- tools/objtool/check.c             |   2 +-
- 74 files changed, 664 insertions(+), 367 deletions(-)
 
 
