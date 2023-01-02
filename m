@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7493A28EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:28:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0EA0C433D2;
-	Mon,  2 Jan 2023 11:28:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 281F528EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:28:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F0E6C433EF;
+	Mon,  2 Jan 2023 11:28:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658888;
-	bh=4wlo2/Dd5CujuiBkCvx8MyiqreDK3NPxFRAy+CFsC7w=;
+	s=korg; t=1672658891;
+	bh=HJztrE50RodWQQ7ph+MW1RWnCJQr7t+NC275WE3vOKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lsnx26Gv3EiNtBX30rsLOHp9YJFV28deQLtcR081hXQ5oOTPCENC0hyN99FKDqhZu
-	 SBKc4FHiIS7QEQq+J9JmCaK/p2VFKY6zG5yOsJUbo39LUMTOnnYT4rJ1V09c0SqrDw
-	 wlBkp83h6KeVinP7XhORmp4PaJLBTERZs1hykuNc=
+	b=EXR9TosKIHIu2BlNGlKrEJRdHcPT460butWzdqxcSifkNa5bqFBP+RhdDCiNWg0ZY
+	 jyjeVX1kBepHwCegBTmzIa0Pt+SFlnMkB49oP7OnK18ZaFBCw95DEa2MRatbJlxqEA
+	 8pb4CO8+U7xRWQuOkn1TX4vcW8/hmQ8f6qRZ17gE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tejun Heo <tj@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 07/74] blk-throttle: pass a gendisk to blk_throtl_init and blk_throtl_exit
-Date: Mon,  2 Jan 2023 12:21:40 +0100
-Message-Id: <20230102110552.361250389@linuxfoundation.org>
+Subject: [PATCH 6.0 08/74] blk-cgroup: pass a gendisk to blkg_destroy_all
+Date: Mon,  2 Jan 2023 12:21:41 +0100
+Message-Id: <20230102110552.401151201@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
 References: <20230102110552.061937047@linuxfoundation.org>
@@ -39,105 +39,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit e13793bae65919cd3e6a7827f8d30f4dbb8584ee ]
+[ Upstream commit 00ad6991bbae116b7c83f68754edd6f4d5e65e01 ]
 
-Pass the gendisk to blk_throtl_init and blk_throtl_exit as part of moving
-the blk-cgroup infrastructure to be gendisk based.
+Pass the gendisk to blkg_destroy_all as part of moving the blk-cgroup
+infrastructure to be gendisk based.
 
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Andreas Herrmann <aherrmann@suse.de>
 Acked-by: Tejun Heo <tj@kernel.org>
-Link: https://lore.kernel.org/r/20220921180501.1539876-13-hch@lst.de
+Link: https://lore.kernel.org/r/20220921180501.1539876-16-hch@lst.de
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Stable-dep-of: 813e693023ba ("blk-iolatency: Fix memory leak on add_disk() failures")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-cgroup.c   | 6 +++---
- block/blk-throttle.c | 7 +++++--
- block/blk-throttle.h | 8 ++++----
- 3 files changed, 12 insertions(+), 9 deletions(-)
+ block/blk-cgroup.c | 13 ++++---------
+ 1 file changed, 4 insertions(+), 9 deletions(-)
 
 diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
-index 4943f36d8a84..afe802e1180f 100644
+index afe802e1180f..cd682fe46d2f 100644
 --- a/block/blk-cgroup.c
 +++ b/block/blk-cgroup.c
-@@ -1277,7 +1277,7 @@ int blkcg_init_disk(struct gendisk *disk)
- 	if (ret)
- 		goto err_destroy_all;
+@@ -462,14 +462,9 @@ static void blkg_destroy(struct blkcg_gq *blkg)
+ 	percpu_ref_kill(&blkg->refcnt);
+ }
  
--	ret = blk_throtl_init(q);
-+	ret = blk_throtl_init(disk);
- 	if (ret)
- 		goto err_ioprio_exit;
+-/**
+- * blkg_destroy_all - destroy all blkgs associated with a request_queue
+- * @q: request_queue of interest
+- *
+- * Destroy all blkgs associated with @q.
+- */
+-static void blkg_destroy_all(struct request_queue *q)
++static void blkg_destroy_all(struct gendisk *disk)
+ {
++	struct request_queue *q = disk->queue;
+ 	struct blkcg_gq *blkg, *n;
+ 	int count = BLKG_DESTROY_BATCH_SIZE;
  
-@@ -1288,7 +1288,7 @@ int blkcg_init_disk(struct gendisk *disk)
- 	return 0;
- 
- err_throtl_exit:
--	blk_throtl_exit(q);
-+	blk_throtl_exit(disk);
+@@ -1292,7 +1287,7 @@ int blkcg_init_disk(struct gendisk *disk)
  err_ioprio_exit:
  	blk_ioprio_exit(q);
  err_destroy_all:
-@@ -1304,7 +1304,7 @@ int blkcg_init_disk(struct gendisk *disk)
+-	blkg_destroy_all(q);
++	blkg_destroy_all(disk);
+ 	return ret;
+ err_unlock:
+ 	spin_unlock_irq(&q->queue_lock);
+@@ -1303,7 +1298,7 @@ int blkcg_init_disk(struct gendisk *disk)
+ 
  void blkcg_exit_disk(struct gendisk *disk)
  {
- 	blkg_destroy_all(disk->queue);
--	blk_throtl_exit(disk->queue);
-+	blk_throtl_exit(disk);
+-	blkg_destroy_all(disk->queue);
++	blkg_destroy_all(disk);
+ 	blk_throtl_exit(disk);
  }
  
- static void blkcg_bind(struct cgroup_subsys_state *root_css)
-diff --git a/block/blk-throttle.c b/block/blk-throttle.c
-index 35cf744ea9d1..f84a6ed440c9 100644
---- a/block/blk-throttle.c
-+++ b/block/blk-throttle.c
-@@ -2276,8 +2276,9 @@ void blk_throtl_bio_endio(struct bio *bio)
- }
- #endif
- 
--int blk_throtl_init(struct request_queue *q)
-+int blk_throtl_init(struct gendisk *disk)
- {
-+	struct request_queue *q = disk->queue;
- 	struct throtl_data *td;
- 	int ret;
- 
-@@ -2319,8 +2320,10 @@ int blk_throtl_init(struct request_queue *q)
- 	return ret;
- }
- 
--void blk_throtl_exit(struct request_queue *q)
-+void blk_throtl_exit(struct gendisk *disk)
- {
-+	struct request_queue *q = disk->queue;
-+
- 	BUG_ON(!q->td);
- 	del_timer_sync(&q->td->service_queue.pending_timer);
- 	throtl_shutdown_wq(q);
-diff --git a/block/blk-throttle.h b/block/blk-throttle.h
-index ee7299e6dea9..e8c2b3d4a18b 100644
---- a/block/blk-throttle.h
-+++ b/block/blk-throttle.h
-@@ -159,14 +159,14 @@ static inline struct throtl_grp *blkg_to_tg(struct blkcg_gq *blkg)
-  * Internal throttling interface
-  */
- #ifndef CONFIG_BLK_DEV_THROTTLING
--static inline int blk_throtl_init(struct request_queue *q) { return 0; }
--static inline void blk_throtl_exit(struct request_queue *q) { }
-+static inline int blk_throtl_init(struct gendisk *disk) { return 0; }
-+static inline void blk_throtl_exit(struct gendisk *disk) { }
- static inline void blk_throtl_register_queue(struct request_queue *q) { }
- static inline bool blk_throtl_bio(struct bio *bio) { return false; }
- static inline void blk_throtl_cancel_bios(struct request_queue *q) { }
- #else /* CONFIG_BLK_DEV_THROTTLING */
--int blk_throtl_init(struct request_queue *q);
--void blk_throtl_exit(struct request_queue *q);
-+int blk_throtl_init(struct gendisk *disk);
-+void blk_throtl_exit(struct gendisk *disk);
- void blk_throtl_register_queue(struct request_queue *q);
- bool __blk_throtl_bio(struct bio *bio);
- void blk_throtl_cancel_bios(struct request_queue *q);
 -- 
 2.35.1
 
