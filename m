@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C402F28EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:29:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BC7FC433EF;
-	Mon,  2 Jan 2023 11:29:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57DF028EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:29:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4790C433EF;
+	Mon,  2 Jan 2023 11:29:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658969;
-	bh=SNCb75FWjVMjGAdEby7dYpMFZdLTjQlTzOev/JJbCl8=;
+	s=korg; t=1672658972;
+	bh=IjhfH3J1WRtIaQ/yEXBvv4S9dLxKy2P2jmU/NjuRMZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ilOK1ZX3srDZxxXXVQjDaWPZVcVlAu48oOBhQgDRJ0nhGqqB0EdOmMQw6Nwe8df/x
-	 dv7xdcXi3pw8c5ddx9B3IzTeHlXywLLMXq5Ut0RKW25kMoS1XFtd895MOGRqeGlBDq
-	 78Fz8nZJDOeX92cXzLf3dsf9f2DgHFl1Psr0Ho5Y=
+	b=r21Q3G5B6YCAIlP2MoOzzetuabVvPGCHZXh1+5/qjYhZCQ8n5yfnUnGjopwrPekYc
+	 fZnLFReX7UuCGY5L+glWTW7Ret1GebKd4J64EMsiwsLbX/1v9biNHYRR5fiV+HHCiM
+	 YVbbSGDQ5OigOP9VMGuc8rbyXI5xXcW06G2LVo2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.0 67/74] f2fs: allow to read node block after shutdown
-Date: Mon,  2 Jan 2023 12:22:40 +0100
-Message-Id: <20230102110554.948181931@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 37/74] fs/ntfs3: Delete duplicate condition in ntfs_read_mft()
+Date: Mon,  2 Jan 2023 12:22:10 +0100
+Message-Id: <20230102110553.677622091@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
 References: <20230102110552.061937047@linuxfoundation.org>
@@ -34,33 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Dan Carpenter <dan.carpenter@oracle.com>
 
-commit e6ecb142429183cef4835f31d4134050ae660032 upstream.
+[ Upstream commit 658015167a8432b88f5d032e9d85d8fd50e5bf2c ]
 
-If block address is still alive, we should give a valid node block even after
-shutdown. Otherwise, we can see zero data when reading out a file.
+There were two patches which addressed the same bug and added the same
+condition:
 
-Cc: stable@vger.kernel.org
-Fixes: 83a3bfdb5a8a ("f2fs: indicate shutdown f2fs to allow unmount successfully")
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+commit 6db620863f85 ("fs/ntfs3: Validate data run offset")
+commit 887bfc546097 ("fs/ntfs3: Fix slab-out-of-bounds read in run_unpack")
+
+Delete one condition.
+
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/node.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/ntfs3/inode.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
---- a/fs/f2fs/node.c
-+++ b/fs/f2fs/node.c
-@@ -1358,8 +1358,7 @@ static int read_node_page(struct page *p
- 		return err;
+diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
+index ba2005c12ee3..471ea4d813ad 100644
+--- a/fs/ntfs3/inode.c
++++ b/fs/ntfs3/inode.c
+@@ -374,12 +374,6 @@ static struct inode *ntfs_read_mft(struct inode *inode,
  
- 	/* NEW_ADDR can be seen, after cp_error drops some dirty node pages */
--	if (unlikely(ni.blk_addr == NULL_ADDR || ni.blk_addr == NEW_ADDR) ||
--			is_sbi_flag_set(sbi, SBI_IS_SHUTDOWN)) {
-+	if (unlikely(ni.blk_addr == NULL_ADDR || ni.blk_addr == NEW_ADDR)) {
- 		ClearPageUptodate(page);
- 		return -ENOENT;
- 	}
+ 	t64 = le64_to_cpu(attr->nres.svcn);
+ 
+-	/* offset to packed runs is out-of-bounds */
+-	if (roff > asize) {
+-		err = -EINVAL;
+-		goto out;
+-	}
+-
+ 	err = run_unpack_ex(run, sbi, ino, t64, le64_to_cpu(attr->nres.evcn),
+ 			    t64, Add2Ptr(attr, roff), asize - roff);
+ 	if (err < 0)
+-- 
+2.35.1
+
 
 
