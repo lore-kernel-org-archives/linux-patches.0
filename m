@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC78F28EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:29:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12216C433EF;
-	Mon,  2 Jan 2023 11:29:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39FF228EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:29:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A51E6C433EF;
+	Mon,  2 Jan 2023 11:29:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658948;
-	bh=V8JDEOHxZYVaGl2463GBfoBZjYbsHwH465h8fIzUM6Q=;
+	s=korg; t=1672658951;
+	bh=uE67fX6++AUoUcMeQtfMYz/Z7jd15Bz5ZGJmjvZ3WRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZhznYxnFfE7qc4Iw1qB8KbR27QN6R4qDfhe/M592YkC1WWuvDgg1Pd+YgT28gkIVC
-	 ixH34cQZFfN0GHxVyLszgB6pBNDvuHz77A6PcQynVPKIRVbx0qn/WPNuy3DSOmKTVM
-	 WQ/zH2yP8cXAJV12Z2cfFrrOA4BPTYYWOpXxPf64=
+	b=i8ifWIBP/tvhU/VpOSbpSOK9423CgPlpUe1il7AWdbqQ0jSeViyke8Jr0F+2veT4O
+	 yfsDlhAzVkEGQ2VGYTjaPA4XBNxwXpEOstW+uPsNnkz7dZc3wv/47hsHT7K36ek3pA
+	 wU/gkLhC7/6z874W32csUUq5rECmISAp8SbMzwdc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Egorkine <arteme@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.0 60/74] ALSA: line6: fix stack overflow in line6_midi_transmit
-Date: Mon,  2 Jan 2023 12:22:33 +0100
-Message-Id: <20230102110554.660113039@linuxfoundation.org>
+Subject: [PATCH 6.0 61/74] ALSA: hda/hdmi: Static PCM mapping again with AMD HDMI codecs
+Date: Mon,  2 Jan 2023 12:22:34 +0100
+Message-Id: <20230102110554.702479190@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
 References: <20230102110552.061937047@linuxfoundation.org>
@@ -34,34 +34,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Artem Egorkine <arteme@gmail.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit b8800d324abb50160560c636bfafe2c81001b66c upstream.
+commit 090ddad4c7a9fefd647c762093a555870a19c8b2 upstream.
 
-Correctly calculate available space including the size of the chunk
-buffer. This fixes a buffer overflow when multiple MIDI sysex
-messages are sent to a PODxt device.
+The recent code refactoring for HD-audio HDMI codec driver caused a
+regression on AMD/ATI HDMI codecs; namely, PulseAudioand pipewire
+don't recognize HDMI outputs any longer while the direct output via
+ALSA raw access still works.
 
-Signed-off-by: Artem Egorkine <arteme@gmail.com>
+The problem turned out that, after the code refactoring, the driver
+assumes only the dynamic PCM assignment, and when a PCM stream that
+still isn't assigned to any pin gets opened, the driver tries to
+assign any free converter to the PCM stream.  This behavior is OK for
+Intel and other codecs, as they have arbitrary connections between
+pins and converters.  OTOH, on AMD chips that have a 1:1 mapping
+between pins and converters, this may end up with blocking the open of
+the next PCM stream for the pin that is tied with the formerly taken
+converter.
+
+Also, with the code refactoring, more PCM streams are exposed than
+necessary as we assume all converters can be used, while this isn't
+true for AMD case.  This may change the PCM stream assignment and
+confuse users as well.
+
+This patch fixes those problems by:
+
+- Introducing a flag spec->static_pcm_mapping, and if it's set, the
+  driver applies the static mapping between pins and converters at the
+  probe time
+- Limiting the number of PCM streams per pins, too; this avoids the
+  superfluous PCM streams
+
+Fixes: ef6f5494faf6 ("ALSA: hda/hdmi: Use only dynamic PCM device allocation")
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20221225105728.1153989-2-arteme@gmail.com
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216836
+Co-developed-by: Jaroslav Kysela <perex@perex.cz>
+Signed-off-by: Jaroslav Kysela <perex@perex.cz>
+Link: https://lore.kernel.org/r/20221228125714.16329-1-tiwai@suse.de
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/line6/midi.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_hdmi.c |   27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
---- a/sound/usb/line6/midi.c
-+++ b/sound/usb/line6/midi.c
-@@ -44,7 +44,8 @@ static void line6_midi_transmit(struct s
- 	int req, done;
+--- a/sound/pci/hda/patch_hdmi.c
++++ b/sound/pci/hda/patch_hdmi.c
+@@ -167,6 +167,7 @@ struct hdmi_spec {
+ 	struct hdmi_ops ops;
  
- 	for (;;) {
--		req = min(line6_midibuf_bytes_free(mb), line6->max_packet_size);
-+		req = min3(line6_midibuf_bytes_free(mb), line6->max_packet_size,
-+			   LINE6_FALLBACK_MAXPACKETSIZE);
- 		done = snd_rawmidi_transmit_peek(substream, chunk, req);
+ 	bool dyn_pin_out;
++	bool static_pcm_mapping;
+ 	/* hdmi interrupt trigger control flag for Nvidia codec */
+ 	bool hdmi_intr_trig_ctrl;
+ 	bool nv_dp_workaround; /* workaround DP audio infoframe for Nvidia */
+@@ -1525,13 +1526,16 @@ static void update_eld(struct hda_codec
+ 	 */
+ 	pcm_jack = pin_idx_to_pcm_jack(codec, per_pin);
  
- 		if (done == 0)
+-	if (eld->eld_valid) {
+-		hdmi_attach_hda_pcm(spec, per_pin);
+-		hdmi_pcm_setup_pin(spec, per_pin);
+-	} else {
+-		hdmi_pcm_reset_pin(spec, per_pin);
+-		hdmi_detach_hda_pcm(spec, per_pin);
++	if (!spec->static_pcm_mapping) {
++		if (eld->eld_valid) {
++			hdmi_attach_hda_pcm(spec, per_pin);
++			hdmi_pcm_setup_pin(spec, per_pin);
++		} else {
++			hdmi_pcm_reset_pin(spec, per_pin);
++			hdmi_detach_hda_pcm(spec, per_pin);
++		}
+ 	}
++
+ 	/* if pcm_idx == -1, it means this is in monitor connection event
+ 	 * we can get the correct pcm_idx now.
+ 	 */
+@@ -2281,8 +2285,8 @@ static int generic_hdmi_build_pcms(struc
+ 	struct hdmi_spec *spec = codec->spec;
+ 	int idx, pcm_num;
+ 
+-	/* limit the PCM devices to the codec converters */
+-	pcm_num = spec->num_cvts;
++	/* limit the PCM devices to the codec converters or available PINs */
++	pcm_num = min(spec->num_cvts, spec->num_pins);
+ 	codec_dbg(codec, "hdmi: pcm_num set to %d\n", pcm_num);
+ 
+ 	for (idx = 0; idx < pcm_num; idx++) {
+@@ -2379,6 +2383,11 @@ static int generic_hdmi_build_controls(s
+ 		struct hdmi_spec_per_pin *per_pin = get_pin(spec, pin_idx);
+ 		struct hdmi_eld *pin_eld = &per_pin->sink_eld;
+ 
++		if (spec->static_pcm_mapping) {
++			hdmi_attach_hda_pcm(spec, per_pin);
++			hdmi_pcm_setup_pin(spec, per_pin);
++		}
++
+ 		pin_eld->eld_valid = false;
+ 		hdmi_present_sense(per_pin, 0);
+ 	}
+@@ -4419,6 +4428,8 @@ static int patch_atihdmi(struct hda_code
+ 
+ 	spec = codec->spec;
+ 
++	spec->static_pcm_mapping = true;
++
+ 	spec->ops.pin_get_eld = atihdmi_pin_get_eld;
+ 	spec->ops.pin_setup_infoframe = atihdmi_pin_setup_infoframe;
+ 	spec->ops.pin_hbr_setup = atihdmi_pin_hbr_setup;
 
 
