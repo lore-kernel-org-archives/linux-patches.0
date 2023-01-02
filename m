@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD7228EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:30:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C04C43396;
-	Mon,  2 Jan 2023 11:30:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF5B28EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:30:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01233C433EF;
+	Mon,  2 Jan 2023 11:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672659003;
-	bh=lFd0EV29iKZDDLDqXWbMV8D6+pQyitgP/uqWRvgNBGg=;
+	s=korg; t=1672659006;
+	bh=hVP9hppalFoxEyMc/MrU3ur0YK6Vixt6XX7v7RUcVO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DArD/APPt2I7cpEW8v5W4UbRerFJ7sRWYXnhoi/kzqIpQrNEcrE73Z9JNkNSObucj
-	 8DpSogEDNo3uEVtNrPow15XRRvD1pnaEAvgdlsRg0n+DNKdMxCmrjKFXeT9jYtTWTQ
-	 mVfuhJUrHIlITRr4wvGcdlLCVgL/YMoHGqR8x2ps=
+	b=M6H+IbR0c/3qQdBxCARJaO2hu/0rVgAdiVpGEckp1k0tyEiiHpuAfjhmO/ktEniCE
+	 ASVtj2I8r1HbvkW4erpUZ+3hplVGOHNUtydlsd8ZThznBAutpiphR7DksgGBBe3O07
+	 UOJOKxZbIs58I3WYmZbJU94TALuZ1/WdGVCyKBY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>
-Subject: [PATCH 6.0 74/74] kcsan: Instrument memcpy/memset/memmove with newer Clang
-Date: Mon,  2 Jan 2023 12:22:47 +0100
-Message-Id: <20230102110555.233324012@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.0 68/74] block: Do not reread partition table on exclusively open device
+Date: Mon,  2 Jan 2023 12:22:41 +0100
+Message-Id: <20230102110554.997273585@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
 References: <20230102110552.061937047@linuxfoundation.org>
@@ -34,92 +34,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marco Elver <elver@google.com>
+From: Jan Kara <jack@suse.cz>
 
-commit 7c201739beef1a586d806463f1465429cdce34c5 upstream.
+commit 36369f46e91785688a5f39d7a5590e3f07981316 upstream.
 
-With Clang version 16+, -fsanitize=thread will turn
-memcpy/memset/memmove calls in instrumented functions into
-__tsan_memcpy/__tsan_memset/__tsan_memmove calls respectively.
+Since commit 10c70d95c0f2 ("block: remove the bd_openers checks in
+blk_drop_partitions") we allow rereading of partition table although
+there are users of the block device. This has an undesirable consequence
+that e.g. if sda and sdb are assembled to a RAID1 device md0 with
+partitions, BLKRRPART ioctl on sda will rescan partition table and
+create sda1 device. This partition device under a raid device confuses
+some programs (such as libstorage-ng used for initial partitioning for
+distribution installation) leading to failures.
 
-Add these functions to the core KCSAN runtime, so that we (a) catch data
-races with mem* functions, and (b) won't run into linker errors with
-such newer compilers.
+Fix the problem refusing to rescan partitions if there is another user
+that has the block device exclusively open.
 
-Cc: stable@vger.kernel.org # v5.10+
-Signed-off-by: Marco Elver <elver@google.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/all/20221130135344.2ul4cyfstfs3znxg@quack3
+Fixes: 10c70d95c0f2 ("block: remove the bd_openers checks in blk_drop_partitions")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221130175653.24299-1-jack@suse.cz
+[axboe: fold in followup fix]
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kcsan/core.c |   50 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+ block/blk.h   |    2 +-
+ block/genhd.c |    7 +++++--
+ block/ioctl.c |   12 +++++++-----
+ 3 files changed, 13 insertions(+), 8 deletions(-)
 
---- a/kernel/kcsan/core.c
-+++ b/kernel/kcsan/core.c
-@@ -14,10 +14,12 @@
- #include <linux/init.h>
- #include <linux/kernel.h>
- #include <linux/list.h>
-+#include <linux/minmax.h>
- #include <linux/moduleparam.h>
- #include <linux/percpu.h>
- #include <linux/preempt.h>
- #include <linux/sched.h>
-+#include <linux/string.h>
- #include <linux/uaccess.h>
- 
- #include "encoding.h"
-@@ -1308,3 +1310,51 @@ noinline void __tsan_atomic_signal_fence
- 	}
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -429,7 +429,7 @@ static inline struct kmem_cache *blk_get
  }
- EXPORT_SYMBOL(__tsan_atomic_signal_fence);
-+
-+#ifdef __HAVE_ARCH_MEMSET
-+void *__tsan_memset(void *s, int c, size_t count);
-+noinline void *__tsan_memset(void *s, int c, size_t count)
-+{
-+	/*
-+	 * Instead of not setting up watchpoints where accessed size is greater
-+	 * than MAX_ENCODABLE_SIZE, truncate checked size to MAX_ENCODABLE_SIZE.
-+	 */
-+	size_t check_len = min_t(size_t, count, MAX_ENCODABLE_SIZE);
-+
-+	check_access(s, check_len, KCSAN_ACCESS_WRITE, _RET_IP_);
-+	return memset(s, c, count);
-+}
-+#else
-+void *__tsan_memset(void *s, int c, size_t count) __alias(memset);
-+#endif
-+EXPORT_SYMBOL(__tsan_memset);
-+
-+#ifdef __HAVE_ARCH_MEMMOVE
-+void *__tsan_memmove(void *dst, const void *src, size_t len);
-+noinline void *__tsan_memmove(void *dst, const void *src, size_t len)
-+{
-+	size_t check_len = min_t(size_t, len, MAX_ENCODABLE_SIZE);
-+
-+	check_access(dst, check_len, KCSAN_ACCESS_WRITE, _RET_IP_);
-+	check_access(src, check_len, 0, _RET_IP_);
-+	return memmove(dst, src, len);
-+}
-+#else
-+void *__tsan_memmove(void *dst, const void *src, size_t len) __alias(memmove);
-+#endif
-+EXPORT_SYMBOL(__tsan_memmove);
-+
-+#ifdef __HAVE_ARCH_MEMCPY
-+void *__tsan_memcpy(void *dst, const void *src, size_t len);
-+noinline void *__tsan_memcpy(void *dst, const void *src, size_t len)
-+{
-+	size_t check_len = min_t(size_t, len, MAX_ENCODABLE_SIZE);
-+
-+	check_access(dst, check_len, KCSAN_ACCESS_WRITE, _RET_IP_);
-+	check_access(src, check_len, 0, _RET_IP_);
-+	return memcpy(dst, src, len);
-+}
-+#else
-+void *__tsan_memcpy(void *dst, const void *src, size_t len) __alias(memcpy);
-+#endif
-+EXPORT_SYMBOL(__tsan_memcpy);
+ struct request_queue *blk_alloc_queue(int node_id, bool alloc_srcu);
+ 
+-int disk_scan_partitions(struct gendisk *disk, fmode_t mode);
++int disk_scan_partitions(struct gendisk *disk, fmode_t mode, void *owner);
+ 
+ int disk_alloc_events(struct gendisk *disk);
+ void disk_add_events(struct gendisk *disk);
+--- a/block/genhd.c
++++ b/block/genhd.c
+@@ -356,7 +356,7 @@ void disk_uevent(struct gendisk *disk, e
+ }
+ EXPORT_SYMBOL_GPL(disk_uevent);
+ 
+-int disk_scan_partitions(struct gendisk *disk, fmode_t mode)
++int disk_scan_partitions(struct gendisk *disk, fmode_t mode, void *owner)
+ {
+ 	struct block_device *bdev;
+ 
+@@ -366,6 +366,9 @@ int disk_scan_partitions(struct gendisk
+ 		return -EINVAL;
+ 	if (disk->open_partitions)
+ 		return -EBUSY;
++	/* Someone else has bdev exclusively open? */
++	if (disk->part0->bd_holder && disk->part0->bd_holder != owner)
++		return -EBUSY;
+ 
+ 	set_bit(GD_NEED_PART_SCAN, &disk->state);
+ 	bdev = blkdev_get_by_dev(disk_devt(disk), mode, NULL);
+@@ -499,7 +502,7 @@ int __must_check device_add_disk(struct
+ 
+ 		bdev_add(disk->part0, ddev->devt);
+ 		if (get_capacity(disk))
+-			disk_scan_partitions(disk, FMODE_READ);
++			disk_scan_partitions(disk, FMODE_READ, NULL);
+ 
+ 		/*
+ 		 * Announce the disk and partitions after all partitions are
+--- a/block/ioctl.c
++++ b/block/ioctl.c
+@@ -467,9 +467,10 @@ static int blkdev_bszset(struct block_de
+  * user space. Note the separate arg/argp parameters that are needed
+  * to deal with the compat_ptr() conversion.
+  */
+-static int blkdev_common_ioctl(struct block_device *bdev, fmode_t mode,
+-				unsigned cmd, unsigned long arg, void __user *argp)
++static int blkdev_common_ioctl(struct file *file, fmode_t mode, unsigned cmd,
++			       unsigned long arg, void __user *argp)
+ {
++	struct block_device *bdev = I_BDEV(file->f_mapping->host);
+ 	unsigned int max_sectors;
+ 
+ 	switch (cmd) {
+@@ -527,7 +528,8 @@ static int blkdev_common_ioctl(struct bl
+ 			return -EACCES;
+ 		if (bdev_is_partition(bdev))
+ 			return -EINVAL;
+-		return disk_scan_partitions(bdev->bd_disk, mode & ~FMODE_EXCL);
++		return disk_scan_partitions(bdev->bd_disk, mode & ~FMODE_EXCL,
++					    file);
+ 	case BLKTRACESTART:
+ 	case BLKTRACESTOP:
+ 	case BLKTRACETEARDOWN:
+@@ -605,7 +607,7 @@ long blkdev_ioctl(struct file *file, uns
+ 		break;
+ 	}
+ 
+-	ret = blkdev_common_ioctl(bdev, mode, cmd, arg, argp);
++	ret = blkdev_common_ioctl(file, mode, cmd, arg, argp);
+ 	if (ret != -ENOIOCTLCMD)
+ 		return ret;
+ 
+@@ -674,7 +676,7 @@ long compat_blkdev_ioctl(struct file *fi
+ 		break;
+ 	}
+ 
+-	ret = blkdev_common_ioctl(bdev, mode, cmd, arg, argp);
++	ret = blkdev_common_ioctl(file, mode, cmd, arg, argp);
+ 	if (ret == -ENOIOCTLCMD && disk->fops->compat_ioctl)
+ 		ret = disk->fops->compat_ioctl(bdev, mode, cmd, arg);
+ 
 
 
