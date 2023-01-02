@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DDDC28EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:26:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC032C433EF;
-	Mon,  2 Jan 2023 11:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2728828EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:27:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA54C433EF;
+	Mon,  2 Jan 2023 11:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658818;
-	bh=jhGHPPiCg8PuuPbx27YsQpFMkeaCpoT/eez0u9GB/Jc=;
+	s=korg; t=1672658821;
+	bh=LFcNYpLyI29e/cvimqjo2FIsGXTD9Fj8wyk2araQHQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oxfm26sKJjVIzqdGXFGBT/NbWIm+90JOmbRyBYReKncvrYjFVQC+X8KA/rdbHM0D9
-	 2FDBkWXVOHU4pXD3AJzru8b5MJ7SRd9nhduWruxZVWaYYuntQ1Kt42DQdRdIOtSTp/
-	 ybgF1cUXJ8hrg2PzB58v6DRNiGDc+ubB0vU1BJYU=
+	b=Geg9sYMqWuPvRHq4lkhyxt55b4dW0kZMJe2dZBIGc3NbeXIxmHRa5RynSAl3/Ors3
+	 d6CR8K36Wr6RjhsM7ZDkZyvTp0/nQBStVcWxfkDtfEJM5BfSBdFlxFiCnpDT3fzFi0
+	 COEaqxwuR8Gjp5a5K6Y3ce5oY4xEPs8Gee6LYm1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Steve French <stfrench@microsoft.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Klaus Jensen <k.jensen@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 11/74] cifs: dont leak -ENOMEM in smb2_open_file()
-Date: Mon,  2 Jan 2023 12:21:44 +0100
-Message-Id: <20230102110552.525903229@linuxfoundation.org>
+Subject: [PATCH 6.0 12/74] nvme-pci: fix doorbell buffer value endianness
+Date: Mon,  2 Jan 2023 12:21:45 +0100
+Message-Id: <20230102110552.562892632@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
 References: <20230102110552.061937047@linuxfoundation.org>
@@ -35,38 +36,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@cjr.nz>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-[ Upstream commit f60ffa662d1427cfd31fe9d895c3566ac50bfe52 ]
+[ Upstream commit b5f96cb719d8ba220b565ddd3ba4ac0d8bcfb130 ]
 
-A NULL error response might be a valid case where smb2_reconnect()
-failed to reconnect the session and tcon due to a disconnected server
-prior to issuing the I/O operation, so don't leak -ENOMEM to userspace
-on such occasions.
+When using shadow doorbells, the event index and the doorbell values are
+written to host memory. Prior to this patch, the values written would
+erroneously be written in host endianness. This causes trouble on
+big-endian platforms. Fix this by adding missing endian conversions.
 
-Fixes: 76894f3e2f71 ("cifs: improve symlink handling for smb2+")
-Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+This issue was noticed by Guenter while testing various big-endian
+platforms under QEMU[1]. A similar fix required for hw/nvme in QEMU is
+up for review as well[2].
+
+  [1]: https://lore.kernel.org/qemu-devel/20221209110022.GA3396194@roeck-us.net/
+  [2]: https://lore.kernel.org/qemu-devel/20221212114409.34972-4-its@irrelevant.dk/
+
+Fixes: f9f38e33389c ("nvme: improve performance for virtual NVMe devices")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2file.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvme/host/pci.c | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
-diff --git a/fs/cifs/smb2file.c b/fs/cifs/smb2file.c
-index ffbd9a99fc12..ba6cc50af390 100644
---- a/fs/cifs/smb2file.c
-+++ b/fs/cifs/smb2file.c
-@@ -122,8 +122,8 @@ int smb2_open_file(const unsigned int xid, struct cifs_open_parms *oparms, __u32
- 		struct smb2_hdr *hdr = err_iov.iov_base;
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 6867620bcc98..0b97e8ce13e4 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -144,9 +144,9 @@ struct nvme_dev {
+ 	mempool_t *iod_mempool;
  
- 		if (unlikely(!err_iov.iov_base || err_buftype == CIFS_NO_BUFFER))
--			rc = -ENOMEM;
--		else if (hdr->Status == STATUS_STOPPED_ON_SYMLINK) {
-+			goto out;
-+		if (hdr->Status == STATUS_STOPPED_ON_SYMLINK) {
- 			rc = smb2_parse_symlink_response(oparms->cifs_sb, &err_iov,
- 							 &data->symlink_target);
- 			if (!rc) {
+ 	/* shadow doorbell buffer support: */
+-	u32 *dbbuf_dbs;
++	__le32 *dbbuf_dbs;
+ 	dma_addr_t dbbuf_dbs_dma_addr;
+-	u32 *dbbuf_eis;
++	__le32 *dbbuf_eis;
+ 	dma_addr_t dbbuf_eis_dma_addr;
+ 
+ 	/* host memory buffer support: */
+@@ -210,10 +210,10 @@ struct nvme_queue {
+ #define NVMEQ_SQ_CMB		1
+ #define NVMEQ_DELETE_ERROR	2
+ #define NVMEQ_POLLED		3
+-	u32 *dbbuf_sq_db;
+-	u32 *dbbuf_cq_db;
+-	u32 *dbbuf_sq_ei;
+-	u32 *dbbuf_cq_ei;
++	__le32 *dbbuf_sq_db;
++	__le32 *dbbuf_cq_db;
++	__le32 *dbbuf_sq_ei;
++	__le32 *dbbuf_cq_ei;
+ 	struct completion delete_done;
+ };
+ 
+@@ -340,11 +340,11 @@ static inline int nvme_dbbuf_need_event(u16 event_idx, u16 new_idx, u16 old)
+ }
+ 
+ /* Update dbbuf and return true if an MMIO is required */
+-static bool nvme_dbbuf_update_and_check_event(u16 value, u32 *dbbuf_db,
+-					      volatile u32 *dbbuf_ei)
++static bool nvme_dbbuf_update_and_check_event(u16 value, __le32 *dbbuf_db,
++					      volatile __le32 *dbbuf_ei)
+ {
+ 	if (dbbuf_db) {
+-		u16 old_value;
++		u16 old_value, event_idx;
+ 
+ 		/*
+ 		 * Ensure that the queue is written before updating
+@@ -352,8 +352,8 @@ static bool nvme_dbbuf_update_and_check_event(u16 value, u32 *dbbuf_db,
+ 		 */
+ 		wmb();
+ 
+-		old_value = *dbbuf_db;
+-		*dbbuf_db = value;
++		old_value = le32_to_cpu(*dbbuf_db);
++		*dbbuf_db = cpu_to_le32(value);
+ 
+ 		/*
+ 		 * Ensure that the doorbell is updated before reading the event
+@@ -363,7 +363,8 @@ static bool nvme_dbbuf_update_and_check_event(u16 value, u32 *dbbuf_db,
+ 		 */
+ 		mb();
+ 
+-		if (!nvme_dbbuf_need_event(*dbbuf_ei, value, old_value))
++		event_idx = le32_to_cpu(*dbbuf_ei);
++		if (!nvme_dbbuf_need_event(event_idx, value, old_value))
+ 			return false;
+ 	}
+ 
 -- 
 2.35.1
 
