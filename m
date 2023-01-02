@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E44F28EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:26:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB56FC433EF;
-	Mon,  2 Jan 2023 11:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BACA728EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:26:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4509FC433EF;
+	Mon,  2 Jan 2023 11:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658761;
-	bh=6jeyAYwb6wJwpbOI9L8YlEuhm7BWD1bw7/7XRTOae2k=;
+	s=korg; t=1672658763;
+	bh=TEJVPG19qhKHeTWREZwE5kkIv/mx/vgU0Tdx6nrpw4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kIp8E5GEk9aZW5JgGtug5GVYH0lrV8p0bI+CiZ8WDJnim8Xpc62n5rQTBvC5iqDuC
-	 Kt9EV9SXc8bV//ZQ2s12rN1xz60nUlBmXSK8VTRzBIZMGRYckRDC8RkGvPeAz7l85I
-	 q7zsRx3mXBrAzpZBci/E8cFvQoMJBiGpGaywczY0=
+	b=pCzwXi3JsZ63R2cLDedJUne2KGe0M1VyPrm7KlK0QoYdhXScC27pcmtyutMhHOkcX
+	 W15XxIZy4NvfgP4AfYUP6zwWJIvYwf597MFghD/q/QrOJVQmyyNLYQyyHlSCexnshN
+	 B6QNVnbgqdKB/Y2trbO7Uxi+qO6hOjgVBDU2EfR0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Mel Gorman <mgorman@techsingularity.net>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.1 43/71] rtmutex: Add acquire semantics for rtmutex lock acquisition slow path
-Date: Mon,  2 Jan 2023 12:22:08 +0100
-Message-Id: <20230102110553.299694452@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 6.1 61/71] md: fix a crash in mempool_free
+Date: Mon,  2 Jan 2023 12:22:26 +0100
+Message-Id: <20230102110554.055912645@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110551.509937186@linuxfoundation.org>
 References: <20230102110551.509937186@linuxfoundation.org>
@@ -35,219 +34,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mel Gorman <mgorman@techsingularity.net>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit 1c0908d8e441631f5b8ba433523cf39339ee2ba0 upstream.
+commit 341097ee53573e06ab9fc675d96a052385b851fa upstream.
 
-Jan Kara reported the following bug triggering on 6.0.5-rt14 running dbench
-on XFS on arm64.
+There's a crash in mempool_free when running the lvm test
+shell/lvchange-rebuild-raid.sh.
 
- kernel BUG at fs/inode.c:625!
- Internal error: Oops - BUG: 0 [#1] PREEMPT_RT SMP
- CPU: 11 PID: 6611 Comm: dbench Tainted: G            E   6.0.0-rt14-rt+ #1
- pc : clear_inode+0xa0/0xc0
- lr : clear_inode+0x38/0xc0
- Call trace:
-  clear_inode+0xa0/0xc0
-  evict+0x160/0x180
-  iput+0x154/0x240
-  do_unlinkat+0x184/0x300
-  __arm64_sys_unlinkat+0x48/0xc0
-  el0_svc_common.constprop.4+0xe4/0x2c0
-  do_el0_svc+0xac/0x100
-  el0_svc+0x78/0x200
-  el0t_64_sync_handler+0x9c/0xc0
-  el0t_64_sync+0x19c/0x1a0
+The reason for the crash is this:
+* super_written calls atomic_dec_and_test(&mddev->pending_writes) and
+  wake_up(&mddev->sb_wait). Then it calls rdev_dec_pending(rdev, mddev)
+  and bio_put(bio).
+* so, the process that waited on sb_wait and that is woken up is racing
+  with bio_put(bio).
+* if the process wins the race, it calls bioset_exit before bio_put(bio)
+  is executed.
+* bio_put(bio) attempts to free a bio into a destroyed bio set - causing
+  a crash in mempool_free.
 
-It also affects 6.1-rc7-rt5 and affects a preempt-rt fork of 5.14 so this
-is likely a bug that existed forever and only became visible when ARM
-support was added to preempt-rt. The same problem does not occur on x86-64
-and he also reported that converting sb->s_inode_wblist_lock to
-raw_spinlock_t makes the problem disappear indicating that the RT spinlock
-variant is the problem.
+We fix this bug by moving bio_put before atomic_dec_and_test.
 
-Which in turn means that RT mutexes on ARM64 and any other weakly ordered
-architecture are affected by this independent of RT.
+We also move rdev_dec_pending before atomic_dec_and_test as suggested by
+Neil Brown.
 
-Will Deacon observed:
+The function md_end_flush has a similar bug - we must call bio_put before
+we decrement the number of in-progress bios.
 
-  "I'd be more inclined to be suspicious of the slowpath tbh, as we need to
-   make sure that we have acquire semantics on all paths where the lock can
-   be taken. Looking at the rtmutex code, this really isn't obvious to me
-   -- for example, try_to_take_rt_mutex() appears to be able to return via
-   the 'takeit' label without acquire semantics and it looks like we might
-   be relying on the caller's subsequent _unlock_ of the wait_lock for
-   ordering, but that will give us release semantics which aren't correct."
+ BUG: kernel NULL pointer dereference, address: 0000000000000000
+ #PF: supervisor write access in kernel mode
+ #PF: error_code(0x0002) - not-present page
+ PGD 11557f0067 P4D 11557f0067 PUD 0
+ Oops: 0002 [#1] PREEMPT SMP
+ CPU: 0 PID: 73 Comm: kworker/0:1 Not tainted 6.1.0-rc3 #5
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-2 04/01/2014
+ Workqueue: kdelayd flush_expired_bios [dm_delay]
+ RIP: 0010:mempool_free+0x47/0x80
+ Code: 48 89 ef 5b 5d ff e0 f3 c3 48 89 f7 e8 32 45 3f 00 48 63 53 08 48 89 c6 3b 53 04 7d 2d 48 8b 43 10 8d 4a 01 48 89 df 89 4b 08 <48> 89 2c d0 e8 b0 45 3f 00 48 8d 7b 30 5b 5d 31 c9 ba 01 00 00 00
+ RSP: 0018:ffff88910036bda8 EFLAGS: 00010093
+ RAX: 0000000000000000 RBX: ffff8891037b65d8 RCX: 0000000000000001
+ RDX: 0000000000000000 RSI: 0000000000000202 RDI: ffff8891037b65d8
+ RBP: ffff8891447ba240 R08: 0000000000012908 R09: 00000000003d0900
+ R10: 0000000000000000 R11: 0000000000173544 R12: ffff889101a14000
+ R13: ffff8891562ac300 R14: ffff889102b41440 R15: ffffe8ffffa00d05
+ FS:  0000000000000000(0000) GS:ffff88942fa00000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000000000000 CR3: 0000001102e99000 CR4: 00000000000006b0
+ Call Trace:
+  <TASK>
+  clone_endio+0xf4/0x1c0 [dm_mod]
+  clone_endio+0xf4/0x1c0 [dm_mod]
+  __submit_bio+0x76/0x120
+  submit_bio_noacct_nocheck+0xb6/0x2a0
+  flush_expired_bios+0x28/0x2f [dm_delay]
+  process_one_work+0x1b4/0x300
+  worker_thread+0x45/0x3e0
+  ? rescuer_thread+0x380/0x380
+  kthread+0xc2/0x100
+  ? kthread_complete_and_exit+0x20/0x20
+  ret_from_fork+0x1f/0x30
+  </TASK>
+ Modules linked in: brd dm_delay dm_raid dm_mod af_packet uvesafb cfbfillrect cfbimgblt cn cfbcopyarea fb font fbdev tun autofs4 binfmt_misc configfs ipv6 virtio_rng virtio_balloon rng_core virtio_net pcspkr net_failover failover qemu_fw_cfg button mousedev raid10 raid456 libcrc32c async_raid6_recov async_memcpy async_pq raid6_pq async_xor xor async_tx raid1 raid0 md_mod sd_mod t10_pi crc64_rocksoft crc64 virtio_scsi scsi_mod evdev psmouse bsg scsi_common [last unloaded: brd]
+ CR2: 0000000000000000
+ ---[ end trace 0000000000000000 ]---
 
-Sebastian Andrzej Siewior prototyped a fix that does work based on that
-comment but it was a little bit overkill and added some fences that should
-not be necessary.
-
-The lock owner is updated with an IRQ-safe raw spinlock held, but the
-spin_unlock does not provide acquire semantics which are needed when
-acquiring a mutex.
-
-Adds the necessary acquire semantics for lock owner updates in the slow path
-acquisition and the waiter bit logic.
-
-It successfully completed 10 iterations of the dbench workload while the
-vanilla kernel fails on the first iteration.
-
-[ bigeasy@linutronix.de: Initial prototype fix ]
-
-Fixes: 700318d1d7b38 ("locking/rtmutex: Use acquire/release semantics")
-Fixes: 23f78d4a03c5 ("[PATCH] pi-futex: rt mutex core")
-Reported-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Mel Gorman <mgorman@techsingularity.net>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221202100223.6mevpbl7i6x5udfd@techsingularity.net
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/locking/rtmutex.c     |   55 +++++++++++++++++++++++++++++++++++--------
- kernel/locking/rtmutex_api.c |    6 ++--
- 2 files changed, 49 insertions(+), 12 deletions(-)
+ drivers/md/md.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/kernel/locking/rtmutex.c
-+++ b/kernel/locking/rtmutex.c
-@@ -89,15 +89,31 @@ static inline int __ww_mutex_check_kill(
-  * set this bit before looking at the lock.
-  */
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -509,13 +509,14 @@ static void md_end_flush(struct bio *bio
+ 	struct md_rdev *rdev = bio->bi_private;
+ 	struct mddev *mddev = rdev->mddev;
  
--static __always_inline void
--rt_mutex_set_owner(struct rt_mutex_base *lock, struct task_struct *owner)
-+static __always_inline struct task_struct *
-+rt_mutex_owner_encode(struct rt_mutex_base *lock, struct task_struct *owner)
- {
- 	unsigned long val = (unsigned long)owner;
- 
- 	if (rt_mutex_has_waiters(lock))
- 		val |= RT_MUTEX_HAS_WAITERS;
- 
--	WRITE_ONCE(lock->owner, (struct task_struct *)val);
-+	return (struct task_struct *)val;
-+}
++	bio_put(bio);
 +
-+static __always_inline void
-+rt_mutex_set_owner(struct rt_mutex_base *lock, struct task_struct *owner)
-+{
-+	/*
-+	 * lock->wait_lock is held but explicit acquire semantics are needed
-+	 * for a new lock owner so WRITE_ONCE is insufficient.
-+	 */
-+	xchg_acquire(&lock->owner, rt_mutex_owner_encode(lock, owner));
-+}
+ 	rdev_dec_pending(rdev, mddev);
+ 
+ 	if (atomic_dec_and_test(&mddev->flush_pending)) {
+ 		/* The pre-request flush has finished */
+ 		queue_work(md_wq, &mddev->flush_work);
+ 	}
+-	bio_put(bio);
+ }
+ 
+ static void md_submit_flush_data(struct work_struct *ws);
+@@ -913,10 +914,12 @@ static void super_written(struct bio *bi
+ 	} else
+ 		clear_bit(LastDev, &rdev->flags);
+ 
++	bio_put(bio);
 +
-+static __always_inline void rt_mutex_clear_owner(struct rt_mutex_base *lock)
-+{
-+	/* lock->wait_lock is held so the unlock provides release semantics. */
-+	WRITE_ONCE(lock->owner, rt_mutex_owner_encode(lock, NULL));
- }
- 
- static __always_inline void clear_rt_mutex_waiters(struct rt_mutex_base *lock)
-@@ -106,7 +122,8 @@ static __always_inline void clear_rt_mut
- 			((unsigned long)lock->owner & ~RT_MUTEX_HAS_WAITERS);
- }
- 
--static __always_inline void fixup_rt_mutex_waiters(struct rt_mutex_base *lock)
-+static __always_inline void
-+fixup_rt_mutex_waiters(struct rt_mutex_base *lock, bool acquire_lock)
- {
- 	unsigned long owner, *p = (unsigned long *) &lock->owner;
- 
-@@ -172,8 +189,21 @@ static __always_inline void fixup_rt_mut
- 	 * still set.
- 	 */
- 	owner = READ_ONCE(*p);
--	if (owner & RT_MUTEX_HAS_WAITERS)
--		WRITE_ONCE(*p, owner & ~RT_MUTEX_HAS_WAITERS);
-+	if (owner & RT_MUTEX_HAS_WAITERS) {
-+		/*
-+		 * See rt_mutex_set_owner() and rt_mutex_clear_owner() on
-+		 * why xchg_acquire() is used for updating owner for
-+		 * locking and WRITE_ONCE() for unlocking.
-+		 *
-+		 * WRITE_ONCE() would work for the acquire case too, but
-+		 * in case that the lock acquisition failed it might
-+		 * force other lockers into the slow path unnecessarily.
-+		 */
-+		if (acquire_lock)
-+			xchg_acquire(p, owner & ~RT_MUTEX_HAS_WAITERS);
-+		else
-+			WRITE_ONCE(*p, owner & ~RT_MUTEX_HAS_WAITERS);
-+	}
- }
- 
- /*
-@@ -208,6 +238,13 @@ static __always_inline void mark_rt_mute
- 		owner = *p;
- 	} while (cmpxchg_relaxed(p, owner,
- 				 owner | RT_MUTEX_HAS_WAITERS) != owner);
++	rdev_dec_pending(rdev, mddev);
 +
-+	/*
-+	 * The cmpxchg loop above is relaxed to avoid back-to-back ACQUIRE
-+	 * operations in the event of contention. Ensure the successful
-+	 * cmpxchg is visible.
-+	 */
-+	smp_mb__after_atomic();
+ 	if (atomic_dec_and_test(&mddev->pending_writes))
+ 		wake_up(&mddev->sb_wait);
+-	rdev_dec_pending(rdev, mddev);
+-	bio_put(bio);
  }
  
- /*
-@@ -1243,7 +1280,7 @@ static int __sched __rt_mutex_slowtryloc
- 	 * try_to_take_rt_mutex() sets the lock waiters bit
- 	 * unconditionally. Clean this up.
- 	 */
--	fixup_rt_mutex_waiters(lock);
-+	fixup_rt_mutex_waiters(lock, true);
- 
- 	return ret;
- }
-@@ -1604,7 +1641,7 @@ static int __sched __rt_mutex_slowlock(s
- 	 * try_to_take_rt_mutex() sets the waiter bit
- 	 * unconditionally. We might have to fix that up.
- 	 */
--	fixup_rt_mutex_waiters(lock);
-+	fixup_rt_mutex_waiters(lock, true);
- 
- 	trace_contention_end(lock, ret);
- 
-@@ -1719,7 +1756,7 @@ static void __sched rtlock_slowlock_lock
- 	 * try_to_take_rt_mutex() sets the waiter bit unconditionally.
- 	 * We might have to fix that up:
- 	 */
--	fixup_rt_mutex_waiters(lock);
-+	fixup_rt_mutex_waiters(lock, true);
- 	debug_rt_mutex_free_waiter(&waiter);
- 
- 	trace_contention_end(lock, 0);
---- a/kernel/locking/rtmutex_api.c
-+++ b/kernel/locking/rtmutex_api.c
-@@ -267,7 +267,7 @@ void __sched rt_mutex_init_proxy_locked(
- void __sched rt_mutex_proxy_unlock(struct rt_mutex_base *lock)
- {
- 	debug_rt_mutex_proxy_unlock(lock);
--	rt_mutex_set_owner(lock, NULL);
-+	rt_mutex_clear_owner(lock);
- }
- 
- /**
-@@ -382,7 +382,7 @@ int __sched rt_mutex_wait_proxy_lock(str
- 	 * try_to_take_rt_mutex() sets the waiter bit unconditionally. We might
- 	 * have to fix that up.
- 	 */
--	fixup_rt_mutex_waiters(lock);
-+	fixup_rt_mutex_waiters(lock, true);
- 	raw_spin_unlock_irq(&lock->wait_lock);
- 
- 	return ret;
-@@ -438,7 +438,7 @@ bool __sched rt_mutex_cleanup_proxy_lock
- 	 * try_to_take_rt_mutex() sets the waiter bit unconditionally. We might
- 	 * have to fix that up.
- 	 */
--	fixup_rt_mutex_waiters(lock);
-+	fixup_rt_mutex_waiters(lock, false);
- 
- 	raw_spin_unlock_irq(&lock->wait_lock);
- 
+ void md_super_write(struct mddev *mddev, struct md_rdev *rdev,
 
 
