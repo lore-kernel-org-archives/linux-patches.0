@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B77F28EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:27:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C599CC433EF;
-	Mon,  2 Jan 2023 11:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2D528EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:27:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F18BC433EF;
+	Mon,  2 Jan 2023 11:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658839;
-	bh=W953RpR2wsW4x8pPm0zb91O/iko3NzFuwtA6x/rdBow=;
+	s=korg; t=1672658841;
+	bh=OZpJqhQAttmZZ/KRw6qYQwysnKhALi1konYZ7deLMIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bvkkX9H0Ot7kH5yrKHJJBCv/wq2qXTDJSPF/mtx69AN69Th7JE/g3GLNAXZ8z43vB
-	 4kZRQCd4YaANDmfeHmJLo9J8y0n3xxXCPA6hCtRjNYQ1/1TJVBhld/2SbmJlLnVHup
-	 PxIvOkvueNgw1l3AV/OX1NrSIxh7ntgcR/L5qcFc=
+	b=q1TSFrb5avNaIswQACcX9umCHNAY1waNG+PjBNFcxz2qjUAARa2MpClz0SRJvRgoE
+	 pl8tlclYVI49Njc1f5W0VuLZlkyN1s8SaIHqnx345/3DmIDvGTWH/lzoM2qF86cPCu
+	 QmO5RxnvSAOATO2LRyHiU83pCGN04oyZnjorUK8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi Zhang <yi.zhang@redhat.com>,
-	Yu Kuai <yukuai3@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Andreas Herrmann <aherrmann@suse.de>,
+	Tejun Heo <tj@kernel.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 19/74] block, bfq: fix uaf for bfqq in bfq_exit_icq_bfqq
-Date: Mon,  2 Jan 2023 12:21:52 +0100
-Message-Id: <20230102110552.878455778@linuxfoundation.org>
+Subject: [PATCH 6.0 02/74] blk-cgroup: fix error unwinding in blkcg_init_queue
+Date: Mon,  2 Jan 2023 12:21:35 +0100
+Message-Id: <20230102110552.167118885@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
 References: <20230102110552.061937047@linuxfoundation.org>
@@ -36,40 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 246cf66e300b76099b5dbd3fdd39e9a5dbc53f02 ]
+[ Upstream commit 33dc62796cb657a633050138a86253fb2a553713 ]
 
-Commit 64dc8c732f5c ("block, bfq: fix possible uaf for 'bfqq->bic'")
-will access 'bic->bfqq' in bic_set_bfqq(), however, bfq_exit_icq_bfqq()
-can free bfqq first, and then call bic_set_bfqq(), which will cause uaf.
+When blk_throtl_init fails, we need to call blk_ioprio_exit.  Switch to
+proper goto based unwinding to fix this.
 
-Fix the problem by moving bfq_exit_bfqq() behind bic_set_bfqq().
-
-Fixes: 64dc8c732f5c ("block, bfq: fix possible uaf for 'bfqq->bic'")
-Reported-by: Yi Zhang <yi.zhang@redhat.com>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Link: https://lore.kernel.org/r/20221226030605.1437081-1-yukuai1@huaweicloud.com
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Andreas Herrmann <aherrmann@suse.de>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20220921180501.1539876-2-hch@lst.de
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 813e693023ba ("blk-iolatency: Fix memory leak on add_disk() failures")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bfq-iosched.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-cgroup.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 528ca21044a5..7d2ca122362f 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -5385,8 +5385,8 @@ static void bfq_exit_icq_bfqq(struct bfq_io_cq *bic, bool is_sync)
- 		unsigned long flags;
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index c8f0c865bf4e..bcd3873ac5ff 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -1297,17 +1297,18 @@ int blkcg_init_queue(struct request_queue *q)
  
- 		spin_lock_irqsave(&bfqd->lock, flags);
--		bfq_exit_bfqq(bfqd, bfqq);
- 		bic_set_bfqq(bic, NULL, is_sync);
-+		bfq_exit_bfqq(bfqd, bfqq);
- 		spin_unlock_irqrestore(&bfqd->lock, flags);
- 	}
- }
+ 	ret = blk_throtl_init(q);
+ 	if (ret)
+-		goto err_destroy_all;
++		goto err_ioprio_exit;
+ 
+ 	ret = blk_iolatency_init(q);
+-	if (ret) {
+-		blk_throtl_exit(q);
+-		blk_ioprio_exit(q);
+-		goto err_destroy_all;
+-	}
++	if (ret)
++		goto err_throtl_exit;
+ 
+ 	return 0;
+ 
++err_throtl_exit:
++	blk_throtl_exit(q);
++err_ioprio_exit:
++	blk_ioprio_exit(q);
+ err_destroy_all:
+ 	blkg_destroy_all(q);
+ 	return ret;
 -- 
 2.35.1
 
