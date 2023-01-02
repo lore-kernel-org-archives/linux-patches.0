@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA3428EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:25:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FFFAC433D2;
-	Mon,  2 Jan 2023 11:25:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 413CE28EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:25:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9937C433D2;
+	Mon,  2 Jan 2023 11:25:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658737;
-	bh=qS78GR4cPsQXWAQr0kYVK08W+uNAJy5SsAjZXYvwqks=;
+	s=korg; t=1672658740;
+	bh=lasleWUw7vzBpGUvHnIfMOkjVTi4DEd7O+vWu2gOH94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J2bW06KdnDSJXUQBbAxvrcRSo9cT+JETcJANLbjv57lCflNL+7I+07edSXIT7L9IQ
-	 StqnAt6nMEzdGFleWph/8sbCc6U2IOR9sYRQhMWd1ueM5sMI2OxO3tQmTYrnbcjdk5
-	 AEZ8GEwyrxCE/U3Z1dH5JWlFvihl5PYFn1mMbihA=
+	b=OuBkZIEz8O+CbKQXxtoG/m9eAqifFdJCOqKg2fqd8XoLIiMAITD468i2FnH6hs1nr
+	 NXYLp+CnbsZwP9s2aQaHN5MKZGvai4gYoFlQYPPbBQscIGx6nKblGfSI8a3n6orY0m
+	 mSjyM1m0XQQ/x0EOeRPblT5VuBmmES+iFdrr/hzc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Benjamin Cheng <ben@bcheng.me>,
-	bilkow@tutanota.com,
-	Paul <paul@zogpog.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Philipp Zabel <philipp.zabel@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 52/71] ACPI: x86: s2idle: Stop using AMD specific codepath for Rembrandt+
-Date: Mon,  2 Jan 2023 12:22:17 +0100
-Message-Id: <20230102110553.663640932@linuxfoundation.org>
+	Wang Yufen <wangyufen@huawei.com>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.1 53/71] binfmt: Fix error return code in load_elf_fdpic_binary()
+Date: Mon,  2 Jan 2023 12:22:18 +0100
+Message-Id: <20230102110553.713378004@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110551.509937186@linuxfoundation.org>
 References: <20230102110551.509937186@linuxfoundation.org>
@@ -38,192 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Wang Yufen <wangyufen@huawei.com>
 
-commit e555c85792bd5f9828a2fd2ca9761f70efb1c77b upstream.
+commit e7f703ff2507f4e9f496da96cd4b78fd3026120c upstream.
 
-After we introduced a module parameter and quirk infrastructure for
-picking the Microsoft GUID over the SOC vendor GUID we discovered
-that lots and lots of systems are getting this wrong.
+Fix to return a negative error code from create_elf_fdpic_tables()
+instead of 0.
 
-The table continues to grow, and is becoming unwieldy.
-
-We don't really have any benefit to forcing vendors to populate the
-AMD GUID. This is just extra work, and more and more vendors seem
-to mess it up.  As the Microsoft GUID is used by Windows as well,
-it's very likely that it won't be messed up like this.
-
-So drop all the quirks forcing it and the Rembrandt behavior. This
-means that Cezanne or later effectively only run the Microsoft GUID
-codepath with the exception of HP Elitebook 8*5 G9.
-
-Fixes: fd894f05cf30 ("ACPI: x86: s2idle: If a new AMD _HID is missing assume Rembrandt")
-Cc: stable@vger.kernel.org # 6.1
-Reported-by: Benjamin Cheng <ben@bcheng.me>
-Reported-by: bilkow@tutanota.com
-Reported-by: Paul <paul@zogpog.com>
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2292
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216768
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Philipp Zabel <philipp.zabel@gmail.com>
-Tested-by: Philipp Zabel <philipp.zabel@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/1669945261-30271-1-git-send-email-wangyufen@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/x86/s2idle.c | 87 ++-------------------------------------
- 1 file changed, 3 insertions(+), 84 deletions(-)
+ fs/binfmt_elf_fdpic.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/x86/s2idle.c b/drivers/acpi/x86/s2idle.c
-index 422415cb14f4..c7afce465a07 100644
---- a/drivers/acpi/x86/s2idle.c
-+++ b/drivers/acpi/x86/s2idle.c
-@@ -28,10 +28,6 @@ static bool sleep_no_lps0 __read_mostly;
- module_param(sleep_no_lps0, bool, 0644);
- MODULE_PARM_DESC(sleep_no_lps0, "Do not use the special LPS0 device interface");
+--- a/fs/binfmt_elf_fdpic.c
++++ b/fs/binfmt_elf_fdpic.c
+@@ -434,8 +434,9 @@ static int load_elf_fdpic_binary(struct
+ 	current->mm->start_stack = current->mm->start_brk + stack_size;
+ #endif
  
--static bool prefer_microsoft_dsm_guid __read_mostly;
--module_param(prefer_microsoft_dsm_guid, bool, 0644);
--MODULE_PARM_DESC(prefer_microsoft_dsm_guid, "Prefer using Microsoft GUID in LPS0 device _DSM evaluation");
--
- static const struct acpi_device_id lps0_device_ids[] = {
- 	{"PNP0D80", },
- 	{"", },
-@@ -369,27 +365,15 @@ out:
- }
+-	if (create_elf_fdpic_tables(bprm, current->mm,
+-				    &exec_params, &interp_params) < 0)
++	retval = create_elf_fdpic_tables(bprm, current->mm, &exec_params,
++					 &interp_params);
++	if (retval < 0)
+ 		goto error;
  
- struct amd_lps0_hid_device_data {
--	const unsigned int rev_id;
- 	const bool check_off_by_one;
--	const bool prefer_amd_guid;
- };
- 
- static const struct amd_lps0_hid_device_data amd_picasso = {
--	.rev_id = 0,
- 	.check_off_by_one = true,
--	.prefer_amd_guid = false,
- };
- 
- static const struct amd_lps0_hid_device_data amd_cezanne = {
--	.rev_id = 0,
- 	.check_off_by_one = false,
--	.prefer_amd_guid = false,
--};
--
--static const struct amd_lps0_hid_device_data amd_rembrandt = {
--	.rev_id = 2,
--	.check_off_by_one = false,
--	.prefer_amd_guid = true,
- };
- 
- static const struct acpi_device_id amd_hid_ids[] = {
-@@ -397,7 +381,6 @@ static const struct acpi_device_id amd_hid_ids[] = {
- 	{"AMD0005",	(kernel_ulong_t)&amd_picasso,	},
- 	{"AMDI0005",	(kernel_ulong_t)&amd_picasso,	},
- 	{"AMDI0006",	(kernel_ulong_t)&amd_cezanne,	},
--	{"AMDI0007",	(kernel_ulong_t)&amd_rembrandt,	},
- 	{}
- };
- 
-@@ -407,68 +390,7 @@ static int lps0_prefer_amd(const struct dmi_system_id *id)
- 	rev_id = 2;
- 	return 0;
- }
--
--static int lps0_prefer_microsoft(const struct dmi_system_id *id)
--{
--	pr_debug("Preferring Microsoft GUID.\n");
--	prefer_microsoft_dsm_guid = true;
--	return 0;
--}
--
- static const struct dmi_system_id s2idle_dmi_table[] __initconst = {
--	{
--		/*
--		 * ASUS TUF Gaming A17 FA707RE
--		 * https://bugzilla.kernel.org/show_bug.cgi?id=216101
--		 */
--		.callback = lps0_prefer_microsoft,
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
--			DMI_MATCH(DMI_PRODUCT_NAME, "ASUS TUF Gaming A17"),
--		},
--	},
--	{
--		/* ASUS ROG Zephyrus G14 (2022) */
--		.callback = lps0_prefer_microsoft,
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
--			DMI_MATCH(DMI_PRODUCT_NAME, "ROG Zephyrus G14 GA402"),
--		},
--	},
--	{
--		/*
--		 * Lenovo Yoga Slim 7 Pro X 14ARH7
--		 * https://bugzilla.kernel.org/show_bug.cgi?id=216473 : 82V2
--		 * https://bugzilla.kernel.org/show_bug.cgi?id=216438 : 82TL
--		 */
--		.callback = lps0_prefer_microsoft,
--		.matches = {
--			DMI_MATCH(DMI_BOARD_VENDOR, "LENOVO"),
--			DMI_MATCH(DMI_PRODUCT_NAME, "82"),
--		},
--	},
--	{
--		/*
--		 * ASUSTeK COMPUTER INC. ROG Flow X13 GV301RE_GV301RE
--		 * https://gitlab.freedesktop.org/drm/amd/-/issues/2148
--		 */
--		.callback = lps0_prefer_microsoft,
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
--			DMI_MATCH(DMI_PRODUCT_NAME, "ROG Flow X13 GV301"),
--		},
--	},
--	{
--		/*
--		 * ASUSTeK COMPUTER INC. ROG Flow X16 GV601RW_GV601RW
--		 * https://gitlab.freedesktop.org/drm/amd/-/issues/2148
--		 */
--		.callback = lps0_prefer_microsoft,
--		.matches = {
--			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
--			DMI_MATCH(DMI_PRODUCT_NAME, "ROG Flow X16 GV601"),
--		},
--	},
- 	{
- 		/*
- 		 * AMD Rembrandt based HP EliteBook 835/845/865 G9
-@@ -504,16 +426,14 @@ static int lps0_device_attach(struct acpi_device *adev,
- 		if (dev_id->id[0])
- 			data = (const struct amd_lps0_hid_device_data *) dev_id->driver_data;
- 		else
--			data = &amd_rembrandt;
--		rev_id = data->rev_id;
-+			data = &amd_cezanne;
- 		lps0_dsm_func_mask = validate_dsm(adev->handle,
- 					ACPI_LPS0_DSM_UUID_AMD, rev_id, &lps0_dsm_guid);
- 		if (lps0_dsm_func_mask > 0x3 && data->check_off_by_one) {
- 			lps0_dsm_func_mask = (lps0_dsm_func_mask << 1) | 0x1;
- 			acpi_handle_debug(adev->handle, "_DSM UUID %s: Adjusted function mask: 0x%x\n",
- 					  ACPI_LPS0_DSM_UUID_AMD, lps0_dsm_func_mask);
--		} else if (lps0_dsm_func_mask_microsoft > 0 && data->prefer_amd_guid &&
--				!prefer_microsoft_dsm_guid) {
-+		} else if (lps0_dsm_func_mask_microsoft > 0 && rev_id) {
- 			lps0_dsm_func_mask_microsoft = -EINVAL;
- 			acpi_handle_debug(adev->handle, "_DSM Using AMD method\n");
- 		}
-@@ -521,8 +441,7 @@ static int lps0_device_attach(struct acpi_device *adev,
- 		rev_id = 1;
- 		lps0_dsm_func_mask = validate_dsm(adev->handle,
- 					ACPI_LPS0_DSM_UUID, rev_id, &lps0_dsm_guid);
--		if (!prefer_microsoft_dsm_guid)
--			lps0_dsm_func_mask_microsoft = -EINVAL;
-+		lps0_dsm_func_mask_microsoft = -EINVAL;
- 	}
- 
- 	if (lps0_dsm_func_mask < 0 && lps0_dsm_func_mask_microsoft < 0)
--- 
-2.39.0
-
+ 	kdebug("- start_code  %lx", current->mm->start_code);
 
 
