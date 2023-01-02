@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8DF428EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:27:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4296EC433D2;
-	Mon,  2 Jan 2023 11:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 628BE28EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:27:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAD07C433D2;
+	Mon,  2 Jan 2023 11:27:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658823;
-	bh=K1PhWsGbQ5gNgxpKSIIlbiJAhdzV+dwMm3aemV00wSU=;
+	s=korg; t=1672658826;
+	bh=fsspzV8k+e7z6w6UrR/mBf/vzMpuXsMDC4eAprfOQ/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tef9CF6b6vkAmvVgnG8bJpapexleEUgBHCLxHpdseRp9ynQgjFk60Untx53URS/yt
-	 m9+3bplwz57m/sdn9e5sSVffBGXu2JZbWgbhf1iiWhUj7yylnkIl+cOxv+rwZRlAMj
-	 BfrkGamSrhJlry+n6qhPzupje+iKK06UDByVhJZ4=
+	b=1b4MDr2U24+IYgPpbp8ZWxTwa8OKTKAWN9zuD2pd0Kb4haJyVGrBI4Q/GKubo4mB0
+	 TTdh5UIVoCc4x/nWXuVgL5V9g+HB5Yrq6DQtuMvZspvAOU41pQ5eukW8p3WXIvM4Co
+	 MBzqH5RNnRqqkB1RInWzN52SFUTw74PIJPuLU6zI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
 	Keith Busch <kbusch@kernel.org>,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 13/74] nvme-pci: fix mempool alloc size
-Date: Mon,  2 Jan 2023 12:21:46 +0100
-Message-Id: <20230102110552.605423337@linuxfoundation.org>
+Subject: [PATCH 6.0 14/74] nvme-pci: fix page size checks
+Date: Mon,  2 Jan 2023 12:21:47 +0100
+Message-Id: <20230102110552.645725306@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
 References: <20230102110552.061937047@linuxfoundation.org>
@@ -40,47 +37,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit c89a529e823d51dd23c7ec0c047c7a454a428541 ]
+[ Upstream commit 841734234a28fd5cd0889b84bd4d93a0988fa11e ]
 
-Convert the max size to bytes to match the units of the divisor that
-calculates the worst-case number of PRP entries.
+The size allocated out of the dma pool is at most NVME_CTRL_PAGE_SIZE,
+which may be smaller than the PAGE_SIZE.
 
-The result is used to determine how many PRP Lists are required. The
-code was previously rounding this to 1 list, but we can require 2 in the
-worst case. In that scenario, the driver would corrupt memory beyond the
-size provided by the mempool.
-
-While unlikely to occur (you'd need a 4MB in exactly 127 phys segments
-on a queue that doesn't support SGLs), this memory corruption has been
-observed by kfence.
-
-Cc: Jens Axboe <axboe@kernel.dk>
-Fixes: 943e942e6266f ("nvme-pci: limit max IO size and segments to avoid high order allocations")
+Fixes: c61b82c7b7134 ("nvme-pci: fix PRP pool size")
 Signed-off-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Jens Axboe <axboe@kernel.dk>
-Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvme/host/pci.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 0b97e8ce13e4..b128e2e36b68 100644
+index b128e2e36b68..529b424ef9b2 100644
 --- a/drivers/nvme/host/pci.c
 +++ b/drivers/nvme/host/pci.c
-@@ -378,8 +378,8 @@ static bool nvme_dbbuf_update_and_check_event(u16 value, __le32 *dbbuf_db,
-  */
- static int nvme_pci_npages_prp(void)
+@@ -35,7 +35,7 @@
+ #define SQ_SIZE(q)	((q)->q_depth << (q)->sqes)
+ #define CQ_SIZE(q)	((q)->q_depth * sizeof(struct nvme_completion))
+ 
+-#define SGES_PER_PAGE	(PAGE_SIZE / sizeof(struct nvme_sgl_desc))
++#define SGES_PER_PAGE	(NVME_CTRL_PAGE_SIZE / sizeof(struct nvme_sgl_desc))
+ 
+ /*
+  * These can be higher, but we need to ensure that any command doesn't
+@@ -380,7 +380,7 @@ static int nvme_pci_npages_prp(void)
  {
--	unsigned nprps = DIV_ROUND_UP(NVME_MAX_KB_SZ + NVME_CTRL_PAGE_SIZE,
--				      NVME_CTRL_PAGE_SIZE);
-+	unsigned max_bytes = (NVME_MAX_KB_SZ * 1024) + NVME_CTRL_PAGE_SIZE;
-+	unsigned nprps = DIV_ROUND_UP(max_bytes, NVME_CTRL_PAGE_SIZE);
- 	return DIV_ROUND_UP(8 * nprps, PAGE_SIZE - 8);
+ 	unsigned max_bytes = (NVME_MAX_KB_SZ * 1024) + NVME_CTRL_PAGE_SIZE;
+ 	unsigned nprps = DIV_ROUND_UP(max_bytes, NVME_CTRL_PAGE_SIZE);
+-	return DIV_ROUND_UP(8 * nprps, PAGE_SIZE - 8);
++	return DIV_ROUND_UP(8 * nprps, NVME_CTRL_PAGE_SIZE - 8);
  }
  
+ /*
+@@ -390,7 +390,7 @@ static int nvme_pci_npages_prp(void)
+ static int nvme_pci_npages_sgl(void)
+ {
+ 	return DIV_ROUND_UP(NVME_MAX_SEGS * sizeof(struct nvme_sgl_desc),
+-			PAGE_SIZE);
++			NVME_CTRL_PAGE_SIZE);
+ }
+ 
+ static size_t nvme_pci_iod_alloc_size(void)
+@@ -721,7 +721,7 @@ static void nvme_pci_sgl_set_seg(struct nvme_sgl_desc *sge,
+ 		sge->length = cpu_to_le32(entries * sizeof(*sge));
+ 		sge->type = NVME_SGL_FMT_LAST_SEG_DESC << 4;
+ 	} else {
+-		sge->length = cpu_to_le32(PAGE_SIZE);
++		sge->length = cpu_to_le32(NVME_CTRL_PAGE_SIZE);
+ 		sge->type = NVME_SGL_FMT_SEG_DESC << 4;
+ 	}
+ }
 -- 
 2.35.1
 
