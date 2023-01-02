@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A676828EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:27:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E277C433EF;
-	Mon,  2 Jan 2023 11:27:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4675428EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:27:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0F0CC433EF;
+	Mon,  2 Jan 2023 11:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658867;
-	bh=ssXl2F8F5rCphLtIU1+Jb/fuLWIdStXhSXNdcphhmu8=;
+	s=korg; t=1672658870;
+	bh=YJy36GgUFuwVa9epmvWsRdS/BP4DZC3VsA6nXtMkFkA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=crP6JSe5E+TLdPngNwacoUwY99WcEV+0xIFGHedbLYH71MBYtkX1blsxIyMusxuzb
-	 TbrP8k2cwE9tEXaSYA1MeSSWevNsLquJlG1O2N9lJfqxz0lFVzWgE3YXqE8usbIHHy
-	 V/nVtQSv9bUAdvgbffkOVrL9sX1yeaN9kaTtQtOg=
+	b=xafK1pjjr/P1n4rOj0/Ef9GfNo7SfwmMWSmeFZn91Zlhp8paAEHC1j1qTJaBv0rpX
+	 X5o8BAGmJPHfu2DCQhdaoJEQAliHVMY6KakMSfN23E41GRwe5YMjh3r7c7hhW01wNN
+	 DLSiFGY5CmNxXLypPzs1VpJhv7FRqsNAxuJL/JGs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edward Lo <edward.lo@ambergroup.io>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Andreas Herrmann <aherrmann@suse.de>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 29/74] fs/ntfs3: Validate attribute name offset
-Date: Mon,  2 Jan 2023 12:22:02 +0100
-Message-Id: <20230102110553.326178532@linuxfoundation.org>
+Subject: [PATCH 6.0 03/74] blk-cgroup: remove blk_queue_root_blkg
+Date: Mon,  2 Jan 2023 12:21:36 +0100
+Message-Id: <20230102110552.208383783@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
 References: <20230102110552.061937047@linuxfoundation.org>
@@ -35,113 +37,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edward Lo <edward.lo@ambergroup.io>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 4f1dc7d9756e66f3f876839ea174df2e656b7f79 ]
+[ Upstream commit 928f6f00a91ecbef6cb1fe59474831ceaf205290 ]
 
-Although the attribute name length is checked before comparing it to
-some common names (e.g., $I30), the offset isn't. This adds a sanity
-check for the attribute name offset, guarantee the validity and prevent
-possible out-of-bound memory accesses.
+Just open code it in the only caller and drop the unused !BLK_CGROUP
+stub.
 
-[  191.720056] BUG: unable to handle page fault for address: ffffebde00000008
-[  191.721060] #PF: supervisor read access in kernel mode
-[  191.721586] #PF: error_code(0x0000) - not-present page
-[  191.722079] PGD 0 P4D 0
-[  191.722571] Oops: 0000 [#1] PREEMPT SMP KASAN NOPTI
-[  191.723179] CPU: 0 PID: 244 Comm: mount Not tainted 6.0.0-rc4 #28
-[  191.723749] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
-[  191.724832] RIP: 0010:kfree+0x56/0x3b0
-[  191.725870] Code: 80 48 01 d8 0f 82 65 03 00 00 48 c7 c2 00 00 00 80 48 2b 15 2c 06 dd 01 48 01 d0 48 c1 e8 0c 48 c1 e0 06 48 03 05 0a 069
-[  191.727375] RSP: 0018:ffff8880076f7878 EFLAGS: 00000286
-[  191.727897] RAX: ffffebde00000000 RBX: 0000000000000040 RCX: ffffffff8528d5b9
-[  191.728531] RDX: 0000777f80000000 RSI: ffffffff8522d49c RDI: 0000000000000040
-[  191.729183] RBP: ffff8880076f78a0 R08: 0000000000000000 R09: 0000000000000000
-[  191.729628] R10: ffff888008949fd8 R11: ffffed10011293fd R12: 0000000000000040
-[  191.730158] R13: ffff888008949f98 R14: ffff888008949ec0 R15: ffff888008949fb0
-[  191.730645] FS:  00007f3520cd7e40(0000) GS:ffff88805ba00000(0000) knlGS:0000000000000000
-[  191.731328] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  191.731667] CR2: ffffebde00000008 CR3: 0000000009704000 CR4: 00000000000006f0
-[  191.732568] Call Trace:
-[  191.733231]  <TASK>
-[  191.733860]  kvfree+0x2c/0x40
-[  191.734632]  ni_clear+0x180/0x290
-[  191.735085]  ntfs_evict_inode+0x45/0x70
-[  191.735495]  evict+0x199/0x280
-[  191.735996]  iput.part.0+0x286/0x320
-[  191.736438]  iput+0x32/0x50
-[  191.736811]  iget_failed+0x23/0x30
-[  191.737270]  ntfs_iget5+0x337/0x1890
-[  191.737629]  ? ntfs_clear_mft_tail+0x20/0x260
-[  191.738201]  ? ntfs_get_block_bmap+0x70/0x70
-[  191.738482]  ? ntfs_objid_init+0xf6/0x140
-[  191.738779]  ? ntfs_reparse_init+0x140/0x140
-[  191.739266]  ntfs_fill_super+0x121b/0x1b50
-[  191.739623]  ? put_ntfs+0x1d0/0x1d0
-[  191.739984]  ? asm_sysvec_apic_timer_interrupt+0x1b/0x20
-[  191.740466]  ? put_ntfs+0x1d0/0x1d0
-[  191.740787]  ? sb_set_blocksize+0x6a/0x80
-[  191.741272]  get_tree_bdev+0x232/0x370
-[  191.741829]  ? put_ntfs+0x1d0/0x1d0
-[  191.742669]  ntfs_fs_get_tree+0x15/0x20
-[  191.743132]  vfs_get_tree+0x4c/0x130
-[  191.743457]  path_mount+0x654/0xfe0
-[  191.743938]  ? putname+0x80/0xa0
-[  191.744271]  ? finish_automount+0x2e0/0x2e0
-[  191.744582]  ? putname+0x80/0xa0
-[  191.745053]  ? kmem_cache_free+0x1c4/0x440
-[  191.745403]  ? putname+0x80/0xa0
-[  191.745616]  do_mount+0xd6/0xf0
-[  191.745887]  ? path_mount+0xfe0/0xfe0
-[  191.746287]  ? __kasan_check_write+0x14/0x20
-[  191.746582]  __x64_sys_mount+0xca/0x110
-[  191.746850]  do_syscall_64+0x3b/0x90
-[  191.747122]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-[  191.747517] RIP: 0033:0x7f351fee948a
-[  191.748332] Code: 48 8b 0d 11 fa 2a 00 f7 d8 64 89 01 48 83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 49 89 ca b8 a5 00 00 008
-[  191.749341] RSP: 002b:00007ffd51cf3af8 EFLAGS: 00000202 ORIG_RAX: 00000000000000a5
-[  191.749960] RAX: ffffffffffffffda RBX: 000055b903733060 RCX: 00007f351fee948a
-[  191.750589] RDX: 000055b903733260 RSI: 000055b9037332e0 RDI: 000055b90373bce0
-[  191.751115] RBP: 0000000000000000 R08: 000055b903733280 R09: 0000000000000020
-[  191.751537] R10: 00000000c0ed0000 R11: 0000000000000202 R12: 000055b90373bce0
-[  191.751946] R13: 000055b903733260 R14: 0000000000000000 R15: 00000000ffffffff
-[  191.752519]  </TASK>
-[  191.752782] Modules linked in:
-[  191.753785] CR2: ffffebde00000008
-[  191.754937] ---[ end trace 0000000000000000 ]---
-[  191.755429] RIP: 0010:kfree+0x56/0x3b0
-[  191.755725] Code: 80 48 01 d8 0f 82 65 03 00 00 48 c7 c2 00 00 00 80 48 2b 15 2c 06 dd 01 48 01 d0 48 c1 e8 0c 48 c1 e0 06 48 03 05 0a 069
-[  191.756744] RSP: 0018:ffff8880076f7878 EFLAGS: 00000286
-[  191.757218] RAX: ffffebde00000000 RBX: 0000000000000040 RCX: ffffffff8528d5b9
-[  191.757580] RDX: 0000777f80000000 RSI: ffffffff8522d49c RDI: 0000000000000040
-[  191.758016] RBP: ffff8880076f78a0 R08: 0000000000000000 R09: 0000000000000000
-[  191.758570] R10: ffff888008949fd8 R11: ffffed10011293fd R12: 0000000000000040
-[  191.758957] R13: ffff888008949f98 R14: ffff888008949ec0 R15: ffff888008949fb0
-[  191.759317] FS:  00007f3520cd7e40(0000) GS:ffff88805ba00000(0000) knlGS:0000000000000000
-[  191.759711] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  191.760118] CR2: ffffebde00000008 CR3: 0000000009704000 CR4: 00000000000006f0
-
-Signed-off-by: Edward Lo <edward.lo@ambergroup.io>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Andreas Herrmann <aherrmann@suse.de>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20220921180501.1539876-3-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 813e693023ba ("blk-iolatency: Fix memory leak on add_disk() failures")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/inode.c | 3 +++
- 1 file changed, 3 insertions(+)
+ block/blk-cgroup.c |  3 +--
+ block/blk-cgroup.h | 13 -------------
+ 2 files changed, 1 insertion(+), 15 deletions(-)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index 3f5e3ca099c7..791d049a9ad7 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -129,6 +129,9 @@ static struct inode *ntfs_read_mft(struct inode *inode,
- 	rsize = attr->non_res ? 0 : le32_to_cpu(attr->res.data_size);
- 	asize = le32_to_cpu(attr->size);
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index bcd3873ac5ff..11f256214928 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -915,8 +915,7 @@ static void blkcg_fill_root_iostats(void)
+ 	class_dev_iter_init(&iter, &block_class, NULL, &disk_type);
+ 	while ((dev = class_dev_iter_next(&iter))) {
+ 		struct block_device *bdev = dev_to_bdev(dev);
+-		struct blkcg_gq *blkg =
+-			blk_queue_root_blkg(bdev_get_queue(bdev));
++		struct blkcg_gq *blkg = bdev->bd_disk->queue->root_blkg;
+ 		struct blkg_iostat tmp;
+ 		int cpu;
+ 		unsigned long flags;
+diff --git a/block/blk-cgroup.h b/block/blk-cgroup.h
+index d2724d1dd7c9..c1fb00a1dfc0 100644
+--- a/block/blk-cgroup.h
++++ b/block/blk-cgroup.h
+@@ -268,17 +268,6 @@ static inline struct blkcg_gq *blkg_lookup(struct blkcg *blkcg,
+ 	return __blkg_lookup(blkcg, q, false);
+ }
  
-+	if (le16_to_cpu(attr->name_off) + attr->name_len > asize)
-+		goto out;
-+
- 	switch (attr->type) {
- 	case ATTR_STD:
- 		if (attr->non_res ||
+-/**
+- * blk_queue_root_blkg - return blkg for the (blkcg_root, @q) pair
+- * @q: request_queue of interest
+- *
+- * Lookup blkg for @q at the root level. See also blkg_lookup().
+- */
+-static inline struct blkcg_gq *blk_queue_root_blkg(struct request_queue *q)
+-{
+-	return q->root_blkg;
+-}
+-
+ /**
+  * blkg_to_pdata - get policy private data
+  * @blkg: blkg of interest
+@@ -507,8 +496,6 @@ struct blkcg {
+ };
+ 
+ static inline struct blkcg_gq *blkg_lookup(struct blkcg *blkcg, void *key) { return NULL; }
+-static inline struct blkcg_gq *blk_queue_root_blkg(struct request_queue *q)
+-{ return NULL; }
+ static inline int blkcg_init_queue(struct request_queue *q) { return 0; }
+ static inline void blkcg_exit_queue(struct request_queue *q) { }
+ static inline int blkcg_policy_register(struct blkcg_policy *pol) { return 0; }
 -- 
 2.35.1
 
