@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BD8428EE
-	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:24:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 940E1C433D2;
-	Mon,  2 Jan 2023 11:24:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA74528EE
+	for <patches@lists.linux.dev>; Mon,  2 Jan 2023 11:24:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30D17C433D2;
+	Mon,  2 Jan 2023 11:24:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672658687;
-	bh=qeWTeD/XppDAMiiK9eXDs2xY/co0C3oVOYqMqTPGd3Q=;
+	s=korg; t=1672658690;
+	bh=n7R4tCUM4XxevYaYZQau8RGY/VJ9WE0hCkmZ/lhFkXU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wrxc1xliSPr2W8wmnsm+xZsGE4CYNUMXVWKtAZa6XpcpsSU/9p5YstSgHoDIHsv3T
-	 U/TydimAZfN41RhkIDH4/xpKU0usp8F7lJW4CWX81a+UrnkRCGie4CJcubtuQOY5Az
-	 aFqhzNVabgGOLMoH/pRwR/g+meXpBKbRGcS7c2YE=
+	b=L1hA26P/jPodmmncgOzB5SYfs95pC8YKJe5r3BkM5WTvKSfATo41Fy+HmIKOscfDL
+	 MHuDB0Y2NhItkmMkV0PvNQJgjihKp0akFNb+8GgRgUIwYu5f+HqCeUx8qRC9TFLh6e
+	 t/IzmqZqP8KMnOqiQT7i53ZnRYZb46q+7BhFAIhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yin Xiujiang <yinxiujiang@kylinos.cn>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 32/71] fs/ntfs3: Fix slab-out-of-bounds in r_page
-Date: Mon,  2 Jan 2023 12:21:57 +0100
-Message-Id: <20230102110552.794133287@linuxfoundation.org>
+Subject: [PATCH 6.1 06/71] nvme-pci: fix page size checks
+Date: Mon,  2 Jan 2023 12:21:31 +0100
+Message-Id: <20230102110551.760153609@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230102110551.509937186@linuxfoundation.org>
 References: <20230102110551.509937186@linuxfoundation.org>
@@ -35,97 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yin Xiujiang <yinxiujiang@kylinos.cn>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit ecfbd57cf9c5ca225184ae266ce44ae473792132 ]
+[ Upstream commit 841734234a28fd5cd0889b84bd4d93a0988fa11e ]
 
-When PAGE_SIZE is 64K, if read_log_page is called by log_read_rst for
-the first time, the size of *buffer would be equal to
-DefaultLogPageSize(4K).But for *buffer operations like memcpy,
-if the memory area size(n) which being assigned to buffer is larger
-than 4K (log->page_size(64K) or bytes(64K-page_off)), it will cause
-an out of boundary error.
- Call trace:
-  [...]
-  kasan_report+0x44/0x130
-  check_memory_region+0xf8/0x1a0
-  memcpy+0xc8/0x100
-  ntfs_read_run_nb+0x20c/0x460
-  read_log_page+0xd0/0x1f4
-  log_read_rst+0x110/0x75c
-  log_replay+0x1e8/0x4aa0
-  ntfs_loadlog_and_replay+0x290/0x2d0
-  ntfs_fill_super+0x508/0xec0
-  get_tree_bdev+0x1fc/0x34c
-  [...]
+The size allocated out of the dma pool is at most NVME_CTRL_PAGE_SIZE,
+which may be smaller than the PAGE_SIZE.
 
-Fix this by setting variable r_page to NULL in log_read_rst.
-
-Signed-off-by: Yin Xiujiang <yinxiujiang@kylinos.cn>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Fixes: c61b82c7b7134 ("nvme-pci: fix PRP pool size")
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/fslog.c | 26 ++------------------------
- 1 file changed, 2 insertions(+), 24 deletions(-)
+ drivers/nvme/host/pci.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ntfs3/fslog.c b/fs/ntfs3/fslog.c
-index a85f5411aa74..c662d2a51907 100644
---- a/fs/ntfs3/fslog.c
-+++ b/fs/ntfs3/fslog.c
-@@ -1132,7 +1132,7 @@ static int read_log_page(struct ntfs_log *log, u32 vbo,
- 		return -EINVAL;
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 3116a0e2ec27..115d81def567 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -35,7 +35,7 @@
+ #define SQ_SIZE(q)	((q)->q_depth << (q)->sqes)
+ #define CQ_SIZE(q)	((q)->q_depth * sizeof(struct nvme_completion))
  
- 	if (!*buffer) {
--		to_free = kmalloc(bytes, GFP_NOFS);
-+		to_free = kmalloc(log->page_size, GFP_NOFS);
- 		if (!to_free)
- 			return -ENOMEM;
- 		*buffer = to_free;
-@@ -1180,10 +1180,7 @@ static int log_read_rst(struct ntfs_log *log, u32 l_size, bool first,
- 			struct restart_info *info)
+-#define SGES_PER_PAGE	(PAGE_SIZE / sizeof(struct nvme_sgl_desc))
++#define SGES_PER_PAGE	(NVME_CTRL_PAGE_SIZE / sizeof(struct nvme_sgl_desc))
+ 
+ /*
+  * These can be higher, but we need to ensure that any command doesn't
+@@ -380,7 +380,7 @@ static int nvme_pci_npages_prp(void)
  {
- 	u32 skip, vbo;
--	struct RESTART_HDR *r_page = kmalloc(DefaultLogPageSize, GFP_NOFS);
--
--	if (!r_page)
--		return -ENOMEM;
-+	struct RESTART_HDR *r_page = NULL;
+ 	unsigned max_bytes = (NVME_MAX_KB_SZ * 1024) + NVME_CTRL_PAGE_SIZE;
+ 	unsigned nprps = DIV_ROUND_UP(max_bytes, NVME_CTRL_PAGE_SIZE);
+-	return DIV_ROUND_UP(8 * nprps, PAGE_SIZE - 8);
++	return DIV_ROUND_UP(8 * nprps, NVME_CTRL_PAGE_SIZE - 8);
+ }
  
- 	/* Determine which restart area we are looking for. */
- 	if (first) {
-@@ -1197,7 +1194,6 @@ static int log_read_rst(struct ntfs_log *log, u32 l_size, bool first,
- 	/* Loop continuously until we succeed. */
- 	for (; vbo < l_size; vbo = 2 * vbo + skip, skip = 0) {
- 		bool usa_error;
--		u32 sys_page_size;
- 		bool brst, bchk;
- 		struct RESTART_AREA *ra;
+ /*
+@@ -390,7 +390,7 @@ static int nvme_pci_npages_prp(void)
+ static int nvme_pci_npages_sgl(void)
+ {
+ 	return DIV_ROUND_UP(NVME_MAX_SEGS * sizeof(struct nvme_sgl_desc),
+-			PAGE_SIZE);
++			NVME_CTRL_PAGE_SIZE);
+ }
  
-@@ -1251,24 +1247,6 @@ static int log_read_rst(struct ntfs_log *log, u32 l_size, bool first,
- 			goto check_result;
- 		}
- 
--		/* Read the entire restart area. */
--		sys_page_size = le32_to_cpu(r_page->sys_page_size);
--		if (DefaultLogPageSize != sys_page_size) {
--			kfree(r_page);
--			r_page = kzalloc(sys_page_size, GFP_NOFS);
--			if (!r_page)
--				return -ENOMEM;
--
--			if (read_log_page(log, vbo,
--					  (struct RECORD_PAGE_HDR **)&r_page,
--					  &usa_error)) {
--				/* Ignore any errors. */
--				kfree(r_page);
--				r_page = NULL;
--				continue;
--			}
--		}
--
- 		if (is_client_area_valid(r_page, usa_error)) {
- 			info->valid_page = true;
- 			ra = Add2Ptr(r_page, le16_to_cpu(r_page->ra_off));
+ static size_t nvme_pci_iod_alloc_size(void)
+@@ -714,7 +714,7 @@ static void nvme_pci_sgl_set_seg(struct nvme_sgl_desc *sge,
+ 		sge->length = cpu_to_le32(entries * sizeof(*sge));
+ 		sge->type = NVME_SGL_FMT_LAST_SEG_DESC << 4;
+ 	} else {
+-		sge->length = cpu_to_le32(PAGE_SIZE);
++		sge->length = cpu_to_le32(NVME_CTRL_PAGE_SIZE);
+ 		sge->type = NVME_SGL_FMT_SEG_DESC << 4;
+ 	}
+ }
 -- 
 2.35.1
 
