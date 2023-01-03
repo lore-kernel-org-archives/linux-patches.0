@@ -1,90 +1,168 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00038F47
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 18:27:13 +0000 (UTC)
-Received: by mail-qv1-f42.google.com with SMTP id o17so18006364qvn.4
-        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 10:27:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DPjL2DQSLlszqw4OiVvbsdD+JxAFXBGfR8THZOT0Qic=;
-        b=nRUxmkVmBZP9/mQBq8rGwpgfeNsx/BibdY+eDd+QVg8C87tH24tMxOgIM4YK1UvVoq
-         hFMe9m75SK5LJIxUJn/JgbRt41A0mBBUBrfqOZMsoOYvXlJBSQbzypPHJpWT7lNmiYyp
-         VTzHuTN8R/ZEX1Ih1ImwJ0JkP1ERvWO/20NyHpGA7oMPkplybv6gNpCYzhVybiLcXp16
-         gU1MZYK5w3vyW1uusn/boLxuq4zcHL1J4H9ZQdsMstiryZSwwvqPxJ/MH6iLp4bk5fCh
-         1bld3qNaXhrjT757mim6vtiuWGOmM4fUNExOjzuAAoDhsJ+tL+ol6iYQC8vinz7hXxM7
-         jk7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DPjL2DQSLlszqw4OiVvbsdD+JxAFXBGfR8THZOT0Qic=;
-        b=QJyDx81l64iOHnbuMCf57WD3Q6YjIlHfdJHp5TsIIxvUjRo5sdUgbbZCAbyNPezEdP
-         xlsXyK9zJGfNuvne938keqqaNoJb5DpQ5GLRHJLSEQowNoQOkpn+BmAXtpC8BIIe32rg
-         Ne1TwMHMKX2Z+CPPwxjzyaaq4bVtiesbzQFrD2LPhuLD+5E9H5bJliDUjZ2IaGkr1+WI
-         fsYve1WdSJdlZ0Z+LpfL9i5YVEiKiYH+kGPMZY5qQtE2SSGnIXjgSO8/sl/TF6mWJACP
-         Q39KbkLAf/PYgHkNzf4wDlwIDWQglLx43RBuBF4NJ8Y2vyq+xxCkOMlgbAEK7exW/yZj
-         oBew==
-X-Gm-Message-State: AFqh2koKrdxU8/7/lgctmwJ8QkbfpaMbAZxeWi/4UqXciyjOwRS9UwyD
-	ucjnxZSruObblkxkhy/O5gk=
-X-Google-Smtp-Source: AMrXdXszGK+QQ4gGy4N/pb22uhf2admBnpdD3b4j7xxC/55IaUnuPnAYy0JxYU//O3wCC+z9YYuAjA==
-X-Received: by 2002:a05:6214:390a:b0:4bc:176f:a50d with SMTP id nh10-20020a056214390a00b004bc176fa50dmr66266818qvb.3.1672770432433;
-        Tue, 03 Jan 2023 10:27:12 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id pj8-20020a05620a1d8800b006cfc7f9eea0sm22142411qkn.122.2023.01.03.10.27.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Jan 2023 10:27:11 -0800 (PST)
-Message-ID: <581e7c54-d10a-23d6-96ca-f6ec6a4326e3@gmail.com>
-Date: Tue, 3 Jan 2023 10:27:08 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4953211
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 18:36:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5AA2C4339B
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 18:36:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1672770975;
+	bh=qmyYVNpngCof8L0z9bRxBJGgthB1paphMx+6zOsfGUY=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=ZceGyxLulP1Ffg0N9eFZITlz0PbWaHWU9wdl8KnetIpDUFk+9vwdsfYzkZv1CmqZ6
+	 6vlFXiUdzOgnjfo3fjTSRVMlI+0Jezi5r+MFGk2lROx5qsmf6zrd9t2ghGIfG69oyS
+	 PTGZ+8DSFyDtLaNWMWbPR9t+qsk6OXEw1871o+2ZwsXo9QH/7XzVggCFWfA0lguW7O
+	 9pjlXnWGMCrkd+v50ka/cVfQ6jk4kA1NuyviIsGIkD0s3RCh5pAcm2SnEDrakU1Pto
+	 BiOWIL23tPgixi669Buux3TBPy3+U8zY4TEac6GVi6d6pIGsBTe6Bn1UVLdPFuiKdW
+	 t0zcQqdO9FwwA==
+Received: by mail-ed1-f49.google.com with SMTP id l29so38061358edj.7
+        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 10:36:15 -0800 (PST)
+X-Gm-Message-State: AFqh2krpeJX3+QugcGhpfxreMOAzXPtQZmKjt6QSNifbQ11qAYxVsc9R
+	nNORC63w3SUJGnGFJVv0LQAt0rZnnPP97wAkdo2ZNw==
+X-Google-Smtp-Source: AMrXdXvSiNT+YujtDx1T+6ZLaxF3U2v/w4nEOY3CSip0uqIHfbU5yuT8L8QlBy/NoU6MZIaK9pJyN5cu3smxVpElQ/s=
+X-Received: by 2002:aa7:cb4f:0:b0:486:1c44:a6fa with SMTP id
+ w15-20020aa7cb4f000000b004861c44a6famr3256292edt.372.1672770974013; Tue, 03
+ Jan 2023 10:36:14 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 5.10 00/63] 5.10.162-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230103081308.548338576@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230103081308.548338576@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <20230101162910.710293-1-Jason@zx2c4.com> <20230101162910.710293-3-Jason@zx2c4.com>
+ <Y7QIg/hAIk7eZE42@gmail.com>
+In-Reply-To: <Y7QIg/hAIk7eZE42@gmail.com>
+From: Andy Lutomirski <luto@kernel.org>
+Date: Tue, 3 Jan 2023 10:36:01 -0800
+X-Gmail-Original-Message-ID: <CALCETrWdw5kxrtr4M7AkKYDOJEE1cU1wENWgmgOxn0rEJz4y3w@mail.gmail.com>
+Message-ID: <CALCETrWdw5kxrtr4M7AkKYDOJEE1cU1wENWgmgOxn0rEJz4y3w@mail.gmail.com>
+Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
+ lazily freeable mappings
+To: Ingo Molnar <mingo@kernel.org>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	tglx@linutronix.de, linux-crypto@vger.kernel.org, linux-api@vger.kernel.org, 
+	x86@kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>, "Carlos O'Donell" <carlos@redhat.com>, 
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>, Jann Horn <jannh@google.com>, 
+	Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org, 
+	Linus Torvalds <torvalds@linux-foundation.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On 1/3/23 00:13, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.162 release.
-> There are 63 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 05 Jan 2023 08:12:47 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.162-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Tue, Jan 3, 2023 at 2:50 AM Ingo Molnar <mingo@kernel.org> wrote:
+>
+>
+> * Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>
+> > The vDSO getrandom() implementation works with a buffer allocated with a
+> > new system call that has certain requirements:
+> >
+> > - It shouldn't be written to core dumps.
+> >   * Easy: VM_DONTDUMP.
+> > - It should be zeroed on fork.
+> >   * Easy: VM_WIPEONFORK.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+I have a rather different suggestion: make a special mapping.  Jason,
+you're trying to shoehorn all kinds of bizarre behavior into the core
+mm, and none of that seems to me to belong to the core mm.  Instead,
+have an actual special mapping with callbacks that does the right
+thing.  No fancy VM flags.
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
+Memory pressure: have it free and unmap it self.  Gets accessed again?
+ ->fault can handle it.
 
+Want to mlock it?  No, don't do that -- that's absurd.  Just arrange
+so that, if it gets evicted, it's not written out anywhere.  And when
+it gets faulted back in it does the right thing -- see above.
+
+Zero on fork?  I'm sure that's manageable with a special mapping.  If
+not, you can add a new vm operation or similar to make it work.  (Kind
+of like how we extended special mappings to get mremap right a couple
+years go.)  But maybe you don't want to *zero* it on fork and you want
+to do something more intelligent.  Fine -- you control ->fault!
+
+> >
+> > - It shouldn't be written to swap.
+> >   * Uh-oh: mlock is rlimited.
+> >   * Uh-oh: mlock isn't inherited by forks.
+
+No mlock, no problems.
+
+> >
+> > - It shouldn't reserve actual memory, but it also shouldn't crash when
+> >   page faulting in memory if none is available
+> >   * Uh-oh: MAP_NORESERVE respects vm.overcommit_memory=2.
+> >   * Uh-oh: VM_NORESERVE means segfaults.
+
+->fault can do whatever you want.
+
+And there is no shortage of user memory that *must* be made available
+on fault in order to resume the faulting process.  ->fault can handle
+this.
+
+> >
+> > It turns out that the vDSO getrandom() function has three really nice
+> > characteristics that we can exploit to solve this problem:
+> >
+> > 1) Due to being wiped during fork(), the vDSO code is already robust to
+> >    having the contents of the pages it reads zeroed out midway through
+> >    the function's execution.
+> >
+> > 2) In the absolute worst case of whatever contingency we're coding for,
+> >    we have the option to fallback to the getrandom() syscall, and
+> >    everything is fine.
+> >
+> > 3) The buffers the function uses are only ever useful for a maximum of
+> >    60 seconds -- a sort of cache, rather than a long term allocation.
+> >
+> > These characteristics mean that we can introduce VM_DROPPABLE, which
+> > has the following semantics:
+
+No need for another vm flag.
+
+> >
+> > a) It never is written out to swap.
+
+No need to complicate the swap logic for this.
+
+> > b) Under memory pressure, mm can just drop the pages (so that they're
+> >    zero when read back again).
+
+Or ->fault could even repopulate it without needing to ever read zeros.
+
+> > c) If there's not enough memory to service a page fault, it's not fatal,
+> >    and no signal is sent. Instead, writes are simply lost.
+
+This just seems massively overcomplicated to me.  If there isn't
+enough memory to fault in a page of code, we don't have some magic
+instruction emulator in the kernel.  We either OOM or we wait for
+memory to show up.
+
+> > d) It is inherited by fork.
+
+If you have a special mapping and you fork, it doesn't magically turn
+into normal memory.
+
+> > e) It doesn't count against the mlock budget, since nothing is locked.
+
+Special mapping -> no mlock.
+
+> >
+> > This is fairly simple to implement, with the one snag that we have to
+> > use 64-bit VM_* flags, but this shouldn't be a problem, since the only
+> > consumers will probably be 64-bit anyway.
+> >
+> > This way, allocations used by vDSO getrandom() can use:
+> >
+> >     VM_DROPPABLE | VM_DONTDUMP | VM_WIPEONFORK | VM_NORESERVE
+> >
+> > And there will be no problem with OOMing, crashing on overcommitment,
+> > using memory when not in use, not wiping on fork(), coredumps, or
+> > writing out to swap.
+> >
+> > At the moment, rather than skipping writes on OOM, the fault handler
+> > just returns to userspace, and the instruction is retried. This isn't
+> > terrible, but it's not quite what is intended. The actual instruction
+> > skipping has to be implemented arch-by-arch, but so does this whole
+> > vDSO series, so that's fine. The following commit addresses it for x86.
+
+I really dislike this.  I'm with Ingo.
