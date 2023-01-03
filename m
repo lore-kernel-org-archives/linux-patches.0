@@ -1,81 +1,98 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2195979C5
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 13:23:48 +0000 (UTC)
-Received: by mail-pg1-f170.google.com with SMTP id 7so20128621pga.1
-        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 05:23:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=eRPbEtbfmVz3R4J2b3g8fPSK88ox6UwjS+JxggJkrJ8=;
-        b=KUNrBJ8qgTtpxHggAF37pOGTy1xAk1l8qzxGh8PqT30cB+oDcgxK7p0qw5wFthAZJy
-         WNECZVVmtaDG7lfMvz4dnifINz4uIROcPTUdwiBjUHj+0zbKDTJWwazaRlWvKQ9Rc6k2
-         QdRgfNsEhWbAqZQ+O9zbRwcW9d+akWQXBKH97XxoxBEFEW7AMLFNx4IvP+/c43VeG7EY
-         Or12AFBbXyYPMUwRtZZockd/mjVHLX/gjHah0Pp2lB3Bt9R9nM4nhyS2PCfJwEzclGip
-         tVd9TvBzcETSfTSLksCnvMAxYtxcGwlZMqCvEBOARTbT8pQReZ8uTYpYT9SCpLb6vtDU
-         T9ww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eRPbEtbfmVz3R4J2b3g8fPSK88ox6UwjS+JxggJkrJ8=;
-        b=rEHjCnhYQkFaEYPsAiwljWyRImJ5eHLcY9KbfwVynpO9EoBQ5EkqiP1ef669SH+sy5
-         UZFab6F2mx/Lt6TaU9qdKOtM8Q4B5KjNvIohTOEESJlY8gH1PioTxV/RPOUvIruwF+o4
-         2fN9hZHzh9KMOmjnk53cC2PfadWqalmjJpIrY32T5mPw+eRky3+70FEA2pOBtdWIDuw1
-         EpGCzqllbqTa3qlng1aSd/HG6lKEM7FWeHIhNNxDg4uSFM6BYPrMSviHk6AEGIjZ1hb3
-         Fg7jSRncweVQvPhiGL07GA68t+8aM4VwngEfniskBWb6S27oJePsyR4wikfN4XvgxISt
-         nrtg==
-X-Gm-Message-State: AFqh2kr0c9o2+Euknytf5oStvpVTK00YBi5oHWB48yYAgxOpUg5a8s0b
-	MEvdCLq7y6BbWtlhj/6wvspTiVMXgotgiFVeyg0=
-X-Google-Smtp-Source: AMrXdXvQ1a7h1n0kUst8FBUP4hP5eedIcCGLIn+U4wzph2MFJI5+aVrxQc4vjKolG2hZZB6iVxWg2mCCajiQLwqhuu8=
-X-Received: by 2002:a63:1e57:0:b0:487:faef:be12 with SMTP id
- p23-20020a631e57000000b00487faefbe12mr1869675pgm.333.1672752228560; Tue, 03
- Jan 2023 05:23:48 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53A479C5
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 13:25:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAAF6C433EF
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 13:25:07 +0000 (UTC)
+Received: from disco-boy.misterjones.org ([51.254.78.96] helo=www.loen.fr)
+	by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <maz@kernel.org>)
+	id 1pChHt-00GW5J-MG
+	for patches@lists.linux.dev;
+	Tue, 03 Jan 2023 13:25:05 +0000
+Resent-From: Marc Zyngier <maz@kernel.org>
+Resent-To: patches@lists.linux.dev
+Resent-Date: Tue, 03 Jan 2023 13:25:05 +0000
+Resent-Message-ID: <df7aaa7df653884167a4bc37832f0039@kernel.org>
+Received: from dfw.source.kernel.org ([139.178.84.217])
+	by disco-boy.misterjones.org with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.95)
+	(envelope-from <SRS0=VLww=5A=arm.com=alexandru.elisei@kernel.org>)
+	id 1pCg5H-00GV73-NY
+	for maz@misterjones.org;
+	Tue, 03 Jan 2023 12:08:02 +0000
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id 7858161275
+	for <maz@misterjones.org>; Tue,  3 Jan 2023 12:07:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix)
+	id F1B0FC433EF; Tue,  3 Jan 2023 12:07:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTP id B619BC433D2
+	for <maz@kernel.org>; Tue,  3 Jan 2023 12:07:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org B619BC433D2
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=arm.com
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=arm.com
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8F5D71516;
+	Tue,  3 Jan 2023 04:08:34 -0800 (PST)
+Received: from monolith.localdoman (unknown [172.31.20.19])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id BEE8A3F587;
+	Tue,  3 Jan 2023 04:07:51 -0800 (PST)
+From: Alexandru Elisei <alexandru.elisei@arm.com>
+To: maz@kernel.org,
+	james.morse@arm.com,
+	suzuki.poulose@arm.com,
+	oliver.upton@linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	kvmarm@lists.linux.dev
+Date: Tue,  3 Jan 2023 12:07:36 +0000
+Message-Id: <20230103120736.116523-1-alexandru.elisei@arm.com>
+X-Mailer: git-send-email 2.39.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230102110552.061937047@linuxfoundation.org>
-In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
-From: Allen Pais <stable.kernel.dev@gmail.com>
-Date: Tue, 3 Jan 2023 05:23:37 -0800
-Message-ID: <CAJq+SaDrGuOk47sbSY=XGPDdD7Dx2uTNznK95FOkM38-73+iDw@mail.gmail.com>
-Subject: Re: [PATCH 6.0 00/74] 6.0.17-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
+	disco-boy.misterjones.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-8.5 required=5.0 tests=BAYES_00,GREYLIST_ISWHITE,
+	HEADER_FROM_DIFFERENT_DOMAINS,RCVD_IN_DNSWL_HI,SPF_HELO_NONE,SPF_PASS
+	autolearn=ham autolearn_force=no version=3.4.6
+Subject: [PATCH] MAINTAINERS: Remove myself as a KVM/arm64 reviewer
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 51.254.78.96
+X-SA-Exim-Rcpt-To: patches@lists.linux.dev
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 
-> This is the start of the stable review cycle for the 6.0.17 release.
-> There are 74 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 04 Jan 2023 11:05:34 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.17-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Haven't done any meaningful reviews for more than a year, and it doesn't
+look like I'll be able to do so in the future. Make it official and remove
+myself from the KVM/arm64 "Reviewers" list.
 
-Compiled and booted on my x86_64 and ARM64 test systems. No errors or
-regressions.
+Signed-off-by: Alexandru Elisei <alexandru.elisei@arm.com>
+---
+ MAINTAINERS | 1 -
+ 1 file changed, 1 deletion(-)
 
-Tested-by: Allen Pais <apais@linux.microsoft.com>
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7f86d02cb427..813673637500 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -11356,7 +11356,6 @@ F:	virt/kvm/*
+ KERNEL VIRTUAL MACHINE FOR ARM64 (KVM/arm64)
+ M:	Marc Zyngier <maz@kernel.org>
+ R:	James Morse <james.morse@arm.com>
+-R:	Alexandru Elisei <alexandru.elisei@arm.com>
+ R:	Suzuki K Poulose <suzuki.poulose@arm.com>
+ R:	Oliver Upton <oliver.upton@linux.dev>
+ L:	linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+-- 
+2.39.0
 
-Thanks.
+
+
