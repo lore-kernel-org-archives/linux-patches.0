@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35316138D
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:15:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99F8EC433EF;
-	Tue,  3 Jan 2023 08:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185A8138D
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:15:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C6C3C433EF;
+	Tue,  3 Jan 2023 08:15:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672733745;
-	bh=lyrliJQSOV8XQYB1qNXDyEHxJsVSxRLvYk3RuJLbrD4=;
+	s=korg; t=1672733747;
+	bh=lVkhJSuC3IowY6x05isk2+fmIZYOlISTPGIA+JFIPO0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ng97aOtKiUkp+RSlJI3nLUXV0oNpReLhK2E+atWIdsyVnSIMHhJc22iZ5/5FFsyGM
-	 /nAxbJJ90WOA+ccvGr5sWVCbg2irM/dPCC+f18RClwCKkz94MEF1y6JJuin9efxqN5
-	 fNQNiXG1WuGg9Q6US224P7L2E1YKWQtOGnwY7dJE=
+	b=SUMF+1uI4I/GMUYDhyB+Hngtoe3vxWxcab3114NIWjO1ReXzkoFNOziz6A29kmpbt
+	 e3hX0n4IJ5qJX0uPKL5jRcX8tDDXMGF6cwMzX75k2oQZ/PmQZ9+wJWYro17iJ7lW3c
+	 RxLSVxDwJRlLKRnRELdrZfCYjTVxl0Dv0GpZ2Bzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-csky@vger.kernel.org,
-	Guo Ren <guoren@kernel.org>,
+	linux-hexagon@vger.kernel.org,
+	Brian Cain <bcain@codeaurora.org>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 29/63] csky: add support for TIF_NOTIFY_SIGNAL
-Date: Tue,  3 Jan 2023 09:13:59 +0100
-Message-Id: <20230103081310.330470070@linuxfoundation.org>
+Subject: [PATCH 5.10 30/63] hexagon: add support for TIF_NOTIFY_SIGNAL
+Date: Tue,  3 Jan 2023 09:14:00 +0100
+Message-Id: <20230103081310.386730622@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230103081308.548338576@linuxfoundation.org>
 References: <20230103081308.548338576@linuxfoundation.org>
@@ -37,57 +37,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit f3924d763c8af4c5d441b666c01f4de03ac9449e ]
+[ Upstream commit aeec8193578a71d0aee21218351849d38121ce90 ]
 
-Wire up TIF_NOTIFY_SIGNAL handling for csky.
+Wire up TIF_NOTIFY_SIGNAL handling for hexagon.
 
-Cc: linux-csky@vger.kernel.org
-Acked-by: Guo Ren <guoren@kernel.org>
+Cc: linux-hexagon@vger.kernel.org
+Acked-by: Brian Cain <bcain@codeaurora.org>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/csky/include/asm/thread_info.h |    5 ++++-
- arch/csky/kernel/signal.c           |    2 +-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ arch/hexagon/include/asm/thread_info.h |    2 ++
+ arch/hexagon/kernel/process.c          |    2 +-
+ 2 files changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/csky/include/asm/thread_info.h
-+++ b/arch/csky/include/asm/thread_info.h
-@@ -64,6 +64,7 @@ static inline struct thread_info *curren
- #define TIF_SYSCALL_TRACE	4	/* syscall trace active */
- #define TIF_SYSCALL_TRACEPOINT	5       /* syscall tracepoint instrumentation */
- #define TIF_SYSCALL_AUDIT	6	/* syscall auditing */
-+#define TIF_NOTIFY_SIGNAL	7	/* signal notifications exist */
- #define TIF_POLLING_NRFLAG	16	/* poll_idle() is TIF_NEED_RESCHED */
- #define TIF_MEMDIE		18      /* is terminating due to OOM killer */
- #define TIF_RESTORE_SIGMASK	20	/* restore signal mask in do_signal() */
-@@ -75,6 +76,7 @@ static inline struct thread_info *curren
- #define _TIF_SYSCALL_TRACE	(1 << TIF_SYSCALL_TRACE)
- #define _TIF_SYSCALL_TRACEPOINT	(1 << TIF_SYSCALL_TRACEPOINT)
- #define _TIF_SYSCALL_AUDIT	(1 << TIF_SYSCALL_AUDIT)
+--- a/arch/hexagon/include/asm/thread_info.h
++++ b/arch/hexagon/include/asm/thread_info.h
+@@ -95,6 +95,7 @@ register struct thread_info *__current_t
+ #define TIF_NEED_RESCHED        3       /* rescheduling necessary */
+ #define TIF_SINGLESTEP          4       /* restore ss @ return to usr mode */
+ #define TIF_RESTORE_SIGMASK     6       /* restore sig mask in do_signal() */
++#define TIF_NOTIFY_SIGNAL	7       /* signal notifications exist */
+ /* true if poll_idle() is polling TIF_NEED_RESCHED */
+ #define TIF_MEMDIE              17      /* OOM killer killed process */
+ 
+@@ -103,6 +104,7 @@ register struct thread_info *__current_t
+ #define _TIF_SIGPENDING         (1 << TIF_SIGPENDING)
+ #define _TIF_NEED_RESCHED       (1 << TIF_NEED_RESCHED)
+ #define _TIF_SINGLESTEP         (1 << TIF_SINGLESTEP)
 +#define _TIF_NOTIFY_SIGNAL	(1 << TIF_NOTIFY_SIGNAL)
- #define _TIF_UPROBE		(1 << TIF_UPROBE)
- #define _TIF_POLLING_NRFLAG	(1 << TIF_POLLING_NRFLAG)
- #define _TIF_MEMDIE		(1 << TIF_MEMDIE)
-@@ -82,7 +84,8 @@ static inline struct thread_info *curren
- #define _TIF_SECCOMP		(1 << TIF_SECCOMP)
  
- #define _TIF_WORK_MASK		(_TIF_NEED_RESCHED | _TIF_SIGPENDING | \
--				 _TIF_NOTIFY_RESUME | _TIF_UPROBE)
-+				 _TIF_NOTIFY_RESUME | _TIF_UPROBE | \
-+				 _TIF_NOTIFY_SIGNAL)
+ /* work to do on interrupt/exception return - All but TIF_SYSCALL_TRACE */
+ #define _TIF_WORK_MASK          (0x0000FFFF & ~_TIF_SYSCALL_TRACE)
+--- a/arch/hexagon/kernel/process.c
++++ b/arch/hexagon/kernel/process.c
+@@ -174,7 +174,7 @@ int do_work_pending(struct pt_regs *regs
+ 		return 1;
+ 	}
  
- #define _TIF_SYSCALL_WORK	(_TIF_SYSCALL_TRACE | _TIF_SYSCALL_AUDIT | \
- 				 _TIF_SYSCALL_TRACEPOINT | _TIF_SECCOMP)
---- a/arch/csky/kernel/signal.c
-+++ b/arch/csky/kernel/signal.c
-@@ -261,7 +261,7 @@ asmlinkage void do_notify_resume(struct
- 		uprobe_notify_resume(regs);
- 
- 	/* Handle pending signal delivery */
--	if (thread_info_flags & _TIF_SIGPENDING)
-+	if (thread_info_flags & (_TIF_SIGPENDING | _TIF_NOTIFY_SIGNAL))
+-	if (thread_info_flags & _TIF_SIGPENDING) {
++	if (thread_info_flags & (_TIF_SIGPENDING | _TIF_NOTIFY_SIGNAL)) {
  		do_signal(regs);
- 
- 	if (thread_info_flags & _TIF_NOTIFY_RESUME) {
+ 		return 1;
+ 	}
 
 
