@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4104B138D
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:16:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE09DC433EF;
-	Tue,  3 Jan 2023 08:16:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26B2C138D
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:16:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 907ACC433EF;
+	Tue,  3 Jan 2023 08:16:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672733791;
-	bh=LMollx75INxlsOc4OTrM24TyDpkA3hw5kYHp28nCAsg=;
+	s=korg; t=1672733794;
+	bh=EfAqrOsV3H3iCG3r35M0pCcLWvv+AM/p3/4tGyl+6dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pFr1bMX5LNT5kMw5nBD7CP7aipg3AkHRh+9WTP65KmAoE7dSfnogM0M2Hvx8AMRtn
-	 vZG+5GgjoDSAZGNEA/cdYuh2kdcFrlrxfXqpZV3rOAPPMdhgbPKi5RheD67Z1iZf51
-	 UmRF7/VE3haFmFRAlGM11bVNu3p7A9KERtAPj8+o=
+	b=g3a4pzqFMDplD9YN1dF/HjPhUPi4EnvJQfX7O1Ov0EdG8K0+dXaC/N2OT/IgsDbfA
+	 v0nRfvg8acYHIvz8UwEPLdVYsCalK+s4MZKVJtjRmWv/YBM4Zktw+laWa0LEk5O+6T
+	 v0vsBsq20yJ+iy6r7EEfFDVOCiQnv/gh+bW5RUww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-ia64@vger.kernel.org,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 37/63] ia64: add support for TIF_NOTIFY_SIGNAL
-Date: Tue,  3 Jan 2023 09:14:07 +0100
-Message-Id: <20230103081310.802833748@linuxfoundation.org>
+	Olivier Langlois <olivier@trillion01.com>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.10 46/63] coredump: Limit what can interrupt coredumps
+Date: Tue,  3 Jan 2023 09:14:16 +0100
+Message-Id: <20230103081311.355472591@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230103081308.548338576@linuxfoundation.org>
 References: <20230103081308.548338576@linuxfoundation.org>
@@ -34,59 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: "Eric W. Biederman" <ebiederm@xmission.com>
 
-[ Upstream commit b269c229b0e89aedb7943c06673b56b6052cf5e5 ]
+[ Upstream commit 06af8679449d4ed282df13191fc52d5ba28ec536 ]
 
-Wire up TIF_NOTIFY_SIGNAL handling for ia64.
+Olivier Langlois has been struggling with coredumps being incompletely written in
+processes using io_uring.
 
-Cc: linux-ia64@vger.kernel.org
-[axboe: added fixes from Mike Rapoport <rppt@kernel.org>]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Olivier Langlois <olivier@trillion01.com> writes:
+> io_uring is a big user of task_work and any event that io_uring made a
+> task waiting for that occurs during the core dump generation will
+> generate a TIF_NOTIFY_SIGNAL.
+>
+> Here are the detailed steps of the problem:
+> 1. io_uring calls vfs_poll() to install a task to a file wait queue
+>    with io_async_wake() as the wakeup function cb from io_arm_poll_handler()
+> 2. wakeup function ends up calling task_work_add() with TWA_SIGNAL
+> 3. task_work_add() sets the TIF_NOTIFY_SIGNAL bit by calling
+>    set_notify_signal()
+
+The coredump code deliberately supports being interrupted by SIGKILL,
+and depends upon prepare_signal to filter out all other signals.   Now
+that signal_pending includes wake ups for TIF_NOTIFY_SIGNAL this hack
+in dump_emitted by the coredump code no longer works.
+
+Make the coredump code more robust by explicitly testing for all of
+the wakeup conditions the coredump code supports.  This prevents
+new wakeup conditions from breaking the coredump code, as well
+as fixing the current issue.
+
+The filesystem code that the coredump code uses already limits
+itself to only aborting on fatal_signal_pending.  So it should
+not develop surprising wake-up reasons either.
+
+v2: Don't remove the now unnecessary code in prepare_signal.
+
+Cc: stable@vger.kernel.org
+Fixes: 12db8b690010 ("entry: Add support for TIF_NOTIFY_SIGNAL")
+Reported-by: Olivier Langlois <olivier@trillion01.com>
+Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/ia64/include/asm/thread_info.h |    4 +++-
- arch/ia64/kernel/process.c          |    3 ++-
- 2 files changed, 5 insertions(+), 2 deletions(-)
+ fs/coredump.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/ia64/include/asm/thread_info.h
-+++ b/arch/ia64/include/asm/thread_info.h
-@@ -103,6 +103,7 @@ struct thread_info {
- #define TIF_SYSCALL_TRACE	2	/* syscall trace active */
- #define TIF_SYSCALL_AUDIT	3	/* syscall auditing active */
- #define TIF_SINGLESTEP		4	/* restore singlestep on return to user mode */
-+#define TIF_NOTIFY_SIGNAL	5	/* signal notification exist */
- #define TIF_NOTIFY_RESUME	6	/* resumption notification requested */
- #define TIF_MEMDIE		17	/* is terminating due to OOM killer */
- #define TIF_MCA_INIT		18	/* this task is processing MCA or INIT */
-@@ -115,6 +116,7 @@ struct thread_info {
- #define _TIF_SINGLESTEP		(1 << TIF_SINGLESTEP)
- #define _TIF_SYSCALL_TRACEAUDIT	(_TIF_SYSCALL_TRACE|_TIF_SYSCALL_AUDIT|_TIF_SINGLESTEP)
- #define _TIF_NOTIFY_RESUME	(1 << TIF_NOTIFY_RESUME)
-+#define _TIF_NOTIFY_SIGNAL	(1 << TIF_NOTIFY_SIGNAL)
- #define _TIF_SIGPENDING		(1 << TIF_SIGPENDING)
- #define _TIF_NEED_RESCHED	(1 << TIF_NEED_RESCHED)
- #define _TIF_MCA_INIT		(1 << TIF_MCA_INIT)
-@@ -124,7 +126,7 @@ struct thread_info {
+--- a/fs/coredump.c
++++ b/fs/coredump.c
+@@ -523,7 +523,7 @@ static bool dump_interrupted(void)
+ 	 * but then we need to teach dump_write() to restart and clear
+ 	 * TIF_SIGPENDING.
+ 	 */
+-	return signal_pending(current);
++	return fatal_signal_pending(current) || freezing(current);
+ }
  
- /* "work to do on user-return" bits */
- #define TIF_ALLWORK_MASK	(_TIF_SIGPENDING|_TIF_NOTIFY_RESUME|_TIF_SYSCALL_AUDIT|\
--				 _TIF_NEED_RESCHED|_TIF_SYSCALL_TRACE)
-+				 _TIF_NEED_RESCHED|_TIF_SYSCALL_TRACE|_TIF_NOTIFY_SIGNAL)
- /* like TIF_ALLWORK_BITS but sans TIF_SYSCALL_TRACE or TIF_SYSCALL_AUDIT */
- #define TIF_WORK_MASK		(TIF_ALLWORK_MASK&~(_TIF_SYSCALL_TRACE|_TIF_SYSCALL_AUDIT))
- 
---- a/arch/ia64/kernel/process.c
-+++ b/arch/ia64/kernel/process.c
-@@ -171,7 +171,8 @@ do_notify_resume_user(sigset_t *unused,
- 	}
- 
- 	/* deal with pending signal delivery */
--	if (test_thread_flag(TIF_SIGPENDING)) {
-+	if (test_thread_flag(TIF_SIGPENDING) ||
-+	    test_thread_flag(TIF_NOTIFY_SIGNAL)) {
- 		local_irq_enable();	/* force interrupt enable */
- 		ia64_do_signal(scr, in_syscall);
- 	}
+ static void wait_for_dump_helpers(struct file *file)
 
 
