@@ -1,90 +1,105 @@
-Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4AC8F57
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 19:33:10 +0000 (UTC)
-Received: by mail-vs1-f49.google.com with SMTP id i10so11147603vsr.12
-        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 11:33:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=lFKwihPvKMpcXpSVULfJwtDOJkGorAbMoBn7I+sY6j0=;
-        b=MLghucnahrx3YDWgHuWWZd07q404MGwEweT67Hhwy9Mse2bTbTBCkpUXIGdA/8v4ec
-         1hLzjsajdPoFMOu7MD1rpCaxUjgAp8lmDbA3j7e+3r5LODLJS/qoZk3HQzy+W+HgCshI
-         8M8J/lENYW1k1SYb3WcIMgEq7jUhqxJInLlswtvwhko2f2RfCeTL4kxXSMheydlhYgSX
-         utYi0EpyEzcOL4rtiTN7AS/3pDkkWcRBI0lmepL/N/B7V0T2RGGkseHHxF7Cm/zB3obg
-         QY73jJJw3dRCHR5lij5STBkKFY0/D2STodTRITvFeAD+Cg0yuuMBNRHZmRQd5TsaxOzz
-         emUg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=lFKwihPvKMpcXpSVULfJwtDOJkGorAbMoBn7I+sY6j0=;
-        b=abmkUg42Jpt8MkDpHZT0TLs+LHy0ZpTrr8+uRsiaaeSYyTpM5eM9NmLAiyqCCgLgPD
-         URJK7wtfuAwe7+fJoYk2oJuMkiDQkv1UvZhUUC275FGnEYy7pxdtbfjDQ/xwBpNnWH1Z
-         Zvyi7uoyUectrJUE4gAXzLSYFu+FkoGzPMluhssbJT/gNXc1um7RiPEz47ylr2tXtoLz
-         VGTk99BbWL8pfBBjXt/VdFeOsjHbHIgYWGyXbl5ouvVuIcQMBEEWU2TcpozEI8TmBslW
-         EPp3RhTdaq1j4iyG9Ns4UKGQISVN+fTiwOZI9FjyTlAuWT5M86MyGxinj6TPJdhkcvuH
-         q6Gw==
-X-Gm-Message-State: AFqh2koZDSTuVJ69eQq+cyFIc0fInqzf0tUseO2m+LxZPdxC3f8NfDYE
-	wQVb4rlawEdEUy5n0Yts88q0AOqf4ic=
-X-Google-Smtp-Source: AMrXdXtaT5qDQkHma3K3lFnkjH3J81z2ePBPS7emp/cK7CZwix+GhyYG9AWUw3u6dD6vVMYvL062Nw==
-X-Received: by 2002:a05:6102:185:b0:3b5:1edd:79fe with SMTP id r5-20020a056102018500b003b51edd79femr18416073vsq.21.1672774389337;
-        Tue, 03 Jan 2023 11:33:09 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id r17-20020ae9d611000000b00704c62638f4sm22439767qkk.89.2023.01.03.11.33.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Jan 2023 11:33:08 -0800 (PST)
-Message-ID: <26f54e70-0453-9a0d-b032-5a97fc4fb6c8@gmail.com>
-Date: Tue, 3 Jan 2023 11:33:05 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C058F57
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 19:35:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B7FC433D2;
+	Tue,  3 Jan 2023 19:35:35 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="W+5NW3Rq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1672774533;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=AVElIohNFNtKW3ZE1msjI450T/TRBnRTo0iv1QIRm4k=;
+	b=W+5NW3Rq7Sg7ZuTMgTdUwj03IpK7ihNUOc1Q9h+gBQpWC+QUV6EXFUsODA2AmCv42FNd0e
+	OMb29Km/uY+FlG/OGvBF2xg7gnUad65wYssd7fdkTOERShnrkrQOaaAmje6Ueu8SzufDZk
+	Q3UvdX/gQYNwNIA9tLioErEXt5eNqYg=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ec6e94ba (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Jan 2023 19:35:32 +0000 (UTC)
+Date: Tue, 3 Jan 2023 20:35:30 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Andy Lutomirski <luto@kernel.org>, Ingo Molnar <mingo@kernel.org>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	tglx@linutronix.de, linux-crypto@vger.kernel.org,
+	linux-api@vger.kernel.org, x86@kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org
+Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
+ lazily freeable mappings
+Message-ID: <Y7SDgtXayQCy6xT6@zx2c4.com>
+References: <20230101162910.710293-1-Jason@zx2c4.com>
+ <20230101162910.710293-3-Jason@zx2c4.com>
+ <Y7QIg/hAIk7eZE42@gmail.com>
+ <CALCETrWdw5kxrtr4M7AkKYDOJEE1cU1wENWgmgOxn0rEJz4y3w@mail.gmail.com>
+ <CAHk-=wg_6Uhkjy12Vq_hN6rQqGRP2nE15rkgiAo6Qay5aOeigg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 6.1 00/71] 6.1.3-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230102110551.509937186@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230102110551.509937186@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAHk-=wg_6Uhkjy12Vq_hN6rQqGRP2nE15rkgiAo6Qay5aOeigg@mail.gmail.com>
 
-On 1/2/23 03:21, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.3 release.
-> There are 71 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 04 Jan 2023 11:05:34 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.3-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Hi Linus,
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+On Tue, Jan 03, 2023 at 11:19:36AM -0800, Linus Torvalds wrote:
+> performed as well as they could, but on the whole this is still a
+> really tiny thing, and Jason is trying to micro-optimize something
+> that THE KERNEL SHOULD NOT CARE ABOUT.
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
+I don't think this is about micro-optimization. Rather, userspace RNGs
+aren't really possible in a safe way at the moment. This patchset aims
+to make that possible, by providing things that libc will use. The cover
+letter of this series makes that case.
 
+> This should all be in libc. Not in the kernel with special magic vdso
+> support and special buffer allocations. The kernel should give good
+> enough support that libc can do a good job, but the kernel should
+> simply *not* take the approach of "libc will get this wrong, so let's
+> just do all the work for it".
+
+That's not what this patchset does. libc still needs to handle
+per-thread semantics itself and slice up buffers and so forth. The vDSO
+doesn't allocate any memory. I suspect this was Ingo's presumption too,
+and you extrapolated from that. But that's not what's happening.
+
+> Now, if the magic buffers were something cool that were a generic
+> concept that a lot of *other* cases would also kill for, that's one
+
+Actually, I was thinking VM_DROPPABLE might be a somewhat interesting
+thing to introduce for database caches and so forth, where dropping
+things under memory pressure is actually useful. Obviously that's the
+result of a thought process involving a solution looking for a problem,
+but I considered this a month or so ago when I first sent this in, and
+decided that if I was to expose this via a MAP_* flag in mmap(), that
+should come later, so I didn't here. Anyway, that is all to say it's not
+like this is the only use for it. But either way, I don't actually have
+my sights set on it as a general solution -- after all, I am not in the
+process of authoring a database cache or something -- and if I can make
+Andy's vm_ops suggestion work, that sounds perfectly fine to me.
+
+> thing. But this is such a small special case that absolutely *nobody*
+> has asked for, and that nothing else wants.
+
+Okay so that's where I think you're really quite mistaken. If you recall
+the original discussion on this, I was initially a bit hesitant to do it
+and didn't really want to do it that much. And then I looked into it,
+and talked to a bunch of library and program authors, and saw that
+there's actually quite a bit of demand for this, and generally an
+unhealthy ecosystem of bad solutions that have cropped up in lieu of a
+good one.
+
+(I talked about this a bit with tglx at Plumbers, and I had hoped to
+discuss with you as well, but you weren't available.)
+
+Jason
