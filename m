@@ -1,51 +1,63 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D218E8483
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 16:16:11 +0000 (UTC)
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-46198b81e5eso443054527b3.4
-        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 08:16:11 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDE39362
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 17:00:54 +0000 (UTC)
+Received: by mail-ed1-f53.google.com with SMTP id r26so39497361edc.5
+        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 09:00:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=joelfernandes.org; s=google;
+        d=gmail.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=T9E3yODCOfZo0/pWTG+czeAvvP2raTvlQmHAk+DYnOs=;
-        b=nA4r95X7N/keC8+zAS1FsJPbm3mXsCxmCg2IFQs4Y5rAbc31twg6Fmc4vCWD1gHVwE
-         wGJPISwNETwyjEC7X+seEI5tSi3S9kXGk7GNYM1LEN7MEDqskbaAXFgBTjn2lRtB6ATY
-         whJ0m2xlTV7HaL7Kf4CncZoIEcPhlqPNS2zew=
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9XGF/oHYkE2lnb+e6AM2YoeOvVTcCohPHHsm6JMBYZU=;
+        b=JDnCpKyYZH9ch/oXO9ePdMr6nXo6+0cW9i508hhjlh5zT44nCdfAggvBsb9VuWsgF3
+         pm7qz9lvpzvNIDdnZ9rJHOeOwiYK7PcIkFW1Gwa8q/fwah8DGmsKuPGGCxvJgNGMF+3I
+         wkfn1AF+Oj0zsjmJnnjuFUlHdu5RDBopb6hQLhxL+uRnDZEmL8VvCEWWFhzSt6G94Kua
+         SLN8u2wr98j/CzArKxSPgzhT0xP9cKSG/qRfu0SVKiD/TyBjqjM/zB/Hz/0McDHCH1WS
+         Qpwo72f4apurBO+drAOl1SEAm40lNuCIXq2wji+g4uWYU4Lp3iAhY1y0KseaA7OzfDc2
+         SeWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=T9E3yODCOfZo0/pWTG+czeAvvP2raTvlQmHAk+DYnOs=;
-        b=PiRJSEYiXSSisE1Swt1HEuDVnnPNwrT5jaF6aUn3gk2NbioYlgsa5NHu1F4Bj3yP7U
-         6qNhzg9rlopu33suBQzauU75GUlLV4vysSPZE0a1Lp7pQwNu1h4OEzwQa2lR7sWj5O+5
-         qcbVYQwXtPixb+O9FKkoRFrJPnjE4gXmXu2Hk5BOIfx81p9HlbbOSjAHkN7CDK9x7AZz
-         uQwTOjOAI1AEyNjdM2kfzvG9AKahxZyUStlMipHK0Mf7yCM7tmHcNuPmuuwMnU0+UVJT
-         daqDFJIBe5fHMRhuLreKFAS0b+D8IMsMj5wwFrgFY5zgOnSVq0YaxqzEZ1K92+s3CAkq
-         Lblw==
-X-Gm-Message-State: AFqh2kpiXiqCvd6lNcU5/W5sQU5CGRXp/WXNl3ZGIOmnzyXgnOqBahMs
-	99zWAgs+dRtw+9QNToUO0YLFHg==
-X-Google-Smtp-Source: AMrXdXugJHssjtvoGtsjOMTkx4zuVT9yDfuVETqyj1vbXVmTJuW0si04aQVlUr4wLafXWmPbDZMiTA==
-X-Received: by 2002:a81:6d4d:0:b0:3b8:1d18:90a8 with SMTP id i74-20020a816d4d000000b003b81d1890a8mr38194581ywc.39.1672762570550;
-        Tue, 03 Jan 2023 08:16:10 -0800 (PST)
-Received: from localhost (228.221.150.34.bc.googleusercontent.com. [34.150.221.228])
-        by smtp.gmail.com with ESMTPSA id x17-20020ac84d51000000b003a7f3c4dcdfsm19032594qtv.47.2023.01.03.08.16.07
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9XGF/oHYkE2lnb+e6AM2YoeOvVTcCohPHHsm6JMBYZU=;
+        b=4koeEST0OKeAooHJUQGtbXQZG7UwqLfKxZ5U9JSeVwP9+Bo23wVukGWtCmY5TV+0tI
+         uTT7OhAnKbVB7WzyJA52EUoybEgGlcfCfDfqbS0nsou3XlwmSxlJYjMV6IB1BcGOPTGn
+         1+XwcfUKw2Sz0JmvYvS+M0/TeT5BCVeQ7SZd1EtvUQq/WnAmbrb0AmxeJnMt/IN8ywXv
+         lq0Nf0S2d8JsQF7ksCLOskOsxYvA9d27soFOgfhE2BjJZbW/RQtFgnlyz2ISXnExrTDG
+         vf+yzbWYujqY9h2+rmj7wKnWk0GFQl6PPyZcfJoMbtCMy+Zf9XUJwuO0Tc38v2SY3SIl
+         8bTw==
+X-Gm-Message-State: AFqh2krYXt7tFih3YcCOB9qWajc5QdgLxIAnfQLkIVDwRMKIpUFRXMcb
+	hQniL3vBQwfe3O7D2DIjqy4=
+X-Google-Smtp-Source: AMrXdXtSYbu5hBJ16foCqcNUSZci2xbRQgMPpDknr2ME3NpvEQ7R5l7mS/T8utPIRP3G+YPQUXMw6Q==
+X-Received: by 2002:a05:6402:1f89:b0:47b:16c7:492c with SMTP id c9-20020a0564021f8900b0047b16c7492cmr43128963edc.25.1672765252973;
+        Tue, 03 Jan 2023 09:00:52 -0800 (PST)
+Received: from gmail.com (1F2EF380.nat.pool.telekom.hu. [31.46.243.128])
+        by smtp.gmail.com with ESMTPSA id da14-20020a056402176e00b0048b4e2aaba0sm5018870edb.34.2023.01.03.09.00.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Jan 2023 08:16:07 -0800 (PST)
-Date: Tue, 3 Jan 2023 16:16:07 +0000
-From: Joel Fernandes <joel@joelfernandes.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.10 00/63] 5.10.162-rc1 review
-Message-ID: <Y7RUxwrokcIKZNZ4@google.com>
-References: <20230103081308.548338576@linuxfoundation.org>
+        Tue, 03 Jan 2023 09:00:52 -0800 (PST)
+Sender: Ingo Molnar <mingo.kernel.org@gmail.com>
+Date: Tue, 3 Jan 2023 18:00:46 +0100
+From: Ingo Molnar <mingo@kernel.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	tglx@linutronix.de, linux-crypto@vger.kernel.org,
+	linux-api@vger.kernel.org, x86@kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: Re: [PATCH v14 1/7] x86: lib: Separate instruction decoder MMIO type
+ from MMIO trace
+Message-ID: <Y7RfPnyK/25pxpKs@gmail.com>
+References: <20230101162910.710293-1-Jason@zx2c4.com>
+ <20230101162910.710293-2-Jason@zx2c4.com>
+ <Y7QELo9etPM8Tpx5@gmail.com>
+ <Y7RA3bmko0AjO8hQ@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -54,368 +66,43 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230103081308.548338576@linuxfoundation.org>
-
-On Tue, Jan 03, 2023 at 09:13:30AM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.162 release.
-> There are 63 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 05 Jan 2023 08:12:47 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.162-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
-> 
-> thanks,
-
-Testing fails. Could you please pick these 2 up?
-https://lore.kernel.org/r/20221230153215.1333921-1-joel@joelfernandes.org
-https://lore.kernel.org/all/20221230153215.1333921-2-joel@joelfernandes.org/
-
-Thank you,
-
- - Joel
+In-Reply-To: <Y7RA3bmko0AjO8hQ@zx2c4.com>
 
 
-> 
-> greg k-h
-> 
-> -------------
-> Pseudo-Shortlog of commits:
-> 
-> Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->     Linux 5.10.162-rc1
-> 
-> Jens Axboe <axboe@kernel.dk>
->     io_uring: pass in EPOLL_URING_WAKE for eventfd signaling and wakeups
-> 
-> Jens Axboe <axboe@kernel.dk>
->     eventfd: provide a eventfd_signal_mask() helper
-> 
-> Jens Axboe <axboe@kernel.dk>
->     eventpoll: add EPOLL_URING_WAKE poll wakeup flag
-> 
-> Jens Axboe <axboe@kernel.dk>
->     Revert "proc: don't allow async path resolution of /proc/self components"
-> 
-> Jens Axboe <axboe@kernel.dk>
->     Revert "proc: don't allow async path resolution of /proc/thread-self components"
-> 
-> Jens Axboe <axboe@kernel.dk>
->     net: remove cmsg restriction from io_uring based send/recvmsg calls
-> 
-> Jens Axboe <axboe@kernel.dk>
->     task_work: unconditionally run task_work from get_signal()
-> 
-> Jens Axboe <axboe@kernel.dk>
->     signal: kill JOBCTL_TASK_WORK
-> 
-> Jens Axboe <axboe@kernel.dk>
->     io_uring: import 5.15-stable io_uring
-> 
-> Jens Axboe <axboe@kernel.dk>
->     task_work: add helper for more targeted task_work canceling
-> 
-> Jens Axboe <axboe@kernel.dk>
->     kernel: don't call do_exit() for PF_IO_WORKER threads
-> 
-> Jens Axboe <axboe@kernel.dk>
->     kernel: stop masking signals in create_io_thread()
-> 
-> Stefan Metzmacher <metze@samba.org>
->     x86/process: setup io_threads more like normal user space threads
-> 
-> Jens Axboe <axboe@kernel.dk>
->     arch: ensure parisc/powerpc handle PF_IO_WORKER in copy_thread()
-> 
-> Jens Axboe <axboe@kernel.dk>
->     arch: setup PF_IO_WORKER threads like PF_KTHREAD
-> 
-> Seth Forshee <sforshee@digitalocean.com>
->     entry/kvm: Exit to user mode when TIF_NOTIFY_SIGNAL is set
-> 
-> Jens Axboe <axboe@kernel.dk>
->     kernel: allow fork with TIF_NOTIFY_SIGNAL pending
-> 
-> Eric W. Biederman <ebiederm@xmission.com>
->     coredump: Limit what can interrupt coredumps
-> 
-> Jens Axboe <axboe@kernel.dk>
->     kernel: remove checking for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     task_work: remove legacy TWA_SIGNAL path
-> 
-> Al Viro <viro@zeniv.linux.org.uk>
->     alpha: fix TIF_NOTIFY_SIGNAL handling
-> 
-> Vineet Gupta <vgupta@synopsys.com>
->     ARC: unbork 5.11 bootup: fix snafu in _TIF_NOTIFY_SIGNAL handling
-> 
-> Jens Axboe <axboe@kernel.dk>
->     ia64: don't call handle_signal() unless there's actually a signal queued
-> 
-> Jens Axboe <axboe@kernel.dk>
->     sparc: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     riscv: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     nds32: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     ia64: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     h8300: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     c6x: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     alpha: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     xtensa: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     arm: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     microblaze: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     hexagon: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     csky: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     openrisc: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     sh: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     um: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     s390: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     mips: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     powerpc: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     parisc: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     nios32: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     m68k: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     arm64: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     arc: add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     x86: Wire up TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     task_work: Use TIF_NOTIFY_SIGNAL if available
-> 
-> Jens Axboe <axboe@kernel.dk>
->     entry: Add support for TIF_NOTIFY_SIGNAL
-> 
-> Jens Axboe <axboe@kernel.dk>
->     fs: provide locked helper variant of close_fd_get_file()
-> 
-> Eric W. Biederman <ebiederm@xmission.com>
->     file: Rename __close_fd_get_file close_fd_get_file
-> 
-> Jens Axboe <axboe@kernel.dk>
->     fs: make do_renameat2() take struct filename
-> 
-> Jens Axboe <axboe@kernel.dk>
->     signal: Add task_sigpending() helper
-> 
-> Pavel Begunkov <asml.silence@gmail.com>
->     net: add accept helper not installing fd
-> 
-> Jens Axboe <axboe@kernel.dk>
->     net: provide __sys_shutdown_sock() that takes a socket
-> 
-> Arnaldo Carvalho de Melo <acme@redhat.com>
->     tools headers UAPI: Sync openat2.h with the kernel sources
-> 
-> Jens Axboe <axboe@kernel.dk>
->     fs: expose LOOKUP_CACHED through openat2() RESOLVE_CACHED
-> 
-> Al Viro <viro@zeniv.linux.org.uk>
->     Make sure nd->path.mnt and nd->path.dentry are always valid pointers
-> 
-> Al Viro <viro@zeniv.linux.org.uk>
->     fix handling of nd->depth on LOOKUP_CACHED failures in try_to_unlazy*
-> 
-> Jens Axboe <axboe@kernel.dk>
->     fs: add support for LOOKUP_CACHED
-> 
-> Al Viro <viro@zeniv.linux.org.uk>
->     saner calling conventions for unlazy_child()
-> 
-> Jens Axboe <axboe@kernel.dk>
->     iov_iter: add helper to save iov_iter state
-> 
-> Jens Axboe <axboe@kernel.dk>
->     kernel: provide create_io_thread() helper
-> 
-> 
-> -------------
-> 
-> Diffstat:
-> 
->  Makefile                                  |    6 +-
->  arch/alpha/include/asm/thread_info.h      |    4 +-
->  arch/alpha/kernel/entry.S                 |    2 +-
->  arch/alpha/kernel/process.c               |    2 +-
->  arch/alpha/kernel/signal.c                |    2 +-
->  arch/arc/include/asm/thread_info.h        |    4 +-
->  arch/arc/kernel/entry.S                   |    3 +-
->  arch/arc/kernel/process.c                 |    2 +-
->  arch/arc/kernel/signal.c                  |    2 +-
->  arch/arm/include/asm/thread_info.h        |    7 +-
->  arch/arm/kernel/entry-common.S            |    6 +-
->  arch/arm/kernel/entry-v7m.S               |    2 +-
->  arch/arm/kernel/process.c                 |    2 +-
->  arch/arm/kernel/signal.c                  |    2 +-
->  arch/arm64/include/asm/thread_info.h      |    5 +-
->  arch/arm64/kernel/process.c               |    2 +-
->  arch/arm64/kernel/signal.c                |    2 +-
->  arch/c6x/include/asm/thread_info.h        |    1 +
->  arch/c6x/kernel/asm-offsets.c             |    1 +
->  arch/c6x/kernel/signal.c                  |    3 +-
->  arch/csky/include/asm/thread_info.h       |    5 +-
->  arch/csky/kernel/process.c                |    2 +-
->  arch/csky/kernel/signal.c                 |    2 +-
->  arch/h8300/include/asm/thread_info.h      |    4 +-
->  arch/h8300/kernel/process.c               |    2 +-
->  arch/h8300/kernel/signal.c                |    2 +-
->  arch/hexagon/include/asm/thread_info.h    |    2 +
->  arch/hexagon/kernel/process.c             |    4 +-
->  arch/ia64/include/asm/thread_info.h       |    4 +-
->  arch/ia64/kernel/process.c                |    5 +-
->  arch/ia64/kernel/signal.c                 |    3 +-
->  arch/m68k/include/asm/thread_info.h       |    1 +
->  arch/m68k/kernel/process.c                |    2 +-
->  arch/m68k/kernel/signal.c                 |    3 +-
->  arch/microblaze/include/asm/thread_info.h |    2 +
->  arch/microblaze/kernel/process.c          |    2 +-
->  arch/microblaze/kernel/signal.c           |    3 +-
->  arch/mips/include/asm/thread_info.h       |    4 +-
->  arch/mips/kernel/process.c                |    2 +-
->  arch/mips/kernel/signal.c                 |    2 +-
->  arch/nds32/include/asm/thread_info.h      |    2 +
->  arch/nds32/kernel/ex-exit.S               |    2 +-
->  arch/nds32/kernel/process.c               |    2 +-
->  arch/nds32/kernel/signal.c                |    2 +-
->  arch/nios2/include/asm/thread_info.h      |    2 +
->  arch/nios2/kernel/process.c               |    2 +-
->  arch/nios2/kernel/signal.c                |    3 +-
->  arch/openrisc/include/asm/thread_info.h   |    2 +
->  arch/openrisc/kernel/process.c            |    2 +-
->  arch/openrisc/kernel/signal.c             |    2 +-
->  arch/parisc/include/asm/thread_info.h     |    4 +-
->  arch/parisc/kernel/process.c              |    2 +-
->  arch/parisc/kernel/signal.c               |    3 +-
->  arch/powerpc/include/asm/thread_info.h    |    5 +-
->  arch/powerpc/kernel/process.c             |    2 +-
->  arch/powerpc/kernel/signal.c              |    2 +-
->  arch/riscv/include/asm/thread_info.h      |    5 +-
->  arch/riscv/kernel/process.c               |    2 +-
->  arch/riscv/kernel/signal.c                |    2 +-
->  arch/s390/include/asm/thread_info.h       |    2 +
->  arch/s390/kernel/entry.S                  |   11 +-
->  arch/s390/kernel/process.c                |    2 +-
->  arch/s390/kernel/signal.c                 |    2 +-
->  arch/sh/include/asm/thread_info.h         |    4 +-
->  arch/sh/kernel/process_32.c               |    2 +-
->  arch/sh/kernel/signal_32.c                |    2 +-
->  arch/sparc/include/asm/thread_info_32.h   |    4 +-
->  arch/sparc/include/asm/thread_info_64.h   |    6 +-
->  arch/sparc/kernel/process_32.c            |    2 +-
->  arch/sparc/kernel/process_64.c            |    2 +-
->  arch/sparc/kernel/signal_32.c             |    2 +-
->  arch/sparc/kernel/signal_64.c             |    2 +-
->  arch/um/include/asm/thread_info.h         |    2 +
->  arch/um/kernel/process.c                  |    5 +-
->  arch/x86/include/asm/thread_info.h        |    2 +
->  arch/x86/kernel/process.c                 |   17 +
->  arch/x86/kernel/signal.c                  |    4 +-
->  arch/xtensa/include/asm/thread_info.h     |    5 +-
->  arch/xtensa/kernel/entry.S                |    4 +-
->  arch/xtensa/kernel/process.c              |    2 +-
->  arch/xtensa/kernel/signal.c               |    3 +-
->  drivers/android/binder.c                  |    2 +-
->  fs/Makefile                               |    2 -
->  fs/coredump.c                             |    2 +-
->  fs/eventfd.c                              |   37 +-
->  fs/eventpoll.c                            |   18 +-
->  fs/file.c                                 |   34 +-
->  fs/internal.h                             |    3 +
->  fs/io-wq.c                                | 1242 ----
->  fs/namei.c                                |   84 +-
->  fs/open.c                                 |    6 +
->  fs/proc/self.c                            |    7 -
->  fs/proc/thread_self.c                     |    7 -
->  include/linux/entry-common.h              |    7 +-
->  include/linux/entry-kvm.h                 |    4 +-
->  include/linux/eventfd.h                   |    7 +
->  include/linux/fcntl.h                     |    2 +-
->  include/linux/fdtable.h                   |    2 +-
->  include/linux/io_uring.h                  |   46 +-
->  include/linux/namei.h                     |    1 +
->  include/linux/net.h                       |    3 -
->  include/linux/sched.h                     |    3 +
->  include/linux/sched/jobctl.h              |    4 +-
->  include/linux/sched/signal.h              |   18 +-
->  include/linux/sched/task.h                |    2 +
->  include/linux/socket.h                    |    4 +
->  include/linux/syscalls.h                  |    2 +-
->  include/linux/task_work.h                 |    2 +
->  include/linux/tracehook.h                 |   23 +
->  include/linux/uio.h                       |   15 +
->  include/trace/events/io_uring.h           |  121 +-
->  include/uapi/linux/eventpoll.h            |    6 +
->  include/uapi/linux/io_uring.h             |  115 +-
->  include/uapi/linux/openat2.h              |    4 +
->  io_uring/Makefile                         |    6 +
->  io_uring/io-wq.c                          | 1398 +++++
->  {fs => io_uring}/io-wq.h                  |   47 +-
->  {fs => io_uring}/io_uring.c               | 9209 ++++++++++++++++-------------
->  kernel/entry/common.c                     |   14 +-
->  kernel/entry/kvm.c                        |    2 +-
->  kernel/events/uprobes.c                   |    2 +-
->  kernel/exit.c                             |    2 +-
->  kernel/fork.c                             |   33 +-
->  kernel/sched/core.c                       |    2 +-
->  kernel/signal.c                           |   53 +-
->  kernel/task_work.c                        |   48 +-
->  lib/iov_iter.c                            |   52 +-
->  net/ipv4/af_inet.c                        |    1 -
->  net/ipv6/af_inet6.c                       |    1 -
->  net/socket.c                              |   92 +-
->  tools/include/uapi/linux/openat2.h        |    4 +
->  131 files changed, 7279 insertions(+), 5773 deletions(-)
-> 
-> 
+* Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+
+> On Tue, Jan 03, 2023 at 11:32:14AM +0100, Ingo Molnar wrote:
+> > 
+> > * Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> > 
+> > > Both mmiotrace.h and insn-eval.h define various MMIO_ enum constants.
+> > > Rename the insn ones to have a INSN_ prefix, so that the headers can be
+> > > used from the same source file.
+> > > 
+> > > Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+> > > ---
+> > >  arch/x86/coco/tdx/tdx.c          | 26 +++++++++++++-------------
+> > >  arch/x86/include/asm/insn-eval.h | 18 +++++++++---------
+> > >  arch/x86/kernel/sev.c            | 18 +++++++++---------
+> > >  arch/x86/lib/insn-eval.c         | 20 ++++++++++----------
+> > >  4 files changed, 41 insertions(+), 41 deletions(-)
+> > 
+> > FYI, I've applied this fix to tip:x86/asm, as the fix for the namespace 
+> > clash makes sense independently of the vDSO getrandom feature.
+> 
+> I guess you missed the conversation with Borislav yesterday about that.
+> He mentioned that I'd just take it through random.git when this whole
+> series goes in.
+
+Please base your tree off on tip:x86/asm then (or pull it in) - it only 
+includes this patch and another trivial patch at:
+
+   a0e3aa8fe6cb ("x86/insn: Avoid namespace clash by separating instruction decoder MMIO type from MMIO trace type")
+
+We often modify these files - roughly ~4 commits to arch/x86/kernel/sev.c 
+alone per cycle on average - and it would be better to avoid conflicts 
+here.
+
+Thanks,
+
+	Ingo
