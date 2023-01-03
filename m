@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A35138D
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:15:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F5A7C433EF;
-	Tue,  3 Jan 2023 08:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B128138E
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:15:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DF11C433D2;
+	Tue,  3 Jan 2023 08:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672733733;
-	bh=a/FcX1DrHi4fYlfYvL75m1mDjOg30lklyzaTQTcHWe8=;
+	s=korg; t=1672733735;
+	bh=aHWCsL7Yk7DECg3q0Lq6MKlwgwnQsz0WYbGfOt60hto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bruXIDIVE0Xl/omtX1abJolrerYTaRsMyjB/TvXqH4sy/Cn3OY57+dB2a/ZSmue5H
-	 y53DJXLtHL4842sVmBEHyYKjx/7MRHiYdTn46MhMhK62KWu/+Zb294t6ogQdMxvuJk
-	 np+Ozfd5di8OvtkXNnSzE+bHlrBYCd5Eq/yKRwGg=
+	b=FBUDqulvEgPg7Fu1NCRxfQiPrPoUMG3/BcAKLmo8FKXu/HjsRS7aZyJIY3K4dwOEp
+	 XAvZy7BNlTZOVYD9y/B4vyq3jNgDqlVTS2Hvm8a9gCQBofchXuM+FRXxM7s5UvkUuw
+	 IUDGE8xd0m9j+6Hlla02AcjZsiUqozPgtcfGYhfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-s390@vger.kernel.org,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
+	linux-um@lists.infradead.org,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 25/63] s390: add support for TIF_NOTIFY_SIGNAL
-Date: Tue,  3 Jan 2023 09:13:55 +0100
-Message-Id: <20230103081310.082733700@linuxfoundation.org>
+Subject: [PATCH 5.10 26/63] um: add support for TIF_NOTIFY_SIGNAL
+Date: Tue,  3 Jan 2023 09:13:56 +0100
+Message-Id: <20230103081310.149506483@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230103081308.548338576@linuxfoundation.org>
 References: <20230103081308.548338576@linuxfoundation.org>
@@ -38,83 +37,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 75309018a24ddfb930c51bad8f4070b9bc2c923b ]
+[ Upstream commit a5b3cd32ff238b87e94d47b927aff117e22d13c0 ]
 
-Wire up TIF_NOTIFY_SIGNAL handling for s390.
+Wire up TIF_NOTIFY_SIGNAL handling for um.
 
-Cc: linux-s390@vger.kernel.org
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Acked-by: Sven Schnelle <svens@linux.ibm.com>
+Cc: linux-um@lists.infradead.org
+Acked-By: Anton Ivanov <anton.ivanov@cambridgegreys.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/include/asm/thread_info.h |    2 ++
- arch/s390/kernel/entry.S            |   11 ++++++-----
- arch/s390/kernel/signal.c           |    2 +-
- 3 files changed, 9 insertions(+), 6 deletions(-)
+ arch/um/include/asm/thread_info.h |    2 ++
+ arch/um/kernel/process.c          |    3 ++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/s390/include/asm/thread_info.h
-+++ b/arch/s390/include/asm/thread_info.h
-@@ -65,6 +65,7 @@ void arch_setup_new_exec(void);
- #define TIF_GUARDED_STORAGE	4	/* load guarded storage control block */
- #define TIF_PATCH_PENDING	5	/* pending live patching update */
- #define TIF_PGSTE		6	/* New mm's will use 4K page tables */
-+#define TIF_NOTIFY_SIGNAL	7	/* signal notifications exist */
- #define TIF_ISOLATE_BP		8	/* Run process with isolated BP */
- #define TIF_ISOLATE_BP_GUEST	9	/* Run KVM guests with isolated BP */
+--- a/arch/um/include/asm/thread_info.h
++++ b/arch/um/include/asm/thread_info.h
+@@ -57,6 +57,7 @@ static inline struct thread_info *curren
+ #define TIF_SYSCALL_TRACE	0	/* syscall trace active */
+ #define TIF_SIGPENDING		1	/* signal pending */
+ #define TIF_NEED_RESCHED	2	/* rescheduling necessary */
++#define TIF_NOTIFY_SIGNAL	3	/* signal notifications exist */
+ #define TIF_RESTART_BLOCK	4
+ #define TIF_MEMDIE		5	/* is terminating due to OOM killer */
+ #define TIF_SYSCALL_AUDIT	6
+@@ -68,6 +69,7 @@ static inline struct thread_info *curren
+ #define _TIF_SYSCALL_TRACE	(1 << TIF_SYSCALL_TRACE)
+ #define _TIF_SIGPENDING		(1 << TIF_SIGPENDING)
+ #define _TIF_NEED_RESCHED	(1 << TIF_NEED_RESCHED)
++#define _TIF_NOTIFY_SIGNAL	(1 << TIF_NOTIFY_SIGNAL)
+ #define _TIF_MEMDIE		(1 << TIF_MEMDIE)
+ #define _TIF_SYSCALL_AUDIT	(1 << TIF_SYSCALL_AUDIT)
+ #define _TIF_SECCOMP		(1 << TIF_SECCOMP)
+--- a/arch/um/kernel/process.c
++++ b/arch/um/kernel/process.c
+@@ -99,7 +99,8 @@ void interrupt_end(void)
  
-@@ -82,6 +83,7 @@ void arch_setup_new_exec(void);
- #define TIF_SYSCALL_TRACEPOINT	27	/* syscall tracepoint instrumentation */
- 
- #define _TIF_NOTIFY_RESUME	BIT(TIF_NOTIFY_RESUME)
-+#define _TIF_NOTIFY_SIGNAL	BIT(TIF_NOTIFY_SIGNAL)
- #define _TIF_SIGPENDING		BIT(TIF_SIGPENDING)
- #define _TIF_NEED_RESCHED	BIT(TIF_NEED_RESCHED)
- #define _TIF_UPROBE		BIT(TIF_UPROBE)
---- a/arch/s390/kernel/entry.S
-+++ b/arch/s390/kernel/entry.S
-@@ -52,7 +52,8 @@ STACK_SIZE  = 1 << STACK_SHIFT
- STACK_INIT = STACK_SIZE - STACK_FRAME_OVERHEAD - __PT_SIZE
- 
- _TIF_WORK	= (_TIF_SIGPENDING | _TIF_NOTIFY_RESUME | _TIF_NEED_RESCHED | \
--		   _TIF_UPROBE | _TIF_GUARDED_STORAGE | _TIF_PATCH_PENDING)
-+		   _TIF_UPROBE | _TIF_GUARDED_STORAGE | _TIF_PATCH_PENDING | \
-+		   _TIF_NOTIFY_SIGNAL)
- _TIF_TRACE	= (_TIF_SYSCALL_TRACE | _TIF_SYSCALL_AUDIT | _TIF_SECCOMP | \
- 		   _TIF_SYSCALL_TRACEPOINT)
- _CIF_WORK	= (_CIF_ASCE_PRIMARY | _CIF_ASCE_SECONDARY | _CIF_FPU)
-@@ -481,8 +482,8 @@ ENTRY(system_call)
- #endif
- 	TSTMSK	__PT_FLAGS(%r11),_PIF_SYSCALL_RESTART
- 	jo	.Lsysc_syscall_restart
--	TSTMSK	__TI_flags(%r12),_TIF_SIGPENDING
--	jo	.Lsysc_sigpending
-+	TSTMSK	__TI_flags(%r12),(_TIF_SIGPENDING|_TIF_NOTIFY_SIGNAL)
-+	jnz	.Lsysc_sigpending
- 	TSTMSK	__TI_flags(%r12),_TIF_NOTIFY_RESUME
- 	jo	.Lsysc_notify_resume
- 	TSTMSK	__LC_CPU_FLAGS,(_CIF_ASCE_PRIMARY|_CIF_ASCE_SECONDARY)
-@@ -863,8 +864,8 @@ ENTRY(io_int_handler)
- 	TSTMSK	__TI_flags(%r12),_TIF_PATCH_PENDING
- 	jo	.Lio_patch_pending
- #endif
--	TSTMSK	__TI_flags(%r12),_TIF_SIGPENDING
--	jo	.Lio_sigpending
-+	TSTMSK	__TI_flags(%r12),(_TIF_SIGPENDING|_TIF_NOTIFY_SIGNAL)
-+	jnz	.Lio_sigpending
- 	TSTMSK	__TI_flags(%r12),_TIF_NOTIFY_RESUME
- 	jo	.Lio_notify_resume
- 	TSTMSK	__TI_flags(%r12),_TIF_GUARDED_STORAGE
---- a/arch/s390/kernel/signal.c
-+++ b/arch/s390/kernel/signal.c
-@@ -472,7 +472,7 @@ void do_signal(struct pt_regs *regs)
- 	current->thread.system_call =
- 		test_pt_regs_flag(regs, PIF_SYSCALL) ? regs->int_code : 0;
- 
--	if (get_signal(&ksig)) {
-+	if (test_thread_flag(TIF_SIGPENDING) && get_signal(&ksig)) {
- 		/* Whee!  Actually deliver the signal.  */
- 		if (current->thread.system_call) {
- 			regs->int_code = current->thread.system_call;
+ 	if (need_resched())
+ 		schedule();
+-	if (test_thread_flag(TIF_SIGPENDING))
++	if (test_thread_flag(TIF_SIGPENDING) ||
++	    test_thread_flag(TIF_NOTIFY_SIGNAL))
+ 		do_signal(regs);
+ 	if (test_thread_flag(TIF_NOTIFY_RESUME))
+ 		tracehook_notify_resume(regs);
 
 
