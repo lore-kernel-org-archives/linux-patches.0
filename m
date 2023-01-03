@@ -1,152 +1,82 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093688F57
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 18:51:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E000DC433EF;
-	Tue,  3 Jan 2023 18:51:45 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="bHHodc0f"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1672771903;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=yIp6kO5eIHdv4v3c2ecLfUgKivnf2+mEm8o0l2hkbzo=;
-	b=bHHodc0fH+H7OOTTkxPAWw94TxrIyjgw8ZAmtm3SM0EYAXHTAqUINBwNVpDp+Ep30VQN7N
-	ngeXJ0no/zVq7bgjckhK5fPEXBM3HxDC/3PeTN5YrBYhgdotA9NzKVzvi5PfzmDmYoEQJd
-	Ss6rEgGplCLChsIP0gx+7BeqKr6GAKg=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id ea8cdcd1 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 3 Jan 2023 18:51:42 +0000 (UTC)
-Date: Tue, 3 Jan 2023 19:51:38 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Ingo Molnar <mingo@kernel.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	tglx@linutronix.de, linux-crypto@vger.kernel.org,
-	linux-api@vger.kernel.org, x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-Message-ID: <Y7R5OokY7P+H2vuD@zx2c4.com>
-References: <20230101162910.710293-1-Jason@zx2c4.com>
- <20230101162910.710293-3-Jason@zx2c4.com>
- <Y7QIg/hAIk7eZE42@gmail.com>
- <Y7RDQLEvlLM0o4cp@zx2c4.com>
- <Y7Rw1plb/pqPiWgg@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9881E8F57
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 18:59:28 +0000 (UTC)
+Received: by mail-pj1-f50.google.com with SMTP id n12so20933603pjp.1
+        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 10:59:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Jx76/1qwXkqVtZ8WWT7wUJXezQVggNO/8OW6AUwyjMA=;
+        b=BxQMADJFAau6seEuwJ0tNqYrllJiRiRxCcYxkJHKE4QLFxmyvgp70j+Nwj8+7SIKQW
+         RoeutIKxN539xK64Dsba4z9O/kv1OSYzJ/nQ4Rpk/k+J92ri8NBjcs4GxeW4Gbm9ftJy
+         CHBT+SZYdVluwCJ1TKETaOtBE8FPVqvcTbn+HJ+Rl6LoIuyzeEE7AufGkOqj7EBHsEC5
+         ylEPyiUuvYlGl+Tf20I/3DvGWivoHFrFLoTli7W1zSAtzjpJQLTW/SE/wjucnxuT8yRw
+         L7zBC2Y+6+QklqO+MQ6JT0P5Q5vWVYK4OwCoDABydsu1lSZZ33er/6sCez33vxB59jlY
+         NoJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Jx76/1qwXkqVtZ8WWT7wUJXezQVggNO/8OW6AUwyjMA=;
+        b=2OTzH3XHFxZCB7UeKCjFQfJjbzVu1Qs13+Hg93JEWd+Xhh3wZI7PZtl6MwcCC6jdcC
+         gOrueonKjlcybC+pDBmzarObnAHuvJYmAr1OTKdZ2Fcxy9SrcCK/JBBWzAGLFL3IIAMG
+         LYwi92FXleiWV4tqhFqYFbN4lN96jLH+kob5UDnmV5trVArk4N2zKXXW1XkQhOGkktXC
+         rO/6tdIKFGq2U7trglh1hbhfiCRlzGda0i7vWUQdIthqUSDa4JMlJ/WWv4io8BwSYRYd
+         9mFAaybW06FXJ8bS5enG+pAsxDEtFdv5JjjJpr9VS8bKTLOgqiKiRnghTlvbi41OlVHC
+         o1+A==
+X-Gm-Message-State: AFqh2kpXybnvd70v+K9LH6DWPAxvgqOWFk72YcFppgIogP4uy5ZOPKlR
+	6HkvYRK7+xpc6aAu++ben0TkyiHr06HcFuxodOw=
+X-Google-Smtp-Source: AMrXdXvu/j0jmA7+ISM9cNRq7iszIsefcF15r6xRSMLq70F8LTW/DsCyEPgQuOn4WtfbnIAGepMvNjKhlZngso3VREM=
+X-Received: by 2002:a17:903:22cc:b0:189:e81a:1520 with SMTP id
+ y12-20020a17090322cc00b00189e81a1520mr2865801plg.48.1672772367982; Tue, 03
+ Jan 2023 10:59:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y7Rw1plb/pqPiWgg@gmail.com>
+References: <20230103081308.548338576@linuxfoundation.org>
+In-Reply-To: <20230103081308.548338576@linuxfoundation.org>
+From: Allen Pais <stable.kernel.dev@gmail.com>
+Date: Tue, 3 Jan 2023 10:59:17 -0800
+Message-ID: <CAJq+SaAQWarJebJBmRv8Kwa6hkqg7rKBKyLZphcXo096PO8mKg@mail.gmail.com>
+Subject: Re: [PATCH 5.10 00/63] 5.10.162-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Jan 03, 2023 at 07:15:50PM +0100, Ingo Molnar wrote:
-> Frankly, I don't appreciate your condescending discussion style that 
-> borders on the toxic, and to save time I'm nacking this technical approach 
-> until both the patch-set and your reaction to constructive review feedback 
-> improves:
-> 
->     NAcked-by: Ingo Molnar <mingo@kernel.org>
+> This is the start of the stable review cycle for the 5.10.162 release.
+> There are 63 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 05 Jan 2023 08:12:47 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.162-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-Your initial email to me did not strike me as constructive at all. All I
-gotta say is that you really seem to live up to your reputation here...
+Compiled and booted on my x86_64 and ARM64 test systems. No errors or
+regressions.
 
-But trying to steer things back to the technical realm:
+Tested-by: Allen Pais <apais@linux.microsoft.com>
 
-> For a single architecture: x86.
-> 
-> And it's only 19 lines because x86 already happens to have a bunch of 
-> complexity implemented, such as a safe instruction decoder that allows the 
-> skipping of an instruction - which relies on thousands of lines of 
-> complexity.
-> 
-> On an architecture where this isn't present, it would have to be 
-> implemented to support the instruction-skipping aspect of VM_DROPPABLE.
-
-My assumption is actually the opposite: that x86 (CISC) is basically the
-most complex, and that the RISC architectures will all be a good deal
-more trivial -- e.g. just adding 4 to IP on some. It looks like some
-architectures also already have mature decoders where required.
-
-> Even on x86, it's not common today for the software-decoder to be used in 
-> unprivileged code - primary use was debugging & instrumentation code. So 
-> your patches bring this piece of complexity to a much larger scope of 
-> untrusted user-space functionality.
-
-As far as I can tell, this decoder *is* used with userspace already.
-It's used by SEV and by UMIP, in a totally userspace accessible way. Am
-I misunderstanding its use there? It looks to me like that operates on
-untrusted code.
-
-*However* - if your big objection to this patch is that the instruction
-skipping is problematic, we could actually punt that part. The result
-will be that userspace just retries the memory write and the fault
-happens again, and eventually it succeeds. From a perspective of
-vgetrandom(), that's perhaps worse -- with this v14 patchset, it'll
-immediately fallback to the syscall under memory pressure -- but you
-could argue that nobody really cares about performance at that point
-anyway, and so just retrying the fault until it succeeds is a less
-complex behavior that would be just fine.
-
-Let me know if you think that'd be an acceptable compromise, and I'll
-roll it into v15. As a preview, it pretty much amounts to dropping 3/7
-and editing the commit message in this 2/7 patch.
-
-> I did not suggest to swap it: my suggestion is to just pin these vDSO data 
-> pages. The per thread memory overhead is infinitesimal on the vast majority 
-> of the target systems, and the complexity trade-off you are proposing is 
-> poorly reasoned IMO.
-> 
-> I think my core point that it would be much simpler to simply pin those 
-> pages and not introduce rarely-excercised 'discardable memory' semantics in 
-> Linux is a fair one - so it's straightforward to lift this NAK.
-
-Okay so this is where I think we're really not lined up and is a large
-part of why I wondered whether you'd read the commit messages before
-dismissing this. This VM_DROPPABLE mapping comes as a result of a
-vgetrandom_alloc() syscall, which (g)libc makes at some point, and then
-the result of that is passed to the vDSO getrandom() function. The
-memory in vgetrandom_alloc() is then carved up, one per thread, with
-(g)libc's various internal pthread creation/exit functions.
-
-So that means this isn't a thing that's trivially limited to just one
-per thread. Userspace can call vgetrandom_alloc() all it wants.
-
-Thus, I'm having a hard time seeing how relaxing rlimits here as you
-suggested doesn't amount to an rlimit backdoor. I'm also not seeing
-other fancy options for "pinning pages" as you mentioned in this email.
-Something about having the kernel allocate them on clone()? That seems
-terrible and complex. And if you do want this all to go through mlock(),
-somehow, there's still the fork() inheritabiity issue. (This was all
-discussed on the thread a few versions ago that surfaced these issues,
-by the way.)
-
-So I'm not really seeing any good alternatives, no matter how hard I
-squint at your suggestions. Maybe you can elaborate a bit?
-Alternatively, perhaps the compromise I suggested above where we ditch
-the instruction decoder stuff is actually fine with you?
-
-> rarely-excercised 'discardable memory' semantics in 
-> Linux is a fair one - so it's straightforward to lift this NAK.
-
-I still don't think calling this "rarely-exercised" is true. Desktop
-machines regularly OOM with lots of Chrome tabs, and this is
-functionality that'll be in glibc, so it'll be exercised quite often.
-Even on servers, many operators work with the philosophy that unused RAM
-is wasted RAM, and so servers are run pretty close to capacity. Not to
-mention Android, where lots of handsets have way too little RAM.
-Swapping and memory pressure and so forth is very real. So claiming that
-this is somehow obscure or rarely used or what have you isn't very
-accurate. These are code paths that will certainly get exercised.
-
-Jason
+Thanks.
