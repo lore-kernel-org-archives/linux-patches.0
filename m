@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6138320E4
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:17:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA668C433D2;
-	Tue,  3 Jan 2023 08:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D8E20E4
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:17:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8446C433F0;
+	Tue,  3 Jan 2023 08:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672733836;
-	bh=mKQkF8W+cn/u5RKKe6dUctZZYP5RMhBvPQWAL6bU1so=;
+	s=korg; t=1672733839;
+	bh=vfKzb+eY3wnt2ReVcnp29G/Dfuf7PoOI+KT5aeKdfW0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UmCTZMKoRu0BJ28YiHFtrfbiiaoDTlxTVVH5ZZ02mEtnC6iB5UIG6jA603AHcGMKi
-	 vMA75wlRNrktQyf37qOgNwYkM0yXK+MmbhzrVmB7vsTogbDBUXbAptBsxWBO+105No
-	 4wzPsCem0CJGa27/IQeUMYQElNgXurxLT7Dfu7oY=
+	b=cKnFxM5fh0WlmTj/EtyPubRu7ZQGKKaHls4pR1pA2MdKthsheApY8zsWRLCroZXGT
+	 cgzCNHDL/TBLl73+Wm0CfvOlQUnhO4fSP4wtzZomaLDKxRXTdtfmiKEha+hM5yog/j
+	 4L+3hy0jPhNSjoLw3Qhuw547hE+tX98aLi2vHUCc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	linux-riscv@lists.infradead.org,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 58/63] net: remove cmsg restriction from io_uring based send/recvmsg calls
-Date: Tue,  3 Jan 2023 09:14:28 +0100
-Message-Id: <20230103081312.102177994@linuxfoundation.org>
+Subject: [PATCH 5.10 39/63] riscv: add support for TIF_NOTIFY_SIGNAL
+Date: Tue,  3 Jan 2023 09:14:09 +0100
+Message-Id: <20230103081310.924046326@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230103081308.548338576@linuxfoundation.org>
 References: <20230103081308.548338576@linuxfoundation.org>
@@ -35,88 +36,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit e54937963fa249595824439dc839c948188dea83 ]
+[ Upstream commit 24a31b81e38309b1604f24520110aae1f83f3cbf ]
 
-No need to restrict these anymore, as the worker threads are direct
-clones of the original task. Hence we know for a fact that we can
-support anything that the regular task can.
+Wire up TIF_NOTIFY_SIGNAL handling for riscv.
 
-Since the only user of proto_ops->flags was to flag PROTO_CMSG_DATA_ONLY,
-kill the member and the flag definition too.
-
+Cc: linux-riscv@lists.infradead.org
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/net.h |    3 ---
- net/ipv4/af_inet.c  |    1 -
- net/ipv6/af_inet6.c |    1 -
- net/socket.c        |   10 ----------
- 4 files changed, 15 deletions(-)
+ arch/riscv/include/asm/thread_info.h |    5 ++++-
+ arch/riscv/kernel/signal.c           |    2 +-
+ 2 files changed, 5 insertions(+), 2 deletions(-)
 
---- a/include/linux/net.h
-+++ b/include/linux/net.h
-@@ -42,8 +42,6 @@ struct net;
- #define SOCK_PASSCRED		3
- #define SOCK_PASSSEC		4
+--- a/arch/riscv/include/asm/thread_info.h
++++ b/arch/riscv/include/asm/thread_info.h
+@@ -80,6 +80,7 @@ struct thread_info {
+ #define TIF_SYSCALL_TRACEPOINT  6       /* syscall tracepoint instrumentation */
+ #define TIF_SYSCALL_AUDIT	7	/* syscall auditing */
+ #define TIF_SECCOMP		8	/* syscall secure computing */
++#define TIF_NOTIFY_SIGNAL	9	/* signal notifications exist */
  
--#define PROTO_CMSG_DATA_ONLY	0x0001
--
- #ifndef ARCH_HAS_SOCKET_TYPES
- /**
-  * enum sock_type - Socket types
-@@ -138,7 +136,6 @@ typedef int (*sk_read_actor_t)(read_desc
+ #define _TIF_SYSCALL_TRACE	(1 << TIF_SYSCALL_TRACE)
+ #define _TIF_NOTIFY_RESUME	(1 << TIF_NOTIFY_RESUME)
+@@ -88,9 +89,11 @@ struct thread_info {
+ #define _TIF_SYSCALL_TRACEPOINT	(1 << TIF_SYSCALL_TRACEPOINT)
+ #define _TIF_SYSCALL_AUDIT	(1 << TIF_SYSCALL_AUDIT)
+ #define _TIF_SECCOMP		(1 << TIF_SECCOMP)
++#define _TIF_NOTIFY_SIGNAL	(1 << TIF_NOTIFY_SIGNAL)
  
- struct proto_ops {
- 	int		family;
--	unsigned int	flags;
- 	struct module	*owner;
- 	int		(*release)   (struct socket *sock);
- 	int		(*bind)	     (struct socket *sock,
---- a/net/ipv4/af_inet.c
-+++ b/net/ipv4/af_inet.c
-@@ -1017,7 +1017,6 @@ static int inet_compat_ioctl(struct sock
+ #define _TIF_WORK_MASK \
+-	(_TIF_NOTIFY_RESUME | _TIF_SIGPENDING | _TIF_NEED_RESCHED)
++	(_TIF_NOTIFY_RESUME | _TIF_SIGPENDING | _TIF_NEED_RESCHED | \
++	 _TIF_NOTIFY_SIGNAL)
  
- const struct proto_ops inet_stream_ops = {
- 	.family		   = PF_INET,
--	.flags		   = PROTO_CMSG_DATA_ONLY,
- 	.owner		   = THIS_MODULE,
- 	.release	   = inet_release,
- 	.bind		   = inet_bind,
---- a/net/ipv6/af_inet6.c
-+++ b/net/ipv6/af_inet6.c
-@@ -661,7 +661,6 @@ int inet6_recvmsg(struct socket *sock, s
- 
- const struct proto_ops inet6_stream_ops = {
- 	.family		   = PF_INET6,
--	.flags		   = PROTO_CMSG_DATA_ONLY,
- 	.owner		   = THIS_MODULE,
- 	.release	   = inet6_release,
- 	.bind		   = inet6_bind,
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -2419,10 +2419,6 @@ static int ___sys_sendmsg(struct socket
- long __sys_sendmsg_sock(struct socket *sock, struct msghdr *msg,
- 			unsigned int flags)
+ #define _TIF_SYSCALL_WORK \
+ 	(_TIF_SYSCALL_TRACE | _TIF_SYSCALL_TRACEPOINT | _TIF_SYSCALL_AUDIT | \
+--- a/arch/riscv/kernel/signal.c
++++ b/arch/riscv/kernel/signal.c
+@@ -312,7 +312,7 @@ asmlinkage __visible void do_notify_resu
+ 					   unsigned long thread_info_flags)
  {
--	/* disallow ancillary data requests from this path */
--	if (msg->msg_control || msg->msg_controllen)
--		return -EINVAL;
--
- 	return ____sys_sendmsg(sock, msg, flags, NULL, 0);
- }
+ 	/* Handle pending signal delivery */
+-	if (thread_info_flags & _TIF_SIGPENDING)
++	if (thread_info_flags & (_TIF_SIGPENDING | _TIF_NOTIFY_SIGNAL))
+ 		do_signal(regs);
  
-@@ -2631,12 +2627,6 @@ long __sys_recvmsg_sock(struct socket *s
- 			struct user_msghdr __user *umsg,
- 			struct sockaddr __user *uaddr, unsigned int flags)
- {
--	if (msg->msg_control || msg->msg_controllen) {
--		/* disallow ancillary data reqs unless cmsg is plain data */
--		if (!(sock->ops->flags & PROTO_CMSG_DATA_ONLY))
--			return -EINVAL;
--	}
--
- 	return ____sys_recvmsg(sock, msg, umsg, uaddr, flags, 0);
- }
- 
+ 	if (thread_info_flags & _TIF_NOTIFY_RESUME)
 
 
