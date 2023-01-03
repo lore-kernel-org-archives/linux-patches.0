@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4565C138D
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:16:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAA23C433EF;
-	Tue,  3 Jan 2023 08:16:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350DE138D
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:16:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B13C433EF;
+	Tue,  3 Jan 2023 08:16:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672733765;
-	bh=G4YkfGzwE9j8vy/+YFxtfyJXJjLzyj/9Znckcg4USSY=;
+	s=korg; t=1672733767;
+	bh=q3dIJLhZFdI85iw5SFJijngSMgu8QeAdoIavAKbDChs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q33vZ7PU7EysINg1VSElh0TostNyaEv6rs+kW6hnGUnTGCZt1zHR+pHSEiM/xiQHB
-	 6OYlCUHWyO38VtfcNjUdfbCyzluDiSWiWpgtvkOxf98H9DbRAVsXvuqBl8+BL8dXbC
-	 5B58AvvjXeHfCl0o+EEkB/YLFf/FRl3bRdWLMSlQ=
+	b=gq3WYE50dRv5D0+6AkZTQsum/jyWlWDbdP4Ylzb3PnG55DEklXgHx5a/GUuYYold1
+	 4KKMfOl7321Htm8Pm8esx26rV/AbST5iF65DisFJiiHAhWkbD/gUpCJYBYGBIuFO/3
+	 68NHnVZf0xHc3Smn0eVRWfGESkVRMteor1oNrqFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-c6x-dev@linux-c6x.org,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 35/63] c6x: add support for TIF_NOTIFY_SIGNAL
-Date: Tue,  3 Jan 2023 09:14:05 +0100
-Message-Id: <20230103081310.682573691@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Oleg Nesterov <oleg@redhat.com>
+Subject: [PATCH 5.10 15/63] entry: Add support for TIF_NOTIFY_SIGNAL
+Date: Tue,  3 Jan 2023 09:13:45 +0100
+Message-Id: <20230103081309.476105583@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230103081308.548338576@linuxfoundation.org>
 References: <20230103081308.548338576@linuxfoundation.org>
@@ -36,57 +37,232 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 6d665a4d8b4264def0fbb72da3a500d9904ffe3e ]
+[ Upstream commit 12db8b690010ccfadf9d0b49a1e1798e47dbbe1a ]
 
-Wire up TIF_NOTIFY_SIGNAL handling for c6x.
+Add TIF_NOTIFY_SIGNAL handling in the generic entry code, which if set,
+will return true if signal_pending() is used in a wait loop. That causes an
+exit of the loop so that notify_signal tracehooks can be run. If the wait
+loop is currently inside a system call, the system call is restarted once
+task_work has been processed.
 
-Cc: linux-c6x-dev@linux-c6x.org
+In preparation for only having arch_do_signal() handle syscall restarts if
+_TIF_SIGPENDING isn't set, rename it to arch_do_signal_or_restart().  Pass
+in a boolean that tells the architecture specific signal handler if it
+should attempt to get a signal, or just process a potential syscall
+restart.
+
+For !CONFIG_GENERIC_ENTRY archs, add the TIF_NOTIFY_SIGNAL handling to
+get_signal(). This is done to minimize the needed architecture changes to
+support this feature.
+
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Link: https://lore.kernel.org/r/20201026203230.386348-3-axboe@kernel.dk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/c6x/include/asm/thread_info.h |    1 +
- arch/c6x/kernel/asm-offsets.c      |    1 +
- arch/c6x/kernel/signal.c           |    3 ++-
- 3 files changed, 4 insertions(+), 1 deletion(-)
+ arch/x86/kernel/signal.c     |    4 ++--
+ include/linux/entry-common.h |   11 ++++++++---
+ include/linux/entry-kvm.h    |    4 ++--
+ include/linux/sched/signal.h |   11 ++++++++++-
+ include/linux/tracehook.h    |   27 +++++++++++++++++++++++++++
+ kernel/entry/common.c        |   14 +++++++++++---
+ kernel/entry/kvm.c           |    3 +++
+ kernel/signal.c              |   14 ++++++++++++++
+ 8 files changed, 77 insertions(+), 11 deletions(-)
 
---- a/arch/c6x/include/asm/thread_info.h
-+++ b/arch/c6x/include/asm/thread_info.h
-@@ -82,6 +82,7 @@ struct thread_info *current_thread_info(
- #define TIF_SIGPENDING		2	/* signal pending */
- #define TIF_NEED_RESCHED	3	/* rescheduling necessary */
- #define TIF_RESTORE_SIGMASK	4	/* restore signal mask in do_signal() */
-+#define TIF_NOTIFY_SIGNAL	5	/* signal notifications exist */
- 
- #define TIF_MEMDIE		17	/* OOM killer killed process */
- 
---- a/arch/c6x/kernel/asm-offsets.c
-+++ b/arch/c6x/kernel/asm-offsets.c
-@@ -116,6 +116,7 @@ void foo(void)
- 	DEFINE(_TIF_NOTIFY_RESUME, (1<<TIF_NOTIFY_RESUME));
- 	DEFINE(_TIF_SIGPENDING, (1<<TIF_SIGPENDING));
- 	DEFINE(_TIF_NEED_RESCHED, (1<<TIF_NEED_RESCHED));
-+	DEFINE(_TIF_NOTIFY_SIGNAL, (1<<TIF_NOTIFY_SIGNAL));
- 
- 	DEFINE(_TIF_ALLWORK_MASK, TIF_ALLWORK_MASK);
- 	DEFINE(_TIF_WORK_MASK, TIF_WORK_MASK);
---- a/arch/c6x/kernel/signal.c
-+++ b/arch/c6x/kernel/signal.c
-@@ -13,6 +13,7 @@
- #include <linux/syscalls.h>
- #include <linux/tracehook.h>
- 
-+#include <asm/asm-offsets.h>
- #include <asm/ucontext.h>
- #include <asm/cacheflush.h>
- 
-@@ -313,7 +314,7 @@ asmlinkage void do_notify_resume(struct
- 				 int syscall)
+--- a/arch/x86/kernel/signal.c
++++ b/arch/x86/kernel/signal.c
+@@ -798,11 +798,11 @@ static inline unsigned long get_nr_resta
+  * want to handle. Thus you cannot kill init even with a SIGKILL even by
+  * mistake.
+  */
+-void arch_do_signal(struct pt_regs *regs)
++void arch_do_signal_or_restart(struct pt_regs *regs, bool has_signal)
  {
- 	/* deal with pending signal delivery */
--	if (thread_info_flags & (1 << TIF_SIGPENDING))
-+	if (thread_info_flags & (_TIF_SIGPENDING | _TIF_NOTIFY_SIGNAL))
- 		do_signal(regs, syscall);
+ 	struct ksignal ksig;
  
- 	if (thread_info_flags & (1 << TIF_NOTIFY_RESUME))
+-	if (get_signal(&ksig)) {
++	if (has_signal && get_signal(&ksig)) {
+ 		/* Whee! Actually deliver the signal.  */
+ 		handle_signal(&ksig, regs);
+ 		return;
+--- a/include/linux/entry-common.h
++++ b/include/linux/entry-common.h
+@@ -37,6 +37,10 @@
+ # define _TIF_UPROBE			(0)
+ #endif
+ 
++#ifndef _TIF_NOTIFY_SIGNAL
++# define _TIF_NOTIFY_SIGNAL		(0)
++#endif
++
+ /*
+  * TIF flags handled in syscall_enter_from_user_mode()
+  */
+@@ -69,7 +73,7 @@
+ 
+ #define EXIT_TO_USER_MODE_WORK						\
+ 	(_TIF_SIGPENDING | _TIF_NOTIFY_RESUME | _TIF_UPROBE |		\
+-	 _TIF_NEED_RESCHED | _TIF_PATCH_PENDING |			\
++	 _TIF_NEED_RESCHED | _TIF_PATCH_PENDING | _TIF_NOTIFY_SIGNAL |	\
+ 	 ARCH_EXIT_TO_USER_MODE_WORK)
+ 
+ /**
+@@ -259,12 +263,13 @@ static __always_inline void arch_exit_to
+ #endif
+ 
+ /**
+- * arch_do_signal -  Architecture specific signal delivery function
++ * arch_do_signal_or_restart -  Architecture specific signal delivery function
+  * @regs:	Pointer to currents pt_regs
++ * @has_signal:	actual signal to handle
+  *
+  * Invoked from exit_to_user_mode_loop().
+  */
+-void arch_do_signal(struct pt_regs *regs);
++void arch_do_signal_or_restart(struct pt_regs *regs, bool has_signal);
+ 
+ /**
+  * arch_syscall_exit_tracehook - Wrapper around tracehook_report_syscall_exit()
+--- a/include/linux/entry-kvm.h
++++ b/include/linux/entry-kvm.h
+@@ -11,8 +11,8 @@
+ # define ARCH_XFER_TO_GUEST_MODE_WORK	(0)
+ #endif
+ 
+-#define XFER_TO_GUEST_MODE_WORK					\
+-	(_TIF_NEED_RESCHED | _TIF_SIGPENDING |			\
++#define XFER_TO_GUEST_MODE_WORK						\
++	(_TIF_NEED_RESCHED | _TIF_SIGPENDING | _TIF_NOTIFY_SIGNAL |	\
+ 	 _TIF_NOTIFY_RESUME | ARCH_XFER_TO_GUEST_MODE_WORK)
+ 
+ struct kvm_vcpu;
+--- a/include/linux/sched/signal.h
++++ b/include/linux/sched/signal.h
+@@ -361,6 +361,15 @@ static inline int task_sigpending(struct
+ 
+ static inline int signal_pending(struct task_struct *p)
+ {
++#if defined(TIF_NOTIFY_SIGNAL)
++	/*
++	 * TIF_NOTIFY_SIGNAL isn't really a signal, but it requires the same
++	 * behavior in terms of ensuring that we break out of wait loops
++	 * so that notify signal callbacks can be processed.
++	 */
++	if (unlikely(test_tsk_thread_flag(p, TIF_NOTIFY_SIGNAL)))
++		return 1;
++#endif
+ 	return task_sigpending(p);
+ }
+ 
+@@ -508,7 +517,7 @@ extern int set_user_sigmask(const sigset
+ static inline void restore_saved_sigmask_unless(bool interrupted)
+ {
+ 	if (interrupted)
+-		WARN_ON(!test_thread_flag(TIF_SIGPENDING));
++		WARN_ON(!signal_pending(current));
+ 	else
+ 		restore_saved_sigmask();
+ }
+--- a/include/linux/tracehook.h
++++ b/include/linux/tracehook.h
+@@ -198,4 +198,31 @@ static inline void tracehook_notify_resu
+ 	blkcg_maybe_throttle_current();
+ }
+ 
++/*
++ * called by exit_to_user_mode_loop() if ti_work & _TIF_NOTIFY_SIGNAL. This
++ * is currently used by TWA_SIGNAL based task_work, which requires breaking
++ * wait loops to ensure that task_work is noticed and run.
++ */
++static inline void tracehook_notify_signal(void)
++{
++#if defined(TIF_NOTIFY_SIGNAL)
++	clear_thread_flag(TIF_NOTIFY_SIGNAL);
++	smp_mb__after_atomic();
++	if (current->task_works)
++		task_work_run();
++#endif
++}
++
++/*
++ * Called when we have work to process from exit_to_user_mode_loop()
++ */
++static inline void set_notify_signal(struct task_struct *task)
++{
++#if defined(TIF_NOTIFY_SIGNAL)
++	if (!test_and_set_tsk_thread_flag(task, TIF_NOTIFY_SIGNAL) &&
++	    !wake_up_state(task, TASK_INTERRUPTIBLE))
++		kick_process(task);
++#endif
++}
++
+ #endif	/* <linux/tracehook.h> */
+--- a/kernel/entry/common.c
++++ b/kernel/entry/common.c
+@@ -135,7 +135,15 @@ static __always_inline void exit_to_user
+ }
+ 
+ /* Workaround to allow gradual conversion of architecture code */
+-void __weak arch_do_signal(struct pt_regs *regs) { }
++void __weak arch_do_signal_or_restart(struct pt_regs *regs, bool has_signal) { }
++
++static void handle_signal_work(struct pt_regs *regs, unsigned long ti_work)
++{
++	if (ti_work & _TIF_NOTIFY_SIGNAL)
++		tracehook_notify_signal();
++
++	arch_do_signal_or_restart(regs, ti_work & _TIF_SIGPENDING);
++}
+ 
+ static unsigned long exit_to_user_mode_loop(struct pt_regs *regs,
+ 					    unsigned long ti_work)
+@@ -157,8 +165,8 @@ static unsigned long exit_to_user_mode_l
+ 		if (ti_work & _TIF_PATCH_PENDING)
+ 			klp_update_patch_state(current);
+ 
+-		if (ti_work & _TIF_SIGPENDING)
+-			arch_do_signal(regs);
++		if (ti_work & (_TIF_SIGPENDING | _TIF_NOTIFY_SIGNAL))
++			handle_signal_work(regs, ti_work);
+ 
+ 		if (ti_work & _TIF_NOTIFY_RESUME) {
+ 			tracehook_notify_resume(regs);
+--- a/kernel/entry/kvm.c
++++ b/kernel/entry/kvm.c
+@@ -8,6 +8,9 @@ static int xfer_to_guest_mode_work(struc
+ 	do {
+ 		int ret;
+ 
++		if (ti_work & _TIF_NOTIFY_SIGNAL)
++			tracehook_notify_signal();
++
+ 		if (ti_work & _TIF_SIGPENDING) {
+ 			kvm_handle_signal_exit(vcpu);
+ 			return -EINTR;
+--- a/kernel/signal.c
++++ b/kernel/signal.c
+@@ -2520,6 +2520,20 @@ bool get_signal(struct ksignal *ksig)
+ 	struct signal_struct *signal = current->signal;
+ 	int signr;
+ 
++	/*
++	 * For non-generic architectures, check for TIF_NOTIFY_SIGNAL so
++	 * that the arch handlers don't all have to do it. If we get here
++	 * without TIF_SIGPENDING, just exit after running signal work.
++	 */
++#ifdef TIF_NOTIFY_SIGNAL
++	if (!IS_ENABLED(CONFIG_GENERIC_ENTRY)) {
++		if (test_thread_flag(TIF_NOTIFY_SIGNAL))
++			tracehook_notify_signal();
++		if (!task_sigpending(current))
++			return false;
++	}
++#endif
++
+ 	if (unlikely(uprobe_deny_signal()))
+ 		return false;
+ 
 
 
