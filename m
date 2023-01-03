@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3EE21873
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:17:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C8AC433F0;
-	Tue,  3 Jan 2023 08:17:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E281FA4
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:17:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09002C433F0;
+	Tue,  3 Jan 2023 08:17:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672733827;
-	bh=b0Kucyb2ql/kHHPCrUlcNegZWffcedsOdFEfMLeOiIE=;
+	s=korg; t=1672733830;
+	bh=lUbYilCbJypDEukFEE64+pgiT8jz6xb0PEwjX9BHEl0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VccoWS+BTcLsTqySX3pfhkAz+FF9e6hX2unsglrEXPVZLzWfBn0P8yyQTpErQSUTy
-	 K/7dIJTnTdsNjS/YfMRRjILhMtemYlpwsPj1IaZowOvh8pv4ou+MByt5t975mW0Lar
-	 ezYdt00MwgpUjW3HyBOFymWSC2kfvWmPpeRyKqb0=
+	b=fU9Qh9Sxhql5xhP/pBlL3ln2XcSbsHjG5lK+xFttyWoCF2xx0dDOzx1S19I72ZmcY
+	 qVDjHvCbOBOvpjs/Y8mOJMulmgoA7M+Gu1ayYKynCC0wTxPOk2polmsFvFysLGqkwh
+	 53EUSASdpnetrDqIipnkizvJeeYPPtErmAAqgpXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nick Hu <nickhu@andestech.com>,
-	Greentime Hu <green.hu@gmail.com>,
-	Vincent Chen <deanbo422@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 38/63] nds32: add support for TIF_NOTIFY_SIGNAL
-Date: Tue,  3 Jan 2023 09:14:08 +0100
-Message-Id: <20230103081310.864434606@linuxfoundation.org>
+Subject: [PATCH 5.10 56/63] signal: kill JOBCTL_TASK_WORK
+Date: Tue,  3 Jan 2023 09:14:26 +0100
+Message-Id: <20230103081311.971784785@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230103081308.548338576@linuxfoundation.org>
 References: <20230103081308.548338576@linuxfoundation.org>
@@ -38,60 +35,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit b13e8bf615fe26fb6a6dfe1b5a1c65e1624dfee2 ]
+[ Upstream commit 98b89b649fce39dacb9dc036d6d0fdb8caff73f7 ]
 
-Wire up TIF_NOTIFY_SIGNAL handling for nds32.
+It's no longer used, get rid of it.
 
-Cc: Nick Hu <nickhu@andestech.com>
-Cc: Greentime Hu <green.hu@gmail.com>
-Cc: Vincent Chen <deanbo422@gmail.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/nds32/include/asm/thread_info.h |    2 ++
- arch/nds32/kernel/ex-exit.S          |    2 +-
- arch/nds32/kernel/signal.c           |    2 +-
- 3 files changed, 4 insertions(+), 2 deletions(-)
+ include/linux/sched/jobctl.h |    4 +---
+ kernel/signal.c              |   20 --------------------
+ 2 files changed, 1 insertion(+), 23 deletions(-)
 
---- a/arch/nds32/include/asm/thread_info.h
-+++ b/arch/nds32/include/asm/thread_info.h
-@@ -48,6 +48,7 @@ struct thread_info {
- #define TIF_NEED_RESCHED	2
- #define TIF_SINGLESTEP		3
- #define TIF_NOTIFY_RESUME	4	/* callback before returning to user */
-+#define TIF_NOTIFY_SIGNAL	5	/* signal notifications exist */
- #define TIF_SYSCALL_TRACE	8
- #define TIF_POLLING_NRFLAG	17
- #define TIF_MEMDIE		18
-@@ -57,6 +58,7 @@ struct thread_info {
- #define _TIF_SIGPENDING		(1 << TIF_SIGPENDING)
- #define _TIF_NEED_RESCHED	(1 << TIF_NEED_RESCHED)
- #define _TIF_NOTIFY_RESUME	(1 << TIF_NOTIFY_RESUME)
-+#define _TIF_NOTIFY_SIGNAL	(1 << TIF_NOTIFY_SIGNAL)
- #define _TIF_SINGLESTEP		(1 << TIF_SINGLESTEP)
- #define _TIF_SYSCALL_TRACE	(1 << TIF_SYSCALL_TRACE)
- #define _TIF_POLLING_NRFLAG	(1 << TIF_POLLING_NRFLAG)
---- a/arch/nds32/kernel/ex-exit.S
-+++ b/arch/nds32/kernel/ex-exit.S
-@@ -120,7 +120,7 @@ work_pending:
- 	andi	$p1, $r1, #_TIF_NEED_RESCHED
- 	bnez	$p1, work_resched
+--- a/include/linux/sched/jobctl.h
++++ b/include/linux/sched/jobctl.h
+@@ -19,7 +19,6 @@ struct task_struct;
+ #define JOBCTL_TRAPPING_BIT	21	/* switching to TRACED */
+ #define JOBCTL_LISTENING_BIT	22	/* ptracer is listening for events */
+ #define JOBCTL_TRAP_FREEZE_BIT	23	/* trap for cgroup freezer */
+-#define JOBCTL_TASK_WORK_BIT	24	/* set by TWA_SIGNAL */
  
--	andi	$p1, $r1, #_TIF_SIGPENDING|#_TIF_NOTIFY_RESUME
-+	andi	$p1, $r1, #_TIF_SIGPENDING|#_TIF_NOTIFY_RESUME|#_TIF_NOTIFY_SIGNAL
- 	beqz	$p1, no_work_pending
+ #define JOBCTL_STOP_DEQUEUED	(1UL << JOBCTL_STOP_DEQUEUED_BIT)
+ #define JOBCTL_STOP_PENDING	(1UL << JOBCTL_STOP_PENDING_BIT)
+@@ -29,10 +28,9 @@ struct task_struct;
+ #define JOBCTL_TRAPPING		(1UL << JOBCTL_TRAPPING_BIT)
+ #define JOBCTL_LISTENING	(1UL << JOBCTL_LISTENING_BIT)
+ #define JOBCTL_TRAP_FREEZE	(1UL << JOBCTL_TRAP_FREEZE_BIT)
+-#define JOBCTL_TASK_WORK	(1UL << JOBCTL_TASK_WORK_BIT)
  
- 	move	$r0, $sp			! 'regs'
---- a/arch/nds32/kernel/signal.c
-+++ b/arch/nds32/kernel/signal.c
-@@ -376,7 +376,7 @@ static void do_signal(struct pt_regs *re
- asmlinkage void
- do_notify_resume(struct pt_regs *regs, unsigned int thread_flags)
- {
--	if (thread_flags & _TIF_SIGPENDING)
-+	if (thread_flags & (_TIF_SIGPENDING | _TIF_NOTIFY_SIGNAL))
- 		do_signal(regs);
+ #define JOBCTL_TRAP_MASK	(JOBCTL_TRAP_STOP | JOBCTL_TRAP_NOTIFY)
+-#define JOBCTL_PENDING_MASK	(JOBCTL_STOP_PENDING | JOBCTL_TRAP_MASK | JOBCTL_TASK_WORK)
++#define JOBCTL_PENDING_MASK	(JOBCTL_STOP_PENDING | JOBCTL_TRAP_MASK)
  
- 	if (thread_flags & _TIF_NOTIFY_RESUME)
+ extern bool task_set_jobctl_pending(struct task_struct *task, unsigned long mask);
+ extern void task_clear_jobctl_trapping(struct task_struct *task);
+--- a/kernel/signal.c
++++ b/kernel/signal.c
+@@ -2544,26 +2544,6 @@ bool get_signal(struct ksignal *ksig)
+ 
+ relock:
+ 	spin_lock_irq(&sighand->siglock);
+-	/*
+-	 * Make sure we can safely read ->jobctl() in task_work add. As Oleg
+-	 * states:
+-	 *
+-	 * It pairs with mb (implied by cmpxchg) before READ_ONCE. So we
+-	 * roughly have
+-	 *
+-	 *	task_work_add:				get_signal:
+-	 *	STORE(task->task_works, new_work);	STORE(task->jobctl);
+-	 *	mb();					mb();
+-	 *	LOAD(task->jobctl);			LOAD(task->task_works);
+-	 *
+-	 * and we can rely on STORE-MB-LOAD [ in task_work_add].
+-	 */
+-	smp_store_mb(current->jobctl, current->jobctl & ~JOBCTL_TASK_WORK);
+-	if (unlikely(current->task_works)) {
+-		spin_unlock_irq(&sighand->siglock);
+-		task_work_run();
+-		goto relock;
+-	}
+ 
+ 	/*
+ 	 * Every stopped thread goes here after wakeup. Check to see if
 
 
