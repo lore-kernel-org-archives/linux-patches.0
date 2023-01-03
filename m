@@ -1,102 +1,115 @@
-Received: from gproxy2-pub.mail.unifiedlayer.com (gproxy2-pub.mail.unifiedlayer.com [69.89.18.3])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C204820E4
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 09:24:49 +0000 (UTC)
-Received: from cmgw10.mail.unifiedlayer.com (unknown [10.0.90.125])
-	by progateway4.mail.pro1.eigbox.com (Postfix) with ESMTP id 878E01004824C
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:59:34 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id Cd8wpEaCKWC90Cd8wp4mWD; Tue, 03 Jan 2023 08:59:34 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=Huizp2fS c=1 sm=1 tr=0 ts=63b3ee76
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=RvmDmJFTN0MA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:In-Reply-To:From:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=vE4MKPzicF6eR68Lvz9p63INS0oax3kRnD7n2dKi1UU=; b=UonnN+B7//Lc5jQeRQ15pvX/rg
-	RcLeCgQ3oJBNL6/ErS1hdG143RK/XZCX0IEn3qEjXLHHzEv36QDDJLv4Pk0CBwh2/D+g46mavWQlh
-	k2uzaUdbpoKWIxS6/fJbYCeCMCrSaNJtH2z16JBEp+jAkXM0frxFb/LMqQ+0ReIxn//+YQ0qivp6+
-	Ip66geAl5nVpUcSKxqpLoR73ytLAJJFckfM7GJe+4qBxG/2YwN12kfbV5jzzPItc8PLmvK4ZfMXy0
-	p4bpibumnBUwnmUlVsRiUrrxhkyTzyoHPkHiWnIcRdXk84fVGIr2hDBt7sr6vJx9GawUWLzHDURn+
-	30/tSgHw==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:39128 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1pCd8u-003vRH-Sy;
-	Tue, 03 Jan 2023 01:59:32 -0700
-Subject: Re: [PATCH 6.1 00/71] 6.1.3-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230102110551.509937186@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-In-Reply-To: <20230102110551.509937186@linuxfoundation.org>
-Message-ID: <c6ebdb01-8b76-adf6-76cc-94cfd87c1cae@w6rz.net>
-Date: Tue, 3 Jan 2023 00:59:28 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9746120E4
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 10:15:16 +0000 (UTC)
+Received: by mail-ed1-f51.google.com with SMTP id u28so38311718edd.10
+        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 02:15:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dg4Iem/pwcu+hGrCWyFWcE0w0rA2DwqUcHLBcyuPeUc=;
+        b=mjSbDBWx33CYMdnRAunBxjnUpsQB8NQEfdMQgMgMOMnsSL2cUgoBYVoV1sYAg2p0Zp
+         50bdUMAQBKLBJKw+RQJGTYGVqDzPzYZoE6hNmGb1i5zXPIqLNykLk0p2pGnXFlik/t2C
+         grRyHKq4PBadLvD2l5ItwXVsIA7HCKuk/+WfMEbq9F2aNiw017v28VGfTtFG/2AijMda
+         veJ+wuzLKcZk3E2ifzeaHUw7UfbUh+7nT4Zs3CJDmhcZ4JEJ4e2YINxHe0YL51HMrGSZ
+         OByncrEr9GdapTEhGBNp8zuujYcX/U+gUYtkegXnSM1hjbSRkh4T4NVSekJxNWP8fRt8
+         fBhw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dg4Iem/pwcu+hGrCWyFWcE0w0rA2DwqUcHLBcyuPeUc=;
+        b=VLr+O3yysVqmuGRNMhpMz2/n3FDjghHnyALZ5k0Te5zmshg1MXlQpT73Le20zRZcYi
+         SnXEIP1k28eoR2wDj6Rzrpo4GsjfE4GPV7B+DFA7Jmio6A8gIeuTdxMEz8uS2VL7BoDt
+         FTmg3iggz3Ut1V0ppcQpZYf07CMZo61XC0sVOApy5j4h5dbJnr0AKKedSZxsb3y5O+c5
+         tEECUdptYbeF5PHGSKNfJKsjyEQRD1Ks+I04mKKWRUHExXIeT0sgW+hIPFET0n7H3FJv
+         l9KFwraxnkNeUjuTZSKrDpcteXLTOM7BDSKJcH1hm+G7LbctE+U9ZJSFG6/Jn9ra35VB
+         iTSg==
+X-Gm-Message-State: AFqh2koAXBFKmmWAGJNmqglCPRGzPdu5IGMNj5gVIL3flgP8WjPW3C2M
+	7FepWFgd2Y/75R17A8IJK7s=
+X-Google-Smtp-Source: AMrXdXvGHahoAqytki6ZL5OVZWOTmKsQ+1eCtyz/+vLkr9dsT6hcqNhYr+klb25nfwe/d8ifvVVIMw==
+X-Received: by 2002:a05:6402:d5c:b0:461:68e4:15cc with SMTP id ec28-20020a0564020d5c00b0046168e415ccmr34746439edb.9.1672740914735;
+        Tue, 03 Jan 2023 02:15:14 -0800 (PST)
+Received: from gmail.com (1F2EF380.nat.pool.telekom.hu. [31.46.243.128])
+        by smtp.gmail.com with ESMTPSA id r7-20020a170906280700b007b27aefc578sm13853448ejc.126.2023.01.03.02.15.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Jan 2023 02:15:14 -0800 (PST)
+Sender: Ingo Molnar <mingo.kernel.org@gmail.com>
+Date: Tue, 3 Jan 2023 11:15:12 +0100
+From: Ingo Molnar <mingo@kernel.org>
+To: Vlastimil Babka <vbabka@suse.cz>
+Cc: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Takashi Iwai <tiwai@suse.de>, x86@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>, patches@lists.linux.dev,
+	linux-mm@kvack.org, linux-kernel@vger.kernel.org,
+	Baoquan He <bhe@redhat.com>, Dave Young <dyoung@redhat.com>,
+	stable@vger.kernel.org
+Subject: Re: [PATCH] x86/kexec: fix double vfree of image->elf_headers
+Message-ID: <Y7QAMIu6j6Y6m8vV@gmail.com>
+References: <20230102103917.20987-1-vbabka@suse.cz>
+ <d6e965ca-a568-5193-20a0-19b1c9b42ca2@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1pCd8u-003vRH-Sy
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:39128
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d6e965ca-a568-5193-20a0-19b1c9b42ca2@suse.cz>
 
-On 1/2/23 3:21 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.3 release.
-> There are 71 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 04 Jan 2023 11:05:34 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.3-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+* Vlastimil Babka <vbabka@suse.cz> wrote:
 
-Tested-by: Ron Economos <re@w6rz.net>
+> On 1/2/23 11:39, Vlastimil Babka wrote:
+> > An investigation of a "Trying to vfree() nonexistent vm area" bug
+> > occurring in arch_kimage_file_post_load_cleanup() doing a
+> > vfree(image->elf_headers) in our 5.14-based kernel yielded the following
+> > double vfree() scenario, also present in mainline:
+> > 
+> > SYSCALL_DEFINE5(kexec_file_load)
+> >   kimage_file_alloc_init()
+> >     kimage_file_prepare_segments()
+> >       arch_kexec_kernel_image_probe()
+> >         kexec_image_load_default()
+> >           kexec_bzImage64_ops.load()
+> >             bzImage64_load()
+> >               crash_load_segments()
+> >                 prepare_elf_headers(image, &kbuf.buffer, &kbuf.bufsz);
+> >                 image->elf_headers = kbuf.buffer;
+> > 		ret = kexec_add_buffer(&kbuf);
+> > 		if (ret) vfree((void *)image->elf_headers); // first vfree()
+> >       if (ret) kimage_file_post_load_cleanup()
+> >         vfree(image->elf_headers);                          // second vfree()
+> > 
+> > AFAICS the scenario is possible since v5.19 commit b3e34a47f989
+> > ("x86/kexec: fix memory leak of elf header buffer") that was marked for
+> > stable and also was backported to our kernel.
+> > 
+> > Fix the problem by setting the pointer to NULL after the first vfree().
+> > Also set elf_headers_sz to 0, as kimage_file_post_load_cleanup() does.
+> > 
+> > Fixes: b3e34a47f989 ("x86/kexec: fix memory leak of elf header buffer")
+> > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+> > Cc: Baoquan He <bhe@redhat.com>
+> > Cc: Dave Young <dyoung@redhat.com>
+> > Cc: <stable@vger.kernel.org>
+> 
+> Takashi told me he sent a slightly different fix already in November:
+> https://lore.kernel.org/all/20221122115122.13937-1-tiwai@suse.de/
+> 
+> Seems it wasn't picked up? You might pick his then, as Baoquan acked it, and
+> it's removing code, not adding it.
 
+Thanks, indeed we missed that fix - Boris picked up that version in 
+tip:x86/urgent, via:
+
+   d00dd2f2645d ("x86/kexec: Fix double-free of elf header buffer")
+
+	Ingo
