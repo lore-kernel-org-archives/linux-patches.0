@@ -1,76 +1,81 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF24B8466
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 14:51:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03AC1C433EF;
-	Tue,  3 Jan 2023 14:51:15 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="EqnD+Mhe"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1672757473;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=+RLDe/8vohQzP3TtQehHcZpEOOCmmguq+K5+MMOxGoY=;
-	b=EqnD+MhecEi8D9Zl9NkxthSAqw0o5RwggsXq4P4l0H/DwihZEWFHT2HX0nGFf+Gk76LKxz
-	rfHwwmvDjdE/dt8X8mMRnEQi3TOcLL5HL6oRCCxCojAwnAOcZDxKNmBGDw5fOQHMAhUu3X
-	KhMLfBvCKlwMsrjlZqz1Bxa6sthkZjA=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id cc3c3e28 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 3 Jan 2023 14:51:13 +0000 (UTC)
-Date: Tue, 3 Jan 2023 15:51:09 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Ingo Molnar <mingo@kernel.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	tglx@linutronix.de, linux-crypto@vger.kernel.org,
-	linux-api@vger.kernel.org, x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>
-Subject: Re: [PATCH v14 1/7] x86: lib: Separate instruction decoder MMIO type
- from MMIO trace
-Message-ID: <Y7RA3bmko0AjO8hQ@zx2c4.com>
-References: <20230101162910.710293-1-Jason@zx2c4.com>
- <20230101162910.710293-2-Jason@zx2c4.com>
- <Y7QELo9etPM8Tpx5@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7B6E8466
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 14:52:00 +0000 (UTC)
+Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-12c8312131fso37003360fac.4
+        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 06:52:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jnflFZNe0pA/ZYIPDzYWn3fRyrXDaT7T1O70Kantkxo=;
+        b=TEDrMUd9RqBtm4eSy6MmGo/oCcTE4Z+FJhmg2mTXBmzQN0OPOJVtyX5G2LS46k3lcP
+         unaUK2ln0mnXgAld+D4g2gRCGHYZhIC9w40gXvI0wqFIdgZnh7mu4jSN1rjxcJwv2qdp
+         o4YPvcrTlO9ti3tHs5fkLO1R1J6l21pxZRdhPbgTJ74JrIaXbN5yGeDOAkjHemow26Xp
+         /365dOB36MY3+jNdtIOlbmgB9gOa3SBjZPvuiaBuzrbqkNzTHjiWTqYowvQSGu3ek+vo
+         FCJBUOQslBfMUQXQQJztqZ88w7U6nH06NlTG1yzaSFjATY4xKOdkC+3wuXKwaooJi0Uu
+         mPPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=jnflFZNe0pA/ZYIPDzYWn3fRyrXDaT7T1O70Kantkxo=;
+        b=bhpEsdHi2n86H5DsCc8+KAttpdt2z5UC/AL0bn214bQiBGh8AjtweftTzklE/EnrpS
+         AhUnP1b1Xp0b1MqCxSLNjm+PGJ2oF1NUuI6+3IMVhQXkZZhGiTBwiiSlbYWEl9A/mBcE
+         wYl+xntSZCzONRX56JwzOVvfcbCg0YeMfLNAGmhsvJu08cotelotBmebBBGgnWv+ZhPx
+         vueSZCW8KWTbua5vU2frdeS/j9acFV1Hq6Su8uGHTdsk14HFHuPF8njMdeKQWorf5wTy
+         dHSgQ2eGHx9mAibqLa4CupMBvZSJF6L5xG7zW2qGI4P6F9QZHHpB/iGq5HVopyAfo8Tn
+         QglA==
+X-Gm-Message-State: AFqh2kqan6R684jhd3DpRbADlSKAb8glo6b/oYGdFH/WRUINhM3CMXsa
+	VLNLl7+8D6qpKTF4mFdggzg=
+X-Google-Smtp-Source: AMrXdXs6MYI9m3GkQ9ZQCPw1EwIxc+QZ3vKMSFuwc2q4U1HHyfemHaKsF1oIptKevWas5Xc5JHHcCg==
+X-Received: by 2002:a05:6871:468b:b0:144:d64e:d6e1 with SMTP id ni11-20020a056871468b00b00144d64ed6e1mr19836087oab.44.1672757519804;
+        Tue, 03 Jan 2023 06:51:59 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id f13-20020a4ab64d000000b004ce5d00de73sm10555926ooo.46.2023.01.03.06.51.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Jan 2023 06:51:59 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Tue, 3 Jan 2023 06:51:57 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.10 00/63] 5.10.162-rc1 review
+Message-ID: <20230103145157.GA197592@roeck-us.net>
+References: <20230103081308.548338576@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Y7QELo9etPM8Tpx5@gmail.com>
+In-Reply-To: <20230103081308.548338576@linuxfoundation.org>
 
-On Tue, Jan 03, 2023 at 11:32:14AM +0100, Ingo Molnar wrote:
+On Tue, Jan 03, 2023 at 09:13:30AM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.162 release.
+> There are 63 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> * Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> Responses should be made by Thu, 05 Jan 2023 08:12:47 +0000.
+> Anything received after that time might be too late.
 > 
-> > Both mmiotrace.h and insn-eval.h define various MMIO_ enum constants.
-> > Rename the insn ones to have a INSN_ prefix, so that the headers can be
-> > used from the same source file.
-> > 
-> > Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-> > ---
-> >  arch/x86/coco/tdx/tdx.c          | 26 +++++++++++++-------------
-> >  arch/x86/include/asm/insn-eval.h | 18 +++++++++---------
-> >  arch/x86/kernel/sev.c            | 18 +++++++++---------
-> >  arch/x86/lib/insn-eval.c         | 20 ++++++++++----------
-> >  4 files changed, 41 insertions(+), 41 deletions(-)
-> 
-> FYI, I've applied this fix to tip:x86/asm, as the fix for the namespace 
-> clash makes sense independently of the vDSO getrandom feature.
 
-I guess you missed the conversation with Borislav yesterday about that.
-He mentioned that I'd just take it through random.git when this whole
-series goes in.
+Build results:
+	total: 162 pass: 162 fail: 0
+Qemu test results:
+	total: 475 pass: 475 fail: 0
 
-(Unless of course you wanted to put this into 6.2? That'd be easiest for
-me.)
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
-Jason
+Guenter
