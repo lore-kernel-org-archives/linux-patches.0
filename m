@@ -1,79 +1,228 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 704B820E4
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:17:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC23C433D2;
-	Tue,  3 Jan 2023 08:17:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672733874;
-	bh=hDVLikRaD+dYEicU/B9QP3lVJLW68K9IQ9ghQ28tZN8=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aM8A6CevlJ5+Ddu71hRgJc5BG0pBFo4OxXPMQafxqXbJRiSkkEB9oOmwY+CRB/14D
-	 kplXdA4wmxBflD5dh+nCmjXQICe7TGrh4tGQ+NJgteckEQJUAJvssaqOJl68LbZgF/
-	 aWliWjucgF9WOFVwmObogr1zHXNWO6qIJXLpUWS4=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 59/63] Revert "proc: dont allow async path resolution of /proc/thread-self components"
-Date: Tue,  3 Jan 2023 09:14:29 +0100
-Message-Id: <20230103081312.165846780@linuxfoundation.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230103081308.548338576@linuxfoundation.org>
-References: <20230103081308.548338576@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5103D62F
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:34:10 +0000 (UTC)
+Received: by mail-vs1-f49.google.com with SMTP id o63so26249774vsc.10
+        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 00:34:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=D0LRzaF4/eAHl8TOiwxl4NBIKM++7t47+klDG5YxwLE=;
+        b=fnT59MiryMAYp0O8jmgcwbPbaobGE32AFR+KpPHkGFbsJ8FkMuDJsg/AFohviUbq9+
+         8TsUmScZMvFqdccMQI+A7HIiPyl4o+wyvBbAgxq2s37iJZRVNLPHjc4LMoAixKDnlEYA
+         2Qo8Z9uXG0lJiGQ1GEw10CcYpzcSRtSEBnbx8qJIjLYz46wTYIneUUHBCSCbSKdO9Cyx
+         /yzqXlLP+kdE0lF4/zfiYQxyHsPQ87APfo2vKxQJ3jSCGWzVjwkcIN6xlcVeokmCyPOc
+         JE3SvNH2+jiCaY1XiKiEDolPadoIkrz/LX7bW6rlL2SjptuAf5GJdvfkheFFLVibR/Xl
+         MPCQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=D0LRzaF4/eAHl8TOiwxl4NBIKM++7t47+klDG5YxwLE=;
+        b=ygI5wU6bYeM56ag6X0MdRixdl7wuuzEM2iWkQYxO34jwGTZmorMr8t2fvxWjI8Hsrr
+         uECBaJfN29hFxfaNsiCUmOMvctAggzeVkW+vbCaI3EETx5nGhgg+ky90rB7fM4jCoJow
+         mxAv7Z3AsZ0fHYPyN5BfHFn78VNoU/gLiq/EoZKM1bEMzln3DyrLOSQQ0RO8wW1zwfhy
+         jivQj17bBG8XboEA9FPWyzEgehXaWc3Z+G2rQhqpn0wDBjfNgCE6FfK5ZFNrAyi8EoHU
+         mpD2qkZ8fKEvTq3BCefXipBo5VXliglft9FOuZe4Ex/CAlETFDykx9p6kR+Lt7Gk1vsc
+         LQZA==
+X-Gm-Message-State: AFqh2krbfF+A/LWH0obtdzUjwhbOS34RSsfTVJYgyL8CGlVNi2Yj5WxP
+	SrzZyvNrdB6ENTwk4pWchlCRtbkBt9+tpMFIlP79GQ==
+X-Google-Smtp-Source: AMrXdXuciQboi6XVi++eNEEmorcFjhwmSXVig2GCgBHpcRFA34Dd6NWZp0egXm/aJE33u2Po7Mh+CoF5UHCKLKTcXzA=
+X-Received: by 2002:a67:ec94:0:b0:3b5:32d0:edcc with SMTP id
+ h20-20020a67ec94000000b003b532d0edccmr4702598vsp.24.1672734848954; Tue, 03
+ Jan 2023 00:34:08 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20230102110552.061937047@linuxfoundation.org>
+In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 3 Jan 2023 14:03:57 +0530
+Message-ID: <CA+G9fYvEOcOrPROaDWXpuuyNFh1apk_-hiRZpZbFQJYXR4Hu4Q@mail.gmail.com>
+Subject: Re: [PATCH 6.0 00/74] 6.0.17-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: Jens Axboe <axboe@kernel.dk>
+On Mon, 2 Jan 2023 at 16:58, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.0.17 release.
+> There are 74 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 04 Jan 2023 11:05:34 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.0.17-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.0.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-[ Upstream commit 2587890b5e2892dfecaa5e5126bdac8076a4e6f7 ]
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-This reverts commit 0d4370cfe36b7f1719123b621a4ec4d9c7a25f89.
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-No longer needed, as the io-wq worker threads have the right identity.
+## Build
+* kernel: 6.0.17-rc1
+* git: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-=
+rc.git
+* git branch: linux-6.0.y
+* git commit: 9c0ac88985a8f62726941213c92ff8eddf500f72
+* git describe: v6.0.16-75-g9c0ac88985a8
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.0.y/build/v6.0.1=
+6-75-g9c0ac88985a8
 
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/proc/self.c        |    2 +-
- fs/proc/thread_self.c |    7 -------
- 2 files changed, 1 insertion(+), 8 deletions(-)
+## Test Regressions (compared to v6.0.15-1067-gf54b936f8ec7)
 
---- a/fs/proc/self.c
-+++ b/fs/proc/self.c
-@@ -20,7 +20,7 @@ static const char *proc_self_get_link(st
- 	 * Not currently supported. Once we can inherit all of struct pid,
- 	 * we can allow this.
- 	 */
--	if (current->flags & PF_IO_WORKER)
-+	if (current->flags & PF_KTHREAD)
- 		return ERR_PTR(-EOPNOTSUPP);
- 
- 	if (!tgid)
---- a/fs/proc/thread_self.c
-+++ b/fs/proc/thread_self.c
-@@ -17,13 +17,6 @@ static const char *proc_thread_self_get_
- 	pid_t pid = task_pid_nr_ns(current, ns);
- 	char *name;
- 
--	/*
--	 * Not currently supported. Once we can inherit all of struct pid,
--	 * we can allow this.
--	 */
--	if (current->flags & PF_IO_WORKER)
--		return ERR_PTR(-EOPNOTSUPP);
--
- 	if (!pid)
- 		return ERR_PTR(-ENOENT);
- 	name = kmalloc(10 + 6 + 10 + 1, dentry ? GFP_KERNEL : GFP_ATOMIC);
+## Metric Regressions (compared to v6.0.15-1067-gf54b936f8ec7)
 
+## Test Fixes (compared to v6.0.15-1067-gf54b936f8ec7)
 
+## Metric Fixes (compared to v6.0.15-1067-gf54b936f8ec7)
+
+## Test result summary
+total: 143234, pass: 127347, fail: 2737, skip: 12854, xfail: 296
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 151 total, 146 passed, 5 failed
+* arm64: 49 total, 49 passed, 0 failed
+* i386: 39 total, 36 passed, 3 failed
+* mips: 30 total, 28 passed, 2 failed
+* parisc: 8 total, 8 passed, 0 failed
+* powerpc: 38 total, 32 passed, 6 failed
+* riscv: 16 total, 16 passed, 0 failed
+* s390: 16 total, 16 passed, 0 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 42 total, 41 passed, 1 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-open-posix-tests
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* packetdrill
+* perf
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
