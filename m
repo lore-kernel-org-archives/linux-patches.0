@@ -1,59 +1,61 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-ed1-f50.google.com (mail-ed1-f50.google.com [209.85.208.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9746120E4
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 10:15:16 +0000 (UTC)
-Received: by mail-ed1-f51.google.com with SMTP id u28so38311718edd.10
-        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 02:15:16 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618AA7E
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 10:32:20 +0000 (UTC)
+Received: by mail-ed1-f50.google.com with SMTP id b88so35917879edf.6
+        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 02:32:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dg4Iem/pwcu+hGrCWyFWcE0w0rA2DwqUcHLBcyuPeUc=;
-        b=mjSbDBWx33CYMdnRAunBxjnUpsQB8NQEfdMQgMgMOMnsSL2cUgoBYVoV1sYAg2p0Zp
-         50bdUMAQBKLBJKw+RQJGTYGVqDzPzYZoE6hNmGb1i5zXPIqLNykLk0p2pGnXFlik/t2C
-         grRyHKq4PBadLvD2l5ItwXVsIA7HCKuk/+WfMEbq9F2aNiw017v28VGfTtFG/2AijMda
-         veJ+wuzLKcZk3E2ifzeaHUw7UfbUh+7nT4Zs3CJDmhcZ4JEJ4e2YINxHe0YL51HMrGSZ
-         OByncrEr9GdapTEhGBNp8zuujYcX/U+gUYtkegXnSM1hjbSRkh4T4NVSekJxNWP8fRt8
-         fBhw==
+        bh=v68bOoCkR5Tf7INS4xaBH/vNbNABqgbVmisl8n1c8os=;
+        b=APp/boIlEzVSZyYU1Gyb8hYMdMSDN7Vy2kh43Ip09ilk29PnlWASTAQCVFadgXSV7a
+         Dx1d0tk/DrrwR9Fk8ccyzI48+1raEPU/heOf24L7Sq00C662Vp9BXdNWgdyDKNAEZQ4h
+         1AtpgN5lWLAxkPTaps3rxH7goKyE9orSf6DHYEfxesR101lsGLf9NPOr4SBUJ00kJKYH
+         EfK3xAwbP0SgBYgBZluMpJ2+tlMPLpurCTHruBA3UwEsXeQ0LQJjPNxHuSv9LjGfpHqW
+         sVrqJ9fyI/2BpC117/KVGgooZFMFT15xytKbe7utLTgI4BXCo5dI950ReI6pcTe3Rt/j
+         2fGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=dg4Iem/pwcu+hGrCWyFWcE0w0rA2DwqUcHLBcyuPeUc=;
-        b=VLr+O3yysVqmuGRNMhpMz2/n3FDjghHnyALZ5k0Te5zmshg1MXlQpT73Le20zRZcYi
-         SnXEIP1k28eoR2wDj6Rzrpo4GsjfE4GPV7B+DFA7Jmio6A8gIeuTdxMEz8uS2VL7BoDt
-         FTmg3iggz3Ut1V0ppcQpZYf07CMZo61XC0sVOApy5j4h5dbJnr0AKKedSZxsb3y5O+c5
-         tEECUdptYbeF5PHGSKNfJKsjyEQRD1Ks+I04mKKWRUHExXIeT0sgW+hIPFET0n7H3FJv
-         l9KFwraxnkNeUjuTZSKrDpcteXLTOM7BDSKJcH1hm+G7LbctE+U9ZJSFG6/Jn9ra35VB
-         iTSg==
-X-Gm-Message-State: AFqh2koAXBFKmmWAGJNmqglCPRGzPdu5IGMNj5gVIL3flgP8WjPW3C2M
-	7FepWFgd2Y/75R17A8IJK7s=
-X-Google-Smtp-Source: AMrXdXvGHahoAqytki6ZL5OVZWOTmKsQ+1eCtyz/+vLkr9dsT6hcqNhYr+klb25nfwe/d8ifvVVIMw==
-X-Received: by 2002:a05:6402:d5c:b0:461:68e4:15cc with SMTP id ec28-20020a0564020d5c00b0046168e415ccmr34746439edb.9.1672740914735;
-        Tue, 03 Jan 2023 02:15:14 -0800 (PST)
+        bh=v68bOoCkR5Tf7INS4xaBH/vNbNABqgbVmisl8n1c8os=;
+        b=QZgnw2fgiCX18SJvi/5NwycwzODuFTrco2cgmu4ioSQCHgpr2klRxGmJrmiJ0HiUPk
+         36/0I24dVE5fLuoEiYlNMx0ePYtOtmAqJBlx2iLciQv5YpbBjhow/FmvIr1RURbLi5kz
+         Emegit9YZes2q+6AnpQjSbhhK3G8U2wmq62QKuucrRZFNbP52PYpZyt9gPW//SxLrrPK
+         y9r2J++mZUVYYHlrRU/VYN8rFLNLk4oCNB70GlLe2OhWCo8s/NnDiIuACDOVsd7KA8/2
+         DKhm+Xu3t4gycpItdKCMExnWrkwkuOFkihjIG52ipevLYfNhljvF62m6u5JMeyObeVd/
+         qZlA==
+X-Gm-Message-State: AFqh2kqxP2aD92wf8EoVrsjEPRH0KNHREZJGMWnr73ISfsA8VTjSwGUl
+	UStOMU9BZKe1iu7DxLTF04A=
+X-Google-Smtp-Source: AMrXdXu28DjVmzTZWJ65IPFE5UzkCMj3obws/ToJ6HzK7ruWFBn/tXvuDNKK93bFiOhX1lvTVmMaLw==
+X-Received: by 2002:a05:6402:12d4:b0:45c:835c:c6d3 with SMTP id k20-20020a05640212d400b0045c835cc6d3mr36173805edx.4.1672741938632;
+        Tue, 03 Jan 2023 02:32:18 -0800 (PST)
 Received: from gmail.com (1F2EF380.nat.pool.telekom.hu. [31.46.243.128])
-        by smtp.gmail.com with ESMTPSA id r7-20020a170906280700b007b27aefc578sm13853448ejc.126.2023.01.03.02.15.13
+        by smtp.gmail.com with ESMTPSA id n20-20020aa7db54000000b0047e6fdbf81csm13616526edt.82.2023.01.03.02.32.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Jan 2023 02:15:14 -0800 (PST)
+        Tue, 03 Jan 2023 02:32:17 -0800 (PST)
 Sender: Ingo Molnar <mingo.kernel.org@gmail.com>
-Date: Tue, 3 Jan 2023 11:15:12 +0100
+Date: Tue, 3 Jan 2023 11:32:14 +0100
 From: Ingo Molnar <mingo@kernel.org>
-To: Vlastimil Babka <vbabka@suse.cz>
-Cc: Thomas Gleixner <tglx@linutronix.de>, Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Takashi Iwai <tiwai@suse.de>, x86@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>, patches@lists.linux.dev,
-	linux-mm@kvack.org, linux-kernel@vger.kernel.org,
-	Baoquan He <bhe@redhat.com>, Dave Young <dyoung@redhat.com>,
-	stable@vger.kernel.org
-Subject: Re: [PATCH] x86/kexec: fix double vfree of image->elf_headers
-Message-ID: <Y7QAMIu6j6Y6m8vV@gmail.com>
-References: <20230102103917.20987-1-vbabka@suse.cz>
- <d6e965ca-a568-5193-20a0-19b1c9b42ca2@suse.cz>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	tglx@linutronix.de, linux-crypto@vger.kernel.org,
+	linux-api@vger.kernel.org, x86@kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: Re: [PATCH v14 1/7] x86: lib: Separate instruction decoder MMIO type
+ from MMIO trace
+Message-ID: <Y7QELo9etPM8Tpx5@gmail.com>
+References: <20230101162910.710293-1-Jason@zx2c4.com>
+ <20230101162910.710293-2-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -62,54 +64,26 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <d6e965ca-a568-5193-20a0-19b1c9b42ca2@suse.cz>
+In-Reply-To: <20230101162910.710293-2-Jason@zx2c4.com>
 
 
-* Vlastimil Babka <vbabka@suse.cz> wrote:
+* Jason A. Donenfeld <Jason@zx2c4.com> wrote:
 
-> On 1/2/23 11:39, Vlastimil Babka wrote:
-> > An investigation of a "Trying to vfree() nonexistent vm area" bug
-> > occurring in arch_kimage_file_post_load_cleanup() doing a
-> > vfree(image->elf_headers) in our 5.14-based kernel yielded the following
-> > double vfree() scenario, also present in mainline:
-> > 
-> > SYSCALL_DEFINE5(kexec_file_load)
-> >   kimage_file_alloc_init()
-> >     kimage_file_prepare_segments()
-> >       arch_kexec_kernel_image_probe()
-> >         kexec_image_load_default()
-> >           kexec_bzImage64_ops.load()
-> >             bzImage64_load()
-> >               crash_load_segments()
-> >                 prepare_elf_headers(image, &kbuf.buffer, &kbuf.bufsz);
-> >                 image->elf_headers = kbuf.buffer;
-> > 		ret = kexec_add_buffer(&kbuf);
-> > 		if (ret) vfree((void *)image->elf_headers); // first vfree()
-> >       if (ret) kimage_file_post_load_cleanup()
-> >         vfree(image->elf_headers);                          // second vfree()
-> > 
-> > AFAICS the scenario is possible since v5.19 commit b3e34a47f989
-> > ("x86/kexec: fix memory leak of elf header buffer") that was marked for
-> > stable and also was backported to our kernel.
-> > 
-> > Fix the problem by setting the pointer to NULL after the first vfree().
-> > Also set elf_headers_sz to 0, as kimage_file_post_load_cleanup() does.
-> > 
-> > Fixes: b3e34a47f989 ("x86/kexec: fix memory leak of elf header buffer")
-> > Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
-> > Cc: Baoquan He <bhe@redhat.com>
-> > Cc: Dave Young <dyoung@redhat.com>
-> > Cc: <stable@vger.kernel.org>
+> Both mmiotrace.h and insn-eval.h define various MMIO_ enum constants.
+> Rename the insn ones to have a INSN_ prefix, so that the headers can be
+> used from the same source file.
 > 
-> Takashi told me he sent a slightly different fix already in November:
-> https://lore.kernel.org/all/20221122115122.13937-1-tiwai@suse.de/
-> 
-> Seems it wasn't picked up? You might pick his then, as Baoquan acked it, and
-> it's removing code, not adding it.
+> Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+> ---
+>  arch/x86/coco/tdx/tdx.c          | 26 +++++++++++++-------------
+>  arch/x86/include/asm/insn-eval.h | 18 +++++++++---------
+>  arch/x86/kernel/sev.c            | 18 +++++++++---------
+>  arch/x86/lib/insn-eval.c         | 20 ++++++++++----------
+>  4 files changed, 41 insertions(+), 41 deletions(-)
 
-Thanks, indeed we missed that fix - Boris picked up that version in 
-tip:x86/urgent, via:
+FYI, I've applied this fix to tip:x86/asm, as the fix for the namespace 
+clash makes sense independently of the vDSO getrandom feature.
 
-   d00dd2f2645d ("x86/kexec: Fix double-free of elf header buffer")
+Thanks,
 
 	Ingo
