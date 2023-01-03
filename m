@@ -1,108 +1,90 @@
-Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
+Received: from mail-vs1-f49.google.com (mail-vs1-f49.google.com [209.85.217.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7008F57
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 19:19:55 +0000 (UTC)
-Received: by mail-vs1-f51.google.com with SMTP id o63so27962540vsc.10
-        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 11:19:55 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B4AC8F57
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 19:33:10 +0000 (UTC)
+Received: by mail-vs1-f49.google.com with SMTP id i10so11147603vsr.12
+        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 11:33:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ia/lu5+B5CRXWa8CF3j1BLcFKSU3j2P6kHuicKKTwhM=;
-        b=ZqWN8gFUfoVI5wnLUXnodqgP701dqeLd5CSt/RsefZ5Qkl5jGfXYOorD034HuIvB5D
-         Ht8gtKf8KI4dn/azdfqIH5esBFN2+qILBHpfWUbepKnmZuifWK677ycRTg3al4Q+XtGT
-         msE8MlX8P1FMZr6Yemo2KVXiq2CyfjHgRvf5A=
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=lFKwihPvKMpcXpSVULfJwtDOJkGorAbMoBn7I+sY6j0=;
+        b=MLghucnahrx3YDWgHuWWZd07q404MGwEweT67Hhwy9Mse2bTbTBCkpUXIGdA/8v4ec
+         1hLzjsajdPoFMOu7MD1rpCaxUjgAp8lmDbA3j7e+3r5LODLJS/qoZk3HQzy+W+HgCshI
+         8M8J/lENYW1k1SYb3WcIMgEq7jUhqxJInLlswtvwhko2f2RfCeTL4kxXSMheydlhYgSX
+         utYi0EpyEzcOL4rtiTN7AS/3pDkkWcRBI0lmepL/N/B7V0T2RGGkseHHxF7Cm/zB3obg
+         QY73jJJw3dRCHR5lij5STBkKFY0/D2STodTRITvFeAD+Cg0yuuMBNRHZmRQd5TsaxOzz
+         emUg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ia/lu5+B5CRXWa8CF3j1BLcFKSU3j2P6kHuicKKTwhM=;
-        b=K//zT6mQCbLIZ0GolBKaN9zFWesB4lnGFZKhcWgINe2twU1ByD/RLIbT0hMHu5ibsm
-         kheIARFwKYna8d8euKUedmjYy3Y4V5hNMK2ivoycPa+Fml3E9EstlOelwjHwSYXaDDXO
-         6hpF9XUul6aXlpzPfSdwmbOInIwnL5IJpyT8wsWY66q6h+z4WipgTtrlFWZv8PPU2H4z
-         wEWOCj4YqVODF22+YEunJmrsJfJMD9BB4P0OJHL+VkP/NRw8sUtldMhlDxaUH1zNlrnA
-         UUgm3MIvXt6r3duD12s0ApCs5mfLn5nFDWR4tPN29oRdeE8Oee0bzN4bIfMUtxGvEvkF
-         nwTw==
-X-Gm-Message-State: AFqh2kqHnkvOsVGVYkT523ubXeOtW/Va2sC3l4lwUvdQKGAkfi5P2b0w
-	pQUN0ItNnuBXvyetMhQq5dmPrIypknW3s6OK
-X-Google-Smtp-Source: AMrXdXv6WQRWEae/nky1ztPFhf6iuAWpxRUDDpWzvRdubBRWq+7bcxZC53Q0YLeDOV7WzQJFDBupNg==
-X-Received: by 2002:a67:f1d6:0:b0:3cb:54f1:d813 with SMTP id v22-20020a67f1d6000000b003cb54f1d813mr9239578vsm.15.1672773593949;
-        Tue, 03 Jan 2023 11:19:53 -0800 (PST)
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com. [209.85.160.180])
-        by smtp.gmail.com with ESMTPSA id m16-20020a05620a291000b007056237b41bsm2538234qkp.67.2023.01.03.11.19.53
-        for <patches@lists.linux.dev>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=lFKwihPvKMpcXpSVULfJwtDOJkGorAbMoBn7I+sY6j0=;
+        b=abmkUg42Jpt8MkDpHZT0TLs+LHy0ZpTrr8+uRsiaaeSYyTpM5eM9NmLAiyqCCgLgPD
+         URJK7wtfuAwe7+fJoYk2oJuMkiDQkv1UvZhUUC275FGnEYy7pxdtbfjDQ/xwBpNnWH1Z
+         Zvyi7uoyUectrJUE4gAXzLSYFu+FkoGzPMluhssbJT/gNXc1um7RiPEz47ylr2tXtoLz
+         VGTk99BbWL8pfBBjXt/VdFeOsjHbHIgYWGyXbl5ouvVuIcQMBEEWU2TcpozEI8TmBslW
+         EPp3RhTdaq1j4iyG9Ns4UKGQISVN+fTiwOZI9FjyTlAuWT5M86MyGxinj6TPJdhkcvuH
+         q6Gw==
+X-Gm-Message-State: AFqh2koZDSTuVJ69eQq+cyFIc0fInqzf0tUseO2m+LxZPdxC3f8NfDYE
+	wQVb4rlawEdEUy5n0Yts88q0AOqf4ic=
+X-Google-Smtp-Source: AMrXdXtaT5qDQkHma3K3lFnkjH3J81z2ePBPS7emp/cK7CZwix+GhyYG9AWUw3u6dD6vVMYvL062Nw==
+X-Received: by 2002:a05:6102:185:b0:3b5:1edd:79fe with SMTP id r5-20020a056102018500b003b51edd79femr18416073vsq.21.1672774389337;
+        Tue, 03 Jan 2023 11:33:09 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id r17-20020ae9d611000000b00704c62638f4sm22439767qkk.89.2023.01.03.11.33.06
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Jan 2023 11:19:53 -0800 (PST)
-Received: by mail-qt1-f180.google.com with SMTP id v14so22547824qtq.3
-        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 11:19:53 -0800 (PST)
-X-Received: by 2002:ac8:67da:0:b0:3a5:122:fb79 with SMTP id
- r26-20020ac867da000000b003a50122fb79mr1194253qtp.452.1672773592726; Tue, 03
- Jan 2023 11:19:52 -0800 (PST)
+        Tue, 03 Jan 2023 11:33:08 -0800 (PST)
+Message-ID: <26f54e70-0453-9a0d-b032-5a97fc4fb6c8@gmail.com>
+Date: Tue, 3 Jan 2023 11:33:05 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230101162910.710293-1-Jason@zx2c4.com> <20230101162910.710293-3-Jason@zx2c4.com>
- <Y7QIg/hAIk7eZE42@gmail.com> <CALCETrWdw5kxrtr4M7AkKYDOJEE1cU1wENWgmgOxn0rEJz4y3w@mail.gmail.com>
-In-Reply-To: <CALCETrWdw5kxrtr4M7AkKYDOJEE1cU1wENWgmgOxn0rEJz4y3w@mail.gmail.com>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Tue, 3 Jan 2023 11:19:36 -0800
-X-Gmail-Original-Message-ID: <CAHk-=wg_6Uhkjy12Vq_hN6rQqGRP2nE15rkgiAo6Qay5aOeigg@mail.gmail.com>
-Message-ID: <CAHk-=wg_6Uhkjy12Vq_hN6rQqGRP2nE15rkgiAo6Qay5aOeigg@mail.gmail.com>
-Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-To: Andy Lutomirski <luto@kernel.org>
-Cc: Ingo Molnar <mingo@kernel.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, tglx@linutronix.de, linux-crypto@vger.kernel.org, 
-	linux-api@vger.kernel.org, x86@kernel.org, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>, "Carlos O'Donell" <carlos@redhat.com>, 
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>, Jann Horn <jannh@google.com>, 
-	Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 6.1 00/71] 6.1.3-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230102110551.509937186@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230102110551.509937186@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jan 3, 2023 at 10:36 AM Andy Lutomirski <luto@kernel.org> wrote:
->
-> I have a rather different suggestion: make a special mapping.  Jason,
-> you're trying to shoehorn all kinds of bizarre behavior into the core
-> mm, and none of that seems to me to belong to the core mm.  Instead,
-> have an actual special mapping with callbacks that does the right
-> thing.  No fancy VM flags.
+On 1/2/23 03:21, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.3 release.
+> There are 71 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 04 Jan 2023 11:05:34 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.3-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-I don't disagree, but honestly, my deeper reaction is "this is not worth it".
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-I think the real issue here is that Jason has to prove that this is
-such a big deal that the VM has to be modified *at*all* for this.
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
 
-Honestly, "getrandom()" performance simply is not important enough to
-design VM changes for.
-
-Do some people care? Debatable. Jason cares, sure. But people have
-gotten used to doing their own random number implementations if they
-*really* care, and yes, they've gotten them wrong, or they've not
-performed as well as they could, but on the whole this is still a
-really tiny thing, and Jason is trying to micro-optimize something
-that THE KERNEL SHOULD NOT CARE ABOUT.
-
-This should all be in libc. Not in the kernel with special magic vdso
-support and special buffer allocations. The kernel should give good
-enough support that libc can do a good job, but the kernel should
-simply *not* take the approach of "libc will get this wrong, so let's
-just do all the work for it".
-
-Let user space do their own percpu areas if they really care. And most
-(as in 99.9%) of all user space won't care at all, and is perfectly
-happy just doing a read() from /dev/urandom or using our existing
-"getrandom()" without any super-clever vdso support with magic
-temporary buffer handling.
-
-Now, if the magic buffers were something cool that were a generic
-concept that a lot of *other* cases would also kill for, that's one
-thing. But this is such a small special case that absolutely *nobody*
-has asked for, and that nothing else wants.
-
-             Linus
