@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4AE138D
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:14:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C372C433EF;
-	Tue,  3 Jan 2023 08:14:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5679138D
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:14:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AC43C433D2;
+	Tue,  3 Jan 2023 08:14:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672733691;
-	bh=cvRm7o9B1QSPX1e+Zrk8vy7BHM1Br2gkNpATpkyE3Gg=;
+	s=korg; t=1672733694;
+	bh=bLQMNidN0VK7ZnObnOkDFRxYFpp+vvWQ0Wrj3m7fxpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lIYjBEgqKbRfcwqFfxUrezUawBOFYeUE2hwDCpkqv5EMyLo9LRqhBtkL2HlpsULJy
-	 dKVy63m4bVBqzmQ8AfizCKueamqQzkQY4pWc8SbedcUwbQGJL+dXEFa9Fdtiq+4IVn
-	 izI9lGYuKmx6vpG7bWO29uJV3g7Hjjw/UR1bjQJk=
+	b=JhBnVZdcA/cAI96lnFikmy2l0tIBCyax30GtxNajSUD6HtQNqfGPpywfpgnMDAYQF
+	 B8QdsFZ5CD9oREz17LQVHWCHyuv4ZTwQIl2BWyOtFMeMU87sINV4NfWmOXuqKtf7yI
+	 +IPO2wQiUfpUXjG2jJ/Zkqrp5kTqtMzho8JMLdGo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Oleg Nesterov <oleg@redhat.com>
-Subject: [PATCH 5.10 11/63] signal: Add task_sigpending() helper
-Date: Tue,  3 Jan 2023 09:13:41 +0100
-Message-Id: <20230103081309.240467560@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.10 02/63] iov_iter: add helper to save iov_iter state
+Date: Tue,  3 Jan 2023 09:13:32 +0100
+Message-Id: <20230103081308.699550936@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230103081308.548338576@linuxfoundation.org>
 References: <20230103081308.548338576@linuxfoundation.org>
@@ -37,106 +35,129 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 5c251e9dc0e127bac6fc5b8e6696363d2e35f515 ]
+[ Upstream commit 8fb0f47a9d7acf620d0fd97831b69da9bc5e22ed ]
 
-This is in preparation for maintaining signal_pending() as the decider of
-whether or not a schedule() loop should be broken, or continue sleeping.
-This is different than the core signal use cases, which really need to know
-whether an actual signal is pending or not. task_sigpending() returns
-non-zero if TIF_SIGPENDING is set.
+In an ideal world, when someone is passed an iov_iter and returns X bytes,
+then X bytes would have been consumed/advanced from the iov_iter. But we
+have use cases that always consume the entire iterator, a few examples
+of that are iomap and bdev O_DIRECT. This means we cannot rely on the
+state of the iov_iter once we've called ->read_iter() or ->write_iter().
 
-Only core kernel use cases should care about the distinction between
-the two, make sure those use the task_sigpending() helper.
+This would be easier if we didn't always have to deal with truncate of
+the iov_iter, as rewinding would be trivial without that. We recently
+added a commit to track the truncate state, but that grew the iov_iter
+by 8 bytes and wasn't the best solution.
 
+Implement a helper to save enough of the iov_iter state to sanely restore
+it after we've called the read/write iterator helpers. This currently
+only works for IOVEC/BVEC/KVEC as that's all we need, support for other
+iterator types are left as an exercise for the reader.
+
+Link: https://lore.kernel.org/linux-fsdevel/CAHk-=wiacKV4Gh-MYjteU0LwNBSGpWrK-Ov25HdqB1ewinrFPg@mail.gmail.com/
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
-Link: https://lore.kernel.org/r/20201026203230.386348-2-axboe@kernel.dk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/sched/signal.h |    9 +++++++--
- kernel/events/uprobes.c      |    2 +-
- kernel/signal.c              |    8 ++++----
- 3 files changed, 12 insertions(+), 7 deletions(-)
+ include/linux/uio.h |   15 +++++++++++++++
+ lib/iov_iter.c      |   52 +++++++++++++++++++++++++++++++++-------------------
+ 2 files changed, 48 insertions(+), 19 deletions(-)
 
---- a/include/linux/sched/signal.h
-+++ b/include/linux/sched/signal.h
-@@ -354,11 +354,16 @@ static inline int restart_syscall(void)
- 	return -ERESTARTNOINTR;
+--- a/include/linux/uio.h
++++ b/include/linux/uio.h
+@@ -26,6 +26,12 @@ enum iter_type {
+ 	ITER_DISCARD = 64,
+ };
+ 
++struct iov_iter_state {
++	size_t iov_offset;
++	size_t count;
++	unsigned long nr_segs;
++};
++
+ struct iov_iter {
+ 	/*
+ 	 * Bit 0 is the read/write bit, set if we're writing.
+@@ -55,6 +61,14 @@ static inline enum iter_type iov_iter_ty
+ 	return i->type & ~(READ | WRITE);
  }
  
--static inline int signal_pending(struct task_struct *p)
-+static inline int task_sigpending(struct task_struct *p)
- {
- 	return unlikely(test_tsk_thread_flag(p,TIF_SIGPENDING));
- }
- 
-+static inline int signal_pending(struct task_struct *p)
++static inline void iov_iter_save_state(struct iov_iter *iter,
++				       struct iov_iter_state *state)
 +{
-+	return task_sigpending(p);
++	state->iov_offset = iter->iov_offset;
++	state->count = iter->count;
++	state->nr_segs = iter->nr_segs;
 +}
 +
- static inline int __fatal_signal_pending(struct task_struct *p)
+ static inline bool iter_is_iovec(const struct iov_iter *i)
  {
- 	return unlikely(sigismember(&p->pending.signal, SIGKILL));
-@@ -366,7 +371,7 @@ static inline int __fatal_signal_pending
+ 	return iov_iter_type(i) == ITER_IOVEC;
+@@ -226,6 +240,7 @@ ssize_t iov_iter_get_pages(struct iov_it
+ ssize_t iov_iter_get_pages_alloc(struct iov_iter *i, struct page ***pages,
+ 			size_t maxsize, size_t *start);
+ int iov_iter_npages(const struct iov_iter *i, int maxpages);
++void iov_iter_restore(struct iov_iter *i, struct iov_iter_state *state);
  
- static inline int fatal_signal_pending(struct task_struct *p)
- {
--	return signal_pending(p) && __fatal_signal_pending(p);
-+	return task_sigpending(p) && __fatal_signal_pending(p);
+ const void *dup_iter(struct iov_iter *new, struct iov_iter *old, gfp_t flags);
+ 
+--- a/lib/iov_iter.c
++++ b/lib/iov_iter.c
+@@ -1836,24 +1836,38 @@ int import_single_range(int rw, void __u
  }
+ EXPORT_SYMBOL(import_single_range);
  
- static inline int signal_pending_state(long state, struct task_struct *p)
---- a/kernel/events/uprobes.c
-+++ b/kernel/events/uprobes.c
-@@ -1973,7 +1973,7 @@ bool uprobe_deny_signal(void)
- 
- 	WARN_ON_ONCE(utask->state != UTASK_SSTEP);
- 
--	if (signal_pending(t)) {
-+	if (task_sigpending(t)) {
- 		spin_lock_irq(&t->sighand->siglock);
- 		clear_tsk_thread_flag(t, TIF_SIGPENDING);
- 		spin_unlock_irq(&t->sighand->siglock);
---- a/kernel/signal.c
-+++ b/kernel/signal.c
-@@ -984,7 +984,7 @@ static inline bool wants_signal(int sig,
- 	if (task_is_stopped_or_traced(p))
- 		return false;
- 
--	return task_curr(p) || !signal_pending(p);
-+	return task_curr(p) || !task_sigpending(p);
- }
- 
- static void complete_signal(int sig, struct task_struct *p, enum pid_type type)
-@@ -2813,7 +2813,7 @@ static void retarget_shared_pending(stru
- 		/* Remove the signals this thread can handle. */
- 		sigandsets(&retarget, &retarget, &t->blocked);
- 
--		if (!signal_pending(t))
-+		if (!task_sigpending(t))
- 			signal_wake_up(t, 0);
- 
- 		if (sigisemptyset(&retarget))
-@@ -2847,7 +2847,7 @@ void exit_signals(struct task_struct *ts
- 
- 	cgroup_threadgroup_change_end(tsk);
- 
--	if (!signal_pending(tsk))
-+	if (!task_sigpending(tsk))
- 		goto out;
- 
- 	unblocked = tsk->blocked;
-@@ -2891,7 +2891,7 @@ long do_no_restart_syscall(struct restar
- 
- static void __set_task_blocked(struct task_struct *tsk, const sigset_t *newset)
+-int iov_iter_for_each_range(struct iov_iter *i, size_t bytes,
+-			    int (*f)(struct kvec *vec, void *context),
+-			    void *context)
++/**
++ * iov_iter_restore() - Restore a &struct iov_iter to the same state as when
++ *     iov_iter_save_state() was called.
++ *
++ * @i: &struct iov_iter to restore
++ * @state: state to restore from
++ *
++ * Used after iov_iter_save_state() to bring restore @i, if operations may
++ * have advanced it.
++ *
++ * Note: only works on ITER_IOVEC, ITER_BVEC, and ITER_KVEC
++ */
++void iov_iter_restore(struct iov_iter *i, struct iov_iter_state *state)
  {
--	if (signal_pending(tsk) && !thread_group_empty(tsk)) {
-+	if (task_sigpending(tsk) && !thread_group_empty(tsk)) {
- 		sigset_t newblocked;
- 		/* A set of now blocked but previously unblocked signals. */
- 		sigandnsets(&newblocked, newset, &current->blocked);
+-	struct kvec w;
+-	int err = -EINVAL;
+-	if (!bytes)
+-		return 0;
+-
+-	iterate_all_kinds(i, bytes, v, -EINVAL, ({
+-		w.iov_base = kmap(v.bv_page) + v.bv_offset;
+-		w.iov_len = v.bv_len;
+-		err = f(&w, context);
+-		kunmap(v.bv_page);
+-		err;}), ({
+-		w = v;
+-		err = f(&w, context);})
+-	)
+-	return err;
++	if (WARN_ON_ONCE(!iov_iter_is_bvec(i) && !iter_is_iovec(i)) &&
++			 !iov_iter_is_kvec(i))
++		return;
++	i->iov_offset = state->iov_offset;
++	i->count = state->count;
++	/*
++	 * For the *vec iters, nr_segs + iov is constant - if we increment
++	 * the vec, then we also decrement the nr_segs count. Hence we don't
++	 * need to track both of these, just one is enough and we can deduct
++	 * the other from that. ITER_KVEC and ITER_IOVEC are the same struct
++	 * size, so we can just increment the iov pointer as they are unionzed.
++	 * ITER_BVEC _may_ be the same size on some archs, but on others it is
++	 * not. Be safe and handle it separately.
++	 */
++	BUILD_BUG_ON(sizeof(struct iovec) != sizeof(struct kvec));
++	if (iov_iter_is_bvec(i))
++		i->bvec -= state->nr_segs - i->nr_segs;
++	else
++		i->iov -= state->nr_segs - i->nr_segs;
++	i->nr_segs = state->nr_segs;
+ }
+-EXPORT_SYMBOL(iov_iter_for_each_range);
 
 
