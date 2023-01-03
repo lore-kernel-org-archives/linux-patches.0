@@ -1,152 +1,108 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCC98F57
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 19:05:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E56C433D2;
-	Tue,  3 Jan 2023 19:05:16 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="UdnPlTE1"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1672772714;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=5NpNAATWWkRP+91skuEFC6IGLeSW0ntw/LmFnvD5DJo=;
-	b=UdnPlTE1GPtqZiqmhGqOPzd6vGqyg6RTb0tEiIQb3JQvC+0sAK7ZpyfNLtyLmIrUtUf9K6
-	w7Kfep3+so7dS+IlkrWLwGAzluYN53gA4o+QhAuIxj4VDfXQ7+yIY1g4OGUVazEqAj/nV8
-	46Fjym8BynZrySEy5c5LuroAzBOGafw=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id cfe7dd4e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 3 Jan 2023 19:05:14 +0000 (UTC)
-Date: Tue, 3 Jan 2023 20:05:10 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Andy Lutomirski <luto@kernel.org>
-Cc: Ingo Molnar <mingo@kernel.org>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, tglx@linutronix.de,
-	linux-crypto@vger.kernel.org, linux-api@vger.kernel.org,
-	x86@kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-Message-ID: <Y7R8Zq6sIKAIprtr@zx2c4.com>
-References: <20230101162910.710293-1-Jason@zx2c4.com>
- <20230101162910.710293-3-Jason@zx2c4.com>
- <Y7QIg/hAIk7eZE42@gmail.com>
- <CALCETrWdw5kxrtr4M7AkKYDOJEE1cU1wENWgmgOxn0rEJz4y3w@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A7008F57
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 19:19:55 +0000 (UTC)
+Received: by mail-vs1-f51.google.com with SMTP id o63so27962540vsc.10
+        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 11:19:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ia/lu5+B5CRXWa8CF3j1BLcFKSU3j2P6kHuicKKTwhM=;
+        b=ZqWN8gFUfoVI5wnLUXnodqgP701dqeLd5CSt/RsefZ5Qkl5jGfXYOorD034HuIvB5D
+         Ht8gtKf8KI4dn/azdfqIH5esBFN2+qILBHpfWUbepKnmZuifWK677ycRTg3al4Q+XtGT
+         msE8MlX8P1FMZr6Yemo2KVXiq2CyfjHgRvf5A=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ia/lu5+B5CRXWa8CF3j1BLcFKSU3j2P6kHuicKKTwhM=;
+        b=K//zT6mQCbLIZ0GolBKaN9zFWesB4lnGFZKhcWgINe2twU1ByD/RLIbT0hMHu5ibsm
+         kheIARFwKYna8d8euKUedmjYy3Y4V5hNMK2ivoycPa+Fml3E9EstlOelwjHwSYXaDDXO
+         6hpF9XUul6aXlpzPfSdwmbOInIwnL5IJpyT8wsWY66q6h+z4WipgTtrlFWZv8PPU2H4z
+         wEWOCj4YqVODF22+YEunJmrsJfJMD9BB4P0OJHL+VkP/NRw8sUtldMhlDxaUH1zNlrnA
+         UUgm3MIvXt6r3duD12s0ApCs5mfLn5nFDWR4tPN29oRdeE8Oee0bzN4bIfMUtxGvEvkF
+         nwTw==
+X-Gm-Message-State: AFqh2kqHnkvOsVGVYkT523ubXeOtW/Va2sC3l4lwUvdQKGAkfi5P2b0w
+	pQUN0ItNnuBXvyetMhQq5dmPrIypknW3s6OK
+X-Google-Smtp-Source: AMrXdXv6WQRWEae/nky1ztPFhf6iuAWpxRUDDpWzvRdubBRWq+7bcxZC53Q0YLeDOV7WzQJFDBupNg==
+X-Received: by 2002:a67:f1d6:0:b0:3cb:54f1:d813 with SMTP id v22-20020a67f1d6000000b003cb54f1d813mr9239578vsm.15.1672773593949;
+        Tue, 03 Jan 2023 11:19:53 -0800 (PST)
+Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com. [209.85.160.180])
+        by smtp.gmail.com with ESMTPSA id m16-20020a05620a291000b007056237b41bsm2538234qkp.67.2023.01.03.11.19.53
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Jan 2023 11:19:53 -0800 (PST)
+Received: by mail-qt1-f180.google.com with SMTP id v14so22547824qtq.3
+        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 11:19:53 -0800 (PST)
+X-Received: by 2002:ac8:67da:0:b0:3a5:122:fb79 with SMTP id
+ r26-20020ac867da000000b003a50122fb79mr1194253qtp.452.1672773592726; Tue, 03
+ Jan 2023 11:19:52 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+References: <20230101162910.710293-1-Jason@zx2c4.com> <20230101162910.710293-3-Jason@zx2c4.com>
+ <Y7QIg/hAIk7eZE42@gmail.com> <CALCETrWdw5kxrtr4M7AkKYDOJEE1cU1wENWgmgOxn0rEJz4y3w@mail.gmail.com>
 In-Reply-To: <CALCETrWdw5kxrtr4M7AkKYDOJEE1cU1wENWgmgOxn0rEJz4y3w@mail.gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Tue, 3 Jan 2023 11:19:36 -0800
+X-Gmail-Original-Message-ID: <CAHk-=wg_6Uhkjy12Vq_hN6rQqGRP2nE15rkgiAo6Qay5aOeigg@mail.gmail.com>
+Message-ID: <CAHk-=wg_6Uhkjy12Vq_hN6rQqGRP2nE15rkgiAo6Qay5aOeigg@mail.gmail.com>
+Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
+ lazily freeable mappings
+To: Andy Lutomirski <luto@kernel.org>
+Cc: Ingo Molnar <mingo@kernel.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, tglx@linutronix.de, linux-crypto@vger.kernel.org, 
+	linux-api@vger.kernel.org, x86@kernel.org, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>, "Carlos O'Donell" <carlos@redhat.com>, 
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>, Jann Horn <jannh@google.com>, 
+	Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Andy,
-
-Thanks for your constructive suggestions.
-
-On Tue, Jan 03, 2023 at 10:36:01AM -0800, Andy Lutomirski wrote:
-> > > c) If there's not enough memory to service a page fault, it's not fatal,
-> > >    and no signal is sent. Instead, writes are simply lost.
-> 
-> This just seems massively overcomplicated to me.  If there isn't
-> enough memory to fault in a page of code, we don't have some magic
-> instruction emulator in the kernel.  We either OOM or we wait for
-> memory to show up.
-
-Before addressing the other parts of your email, I thought I'd touch on
-this. Quoting from the email I just wrote Ingo:
-
-| *However* - if your big objection to this patch is that the instruction
-| skipping is problematic, we could actually punt that part. The result
-| will be that userspace just retries the memory write and the fault
-| happens again, and eventually it succeeds. From a perspective of
-| vgetrandom(), that's perhaps worse -- with this v14 patchset, it'll
-| immediately fallback to the syscall under memory pressure -- but you
-| could argue that nobody really cares about performance at that point
-| anyway, and so just retrying the fault until it succeeds is a less
-| complex behavior that would be just fine.
-| 
-| Let me know if you think that'd be an acceptable compromise, and I'll
-| roll it into v15. As a preview, it pretty much amounts to dropping 3/7
-| and editing the commit message in this 2/7 patch.
-
-IOW, I think the main ideas of the patch work just fine without "point
-c" with the instruction skipping. Instead, waiting/retrying could
-potentially work. So, okay, it seems like the two of you both hate the
-instruction decoder stuff, so I'll plan on working that part in, in one
-way or another, for v15.
-
-> On Tue, Jan 3, 2023 at 2:50 AM Ingo Molnar <mingo@kernel.org> wrote:
-> > > The vDSO getrandom() implementation works with a buffer allocated with a
-> > > new system call that has certain requirements:
-> > >
-> > > - It shouldn't be written to core dumps.
-> > >   * Easy: VM_DONTDUMP.
-> > > - It should be zeroed on fork.
-> > >   * Easy: VM_WIPEONFORK.
-> 
+On Tue, Jan 3, 2023 at 10:36 AM Andy Lutomirski <luto@kernel.org> wrote:
+>
 > I have a rather different suggestion: make a special mapping.  Jason,
 > you're trying to shoehorn all kinds of bizarre behavior into the core
 > mm, and none of that seems to me to belong to the core mm.  Instead,
 > have an actual special mapping with callbacks that does the right
 > thing.  No fancy VM flags.
 
-Oooo! I like this. Avoiding adding VM_* flags would indeed be nice.
-I had seen things that I thought looked in this direction with the shmem
-API, but when I got into the details, it looked like this was meant for
-something else and couldn't address most of what I wanted here.
+I don't disagree, but honestly, my deeper reaction is "this is not worth it".
 
-If you say this is possible, I'll look again to see if I can figure it
-out. Though, if you have some API name at the top of your head, you
-might save me some code squinting time.
+I think the real issue here is that Jason has to prove that this is
+such a big deal that the VM has to be modified *at*all* for this.
 
-> Memory pressure: have it free and unmap it self.  Gets accessed again?
->  ->fault can handle it.
+Honestly, "getrandom()" performance simply is not important enough to
+design VM changes for.
 
-Right.
+Do some people care? Debatable. Jason cares, sure. But people have
+gotten used to doing their own random number implementations if they
+*really* care, and yes, they've gotten them wrong, or they've not
+performed as well as they could, but on the whole this is still a
+really tiny thing, and Jason is trying to micro-optimize something
+that THE KERNEL SHOULD NOT CARE ABOUT.
 
-> Want to mlock it?  No, don't do that -- that's absurd.  Just arrange
-> so that, if it gets evicted, it's not written out anywhere.  And when
-> it gets faulted back in it does the right thing -- see above.
+This should all be in libc. Not in the kernel with special magic vdso
+support and special buffer allocations. The kernel should give good
+enough support that libc can do a good job, but the kernel should
+simply *not* take the approach of "libc will get this wrong, so let's
+just do all the work for it".
 
-Presumably mlock calls are redirected to some function pointer so I can
-just return EINTR?
+Let user space do their own percpu areas if they really care. And most
+(as in 99.9%) of all user space won't care at all, and is perfectly
+happy just doing a read() from /dev/urandom or using our existing
+"getrandom()" without any super-clever vdso support with magic
+temporary buffer handling.
 
-> Zero on fork?  I'm sure that's manageable with a special mapping.  If
-> not, you can add a new vm operation or similar to make it work.  (Kind
-> of like how we extended special mappings to get mremap right a couple
-> years go.)  But maybe you don't want to *zero* it on fork and you want
-> to do something more intelligent.  Fine -- you control ->fault!
+Now, if the magic buffers were something cool that were a generic
+concept that a lot of *other* cases would also kill for, that's one
+thing. But this is such a small special case that absolutely *nobody*
+has asked for, and that nothing else wants.
 
-Doing something more intelligent would be an interesting development, I
-guess... But, before I think about that, all mapping have flags;
-couldn't I *still* set VM_WIPEONFORK on the special mapping? Or does the
-API you have in mind not work that way? (Side note: I also want
-VM_DONTDUMP to work.)
-
-> > > - It shouldn't reserve actual memory, but it also shouldn't crash when
-> > >   page faulting in memory if none is available
-> > >   * Uh-oh: MAP_NORESERVE respects vm.overcommit_memory=2.
-> > >   * Uh-oh: VM_NORESERVE means segfaults.
-> 
-> ->fault can do whatever you want.
-> 
-> And there is no shortage of user memory that *must* be made available
-> on fault in order to resume the faulting process.  ->fault can handle
-> this.
-
-I'll look to see how other things handle this...
-
-Anyway, thanks for the suggestion. That seems like a good future
-direction for this.
-
-Jason
+             Linus
