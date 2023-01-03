@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98432138D
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:15:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B1B1C433D2;
-	Tue,  3 Jan 2023 08:15:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A881A138D
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:15:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19D83C433D2;
+	Tue,  3 Jan 2023 08:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672733753;
-	bh=NinGCVOC9xKRlCNOLVMTHzJOhxCFZn+947TRj4iAUdA=;
+	s=korg; t=1672733756;
+	bh=80/vf2xzBZEXaobcI/OhiAjurtbJObkdBvERCsw4qYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uVehDNE27QpJvgV9V3YEsR9T1Pt2sxozXsPlYCFq9/TkTAJi3SvVx0VhfWXtLtgHQ
-	 Kp8/1JP4zPmwMjfxNZy51rqCaEFVZogKNjSqGnK9yOdJYlxwkBVV7st531r6e0o7iv
-	 quUOdDjd1Nt2CSGEmDFP5XrrGynMvzWTtLjdF0CE=
+	b=Tkd8Fg5jS34lfh0Nb4z1E4okrdo/JfMjq4aF3MmaONyyxdcjfS6wJSH4wWul09Xne
+	 YKXrLprgpYLi5Fz6yl+fdOR/PGNjuzZPhgjcNzTYeeA64hHNLGXHya9Gx/Xw4M92r9
+	 EGeUsGO5uSNqS1h/3KkCsoHPRn5GsiLGQPVsG/2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	linux-arm-kernel@lists.infradead.org,
+	Russell King <rmk+kernel@armlinux.org.uk>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 14/63] fs: provide locked helper variant of close_fd_get_file()
-Date: Tue,  3 Jan 2023 09:13:44 +0100
-Message-Id: <20230103081309.418857619@linuxfoundation.org>
+Subject: [PATCH 5.10 32/63] arm: add support for TIF_NOTIFY_SIGNAL
+Date: Tue,  3 Jan 2023 09:14:02 +0100
+Message-Id: <20230103081310.500082820@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230103081308.548338576@linuxfoundation.org>
 References: <20230103081308.548338576@linuxfoundation.org>
@@ -35,98 +37,108 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 53dec2ea74f2ef360e8455439be96a780baa6097 ]
+[ Upstream commit 32d59773da38cd83e497a70eb9754d4bbae3aeae ]
 
-Assumes current->files->file_lock is already held on invocation. Helps
-the caller check the file before removing the fd, if it needs to.
+Wire up TIF_NOTIFY_SIGNAL handling for arm.
 
+Cc: linux-arm-kernel@lists.infradead.org
+Acked-by: Russell King <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/file.c     |   36 +++++++++++++++++++++++++-----------
- fs/internal.h |    1 +
- 2 files changed, 26 insertions(+), 11 deletions(-)
+ arch/arm/include/asm/thread_info.h |    7 ++++++-
+ arch/arm/kernel/entry-common.S     |    6 +++---
+ arch/arm/kernel/entry-v7m.S        |    2 +-
+ arch/arm/kernel/signal.c           |    2 +-
+ 4 files changed, 11 insertions(+), 6 deletions(-)
 
---- a/fs/file.c
-+++ b/fs/file.c
-@@ -22,6 +22,8 @@
- #include <linux/close_range.h>
- #include <net/sock.h>
- 
-+#include "internal.h"
-+
- unsigned int sysctl_nr_open __read_mostly = 1024*1024;
- unsigned int sysctl_nr_open_min = BITS_PER_LONG;
- /* our min() is unusable in constant expressions ;-/ */
-@@ -780,36 +782,48 @@ int __close_range(unsigned fd, unsigned
- }
- 
- /*
-- * variant of close_fd that gets a ref on the file for later fput.
-- * The caller must ensure that filp_close() called on the file, and then
-- * an fput().
-+ * See close_fd_get_file() below, this variant assumes current->files->file_lock
-+ * is held.
+--- a/arch/arm/include/asm/thread_info.h
++++ b/arch/arm/include/asm/thread_info.h
+@@ -126,6 +126,8 @@ extern int vfp_restore_user_hwstate(stru
+  * thread information flags:
+  *  TIF_USEDFPU		- FPU was used by this task this quantum (SMP)
+  *  TIF_POLLING_NRFLAG	- true if poll_idle() is polling TIF_NEED_RESCHED
++ *
++ * Any bit in the range of 0..15 will cause do_work_pending() to be invoked.
   */
--int close_fd_get_file(unsigned int fd, struct file **res)
-+int __close_fd_get_file(unsigned int fd, struct file **res)
- {
- 	struct files_struct *files = current->files;
- 	struct file *file;
- 	struct fdtable *fdt;
+ #define TIF_SIGPENDING		0	/* signal pending */
+ #define TIF_NEED_RESCHED	1	/* rescheduling necessary */
+@@ -135,6 +137,7 @@ extern int vfp_restore_user_hwstate(stru
+ #define TIF_SYSCALL_AUDIT	5	/* syscall auditing active */
+ #define TIF_SYSCALL_TRACEPOINT	6	/* syscall tracepoint instrumentation */
+ #define TIF_SECCOMP		7	/* seccomp syscall filtering active */
++#define TIF_NOTIFY_SIGNAL	8	/* signal notifications exist */
  
--	spin_lock(&files->file_lock);
- 	fdt = files_fdtable(files);
- 	if (fd >= fdt->max_fds)
--		goto out_unlock;
-+		goto out_err;
- 	file = fdt->fd[fd];
- 	if (!file)
--		goto out_unlock;
-+		goto out_err;
- 	rcu_assign_pointer(fdt->fd[fd], NULL);
- 	__put_unused_fd(files, fd);
--	spin_unlock(&files->file_lock);
- 	get_file(file);
- 	*res = file;
- 	return 0;
--
--out_unlock:
--	spin_unlock(&files->file_lock);
-+out_err:
- 	*res = NULL;
- 	return -ENOENT;
- }
+ #define TIF_USING_IWMMXT	17
+ #define TIF_MEMDIE		18	/* is terminating due to OOM killer */
+@@ -148,6 +151,7 @@ extern int vfp_restore_user_hwstate(stru
+ #define _TIF_SYSCALL_AUDIT	(1 << TIF_SYSCALL_AUDIT)
+ #define _TIF_SYSCALL_TRACEPOINT	(1 << TIF_SYSCALL_TRACEPOINT)
+ #define _TIF_SECCOMP		(1 << TIF_SECCOMP)
++#define _TIF_NOTIFY_SIGNAL	(1 << TIF_NOTIFY_SIGNAL)
+ #define _TIF_USING_IWMMXT	(1 << TIF_USING_IWMMXT)
  
-+/*
-+ * variant of close_fd that gets a ref on the file for later fput.
-+ * The caller must ensure that filp_close() called on the file, and then
-+ * an fput().
-+ */
-+int close_fd_get_file(unsigned int fd, struct file **res)
-+{
-+	struct files_struct *files = current->files;
-+	int ret;
-+
-+	spin_lock(&files->file_lock);
-+	ret = __close_fd_get_file(fd, res);
-+	spin_unlock(&files->file_lock);
-+
-+	return ret;
-+}
-+
- void do_close_on_exec(struct files_struct *files)
- {
- 	unsigned i;
---- a/fs/internal.h
-+++ b/fs/internal.h
-@@ -134,6 +134,7 @@ extern struct file *do_file_open_root(st
- 		const char *, const struct open_flags *);
- extern struct open_how build_open_how(int flags, umode_t mode);
- extern int build_open_flags(const struct open_how *how, struct open_flags *op);
-+extern int __close_fd_get_file(unsigned int fd, struct file **res);
+ /* Checks for any syscall work in entry-common.S */
+@@ -158,7 +162,8 @@ extern int vfp_restore_user_hwstate(stru
+  * Change these and you break ASM code in entry-common.S
+  */
+ #define _TIF_WORK_MASK		(_TIF_NEED_RESCHED | _TIF_SIGPENDING | \
+-				 _TIF_NOTIFY_RESUME | _TIF_UPROBE)
++				 _TIF_NOTIFY_RESUME | _TIF_UPROBE | \
++				 _TIF_NOTIFY_SIGNAL)
  
- long do_sys_ftruncate(unsigned int fd, loff_t length, int small);
- int chmod_common(const struct path *path, umode_t mode);
+ #endif /* __KERNEL__ */
+ #endif /* __ASM_ARM_THREAD_INFO_H */
+--- a/arch/arm/kernel/entry-common.S
++++ b/arch/arm/kernel/entry-common.S
+@@ -53,7 +53,7 @@ __ret_fast_syscall:
+ 	cmp	r2, #TASK_SIZE
+ 	blne	addr_limit_check_failed
+ 	ldr	r1, [tsk, #TI_FLAGS]		@ re-check for syscall tracing
+-	tst	r1, #_TIF_SYSCALL_WORK | _TIF_WORK_MASK
++	movs	r1, r1, lsl #16
+ 	bne	fast_work_pending
+ 
+ 
+@@ -90,7 +90,7 @@ __ret_fast_syscall:
+ 	cmp	r2, #TASK_SIZE
+ 	blne	addr_limit_check_failed
+ 	ldr	r1, [tsk, #TI_FLAGS]		@ re-check for syscall tracing
+-	tst	r1, #_TIF_SYSCALL_WORK | _TIF_WORK_MASK
++	movs	r1, r1, lsl #16
+ 	beq	no_work_pending
+  UNWIND(.fnend		)
+ ENDPROC(ret_fast_syscall)
+@@ -131,7 +131,7 @@ ENTRY(ret_to_user_from_irq)
+ 	cmp	r2, #TASK_SIZE
+ 	blne	addr_limit_check_failed
+ 	ldr	r1, [tsk, #TI_FLAGS]
+-	tst	r1, #_TIF_WORK_MASK
++	movs	r1, r1, lsl #16
+ 	bne	slow_work_pending
+ no_work_pending:
+ 	asm_trace_hardirqs_on save = 0
+--- a/arch/arm/kernel/entry-v7m.S
++++ b/arch/arm/kernel/entry-v7m.S
+@@ -59,7 +59,7 @@ __irq_entry:
+ 
+ 	get_thread_info tsk
+ 	ldr	r2, [tsk, #TI_FLAGS]
+-	tst	r2, #_TIF_WORK_MASK
++	movs	r2, r2, lsl #16
+ 	beq	2f			@ no work pending
+ 	mov	r0, #V7M_SCB_ICSR_PENDSVSET
+ 	str	r0, [r1, V7M_SCB_ICSR]	@ raise PendSV
+--- a/arch/arm/kernel/signal.c
++++ b/arch/arm/kernel/signal.c
+@@ -655,7 +655,7 @@ do_work_pending(struct pt_regs *regs, un
+ 			if (unlikely(!user_mode(regs)))
+ 				return 0;
+ 			local_irq_enable();
+-			if (thread_flags & _TIF_SIGPENDING) {
++			if (thread_flags & (_TIF_SIGPENDING | _TIF_NOTIFY_SIGNAL)) {
+ 				int restart = do_signal(regs, syscall);
+ 				if (unlikely(restart)) {
+ 					/*
 
 
