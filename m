@@ -1,67 +1,76 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6CBB79C5
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 13:44:53 +0000 (UTC)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id C4B671C0AAC; Tue,  3 Jan 2023 14:44:44 +0100 (CET)
-Date: Tue, 3 Jan 2023 14:44:43 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.10 00/63] 5.10.162-rc1 review
-Message-ID: <Y7QxS98UKluqdY2c@duo.ucw.cz>
-References: <20230103081308.548338576@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF24B8466
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 14:51:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03AC1C433EF;
+	Tue,  3 Jan 2023 14:51:15 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="EqnD+Mhe"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1672757473;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=+RLDe/8vohQzP3TtQehHcZpEOOCmmguq+K5+MMOxGoY=;
+	b=EqnD+MhecEi8D9Zl9NkxthSAqw0o5RwggsXq4P4l0H/DwihZEWFHT2HX0nGFf+Gk76LKxz
+	rfHwwmvDjdE/dt8X8mMRnEQi3TOcLL5HL6oRCCxCojAwnAOcZDxKNmBGDw5fOQHMAhUu3X
+	KhMLfBvCKlwMsrjlZqz1Bxa6sthkZjA=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id cc3c3e28 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Jan 2023 14:51:13 +0000 (UTC)
+Date: Tue, 3 Jan 2023 15:51:09 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Ingo Molnar <mingo@kernel.org>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	tglx@linutronix.de, linux-crypto@vger.kernel.org,
+	linux-api@vger.kernel.org, x86@kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: Re: [PATCH v14 1/7] x86: lib: Separate instruction decoder MMIO type
+ from MMIO trace
+Message-ID: <Y7RA3bmko0AjO8hQ@zx2c4.com>
+References: <20230101162910.710293-1-Jason@zx2c4.com>
+ <20230101162910.710293-2-Jason@zx2c4.com>
+ <Y7QELo9etPM8Tpx5@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="wwSmC9Gm6tCMakED"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230103081308.548338576@linuxfoundation.org>
+In-Reply-To: <Y7QELo9etPM8Tpx5@gmail.com>
 
+On Tue, Jan 03, 2023 at 11:32:14AM +0100, Ingo Molnar wrote:
+> 
+> * Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> 
+> > Both mmiotrace.h and insn-eval.h define various MMIO_ enum constants.
+> > Rename the insn ones to have a INSN_ prefix, so that the headers can be
+> > used from the same source file.
+> > 
+> > Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+> > ---
+> >  arch/x86/coco/tdx/tdx.c          | 26 +++++++++++++-------------
+> >  arch/x86/include/asm/insn-eval.h | 18 +++++++++---------
+> >  arch/x86/kernel/sev.c            | 18 +++++++++---------
+> >  arch/x86/lib/insn-eval.c         | 20 ++++++++++----------
+> >  4 files changed, 41 insertions(+), 41 deletions(-)
+> 
+> FYI, I've applied this fix to tip:x86/asm, as the fix for the namespace 
+> clash makes sense independently of the vDSO getrandom feature.
 
---wwSmC9Gm6tCMakED
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I guess you missed the conversation with Borislav yesterday about that.
+He mentioned that I'd just take it through random.git when this whole
+series goes in.
 
-Hi!
+(Unless of course you wanted to put this into 6.2? That'd be easiest for
+me.)
 
-> This is the start of the stable review cycle for the 5.10.162 release.
-> There are 63 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-
-CIP testing did not find any problems here:
-
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-5.10.y
-
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
-
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---wwSmC9Gm6tCMakED
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY7QxSwAKCRAw5/Bqldv6
-8tE+AJ4z9fmkmKFJJ6pB3kzfybgGwWfa9ACgkTag9R/MhDn1GC/HBZ96z9MtV4o=
-=PpXM
------END PGP SIGNATURE-----
-
---wwSmC9Gm6tCMakED--
+Jason
