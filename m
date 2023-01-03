@@ -1,170 +1,134 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on2084.outbound.protection.outlook.com [40.107.243.84])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26905846B
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 15:01:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32045C433EF;
-	Tue,  3 Jan 2023 15:01:26 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ZEU+QTFd"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1672758083;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=1Wi9ZRVeh3Pac9gdkou/v2cNOa31fCafYfyWUT3Kr3k=;
-	b=ZEU+QTFdcn8/wM4uwmRXY0iTfeJnw462+uvwVijCHAYTRzMEM9X/fGwuq4H0hB0+vdAWUN
-	0SpQRZa9aIrwhFWWESP/keVgBqliMvdVcIE7ybqRBGR/tZoWvuQL52s0/l/9CZfvo6pWQl
-	HrwsOL4AmDFm2NFf1S0OS9Y2pYyvu4s=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id f7395740 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Tue, 3 Jan 2023 15:01:23 +0000 (UTC)
-Date: Tue, 3 Jan 2023 16:01:20 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Ingo Molnar <mingo@kernel.org>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	tglx@linutronix.de, linux-crypto@vger.kernel.org,
-	linux-api@vger.kernel.org, x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-Message-ID: <Y7RDQLEvlLM0o4cp@zx2c4.com>
-References: <20230101162910.710293-1-Jason@zx2c4.com>
- <20230101162910.710293-3-Jason@zx2c4.com>
- <Y7QIg/hAIk7eZE42@gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFA58466
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 15:32:30 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=T8PJwtK6N+vkrtzmOSq99KB4ST0QEDGm2UyzXUN4ROIxvPzAt0HMB0uqO811+IPmwd1ZVRhpcPGpP1viPG0aY1YzVXULWM9V4ERvNsx6Luq6rCm2V8kLWHSFJbUJpxC/drvFB4XvGzCnazGD7wjSflrslEro/eRdm6x3kQn1v7uyQmqh3X99KsaYnJ4eXTjTJDNhdcYbBgeyFKSivHw/zxMfG0UYtaK69BDpB0JFeUxUv2gvhNhv583eDyxr0HVo5ApFhcUt+4c5XYVaEizMonPqWfdCA6httCPBfJwgSGPQJSzUk8jn+nH1bIf1biWtgIgXKTJP4F9m51AibzGFRw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=HHpiwLVL6CYq7TR5TA2LwgTzST9jx2KZkviYUwKq3E8=;
+ b=Ji3JFUQt17uMwu8svE+0YA5ynwaMC49IR2vCWHUTgOR7/BOzWR+Od6ZMlvylpB8omezR/Djo2G+YFME81FVQ9yLMxVbzNSQkiflysdMQrFfh5baNEOnwN/s+KbmvRlrAadStlZatTxVU2YGFZdQ/4XtRe4JJRTOA2/mpQF+aKwh2nRWUFVNx1Xo3PndZ+HkeW5FNkbmzOG11He0NcvnNQ8craciSOS3JVfK+uis9ErrmgIBK5OHFjcSZ5hYiOCfOWB2+rfbLQjwtCZWHyZPd/gp2p8NbrhnAFyKOpzAk2nigERUR4/AhLqe6QLcQCha5DEJ5y1FQkIUc54wYSrc5yA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=linuxfoundation.org
+ smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
+ header.from=nvidia.com; dkim=none (message not signed); arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=HHpiwLVL6CYq7TR5TA2LwgTzST9jx2KZkviYUwKq3E8=;
+ b=KO0zCm+o4eVP3IbhsL71zi+9gKSUQqKV6vaXLRMBn2JJNr6EmrpdOn0FuQVy8ke5rUKyk2jqkQDY3a4Z1B5vVNoDeiERReVJA9782MX/KO2JOnMkyYC7fndz+jH7YdhhGwrp+o+44ap+wrGjF9aE2h8HdukPGQRLxASJDph43ptv40At5FjlJslF+zs9kVbkPgXoe09/Tijtq51pu8x5ZJoNYoIa5+4/FjdlsK1NTXPQvidiFuBdTHiZYaY8y/n6s0+cKYUlNmoGtfQ6QpHDzmHKHShUZOYO022WYdu1j3O/xSOfopLikN0v+Xe3h383P6BxGTTXFs/MtqyLQ1ec6g==
+Received: from MW2PR2101CA0014.namprd21.prod.outlook.com (2603:10b6:302:1::27)
+ by IA1PR12MB6332.namprd12.prod.outlook.com (2603:10b6:208:3e2::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5880.19; Tue, 3 Jan
+ 2023 15:32:27 +0000
+Received: from CO1NAM11FT011.eop-nam11.prod.protection.outlook.com
+ (2603:10b6:302:1:cafe::7) by MW2PR2101CA0014.outlook.office365.com
+ (2603:10b6:302:1::27) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6002.4 via Frontend
+ Transport; Tue, 3 Jan 2023 15:32:27 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ CO1NAM11FT011.mail.protection.outlook.com (10.13.175.186) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5944.17 via Frontend Transport; Tue, 3 Jan 2023 15:32:27 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 3 Jan 2023
+ 07:32:23 -0800
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.36; Tue, 3 Jan 2023 07:32:22 -0800
+Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
+ (10.126.190.180) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36 via Frontend
+ Transport; Tue, 3 Jan 2023 07:32:22 -0800
+From: Jon Hunter <jonathanh@nvidia.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>, <linux-tegra@vger.kernel.org>
+Subject: Re: [PATCH 5.10 00/63] 5.10.162-rc1 review
+In-Reply-To: <20230103081308.548338576@linuxfoundation.org>
+References: <20230103081308.548338576@linuxfoundation.org>
+X-NVConfidentiality: public
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <Y7QIg/hAIk7eZE42@gmail.com>
+Message-ID: <31fdb008-b2a0-481f-a595-ba8ad6201c37@drhqmail201.nvidia.com>
+Date: Tue, 3 Jan 2023 07:32:22 -0800
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1NAM11FT011:EE_|IA1PR12MB6332:EE_
+X-MS-Office365-Filtering-Correlation-Id: 52822e54-f7c3-455e-147b-08daed9fb858
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	NJwBsTwytjIjqFv2E5cudh1zJunR22QfO4JtCR23YCtEYgQEsOfJG7zc7AQmbZ8QtTGa7haKX+qd2Ea1zZjB5iCe2UxaI9j5grKKhxBlprD5fi1glmCpxhxsdCt8zAP0ZO/jfi+d6343mVwegt/0xwkdv90zkLnC69wTYlDnI8877KT3Hy3ExSGC/27nq1hisuOtzf38j3BORxtaJQTuZnoub5VYWrdZafIxv7Hs5Ul3y65hr4G13vylOOur9fT9kDsR7w9VBHZLJvV4lWQTkH1Tj7Su6RDCr0jBVdntz6ROiQNjlxkGdzJACGrfMFe13Sl1yRdzex+EJhNOnYPv7PakTlG4iRVoGY0BnkHxKHqELggidza0afm+lR3eXEHf9bEdCFxRNXrJ2aaTzPFkazQvSLi9jzfdf1VUZHv7m7Kg7p1NgrV57Zq5T5D0EPQkQZCGM1emoX8//CzggVA/G4sLiVcwb4w+XJYmGlIfWunPMM4LDASkmZfx6BemnBLrJE3kbQ/HSbf+hS8NasnjpCrWHnZfx+qGrCy9COTUolvK8OEx1nu91Mt8wyk7eC//t1s+7LiqHEbRS8UKlFdkGSHzLpBYj1HnLGN5w4phQF1Fu6tHVIpvIuoX2KnBB9cxtLDenVcTIlYO5rcjxpCpl9+uFtLLq9L1TFtr6w/umXXNT7a5sLdetl3z35BYzp9U76cfaiA5WQ9kgGMxlaPG1ma0TJYz4+nKLlwY5xe4zmYlcZ89OgT46VHYMemcM3Did8AhNijRYVDD1mGdqxZx7IxRw6ZNco1iC/BsuwtvmwTQT6AiZ4Y1Go/8221JXV39
+X-Forefront-Antispam-Report:
+	CIP:216.228.118.233;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc7edge2.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(39860400002)(346002)(136003)(376002)(396003)(451199015)(46966006)(36840700001)(40470700004)(31686004)(82740400003)(7636003)(2906002)(4326008)(70206006)(8676002)(70586007)(356005)(7416002)(5660300002)(31696002)(86362001)(36860700001)(478600001)(316002)(6916009)(54906003)(40460700003)(336012)(966005)(40480700001)(8936002)(41300700001)(82310400005)(426003)(47076005)(26005)(186003)(22166006);DIR:OUT;SFP:1101;
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jan 2023 15:32:27.3772
+ (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 52822e54-f7c3-455e-147b-08daed9fb858
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.118.233];Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource:
+	CO1NAM11FT011.eop-nam11.prod.protection.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6332
 
-On Tue, Jan 03, 2023 at 11:50:43AM +0100, Ingo Molnar wrote:
+On Tue, 03 Jan 2023 09:13:30 +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.162 release.
+> There are 63 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> * Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> Responses should be made by Thu, 05 Jan 2023 08:12:47 +0000.
+> Anything received after that time might be too late.
 > 
-> > The vDSO getrandom() implementation works with a buffer allocated with a
-> > new system call that has certain requirements:
-> > 
-> > - It shouldn't be written to core dumps.
-> >   * Easy: VM_DONTDUMP.
-> > - It should be zeroed on fork.
-> >   * Easy: VM_WIPEONFORK.
-> > 
-> > - It shouldn't be written to swap.
-> >   * Uh-oh: mlock is rlimited.
-> >   * Uh-oh: mlock isn't inherited by forks.
-> > 
-> > - It shouldn't reserve actual memory, but it also shouldn't crash when
-> >   page faulting in memory if none is available
-> >   * Uh-oh: MAP_NORESERVE respects vm.overcommit_memory=2.
-> >   * Uh-oh: VM_NORESERVE means segfaults.
-> > 
-> > It turns out that the vDSO getrandom() function has three really nice
-> > characteristics that we can exploit to solve this problem:
-> > 
-> > 1) Due to being wiped during fork(), the vDSO code is already robust to
-> >    having the contents of the pages it reads zeroed out midway through
-> >    the function's execution.
-> > 
-> > 2) In the absolute worst case of whatever contingency we're coding for,
-> >    we have the option to fallback to the getrandom() syscall, and
-> >    everything is fine.
-> > 
-> > 3) The buffers the function uses are only ever useful for a maximum of
-> >    60 seconds -- a sort of cache, rather than a long term allocation.
-> > 
-> > These characteristics mean that we can introduce VM_DROPPABLE, which
-> > has the following semantics:
-> > 
-> > a) It never is written out to swap.
-> > b) Under memory pressure, mm can just drop the pages (so that they're
-> >    zero when read back again).
-> > c) If there's not enough memory to service a page fault, it's not fatal,
-> >    and no signal is sent. Instead, writes are simply lost.
-> > d) It is inherited by fork.
-> > e) It doesn't count against the mlock budget, since nothing is locked.
-> > 
-> > This is fairly simple to implement, with the one snag that we have to
-> > use 64-bit VM_* flags, but this shouldn't be a problem, since the only
-> > consumers will probably be 64-bit anyway.
-> > 
-> > This way, allocations used by vDSO getrandom() can use:
-> > 
-> >     VM_DROPPABLE | VM_DONTDUMP | VM_WIPEONFORK | VM_NORESERVE
-> > 
-> > And there will be no problem with OOMing, crashing on overcommitment,
-> > using memory when not in use, not wiping on fork(), coredumps, or
-> > writing out to swap.
-> > 
-> > At the moment, rather than skipping writes on OOM, the fault handler
-> > just returns to userspace, and the instruction is retried. This isn't
-> > terrible, but it's not quite what is intended. The actual instruction
-> > skipping has to be implemented arch-by-arch, but so does this whole
-> > vDSO series, so that's fine. The following commit addresses it for x86.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.162-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
 > 
-> Yeah, so VM_DROPPABLE adds a whole lot of complexity, corner cases, per 
-> arch low level work and rarely tested functionality (seriously, whose 
-> desktop system touches swap these days?), just so we can add a few pages of 
-> per thread vDSO data of a quirky type that in 99.999% of cases won't ever 
-> be 'dropped' from under the functionality that is using it and will thus 
-> bitrot fast?
+> thanks,
+> 
+> greg k-h
 
-It sounds like you've misunderstood the issue.
+All tests passing for Tegra ...
 
-Firstly, the arch work is +19 lines (in the vdso branch of random.git).
-That's very small and basic. Don't misrepresent it just to make a point.
+Test results for stable-v5.10:
+    11 builds:	11 pass, 0 fail
+    28 boots:	28 pass, 0 fail
+    75 tests:	75 pass, 0 fail
 
-Secondly, and more importantly, swapping this data is *not* permissible.
-It doesn't matter if you think that certain systems don't use swap
-anyway (you're wrong though regardless -- desktops will swap things
-pretty regularly). It simply must *not* be swapped under any
-circumstances. It's not that swapping is simply undesirable; it's
-absolutely catastrophic. Do you understand that distinction?
+Linux version:	5.10.162-rc1-gc5bc645ae6f9
+Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
+                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
+                tegra20-ventana, tegra210-p2371-2180,
+                tegra210-p3450-0000, tegra30-cardhu-a04
 
-If so, then if you don't like this solution, perhaps you could mention
-something that accomplishes the goals in the commit message.
+Tested-by: Jon Hunter <jonathanh@nvidia.com>
 
-> The maintainability baby is being thrown out with the bath water IMO ...
-
-Really? Are you sure this isn't just a matter of you not having written
-it yourself or something? The commit is pretty short and basic. All the
-actual internals for this kind of thing are already in present. The
-commit just pipes it through.
-
-> And we want to add more complexity to a facility people desperately want to 
-> trust *more*? [RNG]
-
-That seems like a ridiculous rhetorical leap.
-
-> What's wrong with making mlock() more usable? Or just saying that "yeah, 
-> the vDSO can allocate a few more permanent pages outside of existing 
-> rlimits & mlock budgets"?
-
-Did you actually read the commit message?
-
-And now you're suggesting a rlimit backdoor? And adding more cases for
-fork() to fail or block? That sounds terrible.
-
-> The rest of the series looks fine to me, but this special one of a kind 
-> VM_DROPPABLE is just way over-engineered cornercase functionality that 
-> pushes us well past the maintenance_overhead<->complexity trade-off sweet spot ...
-
-I think you should reevaluate that judgement. Consider the actual
-problem. I think if you look at it carefully you'll see that this is a
-pretty straight forward solution. It's deliberately not over-engineered.
-It uses existing facilities and just does the plumbing in the right way
-to make it work. It's really not that complicated.
-
-The commit is +38, -4. The commit message has more lines than that.
-
-Jason
+Jon
