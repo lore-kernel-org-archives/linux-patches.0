@@ -1,90 +1,152 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E3E48F57
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 19:02:41 +0000 (UTC)
-Received: by mail-qt1-f178.google.com with SMTP id bp44so22662863qtb.0
-        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 11:02:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=jYj4/tXIF69QmtbzP1BhKc/PoGdv6mttUVghO9XmKxQ=;
-        b=NbuvwgnhOsNh8UNKt3cOld5dXyeR7DZQaKzpwcqXmyfxhDapDGUWrz/khEqHRmu3R2
-         HTOk1nyri59cXhqeN99/ZsXhuZTb9Oi8yinf9ES6AlFvrz385uBCOQ+ZIRLcZ4cxS6Hj
-         nORyRUcPeSWD03jxYHeXx5Nbfd5aqpEE84OQJNwjGkc9ilr+JlZE3osSrcKvyM7vJLI0
-         MmgZCkSYfs192Odxj4fS9LZXilqHd+QsRa88owC5HgCqFgUx4qjhZxxAf2a6/5h2sO4K
-         LWiFzfG9Ps6HltEpEG93r6ogE9Zq00guB9sg6RVDMpHn+D6Z7xuIpiTtrjGJ613CLli0
-         NswA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=jYj4/tXIF69QmtbzP1BhKc/PoGdv6mttUVghO9XmKxQ=;
-        b=hJNumR97l8HpEUgVEeOli/8BWQplbFm/ibBXAOfhMu+i9GqMSyLUbf28oonTz3JU9b
-         2ACA4zCMqMYLhNeUsAuaLB4xXDCsBTFA01hvyydQJ4hpIv0gwjmqFmjH/1eCiqrMYUIo
-         mLk/G+e7Zc37YWxvTnbaIo46ltV1LkyVaj5uOxZyOXGL/eeDaoNdppznWwiSMXsrjyn9
-         P8PivOAtJjh31pgqYyODNAFrVQQJLtuuqx0pukuIpRjapOPK2eT+gD4bN7t0OE8jJuJ7
-         rA6AW/wXW1SglbIIpP6m5tHU6bsTWmqtDgiZhCoE+BpHG3DihWIeWnS7zeIKeiZbNbAK
-         b1rg==
-X-Gm-Message-State: AFqh2kqEQn2EBGiUS2ASC2f4p4jnrqbSw82QYn8ma50pVn8oXGfD2mCI
-	O4A7UOEPbKNncbDJzU5s6Uo=
-X-Google-Smtp-Source: AMrXdXtAjY59Dp9u9hXRm6Xx81M9kMnNiElJEcoeoBh2hHj5KV6VYfwGYyXMbmto+glaJqc7ymtAKA==
-X-Received: by 2002:ac8:5495:0:b0:3a8:3d8:4e68 with SMTP id h21-20020ac85495000000b003a803d84e68mr63525918qtq.55.1672772559947;
-        Tue, 03 Jan 2023 11:02:39 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id q12-20020ac8450c000000b00397b1c60780sm19246359qtn.61.2023.01.03.11.02.37
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 03 Jan 2023 11:02:39 -0800 (PST)
-Message-ID: <5d8a44f2-511a-c5df-0246-8b1ff953a0e9@gmail.com>
-Date: Tue, 3 Jan 2023 11:02:35 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCC98F57
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 19:05:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E56C433D2;
+	Tue,  3 Jan 2023 19:05:16 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="UdnPlTE1"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1672772714;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=5NpNAATWWkRP+91skuEFC6IGLeSW0ntw/LmFnvD5DJo=;
+	b=UdnPlTE1GPtqZiqmhGqOPzd6vGqyg6RTb0tEiIQb3JQvC+0sAK7ZpyfNLtyLmIrUtUf9K6
+	w7Kfep3+so7dS+IlkrWLwGAzluYN53gA4o+QhAuIxj4VDfXQ7+yIY1g4OGUVazEqAj/nV8
+	46Fjym8BynZrySEy5c5LuroAzBOGafw=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id cfe7dd4e (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Tue, 3 Jan 2023 19:05:14 +0000 (UTC)
+Date: Tue, 3 Jan 2023 20:05:10 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Andy Lutomirski <luto@kernel.org>
+Cc: Ingo Molnar <mingo@kernel.org>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, tglx@linutronix.de,
+	linux-crypto@vger.kernel.org, linux-api@vger.kernel.org,
+	x86@kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
+ lazily freeable mappings
+Message-ID: <Y7R8Zq6sIKAIprtr@zx2c4.com>
+References: <20230101162910.710293-1-Jason@zx2c4.com>
+ <20230101162910.710293-3-Jason@zx2c4.com>
+ <Y7QIg/hAIk7eZE42@gmail.com>
+ <CALCETrWdw5kxrtr4M7AkKYDOJEE1cU1wENWgmgOxn0rEJz4y3w@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 6.0 00/74] 6.0.17-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230102110552.061937047@linuxfoundation.org>
-Content-Language: en-US
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CALCETrWdw5kxrtr4M7AkKYDOJEE1cU1wENWgmgOxn0rEJz4y3w@mail.gmail.com>
 
-On 1/2/23 03:21, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.0.17 release.
-> There are 74 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Wed, 04 Jan 2023 11:05:34 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.17-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+Hi Andy,
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+Thanks for your constructive suggestions.
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
+On Tue, Jan 03, 2023 at 10:36:01AM -0800, Andy Lutomirski wrote:
+> > > c) If there's not enough memory to service a page fault, it's not fatal,
+> > >    and no signal is sent. Instead, writes are simply lost.
+> 
+> This just seems massively overcomplicated to me.  If there isn't
+> enough memory to fault in a page of code, we don't have some magic
+> instruction emulator in the kernel.  We either OOM or we wait for
+> memory to show up.
 
+Before addressing the other parts of your email, I thought I'd touch on
+this. Quoting from the email I just wrote Ingo:
+
+| *However* - if your big objection to this patch is that the instruction
+| skipping is problematic, we could actually punt that part. The result
+| will be that userspace just retries the memory write and the fault
+| happens again, and eventually it succeeds. From a perspective of
+| vgetrandom(), that's perhaps worse -- with this v14 patchset, it'll
+| immediately fallback to the syscall under memory pressure -- but you
+| could argue that nobody really cares about performance at that point
+| anyway, and so just retrying the fault until it succeeds is a less
+| complex behavior that would be just fine.
+| 
+| Let me know if you think that'd be an acceptable compromise, and I'll
+| roll it into v15. As a preview, it pretty much amounts to dropping 3/7
+| and editing the commit message in this 2/7 patch.
+
+IOW, I think the main ideas of the patch work just fine without "point
+c" with the instruction skipping. Instead, waiting/retrying could
+potentially work. So, okay, it seems like the two of you both hate the
+instruction decoder stuff, so I'll plan on working that part in, in one
+way or another, for v15.
+
+> On Tue, Jan 3, 2023 at 2:50 AM Ingo Molnar <mingo@kernel.org> wrote:
+> > > The vDSO getrandom() implementation works with a buffer allocated with a
+> > > new system call that has certain requirements:
+> > >
+> > > - It shouldn't be written to core dumps.
+> > >   * Easy: VM_DONTDUMP.
+> > > - It should be zeroed on fork.
+> > >   * Easy: VM_WIPEONFORK.
+> 
+> I have a rather different suggestion: make a special mapping.  Jason,
+> you're trying to shoehorn all kinds of bizarre behavior into the core
+> mm, and none of that seems to me to belong to the core mm.  Instead,
+> have an actual special mapping with callbacks that does the right
+> thing.  No fancy VM flags.
+
+Oooo! I like this. Avoiding adding VM_* flags would indeed be nice.
+I had seen things that I thought looked in this direction with the shmem
+API, but when I got into the details, it looked like this was meant for
+something else and couldn't address most of what I wanted here.
+
+If you say this is possible, I'll look again to see if I can figure it
+out. Though, if you have some API name at the top of your head, you
+might save me some code squinting time.
+
+> Memory pressure: have it free and unmap it self.  Gets accessed again?
+>  ->fault can handle it.
+
+Right.
+
+> Want to mlock it?  No, don't do that -- that's absurd.  Just arrange
+> so that, if it gets evicted, it's not written out anywhere.  And when
+> it gets faulted back in it does the right thing -- see above.
+
+Presumably mlock calls are redirected to some function pointer so I can
+just return EINTR?
+
+> Zero on fork?  I'm sure that's manageable with a special mapping.  If
+> not, you can add a new vm operation or similar to make it work.  (Kind
+> of like how we extended special mappings to get mremap right a couple
+> years go.)  But maybe you don't want to *zero* it on fork and you want
+> to do something more intelligent.  Fine -- you control ->fault!
+
+Doing something more intelligent would be an interesting development, I
+guess... But, before I think about that, all mapping have flags;
+couldn't I *still* set VM_WIPEONFORK on the special mapping? Or does the
+API you have in mind not work that way? (Side note: I also want
+VM_DONTDUMP to work.)
+
+> > > - It shouldn't reserve actual memory, but it also shouldn't crash when
+> > >   page faulting in memory if none is available
+> > >   * Uh-oh: MAP_NORESERVE respects vm.overcommit_memory=2.
+> > >   * Uh-oh: VM_NORESERVE means segfaults.
+> 
+> ->fault can do whatever you want.
+> 
+> And there is no shortage of user memory that *must* be made available
+> on fault in order to resume the faulting process.  ->fault can handle
+> this.
+
+I'll look to see how other things handle this...
+
+Anyway, thanks for the suggestion. That seems like a good future
+direction for this.
+
+Jason
