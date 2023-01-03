@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75E0A186E
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:16:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEFE8C433D2;
-	Tue,  3 Jan 2023 08:16:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3EE21873
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:17:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C8AC433F0;
+	Tue,  3 Jan 2023 08:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672733818;
-	bh=be2TTvhY8EBxKrzyJOJ+UfrGaKMECh2VPW9ojLS79P0=;
+	s=korg; t=1672733827;
+	bh=b0Kucyb2ql/kHHPCrUlcNegZWffcedsOdFEfMLeOiIE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CDcH5R9uuD7OIu2QjU7A7x3KxPoLa/MbuTo68efWvXfkfjLhPPyqHP4WfHQCBmJuJ
-	 1GfdoEFq0Z6//IA1jopXYQgvc2qH+Z5u+hwwqCJUa2PMqHQlKpMPFHODckD+vthMum
-	 ZZ+8Db/m+cCaxnpzP354WZ3B3jyeCVuAeEc2+H38=
+	b=VccoWS+BTcLsTqySX3pfhkAz+FF9e6hX2unsglrEXPVZLzWfBn0P8yyQTpErQSUTy
+	 K/7dIJTnTdsNjS/YfMRRjILhMtemYlpwsPj1IaZowOvh8pv4ou+MByt5t975mW0Lar
+	 ezYdt00MwgpUjW3HyBOFymWSC2kfvWmPpeRyKqb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oleg Nesterov <oleg@redhat.com>,
+	Nick Hu <nickhu@andestech.com>,
+	Greentime Hu <green.hu@gmail.com>,
+	Vincent Chen <deanbo422@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 54/63] task_work: add helper for more targeted task_work canceling
-Date: Tue,  3 Jan 2023 09:14:24 +0100
-Message-Id: <20230103081311.827558617@linuxfoundation.org>
+Subject: [PATCH 5.10 38/63] nds32: add support for TIF_NOTIFY_SIGNAL
+Date: Tue,  3 Jan 2023 09:14:08 +0100
+Message-Id: <20230103081310.864434606@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230103081308.548338576@linuxfoundation.org>
 References: <20230103081308.548338576@linuxfoundation.org>
@@ -36,99 +38,60 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit c7aab1a7c52b82d9afd7e03c398eb03dc2aa0507 ]
+[ Upstream commit b13e8bf615fe26fb6a6dfe1b5a1c65e1624dfee2 ]
 
-The only exported helper we have right now is task_work_cancel(), which
-cancels any task_work from a given task where func matches the queued
-work item. This is a bit too coarse for some use cases. Add a
-task_work_cancel_match() that allows to more specifically target
-individual work items outside of purely the callback function used.
+Wire up TIF_NOTIFY_SIGNAL handling for nds32.
 
-task_work_cancel() can be trivially implemented on top of that, hence do
-so.
-
-Reviewed-by: Oleg Nesterov <oleg@redhat.com>
+Cc: Nick Hu <nickhu@andestech.com>
+Cc: Greentime Hu <green.hu@gmail.com>
+Cc: Vincent Chen <deanbo422@gmail.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/task_work.h |    2 ++
- kernel/task_work.c        |   35 ++++++++++++++++++++++++++++-------
- 2 files changed, 30 insertions(+), 7 deletions(-)
+ arch/nds32/include/asm/thread_info.h |    2 ++
+ arch/nds32/kernel/ex-exit.S          |    2 +-
+ arch/nds32/kernel/signal.c           |    2 +-
+ 3 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/include/linux/task_work.h
-+++ b/include/linux/task_work.h
-@@ -22,6 +22,8 @@ enum task_work_notify_mode {
- int task_work_add(struct task_struct *task, struct callback_head *twork,
- 			enum task_work_notify_mode mode);
+--- a/arch/nds32/include/asm/thread_info.h
++++ b/arch/nds32/include/asm/thread_info.h
+@@ -48,6 +48,7 @@ struct thread_info {
+ #define TIF_NEED_RESCHED	2
+ #define TIF_SINGLESTEP		3
+ #define TIF_NOTIFY_RESUME	4	/* callback before returning to user */
++#define TIF_NOTIFY_SIGNAL	5	/* signal notifications exist */
+ #define TIF_SYSCALL_TRACE	8
+ #define TIF_POLLING_NRFLAG	17
+ #define TIF_MEMDIE		18
+@@ -57,6 +58,7 @@ struct thread_info {
+ #define _TIF_SIGPENDING		(1 << TIF_SIGPENDING)
+ #define _TIF_NEED_RESCHED	(1 << TIF_NEED_RESCHED)
+ #define _TIF_NOTIFY_RESUME	(1 << TIF_NOTIFY_RESUME)
++#define _TIF_NOTIFY_SIGNAL	(1 << TIF_NOTIFY_SIGNAL)
+ #define _TIF_SINGLESTEP		(1 << TIF_SINGLESTEP)
+ #define _TIF_SYSCALL_TRACE	(1 << TIF_SYSCALL_TRACE)
+ #define _TIF_POLLING_NRFLAG	(1 << TIF_POLLING_NRFLAG)
+--- a/arch/nds32/kernel/ex-exit.S
++++ b/arch/nds32/kernel/ex-exit.S
+@@ -120,7 +120,7 @@ work_pending:
+ 	andi	$p1, $r1, #_TIF_NEED_RESCHED
+ 	bnez	$p1, work_resched
  
-+struct callback_head *task_work_cancel_match(struct task_struct *task,
-+	bool (*match)(struct callback_head *, void *data), void *data);
- struct callback_head *task_work_cancel(struct task_struct *, task_work_func_t);
- void task_work_run(void);
+-	andi	$p1, $r1, #_TIF_SIGPENDING|#_TIF_NOTIFY_RESUME
++	andi	$p1, $r1, #_TIF_SIGPENDING|#_TIF_NOTIFY_RESUME|#_TIF_NOTIFY_SIGNAL
+ 	beqz	$p1, no_work_pending
  
---- a/kernel/task_work.c
-+++ b/kernel/task_work.c
-@@ -59,18 +59,17 @@ int task_work_add(struct task_struct *ta
- }
- 
- /**
-- * task_work_cancel - cancel a pending work added by task_work_add()
-+ * task_work_cancel_match - cancel a pending work added by task_work_add()
-  * @task: the task which should execute the work
-- * @func: identifies the work to remove
-- *
-- * Find the last queued pending work with ->func == @func and remove
-- * it from queue.
-+ * @match: match function to call
-  *
-  * RETURNS:
-  * The found work or NULL if not found.
-  */
- struct callback_head *
--task_work_cancel(struct task_struct *task, task_work_func_t func)
-+task_work_cancel_match(struct task_struct *task,
-+		       bool (*match)(struct callback_head *, void *data),
-+		       void *data)
+ 	move	$r0, $sp			! 'regs'
+--- a/arch/nds32/kernel/signal.c
++++ b/arch/nds32/kernel/signal.c
+@@ -376,7 +376,7 @@ static void do_signal(struct pt_regs *re
+ asmlinkage void
+ do_notify_resume(struct pt_regs *regs, unsigned int thread_flags)
  {
- 	struct callback_head **pprev = &task->task_works;
- 	struct callback_head *work;
-@@ -86,7 +85,7 @@ task_work_cancel(struct task_struct *tas
- 	 */
- 	raw_spin_lock_irqsave(&task->pi_lock, flags);
- 	while ((work = READ_ONCE(*pprev))) {
--		if (work->func != func)
-+		if (!match(work, data))
- 			pprev = &work->next;
- 		else if (cmpxchg(pprev, work, work->next) == work)
- 			break;
-@@ -96,6 +95,28 @@ task_work_cancel(struct task_struct *tas
- 	return work;
- }
+-	if (thread_flags & _TIF_SIGPENDING)
++	if (thread_flags & (_TIF_SIGPENDING | _TIF_NOTIFY_SIGNAL))
+ 		do_signal(regs);
  
-+static bool task_work_func_match(struct callback_head *cb, void *data)
-+{
-+	return cb->func == data;
-+}
-+
-+/**
-+ * task_work_cancel - cancel a pending work added by task_work_add()
-+ * @task: the task which should execute the work
-+ * @func: identifies the work to remove
-+ *
-+ * Find the last queued pending work with ->func == @func and remove
-+ * it from queue.
-+ *
-+ * RETURNS:
-+ * The found work or NULL if not found.
-+ */
-+struct callback_head *
-+task_work_cancel(struct task_struct *task, task_work_func_t func)
-+{
-+	return task_work_cancel_match(task, task_work_func_match, func);
-+}
-+
- /**
-  * task_work_run - execute the works added by task_work_add()
-  *
+ 	if (thread_flags & _TIF_NOTIFY_RESUME)
 
 
