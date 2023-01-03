@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4957B138D
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:16:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B42DDC433EF;
-	Tue,  3 Jan 2023 08:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 434A9138D
+	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 08:16:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA62C433D2;
+	Tue,  3 Jan 2023 08:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672733785;
-	bh=sDKNwB8V+ZhVA/Dt0dwWmeDaO6wgEBnjWBIXlkDfifE=;
+	s=korg; t=1672733788;
+	bh=aBm3ApcZI9UFeIsD9Lq0LSq5qH09kJkU4tFJlLuRHpo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WIiQh81/w7xT6iIFQicVGfNjc4LWC699vSapuMz/P7TBUWC27kH3affjgDG23la5T
-	 meGuCTH0hRyraOZ84opCa46WwkxXgB1ZGODUvMpP7JzVdC4D5RZreXp0MZAF0utGTe
-	 Dy8f0OfsIGtBcP1hp7Q7ESN9qwdVKudltsY7325c=
+	b=1PSUeWtQURN0tykpalR6b8ogwqES6+ivs1KSjxyfhcGO9GMjyft1w6wOEhwu/qLQp
+	 MjgAkA/WzR27g+2WQo7WwpL6pMKAYoIlA5SCQgz7mtfeS7GXAx0pjOzbyKtyaVsk9Y
+	 euCyK8UP5UfdQJqfFp/6xo7JCbmqt5KLsJSwiJuM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ley Foon Tan <ley.foon.tan@intel.com>,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.10 21/63] nios32: add support for TIF_NOTIFY_SIGNAL
-Date: Tue,  3 Jan 2023 09:13:51 +0100
-Message-Id: <20230103081309.834473894@linuxfoundation.org>
+Subject: [PATCH 5.10 12/63] fs: make do_renameat2() take struct filename
+Date: Tue,  3 Jan 2023 09:13:42 +0100
+Message-Id: <20230103081309.296158854@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230103081308.548338576@linuxfoundation.org>
 References: <20230103081308.548338576@linuxfoundation.org>
@@ -36,48 +35,132 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 42020064274c235d720d9c4b7d9a678b133e59cf ]
+[ Upstream commit e886663cfd029b64a1d8da7efae7014526d884e9 ]
 
-Wire up TIF_NOTIFY_SIGNAL handling for nios32.
+Pass in the struct filename pointers instead of the user string, and
+update the three callers to do the same.
 
-Cc: Ley Foon Tan <ley.foon.tan@intel.com>
-Acked-by: Ley Foon Tan <ley.foon.tan@intel.com>
+This behaves like do_unlinkat(), which also takes a filename struct and
+puts it when it is done. Converting callers is then trivial.
+
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/nios2/include/asm/thread_info.h |    2 ++
- arch/nios2/kernel/signal.c           |    3 ++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ fs/internal.h |    2 ++
+ fs/namei.c    |   40 ++++++++++++++++++++++------------------
+ 2 files changed, 24 insertions(+), 18 deletions(-)
 
---- a/arch/nios2/include/asm/thread_info.h
-+++ b/arch/nios2/include/asm/thread_info.h
-@@ -86,6 +86,7 @@ static inline struct thread_info *curren
- #define TIF_MEMDIE		4	/* is terminating due to OOM killer */
- #define TIF_SECCOMP		5	/* secure computing */
- #define TIF_SYSCALL_AUDIT	6	/* syscall auditing active */
-+#define TIF_NOTIFY_SIGNAL	7	/* signal notifications exist */
- #define TIF_RESTORE_SIGMASK	9	/* restore signal mask in do_signal() */
+--- a/fs/internal.h
++++ b/fs/internal.h
+@@ -77,6 +77,8 @@ extern int vfs_path_lookup(struct dentry
+ long do_rmdir(int dfd, struct filename *name);
+ long do_unlinkat(int dfd, struct filename *name);
+ int may_linkat(struct path *link);
++int do_renameat2(int olddfd, struct filename *oldname, int newdfd,
++		 struct filename *newname, unsigned int flags);
  
- #define TIF_POLLING_NRFLAG	16	/* true if poll_idle() is polling
-@@ -97,6 +98,7 @@ static inline struct thread_info *curren
- #define _TIF_NEED_RESCHED	(1 << TIF_NEED_RESCHED)
- #define _TIF_SECCOMP		(1 << TIF_SECCOMP)
- #define _TIF_SYSCALL_AUDIT	(1 << TIF_SYSCALL_AUDIT)
-+#define _TIF_NOTIFY_SIGNAL	(1 << TIF_NOTIFY_SIGNAL)
- #define _TIF_RESTORE_SIGMASK	(1 << TIF_RESTORE_SIGMASK)
- #define _TIF_POLLING_NRFLAG	(1 << TIF_POLLING_NRFLAG)
+ /*
+  * namespace.c
+--- a/fs/namei.c
++++ b/fs/namei.c
+@@ -4353,8 +4353,8 @@ out:
+ }
+ EXPORT_SYMBOL(vfs_rename);
  
---- a/arch/nios2/kernel/signal.c
-+++ b/arch/nios2/kernel/signal.c
-@@ -309,7 +309,8 @@ asmlinkage int do_notify_resume(struct p
- 	if (!user_mode(regs))
- 		return 0;
+-static int do_renameat2(int olddfd, const char __user *oldname, int newdfd,
+-			const char __user *newname, unsigned int flags)
++int do_renameat2(int olddfd, struct filename *from, int newdfd,
++		 struct filename *to, unsigned int flags)
+ {
+ 	struct dentry *old_dentry, *new_dentry;
+ 	struct dentry *trap;
+@@ -4362,32 +4362,30 @@ static int do_renameat2(int olddfd, cons
+ 	struct qstr old_last, new_last;
+ 	int old_type, new_type;
+ 	struct inode *delegated_inode = NULL;
+-	struct filename *from;
+-	struct filename *to;
+ 	unsigned int lookup_flags = 0, target_flags = LOOKUP_RENAME_TARGET;
+ 	bool should_retry = false;
+-	int error;
++	int error = -EINVAL;
  
--	if (test_thread_flag(TIF_SIGPENDING)) {
-+	if (test_thread_flag(TIF_SIGPENDING) ||
-+	    test_thread_flag(TIF_NOTIFY_SIGNAL)) {
- 		int restart = do_signal(regs);
+ 	if (flags & ~(RENAME_NOREPLACE | RENAME_EXCHANGE | RENAME_WHITEOUT))
+-		return -EINVAL;
++		goto put_both;
  
- 		if (unlikely(restart)) {
+ 	if ((flags & (RENAME_NOREPLACE | RENAME_WHITEOUT)) &&
+ 	    (flags & RENAME_EXCHANGE))
+-		return -EINVAL;
++		goto put_both;
+ 
+ 	if (flags & RENAME_EXCHANGE)
+ 		target_flags = 0;
+ 
+ retry:
+-	from = filename_parentat(olddfd, getname(oldname), lookup_flags,
+-				&old_path, &old_last, &old_type);
++	from = filename_parentat(olddfd, from, lookup_flags, &old_path,
++					&old_last, &old_type);
+ 	if (IS_ERR(from)) {
+ 		error = PTR_ERR(from);
+-		goto exit;
++		goto put_new;
+ 	}
+ 
+-	to = filename_parentat(newdfd, getname(newname), lookup_flags,
+-				&new_path, &new_last, &new_type);
++	to = filename_parentat(newdfd, to, lookup_flags, &new_path, &new_last,
++				&new_type);
+ 	if (IS_ERR(to)) {
+ 		error = PTR_ERR(to);
+ 		goto exit1;
+@@ -4480,34 +4478,40 @@ exit2:
+ 	if (retry_estale(error, lookup_flags))
+ 		should_retry = true;
+ 	path_put(&new_path);
+-	putname(to);
+ exit1:
+ 	path_put(&old_path);
+-	putname(from);
+ 	if (should_retry) {
+ 		should_retry = false;
+ 		lookup_flags |= LOOKUP_REVAL;
+ 		goto retry;
+ 	}
+-exit:
++put_both:
++	if (!IS_ERR(from))
++		putname(from);
++put_new:
++	if (!IS_ERR(to))
++		putname(to);
+ 	return error;
+ }
+ 
+ SYSCALL_DEFINE5(renameat2, int, olddfd, const char __user *, oldname,
+ 		int, newdfd, const char __user *, newname, unsigned int, flags)
+ {
+-	return do_renameat2(olddfd, oldname, newdfd, newname, flags);
++	return do_renameat2(olddfd, getname(oldname), newdfd, getname(newname),
++				flags);
+ }
+ 
+ SYSCALL_DEFINE4(renameat, int, olddfd, const char __user *, oldname,
+ 		int, newdfd, const char __user *, newname)
+ {
+-	return do_renameat2(olddfd, oldname, newdfd, newname, 0);
++	return do_renameat2(olddfd, getname(oldname), newdfd, getname(newname),
++				0);
+ }
+ 
+ SYSCALL_DEFINE2(rename, const char __user *, oldname, const char __user *, newname)
+ {
+-	return do_renameat2(AT_FDCWD, oldname, AT_FDCWD, newname, 0);
++	return do_renameat2(AT_FDCWD, getname(oldname), AT_FDCWD,
++				getname(newname), 0);
+ }
+ 
+ int readlink_copy(char __user *buffer, int buflen, const char *link)
 
 
