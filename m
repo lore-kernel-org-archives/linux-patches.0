@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB2E3AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:13:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B5D8C433F1;
-	Wed,  4 Jan 2023 16:13:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7D8AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:13:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AA12C433EF;
+	Wed,  4 Jan 2023 16:13:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848790;
-	bh=8jEAnOgj6WAwSacmCzKr6pansgO9Hlao88Dh9B6VRlk=;
+	s=korg; t=1672848793;
+	bh=MLqWsvv4z/vdalGPAKjnUi15MeM7CF0nPaJgEgCIVr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qgR00hM4xrAz54CgmsKS6QF5aOIMxYGb2LXXgCxMd17aMCRCHcGxA3Wl6k/w/9828
-	 yxJrEqsbaqPLiPzyez/rHYfSm/vz90532vEKRZq5PBzUp6tJDrBIOz+LxL2mt9NIzC
-	 oIyL5tVtzTR9HRggX/iQhxcD4UmGhTrDBcLZ2Rrs=
+	b=KuE2f/FedCIG3KIGEWn9KmCgecJBE4sbxkuj7HuztvMyJAtbA8LR2063JATSlDora
+	 gqXS1N4CbiT90zYXzTWTl0ZeLCPD5NrkVx8fns1mvZ/Yl2X9sC6/tkJC6vbXK2tn2M
+	 78/zsc8NXVXljbLxdV5WTra45dGmX6pHzM5tCSrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Brian Masney <bmasney@redhat.com>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.0 014/177] arm64: dts: qcom: sc8280xp: fix UFS reference clocks
-Date: Wed,  4 Jan 2023 17:05:05 +0100
-Message-Id: <20230104160508.088641235@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 057/207] platform/x86: x86-android-tablets: Add Advantech MICA-071 extra button
+Date: Wed,  4 Jan 2023 17:05:15 +0100
+Message-Id: <20230104160513.720464353@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,78 +34,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit f446022b932aff1d6a308ca5d537ec2b512debdc upstream.
+[ Upstream commit b03ae77e7e057f4b3b858f10c840557e71448a91 ]
 
-There are three UFS reference clocks on SC8280XP which are used as
-follows:
+The Advantech MICA-071 is a standard Windows tablet, but it has an extra
+"quick launch" button which is not described in the ACPI tables in anyway.
 
- - The GCC_UFS_REF_CLKREF_CLK clock is fed to any UFS device connected
-   to either controller.
+Use the x86-android-tablets infra to create a gpio-button device for this.
 
- - The GCC_UFS_1_CARD_CLKREF_CLK and GCC_UFS_CARD_CLKREF_CLK clocks
-   provide reference clocks to the two PHYs.
-
-Note that this depends on first updating the clock driver to reflect
-that all three clocks are sourced from CXO. Specifically, the UFS
-controller driver expects the device reference clock to have a valid
-frequency:
-
-	ufshcd-qcom 1d84000.ufs: invalid ref_clk setting = 0
-
-Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-Fixes: 8d6b458ce6e9 ("arm64: dts: qcom: sc8280xp: fix ufs_card_phy ref clock")
-Fixes: f3aa975e230e ("arm64: dts: qcom: sc8280xp: correct ref clock for ufs_mem_phy")
-Link: https://lore.kernel.org/lkml/Y2OEjNAPXg5BfOxH@hovoldconsulting.com/
-Cc: stable@vger.kernel.org	# 5.20
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Reviewed-by: Brian Masney <bmasney@redhat.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221104092045.17410-2-johan+linaro@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20221127221928.123660-1-hdegoede@redhat.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/platform/x86/x86-android-tablets.c | 58 ++++++++++++++++++++++
+ 1 file changed, 58 insertions(+)
 
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -861,7 +861,7 @@
- 				 <&gcc GCC_AGGRE_UFS_PHY_AXI_CLK>,
- 				 <&gcc GCC_UFS_PHY_AHB_CLK>,
- 				 <&gcc GCC_UFS_PHY_UNIPRO_CORE_CLK>,
--				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&gcc GCC_UFS_REF_CLKREF_CLK>,
- 				 <&gcc GCC_UFS_PHY_TX_SYMBOL_0_CLK>,
- 				 <&gcc GCC_UFS_PHY_RX_SYMBOL_0_CLK>,
- 				 <&gcc GCC_UFS_PHY_RX_SYMBOL_1_CLK>;
-@@ -892,7 +892,7 @@
- 			ranges;
- 			clock-names = "ref",
- 				      "ref_aux";
--			clocks = <&gcc GCC_UFS_REF_CLKREF_CLK>,
-+			clocks = <&gcc GCC_UFS_CARD_CLKREF_CLK>,
- 				 <&gcc GCC_UFS_PHY_PHY_AUX_CLK>;
+diff --git a/drivers/platform/x86/x86-android-tablets.c b/drivers/platform/x86/x86-android-tablets.c
+index bbfae1395e18..123a4618db55 100644
+--- a/drivers/platform/x86/x86-android-tablets.c
++++ b/drivers/platform/x86/x86-android-tablets.c
+@@ -265,6 +265,56 @@ static struct gpiod_lookup_table int3496_gpo2_pin22_gpios = {
+ 	},
+ };
  
- 			resets = <&ufs_mem_hc 0>;
-@@ -930,7 +930,7 @@
- 				 <&gcc GCC_AGGRE_UFS_CARD_AXI_CLK>,
- 				 <&gcc GCC_UFS_CARD_AHB_CLK>,
- 				 <&gcc GCC_UFS_CARD_UNIPRO_CORE_CLK>,
--				 <&rpmhcc RPMH_CXO_CLK>,
-+				 <&gcc GCC_UFS_REF_CLKREF_CLK>,
- 				 <&gcc GCC_UFS_CARD_TX_SYMBOL_0_CLK>,
- 				 <&gcc GCC_UFS_CARD_RX_SYMBOL_0_CLK>,
- 				 <&gcc GCC_UFS_CARD_RX_SYMBOL_1_CLK>;
-@@ -961,7 +961,7 @@
- 			ranges;
- 			clock-names = "ref",
- 				      "ref_aux";
--			clocks = <&gcc GCC_UFS_REF_CLKREF_CLK>,
-+			clocks = <&gcc GCC_UFS_1_CARD_CLKREF_CLK>,
- 				 <&gcc GCC_UFS_CARD_PHY_AUX_CLK>;
++/*
++ * Advantech MICA-071
++ * This is a standard Windows tablet, but it has an extra "quick launch" button
++ * which is not described in the ACPI tables in anyway.
++ * Use the x86-android-tablets infra to create a gpio-button device for this.
++ */
++static struct gpio_keys_button advantech_mica_071_button = {
++	.code = KEY_PROG1,
++	/* .gpio gets filled in by advantech_mica_071_init() */
++	.active_low = true,
++	.desc = "prog1_key",
++	.type = EV_KEY,
++	.wakeup = false,
++	.debounce_interval = 50,
++};
++
++static const struct gpio_keys_platform_data advantech_mica_071_button_pdata __initconst = {
++	.buttons = &advantech_mica_071_button,
++	.nbuttons = 1,
++	.name = "prog1_key",
++};
++
++static const struct platform_device_info advantech_mica_071_pdevs[] __initconst = {
++	{
++		.name = "gpio-keys",
++		.id = PLATFORM_DEVID_AUTO,
++		.data = &advantech_mica_071_button_pdata,
++		.size_data = sizeof(advantech_mica_071_button_pdata),
++	},
++};
++
++static int __init advantech_mica_071_init(void)
++{
++	struct gpio_desc *gpiod;
++	int ret;
++
++	ret = x86_android_tablet_get_gpiod("INT33FC:00", 2, &gpiod);
++	if (ret < 0)
++		return ret;
++	advantech_mica_071_button.gpio = desc_to_gpio(gpiod);
++
++	return 0;
++}
++
++static const struct x86_dev_info advantech_mica_071_info __initconst = {
++	.pdev_info = advantech_mica_071_pdevs,
++	.pdev_count = ARRAY_SIZE(advantech_mica_071_pdevs),
++	.init = advantech_mica_071_init,
++};
++
+ /* Asus ME176C and TF103C tablets shared data */
+ static struct gpio_keys_button asus_me176c_tf103c_lid = {
+ 	.code = SW_LID,
+@@ -1385,6 +1435,14 @@ static const struct x86_dev_info xiaomi_mipad2_info __initconst = {
+ };
  
- 			resets = <&ufs_card_hc 0>;
+ static const struct dmi_system_id x86_android_tablet_ids[] __initconst = {
++	{
++		/* Advantech MICA-071 */
++		.matches = {
++			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Advantech"),
++			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "MICA-071"),
++		},
++		.driver_data = (void *)&advantech_mica_071_info,
++	},
+ 	{
+ 		/* Asus MeMO Pad 7 ME176C */
+ 		.matches = {
+-- 
+2.35.1
+
 
 
