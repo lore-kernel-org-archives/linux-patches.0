@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D039AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:24:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0938C433D2;
-	Wed,  4 Jan 2023 16:24:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C89FAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9FFDC433EF;
+	Wed,  4 Jan 2023 16:25:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849498;
-	bh=wiAIjIg6fyEs03sUJS9d08v2ut1gRznqaNxm/J16Kq8=;
+	s=korg; t=1672849501;
+	bh=I+uvN9snEcSUCLPey6d99IEuG20CygABI4eJ73iPdSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GnMyG6anm0M+26VjckxNIFJOW1GqAuzAxrQTcvmTSnMfivPu4heRo2Gfyf44L35ad
-	 KHI94tYYE2wbQiyA+CWdsDph42Sve8p1k/4Skossti4fowaZMcwV80PuMsN9HthYtG
-	 YOIhNHmTI/fjXbU/PwqEk1IXiOzPc6IjUHbrLO8c=
+	b=iIOdBB6qUhnvz8C/y818ee/vheKudWvnEu+T2lNFiK3arJwmNzMNlo+4TdB7gOzVh
+	 YzoimXKGMaSLnovhjlg5/YF2DQHnE8bbSw0/PwlTUoctiro/mTB/6UOEBRC9U58S3K
+	 5GGwkyzq7FVIKW3zdYJ7bjnk7DEIw+IA8PFpyWvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.0 132/177] ext4: silence the warning when evicting inode with dioread_nolock
-Date: Wed,  4 Jan 2023 17:07:03 +0100
-Message-Id: <20230104160511.646722559@linuxfoundation.org>
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 199/207] drm/amd/display: Add DCN314 display SG Support
+Date: Wed,  4 Jan 2023 17:07:37 +0100
+Message-Id: <20230104160518.228964393@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,93 +34,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Yifan Zhang <yifan1.zhang@amd.com>
 
-commit bc12ac98ea2e1b70adc6478c8b473a0003b659d3 upstream.
+commit fe6872adb05e85bde38f2cdec01a0f4cfb826998 upstream.
 
-When evicting an inode with default dioread_nolock, it could be raced by
-the unwritten extents converting kworker after writeback some new
-allocated dirty blocks. It convert unwritten extents to written, the
-extents could be merged to upper level and free extent blocks, so it
-could mark the inode dirty again even this inode has been marked
-I_FREEING. But the inode->i_io_list check and warning in
-ext4_evict_inode() missing this corner case. Fortunately,
-ext4_evict_inode() will wait all extents converting finished before this
-check, so it will not lead to inode use-after-free problem, every thing
-is OK besides this warning. The WARN_ON_ONCE was originally designed
-for finding inode use-after-free issues in advance, but if we add
-current dioread_nolock case in, it will become not quite useful, so fix
-this warning by just remove this check.
+Add display SG support for DCN 3.1.4.
 
- ======
- WARNING: CPU: 7 PID: 1092 at fs/ext4/inode.c:227
- ext4_evict_inode+0x875/0xc60
- ...
- RIP: 0010:ext4_evict_inode+0x875/0xc60
- ...
- Call Trace:
-  <TASK>
-  evict+0x11c/0x2b0
-  iput+0x236/0x3a0
-  do_unlinkat+0x1b4/0x490
-  __x64_sys_unlinkat+0x4c/0xb0
-  do_syscall_64+0x3b/0x90
-  entry_SYSCALL_64_after_hwframe+0x46/0xb0
- RIP: 0033:0x7fa933c1115b
- ======
-
-rm                          kworker
-                            ext4_end_io_end()
-vfs_unlink()
- ext4_unlink()
-                             ext4_convert_unwritten_io_end_vec()
-                              ext4_convert_unwritten_extents()
-                               ext4_map_blocks()
-                                ext4_ext_map_blocks()
-                                 ext4_ext_try_to_merge_up()
-                                  __mark_inode_dirty()
-                                   check !I_FREEING
-                                   locked_inode_to_wb_and_lock_list()
- iput()
-  iput_final()
-   evict()
-    ext4_evict_inode()
-     truncate_inode_pages_final() //wait release io_end
-                                    inode_io_list_move_locked()
-                             ext4_release_io_end()
-     trigger WARN_ON_ONCE()
-
-Cc: stable@kernel.org
-Fixes: ceff86fddae8 ("ext4: Avoid freeing inodes on dirty list")
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20220629112647.4141034-1-yi.zhang@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -222,13 +222,13 @@ void ext4_evict_inode(struct inode *inod
- 
- 	/*
- 	 * For inodes with journalled data, transaction commit could have
--	 * dirtied the inode. Flush worker is ignoring it because of I_FREEING
--	 * flag but we still need to remove the inode from the writeback lists.
-+	 * dirtied the inode. And for inodes with dioread_nolock, unwritten
-+	 * extents converting worker could merge extents and also have dirtied
-+	 * the inode. Flush worker is ignoring it because of I_FREEING flag but
-+	 * we still need to remove the inode from the writeback lists.
- 	 */
--	if (!list_empty_careful(&inode->i_io_list)) {
--		WARN_ON_ONCE(!ext4_should_journal_data(inode));
-+	if (!list_empty_careful(&inode->i_io_list))
- 		inode_io_list_del(inode);
--	}
- 
- 	/*
- 	 * Protect us against freezing - iput() caller didn't have to have any
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -1512,6 +1512,7 @@ static int amdgpu_dm_init(struct amdgpu_
+ 		case IP_VERSION(3, 0, 1):
+ 		case IP_VERSION(3, 1, 2):
+ 		case IP_VERSION(3, 1, 3):
++		case IP_VERSION(3, 1, 4):
+ 		case IP_VERSION(3, 1, 5):
+ 		case IP_VERSION(3, 1, 6):
+ 			init_data.flags.gpu_vm_support = true;
 
 
