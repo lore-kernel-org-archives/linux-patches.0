@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA5EAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2917EC433EF;
-	Wed,  4 Jan 2023 16:20:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8BADAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27EABC433EF;
+	Wed,  4 Jan 2023 16:20:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849256;
-	bh=1yD27mWLNBYI9eyGvQ2BPyVDuiK7l6bZM0wpZQs7J5k=;
+	s=korg; t=1672849259;
+	bh=RKeG6pAXImq9qcj+T4tzTpmu5OGLr1tJpPPZeeygvbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cgmtckT9L2BUZSMa+wpxXIVYWnF2UaE9yexmricSlkOo7BUB+mFFiekNMmkYRoH8m
-	 NQj54GMFwD8z/qkRKQ8s6FTbxRxL+GaLgKy27r4uW70tb6ztfi+oD1fe7BBNmi6MXe
-	 W/bEt/l5hbT7J3wclvmCTa0Mm/fJ+ZsFQHV7h4x0=
+	b=HxQJDla2M+r+/eP7NkPmRBiAfO6docKpQu3EKLZMjX/rXExBjJjZiVpKaWP7yJJQY
+	 oc4RiYNSHPDQd51naiPoQFCWJzIGXIrjrPCOnfhv3b+5K1XuesvhMcK284b97mz8/G
+	 I5vjiBgtGsysOIGziXj0uN1B/75gKMlt6BFFMvuc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.0 090/177] md/bitmap: Fix bitmap chunk size overflow issues
-Date: Wed,  4 Jan 2023 17:06:21 +0100
-Message-Id: <20230104160510.368909507@linuxfoundation.org>
+	Lucas Stach <l.stach@pengutronix.de>,
+	=?UTF-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>
+Subject: [PATCH 6.1 159/207] drm/etnaviv: reap idle mapping if it doesnt match the softpin address
+Date: Wed,  4 Jan 2023 17:06:57 +0100
+Message-Id: <20230104160516.925891208@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,99 +34,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>
+From: Lucas Stach <l.stach@pengutronix.de>
 
-commit 4555211190798b6b6fa2c37667d175bf67945c78 upstream.
+commit 332f847212e43d584019a8264895f25cf92aa647 upstream.
 
-- limit bitmap chunk size internal u64 variable to values not overflowing
-  the u32 bitmap superblock structure variable stored on persistent media
-- assign bitmap chunk size internal u64 variable from unsigned values to
-  avoid possible sign extension artifacts when assigning from a s32 value
+When a idle BO, which is held open by another process, gets freed by
+userspace and subsequently referenced again by e.g. importing it again,
+userspace may assign a different softpin VA than the last time around.
+As the kernel GEM object still exists, we likely have a idle mapping
+with the old VA still cached, if it hasn't been reaped in the meantime.
 
-The bug has been there since at least kernel 4.0.
-Steps to reproduce it:
-1: mdadm -C /dev/mdx -l 1 --bitmap=internal --bitmap-chunk=256M -e 1.2
--n2 /dev/rnbd1 /dev/rnbd2
-2 resize member device rnbd1 and rnbd2 to 8 TB
-3 mdadm --grow /dev/mdx --size=max
+As the context matches, we then simply try to resurrect this mapping by
+increasing the refcount. As the VA in this mapping does not match the
+new softpin address, we consequently fail the otherwise valid submit.
+Instead of failing, reap the idle mapping.
 
-The bitmap_chunksize will overflow without patch.
-
-Cc: stable@vger.kernel.org
-
-Signed-off-by: Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Song Liu <song@kernel.org>
+Cc: stable@vger.kernel.org # 5.19
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Reviewed-by: Guido Günther <agx@sigxcpu.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md-bitmap.c |   20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/etnaviv/etnaviv_gem.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -486,7 +486,7 @@ void md_bitmap_print_sb(struct bitmap *b
- 	sb = kmap_atomic(bitmap->storage.sb_page);
- 	pr_debug("%s: bitmap file superblock:\n", bmname(bitmap));
- 	pr_debug("         magic: %08x\n", le32_to_cpu(sb->magic));
--	pr_debug("       version: %d\n", le32_to_cpu(sb->version));
-+	pr_debug("       version: %u\n", le32_to_cpu(sb->version));
- 	pr_debug("          uuid: %08x.%08x.%08x.%08x\n",
- 		 le32_to_cpu(*(__le32 *)(sb->uuid+0)),
- 		 le32_to_cpu(*(__le32 *)(sb->uuid+4)),
-@@ -497,11 +497,11 @@ void md_bitmap_print_sb(struct bitmap *b
- 	pr_debug("events cleared: %llu\n",
- 		 (unsigned long long) le64_to_cpu(sb->events_cleared));
- 	pr_debug("         state: %08x\n", le32_to_cpu(sb->state));
--	pr_debug("     chunksize: %d B\n", le32_to_cpu(sb->chunksize));
--	pr_debug("  daemon sleep: %ds\n", le32_to_cpu(sb->daemon_sleep));
-+	pr_debug("     chunksize: %u B\n", le32_to_cpu(sb->chunksize));
-+	pr_debug("  daemon sleep: %us\n", le32_to_cpu(sb->daemon_sleep));
- 	pr_debug("     sync size: %llu KB\n",
- 		 (unsigned long long)le64_to_cpu(sb->sync_size)/2);
--	pr_debug("max write behind: %d\n", le32_to_cpu(sb->write_behind));
-+	pr_debug("max write behind: %u\n", le32_to_cpu(sb->write_behind));
- 	kunmap_atomic(sb);
- }
- 
-@@ -2105,7 +2105,8 @@ int md_bitmap_resize(struct bitmap *bitm
- 			bytes = DIV_ROUND_UP(chunks, 8);
- 			if (!bitmap->mddev->bitmap_info.external)
- 				bytes += sizeof(bitmap_super_t);
--		} while (bytes > (space << 9));
-+		} while (bytes > (space << 9) && (chunkshift + BITMAP_BLOCK_SHIFT) <
-+			(BITS_PER_BYTE * sizeof(((bitmap_super_t *)0)->chunksize) - 1));
- 	} else
- 		chunkshift = ffz(~chunksize) - BITMAP_BLOCK_SHIFT;
- 
-@@ -2150,7 +2151,7 @@ int md_bitmap_resize(struct bitmap *bitm
- 	bitmap->counts.missing_pages = pages;
- 	bitmap->counts.chunkshift = chunkshift;
- 	bitmap->counts.chunks = chunks;
--	bitmap->mddev->bitmap_info.chunksize = 1 << (chunkshift +
-+	bitmap->mddev->bitmap_info.chunksize = 1UL << (chunkshift +
- 						     BITMAP_BLOCK_SHIFT);
- 
- 	blocks = min(old_counts.chunks << old_counts.chunkshift,
-@@ -2176,8 +2177,8 @@ int md_bitmap_resize(struct bitmap *bitm
- 				bitmap->counts.missing_pages = old_counts.pages;
- 				bitmap->counts.chunkshift = old_counts.chunkshift;
- 				bitmap->counts.chunks = old_counts.chunks;
--				bitmap->mddev->bitmap_info.chunksize = 1 << (old_counts.chunkshift +
--									     BITMAP_BLOCK_SHIFT);
-+				bitmap->mddev->bitmap_info.chunksize =
-+					1UL << (old_counts.chunkshift + BITMAP_BLOCK_SHIFT);
- 				blocks = old_counts.chunks << old_counts.chunkshift;
- 				pr_warn("Could not pre-allocate in-memory bitmap for cluster raid\n");
- 				break;
-@@ -2537,6 +2538,9 @@ chunksize_store(struct mddev *mddev, con
- 	if (csize < 512 ||
- 	    !is_power_of_2(csize))
- 		return -EINVAL;
-+	if (BITS_PER_LONG > 32 && csize >= (1ULL << (BITS_PER_BYTE *
-+		sizeof(((bitmap_super_t *)0)->chunksize))))
-+		return -EOVERFLOW;
- 	mddev->bitmap_info.chunksize = csize;
- 	return len;
- }
+--- a/drivers/gpu/drm/etnaviv/etnaviv_gem.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
+@@ -258,7 +258,12 @@ struct etnaviv_vram_mapping *etnaviv_gem
+ 		if (mapping->use == 0) {
+ 			mutex_lock(&mmu_context->lock);
+ 			if (mapping->context == mmu_context)
+-				mapping->use += 1;
++				if (va && mapping->iova != va) {
++					etnaviv_iommu_reap_mapping(mapping);
++					mapping = NULL;
++				} else {
++					mapping->use += 1;
++				}
+ 			else
+ 				mapping = NULL;
+ 			mutex_unlock(&mmu_context->lock);
 
 
