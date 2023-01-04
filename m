@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E5FAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3ED8C433D2;
-	Wed,  4 Jan 2023 16:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C66AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED927C433D2;
+	Wed,  4 Jan 2023 16:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849555;
-	bh=A1uw5Hxj7vIDBREgQvE/zNZFncoElsjiK6WCBNxgwko=;
+	s=korg; t=1672849558;
+	bh=YXsvVkbz4VetYhwqccxBJRYFNckHVXQjcLQThVKAgvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yD1/7fJv9MklOBf2jQHvHd5MEKh4IXCtoPbkviqMqMdb6ua0kz1wPH+t5vk1Enqcj
-	 u4DABpFO/vgq9StLyTvymkIFJrAt6Ev/sbImjri/F7HOO8n1JcXCyS8c+vMI4ZdtEf
-	 NCoiQsEWQo57AMpTeCW0DMWbrIsek4QyyC4hWitY=
+	b=06KkqL7eLXbTU82BRf6CHa5Q0xUXlb6DoxqlnOoARV1L/VFnnLoTrxzZar0YnDRvD
+	 cMreRXXQSzBJ7eNKFh+OYxZ3xtZ/iYK6WkVQJ6wT5OLGcPp6FOCQwqSMgpbFfEDwsg
+	 KRa3KCiLLWgbt1yHdfGF+6L453CwGJAoUQYiqs7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <evan.quan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 207/207] drm/amd/pm: correct the fan speed retrieving in PWM for some SMU13 asics
-Date: Wed,  4 Jan 2023 17:07:45 +0100
-Message-Id: <20230104160518.486568535@linuxfoundation.org>
+	syzbot+05a0f0ccab4a25626e38@syzkaller.appspotmail.com,
+	Ye Bin <yebin10@huawei.com>,
+	Eric Whitney <enwlinux@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.0 141/177] ext4: fix reserved cluster accounting in __es_remove_extent()
+Date: Wed,  4 Jan 2023 17:07:12 +0100
+Message-Id: <20230104160511.918074655@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,80 +37,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Evan Quan <evan.quan@amd.com>
+From: Ye Bin <yebin10@huawei.com>
 
-commit e73fc71e8f015d61f3adca7659cb209fd5117aa5 upstream.
+commit 1da18e38cb97e9521e93d63034521a9649524f64 upstream.
 
-For SMU 13.0.0 and 13.0.7, the output from PMFW is in percent. Driver
-need to convert that into correct PMW(255) based.
+When bigalloc is enabled, reserved cluster accounting for delayed
+allocation is handled in extent_status.c.  With a corrupted file
+system, it's possible for this accounting to be incorrect,
+dsicovered by Syzbot:
 
-Signed-off-by: Evan Quan <evan.quan@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.0, 6.1
+EXT4-fs error (device loop0): ext4_validate_block_bitmap:398: comm rep:
+	bg 0: block 5: invalid block bitmap
+EXT4-fs (loop0): Delayed block allocation failed for inode 18 at logical
+	offset 0 with max blocks 32 with error 28
+EXT4-fs (loop0): This should not happen!! Data will be lost
+
+EXT4-fs (loop0): Total free blocks count 0
+EXT4-fs (loop0): Free/Dirty block details
+EXT4-fs (loop0): free_blocks=0
+EXT4-fs (loop0): dirty_blocks=32
+EXT4-fs (loop0): Block reservation details
+EXT4-fs (loop0): i_reserved_data_blocks=2
+EXT4-fs (loop0): Inode 18 (00000000845cd634):
+	i_reserved_data_blocks (1) not cleared!
+
+Above issue happens as follows:
+Assume:
+sbi->s_cluster_ratio = 16
+Step1:
+Insert delay block [0, 31] -> ei->i_reserved_data_blocks=2
+Step2:
+ext4_writepages
+  mpage_map_and_submit_extent -> return failed
+  mpage_release_unused_pages -> to release [0, 30]
+    ext4_es_remove_extent -> remove lblk=0 end=30
+      __es_remove_extent -> len1=0 len2=31-30=1
+ __es_remove_extent:
+ ...
+ if (len2 > 0) {
+  ...
+	  if (len1 > 0) {
+		  ...
+	  } else {
+		es->es_lblk = end + 1;
+		es->es_len = len2;
+		...
+	  }
+  	if (count_reserved)
+		count_rsvd(inode, lblk, ...);
+	goto out; -> will return but didn't calculate 'reserved'
+ ...
+Step3:
+ext4_destroy_inode -> trigger "i_reserved_data_blocks (1) not cleared!"
+
+To solve above issue if 'len2>0' call 'get_rsvd()' before goto out.
+
+Reported-by: syzbot+05a0f0ccab4a25626e38@syzkaller.appspotmail.com
+Fixes: 8fcc3a580651 ("ext4: rework reserved cluster accounting when invalidating pages")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Eric Whitney <enwlinux@gmail.com>
+Link: https://lore.kernel.org/r/20221208033426.1832460-2-yebin@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |   17 ++++++++++++++---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c |   17 ++++++++++++++---
- 2 files changed, 28 insertions(+), 6 deletions(-)
+ fs/ext4/extents_status.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -1417,12 +1417,23 @@ out:
- static int smu_v13_0_0_get_fan_speed_pwm(struct smu_context *smu,
- 					 uint32_t *speed)
- {
-+	int ret;
-+
- 	if (!speed)
- 		return -EINVAL;
+--- a/fs/ext4/extents_status.c
++++ b/fs/ext4/extents_status.c
+@@ -1372,7 +1372,7 @@ retry:
+ 		if (count_reserved)
+ 			count_rsvd(inode, lblk, orig_es.es_len - len1 - len2,
+ 				   &orig_es, &rc);
+-		goto out;
++		goto out_get_reserved;
+ 	}
  
--	return smu_v13_0_0_get_smu_metrics_data(smu,
--						METRICS_CURR_FANPWM,
--						speed);
-+	ret = smu_v13_0_0_get_smu_metrics_data(smu,
-+					       METRICS_CURR_FANPWM,
-+					       speed);
-+	if (ret) {
-+		dev_err(smu->adev->dev, "Failed to get fan speed(PWM)!");
-+		return ret;
-+	}
-+
-+	/* Convert the PMFW output which is in percent to pwm(255) based */
-+	*speed = MIN(*speed * 255 / 100, 255);
-+
-+	return 0;
- }
+ 	if (len1 > 0) {
+@@ -1414,6 +1414,7 @@ retry:
+ 		}
+ 	}
  
- static int smu_v13_0_0_get_fan_speed_rpm(struct smu_context *smu,
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-@@ -1361,12 +1361,23 @@ static int smu_v13_0_7_populate_umd_stat
- static int smu_v13_0_7_get_fan_speed_pwm(struct smu_context *smu,
- 					 uint32_t *speed)
- {
-+	int ret;
-+
- 	if (!speed)
- 		return -EINVAL;
- 
--	return smu_v13_0_7_get_smu_metrics_data(smu,
--						METRICS_CURR_FANPWM,
--						speed);
-+	ret = smu_v13_0_7_get_smu_metrics_data(smu,
-+					       METRICS_CURR_FANPWM,
-+					       speed);
-+	if (ret) {
-+		dev_err(smu->adev->dev, "Failed to get fan speed(PWM)!");
-+		return ret;
-+	}
-+
-+	/* Convert the PMFW output which is in percent to pwm(255) based */
-+	*speed = MIN(*speed * 255 / 100, 255);
-+
-+	return 0;
- }
- 
- static int smu_v13_0_7_get_fan_speed_rpm(struct smu_context *smu,
++out_get_reserved:
+ 	if (count_reserved)
+ 		*reserved = get_rsvd(inode, end, es, &rc);
+ out:
 
 
