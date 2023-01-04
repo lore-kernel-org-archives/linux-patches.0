@@ -1,29 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2822BAD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:15:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 971C3C433D2;
-	Wed,  4 Jan 2023 16:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5BDAD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:15:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FFE0C433D2;
+	Wed,  4 Jan 2023 16:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848955;
-	bh=HQ2DdUwRTFOmXHOTydP8GQyWnfXm9i/LD1lNXaF7Ikg=;
+	s=korg; t=1672848958;
+	bh=crwRSUmU+3Quc+5mw88khZvxEgG14IXUugIzMdhQ0+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SKEQi3K+2IECZx1ONng3Ui5UDMdQcuiFBqXoDurqMG3PfADktf6mh7J5s/JFHXo8l
-	 tCh9NlpnKY8p78h/AAujcJ53IYXAEDoKtAH5Qyk/lWAirR7zWFojnwpF4zx5ZuZf0E
-	 oJwM0WaIJ1/ksKsBwX3G1+5WJb1KCl8/OmSkK4qk=
+	b=0cIDXwEA4nPJsPq0u8Pa3vA1oUFsoS6Q20N1i//lN/Cn2zY4XES71e6Ad0JCaQEPO
+	 LSQB9dP1F5XMt3sybFPqX+ExTZggZtQFeVRd9VdL2Qq27+vTIXzwMmfRkoK0aFzhYH
+	 0ls9hGjUM274m/r+87B3WNbdi/dWg6eayrH6/3ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <evan.quan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.0 017/177] drm/amd/pm: update SMU13.0.0 reported maximum shader clock
-Date: Wed,  4 Jan 2023 17:05:08 +0100
-Message-Id: <20230104160508.178956494@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"x86@kernel.org" <x86@kernel.org>,
+	Borislav Petkov <bp@alien8.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 087/207] ftrace/x86: Add back ftrace_expected for ftrace bug reports
+Date: Wed,  4 Jan 2023 17:05:45 +0100
+Message-Id: <20230104160514.697052116@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,115 +40,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Evan Quan <evan.quan@amd.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 7a18e089eff02f17eaee49fc18641f5d16a8284b upstream.
+commit fd3dc56253acbe9c641a66d312d8393cd55eb04c upstream.
 
-Update the reported maximum shader clock to the value which can
-be guarded to be achieved on all cards. This is to align with
-Window setting.
+After someone reported a bug report with a failed modification due to the
+expected value not matching what was found, it came to my attention that
+the ftrace_expected is no longer set when that happens. This makes for
+debugging the issue a bit more difficult.
 
-Signed-off-by: Evan Quan <evan.quan@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.0.x
+Set ftrace_expected to the expected code before calling ftrace_bug, so
+that it shows what was expected and why it failed.
+
+Link: https://lore.kernel.org/all/CA+wXwBQ-VhK+hpBtYtyZP-NiX4g8fqRRWithFOHQW-0coQ3vLg@mail.gmail.com/
+Link: https://lore.kernel.org/linux-trace-kernel/20221209105247.01d4e51d@gandalf.local.home
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: "x86@kernel.org" <x86@kernel.org>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 768ae4406a5c ("x86/ftrace: Use text_poke()")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |   70 ++++++++++++++++++-
- 1 file changed, 69 insertions(+), 1 deletion(-)
+ arch/x86/kernel/ftrace.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -517,6 +517,23 @@ static int smu_v13_0_0_set_default_dpm_t
- 						     dpm_table);
- 		if (ret)
- 			return ret;
-+
-+		/*
-+		 * Update the reported maximum shader clock to the value
-+		 * which can be guarded to be achieved on all cards. This
-+		 * is aligned with Window setting. And considering that value
-+		 * might be not the peak frequency the card can achieve, it
-+		 * is normal some real-time clock frequency can overtake this
-+		 * labelled maximum clock frequency(for example in pp_dpm_sclk
-+		 * sysfs output).
-+		 */
-+		if (skutable->DriverReportedClocks.GameClockAc &&
-+		    (dpm_table->dpm_levels[dpm_table->count - 1].value >
-+		    skutable->DriverReportedClocks.GameClockAc)) {
-+			dpm_table->dpm_levels[dpm_table->count - 1].value =
-+				skutable->DriverReportedClocks.GameClockAc;
-+			dpm_table->max = skutable->DriverReportedClocks.GameClockAc;
-+		}
- 	} else {
- 		dpm_table->count = 1;
- 		dpm_table->dpm_levels[0].value = smu->smu_table.boot_values.gfxclk / 100;
-@@ -779,6 +796,57 @@ static int smu_v13_0_0_get_smu_metrics_d
- 	return ret;
- }
+--- a/arch/x86/kernel/ftrace.c
++++ b/arch/x86/kernel/ftrace.c
+@@ -217,7 +217,9 @@ void ftrace_replace_code(int enable)
  
-+static int smu_v13_0_0_get_dpm_ultimate_freq(struct smu_context *smu,
-+					     enum smu_clk_type clk_type,
-+					     uint32_t *min,
-+					     uint32_t *max)
-+{
-+	struct smu_13_0_dpm_context *dpm_context =
-+		smu->smu_dpm.dpm_context;
-+	struct smu_13_0_dpm_table *dpm_table;
-+
-+	switch (clk_type) {
-+	case SMU_MCLK:
-+	case SMU_UCLK:
-+		/* uclk dpm table */
-+		dpm_table = &dpm_context->dpm_tables.uclk_table;
-+		break;
-+	case SMU_GFXCLK:
-+	case SMU_SCLK:
-+		/* gfxclk dpm table */
-+		dpm_table = &dpm_context->dpm_tables.gfx_table;
-+		break;
-+	case SMU_SOCCLK:
-+		/* socclk dpm table */
-+		dpm_table = &dpm_context->dpm_tables.soc_table;
-+		break;
-+	case SMU_FCLK:
-+		/* fclk dpm table */
-+		dpm_table = &dpm_context->dpm_tables.fclk_table;
-+		break;
-+	case SMU_VCLK:
-+	case SMU_VCLK1:
-+		/* vclk dpm table */
-+		dpm_table = &dpm_context->dpm_tables.vclk_table;
-+		break;
-+	case SMU_DCLK:
-+	case SMU_DCLK1:
-+		/* dclk dpm table */
-+		dpm_table = &dpm_context->dpm_tables.dclk_table;
-+		break;
-+	default:
-+		dev_err(smu->adev->dev, "Unsupported clock type!\n");
-+		return -EINVAL;
-+	}
-+
-+	if (min)
-+		*min = dpm_table->min;
-+	if (max)
-+		*max = dpm_table->max;
-+
-+	return 0;
-+}
-+
- static int smu_v13_0_0_read_sensor(struct smu_context *smu,
- 				   enum amd_pp_sensors sensor,
- 				   void *data,
-@@ -1813,7 +1881,7 @@ static const struct pptable_funcs smu_v1
- 	.get_enabled_mask = smu_cmn_get_enabled_mask,
- 	.dpm_set_vcn_enable = smu_v13_0_set_vcn_enable,
- 	.dpm_set_jpeg_enable = smu_v13_0_set_jpeg_enable,
--	.get_dpm_ultimate_freq = smu_v13_0_get_dpm_ultimate_freq,
-+	.get_dpm_ultimate_freq = smu_v13_0_0_get_dpm_ultimate_freq,
- 	.get_vbios_bootup_values = smu_v13_0_get_vbios_bootup_values,
- 	.read_sensor = smu_v13_0_0_read_sensor,
- 	.feature_is_enabled = smu_cmn_feature_is_enabled,
+ 		ret = ftrace_verify_code(rec->ip, old);
+ 		if (ret) {
++			ftrace_expected = old;
+ 			ftrace_bug(ret, rec);
++			ftrace_expected = NULL;
+ 			return;
+ 		}
+ 	}
 
 
