@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563B3AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:21:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17C7C433D2;
-	Wed,  4 Jan 2023 16:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E154AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:21:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8AF1C433EF;
+	Wed,  4 Jan 2023 16:21:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849286;
-	bh=jCThmjB+sCqloW90Ns6LGLBH0Llk6xl8Up1beJe9Yw0=;
+	s=korg; t=1672849289;
+	bh=ksgXcK1NaxphJYJtafeiAOuNITTClBgyX0yxEtDAZWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v/n575qwzSeqfKtKOpR7UOY5DfW4snoFec8cb51H/j5FTfPW+KNlw/wPkgNrMKA7b
-	 nTvCYyPIr1A/hiKhH1iUrSPKhiOWaT2QVdWfcnhJl5MTVIMJ64uYlnaBRASlNPCul/
-	 SvxaYDirK5RVtNtNcdmJao+/5onW6EBJesAVgzuo=
+	b=S75GomysMdUjgcdiWN5ihfOl1wpCH7JiZxjN0iF4/aZeKnvWljMG9VjNQ42tCa7Bp
+	 n2zgJ9boUR8YK42+SVMNVR0yanYAeCHB4xsWp+I1Az8lrdN9DYMqxpauDnV+LS3nP7
+	 r1Y3SoiG1PvyeIUlwiM/AjPGPb8d4lY294nIUan0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Cercueil <paul@crapouillou.net>,
-	Aidan MacDonald <aidanmacdonald.0x0@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.0 093/177] ASoC: jz4740-i2s: Handle independent FIFO flush bits
-Date: Wed,  4 Jan 2023 17:06:24 +0100
-Message-Id: <20230104160510.456955285@linuxfoundation.org>
+	Eric Biggers <ebiggers@kernel.org>,
+	syzbot+9767be679ef5016b6082@syzkaller.appspotmail.com,
+	Alexander Potapenko <glider@google.com>,
+	Eric Biggers <ebiggers@google.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.1 165/207] fs: ext4: initialize fsdata in pagecache_write()
+Date: Wed,  4 Jan 2023 17:07:03 +0100
+Message-Id: <20230104160517.114442515@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,112 +38,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
+From: Alexander Potapenko <glider@google.com>
 
-commit 8b3a9ad86239f80ed569e23c3954a311f66481d6 upstream.
+commit 956510c0c7439e90b8103aaeaf4da92878c622f0 upstream.
 
-On the JZ4740, there is a single bit that flushes (empties) both
-the transmit and receive FIFO. Later SoCs have independent flush
-bits for each FIFO.
+When aops->write_begin() does not initialize fsdata, KMSAN reports
+an error passing the latter to aops->write_end().
 
-Independent FIFOs can be flushed before the snd_soc_dai_active()
-check because it won't disturb other active streams. This ensures
-that the FIFO we're about to use is always flushed before starting
-up. With shared FIFOs we can't do that because if another substream
-is active, flushing its FIFO would cause underrun errors.
+Fix this by unconditionally initializing fsdata.
 
-This also fixes a bug: since we were only setting the JZ4740's
-flush bit, which corresponds to the TX FIFO flush bit on other
-SoCs, other SoCs were not having their RX FIFO flushed at all.
-
-Fixes: 967beb2e8777 ("ASoC: jz4740: Add jz4780 support")
-Reviewed-by: Paul Cercueil <paul@crapouillou.net>
-Cc: stable@vger.kernel.org
-Signed-off-by: Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
-Link: https://lore.kernel.org/r/20221023143328.160866-2-aidanmacdonald.0x0@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Eric Biggers <ebiggers@kernel.org>
+Fixes: c93d8f885809 ("ext4: add basic fs-verity support")
+Reported-by: syzbot+9767be679ef5016b6082@syzkaller.appspotmail.com
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20221121112134.407362-1-glider@google.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/jz4740/jz4740-i2s.c |   39 ++++++++++++++++++++++++++++++++++-----
- 1 file changed, 34 insertions(+), 5 deletions(-)
+ fs/ext4/verity.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/jz4740/jz4740-i2s.c
-+++ b/sound/soc/jz4740/jz4740-i2s.c
-@@ -55,7 +55,8 @@
- #define JZ_AIC_CTRL_MONO_TO_STEREO BIT(11)
- #define JZ_AIC_CTRL_SWITCH_ENDIANNESS BIT(10)
- #define JZ_AIC_CTRL_SIGNED_TO_UNSIGNED BIT(9)
--#define JZ_AIC_CTRL_FLUSH		BIT(8)
-+#define JZ_AIC_CTRL_TFLUSH		BIT(8)
-+#define JZ_AIC_CTRL_RFLUSH		BIT(7)
- #define JZ_AIC_CTRL_ENABLE_ROR_INT BIT(6)
- #define JZ_AIC_CTRL_ENABLE_TUR_INT BIT(5)
- #define JZ_AIC_CTRL_ENABLE_RFS_INT BIT(4)
-@@ -90,6 +91,8 @@ enum jz47xx_i2s_version {
- struct i2s_soc_info {
- 	enum jz47xx_i2s_version version;
- 	struct snd_soc_dai_driver *dai;
-+
-+	bool shared_fifo_flush;
- };
+--- a/fs/ext4/verity.c
++++ b/fs/ext4/verity.c
+@@ -79,7 +79,7 @@ static int pagecache_write(struct inode
+ 		size_t n = min_t(size_t, count,
+ 				 PAGE_SIZE - offset_in_page(pos));
+ 		struct page *page;
+-		void *fsdata;
++		void *fsdata = NULL;
+ 		int res;
  
- struct jz4740_i2s {
-@@ -116,19 +119,44 @@ static inline void jz4740_i2s_write(cons
- 	writel(value, i2s->base + reg);
- }
- 
-+static inline void jz4740_i2s_set_bits(const struct jz4740_i2s *i2s,
-+	unsigned int reg, uint32_t bits)
-+{
-+	uint32_t value = jz4740_i2s_read(i2s, reg);
-+	value |= bits;
-+	jz4740_i2s_write(i2s, reg, value);
-+}
-+
- static int jz4740_i2s_startup(struct snd_pcm_substream *substream,
- 	struct snd_soc_dai *dai)
- {
- 	struct jz4740_i2s *i2s = snd_soc_dai_get_drvdata(dai);
--	uint32_t conf, ctrl;
-+	uint32_t conf;
- 	int ret;
- 
-+	/*
-+	 * When we can flush FIFOs independently, only flush the FIFO
-+	 * that is starting up. We can do this when the DAI is active
-+	 * because it does not disturb other active substreams.
-+	 */
-+	if (!i2s->soc_info->shared_fifo_flush) {
-+		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+			jz4740_i2s_set_bits(i2s, JZ_REG_AIC_CTRL, JZ_AIC_CTRL_TFLUSH);
-+		else
-+			jz4740_i2s_set_bits(i2s, JZ_REG_AIC_CTRL, JZ_AIC_CTRL_RFLUSH);
-+	}
-+
- 	if (snd_soc_dai_active(dai))
- 		return 0;
- 
--	ctrl = jz4740_i2s_read(i2s, JZ_REG_AIC_CTRL);
--	ctrl |= JZ_AIC_CTRL_FLUSH;
--	jz4740_i2s_write(i2s, JZ_REG_AIC_CTRL, ctrl);
-+	/*
-+	 * When there is a shared flush bit for both FIFOs, the TFLUSH
-+	 * bit flushes both FIFOs. Flushing while the DAI is active would
-+	 * cause FIFO underruns in other active substreams so we have to
-+	 * guard this behind the snd_soc_dai_active() check.
-+	 */
-+	if (i2s->soc_info->shared_fifo_flush)
-+		jz4740_i2s_set_bits(i2s, JZ_REG_AIC_CTRL, JZ_AIC_CTRL_TFLUSH);
- 
- 	ret = clk_prepare_enable(i2s->clk_i2s);
- 	if (ret)
-@@ -443,6 +471,7 @@ static struct snd_soc_dai_driver jz4740_
- static const struct i2s_soc_info jz4740_i2s_soc_info = {
- 	.version = JZ_I2S_JZ4740,
- 	.dai = &jz4740_i2s_dai,
-+	.shared_fifo_flush = true,
- };
- 
- static const struct i2s_soc_info jz4760_i2s_soc_info = {
+ 		res = aops->write_begin(NULL, mapping, pos, n, &page, &fsdata);
 
 
