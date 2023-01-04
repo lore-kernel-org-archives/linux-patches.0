@@ -1,90 +1,106 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3ADB7BA3D
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 20:09:01 +0000 (UTC)
-Received: by mail-pj1-f45.google.com with SMTP id c2-20020a17090a020200b00226c762ed23so1098522pjc.5
-        for <patches@lists.linux.dev>; Wed, 04 Jan 2023 12:09:01 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1604EBA3D
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 20:26:04 +0000 (UTC)
+Received: by mail-ej1-f45.google.com with SMTP id vm8so78509825ejc.2
+        for <patches@lists.linux.dev>; Wed, 04 Jan 2023 12:26:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=UMWHrF0/XfOeG1CXIwzjSceGj1ferSMxrkHipfWDqB0=;
-        b=e4YVXucNPMPkk8BQv0XVWpSYCAh5IChMWylGp5stDe2ZlkO1YLf/sQG5KoSDfm7JgO
-         qMTQM82bTjQ7x4+6CsfKGUSh7TiXo6ee6p6wULesgzqGys0Q2/v+nwvb2Zh8L+7MUpfb
-         y8J/ri/OU7+0VdBrgnbcBv6eelz43iCqSJCHqEe/dlGZax6NYq2eM/r/FfVAqVFt5ibW
-         hwuBd4MDfP7SWq/cix/ZIPEYtpfG3LSjlko50EunmdX1+tIOzjUdlmGc96GOqqUhZRwS
-         B0yEJXiPtdpfFuSIPnkHjSqM1XNsNItSeC2SCtKNek/O4fdHPY0tx45GbbMecCYDZt7I
-         ymPg==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0nsiYCj7E7B/biignvWJEgK9zv09wv8jx0ObzuZD7BA=;
+        b=fJo+QzADxBj8/jQzpQWRnaynpQlqiQTaU8QRE0zlmtiZtHSDcIvUYgewPOiKgZNZTe
+         /yRGQZvqwnny1JWPcL1tclqzX0QV5ufBq8bti84ktBySJJEGiRypr3Kkq4TOyKLp6AXD
+         mfMt7OPZ64ktLHIucPvlMzAaH52uZBe0AD7iAWOEY4Iow+ySDaLfa8dHyU36aK37Vc3F
+         dTRI+AYLnjue07kLuxOAdUchHCm74+vc9J0xsrL+a4Coml52gdkW3ScywY02wLj7yxtF
+         L4dEStUENFQcp9YA/7ExVOXgTkvX80J2DTlQSkAAqAK6G5ZHNL1NlNrXkTonCP1bXbIM
+         2eHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=UMWHrF0/XfOeG1CXIwzjSceGj1ferSMxrkHipfWDqB0=;
-        b=VNaJhhL/bTB48yV7ue9uzFWQbAriVFpX51+e1NQXW98aJ0VupMCJLAgQNhAQX/d/dK
-         HPMzhbDAE2ypI3/uUicaAkSgliZO9BnMpxhXIltx1Sv2/xtpCIpUCwih1aQm55p0AhnZ
-         Dpm3u9rW5IKkv/tC9aHQUDoDUsTYWYIyBEyk1mZnMvIEVSqkIe5W/hhcblO/8RuGvHvT
-         oR4vh4vMvUi98TWiRa0xJvXZVTK8syWpwhepQqG8hsltGPrSE8fFE4DtJeUdxfZB6c4p
-         Lu4INts8Ce5QgDegLdfhjvYsKu1lxr+PvXsj868isWiCWEVtDKUA10TthDETqT+JNJNn
-         U47Q==
-X-Gm-Message-State: AFqh2kpXKzac44uZ0Ph6giBvxef43WykSCWi1e8mhCvxzrhAtYaGeEh4
-	+9oY8R0mzv92DIxgP+OsxX4=
-X-Google-Smtp-Source: AMrXdXvZ+bAPgOIV0REbDfAPvqzjHXbJBXtzNNRKMMwm5WRxmgk4RtO8ftfCcp7pGN6LjlLBJKsUNA==
-X-Received: by 2002:a05:6a20:2d1e:b0:af:6f24:b154 with SMTP id g30-20020a056a202d1e00b000af6f24b154mr64018840pzl.60.1672862940560;
-        Wed, 04 Jan 2023 12:09:00 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id f8-20020a655908000000b0047829d1b8eesm21073037pgu.31.2023.01.04.12.08.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Jan 2023 12:08:55 -0800 (PST)
-Message-ID: <d725c96e-4b74-d5c1-e25e-1876e8aa40d9@gmail.com>
-Date: Wed, 4 Jan 2023 12:08:43 -0800
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0nsiYCj7E7B/biignvWJEgK9zv09wv8jx0ObzuZD7BA=;
+        b=DPKcrREmyhjEDRVft4b7vfThT36i3KuxsgVrSxKQzhdyibuhPWeUdOhEG+hyeY/O/w
+         AKhjXZEa0ti+M1/UjuHzcRQOlsavEOWpH1XXLwA2LHkBUr6m/1djuKfcleC3uZUMhapM
+         3wLrt0ByFA4BEZ6IHD5PqpZOEnPbVogA9B2JLXdtH1pYkg82Opv0aY3voAQgmWFYWBXL
+         R7Tk/bgmyAxngoBS4JKu2LoBAhOVSZGOuMl3FtFPnti9Y7qGC9Ok+Wdm+0ohfk8WMDlq
+         bvkmIl1hL6ITuF0VSeYvN5l+QNeRU7VVeQ8EX0m1xmZb6mSYvdadJ98QBt5BGr59dEfr
+         9b/A==
+X-Gm-Message-State: AFqh2kpbf6yYDcOKNH0O2zV640yIvh2Rtt9J4bU9Bs+0jtGQ88DL9SCq
+	+VP6I9hI8CTzHfz8UpaKqQk=
+X-Google-Smtp-Source: AMrXdXv39pIwvzSW1JK083DyvEaIimvX/j6XZ5/7LzVNcY31rmnGqXtGzu/G8SSUDyZANJn3v1+kpw==
+X-Received: by 2002:a17:907:80ce:b0:7c1:26b9:c556 with SMTP id io14-20020a17090780ce00b007c126b9c556mr44908907ejc.15.1672863963331;
+        Wed, 04 Jan 2023 12:26:03 -0800 (PST)
+Received: from gmail.com (1F2EF380.nat.pool.telekom.hu. [31.46.243.128])
+        by smtp.gmail.com with ESMTPSA id l9-20020a1709060cc900b007c0f2d051f4sm15462557ejh.203.2023.01.04.12.26.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Jan 2023 12:26:02 -0800 (PST)
+Sender: Ingo Molnar <mingo.kernel.org@gmail.com>
+Date: Wed, 4 Jan 2023 21:25:59 +0100
+From: Ingo Molnar <mingo@kernel.org>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: Borislav Petkov <bp@alien8.de>, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, tglx@linutronix.de,
+	linux-crypto@vger.kernel.org, linux-api@vger.kernel.org,
+	x86@kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>
+Subject: Re: [PATCH v14 1/7] x86: lib: Separate instruction decoder MMIO type
+ from MMIO trace
+Message-ID: <Y7Xg19H39FqTwyEL@gmail.com>
+References: <20230101162910.710293-1-Jason@zx2c4.com>
+ <20230101162910.710293-2-Jason@zx2c4.com>
+ <Y7QELo9etPM8Tpx5@gmail.com>
+ <Y7RA3bmko0AjO8hQ@zx2c4.com>
+ <Y7RfPnyK/25pxpKs@gmail.com>
+ <Y7RmDVI/ScoeBO2a@zn.tnic>
+ <CAHmME9ohJ3JZNjkxuA0KjFW0LLQksgQP5f8bfrogd3+GmLrpKw@mail.gmail.com>
+ <Y7RqQNH0OuiYCDeE@gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 6.0 000/177] 6.0.18-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230104160507.635888536@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y7RqQNH0OuiYCDeE@gmail.com>
 
-On 1/4/23 08:04, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.0.18 release.
-> There are 177 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 06 Jan 2023 16:04:29 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.18-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+* Ingo Molnar <mingo@kernel.org> wrote:
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
+> 
+> * Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+> 
+> > On Tue, Jan 3, 2023 at 6:29 PM Borislav Petkov <bp@alien8.de> wrote:
+> > >
+> > > On Tue, Jan 03, 2023 at 06:00:46PM +0100, Ingo Molnar wrote:
+> > > > > I guess you missed the conversation with Borislav yesterday about that.
+> > > > > He mentioned that I'd just take it through random.git when this whole
+> > > > > series goes in.
+> > > >
+> > > > Please base your tree off on tip:x86/asm then (or pull it in) - it only
+> > >
+> > > My idea was a lot simpler: avoid the tree inter-dependency by us acking this
+> > > patch so that it can go through the random.git tree.
+> > 
+> > Indeed I would prefer this.
+> > 
+> > Or... just put this in 6.2 because it's trivial anyway? Heck, even mark 
+> > it as stable@ so make future backporting easier. Then it'll meet tip's 
+> > urgent criteria.
+> 
+> Yeah - that's sensible too, it does fix a header namespace bug - I've put 
+> it into tip:x86/urgent.
 
+This namespace clash fix is now upstream as of 512dee0c00ad & later kernels.
+
+Thanks,
+
+	Ingo
