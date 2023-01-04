@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C21AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47ED4C433D2;
-	Wed,  4 Jan 2023 16:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EF9AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4757BC433EF;
+	Wed,  4 Jan 2023 16:17:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849074;
-	bh=Yq7MpLk6LgvvMhM4C3az2Lw1+sjwkRU6a5UtCD/uYBU=;
+	s=korg; t=1672849077;
+	bh=aIv8rPttAvRaqF4jQcjIWVmTppUsBhvUmRnG4goKeAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ktGao4K/joEiEmdWyNIyL61C3ccDCsTSARqTuZh5yZKF68Kpg5yBfh4O623MBkeSq
-	 9QT5kIwOLGqmr393IGpyTJkCipgBAEqlefZoZTM6O0kN5DoxtK7fQ3YYco0LZn5vmI
-	 PlQwMlFa0N95XTb6k9rR4OCs4SufCETW7AaKBJtA=
+	b=SlK/CwTLXVKAA6Gc17UtvuCKnKeuP4dnwEmt+sMuwSaDf0CU4vZ3XMNTJXa1QUeyt
+	 Tei3s9nNmq/oYhIs8892WlAC6+sFlHBy5Qn7f5ErTSw/yMdfrbDb78HwckJzgopM3u
+	 9eQF4ZJQRMmvBuUf7ON4F4yAm7D9zyaXAIH3w29Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Mat Martineau <mathew.j.martineau@linux.intel.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.0 041/177] mptcp: remove MPTCP ifdef in TCP SYN cookies
-Date: Wed,  4 Jan 2023 17:05:32 +0100
-Message-Id: <20230104160508.898407168@linuxfoundation.org>
+	Conor Dooley <conor.dooley@microchip.com>,
+	kernel test robot <lkp@intel.com>,
+	Guo Ren <guoren@kernel.org>,
+	Guo Ren <guoren@linux.alibaba.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.1 129/207] riscv: Fixup compile error with !MMU
+Date: Wed,  4 Jan 2023 17:06:27 +0100
+Message-Id: <20230104160516.010691480@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,113 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Guo Ren <guoren@linux.alibaba.com>
 
-commit 3fff88186f047627bb128d65155f42517f8e448f upstream.
+commit c528ef0888b75f673f7d48022de8d31d5b451e8c upstream.
 
-To ease the maintenance, it is often recommended to avoid having #ifdef
-preprocessor conditions.
+Current nommu_virt_defconfig can't compile:
 
-Here the section related to CONFIG_MPTCP was quite short but the next
-commit needs to add more code around. It is then cleaner to move
-specific MPTCP code to functions located in net/mptcp directory.
+In file included from
+arch/riscv/kernel/crash_core.c:3:
+arch/riscv/kernel/crash_core.c:
+In function 'arch_crash_save_vmcoreinfo':
+arch/riscv/kernel/crash_core.c:8:27:
+error: 'VA_BITS' undeclared (first use in this function)
+    8 |         VMCOREINFO_NUMBER(VA_BITS);
+      |                           ^~~~~~~
 
-Now that mptcp_subflow_request_sock_ops structure can be static, it can
-also be marked as "read only after init".
+Add MMU dependency for KEXEC_FILE.
 
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Fixes: 6261586e0c91 ("RISC-V: Add kexec_file support")
+Reported-by: Conor Dooley <conor.dooley@microchip.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Guo Ren <guoren@kernel.org>
+Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20221207091112.2258674-1-guoren@kernel.org
 Cc: stable@vger.kernel.org
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/mptcp.h   |   12 ++++++++++--
- net/ipv4/syncookies.c |    7 +++----
- net/mptcp/subflow.c   |   12 +++++++++++-
- 3 files changed, 24 insertions(+), 7 deletions(-)
+ arch/riscv/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/net/mptcp.h
-+++ b/include/net/mptcp.h
-@@ -97,8 +97,6 @@ struct mptcp_out_options {
- };
- 
- #ifdef CONFIG_MPTCP
--extern struct request_sock_ops mptcp_subflow_request_sock_ops;
--
- void mptcp_init(void);
- 
- static inline bool sk_is_mptcp(const struct sock *sk)
-@@ -188,6 +186,9 @@ void mptcp_seq_show(struct seq_file *seq
- int mptcp_subflow_init_cookie_req(struct request_sock *req,
- 				  const struct sock *sk_listener,
- 				  struct sk_buff *skb);
-+struct request_sock *mptcp_subflow_reqsk_alloc(const struct request_sock_ops *ops,
-+					       struct sock *sk_listener,
-+					       bool attach_listener);
- 
- __be32 mptcp_get_reset_option(const struct sk_buff *skb);
- 
-@@ -274,6 +275,13 @@ static inline int mptcp_subflow_init_coo
- 	return 0; /* TCP fallback */
- }
- 
-+static inline struct request_sock *mptcp_subflow_reqsk_alloc(const struct request_sock_ops *ops,
-+							     struct sock *sk_listener,
-+							     bool attach_listener)
-+{
-+	return NULL;
-+}
-+
- static inline __be32 mptcp_reset_option(const struct sk_buff *skb)  { return htonl(0u); }
- #endif /* CONFIG_MPTCP */
- 
---- a/net/ipv4/syncookies.c
-+++ b/net/ipv4/syncookies.c
-@@ -288,12 +288,11 @@ struct request_sock *cookie_tcp_reqsk_al
- 	struct tcp_request_sock *treq;
- 	struct request_sock *req;
- 
--#ifdef CONFIG_MPTCP
- 	if (sk_is_mptcp(sk))
--		ops = &mptcp_subflow_request_sock_ops;
--#endif
-+		req = mptcp_subflow_reqsk_alloc(ops, sk, false);
-+	else
-+		req = inet_reqsk_alloc(ops, sk, false);
- 
--	req = inet_reqsk_alloc(ops, sk, false);
- 	if (!req)
- 		return NULL;
- 
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -529,7 +529,7 @@ static int subflow_v6_rebuild_header(str
- }
- #endif
- 
--struct request_sock_ops mptcp_subflow_request_sock_ops;
-+static struct request_sock_ops mptcp_subflow_request_sock_ops __ro_after_init;
- static struct tcp_request_sock_ops subflow_request_sock_ipv4_ops __ro_after_init;
- 
- static int subflow_v4_conn_request(struct sock *sk, struct sk_buff *skb)
-@@ -582,6 +582,16 @@ drop:
- }
- #endif
- 
-+struct request_sock *mptcp_subflow_reqsk_alloc(const struct request_sock_ops *ops,
-+					       struct sock *sk_listener,
-+					       bool attach_listener)
-+{
-+	ops = &mptcp_subflow_request_sock_ops;
-+
-+	return inet_reqsk_alloc(ops, sk_listener, attach_listener);
-+}
-+EXPORT_SYMBOL(mptcp_subflow_reqsk_alloc);
-+
- /* validate hmac received in third ACK */
- static bool subflow_hmac_valid(const struct request_sock *req,
- 			       const struct mptcp_options_received *mp_opt)
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -502,7 +502,7 @@ config KEXEC_FILE
+ 	select KEXEC_CORE
+ 	select KEXEC_ELF
+ 	select HAVE_IMA_KEXEC if IMA
+-	depends on 64BIT
++	depends on 64BIT && MMU
+ 	help
+ 	  This is new version of kexec system call. This system call is
+ 	  file based and takes file descriptors as system call argument
 
 
