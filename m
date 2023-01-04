@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834D8AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8AFDC433D2;
-	Wed,  4 Jan 2023 16:17:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E742BAD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B148C433D2;
+	Wed,  4 Jan 2023 16:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849032;
-	bh=SxN2TOApz+oxv5v0CIdNI5JZj/rkfQMWJ8oWXdXYEOM=;
+	s=korg; t=1672849035;
+	bh=UhL82pXauZJasMQywOTQX3Nnrz1ddtxG5TtOTFaSnjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YWIZig/09rNCSaBpd1v4glfwBYh43OLTWgvoNoT39rCxHr2OgOs/mHMklCLlQm3BM
-	 Yl53Y8389+ms3OJ3u0BZmGBtD0glV6F+uKIHLYtZgvDPEwL5tcLzjhwMx00HmcLCuz
-	 kVKQzYdag+CPwJy86rZjaFqIgDbieXLzm7FssRWQ=
+	b=Qq5QAg5ca+wmx+IVrCckjcA/rMvmTwFQeAeKKae+4p3J42dU5f481zn/M4EIdJf3D
+	 mEt59N8oDcmVdr2ENPruN/F7CdEUJQDZ7JBk1fCEGpLwJ7cyhuBKa4zCMc//g7iCWe
+	 +imLRVy8d6vDOiXkeG+VJOB3+n+wShwkH0p1KVAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Ming <ming4.li@intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Lukas Wunner <lukas@wunner.de>
-Subject: [PATCH 6.0 053/177] PCI/DOE: Fix maximum data object length miscalculation
-Date: Wed,  4 Jan 2023 17:05:44 +0100
-Message-Id: <20230104160509.252879382@linuxfoundation.org>
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 6.1 123/207] ima: Fix memory leak in __ima_inode_hash()
+Date: Wed,  4 Jan 2023 17:06:21 +0100
+Message-Id: <20230104160515.808243157@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,91 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Ming <ming4.li@intel.com>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-commit a4ff8e7a71601321f7bf7b58ede664dc0d774274 upstream.
+commit 8c1d6a050a0f16e0a9d32eaf53b965c77279c6f8 upstream.
 
-Per PCIe r6.0, sec 6.30.1, a data object Length of 0x0 indicates 2^18
-DWORDs (256K DW or 1MB) being transferred.  Adjust the value of data object
-length for this case on both sending side and receiving side.
+Commit f3cc6b25dcc5 ("ima: always measure and audit files in policy") lets
+measurement or audit happen even if the file digest cannot be calculated.
 
-Don't bother checking whether Length is greater than SZ_1M because all
-values of the 18-bit Length field are valid, and it is impossible to
-represent anything larger than SZ_1M:
+As a result, iint->ima_hash could have been allocated despite
+ima_collect_measurement() returning an error.
 
-  0x00000    256K DW (1M bytes)
-  0x00001       1 DW (4 bytes)
-  ...
-  0x3ffff  256K-1 DW (1M - 4 bytes)
+Since ima_hash belongs to a temporary inode metadata structure, declared
+at the beginning of __ima_inode_hash(), just add a kfree() call if
+ima_collect_measurement() returns an error different from -ENOMEM (in that
+case, ima_hash should not have been allocated).
 
-[bhelgaas: commit log]
-Link: https://lore.kernel.org/r/20221116015637.3299664-1-ming4.li@intel.com
-Fixes: 9d24322e887b ("PCI/DOE: Add DOE mailbox support functions")
-Signed-off-by: Li Ming <ming4.li@intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org	# v6.0+
+Cc: stable@vger.kernel.org
+Fixes: 280fe8367b0d ("ima: Always return a file measurement in ima_file_hash()")
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/doe.c |   20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ security/integrity/ima/ima_main.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/doe.c
-+++ b/drivers/pci/doe.c
-@@ -29,6 +29,9 @@
- #define PCI_DOE_FLAG_CANCEL	0
- #define PCI_DOE_FLAG_DEAD	1
+--- a/security/integrity/ima/ima_main.c
++++ b/security/integrity/ima/ima_main.c
+@@ -542,8 +542,13 @@ static int __ima_inode_hash(struct inode
  
-+/* Max data object length is 2^18 dwords */
-+#define PCI_DOE_MAX_LENGTH	(1 << 18)
+ 		rc = ima_collect_measurement(&tmp_iint, file, NULL, 0,
+ 					     ima_hash_algo, NULL);
+-		if (rc < 0)
++		if (rc < 0) {
++			/* ima_hash could be allocated in case of failure. */
++			if (rc != -ENOMEM)
++				kfree(tmp_iint.ima_hash);
 +
- /**
-  * struct pci_doe_mb - State for a single DOE mailbox
-  *
-@@ -107,6 +110,7 @@ static int pci_doe_send_req(struct pci_d
- {
- 	struct pci_dev *pdev = doe_mb->pdev;
- 	int offset = doe_mb->cap_offset;
-+	size_t length;
- 	u32 val;
- 	int i;
+ 			return -EOPNOTSUPP;
++		}
  
-@@ -123,15 +127,20 @@ static int pci_doe_send_req(struct pci_d
- 	if (FIELD_GET(PCI_DOE_STATUS_ERROR, val))
- 		return -EIO;
- 
-+	/* Length is 2 DW of header + length of payload in DW */
-+	length = 2 + task->request_pl_sz / sizeof(u32);
-+	if (length > PCI_DOE_MAX_LENGTH)
-+		return -EIO;
-+	if (length == PCI_DOE_MAX_LENGTH)
-+		length = 0;
-+
- 	/* Write DOE Header */
- 	val = FIELD_PREP(PCI_DOE_DATA_OBJECT_HEADER_1_VID, task->prot.vid) |
- 		FIELD_PREP(PCI_DOE_DATA_OBJECT_HEADER_1_TYPE, task->prot.type);
- 	pci_write_config_dword(pdev, offset + PCI_DOE_WRITE, val);
--	/* Length is 2 DW of header + length of payload in DW */
- 	pci_write_config_dword(pdev, offset + PCI_DOE_WRITE,
- 			       FIELD_PREP(PCI_DOE_DATA_OBJECT_HEADER_2_LENGTH,
--					  2 + task->request_pl_sz /
--						sizeof(u32)));
-+					  length));
- 	for (i = 0; i < task->request_pl_sz / sizeof(u32); i++)
- 		pci_write_config_dword(pdev, offset + PCI_DOE_WRITE,
- 				       task->request_pl[i]);
-@@ -178,7 +187,10 @@ static int pci_doe_recv_resp(struct pci_
- 	pci_write_config_dword(pdev, offset + PCI_DOE_READ, 0);
- 
- 	length = FIELD_GET(PCI_DOE_DATA_OBJECT_HEADER_2_LENGTH, val);
--	if (length > SZ_1M || length < 2)
-+	/* A value of 0x0 indicates max data object length */
-+	if (!length)
-+		length = PCI_DOE_MAX_LENGTH;
-+	if (length < 2)
- 		return -EIO;
- 
- 	/* First 2 dwords have already been read */
+ 		iint = &tmp_iint;
+ 		mutex_lock(&iint->mutex);
 
 
