@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB49AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EE5C433D2;
-	Wed,  4 Jan 2023 16:25:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF8EAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A393FC433EF;
+	Wed,  4 Jan 2023 16:25:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849534;
-	bh=jUGgu+jjn4oh8uZCNtxL5R0bZaJS06RGDqho/5O8FE4=;
+	s=korg; t=1672849537;
+	bh=r9gpkwUQ4GAZnNuMWhHpqcOJjhZ41GYTe9WsgUmaTT0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j52Mq7zorYIZN3FUXXHeAdANnL7QQQ94h2oHD6gaOXDDnJ79Ne69aD537XAzWOq+1
-	 WMSRikcQWcjQ5zSuNGtK95CcUQcafsa8C576QuKzHnEIdLksappqw4DvsG47wS6oMr
-	 8N92P0ckbNUXGj4XCYz7vMpxW1rcp3mUCfKkDkss=
+	b=wMXiFGRGucQhWQxf/qqc7EUju7D6BOLeN8IJvA0fGeIuAUXw1fMi5bYu8EzDqVD4/
+	 fSj6LJTha1YsNcZlV6nH1iabHJBiW5EzbRGA91H09MlNlKdqYeMM8r/s5bT3u+KL8u
+	 LsfZSbLVf/AkE4pv07a3bR7aKDnXmqTsGu44JCHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <evan.quan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 204/207] drm/amd/pm: add missing SMU13.0.0 mm_dpm feature mapping
-Date: Wed,  4 Jan 2023 17:07:42 +0100
-Message-Id: <20230104160518.383220180@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Jason Yan <yanaijie@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.0 138/177] ext4: add EXT4_IGET_BAD flag to prevent unexpected bad inode
+Date: Wed,  4 Jan 2023 17:07:09 +0100
+Message-Id: <20230104160511.829741228@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,32 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Evan Quan <evan.quan@amd.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 592cd24a08763975c75be850a7d4e461bfd353bf upstream.
+commit 63b1e9bccb71fe7d7e3ddc9877dbdc85e5d2d023 upstream.
 
-Without this, the pp_dpm_vclk and pp_dpm_dclk outputs are not with
-correct data.
+There are many places that will get unhappy (and crash) when ext4_iget()
+returns a bad inode. However, if iget the boot loader inode, allows a bad
+inode to be returned, because the inode may not be initialized. This
+mechanism can be used to bypass some checks and cause panic. To solve this
+problem, we add a special iget flag EXT4_IGET_BAD. Only with this flag
+we'd be returning bad inode from ext4_iget(), otherwise we always return
+the error code if the inode is bad inode.(suggested by Jan Kara)
 
-Signed-off-by: Evan Quan <evan.quan@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.0.x
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jason Yan <yanaijie@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221026042310.3839669-4-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ext4/ext4.h  |    3 ++-
+ fs/ext4/inode.c |    8 +++++++-
+ fs/ext4/ioctl.c |    3 ++-
+ 3 files changed, 11 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -187,6 +187,8 @@ static struct cmn2asic_mapping smu_v13_0
- 	FEA_MAP(MEM_TEMP_READ),
- 	FEA_MAP(ATHUB_MMHUB_PG),
- 	FEA_MAP(SOC_PCC),
-+	[SMU_FEATURE_DPM_VCLK_BIT] = {1, FEATURE_MM_DPM_BIT},
-+	[SMU_FEATURE_DPM_DCLK_BIT] = {1, FEATURE_MM_DPM_BIT},
- };
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -2964,7 +2964,8 @@ int do_journal_get_write_access(handle_t
+ typedef enum {
+ 	EXT4_IGET_NORMAL =	0,
+ 	EXT4_IGET_SPECIAL =	0x0001, /* OK to iget a system inode */
+-	EXT4_IGET_HANDLE = 	0x0002	/* Inode # is from a handle */
++	EXT4_IGET_HANDLE = 	0x0002,	/* Inode # is from a handle */
++	EXT4_IGET_BAD =		0x0004  /* Allow to iget a bad inode */
+ } ext4_iget_flags;
  
- static struct cmn2asic_mapping smu_v13_0_0_table_map[SMU_TABLE_COUNT] = {
+ extern struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5053,8 +5053,14 @@ struct inode *__ext4_iget(struct super_b
+ 	if (IS_CASEFOLDED(inode) && !ext4_has_feature_casefold(inode->i_sb))
+ 		ext4_error_inode(inode, function, line, 0,
+ 				 "casefold flag without casefold feature");
+-	brelse(iloc.bh);
++	if (is_bad_inode(inode) && !(flags & EXT4_IGET_BAD)) {
++		ext4_error_inode(inode, function, line, 0,
++				 "bad inode without EXT4_IGET_BAD flag");
++		ret = -EUCLEAN;
++		goto bad_inode;
++	}
+ 
++	brelse(iloc.bh);
+ 	unlock_new_inode(inode);
+ 	return inode;
+ 
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -374,7 +374,8 @@ static long swap_inode_boot_loader(struc
+ 	blkcnt_t blocks;
+ 	unsigned short bytes;
+ 
+-	inode_bl = ext4_iget(sb, EXT4_BOOT_LOADER_INO, EXT4_IGET_SPECIAL);
++	inode_bl = ext4_iget(sb, EXT4_BOOT_LOADER_INO,
++			EXT4_IGET_SPECIAL | EXT4_IGET_BAD);
+ 	if (IS_ERR(inode_bl))
+ 		return PTR_ERR(inode_bl);
+ 	ei_bl = EXT4_I(inode_bl);
 
 
