@@ -1,27 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72802AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DE5C433EF;
-	Wed,  4 Jan 2023 16:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8724EAD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C9D9C433D2;
+	Wed,  4 Jan 2023 16:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849041;
-	bh=PvaCj3owL+92YPNXzW/5fYNFlyDOCueZa/eCuRjmF14=;
+	s=korg; t=1672849044;
+	bh=28ckKiyj9m0vg3THgDlgJYCvyX5Xu6g7B6dQBS8gd2Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QY77fuF2B0iq/bo/B2h+EIOFQigK3SX3a8CKtaElfEfnRUWjcFQ3LdBanEQ84tJS6
-	 SUkpyMJDO1bZKD7TSRMWJKGYuM+upgSPnJ0KtzXP87Kha/U/IeyAsZlRfZO3MDz89g
-	 jD7hdNHUfyD5auPEhF+dKuHWyCaAFhNC3oj6r88k=
+	b=aTnfd8rTB0nkbSXvABRkWGFn4gPolfFhGtW15d5FvL4f/+nqVKI4LZMPoasTyZK5q
+	 1/UxMkvM7uIBsq3O4A8m8qYaNniymab8W22mdaOEQNULv+7dU5yZC0EHx13dYTOMoF
+	 SnC0oObVuguPNX57tvnGdEh5CrqqZk/0rua9lBF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 111/207] block: mq-deadline: Fix dd_finish_request() for zoned devices
-Date: Wed,  4 Jan 2023 17:06:09 +0100
-Message-Id: <20230104160515.418004222@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Richard Weinberger <richard@nod.at>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Vincent Whitchurch <vincent.whitchurch@axis.com>,
+	linux-um@lists.infradead.org,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.1 124/207] um: virt-pci: Avoid GCC non-NULL warning
+Date: Wed,  4 Jan 2023 17:06:22 +0100
+Message-Id: <20230104160515.842647496@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
 References: <20230104160511.905925875@linuxfoundation.org>
@@ -35,74 +42,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Kees Cook <keescook@chromium.org>
 
-commit 2820e5d0820ac4daedff1272616a53d9c7682fd2 upstream.
+commit bdc77507fecd00ddad2f502f86a48a9ec38f0f84 upstream.
 
-dd_finish_request() tests if the per prio fifo_list is not empty to
-determine if request dispatching must be restarted for handling blocked
-write requests to zoned devices with a call to
-blk_mq_sched_mark_restart_hctx(). While simple, this implementation has
-2 problems:
+GCC gets confused about the return value of get_cpu_var() possibly
+being NULL, so explicitly test for it before calls to memcpy() and
+memset(). Avoids warnings like this:
 
-1) Only the priority level of the completed request is considered.
-   However, writes to a zone may be blocked due to other writes to the
-   same zone using a different priority level. While this is unlikely to
-   happen in practice, as writing a zone with different IO priorirites
-   does not make sense, nothing in the code prevents this from
-   happening.
-2) The use of list_empty() is dangerous as dd_finish_request() does not
-   take dd->lock and may run concurrently with the insert and dispatch
-   code.
+   arch/um/drivers/virt-pci.c: In function 'um_pci_send_cmd':
+   include/linux/fortify-string.h:48:33: warning: argument 1 null where non-null expected [-Wnonnull]
+      48 | #define __underlying_memcpy     __builtin_memcpy
+         |                                 ^
+   include/linux/fortify-string.h:438:9: note: in expansion of macro '__underlying_memcpy'
+     438 |         __underlying_##op(p, q, __fortify_size);                        \
+         |         ^~~~~~~~~~~~~
+   include/linux/fortify-string.h:483:26: note: in expansion of macro '__fortify_memcpy_chk'
+     483 | #define memcpy(p, q, s)  __fortify_memcpy_chk(p, q, s,                  \
+         |                          ^~~~~~~~~~~~~~~~~~~~
+   arch/um/drivers/virt-pci.c:100:9: note: in expansion of macro 'memcpy'
+     100 |         memcpy(buf, cmd, cmd_size);
+         |         ^~~~~~
 
-Fix these 2 problems by testing the write fifo list of all priority
-levels using the new helper dd_has_write_work(), and by testing each
-fifo list using list_empty_careful().
+While at it, avoid literal "8" and use stored sizeof(buf->data) in
+memset() and um_pci_send_cmd().
 
-Fixes: c807ab520fc3 ("block/mq-deadline: Add I/O priority support")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Link: https://lore.kernel.org/r/20221124021208.242541-2-damien.lemoal@opensource.wdc.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/lkml/202211271212.SUZSC9f9-lkp@intel.com
+Fixes: ba38961a069b ("um: Enable FORTIFY_SOURCE")
+Cc: Richard Weinberger <richard@nod.at>
+Cc: Anton Ivanov <anton.ivanov@cambridgegreys.com>
+Cc: Johannes Berg <johannes@sipsolutions.net>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Xiu Jianfeng <xiujianfeng@huawei.com>
+Cc: Vincent Whitchurch <vincent.whitchurch@axis.com>
+Cc: linux-um@lists.infradead.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/mq-deadline.c |   17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ arch/um/drivers/virt-pci.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/block/mq-deadline.c
-+++ b/block/mq-deadline.c
-@@ -789,6 +789,18 @@ static void dd_prepare_request(struct re
- 	rq->elv.priv[0] = NULL;
- }
- 
-+static bool dd_has_write_work(struct blk_mq_hw_ctx *hctx)
-+{
-+	struct deadline_data *dd = hctx->queue->elevator->elevator_data;
-+	enum dd_prio p;
-+
-+	for (p = 0; p <= DD_PRIO_MAX; p++)
-+		if (!list_empty_careful(&dd->per_prio[p].fifo_list[DD_WRITE]))
-+			return true;
-+
-+	return false;
-+}
-+
- /*
-  * Callback from inside blk_mq_free_request().
-  *
-@@ -828,9 +840,10 @@ static void dd_finish_request(struct req
- 
- 		spin_lock_irqsave(&dd->zone_lock, flags);
- 		blk_req_zone_write_unlock(rq);
--		if (!list_empty(&per_prio->fifo_list[DD_WRITE]))
--			blk_mq_sched_mark_restart_hctx(rq->mq_hctx);
- 		spin_unlock_irqrestore(&dd->zone_lock, flags);
-+
-+		if (dd_has_write_work(rq->mq_hctx))
-+			blk_mq_sched_mark_restart_hctx(rq->mq_hctx);
+--- a/arch/um/drivers/virt-pci.c
++++ b/arch/um/drivers/virt-pci.c
+@@ -97,7 +97,8 @@ static int um_pci_send_cmd(struct um_pci
  	}
- }
  
+ 	buf = get_cpu_var(um_pci_msg_bufs);
+-	memcpy(buf, cmd, cmd_size);
++	if (buf)
++		memcpy(buf, cmd, cmd_size);
+ 
+ 	if (posted) {
+ 		u8 *ncmd = kmalloc(cmd_size + extra_size, GFP_ATOMIC);
+@@ -182,6 +183,7 @@ static unsigned long um_pci_cfgspace_rea
+ 	struct um_pci_message_buffer *buf;
+ 	u8 *data;
+ 	unsigned long ret = ULONG_MAX;
++	size_t bytes = sizeof(buf->data);
+ 
+ 	if (!dev)
+ 		return ULONG_MAX;
+@@ -189,7 +191,8 @@ static unsigned long um_pci_cfgspace_rea
+ 	buf = get_cpu_var(um_pci_msg_bufs);
+ 	data = buf->data;
+ 
+-	memset(buf->data, 0xff, sizeof(buf->data));
++	if (buf)
++		memset(data, 0xff, bytes);
+ 
+ 	switch (size) {
+ 	case 1:
+@@ -204,7 +207,7 @@ static unsigned long um_pci_cfgspace_rea
+ 		goto out;
+ 	}
+ 
+-	if (um_pci_send_cmd(dev, &hdr, sizeof(hdr), NULL, 0, data, 8))
++	if (um_pci_send_cmd(dev, &hdr, sizeof(hdr), NULL, 0, data, bytes))
+ 		goto out;
+ 
+ 	switch (size) {
 
 
