@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EAAFAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:23:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18A8EC433EF;
-	Wed,  4 Jan 2023 16:23:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AECB0AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:23:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 151A5C433EF;
+	Wed,  4 Jan 2023 16:23:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849398;
-	bh=uiao/3bOP5kOBde8U+iYC0LvYPz2gOUMKKx+IpRxZo8=;
+	s=korg; t=1672849401;
+	bh=XTQOtquhSYCXocnWBLItVUcUgLnIYWIzgIMsy9sh2as=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T1rzN/iwETvHn268yib/Yb1qQn/6Zif/Ov9wE2BTvgJ+RivAEVLtspgH2y7rj4rbC
-	 YRDH51PGYZVbDA0Myq1jdPvPuyS+cNjVAYKsB1kcQ3vueDzZxesoE0VuJ3NzKnNmKp
-	 LWZpuIQpnIcR6VXHRSq2HzA9tOx5U5Ui1nsHbmNU=
+	b=gwHeBa3wV/Oln4LMw2geN3FyhFIOeXly1bO5l1kPalIn7fcI2ahS9oD9e4f44yjpb
+	 g4DwWp3fOuLL3F6wklrN5SozO0Mg1O9jX9IDyHMT/1ugQ9Y5hoGDrZJ4lgO7YOavPK
+	 UszYdpd43aRhtKxGqZ+bnS1JfOCEayCB/Iqjjl9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kim Phillips <kim.phillips@amd.com>,
-	Suravee Suthikulpanit <Suravee.Suthikulpanit@amd.com>,
-	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 6.0 114/177] iommu/amd: Fix ivrs_acpihid cmdline parsing code
-Date: Wed,  4 Jan 2023 17:06:45 +0100
-Message-Id: <20230104160511.097365718@linuxfoundation.org>
+	syzbot+57b25da729eb0b88177d@syzkaller.appspotmail.com,
+	Ye Bin <yebin10@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Eric Biggers <ebiggers@google.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.1 182/207] ext4: fix uninititialized value in ext4_evict_inode
+Date: Wed,  4 Jan 2023 17:07:20 +0100
+Message-Id: <20230104160517.652397892@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,45 +38,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kim Phillips <kim.phillips@amd.com>
+From: Ye Bin <yebin10@huawei.com>
 
-commit 5f18e9f8868c6d4eae71678e7ebd4977b7d8c8cf upstream.
+commit 7ea71af94eaaaf6d9aed24bc94a05b977a741cb9 upstream.
 
-The second (UID) strcmp in acpi_dev_hid_uid_match considers
-"0" and "00" different, which can prevent device registration.
+Syzbot found the following issue:
+=====================================================
+BUG: KMSAN: uninit-value in ext4_evict_inode+0xdd/0x26b0 fs/ext4/inode.c:180
+ ext4_evict_inode+0xdd/0x26b0 fs/ext4/inode.c:180
+ evict+0x365/0x9a0 fs/inode.c:664
+ iput_final fs/inode.c:1747 [inline]
+ iput+0x985/0xdd0 fs/inode.c:1773
+ __ext4_new_inode+0xe54/0x7ec0 fs/ext4/ialloc.c:1361
+ ext4_mknod+0x376/0x840 fs/ext4/namei.c:2844
+ vfs_mknod+0x79d/0x830 fs/namei.c:3914
+ do_mknodat+0x47d/0xaa0
+ __do_sys_mknodat fs/namei.c:3992 [inline]
+ __se_sys_mknodat fs/namei.c:3989 [inline]
+ __ia32_sys_mknodat+0xeb/0x150 fs/namei.c:3989
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x33/0x70 arch/x86/entry/common.c:203
+ do_SYSENTER_32+0x1b/0x20 arch/x86/entry/common.c:246
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
 
-Have the AMD IOMMU driver's ivrs_acpihid parsing code remove
-any leading zeroes to make the UID strcmp succeed.  Now users
-can safely specify "AMDxxxxx:00" or "AMDxxxxx:0" and expect
-the same behaviour.
+Uninit was created at:
+ __alloc_pages+0x9f1/0xe80 mm/page_alloc.c:5578
+ alloc_pages+0xaae/0xd80 mm/mempolicy.c:2285
+ alloc_slab_page mm/slub.c:1794 [inline]
+ allocate_slab+0x1b5/0x1010 mm/slub.c:1939
+ new_slab mm/slub.c:1992 [inline]
+ ___slab_alloc+0x10c3/0x2d60 mm/slub.c:3180
+ __slab_alloc mm/slub.c:3279 [inline]
+ slab_alloc_node mm/slub.c:3364 [inline]
+ slab_alloc mm/slub.c:3406 [inline]
+ __kmem_cache_alloc_lru mm/slub.c:3413 [inline]
+ kmem_cache_alloc_lru+0x6f3/0xb30 mm/slub.c:3429
+ alloc_inode_sb include/linux/fs.h:3117 [inline]
+ ext4_alloc_inode+0x5f/0x860 fs/ext4/super.c:1321
+ alloc_inode+0x83/0x440 fs/inode.c:259
+ new_inode_pseudo fs/inode.c:1018 [inline]
+ new_inode+0x3b/0x430 fs/inode.c:1046
+ __ext4_new_inode+0x2a7/0x7ec0 fs/ext4/ialloc.c:959
+ ext4_mkdir+0x4d5/0x1560 fs/ext4/namei.c:2992
+ vfs_mkdir+0x62a/0x870 fs/namei.c:4035
+ do_mkdirat+0x466/0x7b0 fs/namei.c:4060
+ __do_sys_mkdirat fs/namei.c:4075 [inline]
+ __se_sys_mkdirat fs/namei.c:4073 [inline]
+ __ia32_sys_mkdirat+0xc4/0x120 fs/namei.c:4073
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x33/0x70 arch/x86/entry/common.c:203
+ do_SYSENTER_32+0x1b/0x20 arch/x86/entry/common.c:246
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
 
-Fixes: ca3bf5d47cec ("iommu/amd: Introduces ivrs_acpihid kernel parameter")
-Signed-off-by: Kim Phillips <kim.phillips@amd.com>
-Cc: stable@vger.kernel.org
-Cc: Suravee Suthikulpanit <Suravee.Suthikulpanit@amd.com>
-Cc: Joerg Roedel <jroedel@suse.de>
-Link: https://lore.kernel.org/r/20220919155638.391481-1-kim.phillips@amd.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+CPU: 1 PID: 4625 Comm: syz-executor.2 Not tainted 6.1.0-rc4-syzkaller-62821-gcb231e2f67ec #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+=====================================================
+
+Now, 'ext4_alloc_inode()' didn't init 'ei->i_flags'. If new inode failed
+before set 'ei->i_flags' in '__ext4_new_inode()', then do 'iput()'. As after
+6bc0d63dad7f commit will access 'ei->i_flags' in 'ext4_evict_inode()' which
+will lead to access uninit-value.
+To solve above issue just init 'ei->i_flags' in 'ext4_alloc_inode()'.
+
+Reported-by: syzbot+57b25da729eb0b88177d@syzkaller.appspotmail.com
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Fixes: 6bc0d63dad7f ("ext4: remove EA inode entry from mbcache on inode eviction")
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20221117073603.2598882-1-yebin@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/init.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/ext4/super.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -3471,6 +3471,13 @@ static int __init parse_ivrs_acpihid(cha
- 		return 1;
- 	}
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -1323,6 +1323,7 @@ static struct inode *ext4_alloc_inode(st
+ 		return NULL;
  
-+	/*
-+	 * Ignore leading zeroes after ':', so e.g., AMDI0095:00
-+	 * will match AMDI0095:0 in the second strcmp in acpi_dev_hid_uid_match
-+	 */
-+	while (*uid == '0' && *(uid + 1))
-+		uid++;
-+
- 	i = early_acpihid_map_size++;
- 	memcpy(early_acpihid_map[i].hid, hid, strlen(hid));
- 	memcpy(early_acpihid_map[i].uid, uid, strlen(uid));
+ 	inode_set_iversion(&ei->vfs_inode, 1);
++	ei->i_flags = 0;
+ 	spin_lock_init(&ei->i_raw_lock);
+ 	INIT_LIST_HEAD(&ei->i_prealloc_list);
+ 	atomic_set(&ei->i_prealloc_active, 0);
 
 
