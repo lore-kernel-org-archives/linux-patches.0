@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F7EFAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A2AC433EF;
-	Wed,  4 Jan 2023 16:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F522AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B16D7C433EF;
+	Wed,  4 Jan 2023 16:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849352;
-	bh=RN0M+J3vqCCJpEcexJuW+gDn1bDAXANMXvjsflhV+/8=;
+	s=korg; t=1672849355;
+	bh=eQUw//YQ2mPxPP/kOf1ekHVOmhMfEWJqpHePVMxDQ3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pMazN72jnbF2l3CmqSqL97b84EjGXepbCUQcsJODLcs0Y4j2xmB+pRY0IhJV/eGNS
-	 1CVmWftxoYqEjVFpfEgf9gxt5qQm3X9lAsHAz4N1AcPSzIBlWsVgz+/JvJF9DvHY2F
-	 bRJzoR1CVlV8uWpkaNwTneo+DTkGgmkvvXsQPd2k=
+	b=pmcIHS6Jd0gCTCVLQIjEjteERv/nicePYmdUSF2JeGDWf3TScEvCJ1HmzYX6ANKsQ
+	 QfJVcrdkGoPeEzoep9/nbUMImtF1rpQXCTOkih1Wp4gNvFOkYT70i0fG9yhJMT/xGH
+	 U+UM45IPFH5ERDiETpN676hEUpG/4ZEdN0LdDwh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.0 094/177] ipu3-imgu: Fix NULL pointer dereference in imgu_subdev_set_selection()
-Date: Wed,  4 Jan 2023 17:06:25 +0100
-Message-Id: <20230104160510.486726882@linuxfoundation.org>
+	syzbot+ba9dac45bc76c490b7c3@syzkaller.appspotmail.com,
+	Eric Biggers <ebiggers@google.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.1 175/207] ext4: dont allow journal inode to have encrypt flag
+Date: Wed,  4 Jan 2023 17:07:13 +0100
+Message-Id: <20230104160517.415207063@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,130 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maximilian Luz <luzmaximilian@gmail.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit dc608edf7d45ba0c2ad14c06eccd66474fec7847 upstream.
+commit 105c78e12468413e426625831faa7db4284e1fec upstream.
 
-Calling v4l2_subdev_get_try_crop() and v4l2_subdev_get_try_compose()
-with a subdev state of NULL leads to a NULL pointer dereference. This
-can currently happen in imgu_subdev_set_selection() when the state
-passed in is NULL, as this method first gets pointers to both the "try"
-and "active" states and only then decides which to use.
+Mounting a filesystem whose journal inode has the encrypt flag causes a
+NULL dereference in fscrypt_limit_io_blocks() when the 'inlinecrypt'
+mount option is used.
 
-The same issue has been addressed for imgu_subdev_get_selection() with
-commit 30d03a0de650 ("ipu3-imgu: Fix NULL pointer dereference in active
-selection access"). However the issue still persists in
-imgu_subdev_set_selection().
+The problem is that when jbd2_journal_init_inode() calls bmap(), it
+eventually finds its way into ext4_iomap_begin(), which calls
+fscrypt_limit_io_blocks().  fscrypt_limit_io_blocks() requires that if
+the inode is encrypted, then its encryption key must already be set up.
+That's not the case here, since the journal inode is never "opened" like
+a normal file would be.  Hence the crash.
 
-Therefore, apply a similar fix as done in the aforementioned commit to
-imgu_subdev_set_selection(). To keep things a bit cleaner, introduce
-helper functions for "crop" and "compose" access and use them in both
-imgu_subdev_set_selection() and imgu_subdev_get_selection().
+A reproducer is:
 
-Fixes: 0d346d2a6f54 ("media: v4l2-subdev: add subdev-wide state struct")
-Cc: stable@vger.kernel.org # for v5.14 and later
-Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+    mkfs.ext4 -F /dev/vdb
+    debugfs -w /dev/vdb -R "set_inode_field <8> flags 0x80808"
+    mount /dev/vdb /mnt -o inlinecrypt
+
+To fix this, make ext4 consider journal inodes with the encrypt flag to
+be invalid.  (Note, maybe other flags should be rejected on the journal
+inode too.  For now, this is just the minimal fix for the above issue.)
+
+I've marked this as fixing the commit that introduced the call to
+fscrypt_limit_io_blocks(), since that's what made an actual crash start
+being possible.  But this fix could be applied to any version of ext4
+that supports the encrypt feature.
+
+Reported-by: syzbot+ba9dac45bc76c490b7c3@syzkaller.appspotmail.com
+Fixes: 38ea50daa7a4 ("ext4: support direct I/O with fscrypt using blk-crypto")
+Cc: stable@vger.kernel.org
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20221102053312.189962-1-ebiggers@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/ipu3/ipu3-v4l2.c |   57 +++++++++++++++++++--------------
- 1 file changed, 34 insertions(+), 23 deletions(-)
+ fs/ext4/super.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/staging/media/ipu3/ipu3-v4l2.c
-+++ b/drivers/staging/media/ipu3/ipu3-v4l2.c
-@@ -188,6 +188,28 @@ static int imgu_subdev_set_fmt(struct v4
- 	return 0;
- }
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -5724,7 +5724,7 @@ static struct inode *ext4_get_journal_in
  
-+static struct v4l2_rect *
-+imgu_subdev_get_crop(struct imgu_v4l2_subdev *sd,
-+		     struct v4l2_subdev_state *sd_state, unsigned int pad,
-+		     enum v4l2_subdev_format_whence which)
-+{
-+	if (which == V4L2_SUBDEV_FORMAT_TRY)
-+		return v4l2_subdev_get_try_crop(&sd->subdev, sd_state, pad);
-+	else
-+		return &sd->rect.eff;
-+}
-+
-+static struct v4l2_rect *
-+imgu_subdev_get_compose(struct imgu_v4l2_subdev *sd,
-+			struct v4l2_subdev_state *sd_state, unsigned int pad,
-+			enum v4l2_subdev_format_whence which)
-+{
-+	if (which == V4L2_SUBDEV_FORMAT_TRY)
-+		return v4l2_subdev_get_try_compose(&sd->subdev, sd_state, pad);
-+	else
-+		return &sd->rect.bds;
-+}
-+
- static int imgu_subdev_get_selection(struct v4l2_subdev *sd,
- 				     struct v4l2_subdev_state *sd_state,
- 				     struct v4l2_subdev_selection *sel)
-@@ -200,18 +222,12 @@ static int imgu_subdev_get_selection(str
- 
- 	switch (sel->target) {
- 	case V4L2_SEL_TGT_CROP:
--		if (sel->which == V4L2_SUBDEV_FORMAT_TRY)
--			sel->r = *v4l2_subdev_get_try_crop(sd, sd_state,
--							   sel->pad);
--		else
--			sel->r = imgu_sd->rect.eff;
-+		sel->r = *imgu_subdev_get_crop(imgu_sd, sd_state, sel->pad,
-+					       sel->which);
- 		return 0;
- 	case V4L2_SEL_TGT_COMPOSE:
--		if (sel->which == V4L2_SUBDEV_FORMAT_TRY)
--			sel->r = *v4l2_subdev_get_try_compose(sd, sd_state,
--							      sel->pad);
--		else
--			sel->r = imgu_sd->rect.bds;
-+		sel->r = *imgu_subdev_get_compose(imgu_sd, sd_state, sel->pad,
-+						  sel->which);
- 		return 0;
- 	default:
- 		return -EINVAL;
-@@ -223,10 +239,9 @@ static int imgu_subdev_set_selection(str
- 				     struct v4l2_subdev_selection *sel)
- {
- 	struct imgu_device *imgu = v4l2_get_subdevdata(sd);
--	struct imgu_v4l2_subdev *imgu_sd = container_of(sd,
--							struct imgu_v4l2_subdev,
--							subdev);
--	struct v4l2_rect *rect, *try_sel;
-+	struct imgu_v4l2_subdev *imgu_sd =
-+		container_of(sd, struct imgu_v4l2_subdev, subdev);
-+	struct v4l2_rect *rect;
- 
- 	dev_dbg(&imgu->pci_dev->dev,
- 		 "set subdev %u sel which %u target 0x%4x rect [%ux%u]",
-@@ -238,22 +253,18 @@ static int imgu_subdev_set_selection(str
- 
- 	switch (sel->target) {
- 	case V4L2_SEL_TGT_CROP:
--		try_sel = v4l2_subdev_get_try_crop(sd, sd_state, sel->pad);
--		rect = &imgu_sd->rect.eff;
-+		rect = imgu_subdev_get_crop(imgu_sd, sd_state, sel->pad,
-+					    sel->which);
- 		break;
- 	case V4L2_SEL_TGT_COMPOSE:
--		try_sel = v4l2_subdev_get_try_compose(sd, sd_state, sel->pad);
--		rect = &imgu_sd->rect.bds;
-+		rect = imgu_subdev_get_compose(imgu_sd, sd_state, sel->pad,
-+					       sel->which);
- 		break;
- 	default:
- 		return -EINVAL;
- 	}
- 
--	if (sel->which == V4L2_SUBDEV_FORMAT_TRY)
--		*try_sel = sel->r;
--	else
--		*rect = sel->r;
--
-+	*rect = sel->r;
- 	return 0;
- }
- 
+ 	ext4_debug("Journal inode found at %p: %lld bytes\n",
+ 		  journal_inode, journal_inode->i_size);
+-	if (!S_ISREG(journal_inode->i_mode)) {
++	if (!S_ISREG(journal_inode->i_mode) || IS_ENCRYPTED(journal_inode)) {
+ 		ext4_msg(sb, KERN_ERR, "invalid journal inode");
+ 		iput(journal_inode);
+ 		return NULL;
 
 
