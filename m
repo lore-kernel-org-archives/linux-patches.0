@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9E48AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:19:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B170C433D2;
-	Wed,  4 Jan 2023 16:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C5FAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:19:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 138BBC433D2;
+	Wed,  4 Jan 2023 16:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849180;
-	bh=RgYOqSb9VEXTOoprQI6xWOMh/t5UklMHpPQKAMrXJKI=;
+	s=korg; t=1672849183;
+	bh=03yeJ01VnxS7UaP6UzPjYv65grxSfSIhNPFm3Y77nZo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=owF27ZZetYCKG04HaSkMsYlCV6ga2UOoamNCyodLelYsoy8X/8p4JredM24m99dCW
-	 /Z9IVhyXV80kulUgBA9tri/e9O7Sbx2mApC5dpP6Gz2mmsYdp1FrOLvv/y8lDgYxAk
-	 moCxz9/4iYi/2BFLrUC/Ro+tunqO6sHb3jWp0Tmk=
+	b=oLd2Tb3JIF70rknYrDv+mLR610/9W8mRtROuAKS4N7Z8jexFoS6EHJC5pTaQmV1mp
+	 uRY8afjp+l1MBDmUSiTcXI+9b+KH5oyQ7gCK/RyOKM0kmyiQnlc6i6Rak49qypjYUY
+	 uJ/UXn9+AeTPACHxWfLX1PmkPbwXaYD7nxacMW4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 147/207] parisc: Drop locking in pdc console code
-Date: Wed,  4 Jan 2023 17:06:45 +0100
-Message-Id: <20230104160516.567851199@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.0 079/177] media: dvb-core: Fix UAF due to refcount races at releasing
+Date: Wed,  4 Jan 2023 17:06:10 +0100
+Message-Id: <20230104160510.046338970@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -33,67 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 7dc4dbfe750e1f18c511e73c8ed114da8de9ff85 upstream.
+commit fd3d91ab1c6ab0628fe642dd570b56302c30a792 upstream.
 
-No need to have specific locking for console I/O since
-the PDC functions provide an own locking.
+The dvb-core tries to sync the releases of opened files at
+dvb_dmxdev_release() with two refcounts: dvbdev->users and
+dvr_dvbdev->users.  A problem is present in those two syncs: when yet
+another dvb_demux_open() is called during those sync waits,
+dvb_demux_open() continues to process even if the device is being
+closed.  This includes the increment of the former refcount, resulting
+in the leftover refcount after the sync of the latter refcount at
+dvb_dmxdev_release().  It ends up with use-after-free, since the
+function believes that all usages were gone and releases the
+resources.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org> # 6.1+
+This patch addresses the problem by adding the check of dmxdev->exit
+flag at dvb_demux_open(), just like dvb_dvr_open() already does.  With
+the exit flag check, the second call of dvb_demux_open() fails, hence
+the further corruption can be avoided.
+
+Also for avoiding the races of the dmxdev->exit flag reference, this
+patch serializes the dmxdev->exit set up and the sync waits with the
+dmxdev->mutex lock at dvb_dmxdev_release().  Without the mutex lock,
+dvb_demux_open() (or dvb_dvr_open()) may run concurrently with
+dvb_dmxdev_release(), which allows to skip the exit flag check and
+continue the open process that is being closed.
+
+CVE-2022-41218 is assigned to those bugs above.
+
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/20220908132754.30532-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/pdc_cons.c | 16 +++-------------
- 1 file changed, 3 insertions(+), 13 deletions(-)
+ drivers/media/dvb-core/dmxdev.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/arch/parisc/kernel/pdc_cons.c b/arch/parisc/kernel/pdc_cons.c
-index 7d0989f523d0..cf3bf8232374 100644
---- a/arch/parisc/kernel/pdc_cons.c
-+++ b/arch/parisc/kernel/pdc_cons.c
-@@ -12,37 +12,27 @@
- #include <asm/page.h>		/* for PAGE0 */
- #include <asm/pdc.h>		/* for iodc_call() proto and friends */
+--- a/drivers/media/dvb-core/dmxdev.c
++++ b/drivers/media/dvb-core/dmxdev.c
+@@ -790,6 +790,11 @@ static int dvb_demux_open(struct inode *
+ 	if (mutex_lock_interruptible(&dmxdev->mutex))
+ 		return -ERESTARTSYS;
  
--static DEFINE_SPINLOCK(pdc_console_lock);
--
- static void pdc_console_write(struct console *co, const char *s, unsigned count)
++	if (dmxdev->exit) {
++		mutex_unlock(&dmxdev->mutex);
++		return -ENODEV;
++	}
++
+ 	for (i = 0; i < dmxdev->filternum; i++)
+ 		if (dmxdev->filter[i].state == DMXDEV_STATE_FREE)
+ 			break;
+@@ -1448,7 +1453,10 @@ EXPORT_SYMBOL(dvb_dmxdev_init);
+ 
+ void dvb_dmxdev_release(struct dmxdev *dmxdev)
  {
- 	int i = 0;
--	unsigned long flags;
- 
--	spin_lock_irqsave(&pdc_console_lock, flags);
- 	do {
- 		i += pdc_iodc_print(s + i, count - i);
- 	} while (i < count);
--	spin_unlock_irqrestore(&pdc_console_lock, flags);
- }
- 
- #ifdef CONFIG_KGDB
- static int kgdb_pdc_read_char(void)
- {
--	int c;
--	unsigned long flags;
--
--	spin_lock_irqsave(&pdc_console_lock, flags);
--	c = pdc_iodc_getc();
--	spin_unlock_irqrestore(&pdc_console_lock, flags);
-+	int c = pdc_iodc_getc();
- 
- 	return (c <= 0) ? NO_POLL_CHAR : c;
- }
- 
- static void kgdb_pdc_write_char(u8 chr)
- {
--	if (PAGE0->mem_cons.cl_class != CL_DUPLEX)
--		pdc_console_write(NULL, &chr, 1);
-+	/* no need to print char as it's shown on standard console */
-+	/* pdc_iodc_print(&chr, 1); */
- }
- 
- static struct kgdb_io kgdb_pdc_io_ops = {
--- 
-2.39.0
-
++	mutex_lock(&dmxdev->mutex);
+ 	dmxdev->exit = 1;
++	mutex_unlock(&dmxdev->mutex);
++
+ 	if (dmxdev->dvbdev->users > 1) {
+ 		wait_event(dmxdev->dvbdev->wait_queue,
+ 				dmxdev->dvbdev->users == 1);
 
 
