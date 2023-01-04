@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA662AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:19:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A020C433D2;
-	Wed,  4 Jan 2023 16:19:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0254AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:19:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 214CDC433EF;
+	Wed,  4 Jan 2023 16:19:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849174;
-	bh=AipgWh0lSkZV+fTw1vScQ4PtoBkZ3hoHnYYd+w57pTg=;
+	s=korg; t=1672849177;
+	bh=0useKWpyImj+WHY1FQveRtjKY2RsJ9XqUU9nAGf6Ni8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IDQ+5p3No0Ol791s2fev4Pl2J7a/KQFDHVyI+gZYEx4Qo2C+yjbfU2134qz70G0rv
-	 bem9yJ72nILXgM9ZcJ2XhspTqzkDhT0co9zVJax/UBklNtupMR5mUBIeZ1wBHtwnVW
-	 NW2PBnpC3LB/uWSzwPpYaxZQfSmXTu3jPGard68M=
+	b=O6ZxIFdlkdksR+NHeGa/tNVnFAYqbtngQm598fGp1XoxD/aZMlo8amcQV6Nx/671V
+	 rGjTbJyFobjq7av7/9gx9zT+3aOFFpdOXG+EE+nQuPB9iACITETU+Qf+DR/IxXsUCZ
+	 5vC6GG+Xjc4S3jABE25+h69qgNVAs0FrkAajFEVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 146/207] parisc: led: Fix potential null-ptr-deref in start_task()
-Date: Wed,  4 Jan 2023 17:06:44 +0100
-Message-Id: <20230104160516.538474040@linuxfoundation.org>
+	Wenwen Wang <wenwen@cs.uga.edu>,
+	Keita Suzuki <keitasuzuki.park@sslab.ics.keio.ac.jp>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 6.0 078/177] media: dvb-core: Fix double free in dvb_register_device()
+Date: Wed,  4 Jan 2023 17:06:09 +0100
+Message-Id: <20230104160510.017565116@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,42 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Keita Suzuki <keitasuzuki.park@sslab.ics.keio.ac.jp>
 
-commit 41f563ab3c33698bdfc3403c7c2e6c94e73681e4 upstream.
+commit 6b0d0477fce747d4137aa65856318b55fba72198 upstream.
 
-start_task() calls create_singlethread_workqueue() and not checked the
-ret value, which may return NULL. And a null-ptr-deref may happen:
+In function dvb_register_device() -> dvb_register_media_device() ->
+dvb_create_media_entity(), dvb->entity is allocated and initialized. If
+the initialization fails, it frees the dvb->entity, and return an error
+code. The caller takes the error code and handles the error by calling
+dvb_media_device_free(), which unregisters the entity and frees the
+field again if it is not NULL. As dvb->entity may not NULLed in
+dvb_create_media_entity() when the allocation of dvbdev->pad fails, a
+double free may occur. This may also cause an Use After free in
+media_device_unregister_entity().
 
-start_task()
-    create_singlethread_workqueue() # failed, led_wq is NULL
-    queue_delayed_work()
-        queue_delayed_work_on()
-            __queue_delayed_work()  # warning here, but continue
-                __queue_work()      # access wq->flags, null-ptr-deref
+Fix this by storing NULL to dvb->entity when it is freed.
 
-Check the ret value and return -ENOMEM if it is NULL.
-
-Fixes: 3499495205a6 ("[PARISC] Use work queue in LED/LCD driver instead of tasklet.")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/linux-media/20220426052921.2088416-1-keitasuzuki.park@sslab.ics.keio.ac.jp
+Fixes: fcd5ce4b3936 ("media: dvb-core: fix a memory leak bug")
+Cc: stable@vger.kernel.org
+Cc: Wenwen Wang <wenwen@cs.uga.edu>
+Signed-off-by: Keita Suzuki <keitasuzuki.park@sslab.ics.keio.ac.jp>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parisc/led.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/dvb-core/dvbdev.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/parisc/led.c
-+++ b/drivers/parisc/led.c
-@@ -137,6 +137,9 @@ static int start_task(void)
- 
- 	/* Create the work queue and queue the LED task */
- 	led_wq = create_singlethread_workqueue("led_wq");	
-+	if (!led_wq)
-+		return -ENOMEM;
-+
- 	queue_delayed_work(led_wq, &led_task, 0);
- 
- 	return 0;
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -335,6 +335,7 @@ static int dvb_create_media_entity(struc
+ 				       GFP_KERNEL);
+ 		if (!dvbdev->pads) {
+ 			kfree(dvbdev->entity);
++			dvbdev->entity = NULL;
+ 			return -ENOMEM;
+ 		}
+ 	}
 
 
