@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C9E637
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 05:29:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A84F1C433EF;
-	Wed,  4 Jan 2023 05:29:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DE8F810
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 11:08:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE0AC433EF;
+	Wed,  4 Jan 2023 11:08:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672810167;
-	bh=h1rPRJhSDLO0mtWeLAlKQj4L0G7kMVaMsBVCk/atgwU=;
+	s=korg; t=1672830522;
+	bh=gU2PIy9PmMrmzGK3B2fUwGgTdHeKJCWcIu9vIJLjimg=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=fFFsiJ9NMVa5vjvSVW4AI4H9WIxItChO3F06PPHGbZXBgN6UX9h+05ItOctQNW80r
-	 ai0cG4X3iUEW8T2mSP6XYPygqsVyESDlzN65IySgEc4Sj66ZoNCc7Wr+Ogysma3aDz
-	 5/VmCkzSV87mIlbvOc7bJnftptCz0o+pBcVxyBQ4=
-Date: Wed, 4 Jan 2023 06:29:24 +0100
+	b=gbF+tC6RKG2t+F8kRs17Z3xXPg/AW++tKBrgK+e+TsUAyjKe14CN2TI6My+jbR1fC
+	 O6OCfT97NOtmN7run0682kpKaGfi7wX9oUzycrrkGCZzYHsqlKpvCQdvGtfQGPl7XU
+	 hTIrNWdWJfmqEUvJ3p/7I7SzuGEKIPjJNzZkPvNk=
+Date: Wed, 4 Jan 2023 12:08:39 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Joel Fernandes <joel@joelfernandes.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.10 00/63] 5.10.162-rc1 review
-Message-ID: <Y7UOtInxdmaIP9nH@kroah.com>
-References: <20230103081308.548338576@linuxfoundation.org>
- <Y7RUxwrokcIKZNZ4@google.com>
+To: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Cc: "David S. Miller" <davem@davemloft.net>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.0 00/74] 6.0.17-rc1 review
+Message-ID: <Y7VeN+WpVKqivRGL@kroah.com>
+References: <20230102110552.061937047@linuxfoundation.org>
+ <Y7QFW7O0xqSYTzyl@debian>
+ <CADVatmPJrRsKTNyzWYeU10k+3eycd1bXTnwAaF7KKOR+h6mwYw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -33,36 +34,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Y7RUxwrokcIKZNZ4@google.com>
+In-Reply-To: <CADVatmPJrRsKTNyzWYeU10k+3eycd1bXTnwAaF7KKOR+h6mwYw@mail.gmail.com>
 
-On Tue, Jan 03, 2023 at 04:16:07PM +0000, Joel Fernandes wrote:
-> On Tue, Jan 03, 2023 at 09:13:30AM +0100, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.10.162 release.
-> > There are 63 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Thu, 05 Jan 2023 08:12:47 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.162-rc1.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
+On Tue, Jan 03, 2023 at 10:59:58PM +0000, Sudip Mukherjee wrote:
+> On Tue, 3 Jan 2023 at 10:37, Sudip Mukherjee (Codethink)
+> <sudipm.mukherjee@gmail.com> wrote:
+> >
+> > Hi Greg,
+> >
+> > On Mon, Jan 02, 2023 at 12:21:33PM +0100, Greg Kroah-Hartman wrote:
+> > > This is the start of the stable review cycle for the 6.0.17 release.
+> > > There are 74 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > >
+> > > Responses should be made by Wed, 04 Jan 2023 11:05:34 +0000.
+> > > Anything received after that time might be too late.
+> >
 > 
-> Testing fails. Could you please pick these 2 up?
-> https://lore.kernel.org/r/20221230153215.1333921-1-joel@joelfernandes.org
-> https://lore.kernel.org/all/20221230153215.1333921-2-joel@joelfernandes.org/
+> <snip>
+> 
+> >
+> > mips: Booted on ci20 board. VNC server did not start, will try a bisect
+> > later tonight.
+> 
+> bisect pointed to 2575eebf1bd2 ("net: Return errno in
+> sk->sk_prot->get_port().") introduced in v6.0.16
+> Reverting it on top of v6.0.16 and 6.0.17-rc1 fixed the problem.
+> 
+> This is also in v6.1.y but the issue is not seen there, and I am
+> trying to figure out why.
 
-That is not a regression from 5.10.161, right?  This release is only for
-the io_uring stuff to make sure that backport was done correctly.
-
-The current "to apply" queue for the stable trees is very large right
-now due to everyone waiting to get tiny things into -rc1 instead of
-before then, so the above two are still not yet queued up, sorry.
+As there's probably only going to be one more 6.0.y release before it is
+end-of-life, if you can't figure it out, not that big of a deal :)
 
 thanks,
 
