@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3CFAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:19:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58544C433D2;
-	Wed,  4 Jan 2023 16:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09665AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:19:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760E9C433D2;
+	Wed,  4 Jan 2023 16:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849195;
-	bh=fzNwxn+5D9l4ObhjrXek79HPmvYNmES/HeGoYcrd520=;
+	s=korg; t=1672849198;
+	bh=6jpokDVvcQWx/S1bfOQ9dYOcbxmdbiv1i0vC/4/NjDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HH4SLtGtaEBmONWQc5mAgZjagUbstJTStvMcOIGBhvQmyymfpzniJZDFbtiwR4sPC
-	 BYXW9g0PIFANF2xSCDAcdm72zSrNVgqs62klfBSVCRugZRPX3ZTl7s2CIq041Mbl1O
-	 SJ0W3AlYkWki/X5sghXJOYw6oHhXGR6Gmo7P9JhQ=
+	b=ENHg749rL3ZCy3U1aROMRVy3iSdsG0jKCh+XRK/wFsXgv0WSTvgJfedRCnw/81G7w
+	 yWStTKXh9+9XYMIb3TxZ3lwrkxX/kof+HVVAL2NJza0prkxZwnWpvc6vAJ/ICgdun5
+	 pSW9Tg/fJPpFAS8/60mXTS19/kvoB2AvUW0LHRTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.0 081/177] cifs: fix missing display of three mount options
-Date: Wed,  4 Jan 2023 17:06:12 +0100
-Message-Id: <20230104160510.104715262@linuxfoundation.org>
+	Rafael Mendonca <rafaelmendsr@gmail.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.0 067/177] tracing: Fix race where eprobes can be called before the event
+Date: Wed,  4 Jan 2023 17:05:58 +0100
+Message-Id: <20230104160509.686116393@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -34,41 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve French <stfrench@microsoft.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 2bfd81043e944af0e52835ef6d9b41795af22341 upstream.
+commit d5f30a7da8ea8e6450250275cec5670cee3c4264 upstream.
 
-Three mount options: "tcpnodelay" and "noautotune" and "noblocksend"
-were not displayed when passed in on cifs/smb3 mounts (e.g. displayed
-in /proc/mounts e.g.).  No change to defaults so these are not
-displayed if not specified on mount.
+The flag that tells the event to call its triggers after reading the event
+is set for eprobes after the eprobe is enabled. This leads to a race where
+the eprobe may be triggered at the beginning of the event where the record
+information is NULL. The eprobe then dereferences the NULL record causing
+a NULL kernel pointer bug.
+
+Test for a NULL record to keep this from happening.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20221116192552.1066630-1-rafaelmendsr@gmail.com/
+Link: https://lore.kernel.org/all/20221117214249.2addbe10@gandalf.local.home/
 
 Cc: stable@vger.kernel.org
-Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 7491e2c442781 ("tracing: Add a probe that attaches to trace events")
+Reported-by: Rafael Mendonca <rafaelmendsr@gmail.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifsfs.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ kernel/trace/trace_eprobe.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/cifs/cifsfs.c
-+++ b/fs/cifs/cifsfs.c
-@@ -678,9 +678,15 @@ cifs_show_options(struct seq_file *s, st
- 	seq_printf(s, ",echo_interval=%lu",
- 			tcon->ses->server->echo_interval / HZ);
+--- a/kernel/trace/trace_eprobe.c
++++ b/kernel/trace/trace_eprobe.c
+@@ -563,6 +563,9 @@ static void eprobe_trigger_func(struct e
+ 	if (unlikely(!rec))
+ 		return;
  
--	/* Only display max_credits if it was overridden on mount */
-+	/* Only display the following if overridden on mount */
- 	if (tcon->ses->server->max_credits != SMB2_MAX_CREDITS_AVAILABLE)
- 		seq_printf(s, ",max_credits=%u", tcon->ses->server->max_credits);
-+	if (tcon->ses->server->tcp_nodelay)
-+		seq_puts(s, ",tcpnodelay");
-+	if (tcon->ses->server->noautotune)
-+		seq_puts(s, ",noautotune");
-+	if (tcon->ses->server->noblocksnd)
-+		seq_puts(s, ",noblocksend");
++	if (unlikely(!rec))
++		return;
++
+ 	__eprobe_trace_func(edata, rec);
+ }
  
- 	if (tcon->snapshot_time)
- 		seq_printf(s, ",snapshot=%llu", tcon->snapshot_time);
 
 
