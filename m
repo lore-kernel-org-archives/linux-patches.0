@@ -1,31 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB787AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D38C433EF;
-	Wed,  4 Jan 2023 16:18:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F372FAD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50DF7C433EF;
+	Wed,  4 Jan 2023 16:18:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849101;
-	bh=Qz2qusZJrX6VVCjEVjf5ce6SRu0+p0xhiKnVaIC+20A=;
+	s=korg; t=1672849104;
+	bh=crwRSUmU+3Quc+5mw88khZvxEgG14IXUugIzMdhQ0+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t/MJ/enGV9SPxMI0ghE58FOsXt43bZtBxtvr9BMObN6H54aLYQa8PSohZ/cJvPlJy
-	 3ZoW4kLQFJAaGbajzX8hGl/2vOMuulNsybiKnZPim3DDa6ksZCXKQjSVnVDi2wZMYc
-	 cfvLf5+RSBQy6d/g8lYh2IziKk9NAW/oCIac7aZA=
+	b=REswBh9YB0H3vIO6M1pGbPUoqXkpANEs/SqoA01B06K2oBWj53z+gdrbV85xV+2et
+	 nGEvYO3FVBIm1R8SRfgmoDH3e4ospS+VmC1ghjpyhaNucG8/a2LgWYCP5BjP/NwRZe
+	 0dwvaChqH2bGbnOnw5fpA3UaKzcDG+IWnrTDtrEU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rolf Eike Beer <eike-kernel@sf-tec.de>,
-	Corentin Labbe <clabbe@baylibre.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	stable@kernel.org
-Subject: [PATCH 6.1 133/207] crypto: n2 - add missing hash statesize
-Date: Wed,  4 Jan 2023 17:06:31 +0100
-Message-Id: <20230104160516.133526395@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"x86@kernel.org" <x86@kernel.org>,
+	Borislav Petkov <bp@alien8.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.0 064/177] ftrace/x86: Add back ftrace_expected for ftrace bug reports
+Date: Wed,  4 Jan 2023 17:05:55 +0100
+Message-Id: <20230104160509.595695854@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,74 +40,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corentin Labbe <clabbe@baylibre.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 76a4e874593543a2dff91d249c95bac728df2774 upstream.
+commit fd3dc56253acbe9c641a66d312d8393cd55eb04c upstream.
 
-Add missing statesize to hash templates.
-This is mandatory otherwise no algorithms can be registered as the core
-requires statesize to be set.
+After someone reported a bug report with a failed modification due to the
+expected value not matching what was found, it came to my attention that
+the ftrace_expected is no longer set when that happens. This makes for
+debugging the issue a bit more difficult.
 
-CC: stable@kernel.org # 4.3+
-Reported-by: Rolf Eike Beer <eike-kernel@sf-tec.de>
-Tested-by: Rolf Eike Beer <eike-kernel@sf-tec.de>
-Fixes: 0a625fd2abaa ("crypto: n2 - Add Niagara2 crypto driver")
-Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Set ftrace_expected to the expected code before calling ftrace_bug, so
+that it shows what was expected and why it failed.
+
+Link: https://lore.kernel.org/all/CA+wXwBQ-VhK+hpBtYtyZP-NiX4g8fqRRWithFOHQW-0coQ3vLg@mail.gmail.com/
+Link: https://lore.kernel.org/linux-trace-kernel/20221209105247.01d4e51d@gandalf.local.home
+
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: "x86@kernel.org" <x86@kernel.org>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 768ae4406a5c ("x86/ftrace: Use text_poke()")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/n2_core.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/x86/kernel/ftrace.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/crypto/n2_core.c
-+++ b/drivers/crypto/n2_core.c
-@@ -1229,6 +1229,7 @@ struct n2_hash_tmpl {
- 	const u8	*hash_init;
- 	u8		hw_op_hashsz;
- 	u8		digest_size;
-+	u8		statesize;
- 	u8		block_size;
- 	u8		auth_type;
- 	u8		hmac_type;
-@@ -1260,6 +1261,7 @@ static const struct n2_hash_tmpl hash_tm
- 	  .hmac_type	= AUTH_TYPE_HMAC_MD5,
- 	  .hw_op_hashsz	= MD5_DIGEST_SIZE,
- 	  .digest_size	= MD5_DIGEST_SIZE,
-+	  .statesize	= sizeof(struct md5_state),
- 	  .block_size	= MD5_HMAC_BLOCK_SIZE },
- 	{ .name		= "sha1",
- 	  .hash_zero	= sha1_zero_message_hash,
-@@ -1268,6 +1270,7 @@ static const struct n2_hash_tmpl hash_tm
- 	  .hmac_type	= AUTH_TYPE_HMAC_SHA1,
- 	  .hw_op_hashsz	= SHA1_DIGEST_SIZE,
- 	  .digest_size	= SHA1_DIGEST_SIZE,
-+	  .statesize	= sizeof(struct sha1_state),
- 	  .block_size	= SHA1_BLOCK_SIZE },
- 	{ .name		= "sha256",
- 	  .hash_zero	= sha256_zero_message_hash,
-@@ -1276,6 +1279,7 @@ static const struct n2_hash_tmpl hash_tm
- 	  .hmac_type	= AUTH_TYPE_HMAC_SHA256,
- 	  .hw_op_hashsz	= SHA256_DIGEST_SIZE,
- 	  .digest_size	= SHA256_DIGEST_SIZE,
-+	  .statesize	= sizeof(struct sha256_state),
- 	  .block_size	= SHA256_BLOCK_SIZE },
- 	{ .name		= "sha224",
- 	  .hash_zero	= sha224_zero_message_hash,
-@@ -1284,6 +1288,7 @@ static const struct n2_hash_tmpl hash_tm
- 	  .hmac_type	= AUTH_TYPE_RESERVED,
- 	  .hw_op_hashsz	= SHA256_DIGEST_SIZE,
- 	  .digest_size	= SHA224_DIGEST_SIZE,
-+	  .statesize	= sizeof(struct sha256_state),
- 	  .block_size	= SHA224_BLOCK_SIZE },
- };
- #define NUM_HASH_TMPLS ARRAY_SIZE(hash_tmpls)
-@@ -1424,6 +1429,7 @@ static int __n2_register_one_ahash(const
+--- a/arch/x86/kernel/ftrace.c
++++ b/arch/x86/kernel/ftrace.c
+@@ -217,7 +217,9 @@ void ftrace_replace_code(int enable)
  
- 	halg = &ahash->halg;
- 	halg->digestsize = tmpl->digest_size;
-+	halg->statesize = tmpl->statesize;
- 
- 	base = &halg->base;
- 	snprintf(base->cra_name, CRYPTO_MAX_ALG_NAME, "%s", tmpl->name);
+ 		ret = ftrace_verify_code(rec->ip, old);
+ 		if (ret) {
++			ftrace_expected = old;
+ 			ftrace_bug(ret, rec);
++			ftrace_expected = NULL;
+ 			return;
+ 		}
+ 	}
 
 
