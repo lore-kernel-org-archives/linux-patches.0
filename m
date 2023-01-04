@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C41E0AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4185AC433D2;
-	Wed,  4 Jan 2023 16:18:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6202AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32BFBC433EF;
+	Wed,  4 Jan 2023 16:18:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849089;
-	bh=wHJNlAyPP2Wn7YPgX7H3tucz7VLrm4cDpOvW54T+hXc=;
+	s=korg; t=1672849092;
+	bh=kOMYvEwWYhhze7hNlLH028+FaICmx+4Iwg9FgWbVFno=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GNaYuRu4Tr7St888x457O+LiAfieqmOGF2BFdHin1NOUyg4FyYE+rbGLRoPu0mALb
-	 y1psym5LNz5vzu0qoWEt/u8jFcqrSqfrrTokwOFj36HsdisuSI9h8tNEepVWLuh7xO
-	 S5nyBc+6+HSevrQdlmRH1cQ6P3OMJ18Bb189eNdU=
+	b=u5ym8MfBkL5H2NSJ0S/ZpPxH3m/m4fmR7sMuu6y822dXx4Ldb0OmntdBnD/XHBOiA
+	 2gvt9q4a5gou+oZuD2+sxfJ6dNFnBHoXcQBknAfd0VmznGghrwTVLYrUsEV70xVCEI
+	 b4Gbse5BuFREvEpmPNyRSxhCfiBLZYClUMBeStAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@linux.alibaba.com>,
-	Guo Ren <guoren@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 131/207] riscv: stacktrace: Fixup ftrace_graph_ret_addr retp argument
-Date: Wed,  4 Jan 2023 17:06:29 +0100
-Message-Id: <20230104160516.070850718@linuxfoundation.org>
+	Aaron Lewis <aaronlewis@google.com>,
+	Yu Zhang <yu.c.zhang@linux.intel.com>,
+	Sean Christopherson <seanjc@google.com>,
+	Jim Mattson <jmattson@google.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.0 062/177] KVM: nVMX: Properly expose ENABLE_USR_WAIT_PAUSE control to L1
+Date: Wed,  4 Jan 2023 17:05:53 +0100
+Message-Id: <20230104160509.536427669@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,36 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guo Ren <guoren@linux.alibaba.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit 5c3022e4a616d800cf5f4c3a981d7992179e44a1 upstream.
+commit 31de69f4eea77b28a9724b3fa55aae104fc91fc7 upstream.
 
-The 'retp' is a pointer to the return address on the stack, so we
-must pass the current return address pointer as the 'retp'
-argument to ftrace_push_return_trace(). Not parent function's
-return address on the stack.
+Set ENABLE_USR_WAIT_PAUSE in KVM's supported VMX MSR configuration if the
+feature is supported in hardware and enabled in KVM's base, non-nested
+configuration, i.e. expose ENABLE_USR_WAIT_PAUSE to L1 if it's supported.
+This fixes a bug where saving/restoring, i.e. migrating, a vCPU will fail
+if WAITPKG (the associated CPUID feature) is enabled for the vCPU, and
+obviously allows L1 to enable the feature for L2.
 
-Fixes: b785ec129bd9 ("riscv/ftrace: Add HAVE_FUNCTION_GRAPH_RET_ADDR_PTR support")
-Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
-Signed-off-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20221109064937.3643993-2-guoren@kernel.org
+KVM already effectively exposes ENABLE_USR_WAIT_PAUSE to L1 by stuffing
+the allowed-1 control ina vCPU's virtual MSR_IA32_VMX_PROCBASED_CTLS2 when
+updating secondary controls in response to KVM_SET_CPUID(2), but (a) that
+depends on flawed code (KVM shouldn't touch VMX MSRs in response to CPUID
+updates) and (b) runs afoul of vmx_restore_control_msr()'s restriction
+that the guest value must be a strict subset of the supported host value.
+
+Although no past commit explicitly enabled nested support for WAITPKG,
+doing so is safe and functionally correct from an architectural
+perspective as no additional KVM support is needed to virtualize TPAUSE,
+UMONITOR, and UMWAIT for L2 relative to L1, and KVM already forwards
+VM-Exits to L1 as necessary (commit bf653b78f960, "KVM: vmx: Introduce
+handle_unexpected_vmexit and handle WAITPKG vmexit").
+
+Note, KVM always keeps the hosts MSR_IA32_UMWAIT_CONTROL resident in
+hardware, i.e. always runs both L1 and L2 with the host's power management
+settings for TPAUSE and UMWAIT.  See commit bf09fb6cba4f ("KVM: VMX: Stop
+context switching MSR_IA32_UMWAIT_CONTROL") for more details.
+
+Fixes: e69e72faa3a0 ("KVM: x86: Add support for user wait instructions")
 Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Reported-by: Aaron Lewis <aaronlewis@google.com>
+Reported-by: Yu Zhang <yu.c.zhang@linux.intel.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Reviewed-by: Jim Mattson <jmattson@google.com>
+Message-Id: <20221213062306.667649-2-seanjc@google.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/stacktrace.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/vmx/nested.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/riscv/kernel/stacktrace.c
-+++ b/arch/riscv/kernel/stacktrace.c
-@@ -58,7 +58,7 @@ void notrace walk_stackframe(struct task
- 		} else {
- 			fp = frame->fp;
- 			pc = ftrace_graph_ret_addr(current, NULL, frame->ra,
--						   (unsigned long *)(fp - 8));
-+						   &frame->ra);
- 		}
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -6685,7 +6685,8 @@ void nested_vmx_setup_ctls_msrs(struct n
+ 		SECONDARY_EXEC_ENABLE_INVPCID |
+ 		SECONDARY_EXEC_RDSEED_EXITING |
+ 		SECONDARY_EXEC_XSAVES |
+-		SECONDARY_EXEC_TSC_SCALING;
++		SECONDARY_EXEC_TSC_SCALING |
++		SECONDARY_EXEC_ENABLE_USR_WAIT_PAUSE;
  
- 	}
+ 	/*
+ 	 * We can emulate "VMCS shadowing," even if the hardware
 
 
