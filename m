@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36682AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:15:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92B65C433F1;
-	Wed,  4 Jan 2023 16:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65CC4AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:15:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72C2C433F0;
+	Wed,  4 Jan 2023 16:15:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848933;
-	bh=+K7NqQ8ruQddz2eXqd/yUqVXYkEvC4WHEVyi3KhOHE4=;
+	s=korg; t=1672848936;
+	bh=bK8W/NAE44kRScv0TT1GV/7zOR6XfNojMJQX7FK00tE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NmgVC0zG+WAEJvYBAklJqey08M1Z64/oYemhBgxb0za3RGgVI6uh3O2C4/Hj9eWYH
-	 zbmUREt0cSfhlc/7bjKoH23aZZZ669mMpFU0UmD8ecOy87+x6f5wFMTgA/2fCHBYhK
-	 1XIy4Apd5huePUKkXzzqgFq2+pdF1HOOacbqIfTQ=
+	b=uRwMIu4nnZtu3GxYol/WA7Miatj5wnFnPJ7nfv/RCgJhYMQjWei2Z0qRb1xj6EdLY
+	 0iLmfHrZEirCAmDJTyjzztyCvMrBpPqV/HsXfyRla1j9VSyrWafnht2pS9sNkbr1ji
+	 jF1yIU2QoToud2f92WeKCOWCL3E12e/8enX6tfFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 106/207] cifs: set correct ipc status after initial tree connect
-Date: Wed,  4 Jan 2023 17:06:04 +0100
-Message-Id: <20230104160515.269504648@linuxfoundation.org>
+	Chris Chiu <chris.chiu@canonical.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 037/177] ALSA: hda/realtek: Apply dual codec fixup for Dell Latitude laptops
+Date: Wed,  4 Jan 2023 17:05:28 +0100
+Message-Id: <20230104160508.783140343@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,46 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@cjr.nz>
+From: Chris Chiu <chris.chiu@canonical.com>
 
-commit 86fe0fa8747fb1bc4cc44fc1966e0959fe752f38 upstream.
+[ Upstream commit a4517c4f3423c7c448f2c359218f97c1173523a1 ]
 
-cifs_tcon::status wasn't correctly updated to TID_GOOD after
-establishing initial IPC connection thus staying at TID_NEW as long as
-it wasn't reconnected.
+The Dell Latiture 3340/3440/3540 laptops with Realtek ALC3204 have
+dual codecs and need the ALC1220_FIXUP_GB_DUAL_CODECS to fix the
+conflicts of Master controls. The existing headset mic fixup for
+Dell is also required to enable the jack sense and the headset mic.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Introduce a new fixup to fix the dual codec and headset mic issues
+for particular Dell laptops since other old Dell laptops with the
+same codec configuration are already well handled by the fixup in
+alc269_fallback_pin_fixup_tbl[].
+
+Signed-off-by: Chris Chiu <chris.chiu@canonical.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20221226114303.4027500-1-chris.chiu@canonical.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/connect.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -1871,6 +1871,9 @@ cifs_setup_ipc(struct cifs_ses *ses, str
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index d2f122833830..cca6e8fdec5f 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -7197,6 +7197,7 @@ enum {
+ 	ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK,
+ 	ALC287_FIXUP_YOGA9_14IAP7_BASS_SPK_PIN,
+ 	ALC295_FIXUP_DELL_INSPIRON_TOP_SPEAKERS,
++	ALC236_FIXUP_DELL_DUAL_CODECS,
+ };
  
- 	cifs_dbg(FYI, "IPC tcon rc=%d ipc tid=0x%x\n", rc, tcon->tid);
+ /* A special fixup for Lenovo C940 and Yoga Duet 7;
+@@ -9152,6 +9153,12 @@ static const struct hda_fixup alc269_fixups[] = {
+ 		.chained = true,
+ 		.chain_id = ALC269_FIXUP_DELL4_MIC_NO_PRESENCE,
+ 	},
++	[ALC236_FIXUP_DELL_DUAL_CODECS] = {
++		.type = HDA_FIXUP_PINS,
++		.v.func = alc1220_fixup_gb_dual_codecs,
++		.chained = true,
++		.chain_id = ALC255_FIXUP_DELL1_MIC_NO_PRESENCE,
++	},
+ };
  
-+	spin_lock(&tcon->tc_lock);
-+	tcon->status = TID_GOOD;
-+	spin_unlock(&tcon->tc_lock);
- 	ses->tcon_ipc = tcon;
- out:
- 	return rc;
-@@ -2280,10 +2283,10 @@ cifs_get_smb_ses(struct TCP_Server_Info
- 	list_add(&ses->smb_ses_list, &server->smb_ses_list);
- 	spin_unlock(&cifs_tcp_ses_lock);
- 
--	free_xid(xid);
--
- 	cifs_setup_ipc(ses, ctx);
- 
-+	free_xid(xid);
-+
- 	return ses;
- 
- get_ses_fail:
+ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+@@ -9254,6 +9261,12 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1028, 0x0b1a, "Dell Precision 5570", ALC289_FIXUP_DUAL_SPK),
+ 	SND_PCI_QUIRK(0x1028, 0x0b37, "Dell Inspiron 16 Plus 7620 2-in-1", ALC295_FIXUP_DELL_INSPIRON_TOP_SPEAKERS),
+ 	SND_PCI_QUIRK(0x1028, 0x0b71, "Dell Inspiron 16 Plus 7620", ALC295_FIXUP_DELL_INSPIRON_TOP_SPEAKERS),
++	SND_PCI_QUIRK(0x1028, 0x0c19, "Dell Precision 3340", ALC236_FIXUP_DELL_DUAL_CODECS),
++	SND_PCI_QUIRK(0x1028, 0x0c1a, "Dell Precision 3340", ALC236_FIXUP_DELL_DUAL_CODECS),
++	SND_PCI_QUIRK(0x1028, 0x0c1b, "Dell Precision 3440", ALC236_FIXUP_DELL_DUAL_CODECS),
++	SND_PCI_QUIRK(0x1028, 0x0c1c, "Dell Precision 3540", ALC236_FIXUP_DELL_DUAL_CODECS),
++	SND_PCI_QUIRK(0x1028, 0x0c1d, "Dell Precision 3440", ALC236_FIXUP_DELL_DUAL_CODECS),
++	SND_PCI_QUIRK(0x1028, 0x0c1e, "Dell Precision 3540", ALC236_FIXUP_DELL_DUAL_CODECS),
+ 	SND_PCI_QUIRK(0x1028, 0x164a, "Dell", ALC293_FIXUP_DELL1_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1028, 0x164b, "Dell", ALC293_FIXUP_DELL1_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x103c, 0x1586, "HP", ALC269_FIXUP_HP_MUTE_LED_MIC2),
+-- 
+2.35.1
+
 
 
