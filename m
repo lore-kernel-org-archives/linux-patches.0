@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E747BAD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:16:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E583C433F0;
-	Wed,  4 Jan 2023 16:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE984AD4A
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:16:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F6A0C433EF;
+	Wed,  4 Jan 2023 16:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848997;
-	bh=pMqXlG7cn457TRQyxQ5I5gqZYxbi/Th7/I94Hu1r780=;
+	s=korg; t=1672849000;
+	bh=4JAiU6RFn3VqAt5LoRnZv/NfsZu7QEvmtueIVX2WfII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pcy1rcnH6qDePPmkv++OXeq4u41Vvti4KFEvufsSwlA1A+FS0eW9jaYgUVwuVFTAl
-	 +624WAFhLMgM7wDcZoAo36OsGOMkP8mVfv11a43tKNCljVwZHw1Q6Qp/3CuPVDfRL3
-	 BMb+Ghgf64XS9PqEGehxrvOIutnW5WU8JIwZvQbI=
+	b=DwLJ9tNfeTAK/aa0ZUMHhmMBA5PHojdB/hIR+62iPwzrbsJukblxe34/fgqGs1cC5
+	 dMCCxB4VlWpAmYET/feH3gvX3f8aHVbeBYHpquzKmxgZyVzo4BaEe42e2Ag9JIAz44
+	 FnTUcAZ9+HkV997L9zCpVXzTtf18Aog7nx6AzzjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yuchen <zhangyuchen.lcr@bytedance.com>,
-	Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH 6.1 118/207] ipmi: fix long wait in unload when IPMI disconnect
-Date: Wed,  4 Jan 2023 17:06:16 +0100
-Message-Id: <20230104160515.650006173@linuxfoundation.org>
+	Luo Meng <luomeng12@huawei.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.0 049/177] dm integrity: Fix UAF in dm_integrity_dtr()
+Date: Wed,  4 Jan 2023 17:05:40 +0100
+Message-Id: <20230104160509.134044386@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,94 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
+From: Luo Meng <luomeng12@huawei.com>
 
-commit f6f1234d98cce69578bfac79df147a1f6660596c upstream.
+commit f50cb2cbabd6c4a60add93d72451728f86e4791c upstream.
 
-When fixing the problem mentioned in PATCH1, we also found
-the following problem:
+Dm_integrity also has the same UAF problem when dm_resume()
+and dm_destroy() are concurrent.
 
-If the IPMI is disconnected and in the sending process, the
-uninstallation driver will be stuck for a long time.
+Therefore, cancelling timer again in dm_integrity_dtr().
 
-The main problem is that uninstalling the driver waits for curr_msg to
-be sent or HOSED. After stopping tasklet, the only place to trigger the
-timeout mechanism is the circular poll in shutdown_smi.
-
-The poll function delays 10us and calls smi_event_handler(smi_info,10).
-Smi_event_handler deducts 10us from kcs->ibf_timeout.
-
-But the poll func is followed by schedule_timeout_uninterruptible(1).
-The time consumed here is not counted in kcs->ibf_timeout.
-
-So when 10us is deducted from kcs->ibf_timeout, at least 1 jiffies has
-actually passed. The waiting time has increased by more than a
-hundredfold.
-
-Now instead of calling poll(). call smi_event_handler() directly and
-calculate the elapsed time.
-
-For verification, you can directly use ebpf to check the kcs->
-ibf_timeout for each call to kcs_event() when IPMI is disconnected.
-Decrement at normal rate before unloading. The decrement rate becomes
-very slow after unloading.
-
-  $ bpftrace -e 'kprobe:kcs_event {printf("kcs->ibftimeout : %d\n",
-      *(arg0+584));}'
-
-Signed-off-by: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
-Message-Id: <20221007092617.87597-3-zhangyuchen.lcr@bytedance.com>
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
 Cc: stable@vger.kernel.org
+Fixes: 7eada909bfd7a ("dm: add integrity target")
+Signed-off-by: Luo Meng <luomeng12@huawei.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_si_intf.c |   27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ drivers/md/dm-integrity.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/char/ipmi/ipmi_si_intf.c
-+++ b/drivers/char/ipmi/ipmi_si_intf.c
-@@ -2153,6 +2153,20 @@ skip_fallback_noirq:
- }
- module_init(init_ipmi_si);
+--- a/drivers/md/dm-integrity.c
++++ b/drivers/md/dm-integrity.c
+@@ -4558,6 +4558,8 @@ static void dm_integrity_dtr(struct dm_t
+ 	BUG_ON(!RB_EMPTY_ROOT(&ic->in_progress));
+ 	BUG_ON(!list_empty(&ic->wait_list));
  
-+static void wait_msg_processed(struct smi_info *smi_info)
-+{
-+	unsigned long jiffies_now;
-+	long time_diff;
-+
-+	while (smi_info->curr_msg || (smi_info->si_state != SI_NORMAL)) {
-+		jiffies_now = jiffies;
-+		time_diff = (((long)jiffies_now - (long)smi_info->last_timeout_jiffies)
-+		     * SI_USEC_PER_JIFFY);
-+		smi_event_handler(smi_info, time_diff);
-+		schedule_timeout_uninterruptible(1);
-+	}
-+}
-+
- static void shutdown_smi(void *send_info)
- {
- 	struct smi_info *smi_info = send_info;
-@@ -2187,16 +2201,13 @@ static void shutdown_smi(void *send_info
- 	 * in the BMC.  Note that timers and CPU interrupts are off,
- 	 * so no need for locks.
- 	 */
--	while (smi_info->curr_msg || (smi_info->si_state != SI_NORMAL)) {
--		poll(smi_info);
--		schedule_timeout_uninterruptible(1);
--	}
-+	wait_msg_processed(smi_info);
-+
- 	if (smi_info->handlers)
- 		disable_si_irq(smi_info);
--	while (smi_info->curr_msg || (smi_info->si_state != SI_NORMAL)) {
--		poll(smi_info);
--		schedule_timeout_uninterruptible(1);
--	}
-+
-+	wait_msg_processed(smi_info);
-+
- 	if (smi_info->handlers)
- 		smi_info->handlers->cleanup(smi_info->si_sm);
- 
++	if (ic->mode == 'B')
++		cancel_delayed_work_sync(&ic->bitmap_flush_work);
+ 	if (ic->metadata_wq)
+ 		destroy_workqueue(ic->metadata_wq);
+ 	if (ic->wait_wq)
 
 
