@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A53DDAD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C1C3C433EF;
-	Wed,  4 Jan 2023 16:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C21AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47ED4C433D2;
+	Wed,  4 Jan 2023 16:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849071;
-	bh=HNHAXmBcubcvWn3+Ys9vdX8K2VWtpMxI/K9zX0VRouE=;
+	s=korg; t=1672849074;
+	bh=Yq7MpLk6LgvvMhM4C3az2Lw1+sjwkRU6a5UtCD/uYBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vehkjkLW9MqZeCsZ8Awz7N+/hmroQ+sjs4efFmevnJWEHFq3eQGczwL1p3gUQd7eh
-	 N5y9feJI+hckebZhIgZuK3zkU0QPMh9Eng0iVHhTbR3IPPRW4THKZhAX5LK6KOhhVE
-	 33q5XcSWkyDOQFIFZdzo/3kKMWnEpf03U/FedcdQ=
+	b=ktGao4K/joEiEmdWyNIyL61C3ccDCsTSARqTuZh5yZKF68Kpg5yBfh4O623MBkeSq
+	 9QT5kIwOLGqmr393IGpyTJkCipgBAEqlefZoZTM6O0kN5DoxtK7fQ3YYco0LZn5vmI
+	 PlQwMlFa0N95XTb6k9rR4OCs4SufCETW7AaKBJtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kai Huang <kai.huang@intel.com>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.0 059/177] KVM: VMX: Resume guest immediately when injecting #GP on ECREATE
-Date: Wed,  4 Jan 2023 17:05:50 +0100
-Message-Id: <20230104160509.437094173@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <mathew.j.martineau@linux.intel.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.0 041/177] mptcp: remove MPTCP ifdef in TCP SYN cookies
+Date: Wed,  4 Jan 2023 17:05:32 +0100
+Message-Id: <20230104160508.898407168@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -34,39 +36,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit eb3992e833d3a17f9b0a3e0371d0b1d3d566f740 upstream.
+commit 3fff88186f047627bb128d65155f42517f8e448f upstream.
 
-Resume the guest immediately when injecting a #GP on ECREATE due to an
-invalid enclave size, i.e. don't attempt ECREATE in the host.  The #GP is
-a terminal fault, e.g. skipping the instruction if ECREATE is successful
-would result in KVM injecting #GP on the instruction following ECREATE.
+To ease the maintenance, it is often recommended to avoid having #ifdef
+preprocessor conditions.
 
-Fixes: 70210c044b4e ("KVM: VMX: Add SGX ENCLS[ECREATE] handler to enforce CPUID restrictions")
+Here the section related to CONFIG_MPTCP was quite short but the next
+commit needs to add more code around. It is then cleaner to move
+specific MPTCP code to functions located in net/mptcp directory.
+
+Now that mptcp_subflow_request_sock_ops structure can be static, it can
+also be marked as "read only after init".
+
+Suggested-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
 Cc: stable@vger.kernel.org
-Cc: Kai Huang <kai.huang@intel.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Kai Huang <kai.huang@intel.com>
-Link: https://lore.kernel.org/r/20220930233132.1723330-1-seanjc@google.com
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/sgx.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/net/mptcp.h   |   12 ++++++++++--
+ net/ipv4/syncookies.c |    7 +++----
+ net/mptcp/subflow.c   |   12 +++++++++++-
+ 3 files changed, 24 insertions(+), 7 deletions(-)
 
---- a/arch/x86/kvm/vmx/sgx.c
-+++ b/arch/x86/kvm/vmx/sgx.c
-@@ -182,8 +182,10 @@ static int __handle_encls_ecreate(struct
- 	/* Enforce CPUID restriction on max enclave size. */
- 	max_size_log2 = (attributes & SGX_ATTR_MODE64BIT) ? sgx_12_0->edx >> 8 :
- 							    sgx_12_0->edx;
--	if (size >= BIT_ULL(max_size_log2))
-+	if (size >= BIT_ULL(max_size_log2)) {
- 		kvm_inject_gp(vcpu, 0);
-+		return 1;
-+	}
+--- a/include/net/mptcp.h
++++ b/include/net/mptcp.h
+@@ -97,8 +97,6 @@ struct mptcp_out_options {
+ };
  
- 	/*
- 	 * sgx_virt_ecreate() returns:
+ #ifdef CONFIG_MPTCP
+-extern struct request_sock_ops mptcp_subflow_request_sock_ops;
+-
+ void mptcp_init(void);
+ 
+ static inline bool sk_is_mptcp(const struct sock *sk)
+@@ -188,6 +186,9 @@ void mptcp_seq_show(struct seq_file *seq
+ int mptcp_subflow_init_cookie_req(struct request_sock *req,
+ 				  const struct sock *sk_listener,
+ 				  struct sk_buff *skb);
++struct request_sock *mptcp_subflow_reqsk_alloc(const struct request_sock_ops *ops,
++					       struct sock *sk_listener,
++					       bool attach_listener);
+ 
+ __be32 mptcp_get_reset_option(const struct sk_buff *skb);
+ 
+@@ -274,6 +275,13 @@ static inline int mptcp_subflow_init_coo
+ 	return 0; /* TCP fallback */
+ }
+ 
++static inline struct request_sock *mptcp_subflow_reqsk_alloc(const struct request_sock_ops *ops,
++							     struct sock *sk_listener,
++							     bool attach_listener)
++{
++	return NULL;
++}
++
+ static inline __be32 mptcp_reset_option(const struct sk_buff *skb)  { return htonl(0u); }
+ #endif /* CONFIG_MPTCP */
+ 
+--- a/net/ipv4/syncookies.c
++++ b/net/ipv4/syncookies.c
+@@ -288,12 +288,11 @@ struct request_sock *cookie_tcp_reqsk_al
+ 	struct tcp_request_sock *treq;
+ 	struct request_sock *req;
+ 
+-#ifdef CONFIG_MPTCP
+ 	if (sk_is_mptcp(sk))
+-		ops = &mptcp_subflow_request_sock_ops;
+-#endif
++		req = mptcp_subflow_reqsk_alloc(ops, sk, false);
++	else
++		req = inet_reqsk_alloc(ops, sk, false);
+ 
+-	req = inet_reqsk_alloc(ops, sk, false);
+ 	if (!req)
+ 		return NULL;
+ 
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -529,7 +529,7 @@ static int subflow_v6_rebuild_header(str
+ }
+ #endif
+ 
+-struct request_sock_ops mptcp_subflow_request_sock_ops;
++static struct request_sock_ops mptcp_subflow_request_sock_ops __ro_after_init;
+ static struct tcp_request_sock_ops subflow_request_sock_ipv4_ops __ro_after_init;
+ 
+ static int subflow_v4_conn_request(struct sock *sk, struct sk_buff *skb)
+@@ -582,6 +582,16 @@ drop:
+ }
+ #endif
+ 
++struct request_sock *mptcp_subflow_reqsk_alloc(const struct request_sock_ops *ops,
++					       struct sock *sk_listener,
++					       bool attach_listener)
++{
++	ops = &mptcp_subflow_request_sock_ops;
++
++	return inet_reqsk_alloc(ops, sk_listener, attach_listener);
++}
++EXPORT_SYMBOL(mptcp_subflow_reqsk_alloc);
++
+ /* validate hmac received in third ACK */
+ static bool subflow_hmac_valid(const struct request_sock *req,
+ 			       const struct mptcp_options_received *mp_opt)
 
 
