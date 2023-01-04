@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77258AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:12:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5A67C433EF;
-	Wed,  4 Jan 2023 16:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3C62AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:12:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B61CC433D2;
+	Wed,  4 Jan 2023 16:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848772;
-	bh=dDJYnmAudk12nIt6HSKQqvvnhNuuMKTHRYY+o5qb4ME=;
+	s=korg; t=1672848775;
+	bh=YBDoitX4F0A6gQFe56jbY7V95X6BzrcqhBBjUQLDT/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ssvu4hzE10h+RPlKBb09IrkeAknf1X0m1IQ6t5MIpMrytdVzD0ebfv0VfReNwfUi9
-	 OqzZFn2UCCCwtSTqJDPfiECcE2ekKK3deVegsPogiuovqjmzg2kpTTLuI6gLmzQwGp
-	 lCQIN7voXJbRgABwkpnxCFWwn/Ew3YffQ0F8z8ig=
+	b=YwUl0/briIRi9SJTn3kQ3dJW6GMQFTwUyMjMOd9U7RiewE9ct3d1rtV7wvCLn0/oR
+	 j2CXr0IGASGqKOPa5GIV4DRlkDFtxRPrSPSg2uui3cj+lbYZwLdzftzJnS+EcBTXoL
+	 EKPzh1gF/xTmui1hX/6y2l5UqAOwyMU4tnwaTicQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Maydell <peter.maydell@linaro.org>,
-	Rob Herring <robh@kernel.org>
-Subject: [PATCH 6.1 080/207] of/kexec: Fix reading 32-bit "linux,initrd-{start,end}" values
-Date: Wed,  4 Jan 2023 17:05:38 +0100
-Message-Id: <20230104160514.478899642@linuxfoundation.org>
+	Alexander Antonov <alexander.antonov@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>
+Subject: [PATCH 6.0 012/177] perf/x86/intel/uncore: Clear attr_update properly
+Date: Wed,  4 Jan 2023 17:05:03 +0100
+Message-Id: <20230104160508.029574609@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,67 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Herring <robh@kernel.org>
+From: Alexander Antonov <alexander.antonov@linux.intel.com>
 
-commit e553ad8d7957697385e81034bf76db3b2cb2cf27 upstream.
+commit 6532783310e2b2f50dc13f46c49aa6546cb6e7a3 upstream.
 
-"linux,initrd-start" and "linux,initrd-end" can be 32-bit values even on
-a 64-bit platform. Ideally, the size should be based on
-'#address-cells', but that has never been enforced in the kernel's FDT
-boot parsing code (early_init_dt_check_for_initrd()). Bootloader
-behavior is known to vary. For example, kexec always writes these as
-64-bit. The result of incorrectly reading 32-bit values is most likely
-the reserved memory for the original initrd will still be reserved
-for the new kernel. The original arm64 equivalent of this code failed to
-release the initrd reserved memory in *all* cases.
+Current clear_attr_update procedure in pmu_set_mapping() sets attr_update
+field in NULL that is not correct because intel_uncore_type pmu types can
+contain several groups in attr_update field. For example, SPR platform
+already has uncore_alias_group to update and then UPI topology group will
+be added in next patches.
 
-Use of_read_number() to mirror the early_init_dt_check_for_initrd()
-code.
+Fix current behavior and clear attr_update group related to mapping only.
 
-Fixes: b30be4dc733e ("of: Add a common kexec FDT setup function")
+Fixes: bb42b3d39781 ("perf/x86/intel/uncore: Expose an Uncore unit to IIO PMON mapping")
+Signed-off-by: Alexander Antonov <alexander.antonov@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
 Cc: stable@vger.kernel.org
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Link: https://lore.kernel.org/r/20221128202440.1411895-1-robh@kernel.org
-Signed-off-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20221117122833.3103580-4-alexander.antonov@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/kexec.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/x86/events/intel/uncore_snbep.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
---- a/drivers/of/kexec.c
-+++ b/drivers/of/kexec.c
-@@ -281,7 +281,7 @@ void *of_kexec_alloc_and_setup_fdt(const
- 				   const char *cmdline, size_t extra_fdt_size)
+--- a/arch/x86/events/intel/uncore_snbep.c
++++ b/arch/x86/events/intel/uncore_snbep.c
+@@ -3804,6 +3804,21 @@ static const struct attribute_group *skx
+ 	NULL,
+ };
+ 
++static void pmu_clear_mapping_attr(const struct attribute_group **groups,
++				   struct attribute_group *ag)
++{
++	int i;
++
++	for (i = 0; groups[i]; i++) {
++		if (groups[i] == ag) {
++			for (i++; groups[i]; i++)
++				groups[i - 1] = groups[i];
++			groups[i - 1] = NULL;
++			break;
++		}
++	}
++}
++
+ static int
+ pmu_iio_set_mapping(struct intel_uncore_type *type, struct attribute_group *ag)
  {
- 	void *fdt;
--	int ret, chosen_node;
-+	int ret, chosen_node, len;
- 	const void *prop;
- 	size_t fdt_size;
+@@ -3852,7 +3867,7 @@ clear_attrs:
+ clear_topology:
+ 	kfree(type->topology);
+ clear_attr_update:
+-	type->attr_update = NULL;
++	pmu_clear_mapping_attr(type->attr_update, ag);
+ 	return ret;
+ }
  
-@@ -324,19 +324,19 @@ void *of_kexec_alloc_and_setup_fdt(const
- 		goto out;
- 
- 	/* Did we boot using an initrd? */
--	prop = fdt_getprop(fdt, chosen_node, "linux,initrd-start", NULL);
-+	prop = fdt_getprop(fdt, chosen_node, "linux,initrd-start", &len);
- 	if (prop) {
- 		u64 tmp_start, tmp_end, tmp_size;
- 
--		tmp_start = fdt64_to_cpu(*((const fdt64_t *) prop));
-+		tmp_start = of_read_number(prop, len / 4);
- 
--		prop = fdt_getprop(fdt, chosen_node, "linux,initrd-end", NULL);
-+		prop = fdt_getprop(fdt, chosen_node, "linux,initrd-end", &len);
- 		if (!prop) {
- 			ret = -EINVAL;
- 			goto out;
- 		}
- 
--		tmp_end = fdt64_to_cpu(*((const fdt64_t *) prop));
-+		tmp_end = of_read_number(prop, len / 4);
- 
- 		/*
- 		 * kexec reserves exact initrd size, while firmware may
 
 
