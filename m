@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD3FAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98EDCC433EF;
-	Wed,  4 Jan 2023 16:22:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED39AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:23:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7934C433AA;
+	Wed,  4 Jan 2023 16:22:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849377;
-	bh=/XPvMylD5flrqY/5NXHT0x2wluEtrLi+rO+gHDIT4eQ=;
+	s=korg; t=1672849380;
+	bh=ikNk/3OiuF3NO3pYH94cAUBrvlyB8LD83L/6MOW9WKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s/mPDhzV+mVc3kbbgg10xTDX3TQB10AOabPppY4i/bPKO/vf5FvZpuRyqHaCR4QAM
-	 b+1Y+CfBZM4uyk+8Ne/rt89rqYD+cSR8D360MTWx/880lBz2/Y3dtsjnZXzEsbfm7N
-	 bxQCv0lKvs2EZaUTs9rw29hLmlDUczGiSkYXTOdM=
+	b=FSIYkezaH/P1raYLqd78bmS2RiMlgiA8H3b5oRrRN9EuVq3xIUmZN9VHtg4CGSL9P
+	 i4KUXuRuYe5dnOm2HBh8QI4t0h2o4lk6c2zFMY3rt65ed8mQibCA18/sZSGa7l3euZ
+	 PRmAPXyhezSj8xfpH/7KZ3d4g/rd3M1Zgu9NG2Uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravana Kannan <saravanak@google.com>,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>
-Subject: [PATCH 6.0 111/177] driver core: Fix bus_type.match() error handling in __driver_attach()
-Date: Wed,  4 Jan 2023 17:06:42 +0100
-Message-Id: <20230104160511.007574124@linuxfoundation.org>
+	Eric Biggers <ebiggers@google.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 179/207] ext4: add missing validation of fast-commit record lengths
+Date: Wed,  4 Jan 2023 17:07:17 +0100
+Message-Id: <20230104160517.540937924@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,46 +34,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Isaac J. Manjarres <isaacmanjarres@google.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit 27c0d217340e47ec995557f61423ef415afba987 upstream.
+commit 64b4a25c3de81a69724e888ec2db3533b43816e2 upstream.
 
-When a driver registers with a bus, it will attempt to match with every
-device on the bus through the __driver_attach() function. Currently, if
-the bus_type.match() function encounters an error that is not
--EPROBE_DEFER, __driver_attach() will return a negative error code, which
-causes the driver registration logic to stop trying to match with the
-remaining devices on the bus.
+Validate the inode and filename lengths in fast-commit journal records
+so that a malicious fast-commit journal cannot cause a crash by having
+invalid values for these.  Also validate EXT4_FC_TAG_DEL_RANGE.
 
-This behavior is not correct; a failure while matching a driver to a
-device does not mean that the driver won't be able to match and bind
-with other devices on the bus. Update the logic in __driver_attach()
-to reflect this.
-
-Fixes: 656b8035b0ee ("ARM: 8524/1: driver cohandle -EPROBE_DEFER from bus_type.match()")
-Cc: stable@vger.kernel.org
-Cc: Saravana Kannan <saravanak@google.com>
-Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
-Link: https://lore.kernel.org/r/20220921001414.4046492-1-isaacmanjarres@google.com
+Fixes: aa75f4d3daae ("ext4: main fast-commit commit path")
+Cc: <stable@vger.kernel.org> # v5.10+
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20221106224841.279231-5-ebiggers@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/dd.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/ext4/fast_commit.c |   38 +++++++++++++++++++-------------------
+ fs/ext4/fast_commit.h |    2 +-
+ 2 files changed, 20 insertions(+), 20 deletions(-)
 
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -1162,7 +1162,11 @@ static int __driver_attach(struct device
- 		return 0;
- 	} else if (ret < 0) {
- 		dev_dbg(dev, "Bus failed to match device: %d\n", ret);
--		return ret;
-+		/*
-+		 * Driver could not match with device, but may match with
-+		 * another device on the bus.
-+		 */
-+		return 0;
- 	} /* ret > 0 means positive match */
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -1991,32 +1991,31 @@ void ext4_fc_replay_cleanup(struct super
+ 	kfree(sbi->s_fc_replay_state.fc_modified_inodes);
+ }
  
- 	if (driver_allows_async_probing(drv)) {
+-static inline bool ext4_fc_tag_len_isvalid(struct ext4_fc_tl *tl,
+-					   u8 *val, u8 *end)
++static bool ext4_fc_value_len_isvalid(struct ext4_sb_info *sbi,
++				      int tag, int len)
+ {
+-	if (val + tl->fc_len > end)
+-		return false;
+-
+-	/* Here only check ADD_RANGE/TAIL/HEAD which will read data when do
+-	 * journal rescan before do CRC check. Other tags length check will
+-	 * rely on CRC check.
+-	 */
+-	switch (tl->fc_tag) {
++	switch (tag) {
+ 	case EXT4_FC_TAG_ADD_RANGE:
+-		return (sizeof(struct ext4_fc_add_range) == tl->fc_len);
+-	case EXT4_FC_TAG_TAIL:
+-		return (sizeof(struct ext4_fc_tail) <= tl->fc_len);
+-	case EXT4_FC_TAG_HEAD:
+-		return (sizeof(struct ext4_fc_head) == tl->fc_len);
++		return len == sizeof(struct ext4_fc_add_range);
+ 	case EXT4_FC_TAG_DEL_RANGE:
++		return len == sizeof(struct ext4_fc_del_range);
++	case EXT4_FC_TAG_CREAT:
+ 	case EXT4_FC_TAG_LINK:
+ 	case EXT4_FC_TAG_UNLINK:
+-	case EXT4_FC_TAG_CREAT:
++		len -= sizeof(struct ext4_fc_dentry_info);
++		return len >= 1 && len <= EXT4_NAME_LEN;
+ 	case EXT4_FC_TAG_INODE:
++		len -= sizeof(struct ext4_fc_inode);
++		return len >= EXT4_GOOD_OLD_INODE_SIZE &&
++			len <= sbi->s_inode_size;
+ 	case EXT4_FC_TAG_PAD:
+-	default:
+-		return true;
++		return true; /* padding can have any length */
++	case EXT4_FC_TAG_TAIL:
++		return len >= sizeof(struct ext4_fc_tail);
++	case EXT4_FC_TAG_HEAD:
++		return len == sizeof(struct ext4_fc_head);
+ 	}
++	return false;
+ }
+ 
+ /*
+@@ -2079,7 +2078,8 @@ static int ext4_fc_replay_scan(journal_t
+ 	     cur = cur + EXT4_FC_TAG_BASE_LEN + tl.fc_len) {
+ 		ext4_fc_get_tl(&tl, cur);
+ 		val = cur + EXT4_FC_TAG_BASE_LEN;
+-		if (!ext4_fc_tag_len_isvalid(&tl, val, end)) {
++		if (tl.fc_len > end - val ||
++		    !ext4_fc_value_len_isvalid(sbi, tl.fc_tag, tl.fc_len)) {
+ 			ret = state->fc_replay_num_tags ?
+ 				JBD2_FC_REPLAY_STOP : -ECANCELED;
+ 			goto out_err;
+--- a/fs/ext4/fast_commit.h
++++ b/fs/ext4/fast_commit.h
+@@ -58,7 +58,7 @@ struct ext4_fc_dentry_info {
+ 	__u8 fc_dname[];
+ };
+ 
+-/* Value structure for EXT4_FC_TAG_INODE and EXT4_FC_TAG_INODE_PARTIAL. */
++/* Value structure for EXT4_FC_TAG_INODE. */
+ struct ext4_fc_inode {
+ 	__le32 fc_ino;
+ 	__u8 fc_raw_inode[];
 
 
