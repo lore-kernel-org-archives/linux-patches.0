@@ -1,32 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650E4AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE50BC43398;
-	Wed,  4 Jan 2023 16:22:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DFAAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CA5C433EF;
+	Wed,  4 Jan 2023 16:22:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849337;
-	bh=7324HKQRgvza6tUPLy/lqbH1ssyTgRGJHkONbWiU0kk=;
+	s=korg; t=1672849340;
+	bh=e12YwFE/LXc//Urf9Kqw6v3aUMtZNMZdauPRnVpDfu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9vHgn/YuaYQgi4HuCg6v19492ogCuAxeLigNx7i5VCh8hnkQVmfikMkQvh7tpRWS
-	 eA0Llt4ezV2tHZq0sCUYI+KRy5sFgNN479uXjFNXu4ddRBg9OB/+3hcx6ItPks3eDZ
-	 Xa2P7/Lsl3LnxwBQkyOuwdGAOeolbXT1IJNhs+d0=
+	b=OmGWm4liVdftueXFe+XgW8kEhsw4Fs/giysD6k6NwjvyJSBO1olw304SMqbB1krbm
+	 T/Z7ys46T0bZFU3GJpBoU2kZIUmuFJKSphOYAy1aXzVKHXFkL4hgyGaqssRMLOT3iY
+	 1ISM6e4pB5Hj4cKUzUiDTErhS2KazjP9IGj+nlxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	kernel test robot <lkp@intel.com>,
-	Guo Ren <guoren@kernel.org>,
-	Guo Ren <guoren@linux.alibaba.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.0 105/177] riscv: Fixup compile error with !MMU
-Date: Wed,  4 Jan 2023 17:06:36 +0100
-Message-Id: <20230104160510.827975586@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.1 173/207] ext4: check and assert if marking an no_delete evicting inode dirty
+Date: Wed,  4 Jan 2023 17:07:11 +0100
+Message-Id: <20230104160517.355711760@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,47 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guo Ren <guoren@linux.alibaba.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit c528ef0888b75f673f7d48022de8d31d5b451e8c upstream.
+commit 318cdc822c63b6e2befcfdc2088378ae6fa18def upstream.
 
-Current nommu_virt_defconfig can't compile:
+In ext4_evict_inode(), if we evicting an inode in the 'no_delete' path,
+it cannot be raced by another mark_inode_dirty(). If it happens,
+someone else may accidentally dirty it without holding inode refcount
+and probably cause use-after-free issues in the writeback procedure.
+It's indiscoverable and hard to debug, so add an WARN_ON_ONCE() to
+check and detect this issue in advance.
 
-In file included from
-arch/riscv/kernel/crash_core.c:3:
-arch/riscv/kernel/crash_core.c:
-In function 'arch_crash_save_vmcoreinfo':
-arch/riscv/kernel/crash_core.c:8:27:
-error: 'VA_BITS' undeclared (first use in this function)
-    8 |         VMCOREINFO_NUMBER(VA_BITS);
-      |                           ^~~~~~~
-
-Add MMU dependency for KEXEC_FILE.
-
-Fixes: 6261586e0c91 ("RISC-V: Add kexec_file support")
-Reported-by: Conor Dooley <conor.dooley@microchip.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Guo Ren <guoren@kernel.org>
-Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20221207091112.2258674-1-guoren@kernel.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20220629112647.4141034-2-yi.zhang@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/Kconfig |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/inode.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -493,7 +493,7 @@ config KEXEC_FILE
- 	select KEXEC_CORE
- 	select KEXEC_ELF
- 	select HAVE_IMA_KEXEC if IMA
--	depends on 64BIT
-+	depends on 64BIT && MMU
- 	help
- 	  This is new version of kexec system call. This system call is
- 	  file based and takes file descriptors as system call argument
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -335,6 +335,12 @@ stop_handle:
+ 	ext4_xattr_inode_array_free(ea_inode_array);
+ 	return;
+ no_delete:
++	/*
++	 * Check out some where else accidentally dirty the evicting inode,
++	 * which may probably cause inode use-after-free issues later.
++	 */
++	WARN_ON_ONCE(!list_empty_careful(&inode->i_io_list));
++
+ 	if (!list_empty(&EXT4_I(inode)->i_fc_list))
+ 		ext4_fc_mark_ineligible(inode->i_sb, EXT4_FC_REASON_NOMEM, NULL);
+ 	ext4_clear_inode(inode);	/* We must guarantee clearing of inode... */
 
 
