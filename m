@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4489DAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:26:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A435C433D2;
-	Wed,  4 Jan 2023 16:26:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74466AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:27:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6EF4C433EF;
+	Wed,  4 Jan 2023 16:26:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849617;
-	bh=+ky/T4rRKQ6CMcI+XRS4OfAEZaD6uWMt99Y/01oJ3NE=;
+	s=korg; t=1672849620;
+	bh=jGpGwlKI4Jq0DWdCVBZOUM7IzaG7s5nbf4MfBQaJJUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0jvr72dY3ssf9eDO8z7mu0WPM7Y7yo9aF7qFT4J/Rg6kK6c0tsWYqYAYbsRVpatFh
-	 YB/m+h3E8yRl9Tzp9m3Fiwb4eMV0ftjEhiCrlpucd0QYz6tXgHTP55Vs1r6541B0vc
-	 sWTgc8uo5z6OnrLLT4q1oa47i5dus6QgNYcJNhzo=
+	b=rR6B9OgWoUo14jEpNTjlYhiSESqAeqXkrS3Vv5omei/aProgmrJznoVlBisK6z2ur
+	 RDrpsDDZ+bmQ01UWJXkTuIULDh0Hifz1fEme96l60ta7d4QewmBbb6tvEQ9SttAR5/
+	 McHVfrpnDnl/ENqj3+EDjJ47ecAL743c5yV5yONI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4faa160fa96bfba639f8@syzkaller.appspotmail.com,
-	Jun Nie <jun.nie@linaro.org>,
 	Ye Bin <yebin10@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.0 163/177] ext4: fix kernel BUG in ext4_write_inline_data_end()
-Date: Wed,  4 Jan 2023 17:07:34 +0100
-Message-Id: <20230104160512.616592144@linuxfoundation.org>
+Subject: [PATCH 6.0 164/177] ext4: fix inode leak in ext4_xattr_inode_create() on an error path
+Date: Wed,  4 Jan 2023 17:07:35 +0100
+Message-Id: <20230104160512.650850083@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -39,105 +38,51 @@ Content-Transfer-Encoding: 8bit
 
 From: Ye Bin <yebin10@huawei.com>
 
-commit 5c099c4fdc438014d5893629e70a8ba934433ee8 upstream.
+commit e4db04f7d3dbbe16680e0ded27ea2a65b10f766a upstream.
 
-Syzbot report follow issue:
-------------[ cut here ]------------
-kernel BUG at fs/ext4/inline.c:227!
-invalid opcode: 0000 [#1] PREEMPT SMP KASAN
-CPU: 1 PID: 3629 Comm: syz-executor212 Not tainted 6.1.0-rc5-syzkaller-00018-g59d0d52c30d4 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-RIP: 0010:ext4_write_inline_data+0x344/0x3e0 fs/ext4/inline.c:227
-RSP: 0018:ffffc90003b3f368 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: ffff8880704e16c0 RCX: 0000000000000000
-RDX: ffff888021763a80 RSI: ffffffff821e31a4 RDI: 0000000000000006
-RBP: 000000000006818e R08: 0000000000000006 R09: 0000000000068199
-R10: 0000000000000079 R11: 0000000000000000 R12: 000000000000000b
-R13: 0000000000068199 R14: ffffc90003b3f408 R15: ffff8880704e1c82
-FS:  000055555723e3c0(0000) GS:ffff8880b9b00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007fffe8ac9080 CR3: 0000000079f81000 CR4: 0000000000350ee0
-Call Trace:
- <TASK>
- ext4_write_inline_data_end+0x2a3/0x12f0 fs/ext4/inline.c:768
- ext4_write_end+0x242/0xdd0 fs/ext4/inode.c:1313
- ext4_da_write_end+0x3ed/0xa30 fs/ext4/inode.c:3063
- generic_perform_write+0x316/0x570 mm/filemap.c:3764
- ext4_buffered_write_iter+0x15b/0x460 fs/ext4/file.c:285
- ext4_file_write_iter+0x8bc/0x16e0 fs/ext4/file.c:700
- call_write_iter include/linux/fs.h:2191 [inline]
- do_iter_readv_writev+0x20b/0x3b0 fs/read_write.c:735
- do_iter_write+0x182/0x700 fs/read_write.c:861
- vfs_iter_write+0x74/0xa0 fs/read_write.c:902
- iter_file_splice_write+0x745/0xc90 fs/splice.c:686
- do_splice_from fs/splice.c:764 [inline]
- direct_splice_actor+0x114/0x180 fs/splice.c:931
- splice_direct_to_actor+0x335/0x8a0 fs/splice.c:886
- do_splice_direct+0x1ab/0x280 fs/splice.c:974
- do_sendfile+0xb19/0x1270 fs/read_write.c:1255
- __do_sys_sendfile64 fs/read_write.c:1323 [inline]
- __se_sys_sendfile64 fs/read_write.c:1309 [inline]
- __x64_sys_sendfile64+0x1d0/0x210 fs/read_write.c:1309
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
----[ end trace 0000000000000000 ]---
+There is issue as follows when do setxattr with inject fault:
 
-Above issue may happens as follows:
-ext4_da_write_begin
-  ext4_da_write_inline_data_begin
-    ext4_da_convert_inline_data_to_extent
-      ext4_clear_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
-ext4_da_write_end
+[localhost]# fsck.ext4  -fn  /dev/sda
+e2fsck 1.46.6-rc1 (12-Sep-2022)
+Pass 1: Checking inodes, blocks, and sizes
+Pass 2: Checking directory structure
+Pass 3: Checking directory connectivity
+Pass 4: Checking reference counts
+Unattached zero-length inode 15.  Clear? no
 
-ext4_run_li_request
-  ext4_mb_prefetch
-    ext4_read_block_bitmap_nowait
-      ext4_validate_block_bitmap
-        ext4_mark_group_bitmap_corrupted(sb, block_group, EXT4_GROUP_INFO_BBITMAP_CORRUPT)
-	 percpu_counter_sub(&sbi->s_freeclusters_counter,grp->bb_free);
-	  -> sbi->s_freeclusters_counter become zero
-ext4_da_write_begin
-  if (ext4_nonda_switch(inode->i_sb)) -> As freeclusters_counter is zero will return true
-    *fsdata = (void *)FALL_BACK_TO_NONDELALLOC;
-    ext4_write_begin
-ext4_da_write_end
-  if (write_mode == FALL_BACK_TO_NONDELALLOC)
-    ext4_write_end
-      if (inline_data)
-        ext4_write_inline_data_end
-	  ext4_write_inline_data
-	    BUG_ON(pos + len > EXT4_I(inode)->i_inline_size);
-           -> As inode is already convert to extent, so 'pos + len' > inline_size
-	   -> then trigger BUG.
+Unattached inode 15
+Connect to /lost+found? no
 
-To solve this issue, instead of checking ext4_has_inline_data() which
-is only cleared after data has been written back, check the
-EXT4_STATE_MAY_INLINE_DATA flag in ext4_write_end().
+Pass 5: Checking group summary information
 
-Fixes: f19d5870cbf7 ("ext4: add normal write support for inline data")
-Reported-by: syzbot+4faa160fa96bfba639f8@syzkaller.appspotmail.com
-Reported-by: Jun Nie <jun.nie@linaro.org>
+/dev/sda: ********** WARNING: Filesystem still has errors **********
+
+/dev/sda: 15/655360 files (0.0% non-contiguous), 66755/2621440 blocks
+
+This occurs in 'ext4_xattr_inode_create()'. If 'ext4_mark_inode_dirty()'
+fails, dropping i_nlink of the inode is needed. Or will lead to inode leak.
+
 Signed-off-by: Ye Bin <yebin10@huawei.com>
-Link: https://lore.kernel.org/r/20221206144134.1919987-1-yebin@huaweicloud.com
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221208023233.1231330-5-yebin@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ext4/xattr.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -1315,7 +1315,8 @@ static int ext4_write_end(struct file *f
- 
- 	trace_ext4_write_end(inode, pos, len, copied);
- 
--	if (ext4_has_inline_data(inode))
-+	if (ext4_has_inline_data(inode) &&
-+	    ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA))
- 		return ext4_write_inline_data_end(inode, pos, len, copied, page);
- 
- 	copied = block_write_end(file, mapping, pos, len, copied, page, fsdata);
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1441,6 +1441,9 @@ static struct inode *ext4_xattr_inode_cr
+ 		if (!err)
+ 			err = ext4_inode_attach_jinode(ea_inode);
+ 		if (err) {
++			if (ext4_xattr_inode_dec_ref(handle, ea_inode))
++				ext4_warning_inode(ea_inode,
++					"cleanup dec ref error %d", err);
+ 			iput(ea_inode);
+ 			return ERR_PTR(err);
+ 		}
 
 
