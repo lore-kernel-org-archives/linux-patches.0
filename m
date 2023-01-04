@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75671AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:14:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0732C433D2;
-	Wed,  4 Jan 2023 16:14:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1159AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:14:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0836DC433EF;
+	Wed,  4 Jan 2023 16:14:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848871;
-	bh=jiIx4HYpVT3taMwTPfdx3q/sP+YnH5gARTg3EPGV9x8=;
+	s=korg; t=1672848874;
+	bh=wme1ajKnHr9x60woycRFxX2ffEgpDURTOm80zlSt2V0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WkDdYBcHPwQ11yLdcA/vWBaYF8Jdpsm6VkwxIrPJhratn2V3A+DHL+77Q2PYcCn42
-	 v9GndGiD0DUQ/FGKWDD2lPmH9EbA6YZw3hjCDUUzCl0x1Q0y38ALjZ/bm5pFUJEbJX
-	 yTYOmcoEwav4VAgkkPUDhRt4qjacEjmDA99wKYvw=
+	b=xDzKHFaqREZpKm6qhqnYpflpH45/SUyGDntTwyTxhgWzX2Wbf61UkluY1aOuGAETo
+	 R2RS2qz5gQqC6GFtHG/3e8eumlXQfO9xiZ/RbQSSgLzjPyF5EMXt5jkBSds0dIyHZA
+	 ZmQrbRv8xFI0TR+AHqkJRLHcvgXfiKFXsoDtqsNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.1 097/207] staging: media: tegra-video: fix chan->mipi value on error
-Date: Wed,  4 Jan 2023 17:05:55 +0100
-Message-Id: <20230104160514.996375985@linuxfoundation.org>
+	Yazen Ghannam <yazen.ghannam@amd.com>,
+	Borislav Petkov <bp@suse.de>
+Subject: [PATCH 6.0 028/177] x86/MCE/AMD: Clear DFR errors found in THR handler
+Date: Wed,  4 Jan 2023 17:05:19 +0100
+Message-Id: <20230104160508.518582331@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,53 +34,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Yazen Ghannam <yazen.ghannam@amd.com>
 
-commit 10b5ce6743c839fa75336042c64e2479caec9430 upstream.
+commit bc1b705b0eee4c645ad8b3bbff3c8a66e9688362 upstream.
 
-chan->mipi takes the return value of tegra_mipi_request() which can be a
-valid pointer or an error. However chan->mipi is checked in several places,
-including error-cleanup code in tegra_csi_channels_cleanup(), as 'if
-(chan->mipi)', which suggests the initial intent was that chan->mipi should
-be either NULL or a valid pointer, never an error. As a consequence,
-cleanup code in case of tegra_mipi_request() errors would dereference an
-invalid pointer.
+AMD's MCA Thresholding feature counts errors of all severity levels, not
+just correctable errors. If a deferred error causes the threshold limit
+to be reached (it was the error that caused the overflow), then both a
+deferred error interrupt and a thresholding interrupt will be triggered.
 
-Fix by ensuring chan->mipi always contains either NULL or a void pointer.
+The order of the interrupts is not guaranteed. If the threshold
+interrupt handler is executed first, then it will clear MCA_STATUS for
+the error. It will not check or clear MCA_DESTAT which also holds a copy
+of the deferred error. When the deferred error interrupt handler runs it
+will not find an error in MCA_STATUS, but it will find the error in
+MCA_DESTAT. This will cause two errors to be logged.
 
-Also add that to the documentation.
+Check for deferred errors when handling a threshold interrupt. If a bank
+contains a deferred error, then clear the bank's MCA_DESTAT register.
 
-Fixes: 523c857e34ce ("media: tegra-video: Add CSI MIPI pads calibration")
+Define a new helper function to do the deferred error check and clearing
+of MCA_DESTAT.
+
+  [ bp: Simplify, convert comment to passive voice. ]
+
+Fixes: 37d43acfd79f ("x86/mce/AMD: Redo error logging from APIC LVT interrupt handlers")
+Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
 Cc: stable@vger.kernel.org
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Link: https://lore.kernel.org/r/20220621155943.33623-1-yazen.ghannam@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/tegra-video/csi.c |    1 +
- drivers/staging/media/tegra-video/csi.h |    2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/mce/amd.c |   33 ++++++++++++++++++++-------------
+ 1 file changed, 20 insertions(+), 13 deletions(-)
 
---- a/drivers/staging/media/tegra-video/csi.c
-+++ b/drivers/staging/media/tegra-video/csi.c
-@@ -448,6 +448,7 @@ static int tegra_csi_channel_alloc(struc
- 	chan->mipi = tegra_mipi_request(csi->dev, node);
- 	if (IS_ERR(chan->mipi)) {
- 		ret = PTR_ERR(chan->mipi);
-+		chan->mipi = NULL;
- 		dev_err(csi->dev, "failed to get mipi device: %d\n", ret);
- 	}
+--- a/arch/x86/kernel/cpu/mce/amd.c
++++ b/arch/x86/kernel/cpu/mce/amd.c
+@@ -788,6 +788,24 @@ _log_error_bank(unsigned int bank, u32 m
+ 	return status & MCI_STATUS_DEFERRED;
+ }
  
---- a/drivers/staging/media/tegra-video/csi.h
-+++ b/drivers/staging/media/tegra-video/csi.h
-@@ -56,7 +56,7 @@ struct tegra_csi;
-  * @framerate: active framerate for TPG
-  * @h_blank: horizontal blanking for TPG active format
-  * @v_blank: vertical blanking for TPG active format
-- * @mipi: mipi device for corresponding csi channel pads
-+ * @mipi: mipi device for corresponding csi channel pads, or NULL if not applicable (TPG, error)
-  * @pixel_rate: active pixel rate from the sensor on this channel
++static bool _log_error_deferred(unsigned int bank, u32 misc)
++{
++	if (!_log_error_bank(bank, mca_msr_reg(bank, MCA_STATUS),
++			     mca_msr_reg(bank, MCA_ADDR), misc))
++		return false;
++
++	/*
++	 * Non-SMCA systems don't have MCA_DESTAT/MCA_DEADDR registers.
++	 * Return true here to avoid accessing these registers.
++	 */
++	if (!mce_flags.smca)
++		return true;
++
++	/* Clear MCA_DESTAT if the deferred error was logged from MCA_STATUS. */
++	wrmsrl(MSR_AMD64_SMCA_MCx_DESTAT(bank), 0);
++	return true;
++}
++
+ /*
+  * We have three scenarios for checking for Deferred errors:
+  *
+@@ -799,19 +817,8 @@ _log_error_bank(unsigned int bank, u32 m
   */
- struct tegra_csi_channel {
+ static void log_error_deferred(unsigned int bank)
+ {
+-	bool defrd;
+-
+-	defrd = _log_error_bank(bank, mca_msr_reg(bank, MCA_STATUS),
+-				mca_msr_reg(bank, MCA_ADDR), 0);
+-
+-	if (!mce_flags.smca)
+-		return;
+-
+-	/* Clear MCA_DESTAT if we logged the deferred error from MCA_STATUS. */
+-	if (defrd) {
+-		wrmsrl(MSR_AMD64_SMCA_MCx_DESTAT(bank), 0);
++	if (_log_error_deferred(bank, 0))
+ 		return;
+-	}
+ 
+ 	/*
+ 	 * Only deferred errors are logged in MCA_DE{STAT,ADDR} so just check
+@@ -832,7 +839,7 @@ static void amd_deferred_error_interrupt
+ 
+ static void log_error_thresholding(unsigned int bank, u64 misc)
+ {
+-	_log_error_bank(bank, mca_msr_reg(bank, MCA_STATUS), mca_msr_reg(bank, MCA_ADDR), misc);
++	_log_error_deferred(bank, misc);
+ }
+ 
+ static void log_and_reset_block(struct threshold_block *block)
 
 
