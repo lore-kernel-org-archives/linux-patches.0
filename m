@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E806EAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6630BC433D2;
-	Wed,  4 Jan 2023 16:20:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB7FAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767C3C433D2;
+	Wed,  4 Jan 2023 16:20:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849210;
-	bh=gbueyn30KPFSslQhbfJLCwpeIQPsQuHQBcdCpyP6FU4=;
+	s=korg; t=1672849213;
+	bh=Ics49q2apegzyJk6UleG046jQ43q2/pwb4+WI0ZA+3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R24pempimE+SnGpVdVbgCxrwqy3GmdX/S6uXFDTxQddNyUsjrlN/SeT4U0aW8yT/O
-	 zPGunsesdM1L+IgMWiuZMnsY/ta+OOKzWR8S2JpN6k+3fujdWIgk713iwDGkZpxjFc
-	 aRhc7Q0yyyad+RR/znFqK+nafQyP27RYifuHQVyM=
+	b=1SGw6qySPnq6QoDsEKD99LtFtQae/Jrh7+Cj7hW8BRmb1FH5E4CZT6sYni29Mm14v
+	 j14w33ZNVshmn7miJAb5qsKcAxdpryVTLUFzHDbebFD24jfnP/CcziFm2X0MrBA8Iq
+	 tgVKyZU0wQI300DDdqEU3rs5UcO1F6TN5zqBo1TM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.0 083/177] cifs: set correct ipc status after initial tree connect
-Date: Wed,  4 Jan 2023 17:06:14 +0100
-Message-Id: <20230104160510.162714907@linuxfoundation.org>
+	Wang Weiyang <wangweiyang2@huawei.com>,
+	Aristeu Rozanski <aris@redhat.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.1 152/207] device_cgroup: Roll back to original exceptions after copy failure
+Date: Wed,  4 Jan 2023 17:06:50 +0100
+Message-Id: <20230104160516.719513667@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,46 +35,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@cjr.nz>
+From: Wang Weiyang <wangweiyang2@huawei.com>
 
-commit 86fe0fa8747fb1bc4cc44fc1966e0959fe752f38 upstream.
+commit e68bfbd3b3c3a0ec3cf8c230996ad8cabe90322f upstream.
 
-cifs_tcon::status wasn't correctly updated to TID_GOOD after
-establishing initial IPC connection thus staying at TID_NEW as long as
-it wasn't reconnected.
+When add the 'a *:* rwm' entry to devcgroup A's whitelist, at first A's
+exceptions will be cleaned and A's behavior is changed to
+DEVCG_DEFAULT_ALLOW. Then parent's exceptions will be copyed to A's
+whitelist. If copy failure occurs, just return leaving A to grant
+permissions to all devices. And A may grant more permissions than
+parent.
+
+Backup A's whitelist and recover original exceptions after copy
+failure.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 4cef7299b478 ("device_cgroup: add proper checking when changing default behavior")
+Signed-off-by: Wang Weiyang <wangweiyang2@huawei.com>
+Reviewed-by: Aristeu Rozanski <aris@redhat.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/connect.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ security/device_cgroup.c |   33 +++++++++++++++++++++++++++++----
+ 1 file changed, 29 insertions(+), 4 deletions(-)
 
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -1870,6 +1870,9 @@ cifs_setup_ipc(struct cifs_ses *ses, str
+--- a/security/device_cgroup.c
++++ b/security/device_cgroup.c
+@@ -82,6 +82,17 @@ free_and_exit:
+ 	return -ENOMEM;
+ }
  
- 	cifs_dbg(FYI, "IPC tcon rc=%d ipc tid=0x%x\n", rc, tcon->tid);
- 
-+	spin_lock(&tcon->tc_lock);
-+	tcon->status = TID_GOOD;
-+	spin_unlock(&tcon->tc_lock);
- 	ses->tcon_ipc = tcon;
- out:
- 	return rc;
-@@ -2278,10 +2281,10 @@ cifs_get_smb_ses(struct TCP_Server_Info
- 	list_add(&ses->smb_ses_list, &server->smb_ses_list);
- 	spin_unlock(&cifs_tcp_ses_lock);
- 
--	free_xid(xid);
--
- 	cifs_setup_ipc(ses, ctx);
- 
-+	free_xid(xid);
++static void dev_exceptions_move(struct list_head *dest, struct list_head *orig)
++{
++	struct dev_exception_item *ex, *tmp;
 +
- 	return ses;
++	lockdep_assert_held(&devcgroup_mutex);
++
++	list_for_each_entry_safe(ex, tmp, orig, list) {
++		list_move_tail(&ex->list, dest);
++	}
++}
++
+ /*
+  * called under devcgroup_mutex
+  */
+@@ -604,11 +615,13 @@ static int devcgroup_update_access(struc
+ 	int count, rc = 0;
+ 	struct dev_exception_item ex;
+ 	struct dev_cgroup *parent = css_to_devcgroup(devcgroup->css.parent);
++	struct dev_cgroup tmp_devcgrp;
  
- get_ses_fail:
+ 	if (!capable(CAP_SYS_ADMIN))
+ 		return -EPERM;
+ 
+ 	memset(&ex, 0, sizeof(ex));
++	memset(&tmp_devcgrp, 0, sizeof(tmp_devcgrp));
+ 	b = buffer;
+ 
+ 	switch (*b) {
+@@ -620,15 +633,27 @@ static int devcgroup_update_access(struc
+ 
+ 			if (!may_allow_all(parent))
+ 				return -EPERM;
+-			dev_exception_clean(devcgroup);
+-			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
+-			if (!parent)
++			if (!parent) {
++				devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
++				dev_exception_clean(devcgroup);
+ 				break;
++			}
+ 
++			INIT_LIST_HEAD(&tmp_devcgrp.exceptions);
++			rc = dev_exceptions_copy(&tmp_devcgrp.exceptions,
++						 &devcgroup->exceptions);
++			if (rc)
++				return rc;
++			dev_exception_clean(devcgroup);
+ 			rc = dev_exceptions_copy(&devcgroup->exceptions,
+ 						 &parent->exceptions);
+-			if (rc)
++			if (rc) {
++				dev_exceptions_move(&devcgroup->exceptions,
++						    &tmp_devcgrp.exceptions);
+ 				return rc;
++			}
++			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
++			dev_exception_clean(&tmp_devcgrp);
+ 			break;
+ 		case DEVCG_DENY:
+ 			if (css_has_online_children(&devcgroup->css))
 
 
