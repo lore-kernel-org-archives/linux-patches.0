@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55990AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:13:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D01EC433EF;
-	Wed,  4 Jan 2023 16:13:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84FE5AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:13:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB53AC433D2;
+	Wed,  4 Jan 2023 16:13:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848797;
-	bh=KCPdqmxKiYdVqTAe82Cd0O9L/btDwZO0pEK6AtCNw18=;
+	s=korg; t=1672848800;
+	bh=VYl78aRYhwJC4f3QFIWGqy8iqSbIbL1MdXDREXFIA18=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T/7aUDJSejA/vmm76LQrXkaG1SRr06oot4NsJuP1Vjf5q/Ip/Jt0P2PEGNoddV3lp
-	 ZnlnamB7GSQERKOuluUb8yZHFQxrQm1+T0PcLfKNHloTnj/HUIObwbFkv1SU4YWUo/
-	 fi2R14ld4NVh7cgcORKWXcTgC6G6sRa3uTBQQKHo=
+	b=t+MgPOr1N+l5whs1bfdmXPlk1QgkxhoELLluCcVitXVI5dNEDyADgd4lXZjeFezEa
+	 km3GSnE7edxWGgTNyB/id2deLkBX3hWHi74R6EtubaexmopbWwR/Uw/tQeA5C7stpO
+	 CoPjf+yAvV+fvG/A9kA/WVeLo9a2U4o3DUaFfBSA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ioannis Iliopoulos <jxftw2424@gmail.com>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 058/207] HID: Ignore HP Envy x360 eu0009nv stylus battery
-Date: Wed,  4 Jan 2023 17:05:16 +0100
-Message-Id: <20230104160513.750289359@linuxfoundation.org>
+Subject: [PATCH 6.1 059/207] ALSA: usb-audio: Add new quirk FIXED_RATE for JBL Quantum810 Wireless
+Date: Wed,  4 Jan 2023 17:05:17 +0100
+Message-Id: <20230104160513.789847894@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
 References: <20230104160511.905925875@linuxfoundation.org>
@@ -36,51 +35,279 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: José Expósito <jose.exposito89@gmail.com>
+From: Jaroslav Kysela <perex@perex.cz>
 
-[ Upstream commit cec827d658dd5c287ea8925737d45f0a60e47422 ]
+[ Upstream commit fd28941cff1cd9d8ffa59fe11eb64148e09b6ed6 ]
 
-Battery status is reported for the HP Envy x360 eu0009nv stylus even
-though it does not have battery.
+It seems that the firmware is broken and does not accept
+the UAC_EP_CS_ATTR_SAMPLE_RATE URB. There is only one rate (48000Hz)
+available in the descriptors for the output endpoint.
 
-Prevent it from always reporting the battery as low (1%).
+Create a new quirk QUIRK_FLAG_FIXED_RATE to skip the rate setup
+when only one rate is available (fixed).
 
-Link: https://gitlab.freedesktop.org/libinput/libinput/-/issues/823
-Reported-by: Ioannis Iliopoulos <jxftw2424@gmail.com>
-Tested-by: Ioannis Iliopoulos <jxftw2424@gmail.com>
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=216798
+Signed-off-by: Jaroslav Kysela <perex@perex.cz>
+Link: https://lore.kernel.org/r/20221215153037.1163786-1-perex@perex.cz
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h   | 1 +
- drivers/hid/hid-input.c | 2 ++
- 2 files changed, 3 insertions(+)
+ sound/usb/card.h     |  1 +
+ sound/usb/endpoint.c | 16 ++++++++++------
+ sound/usb/endpoint.h |  3 ++-
+ sound/usb/implicit.c |  6 +++++-
+ sound/usb/implicit.h |  2 +-
+ sound/usb/pcm.c      | 36 +++++++++++++++++++++++++++++++++---
+ sound/usb/pcm.h      |  2 ++
+ sound/usb/quirks.c   |  2 ++
+ sound/usb/usbaudio.h |  4 ++++
+ 9 files changed, 60 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index e27fb27a36bf..82713ef3aaa6 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -412,6 +412,7 @@
- #define USB_DEVICE_ID_HP_X2_10_COVER	0x0755
- #define I2C_DEVICE_ID_HP_ENVY_X360_15	0x2d05
- #define I2C_DEVICE_ID_HP_ENVY_X360_15T_DR100	0x29CF
-+#define I2C_DEVICE_ID_HP_ENVY_X360_EU0009NV	0x2CF9
- #define I2C_DEVICE_ID_HP_SPECTRE_X360_15	0x2817
- #define USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN	0x2544
- #define USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN	0x2706
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index d728a94c642e..3ee5a9fea20e 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -380,6 +380,8 @@ static const struct hid_device_id hid_battery_quirks[] = {
- 	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_ENVY_X360_15T_DR100),
- 	  HID_BATTERY_QUIRK_IGNORE },
-+	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_ENVY_X360_EU0009NV),
-+	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_SPECTRE_X360_15),
- 	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_SURFACE_GO_TOUCHSCREEN),
+diff --git a/sound/usb/card.h b/sound/usb/card.h
+index 40061550105a..6ec95b2edf86 100644
+--- a/sound/usb/card.h
++++ b/sound/usb/card.h
+@@ -131,6 +131,7 @@ struct snd_usb_endpoint {
+ 	bool lowlatency_playback;	/* low-latency playback mode */
+ 	bool need_setup;		/* (re-)need for hw_params? */
+ 	bool need_prepare;		/* (re-)need for prepare? */
++	bool fixed_rate;		/* skip rate setup */
+ 
+ 	/* for hw constraints */
+ 	const struct audioformat *cur_audiofmt;
+diff --git a/sound/usb/endpoint.c b/sound/usb/endpoint.c
+index 4aaf0784940b..419302e2057e 100644
+--- a/sound/usb/endpoint.c
++++ b/sound/usb/endpoint.c
+@@ -769,7 +769,8 @@ struct snd_usb_endpoint *
+ snd_usb_endpoint_open(struct snd_usb_audio *chip,
+ 		      const struct audioformat *fp,
+ 		      const struct snd_pcm_hw_params *params,
+-		      bool is_sync_ep)
++		      bool is_sync_ep,
++		      bool fixed_rate)
+ {
+ 	struct snd_usb_endpoint *ep;
+ 	int ep_num = is_sync_ep ? fp->sync_ep : fp->endpoint;
+@@ -825,6 +826,7 @@ snd_usb_endpoint_open(struct snd_usb_audio *chip,
+ 		ep->implicit_fb_sync = fp->implicit_fb;
+ 		ep->need_setup = true;
+ 		ep->need_prepare = true;
++		ep->fixed_rate = fixed_rate;
+ 
+ 		usb_audio_dbg(chip, "  channels=%d, rate=%d, format=%s, period_bytes=%d, periods=%d, implicit_fb=%d\n",
+ 			      ep->cur_channels, ep->cur_rate,
+@@ -1413,11 +1415,13 @@ static int init_sample_rate(struct snd_usb_audio *chip,
+ 	if (clock && !clock->need_setup)
+ 		return 0;
+ 
+-	err = snd_usb_init_sample_rate(chip, ep->cur_audiofmt, rate);
+-	if (err < 0) {
+-		if (clock)
+-			clock->rate = 0; /* reset rate */
+-		return err;
++	if (!ep->fixed_rate) {
++		err = snd_usb_init_sample_rate(chip, ep->cur_audiofmt, rate);
++		if (err < 0) {
++			if (clock)
++				clock->rate = 0; /* reset rate */
++			return err;
++		}
+ 	}
+ 
+ 	if (clock)
+diff --git a/sound/usb/endpoint.h b/sound/usb/endpoint.h
+index e67ea28faa54..924f4351588c 100644
+--- a/sound/usb/endpoint.h
++++ b/sound/usb/endpoint.h
+@@ -14,7 +14,8 @@ struct snd_usb_endpoint *
+ snd_usb_endpoint_open(struct snd_usb_audio *chip,
+ 		      const struct audioformat *fp,
+ 		      const struct snd_pcm_hw_params *params,
+-		      bool is_sync_ep);
++		      bool is_sync_ep,
++		      bool fixed_rate);
+ void snd_usb_endpoint_close(struct snd_usb_audio *chip,
+ 			    struct snd_usb_endpoint *ep);
+ int snd_usb_endpoint_set_params(struct snd_usb_audio *chip,
+diff --git a/sound/usb/implicit.c b/sound/usb/implicit.c
+index f3e8484b3d9c..41ac7185b42b 100644
+--- a/sound/usb/implicit.c
++++ b/sound/usb/implicit.c
+@@ -15,6 +15,7 @@
+ #include "usbaudio.h"
+ #include "card.h"
+ #include "helper.h"
++#include "pcm.h"
+ #include "implicit.h"
+ 
+ enum {
+@@ -455,7 +456,8 @@ const struct audioformat *
+ snd_usb_find_implicit_fb_sync_format(struct snd_usb_audio *chip,
+ 				     const struct audioformat *target,
+ 				     const struct snd_pcm_hw_params *params,
+-				     int stream)
++				     int stream,
++				     bool *fixed_rate)
+ {
+ 	struct snd_usb_substream *subs;
+ 	const struct audioformat *fp, *sync_fmt = NULL;
+@@ -483,6 +485,8 @@ snd_usb_find_implicit_fb_sync_format(struct snd_usb_audio *chip,
+ 		}
+ 	}
+ 
++	if (fixed_rate)
++		*fixed_rate = snd_usb_pcm_has_fixed_rate(subs);
+ 	return sync_fmt;
+ }
+ 
+diff --git a/sound/usb/implicit.h b/sound/usb/implicit.h
+index ccb415a0ea86..7f1577b6c4d3 100644
+--- a/sound/usb/implicit.h
++++ b/sound/usb/implicit.h
+@@ -9,6 +9,6 @@ const struct audioformat *
+ snd_usb_find_implicit_fb_sync_format(struct snd_usb_audio *chip,
+ 				     const struct audioformat *target,
+ 				     const struct snd_pcm_hw_params *params,
+-				     int stream);
++				     int stream, bool *fixed_rate);
+ 
+ #endif /* __USBAUDIO_IMPLICIT_H */
+diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
+index 9557bd4d1bbc..99a66d0ef5b2 100644
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -157,6 +157,31 @@ find_substream_format(struct snd_usb_substream *subs,
+ 			   true, subs);
+ }
+ 
++bool snd_usb_pcm_has_fixed_rate(struct snd_usb_substream *subs)
++{
++	const struct audioformat *fp;
++	struct snd_usb_audio *chip = subs->stream->chip;
++	int rate = -1;
++
++	if (!(chip->quirk_flags & QUIRK_FLAG_FIXED_RATE))
++		return false;
++	list_for_each_entry(fp, &subs->fmt_list, list) {
++		if (fp->rates & SNDRV_PCM_RATE_CONTINUOUS)
++			return false;
++		if (fp->nr_rates < 1)
++			continue;
++		if (fp->nr_rates > 1)
++			return false;
++		if (rate < 0) {
++			rate = fp->rate_table[0];
++			continue;
++		}
++		if (rate != fp->rate_table[0])
++			return false;
++	}
++	return true;
++}
++
+ static int init_pitch_v1(struct snd_usb_audio *chip, int ep)
+ {
+ 	struct usb_device *dev = chip->dev;
+@@ -450,12 +475,14 @@ static int snd_usb_hw_params(struct snd_pcm_substream *substream,
+ 	struct snd_usb_audio *chip = subs->stream->chip;
+ 	const struct audioformat *fmt;
+ 	const struct audioformat *sync_fmt;
++	bool fixed_rate, sync_fixed_rate;
+ 	int ret;
+ 
+ 	ret = snd_media_start_pipeline(subs);
+ 	if (ret)
+ 		return ret;
+ 
++	fixed_rate = snd_usb_pcm_has_fixed_rate(subs);
+ 	fmt = find_substream_format(subs, hw_params);
+ 	if (!fmt) {
+ 		usb_audio_dbg(chip,
+@@ -469,7 +496,8 @@ static int snd_usb_hw_params(struct snd_pcm_substream *substream,
+ 	if (fmt->implicit_fb) {
+ 		sync_fmt = snd_usb_find_implicit_fb_sync_format(chip, fmt,
+ 								hw_params,
+-								!substream->stream);
++								!substream->stream,
++								&sync_fixed_rate);
+ 		if (!sync_fmt) {
+ 			usb_audio_dbg(chip,
+ 				      "cannot find sync format: ep=0x%x, iface=%d:%d, format=%s, rate=%d, channels=%d\n",
+@@ -482,6 +510,7 @@ static int snd_usb_hw_params(struct snd_pcm_substream *substream,
+ 		}
+ 	} else {
+ 		sync_fmt = fmt;
++		sync_fixed_rate = fixed_rate;
+ 	}
+ 
+ 	ret = snd_usb_lock_shutdown(chip);
+@@ -499,7 +528,7 @@ static int snd_usb_hw_params(struct snd_pcm_substream *substream,
+ 		close_endpoints(chip, subs);
+ 	}
+ 
+-	subs->data_endpoint = snd_usb_endpoint_open(chip, fmt, hw_params, false);
++	subs->data_endpoint = snd_usb_endpoint_open(chip, fmt, hw_params, false, fixed_rate);
+ 	if (!subs->data_endpoint) {
+ 		ret = -EINVAL;
+ 		goto unlock;
+@@ -508,7 +537,8 @@ static int snd_usb_hw_params(struct snd_pcm_substream *substream,
+ 	if (fmt->sync_ep) {
+ 		subs->sync_endpoint = snd_usb_endpoint_open(chip, sync_fmt,
+ 							    hw_params,
+-							    fmt == sync_fmt);
++							    fmt == sync_fmt,
++							    sync_fixed_rate);
+ 		if (!subs->sync_endpoint) {
+ 			ret = -EINVAL;
+ 			goto unlock;
+diff --git a/sound/usb/pcm.h b/sound/usb/pcm.h
+index 493a4e34d78d..388fe2ba346d 100644
+--- a/sound/usb/pcm.h
++++ b/sound/usb/pcm.h
+@@ -6,6 +6,8 @@ void snd_usb_set_pcm_ops(struct snd_pcm *pcm, int stream);
+ int snd_usb_pcm_suspend(struct snd_usb_stream *as);
+ int snd_usb_pcm_resume(struct snd_usb_stream *as);
+ 
++bool snd_usb_pcm_has_fixed_rate(struct snd_usb_substream *as);
++
+ int snd_usb_init_pitch(struct snd_usb_audio *chip,
+ 		       const struct audioformat *fmt);
+ void snd_usb_preallocate_buffer(struct snd_usb_substream *subs);
+diff --git a/sound/usb/quirks.c b/sound/usb/quirks.c
+index 58b37bfc885c..3d13fdf7590c 100644
+--- a/sound/usb/quirks.c
++++ b/sound/usb/quirks.c
+@@ -2152,6 +2152,8 @@ static const struct usb_audio_quirk_flags_table quirk_flags_table[] = {
+ 		   QUIRK_FLAG_GENERIC_IMPLICIT_FB),
+ 	DEVICE_FLG(0x0525, 0xa4ad, /* Hamedal C20 usb camero */
+ 		   QUIRK_FLAG_IFACE_SKIP_CLOSE),
++	DEVICE_FLG(0x0ecb, 0x2069, /* JBL Quantum810 Wireless */
++		   QUIRK_FLAG_FIXED_RATE),
+ 
+ 	/* Vendor matches */
+ 	VENDOR_FLG(0x045e, /* MS Lifecam */
+diff --git a/sound/usb/usbaudio.h b/sound/usb/usbaudio.h
+index 2aba508a4831..f5a8dca66457 100644
+--- a/sound/usb/usbaudio.h
++++ b/sound/usb/usbaudio.h
+@@ -175,6 +175,9 @@ extern bool snd_usb_skip_validation;
+  * QUIRK_FLAG_FORCE_IFACE_RESET
+  *  Force an interface reset whenever stopping & restarting a stream
+  *  (e.g. after xrun)
++ * QUIRK_FLAG_FIXED_RATE
++ *  Do not set PCM rate (frequency) when only one rate is available
++ *  for the given endpoint.
+  */
+ 
+ #define QUIRK_FLAG_GET_SAMPLE_RATE	(1U << 0)
+@@ -198,5 +201,6 @@ extern bool snd_usb_skip_validation;
+ #define QUIRK_FLAG_SKIP_IMPLICIT_FB	(1U << 18)
+ #define QUIRK_FLAG_IFACE_SKIP_CLOSE	(1U << 19)
+ #define QUIRK_FLAG_FORCE_IFACE_RESET	(1U << 20)
++#define QUIRK_FLAG_FIXED_RATE		(1U << 21)
+ 
+ #endif /* __USBAUDIO_H */
 -- 
 2.35.1
 
