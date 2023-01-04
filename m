@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79ACEAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:23:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB1AFC433D2;
-	Wed,  4 Jan 2023 16:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7317DAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:23:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2214C433D2;
+	Wed,  4 Jan 2023 16:23:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849434;
-	bh=kDLBUV+Ye7w3eLOQ3Co93J5anMhbj5TxHng32TQWiYg=;
+	s=korg; t=1672849437;
+	bh=s0kT/Y1VsWxsKgOLbCakZ/h0VaCKTkR4AhzbQxJecp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xCunwhS92F5CzJifL9cehNZkpO0JCF0PqCZT8wfZN0WAy7DUPHRnUFBO5K6odSn45
-	 YUQAadlUzc8Y4AeNsiE6VvZaXSTxmmWrzAjjeOdFP/csEm8YjEE/i1sRPdSwTmOryU
-	 bQw4oD0P1fcP7R4PIMhGOKssV4t0Rawd3eY0xbk0=
+	b=rtQBRa2wjIZvVJfovXwlMbPCIcCdqqBIMC5t9DbRkbasjaHGJCir3YhKZCvHX9llx
+	 AGHZ8/x4i6CFC+LXgbDJnBA2mKPcm5HrTdtGxXAGp9yLaaLdXF4Fp2rRAaOw38tYoS
+	 POqF6iFl0HblsYCP/BBp5nCY5Bm/DwhJqooFwcBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jiaming Li <lijiaming30@huawei.com>,
-	Huaxin Lu <luhuaxin1@huawei.com>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 6.0 097/177] ima: Fix a potential NULL pointer access in ima_restore_measurement_list
-Date: Wed,  4 Jan 2023 17:06:28 +0100
-Message-Id: <20230104160510.575144778@linuxfoundation.org>
+	Michael Walle <michael@walle.cc>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.0 092/177] wifi: wilc1000: sdio: fix module autoloading
+Date: Wed,  4 Jan 2023 17:06:23 +0100
+Message-Id: <20230104160510.428294490@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -37,39 +34,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huaxin Lu <luhuaxin1@huawei.com>
+From: Michael Walle <michael@walle.cc>
 
-commit 11220db412edae8dba58853238f53258268bdb88 upstream.
+commit 57d545b5a3d6ce3a8fb6b093f02bfcbb908973f3 upstream.
 
-In restore_template_fmt, when kstrdup fails, a non-NULL value will still be
-returned, which causes a NULL pointer access in template_desc_init_fields.
+There are no SDIO module aliases included in the driver, therefore,
+module autoloading isn't working. Add the proper MODULE_DEVICE_TABLE().
 
-Fixes: c7d09367702e ("ima: support restoring multiple template formats")
-Cc: stable@kernel.org
-Co-developed-by: Jiaming Li <lijiaming30@huawei.com>
-Signed-off-by: Jiaming Li <lijiaming30@huawei.com>
-Signed-off-by: Huaxin Lu <luhuaxin1@huawei.com>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Michael Walle <michael@walle.cc>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221027171221.491937-1-michael@walle.cc
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/ima/ima_template.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/wireless/microchip/wilc1000/sdio.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/security/integrity/ima/ima_template.c
-+++ b/security/integrity/ima/ima_template.c
-@@ -340,8 +340,11 @@ static struct ima_template_desc *restore
+--- a/drivers/net/wireless/microchip/wilc1000/sdio.c
++++ b/drivers/net/wireless/microchip/wilc1000/sdio.c
+@@ -20,6 +20,7 @@ static const struct sdio_device_id wilc_
+ 	{ SDIO_DEVICE(SDIO_VENDOR_ID_MICROCHIP_WILC, SDIO_DEVICE_ID_MICROCHIP_WILC1000) },
+ 	{ },
+ };
++MODULE_DEVICE_TABLE(sdio, wilc_sdio_ids);
  
- 	template_desc->name = "";
- 	template_desc->fmt = kstrdup(template_name, GFP_KERNEL);
--	if (!template_desc->fmt)
-+	if (!template_desc->fmt) {
-+		kfree(template_desc);
-+		template_desc = NULL;
- 		goto out;
-+	}
+ #define WILC_SDIO_BLOCK_SIZE 512
  
- 	spin_lock(&template_list);
- 	list_add_tail_rcu(&template_desc->list, &defined_templates);
 
 
