@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8534AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:16:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435D8C433D2;
-	Wed,  4 Jan 2023 16:16:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FA1AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:16:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55B07C433D2;
+	Wed,  4 Jan 2023 16:16:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848991;
-	bh=RN0M+J3vqCCJpEcexJuW+gDn1bDAXANMXvjsflhV+/8=;
+	s=korg; t=1672848994;
+	bh=e7oN45J6Bdw4SwilEHA4osAZtrTVi4GDuRXrTySbeAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aSWNN9PFiV5FJgN+4NXygXrsJuyZYACYEaFCeouIQGkUC9ctvBt0K7iTQkJEdB3fG
-	 HX/y/2FH+NBiWWmJzbtV+j2cwazVRs8XDAjl80Qy8V5Qxym+/laYtZDEPp1iSMzAsh
-	 rE9yuTA9zs6H3ri643tk1qeSfp72w+FWRBG+JrWs=
+	b=acTbcEgOVE5kEYdgNYchqwTOlJUbIsfMMlOnQV/obAcXtcGsntkXc/PtHF6stXI7e
+	 A5ZV2bp7sIICiGEBw2D6Wb+wfWdyFB1srHC9tA7kBZ40Yk87/6XT0fcM16AqzW+Xcb
+	 f1dh7kV5lvlcPBGUpmogleb3QI+rSEqLUKVpgBDg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.1 117/207] ipu3-imgu: Fix NULL pointer dereference in imgu_subdev_set_selection()
-Date: Wed,  4 Jan 2023 17:06:15 +0100
-Message-Id: <20230104160515.614982460@linuxfoundation.org>
+	Luo Meng <luomeng12@huawei.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.0 048/177] dm thin: Fix UAF in run_timer_softirq()
+Date: Wed,  4 Jan 2023 17:05:39 +0100
+Message-Id: <20230104160509.104137152@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,130 +34,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maximilian Luz <luzmaximilian@gmail.com>
+From: Luo Meng <luomeng12@huawei.com>
 
-commit dc608edf7d45ba0c2ad14c06eccd66474fec7847 upstream.
+commit 88430ebcbc0ec637b710b947738839848c20feff upstream.
 
-Calling v4l2_subdev_get_try_crop() and v4l2_subdev_get_try_compose()
-with a subdev state of NULL leads to a NULL pointer dereference. This
-can currently happen in imgu_subdev_set_selection() when the state
-passed in is NULL, as this method first gets pointers to both the "try"
-and "active" states and only then decides which to use.
+When dm_resume() and dm_destroy() are concurrent, it will
+lead to UAF, as follows:
 
-The same issue has been addressed for imgu_subdev_get_selection() with
-commit 30d03a0de650 ("ipu3-imgu: Fix NULL pointer dereference in active
-selection access"). However the issue still persists in
-imgu_subdev_set_selection().
+ BUG: KASAN: use-after-free in __run_timers+0x173/0x710
+ Write of size 8 at addr ffff88816d9490f0 by task swapper/0/0
+<snip>
+ Call Trace:
+  <IRQ>
+  dump_stack_lvl+0x73/0x9f
+  print_report.cold+0x132/0xaa2
+  _raw_spin_lock_irqsave+0xcd/0x160
+  __run_timers+0x173/0x710
+  kasan_report+0xad/0x110
+  __run_timers+0x173/0x710
+  __asan_store8+0x9c/0x140
+  __run_timers+0x173/0x710
+  call_timer_fn+0x310/0x310
+  pvclock_clocksource_read+0xfa/0x250
+  kvm_clock_read+0x2c/0x70
+  kvm_clock_get_cycles+0xd/0x20
+  ktime_get+0x5c/0x110
+  lapic_next_event+0x38/0x50
+  clockevents_program_event+0xf1/0x1e0
+  run_timer_softirq+0x49/0x90
+  __do_softirq+0x16e/0x62c
+  __irq_exit_rcu+0x1fa/0x270
+  irq_exit_rcu+0x12/0x20
+  sysvec_apic_timer_interrupt+0x8e/0xc0
 
-Therefore, apply a similar fix as done in the aforementioned commit to
-imgu_subdev_set_selection(). To keep things a bit cleaner, introduce
-helper functions for "crop" and "compose" access and use them in both
-imgu_subdev_set_selection() and imgu_subdev_get_selection().
+One of the concurrency UAF can be shown as below:
 
-Fixes: 0d346d2a6f54 ("media: v4l2-subdev: add subdev-wide state struct")
-Cc: stable@vger.kernel.org # for v5.14 and later
-Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+        use                                  free
+do_resume                           |
+  __find_device_hash_cell           |
+    dm_get                          |
+      atomic_inc(&md->holders)      |
+                                    | dm_destroy
+                                    |   __dm_destroy
+                                    |     if (!dm_suspended_md(md))
+                                    |     atomic_read(&md->holders)
+                                    |     msleep(1)
+  dm_resume                         |
+    __dm_resume                     |
+      dm_table_resume_targets       |
+        pool_resume                 |
+          do_waker  #add delay work |
+  dm_put                            |
+    atomic_dec(&md->holders)        |
+                                    |     dm_table_destroy
+                                    |       pool_dtr
+                                    |         __pool_dec
+                                    |           __pool_destroy
+                                    |             destroy_workqueue
+                                    |             kfree(pool) # free pool
+        time out
+__do_softirq
+  run_timer_softirq # pool has already been freed
+
+This can be easily reproduced using:
+  1. create thin-pool
+  2. dmsetup suspend pool
+  3. dmsetup resume pool
+  4. dmsetup remove_all # Concurrent with 3
+
+The root cause of this UAF bug is that dm_resume() adds timer after
+dm_destroy() skips cancelling the timer because of suspend status.
+After timeout, it will call run_timer_softirq(), however pool has
+already been freed. The concurrency UAF bug will happen.
+
+Therefore, cancelling timer again in __pool_destroy().
+
+Cc: stable@vger.kernel.org
+Fixes: 991d9fa02da0d ("dm: add thin provisioning target")
+Signed-off-by: Luo Meng <luomeng12@huawei.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/ipu3/ipu3-v4l2.c |   57 +++++++++++++++++++--------------
- 1 file changed, 34 insertions(+), 23 deletions(-)
+ drivers/md/dm-thin.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/staging/media/ipu3/ipu3-v4l2.c
-+++ b/drivers/staging/media/ipu3/ipu3-v4l2.c
-@@ -188,6 +188,28 @@ static int imgu_subdev_set_fmt(struct v4
- 	return 0;
- }
+--- a/drivers/md/dm-thin.c
++++ b/drivers/md/dm-thin.c
+@@ -2889,6 +2889,8 @@ static void __pool_destroy(struct pool *
+ 	dm_bio_prison_destroy(pool->prison);
+ 	dm_kcopyd_client_destroy(pool->copier);
  
-+static struct v4l2_rect *
-+imgu_subdev_get_crop(struct imgu_v4l2_subdev *sd,
-+		     struct v4l2_subdev_state *sd_state, unsigned int pad,
-+		     enum v4l2_subdev_format_whence which)
-+{
-+	if (which == V4L2_SUBDEV_FORMAT_TRY)
-+		return v4l2_subdev_get_try_crop(&sd->subdev, sd_state, pad);
-+	else
-+		return &sd->rect.eff;
-+}
-+
-+static struct v4l2_rect *
-+imgu_subdev_get_compose(struct imgu_v4l2_subdev *sd,
-+			struct v4l2_subdev_state *sd_state, unsigned int pad,
-+			enum v4l2_subdev_format_whence which)
-+{
-+	if (which == V4L2_SUBDEV_FORMAT_TRY)
-+		return v4l2_subdev_get_try_compose(&sd->subdev, sd_state, pad);
-+	else
-+		return &sd->rect.bds;
-+}
-+
- static int imgu_subdev_get_selection(struct v4l2_subdev *sd,
- 				     struct v4l2_subdev_state *sd_state,
- 				     struct v4l2_subdev_selection *sel)
-@@ -200,18 +222,12 @@ static int imgu_subdev_get_selection(str
- 
- 	switch (sel->target) {
- 	case V4L2_SEL_TGT_CROP:
--		if (sel->which == V4L2_SUBDEV_FORMAT_TRY)
--			sel->r = *v4l2_subdev_get_try_crop(sd, sd_state,
--							   sel->pad);
--		else
--			sel->r = imgu_sd->rect.eff;
-+		sel->r = *imgu_subdev_get_crop(imgu_sd, sd_state, sel->pad,
-+					       sel->which);
- 		return 0;
- 	case V4L2_SEL_TGT_COMPOSE:
--		if (sel->which == V4L2_SUBDEV_FORMAT_TRY)
--			sel->r = *v4l2_subdev_get_try_compose(sd, sd_state,
--							      sel->pad);
--		else
--			sel->r = imgu_sd->rect.bds;
-+		sel->r = *imgu_subdev_get_compose(imgu_sd, sd_state, sel->pad,
-+						  sel->which);
- 		return 0;
- 	default:
- 		return -EINVAL;
-@@ -223,10 +239,9 @@ static int imgu_subdev_set_selection(str
- 				     struct v4l2_subdev_selection *sel)
- {
- 	struct imgu_device *imgu = v4l2_get_subdevdata(sd);
--	struct imgu_v4l2_subdev *imgu_sd = container_of(sd,
--							struct imgu_v4l2_subdev,
--							subdev);
--	struct v4l2_rect *rect, *try_sel;
-+	struct imgu_v4l2_subdev *imgu_sd =
-+		container_of(sd, struct imgu_v4l2_subdev, subdev);
-+	struct v4l2_rect *rect;
- 
- 	dev_dbg(&imgu->pci_dev->dev,
- 		 "set subdev %u sel which %u target 0x%4x rect [%ux%u]",
-@@ -238,22 +253,18 @@ static int imgu_subdev_set_selection(str
- 
- 	switch (sel->target) {
- 	case V4L2_SEL_TGT_CROP:
--		try_sel = v4l2_subdev_get_try_crop(sd, sd_state, sel->pad);
--		rect = &imgu_sd->rect.eff;
-+		rect = imgu_subdev_get_crop(imgu_sd, sd_state, sel->pad,
-+					    sel->which);
- 		break;
- 	case V4L2_SEL_TGT_COMPOSE:
--		try_sel = v4l2_subdev_get_try_compose(sd, sd_state, sel->pad);
--		rect = &imgu_sd->rect.bds;
-+		rect = imgu_subdev_get_compose(imgu_sd, sd_state, sel->pad,
-+					       sel->which);
- 		break;
- 	default:
- 		return -EINVAL;
- 	}
- 
--	if (sel->which == V4L2_SUBDEV_FORMAT_TRY)
--		*try_sel = sel->r;
--	else
--		*rect = sel->r;
--
-+	*rect = sel->r;
- 	return 0;
- }
++	cancel_delayed_work_sync(&pool->waker);
++	cancel_delayed_work_sync(&pool->no_space_timeout);
+ 	if (pool->wq)
+ 		destroy_workqueue(pool->wq);
  
 
 
