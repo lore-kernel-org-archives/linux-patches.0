@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5D1AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:27:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1DB9C433D2;
-	Wed,  4 Jan 2023 16:27:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4163AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:27:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8B9C433D2;
+	Wed,  4 Jan 2023 16:27:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849672;
-	bh=Ck9GJzt8+lIae6+e9ktnZ81wXPN0XdMnN+9BDRbwRK0=;
+	s=korg; t=1672849675;
+	bh=Cb6iu7EEQeR1fXuOpokNgHFvrMoE+ZBJMMjZ4GMiksw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zemdPXLp19RF3OFr/JwpdXzMyhpm+eDgAaQSVpCOPgRvQD+w5QLNwgcjfxPsygCXQ
-	 1XP9HZVr2tlllGew25O1sgbJGQnbC50Tq1KeJNv8kdPzNhhjo57iLzGnbxl7ms5udh
-	 8HgWdeEUD8Z/s+2o3Kzcc/nkbiAAYrPO3kB8yMhE=
+	b=GIZtCl+uqE15a81BiiYBO3kXZg6q2xE+hcTcBZ/cdN4dVwt6VE73+WmuHXTKntFmc
+	 7RU3Z3/C7l5r3ClFuNvlmApylaCIpSsF2PGnvtSGTkBG7J1+ESVu/kS78HuhtIdLeW
+	 dmHeKUfxWHraQ1+pN0DvY0I1bIyyeX2TyQc34e1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Biggers <ebiggers@google.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.0 150/177] ext4: fix unaligned memory access in ext4_fc_reserve_space()
-Date: Wed,  4 Jan 2023 17:07:21 +0100
-Message-Id: <20230104160512.205915827@linuxfoundation.org>
+Subject: [PATCH 6.0 151/177] ext4: fix off-by-one errors in fast-commit block filling
+Date: Wed,  4 Jan 2023 17:07:22 +0100
+Message-Id: <20230104160512.236076281@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -36,97 +36,164 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@google.com>
 
-commit 8415ce07ecf0cc25efdd5db264a7133716e503cf upstream.
+commit 48a6a66db82b8043d298a630f22c62d43550cae5 upstream.
 
-As is done elsewhere in the file, build the struct ext4_fc_tl on the
-stack and memcpy() it into the buffer, rather than directly writing it
-to a potentially-unaligned location in the buffer.
+Due to several different off-by-one errors, or perhaps due to a late
+change in design that wasn't fully reflected in the code that was
+actually merged, there are several very strange constraints on how
+fast-commit blocks are filled with tlv entries:
+
+- tlvs must start at least 10 bytes before the end of the block, even
+  though the minimum tlv length is 8.  Otherwise, the replay code will
+  ignore them.  (BUG: ext4_fc_reserve_space() could violate this
+  requirement if called with a len of blocksize - 9 or blocksize - 8.
+  Fortunately, this doesn't seem to happen currently.)
+
+- tlvs must end at least 1 byte before the end of the block.  Otherwise
+  the replay code will consider them to be invalid.  This quirk
+  contributed to a bug (fixed by an earlier commit) where uninitialized
+  memory was being leaked to disk in the last byte of blocks.
+
+Also, strangely these constraints don't apply to the replay code in
+e2fsprogs, which will accept any tlvs in the blocks (with no bounds
+checks at all, but that is a separate issue...).
+
+Given that this all seems to be a bug, let's fix it by just filling
+blocks with tlv entries in the natural way.
+
+Note that old kernels will be unable to replay fast-commit journals
+created by kernels that have this commit.
 
 Fixes: aa75f4d3daae ("ext4: main fast-commit commit path")
 Cc: <stable@vger.kernel.org> # v5.10+
 Signed-off-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20221106224841.279231-6-ebiggers@kernel.org
+Link: https://lore.kernel.org/r/20221106224841.279231-7-ebiggers@kernel.org
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |   39 +++++++++++++++++++++------------------
- 1 file changed, 21 insertions(+), 18 deletions(-)
+ fs/ext4/fast_commit.c |   66 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 33 insertions(+), 33 deletions(-)
 
 --- a/fs/ext4/fast_commit.c
 +++ b/fs/ext4/fast_commit.c
-@@ -683,6 +683,15 @@ static void ext4_fc_submit_bh(struct sup
- 
- /* Ext4 commit path routines */
- 
-+/* memcpy to fc reserved space and update CRC */
-+static void *ext4_fc_memcpy(struct super_block *sb, void *dst, const void *src,
-+				int len, u32 *crc)
-+{
-+	if (crc)
-+		*crc = ext4_chksum(EXT4_SB(sb), *crc, src, len);
-+	return memcpy(dst, src, len);
-+}
-+
- /* memzero and update CRC */
- static void *ext4_fc_memzero(struct super_block *sb, void *dst, int len,
- 				u32 *crc)
-@@ -708,12 +717,13 @@ static void *ext4_fc_memzero(struct supe
-  */
- static u8 *ext4_fc_reserve_space(struct super_block *sb, int len, u32 *crc)
- {
--	struct ext4_fc_tl *tl;
-+	struct ext4_fc_tl tl;
- 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+@@ -722,43 +722,43 @@ static u8 *ext4_fc_reserve_space(struct
  	struct buffer_head *bh;
  	int bsize = sbi->s_journal->j_blocksize;
  	int ret, off = sbi->s_fc_bytes % bsize;
- 	int pad_len;
-+	u8 *dst;
+-	int pad_len;
++	int remaining;
+ 	u8 *dst;
  
  	/*
- 	 * After allocating len, we should have space at least for a 0 byte
-@@ -737,16 +747,18 @@ static u8 *ext4_fc_reserve_space(struct
- 		return sbi->s_fc_bh->b_data + off;
+-	 * After allocating len, we should have space at least for a 0 byte
+-	 * padding.
++	 * If 'len' is too long to fit in any block alongside a PAD tlv, then we
++	 * cannot fulfill the request.
+ 	 */
+-	if (len + EXT4_FC_TAG_BASE_LEN > bsize)
++	if (len > bsize - EXT4_FC_TAG_BASE_LEN)
+ 		return NULL;
+ 
+-	if (bsize - off - 1 > len + EXT4_FC_TAG_BASE_LEN) {
+-		/*
+-		 * Only allocate from current buffer if we have enough space for
+-		 * this request AND we have space to add a zero byte padding.
+-		 */
+-		if (!sbi->s_fc_bh) {
+-			ret = jbd2_fc_get_buf(EXT4_SB(sb)->s_journal, &bh);
+-			if (ret)
+-				return NULL;
+-			sbi->s_fc_bh = bh;
+-		}
+-		sbi->s_fc_bytes += len;
+-		return sbi->s_fc_bh->b_data + off;
++	if (!sbi->s_fc_bh) {
++		ret = jbd2_fc_get_buf(EXT4_SB(sb)->s_journal, &bh);
++		if (ret)
++			return NULL;
++		sbi->s_fc_bh = bh;
  	}
- 	/* Need to add PAD tag */
--	tl = (struct ext4_fc_tl *)(sbi->s_fc_bh->b_data + off);
--	tl->fc_tag = cpu_to_le16(EXT4_FC_TAG_PAD);
-+	dst = sbi->s_fc_bh->b_data + off;
-+	tl.fc_tag = cpu_to_le16(EXT4_FC_TAG_PAD);
- 	pad_len = bsize - off - 1 - EXT4_FC_TAG_BASE_LEN;
--	tl->fc_len = cpu_to_le16(pad_len);
--	if (crc)
--		*crc = ext4_chksum(sbi, *crc, tl, EXT4_FC_TAG_BASE_LEN);
--	if (pad_len > 0)
--		ext4_fc_memzero(sb, tl + 1, pad_len, crc);
-+	tl.fc_len = cpu_to_le16(pad_len);
-+	ext4_fc_memcpy(sb, dst, &tl, EXT4_FC_TAG_BASE_LEN, crc);
-+	dst += EXT4_FC_TAG_BASE_LEN;
-+	if (pad_len > 0) {
-+		ext4_fc_memzero(sb, dst, pad_len, crc);
-+		dst += pad_len;
+-	/* Need to add PAD tag */
+ 	dst = sbi->s_fc_bh->b_data + off;
++
++	/*
++	 * Allocate the bytes in the current block if we can do so while still
++	 * leaving enough space for a PAD tlv.
++	 */
++	remaining = bsize - EXT4_FC_TAG_BASE_LEN - off;
++	if (len <= remaining) {
++		sbi->s_fc_bytes += len;
++		return dst;
 +	}
- 	/* Don't leak uninitialized memory in the unused last byte. */
--	*((u8 *)(tl + 1) + pad_len) = 0;
-+	*dst = 0;
++
++	/*
++	 * Else, terminate the current block with a PAD tlv, then allocate a new
++	 * block and allocate the bytes at the start of that new block.
++	 */
++
+ 	tl.fc_tag = cpu_to_le16(EXT4_FC_TAG_PAD);
+-	pad_len = bsize - off - 1 - EXT4_FC_TAG_BASE_LEN;
+-	tl.fc_len = cpu_to_le16(pad_len);
++	tl.fc_len = cpu_to_le16(remaining);
+ 	ext4_fc_memcpy(sb, dst, &tl, EXT4_FC_TAG_BASE_LEN, crc);
+-	dst += EXT4_FC_TAG_BASE_LEN;
+-	if (pad_len > 0) {
+-		ext4_fc_memzero(sb, dst, pad_len, crc);
+-		dst += pad_len;
+-	}
+-	/* Don't leak uninitialized memory in the unused last byte. */
+-	*dst = 0;
++	ext4_fc_memzero(sb, dst + EXT4_FC_TAG_BASE_LEN, remaining, crc);
  
  	ext4_fc_submit_bh(sb, false);
  
-@@ -758,15 +770,6 @@ static u8 *ext4_fc_reserve_space(struct
+@@ -766,7 +766,7 @@ static u8 *ext4_fc_reserve_space(struct
+ 	if (ret)
+ 		return NULL;
+ 	sbi->s_fc_bh = bh;
+-	sbi->s_fc_bytes = (sbi->s_fc_bytes / bsize + 1) * bsize + len;
++	sbi->s_fc_bytes += bsize - off + len;
  	return sbi->s_fc_bh->b_data;
  }
  
--/* memcpy to fc reserved space and update CRC */
--static void *ext4_fc_memcpy(struct super_block *sb, void *dst, const void *src,
--				int len, u32 *crc)
--{
--	if (crc)
--		*crc = ext4_chksum(EXT4_SB(sb), *crc, src, len);
--	return memcpy(dst, src, len);
--}
--
- /*
-  * Complete a fast commit by writing tail tag.
-  *
+@@ -797,7 +797,7 @@ static int ext4_fc_write_tail(struct sup
+ 	off = sbi->s_fc_bytes % bsize;
+ 
+ 	tl.fc_tag = cpu_to_le16(EXT4_FC_TAG_TAIL);
+-	tl.fc_len = cpu_to_le16(bsize - off - 1 + sizeof(struct ext4_fc_tail));
++	tl.fc_len = cpu_to_le16(bsize - off + sizeof(struct ext4_fc_tail));
+ 	sbi->s_fc_bytes = round_up(sbi->s_fc_bytes, bsize);
+ 
+ 	ext4_fc_memcpy(sb, dst, &tl, EXT4_FC_TAG_BASE_LEN, &crc);
+@@ -2065,7 +2065,7 @@ static int ext4_fc_replay_scan(journal_t
+ 	state = &sbi->s_fc_replay_state;
+ 
+ 	start = (u8 *)bh->b_data;
+-	end = (__u8 *)bh->b_data + journal->j_blocksize - 1;
++	end = start + journal->j_blocksize;
+ 
+ 	if (state->fc_replay_expected_off == 0) {
+ 		state->fc_cur_tag = 0;
+@@ -2086,7 +2086,7 @@ static int ext4_fc_replay_scan(journal_t
+ 	}
+ 
+ 	state->fc_replay_expected_off++;
+-	for (cur = start; cur < end - EXT4_FC_TAG_BASE_LEN;
++	for (cur = start; cur <= end - EXT4_FC_TAG_BASE_LEN;
+ 	     cur = cur + EXT4_FC_TAG_BASE_LEN + tl.fc_len) {
+ 		ext4_fc_get_tl(&tl, cur);
+ 		val = cur + EXT4_FC_TAG_BASE_LEN;
+@@ -2204,9 +2204,9 @@ static int ext4_fc_replay(journal_t *jou
+ #endif
+ 
+ 	start = (u8 *)bh->b_data;
+-	end = (__u8 *)bh->b_data + journal->j_blocksize - 1;
++	end = start + journal->j_blocksize;
+ 
+-	for (cur = start; cur < end - EXT4_FC_TAG_BASE_LEN;
++	for (cur = start; cur <= end - EXT4_FC_TAG_BASE_LEN;
+ 	     cur = cur + EXT4_FC_TAG_BASE_LEN + tl.fc_len) {
+ 		ext4_fc_get_tl(&tl, cur);
+ 		val = cur + EXT4_FC_TAG_BASE_LEN;
 
 
