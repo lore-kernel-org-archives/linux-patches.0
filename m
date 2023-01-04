@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EF7AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9629C433D2;
-	Wed,  4 Jan 2023 16:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E85CAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0C2BC433F0;
+	Wed,  4 Jan 2023 16:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849343;
-	bh=N50cOfFxgAGh/igrfdLHnO1oXjCQ9T8lToz0ZfB+JaI=;
+	s=korg; t=1672849346;
+	bh=4Wp4zqTIS/DMm/uEEpuWrevVUzNF2qEy0nVekrEUqYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IVUbMbnKasS/z1kskDsilogCIHblkRUEOubPZyma3H7hPYfqFWubUDXKKLf7nV6Ov
-	 DqQAd14wxaFZoAHj8Du+0R4NItoFnWGj6f1AxW9rGcp7l+m60QBznnYds/r74p5DbX
-	 1UHS4xnAyu0pCFgYurmOmv0ejXEVjNIXIlOEpdGY=
+	b=kH7BNXgNUCLBT62ORn07OfoI2OvZ+ECPqVZu50VR7QjN5IYDJDpxjY21XG6fszxNq
+	 GTeM1xHEGK/dCTSN1RvYjuNI9ZeIiMhwW5/3eiufJryPB2geESvRg/sgCobEHRNQDK
+	 DTbMgDKFn7wdY376xfvbUO/4BV3rYMbynrIjQ0wk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Huafei <lihuafei1@huawei.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.0 106/177] RISC-V: kexec: Fix memory leak of elf header buffer
-Date: Wed,  4 Jan 2023 17:06:37 +0100
-Message-Id: <20230104160510.857319215@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Jason Yan <yanaijie@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.1 174/207] ext4: fix bug_on in __es_tree_search caused by bad boot loader inode
+Date: Wed,  4 Jan 2023 17:07:12 +0100
+Message-Id: <20230104160517.385666405@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,57 +37,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Huafei <lihuafei1@huawei.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit cbc32023ddbdf4baa3d9dc513a2184a84080a5a2 upstream.
+commit 991ed014de0840c5dc405b679168924afb2952ac upstream.
 
-This is reported by kmemleak detector:
+We got a issue as fllows:
+==================================================================
+ kernel BUG at fs/ext4/extents_status.c:203!
+ invalid opcode: 0000 [#1] PREEMPT SMP
+ CPU: 1 PID: 945 Comm: cat Not tainted 6.0.0-next-20221007-dirty #349
+ RIP: 0010:ext4_es_end.isra.0+0x34/0x42
+ RSP: 0018:ffffc9000143b768 EFLAGS: 00010203
+ RAX: 0000000000000000 RBX: ffff8881769cd0b8 RCX: 0000000000000000
+ RDX: 0000000000000000 RSI: ffffffff8fc27cf7 RDI: 00000000ffffffff
+ RBP: ffff8881769cd0bc R08: 0000000000000000 R09: ffffc9000143b5f8
+ R10: 0000000000000001 R11: 0000000000000001 R12: ffff8881769cd0a0
+ R13: ffff8881768e5668 R14: 00000000768e52f0 R15: 0000000000000000
+ FS: 00007f359f7f05c0(0000)GS:ffff88842fd00000(0000)knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00007f359f5a2000 CR3: 000000017130c000 CR4: 00000000000006e0
+ DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+ DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+ Call Trace:
+  <TASK>
+  __es_tree_search.isra.0+0x6d/0xf5
+  ext4_es_cache_extent+0xfa/0x230
+  ext4_cache_extents+0xd2/0x110
+  ext4_find_extent+0x5d5/0x8c0
+  ext4_ext_map_blocks+0x9c/0x1d30
+  ext4_map_blocks+0x431/0xa50
+  ext4_mpage_readpages+0x48e/0xe40
+  ext4_readahead+0x47/0x50
+  read_pages+0x82/0x530
+  page_cache_ra_unbounded+0x199/0x2a0
+  do_page_cache_ra+0x47/0x70
+  page_cache_ra_order+0x242/0x400
+  ondemand_readahead+0x1e8/0x4b0
+  page_cache_sync_ra+0xf4/0x110
+  filemap_get_pages+0x131/0xb20
+  filemap_read+0xda/0x4b0
+  generic_file_read_iter+0x13a/0x250
+  ext4_file_read_iter+0x59/0x1d0
+  vfs_read+0x28f/0x460
+  ksys_read+0x73/0x160
+  __x64_sys_read+0x1e/0x30
+  do_syscall_64+0x35/0x80
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  </TASK>
+==================================================================
 
-unreferenced object 0xff2000000403d000 (size 4096):
-  comm "kexec", pid 146, jiffies 4294900633 (age 64.792s)
-  hex dump (first 32 bytes):
-    7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00  .ELF............
-    04 00 f3 00 01 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<00000000566ca97c>] kmemleak_vmalloc+0x3c/0xbe
-    [<00000000979283d8>] __vmalloc_node_range+0x3ac/0x560
-    [<00000000b4b3712a>] __vmalloc_node+0x56/0x62
-    [<00000000854f75e2>] vzalloc+0x2c/0x34
-    [<00000000e9a00db9>] crash_prepare_elf64_headers+0x80/0x30c
-    [<0000000067e8bf48>] elf_kexec_load+0x3e8/0x4ec
-    [<0000000036548e09>] kexec_image_load_default+0x40/0x4c
-    [<0000000079fbe1b4>] sys_kexec_file_load+0x1c4/0x322
-    [<0000000040c62c03>] ret_from_syscall+0x0/0x2
+In the above issue, ioctl invokes the swap_inode_boot_loader function to
+swap inode<5> and inode<12>. However, inode<5> contain incorrect imode and
+disordered extents, and i_nlink is set to 1. The extents check for inode in
+the ext4_iget function can be bypassed bacause 5 is EXT4_BOOT_LOADER_INO.
+While links_count is set to 1, the extents are not initialized in
+swap_inode_boot_loader. After the ioctl command is executed successfully,
+the extents are swapped to inode<12>, in this case, run the `cat` command
+to view inode<12>. And Bug_ON is triggered due to the incorrect extents.
 
-In elf_kexec_load(), a buffer is allocated via vzalloc() to store elf
-headers.  While it's not freed back to system when kdump kernel is
-reloaded or unloaded, or when image->elf_header is successfully set and
-then fails to load kdump kernel for some reason. Fix it by freeing the
-buffer in arch_kimage_file_post_load_cleanup().
+When the boot loader inode is not initialized, its imode can be one of the
+following:
+1) the imode is a bad type, which is marked as bad_inode in ext4_iget and
+   set to S_IFREG.
+2) the imode is good type but not S_IFREG.
+3) the imode is S_IFREG.
 
-Fixes: 8acea455fafa ("RISC-V: Support for kexec_file on panic")
-Signed-off-by: Li Huafei <lihuafei1@huawei.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20221104095658.141222-2-lihuafei1@huawei.com
-Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+The BUG_ON may be triggered by bypassing the check in cases 1 and 2.
+Therefore, when the boot loader inode is bad_inode or its imode is not
+S_IFREG, initialize the inode to avoid triggering the BUG.
+
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jason Yan <yanaijie@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221026042310.3839669-5-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/elf_kexec.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ fs/ext4/ioctl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/riscv/kernel/elf_kexec.c
-+++ b/arch/riscv/kernel/elf_kexec.c
-@@ -26,6 +26,10 @@ int arch_kimage_file_post_load_cleanup(s
- 	kvfree(image->arch.fdt);
- 	image->arch.fdt = NULL;
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -425,7 +425,7 @@ static long swap_inode_boot_loader(struc
+ 	/* Protect extent tree against block allocations via delalloc */
+ 	ext4_double_down_write_data_sem(inode, inode_bl);
  
-+	vfree(image->elf_headers);
-+	image->elf_headers = NULL;
-+	image->elf_headers_sz = 0;
-+
- 	return kexec_image_post_load_cleanup_default(image);
- }
- 
+-	if (inode_bl->i_nlink == 0) {
++	if (is_bad_inode(inode_bl) || !S_ISREG(inode_bl->i_mode)) {
+ 		/* this inode has never been used as a BOOT_LOADER */
+ 		set_nlink(inode_bl, 1);
+ 		i_uid_write(inode_bl, 0);
 
 
