@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 537C1AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:14:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E44C433EF;
-	Wed,  4 Jan 2023 16:14:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 847CCAD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:14:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF04DC433EF;
+	Wed,  4 Jan 2023 16:14:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848896;
-	bh=f5oEEkB+j5jHBRMu6rRFXvjyC99Tc31Ra3JUcwmi/sc=;
+	s=korg; t=1672848899;
+	bh=0useKWpyImj+WHY1FQveRtjKY2RsJ9XqUU9nAGf6Ni8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xOQQNHm9rU5eqUo9avT1KSLlHJBGt3Fj3GaSb6GC/phi0VgBuXLonJDhzPEDylQZw
-	 o2e6mLlgBYHpNpRskqz7cm/Acfw9pflWrWJ0NBDx5TRV4fTiG8ljbMOYyK9PngMZJJ
-	 iIP4N9ZG8LKmefxaQhEu6/Wl7KsfPXAJojh3jv8I=
+	b=HLi7JPP1PX8WfXMZMsDaj8DUhUmM/BM2oE1P4Vpy6IDAxOmUMNAQr/6fbMiayRuhL
+	 2QjUwc84qkx2lUKU34xT1mDn3j3vwE7ZYozwmBEJgo4T00srSpHRwRMP6++5wfY85O
+	 ujvikckTqpbfIdFrCQC02JAvq6jbaw+XKD53KKa8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 6.0 031/177] ext2: unbugger ext2_empty_dir()
-Date: Wed,  4 Jan 2023 17:05:22 +0100
-Message-Id: <20230104160508.609952642@linuxfoundation.org>
+	Wenwen Wang <wenwen@cs.uga.edu>,
+	Keita Suzuki <keitasuzuki.park@sslab.ics.keio.ac.jp>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 6.1 101/207] media: dvb-core: Fix double free in dvb_register_device()
+Date: Wed,  4 Jan 2023 17:05:59 +0100
+Message-Id: <20230104160515.116292303@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,52 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Keita Suzuki <keitasuzuki.park@sslab.ics.keio.ac.jp>
 
-commit 27e714c007e4ad01837bf0fac5c11913a38d7695 upstream.
+commit 6b0d0477fce747d4137aa65856318b55fba72198 upstream.
 
-In 27cfa258951a "ext2: fix fs corruption when trying to remove
-a non-empty directory with IO error" a funny thing has happened:
+In function dvb_register_device() -> dvb_register_media_device() ->
+dvb_create_media_entity(), dvb->entity is allocated and initialized. If
+the initialization fails, it frees the dvb->entity, and return an error
+code. The caller takes the error code and handles the error by calling
+dvb_media_device_free(), which unregisters the entity and frees the
+field again if it is not NULL. As dvb->entity may not NULLed in
+dvb_create_media_entity() when the allocation of dvbdev->pad fails, a
+double free may occur. This may also cause an Use After free in
+media_device_unregister_entity().
 
--               page = ext2_get_page(inode, i, dir_has_error, &page_addr);
-+               page = ext2_get_page(inode, i, 0, &page_addr);
+Fix this by storing NULL to dvb->entity when it is freed.
 
- -               if (IS_ERR(page)) {
- -                       dir_has_error = 1;
- -                       continue;
- -               }
- +               if (IS_ERR(page))
- +                       goto not_empty;
-
-And at not_empty: we hit ext2_put_page(page, page_addr), which does
-put_page(page).  Which, unless I'm very mistaken, should oops
-immediately when given ERR_PTR(-E...) as page.
-
-OK, shit happens, insufficiently tested patches included.  But when
-commit in question describes the fault-injection test that exercised
-that particular failure exit...
-
-Ow.
-
-CC: stable@vger.kernel.org
-Fixes: 27cfa258951a ("ext2: fix fs corruption when trying to remove a non-empty directory with IO error")
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/linux-media/20220426052921.2088416-1-keitasuzuki.park@sslab.ics.keio.ac.jp
+Fixes: fcd5ce4b3936 ("media: dvb-core: fix a memory leak bug")
+Cc: stable@vger.kernel.org
+Cc: Wenwen Wang <wenwen@cs.uga.edu>
+Signed-off-by: Keita Suzuki <keitasuzuki.park@sslab.ics.keio.ac.jp>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext2/dir.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/dvb-core/dvbdev.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ext2/dir.c
-+++ b/fs/ext2/dir.c
-@@ -679,7 +679,7 @@ int ext2_empty_dir (struct inode * inode
- 		page = ext2_get_page(inode, i, 0, &page_addr);
- 
- 		if (IS_ERR(page))
--			goto not_empty;
-+			return 0;
- 
- 		kaddr = page_addr;
- 		de = (ext2_dirent *)kaddr;
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -335,6 +335,7 @@ static int dvb_create_media_entity(struc
+ 				       GFP_KERNEL);
+ 		if (!dvbdev->pads) {
+ 			kfree(dvbdev->entity);
++			dvbdev->entity = NULL;
+ 			return -ENOMEM;
+ 		}
+ 	}
 
 
