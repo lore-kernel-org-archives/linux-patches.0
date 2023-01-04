@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB37EAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:24:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 263C4C433EF;
-	Wed,  4 Jan 2023 16:24:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1252AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:24:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EAC0C433EF;
+	Wed,  4 Jan 2023 16:24:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849446;
-	bh=Ics49q2apegzyJk6UleG046jQ43q2/pwb4+WI0ZA+3w=;
+	s=korg; t=1672849449;
+	bh=ncR10ObcXnmBEoNAM16monO+RokhQ7VTe0S5BKXjw68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pQlJoiVuV7aaNzcXh4POrGpMO24vb4hNmVZEV6sX38dRYufAr7PqiIkulOGAgNGgh
-	 8HG9Ncrj4Fu9LEVFhQlcECeGr+d2w7M6TP6vdW8PsDMYo4wuRzMIWEVuoU6EVC/2cU
-	 K48n8o/KHpFq7xwjj+Wwbml7CVgnFUBpHYgCPeIQ=
+	b=H+ca7oGxS8vqaGnp5BTDS4t6GWuzdN8zopCDZCxIxtFK4VQao4WyoaLo8cHPtJctc
+	 GDh6zHJiGREgw14Im+odZt2Y79BoXOZk9b/3CESffH7FGlMVheUQMN+TtE4kVEaRWc
+	 j8whW7iVFCMJCzZATcoiXxwnpIEyPcjrybTf0Snc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Weiyang <wangweiyang2@huawei.com>,
-	Aristeu Rozanski <aris@redhat.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.0 124/177] device_cgroup: Roll back to original exceptions after copy failure
-Date: Wed,  4 Jan 2023 17:06:55 +0100
-Message-Id: <20230104160511.399629422@linuxfoundation.org>
+	Eric Sandeen <sandeen@redhat.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.1 191/207] ext4: avoid BUG_ON when creating xattrs
+Date: Wed,  4 Jan 2023 17:07:29 +0100
+Message-Id: <20230104160517.947547996@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,95 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Weiyang <wangweiyang2@huawei.com>
+From: Jan Kara <jack@suse.cz>
 
-commit e68bfbd3b3c3a0ec3cf8c230996ad8cabe90322f upstream.
+commit b40ebaf63851b3a401b0dc9263843538f64f5ce6 upstream.
 
-When add the 'a *:* rwm' entry to devcgroup A's whitelist, at first A's
-exceptions will be cleaned and A's behavior is changed to
-DEVCG_DEFAULT_ALLOW. Then parent's exceptions will be copyed to A's
-whitelist. If copy failure occurs, just return leaving A to grant
-permissions to all devices. And A may grant more permissions than
-parent.
+Commit fb0a387dcdcd ("ext4: limit block allocations for indirect-block
+files to < 2^32") added code to try to allocate xattr block with 32-bit
+block number for indirect block based files on the grounds that these
+files cannot use larger block numbers. It also added BUG_ON when
+allocated block could not fit into 32 bits. This is however bogus
+reasoning because xattr block is stored in inode->i_file_acl and
+inode->i_file_acl_hi and as such even indirect block based files can
+happily use full 48 bits for xattr block number. The proper handling
+seems to be there basically since 64-bit block number support was added.
+So remove the bogus limitation and BUG_ON.
 
-Backup A's whitelist and recover original exceptions after copy
-failure.
-
-Cc: stable@vger.kernel.org
-Fixes: 4cef7299b478 ("device_cgroup: add proper checking when changing default behavior")
-Signed-off-by: Wang Weiyang <wangweiyang2@huawei.com>
-Reviewed-by: Aristeu Rozanski <aris@redhat.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Cc: Eric Sandeen <sandeen@redhat.com>
+Fixes: fb0a387dcdcd ("ext4: limit block allocations for indirect-block files to < 2^32")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221121130929.32031-1-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/device_cgroup.c |   33 +++++++++++++++++++++++++++++----
- 1 file changed, 29 insertions(+), 4 deletions(-)
+ fs/ext4/xattr.c |    8 --------
+ 1 file changed, 8 deletions(-)
 
---- a/security/device_cgroup.c
-+++ b/security/device_cgroup.c
-@@ -82,6 +82,17 @@ free_and_exit:
- 	return -ENOMEM;
- }
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -2070,19 +2070,11 @@ inserted:
  
-+static void dev_exceptions_move(struct list_head *dest, struct list_head *orig)
-+{
-+	struct dev_exception_item *ex, *tmp;
-+
-+	lockdep_assert_held(&devcgroup_mutex);
-+
-+	list_for_each_entry_safe(ex, tmp, orig, list) {
-+		list_move_tail(&ex->list, dest);
-+	}
-+}
-+
- /*
-  * called under devcgroup_mutex
-  */
-@@ -604,11 +615,13 @@ static int devcgroup_update_access(struc
- 	int count, rc = 0;
- 	struct dev_exception_item ex;
- 	struct dev_cgroup *parent = css_to_devcgroup(devcgroup->css.parent);
-+	struct dev_cgroup tmp_devcgrp;
+ 			goal = ext4_group_first_block_no(sb,
+ 						EXT4_I(inode)->i_block_group);
+-
+-			/* non-extent files can't have physical blocks past 2^32 */
+-			if (!(ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)))
+-				goal = goal & EXT4_MAX_BLOCK_FILE_PHYS;
+-
+ 			block = ext4_new_meta_blocks(handle, inode, goal, 0,
+ 						     NULL, &error);
+ 			if (error)
+ 				goto cleanup;
  
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EPERM;
+-			if (!(ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)))
+-				BUG_ON(block > EXT4_MAX_BLOCK_FILE_PHYS);
+-
+ 			ea_idebug(inode, "creating block %llu",
+ 				  (unsigned long long)block);
  
- 	memset(&ex, 0, sizeof(ex));
-+	memset(&tmp_devcgrp, 0, sizeof(tmp_devcgrp));
- 	b = buffer;
- 
- 	switch (*b) {
-@@ -620,15 +633,27 @@ static int devcgroup_update_access(struc
- 
- 			if (!may_allow_all(parent))
- 				return -EPERM;
--			dev_exception_clean(devcgroup);
--			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
--			if (!parent)
-+			if (!parent) {
-+				devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
-+				dev_exception_clean(devcgroup);
- 				break;
-+			}
- 
-+			INIT_LIST_HEAD(&tmp_devcgrp.exceptions);
-+			rc = dev_exceptions_copy(&tmp_devcgrp.exceptions,
-+						 &devcgroup->exceptions);
-+			if (rc)
-+				return rc;
-+			dev_exception_clean(devcgroup);
- 			rc = dev_exceptions_copy(&devcgroup->exceptions,
- 						 &parent->exceptions);
--			if (rc)
-+			if (rc) {
-+				dev_exceptions_move(&devcgroup->exceptions,
-+						    &tmp_devcgrp.exceptions);
- 				return rc;
-+			}
-+			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
-+			dev_exception_clean(&tmp_devcgrp);
- 			break;
- 		case DEVCG_DENY:
- 			if (css_has_online_children(&devcgroup->css))
 
 
