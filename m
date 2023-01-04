@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DAEAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:21:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41961C433EF;
-	Wed,  4 Jan 2023 16:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 948A7AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:21:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A7EAC433D2;
+	Wed,  4 Jan 2023 16:21:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849268;
-	bh=Y9avWnrdo1KJJsjerhAmp289Ae/E1SbEtbzXTHDwICQ=;
+	s=korg; t=1672849271;
+	bh=G8QZ0+uL+FWXTOnLhfmu2hMPUeJgTQuQTZX24NFNcHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QmGzsaT0IeuiZOcGdqTkR+aD7PooMFEWuUNAD7yrYK+IRmJJe/zcOAH4b94YMRR/U
-	 bm0GX0uIbHg03vlQkob2IQ8oW/BHthhN4YPA/xmNnoemMR5njDWGX9N8xBRD1iWUk3
-	 eFkZh/s+05GGXvgz0hIJ9wkAEh6+KrLyFcgUYKDY=
+	b=wyHSuHfmLPy4Qr2oy6Xv/ZycT/t/4kVBmxQod3A+t6LjxNQl6EY0+QM/bkNUxIu5I
+	 wdM62BKerYjc0LqE/nkJH9GMYKdXSTLZlcwwVyVa3vwQ5HD8EcMIS2ow0RL9qAGp3Q
+	 MFkAhV1Mp3rfdMad1dCNJnw6BHJx/BYpyddwFpM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.1 160/207] arm64: efi: Execute runtime services from a dedicated stack
-Date: Wed,  4 Jan 2023 17:06:58 +0100
-Message-Id: <20230104160516.955760274@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.1 138/207] phy: qcom-qmp-combo: fix sc8180x reset
+Date: Wed,  4 Jan 2023 17:06:36 +0100
+Message-Id: <20230104160516.286712230@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
 References: <20230104160511.905925875@linuxfoundation.org>
@@ -33,125 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit ff7a167961d1b97e0e205f245f806e564d3505e7 upstream.
+commit 910dd4883d757af5faac92590f33f0f7da963032 upstream.
 
-With the introduction of PRMT in the ACPI subsystem, the EFI rts
-workqueue is no longer the only caller of efi_call_virt_pointer() in the
-kernel. This means the EFI runtime services lock is no longer sufficient
-to manage concurrent calls into firmware, but also that firmware calls
-may occur that are not marshalled via the workqueue mechanism, but
-originate directly from the caller context.
+The SC8180X has two resets but the DP configuration erroneously
+described only one.
 
-For added robustness, and to ensure that the runtime services have 8 KiB
-of stack space available as per the EFI spec, introduce a spinlock
-protected EFI runtime stack of 8 KiB, where the spinlock also ensures
-serialization between the EFI rts workqueue (which itself serializes EFI
-runtime calls) and other callers of efi_call_virt_pointer().
+In case the DP part of the PHY is initialised before the USB part (e.g.
+depending on probe order), then only the first reset would be asserted.
 
-While at it, use the stack pivot to avoid reloading the shadow call
-stack pointer from the ordinary stack, as doing so could produce a
-gadget to defeat it.
-
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: 1633802cd4ac ("phy: qcom: qmp: Add SC8180x USB/DP combo")
+Cc: stable@vger.kernel.org	# 5.15
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20221114081346.5116-4-johan+linaro@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/efi.h       |    3 +++
- arch/arm64/kernel/efi-rt-wrapper.S |   13 ++++++++++++-
- arch/arm64/kernel/efi.c            |   27 +++++++++++++++++++++++++++
- 3 files changed, 42 insertions(+), 1 deletion(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/include/asm/efi.h
-+++ b/arch/arm64/include/asm/efi.h
-@@ -25,6 +25,7 @@ int efi_set_mapping_permissions(struct m
- ({									\
- 	efi_virtmap_load();						\
- 	__efi_fpsimd_begin();						\
-+	spin_lock(&efi_rt_lock);					\
- })
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -1221,8 +1221,8 @@ static const struct qmp_phy_cfg sc8180x_
  
- #undef arch_efi_call_virt
-@@ -33,10 +34,12 @@ int efi_set_mapping_permissions(struct m
- 
- #define arch_efi_call_virt_teardown()					\
- ({									\
-+	spin_unlock(&efi_rt_lock);					\
- 	__efi_fpsimd_end();						\
- 	efi_virtmap_unload();						\
- })
- 
-+extern spinlock_t efi_rt_lock;
- efi_status_t __efi_rt_asm_wrapper(void *, const char *, ...);
- 
- #define ARCH_EFI_IRQ_FLAGS_MASK (PSR_D_BIT | PSR_A_BIT | PSR_I_BIT | PSR_F_BIT)
---- a/arch/arm64/kernel/efi-rt-wrapper.S
-+++ b/arch/arm64/kernel/efi-rt-wrapper.S
-@@ -16,6 +16,12 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
- 	 */
- 	stp	x1, x18, [sp, #16]
- 
-+	ldr_l	x16, efi_rt_stack_top
-+	mov	sp, x16
-+#ifdef CONFIG_SHADOW_CALL_STACK
-+	str	x18, [sp, #-16]!
-+#endif
-+
- 	/*
- 	 * We are lucky enough that no EFI runtime services take more than
- 	 * 5 arguments, so all are passed in registers rather than via the
-@@ -29,6 +35,7 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
- 	mov	x4, x6
- 	blr	x8
- 
-+	mov	sp, x29
- 	ldp	x1, x2, [sp, #16]
- 	cmp	x2, x18
- 	ldp	x29, x30, [sp], #32
-@@ -42,6 +49,10 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
- 	 * called with preemption disabled and a separate shadow stack is used
- 	 * for interrupts.
- 	 */
--	mov	x18, x2
-+#ifdef CONFIG_SHADOW_CALL_STACK
-+	ldr_l	x18, efi_rt_stack_top
-+	ldr	x18, [x18, #-16]
-+#endif
-+
- 	b	efi_handle_corrupted_x18	// tail call
- SYM_FUNC_END(__efi_rt_asm_wrapper)
---- a/arch/arm64/kernel/efi.c
-+++ b/arch/arm64/kernel/efi.c
-@@ -144,3 +144,30 @@ asmlinkage efi_status_t efi_handle_corru
- 	pr_err_ratelimited(FW_BUG "register x18 corrupted by EFI %s\n", f);
- 	return s;
- }
-+
-+DEFINE_SPINLOCK(efi_rt_lock);
-+
-+asmlinkage u64 *efi_rt_stack_top __ro_after_init;
-+
-+/* EFI requires 8 KiB of stack space for runtime services */
-+static_assert(THREAD_SIZE >= SZ_8K);
-+
-+static int __init arm64_efi_rt_init(void)
-+{
-+	void *p;
-+
-+	if (!efi_enabled(EFI_RUNTIME_SERVICES))
-+		return 0;
-+
-+	p = __vmalloc_node(THREAD_SIZE, THREAD_ALIGN, GFP_KERNEL,
-+			   NUMA_NO_NODE, &&l);
-+l:	if (!p) {
-+		pr_warn("Failed to allocate EFI runtime stack\n");
-+		clear_bit(EFI_RUNTIME_SERVICES, &efi.flags);
-+		return -ENOMEM;
-+	}
-+
-+	efi_rt_stack_top = p + THREAD_SIZE;
-+	return 0;
-+}
-+core_initcall(arm64_efi_rt_init);
+ 	.clk_list		= qmp_v3_phy_clk_l,
+ 	.num_clks		= ARRAY_SIZE(qmp_v3_phy_clk_l),
+-	.reset_list		= sc7180_usb3phy_reset_l,
+-	.num_resets		= ARRAY_SIZE(sc7180_usb3phy_reset_l),
++	.reset_list		= msm8996_usb3phy_reset_l,
++	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+ 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
+ 	.regs			= qmp_v3_usb3phy_regs_layout,
 
 
