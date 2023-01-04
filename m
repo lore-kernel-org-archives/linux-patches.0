@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED39AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:23:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7934C433AA;
-	Wed,  4 Jan 2023 16:22:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56560AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:23:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9FD3C433D2;
+	Wed,  4 Jan 2023 16:23:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849380;
-	bh=ikNk/3OiuF3NO3pYH94cAUBrvlyB8LD83L/6MOW9WKk=;
+	s=korg; t=1672849383;
+	bh=eTkKD0QLneq/gTEjl7sEcWX6q3OTaP227nVwiEgcnBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FSIYkezaH/P1raYLqd78bmS2RiMlgiA8H3b5oRrRN9EuVq3xIUmZN9VHtg4CGSL9P
-	 i4KUXuRuYe5dnOm2HBh8QI4t0h2o4lk6c2zFMY3rt65ed8mQibCA18/sZSGa7l3euZ
-	 PRmAPXyhezSj8xfpH/7KZ3d4g/rd3M1Zgu9NG2Uc=
+	b=D4S+n5qZM/EW6B0tlUcznmbf9aDfO9e6iWi+CLoGO7JtiabMX9mLwvFdFd0LCenK+
+	 +Er4zN+0wyYcTbL4yfzGT8KmNSJMEhHHu27NyA9737ipRssiRbsP1C0HiNtTGngPjs
+	 WNH1iFFz5srJnNZYSRQxVdSE56l2Di5bNIaQYq4o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 179/207] ext4: add missing validation of fast-commit record lengths
-Date: Wed,  4 Jan 2023 17:07:17 +0100
-Message-Id: <20230104160517.540937924@linuxfoundation.org>
+	Qiang Yu <quic_qianyu@quicinc.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 6.0 112/177] bus: mhi: host: Fix race between channel preparation and M0 event
+Date: Wed,  4 Jan 2023 17:06:43 +0100
+Message-Id: <20230104160511.037198241@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,97 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Qiang Yu <quic_qianyu@quicinc.com>
 
-commit 64b4a25c3de81a69724e888ec2db3533b43816e2 upstream.
+commit 869a99907faea6d1835b0bd0d0422ae3519c6ea9 upstream.
 
-Validate the inode and filename lengths in fast-commit journal records
-so that a malicious fast-commit journal cannot cause a crash by having
-invalid values for these.  Also validate EXT4_FC_TAG_DEL_RANGE.
+There is a race condition where mhi_prepare_channel() updates the
+read and write pointers as the base address and in parallel, if
+an M0 transition occurs, the tasklet goes ahead and rings
+doorbells for all channels with a delta in TRE rings assuming
+they are already enabled. This causes a null pointer access. Fix
+it by adding a channel enabled check before ringing channel
+doorbells.
 
-Fixes: aa75f4d3daae ("ext4: main fast-commit commit path")
-Cc: <stable@vger.kernel.org> # v5.10+
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20221106224841.279231-5-ebiggers@kernel.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@vger.kernel.org # 5.19
+Fixes: a6e2e3522f29 "bus: mhi: core: Add support for PM state transitions"
+Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://lore.kernel.org/r/1665889532-13634-1-git-send-email-quic_qianyu@quicinc.com
+[mani: CCed stable list]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |   38 +++++++++++++++++++-------------------
- fs/ext4/fast_commit.h |    2 +-
- 2 files changed, 20 insertions(+), 20 deletions(-)
+ drivers/bus/mhi/host/pm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -1991,32 +1991,31 @@ void ext4_fc_replay_cleanup(struct super
- 	kfree(sbi->s_fc_replay_state.fc_modified_inodes);
- }
+diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
+index 4a42186ff111..083459028a4b 100644
+--- a/drivers/bus/mhi/host/pm.c
++++ b/drivers/bus/mhi/host/pm.c
+@@ -301,7 +301,8 @@ int mhi_pm_m0_transition(struct mhi_controller *mhi_cntrl)
+ 		read_lock_irq(&mhi_chan->lock);
  
--static inline bool ext4_fc_tag_len_isvalid(struct ext4_fc_tl *tl,
--					   u8 *val, u8 *end)
-+static bool ext4_fc_value_len_isvalid(struct ext4_sb_info *sbi,
-+				      int tag, int len)
- {
--	if (val + tl->fc_len > end)
--		return false;
--
--	/* Here only check ADD_RANGE/TAIL/HEAD which will read data when do
--	 * journal rescan before do CRC check. Other tags length check will
--	 * rely on CRC check.
--	 */
--	switch (tl->fc_tag) {
-+	switch (tag) {
- 	case EXT4_FC_TAG_ADD_RANGE:
--		return (sizeof(struct ext4_fc_add_range) == tl->fc_len);
--	case EXT4_FC_TAG_TAIL:
--		return (sizeof(struct ext4_fc_tail) <= tl->fc_len);
--	case EXT4_FC_TAG_HEAD:
--		return (sizeof(struct ext4_fc_head) == tl->fc_len);
-+		return len == sizeof(struct ext4_fc_add_range);
- 	case EXT4_FC_TAG_DEL_RANGE:
-+		return len == sizeof(struct ext4_fc_del_range);
-+	case EXT4_FC_TAG_CREAT:
- 	case EXT4_FC_TAG_LINK:
- 	case EXT4_FC_TAG_UNLINK:
--	case EXT4_FC_TAG_CREAT:
-+		len -= sizeof(struct ext4_fc_dentry_info);
-+		return len >= 1 && len <= EXT4_NAME_LEN;
- 	case EXT4_FC_TAG_INODE:
-+		len -= sizeof(struct ext4_fc_inode);
-+		return len >= EXT4_GOOD_OLD_INODE_SIZE &&
-+			len <= sbi->s_inode_size;
- 	case EXT4_FC_TAG_PAD:
--	default:
--		return true;
-+		return true; /* padding can have any length */
-+	case EXT4_FC_TAG_TAIL:
-+		return len >= sizeof(struct ext4_fc_tail);
-+	case EXT4_FC_TAG_HEAD:
-+		return len == sizeof(struct ext4_fc_head);
+ 		/* Only ring DB if ring is not empty */
+-		if (tre_ring->base && tre_ring->wp  != tre_ring->rp)
++		if (tre_ring->base && tre_ring->wp  != tre_ring->rp &&
++		    mhi_chan->ch_state == MHI_CH_STATE_ENABLED)
+ 			mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+ 		read_unlock_irq(&mhi_chan->lock);
  	}
-+	return false;
- }
- 
- /*
-@@ -2079,7 +2078,8 @@ static int ext4_fc_replay_scan(journal_t
- 	     cur = cur + EXT4_FC_TAG_BASE_LEN + tl.fc_len) {
- 		ext4_fc_get_tl(&tl, cur);
- 		val = cur + EXT4_FC_TAG_BASE_LEN;
--		if (!ext4_fc_tag_len_isvalid(&tl, val, end)) {
-+		if (tl.fc_len > end - val ||
-+		    !ext4_fc_value_len_isvalid(sbi, tl.fc_tag, tl.fc_len)) {
- 			ret = state->fc_replay_num_tags ?
- 				JBD2_FC_REPLAY_STOP : -ECANCELED;
- 			goto out_err;
---- a/fs/ext4/fast_commit.h
-+++ b/fs/ext4/fast_commit.h
-@@ -58,7 +58,7 @@ struct ext4_fc_dentry_info {
- 	__u8 fc_dname[];
- };
- 
--/* Value structure for EXT4_FC_TAG_INODE and EXT4_FC_TAG_INODE_PARTIAL. */
-+/* Value structure for EXT4_FC_TAG_INODE. */
- struct ext4_fc_inode {
- 	__le32 fc_ino;
- 	__u8 fc_raw_inode[];
+-- 
+2.39.0
+
 
 
