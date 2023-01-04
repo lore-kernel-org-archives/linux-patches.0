@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84718AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03199C433D2;
-	Wed,  4 Jan 2023 16:22:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1544DAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054A0C433D2;
+	Wed,  4 Jan 2023 16:22:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849361;
-	bh=28pcgS0PYSiuiZoLBQFT3pTS7vVrcWvixg6tXZPZdcI=;
+	s=korg; t=1672849364;
+	bh=Qz2qusZJrX6VVCjEVjf5ce6SRu0+p0xhiKnVaIC+20A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jiEPZzx6OH1Iau5ZcIM9Pfzxtav4we8tJRbINiLilrrvQVX6KHn1fuNVAMuVXpvex
-	 TOJOZeWt0sQbl06nonIX2fldqYwavnD9BvFsVAo5FYTUw1eBpLYLvu8vd4Ac2isBSv
-	 HH82Liw6d1ICPqPDk+0t2aGPmjcIKi6ej/3614RA=
+	b=mLvPqtthKzmMu/+X+oG8mVyUWPj0OlJkgvH6boDyhvEWTkukCSms36l4qxZdX10Ge
+	 BCA4FYVSBUkCHwmqvlIViEjeJU+JVg0AKeLmO3PEVsBIias/E/Tk03Zn/YZR94mRXJ
+	 uN+3fFGhjz+vp3MnOciOuBDi/R3OvJCG4afNClAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@google.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 176/207] ext4: disable fast-commit of encrypted dir operations
-Date: Wed,  4 Jan 2023 17:07:14 +0100
-Message-Id: <20230104160517.445026579@linuxfoundation.org>
+	Rolf Eike Beer <eike-kernel@sf-tec.de>,
+	Corentin Labbe <clabbe@baylibre.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	stable@kernel.org
+Subject: [PATCH 6.0 109/177] crypto: n2 - add missing hash statesize
+Date: Wed,  4 Jan 2023 17:06:40 +0100
+Message-Id: <20230104160510.946485735@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,151 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Corentin Labbe <clabbe@baylibre.com>
 
-commit 0fbcb5251fc81b58969b272c4fb7374a7b922e3e upstream.
+commit 76a4e874593543a2dff91d249c95bac728df2774 upstream.
 
-fast-commit of create, link, and unlink operations in encrypted
-directories is completely broken because the unencrypted filenames are
-being written to the fast-commit journal instead of the encrypted
-filenames.  These operations can't be replayed, as encryption keys
-aren't present at journal replay time.  It is also an information leak.
+Add missing statesize to hash templates.
+This is mandatory otherwise no algorithms can be registered as the core
+requires statesize to be set.
 
-Until if/when we can get this working properly, make encrypted directory
-operations ineligible for fast-commit.
-
-Note that fast-commit operations on encrypted regular files continue to
-be allowed, as they seem to work.
-
-Fixes: aa75f4d3daae ("ext4: main fast-commit commit path")
-Cc: <stable@vger.kernel.org> # v5.10+
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20221106224841.279231-2-ebiggers@kernel.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+CC: stable@kernel.org # 4.3+
+Reported-by: Rolf Eike Beer <eike-kernel@sf-tec.de>
+Tested-by: Rolf Eike Beer <eike-kernel@sf-tec.de>
+Fixes: 0a625fd2abaa ("crypto: n2 - Add Niagara2 crypto driver")
+Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c       |   41 +++++++++++++++++++++++++----------------
- fs/ext4/fast_commit.h       |    1 +
- include/trace/events/ext4.h |    7 +++++--
- 3 files changed, 31 insertions(+), 18 deletions(-)
+ drivers/crypto/n2_core.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -420,25 +420,34 @@ static int __track_dentry_update(struct
- 	struct __track_dentry_update_args *dentry_update =
- 		(struct __track_dentry_update_args *)arg;
- 	struct dentry *dentry = dentry_update->dentry;
--	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
-+	struct inode *dir = dentry->d_parent->d_inode;
-+	struct super_block *sb = inode->i_sb;
-+	struct ext4_sb_info *sbi = EXT4_SB(sb);
- 
- 	mutex_unlock(&ei->i_fc_lock);
-+
-+	if (IS_ENCRYPTED(dir)) {
-+		ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_ENCRYPTED_FILENAME,
-+					NULL);
-+		mutex_lock(&ei->i_fc_lock);
-+		return -EOPNOTSUPP;
-+	}
-+
- 	node = kmem_cache_alloc(ext4_fc_dentry_cachep, GFP_NOFS);
- 	if (!node) {
--		ext4_fc_mark_ineligible(inode->i_sb, EXT4_FC_REASON_NOMEM, NULL);
-+		ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_NOMEM, NULL);
- 		mutex_lock(&ei->i_fc_lock);
- 		return -ENOMEM;
- 	}
- 
- 	node->fcd_op = dentry_update->op;
--	node->fcd_parent = dentry->d_parent->d_inode->i_ino;
-+	node->fcd_parent = dir->i_ino;
- 	node->fcd_ino = inode->i_ino;
- 	if (dentry->d_name.len > DNAME_INLINE_LEN) {
- 		node->fcd_name.name = kmalloc(dentry->d_name.len, GFP_NOFS);
- 		if (!node->fcd_name.name) {
- 			kmem_cache_free(ext4_fc_dentry_cachep, node);
--			ext4_fc_mark_ineligible(inode->i_sb,
--				EXT4_FC_REASON_NOMEM, NULL);
-+			ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_NOMEM, NULL);
- 			mutex_lock(&ei->i_fc_lock);
- 			return -ENOMEM;
- 		}
-@@ -2249,17 +2258,17 @@ void ext4_fc_init(struct super_block *sb
- 	journal->j_fc_cleanup_callback = ext4_fc_cleanup;
- }
- 
--static const char *fc_ineligible_reasons[] = {
--	"Extended attributes changed",
--	"Cross rename",
--	"Journal flag changed",
--	"Insufficient memory",
--	"Swap boot",
--	"Resize",
--	"Dir renamed",
--	"Falloc range op",
--	"Data journalling",
--	"FC Commit Failed"
-+static const char * const fc_ineligible_reasons[] = {
-+	[EXT4_FC_REASON_XATTR] = "Extended attributes changed",
-+	[EXT4_FC_REASON_CROSS_RENAME] = "Cross rename",
-+	[EXT4_FC_REASON_JOURNAL_FLAG_CHANGE] = "Journal flag changed",
-+	[EXT4_FC_REASON_NOMEM] = "Insufficient memory",
-+	[EXT4_FC_REASON_SWAP_BOOT] = "Swap boot",
-+	[EXT4_FC_REASON_RESIZE] = "Resize",
-+	[EXT4_FC_REASON_RENAME_DIR] = "Dir renamed",
-+	[EXT4_FC_REASON_FALLOC_RANGE] = "Falloc range op",
-+	[EXT4_FC_REASON_INODE_JOURNAL_DATA] = "Data journalling",
-+	[EXT4_FC_REASON_ENCRYPTED_FILENAME] = "Encrypted filename",
+--- a/drivers/crypto/n2_core.c
++++ b/drivers/crypto/n2_core.c
+@@ -1229,6 +1229,7 @@ struct n2_hash_tmpl {
+ 	const u8	*hash_init;
+ 	u8		hw_op_hashsz;
+ 	u8		digest_size;
++	u8		statesize;
+ 	u8		block_size;
+ 	u8		auth_type;
+ 	u8		hmac_type;
+@@ -1260,6 +1261,7 @@ static const struct n2_hash_tmpl hash_tm
+ 	  .hmac_type	= AUTH_TYPE_HMAC_MD5,
+ 	  .hw_op_hashsz	= MD5_DIGEST_SIZE,
+ 	  .digest_size	= MD5_DIGEST_SIZE,
++	  .statesize	= sizeof(struct md5_state),
+ 	  .block_size	= MD5_HMAC_BLOCK_SIZE },
+ 	{ .name		= "sha1",
+ 	  .hash_zero	= sha1_zero_message_hash,
+@@ -1268,6 +1270,7 @@ static const struct n2_hash_tmpl hash_tm
+ 	  .hmac_type	= AUTH_TYPE_HMAC_SHA1,
+ 	  .hw_op_hashsz	= SHA1_DIGEST_SIZE,
+ 	  .digest_size	= SHA1_DIGEST_SIZE,
++	  .statesize	= sizeof(struct sha1_state),
+ 	  .block_size	= SHA1_BLOCK_SIZE },
+ 	{ .name		= "sha256",
+ 	  .hash_zero	= sha256_zero_message_hash,
+@@ -1276,6 +1279,7 @@ static const struct n2_hash_tmpl hash_tm
+ 	  .hmac_type	= AUTH_TYPE_HMAC_SHA256,
+ 	  .hw_op_hashsz	= SHA256_DIGEST_SIZE,
+ 	  .digest_size	= SHA256_DIGEST_SIZE,
++	  .statesize	= sizeof(struct sha256_state),
+ 	  .block_size	= SHA256_BLOCK_SIZE },
+ 	{ .name		= "sha224",
+ 	  .hash_zero	= sha224_zero_message_hash,
+@@ -1284,6 +1288,7 @@ static const struct n2_hash_tmpl hash_tm
+ 	  .hmac_type	= AUTH_TYPE_RESERVED,
+ 	  .hw_op_hashsz	= SHA256_DIGEST_SIZE,
+ 	  .digest_size	= SHA224_DIGEST_SIZE,
++	  .statesize	= sizeof(struct sha256_state),
+ 	  .block_size	= SHA224_BLOCK_SIZE },
  };
+ #define NUM_HASH_TMPLS ARRAY_SIZE(hash_tmpls)
+@@ -1424,6 +1429,7 @@ static int __n2_register_one_ahash(const
  
- int ext4_fc_info_show(struct seq_file *seq, void *v)
---- a/fs/ext4/fast_commit.h
-+++ b/fs/ext4/fast_commit.h
-@@ -96,6 +96,7 @@ enum {
- 	EXT4_FC_REASON_RENAME_DIR,
- 	EXT4_FC_REASON_FALLOC_RANGE,
- 	EXT4_FC_REASON_INODE_JOURNAL_DATA,
-+	EXT4_FC_REASON_ENCRYPTED_FILENAME,
- 	EXT4_FC_REASON_MAX
- };
+ 	halg = &ahash->halg;
+ 	halg->digestsize = tmpl->digest_size;
++	halg->statesize = tmpl->statesize;
  
---- a/include/trace/events/ext4.h
-+++ b/include/trace/events/ext4.h
-@@ -104,6 +104,7 @@ TRACE_DEFINE_ENUM(EXT4_FC_REASON_RESIZE)
- TRACE_DEFINE_ENUM(EXT4_FC_REASON_RENAME_DIR);
- TRACE_DEFINE_ENUM(EXT4_FC_REASON_FALLOC_RANGE);
- TRACE_DEFINE_ENUM(EXT4_FC_REASON_INODE_JOURNAL_DATA);
-+TRACE_DEFINE_ENUM(EXT4_FC_REASON_ENCRYPTED_FILENAME);
- TRACE_DEFINE_ENUM(EXT4_FC_REASON_MAX);
- 
- #define show_fc_reason(reason)						\
-@@ -116,7 +117,8 @@ TRACE_DEFINE_ENUM(EXT4_FC_REASON_MAX);
- 		{ EXT4_FC_REASON_RESIZE,	"RESIZE"},		\
- 		{ EXT4_FC_REASON_RENAME_DIR,	"RENAME_DIR"},		\
- 		{ EXT4_FC_REASON_FALLOC_RANGE,	"FALLOC_RANGE"},	\
--		{ EXT4_FC_REASON_INODE_JOURNAL_DATA,	"INODE_JOURNAL_DATA"})
-+		{ EXT4_FC_REASON_INODE_JOURNAL_DATA,	"INODE_JOURNAL_DATA"}, \
-+		{ EXT4_FC_REASON_ENCRYPTED_FILENAME,	"ENCRYPTED_FILENAME"})
- 
- TRACE_EVENT(ext4_other_inode_update_time,
- 	TP_PROTO(struct inode *inode, ino_t orig_ino),
-@@ -2764,7 +2766,7 @@ TRACE_EVENT(ext4_fc_stats,
- 	),
- 
- 	TP_printk("dev %d,%d fc ineligible reasons:\n"
--		  "%s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u "
-+		  "%s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u"
- 		  "num_commits:%lu, ineligible: %lu, numblks: %lu",
- 		  MAJOR(__entry->dev), MINOR(__entry->dev),
- 		  FC_REASON_NAME_STAT(EXT4_FC_REASON_XATTR),
-@@ -2776,6 +2778,7 @@ TRACE_EVENT(ext4_fc_stats,
- 		  FC_REASON_NAME_STAT(EXT4_FC_REASON_RENAME_DIR),
- 		  FC_REASON_NAME_STAT(EXT4_FC_REASON_FALLOC_RANGE),
- 		  FC_REASON_NAME_STAT(EXT4_FC_REASON_INODE_JOURNAL_DATA),
-+		  FC_REASON_NAME_STAT(EXT4_FC_REASON_ENCRYPTED_FILENAME),
- 		  __entry->fc_commits, __entry->fc_ineligible_commits,
- 		  __entry->fc_numblks)
- );
+ 	base = &halg->base;
+ 	snprintf(base->cra_name, CRYPTO_MAX_ALG_NAME, "%s", tmpl->name);
 
 
