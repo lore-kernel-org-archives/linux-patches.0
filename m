@@ -1,28 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39769AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:24:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94717C433D2;
-	Wed,  4 Jan 2023 16:24:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3224AAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:24:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56FCC433D2;
+	Wed,  4 Jan 2023 16:24:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849492;
-	bh=Y9avWnrdo1KJJsjerhAmp289Ae/E1SbEtbzXTHDwICQ=;
+	s=korg; t=1672849495;
+	bh=MvVGUDtIvMOh7+1YcCiSwII4EajhyZTlwB/AJsib72o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ndRrAiwGMTShVq7ldqYsiL/j+WXOrjrqi9uakn+AEAxpX9eLnY4W/3lYKo7FD0auQ
-	 zh68nRxu+1Tf4bY29xh41VqV1F5VZinljWJVBdyrLLv2w7vCmkP8xJQEszZpxuQth6
-	 6ZZazYKUp2TOiKAgHc00nX/dadLuhUvbEc3bctv8=
+	b=FE5odK3m72meSBrGTYUvf2SR9HEmjcLfJkD78exWOxTT8ywdauXriGhuzLHRbG5FR
+	 /NGxtcZ/gUPc8RhsanlfBcfTcyIQ69dfoZ1d4ENxOEhCjJjnJupS1J6OLpjMyevyrV
+	 4fAR+Eoi4FwrIow3x1zQheT9SXXtyVNyCtWkl+gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.0 131/177] arm64: efi: Execute runtime services from a dedicated stack
-Date: Wed,  4 Jan 2023 17:07:02 +0100
-Message-Id: <20230104160511.618254851@linuxfoundation.org>
+	Matthew Auld <matthew.auld@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Shuicheng Lin <shuicheng.lin@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.1 198/207] drm/i915/ttm: consider CCS for backup objects
+Date: Wed,  4 Jan 2023 17:07:36 +0100
+Message-Id: <20230104160518.187897439@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -33,125 +38,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Matthew Auld <matthew.auld@intel.com>
 
-commit ff7a167961d1b97e0e205f245f806e564d3505e7 upstream.
+commit ad0fca2dceeab8fdd8e1135f4b4ef2dc46c2ead9 upstream.
 
-With the introduction of PRMT in the ACPI subsystem, the EFI rts
-workqueue is no longer the only caller of efi_call_virt_pointer() in the
-kernel. This means the EFI runtime services lock is no longer sufficient
-to manage concurrent calls into firmware, but also that firmware calls
-may occur that are not marshalled via the workqueue mechanism, but
-originate directly from the caller context.
+It seems we can have one or more framebuffers that are still pinned when
+suspending lmem, in such a case we end up creating a shmem backup
+object, instead of evicting the object directly, but this will skip
+copying the CCS aux state, since we don't allocate the extra storage for
+the CCS pages as part of the ttm_tt construction. Since we can already
+deal with pinned objects just fine, it doesn't seem too nasty to just
+extend to support dealing with the CCS aux state, if the object is a
+pinned framebuffer. This fixes display corruption (like in gnome-shell)
+seen on DG2 when returning from suspend.
 
-For added robustness, and to ensure that the runtime services have 8 KiB
-of stack space available as per the EFI spec, introduce a spinlock
-protected EFI runtime stack of 8 KiB, where the spinlock also ensures
-serialization between the EFI rts workqueue (which itself serializes EFI
-runtime calls) and other callers of efi_call_virt_pointer().
-
-While at it, use the stack pivot to avoid reloading the shadow call
-stack pointer from the ordinary stack, as doing so could produce a
-gadget to defeat it.
-
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Fixes: da0595ae91da ("drm/i915/migrate: Evict and restore the flatccs capable lmem obj")
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Nirmoy Das <nirmoy.das@intel.com>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>
+Cc: Shuicheng Lin <shuicheng.lin@intel.com>
+Cc: <stable@vger.kernel.org> # v5.19+
+Tested-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221212171958.82593-2-matthew.auld@intel.com
+(cherry picked from commit 95df9cc24bee8a09d39c62bcef4319b984814e18)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/efi.h       |    3 +++
- arch/arm64/kernel/efi-rt-wrapper.S |   13 ++++++++++++-
- arch/arm64/kernel/efi.c            |   27 +++++++++++++++++++++++++++
- 3 files changed, 42 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gem/i915_gem_object.c       |    3 +++
+ drivers/gpu/drm/i915/gem/i915_gem_object_types.h |   10 ++++++----
+ drivers/gpu/drm/i915/gem/i915_gem_ttm_pm.c       |   18 +++++++++++++++++-
+ 3 files changed, 26 insertions(+), 5 deletions(-)
 
---- a/arch/arm64/include/asm/efi.h
-+++ b/arch/arm64/include/asm/efi.h
-@@ -25,6 +25,7 @@ int efi_set_mapping_permissions(struct m
- ({									\
- 	efi_virtmap_load();						\
- 	__efi_fpsimd_begin();						\
-+	spin_lock(&efi_rt_lock);					\
- })
+--- a/drivers/gpu/drm/i915/gem/i915_gem_object.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_object.c
+@@ -761,6 +761,9 @@ bool i915_gem_object_needs_ccs_pages(str
+ 	if (!HAS_FLAT_CCS(to_i915(obj->base.dev)))
+ 		return false;
  
- #undef arch_efi_call_virt
-@@ -33,10 +34,12 @@ int efi_set_mapping_permissions(struct m
++	if (obj->flags & I915_BO_ALLOC_CCS_AUX)
++		return true;
++
+ 	for (i = 0; i < obj->mm.n_placements; i++) {
+ 		/* Compression is not allowed for the objects with smem placement */
+ 		if (obj->mm.placements[i]->type == INTEL_MEMORY_SYSTEM)
+--- a/drivers/gpu/drm/i915/gem/i915_gem_object_types.h
++++ b/drivers/gpu/drm/i915/gem/i915_gem_object_types.h
+@@ -327,16 +327,18 @@ struct drm_i915_gem_object {
+  * dealing with userspace objects the CPU fault handler is free to ignore this.
+  */
+ #define I915_BO_ALLOC_GPU_ONLY	  BIT(6)
++#define I915_BO_ALLOC_CCS_AUX	  BIT(7)
+ #define I915_BO_ALLOC_FLAGS (I915_BO_ALLOC_CONTIGUOUS | \
+ 			     I915_BO_ALLOC_VOLATILE | \
+ 			     I915_BO_ALLOC_CPU_CLEAR | \
+ 			     I915_BO_ALLOC_USER | \
+ 			     I915_BO_ALLOC_PM_VOLATILE | \
+ 			     I915_BO_ALLOC_PM_EARLY | \
+-			     I915_BO_ALLOC_GPU_ONLY)
+-#define I915_BO_READONLY          BIT(7)
+-#define I915_TILING_QUIRK_BIT     8 /* unknown swizzling; do not release! */
+-#define I915_BO_PROTECTED         BIT(9)
++			     I915_BO_ALLOC_GPU_ONLY | \
++			     I915_BO_ALLOC_CCS_AUX)
++#define I915_BO_READONLY          BIT(8)
++#define I915_TILING_QUIRK_BIT     9 /* unknown swizzling; do not release! */
++#define I915_BO_PROTECTED         BIT(10)
+ 	/**
+ 	 * @mem_flags - Mutable placement-related flags
+ 	 *
+--- a/drivers/gpu/drm/i915/gem/i915_gem_ttm_pm.c
++++ b/drivers/gpu/drm/i915/gem/i915_gem_ttm_pm.c
+@@ -50,6 +50,7 @@ static int i915_ttm_backup(struct i915_g
+ 		container_of(bo->bdev, typeof(*i915), bdev);
+ 	struct drm_i915_gem_object *backup;
+ 	struct ttm_operation_ctx ctx = {};
++	unsigned int flags;
+ 	int err = 0;
  
- #define arch_efi_call_virt_teardown()					\
- ({									\
-+	spin_unlock(&efi_rt_lock);					\
- 	__efi_fpsimd_end();						\
- 	efi_virtmap_unload();						\
- })
+ 	if (bo->resource->mem_type == I915_PL_SYSTEM || obj->ttm.backup)
+@@ -65,7 +66,22 @@ static int i915_ttm_backup(struct i915_g
+ 	if (obj->flags & I915_BO_ALLOC_PM_VOLATILE)
+ 		return 0;
  
-+extern spinlock_t efi_rt_lock;
- efi_status_t __efi_rt_asm_wrapper(void *, const char *, ...);
- 
- #define ARCH_EFI_IRQ_FLAGS_MASK (PSR_D_BIT | PSR_A_BIT | PSR_I_BIT | PSR_F_BIT)
---- a/arch/arm64/kernel/efi-rt-wrapper.S
-+++ b/arch/arm64/kernel/efi-rt-wrapper.S
-@@ -16,6 +16,12 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
- 	 */
- 	stp	x1, x18, [sp, #16]
- 
-+	ldr_l	x16, efi_rt_stack_top
-+	mov	sp, x16
-+#ifdef CONFIG_SHADOW_CALL_STACK
-+	str	x18, [sp, #-16]!
-+#endif
+-	backup = i915_gem_object_create_shmem(i915, obj->base.size);
++	/*
++	 * It seems that we might have some framebuffers still pinned at this
++	 * stage, but for such objects we might also need to deal with the CCS
++	 * aux state. Make sure we force the save/restore of the CCS state,
++	 * otherwise we might observe display corruption, when returning from
++	 * suspend.
++	 */
++	flags = 0;
++	if (i915_gem_object_needs_ccs_pages(obj)) {
++		WARN_ON_ONCE(!i915_gem_object_is_framebuffer(obj));
++		WARN_ON_ONCE(!pm_apply->allow_gpu);
 +
- 	/*
- 	 * We are lucky enough that no EFI runtime services take more than
- 	 * 5 arguments, so all are passed in registers rather than via the
-@@ -29,6 +35,7 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
- 	mov	x4, x6
- 	blr	x8
- 
-+	mov	sp, x29
- 	ldp	x1, x2, [sp, #16]
- 	cmp	x2, x18
- 	ldp	x29, x30, [sp], #32
-@@ -42,6 +49,10 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
- 	 * called with preemption disabled and a separate shadow stack is used
- 	 * for interrupts.
- 	 */
--	mov	x18, x2
-+#ifdef CONFIG_SHADOW_CALL_STACK
-+	ldr_l	x18, efi_rt_stack_top
-+	ldr	x18, [x18, #-16]
-+#endif
-+
- 	b	efi_handle_corrupted_x18	// tail call
- SYM_FUNC_END(__efi_rt_asm_wrapper)
---- a/arch/arm64/kernel/efi.c
-+++ b/arch/arm64/kernel/efi.c
-@@ -144,3 +144,30 @@ asmlinkage efi_status_t efi_handle_corru
- 	pr_err_ratelimited(FW_BUG "register x18 corrupted by EFI %s\n", f);
- 	return s;
- }
-+
-+DEFINE_SPINLOCK(efi_rt_lock);
-+
-+asmlinkage u64 *efi_rt_stack_top __ro_after_init;
-+
-+/* EFI requires 8 KiB of stack space for runtime services */
-+static_assert(THREAD_SIZE >= SZ_8K);
-+
-+static int __init arm64_efi_rt_init(void)
-+{
-+	void *p;
-+
-+	if (!efi_enabled(EFI_RUNTIME_SERVICES))
-+		return 0;
-+
-+	p = __vmalloc_node(THREAD_SIZE, THREAD_ALIGN, GFP_KERNEL,
-+			   NUMA_NO_NODE, &&l);
-+l:	if (!p) {
-+		pr_warn("Failed to allocate EFI runtime stack\n");
-+		clear_bit(EFI_RUNTIME_SERVICES, &efi.flags);
-+		return -ENOMEM;
++		flags = I915_BO_ALLOC_CCS_AUX;
 +	}
-+
-+	efi_rt_stack_top = p + THREAD_SIZE;
-+	return 0;
-+}
-+core_initcall(arm64_efi_rt_init);
++	backup = i915_gem_object_create_region(i915->mm.regions[INTEL_REGION_SMEM],
++					       obj->base.size, 0, flags);
+ 	if (IS_ERR(backup))
+ 		return PTR_ERR(backup);
+ 
 
 
