@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FA3AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:16:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74124C433D2;
-	Wed,  4 Jan 2023 16:16:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8534AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:16:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 435D8C433D2;
+	Wed,  4 Jan 2023 16:16:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848988;
-	bh=iUkqj8eHKl+EPk6IbueLUw0BO3pC9tpQoXtlM4HElSk=;
+	s=korg; t=1672848991;
+	bh=RN0M+J3vqCCJpEcexJuW+gDn1bDAXANMXvjsflhV+/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kci4tob6xFYyuP+s+onLsQS0PwrpWqs3PUnWU5qT0alQDqe+5YBvBq44J6Hi1wVfn
-	 jVshY2sYPyP1ae039bhj1YrZIPiKkLRhlVNrf3CcgPTU95asVVp04kf5wct1Mk3Dew
-	 SbBh1Kqz7Sm5omKteuT7B+zMDVw1oFI2HwCtT+TU=
+	b=aSWNN9PFiV5FJgN+4NXygXrsJuyZYACYEaFCeouIQGkUC9ctvBt0K7iTQkJEdB3fG
+	 HX/y/2FH+NBiWWmJzbtV+j2cwazVRs8XDAjl80Qy8V5Qxym+/laYtZDEPp1iSMzAsh
+	 rE9yuTA9zs6H3ri643tk1qeSfp72w+FWRBG+JrWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Meng <luomeng12@huawei.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.0 047/177] dm thin: resume even if in FAIL mode
-Date: Wed,  4 Jan 2023 17:05:38 +0100
-Message-Id: <20230104160509.074136078@linuxfoundation.org>
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: [PATCH 6.1 117/207] ipu3-imgu: Fix NULL pointer dereference in imgu_subdev_set_selection()
+Date: Wed,  4 Jan 2023 17:06:15 +0100
+Message-Id: <20230104160515.614982460@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,72 +34,130 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luo Meng <luomeng12@huawei.com>
+From: Maximilian Luz <luzmaximilian@gmail.com>
 
-commit 19eb1650afeb1aa86151f61900e9e5f1de5d8d02 upstream.
+commit dc608edf7d45ba0c2ad14c06eccd66474fec7847 upstream.
 
-If a thinpool set fail_io while suspending, resume will fail with:
- device-mapper: resume ioctl on vg-thinpool  failed: Invalid argument
+Calling v4l2_subdev_get_try_crop() and v4l2_subdev_get_try_compose()
+with a subdev state of NULL leads to a NULL pointer dereference. This
+can currently happen in imgu_subdev_set_selection() when the state
+passed in is NULL, as this method first gets pointers to both the "try"
+and "active" states and only then decides which to use.
 
-The thin-pool also can't be removed if an in-flight bio is in the
-deferred list.
+The same issue has been addressed for imgu_subdev_get_selection() with
+commit 30d03a0de650 ("ipu3-imgu: Fix NULL pointer dereference in active
+selection access"). However the issue still persists in
+imgu_subdev_set_selection().
 
-This can be easily reproduced using:
+Therefore, apply a similar fix as done in the aforementioned commit to
+imgu_subdev_set_selection(). To keep things a bit cleaner, introduce
+helper functions for "crop" and "compose" access and use them in both
+imgu_subdev_set_selection() and imgu_subdev_get_selection().
 
-  echo "offline" > /sys/block/sda/device/state
-  dd if=/dev/zero of=/dev/mapper/thin bs=4K count=1
-  dmsetup suspend /dev/mapper/pool
-  mkfs.ext4 /dev/mapper/thin
-  dmsetup resume /dev/mapper/pool
-
-The root cause is maybe_resize_data_dev() will check fail_io and return
-error before called dm_resume.
-
-Fix this by adding FAIL mode check at the end of pool_preresume().
-
-Cc: stable@vger.kernel.org
-Fixes: da105ed5fd7e ("dm thin metadata: introduce dm_pool_abort_metadata")
-Signed-off-by: Luo Meng <luomeng12@huawei.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: 0d346d2a6f54 ("media: v4l2-subdev: add subdev-wide state struct")
+Cc: stable@vger.kernel.org # for v5.14 and later
+Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-thin.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/staging/media/ipu3/ipu3-v4l2.c |   57 +++++++++++++++++++--------------
+ 1 file changed, 34 insertions(+), 23 deletions(-)
 
---- a/drivers/md/dm-thin.c
-+++ b/drivers/md/dm-thin.c
-@@ -3540,20 +3540,28 @@ static int pool_preresume(struct dm_targ
- 	 */
- 	r = bind_control_target(pool, ti);
- 	if (r)
--		return r;
-+		goto out;
- 
- 	r = maybe_resize_data_dev(ti, &need_commit1);
- 	if (r)
--		return r;
-+		goto out;
- 
- 	r = maybe_resize_metadata_dev(ti, &need_commit2);
- 	if (r)
--		return r;
-+		goto out;
- 
- 	if (need_commit1 || need_commit2)
- 		(void) commit(pool);
-+out:
-+	/*
-+	 * When a thin-pool is PM_FAIL, it cannot be rebuilt if
-+	 * bio is in deferred list. Therefore need to return 0
-+	 * to allow pool_resume() to flush IO.
-+	 */
-+	if (r && get_pool_mode(pool) == PM_FAIL)
-+		r = 0;
- 
--	return 0;
-+	return r;
+--- a/drivers/staging/media/ipu3/ipu3-v4l2.c
++++ b/drivers/staging/media/ipu3/ipu3-v4l2.c
+@@ -188,6 +188,28 @@ static int imgu_subdev_set_fmt(struct v4
+ 	return 0;
  }
  
- static void pool_suspend_active_thins(struct pool *pool)
++static struct v4l2_rect *
++imgu_subdev_get_crop(struct imgu_v4l2_subdev *sd,
++		     struct v4l2_subdev_state *sd_state, unsigned int pad,
++		     enum v4l2_subdev_format_whence which)
++{
++	if (which == V4L2_SUBDEV_FORMAT_TRY)
++		return v4l2_subdev_get_try_crop(&sd->subdev, sd_state, pad);
++	else
++		return &sd->rect.eff;
++}
++
++static struct v4l2_rect *
++imgu_subdev_get_compose(struct imgu_v4l2_subdev *sd,
++			struct v4l2_subdev_state *sd_state, unsigned int pad,
++			enum v4l2_subdev_format_whence which)
++{
++	if (which == V4L2_SUBDEV_FORMAT_TRY)
++		return v4l2_subdev_get_try_compose(&sd->subdev, sd_state, pad);
++	else
++		return &sd->rect.bds;
++}
++
+ static int imgu_subdev_get_selection(struct v4l2_subdev *sd,
+ 				     struct v4l2_subdev_state *sd_state,
+ 				     struct v4l2_subdev_selection *sel)
+@@ -200,18 +222,12 @@ static int imgu_subdev_get_selection(str
+ 
+ 	switch (sel->target) {
+ 	case V4L2_SEL_TGT_CROP:
+-		if (sel->which == V4L2_SUBDEV_FORMAT_TRY)
+-			sel->r = *v4l2_subdev_get_try_crop(sd, sd_state,
+-							   sel->pad);
+-		else
+-			sel->r = imgu_sd->rect.eff;
++		sel->r = *imgu_subdev_get_crop(imgu_sd, sd_state, sel->pad,
++					       sel->which);
+ 		return 0;
+ 	case V4L2_SEL_TGT_COMPOSE:
+-		if (sel->which == V4L2_SUBDEV_FORMAT_TRY)
+-			sel->r = *v4l2_subdev_get_try_compose(sd, sd_state,
+-							      sel->pad);
+-		else
+-			sel->r = imgu_sd->rect.bds;
++		sel->r = *imgu_subdev_get_compose(imgu_sd, sd_state, sel->pad,
++						  sel->which);
+ 		return 0;
+ 	default:
+ 		return -EINVAL;
+@@ -223,10 +239,9 @@ static int imgu_subdev_set_selection(str
+ 				     struct v4l2_subdev_selection *sel)
+ {
+ 	struct imgu_device *imgu = v4l2_get_subdevdata(sd);
+-	struct imgu_v4l2_subdev *imgu_sd = container_of(sd,
+-							struct imgu_v4l2_subdev,
+-							subdev);
+-	struct v4l2_rect *rect, *try_sel;
++	struct imgu_v4l2_subdev *imgu_sd =
++		container_of(sd, struct imgu_v4l2_subdev, subdev);
++	struct v4l2_rect *rect;
+ 
+ 	dev_dbg(&imgu->pci_dev->dev,
+ 		 "set subdev %u sel which %u target 0x%4x rect [%ux%u]",
+@@ -238,22 +253,18 @@ static int imgu_subdev_set_selection(str
+ 
+ 	switch (sel->target) {
+ 	case V4L2_SEL_TGT_CROP:
+-		try_sel = v4l2_subdev_get_try_crop(sd, sd_state, sel->pad);
+-		rect = &imgu_sd->rect.eff;
++		rect = imgu_subdev_get_crop(imgu_sd, sd_state, sel->pad,
++					    sel->which);
+ 		break;
+ 	case V4L2_SEL_TGT_COMPOSE:
+-		try_sel = v4l2_subdev_get_try_compose(sd, sd_state, sel->pad);
+-		rect = &imgu_sd->rect.bds;
++		rect = imgu_subdev_get_compose(imgu_sd, sd_state, sel->pad,
++					       sel->which);
+ 		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+ 
+-	if (sel->which == V4L2_SUBDEV_FORMAT_TRY)
+-		*try_sel = sel->r;
+-	else
+-		*rect = sel->r;
+-
++	*rect = sel->r;
+ 	return 0;
+ }
+ 
 
 
