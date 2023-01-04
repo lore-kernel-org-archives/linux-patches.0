@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 337B5AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:21:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C004C433D2;
-	Wed,  4 Jan 2023 16:21:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436E3AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:21:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E25DC433EF;
+	Wed,  4 Jan 2023 16:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849307;
-	bh=r9gpkwUQ4GAZnNuMWhHpqcOJjhZ41GYTe9WsgUmaTT0=;
+	s=korg; t=1672849310;
+	bh=scUS75onR2KFU/u0/I8GBilWvW5VJ6Ac1LkMBjnP7hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xOeKU+AVOAbveVJL3B2c9WbWFLEnf39L2QmcNHgI+MDPfoZC/ebbn+uEYEe53h4rw
-	 pEca684CLizgxbhIB6+0n80qWXFm8D96qVYNphwUbb/EZU4tL/wbAohSHeS806ITjF
-	 HyCGRm69sgj+fUT5mgFtb811+rzza1KuDqwR5fgg=
+	b=p9/v5v6Sx1Pm8O84gSBc4xPTGbus4DAxHnXjGM1UH/kELObw1tbwkj1h+w0i9mflI
+	 n/owiS+fb07SaabpEqIeCvkLeMY0cZo4GEcAD4QaSx8o4tSJdI0IN3VB5qPoya/twR
+	 LnZWxIx7fVyC9JAl/Spj3WJcmTw4pHPdu1uKnrh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jason Yan <yanaijie@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.1 168/207] ext4: add EXT4_IGET_BAD flag to prevent unexpected bad inode
-Date: Wed,  4 Jan 2023 17:07:06 +0100
-Message-Id: <20230104160517.202840181@linuxfoundation.org>
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Tianjia Zhang <tianjia.zhang@linux.alibaba.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.0 101/177] crypto: ccree,hisilicon - Fix dependencies to correct algorithm
+Date: Wed,  4 Jan 2023 17:06:32 +0100
+Message-Id: <20230104160510.701716561@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,72 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
 
-commit 63b1e9bccb71fe7d7e3ddc9877dbdc85e5d2d023 upstream.
+commit 2ae6feb1a1f6678fe11864f1b6920ed10b09ad6a upstream.
 
-There are many places that will get unhappy (and crash) when ext4_iget()
-returns a bad inode. However, if iget the boot loader inode, allows a bad
-inode to be returned, because the inode may not be initialized. This
-mechanism can be used to bypass some checks and cause panic. To solve this
-problem, we add a special iget flag EXT4_IGET_BAD. Only with this flag
-we'd be returning bad inode from ext4_iget(), otherwise we always return
-the error code if the inode is bad inode.(suggested by Jan Kara)
+Commit d2825fa9365d ("crypto: sm3,sm4 - move into crypto directory") moves
+the SM3 and SM4 stand-alone library and the algorithm implementation for
+the Crypto API into the same directory, and the corresponding relationship
+of Kconfig is modified, CONFIG_CRYPTO_SM3/4 corresponds to the stand-alone
+library of SM3/4, and CONFIG_CRYPTO_SM3/4_GENERIC corresponds to the
+algorithm implementation for the Crypto API. Therefore, it is necessary
+for this module to depend on the correct algorithm.
 
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221026042310.3839669-4-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Fixes: d2825fa9365d ("crypto: sm3,sm4 - move into crypto directory")
+Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: stable@vger.kernel.org # v5.19+
+Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h  |    3 ++-
- fs/ext4/inode.c |    8 +++++++-
- fs/ext4/ioctl.c |    3 ++-
- 3 files changed, 11 insertions(+), 3 deletions(-)
+ drivers/crypto/Kconfig           |    4 ++--
+ drivers/crypto/hisilicon/Kconfig |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -2964,7 +2964,8 @@ int do_journal_get_write_access(handle_t
- typedef enum {
- 	EXT4_IGET_NORMAL =	0,
- 	EXT4_IGET_SPECIAL =	0x0001, /* OK to iget a system inode */
--	EXT4_IGET_HANDLE = 	0x0002	/* Inode # is from a handle */
-+	EXT4_IGET_HANDLE = 	0x0002,	/* Inode # is from a handle */
-+	EXT4_IGET_BAD =		0x0004  /* Allow to iget a bad inode */
- } ext4_iget_flags;
- 
- extern struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -5053,8 +5053,14 @@ struct inode *__ext4_iget(struct super_b
- 	if (IS_CASEFOLDED(inode) && !ext4_has_feature_casefold(inode->i_sb))
- 		ext4_error_inode(inode, function, line, 0,
- 				 "casefold flag without casefold feature");
--	brelse(iloc.bh);
-+	if (is_bad_inode(inode) && !(flags & EXT4_IGET_BAD)) {
-+		ext4_error_inode(inode, function, line, 0,
-+				 "bad inode without EXT4_IGET_BAD flag");
-+		ret = -EUCLEAN;
-+		goto bad_inode;
-+	}
- 
-+	brelse(iloc.bh);
- 	unlock_new_inode(inode);
- 	return inode;
- 
---- a/fs/ext4/ioctl.c
-+++ b/fs/ext4/ioctl.c
-@@ -374,7 +374,8 @@ static long swap_inode_boot_loader(struc
- 	blkcnt_t blocks;
- 	unsigned short bytes;
- 
--	inode_bl = ext4_iget(sb, EXT4_BOOT_LOADER_INO, EXT4_IGET_SPECIAL);
-+	inode_bl = ext4_iget(sb, EXT4_BOOT_LOADER_INO,
-+			EXT4_IGET_SPECIAL | EXT4_IGET_BAD);
- 	if (IS_ERR(inode_bl))
- 		return PTR_ERR(inode_bl);
- 	ei_bl = EXT4_I(inode_bl);
+--- a/drivers/crypto/Kconfig
++++ b/drivers/crypto/Kconfig
+@@ -790,8 +790,8 @@ config CRYPTO_DEV_CCREE
+ 	select CRYPTO_ECB
+ 	select CRYPTO_CTR
+ 	select CRYPTO_XTS
+-	select CRYPTO_SM4
+-	select CRYPTO_SM3
++	select CRYPTO_SM4_GENERIC
++	select CRYPTO_SM3_GENERIC
+ 	help
+ 	  Say 'Y' to enable a driver for the REE interface of the Arm
+ 	  TrustZone CryptoCell family of processors. Currently the
+--- a/drivers/crypto/hisilicon/Kconfig
++++ b/drivers/crypto/hisilicon/Kconfig
+@@ -26,7 +26,7 @@ config CRYPTO_DEV_HISI_SEC2
+ 	select CRYPTO_SHA1
+ 	select CRYPTO_SHA256
+ 	select CRYPTO_SHA512
+-	select CRYPTO_SM4
++	select CRYPTO_SM4_GENERIC
+ 	depends on PCI && PCI_MSI
+ 	depends on UACCE || UACCE=n
+ 	depends on ARM64 || (COMPILE_TEST && 64BIT)
 
 
