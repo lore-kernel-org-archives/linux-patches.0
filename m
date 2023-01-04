@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5EB9AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:13:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2413EC433D2;
-	Wed,  4 Jan 2023 16:13:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F4EAD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:13:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFB1C433D2;
+	Wed,  4 Jan 2023 16:13:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848815;
-	bh=y1JgZVdLGISUSnF32rEMF2xE8v/iEEK0D7Rn+iY1srI=;
+	s=korg; t=1672848819;
+	bh=8+vgRJSH5a1+wjv0k+f0IWtfwJNNdxCpLzpTrTPIL8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Lj9z861vafPyDrFODNet+UhMWdkRHBhm4k1U5z3w6l9AsK+oUsJIX3ubbDkOVgNG/
-	 bhveJRy3GB0YRyb7rQDPswPCdYZa+5NvTRoebClyaElLHmxs6FAHX3PBygJwGaWayy
-	 nqkcXEC793SkeEimXmpNonHGGCcUAIi4Fecaw6bE=
+	b=gJOBt7vqm5msA7AG3nYi0us9CkyJwEfUj9Cz/zbKdUMoj6W5+UK2XrJ1MBucUObJq
+	 wz0i/RcibCiM0J/CLTnizW6JYeFLeBC5Vh7YSU9zcpWQn2LSYkuFV1iDBfMR3WLJXA
+	 wLs+CkSwgOb7CzBjZvcLlJPmxlD6yBnSVUiJMjMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	eriri <1527030098@qq.com>,
-	void0red <void0red@gmail.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.0 019/177] btrfs: fix extent map use-after-free when handling missing device in read_one_chunk
-Date: Wed,  4 Jan 2023 17:05:10 +0100
-Message-Id: <20230104160508.243184168@linuxfoundation.org>
+	Peter Zijlstra <peterz@infradead.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.1 089/207] x86/kprobes: Fix optprobe optimization check with CONFIG_RETHUNK
+Date: Wed,  4 Jan 2023 17:05:47 +0100
+Message-Id: <20230104160514.759634403@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,41 +34,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: void0red <void0red@gmail.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 1742e1c90c3da344f3bb9b1f1309b3f47482756a upstream.
+commit 63dc6325ff41ee9e570bde705ac34a39c5dbeb44 upstream.
 
-Store the error code before freeing the extent_map. Though it's
-reference counted structure, in that function it's the first and last
-allocation so this would lead to a potential use-after-free.
+Since the CONFIG_RETHUNK and CONFIG_SLS will use INT3 for stopping
+speculative execution after function return, kprobe jump optimization
+always fails on the functions with such INT3 inside the function body.
+(It already checks the INT3 padding between functions, but not inside
+ the function)
 
-The error can happen eg. when chunk is stored on a missing device and
-the degraded mount option is missing.
+To avoid this issue, as same as kprobes, check whether the INT3 comes
+from kgdb or not, and if so, stop decoding and make it fail. The other
+INT3 will come from CONFIG_RETHUNK/CONFIG_SLS and those can be
+treated as a one-byte instruction.
 
-Bugzilla: https://bugzilla.kernel.org/show_bug.cgi?id=216721
-Reported-by: eriri <1527030098@qq.com>
-Fixes: adfb69af7d8c ("btrfs: add_missing_dev() should return the actual error")
-CC: stable@vger.kernel.org # 4.9+
-Signed-off-by: void0red <void0red@gmail.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: e463a09af2f0 ("x86: Add straight-line-speculation mitigation")
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/167146051929.1374301.7419382929328081706.stgit@devnote3
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kernel/kprobes/opt.c |   28 ++++++++--------------------
+ 1 file changed, 8 insertions(+), 20 deletions(-)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -7128,8 +7128,9 @@ static int read_one_chunk(struct btrfs_k
- 			map->stripes[i].dev = handle_missing_device(fs_info,
- 								    devid, uuid);
- 			if (IS_ERR(map->stripes[i].dev)) {
-+				ret = PTR_ERR(map->stripes[i].dev);
- 				free_extent_map(em);
--				return PTR_ERR(map->stripes[i].dev);
-+				return ret;
- 			}
- 		}
+--- a/arch/x86/kernel/kprobes/opt.c
++++ b/arch/x86/kernel/kprobes/opt.c
+@@ -15,6 +15,7 @@
+ #include <linux/extable.h>
+ #include <linux/kdebug.h>
+ #include <linux/kallsyms.h>
++#include <linux/kgdb.h>
+ #include <linux/ftrace.h>
+ #include <linux/objtool.h>
+ #include <linux/pgtable.h>
+@@ -279,19 +280,6 @@ static int insn_is_indirect_jump(struct
+ 	return ret;
+ }
  
+-static bool is_padding_int3(unsigned long addr, unsigned long eaddr)
+-{
+-	unsigned char ops;
+-
+-	for (; addr < eaddr; addr++) {
+-		if (get_kernel_nofault(ops, (void *)addr) < 0 ||
+-		    ops != INT3_INSN_OPCODE)
+-			return false;
+-	}
+-
+-	return true;
+-}
+-
+ /* Decode whole function to ensure any instructions don't jump into target */
+ static int can_optimize(unsigned long paddr)
+ {
+@@ -334,15 +322,15 @@ static int can_optimize(unsigned long pa
+ 		ret = insn_decode_kernel(&insn, (void *)recovered_insn);
+ 		if (ret < 0)
+ 			return 0;
+-
++#ifdef CONFIG_KGDB
+ 		/*
+-		 * In the case of detecting unknown breakpoint, this could be
+-		 * a padding INT3 between functions. Let's check that all the
+-		 * rest of the bytes are also INT3.
++		 * If there is a dynamically installed kgdb sw breakpoint,
++		 * this function should not be probed.
+ 		 */
+-		if (insn.opcode.bytes[0] == INT3_INSN_OPCODE)
+-			return is_padding_int3(addr, paddr - offset + size) ? 1 : 0;
+-
++		if (insn.opcode.bytes[0] == INT3_INSN_OPCODE &&
++		    kgdb_has_hit_break(addr))
++			return 0;
++#endif
+ 		/* Recover address */
+ 		insn.kaddr = (void *)addr;
+ 		insn.next_byte = (void *)(addr + insn.length);
 
 
