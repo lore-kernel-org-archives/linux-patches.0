@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB20EAD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:15:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179D1C433EF;
-	Wed,  4 Jan 2023 16:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB48DAD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:15:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 106FAC433EF;
+	Wed,  4 Jan 2023 16:15:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848945;
-	bh=GD01h0E23pkQO6ixGr2tzkM+stJzaqJkF1viDWRa/Lw=;
+	s=korg; t=1672848948;
+	bh=FPkcEypsfjMdI/mc7/1vbjpu8SN1fPpgAwJ0Tfp+sPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NyLBMHt0vviujNbrqo81YxyifSThQbfZg2gJtLTv4gFzN6hWjxRjUap4qgIpSKAJU
-	 PPNRj5m5btCPVnDwnpiUN/JN6Hu4uHYd4Lzcye3zJXwEnvi6Ps5sIqH9j7qmxt7F90
-	 QqqTLF60rhgGq/bXBfQ0bXwpIViF2LIjjhPEj0ys=
+	b=O3fSUjPhsvZ9Q4uEEVdbRPj4LIH5mQ7TKftP8NKY/N2YczNpx1gsX1cEbay1RnzyR
+	 Sket20DU9ySbfrRJ14xTvgLfsYvWyV/eo8hdrcV+IvcRFWuZbIqhmIQIGDRETAoamY
+	 mfTPfsfLpO++ZM6gDZkrmR+bbgD9qt5ROlqxVEpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.1 108/207] ravb: Fix "failed to switch device to config mode" message during unbind
-Date: Wed,  4 Jan 2023 17:06:06 +0100
-Message-Id: <20230104160515.328185648@linuxfoundation.org>
+	Ashok Raj <ashok.raj@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.1 086/207] x86/microcode/intel: Do not retry microcode reloading on the APs
+Date: Wed,  4 Jan 2023 17:05:44 +0100
+Message-Id: <20230104160514.666237838@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
 References: <20230104160511.905925875@linuxfoundation.org>
@@ -35,63 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Ashok Raj <ashok.raj@intel.com>
 
-commit c72a7e42592b2e18d862cf120876070947000d7a upstream.
+commit be1b670f61443aa5d0d01782e9b8ea0ee825d018 upstream.
 
-This patch fixes the error "ravb 11c20000.ethernet eth0: failed to switch
-device to config mode" during unbind.
+The retries in load_ucode_intel_ap() were in place to support systems
+with mixed steppings. Mixed steppings are no longer supported and there is
+only one microcode image at a time. Any retries will simply reattempt to
+apply the same image over and over without making progress.
 
-We are doing register access after pm_runtime_put_sync().
+  [ bp: Zap the circumstantial reasoning from the commit message. ]
 
-We usually do cleanup in reverse order of init. Currently in
-remove(), the "pm_runtime_put_sync" is not in reverse order.
-
-Probe
-	reset_control_deassert(rstc);
-	pm_runtime_enable(&pdev->dev);
-	pm_runtime_get_sync(&pdev->dev);
-
-remove
-	pm_runtime_put_sync(&pdev->dev);
-	unregister_netdev(ndev);
-	..
-	ravb_mdio_release(priv);
-	pm_runtime_disable(&pdev->dev);
-
-Consider the call to unregister_netdev()
-unregister_netdev->unregister_netdevice_queue->rollback_registered_many
-that calls the below functions which access the registers after
-pm_runtime_put_sync()
- 1) ravb_get_stats
- 2) ravb_close
-
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
+Fixes: 06b8534cb728 ("x86/microcode: Rework microcode loading")
+Signed-off-by: Ashok Raj <ashok.raj@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20221214105118.2495313-1-biju.das.jz@bp.renesas.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/20221129210832.107850-3-ashok.raj@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/cpu/microcode/intel.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -2903,12 +2903,12 @@ static int ravb_remove(struct platform_d
- 			  priv->desc_bat_dma);
- 	/* Set reset mode */
- 	ravb_write(ndev, CCC_OPC_RESET, CCC);
--	pm_runtime_put_sync(&pdev->dev);
- 	unregister_netdev(ndev);
- 	if (info->nc_queues)
- 		netif_napi_del(&priv->napi[RAVB_NC]);
- 	netif_napi_del(&priv->napi[RAVB_BE]);
- 	ravb_mdio_release(priv);
-+	pm_runtime_put_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	reset_control_assert(priv->rstc);
- 	free_netdev(ndev);
+--- a/arch/x86/kernel/cpu/microcode/intel.c
++++ b/arch/x86/kernel/cpu/microcode/intel.c
+@@ -621,7 +621,6 @@ void load_ucode_intel_ap(void)
+ 	else
+ 		iup = &intel_ucode_patch;
+ 
+-reget:
+ 	if (!*iup) {
+ 		patch = __load_ucode_intel(&uci);
+ 		if (!patch)
+@@ -632,12 +631,7 @@ reget:
+ 
+ 	uci.mc = *iup;
+ 
+-	if (apply_microcode_early(&uci, true)) {
+-		/* Mixed-silicon system? Try to refetch the proper patch: */
+-		*iup = NULL;
+-
+-		goto reget;
+-	}
++	apply_microcode_early(&uci, true);
+ }
+ 
+ static struct microcode_intel *find_patch(struct ucode_cpu_info *uci)
 
 
