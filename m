@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1337AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:19:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46CF3C433D2;
-	Wed,  4 Jan 2023 16:19:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA3CFAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:19:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58544C433D2;
+	Wed,  4 Jan 2023 16:19:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849192;
-	bh=d7qVbnylPvjOz6+l/uEdWMly/xKV8UcjOQvaxZQ9Zzc=;
+	s=korg; t=1672849195;
+	bh=fzNwxn+5D9l4ObhjrXek79HPmvYNmES/HeGoYcrd520=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dbDEy6r/Hk2WZ7SUghinD1o9d2DZN7nSKURqpD56LpU9fOmL0BJ9ZJ597iBbCYzKB
-	 AD7tWpkp+JsdyfVHNci/aAg/RacCMy3+I2VYF9bBSKFAgbpLLNh1Q+zR5figfalZXi
-	 Fxm6LwDmltkAlD025AqPCVTdBJhe43J/Lym9CcN4=
+	b=HH4SLtGtaEBmONWQc5mAgZjagUbstJTStvMcOIGBhvQmyymfpzniJZDFbtiwR4sPC
+	 BYXW9g0PIFANF2xSCDAcdm72zSrNVgqs62klfBSVCRugZRPX3ZTl7s2CIq041Mbl1O
+	 SJ0W3AlYkWki/X5sghXJOYw6oHhXGR6Gmo7P9JhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 149/207] parisc: Add missing FORCE prerequisites in Makefile
-Date: Wed,  4 Jan 2023 17:06:47 +0100
-Message-Id: <20230104160516.627342792@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.0 081/177] cifs: fix missing display of three mount options
+Date: Wed,  4 Jan 2023 17:06:12 +0100
+Message-Id: <20230104160510.104715262@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -33,65 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Steve French <stfrench@microsoft.com>
 
-commit 9086e6017957c5cd6ea28d94b70e0d513d6b7800 upstream.
+commit 2bfd81043e944af0e52835ef6d9b41795af22341 upstream.
 
-Fix those make warnings:
-    arch/parisc/kernel/vdso32/Makefile:30: FORCE prerequisite is missing
-    arch/parisc/kernel/vdso64/Makefile:30: FORCE prerequisite is missing
+Three mount options: "tcpnodelay" and "noautotune" and "noblocksend"
+were not displayed when passed in on cifs/smb3 mounts (e.g. displayed
+in /proc/mounts e.g.).  No change to defaults so these are not
+displayed if not specified on mount.
 
-Add the missing FORCE prerequisites for all build targets identified by
-"make help".
-
-Fixes: e1f86d7b4b2a5213 ("kbuild: warn if FORCE is missing for if_changed(_dep,_rule) and filechk")
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org> # 5.18+
+Cc: stable@vger.kernel.org
+Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/vdso32/Makefile |    4 ++--
- arch/parisc/kernel/vdso64/Makefile |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ fs/cifs/cifsfs.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/arch/parisc/kernel/vdso32/Makefile
-+++ b/arch/parisc/kernel/vdso32/Makefile
-@@ -26,7 +26,7 @@ $(obj)/vdso32_wrapper.o : $(obj)/vdso32.
+--- a/fs/cifs/cifsfs.c
++++ b/fs/cifs/cifsfs.c
+@@ -678,9 +678,15 @@ cifs_show_options(struct seq_file *s, st
+ 	seq_printf(s, ",echo_interval=%lu",
+ 			tcon->ses->server->echo_interval / HZ);
  
- # Force dependency (incbin is bad)
- # link rule for the .so file, .lds has to be first
--$(obj)/vdso32.so: $(src)/vdso32.lds $(obj-vdso32) $(obj-cvdso32) $(VDSO_LIBGCC)
-+$(obj)/vdso32.so: $(src)/vdso32.lds $(obj-vdso32) $(obj-cvdso32) $(VDSO_LIBGCC) FORCE
- 	$(call if_changed,vdso32ld)
+-	/* Only display max_credits if it was overridden on mount */
++	/* Only display the following if overridden on mount */
+ 	if (tcon->ses->server->max_credits != SMB2_MAX_CREDITS_AVAILABLE)
+ 		seq_printf(s, ",max_credits=%u", tcon->ses->server->max_credits);
++	if (tcon->ses->server->tcp_nodelay)
++		seq_puts(s, ",tcpnodelay");
++	if (tcon->ses->server->noautotune)
++		seq_puts(s, ",noautotune");
++	if (tcon->ses->server->noblocksnd)
++		seq_puts(s, ",noblocksend");
  
- # assembly rules for the .S files
-@@ -38,7 +38,7 @@ $(obj-cvdso32): %.o: %.c FORCE
- 
- # actual build commands
- quiet_cmd_vdso32ld = VDSO32L $@
--      cmd_vdso32ld = $(CROSS32CC) $(c_flags) -Wl,-T $^ -o $@
-+      cmd_vdso32ld = $(CROSS32CC) $(c_flags) -Wl,-T $(filter-out FORCE, $^) -o $@
- quiet_cmd_vdso32as = VDSO32A $@
-       cmd_vdso32as = $(CROSS32CC) $(a_flags) -c -o $@ $<
- quiet_cmd_vdso32cc = VDSO32C $@
---- a/arch/parisc/kernel/vdso64/Makefile
-+++ b/arch/parisc/kernel/vdso64/Makefile
-@@ -26,7 +26,7 @@ $(obj)/vdso64_wrapper.o : $(obj)/vdso64.
- 
- # Force dependency (incbin is bad)
- # link rule for the .so file, .lds has to be first
--$(obj)/vdso64.so: $(src)/vdso64.lds $(obj-vdso64) $(VDSO_LIBGCC)
-+$(obj)/vdso64.so: $(src)/vdso64.lds $(obj-vdso64) $(VDSO_LIBGCC) FORCE
- 	$(call if_changed,vdso64ld)
- 
- # assembly rules for the .S files
-@@ -35,7 +35,7 @@ $(obj-vdso64): %.o: %.S FORCE
- 
- # actual build commands
- quiet_cmd_vdso64ld = VDSO64L $@
--      cmd_vdso64ld = $(CC) $(c_flags) -Wl,-T $^ -o $@
-+      cmd_vdso64ld = $(CC) $(c_flags) -Wl,-T $(filter-out FORCE, $^) -o $@
- quiet_cmd_vdso64as = VDSO64A $@
-       cmd_vdso64as = $(CC) $(a_flags) -c -o $@ $<
- 
+ 	if (tcon->snapshot_time)
+ 		seq_printf(s, ",snapshot=%llu", tcon->snapshot_time);
 
 
