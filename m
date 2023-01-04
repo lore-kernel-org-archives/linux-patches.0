@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C736AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:19:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3556C433EF;
-	Wed,  4 Jan 2023 16:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF09AAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:19:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AA25C433D2;
+	Wed,  4 Jan 2023 16:19:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849150;
-	bh=jiIx4HYpVT3taMwTPfdx3q/sP+YnH5gARTg3EPGV9x8=;
+	s=korg; t=1672849153;
+	bh=7ktn5HAXB/jRgTYt6YfgA0BoMXWfLTYgjJN5ujsvieE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=paYnaOMpTw9Eg5UnKwjp8SS6MMXNaafMcz7wOpnkyCxFzQHpDykW/fUY2ON1XgzA6
-	 bIHg/caMI9X4vbsRbLrqZ3st8u/JMTy//mIpNyXrXd0I45OdW7ZQ8WN0Uz+oCbuz0z
-	 RNmboQfbUJFHoeZOdyfkKYIS94xWuO2IUmXNX+T4=
+	b=AFYHBBtlcbQ8XPRFbB3LZckw4+AU7YvmyaOJngHI1nC8la3/LiscZ0kQcZr8V4tBR
+	 NicdLqhUKV5ryK0xz2c2ppc8lScdZbol5rUF4FO2UUYxrEq7B8WDmhTrCkj9qNQL6S
+	 WKogebkm91Yv9Z/Q1giCFrVObHPeJ5UTST88OV3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.0 074/177] staging: media: tegra-video: fix chan->mipi value on error
-Date: Wed,  4 Jan 2023 17:06:05 +0100
-Message-Id: <20230104160509.896792775@linuxfoundation.org>
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Mathieu Poirier <mathieu.poirier@linaro.org>
+Subject: [PATCH 6.1 143/207] remoteproc: imx_dsp_rproc: Add mutex protection for workqueue
+Date: Wed,  4 Jan 2023 17:06:41 +0100
+Message-Id: <20230104160516.449224920@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,53 +35,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-commit 10b5ce6743c839fa75336042c64e2479caec9430 upstream.
+commit 47e6ab07018edebf94ce873cf50a05ec76ff2dde upstream.
 
-chan->mipi takes the return value of tegra_mipi_request() which can be a
-valid pointer or an error. However chan->mipi is checked in several places,
-including error-cleanup code in tegra_csi_channels_cleanup(), as 'if
-(chan->mipi)', which suggests the initial intent was that chan->mipi should
-be either NULL or a valid pointer, never an error. As a consequence,
-cleanup code in case of tegra_mipi_request() errors would dereference an
-invalid pointer.
+The workqueue may execute late even after remoteproc is stopped or
+stopping, some resources (rpmsg device and endpoint) have been
+released in rproc_stop_subdevices(), then rproc_vq_interrupt()
+accessing these resources will cause kennel dump.
 
-Fix by ensuring chan->mipi always contains either NULL or a void pointer.
+Call trace:
+ virtqueue_add_split+0x1ac/0x560
+ virtqueue_add_inbuf+0x4c/0x60
+ rpmsg_recv_done+0x15c/0x294
+ vring_interrupt+0x6c/0xa4
+ rproc_vq_interrupt+0x30/0x50
+ imx_dsp_rproc_vq_work+0x24/0x40 [imx_dsp_rproc]
+ process_one_work+0x1d0/0x354
+ worker_thread+0x13c/0x470
+ kthread+0x154/0x160
+ ret_from_fork+0x10/0x20
 
-Also add that to the documentation.
+Add mutex protection in imx_dsp_rproc_vq_work(), if the state is
+not running, then just skip calling rproc_vq_interrupt().
 
-Fixes: 523c857e34ce ("media: tegra-video: Add CSI MIPI pads calibration")
-Cc: stable@vger.kernel.org
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Also the flush workqueue operation can't be added in rproc stop
+for the same reason. The call sequence is
+
+rproc_shutdown
+-> rproc_stop
+   ->rproc_stop_subdevices
+   ->rproc->ops->stop()
+     ->imx_dsp_rproc_stop
+       ->flush_work
+         -> rproc_vq_interrupt
+
+The resource needed by rproc_vq_interrupt has been released in
+rproc_stop_subdevices, so flush_work is not safe to be called in
+imx_dsp_rproc_stop.
+
+Fixes: ec0e5549f358 ("remoteproc: imx_dsp_rproc: Add remoteproc driver for DSP on i.MX")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Cc: stable <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/1664524216-19949-1-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/tegra-video/csi.c |    1 +
- drivers/staging/media/tegra-video/csi.h |    2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ drivers/remoteproc/imx_dsp_rproc.c |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/staging/media/tegra-video/csi.c
-+++ b/drivers/staging/media/tegra-video/csi.c
-@@ -448,6 +448,7 @@ static int tegra_csi_channel_alloc(struc
- 	chan->mipi = tegra_mipi_request(csi->dev, node);
- 	if (IS_ERR(chan->mipi)) {
- 		ret = PTR_ERR(chan->mipi);
-+		chan->mipi = NULL;
- 		dev_err(csi->dev, "failed to get mipi device: %d\n", ret);
- 	}
+--- a/drivers/remoteproc/imx_dsp_rproc.c
++++ b/drivers/remoteproc/imx_dsp_rproc.c
+@@ -347,9 +347,6 @@ static int imx_dsp_rproc_stop(struct rpr
+ 	struct device *dev = rproc->dev.parent;
+ 	int ret = 0;
  
---- a/drivers/staging/media/tegra-video/csi.h
-+++ b/drivers/staging/media/tegra-video/csi.h
-@@ -56,7 +56,7 @@ struct tegra_csi;
-  * @framerate: active framerate for TPG
-  * @h_blank: horizontal blanking for TPG active format
-  * @v_blank: vertical blanking for TPG active format
-- * @mipi: mipi device for corresponding csi channel pads
-+ * @mipi: mipi device for corresponding csi channel pads, or NULL if not applicable (TPG, error)
-  * @pixel_rate: active pixel rate from the sensor on this channel
-  */
- struct tegra_csi_channel {
+-	/* Make sure work is finished */
+-	flush_work(&priv->rproc_work);
+-
+ 	if (rproc->state == RPROC_CRASHED) {
+ 		priv->flags &= ~REMOTE_IS_READY;
+ 		return 0;
+@@ -432,9 +429,18 @@ static void imx_dsp_rproc_vq_work(struct
+ {
+ 	struct imx_dsp_rproc *priv = container_of(work, struct imx_dsp_rproc,
+ 						  rproc_work);
++	struct rproc *rproc = priv->rproc;
++
++	mutex_lock(&rproc->lock);
++
++	if (rproc->state != RPROC_RUNNING)
++		goto unlock_mutex;
+ 
+ 	rproc_vq_interrupt(priv->rproc, 0);
+ 	rproc_vq_interrupt(priv->rproc, 1);
++
++unlock_mutex:
++	mutex_unlock(&rproc->lock);
+ }
+ 
+ /**
 
 
