@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3D5AD38
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:08:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5D5EC433F0;
-	Wed,  4 Jan 2023 16:08:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE9BAD38
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:08:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB083C433EF;
+	Wed,  4 Jan 2023 16:08:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848518;
-	bh=5vqMnOjPB/EzvYDjxxL+uagrVqeIhA4cDaoRhifpY2Y=;
+	s=korg; t=1672848521;
+	bh=EIZqDPd9fNOCBCswgpx07PnRiZiEE9xZ/S9dqsC6PNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OBZax3tOSKh0SYZrhYRxqIyGVxTFnUdvq4r+wK3vE1Z2bdPZaQOhEGFxYjT/LC+g/
-	 u4GNwOs0Rl9P2D9fEd9REDGnnkS7Zk4nDdGhZYDBh5jhjELnTqD4Gp2JOmGv5+OT4j
-	 7GM0R8Eg4fFp+qFIRmjuFM+sQ0ZqDnT4GpL6Rajs=
+	b=ye2KXezRWkPtT9PZkpIsLjMlPZGolFEC6rxzDqOcHJ7K2xS5R4dlBhI2pcp/xK53Z
+	 rokwrr4jgvOIUUq1YBaBgcjOnCQhvESnzHBzcAWJy3d93OZVE963+6cFNXKfGcyslw
+	 esGhWICzWHpVj37OQXypw2/i/4Y6cl3ihSs2c3i4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	linux-media@vger.kernel.org,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH 6.1 003/207] media: stv0288: use explicitly signed char
-Date: Wed,  4 Jan 2023 17:04:21 +0100
-Message-Id: <20230104160512.024402065@linuxfoundation.org>
+	Alexander Antonov <alexander.antonov@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>
+Subject: [PATCH 6.1 012/207] perf/x86/intel/uncore: Disable I/O stacks to PMU mapping on ICX-D
+Date: Wed,  4 Jan 2023 17:04:30 +0100
+Message-Id: <20230104160512.306183616@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
 References: <20230104160511.905925875@linuxfoundation.org>
@@ -35,40 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Alexander Antonov <alexander.antonov@linux.intel.com>
 
-commit 7392134428c92a4cb541bd5c8f4f5c8d2e88364d upstream.
+commit efe062705d149b20a15498cb999a9edbb8241e6f upstream.
 
-With char becoming unsigned by default, and with `char` alone being
-ambiguous and based on architecture, signed chars need to be marked
-explicitly as such. Use `s8` and `u8` types here, since that's what
-surrounding code does. This fixes:
+Current implementation of I/O stacks to PMU mapping doesn't support ICX-D.
+Detect ICX-D system to disable mapping.
 
-drivers/media/dvb-frontends/stv0288.c:471 stv0288_set_frontend() warn: assigning (-9) to unsigned variable 'tm'
-drivers/media/dvb-frontends/stv0288.c:471 stv0288_set_frontend() warn: we never enter this loop
-
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org
+Fixes: 10337e95e04c ("perf/x86/intel/uncore: Enable I/O stacks to IIO PMON mapping on ICX")
+Signed-off-by: Alexander Antonov <alexander.antonov@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://lore.kernel.org/r/20221117122833.3103580-5-alexander.antonov@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-frontends/stv0288.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/x86/events/intel/uncore.h       |    1 +
+ arch/x86/events/intel/uncore_snbep.c |    5 +++++
+ 2 files changed, 6 insertions(+)
 
---- a/drivers/media/dvb-frontends/stv0288.c
-+++ b/drivers/media/dvb-frontends/stv0288.c
-@@ -440,9 +440,8 @@ static int stv0288_set_frontend(struct d
- 	struct stv0288_state *state = fe->demodulator_priv;
- 	struct dtv_frontend_properties *c = &fe->dtv_property_cache;
+--- a/arch/x86/events/intel/uncore.h
++++ b/arch/x86/events/intel/uncore.h
+@@ -2,6 +2,7 @@
+ #include <linux/slab.h>
+ #include <linux/pci.h>
+ #include <asm/apicdef.h>
++#include <asm/intel-family.h>
+ #include <linux/io-64-nonatomic-lo-hi.h>
  
--	char tm;
--	unsigned char tda[3];
--	u8 reg, time_out = 0;
-+	u8 tda[3], reg, time_out = 0;
-+	s8 tm;
+ #include <linux/perf_event.h>
+--- a/arch/x86/events/intel/uncore_snbep.c
++++ b/arch/x86/events/intel/uncore_snbep.c
+@@ -5144,6 +5144,11 @@ static int icx_iio_get_topology(struct i
  
- 	dprintk("%s : FE_SET_FRONTEND\n", __func__);
+ static int icx_iio_set_mapping(struct intel_uncore_type *type)
+ {
++	/* Detect ICX-D system. This case is not supported */
++	if (boot_cpu_data.x86_model == INTEL_FAM6_ICELAKE_D) {
++		pmu_clear_mapping_attr(type->attr_update, &icx_iio_mapping_group);
++		return -EPERM;
++	}
+ 	return pmu_iio_set_mapping(type, &icx_iio_mapping_group);
+ }
  
 
 
