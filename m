@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21700AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89104C433EF;
-	Wed,  4 Jan 2023 16:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15588AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72269C433EF;
+	Wed,  4 Jan 2023 16:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849223;
-	bh=QfOeRVhAUwAPl3Vbl1Xt2m5e8TWalbNi4D7WzqtcR98=;
+	s=korg; t=1672849225;
+	bh=o8GHoLbs3RomkxHAm/b+mr6R6R9tHQaBSYJa3EhyAec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cRGo1gkm4Llnnq+hzQZ9KLmXDqAqdfCEWiPhPd13IBSA4Pk//zZOn26sndzqtYHUw
-	 yASdWC0oTS6NINK4RywDOEOl5M44l1N1GQ7lQLW6Dj7+fo9Gc+VqD2XAtv1UZYDDzM
-	 rfYcosjV3xSk782iuyh1E9Oup4pYstnYbWo2Z438=
+	b=iYZ4+pUlLjAezixZUHXyRWM0GbODfbFmrJyMiT/iN6wESmC50+sDJwnUcv1pPJ4Je
+	 rwRKnzTo+RuCVjiAl/R1kD5Br8doWbByZcgZj36gQWBHxVbRnUyZ41LXK8kUHsypKi
+	 Q2AhR25s7r6hTRq6mycW+PTpWRw4AR58nQnbPdAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 6.0 085/177] ravb: Fix "failed to switch device to config mode" message during unbind
-Date: Wed,  4 Jan 2023 17:06:16 +0100
-Message-Id: <20230104160510.220555272@linuxfoundation.org>
+	Zack Rusin <zackr@vmware.com>,
+	Michael Banack <banackm@vmware.com>,
+	Martin Krastev <krastevm@vmware.com>
+Subject: [PATCH 6.1 154/207] drm/vmwgfx: Validate the box size for the snooped cursor
+Date: Wed,  4 Jan 2023 17:06:52 +0100
+Message-Id: <20230104160516.777512483@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,63 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Zack Rusin <zackr@vmware.com>
 
-commit c72a7e42592b2e18d862cf120876070947000d7a upstream.
+commit 4cf949c7fafe21e085a4ee386bb2dade9067316e upstream.
 
-This patch fixes the error "ravb 11c20000.ethernet eth0: failed to switch
-device to config mode" during unbind.
+Invalid userspace dma surface copies could potentially overflow
+the memcpy from the surface to the snooped image leading to crashes.
+To fix it the dimensions of the copybox have to be validated
+against the expected size of the snooped cursor.
 
-We are doing register access after pm_runtime_put_sync().
-
-We usually do cleanup in reverse order of init. Currently in
-remove(), the "pm_runtime_put_sync" is not in reverse order.
-
-Probe
-	reset_control_deassert(rstc);
-	pm_runtime_enable(&pdev->dev);
-	pm_runtime_get_sync(&pdev->dev);
-
-remove
-	pm_runtime_put_sync(&pdev->dev);
-	unregister_netdev(ndev);
-	..
-	ravb_mdio_release(priv);
-	pm_runtime_disable(&pdev->dev);
-
-Consider the call to unregister_netdev()
-unregister_netdev->unregister_netdevice_queue->rollback_registered_many
-that calls the below functions which access the registers after
-pm_runtime_put_sync()
- 1) ravb_get_stats
- 2) ravb_close
-
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
-Cc: stable@vger.kernel.org
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20221214105118.2495313-1-biju.das.jz@bp.renesas.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Zack Rusin <zackr@vmware.com>
+Fixes: 2ac863719e51 ("vmwgfx: Snoop DMA transfers with non-covering sizes")
+Cc: <stable@vger.kernel.org> # v3.2+
+Reviewed-by: Michael Banack <banackm@vmware.com>
+Reviewed-by: Martin Krastev <krastevm@vmware.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221026031936.1004280-1-zack@kde.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -2896,12 +2896,12 @@ static int ravb_remove(struct platform_d
- 			  priv->desc_bat_dma);
- 	/* Set reset mode */
- 	ravb_write(ndev, CCC_OPC_RESET, CCC);
--	pm_runtime_put_sync(&pdev->dev);
- 	unregister_netdev(ndev);
- 	if (info->nc_queues)
- 		netif_napi_del(&priv->napi[RAVB_NC]);
- 	netif_napi_del(&priv->napi[RAVB_BE]);
- 	ravb_mdio_release(priv);
-+	pm_runtime_put_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	reset_control_assert(priv->rstc);
- 	free_netdev(ndev);
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+@@ -308,7 +308,8 @@ void vmw_kms_cursor_snoop(struct vmw_sur
+ 	if (cmd->dma.guest.ptr.offset % PAGE_SIZE ||
+ 	    box->x != 0    || box->y != 0    || box->z != 0    ||
+ 	    box->srcx != 0 || box->srcy != 0 || box->srcz != 0 ||
+-	    box->d != 1    || box_count != 1) {
++	    box->d != 1    || box_count != 1 ||
++	    box->w > 64 || box->h > 64) {
+ 		/* TODO handle none page aligned offsets */
+ 		/* TODO handle more dst & src != 0 */
+ 		/* TODO handle more then one copy */
 
 
