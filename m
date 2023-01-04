@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E154AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:21:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8AF1C433EF;
-	Wed,  4 Jan 2023 16:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE4FAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:21:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B070CC433D2;
+	Wed,  4 Jan 2023 16:21:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849289;
-	bh=ksgXcK1NaxphJYJtafeiAOuNITTClBgyX0yxEtDAZWY=;
+	s=korg; t=1672849292;
+	bh=WxSrhrpqyDeqQwktNFOhI4EkwNUo4eNlp4LP9pd2r+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S75GomysMdUjgcdiWN5ihfOl1wpCH7JiZxjN0iF4/aZeKnvWljMG9VjNQ42tCa7Bp
-	 n2zgJ9boUR8YK42+SVMNVR0yanYAeCHB4xsWp+I1Az8lrdN9DYMqxpauDnV+LS3nP7
-	 r1Y3SoiG1PvyeIUlwiM/AjPGPb8d4lY294nIUan0=
+	b=ZcX6MXh3wE93Iw69xV99pe0GSCZH4znC9SxNyiXSHcFhP4ygRAuoistDJbyrdNJWJ
+	 JYVltV1+YoSF/fG01wuHDfMvxti9QfUoeaCXne/UQXC8oJjgEV92+t9cR18mT3aNK+
+	 p2xyWIP7ggWaFyl4oY58YhQ1y0YwJcslR84dt9ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Biggers <ebiggers@kernel.org>,
-	syzbot+9767be679ef5016b6082@syzkaller.appspotmail.com,
-	Alexander Potapenko <glider@google.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.1 165/207] fs: ext4: initialize fsdata in pagecache_write()
-Date: Wed,  4 Jan 2023 17:07:03 +0100
-Message-Id: <20230104160517.114442515@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	Corey Minyard <cminyard@mvista.com>
+Subject: [PATCH 6.0 098/177] ipmi: fix use after free in _ipmi_destroy_user()
+Date: Wed,  4 Jan 2023 17:06:29 +0100
+Message-Id: <20230104160510.604935743@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,38 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Potapenko <glider@google.com>
+From: Dan Carpenter <error27@gmail.com>
 
-commit 956510c0c7439e90b8103aaeaf4da92878c622f0 upstream.
+commit a92ce570c81dc0feaeb12a429b4bc65686d17967 upstream.
 
-When aops->write_begin() does not initialize fsdata, KMSAN reports
-an error passing the latter to aops->write_end().
+The intf_free() function frees the "intf" pointer so we cannot
+dereference it again on the next line.
 
-Fix this by unconditionally initializing fsdata.
-
-Cc: Eric Biggers <ebiggers@kernel.org>
-Fixes: c93d8f885809 ("ext4: add basic fs-verity support")
-Reported-by: syzbot+9767be679ef5016b6082@syzkaller.appspotmail.com
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20221121112134.407362-1-glider@google.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Fixes: cbb79863fc31 ("ipmi: Don't allow device module unload when in use")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Message-Id: <Y3M8xa1drZv4CToE@kili>
+Cc: <stable@vger.kernel.org> # 5.5+
+Signed-off-by: Corey Minyard <cminyard@mvista.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/verity.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/char/ipmi/ipmi_msghandler.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/verity.c
-+++ b/fs/ext4/verity.c
-@@ -79,7 +79,7 @@ static int pagecache_write(struct inode
- 		size_t n = min_t(size_t, count,
- 				 PAGE_SIZE - offset_in_page(pos));
- 		struct page *page;
--		void *fsdata;
-+		void *fsdata = NULL;
- 		int res;
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -1336,6 +1336,7 @@ static void _ipmi_destroy_user(struct ip
+ 	unsigned long    flags;
+ 	struct cmd_rcvr  *rcvr;
+ 	struct cmd_rcvr  *rcvrs = NULL;
++	struct module    *owner;
  
- 		res = aops->write_begin(NULL, mapping, pos, n, &page, &fsdata);
+ 	if (!acquire_ipmi_user(user, &i)) {
+ 		/*
+@@ -1398,8 +1399,9 @@ static void _ipmi_destroy_user(struct ip
+ 		kfree(rcvr);
+ 	}
+ 
++	owner = intf->owner;
+ 	kref_put(&intf->refcount, intf_free);
+-	module_put(intf->owner);
++	module_put(owner);
+ }
+ 
+ int ipmi_destroy_user(struct ipmi_user *user)
 
 
