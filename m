@@ -1,93 +1,81 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B544AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:28:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B9CC433F0;
-	Wed,  4 Jan 2023 16:28:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849688;
-	bh=66TTpy8zi1Ms8RUsKRu+PHzGU87iM1FxkdGpHYvckPA=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gUq7JCJmg/NVLZoxn1+eBythlSE7WAzIQlNB/Q/9ku+cvIOCh0i6Ya4tnf6zIQEDL
-	 jceKNNu+8CURM/WumtIGyu96llIwitW7xCDegpWBcmvRAkl8tlCuHjDkw5F/9YaLia
-	 0oLQlmildV9NvgWIfiqxY0ypID685g5iG1FKxfSo=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	syzbot+ba9dac45bc76c490b7c3@syzkaller.appspotmail.com,
-	Eric Biggers <ebiggers@google.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.0 145/177] ext4: dont allow journal inode to have encrypt flag
-Date: Wed,  4 Jan 2023 17:07:16 +0100
-Message-Id: <20230104160512.054136761@linuxfoundation.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94BDCBA31
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 19:46:30 +0000 (UTC)
+Received: by mail-pf1-f171.google.com with SMTP id a30so7991171pfr.6
+        for <patches@lists.linux.dev>; Wed, 04 Jan 2023 11:46:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Lfp41JQ/onUmjvZ07AVTcvQ52DwcrIfI2vmD2kQlaH4=;
+        b=kO1or/RXoA05nURTG3xyN7muAUlj2ebxkGpDEctbc4x6Nqwc9T5PxVV04perKzOzW9
+         SX6g6Y8JUF48swj3lmNF14tIlC/U5klThXu4dbx1aukENqSQUMfFWG/jJB6Q9xbl1ltK
+         qNpSfcQ6np3P6rpVcRUp9mC8cnnqijDUGEiEa3zFJIlnzS17Pzo8ryM7Pf7d5Xtkz6De
+         d6c/bZR2mtvKLev5k1qwzFkOo676v92PcZ4Pdu4mwwzepQ38u9h6q16OeI0OAU6XWltd
+         XlFkx5ntnXOFPR1ByE2rVojIUXNjYviqtVUQH7Boc2uHlHZljhmmamshUGtZcT5Rh9XN
+         QtbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Lfp41JQ/onUmjvZ07AVTcvQ52DwcrIfI2vmD2kQlaH4=;
+        b=imh9EGuA/329RqS8afPx+gyxDH0PNM5WlSfCxMp27cHZrHQGi8oK1atoDWFijC1FHK
+         oGFQ+5rYP+kekdI7cTVD7Y2BptU7gOhq8D0XUon8U2kyTvzY3OgLz3YJp0td8EQPDUbl
+         jNHeL2zGVIkMW0Hw2hAE9jkxbA1RwRPkNdm0leo9Hs9NuSHPg2X0flBGJ6fSTnF8EPox
+         EpBkcsQY54NyNGsga/m4oXcgbcW6PN5tX3M8Genjhgi+wBpQIR0HmyMw9BbxgXn9noLL
+         +8Z6FiUjy5fUTGypkPLQFO/KQMpQfr2ZJYg00DjxfRG+YJiQw87IaDd48Yd4+Fon19xz
+         suQg==
+X-Gm-Message-State: AFqh2krSbo1MfvSsFuUO6yywHZbath1iA5oA1l5qfqWRM86+xcGp/R4h
+	QoWNURnzgEd9UuiNNq/BPPkMiZgMqOSa/ZlsLNU=
+X-Google-Smtp-Source: AMrXdXuUI87EkFUiq+H9wnUuDjm36Sg0u4sCXF0UhtLLaXBCzOjCNdY2tjgwN9QtDTcSCPtYCShEKY9S0cZg3XH6MT4=
+X-Received: by 2002:a05:6a00:27a0:b0:57e:7d2e:cbea with SMTP id
+ bd32-20020a056a0027a000b0057e7d2ecbeamr3153172pfb.27.1672861589963; Wed, 04
+ Jan 2023 11:46:29 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+From: Allen Pais <stable.kernel.dev@gmail.com>
+Date: Wed, 4 Jan 2023 11:46:18 -0800
+Message-ID: <CAJq+SaAqX7ikxOEsNvqyAyrtDes5-r1aeOMSx2fapddk8s3U=A@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/207] 6.1.4-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 
-From: Eric Biggers <ebiggers@google.com>
+> This is the start of the stable review cycle for the 6.1.4 release.
+> There are 207 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Fri, 06 Jan 2023 16:04:29 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.4-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-commit 105c78e12468413e426625831faa7db4284e1fec upstream.
+Compiled and booted on my x86_64 and ARM64 test systems. No errors or
+regressions.
 
-Mounting a filesystem whose journal inode has the encrypt flag causes a
-NULL dereference in fscrypt_limit_io_blocks() when the 'inlinecrypt'
-mount option is used.
+Tested-by: Allen Pais <apais@linux.microsoft.com>
 
-The problem is that when jbd2_journal_init_inode() calls bmap(), it
-eventually finds its way into ext4_iomap_begin(), which calls
-fscrypt_limit_io_blocks().  fscrypt_limit_io_blocks() requires that if
-the inode is encrypted, then its encryption key must already be set up.
-That's not the case here, since the journal inode is never "opened" like
-a normal file would be.  Hence the crash.
-
-A reproducer is:
-
-    mkfs.ext4 -F /dev/vdb
-    debugfs -w /dev/vdb -R "set_inode_field <8> flags 0x80808"
-    mount /dev/vdb /mnt -o inlinecrypt
-
-To fix this, make ext4 consider journal inodes with the encrypt flag to
-be invalid.  (Note, maybe other flags should be rejected on the journal
-inode too.  For now, this is just the minimal fix for the above issue.)
-
-I've marked this as fixing the commit that introduced the call to
-fscrypt_limit_io_blocks(), since that's what made an actual crash start
-being possible.  But this fix could be applied to any version of ext4
-that supports the encrypt feature.
-
-Reported-by: syzbot+ba9dac45bc76c490b7c3@syzkaller.appspotmail.com
-Fixes: 38ea50daa7a4 ("ext4: support direct I/O with fscrypt using blk-crypto")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20221102053312.189962-1-ebiggers@kernel.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/ext4/super.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5580,7 +5580,7 @@ static struct inode *ext4_get_journal_in
- 
- 	ext4_debug("Journal inode found at %p: %lld bytes\n",
- 		  journal_inode, journal_inode->i_size);
--	if (!S_ISREG(journal_inode->i_mode)) {
-+	if (!S_ISREG(journal_inode->i_mode) || IS_ENCRYPTED(journal_inode)) {
- 		ext4_msg(sb, KERN_ERR, "invalid journal inode");
- 		iput(journal_inode);
- 		return NULL;
-
-
+Thanks.
