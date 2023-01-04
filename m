@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8500DAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:21:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D20C433EF;
-	Wed,  4 Jan 2023 16:21:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563B3AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:21:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D17C7C433D2;
+	Wed,  4 Jan 2023 16:21:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849283;
-	bh=/XPvMylD5flrqY/5NXHT0x2wluEtrLi+rO+gHDIT4eQ=;
+	s=korg; t=1672849286;
+	bh=jCThmjB+sCqloW90Ns6LGLBH0Llk6xl8Up1beJe9Yw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V+lhvH4CyPgbcy371ks54WUJ7VH9RpwP416EDDIMY3wOOfj87j7TJgG+bPgFik0am
-	 PUIfhoPz4QPtqxdZlMS9Ud6oaY1fJg8zMChc164K1LnsZZ9XroSetCUeCWv6Xaq6Jo
-	 KVWzdLV3enCh6zhZBAHIGYp4VnP4J10To51t9ERc=
+	b=v/n575qwzSeqfKtKOpR7UOY5DfW4snoFec8cb51H/j5FTfPW+KNlw/wPkgNrMKA7b
+	 nTvCYyPIr1A/hiKhH1iUrSPKhiOWaT2QVdWfcnhJl5MTVIMJ64uYlnaBRASlNPCul/
+	 SvxaYDirK5RVtNtNcdmJao+/5onW6EBJesAVgzuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravana Kannan <saravanak@google.com>,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>
-Subject: [PATCH 6.1 135/207] driver core: Fix bus_type.match() error handling in __driver_attach()
-Date: Wed,  4 Jan 2023 17:06:33 +0100
-Message-Id: <20230104160516.194066049@linuxfoundation.org>
+	Paul Cercueil <paul@crapouillou.net>,
+	Aidan MacDonald <aidanmacdonald.0x0@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.0 093/177] ASoC: jz4740-i2s: Handle independent FIFO flush bits
+Date: Wed,  4 Jan 2023 17:06:24 +0100
+Message-Id: <20230104160510.456955285@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,46 +35,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Isaac J. Manjarres <isaacmanjarres@google.com>
+From: Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
 
-commit 27c0d217340e47ec995557f61423ef415afba987 upstream.
+commit 8b3a9ad86239f80ed569e23c3954a311f66481d6 upstream.
 
-When a driver registers with a bus, it will attempt to match with every
-device on the bus through the __driver_attach() function. Currently, if
-the bus_type.match() function encounters an error that is not
--EPROBE_DEFER, __driver_attach() will return a negative error code, which
-causes the driver registration logic to stop trying to match with the
-remaining devices on the bus.
+On the JZ4740, there is a single bit that flushes (empties) both
+the transmit and receive FIFO. Later SoCs have independent flush
+bits for each FIFO.
 
-This behavior is not correct; a failure while matching a driver to a
-device does not mean that the driver won't be able to match and bind
-with other devices on the bus. Update the logic in __driver_attach()
-to reflect this.
+Independent FIFOs can be flushed before the snd_soc_dai_active()
+check because it won't disturb other active streams. This ensures
+that the FIFO we're about to use is always flushed before starting
+up. With shared FIFOs we can't do that because if another substream
+is active, flushing its FIFO would cause underrun errors.
 
-Fixes: 656b8035b0ee ("ARM: 8524/1: driver cohandle -EPROBE_DEFER from bus_type.match()")
+This also fixes a bug: since we were only setting the JZ4740's
+flush bit, which corresponds to the TX FIFO flush bit on other
+SoCs, other SoCs were not having their RX FIFO flushed at all.
+
+Fixes: 967beb2e8777 ("ASoC: jz4740: Add jz4780 support")
+Reviewed-by: Paul Cercueil <paul@crapouillou.net>
 Cc: stable@vger.kernel.org
-Cc: Saravana Kannan <saravanak@google.com>
-Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
-Link: https://lore.kernel.org/r/20220921001414.4046492-1-isaacmanjarres@google.com
+Signed-off-by: Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
+Link: https://lore.kernel.org/r/20221023143328.160866-2-aidanmacdonald.0x0@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/dd.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ sound/soc/jz4740/jz4740-i2s.c |   39 ++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 34 insertions(+), 5 deletions(-)
 
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -1162,7 +1162,11 @@ static int __driver_attach(struct device
- 		return 0;
- 	} else if (ret < 0) {
- 		dev_dbg(dev, "Bus failed to match device: %d\n", ret);
--		return ret;
-+		/*
-+		 * Driver could not match with device, but may match with
-+		 * another device on the bus.
-+		 */
-+		return 0;
- 	} /* ret > 0 means positive match */
+--- a/sound/soc/jz4740/jz4740-i2s.c
++++ b/sound/soc/jz4740/jz4740-i2s.c
+@@ -55,7 +55,8 @@
+ #define JZ_AIC_CTRL_MONO_TO_STEREO BIT(11)
+ #define JZ_AIC_CTRL_SWITCH_ENDIANNESS BIT(10)
+ #define JZ_AIC_CTRL_SIGNED_TO_UNSIGNED BIT(9)
+-#define JZ_AIC_CTRL_FLUSH		BIT(8)
++#define JZ_AIC_CTRL_TFLUSH		BIT(8)
++#define JZ_AIC_CTRL_RFLUSH		BIT(7)
+ #define JZ_AIC_CTRL_ENABLE_ROR_INT BIT(6)
+ #define JZ_AIC_CTRL_ENABLE_TUR_INT BIT(5)
+ #define JZ_AIC_CTRL_ENABLE_RFS_INT BIT(4)
+@@ -90,6 +91,8 @@ enum jz47xx_i2s_version {
+ struct i2s_soc_info {
+ 	enum jz47xx_i2s_version version;
+ 	struct snd_soc_dai_driver *dai;
++
++	bool shared_fifo_flush;
+ };
  
- 	if (driver_allows_async_probing(drv)) {
+ struct jz4740_i2s {
+@@ -116,19 +119,44 @@ static inline void jz4740_i2s_write(cons
+ 	writel(value, i2s->base + reg);
+ }
+ 
++static inline void jz4740_i2s_set_bits(const struct jz4740_i2s *i2s,
++	unsigned int reg, uint32_t bits)
++{
++	uint32_t value = jz4740_i2s_read(i2s, reg);
++	value |= bits;
++	jz4740_i2s_write(i2s, reg, value);
++}
++
+ static int jz4740_i2s_startup(struct snd_pcm_substream *substream,
+ 	struct snd_soc_dai *dai)
+ {
+ 	struct jz4740_i2s *i2s = snd_soc_dai_get_drvdata(dai);
+-	uint32_t conf, ctrl;
++	uint32_t conf;
+ 	int ret;
+ 
++	/*
++	 * When we can flush FIFOs independently, only flush the FIFO
++	 * that is starting up. We can do this when the DAI is active
++	 * because it does not disturb other active substreams.
++	 */
++	if (!i2s->soc_info->shared_fifo_flush) {
++		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
++			jz4740_i2s_set_bits(i2s, JZ_REG_AIC_CTRL, JZ_AIC_CTRL_TFLUSH);
++		else
++			jz4740_i2s_set_bits(i2s, JZ_REG_AIC_CTRL, JZ_AIC_CTRL_RFLUSH);
++	}
++
+ 	if (snd_soc_dai_active(dai))
+ 		return 0;
+ 
+-	ctrl = jz4740_i2s_read(i2s, JZ_REG_AIC_CTRL);
+-	ctrl |= JZ_AIC_CTRL_FLUSH;
+-	jz4740_i2s_write(i2s, JZ_REG_AIC_CTRL, ctrl);
++	/*
++	 * When there is a shared flush bit for both FIFOs, the TFLUSH
++	 * bit flushes both FIFOs. Flushing while the DAI is active would
++	 * cause FIFO underruns in other active substreams so we have to
++	 * guard this behind the snd_soc_dai_active() check.
++	 */
++	if (i2s->soc_info->shared_fifo_flush)
++		jz4740_i2s_set_bits(i2s, JZ_REG_AIC_CTRL, JZ_AIC_CTRL_TFLUSH);
+ 
+ 	ret = clk_prepare_enable(i2s->clk_i2s);
+ 	if (ret)
+@@ -443,6 +471,7 @@ static struct snd_soc_dai_driver jz4740_
+ static const struct i2s_soc_info jz4740_i2s_soc_info = {
+ 	.version = JZ_I2S_JZ4740,
+ 	.dai = &jz4740_i2s_dai,
++	.shared_fifo_flush = true,
+ };
+ 
+ static const struct i2s_soc_info jz4760_i2s_soc_info = {
 
 
