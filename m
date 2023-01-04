@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C66AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED927C433D2;
-	Wed,  4 Jan 2023 16:25:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F0EAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:26:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C6DC433D2;
+	Wed,  4 Jan 2023 16:26:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849558;
-	bh=YXsvVkbz4VetYhwqccxBJRYFNckHVXQjcLQThVKAgvw=;
+	s=korg; t=1672849561;
+	bh=iWcICvDwaV5EeYy5zG0e0FOKsdswhcebZwCyLQYYfII=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=06KkqL7eLXbTU82BRf6CHa5Q0xUXlb6DoxqlnOoARV1L/VFnnLoTrxzZar0YnDRvD
-	 cMreRXXQSzBJ7eNKFh+OYxZ3xtZ/iYK6WkVQJ6wT5OLGcPp6FOCQwqSMgpbFfEDwsg
-	 KRa3KCiLLWgbt1yHdfGF+6L453CwGJAoUQYiqs7U=
+	b=tPHD1P15aUhtoFdxS424W9UqaMwYRUi5xHrxgtl2LuD6DOufncexgR9PsPwyxhgwH
+	 5CQjzpHQGl7PjSZ0gI0WUo6fxTvEE48bjuI30k3BT0rt9rrwf+s5W10t2EWCLx85RF
+	 6FLWjXIzC/HMjxLauJXN+DZ4qPYlZGC46eUXvR5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+05a0f0ccab4a25626e38@syzkaller.appspotmail.com,
-	Ye Bin <yebin10@huawei.com>,
-	Eric Whitney <enwlinux@gmail.com>,
+	Lukas Czerner <lczerner@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.0 141/177] ext4: fix reserved cluster accounting in __es_remove_extent()
-Date: Wed,  4 Jan 2023 17:07:12 +0100
-Message-Id: <20230104160511.918074655@linuxfoundation.org>
+Subject: [PATCH 6.0 142/177] ext4: journal_path mount options should follow links
+Date: Wed,  4 Jan 2023 17:07:13 +0100
+Message-Id: <20230104160511.958335406@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -37,91 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ye Bin <yebin10@huawei.com>
+From: Lukas Czerner <lczerner@redhat.com>
 
-commit 1da18e38cb97e9521e93d63034521a9649524f64 upstream.
+commit e3ea75ee651daf5e434afbfdb7dbf75e200ea1f6 upstream.
 
-When bigalloc is enabled, reserved cluster accounting for delayed
-allocation is handled in extent_status.c.  With a corrupted file
-system, it's possible for this accounting to be incorrect,
-dsicovered by Syzbot:
+Before the commit 461c3af045d3 ("ext4: Change handle_mount_opt() to use
+fs_parameter") ext4 mount option journal_path did follow links in the
+provided path.
 
-EXT4-fs error (device loop0): ext4_validate_block_bitmap:398: comm rep:
-	bg 0: block 5: invalid block bitmap
-EXT4-fs (loop0): Delayed block allocation failed for inode 18 at logical
-	offset 0 with max blocks 32 with error 28
-EXT4-fs (loop0): This should not happen!! Data will be lost
+Bring this behavior back by allowing to pass pathwalk flags to
+fs_lookup_param().
 
-EXT4-fs (loop0): Total free blocks count 0
-EXT4-fs (loop0): Free/Dirty block details
-EXT4-fs (loop0): free_blocks=0
-EXT4-fs (loop0): dirty_blocks=32
-EXT4-fs (loop0): Block reservation details
-EXT4-fs (loop0): i_reserved_data_blocks=2
-EXT4-fs (loop0): Inode 18 (00000000845cd634):
-	i_reserved_data_blocks (1) not cleared!
-
-Above issue happens as follows:
-Assume:
-sbi->s_cluster_ratio = 16
-Step1:
-Insert delay block [0, 31] -> ei->i_reserved_data_blocks=2
-Step2:
-ext4_writepages
-  mpage_map_and_submit_extent -> return failed
-  mpage_release_unused_pages -> to release [0, 30]
-    ext4_es_remove_extent -> remove lblk=0 end=30
-      __es_remove_extent -> len1=0 len2=31-30=1
- __es_remove_extent:
- ...
- if (len2 > 0) {
-  ...
-	  if (len1 > 0) {
-		  ...
-	  } else {
-		es->es_lblk = end + 1;
-		es->es_len = len2;
-		...
-	  }
-  	if (count_reserved)
-		count_rsvd(inode, lblk, ...);
-	goto out; -> will return but didn't calculate 'reserved'
- ...
-Step3:
-ext4_destroy_inode -> trigger "i_reserved_data_blocks (1) not cleared!"
-
-To solve above issue if 'len2>0' call 'get_rsvd()' before goto out.
-
-Reported-by: syzbot+05a0f0ccab4a25626e38@syzkaller.appspotmail.com
-Fixes: 8fcc3a580651 ("ext4: rework reserved cluster accounting when invalidating pages")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Eric Whitney <enwlinux@gmail.com>
-Link: https://lore.kernel.org/r/20221208033426.1832460-2-yebin@huaweicloud.com
+Fixes: 461c3af045d3 ("ext4: Change handle_mount_opt() to use fs_parameter")
+Signed-off-by: Lukas Czerner <lczerner@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Link: https://lore.kernel.org/r/20221004135803.32283-1-lczerner@redhat.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents_status.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ Documentation/filesystems/mount_api.rst |    1 +
+ fs/ext4/super.c                         |    2 +-
+ fs/fs_parser.c                          |    3 ++-
+ include/linux/fs_parser.h               |    1 +
+ 4 files changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/extents_status.c
-+++ b/fs/ext4/extents_status.c
-@@ -1372,7 +1372,7 @@ retry:
- 		if (count_reserved)
- 			count_rsvd(inode, lblk, orig_es.es_len - len1 - len2,
- 				   &orig_es, &rc);
--		goto out;
-+		goto out_get_reserved;
- 	}
+--- a/Documentation/filesystems/mount_api.rst
++++ b/Documentation/filesystems/mount_api.rst
+@@ -814,6 +814,7 @@ process the parameters it is given.
+        int fs_lookup_param(struct fs_context *fc,
+ 			   struct fs_parameter *value,
+ 			   bool want_bdev,
++			   unsigned int flags,
+ 			   struct path *_path);
  
- 	if (len1 > 0) {
-@@ -1414,6 +1414,7 @@ retry:
+      This takes a parameter that carries a string or filename type and attempts
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -2260,7 +2260,7 @@ static int ext4_parse_param(struct fs_co
+ 			return -EINVAL;
  		}
- 	}
  
-+out_get_reserved:
- 	if (count_reserved)
- 		*reserved = get_rsvd(inode, end, es, &rc);
- out:
+-		error = fs_lookup_param(fc, param, 1, &path);
++		error = fs_lookup_param(fc, param, 1, LOOKUP_FOLLOW, &path);
+ 		if (error) {
+ 			ext4_msg(NULL, KERN_ERR, "error: could not find "
+ 				 "journal device path");
+--- a/fs/fs_parser.c
++++ b/fs/fs_parser.c
+@@ -138,15 +138,16 @@ EXPORT_SYMBOL(__fs_parse);
+  * @fc: The filesystem context to log errors through.
+  * @param: The parameter.
+  * @want_bdev: T if want a blockdev
++ * @flags: Pathwalk flags passed to filename_lookup()
+  * @_path: The result of the lookup
+  */
+ int fs_lookup_param(struct fs_context *fc,
+ 		    struct fs_parameter *param,
+ 		    bool want_bdev,
++		    unsigned int flags,
+ 		    struct path *_path)
+ {
+ 	struct filename *f;
+-	unsigned int flags = 0;
+ 	bool put_f;
+ 	int ret;
+ 
+--- a/include/linux/fs_parser.h
++++ b/include/linux/fs_parser.h
+@@ -76,6 +76,7 @@ static inline int fs_parse(struct fs_con
+ extern int fs_lookup_param(struct fs_context *fc,
+ 			   struct fs_parameter *param,
+ 			   bool want_bdev,
++			   unsigned int flags,
+ 			   struct path *_path);
+ 
+ extern int lookup_constant(const struct constant_table tbl[], const char *name, int not_found);
 
 
