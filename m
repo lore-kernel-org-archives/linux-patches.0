@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E351AD38
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:09:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E56C433F0;
-	Wed,  4 Jan 2023 16:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00C0AD38
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:09:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 050CCC433EF;
+	Wed,  4 Jan 2023 16:09:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848572;
-	bh=ElH7abeN3VMb2QlXL88KTZ/TYWYmzKyL5+4uahvfH+g=;
+	s=korg; t=1672848575;
+	bh=zsf9mfcBW2jDNFm+t6nq9xnuBvqTTIpZH0UOHWWwlkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xMFafO+7HPsCOSi+Pvxee6cRNYiqGB3J1dGXVicOnInbovcWTZzF1r2TIn4J5dhmZ
-	 DCpwpyt8a3v7U8TBQqv9LdXYMBDaZW41dcwhC4Tm3OCizpEU4uvbdYHGfE0gw7Qg1J
-	 T8jDTgMsbXEwQz5YPJzLRMXXs8oK+5Co2yXaYO5E=
+	b=lqovXqN+46buJCbKR9FHhxqBTliOYtGA702N9T7skXl8MA/zmlpkNsAJ1q8MPIkN0
+	 HfUn64XThWD/2TNlKbXybgN2RPqJng6WexYY+kQ2y74InytxAlpC12J1HDCQAmNuLu
+	 RIc3HXvXGk3tET84eI97+mEdJKyLfq5/udsP2v9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bixuan Cui <cuibixuan@linux.alibaba.com>,
-	Jason Yan <yanaijie@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.1 011/207] jbd2: use the correct print format
-Date: Wed,  4 Jan 2023 17:04:29 +0100
-Message-Id: <20230104160512.268549334@linuxfoundation.org>
+	Tim Huang <tim.huang@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 002/207] drm/amdgpu: skip mes self test after s0i3 resume for MES IP v11.0
+Date: Wed,  4 Jan 2023 17:04:20 +0100
+Message-Id: <20230104160511.988152631@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
 References: <20230104160511.905925875@linuxfoundation.org>
@@ -36,213 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bixuan Cui <cuibixuan@linux.alibaba.com>
+From: Tim Huang <tim.huang@amd.com>
 
-commit d87a7b4c77a997d5388566dd511ca8e6b8e8a0a8 upstream.
+commit 8660495a9c5b9afeec4cc006b3b75178f0fb2f10 upstream.
 
-The print format error was found when using ftrace event:
-    <...>-1406 [000] .... 23599442.895823: jbd2_end_commit: dev 252,8 transaction -1866216965 sync 0 head -1866217368
-    <...>-1406 [000] .... 23599442.896299: jbd2_start_commit: dev 252,8 transaction -1866216964 sync 0
+MES is part of gfxoff and MES suspend and resume are skipped for S0i3.
+But the mes_self_test call path is still in the amdgpu_device_ip_late_init.
+it's should also be skipped for s0ix as no hardware re-initialization
+happened.
 
-Use the correct print format for transaction, head and tid.
+Besides, mes_self_test will free the BO that triggers a lot of warning
+messages while in the suspend state.
 
-Fixes: 879c5e6b7cb4 ('jbd2: convert instrumentation from markers to tracepoints')
-Signed-off-by: Bixuan Cui <cuibixuan@linux.alibaba.com>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Link: https://lore.kernel.org/r/1665488024-95172-1-git-send-email-cuibixuan@linux.alibaba.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+[   81.656085] WARNING: CPU: 2 PID: 1550 at drivers/gpu/drm/amd/amdgpu/amdgpu_object.c:425 amdgpu_bo_free_kernel+0xfc/0x110 [amdgpu]
+[   81.679435] Call Trace:
+[   81.679726]  <TASK>
+[   81.679981]  amdgpu_mes_remove_hw_queue+0x17a/0x230 [amdgpu]
+[   81.680857]  amdgpu_mes_self_test+0x390/0x430 [amdgpu]
+[   81.681665]  mes_v11_0_late_init+0x37/0x50 [amdgpu]
+[   81.682423]  amdgpu_device_ip_late_init+0x53/0x280 [amdgpu]
+[   81.683257]  amdgpu_device_resume+0xae/0x2a0 [amdgpu]
+[   81.684043]  amdgpu_pmops_resume+0x37/0x70 [amdgpu]
+[   81.684818]  pci_pm_resume+0x5c/0xa0
+[   81.685247]  ? pci_pm_thaw+0x90/0x90
+[   81.685658]  dpm_run_callback+0x4e/0x160
+[   81.686110]  device_resume+0xad/0x210
+[   81.686529]  async_resume+0x1e/0x40
+[   81.686931]  async_run_entry_fn+0x33/0x120
+[   81.687405]  process_one_work+0x21d/0x3f0
+[   81.687869]  worker_thread+0x4a/0x3c0
+[   81.688293]  ? process_one_work+0x3f0/0x3f0
+[   81.688777]  kthread+0xff/0x130
+[   81.689157]  ? kthread_complete_and_exit+0x20/0x20
+[   81.689707]  ret_from_fork+0x22/0x30
+[   81.690118]  </TASK>
+[   81.690380] ---[ end trace 0000000000000000 ]---
+
+v2: make the comment clean and use adev->in_s0ix instead of
+adev->suspend
+
+Signed-off-by: Tim Huang <tim.huang@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.0, 6.1
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/jbd2.h |   44 ++++++++++++++++++++++----------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/mes_v11_0.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/include/trace/events/jbd2.h
-+++ b/include/trace/events/jbd2.h
-@@ -40,7 +40,7 @@ DECLARE_EVENT_CLASS(jbd2_commit,
- 	TP_STRUCT__entry(
- 		__field(	dev_t,	dev			)
- 		__field(	char,	sync_commit		  )
--		__field(	int,	transaction		  )
-+		__field(	tid_t,	transaction		  )
- 	),
+--- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
+@@ -1339,7 +1339,8 @@ static int mes_v11_0_late_init(void *han
+ {
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
  
- 	TP_fast_assign(
-@@ -49,7 +49,7 @@ DECLARE_EVENT_CLASS(jbd2_commit,
- 		__entry->transaction	= commit_transaction->t_tid;
- 	),
+-	if (!amdgpu_in_reset(adev) &&
++	/* it's only intended for use in mes_self_test case, not for s0ix and reset */
++	if (!amdgpu_in_reset(adev) && !adev->in_s0ix &&
+ 	    (adev->ip_versions[GC_HWIP][0] != IP_VERSION(11, 0, 3)))
+ 		amdgpu_mes_self_test(adev);
  
--	TP_printk("dev %d,%d transaction %d sync %d",
-+	TP_printk("dev %d,%d transaction %u sync %d",
- 		  MAJOR(__entry->dev), MINOR(__entry->dev),
- 		  __entry->transaction, __entry->sync_commit)
- );
-@@ -97,8 +97,8 @@ TRACE_EVENT(jbd2_end_commit,
- 	TP_STRUCT__entry(
- 		__field(	dev_t,	dev			)
- 		__field(	char,	sync_commit		  )
--		__field(	int,	transaction		  )
--		__field(	int,	head		  	  )
-+		__field(	tid_t,	transaction		  )
-+		__field(	tid_t,	head		  	  )
- 	),
- 
- 	TP_fast_assign(
-@@ -108,7 +108,7 @@ TRACE_EVENT(jbd2_end_commit,
- 		__entry->head		= journal->j_tail_sequence;
- 	),
- 
--	TP_printk("dev %d,%d transaction %d sync %d head %d",
-+	TP_printk("dev %d,%d transaction %u sync %d head %u",
- 		  MAJOR(__entry->dev), MINOR(__entry->dev),
- 		  __entry->transaction, __entry->sync_commit, __entry->head)
- );
-@@ -134,14 +134,14 @@ TRACE_EVENT(jbd2_submit_inode_data,
- );
- 
- DECLARE_EVENT_CLASS(jbd2_handle_start_class,
--	TP_PROTO(dev_t dev, unsigned long tid, unsigned int type,
-+	TP_PROTO(dev_t dev, tid_t tid, unsigned int type,
- 		 unsigned int line_no, int requested_blocks),
- 
- 	TP_ARGS(dev, tid, type, line_no, requested_blocks),
- 
- 	TP_STRUCT__entry(
- 		__field(		dev_t,	dev		)
--		__field(	unsigned long,	tid		)
-+		__field(		tid_t,	tid		)
- 		__field(	 unsigned int,	type		)
- 		__field(	 unsigned int,	line_no		)
- 		__field(		  int,	requested_blocks)
-@@ -155,28 +155,28 @@ DECLARE_EVENT_CLASS(jbd2_handle_start_cl
- 		__entry->requested_blocks = requested_blocks;
- 	),
- 
--	TP_printk("dev %d,%d tid %lu type %u line_no %u "
-+	TP_printk("dev %d,%d tid %u type %u line_no %u "
- 		  "requested_blocks %d",
- 		  MAJOR(__entry->dev), MINOR(__entry->dev), __entry->tid,
- 		  __entry->type, __entry->line_no, __entry->requested_blocks)
- );
- 
- DEFINE_EVENT(jbd2_handle_start_class, jbd2_handle_start,
--	TP_PROTO(dev_t dev, unsigned long tid, unsigned int type,
-+	TP_PROTO(dev_t dev, tid_t tid, unsigned int type,
- 		 unsigned int line_no, int requested_blocks),
- 
- 	TP_ARGS(dev, tid, type, line_no, requested_blocks)
- );
- 
- DEFINE_EVENT(jbd2_handle_start_class, jbd2_handle_restart,
--	TP_PROTO(dev_t dev, unsigned long tid, unsigned int type,
-+	TP_PROTO(dev_t dev, tid_t tid, unsigned int type,
- 		 unsigned int line_no, int requested_blocks),
- 
- 	TP_ARGS(dev, tid, type, line_no, requested_blocks)
- );
- 
- TRACE_EVENT(jbd2_handle_extend,
--	TP_PROTO(dev_t dev, unsigned long tid, unsigned int type,
-+	TP_PROTO(dev_t dev, tid_t tid, unsigned int type,
- 		 unsigned int line_no, int buffer_credits,
- 		 int requested_blocks),
- 
-@@ -184,7 +184,7 @@ TRACE_EVENT(jbd2_handle_extend,
- 
- 	TP_STRUCT__entry(
- 		__field(		dev_t,	dev		)
--		__field(	unsigned long,	tid		)
-+		__field(		tid_t,	tid		)
- 		__field(	 unsigned int,	type		)
- 		__field(	 unsigned int,	line_no		)
- 		__field(		  int,	buffer_credits  )
-@@ -200,7 +200,7 @@ TRACE_EVENT(jbd2_handle_extend,
- 		__entry->requested_blocks = requested_blocks;
- 	),
- 
--	TP_printk("dev %d,%d tid %lu type %u line_no %u "
-+	TP_printk("dev %d,%d tid %u type %u line_no %u "
- 		  "buffer_credits %d requested_blocks %d",
- 		  MAJOR(__entry->dev), MINOR(__entry->dev), __entry->tid,
- 		  __entry->type, __entry->line_no, __entry->buffer_credits,
-@@ -208,7 +208,7 @@ TRACE_EVENT(jbd2_handle_extend,
- );
- 
- TRACE_EVENT(jbd2_handle_stats,
--	TP_PROTO(dev_t dev, unsigned long tid, unsigned int type,
-+	TP_PROTO(dev_t dev, tid_t tid, unsigned int type,
- 		 unsigned int line_no, int interval, int sync,
- 		 int requested_blocks, int dirtied_blocks),
- 
-@@ -217,7 +217,7 @@ TRACE_EVENT(jbd2_handle_stats,
- 
- 	TP_STRUCT__entry(
- 		__field(		dev_t,	dev		)
--		__field(	unsigned long,	tid		)
-+		__field(		tid_t,	tid		)
- 		__field(	 unsigned int,	type		)
- 		__field(	 unsigned int,	line_no		)
- 		__field(		  int,	interval	)
-@@ -237,7 +237,7 @@ TRACE_EVENT(jbd2_handle_stats,
- 		__entry->dirtied_blocks	  = dirtied_blocks;
- 	),
- 
--	TP_printk("dev %d,%d tid %lu type %u line_no %u interval %d "
-+	TP_printk("dev %d,%d tid %u type %u line_no %u interval %d "
- 		  "sync %d requested_blocks %d dirtied_blocks %d",
- 		  MAJOR(__entry->dev), MINOR(__entry->dev), __entry->tid,
- 		  __entry->type, __entry->line_no, __entry->interval,
-@@ -246,14 +246,14 @@ TRACE_EVENT(jbd2_handle_stats,
- );
- 
- TRACE_EVENT(jbd2_run_stats,
--	TP_PROTO(dev_t dev, unsigned long tid,
-+	TP_PROTO(dev_t dev, tid_t tid,
- 		 struct transaction_run_stats_s *stats),
- 
- 	TP_ARGS(dev, tid, stats),
- 
- 	TP_STRUCT__entry(
- 		__field(		dev_t,	dev		)
--		__field(	unsigned long,	tid		)
-+		__field(		tid_t,	tid		)
- 		__field(	unsigned long,	wait		)
- 		__field(	unsigned long,	request_delay	)
- 		__field(	unsigned long,	running		)
-@@ -279,7 +279,7 @@ TRACE_EVENT(jbd2_run_stats,
- 		__entry->blocks_logged	= stats->rs_blocks_logged;
- 	),
- 
--	TP_printk("dev %d,%d tid %lu wait %u request_delay %u running %u "
-+	TP_printk("dev %d,%d tid %u wait %u request_delay %u running %u "
- 		  "locked %u flushing %u logging %u handle_count %u "
- 		  "blocks %u blocks_logged %u",
- 		  MAJOR(__entry->dev), MINOR(__entry->dev), __entry->tid,
-@@ -294,14 +294,14 @@ TRACE_EVENT(jbd2_run_stats,
- );
- 
- TRACE_EVENT(jbd2_checkpoint_stats,
--	TP_PROTO(dev_t dev, unsigned long tid,
-+	TP_PROTO(dev_t dev, tid_t tid,
- 		 struct transaction_chp_stats_s *stats),
- 
- 	TP_ARGS(dev, tid, stats),
- 
- 	TP_STRUCT__entry(
- 		__field(		dev_t,	dev		)
--		__field(	unsigned long,	tid		)
-+		__field(		tid_t,	tid		)
- 		__field(	unsigned long,	chp_time	)
- 		__field(		__u32,	forced_to_close	)
- 		__field(		__u32,	written		)
-@@ -317,7 +317,7 @@ TRACE_EVENT(jbd2_checkpoint_stats,
- 		__entry->dropped	= stats->cs_dropped;
- 	),
- 
--	TP_printk("dev %d,%d tid %lu chp_time %u forced_to_close %u "
-+	TP_printk("dev %d,%d tid %u chp_time %u forced_to_close %u "
- 		  "written %u dropped %u",
- 		  MAJOR(__entry->dev), MINOR(__entry->dev), __entry->tid,
- 		  jiffies_to_msecs(__entry->chp_time),
 
 
