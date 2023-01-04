@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F80DAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:11:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887F1C433F0;
-	Wed,  4 Jan 2023 16:11:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B91BAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:11:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC3F6C433F0;
+	Wed,  4 Jan 2023 16:11:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848705;
-	bh=e7oN45J6Bdw4SwilEHA4osAZtrTVi4GDuRXrTySbeAs=;
+	s=korg; t=1672848708;
+	bh=5vqMnOjPB/EzvYDjxxL+uagrVqeIhA4cDaoRhifpY2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=agM4sVNoR60JLUJvjyAaDY95Etsx897m7nDXqZQJsDxiJb1kB3fjkVoGbjXhV3HHT
-	 3T9Y5ZGNFS2dPTNKH+jqxGKtPBJNvJQV5S09V0irOzPeFc7sBgilDM72PacjZzpH44
-	 iQY3R7fDYto0IGjuf6hBji+2Jp0sfEde08TjdZMU=
+	b=tkIOltjj6KNOeDwL83sd3YRfSB3OnocTVA2X9i2iVhewgmqQYsoOTLQHb0sAmNw62
+	 gL4ym6jyORObVrlL5H9j3AWqhO61KGKuxNHrQ7/LGW0maVMxCu1dPRhmc/t2HMEGg1
+	 6RQhGdJBeTrEt7wwD2RRWFFZYuGmRPwetctN/cxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Meng <luomeng12@huawei.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.1 070/207] dm thin: Fix UAF in run_timer_softirq()
-Date: Wed,  4 Jan 2023 17:05:28 +0100
-Message-Id: <20230104160514.149613648@linuxfoundation.org>
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	linux-media@vger.kernel.org,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [PATCH 6.0 002/177] media: stv0288: use explicitly signed char
+Date: Wed,  4 Jan 2023 17:04:53 +0100
+Message-Id: <20230104160507.718681077@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,100 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luo Meng <luomeng12@huawei.com>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit 88430ebcbc0ec637b710b947738839848c20feff upstream.
+commit 7392134428c92a4cb541bd5c8f4f5c8d2e88364d upstream.
 
-When dm_resume() and dm_destroy() are concurrent, it will
-lead to UAF, as follows:
+With char becoming unsigned by default, and with `char` alone being
+ambiguous and based on architecture, signed chars need to be marked
+explicitly as such. Use `s8` and `u8` types here, since that's what
+surrounding code does. This fixes:
 
- BUG: KASAN: use-after-free in __run_timers+0x173/0x710
- Write of size 8 at addr ffff88816d9490f0 by task swapper/0/0
-<snip>
- Call Trace:
-  <IRQ>
-  dump_stack_lvl+0x73/0x9f
-  print_report.cold+0x132/0xaa2
-  _raw_spin_lock_irqsave+0xcd/0x160
-  __run_timers+0x173/0x710
-  kasan_report+0xad/0x110
-  __run_timers+0x173/0x710
-  __asan_store8+0x9c/0x140
-  __run_timers+0x173/0x710
-  call_timer_fn+0x310/0x310
-  pvclock_clocksource_read+0xfa/0x250
-  kvm_clock_read+0x2c/0x70
-  kvm_clock_get_cycles+0xd/0x20
-  ktime_get+0x5c/0x110
-  lapic_next_event+0x38/0x50
-  clockevents_program_event+0xf1/0x1e0
-  run_timer_softirq+0x49/0x90
-  __do_softirq+0x16e/0x62c
-  __irq_exit_rcu+0x1fa/0x270
-  irq_exit_rcu+0x12/0x20
-  sysvec_apic_timer_interrupt+0x8e/0xc0
+drivers/media/dvb-frontends/stv0288.c:471 stv0288_set_frontend() warn: assigning (-9) to unsigned variable 'tm'
+drivers/media/dvb-frontends/stv0288.c:471 stv0288_set_frontend() warn: we never enter this loop
 
-One of the concurrency UAF can be shown as below:
-
-        use                                  free
-do_resume                           |
-  __find_device_hash_cell           |
-    dm_get                          |
-      atomic_inc(&md->holders)      |
-                                    | dm_destroy
-                                    |   __dm_destroy
-                                    |     if (!dm_suspended_md(md))
-                                    |     atomic_read(&md->holders)
-                                    |     msleep(1)
-  dm_resume                         |
-    __dm_resume                     |
-      dm_table_resume_targets       |
-        pool_resume                 |
-          do_waker  #add delay work |
-  dm_put                            |
-    atomic_dec(&md->holders)        |
-                                    |     dm_table_destroy
-                                    |       pool_dtr
-                                    |         __pool_dec
-                                    |           __pool_destroy
-                                    |             destroy_workqueue
-                                    |             kfree(pool) # free pool
-        time out
-__do_softirq
-  run_timer_softirq # pool has already been freed
-
-This can be easily reproduced using:
-  1. create thin-pool
-  2. dmsetup suspend pool
-  3. dmsetup resume pool
-  4. dmsetup remove_all # Concurrent with 3
-
-The root cause of this UAF bug is that dm_resume() adds timer after
-dm_destroy() skips cancelling the timer because of suspend status.
-After timeout, it will call run_timer_softirq(), however pool has
-already been freed. The concurrency UAF bug will happen.
-
-Therefore, cancelling timer again in __pool_destroy().
-
+Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
+Cc: linux-media@vger.kernel.org
 Cc: stable@vger.kernel.org
-Fixes: 991d9fa02da0d ("dm: add thin provisioning target")
-Signed-off-by: Luo Meng <luomeng12@huawei.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-thin.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/dvb-frontends/stv0288.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/drivers/md/dm-thin.c
-+++ b/drivers/md/dm-thin.c
-@@ -2889,6 +2889,8 @@ static void __pool_destroy(struct pool *
- 	dm_bio_prison_destroy(pool->prison);
- 	dm_kcopyd_client_destroy(pool->copier);
+--- a/drivers/media/dvb-frontends/stv0288.c
++++ b/drivers/media/dvb-frontends/stv0288.c
+@@ -440,9 +440,8 @@ static int stv0288_set_frontend(struct d
+ 	struct stv0288_state *state = fe->demodulator_priv;
+ 	struct dtv_frontend_properties *c = &fe->dtv_property_cache;
  
-+	cancel_delayed_work_sync(&pool->waker);
-+	cancel_delayed_work_sync(&pool->no_space_timeout);
- 	if (pool->wq)
- 		destroy_workqueue(pool->wq);
+-	char tm;
+-	unsigned char tda[3];
+-	u8 reg, time_out = 0;
++	u8 tda[3], reg, time_out = 0;
++	s8 tm;
+ 
+ 	dprintk("%s : FE_SET_FRONTEND\n", __func__);
  
 
 
