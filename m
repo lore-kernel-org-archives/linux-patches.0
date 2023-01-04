@@ -1,35 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F372FAD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50DF7C433EF;
-	Wed,  4 Jan 2023 16:18:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5EFAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E1CCC433EF;
+	Wed,  4 Jan 2023 16:18:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849104;
-	bh=crwRSUmU+3Quc+5mw88khZvxEgG14IXUugIzMdhQ0+g=;
+	s=korg; t=1672849107;
+	bh=97HiME8cGgVtB8O4l7xmcpEse3tiNYZQ8uavi8nhiko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=REswBh9YB0H3vIO6M1pGbPUoqXkpANEs/SqoA01B06K2oBWj53z+gdrbV85xV+2et
-	 nGEvYO3FVBIm1R8SRfgmoDH3e4ospS+VmC1ghjpyhaNucG8/a2LgWYCP5BjP/NwRZe
-	 0dwvaChqH2bGbnOnw5fpA3UaKzcDG+IWnrTDtrEU=
+	b=g/091ecc0FSGIPWd4WIBMOzPBp2+PWrdzOWRSNTDUktloma0UYjJdhXRD1L+RFAE/
+	 Ejv7A/DefLR+mAJ6plC++24E2e2wVSGZdu1UfRf1gWYMW/AUg7DXDwSrp2wjzjAGeC
+	 pikWcEIRnA61UXrxUQ/ORglu0XufTZZN/Y/1Ip9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"x86@kernel.org" <x86@kernel.org>,
-	Borislav Petkov <bp@alien8.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.0 064/177] ftrace/x86: Add back ftrace_expected for ftrace bug reports
-Date: Wed,  4 Jan 2023 17:05:55 +0100
-Message-Id: <20230104160509.595695854@linuxfoundation.org>
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 112/207] block: mq-deadline: Do not break sequential write streams to zoned HDDs
+Date: Wed,  4 Jan 2023 17:06:10 +0100
+Message-Id: <20230104160515.446704757@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -40,47 +35,162 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-commit fd3dc56253acbe9c641a66d312d8393cd55eb04c upstream.
+commit 015d02f48537cf2d1a65eeac50717566f9db6eec upstream.
 
-After someone reported a bug report with a failed modification due to the
-expected value not matching what was found, it came to my attention that
-the ftrace_expected is no longer set when that happens. This makes for
-debugging the issue a bit more difficult.
+mq-deadline ensures an in order dispatching of write requests to zoned
+block devices using a per zone lock (a bit). This implies that for any
+purely sequential write workload, the drive is exercised most of the
+time at a maximum queue depth of one.
 
-Set ftrace_expected to the expected code before calling ftrace_bug, so
-that it shows what was expected and why it failed.
+However, when such sequential write workload crosses a zone boundary
+(when sequentially writing multiple contiguous zones), zone write
+locking may prevent the last write to one zone to be issued (as the
+previous write is still being executed) but allow the first write to the
+following zone to be issued (as that zone is not yet being writen and
+not locked). This result in an out of order delivery of the sequential
+write commands to the device every time a zone boundary is crossed.
 
-Link: https://lore.kernel.org/all/CA+wXwBQ-VhK+hpBtYtyZP-NiX4g8fqRRWithFOHQW-0coQ3vLg@mail.gmail.com/
-Link: https://lore.kernel.org/linux-trace-kernel/20221209105247.01d4e51d@gandalf.local.home
+While such behavior does not break the sequential write constraint of
+zoned block devices (and does not generate any write error), some zoned
+hard-disks react badly to seeing these out of order writes, resulting in
+lower write throughput.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: "x86@kernel.org" <x86@kernel.org>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: stable@vger.kernel.org
-Fixes: 768ae4406a5c ("x86/ftrace: Use text_poke()")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+This problem can be addressed by always dispatching the first request
+of a stream of sequential write requests, regardless of the zones
+targeted by these sequential writes. To do so, the function
+deadline_skip_seq_writes() is introduced and used in
+deadline_next_request() to select the next write command to issue if the
+target device is an HDD (blk_queue_nonrot() being false).
+deadline_fifo_request() is modified using the new
+deadline_earlier_request() and deadline_is_seq_write() helpers to ignore
+requests in the fifo list that have a preceding request in lba order
+that is sequential.
+
+With this fix, a sequential write workload executed with the following
+fio command:
+
+fio  --name=seq-write --filename=/dev/sda --zonemode=zbd --direct=1 \
+     --size=68719476736  --ioengine=libaio --iodepth=32 --rw=write \
+     --bs=65536
+
+results in an increase from 225 MB/s to 250 MB/s of the write throughput
+of an SMR HDD (11% increase).
+
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Link: https://lore.kernel.org/r/20221124021208.242541-3-damien.lemoal@opensource.wdc.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/ftrace.c |    2 ++
- 1 file changed, 2 insertions(+)
+ block/mq-deadline.c |   66 ++++++++++++++++++++++++++++++++++++++++++++++++----
+ 1 file changed, 62 insertions(+), 4 deletions(-)
 
---- a/arch/x86/kernel/ftrace.c
-+++ b/arch/x86/kernel/ftrace.c
-@@ -217,7 +217,9 @@ void ftrace_replace_code(int enable)
+--- a/block/mq-deadline.c
++++ b/block/mq-deadline.c
+@@ -131,6 +131,20 @@ static u8 dd_rq_ioclass(struct request *
+ }
  
- 		ret = ftrace_verify_code(rec->ip, old);
- 		if (ret) {
-+			ftrace_expected = old;
- 			ftrace_bug(ret, rec);
-+			ftrace_expected = NULL;
- 			return;
- 		}
+ /*
++ * get the request before `rq' in sector-sorted order
++ */
++static inline struct request *
++deadline_earlier_request(struct request *rq)
++{
++	struct rb_node *node = rb_prev(&rq->rb_node);
++
++	if (node)
++		return rb_entry_rq(node);
++
++	return NULL;
++}
++
++/*
+  * get the request after `rq' in sector-sorted order
+  */
+ static inline struct request *
+@@ -278,6 +292,39 @@ static inline int deadline_check_fifo(st
+ }
+ 
+ /*
++ * Check if rq has a sequential request preceding it.
++ */
++static bool deadline_is_seq_writes(struct deadline_data *dd, struct request *rq)
++{
++	struct request *prev = deadline_earlier_request(rq);
++
++	if (!prev)
++		return false;
++
++	return blk_rq_pos(prev) + blk_rq_sectors(prev) == blk_rq_pos(rq);
++}
++
++/*
++ * Skip all write requests that are sequential from @rq, even if we cross
++ * a zone boundary.
++ */
++static struct request *deadline_skip_seq_writes(struct deadline_data *dd,
++						struct request *rq)
++{
++	sector_t pos = blk_rq_pos(rq);
++	sector_t skipped_sectors = 0;
++
++	while (rq) {
++		if (blk_rq_pos(rq) != pos + skipped_sectors)
++			break;
++		skipped_sectors += blk_rq_sectors(rq);
++		rq = deadline_latter_request(rq);
++	}
++
++	return rq;
++}
++
++/*
+  * For the specified data direction, return the next request to
+  * dispatch using arrival ordered lists.
+  */
+@@ -297,11 +344,16 @@ deadline_fifo_request(struct deadline_da
+ 
+ 	/*
+ 	 * Look for a write request that can be dispatched, that is one with
+-	 * an unlocked target zone.
++	 * an unlocked target zone. For some HDDs, breaking a sequential
++	 * write stream can lead to lower throughput, so make sure to preserve
++	 * sequential write streams, even if that stream crosses into the next
++	 * zones and these zones are unlocked.
+ 	 */
+ 	spin_lock_irqsave(&dd->zone_lock, flags);
+ 	list_for_each_entry(rq, &per_prio->fifo_list[DD_WRITE], queuelist) {
+-		if (blk_req_can_dispatch_to_zone(rq))
++		if (blk_req_can_dispatch_to_zone(rq) &&
++		    (blk_queue_nonrot(rq->q) ||
++		     !deadline_is_seq_writes(dd, rq)))
+ 			goto out;
  	}
+ 	rq = NULL;
+@@ -331,13 +383,19 @@ deadline_next_request(struct deadline_da
+ 
+ 	/*
+ 	 * Look for a write request that can be dispatched, that is one with
+-	 * an unlocked target zone.
++	 * an unlocked target zone. For some HDDs, breaking a sequential
++	 * write stream can lead to lower throughput, so make sure to preserve
++	 * sequential write streams, even if that stream crosses into the next
++	 * zones and these zones are unlocked.
+ 	 */
+ 	spin_lock_irqsave(&dd->zone_lock, flags);
+ 	while (rq) {
+ 		if (blk_req_can_dispatch_to_zone(rq))
+ 			break;
+-		rq = deadline_latter_request(rq);
++		if (blk_queue_nonrot(rq->q))
++			rq = deadline_latter_request(rq);
++		else
++			rq = deadline_skip_seq_writes(dd, rq);
+ 	}
+ 	spin_unlock_irqrestore(&dd->zone_lock, flags);
+ 
 
 
