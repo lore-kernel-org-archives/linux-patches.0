@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01D1AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 060BBC433EF;
-	Wed,  4 Jan 2023 16:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DAEAD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179DFC433EF;
+	Wed,  4 Jan 2023 16:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849053;
-	bh=6p1VPtKVkQHAdB2RbZfsUJa9LvrjnczX+ak7D6mhguA=;
+	s=korg; t=1672849056;
+	bh=rEQwKburwAjhvZf1nVvtLJP3EGo5KVNAlqkQxr7jGHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MCInbZ+bA/vmXbZPmPksG8x2t7yIBXdz9cmzClUekMQ8Z+rWil1wZQigNl/g8a+sy
-	 DZj8mpJyWvDSxH/+24giCx/YX5ZIPJarleiA9WjS+lBSbDm0uFhF13H2MGAYVn9pEB
-	 DGaBOgEpol/mv1kuTyOsPhFUFQRUxDWrQRjeBb6s=
+	b=1EjlCC6hrvdrkMfVWGMLCOysqSkXKC91drTJc755Hpjf3liEdQz2u8X+y7oJ+dVXc
+	 kqro+fM1iuMUxd6mEWO5L+AAQ19cTsqXSdVukMxNg6YQeCfhL8Gd3N1gCcKz/66txZ
+	 Ezm6VvSNwEOu89VEPdSgb+/WPtlCh8qh49tl40KI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Filippov <jcmvbkbc@gmail.com>
-Subject: [PATCH 6.0 056/177] xtensa: add __umulsidi3 helper
-Date: Wed,  4 Jan 2023 17:05:47 +0100
-Message-Id: <20230104160509.342441728@linuxfoundation.org>
+	Wei Gong <gongwei833x@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 6.1 126/207] PCI: Fix pci_device_is_present() for VFs by checking PF
+Date: Wed,  4 Jan 2023 17:06:24 +0100
+Message-Id: <20230104160515.913306798@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -33,299 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-commit 8939c58d68f97ce530f02d46c9f2b56c3ec88399 upstream.
+commit 98b04dd0b4577894520493d96bc4623387767445 upstream.
 
-xtensa gcc-13 has changed multiplication handling and may now use
-__umulsidi3 helper where it used to use __muldi3. As a result building
-the kernel with the new gcc may fail with the following error:
+pci_device_is_present() previously didn't work for VFs because it reads the
+Vendor and Device ID, which are 0xffff for VFs, which looks like they
+aren't present.  Check the PF instead.
 
-    linux/init/main.c:1287: undefined reference to `__umulsidi3'
+Wei Gong reported that if virtio I/O is in progress when the driver is
+unbound or "0" is written to /sys/.../sriov_numvfs, the virtio I/O
+operation hangs, which may result in output like this:
 
-Fix the build by providing __umulsidi3 implementation for xtensa.
+  task:bash state:D stack:    0 pid: 1773 ppid:  1241 flags:0x00004002
+  Call Trace:
+   schedule+0x4f/0xc0
+   blk_mq_freeze_queue_wait+0x69/0xa0
+   blk_mq_freeze_queue+0x1b/0x20
+   blk_cleanup_queue+0x3d/0xd0
+   virtblk_remove+0x3c/0xb0 [virtio_blk]
+   virtio_dev_remove+0x4b/0x80
+   ...
+   device_unregister+0x1b/0x60
+   unregister_virtio_device+0x18/0x30
+   virtio_pci_remove+0x41/0x80
+   pci_device_remove+0x3e/0xb0
 
-Cc: stable@vger.kernel.org # 5.18+
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
+This happened because pci_device_is_present(VF) returned "false" in
+virtio_pci_remove(), so it called virtio_break_device().  The broken vq
+meant that vring_interrupt() skipped the vq.callback() that would have
+completed the virtio I/O operation via virtblk_done().
+
+[bhelgaas: commit log, simplify to always use pci_physfn(), add stable tag]
+Link: https://lore.kernel.org/r/20221026060912.173250-1-mst@redhat.com
+Reported-by: Wei Gong <gongwei833x@gmail.com>
+Tested-by: Wei Gong <gongwei833x@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/xtensa/kernel/xtensa_ksyms.c |   2 +
- arch/xtensa/lib/Makefile          |   2 +-
- arch/xtensa/lib/umulsidi3.S       | 230 ++++++++++++++++++++++++++++++
- 3 files changed, 233 insertions(+), 1 deletion(-)
- create mode 100644 arch/xtensa/lib/umulsidi3.S
+ drivers/pci/pci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/xtensa/kernel/xtensa_ksyms.c b/arch/xtensa/kernel/xtensa_ksyms.c
-index b0bc8897c924..2a31b1ab0c9f 100644
---- a/arch/xtensa/kernel/xtensa_ksyms.c
-+++ b/arch/xtensa/kernel/xtensa_ksyms.c
-@@ -62,6 +62,7 @@ extern int __modsi3(int, int);
- extern int __mulsi3(int, int);
- extern unsigned int __udivsi3(unsigned int, unsigned int);
- extern unsigned int __umodsi3(unsigned int, unsigned int);
-+extern unsigned long long __umulsidi3(unsigned int, unsigned int);
- 
- EXPORT_SYMBOL(__ashldi3);
- EXPORT_SYMBOL(__ashrdi3);
-@@ -71,6 +72,7 @@ EXPORT_SYMBOL(__modsi3);
- EXPORT_SYMBOL(__mulsi3);
- EXPORT_SYMBOL(__udivsi3);
- EXPORT_SYMBOL(__umodsi3);
-+EXPORT_SYMBOL(__umulsidi3);
- 
- unsigned int __sync_fetch_and_and_4(volatile void *p, unsigned int v)
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -6447,6 +6447,8 @@ bool pci_device_is_present(struct pci_de
  {
-diff --git a/arch/xtensa/lib/Makefile b/arch/xtensa/lib/Makefile
-index d4e9c397e3fd..7ecef0519a27 100644
---- a/arch/xtensa/lib/Makefile
-+++ b/arch/xtensa/lib/Makefile
-@@ -5,7 +5,7 @@
+ 	u32 v;
  
- lib-y	+= memcopy.o memset.o checksum.o \
- 	   ashldi3.o ashrdi3.o lshrdi3.o \
--	   divsi3.o udivsi3.o modsi3.o umodsi3.o mulsi3.o \
-+	   divsi3.o udivsi3.o modsi3.o umodsi3.o mulsi3.o umulsidi3.o \
- 	   usercopy.o strncpy_user.o strnlen_user.o
- lib-$(CONFIG_PCI) += pci-auto.o
- lib-$(CONFIG_KCSAN) += kcsan-stubs.o
-diff --git a/arch/xtensa/lib/umulsidi3.S b/arch/xtensa/lib/umulsidi3.S
-new file mode 100644
-index 000000000000..136081647942
---- /dev/null
-+++ b/arch/xtensa/lib/umulsidi3.S
-@@ -0,0 +1,230 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later WITH GCC-exception-2.0 */
-+#include <linux/linkage.h>
-+#include <asm/asmmacro.h>
-+#include <asm/core.h>
-+
-+#if !XCHAL_HAVE_MUL16 && !XCHAL_HAVE_MUL32 && !XCHAL_HAVE_MAC16
-+#define XCHAL_NO_MUL 1
-+#endif
-+
-+ENTRY(__umulsidi3)
-+
-+#ifdef __XTENSA_CALL0_ABI__
-+	abi_entry(32)
-+	s32i	a12, sp, 16
-+	s32i	a13, sp, 20
-+	s32i	a14, sp, 24
-+	s32i	a15, sp, 28
-+#elif XCHAL_NO_MUL
-+	/* This is not really a leaf function; allocate enough stack space
-+	   to allow CALL12s to a helper function.  */
-+	abi_entry(32)
-+#else
-+	abi_entry_default
-+#endif
-+
-+#ifdef __XTENSA_EB__
-+#define wh a2
-+#define wl a3
-+#else
-+#define wh a3
-+#define wl a2
-+#endif /* __XTENSA_EB__ */
-+
-+	/* This code is taken from the mulsf3 routine in ieee754-sf.S.
-+	   See more comments there.  */
-+
-+#if XCHAL_HAVE_MUL32_HIGH
-+	mull	a6, a2, a3
-+	muluh	wh, a2, a3
-+	mov	wl, a6
-+
-+#else /* ! MUL32_HIGH */
-+
-+#if defined(__XTENSA_CALL0_ABI__) && XCHAL_NO_MUL
-+	/* a0 and a8 will be clobbered by calling the multiply function
-+	   but a8 is not used here and need not be saved.  */
-+	s32i	a0, sp, 0
-+#endif
-+
-+#if XCHAL_HAVE_MUL16 || XCHAL_HAVE_MUL32
-+
-+#define a2h a4
-+#define a3h a5
-+
-+	/* Get the high halves of the inputs into registers.  */
-+	srli	a2h, a2, 16
-+	srli	a3h, a3, 16
-+
-+#define a2l a2
-+#define a3l a3
-+
-+#if XCHAL_HAVE_MUL32 && !XCHAL_HAVE_MUL16
-+	/* Clear the high halves of the inputs.  This does not matter
-+	   for MUL16 because the high bits are ignored.  */
-+	extui	a2, a2, 0, 16
-+	extui	a3, a3, 0, 16
-+#endif
-+#endif /* MUL16 || MUL32 */
-+
-+
-+#if XCHAL_HAVE_MUL16
-+
-+#define do_mul(dst, xreg, xhalf, yreg, yhalf) \
-+	mul16u	dst, xreg ## xhalf, yreg ## yhalf
-+
-+#elif XCHAL_HAVE_MUL32
-+
-+#define do_mul(dst, xreg, xhalf, yreg, yhalf) \
-+	mull	dst, xreg ## xhalf, yreg ## yhalf
-+
-+#elif XCHAL_HAVE_MAC16
-+
-+/* The preprocessor insists on inserting a space when concatenating after
-+   a period in the definition of do_mul below.  These macros are a workaround
-+   using underscores instead of periods when doing the concatenation.  */
-+#define umul_aa_ll umul.aa.ll
-+#define umul_aa_lh umul.aa.lh
-+#define umul_aa_hl umul.aa.hl
-+#define umul_aa_hh umul.aa.hh
-+
-+#define do_mul(dst, xreg, xhalf, yreg, yhalf) \
-+	umul_aa_ ## xhalf ## yhalf	xreg, yreg; \
-+	rsr	dst, ACCLO
-+
-+#else /* no multiply hardware */
-+
-+#define set_arg_l(dst, src) \
-+	extui	dst, src, 0, 16
-+#define set_arg_h(dst, src) \
-+	srli	dst, src, 16
-+
-+#ifdef __XTENSA_CALL0_ABI__
-+#define do_mul(dst, xreg, xhalf, yreg, yhalf) \
-+	set_arg_ ## xhalf (a13, xreg); \
-+	set_arg_ ## yhalf (a14, yreg); \
-+	call0	.Lmul_mulsi3; \
-+	mov	dst, a12
-+#else
-+#define do_mul(dst, xreg, xhalf, yreg, yhalf) \
-+	set_arg_ ## xhalf (a14, xreg); \
-+	set_arg_ ## yhalf (a15, yreg); \
-+	call12	.Lmul_mulsi3; \
-+	mov	dst, a14
-+#endif /* __XTENSA_CALL0_ABI__ */
-+
-+#endif /* no multiply hardware */
-+
-+	/* Add pp1 and pp2 into a6 with carry-out in a9.  */
-+	do_mul(a6, a2, l, a3, h)	/* pp 1 */
-+	do_mul(a11, a2, h, a3, l)	/* pp 2 */
-+	movi	a9, 0
-+	add	a6, a6, a11
-+	bgeu	a6, a11, 1f
-+	addi	a9, a9, 1
-+1:
-+	/* Shift the high half of a9/a6 into position in a9.  Note that
-+	   this value can be safely incremented without any carry-outs.  */
-+	ssai	16
-+	src	a9, a9, a6
-+
-+	/* Compute the low word into a6.  */
-+	do_mul(a11, a2, l, a3, l)	/* pp 0 */
-+	sll	a6, a6
-+	add	a6, a6, a11
-+	bgeu	a6, a11, 1f
-+	addi	a9, a9, 1
-+1:
-+	/* Compute the high word into wh.  */
-+	do_mul(wh, a2, h, a3, h)	/* pp 3 */
-+	add	wh, wh, a9
-+	mov	wl, a6
-+
-+#endif /* !MUL32_HIGH */
-+
-+#if defined(__XTENSA_CALL0_ABI__) && XCHAL_NO_MUL
-+	/* Restore the original return address.  */
-+	l32i	a0, sp, 0
-+#endif
-+#ifdef __XTENSA_CALL0_ABI__
-+	l32i	a12, sp, 16
-+	l32i	a13, sp, 20
-+	l32i	a14, sp, 24
-+	l32i	a15, sp, 28
-+	abi_ret(32)
-+#else
-+	abi_ret_default
-+#endif
-+
-+#if XCHAL_NO_MUL
-+
-+	.macro	do_addx2 dst, as, at, tmp
-+#if XCHAL_HAVE_ADDX
-+	addx2	\dst, \as, \at
-+#else
-+	slli	\tmp, \as, 1
-+	add	\dst, \tmp, \at
-+#endif
-+	.endm
-+
-+	.macro	do_addx4 dst, as, at, tmp
-+#if XCHAL_HAVE_ADDX
-+	addx4	\dst, \as, \at
-+#else
-+	slli	\tmp, \as, 2
-+	add	\dst, \tmp, \at
-+#endif
-+	.endm
-+
-+	.macro	do_addx8 dst, as, at, tmp
-+#if XCHAL_HAVE_ADDX
-+	addx8	\dst, \as, \at
-+#else
-+	slli	\tmp, \as, 3
-+	add	\dst, \tmp, \at
-+#endif
-+	.endm
-+
-+	/* For Xtensa processors with no multiply hardware, this simplified
-+	   version of _mulsi3 is used for multiplying 16-bit chunks of
-+	   the floating-point mantissas.  When using CALL0, this function
-+	   uses a custom ABI: the inputs are passed in a13 and a14, the
-+	   result is returned in a12, and a8 and a15 are clobbered.  */
-+	.align	4
-+.Lmul_mulsi3:
-+	abi_entry_default
-+
-+	.macro mul_mulsi3_body dst, src1, src2, tmp1, tmp2
-+	movi	\dst, 0
-+1:	add	\tmp1, \src2, \dst
-+	extui	\tmp2, \src1, 0, 1
-+	movnez	\dst, \tmp1, \tmp2
-+
-+	do_addx2 \tmp1, \src2, \dst, \tmp1
-+	extui	\tmp2, \src1, 1, 1
-+	movnez	\dst, \tmp1, \tmp2
-+
-+	do_addx4 \tmp1, \src2, \dst, \tmp1
-+	extui	\tmp2, \src1, 2, 1
-+	movnez	\dst, \tmp1, \tmp2
-+
-+	do_addx8 \tmp1, \src2, \dst, \tmp1
-+	extui	\tmp2, \src1, 3, 1
-+	movnez	\dst, \tmp1, \tmp2
-+
-+	srli	\src1, \src1, 4
-+	slli	\src2, \src2, 4
-+	bnez	\src1, 1b
-+	.endm
-+
-+#ifdef __XTENSA_CALL0_ABI__
-+	mul_mulsi3_body a12, a13, a14, a15, a8
-+#else
-+	/* The result will be written into a2, so save that argument in a4.  */
-+	mov	a4, a2
-+	mul_mulsi3_body a2, a4, a3, a5, a6
-+#endif
-+	abi_ret_default
-+#endif /* XCHAL_NO_MUL */
-+
-+ENDPROC(__umulsidi3)
--- 
-2.39.0
-
++	/* Check PF if pdev is a VF, since VF Vendor/Device IDs are 0xffff */
++	pdev = pci_physfn(pdev);
+ 	if (pci_dev_is_disconnected(pdev))
+ 		return false;
+ 	return pci_bus_read_dev_vendor_id(pdev->bus, pdev->devfn, &v, 0);
 
 
