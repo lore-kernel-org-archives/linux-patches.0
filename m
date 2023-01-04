@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6DCAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73DEC433D2;
-	Wed,  4 Jan 2023 16:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8E1AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D06C433D2;
+	Wed,  4 Jan 2023 16:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849135;
-	bh=5gCpc6wRQhwOm/6bhlqDFTVUWNIdTjKifV6zEMvsVJg=;
+	s=korg; t=1672849138;
+	bh=CV18yt6KP10/AOJAnRMpI0N5HtEYXjfWrIE9WgC+1GY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S+/3iGAdQhB+FNkuXkEIsMW63AtOPvcrjscwEuzclDGOMOnmfoXeh2Xvo9iscEEyQ
-	 lNBzNUxzzGpthowGG+kowiImNCnlvA4Jopy2yue0Z6mHyZqb9t2OjJrNBfGhAFaKKr
-	 iBcQE0ghnkjycSYdo+5TUocL4LYPT+LkILtHg1z4=
+	b=zwrzjrxD4LwDtkEOdZBktYKtAFly3kQ3FJBk5hsTJM1chOi4+AP/NU4/WckNgX5ax
+	 txOE28/Zb479J7BhHI9m/kSMORIxoLv533bICENHqjNrwpX+dBa8e7JRl9V7ZI7NUW
+	 Ib1fpthSOBbwywPwbc4KZL79QZFalMhMA6Mjz+hY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kim Phillips <kim.phillips@amd.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 6.1 140/207] iommu/amd: Fix ill-formed ivrs_ioapic, ivrs_hpet and ivrs_acpihid options
-Date: Wed,  4 Jan 2023 17:06:38 +0100
-Message-Id: <20230104160516.351849707@linuxfoundation.org>
+	mhiramat@kernel.org,
+	zanussi@kernel.org,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.0 072/177] tracing: Fix issue of missing one synthetic field
+Date: Wed,  4 Jan 2023 17:06:03 +0100
+Message-Id: <20230104160509.837971417@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,207 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kim Phillips <kim.phillips@amd.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-commit 1198d2316dc4265a97d0e8445a22c7a6d17580a4 upstream.
+commit ff4837f7fe59ff018eca4705a70eca5e0b486b97 upstream.
 
-Currently, these options cause the following libkmod error:
+The maximum number of synthetic fields supported is defined as
+SYNTH_FIELDS_MAX which value currently is 64, but it actually fails
+when try to generate a synthetic event with 64 fields by executing like:
 
-libkmod: ERROR ../libkmod/libkmod-config.c:489 kcmdline_parse_result: \
-	Ignoring bad option on kernel command line while parsing module \
-	name: 'ivrs_xxxx[XX:XX'
+  # echo "my_synth_event int v1; int v2; int v3; int v4; int v5; int v6;\
+   int v7; int v8; int v9; int v10; int v11; int v12; int v13; int v14;\
+   int v15; int v16; int v17; int v18; int v19; int v20; int v21; int v22;\
+   int v23; int v24; int v25; int v26; int v27; int v28; int v29; int v30;\
+   int v31; int v32; int v33; int v34; int v35; int v36; int v37; int v38;\
+   int v39; int v40; int v41; int v42; int v43; int v44; int v45; int v46;\
+   int v47; int v48; int v49; int v50; int v51; int v52; int v53; int v54;\
+   int v55; int v56; int v57; int v58; int v59; int v60; int v61; int v62;\
+   int v63; int v64" >> /sys/kernel/tracing/synthetic_events
 
-Fix by introducing a new parameter format for these options and
-throw a warning for the deprecated format.
+Correct the field counting to fix it.
 
-Users are still allowed to omit the PCI Segment if zero.
+Link: https://lore.kernel.org/linux-trace-kernel/20221207091557.3137904-1-zhengyejian1@huawei.com
 
-Adding a Link: to the reason why we're modding the syntax parsing
-in the driver and not in libkmod.
-
-Fixes: ca3bf5d47cec ("iommu/amd: Introduces ivrs_acpihid kernel parameter")
+Cc: <mhiramat@kernel.org>
+Cc: <zanussi@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-modules/20200310082308.14318-2-lucas.demarchi@intel.com/
-Reported-by: Kim Phillips <kim.phillips@amd.com>
-Co-developed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Kim Phillips <kim.phillips@amd.com>
-Link: https://lore.kernel.org/r/20220919155638.391481-2-kim.phillips@amd.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Fixes: c9e759b1e845 ("tracing: Rework synthetic event command parsing")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/kernel-parameters.txt |   27 ++++++--
- drivers/iommu/amd/init.c                        |   77 ++++++++++++++++--------
- 2 files changed, 75 insertions(+), 29 deletions(-)
+ kernel/trace/trace_events_synth.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -2300,7 +2300,13 @@
- 			Provide an override to the IOAPIC-ID<->DEVICE-ID
- 			mapping provided in the IVRS ACPI table.
- 			By default, PCI segment is 0, and can be omitted.
--			For example:
-+
-+			For example, to map IOAPIC-ID decimal 10 to
-+			PCI segment 0x1 and PCI device 00:14.0,
-+			write the parameter as:
-+				ivrs_ioapic=10@0001:00:14.0
-+
-+			Deprecated formats:
- 			* To map IOAPIC-ID decimal 10 to PCI device 00:14.0
- 			  write the parameter as:
- 				ivrs_ioapic[10]=00:14.0
-@@ -2312,7 +2318,13 @@
- 			Provide an override to the HPET-ID<->DEVICE-ID
- 			mapping provided in the IVRS ACPI table.
- 			By default, PCI segment is 0, and can be omitted.
--			For example:
-+
-+			For example, to map HPET-ID decimal 10 to
-+			PCI segment 0x1 and PCI device 00:14.0,
-+			write the parameter as:
-+				ivrs_hpet=10@0001:00:14.0
-+
-+			Deprecated formats:
- 			* To map HPET-ID decimal 0 to PCI device 00:14.0
- 			  write the parameter as:
- 				ivrs_hpet[0]=00:14.0
-@@ -2323,15 +2335,20 @@
- 	ivrs_acpihid	[HW,X86-64]
- 			Provide an override to the ACPI-HID:UID<->DEVICE-ID
- 			mapping provided in the IVRS ACPI table.
-+			By default, PCI segment is 0, and can be omitted.
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -1282,12 +1282,12 @@ static int __create_synth_event(const ch
+ 				goto err_free_arg;
+ 			}
  
- 			For example, to map UART-HID:UID AMD0020:0 to
- 			PCI segment 0x1 and PCI device ID 00:14.5,
- 			write the parameter as:
--				ivrs_acpihid[0001:00:14.5]=AMD0020:0
-+				ivrs_acpihid=AMD0020:0@0001:00:14.5
+-			fields[n_fields++] = field;
+ 			if (n_fields == SYNTH_FIELDS_MAX) {
+ 				synth_err(SYNTH_ERR_TOO_MANY_FIELDS, 0);
+ 				ret = -EINVAL;
+ 				goto err_free_arg;
+ 			}
++			fields[n_fields++] = field;
  
--			By default, PCI segment is 0, and can be omitted.
--			For example, PCI device 00:14.5 write the parameter as:
-+			Deprecated formats:
-+			* To map UART-HID:UID AMD0020:0 to PCI segment is 0,
-+			  PCI device ID 00:14.5, write the parameter as:
- 				ivrs_acpihid[00:14.5]=AMD0020:0
-+			* To map UART-HID:UID AMD0020:0 to PCI segment 0x1 and
-+			  PCI device ID 00:14.5, write the parameter as:
-+				ivrs_acpihid[0001:00:14.5]=AMD0020:0
- 
- 	js=		[HW,JOY] Analog joystick
- 			See Documentation/input/joydev/joystick.rst.
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -3402,18 +3402,24 @@ static int __init parse_amd_iommu_option
- static int __init parse_ivrs_ioapic(char *str)
- {
- 	u32 seg = 0, bus, dev, fn;
--	int ret, id, i;
-+	int id, i;
- 	u32 devid;
- 
--	ret = sscanf(str, "[%d]=%x:%x.%x", &id, &bus, &dev, &fn);
--	if (ret != 4) {
--		ret = sscanf(str, "[%d]=%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn);
--		if (ret != 5) {
--			pr_err("Invalid command line: ivrs_ioapic%s\n", str);
--			return 1;
--		}
-+	if (sscanf(str, "=%d@%x:%x.%x", &id, &bus, &dev, &fn) == 4 ||
-+	    sscanf(str, "=%d@%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn) == 5)
-+		goto found;
-+
-+	if (sscanf(str, "[%d]=%x:%x.%x", &id, &bus, &dev, &fn) == 4 ||
-+	    sscanf(str, "[%d]=%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn) == 5) {
-+		pr_warn("ivrs_ioapic%s option format deprecated; use ivrs_ioapic=%d@%04x:%02x:%02x.%d instead\n",
-+			str, id, seg, bus, dev, fn);
-+		goto found;
- 	}
- 
-+	pr_err("Invalid command line: ivrs_ioapic%s\n", str);
-+	return 1;
-+
-+found:
- 	if (early_ioapic_map_size == EARLY_MAP_SIZE) {
- 		pr_err("Early IOAPIC map overflow - ignoring ivrs_ioapic%s\n",
- 			str);
-@@ -3434,18 +3440,24 @@ static int __init parse_ivrs_ioapic(char
- static int __init parse_ivrs_hpet(char *str)
- {
- 	u32 seg = 0, bus, dev, fn;
--	int ret, id, i;
-+	int id, i;
- 	u32 devid;
- 
--	ret = sscanf(str, "[%d]=%x:%x.%x", &id, &bus, &dev, &fn);
--	if (ret != 4) {
--		ret = sscanf(str, "[%d]=%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn);
--		if (ret != 5) {
--			pr_err("Invalid command line: ivrs_hpet%s\n", str);
--			return 1;
--		}
-+	if (sscanf(str, "=%d@%x:%x.%x", &id, &bus, &dev, &fn) == 4 ||
-+	    sscanf(str, "=%d@%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn) == 5)
-+		goto found;
-+
-+	if (sscanf(str, "[%d]=%x:%x.%x", &id, &bus, &dev, &fn) == 4 ||
-+	    sscanf(str, "[%d]=%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn) == 5) {
-+		pr_warn("ivrs_hpet%s option format deprecated; use ivrs_hpet=%d@%04x:%02x:%02x.%d instead\n",
-+			str, id, seg, bus, dev, fn);
-+		goto found;
- 	}
- 
-+	pr_err("Invalid command line: ivrs_hpet%s\n", str);
-+	return 1;
-+
-+found:
- 	if (early_hpet_map_size == EARLY_MAP_SIZE) {
- 		pr_err("Early HPET map overflow - ignoring ivrs_hpet%s\n",
- 			str);
-@@ -3466,19 +3478,36 @@ static int __init parse_ivrs_hpet(char *
- static int __init parse_ivrs_acpihid(char *str)
- {
- 	u32 seg = 0, bus, dev, fn;
--	char *hid, *uid, *p;
-+	char *hid, *uid, *p, *addr;
- 	char acpiid[ACPIHID_UID_LEN + ACPIHID_HID_LEN] = {0};
--	int ret, i;
-+	int i;
- 
--	ret = sscanf(str, "[%x:%x.%x]=%s", &bus, &dev, &fn, acpiid);
--	if (ret != 4) {
--		ret = sscanf(str, "[%x:%x:%x.%x]=%s", &seg, &bus, &dev, &fn, acpiid);
--		if (ret != 5) {
--			pr_err("Invalid command line: ivrs_acpihid(%s)\n", str);
--			return 1;
-+	addr = strchr(str, '@');
-+	if (!addr) {
-+		if (sscanf(str, "[%x:%x.%x]=%s", &bus, &dev, &fn, acpiid) == 4 ||
-+		    sscanf(str, "[%x:%x:%x.%x]=%s", &seg, &bus, &dev, &fn, acpiid) == 5) {
-+			pr_warn("ivrs_acpihid%s option format deprecated; use ivrs_acpihid=%s@%04x:%02x:%02x.%d instead\n",
-+				str, acpiid, seg, bus, dev, fn);
-+			goto found;
+ 			n_fields_this_loop++;
  		}
-+		goto not_found;
- 	}
- 
-+	/* We have the '@', make it the terminator to get just the acpiid */
-+	*addr++ = 0;
-+
-+	if (sscanf(str, "=%s", acpiid) != 1)
-+		goto not_found;
-+
-+	if (sscanf(addr, "%x:%x.%x", &bus, &dev, &fn) == 3 ||
-+	    sscanf(addr, "%x:%x:%x.%x", &seg, &bus, &dev, &fn) == 4)
-+		goto found;
-+
-+not_found:
-+	pr_err("Invalid command line: ivrs_acpihid%s\n", str);
-+	return 1;
-+
-+found:
- 	p = acpiid;
- 	hid = strsep(&p, ":");
- 	uid = p;
 
 
