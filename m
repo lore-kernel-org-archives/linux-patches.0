@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CE4FAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:21:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B070CC433D2;
-	Wed,  4 Jan 2023 16:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6D2AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:21:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8DA2C433F0;
+	Wed,  4 Jan 2023 16:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849292;
-	bh=WxSrhrpqyDeqQwktNFOhI4EkwNUo4eNlp4LP9pd2r+I=;
+	s=korg; t=1672849295;
+	bh=/M814mfgd3JY4C+bjGTnTZWqUkfm651ilV6Em7l/7Uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZcX6MXh3wE93Iw69xV99pe0GSCZH4znC9SxNyiXSHcFhP4ygRAuoistDJbyrdNJWJ
-	 JYVltV1+YoSF/fG01wuHDfMvxti9QfUoeaCXne/UQXC8oJjgEV92+t9cR18mT3aNK+
-	 p2xyWIP7ggWaFyl4oY58YhQ1y0YwJcslR84dt9ko=
+	b=ZROrtM3+S3/4SGh/JEECjiz8bJ0hncZYChIo+vdHTCoCWRrE3i12Sv9pJraZbkgux
+	 5vw8Xp+ukiyalSjMoql9VQiRrIf1QE8TNGCNMhXSytPahH8dXPgfyJMReY0n82xhMm
+	 fRi1PoNu11ulNFxi58jCq2RiE2b9JTHJ1HQEMbfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH 6.0 098/177] ipmi: fix use after free in _ipmi_destroy_user()
-Date: Wed,  4 Jan 2023 17:06:29 +0100
-Message-Id: <20230104160510.604935743@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.1 166/207] ext4: fix use-after-free in ext4_orphan_cleanup
+Date: Wed,  4 Jan 2023 17:07:04 +0100
+Message-Id: <20230104160517.143923703@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,43 +36,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit a92ce570c81dc0feaeb12a429b4bc65686d17967 upstream.
+commit a71248b1accb2b42e4980afef4fa4a27fa0e36f5 upstream.
 
-The intf_free() function frees the "intf" pointer so we cannot
-dereference it again on the next line.
+I caught a issue as follows:
+==================================================================
+ BUG: KASAN: use-after-free in __list_add_valid+0x28/0x1a0
+ Read of size 8 at addr ffff88814b13f378 by task mount/710
 
-Fixes: cbb79863fc31 ("ipmi: Don't allow device module unload when in use")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Message-Id: <Y3M8xa1drZv4CToE@kili>
-Cc: <stable@vger.kernel.org> # 5.5+
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+ CPU: 1 PID: 710 Comm: mount Not tainted 6.1.0-rc3-next #370
+ Call Trace:
+  <TASK>
+  dump_stack_lvl+0x73/0x9f
+  print_report+0x25d/0x759
+  kasan_report+0xc0/0x120
+  __asan_load8+0x99/0x140
+  __list_add_valid+0x28/0x1a0
+  ext4_orphan_cleanup+0x564/0x9d0 [ext4]
+  __ext4_fill_super+0x48e2/0x5300 [ext4]
+  ext4_fill_super+0x19f/0x3a0 [ext4]
+  get_tree_bdev+0x27b/0x450
+  ext4_get_tree+0x19/0x30 [ext4]
+  vfs_get_tree+0x49/0x150
+  path_mount+0xaae/0x1350
+  do_mount+0xe2/0x110
+  __x64_sys_mount+0xf0/0x190
+  do_syscall_64+0x35/0x80
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  </TASK>
+ [...]
+==================================================================
+
+Above issue may happen as follows:
+-------------------------------------
+ext4_fill_super
+  ext4_orphan_cleanup
+   --- loop1: assume last_orphan is 12 ---
+    list_add(&EXT4_I(inode)->i_orphan, &EXT4_SB(sb)->s_orphan)
+    ext4_truncate --> return 0
+      ext4_inode_attach_jinode --> return -ENOMEM
+    iput(inode) --> free inode<12>
+   --- loop2: last_orphan is still 12 ---
+    list_add(&EXT4_I(inode)->i_orphan, &EXT4_SB(sb)->s_orphan);
+    // use inode<12> and trigger UAF
+
+To solve this issue, we need to propagate the return value of
+ext4_inode_attach_jinode() appropriately.
+
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221102080633.1630225-1-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/ext4/inode.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -1336,6 +1336,7 @@ static void _ipmi_destroy_user(struct ip
- 	unsigned long    flags;
- 	struct cmd_rcvr  *rcvr;
- 	struct cmd_rcvr  *rcvrs = NULL;
-+	struct module    *owner;
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4225,7 +4225,8 @@ int ext4_truncate(struct inode *inode)
  
- 	if (!acquire_ipmi_user(user, &i)) {
- 		/*
-@@ -1398,8 +1399,9 @@ static void _ipmi_destroy_user(struct ip
- 		kfree(rcvr);
+ 	/* If we zero-out tail of the page, we have to create jinode for jbd2 */
+ 	if (inode->i_size & (inode->i_sb->s_blocksize - 1)) {
+-		if (ext4_inode_attach_jinode(inode) < 0)
++		err = ext4_inode_attach_jinode(inode);
++		if (err)
+ 			goto out_trace;
  	}
  
-+	owner = intf->owner;
- 	kref_put(&intf->refcount, intf_free);
--	module_put(intf->owner);
-+	module_put(owner);
- }
- 
- int ipmi_destroy_user(struct ipmi_user *user)
 
 
