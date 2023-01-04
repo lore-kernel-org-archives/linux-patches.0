@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EB7FAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 767C3C433D2;
-	Wed,  4 Jan 2023 16:20:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14A9BAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F95FC433D2;
+	Wed,  4 Jan 2023 16:20:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849213;
-	bh=Ics49q2apegzyJk6UleG046jQ43q2/pwb4+WI0ZA+3w=;
+	s=korg; t=1672849216;
+	bh=4r5S2G9TNj2o2zkuitumm9+llmmLGUaSHxvKX1YW4Fg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1SGw6qySPnq6QoDsEKD99LtFtQae/Jrh7+Cj7hW8BRmb1FH5E4CZT6sYni29Mm14v
-	 j14w33ZNVshmn7miJAb5qsKcAxdpryVTLUFzHDbebFD24jfnP/CcziFm2X0MrBA8Iq
-	 tgVKyZU0wQI300DDdqEU3rs5UcO1F6TN5zqBo1TM=
+	b=cSZnzFQ/tO0L/px1qZmW8pNNBFTC2OQwQY7jAy/0VUU5ERtmwGCbIgm+sv1knChDT
+	 3vGQiM1PUO5M3m1rMlrWZ7UD1p/5UKR7/ObpzszbtJ7OGkeyaz47lmjP8r6jZ1x/5M
+	 TufNPWb8jVRSEjeGTWgnoy5twoEFIBStVoIWXeH0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Weiyang <wangweiyang2@huawei.com>,
-	Aristeu Rozanski <aris@redhat.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 6.1 152/207] device_cgroup: Roll back to original exceptions after copy failure
-Date: Wed,  4 Jan 2023 17:06:50 +0100
-Message-Id: <20230104160516.719513667@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.0 084/177] cifs: set correct status of tcon ipc when reconnecting
+Date: Wed,  4 Jan 2023 17:06:15 +0100
+Message-Id: <20230104160510.190957955@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,95 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Weiyang <wangweiyang2@huawei.com>
+From: Paulo Alcantara <pc@cjr.nz>
 
-commit e68bfbd3b3c3a0ec3cf8c230996ad8cabe90322f upstream.
+commit 25cf01b7c9200d6ace5a59125d8166435dd9dea7 upstream.
 
-When add the 'a *:* rwm' entry to devcgroup A's whitelist, at first A's
-exceptions will be cleaned and A's behavior is changed to
-DEVCG_DEFAULT_ALLOW. Then parent's exceptions will be copyed to A's
-whitelist. If copy failure occurs, just return leaving A to grant
-permissions to all devices. And A may grant more permissions than
-parent.
-
-Backup A's whitelist and recover original exceptions after copy
-failure.
+The status of tcon ipcs were not being set to TID_NEED_RECO when
+marking sessions and tcons to be reconnected, therefore not sending
+tree connect to those ipcs in cifs_tree_connect() and leaving them
+disconnected.
 
 Cc: stable@vger.kernel.org
-Fixes: 4cef7299b478 ("device_cgroup: add proper checking when changing default behavior")
-Signed-off-by: Wang Weiyang <wangweiyang2@huawei.com>
-Reviewed-by: Aristeu Rozanski <aris@redhat.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/device_cgroup.c |   33 +++++++++++++++++++++++++++++----
- 1 file changed, 29 insertions(+), 4 deletions(-)
+ fs/cifs/connect.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/security/device_cgroup.c
-+++ b/security/device_cgroup.c
-@@ -82,6 +82,17 @@ free_and_exit:
- 	return -ENOMEM;
- }
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -279,8 +279,10 @@ cifs_mark_tcp_ses_conns_for_reconnect(st
+ 			tcon->need_reconnect = true;
+ 			tcon->status = TID_NEED_RECON;
+ 		}
+-		if (ses->tcon_ipc)
++		if (ses->tcon_ipc) {
+ 			ses->tcon_ipc->need_reconnect = true;
++			ses->tcon_ipc->status = TID_NEED_RECON;
++		}
  
-+static void dev_exceptions_move(struct list_head *dest, struct list_head *orig)
-+{
-+	struct dev_exception_item *ex, *tmp;
-+
-+	lockdep_assert_held(&devcgroup_mutex);
-+
-+	list_for_each_entry_safe(ex, tmp, orig, list) {
-+		list_move_tail(&ex->list, dest);
-+	}
-+}
-+
- /*
-  * called under devcgroup_mutex
-  */
-@@ -604,11 +615,13 @@ static int devcgroup_update_access(struc
- 	int count, rc = 0;
- 	struct dev_exception_item ex;
- 	struct dev_cgroup *parent = css_to_devcgroup(devcgroup->css.parent);
-+	struct dev_cgroup tmp_devcgrp;
- 
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EPERM;
- 
- 	memset(&ex, 0, sizeof(ex));
-+	memset(&tmp_devcgrp, 0, sizeof(tmp_devcgrp));
- 	b = buffer;
- 
- 	switch (*b) {
-@@ -620,15 +633,27 @@ static int devcgroup_update_access(struc
- 
- 			if (!may_allow_all(parent))
- 				return -EPERM;
--			dev_exception_clean(devcgroup);
--			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
--			if (!parent)
-+			if (!parent) {
-+				devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
-+				dev_exception_clean(devcgroup);
- 				break;
-+			}
- 
-+			INIT_LIST_HEAD(&tmp_devcgrp.exceptions);
-+			rc = dev_exceptions_copy(&tmp_devcgrp.exceptions,
-+						 &devcgroup->exceptions);
-+			if (rc)
-+				return rc;
-+			dev_exception_clean(devcgroup);
- 			rc = dev_exceptions_copy(&devcgroup->exceptions,
- 						 &parent->exceptions);
--			if (rc)
-+			if (rc) {
-+				dev_exceptions_move(&devcgroup->exceptions,
-+						    &tmp_devcgrp.exceptions);
- 				return rc;
-+			}
-+			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
-+			dev_exception_clean(&tmp_devcgrp);
- 			break;
- 		case DEVCG_DENY:
- 			if (css_has_online_children(&devcgroup->css))
+ next_session:
+ 		spin_unlock(&ses->chan_lock);
 
 
