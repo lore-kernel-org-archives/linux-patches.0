@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4E88AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:27:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31ECDC433D2;
-	Wed,  4 Jan 2023 16:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF6AAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:27:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B01DC433EF;
+	Wed,  4 Jan 2023 16:27:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849653;
-	bh=jUGgu+jjn4oh8uZCNtxL5R0bZaJS06RGDqho/5O8FE4=;
+	s=korg; t=1672849656;
+	bh=SAupEB1FmNWJ/isAsCRa7NcQvTlYYwmPCaNF76qzS54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Osko409fRl/vFMnYXxL9URUIcmQmQys7FBPYBzw/ufGXBz6HNgA2xFJDhVzbP7peQ
-	 YWLqqqTnFNKzqRSf342fjFWoRNh5ovtoPCZPo1rPwv8XnzF9IluYuDAGgfm8F8XrWN
-	 uogCE02Mr2MxU5PCX3Nb5pIuzB2ecxhPP8od/fuY=
+	b=EcmI9da4hpLe5tYO2A8Iy5saeKARuMobespt2wOpUZjrPub6zXS6RxPh/VnpS61wi
+	 0TVjlkLYChnQaHFjwAkEgZXrJCYGv29kcZjH5w10nTfzyZY6XAjEpfdUUtpOtHhHMe
+	 75WEgWdOJH2dI2qGUnNfdje5fylhJzF1g5VB/Vho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <evan.quan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.0 174/177] drm/amd/pm: add missing SMU13.0.0 mm_dpm feature mapping
-Date: Wed,  4 Jan 2023 17:07:45 +0100
-Message-Id: <20230104160512.949606906@linuxfoundation.org>
+	syzbot+1a748d0007eeac3ab079@syzkaller.appspotmail.com,
+	Eric Biggers <ebiggers@google.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.0 148/177] ext4: dont set up encryption key during jbd2 transaction
+Date: Wed,  4 Jan 2023 17:07:19 +0100
+Message-Id: <20230104160512.143786027@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -34,32 +35,158 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Evan Quan <evan.quan@amd.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit 592cd24a08763975c75be850a7d4e461bfd353bf upstream.
+commit 4c0d5778385cb3618ff26a561ce41de2b7d9de70 upstream.
 
-Without this, the pp_dpm_vclk and pp_dpm_dclk outputs are not with
-correct data.
+Commit a80f7fcf1867 ("ext4: fixup ext4_fc_track_* functions' signature")
+extended the scope of the transaction in ext4_unlink() too far, making
+it include the call to ext4_find_entry().  However, ext4_find_entry()
+can deadlock when called from within a transaction because it may need
+to set up the directory's encryption key.
 
-Signed-off-by: Evan Quan <evan.quan@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.0.x
+Fix this by restoring the transaction to its original scope.
+
+Reported-by: syzbot+1a748d0007eeac3ab079@syzkaller.appspotmail.com
+Fixes: a80f7fcf1867 ("ext4: fixup ext4_fc_track_* functions' signature")
+Cc: <stable@vger.kernel.org> # v5.10+
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20221106224841.279231-3-ebiggers@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ext4/ext4.h        |    4 ++--
+ fs/ext4/fast_commit.c |    2 +-
+ fs/ext4/namei.c       |   44 ++++++++++++++++++++++++--------------------
+ 3 files changed, 27 insertions(+), 23 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -187,6 +187,8 @@ static struct cmn2asic_mapping smu_v13_0
- 	FEA_MAP(MEM_TEMP_READ),
- 	FEA_MAP(ATHUB_MMHUB_PG),
- 	FEA_MAP(SOC_PCC),
-+	[SMU_FEATURE_DPM_VCLK_BIT] = {1, FEATURE_MM_DPM_BIT},
-+	[SMU_FEATURE_DPM_DCLK_BIT] = {1, FEATURE_MM_DPM_BIT},
- };
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -3622,8 +3622,8 @@ extern void ext4_initialize_dirent_tail(
+ 					unsigned int blocksize);
+ extern int ext4_handle_dirty_dirblock(handle_t *handle, struct inode *inode,
+ 				      struct buffer_head *bh);
+-extern int __ext4_unlink(handle_t *handle, struct inode *dir, const struct qstr *d_name,
+-			 struct inode *inode);
++extern int __ext4_unlink(struct inode *dir, const struct qstr *d_name,
++			 struct inode *inode, struct dentry *dentry);
+ extern int __ext4_link(struct inode *dir, struct inode *inode,
+ 		       struct dentry *dentry);
  
- static struct cmn2asic_mapping smu_v13_0_0_table_map[SMU_TABLE_COUNT] = {
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -1410,7 +1410,7 @@ static int ext4_fc_replay_unlink(struct
+ 		return 0;
+ 	}
+ 
+-	ret = __ext4_unlink(NULL, old_parent, &entry, inode);
++	ret = __ext4_unlink(old_parent, &entry, inode, NULL);
+ 	/* -ENOENT ok coz it might not exist anymore. */
+ 	if (ret == -ENOENT)
+ 		ret = 0;
+--- a/fs/ext4/namei.c
++++ b/fs/ext4/namei.c
+@@ -3204,14 +3204,20 @@ end_rmdir:
+ 	return retval;
+ }
+ 
+-int __ext4_unlink(handle_t *handle, struct inode *dir, const struct qstr *d_name,
+-		  struct inode *inode)
++int __ext4_unlink(struct inode *dir, const struct qstr *d_name,
++		  struct inode *inode,
++		  struct dentry *dentry /* NULL during fast_commit recovery */)
+ {
+ 	int retval = -ENOENT;
+ 	struct buffer_head *bh;
+ 	struct ext4_dir_entry_2 *de;
++	handle_t *handle;
+ 	int skip_remove_dentry = 0;
+ 
++	/*
++	 * Keep this outside the transaction; it may have to set up the
++	 * directory's encryption key, which isn't GFP_NOFS-safe.
++	 */
+ 	bh = ext4_find_entry(dir, d_name, &de, NULL);
+ 	if (IS_ERR(bh))
+ 		return PTR_ERR(bh);
+@@ -3228,7 +3234,14 @@ int __ext4_unlink(handle_t *handle, stru
+ 		if (EXT4_SB(inode->i_sb)->s_mount_state & EXT4_FC_REPLAY)
+ 			skip_remove_dentry = 1;
+ 		else
+-			goto out;
++			goto out_bh;
++	}
++
++	handle = ext4_journal_start(dir, EXT4_HT_DIR,
++				    EXT4_DATA_TRANS_BLOCKS(dir->i_sb));
++	if (IS_ERR(handle)) {
++		retval = PTR_ERR(handle);
++		goto out_bh;
+ 	}
+ 
+ 	if (IS_DIRSYNC(dir))
+@@ -3237,12 +3250,12 @@ int __ext4_unlink(handle_t *handle, stru
+ 	if (!skip_remove_dentry) {
+ 		retval = ext4_delete_entry(handle, dir, de, bh);
+ 		if (retval)
+-			goto out;
++			goto out_handle;
+ 		dir->i_ctime = dir->i_mtime = current_time(dir);
+ 		ext4_update_dx_flag(dir);
+ 		retval = ext4_mark_inode_dirty(handle, dir);
+ 		if (retval)
+-			goto out;
++			goto out_handle;
+ 	} else {
+ 		retval = 0;
+ 	}
+@@ -3255,15 +3268,17 @@ int __ext4_unlink(handle_t *handle, stru
+ 		ext4_orphan_add(handle, inode);
+ 	inode->i_ctime = current_time(inode);
+ 	retval = ext4_mark_inode_dirty(handle, inode);
+-
+-out:
++	if (dentry && !retval)
++		ext4_fc_track_unlink(handle, dentry);
++out_handle:
++	ext4_journal_stop(handle);
++out_bh:
+ 	brelse(bh);
+ 	return retval;
+ }
+ 
+ static int ext4_unlink(struct inode *dir, struct dentry *dentry)
+ {
+-	handle_t *handle;
+ 	int retval;
+ 
+ 	if (unlikely(ext4_forced_shutdown(EXT4_SB(dir->i_sb))))
+@@ -3281,16 +3296,7 @@ static int ext4_unlink(struct inode *dir
+ 	if (retval)
+ 		goto out_trace;
+ 
+-	handle = ext4_journal_start(dir, EXT4_HT_DIR,
+-				    EXT4_DATA_TRANS_BLOCKS(dir->i_sb));
+-	if (IS_ERR(handle)) {
+-		retval = PTR_ERR(handle);
+-		goto out_trace;
+-	}
+-
+-	retval = __ext4_unlink(handle, dir, &dentry->d_name, d_inode(dentry));
+-	if (!retval)
+-		ext4_fc_track_unlink(handle, dentry);
++	retval = __ext4_unlink(dir, &dentry->d_name, d_inode(dentry), dentry);
+ #if IS_ENABLED(CONFIG_UNICODE)
+ 	/* VFS negative dentries are incompatible with Encoding and
+ 	 * Case-insensitiveness. Eventually we'll want avoid
+@@ -3301,8 +3307,6 @@ static int ext4_unlink(struct inode *dir
+ 	if (IS_CASEFOLDED(dir))
+ 		d_invalidate(dentry);
+ #endif
+-	if (handle)
+-		ext4_journal_stop(handle);
+ 
+ out_trace:
+ 	trace_ext4_unlink_exit(dentry, retval);
 
 
