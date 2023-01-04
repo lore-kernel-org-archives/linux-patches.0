@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22CEAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0E9C433EF;
-	Wed,  4 Jan 2023 16:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADA5EAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2917EC433EF;
+	Wed,  4 Jan 2023 16:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849253;
-	bh=LaNO8fLXHjsm2QKl1o2INaw5paN3LDCZzOGdoLXWHZk=;
+	s=korg; t=1672849256;
+	bh=1yD27mWLNBYI9eyGvQ2BPyVDuiK7l6bZM0wpZQs7J5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TesRZscweRa/rLMrY1oaOrqbwgTCixUmWb2aWoWwOVnNxqq7LJDs+O+vue8Q9TTKo
-	 p55a+hMamIlI6VKQWRbWRT9ZKFDfM56NgmusO6XDHXmoxy2sIVC0tBjE5vnJxhSMks
-	 QvWjIL0UnzTP/MNBjbRKL5uygZBpILRwaHbPKCU8=
+	b=cgmtckT9L2BUZSMa+wpxXIVYWnF2UaE9yexmricSlkOo7BUB+mFFiekNMmkYRoH8m
+	 NQj54GMFwD8z/qkRKQ8s6FTbxRxL+GaLgKy27r4uW70tb6ztfi+oD1fe7BBNmi6MXe
+	 W/bEt/l5hbT7J3wclvmCTa0Mm/fJ+ZsFQHV7h4x0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Paul Cercueil <paul@crapouillou.net>
-Subject: [PATCH 6.1 158/207] drm/ingenic: Fix missing platform_driver_unregister() call in ingenic_drm_init()
-Date: Wed,  4 Jan 2023 17:06:56 +0100
-Message-Id: <20230104160516.896391379@linuxfoundation.org>
+	Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 6.0 090/177] md/bitmap: Fix bitmap chunk size overflow issues
+Date: Wed,  4 Jan 2023 17:06:21 +0100
+Message-Id: <20230104160510.368909507@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,58 +35,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>
 
-commit 47078311b8efebdefd5b3b2f87e2b02b14f49c66 upstream.
+commit 4555211190798b6b6fa2c37667d175bf67945c78 upstream.
 
-A problem about modprobe ingenic-drm failed is triggered with the following
-log given:
+- limit bitmap chunk size internal u64 variable to values not overflowing
+  the u32 bitmap superblock structure variable stored on persistent media
+- assign bitmap chunk size internal u64 variable from unsigned values to
+  avoid possible sign extension artifacts when assigning from a s32 value
 
- [  303.561088] Error: Driver 'ingenic-ipu' is already registered, aborting...
- modprobe: ERROR: could not insert 'ingenic_drm': Device or resource busy
+The bug has been there since at least kernel 4.0.
+Steps to reproduce it:
+1: mdadm -C /dev/mdx -l 1 --bitmap=internal --bitmap-chunk=256M -e 1.2
+-n2 /dev/rnbd1 /dev/rnbd2
+2 resize member device rnbd1 and rnbd2 to 8 TB
+3 mdadm --grow /dev/mdx --size=max
 
-The reason is that ingenic_drm_init() returns platform_driver_register()
-directly without checking its return value, if platform_driver_register()
-failed, it returns without unregistering ingenic_ipu_driver_ptr, resulting
-the ingenic-drm can never be installed later.
-A simple call graph is shown as below:
+The bitmap_chunksize will overflow without patch.
 
- ingenic_drm_init()
-   platform_driver_register() # ingenic_ipu_driver_ptr are registered
-   platform_driver_register()
-     driver_register()
-       bus_add_driver()
-         priv = kzalloc(...) # OOM happened
-   # return without unregister ingenic_ipu_driver_ptr
-
-Fixing this problem by checking the return value of
-platform_driver_register() and do platform_unregister_drivers() if
-error happened.
-
-Fixes: fc1acf317b01 ("drm/ingenic: Add support for the IPU")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Paul Cercueil <paul@crapouillou.net>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221104064512.8569-1-yuancan@huawei.com
+
+Signed-off-by: Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>
+Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ingenic/ingenic-drm-drv.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/md/md-bitmap.c |   20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
-+++ b/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
-@@ -1629,7 +1629,11 @@ static int ingenic_drm_init(void)
- 			return err;
- 	}
- 
--	return platform_driver_register(&ingenic_drm_driver);
-+	err = platform_driver_register(&ingenic_drm_driver);
-+	if (IS_ENABLED(CONFIG_DRM_INGENIC_IPU) && err)
-+		platform_driver_unregister(ingenic_ipu_driver_ptr);
-+
-+	return err;
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -486,7 +486,7 @@ void md_bitmap_print_sb(struct bitmap *b
+ 	sb = kmap_atomic(bitmap->storage.sb_page);
+ 	pr_debug("%s: bitmap file superblock:\n", bmname(bitmap));
+ 	pr_debug("         magic: %08x\n", le32_to_cpu(sb->magic));
+-	pr_debug("       version: %d\n", le32_to_cpu(sb->version));
++	pr_debug("       version: %u\n", le32_to_cpu(sb->version));
+ 	pr_debug("          uuid: %08x.%08x.%08x.%08x\n",
+ 		 le32_to_cpu(*(__le32 *)(sb->uuid+0)),
+ 		 le32_to_cpu(*(__le32 *)(sb->uuid+4)),
+@@ -497,11 +497,11 @@ void md_bitmap_print_sb(struct bitmap *b
+ 	pr_debug("events cleared: %llu\n",
+ 		 (unsigned long long) le64_to_cpu(sb->events_cleared));
+ 	pr_debug("         state: %08x\n", le32_to_cpu(sb->state));
+-	pr_debug("     chunksize: %d B\n", le32_to_cpu(sb->chunksize));
+-	pr_debug("  daemon sleep: %ds\n", le32_to_cpu(sb->daemon_sleep));
++	pr_debug("     chunksize: %u B\n", le32_to_cpu(sb->chunksize));
++	pr_debug("  daemon sleep: %us\n", le32_to_cpu(sb->daemon_sleep));
+ 	pr_debug("     sync size: %llu KB\n",
+ 		 (unsigned long long)le64_to_cpu(sb->sync_size)/2);
+-	pr_debug("max write behind: %d\n", le32_to_cpu(sb->write_behind));
++	pr_debug("max write behind: %u\n", le32_to_cpu(sb->write_behind));
+ 	kunmap_atomic(sb);
  }
- module_init(ingenic_drm_init);
  
+@@ -2105,7 +2105,8 @@ int md_bitmap_resize(struct bitmap *bitm
+ 			bytes = DIV_ROUND_UP(chunks, 8);
+ 			if (!bitmap->mddev->bitmap_info.external)
+ 				bytes += sizeof(bitmap_super_t);
+-		} while (bytes > (space << 9));
++		} while (bytes > (space << 9) && (chunkshift + BITMAP_BLOCK_SHIFT) <
++			(BITS_PER_BYTE * sizeof(((bitmap_super_t *)0)->chunksize) - 1));
+ 	} else
+ 		chunkshift = ffz(~chunksize) - BITMAP_BLOCK_SHIFT;
+ 
+@@ -2150,7 +2151,7 @@ int md_bitmap_resize(struct bitmap *bitm
+ 	bitmap->counts.missing_pages = pages;
+ 	bitmap->counts.chunkshift = chunkshift;
+ 	bitmap->counts.chunks = chunks;
+-	bitmap->mddev->bitmap_info.chunksize = 1 << (chunkshift +
++	bitmap->mddev->bitmap_info.chunksize = 1UL << (chunkshift +
+ 						     BITMAP_BLOCK_SHIFT);
+ 
+ 	blocks = min(old_counts.chunks << old_counts.chunkshift,
+@@ -2176,8 +2177,8 @@ int md_bitmap_resize(struct bitmap *bitm
+ 				bitmap->counts.missing_pages = old_counts.pages;
+ 				bitmap->counts.chunkshift = old_counts.chunkshift;
+ 				bitmap->counts.chunks = old_counts.chunks;
+-				bitmap->mddev->bitmap_info.chunksize = 1 << (old_counts.chunkshift +
+-									     BITMAP_BLOCK_SHIFT);
++				bitmap->mddev->bitmap_info.chunksize =
++					1UL << (old_counts.chunkshift + BITMAP_BLOCK_SHIFT);
+ 				blocks = old_counts.chunks << old_counts.chunkshift;
+ 				pr_warn("Could not pre-allocate in-memory bitmap for cluster raid\n");
+ 				break;
+@@ -2537,6 +2538,9 @@ chunksize_store(struct mddev *mddev, con
+ 	if (csize < 512 ||
+ 	    !is_power_of_2(csize))
+ 		return -EINVAL;
++	if (BITS_PER_LONG > 32 && csize >= (1ULL << (BITS_PER_BYTE *
++		sizeof(((bitmap_super_t *)0)->chunksize))))
++		return -EOVERFLOW;
+ 	mddev->bitmap_info.chunksize = csize;
+ 	return len;
+ }
 
 
