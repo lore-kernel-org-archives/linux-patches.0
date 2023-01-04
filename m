@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24D5CAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FB1DC433F0;
-	Wed,  4 Jan 2023 16:18:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53432AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACA01C433D2;
+	Wed,  4 Jan 2023 16:18:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849126;
-	bh=3DkUk8eoE+2U/AM6ITA7Epiw5Jk91N0GFUzZv0dBMkM=;
+	s=korg; t=1672849129;
+	bh=66h0ahMfWUG4UiOA/SnThe4rUc9VPGxQ/L8JgSjEe74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jdshHrnY5BMaFDSH/oyd+0PBFEQEN/4GGcmiSXKlDZmzAjGwJVq6gCJU0iZ6EzXD/
-	 v0qLd+SY0o10H6VQ4l9PrasRiSLt3CWw1G2hLY1aAKjeBAQWoTMEVxc2f3Db1QIF2p
-	 N8H2Mi1RvXjY0CAyP/JRannn1LfQxZd0uS/9jULY=
+	b=HU2fiMRjVQ8niK6V0+IPOcgdwiN9R9I6/cIdOV6WdBulBowbAE77SY+syH3sXgAS0
+	 0z6PHVcgchNU1ap6yOQyDWFQvp+7aq23OiHMJSqYfbU+p1PIwrqbu1PlNKeAw+APFj
+	 1Yqb1yRPPFc0L5ogHULxEUpJAvvftWmlhz0t7ymg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Garg <gargaditya08@live.com>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 6.1 114/207] efi: Add iMac Pro 2017 to uefi skip cert quirk
-Date: Wed,  4 Jan 2023 17:06:12 +0100
-Message-Id: <20230104160515.518997445@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 6.1 109/207] rtc: ds1347: fix value written to century register
+Date: Wed,  4 Jan 2023 17:06:07 +0100
+Message-Id: <20230104160515.357822706@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
 References: <20230104160511.905925875@linuxfoundation.org>
@@ -34,32 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aditya Garg <gargaditya08@live.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit 0be56a116220f9e5731a6609e66a11accfe8d8e2 upstream.
+commit 4dfe05bdc1ade79b943d4979a2e2a8b5ef68fbb5 upstream.
 
-The iMac Pro 2017 is also a T2 Mac. Thus add it to the list of uefi skip
-cert.
+In `ds1347_set_time()`, the wrong value is being written to the
+`DS1347_CENTURY_REG` register.  It needs to be converted to BCD.  Fix
+it.
 
-Cc: stable@vger.kernel.org
-Fixes: 155ca952c7ca ("efi: Do not import certificates from UEFI Secure Boot for T2 Macs")
-Link: https://lore.kernel.org/linux-integrity/9D46D92F-1381-4F10-989C-1A12CD2FFDD8@live.com/
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: 147dae76dbb9 ("rtc: ds1347: handle century register")
+Cc: <stable@vger.kernel.org> # v5.5+
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20221027163249.447416-1-abbotti@mev.co.uk
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/platform_certs/load_uefi.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/rtc/rtc-ds1347.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/security/integrity/platform_certs/load_uefi.c
-+++ b/security/integrity/platform_certs/load_uefi.c
-@@ -35,6 +35,7 @@ static const struct dmi_system_id uefi_s
- 	{ UEFI_QUIRK_SKIP_CERT("Apple Inc.", "MacPro7,1") },
- 	{ UEFI_QUIRK_SKIP_CERT("Apple Inc.", "iMac20,1") },
- 	{ UEFI_QUIRK_SKIP_CERT("Apple Inc.", "iMac20,2") },
-+	{ UEFI_QUIRK_SKIP_CERT("Apple Inc.", "iMacPro1,1") },
- 	{ }
- };
+--- a/drivers/rtc/rtc-ds1347.c
++++ b/drivers/rtc/rtc-ds1347.c
+@@ -112,7 +112,7 @@ static int ds1347_set_time(struct device
+ 		return err;
+ 
+ 	century = (dt->tm_year / 100) + 19;
+-	err = regmap_write(map, DS1347_CENTURY_REG, century);
++	err = regmap_write(map, DS1347_CENTURY_REG, bin2bcd(century));
+ 	if (err)
+ 		return err;
  
 
 
