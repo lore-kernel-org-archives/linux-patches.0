@@ -1,89 +1,83 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DA0AD21
-	for <patches@lists.linux.dev>; Tue,  3 Jan 2023 23:00:36 +0000 (UTC)
-Received: by mail-ed1-f51.google.com with SMTP id b88so38780663edf.6
-        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 15:00:36 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103A37F
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 01:38:49 +0000 (UTC)
+Received: by mail-oi1-f180.google.com with SMTP id r11so28496408oie.13
+        for <patches@lists.linux.dev>; Tue, 03 Jan 2023 17:38:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=7t0cKhaIlP1FC/fSvNTaDmX7GdHTbT3PBblRW/MDDSU=;
-        b=fff3Ylyj6mA8CkFJXoYpmgV68j1IhsciHYHzS2YZKdF4MncvQXqjo+5O+cV++IxS3c
-         EXbi1XpeITKKAoeV8nNNaLygVxiP0tlKbZ6BUHQYXJJzyxgHAhzM2tkaEnuNKc2B/vhz
-         HyM4rpqSpUmCEBaKq9ABZBvIfHnGsEJw0AeuRJtXoCV7Q6mvLNLlyPpQXqt4/cPFcvqR
-         s/B0ZSlhPx/BBUno3LbMyACAoelXq789M+fOjU+bwHamyY0NQxTSe5YHpBuJXYlZXyyp
-         JONtdSh+8Q2blCH8b3yIzJSeeWOF5Ru4zX+exlN7Kwxqk6AB51u7PkyHQqh+PHDv+jQv
-         MxwA==
+        d=linuxtx.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7xiJceqXb+ErDMJE6RdkUBkKlMsVUevK6KQODTOQeNE=;
+        b=cgocR8kJne+v2LfJ1M+39Y+WFnzR2RfHzix5JcICL0w/SQ/MTmRVI3zy6as3846VKB
+         UJ4rET4SgdihgeQ6qQQUYg2UDjq+ulOE5hBTCCGB3rkZN2Tv+QLCNr5FgjwLvVE7wung
+         hSrD9nepNh0YS/faWkd5pRNUkBLvJmu01BWGM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=7t0cKhaIlP1FC/fSvNTaDmX7GdHTbT3PBblRW/MDDSU=;
-        b=qlqHuZXP1PDdUvkyhs1ttwOn5cgwTGnFvMCuFH4U+UY4M38aihcyPDcnO8YGt96EgU
-         B8OUrJg/hlfySqWO4frOXaVYhrKLmE7pMe2Yn+zkC+YqYT6NwBdP6WnVJSE0F5rUJJ36
-         5X1e8Nc7kZSQi07oNNBrnMWc4MFgkM32wYnn5rgUv08aNCDZrhYirlBj/Tjvs7FNOL3A
-         kkmnhF9kB1NXS3kpcf9bb1icvg6wGldeZf2Dx7l/q/vL3TSvOrgdKrRcYfxBWoV58YWE
-         2sEKi47qZHf+ygYBtZEqz0JwTWyBjIEFqwvzxymzJHaUGwRaei7MhFuAU57PZa3y6HBF
-         /LGQ==
-X-Gm-Message-State: AFqh2kqEy6VPtNNTTa/xfIMcJoSFHXoPuTZmVLYTxr+8JGxhudYgU3So
-	dqTOYcp7SJiglYwOT+UbJWr9OFtdkJmNqDQpHnE=
-X-Google-Smtp-Source: AMrXdXtL+LrfDkGxeFJwcG6Ini1fZxJpmMYUjU+MKgEHTzJz5ibDhYKUiTE5BFKHQ9nrTplK9cTZgigpsV2gr87sH9s=
-X-Received: by 2002:aa7:ccd3:0:b0:467:b88c:f3af with SMTP id
- y19-20020aa7ccd3000000b00467b88cf3afmr4554700edt.24.1672786834397; Tue, 03
- Jan 2023 15:00:34 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7xiJceqXb+ErDMJE6RdkUBkKlMsVUevK6KQODTOQeNE=;
+        b=jOP9UqZib9qV7HO8UU7Gy9sE3C5HmWGOi+TweaO8bQvGGq5vPX0TL9EX9sCx8bU3kv
+         JIaTnJBxIB6HxBcDKzEVFHDYTduLKmp8EPNfRHeCW9tZC57jOzFP5DQ2Gd5eFgQ1e2tD
+         6KVzJRXYvhDrjf74z57EXZOlDyS1z61LNIWIDAyVt6rQtAunIFrYIj9/QvM5HKrQ5KCq
+         HLT7Dg2kCvR+y1QO9jBF4xBFXUBJ63KC2g4C4jmO85frjdPIa0UKpSkq9jwKfEyttMqn
+         oN5SrqMecX5Ri8410+I7Zcb9oxdVtnt9PuS61HZMklkbb6hq5WLs+3D3p828XV93JFvw
+         Cubg==
+X-Gm-Message-State: AFqh2kq1+ZRxiSsKKmGew7oTTfA00kjYV4T++N6rce+vgxQmCQ01m6a8
+	TVlYqfWIxaDHEJoYi/zcedU63A==
+X-Google-Smtp-Source: AMrXdXuEEiqD7YMLDJRG/moqiOTIvlKBHn0RDaHAY+4JnbJkovH7LLd3AlM4DQiO8DdZIIDGhE5JhQ==
+X-Received: by 2002:a05:6808:2020:b0:35e:46d9:21bf with SMTP id q32-20020a056808202000b0035e46d921bfmr28869075oiw.17.1672796328975;
+        Tue, 03 Jan 2023 17:38:48 -0800 (PST)
+Received: from fedora64.linuxtx.org (99-47-93-78.lightspeed.rcsntx.sbcglobal.net. [99.47.93.78])
+        by smtp.gmail.com with ESMTPSA id b66-20020acab245000000b0035b4b6d1bbfsm13559979oif.28.2023.01.03.17.38.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 03 Jan 2023 17:38:48 -0800 (PST)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Tue, 3 Jan 2023 19:38:46 -0600
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.0 00/74] 6.0.17-rc1 review
+Message-ID: <Y7TYpnlZWQHBa1Lm@fedora64.linuxtx.org>
+References: <20230102110552.061937047@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230102110552.061937047@linuxfoundation.org> <Y7QFW7O0xqSYTzyl@debian>
-In-Reply-To: <Y7QFW7O0xqSYTzyl@debian>
-From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
-Date: Tue, 3 Jan 2023 22:59:58 +0000
-Message-ID: <CADVatmPJrRsKTNyzWYeU10k+3eycd1bXTnwAaF7KKOR+h6mwYw@mail.gmail.com>
-Subject: Re: [PATCH 6.0 00/74] 6.0.17-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "David S. Miller" <davem@davemloft.net>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net, 
-	rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230102110552.061937047@linuxfoundation.org>
 
-On Tue, 3 Jan 2023 at 10:37, Sudip Mukherjee (Codethink)
-<sudipm.mukherjee@gmail.com> wrote:
->
-> Hi Greg,
->
-> On Mon, Jan 02, 2023 at 12:21:33PM +0100, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.0.17 release.
-> > There are 74 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Wed, 04 Jan 2023 11:05:34 +0000.
-> > Anything received after that time might be too late.
->
+On Mon, Jan 02, 2023 at 12:21:33PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.0.17 release.
+> There are 74 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 04 Jan 2023 11:05:34 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.17-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-<snip>
+Tested rc1 against the Fedora build system (aarch64, armv7, ppc64le,
+s390x, x86_64), and boot tested x86_64. No regressions noted.
 
->
-> mips: Booted on ci20 board. VNC server did not start, will try a bisect
-> later tonight.
-
-bisect pointed to 2575eebf1bd2 ("net: Return errno in
-sk->sk_prot->get_port().") introduced in v6.0.16
-Reverting it on top of v6.0.16 and 6.0.17-rc1 fixed the problem.
-
-This is also in v6.1.y but the issue is not seen there, and I am
-trying to figure out why.
-
-
--- 
-Regards
-Sudip
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
