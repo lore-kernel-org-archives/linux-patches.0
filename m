@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E4DEAD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7E7FC433EF;
-	Wed,  4 Jan 2023 16:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D810AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8E6DC433EF;
+	Wed,  4 Jan 2023 16:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849047;
-	bh=0HU7Je5V9YnjSCDZCiVpdSEDQ3DH6els76GEx1VHdpQ=;
+	s=korg; t=1672849050;
+	bh=scUS75onR2KFU/u0/I8GBilWvW5VJ6Ac1LkMBjnP7hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HLjaM98YOdOS24z8UGWCssW0yNaHmoHEwfSQfW/t0eNywju/eJcraIXtoFL/JyC8n
-	 wYfYuyIYmUlOixcjp9qi/WxGM8da6bj0S/CrUp4YquWz5EMaObOyTPUtnwpMTGGW0i
-	 3DaAZUNbBMk9h81YCPyIrvu0NE0REgI2qsN6AJgE=
+	b=jlLI5leoTXEvXocpmFsN+AkUPbeg6X7KOhjyK7GZ0TysTb0T+jCLT1CYdT4Qf+bZW
+	 QtVUw8mpbvBWiVlnFxY539zdqb5dM4b0Aeju0Xjeavy7b+KHdSw53kmup3efts6kLy
+	 JzC82XCGWfEFJ95uULL4k34g/4PweirabbMKKQBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>
-Subject: [PATCH 6.0 055/177] perf/core: Call LSM hook after copying perf_event_attr
-Date: Wed,  4 Jan 2023 17:05:46 +0100
-Message-Id: <20230104160509.313222828@linuxfoundation.org>
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Tianjia Zhang <tianjia.zhang@linux.alibaba.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 6.1 125/207] crypto: ccree,hisilicon - Fix dependencies to correct algorithm
+Date: Wed,  4 Jan 2023 17:06:23 +0100
+Message-Id: <20230104160515.873105666@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,41 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
 
-commit 0a041ebca4956292cadfb14a63ace3a9c1dcb0a3 upstream.
+commit 2ae6feb1a1f6678fe11864f1b6920ed10b09ad6a upstream.
 
-It passes the attr struct to the security_perf_event_open() but it's
-not initialized yet.
+Commit d2825fa9365d ("crypto: sm3,sm4 - move into crypto directory") moves
+the SM3 and SM4 stand-alone library and the algorithm implementation for
+the Crypto API into the same directory, and the corresponding relationship
+of Kconfig is modified, CONFIG_CRYPTO_SM3/4 corresponds to the stand-alone
+library of SM3/4, and CONFIG_CRYPTO_SM3/4_GENERIC corresponds to the
+algorithm implementation for the Crypto API. Therefore, it is necessary
+for this module to depend on the correct algorithm.
 
-Fixes: da97e18458fb ("perf_event: Add support for LSM and SELinux checks")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Joel Fernandes (Google) <joel@joelfernandes.org>
-Cc: stable@vger.kernel.org
-Link: https://lkml.kernel.org/r/20221220223140.4020470-1-namhyung@kernel.org
+Fixes: d2825fa9365d ("crypto: sm3,sm4 - move into crypto directory")
+Cc: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: stable@vger.kernel.org # v5.19+
+Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/events/core.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/crypto/Kconfig           |    4 ++--
+ drivers/crypto/hisilicon/Kconfig |    2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -12176,12 +12176,12 @@ SYSCALL_DEFINE5(perf_event_open,
- 	if (flags & ~PERF_FLAG_ALL)
- 		return -EINVAL;
- 
--	/* Do we allow access to perf_event_open(2) ? */
--	err = security_perf_event_open(&attr, PERF_SECURITY_OPEN);
-+	err = perf_copy_attr(attr_uptr, &attr);
- 	if (err)
- 		return err;
- 
--	err = perf_copy_attr(attr_uptr, &attr);
-+	/* Do we allow access to perf_event_open(2) ? */
-+	err = security_perf_event_open(&attr, PERF_SECURITY_OPEN);
- 	if (err)
- 		return err;
- 
+--- a/drivers/crypto/Kconfig
++++ b/drivers/crypto/Kconfig
+@@ -790,8 +790,8 @@ config CRYPTO_DEV_CCREE
+ 	select CRYPTO_ECB
+ 	select CRYPTO_CTR
+ 	select CRYPTO_XTS
+-	select CRYPTO_SM4
+-	select CRYPTO_SM3
++	select CRYPTO_SM4_GENERIC
++	select CRYPTO_SM3_GENERIC
+ 	help
+ 	  Say 'Y' to enable a driver for the REE interface of the Arm
+ 	  TrustZone CryptoCell family of processors. Currently the
+--- a/drivers/crypto/hisilicon/Kconfig
++++ b/drivers/crypto/hisilicon/Kconfig
+@@ -26,7 +26,7 @@ config CRYPTO_DEV_HISI_SEC2
+ 	select CRYPTO_SHA1
+ 	select CRYPTO_SHA256
+ 	select CRYPTO_SHA512
+-	select CRYPTO_SM4
++	select CRYPTO_SM4_GENERIC
+ 	depends on PCI && PCI_MSI
+ 	depends on UACCE || UACCE=n
+ 	depends on ARM64 || (COMPILE_TEST && 64BIT)
 
 
