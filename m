@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925C1AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:24:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09F0EC433D2;
-	Wed,  4 Jan 2023 16:24:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB37EAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:24:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 263C4C433EF;
+	Wed,  4 Jan 2023 16:24:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849443;
-	bh=U/M665vaTwwilOYW7WhhzQzwI8CAkP/i2OLpsIirIzY=;
+	s=korg; t=1672849446;
+	bh=Ics49q2apegzyJk6UleG046jQ43q2/pwb4+WI0ZA+3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jtNM3CYO7AolmOf+ALocicjrkOLNppRI1M/lldivBi2/yALIB2ZhhKa3tngXgChxU
-	 4JkuPXcgFhuIF3lFvjHsaHyRwuRXARz8b9GEnj/ucvCU9cycTpwy101mecWyuQkCfx
-	 uPKOc4QxQpet61e0HciU0XRq3JMHOSKlsbYWbf7w=
+	b=pQlJoiVuV7aaNzcXh4POrGpMO24vb4hNmVZEV6sX38dRYufAr7PqiIkulOGAgNGgh
+	 8HG9Ncrj4Fu9LEVFhQlcECeGr+d2w7M6TP6vdW8PsDMYo4wuRzMIWEVuoU6EVC/2cU
+	 K48n8o/KHpFq7xwjj+Wwbml7CVgnFUBpHYgCPeIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	stable@kernel.org,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 190/207] ext4: fix corrupt backup group descriptors after online resize
-Date: Wed,  4 Jan 2023 17:07:28 +0100
-Message-Id: <20230104160517.918367834@linuxfoundation.org>
+	Wang Weiyang <wangweiyang2@huawei.com>,
+	Aristeu Rozanski <aris@redhat.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 6.0 124/177] device_cgroup: Roll back to original exceptions after copy failure
+Date: Wed,  4 Jan 2023 17:06:55 +0100
+Message-Id: <20230104160511.399629422@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,92 +35,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Wang Weiyang <wangweiyang2@huawei.com>
 
-commit 8f49ec603ae3e213bfab2799182724e3abac55a1 upstream.
+commit e68bfbd3b3c3a0ec3cf8c230996ad8cabe90322f upstream.
 
-In commit 9a8c5b0d0615 ("ext4: update the backup superblock's at the end
-of the online resize"), it is assumed that update_backups() only updates
-backup superblocks, so each b_data is treated as a backupsuper block to
-update its s_block_group_nr and s_checksum. However, update_backups()
-also updates the backup group descriptors, which causes the backup group
-descriptors to be corrupted.
+When add the 'a *:* rwm' entry to devcgroup A's whitelist, at first A's
+exceptions will be cleaned and A's behavior is changed to
+DEVCG_DEFAULT_ALLOW. Then parent's exceptions will be copyed to A's
+whitelist. If copy failure occurs, just return leaving A to grant
+permissions to all devices. And A may grant more permissions than
+parent.
 
-The above commit fixes the problem of invalid checksum of the backup
-superblock. The root cause of this problem is that the checksum of
-ext4_update_super() is not set correctly. This problem has been fixed
-in the previous patch ("ext4: fix bad checksum after online resize").
+Backup A's whitelist and recover original exceptions after copy
+failure.
 
-However, we do need to set block_group_nr for the backup superblock in
-update_backups(). When a block is in a group that contains a backup
-superblock, and the block is the first block in the group, the block is
-definitely a superblock. We add a helper function that includes setting
-s_block_group_nr and updating checksum, and then call it only when the
-above conditions are met to prevent the backup group descriptors from
-being incorrectly modified.
-
-Fixes: 9a8c5b0d0615 ("ext4: update the backup superblock's at the end of the online resize")
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Cc: stable@kernel.org
-Link: https://lore.kernel.org/r/20221117040341.1380702-3-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@vger.kernel.org
+Fixes: 4cef7299b478 ("device_cgroup: add proper checking when changing default behavior")
+Signed-off-by: Wang Weiyang <wangweiyang2@huawei.com>
+Reviewed-by: Aristeu Rozanski <aris@redhat.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/resize.c |   22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ security/device_cgroup.c |   33 +++++++++++++++++++++++++++++----
+ 1 file changed, 29 insertions(+), 4 deletions(-)
 
---- a/fs/ext4/resize.c
-+++ b/fs/ext4/resize.c
-@@ -1110,6 +1110,16 @@ exit_free:
- 	return err;
+--- a/security/device_cgroup.c
++++ b/security/device_cgroup.c
+@@ -82,6 +82,17 @@ free_and_exit:
+ 	return -ENOMEM;
  }
  
-+static inline void ext4_set_block_group_nr(struct super_block *sb, char *data,
-+					   ext4_group_t group)
++static void dev_exceptions_move(struct list_head *dest, struct list_head *orig)
 +{
-+	struct ext4_super_block *es = (struct ext4_super_block *) data;
++	struct dev_exception_item *ex, *tmp;
 +
-+	es->s_block_group_nr = cpu_to_le16(group);
-+	if (ext4_has_metadata_csum(sb))
-+		es->s_checksum = ext4_superblock_csum(sb, es);
++	lockdep_assert_held(&devcgroup_mutex);
++
++	list_for_each_entry_safe(ex, tmp, orig, list) {
++		list_move_tail(&ex->list, dest);
++	}
 +}
 +
  /*
-  * Update the backup copies of the ext4 metadata.  These don't need to be part
-  * of the main resize transaction, because e2fsck will re-write them if there
-@@ -1158,7 +1168,8 @@ static void update_backups(struct super_
- 	while (group < sbi->s_groups_count) {
- 		struct buffer_head *bh;
- 		ext4_fsblk_t backup_block;
--		struct ext4_super_block *es;
-+		int has_super = ext4_bg_has_super(sb, group);
-+		ext4_fsblk_t first_block = ext4_group_first_block_no(sb, group);
+  * called under devcgroup_mutex
+  */
+@@ -604,11 +615,13 @@ static int devcgroup_update_access(struc
+ 	int count, rc = 0;
+ 	struct dev_exception_item ex;
+ 	struct dev_cgroup *parent = css_to_devcgroup(devcgroup->css.parent);
++	struct dev_cgroup tmp_devcgrp;
  
- 		/* Out of journal space, and can't get more - abort - so sad */
- 		err = ext4_resize_ensure_credits_batch(handle, 1);
-@@ -1168,8 +1179,7 @@ static void update_backups(struct super_
- 		if (meta_bg == 0)
- 			backup_block = ((ext4_fsblk_t)group) * bpg + blk_off;
- 		else
--			backup_block = (ext4_group_first_block_no(sb, group) +
--					ext4_bg_has_super(sb, group));
-+			backup_block = first_block + has_super;
+ 	if (!capable(CAP_SYS_ADMIN))
+ 		return -EPERM;
  
- 		bh = sb_getblk(sb, backup_block);
- 		if (unlikely(!bh)) {
-@@ -1187,10 +1197,8 @@ static void update_backups(struct super_
- 		memcpy(bh->b_data, data, size);
- 		if (rest)
- 			memset(bh->b_data + size, 0, rest);
--		es = (struct ext4_super_block *) bh->b_data;
--		es->s_block_group_nr = cpu_to_le16(group);
--		if (ext4_has_metadata_csum(sb))
--			es->s_checksum = ext4_superblock_csum(sb, es);
-+		if (has_super && (backup_block == first_block))
-+			ext4_set_block_group_nr(sb, bh->b_data, group);
- 		set_buffer_uptodate(bh);
- 		unlock_buffer(bh);
- 		err = ext4_handle_dirty_metadata(handle, NULL, bh);
+ 	memset(&ex, 0, sizeof(ex));
++	memset(&tmp_devcgrp, 0, sizeof(tmp_devcgrp));
+ 	b = buffer;
+ 
+ 	switch (*b) {
+@@ -620,15 +633,27 @@ static int devcgroup_update_access(struc
+ 
+ 			if (!may_allow_all(parent))
+ 				return -EPERM;
+-			dev_exception_clean(devcgroup);
+-			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
+-			if (!parent)
++			if (!parent) {
++				devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
++				dev_exception_clean(devcgroup);
+ 				break;
++			}
+ 
++			INIT_LIST_HEAD(&tmp_devcgrp.exceptions);
++			rc = dev_exceptions_copy(&tmp_devcgrp.exceptions,
++						 &devcgroup->exceptions);
++			if (rc)
++				return rc;
++			dev_exception_clean(devcgroup);
+ 			rc = dev_exceptions_copy(&devcgroup->exceptions,
+ 						 &parent->exceptions);
+-			if (rc)
++			if (rc) {
++				dev_exceptions_move(&devcgroup->exceptions,
++						    &tmp_devcgrp.exceptions);
+ 				return rc;
++			}
++			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
++			dev_exception_clean(&tmp_devcgrp);
+ 			break;
+ 		case DEVCG_DENY:
+ 			if (css_has_online_children(&devcgroup->css))
 
 
