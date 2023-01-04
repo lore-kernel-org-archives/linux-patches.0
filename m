@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39315AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:24:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B075C433D2;
-	Wed,  4 Jan 2023 16:24:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39769AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:24:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94717C433D2;
+	Wed,  4 Jan 2023 16:24:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849489;
-	bh=u3zHtlQsP12Ra3f/B/bvG47e3nPFrKyX4RCwckyKPqA=;
+	s=korg; t=1672849492;
+	bh=Y9avWnrdo1KJJsjerhAmp289Ae/E1SbEtbzXTHDwICQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HzD91gIiruUSEHHoLo53VWyKHVNQ7BTyGEnWdznjKBYy0H/nLMaeCEos3Zd/Z3+Oj
-	 mSUIbeW5fsMnkKI853y0zuHekoKmiYcg9WugCoplW+/PPVfwLL9GDuUcF4Q24gJ2GR
-	 wcQo7iOEX/KQkUt92QLElxn/n1/xyqjz53PPbY3M=
+	b=ndRrAiwGMTShVq7ldqYsiL/j+WXOrjrqi9uakn+AEAxpX9eLnY4W/3lYKo7FD0auQ
+	 zh68nRxu+1Tf4bY29xh41VqV1F5VZinljWJVBdyrLLv2w7vCmkP8xJQEszZpxuQth6
+	 6ZZazYKUp2TOiKAgHc00nX/dadLuhUvbEc3bctv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.1 197/207] ext4: allocate extended attribute value in vmalloc area
-Date: Wed,  4 Jan 2023 17:07:35 +0100
-Message-Id: <20230104160518.158223962@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.0 131/177] arm64: efi: Execute runtime services from a dedicated stack
+Date: Wed,  4 Jan 2023 17:07:02 +0100
+Message-Id: <20230104160511.618254851@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,45 +33,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ye Bin <yebin10@huawei.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit cc12a6f25e07ed05d5825a1664b67a970842b2ca upstream.
+commit ff7a167961d1b97e0e205f245f806e564d3505e7 upstream.
 
-Now, extended attribute value maximum length is 64K. The memory
-requested here does not need continuous physical addresses, so it is
-appropriate to use kvmalloc to request memory. At the same time, it
-can also cope with the situation that the extended attribute will
-become longer in the future.
+With the introduction of PRMT in the ACPI subsystem, the EFI rts
+workqueue is no longer the only caller of efi_call_virt_pointer() in the
+kernel. This means the EFI runtime services lock is no longer sufficient
+to manage concurrent calls into firmware, but also that firmware calls
+may occur that are not marshalled via the workqueue mechanism, but
+originate directly from the caller context.
 
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221208023233.1231330-3-yebin@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+For added robustness, and to ensure that the runtime services have 8 KiB
+of stack space available as per the EFI spec, introduce a spinlock
+protected EFI runtime stack of 8 KiB, where the spinlock also ensures
+serialization between the EFI rts workqueue (which itself serializes EFI
+runtime calls) and other callers of efi_call_virt_pointer().
+
+While at it, use the stack pivot to avoid reloading the shadow call
+stack pointer from the ordinary stack, as doing so could produce a
+gadget to defeat it.
+
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm64/include/asm/efi.h       |    3 +++
+ arch/arm64/kernel/efi-rt-wrapper.S |   13 ++++++++++++-
+ arch/arm64/kernel/efi.c            |   27 +++++++++++++++++++++++++++
+ 3 files changed, 42 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -2550,7 +2550,7 @@ static int ext4_xattr_move_to_block(hand
+--- a/arch/arm64/include/asm/efi.h
++++ b/arch/arm64/include/asm/efi.h
+@@ -25,6 +25,7 @@ int efi_set_mapping_permissions(struct m
+ ({									\
+ 	efi_virtmap_load();						\
+ 	__efi_fpsimd_begin();						\
++	spin_lock(&efi_rt_lock);					\
+ })
  
- 	is = kzalloc(sizeof(struct ext4_xattr_ibody_find), GFP_NOFS);
- 	bs = kzalloc(sizeof(struct ext4_xattr_block_find), GFP_NOFS);
--	buffer = kmalloc(value_size, GFP_NOFS);
-+	buffer = kvmalloc(value_size, GFP_NOFS);
- 	b_entry_name = kmalloc(entry->e_name_len + 1, GFP_NOFS);
- 	if (!is || !bs || !buffer || !b_entry_name) {
- 		error = -ENOMEM;
-@@ -2602,7 +2602,7 @@ static int ext4_xattr_move_to_block(hand
- 	error = 0;
- out:
- 	kfree(b_entry_name);
--	kfree(buffer);
-+	kvfree(buffer);
- 	if (is)
- 		brelse(is->iloc.bh);
- 	if (bs)
+ #undef arch_efi_call_virt
+@@ -33,10 +34,12 @@ int efi_set_mapping_permissions(struct m
+ 
+ #define arch_efi_call_virt_teardown()					\
+ ({									\
++	spin_unlock(&efi_rt_lock);					\
+ 	__efi_fpsimd_end();						\
+ 	efi_virtmap_unload();						\
+ })
+ 
++extern spinlock_t efi_rt_lock;
+ efi_status_t __efi_rt_asm_wrapper(void *, const char *, ...);
+ 
+ #define ARCH_EFI_IRQ_FLAGS_MASK (PSR_D_BIT | PSR_A_BIT | PSR_I_BIT | PSR_F_BIT)
+--- a/arch/arm64/kernel/efi-rt-wrapper.S
++++ b/arch/arm64/kernel/efi-rt-wrapper.S
+@@ -16,6 +16,12 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
+ 	 */
+ 	stp	x1, x18, [sp, #16]
+ 
++	ldr_l	x16, efi_rt_stack_top
++	mov	sp, x16
++#ifdef CONFIG_SHADOW_CALL_STACK
++	str	x18, [sp, #-16]!
++#endif
++
+ 	/*
+ 	 * We are lucky enough that no EFI runtime services take more than
+ 	 * 5 arguments, so all are passed in registers rather than via the
+@@ -29,6 +35,7 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
+ 	mov	x4, x6
+ 	blr	x8
+ 
++	mov	sp, x29
+ 	ldp	x1, x2, [sp, #16]
+ 	cmp	x2, x18
+ 	ldp	x29, x30, [sp], #32
+@@ -42,6 +49,10 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
+ 	 * called with preemption disabled and a separate shadow stack is used
+ 	 * for interrupts.
+ 	 */
+-	mov	x18, x2
++#ifdef CONFIG_SHADOW_CALL_STACK
++	ldr_l	x18, efi_rt_stack_top
++	ldr	x18, [x18, #-16]
++#endif
++
+ 	b	efi_handle_corrupted_x18	// tail call
+ SYM_FUNC_END(__efi_rt_asm_wrapper)
+--- a/arch/arm64/kernel/efi.c
++++ b/arch/arm64/kernel/efi.c
+@@ -144,3 +144,30 @@ asmlinkage efi_status_t efi_handle_corru
+ 	pr_err_ratelimited(FW_BUG "register x18 corrupted by EFI %s\n", f);
+ 	return s;
+ }
++
++DEFINE_SPINLOCK(efi_rt_lock);
++
++asmlinkage u64 *efi_rt_stack_top __ro_after_init;
++
++/* EFI requires 8 KiB of stack space for runtime services */
++static_assert(THREAD_SIZE >= SZ_8K);
++
++static int __init arm64_efi_rt_init(void)
++{
++	void *p;
++
++	if (!efi_enabled(EFI_RUNTIME_SERVICES))
++		return 0;
++
++	p = __vmalloc_node(THREAD_SIZE, THREAD_ALIGN, GFP_KERNEL,
++			   NUMA_NO_NODE, &&l);
++l:	if (!p) {
++		pr_warn("Failed to allocate EFI runtime stack\n");
++		clear_bit(EFI_RUNTIME_SERVICES, &efi.flags);
++		return -ENOMEM;
++	}
++
++	efi_rt_stack_top = p + THREAD_SIZE;
++	return 0;
++}
++core_initcall(arm64_efi_rt_init);
 
 
