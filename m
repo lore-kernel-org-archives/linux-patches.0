@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3224AAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:24:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56FCC433D2;
-	Wed,  4 Jan 2023 16:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D039AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:24:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0938C433D2;
+	Wed,  4 Jan 2023 16:24:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849495;
-	bh=MvVGUDtIvMOh7+1YcCiSwII4EajhyZTlwB/AJsib72o=;
+	s=korg; t=1672849498;
+	bh=wiAIjIg6fyEs03sUJS9d08v2ut1gRznqaNxm/J16Kq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FE5odK3m72meSBrGTYUvf2SR9HEmjcLfJkD78exWOxTT8ywdauXriGhuzLHRbG5FR
-	 /NGxtcZ/gUPc8RhsanlfBcfTcyIQ69dfoZ1d4ENxOEhCjJjnJupS1J6OLpjMyevyrV
-	 4fAR+Eoi4FwrIow3x1zQheT9SXXtyVNyCtWkl+gw=
+	b=GnMyG6anm0M+26VjckxNIFJOW1GqAuzAxrQTcvmTSnMfivPu4heRo2Gfyf44L35ad
+	 KHI94tYYE2wbQiyA+CWdsDph42Sve8p1k/4Skossti4fowaZMcwV80PuMsN9HthYtG
+	 YOIhNHmTI/fjXbU/PwqEk1IXiOzPc6IjUHbrLO8c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Shuicheng Lin <shuicheng.lin@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.1 198/207] drm/i915/ttm: consider CCS for backup objects
-Date: Wed,  4 Jan 2023 17:07:36 +0100
-Message-Id: <20230104160518.187897439@linuxfoundation.org>
+	stable@kernel.org,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.0 132/177] ext4: silence the warning when evicting inode with dioread_nolock
+Date: Wed,  4 Jan 2023 17:07:03 +0100
+Message-Id: <20230104160511.646722559@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,109 +36,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit ad0fca2dceeab8fdd8e1135f4b4ef2dc46c2ead9 upstream.
+commit bc12ac98ea2e1b70adc6478c8b473a0003b659d3 upstream.
 
-It seems we can have one or more framebuffers that are still pinned when
-suspending lmem, in such a case we end up creating a shmem backup
-object, instead of evicting the object directly, but this will skip
-copying the CCS aux state, since we don't allocate the extra storage for
-the CCS pages as part of the ttm_tt construction. Since we can already
-deal with pinned objects just fine, it doesn't seem too nasty to just
-extend to support dealing with the CCS aux state, if the object is a
-pinned framebuffer. This fixes display corruption (like in gnome-shell)
-seen on DG2 when returning from suspend.
+When evicting an inode with default dioread_nolock, it could be raced by
+the unwritten extents converting kworker after writeback some new
+allocated dirty blocks. It convert unwritten extents to written, the
+extents could be merged to upper level and free extent blocks, so it
+could mark the inode dirty again even this inode has been marked
+I_FREEING. But the inode->i_io_list check and warning in
+ext4_evict_inode() missing this corner case. Fortunately,
+ext4_evict_inode() will wait all extents converting finished before this
+check, so it will not lead to inode use-after-free problem, every thing
+is OK besides this warning. The WARN_ON_ONCE was originally designed
+for finding inode use-after-free issues in advance, but if we add
+current dioread_nolock case in, it will become not quite useful, so fix
+this warning by just remove this check.
 
-Fixes: da0595ae91da ("drm/i915/migrate: Evict and restore the flatccs capable lmem obj")
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Nirmoy Das <nirmoy.das@intel.com>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>
-Cc: Shuicheng Lin <shuicheng.lin@intel.com>
-Cc: <stable@vger.kernel.org> # v5.19+
-Tested-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221212171958.82593-2-matthew.auld@intel.com
-(cherry picked from commit 95df9cc24bee8a09d39c62bcef4319b984814e18)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+ ======
+ WARNING: CPU: 7 PID: 1092 at fs/ext4/inode.c:227
+ ext4_evict_inode+0x875/0xc60
+ ...
+ RIP: 0010:ext4_evict_inode+0x875/0xc60
+ ...
+ Call Trace:
+  <TASK>
+  evict+0x11c/0x2b0
+  iput+0x236/0x3a0
+  do_unlinkat+0x1b4/0x490
+  __x64_sys_unlinkat+0x4c/0xb0
+  do_syscall_64+0x3b/0x90
+  entry_SYSCALL_64_after_hwframe+0x46/0xb0
+ RIP: 0033:0x7fa933c1115b
+ ======
+
+rm                          kworker
+                            ext4_end_io_end()
+vfs_unlink()
+ ext4_unlink()
+                             ext4_convert_unwritten_io_end_vec()
+                              ext4_convert_unwritten_extents()
+                               ext4_map_blocks()
+                                ext4_ext_map_blocks()
+                                 ext4_ext_try_to_merge_up()
+                                  __mark_inode_dirty()
+                                   check !I_FREEING
+                                   locked_inode_to_wb_and_lock_list()
+ iput()
+  iput_final()
+   evict()
+    ext4_evict_inode()
+     truncate_inode_pages_final() //wait release io_end
+                                    inode_io_list_move_locked()
+                             ext4_release_io_end()
+     trigger WARN_ON_ONCE()
+
+Cc: stable@kernel.org
+Fixes: ceff86fddae8 ("ext4: Avoid freeing inodes on dirty list")
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20220629112647.4141034-1-yi.zhang@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_object.c       |    3 +++
- drivers/gpu/drm/i915/gem/i915_gem_object_types.h |   10 ++++++----
- drivers/gpu/drm/i915/gem/i915_gem_ttm_pm.c       |   18 +++++++++++++++++-
- 3 files changed, 26 insertions(+), 5 deletions(-)
+ fs/ext4/inode.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_object.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_object.c
-@@ -761,6 +761,9 @@ bool i915_gem_object_needs_ccs_pages(str
- 	if (!HAS_FLAT_CCS(to_i915(obj->base.dev)))
- 		return false;
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -222,13 +222,13 @@ void ext4_evict_inode(struct inode *inod
  
-+	if (obj->flags & I915_BO_ALLOC_CCS_AUX)
-+		return true;
-+
- 	for (i = 0; i < obj->mm.n_placements; i++) {
- 		/* Compression is not allowed for the objects with smem placement */
- 		if (obj->mm.placements[i]->type == INTEL_MEMORY_SYSTEM)
---- a/drivers/gpu/drm/i915/gem/i915_gem_object_types.h
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_object_types.h
-@@ -327,16 +327,18 @@ struct drm_i915_gem_object {
-  * dealing with userspace objects the CPU fault handler is free to ignore this.
-  */
- #define I915_BO_ALLOC_GPU_ONLY	  BIT(6)
-+#define I915_BO_ALLOC_CCS_AUX	  BIT(7)
- #define I915_BO_ALLOC_FLAGS (I915_BO_ALLOC_CONTIGUOUS | \
- 			     I915_BO_ALLOC_VOLATILE | \
- 			     I915_BO_ALLOC_CPU_CLEAR | \
- 			     I915_BO_ALLOC_USER | \
- 			     I915_BO_ALLOC_PM_VOLATILE | \
- 			     I915_BO_ALLOC_PM_EARLY | \
--			     I915_BO_ALLOC_GPU_ONLY)
--#define I915_BO_READONLY          BIT(7)
--#define I915_TILING_QUIRK_BIT     8 /* unknown swizzling; do not release! */
--#define I915_BO_PROTECTED         BIT(9)
-+			     I915_BO_ALLOC_GPU_ONLY | \
-+			     I915_BO_ALLOC_CCS_AUX)
-+#define I915_BO_READONLY          BIT(8)
-+#define I915_TILING_QUIRK_BIT     9 /* unknown swizzling; do not release! */
-+#define I915_BO_PROTECTED         BIT(10)
- 	/**
- 	 * @mem_flags - Mutable placement-related flags
- 	 *
---- a/drivers/gpu/drm/i915/gem/i915_gem_ttm_pm.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_ttm_pm.c
-@@ -50,6 +50,7 @@ static int i915_ttm_backup(struct i915_g
- 		container_of(bo->bdev, typeof(*i915), bdev);
- 	struct drm_i915_gem_object *backup;
- 	struct ttm_operation_ctx ctx = {};
-+	unsigned int flags;
- 	int err = 0;
+ 	/*
+ 	 * For inodes with journalled data, transaction commit could have
+-	 * dirtied the inode. Flush worker is ignoring it because of I_FREEING
+-	 * flag but we still need to remove the inode from the writeback lists.
++	 * dirtied the inode. And for inodes with dioread_nolock, unwritten
++	 * extents converting worker could merge extents and also have dirtied
++	 * the inode. Flush worker is ignoring it because of I_FREEING flag but
++	 * we still need to remove the inode from the writeback lists.
+ 	 */
+-	if (!list_empty_careful(&inode->i_io_list)) {
+-		WARN_ON_ONCE(!ext4_should_journal_data(inode));
++	if (!list_empty_careful(&inode->i_io_list))
+ 		inode_io_list_del(inode);
+-	}
  
- 	if (bo->resource->mem_type == I915_PL_SYSTEM || obj->ttm.backup)
-@@ -65,7 +66,22 @@ static int i915_ttm_backup(struct i915_g
- 	if (obj->flags & I915_BO_ALLOC_PM_VOLATILE)
- 		return 0;
- 
--	backup = i915_gem_object_create_shmem(i915, obj->base.size);
-+	/*
-+	 * It seems that we might have some framebuffers still pinned at this
-+	 * stage, but for such objects we might also need to deal with the CCS
-+	 * aux state. Make sure we force the save/restore of the CCS state,
-+	 * otherwise we might observe display corruption, when returning from
-+	 * suspend.
-+	 */
-+	flags = 0;
-+	if (i915_gem_object_needs_ccs_pages(obj)) {
-+		WARN_ON_ONCE(!i915_gem_object_is_framebuffer(obj));
-+		WARN_ON_ONCE(!pm_apply->allow_gpu);
-+
-+		flags = I915_BO_ALLOC_CCS_AUX;
-+	}
-+	backup = i915_gem_object_create_region(i915->mm.regions[INTEL_REGION_SMEM],
-+					       obj->base.size, 0, flags);
- 	if (IS_ERR(backup))
- 		return PTR_ERR(backup);
- 
+ 	/*
+ 	 * Protect us against freezing - iput() caller didn't have to have any
 
 
