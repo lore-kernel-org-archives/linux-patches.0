@@ -1,35 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5BDAD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:15:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FFE0C433D2;
-	Wed,  4 Jan 2023 16:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEB9AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:16:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A11B1C433D2;
+	Wed,  4 Jan 2023 16:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848958;
-	bh=crwRSUmU+3Quc+5mw88khZvxEgG14IXUugIzMdhQ0+g=;
+	s=korg; t=1672848961;
+	bh=RMlV+wJd0i/9lQeG86KmABf7eoEg28Xrh7cV4TvGs+0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0cIDXwEA4nPJsPq0u8Pa3vA1oUFsoS6Q20N1i//lN/Cn2zY4XES71e6Ad0JCaQEPO
-	 LSQB9dP1F5XMt3sybFPqX+ExTZggZtQFeVRd9VdL2Qq27+vTIXzwMmfRkoK0aFzhYH
-	 0ls9hGjUM274m/r+87B3WNbdi/dWg6eayrH6/3ig=
+	b=WZmKKVkPYSBXJqjuGPfKaow3GbI5nP/hpQ/w/hV3vcoR8/pIDOYvEOp0JmDhCg6bk
+	 lC7K4JPqbyu5ex3T+SeAC5urmQxtYNE/388PKwT8i1DA7CD3yk15Z/p4MsCMRGAZUZ
+	 z7pUUCAH+UioFtbOxIrX0V+OoDMi6H2ImLjjwo4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	"x86@kernel.org" <x86@kernel.org>,
-	Borislav Petkov <bp@alien8.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 087/207] ftrace/x86: Add back ftrace_expected for ftrace bug reports
-Date: Wed,  4 Jan 2023 17:05:45 +0100
-Message-Id: <20230104160514.697052116@linuxfoundation.org>
+	Evan Quan <evan.quan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.0 018/177] drm/amd/pm: correct SMU13.0.0 pstate profiling clock settings
+Date: Wed,  4 Jan 2023 17:05:09 +0100
+Message-Id: <20230104160508.210552935@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -40,47 +34,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Evan Quan <evan.quan@amd.com>
 
-commit fd3dc56253acbe9c641a66d312d8393cd55eb04c upstream.
+commit 32a7819ff8e25375c7515aaae5cfcb8c44a461b7 upstream.
 
-After someone reported a bug report with a failed modification due to the
-expected value not matching what was found, it came to my attention that
-the ftrace_expected is no longer set when that happens. This makes for
-debugging the issue a bit more difficult.
+Correct the pstate standard/peak profiling mode clock settings
+for SMU13.0.0.
 
-Set ftrace_expected to the expected code before calling ftrace_bug, so
-that it shows what was expected and why it failed.
-
-Link: https://lore.kernel.org/all/CA+wXwBQ-VhK+hpBtYtyZP-NiX4g8fqRRWithFOHQW-0coQ3vLg@mail.gmail.com/
-Link: https://lore.kernel.org/linux-trace-kernel/20221209105247.01d4e51d@gandalf.local.home
-
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: "x86@kernel.org" <x86@kernel.org>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: stable@vger.kernel.org
-Fixes: 768ae4406a5c ("x86/ftrace: Use text_poke()")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Evan Quan <evan.quan@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.0.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/ftrace.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |   22 ++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
---- a/arch/x86/kernel/ftrace.c
-+++ b/arch/x86/kernel/ftrace.c
-@@ -217,7 +217,9 @@ void ftrace_replace_code(int enable)
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -1349,9 +1349,17 @@ static int smu_v13_0_0_populate_umd_stat
+ 				&dpm_context->dpm_tables.fclk_table;
+ 	struct smu_umd_pstate_table *pstate_table =
+ 				&smu->pstate_table;
++	struct smu_table_context *table_context = &smu->smu_table;
++	PPTable_t *pptable = table_context->driver_pptable;
++	DriverReportedClocks_t driver_clocks =
++			pptable->SkuTable.DriverReportedClocks;
  
- 		ret = ftrace_verify_code(rec->ip, old);
- 		if (ret) {
-+			ftrace_expected = old;
- 			ftrace_bug(ret, rec);
-+			ftrace_expected = NULL;
- 			return;
- 		}
- 	}
+ 	pstate_table->gfxclk_pstate.min = gfx_table->min;
+-	pstate_table->gfxclk_pstate.peak = gfx_table->max;
++	if (driver_clocks.GameClockAc &&
++	    (driver_clocks.GameClockAc < gfx_table->max))
++		pstate_table->gfxclk_pstate.peak = driver_clocks.GameClockAc;
++	else
++		pstate_table->gfxclk_pstate.peak = gfx_table->max;
+ 
+ 	pstate_table->uclk_pstate.min = mem_table->min;
+ 	pstate_table->uclk_pstate.peak = mem_table->max;
+@@ -1368,12 +1376,12 @@ static int smu_v13_0_0_populate_umd_stat
+ 	pstate_table->fclk_pstate.min = fclk_table->min;
+ 	pstate_table->fclk_pstate.peak = fclk_table->max;
+ 
+-	/*
+-	 * For now, just use the mininum clock frequency.
+-	 * TODO: update them when the real pstate settings available
+-	 */
+-	pstate_table->gfxclk_pstate.standard = gfx_table->min;
+-	pstate_table->uclk_pstate.standard = mem_table->min;
++	if (driver_clocks.BaseClockAc &&
++	    driver_clocks.BaseClockAc < gfx_table->max)
++		pstate_table->gfxclk_pstate.standard = driver_clocks.BaseClockAc;
++	else
++		pstate_table->gfxclk_pstate.standard = gfx_table->max;
++	pstate_table->uclk_pstate.standard = mem_table->max;
+ 	pstate_table->socclk_pstate.standard = soc_table->min;
+ 	pstate_table->vclk_pstate.standard = vclk_table->min;
+ 	pstate_table->dclk_pstate.standard = dclk_table->min;
 
 
