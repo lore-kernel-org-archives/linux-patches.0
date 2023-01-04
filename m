@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26DE9AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ADF2C433D2;
-	Wed,  4 Jan 2023 16:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EB34AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9295CC433EF;
+	Wed,  4 Jan 2023 16:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849543;
-	bh=Cp4Xey+5WpKc028XxyYs27sWKy+hn7eJfH7Ol3j+gxk=;
+	s=korg; t=1672849546;
+	bh=ftEOKaXmZR0+g33Y1VNSK5OcqVd/R71NrFsufjtsaNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LwTMfelwMS+L8CZf4zP61Mgc6WuFv48zTioL2tQRtuCJ8cXruUExcEVRoTvsocbtX
-	 9G0gTz/IPv0Hi09IL/pCi23qtNEU0FNg/z++44xMTY4nw9BeLQUa69FGf46/uQoLrk
-	 ngss9jHKnDmoCYlLWRCSTDuPRRkeawNUfygUQL2Y=
+	b=CBZgHnhnnA46I9bqE/kICOjdsTCnoZ0BxVkHzMzKSIrSs9sxty6sTw45MBxEm4LSs
+	 fF6CHqX+JMyREygOaMGiEWrdIVfQ/WCY5YzMuZKxcJ2NDB9Pw4mpHv7qk3cz9fr6/w
+	 Z374q+tDTrF0soONf91WU8hzpbHYRlqBClgL8cgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <evan.quan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 205/207] drm/amd/pm: add missing SMU13.0.7 mm_dpm feature mapping
-Date: Wed,  4 Jan 2023 17:07:43 +0100
-Message-Id: <20230104160518.422651048@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Jason Yan <yanaijie@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.0 139/177] ext4: add helper to check quota inums
+Date: Wed,  4 Jan 2023 17:07:10 +0100
+Message-Id: <20230104160511.859222897@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,32 +37,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Evan Quan <evan.quan@amd.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit e0607c10ebf551a654c3577fc74b4bf5533e1cea upstream.
+commit 07342ec259df2a35d6a34aebce010567a80a0e15 upstream.
 
-Without this, the pp_dpm_vclk and pp_dpm_dclk outputs are not with
-correct data.
+Before quota is enabled, a check on the preset quota inums in
+ext4_super_block is added to prevent wrong quota inodes from being loaded.
+In addition, when the quota fails to be enabled, the quota type and quota
+inum are printed to facilitate fault locating.
 
-Signed-off-by: Evan Quan <evan.quan@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.0.x
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jason Yan <yanaijie@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221026042310.3839669-3-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ext4/super.c |   28 +++++++++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-@@ -189,6 +189,8 @@ static struct cmn2asic_mapping smu_v13_0
- 	FEA_MAP(MEM_TEMP_READ),
- 	FEA_MAP(ATHUB_MMHUB_PG),
- 	FEA_MAP(SOC_PCC),
-+	[SMU_FEATURE_DPM_VCLK_BIT] = {1, FEATURE_MM_DPM_BIT},
-+	[SMU_FEATURE_DPM_DCLK_BIT] = {1, FEATURE_MM_DPM_BIT},
- };
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -6743,6 +6743,20 @@ static int ext4_quota_on(struct super_bl
+ 	return err;
+ }
  
- static struct cmn2asic_mapping smu_v13_0_7_table_map[SMU_TABLE_COUNT] = {
++static inline bool ext4_check_quota_inum(int type, unsigned long qf_inum)
++{
++	switch (type) {
++	case USRQUOTA:
++		return qf_inum == EXT4_USR_QUOTA_INO;
++	case GRPQUOTA:
++		return qf_inum == EXT4_GRP_QUOTA_INO;
++	case PRJQUOTA:
++		return qf_inum >= EXT4_GOOD_OLD_FIRST_INO;
++	default:
++		BUG();
++	}
++}
++
+ static int ext4_quota_enable(struct super_block *sb, int type, int format_id,
+ 			     unsigned int flags)
+ {
+@@ -6759,9 +6773,16 @@ static int ext4_quota_enable(struct supe
+ 	if (!qf_inums[type])
+ 		return -EPERM;
+ 
++	if (!ext4_check_quota_inum(type, qf_inums[type])) {
++		ext4_error(sb, "Bad quota inum: %lu, type: %d",
++				qf_inums[type], type);
++		return -EUCLEAN;
++	}
++
+ 	qf_inode = ext4_iget(sb, qf_inums[type], EXT4_IGET_SPECIAL);
+ 	if (IS_ERR(qf_inode)) {
+-		ext4_error(sb, "Bad quota inode # %lu", qf_inums[type]);
++		ext4_error(sb, "Bad quota inode: %lu, type: %d",
++				qf_inums[type], type);
+ 		return PTR_ERR(qf_inode);
+ 	}
+ 
+@@ -6800,8 +6821,9 @@ int ext4_enable_quotas(struct super_bloc
+ 			if (err) {
+ 				ext4_warning(sb,
+ 					"Failed to enable quota tracking "
+-					"(type=%d, err=%d). Please run "
+-					"e2fsck to fix.", type, err);
++					"(type=%d, err=%d, ino=%lu). "
++					"Please run e2fsck to fix.", type,
++					err, qf_inums[type]);
+ 				for (type--; type >= 0; type--) {
+ 					struct inode *inode;
+ 
 
 
