@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4435AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:23:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22880C433D2;
-	Wed,  4 Jan 2023 16:23:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B336CAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:23:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5E9C433D2;
+	Wed,  4 Jan 2023 16:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849416;
-	bh=7ktn5HAXB/jRgTYt6YfgA0BoMXWfLTYgjJN5ujsvieE=;
+	s=korg; t=1672849419;
+	bh=pMqXlG7cn457TRQyxQ5I5gqZYxbi/Th7/I94Hu1r780=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2EwkUt43W1SW2EghvNntMI7vLvmRfEVqDl1sZ3R/NeDGBla+IZhIX48SgrmjyrLM3
-	 sVYhYkAsUwT+5bL6iIZhy6UpcYi1G6icPMtPg//jgF8ks73MkgxYjy+TUkIBFmaF72
-	 I+XbG8USi9bOS7uBDU+jPZuDFZJa6HWMLwDMhrTE=
+	b=PUc3TUna+Y0BXTxV8XJ9npjT6sF3g8mQ65OYnNqD5wO6OeokYZKpQYiRXN/cc3V9G
+	 MqEp6CcdHvrVmKxqJ1szaqGzru1GS3F1Tpvmi0vxLYWDD4x44fZv2Xz0qm4rCkZoYp
+	 5CdjSbmO6lSezeHp+6xekUHpGn97+KXRWVpHzriI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 6.0 117/177] remoteproc: imx_dsp_rproc: Add mutex protection for workqueue
-Date: Wed,  4 Jan 2023 17:06:48 +0100
-Message-Id: <20230104160511.184630423@linuxfoundation.org>
+	Zhang Yuchen <zhangyuchen.lcr@bytedance.com>,
+	Corey Minyard <cminyard@mvista.com>
+Subject: [PATCH 6.0 095/177] ipmi: fix long wait in unload when IPMI disconnect
+Date: Wed,  4 Jan 2023 17:06:26 +0100
+Message-Id: <20230104160510.516242630@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -35,86 +34,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shengjiu Wang <shengjiu.wang@nxp.com>
+From: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
 
-commit 47e6ab07018edebf94ce873cf50a05ec76ff2dde upstream.
+commit f6f1234d98cce69578bfac79df147a1f6660596c upstream.
 
-The workqueue may execute late even after remoteproc is stopped or
-stopping, some resources (rpmsg device and endpoint) have been
-released in rproc_stop_subdevices(), then rproc_vq_interrupt()
-accessing these resources will cause kennel dump.
+When fixing the problem mentioned in PATCH1, we also found
+the following problem:
 
-Call trace:
- virtqueue_add_split+0x1ac/0x560
- virtqueue_add_inbuf+0x4c/0x60
- rpmsg_recv_done+0x15c/0x294
- vring_interrupt+0x6c/0xa4
- rproc_vq_interrupt+0x30/0x50
- imx_dsp_rproc_vq_work+0x24/0x40 [imx_dsp_rproc]
- process_one_work+0x1d0/0x354
- worker_thread+0x13c/0x470
- kthread+0x154/0x160
- ret_from_fork+0x10/0x20
+If the IPMI is disconnected and in the sending process, the
+uninstallation driver will be stuck for a long time.
 
-Add mutex protection in imx_dsp_rproc_vq_work(), if the state is
-not running, then just skip calling rproc_vq_interrupt().
+The main problem is that uninstalling the driver waits for curr_msg to
+be sent or HOSED. After stopping tasklet, the only place to trigger the
+timeout mechanism is the circular poll in shutdown_smi.
 
-Also the flush workqueue operation can't be added in rproc stop
-for the same reason. The call sequence is
+The poll function delays 10us and calls smi_event_handler(smi_info,10).
+Smi_event_handler deducts 10us from kcs->ibf_timeout.
 
-rproc_shutdown
--> rproc_stop
-   ->rproc_stop_subdevices
-   ->rproc->ops->stop()
-     ->imx_dsp_rproc_stop
-       ->flush_work
-         -> rproc_vq_interrupt
+But the poll func is followed by schedule_timeout_uninterruptible(1).
+The time consumed here is not counted in kcs->ibf_timeout.
 
-The resource needed by rproc_vq_interrupt has been released in
-rproc_stop_subdevices, so flush_work is not safe to be called in
-imx_dsp_rproc_stop.
+So when 10us is deducted from kcs->ibf_timeout, at least 1 jiffies has
+actually passed. The waiting time has increased by more than a
+hundredfold.
 
-Fixes: ec0e5549f358 ("remoteproc: imx_dsp_rproc: Add remoteproc driver for DSP on i.MX")
-Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Cc: stable <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/1664524216-19949-1-git-send-email-shengjiu.wang@nxp.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Now instead of calling poll(). call smi_event_handler() directly and
+calculate the elapsed time.
+
+For verification, you can directly use ebpf to check the kcs->
+ibf_timeout for each call to kcs_event() when IPMI is disconnected.
+Decrement at normal rate before unloading. The decrement rate becomes
+very slow after unloading.
+
+  $ bpftrace -e 'kprobe:kcs_event {printf("kcs->ibftimeout : %d\n",
+      *(arg0+584));}'
+
+Signed-off-by: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
+Message-Id: <20221007092617.87597-3-zhangyuchen.lcr@bytedance.com>
+Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/imx_dsp_rproc.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/char/ipmi/ipmi_si_intf.c |   27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
---- a/drivers/remoteproc/imx_dsp_rproc.c
-+++ b/drivers/remoteproc/imx_dsp_rproc.c
-@@ -347,9 +347,6 @@ static int imx_dsp_rproc_stop(struct rpr
- 	struct device *dev = rproc->dev.parent;
- 	int ret = 0;
- 
--	/* Make sure work is finished */
--	flush_work(&priv->rproc_work);
--
- 	if (rproc->state == RPROC_CRASHED) {
- 		priv->flags &= ~REMOTE_IS_READY;
- 		return 0;
-@@ -432,9 +429,18 @@ static void imx_dsp_rproc_vq_work(struct
- {
- 	struct imx_dsp_rproc *priv = container_of(work, struct imx_dsp_rproc,
- 						  rproc_work);
-+	struct rproc *rproc = priv->rproc;
-+
-+	mutex_lock(&rproc->lock);
-+
-+	if (rproc->state != RPROC_RUNNING)
-+		goto unlock_mutex;
- 
- 	rproc_vq_interrupt(priv->rproc, 0);
- 	rproc_vq_interrupt(priv->rproc, 1);
-+
-+unlock_mutex:
-+	mutex_unlock(&rproc->lock);
+--- a/drivers/char/ipmi/ipmi_si_intf.c
++++ b/drivers/char/ipmi/ipmi_si_intf.c
+@@ -2153,6 +2153,20 @@ skip_fallback_noirq:
  }
+ module_init(init_ipmi_si);
  
- /**
++static void wait_msg_processed(struct smi_info *smi_info)
++{
++	unsigned long jiffies_now;
++	long time_diff;
++
++	while (smi_info->curr_msg || (smi_info->si_state != SI_NORMAL)) {
++		jiffies_now = jiffies;
++		time_diff = (((long)jiffies_now - (long)smi_info->last_timeout_jiffies)
++		     * SI_USEC_PER_JIFFY);
++		smi_event_handler(smi_info, time_diff);
++		schedule_timeout_uninterruptible(1);
++	}
++}
++
+ static void shutdown_smi(void *send_info)
+ {
+ 	struct smi_info *smi_info = send_info;
+@@ -2187,16 +2201,13 @@ static void shutdown_smi(void *send_info
+ 	 * in the BMC.  Note that timers and CPU interrupts are off,
+ 	 * so no need for locks.
+ 	 */
+-	while (smi_info->curr_msg || (smi_info->si_state != SI_NORMAL)) {
+-		poll(smi_info);
+-		schedule_timeout_uninterruptible(1);
+-	}
++	wait_msg_processed(smi_info);
++
+ 	if (smi_info->handlers)
+ 		disable_si_irq(smi_info);
+-	while (smi_info->curr_msg || (smi_info->si_state != SI_NORMAL)) {
+-		poll(smi_info);
+-		schedule_timeout_uninterruptible(1);
+-	}
++
++	wait_msg_processed(smi_info);
++
+ 	if (smi_info->handlers)
+ 		smi_info->handlers->cleanup(smi_info->si_sm);
+ 
 
 
