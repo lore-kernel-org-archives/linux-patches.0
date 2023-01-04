@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5DAAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:23:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06930C433EF;
-	Wed,  4 Jan 2023 16:23:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0182AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:23:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18410C433EF;
+	Wed,  4 Jan 2023 16:23:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849407;
-	bh=u+Ab45UWIXugyBKjmcyzZdcg0gQPdTIsYvWqQUKwJZM=;
+	s=korg; t=1672849410;
+	bh=micRtym3x5TtlFIQ+/X4E1LzJPUSH0P+PkAWPlxQOPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TJXFhQRjowxF1UmJ98K+QyXrz4PiGOSEYZM5DVCdJ79PFtn9DIshhZFqGF4k3XPqg
-	 GPtjBqQuL/3wSwM6rIh+RNRS+Got3wZ1JHC81KwNHbYqI8kIhTRJe9hGw7oH3mN8MZ
-	 KdwhK1FMrM68bHV2n5G6Rb74YxTlDp0tNq+GKtgg=
+	b=qYjfaPOQZPLyaqOTy1VQxlVZHz9oT/WQbcA2ba+l8dZ1Id580B46x+QCU+5rbWgxQ
+	 D6a7oYP7MrDAQ9GdGVdSZYdyiinahHibzkJ1Wl/lMVwz7iTVWs6WirtOhPJfbPZRSq
+	 JnYms+5sXwbfhsBcHrxZVlOgj9AcBcKTE38dSERY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+98346927678ac3059c77@syzkaller.appspotmail.com,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.1 183/207] ext4: init quota for old.inode in ext4_rename
-Date: Wed,  4 Jan 2023 17:07:21 +0100
-Message-Id: <20230104160517.681932440@linuxfoundation.org>
+	Li Hua <hucool.lihua@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.0 116/177] test_kprobes: Fix implicit declaration error of test_kprobes
+Date: Wed,  4 Jan 2023 17:06:47 +0100
+Message-Id: <20230104160511.155173495@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,77 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ye Bin <yebin10@huawei.com>
+From: Li Hua <hucool.lihua@huawei.com>
 
-commit fae381a3d79bb94aa2eb752170d47458d778b797 upstream.
+commit 63a4dc0a0bb0e9bfeb2c88ccda81abdde4cdd6b8 upstream.
 
-Syzbot found the following issue:
-ext4_parse_param: s_want_extra_isize=128
-ext4_inode_info_init: s_want_extra_isize=32
-ext4_rename: old.inode=ffff88823869a2c8 old.dir=ffff888238699828 new.inode=ffff88823869d7e8 new.dir=ffff888238699828
-__ext4_mark_inode_dirty: inode=ffff888238699828 ea_isize=32 want_ea_size=128
-__ext4_mark_inode_dirty: inode=ffff88823869a2c8 ea_isize=32 want_ea_size=128
-ext4_xattr_block_set: inode=ffff88823869a2c8
-------------[ cut here ]------------
-WARNING: CPU: 13 PID: 2234 at fs/ext4/xattr.c:2070 ext4_xattr_block_set.cold+0x22/0x980
-Modules linked in:
-RIP: 0010:ext4_xattr_block_set.cold+0x22/0x980
-RSP: 0018:ffff888227d3f3b0 EFLAGS: 00010202
-RAX: 0000000000000001 RBX: ffff88823007a000 RCX: 0000000000000000
-RDX: 0000000000000a03 RSI: 0000000000000040 RDI: ffff888230078178
-RBP: 0000000000000000 R08: 000000000000002c R09: ffffed1075c7df8e
-R10: ffff8883ae3efc6b R11: ffffed1075c7df8d R12: 0000000000000000
-R13: ffff88823869a2c8 R14: ffff8881012e0460 R15: dffffc0000000000
-FS:  00007f350ac1f740(0000) GS:ffff8883ae200000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f350a6ed6a0 CR3: 0000000237456000 CR4: 00000000000006e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ? ext4_xattr_set_entry+0x3b7/0x2320
- ? ext4_xattr_block_set+0x0/0x2020
- ? ext4_xattr_set_entry+0x0/0x2320
- ? ext4_xattr_check_entries+0x77/0x310
- ? ext4_xattr_ibody_set+0x23b/0x340
- ext4_xattr_move_to_block+0x594/0x720
- ext4_expand_extra_isize_ea+0x59a/0x10f0
- __ext4_expand_extra_isize+0x278/0x3f0
- __ext4_mark_inode_dirty.cold+0x347/0x410
- ext4_rename+0xed3/0x174f
- vfs_rename+0x13a7/0x2510
- do_renameat2+0x55d/0x920
- __x64_sys_rename+0x7d/0xb0
- do_syscall_64+0x3b/0xa0
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
+If KPROBES_SANITY_TEST and ARCH_CORRECT_STACKTRACE_ON_KRETPROBE is enabled, but
+STACKTRACE is not set. Build failed as below:
 
-As 'ext4_rename' will modify 'old.inode' ctime and mark inode dirty,
-which may trigger expand 'extra_isize' and allocate block. If inode
-didn't init quota will lead to warning.  To solve above issue, init
-'old.inode' firstly in 'ext4_rename'.
+lib/test_kprobes.c: In function ‘stacktrace_return_handler’:
+lib/test_kprobes.c:228:8: error: implicit declaration of function ‘stack_trace_save’; did you mean ‘stacktrace_driver’? [-Werror=implicit-function-declaration]
+  ret = stack_trace_save(stack_buf, STACK_BUF_SIZE, 0);
+        ^~~~~~~~~~~~~~~~
+        stacktrace_driver
+cc1: all warnings being treated as errors
+scripts/Makefile.build:250: recipe for target 'lib/test_kprobes.o' failed
+make[2]: *** [lib/test_kprobes.o] Error 1
 
-Reported-by: syzbot+98346927678ac3059c77@syzkaller.appspotmail.com
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221107015335.2524319-1-yebin@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+To fix this error, Select STACKTRACE if ARCH_CORRECT_STACKTRACE_ON_KRETPROBE is enabled.
+
+Link: https://lore.kernel.org/all/20221121030620.63181-1-hucool.lihua@huawei.com/
+
+Fixes: 1f6d3a8f5e39 ("kprobes: Add a test case for stacktrace from kretprobe handler")
+Cc: stable@vger.kernel.org
+Signed-off-by: Li Hua <hucool.lihua@huawei.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |    3 +++
- 1 file changed, 3 insertions(+)
+ lib/Kconfig.debug |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -3798,6 +3798,9 @@ static int ext4_rename(struct user_names
- 	retval = dquot_initialize(old.dir);
- 	if (retval)
- 		return retval;
-+	retval = dquot_initialize(old.inode);
-+	if (retval)
-+		return retval;
- 	retval = dquot_initialize(new.dir);
- 	if (retval)
- 		return retval;
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -2080,6 +2080,7 @@ config TEST_MIN_HEAP
+ config TEST_SORT
+ 	tristate "Array-based sort test" if !KUNIT_ALL_TESTS
+ 	depends on KUNIT
++	select STACKTRACE if ARCH_CORRECT_STACKTRACE_ON_KRETPROBE
+ 	default KUNIT_ALL_TESTS
+ 	help
+ 	  This option enables the self-test function of 'sort()' at boot,
 
 
