@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4062AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B0A5C433EF;
-	Wed,  4 Jan 2023 16:18:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB2CCAD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32F1CC433EF;
+	Wed,  4 Jan 2023 16:18:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849083;
-	bh=N50cOfFxgAGh/igrfdLHnO1oXjCQ9T8lToz0ZfB+JaI=;
+	s=korg; t=1672849086;
+	bh=/+RtLJrw83pOsRnIAVJD9SSkZloBC3qiRoY0p3tK/fc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ntDarCTvHh8ojFVjvhoWdMqHN34SKzSjG4Lfk+cdz19/KI0v0GtKrUNjyjabDtg1j
-	 l9xbrKgapM0gcBqMkxpDdItT97ESJTNJYwjGH/RGe+Rgfv3etU++23JYf7ZYOuD4L5
-	 4TxTmNI/yfmYMd4/79qnI7FBXRPrJ2HqDGiU2rWo=
+	b=C+73SzGHCCV1qXg/E8MMsdRHH3nIq/IXkTEx7/vM97PbxVwv8bwd7YD/cwyRZjef4
+	 8NNTg+ItJ2aSItHPYJtXivITh+6pXZM08drzaWpx2besyfMwXWKdbQdSdj93Ntr+kW
+	 qAFJaERxvXbTA3HF/qwouG92Twn/3p38Pv3sSda8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Huafei <lihuafei1@huawei.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 130/207] RISC-V: kexec: Fix memory leak of elf header buffer
-Date: Wed,  4 Jan 2023 17:06:28 +0100
-Message-Id: <20230104160516.040685305@linuxfoundation.org>
+	Yuan ZhaoXiong <yuanzhaoxiong@baidu.com>,
+	Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
+	Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 6.0 061/177] KVM: x86: fix APICv/x2AVIC disabled when vm reboot by itself
+Date: Wed,  4 Jan 2023 17:05:52 +0100
+Message-Id: <20230104160509.506216187@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,57 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Huafei <lihuafei1@huawei.com>
+From: Yuan ZhaoXiong <yuanzhaoxiong@baidu.com>
 
-commit cbc32023ddbdf4baa3d9dc513a2184a84080a5a2 upstream.
+commit ef40757743b47cc95de9b4ed41525c94f8dc73d9 upstream.
 
-This is reported by kmemleak detector:
+When a VM reboots itself, the reset process will result in
+an ioctl(KVM_SET_LAPIC, ...) to disable x2APIC mode and set
+the xAPIC id of the vCPU to its default value, which is the
+vCPU id.
 
-unreferenced object 0xff2000000403d000 (size 4096):
-  comm "kexec", pid 146, jiffies 4294900633 (age 64.792s)
-  hex dump (first 32 bytes):
-    7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00  .ELF............
-    04 00 f3 00 01 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<00000000566ca97c>] kmemleak_vmalloc+0x3c/0xbe
-    [<00000000979283d8>] __vmalloc_node_range+0x3ac/0x560
-    [<00000000b4b3712a>] __vmalloc_node+0x56/0x62
-    [<00000000854f75e2>] vzalloc+0x2c/0x34
-    [<00000000e9a00db9>] crash_prepare_elf64_headers+0x80/0x30c
-    [<0000000067e8bf48>] elf_kexec_load+0x3e8/0x4ec
-    [<0000000036548e09>] kexec_image_load_default+0x40/0x4c
-    [<0000000079fbe1b4>] sys_kexec_file_load+0x1c4/0x322
-    [<0000000040c62c03>] ret_from_syscall+0x0/0x2
+That will be handled in KVM as follows:
 
-In elf_kexec_load(), a buffer is allocated via vzalloc() to store elf
-headers.  While it's not freed back to system when kdump kernel is
-reloaded or unloaded, or when image->elf_header is successfully set and
-then fails to load kdump kernel for some reason. Fix it by freeing the
-buffer in arch_kimage_file_post_load_cleanup().
+     kvm_vcpu_ioctl_set_lapic
+       kvm_apic_set_state
+	  kvm_lapic_set_base  =>  disable X2APIC mode
+	    kvm_apic_state_fixup
+	      kvm_lapic_xapic_id_updated
+	        kvm_xapic_id(apic) != apic->vcpu->vcpu_id
+		kvm_set_apicv_inhibit(APICV_INHIBIT_REASON_APIC_ID_MODIFIED)
+	   memcpy(vcpu->arch.apic->regs, s->regs, sizeof(*s))  => update APIC_ID
 
-Fixes: 8acea455fafa ("RISC-V: Support for kexec_file on panic")
-Signed-off-by: Li Huafei <lihuafei1@huawei.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20221104095658.141222-2-lihuafei1@huawei.com
+When kvm_apic_set_state invokes kvm_lapic_set_base to disable
+x2APIC mode, the old 32-bit x2APIC id is still present rather
+than the 8-bit xAPIC id.  kvm_lapic_xapic_id_updated will set the
+APICV_INHIBIT_REASON_APIC_ID_MODIFIED bit and disable APICv/x2AVIC.
+
+Instead, kvm_lapic_xapic_id_updated must be called after APIC_ID is
+changed.
+
+In fact, this fixes another small issue in the code in that
+potential changes to a vCPU's xAPIC ID need not be tracked for
+KVM_GET_LAPIC.
+
+Fixes: 3743c2f02517 ("KVM: x86: inhibit APICv/AVIC on changes to APIC ID or APIC base")
+Signed-off-by: Yuan ZhaoXiong <yuanzhaoxiong@baidu.com>
+Message-Id: <1669984574-32692-1-git-send-email-yuanzhaoxiong@baidu.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/elf_kexec.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/x86/kvm/lapic.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/riscv/kernel/elf_kexec.c
-+++ b/arch/riscv/kernel/elf_kexec.c
-@@ -26,6 +26,10 @@ int arch_kimage_file_post_load_cleanup(s
- 	kvfree(image->arch.fdt);
- 	image->arch.fdt = NULL;
+--- a/arch/x86/kvm/lapic.c
++++ b/arch/x86/kvm/lapic.c
+@@ -2722,8 +2722,6 @@ static int kvm_apic_state_fixup(struct k
+ 			icr = __kvm_lapic_get_reg64(s->regs, APIC_ICR);
+ 			__kvm_lapic_set_reg(s->regs, APIC_ICR2, icr >> 32);
+ 		}
+-	} else {
+-		kvm_lapic_xapic_id_updated(vcpu->arch.apic);
+ 	}
  
-+	vfree(image->elf_headers);
-+	image->elf_headers = NULL;
-+	image->elf_headers_sz = 0;
+ 	return 0;
+@@ -2759,6 +2757,9 @@ int kvm_apic_set_state(struct kvm_vcpu *
+ 	}
+ 	memcpy(vcpu->arch.apic->regs, s->regs, sizeof(*s));
+ 
++	if (!apic_x2apic_mode(apic))
++		kvm_lapic_xapic_id_updated(apic);
 +
- 	return kexec_image_post_load_cleanup_default(image);
- }
- 
+ 	atomic_set_release(&apic->vcpu->kvm->arch.apic_map_dirty, DIRTY);
+ 	kvm_recalculate_apic_map(vcpu->kvm);
+ 	kvm_apic_set_version(vcpu);
 
 
