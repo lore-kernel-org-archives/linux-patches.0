@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E004AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:15:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3195C433EF;
-	Wed,  4 Jan 2023 16:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34652AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:15:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5C5C433D2;
+	Wed,  4 Jan 2023 16:15:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848908;
-	bh=MimaLMWi5ZRbnPPy0T/5UcHq4lgxAWRPmd8ZHeCPtAY=;
+	s=korg; t=1672848911;
+	bh=bD4MAlC7kSU5pT6G81b9StRTiVp5PW64Q40gwQlyRyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DPEyEPGBy0bKJyPD3WpmkjFL1Diu+849jhS94s0RimXCQcBHhouX8k/p1JGzcGPtM
-	 PVt8ALH0izH2Krqt1GP7W9cBjR4RG/ykb5q2GYWTX9AO33yI2KvY5vCr8deCaFHsgE
-	 Rtk0IWIvTfsJn1Nn0uIaGUFIXhNy+xtUS/MIOsl0=
+	b=hBMgdaWOwbfH30oyymZaWdhmaRcGHhVhNwkeQbFpJwa2YH0jgq9V7qUIv2y9TTfLY
+	 0LC48y+UJRX3tEL3i89ZBLX8IRLLno6IwBuHFbYX1wN3sFBbVjmd3NwQRadWNneCGg
+	 NZvDdKZ8VrzoA9OvgnD5IebUL1uZZRN9R9mQ0y7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-fsd@tesla.com,
-	Smitha T Murthy <smitha.t@samsung.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.0 033/177] media: s5p-mfc: Clear workbit to handle error condition
-Date: Wed,  4 Jan 2023 17:05:24 +0100
-Message-Id: <20230104160508.669049097@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 103/207] cifs: fix confusing debug message
+Date: Wed,  4 Jan 2023 17:06:01 +0100
+Message-Id: <20230104160515.178374934@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,38 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Smitha T Murthy <smitha.t@samsung.com>
+From: Paulo Alcantara <pc@cjr.nz>
 
-commit d3f3c2fe54e30b0636496d842ffbb5ad3a547f9b upstream.
+commit a85ceafd41927e41a4103d228a993df7edd8823b upstream.
 
-During error on CLOSE_INSTANCE command, ctx_work_bits was not getting
-cleared. During consequent mfc execution NULL pointer dereferencing of
-this context led to kernel panic. This patch fixes this issue by making
-sure to clear ctx_work_bits always.
+Since rc was initialised to -ENOMEM in cifs_get_smb_ses(), when an
+existing smb session was found, free_xid() would be called and then
+print
 
-Fixes: 818cd91ab8c6 ("[media] s5p-mfc: Extract open/close MFC instance commands")
+  CIFS: fs/cifs/connect.c: Existing tcp session with server found
+  CIFS: fs/cifs/connect.c: VFS: in cifs_get_smb_ses as Xid: 44 with uid: 0
+  CIFS: fs/cifs/connect.c: Existing smb sess found (status=1)
+  CIFS: fs/cifs/connect.c: VFS: leaving cifs_get_smb_ses (xid = 44) rc = -12
+
+Fix this by initialising rc to 0 and then let free_xid() print this
+instead
+
+  CIFS: fs/cifs/connect.c: Existing tcp session with server found
+  CIFS: fs/cifs/connect.c: VFS: in cifs_get_smb_ses as Xid: 14 with uid: 0
+  CIFS: fs/cifs/connect.c: Existing smb sess found (status=1)
+  CIFS: fs/cifs/connect.c: VFS: leaving cifs_get_smb_ses (xid = 14) rc = 0
+
+Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
 Cc: stable@vger.kernel.org
-Cc: linux-fsd@tesla.com
-Signed-off-by: Smitha T Murthy <smitha.t@samsung.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/samsung/s5p-mfc/s5p_mfc_ctrl.c |    4 +++-
+ fs/cifs/connect.c |    4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_ctrl.c
-+++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_ctrl.c
-@@ -468,8 +468,10 @@ void s5p_mfc_close_mfc_inst(struct s5p_m
- 	s5p_mfc_hw_call(dev->mfc_ops, try_run, dev);
- 	/* Wait until instance is returned or timeout occurred */
- 	if (s5p_mfc_wait_for_done_ctx(ctx,
--				S5P_MFC_R2H_CMD_CLOSE_INSTANCE_RET, 0))
-+				S5P_MFC_R2H_CMD_CLOSE_INSTANCE_RET, 0)){
-+		clear_work_bit_irqsave(ctx);
- 		mfc_err("Err returning instance\n");
-+	}
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -2157,7 +2157,7 @@ cifs_set_cifscreds(struct smb3_fs_contex
+ struct cifs_ses *
+ cifs_get_smb_ses(struct TCP_Server_Info *server, struct smb3_fs_context *ctx)
+ {
+-	int rc = -ENOMEM;
++	int rc = 0;
+ 	unsigned int xid;
+ 	struct cifs_ses *ses;
+ 	struct sockaddr_in *addr = (struct sockaddr_in *)&server->dstaddr;
+@@ -2206,6 +2206,8 @@ cifs_get_smb_ses(struct TCP_Server_Info
+ 		return ses;
+ 	}
  
- 	/* Free resources */
- 	s5p_mfc_hw_call(dev->mfc_ops, release_codec_buffers, ctx);
++	rc = -ENOMEM;
++
+ 	cifs_dbg(FYI, "Existing smb sess not found\n");
+ 	ses = sesInfoAlloc();
+ 	if (ses == NULL)
 
 
