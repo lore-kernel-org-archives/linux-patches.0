@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2473AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CEDFC433EF;
-	Wed,  4 Jan 2023 16:18:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB787AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D38C433EF;
+	Wed,  4 Jan 2023 16:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849098;
-	bh=FPkcEypsfjMdI/mc7/1vbjpu8SN1fPpgAwJ0Tfp+sPQ=;
+	s=korg; t=1672849101;
+	bh=Qz2qusZJrX6VVCjEVjf5ce6SRu0+p0xhiKnVaIC+20A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eltu4gFXuTlFVpH6TTWfNNBuZbEAGMiXz5j4aCGrZaY7SJ4w3tJsPOXD9X8XeijPX
-	 ws70le/smmyaWemb0oCQPvQTr2UvL5Zl7/0UbMOYacU4zhAm+Z78ykJnr2NGOblqhm
-	 26nDyDnzU7CMh9lMUOGCLQ2Sj5RbfQ1I+erM69s4=
+	b=t/MJ/enGV9SPxMI0ghE58FOsXt43bZtBxtvr9BMObN6H54aLYQa8PSohZ/cJvPlJy
+	 3ZoW4kLQFJAaGbajzX8hGl/2vOMuulNsybiKnZPim3DDa6ksZCXKQjSVnVDi2wZMYc
+	 cfvLf5+RSBQy6d/g8lYh2IziKk9NAW/oCIac7aZA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashok Raj <ashok.raj@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.0 063/177] x86/microcode/intel: Do not retry microcode reloading on the APs
-Date: Wed,  4 Jan 2023 17:05:54 +0100
-Message-Id: <20230104160509.565755129@linuxfoundation.org>
+	Rolf Eike Beer <eike-kernel@sf-tec.de>,
+	Corentin Labbe <clabbe@baylibre.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	stable@kernel.org
+Subject: [PATCH 6.1 133/207] crypto: n2 - add missing hash statesize
+Date: Wed,  4 Jan 2023 17:06:31 +0100
+Message-Id: <20230104160516.133526395@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,51 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ashok Raj <ashok.raj@intel.com>
+From: Corentin Labbe <clabbe@baylibre.com>
 
-commit be1b670f61443aa5d0d01782e9b8ea0ee825d018 upstream.
+commit 76a4e874593543a2dff91d249c95bac728df2774 upstream.
 
-The retries in load_ucode_intel_ap() were in place to support systems
-with mixed steppings. Mixed steppings are no longer supported and there is
-only one microcode image at a time. Any retries will simply reattempt to
-apply the same image over and over without making progress.
+Add missing statesize to hash templates.
+This is mandatory otherwise no algorithms can be registered as the core
+requires statesize to be set.
 
-  [ bp: Zap the circumstantial reasoning from the commit message. ]
-
-Fixes: 06b8534cb728 ("x86/microcode: Rework microcode loading")
-Signed-off-by: Ashok Raj <ashok.raj@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221129210832.107850-3-ashok.raj@intel.com
+CC: stable@kernel.org # 4.3+
+Reported-by: Rolf Eike Beer <eike-kernel@sf-tec.de>
+Tested-by: Rolf Eike Beer <eike-kernel@sf-tec.de>
+Fixes: 0a625fd2abaa ("crypto: n2 - Add Niagara2 crypto driver")
+Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/microcode/intel.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/crypto/n2_core.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/arch/x86/kernel/cpu/microcode/intel.c
-+++ b/arch/x86/kernel/cpu/microcode/intel.c
-@@ -621,7 +621,6 @@ void load_ucode_intel_ap(void)
- 	else
- 		iup = &intel_ucode_patch;
+--- a/drivers/crypto/n2_core.c
++++ b/drivers/crypto/n2_core.c
+@@ -1229,6 +1229,7 @@ struct n2_hash_tmpl {
+ 	const u8	*hash_init;
+ 	u8		hw_op_hashsz;
+ 	u8		digest_size;
++	u8		statesize;
+ 	u8		block_size;
+ 	u8		auth_type;
+ 	u8		hmac_type;
+@@ -1260,6 +1261,7 @@ static const struct n2_hash_tmpl hash_tm
+ 	  .hmac_type	= AUTH_TYPE_HMAC_MD5,
+ 	  .hw_op_hashsz	= MD5_DIGEST_SIZE,
+ 	  .digest_size	= MD5_DIGEST_SIZE,
++	  .statesize	= sizeof(struct md5_state),
+ 	  .block_size	= MD5_HMAC_BLOCK_SIZE },
+ 	{ .name		= "sha1",
+ 	  .hash_zero	= sha1_zero_message_hash,
+@@ -1268,6 +1270,7 @@ static const struct n2_hash_tmpl hash_tm
+ 	  .hmac_type	= AUTH_TYPE_HMAC_SHA1,
+ 	  .hw_op_hashsz	= SHA1_DIGEST_SIZE,
+ 	  .digest_size	= SHA1_DIGEST_SIZE,
++	  .statesize	= sizeof(struct sha1_state),
+ 	  .block_size	= SHA1_BLOCK_SIZE },
+ 	{ .name		= "sha256",
+ 	  .hash_zero	= sha256_zero_message_hash,
+@@ -1276,6 +1279,7 @@ static const struct n2_hash_tmpl hash_tm
+ 	  .hmac_type	= AUTH_TYPE_HMAC_SHA256,
+ 	  .hw_op_hashsz	= SHA256_DIGEST_SIZE,
+ 	  .digest_size	= SHA256_DIGEST_SIZE,
++	  .statesize	= sizeof(struct sha256_state),
+ 	  .block_size	= SHA256_BLOCK_SIZE },
+ 	{ .name		= "sha224",
+ 	  .hash_zero	= sha224_zero_message_hash,
+@@ -1284,6 +1288,7 @@ static const struct n2_hash_tmpl hash_tm
+ 	  .hmac_type	= AUTH_TYPE_RESERVED,
+ 	  .hw_op_hashsz	= SHA256_DIGEST_SIZE,
+ 	  .digest_size	= SHA224_DIGEST_SIZE,
++	  .statesize	= sizeof(struct sha256_state),
+ 	  .block_size	= SHA224_BLOCK_SIZE },
+ };
+ #define NUM_HASH_TMPLS ARRAY_SIZE(hash_tmpls)
+@@ -1424,6 +1429,7 @@ static int __n2_register_one_ahash(const
  
--reget:
- 	if (!*iup) {
- 		patch = __load_ucode_intel(&uci);
- 		if (!patch)
-@@ -632,12 +631,7 @@ reget:
+ 	halg = &ahash->halg;
+ 	halg->digestsize = tmpl->digest_size;
++	halg->statesize = tmpl->statesize;
  
- 	uci.mc = *iup;
- 
--	if (apply_microcode_early(&uci, true)) {
--		/* Mixed-silicon system? Try to refetch the proper patch: */
--		*iup = NULL;
--
--		goto reget;
--	}
-+	apply_microcode_early(&uci, true);
- }
- 
- static struct microcode_intel *find_patch(struct ucode_cpu_info *uci)
+ 	base = &halg->base;
+ 	snprintf(base->cra_name, CRYPTO_MAX_ALG_NAME, "%s", tmpl->name);
 
 
