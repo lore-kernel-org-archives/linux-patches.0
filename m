@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56560AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:23:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9FD3C433D2;
-	Wed,  4 Jan 2023 16:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC27AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:23:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DABFDC433EF;
+	Wed,  4 Jan 2023 16:23:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849383;
-	bh=eTkKD0QLneq/gTEjl7sEcWX6q3OTaP227nVwiEgcnBU=;
+	s=korg; t=1672849386;
+	bh=lPu347q23qT8IUIepqbkxwSfFGzUOIOcyRJYtnX5yTs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D4S+n5qZM/EW6B0tlUcznmbf9aDfO9e6iWi+CLoGO7JtiabMX9mLwvFdFd0LCenK+
-	 +Er4zN+0wyYcTbL4yfzGT8KmNSJMEhHHu27NyA9737ipRssiRbsP1C0HiNtTGngPjs
-	 WNH1iFFz5srJnNZYSRQxVdSE56l2Di5bNIaQYq4o=
+	b=E6f99Y2elFpE8horHU3qxt9EbqCJCO0avGF4yNZz/IpUfgNsCFdkw6A9QPeL5ffzM
+	 3AMTKFh4MWM4ZCxSxWwpwAEJ0KwSz7kcZEa2GCfCDqfITxGAijsF0h635aomzfW+S4
+	 ANPTq7KNMwIHQrpsJhItzPHsA1k525v5eYspdfPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qiang Yu <quic_qianyu@quicinc.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 6.0 112/177] bus: mhi: host: Fix race between channel preparation and M0 event
-Date: Wed,  4 Jan 2023 17:06:43 +0100
-Message-Id: <20230104160511.037198241@linuxfoundation.org>
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 162/207] ext4: add inode table check in __ext4_get_inode_loc to aovid possible infinite loop
+Date: Wed,  4 Jan 2023 17:07:00 +0100
+Message-Id: <20230104160517.019455453@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,46 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qiang Yu <quic_qianyu@quicinc.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 869a99907faea6d1835b0bd0d0422ae3519c6ea9 upstream.
+commit eee22187b53611e173161e38f61de1c7ecbeb876 upstream.
 
-There is a race condition where mhi_prepare_channel() updates the
-read and write pointers as the base address and in parallel, if
-an M0 transition occurs, the tasklet goes ahead and rings
-doorbells for all channels with a delta in TRE rings assuming
-they are already enabled. This causes a null pointer access. Fix
-it by adding a channel enabled check before ringing channel
-doorbells.
+In do_writepages, if the value returned by ext4_writepages is "-ENOMEM"
+and "wbc->sync_mode == WB_SYNC_ALL", retry until the condition is not met.
 
-Cc: stable@vger.kernel.org # 5.19
-Fixes: a6e2e3522f29 "bus: mhi: core: Add support for PM state transitions"
-Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://lore.kernel.org/r/1665889532-13634-1-git-send-email-quic_qianyu@quicinc.com
-[mani: CCed stable list]
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+In __ext4_get_inode_loc, if the bh returned by sb_getblk is NULL,
+the function returns -ENOMEM.
+
+In __getblk_slow, if the return value of grow_buffers is less than 0,
+the function returns NULL.
+
+When the three processes are connected in series like the following stack,
+an infinite loop may occur:
+
+do_writepages					<--- keep retrying
+ ext4_writepages
+  mpage_map_and_submit_extent
+   mpage_map_one_extent
+    ext4_map_blocks
+     ext4_ext_map_blocks
+      ext4_ext_handle_unwritten_extents
+       ext4_ext_convert_to_initialized
+        ext4_split_extent
+         ext4_split_extent_at
+          __ext4_ext_dirty
+           __ext4_mark_inode_dirty
+            ext4_reserve_inode_write
+             ext4_get_inode_loc
+              __ext4_get_inode_loc		<--- return -ENOMEM
+               sb_getblk
+                __getblk_gfp
+                 __getblk_slow			<--- return NULL
+                  grow_buffers
+                   grow_dev_page		<--- return -ENXIO
+                    ret = (block < end_block) ? 1 : -ENXIO;
+
+In this issue, bg_inode_table_hi is overwritten as an incorrect value.
+As a result, `block < end_block` cannot be met in grow_dev_page.
+Therefore, __ext4_get_inode_loc always returns '-ENOMEM' and do_writepages
+keeps retrying. As a result, the writeback process is in the D state due
+to an infinite loop.
+
+Add a check on inode table block in the __ext4_get_inode_loc function by
+referring to ext4_read_inode_bitmap to avoid this infinite loop.
+
+Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Link: https://lore.kernel.org/r/20220817132701.3015912-3-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/mhi/host/pm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ext4/inode.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/bus/mhi/host/pm.c b/drivers/bus/mhi/host/pm.c
-index 4a42186ff111..083459028a4b 100644
---- a/drivers/bus/mhi/host/pm.c
-+++ b/drivers/bus/mhi/host/pm.c
-@@ -301,7 +301,8 @@ int mhi_pm_m0_transition(struct mhi_controller *mhi_cntrl)
- 		read_lock_irq(&mhi_chan->lock);
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4473,9 +4473,17 @@ static int __ext4_get_inode_loc(struct s
+ 	inodes_per_block = EXT4_SB(sb)->s_inodes_per_block;
+ 	inode_offset = ((ino - 1) %
+ 			EXT4_INODES_PER_GROUP(sb));
+-	block = ext4_inode_table(sb, gdp) + (inode_offset / inodes_per_block);
+ 	iloc->offset = (inode_offset % inodes_per_block) * EXT4_INODE_SIZE(sb);
  
- 		/* Only ring DB if ring is not empty */
--		if (tre_ring->base && tre_ring->wp  != tre_ring->rp)
-+		if (tre_ring->base && tre_ring->wp  != tre_ring->rp &&
-+		    mhi_chan->ch_state == MHI_CH_STATE_ENABLED)
- 			mhi_ring_chan_db(mhi_cntrl, mhi_chan);
- 		read_unlock_irq(&mhi_chan->lock);
- 	}
--- 
-2.39.0
-
++	block = ext4_inode_table(sb, gdp);
++	if ((block <= le32_to_cpu(EXT4_SB(sb)->s_es->s_first_data_block)) ||
++	    (block >= ext4_blocks_count(EXT4_SB(sb)->s_es))) {
++		ext4_error(sb, "Invalid inode table block %llu in "
++			   "block_group %u", block, iloc->block_group);
++		return -EFSCORRUPTED;
++	}
++	block += (inode_offset / inodes_per_block);
++
+ 	bh = sb_getblk(sb, block);
+ 	if (unlikely(!bh))
+ 		return -ENOMEM;
 
 
