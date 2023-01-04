@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B336CAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:23:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A5E9C433D2;
-	Wed,  4 Jan 2023 16:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A10AD4A
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:23:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15C71C433F0;
+	Wed,  4 Jan 2023 16:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849419;
-	bh=pMqXlG7cn457TRQyxQ5I5gqZYxbi/Th7/I94Hu1r780=;
+	s=korg; t=1672849422;
+	bh=J++P1H09X2udYvUD4P/p1cK3nWwqkgNwItMeS6xQL40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PUc3TUna+Y0BXTxV8XJ9npjT6sF3g8mQ65OYnNqD5wO6OeokYZKpQYiRXN/cc3V9G
-	 MqEp6CcdHvrVmKxqJ1szaqGzru1GS3F1Tpvmi0vxLYWDD4x44fZv2Xz0qm4rCkZoYp
-	 5CdjSbmO6lSezeHp+6xekUHpGn97+KXRWVpHzriI=
+	b=P1HjupyuyQBrn3AKtqz2UGuaMO1oRfqVuEjv3ndNrEM9QFV9S+djOqEpWwTBqC0t3
+	 byoKOla2PU0FcC1fWMFM2IG5npVStogQYiLNozQHBzBb9iIxQxAm3D3OfuIst9PZh9
+	 PpmEj1ENLUDqGqB66mqjHUw5UOMJ4O9AiI83UNr4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yuchen <zhangyuchen.lcr@bytedance.com>,
-	Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH 6.0 095/177] ipmi: fix long wait in unload when IPMI disconnect
-Date: Wed,  4 Jan 2023 17:06:26 +0100
-Message-Id: <20230104160510.516242630@linuxfoundation.org>
+	Eric Whitney <enwlinux@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.1 185/207] ext4: fix delayed allocation bug in ext4_clu_mapped for bigalloc + inline
+Date: Wed,  4 Jan 2023 17:07:23 +0100
+Message-Id: <20230104160517.750797497@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,94 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
+From: Eric Whitney <enwlinux@gmail.com>
 
-commit f6f1234d98cce69578bfac79df147a1f6660596c upstream.
+commit 131294c35ed6f777bd4e79d42af13b5c41bf2775 upstream.
 
-When fixing the problem mentioned in PATCH1, we also found
-the following problem:
+When converting files with inline data to extents, delayed allocations
+made on a file system created with both the bigalloc and inline options
+can result in invalid extent status cache content, incorrect reserved
+cluster counts, kernel memory leaks, and potential kernel panics.
 
-If the IPMI is disconnected and in the sending process, the
-uninstallation driver will be stuck for a long time.
+With bigalloc, the code that determines whether a block must be
+delayed allocated searches the extent tree to see if that block maps
+to a previously allocated cluster.  If not, the block is delayed
+allocated, and otherwise, it isn't.  However, if the inline option is
+also used, and if the file containing the block is marked as able to
+store data inline, there isn't a valid extent tree associated with
+the file.  The current code in ext4_clu_mapped() calls
+ext4_find_extent() to search the non-existent tree for a previously
+allocated cluster anyway, which typically finds nothing, as desired.
+However, a side effect of the search can be to cache invalid content
+from the non-existent tree (garbage) in the extent status tree,
+including bogus entries in the pending reservation tree.
 
-The main problem is that uninstalling the driver waits for curr_msg to
-be sent or HOSED. After stopping tasklet, the only place to trigger the
-timeout mechanism is the circular poll in shutdown_smi.
+To fix this, avoid searching the extent tree when allocating blocks
+for bigalloc + inline files that are being converted from inline to
+extent mapped.
 
-The poll function delays 10us and calls smi_event_handler(smi_info,10).
-Smi_event_handler deducts 10us from kcs->ibf_timeout.
-
-But the poll func is followed by schedule_timeout_uninterruptible(1).
-The time consumed here is not counted in kcs->ibf_timeout.
-
-So when 10us is deducted from kcs->ibf_timeout, at least 1 jiffies has
-actually passed. The waiting time has increased by more than a
-hundredfold.
-
-Now instead of calling poll(). call smi_event_handler() directly and
-calculate the elapsed time.
-
-For verification, you can directly use ebpf to check the kcs->
-ibf_timeout for each call to kcs_event() when IPMI is disconnected.
-Decrement at normal rate before unloading. The decrement rate becomes
-very slow after unloading.
-
-  $ bpftrace -e 'kprobe:kcs_event {printf("kcs->ibftimeout : %d\n",
-      *(arg0+584));}'
-
-Signed-off-by: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
-Message-Id: <20221007092617.87597-3-zhangyuchen.lcr@bytedance.com>
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
-Cc: stable@vger.kernel.org
+Signed-off-by: Eric Whitney <enwlinux@gmail.com>
+Link: https://lore.kernel.org/r/20221117152207.2424-1-enwlinux@gmail.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_si_intf.c |   27 +++++++++++++++++++--------
- 1 file changed, 19 insertions(+), 8 deletions(-)
+ fs/ext4/extents.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/char/ipmi/ipmi_si_intf.c
-+++ b/drivers/char/ipmi/ipmi_si_intf.c
-@@ -2153,6 +2153,20 @@ skip_fallback_noirq:
- }
- module_init(init_ipmi_si);
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -5799,6 +5799,14 @@ int ext4_clu_mapped(struct inode *inode,
+ 	struct ext4_extent *extent;
+ 	ext4_lblk_t first_lblk, first_lclu, last_lclu;
  
-+static void wait_msg_processed(struct smi_info *smi_info)
-+{
-+	unsigned long jiffies_now;
-+	long time_diff;
++	/*
++	 * if data can be stored inline, the logical cluster isn't
++	 * mapped - no physical clusters have been allocated, and the
++	 * file has no extents
++	 */
++	if (ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA))
++		return 0;
 +
-+	while (smi_info->curr_msg || (smi_info->si_state != SI_NORMAL)) {
-+		jiffies_now = jiffies;
-+		time_diff = (((long)jiffies_now - (long)smi_info->last_timeout_jiffies)
-+		     * SI_USEC_PER_JIFFY);
-+		smi_event_handler(smi_info, time_diff);
-+		schedule_timeout_uninterruptible(1);
-+	}
-+}
-+
- static void shutdown_smi(void *send_info)
- {
- 	struct smi_info *smi_info = send_info;
-@@ -2187,16 +2201,13 @@ static void shutdown_smi(void *send_info
- 	 * in the BMC.  Note that timers and CPU interrupts are off,
- 	 * so no need for locks.
- 	 */
--	while (smi_info->curr_msg || (smi_info->si_state != SI_NORMAL)) {
--		poll(smi_info);
--		schedule_timeout_uninterruptible(1);
--	}
-+	wait_msg_processed(smi_info);
-+
- 	if (smi_info->handlers)
- 		disable_si_irq(smi_info);
--	while (smi_info->curr_msg || (smi_info->si_state != SI_NORMAL)) {
--		poll(smi_info);
--		schedule_timeout_uninterruptible(1);
--	}
-+
-+	wait_msg_processed(smi_info);
-+
- 	if (smi_info->handlers)
- 		smi_info->handlers->cleanup(smi_info->si_sm);
- 
+ 	/* search for the extent closest to the first block in the cluster */
+ 	path = ext4_find_extent(inode, EXT4_C2B(sbi, lclu), NULL, 0);
+ 	if (IS_ERR(path)) {
 
 
