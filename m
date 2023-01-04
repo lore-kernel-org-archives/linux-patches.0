@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F0EAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:26:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C6DC433D2;
-	Wed,  4 Jan 2023 16:26:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1ABAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:26:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42288C433D2;
+	Wed,  4 Jan 2023 16:26:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849561;
-	bh=iWcICvDwaV5EeYy5zG0e0FOKsdswhcebZwCyLQYYfII=;
+	s=korg; t=1672849564;
+	bh=e12YwFE/LXc//Urf9Kqw6v3aUMtZNMZdauPRnVpDfu8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tPHD1P15aUhtoFdxS424W9UqaMwYRUi5xHrxgtl2LuD6DOufncexgR9PsPwyxhgwH
-	 5CQjzpHQGl7PjSZ0gI0WUo6fxTvEE48bjuI30k3BT0rt9rrwf+s5W10t2EWCLx85RF
-	 6FLWjXIzC/HMjxLauJXN+DZ4qPYlZGC46eUXvR5Q=
+	b=jG3NgR6f52KANnX2E0n4C1J/GG1ai18Qc/mrQwY/UnmqwR54/u2Mg6TspnjviSGQ+
+	 tvRT1//k9TfNkIU0xD1I32UJuYuZougT3XbCPYzazSx9quownD7g+iLTBLXRfcfQm/
+	 For/Q8/oIp69frRC6VXINlIIqhzYJUmcdEjxlD4Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Czerner <lczerner@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.0 142/177] ext4: journal_path mount options should follow links
-Date: Wed,  4 Jan 2023 17:07:13 +0100
-Message-Id: <20230104160511.958335406@linuxfoundation.org>
+Subject: [PATCH 6.0 143/177] ext4: check and assert if marking an no_delete evicting inode dirty
+Date: Wed,  4 Jan 2023 17:07:14 +0100
+Message-Id: <20230104160511.994571109@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -36,81 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Czerner <lczerner@redhat.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit e3ea75ee651daf5e434afbfdb7dbf75e200ea1f6 upstream.
+commit 318cdc822c63b6e2befcfdc2088378ae6fa18def upstream.
 
-Before the commit 461c3af045d3 ("ext4: Change handle_mount_opt() to use
-fs_parameter") ext4 mount option journal_path did follow links in the
-provided path.
+In ext4_evict_inode(), if we evicting an inode in the 'no_delete' path,
+it cannot be raced by another mark_inode_dirty(). If it happens,
+someone else may accidentally dirty it without holding inode refcount
+and probably cause use-after-free issues in the writeback procedure.
+It's indiscoverable and hard to debug, so add an WARN_ON_ONCE() to
+check and detect this issue in advance.
 
-Bring this behavior back by allowing to pass pathwalk flags to
-fs_lookup_param().
-
-Fixes: 461c3af045d3 ("ext4: Change handle_mount_opt() to use fs_parameter")
-Signed-off-by: Lukas Czerner <lczerner@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Link: https://lore.kernel.org/r/20221004135803.32283-1-lczerner@redhat.com
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20220629112647.4141034-2-yi.zhang@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/filesystems/mount_api.rst |    1 +
- fs/ext4/super.c                         |    2 +-
- fs/fs_parser.c                          |    3 ++-
- include/linux/fs_parser.h               |    1 +
- 4 files changed, 5 insertions(+), 2 deletions(-)
+ fs/ext4/inode.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/Documentation/filesystems/mount_api.rst
-+++ b/Documentation/filesystems/mount_api.rst
-@@ -814,6 +814,7 @@ process the parameters it is given.
-        int fs_lookup_param(struct fs_context *fc,
- 			   struct fs_parameter *value,
- 			   bool want_bdev,
-+			   unsigned int flags,
- 			   struct path *_path);
- 
-      This takes a parameter that carries a string or filename type and attempts
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -2260,7 +2260,7 @@ static int ext4_parse_param(struct fs_co
- 			return -EINVAL;
- 		}
- 
--		error = fs_lookup_param(fc, param, 1, &path);
-+		error = fs_lookup_param(fc, param, 1, LOOKUP_FOLLOW, &path);
- 		if (error) {
- 			ext4_msg(NULL, KERN_ERR, "error: could not find "
- 				 "journal device path");
---- a/fs/fs_parser.c
-+++ b/fs/fs_parser.c
-@@ -138,15 +138,16 @@ EXPORT_SYMBOL(__fs_parse);
-  * @fc: The filesystem context to log errors through.
-  * @param: The parameter.
-  * @want_bdev: T if want a blockdev
-+ * @flags: Pathwalk flags passed to filename_lookup()
-  * @_path: The result of the lookup
-  */
- int fs_lookup_param(struct fs_context *fc,
- 		    struct fs_parameter *param,
- 		    bool want_bdev,
-+		    unsigned int flags,
- 		    struct path *_path)
- {
- 	struct filename *f;
--	unsigned int flags = 0;
- 	bool put_f;
- 	int ret;
- 
---- a/include/linux/fs_parser.h
-+++ b/include/linux/fs_parser.h
-@@ -76,6 +76,7 @@ static inline int fs_parse(struct fs_con
- extern int fs_lookup_param(struct fs_context *fc,
- 			   struct fs_parameter *param,
- 			   bool want_bdev,
-+			   unsigned int flags,
- 			   struct path *_path);
- 
- extern int lookup_constant(const struct constant_table tbl[], const char *name, int not_found);
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -335,6 +335,12 @@ stop_handle:
+ 	ext4_xattr_inode_array_free(ea_inode_array);
+ 	return;
+ no_delete:
++	/*
++	 * Check out some where else accidentally dirty the evicting inode,
++	 * which may probably cause inode use-after-free issues later.
++	 */
++	WARN_ON_ONCE(!list_empty_careful(&inode->i_io_list));
++
+ 	if (!list_empty(&EXT4_I(inode)->i_fc_list))
+ 		ext4_fc_mark_ineligible(inode->i_sb, EXT4_FC_REASON_NOMEM, NULL);
+ 	ext4_clear_inode(inode);	/* We must guarantee clearing of inode... */
 
 
