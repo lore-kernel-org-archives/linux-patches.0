@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF3BAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:12:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7172AC433F1;
-	Wed,  4 Jan 2023 16:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BACEAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:12:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8307FC433F0;
+	Wed,  4 Jan 2023 16:12:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848747;
-	bh=SxN2TOApz+oxv5v0CIdNI5JZj/rkfQMWJ8oWXdXYEOM=;
+	s=korg; t=1672848750;
+	bh=J3fX5e4y2THab1EuQpPnMsa/0H8Leg+fhzKfUtBMB5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WClGA9Zvo527yK70HJxiYDe8gFNjejlNFFw8GkhfuujwHOkJHDX2ieeLRXJZWTpVo
-	 oxCZE54oJ4ZQf/zR5o11m/c6MxgqgRocyUFiwi4AlClc8ochcwa5a7KxTmneiO33iv
-	 CYYstEN84FkdjSsuXP+K/776UaN2Ji5bjohXVNLM=
+	b=CLF/5zROMXUgJWUhwxqe0xJiRHW57gh86ULYrkD8ycEF6cnv1FdhaMAjYRDgafPdn
+	 YOjl3dyjv4xA4g3ZVYYXTGkrPHVyvSa5gCcgyFWIBf7cU0/YABDrjl1+GPKT/fDvIn
+	 ay8CyXNy7gnLJk4feu3OD0PndEd3Hhm1fXndI2W0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Ming <ming4.li@intel.com>,
-	Bjorn Helgaas <bhelgaas@google.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Lukas Wunner <lukas@wunner.de>
-Subject: [PATCH 6.1 076/207] PCI/DOE: Fix maximum data object length miscalculation
-Date: Wed,  4 Jan 2023 17:05:34 +0100
-Message-Id: <20230104160514.347191210@linuxfoundation.org>
+	"John Warthog9 Hawley (VMware)" <warthog9@eaglescrag.net>,
+	Steven Rostedt <rostedt@goodmis.org>
+Subject: [PATCH 6.0 008/177] kest.pl: Fix grub2 menu handling for rebooting
+Date: Wed,  4 Jan 2023 17:04:59 +0100
+Message-Id: <20230104160507.910371956@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,91 +34,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Ming <ming4.li@intel.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit a4ff8e7a71601321f7bf7b58ede664dc0d774274 upstream.
+commit 26df05a8c1420ad3de314fdd407e7fc2058cc7aa upstream.
 
-Per PCIe r6.0, sec 6.30.1, a data object Length of 0x0 indicates 2^18
-DWORDs (256K DW or 1MB) being transferred.  Adjust the value of data object
-length for this case on both sending side and receiving side.
+grub2 has submenus where to use grub-reboot, it requires:
 
-Don't bother checking whether Length is greater than SZ_1M because all
-values of the 18-bit Length field are valid, and it is impossible to
-represent anything larger than SZ_1M:
+  grub-reboot X>Y
 
-  0x00000    256K DW (1M bytes)
-  0x00001       1 DW (4 bytes)
-  ...
-  0x3ffff  256K-1 DW (1M - 4 bytes)
+where X is the main index and Y is the submenu. Thus if you have:
 
-[bhelgaas: commit log]
-Link: https://lore.kernel.org/r/20221116015637.3299664-1-ming4.li@intel.com
-Fixes: 9d24322e887b ("PCI/DOE: Add DOE mailbox support functions")
-Signed-off-by: Li Ming <ming4.li@intel.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org	# v6.0+
+menuentry 'Debian GNU/Linux' --class debian --class gnu-linux ...
+	[...]
+}
+submenu 'Advanced options for Debian GNU/Linux' $menuentry_id_option ...
+        menuentry 'Debian GNU/Linux, with Linux 6.0.0-4-amd64' --class debian --class gnu-linux ...
+                [...]
+        }
+        menuentry 'Debian GNU/Linux, with Linux 6.0.0-4-amd64 (recovery mode)' --class debian --class gnu-linux ...
+		[...]
+        }
+        menuentry 'Debian GNU/Linux, with Linux test' --class debian --class gnu-linux ...
+                [...]
+        }
+
+And wanted to boot to the "Linux test" kernel, you need to run:
+
+ # grub-reboot 1>2
+
+As 1 is the second top menu (the submenu) and 2 is the third of the sub
+menu entries.
+
+Have the grub.cfg parsing for grub2 handle such cases.
+
+Cc: stable@vger.kernel.org
+Fixes: a15ba91361d46 ("ktest: Add support for grub2")
+Reviewed-by: John 'Warthog9' Hawley (VMware) <warthog9@eaglescrag.net>
+Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/doe.c |   20 ++++++++++++++++----
- 1 file changed, 16 insertions(+), 4 deletions(-)
+ tools/testing/ktest/ktest.pl |   20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
 
---- a/drivers/pci/doe.c
-+++ b/drivers/pci/doe.c
-@@ -29,6 +29,9 @@
- #define PCI_DOE_FLAG_CANCEL	0
- #define PCI_DOE_FLAG_DEAD	1
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -1963,7 +1963,7 @@ sub run_scp_mod {
  
-+/* Max data object length is 2^18 dwords */
-+#define PCI_DOE_MAX_LENGTH	(1 << 18)
+ sub _get_grub_index {
+ 
+-    my ($command, $target, $skip) = @_;
++    my ($command, $target, $skip, $submenu) = @_;
+ 
+     return if (defined($grub_number) && defined($last_grub_menu) &&
+ 	$last_grub_menu eq $grub_menu && defined($last_machine) &&
+@@ -1980,11 +1980,16 @@ sub _get_grub_index {
+ 
+     my $found = 0;
+ 
++    my $submenu_number = 0;
 +
- /**
-  * struct pci_doe_mb - State for a single DOE mailbox
-  *
-@@ -107,6 +110,7 @@ static int pci_doe_send_req(struct pci_d
- {
- 	struct pci_dev *pdev = doe_mb->pdev;
- 	int offset = doe_mb->cap_offset;
-+	size_t length;
- 	u32 val;
- 	int i;
+     while (<IN>) {
+ 	if (/$target/) {
+ 	    $grub_number++;
+ 	    $found = 1;
+ 	    last;
++	} elsif (defined($submenu) && /$submenu/) {
++		$submenu_number++;
++		$grub_number = -1;
+ 	} elsif (/$skip/) {
+ 	    $grub_number++;
+ 	}
+@@ -1993,6 +1998,9 @@ sub _get_grub_index {
  
-@@ -123,15 +127,20 @@ static int pci_doe_send_req(struct pci_d
- 	if (FIELD_GET(PCI_DOE_STATUS_ERROR, val))
- 		return -EIO;
+     dodie "Could not find '$grub_menu' through $command on $machine"
+ 	if (!$found);
++    if ($submenu_number > 0) {
++	$grub_number = "$submenu_number>$grub_number";
++    }
+     doprint "$grub_number\n";
+     $last_grub_menu = $grub_menu;
+     $last_machine = $machine;
+@@ -2003,6 +2011,7 @@ sub get_grub_index {
+     my $command;
+     my $target;
+     my $skip;
++    my $submenu;
+     my $grub_menu_qt;
  
-+	/* Length is 2 DW of header + length of payload in DW */
-+	length = 2 + task->request_pl_sz / sizeof(u32);
-+	if (length > PCI_DOE_MAX_LENGTH)
-+		return -EIO;
-+	if (length == PCI_DOE_MAX_LENGTH)
-+		length = 0;
-+
- 	/* Write DOE Header */
- 	val = FIELD_PREP(PCI_DOE_DATA_OBJECT_HEADER_1_VID, task->prot.vid) |
- 		FIELD_PREP(PCI_DOE_DATA_OBJECT_HEADER_1_TYPE, task->prot.type);
- 	pci_write_config_dword(pdev, offset + PCI_DOE_WRITE, val);
--	/* Length is 2 DW of header + length of payload in DW */
- 	pci_write_config_dword(pdev, offset + PCI_DOE_WRITE,
- 			       FIELD_PREP(PCI_DOE_DATA_OBJECT_HEADER_2_LENGTH,
--					  2 + task->request_pl_sz /
--						sizeof(u32)));
-+					  length));
- 	for (i = 0; i < task->request_pl_sz / sizeof(u32); i++)
- 		pci_write_config_dword(pdev, offset + PCI_DOE_WRITE,
- 				       task->request_pl[i]);
-@@ -178,7 +187,10 @@ static int pci_doe_recv_resp(struct pci_
- 	pci_write_config_dword(pdev, offset + PCI_DOE_READ, 0);
+     if ($reboot_type !~ /^grub/) {
+@@ -2017,8 +2026,9 @@ sub get_grub_index {
+ 	$skip = '^\s*title\s';
+     } elsif ($reboot_type eq "grub2") {
+ 	$command = "cat $grub_file";
+-	$target = '^menuentry.*' . $grub_menu_qt;
+-	$skip = '^menuentry\s|^submenu\s';
++	$target = '^\s*menuentry.*' . $grub_menu_qt;
++	$skip = '^\s*menuentry';
++	$submenu = '^\s*submenu\s';
+     } elsif ($reboot_type eq "grub2bls") {
+ 	$command = $grub_bls_get;
+ 	$target = '^title=.*' . $grub_menu_qt;
+@@ -2027,7 +2037,7 @@ sub get_grub_index {
+ 	return;
+     }
  
- 	length = FIELD_GET(PCI_DOE_DATA_OBJECT_HEADER_2_LENGTH, val);
--	if (length > SZ_1M || length < 2)
-+	/* A value of 0x0 indicates max data object length */
-+	if (!length)
-+		length = PCI_DOE_MAX_LENGTH;
-+	if (length < 2)
- 		return -EIO;
+-    _get_grub_index($command, $target, $skip);
++    _get_grub_index($command, $target, $skip, $submenu);
+ }
  
- 	/* First 2 dwords have already been read */
+ sub wait_for_input {
+@@ -2090,7 +2100,7 @@ sub reboot_to {
+     if ($reboot_type eq "grub") {
+ 	run_ssh "'(echo \"savedefault --default=$grub_number --once\" | grub --batch)'";
+     } elsif (($reboot_type eq "grub2") or ($reboot_type eq "grub2bls")) {
+-	run_ssh "$grub_reboot $grub_number";
++	run_ssh "$grub_reboot \"'$grub_number'\"";
+     } elsif ($reboot_type eq "syslinux") {
+ 	run_ssh "$syslinux --once \\\"$syslinux_label\\\" $syslinux_path";
+     } elsif (defined $reboot_script) {
 
 
