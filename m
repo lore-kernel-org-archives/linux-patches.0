@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5755CAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9E1C433D2;
-	Wed,  4 Jan 2023 16:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FB49AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1EE5C433D2;
+	Wed,  4 Jan 2023 16:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849531;
-	bh=9uXhCzmlfchr0Xu79x6phagBlCsIFYwWgajXMBr+hsk=;
+	s=korg; t=1672849534;
+	bh=jUGgu+jjn4oh8uZCNtxL5R0bZaJS06RGDqho/5O8FE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RkK32U1DMJXYFGu/R3t1Pe5CAA7za/0WtGqkxz+W+1tWKfEKOfF7w37ytsz6N03aQ
-	 TLHo+Ujc4lFJLW5nHob8fJbR2pQ1zKz7Gv2U1VR0d5J2xyf0ZuSo4biG1y0I3c5QDu
-	 QKoOgMqQTWtcwjtjSTwnAG1Esz0jICcbZ8zOJwwM=
+	b=j52Mq7zorYIZN3FUXXHeAdANnL7QQQ94h2oHD6gaOXDDnJ79Ne69aD537XAzWOq+1
+	 WMSRikcQWcjQ5zSuNGtK95CcUQcafsa8C576QuKzHnEIdLksappqw4DvsG47wS6oMr
+	 8N92P0ckbNUXGj4XCYz7vMpxW1rcp3mUCfKkDkss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.0 137/177] ext4: fix undefined behavior in bit shift for ext4_check_flag_values
-Date: Wed,  4 Jan 2023 17:07:08 +0100
-Message-Id: <20230104160511.800411179@linuxfoundation.org>
+	Evan Quan <evan.quan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 204/207] drm/amd/pm: add missing SMU13.0.0 mm_dpm feature mapping
+Date: Wed,  4 Jan 2023 17:07:42 +0100
+Message-Id: <20230104160518.383220180@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,48 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Evan Quan <evan.quan@amd.com>
 
-commit 3bf678a0f9c017c9ba7c581541dbc8453452a7ae upstream.
+commit 592cd24a08763975c75be850a7d4e461bfd353bf upstream.
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned. The UBSAN warning calltrace like below:
+Without this, the pp_dpm_vclk and pp_dpm_dclk outputs are not with
+correct data.
 
-UBSAN: shift-out-of-bounds in fs/ext4/ext4.h:591:2
-left shift of 1 by 31 places cannot be represented in type 'int'
-Call Trace:
- <TASK>
- dump_stack_lvl+0x7d/0xa5
- dump_stack+0x15/0x1b
- ubsan_epilogue+0xe/0x4e
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
- ext4_init_fs+0x5a/0x277
- do_one_initcall+0x76/0x430
- kernel_init_freeable+0x3b3/0x422
- kernel_init+0x24/0x1e0
- ret_from_fork+0x1f/0x30
- </TASK>
-
-Fixes: 9a4c80194713 ("ext4: ensure Inode flags consistency are checked at build time")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://lore.kernel.org/r/20221031055833.3966222-1-cuigaosheng1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Signed-off-by: Evan Quan <evan.quan@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.0.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -558,7 +558,7 @@ enum {
-  *
-  * It's not paranoia if the Murphy's Law really *is* out to get you.  :-)
-  */
--#define TEST_FLAG_VALUE(FLAG) (EXT4_##FLAG##_FL == (1 << EXT4_INODE_##FLAG))
-+#define TEST_FLAG_VALUE(FLAG) (EXT4_##FLAG##_FL == (1U << EXT4_INODE_##FLAG))
- #define CHECK_FLAG_VALUE(FLAG) BUILD_BUG_ON(!TEST_FLAG_VALUE(FLAG))
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -187,6 +187,8 @@ static struct cmn2asic_mapping smu_v13_0
+ 	FEA_MAP(MEM_TEMP_READ),
+ 	FEA_MAP(ATHUB_MMHUB_PG),
+ 	FEA_MAP(SOC_PCC),
++	[SMU_FEATURE_DPM_VCLK_BIT] = {1, FEATURE_MM_DPM_BIT},
++	[SMU_FEATURE_DPM_DCLK_BIT] = {1, FEATURE_MM_DPM_BIT},
+ };
  
- static inline void ext4_check_flag_values(void)
+ static struct cmn2asic_mapping smu_v13_0_0_table_map[SMU_TABLE_COUNT] = {
 
 
