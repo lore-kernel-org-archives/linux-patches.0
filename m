@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4163AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:27:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8B9C433D2;
-	Wed,  4 Jan 2023 16:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F7FAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:27:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D41AC433EF;
+	Wed,  4 Jan 2023 16:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849675;
-	bh=Cb6iu7EEQeR1fXuOpokNgHFvrMoE+ZBJMMjZ4GMiksw=;
+	s=korg; t=1672849678;
+	bh=XTQOtquhSYCXocnWBLItVUcUgLnIYWIzgIMsy9sh2as=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GIZtCl+uqE15a81BiiYBO3kXZg6q2xE+hcTcBZ/cdN4dVwt6VE73+WmuHXTKntFmc
-	 7RU3Z3/C7l5r3ClFuNvlmApylaCIpSsF2PGnvtSGTkBG7J1+ESVu/kS78HuhtIdLeW
-	 dmHeKUfxWHraQ1+pN0DvY0I1bIyyeX2TyQc34e1k=
+	b=cfVjZdCV0ChpgRlnUNphSee20L1/mLQcPkWz2h6lXQE1qAjx7XlDF7eOiL5jR9yIk
+	 3bW72NMmZ0gchIlFzubqZSnp8dZ4oS4yG+Y6a0hw6lJT4dOEQtOrUPF5WR+9fUMHyK
+	 98yXRNpg5d3aZP5yUp6LiqS09ZL9oknNq0fEvxLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+57b25da729eb0b88177d@syzkaller.appspotmail.com,
+	Ye Bin <yebin10@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Eric Biggers <ebiggers@google.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.0 151/177] ext4: fix off-by-one errors in fast-commit block filling
-Date: Wed,  4 Jan 2023 17:07:22 +0100
-Message-Id: <20230104160512.236076281@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.0 152/177] ext4: fix uninititialized value in ext4_evict_inode
+Date: Wed,  4 Jan 2023 17:07:23 +0100
+Message-Id: <20230104160512.266731030@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -34,166 +38,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Ye Bin <yebin10@huawei.com>
 
-commit 48a6a66db82b8043d298a630f22c62d43550cae5 upstream.
+commit 7ea71af94eaaaf6d9aed24bc94a05b977a741cb9 upstream.
 
-Due to several different off-by-one errors, or perhaps due to a late
-change in design that wasn't fully reflected in the code that was
-actually merged, there are several very strange constraints on how
-fast-commit blocks are filled with tlv entries:
+Syzbot found the following issue:
+=====================================================
+BUG: KMSAN: uninit-value in ext4_evict_inode+0xdd/0x26b0 fs/ext4/inode.c:180
+ ext4_evict_inode+0xdd/0x26b0 fs/ext4/inode.c:180
+ evict+0x365/0x9a0 fs/inode.c:664
+ iput_final fs/inode.c:1747 [inline]
+ iput+0x985/0xdd0 fs/inode.c:1773
+ __ext4_new_inode+0xe54/0x7ec0 fs/ext4/ialloc.c:1361
+ ext4_mknod+0x376/0x840 fs/ext4/namei.c:2844
+ vfs_mknod+0x79d/0x830 fs/namei.c:3914
+ do_mknodat+0x47d/0xaa0
+ __do_sys_mknodat fs/namei.c:3992 [inline]
+ __se_sys_mknodat fs/namei.c:3989 [inline]
+ __ia32_sys_mknodat+0xeb/0x150 fs/namei.c:3989
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x33/0x70 arch/x86/entry/common.c:203
+ do_SYSENTER_32+0x1b/0x20 arch/x86/entry/common.c:246
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
 
-- tlvs must start at least 10 bytes before the end of the block, even
-  though the minimum tlv length is 8.  Otherwise, the replay code will
-  ignore them.  (BUG: ext4_fc_reserve_space() could violate this
-  requirement if called with a len of blocksize - 9 or blocksize - 8.
-  Fortunately, this doesn't seem to happen currently.)
+Uninit was created at:
+ __alloc_pages+0x9f1/0xe80 mm/page_alloc.c:5578
+ alloc_pages+0xaae/0xd80 mm/mempolicy.c:2285
+ alloc_slab_page mm/slub.c:1794 [inline]
+ allocate_slab+0x1b5/0x1010 mm/slub.c:1939
+ new_slab mm/slub.c:1992 [inline]
+ ___slab_alloc+0x10c3/0x2d60 mm/slub.c:3180
+ __slab_alloc mm/slub.c:3279 [inline]
+ slab_alloc_node mm/slub.c:3364 [inline]
+ slab_alloc mm/slub.c:3406 [inline]
+ __kmem_cache_alloc_lru mm/slub.c:3413 [inline]
+ kmem_cache_alloc_lru+0x6f3/0xb30 mm/slub.c:3429
+ alloc_inode_sb include/linux/fs.h:3117 [inline]
+ ext4_alloc_inode+0x5f/0x860 fs/ext4/super.c:1321
+ alloc_inode+0x83/0x440 fs/inode.c:259
+ new_inode_pseudo fs/inode.c:1018 [inline]
+ new_inode+0x3b/0x430 fs/inode.c:1046
+ __ext4_new_inode+0x2a7/0x7ec0 fs/ext4/ialloc.c:959
+ ext4_mkdir+0x4d5/0x1560 fs/ext4/namei.c:2992
+ vfs_mkdir+0x62a/0x870 fs/namei.c:4035
+ do_mkdirat+0x466/0x7b0 fs/namei.c:4060
+ __do_sys_mkdirat fs/namei.c:4075 [inline]
+ __se_sys_mkdirat fs/namei.c:4073 [inline]
+ __ia32_sys_mkdirat+0xc4/0x120 fs/namei.c:4073
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x33/0x70 arch/x86/entry/common.c:203
+ do_SYSENTER_32+0x1b/0x20 arch/x86/entry/common.c:246
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
 
-- tlvs must end at least 1 byte before the end of the block.  Otherwise
-  the replay code will consider them to be invalid.  This quirk
-  contributed to a bug (fixed by an earlier commit) where uninitialized
-  memory was being leaked to disk in the last byte of blocks.
+CPU: 1 PID: 4625 Comm: syz-executor.2 Not tainted 6.1.0-rc4-syzkaller-62821-gcb231e2f67ec #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+=====================================================
 
-Also, strangely these constraints don't apply to the replay code in
-e2fsprogs, which will accept any tlvs in the blocks (with no bounds
-checks at all, but that is a separate issue...).
+Now, 'ext4_alloc_inode()' didn't init 'ei->i_flags'. If new inode failed
+before set 'ei->i_flags' in '__ext4_new_inode()', then do 'iput()'. As after
+6bc0d63dad7f commit will access 'ei->i_flags' in 'ext4_evict_inode()' which
+will lead to access uninit-value.
+To solve above issue just init 'ei->i_flags' in 'ext4_alloc_inode()'.
 
-Given that this all seems to be a bug, let's fix it by just filling
-blocks with tlv entries in the natural way.
-
-Note that old kernels will be unable to replay fast-commit journals
-created by kernels that have this commit.
-
-Fixes: aa75f4d3daae ("ext4: main fast-commit commit path")
-Cc: <stable@vger.kernel.org> # v5.10+
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20221106224841.279231-7-ebiggers@kernel.org
+Reported-by: syzbot+57b25da729eb0b88177d@syzkaller.appspotmail.com
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Fixes: 6bc0d63dad7f ("ext4: remove EA inode entry from mbcache on inode eviction")
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20221117073603.2598882-1-yebin@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |   66 +++++++++++++++++++++++++-------------------------
- 1 file changed, 33 insertions(+), 33 deletions(-)
+ fs/ext4/super.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -722,43 +722,43 @@ static u8 *ext4_fc_reserve_space(struct
- 	struct buffer_head *bh;
- 	int bsize = sbi->s_journal->j_blocksize;
- 	int ret, off = sbi->s_fc_bytes % bsize;
--	int pad_len;
-+	int remaining;
- 	u8 *dst;
- 
- 	/*
--	 * After allocating len, we should have space at least for a 0 byte
--	 * padding.
-+	 * If 'len' is too long to fit in any block alongside a PAD tlv, then we
-+	 * cannot fulfill the request.
- 	 */
--	if (len + EXT4_FC_TAG_BASE_LEN > bsize)
-+	if (len > bsize - EXT4_FC_TAG_BASE_LEN)
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -1323,6 +1323,7 @@ static struct inode *ext4_alloc_inode(st
  		return NULL;
  
--	if (bsize - off - 1 > len + EXT4_FC_TAG_BASE_LEN) {
--		/*
--		 * Only allocate from current buffer if we have enough space for
--		 * this request AND we have space to add a zero byte padding.
--		 */
--		if (!sbi->s_fc_bh) {
--			ret = jbd2_fc_get_buf(EXT4_SB(sb)->s_journal, &bh);
--			if (ret)
--				return NULL;
--			sbi->s_fc_bh = bh;
--		}
--		sbi->s_fc_bytes += len;
--		return sbi->s_fc_bh->b_data + off;
-+	if (!sbi->s_fc_bh) {
-+		ret = jbd2_fc_get_buf(EXT4_SB(sb)->s_journal, &bh);
-+		if (ret)
-+			return NULL;
-+		sbi->s_fc_bh = bh;
- 	}
--	/* Need to add PAD tag */
- 	dst = sbi->s_fc_bh->b_data + off;
-+
-+	/*
-+	 * Allocate the bytes in the current block if we can do so while still
-+	 * leaving enough space for a PAD tlv.
-+	 */
-+	remaining = bsize - EXT4_FC_TAG_BASE_LEN - off;
-+	if (len <= remaining) {
-+		sbi->s_fc_bytes += len;
-+		return dst;
-+	}
-+
-+	/*
-+	 * Else, terminate the current block with a PAD tlv, then allocate a new
-+	 * block and allocate the bytes at the start of that new block.
-+	 */
-+
- 	tl.fc_tag = cpu_to_le16(EXT4_FC_TAG_PAD);
--	pad_len = bsize - off - 1 - EXT4_FC_TAG_BASE_LEN;
--	tl.fc_len = cpu_to_le16(pad_len);
-+	tl.fc_len = cpu_to_le16(remaining);
- 	ext4_fc_memcpy(sb, dst, &tl, EXT4_FC_TAG_BASE_LEN, crc);
--	dst += EXT4_FC_TAG_BASE_LEN;
--	if (pad_len > 0) {
--		ext4_fc_memzero(sb, dst, pad_len, crc);
--		dst += pad_len;
--	}
--	/* Don't leak uninitialized memory in the unused last byte. */
--	*dst = 0;
-+	ext4_fc_memzero(sb, dst + EXT4_FC_TAG_BASE_LEN, remaining, crc);
- 
- 	ext4_fc_submit_bh(sb, false);
- 
-@@ -766,7 +766,7 @@ static u8 *ext4_fc_reserve_space(struct
- 	if (ret)
- 		return NULL;
- 	sbi->s_fc_bh = bh;
--	sbi->s_fc_bytes = (sbi->s_fc_bytes / bsize + 1) * bsize + len;
-+	sbi->s_fc_bytes += bsize - off + len;
- 	return sbi->s_fc_bh->b_data;
- }
- 
-@@ -797,7 +797,7 @@ static int ext4_fc_write_tail(struct sup
- 	off = sbi->s_fc_bytes % bsize;
- 
- 	tl.fc_tag = cpu_to_le16(EXT4_FC_TAG_TAIL);
--	tl.fc_len = cpu_to_le16(bsize - off - 1 + sizeof(struct ext4_fc_tail));
-+	tl.fc_len = cpu_to_le16(bsize - off + sizeof(struct ext4_fc_tail));
- 	sbi->s_fc_bytes = round_up(sbi->s_fc_bytes, bsize);
- 
- 	ext4_fc_memcpy(sb, dst, &tl, EXT4_FC_TAG_BASE_LEN, &crc);
-@@ -2065,7 +2065,7 @@ static int ext4_fc_replay_scan(journal_t
- 	state = &sbi->s_fc_replay_state;
- 
- 	start = (u8 *)bh->b_data;
--	end = (__u8 *)bh->b_data + journal->j_blocksize - 1;
-+	end = start + journal->j_blocksize;
- 
- 	if (state->fc_replay_expected_off == 0) {
- 		state->fc_cur_tag = 0;
-@@ -2086,7 +2086,7 @@ static int ext4_fc_replay_scan(journal_t
- 	}
- 
- 	state->fc_replay_expected_off++;
--	for (cur = start; cur < end - EXT4_FC_TAG_BASE_LEN;
-+	for (cur = start; cur <= end - EXT4_FC_TAG_BASE_LEN;
- 	     cur = cur + EXT4_FC_TAG_BASE_LEN + tl.fc_len) {
- 		ext4_fc_get_tl(&tl, cur);
- 		val = cur + EXT4_FC_TAG_BASE_LEN;
-@@ -2204,9 +2204,9 @@ static int ext4_fc_replay(journal_t *jou
- #endif
- 
- 	start = (u8 *)bh->b_data;
--	end = (__u8 *)bh->b_data + journal->j_blocksize - 1;
-+	end = start + journal->j_blocksize;
- 
--	for (cur = start; cur < end - EXT4_FC_TAG_BASE_LEN;
-+	for (cur = start; cur <= end - EXT4_FC_TAG_BASE_LEN;
- 	     cur = cur + EXT4_FC_TAG_BASE_LEN + tl.fc_len) {
- 		ext4_fc_get_tl(&tl, cur);
- 		val = cur + EXT4_FC_TAG_BASE_LEN;
+ 	inode_set_iversion(&ei->vfs_inode, 1);
++	ei->i_flags = 0;
+ 	spin_lock_init(&ei->i_raw_lock);
+ 	INIT_LIST_HEAD(&ei->i_prealloc_list);
+ 	atomic_set(&ei->i_prealloc_active, 0);
 
 
