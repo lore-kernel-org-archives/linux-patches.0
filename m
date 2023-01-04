@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23454AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:14:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8163BC433EF;
-	Wed,  4 Jan 2023 16:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3844BAD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:14:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9083FC4339B;
+	Wed,  4 Jan 2023 16:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848840;
-	bh=/SGjc/bqFrhn/0ujg6yy2wv+klspnHA1uquejMVB/zQ=;
+	s=korg; t=1672848843;
+	bh=F8CtsddWLGprx12hdWMnysWHiG8y9BI3X4ez39hDOI0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VuwqvQLqlyvaXuvebntftqObpZfXru15s2v4r6WYJqRC75h93Fgx5aXk0Kcn7RPMO
-	 4XHKiqrDiyJq9MF6ena3el5LeLkZ0XlYJHqG2x0nol1wOo8rBIF4KDceeAsryUxafT
-	 jHgmgbFa9GQb8vaeg05q5cMfRbdcDCkfA6IGFcfA=
+	b=trCh0neCZj30vMAjdKcnKXLJlUROhwEkC0mGAaQcP95dajrozWURDvzAyKXvEsnsq
+	 O6fj/Pogv3MKP9I6EKS7+ZNX0e6ZJJ4euJetTS9HC6Lw5mLlinJvWZZYdgD6mFqFWK
+	 So+NPHKFYbWSszMp3E0rT9Y3qaek866xEyfk/9Vo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Cooper <andrew.cooper3@citrix.com>,
-	Borislav Petkov <bp@suse.de>
-Subject: [PATCH 6.0 023/177] x86/fpu/xstate: Fix XSTATE_WARN_ON() to emit relevant diagnostics
-Date: Wed,  4 Jan 2023 17:05:14 +0100
-Message-Id: <20230104160508.365931371@linuxfoundation.org>
+	mhiramat@kernel.org,
+	zanussi@kernel.org,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 6.1 093/207] tracing/hist: Fix wrong return value in parse_action_params()
+Date: Wed,  4 Jan 2023 17:05:51 +0100
+Message-Id: <20230104160514.878389730@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,69 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Cooper <andrew.cooper3@citrix.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-commit 48280042f2c6e3ac2cfb1d8b752ab4a7e0baea24 upstream.
+commit 2cc6a528882d0e0ccbc1bca5f95b8c963cedac54 upstream.
 
-"XSAVE consistency problem" has been reported under Xen, but that's the extent
-of my divination skills.
+When number of synth fields is more than SYNTH_FIELDS_MAX,
+parse_action_params() should return -EINVAL.
 
-Modify XSTATE_WARN_ON() to force the caller to provide relevant diagnostic
-information, and modify each caller suitably.
+Link: https://lore.kernel.org/linux-trace-kernel/20221207034635.2253990-1-zhengyejian1@huawei.com
 
-For check_xstate_against_struct(), this removes a double WARN() where one will
-do perfectly fine.
-
-CC stable as this has been wonky debugging for 7 years and it is good to
-have there too.
-
-Signed-off-by: Andrew Cooper <andrew.cooper3@citrix.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20220810221909.12768-1-andrew.cooper3@citrix.com
+Cc: <mhiramat@kernel.org>
+Cc: <zanussi@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: c282a386a397 ("tracing: Add 'onmatch' hist trigger action support")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/fpu/xstate.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ kernel/trace/trace_events_hist.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/x86/kernel/fpu/xstate.c
-+++ b/arch/x86/kernel/fpu/xstate.c
-@@ -440,8 +440,8 @@ static void __init __xstate_dump_leaves(
- 	}
- }
- 
--#define XSTATE_WARN_ON(x) do {							\
--	if (WARN_ONCE(x, "XSAVE consistency problem, dumping leaves")) {	\
-+#define XSTATE_WARN_ON(x, fmt, ...) do {					\
-+	if (WARN_ONCE(x, "XSAVE consistency problem: " fmt, ##__VA_ARGS__)) {	\
- 		__xstate_dump_leaves();						\
- 	}									\
- } while (0)
-@@ -554,8 +554,7 @@ static bool __init check_xstate_against_
- 	    (nr >= XFEATURE_MAX) ||
- 	    (nr == XFEATURE_PT_UNIMPLEMENTED_SO_FAR) ||
- 	    ((nr >= XFEATURE_RSRVD_COMP_11) && (nr <= XFEATURE_RSRVD_COMP_16))) {
--		WARN_ONCE(1, "no structure for xstate: %d\n", nr);
--		XSTATE_WARN_ON(1);
-+		XSTATE_WARN_ON(1, "No structure for xstate: %d\n", nr);
- 		return false;
- 	}
- 	return true;
-@@ -598,12 +597,13 @@ static bool __init paranoid_xstate_size_
- 		 * XSAVES.
- 		 */
- 		if (!xsaves && xfeature_is_supervisor(i)) {
--			XSTATE_WARN_ON(1);
-+			XSTATE_WARN_ON(1, "Got supervisor feature %d, but XSAVES not advertised\n", i);
- 			return false;
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -3588,6 +3588,7 @@ static int parse_action_params(struct tr
+ 	while (params) {
+ 		if (data->n_params >= SYNTH_FIELDS_MAX) {
+ 			hist_err(tr, HIST_ERR_TOO_MANY_PARAMS, 0);
++			ret = -EINVAL;
+ 			goto out;
  		}
- 	}
- 	size = xstate_calculate_size(fpu_kernel_cfg.max_features, compacted);
--	XSTATE_WARN_ON(size != kernel_size);
-+	XSTATE_WARN_ON(size != kernel_size,
-+		       "size %u != kernel_size %u\n", size, kernel_size);
- 	return size == kernel_size;
- }
  
 
 
