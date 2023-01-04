@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC13AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BABACC433D2;
-	Wed,  4 Jan 2023 16:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73790AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD5BC433D2;
+	Wed,  4 Jan 2023 16:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849507;
-	bh=AipgWh0lSkZV+fTw1vScQ4PtoBkZ3hoHnYYd+w57pTg=;
+	s=korg; t=1672849510;
+	bh=b8b29d6uUF5uatIFA5lMUaZBJaLCG3x6XpgDZhqgjbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yQLONr+1unYZG1Iulm6H0080E24E+LTW3hUDrt3G6JNoyB4jIKYbknFa8Hj+tvf+C
-	 kwXA18exI699nend7/DwBvrTS1JuCimcOuxA03Yhz5iUkQlqe4ok2IjvgQMzr4MeKN
-	 3x6WCT61/bxEpeEWxGKCJyFJ9sEGmY8YIR+7TSB8=
+	b=akTPVpA3XdGLA+2TNJQ1zMPj764wDmzMh4OBQ4eWLkwkq0rOxnU+VrTl7lwR/7Y7+
+	 VsPn2vieJAarf4t90XAaSVfClUr3Q7FUyHlSzg7rpgMr8aSqbbNyichKT2ZbiqktCi
+	 hZKGaK2o4tBeCcGvnHryWyRZa8oGWE2/9hiW6xKk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.0 120/177] parisc: led: Fix potential null-ptr-deref in start_task()
-Date: Wed,  4 Jan 2023 17:06:51 +0100
-Message-Id: <20230104160511.278947471@linuxfoundation.org>
+	Luben Tuikov <luben.tuikov@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 200/207] drm/amdgpu: handle polaris10/11 overlap asics (v2)
+Date: Wed,  4 Jan 2023 17:07:38 +0100
+Message-Id: <20230104160518.258001076@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,42 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 41f563ab3c33698bdfc3403c7c2e6c94e73681e4 upstream.
+commit 1d4624cd72b912b2680c08d0be48338a1629a858 upstream.
 
-start_task() calls create_singlethread_workqueue() and not checked the
-ret value, which may return NULL. And a null-ptr-deref may happen:
+Some special polaris 10 chips overlap with the polaris11
+DID range.  Handle this properly in the driver.
 
-start_task()
-    create_singlethread_workqueue() # failed, led_wq is NULL
-    queue_delayed_work()
-        queue_delayed_work_on()
-            __queue_delayed_work()  # warning here, but continue
-                __queue_work()      # access wq->flags, null-ptr-deref
+v2: use local flags for other function calls.
 
-Check the ret value and return -ENOMEM if it is NULL.
-
-Fixes: 3499495205a6 ("[PARISC] Use work queue in LED/LCD driver instead of tasklet.")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org>
+Acked-by: Luben Tuikov <luben.tuikov@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parisc/led.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/parisc/led.c
-+++ b/drivers/parisc/led.c
-@@ -137,6 +137,9 @@ static int start_task(void)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -2040,6 +2040,15 @@ static int amdgpu_pci_probe(struct pci_d
+ 			 "See modparam exp_hw_support\n");
+ 		return -ENODEV;
+ 	}
++	/* differentiate between P10 and P11 asics with the same DID */
++	if (pdev->device == 0x67FF &&
++	    (pdev->revision == 0xE3 ||
++	     pdev->revision == 0xE7 ||
++	     pdev->revision == 0xF3 ||
++	     pdev->revision == 0xF7)) {
++		flags &= ~AMD_ASIC_MASK;
++		flags |= CHIP_POLARIS10;
++	}
  
- 	/* Create the work queue and queue the LED task */
- 	led_wq = create_singlethread_workqueue("led_wq");	
-+	if (!led_wq)
-+		return -ENOMEM;
-+
- 	queue_delayed_work(led_wq, &led_task, 0);
+ 	/* Due to hardware bugs, S/G Display on raven requires a 1:1 IOMMU mapping,
+ 	 * however, SME requires an indirect IOMMU mapping because the encryption
+@@ -2109,12 +2118,12 @@ static int amdgpu_pci_probe(struct pci_d
  
- 	return 0;
+ 	pci_set_drvdata(pdev, ddev);
+ 
+-	ret = amdgpu_driver_load_kms(adev, ent->driver_data);
++	ret = amdgpu_driver_load_kms(adev, flags);
+ 	if (ret)
+ 		goto err_pci;
+ 
+ retry_init:
+-	ret = drm_dev_register(ddev, ent->driver_data);
++	ret = drm_dev_register(ddev, flags);
+ 	if (ret == -EAGAIN && ++retry <= 3) {
+ 		DRM_INFO("retry init %d\n", retry);
+ 		/* Don't request EX mode too frequently which is attacking */
 
 
