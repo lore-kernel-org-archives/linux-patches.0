@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE23AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:14:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A309AC433D2;
-	Wed,  4 Jan 2023 16:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D050AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:14:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5BF1C433EF;
+	Wed,  4 Jan 2023 16:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848846;
-	bh=EG94yDk3p9gBjrX3vaY88CsBNJcK0tVoHICSCY6KvSE=;
+	s=korg; t=1672848849;
+	bh=VOTvp+4qMnS4pIXR2TLEide2mul8kp9d7DnWzB0oKc8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r5n0aHdvQedv9P9kDN5k0w25jqwPf8LGSk5zh67ZM5Cd/Z15NEpjWl4L83C29U89t
-	 xyVMTzKE1JaQd9Ck/oHTg7U6xBzDr9E0nOW3o2e36NjbYGHGtH5lYCpYiDaxwxwF3/
-	 j/BSfQzCgzkjbdMUQ5VsWkx88Kg85hYNSofLGJm4=
+	b=00/5G7H2vfR/71IEktPSBLzkHKJvgDG3okhqnt2IGWfU7KxvHtZGOOzP/CZBQ55S5
+	 iTkfqEbCjjRbEUVGIM3gzbz5fG27cc6csLXDFrRzxrn8A0IF6VDNuAaaI4XWAGjcqZ
+	 r+qIMF2o7eZWI1hn0nrAwd+IywMUW18NOCgqZmtE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Chen <wenchao.chen@unisoc.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.0 015/177] mmc: sdhci-sprd: Disable CLK_AUTO when the clock is less than 400K
-Date: Wed,  4 Jan 2023 17:05:06 +0100
-Message-Id: <20230104160508.119018476@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Steev Klimaszewski <steev@kali.org>,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.0 024/177] arm64: dts: qcom: sdm850-lenovo-yoga-c630: correct I2C12 pins drive strength
+Date: Wed,  4 Jan 2023 17:05:15 +0100
+Message-Id: <20230104160508.400668617@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -34,47 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wenchao Chen <wenchao.chen@unisoc.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit ff874dbc4f868af128b412a9bd92637103cf11d7 upstream.
+commit fd49776d8f458bba5499384131eddc0b8bcaf50c upstream.
 
-When the clock is less than 400K, some SD cards fail to initialize
-because CLK_AUTO is enabled.
+The pin configuration (done with generic pin controller helpers and
+as expressed by bindings) requires children nodes with either:
+1. "pins" property and the actual configuration,
+2. another set of nodes with above point.
 
-Fixes: fb8bd90f83c4 ("mmc: sdhci-sprd: Add Spreadtrum's initial host controller")
-Signed-off-by: Wenchao Chen <wenchao.chen@unisoc.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221207051909.32126-1-wenchao.chen@unisoc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+The qup_i2c12_default pin configuration used second method - with a
+"pinmux" child.
+
+Fixes: 44acee207844 ("arm64: dts: qcom: Add Lenovo Yoga C630")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Steev Klimaszewski <steev@kali.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20220930192039.240486-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-sprd.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/sdhci-sprd.c
-+++ b/drivers/mmc/host/sdhci-sprd.c
-@@ -228,13 +228,15 @@ static inline void _sdhci_sprd_set_clock
- 	div = ((div & 0x300) >> 2) | ((div & 0xFF) << 8);
- 	sdhci_enable_clk(host, div);
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -487,8 +487,10 @@
+ };
  
--	/* enable auto gate sdhc_enable_auto_gate */
--	val = sdhci_readl(host, SDHCI_SPRD_REG_32_BUSY_POSI);
--	mask = SDHCI_SPRD_BIT_OUTR_CLK_AUTO_EN |
--	       SDHCI_SPRD_BIT_INNR_CLK_AUTO_EN;
--	if (mask != (val & mask)) {
--		val |= mask;
--		sdhci_writel(host, val, SDHCI_SPRD_REG_32_BUSY_POSI);
-+	/* Enable CLK_AUTO when the clock is greater than 400K. */
-+	if (clk > 400000) {
-+		val = sdhci_readl(host, SDHCI_SPRD_REG_32_BUSY_POSI);
-+		mask = SDHCI_SPRD_BIT_OUTR_CLK_AUTO_EN |
-+			SDHCI_SPRD_BIT_INNR_CLK_AUTO_EN;
-+		if (mask != (val & mask)) {
-+			val |= mask;
-+			sdhci_writel(host, val, SDHCI_SPRD_REG_32_BUSY_POSI);
-+		}
- 	}
- }
+ &qup_i2c12_default {
+-	drive-strength = <2>;
+-	bias-disable;
++	pinmux {
++		drive-strength = <2>;
++		bias-disable;
++	};
+ };
  
+ &qup_uart6_default {
 
 
