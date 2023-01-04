@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C24AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F96DC433EF;
-	Wed,  4 Jan 2023 16:17:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 582F7AD4A
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79C5AC433F0;
+	Wed,  4 Jan 2023 16:17:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849023;
-	bh=ch0YJTp+FsFy7c5TeHdFTAWVBKe43zzHD3Kt86f3fQw=;
+	s=korg; t=1672849026;
+	bh=JJGv0wlS+fGh1ux34YOoC2Y6fy/IDkf1dboYub3X51c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qvw4BZlVSW/lpmuWS01mSIbf/sG42aidesgJ/04dI5T5lzyoBfGRyJ2wuP83hjhSm
-	 SjQcIwM8BGMbL4WVAfKCrhXGp2TU+YJukcbuWZErfGymTQHygLRy1RZKkVA84Z7Ubx
-	 VJpAXcddw8UiOnyUNrBpAqYwASF1DhurMQRH5a7I=
+	b=WVHhuVwr8ysfPo4Vqk7SesCveHLqYkh9cGU44bk1k4KD8a/zvAe3VtfyHqkpf2AyZ
+	 KWQDWg7V/BHsH35Zfmy+Te1jljn7wmZtvx+eRpVisE8wo/uhOGiXZ+XBX56OY0aoFm
+	 Pk3VrYCORgIh/aGvoICGPJ6QgdAOlvLjMCdC6CLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Corey Minyard <cminyard@mvista.com>
-Subject: [PATCH 6.1 121/207] ipmi: fix use after free in _ipmi_destroy_user()
-Date: Wed,  4 Jan 2023 17:06:19 +0100
-Message-Id: <20230104160515.738104852@linuxfoundation.org>
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.0 052/177] dm cache: set needs_check flag after aborting metadata
+Date: Wed,  4 Jan 2023 17:05:43 +0100
+Message-Id: <20230104160509.222862338@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,43 +33,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-commit a92ce570c81dc0feaeb12a429b4bc65686d17967 upstream.
+commit 6b9973861cb2e96dcd0bb0f1baddc5c034207c5c upstream.
 
-The intf_free() function frees the "intf" pointer so we cannot
-dereference it again on the next line.
+Otherwise the commit that will be aborted will be associated with the
+metadata objects that will be torn down.  Must write needs_check flag
+to metadata with a reset block manager.
 
-Fixes: cbb79863fc31 ("ipmi: Don't allow device module unload when in use")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Message-Id: <Y3M8xa1drZv4CToE@kili>
-Cc: <stable@vger.kernel.org> # 5.5+
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Found through code-inspection (and compared against dm-thin.c).
+
+Cc: stable@vger.kernel.org
+Fixes: 028ae9f76f29 ("dm cache: add fail io mode and needs_check flag")
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/md/dm-cache-target.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -1330,6 +1330,7 @@ static void _ipmi_destroy_user(struct ip
- 	unsigned long    flags;
- 	struct cmd_rcvr  *rcvr;
- 	struct cmd_rcvr  *rcvrs = NULL;
-+	struct module    *owner;
+--- a/drivers/md/dm-cache-target.c
++++ b/drivers/md/dm-cache-target.c
+@@ -907,16 +907,16 @@ static void abort_transaction(struct cac
+ 	if (get_cache_mode(cache) >= CM_READ_ONLY)
+ 		return;
  
- 	if (!acquire_ipmi_user(user, &i)) {
- 		/*
-@@ -1392,8 +1393,9 @@ static void _ipmi_destroy_user(struct ip
- 		kfree(rcvr);
+-	if (dm_cache_metadata_set_needs_check(cache->cmd)) {
+-		DMERR("%s: failed to set 'needs_check' flag in metadata", dev_name);
+-		set_cache_mode(cache, CM_FAIL);
+-	}
+-
+ 	DMERR_LIMIT("%s: aborting current metadata transaction", dev_name);
+ 	if (dm_cache_metadata_abort(cache->cmd)) {
+ 		DMERR("%s: failed to abort metadata transaction", dev_name);
+ 		set_cache_mode(cache, CM_FAIL);
  	}
- 
-+	owner = intf->owner;
- 	kref_put(&intf->refcount, intf_free);
--	module_put(intf->owner);
-+	module_put(owner);
++
++	if (dm_cache_metadata_set_needs_check(cache->cmd)) {
++		DMERR("%s: failed to set 'needs_check' flag in metadata", dev_name);
++		set_cache_mode(cache, CM_FAIL);
++	}
  }
  
- int ipmi_destroy_user(struct ipmi_user *user)
+ static void metadata_operation_failed(struct cache *cache, const char *op, int r)
 
 
