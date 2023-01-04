@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F4EAD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:13:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EFB1C433D2;
-	Wed,  4 Jan 2023 16:13:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06971AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:13:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 668CEC433D2;
+	Wed,  4 Jan 2023 16:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848819;
-	bh=8+vgRJSH5a1+wjv0k+f0IWtfwJNNdxCpLzpTrTPIL8E=;
+	s=korg; t=1672848821;
+	bh=RjCZfCQOnhbJzOINR5uUbRsnbtupjbvh63TDF+SAkZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gJOBt7vqm5msA7AG3nYi0us9CkyJwEfUj9Cz/zbKdUMoj6W5+UK2XrJ1MBucUObJq
-	 wz0i/RcibCiM0J/CLTnizW6JYeFLeBC5Vh7YSU9zcpWQn2LSYkuFV1iDBfMR3WLJXA
-	 wLs+CkSwgOb7CzBjZvcLlJPmxlD6yBnSVUiJMjMs=
+	b=kY81I0HcZiSt2pdzyt/HKubpzACOwottvTUMo/c1uTk6STcmarinJX9zgpjyEX568
+	 5uVz4GzdjguJM41YrimsNqMk6PGJdIeguo6LBBkA/XTx1NKk/7oF4EG0nss6nNjH3o
+	 o7WUS3wvdAi1PyRjZxERijow8cejTeuWYJe7Ewcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.1 089/207] x86/kprobes: Fix optprobe optimization check with CONFIG_RETHUNK
-Date: Wed,  4 Jan 2023 17:05:47 +0100
-Message-Id: <20230104160514.759634403@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.0 020/177] btrfs: fix resolving backrefs for inline extent followed by prealloc
+Date: Wed,  4 Jan 2023 17:05:11 +0100
+Message-Id: <20230104160508.272808185@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,84 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Boris Burkov <boris@bur.io>
 
-commit 63dc6325ff41ee9e570bde705ac34a39c5dbeb44 upstream.
+commit 560840afc3e63bbe5d9c5ef6b2ecf8f3589adff6 upstream.
 
-Since the CONFIG_RETHUNK and CONFIG_SLS will use INT3 for stopping
-speculative execution after function return, kprobe jump optimization
-always fails on the functions with such INT3 inside the function body.
-(It already checks the INT3 padding between functions, but not inside
- the function)
+If a file consists of an inline extent followed by a regular or prealloc
+extent, then a legitimate attempt to resolve a logical address in the
+non-inline region will result in add_all_parents reading the invalid
+offset field of the inline extent. If the inline extent item is placed
+in the leaf eb s.t. it is the first item, attempting to access the
+offset field will not only be meaningless, it will go past the end of
+the eb and cause this panic:
 
-To avoid this issue, as same as kprobes, check whether the INT3 comes
-from kgdb or not, and if so, stop decoding and make it fail. The other
-INT3 will come from CONFIG_RETHUNK/CONFIG_SLS and those can be
-treated as a one-byte instruction.
+  [17.626048] BTRFS warning (device dm-2): bad eb member end: ptr 0x3fd4 start 30834688 member offset 16377 size 8
+  [17.631693] general protection fault, probably for non-canonical address 0x5088000000000: 0000 [#1] SMP PTI
+  [17.635041] CPU: 2 PID: 1267 Comm: btrfs Not tainted 5.12.0-07246-g75175d5adc74-dirty #199
+  [17.637969] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
+  [17.641995] RIP: 0010:btrfs_get_64+0xe7/0x110
+  [17.649890] RSP: 0018:ffffc90001f73a08 EFLAGS: 00010202
+  [17.651652] RAX: 0000000000000001 RBX: ffff88810c42d000 RCX: 0000000000000000
+  [17.653921] RDX: 0005088000000000 RSI: ffffc90001f73a0f RDI: 0000000000000001
+  [17.656174] RBP: 0000000000000ff9 R08: 0000000000000007 R09: c0000000fffeffff
+  [17.658441] R10: ffffc90001f73790 R11: ffffc90001f73788 R12: ffff888106afe918
+  [17.661070] R13: 0000000000003fd4 R14: 0000000000003f6f R15: cdcdcdcdcdcdcdcd
+  [17.663617] FS:  00007f64e7627d80(0000) GS:ffff888237c80000(0000) knlGS:0000000000000000
+  [17.666525] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [17.668664] CR2: 000055d4a39152e8 CR3: 000000010c596002 CR4: 0000000000770ee0
+  [17.671253] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  [17.673634] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  [17.676034] PKRU: 55555554
+  [17.677004] Call Trace:
+  [17.677877]  add_all_parents+0x276/0x480
+  [17.679325]  find_parent_nodes+0xfae/0x1590
+  [17.680771]  btrfs_find_all_leafs+0x5e/0xa0
+  [17.682217]  iterate_extent_inodes+0xce/0x260
+  [17.683809]  ? btrfs_inode_flags_to_xflags+0x50/0x50
+  [17.685597]  ? iterate_inodes_from_logical+0xa1/0xd0
+  [17.687404]  iterate_inodes_from_logical+0xa1/0xd0
+  [17.689121]  ? btrfs_inode_flags_to_xflags+0x50/0x50
+  [17.691010]  btrfs_ioctl_logical_to_ino+0x131/0x190
+  [17.692946]  btrfs_ioctl+0x104a/0x2f60
+  [17.694384]  ? selinux_file_ioctl+0x182/0x220
+  [17.695995]  ? __x64_sys_ioctl+0x84/0xc0
+  [17.697394]  __x64_sys_ioctl+0x84/0xc0
+  [17.698697]  do_syscall_64+0x33/0x40
+  [17.700017]  entry_SYSCALL_64_after_hwframe+0x44/0xae
+  [17.701753] RIP: 0033:0x7f64e72761b7
+  [17.709355] RSP: 002b:00007ffefb067f58 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+  [17.712088] RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007f64e72761b7
+  [17.714667] RDX: 00007ffefb067fb0 RSI: 00000000c0389424 RDI: 0000000000000003
+  [17.717386] RBP: 00007ffefb06d188 R08: 000055d4a390d2b0 R09: 00007f64e7340a60
+  [17.719938] R10: 0000000000000231 R11: 0000000000000246 R12: 0000000000000001
+  [17.722383] R13: 0000000000000000 R14: 00000000c0389424 R15: 000055d4a38fd2a0
+  [17.724839] Modules linked in:
 
-Fixes: e463a09af2f0 ("x86: Add straight-line-speculation mitigation")
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/167146051929.1374301.7419382929328081706.stgit@devnote3
+Fix the bug by detecting the inline extent item in add_all_parents and
+skipping to the next extent item.
+
+CC: stable@vger.kernel.org # 4.9+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/kprobes/opt.c |   28 ++++++++--------------------
- 1 file changed, 8 insertions(+), 20 deletions(-)
+ fs/btrfs/backref.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/x86/kernel/kprobes/opt.c
-+++ b/arch/x86/kernel/kprobes/opt.c
-@@ -15,6 +15,7 @@
- #include <linux/extable.h>
- #include <linux/kdebug.h>
- #include <linux/kallsyms.h>
-+#include <linux/kgdb.h>
- #include <linux/ftrace.h>
- #include <linux/objtool.h>
- #include <linux/pgtable.h>
-@@ -279,19 +280,6 @@ static int insn_is_indirect_jump(struct
- 	return ret;
- }
+--- a/fs/btrfs/backref.c
++++ b/fs/btrfs/backref.c
+@@ -433,6 +433,7 @@ static int add_all_parents(struct btrfs_
+ 	u64 wanted_disk_byte = ref->wanted_disk_byte;
+ 	u64 count = 0;
+ 	u64 data_offset;
++	u8 type;
  
--static bool is_padding_int3(unsigned long addr, unsigned long eaddr)
--{
--	unsigned char ops;
--
--	for (; addr < eaddr; addr++) {
--		if (get_kernel_nofault(ops, (void *)addr) < 0 ||
--		    ops != INT3_INSN_OPCODE)
--			return false;
--	}
--
--	return true;
--}
--
- /* Decode whole function to ensure any instructions don't jump into target */
- static int can_optimize(unsigned long paddr)
- {
-@@ -334,15 +322,15 @@ static int can_optimize(unsigned long pa
- 		ret = insn_decode_kernel(&insn, (void *)recovered_insn);
- 		if (ret < 0)
- 			return 0;
--
-+#ifdef CONFIG_KGDB
- 		/*
--		 * In the case of detecting unknown breakpoint, this could be
--		 * a padding INT3 between functions. Let's check that all the
--		 * rest of the bytes are also INT3.
-+		 * If there is a dynamically installed kgdb sw breakpoint,
-+		 * this function should not be probed.
- 		 */
--		if (insn.opcode.bytes[0] == INT3_INSN_OPCODE)
--			return is_padding_int3(addr, paddr - offset + size) ? 1 : 0;
--
-+		if (insn.opcode.bytes[0] == INT3_INSN_OPCODE &&
-+		    kgdb_has_hit_break(addr))
-+			return 0;
-+#endif
- 		/* Recover address */
- 		insn.kaddr = (void *)addr;
- 		insn.next_byte = (void *)(addr + insn.length);
+ 	if (level != 0) {
+ 		eb = path->nodes[level];
+@@ -487,6 +488,9 @@ static int add_all_parents(struct btrfs_
+ 			continue;
+ 		}
+ 		fi = btrfs_item_ptr(eb, slot, struct btrfs_file_extent_item);
++		type = btrfs_file_extent_type(eb, fi);
++		if (type == BTRFS_FILE_EXTENT_INLINE)
++			goto next;
+ 		disk_byte = btrfs_file_extent_disk_bytenr(eb, fi);
+ 		data_offset = btrfs_file_extent_offset(eb, fi);
+ 
 
 
