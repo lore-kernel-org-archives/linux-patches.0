@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E98AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:26:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 241A3C433EF;
-	Wed,  4 Jan 2023 16:26:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77B3AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:26:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CFC4C433EF;
+	Wed,  4 Jan 2023 16:26:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849604;
-	bh=uq4+5aO999whfevOG+qpcsDAxGIZXeVu4VCQo0w85Sk=;
+	s=korg; t=1672849607;
+	bh=646KULrc+YqY/DoBIgUczkDY3B9fHFZiADHQ5hBDPTQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TYDCg7P8sS9odeN4tBCJv6TuX7CpuyNcpe6wZa6Ceyo5QOT9JKd50EyVQdo9GSfyh
-	 rumd1KbHtzTp6dnMN6JONGK6mSb9MafgNwcBQPNpjeP0xHJeH+Ah9PK7wJtzMB8nv/
-	 XjGjmphiDt+eHHcIoBdwmCKEXUHwIjPs2BNuyBkw=
+	b=iDyzpti36asq4f1kI5UCY9vTUIHU8ooMGoEwCi7FE+OvGy5h9RbJHfb4Xtk6UiNRX
+	 4yYg858CLUo3jyDloent9ZxeWnXds16z7LMaWDfUck0w8ukQyxWbNk248CkC+u++zR
+	 WXmrDIbeRr0N4GnhJi4pICu9+j6vh4fApWCFq/Ig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Catherine Hoang <catherine.hoang@oracle.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.0 159/177] ext4: dont return EINVAL from GETFSUUID when reporting UUID length
-Date: Wed,  4 Jan 2023 17:07:30 +0100
-Message-Id: <20230104160512.490963133@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.0 160/177] ext4: fix corrupt backup group descriptors after online resize
+Date: Wed,  4 Jan 2023 17:07:31 +0100
+Message-Id: <20230104160512.520866688@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -36,42 +36,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit b76abb5157468756163fe7e3431c9fe32cba57ca upstream.
+commit 8f49ec603ae3e213bfab2799182724e3abac55a1 upstream.
 
-If userspace calls this ioctl with fsu_length (the length of the
-fsuuid.fsu_uuid array) set to zero, ext4 copies the desired uuid length
-out to userspace.  The kernel call returned a result from a valid input,
-so the return value here should be zero, not EINVAL.
+In commit 9a8c5b0d0615 ("ext4: update the backup superblock's at the end
+of the online resize"), it is assumed that update_backups() only updates
+backup superblocks, so each b_data is treated as a backupsuper block to
+update its s_block_group_nr and s_checksum. However, update_backups()
+also updates the backup group descriptors, which causes the backup group
+descriptors to be corrupted.
 
-While we're at it, fix the copy_to_user call to make it clear that we're
-only copying out fsu_len.
+The above commit fixes the problem of invalid checksum of the backup
+superblock. The root cause of this problem is that the checksum of
+ext4_update_super() is not set correctly. This problem has been fixed
+in the previous patch ("ext4: fix bad checksum after online resize").
 
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Catherine Hoang <catherine.hoang@oracle.com>
-Link: https://lore.kernel.org/r/166811138914.327006.9241306894437166566.stgit@magnolia
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+However, we do need to set block_group_nr for the backup superblock in
+update_backups(). When a block is in a group that contains a backup
+superblock, and the block is the first block in the group, the block is
+definitely a superblock. We add a helper function that includes setting
+s_block_group_nr and updating checksum, and then call it only when the
+above conditions are met to prevent the backup group descriptors from
+being incorrectly modified.
+
+Fixes: 9a8c5b0d0615 ("ext4: update the backup superblock's at the end of the online resize")
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
 Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20221117040341.1380702-3-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ioctl.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ fs/ext4/resize.c | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
---- a/fs/ext4/ioctl.c
-+++ b/fs/ext4/ioctl.c
-@@ -1157,9 +1157,10 @@ static int ext4_ioctl_getuuid(struct ext
+diff --git a/fs/ext4/resize.c b/fs/ext4/resize.c
+index 70fef50ab3f9..d460440d6dee 100644
+--- a/fs/ext4/resize.c
++++ b/fs/ext4/resize.c
+@@ -1110,6 +1110,16 @@ static int reserve_backup_gdb(handle_t *handle, struct inode *inode,
+ 	return err;
+ }
  
- 	if (fsuuid.fsu_len == 0) {
- 		fsuuid.fsu_len = UUID_SIZE;
--		if (copy_to_user(ufsuuid, &fsuuid, sizeof(fsuuid.fsu_len)))
-+		if (copy_to_user(&ufsuuid->fsu_len, &fsuuid.fsu_len,
-+					sizeof(fsuuid.fsu_len)))
- 			return -EFAULT;
--		return -EINVAL;
-+		return 0;
- 	}
++static inline void ext4_set_block_group_nr(struct super_block *sb, char *data,
++					   ext4_group_t group)
++{
++	struct ext4_super_block *es = (struct ext4_super_block *) data;
++
++	es->s_block_group_nr = cpu_to_le16(group);
++	if (ext4_has_metadata_csum(sb))
++		es->s_checksum = ext4_superblock_csum(sb, es);
++}
++
+ /*
+  * Update the backup copies of the ext4 metadata.  These don't need to be part
+  * of the main resize transaction, because e2fsck will re-write them if there
+@@ -1158,7 +1168,8 @@ static void update_backups(struct super_block *sb, sector_t blk_off, char *data,
+ 	while (group < sbi->s_groups_count) {
+ 		struct buffer_head *bh;
+ 		ext4_fsblk_t backup_block;
+-		struct ext4_super_block *es;
++		int has_super = ext4_bg_has_super(sb, group);
++		ext4_fsblk_t first_block = ext4_group_first_block_no(sb, group);
  
- 	if (fsuuid.fsu_len < UUID_SIZE || fsuuid.fsu_flags != 0)
+ 		/* Out of journal space, and can't get more - abort - so sad */
+ 		err = ext4_resize_ensure_credits_batch(handle, 1);
+@@ -1168,8 +1179,7 @@ static void update_backups(struct super_block *sb, sector_t blk_off, char *data,
+ 		if (meta_bg == 0)
+ 			backup_block = ((ext4_fsblk_t)group) * bpg + blk_off;
+ 		else
+-			backup_block = (ext4_group_first_block_no(sb, group) +
+-					ext4_bg_has_super(sb, group));
++			backup_block = first_block + has_super;
+ 
+ 		bh = sb_getblk(sb, backup_block);
+ 		if (unlikely(!bh)) {
+@@ -1187,10 +1197,8 @@ static void update_backups(struct super_block *sb, sector_t blk_off, char *data,
+ 		memcpy(bh->b_data, data, size);
+ 		if (rest)
+ 			memset(bh->b_data + size, 0, rest);
+-		es = (struct ext4_super_block *) bh->b_data;
+-		es->s_block_group_nr = cpu_to_le16(group);
+-		if (ext4_has_metadata_csum(sb))
+-			es->s_checksum = ext4_superblock_csum(sb, es);
++		if (has_super && (backup_block == first_block))
++			ext4_set_block_group_nr(sb, bh->b_data, group);
+ 		set_buffer_uptodate(bh);
+ 		unlock_buffer(bh);
+ 		err = ext4_handle_dirty_metadata(handle, NULL, bh);
+-- 
+2.39.0
+
 
 
