@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E92F9AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:21:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A514C433F0;
-	Wed,  4 Jan 2023 16:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6DAEAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:21:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41961C433EF;
+	Wed,  4 Jan 2023 16:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849265;
-	bh=TEa85643XdGVd0hid48IlR+IB6fa/wr22QXoIulKvaw=;
+	s=korg; t=1672849268;
+	bh=Y9avWnrdo1KJJsjerhAmp289Ae/E1SbEtbzXTHDwICQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nXVCppY176zo84xyg2LKi9qeLBaN608IAKC5JwwXnu3NN6l8y7lwFn8X8GBSKXwcu
-	 ZDiVaORuYpWjAv87vhKauAoSIW0MA78+d+gaUaQz6YdLuSjWjnf6K/IT6N7329ht9W
-	 6dF+gdEgzmLNs0xpH2xvkryyujw+UBJUXgfaATd8=
+	b=QmGzsaT0IeuiZOcGdqTkR+aD7PooMFEWuUNAD7yrYK+IRmJJe/zcOAH4b94YMRR/U
+	 bm0GX0uIbHg03vlQkob2IQ8oW/BHthhN4YPA/xmNnoemMR5njDWGX9N8xBRD1iWUk3
+	 eFkZh/s+05GGXvgz0hIJ9wkAEh6+KrLyFcgUYKDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Bristot de Oliveira <bristot@kernel.org>,
-	David Howells <dhowells@redhat.com>,
-	kernel test robot <lkp@intel.com>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.0 069/177] tracing: Fix complicated dependency of CONFIG_TRACER_MAX_TRACE
-Date: Wed,  4 Jan 2023 17:06:00 +0100
-Message-Id: <20230104160509.749594232@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 6.1 160/207] arm64: efi: Execute runtime services from a dedicated stack
+Date: Wed,  4 Jan 2023 17:06:58 +0100
+Message-Id: <20230104160516.955760274@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,180 +33,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit e25e43a4e5d8cb2323553d8b6a7ba08d2ebab21f upstream.
+commit ff7a167961d1b97e0e205f245f806e564d3505e7 upstream.
 
-Both CONFIG_OSNOISE_TRACER and CONFIG_HWLAT_TRACER partially enables the
-CONFIG_TRACER_MAX_TRACE code, but that is complicated and has
-introduced a bug; It declares tracing_max_lat_fops data structure outside
-of #ifdefs, but since it is defined only when CONFIG_TRACER_MAX_TRACE=y
-or CONFIG_HWLAT_TRACER=y, if only CONFIG_OSNOISE_TRACER=y, that
-declaration comes to a definition(!).
+With the introduction of PRMT in the ACPI subsystem, the EFI rts
+workqueue is no longer the only caller of efi_call_virt_pointer() in the
+kernel. This means the EFI runtime services lock is no longer sufficient
+to manage concurrent calls into firmware, but also that firmware calls
+may occur that are not marshalled via the workqueue mechanism, but
+originate directly from the caller context.
 
-To fix this issue, and do not repeat the similar problem, makes
-CONFIG_OSNOISE_TRACER and CONFIG_HWLAT_TRACER enables the
-CONFIG_TRACER_MAX_TRACE always. It has there benefits;
-- Fix the tracing_max_lat_fops bug
-- Simplify the #ifdefs
-- CONFIG_TRACER_MAX_TRACE code is fully enabled, or not.
+For added robustness, and to ensure that the runtime services have 8 KiB
+of stack space available as per the EFI spec, introduce a spinlock
+protected EFI runtime stack of 8 KiB, where the spinlock also ensures
+serialization between the EFI rts workqueue (which itself serializes EFI
+runtime calls) and other callers of efi_call_virt_pointer().
 
-Link: https://lore.kernel.org/linux-trace-kernel/167033628155.4111793.12185405690820208159.stgit@devnote3
+While at it, use the stack pivot to avoid reloading the shadow call
+stack pointer from the ordinary stack, as doing so could produce a
+gadget to defeat it.
 
-Fixes: 424b650f35c7 ("tracing: Fix missing osnoise tracer on max_latency")
-Cc: Daniel Bristot de Oliveira <bristot@kernel.org>
-Cc: stable@vger.kernel.org
-Reported-by: David Howells <dhowells@redhat.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Link: https://lore.kernel.org/all/166992525941.1716618.13740663757583361463.stgit@warthog.procyon.org.uk/ (original thread and v1)
-Link: https://lore.kernel.org/all/202212052253.VuhZ2ulJ-lkp@intel.com/T/#u (v1 error report)
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/Kconfig |    2 ++
- kernel/trace/trace.c |   23 +++++++++++++----------
- kernel/trace/trace.h |    8 +++-----
- 3 files changed, 18 insertions(+), 15 deletions(-)
+ arch/arm64/include/asm/efi.h       |    3 +++
+ arch/arm64/kernel/efi-rt-wrapper.S |   13 ++++++++++++-
+ arch/arm64/kernel/efi.c            |   27 +++++++++++++++++++++++++++
+ 3 files changed, 42 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/Kconfig
-+++ b/kernel/trace/Kconfig
-@@ -369,6 +369,7 @@ config SCHED_TRACER
- config HWLAT_TRACER
- 	bool "Tracer to detect hardware latencies (like SMIs)"
- 	select GENERIC_TRACER
-+	select TRACER_MAX_TRACE
- 	help
- 	 This tracer, when enabled will create one or more kernel threads,
- 	 depending on what the cpumask file is set to, which each thread
-@@ -404,6 +405,7 @@ config HWLAT_TRACER
- config OSNOISE_TRACER
- 	bool "OS Noise tracer"
- 	select GENERIC_TRACER
-+	select TRACER_MAX_TRACE
- 	help
- 	  In the context of high-performance computing (HPC), the Operating
- 	  System Noise (osnoise) refers to the interference experienced by an
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -1421,6 +1421,7 @@ int tracing_snapshot_cond_disable(struct
- 	return false;
- }
- EXPORT_SYMBOL_GPL(tracing_snapshot_cond_disable);
-+#define free_snapshot(tr)	do { } while (0)
- #endif /* CONFIG_TRACER_SNAPSHOT */
+--- a/arch/arm64/include/asm/efi.h
++++ b/arch/arm64/include/asm/efi.h
+@@ -25,6 +25,7 @@ int efi_set_mapping_permissions(struct m
+ ({									\
+ 	efi_virtmap_load();						\
+ 	__efi_fpsimd_begin();						\
++	spin_lock(&efi_rt_lock);					\
+ })
  
- void tracer_tracing_off(struct trace_array *tr)
-@@ -1692,6 +1693,8 @@ static ssize_t trace_seq_to_buffer(struc
- }
+ #undef arch_efi_call_virt
+@@ -33,10 +34,12 @@ int efi_set_mapping_permissions(struct m
  
- unsigned long __read_mostly	tracing_thresh;
-+
-+#ifdef CONFIG_TRACER_MAX_TRACE
- static const struct file_operations tracing_max_lat_fops;
+ #define arch_efi_call_virt_teardown()					\
+ ({									\
++	spin_unlock(&efi_rt_lock);					\
+ 	__efi_fpsimd_end();						\
+ 	efi_virtmap_unload();						\
+ })
  
- #ifdef LATENCY_FS_NOTIFY
-@@ -1748,18 +1751,14 @@ void latency_fsnotify(struct trace_array
- 	irq_work_queue(&tr->fsnotify_irqwork);
- }
++extern spinlock_t efi_rt_lock;
+ efi_status_t __efi_rt_asm_wrapper(void *, const char *, ...);
  
--#elif defined(CONFIG_TRACER_MAX_TRACE) || defined(CONFIG_HWLAT_TRACER)	\
--	|| defined(CONFIG_OSNOISE_TRACER)
-+#else /* !LATENCY_FS_NOTIFY */
+ #define ARCH_EFI_IRQ_FLAGS_MASK (PSR_D_BIT | PSR_A_BIT | PSR_I_BIT | PSR_F_BIT)
+--- a/arch/arm64/kernel/efi-rt-wrapper.S
++++ b/arch/arm64/kernel/efi-rt-wrapper.S
+@@ -16,6 +16,12 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
+ 	 */
+ 	stp	x1, x18, [sp, #16]
  
- #define trace_create_maxlat_file(tr, d_tracer)				\
- 	trace_create_file("tracing_max_latency", TRACE_MODE_WRITE,	\
- 			  d_tracer, &tr->max_latency, &tracing_max_lat_fops)
- 
--#else
--#define trace_create_maxlat_file(tr, d_tracer)	 do { } while (0)
- #endif
- 
--#ifdef CONFIG_TRACER_MAX_TRACE
- /*
-  * Copy the new maximum trace into the separate maximum-trace
-  * structure. (this way the maximum trace is permanently saved,
-@@ -1834,14 +1833,15 @@ update_max_tr(struct trace_array *tr, st
- 		ring_buffer_record_off(tr->max_buffer.buffer);
- 
- #ifdef CONFIG_TRACER_SNAPSHOT
--	if (tr->cond_snapshot && !tr->cond_snapshot->update(tr, cond_data))
--		goto out_unlock;
-+	if (tr->cond_snapshot && !tr->cond_snapshot->update(tr, cond_data)) {
-+		arch_spin_unlock(&tr->max_lock);
-+		return;
-+	}
- #endif
- 	swap(tr->array_buffer.buffer, tr->max_buffer.buffer);
- 
- 	__update_max_tr(tr, tsk, cpu);
- 
-- out_unlock:
- 	arch_spin_unlock(&tr->max_lock);
- }
- 
-@@ -1888,6 +1888,7 @@ update_max_tr_single(struct trace_array
- 	__update_max_tr(tr, tsk, cpu);
- 	arch_spin_unlock(&tr->max_lock);
- }
-+
- #endif /* CONFIG_TRACER_MAX_TRACE */
- 
- static int wait_on_pipe(struct trace_iterator *iter, int full)
-@@ -6563,7 +6564,7 @@ out:
- 	return ret;
- }
- 
--#if defined(CONFIG_TRACER_MAX_TRACE) || defined(CONFIG_HWLAT_TRACER)
-+#ifdef CONFIG_TRACER_MAX_TRACE
- 
- static ssize_t
- tracing_max_lat_read(struct file *filp, char __user *ubuf,
-@@ -7578,7 +7579,7 @@ static const struct file_operations trac
- 	.llseek		= generic_file_llseek,
- };
- 
--#if defined(CONFIG_TRACER_MAX_TRACE) || defined(CONFIG_HWLAT_TRACER)
-+#ifdef CONFIG_TRACER_MAX_TRACE
- static const struct file_operations tracing_max_lat_fops = {
- 	.open		= tracing_open_generic,
- 	.read		= tracing_max_lat_read,
-@@ -9592,7 +9593,9 @@ init_tracer_tracefs(struct trace_array *
- 
- 	create_trace_options_dir(tr);
- 
-+#ifdef CONFIG_TRACER_MAX_TRACE
- 	trace_create_maxlat_file(tr, d_tracer);
++	ldr_l	x16, efi_rt_stack_top
++	mov	sp, x16
++#ifdef CONFIG_SHADOW_CALL_STACK
++	str	x18, [sp, #-16]!
 +#endif
++
+ 	/*
+ 	 * We are lucky enough that no EFI runtime services take more than
+ 	 * 5 arguments, so all are passed in registers rather than via the
+@@ -29,6 +35,7 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
+ 	mov	x4, x6
+ 	blr	x8
  
- 	if (ftrace_create_function_files(tr, d_tracer))
- 		MEM_FAIL(1, "Could not allocate function filter files");
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -308,8 +308,7 @@ struct trace_array {
- 	struct array_buffer	max_buffer;
- 	bool			allocated_snapshot;
- #endif
--#if defined(CONFIG_TRACER_MAX_TRACE) || defined(CONFIG_HWLAT_TRACER) \
--	|| defined(CONFIG_OSNOISE_TRACER)
-+#ifdef CONFIG_TRACER_MAX_TRACE
- 	unsigned long		max_latency;
- #ifdef CONFIG_FSNOTIFY
- 	struct dentry		*d_max_latency;
-@@ -687,12 +686,11 @@ void update_max_tr(struct trace_array *t
- 		   void *cond_data);
- void update_max_tr_single(struct trace_array *tr,
- 			  struct task_struct *tsk, int cpu);
--#endif /* CONFIG_TRACER_MAX_TRACE */
- 
--#if (defined(CONFIG_TRACER_MAX_TRACE) || defined(CONFIG_HWLAT_TRACER) \
--	|| defined(CONFIG_OSNOISE_TRACER)) && defined(CONFIG_FSNOTIFY)
-+#ifdef CONFIG_FSNOTIFY
- #define LATENCY_FS_NOTIFY
- #endif
-+#endif /* CONFIG_TRACER_MAX_TRACE */
- 
- #ifdef LATENCY_FS_NOTIFY
- void latency_fsnotify(struct trace_array *tr);
++	mov	sp, x29
+ 	ldp	x1, x2, [sp, #16]
+ 	cmp	x2, x18
+ 	ldp	x29, x30, [sp], #32
+@@ -42,6 +49,10 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
+ 	 * called with preemption disabled and a separate shadow stack is used
+ 	 * for interrupts.
+ 	 */
+-	mov	x18, x2
++#ifdef CONFIG_SHADOW_CALL_STACK
++	ldr_l	x18, efi_rt_stack_top
++	ldr	x18, [x18, #-16]
++#endif
++
+ 	b	efi_handle_corrupted_x18	// tail call
+ SYM_FUNC_END(__efi_rt_asm_wrapper)
+--- a/arch/arm64/kernel/efi.c
++++ b/arch/arm64/kernel/efi.c
+@@ -144,3 +144,30 @@ asmlinkage efi_status_t efi_handle_corru
+ 	pr_err_ratelimited(FW_BUG "register x18 corrupted by EFI %s\n", f);
+ 	return s;
+ }
++
++DEFINE_SPINLOCK(efi_rt_lock);
++
++asmlinkage u64 *efi_rt_stack_top __ro_after_init;
++
++/* EFI requires 8 KiB of stack space for runtime services */
++static_assert(THREAD_SIZE >= SZ_8K);
++
++static int __init arm64_efi_rt_init(void)
++{
++	void *p;
++
++	if (!efi_enabled(EFI_RUNTIME_SERVICES))
++		return 0;
++
++	p = __vmalloc_node(THREAD_SIZE, THREAD_ALIGN, GFP_KERNEL,
++			   NUMA_NO_NODE, &&l);
++l:	if (!p) {
++		pr_warn("Failed to allocate EFI runtime stack\n");
++		clear_bit(EFI_RUNTIME_SERVICES, &efi.flags);
++		return -ENOMEM;
++	}
++
++	efi_rt_stack_top = p + THREAD_SIZE;
++	return 0;
++}
++core_initcall(arm64_efi_rt_init);
 
 
