@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8F53AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:28:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5099BC433D2;
-	Wed,  4 Jan 2023 16:28:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7ECAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:28:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AF61C433D2;
+	Wed,  4 Jan 2023 16:28:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849681;
-	bh=u+Ab45UWIXugyBKjmcyzZdcg0gQPdTIsYvWqQUKwJZM=;
+	s=korg; t=1672849685;
+	bh=dIga66q9mWe6EELufHbGzomcklYphT/J8096Se33pUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AGeejA/jU+ChSsaqExvpLBX78YLx0WN9iS2p7dG1NRmRCtss5/lI9v3A08tbrS6oX
-	 U/9NDXm5zi+mqQ9JXH0MOMP03NBK9xT0vn26aqV4XrzfKnciJ0Qhjb8gEZ64fYMaqR
-	 qUdZYwT7cI3gUthr+WY5sdJl96sZNnB5ACK/u52M=
+	b=Kp88fJ1A6K1NPokIneUrH7ZH0k8ZjpE+1tmHNLCylzLZ0vyu7gaLw1YroM4S8FMi7
+	 x8u0PKW5V7IsRE5aOUKtOTy1WVCIxE53tSQtFT1AVpn2yaVhn6JGb7GgoXcc7TC0ha
+	 sORaXx8p4EX5hRW8zqkrBOIEGAtxr71C7Xs14Ep8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+98346927678ac3059c77@syzkaller.appspotmail.com,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Catherine Hoang <catherine.hoang@oracle.com>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 6.0 153/177] ext4: init quota for old.inode in ext4_rename
-Date: Wed,  4 Jan 2023 17:07:24 +0100
-Message-Id: <20230104160512.296317948@linuxfoundation.org>
+Subject: [PATCH 6.0 154/177] ext4: dont fail GETFSUUID when the caller provides a long buffer
+Date: Wed,  4 Jan 2023 17:07:25 +0100
+Message-Id: <20230104160512.326314842@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -37,77 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ye Bin <yebin10@huawei.com>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit fae381a3d79bb94aa2eb752170d47458d778b797 upstream.
+commit a7e9d977e031fceefe1e7cd69ebd7202d5758b56 upstream.
 
-Syzbot found the following issue:
-ext4_parse_param: s_want_extra_isize=128
-ext4_inode_info_init: s_want_extra_isize=32
-ext4_rename: old.inode=ffff88823869a2c8 old.dir=ffff888238699828 new.inode=ffff88823869d7e8 new.dir=ffff888238699828
-__ext4_mark_inode_dirty: inode=ffff888238699828 ea_isize=32 want_ea_size=128
-__ext4_mark_inode_dirty: inode=ffff88823869a2c8 ea_isize=32 want_ea_size=128
-ext4_xattr_block_set: inode=ffff88823869a2c8
-------------[ cut here ]------------
-WARNING: CPU: 13 PID: 2234 at fs/ext4/xattr.c:2070 ext4_xattr_block_set.cold+0x22/0x980
-Modules linked in:
-RIP: 0010:ext4_xattr_block_set.cold+0x22/0x980
-RSP: 0018:ffff888227d3f3b0 EFLAGS: 00010202
-RAX: 0000000000000001 RBX: ffff88823007a000 RCX: 0000000000000000
-RDX: 0000000000000a03 RSI: 0000000000000040 RDI: ffff888230078178
-RBP: 0000000000000000 R08: 000000000000002c R09: ffffed1075c7df8e
-R10: ffff8883ae3efc6b R11: ffffed1075c7df8d R12: 0000000000000000
-R13: ffff88823869a2c8 R14: ffff8881012e0460 R15: dffffc0000000000
-FS:  00007f350ac1f740(0000) GS:ffff8883ae200000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f350a6ed6a0 CR3: 0000000237456000 CR4: 00000000000006e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ? ext4_xattr_set_entry+0x3b7/0x2320
- ? ext4_xattr_block_set+0x0/0x2020
- ? ext4_xattr_set_entry+0x0/0x2320
- ? ext4_xattr_check_entries+0x77/0x310
- ? ext4_xattr_ibody_set+0x23b/0x340
- ext4_xattr_move_to_block+0x594/0x720
- ext4_expand_extra_isize_ea+0x59a/0x10f0
- __ext4_expand_extra_isize+0x278/0x3f0
- __ext4_mark_inode_dirty.cold+0x347/0x410
- ext4_rename+0xed3/0x174f
- vfs_rename+0x13a7/0x2510
- do_renameat2+0x55d/0x920
- __x64_sys_rename+0x7d/0xb0
- do_syscall_64+0x3b/0xa0
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
+If userspace provides a longer UUID buffer than is required, we
+shouldn't fail the call with EINVAL -- rather, we can fill the caller's
+buffer with the bytes we /can/ fill, and update the length field to
+reflect what we copied.  This doesn't break the UAPI since we're
+enabling a case that currently fails, and so far Ted hasn't released a
+version of e2fsprogs that uses the new ext4 ioctl.
 
-As 'ext4_rename' will modify 'old.inode' ctime and mark inode dirty,
-which may trigger expand 'extra_isize' and allocate block. If inode
-didn't init quota will lead to warning.  To solve above issue, init
-'old.inode' firstly in 'ext4_rename'.
-
-Reported-by: syzbot+98346927678ac3059c77@syzkaller.appspotmail.com
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221107015335.2524319-1-yebin@huaweicloud.com
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Catherine Hoang <catherine.hoang@oracle.com>
+Link: https://lore.kernel.org/r/166811139478.327006.13879198441587445544.stgit@magnolia
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/ext4/ioctl.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -3798,6 +3798,9 @@ static int ext4_rename(struct user_names
- 	retval = dquot_initialize(old.dir);
- 	if (retval)
- 		return retval;
-+	retval = dquot_initialize(old.inode);
-+	if (retval)
-+		return retval;
- 	retval = dquot_initialize(new.dir);
- 	if (retval)
- 		return retval;
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -1162,14 +1162,16 @@ static int ext4_ioctl_getuuid(struct ext
+ 		return -EINVAL;
+ 	}
+ 
+-	if (fsuuid.fsu_len != UUID_SIZE || fsuuid.fsu_flags != 0)
++	if (fsuuid.fsu_len < UUID_SIZE || fsuuid.fsu_flags != 0)
+ 		return -EINVAL;
+ 
+ 	lock_buffer(sbi->s_sbh);
+ 	memcpy(uuid, sbi->s_es->s_uuid, UUID_SIZE);
+ 	unlock_buffer(sbi->s_sbh);
+ 
+-	if (copy_to_user(&ufsuuid->fsu_uuid[0], uuid, UUID_SIZE))
++	fsuuid.fsu_len = UUID_SIZE;
++	if (copy_to_user(ufsuuid, &fsuuid, sizeof(fsuuid)) ||
++	    copy_to_user(&ufsuuid->fsu_uuid[0], uuid, UUID_SIZE))
+ 		return -EFAULT;
+ 	return 0;
+ }
 
 
