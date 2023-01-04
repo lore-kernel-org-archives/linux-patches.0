@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC389AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:16:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 386A5C433D2;
-	Wed,  4 Jan 2023 16:16:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15FA3AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:16:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74124C433D2;
+	Wed,  4 Jan 2023 16:16:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848985;
-	bh=jCThmjB+sCqloW90Ns6LGLBH0Llk6xl8Up1beJe9Yw0=;
+	s=korg; t=1672848988;
+	bh=iUkqj8eHKl+EPk6IbueLUw0BO3pC9tpQoXtlM4HElSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CfZl7RkheZt4TOCMah+9WAZirZRN5uILAP3gIv28cuF+DiFOCOmFO4j86v6XbX35j
-	 jag5CBpVIpPG0UZFOBxAlRZHJOPb7WOgO8BbLrniccEI0LFFUuCbGNSEjRYQaNCKma
-	 eKVvKQOfg/hjZZt1NYUFUbsfAAQZ55ShulyIOdHc=
+	b=kci4tob6xFYyuP+s+onLsQS0PwrpWqs3PUnWU5qT0alQDqe+5YBvBq44J6Hi1wVfn
+	 jVshY2sYPyP1ae039bhj1YrZIPiKkLRhlVNrf3CcgPTU95asVVp04kf5wct1Mk3Dew
+	 SbBh1Kqz7Sm5omKteuT7B+zMDVw1oFI2HwCtT+TU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Cercueil <paul@crapouillou.net>,
-	Aidan MacDonald <aidanmacdonald.0x0@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 116/207] ASoC: jz4740-i2s: Handle independent FIFO flush bits
-Date: Wed,  4 Jan 2023 17:06:14 +0100
-Message-Id: <20230104160515.578865116@linuxfoundation.org>
+	Luo Meng <luomeng12@huawei.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.0 047/177] dm thin: resume even if in FAIL mode
+Date: Wed,  4 Jan 2023 17:05:38 +0100
+Message-Id: <20230104160509.074136078@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,112 +34,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
+From: Luo Meng <luomeng12@huawei.com>
 
-commit 8b3a9ad86239f80ed569e23c3954a311f66481d6 upstream.
+commit 19eb1650afeb1aa86151f61900e9e5f1de5d8d02 upstream.
 
-On the JZ4740, there is a single bit that flushes (empties) both
-the transmit and receive FIFO. Later SoCs have independent flush
-bits for each FIFO.
+If a thinpool set fail_io while suspending, resume will fail with:
+ device-mapper: resume ioctl on vg-thinpool  failed: Invalid argument
 
-Independent FIFOs can be flushed before the snd_soc_dai_active()
-check because it won't disturb other active streams. This ensures
-that the FIFO we're about to use is always flushed before starting
-up. With shared FIFOs we can't do that because if another substream
-is active, flushing its FIFO would cause underrun errors.
+The thin-pool also can't be removed if an in-flight bio is in the
+deferred list.
 
-This also fixes a bug: since we were only setting the JZ4740's
-flush bit, which corresponds to the TX FIFO flush bit on other
-SoCs, other SoCs were not having their RX FIFO flushed at all.
+This can be easily reproduced using:
 
-Fixes: 967beb2e8777 ("ASoC: jz4740: Add jz4780 support")
-Reviewed-by: Paul Cercueil <paul@crapouillou.net>
+  echo "offline" > /sys/block/sda/device/state
+  dd if=/dev/zero of=/dev/mapper/thin bs=4K count=1
+  dmsetup suspend /dev/mapper/pool
+  mkfs.ext4 /dev/mapper/thin
+  dmsetup resume /dev/mapper/pool
+
+The root cause is maybe_resize_data_dev() will check fail_io and return
+error before called dm_resume.
+
+Fix this by adding FAIL mode check at the end of pool_preresume().
+
 Cc: stable@vger.kernel.org
-Signed-off-by: Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
-Link: https://lore.kernel.org/r/20221023143328.160866-2-aidanmacdonald.0x0@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: da105ed5fd7e ("dm thin metadata: introduce dm_pool_abort_metadata")
+Signed-off-by: Luo Meng <luomeng12@huawei.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/jz4740/jz4740-i2s.c |   39 ++++++++++++++++++++++++++++++++++-----
- 1 file changed, 34 insertions(+), 5 deletions(-)
+ drivers/md/dm-thin.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/sound/soc/jz4740/jz4740-i2s.c
-+++ b/sound/soc/jz4740/jz4740-i2s.c
-@@ -55,7 +55,8 @@
- #define JZ_AIC_CTRL_MONO_TO_STEREO BIT(11)
- #define JZ_AIC_CTRL_SWITCH_ENDIANNESS BIT(10)
- #define JZ_AIC_CTRL_SIGNED_TO_UNSIGNED BIT(9)
--#define JZ_AIC_CTRL_FLUSH		BIT(8)
-+#define JZ_AIC_CTRL_TFLUSH		BIT(8)
-+#define JZ_AIC_CTRL_RFLUSH		BIT(7)
- #define JZ_AIC_CTRL_ENABLE_ROR_INT BIT(6)
- #define JZ_AIC_CTRL_ENABLE_TUR_INT BIT(5)
- #define JZ_AIC_CTRL_ENABLE_RFS_INT BIT(4)
-@@ -90,6 +91,8 @@ enum jz47xx_i2s_version {
- struct i2s_soc_info {
- 	enum jz47xx_i2s_version version;
- 	struct snd_soc_dai_driver *dai;
-+
-+	bool shared_fifo_flush;
- };
+--- a/drivers/md/dm-thin.c
++++ b/drivers/md/dm-thin.c
+@@ -3540,20 +3540,28 @@ static int pool_preresume(struct dm_targ
+ 	 */
+ 	r = bind_control_target(pool, ti);
+ 	if (r)
+-		return r;
++		goto out;
  
- struct jz4740_i2s {
-@@ -116,19 +119,44 @@ static inline void jz4740_i2s_write(cons
- 	writel(value, i2s->base + reg);
+ 	r = maybe_resize_data_dev(ti, &need_commit1);
+ 	if (r)
+-		return r;
++		goto out;
+ 
+ 	r = maybe_resize_metadata_dev(ti, &need_commit2);
+ 	if (r)
+-		return r;
++		goto out;
+ 
+ 	if (need_commit1 || need_commit2)
+ 		(void) commit(pool);
++out:
++	/*
++	 * When a thin-pool is PM_FAIL, it cannot be rebuilt if
++	 * bio is in deferred list. Therefore need to return 0
++	 * to allow pool_resume() to flush IO.
++	 */
++	if (r && get_pool_mode(pool) == PM_FAIL)
++		r = 0;
+ 
+-	return 0;
++	return r;
  }
  
-+static inline void jz4740_i2s_set_bits(const struct jz4740_i2s *i2s,
-+	unsigned int reg, uint32_t bits)
-+{
-+	uint32_t value = jz4740_i2s_read(i2s, reg);
-+	value |= bits;
-+	jz4740_i2s_write(i2s, reg, value);
-+}
-+
- static int jz4740_i2s_startup(struct snd_pcm_substream *substream,
- 	struct snd_soc_dai *dai)
- {
- 	struct jz4740_i2s *i2s = snd_soc_dai_get_drvdata(dai);
--	uint32_t conf, ctrl;
-+	uint32_t conf;
- 	int ret;
- 
-+	/*
-+	 * When we can flush FIFOs independently, only flush the FIFO
-+	 * that is starting up. We can do this when the DAI is active
-+	 * because it does not disturb other active substreams.
-+	 */
-+	if (!i2s->soc_info->shared_fifo_flush) {
-+		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+			jz4740_i2s_set_bits(i2s, JZ_REG_AIC_CTRL, JZ_AIC_CTRL_TFLUSH);
-+		else
-+			jz4740_i2s_set_bits(i2s, JZ_REG_AIC_CTRL, JZ_AIC_CTRL_RFLUSH);
-+	}
-+
- 	if (snd_soc_dai_active(dai))
- 		return 0;
- 
--	ctrl = jz4740_i2s_read(i2s, JZ_REG_AIC_CTRL);
--	ctrl |= JZ_AIC_CTRL_FLUSH;
--	jz4740_i2s_write(i2s, JZ_REG_AIC_CTRL, ctrl);
-+	/*
-+	 * When there is a shared flush bit for both FIFOs, the TFLUSH
-+	 * bit flushes both FIFOs. Flushing while the DAI is active would
-+	 * cause FIFO underruns in other active substreams so we have to
-+	 * guard this behind the snd_soc_dai_active() check.
-+	 */
-+	if (i2s->soc_info->shared_fifo_flush)
-+		jz4740_i2s_set_bits(i2s, JZ_REG_AIC_CTRL, JZ_AIC_CTRL_TFLUSH);
- 
- 	ret = clk_prepare_enable(i2s->clk_i2s);
- 	if (ret)
-@@ -443,6 +471,7 @@ static struct snd_soc_dai_driver jz4740_
- static const struct i2s_soc_info jz4740_i2s_soc_info = {
- 	.version = JZ_I2S_JZ4740,
- 	.dai = &jz4740_i2s_dai,
-+	.shared_fifo_flush = true,
- };
- 
- static const struct i2s_soc_info jz4760_i2s_soc_info = {
+ static void pool_suspend_active_thins(struct pool *pool)
 
 
