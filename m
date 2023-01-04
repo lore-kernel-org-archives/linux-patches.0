@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74466AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:27:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6EF4C433EF;
-	Wed,  4 Jan 2023 16:26:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F772AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:27:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F17B8C433D2;
+	Wed,  4 Jan 2023 16:27:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849620;
-	bh=jGpGwlKI4Jq0DWdCVBZOUM7IzaG7s5nbf4MfBQaJJUQ=;
+	s=korg; t=1672849623;
+	bh=OfMgNU9HOVTNL9A+i8r3ITOYwJJKCwChbeZVBMZJt+4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rR6B9OgWoUo14jEpNTjlYhiSESqAeqXkrS3Vv5omei/aProgmrJznoVlBisK6z2ur
-	 RDrpsDDZ+bmQ01UWJXkTuIULDh0Hifz1fEme96l60ta7d4QewmBbb6tvEQ9SttAR5/
-	 McHVfrpnDnl/ENqj3+EDjJ47ecAL743c5yV5yONI=
+	b=F923qPPCQO7BhZLX5VELG+ERyhrjWzwZEEW3XisT1vQ40JGONrmmBkp6k7ru1Eosc
+	 KVPJ7vxJ2MzKr9O9zYG2AvujlMFTbqIdar46swibf/o4ong5G7hKMH3z18x4oT1MdY
+	 BSfyk6M3TUOJavkL0geobQ7XugVtLWNd5Zg5//0s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.0 164/177] ext4: fix inode leak in ext4_xattr_inode_create() on an error path
-Date: Wed,  4 Jan 2023 17:07:35 +0100
-Message-Id: <20230104160512.650850083@linuxfoundation.org>
+	Eric Biggers <ebiggers@google.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.0 147/177] ext4: fix leaking uninitialized memory in fast-commit journal
+Date: Wed,  4 Jan 2023 17:07:18 +0100
+Message-Id: <20230104160512.113744253@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -36,53 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ye Bin <yebin10@huawei.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit e4db04f7d3dbbe16680e0ded27ea2a65b10f766a upstream.
+commit 594bc43b410316d70bb42aeff168837888d96810 upstream.
 
-There is issue as follows when do setxattr with inject fault:
+When space at the end of fast-commit journal blocks is unused, make sure
+to zero it out so that uninitialized memory is not leaked to disk.
 
-[localhost]# fsck.ext4  -fn  /dev/sda
-e2fsck 1.46.6-rc1 (12-Sep-2022)
-Pass 1: Checking inodes, blocks, and sizes
-Pass 2: Checking directory structure
-Pass 3: Checking directory connectivity
-Pass 4: Checking reference counts
-Unattached zero-length inode 15.  Clear? no
-
-Unattached inode 15
-Connect to /lost+found? no
-
-Pass 5: Checking group summary information
-
-/dev/sda: ********** WARNING: Filesystem still has errors **********
-
-/dev/sda: 15/655360 files (0.0% non-contiguous), 66755/2621440 blocks
-
-This occurs in 'ext4_xattr_inode_create()'. If 'ext4_mark_inode_dirty()'
-fails, dropping i_nlink of the inode is needed. Or will lead to inode leak.
-
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221208023233.1231330-5-yebin@huaweicloud.com
+Fixes: aa75f4d3daae ("ext4: main fast-commit commit path")
+Cc: <stable@vger.kernel.org> # v5.10+
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20221106224841.279231-4-ebiggers@kernel.org
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/ext4/fast_commit.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -1441,6 +1441,9 @@ static struct inode *ext4_xattr_inode_cr
- 		if (!err)
- 			err = ext4_inode_attach_jinode(ea_inode);
- 		if (err) {
-+			if (ext4_xattr_inode_dec_ref(handle, ea_inode))
-+				ext4_warning_inode(ea_inode,
-+					"cleanup dec ref error %d", err);
- 			iput(ea_inode);
- 			return ERR_PTR(err);
- 		}
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -745,6 +745,9 @@ static u8 *ext4_fc_reserve_space(struct
+ 		*crc = ext4_chksum(sbi, *crc, tl, EXT4_FC_TAG_BASE_LEN);
+ 	if (pad_len > 0)
+ 		ext4_fc_memzero(sb, tl + 1, pad_len, crc);
++	/* Don't leak uninitialized memory in the unused last byte. */
++	*((u8 *)(tl + 1) + pad_len) = 0;
++
+ 	ext4_fc_submit_bh(sb, false);
+ 
+ 	ret = jbd2_fc_get_buf(EXT4_SB(sb)->s_journal, &bh);
+@@ -801,6 +804,8 @@ static int ext4_fc_write_tail(struct sup
+ 	dst += sizeof(tail.fc_tid);
+ 	tail.fc_crc = cpu_to_le32(crc);
+ 	ext4_fc_memcpy(sb, dst, &tail.fc_crc, sizeof(tail.fc_crc), NULL);
++	dst += sizeof(tail.fc_crc);
++	memset(dst, 0, bsize - off); /* Don't leak uninitialized memory. */
+ 
+ 	ext4_fc_submit_bh(sb, true);
+ 
 
 
