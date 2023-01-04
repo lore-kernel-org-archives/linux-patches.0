@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DABBAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:21:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6ECAC433F0;
-	Wed,  4 Jan 2023 16:21:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8500DAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:21:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6D20C433EF;
+	Wed,  4 Jan 2023 16:21:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849280;
-	bh=nk6nCgwGF1vEsIkqS/S6w6IFykDogDFUH3eMqjT2yT8=;
+	s=korg; t=1672849283;
+	bh=/XPvMylD5flrqY/5NXHT0x2wluEtrLi+rO+gHDIT4eQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rRlQCZhHIELODiYxiqt3kmUrNv8oFz4X7ud2S+fS36CdQdkQXEp0DH35c8rGYU/d7
-	 xKYS7iuqHlGGvfKCo2nHRQkqG4TngtToaEHqdxZ3cyHtUquWvnxXQHsJ0UR6yYlYAz
-	 JdVjfyZbsLqC3IZYnKuU2SgEeAnuT4EUzzxXKaA4=
+	b=V+lhvH4CyPgbcy371ks54WUJ7VH9RpwP416EDDIMY3wOOfj87j7TJgG+bPgFik0am
+	 PUIfhoPz4QPtqxdZlMS9Ud6oaY1fJg8zMChc164K1LnsZZ9XroSetCUeCWv6Xaq6Jo
+	 KVWzdLV3enCh6zhZBAHIGYp4VnP4J10To51t9ERc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Rafael Mendonca <rafaelmendsr@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.0 071/177] tracing/probes: Handle system names with hyphens
-Date: Wed,  4 Jan 2023 17:06:02 +0100
-Message-Id: <20230104160509.808601798@linuxfoundation.org>
+	Saravana Kannan <saravanak@google.com>,
+	"Isaac J. Manjarres" <isaacmanjarres@google.com>
+Subject: [PATCH 6.1 135/207] driver core: Fix bus_type.match() error handling in __driver_attach()
+Date: Wed,  4 Jan 2023 17:06:33 +0100
+Message-Id: <20230104160516.194066049@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,85 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Isaac J. Manjarres <isaacmanjarres@google.com>
 
-commit 575b76cb885532aae13a9d979fd476bb2b156cb9 upstream.
+commit 27c0d217340e47ec995557f61423ef415afba987 upstream.
 
-When creating probe names, a check is done to make sure it matches basic C
-standard variable naming standards. Basically, starts with alphabetic or
-underline, and then the rest of the characters have alpha-numeric or
-underline in them.
+When a driver registers with a bus, it will attempt to match with every
+device on the bus through the __driver_attach() function. Currently, if
+the bus_type.match() function encounters an error that is not
+-EPROBE_DEFER, __driver_attach() will return a negative error code, which
+causes the driver registration logic to stop trying to match with the
+remaining devices on the bus.
 
-But system names do not have any true naming conventions, as they are
-created by the TRACE_SYSTEM macro and nothing tests to see what they are.
-The "xhci-hcd" trace events has a '-' in the system name. When trying to
-attach a eprobe to one of these trace points, it fails because the system
-name does not follow the variable naming convention because of the
-hyphen, and the eprobe checks fail on this.
+This behavior is not correct; a failure while matching a driver to a
+device does not mean that the driver won't be able to match and bind
+with other devices on the bus. Update the logic in __driver_attach()
+to reflect this.
 
-Allow hyphens in the system name so that eprobes can attach to the
-"xhci-hcd" trace events.
-
-Link: https://lore.kernel.org/all/Y3eJ8GiGnEvVd8%2FN@macondo/
-Link: https://lore.kernel.org/linux-trace-kernel/20221122122345.160f5077@gandalf.local.home
-
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Fixes: 656b8035b0ee ("ARM: 8524/1: driver cohandle -EPROBE_DEFER from bus_type.match()")
 Cc: stable@vger.kernel.org
-Fixes: 5b7a96220900e ("tracing/probe: Check event/group naming rule at parsing")
-Reported-by: Rafael Mendonca <rafaelmendsr@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Cc: Saravana Kannan <saravanak@google.com>
+Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
+Link: https://lore.kernel.org/r/20220921001414.4046492-1-isaacmanjarres@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.h       |   19 ++++++++++++++++---
- kernel/trace/trace_probe.c |    2 +-
- 2 files changed, 17 insertions(+), 4 deletions(-)
+ drivers/base/dd.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -1966,17 +1966,30 @@ static __always_inline void trace_iterat
- }
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -1162,7 +1162,11 @@ static int __driver_attach(struct device
+ 		return 0;
+ 	} else if (ret < 0) {
+ 		dev_dbg(dev, "Bus failed to match device: %d\n", ret);
+-		return ret;
++		/*
++		 * Driver could not match with device, but may match with
++		 * another device on the bus.
++		 */
++		return 0;
+ 	} /* ret > 0 means positive match */
  
- /* Check the name is good for event/group/fields */
--static inline bool is_good_name(const char *name)
-+static inline bool __is_good_name(const char *name, bool hash_ok)
- {
--	if (!isalpha(*name) && *name != '_')
-+	if (!isalpha(*name) && *name != '_' && (!hash_ok || *name != '-'))
- 		return false;
- 	while (*++name != '\0') {
--		if (!isalpha(*name) && !isdigit(*name) && *name != '_')
-+		if (!isalpha(*name) && !isdigit(*name) && *name != '_' &&
-+		    (!hash_ok || *name != '-'))
- 			return false;
- 	}
- 	return true;
- }
- 
-+/* Check the name is good for event/group/fields */
-+static inline bool is_good_name(const char *name)
-+{
-+	return __is_good_name(name, false);
-+}
-+
-+/* Check the name is good for system */
-+static inline bool is_good_system_name(const char *name)
-+{
-+	return __is_good_name(name, true);
-+}
-+
- /* Convert certain expected symbols into '_' when generating event names */
- static inline void sanitize_event_name(char *name)
- {
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -246,7 +246,7 @@ int traceprobe_parse_event_name(const ch
- 			return -EINVAL;
- 		}
- 		strlcpy(buf, event, slash - event + 1);
--		if (!is_good_name(buf)) {
-+		if (!is_good_system_name(buf)) {
- 			trace_probe_log_err(offset, BAD_GROUP_NAME);
- 			return -EINVAL;
- 		}
+ 	if (driver_allows_async_probing(drv)) {
 
 
