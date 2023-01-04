@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1D4DAD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:14:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 368A9C433EF;
-	Wed,  4 Jan 2023 16:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A07AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:14:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56E3FC433F1;
+	Wed,  4 Jan 2023 16:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848852;
-	bh=RFA6gCcZeY2oKHryWAvh2vKcmJh2apgAfxkzpNLfKFg=;
+	s=korg; t=1672848855;
+	bh=5tHrMX6FgdCnjydWDq4GPmhVF0KkNZY7YSxPIIyBsqA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=isKvTv0bl6UxpNi4hUQE6Pnia/R/VD6V0oldNDo3Ki7kKMSszWtYBXF2lK42IN+Ek
-	 DukKpW3G1s6CKF9Lkw2uASPbBrBcluQQXTZzMk6bvMgDomXcdNKZzh7TFQowgNaLnj
-	 HzHY9gF0lOSj3YVO6wD5llaRA2Ov4S6I1h2HlQfI=
+	b=CEv329bnI/oWYDs3ls77S8ZSLsi9otD39eXwpcHStAR6eeLys+rZYbDeVV2rWo4dE
+	 3e3R6uqbHgjj2EB+bW97kwMPJWmCBxlu7QIBEhRAxjeUuIrA6LZP/kxjTeO4fHUdgy
+	 4MnivmSnHWECqYIERlKmjKD4S/m7dlsrBceqN9Ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Rafael Mendonca <rafaelmendsr@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 094/207] tracing/probes: Handle system names with hyphens
-Date: Wed,  4 Jan 2023 17:05:52 +0100
-Message-Id: <20230104160514.908040337@linuxfoundation.org>
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: [PATCH 6.0 025/177] cxl/region: Fix missing probe failure
+Date: Wed,  4 Jan 2023 17:05:16 +0100
+Message-Id: <20230104160508.430077416@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,85 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Dan Williams <dan.j.williams@intel.com>
 
-commit 575b76cb885532aae13a9d979fd476bb2b156cb9 upstream.
+commit bf3e5da8cb43a671b32fc125fa81b8f6a3677192 upstream.
 
-When creating probe names, a check is done to make sure it matches basic C
-standard variable naming standards. Basically, starts with alphabetic or
-underline, and then the rest of the characters have alpha-numeric or
-underline in them.
+cxl_region_probe() allows for regions not in the 'commit' state to be
+enabled. Fail probe when the region is not committed otherwise the
+kernel may indicate that an address range is active when none of the
+decoders are active.
 
-But system names do not have any true naming conventions, as they are
-created by the TRACE_SYSTEM macro and nothing tests to see what they are.
-The "xhci-hcd" trace events has a '-' in the system name. When trying to
-attach a eprobe to one of these trace points, it fails because the system
-name does not follow the variable naming convention because of the
-hyphen, and the eprobe checks fail on this.
-
-Allow hyphens in the system name so that eprobes can attach to the
-"xhci-hcd" trace events.
-
-Link: https://lore.kernel.org/all/Y3eJ8GiGnEvVd8%2FN@macondo/
-Link: https://lore.kernel.org/linux-trace-kernel/20221122122345.160f5077@gandalf.local.home
-
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: stable@vger.kernel.org
-Fixes: 5b7a96220900e ("tracing/probe: Check event/group naming rule at parsing")
-Reported-by: Rafael Mendonca <rafaelmendsr@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 8d48817df6ac ("cxl/region: Add region driver boiler plate")
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Link: https://lore.kernel.org/r/166993220462.1995348.1698008475198427361.stgit@dwillia2-xfh.jf.intel.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.h       |   19 ++++++++++++++++---
- kernel/trace/trace_probe.c |    2 +-
- 2 files changed, 17 insertions(+), 4 deletions(-)
+ drivers/cxl/core/region.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -1954,17 +1954,30 @@ static __always_inline void trace_iterat
- }
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -1922,6 +1922,9 @@ static int cxl_region_probe(struct devic
+ 	 */
+ 	up_read(&cxl_region_rwsem);
  
- /* Check the name is good for event/group/fields */
--static inline bool is_good_name(const char *name)
-+static inline bool __is_good_name(const char *name, bool hash_ok)
- {
--	if (!isalpha(*name) && *name != '_')
-+	if (!isalpha(*name) && *name != '_' && (!hash_ok || *name != '-'))
- 		return false;
- 	while (*++name != '\0') {
--		if (!isalpha(*name) && !isdigit(*name) && *name != '_')
-+		if (!isalpha(*name) && !isdigit(*name) && *name != '_' &&
-+		    (!hash_ok || *name != '-'))
- 			return false;
- 	}
- 	return true;
- }
- 
-+/* Check the name is good for event/group/fields */
-+static inline bool is_good_name(const char *name)
-+{
-+	return __is_good_name(name, false);
-+}
++	if (rc)
++		return rc;
 +
-+/* Check the name is good for system */
-+static inline bool is_good_system_name(const char *name)
-+{
-+	return __is_good_name(name, true);
-+}
-+
- /* Convert certain expected symbols into '_' when generating event names */
- static inline void sanitize_event_name(char *name)
- {
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -246,7 +246,7 @@ int traceprobe_parse_event_name(const ch
- 			return -EINVAL;
- 		}
- 		strlcpy(buf, event, slash - event + 1);
--		if (!is_good_name(buf)) {
-+		if (!is_good_system_name(buf)) {
- 			trace_probe_log_err(offset, BAD_GROUP_NAME);
- 			return -EINVAL;
- 		}
+ 	switch (cxlr->mode) {
+ 	case CXL_DECODER_PMEM:
+ 		return devm_cxl_add_pmem_region(cxlr);
 
 
