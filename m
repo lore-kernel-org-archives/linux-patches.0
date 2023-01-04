@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8A2AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBCB0C433D2;
-	Wed,  4 Jan 2023 16:18:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6DCAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E73DEC433D2;
+	Wed,  4 Jan 2023 16:18:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849132;
-	bh=8+vgRJSH5a1+wjv0k+f0IWtfwJNNdxCpLzpTrTPIL8E=;
+	s=korg; t=1672849135;
+	bh=5gCpc6wRQhwOm/6bhlqDFTVUWNIdTjKifV6zEMvsVJg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QcwzjZe9MhAW4cIFdt/LaBLUtrhB+mcjihPVhq8Ltkiq+3i0Y4q+ZAUsllvzb376s
-	 g9JjLBBN7b5p5xwS65AwnSD6Gvcl0KEbWumQQKPqqw39B2lVgMEacCbPnodJ6rrOwH
-	 t6oRWJ1z6K3K9rGx80/cLrgt1pAtvgXxVN7FeuPo=
+	b=S+/3iGAdQhB+FNkuXkEIsMW63AtOPvcrjscwEuzclDGOMOnmfoXeh2Xvo9iscEEyQ
+	 lNBzNUxzzGpthowGG+kowiImNCnlvA4Jopy2yue0Z6mHyZqb9t2OjJrNBfGhAFaKKr
+	 iBcQE0ghnkjycSYdo+5TUocL4LYPT+LkILtHg1z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.0 066/177] x86/kprobes: Fix optprobe optimization check with CONFIG_RETHUNK
-Date: Wed,  4 Jan 2023 17:05:57 +0100
-Message-Id: <20230104160509.656510905@linuxfoundation.org>
+	Kim Phillips <kim.phillips@amd.com>,
+	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 6.1 140/207] iommu/amd: Fix ill-formed ivrs_ioapic, ivrs_hpet and ivrs_acpihid options
+Date: Wed,  4 Jan 2023 17:06:38 +0100
+Message-Id: <20230104160516.351849707@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,84 +35,207 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Kim Phillips <kim.phillips@amd.com>
 
-commit 63dc6325ff41ee9e570bde705ac34a39c5dbeb44 upstream.
+commit 1198d2316dc4265a97d0e8445a22c7a6d17580a4 upstream.
 
-Since the CONFIG_RETHUNK and CONFIG_SLS will use INT3 for stopping
-speculative execution after function return, kprobe jump optimization
-always fails on the functions with such INT3 inside the function body.
-(It already checks the INT3 padding between functions, but not inside
- the function)
+Currently, these options cause the following libkmod error:
 
-To avoid this issue, as same as kprobes, check whether the INT3 comes
-from kgdb or not, and if so, stop decoding and make it fail. The other
-INT3 will come from CONFIG_RETHUNK/CONFIG_SLS and those can be
-treated as a one-byte instruction.
+libkmod: ERROR ../libkmod/libkmod-config.c:489 kcmdline_parse_result: \
+	Ignoring bad option on kernel command line while parsing module \
+	name: 'ivrs_xxxx[XX:XX'
 
-Fixes: e463a09af2f0 ("x86: Add straight-line-speculation mitigation")
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Fix by introducing a new parameter format for these options and
+throw a warning for the deprecated format.
+
+Users are still allowed to omit the PCI Segment if zero.
+
+Adding a Link: to the reason why we're modding the syntax parsing
+in the driver and not in libkmod.
+
+Fixes: ca3bf5d47cec ("iommu/amd: Introduces ivrs_acpihid kernel parameter")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/167146051929.1374301.7419382929328081706.stgit@devnote3
+Link: https://lore.kernel.org/linux-modules/20200310082308.14318-2-lucas.demarchi@intel.com/
+Reported-by: Kim Phillips <kim.phillips@amd.com>
+Co-developed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+Signed-off-by: Kim Phillips <kim.phillips@amd.com>
+Link: https://lore.kernel.org/r/20220919155638.391481-2-kim.phillips@amd.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/kprobes/opt.c |   28 ++++++++--------------------
- 1 file changed, 8 insertions(+), 20 deletions(-)
+ Documentation/admin-guide/kernel-parameters.txt |   27 ++++++--
+ drivers/iommu/amd/init.c                        |   77 ++++++++++++++++--------
+ 2 files changed, 75 insertions(+), 29 deletions(-)
 
---- a/arch/x86/kernel/kprobes/opt.c
-+++ b/arch/x86/kernel/kprobes/opt.c
-@@ -15,6 +15,7 @@
- #include <linux/extable.h>
- #include <linux/kdebug.h>
- #include <linux/kallsyms.h>
-+#include <linux/kgdb.h>
- #include <linux/ftrace.h>
- #include <linux/objtool.h>
- #include <linux/pgtable.h>
-@@ -279,19 +280,6 @@ static int insn_is_indirect_jump(struct
- 	return ret;
- }
+--- a/Documentation/admin-guide/kernel-parameters.txt
++++ b/Documentation/admin-guide/kernel-parameters.txt
+@@ -2300,7 +2300,13 @@
+ 			Provide an override to the IOAPIC-ID<->DEVICE-ID
+ 			mapping provided in the IVRS ACPI table.
+ 			By default, PCI segment is 0, and can be omitted.
+-			For example:
++
++			For example, to map IOAPIC-ID decimal 10 to
++			PCI segment 0x1 and PCI device 00:14.0,
++			write the parameter as:
++				ivrs_ioapic=10@0001:00:14.0
++
++			Deprecated formats:
+ 			* To map IOAPIC-ID decimal 10 to PCI device 00:14.0
+ 			  write the parameter as:
+ 				ivrs_ioapic[10]=00:14.0
+@@ -2312,7 +2318,13 @@
+ 			Provide an override to the HPET-ID<->DEVICE-ID
+ 			mapping provided in the IVRS ACPI table.
+ 			By default, PCI segment is 0, and can be omitted.
+-			For example:
++
++			For example, to map HPET-ID decimal 10 to
++			PCI segment 0x1 and PCI device 00:14.0,
++			write the parameter as:
++				ivrs_hpet=10@0001:00:14.0
++
++			Deprecated formats:
+ 			* To map HPET-ID decimal 0 to PCI device 00:14.0
+ 			  write the parameter as:
+ 				ivrs_hpet[0]=00:14.0
+@@ -2323,15 +2335,20 @@
+ 	ivrs_acpihid	[HW,X86-64]
+ 			Provide an override to the ACPI-HID:UID<->DEVICE-ID
+ 			mapping provided in the IVRS ACPI table.
++			By default, PCI segment is 0, and can be omitted.
  
--static bool is_padding_int3(unsigned long addr, unsigned long eaddr)
--{
--	unsigned char ops;
--
--	for (; addr < eaddr; addr++) {
--		if (get_kernel_nofault(ops, (void *)addr) < 0 ||
--		    ops != INT3_INSN_OPCODE)
--			return false;
--	}
--
--	return true;
--}
--
- /* Decode whole function to ensure any instructions don't jump into target */
- static int can_optimize(unsigned long paddr)
+ 			For example, to map UART-HID:UID AMD0020:0 to
+ 			PCI segment 0x1 and PCI device ID 00:14.5,
+ 			write the parameter as:
+-				ivrs_acpihid[0001:00:14.5]=AMD0020:0
++				ivrs_acpihid=AMD0020:0@0001:00:14.5
+ 
+-			By default, PCI segment is 0, and can be omitted.
+-			For example, PCI device 00:14.5 write the parameter as:
++			Deprecated formats:
++			* To map UART-HID:UID AMD0020:0 to PCI segment is 0,
++			  PCI device ID 00:14.5, write the parameter as:
+ 				ivrs_acpihid[00:14.5]=AMD0020:0
++			* To map UART-HID:UID AMD0020:0 to PCI segment 0x1 and
++			  PCI device ID 00:14.5, write the parameter as:
++				ivrs_acpihid[0001:00:14.5]=AMD0020:0
+ 
+ 	js=		[HW,JOY] Analog joystick
+ 			See Documentation/input/joydev/joystick.rst.
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -3402,18 +3402,24 @@ static int __init parse_amd_iommu_option
+ static int __init parse_ivrs_ioapic(char *str)
  {
-@@ -334,15 +322,15 @@ static int can_optimize(unsigned long pa
- 		ret = insn_decode_kernel(&insn, (void *)recovered_insn);
- 		if (ret < 0)
- 			return 0;
--
-+#ifdef CONFIG_KGDB
- 		/*
--		 * In the case of detecting unknown breakpoint, this could be
--		 * a padding INT3 between functions. Let's check that all the
--		 * rest of the bytes are also INT3.
-+		 * If there is a dynamically installed kgdb sw breakpoint,
-+		 * this function should not be probed.
- 		 */
--		if (insn.opcode.bytes[0] == INT3_INSN_OPCODE)
--			return is_padding_int3(addr, paddr - offset + size) ? 1 : 0;
--
-+		if (insn.opcode.bytes[0] == INT3_INSN_OPCODE &&
-+		    kgdb_has_hit_break(addr))
-+			return 0;
-+#endif
- 		/* Recover address */
- 		insn.kaddr = (void *)addr;
- 		insn.next_byte = (void *)(addr + insn.length);
+ 	u32 seg = 0, bus, dev, fn;
+-	int ret, id, i;
++	int id, i;
+ 	u32 devid;
+ 
+-	ret = sscanf(str, "[%d]=%x:%x.%x", &id, &bus, &dev, &fn);
+-	if (ret != 4) {
+-		ret = sscanf(str, "[%d]=%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn);
+-		if (ret != 5) {
+-			pr_err("Invalid command line: ivrs_ioapic%s\n", str);
+-			return 1;
+-		}
++	if (sscanf(str, "=%d@%x:%x.%x", &id, &bus, &dev, &fn) == 4 ||
++	    sscanf(str, "=%d@%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn) == 5)
++		goto found;
++
++	if (sscanf(str, "[%d]=%x:%x.%x", &id, &bus, &dev, &fn) == 4 ||
++	    sscanf(str, "[%d]=%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn) == 5) {
++		pr_warn("ivrs_ioapic%s option format deprecated; use ivrs_ioapic=%d@%04x:%02x:%02x.%d instead\n",
++			str, id, seg, bus, dev, fn);
++		goto found;
+ 	}
+ 
++	pr_err("Invalid command line: ivrs_ioapic%s\n", str);
++	return 1;
++
++found:
+ 	if (early_ioapic_map_size == EARLY_MAP_SIZE) {
+ 		pr_err("Early IOAPIC map overflow - ignoring ivrs_ioapic%s\n",
+ 			str);
+@@ -3434,18 +3440,24 @@ static int __init parse_ivrs_ioapic(char
+ static int __init parse_ivrs_hpet(char *str)
+ {
+ 	u32 seg = 0, bus, dev, fn;
+-	int ret, id, i;
++	int id, i;
+ 	u32 devid;
+ 
+-	ret = sscanf(str, "[%d]=%x:%x.%x", &id, &bus, &dev, &fn);
+-	if (ret != 4) {
+-		ret = sscanf(str, "[%d]=%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn);
+-		if (ret != 5) {
+-			pr_err("Invalid command line: ivrs_hpet%s\n", str);
+-			return 1;
+-		}
++	if (sscanf(str, "=%d@%x:%x.%x", &id, &bus, &dev, &fn) == 4 ||
++	    sscanf(str, "=%d@%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn) == 5)
++		goto found;
++
++	if (sscanf(str, "[%d]=%x:%x.%x", &id, &bus, &dev, &fn) == 4 ||
++	    sscanf(str, "[%d]=%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn) == 5) {
++		pr_warn("ivrs_hpet%s option format deprecated; use ivrs_hpet=%d@%04x:%02x:%02x.%d instead\n",
++			str, id, seg, bus, dev, fn);
++		goto found;
+ 	}
+ 
++	pr_err("Invalid command line: ivrs_hpet%s\n", str);
++	return 1;
++
++found:
+ 	if (early_hpet_map_size == EARLY_MAP_SIZE) {
+ 		pr_err("Early HPET map overflow - ignoring ivrs_hpet%s\n",
+ 			str);
+@@ -3466,19 +3478,36 @@ static int __init parse_ivrs_hpet(char *
+ static int __init parse_ivrs_acpihid(char *str)
+ {
+ 	u32 seg = 0, bus, dev, fn;
+-	char *hid, *uid, *p;
++	char *hid, *uid, *p, *addr;
+ 	char acpiid[ACPIHID_UID_LEN + ACPIHID_HID_LEN] = {0};
+-	int ret, i;
++	int i;
+ 
+-	ret = sscanf(str, "[%x:%x.%x]=%s", &bus, &dev, &fn, acpiid);
+-	if (ret != 4) {
+-		ret = sscanf(str, "[%x:%x:%x.%x]=%s", &seg, &bus, &dev, &fn, acpiid);
+-		if (ret != 5) {
+-			pr_err("Invalid command line: ivrs_acpihid(%s)\n", str);
+-			return 1;
++	addr = strchr(str, '@');
++	if (!addr) {
++		if (sscanf(str, "[%x:%x.%x]=%s", &bus, &dev, &fn, acpiid) == 4 ||
++		    sscanf(str, "[%x:%x:%x.%x]=%s", &seg, &bus, &dev, &fn, acpiid) == 5) {
++			pr_warn("ivrs_acpihid%s option format deprecated; use ivrs_acpihid=%s@%04x:%02x:%02x.%d instead\n",
++				str, acpiid, seg, bus, dev, fn);
++			goto found;
+ 		}
++		goto not_found;
+ 	}
+ 
++	/* We have the '@', make it the terminator to get just the acpiid */
++	*addr++ = 0;
++
++	if (sscanf(str, "=%s", acpiid) != 1)
++		goto not_found;
++
++	if (sscanf(addr, "%x:%x.%x", &bus, &dev, &fn) == 3 ||
++	    sscanf(addr, "%x:%x:%x.%x", &seg, &bus, &dev, &fn) == 4)
++		goto found;
++
++not_found:
++	pr_err("Invalid command line: ivrs_acpihid%s\n", str);
++	return 1;
++
++found:
+ 	p = acpiid;
+ 	hid = strsep(&p, ":");
+ 	uid = p;
 
 
