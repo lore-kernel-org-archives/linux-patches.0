@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47DFAAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CA5C433EF;
-	Wed,  4 Jan 2023 16:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EF7AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9629C433D2;
+	Wed,  4 Jan 2023 16:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849340;
-	bh=e12YwFE/LXc//Urf9Kqw6v3aUMtZNMZdauPRnVpDfu8=;
+	s=korg; t=1672849343;
+	bh=N50cOfFxgAGh/igrfdLHnO1oXjCQ9T8lToz0ZfB+JaI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OmGWm4liVdftueXFe+XgW8kEhsw4Fs/giysD6k6NwjvyJSBO1olw304SMqbB1krbm
-	 T/Z7ys46T0bZFU3GJpBoU2kZIUmuFJKSphOYAy1aXzVKHXFkL4hgyGaqssRMLOT3iY
-	 1ISM6e4pB5Hj4cKUzUiDTErhS2KazjP9IGj+nlxI=
+	b=IVUbMbnKasS/z1kskDsilogCIHblkRUEOubPZyma3H7hPYfqFWubUDXKKLf7nV6Ov
+	 DqQAd14wxaFZoAHj8Du+0R4NItoFnWGj6f1AxW9rGcp7l+m60QBznnYds/r74p5DbX
+	 1UHS4xnAyu0pCFgYurmOmv0ejXEVjNIXIlOEpdGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Zhang Yi <yi.zhang@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.1 173/207] ext4: check and assert if marking an no_delete evicting inode dirty
-Date: Wed,  4 Jan 2023 17:07:11 +0100
-Message-Id: <20230104160517.355711760@linuxfoundation.org>
+	Li Huafei <lihuafei1@huawei.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.0 106/177] RISC-V: kexec: Fix memory leak of elf header buffer
+Date: Wed,  4 Jan 2023 17:06:37 +0100
+Message-Id: <20230104160510.857319215@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,42 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Li Huafei <lihuafei1@huawei.com>
 
-commit 318cdc822c63b6e2befcfdc2088378ae6fa18def upstream.
+commit cbc32023ddbdf4baa3d9dc513a2184a84080a5a2 upstream.
 
-In ext4_evict_inode(), if we evicting an inode in the 'no_delete' path,
-it cannot be raced by another mark_inode_dirty(). If it happens,
-someone else may accidentally dirty it without holding inode refcount
-and probably cause use-after-free issues in the writeback procedure.
-It's indiscoverable and hard to debug, so add an WARN_ON_ONCE() to
-check and detect this issue in advance.
+This is reported by kmemleak detector:
 
-Suggested-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20220629112647.4141034-2-yi.zhang@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+unreferenced object 0xff2000000403d000 (size 4096):
+  comm "kexec", pid 146, jiffies 4294900633 (age 64.792s)
+  hex dump (first 32 bytes):
+    7f 45 4c 46 02 01 01 00 00 00 00 00 00 00 00 00  .ELF............
+    04 00 f3 00 01 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<00000000566ca97c>] kmemleak_vmalloc+0x3c/0xbe
+    [<00000000979283d8>] __vmalloc_node_range+0x3ac/0x560
+    [<00000000b4b3712a>] __vmalloc_node+0x56/0x62
+    [<00000000854f75e2>] vzalloc+0x2c/0x34
+    [<00000000e9a00db9>] crash_prepare_elf64_headers+0x80/0x30c
+    [<0000000067e8bf48>] elf_kexec_load+0x3e8/0x4ec
+    [<0000000036548e09>] kexec_image_load_default+0x40/0x4c
+    [<0000000079fbe1b4>] sys_kexec_file_load+0x1c4/0x322
+    [<0000000040c62c03>] ret_from_syscall+0x0/0x2
+
+In elf_kexec_load(), a buffer is allocated via vzalloc() to store elf
+headers.  While it's not freed back to system when kdump kernel is
+reloaded or unloaded, or when image->elf_header is successfully set and
+then fails to load kdump kernel for some reason. Fix it by freeing the
+buffer in arch_kimage_file_post_load_cleanup().
+
+Fixes: 8acea455fafa ("RISC-V: Support for kexec_file on panic")
+Signed-off-by: Li Huafei <lihuafei1@huawei.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20221104095658.141222-2-lihuafei1@huawei.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/riscv/kernel/elf_kexec.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -335,6 +335,12 @@ stop_handle:
- 	ext4_xattr_inode_array_free(ea_inode_array);
- 	return;
- no_delete:
-+	/*
-+	 * Check out some where else accidentally dirty the evicting inode,
-+	 * which may probably cause inode use-after-free issues later.
-+	 */
-+	WARN_ON_ONCE(!list_empty_careful(&inode->i_io_list));
+--- a/arch/riscv/kernel/elf_kexec.c
++++ b/arch/riscv/kernel/elf_kexec.c
+@@ -26,6 +26,10 @@ int arch_kimage_file_post_load_cleanup(s
+ 	kvfree(image->arch.fdt);
+ 	image->arch.fdt = NULL;
+ 
++	vfree(image->elf_headers);
++	image->elf_headers = NULL;
++	image->elf_headers_sz = 0;
 +
- 	if (!list_empty(&EXT4_I(inode)->i_fc_list))
- 		ext4_fc_mark_ineligible(inode->i_sb, EXT4_FC_REASON_NOMEM, NULL);
- 	ext4_clear_inode(inode);	/* We must guarantee clearing of inode... */
+ 	return kexec_image_post_load_cleanup_default(image);
+ }
+ 
 
 
