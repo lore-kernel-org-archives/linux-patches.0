@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73611AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:13:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3AA3C433D2;
-	Wed,  4 Jan 2023 16:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C6D4AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:13:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C327DC433D2;
+	Wed,  4 Jan 2023 16:13:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848806;
-	bh=Sn+hzq9h09ualt1WovD9gcawki8wgkSRVAJc8HlrLrs=;
+	s=korg; t=1672848809;
+	bh=CtwM4FknA6rs9U6+h3U1M1otnLVrQRN2QqBkbLSuYQo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=joVAnCC6NBaEVWDgjXqPRSjeCYazQDjLAoV7ihlZCk6P/HtaLDZKjFvx5ADmkNEJ9
-	 bsqAHo3jF7XlsoELGqffQaLybfpECdTjZWYqrcZZi14Z+jiImStQawxo/fSXDPrS3X
-	 38R5rPhQEToU1iSOA2t+Wy4NsOFcwyGJV3v8VyE8=
+	b=KBoKlU04KTut8t7oy0g62lSjbiO43W+cMiQit5qpmIqXceRvnYZ0IjWAFPKz2ByX+
+	 15XEtnxid+mbSbhm9SKV7PAU4Sj8qfsjt1l5CRwahGMmCHIfDOqLHwPQQweIX9BEKA
+	 1UVKQDMcJC0RjGd3Ib4SPj2+yn4TKFOtsZk4ZO1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Aring <aahringo@redhat.com>,
-	David Teigland <teigland@redhat.com>
-Subject: [PATCH 6.1 061/207] fs: dlm: retry accept() until -EAGAIN or error returns
-Date: Wed,  4 Jan 2023 17:05:19 +0100
-Message-Id: <20230104160513.859624712@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Maxim Mikityanskiy <maxtram95@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 052/207] platform/x86: ideapad-laptop: Stop writing VPCCMD_W_TOUCHPAD at probe time
+Date: Wed,  4 Jan 2023 17:05:10 +0100
+Message-Id: <20230104160513.563342360@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
 References: <20230104160511.905925875@linuxfoundation.org>
@@ -34,42 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Aring <aahringo@redhat.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit f0f4bb431bd543ed7bebbaea3ce326cfcd5388bc upstream.
+[ Upstream commit a10ba160d427e78ffa2ab15a86cacaec291fa58a ]
 
-This patch fixes a race if we get two times an socket data ready event
-while the listen connection worker is queued. Currently it will be
-served only once but we need to do it (in this case twice) until we hit
--EAGAIN which tells us there is no pending accept going on.
+Commit d69cd7eea93e ("platform/x86: ideapad-laptop: Disable touchpad_switch
+for ELAN0634") from Janary 2021 added a flag hiding the touchpad sysfs-attr
+and disabling ideapad_sync_touchpad_state() because some devices
+"do not use EC to switch touchpad".
 
-This patch wraps an do while loop until we receive a return value which
-is different than 0 as it was done before commit d11ccd451b65 ("fs: dlm:
-listen socket out of connection hash").
+At the same time this added a write(VPCCMD_W_TOUCHPAD, 1) call at probe
+time on these same devices. This seems to be copied from the rfkill code
+which does something similar when hw rfkill support is disabled.
 
-Cc: stable@vger.kernel.org
-Fixes: d11ccd451b65 ("fs: dlm: listen socket out of connection hash")
-Signed-off-by: Alexander Aring <aahringo@redhat.com>
-Signed-off-by: David Teigland <teigland@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+But for the rfkill code this is known to be necessary on some models,
+where as for the touchpad control no motivation is given for doing this
+and prior to this patch there were no reports of needing to do this.
+
+So this seems unnecessary; and it is best to avoid poking the hardware
+unnecessary to avoid unwanted side effects, so remove this.
+
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Tested-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Tested-by: Maxim Mikityanskiy <maxtram95@gmail.com>
+Link: https://lore.kernel.org/r/20221117110244.67811-6-hdegoede@redhat.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/dlm/lowcomms.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/platform/x86/ideapad-laptop.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/fs/dlm/lowcomms.c
-+++ b/fs/dlm/lowcomms.c
-@@ -1543,7 +1543,11 @@ static void process_recv_sockets(struct
+diff --git a/drivers/platform/x86/ideapad-laptop.c b/drivers/platform/x86/ideapad-laptop.c
+index 9b36cfddd36f..fc3d47a75944 100644
+--- a/drivers/platform/x86/ideapad-laptop.c
++++ b/drivers/platform/x86/ideapad-laptop.c
+@@ -1875,10 +1875,6 @@ static int ideapad_acpi_add(struct platform_device *pdev)
+ 	if (!priv->features.hw_rfkill_switch)
+ 		write_ec_cmd(priv->adev->handle, VPCCMD_W_RF, 1);
  
- static void process_listen_recv_socket(struct work_struct *work)
- {
--	accept_from_sock(&listen_con);
-+	int ret;
-+
-+	do {
-+		ret = accept_from_sock(&listen_con);
-+	} while (!ret);
- }
- 
- static void dlm_connect(struct connection *con)
+-	/* The same for Touchpad */
+-	if (!priv->features.touchpad_ctrl_via_ec)
+-		write_ec_cmd(priv->adev->handle, VPCCMD_W_TOUCHPAD, 1);
+-
+ 	for (i = 0; i < IDEAPAD_RFKILL_DEV_NUM; i++)
+ 		if (test_bit(ideapad_rfk_data[i].cfgbit, &priv->cfg))
+ 			ideapad_register_rfkill(priv, i);
+-- 
+2.35.1
+
 
 
