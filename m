@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09DCFAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:12:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A861C433F0;
-	Wed,  4 Jan 2023 16:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5461AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:12:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3187FC433EF;
+	Wed,  4 Jan 2023 16:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848753;
-	bh=Lddamzy84F7IntM5RIIPGNBQKw8rSujVqBAy0ecnios=;
+	s=korg; t=1672848756;
+	bh=hj+zY7cQJhO7F/fcOhPf9qe6r17hp6PKEhAVYrhHZcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ruWXo76rlP2u2z/AvoJKO0gqzeS5UkvZwDnISjBHspjyNe/UXAcc5KQuQs+brsWYV
-	 T1ZTg0tQPt5U90vxfIUfy+poIJEj/9KPY/9OHs2/bQNgJelSPiDPkV8EYqdspVRnPX
-	 yERdeFzGol7agvpgr60k5B8butFyqDtQFavGBWgo=
+	b=c6yQJVX+woOkG4jTZim3xNUI8flIobrCEu13Z57b5eXkL3sY+wFpBavTDe5ZkUTzP
+	 kKFlPMmZbMQbp/G02YpUW7/n3kY1YXEmm+PUIM2lcKsKofYHJ2GfmZL2UYxwJjLqMl
+	 5imhaxFRvTTQMXzZKg8PU8mP5Z8LCeucg7fa13iw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	zanussi@kernel.org,
-	Zheng Yejian <zhengyejian1@huawei.com>,
+	"John Warthog9 Hawley (VMware)" <warthog9@eaglescrag.net>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.1 077/207] tracing/hist: Fix out-of-bound write on action_data.var_ref_idx
-Date: Wed,  4 Jan 2023 17:05:35 +0100
-Message-Id: <20230104160514.385729685@linuxfoundation.org>
+Subject: [PATCH 6.0 009/177] ktest.pl minconfig: Unset configs instead of just removing them
+Date: Wed,  4 Jan 2023 17:05:00 +0100
+Message-Id: <20230104160507.940666348@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,153 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit 82470f7d9044842618c847a7166de2b7458157a7 upstream.
+commit ef784eebb56425eed6e9b16e7d47e5c00dcf9c38 upstream.
 
-When generate a synthetic event with many params and then create a trace
-action for it [1], kernel panic happened [2].
+After a full run of a make_min_config test, I noticed there were a lot of
+CONFIGs still enabled that really should not be. Looking at them, I
+noticed they were all defined as "default y". The issue is that the test
+simple removes the config and re-runs make oldconfig, which enables it
+again because it is set to default 'y'. Instead, explicitly disable the
+config with writing "# CONFIG_FOO is not set" to the file to keep it from
+being set again.
 
-It is because that in trace_action_create() 'data->n_params' is up to
-SYNTH_FIELDS_MAX (current value is 64), and array 'data->var_ref_idx'
-keeps indices into array 'hist_data->var_refs' for each synthetic event
-param, but the length of 'data->var_ref_idx' is TRACING_MAP_VARS_MAX
-(current value is 16), so out-of-bound write happened when 'data->n_params'
-more than 16. In this case, 'data->match_data.event' is overwritten and
-eventually cause the panic.
+With this change, one of my box's minconfigs went from 768 configs set,
+down to 521 configs set.
 
-To solve the issue, adjust the length of 'data->var_ref_idx' to be
-SYNTH_FIELDS_MAX and add sanity checks to avoid out-of-bound write.
+Link: https://lkml.kernel.org/r/20221202115936.016fce23@gandalf.local.home
 
-[1]
- # cd /sys/kernel/tracing/
- # echo "my_synth_event int v1; int v2; int v3; int v4; int v5; int v6;\
-int v7; int v8; int v9; int v10; int v11; int v12; int v13; int v14;\
-int v15; int v16; int v17; int v18; int v19; int v20; int v21; int v22;\
-int v23; int v24; int v25; int v26; int v27; int v28; int v29; int v30;\
-int v31; int v32; int v33; int v34; int v35; int v36; int v37; int v38;\
-int v39; int v40; int v41; int v42; int v43; int v44; int v45; int v46;\
-int v47; int v48; int v49; int v50; int v51; int v52; int v53; int v54;\
-int v55; int v56; int v57; int v58; int v59; int v60; int v61; int v62;\
-int v63" >> synthetic_events
- # echo 'hist:keys=pid:ts0=common_timestamp.usecs if comm=="bash"' >> \
-events/sched/sched_waking/trigger
- # echo "hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(\
-pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,\
-pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,\
-pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,pid,\
-pid,pid,pid,pid,pid,pid,pid,pid,pid)" >> events/sched/sched_switch/trigger
-
-[2]
-BUG: unable to handle page fault for address: ffff91c900000000
-PGD 61001067 P4D 61001067 PUD 0
-Oops: 0000 [#1] PREEMPT SMP NOPTI
-CPU: 2 PID: 322 Comm: bash Tainted: G        W          6.1.0-rc8+ #229
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014
-RIP: 0010:strcmp+0xc/0x30
-Code: 75 f7 31 d2 44 0f b6 04 16 44 88 04 11 48 83 c2 01 45 84 c0 75 ee
-c3 cc cc cc cc 0f 1f 00 31 c0 eb 08 48 83 c0 01 84 d2 74 13 <0f> b6 14
-07 3a 14 06 74 ef 19 c0 83 c8 01 c3 cc cc cc cc 31 c3
-RSP: 0018:ffff9b3b00f53c48 EFLAGS: 00000246
-RAX: 0000000000000000 RBX: ffffffffba958a68 RCX: 0000000000000000
-RDX: 0000000000000010 RSI: ffff91c943d33a90 RDI: ffff91c900000000
-RBP: ffff91c900000000 R08: 00000018d604b529 R09: 0000000000000000
-R10: ffff91c9483eddb1 R11: ffff91ca483eddab R12: ffff91c946171580
-R13: ffff91c9479f0538 R14: ffff91c9457c2848 R15: ffff91c9479f0538
-FS:  00007f1d1cfbe740(0000) GS:ffff91c9bdc80000(0000)
-knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffff91c900000000 CR3: 0000000006316000 CR4: 00000000000006e0
-Call Trace:
- <TASK>
- __find_event_file+0x55/0x90
- action_create+0x76c/0x1060
- event_hist_trigger_parse+0x146d/0x2060
- ? event_trigger_write+0x31/0xd0
- trigger_process_regex+0xbb/0x110
- event_trigger_write+0x6b/0xd0
- vfs_write+0xc8/0x3e0
- ? alloc_fd+0xc0/0x160
- ? preempt_count_add+0x4d/0xa0
- ? preempt_count_add+0x70/0xa0
- ksys_write+0x5f/0xe0
- do_syscall_64+0x3b/0x90
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7f1d1d0cf077
-Code: 64 89 02 48 c7 c0 ff ff ff ff eb bb 0f 1f 80 00 00 00 00 f3 0f 1e
-fa 64 8b 04 25 18 00 00 00 85 c0 75 10 b8 01 00 00 00 0f 05 <48> 3d 00
-f0 ff ff 77 51 c3 48 83 ec 28 48 89 54 24 18 48 89 74
-RSP: 002b:00007ffcebb0e568 EFLAGS: 00000246 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 0000000000000143 RCX: 00007f1d1d0cf077
-RDX: 0000000000000143 RSI: 00005639265aa7e0 RDI: 0000000000000001
-RBP: 00005639265aa7e0 R08: 000000000000000a R09: 0000000000000142
-R10: 000056392639c017 R11: 0000000000000246 R12: 0000000000000143
-R13: 00007f1d1d1ae6a0 R14: 00007f1d1d1aa4a0 R15: 00007f1d1d1a98a0
- </TASK>
-Modules linked in:
-CR2: ffff91c900000000
----[ end trace 0000000000000000 ]---
-RIP: 0010:strcmp+0xc/0x30
-Code: 75 f7 31 d2 44 0f b6 04 16 44 88 04 11 48 83 c2 01 45 84 c0 75 ee
-c3 cc cc cc cc 0f 1f 00 31 c0 eb 08 48 83 c0 01 84 d2 74 13 <0f> b6 14
-07 3a 14 06 74 ef 19 c0 83 c8 01 c3 cc cc cc cc 31 c3
-RSP: 0018:ffff9b3b00f53c48 EFLAGS: 00000246
-RAX: 0000000000000000 RBX: ffffffffba958a68 RCX: 0000000000000000
-RDX: 0000000000000010 RSI: ffff91c943d33a90 RDI: ffff91c900000000
-RBP: ffff91c900000000 R08: 00000018d604b529 R09: 0000000000000000
-R10: ffff91c9483eddb1 R11: ffff91ca483eddab R12: ffff91c946171580
-R13: ffff91c9479f0538 R14: ffff91c9457c2848 R15: ffff91c9479f0538
-FS:  00007f1d1cfbe740(0000) GS:ffff91c9bdc80000(0000)
-knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffff91c900000000 CR3: 0000000006316000 CR4: 00000000000006e0
-
-Link: https://lore.kernel.org/linux-trace-kernel/20221207035143.2278781-1-zhengyejian1@huawei.com
-
-Cc: <mhiramat@kernel.org>
-Cc: <zanussi@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: d380dcde9a07 ("tracing: Fix now invalid var_ref_vals assumption in trace action")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Fixes: 0a05c769a9de5 ("ktest: Added config_bisect test type")
+Reviewed-by: John 'Warthog9' Hawley (VMware) <warthog9@eaglescrag.net>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ tools/testing/ktest/ktest.pl |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -617,7 +617,7 @@ struct action_data {
- 	 * event param, and is passed to the synthetic event
- 	 * invocation.
- 	 */
--	unsigned int		var_ref_idx[TRACING_MAP_VARS_MAX];
-+	unsigned int		var_ref_idx[SYNTH_FIELDS_MAX];
- 	struct synth_event	*synth_event;
- 	bool			use_trace_keyword;
- 	char			*synth_event_name;
-@@ -2173,7 +2173,9 @@ static struct hist_field *create_var_ref
- 			return ref_field;
- 		}
- 	}
--
-+	/* Sanity check to avoid out-of-bound write on 'hist_data->var_refs' */
-+	if (hist_data->n_var_refs >= TRACING_MAP_VARS_MAX)
-+		return NULL;
- 	ref_field = create_hist_field(var_field->hist_data, NULL, flags, NULL);
- 	if (ref_field) {
- 		if (init_var_ref(ref_field, var_field, system, event_name)) {
-@@ -3922,6 +3924,10 @@ static int trace_action_create(struct hi
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -3778,9 +3778,10 @@ sub test_this_config {
+     # .config to make sure it is missing the config that
+     # we had before
+     my %configs = %min_configs;
+-    delete $configs{$config};
++    $configs{$config} = "# $config is not set";
+     make_new_config ((values %configs), (values %keep_configs));
+     make_oldconfig;
++    delete $configs{$config};
+     undef %configs;
+     assign_configs \%configs, $output_config;
  
- 	lockdep_assert_held(&event_mutex);
- 
-+	/* Sanity check to avoid out-of-bound write on 'data->var_ref_idx' */
-+	if (data->n_params > SYNTH_FIELDS_MAX)
-+		return -EINVAL;
-+
- 	if (data->use_trace_keyword)
- 		synth_event_name = data->synth_event_name;
- 	else
 
 
