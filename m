@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C17AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58E6C433D2;
-	Wed,  4 Jan 2023 16:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC13AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BABACC433D2;
+	Wed,  4 Jan 2023 16:25:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849504;
-	bh=lPu347q23qT8IUIepqbkxwSfFGzUOIOcyRJYtnX5yTs=;
+	s=korg; t=1672849507;
+	bh=AipgWh0lSkZV+fTw1vScQ4PtoBkZ3hoHnYYd+w57pTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hyreDjPVzHItMjUgk7zAaEQVWVLr5eKeZeLdVHBmT+nKnlMktDpSOMuLBl11k2Nwh
-	 0ZYvmn4PFsD+tnf4m6NyKEqkiPIos9EjVCynPWwy8BD5X20dVwcH3S9B3d97Y0zaHX
-	 awd2URzxSbr2RP1NdXx14KxEgx2cz0nXUTWM+3wc=
+	b=yQLONr+1unYZG1Iulm6H0080E24E+LTW3hUDrt3G6JNoyB4jIKYbknFa8Hj+tvf+C
+	 kwXA18exI699nend7/DwBvrTS1JuCimcOuxA03Yhz5iUkQlqe4ok2IjvgQMzr4MeKN
+	 3x6WCT61/bxEpeEWxGKCJyFJ9sEGmY8YIR+7TSB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.0 133/177] ext4: add inode table check in __ext4_get_inode_loc to aovid possible infinite loop
-Date: Wed,  4 Jan 2023 17:07:04 +0100
-Message-Id: <20230104160511.677143169@linuxfoundation.org>
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.0 120/177] parisc: led: Fix potential null-ptr-deref in start_task()
+Date: Wed,  4 Jan 2023 17:06:51 +0100
+Message-Id: <20230104160511.278947471@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -36,83 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-commit eee22187b53611e173161e38f61de1c7ecbeb876 upstream.
+commit 41f563ab3c33698bdfc3403c7c2e6c94e73681e4 upstream.
 
-In do_writepages, if the value returned by ext4_writepages is "-ENOMEM"
-and "wbc->sync_mode == WB_SYNC_ALL", retry until the condition is not met.
+start_task() calls create_singlethread_workqueue() and not checked the
+ret value, which may return NULL. And a null-ptr-deref may happen:
 
-In __ext4_get_inode_loc, if the bh returned by sb_getblk is NULL,
-the function returns -ENOMEM.
+start_task()
+    create_singlethread_workqueue() # failed, led_wq is NULL
+    queue_delayed_work()
+        queue_delayed_work_on()
+            __queue_delayed_work()  # warning here, but continue
+                __queue_work()      # access wq->flags, null-ptr-deref
 
-In __getblk_slow, if the return value of grow_buffers is less than 0,
-the function returns NULL.
+Check the ret value and return -ENOMEM if it is NULL.
 
-When the three processes are connected in series like the following stack,
-an infinite loop may occur:
-
-do_writepages					<--- keep retrying
- ext4_writepages
-  mpage_map_and_submit_extent
-   mpage_map_one_extent
-    ext4_map_blocks
-     ext4_ext_map_blocks
-      ext4_ext_handle_unwritten_extents
-       ext4_ext_convert_to_initialized
-        ext4_split_extent
-         ext4_split_extent_at
-          __ext4_ext_dirty
-           __ext4_mark_inode_dirty
-            ext4_reserve_inode_write
-             ext4_get_inode_loc
-              __ext4_get_inode_loc		<--- return -ENOMEM
-               sb_getblk
-                __getblk_gfp
-                 __getblk_slow			<--- return NULL
-                  grow_buffers
-                   grow_dev_page		<--- return -ENXIO
-                    ret = (block < end_block) ? 1 : -ENXIO;
-
-In this issue, bg_inode_table_hi is overwritten as an incorrect value.
-As a result, `block < end_block` cannot be met in grow_dev_page.
-Therefore, __ext4_get_inode_loc always returns '-ENOMEM' and do_writepages
-keeps retrying. As a result, the writeback process is in the D state due
-to an infinite loop.
-
-Add a check on inode table block in the __ext4_get_inode_loc function by
-referring to ext4_read_inode_bitmap to avoid this infinite loop.
-
-Cc: stable@kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Link: https://lore.kernel.org/r/20220817132701.3015912-3-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: 3499495205a6 ("[PARISC] Use work queue in LED/LCD driver instead of tasklet.")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/parisc/led.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4473,9 +4473,17 @@ static int __ext4_get_inode_loc(struct s
- 	inodes_per_block = EXT4_SB(sb)->s_inodes_per_block;
- 	inode_offset = ((ino - 1) %
- 			EXT4_INODES_PER_GROUP(sb));
--	block = ext4_inode_table(sb, gdp) + (inode_offset / inodes_per_block);
- 	iloc->offset = (inode_offset % inodes_per_block) * EXT4_INODE_SIZE(sb);
+--- a/drivers/parisc/led.c
++++ b/drivers/parisc/led.c
+@@ -137,6 +137,9 @@ static int start_task(void)
  
-+	block = ext4_inode_table(sb, gdp);
-+	if ((block <= le32_to_cpu(EXT4_SB(sb)->s_es->s_first_data_block)) ||
-+	    (block >= ext4_blocks_count(EXT4_SB(sb)->s_es))) {
-+		ext4_error(sb, "Invalid inode table block %llu in "
-+			   "block_group %u", block, iloc->block_group);
-+		return -EFSCORRUPTED;
-+	}
-+	block += (inode_offset / inodes_per_block);
+ 	/* Create the work queue and queue the LED task */
+ 	led_wq = create_singlethread_workqueue("led_wq");	
++	if (!led_wq)
++		return -ENOMEM;
 +
- 	bh = sb_getblk(sb, block);
- 	if (unlikely(!bh))
- 		return -ENOMEM;
+ 	queue_delayed_work(led_wq, &led_task, 0);
+ 
+ 	return 0;
 
 
