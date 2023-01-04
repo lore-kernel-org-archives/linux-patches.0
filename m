@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95900AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:12:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0062DC433EF;
-	Wed,  4 Jan 2023 16:12:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36DEAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:12:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128F7C433F1;
+	Wed,  4 Jan 2023 16:12:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848732;
-	bh=JJGv0wlS+fGh1ux34YOoC2Y6fy/IDkf1dboYub3X51c=;
+	s=korg; t=1672848735;
+	bh=5yRS6mx8C1HfwzAVjei95PV2yRsuOL6oYpiGnuR8FwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VepWSWw0HSYFMRzFnMPoXIHhhgtYxtcC0aSDApGueJcXyNVKuFreiyKJVXxeKEBUA
-	 U1uEGukhl92C8oWqm5hklkg0Ba8g1PXYd3HVc575+Siq7hERx/ItyquEhT114MdjvW
-	 7gPSi4Gm6IwZaPZH/De+MdqNH+oLRHAB1uKdMh5k=
+	b=S2qVyhZlFhxiCggTHCjVCVNYAZcvJyizZ49pgCfif0U2A8FAYRI/IE8VCJxBEZ/kD
+	 0QYsxHzOg3HUWiarS6r6Q9XEl5MSpZSyWcSx3xzP4GoRi1kQTiDxokGgHHhKFAXbC2
+	 MhxgDlcMr1OAWBTQ0+E3ocKXtrBLAAMN8nS+z32Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.1 074/207] dm cache: set needs_check flag after aborting metadata
-Date: Wed,  4 Jan 2023 17:05:32 +0100
-Message-Id: <20230104160514.286676846@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.0 006/177] soc: qcom: Select REMAP_MMIO for LLCC driver
+Date: Wed,  4 Jan 2023 17:04:57 +0100
+Message-Id: <20230104160507.848636582@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -33,47 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit 6b9973861cb2e96dcd0bb0f1baddc5c034207c5c upstream.
+commit 5d2fe2d7b616b8baa18348ead857b504fc2de336 upstream.
 
-Otherwise the commit that will be aborted will be associated with the
-metadata objects that will be torn down.  Must write needs_check flag
-to metadata with a reset block manager.
+LLCC driver uses REGMAP_MMIO for accessing the hardware registers. So
+select the dependency in Kconfig. Without this, there will be errors
+while building the driver with COMPILE_TEST only:
 
-Found through code-inspection (and compared against dm-thin.c).
+ERROR: modpost: "__devm_regmap_init_mmio_clk" [drivers/soc/qcom/llcc-qcom.ko] undefined!
+make[1]: *** [scripts/Makefile.modpost:126: Module.symvers] Error 1
+make: *** [Makefile:1944: modpost] Error 2
 
-Cc: stable@vger.kernel.org
-Fixes: 028ae9f76f29 ("dm cache: add fail io mode and needs_check flag")
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Cc: <stable@vger.kernel.org> # 4.19
+Fixes: a3134fb09e0b ("drivers: soc: Add LLCC driver")
+Reported-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221129071201.30024-2-manivannan.sadhasivam@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-target.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/soc/qcom/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -907,16 +907,16 @@ static void abort_transaction(struct cac
- 	if (get_cache_mode(cache) >= CM_READ_ONLY)
- 		return;
- 
--	if (dm_cache_metadata_set_needs_check(cache->cmd)) {
--		DMERR("%s: failed to set 'needs_check' flag in metadata", dev_name);
--		set_cache_mode(cache, CM_FAIL);
--	}
--
- 	DMERR_LIMIT("%s: aborting current metadata transaction", dev_name);
- 	if (dm_cache_metadata_abort(cache->cmd)) {
- 		DMERR("%s: failed to abort metadata transaction", dev_name);
- 		set_cache_mode(cache, CM_FAIL);
- 	}
-+
-+	if (dm_cache_metadata_set_needs_check(cache->cmd)) {
-+		DMERR("%s: failed to set 'needs_check' flag in metadata", dev_name);
-+		set_cache_mode(cache, CM_FAIL);
-+	}
- }
- 
- static void metadata_operation_failed(struct cache *cache, const char *op, int r)
+--- a/drivers/soc/qcom/Kconfig
++++ b/drivers/soc/qcom/Kconfig
+@@ -63,6 +63,7 @@ config QCOM_GSBI
+ config QCOM_LLCC
+ 	tristate "Qualcomm Technologies, Inc. LLCC driver"
+ 	depends on ARCH_QCOM || COMPILE_TEST
++	select REGMAP_MMIO
+ 	help
+ 	  Qualcomm Technologies, Inc. platform specific
+ 	  Last Level Cache Controller(LLCC) driver for platforms such as,
 
 
