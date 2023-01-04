@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0BFAAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:27:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A980C433EF;
-	Wed,  4 Jan 2023 16:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B29EDAD4A
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:27:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE68C433EF;
+	Wed,  4 Jan 2023 16:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849638;
-	bh=77Y/fKw5+sCoJcuGF2qllAqjhim4poxFL2Dp7ppYt4c=;
+	s=korg; t=1672849641;
+	bh=otsHJIKptbLaNqeWlZec4N1QzHhuNXO9Kpw73I26GBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z7skiva5WburHw3Nw5kSxBob9d27ob3IrJQgr7rAK0YhC8H4wr6nNjIaYKXEWSxaH
-	 9uv7GaRfyPe62d8ICa0IKyvYslUNNjz6zWdj2DehtekNDsun/UCVXdLnzyH5gFfljU
-	 ttJvTLGfgJIXLcBoBphvVZGe0AzyplD1O5bQ1lVI=
+	b=ggscFnEWtMvWVYxt1kr8yngC/g7oGqeqDp4leiOErsdnL2RDBuFXeWa2uE4cliur8
+	 Kg57Kot2d7UarMx4tW7temHinykPIjZuB4YccYaA9ES9/L7IlPs1TIGvbIfXGSo5Bi
+	 YPRUN0HeVKHWBdy4W29Bcl4GJ16cPeeMAdjB3zJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yifan Zhang <yifan1.zhang@amd.com>,
+	Luben Tuikov <luben.tuikov@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.0 169/177] drm/amd/display: Add DCN314 display SG Support
-Date: Wed,  4 Jan 2023 17:07:40 +0100
-Message-Id: <20230104160512.798886030@linuxfoundation.org>
+Subject: [PATCH 6.0 170/177] drm/amdgpu: handle polaris10/11 overlap asics (v2)
+Date: Wed,  4 Jan 2023 17:07:41 +0100
+Message-Id: <20230104160512.828442508@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -34,30 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yifan Zhang <yifan1.zhang@amd.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit fe6872adb05e85bde38f2cdec01a0f4cfb826998 upstream.
+commit 1d4624cd72b912b2680c08d0be48338a1629a858 upstream.
 
-Add display SG support for DCN 3.1.4.
+Some special polaris 10 chips overlap with the polaris11
+DID range.  Handle this properly in the driver.
 
-Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+v2: use local flags for other function calls.
+
+Acked-by: Luben Tuikov <luben.tuikov@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -1511,6 +1511,7 @@ static int amdgpu_dm_init(struct amdgpu_
- 		case IP_VERSION(3, 0, 1):
- 		case IP_VERSION(3, 1, 2):
- 		case IP_VERSION(3, 1, 3):
-+		case IP_VERSION(3, 1, 4):
- 		case IP_VERSION(3, 1, 5):
- 		case IP_VERSION(3, 1, 6):
- 			init_data.flags.gpu_vm_support = true;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -2025,6 +2025,15 @@ static int amdgpu_pci_probe(struct pci_d
+ 			 "See modparam exp_hw_support\n");
+ 		return -ENODEV;
+ 	}
++	/* differentiate between P10 and P11 asics with the same DID */
++	if (pdev->device == 0x67FF &&
++	    (pdev->revision == 0xE3 ||
++	     pdev->revision == 0xE7 ||
++	     pdev->revision == 0xF3 ||
++	     pdev->revision == 0xF7)) {
++		flags &= ~AMD_ASIC_MASK;
++		flags |= CHIP_POLARIS10;
++	}
+ 
+ 	/* Due to hardware bugs, S/G Display on raven requires a 1:1 IOMMU mapping,
+ 	 * however, SME requires an indirect IOMMU mapping because the encryption
+@@ -2094,12 +2103,12 @@ static int amdgpu_pci_probe(struct pci_d
+ 
+ 	pci_set_drvdata(pdev, ddev);
+ 
+-	ret = amdgpu_driver_load_kms(adev, ent->driver_data);
++	ret = amdgpu_driver_load_kms(adev, flags);
+ 	if (ret)
+ 		goto err_pci;
+ 
+ retry_init:
+-	ret = drm_dev_register(ddev, ent->driver_data);
++	ret = drm_dev_register(ddev, flags);
+ 	if (ret == -EAGAIN && ++retry <= 3) {
+ 		DRM_INFO("retry init %d\n", retry);
+ 		/* Don't request EX mode too frequently which is attacking */
 
 
