@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7C5FAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:19:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 138BBC433D2;
-	Wed,  4 Jan 2023 16:19:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8CE8AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:19:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25448C433D2;
+	Wed,  4 Jan 2023 16:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849183;
-	bh=03yeJ01VnxS7UaP6UzPjYv65grxSfSIhNPFm3Y77nZo=;
+	s=korg; t=1672849186;
+	bh=MYO0wgBWbAV5yh3M0dPp84M6RWXDjl3eWW7uR7rcwN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oLd2Tb3JIF70rknYrDv+mLR610/9W8mRtROuAKS4N7Z8jexFoS6EHJC5pTaQmV1mp
-	 uRY8afjp+l1MBDmUSiTcXI+9b+KH5oyQ7gCK/RyOKM0kmyiQnlc6i6Rak49qypjYUY
-	 uJ/UXn9+AeTPACHxWfLX1PmkPbwXaYD7nxacMW4U=
+	b=SPPZBFq/pFyukm/wzBeBQP6twvxUkmoiq8kFDFu7fnq++Ab8faw2LPDuWRwsLBVWT
+	 CEoychLc8aA9ey0LK/DuMWFTD5uwBxxBmbiIbty90NqAA8RnoHNK5/qQCf5SGMb8SW
+	 1yCmPq30a/pTo2WbMTL3gcv5SJzgtyAxykq1buhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <imv4bel@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.0 079/177] media: dvb-core: Fix UAF due to refcount races at releasing
-Date: Wed,  4 Jan 2023 17:06:10 +0100
-Message-Id: <20230104160510.046338970@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 148/207] parisc: Fix locking in pdc_iodc_print() firmware call
+Date: Wed,  4 Jan 2023 17:06:46 +0100
+Message-Id: <20230104160516.597569546@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,69 +33,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Helge Deller <deller@gmx.de>
 
-commit fd3d91ab1c6ab0628fe642dd570b56302c30a792 upstream.
+commit 7236aae5f81f3efbd93d0601e74fc05994bc2580 upstream.
 
-The dvb-core tries to sync the releases of opened files at
-dvb_dmxdev_release() with two refcounts: dvbdev->users and
-dvr_dvbdev->users.  A problem is present in those two syncs: when yet
-another dvb_demux_open() is called during those sync waits,
-dvb_demux_open() continues to process even if the device is being
-closed.  This includes the increment of the former refcount, resulting
-in the leftover refcount after the sync of the latter refcount at
-dvb_dmxdev_release().  It ends up with use-after-free, since the
-function believes that all usages were gone and releases the
-resources.
+Utilize pdc_lock spinlock to protect parallel modifications of the
+iodc_dbuf[] buffer, check length to prevent buffer overflow of
+iodc_dbuf[], drop the iodc_retbuf[] buffer and fix some wrong
+indentings.
 
-This patch addresses the problem by adding the check of dmxdev->exit
-flag at dvb_demux_open(), just like dvb_dvr_open() already does.  With
-the exit flag check, the second call of dvb_demux_open() fails, hence
-the further corruption can be avoided.
-
-Also for avoiding the races of the dmxdev->exit flag reference, this
-patch serializes the dmxdev->exit set up and the sync waits with the
-dmxdev->mutex lock at dvb_dmxdev_release().  Without the mutex lock,
-dvb_demux_open() (or dvb_dvr_open()) may run concurrently with
-dvb_dmxdev_release(), which allows to skip the exit flag check and
-continue the open process that is being closed.
-
-CVE-2022-41218 is assigned to those bugs above.
-
-Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/20220908132754.30532-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: <stable@vger.kernel.org> # 6.0+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-core/dmxdev.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/parisc/kernel/firmware.c |   24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
---- a/drivers/media/dvb-core/dmxdev.c
-+++ b/drivers/media/dvb-core/dmxdev.c
-@@ -790,6 +790,11 @@ static int dvb_demux_open(struct inode *
- 	if (mutex_lock_interruptible(&dmxdev->mutex))
- 		return -ERESTARTSYS;
+--- a/arch/parisc/kernel/firmware.c
++++ b/arch/parisc/kernel/firmware.c
+@@ -1288,9 +1288,8 @@ void pdc_io_reset_devices(void)
  
-+	if (dmxdev->exit) {
-+		mutex_unlock(&dmxdev->mutex);
-+		return -ENODEV;
-+	}
-+
- 	for (i = 0; i < dmxdev->filternum; i++)
- 		if (dmxdev->filter[i].state == DMXDEV_STATE_FREE)
- 			break;
-@@ -1448,7 +1453,10 @@ EXPORT_SYMBOL(dvb_dmxdev_init);
+ #endif /* defined(BOOTLOADER) */
  
- void dvb_dmxdev_release(struct dmxdev *dmxdev)
- {
-+	mutex_lock(&dmxdev->mutex);
- 	dmxdev->exit = 1;
-+	mutex_unlock(&dmxdev->mutex);
+-/* locked by pdc_console_lock */
+-static int __attribute__((aligned(8)))   iodc_retbuf[32];
+-static char __attribute__((aligned(64))) iodc_dbuf[4096];
++/* locked by pdc_lock */
++static char iodc_dbuf[4096] __page_aligned_bss;
+ 
+ /**
+  * pdc_iodc_print - Console print using IODC.
+@@ -1307,6 +1306,9 @@ int pdc_iodc_print(const unsigned char *
+ 	unsigned int i;
+ 	unsigned long flags;
+ 
++	count = min_t(unsigned int, count, sizeof(iodc_dbuf));
 +
- 	if (dmxdev->dvbdev->users > 1) {
- 		wait_event(dmxdev->dvbdev->wait_queue,
- 				dmxdev->dvbdev->users == 1);
++	spin_lock_irqsave(&pdc_lock, flags);
+ 	for (i = 0; i < count;) {
+ 		switch(str[i]) {
+ 		case '\n':
+@@ -1322,12 +1324,11 @@ int pdc_iodc_print(const unsigned char *
+ 	}
+ 
+ print:
+-        spin_lock_irqsave(&pdc_lock, flags);
+-        real32_call(PAGE0->mem_cons.iodc_io,
+-                    (unsigned long)PAGE0->mem_cons.hpa, ENTRY_IO_COUT,
+-                    PAGE0->mem_cons.spa, __pa(PAGE0->mem_cons.dp.layers),
+-                    __pa(iodc_retbuf), 0, __pa(iodc_dbuf), i, 0);
+-        spin_unlock_irqrestore(&pdc_lock, flags);
++	real32_call(PAGE0->mem_cons.iodc_io,
++		(unsigned long)PAGE0->mem_cons.hpa, ENTRY_IO_COUT,
++		PAGE0->mem_cons.spa, __pa(PAGE0->mem_cons.dp.layers),
++		__pa(pdc_result), 0, __pa(iodc_dbuf), i, 0);
++	spin_unlock_irqrestore(&pdc_lock, flags);
+ 
+ 	return i;
+ }
+@@ -1354,10 +1355,11 @@ int pdc_iodc_getc(void)
+ 	real32_call(PAGE0->mem_kbd.iodc_io,
+ 		    (unsigned long)PAGE0->mem_kbd.hpa, ENTRY_IO_CIN,
+ 		    PAGE0->mem_kbd.spa, __pa(PAGE0->mem_kbd.dp.layers), 
+-		    __pa(iodc_retbuf), 0, __pa(iodc_dbuf), 1, 0);
++		    __pa(pdc_result), 0, __pa(iodc_dbuf), 1, 0);
+ 
+ 	ch = *iodc_dbuf;
+-	status = *iodc_retbuf;
++	/* like convert_to_wide() but for first return value only: */
++	status = *(int *)&pdc_result;
+ 	spin_unlock_irqrestore(&pdc_lock, flags);
+ 
+ 	if (status == 0)
 
 
