@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D2DCAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F661C433D2;
-	Wed,  4 Jan 2023 16:18:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 180A7AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F670C433EF;
+	Wed,  4 Jan 2023 16:18:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849119;
-	bh=1yD27mWLNBYI9eyGvQ2BPyVDuiK7l6bZM0wpZQs7J5k=;
+	s=korg; t=1672849122;
+	bh=d6OhcyYazqXyzw+qHsFSWFxAiQjtxXvb0Gx7abt1C5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yaxtq/dJz2ERgVkqWIjQgd34yvRcLWkRDBD1n2xMobgbLfLiH2ZWE1FFPR/af0099
-	 7Cy4x+PeLKklYkOAdemC/ryGzQLfKjvT6gFiiTZd0UqvgtCRUqKxcu8lmFIR4bNPzv
-	 7XQRVuPIpKL7ABemd1ETcBUlsKsWjTIYkykrPFg0=
+	b=ir0SBnEWcMM/FPwXwOKnGsN9qTulq0ppcXkkDbdNOA03Jq55UjkcDNc658s8tvJtS
+	 WWerCh5RwqpXOa6/b7SCVeSCVIfHEXsU2lheK10nyjrVeB7dEixv2BSZtht2hOS6ZC
+	 7r8eCq+nv76/vhOwwwbPNzySAuqqL0bxmgIJINRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 6.1 113/207] md/bitmap: Fix bitmap chunk size overflow issues
-Date: Wed,  4 Jan 2023 17:06:11 +0100
-Message-Id: <20230104160515.476906200@linuxfoundation.org>
+	Mat Martineau <mathew.j.martineau@linux.intel.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.0 043/177] mptcp: use proper req destructor for IPv6
+Date: Wed,  4 Jan 2023 17:05:34 +0100
+Message-Id: <20230104160508.955749538@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,99 +35,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 4555211190798b6b6fa2c37667d175bf67945c78 upstream.
+commit d3295fee3c756ece33ac0d935e172e68c0a4161b upstream.
 
-- limit bitmap chunk size internal u64 variable to values not overflowing
-  the u32 bitmap superblock structure variable stored on persistent media
-- assign bitmap chunk size internal u64 variable from unsigned values to
-  avoid possible sign extension artifacts when assigning from a s32 value
+Before, only the destructor from TCP request sock in IPv4 was called
+even if the subflow was IPv6.
 
-The bug has been there since at least kernel 4.0.
-Steps to reproduce it:
-1: mdadm -C /dev/mdx -l 1 --bitmap=internal --bitmap-chunk=256M -e 1.2
--n2 /dev/rnbd1 /dev/rnbd2
-2 resize member device rnbd1 and rnbd2 to 8 TB
-3 mdadm --grow /dev/mdx --size=max
+It is important to use the right destructor to avoid memory leaks with
+some advanced IPv6 features, e.g. when the request socks contain
+specific IPv6 options.
 
-The bitmap_chunksize will overflow without patch.
-
+Fixes: 79c0949e9a09 ("mptcp: Add key generation and token tree")
+Reviewed-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
 Cc: stable@vger.kernel.org
-
-Signed-off-by: Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Song Liu <song@kernel.org>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md-bitmap.c |   20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ net/mptcp/subflow.c |   19 ++++++++++++++++---
+ 1 file changed, 16 insertions(+), 3 deletions(-)
 
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -486,7 +486,7 @@ void md_bitmap_print_sb(struct bitmap *b
- 	sb = kmap_atomic(bitmap->storage.sb_page);
- 	pr_debug("%s: bitmap file superblock:\n", bmname(bitmap));
- 	pr_debug("         magic: %08x\n", le32_to_cpu(sb->magic));
--	pr_debug("       version: %d\n", le32_to_cpu(sb->version));
-+	pr_debug("       version: %u\n", le32_to_cpu(sb->version));
- 	pr_debug("          uuid: %08x.%08x.%08x.%08x\n",
- 		 le32_to_cpu(*(__le32 *)(sb->uuid+0)),
- 		 le32_to_cpu(*(__le32 *)(sb->uuid+4)),
-@@ -497,11 +497,11 @@ void md_bitmap_print_sb(struct bitmap *b
- 	pr_debug("events cleared: %llu\n",
- 		 (unsigned long long) le64_to_cpu(sb->events_cleared));
- 	pr_debug("         state: %08x\n", le32_to_cpu(sb->state));
--	pr_debug("     chunksize: %d B\n", le32_to_cpu(sb->chunksize));
--	pr_debug("  daemon sleep: %ds\n", le32_to_cpu(sb->daemon_sleep));
-+	pr_debug("     chunksize: %u B\n", le32_to_cpu(sb->chunksize));
-+	pr_debug("  daemon sleep: %us\n", le32_to_cpu(sb->daemon_sleep));
- 	pr_debug("     sync size: %llu KB\n",
- 		 (unsigned long long)le64_to_cpu(sb->sync_size)/2);
--	pr_debug("max write behind: %d\n", le32_to_cpu(sb->write_behind));
-+	pr_debug("max write behind: %u\n", le32_to_cpu(sb->write_behind));
- 	kunmap_atomic(sb);
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -45,7 +45,6 @@ static void subflow_req_destructor(struc
+ 		sock_put((struct sock *)subflow_req->msk);
+ 
+ 	mptcp_token_destroy_request(req);
+-	tcp_request_sock_ops.destructor(req);
  }
  
-@@ -2105,7 +2105,8 @@ int md_bitmap_resize(struct bitmap *bitm
- 			bytes = DIV_ROUND_UP(chunks, 8);
- 			if (!bitmap->mddev->bitmap_info.external)
- 				bytes += sizeof(bitmap_super_t);
--		} while (bytes > (space << 9));
-+		} while (bytes > (space << 9) && (chunkshift + BITMAP_BLOCK_SHIFT) <
-+			(BITS_PER_BYTE * sizeof(((bitmap_super_t *)0)->chunksize) - 1));
- 	} else
- 		chunkshift = ffz(~chunksize) - BITMAP_BLOCK_SHIFT;
- 
-@@ -2150,7 +2151,7 @@ int md_bitmap_resize(struct bitmap *bitm
- 	bitmap->counts.missing_pages = pages;
- 	bitmap->counts.chunkshift = chunkshift;
- 	bitmap->counts.chunks = chunks;
--	bitmap->mddev->bitmap_info.chunksize = 1 << (chunkshift +
-+	bitmap->mddev->bitmap_info.chunksize = 1UL << (chunkshift +
- 						     BITMAP_BLOCK_SHIFT);
- 
- 	blocks = min(old_counts.chunks << old_counts.chunkshift,
-@@ -2176,8 +2177,8 @@ int md_bitmap_resize(struct bitmap *bitm
- 				bitmap->counts.missing_pages = old_counts.pages;
- 				bitmap->counts.chunkshift = old_counts.chunkshift;
- 				bitmap->counts.chunks = old_counts.chunks;
--				bitmap->mddev->bitmap_info.chunksize = 1 << (old_counts.chunkshift +
--									     BITMAP_BLOCK_SHIFT);
-+				bitmap->mddev->bitmap_info.chunksize =
-+					1UL << (old_counts.chunkshift + BITMAP_BLOCK_SHIFT);
- 				blocks = old_counts.chunks << old_counts.chunkshift;
- 				pr_warn("Could not pre-allocate in-memory bitmap for cluster raid\n");
- 				break;
-@@ -2537,6 +2538,9 @@ chunksize_store(struct mddev *mddev, con
- 	if (csize < 512 ||
- 	    !is_power_of_2(csize))
- 		return -EINVAL;
-+	if (BITS_PER_LONG > 32 && csize >= (1ULL << (BITS_PER_BYTE *
-+		sizeof(((bitmap_super_t *)0)->chunksize))))
-+		return -EOVERFLOW;
- 	mddev->bitmap_info.chunksize = csize;
- 	return len;
+ static void subflow_generate_hmac(u64 key1, u64 key2, u32 nonce1, u32 nonce2,
+@@ -550,6 +549,12 @@ drop:
+ 	return 0;
  }
+ 
++static void subflow_v4_req_destructor(struct request_sock *req)
++{
++	subflow_req_destructor(req);
++	tcp_request_sock_ops.destructor(req);
++}
++
+ #if IS_ENABLED(CONFIG_MPTCP_IPV6)
+ static struct request_sock_ops mptcp_subflow_v6_request_sock_ops __ro_after_init;
+ static struct tcp_request_sock_ops subflow_request_sock_ipv6_ops __ro_after_init;
+@@ -581,6 +586,12 @@ drop:
+ 	tcp_listendrop(sk);
+ 	return 0; /* don't send reset */
+ }
++
++static void subflow_v6_req_destructor(struct request_sock *req)
++{
++	subflow_req_destructor(req);
++	tcp6_request_sock_ops.destructor(req);
++}
+ #endif
+ 
+ struct request_sock *mptcp_subflow_reqsk_alloc(const struct request_sock_ops *ops,
+@@ -1929,8 +1940,6 @@ static int subflow_ops_init(struct reque
+ 	if (!subflow_ops->slab)
+ 		return -ENOMEM;
+ 
+-	subflow_ops->destructor = subflow_req_destructor;
+-
+ 	return 0;
+ }
+ 
+@@ -1938,6 +1947,8 @@ void __init mptcp_subflow_init(void)
+ {
+ 	mptcp_subflow_v4_request_sock_ops = tcp_request_sock_ops;
+ 	mptcp_subflow_v4_request_sock_ops.slab_name = "request_sock_subflow_v4";
++	mptcp_subflow_v4_request_sock_ops.destructor = subflow_v4_req_destructor;
++
+ 	if (subflow_ops_init(&mptcp_subflow_v4_request_sock_ops) != 0)
+ 		panic("MPTCP: failed to init subflow v4 request sock ops\n");
+ 
+@@ -1963,6 +1974,8 @@ void __init mptcp_subflow_init(void)
+ 
+ 	mptcp_subflow_v6_request_sock_ops = tcp6_request_sock_ops;
+ 	mptcp_subflow_v6_request_sock_ops.slab_name = "request_sock_subflow_v6";
++	mptcp_subflow_v6_request_sock_ops.destructor = subflow_v6_req_destructor;
++
+ 	if (subflow_ops_init(&mptcp_subflow_v6_request_sock_ops) != 0)
+ 		panic("MPTCP: failed to init subflow v6 request sock ops\n");
+ 
 
 
