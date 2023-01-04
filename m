@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5500AAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:19:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCE60C433EF;
-	Wed,  4 Jan 2023 16:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765E6AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:19:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF44AC433D2;
+	Wed,  4 Jan 2023 16:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849162;
-	bh=4x9zNj55MCuC4oCyBfGV0ldAKg1d0aX/GpzQV7yNcsM=;
+	s=korg; t=1672849165;
+	bh=O6wiKCupFA3cYumLXNEDZszkyucDIx/CQRmtWJWex/M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IouhJwZJuVXO0zJREiKIumhe9WEFpgQjVRQdBHw5IweJ/yM8HSnlskoyw2c1XUvtx
-	 eoxPvFoiR7u5YBPPTzdkdWNE2mxpoB8OqyWryf2GhAtOfQLSjmFI6LQoY0LbRBYwFi
-	 mXtezg1QYqG2ybjfJPPo+luJIORsdst2AlDXlDnM=
+	b=crrMs5I1e8E1Vk2wpV/erOGdppIOaC8s1WIytME37u3kY5uRXO2IbroHvr3TGCh27
+	 pUYGzTE8If86LrFqLJ7zDKgxtcOe+PnD3zpFCYCTWmrNRJXtEYYqGska/udATvwolR
+	 eAk9Y3Ubhp6gKZ1OZvzEf4UJtsRWyCvNlD3WELsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Macpaul Lin <macpaul.lin@mediatek.com>,
-	Miles Chen <miles.chen@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>
-Subject: [PATCH 6.0 076/177] arm64: dts: mediatek: mt8195-demo: fix the memory size of node secmon
-Date: Wed,  4 Jan 2023 17:06:07 +0100
-Message-Id: <20230104160509.956320358@linuxfoundation.org>
+	Qiang Yu <quic_qianyu@quicinc.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Subject: [PATCH 6.1 136/207] bus: mhi: host: Fix race between channel preparation and M0 event
+Date: Wed,  4 Jan 2023 17:06:34 +0100
+Message-Id: <20230104160516.223569967@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,60 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Macpaul Lin <macpaul.lin@mediatek.com>
+From: Qiang Yu <quic_qianyu@quicinc.com>
 
-commit e4a4175201014c0222f6bab1895a17b3d1b92f08 upstream.
+commit 869a99907faea6d1835b0bd0d0422ae3519c6ea9 upstream.
 
-The size of device tree node secmon (bl31_secmon_reserved) was
-incorrect. It should be increased to 2MiB (0x200000).
+There is a race condition where mhi_prepare_channel() updates the
+read and write pointers as the base address and in parallel, if
+an M0 transition occurs, the tasklet goes ahead and rings
+doorbells for all channels with a delta in TRE rings assuming
+they are already enabled. This causes a null pointer access. Fix
+it by adding a channel enabled check before ringing channel
+doorbells.
 
-The origin setting will cause some abnormal behavior due to
-trusted-firmware-a and related firmware didn't load correctly.
-The incorrect behavior may vary because of different software stacks.
-For example, it will cause build error in some Yocto project because
-it will check if there was enough memory to load trusted-firmware-a
-to the reserved memory.
-
-When mt8195-demo.dts sent to the upstream, at that time the size of
-BL31 was small. Because supported functions and modules in BL31 are
-basic sets when the board was under early development stage.
-
-Now BL31 includes more firmwares of coprocessors and maturer functions
-so the size has grown bigger in real applications. According to the value
-reported by customers, we think reserved 2MiB for BL31 might be enough
-for maybe the following 2 or 3 years.
-
-Cc: stable@vger.kernel.org      # v5.19
-Fixes: 6147314aeedc ("arm64: dts: mediatek: Add device-tree for MT8195 Demo board")
-Signed-off-by: Macpaul Lin <macpaul.lin@mediatek.com>
-Reviewed-by: Miles Chen <miles.chen@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221111095540.28881-1-macpaul.lin@mediatek.com
-Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: stable@vger.kernel.org # 5.19
+Fixes: a6e2e3522f29 "bus: mhi: core: Add support for PM state transitions"
+Signed-off-by: Qiang Yu <quic_qianyu@quicinc.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://lore.kernel.org/r/1665889532-13634-1-git-send-email-quic_qianyu@quicinc.com
+[mani: CCed stable list]
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195-demo.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/bus/mhi/host/pm.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195-demo.dts b/arch/arm64/boot/dts/mediatek/mt8195-demo.dts
-index 4fbd99eb496a..dec85d254838 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195-demo.dts
-+++ b/arch/arm64/boot/dts/mediatek/mt8195-demo.dts
-@@ -56,10 +56,10 @@ reserved-memory {
- 		#size-cells = <2>;
- 		ranges;
+--- a/drivers/bus/mhi/host/pm.c
++++ b/drivers/bus/mhi/host/pm.c
+@@ -301,7 +301,8 @@ int mhi_pm_m0_transition(struct mhi_cont
+ 		read_lock_irq(&mhi_chan->lock);
  
--		/* 192 KiB reserved for ARM Trusted Firmware (BL31) */
-+		/* 2 MiB reserved for ARM Trusted Firmware (BL31) */
- 		bl31_secmon_reserved: secmon@54600000 {
- 			no-map;
--			reg = <0 0x54600000 0x0 0x30000>;
-+			reg = <0 0x54600000 0x0 0x200000>;
- 		};
- 
- 		/* 12 MiB reserved for OP-TEE (BL32)
--- 
-2.39.0
-
+ 		/* Only ring DB if ring is not empty */
+-		if (tre_ring->base && tre_ring->wp  != tre_ring->rp)
++		if (tre_ring->base && tre_ring->wp  != tre_ring->rp &&
++		    mhi_chan->ch_state == MHI_CH_STATE_ENABLED)
+ 			mhi_ring_chan_db(mhi_cntrl, mhi_chan);
+ 		read_unlock_irq(&mhi_chan->lock);
+ 	}
 
 
