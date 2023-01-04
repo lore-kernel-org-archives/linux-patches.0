@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8EF9AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4757BC433EF;
-	Wed,  4 Jan 2023 16:17:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D926FAD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53956C433F1;
+	Wed,  4 Jan 2023 16:18:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849077;
-	bh=aIv8rPttAvRaqF4jQcjIWVmTppUsBhvUmRnG4goKeAo=;
+	s=korg; t=1672849080;
+	bh=B3AGuw5uSyl7t+tCx0IUq8iDtgx1TgdKumSR09duwTI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SlK/CwTLXVKAA6Gc17UtvuCKnKeuP4dnwEmt+sMuwSaDf0CU4vZ3XMNTJXa1QUeyt
-	 Tei3s9nNmq/oYhIs8892WlAC6+sFlHBy5Qn7f5ErTSw/yMdfrbDb78HwckJzgopM3u
-	 9eQF4ZJQRMmvBuUf7ON4F4yAm7D9zyaXAIH3w29Q=
+	b=DrGM4GJHBsH1UgCBgmSRJ57FC2TM0JxuT8C1td98C7L4FjeaiWcc+5m4Lc77rKNQV
+	 yMNuiSWJZHq0ERxpNfINSZiYFUal5nJ+00gpDUTcVfWF9wd3++ibAaqC2mQt2dSsbF
+	 +04JaNRAathOmm67htaGZKPj4M/OSyjR4jg8SEJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	kernel test robot <lkp@intel.com>,
-	Guo Ren <guoren@kernel.org>,
-	Guo Ren <guoren@linux.alibaba.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 129/207] riscv: Fixup compile error with !MMU
-Date: Wed,  4 Jan 2023 17:06:27 +0100
-Message-Id: <20230104160516.010691480@linuxfoundation.org>
+	Eric Li <ercli@ucdavis.edu>,
+	Sean Christopherson <seanjc@google.com>
+Subject: [PATCH 6.0 060/177] KVM: nVMX: Inject #GP, not #UD, if "generic" VMXON CR0/CR4 check fails
+Date: Wed,  4 Jan 2023 17:05:51 +0100
+Message-Id: <20230104160509.467552244@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,47 +34,136 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guo Ren <guoren@linux.alibaba.com>
+From: Sean Christopherson <seanjc@google.com>
 
-commit c528ef0888b75f673f7d48022de8d31d5b451e8c upstream.
+commit 9cc409325ddd776f6fd6293d5ce93ce1248af6e4 upstream.
 
-Current nommu_virt_defconfig can't compile:
+Inject #GP for if VMXON is attempting with a CR0/CR4 that fails the
+generic "is CRx valid" check, but passes the CR4.VMXE check, and do the
+generic checks _after_ handling the post-VMXON VM-Fail.
 
-In file included from
-arch/riscv/kernel/crash_core.c:3:
-arch/riscv/kernel/crash_core.c:
-In function 'arch_crash_save_vmcoreinfo':
-arch/riscv/kernel/crash_core.c:8:27:
-error: 'VA_BITS' undeclared (first use in this function)
-    8 |         VMCOREINFO_NUMBER(VA_BITS);
-      |                           ^~~~~~~
+The CR4.VMXE check, and all other #UD cases, are special pre-conditions
+that are enforced prior to pivoting on the current VMX mode, i.e. occur
+before interception if VMXON is attempted in VMX non-root mode.
 
-Add MMU dependency for KEXEC_FILE.
+All other CR0/CR4 checks generate #GP and effectively have lower priority
+than the post-VMXON check.
 
-Fixes: 6261586e0c91 ("RISC-V: Add kexec_file support")
-Reported-by: Conor Dooley <conor.dooley@microchip.com>
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Guo Ren <guoren@kernel.org>
-Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
-Link: https://lore.kernel.org/r/20221207091112.2258674-1-guoren@kernel.org
+Per the SDM:
+
+    IF (register operand) or (CR0.PE = 0) or (CR4.VMXE = 0) or ...
+        THEN #UD;
+    ELSIF not in VMX operation
+        THEN
+            IF (CPL > 0) or (in A20M mode) or
+            (the values of CR0 and CR4 are not supported in VMX operation)
+                THEN #GP(0);
+    ELSIF in VMX non-root operation
+        THEN VMexit;
+    ELSIF CPL > 0
+        THEN #GP(0);
+    ELSE VMfail("VMXON executed in VMX root operation");
+    FI;
+
+which, if re-written without ELSIF, yields:
+
+    IF (register operand) or (CR0.PE = 0) or (CR4.VMXE = 0) or ...
+        THEN #UD
+
+    IF in VMX non-root operation
+        THEN VMexit;
+
+    IF CPL > 0
+        THEN #GP(0)
+
+    IF in VMX operation
+        THEN VMfail("VMXON executed in VMX root operation");
+
+    IF (in A20M mode) or
+       (the values of CR0 and CR4 are not supported in VMX operation)
+                THEN #GP(0);
+
+Note, KVM unconditionally forwards VMXON VM-Exits that occur in L2 to L1,
+i.e. there is no need to check the vCPU is not in VMX non-root mode.  Add
+a comment to explain why unconditionally forwarding such exits is
+functionally correct.
+
+Reported-by: Eric Li <ercli@ucdavis.edu>
+Fixes: c7d855c2aff2 ("KVM: nVMX: Inject #UD if VMXON is attempted with incompatible CR0/CR4")
 Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/r/20221006001956.329314-1-seanjc@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/Kconfig |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/vmx/nested.c |   44 +++++++++++++++++++++++++++++++++-----------
+ 1 file changed, 33 insertions(+), 11 deletions(-)
 
---- a/arch/riscv/Kconfig
-+++ b/arch/riscv/Kconfig
-@@ -502,7 +502,7 @@ config KEXEC_FILE
- 	select KEXEC_CORE
- 	select KEXEC_ELF
- 	select HAVE_IMA_KEXEC if IMA
--	depends on 64BIT
-+	depends on 64BIT && MMU
- 	help
- 	  This is new version of kexec system call. This system call is
- 	  file based and takes file descriptors as system call argument
+--- a/arch/x86/kvm/vmx/nested.c
++++ b/arch/x86/kvm/vmx/nested.c
+@@ -4953,24 +4953,35 @@ static int handle_vmxon(struct kvm_vcpu
+ 		| FEAT_CTL_VMX_ENABLED_OUTSIDE_SMX;
+ 
+ 	/*
+-	 * Note, KVM cannot rely on hardware to perform the CR0/CR4 #UD checks
+-	 * that have higher priority than VM-Exit (see Intel SDM's pseudocode
+-	 * for VMXON), as KVM must load valid CR0/CR4 values into hardware while
+-	 * running the guest, i.e. KVM needs to check the _guest_ values.
++	 * Manually check CR4.VMXE checks, KVM must force CR4.VMXE=1 to enter
++	 * the guest and so cannot rely on hardware to perform the check,
++	 * which has higher priority than VM-Exit (see Intel SDM's pseudocode
++	 * for VMXON).
+ 	 *
+-	 * Rely on hardware for the other two pre-VM-Exit checks, !VM86 and
+-	 * !COMPATIBILITY modes.  KVM may run the guest in VM86 to emulate Real
+-	 * Mode, but KVM will never take the guest out of those modes.
++	 * Rely on hardware for the other pre-VM-Exit checks, CR0.PE=1, !VM86
++	 * and !COMPATIBILITY modes.  For an unrestricted guest, KVM doesn't
++	 * force any of the relevant guest state.  For a restricted guest, KVM
++	 * does force CR0.PE=1, but only to also force VM86 in order to emulate
++	 * Real Mode, and so there's no need to check CR0.PE manually.
+ 	 */
+-	if (!nested_host_cr0_valid(vcpu, kvm_read_cr0(vcpu)) ||
+-	    !nested_host_cr4_valid(vcpu, kvm_read_cr4(vcpu))) {
++	if (!kvm_read_cr4_bits(vcpu, X86_CR4_VMXE)) {
+ 		kvm_queue_exception(vcpu, UD_VECTOR);
+ 		return 1;
+ 	}
+ 
+ 	/*
+-	 * CPL=0 and all other checks that are lower priority than VM-Exit must
+-	 * be checked manually.
++	 * The CPL is checked for "not in VMX operation" and for "in VMX root",
++	 * and has higher priority than the VM-Fail due to being post-VMXON,
++	 * i.e. VMXON #GPs outside of VMX non-root if CPL!=0.  In VMX non-root,
++	 * VMXON causes VM-Exit and KVM unconditionally forwards VMXON VM-Exits
++	 * from L2 to L1, i.e. there's no need to check for the vCPU being in
++	 * VMX non-root.
++	 *
++	 * Forwarding the VM-Exit unconditionally, i.e. without performing the
++	 * #UD checks (see above), is functionally ok because KVM doesn't allow
++	 * L1 to run L2 without CR4.VMXE=0, and because KVM never modifies L2's
++	 * CR0 or CR4, i.e. it's L2's responsibility to emulate #UDs that are
++	 * missed by hardware due to shadowing CR0 and/or CR4.
+ 	 */
+ 	if (vmx_get_cpl(vcpu)) {
+ 		kvm_inject_gp(vcpu, 0);
+@@ -4980,6 +4991,17 @@ static int handle_vmxon(struct kvm_vcpu
+ 	if (vmx->nested.vmxon)
+ 		return nested_vmx_fail(vcpu, VMXERR_VMXON_IN_VMX_ROOT_OPERATION);
+ 
++	/*
++	 * Invalid CR0/CR4 generates #GP.  These checks are performed if and
++	 * only if the vCPU isn't already in VMX operation, i.e. effectively
++	 * have lower priority than the VM-Fail above.
++	 */
++	if (!nested_host_cr0_valid(vcpu, kvm_read_cr0(vcpu)) ||
++	    !nested_host_cr4_valid(vcpu, kvm_read_cr4(vcpu))) {
++		kvm_inject_gp(vcpu, 0);
++		return 1;
++	}
++
+ 	if ((vmx->msr_ia32_feature_control & VMXON_NEEDED_FEATURES)
+ 			!= VMXON_NEEDED_FEATURES) {
+ 		kvm_inject_gp(vcpu, 0);
 
 
