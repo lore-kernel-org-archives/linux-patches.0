@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB94AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:15:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F84C433EF;
-	Wed,  4 Jan 2023 16:15:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890B4AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:15:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B08C433EF;
+	Wed,  4 Jan 2023 16:15:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848914;
-	bh=r6yvBeFbds1YEWpwfD/9LHlsc+lMwYeCu9F4msfA7Zs=;
+	s=korg; t=1672848917;
+	bh=CQ2dv/B0AOmicQVYC379KnMO1h34F0xUY8aprLNoXfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iXyfio+I8hCwzwXXIUXOkMmTkxkPbJNl8oLCUt+XDlQxNsEC9BV0wsMK/Dhszfgbs
-	 nlrxBNntlz4A4pXF0LMGo0IjjI3kmD1Bdb3+9i/xnBQtKtatM9tchGYmrjaEeWlVZr
-	 jFuZHO9JvPuL809vf2Lujfx9x1F7+GQ1XPIbWp88=
+	b=hicX24br5rOB+ObhaZ5nu5OECjxB+3/kKlgr3/76o1EXTljyf/4p/9lCI+Azbn/Fr
+	 +1Hd7qGIRG0SFejOp3yAES8DThBD5JCbv/iiDy54MhdullRyiQpBfRg5xN8pXStdIt
+	 1rRPb1Td1IS/7Xc6ijMW65Qd2el+fGnSbwYsME7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.0 016/177] phy: qcom-qmp-combo: fix out-of-bounds clock access
-Date: Wed,  4 Jan 2023 17:05:07 +0100
-Message-Id: <20230104160508.149096439@linuxfoundation.org>
+	linux-fsd@tesla.com,
+	Smitha T Murthy <smitha.t@samsung.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 6.0 034/177] media: s5p-mfc: Fix in register read and write for H264
+Date: Wed,  4 Jan 2023 17:05:25 +0100
+Message-Id: <20230104160508.697386116@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -35,41 +35,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Smitha T Murthy <smitha.t@samsung.com>
 
-commit d8a5b59c5fc75c99ba17e3eb1a8f580d8d172b28 upstream.
+commit 06710cd5d2436135046898d7e4b9408c8bb99446 upstream.
 
-The SM8250 only uses three clocks but the DP configuration erroneously
-described four clocks.
+Few of the H264 encoder registers written were not getting reflected
+since the read values were not stored and getting overwritten.
 
-In case the DP part of the PHY is initialised before the USB part, this
-would lead to uninitialised memory beyond the bulk-clocks array to be
-treated as a clock pointer as the clocks are requested based on the USB
-configuration.
+Fixes: 6a9c6f681257 ("[media] s5p-mfc: Add variants to access mfc registers")
 
-Fixes: aff188feb5e1 ("phy: qcom-qmp: add support for sm8250-usb3-dp phy")
-Cc: stable@vger.kernel.org	# 5.13
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20221114081346.5116-2-johan+linaro@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Cc: stable@vger.kernel.org
+Cc: linux-fsd@tesla.com
+Signed-off-by: Smitha T Murthy <smitha.t@samsung.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/platform/samsung/s5p-mfc/s5p_mfc_opr_v6.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -1032,8 +1032,8 @@ static const struct qmp_phy_cfg sm8250_d
- 	.serdes_tbl_hbr3	= qmp_v4_dp_serdes_tbl_hbr3,
- 	.serdes_tbl_hbr3_num	= ARRAY_SIZE(qmp_v4_dp_serdes_tbl_hbr3),
+--- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_opr_v6.c
++++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_opr_v6.c
+@@ -1060,7 +1060,7 @@ static int s5p_mfc_set_enc_params_h264(s
+ 	}
  
--	.clk_list		= qmp_v4_phy_clk_l,
--	.num_clks		= ARRAY_SIZE(qmp_v4_phy_clk_l),
-+	.clk_list		= qmp_v4_sm8250_usbphy_clk_l,
-+	.num_clks		= ARRAY_SIZE(qmp_v4_sm8250_usbphy_clk_l),
- 	.reset_list		= msm8996_usb3phy_reset_l,
- 	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
+ 	/* aspect ratio VUI */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 5);
+ 	reg |= ((p_h264->vui_sar & 0x1) << 5);
+ 	writel(reg, mfc_regs->e_h264_options);
+@@ -1083,7 +1083,7 @@ static int s5p_mfc_set_enc_params_h264(s
+ 
+ 	/* intra picture period for H.264 open GOP */
+ 	/* control */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 4);
+ 	reg |= ((p_h264->open_gop & 0x1) << 4);
+ 	writel(reg, mfc_regs->e_h264_options);
+@@ -1097,23 +1097,23 @@ static int s5p_mfc_set_enc_params_h264(s
+ 	}
+ 
+ 	/* 'WEIGHTED_BI_PREDICTION' for B is disable */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x3 << 9);
+ 	writel(reg, mfc_regs->e_h264_options);
+ 
+ 	/* 'CONSTRAINED_INTRA_PRED_ENABLE' is disable */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 14);
+ 	writel(reg, mfc_regs->e_h264_options);
+ 
+ 	/* ASO */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 6);
+ 	reg |= ((p_h264->aso & 0x1) << 6);
+ 	writel(reg, mfc_regs->e_h264_options);
+ 
+ 	/* hier qp enable */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 8);
+ 	reg |= ((p_h264->open_gop & 0x1) << 8);
+ 	writel(reg, mfc_regs->e_h264_options);
+@@ -1134,7 +1134,7 @@ static int s5p_mfc_set_enc_params_h264(s
+ 	writel(reg, mfc_regs->e_h264_num_t_layer);
+ 
+ 	/* frame packing SEI generation */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 25);
+ 	reg |= ((p_h264->sei_frame_packing & 0x1) << 25);
+ 	writel(reg, mfc_regs->e_h264_options);
 
 
