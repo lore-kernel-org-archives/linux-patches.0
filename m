@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA8BAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:21:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8A32C433EF;
-	Wed,  4 Jan 2023 16:21:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583D2AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9C8BC433EF;
+	Wed,  4 Jan 2023 16:22:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849319;
-	bh=wiAIjIg6fyEs03sUJS9d08v2ut1gRznqaNxm/J16Kq8=;
+	s=korg; t=1672849322;
+	bh=v5XiEtDxwyasmqQJ9siHlmK2qqmLaQFwWIlnYW3zvCc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hZ9ffdrzttkO/vaCHCN8rdeq7p3fj1tBt4a04pTZgRybqLDlxIVpKTOzJPBup/zIX
-	 Ka1jH54M6kzwwSer22U7r7UoAnw3BU2QF5axXM3UQryEYvNuP590twekx4rFWUtlzs
-	 CIcFP4srW34hLdk5gKerns302m+CRGeR6TPa5JRQ=
+	b=SQ2yiDI9ipf/SxyR+yfyHKknMhMc/uNe4iNMAx3z1CLG/1uY2wLrp1myho5md+S56
+	 9ev4QxiAG8PxfsLlzrGWGTiEQhVCN8YIqSaQOmfF5OLp55QrQe3wBd++6l3wt7gJgX
+	 2o37anVSnG7QiCGEBWJgBM7/FWn0t8ZrVOddTTeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Zhang Yi <yi.zhang@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Jason Yan <yanaijie@huawei.com>,
 	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.1 161/207] ext4: silence the warning when evicting inode with dioread_nolock
-Date: Wed,  4 Jan 2023 17:06:59 +0100
-Message-Id: <20230104160516.990584588@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.1 170/207] ext4: fix bug_on in __es_tree_search caused by bad quota inode
+Date: Wed,  4 Jan 2023 17:07:08 +0100
+Message-Id: <20230104160517.267072225@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
 References: <20230104160511.905925875@linuxfoundation.org>
@@ -36,93 +38,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yi <yi.zhang@huawei.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit bc12ac98ea2e1b70adc6478c8b473a0003b659d3 upstream.
+commit d323877484765aaacbb2769b06e355c2041ed115 upstream.
 
-When evicting an inode with default dioread_nolock, it could be raced by
-the unwritten extents converting kworker after writeback some new
-allocated dirty blocks. It convert unwritten extents to written, the
-extents could be merged to upper level and free extent blocks, so it
-could mark the inode dirty again even this inode has been marked
-I_FREEING. But the inode->i_io_list check and warning in
-ext4_evict_inode() missing this corner case. Fortunately,
-ext4_evict_inode() will wait all extents converting finished before this
-check, so it will not lead to inode use-after-free problem, every thing
-is OK besides this warning. The WARN_ON_ONCE was originally designed
-for finding inode use-after-free issues in advance, but if we add
-current dioread_nolock case in, it will become not quite useful, so fix
-this warning by just remove this check.
-
- ======
- WARNING: CPU: 7 PID: 1092 at fs/ext4/inode.c:227
- ext4_evict_inode+0x875/0xc60
- ...
- RIP: 0010:ext4_evict_inode+0x875/0xc60
- ...
+We got a issue as fllows:
+==================================================================
+ kernel BUG at fs/ext4/extents_status.c:202!
+ invalid opcode: 0000 [#1] PREEMPT SMP
+ CPU: 1 PID: 810 Comm: mount Not tainted 6.1.0-rc1-next-g9631525255e3 #352
+ RIP: 0010:__es_tree_search.isra.0+0xb8/0xe0
+ RSP: 0018:ffffc90001227900 EFLAGS: 00010202
+ RAX: 0000000000000000 RBX: 0000000077512a0f RCX: 0000000000000000
+ RDX: 0000000000000002 RSI: 0000000000002a10 RDI: ffff8881004cd0c8
+ RBP: ffff888177512ac8 R08: 47ffffffffffffff R09: 0000000000000001
+ R10: 0000000000000001 R11: 00000000000679af R12: 0000000000002a10
+ R13: ffff888177512d88 R14: 0000000077512a10 R15: 0000000000000000
+ FS: 00007f4bd76dbc40(0000)GS:ffff88842fd00000(0000)knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 00005653bf993cf8 CR3: 000000017bfdf000 CR4: 00000000000006e0
+ DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+ DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
  Call Trace:
   <TASK>
-  evict+0x11c/0x2b0
-  iput+0x236/0x3a0
-  do_unlinkat+0x1b4/0x490
-  __x64_sys_unlinkat+0x4c/0xb0
-  do_syscall_64+0x3b/0x90
-  entry_SYSCALL_64_after_hwframe+0x46/0xb0
- RIP: 0033:0x7fa933c1115b
- ======
+  ext4_es_cache_extent+0xe2/0x210
+  ext4_cache_extents+0xd2/0x110
+  ext4_find_extent+0x5d5/0x8c0
+  ext4_ext_map_blocks+0x9c/0x1d30
+  ext4_map_blocks+0x431/0xa50
+  ext4_getblk+0x82/0x340
+  ext4_bread+0x14/0x110
+  ext4_quota_read+0xf0/0x180
+  v2_read_header+0x24/0x90
+  v2_check_quota_file+0x2f/0xa0
+  dquot_load_quota_sb+0x26c/0x760
+  dquot_load_quota_inode+0xa5/0x190
+  ext4_enable_quotas+0x14c/0x300
+  __ext4_fill_super+0x31cc/0x32c0
+  ext4_fill_super+0x115/0x2d0
+  get_tree_bdev+0x1d2/0x360
+  ext4_get_tree+0x19/0x30
+  vfs_get_tree+0x26/0xe0
+  path_mount+0x81d/0xfc0
+  do_mount+0x8d/0xc0
+  __x64_sys_mount+0xc0/0x160
+  do_syscall_64+0x35/0x80
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  </TASK>
+==================================================================
 
-rm                          kworker
-                            ext4_end_io_end()
-vfs_unlink()
- ext4_unlink()
-                             ext4_convert_unwritten_io_end_vec()
-                              ext4_convert_unwritten_extents()
-                               ext4_map_blocks()
-                                ext4_ext_map_blocks()
-                                 ext4_ext_try_to_merge_up()
-                                  __mark_inode_dirty()
-                                   check !I_FREEING
-                                   locked_inode_to_wb_and_lock_list()
- iput()
-  iput_final()
-   evict()
-    ext4_evict_inode()
-     truncate_inode_pages_final() //wait release io_end
-                                    inode_io_list_move_locked()
-                             ext4_release_io_end()
-     trigger WARN_ON_ONCE()
+Above issue may happen as follows:
+-------------------------------------
+ext4_fill_super
+ ext4_orphan_cleanup
+  ext4_enable_quotas
+   ext4_quota_enable
+    ext4_iget --> get error inode <5>
+     ext4_ext_check_inode --> Wrong imode makes it escape inspection
+     make_bad_inode(inode) --> EXT4_BOOT_LOADER_INO set imode
+    dquot_load_quota_inode
+     vfs_setup_quota_inode --> check pass
+     dquot_load_quota_sb
+      v2_check_quota_file
+       v2_read_header
+        ext4_quota_read
+         ext4_bread
+          ext4_getblk
+           ext4_map_blocks
+            ext4_ext_map_blocks
+             ext4_find_extent
+              ext4_cache_extents
+               ext4_es_cache_extent
+                __es_tree_search.isra.0
+                 ext4_es_end --> Wrong extents trigger BUG_ON
 
-Cc: stable@kernel.org
-Fixes: ceff86fddae8 ("ext4: Avoid freeing inodes on dirty list")
-Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+In the above issue, s_usr_quota_inum is set to 5, but inode<5> contains
+incorrect imode and disordered extents. Because 5 is EXT4_BOOT_LOADER_INO,
+the ext4_ext_check_inode check in the ext4_iget function can be bypassed,
+finally, the extents that are not checked trigger the BUG_ON in the
+__es_tree_search function. To solve this issue, check whether the inode is
+bad_inode in vfs_setup_quota_inode().
+
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Jason Yan <yanaijie@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20220629112647.4141034-1-yi.zhang@huawei.com
+Link: https://lore.kernel.org/r/20221026042310.3839669-2-libaokun1@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ fs/quota/dquot.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -222,13 +222,13 @@ void ext4_evict_inode(struct inode *inod
+--- a/fs/quota/dquot.c
++++ b/fs/quota/dquot.c
+@@ -2324,6 +2324,8 @@ static int vfs_setup_quota_inode(struct
+ 	struct super_block *sb = inode->i_sb;
+ 	struct quota_info *dqopt = sb_dqopt(sb);
  
- 	/*
- 	 * For inodes with journalled data, transaction commit could have
--	 * dirtied the inode. Flush worker is ignoring it because of I_FREEING
--	 * flag but we still need to remove the inode from the writeback lists.
-+	 * dirtied the inode. And for inodes with dioread_nolock, unwritten
-+	 * extents converting worker could merge extents and also have dirtied
-+	 * the inode. Flush worker is ignoring it because of I_FREEING flag but
-+	 * we still need to remove the inode from the writeback lists.
- 	 */
--	if (!list_empty_careful(&inode->i_io_list)) {
--		WARN_ON_ONCE(!ext4_should_journal_data(inode));
-+	if (!list_empty_careful(&inode->i_io_list))
- 		inode_io_list_del(inode);
--	}
- 
- 	/*
- 	 * Protect us against freezing - iput() caller didn't have to have any
++	if (is_bad_inode(inode))
++		return -EUCLEAN;
+ 	if (!S_ISREG(inode->i_mode))
+ 		return -EACCES;
+ 	if (IS_RDONLY(inode))
 
 
