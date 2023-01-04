@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDE8AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9C8C433EF;
-	Wed,  4 Jan 2023 16:20:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF213AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 472CEC433D2;
+	Wed,  4 Jan 2023 16:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849240;
-	bh=EV5fyugVb4Hrhhura0t+d/w8dUF7LHNL+DIqthJzKEo=;
+	s=korg; t=1672849243;
+	bh=PvaCj3owL+92YPNXzW/5fYNFlyDOCueZa/eCuRjmF14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=of889iUjRpfC8VP51ePLWXesPrdLMxZbsM0ZkYQ3b+yn2bRPETyek412NLZzukomv
-	 THjjVfuBq9O9dSj9T1ku8VY/uWq9v9Tr6ndt+jT3TWfCnNXU0eYrrFhUJP9xnukl7R
-	 RqcvxeCP9pSqcwLh3q06CrLWP+4EcRpVW5Vw7tcQ=
+	b=ZQtmRLpj/Z+M7DKKUoTRTOmeELDDOjVdla90IUAAVOfuBM0V/DzTy/fk0hq2snlzx
+	 rIxyqq8vcrXDAIRMuIWsNCegTA3qIcA2dPkQb9tWGEwBUO6Mxffyv5xHw4Q6Xcz+k/
+	 O1GZ6SEKO+17Vb2ni14fc6hG3vR2uZ5vuHAF/yeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Stach <l.stach@pengutronix.de>,
-	=?UTF-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>
-Subject: [PATCH 6.1 156/207] drm/etnaviv: move idle mapping reaping into separate function
-Date: Wed,  4 Jan 2023 17:06:54 +0100
-Message-Id: <20230104160516.837706350@linuxfoundation.org>
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.0 088/177] block: mq-deadline: Fix dd_finish_request() for zoned devices
+Date: Wed,  4 Jan 2023 17:06:19 +0100
+Message-Id: <20230104160510.310365867@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,78 +35,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-commit 5a40837debaa9dcc71765d32ce1a15be068b6cc2 upstream.
+commit 2820e5d0820ac4daedff1272616a53d9c7682fd2 upstream.
 
-The same logic is already used in two different places and now
-it will also be needed outside of the compilation unit, so split
-it into a separate function.
+dd_finish_request() tests if the per prio fifo_list is not empty to
+determine if request dispatching must be restarted for handling blocked
+write requests to zoned devices with a call to
+blk_mq_sched_mark_restart_hctx(). While simple, this implementation has
+2 problems:
 
-Cc: stable@vger.kernel.org # 5.19
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Reviewed-by: Guido Günther <agx@sigxcpu.org>
+1) Only the priority level of the completed request is considered.
+   However, writes to a zone may be blocked due to other writes to the
+   same zone using a different priority level. While this is unlikely to
+   happen in practice, as writing a zone with different IO priorirites
+   does not make sense, nothing in the code prevents this from
+   happening.
+2) The use of list_empty() is dangerous as dd_finish_request() does not
+   take dd->lock and may run concurrently with the insert and dispatch
+   code.
+
+Fix these 2 problems by testing the write fifo list of all priority
+levels using the new helper dd_has_write_work(), and by testing each
+fifo list using list_empty_careful().
+
+Fixes: c807ab520fc3 ("block/mq-deadline: Add I/O priority support")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Link: https://lore.kernel.org/r/20221124021208.242541-2-damien.lemoal@opensource.wdc.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_mmu.c |   23 +++++++++++++++--------
- drivers/gpu/drm/etnaviv/etnaviv_mmu.h |    1 +
- 2 files changed, 16 insertions(+), 8 deletions(-)
+ block/mq-deadline.c |   17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/etnaviv/etnaviv_mmu.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_mmu.c
-@@ -135,6 +135,19 @@ static void etnaviv_iommu_remove_mapping
- 	drm_mm_remove_node(&mapping->vram_node);
+--- a/block/mq-deadline.c
++++ b/block/mq-deadline.c
+@@ -789,6 +789,18 @@ static void dd_prepare_request(struct re
+ 	rq->elv.priv[0] = NULL;
  }
  
-+void etnaviv_iommu_reap_mapping(struct etnaviv_vram_mapping *mapping)
++static bool dd_has_write_work(struct blk_mq_hw_ctx *hctx)
 +{
-+	struct etnaviv_iommu_context *context = mapping->context;
++	struct deadline_data *dd = hctx->queue->elevator->elevator_data;
++	enum dd_prio p;
 +
-+	lockdep_assert_held(&context->lock);
-+	WARN_ON(mapping->use);
++	for (p = 0; p <= DD_PRIO_MAX; p++)
++		if (!list_empty_careful(&dd->per_prio[p].fifo_list[DD_WRITE]))
++			return true;
 +
-+	etnaviv_iommu_remove_mapping(context, mapping);
-+	etnaviv_iommu_context_put(mapping->context);
-+	mapping->context = NULL;
-+	list_del_init(&mapping->mmu_node);
++	return false;
 +}
 +
- static int etnaviv_iommu_find_iova(struct etnaviv_iommu_context *context,
- 				   struct drm_mm_node *node, size_t size)
- {
-@@ -202,10 +215,7 @@ static int etnaviv_iommu_find_iova(struc
- 		 * this mapping.
- 		 */
- 		list_for_each_entry_safe(m, n, &list, scan_node) {
--			etnaviv_iommu_remove_mapping(context, m);
--			etnaviv_iommu_context_put(m->context);
--			m->context = NULL;
--			list_del_init(&m->mmu_node);
-+			etnaviv_iommu_reap_mapping(m);
- 			list_del_init(&m->scan_node);
- 		}
+ /*
+  * Callback from inside blk_mq_free_request().
+  *
+@@ -828,9 +840,10 @@ static void dd_finish_request(struct req
  
-@@ -257,10 +267,7 @@ static int etnaviv_iommu_insert_exact(st
+ 		spin_lock_irqsave(&dd->zone_lock, flags);
+ 		blk_req_zone_write_unlock(rq);
+-		if (!list_empty(&per_prio->fifo_list[DD_WRITE]))
+-			blk_mq_sched_mark_restart_hctx(rq->mq_hctx);
+ 		spin_unlock_irqrestore(&dd->zone_lock, flags);
++
++		if (dd_has_write_work(rq->mq_hctx))
++			blk_mq_sched_mark_restart_hctx(rq->mq_hctx);
  	}
+ }
  
- 	list_for_each_entry_safe(m, n, &scan_list, scan_node) {
--		etnaviv_iommu_remove_mapping(context, m);
--		etnaviv_iommu_context_put(m->context);
--		m->context = NULL;
--		list_del_init(&m->mmu_node);
-+		etnaviv_iommu_reap_mapping(m);
- 		list_del_init(&m->scan_node);
- 	}
- 
---- a/drivers/gpu/drm/etnaviv/etnaviv_mmu.h
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_mmu.h
-@@ -91,6 +91,7 @@ int etnaviv_iommu_map_gem(struct etnaviv
- 	struct etnaviv_vram_mapping *mapping, u64 va);
- void etnaviv_iommu_unmap_gem(struct etnaviv_iommu_context *context,
- 	struct etnaviv_vram_mapping *mapping);
-+void etnaviv_iommu_reap_mapping(struct etnaviv_vram_mapping *mapping);
- 
- int etnaviv_iommu_get_suballoc_va(struct etnaviv_iommu_context *ctx,
- 				  struct etnaviv_vram_mapping *mapping,
 
 
