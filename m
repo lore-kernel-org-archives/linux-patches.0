@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973CFAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE533C433D2;
-	Wed,  4 Jan 2023 16:22:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84718AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03199C433D2;
+	Wed,  4 Jan 2023 16:22:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849358;
-	bh=PMpMR5JSznT+4xtw8NubllbAt3S06TaPv2TpR67ZZmA=;
+	s=korg; t=1672849361;
+	bh=28pcgS0PYSiuiZoLBQFT3pTS7vVrcWvixg6tXZPZdcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mr71/FB43SJa1ZkQThMKX5M5tSnh3DjP3sw8QUEvY1TTUiq6q4IOuuZKDC+CT43CZ
-	 RznFYnKG+zp2zNODKTqV6mBGMK3Z1A2mbTGZtZih1jrEmtLAbQcJKiJL+IJizYohfR
-	 vz1ETnisHXanF9GvaxDhRoROS9A2fAdpDV/dCnjk=
+	b=jiEPZzx6OH1Iau5ZcIM9Pfzxtav4we8tJRbINiLilrrvQVX6KHn1fuNVAMuVXpvex
+	 TOJOZeWt0sQbl06nonIX2fldqYwavnD9BvFsVAo5FYTUw1eBpLYLvu8vd4Ac2isBSv
+	 HH82Liw6d1ICPqPDk+0t2aGPmjcIKi6ej/3614RA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Matyukevich <sergey.matyukevich@syntacore.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.0 108/177] riscv: mm: notify remote harts about mmu cache updates
-Date: Wed,  4 Jan 2023 17:06:39 +0100
-Message-Id: <20230104160510.915662417@linuxfoundation.org>
+	Eric Biggers <ebiggers@google.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 176/207] ext4: disable fast-commit of encrypted dir operations
+Date: Wed,  4 Jan 2023 17:07:14 +0100
+Message-Id: <20230104160517.445026579@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,161 +34,151 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit 4bd1d80efb5af640f99157f39b50fb11326ce641 upstream.
+commit 0fbcb5251fc81b58969b272c4fb7374a7b922e3e upstream.
 
-Current implementation of update_mmu_cache function performs local TLB
-flush. It does not take into account ASID information. Besides, it does
-not take into account other harts currently running the same mm context
-or possible migration of the running context to other harts. Meanwhile
-TLB flush is not performed for every context switch if ASID support
-is enabled.
+fast-commit of create, link, and unlink operations in encrypted
+directories is completely broken because the unencrypted filenames are
+being written to the fast-commit journal instead of the encrypted
+filenames.  These operations can't be replayed, as encryption keys
+aren't present at journal replay time.  It is also an information leak.
 
-Patch [1] proposed to add ASID support to update_mmu_cache to avoid
-flushing local TLB entirely. This patch takes into account other
-harts currently running the same mm context as well as possible
-migration of this context to other harts.
+Until if/when we can get this working properly, make encrypted directory
+operations ineligible for fast-commit.
 
-For this purpose the approach from flush_icache_mm is reused. Remote
-harts currently running the same mm context are informed via SBI calls
-that they need to flush their local TLBs. All the other harts are marked
-as needing a deferred TLB flush when this mm context runs on them.
+Note that fast-commit operations on encrypted regular files continue to
+be allowed, as they seem to work.
 
-[1] https://lore.kernel.org/linux-riscv/20220821013926.8968-1-tjytimi@163.com/
-
-Signed-off-by: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
-Fixes: 65d4b9c53017 ("RISC-V: Implement ASID allocator")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-riscv/20220829205219.283543-1-geomatsi@gmail.com/#t
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: aa75f4d3daae ("ext4: main fast-commit commit path")
+Cc: <stable@vger.kernel.org> # v5.10+
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20221106224841.279231-2-ebiggers@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/mmu.h      |    2 ++
- arch/riscv/include/asm/pgtable.h  |    2 +-
- arch/riscv/include/asm/tlbflush.h |   18 ++++++++++++++++++
- arch/riscv/mm/context.c           |   10 ++++++++++
- arch/riscv/mm/tlbflush.c          |   28 +++++++++++-----------------
- 5 files changed, 42 insertions(+), 18 deletions(-)
+ fs/ext4/fast_commit.c       |   41 +++++++++++++++++++++++++----------------
+ fs/ext4/fast_commit.h       |    1 +
+ include/trace/events/ext4.h |    7 +++++--
+ 3 files changed, 31 insertions(+), 18 deletions(-)
 
---- a/arch/riscv/include/asm/mmu.h
-+++ b/arch/riscv/include/asm/mmu.h
-@@ -19,6 +19,8 @@ typedef struct {
- #ifdef CONFIG_SMP
- 	/* A local icache flush is needed before user execution can resume. */
- 	cpumask_t icache_stale_mask;
-+	/* A local tlb flush is needed before user execution can resume. */
-+	cpumask_t tlb_stale_mask;
- #endif
- } mm_context_t;
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -420,25 +420,34 @@ static int __track_dentry_update(struct
+ 	struct __track_dentry_update_args *dentry_update =
+ 		(struct __track_dentry_update_args *)arg;
+ 	struct dentry *dentry = dentry_update->dentry;
+-	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
++	struct inode *dir = dentry->d_parent->d_inode;
++	struct super_block *sb = inode->i_sb;
++	struct ext4_sb_info *sbi = EXT4_SB(sb);
  
---- a/arch/riscv/include/asm/pgtable.h
-+++ b/arch/riscv/include/asm/pgtable.h
-@@ -415,7 +415,7 @@ static inline void update_mmu_cache(stru
- 	 * Relying on flush_tlb_fix_spurious_fault would suffice, but
- 	 * the extra traps reduce performance.  So, eagerly SFENCE.VMA.
- 	 */
--	local_flush_tlb_page(address);
-+	flush_tlb_page(vma, address);
- }
- 
- static inline void update_mmu_cache_pmd(struct vm_area_struct *vma,
---- a/arch/riscv/include/asm/tlbflush.h
-+++ b/arch/riscv/include/asm/tlbflush.h
-@@ -22,6 +22,24 @@ static inline void local_flush_tlb_page(
- {
- 	ALT_FLUSH_TLB_PAGE(__asm__ __volatile__ ("sfence.vma %0" : : "r" (addr) : "memory"));
- }
+ 	mutex_unlock(&ei->i_fc_lock);
 +
-+static inline void local_flush_tlb_all_asid(unsigned long asid)
-+{
-+	__asm__ __volatile__ ("sfence.vma x0, %0"
-+			:
-+			: "r" (asid)
-+			: "memory");
-+}
-+
-+static inline void local_flush_tlb_page_asid(unsigned long addr,
-+		unsigned long asid)
-+{
-+	__asm__ __volatile__ ("sfence.vma %0, %1"
-+			:
-+			: "r" (addr), "r" (asid)
-+			: "memory");
-+}
-+
- #else /* CONFIG_MMU */
- #define local_flush_tlb_all()			do { } while (0)
- #define local_flush_tlb_page(addr)		do { } while (0)
---- a/arch/riscv/mm/context.c
-+++ b/arch/riscv/mm/context.c
-@@ -196,6 +196,16 @@ switch_mm_fast:
- 
- 	if (need_flush_tlb)
- 		local_flush_tlb_all();
-+#ifdef CONFIG_SMP
-+	else {
-+		cpumask_t *mask = &mm->context.tlb_stale_mask;
-+
-+		if (cpumask_test_cpu(cpu, mask)) {
-+			cpumask_clear_cpu(cpu, mask);
-+			local_flush_tlb_all_asid(cntx & asid_mask);
-+		}
++	if (IS_ENCRYPTED(dir)) {
++		ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_ENCRYPTED_FILENAME,
++					NULL);
++		mutex_lock(&ei->i_fc_lock);
++		return -EOPNOTSUPP;
 +	}
-+#endif
++
+ 	node = kmem_cache_alloc(ext4_fc_dentry_cachep, GFP_NOFS);
+ 	if (!node) {
+-		ext4_fc_mark_ineligible(inode->i_sb, EXT4_FC_REASON_NOMEM, NULL);
++		ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_NOMEM, NULL);
+ 		mutex_lock(&ei->i_fc_lock);
+ 		return -ENOMEM;
+ 	}
+ 
+ 	node->fcd_op = dentry_update->op;
+-	node->fcd_parent = dentry->d_parent->d_inode->i_ino;
++	node->fcd_parent = dir->i_ino;
+ 	node->fcd_ino = inode->i_ino;
+ 	if (dentry->d_name.len > DNAME_INLINE_LEN) {
+ 		node->fcd_name.name = kmalloc(dentry->d_name.len, GFP_NOFS);
+ 		if (!node->fcd_name.name) {
+ 			kmem_cache_free(ext4_fc_dentry_cachep, node);
+-			ext4_fc_mark_ineligible(inode->i_sb,
+-				EXT4_FC_REASON_NOMEM, NULL);
++			ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_NOMEM, NULL);
+ 			mutex_lock(&ei->i_fc_lock);
+ 			return -ENOMEM;
+ 		}
+@@ -2249,17 +2258,17 @@ void ext4_fc_init(struct super_block *sb
+ 	journal->j_fc_cleanup_callback = ext4_fc_cleanup;
  }
  
- static void set_mm_noasid(struct mm_struct *mm)
---- a/arch/riscv/mm/tlbflush.c
-+++ b/arch/riscv/mm/tlbflush.c
-@@ -5,23 +5,7 @@
- #include <linux/sched.h>
- #include <asm/sbi.h>
- #include <asm/mmu_context.h>
--
--static inline void local_flush_tlb_all_asid(unsigned long asid)
--{
--	__asm__ __volatile__ ("sfence.vma x0, %0"
--			:
--			: "r" (asid)
--			: "memory");
--}
--
--static inline void local_flush_tlb_page_asid(unsigned long addr,
--		unsigned long asid)
--{
--	__asm__ __volatile__ ("sfence.vma %0, %1"
--			:
--			: "r" (addr), "r" (asid)
--			: "memory");
--}
-+#include <asm/tlbflush.h>
+-static const char *fc_ineligible_reasons[] = {
+-	"Extended attributes changed",
+-	"Cross rename",
+-	"Journal flag changed",
+-	"Insufficient memory",
+-	"Swap boot",
+-	"Resize",
+-	"Dir renamed",
+-	"Falloc range op",
+-	"Data journalling",
+-	"FC Commit Failed"
++static const char * const fc_ineligible_reasons[] = {
++	[EXT4_FC_REASON_XATTR] = "Extended attributes changed",
++	[EXT4_FC_REASON_CROSS_RENAME] = "Cross rename",
++	[EXT4_FC_REASON_JOURNAL_FLAG_CHANGE] = "Journal flag changed",
++	[EXT4_FC_REASON_NOMEM] = "Insufficient memory",
++	[EXT4_FC_REASON_SWAP_BOOT] = "Swap boot",
++	[EXT4_FC_REASON_RESIZE] = "Resize",
++	[EXT4_FC_REASON_RENAME_DIR] = "Dir renamed",
++	[EXT4_FC_REASON_FALLOC_RANGE] = "Falloc range op",
++	[EXT4_FC_REASON_INODE_JOURNAL_DATA] = "Data journalling",
++	[EXT4_FC_REASON_ENCRYPTED_FILENAME] = "Encrypted filename",
+ };
  
- void flush_tlb_all(void)
- {
-@@ -31,6 +15,7 @@ void flush_tlb_all(void)
- static void __sbi_tlb_flush_range(struct mm_struct *mm, unsigned long start,
- 				  unsigned long size, unsigned long stride)
- {
-+	struct cpumask *pmask = &mm->context.tlb_stale_mask;
- 	struct cpumask *cmask = mm_cpumask(mm);
- 	unsigned int cpuid;
- 	bool broadcast;
-@@ -44,6 +29,15 @@ static void __sbi_tlb_flush_range(struct
- 	if (static_branch_unlikely(&use_asid_allocator)) {
- 		unsigned long asid = atomic_long_read(&mm->context.id);
+ int ext4_fc_info_show(struct seq_file *seq, void *v)
+--- a/fs/ext4/fast_commit.h
++++ b/fs/ext4/fast_commit.h
+@@ -96,6 +96,7 @@ enum {
+ 	EXT4_FC_REASON_RENAME_DIR,
+ 	EXT4_FC_REASON_FALLOC_RANGE,
+ 	EXT4_FC_REASON_INODE_JOURNAL_DATA,
++	EXT4_FC_REASON_ENCRYPTED_FILENAME,
+ 	EXT4_FC_REASON_MAX
+ };
  
-+		/*
-+		 * TLB will be immediately flushed on harts concurrently
-+		 * executing this MM context. TLB flush on other harts
-+		 * is deferred until this MM context migrates there.
-+		 */
-+		cpumask_setall(pmask);
-+		cpumask_clear_cpu(cpuid, pmask);
-+		cpumask_andnot(pmask, pmask, cmask);
-+
- 		if (broadcast) {
- 			sbi_remote_sfence_vma_asid(cmask, start, size, asid);
- 		} else if (size <= stride) {
+--- a/include/trace/events/ext4.h
++++ b/include/trace/events/ext4.h
+@@ -104,6 +104,7 @@ TRACE_DEFINE_ENUM(EXT4_FC_REASON_RESIZE)
+ TRACE_DEFINE_ENUM(EXT4_FC_REASON_RENAME_DIR);
+ TRACE_DEFINE_ENUM(EXT4_FC_REASON_FALLOC_RANGE);
+ TRACE_DEFINE_ENUM(EXT4_FC_REASON_INODE_JOURNAL_DATA);
++TRACE_DEFINE_ENUM(EXT4_FC_REASON_ENCRYPTED_FILENAME);
+ TRACE_DEFINE_ENUM(EXT4_FC_REASON_MAX);
+ 
+ #define show_fc_reason(reason)						\
+@@ -116,7 +117,8 @@ TRACE_DEFINE_ENUM(EXT4_FC_REASON_MAX);
+ 		{ EXT4_FC_REASON_RESIZE,	"RESIZE"},		\
+ 		{ EXT4_FC_REASON_RENAME_DIR,	"RENAME_DIR"},		\
+ 		{ EXT4_FC_REASON_FALLOC_RANGE,	"FALLOC_RANGE"},	\
+-		{ EXT4_FC_REASON_INODE_JOURNAL_DATA,	"INODE_JOURNAL_DATA"})
++		{ EXT4_FC_REASON_INODE_JOURNAL_DATA,	"INODE_JOURNAL_DATA"}, \
++		{ EXT4_FC_REASON_ENCRYPTED_FILENAME,	"ENCRYPTED_FILENAME"})
+ 
+ TRACE_EVENT(ext4_other_inode_update_time,
+ 	TP_PROTO(struct inode *inode, ino_t orig_ino),
+@@ -2764,7 +2766,7 @@ TRACE_EVENT(ext4_fc_stats,
+ 	),
+ 
+ 	TP_printk("dev %d,%d fc ineligible reasons:\n"
+-		  "%s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u "
++		  "%s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u"
+ 		  "num_commits:%lu, ineligible: %lu, numblks: %lu",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev),
+ 		  FC_REASON_NAME_STAT(EXT4_FC_REASON_XATTR),
+@@ -2776,6 +2778,7 @@ TRACE_EVENT(ext4_fc_stats,
+ 		  FC_REASON_NAME_STAT(EXT4_FC_REASON_RENAME_DIR),
+ 		  FC_REASON_NAME_STAT(EXT4_FC_REASON_FALLOC_RANGE),
+ 		  FC_REASON_NAME_STAT(EXT4_FC_REASON_INODE_JOURNAL_DATA),
++		  FC_REASON_NAME_STAT(EXT4_FC_REASON_ENCRYPTED_FILENAME),
+ 		  __entry->fc_commits, __entry->fc_ineligible_commits,
+ 		  __entry->fc_numblks)
+ );
 
 
