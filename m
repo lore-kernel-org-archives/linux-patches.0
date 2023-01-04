@@ -1,30 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED220AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:24:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A0C0C433EF;
-	Wed,  4 Jan 2023 16:24:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8875AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:24:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48838C433D2;
+	Wed,  4 Jan 2023 16:24:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849458;
-	bh=4va3wUPT7zPa6x4wl2Tqwhgq8MSGnS3eFl2QX7utxqM=;
+	s=korg; t=1672849461;
+	bh=+ky/T4rRKQ6CMcI+XRS4OfAEZaD6uWMt99Y/01oJ3NE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EBk6UHZeTphxOFskTSO4X9z0GiSTEAMJ95GcKQBnEeT05/36HzaD+EensdWWjWG8h
-	 BCI/i3mzg4yKUM1jH1BK0LIQqo9/4KS3JlrdMT65nQ9zoKJIA3/U96d/vq1ItWEnLU
-	 x9KKE4LCg/ltM70PjlcscoWs5Ykx2twUKp9gOllE=
+	b=z+beIeImiTJ/hYRMM1yOBP25HwXh7N/katk5M9QUyz1n1oBtU7tuCxKSWs9i28P6R
+	 pLOgRUmQ1QNP/geUdE5G//EhRNUds0toFel5ETC7EhdihHbqvGn2daI3REoP5gEF6E
+	 o4E1VmCjzSVWHuZF0CtBU6RehGsFVTDHIWishZ7I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zackr@vmware.com>,
-	Michael Banack <banackm@vmware.com>,
-	Martin Krastev <krastevm@vmware.com>
-Subject: [PATCH 6.0 126/177] drm/vmwgfx: Validate the box size for the snooped cursor
-Date: Wed,  4 Jan 2023 17:06:57 +0100
-Message-Id: <20230104160511.464668820@linuxfoundation.org>
+	syzbot+4faa160fa96bfba639f8@syzkaller.appspotmail.com,
+	Jun Nie <jun.nie@linaro.org>,
+	Ye Bin <yebin10@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.1 193/207] ext4: fix kernel BUG in ext4_write_inline_data_end()
+Date: Wed,  4 Jan 2023 17:07:31 +0100
+Message-Id: <20230104160518.025732476@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,37 +37,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zack Rusin <zackr@vmware.com>
+From: Ye Bin <yebin10@huawei.com>
 
-commit 4cf949c7fafe21e085a4ee386bb2dade9067316e upstream.
+commit 5c099c4fdc438014d5893629e70a8ba934433ee8 upstream.
 
-Invalid userspace dma surface copies could potentially overflow
-the memcpy from the surface to the snooped image leading to crashes.
-To fix it the dimensions of the copybox have to be validated
-against the expected size of the snooped cursor.
+Syzbot report follow issue:
+------------[ cut here ]------------
+kernel BUG at fs/ext4/inline.c:227!
+invalid opcode: 0000 [#1] PREEMPT SMP KASAN
+CPU: 1 PID: 3629 Comm: syz-executor212 Not tainted 6.1.0-rc5-syzkaller-00018-g59d0d52c30d4 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+RIP: 0010:ext4_write_inline_data+0x344/0x3e0 fs/ext4/inline.c:227
+RSP: 0018:ffffc90003b3f368 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: ffff8880704e16c0 RCX: 0000000000000000
+RDX: ffff888021763a80 RSI: ffffffff821e31a4 RDI: 0000000000000006
+RBP: 000000000006818e R08: 0000000000000006 R09: 0000000000068199
+R10: 0000000000000079 R11: 0000000000000000 R12: 000000000000000b
+R13: 0000000000068199 R14: ffffc90003b3f408 R15: ffff8880704e1c82
+FS:  000055555723e3c0(0000) GS:ffff8880b9b00000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 00007fffe8ac9080 CR3: 0000000079f81000 CR4: 0000000000350ee0
+Call Trace:
+ <TASK>
+ ext4_write_inline_data_end+0x2a3/0x12f0 fs/ext4/inline.c:768
+ ext4_write_end+0x242/0xdd0 fs/ext4/inode.c:1313
+ ext4_da_write_end+0x3ed/0xa30 fs/ext4/inode.c:3063
+ generic_perform_write+0x316/0x570 mm/filemap.c:3764
+ ext4_buffered_write_iter+0x15b/0x460 fs/ext4/file.c:285
+ ext4_file_write_iter+0x8bc/0x16e0 fs/ext4/file.c:700
+ call_write_iter include/linux/fs.h:2191 [inline]
+ do_iter_readv_writev+0x20b/0x3b0 fs/read_write.c:735
+ do_iter_write+0x182/0x700 fs/read_write.c:861
+ vfs_iter_write+0x74/0xa0 fs/read_write.c:902
+ iter_file_splice_write+0x745/0xc90 fs/splice.c:686
+ do_splice_from fs/splice.c:764 [inline]
+ direct_splice_actor+0x114/0x180 fs/splice.c:931
+ splice_direct_to_actor+0x335/0x8a0 fs/splice.c:886
+ do_splice_direct+0x1ab/0x280 fs/splice.c:974
+ do_sendfile+0xb19/0x1270 fs/read_write.c:1255
+ __do_sys_sendfile64 fs/read_write.c:1323 [inline]
+ __se_sys_sendfile64 fs/read_write.c:1309 [inline]
+ __x64_sys_sendfile64+0x1d0/0x210 fs/read_write.c:1309
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+---[ end trace 0000000000000000 ]---
 
-Signed-off-by: Zack Rusin <zackr@vmware.com>
-Fixes: 2ac863719e51 ("vmwgfx: Snoop DMA transfers with non-covering sizes")
-Cc: <stable@vger.kernel.org> # v3.2+
-Reviewed-by: Michael Banack <banackm@vmware.com>
-Reviewed-by: Martin Krastev <krastevm@vmware.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221026031936.1004280-1-zack@kde.org
+Above issue may happens as follows:
+ext4_da_write_begin
+  ext4_da_write_inline_data_begin
+    ext4_da_convert_inline_data_to_extent
+      ext4_clear_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA);
+ext4_da_write_end
+
+ext4_run_li_request
+  ext4_mb_prefetch
+    ext4_read_block_bitmap_nowait
+      ext4_validate_block_bitmap
+        ext4_mark_group_bitmap_corrupted(sb, block_group, EXT4_GROUP_INFO_BBITMAP_CORRUPT)
+	 percpu_counter_sub(&sbi->s_freeclusters_counter,grp->bb_free);
+	  -> sbi->s_freeclusters_counter become zero
+ext4_da_write_begin
+  if (ext4_nonda_switch(inode->i_sb)) -> As freeclusters_counter is zero will return true
+    *fsdata = (void *)FALL_BACK_TO_NONDELALLOC;
+    ext4_write_begin
+ext4_da_write_end
+  if (write_mode == FALL_BACK_TO_NONDELALLOC)
+    ext4_write_end
+      if (inline_data)
+        ext4_write_inline_data_end
+	  ext4_write_inline_data
+	    BUG_ON(pos + len > EXT4_I(inode)->i_inline_size);
+           -> As inode is already convert to extent, so 'pos + len' > inline_size
+	   -> then trigger BUG.
+
+To solve this issue, instead of checking ext4_has_inline_data() which
+is only cleared after data has been written back, check the
+EXT4_STATE_MAY_INLINE_DATA flag in ext4_write_end().
+
+Fixes: f19d5870cbf7 ("ext4: add normal write support for inline data")
+Reported-by: syzbot+4faa160fa96bfba639f8@syzkaller.appspotmail.com
+Reported-by: Jun Nie <jun.nie@linaro.org>
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Link: https://lore.kernel.org/r/20221206144134.1919987-1-yebin@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.c |    3 ++-
+ fs/ext4/inode.c |    3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-@@ -309,7 +309,8 @@ void vmw_kms_cursor_snoop(struct vmw_sur
- 	if (cmd->dma.guest.ptr.offset % PAGE_SIZE ||
- 	    box->x != 0    || box->y != 0    || box->z != 0    ||
- 	    box->srcx != 0 || box->srcy != 0 || box->srcz != 0 ||
--	    box->d != 1    || box_count != 1) {
-+	    box->d != 1    || box_count != 1 ||
-+	    box->w > 64 || box->h > 64) {
- 		/* TODO handle none page aligned offsets */
- 		/* TODO handle more dst & src != 0 */
- 		/* TODO handle more then one copy */
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -1315,7 +1315,8 @@ static int ext4_write_end(struct file *f
+ 
+ 	trace_ext4_write_end(inode, pos, len, copied);
+ 
+-	if (ext4_has_inline_data(inode))
++	if (ext4_has_inline_data(inode) &&
++	    ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA))
+ 		return ext4_write_inline_data_end(inode, pos, len, copied, page);
+ 
+ 	copied = block_write_end(file, mapping, pos, len, copied, page, fsdata);
 
 
