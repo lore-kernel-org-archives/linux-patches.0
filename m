@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890B4AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:15:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3B08C433EF;
-	Wed,  4 Jan 2023 16:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D9EAD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:15:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43823C433D2;
+	Wed,  4 Jan 2023 16:15:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848917;
-	bh=CQ2dv/B0AOmicQVYC379KnMO1h34F0xUY8aprLNoXfE=;
+	s=korg; t=1672848920;
+	bh=fzNwxn+5D9l4ObhjrXek79HPmvYNmES/HeGoYcrd520=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hicX24br5rOB+ObhaZ5nu5OECjxB+3/kKlgr3/76o1EXTljyf/4p/9lCI+Azbn/Fr
-	 +1Hd7qGIRG0SFejOp3yAES8DThBD5JCbv/iiDy54MhdullRyiQpBfRg5xN8pXStdIt
-	 1rRPb1Td1IS/7Xc6ijMW65Qd2el+fGnSbwYsME7k=
+	b=bx8PHePXFky06jehNfofpeS8R4ybni9zB1c7e61nnwQnNeo6LuG6cumOTAvjknqui
+	 mGObEmeBfoiWjmF4yDYo33FExcVrjXlcGiVnEf/CpEm5GFY7HxDxPZURiKhU/mn1M7
+	 GWqImv/9KzQbb9esNiAvaAkiGHCzkG8gYbOSyEGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-fsd@tesla.com,
-	Smitha T Murthy <smitha.t@samsung.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.0 034/177] media: s5p-mfc: Fix in register read and write for H264
-Date: Wed,  4 Jan 2023 17:05:25 +0100
-Message-Id: <20230104160508.697386116@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 104/207] cifs: fix missing display of three mount options
+Date: Wed,  4 Jan 2023 17:06:02 +0100
+Message-Id: <20230104160515.207780813@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,80 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Smitha T Murthy <smitha.t@samsung.com>
+From: Steve French <stfrench@microsoft.com>
 
-commit 06710cd5d2436135046898d7e4b9408c8bb99446 upstream.
+commit 2bfd81043e944af0e52835ef6d9b41795af22341 upstream.
 
-Few of the H264 encoder registers written were not getting reflected
-since the read values were not stored and getting overwritten.
-
-Fixes: 6a9c6f681257 ("[media] s5p-mfc: Add variants to access mfc registers")
+Three mount options: "tcpnodelay" and "noautotune" and "noblocksend"
+were not displayed when passed in on cifs/smb3 mounts (e.g. displayed
+in /proc/mounts e.g.).  No change to defaults so these are not
+displayed if not specified on mount.
 
 Cc: stable@vger.kernel.org
-Cc: linux-fsd@tesla.com
-Signed-off-by: Smitha T Murthy <smitha.t@samsung.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/samsung/s5p-mfc/s5p_mfc_opr_v6.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/cifs/cifsfs.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_opr_v6.c
-+++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_opr_v6.c
-@@ -1060,7 +1060,7 @@ static int s5p_mfc_set_enc_params_h264(s
- 	}
+--- a/fs/cifs/cifsfs.c
++++ b/fs/cifs/cifsfs.c
+@@ -678,9 +678,15 @@ cifs_show_options(struct seq_file *s, st
+ 	seq_printf(s, ",echo_interval=%lu",
+ 			tcon->ses->server->echo_interval / HZ);
  
- 	/* aspect ratio VUI */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 5);
- 	reg |= ((p_h264->vui_sar & 0x1) << 5);
- 	writel(reg, mfc_regs->e_h264_options);
-@@ -1083,7 +1083,7 @@ static int s5p_mfc_set_enc_params_h264(s
+-	/* Only display max_credits if it was overridden on mount */
++	/* Only display the following if overridden on mount */
+ 	if (tcon->ses->server->max_credits != SMB2_MAX_CREDITS_AVAILABLE)
+ 		seq_printf(s, ",max_credits=%u", tcon->ses->server->max_credits);
++	if (tcon->ses->server->tcp_nodelay)
++		seq_puts(s, ",tcpnodelay");
++	if (tcon->ses->server->noautotune)
++		seq_puts(s, ",noautotune");
++	if (tcon->ses->server->noblocksnd)
++		seq_puts(s, ",noblocksend");
  
- 	/* intra picture period for H.264 open GOP */
- 	/* control */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 4);
- 	reg |= ((p_h264->open_gop & 0x1) << 4);
- 	writel(reg, mfc_regs->e_h264_options);
-@@ -1097,23 +1097,23 @@ static int s5p_mfc_set_enc_params_h264(s
- 	}
- 
- 	/* 'WEIGHTED_BI_PREDICTION' for B is disable */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x3 << 9);
- 	writel(reg, mfc_regs->e_h264_options);
- 
- 	/* 'CONSTRAINED_INTRA_PRED_ENABLE' is disable */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 14);
- 	writel(reg, mfc_regs->e_h264_options);
- 
- 	/* ASO */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 6);
- 	reg |= ((p_h264->aso & 0x1) << 6);
- 	writel(reg, mfc_regs->e_h264_options);
- 
- 	/* hier qp enable */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 8);
- 	reg |= ((p_h264->open_gop & 0x1) << 8);
- 	writel(reg, mfc_regs->e_h264_options);
-@@ -1134,7 +1134,7 @@ static int s5p_mfc_set_enc_params_h264(s
- 	writel(reg, mfc_regs->e_h264_num_t_layer);
- 
- 	/* frame packing SEI generation */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 25);
- 	reg |= ((p_h264->sei_frame_packing & 0x1) << 25);
- 	writel(reg, mfc_regs->e_h264_options);
+ 	if (tcon->snapshot_time)
+ 		seq_printf(s, ",snapshot=%llu", tcon->snapshot_time);
 
 
