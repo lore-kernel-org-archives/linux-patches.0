@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07224AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:24:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F915C433F0;
-	Wed,  4 Jan 2023 16:24:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CE5EAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:24:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78C01C433F0;
+	Wed,  4 Jan 2023 16:24:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849479;
-	bh=5dC3nqAyJWDTjXZ9KBsC2wLZQkUsc5xPMLJIaUBAO0k=;
+	s=korg; t=1672849482;
+	bh=ZYVmh3qE1ahbQfcHjIdZkZIZV3y8zWZy4kl8Dmmfy8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BaLbyVGyIvlJ5TQZOM03jHjH9lkVlMkOwDhjjNe9fX8XigY312fo9dVkqGr7JGNqn
-	 eP70hJSXw7LaAgUjXMAJOdf3tUxMyFK8A0iwimQd6qSP4Mwe8NajKnfc0ZrzmQ8ztb
-	 uRpx8UK7srIncu14rBVHa+CPUUwSU1bsENyLVtK0=
+	b=MQVV+mdmA4dtoNuqzCnnsDzot5jcSB0sX5qqijK6n40PGWbHG67h7qGw01oKyXltK
+	 81Nr9tH5BuLwI/Y3OEHXtUWDRsDIjamG9wDevpZCo4tWt6QUaMD5nSvdCaaMD1YtJd
+	 2Gqf//rdhBLZRLOOwAvwZ0ZOP6CnfFczBHJ1VUtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Paul Cercueil <paul@crapouillou.net>
-Subject: [PATCH 6.0 129/177] drm/ingenic: Fix missing platform_driver_unregister() call in ingenic_drm_init()
-Date: Wed,  4 Jan 2023 17:07:00 +0100
-Message-Id: <20230104160511.557026264@linuxfoundation.org>
+	Pengfei Xu <pengfei.xu@intel.com>,
+	Jan Kara <jack@suse.cz>,
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.1 196/207] ext4: avoid unaccounted block allocation when expanding inode
+Date: Wed,  4 Jan 2023 17:07:34 +0100
+Message-Id: <20230104160518.114303102@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,58 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Jan Kara <jack@suse.cz>
 
-commit 47078311b8efebdefd5b3b2f87e2b02b14f49c66 upstream.
+commit 8994d11395f8165b3deca1971946f549f0822630 upstream.
 
-A problem about modprobe ingenic-drm failed is triggered with the following
-log given:
+When expanding inode space in ext4_expand_extra_isize_ea() we may need
+to allocate external xattr block. If quota is not initialized for the
+inode, the block allocation will not be accounted into quota usage. Make
+sure the quota is initialized before we try to expand inode space.
 
- [  303.561088] Error: Driver 'ingenic-ipu' is already registered, aborting...
- modprobe: ERROR: could not insert 'ingenic_drm': Device or resource busy
-
-The reason is that ingenic_drm_init() returns platform_driver_register()
-directly without checking its return value, if platform_driver_register()
-failed, it returns without unregistering ingenic_ipu_driver_ptr, resulting
-the ingenic-drm can never be installed later.
-A simple call graph is shown as below:
-
- ingenic_drm_init()
-   platform_driver_register() # ingenic_ipu_driver_ptr are registered
-   platform_driver_register()
-     driver_register()
-       bus_add_driver()
-         priv = kzalloc(...) # OOM happened
-   # return without unregister ingenic_ipu_driver_ptr
-
-Fixing this problem by checking the return value of
-platform_driver_register() and do platform_unregister_drivers() if
-error happened.
-
-Fixes: fc1acf317b01 ("drm/ingenic: Add support for the IPU")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Paul Cercueil <paul@crapouillou.net>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221104064512.8569-1-yuancan@huawei.com
+Reported-by: Pengfei Xu <pengfei.xu@intel.com>
+Link: https://lore.kernel.org/all/Y5BT+k6xWqthZc1P@xpf.sh.intel.com
+Signed-off-by: Jan Kara <jack@suse.cz>
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20221207115937.26601-2-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/ingenic/ingenic-drm-drv.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/ext4/inode.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
-+++ b/drivers/gpu/drm/ingenic/ingenic-drm-drv.c
-@@ -1601,7 +1601,11 @@ static int ingenic_drm_init(void)
- 			return err;
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5875,6 +5875,14 @@ static int __ext4_expand_extra_isize(str
+ 		return 0;
  	}
  
--	return platform_driver_register(&ingenic_drm_driver);
-+	err = platform_driver_register(&ingenic_drm_driver);
-+	if (IS_ENABLED(CONFIG_DRM_INGENIC_IPU) && err)
-+		platform_driver_unregister(ingenic_ipu_driver_ptr);
++	/*
++	 * We may need to allocate external xattr block so we need quotas
++	 * initialized. Here we can be called with various locks held so we
++	 * cannot affort to initialize quotas ourselves. So just bail.
++	 */
++	if (dquot_initialize_needed(inode))
++		return -EAGAIN;
 +
-+	return err;
- }
- module_init(ingenic_drm_init);
- 
+ 	/* try to expand with EAs present */
+ 	error = ext4_expand_extra_isize_ea(inode, new_extra_isize,
+ 					   raw_inode, handle);
 
 
