@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B45AFAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:13:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 251B5C433EF;
-	Wed,  4 Jan 2023 16:13:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F05AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:13:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D08DC433F0;
+	Wed,  4 Jan 2023 16:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848781;
-	bh=/FSi+Pd4WgmdH+wM2uW0IAKt0B3d6mNtqXqVNRzNtSU=;
+	s=korg; t=1672848784;
+	bh=r8Wy8rSoS4qvnvZzPMfJOSopQypRSVPJ5uA5CQSiK14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WDKVt27D/qKipu5K00+LpF6pL0HcHJULlgCAEov0vvVrnrplNdG1DN1WQwp6EtCTe
-	 dt5cjpE9rioPx+ICdqxYQAixANAsZ4MrMlCMCpCVuy4C+duQVTGTmP2THR21cs7HJ1
-	 TP497ilb8na6A4A3NqDmGTQTC7ZFVmaLPY9XfFiM=
+	b=Gxst42a50f2YJxbFhnuwIBNAKOvXibtImincu22G666QeCZWuyUQiHOgz6GPQ1jTX
+	 9Rxw5Ofx3WwCh781Gicbs1w5M+ybCC9ze54KMPUjm8FZbVpvsJxi+WXDVrxc94DH58
+	 q48ci8Lucl+jO1r5vv+wC2JMBlr/P3zaqUD0HFLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Tianjia Zhang <tianjia.zhang@linux.alibaba.com>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 6.1 081/207] ima: Fix hash dependency to correct algorithm
-Date: Wed,  4 Jan 2023 17:05:39 +0100
-Message-Id: <20230104160514.507727526@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.0 013/177] arm64: dts: qcom: sdm845-db845c: correct SPI2 pins drive strength
+Date: Wed,  4 Jan 2023 17:05:04 +0100
+Message-Id: <20230104160508.059599463@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,38 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit b6018af440a07bd0d74b58c4e18045f4a8dbfe6b upstream.
+commit 9905370560d9c29adc15f4937c5a0c0dac05f0b4 upstream.
 
-Commit d2825fa9365d ("crypto: sm3,sm4 - move into crypto directory") moves
-the SM3 and SM4 stand-alone library and the algorithm implementation for
-the Crypto API into the same directory, and the corresponding relationship
-of Kconfig is modified, CONFIG_CRYPTO_SM3/4 corresponds to the stand-alone
-library of SM3/4, and CONFIG_CRYPTO_SM3/4_GENERIC corresponds to the
-algorithm implementation for the Crypto API. Therefore, it is necessary
-for this module to depend on the correct algorithm.
+The pin configuration (done with generic pin controller helpers and
+as expressed by bindings) requires children nodes with either:
+1. "pins" property and the actual configuration,
+2. another set of nodes with above point.
 
-Fixes: d2825fa9365d ("crypto: sm3,sm4 - move into crypto directory")
-Cc: Jason A. Donenfeld <Jason@zx2c4.com>
-Cc: stable@vger.kernel.org # v5.19+
-Signed-off-by: Tianjia Zhang <tianjia.zhang@linux.alibaba.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+The qup_spi2_default pin configuration uses alreaady the second method
+with a "pinmux" child, so configure drive-strength similarly in
+"pinconf".  Otherwise the PIN drive strength would not be applied.
+
+Fixes: 8d23a0040475 ("arm64: dts: qcom: db845c: add Low speed expansion i2c and spi nodes")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221010114417.29859-2-krzysztof.kozlowski@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/ima/Kconfig |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/sdm845-db845c.dts |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/security/integrity/ima/Kconfig
-+++ b/security/integrity/ima/Kconfig
-@@ -112,7 +112,7 @@ choice
+--- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+@@ -1123,7 +1123,10 @@
  
- 	config IMA_DEFAULT_HASH_SM3
- 		bool "SM3"
--		depends on CRYPTO_SM3=y
-+		depends on CRYPTO_SM3_GENERIC=y
- endchoice
+ /* PINCTRL - additions to nodes defined in sdm845.dtsi */
+ &qup_spi2_default {
+-	drive-strength = <16>;
++	pinconf {
++		pins = "gpio27", "gpio28", "gpio29", "gpio30";
++		drive-strength = <16>;
++	};
+ };
  
- config IMA_DEFAULT_HASH
+ &qup_uart3_default{
 
 
