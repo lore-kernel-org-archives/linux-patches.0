@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 688D6AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC7BDC4339E;
-	Wed,  4 Jan 2023 16:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650E4AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE50BC43398;
+	Wed,  4 Jan 2023 16:22:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849334;
-	bh=1kIbxSOtFvgKC/V/gaVa1VYt1O9i8rhUyH3A/MnqEyo=;
+	s=korg; t=1672849337;
+	bh=7324HKQRgvza6tUPLy/lqbH1ssyTgRGJHkONbWiU0kk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oV/pmJL1oaNn3zX52ZTRJL4vunGfbCel8kW/LFo8YxPLL3J+acNsHKqGoXC8qizJc
-	 rxjjKnFvGnh8RPfe73s/w/sGhq108Ko47fIslpWNHdGfyhShOm4yWkOfdmub1Y3yiF
-	 LAc8oMLuyG2DGV9JiC+q6fWET195ug+eFjJVER3w=
+	b=Y9vHgn/YuaYQgi4HuCg6v19492ogCuAxeLigNx7i5VCh8hnkQVmfikMkQvh7tpRWS
+	 eA0Llt4ezV2tHZq0sCUYI+KRy5sFgNN479uXjFNXu4ddRBg9OB/+3hcx6ItPks3eDZ
+	 Xa2P7/Lsl3LnxwBQkyOuwdGAOeolbXT1IJNhs+d0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Czerner <lczerner@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.1 172/207] ext4: journal_path mount options should follow links
-Date: Wed,  4 Jan 2023 17:07:10 +0100
-Message-Id: <20230104160517.326797187@linuxfoundation.org>
+	Conor Dooley <conor.dooley@microchip.com>,
+	kernel test robot <lkp@intel.com>,
+	Guo Ren <guoren@kernel.org>,
+	Guo Ren <guoren@linux.alibaba.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.0 105/177] riscv: Fixup compile error with !MMU
+Date: Wed,  4 Jan 2023 17:06:36 +0100
+Message-Id: <20230104160510.827975586@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,81 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Czerner <lczerner@redhat.com>
+From: Guo Ren <guoren@linux.alibaba.com>
 
-commit e3ea75ee651daf5e434afbfdb7dbf75e200ea1f6 upstream.
+commit c528ef0888b75f673f7d48022de8d31d5b451e8c upstream.
 
-Before the commit 461c3af045d3 ("ext4: Change handle_mount_opt() to use
-fs_parameter") ext4 mount option journal_path did follow links in the
-provided path.
+Current nommu_virt_defconfig can't compile:
 
-Bring this behavior back by allowing to pass pathwalk flags to
-fs_lookup_param().
+In file included from
+arch/riscv/kernel/crash_core.c:3:
+arch/riscv/kernel/crash_core.c:
+In function 'arch_crash_save_vmcoreinfo':
+arch/riscv/kernel/crash_core.c:8:27:
+error: 'VA_BITS' undeclared (first use in this function)
+    8 |         VMCOREINFO_NUMBER(VA_BITS);
+      |                           ^~~~~~~
 
-Fixes: 461c3af045d3 ("ext4: Change handle_mount_opt() to use fs_parameter")
-Signed-off-by: Lukas Czerner <lczerner@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Link: https://lore.kernel.org/r/20221004135803.32283-1-lczerner@redhat.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Add MMU dependency for KEXEC_FILE.
+
+Fixes: 6261586e0c91 ("RISC-V: Add kexec_file support")
+Reported-by: Conor Dooley <conor.dooley@microchip.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Guo Ren <guoren@kernel.org>
+Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20221207091112.2258674-1-guoren@kernel.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/filesystems/mount_api.rst |    1 +
- fs/ext4/super.c                         |    2 +-
- fs/fs_parser.c                          |    3 ++-
- include/linux/fs_parser.h               |    1 +
- 4 files changed, 5 insertions(+), 2 deletions(-)
+ arch/riscv/Kconfig |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/Documentation/filesystems/mount_api.rst
-+++ b/Documentation/filesystems/mount_api.rst
-@@ -814,6 +814,7 @@ process the parameters it is given.
-        int fs_lookup_param(struct fs_context *fc,
- 			   struct fs_parameter *value,
- 			   bool want_bdev,
-+			   unsigned int flags,
- 			   struct path *_path);
- 
-      This takes a parameter that carries a string or filename type and attempts
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -2247,7 +2247,7 @@ static int ext4_parse_param(struct fs_co
- 			return -EINVAL;
- 		}
- 
--		error = fs_lookup_param(fc, param, 1, &path);
-+		error = fs_lookup_param(fc, param, 1, LOOKUP_FOLLOW, &path);
- 		if (error) {
- 			ext4_msg(NULL, KERN_ERR, "error: could not find "
- 				 "journal device path");
---- a/fs/fs_parser.c
-+++ b/fs/fs_parser.c
-@@ -138,15 +138,16 @@ EXPORT_SYMBOL(__fs_parse);
-  * @fc: The filesystem context to log errors through.
-  * @param: The parameter.
-  * @want_bdev: T if want a blockdev
-+ * @flags: Pathwalk flags passed to filename_lookup()
-  * @_path: The result of the lookup
-  */
- int fs_lookup_param(struct fs_context *fc,
- 		    struct fs_parameter *param,
- 		    bool want_bdev,
-+		    unsigned int flags,
- 		    struct path *_path)
- {
- 	struct filename *f;
--	unsigned int flags = 0;
- 	bool put_f;
- 	int ret;
- 
---- a/include/linux/fs_parser.h
-+++ b/include/linux/fs_parser.h
-@@ -76,6 +76,7 @@ static inline int fs_parse(struct fs_con
- extern int fs_lookup_param(struct fs_context *fc,
- 			   struct fs_parameter *param,
- 			   bool want_bdev,
-+			   unsigned int flags,
- 			   struct path *_path);
- 
- extern int lookup_constant(const struct constant_table tbl[], const char *name, int not_found);
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -493,7 +493,7 @@ config KEXEC_FILE
+ 	select KEXEC_CORE
+ 	select KEXEC_ELF
+ 	select HAVE_IMA_KEXEC if IMA
+-	depends on 64BIT
++	depends on 64BIT && MMU
+ 	help
+ 	  This is new version of kexec system call. This system call is
+ 	  file based and takes file descriptors as system call argument
 
 
