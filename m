@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3263AAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FA49C433D2;
-	Wed,  4 Jan 2023 16:20:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E806EAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6630BC433D2;
+	Wed,  4 Jan 2023 16:20:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849207;
-	bh=IQKZ8QjPtr4PHTiuYZwrZeR8Jb1eGMZxdhUscaZd9Bg=;
+	s=korg; t=1672849210;
+	bh=gbueyn30KPFSslQhbfJLCwpeIQPsQuHQBcdCpyP6FU4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CBqpgzkAAM7L9W/t8AZjNACiwKOQyDe5DoOSAo61jHaeJ1zknWid6WaPY4GIw8UCT
-	 RcmG56s39dyVP/lbY+He+gBkolOme9SlfaAkAq2qXVxI2DcxsA7W9mYue4E+O9V41m
-	 fXPlhSSe0DrZ5lejTPzwoNmIYhK0OH0MIZrUcqD4=
+	b=R24pempimE+SnGpVdVbgCxrwqy3GmdX/S6uXFDTxQddNyUsjrlN/SeT4U0aW8yT/O
+	 zPGunsesdM1L+IgMWiuZMnsY/ta+OOKzWR8S2JpN6k+3fujdWIgk713iwDGkZpxjFc
+	 aRhc7Q0yyyad+RR/znFqK+nafQyP27RYifuHQVyM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>,
-	kernel test robot <lkp@intel.com>
-Subject: [PATCH 6.1 151/207] parisc: Drop PMD_SHIFT from calculation in pgtable.h
-Date: Wed,  4 Jan 2023 17:06:49 +0100
-Message-Id: <20230104160516.687928646@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.0 083/177] cifs: set correct ipc status after initial tree connect
+Date: Wed,  4 Jan 2023 17:06:14 +0100
+Message-Id: <20230104160510.162714907@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,40 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Paulo Alcantara <pc@cjr.nz>
 
-commit fe94cb1a614d2df2764d49ac959d8b7e4cb98e15 upstream.
+commit 86fe0fa8747fb1bc4cc44fc1966e0959fe752f38 upstream.
 
-PMD_SHIFT isn't defined if CONFIG_PGTABLE_LEVELS == 3, and as
-such the kernel test robot found this warning:
+cifs_tcon::status wasn't correctly updated to TID_GOOD after
+establishing initial IPC connection thus staying at TID_NEW as long as
+it wasn't reconnected.
 
- In file included from include/linux/pgtable.h:6,
-                  from arch/parisc/kernel/head.S:23:
- arch/parisc/include/asm/pgtable.h:169:32: warning: "PMD_SHIFT" is not defined, evaluates to 0 [-Wundef]
-     169 | #if (KERNEL_INITIAL_ORDER) >= (PMD_SHIFT)
-
-Avoid the warning by using PLD_SHIFT and BITS_PER_PTE.
-
-Signed-off-by: Helge Deller <deller@gmx.de>
-Reported-by: kernel test robot <lkp@intel.com>
-Cc: <stable@vger.kernel.org> # 6.0+
+Cc: stable@vger.kernel.org
+Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/include/asm/pgtable.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/cifs/connect.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/arch/parisc/include/asm/pgtable.h
-+++ b/arch/parisc/include/asm/pgtable.h
-@@ -166,8 +166,8 @@ extern void __update_cache(pte_t pte);
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -1870,6 +1870,9 @@ cifs_setup_ipc(struct cifs_ses *ses, str
  
- /* This calculates the number of initial pages we need for the initial
-  * page tables */
--#if (KERNEL_INITIAL_ORDER) >= (PMD_SHIFT)
--# define PT_INITIAL	(1 << (KERNEL_INITIAL_ORDER - PMD_SHIFT))
-+#if (KERNEL_INITIAL_ORDER) >= (PLD_SHIFT + BITS_PER_PTE)
-+# define PT_INITIAL	(1 << (KERNEL_INITIAL_ORDER - PLD_SHIFT - BITS_PER_PTE))
- #else
- # define PT_INITIAL	(1)  /* all initial PTEs fit into one page */
- #endif
+ 	cifs_dbg(FYI, "IPC tcon rc=%d ipc tid=0x%x\n", rc, tcon->tid);
+ 
++	spin_lock(&tcon->tc_lock);
++	tcon->status = TID_GOOD;
++	spin_unlock(&tcon->tc_lock);
+ 	ses->tcon_ipc = tcon;
+ out:
+ 	return rc;
+@@ -2278,10 +2281,10 @@ cifs_get_smb_ses(struct TCP_Server_Info
+ 	list_add(&ses->smb_ses_list, &server->smb_ses_list);
+ 	spin_unlock(&cifs_tcp_ses_lock);
+ 
+-	free_xid(xid);
+-
+ 	cifs_setup_ipc(ses, ctx);
+ 
++	free_xid(xid);
++
+ 	return ses;
+ 
+ get_ses_fail:
 
 
