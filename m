@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0AB5AD38
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:10:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 267E8C433EF;
-	Wed,  4 Jan 2023 16:10:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D5CAD38
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:10:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C2DC433EF;
+	Wed,  4 Jan 2023 16:10:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848602;
-	bh=OO1ftrJc/JUWcBfJpYvta3UcTMHwX7+LyO57JbBFF5U=;
+	s=korg; t=1672848605;
+	bh=MimaLMWi5ZRbnPPy0T/5UcHq4lgxAWRPmd8ZHeCPtAY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X1B5RtdzDTkQxMpzFhf1ooMwmS79zXajWxwrulQBZLVLyswy0QqYvKs5+QaNhJ5DP
-	 K/YoKgbE/iS4gz1ivjWhfZc1G0symIgYECQ0/W7qSCyOZb8sm9kiHNd7cituAQuWGN
-	 y5j/c19CxRYPZ2AmlQ2Trlpxqtj0LPmWfU+SD9z4=
+	b=co45K3HB1uHL1KqSzpqs5+h+gOmrXk2tIS+RG9DGuN1fRak310PMl6UVpHDivzUeQ
+	 g4ePhsjZVQCF0V0hlL7OYZRkRWrSzlK7DU7LE2y34guLx7sL1NmDL3SpCaEFmgQ8nn
+	 DgGJQozfnojtF+ayPqrHtCThdjEQnD2fdlVe4lIs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	linux-fsd@tesla.com,
 	Smitha T Murthy <smitha.t@samsung.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 6.1 036/207] media: s5p-mfc: Fix to handle reference queue during finishing
-Date: Wed,  4 Jan 2023 17:04:54 +0100
-Message-Id: <20230104160513.053650254@linuxfoundation.org>
+Subject: [PATCH 6.1 037/207] media: s5p-mfc: Clear workbit to handle error condition
+Date: Wed,  4 Jan 2023 17:04:55 +0100
+Message-Id: <20230104160513.082472898@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
 References: <20230104160511.905925875@linuxfoundation.org>
@@ -37,60 +37,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Smitha T Murthy <smitha.t@samsung.com>
 
-commit d8a46bc4e1e0446459daa77c4ce14218d32dacf9 upstream.
+commit d3f3c2fe54e30b0636496d842ffbb5ad3a547f9b upstream.
 
-On receiving last buffer driver puts MFC to MFCINST_FINISHING state which
-in turn skips transferring of frame from SRC to REF queue. This causes
-driver to stop MFC encoding and last frame is lost.
+During error on CLOSE_INSTANCE command, ctx_work_bits was not getting
+cleared. During consequent mfc execution NULL pointer dereferencing of
+this context led to kernel panic. This patch fixes this issue by making
+sure to clear ctx_work_bits always.
 
-This patch guarantees safe handling of frames during MFCINST_FINISHING and
-correct clearing of workbit to avoid early stopping of encoding.
-
-Fixes: af9357467810 ("[media] MFC: Add MFC 5.1 V4L2 driver")
-
+Fixes: 818cd91ab8c6 ("[media] s5p-mfc: Extract open/close MFC instance commands")
 Cc: stable@vger.kernel.org
 Cc: linux-fsd@tesla.com
 Signed-off-by: Smitha T Murthy <smitha.t@samsung.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/samsung/s5p-mfc/s5p_mfc_enc.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/media/platform/samsung/s5p-mfc/s5p_mfc_ctrl.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_enc.c
-+++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_enc.c
-@@ -1218,6 +1218,7 @@ static int enc_post_frame_start(struct s
- 	unsigned long mb_y_addr, mb_c_addr;
- 	int slice_type;
- 	unsigned int strm_size;
-+	bool src_ready;
+--- a/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_ctrl.c
++++ b/drivers/media/platform/samsung/s5p-mfc/s5p_mfc_ctrl.c
+@@ -468,8 +468,10 @@ void s5p_mfc_close_mfc_inst(struct s5p_m
+ 	s5p_mfc_hw_call(dev->mfc_ops, try_run, dev);
+ 	/* Wait until instance is returned or timeout occurred */
+ 	if (s5p_mfc_wait_for_done_ctx(ctx,
+-				S5P_MFC_R2H_CMD_CLOSE_INSTANCE_RET, 0))
++				S5P_MFC_R2H_CMD_CLOSE_INSTANCE_RET, 0)){
++		clear_work_bit_irqsave(ctx);
+ 		mfc_err("Err returning instance\n");
++	}
  
- 	slice_type = s5p_mfc_hw_call(dev->mfc_ops, get_enc_slice_type, dev);
- 	strm_size = s5p_mfc_hw_call(dev->mfc_ops, get_enc_strm_size, dev);
-@@ -1257,7 +1258,8 @@ static int enc_post_frame_start(struct s
- 			}
- 		}
- 	}
--	if ((ctx->src_queue_cnt > 0) && (ctx->state == MFCINST_RUNNING)) {
-+	if (ctx->src_queue_cnt > 0 && (ctx->state == MFCINST_RUNNING ||
-+				       ctx->state == MFCINST_FINISHING)) {
- 		mb_entry = list_entry(ctx->src_queue.next, struct s5p_mfc_buf,
- 									list);
- 		if (mb_entry->flags & MFC_BUF_FLAG_USED) {
-@@ -1288,7 +1290,13 @@ static int enc_post_frame_start(struct s
- 		vb2_set_plane_payload(&mb_entry->b->vb2_buf, 0, strm_size);
- 		vb2_buffer_done(&mb_entry->b->vb2_buf, VB2_BUF_STATE_DONE);
- 	}
--	if ((ctx->src_queue_cnt == 0) || (ctx->dst_queue_cnt == 0))
-+
-+	src_ready = true;
-+	if (ctx->state == MFCINST_RUNNING && ctx->src_queue_cnt == 0)
-+		src_ready = false;
-+	if (ctx->state == MFCINST_FINISHING && ctx->ref_queue_cnt == 0)
-+		src_ready = false;
-+	if (!src_ready || ctx->dst_queue_cnt == 0)
- 		clear_work_bit(ctx);
- 
- 	return 0;
+ 	/* Free resources */
+ 	s5p_mfc_hw_call(dev->mfc_ops, release_codec_buffers, ctx);
 
 
