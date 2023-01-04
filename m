@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633F6AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:27:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB96BC433F1;
-	Wed,  4 Jan 2023 16:27:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5D1AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:27:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1DB9C433D2;
+	Wed,  4 Jan 2023 16:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849669;
-	bh=aUREFiTu4QhMjkabcRWkj1RNh9ul3PEukNS6B9e4KVU=;
+	s=korg; t=1672849672;
+	bh=Ck9GJzt8+lIae6+e9ktnZ81wXPN0XdMnN+9BDRbwRK0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rjbpAui74fQdirXd4dXMmILp3bZ2bM2i4FoBW6oj/5KVwM3iAyaMvkkRdGz4se1bP
-	 KDexmV1owSmojZy79o7Jcu/1aLyqBz4PpY7P2pEbQBTiTKz7o1iBfQ9lj7XKY2ARiq
-	 uf9iNpPdyAlNrduANTgt6ZjG6Ef4Jucle2ec/gfY=
+	b=zemdPXLp19RF3OFr/JwpdXzMyhpm+eDgAaQSVpCOPgRvQD+w5QLNwgcjfxPsygCXQ
+	 1XP9HZVr2tlllGew25O1sgbJGQnbC50Tq1KeJNv8kdPzNhhjo57iLzGnbxl7ms5udh
+	 8HgWdeEUD8Z/s+2o3Kzcc/nkbiAAYrPO3kB8yMhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Biggers <ebiggers@google.com>,
 	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 6.0 149/177] ext4: add missing validation of fast-commit record lengths
-Date: Wed,  4 Jan 2023 17:07:20 +0100
-Message-Id: <20230104160512.174492445@linuxfoundation.org>
+Subject: [PATCH 6.0 150/177] ext4: fix unaligned memory access in ext4_fc_reserve_space()
+Date: Wed,  4 Jan 2023 17:07:21 +0100
+Message-Id: <20230104160512.205915827@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -36,95 +36,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@google.com>
 
-commit 64b4a25c3de81a69724e888ec2db3533b43816e2 upstream.
+commit 8415ce07ecf0cc25efdd5db264a7133716e503cf upstream.
 
-Validate the inode and filename lengths in fast-commit journal records
-so that a malicious fast-commit journal cannot cause a crash by having
-invalid values for these.  Also validate EXT4_FC_TAG_DEL_RANGE.
+As is done elsewhere in the file, build the struct ext4_fc_tl on the
+stack and memcpy() it into the buffer, rather than directly writing it
+to a potentially-unaligned location in the buffer.
 
 Fixes: aa75f4d3daae ("ext4: main fast-commit commit path")
 Cc: <stable@vger.kernel.org> # v5.10+
 Signed-off-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20221106224841.279231-5-ebiggers@kernel.org
+Link: https://lore.kernel.org/r/20221106224841.279231-6-ebiggers@kernel.org
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |   38 +++++++++++++++++++-------------------
- fs/ext4/fast_commit.h |    2 +-
- 2 files changed, 20 insertions(+), 20 deletions(-)
+ fs/ext4/fast_commit.c |   39 +++++++++++++++++++++------------------
+ 1 file changed, 21 insertions(+), 18 deletions(-)
 
 --- a/fs/ext4/fast_commit.c
 +++ b/fs/ext4/fast_commit.c
-@@ -2000,32 +2000,31 @@ void ext4_fc_replay_cleanup(struct super
- 	kfree(sbi->s_fc_replay_state.fc_modified_inodes);
- }
+@@ -683,6 +683,15 @@ static void ext4_fc_submit_bh(struct sup
  
--static inline bool ext4_fc_tag_len_isvalid(struct ext4_fc_tl *tl,
--					   u8 *val, u8 *end)
-+static bool ext4_fc_value_len_isvalid(struct ext4_sb_info *sbi,
-+				      int tag, int len)
+ /* Ext4 commit path routines */
+ 
++/* memcpy to fc reserved space and update CRC */
++static void *ext4_fc_memcpy(struct super_block *sb, void *dst, const void *src,
++				int len, u32 *crc)
++{
++	if (crc)
++		*crc = ext4_chksum(EXT4_SB(sb), *crc, src, len);
++	return memcpy(dst, src, len);
++}
++
+ /* memzero and update CRC */
+ static void *ext4_fc_memzero(struct super_block *sb, void *dst, int len,
+ 				u32 *crc)
+@@ -708,12 +717,13 @@ static void *ext4_fc_memzero(struct supe
+  */
+ static u8 *ext4_fc_reserve_space(struct super_block *sb, int len, u32 *crc)
  {
--	if (val + tl->fc_len > end)
--		return false;
--
--	/* Here only check ADD_RANGE/TAIL/HEAD which will read data when do
--	 * journal rescan before do CRC check. Other tags length check will
--	 * rely on CRC check.
--	 */
--	switch (tl->fc_tag) {
-+	switch (tag) {
- 	case EXT4_FC_TAG_ADD_RANGE:
--		return (sizeof(struct ext4_fc_add_range) == tl->fc_len);
--	case EXT4_FC_TAG_TAIL:
--		return (sizeof(struct ext4_fc_tail) <= tl->fc_len);
--	case EXT4_FC_TAG_HEAD:
--		return (sizeof(struct ext4_fc_head) == tl->fc_len);
-+		return len == sizeof(struct ext4_fc_add_range);
- 	case EXT4_FC_TAG_DEL_RANGE:
-+		return len == sizeof(struct ext4_fc_del_range);
-+	case EXT4_FC_TAG_CREAT:
- 	case EXT4_FC_TAG_LINK:
- 	case EXT4_FC_TAG_UNLINK:
--	case EXT4_FC_TAG_CREAT:
-+		len -= sizeof(struct ext4_fc_dentry_info);
-+		return len >= 1 && len <= EXT4_NAME_LEN;
- 	case EXT4_FC_TAG_INODE:
-+		len -= sizeof(struct ext4_fc_inode);
-+		return len >= EXT4_GOOD_OLD_INODE_SIZE &&
-+			len <= sbi->s_inode_size;
- 	case EXT4_FC_TAG_PAD:
--	default:
--		return true;
-+		return true; /* padding can have any length */
-+	case EXT4_FC_TAG_TAIL:
-+		return len >= sizeof(struct ext4_fc_tail);
-+	case EXT4_FC_TAG_HEAD:
-+		return len == sizeof(struct ext4_fc_head);
+-	struct ext4_fc_tl *tl;
++	struct ext4_fc_tl tl;
+ 	struct ext4_sb_info *sbi = EXT4_SB(sb);
+ 	struct buffer_head *bh;
+ 	int bsize = sbi->s_journal->j_blocksize;
+ 	int ret, off = sbi->s_fc_bytes % bsize;
+ 	int pad_len;
++	u8 *dst;
+ 
+ 	/*
+ 	 * After allocating len, we should have space at least for a 0 byte
+@@ -737,16 +747,18 @@ static u8 *ext4_fc_reserve_space(struct
+ 		return sbi->s_fc_bh->b_data + off;
  	}
-+	return false;
+ 	/* Need to add PAD tag */
+-	tl = (struct ext4_fc_tl *)(sbi->s_fc_bh->b_data + off);
+-	tl->fc_tag = cpu_to_le16(EXT4_FC_TAG_PAD);
++	dst = sbi->s_fc_bh->b_data + off;
++	tl.fc_tag = cpu_to_le16(EXT4_FC_TAG_PAD);
+ 	pad_len = bsize - off - 1 - EXT4_FC_TAG_BASE_LEN;
+-	tl->fc_len = cpu_to_le16(pad_len);
+-	if (crc)
+-		*crc = ext4_chksum(sbi, *crc, tl, EXT4_FC_TAG_BASE_LEN);
+-	if (pad_len > 0)
+-		ext4_fc_memzero(sb, tl + 1, pad_len, crc);
++	tl.fc_len = cpu_to_le16(pad_len);
++	ext4_fc_memcpy(sb, dst, &tl, EXT4_FC_TAG_BASE_LEN, crc);
++	dst += EXT4_FC_TAG_BASE_LEN;
++	if (pad_len > 0) {
++		ext4_fc_memzero(sb, dst, pad_len, crc);
++		dst += pad_len;
++	}
+ 	/* Don't leak uninitialized memory in the unused last byte. */
+-	*((u8 *)(tl + 1) + pad_len) = 0;
++	*dst = 0;
+ 
+ 	ext4_fc_submit_bh(sb, false);
+ 
+@@ -758,15 +770,6 @@ static u8 *ext4_fc_reserve_space(struct
+ 	return sbi->s_fc_bh->b_data;
  }
  
+-/* memcpy to fc reserved space and update CRC */
+-static void *ext4_fc_memcpy(struct super_block *sb, void *dst, const void *src,
+-				int len, u32 *crc)
+-{
+-	if (crc)
+-		*crc = ext4_chksum(EXT4_SB(sb), *crc, src, len);
+-	return memcpy(dst, src, len);
+-}
+-
  /*
-@@ -2088,7 +2087,8 @@ static int ext4_fc_replay_scan(journal_t
- 	     cur = cur + EXT4_FC_TAG_BASE_LEN + tl.fc_len) {
- 		ext4_fc_get_tl(&tl, cur);
- 		val = cur + EXT4_FC_TAG_BASE_LEN;
--		if (!ext4_fc_tag_len_isvalid(&tl, val, end)) {
-+		if (tl.fc_len > end - val ||
-+		    !ext4_fc_value_len_isvalid(sbi, tl.fc_tag, tl.fc_len)) {
- 			ret = state->fc_replay_num_tags ?
- 				JBD2_FC_REPLAY_STOP : -ECANCELED;
- 			goto out_err;
---- a/fs/ext4/fast_commit.h
-+++ b/fs/ext4/fast_commit.h
-@@ -58,7 +58,7 @@ struct ext4_fc_dentry_info {
- 	__u8 fc_dname[];
- };
- 
--/* Value structure for EXT4_FC_TAG_INODE and EXT4_FC_TAG_INODE_PARTIAL. */
-+/* Value structure for EXT4_FC_TAG_INODE. */
- struct ext4_fc_inode {
- 	__le32 fc_ino;
- 	__u8 fc_raw_inode[];
+  * Complete a fast commit by writing tail tag.
+  *
 
 
