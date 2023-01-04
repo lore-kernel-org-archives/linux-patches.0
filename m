@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FFF7AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87D71C433EF;
-	Wed,  4 Jan 2023 16:20:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21700AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89104C433EF;
+	Wed,  4 Jan 2023 16:20:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849220;
-	bh=zmZK2hSRdTde47tKGWbmUFRMXQh0cYoEwfN3TOho04g=;
+	s=korg; t=1672849223;
+	bh=QfOeRVhAUwAPl3Vbl1Xt2m5e8TWalbNi4D7WzqtcR98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=me0RG13AAz1jAfeyQFlBfNBs9VIJDVRuKqK/JGjXm8TKLie+fTjt4SCoxcYnNt3wF
-	 qXFTr0pvynUIU/FBCnvJ8b6Xou0UKBeo3U8U131yTH3hEB7aaKVehOnyQ4umZj1nna
-	 SRmJUJFOQZsr2YsYKW424Dm7BDmEj2AeEMKvGR/s=
+	b=cRGo1gkm4Llnnq+hzQZ9KLmXDqAqdfCEWiPhPd13IBSA4Pk//zZOn26sndzqtYHUw
+	 yASdWC0oTS6NINK4RywDOEOl5M44l1N1GQ7lQLW6Dj7+fo9Gc+VqD2XAtv1UZYDDzM
+	 rfYcosjV3xSk782iuyh1E9Oup4pYstnYbWo2Z438=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Ser <contact@emersion.fr>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Lyude Paul <lyude@redhat.com>,
-	=?UTF-8?q?Jonas=20=C3=85dahl?= <jadahl@redhat.com>
-Subject: [PATCH 6.1 153/207] drm/connector: send hotplug uevent on connector cleanup
-Date: Wed,  4 Jan 2023 17:06:51 +0100
-Message-Id: <20230104160516.748791608@linuxfoundation.org>
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.0 085/177] ravb: Fix "failed to switch device to config mode" message during unbind
+Date: Wed,  4 Jan 2023 17:06:16 +0100
+Message-Id: <20230104160510.220555272@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,56 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Simon Ser <contact@emersion.fr>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-commit 6fdc2d490ea1369d17afd7e6eb66fecc5b7209bc upstream.
+commit c72a7e42592b2e18d862cf120876070947000d7a upstream.
 
-A typical DP-MST unplug removes a KMS connector. However care must
-be taken to properly synchronize with user-space. The expected
-sequence of events is the following:
+This patch fixes the error "ravb 11c20000.ethernet eth0: failed to switch
+device to config mode" during unbind.
 
-1. The kernel notices that the DP-MST port is gone.
-2. The kernel marks the connector as disconnected, then sends a
-   uevent to make user-space re-scan the connector list.
-3. User-space notices the connector goes from connected to disconnected,
-   disables it.
-4. Kernel handles the IOCTL disabling the connector. On success,
-   the very last reference to the struct drm_connector is dropped and
-   drm_connector_cleanup() is called.
-5. The connector is removed from the list, and a uevent is sent to tell
-   user-space that the connector disappeared.
+We are doing register access after pm_runtime_put_sync().
 
-The very last step was missing. As a result, user-space thought the
-connector still existed and could try to disable it again. Since the
-kernel no longer knows about the connector, that would end up with
-EINVAL and confused user-space.
+We usually do cleanup in reverse order of init. Currently in
+remove(), the "pm_runtime_put_sync" is not in reverse order.
 
-Fix this by sending a hotplug uevent from drm_connector_cleanup().
+Probe
+	reset_control_deassert(rstc);
+	pm_runtime_enable(&pdev->dev);
+	pm_runtime_get_sync(&pdev->dev);
 
-Signed-off-by: Simon Ser <contact@emersion.fr>
+remove
+	pm_runtime_put_sync(&pdev->dev);
+	unregister_netdev(ndev);
+	..
+	ravb_mdio_release(priv);
+	pm_runtime_disable(&pdev->dev);
+
+Consider the call to unregister_netdev()
+unregister_netdev->unregister_netdevice_queue->rollback_registered_many
+that calls the below functions which access the registers after
+pm_runtime_put_sync()
+ 1) ravb_get_stats
+ 2) ravb_close
+
+Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
 Cc: stable@vger.kernel.org
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: Jonas Ådahl <jadahl@redhat.com>
-Tested-by: Jonas Ådahl <jadahl@redhat.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221017153150.60675-2-contact@emersion.fr
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20221214105118.2495313-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_connector.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/renesas/ravb_main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_connector.c
-+++ b/drivers/gpu/drm/drm_connector.c
-@@ -582,6 +582,9 @@ void drm_connector_cleanup(struct drm_co
- 	mutex_destroy(&connector->mutex);
- 
- 	memset(connector, 0, sizeof(*connector));
-+
-+	if (dev->registered)
-+		drm_sysfs_hotplug_event(dev);
- }
- EXPORT_SYMBOL(drm_connector_cleanup);
- 
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -2896,12 +2896,12 @@ static int ravb_remove(struct platform_d
+ 			  priv->desc_bat_dma);
+ 	/* Set reset mode */
+ 	ravb_write(ndev, CCC_OPC_RESET, CCC);
+-	pm_runtime_put_sync(&pdev->dev);
+ 	unregister_netdev(ndev);
+ 	if (info->nc_queues)
+ 		netif_napi_del(&priv->napi[RAVB_NC]);
+ 	netif_napi_del(&priv->napi[RAVB_BE]);
+ 	ravb_mdio_release(priv);
++	pm_runtime_put_sync(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	reset_control_assert(priv->rstc);
+ 	free_netdev(ndev);
 
 
