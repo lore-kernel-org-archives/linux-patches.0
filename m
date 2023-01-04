@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8343CAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC88C433EF;
-	Wed,  4 Jan 2023 16:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B529AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:22:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D499CC433D2;
+	Wed,  4 Jan 2023 16:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849325;
-	bh=tpTT5AEq+v0/3j8CsYJZrSMV1OS7xwr1Ck0yGVZL3Y8=;
+	s=korg; t=1672849328;
+	bh=nlUhkipnWJlGvxlQnVzGIT5NpikZ5PBb2UEBcPbAbZk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k9Pf2J0D13/9nDRYJWt78ytDKCFaU+EjOCEgtnUeqv3PMOqza5iTefS3Us/1Qbjuj
-	 ujXnldSs5BU2CufWuajXbDZaQhL1wb+a8cFDlsK7LgyoYsNaz2ODgncWDiT2DEGA0o
-	 rEIvWVNXAD3ORz4AKwKWSSA5RhXZl/TMaEhTFdAQ=
+	b=QBOUbtS1Tncj+PI3i0Lw0duqws6OSMOvUw6Z99kKW+bwwPRa6jQ1grJiQC9xoU92Z
+	 YUtFf+fw9cGwmDYif6L+h0VhP8XVH/dBse4v+gRbcI+9L/CZeqZPrvevn3/FInSlfJ
+	 BnCHKZqXwccyDE+KIjTgOSNd2iH858eNsXR2r5EA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.0 103/177] PCI/sysfs: Fix double free in error path
-Date: Wed,  4 Jan 2023 17:06:34 +0100
-Message-Id: <20230104160510.761340692@linuxfoundation.org>
+	syzbot+05a0f0ccab4a25626e38@syzkaller.appspotmail.com,
+	Ye Bin <yebin10@huawei.com>,
+	Eric Whitney <enwlinux@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.1 171/207] ext4: fix reserved cluster accounting in __es_remove_extent()
+Date: Wed,  4 Jan 2023 17:07:09 +0100
+Message-Id: <20230104160517.296797563@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,58 +37,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Ye Bin <yebin10@huawei.com>
 
-commit aa382ffa705bea9931ec92b6f3c70e1fdb372195 upstream.
+commit 1da18e38cb97e9521e93d63034521a9649524f64 upstream.
 
-When pci_create_attr() fails, pci_remove_resource_files() is called which
-will iterate over the res_attr[_wc] arrays and frees every non NULL entry.
-To avoid a double free here set the array entry only after it's clear we
-successfully initialized it.
+When bigalloc is enabled, reserved cluster accounting for delayed
+allocation is handled in extent_status.c.  With a corrupted file
+system, it's possible for this accounting to be incorrect,
+dsicovered by Syzbot:
 
-Fixes: b562ec8f74e4 ("PCI: Don't leak memory if sysfs_create_bin_file() fails")
-Link: https://lore.kernel.org/r/20221007070735.GX986@pengutronix.de/
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
-Cc: stable@vger.kernel.org
+EXT4-fs error (device loop0): ext4_validate_block_bitmap:398: comm rep:
+	bg 0: block 5: invalid block bitmap
+EXT4-fs (loop0): Delayed block allocation failed for inode 18 at logical
+	offset 0 with max blocks 32 with error 28
+EXT4-fs (loop0): This should not happen!! Data will be lost
+
+EXT4-fs (loop0): Total free blocks count 0
+EXT4-fs (loop0): Free/Dirty block details
+EXT4-fs (loop0): free_blocks=0
+EXT4-fs (loop0): dirty_blocks=32
+EXT4-fs (loop0): Block reservation details
+EXT4-fs (loop0): i_reserved_data_blocks=2
+EXT4-fs (loop0): Inode 18 (00000000845cd634):
+	i_reserved_data_blocks (1) not cleared!
+
+Above issue happens as follows:
+Assume:
+sbi->s_cluster_ratio = 16
+Step1:
+Insert delay block [0, 31] -> ei->i_reserved_data_blocks=2
+Step2:
+ext4_writepages
+  mpage_map_and_submit_extent -> return failed
+  mpage_release_unused_pages -> to release [0, 30]
+    ext4_es_remove_extent -> remove lblk=0 end=30
+      __es_remove_extent -> len1=0 len2=31-30=1
+ __es_remove_extent:
+ ...
+ if (len2 > 0) {
+  ...
+	  if (len1 > 0) {
+		  ...
+	  } else {
+		es->es_lblk = end + 1;
+		es->es_len = len2;
+		...
+	  }
+  	if (count_reserved)
+		count_rsvd(inode, lblk, ...);
+	goto out; -> will return but didn't calculate 'reserved'
+ ...
+Step3:
+ext4_destroy_inode -> trigger "i_reserved_data_blocks (1) not cleared!"
+
+To solve above issue if 'len2>0' call 'get_rsvd()' before goto out.
+
+Reported-by: syzbot+05a0f0ccab4a25626e38@syzkaller.appspotmail.com
+Fixes: 8fcc3a580651 ("ext4: rework reserved cluster accounting when invalidating pages")
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Reviewed-by: Eric Whitney <enwlinux@gmail.com>
+Link: https://lore.kernel.org/r/20221208033426.1832460-2-yebin@huaweicloud.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-sysfs.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ fs/ext4/extents_status.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/pci-sysfs.c
-+++ b/drivers/pci/pci-sysfs.c
-@@ -1174,11 +1174,9 @@ static int pci_create_attr(struct pci_de
+--- a/fs/ext4/extents_status.c
++++ b/fs/ext4/extents_status.c
+@@ -1371,7 +1371,7 @@ retry:
+ 		if (count_reserved)
+ 			count_rsvd(inode, lblk, orig_es.es_len - len1 - len2,
+ 				   &orig_es, &rc);
+-		goto out;
++		goto out_get_reserved;
+ 	}
  
- 	sysfs_bin_attr_init(res_attr);
- 	if (write_combine) {
--		pdev->res_attr_wc[num] = res_attr;
- 		sprintf(res_attr_name, "resource%d_wc", num);
- 		res_attr->mmap = pci_mmap_resource_wc;
- 	} else {
--		pdev->res_attr[num] = res_attr;
- 		sprintf(res_attr_name, "resource%d", num);
- 		if (pci_resource_flags(pdev, num) & IORESOURCE_IO) {
- 			res_attr->read = pci_read_resource_io;
-@@ -1196,10 +1194,17 @@ static int pci_create_attr(struct pci_de
- 	res_attr->size = pci_resource_len(pdev, num);
- 	res_attr->private = (void *)(unsigned long)num;
- 	retval = sysfs_create_bin_file(&pdev->dev.kobj, res_attr);
--	if (retval)
-+	if (retval) {
- 		kfree(res_attr);
-+		return retval;
-+	}
-+
-+	if (write_combine)
-+		pdev->res_attr_wc[num] = res_attr;
-+	else
-+		pdev->res_attr[num] = res_attr;
+ 	if (len1 > 0) {
+@@ -1413,6 +1413,7 @@ retry:
+ 		}
+ 	}
  
--	return retval;
-+	return 0;
- }
- 
- /**
++out_get_reserved:
+ 	if (count_reserved)
+ 		*reserved = get_rsvd(inode, end, es, &rc);
+ out:
 
 
