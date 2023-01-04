@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED98AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D88C433D2;
-	Wed,  4 Jan 2023 16:25:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5755CAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA9E1C433D2;
+	Wed,  4 Jan 2023 16:25:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849528;
-	bh=WdZBzUqzHsSXtl/ImaD5Xx7b6UTjmMax8khZpOu+Gws=;
+	s=korg; t=1672849531;
+	bh=9uXhCzmlfchr0Xu79x6phagBlCsIFYwWgajXMBr+hsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eVlgHnist0BZ3wdhhEhcyJU2BREaVedlNntMYyuuRdLnVrD0/gGBob622rUtSa+W3
-	 OosUtHSKLuKXJPwCRbqrZH+0OfR8WVn+LrCldb9yRoxZ/4g62QaOZvogq3aDgQmIbX
-	 k/3WLufnNb3U2ZSOcgopVMW5EYqm176KZfQlY880=
+	b=RkK32U1DMJXYFGu/R3t1Pe5CAA7za/0WtGqkxz+W+1tWKfEKOfF7w37ytsz6N03aQ
+	 TLHo+Ujc4lFJLW5nHob8fJbR2pQ1zKz7Gv2U1VR0d5J2xyf0ZuSo4biG1y0I3c5QDu
+	 QKoOgMqQTWtcwjtjSTwnAG1Esz0jICcbZ8zOJwwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wilson <chris.p.wilson@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.1 203/207] drm/i915/migrate: Account for the reserved_space
-Date: Wed,  4 Jan 2023 17:07:41 +0100
-Message-Id: <20230104160518.348113678@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.0 137/177] ext4: fix undefined behavior in bit shift for ext4_check_flag_values
+Date: Wed,  4 Jan 2023 17:07:08 +0100
+Message-Id: <20230104160511.800411179@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,79 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Wilson <chris.p.wilson@intel.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-commit 31a2e6cbe8a4eb0d1650fff4b77872b744e14a62 upstream.
+commit 3bf678a0f9c017c9ba7c581541dbc8453452a7ae upstream.
 
-If the ring is nearly full when calling into emit_pte(), we might
-incorrectly trample the reserved_space when constructing the packet to
-emit the PTEs. This then triggers the GEM_BUG_ON(rq->reserved_space >
-ring->space) when later submitting the request, since the request itself
-doesn't have enough space left in the ring to emit things like
-workarounds, breadcrumbs etc.
+Shifting signed 32-bit value by 31 bits is undefined, so changing
+significant bit to unsigned. The UBSAN warning calltrace like below:
 
-v2: Fix the whitespace errors
+UBSAN: shift-out-of-bounds in fs/ext4/ext4.h:591:2
+left shift of 1 by 31 places cannot be represented in type 'int'
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x7d/0xa5
+ dump_stack+0x15/0x1b
+ ubsan_epilogue+0xe/0x4e
+ __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
+ ext4_init_fs+0x5a/0x277
+ do_one_initcall+0x76/0x430
+ kernel_init_freeable+0x3b3/0x422
+ kernel_init+0x24/0x1e0
+ ret_from_fork+0x1f/0x30
+ </TASK>
 
-Testcase: igt@i915_selftests@live_emit_pte_full_ring
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/7535
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/6889
-Fixes: cf586021642d ("drm/i915/gt: Pipelined page migration")
-Signed-off-by: Chris Wilson <chris.p.wilson@intel.com>
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Andrzej Hajda <andrzej.hajda@intel.com>
-Cc: Andi Shyti <andi.shyti@linux.intel.com>
-Cc: Nirmoy Das <nirmoy.das@intel.com>
-Cc: <stable@vger.kernel.org> # v5.15+
-Tested-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221202122844.428006-1-matthew.auld@intel.com
-(cherry picked from commit 35168a6c4ed53db4f786858bac23b1474fd7d0dc)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 9a4c80194713 ("ext4: ensure Inode flags consistency are checked at build time")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221031055833.3966222-1-cuigaosheng1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_migrate.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ fs/ext4/ext4.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/gt/intel_migrate.c
-+++ b/drivers/gpu/drm/i915/gt/intel_migrate.c
-@@ -341,6 +341,16 @@ static int emit_no_arbitration(struct i9
- 	return 0;
- }
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -558,7 +558,7 @@ enum {
+  *
+  * It's not paranoia if the Murphy's Law really *is* out to get you.  :-)
+  */
+-#define TEST_FLAG_VALUE(FLAG) (EXT4_##FLAG##_FL == (1 << EXT4_INODE_##FLAG))
++#define TEST_FLAG_VALUE(FLAG) (EXT4_##FLAG##_FL == (1U << EXT4_INODE_##FLAG))
+ #define CHECK_FLAG_VALUE(FLAG) BUILD_BUG_ON(!TEST_FLAG_VALUE(FLAG))
  
-+static int max_pte_pkt_size(struct i915_request *rq, int pkt)
-+{
-+	struct intel_ring *ring = rq->ring;
-+
-+	pkt = min_t(int, pkt, (ring->space - rq->reserved_space) / sizeof(u32) + 5);
-+	pkt = min_t(int, pkt, (ring->size - ring->emit) / sizeof(u32) + 5);
-+
-+	return pkt;
-+}
-+
- static int emit_pte(struct i915_request *rq,
- 		    struct sgt_dma *it,
- 		    enum i915_cache_level cache_level,
-@@ -387,8 +397,7 @@ static int emit_pte(struct i915_request
- 		return PTR_ERR(cs);
- 
- 	/* Pack as many PTE updates as possible into a single MI command */
--	pkt = min_t(int, dword_length, ring->space / sizeof(u32) + 5);
--	pkt = min_t(int, pkt, (ring->size - ring->emit) / sizeof(u32) + 5);
-+	pkt = max_pte_pkt_size(rq, dword_length);
- 
- 	hdr = cs;
- 	*cs++ = MI_STORE_DATA_IMM | REG_BIT(21); /* as qword elements */
-@@ -421,8 +430,7 @@ static int emit_pte(struct i915_request
- 				}
- 			}
- 
--			pkt = min_t(int, dword_rem, ring->space / sizeof(u32) + 5);
--			pkt = min_t(int, pkt, (ring->size - ring->emit) / sizeof(u32) + 5);
-+			pkt = max_pte_pkt_size(rq, dword_rem);
- 
- 			hdr = cs;
- 			*cs++ = MI_STORE_DATA_IMM | REG_BIT(21);
+ static inline void ext4_check_flag_values(void)
 
 
