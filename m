@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2DAEAD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 179DFC433EF;
-	Wed,  4 Jan 2023 16:17:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3164AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C10C433EF;
+	Wed,  4 Jan 2023 16:17:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849056;
-	bh=rEQwKburwAjhvZf1nVvtLJP3EGo5KVNAlqkQxr7jGHE=;
+	s=korg; t=1672849059;
+	bh=dDJYnmAudk12nIt6HSKQqvvnhNuuMKTHRYY+o5qb4ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1EjlCC6hrvdrkMfVWGMLCOysqSkXKC91drTJc755Hpjf3liEdQz2u8X+y7oJ+dVXc
-	 kqro+fM1iuMUxd6mEWO5L+AAQ19cTsqXSdVukMxNg6YQeCfhL8Gd3N1gCcKz/66txZ
-	 Ezm6VvSNwEOu89VEPdSgb+/WPtlCh8qh49tl40KI=
+	b=VcavuSixl4354BHzWFPSNYh5cQAl+9evjyA/n7weUy716kQUbnLfF1n0eAefEADDl
+	 E7MUutZCzkY96zoZ+5c1qm/DYlpV4K49UEXYldIQtwjem95PI3xZdtLAizCUlPesVa
+	 UZYQrNzmg2XEKOFNKyoF6pFqGvyElmUaWsv5kp80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Gong <gongwei833x@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 6.1 126/207] PCI: Fix pci_device_is_present() for VFs by checking PF
-Date: Wed,  4 Jan 2023 17:06:24 +0100
-Message-Id: <20230104160515.913306798@linuxfoundation.org>
+	Peter Maydell <peter.maydell@linaro.org>,
+	Rob Herring <robh@kernel.org>
+Subject: [PATCH 6.0 057/177] of/kexec: Fix reading 32-bit "linux,initrd-{start,end}" values
+Date: Wed,  4 Jan 2023 17:05:48 +0100
+Message-Id: <20230104160509.372959309@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,59 +34,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: Rob Herring <robh@kernel.org>
 
-commit 98b04dd0b4577894520493d96bc4623387767445 upstream.
+commit e553ad8d7957697385e81034bf76db3b2cb2cf27 upstream.
 
-pci_device_is_present() previously didn't work for VFs because it reads the
-Vendor and Device ID, which are 0xffff for VFs, which looks like they
-aren't present.  Check the PF instead.
+"linux,initrd-start" and "linux,initrd-end" can be 32-bit values even on
+a 64-bit platform. Ideally, the size should be based on
+'#address-cells', but that has never been enforced in the kernel's FDT
+boot parsing code (early_init_dt_check_for_initrd()). Bootloader
+behavior is known to vary. For example, kexec always writes these as
+64-bit. The result of incorrectly reading 32-bit values is most likely
+the reserved memory for the original initrd will still be reserved
+for the new kernel. The original arm64 equivalent of this code failed to
+release the initrd reserved memory in *all* cases.
 
-Wei Gong reported that if virtio I/O is in progress when the driver is
-unbound or "0" is written to /sys/.../sriov_numvfs, the virtio I/O
-operation hangs, which may result in output like this:
+Use of_read_number() to mirror the early_init_dt_check_for_initrd()
+code.
 
-  task:bash state:D stack:    0 pid: 1773 ppid:  1241 flags:0x00004002
-  Call Trace:
-   schedule+0x4f/0xc0
-   blk_mq_freeze_queue_wait+0x69/0xa0
-   blk_mq_freeze_queue+0x1b/0x20
-   blk_cleanup_queue+0x3d/0xd0
-   virtblk_remove+0x3c/0xb0 [virtio_blk]
-   virtio_dev_remove+0x4b/0x80
-   ...
-   device_unregister+0x1b/0x60
-   unregister_virtio_device+0x18/0x30
-   virtio_pci_remove+0x41/0x80
-   pci_device_remove+0x3e/0xb0
-
-This happened because pci_device_is_present(VF) returned "false" in
-virtio_pci_remove(), so it called virtio_break_device().  The broken vq
-meant that vring_interrupt() skipped the vq.callback() that would have
-completed the virtio I/O operation via virtblk_done().
-
-[bhelgaas: commit log, simplify to always use pci_physfn(), add stable tag]
-Link: https://lore.kernel.org/r/20221026060912.173250-1-mst@redhat.com
-Reported-by: Wei Gong <gongwei833x@gmail.com>
-Tested-by: Wei Gong <gongwei833x@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: b30be4dc733e ("of: Add a common kexec FDT setup function")
 Cc: stable@vger.kernel.org
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Link: https://lore.kernel.org/r/20221128202440.1411895-1-robh@kernel.org
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/of/kexec.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -6447,6 +6447,8 @@ bool pci_device_is_present(struct pci_de
+--- a/drivers/of/kexec.c
++++ b/drivers/of/kexec.c
+@@ -281,7 +281,7 @@ void *of_kexec_alloc_and_setup_fdt(const
+ 				   const char *cmdline, size_t extra_fdt_size)
  {
- 	u32 v;
+ 	void *fdt;
+-	int ret, chosen_node;
++	int ret, chosen_node, len;
+ 	const void *prop;
+ 	size_t fdt_size;
  
-+	/* Check PF if pdev is a VF, since VF Vendor/Device IDs are 0xffff */
-+	pdev = pci_physfn(pdev);
- 	if (pci_dev_is_disconnected(pdev))
- 		return false;
- 	return pci_bus_read_dev_vendor_id(pdev->bus, pdev->devfn, &v, 0);
+@@ -324,19 +324,19 @@ void *of_kexec_alloc_and_setup_fdt(const
+ 		goto out;
+ 
+ 	/* Did we boot using an initrd? */
+-	prop = fdt_getprop(fdt, chosen_node, "linux,initrd-start", NULL);
++	prop = fdt_getprop(fdt, chosen_node, "linux,initrd-start", &len);
+ 	if (prop) {
+ 		u64 tmp_start, tmp_end, tmp_size;
+ 
+-		tmp_start = fdt64_to_cpu(*((const fdt64_t *) prop));
++		tmp_start = of_read_number(prop, len / 4);
+ 
+-		prop = fdt_getprop(fdt, chosen_node, "linux,initrd-end", NULL);
++		prop = fdt_getprop(fdt, chosen_node, "linux,initrd-end", &len);
+ 		if (!prop) {
+ 			ret = -EINVAL;
+ 			goto out;
+ 		}
+ 
+-		tmp_end = fdt64_to_cpu(*((const fdt64_t *) prop));
++		tmp_end = of_read_number(prop, len / 4);
+ 
+ 		/*
+ 		 * kexec reserves exact initrd size, while firmware may
 
 
