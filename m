@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9300AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:13:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A9BC433D2;
-	Wed,  4 Jan 2023 16:13:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1970AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:13:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B3F0C433EF;
+	Wed,  4 Jan 2023 16:13:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848827;
-	bh=CRY/T8PsxHx6HYu6Q95DGO5VlQ3cyv5vVESvY3rFo/E=;
+	s=korg; t=1672848830;
+	bh=9MkbbxsK9aL9abwNpbWHTyHy3Sm/cMBJ8YxmLMLB6Ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pc2c9/BJpmg72ppPWyzAj9Jyn6zrHTSuRwWxc6NZ/dNurPAD6MyGEudpVH9t3A7bn
-	 Beep6vhgo2LMOMZZeNKCbZeLGe8tOoVFFiHfN13LuLRHRbETJ+YNfHjau8JRp5J9gi
-	 EX77+Rkaax/9WPn1N5LJCpXWwqgxMX/gAwoNwx7Y=
+	b=b6k5WSJzSkE6LVQHtBn7D3WXxk64KDglrPVYbrukvRb9EchXYZraiDA/Xml8n09yT
+	 emXzSnRx8f4gcw/qAJ3u36v1FYn/VGtQ9nj+ZC83n8icWpLUBgYZ66JG/DPc5y7dhi
+	 kiVLhoy/bf0m9WO46hlSAc2D9zRrk6zQLLBZANYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	kernel test robot <lkp@intel.com>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH 6.0 021/177] ARM: ux500: do not directly dereference __iomem
-Date: Wed,  4 Jan 2023 17:05:12 +0100
-Message-Id: <20230104160508.304567465@linuxfoundation.org>
+	Michael Jeanson <mjeanson@efficios.com>,
+	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 6.1 091/207] powerpc/ftrace: fix syscall tracing on PPC64_ELF_ABI_V1
+Date: Wed,  4 Jan 2023 17:05:49 +0100
+Message-Id: <20230104160514.817893156@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,54 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Michael Jeanson <mjeanson@efficios.com>
 
-commit 65b0e307a1a9193571db12910f382f84195a3d29 upstream.
+commit ad050d2390fccb22aa3e6f65e11757ce7a5a7ca5 upstream.
 
-Sparse reports that calling add_device_randomness() on `uid` is a
-violation of address spaces. And indeed the next usage uses readl()
-properly, but that was left out when passing it toadd_device_
-randomness(). So instead copy the whole thing to the stack first.
+In v5.7 the powerpc syscall entry/exit logic was rewritten in C, on
+PPC64_ELF_ABI_V1 this resulted in the symbols in the syscall table
+changing from their dot prefixed variant to the non-prefixed ones.
 
-Fixes: 4040d10a3d44 ("ARM: ux500: add DB serial number to entropy pool")
-Cc: Linus Walleij <linus.walleij@linaro.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/202210230819.loF90KDh-lkp@intel.com/
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Link: https://lore.kernel.org/r/20221108123755.207438-1-Jason@zx2c4.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Since ftrace prefixes a dot to the syscall names when matching them to
+build its syscall event list, this resulted in no syscall events being
+available.
+
+Remove the PPC64_ELF_ABI_V1 specific version of
+arch_syscall_match_sym_name to have the same behavior across all powerpc
+variants.
+
+Fixes: 68b34588e202 ("powerpc/64/sycall: Implement syscall entry/exit logic in C")
+Cc: stable@vger.kernel.org # v5.7+
+Signed-off-by: Michael Jeanson <mjeanson@efficios.com>
+Reviewed-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20221201161442.2127231-1-mjeanson@efficios.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/ux500/ux500-soc-id.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ arch/powerpc/include/asm/ftrace.h |   12 ------------
+ 1 file changed, 12 deletions(-)
 
---- a/drivers/soc/ux500/ux500-soc-id.c
-+++ b/drivers/soc/ux500/ux500-soc-id.c
-@@ -167,20 +167,18 @@ ATTRIBUTE_GROUPS(ux500_soc);
- static const char *db8500_read_soc_id(struct device_node *backupram)
+--- a/arch/powerpc/include/asm/ftrace.h
++++ b/arch/powerpc/include/asm/ftrace.h
+@@ -64,17 +64,6 @@ void ftrace_graph_func(unsigned long ip,
+  * those.
+  */
+ #define ARCH_HAS_SYSCALL_MATCH_SYM_NAME
+-#ifdef CONFIG_PPC64_ELF_ABI_V1
+-static inline bool arch_syscall_match_sym_name(const char *sym, const char *name)
+-{
+-	/* We need to skip past the initial dot, and the __se_sys alias */
+-	return !strcmp(sym + 1, name) ||
+-		(!strncmp(sym, ".__se_sys", 9) && !strcmp(sym + 6, name)) ||
+-		(!strncmp(sym, ".ppc_", 5) && !strcmp(sym + 5, name + 4)) ||
+-		(!strncmp(sym, ".ppc32_", 7) && !strcmp(sym + 7, name + 4)) ||
+-		(!strncmp(sym, ".ppc64_", 7) && !strcmp(sym + 7, name + 4));
+-}
+-#else
+ static inline bool arch_syscall_match_sym_name(const char *sym, const char *name)
  {
- 	void __iomem *base;
--	void __iomem *uid;
- 	const char *retstr;
-+	u32 uid[5];
- 
- 	base = of_iomap(backupram, 0);
- 	if (!base)
- 		return NULL;
--	uid = base + 0x1fc0;
-+	memcpy_fromio(uid, base + 0x1fc0, sizeof(uid));
- 
- 	/* Throw these device-specific numbers into the entropy pool */
--	add_device_randomness(uid, 0x14);
-+	add_device_randomness(uid, sizeof(uid));
- 	retstr = kasprintf(GFP_KERNEL, "%08x%08x%08x%08x%08x",
--			 readl((u32 *)uid+0),
--			 readl((u32 *)uid+1), readl((u32 *)uid+2),
--			 readl((u32 *)uid+3), readl((u32 *)uid+4));
-+			   uid[0], uid[1], uid[2], uid[3], uid[4]);
- 	iounmap(base);
- 	return retstr;
+ 	return !strcmp(sym, name) ||
+@@ -83,7 +72,6 @@ static inline bool arch_syscall_match_sy
+ 		(!strncmp(sym, "ppc32_", 6) && !strcmp(sym + 6, name + 4)) ||
+ 		(!strncmp(sym, "ppc64_", 6) && !strcmp(sym + 6, name + 4));
  }
+-#endif /* CONFIG_PPC64_ELF_ABI_V1 */
+ #endif /* CONFIG_FTRACE_SYSCALLS */
+ 
+ #if defined(CONFIG_PPC64) && defined(CONFIG_FUNCTION_TRACER)
 
 
