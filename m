@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F3EFAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:27:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90288C433EF;
-	Wed,  4 Jan 2023 16:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 633F6AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:27:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB96BC433F1;
+	Wed,  4 Jan 2023 16:27:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849666;
-	bh=A1uw5Hxj7vIDBREgQvE/zNZFncoElsjiK6WCBNxgwko=;
+	s=korg; t=1672849669;
+	bh=aUREFiTu4QhMjkabcRWkj1RNh9ul3PEukNS6B9e4KVU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hyYxDiL0lU7pcrx8+l4ewFVjzUJlU5dZI77serJ74WqucOaTzWxNHqUFkuiVam/5E
-	 eGXrBq1Fh2U3nIdXoWrbWxVsE6vvvKvhApr/e3OMzAXsUh4ZpD3fpjm+RLokwp/jBO
-	 X9/K3z5pTtccFKoVd2NwOiuHNIfS9i/YaO1YvUyY=
+	b=rjbpAui74fQdirXd4dXMmILp3bZ2bM2i4FoBW6oj/5KVwM3iAyaMvkkRdGz4se1bP
+	 KDexmV1owSmojZy79o7Jcu/1aLyqBz4PpY7P2pEbQBTiTKz7o1iBfQ9lj7XKY2ARiq
+	 uf9iNpPdyAlNrduANTgt6ZjG6Ef4Jucle2ec/gfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <evan.quan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.0 177/177] drm/amd/pm: correct the fan speed retrieving in PWM for some SMU13 asics
-Date: Wed,  4 Jan 2023 17:07:48 +0100
-Message-Id: <20230104160513.051677410@linuxfoundation.org>
+	Eric Biggers <ebiggers@google.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.0 149/177] ext4: add missing validation of fast-commit record lengths
+Date: Wed,  4 Jan 2023 17:07:20 +0100
+Message-Id: <20230104160512.174492445@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -34,80 +34,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Evan Quan <evan.quan@amd.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit e73fc71e8f015d61f3adca7659cb209fd5117aa5 upstream.
+commit 64b4a25c3de81a69724e888ec2db3533b43816e2 upstream.
 
-For SMU 13.0.0 and 13.0.7, the output from PMFW is in percent. Driver
-need to convert that into correct PMW(255) based.
+Validate the inode and filename lengths in fast-commit journal records
+so that a malicious fast-commit journal cannot cause a crash by having
+invalid values for these.  Also validate EXT4_FC_TAG_DEL_RANGE.
 
-Signed-off-by: Evan Quan <evan.quan@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.0, 6.1
+Fixes: aa75f4d3daae ("ext4: main fast-commit commit path")
+Cc: <stable@vger.kernel.org> # v5.10+
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20221106224841.279231-5-ebiggers@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |   17 ++++++++++++++---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c |   17 ++++++++++++++---
- 2 files changed, 28 insertions(+), 6 deletions(-)
+ fs/ext4/fast_commit.c |   38 +++++++++++++++++++-------------------
+ fs/ext4/fast_commit.h |    2 +-
+ 2 files changed, 20 insertions(+), 20 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -1417,12 +1417,23 @@ out:
- static int smu_v13_0_0_get_fan_speed_pwm(struct smu_context *smu,
- 					 uint32_t *speed)
- {
-+	int ret;
-+
- 	if (!speed)
- 		return -EINVAL;
- 
--	return smu_v13_0_0_get_smu_metrics_data(smu,
--						METRICS_CURR_FANPWM,
--						speed);
-+	ret = smu_v13_0_0_get_smu_metrics_data(smu,
-+					       METRICS_CURR_FANPWM,
-+					       speed);
-+	if (ret) {
-+		dev_err(smu->adev->dev, "Failed to get fan speed(PWM)!");
-+		return ret;
-+	}
-+
-+	/* Convert the PMFW output which is in percent to pwm(255) based */
-+	*speed = MIN(*speed * 255 / 100, 255);
-+
-+	return 0;
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -2000,32 +2000,31 @@ void ext4_fc_replay_cleanup(struct super
+ 	kfree(sbi->s_fc_replay_state.fc_modified_inodes);
  }
  
- static int smu_v13_0_0_get_fan_speed_rpm(struct smu_context *smu,
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-@@ -1361,12 +1361,23 @@ static int smu_v13_0_7_populate_umd_stat
- static int smu_v13_0_7_get_fan_speed_pwm(struct smu_context *smu,
- 					 uint32_t *speed)
+-static inline bool ext4_fc_tag_len_isvalid(struct ext4_fc_tl *tl,
+-					   u8 *val, u8 *end)
++static bool ext4_fc_value_len_isvalid(struct ext4_sb_info *sbi,
++				      int tag, int len)
  {
-+	int ret;
-+
- 	if (!speed)
- 		return -EINVAL;
- 
--	return smu_v13_0_7_get_smu_metrics_data(smu,
--						METRICS_CURR_FANPWM,
--						speed);
-+	ret = smu_v13_0_7_get_smu_metrics_data(smu,
-+					       METRICS_CURR_FANPWM,
-+					       speed);
-+	if (ret) {
-+		dev_err(smu->adev->dev, "Failed to get fan speed(PWM)!");
-+		return ret;
-+	}
-+
-+	/* Convert the PMFW output which is in percent to pwm(255) based */
-+	*speed = MIN(*speed * 255 / 100, 255);
-+
-+	return 0;
+-	if (val + tl->fc_len > end)
+-		return false;
+-
+-	/* Here only check ADD_RANGE/TAIL/HEAD which will read data when do
+-	 * journal rescan before do CRC check. Other tags length check will
+-	 * rely on CRC check.
+-	 */
+-	switch (tl->fc_tag) {
++	switch (tag) {
+ 	case EXT4_FC_TAG_ADD_RANGE:
+-		return (sizeof(struct ext4_fc_add_range) == tl->fc_len);
+-	case EXT4_FC_TAG_TAIL:
+-		return (sizeof(struct ext4_fc_tail) <= tl->fc_len);
+-	case EXT4_FC_TAG_HEAD:
+-		return (sizeof(struct ext4_fc_head) == tl->fc_len);
++		return len == sizeof(struct ext4_fc_add_range);
+ 	case EXT4_FC_TAG_DEL_RANGE:
++		return len == sizeof(struct ext4_fc_del_range);
++	case EXT4_FC_TAG_CREAT:
+ 	case EXT4_FC_TAG_LINK:
+ 	case EXT4_FC_TAG_UNLINK:
+-	case EXT4_FC_TAG_CREAT:
++		len -= sizeof(struct ext4_fc_dentry_info);
++		return len >= 1 && len <= EXT4_NAME_LEN;
+ 	case EXT4_FC_TAG_INODE:
++		len -= sizeof(struct ext4_fc_inode);
++		return len >= EXT4_GOOD_OLD_INODE_SIZE &&
++			len <= sbi->s_inode_size;
+ 	case EXT4_FC_TAG_PAD:
+-	default:
+-		return true;
++		return true; /* padding can have any length */
++	case EXT4_FC_TAG_TAIL:
++		return len >= sizeof(struct ext4_fc_tail);
++	case EXT4_FC_TAG_HEAD:
++		return len == sizeof(struct ext4_fc_head);
+ 	}
++	return false;
  }
  
- static int smu_v13_0_7_get_fan_speed_rpm(struct smu_context *smu,
+ /*
+@@ -2088,7 +2087,8 @@ static int ext4_fc_replay_scan(journal_t
+ 	     cur = cur + EXT4_FC_TAG_BASE_LEN + tl.fc_len) {
+ 		ext4_fc_get_tl(&tl, cur);
+ 		val = cur + EXT4_FC_TAG_BASE_LEN;
+-		if (!ext4_fc_tag_len_isvalid(&tl, val, end)) {
++		if (tl.fc_len > end - val ||
++		    !ext4_fc_value_len_isvalid(sbi, tl.fc_tag, tl.fc_len)) {
+ 			ret = state->fc_replay_num_tags ?
+ 				JBD2_FC_REPLAY_STOP : -ECANCELED;
+ 			goto out_err;
+--- a/fs/ext4/fast_commit.h
++++ b/fs/ext4/fast_commit.h
+@@ -58,7 +58,7 @@ struct ext4_fc_dentry_info {
+ 	__u8 fc_dname[];
+ };
+ 
+-/* Value structure for EXT4_FC_TAG_INODE and EXT4_FC_TAG_INODE_PARTIAL. */
++/* Value structure for EXT4_FC_TAG_INODE. */
+ struct ext4_fc_inode {
+ 	__le32 fc_ino;
+ 	__u8 fc_raw_inode[];
 
 
