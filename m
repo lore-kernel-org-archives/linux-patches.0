@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34652AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:15:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA5C5C433D2;
-	Wed,  4 Jan 2023 16:15:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB94AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:15:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F84C433EF;
+	Wed,  4 Jan 2023 16:15:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848911;
-	bh=bD4MAlC7kSU5pT6G81b9StRTiVp5PW64Q40gwQlyRyc=;
+	s=korg; t=1672848914;
+	bh=r6yvBeFbds1YEWpwfD/9LHlsc+lMwYeCu9F4msfA7Zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hBMgdaWOwbfH30oyymZaWdhmaRcGHhVhNwkeQbFpJwa2YH0jgq9V7qUIv2y9TTfLY
-	 0LC48y+UJRX3tEL3i89ZBLX8IRLLno6IwBuHFbYX1wN3sFBbVjmd3NwQRadWNneCGg
-	 NZvDdKZ8VrzoA9OvgnD5IebUL1uZZRN9R9mQ0y7A=
+	b=iXyfio+I8hCwzwXXIUXOkMmTkxkPbJNl8oLCUt+XDlQxNsEC9BV0wsMK/Dhszfgbs
+	 nlrxBNntlz4A4pXF0LMGo0IjjI3kmD1Bdb3+9i/xnBQtKtatM9tchGYmrjaEeWlVZr
+	 jFuZHO9JvPuL809vf2Lujfx9x1F7+GQ1XPIbWp88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 103/207] cifs: fix confusing debug message
-Date: Wed,  4 Jan 2023 17:06:01 +0100
-Message-Id: <20230104160515.178374934@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.0 016/177] phy: qcom-qmp-combo: fix out-of-bounds clock access
+Date: Wed,  4 Jan 2023 17:05:07 +0100
+Message-Id: <20230104160508.149096439@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,54 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@cjr.nz>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit a85ceafd41927e41a4103d228a993df7edd8823b upstream.
+commit d8a5b59c5fc75c99ba17e3eb1a8f580d8d172b28 upstream.
 
-Since rc was initialised to -ENOMEM in cifs_get_smb_ses(), when an
-existing smb session was found, free_xid() would be called and then
-print
+The SM8250 only uses three clocks but the DP configuration erroneously
+described four clocks.
 
-  CIFS: fs/cifs/connect.c: Existing tcp session with server found
-  CIFS: fs/cifs/connect.c: VFS: in cifs_get_smb_ses as Xid: 44 with uid: 0
-  CIFS: fs/cifs/connect.c: Existing smb sess found (status=1)
-  CIFS: fs/cifs/connect.c: VFS: leaving cifs_get_smb_ses (xid = 44) rc = -12
+In case the DP part of the PHY is initialised before the USB part, this
+would lead to uninitialised memory beyond the bulk-clocks array to be
+treated as a clock pointer as the clocks are requested based on the USB
+configuration.
 
-Fix this by initialising rc to 0 and then let free_xid() print this
-instead
-
-  CIFS: fs/cifs/connect.c: Existing tcp session with server found
-  CIFS: fs/cifs/connect.c: VFS: in cifs_get_smb_ses as Xid: 14 with uid: 0
-  CIFS: fs/cifs/connect.c: Existing smb sess found (status=1)
-  CIFS: fs/cifs/connect.c: VFS: leaving cifs_get_smb_ses (xid = 14) rc = 0
-
-Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Cc: stable@vger.kernel.org
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: aff188feb5e1 ("phy: qcom-qmp: add support for sm8250-usb3-dp phy")
+Cc: stable@vger.kernel.org	# 5.13
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20221114081346.5116-2-johan+linaro@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/connect.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -2157,7 +2157,7 @@ cifs_set_cifscreds(struct smb3_fs_contex
- struct cifs_ses *
- cifs_get_smb_ses(struct TCP_Server_Info *server, struct smb3_fs_context *ctx)
- {
--	int rc = -ENOMEM;
-+	int rc = 0;
- 	unsigned int xid;
- 	struct cifs_ses *ses;
- 	struct sockaddr_in *addr = (struct sockaddr_in *)&server->dstaddr;
-@@ -2206,6 +2206,8 @@ cifs_get_smb_ses(struct TCP_Server_Info
- 		return ses;
- 	}
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -1032,8 +1032,8 @@ static const struct qmp_phy_cfg sm8250_d
+ 	.serdes_tbl_hbr3	= qmp_v4_dp_serdes_tbl_hbr3,
+ 	.serdes_tbl_hbr3_num	= ARRAY_SIZE(qmp_v4_dp_serdes_tbl_hbr3),
  
-+	rc = -ENOMEM;
-+
- 	cifs_dbg(FYI, "Existing smb sess not found\n");
- 	ses = sesInfoAlloc();
- 	if (ses == NULL)
+-	.clk_list		= qmp_v4_phy_clk_l,
+-	.num_clks		= ARRAY_SIZE(qmp_v4_phy_clk_l),
++	.clk_list		= qmp_v4_sm8250_usbphy_clk_l,
++	.num_clks		= ARRAY_SIZE(qmp_v4_sm8250_usbphy_clk_l),
+ 	.reset_list		= msm8996_usb3phy_reset_l,
+ 	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
 
 
