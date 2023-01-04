@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932BDAD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85BBC433EF;
-	Wed,  4 Jan 2023 16:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 834D8AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:17:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8AFDC433D2;
+	Wed,  4 Jan 2023 16:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849029;
-	bh=Sh52N/4oQ36B4hWKWoGJgmNOjeg4t01WHjVXah8fEf4=;
+	s=korg; t=1672849032;
+	bh=SxN2TOApz+oxv5v0CIdNI5JZj/rkfQMWJ8oWXdXYEOM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sGHxMgPs35Lnj0kFsBSrHCrptf4wpe/FImtvEIWJsl5ba3Ulsv5s2yBxW6xlv6YwV
-	 Qyxm76Ow/QuIXPo79fxO6Q+KV8UJ+lDI21uv2CaKXUnRuMqkMFhZjQf+DHWJ3foJ61
-	 q+BiJjgXapQvT3kfC/o3YvjTmEpvlC5EKHdxwb5Y=
+	b=YWIZig/09rNCSaBpd1v4glfwBYh43OLTWgvoNoT39rCxHr2OgOs/mHMklCLlQm3BM
+	 Yl53Y8389+ms3OJ3u0BZmGBtD0glV6F+uKIHLYtZgvDPEwL5tcLzjhwMx00HmcLCuz
+	 kVKQzYdag+CPwJy86rZjaFqIgDbieXLzm7FssRWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Yaliang Wang <Yaliang.Wang@windriver.com>,
-	Tudor Ambarus <tudor.ambarus@microchip.com>
-Subject: [PATCH 6.1 122/207] mtd: spi-nor: gigadevice: gd25q256: replace gd25q256_default_init with gd25q256_post_bfpt
-Date: Wed,  4 Jan 2023 17:06:20 +0100
-Message-Id: <20230104160515.778005185@linuxfoundation.org>
+	Li Ming <ming4.li@intel.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Lukas Wunner <lukas@wunner.de>
+Subject: [PATCH 6.0 053/177] PCI/DOE: Fix maximum data object length miscalculation
+Date: Wed,  4 Jan 2023 17:05:44 +0100
+Message-Id: <20230104160509.252879382@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,79 +36,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yaliang Wang <Yaliang.Wang@windriver.com>
+From: Li Ming <ming4.li@intel.com>
 
-commit 4dc49062a7e9c0c7261807fb855df1c611eb78c3 upstream.
+commit a4ff8e7a71601321f7bf7b58ede664dc0d774274 upstream.
 
-When utilizing PARSE_SFDP to initialize the flash parameter, the
-deprecated initializing method spi_nor_init_params_deprecated() and the
-function spi_nor_manufacturer_init_params() within it will never be
-executed, which results in the default_init hook function will also never
-be executed.
+Per PCIe r6.0, sec 6.30.1, a data object Length of 0x0 indicates 2^18
+DWORDs (256K DW or 1MB) being transferred.  Adjust the value of data object
+length for this case on both sending side and receiving side.
 
-This is okay for 'D' generation of GD25Q256, because 'D' generation is
-implementing the JESD216B standards, it has QER field defined in BFPT,
-parsing the SFDP can properly set the quad_enable function. The 'E'
-generation also implements the JESD216B standards, and it has the same
-status register definitions as 'D' generation, parsing the SFDP to set
-the quad_enable function should also work for 'E' generation.
+Don't bother checking whether Length is greater than SZ_1M because all
+values of the 18-bit Length field are valid, and it is impossible to
+represent anything larger than SZ_1M:
 
-However, the same thing can't apply to 'C' generation. 'C' generation
-'GD25Q256C' implements the JESD216 standards, and it doesn't have the
-QER field defined in BFPT, since it does have QE bit in status register
-1, the quad_enable hook needs to be tweaked to properly set the
-quad_enable function, this can be done in post_bfpt fixup hook.
+  0x00000    256K DW (1M bytes)
+  0x00001       1 DW (4 bytes)
+  ...
+  0x3ffff  256K-1 DW (1M - 4 bytes)
 
-Fixes: 047275f7de18 ("mtd: spi-nor: gigadevice: gd25q256: Init flash based on SFDP")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Yaliang Wang <Yaliang.Wang@windriver.com>
-[tudor.ambarus@microchip.com: Update comment in gd25q256_post_bfpt]
-Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221016171901.1483542-2-yaliang.wang@windriver.com
+[bhelgaas: commit log]
+Link: https://lore.kernel.org/r/20221116015637.3299664-1-ming4.li@intel.com
+Fixes: 9d24322e887b ("PCI/DOE: Add DOE mailbox support functions")
+Signed-off-by: Li Ming <ming4.li@intel.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org	# v6.0+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/gigadevice.c |   24 +++++++++++++++++-------
- 1 file changed, 17 insertions(+), 7 deletions(-)
+ drivers/pci/doe.c |   20 ++++++++++++++++----
+ 1 file changed, 16 insertions(+), 4 deletions(-)
 
---- a/drivers/mtd/spi-nor/gigadevice.c
-+++ b/drivers/mtd/spi-nor/gigadevice.c
-@@ -8,19 +8,29 @@
+--- a/drivers/pci/doe.c
++++ b/drivers/pci/doe.c
+@@ -29,6 +29,9 @@
+ #define PCI_DOE_FLAG_CANCEL	0
+ #define PCI_DOE_FLAG_DEAD	1
  
- #include "core.h"
- 
--static void gd25q256_default_init(struct spi_nor *nor)
-+static int
-+gd25q256_post_bfpt(struct spi_nor *nor,
-+		   const struct sfdp_parameter_header *bfpt_header,
-+		   const struct sfdp_bfpt *bfpt)
- {
- 	/*
--	 * Some manufacturer like GigaDevice may use different
--	 * bit to set QE on different memories, so the MFR can't
--	 * indicate the quad_enable method for this case, we need
--	 * to set it in the default_init fixup hook.
-+	 * GD25Q256C supports the first version of JESD216 which does not define
-+	 * the Quad Enable methods. Overwrite the default Quad Enable method.
-+	 *
-+	 * GD25Q256 GENERATION | SFDP MAJOR VERSION | SFDP MINOR VERSION
-+	 *      GD25Q256C      | SFDP_JESD216_MAJOR | SFDP_JESD216_MINOR
-+	 *      GD25Q256D      | SFDP_JESD216_MAJOR | SFDP_JESD216B_MINOR
-+	 *      GD25Q256E      | SFDP_JESD216_MAJOR | SFDP_JESD216B_MINOR
- 	 */
--	nor->params->quad_enable = spi_nor_sr1_bit6_quad_enable;
-+	if (bfpt_header->major == SFDP_JESD216_MAJOR &&
-+	    bfpt_header->minor == SFDP_JESD216_MINOR)
-+		nor->params->quad_enable = spi_nor_sr1_bit6_quad_enable;
++/* Max data object length is 2^18 dwords */
++#define PCI_DOE_MAX_LENGTH	(1 << 18)
 +
-+	return 0;
- }
+ /**
+  * struct pci_doe_mb - State for a single DOE mailbox
+  *
+@@ -107,6 +110,7 @@ static int pci_doe_send_req(struct pci_d
+ {
+ 	struct pci_dev *pdev = doe_mb->pdev;
+ 	int offset = doe_mb->cap_offset;
++	size_t length;
+ 	u32 val;
+ 	int i;
  
- static const struct spi_nor_fixups gd25q256_fixups = {
--	.default_init = gd25q256_default_init,
-+	.post_bfpt = gd25q256_post_bfpt,
- };
+@@ -123,15 +127,20 @@ static int pci_doe_send_req(struct pci_d
+ 	if (FIELD_GET(PCI_DOE_STATUS_ERROR, val))
+ 		return -EIO;
  
- static const struct flash_info gigadevice_nor_parts[] = {
++	/* Length is 2 DW of header + length of payload in DW */
++	length = 2 + task->request_pl_sz / sizeof(u32);
++	if (length > PCI_DOE_MAX_LENGTH)
++		return -EIO;
++	if (length == PCI_DOE_MAX_LENGTH)
++		length = 0;
++
+ 	/* Write DOE Header */
+ 	val = FIELD_PREP(PCI_DOE_DATA_OBJECT_HEADER_1_VID, task->prot.vid) |
+ 		FIELD_PREP(PCI_DOE_DATA_OBJECT_HEADER_1_TYPE, task->prot.type);
+ 	pci_write_config_dword(pdev, offset + PCI_DOE_WRITE, val);
+-	/* Length is 2 DW of header + length of payload in DW */
+ 	pci_write_config_dword(pdev, offset + PCI_DOE_WRITE,
+ 			       FIELD_PREP(PCI_DOE_DATA_OBJECT_HEADER_2_LENGTH,
+-					  2 + task->request_pl_sz /
+-						sizeof(u32)));
++					  length));
+ 	for (i = 0; i < task->request_pl_sz / sizeof(u32); i++)
+ 		pci_write_config_dword(pdev, offset + PCI_DOE_WRITE,
+ 				       task->request_pl[i]);
+@@ -178,7 +187,10 @@ static int pci_doe_recv_resp(struct pci_
+ 	pci_write_config_dword(pdev, offset + PCI_DOE_READ, 0);
+ 
+ 	length = FIELD_GET(PCI_DOE_DATA_OBJECT_HEADER_2_LENGTH, val);
+-	if (length > SZ_1M || length < 2)
++	/* A value of 0x0 indicates max data object length */
++	if (!length)
++		length = PCI_DOE_MAX_LENGTH;
++	if (length < 2)
+ 		return -EIO;
+ 
+ 	/* First 2 dwords have already been read */
 
 
