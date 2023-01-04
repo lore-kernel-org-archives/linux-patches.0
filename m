@@ -1,32 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5DFAD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:16:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8312C433D2;
-	Wed,  4 Jan 2023 16:16:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F6FAD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:16:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 984EEC433EF;
+	Wed,  4 Jan 2023 16:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849015;
-	bh=kDLBUV+Ye7w3eLOQ3Co93J5anMhbj5TxHng32TQWiYg=;
+	s=korg; t=1672849019;
+	bh=nPxBtxz6G++DwdQglkJOF6dm4xPDMrbf3WK8tdcieK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kt6tHknp3wfXodx1z4xUukG0eQAuVfFjvjeDEk/mGA55S7DTfuSeTU/WFWcOYl39R
-	 8p5n/l2MmmVVas/ENJomuh8BJNQ0EVeQLv45LjCIIkUUYwW+0wmPgLNCv9fBI8xKda
-	 LDdSzMkP0Zmj2fG7c7cYPhmF1+4afSahDbdfKo6g=
+	b=15M3aT2bbh2eWDXRLtcALSq+c3WtA6pKGf8JMfv0ZtzBqX1/uuWJwIyY+OzA0xw6w
+	 dKmfKkEdTY3g07o7G8r7DTbgkpZYNFy4CYScQcXZ8oYopxTXGjrnkoB/e2LHBd4ix/
+	 pTm9+NU4aZnPxzpjkn+OXHJxpRTjjwjqSOVriWR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jiaming Li <lijiaming30@huawei.com>,
-	Huaxin Lu <luhuaxin1@huawei.com>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 6.1 120/207] ima: Fix a potential NULL pointer access in ima_restore_measurement_list
-Date: Wed,  4 Jan 2023 17:06:18 +0100
-Message-Id: <20230104160515.708481194@linuxfoundation.org>
+	Luo Meng <luomeng12@huawei.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 6.0 051/177] dm cache: Fix UAF in destroy()
+Date: Wed,  4 Jan 2023 17:05:42 +0100
+Message-Id: <20230104160509.193949365@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -37,39 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huaxin Lu <luhuaxin1@huawei.com>
+From: Luo Meng <luomeng12@huawei.com>
 
-commit 11220db412edae8dba58853238f53258268bdb88 upstream.
+commit 6a459d8edbdbe7b24db42a5a9f21e6aa9e00c2aa upstream.
 
-In restore_template_fmt, when kstrdup fails, a non-NULL value will still be
-returned, which causes a NULL pointer access in template_desc_init_fields.
+Dm_cache also has the same UAF problem when dm_resume()
+and dm_destroy() are concurrent.
 
-Fixes: c7d09367702e ("ima: support restoring multiple template formats")
-Cc: stable@kernel.org
-Co-developed-by: Jiaming Li <lijiaming30@huawei.com>
-Signed-off-by: Jiaming Li <lijiaming30@huawei.com>
-Signed-off-by: Huaxin Lu <luhuaxin1@huawei.com>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Therefore, cancelling timer again in destroy().
+
+Cc: stable@vger.kernel.org
+Fixes: c6b4fcbad044e ("dm: add cache target")
+Signed-off-by: Luo Meng <luomeng12@huawei.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/ima/ima_template.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/md/dm-cache-target.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/security/integrity/ima/ima_template.c
-+++ b/security/integrity/ima/ima_template.c
-@@ -340,8 +340,11 @@ static struct ima_template_desc *restore
+--- a/drivers/md/dm-cache-target.c
++++ b/drivers/md/dm-cache-target.c
+@@ -1887,6 +1887,7 @@ static void destroy(struct cache *cache)
+ 	if (cache->prison)
+ 		dm_bio_prison_destroy_v2(cache->prison);
  
- 	template_desc->name = "";
- 	template_desc->fmt = kstrdup(template_name, GFP_KERNEL);
--	if (!template_desc->fmt)
-+	if (!template_desc->fmt) {
-+		kfree(template_desc);
-+		template_desc = NULL;
- 		goto out;
-+	}
++	cancel_delayed_work_sync(&cache->waker);
+ 	if (cache->wq)
+ 		destroy_workqueue(cache->wq);
  
- 	spin_lock(&template_list);
- 	list_add_tail_rcu(&template_desc->list, &defined_templates);
 
 
