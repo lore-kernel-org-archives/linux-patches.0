@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38282AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:26:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9AC5EC433D2;
-	Wed,  4 Jan 2023 16:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 487E7AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:26:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A523DC433D2;
+	Wed,  4 Jan 2023 16:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849577;
-	bh=d7qVbnylPvjOz6+l/uEdWMly/xKV8UcjOQvaxZQ9Zzc=;
+	s=korg; t=1672849580;
+	bh=GoVuUgJ2ENhXRFw6IMSLxyn28rUPaVlTS8SnQa47TaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S6uAqH7iNs7LGNApXu1cqKgePmRgFqZcBltAXaod1WtHw6FuiotMU2M8BuyFZwpsd
-	 sQ8RQZQHPBXXbTtmW+Qpof6nbCA3uVaYxEc2rJ3foRfG4j5243OiNF4j7TnKIHeFIz
-	 8EblMCOoEH0dXxTn5PviX+SoMuuMuZ8Bs+0M5rBk=
+	b=DKDpxpEcFklZmZ0h6HUvXqbe84sJHyLkY5Pp1EbFZ2F1xt9Q1bWfD9GDLqrWJrX9w
+	 EgaQQAfBhhnRU9SeXyVtCY1yiOIJefDBPKC89PpIH0IlLSIOKRMbSmo7ZvYNerOVHl
+	 YG8G8W6m9WGMCDRnM85nCzddMcPnn30Pk0LhUuxc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.0 122/177] parisc: Add missing FORCE prerequisites in Makefile
-Date: Wed,  4 Jan 2023 17:06:53 +0100
-Message-Id: <20230104160511.338764971@linuxfoundation.org>
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Catherine Hoang <catherine.hoang@oracle.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 6.1 189/207] ext4: dont return EINVAL from GETFSUUID when reporting UUID length
+Date: Wed,  4 Jan 2023 17:07:27 +0100
+Message-Id: <20230104160517.879095727@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -33,65 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Darrick J. Wong <djwong@kernel.org>
 
-commit 9086e6017957c5cd6ea28d94b70e0d513d6b7800 upstream.
+commit b76abb5157468756163fe7e3431c9fe32cba57ca upstream.
 
-Fix those make warnings:
-    arch/parisc/kernel/vdso32/Makefile:30: FORCE prerequisite is missing
-    arch/parisc/kernel/vdso64/Makefile:30: FORCE prerequisite is missing
+If userspace calls this ioctl with fsu_length (the length of the
+fsuuid.fsu_uuid array) set to zero, ext4 copies the desired uuid length
+out to userspace.  The kernel call returned a result from a valid input,
+so the return value here should be zero, not EINVAL.
 
-Add the missing FORCE prerequisites for all build targets identified by
-"make help".
+While we're at it, fix the copy_to_user call to make it clear that we're
+only copying out fsu_len.
 
-Fixes: e1f86d7b4b2a5213 ("kbuild: warn if FORCE is missing for if_changed(_dep,_rule) and filechk")
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org> # 5.18+
+Signed-off-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Catherine Hoang <catherine.hoang@oracle.com>
+Link: https://lore.kernel.org/r/166811138914.327006.9241306894437166566.stgit@magnolia
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/vdso32/Makefile |    4 ++--
- arch/parisc/kernel/vdso64/Makefile |    4 ++--
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ fs/ext4/ioctl.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/arch/parisc/kernel/vdso32/Makefile
-+++ b/arch/parisc/kernel/vdso32/Makefile
-@@ -26,7 +26,7 @@ $(obj)/vdso32_wrapper.o : $(obj)/vdso32.
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -1154,9 +1154,10 @@ static int ext4_ioctl_getuuid(struct ext
  
- # Force dependency (incbin is bad)
- # link rule for the .so file, .lds has to be first
--$(obj)/vdso32.so: $(src)/vdso32.lds $(obj-vdso32) $(obj-cvdso32) $(VDSO_LIBGCC)
-+$(obj)/vdso32.so: $(src)/vdso32.lds $(obj-vdso32) $(obj-cvdso32) $(VDSO_LIBGCC) FORCE
- 	$(call if_changed,vdso32ld)
+ 	if (fsuuid.fsu_len == 0) {
+ 		fsuuid.fsu_len = UUID_SIZE;
+-		if (copy_to_user(ufsuuid, &fsuuid, sizeof(fsuuid.fsu_len)))
++		if (copy_to_user(&ufsuuid->fsu_len, &fsuuid.fsu_len,
++					sizeof(fsuuid.fsu_len)))
+ 			return -EFAULT;
+-		return -EINVAL;
++		return 0;
+ 	}
  
- # assembly rules for the .S files
-@@ -38,7 +38,7 @@ $(obj-cvdso32): %.o: %.c FORCE
- 
- # actual build commands
- quiet_cmd_vdso32ld = VDSO32L $@
--      cmd_vdso32ld = $(CROSS32CC) $(c_flags) -Wl,-T $^ -o $@
-+      cmd_vdso32ld = $(CROSS32CC) $(c_flags) -Wl,-T $(filter-out FORCE, $^) -o $@
- quiet_cmd_vdso32as = VDSO32A $@
-       cmd_vdso32as = $(CROSS32CC) $(a_flags) -c -o $@ $<
- quiet_cmd_vdso32cc = VDSO32C $@
---- a/arch/parisc/kernel/vdso64/Makefile
-+++ b/arch/parisc/kernel/vdso64/Makefile
-@@ -26,7 +26,7 @@ $(obj)/vdso64_wrapper.o : $(obj)/vdso64.
- 
- # Force dependency (incbin is bad)
- # link rule for the .so file, .lds has to be first
--$(obj)/vdso64.so: $(src)/vdso64.lds $(obj-vdso64) $(VDSO_LIBGCC)
-+$(obj)/vdso64.so: $(src)/vdso64.lds $(obj-vdso64) $(VDSO_LIBGCC) FORCE
- 	$(call if_changed,vdso64ld)
- 
- # assembly rules for the .S files
-@@ -35,7 +35,7 @@ $(obj-vdso64): %.o: %.S FORCE
- 
- # actual build commands
- quiet_cmd_vdso64ld = VDSO64L $@
--      cmd_vdso64ld = $(CC) $(c_flags) -Wl,-T $^ -o $@
-+      cmd_vdso64ld = $(CC) $(c_flags) -Wl,-T $(filter-out FORCE, $^) -o $@
- quiet_cmd_vdso64as = VDSO64A $@
-       cmd_vdso64as = $(CC) $(a_flags) -c -o $@ $<
- 
+ 	if (fsuuid.fsu_len < UUID_SIZE || fsuuid.fsu_flags != 0)
 
 
