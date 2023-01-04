@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15F00AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F1BCC433EF;
-	Wed,  4 Jan 2023 16:20:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFDE8AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9C8C433EF;
+	Wed,  4 Jan 2023 16:20:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849237;
-	bh=zrfU231GJK/axSv6kEzBi+LS+JM7t34THONAJX0/JrM=;
+	s=korg; t=1672849240;
+	bh=EV5fyugVb4Hrhhura0t+d/w8dUF7LHNL+DIqthJzKEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wjQc6KJWCpmn65bVfIGPbm9n1PARG13RxGQQqNHlFXeYAfDU88JRh0M1Wkwf8omFU
-	 Cqy7y+dSbCYynUu4iR6EkI1SIcYN3ql0lWbWBeCD28nmZOlGT/+b1heibLevrC14Jq
-	 UYKP53tD7W27aXo9MpaLpKCT/HZhNOR0bD5bpM9s=
+	b=of889iUjRpfC8VP51ePLWXesPrdLMxZbsM0ZkYQ3b+yn2bRPETyek412NLZzukomv
+	 THjjVfuBq9O9dSj9T1ku8VY/uWq9v9Tr6ndt+jT3TWfCnNXU0eYrrFhUJP9xnukl7R
+	 RqcvxeCP9pSqcwLh3q06CrLWP+4EcRpVW5Vw7tcQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Wang <KevinYang.Wang@amd.com>,
-	Hawking Zhang <Hawking.Zhang@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.0 087/177] drm/amdgpu: fix mmhub register base coding error
-Date: Wed,  4 Jan 2023 17:06:18 +0100
-Message-Id: <20230104160510.282788013@linuxfoundation.org>
+	Lucas Stach <l.stach@pengutronix.de>,
+	=?UTF-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>
+Subject: [PATCH 6.1 156/207] drm/etnaviv: move idle mapping reaping into separate function
+Date: Wed,  4 Jan 2023 17:06:54 +0100
+Message-Id: <20230104160516.837706350@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,82 +34,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Wang <KevinYang.Wang@amd.com>
+From: Lucas Stach <l.stach@pengutronix.de>
 
-commit 347fafe0eb46df941965c355c77ce480e4d49f1f upstream.
+commit 5a40837debaa9dcc71765d32ce1a15be068b6cc2 upstream.
 
-fix MMHUB register base coding error.
+The same logic is already used in two different places and now
+it will also be needed outside of the compilation unit, so split
+it into a separate function.
 
-Fixes: ec6837591f992 ("drm/amdgpu/gmc10: program the smallK fragment size")
-
-Signed-off-by: Yang Wang <KevinYang.Wang@amd.com>
-Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # 5.19
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Reviewed-by: Guido Günther <agx@sigxcpu.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c   |    2 +-
- drivers/gpu/drm/amd/amdgpu/mmhub_v2_3.c   |    2 +-
- drivers/gpu/drm/amd/amdgpu/mmhub_v3_0.c   |    2 +-
- drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c |    2 +-
- drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_2.c |    2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/etnaviv/etnaviv_mmu.c |   23 +++++++++++++++--------
+ drivers/gpu/drm/etnaviv/etnaviv_mmu.h |    1 +
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
-@@ -319,7 +319,7 @@ static void mmhub_v2_0_init_cache_regs(s
- 
- 	tmp = mmMMVM_L2_CNTL5_DEFAULT;
- 	tmp = REG_SET_FIELD(tmp, MMVM_L2_CNTL5, L2_CACHE_SMALLK_FRAGMENT_SIZE, 0);
--	WREG32_SOC15(GC, 0, mmMMVM_L2_CNTL5, tmp);
-+	WREG32_SOC15(MMHUB, 0, mmMMVM_L2_CNTL5, tmp);
+--- a/drivers/gpu/drm/etnaviv/etnaviv_mmu.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_mmu.c
+@@ -135,6 +135,19 @@ static void etnaviv_iommu_remove_mapping
+ 	drm_mm_remove_node(&mapping->vram_node);
  }
  
- static void mmhub_v2_0_enable_system_domain(struct amdgpu_device *adev)
---- a/drivers/gpu/drm/amd/amdgpu/mmhub_v2_3.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v2_3.c
-@@ -243,7 +243,7 @@ static void mmhub_v2_3_init_cache_regs(s
++void etnaviv_iommu_reap_mapping(struct etnaviv_vram_mapping *mapping)
++{
++	struct etnaviv_iommu_context *context = mapping->context;
++
++	lockdep_assert_held(&context->lock);
++	WARN_ON(mapping->use);
++
++	etnaviv_iommu_remove_mapping(context, mapping);
++	etnaviv_iommu_context_put(mapping->context);
++	mapping->context = NULL;
++	list_del_init(&mapping->mmu_node);
++}
++
+ static int etnaviv_iommu_find_iova(struct etnaviv_iommu_context *context,
+ 				   struct drm_mm_node *node, size_t size)
+ {
+@@ -202,10 +215,7 @@ static int etnaviv_iommu_find_iova(struc
+ 		 * this mapping.
+ 		 */
+ 		list_for_each_entry_safe(m, n, &list, scan_node) {
+-			etnaviv_iommu_remove_mapping(context, m);
+-			etnaviv_iommu_context_put(m->context);
+-			m->context = NULL;
+-			list_del_init(&m->mmu_node);
++			etnaviv_iommu_reap_mapping(m);
+ 			list_del_init(&m->scan_node);
+ 		}
  
- 	tmp = mmMMVM_L2_CNTL5_DEFAULT;
- 	tmp = REG_SET_FIELD(tmp, MMVM_L2_CNTL5, L2_CACHE_SMALLK_FRAGMENT_SIZE, 0);
--	WREG32_SOC15(GC, 0, mmMMVM_L2_CNTL5, tmp);
-+	WREG32_SOC15(MMHUB, 0, mmMMVM_L2_CNTL5, tmp);
- }
+@@ -257,10 +267,7 @@ static int etnaviv_iommu_insert_exact(st
+ 	}
  
- static void mmhub_v2_3_enable_system_domain(struct amdgpu_device *adev)
---- a/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0.c
-@@ -275,7 +275,7 @@ static void mmhub_v3_0_init_cache_regs(s
+ 	list_for_each_entry_safe(m, n, &scan_list, scan_node) {
+-		etnaviv_iommu_remove_mapping(context, m);
+-		etnaviv_iommu_context_put(m->context);
+-		m->context = NULL;
+-		list_del_init(&m->mmu_node);
++		etnaviv_iommu_reap_mapping(m);
+ 		list_del_init(&m->scan_node);
+ 	}
  
- 	tmp = regMMVM_L2_CNTL5_DEFAULT;
- 	tmp = REG_SET_FIELD(tmp, MMVM_L2_CNTL5, L2_CACHE_SMALLK_FRAGMENT_SIZE, 0);
--	WREG32_SOC15(GC, 0, regMMVM_L2_CNTL5, tmp);
-+	WREG32_SOC15(MMHUB, 0, regMMVM_L2_CNTL5, tmp);
- }
+--- a/drivers/gpu/drm/etnaviv/etnaviv_mmu.h
++++ b/drivers/gpu/drm/etnaviv/etnaviv_mmu.h
+@@ -91,6 +91,7 @@ int etnaviv_iommu_map_gem(struct etnaviv
+ 	struct etnaviv_vram_mapping *mapping, u64 va);
+ void etnaviv_iommu_unmap_gem(struct etnaviv_iommu_context *context,
+ 	struct etnaviv_vram_mapping *mapping);
++void etnaviv_iommu_reap_mapping(struct etnaviv_vram_mapping *mapping);
  
- static void mmhub_v3_0_enable_system_domain(struct amdgpu_device *adev)
---- a/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c
-@@ -269,7 +269,7 @@ static void mmhub_v3_0_1_init_cache_regs
- 
- 	tmp = regMMVM_L2_CNTL5_DEFAULT;
- 	tmp = REG_SET_FIELD(tmp, MMVM_L2_CNTL5, L2_CACHE_SMALLK_FRAGMENT_SIZE, 0);
--	WREG32_SOC15(GC, 0, regMMVM_L2_CNTL5, tmp);
-+	WREG32_SOC15(MMHUB, 0, regMMVM_L2_CNTL5, tmp);
- }
- 
- static void mmhub_v3_0_1_enable_system_domain(struct amdgpu_device *adev)
---- a/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_2.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_2.c
-@@ -268,7 +268,7 @@ static void mmhub_v3_0_2_init_cache_regs
- 
- 	tmp = regMMVM_L2_CNTL5_DEFAULT;
- 	tmp = REG_SET_FIELD(tmp, MMVM_L2_CNTL5, L2_CACHE_SMALLK_FRAGMENT_SIZE, 0);
--	WREG32_SOC15(GC, 0, regMMVM_L2_CNTL5, tmp);
-+	WREG32_SOC15(MMHUB, 0, regMMVM_L2_CNTL5, tmp);
- }
- 
- static void mmhub_v3_0_2_enable_system_domain(struct amdgpu_device *adev)
+ int etnaviv_iommu_get_suballoc_va(struct etnaviv_iommu_context *ctx,
+ 				  struct etnaviv_vram_mapping *mapping,
 
 
