@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42AFAAD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:16:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAFB9C43392;
-	Wed,  4 Jan 2023 16:16:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 623FDAD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:16:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC793C433EF;
+	Wed,  4 Jan 2023 16:16:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848967;
-	bh=SnyqLqmv7BeHpxquiDuAgMIxqeZGsC5N0ylfD47dEaU=;
+	s=korg; t=1672848970;
+	bh=zrfU231GJK/axSv6kEzBi+LS+JM7t34THONAJX0/JrM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jI9/imKpuHaEHQuFv28RR7wEcahpy28gIROZLx/lo1lP7fu6gzUlpVlX0o6eb3UDR
-	 kKajT80tVUkSpUnRcJg1Gw817OoP33nvQMwgT45PBvFmoVBpK3RI4Bw25V47H/qN8A
-	 4AHRNuZJD/3gjAIpzESltL4IdU2sNsQOqinjk2ZM=
+	b=L1M/Sj3YL1Vui2pxLl2C6v77rMiaXoU6ZzcSvlrrUtUSDA4BKmzi2TMW0fO5ZVXRq
+	 bBu1y2QcBdXWJGze5qte3Hg+aVzeiKz0NOvPOdBQlrLWYRgYe8lCUuGIdm9Ld+aPVH
+	 HI7EJjPCFfTT365qVhwDRnfSONB6aKFtax+Kj3ys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Li <ercli@ucdavis.edu>,
-	Sean Christopherson <seanjc@google.com>
-Subject: [PATCH 6.1 083/207] KVM: nVMX: Inject #GP, not #UD, if "generic" VMXON CR0/CR4 check fails
-Date: Wed,  4 Jan 2023 17:05:41 +0100
-Message-Id: <20230104160514.572721684@linuxfoundation.org>
+	Yang Wang <KevinYang.Wang@amd.com>,
+	Hawking Zhang <Hawking.Zhang@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 110/207] drm/amdgpu: fix mmhub register base coding error
+Date: Wed,  4 Jan 2023 17:06:08 +0100
+Message-Id: <20230104160515.388707543@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
 References: <20230104160511.905925875@linuxfoundation.org>
@@ -34,136 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Yang Wang <KevinYang.Wang@amd.com>
 
-commit 9cc409325ddd776f6fd6293d5ce93ce1248af6e4 upstream.
+commit 347fafe0eb46df941965c355c77ce480e4d49f1f upstream.
 
-Inject #GP for if VMXON is attempting with a CR0/CR4 that fails the
-generic "is CRx valid" check, but passes the CR4.VMXE check, and do the
-generic checks _after_ handling the post-VMXON VM-Fail.
+fix MMHUB register base coding error.
 
-The CR4.VMXE check, and all other #UD cases, are special pre-conditions
-that are enforced prior to pivoting on the current VMX mode, i.e. occur
-before interception if VMXON is attempted in VMX non-root mode.
+Fixes: ec6837591f992 ("drm/amdgpu/gmc10: program the smallK fragment size")
 
-All other CR0/CR4 checks generate #GP and effectively have lower priority
-than the post-VMXON check.
-
-Per the SDM:
-
-    IF (register operand) or (CR0.PE = 0) or (CR4.VMXE = 0) or ...
-        THEN #UD;
-    ELSIF not in VMX operation
-        THEN
-            IF (CPL > 0) or (in A20M mode) or
-            (the values of CR0 and CR4 are not supported in VMX operation)
-                THEN #GP(0);
-    ELSIF in VMX non-root operation
-        THEN VMexit;
-    ELSIF CPL > 0
-        THEN #GP(0);
-    ELSE VMfail("VMXON executed in VMX root operation");
-    FI;
-
-which, if re-written without ELSIF, yields:
-
-    IF (register operand) or (CR0.PE = 0) or (CR4.VMXE = 0) or ...
-        THEN #UD
-
-    IF in VMX non-root operation
-        THEN VMexit;
-
-    IF CPL > 0
-        THEN #GP(0)
-
-    IF in VMX operation
-        THEN VMfail("VMXON executed in VMX root operation");
-
-    IF (in A20M mode) or
-       (the values of CR0 and CR4 are not supported in VMX operation)
-                THEN #GP(0);
-
-Note, KVM unconditionally forwards VMXON VM-Exits that occur in L2 to L1,
-i.e. there is no need to check the vCPU is not in VMX non-root mode.  Add
-a comment to explain why unconditionally forwarding such exits is
-functionally correct.
-
-Reported-by: Eric Li <ercli@ucdavis.edu>
-Fixes: c7d855c2aff2 ("KVM: nVMX: Inject #UD if VMXON is attempted with incompatible CR0/CR4")
+Signed-off-by: Yang Wang <KevinYang.Wang@amd.com>
+Reviewed-by: Hawking Zhang <Hawking.Zhang@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Link: https://lore.kernel.org/r/20221006001956.329314-1-seanjc@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |   44 +++++++++++++++++++++++++++++++++-----------
- 1 file changed, 33 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c   |    2 +-
+ drivers/gpu/drm/amd/amdgpu/mmhub_v2_3.c   |    2 +-
+ drivers/gpu/drm/amd/amdgpu/mmhub_v3_0.c   |    2 +-
+ drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c |    2 +-
+ drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_2.c |    2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -5100,24 +5100,35 @@ static int handle_vmxon(struct kvm_vcpu
- 		| FEAT_CTL_VMX_ENABLED_OUTSIDE_SMX;
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v2_0.c
+@@ -319,7 +319,7 @@ static void mmhub_v2_0_init_cache_regs(s
  
- 	/*
--	 * Note, KVM cannot rely on hardware to perform the CR0/CR4 #UD checks
--	 * that have higher priority than VM-Exit (see Intel SDM's pseudocode
--	 * for VMXON), as KVM must load valid CR0/CR4 values into hardware while
--	 * running the guest, i.e. KVM needs to check the _guest_ values.
-+	 * Manually check CR4.VMXE checks, KVM must force CR4.VMXE=1 to enter
-+	 * the guest and so cannot rely on hardware to perform the check,
-+	 * which has higher priority than VM-Exit (see Intel SDM's pseudocode
-+	 * for VMXON).
- 	 *
--	 * Rely on hardware for the other two pre-VM-Exit checks, !VM86 and
--	 * !COMPATIBILITY modes.  KVM may run the guest in VM86 to emulate Real
--	 * Mode, but KVM will never take the guest out of those modes.
-+	 * Rely on hardware for the other pre-VM-Exit checks, CR0.PE=1, !VM86
-+	 * and !COMPATIBILITY modes.  For an unrestricted guest, KVM doesn't
-+	 * force any of the relevant guest state.  For a restricted guest, KVM
-+	 * does force CR0.PE=1, but only to also force VM86 in order to emulate
-+	 * Real Mode, and so there's no need to check CR0.PE manually.
- 	 */
--	if (!nested_host_cr0_valid(vcpu, kvm_read_cr0(vcpu)) ||
--	    !nested_host_cr4_valid(vcpu, kvm_read_cr4(vcpu))) {
-+	if (!kvm_read_cr4_bits(vcpu, X86_CR4_VMXE)) {
- 		kvm_queue_exception(vcpu, UD_VECTOR);
- 		return 1;
- 	}
+ 	tmp = mmMMVM_L2_CNTL5_DEFAULT;
+ 	tmp = REG_SET_FIELD(tmp, MMVM_L2_CNTL5, L2_CACHE_SMALLK_FRAGMENT_SIZE, 0);
+-	WREG32_SOC15(GC, 0, mmMMVM_L2_CNTL5, tmp);
++	WREG32_SOC15(MMHUB, 0, mmMMVM_L2_CNTL5, tmp);
+ }
  
- 	/*
--	 * CPL=0 and all other checks that are lower priority than VM-Exit must
--	 * be checked manually.
-+	 * The CPL is checked for "not in VMX operation" and for "in VMX root",
-+	 * and has higher priority than the VM-Fail due to being post-VMXON,
-+	 * i.e. VMXON #GPs outside of VMX non-root if CPL!=0.  In VMX non-root,
-+	 * VMXON causes VM-Exit and KVM unconditionally forwards VMXON VM-Exits
-+	 * from L2 to L1, i.e. there's no need to check for the vCPU being in
-+	 * VMX non-root.
-+	 *
-+	 * Forwarding the VM-Exit unconditionally, i.e. without performing the
-+	 * #UD checks (see above), is functionally ok because KVM doesn't allow
-+	 * L1 to run L2 without CR4.VMXE=0, and because KVM never modifies L2's
-+	 * CR0 or CR4, i.e. it's L2's responsibility to emulate #UDs that are
-+	 * missed by hardware due to shadowing CR0 and/or CR4.
- 	 */
- 	if (vmx_get_cpl(vcpu)) {
- 		kvm_inject_gp(vcpu, 0);
-@@ -5127,6 +5138,17 @@ static int handle_vmxon(struct kvm_vcpu
- 	if (vmx->nested.vmxon)
- 		return nested_vmx_fail(vcpu, VMXERR_VMXON_IN_VMX_ROOT_OPERATION);
+ static void mmhub_v2_0_enable_system_domain(struct amdgpu_device *adev)
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v2_3.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v2_3.c
+@@ -243,7 +243,7 @@ static void mmhub_v2_3_init_cache_regs(s
  
-+	/*
-+	 * Invalid CR0/CR4 generates #GP.  These checks are performed if and
-+	 * only if the vCPU isn't already in VMX operation, i.e. effectively
-+	 * have lower priority than the VM-Fail above.
-+	 */
-+	if (!nested_host_cr0_valid(vcpu, kvm_read_cr0(vcpu)) ||
-+	    !nested_host_cr4_valid(vcpu, kvm_read_cr4(vcpu))) {
-+		kvm_inject_gp(vcpu, 0);
-+		return 1;
-+	}
-+
- 	if ((vmx->msr_ia32_feature_control & VMXON_NEEDED_FEATURES)
- 			!= VMXON_NEEDED_FEATURES) {
- 		kvm_inject_gp(vcpu, 0);
+ 	tmp = mmMMVM_L2_CNTL5_DEFAULT;
+ 	tmp = REG_SET_FIELD(tmp, MMVM_L2_CNTL5, L2_CACHE_SMALLK_FRAGMENT_SIZE, 0);
+-	WREG32_SOC15(GC, 0, mmMMVM_L2_CNTL5, tmp);
++	WREG32_SOC15(MMHUB, 0, mmMMVM_L2_CNTL5, tmp);
+ }
+ 
+ static void mmhub_v2_3_enable_system_domain(struct amdgpu_device *adev)
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0.c
+@@ -275,7 +275,7 @@ static void mmhub_v3_0_init_cache_regs(s
+ 
+ 	tmp = regMMVM_L2_CNTL5_DEFAULT;
+ 	tmp = REG_SET_FIELD(tmp, MMVM_L2_CNTL5, L2_CACHE_SMALLK_FRAGMENT_SIZE, 0);
+-	WREG32_SOC15(GC, 0, regMMVM_L2_CNTL5, tmp);
++	WREG32_SOC15(MMHUB, 0, regMMVM_L2_CNTL5, tmp);
+ }
+ 
+ static void mmhub_v3_0_enable_system_domain(struct amdgpu_device *adev)
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_1.c
+@@ -269,7 +269,7 @@ static void mmhub_v3_0_1_init_cache_regs
+ 
+ 	tmp = regMMVM_L2_CNTL5_DEFAULT;
+ 	tmp = REG_SET_FIELD(tmp, MMVM_L2_CNTL5, L2_CACHE_SMALLK_FRAGMENT_SIZE, 0);
+-	WREG32_SOC15(GC, 0, regMMVM_L2_CNTL5, tmp);
++	WREG32_SOC15(MMHUB, 0, regMMVM_L2_CNTL5, tmp);
+ }
+ 
+ static void mmhub_v3_0_1_enable_system_domain(struct amdgpu_device *adev)
+--- a/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_2.c
++++ b/drivers/gpu/drm/amd/amdgpu/mmhub_v3_0_2.c
+@@ -268,7 +268,7 @@ static void mmhub_v3_0_2_init_cache_regs
+ 
+ 	tmp = regMMVM_L2_CNTL5_DEFAULT;
+ 	tmp = REG_SET_FIELD(tmp, MMVM_L2_CNTL5, L2_CACHE_SMALLK_FRAGMENT_SIZE, 0);
+-	WREG32_SOC15(GC, 0, regMMVM_L2_CNTL5, tmp);
++	WREG32_SOC15(MMHUB, 0, regMMVM_L2_CNTL5, tmp);
+ }
+ 
+ static void mmhub_v3_0_2_enable_system_domain(struct amdgpu_device *adev)
 
 
