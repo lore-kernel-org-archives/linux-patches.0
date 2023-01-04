@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09665AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:19:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 760E9C433D2;
-	Wed,  4 Jan 2023 16:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36E48AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:20:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95EDAC433D2;
+	Wed,  4 Jan 2023 16:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849198;
-	bh=6jpokDVvcQWx/S1bfOQ9dYOcbxmdbiv1i0vC/4/NjDQ=;
+	s=korg; t=1672849202;
+	bh=o+z/HO3mYJ6hbuTxBezOeImd34Tgq1zLH5BVukxMeLY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ENHg749rL3ZCy3U1aROMRVy3iSdsG0jKCh+XRK/wFsXgv0WSTvgJfedRCnw/81G7w
-	 yWStTKXh9+9XYMIb3TxZ3lwrkxX/kof+HVVAL2NJza0prkxZwnWpvc6vAJ/ICgdun5
-	 pSW9Tg/fJPpFAS8/60mXTS19/kvoB2AvUW0LHRTs=
+	b=ZdMhmmkv8XB2YYyLhWFNShdVLgUzAKg3MMmKETUC8oVhl0n5dIhrmAuI6BL1dlv+a
+	 LHMEJlDGZ12OnoU4WhN1cRNCDEmkqOT1Km1LH9wZjkg3f/ykusIJHH9Lh7l+KDaAMp
+	 58mFsbYyno7bBdvmfhseNX/gbtCwJLdMRu4e5hco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Mendonca <rafaelmendsr@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.0 067/177] tracing: Fix race where eprobes can be called before the event
-Date: Wed,  4 Jan 2023 17:05:58 +0100
-Message-Id: <20230104160509.686116393@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 150/207] parisc: Drop duplicate kgdb_pdc console
+Date: Wed,  4 Jan 2023 17:06:48 +0100
+Message-Id: <20230104160516.657308276@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,43 +33,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Helge Deller <deller@gmx.de>
 
-commit d5f30a7da8ea8e6450250275cec5670cee3c4264 upstream.
+commit 7e6652c79ecd74e1112500668d956367dc3772a5 upstream.
 
-The flag that tells the event to call its triggers after reading the event
-is set for eprobes after the eprobe is enabled. This leads to a race where
-the eprobe may be triggered at the beginning of the event where the record
-information is NULL. The eprobe then dereferences the NULL record causing
-a NULL kernel pointer bug.
+The kgdb console is already implemented and registered in pdc_cons.c,
+so the duplicate code can be dropped.
 
-Test for a NULL record to keep this from happening.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20221116192552.1066630-1-rafaelmendsr@gmail.com/
-Link: https://lore.kernel.org/all/20221117214249.2addbe10@gandalf.local.home/
-
-Cc: stable@vger.kernel.org
-Fixes: 7491e2c442781 ("tracing: Add a probe that attaches to trace events")
-Reported-by: Rafael Mendonca <rafaelmendsr@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: <stable@vger.kernel.org> # 6.1+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_eprobe.c |    3 +++
- 1 file changed, 3 insertions(+)
+ arch/parisc/kernel/kgdb.c | 20 --------------------
+ 1 file changed, 20 deletions(-)
 
---- a/kernel/trace/trace_eprobe.c
-+++ b/kernel/trace/trace_eprobe.c
-@@ -563,6 +563,9 @@ static void eprobe_trigger_func(struct e
- 	if (unlikely(!rec))
- 		return;
- 
-+	if (unlikely(!rec))
-+		return;
-+
- 	__eprobe_trace_func(edata, rec);
+diff --git a/arch/parisc/kernel/kgdb.c b/arch/parisc/kernel/kgdb.c
+index ab7620f695be..b16fa9bac5f4 100644
+--- a/arch/parisc/kernel/kgdb.c
++++ b/arch/parisc/kernel/kgdb.c
+@@ -208,23 +208,3 @@ int kgdb_arch_handle_exception(int trap, int signo,
+ 	}
+ 	return -1;
  }
- 
+-
+-/* KGDB console driver which uses PDC to read chars from keyboard */
+-
+-static void kgdb_pdc_write_char(u8 chr)
+-{
+-	/* no need to print char. kgdb will do it. */
+-}
+-
+-static struct kgdb_io kgdb_pdc_io_ops = {
+-	.name		= "kgdb_pdc",
+-	.read_char	= pdc_iodc_getc,
+-	.write_char	= kgdb_pdc_write_char,
+-};
+-
+-static int __init kgdb_pdc_init(void)
+-{
+-	kgdb_register_io_module(&kgdb_pdc_io_ops);
+-	return 0;
+-}
+-early_initcall(kgdb_pdc_init);
+-- 
+2.39.0
+
 
 
