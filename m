@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4683AD38
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:11:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDB2C433EF;
-	Wed,  4 Jan 2023 16:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEB50AD38
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:11:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DDFC433EF;
+	Wed,  4 Jan 2023 16:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848677;
-	bh=iwQjpzbxGQaC1p9wQRoMDHO8sW9SFpnD8zA+bG90Rqs=;
+	s=korg; t=1672848680;
+	bh=ZRfaL7B1q+besPeKnB4ITfS7CBQQvTa5vhZwqwqJgVc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xOasnxjG8gDyW+5ri6/W1ZPirhMcQw+xMFDa3AN4wawVbYRlQIzBAQqDv9TFcoLg1
-	 dnqqZtgbzBiiyutxsiVs2LzbP47AJgCwsSHurBDiYd2b1ylWajVbG0nydb95PBUxds
-	 ATfdDV5ssDtIaH6T7jSgSyr2VDaxsbyuj6AXSHOg=
+	b=s/7jAU/NxYfdcGwgvq5tv7beyYb+DTM1UnL0uLjjIv70mnBDQhTBevcXvgHo30syP
+	 pCScJhlC3X7hQ7+bg8XGFQOO1Omp3T8QpcDyXrCBSqEbhwg1Au850W8FjQPH21Xss6
+	 SXTv6rsaicToc1MqOOOv3PQtYs7+puN85SpOAK2I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Bityutskiy <artem.bityutskiy@linux.intel.com>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 053/207] platform/x86: intel-uncore-freq: add Emerald Rapids support
-Date: Wed,  4 Jan 2023 17:05:11 +0100
-Message-Id: <20230104160513.593013667@linuxfoundation.org>
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Mat Martineau <mathew.j.martineau@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 062/207] mptcp: netlink: fix some error return code
+Date: Wed,  4 Jan 2023 17:05:20 +0100
+Message-Id: <20230104160513.889246031@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
 References: <20230104160511.905925875@linuxfoundation.org>
@@ -37,39 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
+From: Wei Yongjun <weiyongjun1@huawei.com>
 
-[ Upstream commit 9c252ecf30360cb7b4dbcc275aebe5642174fd39 ]
+commit e0fe1123ab2b07d2cd5475660bd0b4e6993ffaa7 upstream.
 
-Make Intel uncore frequency driver support Emerald Rapids by adding its
-CPU model to the match table.
+Fix to return negative error code -EINVAL from some error handling
+case instead of 0, as done elsewhere in those functions.
 
-Emerald Rapids uncore frequency control is the same as in Sapphire
-Rapids.
-
-Signed-off-by: Artem Bityutskiy <artem.bityutskiy@linux.intel.com>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Acked-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 9ab4807c84a4 ("mptcp: netlink: Add MPTCP_PM_CMD_ANNOUNCE")
+Fixes: 702c2f646d42 ("mptcp: netlink: allow userspace-driven subflow establishment")
+Cc: stable@vger.kernel.org
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
+Signed-off-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/mptcp/pm_userspace.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
-index 8f9c571d7257..00ac7e381441 100644
---- a/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
-+++ b/drivers/platform/x86/intel/uncore-frequency/uncore-frequency.c
-@@ -203,6 +203,7 @@ static const struct x86_cpu_id intel_uncore_cpu_ids[] = {
- 	X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_X,	NULL),
- 	X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_D,	NULL),
- 	X86_MATCH_INTEL_FAM6_MODEL(SAPPHIRERAPIDS_X, NULL),
-+	X86_MATCH_INTEL_FAM6_MODEL(EMERALDRAPIDS_X, NULL),
- 	{}
- };
- MODULE_DEVICE_TABLE(x86cpu, intel_uncore_cpu_ids);
--- 
-2.35.1
-
+--- a/net/mptcp/pm_userspace.c
++++ b/net/mptcp/pm_userspace.c
+@@ -156,6 +156,7 @@ int mptcp_nl_cmd_announce(struct sk_buff
+ 
+ 	if (addr_val.addr.id == 0 || !(addr_val.flags & MPTCP_PM_ADDR_FLAG_SIGNAL)) {
+ 		GENL_SET_ERR_MSG(info, "invalid addr id or flags");
++		err = -EINVAL;
+ 		goto announce_err;
+ 	}
+ 
+@@ -282,6 +283,7 @@ int mptcp_nl_cmd_sf_create(struct sk_buf
+ 
+ 	if (addr_l.id == 0) {
+ 		NL_SET_ERR_MSG_ATTR(info->extack, laddr, "missing local addr id");
++		err = -EINVAL;
+ 		goto create_err;
+ 	}
+ 
+@@ -395,11 +397,13 @@ int mptcp_nl_cmd_sf_destroy(struct sk_bu
+ 
+ 	if (addr_l.family != addr_r.family) {
+ 		GENL_SET_ERR_MSG(info, "address families do not match");
++		err = -EINVAL;
+ 		goto destroy_err;
+ 	}
+ 
+ 	if (!addr_l.port || !addr_r.port) {
+ 		GENL_SET_ERR_MSG(info, "missing local or remote port");
++		err = -EINVAL;
+ 		goto destroy_err;
+ 	}
+ 
 
 
