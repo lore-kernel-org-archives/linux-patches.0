@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BAEAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:11:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5D2EC433EF;
-	Wed,  4 Jan 2023 16:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74AE8AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:11:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF9D1C433F0;
+	Wed,  4 Jan 2023 16:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848714;
-	bh=4JAiU6RFn3VqAt5LoRnZv/NfsZu7QEvmtueIVX2WfII=;
+	s=korg; t=1672848717;
+	bh=9XuYlRIEDjmQwcnNQIA5o7zDXieqzksQaqZ9e7qGtHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qel8WAuxlQii94B4XCiQ+ppcB65q+LazSfT4dSjQBWJ51d/LALcvmblNgM2RQyk0h
-	 yRhqu+UNxVz0NuEV3KANAcsi28yzwlxNNTbrHYZVIXJy+mYU+hNRgFFEeSZ6xSKubS
-	 1JZHtEDTGW5EitaMNWbUC0wpfSrc6tBuEzHm/ubk=
+	b=d+pS0tYK+auUB9BsuPeUshGCB1jtYFoL2lxpiF11w2kGlnaGF8YQtE1JxdMhvrVyG
+	 xoaQEJ6lN2TEDeteyZLT8/MORfh6jIo3uYduB6HF3P5UAXyAQBC/+w4PptcqV46QVH
+	 dfTWgup6yQ7aUAHxmUsUvFmhpi08vP/fDzVz68dE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Meng <luomeng12@huawei.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.1 071/207] dm integrity: Fix UAF in dm_integrity_dtr()
-Date: Wed,  4 Jan 2023 17:05:29 +0100
-Message-Id: <20230104160514.189291913@linuxfoundation.org>
+	Fan Ni <fan.ni@samsung.com>,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: [PATCH 6.0 003/177] cxl/region: Fix memdev reuse check
+Date: Wed,  4 Jan 2023 17:04:54 +0100
+Message-Id: <20230104160507.758214184@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,34 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luo Meng <luomeng12@huawei.com>
+From: Fan Ni <fan.ni@samsung.com>
 
-commit f50cb2cbabd6c4a60add93d72451728f86e4791c upstream.
+commit f04facfb993de47e2133b2b842d72b97b1c50162 upstream.
 
-Dm_integrity also has the same UAF problem when dm_resume()
-and dm_destroy() are concurrent.
+Due to a typo, the check of whether or not a memdev has already been
+used as a target for the region (above code piece) will always be
+skipped. Given a memdev with more than one HDM decoder, an interleaved
+region can be created that maps multiple HPAs to the same DPA. According
+to CXL spec 3.0 8.1.3.8.4, "Aliasing (mapping more than one Host
+Physical Address (HPA) to a single Device Physical Address) is
+forbidden."
 
-Therefore, cancelling timer again in dm_integrity_dtr().
+Fix this by using existing iterator for memdev reuse check.
 
-Cc: stable@vger.kernel.org
-Fixes: 7eada909bfd7a ("dm: add integrity target")
-Signed-off-by: Luo Meng <luomeng12@huawei.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Cc: <stable@vger.kernel.org>
+Fixes: 384e624bb211 ("cxl/region: Attach endpoint decoders")
+Signed-off-by: Fan Ni <fan.ni@samsung.com>
+Link: https://lore.kernel.org/r/20221107212153.745993-1-fan.ni@samsung.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/cxl/core/region.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -4558,6 +4558,8 @@ static void dm_integrity_dtr(struct dm_t
- 	BUG_ON(!RB_EMPTY_ROOT(&ic->in_progress));
- 	BUG_ON(!list_empty(&ic->wait_list));
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -1225,7 +1225,7 @@ static int cxl_region_attach(struct cxl_
+ 		struct cxl_endpoint_decoder *cxled_target;
+ 		struct cxl_memdev *cxlmd_target;
  
-+	if (ic->mode == 'B')
-+		cancel_delayed_work_sync(&ic->bitmap_flush_work);
- 	if (ic->metadata_wq)
- 		destroy_workqueue(ic->metadata_wq);
- 	if (ic->wait_wq)
+-		cxled_target = p->targets[pos];
++		cxled_target = p->targets[i];
+ 		if (!cxled_target)
+ 			continue;
+ 
 
 
