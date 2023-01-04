@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 967CCAD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:15:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D111FC433D2;
-	Wed,  4 Jan 2023 16:15:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9807FAD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:15:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05873C433D2;
+	Wed,  4 Jan 2023 16:15:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848939;
-	bh=4r5S2G9TNj2o2zkuitumm9+llmmLGUaSHxvKX1YW4Fg=;
+	s=korg; t=1672848942;
+	bh=yiy/BAanfZaE9KPqRhdmn+0BIKx/+dNNMmkwyeAkINg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I5t097sxDS8GAvHtcDA6P7RSbvG4yDJltlOhKXstSAsWmFn6ptjLrMd9EW4Ve9d/i
-	 tNPntLkMtJNvpHQgzC/ZuYUwUf/Swvto3/DIkQ14SNfi2IFzxuOYE9ZzQ6/Pr+Htdi
-	 P4toPMiNPa5S+XNxQHhuuUEPQf7adUfzQSBhOPpM=
+	b=MeGHWHf0S34VcbLvcC+5W3LPDV7JN0UyVFl7NbiO0py60pdv3ytYGv7bCpDmLMrwA
+	 2tJ6wlPmo9EJVyFHfCtw67Y6ubZjKPyHBPI9OtlXVwikDh+2yXoy9rePUpRYpKP1PB
+	 sl61d/F86pR8OuFghbsX1OaDTQTbsB1py3iw6a30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 107/207] cifs: set correct status of tcon ipc when reconnecting
-Date: Wed,  4 Jan 2023 17:06:05 +0100
-Message-Id: <20230104160515.298684559@linuxfoundation.org>
+	Alexander Aring <aahringo@redhat.com>,
+	David Teigland <teigland@redhat.com>
+Subject: [PATCH 6.0 038/177] fs: dlm: fix sock release if listen fails
+Date: Wed,  4 Jan 2023 17:05:29 +0100
+Message-Id: <20230104160508.811621920@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,36 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@cjr.nz>
+From: Alexander Aring <aahringo@redhat.com>
 
-commit 25cf01b7c9200d6ace5a59125d8166435dd9dea7 upstream.
+commit 08ae0547e75ec3d062b6b6b9cf4830c730df68df upstream.
 
-The status of tcon ipcs were not being set to TID_NEED_RECO when
-marking sessions and tcons to be reconnected, therefore not sending
-tree connect to those ipcs in cifs_tree_connect() and leaving them
-disconnected.
+This patch fixes a double sock_release() call when the listen() is
+called for the dlm lowcomms listen socket. The caller of
+dlm_listen_for_all should never care about releasing the socket if
+dlm_listen_for_all() fails, it's done now only once if listen() fails.
 
 Cc: stable@vger.kernel.org
-Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 2dc6b1158c28 ("fs: dlm: introduce generic listen")
+Signed-off-by: Alexander Aring <aahringo@redhat.com>
+Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/connect.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/dlm/lowcomms.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/fs/cifs/connect.c
-+++ b/fs/cifs/connect.c
-@@ -279,8 +279,10 @@ cifs_mark_tcp_ses_conns_for_reconnect(st
- 			tcon->need_reconnect = true;
- 			tcon->status = TID_NEED_RECON;
- 		}
--		if (ses->tcon_ipc)
-+		if (ses->tcon_ipc) {
- 			ses->tcon_ipc->need_reconnect = true;
-+			ses->tcon_ipc->status = TID_NEED_RECON;
-+		}
+--- a/fs/dlm/lowcomms.c
++++ b/fs/dlm/lowcomms.c
+@@ -1820,7 +1820,7 @@ static int dlm_listen_for_all(void)
+ 	result = sock->ops->listen(sock, 5);
+ 	if (result < 0) {
+ 		dlm_close_sock(&listen_con.sock);
+-		goto out;
++		return result;
+ 	}
  
- next_session:
- 		spin_unlock(&ses->chan_lock);
+ 	return 0;
+@@ -2023,7 +2023,6 @@ fail_listen:
+ 	dlm_proto_ops = NULL;
+ fail_proto_ops:
+ 	dlm_allow_conn = 0;
+-	dlm_close_sock(&listen_con.sock);
+ 	work_stop();
+ fail_local:
+ 	deinit_local();
 
 
