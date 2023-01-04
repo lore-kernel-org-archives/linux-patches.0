@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EA0BAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E301DC43392;
-	Wed,  4 Jan 2023 16:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ED98AD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1D88C433D2;
+	Wed,  4 Jan 2023 16:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849525;
-	bh=/M814mfgd3JY4C+bjGTnTZWqUkfm651ilV6Em7l/7Uc=;
+	s=korg; t=1672849528;
+	bh=WdZBzUqzHsSXtl/ImaD5Xx7b6UTjmMax8khZpOu+Gws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0sJrTAnYnnDzTMV5betGIvfaruxscq5ToavGIeIWfty3Jdi7F1+gIMYqLAjxa/m3n
-	 yBhzQPfDwLfLh+TzzoZ1YJQhdYU4VUQT/3DQTXqjOVLg6D2SjR/XEiVP79PimbEb2w
-	 DrbnWt03d9zkJcRmQQh85Zld0RW7Z/bb3GjPl0fc=
+	b=eVlgHnist0BZ3wdhhEhcyJU2BREaVedlNntMYyuuRdLnVrD0/gGBob622rUtSa+W3
+	 OosUtHSKLuKXJPwCRbqrZH+0OfR8WVn+LrCldb9yRoxZ/4g62QaOZvogq3aDgQmIbX
+	 k/3WLufnNb3U2ZSOcgopVMW5EYqm176KZfQlY880=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.0 136/177] ext4: fix use-after-free in ext4_orphan_cleanup
-Date: Wed,  4 Jan 2023 17:07:07 +0100
-Message-Id: <20230104160511.770436044@linuxfoundation.org>
+	Chris Wilson <chris.p.wilson@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.1 203/207] drm/i915/migrate: Account for the reserved_space
+Date: Wed,  4 Jan 2023 17:07:41 +0100
+Message-Id: <20230104160518.348113678@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,75 +38,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Chris Wilson <chris.p.wilson@intel.com>
 
-commit a71248b1accb2b42e4980afef4fa4a27fa0e36f5 upstream.
+commit 31a2e6cbe8a4eb0d1650fff4b77872b744e14a62 upstream.
 
-I caught a issue as follows:
-==================================================================
- BUG: KASAN: use-after-free in __list_add_valid+0x28/0x1a0
- Read of size 8 at addr ffff88814b13f378 by task mount/710
+If the ring is nearly full when calling into emit_pte(), we might
+incorrectly trample the reserved_space when constructing the packet to
+emit the PTEs. This then triggers the GEM_BUG_ON(rq->reserved_space >
+ring->space) when later submitting the request, since the request itself
+doesn't have enough space left in the ring to emit things like
+workarounds, breadcrumbs etc.
 
- CPU: 1 PID: 710 Comm: mount Not tainted 6.1.0-rc3-next #370
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x73/0x9f
-  print_report+0x25d/0x759
-  kasan_report+0xc0/0x120
-  __asan_load8+0x99/0x140
-  __list_add_valid+0x28/0x1a0
-  ext4_orphan_cleanup+0x564/0x9d0 [ext4]
-  __ext4_fill_super+0x48e2/0x5300 [ext4]
-  ext4_fill_super+0x19f/0x3a0 [ext4]
-  get_tree_bdev+0x27b/0x450
-  ext4_get_tree+0x19/0x30 [ext4]
-  vfs_get_tree+0x49/0x150
-  path_mount+0xaae/0x1350
-  do_mount+0xe2/0x110
-  __x64_sys_mount+0xf0/0x190
-  do_syscall_64+0x35/0x80
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-  </TASK>
- [...]
-==================================================================
+v2: Fix the whitespace errors
 
-Above issue may happen as follows:
--------------------------------------
-ext4_fill_super
-  ext4_orphan_cleanup
-   --- loop1: assume last_orphan is 12 ---
-    list_add(&EXT4_I(inode)->i_orphan, &EXT4_SB(sb)->s_orphan)
-    ext4_truncate --> return 0
-      ext4_inode_attach_jinode --> return -ENOMEM
-    iput(inode) --> free inode<12>
-   --- loop2: last_orphan is still 12 ---
-    list_add(&EXT4_I(inode)->i_orphan, &EXT4_SB(sb)->s_orphan);
-    // use inode<12> and trigger UAF
-
-To solve this issue, we need to propagate the return value of
-ext4_inode_attach_jinode() appropriately.
-
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221102080633.1630225-1-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Testcase: igt@i915_selftests@live_emit_pte_full_ring
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/7535
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/6889
+Fixes: cf586021642d ("drm/i915/gt: Pipelined page migration")
+Signed-off-by: Chris Wilson <chris.p.wilson@intel.com>
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Cc: Andrzej Hajda <andrzej.hajda@intel.com>
+Cc: Andi Shyti <andi.shyti@linux.intel.com>
+Cc: Nirmoy Das <nirmoy.das@intel.com>
+Cc: <stable@vger.kernel.org> # v5.15+
+Tested-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221202122844.428006-1-matthew.auld@intel.com
+(cherry picked from commit 35168a6c4ed53db4f786858bac23b1474fd7d0dc)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/gt/intel_migrate.c |   16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4225,7 +4225,8 @@ int ext4_truncate(struct inode *inode)
+--- a/drivers/gpu/drm/i915/gt/intel_migrate.c
++++ b/drivers/gpu/drm/i915/gt/intel_migrate.c
+@@ -341,6 +341,16 @@ static int emit_no_arbitration(struct i9
+ 	return 0;
+ }
  
- 	/* If we zero-out tail of the page, we have to create jinode for jbd2 */
- 	if (inode->i_size & (inode->i_sb->s_blocksize - 1)) {
--		if (ext4_inode_attach_jinode(inode) < 0)
-+		err = ext4_inode_attach_jinode(inode);
-+		if (err)
- 			goto out_trace;
- 	}
++static int max_pte_pkt_size(struct i915_request *rq, int pkt)
++{
++	struct intel_ring *ring = rq->ring;
++
++	pkt = min_t(int, pkt, (ring->space - rq->reserved_space) / sizeof(u32) + 5);
++	pkt = min_t(int, pkt, (ring->size - ring->emit) / sizeof(u32) + 5);
++
++	return pkt;
++}
++
+ static int emit_pte(struct i915_request *rq,
+ 		    struct sgt_dma *it,
+ 		    enum i915_cache_level cache_level,
+@@ -387,8 +397,7 @@ static int emit_pte(struct i915_request
+ 		return PTR_ERR(cs);
  
+ 	/* Pack as many PTE updates as possible into a single MI command */
+-	pkt = min_t(int, dword_length, ring->space / sizeof(u32) + 5);
+-	pkt = min_t(int, pkt, (ring->size - ring->emit) / sizeof(u32) + 5);
++	pkt = max_pte_pkt_size(rq, dword_length);
+ 
+ 	hdr = cs;
+ 	*cs++ = MI_STORE_DATA_IMM | REG_BIT(21); /* as qword elements */
+@@ -421,8 +430,7 @@ static int emit_pte(struct i915_request
+ 				}
+ 			}
+ 
+-			pkt = min_t(int, dword_rem, ring->space / sizeof(u32) + 5);
+-			pkt = min_t(int, pkt, (ring->size - ring->emit) / sizeof(u32) + 5);
++			pkt = max_pte_pkt_size(rq, dword_rem);
+ 
+ 			hdr = cs;
+ 			*cs++ = MI_STORE_DATA_IMM | REG_BIT(21);
 
 
