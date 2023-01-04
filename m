@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CF2AD49
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:13:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58FE9C433D2;
-	Wed,  4 Jan 2023 16:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9300AD49
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:13:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A9BC433D2;
+	Wed,  4 Jan 2023 16:13:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848824;
-	bh=R62n4egSXnpXXXnV23Ku4Dc8+S1ZEFpdcEOk5E62XXU=;
+	s=korg; t=1672848827;
+	bh=CRY/T8PsxHx6HYu6Q95DGO5VlQ3cyv5vVESvY3rFo/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gv3DfjIKgt6t14FnTq96CA8M/5xyu7Rxdigy+5LgARfJ1l190qtjBThahEdFaokdW
-	 edPMnRnxZAStRT43ZEZfpIRUhv5A8WRerlfFG6y6G7tUM6dD4JpY1al6bvSVJ8M6H5
-	 vTuxE22PpjtsZT/FMF17VOwlwohz4Xz7dw7AeyMs=
+	b=pc2c9/BJpmg72ppPWyzAj9Jyn6zrHTSuRwWxc6NZ/dNurPAD6MyGEudpVH9t3A7bn
+	 Beep6vhgo2LMOMZZeNKCbZeLGe8tOoVFFiHfN13LuLRHRbETJ+YNfHjau8JRp5J9gi
+	 EX77+Rkaax/9WPn1N5LJCpXWwqgxMX/gAwoNwx7Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Mendonca <rafaelmendsr@gmail.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 6.1 090/207] tracing: Fix race where eprobes can be called before the event
-Date: Wed,  4 Jan 2023 17:05:48 +0100
-Message-Id: <20230104160514.789565938@linuxfoundation.org>
+	Linus Walleij <linus.walleij@linaro.org>,
+	kernel test robot <lkp@intel.com>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [PATCH 6.0 021/177] ARM: ux500: do not directly dereference __iomem
+Date: Wed,  4 Jan 2023 17:05:12 +0100
+Message-Id: <20230104160508.304567465@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-References: <20230104160511.905925875@linuxfoundation.org>
+In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
+References: <20230104160507.635888536@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,43 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit d5f30a7da8ea8e6450250275cec5670cee3c4264 upstream.
+commit 65b0e307a1a9193571db12910f382f84195a3d29 upstream.
 
-The flag that tells the event to call its triggers after reading the event
-is set for eprobes after the eprobe is enabled. This leads to a race where
-the eprobe may be triggered at the beginning of the event where the record
-information is NULL. The eprobe then dereferences the NULL record causing
-a NULL kernel pointer bug.
+Sparse reports that calling add_device_randomness() on `uid` is a
+violation of address spaces. And indeed the next usage uses readl()
+properly, but that was left out when passing it toadd_device_
+randomness(). So instead copy the whole thing to the stack first.
 
-Test for a NULL record to keep this from happening.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20221116192552.1066630-1-rafaelmendsr@gmail.com/
-Link: https://lore.kernel.org/all/20221117214249.2addbe10@gandalf.local.home/
-
+Fixes: 4040d10a3d44 ("ARM: ux500: add DB serial number to entropy pool")
+Cc: Linus Walleij <linus.walleij@linaro.org>
 Cc: stable@vger.kernel.org
-Fixes: 7491e2c442781 ("tracing: Add a probe that attaches to trace events")
-Reported-by: Rafael Mendonca <rafaelmendsr@gmail.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://lore.kernel.org/all/202210230819.loF90KDh-lkp@intel.com/
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://lore.kernel.org/r/20221108123755.207438-1-Jason@zx2c4.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_eprobe.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/soc/ux500/ux500-soc-id.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/kernel/trace/trace_eprobe.c
-+++ b/kernel/trace/trace_eprobe.c
-@@ -567,6 +567,9 @@ static void eprobe_trigger_func(struct e
- 	if (unlikely(!rec))
- 		return;
+--- a/drivers/soc/ux500/ux500-soc-id.c
++++ b/drivers/soc/ux500/ux500-soc-id.c
+@@ -167,20 +167,18 @@ ATTRIBUTE_GROUPS(ux500_soc);
+ static const char *db8500_read_soc_id(struct device_node *backupram)
+ {
+ 	void __iomem *base;
+-	void __iomem *uid;
+ 	const char *retstr;
++	u32 uid[5];
  
-+	if (unlikely(!rec))
-+		return;
-+
- 	__eprobe_trace_func(edata, rec);
+ 	base = of_iomap(backupram, 0);
+ 	if (!base)
+ 		return NULL;
+-	uid = base + 0x1fc0;
++	memcpy_fromio(uid, base + 0x1fc0, sizeof(uid));
+ 
+ 	/* Throw these device-specific numbers into the entropy pool */
+-	add_device_randomness(uid, 0x14);
++	add_device_randomness(uid, sizeof(uid));
+ 	retstr = kasprintf(GFP_KERNEL, "%08x%08x%08x%08x%08x",
+-			 readl((u32 *)uid+0),
+-			 readl((u32 *)uid+1), readl((u32 *)uid+2),
+-			 readl((u32 *)uid+3), readl((u32 *)uid+4));
++			   uid[0], uid[1], uid[2], uid[3], uid[4]);
+ 	iounmap(base);
+ 	return retstr;
  }
- 
 
 
