@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6711EAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:26:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C814FC433EF;
-	Wed,  4 Jan 2023 16:26:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F0DDAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:26:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAA62C4332F;
+	Wed,  4 Jan 2023 16:26:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849586;
-	bh=KMsgZsGg5RxChiGBR+KI62XQ9EOg44dKOYLWJffZWi8=;
+	s=korg; t=1672849589;
+	bh=vFVE+DT4WmiWtUr7ryAy2P3PaNYeKuItrUe9h+x705o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wcgg+cdh4i5kC4QQEmwwPOwe6/7tjjpPJQ3TgQZQ2Eis2tv7WGioFHzLAwTsMQjrN
-	 UeD+EJMHhZynOtg2hn9oAC5gqvKn9sghtUzor2Z2k9xh5DdcN3w4FfvnDQMooAvMJ5
-	 MnLhxiTyWzKY2x+sP0wbeVaH2x+jzEYWzHldEXGI=
+	b=BpNjrl0OTd3urZ8JLnHhavcZ/JHzyNtSocaKlclx5kyb/4M64izlYwHul0wJmArNo
+	 vEX8y0L6EIGH6buFg7vBaTmfpKm6s26UNHiBhk96kpI/D94fBhabV8YfrrEW1G4NPh
+	 nPJo9LnU3FsB/voauRWHVtsrk5D7GqRzweVcVjrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maria Yu <quic_aiquny@quicinc.com>,
-	Mathieu Poirier <mathieu.poirier@linaro.org>
-Subject: [PATCH 6.0 118/177] remoteproc: core: Do pm_relax when in RPROC_OFFLINE state
-Date: Wed,  4 Jan 2023 17:06:49 +0100
-Message-Id: <20230104160511.213946103@linuxfoundation.org>
+	Eric Biggers <ebiggers@google.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.0 146/177] ext4: disable fast-commit of encrypted dir operations
+Date: Wed,  4 Jan 2023 17:07:17 +0100
+Message-Id: <20230104160512.083595890@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
 References: <20230104160507.635888536@linuxfoundation.org>
@@ -34,52 +34,151 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maria Yu <quic_aiquny@quicinc.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit 11c7f9e3131ad14b27a957496088fa488b153a48 upstream.
+commit 0fbcb5251fc81b58969b272c4fb7374a7b922e3e upstream.
 
-Make sure that pm_relax() happens even when the remoteproc
-is stopped before the crash handler work is scheduled.
+fast-commit of create, link, and unlink operations in encrypted
+directories is completely broken because the unencrypted filenames are
+being written to the fast-commit journal instead of the encrypted
+filenames.  These operations can't be replayed, as encryption keys
+aren't present at journal replay time.  It is also an information leak.
 
-Signed-off-by: Maria Yu <quic_aiquny@quicinc.com>
-Cc: stable <stable@vger.kernel.org>
-Fixes: a781e5aa5911 ("remoteproc: core: Prevent system suspend during remoteproc recovery")
-Link: https://lore.kernel.org/r/20221206015957.2616-2-quic_aiquny@quicinc.com
-Signed-off-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Until if/when we can get this working properly, make encrypted directory
+operations ineligible for fast-commit.
+
+Note that fast-commit operations on encrypted regular files continue to
+be allowed, as they seem to work.
+
+Fixes: aa75f4d3daae ("ext4: main fast-commit commit path")
+Cc: <stable@vger.kernel.org> # v5.10+
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20221106224841.279231-2-ebiggers@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/remoteproc/remoteproc_core.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/ext4/fast_commit.c       |   41 +++++++++++++++++++++++++----------------
+ fs/ext4/fast_commit.h       |    1 +
+ include/trace/events/ext4.h |    7 +++++--
+ 3 files changed, 31 insertions(+), 18 deletions(-)
 
---- a/drivers/remoteproc/remoteproc_core.c
-+++ b/drivers/remoteproc/remoteproc_core.c
-@@ -1954,12 +1954,18 @@ static void rproc_crash_handler_work(str
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -418,25 +418,34 @@ static int __track_dentry_update(struct
+ 	struct __track_dentry_update_args *dentry_update =
+ 		(struct __track_dentry_update_args *)arg;
+ 	struct dentry *dentry = dentry_update->dentry;
+-	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
++	struct inode *dir = dentry->d_parent->d_inode;
++	struct super_block *sb = inode->i_sb;
++	struct ext4_sb_info *sbi = EXT4_SB(sb);
  
- 	mutex_lock(&rproc->lock);
- 
--	if (rproc->state == RPROC_CRASHED || rproc->state == RPROC_OFFLINE) {
-+	if (rproc->state == RPROC_CRASHED) {
- 		/* handle only the first crash detected */
- 		mutex_unlock(&rproc->lock);
- 		return;
- 	}
- 
-+	if (rproc->state == RPROC_OFFLINE) {
-+		/* Don't recover if the remote processor was stopped */
-+		mutex_unlock(&rproc->lock);
-+		goto out;
+ 	mutex_unlock(&ei->i_fc_lock);
++
++	if (IS_ENCRYPTED(dir)) {
++		ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_ENCRYPTED_FILENAME,
++					NULL);
++		mutex_lock(&ei->i_fc_lock);
++		return -EOPNOTSUPP;
 +	}
 +
- 	rproc->state = RPROC_CRASHED;
- 	dev_err(dev, "handling crash #%u in %s\n", ++rproc->crash_cnt,
- 		rproc->name);
-@@ -1969,6 +1975,7 @@ static void rproc_crash_handler_work(str
- 	if (!rproc->recovery_disabled)
- 		rproc_trigger_recovery(rproc);
+ 	node = kmem_cache_alloc(ext4_fc_dentry_cachep, GFP_NOFS);
+ 	if (!node) {
+-		ext4_fc_mark_ineligible(inode->i_sb, EXT4_FC_REASON_NOMEM, NULL);
++		ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_NOMEM, NULL);
+ 		mutex_lock(&ei->i_fc_lock);
+ 		return -ENOMEM;
+ 	}
  
-+out:
- 	pm_relax(rproc->dev.parent);
+ 	node->fcd_op = dentry_update->op;
+-	node->fcd_parent = dentry->d_parent->d_inode->i_ino;
++	node->fcd_parent = dir->i_ino;
+ 	node->fcd_ino = inode->i_ino;
+ 	if (dentry->d_name.len > DNAME_INLINE_LEN) {
+ 		node->fcd_name.name = kmalloc(dentry->d_name.len, GFP_NOFS);
+ 		if (!node->fcd_name.name) {
+ 			kmem_cache_free(ext4_fc_dentry_cachep, node);
+-			ext4_fc_mark_ineligible(inode->i_sb,
+-				EXT4_FC_REASON_NOMEM, NULL);
++			ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_NOMEM, NULL);
+ 			mutex_lock(&ei->i_fc_lock);
+ 			return -ENOMEM;
+ 		}
+@@ -2258,17 +2267,17 @@ void ext4_fc_init(struct super_block *sb
+ 	journal->j_fc_cleanup_callback = ext4_fc_cleanup;
  }
  
+-static const char *fc_ineligible_reasons[] = {
+-	"Extended attributes changed",
+-	"Cross rename",
+-	"Journal flag changed",
+-	"Insufficient memory",
+-	"Swap boot",
+-	"Resize",
+-	"Dir renamed",
+-	"Falloc range op",
+-	"Data journalling",
+-	"FC Commit Failed"
++static const char * const fc_ineligible_reasons[] = {
++	[EXT4_FC_REASON_XATTR] = "Extended attributes changed",
++	[EXT4_FC_REASON_CROSS_RENAME] = "Cross rename",
++	[EXT4_FC_REASON_JOURNAL_FLAG_CHANGE] = "Journal flag changed",
++	[EXT4_FC_REASON_NOMEM] = "Insufficient memory",
++	[EXT4_FC_REASON_SWAP_BOOT] = "Swap boot",
++	[EXT4_FC_REASON_RESIZE] = "Resize",
++	[EXT4_FC_REASON_RENAME_DIR] = "Dir renamed",
++	[EXT4_FC_REASON_FALLOC_RANGE] = "Falloc range op",
++	[EXT4_FC_REASON_INODE_JOURNAL_DATA] = "Data journalling",
++	[EXT4_FC_REASON_ENCRYPTED_FILENAME] = "Encrypted filename",
+ };
+ 
+ int ext4_fc_info_show(struct seq_file *seq, void *v)
+--- a/fs/ext4/fast_commit.h
++++ b/fs/ext4/fast_commit.h
+@@ -96,6 +96,7 @@ enum {
+ 	EXT4_FC_REASON_RENAME_DIR,
+ 	EXT4_FC_REASON_FALLOC_RANGE,
+ 	EXT4_FC_REASON_INODE_JOURNAL_DATA,
++	EXT4_FC_REASON_ENCRYPTED_FILENAME,
+ 	EXT4_FC_REASON_MAX
+ };
+ 
+--- a/include/trace/events/ext4.h
++++ b/include/trace/events/ext4.h
+@@ -104,6 +104,7 @@ TRACE_DEFINE_ENUM(EXT4_FC_REASON_RESIZE)
+ TRACE_DEFINE_ENUM(EXT4_FC_REASON_RENAME_DIR);
+ TRACE_DEFINE_ENUM(EXT4_FC_REASON_FALLOC_RANGE);
+ TRACE_DEFINE_ENUM(EXT4_FC_REASON_INODE_JOURNAL_DATA);
++TRACE_DEFINE_ENUM(EXT4_FC_REASON_ENCRYPTED_FILENAME);
+ TRACE_DEFINE_ENUM(EXT4_FC_REASON_MAX);
+ 
+ #define show_fc_reason(reason)						\
+@@ -116,7 +117,8 @@ TRACE_DEFINE_ENUM(EXT4_FC_REASON_MAX);
+ 		{ EXT4_FC_REASON_RESIZE,	"RESIZE"},		\
+ 		{ EXT4_FC_REASON_RENAME_DIR,	"RENAME_DIR"},		\
+ 		{ EXT4_FC_REASON_FALLOC_RANGE,	"FALLOC_RANGE"},	\
+-		{ EXT4_FC_REASON_INODE_JOURNAL_DATA,	"INODE_JOURNAL_DATA"})
++		{ EXT4_FC_REASON_INODE_JOURNAL_DATA,	"INODE_JOURNAL_DATA"}, \
++		{ EXT4_FC_REASON_ENCRYPTED_FILENAME,	"ENCRYPTED_FILENAME"})
+ 
+ TRACE_EVENT(ext4_other_inode_update_time,
+ 	TP_PROTO(struct inode *inode, ino_t orig_ino),
+@@ -2764,7 +2766,7 @@ TRACE_EVENT(ext4_fc_stats,
+ 	),
+ 
+ 	TP_printk("dev %d,%d fc ineligible reasons:\n"
+-		  "%s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u "
++		  "%s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u"
+ 		  "num_commits:%lu, ineligible: %lu, numblks: %lu",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev),
+ 		  FC_REASON_NAME_STAT(EXT4_FC_REASON_XATTR),
+@@ -2776,6 +2778,7 @@ TRACE_EVENT(ext4_fc_stats,
+ 		  FC_REASON_NAME_STAT(EXT4_FC_REASON_RENAME_DIR),
+ 		  FC_REASON_NAME_STAT(EXT4_FC_REASON_FALLOC_RANGE),
+ 		  FC_REASON_NAME_STAT(EXT4_FC_REASON_INODE_JOURNAL_DATA),
++		  FC_REASON_NAME_STAT(EXT4_FC_REASON_ENCRYPTED_FILENAME),
+ 		  __entry->fc_commits, __entry->fc_ineligible_commits,
+ 		  __entry->fc_numblks)
+ );
 
 
