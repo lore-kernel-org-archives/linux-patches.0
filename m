@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D26EAD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:11:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76709C433F0;
-	Wed,  4 Jan 2023 16:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F80DAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:11:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 887F1C433F0;
+	Wed,  4 Jan 2023 16:11:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848701;
-	bh=iUkqj8eHKl+EPk6IbueLUw0BO3pC9tpQoXtlM4HElSk=;
+	s=korg; t=1672848705;
+	bh=e7oN45J6Bdw4SwilEHA4osAZtrTVi4GDuRXrTySbeAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wcn0OMZWHnaGsVjZdgDiHIWzbtTGJTatSxVtU0aPUjiyEPm1Ut3Lo5mA3IV7i2k18
-	 2tqAjFAlGPnzH0JMo3FZjPxmA2rLHt2QMKB0xVatGZG9vaIInKrHLPCklHOnu2C+qx
-	 zEJ6WF1AtVYjG648bR7U3L6c1U5hhqKvFy+XWs/M=
+	b=agM4sVNoR60JLUJvjyAaDY95Etsx897m7nDXqZQJsDxiJb1kB3fjkVoGbjXhV3HHT
+	 3T9Y5ZGNFS2dPTNKH+jqxGKtPBJNvJQV5S09V0irOzPeFc7sBgilDM72PacjZzpH44
+	 iQY3R7fDYto0IGjuf6hBji+2Jp0sfEde08TjdZMU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Luo Meng <luomeng12@huawei.com>,
 	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 6.1 069/207] dm thin: resume even if in FAIL mode
-Date: Wed,  4 Jan 2023 17:05:27 +0100
-Message-Id: <20230104160514.119606524@linuxfoundation.org>
+Subject: [PATCH 6.1 070/207] dm thin: Fix UAF in run_timer_softirq()
+Date: Wed,  4 Jan 2023 17:05:28 +0100
+Message-Id: <20230104160514.149613648@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
 References: <20230104160511.905925875@linuxfoundation.org>
@@ -36,70 +36,98 @@ Content-Transfer-Encoding: 8bit
 
 From: Luo Meng <luomeng12@huawei.com>
 
-commit 19eb1650afeb1aa86151f61900e9e5f1de5d8d02 upstream.
+commit 88430ebcbc0ec637b710b947738839848c20feff upstream.
 
-If a thinpool set fail_io while suspending, resume will fail with:
- device-mapper: resume ioctl on vg-thinpool  failed: Invalid argument
+When dm_resume() and dm_destroy() are concurrent, it will
+lead to UAF, as follows:
 
-The thin-pool also can't be removed if an in-flight bio is in the
-deferred list.
+ BUG: KASAN: use-after-free in __run_timers+0x173/0x710
+ Write of size 8 at addr ffff88816d9490f0 by task swapper/0/0
+<snip>
+ Call Trace:
+  <IRQ>
+  dump_stack_lvl+0x73/0x9f
+  print_report.cold+0x132/0xaa2
+  _raw_spin_lock_irqsave+0xcd/0x160
+  __run_timers+0x173/0x710
+  kasan_report+0xad/0x110
+  __run_timers+0x173/0x710
+  __asan_store8+0x9c/0x140
+  __run_timers+0x173/0x710
+  call_timer_fn+0x310/0x310
+  pvclock_clocksource_read+0xfa/0x250
+  kvm_clock_read+0x2c/0x70
+  kvm_clock_get_cycles+0xd/0x20
+  ktime_get+0x5c/0x110
+  lapic_next_event+0x38/0x50
+  clockevents_program_event+0xf1/0x1e0
+  run_timer_softirq+0x49/0x90
+  __do_softirq+0x16e/0x62c
+  __irq_exit_rcu+0x1fa/0x270
+  irq_exit_rcu+0x12/0x20
+  sysvec_apic_timer_interrupt+0x8e/0xc0
+
+One of the concurrency UAF can be shown as below:
+
+        use                                  free
+do_resume                           |
+  __find_device_hash_cell           |
+    dm_get                          |
+      atomic_inc(&md->holders)      |
+                                    | dm_destroy
+                                    |   __dm_destroy
+                                    |     if (!dm_suspended_md(md))
+                                    |     atomic_read(&md->holders)
+                                    |     msleep(1)
+  dm_resume                         |
+    __dm_resume                     |
+      dm_table_resume_targets       |
+        pool_resume                 |
+          do_waker  #add delay work |
+  dm_put                            |
+    atomic_dec(&md->holders)        |
+                                    |     dm_table_destroy
+                                    |       pool_dtr
+                                    |         __pool_dec
+                                    |           __pool_destroy
+                                    |             destroy_workqueue
+                                    |             kfree(pool) # free pool
+        time out
+__do_softirq
+  run_timer_softirq # pool has already been freed
 
 This can be easily reproduced using:
+  1. create thin-pool
+  2. dmsetup suspend pool
+  3. dmsetup resume pool
+  4. dmsetup remove_all # Concurrent with 3
 
-  echo "offline" > /sys/block/sda/device/state
-  dd if=/dev/zero of=/dev/mapper/thin bs=4K count=1
-  dmsetup suspend /dev/mapper/pool
-  mkfs.ext4 /dev/mapper/thin
-  dmsetup resume /dev/mapper/pool
+The root cause of this UAF bug is that dm_resume() adds timer after
+dm_destroy() skips cancelling the timer because of suspend status.
+After timeout, it will call run_timer_softirq(), however pool has
+already been freed. The concurrency UAF bug will happen.
 
-The root cause is maybe_resize_data_dev() will check fail_io and return
-error before called dm_resume.
-
-Fix this by adding FAIL mode check at the end of pool_preresume().
+Therefore, cancelling timer again in __pool_destroy().
 
 Cc: stable@vger.kernel.org
-Fixes: da105ed5fd7e ("dm thin metadata: introduce dm_pool_abort_metadata")
+Fixes: 991d9fa02da0d ("dm: add thin provisioning target")
 Signed-off-by: Luo Meng <luomeng12@huawei.com>
 Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-thin.c |   16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/md/dm-thin.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/drivers/md/dm-thin.c
 +++ b/drivers/md/dm-thin.c
-@@ -3540,20 +3540,28 @@ static int pool_preresume(struct dm_targ
- 	 */
- 	r = bind_control_target(pool, ti);
- 	if (r)
--		return r;
-+		goto out;
+@@ -2889,6 +2889,8 @@ static void __pool_destroy(struct pool *
+ 	dm_bio_prison_destroy(pool->prison);
+ 	dm_kcopyd_client_destroy(pool->copier);
  
- 	r = maybe_resize_data_dev(ti, &need_commit1);
- 	if (r)
--		return r;
-+		goto out;
++	cancel_delayed_work_sync(&pool->waker);
++	cancel_delayed_work_sync(&pool->no_space_timeout);
+ 	if (pool->wq)
+ 		destroy_workqueue(pool->wq);
  
- 	r = maybe_resize_metadata_dev(ti, &need_commit2);
- 	if (r)
--		return r;
-+		goto out;
- 
- 	if (need_commit1 || need_commit2)
- 		(void) commit(pool);
-+out:
-+	/*
-+	 * When a thin-pool is PM_FAIL, it cannot be rebuilt if
-+	 * bio is in deferred list. Therefore need to return 0
-+	 * to allow pool_resume() to flush IO.
-+	 */
-+	if (r && get_pool_mode(pool) == PM_FAIL)
-+		r = 0;
- 
--	return 0;
-+	return r;
- }
- 
- static void pool_suspend_active_thins(struct pool *pool)
 
 
