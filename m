@@ -1,33 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0CA6AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8D4FC433D2;
-	Wed,  4 Jan 2023 16:25:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80E5FAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:25:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3ED8C433D2;
+	Wed,  4 Jan 2023 16:25:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849552;
-	bh=v5XiEtDxwyasmqQJ9siHlmK2qqmLaQFwWIlnYW3zvCc=;
+	s=korg; t=1672849555;
+	bh=A1uw5Hxj7vIDBREgQvE/zNZFncoElsjiK6WCBNxgwko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IMjo7E1WwqvB2XzH4vbgpWUBl7d/UfNJq4nzpRMLqxOi05KqbB0A1ZMuGtXRbR80z
-	 tycJ9sfCpKN6j9Zoq1BV+rvuk2fh/BOjBfgAakurfIctdQDWkTlg3A0/riRiOcnAl5
-	 EhYyh7TJftwXCzY+2N4c4CSI92OCHq+jNJ8G1ZuA=
+	b=yD1/7fJv9MklOBf2jQHvHd5MEKh4IXCtoPbkviqMqMdb6ua0kz1wPH+t5vk1Enqcj
+	 u4DABpFO/vgq9StLyTvymkIFJrAt6Ev/sbImjri/F7HOO8n1JcXCyS8c+vMI4ZdtEf
+	 NCoiQsEWQo57AMpTeCW0DMWbrIsek4QyyC4hWitY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jason Yan <yanaijie@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 6.0 140/177] ext4: fix bug_on in __es_tree_search caused by bad quota inode
-Date: Wed,  4 Jan 2023 17:07:11 +0100
-Message-Id: <20230104160511.888448788@linuxfoundation.org>
+	Evan Quan <evan.quan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 207/207] drm/amd/pm: correct the fan speed retrieving in PWM for some SMU13 asics
+Date: Wed,  4 Jan 2023 17:07:45 +0100
+Message-Id: <20230104160518.486568535@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -38,109 +34,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Evan Quan <evan.quan@amd.com>
 
-commit d323877484765aaacbb2769b06e355c2041ed115 upstream.
+commit e73fc71e8f015d61f3adca7659cb209fd5117aa5 upstream.
 
-We got a issue as fllows:
-==================================================================
- kernel BUG at fs/ext4/extents_status.c:202!
- invalid opcode: 0000 [#1] PREEMPT SMP
- CPU: 1 PID: 810 Comm: mount Not tainted 6.1.0-rc1-next-g9631525255e3 #352
- RIP: 0010:__es_tree_search.isra.0+0xb8/0xe0
- RSP: 0018:ffffc90001227900 EFLAGS: 00010202
- RAX: 0000000000000000 RBX: 0000000077512a0f RCX: 0000000000000000
- RDX: 0000000000000002 RSI: 0000000000002a10 RDI: ffff8881004cd0c8
- RBP: ffff888177512ac8 R08: 47ffffffffffffff R09: 0000000000000001
- R10: 0000000000000001 R11: 00000000000679af R12: 0000000000002a10
- R13: ffff888177512d88 R14: 0000000077512a10 R15: 0000000000000000
- FS: 00007f4bd76dbc40(0000)GS:ffff88842fd00000(0000)knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00005653bf993cf8 CR3: 000000017bfdf000 CR4: 00000000000006e0
- DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
- DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
- Call Trace:
-  <TASK>
-  ext4_es_cache_extent+0xe2/0x210
-  ext4_cache_extents+0xd2/0x110
-  ext4_find_extent+0x5d5/0x8c0
-  ext4_ext_map_blocks+0x9c/0x1d30
-  ext4_map_blocks+0x431/0xa50
-  ext4_getblk+0x82/0x340
-  ext4_bread+0x14/0x110
-  ext4_quota_read+0xf0/0x180
-  v2_read_header+0x24/0x90
-  v2_check_quota_file+0x2f/0xa0
-  dquot_load_quota_sb+0x26c/0x760
-  dquot_load_quota_inode+0xa5/0x190
-  ext4_enable_quotas+0x14c/0x300
-  __ext4_fill_super+0x31cc/0x32c0
-  ext4_fill_super+0x115/0x2d0
-  get_tree_bdev+0x1d2/0x360
-  ext4_get_tree+0x19/0x30
-  vfs_get_tree+0x26/0xe0
-  path_mount+0x81d/0xfc0
-  do_mount+0x8d/0xc0
-  __x64_sys_mount+0xc0/0x160
-  do_syscall_64+0x35/0x80
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-  </TASK>
-==================================================================
+For SMU 13.0.0 and 13.0.7, the output from PMFW is in percent. Driver
+need to convert that into correct PMW(255) based.
 
-Above issue may happen as follows:
--------------------------------------
-ext4_fill_super
- ext4_orphan_cleanup
-  ext4_enable_quotas
-   ext4_quota_enable
-    ext4_iget --> get error inode <5>
-     ext4_ext_check_inode --> Wrong imode makes it escape inspection
-     make_bad_inode(inode) --> EXT4_BOOT_LOADER_INO set imode
-    dquot_load_quota_inode
-     vfs_setup_quota_inode --> check pass
-     dquot_load_quota_sb
-      v2_check_quota_file
-       v2_read_header
-        ext4_quota_read
-         ext4_bread
-          ext4_getblk
-           ext4_map_blocks
-            ext4_ext_map_blocks
-             ext4_find_extent
-              ext4_cache_extents
-               ext4_es_cache_extent
-                __es_tree_search.isra.0
-                 ext4_es_end --> Wrong extents trigger BUG_ON
-
-In the above issue, s_usr_quota_inum is set to 5, but inode<5> contains
-incorrect imode and disordered extents. Because 5 is EXT4_BOOT_LOADER_INO,
-the ext4_ext_check_inode check in the ext4_iget function can be bypassed,
-finally, the extents that are not checked trigger the BUG_ON in the
-__es_tree_search function. To solve this issue, check whether the inode is
-bad_inode in vfs_setup_quota_inode().
-
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221026042310.3839669-2-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Signed-off-by: Evan Quan <evan.quan@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.0, 6.1
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/quota/dquot.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |   17 ++++++++++++++---
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c |   17 ++++++++++++++---
+ 2 files changed, 28 insertions(+), 6 deletions(-)
 
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -2324,6 +2324,8 @@ static int vfs_setup_quota_inode(struct
- 	struct super_block *sb = inode->i_sb;
- 	struct quota_info *dqopt = sb_dqopt(sb);
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -1417,12 +1417,23 @@ out:
+ static int smu_v13_0_0_get_fan_speed_pwm(struct smu_context *smu,
+ 					 uint32_t *speed)
+ {
++	int ret;
++
+ 	if (!speed)
+ 		return -EINVAL;
  
-+	if (is_bad_inode(inode))
-+		return -EUCLEAN;
- 	if (!S_ISREG(inode->i_mode))
- 		return -EACCES;
- 	if (IS_RDONLY(inode))
+-	return smu_v13_0_0_get_smu_metrics_data(smu,
+-						METRICS_CURR_FANPWM,
+-						speed);
++	ret = smu_v13_0_0_get_smu_metrics_data(smu,
++					       METRICS_CURR_FANPWM,
++					       speed);
++	if (ret) {
++		dev_err(smu->adev->dev, "Failed to get fan speed(PWM)!");
++		return ret;
++	}
++
++	/* Convert the PMFW output which is in percent to pwm(255) based */
++	*speed = MIN(*speed * 255 / 100, 255);
++
++	return 0;
+ }
+ 
+ static int smu_v13_0_0_get_fan_speed_rpm(struct smu_context *smu,
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+@@ -1361,12 +1361,23 @@ static int smu_v13_0_7_populate_umd_stat
+ static int smu_v13_0_7_get_fan_speed_pwm(struct smu_context *smu,
+ 					 uint32_t *speed)
+ {
++	int ret;
++
+ 	if (!speed)
+ 		return -EINVAL;
+ 
+-	return smu_v13_0_7_get_smu_metrics_data(smu,
+-						METRICS_CURR_FANPWM,
+-						speed);
++	ret = smu_v13_0_7_get_smu_metrics_data(smu,
++					       METRICS_CURR_FANPWM,
++					       speed);
++	if (ret) {
++		dev_err(smu->adev->dev, "Failed to get fan speed(PWM)!");
++		return ret;
++	}
++
++	/* Convert the PMFW output which is in percent to pwm(255) based */
++	*speed = MIN(*speed * 255 / 100, 255);
++
++	return 0;
+ }
+ 
+ static int smu_v13_0_7_get_fan_speed_rpm(struct smu_context *smu,
 
 
