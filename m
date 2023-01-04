@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E8E1AD48
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:18:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D06C433D2;
-	Wed,  4 Jan 2023 16:18:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADADAD48
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:19:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1748CC433D2;
+	Wed,  4 Jan 2023 16:19:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672849138;
-	bh=CV18yt6KP10/AOJAnRMpI0N5HtEYXjfWrIE9WgC+1GY=;
+	s=korg; t=1672849141;
+	bh=VXnpT57LO7V8ngBoyGmLg/BPvjwAqSab65QuIKs9udo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zwrzjrxD4LwDtkEOdZBktYKtAFly3kQ3FJBk5hsTJM1chOi4+AP/NU4/WckNgX5ax
-	 txOE28/Zb479J7BhHI9m/kSMORIxoLv533bICENHqjNrwpX+dBa8e7JRl9V7ZI7NUW
-	 Ib1fpthSOBbwywPwbc4KZL79QZFalMhMA6Mjz+hY=
+	b=a6BN/cMvb88xCO2+d4Z8Moo/16SVYLcAp5TKwKrsROpmjjpDIfWurHwORWqpagHuV
+	 zQLP1l+V+wzi75BdPA1tJaGG8k2xYlp4j1kDelh+pzN30gSNJff+3VHD7LU9OaX4RN
+	 iamsTGdxOvenINnY6WgFUhP8rxDfePDWyvPyg8Ss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	zanussi@kernel.org,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 6.0 072/177] tracing: Fix issue of missing one synthetic field
-Date: Wed,  4 Jan 2023 17:06:03 +0100
-Message-Id: <20230104160509.837971417@linuxfoundation.org>
+	Li Hua <hucool.lihua@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.1 141/207] test_kprobes: Fix implicit declaration error of test_kprobes
+Date: Wed,  4 Jan 2023 17:06:39 +0100
+Message-Id: <20230104160516.389991695@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230104160507.635888536@linuxfoundation.org>
-References: <20230104160507.635888536@linuxfoundation.org>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,54 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Li Hua <hucool.lihua@huawei.com>
 
-commit ff4837f7fe59ff018eca4705a70eca5e0b486b97 upstream.
+commit 63a4dc0a0bb0e9bfeb2c88ccda81abdde4cdd6b8 upstream.
 
-The maximum number of synthetic fields supported is defined as
-SYNTH_FIELDS_MAX which value currently is 64, but it actually fails
-when try to generate a synthetic event with 64 fields by executing like:
+If KPROBES_SANITY_TEST and ARCH_CORRECT_STACKTRACE_ON_KRETPROBE is enabled, but
+STACKTRACE is not set. Build failed as below:
 
-  # echo "my_synth_event int v1; int v2; int v3; int v4; int v5; int v6;\
-   int v7; int v8; int v9; int v10; int v11; int v12; int v13; int v14;\
-   int v15; int v16; int v17; int v18; int v19; int v20; int v21; int v22;\
-   int v23; int v24; int v25; int v26; int v27; int v28; int v29; int v30;\
-   int v31; int v32; int v33; int v34; int v35; int v36; int v37; int v38;\
-   int v39; int v40; int v41; int v42; int v43; int v44; int v45; int v46;\
-   int v47; int v48; int v49; int v50; int v51; int v52; int v53; int v54;\
-   int v55; int v56; int v57; int v58; int v59; int v60; int v61; int v62;\
-   int v63; int v64" >> /sys/kernel/tracing/synthetic_events
+lib/test_kprobes.c: In function ‘stacktrace_return_handler’:
+lib/test_kprobes.c:228:8: error: implicit declaration of function ‘stack_trace_save’; did you mean ‘stacktrace_driver’? [-Werror=implicit-function-declaration]
+  ret = stack_trace_save(stack_buf, STACK_BUF_SIZE, 0);
+        ^~~~~~~~~~~~~~~~
+        stacktrace_driver
+cc1: all warnings being treated as errors
+scripts/Makefile.build:250: recipe for target 'lib/test_kprobes.o' failed
+make[2]: *** [lib/test_kprobes.o] Error 1
 
-Correct the field counting to fix it.
+To fix this error, Select STACKTRACE if ARCH_CORRECT_STACKTRACE_ON_KRETPROBE is enabled.
 
-Link: https://lore.kernel.org/linux-trace-kernel/20221207091557.3137904-1-zhengyejian1@huawei.com
+Link: https://lore.kernel.org/all/20221121030620.63181-1-hucool.lihua@huawei.com/
 
-Cc: <mhiramat@kernel.org>
-Cc: <zanussi@kernel.org>
+Fixes: 1f6d3a8f5e39 ("kprobes: Add a test case for stacktrace from kretprobe handler")
 Cc: stable@vger.kernel.org
-Fixes: c9e759b1e845 ("tracing: Rework synthetic event command parsing")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Li Hua <hucool.lihua@huawei.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_synth.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/Kconfig.debug |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -1282,12 +1282,12 @@ static int __create_synth_event(const ch
- 				goto err_free_arg;
- 			}
- 
--			fields[n_fields++] = field;
- 			if (n_fields == SYNTH_FIELDS_MAX) {
- 				synth_err(SYNTH_ERR_TOO_MANY_FIELDS, 0);
- 				ret = -EINVAL;
- 				goto err_free_arg;
- 			}
-+			fields[n_fields++] = field;
- 
- 			n_fields_this_loop++;
- 		}
+--- a/lib/Kconfig.debug
++++ b/lib/Kconfig.debug
+@@ -2092,6 +2092,7 @@ config TEST_MIN_HEAP
+ config TEST_SORT
+ 	tristate "Array-based sort test" if !KUNIT_ALL_TESTS
+ 	depends on KUNIT
++	select STACKTRACE if ARCH_CORRECT_STACKTRACE_ON_KRETPROBE
+ 	default KUNIT_ALL_TESTS
+ 	help
+ 	  This option enables the self-test function of 'sort()' at boot,
 
 
