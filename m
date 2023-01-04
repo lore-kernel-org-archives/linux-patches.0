@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A34B3AD38
-	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:10:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2D86C433EF;
-	Wed,  4 Jan 2023 16:10:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90DEAAD38
+	for <patches@lists.linux.dev>; Wed,  4 Jan 2023 16:10:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBF69C433F0;
+	Wed,  4 Jan 2023 16:10:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672848638;
-	bh=tUC9s8oCPpgh927y4ylDwOigVB+Nk/IWqtPcLZaESjQ=;
+	s=korg; t=1672848641;
+	bh=nxxioL4F4P3/WE2zNQBSlmVwJ7MeSriH6LWygpzA3hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wIcRxJraIZCm6KcJaLn7aSTE7Iv1oydtJ5UwFH5eNjiLgAYqBdWIgBTBTEAsC+s7K
-	 VuBJB/Ru3qEWdp34yeT9o/m0++pYnVqAOAfs9/4mWLALI/VLTOvdJO3DDNNTBGbPTM
-	 rRvLP+1CmRTXZGDXecUBpRIbbJlV1EqZoZ8/KRd8=
+	b=s7HBK9QhLVuGvRAuAjlq2xQVGCBuoNB4AKpd27Q1BjYcwCdt6qVlZzbHmxwQgw50m
+	 QW4NDEeqMXcQWK2WmMaXm/9ZYxEx6+IJHT//TM6oXOMs4fRhiqRDo51sIYhiti64aR
+	 sWtTH8Lfo3lEQWufTWJKr7zB1VUK2/E9Fe5IY/Og=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jiaxun Yang <jiaxun.yang@flygoat.com>,
+	Maxim Mikityanskiy <maxtram95@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 047/207] ACPI: video: Prefer native over vendor
-Date: Wed,  4 Jan 2023 17:05:05 +0100
-Message-Id: <20230104160513.410643630@linuxfoundation.org>
+Subject: [PATCH 6.1 048/207] platform/x86: ideapad-laptop: Refactor ideapad_sync_touchpad_state()
+Date: Wed,  4 Jan 2023 17:05:06 +0100
+Message-Id: <20230104160513.440679674@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
 References: <20230104160511.905925875@linuxfoundation.org>
@@ -37,74 +38,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit fb1836c91317e0770950260dfa91eb9b2170cb27 ]
+[ Upstream commit 289a59895e7a380cdc7fe2780d3073f4b9237020 ]
 
-When available prefer native backlight control over vendor backlight
-control.
-
-Testing has shown that there are quite a few laptop models which rely
-on native backlight control (they don't have ACPI video bus backlight
-control) and on which acpi_osi_is_win8() returns false.
-
-Currently __acpi_video_get_backlight_type() returns vendor on these
-laptops, leading to an empty /sys/class/backlight.
-
-As a workaround for this acpi_video_backlight_use_native() has been
-temporarily changed to always return true.
-
-This re-introduces the problem of having multiple backlight
-devices under /sys/class/backlight for a single panel.
-
-Change __acpi_video_get_backlight_type() to prefer native over vendor
-when available. So that it returns native on these models.
-
-And change acpi_video_backlight_use_native() back to only return
-true when __acpi_video_get_backlight_type() returns native.
+Add an error exit for read_ec_data() failing instead of putting the main
+body in an if (success) block.
 
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Tested-by: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Tested-by: Maxim Mikityanskiy <maxtram95@gmail.com>
+Link: https://lore.kernel.org/r/20221117110244.67811-2-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/video_detect.c | 18 +++---------------
- 1 file changed, 3 insertions(+), 15 deletions(-)
+ drivers/platform/x86/ideapad-laptop.c | 27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
-index 0c17ee93f861..76b7e7f8894e 100644
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -795,10 +795,10 @@ static enum acpi_backlight_type __acpi_video_get_backlight_type(bool native)
- 		return acpi_backlight_video;
- 
- 	/* Use native if available */
--	if (native_available && prefer_native_over_acpi_video())
-+	if (native_available)
- 		return acpi_backlight_native;
- 
--	/* No ACPI video (old hw), use vendor specific fw methods. */
-+	/* No ACPI video/native (old hw), use vendor specific fw methods. */
- 	return acpi_backlight_vendor;
- }
- 
-@@ -810,18 +810,6 @@ EXPORT_SYMBOL(acpi_video_get_backlight_type);
- 
- bool acpi_video_backlight_use_native(void)
+diff --git a/drivers/platform/x86/ideapad-laptop.c b/drivers/platform/x86/ideapad-laptop.c
+index 13e3ae731fd8..dcb3a82024da 100644
+--- a/drivers/platform/x86/ideapad-laptop.c
++++ b/drivers/platform/x86/ideapad-laptop.c
+@@ -1490,23 +1490,26 @@ static void ideapad_kbd_bl_exit(struct ideapad_private *priv)
+ static void ideapad_sync_touchpad_state(struct ideapad_private *priv)
  {
--	/*
--	 * Call __acpi_video_get_backlight_type() to let it know that
--	 * a native backlight is available.
--	 */
--	__acpi_video_get_backlight_type(true);
--
--	/*
--	 * For now just always return true. There is a whole bunch of laptop
--	 * models where (video_caps & ACPI_VIDEO_BACKLIGHT) is false causing
--	 * __acpi_video_get_backlight_type() to return vendor, while these
--	 * models only have a native backlight control.
--	 */
--	return true;
-+	return __acpi_video_get_backlight_type(true) == acpi_backlight_native;
+ 	unsigned long value;
++	unsigned char param;
++	int ret;
+ 
+ 	if (!priv->features.touchpad_ctrl_via_ec)
+ 		return;
+ 
+ 	/* Without reading from EC touchpad LED doesn't switch state */
+-	if (!read_ec_data(priv->adev->handle, VPCCMD_R_TOUCHPAD, &value)) {
+-		unsigned char param;
+-		/*
+-		 * Some IdeaPads don't really turn off touchpad - they only
+-		 * switch the LED state. We (de)activate KBC AUX port to turn
+-		 * touchpad off and on. We send KEY_TOUCHPAD_OFF and
+-		 * KEY_TOUCHPAD_ON to not to get out of sync with LED
+-		 */
+-		i8042_command(&param, value ? I8042_CMD_AUX_ENABLE : I8042_CMD_AUX_DISABLE);
+-		ideapad_input_report(priv, value ? 67 : 66);
+-		sysfs_notify(&priv->platform_device->dev.kobj, NULL, "touchpad");
+-	}
++	ret = read_ec_data(priv->adev->handle, VPCCMD_R_TOUCHPAD, &value);
++	if (ret)
++		return;
++
++	/*
++	 * Some IdeaPads don't really turn off touchpad - they only
++	 * switch the LED state. We (de)activate KBC AUX port to turn
++	 * touchpad off and on. We send KEY_TOUCHPAD_OFF and
++	 * KEY_TOUCHPAD_ON to not to get out of sync with LED
++	 */
++	i8042_command(&param, value ? I8042_CMD_AUX_ENABLE : I8042_CMD_AUX_DISABLE);
++	ideapad_input_report(priv, value ? 67 : 66);
++	sysfs_notify(&priv->platform_device->dev.kobj, NULL, "touchpad");
  }
- EXPORT_SYMBOL(acpi_video_backlight_use_native);
+ 
+ static void ideapad_acpi_notify(acpi_handle handle, u32 event, void *data)
 -- 
 2.35.1
 
