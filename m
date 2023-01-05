@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE35320D
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 11:43:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75130C433F1;
-	Thu,  5 Jan 2023 11:43:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672919016;
-	bh=C5S4pknLLvvDIqVA3nXAB2Mbro1adcpPdKMs0YpS8gs=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ADFA33FA
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 12:18:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DA7C433EF;
+	Thu,  5 Jan 2023 12:18:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1672921103;
+	bh=hv1EV/irLjHJQAyoHKa6C4KDVEhonROZ4XUZ0ToC0fQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=km+k6zqgpUVt4IUy5am5wYpxeJlKrLcAti6K12OnnrtGeBa0OP2EVB+6CHJL1exky
-	 sLlhPK6dojydCChwth3leYyDfe3Ggc1nGxr5opYIvdMJsq1Wveegihg2zJkMMFdwAl
-	 cgwwkahvCgZEKeKyySHEHffn4pt5kPJW7Sx/0YKg=
-Date: Thu, 5 Jan 2023 12:43:28 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Joel Fernandes <joel@joelfernandes.org>
+	b=Gf0gw6lMHhFnp/R+FKSWjblrHqXd0pj4hA8muqIwwgZa1U5fhJQvX9k6VLSw8Eqzs
+	 QI0wbub5PnleV2FaVjoUQ0AyRdzwnib111z/fOuz3qgiHmAKcmMveUoMRxrAWj0ux4
+	 4yKbqCy3VadeVGmf9z3A1UbirXsLeokMilo8In/w+K1WkCuBCAXPeJGm/+0MG99DjV
+	 +AoaIhmmB8U5p8jhwlnFxE1x3jZxFINHea1uHrY/H4stKPiiugXamFwz/n083fLQWM
+	 82djg9sCYq6VULJDKM+GZXVHbKWf4jFm72sxJRV1tZ8PS/6ih4K99HSd3QlUYibzA8
+	 JOvW6BkjY5FVQ==
+Date: Thu, 5 Jan 2023 12:18:18 +0000
+From: Lee Jones <lee@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.10 00/63] 5.10.162-rc1 review
-Message-ID: <Y7a34Ckczx8ZuczK@kroah.com>
-References: <Y7UOtInxdmaIP9nH@kroah.com>
- <7BA3F66A-097C-44F2-AAC8-35ADBEAE7E12@joelfernandes.org>
+	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+	John Keeping <john@metanate.com>, Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.15 481/731] usb: gadget: f_hid: fix f_hidg lifetime vs
+ cdev
+Message-ID: <Y7bACmZQdEhlf121@google.com>
+References: <20221228144256.536395940@linuxfoundation.org>
+ <20221228144310.493605271@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,47 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <7BA3F66A-097C-44F2-AAC8-35ADBEAE7E12@joelfernandes.org>
+In-Reply-To: <20221228144310.493605271@linuxfoundation.org>
 
-On Wed, Jan 04, 2023 at 04:56:31PM -0500, Joel Fernandes wrote:
-> 
-> 
-> > On Jan 4, 2023, at 12:29 AM, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> > 
-> > ﻿On Tue, Jan 03, 2023 at 04:16:07PM +0000, Joel Fernandes wrote:
-> >>> On Tue, Jan 03, 2023 at 09:13:30AM +0100, Greg Kroah-Hartman wrote:
-> >>> This is the start of the stable review cycle for the 5.10.162 release.
-> >>> There are 63 patches in this series, all will be posted as a response
-> >>> to this one.  If anyone has any issues with these being applied, please
-> >>> let me know.
-> >>> 
-> >>> Responses should be made by Thu, 05 Jan 2023 08:12:47 +0000.
-> >>> Anything received after that time might be too late.
-> >>> 
-> >>> The whole patch series can be found in one patch at:
-> >>>    https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.162-rc1.gz
-> >>> or in the git tree and branch at:
-> >>>    git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> >>> and the diffstat can be found below.
-> >>> 
-> >>> thanks,
-> >> 
-> >> Testing fails. Could you please pick these 2 up?
-> >> https://lore.kernel.org/r/20221230153215.1333921-1-joel@joelfernandes.org
-> >> https://lore.kernel.org/all/20221230153215.1333921-2-joel@joelfernandes.org/
-> > 
-> > That is not a regression from 5.10.161, right?
-> 
-> Yes it is not.
-> 
-> >  This release is only for
-> > the io_uring stuff to make sure that backport was done correctly.
-> > 
-> > The current "to apply" queue for the stable trees is very large right
-> > now due to everyone waiting to get tiny things into -rc1 instead of
-> > before then, so the above two are still not yet queued up, sorry.
-> 
-> Sure not a problem, I can resend again later if it is still not queued.
+On Wed, 28 Dec 2022, Greg Kroah-Hartman wrote:
 
-You should have already received the email notices saying they were
-queued :)
+> From: John Keeping <john@metanate.com>
+> 
+> [ Upstream commit 89ff3dfac604614287ad5aad9370c3f984ea3f4b ]
+> 
+> The embedded struct cdev does not have its lifetime correctly tied to
+> the enclosing struct f_hidg, so there is a use-after-free if /dev/hidgN
+> is held open while the gadget is deleted.
+> 
+> This can readily be replicated with libusbgx's example programs (for
+> conciseness - operating directly via configfs is equivalent):
+> 
+> 	gadget-hid
+> 	exec 3<> /dev/hidg0
+> 	gadget-vid-pid-remove
+> 	exec 3<&-
+> 
+> Pull the existing device up in to struct f_hidg and make use of the
+> cdev_device_{add,del}() helpers.  This changes the lifetime of the
+> device object to match struct f_hidg, but note that it is still added
+> and deleted at the same time.
+> 
+> Fixes: 71adf1189469 ("USB: gadget: add HID gadget driver")
+> Tested-by: Lee Jones <lee@kernel.org>
+> Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+> Reviewed-by: Lee Jones <lee@kernel.org>
+> Signed-off-by: John Keeping <john@metanate.com>
+> Link: https://lore.kernel.org/r/20221122123523.3068034-2-john@metanate.com
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  drivers/usb/gadget/function/f_hid.c | 52 ++++++++++++++++-------------
+>  1 file changed, 28 insertions(+), 24 deletions(-)
+ 
+Dear Stable,
+
+Would you be kind enough to take this back as far back as linux.4.14.y
+please?  There is a trivial fix-up required for kernels older than
+v5.15, but it's the same fix-up back through v4.14.
+
+Thanks.
+
+--- 
+Lee Jones [李琼斯]
