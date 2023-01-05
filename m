@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5A58494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:00:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C017DC433EF;
-	Thu,  5 Jan 2023 13:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F01A8494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:00:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C855BC433D2;
+	Thu,  5 Jan 2023 13:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923654;
-	bh=PCd9oEegePytTj9WafdMzWJQ2nqpli7GpMd8krmrql8=;
+	s=korg; t=1672923657;
+	bh=dqE5HKcJeZVHtAamV5TnKq9ZK1JYm8FpTR1LC8shB40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=obkK6VHhRhX60DQwpOwi0kcJHh/880ju3CpVeglT7ZbitrZFYH4kiyV91/TRqpeFu
-	 VMI0ZnWIF960sj7ir/lS83Qh8BW7CQ6rZNJAH8YGy4H+Z30/9h82lUWK/6OjKf5Pqm
-	 vEK7DYtxeWLs+ZLyaB3moSdIPezugLOYHuPRLH4w=
+	b=GOJPdDQpChu3r/n4x+QOgaglEUl7WSdABnDUkWNTXIfxVt5GKf5hMJpfSh6uN9DGy
+	 p5+AGQQUpBOmDaDgMmQ9nh/SFuZ8mY70G5JBue95opA854g2RiRRYWw7EG0337kHK/
+	 vybfGoyW/rLGIC/4xNHITQGXUh3Xw7KMYwcYFDLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 062/251] media: solo6x10: fix possible memory leak in solo_sysfs_init()
-Date: Thu,  5 Jan 2023 13:53:19 +0100
-Message-Id: <20230105125337.603018176@linuxfoundation.org>
+Subject: [PATCH 4.9 089/251] mmc: mmci: fix return value check of mmc_add_host()
+Date: Thu,  5 Jan 2023 13:53:46 +0100
+Message-Id: <20230105125338.882597035@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -37,34 +37,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 7f5866dd96d95b74e439f6ee17b8abd8195179fb ]
+[ Upstream commit b38a20f29a49ae04d23750d104b25400b792b98c ]
 
-If device_register() returns error in solo_sysfs_init(), the
-name allocated by dev_set_name() need be freed. As comment of
-device_register() says, it should use put_device() to give up
-the reference in the error path. So fix this by calling
-put_device(), then the name can be freed in kobject_cleanup().
+mmc_add_host() may return error, if we ignore its return value,
+it will lead two issues:
+1. The memory that allocated in mmc_alloc_host() is leaked.
+2. In the remove() path, mmc_remove_host() will be called to
+   delete device, but it's not added yet, it will lead a kernel
+   crash because of null-ptr-deref in device_del().
 
-Fixes: dcae5dacbce5 ("[media] solo6x10: sync to latest code from Bluecherry's git repo")
+So fix this by checking the return value and goto error path which
+will call mmc_free_host().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Link: https://lore.kernel.org/r/20221109133539.3275664-1-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/solo6x10/solo6x10-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/host/mmci.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/pci/solo6x10/solo6x10-core.c b/drivers/media/pci/solo6x10/solo6x10-core.c
-index f50d07229236..fc45d4aeb77e 100644
---- a/drivers/media/pci/solo6x10/solo6x10-core.c
-+++ b/drivers/media/pci/solo6x10/solo6x10-core.c
-@@ -428,6 +428,7 @@ static int solo_sysfs_init(struct solo_dev *solo_dev)
- 		     solo_dev->nr_chans);
+diff --git a/drivers/mmc/host/mmci.c b/drivers/mmc/host/mmci.c
+index df990bb8c873..347dffaea105 100644
+--- a/drivers/mmc/host/mmci.c
++++ b/drivers/mmc/host/mmci.c
+@@ -1718,7 +1718,9 @@ static int mmci_probe(struct amba_device *dev,
+ 	pm_runtime_set_autosuspend_delay(&dev->dev, 50);
+ 	pm_runtime_use_autosuspend(&dev->dev);
  
- 	if (device_register(dev)) {
-+		put_device(dev);
- 		dev->parent = NULL;
- 		return -ENOMEM;
- 	}
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret)
++		goto clk_disable;
+ 
+ 	pm_runtime_put(&dev->dev);
+ 	return 0;
 -- 
 2.35.1
 
