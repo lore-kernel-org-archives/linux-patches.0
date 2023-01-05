@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8B68494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:05:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7DFC433D2;
-	Thu,  5 Jan 2023 13:05:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1578494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:05:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AAD8C433EF;
+	Thu,  5 Jan 2023 13:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923923;
-	bh=wu1voDtzG5hmMJa1qNHG4LgUTDAJlN5jn2B7XmnY0es=;
+	s=korg; t=1672923925;
+	bh=jnYLJjsDg6RtXq+NEZdXeAY7URJzj1IySo/MYuOD9kg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hMHxO84m5fv/POt+fj90sxKvMjlJ8L3RWLxrvVD16KDP/YOGcudiXSNcKaeO2q/N5
-	 OZbTcmq1s+HSKFrUpTziGdQOPip67OZALsuNRzWxBTEF0VbX13YmEtBd3ASlfl25mM
-	 xxxwhDogcXwdqKp2ZV0i84VmSMsQ6fCHepW0wuxs=
+	b=1/A2DvYMmMVCxenob1yxPwcGDCT7HHixWQg/I+hVd3ncpFnsEq2xPpnMv63zUN60E
+	 4TBlossw+kAziN/2O2jq+FZKDRl0VdMJcw7f6GoJ+qTpFabmElqv9T/mSggFn61ciO
+	 YHgda2IpWnCha4tIniLm77sqUgflOQEng727LHpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 177/251] myri10ge: Fix an error handling path in myri10ge_probe()
-Date: Thu,  5 Jan 2023 13:55:14 +0100
-Message-Id: <20230105125342.899077329@linuxfoundation.org>
+Subject: [PATCH 4.9 160/251] macintosh: fix possible memory leak in macio_add_one_device()
+Date: Thu,  5 Jan 2023 13:54:57 +0100
+Message-Id: <20230105125342.166555696@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -35,35 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit d83b950d44d2982c0e62e3d81b0f35ab09431008 ]
+[ Upstream commit 5ca86eae55a2f006e6c1edd2029b2cacb6979515 ]
 
-Some memory allocated in myri10ge_probe_slices() is not released in the
-error handling path of myri10ge_probe().
+Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's
+bus_id string array"), the name of device is allocated dynamically. It
+needs to be freed when of_device_register() fails. Call put_device() to
+give up the reference that's taken in device_initialize(), so that it
+can be freed in kobject_cleanup() when the refcount hits 0.
 
-Add the corresponding kfree(), as already done in the remove function.
+macio device is freed in macio_release_dev(), so the kfree() can be
+removed.
 
-Fixes: 0dcffac1a329 ("myri10ge: add multislices support")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20221104032551.1075335-1-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/myricom/myri10ge/myri10ge.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/macintosh/macio_asic.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/myricom/myri10ge/myri10ge.c b/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
-index 5eeba263b5f8..d50cee7aae4d 100644
---- a/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
-+++ b/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
-@@ -4152,6 +4152,7 @@ static int myri10ge_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	myri10ge_free_slices(mgp);
+diff --git a/drivers/macintosh/macio_asic.c b/drivers/macintosh/macio_asic.c
+index 3f041b187033..04da09af5531 100644
+--- a/drivers/macintosh/macio_asic.c
++++ b/drivers/macintosh/macio_asic.c
+@@ -425,7 +425,7 @@ static struct macio_dev * macio_add_one_device(struct macio_chip *chip,
+ 	if (of_device_register(&dev->ofdev) != 0) {
+ 		printk(KERN_DEBUG"macio: device registration error for %s!\n",
+ 		       dev_name(&dev->ofdev.dev));
+-		kfree(dev);
++		put_device(&dev->ofdev.dev);
+ 		return NULL;
+ 	}
  
- abort_with_firmware:
-+	kfree(mgp->msix_vectors);
- 	myri10ge_dummy_rdma(mgp, 0);
- 
- abort_with_ioremap:
 -- 
 2.35.1
 
