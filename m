@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F11A8494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 12:59:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA949C433F0;
-	Thu,  5 Jan 2023 12:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94EFE8494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 12:59:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DAA0C433EF;
+	Thu,  5 Jan 2023 12:59:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923562;
-	bh=TAeZbPYa49P/YgANyyKj6pcY4kBzflj1rk9MaIIG4EA=;
+	s=korg; t=1672923565;
+	bh=dnTKoCXOhGrm4zJipGrr3KuaLbMURMRRDF0tSsdFyqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cd/cweTLhuDorXEQHcGer8ZswcakFXREog+IDYYAAHW2lSbTcmBxoxUf4E1B3gxUb
-	 l37m7OC9LCgOTUInZh0qTXYArfB3buI5hTnDZH7LMZOld0OhuXxRsqmiLUAyW+cfGc
-	 138xHP6jdAdGFOqaaS9k+Rip86cDG9QUygztecUg=
+	b=QCPF+IJ9UJ10dnOzFHFY48K3dRnqBI2pCmEcek7ZcleVmDzLzVSgcMmPq1S3ytOAR
+	 bQPeutrSAtJcdrlLFw1+XhmgDQa/7/TDwbLmf37udwA3DXkZKsrvK6l51HlK1gtgoj
+	 kk73qywXC/ULKq6LnclkAhgoYB02gLWI1AIVx7fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 058/251] ima: Fix misuse of dereference of pointer in template_desc_init_fields()
-Date: Thu,  5 Jan 2023 13:53:15 +0100
-Message-Id: <20230105125337.427094070@linuxfoundation.org>
+Subject: [PATCH 4.9 031/251] perf: Fix possible memleak in pmu_dev_alloc()
+Date: Thu,  5 Jan 2023 13:52:48 +0100
+Message-Id: <20230105125336.196038654@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -36,44 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 25369175ce84813dd99d6604e710dc2491f68523 ]
+[ Upstream commit e8d7a90c08ce963c592fb49845f2ccc606a2ac21 ]
 
-The input parameter @fields is type of struct ima_template_field ***, so
-when allocates array memory for @fields, the size of element should be
-sizeof(**field) instead of sizeof(*field).
+In pmu_dev_alloc(), when dev_set_name() failed, it will goto free_dev
+and call put_device(pmu->dev) to release it.
+However pmu->dev->release is assigned after this, which makes warning
+and memleak.
+Call dev_set_name() after pmu->dev->release = pmu_dev_release to fix it.
 
-Actually the original code would not cause any runtime error, but it's
-better to make it logically right.
+  Device '(null)' does not have a release() function...
+  WARNING: CPU: 2 PID: 441 at drivers/base/core.c:2332 device_release+0x1b9/0x240
+  ...
+  Call Trace:
+    <TASK>
+    kobject_put+0x17f/0x460
+    put_device+0x20/0x30
+    pmu_dev_alloc+0x152/0x400
+    perf_pmu_register+0x96b/0xee0
+    ...
+  kmemleak: 1 new suspected memory leaks (see /sys/kernel/debug/kmemleak)
+  unreferenced object 0xffff888014759000 (size 2048):
+    comm "modprobe", pid 441, jiffies 4294931444 (age 38.332s)
+    backtrace:
+      [<0000000005aed3b4>] kmalloc_trace+0x27/0x110
+      [<000000006b38f9b8>] pmu_dev_alloc+0x50/0x400
+      [<00000000735f17be>] perf_pmu_register+0x96b/0xee0
+      [<00000000e38477f1>] 0xffffffffc0ad8603
+      [<000000004e162216>] do_one_initcall+0xd0/0x4e0
+      ...
 
-Fixes: adf53a778a0a ("ima: new templates management mechanism")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Fixes: abe43400579d ("perf: Sysfs enumeration")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20221111103653.91058-1-chenzhongjin@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/ima_template.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/events/core.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/security/integrity/ima/ima_template.c b/security/integrity/ima/ima_template.c
-index febd12ed9b55..fdba86fa90ee 100644
---- a/security/integrity/ima/ima_template.c
-+++ b/security/integrity/ima/ima_template.c
-@@ -171,11 +171,11 @@ static int template_desc_init_fields(const char *template_fmt,
- 	}
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 58ef731d52c7..a25b5a8182ec 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -8864,13 +8864,15 @@ static int pmu_dev_alloc(struct pmu *pmu)
  
- 	if (fields && num_fields) {
--		*fields = kmalloc_array(i, sizeof(*fields), GFP_KERNEL);
-+		*fields = kmalloc_array(i, sizeof(**fields), GFP_KERNEL);
- 		if (*fields == NULL)
- 			return -ENOMEM;
+ 	pmu->dev->groups = pmu->attr_groups;
+ 	device_initialize(pmu->dev);
+-	ret = dev_set_name(pmu->dev, "%s", pmu->name);
+-	if (ret)
+-		goto free_dev;
  
--		memcpy(*fields, found_fields, i * sizeof(*fields));
-+		memcpy(*fields, found_fields, i * sizeof(**fields));
- 		*num_fields = i;
- 	}
- 
+ 	dev_set_drvdata(pmu->dev, pmu);
+ 	pmu->dev->bus = &pmu_bus;
+ 	pmu->dev->release = pmu_dev_release;
++
++	ret = dev_set_name(pmu->dev, "%s", pmu->name);
++	if (ret)
++		goto free_dev;
++
+ 	ret = device_add(pmu->dev);
+ 	if (ret)
+ 		goto free_dev;
 -- 
 2.35.1
 
