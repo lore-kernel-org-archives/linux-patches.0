@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C014C8494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 12:59:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29001C433D2;
-	Thu,  5 Jan 2023 12:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E4E8494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 12:59:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39857C43396;
+	Thu,  5 Jan 2023 12:59:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923580;
-	bh=G7E1iqakTX/tIagmnrHh7XUZgSQyn0DR+QulAV70MPo=;
+	s=korg; t=1672923583;
+	bh=iXwdNJVEhCJYVolA7sTL6gOoQOVBvXm5P+O4gSp19Xc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vkr7p6jBQ8KUC93Ad48BDvhQkudagBta+8M4I6d5RJNyHrJa6b9BBt8o8+QoaJ0+1
-	 esDFYO4ovKh+yMmv4zFmiTo3S6wwu02mFqNRZJU2FS17vE8i8LP7lfZ+Ctmg+BiiVe
-	 kJdns/jzj+PEvczCeK3YG9W9jMA7uFlUNmM/eQdM=
+	b=zVXpcDCbXBM1dJ8EPTxdZ6ujTxI4JJ+VRCsWljagBeLBGaaKjKvxL87388Ua/870e
+	 iQQOgAQVpE35DHMF8phjLPkvFl8JBzJktsuAag6muyT91oNzT+l9yNvrZhG8Ib5yvP
+	 uqqkOkGcNf54VxNEJZrlDwouc4jMzJc9n7qh+M3k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 036/251] PNP: fix name memory leak in pnp_alloc_dev()
-Date: Thu,  5 Jan 2023 13:52:53 +0100
-Message-Id: <20230105125336.410234964@linuxfoundation.org>
+Subject: [PATCH 4.9 027/251] cpuidle: dt: Return the correct numbers of parsed idle states
+Date: Thu,  5 Jan 2023 13:52:44 +0100
+Message-Id: <20230105125336.017846436@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -36,44 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-[ Upstream commit 110d7b0325c55ff3620073ba4201845f59e22ebf ]
+[ Upstream commit ee3c2c8ad6ba6785f14a60e4081d7c82e88162a2 ]
 
-After commit 1fa5ae857bb1 ("driver core: get rid of struct device's
-bus_id string array"), the name of device is allocated dynamically,
-move dev_set_name() after pnp_add_id() to avoid memory leak.
+While we correctly skips to initialize an idle state from a disabled idle
+state node in DT, the returned value from dt_init_idle_driver() don't get
+adjusted accordingly. Instead the number of found idle state nodes are
+returned, while the callers are expecting the number of successfully
+initialized idle states from DT.
 
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
+This leads to cpuidle drivers unnecessarily continues to initialize their
+idle state specific data. Moreover, in the case when all idle states have
+been disabled in DT, we would end up registering a cpuidle driver, rather
+than relying on the default arch specific idle call.
+
+Fixes: 9f14da345599 ("drivers: cpuidle: implement DT based idle states infrastructure")
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pnp/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/cpuidle/dt_idle_states.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pnp/core.c b/drivers/pnp/core.c
-index b54620e53830..3d5865c7694b 100644
---- a/drivers/pnp/core.c
-+++ b/drivers/pnp/core.c
-@@ -159,14 +159,14 @@ struct pnp_dev *pnp_alloc_dev(struct pnp_protocol *protocol, int id,
- 	dev->dev.coherent_dma_mask = dev->dma_mask;
- 	dev->dev.release = &pnp_release_device;
- 
--	dev_set_name(&dev->dev, "%02x:%02x", dev->protocol->number, dev->number);
--
- 	dev_id = pnp_add_id(dev, pnpid);
- 	if (!dev_id) {
- 		kfree(dev);
- 		return NULL;
- 	}
- 
-+	dev_set_name(&dev->dev, "%02x:%02x", dev->protocol->number, dev->number);
-+
- 	return dev;
+diff --git a/drivers/cpuidle/dt_idle_states.c b/drivers/cpuidle/dt_idle_states.c
+index ea11a33e7fff..1a79ac569770 100644
+--- a/drivers/cpuidle/dt_idle_states.c
++++ b/drivers/cpuidle/dt_idle_states.c
+@@ -218,6 +218,6 @@ int dt_init_idle_driver(struct cpuidle_driver *drv,
+ 	 * also be 0 on platforms with missing DT idle states or legacy DT
+ 	 * configuration predating the DT idle states bindings.
+ 	 */
+-	return i;
++	return state_idx - start_idx;
  }
- 
+ EXPORT_SYMBOL_GPL(dt_init_idle_driver);
 -- 
 2.35.1
 
