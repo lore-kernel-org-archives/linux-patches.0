@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9695B8494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:04:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00529C433D2;
-	Thu,  5 Jan 2023 13:04:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 925E78494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:04:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE05AC433D2;
+	Thu,  5 Jan 2023 13:04:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923889;
-	bh=To9YenKa38xIfNW1ELFoZ9tAXRzPd8vtBpipHId5cDQ=;
+	s=korg; t=1672923892;
+	bh=aJD/XXlf9RCj56P+YklnCPAyY0jVoIg/J+94U1DPjpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b32ZIZpJMYpB8wGqryUlQOKk1YUa26KJTPVQa/41BFsEvU4bpRRcZEDGqDJS3+NV/
-	 ByfLfddpBJPJLDOMpd42+pp9iStpM2r0Zco0lcqjUeY+X2P8wbgESQmsmghfHu7e9D
-	 +77dgGaSIfNRjANTdNj5WDEeRfhmNKTIV2n8VfRA=
+	b=UsqfgBVyzu80LDoaZLaWpCD20b2G0PqtSlASIFvNk5XTIBlBnZm9682uJ03GOBjrL
+	 69PVVck2vg8o1xXqZgYq3O92ldxonwOjv77mKZX7twg9kWCvZ5B/5SjSNLjXUnOqdT
+	 vrzO1VB+DM0m1Id+7eIN12XDqZKN5QR96Lc2oa7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Yuan Can <yuancan@huawei.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 125/251] IB/IPoIB: Fix queue count inconsistency for PKEY child interfaces
-Date: Thu,  5 Jan 2023 13:54:22 +0100
-Message-Id: <20230105125340.555205316@linuxfoundation.org>
+Subject: [PATCH 4.9 159/251] iommu/fsl_pamu: Fix resource leak in fsl_pamu_probe()
+Date: Thu,  5 Jan 2023 13:54:56 +0100
+Message-Id: <20230105125342.117115270@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -35,59 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit dbc94a0fb81771a38733c0e8f2ea8c4fa6934dc1 ]
+[ Upstream commit 73f5fc5f884ad0c5f7d57f66303af64f9f002526 ]
 
-There are 2 ways to create IPoIB PKEY child interfaces:
-1) Writing a PKEY to /sys/class/net/<ib parent interface>/create_child.
-2) Using netlink with iproute.
+The fsl_pamu_probe() returns directly when create_csd() failed, leaving
+irq and memories unreleased.
+Fix by jumping to error if create_csd() returns error.
 
-While with sysfs the child interface has the same number of tx and
-rx queues as the parent, with netlink there will always be 1 tx
-and 1 rx queue for the child interface. That's because the
-get_num_tx/rx_queues() netlink ops are missing and the default value
-of 1 is taken for the number of queues (in rtnl_create_link()).
-
-This change adds the get_num_tx/rx_queues() ops which allows for
-interfaces with multiple queues to be created over netlink. This
-constant only represents the max number of tx and rx queues on that
-net device.
-
-Fixes: 9baa0b036410 ("IB/ipoib: Add rtnl_link_ops support")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Link: https://lore.kernel.org/r/f4a42c8aa43c02d5ae5559a60c3e5e0f18c82531.1670485816.git.leonro@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 695093e38c3e ("iommu/fsl: Freescale PAMU driver and iommu implementation.")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20221121082022.19091-1-yuancan@huawei.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/ipoib/ipoib_netlink.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/iommu/fsl_pamu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_netlink.c b/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
-index cdc7df4fdb8a..20a6d1071014 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
-@@ -42,6 +42,11 @@ static const struct nla_policy ipoib_policy[IFLA_IPOIB_MAX + 1] = {
- 	[IFLA_IPOIB_UMCAST]	= { .type = NLA_U16 },
- };
+diff --git a/drivers/iommu/fsl_pamu.c b/drivers/iommu/fsl_pamu.c
+index a34355fca37a..4d6bdc465dde 100644
+--- a/drivers/iommu/fsl_pamu.c
++++ b/drivers/iommu/fsl_pamu.c
+@@ -1131,7 +1131,7 @@ static int fsl_pamu_probe(struct platform_device *pdev)
+ 		ret = create_csd(ppaact_phys, mem_size, csd_port_id);
+ 		if (ret) {
+ 			dev_err(dev, "could not create coherence subdomain\n");
+-			return ret;
++			goto error;
+ 		}
+ 	}
  
-+static unsigned int ipoib_get_max_num_queues(void)
-+{
-+	return min_t(unsigned int, num_possible_cpus(), 128);
-+}
-+
- static int ipoib_fill_info(struct sk_buff *skb, const struct net_device *dev)
- {
- 	struct ipoib_dev_priv *priv = netdev_priv(dev);
-@@ -167,6 +172,8 @@ static struct rtnl_link_ops ipoib_link_ops __read_mostly = {
- 	.dellink	= ipoib_unregister_child_dev,
- 	.get_size	= ipoib_get_size,
- 	.fill_info	= ipoib_fill_info,
-+	.get_num_rx_queues = ipoib_get_max_num_queues,
-+	.get_num_tx_queues = ipoib_get_max_num_queues,
- };
- 
- int __init ipoib_netlink_init(void)
 -- 
 2.35.1
 
