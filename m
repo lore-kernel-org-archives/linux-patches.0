@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8569A8495
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:07:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE27EC433F1;
-	Thu,  5 Jan 2023 13:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7A178494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:08:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CBD0C433EF;
+	Thu,  5 Jan 2023 13:07:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672924077;
-	bh=j+XvRaeHGALL552/+G9Y1kGH0I+QWcqTXZJUhSX4eWc=;
+	s=korg; t=1672924080;
+	bh=eYdyufKyyAq71Y+IxjVwhVNShYvkflu1cxrB7ge5s8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iZ3jHWZsVyHEc0/UV/sw/7OE0Aop5gpkgojWivKOomtWLONEGCLOOSsQCyYFmOhLj
-	 Lrhe+mJsZd7c9ScSr0lLOj8naldKtBLTuV6Mz2xdPNvXMmi5YKLbQQ7WZdg8avx/ZO
-	 MxxS/6EFMDYaFEGQ1QUjHOZXZF82aWZHlrtZKeAw=
+	b=L0nyNtMFSEOlxJw6gIe/0Nah7KqrIVb9N+rx+XdzomSzKFaFWc62QENV2ejFcHK0f
+	 diU5x6XADZ02MWc4xWGtG/XaOIsVAzuWD5ANl7o4pGziVBY9cFYry1D6kh3Z9I+et7
+	 yKQlbXXZSQzNDRBrlk1xdIerYeTK4FmJ9qCn7Gh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandra Winter <wintera@linux.ibm.com>,
-	Kees Cook <keescook@chromium.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Alain Volmat <alain.volmat@foss.st.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 196/251] s390/lcs: Fix return type of lcs_start_xmit()
-Date: Thu,  5 Jan 2023 13:55:33 +0100
-Message-Id: <20230105125343.804024685@linuxfoundation.org>
+Subject: [PATCH 4.9 197/251] drm/sti: Use drm_mode_copy()
+Date: Thu,  5 Jan 2023 13:55:34 +0100
+Message-Id: <20230105125343.852602558@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -37,66 +36,116 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit bb16db8393658e0978c3f0d30ae069e878264fa3 ]
+[ Upstream commit 442cf8e22ba25a77cb9092d78733fdbac9844e50 ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+struct drm_display_mode embeds a list head, so overwriting
+the full struct with another one will corrupt the list
+(if the destination mode is on a list). Use drm_mode_copy()
+instead which explicitly preserves the list head of
+the destination mode.
 
-  drivers/s390/net/lcs.c:2090:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = lcs_start_xmit,
-                                    ^~~~~~~~~~~~~~
-  drivers/s390/net/lcs.c:2097:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = lcs_start_xmit,
-                                    ^~~~~~~~~~~~~~
+Even if we know the destination mode is not on any list
+using drm_mode_copy() seems decent as it sets a good
+example. Bad examples of not using it might eventually
+get copied into code where preserving the list head
+actually matters.
 
-->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-'netdev_tx_t', not 'int'. Adjust the return type of lcs_start_xmit() to
-match the prototype's to resolve the warning and potential CFI failure,
-should s390 select ARCH_SUPPORTS_CFI_CLANG in the future.
+Obviously one case not covered here is when the mode
+itself is embedded in a larger structure and the whole
+structure is copied. But if we are careful when copying
+into modes embedded in structures I think we can be a
+little more reassured that bogus list heads haven't been
+propagated in.
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+@is_mode_copy@
+@@
+drm_mode_copy(...)
+{
+...
+}
+
+@depends on !is_mode_copy@
+struct drm_display_mode *mode;
+expression E, S;
+@@
+(
+- *mode = E
++ drm_mode_copy(mode, &E)
+|
+- memcpy(mode, E, S)
++ drm_mode_copy(mode, E)
+)
+
+@depends on !is_mode_copy@
+struct drm_display_mode mode;
+expression E;
+@@
+(
+- mode = E
++ drm_mode_copy(&mode, &E)
+|
+- memcpy(&mode, E, S)
++ drm_mode_copy(&mode, E)
+)
+
+@@
+struct drm_display_mode *mode;
+@@
+- &*mode
++ mode
+
+Cc: Alain Volmat <alain.volmat@foss.st.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221107192545.9896-8-ville.syrjala@linux.intel.com
+Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/s390/net/lcs.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/sti/sti_dvo.c  | 2 +-
+ drivers/gpu/drm/sti/sti_hda.c  | 2 +-
+ drivers/gpu/drm/sti/sti_hdmi.c | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/s390/net/lcs.c b/drivers/s390/net/lcs.c
-index 4d3caad7e981..3bd2241c13e8 100644
---- a/drivers/s390/net/lcs.c
-+++ b/drivers/s390/net/lcs.c
-@@ -1544,9 +1544,8 @@ lcs_txbuffer_cb(struct lcs_channel *channel, struct lcs_buffer *buffer)
- /**
-  * Packet transmit function called by network stack
-  */
--static int
--__lcs_start_xmit(struct lcs_card *card, struct sk_buff *skb,
--		 struct net_device *dev)
-+static netdev_tx_t __lcs_start_xmit(struct lcs_card *card, struct sk_buff *skb,
-+				    struct net_device *dev)
- {
- 	struct lcs_header *header;
- 	int rc = NETDEV_TX_OK;
-@@ -1607,8 +1606,7 @@ __lcs_start_xmit(struct lcs_card *card, struct sk_buff *skb,
- 	return rc;
- }
+diff --git a/drivers/gpu/drm/sti/sti_dvo.c b/drivers/gpu/drm/sti/sti_dvo.c
+index e8c1ed08a9f7..4be5b5670599 100644
+--- a/drivers/gpu/drm/sti/sti_dvo.c
++++ b/drivers/gpu/drm/sti/sti_dvo.c
+@@ -296,7 +296,7 @@ static void sti_dvo_set_mode(struct drm_bridge *bridge,
  
--static int
--lcs_start_xmit(struct sk_buff *skb, struct net_device *dev)
-+static netdev_tx_t lcs_start_xmit(struct sk_buff *skb, struct net_device *dev)
- {
- 	struct lcs_card *card;
- 	int rc;
+ 	DRM_DEBUG_DRIVER("\n");
+ 
+-	memcpy(&dvo->mode, mode, sizeof(struct drm_display_mode));
++	drm_mode_copy(&dvo->mode, mode);
+ 
+ 	/* According to the path used (main or aux), the dvo clocks should
+ 	 * have a different parent clock. */
+diff --git a/drivers/gpu/drm/sti/sti_hda.c b/drivers/gpu/drm/sti/sti_hda.c
+index 08808e3701de..cbceea7d4f87 100644
+--- a/drivers/gpu/drm/sti/sti_hda.c
++++ b/drivers/gpu/drm/sti/sti_hda.c
+@@ -528,7 +528,7 @@ static void sti_hda_set_mode(struct drm_bridge *bridge,
+ 
+ 	DRM_DEBUG_DRIVER("\n");
+ 
+-	memcpy(&hda->mode, mode, sizeof(struct drm_display_mode));
++	drm_mode_copy(&hda->mode, mode);
+ 
+ 	if (!hda_get_mode_idx(hda->mode, &mode_idx)) {
+ 		DRM_ERROR("Undefined mode\n");
+diff --git a/drivers/gpu/drm/sti/sti_hdmi.c b/drivers/gpu/drm/sti/sti_hdmi.c
+index a5412a6fbeca..c450668883b5 100644
+--- a/drivers/gpu/drm/sti/sti_hdmi.c
++++ b/drivers/gpu/drm/sti/sti_hdmi.c
+@@ -848,7 +848,7 @@ static void sti_hdmi_set_mode(struct drm_bridge *bridge,
+ 	DRM_DEBUG_DRIVER("\n");
+ 
+ 	/* Copy the drm display mode in the connector local structure */
+-	memcpy(&hdmi->mode, mode, sizeof(struct drm_display_mode));
++	drm_mode_copy(&hdmi->mode, mode);
+ 
+ 	/* Update clock framerate according to the selected mode */
+ 	ret = clk_set_rate(hdmi->clk_pix, mode->clock * 1000);
 -- 
 2.35.1
 
