@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A778494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:03:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16955C433D2;
-	Thu,  5 Jan 2023 13:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3428494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:03:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42194C433EF;
+	Thu,  5 Jan 2023 13:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923833;
-	bh=g2OdSkJ7CtElp7CkAJWGPqxBw7YHK7JjH7rFr2hKfo4=;
+	s=korg; t=1672923836;
+	bh=/vawPjdpqQMHeG144/ZxjDI/wjG2NbqfVnhjc0jIhq8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Prb2hwmx+wzeZ3fMn+nXqa3DtDUGdsekRQKPsslxYlVl9AWuAgvJxAUmyEJ+b4nfK
-	 vUpxyrkCZobNY8DYYMxjW45/yFuljN7DYf6apmEhWHGfSvlwY22leikqZwDj7w4Gv7
-	 8WTbbrfkhJib5idTaAbzb1loS/kHNUGMfZ66QDD0=
+	b=VMxWHa9Je5bIedduyWxcvPtlkva0UAnWKAEIK3dDcObhlUz8yFo2jD3NRTnPrG4W9
+	 0Z4ngMxXoc6EkxuTkir6HYTDwjdw1v4iWz3cZ5YHRKw+P2pVG6qX2o8qRNX+CrnefW
+	 St3yrbDBkaTfIdE/IT7Vs3INX6CBxN6knpgU5srA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 147/251] usb: storage: Add check for kcalloc
-Date: Thu,  5 Jan 2023 13:54:44 +0100
-Message-Id: <20230105125341.568939645@linuxfoundation.org>
+Subject: [PATCH 4.9 148/251] fbdev: ssd1307fb: Drop optional dependency
+Date: Thu,  5 Jan 2023 13:54:45 +0100
+Message-Id: <20230105125341.607546737@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -35,37 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit c35ca10f53c51eeb610d3f8fbc6dd6d511b58a58 ]
+[ Upstream commit 025e3b507a3a8e1ee96a3112bb67495c77d6cdb6 ]
 
-As kcalloc may return NULL pointer, the return value should
-be checked and return error if fails as same as the ones in
-alauda_read_map.
+Only a single out of three devices need a PWM, so from driver it's
+optional. Moreover it's a single driver in the entire kernel that
+currently selects PWM. Unfortunately this selection is a root cause
+of the circular dependencies when we want to enable optional PWM
+for some other drivers that select GPIOLIB.
 
-Fixes: e80b0fade09e ("[PATCH] USB Storage: add alauda support")
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20221208110058.12983-1-jiasheng@iscas.ac.cn
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a2ed00da5047 ("drivers/video: add support for the Solomon SSD1307 OLED Controller")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/storage/alauda.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/video/fbdev/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/usb/storage/alauda.c b/drivers/usb/storage/alauda.c
-index 878b4b8761f5..3dbd60540372 100644
---- a/drivers/usb/storage/alauda.c
-+++ b/drivers/usb/storage/alauda.c
-@@ -450,6 +450,8 @@ static int alauda_init_media(struct us_data *us)
- 		+ MEDIA_INFO(us).blockshift + MEDIA_INFO(us).pageshift);
- 	MEDIA_INFO(us).pba_to_lba = kcalloc(num_zones, sizeof(u16*), GFP_NOIO);
- 	MEDIA_INFO(us).lba_to_pba = kcalloc(num_zones, sizeof(u16*), GFP_NOIO);
-+	if (MEDIA_INFO(us).pba_to_lba == NULL || MEDIA_INFO(us).lba_to_pba == NULL)
-+		return USB_STOR_TRANSPORT_ERROR;
- 
- 	if (alauda_reset_media(us) != USB_STOR_XFER_GOOD)
- 		return USB_STOR_TRANSPORT_ERROR;
+diff --git a/drivers/video/fbdev/Kconfig b/drivers/video/fbdev/Kconfig
+index c0d4e645f3b5..e2c51e2ffc80 100644
+--- a/drivers/video/fbdev/Kconfig
++++ b/drivers/video/fbdev/Kconfig
+@@ -2471,7 +2471,6 @@ config FB_SSD1307
+ 	select FB_SYS_COPYAREA
+ 	select FB_SYS_IMAGEBLIT
+ 	select FB_DEFERRED_IO
+-	select PWM
+ 	select FB_BACKLIGHT
+ 	help
+ 	  This driver implements support for the Solomon SSD1307
 -- 
 2.35.1
 
