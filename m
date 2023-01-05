@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52FD28495
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:01:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF102C433F2;
-	Thu,  5 Jan 2023 13:01:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB6363DE
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:01:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9373C433EF;
+	Thu,  5 Jan 2023 13:01:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923688;
-	bh=HRUHDpZ1Gxk59cD0b+S2xcF+iemVCLoO5J3EfI9L1Pw=;
+	s=korg; t=1672923691;
+	bh=yS36aMY5bexFxCGt78u3R8SmCesarsFjae5usjJ794w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UrxG5U/jJun99OUU+bKwEtuWQeJxOqwflmbrtpbbOSTTjqKqBAHKQPFaFBZk8tuex
-	 mrvfn6nVRW/whrS6/S1T6cBYycTv082XGK0rPZK6P5NeipBK796i8OZS7c2Yojrts0
-	 waFHR5a/zUywyzdiEv63jdbPB6n6ppQjHL70QTMw=
+	b=eW2nq30LaNnqtT08I7egj/3k2HBwC24nJHXJvJV9CVhY2WgZEcnQzKHN46ao+Kr7N
+	 mI0Sev7JmGwR9oWuAwZZYkyqwcohaeAEBrzdfR/CQ2uzu3jgmVYJOWOrpzXoWv676i
+	 A+q8wdpuHA/JdnaL5nLTlRk544CLraAz8TnwKG20=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 093/251] wifi: rtl8xxxu: Add __packed to struct rtl8723bu_c2h
-Date: Thu,  5 Jan 2023 13:53:50 +0100
-Message-Id: <20230105125339.058557940@linuxfoundation.org>
+Subject: [PATCH 4.9 102/251] net: apple: mace: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Thu,  5 Jan 2023 13:53:59 +0100
+Message-Id: <20230105125339.497375918@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -36,39 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit dd469a754afdb782ba3033cee102147493dc39f4 ]
+[ Upstream commit 3dfe3486c1cd4f82b466b7d307f23777137b8acc ]
 
-This struct is used to access a sequence of bytes received from the
-wifi chip. It must not have any padding bytes between the members.
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-This doesn't change anything on my system, possibly because currently
-none of the members need more than byte alignment.
+It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
+The difference between them is free reason, dev_kfree_skb_irq() means
+the SKB is dropped in error and dev_consume_skb_irq() means the SKB
+is consumed in normal.
 
-Fixes: b2b43b7837ba ("rtl8xxxu: Initial functionality to handle C2H events for 8723bu")
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/1a270918-da22-ff5f-29fc-7855f740c5ba@gmail.com
+In this case, dev_kfree_skb() is called in mace_tx_timeout() to drop
+the SKB, when tx timeout, so replace it with dev_kfree_skb_irq().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h | 2 +-
+ drivers/net/ethernet/apple/mace.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-index 9143b173935d..c2c0e5635795 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.h
-@@ -1191,7 +1191,7 @@ struct rtl8723bu_c2h {
- 			u8 dummy3_0;
- 		} __packed ra_report;
- 	};
--};
-+} __packed;
- 
- struct rtl8xxxu_fileops;
- 
+diff --git a/drivers/net/ethernet/apple/mace.c b/drivers/net/ethernet/apple/mace.c
+index e58a7c73766e..ea6199425b67 100644
+--- a/drivers/net/ethernet/apple/mace.c
++++ b/drivers/net/ethernet/apple/mace.c
+@@ -843,7 +843,7 @@ static void mace_tx_timeout(unsigned long data)
+     if (mp->tx_bad_runt) {
+ 	mp->tx_bad_runt = 0;
+     } else if (i != mp->tx_fill) {
+-	dev_kfree_skb(mp->tx_bufs[i]);
++	dev_kfree_skb_irq(mp->tx_bufs[i]);
+ 	if (++i >= N_TX_RING)
+ 	    i = 0;
+ 	mp->tx_empty = i;
 -- 
 2.35.1
 
