@@ -1,109 +1,73 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40D3CEB34
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 19:47:39 +0000 (UTC)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 4C6111C09F4; Thu,  5 Jan 2023 20:47:37 +0100 (CET)
-Date: Thu, 5 Jan 2023 20:47:36 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, nathan@kernel.org,
-	marcus.folkesson@gmail.com, cuigaosheng1@huawei.com,
-	andriy.shevchenko@linux.intel.com, m.szyprowski@samsung.com,
-	jack@suse.cz
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 4.9 000/251] 4.9.337-rc1 review
-Message-ID: <Y7cpWKbQlNW5qEeO@duo.ucw.cz>
-References: <20230105125334.727282894@linuxfoundation.org>
+Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 52E1E107A3
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 22:05:37 +0000 (UTC)
+Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
+	by smtpfb1-g21.free.fr (Postfix) with ESMTP id E0267DF8A09
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 22:58:14 +0100 (CET)
+Received: from [IPV6:2a01:e35:39f2:1220:c70:c024:95ee:ebbb] (unknown [IPv6:2a01:e35:39f2:1220:c70:c024:95ee:ebbb])
+	by smtp3-g21.free.fr (Postfix) with ESMTPS id C4DD413F846;
+	Thu,  5 Jan 2023 22:57:48 +0100 (CET)
+Message-ID: <10302240-51ec-0854-2c86-16752d67a9be@opteya.com>
+Date: Thu, 5 Jan 2023 22:57:48 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="W88MDnI1irEhoaY2"
-Content-Disposition: inline
-In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
+ lazily freeable mappings
+Content-Language: fr-FR
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Andy Lutomirski <luto@kernel.org>, Ingo Molnar <mingo@kernel.org>,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev, tglx@linutronix.de,
+ linux-crypto@vger.kernel.org, linux-api@vger.kernel.org, x86@kernel.org,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+ Carlos O'Donell <carlos@redhat.com>, Florian Weimer <fweimer@redhat.com>,
+ Arnd Bergmann <arnd@arndb.de>, Jann Horn <jannh@google.com>,
+ Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org
+References: <20230101162910.710293-1-Jason@zx2c4.com>
+ <20230101162910.710293-3-Jason@zx2c4.com> <Y7QIg/hAIk7eZE42@gmail.com>
+ <CALCETrWdw5kxrtr4M7AkKYDOJEE1cU1wENWgmgOxn0rEJz4y3w@mail.gmail.com>
+ <CAHk-=wg_6Uhkjy12Vq_hN6rQqGRP2nE15rkgiAo6Qay5aOeigg@mail.gmail.com>
+ <Y7SDgtXayQCy6xT6@zx2c4.com>
+ <CAHk-=whQdWFw+0eGttxsWBHZg1+uh=0MhxXYtvJGX4t9P1MgNw@mail.gmail.com>
+ <Y7SJ+/axonTK0Fir@zx2c4.com>
+ <CAHk-=wi4gshfKjbhEO_xZdVb9ztXf0iuv5kKhxtvAHf2HzTmng@mail.gmail.com>
+ <Y7STv9+p248zr+0a@zx2c4.com>
+From: Yann Droneaud <ydroneaud@opteya.com>
+Organization: OPTEYA
+In-Reply-To: <Y7STv9+p248zr+0a@zx2c4.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+
+Hi,
+
+Le 03/01/2023 à 21:44, Jason A. Donenfeld a écrit :
+> On Tue, Jan 03, 2023 at 12:15:57PM -0800, Linus Torvalds wrote:
+>> On Tue, Jan 3, 2023 at 12:03 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+>>> That buffering cannot be done safely currently
+>> .. again, this is "your semantics" (the (b) in my humbug list), not
+>> necessarily reality for anybody else.
+> Yea that's fair. Except, of course, I maintain that my semantics are
+> important ones. :)
 
 
---W88MDnI1irEhoaY2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I concur.
 
-Hi!
+To hold secret material, we need MADV_WIPEONFORK | MADV_DONTDUMP and the side effect of mlock() (pages' content never written to swap), inherited across fork().
+And I want mlock() without paying the price.
 
-> This is the start of the stable review cycle for the 4.9.337 release.
-> There are 251 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Jason's proposed semantics, which I call MADV_WIPEONSWAP, provide a mean to hold /unlimited/ amount secrets in userspace memory (not limited by RLIMIT_MEMLOCK).
+The only constraint for userspace is to handle the case pages are wiped, which is already the case of userspace arc4random()'s implementation.
 
-These are kCFI fixes, we don't really need them in 4.9:
+Regards.
 
-> Nathan Chancellor <nathan@kernel.org>
->     net: ethernet: ti: Fix return type of netcp_ndo_start_xmit()
-> Nathan Chancellor <nathan@kernel.org>
->     hamradio: baycom_epp: Fix return type of baycom_send_packet()
-> Nathan Chancellor <nathan@kernel.org>
->     drm/fsl-dcu: Fix return type of fsl_dcu_drm_connector_mode_valid()
-> Nathan Chancellor <nathan@kernel.org>
->     drm/sti: Fix return type of sti_{dvo,hda,hdmi}_connector_mode_valid()
+-- 
+Yann Droneaud
+OPTEYA
 
-This is marked as not-for-stable, and does not fix anything really
-bad, just smatch warning:
-
-> Marcus Folkesson <marcus.folkesson@gmail.com>
->     HID: hid-sensor-custom: set fixed size for custom attributes
-
-This is quite wrong. Real bug is registering the interrupt before the
-device is set up -- it should be fixed by reordering the init code,
-not by checking for NULL.
-
-> Gaosheng Cui <cuigaosheng1@huawei.com>
->     ALSA: mts64: fix possible null-ptr-defer in snd_mts64_interrupt
-
-This may turn working config into non-working for someone, as people
-now need to enable PWM manually to get fully working driver. I don't
-think we want it in stable.
-
-> Andy Shevchenko <andriy.shevchenko@linux.intel.com>
->     fbdev: ssd1307fb: Drop optional dependency
-
-This claims to fix a deadlock, but in turn it calls
-cancel_delayed_work_sync from interrupt handler. I don't think that is
-good idea.
-
-> Marek Szyprowski <m.szyprowski@samsung.com>
->     ASoC: wm8994: Fix potential deadlock
-
-This one is okay in mainline, but contains wrong error handling in the
-4.9 backport. 4.19 seems okay. It needs to "goto out_unlock", not
-return directly.
-
-> Jan Kara <jack@suse.cz>
->     ext4: initialize quota before expanding inode in setproject ioctl
-
-Best regards,
-								Pavel
-
---=20
-DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---W88MDnI1irEhoaY2
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY7cpWAAKCRAw5/Bqldv6
-8ojEAKCY75U3fxHtetJmbMdT2+rhB2HWhACgs7WB0SnN3QEXI1p9VceTklePlfU=
-=giGP
------END PGP SIGNATURE-----
-
---W88MDnI1irEhoaY2--
