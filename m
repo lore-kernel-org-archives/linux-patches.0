@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D40D63DA
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 12:57:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31917C433D2;
-	Thu,  5 Jan 2023 12:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7ED8F63DA
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 12:57:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9408C433D2;
+	Thu,  5 Jan 2023 12:57:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923459;
-	bh=PWi7STOMuV5HROAyxHVLPlzSZU24UCeaGiE+O3BSE08=;
+	s=korg; t=1672923462;
+	bh=cLuz4LSEAty/85tyXXL4axokUbINPGSn0BUoBf9FH3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wsVNlZhQ/TGqPw7h4bXXLRHV0p/U6KZuxskK/xS0Y97dVbRV0haCpuOYG0kW3d10Q
-	 VM+wHuNiGXTPtjT6cecLfSoYBS9lLblpHcSAq4c0qkUH4B3Q+2ovCaysfrqvH+UJyR
-	 VnSCJ3cBnHGWsYcgK8lpRQH54PjNV6fdmZf9AUpc=
+	b=SJ6yiTQ3MMPh8mX9oybGYw5TObqStqDUZFnpYduq/VNKU/3y6xeSbbO5xDOKnFAuV
+	 0NT2Vz6OxZ6TuMeaUvx9ZPDhrrbjEDpkx+/h7IvSP++QvMvrz1I4DBeEQkXpaZVbT3
+	 TKl6lpv7RXMkjRejyvbUKRaIfEgOLRzhbR15y5FQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Geffon <bgeffon@google.com>,
-	Mike Rapoport <rppt@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Kees Cook <keescook@chromium.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 026/251] pstore: Avoid kcore oops by vmap()ing with VM_IOREMAP
-Date: Thu,  5 Jan 2023 13:52:43 +0100
-Message-Id: <20230105125335.966683494@linuxfoundation.org>
+	Shiwei Cui <cuishw@inspur.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jan Kara <jack@suse.cz>,
+	Ming Lei <ming.lei@redhat.com>
+Subject: [PATCH 4.9 003/251] block: unhash blkdev part inode when the part is deleted
+Date: Thu,  5 Jan 2023 13:52:20 +0100
+Message-Id: <20230105125334.897742203@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -38,103 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephen Boyd <swboyd@chromium.org>
+From: Ming Lei <ming.lei@redhat.com>
 
-[ Upstream commit e6b842741b4f39007215fd7e545cb55aa3d358a2 ]
+v5.11 changes the blkdev lookup mechanism completely since commit
+22ae8ce8b892 ("block: simplify bdev/disk lookup in blkdev_get"),
+and small part of the change is to unhash part bdev inode when
+deleting partition. Turns out this kind of change does fix one
+nasty issue in case of BLOCK_EXT_MAJOR:
 
-An oops can be induced by running 'cat /proc/kcore > /dev/null' on
-devices using pstore with the ram backend because kmap_atomic() assumes
-lowmem pages are accessible with __va().
+1) when one partition is deleted & closed, disk_put_part() is always
+called before bdput(bdev), see blkdev_put(); so the part's devt can
+be freed & re-used before the inode is dropped
 
- Unable to handle kernel paging request at virtual address ffffff807ff2b000
- Mem abort info:
- ESR = 0x96000006
- EC = 0x25: DABT (current EL), IL = 32 bits
- SET = 0, FnV = 0
- EA = 0, S1PTW = 0
- FSC = 0x06: level 2 translation fault
- Data abort info:
- ISV = 0, ISS = 0x00000006
- CM = 0, WnR = 0
- swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000081d87000
- [ffffff807ff2b000] pgd=180000017fe18003, p4d=180000017fe18003, pud=180000017fe18003, pmd=0000000000000000
- Internal error: Oops: 96000006 [#1] PREEMPT SMP
- Modules linked in: dm_integrity
- CPU: 7 PID: 21179 Comm: perf Not tainted 5.15.67-10882-ge4eb2eb988cd #1 baa443fb8e8477896a370b31a821eb2009f9bfba
- Hardware name: Google Lazor (rev3 - 8) (DT)
- pstate: a0400009 (NzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
- pc : __memcpy+0x110/0x260
- lr : vread+0x194/0x294
- sp : ffffffc013ee39d0
- x29: ffffffc013ee39f0 x28: 0000000000001000 x27: ffffff807ff2b000
- x26: 0000000000001000 x25: ffffffc0085a2000 x24: ffffff802d4b3000
- x23: ffffff80f8a60000 x22: ffffff802d4b3000 x21: ffffffc0085a2000
- x20: ffffff8080b7bc68 x19: 0000000000001000 x18: 0000000000000000
- x17: 0000000000000000 x16: 0000000000000000 x15: ffffffd3073f2e60
- x14: ffffffffad588000 x13: 0000000000000000 x12: 0000000000000001
- x11: 00000000000001a2 x10: 00680000fff2bf0b x9 : 03fffffff807ff2b
- x8 : 0000000000000001 x7 : 0000000000000000 x6 : 0000000000000000
- x5 : ffffff802d4b4000 x4 : ffffff807ff2c000 x3 : ffffffc013ee3a78
- x2 : 0000000000001000 x1 : ffffff807ff2b000 x0 : ffffff802d4b3000
- Call trace:
- __memcpy+0x110/0x260
- read_kcore+0x584/0x778
- proc_reg_read+0xb4/0xe4
+2) then new partition with same devt can be created just before the
+inode in 1) is dropped, then the old inode/bdev structurein 1) is
+re-used for this new partition, this way causes use-after-free and
+kernel panic.
 
-During early boot, memblock reserves the pages for the ramoops reserved
-memory node in DT that would otherwise be part of the direct lowmem
-mapping. Pstore's ram backend reuses those reserved pages to change the
-memory type (writeback or non-cached) by passing the pages to vmap()
-(see pfn_to_page() usage in persistent_ram_vmap() for more details) with
-specific flags. When read_kcore() starts iterating over the vmalloc
-region, it runs over the virtual address that vmap() returned for
-ramoops. In aligned_vread() the virtual address is passed to
-vmalloc_to_page() which returns the page struct for the reserved lowmem
-area. That lowmem page is passed to kmap_atomic(), which effectively
-calls page_to_virt() that assumes a lowmem page struct must be directly
-accessible with __va() and friends. These pages are mapped via vmap()
-though, and the lowmem mapping was never made, so accessing them via the
-lowmem virtual address oopses like above.
+It isn't possible to backport the whole big patchset of "merge struct
+block_device and struct hd_struct v4" for addressing this issue.
 
-Let's side-step this problem by passing VM_IOREMAP to vmap(). This will
-tell vread() to not include the ramoops region in the kcore. Instead the
-area will look like a bunch of zeros. The alternative is to teach kmap()
-about vmalloc areas that intersect with lowmem. Presumably such a change
-isn't a one-liner, and there isn't much interest in inspecting the
-ramoops region in kcore files anyway, so the most expedient route is
-taken for now.
+https://lore.kernel.org/linux-block/20201128161510.347752-1-hch@lst.de/
 
-Cc: Brian Geffon <bgeffon@google.com>
-Cc: Mike Rapoport <rppt@kernel.org>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Fixes: 404a6043385d ("staging: android: persistent_ram: handle reserving and mapping memory")
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221205233136.3420802-1-swboyd@chromium.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+So fixes it by unhashing part bdev in delete_partition(), and this way
+is actually aligned with v5.11+'s behavior.
+
+Backported from the following 5.10.y commit:
+
+5f2f77560591 ("block: unhash blkdev part inode when the part is deleted")
+
+Reported-by: Shiwei Cui <cuishw@inspur.com>
+Tested-by: Shiwei Cui <cuishw@inspur.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Jan Kara <jack@suse.cz>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/pstore/ram_core.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ block/partition-generic.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
-index 11e558efd61e..b56cf56ae926 100644
---- a/fs/pstore/ram_core.c
-+++ b/fs/pstore/ram_core.c
-@@ -418,7 +418,11 @@ static void *persistent_ram_vmap(phys_addr_t start, size_t size,
- 		phys_addr_t addr = page_start + i * PAGE_SIZE;
- 		pages[i] = pfn_to_page(addr >> PAGE_SHIFT);
- 	}
--	vaddr = vmap(pages, page_count, VM_MAP, prot);
-+	/*
-+	 * VM_IOREMAP used here to bypass this region during vread()
-+	 * and kmap_atomic() (i.e. kcore) to avoid __va() failures.
-+	 */
-+	vaddr = vmap(pages, page_count, VM_MAP | VM_IOREMAP, prot);
- 	kfree(pages);
+--- a/block/partition-generic.c
++++ b/block/partition-generic.c
+@@ -254,6 +254,7 @@ void delete_partition(struct gendisk *di
+ {
+ 	struct disk_part_tbl *ptbl = disk->part_tbl;
+ 	struct hd_struct *part;
++	struct block_device *bdev;
  
- 	/*
--- 
-2.35.1
-
+ 	if (partno >= ptbl->len)
+ 		return;
+@@ -267,6 +268,11 @@ void delete_partition(struct gendisk *di
+ 	kobject_put(part->holder_dir);
+ 	device_del(part_to_dev(part));
+ 
++	bdev = bdget(part_devt(part));
++	if (bdev) {
++		remove_inode_hash(bdev->bd_inode);
++		bdput(bdev);
++	}
+ 	hd_struct_kill(part);
+ }
+ 
 
 
