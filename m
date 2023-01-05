@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3428494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:03:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42194C433EF;
-	Thu,  5 Jan 2023 13:03:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 430518494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:04:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D392C433EF;
+	Thu,  5 Jan 2023 13:03:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923836;
-	bh=/vawPjdpqQMHeG144/ZxjDI/wjG2NbqfVnhjc0jIhq8=;
+	s=korg; t=1672923840;
+	bh=kF4NFakEDFg3FsYyrO34U1kpJJoDywv54y4XOSUtCKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VMxWHa9Je5bIedduyWxcvPtlkva0UAnWKAEIK3dDcObhlUz8yFo2jD3NRTnPrG4W9
-	 0Z4ngMxXoc6EkxuTkir6HYTDwjdw1v4iWz3cZ5YHRKw+P2pVG6qX2o8qRNX+CrnefW
-	 St3yrbDBkaTfIdE/IT7Vs3INX6CBxN6knpgU5srA=
+	b=vM0+f8N4fZfNnOxiX1D5ymU6YoBp1exbaT1ox6Pq5FHtuoo1Mt18AR7hvCGUmoKgK
+	 +seVVtPkjIejW0WrvByQlvc0fd6dRWhFqzNKUspi2fezWomVu5x5ZOp3q4OWqYOaKq
+	 pFCsDZnhrMMNmi4FZ1/+qBvfqglOL1rprO46IHZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 148/251] fbdev: ssd1307fb: Drop optional dependency
-Date: Thu,  5 Jan 2023 13:54:45 +0100
-Message-Id: <20230105125341.607546737@linuxfoundation.org>
+Subject: [PATCH 4.9 149/251] fbdev: pm2fb: fix missing pci_disable_device()
+Date: Thu,  5 Jan 2023 13:54:46 +0100
+Message-Id: <20230105125341.640654612@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -35,36 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 025e3b507a3a8e1ee96a3112bb67495c77d6cdb6 ]
+[ Upstream commit ed359a464846b48f76ea6cc5cd8257e545ac97f4 ]
 
-Only a single out of three devices need a PWM, so from driver it's
-optional. Moreover it's a single driver in the entire kernel that
-currently selects PWM. Unfortunately this selection is a root cause
-of the circular dependencies when we want to enable optional PWM
-for some other drivers that select GPIOLIB.
+Add missing pci_disable_device() in error path of probe() and remove() path.
 
-Fixes: a2ed00da5047 ("drivers/video: add support for the Solomon SSD1307 OLED Controller")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/Kconfig | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/video/fbdev/pm2fb.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/video/fbdev/Kconfig b/drivers/video/fbdev/Kconfig
-index c0d4e645f3b5..e2c51e2ffc80 100644
---- a/drivers/video/fbdev/Kconfig
-+++ b/drivers/video/fbdev/Kconfig
-@@ -2471,7 +2471,6 @@ config FB_SSD1307
- 	select FB_SYS_COPYAREA
- 	select FB_SYS_IMAGEBLIT
- 	select FB_DEFERRED_IO
--	select PWM
- 	select FB_BACKLIGHT
- 	help
- 	  This driver implements support for the Solomon SSD1307
+diff --git a/drivers/video/fbdev/pm2fb.c b/drivers/video/fbdev/pm2fb.c
+index 9b32b9fc44a5..6e8bd281ee0f 100644
+--- a/drivers/video/fbdev/pm2fb.c
++++ b/drivers/video/fbdev/pm2fb.c
+@@ -1527,8 +1527,10 @@ static int pm2fb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	}
+ 
+ 	info = framebuffer_alloc(sizeof(struct pm2fb_par), &pdev->dev);
+-	if (!info)
+-		return -ENOMEM;
++	if (!info) {
++		err = -ENOMEM;
++		goto err_exit_disable;
++	}
+ 	default_par = info->par;
+ 
+ 	switch (pdev->device) {
+@@ -1709,6 +1711,8 @@ static int pm2fb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	release_mem_region(pm2fb_fix.mmio_start, pm2fb_fix.mmio_len);
+  err_exit_neither:
+ 	framebuffer_release(info);
++ err_exit_disable:
++	pci_disable_device(pdev);
+ 	return retval;
+ }
+ 
+@@ -1735,6 +1739,7 @@ static void pm2fb_remove(struct pci_dev *pdev)
+ 	fb_dealloc_cmap(&info->cmap);
+ 	kfree(info->pixmap.addr);
+ 	framebuffer_release(info);
++	pci_disable_device(pdev);
+ }
+ 
+ static struct pci_device_id pm2fb_id_table[] = {
 -- 
 2.35.1
 
