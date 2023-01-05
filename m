@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4683A8494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:08:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E57AC433EF;
-	Thu,  5 Jan 2023 13:08:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5573E8494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:08:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF793C433D2;
+	Thu,  5 Jan 2023 13:08:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672924096;
-	bh=uRdiZjPWy1IzB+2xKpXuBcV4BgFwF07Yn6jufXNHX9o=;
+	s=korg; t=1672924099;
+	bh=kKbkugGCg/aBNKjtSDOPR/v1x0WrTOP7oR5bgsiZxfc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FkEiSSTSlO/Dabx1CJckh30/NRwr4rXHnSbLXKSQTxhg1LGk3kB/bTQKKLMMaKKrg
-	 BnhiS88wLTVvd+cWpYjwlaxP48UPZfDc8ofiQfqfjmeibSzSt1Q3s7NKATAcpby/tE
-	 lJ+lSlc6lalQKQ/zIyDtX7VJM2/7Hq0j2U8GB9Bs=
+	b=JI595QGskHU9reRSubShz1dDM6JBlYwXMSuIcJCxKbQn6fFU4KynNWY47T5cf0MgI
+	 OVcxXQLASCsZYEy0RNNlp0aSCb4XQk8+8kWxftlyVkXT78gG4Z7J4qD1GJztJ2q5n7
+	 wLKkYoZ7nxk4h3AuaL/TG/C4LySm+IQ/UEfATI90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 4.9 233/251] dm cache: set needs_check flag after aborting metadata
-Date: Thu,  5 Jan 2023 13:56:10 +0100
-Message-Id: <20230105125345.538290621@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 4.9 234/251] tracing: Fix infinite loop in tracing_read_pipe on overflowed print_trace_line
+Date: Thu,  5 Jan 2023 13:56:11 +0100
+Message-Id: <20230105125345.589447353@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -33,47 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-commit 6b9973861cb2e96dcd0bb0f1baddc5c034207c5c upstream.
+commit c1ac03af6ed45d05786c219d102f37eb44880f28 upstream.
 
-Otherwise the commit that will be aborted will be associated with the
-metadata objects that will be torn down.  Must write needs_check flag
-to metadata with a reset block manager.
+print_trace_line may overflow seq_file buffer. If the event is not
+consumed, the while loop keeps peeking this event, causing a infinite loop.
 
-Found through code-inspection (and compared against dm-thin.c).
+Link: https://lkml.kernel.org/r/20221129113009.182425-1-yangjihong1@huawei.com
 
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: 028ae9f76f29 ("dm cache: add fail io mode and needs_check flag")
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: 088b1e427dbba ("ftrace: pipe fixes")
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-target.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ kernel/trace/trace.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -1030,16 +1030,16 @@ static void abort_transaction(struct cac
- 	if (get_cache_mode(cache) >= CM_READ_ONLY)
- 		return;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -5226,7 +5226,20 @@ waitagain:
  
--	if (dm_cache_metadata_set_needs_check(cache->cmd)) {
--		DMERR("%s: failed to set 'needs_check' flag in metadata", dev_name);
--		set_cache_mode(cache, CM_FAIL);
--	}
--
- 	DMERR_LIMIT("%s: aborting current metadata transaction", dev_name);
- 	if (dm_cache_metadata_abort(cache->cmd)) {
- 		DMERR("%s: failed to abort metadata transaction", dev_name);
- 		set_cache_mode(cache, CM_FAIL);
- 	}
+ 		ret = print_trace_line(iter);
+ 		if (ret == TRACE_TYPE_PARTIAL_LINE) {
+-			/* don't print partial lines */
++			/*
++			 * If one print_trace_line() fills entire trace_seq in one shot,
++			 * trace_seq_to_user() will returns -EBUSY because save_len == 0,
++			 * In this case, we need to consume it, otherwise, loop will peek
++			 * this event next time, resulting in an infinite loop.
++			 */
++			if (save_len == 0) {
++				iter->seq.full = 0;
++				trace_seq_puts(&iter->seq, "[LINE TOO BIG]\n");
++				trace_consume(iter);
++				break;
++			}
 +
-+	if (dm_cache_metadata_set_needs_check(cache->cmd)) {
-+		DMERR("%s: failed to set 'needs_check' flag in metadata", dev_name);
-+		set_cache_mode(cache, CM_FAIL);
-+	}
- }
- 
- static void metadata_operation_failed(struct cache *cache, const char *op, int r)
++			/* In other cases, don't print partial lines */
+ 			iter->seq.seq.len = save_len;
+ 			break;
+ 		}
 
 
