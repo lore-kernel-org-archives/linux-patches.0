@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005088494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:09:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55BCDC433F0;
-	Thu,  5 Jan 2023 13:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D1018494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:09:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 686B0C433F1;
+	Thu,  5 Jan 2023 13:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672924151;
-	bh=FlLh6K78HjhptjI84Hyq3gLEYCbk1Uuo8gFKTviu7YY=;
+	s=korg; t=1672924154;
+	bh=WoJizg100qiYf7/FvA1kI0UcHjJZT6LY1W7AEfS6H1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WavC0vO1jY96ndQ6awgWDVl+bGcWrKSehApW/tQfvzND0UQm9Ln+Znxq81scRLxNd
-	 Zoc2/LedHQc5VE5MBZfTx/tLACKq4RMXTrGHLlTXdKQAtUgRc3DFKG9iE0QB3FUEtZ
-	 brZOYCCaWg+3GB/8Inma0l6FxB7PV0QcuDGQC7Tc=
+	b=EKSQOjrwZGXRXPZ64PclSFuwqIYQXKLOP75Zx/qwwcj9AEOuLF0zwfsB1U24gvPUn
+	 RAsWV0HVo3nLj52A862ifvhGLcSTK1gkNiGaJSx5bdqonflPoaArgK0ux6YB4Se5nD
+	 XqDHbAnM1eSyJ5BXgXLh39CuO9v0BYuFbi+3aPwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
+	Eric Sandeen <sandeen@redhat.com>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 4.9 249/251] ext4: fix error code return to user-space in ext4_get_branch()
-Date: Thu,  5 Jan 2023 13:56:26 +0100
-Message-Id: <20230105125346.269499174@linuxfoundation.org>
+Subject: [PATCH 4.9 250/251] ext4: avoid BUG_ON when creating xattrs
+Date: Thu,  5 Jan 2023 13:56:27 +0100
+Message-Id: <20230105125346.319748653@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -35,48 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luís Henriques <lhenriques@suse.de>
+From: Jan Kara <jack@suse.cz>
 
-commit 26d75a16af285a70863ba6a81f85d81e7e65da50 upstream.
+commit b40ebaf63851b3a401b0dc9263843538f64f5ce6 upstream.
 
-If a block is out of range in ext4_get_branch(), -ENOMEM will be returned
-to user-space.  Obviously, this error code isn't really useful.  This
-patch fixes it by making sure the right error code (-EFSCORRUPTED) is
-propagated to user-space.  EUCLEAN is more informative than ENOMEM.
+Commit fb0a387dcdcd ("ext4: limit block allocations for indirect-block
+files to < 2^32") added code to try to allocate xattr block with 32-bit
+block number for indirect block based files on the grounds that these
+files cannot use larger block numbers. It also added BUG_ON when
+allocated block could not fit into 32 bits. This is however bogus
+reasoning because xattr block is stored in inode->i_file_acl and
+inode->i_file_acl_hi and as such even indirect block based files can
+happily use full 48 bits for xattr block number. The proper handling
+seems to be there basically since 64-bit block number support was added.
+So remove the bogus limitation and BUG_ON.
 
-Signed-off-by: Luís Henriques <lhenriques@suse.de>
-Link: https://lore.kernel.org/r/20221109181445.17843-1-lhenriques@suse.de
+Cc: Eric Sandeen <sandeen@redhat.com>
+Fixes: fb0a387dcdcd ("ext4: limit block allocations for indirect-block files to < 2^32")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221121130929.32031-1-jack@suse.cz
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/indirect.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ fs/ext4/xattr.c |    8 --------
+ 1 file changed, 8 deletions(-)
 
---- a/fs/ext4/indirect.c
-+++ b/fs/ext4/indirect.c
-@@ -147,6 +147,7 @@ static Indirect *ext4_get_branch(struct
- 	struct super_block *sb = inode->i_sb;
- 	Indirect *p = chain;
- 	struct buffer_head *bh;
-+	unsigned int key;
- 	int ret = -EIO;
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -974,19 +974,11 @@ inserted:
  
- 	*err = 0;
-@@ -155,7 +156,13 @@ static Indirect *ext4_get_branch(struct
- 	if (!p->key)
- 		goto no_block;
- 	while (--depth) {
--		bh = sb_getblk(sb, le32_to_cpu(p->key));
-+		key = le32_to_cpu(p->key);
-+		if (key > ext4_blocks_count(EXT4_SB(sb)->s_es)) {
-+			/* the block was out of range */
-+			ret = -EFSCORRUPTED;
-+			goto failure;
-+		}
-+		bh = sb_getblk(sb, key);
- 		if (unlikely(!bh)) {
- 			ret = -ENOMEM;
- 			goto failure;
+ 			goal = ext4_group_first_block_no(sb,
+ 						EXT4_I(inode)->i_block_group);
+-
+-			/* non-extent files can't have physical blocks past 2^32 */
+-			if (!(ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)))
+-				goal = goal & EXT4_MAX_BLOCK_FILE_PHYS;
+-
+ 			block = ext4_new_meta_blocks(handle, inode, goal, 0,
+ 						     NULL, &error);
+ 			if (error)
+ 				goto cleanup;
+ 
+-			if (!(ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)))
+-				BUG_ON(block > EXT4_MAX_BLOCK_FILE_PHYS);
+-
+ 			ea_idebug(inode, "creating block %llu",
+ 				  (unsigned long long)block);
+ 
 
 
