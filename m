@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A77DA63DE
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 12:58:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D421C433D2;
-	Thu,  5 Jan 2023 12:58:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1814D6ADF
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 12:58:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697D0C433D2;
+	Thu,  5 Jan 2023 12:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923486;
-	bh=oUMcD5Ler3uMEvfSroYxl8tyOmTk2bvAPexaQohh0GY=;
+	s=korg; t=1672923489;
+	bh=bloqT0XLlL6pZlvfDkPmdF+ymEdYgihtx++/A0gF1zA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yALVDmICNFQV81Dk65G7oDJaIlCRRcGJWTeR2xCXzyv2NIT9vPwosMuuraxs4SjX0
-	 ucz9KkY04XArryjXLgOohDMXok6ci9WYewx6awyyI+ole/3aShs5M6HdxK+cQ72jH9
-	 O8EWJGbGUPtYeUFwcDmxuKVTxZnRMTqlyuzVnxvI=
+	b=PwgfcZxMNOp/sw4t0BF59/b9EUC+mUP0MlUfEKcHVvAql1je0QTkG+0kIX7hBSrzc
+	 6G0OAvzMSLgI4LljINA3/FPPCnICOHbKCDfc7y3ZY6pKa/FSV108Bmoy2xWjN/RNJ1
+	 29RHS/++w8vtzrE0GbqOdvuFy3aUNatF4EEgUyP0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 028/251] alpha: fix syscall entry in !AUDUT_SYSCALL case
-Date: Thu,  5 Jan 2023 13:52:45 +0100
-Message-Id: <20230105125336.056814235@linuxfoundation.org>
+Subject: [PATCH 4.9 037/251] irqchip: gic-pm: Use pm_runtime_resume_and_get() in gic_probe()
+Date: Thu,  5 Jan 2023 13:52:54 +0100
+Message-Id: <20230105125336.460162946@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -34,38 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit f7b2431a6d22f7a91c567708e071dfcd6d66db14 ]
+[ Upstream commit f9ee20c85b3a3ba0afd3672630ec4f93d339f015 ]
 
-We only want to take the slow path if SYSCALL_TRACE or SYSCALL_AUDIT is
-set; on !AUDIT_SYSCALL configs the current tree hits it whenever _any_
-thread flag (including NEED_RESCHED, NOTIFY_SIGNAL, etc.) happens to
-be set.
+gic_probe() calls pm_runtime_get_sync() and added fail path as
+rpm_put to put usage_counter. However, pm_runtime_get_sync()
+will increment usage_counter even it failed. Fix it by replacing it with
+pm_runtime_resume_and_get() to keep usage counter balanced.
 
-Fixes: a9302e843944 "alpha: Enable system-call auditing support"
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Fixes: 9c8edddfc992 ("irqchip/gic: Add platform driver for non-root GICs that require RPM")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20221124065150.22809-1-shangxiaojing@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/kernel/entry.S | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/irqchip/irq-gic-pm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/alpha/kernel/entry.S b/arch/alpha/kernel/entry.S
-index 98703d99b565..d752ccc53b24 100644
---- a/arch/alpha/kernel/entry.S
-+++ b/arch/alpha/kernel/entry.S
-@@ -468,8 +468,10 @@ entSys:
- #ifdef CONFIG_AUDITSYSCALL
- 	lda     $6, _TIF_SYSCALL_TRACE | _TIF_SYSCALL_AUDIT
- 	and     $3, $6, $3
--#endif
- 	bne     $3, strace
-+#else
-+	blbs    $3, strace		/* check for SYSCALL_TRACE in disguise */
-+#endif
- 	beq	$4, 1f
- 	ldq	$27, 0($5)
- 1:	jsr	$26, ($27), alpha_ni_syscall
+diff --git a/drivers/irqchip/irq-gic-pm.c b/drivers/irqchip/irq-gic-pm.c
+index ecafd295c31c..21c5decfc55b 100644
+--- a/drivers/irqchip/irq-gic-pm.c
++++ b/drivers/irqchip/irq-gic-pm.c
+@@ -112,7 +112,7 @@ static int gic_probe(struct platform_device *pdev)
+ 
+ 	pm_runtime_enable(dev);
+ 
+-	ret = pm_runtime_get_sync(dev);
++	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret < 0)
+ 		goto rpm_disable;
+ 
 -- 
 2.35.1
 
