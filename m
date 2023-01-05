@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835FA8494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:08:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB26C433F0;
-	Thu,  5 Jan 2023 13:08:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B6DC8494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:08:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69F6EC433EF;
+	Thu,  5 Jan 2023 13:08:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672924124;
-	bh=mbZ1Lah6lbbgP0GBBECUUzwPebNVUF6rKeY2+iakSY4=;
+	s=korg; t=1672924133;
+	bh=i+u/E+emaHhrDCmPUkaSbZd7dJ1Sves4KI1hcHUBG5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CeWEpZLjiyKTKuUNZlCzSoofYANBWK0JPW1k1WqMbzs6qDtSyn5hIcJhsxKQ+cifz
-	 OFMlwy9dVY5H6ZG/hc0mFzeF722m/AeQWJmd6bdjtvqsXpeIbT8UqfLJSECx5Dc5dE
-	 B7t7ld/CHcFycizaAJhW5rYkehs0gwl94BqGjNNY=
+	b=U6CP/7R5gLF2+SmpTe7B4xUPwt992UbG7gRj858C0DAs8fTlU1Lk5ef/D7uLunK/F
+	 b+xdcKO6+p/s4EEMUmgEPwgKou0A74flrG3IWnEzWw2HQqq6jAMZ1ZV0MIi+vlQn9/
+	 rQurb6pHUUNqhhnKwQw4K0rX5BNVcmu9Vl8Xxx28=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Weiyang <wangweiyang2@huawei.com>,
-	Aristeu Rozanski <aris@redhat.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 4.9 242/251] device_cgroup: Roll back to original exceptions after copy failure
-Date: Thu,  5 Jan 2023 13:56:19 +0100
-Message-Id: <20230105125345.961048816@linuxfoundation.org>
+	Zack Rusin <zackr@vmware.com>,
+	Michael Banack <banackm@vmware.com>,
+	Martin Krastev <krastevm@vmware.com>
+Subject: [PATCH 4.9 244/251] drm/vmwgfx: Validate the box size for the snooped cursor
+Date: Thu,  5 Jan 2023 13:56:21 +0100
+Message-Id: <20230105125346.052149329@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -35,95 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Weiyang <wangweiyang2@huawei.com>
+From: Zack Rusin <zackr@vmware.com>
 
-commit e68bfbd3b3c3a0ec3cf8c230996ad8cabe90322f upstream.
+commit 4cf949c7fafe21e085a4ee386bb2dade9067316e upstream.
 
-When add the 'a *:* rwm' entry to devcgroup A's whitelist, at first A's
-exceptions will be cleaned and A's behavior is changed to
-DEVCG_DEFAULT_ALLOW. Then parent's exceptions will be copyed to A's
-whitelist. If copy failure occurs, just return leaving A to grant
-permissions to all devices. And A may grant more permissions than
-parent.
+Invalid userspace dma surface copies could potentially overflow
+the memcpy from the surface to the snooped image leading to crashes.
+To fix it the dimensions of the copybox have to be validated
+against the expected size of the snooped cursor.
 
-Backup A's whitelist and recover original exceptions after copy
-failure.
-
-Cc: stable@vger.kernel.org
-Fixes: 4cef7299b478 ("device_cgroup: add proper checking when changing default behavior")
-Signed-off-by: Wang Weiyang <wangweiyang2@huawei.com>
-Reviewed-by: Aristeu Rozanski <aris@redhat.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Zack Rusin <zackr@vmware.com>
+Fixes: 2ac863719e51 ("vmwgfx: Snoop DMA transfers with non-covering sizes")
+Cc: <stable@vger.kernel.org> # v3.2+
+Reviewed-by: Michael Banack <banackm@vmware.com>
+Reviewed-by: Martin Krastev <krastevm@vmware.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221026031936.1004280-1-zack@kde.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/device_cgroup.c |   33 +++++++++++++++++++++++++++++----
- 1 file changed, 29 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/security/device_cgroup.c
-+++ b/security/device_cgroup.c
-@@ -87,6 +87,17 @@ free_and_exit:
- 	return -ENOMEM;
- }
- 
-+static void dev_exceptions_move(struct list_head *dest, struct list_head *orig)
-+{
-+	struct dev_exception_item *ex, *tmp;
-+
-+	lockdep_assert_held(&devcgroup_mutex);
-+
-+	list_for_each_entry_safe(ex, tmp, orig, list) {
-+		list_move_tail(&ex->list, dest);
-+	}
-+}
-+
- /*
-  * called under devcgroup_mutex
-  */
-@@ -608,11 +619,13 @@ static int devcgroup_update_access(struc
- 	int count, rc = 0;
- 	struct dev_exception_item ex;
- 	struct dev_cgroup *parent = css_to_devcgroup(devcgroup->css.parent);
-+	struct dev_cgroup tmp_devcgrp;
- 
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EPERM;
- 
- 	memset(&ex, 0, sizeof(ex));
-+	memset(&tmp_devcgrp, 0, sizeof(tmp_devcgrp));
- 	b = buffer;
- 
- 	switch (*b) {
-@@ -624,15 +637,27 @@ static int devcgroup_update_access(struc
- 
- 			if (!may_allow_all(parent))
- 				return -EPERM;
--			dev_exception_clean(devcgroup);
--			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
--			if (!parent)
-+			if (!parent) {
-+				devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
-+				dev_exception_clean(devcgroup);
- 				break;
-+			}
- 
-+			INIT_LIST_HEAD(&tmp_devcgrp.exceptions);
-+			rc = dev_exceptions_copy(&tmp_devcgrp.exceptions,
-+						 &devcgroup->exceptions);
-+			if (rc)
-+				return rc;
-+			dev_exception_clean(devcgroup);
- 			rc = dev_exceptions_copy(&devcgroup->exceptions,
- 						 &parent->exceptions);
--			if (rc)
-+			if (rc) {
-+				dev_exceptions_move(&devcgroup->exceptions,
-+						    &tmp_devcgrp.exceptions);
- 				return rc;
-+			}
-+			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
-+			dev_exception_clean(&tmp_devcgrp);
- 			break;
- 		case DEVCG_DENY:
- 			if (css_has_online_children(&devcgroup->css))
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+@@ -301,7 +301,8 @@ void vmw_kms_cursor_snoop(struct vmw_sur
+ 	if (cmd->dma.guest.ptr.offset % PAGE_SIZE ||
+ 	    box->x != 0    || box->y != 0    || box->z != 0    ||
+ 	    box->srcx != 0 || box->srcy != 0 || box->srcz != 0 ||
+-	    box->d != 1    || box_count != 1) {
++	    box->d != 1    || box_count != 1 ||
++	    box->w > 64 || box->h > 64) {
+ 		/* TODO handle none page aligned offsets */
+ 		/* TODO handle more dst & src != 0 */
+ 		/* TODO handle more then one copy */
 
 
