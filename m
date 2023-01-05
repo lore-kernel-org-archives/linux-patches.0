@@ -1,93 +1,83 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E918BE0
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 14:08:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1560CC433D2;
-	Thu,  5 Jan 2023 14:08:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1672927711;
-	bh=nrx5rFy/NuygorsE+kWgn3I6xCfjKYugGy4omgwFW98=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Bcl6IMcrfXpFcDGMoiXIMmy9nI62G1hcKxubSR/VTW7VbaLNpK8zwUb+suZ+rESfx
-	 58dI+TUTyw2OB5Xi7MtEqYJzusuaoO4Dris1uhg+EEsQxWFGwZ4yDlZSCvOy51S9mT
-	 VqaIGBsFoY6JAi3IWhmSFKCAqdgpzBMnnDPAvH5dF5XbY2hvlW87HjvGcC9M9n9sPx
-	 SnFT1nGsgiuKjoInJc5VEHDk5+wb/n6AsCu79m3llM2lUdj4fnlArAiWFFPFeIBFuM
-	 V0RenKkSyYiH13Oy4gSHOikyWB5xTpx/XkYgm2nsZe8x1lNS9JOcJH887Mvd+mS/WG
-	 i2wwEKCvqIOCw==
-Date: Thu, 5 Jan 2023 14:08:26 +0000
-From: Lee Jones <lee@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3220D2F27
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 14:43:28 +0000 (UTC)
+Received: by mail-oi1-f181.google.com with SMTP id c133so32159354oif.1
+        for <patches@lists.linux.dev>; Thu, 05 Jan 2023 06:43:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxtx.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=EdNIzr6K79WGrUyV+pZ/Ft7qJJmll5v3NGysEKK7sJ4=;
+        b=hV/gs6uGEhp2/BqwXHHWgvEpjroUzlbH5ZC972vJ/UcAIGkZD8KViT/iwG7m9ZfKVL
+         4p9k5lNOY3ZDmRf517hnQLx9WH5EIK2P2gDAOBbbOlFc04N54f2ZwtvGyUfWfQUcuyUc
+         lMnhJ/6husUN8ZqIPXO5e6DdPwmB40nz/jetw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EdNIzr6K79WGrUyV+pZ/Ft7qJJmll5v3NGysEKK7sJ4=;
+        b=Q3MnqRIeRZvjYcLRDSQElYWRB9iQRc+GCNbyoXOTwpNB9mRhQsArxL6JSdNxfvioim
+         dnHFECcR2ErJK00jXV7BlI0xXXEQsOKQzCs27fWYE8jpfbISoz/Z8Id+KMfSPwIyOGSl
+         nQHVNBCAa4yU/+RPhg5N5GXwyqaEN5cNY3ZrsqycidI9E1inNV8n9Mv/rIUxEb1rei18
+         jG4dTijkr/D8Ux9M4F/F7E0Xcodxfu/WPSZ/NPuTRI20RmwNV1XjFP2VMGaRAbdik8QC
+         3EqhybQrJ/ZCdybYLT/YqsmDt0L+1xrR4VF4IFNGxxOH7TqLV2nccqnmrsasSn/rEIMw
+         SLfA==
+X-Gm-Message-State: AFqh2kpDaED6fN8wYL5x2CU5tvzrRqvwXpo5MsW/7XhdScp9i6x5QCO+
+	MIrgVJ2p42eyyE56h9YCqStFnlVblBE8LRT1BBijtg==
+X-Google-Smtp-Source: AMrXdXs6IuHALNc2iJnYamsaDTWMfvdsNhCSKvmYJvtEl5OJreiggIYBSep+IOTVbeYybTh5KI2NKw==
+X-Received: by 2002:a05:6808:309a:b0:363:aeff:9969 with SMTP id bl26-20020a056808309a00b00363aeff9969mr10397466oib.13.1672929808065;
+        Thu, 05 Jan 2023 06:43:28 -0800 (PST)
+Received: from fedora64.linuxtx.org (99-47-93-78.lightspeed.rcsntx.sbcglobal.net. [99.47.93.78])
+        by smtp.gmail.com with ESMTPSA id n67-20020acabd46000000b0035b451d80afsm15375146oif.58.2023.01.05.06.43.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Jan 2023 06:43:27 -0800 (PST)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Thu, 5 Jan 2023 08:43:25 -0600
+From: Justin Forbes <jforbes@fedoraproject.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
-	John Keeping <john@metanate.com>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 5.15 481/731] usb: gadget: f_hid: fix f_hidg lifetime vs
- cdev
-Message-ID: <Y7bZ2krq2uvjJqRR@google.com>
-References: <20221228144256.536395940@linuxfoundation.org>
- <20221228144310.493605271@linuxfoundation.org>
- <Y7bACmZQdEhlf121@google.com>
- <Y7bCgNu1ZXlCHmPm@kroah.com>
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/207] 6.1.4-rc1 review
+Message-ID: <Y7biDVBJ9ZR8BSfk@fedora64.linuxtx.org>
+References: <20230104160511.905925875@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y7bCgNu1ZXlCHmPm@kroah.com>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
 
-On Thu, 05 Jan 2023, Greg Kroah-Hartman wrote:
-
-> On Thu, Jan 05, 2023 at 12:18:18PM +0000, Lee Jones wrote:
-> > On Wed, 28 Dec 2022, Greg Kroah-Hartman wrote:
-> > 
-> > > From: John Keeping <john@metanate.com>
-> > > 
-> > > [ Upstream commit 89ff3dfac604614287ad5aad9370c3f984ea3f4b ]
-> > > 
-> > > The embedded struct cdev does not have its lifetime correctly tied to
-> > > the enclosing struct f_hidg, so there is a use-after-free if /dev/hidgN
-> > > is held open while the gadget is deleted.
-> > > 
-> > > This can readily be replicated with libusbgx's example programs (for
-> > > conciseness - operating directly via configfs is equivalent):
-> > > 
-> > > 	gadget-hid
-> > > 	exec 3<> /dev/hidg0
-> > > 	gadget-vid-pid-remove
-> > > 	exec 3<&-
-> > > 
-> > > Pull the existing device up in to struct f_hidg and make use of the
-> > > cdev_device_{add,del}() helpers.  This changes the lifetime of the
-> > > device object to match struct f_hidg, but note that it is still added
-> > > and deleted at the same time.
-> > > 
-> > > Fixes: 71adf1189469 ("USB: gadget: add HID gadget driver")
-> > > Tested-by: Lee Jones <lee@kernel.org>
-> > > Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-> > > Reviewed-by: Lee Jones <lee@kernel.org>
-> > > Signed-off-by: John Keeping <john@metanate.com>
-> > > Link: https://lore.kernel.org/r/20221122123523.3068034-2-john@metanate.com
-> > > Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> > > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > > ---
-> > >  drivers/usb/gadget/function/f_hid.c | 52 ++++++++++++++++-------------
-> > >  1 file changed, 28 insertions(+), 24 deletions(-)
-> >  
-> > Dear Stable,
-> > 
-> > Would you be kind enough to take this back as far back as linux.4.14.y
-> > please?  There is a trivial fix-up required for kernels older than
-> > v5.15, but it's the same fix-up back through v4.14.
+On Wed, Jan 04, 2023 at 05:04:18PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.4 release.
+> There are 207 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> This is already in the queue for 5.10, 5.4, and 4.19, but for some
-> reason not in 4.14.  Can you verify that the 4.19 version works there
-> too?
+> Responses should be made by Fri, 06 Jan 2023 16:04:29 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.4-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-That works.  v4.19 isn't required.  Thanks.
+Tested rc1 against the Fedora build system (aarch64, armv7, ppc64le,
+s390x, x86_64), and boot tested x86_64. No regressions noted.
 
--- 
-Lee Jones [李琼斯]
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
