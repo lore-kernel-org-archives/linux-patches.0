@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1848494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:08:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51872C433EF;
-	Thu,  5 Jan 2023 13:08:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4683A8494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:08:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E57AC433EF;
+	Thu,  5 Jan 2023 13:08:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672924092;
-	bh=8UcgxdlRCL0mW3jZnX115RanCngd692wMEsRn+/IFPg=;
+	s=korg; t=1672924096;
+	bh=uRdiZjPWy1IzB+2xKpXuBcV4BgFwF07Yn6jufXNHX9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LD47uhag4Ov92Pkwyex1wjBMSs3TXonjbp1iD0FYd0kHZVpN7rU/KiYTnfMvEIvXK
-	 dNgTMBP9RCoJdzjJyk+XEMXqY6zbD1FRBrQa0vXzWdk3I5Tr74CWU3GNcy4R42Gfo7
-	 A7vimHkqXmlldbIjSHKBu/7pjZV6WnPM5dMmEDBY=
+	b=FkEiSSTSlO/Dabx1CJckh30/NRwr4rXHnSbLXKSQTxhg1LGk3kB/bTQKKLMMaKKrg
+	 BnhiS88wLTVvd+cWpYjwlaxP48UPZfDc8ofiQfqfjmeibSzSt1Q3s7NKATAcpby/tE
+	 lJ+lSlc6lalQKQ/zIyDtX7VJM2/7Hq0j2U8GB9Bs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 4.9 224/251] md: fix a crash in mempool_free
-Date: Thu,  5 Jan 2023 13:56:01 +0100
-Message-Id: <20230105125345.109770951@linuxfoundation.org>
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 4.9 233/251] dm cache: set needs_check flag after aborting metadata
+Date: Thu,  5 Jan 2023 13:56:10 +0100
+Message-Id: <20230105125345.538290621@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -34,109 +33,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-commit 341097ee53573e06ab9fc675d96a052385b851fa upstream.
+commit 6b9973861cb2e96dcd0bb0f1baddc5c034207c5c upstream.
 
-There's a crash in mempool_free when running the lvm test
-shell/lvchange-rebuild-raid.sh.
+Otherwise the commit that will be aborted will be associated with the
+metadata objects that will be torn down.  Must write needs_check flag
+to metadata with a reset block manager.
 
-The reason for the crash is this:
-* super_written calls atomic_dec_and_test(&mddev->pending_writes) and
-  wake_up(&mddev->sb_wait). Then it calls rdev_dec_pending(rdev, mddev)
-  and bio_put(bio).
-* so, the process that waited on sb_wait and that is woken up is racing
-  with bio_put(bio).
-* if the process wins the race, it calls bioset_exit before bio_put(bio)
-  is executed.
-* bio_put(bio) attempts to free a bio into a destroyed bio set - causing
-  a crash in mempool_free.
+Found through code-inspection (and compared against dm-thin.c).
 
-We fix this bug by moving bio_put before atomic_dec_and_test.
-
-We also move rdev_dec_pending before atomic_dec_and_test as suggested by
-Neil Brown.
-
-The function md_end_flush has a similar bug - we must call bio_put before
-we decrement the number of in-progress bios.
-
- BUG: kernel NULL pointer dereference, address: 0000000000000000
- #PF: supervisor write access in kernel mode
- #PF: error_code(0x0002) - not-present page
- PGD 11557f0067 P4D 11557f0067 PUD 0
- Oops: 0002 [#1] PREEMPT SMP
- CPU: 0 PID: 73 Comm: kworker/0:1 Not tainted 6.1.0-rc3 #5
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-2 04/01/2014
- Workqueue: kdelayd flush_expired_bios [dm_delay]
- RIP: 0010:mempool_free+0x47/0x80
- Code: 48 89 ef 5b 5d ff e0 f3 c3 48 89 f7 e8 32 45 3f 00 48 63 53 08 48 89 c6 3b 53 04 7d 2d 48 8b 43 10 8d 4a 01 48 89 df 89 4b 08 <48> 89 2c d0 e8 b0 45 3f 00 48 8d 7b 30 5b 5d 31 c9 ba 01 00 00 00
- RSP: 0018:ffff88910036bda8 EFLAGS: 00010093
- RAX: 0000000000000000 RBX: ffff8891037b65d8 RCX: 0000000000000001
- RDX: 0000000000000000 RSI: 0000000000000202 RDI: ffff8891037b65d8
- RBP: ffff8891447ba240 R08: 0000000000012908 R09: 00000000003d0900
- R10: 0000000000000000 R11: 0000000000173544 R12: ffff889101a14000
- R13: ffff8891562ac300 R14: ffff889102b41440 R15: ffffe8ffffa00d05
- FS:  0000000000000000(0000) GS:ffff88942fa00000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 0000000000000000 CR3: 0000001102e99000 CR4: 00000000000006b0
- Call Trace:
-  <TASK>
-  clone_endio+0xf4/0x1c0 [dm_mod]
-  clone_endio+0xf4/0x1c0 [dm_mod]
-  __submit_bio+0x76/0x120
-  submit_bio_noacct_nocheck+0xb6/0x2a0
-  flush_expired_bios+0x28/0x2f [dm_delay]
-  process_one_work+0x1b4/0x300
-  worker_thread+0x45/0x3e0
-  ? rescuer_thread+0x380/0x380
-  kthread+0xc2/0x100
-  ? kthread_complete_and_exit+0x20/0x20
-  ret_from_fork+0x1f/0x30
-  </TASK>
- Modules linked in: brd dm_delay dm_raid dm_mod af_packet uvesafb cfbfillrect cfbimgblt cn cfbcopyarea fb font fbdev tun autofs4 binfmt_misc configfs ipv6 virtio_rng virtio_balloon rng_core virtio_net pcspkr net_failover failover qemu_fw_cfg button mousedev raid10 raid456 libcrc32c async_raid6_recov async_memcpy async_pq raid6_pq async_xor xor async_tx raid1 raid0 md_mod sd_mod t10_pi crc64_rocksoft crc64 virtio_scsi scsi_mod evdev psmouse bsg scsi_common [last unloaded: brd]
- CR2: 0000000000000000
- ---[ end trace 0000000000000000 ]---
-
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Song Liu <song@kernel.org>
+Fixes: 028ae9f76f29 ("dm cache: add fail io mode and needs_check flag")
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/md/dm-cache-target.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/md/md.c
-+++ b/drivers/md/md.c
-@@ -360,13 +360,14 @@ static void md_end_flush(struct bio *bio
- 	struct md_rdev *rdev = bio->bi_private;
- 	struct mddev *mddev = rdev->mddev;
+--- a/drivers/md/dm-cache-target.c
++++ b/drivers/md/dm-cache-target.c
+@@ -1030,16 +1030,16 @@ static void abort_transaction(struct cac
+ 	if (get_cache_mode(cache) >= CM_READ_ONLY)
+ 		return;
  
-+	bio_put(bio);
-+
- 	rdev_dec_pending(rdev, mddev);
- 
- 	if (atomic_dec_and_test(&mddev->flush_pending)) {
- 		/* The pre-request flush has finished */
- 		queue_work(md_wq, &mddev->flush_work);
+-	if (dm_cache_metadata_set_needs_check(cache->cmd)) {
+-		DMERR("%s: failed to set 'needs_check' flag in metadata", dev_name);
+-		set_cache_mode(cache, CM_FAIL);
+-	}
+-
+ 	DMERR_LIMIT("%s: aborting current metadata transaction", dev_name);
+ 	if (dm_cache_metadata_abort(cache->cmd)) {
+ 		DMERR("%s: failed to abort metadata transaction", dev_name);
+ 		set_cache_mode(cache, CM_FAIL);
  	}
--	bio_put(bio);
++
++	if (dm_cache_metadata_set_needs_check(cache->cmd)) {
++		DMERR("%s: failed to set 'needs_check' flag in metadata", dev_name);
++		set_cache_mode(cache, CM_FAIL);
++	}
  }
  
- static void md_submit_flush_data(struct work_struct *ws);
-@@ -725,10 +726,12 @@ static void super_written(struct bio *bi
- 		md_error(mddev, rdev);
- 	}
- 
-+	bio_put(bio);
-+
-+	rdev_dec_pending(rdev, mddev);
-+
- 	if (atomic_dec_and_test(&mddev->pending_writes))
- 		wake_up(&mddev->sb_wait);
--	rdev_dec_pending(rdev, mddev);
--	bio_put(bio);
- }
- 
- void md_super_write(struct mddev *mddev, struct md_rdev *rdev,
+ static void metadata_operation_failed(struct cache *cache, const char *op, int r)
 
 
