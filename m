@@ -1,102 +1,80 @@
-Received: from outbound-ss-820.bluehost.com (outbound-ss-820.bluehost.com [69.89.24.241])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EB5F3224
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 11:23:23 +0000 (UTC)
-Received: from cmgw15.mail.unifiedlayer.com (unknown [10.0.90.130])
-	by progateway2.mail.pro1.eigbox.com (Postfix) with ESMTP id 239311005B4AB
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 11:23:15 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id DOL5pUks1RAcHDOL5pijHl; Thu, 05 Jan 2023 11:23:15 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=F72SyotN c=1 sm=1 tr=0 ts=63b6b323
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=RvmDmJFTN0MA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=BDNUbKd+IKizGGlTxczQEdVEX8iLGJtxOU7JuRoqOfE=; b=PkZ5JTdJOeoLNXigS6DUUjdHqn
-	f9szogBBQISgSE0l/9UDRHc80jKkFDMdX3vhBayeu4h/DaWps+XpLwAGMBXHfkEaLtyXF1SbczG78
-	E2pl56hwST6vy+9NFdFiuF8e97ipA4A7NxlG/L3dEmfHL8Hq6t/i7fpJGbMvWJnTF6HOohjsdwFyB
-	Yzno/JmXz0ZgzXoysMrzg+xz9RYIz3SCGVf96tlCt39hB19KA4vBU7dusWJc41SOGcwj3xaANEuxx
-	qekAQ9c8T1iHDT1r4pfZI8Un5n/hnEXEk3t91p9jAMx2+Fjo+ENg3gbU4TUB2WmsnUXrUmqjAUSn1
-	73HrS86g==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:50546 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1pDOL3-001Qe6-M2;
-	Thu, 05 Jan 2023 04:23:13 -0700
-Subject: Re: [PATCH 6.1 000/207] 6.1.4-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230104160511.905925875@linuxfoundation.org>
-In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <6c15a405-8cc4-ca93-f9b0-c442874fa59a@w6rz.net>
-Date: Thu, 5 Jan 2023 03:23:07 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FE35320D
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 11:43:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75130C433F1;
+	Thu,  5 Jan 2023 11:43:35 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1672919016;
+	bh=C5S4pknLLvvDIqVA3nXAB2Mbro1adcpPdKMs0YpS8gs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=km+k6zqgpUVt4IUy5am5wYpxeJlKrLcAti6K12OnnrtGeBa0OP2EVB+6CHJL1exky
+	 sLlhPK6dojydCChwth3leYyDfe3Ggc1nGxr5opYIvdMJsq1Wveegihg2zJkMMFdwAl
+	 cgwwkahvCgZEKeKyySHEHffn4pt5kPJW7Sx/0YKg=
+Date: Thu, 5 Jan 2023 12:43:28 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Joel Fernandes <joel@joelfernandes.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.10 00/63] 5.10.162-rc1 review
+Message-ID: <Y7a34Ckczx8ZuczK@kroah.com>
+References: <Y7UOtInxdmaIP9nH@kroah.com>
+ <7BA3F66A-097C-44F2-AAC8-35ADBEAE7E12@joelfernandes.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1pDOL3-001Qe6-M2
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:50546
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7BA3F66A-097C-44F2-AAC8-35ADBEAE7E12@joelfernandes.org>
 
-On 1/4/23 8:04 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.4 release.
-> There are 207 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 06 Jan 2023 16:04:29 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.4-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Wed, Jan 04, 2023 at 04:56:31PM -0500, Joel Fernandes wrote:
+> 
+> 
+> > On Jan 4, 2023, at 12:29 AM, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+> > 
+> > ﻿On Tue, Jan 03, 2023 at 04:16:07PM +0000, Joel Fernandes wrote:
+> >>> On Tue, Jan 03, 2023 at 09:13:30AM +0100, Greg Kroah-Hartman wrote:
+> >>> This is the start of the stable review cycle for the 5.10.162 release.
+> >>> There are 63 patches in this series, all will be posted as a response
+> >>> to this one.  If anyone has any issues with these being applied, please
+> >>> let me know.
+> >>> 
+> >>> Responses should be made by Thu, 05 Jan 2023 08:12:47 +0000.
+> >>> Anything received after that time might be too late.
+> >>> 
+> >>> The whole patch series can be found in one patch at:
+> >>>    https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.162-rc1.gz
+> >>> or in the git tree and branch at:
+> >>>    git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> >>> and the diffstat can be found below.
+> >>> 
+> >>> thanks,
+> >> 
+> >> Testing fails. Could you please pick these 2 up?
+> >> https://lore.kernel.org/r/20221230153215.1333921-1-joel@joelfernandes.org
+> >> https://lore.kernel.org/all/20221230153215.1333921-2-joel@joelfernandes.org/
+> > 
+> > That is not a regression from 5.10.161, right?
+> 
+> Yes it is not.
+> 
+> >  This release is only for
+> > the io_uring stuff to make sure that backport was done correctly.
+> > 
+> > The current "to apply" queue for the stable trees is very large right
+> > now due to everyone waiting to get tiny things into -rc1 instead of
+> > before then, so the above two are still not yet queued up, sorry.
+> 
+> Sure not a problem, I can resend again later if it is still not queued.
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
-
-Tested-by: Ron Economos <re@w6rz.net>
-
+You should have already received the email notices saying they were
+queued :)
