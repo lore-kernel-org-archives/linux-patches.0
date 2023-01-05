@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9646C8495
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:08:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FCA1C433F1;
-	Thu,  5 Jan 2023 13:08:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835FA8494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:08:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DEB26C433F0;
+	Thu,  5 Jan 2023 13:08:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672924127;
-	bh=TWrGF6m0K5lJHgT75VHS1sdNyYso6wkAZkaHqXQRNxM=;
+	s=korg; t=1672924124;
+	bh=mbZ1Lah6lbbgP0GBBECUUzwPebNVUF6rKeY2+iakSY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2r8pI4q/fb4MEBed7vY8miFDDNFb76tX/1g/efTT+H3x2s9XcDxnM8ApmtOapPQZc
-	 21kaF6edmYfLi21am4rnhUnehEP/HC8R+0HHFTP2du5mY5yEuLFH9hJmt4kgEKRXCj
-	 EhblfKgk8xXqBLuByFNB3ptcTknOYNa0iOYLPFg4=
+	b=CeWEpZLjiyKTKuUNZlCzSoofYANBWK0JPW1k1WqMbzs6qDtSyn5hIcJhsxKQ+cifz
+	 OFMlwy9dVY5H6ZG/hc0mFzeF722m/AeQWJmd6bdjtvqsXpeIbT8UqfLJSECx5Dc5dE
+	 B7t7ld/CHcFycizaAJhW5rYkehs0gwl94BqGjNNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Deren Wu <deren.wu@mediatek.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.9 225/251] mmc: vub300: fix warning - do not call blocking ops when !TASK_RUNNING
-Date: Thu,  5 Jan 2023 13:56:02 +0100
-Message-Id: <20230105125345.156064813@linuxfoundation.org>
+	Wang Weiyang <wangweiyang2@huawei.com>,
+	Aristeu Rozanski <aris@redhat.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 4.9 242/251] device_cgroup: Roll back to original exceptions after copy failure
+Date: Thu,  5 Jan 2023 13:56:19 +0100
+Message-Id: <20230105125345.961048816@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -34,64 +35,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Deren Wu <deren.wu@mediatek.com>
+From: Wang Weiyang <wangweiyang2@huawei.com>
 
-commit 4a44cd249604e29e7b90ae796d7692f5773dd348 upstream.
+commit e68bfbd3b3c3a0ec3cf8c230996ad8cabe90322f upstream.
 
-vub300_enable_sdio_irq() works with mutex and need TASK_RUNNING here.
-Ensure that we mark current as TASK_RUNNING for sleepable context.
+When add the 'a *:* rwm' entry to devcgroup A's whitelist, at first A's
+exceptions will be cleaned and A's behavior is changed to
+DEVCG_DEFAULT_ALLOW. Then parent's exceptions will be copyed to A's
+whitelist. If copy failure occurs, just return leaving A to grant
+permissions to all devices. And A may grant more permissions than
+parent.
 
-[   77.554641] do not call blocking ops when !TASK_RUNNING; state=1 set at [<ffffffff92a72c1d>] sdio_irq_thread+0x17d/0x5b0
-[   77.554652] WARNING: CPU: 2 PID: 1983 at kernel/sched/core.c:9813 __might_sleep+0x116/0x160
-[   77.554905] CPU: 2 PID: 1983 Comm: ksdioirqd/mmc1 Tainted: G           OE      6.1.0-rc5 #1
-[   77.554910] Hardware name: Intel(R) Client Systems NUC8i7BEH/NUC8BEB, BIOS BECFL357.86A.0081.2020.0504.1834 05/04/2020
-[   77.554912] RIP: 0010:__might_sleep+0x116/0x160
-[   77.554920] RSP: 0018:ffff888107b7fdb8 EFLAGS: 00010282
-[   77.554923] RAX: 0000000000000000 RBX: ffff888118c1b740 RCX: 0000000000000000
-[   77.554926] RDX: 0000000000000001 RSI: 0000000000000004 RDI: ffffed1020f6ffa9
-[   77.554928] RBP: ffff888107b7fde0 R08: 0000000000000001 R09: ffffed1043ea60ba
-[   77.554930] R10: ffff88821f5305cb R11: ffffed1043ea60b9 R12: ffffffff93aa3a60
-[   77.554932] R13: 000000000000011b R14: 7fffffffffffffff R15: ffffffffc0558660
-[   77.554934] FS:  0000000000000000(0000) GS:ffff88821f500000(0000) knlGS:0000000000000000
-[   77.554937] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[   77.554939] CR2: 00007f8a44010d68 CR3: 000000024421a003 CR4: 00000000003706e0
-[   77.554942] Call Trace:
-[   77.554944]  <TASK>
-[   77.554952]  mutex_lock+0x78/0xf0
-[   77.554973]  vub300_enable_sdio_irq+0x103/0x3c0 [vub300]
-[   77.554981]  sdio_irq_thread+0x25c/0x5b0
-[   77.555006]  kthread+0x2b8/0x370
-[   77.555017]  ret_from_fork+0x1f/0x30
-[   77.555023]  </TASK>
-[   77.555025] ---[ end trace 0000000000000000 ]---
+Backup A's whitelist and recover original exceptions after copy
+failure.
 
-Fixes: 88095e7b473a ("mmc: Add new VUB300 USB-to-SD/SDIO/MMC driver")
-Signed-off-by: Deren Wu <deren.wu@mediatek.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/87dc45b122d26d63c80532976813c9365d7160b3.1670140888.git.deren.wu@mediatek.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 4cef7299b478 ("device_cgroup: add proper checking when changing default behavior")
+Signed-off-by: Wang Weiyang <wangweiyang2@huawei.com>
+Reviewed-by: Aristeu Rozanski <aris@redhat.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/vub300.c |    2 ++
- 1 file changed, 2 insertions(+)
+ security/device_cgroup.c |   33 +++++++++++++++++++++++++++++----
+ 1 file changed, 29 insertions(+), 4 deletions(-)
 
---- a/drivers/mmc/host/vub300.c
-+++ b/drivers/mmc/host/vub300.c
-@@ -2056,6 +2056,7 @@ static void vub300_enable_sdio_irq(struc
- 		return;
- 	kref_get(&vub300->kref);
- 	if (enable) {
-+		set_current_state(TASK_RUNNING);
- 		mutex_lock(&vub300->irq_mutex);
- 		if (vub300->irqs_queued) {
- 			vub300->irqs_queued -= 1;
-@@ -2071,6 +2072,7 @@ static void vub300_enable_sdio_irq(struc
- 			vub300_queue_poll_work(vub300, 0);
- 		}
- 		mutex_unlock(&vub300->irq_mutex);
-+		set_current_state(TASK_INTERRUPTIBLE);
- 	} else {
- 		vub300->irq_enabled = 0;
- 	}
+--- a/security/device_cgroup.c
++++ b/security/device_cgroup.c
+@@ -87,6 +87,17 @@ free_and_exit:
+ 	return -ENOMEM;
+ }
+ 
++static void dev_exceptions_move(struct list_head *dest, struct list_head *orig)
++{
++	struct dev_exception_item *ex, *tmp;
++
++	lockdep_assert_held(&devcgroup_mutex);
++
++	list_for_each_entry_safe(ex, tmp, orig, list) {
++		list_move_tail(&ex->list, dest);
++	}
++}
++
+ /*
+  * called under devcgroup_mutex
+  */
+@@ -608,11 +619,13 @@ static int devcgroup_update_access(struc
+ 	int count, rc = 0;
+ 	struct dev_exception_item ex;
+ 	struct dev_cgroup *parent = css_to_devcgroup(devcgroup->css.parent);
++	struct dev_cgroup tmp_devcgrp;
+ 
+ 	if (!capable(CAP_SYS_ADMIN))
+ 		return -EPERM;
+ 
+ 	memset(&ex, 0, sizeof(ex));
++	memset(&tmp_devcgrp, 0, sizeof(tmp_devcgrp));
+ 	b = buffer;
+ 
+ 	switch (*b) {
+@@ -624,15 +637,27 @@ static int devcgroup_update_access(struc
+ 
+ 			if (!may_allow_all(parent))
+ 				return -EPERM;
+-			dev_exception_clean(devcgroup);
+-			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
+-			if (!parent)
++			if (!parent) {
++				devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
++				dev_exception_clean(devcgroup);
+ 				break;
++			}
+ 
++			INIT_LIST_HEAD(&tmp_devcgrp.exceptions);
++			rc = dev_exceptions_copy(&tmp_devcgrp.exceptions,
++						 &devcgroup->exceptions);
++			if (rc)
++				return rc;
++			dev_exception_clean(devcgroup);
+ 			rc = dev_exceptions_copy(&devcgroup->exceptions,
+ 						 &parent->exceptions);
+-			if (rc)
++			if (rc) {
++				dev_exceptions_move(&devcgroup->exceptions,
++						    &tmp_devcgrp.exceptions);
+ 				return rc;
++			}
++			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
++			dev_exception_clean(&tmp_devcgrp);
+ 			break;
+ 		case DEVCG_DENY:
+ 			if (css_has_online_children(&devcgroup->css))
 
 
