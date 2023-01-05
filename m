@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F078494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 12:59:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BB6AC43392;
-	Thu,  5 Jan 2023 12:59:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06E238494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 12:59:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612A6C433EF;
+	Thu,  5 Jan 2023 12:59:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923586;
-	bh=rmUNwuHkCZK/kL94eohe6D4tak7ZalGMdhKeu+Yj4iY=;
+	s=korg; t=1672923589;
+	bh=8G5P1bKONHYNybXA3AXzV2jmMQt9ANoBvwiZugq9a4I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bjh9c9D4KIy3ZD+5gBDZeGV3dsDfFnthNUlO73PLitr2/oM+5dFl81GobKOpAi5nC
-	 WrFKCZSCFAaEiL8Ae//URH+FOKxwR96GHsGujmoEnMe0iKvxRLnItAtHociO4YzkME
-	 yX4Exc/TBbqy35ITw5ZRjCqkcX167Z8zSMMNn0Ug=
+	b=mqFbnnaOlTql5oy2tLAAEFgoZMLJ1ZO2eIGUZi4+v1a4BnUhlGeeFRVbIMsK9++1Y
+	 g1BTlR/NI2+6eJGFh6QfcOTCpsTCsHwav75iJt8hIFFvCAkX+Wg01YkZMMc2gOYeZc
+	 vJSGJbDwNrOVmpAHeIkfd9iEMmVKhIPczQX+wiBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Tang <tanghui20@huawei.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	ZhangPeng <zhangpeng362@huawei.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 060/251] mtd: lpddr2_nvm: Fix possible null-ptr-deref
-Date: Thu,  5 Jan 2023 13:53:17 +0100
-Message-Id: <20230105125337.503987047@linuxfoundation.org>
+Subject: [PATCH 4.9 069/251] pinctrl: pinconf-generic: add missing of_node_put()
+Date: Thu,  5 Jan 2023 13:53:26 +0100
+Message-Id: <20230105125337.929831928@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -36,36 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hui Tang <tanghui20@huawei.com>
+From: ZhangPeng <zhangpeng362@huawei.com>
 
-[ Upstream commit 6bdd45d795adf9e73b38ced5e7f750cd199499ff ]
+[ Upstream commit 5ead93289815a075d43c415e35c8beafafb801c9 ]
 
-It will cause null-ptr-deref when resource_size(add_range) invoked,
-if platform_get_resource() returns NULL.
+of_node_put() needs to be called when jumping out of the loop, since
+for_each_available_child_of_node() will increase the refcount of node.
 
-Fixes: 96ba9dd65788 ("mtd: lpddr: add driver for LPDDR2-NVM PCM memories")
-Signed-off-by: Hui Tang <tanghui20@huawei.com>
-Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20221114090240.244172-1-tanghui20@huawei.com
+Fixes: c7289500e29d ("pinctrl: pinconf-generic: scan also referenced phandle node")
+Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
+Link: https://lore.kernel.org/r/20221125070156.3535855-1-zhangpeng362@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/lpddr/lpddr2_nvm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/pinctrl/pinconf-generic.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/lpddr/lpddr2_nvm.c b/drivers/mtd/lpddr/lpddr2_nvm.c
-index 5e36366d9b36..19b00225c7ef 100644
---- a/drivers/mtd/lpddr/lpddr2_nvm.c
-+++ b/drivers/mtd/lpddr/lpddr2_nvm.c
-@@ -448,6 +448,8 @@ static int lpddr2_nvm_probe(struct platform_device *pdev)
+diff --git a/drivers/pinctrl/pinconf-generic.c b/drivers/pinctrl/pinconf-generic.c
+index 074a7e044e25..b0e41fb3623d 100644
+--- a/drivers/pinctrl/pinconf-generic.c
++++ b/drivers/pinctrl/pinconf-generic.c
+@@ -384,8 +384,10 @@ int pinconf_generic_dt_node_to_map(struct pinctrl_dev *pctldev,
+ 	for_each_child_of_node(np_config, np) {
+ 		ret = pinconf_generic_dt_subnode_to_map(pctldev, np, map,
+ 					&reserved_maps, num_maps, type);
+-		if (ret < 0)
++		if (ret < 0) {
++			of_node_put(np);
+ 			goto exit;
++		}
+ 	}
+ 	return 0;
  
- 	/* lpddr2_nvm address range */
- 	add_range = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-+	if (!add_range)
-+		return -ENODEV;
- 
- 	/* Populate map_info data structure */
- 	*map = (struct map_info) {
 -- 
 2.35.1
 
