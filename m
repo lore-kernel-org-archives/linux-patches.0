@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBE108494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:08:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A2F3C433EF;
-	Thu,  5 Jan 2023 13:08:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1848494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:08:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51872C433EF;
+	Thu,  5 Jan 2023 13:08:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672924089;
-	bh=IiznI6s7z6AJ6dUU8a+7Bqq7FFsj2KoatyvFS47s3fA=;
+	s=korg; t=1672924092;
+	bh=8UcgxdlRCL0mW3jZnX115RanCngd692wMEsRn+/IFPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EdBzibQwlZvsdVuNsprsZYLlHjzy6foQdJjes9JU8Au/05QokoA10d9UPj99lWd3l
-	 25LbuVAo6hQCIdkJnpr5esm/bOx9f69yHGrDtBBcs9pq+9DS1ujve1K+G2+isjU8oP
-	 +kOEy4IDVI56zQpBRNwepT1Njzw7Ec4G/cwUPh4I=
+	b=LD47uhag4Ov92Pkwyex1wjBMSs3TXonjbp1iD0FYd0kHZVpN7rU/KiYTnfMvEIvXK
+	 dNgTMBP9RCoJdzjJyk+XEMXqY6zbD1FRBrQa0vXzWdk3I5Tr74CWU3GNcy4R42Gfo7
+	 A7vimHkqXmlldbIjSHKBu/7pjZV6WnPM5dMmEDBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 190/251] net: ethernet: ti: Fix return type of netcp_ndo_start_xmit()
-Date: Thu,  5 Jan 2023 13:55:27 +0100
-Message-Id: <20230105125343.512129005@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 4.9 224/251] md: fix a crash in mempool_free
+Date: Thu,  5 Jan 2023 13:56:01 +0100
+Message-Id: <20230105125345.109770951@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -36,53 +34,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 63fe6ff674a96cfcfc0fa8df1051a27aa31c70b4 ]
+commit 341097ee53573e06ab9fc675d96a052385b851fa upstream.
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+There's a crash in mempool_free when running the lvm test
+shell/lvchange-rebuild-raid.sh.
 
-  drivers/net/ethernet/ti/netcp_core.c:1944:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = netcp_ndo_start_xmit,
-                                    ^~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+The reason for the crash is this:
+* super_written calls atomic_dec_and_test(&mddev->pending_writes) and
+  wake_up(&mddev->sb_wait). Then it calls rdev_dec_pending(rdev, mddev)
+  and bio_put(bio).
+* so, the process that waited on sb_wait and that is woken up is racing
+  with bio_put(bio).
+* if the process wins the race, it calls bioset_exit before bio_put(bio)
+  is executed.
+* bio_put(bio) attempts to free a bio into a destroyed bio set - causing
+  a crash in mempool_free.
 
-->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-'netdev_tx_t', not 'int'. Adjust the return type of
-netcp_ndo_start_xmit() to match the prototype's to resolve the warning
-and CFI failure.
+We fix this bug by moving bio_put before atomic_dec_and_test.
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221102160933.1601260-1-nathan@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+We also move rdev_dec_pending before atomic_dec_and_test as suggested by
+Neil Brown.
+
+The function md_end_flush has a similar bug - we must call bio_put before
+we decrement the number of in-progress bios.
+
+ BUG: kernel NULL pointer dereference, address: 0000000000000000
+ #PF: supervisor write access in kernel mode
+ #PF: error_code(0x0002) - not-present page
+ PGD 11557f0067 P4D 11557f0067 PUD 0
+ Oops: 0002 [#1] PREEMPT SMP
+ CPU: 0 PID: 73 Comm: kworker/0:1 Not tainted 6.1.0-rc3 #5
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-2 04/01/2014
+ Workqueue: kdelayd flush_expired_bios [dm_delay]
+ RIP: 0010:mempool_free+0x47/0x80
+ Code: 48 89 ef 5b 5d ff e0 f3 c3 48 89 f7 e8 32 45 3f 00 48 63 53 08 48 89 c6 3b 53 04 7d 2d 48 8b 43 10 8d 4a 01 48 89 df 89 4b 08 <48> 89 2c d0 e8 b0 45 3f 00 48 8d 7b 30 5b 5d 31 c9 ba 01 00 00 00
+ RSP: 0018:ffff88910036bda8 EFLAGS: 00010093
+ RAX: 0000000000000000 RBX: ffff8891037b65d8 RCX: 0000000000000001
+ RDX: 0000000000000000 RSI: 0000000000000202 RDI: ffff8891037b65d8
+ RBP: ffff8891447ba240 R08: 0000000000012908 R09: 00000000003d0900
+ R10: 0000000000000000 R11: 0000000000173544 R12: ffff889101a14000
+ R13: ffff8891562ac300 R14: ffff889102b41440 R15: ffffe8ffffa00d05
+ FS:  0000000000000000(0000) GS:ffff88942fa00000(0000) knlGS:0000000000000000
+ CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ CR2: 0000000000000000 CR3: 0000001102e99000 CR4: 00000000000006b0
+ Call Trace:
+  <TASK>
+  clone_endio+0xf4/0x1c0 [dm_mod]
+  clone_endio+0xf4/0x1c0 [dm_mod]
+  __submit_bio+0x76/0x120
+  submit_bio_noacct_nocheck+0xb6/0x2a0
+  flush_expired_bios+0x28/0x2f [dm_delay]
+  process_one_work+0x1b4/0x300
+  worker_thread+0x45/0x3e0
+  ? rescuer_thread+0x380/0x380
+  kthread+0xc2/0x100
+  ? kthread_complete_and_exit+0x20/0x20
+  ret_from_fork+0x1f/0x30
+  </TASK>
+ Modules linked in: brd dm_delay dm_raid dm_mod af_packet uvesafb cfbfillrect cfbimgblt cn cfbcopyarea fb font fbdev tun autofs4 binfmt_misc configfs ipv6 virtio_rng virtio_balloon rng_core virtio_net pcspkr net_failover failover qemu_fw_cfg button mousedev raid10 raid456 libcrc32c async_raid6_recov async_memcpy async_pq raid6_pq async_xor xor async_tx raid1 raid0 md_mod sd_mod t10_pi crc64_rocksoft crc64 virtio_scsi scsi_mod evdev psmouse bsg scsi_common [last unloaded: brd]
+ CR2: 0000000000000000
+ ---[ end trace 0000000000000000 ]---
+
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Song Liu <song@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/ti/netcp_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/md/md.c |    9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/ti/netcp_core.c b/drivers/net/ethernet/ti/netcp_core.c
-index c17967b23d3c..957701d48712 100644
---- a/drivers/net/ethernet/ti/netcp_core.c
-+++ b/drivers/net/ethernet/ti/netcp_core.c
-@@ -1237,7 +1237,7 @@ static int netcp_tx_submit_skb(struct netcp_intf *netcp,
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -360,13 +360,14 @@ static void md_end_flush(struct bio *bio
+ 	struct md_rdev *rdev = bio->bi_private;
+ 	struct mddev *mddev = rdev->mddev;
+ 
++	bio_put(bio);
++
+ 	rdev_dec_pending(rdev, mddev);
+ 
+ 	if (atomic_dec_and_test(&mddev->flush_pending)) {
+ 		/* The pre-request flush has finished */
+ 		queue_work(md_wq, &mddev->flush_work);
+ 	}
+-	bio_put(bio);
  }
  
- /* Submit the packet */
--static int netcp_ndo_start_xmit(struct sk_buff *skb, struct net_device *ndev)
-+static netdev_tx_t netcp_ndo_start_xmit(struct sk_buff *skb, struct net_device *ndev)
- {
- 	struct netcp_intf *netcp = netdev_priv(ndev);
- 	int subqueue = skb_get_queue_mapping(skb);
--- 
-2.35.1
-
+ static void md_submit_flush_data(struct work_struct *ws);
+@@ -725,10 +726,12 @@ static void super_written(struct bio *bi
+ 		md_error(mddev, rdev);
+ 	}
+ 
++	bio_put(bio);
++
++	rdev_dec_pending(rdev, mddev);
++
+ 	if (atomic_dec_and_test(&mddev->pending_writes))
+ 		wake_up(&mddev->sb_wait);
+-	rdev_dec_pending(rdev, mddev);
+-	bio_put(bio);
+ }
+ 
+ void md_super_write(struct mddev *mddev, struct md_rdev *rdev,
 
 
