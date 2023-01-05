@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70908494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:06:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CD88C433D2;
-	Thu,  5 Jan 2023 13:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C86C48494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:06:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DFA4C433EF;
+	Thu,  5 Jan 2023 13:06:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923996;
-	bh=e+mK2I0XLSH5ibwB3tkTIJFc3uG7mhmJaeMBe1RVO2c=;
+	s=korg; t=1672923999;
+	bh=1fXw6PcYdInX4Nm7rj3luK2/XN9nXHIR1RetC55iRxc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BDRnFsRecuxJb7gCTf0Tah9n2WzVhtbs2VQ1FadkqxJswuO+v2+b6ncdFbxsltRUo
-	 bBn15RFEMvYt8aMrSRajF72YFkau1oQPVgS/QYwCq+9XQXm0nckz5kE7VBOiRdBFqt
-	 JZmt/o5FT+xcLm+yX6sZLTEh6/ofPlN6o9t/iuMY=
+	b=eWEp1o7rn3IH6nvulBQ/6i9q/wDtJ2hwzVr2xXIREzvPBFUZNe5ShbjWaOcRmT5eM
+	 E5pOROIcXSt8OpniA9UriD1Vth4C9ZgjeXUDixlZ69b8Ok+Y8ukLdXUUKr2UPDocLn
+	 1RhrPzMZImvJhDmN7fsoAjgBuB19Ph3f7cooIVYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yan Lei <yan_lei@dahuatech.com>,
+	Mazin Al Haddad <mazinalhaddad05@gmail.com>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 201/251] media: dvb-frontends: fix leak of memory fw
-Date: Thu,  5 Jan 2023 13:55:38 +0100
-Message-Id: <20230105125344.058912510@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+f66dd31987e6740657be@syzkaller.appspotmail.com
+Subject: [PATCH 4.9 202/251] media: dvb-usb: fix memory leak in dvb_usb_adapter_init()
+Date: Thu,  5 Jan 2023 13:55:39 +0100
+Message-Id: <20230105125344.110978284@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -35,30 +36,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yan Lei <yan_lei@dahuatech.com>
+From: Mazin Al Haddad <mazinalhaddad05@gmail.com>
 
-[ Upstream commit a15fe8d9f1bf460a804bcf18a890bfd2cf0d5caa ]
+[ Upstream commit 94d90fb06b94a90c176270d38861bcba34ce377d ]
 
-Link: https://lore.kernel.org/linux-media/20220410061925.4107-1-chinayanlei2002@163.com
-Signed-off-by: Yan Lei <yan_lei@dahuatech.com>
+Syzbot reports a memory leak in "dvb_usb_adapter_init()".
+The leak is due to not accounting for and freeing current iteration's
+adapter->priv in case of an error. Currently if an error occurs,
+it will exit before incrementing "num_adapters_initalized",
+which is used as a reference counter to free all adap->priv
+in "dvb_usb_adapter_exit()". There are multiple error paths that
+can exit from before incrementing the counter. Including the
+error handling paths for "dvb_usb_adapter_stream_init()",
+"dvb_usb_adapter_dvb_init()" and "dvb_usb_adapter_frontend_init()"
+within "dvb_usb_adapter_init()".
+
+This means that in case of an error in any of these functions the
+current iteration is not accounted for and the current iteration's
+adap->priv is not freed.
+
+Fix this by freeing the current iteration's adap->priv in the
+"stream_init_err:" label in the error path. The rest of the
+(accounted for) adap->priv objects are freed in dvb_usb_adapter_exit()
+as expected using the num_adapters_initalized variable.
+
+Syzbot report:
+
+BUG: memory leak
+unreferenced object 0xffff8881172f1a00 (size 512):
+  comm "kworker/0:2", pid 139, jiffies 4294994873 (age 10.960s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+backtrace:
+    [<ffffffff844af012>] dvb_usb_adapter_init drivers/media/usb/dvb-usb/dvb-usb-init.c:75 [inline]
+    [<ffffffff844af012>] dvb_usb_init drivers/media/usb/dvb-usb/dvb-usb-init.c:184 [inline]
+    [<ffffffff844af012>] dvb_usb_device_init.cold+0x4e5/0x79e drivers/media/usb/dvb-usb/dvb-usb-init.c:308
+    [<ffffffff830db21d>] dib0700_probe+0x8d/0x1b0 drivers/media/usb/dvb-usb/dib0700_core.c:883
+    [<ffffffff82d3fdc7>] usb_probe_interface+0x177/0x370 drivers/usb/core/driver.c:396
+    [<ffffffff8274ab37>] call_driver_probe drivers/base/dd.c:542 [inline]
+    [<ffffffff8274ab37>] really_probe.part.0+0xe7/0x310 drivers/base/dd.c:621
+    [<ffffffff8274ae6c>] really_probe drivers/base/dd.c:583 [inline]
+    [<ffffffff8274ae6c>] __driver_probe_device+0x10c/0x1e0 drivers/base/dd.c:752
+    [<ffffffff8274af6a>] driver_probe_device+0x2a/0x120 drivers/base/dd.c:782
+    [<ffffffff8274b786>] __device_attach_driver+0xf6/0x140 drivers/base/dd.c:899
+    [<ffffffff82747c87>] bus_for_each_drv+0xb7/0x100 drivers/base/bus.c:427
+    [<ffffffff8274b352>] __device_attach+0x122/0x260 drivers/base/dd.c:970
+    [<ffffffff827498f6>] bus_probe_device+0xc6/0xe0 drivers/base/bus.c:487
+    [<ffffffff82745cdb>] device_add+0x5fb/0xdf0 drivers/base/core.c:3405
+    [<ffffffff82d3d202>] usb_set_configuration+0x8f2/0xb80 drivers/usb/core/message.c:2170
+    [<ffffffff82d4dbfc>] usb_generic_driver_probe+0x8c/0xc0 drivers/usb/core/generic.c:238
+    [<ffffffff82d3f49c>] usb_probe_device+0x5c/0x140 drivers/usb/core/driver.c:293
+    [<ffffffff8274ab37>] call_driver_probe drivers/base/dd.c:542 [inline]
+    [<ffffffff8274ab37>] really_probe.part.0+0xe7/0x310 drivers/base/dd.c:621
+    [<ffffffff8274ae6c>] really_probe drivers/base/dd.c:583 [inline]
+    [<ffffffff8274ae6c>] __driver_probe_device+0x10c/0x1e0 drivers/base/dd.c:752
+
+Link: https://syzkaller.appspot.com/bug?extid=f66dd31987e6740657be
+Reported-and-tested-by: syzbot+f66dd31987e6740657be@syzkaller.appspotmail.com
+
+Link: https://lore.kernel.org/linux-media/20220824012152.539788-1-mazinalhaddad05@gmail.com
+Signed-off-by: Mazin Al Haddad <mazinalhaddad05@gmail.com>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-frontends/bcm3510.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/usb/dvb-usb/dvb-usb-init.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/dvb-frontends/bcm3510.c b/drivers/media/dvb-frontends/bcm3510.c
-index bb698839e477..fc1dbdfb0cba 100644
---- a/drivers/media/dvb-frontends/bcm3510.c
-+++ b/drivers/media/dvb-frontends/bcm3510.c
-@@ -648,6 +648,7 @@ static int bcm3510_download_firmware(struct dvb_frontend* fe)
- 		deb_info("firmware chunk, addr: 0x%04x, len: 0x%04x, total length: 0x%04zx\n",addr,len,fw->size);
- 		if ((ret = bcm3510_write_ram(st,addr,&b[i+4],len)) < 0) {
- 			err("firmware download failed: %d\n",ret);
-+			release_firmware(fw);
- 			return ret;
- 		}
- 		i += 4 + len;
+diff --git a/drivers/media/usb/dvb-usb/dvb-usb-init.c b/drivers/media/usb/dvb-usb/dvb-usb-init.c
+index 690c1e06fbfa..28077f3c9edf 100644
+--- a/drivers/media/usb/dvb-usb/dvb-usb-init.c
++++ b/drivers/media/usb/dvb-usb/dvb-usb-init.c
+@@ -84,7 +84,7 @@ static int dvb_usb_adapter_init(struct dvb_usb_device *d, short *adapter_nrs)
+ 
+ 		ret = dvb_usb_adapter_stream_init(adap);
+ 		if (ret)
+-			return ret;
++			goto stream_init_err;
+ 
+ 		ret = dvb_usb_adapter_dvb_init(adap, adapter_nrs);
+ 		if (ret)
+@@ -117,6 +117,8 @@ static int dvb_usb_adapter_init(struct dvb_usb_device *d, short *adapter_nrs)
+ 	dvb_usb_adapter_dvb_exit(adap);
+ dvb_init_err:
+ 	dvb_usb_adapter_stream_exit(adap);
++stream_init_err:
++	kfree(adap->priv);
+ 	return ret;
+ }
+ 
 -- 
 2.35.1
 
