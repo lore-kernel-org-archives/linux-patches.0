@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534ED8494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:07:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B624FC433F0;
-	Thu,  5 Jan 2023 13:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2388494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:07:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D01C433EF;
+	Thu,  5 Jan 2023 13:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672924049;
-	bh=qluLUvDEEZhDwT0RZaesZh+vNgq8LpA6e4Hcp1dsIjk=;
+	s=korg; t=1672924052;
+	bh=vHtnvMLnNeW0LVpGtBo8msaqdCgegaLg4vDC/O3ZjDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F1L6yyYyMbotpth0XIXWKUmjaBT0EUp0QjezxQKVgbOfxlOB9WL92ZQnFqWiPu9EO
-	 C+7OFuJ2p6Sa6Loz+6Kha07STiIf1jY62i+e9yFmRLusMbEwy+oVVrXap6FPtZSRyQ
-	 2ePn1E4Qi8g6sjCPL1xS7/YMTdD/1mEdn6Gg90Xk=
+	b=dM9luGyWgoTAfLIeq2PO3UYKZnZ6NnkzWr1WQmOwooQW5+aoOuHL77S87dNrbfpeY
+	 +ShMEEdied35mrZsP+jn8Vc8HC+K+mwHeRqVhg7szl4QILYgnjt7qKHLDwiqhCFHxN
+	 PiUln+r4/clvyoAhVdZUumVkute5QvARR+xA6Myo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rickard x Andersson <rickaran@axis.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Martin Liska <mliska@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.9 217/251] gcov: add support for checksum field
-Date: Thu,  5 Jan 2023 13:55:54 +0100
-Message-Id: <20230105125344.790817468@linuxfoundation.org>
+	Nathan Lynch <nathanl@linux.ibm.com>,
+	Nicholas Piggin <npiggin@gmail.com>,
+	Andrew Donnellan <ajd@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.9 218/251] powerpc/rtas: avoid scheduling in rtas_os_term()
+Date: Thu,  5 Jan 2023 13:55:55 +0100
+Message-Id: <20230105125344.829920296@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -36,49 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rickard x Andersson <rickaran@axis.com>
+From: Nathan Lynch <nathanl@linux.ibm.com>
 
-commit e96b95c2b7a63a454b6498e2df67aac14d046d13 upstream.
+[ Upstream commit 6c606e57eecc37d6b36d732b1ff7e55b7dc32dd4 ]
 
-In GCC version 12.1 a checksum field was added.
+It's unsafe to use rtas_busy_delay() to handle a busy status from
+the ibm,os-term RTAS function in rtas_os_term():
 
-This patch fixes a kernel crash occurring during boot when using
-gcov-kernel with GCC version 12.2.  The crash occurred on a system running
-on i.MX6SX.
+Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
+BUG: sleeping function called from invalid context at arch/powerpc/kernel/rtas.c:618
+in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 1, name: swapper/0
+preempt_count: 2, expected: 0
+CPU: 7 PID: 1 Comm: swapper/0 Tainted: G      D            6.0.0-rc5-02182-gf8553a572277-dirty #9
+Call Trace:
+[c000000007b8f000] [c000000001337110] dump_stack_lvl+0xb4/0x110 (unreliable)
+[c000000007b8f040] [c0000000002440e4] __might_resched+0x394/0x3c0
+[c000000007b8f0e0] [c00000000004f680] rtas_busy_delay+0x120/0x1b0
+[c000000007b8f100] [c000000000052d04] rtas_os_term+0xb8/0xf4
+[c000000007b8f180] [c0000000001150fc] pseries_panic+0x50/0x68
+[c000000007b8f1f0] [c000000000036354] ppc_panic_platform_handler+0x34/0x50
+[c000000007b8f210] [c0000000002303c4] notifier_call_chain+0xd4/0x1c0
+[c000000007b8f2b0] [c0000000002306cc] atomic_notifier_call_chain+0xac/0x1c0
+[c000000007b8f2f0] [c0000000001d62b8] panic+0x228/0x4d0
+[c000000007b8f390] [c0000000001e573c] do_exit+0x140c/0x1420
+[c000000007b8f480] [c0000000001e586c] make_task_dead+0xdc/0x200
 
-Link: https://lkml.kernel.org/r/20221220102318.3418501-1-rickaran@axis.com
-Fixes: 977ef30a7d88 ("gcov: support GCC 12.1 and newer compilers")
-Signed-off-by: Rickard x Andersson <rickaran@axis.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Tested-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Reviewed-by: Martin Liska <mliska@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Use rtas_busy_delay_time() instead, which signals without side effects
+whether to attempt the ibm,os-term RTAS call again.
+
+Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
+Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+Reviewed-by: Andrew Donnellan <ajd@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20221118150751.469393-5-nathanl@linux.ibm.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/gcov/gcc_4_7.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/powerpc/kernel/rtas.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/kernel/gcov/gcc_4_7.c
-+++ b/kernel/gcov/gcc_4_7.c
-@@ -84,6 +84,7 @@ struct gcov_fn_info {
-  * @version: gcov version magic indicating the gcc version used for compilation
-  * @next: list head for a singly-linked list
-  * @stamp: uniquifying time stamp
-+ * @checksum: unique object checksum
-  * @filename: name of the associated gcov data file
-  * @merge: merge functions (null for unused counter type)
-  * @n_functions: number of instrumented functions
-@@ -96,6 +97,10 @@ struct gcov_info {
- 	unsigned int version;
- 	struct gcov_info *next;
- 	unsigned int stamp;
-+ /* Since GCC 12.1 a checksum field is added. */
-+#if (__GNUC__ >= 12)
-+	unsigned int checksum;
-+#endif
- 	const char *filename;
- 	void (*merge[GCOV_COUNTERS])(gcov_type *, unsigned int);
- 	unsigned int n_functions;
+diff --git a/arch/powerpc/kernel/rtas.c b/arch/powerpc/kernel/rtas.c
+index 641f3e4c3380..9a77778bd24a 100644
+--- a/arch/powerpc/kernel/rtas.c
++++ b/arch/powerpc/kernel/rtas.c
+@@ -733,10 +733,15 @@ void rtas_os_term(char *str)
+ 
+ 	snprintf(rtas_os_term_buf, 2048, "OS panic: %s", str);
+ 
++	/*
++	 * Keep calling as long as RTAS returns a "try again" status,
++	 * but don't use rtas_busy_delay(), which potentially
++	 * schedules.
++	 */
+ 	do {
+ 		status = rtas_call(rtas_token("ibm,os-term"), 1, 1, NULL,
+ 				   __pa(rtas_os_term_buf));
+-	} while (rtas_busy_delay(status));
++	} while (rtas_busy_delay_time(status));
+ 
+ 	if (status != 0)
+ 		printk(KERN_EMERG "ibm,os-term call failed %d\n", status);
+-- 
+2.35.1
+
 
 
