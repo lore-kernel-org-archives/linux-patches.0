@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C6018494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:07:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5B21C433D2;
-	Thu,  5 Jan 2023 13:07:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534ED8494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:07:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B624FC433F0;
+	Thu,  5 Jan 2023 13:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672924046;
-	bh=saaQi3Y/oNv4g8gxBHBt9nMOMkppUwXoOLTR2t8hvCw=;
+	s=korg; t=1672924049;
+	bh=qluLUvDEEZhDwT0RZaesZh+vNgq8LpA6e4Hcp1dsIjk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WRW4AjyZmF3SqGLRQnSOfikpLZdqdiVYmZGcQF/Z3AP5bqH1lmOSSxnee02qNlK24
-	 WoBAV2trgiFC+IgwlNX9ZdKik+RuhRzUARuKD6RKuT9EdHUvvmXMuwwYd0MRqMpyAv
-	 SWihy6XqHIOAofopWhNR5CV6qTfbyo2Mxfv/96YA=
+	b=F1L6yyYyMbotpth0XIXWKUmjaBT0EUp0QjezxQKVgbOfxlOB9WL92ZQnFqWiPu9EO
+	 C+7OFuJ2p6Sa6Loz+6Kha07STiIf1jY62i+e9yFmRLusMbEwy+oVVrXap6FPtZSRyQ
+	 2ePn1E4Qi8g6sjCPL1xS7/YMTdD/1mEdn6Gg90Xk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Stable@vger.kernel.org
-Subject: [PATCH 4.9 216/251] iio: adc: ad_sigma_delta: do not use internal iio_dev lock
-Date: Thu,  5 Jan 2023 13:55:53 +0100
-Message-Id: <20230105125344.757871931@linuxfoundation.org>
+	Rickard x Andersson <rickaran@axis.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Martin Liska <mliska@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.9 217/251] gcov: add support for checksum field
+Date: Thu,  5 Jan 2023 13:55:54 +0100
+Message-Id: <20230105125344.790817468@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -36,51 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Rickard x Andersson <rickaran@axis.com>
 
-commit 20228a1d5a55e7db0c6720840f2c7d2b48c55f69 upstream.
+commit e96b95c2b7a63a454b6498e2df67aac14d046d13 upstream.
 
-Drop 'mlock' usage by making use of iio_device_claim_direct_mode().
-This change actually makes sure we cannot do a single conversion while
-buffering is enable. Note there was a potential race in the previous
-code since we were only acquiring the lock after checking if the bus is
-enabled.
+In GCC version 12.1 a checksum field was added.
 
-Fixes: af3008485ea0 ("iio:adc: Add common code for ADI Sigma Delta devices")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Cc: <Stable@vger.kernel.org> #No rush as race is very old.
-Link: https://lore.kernel.org/r/20220920112821.975359-2-nuno.sa@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+This patch fixes a kernel crash occurring during boot when using
+gcov-kernel with GCC version 12.2.  The crash occurred on a system running
+on i.MX6SX.
+
+Link: https://lkml.kernel.org/r/20221220102318.3418501-1-rickaran@axis.com
+Fixes: 977ef30a7d88 ("gcov: support GCC 12.1 and newer compilers")
+Signed-off-by: Rickard x Andersson <rickaran@axis.com>
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Tested-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Reviewed-by: Martin Liska <mliska@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad_sigma_delta.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ kernel/gcov/gcc_4_7.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/iio/adc/ad_sigma_delta.c
-+++ b/drivers/iio/adc/ad_sigma_delta.c
-@@ -282,10 +282,10 @@ int ad_sigma_delta_single_conversion(str
- 	unsigned int sample, raw_sample;
- 	int ret = 0;
- 
--	if (iio_buffer_enabled(indio_dev))
--		return -EBUSY;
-+	ret = iio_device_claim_direct_mode(indio_dev);
-+	if (ret)
-+		return ret;
- 
--	mutex_lock(&indio_dev->mlock);
- 	ad_sigma_delta_set_channel(sigma_delta, chan->address);
- 
- 	spi_bus_lock(sigma_delta->spi->master);
-@@ -319,7 +319,7 @@ out:
- 	ad_sigma_delta_set_mode(sigma_delta, AD_SD_MODE_IDLE);
- 	sigma_delta->bus_locked = false;
- 	spi_bus_unlock(sigma_delta->spi->master);
--	mutex_unlock(&indio_dev->mlock);
-+	iio_device_release_direct_mode(indio_dev);
- 
- 	if (ret)
- 		return ret;
+--- a/kernel/gcov/gcc_4_7.c
++++ b/kernel/gcov/gcc_4_7.c
+@@ -84,6 +84,7 @@ struct gcov_fn_info {
+  * @version: gcov version magic indicating the gcc version used for compilation
+  * @next: list head for a singly-linked list
+  * @stamp: uniquifying time stamp
++ * @checksum: unique object checksum
+  * @filename: name of the associated gcov data file
+  * @merge: merge functions (null for unused counter type)
+  * @n_functions: number of instrumented functions
+@@ -96,6 +97,10 @@ struct gcov_info {
+ 	unsigned int version;
+ 	struct gcov_info *next;
+ 	unsigned int stamp;
++ /* Since GCC 12.1 a checksum field is added. */
++#if (__GNUC__ >= 12)
++	unsigned int checksum;
++#endif
+ 	const char *filename;
+ 	void (*merge[GCOV_COUNTERS])(gcov_type *, unsigned int);
+ 	unsigned int n_functions;
 
 
