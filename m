@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8F78494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:00:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE1CC433EF;
-	Thu,  5 Jan 2023 13:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5A58494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:00:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C017DC433EF;
+	Thu,  5 Jan 2023 13:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923651;
-	bh=PNOsA9NjxiWjyTj57IPFBSaVcxl/68FyM2gNSqUFsE0=;
+	s=korg; t=1672923654;
+	bh=PCd9oEegePytTj9WafdMzWJQ2nqpli7GpMd8krmrql8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u9HDtvf6bWABHBqd+wmRJWFgSDQetWU37S7MA2C/Kn77Ks3iLxLcBf5xROMwLCd49
-	 OqEWQmpyTABZvdywbBpXfAIv0x4PnVFv9gEhESIsnnjpaFtk03O+0mdHPkEkf4Sabf
-	 K69SGq4iydv3Q1LzHN576byvpt7Y7fldICqJfvWw=
+	b=obkK6VHhRhX60DQwpOwi0kcJHh/880ju3CpVeglT7ZbitrZFYH4kiyV91/TRqpeFu
+	 VMI0ZnWIF960sj7ir/lS83Qh8BW7CQ6rZNJAH8YGy4H+Z30/9h82lUWK/6OjKf5Pqm
+	 vEK7DYtxeWLs+ZLyaB3moSdIPezugLOYHuPRLH4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 088/251] mmc: wbsd: fix return value check of mmc_add_host()
-Date: Thu,  5 Jan 2023 13:53:45 +0100
-Message-Id: <20230105125338.832521265@linuxfoundation.org>
+Subject: [PATCH 4.9 062/251] media: solo6x10: fix possible memory leak in solo_sysfs_init()
+Date: Thu,  5 Jan 2023 13:53:19 +0100
+Message-Id: <20230105125337.603018176@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -37,51 +37,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit dc5b9b50fc9d1334407e316e6e29a5097ef833bd ]
+[ Upstream commit 7f5866dd96d95b74e439f6ee17b8abd8195179fb ]
 
-mmc_add_host() may return error, if we ignore its return value,
-it will lead two issues:
-1. The memory that allocated in mmc_alloc_host() is leaked.
-2. In the remove() path, mmc_remove_host() will be called to
-   delete device, but it's not added yet, it will lead a kernel
-   crash because of null-ptr-deref in device_del().
+If device_register() returns error in solo_sysfs_init(), the
+name allocated by dev_set_name() need be freed. As comment of
+device_register() says, it should use put_device() to give up
+the reference in the error path. So fix this by calling
+put_device(), then the name can be freed in kobject_cleanup().
 
-So fix this by checking the return value and goto error path which
-will call mmc_free_host(), besides, other resources also need be
-released.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: dcae5dacbce5 ("[media] solo6x10: sync to latest code from Bluecherry's git repo")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221109133237.3273558-1-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/wbsd.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/media/pci/solo6x10/solo6x10-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mmc/host/wbsd.c b/drivers/mmc/host/wbsd.c
-index c3fd16d997ca..402b044c9a0b 100644
---- a/drivers/mmc/host/wbsd.c
-+++ b/drivers/mmc/host/wbsd.c
-@@ -1712,7 +1712,17 @@ static int wbsd_init(struct device *dev, int base, int irq, int dma,
- 	 */
- 	wbsd_init_device(host);
+diff --git a/drivers/media/pci/solo6x10/solo6x10-core.c b/drivers/media/pci/solo6x10/solo6x10-core.c
+index f50d07229236..fc45d4aeb77e 100644
+--- a/drivers/media/pci/solo6x10/solo6x10-core.c
++++ b/drivers/media/pci/solo6x10/solo6x10-core.c
+@@ -428,6 +428,7 @@ static int solo_sysfs_init(struct solo_dev *solo_dev)
+ 		     solo_dev->nr_chans);
  
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret) {
-+		if (!pnp)
-+			wbsd_chip_poweroff(host);
-+
-+		wbsd_release_resources(host);
-+		wbsd_free_mmc(dev);
-+
-+		mmc_free_host(mmc);
-+		return ret;
-+	}
- 
- 	pr_info("%s: W83L51xD", mmc_hostname(mmc));
- 	if (host->chip_id != 0)
+ 	if (device_register(dev)) {
++		put_device(dev);
+ 		dev->parent = NULL;
+ 		return -ENOMEM;
+ 	}
 -- 
 2.35.1
 
