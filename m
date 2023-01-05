@@ -1,122 +1,99 @@
-Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
+Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 840452F27
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 15:28:28 +0000 (UTC)
-Received: by mail-qv1-f54.google.com with SMTP id o17so21758481qvn.4
-        for <patches@lists.linux.dev>; Thu, 05 Jan 2023 07:28:28 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A114D53B
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 16:37:01 +0000 (UTC)
+Received: by mail-il1-f177.google.com with SMTP id g2so18053049ila.4
+        for <patches@lists.linux.dev>; Thu, 05 Jan 2023 08:37:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=joelfernandes.org; s=google;
-        h=to:cc:message-id:subject:date:mime-version:from
-         :content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FldW873lpxyZUgJl3Gn79d3ABr7Mbt6BQFXBgqMjN4g=;
-        b=A9jOz6sfESY2vupB9VK1hFQayWSwN4Qz+KE9Y18HeXt7i8p6Y8Cd7k1QSsdF37MG2W
-         tVe+pgFJx3dvSajHVCLPLsDuHqe3Mq6nECeZAB63VaK1A/Fr87YZTG2T73i4VPYHaWwd
-         vKJv0h+o0sJSdIdqCqyYqQBYN3SEc9ycLVhlc=
+        d=linuxfoundation.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Y/kxRv6fDXpaPXcp/0ocKs2qh6YQ87UzMYUDDy7haK0=;
+        b=P/ReJo2wNBxBTrUvbATD2VYqnybUbmSQkMNCwYbq6tWw0ZpaAzN028TO6fxbH3uT4p
+         kur/SrzvKiAHIRzJTvJVUZlYb0/p5yCeY+3Gsq18ulNrxpc5nEokk24OzLMUJC9jYgjP
+         xA1KCyrZd8ywvsgKpPXeN3GmTgrxh4kkoYVPg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:cc:message-id:subject:date:mime-version:from
-         :content-transfer-encoding:x-gm-message-state:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=FldW873lpxyZUgJl3Gn79d3ABr7Mbt6BQFXBgqMjN4g=;
-        b=AnMwyKVsQciMfThJZTJZMrgtrjh/YzY8i+5Ih3ik/0fOeCLfkrjzRtzeWtLJXKBJ+f
-         mmPpOl6BxN8DzHR3+fXtwJ8HFy7dAtLGP3uwu8VfoE0vODQTsXUm/toT85J1SXQAYKJ1
-         Y8u99CV28n7v+IRw5ceuTLIhEAS7E5uRwhWTNOzzLY0bBBfijtsmfeaFxBMMBFKjF8Er
-         pJHl2UHalZEUuSVkrOth+vfVDVZulhAE3VxUR/fsyOhfxRaDdE8e20B8750dQMj3DZ6u
-         gdoBkHn1BwIpVewKhw4B+GNYTbwVk+yN6nUFl4C28jOr0mYfixCE54CPDX/NURgQm8cb
-         lM1g==
-X-Gm-Message-State: AFqh2kqVM/591CKQdlWg9BggbnktkZMrNhJrX/YHO5F028PWrEo46afU
-	2DPveW8dUddjCHfoI8pUjQ8aQg==
-X-Google-Smtp-Source: AMrXdXvO4YAvMAf5z7gOFCnlfp3u0UaOR58PNp7Q7w0C5P/uXexZOlrDC5oKmltFky47DWvSYZasiQ==
-X-Received: by 2002:a0c:c783:0:b0:531:c27b:8ab3 with SMTP id k3-20020a0cc783000000b00531c27b8ab3mr21415196qvj.41.1672932507387;
-        Thu, 05 Jan 2023 07:28:27 -0800 (PST)
-Received: from smtpclient.apple (c-98-249-43-138.hsd1.va.comcast.net. [98.249.43.138])
-        by smtp.gmail.com with ESMTPSA id v2-20020a05620a440200b006fed2788751sm26290698qkp.76.2023.01.05.07.28.26
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y/kxRv6fDXpaPXcp/0ocKs2qh6YQ87UzMYUDDy7haK0=;
+        b=03L8ImnOzO6bN1gnNu9ksPKRcBi0upYGAH/fMHJtSx056UA67MB32lqeIyOJg9nEBo
+         am+8W7sn1qKVThoNYSeRHd9geJtcukuoGneKTQZuD5gsBvQE02y9wH8SsyMYQajZVXEY
+         2WdMT1s6kxnTliodi+bMeeU1vXwIe8HmUz8XvGXujA8wARr3n2Dz1FXy3WtlUHAo00y0
+         ODbHNdP1OHvUu/qoueCl5/UCVfAd/qzCzgcw+r6Z2Q4wQIXKF/eVtBmDcL1Yp3hya8qO
+         loXEIi4rD0gg27U/wIcAepN+63Kz8zN4qj/TUesF5dWARySUXhezdXqJs/PsvnhjTeGP
+         Bheg==
+X-Gm-Message-State: AFqh2kp266ieaXEeNrOaPT+y+5u3dVNF6FttwGsYwdkWyzdHQun8mwFb
+	FxDWPPpMhb9ud31Ap9ZxG1wWhw==
+X-Google-Smtp-Source: AMrXdXu1OcNEMegWeMxBM8DfgQFOIdcUp7iZ2c0I4lCdhAQPGLaAYkGDxFbcnpE3v+nFuo9yTF85kw==
+X-Received: by 2002:a92:c151:0:b0:303:9c30:7eff with SMTP id b17-20020a92c151000000b003039c307effmr7706859ilh.2.1672936620210;
+        Thu, 05 Jan 2023 08:37:00 -0800 (PST)
+Received: from [192.168.1.128] ([38.15.45.1])
+        by smtp.gmail.com with ESMTPSA id f16-20020a02a810000000b0038a8f0b4919sm11973940jaj.140.2023.01.05.08.36.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Jan 2023 07:28:26 -0800 (PST)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Joel Fernandes <joel@joelfernandes.org>
+        Thu, 05 Jan 2023 08:36:59 -0800 (PST)
+Message-ID: <a5148d63-a4cd-cb49-58b9-6421bb8aab97@linuxfoundation.org>
+Date: Thu, 5 Jan 2023 09:36:58 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0 (1.0)
-Date: Thu, 5 Jan 2023 10:28:15 -0500
-Subject: Re: [PATCH 5.10 00/63] 5.10.162-rc1 review
-Message-Id: <214361C4-9FE1-426D-9C54-9EF332604ABE@joelfernandes.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-X-Mailer: iPhone Mail (20B101)
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 4.9 000/251] 4.9.337-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
+References: <20230105125334.727282894@linuxfoundation.org>
+Content-Language: en-US
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
+On 1/5/23 05:52, Greg Kroah-Hartman wrote:
+> -------------------------------------------
+> NOTE:
+> 
+> This is going to be the LAST 4.9.y release to be made by the stable/LTS
+> kernel maintainers.  After this release, it will be end-of-life and you
+> should not use it at all.  You should have moved to a newer kernel
+> branch by now (as seen on the https://kernel.org/category/releases.html
+> page), but if NOT, and this is going to be a real hardship, please
+> contact me directly.
+> -------------------------------------------
+> 
+> This is the start of the stable review cycle for the 4.9.337 release.
+> There are 251 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Sat, 07 Jan 2023 12:52:55 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.9.337-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.9.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
+Compiled and booted on my test system. No dmesg regressions.
 
-> On Jan 5, 2023, at 6:43 AM, Greg Kroah-Hartman <gregkh@linuxfoundation.org=
-> wrote:
->=20
-> =EF=BB=BFOn Wed, Jan 04, 2023 at 04:56:31PM -0500, Joel Fernandes wrote:
->>=20
->>=20
->>>> On Jan 4, 2023, at 12:29 AM, Greg Kroah-Hartman <gregkh@linuxfoundation=
-.org> wrote:
->>>=20
->>> =EF=BB=BFOn Tue, Jan 03, 2023 at 04:16:07PM +0000, Joel Fernandes wrote:=
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
->>>>> On Tue, Jan 03, 2023 at 09:13:30AM +0100, Greg Kroah-Hartman wrote:
->>>>> This is the start of the stable review cycle for the 5.10.162 release.=
-
->>>>> There are 63 patches in this series, all will be posted as a response
->>>>> to this one.  If anyone has any issues with these being applied, pleas=
-e
->>>>> let me know.
->>>>>=20
->>>>> Responses should be made by Thu, 05 Jan 2023 08:12:47 +0000.
->>>>> Anything received after that time might be too late.
->>>>>=20
->>>>> The whole patch series can be found in one patch at:
->>>>>   https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.1=
-0.162-rc1.gz
->>>>> or in the git tree and branch at:
->>>>>   git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc=
-.git linux-5.10.y
->>>>> and the diffstat can be found below.
->>>>>=20
->>>>> thanks,
->>>>=20
->>>> Testing fails. Could you please pick these 2 up?
->>>> https://lore.kernel.org/r/20221230153215.1333921-1-joel@joelfernandes.o=
-rg
->>>> https://lore.kernel.org/all/20221230153215.1333921-2-joel@joelfernandes=
-.org/
->>>=20
->>> That is not a regression from 5.10.161, right?
->>=20
->> Yes it is not.
->>=20
->>> This release is only for
->>> the io_uring stuff to make sure that backport was done correctly.
->>>=20
->>> The current "to apply" queue for the stable trees is very large right
->>> now due to everyone waiting to get tiny things into -rc1 instead of
->>> before then, so the above two are still not yet queued up, sorry.
->>=20
->> Sure not a problem, I can resend again later if it is still not queued.
->=20
-> You should have already received the email notices saying they were
-> queued :)
-
-I happen to take messages from Skynet with a grain of salt ;-).
-
-But thank you for the automated notification!
-
- - Joel=20
-
-
-
+thanks,
+-- Shuah
