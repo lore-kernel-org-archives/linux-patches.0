@@ -1,36 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716AF63DA
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 12:56:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3F59C433F1;
-	Thu,  5 Jan 2023 12:56:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF90163DA
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 12:56:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC15BC433F0;
+	Thu,  5 Jan 2023 12:56:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923404;
-	bh=JpRoCOycaWZnoJoaIeuyi/UYW4SMCrZhAs7rTvx7/Ng=;
+	s=korg; t=1672923407;
+	bh=T6ogtEA/k+38oJHMiRWvj7T+7+jE5E9D0h7SCn0qiRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ka4L/A7YzwB5ugviM15u1av5f2yLWBLUWRROkoExpf5orcIwKK4h54ZrhK25Hnxon
-	 CEtvYkHmTyCbAb6lpUzS4JHmgS4fCp6CY+zfY2UqmBhoXJ9FMGsaE91JsLzrURc+mj
-	 fd8FtS80Ops/8Uduv6ZEWQ6oywgVYIw4x3RLiua8=
+	b=bR+v2vyZCXXXUEqYjF88m3q43/szjvUEruyRqtByXCxafeY0Q8FOqiBzVsmJ8T3nz
+	 ZydiHuHAilcuB2MfIN4LOViAnnYw9PsLlDHVKqY2EvQM7LGOe41vLyIrma0VfokOA+
+	 bm8x3VG1DKczeU9IGTLCWKLvG/nf3FxJ7yQPW27g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Yang Shi <shy828301@gmail.com>,
-	David Hildenbrand <david@redhat.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.9 001/251] mm/khugepaged: fix GUP-fast interaction by sending IPI
-Date: Thu,  5 Jan 2023 13:52:18 +0100
-Message-Id: <20230105125334.799380749@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 4.9 010/251] udf: Do not bother looking for prealloc extents if i_lenExtents matches i_size
+Date: Thu,  5 Jan 2023 13:52:27 +0100
+Message-Id: <20230105125335.208452354@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -40,109 +33,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jann Horn <jannh@google.com>
+From: Jan Kara <jack@suse.cz>
 
-commit 2ba99c5e08812494bc57f319fb562f527d9bacd8 upstream.
+commit 6ad53f0f71c52871202a7bf096feb2c59db33fc5 upstream.
 
-Since commit 70cbc3cc78a99 ("mm: gup: fix the fast GUP race against THP
-collapse"), the lockless_pages_from_mm() fastpath rechecks the pmd_t to
-ensure that the page table was not removed by khugepaged in between.
+If rounded block-rounded i_lenExtents matches block rounded i_size,
+there are no preallocation extents. Do not bother walking extent linked
+list.
 
-However, lockless_pages_from_mm() still requires that the page table is
-not concurrently freed.  Fix it by sending IPIs (if the architecture uses
-semi-RCU-style page table freeing) before freeing/reusing page tables.
-
-Link: https://lkml.kernel.org/r/20221129154730.2274278-2-jannh@google.com
-Link: https://lkml.kernel.org/r/20221128180252.1684965-2-jannh@google.com
-Link: https://lkml.kernel.org/r/20221125213714.4115729-2-jannh@google.com
-Fixes: ba76149f47d8 ("thp: khugepaged")
-Signed-off-by: Jann Horn <jannh@google.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[manual backport: two of the three places in khugepaged that can free
-ptes were refactored into a common helper between 5.15 and 6.0;
-TLB flushing was refactored between 5.4 and 5.10;
-TLB flushing was refactored between 4.19 and 5.4;
-pmd collapse for PTE-mapped THP was only added in 5.4;
-ugly hack for s390 in <=4.19 and arm]
-Signed-off-by: Jann Horn <jannh@google.com>
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/asm-generic/tlb.h |    6 ++++++
- mm/khugepaged.c           |   15 +++++++++++++++
- mm/memory.c               |    5 +++++
- 3 files changed, 26 insertions(+)
+ fs/udf/truncate.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/include/asm-generic/tlb.h
-+++ b/include/asm-generic/tlb.h
-@@ -60,6 +60,12 @@ struct mmu_table_batch {
- extern void tlb_table_flush(struct mmu_gather *tlb);
- extern void tlb_remove_table(struct mmu_gather *tlb, void *table);
+--- a/fs/udf/truncate.c
++++ b/fs/udf/truncate.c
+@@ -127,9 +127,10 @@ void udf_discard_prealloc(struct inode *
+ 	uint64_t lbcount = 0;
+ 	int8_t etype = -1, netype;
+ 	struct udf_inode_info *iinfo = UDF_I(inode);
++	int bsize = 1 << inode->i_blkbits;
  
-+void tlb_remove_table_sync_one(void);
-+
-+#else
-+
-+static inline void tlb_remove_table_sync_one(void) { }
-+
- #endif
+ 	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB ||
+-	    inode->i_size == iinfo->i_lenExtents)
++	    ALIGN(inode->i_size, bsize) == ALIGN(iinfo->i_lenExtents, bsize))
+ 		return;
  
- /*
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -20,6 +20,19 @@
- #include <asm/pgalloc.h>
- #include "internal.h"
- 
-+/* gross hack for <=4.19 stable */
-+#if defined(CONFIG_S390) || defined(CONFIG_ARM)
-+static void tlb_remove_table_smp_sync(void *arg)
-+{
-+        /* Simply deliver the interrupt */
-+}
-+
-+static void tlb_remove_table_sync_one(void)
-+{
-+        smp_call_function(tlb_remove_table_smp_sync, NULL, 1);
-+}
-+#endif
-+
- enum scan_result {
- 	SCAN_FAIL,
- 	SCAN_SUCCEED,
-@@ -1044,6 +1057,7 @@ static void collapse_huge_page(struct mm
- 	_pmd = pmdp_collapse_flush(vma, address, pmd);
- 	spin_unlock(pmd_ptl);
- 	mmu_notifier_invalidate_range_end(mm, mmun_start, mmun_end);
-+	tlb_remove_table_sync_one();
- 
- 	spin_lock(pte_ptl);
- 	isolated = __collapse_huge_page_isolate(vma, address, pte);
-@@ -1293,6 +1307,7 @@ static void retract_page_tables(struct a
- 				_pmd = pmdp_collapse_flush(vma, addr, pmd);
- 				spin_unlock(ptl);
- 				atomic_long_dec(&mm->nr_ptes);
-+				tlb_remove_table_sync_one();
- 				pte_free(mm, pmd_pgtable(_pmd));
- 			}
- 			up_write(&mm->mmap_sem);
---- a/mm/memory.c
-+++ b/mm/memory.c
-@@ -349,6 +349,11 @@ static void tlb_remove_table_smp_sync(vo
- 	/* Simply deliver the interrupt */
- }
- 
-+void tlb_remove_table_sync_one(void)
-+{
-+	smp_call_function(tlb_remove_table_smp_sync, NULL, 1);
-+}
-+
- static void tlb_remove_table_one(void *table)
- {
- 	/*
+ 	epos.block = iinfo->i_location;
 
 
