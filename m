@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BFC8494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:05:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBFA5C433F2;
-	Thu,  5 Jan 2023 13:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D8B68494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:05:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7DFC433D2;
+	Thu,  5 Jan 2023 13:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923920;
-	bh=0EBGk+wpzcLEDTQ6rRsTphJYVqXss/I+7TPaKDlIWf8=;
+	s=korg; t=1672923923;
+	bh=wu1voDtzG5hmMJa1qNHG4LgUTDAJlN5jn2B7XmnY0es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qef8LyCdC/gNZgwoLtN3p6K4yH0MnxG6ZsfWvsq61UHi7zkhl5ZCZM/uVyZUTWUoD
-	 J0T8tVGUra1Sr6H725FcItUAqrdEdg2wlITGmAOB9tE2YpPvlsmV2cVnwJQibGSJ6O
-	 fulpIcWjjeyhCGopUx5qjpyUtVsm1np0CwYBLUFw=
+	b=hMHxO84m5fv/POt+fj90sxKvMjlJ8L3RWLxrvVD16KDP/YOGcudiXSNcKaeO2q/N5
+	 OZbTcmq1s+HSKFrUpTziGdQOPip67OZALsuNRzWxBTEF0VbX13YmEtBd3ASlfl25mM
+	 xxxwhDogcXwdqKp2ZV0i84VmSMsQ6fCHepW0wuxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Nie <jun.nie@linaro.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Cong Wang <cong.wang@bytedance.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+4caeae4c7103813598ae@syzkaller.appspotmail.com
-Subject: [PATCH 4.9 176/251] net_sched: reject TCF_EM_SIMPLE case for complex ematch module
-Date: Thu,  5 Jan 2023 13:55:13 +0100
-Message-Id: <20230105125342.850723394@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.9 177/251] myri10ge: Fix an error handling path in myri10ge_probe()
+Date: Thu,  5 Jan 2023 13:55:14 +0100
+Message-Id: <20230105125342.899077329@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -39,50 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cong Wang <cong.wang@bytedance.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 9cd3fd2054c3b3055163accbf2f31a4426f10317 ]
+[ Upstream commit d83b950d44d2982c0e62e3d81b0f35ab09431008 ]
 
-When TCF_EM_SIMPLE was introduced, it is supposed to be convenient
-for ematch implementation:
+Some memory allocated in myri10ge_probe_slices() is not released in the
+error handling path of myri10ge_probe().
 
-https://lore.kernel.org/all/20050105110048.GO26856@postel.suug.ch/
+Add the corresponding kfree(), as already done in the remove function.
 
-"You don't have to, providing a 32bit data chunk without TCF_EM_SIMPLE
-set will simply result in allocating & copy. It's an optimization,
-nothing more."
-
-So if an ematch module provides ops->datalen that means it wants a
-complex data structure (saved in its em->data) instead of a simple u32
-value. We should simply reject such a combination, otherwise this u32
-could be misinterpreted as a pointer.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-and-tested-by: syzbot+4caeae4c7103813598ae@syzkaller.appspotmail.com
-Reported-by: Jun Nie <jun.nie@linaro.org>
-Cc: Jamal Hadi Salim <jhs@mojatatu.com>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Cong Wang <cong.wang@bytedance.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 0dcffac1a329 ("myri10ge: add multislices support")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/ematch.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/myricom/myri10ge/myri10ge.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sched/ematch.c b/net/sched/ematch.c
-index d4d6f9c91e8c..59340d633253 100644
---- a/net/sched/ematch.c
-+++ b/net/sched/ematch.c
-@@ -259,6 +259,8 @@ static int tcf_em_validate(struct tcf_proto *tp,
- 			 * the value carried.
- 			 */
- 			if (em_hdr->flags & TCF_EM_SIMPLE) {
-+				if (em->ops->datalen > 0)
-+					goto errout;
- 				if (data_len < sizeof(u32))
- 					goto errout;
- 				em->data = *(u32 *) data;
+diff --git a/drivers/net/ethernet/myricom/myri10ge/myri10ge.c b/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
+index 5eeba263b5f8..d50cee7aae4d 100644
+--- a/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
++++ b/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
+@@ -4152,6 +4152,7 @@ static int myri10ge_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	myri10ge_free_slices(mgp);
+ 
+ abort_with_firmware:
++	kfree(mgp->msix_vectors);
+ 	myri10ge_dummy_rdma(mgp, 0);
+ 
+ abort_with_ioremap:
 -- 
 2.35.1
 
