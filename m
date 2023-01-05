@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1E4E8494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 12:59:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39857C43396;
-	Thu,  5 Jan 2023 12:59:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F078494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 12:59:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BB6AC43392;
+	Thu,  5 Jan 2023 12:59:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923583;
-	bh=iXwdNJVEhCJYVolA7sTL6gOoQOVBvXm5P+O4gSp19Xc=;
+	s=korg; t=1672923586;
+	bh=rmUNwuHkCZK/kL94eohe6D4tak7ZalGMdhKeu+Yj4iY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zVXpcDCbXBM1dJ8EPTxdZ6ujTxI4JJ+VRCsWljagBeLBGaaKjKvxL87388Ua/870e
-	 iQQOgAQVpE35DHMF8phjLPkvFl8JBzJktsuAag6muyT91oNzT+l9yNvrZhG8Ib5yvP
-	 uqqkOkGcNf54VxNEJZrlDwouc4jMzJc9n7qh+M3k=
+	b=Bjh9c9D4KIy3ZD+5gBDZeGV3dsDfFnthNUlO73PLitr2/oM+5dFl81GobKOpAi5nC
+	 WrFKCZSCFAaEiL8Ae//URH+FOKxwR96GHsGujmoEnMe0iKvxRLnItAtHociO4YzkME
+	 yX4Exc/TBbqy35ITw5ZRjCqkcX167Z8zSMMNn0Ug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Hui Tang <tanghui20@huawei.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 027/251] cpuidle: dt: Return the correct numbers of parsed idle states
-Date: Thu,  5 Jan 2023 13:52:44 +0100
-Message-Id: <20230105125336.017846436@linuxfoundation.org>
+Subject: [PATCH 4.9 060/251] mtd: lpddr2_nvm: Fix possible null-ptr-deref
+Date: Thu,  5 Jan 2023 13:53:17 +0100
+Message-Id: <20230105125337.503987047@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -36,42 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Hui Tang <tanghui20@huawei.com>
 
-[ Upstream commit ee3c2c8ad6ba6785f14a60e4081d7c82e88162a2 ]
+[ Upstream commit 6bdd45d795adf9e73b38ced5e7f750cd199499ff ]
 
-While we correctly skips to initialize an idle state from a disabled idle
-state node in DT, the returned value from dt_init_idle_driver() don't get
-adjusted accordingly. Instead the number of found idle state nodes are
-returned, while the callers are expecting the number of successfully
-initialized idle states from DT.
+It will cause null-ptr-deref when resource_size(add_range) invoked,
+if platform_get_resource() returns NULL.
 
-This leads to cpuidle drivers unnecessarily continues to initialize their
-idle state specific data. Moreover, in the case when all idle states have
-been disabled in DT, we would end up registering a cpuidle driver, rather
-than relying on the default arch specific idle call.
-
-Fixes: 9f14da345599 ("drivers: cpuidle: implement DT based idle states infrastructure")
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 96ba9dd65788 ("mtd: lpddr: add driver for LPDDR2-NVM PCM memories")
+Signed-off-by: Hui Tang <tanghui20@huawei.com>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20221114090240.244172-1-tanghui20@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpuidle/dt_idle_states.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/lpddr/lpddr2_nvm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/cpuidle/dt_idle_states.c b/drivers/cpuidle/dt_idle_states.c
-index ea11a33e7fff..1a79ac569770 100644
---- a/drivers/cpuidle/dt_idle_states.c
-+++ b/drivers/cpuidle/dt_idle_states.c
-@@ -218,6 +218,6 @@ int dt_init_idle_driver(struct cpuidle_driver *drv,
- 	 * also be 0 on platforms with missing DT idle states or legacy DT
- 	 * configuration predating the DT idle states bindings.
- 	 */
--	return i;
-+	return state_idx - start_idx;
- }
- EXPORT_SYMBOL_GPL(dt_init_idle_driver);
+diff --git a/drivers/mtd/lpddr/lpddr2_nvm.c b/drivers/mtd/lpddr/lpddr2_nvm.c
+index 5e36366d9b36..19b00225c7ef 100644
+--- a/drivers/mtd/lpddr/lpddr2_nvm.c
++++ b/drivers/mtd/lpddr/lpddr2_nvm.c
+@@ -448,6 +448,8 @@ static int lpddr2_nvm_probe(struct platform_device *pdev)
+ 
+ 	/* lpddr2_nvm address range */
+ 	add_range = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	if (!add_range)
++		return -ENODEV;
+ 
+ 	/* Populate map_info data structure */
+ 	*map = (struct map_info) {
 -- 
 2.35.1
 
