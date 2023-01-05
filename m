@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 835D36ADF
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:05:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFEDCC433D2;
-	Thu,  5 Jan 2023 13:05:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F4598494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:05:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E942CC43446;
+	Thu,  5 Jan 2023 13:05:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923911;
-	bh=p510iqFz0lXBIz5XtmTvZu+sfZoGz8AAsSMZzfjg8vw=;
+	s=korg; t=1672923914;
+	bh=xouXe9un51HS6C8Ci/lIbTuunXwmMKeh0QzZS6C08Lg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SFFZd3BkdBPHu2j0F3IM2R6AOF8bD7e4TMMiPYgEDqTHKHhYGkgOFk4i+PJJTewsI
-	 juFoO0N4qo7k2OaCspO32fHR+WsVg7OZxRZ5ZRuAv1f+tlCqLUyMVeWpZyFbgc8zVq
-	 Q4EnmEd6IfSuHcj0Op/vURAh/GcMyBJJ+wGAXiUY=
+	b=KvTefRt+VOqh4TgPdWYKsYEU5wNJI7aV9tDitf00W48HJN7JXdCBPbY4/5GqHhDKA
+	 WgJT3021hY5gDxQFEf+NZfp17uzUeZQzodMCHusLjXSVXwuOkoXiNxhzqvo+ywqKKE
+	 T9btvkUjAxMTJjrq44/PzqZJON8RViuvwItzDSPw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zetao <lizetao1@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 173/251] r6040: Fix kmemleak in probe and remove
-Date: Thu,  5 Jan 2023 13:55:10 +0100
-Message-Id: <20230105125342.739392282@linuxfoundation.org>
+Subject: [PATCH 4.9 174/251] openvswitch: Fix flow lookup to use unmasked key
+Date: Thu,  5 Jan 2023 13:55:11 +0100
+Message-Id: <20230105125342.771749325@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -36,94 +35,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Zetao <lizetao1@huawei.com>
+From: Eelco Chaudron <echaudro@redhat.com>
 
-[ Upstream commit 7e43039a49c2da45edc1d9d7c9ede4003ab45a5f ]
+[ Upstream commit 68bb10101e6b0a6bb44e9c908ef795fc4af99eae ]
 
-There is a memory leaks reported by kmemleak:
+The commit mentioned below causes the ovs_flow_tbl_lookup() function
+to be called with the masked key. However, it's supposed to be called
+with the unmasked key. This due to the fact that the datapath supports
+installing wider flows, and OVS relies on this behavior. For example
+if ipv4(src=1.1.1.1/192.0.0.0, dst=1.1.1.2/192.0.0.0) exists, a wider
+flow (smaller mask) of ipv4(src=192.1.1.1/128.0.0.0,dst=192.1.1.2/
+128.0.0.0) is allowed to be added.
 
-  unreferenced object 0xffff888116111000 (size 2048):
-    comm "modprobe", pid 817, jiffies 4294759745 (age 76.502s)
-    hex dump (first 32 bytes):
-      00 c4 0a 04 81 88 ff ff 08 10 11 16 81 88 ff ff  ................
-      08 10 11 16 81 88 ff ff 00 00 00 00 00 00 00 00  ................
-    backtrace:
-      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
-      [<ffffffff827e20ee>] phy_device_create+0x4e/0x90
-      [<ffffffff827e6072>] get_phy_device+0xd2/0x220
-      [<ffffffff827e7844>] mdiobus_scan+0xa4/0x2e0
-      [<ffffffff827e8be2>] __mdiobus_register+0x482/0x8b0
-      [<ffffffffa01f5d24>] r6040_init_one+0x714/0xd2c [r6040]
-      ...
+However, if we try to add a wildcard rule, the installation fails:
 
-The problem occurs in probe process as follows:
-  r6040_init_one:
-    mdiobus_register
-      mdiobus_scan    <- alloc and register phy_device,
-                         the reference count of phy_device is 3
-    r6040_mii_probe
-      phy_connect     <- connect to the first phy_device,
-                         so the reference count of the first
-                         phy_device is 4, others are 3
-    register_netdev   <- fault inject succeeded, goto error handling path
+$ ovs-appctl dpctl/add-flow system@myDP "in_port(1),eth_type(0x0800), \
+  ipv4(src=1.1.1.1/192.0.0.0,dst=1.1.1.2/192.0.0.0,frag=no)" 2
+$ ovs-appctl dpctl/add-flow system@myDP "in_port(1),eth_type(0x0800), \
+  ipv4(src=192.1.1.1/0.0.0.0,dst=49.1.1.2/0.0.0.0,frag=no)" 2
+ovs-vswitchd: updating flow table (File exists)
 
-    // error handling path
-    err_out_mdio_unregister:
-      mdiobus_unregister(lp->mii_bus);
-    err_out_mdio:
-      mdiobus_free(lp->mii_bus);    <- the reference count of the first
-                                       phy_device is 1, it is not released
-                                       and other phy_devices are released
-  // similarly, the remove process also has the same problem
+The reason is that the key used to determine if the flow is already
+present in the system uses the original key ANDed with the mask.
+This results in the IP address not being part of the (miniflow) key,
+i.e., being substituted with an all-zero value. When doing the actual
+lookup, this results in the key wrongfully matching the first flow,
+and therefore the flow does not get installed.
 
-The root cause is traced to the phy_device is not disconnected when
-removes one r6040 device in r6040_remove_one() or on error handling path
-after r6040_mii probed successfully. In r6040_mii_probe(), a net ethernet
-device is connected to the first PHY device of mii_bus, in order to
-notify the connected driver when the link status changes, which is the
-default behavior of the PHY infrastructure to handle everything.
-Therefore the phy_device should be disconnected when removes one r6040
-device or on error handling path.
+This change reverses the commit below, but rather than having the key
+on the stack, it's allocated.
 
-Fix it by adding phy_disconnect() when removes one r6040 device or on
-error handling path after r6040_mii probed successfully.
+Fixes: 190aa3e77880 ("openvswitch: Fix Frame-size larger than 1024 bytes warning.")
 
-Fixes: 3831861b4ad8 ("r6040: implement phylib")
-Signed-off-by: Li Zetao <lizetao1@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20221213125614.927754-1-lizetao1@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/rdc/r6040.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ net/openvswitch/datapath.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/rdc/r6040.c b/drivers/net/ethernet/rdc/r6040.c
-index 065a63123863..4a963b4ec0eb 100644
---- a/drivers/net/ethernet/rdc/r6040.c
-+++ b/drivers/net/ethernet/rdc/r6040.c
-@@ -1185,10 +1185,12 @@ static int r6040_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	err = register_netdev(dev);
- 	if (err) {
- 		dev_err(&pdev->dev, "Failed to register net device\n");
--		goto err_out_mdio_unregister;
-+		goto err_out_phy_disconnect;
+diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
+index 56999d8528a4..e4404f5053ae 100644
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -944,6 +944,7 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	struct sw_flow_mask mask;
+ 	struct sk_buff *reply;
+ 	struct datapath *dp;
++	struct sw_flow_key *key;
+ 	struct sw_flow_actions *acts;
+ 	struct sw_flow_match match;
+ 	u32 ufid_flags = ovs_nla_get_ufid_flags(a[OVS_FLOW_ATTR_UFID_FLAGS]);
+@@ -971,24 +972,26 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
  	}
+ 
+ 	/* Extract key. */
+-	ovs_match_init(&match, &new_flow->key, false, &mask);
++	key = kzalloc(sizeof(*key), GFP_KERNEL);
++	if (!key) {
++		error = -ENOMEM;
++		goto err_kfree_key;
++	}
++
++	ovs_match_init(&match, key, false, &mask);
+ 	error = ovs_nla_get_match(net, &match, a[OVS_FLOW_ATTR_KEY],
+ 				  a[OVS_FLOW_ATTR_MASK], log);
+ 	if (error)
+ 		goto err_kfree_flow;
+ 
++	ovs_flow_mask_key(&new_flow->key, key, true, &mask);
++
+ 	/* Extract flow identifier. */
+ 	error = ovs_nla_get_identifier(&new_flow->id, a[OVS_FLOW_ATTR_UFID],
+-				       &new_flow->key, log);
++				       key, log);
+ 	if (error)
+ 		goto err_kfree_flow;
+ 
+-	/* unmasked key is needed to match when ufid is not used. */
+-	if (ovs_identifier_is_key(&new_flow->id))
+-		match.key = new_flow->id.unmasked_key;
+-
+-	ovs_flow_mask_key(&new_flow->key, &new_flow->key, true, &mask);
+-
+ 	/* Validate actions. */
+ 	error = ovs_nla_copy_actions(net, a[OVS_FLOW_ATTR_ACTIONS],
+ 				     &new_flow->key, &acts, log);
+@@ -1015,7 +1018,7 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	if (ovs_identifier_is_ufid(&new_flow->id))
+ 		flow = ovs_flow_tbl_lookup_ufid(&dp->table, &new_flow->id);
+ 	if (!flow)
+-		flow = ovs_flow_tbl_lookup(&dp->table, &new_flow->key);
++		flow = ovs_flow_tbl_lookup(&dp->table, key);
+ 	if (likely(!flow)) {
+ 		rcu_assign_pointer(new_flow->sf_acts, acts);
+ 
+@@ -1085,6 +1088,8 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	if (reply)
+ 		ovs_notify(&dp_flow_genl_family, reply, info);
++
++	kfree(key);
  	return 0;
  
-+err_out_phy_disconnect:
-+	phy_disconnect(dev->phydev);
- err_out_mdio_unregister:
- 	mdiobus_unregister(lp->mii_bus);
- err_out_mdio:
-@@ -1212,6 +1214,7 @@ static void r6040_remove_one(struct pci_dev *pdev)
- 	struct r6040_private *lp = netdev_priv(dev);
- 
- 	unregister_netdev(dev);
-+	phy_disconnect(dev->phydev);
- 	mdiobus_unregister(lp->mii_bus);
- 	mdiobus_free(lp->mii_bus);
- 	netif_napi_del(&lp->napi);
+ err_unlock_ovs:
+@@ -1094,6 +1099,8 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	ovs_nla_free_flow_actions(acts);
+ err_kfree_flow:
+ 	ovs_flow_free(new_flow, false);
++err_kfree_key:
++	kfree(key);
+ error:
+ 	return error;
+ }
 -- 
 2.35.1
 
