@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B05B8494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:06:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C435EC433EF;
-	Thu,  5 Jan 2023 13:06:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A10C8494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:06:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5C03C433D2;
+	Thu,  5 Jan 2023 13:06:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923966;
-	bh=IbI/rddTL4Lp14pulRMePGIgy0VKrx8t1hQOvYy9RS8=;
+	s=korg; t=1672923969;
+	bh=TbCpINvWp0CKrrPTkJS/DMyD036gVi7Qg6haYZw8mkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M1fYO0yf7t4/SUlr+6+fsgNcSk3YLJxFr6gateYwIUCuilIj9Jqb5BDs7tG3gOj1R
-	 C4mVxADakKU1H81g7uzRrKJx9zFoyhXZtyjwxlF0guj73/vZhuZY8IbfQoZqtqKBLK
-	 ARtmsARilAK/5elJpe2bmK7SKh/foVobG4AHYvts=
+	b=mlE1WxfbXfKEy9K6URbhNM8U1x34JtDYLxhNzhM4rTQave+WxDbOraf6p+6ncUZbx
+	 58/OLv8tu4q+LohdaHa3PE66VMcHakj/nxjt3BhR9Ns2fvj3A102c4FIAjPVnz5F5J
+	 Dcw6Nzng3v33g4f5Dg/bZbYJq8604SqrZj6yXcqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yuchen <zhangyuchen.lcr@bytedance.com>,
-	Corey Minyard <cminyard@mvista.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 189/251] ipmi: fix memleak when unload ipmi driver
-Date: Thu,  5 Jan 2023 13:55:26 +0100
-Message-Id: <20230105125343.462983757@linuxfoundation.org>
+Subject: [PATCH 4.9 162/251] powerpc/52xx: Fix a resource leak in an error handling path
+Date: Thu,  5 Jan 2023 13:54:59 +0100
+Message-Id: <20230105125342.254997799@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -35,62 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 36992eb6b9b83f7f9cdc8e74fb5799d7b52e83e9 ]
+[ Upstream commit 5836947613ef33d311b4eff6a32d019580a214f5 ]
 
-After the IPMI disconnect problem, the memory kept rising and we tried
-to unload the driver to free the memory. However, only part of the
-free memory is recovered after the driver is uninstalled. Using
-ebpf to hook free functions, we find that neither ipmi_user nor
-ipmi_smi_msg is free, only ipmi_recv_msg is free.
+The error handling path of mpc52xx_lpbfifo_probe() has a request_irq()
+that is not balanced by a corresponding free_irq().
 
-We find that the deliver_smi_err_response call in clean_smi_msgs does
-the destroy processing on each message from the xmit_msg queue without
-checking the return value and free ipmi_smi_msg.
+Add the missing call, as already done in the remove function.
 
-deliver_smi_err_response is called only at this location. Adding the
-free handling has no effect.
-
-To verify, try using ebpf to trace the free function.
-
-  $ bpftrace -e 'kretprobe:ipmi_alloc_recv_msg {printf("alloc rcv
-      %p\n",retval);} kprobe:free_recv_msg {printf("free recv %p\n",
-      arg0)} kretprobe:ipmi_alloc_smi_msg {printf("alloc smi %p\n",
-        retval);} kprobe:free_smi_msg {printf("free smi  %p\n",arg0)}'
-
-Signed-off-by: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
-Message-Id: <20221007092617.87597-4-zhangyuchen.lcr@bytedance.com>
-[Fixed the comment above handle_one_recv_msg().]
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Fixes: 3c9059d79f5e ("powerpc/5200: add LocalPlus bus FIFO device driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/dec1496d46ccd5311d0f6e9f9ca4238be11bf6a6.1643440531.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ arch/powerpc/platforms/52xx/mpc52xx_lpbfifo.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
-index 74044b52d2c6..97d3c9d4ebc7 100644
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -2930,12 +2930,16 @@ static void deliver_smi_err_response(ipmi_smi_t intf,
- 				     struct ipmi_smi_msg *msg,
- 				     unsigned char err)
- {
-+	int rv;
- 	msg->rsp[0] = msg->data[0] | 4;
- 	msg->rsp[1] = msg->data[1];
- 	msg->rsp[2] = err;
- 	msg->rsp_size = 3;
--	/* It's an error, so it will never requeue, no need to check return. */
--	handle_one_recv_msg(intf, msg);
-+
-+	/* This will never requeue, but it may ask us to free the message. */
-+	rv = handle_one_recv_msg(intf, msg);
-+	if (rv == 0)
-+		ipmi_free_smi_msg(msg);
- }
- 
- static void cleanup_smi_msgs(ipmi_smi_t intf)
+diff --git a/arch/powerpc/platforms/52xx/mpc52xx_lpbfifo.c b/arch/powerpc/platforms/52xx/mpc52xx_lpbfifo.c
+index 7bb42a0100de..caaaaf2bea52 100644
+--- a/arch/powerpc/platforms/52xx/mpc52xx_lpbfifo.c
++++ b/arch/powerpc/platforms/52xx/mpc52xx_lpbfifo.c
+@@ -531,6 +531,7 @@ static int mpc52xx_lpbfifo_probe(struct platform_device *op)
+  err_bcom_rx_irq:
+ 	bcom_gen_bd_rx_release(lpbfifo.bcom_rx_task);
+  err_bcom_rx:
++	free_irq(lpbfifo.irq, &lpbfifo);
+  err_irq:
+ 	iounmap(lpbfifo.regs);
+ 	lpbfifo.regs = NULL;
 -- 
 2.35.1
 
