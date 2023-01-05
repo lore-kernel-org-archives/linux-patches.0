@@ -1,27 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC1D8494
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 12:58:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBD19C433D2;
-	Thu,  5 Jan 2023 12:58:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59C4D8494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 12:58:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8333FC433F0;
+	Thu,  5 Jan 2023 12:58:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672923521;
-	bh=QACIhB/Dh4yjVnjpjUaa1Crn7thIWMZO8SlBO2M7y2c=;
+	s=korg; t=1672923524;
+	bh=ewqMQzfscWTwZSWL2kjmdmCAD1OFegw1WQcBDCHRr5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a+cAChtTX+jze9bEcTOTSyNcV4qtVxPfpQ9qRt8RUjEZgdORfb+J9kjzaAglakbWK
-	 wJDW8Z1D5UzwrgnvNRcB/gW6vGtEaXViwQt3Us/Onxs4pyrB5F75f6WqEsQuflqudN
-	 THdUduT4LxgkA8NCmU6VD8Orw1u/en4SvtsDDzaE=
+	b=kvAhYFTvFSxwuBYo6fPsg2JLaGu865dta3+NTcKiO1jnX8sItW024kh+nKmrJjWeX
+	 TIN2a53tI8vvJdVBRQbnB66+I8pQ3DRsDE7SjYl1Z8bha5gLfXWZN9HkJQlDWTZFD9
+	 UeNXoiHWevUIqXLATz6saAaNF+T5LUVfSFc36uuo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	xiongxin <xiongxin@kylinos.cn>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Wang Weiyang <wangweiyang2@huawei.com>,
+	Alexandre Bounine <alex.bou9@gmail.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Jakob Koschel <jakobkoschel@gmail.com>,
+	John Hubbard <jhubbard@nvidia.com>,
+	Matt Porter <mporter@kernel.crashing.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.9 029/251] PM: hibernate: Fix mistake in kerneldoc comment
-Date: Thu,  5 Jan 2023 13:52:46 +0100
-Message-Id: <20230105125336.094397655@linuxfoundation.org>
+Subject: [PATCH 4.9 047/251] rapidio: fix possible UAF when kfifo_alloc() fails
+Date: Thu,  5 Jan 2023 13:53:04 +0100
+Message-Id: <20230105125336.923808206@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -35,43 +41,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: xiongxin <xiongxin@kylinos.cn>
+From: Wang Weiyang <wangweiyang2@huawei.com>
 
-[ Upstream commit 6e5d7300cbe7c3541bc31f16db3e9266e6027b4b ]
+[ Upstream commit 02d7d89f816951e0862147d751b1150d67aaebdd ]
 
-The actual maximum image size formula in hibernate_preallocate_memory()
-is as follows:
+If kfifo_alloc() fails in mport_cdev_open(), goto err_fifo and just free
+priv. But priv is still in the chdev->file_list, then list traversal
+may cause UAF. This fixes the following smatch warning:
 
-max_size = (count - (size + PAGES_FOR_IO)) / 2
-	    - 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE);
+drivers/rapidio/devices/rio_mport_cdev.c:1930 mport_cdev_open() warn: '&priv->list' not removed from list
 
-but the one in the kerneldoc comment of the function is different and
-incorrect.
-
-Fixes: ddeb64870810 ("PM / Hibernate: Add sysfs knob to control size of memory for drivers")
-Signed-off-by: xiongxin <xiongxin@kylinos.cn>
-[ rjw: Subject and changelog rewrite ]
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lkml.kernel.org/r/20221123095147.52408-1-wangweiyang2@huawei.com
+Fixes: e8de370188d0 ("rapidio: add mport char device driver")
+Signed-off-by: Wang Weiyang <wangweiyang2@huawei.com>
+Cc: Alexandre Bounine <alex.bou9@gmail.com>
+Cc: Dan Carpenter <error27@gmail.com>
+Cc: Jakob Koschel <jakobkoschel@gmail.com>
+Cc: John Hubbard <jhubbard@nvidia.com>
+Cc: Matt Porter <mporter@kernel.crashing.org>
+Cc: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/power/snapshot.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/rapidio/devices/rio_mport_cdev.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/power/snapshot.c b/kernel/power/snapshot.c
-index 5dfac92521fa..b02850cfc8ee 100644
---- a/kernel/power/snapshot.c
-+++ b/kernel/power/snapshot.c
-@@ -1677,8 +1677,8 @@ static unsigned long minimum_image_size(unsigned long saveable)
-  * /sys/power/reserved_size, respectively).  To make this happen, we compute the
-  * total number of available page frames and allocate at least
-  *
-- * ([page frames total] + PAGES_FOR_IO + [metadata pages]) / 2
-- *  + 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE)
-+ * ([page frames total] - PAGES_FOR_IO - [metadata pages]) / 2
-+ *  - 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE)
-  *
-  * of them, which corresponds to the maximum size of a hibernation image.
-  *
+diff --git a/drivers/rapidio/devices/rio_mport_cdev.c b/drivers/rapidio/devices/rio_mport_cdev.c
+index c0597b6d75ef..381354ef0959 100644
+--- a/drivers/rapidio/devices/rio_mport_cdev.c
++++ b/drivers/rapidio/devices/rio_mport_cdev.c
+@@ -1964,10 +1964,6 @@ static int mport_cdev_open(struct inode *inode, struct file *filp)
+ 
+ 	priv->md = chdev;
+ 
+-	mutex_lock(&chdev->file_mutex);
+-	list_add_tail(&priv->list, &chdev->file_list);
+-	mutex_unlock(&chdev->file_mutex);
+-
+ 	INIT_LIST_HEAD(&priv->db_filters);
+ 	INIT_LIST_HEAD(&priv->pw_filters);
+ 	spin_lock_init(&priv->fifo_lock);
+@@ -1987,6 +1983,9 @@ static int mport_cdev_open(struct inode *inode, struct file *filp)
+ 	spin_lock_init(&priv->req_lock);
+ 	mutex_init(&priv->dma_lock);
+ #endif
++	mutex_lock(&chdev->file_mutex);
++	list_add_tail(&priv->list, &chdev->file_list);
++	mutex_unlock(&chdev->file_mutex);
+ 
+ 	filp->private_data = priv;
+ 	goto out;
 -- 
 2.35.1
 
