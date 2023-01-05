@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA31E8495
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:08:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25AE8C433F1;
-	Thu,  5 Jan 2023 13:08:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6EA8494
+	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 13:08:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E6DC433D2;
+	Thu,  5 Jan 2023 13:08:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1672924130;
-	bh=I5c5fox+q07OpPB+Q7xKVHc7Mp7MYCjON7vvhoDA6+0=;
+	s=korg; t=1672924137;
+	bh=pcRMdX9yW4Sf3/fG8ydxqUjWKy5fdGZ2mS48Fq6Eaug=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X4pt5BLEwSMaHmJuTIybOJcsd+74ds31uHb4973IWRKxI/e7dIOocJnquSpF+pw19
-	 deg/dVKpp9xyNi/EySlpBPw2U7Z3VSGgiFVofH+s3YMKDhmLSEvwxRHivwJos2rGCB
-	 iCFX4i1VvAwhqrl2M5zWz9Hk9h9xGhftB/z4cq/4=
+	b=DRqFlfvcC+TEvoimbIwII/vmogsgaYPO1BpusGF44XdLHxQD9Z862hNFrSo9NAQcM
+	 WQUc4EGzRd1TnQv3boHrPQc78XwNrnroq4kOxrkJUV/CjGr1V6iemjN9NE01IX7JJ/
+	 IVIHZNpeD7M1j/RyqWI6lVm+2JCPUUF3XpoEpF9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Ser <contact@emersion.fr>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Lyude Paul <lyude@redhat.com>,
-	=?UTF-8?q?Jonas=20=C3=85dahl?= <jadahl@redhat.com>
-Subject: [PATCH 4.9 243/251] drm/connector: send hotplug uevent on connector cleanup
-Date: Thu,  5 Jan 2023 13:56:20 +0100
-Message-Id: <20230105125346.001926140@linuxfoundation.org>
+	stable@kernel.org,
+	Baokun Li <libaokun1@huawei.com>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 4.9 245/251] ext4: add inode table check in __ext4_get_inode_loc to aovid possible infinite loop
+Date: Thu,  5 Jan 2023 13:56:22 +0100
+Message-Id: <20230105125346.095414434@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230105125334.727282894@linuxfoundation.org>
 References: <20230105125334.727282894@linuxfoundation.org>
@@ -36,56 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Simon Ser <contact@emersion.fr>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 6fdc2d490ea1369d17afd7e6eb66fecc5b7209bc upstream.
+commit eee22187b53611e173161e38f61de1c7ecbeb876 upstream.
 
-A typical DP-MST unplug removes a KMS connector. However care must
-be taken to properly synchronize with user-space. The expected
-sequence of events is the following:
+In do_writepages, if the value returned by ext4_writepages is "-ENOMEM"
+and "wbc->sync_mode == WB_SYNC_ALL", retry until the condition is not met.
 
-1. The kernel notices that the DP-MST port is gone.
-2. The kernel marks the connector as disconnected, then sends a
-   uevent to make user-space re-scan the connector list.
-3. User-space notices the connector goes from connected to disconnected,
-   disables it.
-4. Kernel handles the IOCTL disabling the connector. On success,
-   the very last reference to the struct drm_connector is dropped and
-   drm_connector_cleanup() is called.
-5. The connector is removed from the list, and a uevent is sent to tell
-   user-space that the connector disappeared.
+In __ext4_get_inode_loc, if the bh returned by sb_getblk is NULL,
+the function returns -ENOMEM.
 
-The very last step was missing. As a result, user-space thought the
-connector still existed and could try to disable it again. Since the
-kernel no longer knows about the connector, that would end up with
-EINVAL and confused user-space.
+In __getblk_slow, if the return value of grow_buffers is less than 0,
+the function returns NULL.
 
-Fix this by sending a hotplug uevent from drm_connector_cleanup().
+When the three processes are connected in series like the following stack,
+an infinite loop may occur:
 
-Signed-off-by: Simon Ser <contact@emersion.fr>
-Cc: stable@vger.kernel.org
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: Jonas Ådahl <jadahl@redhat.com>
-Tested-by: Jonas Ådahl <jadahl@redhat.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221017153150.60675-2-contact@emersion.fr
+do_writepages					<--- keep retrying
+ ext4_writepages
+  mpage_map_and_submit_extent
+   mpage_map_one_extent
+    ext4_map_blocks
+     ext4_ext_map_blocks
+      ext4_ext_handle_unwritten_extents
+       ext4_ext_convert_to_initialized
+        ext4_split_extent
+         ext4_split_extent_at
+          __ext4_ext_dirty
+           __ext4_mark_inode_dirty
+            ext4_reserve_inode_write
+             ext4_get_inode_loc
+              __ext4_get_inode_loc		<--- return -ENOMEM
+               sb_getblk
+                __getblk_gfp
+                 __getblk_slow			<--- return NULL
+                  grow_buffers
+                   grow_dev_page		<--- return -ENXIO
+                    ret = (block < end_block) ? 1 : -ENXIO;
+
+In this issue, bg_inode_table_hi is overwritten as an incorrect value.
+As a result, `block < end_block` cannot be met in grow_dev_page.
+Therefore, __ext4_get_inode_loc always returns '-ENOMEM' and do_writepages
+keeps retrying. As a result, the writeback process is in the D state due
+to an infinite loop.
+
+Add a check on inode table block in the __ext4_get_inode_loc function by
+referring to ext4_read_inode_bitmap to avoid this infinite loop.
+
+Cc: stable@kernel.org
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Link: https://lore.kernel.org/r/20220817132701.3015912-3-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_connector.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/ext4/inode.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/drm_connector.c
-+++ b/drivers/gpu/drm/drm_connector.c
-@@ -363,6 +363,9 @@ void drm_connector_cleanup(struct drm_co
- 	mutex_destroy(&connector->mutex);
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4321,9 +4321,17 @@ static int __ext4_get_inode_loc(struct i
+ 	inodes_per_block = EXT4_SB(sb)->s_inodes_per_block;
+ 	inode_offset = ((inode->i_ino - 1) %
+ 			EXT4_INODES_PER_GROUP(sb));
+-	block = ext4_inode_table(sb, gdp) + (inode_offset / inodes_per_block);
+ 	iloc->offset = (inode_offset % inodes_per_block) * EXT4_INODE_SIZE(sb);
  
- 	memset(connector, 0, sizeof(*connector));
++	block = ext4_inode_table(sb, gdp);
++	if ((block <= le32_to_cpu(EXT4_SB(sb)->s_es->s_first_data_block)) ||
++	    (block >= ext4_blocks_count(EXT4_SB(sb)->s_es))) {
++		ext4_error(sb, "Invalid inode table block %llu in "
++			   "block_group %u", block, iloc->block_group);
++		return -EFSCORRUPTED;
++	}
++	block += (inode_offset / inodes_per_block);
 +
-+	if (dev->registered)
-+		drm_sysfs_hotplug_event(dev);
- }
- EXPORT_SYMBOL(drm_connector_cleanup);
- 
+ 	bh = sb_getblk(sb, block);
+ 	if (unlikely(!bh))
+ 		return -ENOMEM;
 
 
