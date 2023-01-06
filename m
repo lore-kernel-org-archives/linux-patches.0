@@ -1,45 +1,45 @@
-Received: from mail-qt1-f171.google.com (mail-qt1-f171.google.com [209.85.160.171])
+Received: from mail-qt1-f182.google.com (mail-qt1-f182.google.com [209.85.160.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33CA47E3
-	for <patches@lists.linux.dev>; Fri,  6 Jan 2023 01:02:24 +0000 (UTC)
-Received: by mail-qt1-f171.google.com with SMTP id a16so878722qtw.10
-        for <patches@lists.linux.dev>; Thu, 05 Jan 2023 17:02:24 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE835A23
+	for <patches@lists.linux.dev>; Fri,  6 Jan 2023 02:08:48 +0000 (UTC)
+Received: by mail-qt1-f182.google.com with SMTP id bp44so1213001qtb.0
+        for <patches@lists.linux.dev>; Thu, 05 Jan 2023 18:08:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linux-foundation.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=E2zTyAKcMSHj1NuBZpldWBfP/uR4r0Oo4FG0pR0Pc4o=;
-        b=groJ1iJJAbzkeoFY5z0vFFmU8BFSk2iIyzy4jspxCVqwwWmPsIsjEfRdLdBElbBGOT
-         EmrM5lijkGvSvr3nKF/I3GI8riFE7PasAhLLNA/4T+m976ixjVmwz3IcMaPuxSRT3Kgg
-         txcqpXsJ9kof2smhhnslMFaxYEJR/ApjGac1A=
+        bh=BiZr/M2mt9gUTQKPQ4MQC9Idh91qUV736LW/CBudrbE=;
+        b=P6XRZRqc9dOjMMfEouyKdDiSj6G0ngTgOdZFQGSK75nkXucj9HkSaMYockndHF8Fgv
+         JpamW/mn6TTZlF+lr+0GH7uDfMqIljr7VdSxGTydv+v+N5EB1KGXMLstsXEyad+KVLek
+         0ijEMujzD3TCNaC+kW7hIIfLR7gJwBPXI08m0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=E2zTyAKcMSHj1NuBZpldWBfP/uR4r0Oo4FG0pR0Pc4o=;
-        b=QS5qyTTfxNH8boGsFGCxUXHMIbg3P7octAv4WGxTWIr+gwVM49KwynFJCdLvy9yrnu
-         amQfqjydAC52TuL/zTwj/oeUqPbawIFYyuSNA45UUuF8H9cIRUtjK8zWIY5PheYysG5w
-         LKdGC2FjwO4HOC/Xim/Z9XEcgkQbjZ7oDnbc7FtKv0o3UQymV0ielecrFaZaGzzopvZG
-         QwXvLkBY6ZdgC9hIxLIspu7/SRGg5HxmoAw57DzXwxKw4dABVEYhsf/JQlOW3Zr8Bnoi
-         GqEbU8PT1zke8iuc6bJXGcy2UUqag21ylBWjoq+rdjhTbZwoj0U9YFSthp+R7y7tqWsn
-         COuw==
-X-Gm-Message-State: AFqh2kqzXT5BH3j5P5cOROiU4rEjeGxM4IAdrjC5aPftCHqwcJRUzM6A
-	82vsZqj/3C0xYyyAUKtiq6w4wvcNAmA3NJtw
-X-Google-Smtp-Source: AMrXdXsoMpLpdrWZ/GcFFLEMUONIg6Mvt2NGCFuCTBkAwdLdt/xYlqZJjMRVgS4xJYxIEC73+HxNrA==
-X-Received: by 2002:ac8:5213:0:b0:3a9:87fa:533a with SMTP id r19-20020ac85213000000b003a987fa533amr73364708qtn.1.1672966942767;
-        Thu, 05 Jan 2023 17:02:22 -0800 (PST)
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com. [209.85.219.43])
-        by smtp.gmail.com with ESMTPSA id l14-20020ac848ce000000b003a820f9fb70sm22273009qtr.36.2023.01.05.17.02.21
+        bh=BiZr/M2mt9gUTQKPQ4MQC9Idh91qUV736LW/CBudrbE=;
+        b=ZYsRsNvdFylnZsPgqD5wNd2HqYWvJqAwOs5malXkKHooXc88075TFY1r9fsVFGSs0n
+         HQ5KN4zeimpzxpm87L86O9mX5Cc2qg9oyfpTxmxTf1bFQSzqpW7aJp9i0Rw4lEuYxUdD
+         mKx90xI+/hqvUfzgi4c1iFR0D4K6iXwHyyWjm8Q9q6X1y+85fh4eB84me3ORysWPi5tR
+         JEZpVMkHvAgpVCo+YoZApgPc87TFz1vSZ4quDQr/ePPY5qulu/ymqDyxH+DyWTtsMlUu
+         7WUdSEPHtcazdx95vZrv93V9WAkctcohMgk6QVA077pIsvDCLOKLbp4c7JR9G5qySske
+         NqbQ==
+X-Gm-Message-State: AFqh2kq/C1JfGGpfQRgthDmmYcAIq7lKISTLuGdAJc42zLhb0I1d1OXv
+	kI2v3AKV/gl7uvt+4n8DaEo7nnDMWDbsi67F
+X-Google-Smtp-Source: AMrXdXsRZc3k3SLw7K8/9RcJjN7o+zG20L/jx0KfgceWQKhV9WVa7STXUcHeTGjkG6Qi+uzOLHC+8w==
+X-Received: by 2002:a05:622a:1f17:b0:3a9:8370:63d4 with SMTP id ca23-20020a05622a1f1700b003a9837063d4mr91458107qtb.42.1672970927237;
+        Thu, 05 Jan 2023 18:08:47 -0800 (PST)
+Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com. [209.85.160.177])
+        by smtp.gmail.com with ESMTPSA id w26-20020a05620a095a00b006fc6529abaesm26228410qkw.101.2023.01.05.18.08.45
         for <patches@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Jan 2023 17:02:22 -0800 (PST)
-Received: by mail-qv1-f43.google.com with SMTP id o17so108964qvn.4
-        for <patches@lists.linux.dev>; Thu, 05 Jan 2023 17:02:21 -0800 (PST)
-X-Received: by 2002:a05:6214:1185:b0:4c6:608c:6b2c with SMTP id
- t5-20020a056214118500b004c6608c6b2cmr2487246qvv.130.1672966941474; Thu, 05
- Jan 2023 17:02:21 -0800 (PST)
+        Thu, 05 Jan 2023 18:08:45 -0800 (PST)
+Received: by mail-qt1-f177.google.com with SMTP id bp44so1212915qtb.0
+        for <patches@lists.linux.dev>; Thu, 05 Jan 2023 18:08:45 -0800 (PST)
+X-Received: by 2002:a05:622a:428c:b0:3a6:8b84:47ce with SMTP id
+ cr12-20020a05622a428c00b003a68b8447cemr1471748qtb.678.1672970924763; Thu, 05
+ Jan 2023 18:08:44 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -52,12 +52,12 @@ References: <20230101162910.710293-3-Jason@zx2c4.com> <Y7QIg/hAIk7eZE42@gmail.co
  <Y7SDgtXayQCy6xT6@zx2c4.com> <CAHk-=whQdWFw+0eGttxsWBHZg1+uh=0MhxXYtvJGX4t9P1MgNw@mail.gmail.com>
  <Y7SJ+/axonTK0Fir@zx2c4.com> <CAHk-=wi4gshfKjbhEO_xZdVb9ztXf0iuv5kKhxtvAHf2HzTmng@mail.gmail.com>
  <Y7STv9+p248zr+0a@zx2c4.com> <10302240-51ec-0854-2c86-16752d67a9be@opteya.com>
- <Y7dV1lVUYjqs8fh0@zx2c4.com>
-In-Reply-To: <Y7dV1lVUYjqs8fh0@zx2c4.com>
+ <Y7dV1lVUYjqs8fh0@zx2c4.com> <CAHk-=wijEC_oDzfUajhmp=ZVnzMTXgjxHEcxAfaHiNQm4iAcqA@mail.gmail.com>
+In-Reply-To: <CAHk-=wijEC_oDzfUajhmp=ZVnzMTXgjxHEcxAfaHiNQm4iAcqA@mail.gmail.com>
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Thu, 5 Jan 2023 17:02:05 -0800
-X-Gmail-Original-Message-ID: <CAHk-=wijEC_oDzfUajhmp=ZVnzMTXgjxHEcxAfaHiNQm4iAcqA@mail.gmail.com>
-Message-ID: <CAHk-=wijEC_oDzfUajhmp=ZVnzMTXgjxHEcxAfaHiNQm4iAcqA@mail.gmail.com>
+Date: Thu, 5 Jan 2023 18:08:28 -0800
+X-Gmail-Original-Message-ID: <CAHk-=wiO4rp8oVmj6i6vvC97gNePLN-SxhSK=UozA88G6nxBGQ@mail.gmail.com>
+Message-ID: <CAHk-=wiO4rp8oVmj6i6vvC97gNePLN-SxhSK=UozA88G6nxBGQ@mail.gmail.com>
 Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
  lazily freeable mappings
 To: "Jason A. Donenfeld" <Jason@zx2c4.com>
@@ -70,86 +70,72 @@ Cc: Yann Droneaud <ydroneaud@opteya.com>, Andy Lutomirski <luto@kernel.org>,
 	Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Jan 5, 2023 at 2:57 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
+On Thu, Jan 5, 2023 at 5:02 PM Linus Torvalds
+<torvalds@linux-foundation.org> wrote:
 >
-> On Thu, Jan 05, 2023 at 10:57:48PM +0100, Yann Droneaud wrote:
-> >
-> > To hold secret material, we need MADV_WIPEONFORK | MADV_DONTDUMP and the side effect of mlock() (pages' content never written to swap), inherited across fork().
-> > And I want mlock() without paying the price.
-> >
-> > Jason's proposed semantics, which I call MADV_WIPEONSWAP, provide a mean to hold /unlimited/ amount secrets in userspace memory (not limited by RLIMIT_MEMLOCK).
-> > The only constraint for userspace is to handle the case pages are wiped, which is already the case of userspace arc4random()'s implementation.
->
-> If you're actually serious about wanting a generic mechanism for
-> userspace, I think the moral of yesterday's poo-poo'ing all over this
-> cool new idea is that the Linux innercircle doesn't really care for
-> "security things" as a motivator
+> None of what you ask for is for any kind of real security, it's all
+> just crazy "but I want to feel the warm and fuzzies and take shortcuts
+> elsewhere, and push my pain onto other people".
 
-No.
+Actually, let me maybe soften that a bit and say that it's
+"convenience features". It might make some things more _convenient_ to
+do, exactly because it might allow other parts to do short-cuts.
 
-We don't take stupid statements as a motivator.
+But because it's a convenience-feature, it had also better either be
+(a) really easy and clear to do in the kernel and (b) have
+sufficiently *wide* convenience so that it doesn't end up being one of
+those "corner case things we have to maintain forever and nobody
+uses".
 
-Stop with the histrionics and silly security theater BS.
+And I think VM_DROPPABLE matches (a), and would be fine if it had some
+other non-made-up use (although honestly, we should solve the 32-bit
+problem first - ignoring it isn't fine for anything that is supposed
+to be widely useful).
 
-There is *nop* security in "MADV_WIPEONFORK". You claiming that that
-is "security" is just making you less believable and me ignoring your
-arguments more.
+We *have* talked about features kind of like it before, for people
+doing basically caches in user space that they can re-create on demand
+and are ok with just going away under memory pressure.
 
-It's a complete make-believe fairy tale.
+But those people almost invariably want dropped pages to cause a
+SIGSEGV or SIGBUS, not to come back as zeroes.
 
-Why would it be "security" to dump random state data? In most
-situations it's a complete non-issue, and nobody cares.
+So you were insulting when you said kernel people don't care about
+security issues.  And I'm just telling you that's not true, but it
+*is* 100% true that kernel people are often really fed up with
+security people who have their blinders on, focus on some small thing,
+and think nothing else ever matters.
 
-And those situations that want to be extra careful, and are actually
-generating keys, those situations can do all of this very carefully on
-their own using existing machinery.
+So yes, the way to get something like VM_DROPPABLE accepted is to
+remove the blinders, and have it be something more widely useful, and
+not be a "for made up bad code".
 
-If you don't want a core-dump because you have sensitive information,
-you do "ulimit -c 0". Or you use MADV_DONTDUMP that we've had forever.
+Side note: making the 32-bit issue go away is likely trivial. We can
+make 'vm_flags' be 64-bit, and a patch for that has been floating
+around for over a decade:
 
-And you don't want to have wipe-on-fork, because
+   https://lore.kernel.org/all/20110412151116.B50D.A69D9226@jp.fujitsu.com/
 
- (a) if you want things to be wiped on fork, you just wipe it before
-the fork (duh!)
+but there was enough push-back on that patch that I didn't want to
+take it, and some of the arguments for it were not that convincing (at
+the time).
 
- (b) but more likely, and more relevantly, you want to make *DAMN
-SURE* you wiped things much earlier than that if you are really
-security-conscious and just generated a secret key, because you don't
-want to leak things accidentally other ways.
+But see commit ca16d140af91 ("mm: don't access vm_flags as 'int'"),
+which happened as a result, and which I (obviously very naively)
+believed would be a way to get the conversion to happen in a more
+controlled manner. Sadly, it never actually took off, and we have very
+few "vm_flags_t" users in the kernel, and a lot of "unsigned long
+flags". We even started out with a "__nocast" annotation to try to
+make sparse trigger on people who didn't use vm_flags_t properly. That
+was removed due to it just never happening.
 
- (c) and you can use MADV_DONTFORK to not copy it at all, which again
-we've had for a long time.
+But converting things to vm_flags_t with a coccinelle script
+(hand-wave: look for variables of of "unsigned long" that use the
+VM_xyz constants), and then just making vm_flags_t be a "u64" instead
+sounds like a way forward.
 
-And if you don't want to have it written to swap, you're just making
-sh*t up at that point.
+But again: this is all about new flags like VM_DROPPABLE not being
+some corner-case that nobody is expected to use other than some
+special code that is relegated to 64-bit only because it is *so*
+special.
 
-First off, it's a purely theoretical thing in the first place. See (b)
-above. Don't keep those random things around long enough (and
-untouched enough) to hit the disk.
-
-Secondly, anybody who can read swap space can already ptrace you and
-read things much more easily that way.
-
-Thirdly, you can just use mlock, and make sure you never have so much
-super-sikret stuff pending for long times and in big buffers.
-
-Fourth, if your keys are *that* sensitive, and *that* secret, just use
-/dev/random or getrandom(), because you're not generating that kind of
-volume of long-term keys, so the whole "I have a huge random buffer
-that is super-secret" is a complete non-issue.
-
-So stop making stupid arguments. The kernel is not supposed to
-baby-sit programs that do things wrong on purpose, and that are
-literally trying to do things wrong, and leaving secret stuff around
-while they do a lot of other things.
-
-You guys have literally MADE UP bad examples of so-called "security",
-and then you use those as arguments for bad coding, and for
-bad-mouthing kernel developers who just don't happen to believe in
-that bad model.
-
-None of what you ask for is for any kind of real security, it's all
-just crazy "but I want to feel the warm and fuzzies and take shortcuts
-elsewhere, and push my pain onto other people".
-
-          Linus
+                 Linus
