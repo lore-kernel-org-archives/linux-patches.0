@@ -1,87 +1,118 @@
-Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1793995DE
-	for <patches@lists.linux.dev>; Fri,  6 Jan 2023 21:11:04 +0000 (UTC)
-Received: by mail-vk1-f176.google.com with SMTP id q7so1188814vkn.3
-        for <patches@lists.linux.dev>; Fri, 06 Jan 2023 13:11:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=6TxHKlwJQCLSbYZxgdJdZSJ5mNfa7xbEinv+9m+b8dU=;
-        b=JkoJF2oW8oodyFdhhEZiE+zCQjJRSe8qbnBn4Ts4FFiwa0sekyPhwMSBKHbEAYUHQ3
-         r06xF755O1aHQhg/uNyi+N/5KDBJ+uaAZmpigEg23rzOQ2HcFrMDLG9jJMUNcJHfKiAj
-         dE34EO7JXggOKr+Oq4bXZx2m6WRZXthUX8U5I=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=6TxHKlwJQCLSbYZxgdJdZSJ5mNfa7xbEinv+9m+b8dU=;
-        b=Cvra6487lVLGyZFLL0FLIQsel1A+zKqo0jBiFYhvl5TwKVb7dVK+afFC1AvCpwqYgy
-         MiEx77kxNc1cJFF67KYRS8Zx+q2Ozews9EVOnLzknSU4mGSkDBkAm1Sz2hgPEFsoAf5a
-         nH2ceeHIIwmbhujCnb3go49asv9qu2LdTIBes5XD2qfi/kG0KEcPdAo5vh2Z5Ojnzcuv
-         hiWL9mrZy/AZQ17yllDWx9zQdOZ/E0zgE1gL5VKrRAYHz/nDyI10ndFHeIUi5sKVTCgg
-         jYCJsqwhyp7yumzqMRyQEhPS9zb6PmzOcFVVG8J9Rwm6OaRrvKoNMgA+q+lj9GrAtE57
-         E9cQ==
-X-Gm-Message-State: AFqh2krpB77K+eXEMlIEwldUDZNuTUgRje2Hfui0rN4ns0qZWsOVZvMr
-	hStC1w7Vb+JoYjFn/PjTErwUS7vh1Md6nGnt
-X-Google-Smtp-Source: AMrXdXtyUu6QkFWOKQHCw6nOTA4BYcY00RsxGOnhIt1gzwq64Pq/4AgHtO4sUamj3jv2WGF42k21cQ==
-X-Received: by 2002:a05:6122:4d:b0:3d5:ec83:511c with SMTP id q13-20020a056122004d00b003d5ec83511cmr9226435vkn.12.1673039463736;
-        Fri, 06 Jan 2023 13:11:03 -0800 (PST)
-Received: from mail-qk1-f178.google.com (mail-qk1-f178.google.com. [209.85.222.178])
-        by smtp.gmail.com with ESMTPSA id d12-20020a05620a240c00b006fcc3858044sm1155496qkn.86.2023.01.06.13.11.01
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Jan 2023 13:11:01 -0800 (PST)
-Received: by mail-qk1-f178.google.com with SMTP id c9so1342219qko.6
-        for <patches@lists.linux.dev>; Fri, 06 Jan 2023 13:11:01 -0800 (PST)
-X-Received: by 2002:a05:620a:4720:b0:6ff:cbda:a128 with SMTP id
- bs32-20020a05620a472000b006ffcbdaa128mr2770302qkb.697.1673039460720; Fri, 06
- Jan 2023 13:11:00 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CB395DF
+	for <patches@lists.linux.dev>; Fri,  6 Jan 2023 21:36:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D53A2C433EF;
+	Fri,  6 Jan 2023 21:36:41 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="Lw5J2oJG"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
+	t=1673040999;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=iBuV3hmE9MTswDExTCjyj/E1AIJfosMyykKtbV7OQBQ=;
+	b=Lw5J2oJGEsVjlubs6QISg3WV7V7HRaEytxm4hiXK2JwyachDcJi7HU4HWIJVPwyz+rwzLE
+	apbuJrPc6ZEHzDw5h3SQ0zATwxJawcJaypUv8oDWcu7Ooryx5hMzkzRAEAM2pLSi2iV3tH
+	zZ7rD+4WJHGrP4AqYGzfhQPhxwKrw5U=
+Received: 
+	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 1d0af2f9 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
+	Fri, 6 Jan 2023 21:36:39 +0000 (UTC)
+Date: Fri, 6 Jan 2023 22:36:38 +0100
+From: "Jason A. Donenfeld" <Jason@zx2c4.com>
+To: Andy Lutomirski <luto@kernel.org>
+Cc: Linus Torvalds <torvalds@linux-foundation.org>,
+	Yann Droneaud <ydroneaud@opteya.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+	patches@lists.linux.dev, Thomas Gleixner <tglx@linutronix.de>,
+	Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
+	Linux API <linux-api@vger.kernel.org>,
+	the arch/x86 maintainers <x86@kernel.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org
+Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
+ lazily freeable mappings
+Message-ID: <Y7iUZmbXOIuBKtIh@zx2c4.com>
+References: <Y7SDgtXayQCy6xT6@zx2c4.com>
+ <CAHk-=whQdWFw+0eGttxsWBHZg1+uh=0MhxXYtvJGX4t9P1MgNw@mail.gmail.com>
+ <Y7SJ+/axonTK0Fir@zx2c4.com>
+ <CAHk-=wi4gshfKjbhEO_xZdVb9ztXf0iuv5kKhxtvAHf2HzTmng@mail.gmail.com>
+ <Y7STv9+p248zr+0a@zx2c4.com>
+ <10302240-51ec-0854-2c86-16752d67a9be@opteya.com>
+ <Y7dV1lVUYjqs8fh0@zx2c4.com>
+ <CAHk-=wijEC_oDzfUajhmp=ZVnzMTXgjxHEcxAfaHiNQm4iAcqA@mail.gmail.com>
+ <CAHk-=wiO4rp8oVmj6i6vvC97gNePLN-SxhSK=UozA88G6nxBGQ@mail.gmail.com>
+ <f36f19ee-5bff-4cd0-b9a9-0fe987cf6d38@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230101162910.710293-3-Jason@zx2c4.com> <Y7QIg/hAIk7eZE42@gmail.com>
- <CALCETrWdw5kxrtr4M7AkKYDOJEE1cU1wENWgmgOxn0rEJz4y3w@mail.gmail.com>
- <CAHk-=wg_6Uhkjy12Vq_hN6rQqGRP2nE15rkgiAo6Qay5aOeigg@mail.gmail.com>
- <Y7SDgtXayQCy6xT6@zx2c4.com> <CAHk-=whQdWFw+0eGttxsWBHZg1+uh=0MhxXYtvJGX4t9P1MgNw@mail.gmail.com>
- <Y7SJ+/axonTK0Fir@zx2c4.com> <CAHk-=wi4gshfKjbhEO_xZdVb9ztXf0iuv5kKhxtvAHf2HzTmng@mail.gmail.com>
- <Y7STv9+p248zr+0a@zx2c4.com> <10302240-51ec-0854-2c86-16752d67a9be@opteya.com>
- <Y7dV1lVUYjqs8fh0@zx2c4.com> <CAHk-=wijEC_oDzfUajhmp=ZVnzMTXgjxHEcxAfaHiNQm4iAcqA@mail.gmail.com>
- <CAHk-=wiO4rp8oVmj6i6vvC97gNePLN-SxhSK=UozA88G6nxBGQ@mail.gmail.com> <f36f19ee-5bff-4cd0-b9a9-0fe987cf6d38@app.fastmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 In-Reply-To: <f36f19ee-5bff-4cd0-b9a9-0fe987cf6d38@app.fastmail.com>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Fri, 6 Jan 2023 13:10:44 -0800
-X-Gmail-Original-Message-ID: <CAHk-=wgLWcKq2AdrTmTOxJKn6w4oEpEGdipWAah5Xad5-Yii6Q@mail.gmail.com>
-Message-ID: <CAHk-=wgLWcKq2AdrTmTOxJKn6w4oEpEGdipWAah5Xad5-Yii6Q@mail.gmail.com>
-Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-To: Andy Lutomirski <luto@kernel.org>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Yann Droneaud <ydroneaud@opteya.com>, 
-	Ingo Molnar <mingo@kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, patches@lists.linux.dev, 
-	Thomas Gleixner <tglx@linutronix.de>, 
-	Linux Crypto Mailing List <linux-crypto@vger.kernel.org>, Linux API <linux-api@vger.kernel.org>, 
-	"the arch/x86 maintainers" <x86@kernel.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>, "Carlos O'Donell" <carlos@redhat.com>, 
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>, Jann Horn <jannh@google.com>, 
-	Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org
-Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Jan 6, 2023 at 12:54 PM Andy Lutomirski <luto@kernel.org> wrote:
->
-> I'm going to suggest a very very different approach: fix secret
-> storage in memory for real. That is, don't lock "super secret
-> sensitive stuff" into memory, and don't wipe it either. *Encrypt* it.
+On Fri, Jan 06, 2023 at 12:53:41PM -0800, Andy Lutomirski wrote:
+> 
+> 
+> On Thu, Jan 5, 2023, at 6:08 PM, Linus Torvalds wrote:
+> > On Thu, Jan 5, 2023 at 5:02 PM Linus Torvalds
+> > <torvalds@linux-foundation.org> wrote:
+> >>
+> >> None of what you ask for is for any kind of real security, it's all
+> >> just crazy "but I want to feel the warm and fuzzies and take shortcuts
+> >> elsewhere, and push my pain onto other people".
+> >
+> > Actually, let me maybe soften that a bit and say that it's
+> > "convenience features". It might make some things more _convenient_ to
+> > do, exactly because it might allow other parts to do short-cuts.
+> >
+> > But because it's a convenience-feature, it had also better either be
+> > (a) really easy and clear to do in the kernel and (b) have
+> > sufficiently *wide* convenience so that it doesn't end up being one of
+> > those "corner case things we have to maintain forever and nobody
+> > uses".
+> >
+> > And I think VM_DROPPABLE matches (a), and would be fine if it had some
+> > other non-made-up use (although honestly, we should solve the 32-bit
+> > problem first - ignoring it isn't fine for anything that is supposed
+> > to be widely useful).
+> >
+> > We *have* talked about features kind of like it before, for people
+> > doing basically caches in user space that they can re-create on demand
+> > and are ok with just going away under memory pressure.
+> >
+> > But those people almost invariably want dropped pages to cause a
+> > SIGSEGV or SIGBUS, not to come back as zeroes.
+> >
+> > So you were insulting when you said kernel people don't care about
+> > security issues.  And I'm just telling you that's not true, but it
+> > *is* 100% true that kernel people are often really fed up with
+> > security people who have their blinders on, focus on some small thing,
+> > and think nothing else ever matters.
+> >
+> > So yes, the way to get something like VM_DROPPABLE accepted is to
+> > remove the blinders, and have it be something more widely useful, and
+> > not be a "for made up bad code".
+> 
+> I'm going to suggest a very very different approach: fix secret storage in memory for real.  That is, don't lock "super secret sensitive stuff" into memory, and don't wipe it either.  *Encrypt* it.
+> 
+> This boils down to implementing proper encrypted swap support, which is not conceptually that difficult.  The kernel already has identifiers (mapping, offset, etc) for every page in swap and already stores some metadata.  Using that as part of a cryptographic operation seems conceptually fairly straightforward.
 
-I don't think you're wrong, but people will complain about key
-management, and worry about that part instead.
+Not sure this solves the right problem, which is primarily related to
+forward secrecy, which means the important property is timely secret
+erasure. Writing things out to disk complicates that, and encrypted swap
+means moving the problem into key lifetime, which sounds like a can of
+worms to synchronize. So this doesn't sound so appealing to me as a
+solution.
 
-Honestly, this is what SGX and CPU enclaves is _supposed_ to all do
-for you, but then nobody uses it for various reasons.
+It does sound like a potentially nice thing for other uses, though.
 
-               Linus
+Jason
