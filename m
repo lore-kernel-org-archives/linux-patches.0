@@ -1,97 +1,140 @@
-Received: from mail-qt1-f180.google.com (mail-qt1-f180.google.com [209.85.160.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5076B95E4
-	for <patches@lists.linux.dev>; Fri,  6 Jan 2023 22:07:10 +0000 (UTC)
-Received: by mail-qt1-f180.google.com with SMTP id c7so3282354qtw.8
-        for <patches@lists.linux.dev>; Fri, 06 Jan 2023 14:07:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=l9dqVddWwlNIkWBEkX2eMMbroRQSsxPmZhf5UK2bJx4=;
-        b=O6fLaeMkOAI9qlrlbD9V9hqb0FRi+3fYwY656X3zqlxsNXYgmUCLgJYTFwJVKAjthE
-         irUaeSLWBxwa416jiNkQxJky4pxbLUW3S/rzOYcjecUxbP1aO1xBadn5G83AJZJjM0GP
-         8LNX+VfdzXkl4XSINWkZYmRr2ww9tgPFY2yho=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=l9dqVddWwlNIkWBEkX2eMMbroRQSsxPmZhf5UK2bJx4=;
-        b=rd0Zaj/5F22CUw+j728KVc80hxsXTpRw1I0wtBpxqWIKil6EN5IVGIAyTQ+OzEJXcC
-         l1k7zDYgI3CDhm7COBNswtHBriUcJbv6AaHgZD6W3gbxoY/DakqvTnzh84CKfDQmdBpe
-         GvTf7Hkd9OGwJUD5WUplY/cdCy0HjY8yJWfAVuilBMEAjboqEx/OktovSTZi6EAtm/9O
-         KbaG3KmBkuBffh78zsSmWpk2rRKT/1GHTcUSALntn36DeTaZe0m6DEISWCPJowoWgtT+
-         0akhOpjXQbzxnMI/NX1+717eFmMrGvchNiEkPvJnlDBLw9eeeOqr/XEpqsift1GExMyi
-         387A==
-X-Gm-Message-State: AFqh2kpiA0/6aK+UEpIYu2SLlQ6U3/Ur13oZK38sIoGnpp/QSVr0LZC7
-	Z6m6VlhNkPd278F6Z1gRLfKa/yar+M28CTlR
-X-Google-Smtp-Source: AMrXdXuid8SSmwqtk+6GzAtFjd6PdPqr49sdCvKpL5Fdfl0Em4z2EM9i0VRHblT8xl4PVnIDcKybng==
-X-Received: by 2002:a05:622a:4c19:b0:3a7:e619:61a with SMTP id ey25-20020a05622a4c1900b003a7e619061amr87674317qtb.37.1673042828846;
-        Fri, 06 Jan 2023 14:07:08 -0800 (PST)
-Received: from mail-qv1-f49.google.com (mail-qv1-f49.google.com. [209.85.219.49])
-        by smtp.gmail.com with ESMTPSA id o24-20020a05620a229800b006fec1c0754csm1152551qkh.87.2023.01.06.14.07.07
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 06 Jan 2023 14:07:07 -0800 (PST)
-Received: by mail-qv1-f49.google.com with SMTP id o17so1912792qvn.4
-        for <patches@lists.linux.dev>; Fri, 06 Jan 2023 14:07:07 -0800 (PST)
-X-Received: by 2002:a05:6214:1185:b0:4c6:608c:6b2c with SMTP id
- t5-20020a056214118500b004c6608c6b2cmr2661817qvv.130.1673042827328; Fri, 06
- Jan 2023 14:07:07 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC30995F9
+	for <patches@lists.linux.dev>; Fri,  6 Jan 2023 23:53:15 +0000 (UTC)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id B09D85C0071;
+	Fri,  6 Jan 2023 18:53:14 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Fri, 06 Jan 2023 18:53:14 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tyhicks.com; h=
+	cc:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm2; t=1673049194; x=1673135594; bh=7G4/beSUaF
+	qqw1nEdaUkVcwlLhwLsSrWTndJbny1Uek=; b=hGJkAkQ5KCG0r0+DxIojSkT5BC
+	IBN6kbZKQq7pLRwfGGaNKDfW+LGae89wtH1h2F8OPrqSZ7MWp1xANmLhMrq/7CqJ
+	UNqfC8L2Dlzzoxk/fnYY8jVpJ+N+iQEIPkNYfO9/Kpth32Hfx3FfSlbZABAW3bL0
+	e8oXoaSlZ0m8HF7C9agSc3jtdXjob4z63GM6FftCC2GZmPeLWefHKApzyc8XXbe1
+	tmDr9pdDjkNQlu9xMya+nqSPue+SBmEGqmpCbDAbEbeRMGRUDezeYx/rB3dGCe7d
+	CGYSC5I2zJfTUJaR4eYiizl3dvCBHKDNb8llrGznk30FAS0UfV0ckudA/XbA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1673049194; x=1673135594; bh=7G4/beSUaFqqw1nEdaUkVcwlLhwL
+	sSrWTndJbny1Uek=; b=mBm7DiKmDzFj3ZH0irV4Ph9MbVV6esIQVuP890YNs3Ms
+	2J3Q9JMWOXIu2joi/yhJVzqCuH7q+kP2TOYHGSGRN0xJYhdAYcWmRnHqRbr0h3ii
+	sIHPmp2KZoQVBcUUgUoI2ppwseRIKl6NOC1odHgJPaUOhE+ZZKBy2VhVff63nT8w
+	ydtyxhgUHKR71tOO6medUr3Neq/JyZRIWsCX4TVnto4uuXA8xfnyjTVKXr2PVyou
+	zTFbQdhDXelcxMqZbNLEkDWFWfwEo0deTwQi/Qf26grzK9x638wwn+hN6WOmhLpN
+	4uyqXwZ0wWEYQ8pMnbzBfn548+EwqttdaRTrhflX5w==
+X-ME-Sender: <xms:arS4Y3NrU9dkMAyPmyqkpUiyuXBI3RJ-_9macWGeKOZJAfScgmu2HA>
+    <xme:arS4Yx8uCLH0kJRxSzsggWaaI8aDgylq-XDQbiVXlg_rWF-MQ5ohRPMvYNWJKbpoL
+    WjxdvX_5vZAAKatE2I>
+X-ME-Received: <xmr:arS4Y2TV3xcJX-7-o7eZXgEyTzdYP9y0elAnRlnIoyJe_TpBOT2o2UeFubk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrkedugdduhecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefvhihlvghr
+    ucfjihgtkhhsuceotghouggvsehthihhihgtkhhsrdgtohhmqeenucggtffrrghtthgvrh
+    hnpeetveeffeehgefgieffudeulefgffegudehjeejueffvefhkedvhfelvdevffelhfen
+    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhlvggvmhhhuhhishdrihhnfhhonecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvseht
+    hihhihgtkhhsrdgtohhm
+X-ME-Proxy: <xmx:arS4Y7sfGfnq-b-6O7kkX09GUiLNVAndrlxOAX9EVU9G3zabJMCCxg>
+    <xmx:arS4Y_dI3EhpUn-ByDqSEXM172wzx4vwNfXKXAsJymALFcQa2NIyuQ>
+    <xmx:arS4Y32X8-XxdSMA65eCzow_upFALDYXBItRTvHgbwjk-6mkspwBSQ>
+    <xmx:arS4Y631rLcbSN7M8lgby6MZ8r6zt4hEsd9Qgv25ecPAuUQ5KEtngg>
+Feedback-ID: i78e14604:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Jan 2023 18:53:12 -0500 (EST)
+Date: Fri, 6 Jan 2023 17:53:10 -0600
+From: Tyler Hicks <code@tyhicks.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Pavel Machek <pavel@denx.de>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/207] 6.1.4-rc1 review
+Message-ID: <Y7i0ZukMa9CX+fzo@sequoia>
+References: <20230104160511.905925875@linuxfoundation.org>
+ <Y7cmMKUr//oYKWXb@duo.ucw.cz>
+ <Y7fGpYyaJWym1BxW@kroah.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <CAHk-=wg_6Uhkjy12Vq_hN6rQqGRP2nE15rkgiAo6Qay5aOeigg@mail.gmail.com>
- <Y7SDgtXayQCy6xT6@zx2c4.com> <CAHk-=whQdWFw+0eGttxsWBHZg1+uh=0MhxXYtvJGX4t9P1MgNw@mail.gmail.com>
- <Y7SJ+/axonTK0Fir@zx2c4.com> <CAHk-=wi4gshfKjbhEO_xZdVb9ztXf0iuv5kKhxtvAHf2HzTmng@mail.gmail.com>
- <Y7STv9+p248zr+0a@zx2c4.com> <10302240-51ec-0854-2c86-16752d67a9be@opteya.com>
- <Y7dV1lVUYjqs8fh0@zx2c4.com> <CAHk-=wijEC_oDzfUajhmp=ZVnzMTXgjxHEcxAfaHiNQm4iAcqA@mail.gmail.com>
- <CAHk-=wiO4rp8oVmj6i6vvC97gNePLN-SxhSK=UozA88G6nxBGQ@mail.gmail.com> <Y7iV18CqKAa4gO9r@casper.infradead.org>
-In-Reply-To: <Y7iV18CqKAa4gO9r@casper.infradead.org>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Fri, 6 Jan 2023 14:06:51 -0800
-X-Gmail-Original-Message-ID: <CAHk-=wj7jenrb6UNjv--xLC4hrjJDsCFxuaHw1e67a4ihVEmUw@mail.gmail.com>
-Message-ID: <CAHk-=wj7jenrb6UNjv--xLC4hrjJDsCFxuaHw1e67a4ihVEmUw@mail.gmail.com>
-Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-To: Matthew Wilcox <willy@infradead.org>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Yann Droneaud <ydroneaud@opteya.com>, 
-	Andy Lutomirski <luto@kernel.org>, Ingo Molnar <mingo@kernel.org>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, tglx@linutronix.de, linux-crypto@vger.kernel.org, 
-	linux-api@vger.kernel.org, x86@kernel.org, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>, "Carlos O'Donell" <carlos@redhat.com>, 
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>, Jann Horn <jannh@google.com>, 
-	Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y7fGpYyaJWym1BxW@kroah.com>
 
-On Fri, Jan 6, 2023 at 1:42 PM Matthew Wilcox <willy@infradead.org> wrote:
->
->
-> I'd be more inclined to do:
->
-> typedef unsigned int vm_flags_t[2];
+On 2023-01-06 07:58:45, Greg Kroah-Hartman wrote:
+> On Thu, Jan 05, 2023 at 08:34:08PM +0100, Pavel Machek wrote:
+> > Hi!
+> > 
+> > > This is the start of the stable review cycle for the 6.1.4 release.
+> > > There are 207 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > 
+> > Thank you.
+> > 
+> > Is it known at this point if 6.1 will became next longterm release? It
+> > is not listed as such on https://www.kernel.org/category/releases.html
+> > . We might want to do some extra testing if it is.
+> 
+> A kernel can not become "long term" until it would have normally dropped
+> off of support.  Right now there are known-regressions in 6.1 still that
+> are not resolved.
 
-No, that's entirely invalid.
+Hey Greg - A couple questions...
 
-Never *ever* use arrays in C for type safety. Arrays are not type
-safe. They can't be assigned sanely, and they silently become pointers
-(which also aren't type-safe, since they end up converting silently to
-'void *').
+1. Does that mean that you always wait until N+1 is released by Linus
+   before declaring N to be an upstream LTS kernel?
 
-If you want to use the type system to enforce things, and you don't
-want to rely on sparse, you absolutely have to use a struct (or union)
-type.
+   Looking back to last year, v5.16 was released on 2022-01-10 and you
+   declared v5.15 as the LTS on 2022-01-16:
 
-So something like
+    https://git.kernel.org/pub/scm/docs/kernel/website.git/commit/?id=c335525958a3424ec0200dc9093d2bbf95032f83
 
-   typedef struct { u64 val; } vm_flags_t;
+   That one data point lines up but I want to confirm that's the normal
+   procedure because I hadn't noticed that pattern until now and I don't
+   see it mentioned on the kernel.org Releases page.
 
-would be an option.
+2. Do you (or anyone else) happen to have a list of the known
+   regressions? I see one specific to linux-6.1.y in the regzbot list:
 
-              Linus
+    https://linux-regtracking.leemhuis.info/regzbot/stable/
+
+   Another reported here (with a potential fix identified):
+
+    https://lore.kernel.org/netdev/CAK8fFZ7cYRkGjUJD2D86G6Jh9YRmP_L+7Ke6CLFSyFmRkoe-Hg@mail.gmail.com/T/#m1b118647969eb0d64de016858506fc2345a0b834
+
+   A more complete list may help all of us currently evaluating v6.1.
+
+> And "extra" testing is always good no matter what kernel branch it is
+> happening for, why not always do it?
+
+That's a very good point. I have to admit that we are a bit too
+LTS-focused today when it comes to our testing. We have a goal to
+improve in that area.
+
+We have been working under the assumption that v6.1 is going to be the
+next LTS but, as you point out, we should be iteratively testing each
+release just the same. We are currently doing some additional/extra
+testing of v6.1 with our Microsoft Linux kernel and will let you know
+the results as they come in.
+
+Tyler
+
+> 
+> thanks,
+> 
+> greg k-h
