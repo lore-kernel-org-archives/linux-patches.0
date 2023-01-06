@@ -1,99 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3830D62A
-	for <patches@lists.linux.dev>; Thu,  5 Jan 2023 22:57:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2E39C433F0;
-	Thu,  5 Jan 2023 22:57:31 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="d3U57LHD"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1672959449;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=INhUx6/3Xhk2/xGcSTChC+f55M0MZlL+ygV3JkGy+qw=;
-	b=d3U57LHDK5/g5g3S5DBYHkQoCwcYk8ZV6a0oM3Z6SewXdvSOqXsdHHaQbe31rTK2/sDwM8
-	uMa3NJfzLzSkKnpUMBkGoQwKDNdqTWO6cQbSV8C+gyuenY/YH3A7RWhDB0eL4EaO20uqvQ
-	CziJ/xm7YuUGNCJojapunpRX30XKVzA=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 8daf678c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Thu, 5 Jan 2023 22:57:29 +0000 (UTC)
-Date: Thu, 5 Jan 2023 23:57:26 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Yann Droneaud <ydroneaud@opteya.com>
-Cc: Linus Torvalds <torvalds@linux-foundation.org>,
-	Andy Lutomirski <luto@kernel.org>, Ingo Molnar <mingo@kernel.org>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	tglx@linutronix.de, linux-crypto@vger.kernel.org,
-	linux-api@vger.kernel.org, x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org
-Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-Message-ID: <Y7dV1lVUYjqs8fh0@zx2c4.com>
-References: <20230101162910.710293-3-Jason@zx2c4.com>
- <Y7QIg/hAIk7eZE42@gmail.com>
- <CALCETrWdw5kxrtr4M7AkKYDOJEE1cU1wENWgmgOxn0rEJz4y3w@mail.gmail.com>
- <CAHk-=wg_6Uhkjy12Vq_hN6rQqGRP2nE15rkgiAo6Qay5aOeigg@mail.gmail.com>
- <Y7SDgtXayQCy6xT6@zx2c4.com>
- <CAHk-=whQdWFw+0eGttxsWBHZg1+uh=0MhxXYtvJGX4t9P1MgNw@mail.gmail.com>
- <Y7SJ+/axonTK0Fir@zx2c4.com>
- <CAHk-=wi4gshfKjbhEO_xZdVb9ztXf0iuv5kKhxtvAHf2HzTmng@mail.gmail.com>
- <Y7STv9+p248zr+0a@zx2c4.com>
- <10302240-51ec-0854-2c86-16752d67a9be@opteya.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0D97E0
+	for <patches@lists.linux.dev>; Fri,  6 Jan 2023 00:05:05 +0000 (UTC)
+Received: by mail-pg1-f169.google.com with SMTP id 7so179397pga.1
+        for <patches@lists.linux.dev>; Thu, 05 Jan 2023 16:05:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=heitbaum.com; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=i2xgnS6P8oE/KrpMlccAZ+Y4dEgvLfcHqD32J1lx09Y=;
+        b=dnJOdhDpc89F27/WUX9nX/el+s3gnF3ZFn+gfhDkX1Ru/RHLLlQw/kAE0Deju/pbny
+         I85LE0iTbKlSKzqfvP8TWYcLKjVYicKGuQ+rUD/BB/weWJp8lO0X7QGvgPdfFvOgQMQg
+         iCo9aRFzfyeqv2Jl9OfOaUxBOV4PWxb5uCbqo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=i2xgnS6P8oE/KrpMlccAZ+Y4dEgvLfcHqD32J1lx09Y=;
+        b=tBVb8jvgBUtEbE43CU3DnI08kmPYKFHbwF7rwTmYcEsswmRw+hXXGOh5+VoKdQrdRX
+         3xk7cH+6QNgW+FbVbirw04wb2E/w+t2aPspyiSgBDQhZZ/NN3zv5oqjG+tA9gLRRHJ1D
+         W3MhYrgLcrjo/vUSZiOmbXMc+rgGY84j2kc6QD4g1XkfWONb7en/6WlBOlfQOHrXBUy8
+         Q6qYIgTD5bO15KDFmkaC7ekQRA9D0MqSjKNgE0UBcNyIRcBTVQcs81vGwWMuZmy/W0jy
+         3risTHNLvIn/NPOOl2a0jdzX69rmyxITDCeJPon/Dp5zNA8e5I0gKRtLCEpYFUWmjv78
+         559A==
+X-Gm-Message-State: AFqh2ko3GX6WSC6Q5W3WqnCGDAOMsZkmxzA71gxNLW/dzYrprib+TZk3
+	Rf4G3Zv6Ue/UQfI/DaQHdBkHtg==
+X-Google-Smtp-Source: AMrXdXuxy5OrJQPhjeuVD3E7jCOyZE9sgowf8xRuV/O6+/U+amwrJK46YAwEYVaaF4IJ3A8aKJQU9A==
+X-Received: by 2002:a05:6a00:706:b0:580:d409:396c with SMTP id 6-20020a056a00070600b00580d409396cmr47276929pfl.6.1672963504915;
+        Thu, 05 Jan 2023 16:05:04 -0800 (PST)
+Received: from 5627e7ec9cfd (124-148-239-102.tpgi.com.au. [124.148.239.102])
+        by smtp.gmail.com with ESMTPSA id 9-20020a621709000000b00580e07cc338sm22768631pfx.175.2023.01.05.16.04.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Jan 2023 16:05:03 -0800 (PST)
+Date: Fri, 6 Jan 2023 00:04:55 +0000
+From: Rudi Heitbaum <rudi@heitbaum.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/207] 6.1.4-rc1 review
+Message-ID: <20230106000455.GA1929704@5627e7ec9cfd>
+References: <20230104160511.905925875@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <10302240-51ec-0854-2c86-16752d67a9be@opteya.com>
+In-Reply-To: <20230104160511.905925875@linuxfoundation.org>
 
-On Thu, Jan 05, 2023 at 10:57:48PM +0100, Yann Droneaud wrote:
-> Hi,
+On Wed, Jan 04, 2023 at 05:04:18PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.4 release.
+> There are 207 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Le 03/01/2023 à 21:44, Jason A. Donenfeld a écrit :
-> > On Tue, Jan 03, 2023 at 12:15:57PM -0800, Linus Torvalds wrote:
-> >> On Tue, Jan 3, 2023 at 12:03 PM Jason A. Donenfeld <Jason@zx2c4.com> wrote:
-> >>> That buffering cannot be done safely currently
-> >> .. again, this is "your semantics" (the (b) in my humbug list), not
-> >> necessarily reality for anybody else.
-> > Yea that's fair. Except, of course, I maintain that my semantics are
-> > important ones. :)
-> 
-> 
-> I concur.
-> 
-> To hold secret material, we need MADV_WIPEONFORK | MADV_DONTDUMP and the side effect of mlock() (pages' content never written to swap), inherited across fork().
-> And I want mlock() without paying the price.
-> 
-> Jason's proposed semantics, which I call MADV_WIPEONSWAP, provide a mean to hold /unlimited/ amount secrets in userspace memory (not limited by RLIMIT_MEMLOCK).
-> The only constraint for userspace is to handle the case pages are wiped, which is already the case of userspace arc4random()'s implementation.
+> Responses should be made by Fri, 06 Jan 2023 16:04:29 +0000.
+> Anything received after that time might be too late.
 
-If you're actually serious about wanting a generic mechanism for
-userspace, I think the moral of yesterday's poo-poo'ing all over this
-cool new idea is that the Linux innercircle doesn't really care for
-"security things" as a motivator and just takes the shortest and easiest
-route toward swatting it away like a gadfly, assuming that the concerns
-are unreal or niche or paranoid or whatever. This is obviously nothing
-new - it's an old complaint beaten to death for years, with people who
-are diehard it about eventually getting burnt out and leaving. So,
-practically speaking, if you want this to exist, I think you have to
-find some other cool use cases. Like, see if the database cache people
-would actually love this. Or if it could be used as an opportunistic
-renderer cache in Chrome that wouldn't result in OOMing with lots of
-tabs. Or if shared process compiler servers could benefit from it.
-"Droppable cache" is likely useful lots of places. So just find
-SOMETHING that doesn't mean having to convince folks of a new security
-model that justifies tickling mm/ innards in uncomfortable ways.
+Hi Greg,
 
-Jason
+6.1.4-rc1 tested.
+
+Run tested on:
+- Allwinner H6 (Tanix TX6)
+- Intel Alder Lake x86_64 (nuc12 i7-1260P)
+- SolidRun Cubox-i Dual/Quad - NXP iMX6 (Cubox-i4Pro)
+
+In addition - build tested for:
+- Allwinner A64
+- Allwinner H3
+- Allwinner H5
+- NXP iMX8
+- Qualcomm Dragonboard
+- Rockchip RK3288
+- Rockchip RK3328
+- Rockchip RK3399pro
+- Samsung Exynos
+
+Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
+--
+Rudi
