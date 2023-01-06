@@ -1,65 +1,132 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D163F33CA
-	for <patches@lists.linux.dev>; Fri,  6 Jan 2023 14:34:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D60EC433D2;
-	Fri,  6 Jan 2023 14:34:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673015658;
-	bh=ynDFiEQrOvyn+hQ5jOy9DWfHWTy4bEEbSvBtrELW8dQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=wMa2bMRGLHxuCrjcj5axey3B7v6+dvVeQQuaJ8ItKM59V2cpPmjUZXy6+op3d6hT5
-	 A2BZBq2upk6x425FjB3YjhAokFgxKfnB82s2oZWj5Fj85R1ggEwW5sEpCyMfVUTG4T
-	 /8dN2p/dGuSrjAsXsnH3oNaFVlGCivLJr8MfbVPA=
-Date: Fri, 6 Jan 2023 15:34:15 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Georg =?iso-8859-1?Q?M=FCller?= <georgmueller@gmx.net>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.0 000/177] 6.0.18-rc1 review
-Message-ID: <Y7gxZ201DOi7nyZZ@kroah.com>
-References: <20230104160507.635888536@linuxfoundation.org>
- <53f19c0a-412d-ba8e-57bb-b626ba5b7672@gmx.net>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48FF95DD
+	for <patches@lists.linux.dev>; Fri,  6 Jan 2023 20:54:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A220DC433D2;
+	Fri,  6 Jan 2023 20:54:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1673038444;
+	bh=2XFVyFO90sv15IXbHfuoR96vEeg0uVA9f6scATbkw5I=;
+	h=In-Reply-To:References:Date:From:To:Cc:Subject:From;
+	b=mHfJQe+ghzVdgZxSVelgm1jSG5vA5KgBsk91CsnOdE6+vYEnKP07FXxBqc+wIWjNc
+	 /ney0ntA5oVoXHpljLmbG/ptlT/69CqOGDRiBfs67lVR/GpQtfA4SFKxt6Hqv2BrBx
+	 /Zil7U7xTEbnwogsadNwFzIvOXp6M8oDMMmGpSRt/t2pBweXijPjNQBXjJ4Hz0fpTX
+	 qSPyHb2Bu6mdIo6QJC/HJCYTeL5tzoccdmge+vm1oc6K4rSnBht9HhRe3PbU0FE3ZW
+	 aP0OkfFtzOACThVhMDHKsjFKc34/bLpq9aJjwF+moBB4D8aQh33Cwmke0C/NvktWH2
+	 FqeZFd7BC2/Uw==
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailauth.nyi.internal (Postfix) with ESMTP id 798D327C0054;
+	Fri,  6 Jan 2023 15:54:02 -0500 (EST)
+Received: from imap48 ([10.202.2.98])
+  by compute3.internal (MEProxy); Fri, 06 Jan 2023 15:54:02 -0500
+X-ME-Sender: <xms:aYq4Y-HpRJ9B9KVZyG6iVEM6s8NDCETv5X-KrsUs5WE5OYU3DXhsxw>
+    <xme:aYq4Y_XW2bsYUXDLlsowJxX4un9TnJD8ALkVdygkeHk166HmYyfqqNhrlDRbmSbZ8
+    fRUS-pwOvmyKPYVEqw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrkedtgddugedvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehn
+    ugihucfnuhhtohhmihhrshhkihdfuceolhhuthhosehkvghrnhgvlhdrohhrgheqnecugg
+    ftrfgrthhtvghrnhepvdfhuedvtdfhudffhfekkefftefghfeltdelgeffteehueegjeff
+    udehgfetiefhnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homheprghnugihodhmvghsmhhtphgruhhthhhpvghrshhonhgrlhhithihqdduudeiudek
+    heeifedvqddvieefudeiiedtkedqlhhuthhopeepkhgvrhhnvghlrdhorhhgsehlihhnuh
+    igrdhluhhtohdruhhs
+X-ME-Proxy: <xmx:aYq4Y4L8HErcX2HRlQKr0dw1B7SrsvMkRW9QTjnonJuhU-hAl0LKqw>
+    <xmx:aYq4Y4G772EnhzgLQ69UtH1UMRr7vy4DshAEEJ42s6kcmdGFJQp3YQ>
+    <xmx:aYq4Y0WAuAq2TWSCMZ7Wx8xq4jkY6HXE77C4c58bGSdFK0VwRwDZKw>
+    <xmx:aoq4Y5VRPXbo6ksg6EpyLzGFFIiWUfS8hsisPDiECVffoznwvBoMwg>
+Feedback-ID: ieff94742:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id AC89E31A03FD; Fri,  6 Jan 2023 15:54:01 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-1185-g841157300a-fm-20221208.002-g84115730
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <53f19c0a-412d-ba8e-57bb-b626ba5b7672@gmx.net>
+Mime-Version: 1.0
+Message-Id: <f36f19ee-5bff-4cd0-b9a9-0fe987cf6d38@app.fastmail.com>
+In-Reply-To: 
+ <CAHk-=wiO4rp8oVmj6i6vvC97gNePLN-SxhSK=UozA88G6nxBGQ@mail.gmail.com>
+References: <20230101162910.710293-3-Jason@zx2c4.com>
+ <Y7QIg/hAIk7eZE42@gmail.com>
+ <CALCETrWdw5kxrtr4M7AkKYDOJEE1cU1wENWgmgOxn0rEJz4y3w@mail.gmail.com>
+ <CAHk-=wg_6Uhkjy12Vq_hN6rQqGRP2nE15rkgiAo6Qay5aOeigg@mail.gmail.com>
+ <Y7SDgtXayQCy6xT6@zx2c4.com>
+ <CAHk-=whQdWFw+0eGttxsWBHZg1+uh=0MhxXYtvJGX4t9P1MgNw@mail.gmail.com>
+ <Y7SJ+/axonTK0Fir@zx2c4.com>
+ <CAHk-=wi4gshfKjbhEO_xZdVb9ztXf0iuv5kKhxtvAHf2HzTmng@mail.gmail.com>
+ <Y7STv9+p248zr+0a@zx2c4.com>
+ <10302240-51ec-0854-2c86-16752d67a9be@opteya.com>
+ <Y7dV1lVUYjqs8fh0@zx2c4.com>
+ <CAHk-=wijEC_oDzfUajhmp=ZVnzMTXgjxHEcxAfaHiNQm4iAcqA@mail.gmail.com>
+ <CAHk-=wiO4rp8oVmj6i6vvC97gNePLN-SxhSK=UozA88G6nxBGQ@mail.gmail.com>
+Date: Fri, 06 Jan 2023 12:53:41 -0800
+From: "Andy Lutomirski" <luto@kernel.org>
+To: "Linus Torvalds" <torvalds@linux-foundation.org>,
+ "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: "Yann Droneaud" <ydroneaud@opteya.com>, "Ingo Molnar" <mingo@kernel.org>,
+ "Linux Kernel Mailing List" <linux-kernel@vger.kernel.org>,
+ patches@lists.linux.dev, "Thomas Gleixner" <tglx@linutronix.de>,
+ "Linux Crypto Mailing List" <linux-crypto@vger.kernel.org>,
+ "Linux API" <linux-api@vger.kernel.org>,
+ "the arch/x86 maintainers" <x86@kernel.org>,
+ "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>,
+ "Adhemerval Zanella Netto" <adhemerval.zanella@linaro.org>,
+ "Carlos O'Donell" <carlos@redhat.com>, "Florian Weimer" <fweimer@redhat.com>,
+ "Arnd Bergmann" <arnd@arndb.de>, "Jann Horn" <jannh@google.com>,
+ "Christian Brauner" <brauner@kernel.org>, linux-mm@kvack.org
+Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always lazily
+ freeable mappings
+Content-Type: text/plain
 
-On Fri, Jan 06, 2023 at 03:27:58PM +0100, Georg Müller wrote:
-> Hi Greg,
-> 
-> Am 04.01.23 um 17:04 schrieb Greg Kroah-Hartman:
-> > This is the start of the stable review cycle for the 6.0.18 release.
-> > There are 177 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Fri, 06 Jan 2023 16:04:29 +0000.
-> > Anything received after that time might be too late.
-> 
-> There is an easy-to-trigger kernel panic in cifs which was introduced in 6.0.16 and could be fixed by backporting the following commit:
-> 
->    9ee2afe5207b ("cifs: prevent copying past input buffer boundaries")
-> 
-> Please see https://bugzilla.kernel.org/show_bug.cgi?id=216895 for the details
-> 
-> Could this commit be added as well to 6.0.18?
 
-It is too late for this release, we can add it to the next one.  Or you
-can move to 6.1.y which you should be doing anyway as 6.0.y is about to
-go end-of-life in a few days.
 
-thanks,
+On Thu, Jan 5, 2023, at 6:08 PM, Linus Torvalds wrote:
+> On Thu, Jan 5, 2023 at 5:02 PM Linus Torvalds
+> <torvalds@linux-foundation.org> wrote:
+>>
+>> None of what you ask for is for any kind of real security, it's all
+>> just crazy "but I want to feel the warm and fuzzies and take shortcuts
+>> elsewhere, and push my pain onto other people".
+>
+> Actually, let me maybe soften that a bit and say that it's
+> "convenience features". It might make some things more _convenient_ to
+> do, exactly because it might allow other parts to do short-cuts.
+>
+> But because it's a convenience-feature, it had also better either be
+> (a) really easy and clear to do in the kernel and (b) have
+> sufficiently *wide* convenience so that it doesn't end up being one of
+> those "corner case things we have to maintain forever and nobody
+> uses".
+>
+> And I think VM_DROPPABLE matches (a), and would be fine if it had some
+> other non-made-up use (although honestly, we should solve the 32-bit
+> problem first - ignoring it isn't fine for anything that is supposed
+> to be widely useful).
+>
+> We *have* talked about features kind of like it before, for people
+> doing basically caches in user space that they can re-create on demand
+> and are ok with just going away under memory pressure.
+>
+> But those people almost invariably want dropped pages to cause a
+> SIGSEGV or SIGBUS, not to come back as zeroes.
+>
+> So you were insulting when you said kernel people don't care about
+> security issues.  And I'm just telling you that's not true, but it
+> *is* 100% true that kernel people are often really fed up with
+> security people who have their blinders on, focus on some small thing,
+> and think nothing else ever matters.
+>
+> So yes, the way to get something like VM_DROPPABLE accepted is to
+> remove the blinders, and have it be something more widely useful, and
+> not be a "for made up bad code".
 
-greg k-h
+I'm going to suggest a very very different approach: fix secret storage in memory for real.  That is, don't lock "super secret sensitive stuff" into memory, and don't wipe it either.  *Encrypt* it.
+
+This boils down to implementing proper encrypted swap support, which is not conceptually that difficult.  The kernel already has identifiers (mapping, offset, etc) for every page in swap and already stores some metadata.  Using that as part of a cryptographic operation seems conceptually fairly straightforward.
+
+And a nice implementation of this could be on by default, and the kernel could even tell userspace that it's on, and then userspace could just stop worrying about this particular issue.
