@@ -1,137 +1,147 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E58A40
-	for <patches@lists.linux.dev>; Fri,  6 Jan 2023 02:42:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C6DC433D2;
-	Fri,  6 Jan 2023 02:42:34 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="ny+dCxXQ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1672972951;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=g1mMlBEGSH2yJeXHfEJcLsexhlCzf0SSwDSRSbPe6+4=;
-	b=ny+dCxXQ/0DuBUk+XJHzeaUeqT3EVGKAl2Rr/lYLEYrmHIJQ+MtDOg153v2IZImUWbtoig
-	lBdmtGmPSXabTgE1Eq9qNkpvwrBAw3PPVOtNlibVP70ZIK94iVKC6HLt5FtPyDCWJ1UkN5
-	W85ewNz9OiZziXXdzYUzyDzqup9d0c4=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 71928115 (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO);
-	Fri, 6 Jan 2023 02:42:31 +0000 (UTC)
-Date: Fri, 6 Jan 2023 03:42:28 +0100
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Yann Droneaud <ydroneaud@opteya.com>, Andy Lutomirski <luto@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, tglx@linutronix.de,
-	linux-crypto@vger.kernel.org, linux-api@vger.kernel.org,
-	x86@kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org
-Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-Message-ID: <Y7eKlGDHyfHLRDuE@zx2c4.com>
-References: <CAHk-=wg_6Uhkjy12Vq_hN6rQqGRP2nE15rkgiAo6Qay5aOeigg@mail.gmail.com>
- <Y7SDgtXayQCy6xT6@zx2c4.com>
- <CAHk-=whQdWFw+0eGttxsWBHZg1+uh=0MhxXYtvJGX4t9P1MgNw@mail.gmail.com>
- <Y7SJ+/axonTK0Fir@zx2c4.com>
- <CAHk-=wi4gshfKjbhEO_xZdVb9ztXf0iuv5kKhxtvAHf2HzTmng@mail.gmail.com>
- <Y7STv9+p248zr+0a@zx2c4.com>
- <10302240-51ec-0854-2c86-16752d67a9be@opteya.com>
- <Y7dV1lVUYjqs8fh0@zx2c4.com>
- <CAHk-=wijEC_oDzfUajhmp=ZVnzMTXgjxHEcxAfaHiNQm4iAcqA@mail.gmail.com>
- <CAHk-=wiO4rp8oVmj6i6vvC97gNePLN-SxhSK=UozA88G6nxBGQ@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFA197B
+	for <patches@lists.linux.dev>; Fri,  6 Jan 2023 03:01:11 +0000 (UTC)
+Received: by mail-pl1-f180.google.com with SMTP id c4so373321plc.5
+        for <patches@lists.linux.dev>; Thu, 05 Jan 2023 19:01:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FLEA2wQkQBIO15nu3HyGaLDd58pUqyHA63e/BahflBg=;
+        b=gr1lwpg+ZbMVA7VcYOW5YvvzRvyk56qGEw34yRLVGhuBq+su/XvHWcwtgeYG5Q5API
+         kQWl20V6HCSzhC+y3lpli6F+e5NnCI736lNGtNY3CR7LWYw9K1WOVN8CmTdTLHH/VHT1
+         /UbBKNWAAha3z8idSR8hR8tlBNBJY87nnTfCo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FLEA2wQkQBIO15nu3HyGaLDd58pUqyHA63e/BahflBg=;
+        b=BqD+BiPEEKHhLPICqJIaaxjM0gBF+EhZYtls+28++wwkL9PQZSo4zWEGmmxiEBkxis
+         LhuKmZUE/WNMBOO7LwR6YZxD68iNQwDokpy9YEZwgWzyRmWQwH8qdgdirCffIS4zuUZ6
+         Wl7l5B2XzJ4JKBlghALv8s8HHn9MDUaqCwpgkfAbr0GFvUcWimHYevp3q7AkwG+MIdRQ
+         cmn8Pf4wGAHtgp3ARuO127qdilV/MBuAZcNtWnbMc/KlqqGfyms5r6ss6dZExjniKjN9
+         E8x6TUnm8U8sGAuyML/XU0imEnXoypMEe/8TFew1UpJBr/Xh23bSoxohxVoAe9+G/4Zx
+         T3aw==
+X-Gm-Message-State: AFqh2kq4ayJBjjWR98oT+XKCAZHDxDAHA57HIXYxSx3NBWCVn5mIE3yV
+	YWG2oN/ab9oQSErjgrVilU2E7g==
+X-Google-Smtp-Source: AMrXdXsomxVgbccv1usflDMgeLmsRP7BhyBVOMFDU6WowU+xXCKfXlkP0R8LnNIfb1r5yNksWji+AQ==
+X-Received: by 2002:a05:6a20:cb44:b0:af:e129:cc4 with SMTP id hd4-20020a056a20cb4400b000afe1290cc4mr51387940pzb.41.1672974071148;
+        Thu, 05 Jan 2023 19:01:11 -0800 (PST)
+Received: from smtp.gmail.com ([2620:15c:11a:201:d024:f69:ad7c:2653])
+        by smtp.gmail.com with ESMTPSA id g38-20020a635666000000b004768b74f208sm21320pgm.4.2023.01.05.19.01.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 05 Jan 2023 19:01:10 -0800 (PST)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Thierry Reding <thierry.reding@gmail.com>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	dri-devel@lists.freedesktop.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-mediatek@lists.infradead.org,
+	yangcong <yangcong5@huaqin.corp-partner.google.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Jitao Shi <jitao.shi@mediatek.com>,
+	Sam Ravnborg <sam@ravnborg.org>,
+	Rob Clark <robdclark@chromium.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH] drm/panel: boe-tv101wum-nl6: Ensure DSI writes succeed during disable
+Date: Thu,  5 Jan 2023 19:01:08 -0800
+Message-Id: <20230106030108.2542081-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.39.0.314.g84b9a713c41-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAHk-=wiO4rp8oVmj6i6vvC97gNePLN-SxhSK=UozA88G6nxBGQ@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jan 05, 2023 at 06:08:28PM -0800, Linus Torvalds wrote:
-> (although honestly, we should solve the 32-bit
-> problem first - ignoring it isn't fine for anything that is supposed
-> to be widely useful).
+The unprepare sequence has started to fail after moving to panel bridge
+code in the msm drm driver (commit 007ac0262b0d ("drm/msm/dsi: switch to
+DRM_PANEL_BRIDGE")). You'll see messages like this in the kernel logs:
 
-Yea, the 64-bit aspect of that patch is pretty gnarly. I would hope that
-if converting the field to be 64-bit everywhere, the compiler would
-still generate good code for most cases, when testing against
-common-case constant bit masks that are half unset, but I didn't look
-into it. Indeed if this is to become something real, that'd be a
-worthwhile pre-requisite project.
+   panel-boe-tv101wum-nl6 ae94000.dsi.0: failed to set panel off: -22
 
-> And I think VM_DROPPABLE matches (a), and would be fine if it had some
-> other non-made-up use (although honestly, we should solve the 32-bit
-> problem first - ignoring it isn't fine for anything that is supposed
-> to be widely useful).
-> 
-> We *have* talked about features kind of like it before, for people
-> doing basically caches in user space that they can re-create on demand
-> and are ok with just going away under memory pressure.
-> 
-> But those people almost invariably want dropped pages to cause a
-> SIGSEGV or SIGBUS, not to come back as zeroes.
+This is because boe_panel_enter_sleep_mode() needs an operating DSI link
+to set the panel into sleep mode. Performing those writes in the
+unprepare phase of bridge ops is too late, because the link has already
+been torn down by the DSI controller in post_disable, i.e. the PHY has
+been disabled, etc. See dsi_mgr_bridge_post_disable() for more details
+on the DSI .
 
-Yea it seems intuitively like that would be a useful thing. Rather than
-trying to heuristically monitor memory pressure from inside
-uncoordinated userspace apps, just have the kernel nuke pages when it
-makes sense to do.
+Split the unprepare function into a disable part and an unprepare part.
+For now, just the DSI writes to enter sleep mode are put in the disable
+function. This fixes the panel off routine and keeps the panel happy.
 
-The thing is -- and this is what I was trying to express to Yann --
-while I have some theoretical notion of how it /might/ be useful, that's
-mainly just a guess from me. But one could run around discussing the
-idea with actual potential users of it, and see if anyone's eyes light
-up. And then once, for example, the Chrome renderer team is clamoring
-for it, then hey, there'd be a good use that wouldn't be bound up with
-security models not everybody cares about.
+My Wormdingler has an integrated touchscreen that stops responding to
+touch if the panel is only half disabled too. This patch fixes it. And
+finally, this saves power when the screen is off because without this
+fix the regulators for the panel are left enabled when nothing is being
+displayed on the screen.
 
-> So you were insulting when you said kernel people don't care about
-> security issues.  And I'm just telling you that's not true, but it
+Fixes: 007ac0262b0d ("drm/msm/dsi: switch to DRM_PANEL_BRIDGE")
+Fixes: a869b9db7adf ("drm/panel: support for boe tv101wum-nl6 wuxga dsi video mode panel")
+Cc: yangcong <yangcong5@huaqin.corp-partner.google.com>
+Cc: Douglas Anderson <dianders@chromium.org>
+Cc: Jitao Shi <jitao.shi@mediatek.com>
+Cc: Sam Ravnborg <sam@ravnborg.org>
+Cc: Rob Clark <robdclark@chromium.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-Maybe you read that without looking at the end of the sentence which
-read: ", assuming that the concerns are unreal or niche or paranoid or
-whatever." Because the email you sent in response pretty much described
-the concerns as either unreal or niche. So I didn't mean to be
-insulting. I actually think we agree with each other on the nature of
-your position.
+diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+index 857a2f0420d7..c924f1124ebc 100644
+--- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
++++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+@@ -1193,14 +1193,11 @@ static int boe_panel_enter_sleep_mode(struct boe_panel *boe)
+ 	return 0;
+ }
+ 
+-static int boe_panel_unprepare(struct drm_panel *panel)
++static int boe_panel_disable(struct drm_panel *panel)
+ {
+ 	struct boe_panel *boe = to_boe_panel(panel);
+ 	int ret;
+ 
+-	if (!boe->prepared)
+-		return 0;
+-
+ 	ret = boe_panel_enter_sleep_mode(boe);
+ 	if (ret < 0) {
+ 		dev_err(panel->dev, "failed to set panel off: %d\n", ret);
+@@ -1209,6 +1206,16 @@ static int boe_panel_unprepare(struct drm_panel *panel)
+ 
+ 	msleep(150);
+ 
++	return 0;
++}
++
++static int boe_panel_unprepare(struct drm_panel *panel)
++{
++	struct boe_panel *boe = to_boe_panel(panel);
++
++	if (!boe->prepared)
++		return 0;
++
+ 	if (boe->desc->discharge_on_disable) {
+ 		regulator_disable(boe->avee);
+ 		regulator_disable(boe->avdd);
+@@ -1528,6 +1535,7 @@ static enum drm_panel_orientation boe_panel_get_orientation(struct drm_panel *pa
+ }
+ 
+ static const struct drm_panel_funcs boe_panel_funcs = {
++	.disable = boe_panel_disable,
+ 	.unprepare = boe_panel_unprepare,
+ 	.prepare = boe_panel_prepare,
+ 	.enable = boe_panel_enable,
 
-> *is* 100% true that kernel people are often really fed up with
-> security people who have their blinders on, focus on some small thing,
-> and think nothing else ever matters.
-> 
-> So yes, the way to get something like VM_DROPPABLE accepted is to
-> remove the blinders, and have it be something more widely useful, and
-> not be a "for made up bad code".
+base-commit: 1b929c02afd37871d5afb9d498426f83432e71c2
+-- 
+https://chromeos.dev
 
-I get this part. Either the implementation is trivial/convenient/
-unintrusive/unnoticeable, or it really needs to be motivated by
-something you find compelling and preferably has wide application. No
-objection from me there.
-
-If you ignore the instruction decoder part, though -- which I mentioned
-to Ingo could be nixed anyway -- my initial estimation of this patch
-here was that it wasn't /that/ bad, being +32/-3, and I didn't buy the
-arguments that it'd be rarely used code paths and that nobody OOMs and
-nobody swaps, because it doesn't match my own experience of seeing
-OOMing regularly and the fact that if this is in glibc, it'll wind up
-being used. So the initial arguments against it were not compelling.
-
-But then you and others elaborated that VM_* flags really ought to be
-for general things, and that as a matter of taste and cleanliness,
-sticking things into the *core* of mm/ is just really a sensitive thing
-not to be done lightly and without a really compelling reason. And so I
-also get that.
-
-So, I'm playing around with other technical solutions to the mlock()
-limitation thing that started all of this (amidst other things in my
-end-of-the-year backlog), and I'll post results if I can get something
-working.
-
-Jason
