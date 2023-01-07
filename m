@@ -1,53 +1,69 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E750B1842
-	for <patches@lists.linux.dev>; Sat,  7 Jan 2023 10:27:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1591CC433EF;
-	Sat,  7 Jan 2023 10:27:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673087271;
-	bh=9aSwaVo2ASINUIF5kxH/VwbRD8ciZ/eswbsN74JDSOA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IFqULiuqPuR7caQBBJhPi0uCa02+SSlhQpb8HRgRRV32XmQABwjCsMyf90jSDtD6f
-	 v9CxmAN42nEdBgUKed619kswN9VLOBSP4PRjaxNRlc349ixrLH9Pu0WqIQUEN5iR9i
-	 /diqwXucno0TdkY5Pxvs38jSD/YjthrW2tHdTGag=
-Date: Sat, 7 Jan 2023 11:27:48 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Pavel Machek <pavel@denx.de>
-Cc: nathan@kernel.org, marcus.folkesson@gmail.com, cuigaosheng1@huawei.com,
-	andriy.shevchenko@linux.intel.com, m.szyprowski@samsung.com,
-	jack@suse.cz, stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 4.9 000/251] 4.9.337-rc1 review
-Message-ID: <Y7lJJEhK3W3joZv6@kroah.com>
-References: <20230105125334.727282894@linuxfoundation.org>
- <Y7cpWKbQlNW5qEeO@duo.ucw.cz>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA6FEA1
+	for <patches@lists.linux.dev>; Sat,  7 Jan 2023 14:38:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10682C433EF;
+	Sat,  7 Jan 2023 14:38:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1673102288;
+	bh=+AcQ9WJVPan1G0rYOTucA63bgMfL6ndtCecaiiPwGU8=;
+	h=From:To:Cc:Subject:Date:From;
+	b=WnUbZ1JQ+9BIe/fAr06jMYtSbfOig2tcyMdMKe4zZ0R27tWtJUUWP/tQfwOe7bOGm
+	 QVVGSdrvLKwX0SfMz44PycAY1bwwM/ggYSCbqV73oG4ipDOuX+JHoXdHKpv8Bns9Z2
+	 0mHaM3GhllUdFwdGU2fwElTLLX6nVZc6jG2/5hcKKE6gzqi/CE0GKaVZO9jPbMNe1c
+	 1w2hUw4rXJx55itSrDyTHLvdXYqAaPD0vv6aK5RYD4anubeZtlPnS9N73ffbYJ6OYA
+	 XQv9iNvE6YXOmxCB86HqdscMt9AHKF9cVCa9PtpxO8GPdeNc4BA+7ZTUstluvWPWEO
+	 XawH9Xlz44jlA==
+From: ojeda@kernel.org
+To: Masahiro Yamada <masahiroy@kernel.org>,
+	Jonathan Corbet <corbet@lwn.net>,
+	linux-kbuild@vger.kernel.org,
+	linux-doc@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nicolas Schier <nicolas@fjasle.eu>
+Subject: [PATCH] docs: kbuild: remove mention to dropped $(objtree) feature
+Date: Sat,  7 Jan 2023 15:37:47 +0100
+Message-Id: <20230107143747.64802-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y7cpWKbQlNW5qEeO@duo.ucw.cz>
+Content-Transfer-Encoding: 8bit
 
-On Thu, Jan 05, 2023 at 08:47:36PM +0100, Pavel Machek wrote:
-> This one is okay in mainline, but contains wrong error handling in the
-> 4.9 backport. 4.19 seems okay. It needs to "goto out_unlock", not
-> return directly.
-> 
-> > Jan Kara <jack@suse.cz>
-> >     ext4: initialize quota before expanding inode in setproject ioctl
+From: Miguel Ojeda <ojeda@kernel.org>
 
-I've fixed this up, good catch.  The rest I've left as they seem
-reasonable to be in the tree as-is.
+Commit 8d613a1d048c ("kbuild: drop $(objtree)/ prefix support
+for clean-files") dropped support for prefixing with $(objtree).
 
-thanks,
+Thus update the documentation to match that change.
 
-greg k-h
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ Documentation/kbuild/makefiles.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Documentation/kbuild/makefiles.rst b/Documentation/kbuild/makefiles.rst
+index 6b7368d1f516..38bc74eaa547 100644
+--- a/Documentation/kbuild/makefiles.rst
++++ b/Documentation/kbuild/makefiles.rst
+@@ -1042,7 +1042,7 @@ $(clean-files).
+ 
+ When executing "make clean", the file "crc32table.h" will be deleted.
+ Kbuild will assume files to be in the same relative directory as the
+-Makefile, except if prefixed with $(objtree).
++Makefile.
+ 
+ To exclude certain files or directories from make clean, use the
+ $(no-clean-files) variable.
+
+base-commit: 88603b6dc419445847923fcb7fe5080067a30f98
+-- 
+2.39.0
+
