@@ -1,69 +1,56 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f180.google.com (mail-oi1-f180.google.com [209.85.167.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DA6FEA1
-	for <patches@lists.linux.dev>; Sat,  7 Jan 2023 14:38:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10682C433EF;
-	Sat,  7 Jan 2023 14:38:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1673102288;
-	bh=+AcQ9WJVPan1G0rYOTucA63bgMfL6ndtCecaiiPwGU8=;
-	h=From:To:Cc:Subject:Date:From;
-	b=WnUbZ1JQ+9BIe/fAr06jMYtSbfOig2tcyMdMKe4zZ0R27tWtJUUWP/tQfwOe7bOGm
-	 QVVGSdrvLKwX0SfMz44PycAY1bwwM/ggYSCbqV73oG4ipDOuX+JHoXdHKpv8Bns9Z2
-	 0mHaM3GhllUdFwdGU2fwElTLLX6nVZc6jG2/5hcKKE6gzqi/CE0GKaVZO9jPbMNe1c
-	 1w2hUw4rXJx55itSrDyTHLvdXYqAaPD0vv6aK5RYD4anubeZtlPnS9N73ffbYJ6OYA
-	 XQv9iNvE6YXOmxCB86HqdscMt9AHKF9cVCa9PtpxO8GPdeNc4BA+7ZTUstluvWPWEO
-	 XawH9Xlz44jlA==
-From: ojeda@kernel.org
-To: Masahiro Yamada <masahiroy@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	linux-kbuild@vger.kernel.org,
-	linux-doc@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nicolas Schier <nicolas@fjasle.eu>
-Subject: [PATCH] docs: kbuild: remove mention to dropped $(objtree) feature
-Date: Sat,  7 Jan 2023 15:37:47 +0100
-Message-Id: <20230107143747.64802-1-ojeda@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB47EA47
+	for <patches@lists.linux.dev>; Sat,  7 Jan 2023 18:52:32 +0000 (UTC)
+Received: by mail-oi1-f180.google.com with SMTP id s66so3088968oib.7
+        for <patches@lists.linux.dev>; Sat, 07 Jan 2023 10:52:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:subject:message-id:date:from:reply-to:mime-version:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=XppnWxwUDd4VKlDQMnttNa0YhBi85GdHW05upV3mZfc=;
+        b=OTJDznGLg7xjyw7tYndHsDo7xxcKggcAU+buAwGIvjCu5KZ47f2SxgOoH2MVLPpynK
+         tXnt/yk3An3+ytdM3v+2dezUktsFcygq98tv7Ru5jkI2hTaELIeHtYWyziBUavqicrFS
+         Wk8eBzm5uUq4QtEEAczqXrtOPrnicjlmyb/SrBDk2XzibtwctruqK0CI+snjVVcws/Kl
+         1q0LRk6TL+lf29Ys8sxd+tOed/2Dwp/Eo+1Kpv0rAPV3Uhrr8/KC61q3luS1b5aN1i/W
+         3UIPS8430eoyTH6yMqyealSHcnkfHgEOv882VSmLKve+yzOMLeLAQ2iv8WAaMbJuzzF2
+         dFqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:subject:message-id:date:from:reply-to:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XppnWxwUDd4VKlDQMnttNa0YhBi85GdHW05upV3mZfc=;
+        b=8D5uT99eJGmQUPHn12UoHpiI7tOvTclq8BarrH9g4YVdxqQAB011gCLYfs39d2eBtL
+         Z/J89JL23yOwehRhzO1ED95g0lrBz+C4MkE4i5XI/TAfVXJk+d16LCPEaNeK9dEyAjp7
+         falccT7wEAc9XVlTxaYT1ZMbFolgn+CPyT3ZxpzOWeWv8No2qmi5sX3QC2+GWLO3BTP6
+         d0UWJ+V+payI1s2IFXfbmr5Uz8RUlM6JovKuclkMbgoAJAS36LfF6Kg/6N6tV+8DZij1
+         54sbA0ErhGmD4feL+WoBB68WRBKJrmGa3Ztbg+/fhBXEjVbv3r+p2GAV7ohu1hPBfnML
+         UwZg==
+X-Gm-Message-State: AFqh2kolQRE/8f2U/EgTXRJcmZcK4jbIG2PMm/tEb1bX/gOu9KBk5D0l
+	x3EI/vYuo/Yj5iy8dnf2flWCqhvPRiH/A4SX1Wg=
+X-Google-Smtp-Source: AMrXdXvua+9xxzIE3vrOHiPm8pfO1lHJ4iNNuHiUxvgIM81k5saevWDca0xfsqgrSHrqPtTBwJZaNjLL4jrPp9i2UXY=
+X-Received: by 2002:a05:6808:3c6:b0:35e:2397:2223 with SMTP id
+ o6-20020a05680803c600b0035e23972223mr2819653oie.163.1673117551770; Sat, 07
+ Jan 2023 10:52:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Received: by 2002:a05:6838:2307:b0:577:153e:6778 with HTTP; Sat, 7 Jan 2023
+ 10:52:31 -0800 (PST)
+Reply-To: lisaarobet@gmail.com
+From: Lisa <ws6392981@gmail.com>
+Date: Sat, 7 Jan 2023 18:52:31 +0000
+Message-ID: <CALcNZmFStXCz-MD4J7B7uJQgiC-Rf+obM6p2nV7xHffiY9vC0w@mail.gmail.com>
+Subject: Greetings
+To: undisclosed-recipients:;
+Content-Type: text/plain; charset="UTF-8"
 
-From: Miguel Ojeda <ojeda@kernel.org>
+Hi,
 
-Commit 8d613a1d048c ("kbuild: drop $(objtree)/ prefix support
-for clean-files") dropped support for prefixing with $(objtree).
+Just wanted to check in and see if you receive my request?
 
-Thus update the documentation to match that change.
-
-Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
----
- Documentation/kbuild/makefiles.rst | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/kbuild/makefiles.rst b/Documentation/kbuild/makefiles.rst
-index 6b7368d1f516..38bc74eaa547 100644
---- a/Documentation/kbuild/makefiles.rst
-+++ b/Documentation/kbuild/makefiles.rst
-@@ -1042,7 +1042,7 @@ $(clean-files).
- 
- When executing "make clean", the file "crc32table.h" will be deleted.
- Kbuild will assume files to be in the same relative directory as the
--Makefile, except if prefixed with $(objtree).
-+Makefile.
- 
- To exclude certain files or directories from make clean, use the
- $(no-clean-files) variable.
-
-base-commit: 88603b6dc419445847923fcb7fe5080067a30f98
--- 
-2.39.0
-
+Thanks
