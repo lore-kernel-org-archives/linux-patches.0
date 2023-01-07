@@ -1,140 +1,67 @@
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC30995F9
-	for <patches@lists.linux.dev>; Fri,  6 Jan 2023 23:53:15 +0000 (UTC)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id B09D85C0071;
-	Fri,  6 Jan 2023 18:53:14 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Fri, 06 Jan 2023 18:53:14 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tyhicks.com; h=
-	cc:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm2; t=1673049194; x=1673135594; bh=7G4/beSUaF
-	qqw1nEdaUkVcwlLhwLsSrWTndJbny1Uek=; b=hGJkAkQ5KCG0r0+DxIojSkT5BC
-	IBN6kbZKQq7pLRwfGGaNKDfW+LGae89wtH1h2F8OPrqSZ7MWp1xANmLhMrq/7CqJ
-	UNqfC8L2Dlzzoxk/fnYY8jVpJ+N+iQEIPkNYfO9/Kpth32Hfx3FfSlbZABAW3bL0
-	e8oXoaSlZ0m8HF7C9agSc3jtdXjob4z63GM6FftCC2GZmPeLWefHKApzyc8XXbe1
-	tmDr9pdDjkNQlu9xMya+nqSPue+SBmEGqmpCbDAbEbeRMGRUDezeYx/rB3dGCe7d
-	CGYSC5I2zJfTUJaR4eYiizl3dvCBHKDNb8llrGznk30FAS0UfV0ckudA/XbA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1673049194; x=1673135594; bh=7G4/beSUaFqqw1nEdaUkVcwlLhwL
-	sSrWTndJbny1Uek=; b=mBm7DiKmDzFj3ZH0irV4Ph9MbVV6esIQVuP890YNs3Ms
-	2J3Q9JMWOXIu2joi/yhJVzqCuH7q+kP2TOYHGSGRN0xJYhdAYcWmRnHqRbr0h3ii
-	sIHPmp2KZoQVBcUUgUoI2ppwseRIKl6NOC1odHgJPaUOhE+ZZKBy2VhVff63nT8w
-	ydtyxhgUHKR71tOO6medUr3Neq/JyZRIWsCX4TVnto4uuXA8xfnyjTVKXr2PVyou
-	zTFbQdhDXelcxMqZbNLEkDWFWfwEo0deTwQi/Qf26grzK9x638wwn+hN6WOmhLpN
-	4uyqXwZ0wWEYQ8pMnbzBfn548+EwqttdaRTrhflX5w==
-X-ME-Sender: <xms:arS4Y3NrU9dkMAyPmyqkpUiyuXBI3RJ-_9macWGeKOZJAfScgmu2HA>
-    <xme:arS4Yx8uCLH0kJRxSzsggWaaI8aDgylq-XDQbiVXlg_rWF-MQ5ohRPMvYNWJKbpoL
-    WjxdvX_5vZAAKatE2I>
-X-ME-Received: <xmr:arS4Y2TV3xcJX-7-o7eZXgEyTzdYP9y0elAnRlnIoyJe_TpBOT2o2UeFubk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrkedugdduhecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefvhihlvghr
-    ucfjihgtkhhsuceotghouggvsehthihhihgtkhhsrdgtohhmqeenucggtffrrghtthgvrh
-    hnpeetveeffeehgefgieffudeulefgffegudehjeejueffvefhkedvhfelvdevffelhfen
-    ucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhlvggvmhhhuhhishdrihhnfhhonecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvseht
-    hihhihgtkhhsrdgtohhm
-X-ME-Proxy: <xmx:arS4Y7sfGfnq-b-6O7kkX09GUiLNVAndrlxOAX9EVU9G3zabJMCCxg>
-    <xmx:arS4Y_dI3EhpUn-ByDqSEXM172wzx4vwNfXKXAsJymALFcQa2NIyuQ>
-    <xmx:arS4Y32X8-XxdSMA65eCzow_upFALDYXBItRTvHgbwjk-6mkspwBSQ>
-    <xmx:arS4Y631rLcbSN7M8lgby6MZ8r6zt4hEsd9Qgv25ecPAuUQ5KEtngg>
-Feedback-ID: i78e14604:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Jan 2023 18:53:12 -0500 (EST)
-Date: Fri, 6 Jan 2023 17:53:10 -0600
-From: Tyler Hicks <code@tyhicks.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Pavel Machek <pavel@denx.de>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 000/207] 6.1.4-rc1 review
-Message-ID: <Y7i0ZukMa9CX+fzo@sequoia>
-References: <20230104160511.905925875@linuxfoundation.org>
- <Y7cmMKUr//oYKWXb@duo.ucw.cz>
- <Y7fGpYyaJWym1BxW@kroah.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39356139C
+	for <patches@lists.linux.dev>; Sat,  7 Jan 2023 07:13:38 +0000 (UTC)
+Received: from [2a02:8108:963f:de38:eca4:7d19:f9a2:22c5]; authenticated
+	by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+	id 1pE3OX-0004hI-QT; Sat, 07 Jan 2023 08:13:34 +0100
+Message-ID: <a7bba4b9-e24e-0214-0fa7-a7f738afde25@leemhuis.info>
+Date: Sat, 7 Jan 2023 08:13:32 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y7fGpYyaJWym1BxW@kroah.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.0
+Subject: Re: [PATCH 6.1 000/207] 6.1.4-rc1 review
+Content-Language: en-US, de-DE
+To: Tyler Hicks <code@tyhicks.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Pavel Machek <pavel@denx.de>, stable@vger.kernel.org,
+ patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, jonathanh@nvidia.com, f.fainelli@gmail.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230104160511.905925875@linuxfoundation.org>
+ <Y7cmMKUr//oYKWXb@duo.ucw.cz> <Y7fGpYyaJWym1BxW@kroah.com>
+ <Y7i0ZukMa9CX+fzo@sequoia>
+From: Thorsten Leemhuis <regressions@leemhuis.info>
+In-Reply-To: <Y7i0ZukMa9CX+fzo@sequoia>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1673075618;ff4e75b3;
+X-HE-SMSGID: 1pE3OX-0004hI-QT
 
-On 2023-01-06 07:58:45, Greg Kroah-Hartman wrote:
-> On Thu, Jan 05, 2023 at 08:34:08PM +0100, Pavel Machek wrote:
-> > Hi!
-> > 
-> > > This is the start of the stable review cycle for the 6.1.4 release.
-> > > There are 207 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > 
-> > Thank you.
-> > 
-> > Is it known at this point if 6.1 will became next longterm release? It
-> > is not listed as such on https://www.kernel.org/category/releases.html
-> > . We might want to do some extra testing if it is.
+On 07.01.23 00:53, Tyler Hicks wrote:
+>
+> 2. Do you (or anyone else) happen to have a list of the known
+>    regressions? I see one specific to linux-6.1.y in the regzbot list:
 > 
-> A kernel can not become "long term" until it would have normally dropped
-> off of support.  Right now there are known-regressions in 6.1 still that
-> are not resolved.
+>     https://linux-regtracking.leemhuis.info/regzbot/stable/
 
-Hey Greg - A couple questions...
+That page only lists regressions that where introduced in stable (e.g.
+say in a range like v6.1.1..v6.1.2) which might need to be handled by
+the stable team (for example if a regression is caused by incomplete
+backport).
 
-1. Does that mean that you always wait until N+1 is released by Linus
-   before declaring N to be an upstream LTS kernel?
+All that where introduced in mainline (e.g. v6.0..v6.1) are listed on
+the mainline page, as those need to be fixed in mainline by the regular
+developers (e.g. never by the stable team) before they can be backported
+to the stable series[1]:
 
-   Looking back to last year, v5.16 was released on 2022-01-10 and you
-   declared v5.15 as the LTS on 2022-01-16:
+https://linux-regtracking.leemhuis.info/regzbot/mainline/
 
-    https://git.kernel.org/pub/scm/docs/kernel/website.git/commit/?id=c335525958a3424ec0200dc9093d2bbf95032f83
+There are plenty for v6.0..v6.1 currently, which is unusual, but that
+can happen this time of the year. I hope the situation improves somewhat
+over the next two weeks when more people are back from the holidays.
 
-   That one data point lines up but I want to confirm that's the normal
-   procedure because I hadn't noticed that pattern until now and I don't
-   see it mentioned on the kernel.org Releases page.
+Ciao, Thorsten
 
-2. Do you (or anyone else) happen to have a list of the known
-   regressions? I see one specific to linux-6.1.y in the regzbot list:
-
-    https://linux-regtracking.leemhuis.info/regzbot/stable/
-
-   Another reported here (with a potential fix identified):
-
-    https://lore.kernel.org/netdev/CAK8fFZ7cYRkGjUJD2D86G6Jh9YRmP_L+7Ke6CLFSyFmRkoe-Hg@mail.gmail.com/T/#m1b118647969eb0d64de016858506fc2345a0b834
-
-   A more complete list may help all of us currently evaluating v6.1.
-
-> And "extra" testing is always good no matter what kernel branch it is
-> happening for, why not always do it?
-
-That's a very good point. I have to admit that we are a bit too
-LTS-focused today when it comes to our testing. We have a goal to
-improve in that area.
-
-We have been working under the assumption that v6.1 is going to be the
-next LTS but, as you point out, we should be iteratively testing each
-release just the same. We are currently doing some additional/extra
-testing of v6.1 with our Microsoft Linux kernel and will let you know
-the results as they come in.
-
-Tyler
-
-> 
-> thanks,
-> 
-> greg k-h
+[1] which is true for some of those that are introduced in the stable
+series as well. That's one of the reasons why I'm not really happy with
+how rezbot exposes those regressions and will improve this sooner or
+later, but there are more important things on the todo list for now.
