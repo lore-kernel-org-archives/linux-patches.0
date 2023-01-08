@@ -1,155 +1,88 @@
-Received: from mailrelay3-1.pub.mailoutpod2-cph3.one.com (mailrelay3-1.pub.mailoutpod2-cph3.one.com [46.30.211.178])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83A1A47
-	for <patches@lists.linux.dev>; Sat,  7 Jan 2023 20:28:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=ravnborg.org; s=rsa2;
-	h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
-	 from:date:from;
-	bh=OKwJoKKJXwc7yt9ypgLP9wcR/2GEiXgGzz9+CO4kFl8=;
-	b=kvdfOG7QHhfJrWGUORioRmy9O0xW4kcyiToa4UkWwBhfJyJBLZAbK7qWZ3J4A1OE2jhg0+CAPnO6y
-	 VzxY4CJvPmA2ebBnUSQMqbGKD/oCmixb/Dl14hRDNPNaZUETuhtlyb/8/hJZIIw5M8CLVT4hdbY8AZ
-	 ZBS+rOnUTePDqkkUWcpB/QVET/01rsz3NVyf5EbrqA//mpSVgxtv2E3oPYKr5vWNGjAoRDMp4Zj+10
-	 eVuJCM0n66qq42In7qobcKCMM9rlhwzzzrdqOUl9CaVifYp2Uh5BsMORq/oGDWScW+quu0JEQQIjPt
-	 be7SA6GitieZs5wOvouDZ5kqyhT+P0g==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed;
-	d=ravnborg.org; s=ed2;
-	h=in-reply-to:content-type:mime-version:references:message-id:subject:cc:to:
-	 from:date:from;
-	bh=OKwJoKKJXwc7yt9ypgLP9wcR/2GEiXgGzz9+CO4kFl8=;
-	b=hnooveo3yjFo0mVbCvtInFozqKRmSzDRj3x/a4FgiV25pZ8/9l53+QW05rDSy5Zwng5tzOzL63pKc
-	 eFUbSxnBg==
-X-HalOne-ID: dfa8968f-8ec9-11ed-b757-ede074c87fad
-Received: from ravnborg.org (2-105-2-98-cable.dk.customer.tdc.net [2.105.2.98])
-	by mailrelay3 (Halon) with ESMTPSA
-	id dfa8968f-8ec9-11ed-b757-ede074c87fad;
-	Sat, 07 Jan 2023 20:28:43 +0000 (UTC)
-Date: Sat, 7 Jan 2023 21:28:41 +0100
-From: Sam Ravnborg <sam@ravnborg.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Thierry Reding <thierry.reding@gmail.com>, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, dri-devel@lists.freedesktop.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-mediatek@lists.infradead.org,
-	yangcong <yangcong5@huaqin.corp-partner.google.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Jitao Shi <jitao.shi@mediatek.com>,
-	Rob Clark <robdclark@chromium.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH] drm/panel: boe-tv101wum-nl6: Ensure DSI writes succeed
- during disable
-Message-ID: <Y7nV+aeFiq5aD0xU@ravnborg.org>
-References: <20230106030108.2542081-1-swboyd@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EC01FD0
+	for <patches@lists.linux.dev>; Sun,  8 Jan 2023 12:52:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 399A1C433F0
+	for <patches@lists.linux.dev>; Sun,  8 Jan 2023 12:52:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1673182327;
+	bh=VnGhcg4zxSgX4xZuHSdJDrQ5iUTrHtILPmmSMksv9w4=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=YN9YXrawrN7Sr+6pEtFesgn7DnMKXFAafpFaVD8IQ0u8xkhDMFzSDvZa870mFptgZ
+	 0gaVXH32i+vZSDaHlwnhg4Eb6D3l6adXFu0o3uFya3nXuVeu0Z7Bh1FzVjxofjxpeu
+	 PeyhOzxY32WVpAl6hKG8ioiS3aedaL15Ckd7xa2bxFxZQy0jjOfS/S6JKfycvgCyGv
+	 4xu+ofN7i80kqvQFMolXP5XMhCJOSWXey5/XCsDOnlBB3dov6A1MCfq0XOnYzNMPIk
+	 jt75SlUQJmlGeCdcuv3jT89Vp7aCcmf0mCf88j4AUxB50Dd8P/uv4csTMLJHfYK5K5
+	 JzMdrFkZdwdaw==
+Received: by mail-oi1-f174.google.com with SMTP id h185so4981314oif.5
+        for <patches@lists.linux.dev>; Sun, 08 Jan 2023 04:52:07 -0800 (PST)
+X-Gm-Message-State: AFqh2kqJhOYHVwqIUYCmEwekdVpAezuaHvr/dYbpWzRpX1hp/LiymKRe
+	tUL9L9QkizWkpG34CVbNYsxu3/vKGjECrK68QAU=
+X-Google-Smtp-Source: AMrXdXu5aNI5c7PDY2/YYpeRfYOcd4kjo2KqcZg51Q1nIVZmiL1vxxXX13wDKne+iSFJbbCp4lwz/gvTYsoUERygPrA=
+X-Received: by 2002:aca:3755:0:b0:35e:7c55:b015 with SMTP id
+ e82-20020aca3755000000b0035e7c55b015mr3677001oia.287.1673182326467; Sun, 08
+ Jan 2023 04:52:06 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230106030108.2542081-1-swboyd@chromium.org>
+References: <20230107143747.64802-1-ojeda@kernel.org>
+In-Reply-To: <20230107143747.64802-1-ojeda@kernel.org>
+From: Masahiro Yamada <masahiroy@kernel.org>
+Date: Sun, 8 Jan 2023 21:51:30 +0900
+X-Gmail-Original-Message-ID: <CAK7LNARWCeYew_sWmYYnrm87vYDBLs0LQOdc0XkCUy+b45zmBQ@mail.gmail.com>
+Message-ID: <CAK7LNARWCeYew_sWmYYnrm87vYDBLs0LQOdc0XkCUy+b45zmBQ@mail.gmail.com>
+Subject: Re: [PATCH] docs: kbuild: remove mention to dropped $(objtree) feature
+To: ojeda@kernel.org
+Cc: Jonathan Corbet <corbet@lwn.net>, linux-kbuild@vger.kernel.org, linux-doc@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
+	Nicolas Schier <nicolas@fjasle.eu>
+Content-Type: text/plain; charset="UTF-8"
 
-Hi Stephen.
+On Sat, Jan 7, 2023 at 11:38 PM <ojeda@kernel.org> wrote:
+>
+> From: Miguel Ojeda <ojeda@kernel.org>
+>
+> Commit 8d613a1d048c ("kbuild: drop $(objtree)/ prefix support
+> for clean-files") dropped support for prefixing with $(objtree).
+>
+> Thus update the documentation to match that change.
+>
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
-On Thu, Jan 05, 2023 at 07:01:08PM -0800, Stephen Boyd wrote:
-> The unprepare sequence has started to fail after moving to panel bridge
-> code in the msm drm driver (commit 007ac0262b0d ("drm/msm/dsi: switch to
-> DRM_PANEL_BRIDGE")). You'll see messages like this in the kernel logs:
-> 
->    panel-boe-tv101wum-nl6 ae94000.dsi.0: failed to set panel off: -22
-> 
-> This is because boe_panel_enter_sleep_mode() needs an operating DSI link
-> to set the panel into sleep mode. Performing those writes in the
-> unprepare phase of bridge ops is too late, because the link has already
-> been torn down by the DSI controller in post_disable, i.e. the PHY has
-> been disabled, etc. See dsi_mgr_bridge_post_disable() for more details
-> on the DSI .
-> 
-> Split the unprepare function into a disable part and an unprepare part.
-> For now, just the DSI writes to enter sleep mode are put in the disable
-> function. This fixes the panel off routine and keeps the panel happy.
-> 
-> My Wormdingler has an integrated touchscreen that stops responding to
-> touch if the panel is only half disabled too. This patch fixes it. And
-> finally, this saves power when the screen is off because without this
-> fix the regulators for the panel are left enabled when nothing is being
-> displayed on the screen.
-The pattern we use in several (but not all) panel drivers are that
-errors in unprepare/disable are logged but the function do not skip
-the remainder of the function. This is to avoid that we do not disable
-power supplies etc.
 
-For this case we could ask ourself if the display needs to enter sleep
-mode right before we disable the regulator. But if the regulator is
-fixed, so the disable has no effect, this seems OK.
+Applied to linux-kbuild/fixes.
+Thanks.
 
-Please fix the unprepare to not jump out early, on top of or together
-with the other fix.
 
-	Sam
-
-> 
-> Fixes: 007ac0262b0d ("drm/msm/dsi: switch to DRM_PANEL_BRIDGE")
-> Fixes: a869b9db7adf ("drm/panel: support for boe tv101wum-nl6 wuxga dsi video mode panel")
-> Cc: yangcong <yangcong5@huaqin.corp-partner.google.com>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Jitao Shi <jitao.shi@mediatek.com>
-> Cc: Sam Ravnborg <sam@ravnborg.org>
-> Cc: Rob Clark <robdclark@chromium.org>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 16 ++++++++++++----
->  1 file changed, 12 insertions(+), 4 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-> index 857a2f0420d7..c924f1124ebc 100644
-> --- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-> +++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-> @@ -1193,14 +1193,11 @@ static int boe_panel_enter_sleep_mode(struct boe_panel *boe)
->  	return 0;
->  }
->  
-> -static int boe_panel_unprepare(struct drm_panel *panel)
-> +static int boe_panel_disable(struct drm_panel *panel)
->  {
->  	struct boe_panel *boe = to_boe_panel(panel);
->  	int ret;
->  
-> -	if (!boe->prepared)
-> -		return 0;
-> -
->  	ret = boe_panel_enter_sleep_mode(boe);
->  	if (ret < 0) {
->  		dev_err(panel->dev, "failed to set panel off: %d\n", ret);
-> @@ -1209,6 +1206,16 @@ static int boe_panel_unprepare(struct drm_panel *panel)
->  
->  	msleep(150);
->  
-> +	return 0;
-> +}
-> +
-> +static int boe_panel_unprepare(struct drm_panel *panel)
-> +{
-> +	struct boe_panel *boe = to_boe_panel(panel);
-> +
-> +	if (!boe->prepared)
-> +		return 0;
-> +
->  	if (boe->desc->discharge_on_disable) {
->  		regulator_disable(boe->avee);
->  		regulator_disable(boe->avdd);
-> @@ -1528,6 +1535,7 @@ static enum drm_panel_orientation boe_panel_get_orientation(struct drm_panel *pa
->  }
->  
->  static const struct drm_panel_funcs boe_panel_funcs = {
-> +	.disable = boe_panel_disable,
->  	.unprepare = boe_panel_unprepare,
->  	.prepare = boe_panel_prepare,
->  	.enable = boe_panel_enable,
-> 
-> base-commit: 1b929c02afd37871d5afb9d498426f83432e71c2
-> -- 
-> https://chromeos.dev
+>  Documentation/kbuild/makefiles.rst | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/Documentation/kbuild/makefiles.rst b/Documentation/kbuild/makefiles.rst
+> index 6b7368d1f516..38bc74eaa547 100644
+> --- a/Documentation/kbuild/makefiles.rst
+> +++ b/Documentation/kbuild/makefiles.rst
+> @@ -1042,7 +1042,7 @@ $(clean-files).
+>
+>  When executing "make clean", the file "crc32table.h" will be deleted.
+>  Kbuild will assume files to be in the same relative directory as the
+> -Makefile, except if prefixed with $(objtree).
+> +Makefile.
+>
+>  To exclude certain files or directories from make clean, use the
+>  $(no-clean-files) variable.
+>
+> base-commit: 88603b6dc419445847923fcb7fe5080067a30f98
+> --
+> 2.39.0
+>
+
+
+-- 
+Best Regards
+Masahiro Yamada
