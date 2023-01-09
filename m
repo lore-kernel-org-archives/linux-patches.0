@@ -1,87 +1,88 @@
-Received: from mail-vs1-f54.google.com (mail-vs1-f54.google.com [209.85.217.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB10C320A
-	for <patches@lists.linux.dev>; Mon,  9 Jan 2023 14:29:17 +0000 (UTC)
-Received: by mail-vs1-f54.google.com with SMTP id z128so1890620vsb.3
-        for <patches@lists.linux.dev>; Mon, 09 Jan 2023 06:29:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linux-foundation.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+Yy00juT6YLJ5oWGMT9Wza1I0KabYl3KuXLE2Ym30r8=;
-        b=hqu1WUIKQ7nelxjitmtslt7P2HWICJ6UQhItkE1DxGc9pYkqGv2Z3jzXfiUQ7oN+jD
-         woMH988I6TyAfP/DcKz8zY/EqQvJsbpUwPmosnHsPhhtYjp/+7T4/iB5/v0fZx5jhews
-         EgJ65v8od4MS0eHGmvOkk88QhVj1ogj0TwlYA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+Yy00juT6YLJ5oWGMT9Wza1I0KabYl3KuXLE2Ym30r8=;
-        b=zvpdY649wH1lbaVFSQzq+0RxkYmsmWmF4n61XCzYZP8gjXzx+C6kEdYS6bFXzv/ay2
-         j67acuyrmmxz0h6y4dHYCOY/NSBpvucWlckoATxbICinyHgaE1rbmVOD7jqC3hCUiqjd
-         PZmOMyjvuuvf1fMRYVFnhtWbNacU8u9WnH1A+vBwvErvHrq/t3ynCHCfh2o7CoLYs1o0
-         F3Gv3DAXgJjSYplBfP5Kqjl+PlVZNy4NZu4uzAD8N53guVPJ9eXdaYFfoiBWVkFNgyJn
-         b6VGe3gEv/vrt1E37jcAfpOYw2Bl4HGOyPMicOiUkzc9JJLCh93cLv4dt/d5fGpXCKSN
-         44cw==
-X-Gm-Message-State: AFqh2kqmtZgOTRVcfnK9r0DmQrOmdv178YCntT25/qqN3c7H3DGBzBwd
-	+1yWkVjRnX5JpQ0B7QIGs0ZDupzNsRafZV6lvuU=
-X-Google-Smtp-Source: AMrXdXt1yea4Anv4oYkvFbt4D7nN0mp2LVJ/4dklNps5me+fKatiPGtiEOPsY6qeT3741fIl7uwiAw==
-X-Received: by 2002:a05:6102:3d0c:b0:3c9:77f:3e27 with SMTP id i12-20020a0561023d0c00b003c9077f3e27mr31126701vsv.31.1673274556478;
-        Mon, 09 Jan 2023 06:29:16 -0800 (PST)
-Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com. [209.85.222.169])
-        by smtp.gmail.com with ESMTPSA id y2-20020a05620a44c200b006f87d28ea3asm5396843qkp.54.2023.01.09.06.29.14
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Jan 2023 06:29:14 -0800 (PST)
-Received: by mail-qk1-f169.google.com with SMTP id e6so4224457qkl.4
-        for <patches@lists.linux.dev>; Mon, 09 Jan 2023 06:29:14 -0800 (PST)
-X-Received: by 2002:ae9:ef49:0:b0:6fe:d4a6:dcef with SMTP id
- d70-20020ae9ef49000000b006fed4a6dcefmr3220519qkg.594.1673274554214; Mon, 09
- Jan 2023 06:29:14 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB532F32
+	for <patches@lists.linux.dev>; Mon,  9 Jan 2023 20:45:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9624C433EF;
+	Mon,  9 Jan 2023 20:45:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1673297149;
+	bh=7uir+fpWvzx/j9KVXbIqIv40RM5gM3COk4tThC15780=;
+	h=From:To:Cc:Subject:Date:From;
+	b=g6N3/ydSgf1ekjlEVVfHIsbM86g99kyRUChoRdZg9dF1V/YnyOisYY37+GmhiitC0
+	 Jdi2fKYCxTR6yF2oF3U/V0kkuRBNpAVyrGOiqqVN4JpG6eGFBVbNFBPsOHQSc17+Vh
+	 lNaZxi1Dt9tvPKNvDjwQJ/6lv0fPjQGtuA3lfiiPTgOB3RZLYuYpvrrMsjEILsl8qI
+	 QuDZ0h1vJ7mq97UjXtbliAoUDQc6j8sjYcuAkg/KbYgpKCbjPb1lBS2UTe6sN8SZZ+
+	 83WGp3wKWYw6yURHS1NMI9AG1KA78Jh38A6ktiB7Obi8hyEL74pZ22Jywp1NEdzJtS
+	 zQWuLBcrUi58A==
+From: Miguel Ojeda <ojeda@kernel.org>
+To: Masahiro Yamada <masahiroy@kernel.org>
+Cc: linux-kbuild@vger.kernel.org,
+	Nathan Chancellor <nathan@kernel.org>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nicolas Schier <nicolas@fjasle.eu>,
+	rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Alex Gaynor <alex.gaynor@gmail.com>,
+	Wedson Almeida Filho <wedsonaf@gmail.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Gary Guo <gary@garyguo.net>,
+	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	linux-doc@vger.kernel.org
+Subject: [PATCH 1/6] docs: rust: add paragraph about finding a suitable `libclang`
+Date: Mon,  9 Jan 2023 21:45:15 +0100
+Message-Id: <20230109204520.539080-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230101162910.710293-1-Jason@zx2c4.com> <20230101162910.710293-3-Jason@zx2c4.com>
- <Y7QIg/hAIk7eZE42@gmail.com> <CALCETrWdw5kxrtr4M7AkKYDOJEE1cU1wENWgmgOxn0rEJz4y3w@mail.gmail.com>
- <CAHk-=wg_6Uhkjy12Vq_hN6rQqGRP2nE15rkgiAo6Qay5aOeigg@mail.gmail.com>
- <Y7SDgtXayQCy6xT6@zx2c4.com> <CAHk-=whQdWFw+0eGttxsWBHZg1+uh=0MhxXYtvJGX4t9P1MgNw@mail.gmail.com>
- <874jt0kndq.fsf@oldenburg.str.redhat.com>
-In-Reply-To: <874jt0kndq.fsf@oldenburg.str.redhat.com>
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Mon, 9 Jan 2023 08:28:58 -0600
-X-Gmail-Original-Message-ID: <CAHk-=wg7vMC2VmSBdVw7EKV+7UDiftQEg3L+3Rc0rcjjfsvs5A@mail.gmail.com>
-Message-ID: <CAHk-=wg7vMC2VmSBdVw7EKV+7UDiftQEg3L+3Rc0rcjjfsvs5A@mail.gmail.com>
-Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-To: Florian Weimer <fweimer@redhat.com>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>, Andy Lutomirski <luto@kernel.org>, Ingo Molnar <mingo@kernel.org>, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, tglx@linutronix.de, 
-	linux-crypto@vger.kernel.org, linux-api@vger.kernel.org, x86@kernel.org, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>, "Carlos O'Donell" <carlos@redhat.com>, 
-	Arnd Bergmann <arnd@arndb.de>, Jann Horn <jannh@google.com>, Christian Brauner <brauner@kernel.org>, 
-	linux-mm@kvack.org, mlichvar@redhat.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 
-On Mon, Jan 9, 2023 at 4:34 AM Florian Weimer <fweimer@redhat.com> wrote:
->
-> We did these changes on the glibc side because Jason sounded very
-> confident that he's able to deliver vDSO acceleration for getrandom.  If
-> that fails to materialize, we'll just have to add back userspace
-> buffering in glibc.
+Sometimes users need to tweak the finding process of `libclang`
+for `bindgen` via the `clang-sys`-provided environment variables.
 
-My whole argument has been that user-space buffering is the sane thing
-to do. Most definitely for something like glibc.
+Thus add a paragraph to the setting up guide, including a reference
+to `clang-sys`'s relevant documentation.
 
-The number of people who go "oh, no, my buffer or randomness could be
-exposed by insert-odd-situation-here" is approximately zero, and then
-the onus should be on *them* to do something special.
+Link: https://lore.kernel.org/rust-for-linux/CAKwvOdm5JT4wbdQQYuW+RT07rCi6whGBM2iUAyg8A1CmLXG6Nw@mail.gmail.com/
+Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+---
+ Documentation/rust/quick-start.rst | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
 
-Because *they* are special. Precious little snowflake special.
+diff --git a/Documentation/rust/quick-start.rst b/Documentation/rust/quick-start.rst
+index 13b7744b1e27..cae21ea7de41 100644
+--- a/Documentation/rust/quick-start.rst
++++ b/Documentation/rust/quick-start.rst
+@@ -100,6 +100,23 @@ Install it via (note that this will download and build the tool from source)::
+ 
+ 	cargo install --locked --version $(scripts/min-tool-version.sh bindgen) bindgen
+ 
++``bindgen`` needs to find a suitable ``libclang`` in order to work. If it is
++not found (or a different ``libclang`` than the one found should be used),
++the process can be tweaked using the environment variables understood by
++``clang-sys`` (the Rust bindings crate that ``bindgen`` uses to access
++``libclang``):
++
++* ``LLVM_CONFIG_PATH`` can be pointed to an ``llvm-config`` executable.
++
++* Or ``LIBCLANG_PATH`` can be pointed to a ``libclang`` shared library
++  or to the directoy containing it.
++
++* Or ``CLANG_PATH`` can be pointed to a ``clang`` executable.
++
++For details, please see ``clang-sys``'s documentation at:
++
++	https://github.com/KyleMayes/clang-sys#environment-variables
++
+ 
+ Requirements: Developing
+ ------------------------
+-- 
+2.39.0
 
-             Linus
