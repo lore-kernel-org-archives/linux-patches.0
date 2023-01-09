@@ -1,40 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CF545221
-	for <patches@lists.linux.dev>; Mon,  9 Jan 2023 20:46:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B2F0C433EF;
-	Mon,  9 Jan 2023 20:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E64F5221
+	for <patches@lists.linux.dev>; Mon,  9 Jan 2023 20:49:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6196C433EF;
+	Mon,  9 Jan 2023 20:49:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1673297166;
-	bh=UwE38YioG9dTqnBwoYpucHihCJ8r0LAOxRgPcDdHqlg=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=md6E83gIPs0q+cIi9mPU6xAs1exMIZwpNLcjfKZj9ntwkm+sTaENDo6dkGPwVXN6U
-	 Xw/8oJ+EYwdci1GfgUC31xhejRtHJo4niR8nZRaLcU63lYtYHW2aPcchBBA+MiinxJ
-	 A4vteyRB/s7a8KGj0QknTLQlXG4ZzIfwj9M5Q2ojzSIy6b3QpJqSYhq/n4PdIKTRgy
-	 zx7ymJQbnBZb2e3VbPws2+xMh6/gQWxSkubLZcWkTk5GfZ80hQd9dIJeQpxzvS/q6q
-	 Xpg9ugardquGSdJlGp1qZTjLyy8kLpKTLvdHHON4ppoE29OE8szZZVBOPLcOeszj5N
-	 aV3yOENwkKJkQ==
+	s=k20201202; t=1673297367;
+	bh=ZCpIfx/6UP52Vxj4R4wUhX+SXLNpHxh2VEnEZXQEJdM=;
+	h=From:To:Cc:Subject:Date:From;
+	b=tcY6SHNYWtmLB7FfBUj4VIUl8tjXhVpGGlMeqPQf0JkAo0Kz4SNiRNCFi1xgl8muN
+	 EC9vmwUiEY2A5JYQEJfBeVvfVpePlc7bSmmSqMsMYNDbTfMwZAhO8oL5saDewrCc40
+	 jdIwxVYtEA2W+7RSdmMVl5xfL92AWlbBhVgV7tdaFdt/qcwlJsqLimQCyhh4vnOqga
+	 DiE3NfjcmTDjajypQXosYv9zXvkrou0I5DG1DB/ubeYXRTZg4m6fC0io6ompOMzdMe
+	 KjymdCJ2KpPz/bolKYNvvTobcxp3L6tUK1JD4rGiGK3EVAeuGfNdg1RMHKTcrBqjkH
+	 KCniDREGSE6FQ==
 From: Miguel Ojeda <ojeda@kernel.org>
-To: Masahiro Yamada <masahiroy@kernel.org>
-Cc: linux-kbuild@vger.kernel.org,
-	Nathan Chancellor <nathan@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nicolas Schier <nicolas@fjasle.eu>,
-	rust-for-linux@vger.kernel.org,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Miguel Ojeda <ojeda@kernel.org>,
+To: Wedson Almeida Filho <wedsonaf@gmail.com>,
 	Alex Gaynor <alex.gaynor@gmail.com>,
-	Wedson Almeida Filho <wedsonaf@gmail.com>,
 	Boqun Feng <boqun.feng@gmail.com>,
 	Gary Guo <gary@garyguo.net>,
 	=?UTF-8?q?Bj=C3=B6rn=20Roy=20Baron?= <bjorn3_gh@protonmail.com>
-Subject: [PATCH 6/6] kbuild: rust_is_available: normalize version matching
-Date: Mon,  9 Jan 2023 21:45:20 +0100
-Message-Id: <20230109204520.539080-6-ojeda@kernel.org>
-In-Reply-To: <20230109204520.539080-1-ojeda@kernel.org>
-References: <20230109204520.539080-1-ojeda@kernel.org>
+Cc: rust-for-linux@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Miguel Ojeda <ojeda@kernel.org>,
+	Domen Puncer Kugler <domen.puncerkugler@nccgroup.com>
+Subject: [PATCH] rust: print: avoid evaluating arguments in `pr_*` macros in `unsafe` blocks
+Date: Mon,  9 Jan 2023 21:49:12 +0100
+Message-Id: <20230109204912.539790-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -43,60 +37,67 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In order to match the version string, `sed` is used in a couple
-cases, and `grep` and `head` in a couple others.
+At the moment it is possible to perform unsafe operations in
+the arguments of `pr_*` macros since they are evaluated inside
+an `unsafe` block:
 
-Make the script more consistent and easier to understand by
-using the same method, `sed`, for all of them.
+    let x = &10u32 as *const u32;
+    pr_info!("{}", *x);
 
-This makes the version matching also a bit more strict for
-the changed cases, since the strings `rustc ` and `bindgen `
-will now be required, which should be fine since `rustc`
-complains if one attempts to call it with another program
-name, and `bindgen` uses a hardcoded string.
+In other words, this is a soundness issue.
 
-In addition, clarify why one of the existing `sed` commands
-does not provide an address like the others.
+Fix it so that it requires an explicit `unsafe` block.
 
+Reported-by: Wedson Almeida Filho <wedsonaf@gmail.com>
+Reported-by: Domen Puncer Kugler <domen.puncerkugler@nccgroup.com>
+Link: https://github.com/Rust-for-Linux/linux/issues/479
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- scripts/rust_is_available.sh | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ rust/kernel/print.rs | 29 ++++++++++++++++++-----------
+ 1 file changed, 18 insertions(+), 11 deletions(-)
 
-diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.sh
-index a86659410e48..99811842b61f 100755
---- a/scripts/rust_is_available.sh
-+++ b/scripts/rust_is_available.sh
-@@ -66,8 +66,7 @@ fi
- # Non-stable and distributions' versions may have a version suffix, e.g. `-dev`.
- rust_compiler_version=$( \
- 	LC_ALL=C "$RUSTC" --version 2>/dev/null \
--		| head -n 1 \
--		| grep -oE '[0-9]+\.[0-9]+\.[0-9]+' \
-+		| sed -nE '1s:.*rustc ([0-9]+\.[0-9]+\.[0-9]+).*:\1:p'
- )
- rust_compiler_min_version=$($min_tool_version rustc)
- rust_compiler_cversion=$(get_canonical_version $rust_compiler_version)
-@@ -94,8 +93,7 @@ fi
- # Non-stable and distributions' versions may have a version suffix, e.g. `-dev`.
- rust_bindings_generator_version=$( \
- 	LC_ALL=C "$BINDGEN" --version 2>/dev/null \
--		| head -n 1 \
--		| grep -oE '[0-9]+\.[0-9]+\.[0-9]+' \
-+		| sed -nE '1s:.*bindgen ([0-9]+\.[0-9]+\.[0-9]+).*:\1:p'
- )
- rust_bindings_generator_min_version=$($min_tool_version bindgen)
- rust_bindings_generator_cversion=$(get_canonical_version $rust_bindings_generator_version)
-@@ -139,6 +137,9 @@ fi
+diff --git a/rust/kernel/print.rs b/rust/kernel/print.rs
+index 29bf9c2e8aee..30103325696d 100644
+--- a/rust/kernel/print.rs
++++ b/rust/kernel/print.rs
+@@ -142,17 +142,24 @@ pub fn call_printk_cont(args: fmt::Arguments<'_>) {
+ macro_rules! print_macro (
+     // The non-continuation cases (most of them, e.g. `INFO`).
+     ($format_string:path, false, $($arg:tt)+) => (
+-        // SAFETY: This hidden macro should only be called by the documented
+-        // printing macros which ensure the format string is one of the fixed
+-        // ones. All `__LOG_PREFIX`s are null-terminated as they are generated
+-        // by the `module!` proc macro or fixed values defined in a kernel
+-        // crate.
+-        unsafe {
+-            $crate::print::call_printk(
+-                &$format_string,
+-                crate::__LOG_PREFIX,
+-                format_args!($($arg)+),
+-            );
++        // To remain sound, `arg`s must be expanded outside the `unsafe` block.
++        // Typically one would use a `let` binding for that; however, `format_args!`
++        // takes borrows on the arguments, but does not extend the scope of temporaries.
++        // Therefore, a `match` expression is used to keep them around, since
++        // the scrutinee is kept until the end of the `match`.
++        match format_args!($($arg)+) {
++            // SAFETY: This hidden macro should only be called by the documented
++            // printing macros which ensure the format string is one of the fixed
++            // ones. All `__LOG_PREFIX`s are null-terminated as they are generated
++            // by the `module!` proc macro or fixed values defined in a kernel
++            // crate.
++            args => unsafe {
++                $crate::print::call_printk(
++                    &$format_string,
++                    crate::__LOG_PREFIX,
++                    args,
++                );
++            }
+         }
+     );
  
- # `bindgen` returned successfully, thus use the output to check that the version
- # of the `libclang` found by the Rust bindings generator is suitable.
-+#
-+# Unlike other version checks, note that this one does not necessarily appear
-+# in the first line of the output, thus no `sed` address is provided.
- bindgen_libclang_version=$( \
- 	echo "$bindgen_libclang_output" \
- 		| sed -nE 's:.*clang version ([0-9]+\.[0-9]+\.[0-9]+).*:\1:p'
+
+base-commit: b7bfaa761d760e72a969d116517eaa12e404c262
 -- 
 2.39.0
 
