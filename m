@@ -1,53 +1,53 @@
-Received: from mail-pg1-f182.google.com (mail-pg1-f182.google.com [209.85.215.182])
+Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C92435221
-	for <patches@lists.linux.dev>; Mon,  9 Jan 2023 20:54:36 +0000 (UTC)
-Received: by mail-pg1-f182.google.com with SMTP id f3so6764603pgc.2
-        for <patches@lists.linux.dev>; Mon, 09 Jan 2023 12:54:36 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD2B05221
+	for <patches@lists.linux.dev>; Mon,  9 Jan 2023 21:05:47 +0000 (UTC)
+Received: by mail-yb1-f175.google.com with SMTP id 203so9784795yby.10
+        for <patches@lists.linux.dev>; Mon, 09 Jan 2023 13:05:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
+        d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=bCpbMmW0eLev9FdtuyFUocFIcOdmXfyBWebTqFK5CIA=;
-        b=h4agD+4jNY3gjy2SULguao1y1SDRTBALR9O8Bjx0eLoYRsDA2ETD9q9AMY5zysnq+q
-         6GujFw61YQklfxifLoM25/Qx27WxO+muJS7gQ2/y584ocSmZlbkb+YerHNikmmopMt8Q
-         8rlV/PMlrHVvPBQwSUX45mQgkl/lnEsPItg7VmFwxpKVkQ0wxzMolPIiKpSrMm9vWf91
-         BdnidegVeoi+AAnpJEtgYYuR8Hj6cvvQ4gLOYJJiMwV7jAU647pgrMmjixSWC4tlr/XH
-         6G2iG/BNRvOLrlnG/a3jkymflXl2P3YV8Dio+cecoWhApoEiT0ZHCb/LmhkfF6l0Q1eF
-         Zn0w==
+        bh=myEKGg+oMEzcSTRA/yCcbDAjuI7KfOMxWzLnkBmkC7Y=;
+        b=KKh3FuuvOpr51yI0LDH/oIme2+Hs5Gwn0hqqM1Ytor7PzuInJ0En8ggSSspfJ30SaI
+         kWVKD0FVS+Grls7waVZhg5695Mvi96LjJjrbcZai4x49BmdWU4H9kUraiAuvBCe/B6lC
+         fQhAL2CxHFyXCrbxQVdG8bfiJR//TYsTQTIth+GWMygLeUigzr1CoUa+n1pN0r/j9rEi
+         0W8czT3zajB6mmnbkM065wnrFZRbKZ1niJVlj9l3omMbz+FMbPftQR5xOcTssawRuVrn
+         n7E+2d0zrcx3Gh4MS5tv62NBiv9hHdxxys1C+qekXlRWgOgdaC7n9CdU6eqLFigLJX8q
+         VRRQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=bCpbMmW0eLev9FdtuyFUocFIcOdmXfyBWebTqFK5CIA=;
-        b=0MLUQrrbQyh32idfGZs7Lk0c2dIZirTI9Exe7VEIrQhLaNy/sMAAxH3VGGeLoTwU2r
-         V2RkBZNx5KatWHvcZhNTslYtuuHIWhkRv+ZXDMqnvfzhGbvU7uwoMkcNxVqs506t18rt
-         LsmgUg4bTRl1SSM+nTKrRGNVhSQVOUdN8gNvb1BJTDie2XyxsEDYtungMlKJbEhMiU7L
-         MotgJw9N04iZlcpuAgBLjPkutPl6dVp4/Bwg8vr2Y3Q913Gb/rOfd4BXX0IT2G1j0HO5
-         VH3jtxWG7i5z6XZ81XCxfbDV9iv57DKfrNmrIpdMHmGTaOarGMJMsWsrDz36OSt/DFjw
-         ZFoA==
-X-Gm-Message-State: AFqh2kpN0DJzwU6/YtWKO/JuICclatdI2WiZrHPn+ZR2IsIDaM39haoT
-	45WkFvabXYqBy270nbnKcQmDV9kVMfG/1Czvny6ZxQ==
-X-Google-Smtp-Source: AMrXdXtJwhfbhqPtlK+wteYA6wJbhqZXNYUZFPHzEbZJNaISXYOe+1yfLa+PUkvrtxjs8n0M+KBV1ndODf+qq8fq670=
-X-Received: by 2002:aa7:914e:0:b0:578:202d:a33a with SMTP id
- 14-20020aa7914e000000b00578202da33amr3345635pfi.23.1673297676007; Mon, 09 Jan
- 2023 12:54:36 -0800 (PST)
+        bh=myEKGg+oMEzcSTRA/yCcbDAjuI7KfOMxWzLnkBmkC7Y=;
+        b=w6Fx6OrAUVD4qshrFgXyKOCsUgBoNVlhuFg3n/EzO1gpz7UrbF13Qpbz9mU1hNY1Km
+         W3YdV4O7o9Aaw5fJrhmfxTwBMBy+hNbjzQ1sn4gL93aziIcjxMwPLAYxyj811ixiNRch
+         QDzBBKbSvKAQmjKCQVRk+4K6ClEM6ecQYPAQqYlvxYRubE6nUwvddho2JrHvP8S/DYR/
+         3maxuI+zjlx7ISJpVQRtL8mhaPJ8HLVVPVS3MljxB0nhJyavikg9+XTg9u6stDf0DCZh
+         WjfGvL0ZAIw/k2gLMKcALHhar5i/4L1eBCzBVcZVw+WeuAeHOAEZHKEyOGHBtU/f5qle
+         sEDQ==
+X-Gm-Message-State: AFqh2kqR95vhIlaTyULvXOvoJfVjl+FgUcpOTrIlnGrvZ8jP9/Q4gWQb
+	Vfy44FKMJ2mtOfKsqBiK6aNdTQvK6NyJk6dXwzA=
+X-Google-Smtp-Source: AMrXdXtxeAq1fcrp0b42A4VMYRMUWp0hLyrkry0m7xghpdIY2iK2OeCAvX/A8wipnJx6npW9eQA3IsQmGU8rhapiN+I=
+X-Received: by 2002:a25:1004:0:b0:712:faac:e6b2 with SMTP id
+ 4-20020a251004000000b00712faace6b2mr6955908ybq.632.1673298346610; Mon, 09 Jan
+ 2023 13:05:46 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230109204520.539080-1-ojeda@kernel.org>
-In-Reply-To: <20230109204520.539080-1-ojeda@kernel.org>
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Mon, 9 Jan 2023 12:54:24 -0800
-Message-ID: <CAKwvOdkr6mAdNOkZqGdkosAN6JABHRU3bHg=K8ujjbw2GxEsKQ@mail.gmail.com>
+References: <20230109204520.539080-1-ojeda@kernel.org> <CAKwvOdkr6mAdNOkZqGdkosAN6JABHRU3bHg=K8ujjbw2GxEsKQ@mail.gmail.com>
+In-Reply-To: <CAKwvOdkr6mAdNOkZqGdkosAN6JABHRU3bHg=K8ujjbw2GxEsKQ@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 9 Jan 2023 22:05:35 +0100
+Message-ID: <CANiq72=RJ9NffqJOJLuN6B-DCQgjx1Yp7-sP58q2HchBNpYE=w@mail.gmail.com>
 Subject: Re: [PATCH 1/6] docs: rust: add paragraph about finding a suitable `libclang`
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>, linux-kbuild@vger.kernel.org, 
+To: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Miguel Ojeda <ojeda@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>, linux-kbuild@vger.kernel.org, 
 	Nathan Chancellor <nathan@kernel.org>, Nicolas Schier <nicolas@fjasle.eu>, rust-for-linux@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
 	Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
@@ -56,59 +56,17 @@ Cc: Masahiro Yamada <masahiroy@kernel.org>, linux-kbuild@vger.kernel.org,
 	Jonathan Corbet <corbet@lwn.net>, linux-doc@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Jan 9, 2023 at 12:45 PM Miguel Ojeda <ojeda@kernel.org> wrote:
+On Mon, Jan 9, 2023 at 9:54 PM Nick Desaulniers <ndesaulniers@google.com> wrote:
 >
-> Sometimes users need to tweak the finding process of `libclang`
-> for `bindgen` via the `clang-sys`-provided environment variables.
->
-> Thus add a paragraph to the setting up guide, including a reference
-> to `clang-sys`'s relevant documentation.
->
-> Link: https://lore.kernel.org/rust-for-linux/CAKwvOdm5JT4wbdQQYuW+RT07rCi6whGBM2iUAyg8A1CmLXG6Nw@mail.gmail.com/
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> This is super helpful for me, since I build clang from source and
+> would like to use my libclang.so! Thanks for this documentation
+> Miguel!
+> Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
 
-This is super helpful for me, since I build clang from source and
-would like to use my libclang.so! Thanks for this documentation
-Miguel!
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Thanks for the quick review Nick!
 
-> ---
->  Documentation/rust/quick-start.rst | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->
-> diff --git a/Documentation/rust/quick-start.rst b/Documentation/rust/quick-start.rst
-> index 13b7744b1e27..cae21ea7de41 100644
-> --- a/Documentation/rust/quick-start.rst
-> +++ b/Documentation/rust/quick-start.rst
-> @@ -100,6 +100,23 @@ Install it via (note that this will download and build the tool from source)::
->
->         cargo install --locked --version $(scripts/min-tool-version.sh bindgen) bindgen
->
-> +``bindgen`` needs to find a suitable ``libclang`` in order to work. If it is
-> +not found (or a different ``libclang`` than the one found should be used),
-> +the process can be tweaked using the environment variables understood by
-> +``clang-sys`` (the Rust bindings crate that ``bindgen`` uses to access
-> +``libclang``):
-> +
-> +* ``LLVM_CONFIG_PATH`` can be pointed to an ``llvm-config`` executable.
-> +
-> +* Or ``LIBCLANG_PATH`` can be pointed to a ``libclang`` shared library
-> +  or to the directoy containing it.
-> +
-> +* Or ``CLANG_PATH`` can be pointed to a ``clang`` executable.
-> +
-> +For details, please see ``clang-sys``'s documentation at:
-> +
-> +       https://github.com/KyleMayes/clang-sys#environment-variables
-> +
->
->  Requirements: Developing
->  ------------------------
-> --
-> 2.39.0
->
+By the way, I didn't add your Reported-by here because apparently it
+is only intended for bug fixes and not features.
 
-
--- 
-Thanks,
-~Nick Desaulniers
+Cheers,
+Miguel
