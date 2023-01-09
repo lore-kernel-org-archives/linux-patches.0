@@ -1,88 +1,129 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EC01FD0
-	for <patches@lists.linux.dev>; Sun,  8 Jan 2023 12:52:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 399A1C433F0
-	for <patches@lists.linux.dev>; Sun,  8 Jan 2023 12:52:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1673182327;
-	bh=VnGhcg4zxSgX4xZuHSdJDrQ5iUTrHtILPmmSMksv9w4=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=YN9YXrawrN7Sr+6pEtFesgn7DnMKXFAafpFaVD8IQ0u8xkhDMFzSDvZa870mFptgZ
-	 0gaVXH32i+vZSDaHlwnhg4Eb6D3l6adXFu0o3uFya3nXuVeu0Z7Bh1FzVjxofjxpeu
-	 PeyhOzxY32WVpAl6hKG8ioiS3aedaL15Ckd7xa2bxFxZQy0jjOfS/S6JKfycvgCyGv
-	 4xu+ofN7i80kqvQFMolXP5XMhCJOSWXey5/XCsDOnlBB3dov6A1MCfq0XOnYzNMPIk
-	 jt75SlUQJmlGeCdcuv3jT89Vp7aCcmf0mCf88j4AUxB50Dd8P/uv4csTMLJHfYK5K5
-	 JzMdrFkZdwdaw==
-Received: by mail-oi1-f174.google.com with SMTP id h185so4981314oif.5
-        for <patches@lists.linux.dev>; Sun, 08 Jan 2023 04:52:07 -0800 (PST)
-X-Gm-Message-State: AFqh2kqJhOYHVwqIUYCmEwekdVpAezuaHvr/dYbpWzRpX1hp/LiymKRe
-	tUL9L9QkizWkpG34CVbNYsxu3/vKGjECrK68QAU=
-X-Google-Smtp-Source: AMrXdXu5aNI5c7PDY2/YYpeRfYOcd4kjo2KqcZg51Q1nIVZmiL1vxxXX13wDKne+iSFJbbCp4lwz/gvTYsoUERygPrA=
-X-Received: by 2002:aca:3755:0:b0:35e:7c55:b015 with SMTP id
- e82-20020aca3755000000b0035e7c55b015mr3677001oia.287.1673182326467; Sun, 08
- Jan 2023 04:52:06 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E196928E8
+	for <patches@lists.linux.dev>; Mon,  9 Jan 2023 10:34:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1673260457;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=Gp01bbHImBb9jQ++aTa7ksC+hJELx0J0kuwwfn5XG7k=;
+	b=aG1t4uu1Ul8qF9mja9Rr9MI8vtaCYNTato74bCIajzqOn8Q7g8cVnebwd80XiDCNUkWX60
+	4uKF6Aius0150PiuWHNoQrFVuaA4sMTywMaqeVWaIyx3wblMcZsVRQeLHd6JVPstxa/rl1
+	DBGA6SLnM4xahEIovXl8QYzwzb3cdQk=
+Received: from mimecast-mx02.redhat.com (mx3-rdu2.redhat.com
+ [66.187.233.73]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-192-6lJLLzdVMhu3P5ythx0hnw-1; Mon, 09 Jan 2023 05:34:14 -0500
+X-MC-Unique: 6lJLLzdVMhu3P5ythx0hnw-1
+Received: from smtp.corp.redhat.com (int-mx01.intmail.prod.int.rdu2.redhat.com [10.11.54.1])
+	(using TLSv1.2 with cipher AECDH-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mimecast-mx02.redhat.com (Postfix) with ESMTPS id E9F9E1C09044;
+	Mon,  9 Jan 2023 10:34:13 +0000 (UTC)
+Received: from oldenburg.str.redhat.com (unknown [10.2.16.32])
+	by smtp.corp.redhat.com (Postfix) with ESMTPS id 08EA240C2064;
+	Mon,  9 Jan 2023 10:34:10 +0000 (UTC)
+From: Florian Weimer <fweimer@redhat.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>,  Andy Lutomirski
+ <luto@kernel.org>,  Ingo Molnar <mingo@kernel.org>,
+  linux-kernel@vger.kernel.org,  patches@lists.linux.dev,
+  tglx@linutronix.de,  linux-crypto@vger.kernel.org,
+  linux-api@vger.kernel.org,  x86@kernel.org,  Greg Kroah-Hartman
+ <gregkh@linuxfoundation.org>,  Adhemerval Zanella Netto
+ <adhemerval.zanella@linaro.org>,  "Carlos O'Donell" <carlos@redhat.com>,
+  Arnd Bergmann <arnd@arndb.de>,  Jann Horn <jannh@google.com>,  Christian
+ Brauner <brauner@kernel.org>,  linux-mm@kvack.org, mlichvar@redhat.com
+Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
+ lazily freeable mappings
+References: <20230101162910.710293-1-Jason@zx2c4.com>
+	<20230101162910.710293-3-Jason@zx2c4.com> <Y7QIg/hAIk7eZE42@gmail.com>
+	<CALCETrWdw5kxrtr4M7AkKYDOJEE1cU1wENWgmgOxn0rEJz4y3w@mail.gmail.com>
+	<CAHk-=wg_6Uhkjy12Vq_hN6rQqGRP2nE15rkgiAo6Qay5aOeigg@mail.gmail.com>
+	<Y7SDgtXayQCy6xT6@zx2c4.com>
+	<CAHk-=whQdWFw+0eGttxsWBHZg1+uh=0MhxXYtvJGX4t9P1MgNw@mail.gmail.com>
+Date: Mon, 09 Jan 2023 11:34:09 +0100
+In-Reply-To: <CAHk-=whQdWFw+0eGttxsWBHZg1+uh=0MhxXYtvJGX4t9P1MgNw@mail.gmail.com>
+	(Linus Torvalds's message of "Tue, 3 Jan 2023 11:54:35 -0800")
+Message-ID: <874jt0kndq.fsf@oldenburg.str.redhat.com>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/28.2 (gnu/linux)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230107143747.64802-1-ojeda@kernel.org>
-In-Reply-To: <20230107143747.64802-1-ojeda@kernel.org>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Sun, 8 Jan 2023 21:51:30 +0900
-X-Gmail-Original-Message-ID: <CAK7LNARWCeYew_sWmYYnrm87vYDBLs0LQOdc0XkCUy+b45zmBQ@mail.gmail.com>
-Message-ID: <CAK7LNARWCeYew_sWmYYnrm87vYDBLs0LQOdc0XkCUy+b45zmBQ@mail.gmail.com>
-Subject: Re: [PATCH] docs: kbuild: remove mention to dropped $(objtree) feature
-To: ojeda@kernel.org
-Cc: Jonathan Corbet <corbet@lwn.net>, linux-kbuild@vger.kernel.org, linux-doc@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
-	Nicolas Schier <nicolas@fjasle.eu>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.1 on 10.11.54.1
 
-On Sat, Jan 7, 2023 at 11:38 PM <ojeda@kernel.org> wrote:
->
-> From: Miguel Ojeda <ojeda@kernel.org>
->
-> Commit 8d613a1d048c ("kbuild: drop $(objtree)/ prefix support
-> for clean-files") dropped support for prefixing with $(objtree).
->
-> Thus update the documentation to match that change.
->
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+* Linus Torvalds:
 
-
-Applied to linux-kbuild/fixes.
-Thanks.
-
-
-> ---
->  Documentation/kbuild/makefiles.rst | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> On Tue, Jan 3, 2023 at 11:35 AM Jason A. Donenfeld <Jason@zx2c4.com> wrot=
+e:
+>>
+>> I don't think this is about micro-optimization. Rather, userspace RNGs
+>> aren't really possible in a safe way at the moment.
 >
-> diff --git a/Documentation/kbuild/makefiles.rst b/Documentation/kbuild/makefiles.rst
-> index 6b7368d1f516..38bc74eaa547 100644
-> --- a/Documentation/kbuild/makefiles.rst
-> +++ b/Documentation/kbuild/makefiles.rst
-> @@ -1042,7 +1042,7 @@ $(clean-files).
+> "Bah, humbug", to quote a modern-time philosopher.
 >
->  When executing "make clean", the file "crc32table.h" will be deleted.
->  Kbuild will assume files to be in the same relative directory as the
-> -Makefile, except if prefixed with $(objtree).
-> +Makefile.
+> It's humbug simply because it makes two assumptions that aren't even vali=
+d:
 >
->  To exclude certain files or directories from make clean, use the
->  $(no-clean-files) variable.
+>  (a) that you have to do it in user space in the first place
 >
-> base-commit: 88603b6dc419445847923fcb7fe5080067a30f98
-> --
-> 2.39.0
+>  (b) that you care about the particular semantics that you are looking for
 >
+> The thing is, you can just do getrandom(). It's what people already
+> do. Problem solved.
 
+We are currently doing this in glibc for our arc4random implementation,
+after Jason opposed userspace buffering.  If chrony is recompiled
+against the glibc version of arc4random (instead of its OpenBSD compat
+version, which uses userspace buffering), the result is a 25% drop in
+NTP packet response rate:
 
--- 
-Best Regards
-Masahiro Yamada
+| The new arc4random using getrandom() seems to have a significant
+| impact on performance of chronyd operating as an NTP server. On an
+| Intel E3-1220 CPU, I see that the maximum number of requests per
+| second dropped by about 25%. That would be an issue for some public
+| NTP servers.
+
+arc4random is too slow
+<https://sourceware.org/bugzilla/show_bug.cgi?id=3D29437>
+
+This is *not* =E2=80=9Carc4random is 25% slower=E2=80=9D, it is the measure=
+d overall
+impact on server performance.
+
+Historically, the solution space for getrandom and arc4random are
+slightly different.  The backronym is =E2=80=9CA Replacement Call For rando=
+m=E2=80=9D,
+i.e., you should be able to use arc4random without worrying about
+performance.  I don't expect cryptographic libraries to turn to
+arc4random to implement their random number generators, and that
+programmers that use low-level OpenSSL primitives (for example) keep
+calling RAND_bytes instead of arc4random because it is available to
+them.
+
+We did these changes on the glibc side because Jason sounded very
+confident that he's able to deliver vDSO acceleration for getrandom.  If
+that fails to materialize, we'll just have to add back userspace
+buffering in glibc.  At least we can get process fork protection via
+MADV_WIPEONFORK, solving a real problem with the usual arc4random compat
+implementation.  (The OpenBSD mechanism for this is slightly different.)
+We won't get VM fork protection or forward secrecy against ptrace.  But
+the latter is rather speculative anyway because if you can do ptrace
+once, you can likely do ptrace twice, the first time patching the
+process to remove forward secrecy.  There is a real gap for VM forks,
+but I'm not sure how much that matters in practice.  Live migration has
+to be implemented in such a way that this isn't observable (otherwise
+TCP connections etc. would break), and long-term keys probably shouldn't
+be generated under virtualization anyway.
+
+Thanks,
+Florian
+
