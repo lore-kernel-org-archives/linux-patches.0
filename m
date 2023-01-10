@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C3BA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:07:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC21C433EF;
-	Tue, 10 Jan 2023 18:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488DAA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:07:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9072C433D2;
+	Tue, 10 Jan 2023 18:07:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374052;
-	bh=goc9zy/4l8vkIUno5Az/ePvO0Gv498KEOUcal1w97gg=;
+	s=korg; t=1673374055;
+	bh=dxvRW6dFLhKgPgWUlDfu+Oq5yPu/CSlBU1d0/Ct9OvU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0G+PFmlVVKcq3XO4+4eGpkIh4P6UB8LgM0fNSvYZIdtm62ffAybv3jObCalYnhrFl
-	 cW6zzepbwGd+NqzDePeNH+IG4Gh+FNPeP4PjWnGhEOzV6J3qPppBnahG95Mmgtq3oA
-	 FqaSGlSQW+ntkTkrT9nI1cEoL2yYzyTottoxvWjk=
+	b=TvR8vKnlnl8/2nbd6ESl2BqY6f+lWvK5Q/QUtXinxpbrTUKL3FYnQo9ZkgMucAimA
+	 z44tMNUDWuMZ2/T2BL5X3PBbk6cel7wBl9d0gVERLkJb0vns0rvUIlFJhKCQKDwWHc
+	 rnjgFybAG3rczYDI/EHKEHfFO5zDH77kT1qkE74I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.0 003/148] cifs: fix interface count calculation during refresh
-Date: Tue, 10 Jan 2023 19:01:47 +0100
-Message-Id: <20230110180017.273086938@linuxfoundation.org>
+	Jianlin Shi <jishi@redhat.com>,
+	Antoine Tenart <atenart@kernel.org>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 020/148] net: vrf: determine the dst using the original ifindex for multicast
+Date: Tue, 10 Jan 2023 19:02:04 +0100
+Message-Id: <20230110180017.842221790@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -35,52 +37,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Antoine Tenart <atenart@kernel.org>
 
-commit cc7d79d4fad6a4eab3f88c4bb237de72be4478f1 upstream.
+[ Upstream commit f2575c8f404911da83f25b688e12afcf4273e640 ]
 
-The last fix to iface_count did fix the overcounting issue.
-However, during each refresh, we could end up undercounting
-the iface_count, if a match was found.
+Multicast packets received on an interface bound to a VRF are marked as
+belonging to the VRF and the skb device is updated to point to the VRF
+device itself. This was fine even when a route was associated to a
+device as when performing a fib table lookup 'oif' in fib6_table_lookup
+(coming from 'skb->dev->ifindex' in ip6_route_input) was set to 0 when
+FLOWI_FLAG_SKIP_NH_OIF was set.
 
-Fixing this by doing increments and decrements instead of
-setting it to 0 before each parsing of server interfaces.
+With commit 40867d74c374 ("net: Add l3mdev index to flow struct and
+avoid oif reset for port devices") this is not longer true and multicast
+traffic is not received on the original interface.
 
-Fixes: 096bbeec7bd6 ("smb3: interface count displayed incorrectly")
-Cc: stable@vger.kernel.org # 6.1
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Instead of adding back a similar check in fib6_table_lookup determine
+the dst using the original ifindex for multicast VRF traffic. To make
+things consistent across the function do the above for all strict
+packets, which was the logic before commit 6f12fa775530 ("vrf: mark skb
+for multicast or link-local as enslaved to VRF"). Note that reverting to
+this behavior should be fine as the change was about marking packets
+belonging to the VRF, not about their dst.
+
+Fixes: 40867d74c374 ("net: Add l3mdev index to flow struct and avoid oif reset for port devices")
+Reported-by: Jianlin Shi <jishi@redhat.com>
+Signed-off-by: Antoine Tenart <atenart@kernel.org>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Link: https://lore.kernel.org/r/20221220171825.1172237-1-atenart@kernel.org
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/smb2ops.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/vrf.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/cifs/smb2ops.c
-+++ b/fs/cifs/smb2ops.c
-@@ -530,7 +530,6 @@ parse_server_interfaces(struct network_i
- 	p = buf;
+diff --git a/drivers/net/vrf.c b/drivers/net/vrf.c
+index 5df7a0abc39d..f7f40e3fe9cc 100644
+--- a/drivers/net/vrf.c
++++ b/drivers/net/vrf.c
+@@ -1385,8 +1385,8 @@ static struct sk_buff *vrf_ip6_rcv(struct net_device *vrf_dev,
  
- 	spin_lock(&ses->iface_lock);
--	ses->iface_count = 0;
- 	/*
- 	 * Go through iface_list and do kref_put to remove
- 	 * any unused ifaces. ifaces in use will be removed
-@@ -540,6 +539,7 @@ parse_server_interfaces(struct network_i
- 				 iface_head) {
- 		iface->is_active = 0;
- 		kref_put(&iface->refcount, release_iface);
-+		ses->iface_count--;
- 	}
- 	spin_unlock(&ses->iface_lock);
+ 	/* loopback, multicast & non-ND link-local traffic; do not push through
+ 	 * packet taps again. Reset pkt_type for upper layers to process skb.
+-	 * For strict packets with a source LLA, determine the dst using the
+-	 * original ifindex.
++	 * For non-loopback strict packets, determine the dst using the original
++	 * ifindex.
+ 	 */
+ 	if (skb->pkt_type == PACKET_LOOPBACK || (need_strict && !is_ndisc)) {
+ 		skb->dev = vrf_dev;
+@@ -1395,7 +1395,7 @@ static struct sk_buff *vrf_ip6_rcv(struct net_device *vrf_dev,
  
-@@ -617,6 +617,7 @@ parse_server_interfaces(struct network_i
- 				/* just get a ref so that it doesn't get picked/freed */
- 				iface->is_active = 1;
- 				kref_get(&iface->refcount);
-+				ses->iface_count++;
- 				spin_unlock(&ses->iface_lock);
- 				goto next_iface;
- 			} else if (ret < 0) {
+ 		if (skb->pkt_type == PACKET_LOOPBACK)
+ 			skb->pkt_type = PACKET_HOST;
+-		else if (ipv6_addr_type(&ipv6_hdr(skb)->saddr) & IPV6_ADDR_LINKLOCAL)
++		else
+ 			vrf_ip6_input_dst(skb, vrf_dev, orig_iif);
+ 
+ 		goto out;
+-- 
+2.35.1
+
 
 
