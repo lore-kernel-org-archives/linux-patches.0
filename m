@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1DB2A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:14:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08299C433EF;
-	Tue, 10 Jan 2023 18:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80044A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:14:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFEC6C433EF;
+	Tue, 10 Jan 2023 18:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374450;
-	bh=It2lpO+vmP57BtC0O3umVks7IOxY/Vn6pKoBK7nykgo=;
+	s=korg; t=1673374453;
+	bh=W+fVkrIcCCI/H2MCmJoxTubOjFUEnFRU2Lpyr+C2Ua0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RCN1ubDPKMftNqlPHQ6sl84DJeR+vm3/V5SJaYqJg5Ua08SpSnzgW1cJdjX55vf4C
-	 Y5Se7CJALOcsXpTa3RCgutvdfatmDO44rBJA5NrLLrWQ6g/heXXbO1nDilTWifk41o
-	 yR5pOszb26/IgCYLIuSflUI9TwkxfDiSnCcHuPf4=
+	b=BtK0VSY+MZ3fnjeCadcitgmEpKOelFiWT0KohMB2luWyGG2bA0pqr6D43fOy0YERf
+	 HRtUSHK9YLG++vHVC2hyrqh9W3GYbOoL98fCVgmXJagMWbN/Tq5CEZwYT6HyBIYLud
+	 BexuZ63k2/XrUXT7QFSe05TCbua01evWDgfC6njc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Subject: [PATCH 6.1 005/159] usb: dwc3: gadget: Ignore End Transfer delay on teardown
-Date: Tue, 10 Jan 2023 19:02:33 +0100
-Message-Id: <20230110180018.471278155@linuxfoundation.org>
+	=?UTF-8?q?Joan=20Bruguera=20Mic=C3=B3?= <joanbrugueram@gmail.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.1 006/159] btrfs: fix off-by-one in delalloc search during lseek
+Date: Tue, 10 Jan 2023 19:02:34 +0100
+Message-Id: <20230110180018.502815680@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -33,56 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit c4e3ef5685393c5051b52cf1e94b8891d49793ab upstream.
+commit 2f2e84ca60660402bd81d0859703567c59556e6a upstream.
 
-If we delay sending End Transfer for Setup TRB to be prepared, we need
-to check if the End Transfer was in preparation for a driver
-teardown/soft-disconnect. In those cases, just send the End Transfer
-command without delay.
+During lseek, when searching for delalloc in a range that represents a
+hole and that range has a length of 1 byte, we end up not doing the actual
+delalloc search in the inode's io tree, resulting in not correctly
+reporting the offset with data or a hole. This actually only happens when
+the start offset is 0 because with any other start offset we round it down
+by sector size.
 
-In the case of soft-disconnect, there's a very small chance the command
-may not go through immediately. But should it happen, the Setup TRB will
-be prepared during the polling of the controller halted state, allowing
-the command to go through then.
+Reproducer:
 
-In the case of disabling endpoint due to reconfiguration (e.g.
-set_interface(alt-setting) or usb reset), then it's driven by the host.
-Typically the host wouldn't immediately cancel the control request and
-send another control transfer to trigger the End Transfer command
-timeout.
+  $ mkfs.btrfs -f /dev/sdc
+  $ mount /dev/sdc /mnt/sdc
 
-Fixes: 4db0fbb60136 ("usb: dwc3: gadget: Don't delay End Transfer on delayed_status")
-Cc: stable@vger.kernel.org
-Signed-off-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Link: https://lore.kernel.org/r/f1617a323e190b9cc408fb8b65456e32b5814113.1670546756.git.Thinh.Nguyen@synopsys.com
+  $ xfs_io -f -c "pwrite -q 0 1" /mnt/sdc/foo
+
+  $ xfs_io -c "seek -d 0" /mnt/sdc/foo
+  Whence   Result
+  DATA	   EOF
+
+It should have reported an offset of 0 instead of EOF.
+
+Fix this by updating btrfs_find_delalloc_in_range() and count_range_bits()
+to deal with inclusive ranges properly. These functions are already
+supposed to work with inclusive end offsets, they just got it wrong in a
+couple places due to off-by-one mistakes.
+
+A test case for fstests will be added later.
+
+Reported-by: Joan Bruguera Micó <joanbrugueram@gmail.com>
+Link: https://lore.kernel.org/linux-btrfs/20221223020509.457113-1-joanbrugueram@gmail.com/
+Fixes: b6e833567ea1 ("btrfs: make hole and data seeking a lot more efficient")
+CC: stable@vger.kernel.org # 6.1
+Tested-by: Joan Bruguera Micó <joanbrugueram@gmail.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/dwc3/gadget.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/btrfs/extent-io-tree.c |    2 +-
+ fs/btrfs/file.c           |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/dwc3/gadget.c
-+++ b/drivers/usb/dwc3/gadget.c
-@@ -1717,6 +1717,7 @@ static int __dwc3_stop_active_transfer(s
- 	else if (!ret)
- 		dep->flags |= DWC3_EP_END_TRANSFER_PENDING;
+--- a/fs/btrfs/extent-io-tree.c
++++ b/fs/btrfs/extent-io-tree.c
+@@ -1507,7 +1507,7 @@ u64 count_range_bits(struct extent_io_tr
+ 	u64 last = 0;
+ 	int found = 0;
  
-+	dep->flags &= ~DWC3_EP_DELAY_STOP;
- 	return ret;
- }
+-	if (WARN_ON(search_end <= cur_start))
++	if (WARN_ON(search_end < cur_start))
+ 		return 0;
  
-@@ -3722,8 +3723,10 @@ void dwc3_stop_active_transfer(struct dw
- 	if (dep->number <= 1 && dwc->ep0state != EP0_DATA_PHASE)
- 		return;
+ 	spin_lock(&tree->lock);
+--- a/fs/btrfs/file.c
++++ b/fs/btrfs/file.c
+@@ -3671,7 +3671,7 @@ bool btrfs_find_delalloc_in_range(struct
+ 	u64 prev_delalloc_end = 0;
+ 	bool ret = false;
  
-+	if (interrupt && (dep->flags & DWC3_EP_DELAY_STOP))
-+		return;
-+
- 	if (!(dep->flags & DWC3_EP_TRANSFER_STARTED) ||
--	    (dep->flags & DWC3_EP_DELAY_STOP) ||
- 	    (dep->flags & DWC3_EP_END_TRANSFER_PENDING))
- 		return;
- 
+-	while (cur_offset < end) {
++	while (cur_offset <= end) {
+ 		u64 delalloc_start;
+ 		u64 delalloc_end;
+ 		bool delalloc;
 
 
