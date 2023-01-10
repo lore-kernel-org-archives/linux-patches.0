@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB416FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:29:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCDC3C433EF;
-	Tue, 10 Jan 2023 18:29:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97DBF6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:29:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3AA1C433D2;
+	Tue, 10 Jan 2023 18:29:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375387;
-	bh=1ubklAFHVW7csSkJ3bvFLHU+IWuN6cvvHpOO6KJwJ8U=;
+	s=korg; t=1673375390;
+	bh=+WXWNH6jeRU3k+fDl+APUVH2IKvB+O2CQOXUjoaiN0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A3TEdio0Hy1nu4PU/x6cYFeW2BO3dKkIuzP58Qj5vPHyJq1mAkh43VTWTTLkV/gte
-	 eiHQyVwdhJZH97T+NRuQuEDc16pEFBW0ayAMGxlB1VYLiuiRAy8ek8t1BA291+t5tq
-	 iE7M5BfU+BbTtkcXwIzXt5Ja0MQVLyjw8z1hCXRc=
+	b=xgQgPRLcl4V1JLvibHOnzSAj7UTAqhnlq96QzN7xdmiswebdNOb+GX4VbX5rYVr4D
+	 sjjjOMZQ25+2GCU7c07I25sZ5W/IJAlNZhKfkJrFG+Lpvem09Sz5DlxqhEoCvt1OIg
+	 c2XI59vhFbGGhoYaGYFvCuChvmW34wxvEmDpBc+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 165/290] block: mq-deadline: Fix dd_finish_request() for zoned devices
-Date: Tue, 10 Jan 2023 19:04:17 +0100
-Message-Id: <20230110180037.599451655@linuxfoundation.org>
+	"linux-ext4@vger.kernel.org, Theodore Tso" <tytso@mit.edu>,
+	Eric Biggers <ebiggers@google.com>,
+	Theodore Ts'o <tytso@mit.edu>
+Subject: [PATCH 5.15 174/290] ext4: add missing validation of fast-commit record lengths
+Date: Tue, 10 Jan 2023 19:04:26 +0100
+Message-Id: <20230110180037.928741712@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,82 +35,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Eric Biggers <ebiggers@kernel.org>
 
-commit 2820e5d0820ac4daedff1272616a53d9c7682fd2 upstream.
+From: Eric Biggers <ebiggers@google.com>
 
-dd_finish_request() tests if the per prio fifo_list is not empty to
-determine if request dispatching must be restarted for handling blocked
-write requests to zoned devices with a call to
-blk_mq_sched_mark_restart_hctx(). While simple, this implementation has
-2 problems:
+commit 64b4a25c3de81a69724e888ec2db3533b43816e2 upstream.
 
-1) Only the priority level of the completed request is considered.
-   However, writes to a zone may be blocked due to other writes to the
-   same zone using a different priority level. While this is unlikely to
-   happen in practice, as writing a zone with different IO priorirites
-   does not make sense, nothing in the code prevents this from
-   happening.
-2) The use of list_empty() is dangerous as dd_finish_request() does not
-   take dd->lock and may run concurrently with the insert and dispatch
-   code.
+Validate the inode and filename lengths in fast-commit journal records
+so that a malicious fast-commit journal cannot cause a crash by having
+invalid values for these.  Also validate EXT4_FC_TAG_DEL_RANGE.
 
-Fix these 2 problems by testing the write fifo list of all priority
-levels using the new helper dd_has_write_work(), and by testing each
-fifo list using list_empty_careful().
-
-Fixes: c807ab520fc3 ("block/mq-deadline: Add I/O priority support")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Link: https://lore.kernel.org/r/20221124021208.242541-2-damien.lemoal@opensource.wdc.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: aa75f4d3daae ("ext4: main fast-commit commit path")
+Cc: <stable@vger.kernel.org> # v5.10+
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20221106224841.279231-5-ebiggers@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/mq-deadline.c |   18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ fs/ext4/fast_commit.c |   38 +++++++++++++++++++-------------------
+ fs/ext4/fast_commit.h |    2 +-
+ 2 files changed, 20 insertions(+), 20 deletions(-)
 
---- a/block/mq-deadline.c
-+++ b/block/mq-deadline.c
-@@ -791,6 +791,18 @@ static void dd_prepare_request(struct re
- 	rq->elv.priv[0] = NULL;
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -1916,32 +1916,31 @@ void ext4_fc_replay_cleanup(struct super
+ 	kfree(sbi->s_fc_replay_state.fc_modified_inodes);
  }
  
-+static bool dd_has_write_work(struct blk_mq_hw_ctx *hctx)
-+{
-+	struct deadline_data *dd = hctx->queue->elevator->elevator_data;
-+	enum dd_prio p;
-+
-+	for (p = 0; p <= DD_PRIO_MAX; p++)
-+		if (!list_empty_careful(&dd->per_prio[p].fifo_list[DD_WRITE]))
-+			return true;
-+
-+	return false;
-+}
-+
- /*
-  * Callback from inside blk_mq_free_request().
-  *
-@@ -813,7 +825,6 @@ static void dd_finish_request(struct req
- 	struct deadline_data *dd = q->elevator->elevator_data;
- 	const u8 ioprio_class = dd_rq_ioclass(rq);
- 	const enum dd_prio prio = ioprio_class_to_prio[ioprio_class];
--	struct dd_per_prio *per_prio = &dd->per_prio[prio];
- 
- 	/*
- 	 * The block layer core may call dd_finish_request() without having
-@@ -829,9 +840,10 @@ static void dd_finish_request(struct req
- 
- 		spin_lock_irqsave(&dd->zone_lock, flags);
- 		blk_req_zone_write_unlock(rq);
--		if (!list_empty(&per_prio->fifo_list[DD_WRITE]))
--			blk_mq_sched_mark_restart_hctx(rq->mq_hctx);
- 		spin_unlock_irqrestore(&dd->zone_lock, flags);
-+
-+		if (dd_has_write_work(rq->mq_hctx))
-+			blk_mq_sched_mark_restart_hctx(rq->mq_hctx);
+-static inline bool ext4_fc_tag_len_isvalid(struct ext4_fc_tl *tl,
+-					   u8 *val, u8 *end)
++static bool ext4_fc_value_len_isvalid(struct ext4_sb_info *sbi,
++				      int tag, int len)
+ {
+-	if (val + tl->fc_len > end)
+-		return false;
+-
+-	/* Here only check ADD_RANGE/TAIL/HEAD which will read data when do
+-	 * journal rescan before do CRC check. Other tags length check will
+-	 * rely on CRC check.
+-	 */
+-	switch (tl->fc_tag) {
++	switch (tag) {
+ 	case EXT4_FC_TAG_ADD_RANGE:
+-		return (sizeof(struct ext4_fc_add_range) == tl->fc_len);
+-	case EXT4_FC_TAG_TAIL:
+-		return (sizeof(struct ext4_fc_tail) <= tl->fc_len);
+-	case EXT4_FC_TAG_HEAD:
+-		return (sizeof(struct ext4_fc_head) == tl->fc_len);
++		return len == sizeof(struct ext4_fc_add_range);
+ 	case EXT4_FC_TAG_DEL_RANGE:
++		return len == sizeof(struct ext4_fc_del_range);
++	case EXT4_FC_TAG_CREAT:
+ 	case EXT4_FC_TAG_LINK:
+ 	case EXT4_FC_TAG_UNLINK:
+-	case EXT4_FC_TAG_CREAT:
++		len -= sizeof(struct ext4_fc_dentry_info);
++		return len >= 1 && len <= EXT4_NAME_LEN;
+ 	case EXT4_FC_TAG_INODE:
++		len -= sizeof(struct ext4_fc_inode);
++		return len >= EXT4_GOOD_OLD_INODE_SIZE &&
++			len <= sbi->s_inode_size;
+ 	case EXT4_FC_TAG_PAD:
+-	default:
+-		return true;
++		return true; /* padding can have any length */
++	case EXT4_FC_TAG_TAIL:
++		return len >= sizeof(struct ext4_fc_tail);
++	case EXT4_FC_TAG_HEAD:
++		return len == sizeof(struct ext4_fc_head);
  	}
++	return false;
  }
  
+ /*
+@@ -2004,7 +2003,8 @@ static int ext4_fc_replay_scan(journal_t
+ 	     cur = cur + EXT4_FC_TAG_BASE_LEN + tl.fc_len) {
+ 		ext4_fc_get_tl(&tl, cur);
+ 		val = cur + EXT4_FC_TAG_BASE_LEN;
+-		if (!ext4_fc_tag_len_isvalid(&tl, val, end)) {
++		if (tl.fc_len > end - val ||
++		    !ext4_fc_value_len_isvalid(sbi, tl.fc_tag, tl.fc_len)) {
+ 			ret = state->fc_replay_num_tags ?
+ 				JBD2_FC_REPLAY_STOP : -ECANCELED;
+ 			goto out_err;
+--- a/fs/ext4/fast_commit.h
++++ b/fs/ext4/fast_commit.h
+@@ -58,7 +58,7 @@ struct ext4_fc_dentry_info {
+ 	__u8 fc_dname[0];
+ };
+ 
+-/* Value structure for EXT4_FC_TAG_INODE and EXT4_FC_TAG_INODE_PARTIAL. */
++/* Value structure for EXT4_FC_TAG_INODE. */
+ struct ext4_fc_inode {
+ 	__le32 fc_ino;
+ 	__u8 fc_raw_inode[0];
 
 
