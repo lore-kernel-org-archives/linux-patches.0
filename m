@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA3936FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:24:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10502C433D2;
-	Tue, 10 Jan 2023 18:24:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DCC26FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:25:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB8AFC433D2;
+	Tue, 10 Jan 2023 18:24:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375095;
-	bh=O7hOAGal/0o67nv2+ITXPit0FJvBYdG313OurF/TYSY=;
+	s=korg; t=1673375100;
+	bh=w0xO49TIzoNjZMAtrlzZnmgqx4upUyfxRLjiQXfWQRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CYG6G+qGvbIzQMiPfJ4fpZKD1b9nz6np49wrSMRIwOWan9+WEY5HpwnhMm2hVufRQ
-	 hsCB9cfUm2KX/AvugzGzZTf3y4dQS7FXf2hVK6lyisjEAV/9ZRK946D/pJoPysOl1i
-	 i0ery4fzb5dBnGwD4t7qpJa/FwkiSyi7BYCErWa8=
+	b=gbeNdsN8Atr+U2ARFNiLF2kh7Gc+ir9pELqYD0GJd4BeaiDMGq5zTwtWZTkH9F1YK
+	 t8GRlqYDduGkh84tBauXZOb+PPMSBWq+LVoff1sUs39wFPw4lGM1BIaEDfbreTrTDX
+	 bH57G+QDa0bYFwkODiRuDjA19LTJ+4/fOqqO1+fY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Alexander Aring <aahringo@redhat.com>,
 	David Teigland <teigland@redhat.com>
-Subject: [PATCH 5.15 077/290] fs: dlm: fix sock release if listen fails
-Date: Tue, 10 Jan 2023 19:02:49 +0100
-Message-Id: <20230110180034.285314641@linuxfoundation.org>
+Subject: [PATCH 5.15 078/290] fs: dlm: retry accept() until -EAGAIN or error returns
+Date: Tue, 10 Jan 2023 19:02:50 +0100
+Message-Id: <20230110180034.315200469@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -36,40 +36,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Alexander Aring <aahringo@redhat.com>
 
-commit 08ae0547e75ec3d062b6b6b9cf4830c730df68df upstream.
+commit f0f4bb431bd543ed7bebbaea3ce326cfcd5388bc upstream.
 
-This patch fixes a double sock_release() call when the listen() is
-called for the dlm lowcomms listen socket. The caller of
-dlm_listen_for_all should never care about releasing the socket if
-dlm_listen_for_all() fails, it's done now only once if listen() fails.
+This patch fixes a race if we get two times an socket data ready event
+while the listen connection worker is queued. Currently it will be
+served only once but we need to do it (in this case twice) until we hit
+-EAGAIN which tells us there is no pending accept going on.
+
+This patch wraps an do while loop until we receive a return value which
+is different than 0 as it was done before commit d11ccd451b65 ("fs: dlm:
+listen socket out of connection hash").
 
 Cc: stable@vger.kernel.org
-Fixes: 2dc6b1158c28 ("fs: dlm: introduce generic listen")
+Fixes: d11ccd451b65 ("fs: dlm: listen socket out of connection hash")
 Signed-off-by: Alexander Aring <aahringo@redhat.com>
 Signed-off-by: David Teigland <teigland@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/dlm/lowcomms.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/dlm/lowcomms.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
 --- a/fs/dlm/lowcomms.c
 +++ b/fs/dlm/lowcomms.c
-@@ -1797,7 +1797,7 @@ static int dlm_listen_for_all(void)
- 	result = sock->ops->listen(sock, 5);
- 	if (result < 0) {
- 		dlm_close_sock(&listen_con.sock);
--		goto out;
-+		return result;
- 	}
+@@ -1520,7 +1520,11 @@ static void process_recv_sockets(struct
  
- 	return 0;
-@@ -2000,7 +2000,6 @@ fail_listen:
- 	dlm_proto_ops = NULL;
- fail_proto_ops:
- 	dlm_allow_conn = 0;
--	dlm_close_sock(&listen_con.sock);
- 	work_stop();
- fail_local:
- 	deinit_local();
+ static void process_listen_recv_socket(struct work_struct *work)
+ {
+-	accept_from_sock(&listen_con);
++	int ret;
++
++	do {
++		ret = accept_from_sock(&listen_con);
++	} while (!ret);
+ }
+ 
+ static void dlm_connect(struct connection *con)
 
 
