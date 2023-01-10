@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29539A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8283FC433EF;
-	Tue, 10 Jan 2023 18:16:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5A00A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A0BC4331D;
+	Tue, 10 Jan 2023 18:16:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374570;
-	bh=C6aaC7dEEj/94roJOoP9V7BTOQZCt8kHmoXOk/GmSL4=;
+	s=korg; t=1673374572;
+	bh=knHi9VLEo291rWR7ShrUaiH7g/2N6DF7uxcLAwYZ/yY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sWmuOdD7jWoQwpNhWyHcm3ov/kM09QhID4s+lW5YmikHALa/6k4H94FpA03iPMTOY
-	 XoA1LjivLstrMTFXq5Q84ZAMtgl7LhySrsdFzUuKPTtMPuT5CRIR4g2Bd9tLNlTVr4
-	 EFX/uHWctiSO9AvxBWIcVDMMF+nY8f/A1nYAaPW8=
+	b=CUKgQFWBCPl01WHj2fFbO43Uz4KbmdeEvFsk4sgvVHlzAJT3t/lCXiXJLLCp6e/NV
+	 swYGOWrF234AdtCEfsiUxaRe486wOa50/6ymz67dCsenJiA/VPJS0/WP5kC8O96DTz
+	 Dri2stAo04Z4wnK/AloGg/O96dxckQnngzhWMJ8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Mi <cmi@nvidia.com>,
-	Roi Dayan <roid@nvidia.com>,
+	Adham Faris <afaris@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 059/159] net/mlx5e: Always clear dest encap in neigh-update-del
-Date: Tue, 10 Jan 2023 19:03:27 +0100
-Message-Id: <20230110180020.191159456@linuxfoundation.org>
+Subject: [PATCH 6.1 060/159] net/mlx5e: Fix hw mtu initializing at XDP SQ allocation
+Date: Tue, 10 Jan 2023 19:03:28 +0100
+Message-Id: <20230110180020.221244572@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,54 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Mi <cmi@nvidia.com>
+From: Adham Faris <afaris@nvidia.com>
 
-[ Upstream commit 2951b2e142ecf6e0115df785ba91e91b6da74602 ]
+[ Upstream commit 1e267ab88dc44c48f556218f7b7f14c76f7aa066 ]
 
-The cited commit introduced a bug for multiple encapsulations flow.
-If one dest encap becomes invalid, the flow is set slow path flag.
-But when other dests encap become invalid, they are not cleared due
-to slow path flag of the flow. When neigh-update-add is running, it
-will use invalid encap.
+Current xdp xmit functions logic (mlx5e_xmit_xdp_frame_mpwqe or
+mlx5e_xmit_xdp_frame), validates xdp packet length by comparing it to
+hw mtu (configured at xdp sq allocation) before xmiting it. This check
+does not account for ethernet fcs length (calculated and filled by the
+nic). Hence, when we try sending packets with length > (hw-mtu -
+ethernet-fcs-size), the device port drops it and tx_errors_phy is
+incremented. Desired behavior is to catch these packets and drop them
+by the driver.
 
-Fix it by checking slow path flag after clearing dest encap.
+Fix this behavior in XDP SQ allocation function (mlx5e_alloc_xdpsq) by
+subtracting ethernet FCS header size (4 Bytes) from current hw mtu
+value, since ethernet FCS is calculated and written to ethernet frames
+by the nic.
 
-Fixes: 9a5f9cc794e1 ("net/mlx5e: Fix possible use-after-free deleting fdb rule")
-Signed-off-by: Chris Mi <cmi@nvidia.com>
-Reviewed-by: Roi Dayan <roid@nvidia.com>
+Fixes: d8bec2b29a82 ("net/mlx5e: Support bpf_xdp_adjust_head()")
+Signed-off-by: Adham Faris <afaris@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c    | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
-index ff73d25bc6eb..2aaf8ab857b8 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_encap.c
-@@ -222,7 +222,7 @@ void mlx5e_tc_encap_flows_del(struct mlx5e_priv *priv,
- 	int err;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 5e41dfdf79c8..951ede433813 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -1298,7 +1298,7 @@ static int mlx5e_alloc_xdpsq(struct mlx5e_channel *c,
+ 	sq->channel   = c;
+ 	sq->uar_map   = mdev->mlx5e_res.hw_objs.bfreg.map;
+ 	sq->min_inline_mode = params->tx_min_inline_mode;
+-	sq->hw_mtu    = MLX5E_SW2HW_MTU(params, params->sw_mtu);
++	sq->hw_mtu    = MLX5E_SW2HW_MTU(params, params->sw_mtu) - ETH_FCS_LEN;
+ 	sq->xsk_pool  = xsk_pool;
  
- 	list_for_each_entry(flow, flow_list, tmp_list) {
--		if (!mlx5e_is_offloaded_flow(flow) || flow_flag_test(flow, SLOW))
-+		if (!mlx5e_is_offloaded_flow(flow))
- 			continue;
- 
- 		attr = mlx5e_tc_get_encap_attr(flow);
-@@ -231,6 +231,13 @@ void mlx5e_tc_encap_flows_del(struct mlx5e_priv *priv,
- 		esw_attr->dests[flow->tmp_entry_index].flags &= ~MLX5_ESW_DEST_ENCAP_VALID;
- 		esw_attr->dests[flow->tmp_entry_index].pkt_reformat = NULL;
- 
-+		/* Clear pkt_reformat before checking slow path flag. Because
-+		 * in next iteration, the same flow is already set slow path
-+		 * flag, but still need to clear the pkt_reformat.
-+		 */
-+		if (flow_flag_test(flow, SLOW))
-+			continue;
-+
- 		/* update from encap rule to slow path rule */
- 		spec = &flow->attr->parse_attr->spec;
- 		rule = mlx5e_tc_offload_to_slow_path(esw, flow, spec);
+ 	sq->stats = sq->xsk_pool ?
 -- 
 2.35.1
 
