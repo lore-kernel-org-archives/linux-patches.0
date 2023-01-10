@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6578A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:10:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A6E3C433D2;
-	Tue, 10 Jan 2023 18:10:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48DB7A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:10:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C18ACC4339B;
+	Tue, 10 Jan 2023 18:10:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374235;
-	bh=1kWbMsaTYrYA+ClJ3yAOD06gUm4odCYDxQnfopTjvdA=;
+	s=korg; t=1673374238;
+	bh=Zx4aD6pUUaFlUxCeLUsdN9vbY/6yEUA8XwWNlv0DpfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ioutHlxPH1jEpcaAPL8ZElLHKjX9aFukEYwXAL0O50L5VB2L64OaM8sB37Ebwd8DA
-	 xLPC3a+R5FBHNb9hFI2EOJr6ss7kxprCqOy04CH2DieQd0pfBm++oZvEqRcHgIvsf5
-	 kqfm4AsdXWecs6rGsOrGl7Nd8WE38LCJhyrZT4K4=
+	b=W0TtvAmLnCi+nOZJGuDjpxmDLOfkRDmqOaOP57NQuxbgDznF59YBVPYBM0ZOfIunB
+	 vDuM/n05cBD3tB5bE5Dv0yGtFM6LocGMsyFrfndvqg6Aepn/2YXancQYWUdQ25eH85
+	 C/uiJZt8oK256N9FqkOVpjL8FtiLtGVDQblooQgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Wang <zyytlz.wz@163.com>,
-	Zhenyu Wang <zhenyuw@linux.intel.com>,
+	David Arinzon <darinzon@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 096/148] drm/i915/gvt: fix double free bug in split_2MB_gtt_entry
-Date: Tue, 10 Jan 2023 19:03:20 +0100
-Message-Id: <20230110180020.238132316@linuxfoundation.org>
+Subject: [PATCH 6.0 070/148] net: ena: Update NUMA TPH hint register upon NUMA node update
+Date: Tue, 10 Jan 2023 19:02:54 +0100
+Message-Id: <20230110180019.439957961@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -35,65 +35,153 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Wang <zyytlz.wz@163.com>
+From: David Arinzon <darinzon@amazon.com>
 
-[ Upstream commit 4a61648af68f5ba4884f0e3b494ee1cabc4b6620 ]
+[ Upstream commit a8ee104f986e720cea52133885cc822d459398c7 ]
 
-If intel_gvt_dma_map_guest_page failed, it will call
-ppgtt_invalidate_spt, which will finally free the spt.
-But the caller function ppgtt_populate_spt_by_guest_entry
-does not notice that, it will free spt again in its error
-path.
+The device supports a PCIe optimization hint, which indicates on
+which NUMA the queue is currently processed. This hint is utilized
+by PCIe in order to reduce its access time by accessing the
+correct NUMA resources and maintaining cache coherence.
 
-Fix this by canceling the mapping of DMA address and freeing sub_spt.
-Besides, leave the handle of spt destroy to caller function instead
-of callee function when error occurs.
+The driver calls the register update for the hint (called TPH -
+TLP Processing Hint) during the NAPI loop.
 
-Fixes: b901b252b6cf ("drm/i915/gvt: Add 2M huge gtt support")
-Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
-Reviewed-by: Zhenyu Wang <zhenyuw@linux.intel.com>
-Signed-off-by: Zhenyu Wang <zhenyuw@linux.intel.com>
-Link: http://patchwork.freedesktop.org/patch/msgid/20221229165641.1192455-1-zyytlz.wz@163.com
+Though the update is expected upon a NUMA change (when a queue
+is moved from one NUMA to the other), the current logic performs
+a register update when the queue is moved to a different CPU,
+but the CPU is not necessarily in a different NUMA.
+
+The changes include:
+1. Performing the TPH update only when the queue has switched
+a NUMA node.
+2. Moving the TPH update call to be triggered only when NAPI was
+scheduled from interrupt context, as opposed to a busy-polling loop.
+This is due to the fact that during busy-polling, the frequency
+of CPU switches for a particular queue is significantly higher,
+thus, the likelihood to switch NUMA is much higher. Therefore,
+providing the frequent updates to the device upon a NUMA update
+are unlikely to be beneficial.
+
+Fixes: 1738cd3ed342 ("net: ena: Add a driver for Amazon Elastic Network Adapters (ENA)")
+Signed-off-by: David Arinzon <darinzon@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gvt/gtt.c | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c | 27 +++++++++++++-------
+ drivers/net/ethernet/amazon/ena/ena_netdev.h |  6 +++--
+ 2 files changed, 22 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gvt/gtt.c b/drivers/gpu/drm/i915/gvt/gtt.c
-index ce0eb03709c3..80c60754a5c1 100644
---- a/drivers/gpu/drm/i915/gvt/gtt.c
-+++ b/drivers/gpu/drm/i915/gvt/gtt.c
-@@ -1214,10 +1214,8 @@ static int split_2MB_gtt_entry(struct intel_vgpu *vgpu,
- 	for_each_shadow_entry(sub_spt, &sub_se, sub_index) {
- 		ret = intel_gvt_dma_map_guest_page(vgpu, start_gfn + sub_index,
- 						   PAGE_SIZE, &dma_addr);
--		if (ret) {
--			ppgtt_invalidate_spt(spt);
--			return ret;
--		}
-+		if (ret)
-+			goto err;
- 		sub_se.val64 = se->val64;
- 
- 		/* Copy the PAT field from PDE. */
-@@ -1236,6 +1234,17 @@ static int split_2MB_gtt_entry(struct intel_vgpu *vgpu,
- 	ops->set_pfn(se, sub_spt->shadow_page.mfn);
- 	ppgtt_set_shadow_entry(spt, se, index);
- 	return 0;
-+err:
-+	/* Cancel the existing addess mappings of DMA addr. */
-+	for_each_present_shadow_entry(sub_spt, &sub_se, sub_index) {
-+		gvt_vdbg_mm("invalidate 4K entry\n");
-+		ppgtt_invalidate_pte(sub_spt, &sub_se);
-+	}
-+	/* Release the new allocated spt. */
-+	trace_spt_change(sub_spt->vgpu->id, "release", sub_spt,
-+		sub_spt->guest_page.gfn, sub_spt->shadow_page.type);
-+	ppgtt_free_spt(sub_spt);
-+	return ret;
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+index b25a2fcff339..413714f373ff 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -680,6 +680,7 @@ static void ena_init_io_rings_common(struct ena_adapter *adapter,
+ 	ring->ena_dev = adapter->ena_dev;
+ 	ring->per_napi_packets = 0;
+ 	ring->cpu = 0;
++	ring->numa_node = 0;
+ 	ring->no_interrupt_event_cnt = 0;
+ 	u64_stats_init(&ring->syncp);
  }
+@@ -783,6 +784,7 @@ static int ena_setup_tx_resources(struct ena_adapter *adapter, int qid)
+ 	tx_ring->next_to_use = 0;
+ 	tx_ring->next_to_clean = 0;
+ 	tx_ring->cpu = ena_irq->cpu;
++	tx_ring->numa_node = node;
+ 	return 0;
  
- static int split_64KB_gtt_entry(struct intel_vgpu *vgpu,
+ err_push_buf_intermediate_buf:
+@@ -915,6 +917,7 @@ static int ena_setup_rx_resources(struct ena_adapter *adapter,
+ 	rx_ring->next_to_clean = 0;
+ 	rx_ring->next_to_use = 0;
+ 	rx_ring->cpu = ena_irq->cpu;
++	rx_ring->numa_node = node;
+ 
+ 	return 0;
+ }
+@@ -1863,20 +1866,27 @@ static void ena_update_ring_numa_node(struct ena_ring *tx_ring,
+ 	if (likely(tx_ring->cpu == cpu))
+ 		goto out;
+ 
++	tx_ring->cpu = cpu;
++	if (rx_ring)
++		rx_ring->cpu = cpu;
++
+ 	numa_node = cpu_to_node(cpu);
++
++	if (likely(tx_ring->numa_node == numa_node))
++		goto out;
++
+ 	put_cpu();
+ 
+ 	if (numa_node != NUMA_NO_NODE) {
+ 		ena_com_update_numa_node(tx_ring->ena_com_io_cq, numa_node);
+-		if (rx_ring)
++		tx_ring->numa_node = numa_node;
++		if (rx_ring) {
++			rx_ring->numa_node = numa_node;
+ 			ena_com_update_numa_node(rx_ring->ena_com_io_cq,
+ 						 numa_node);
++		}
+ 	}
+ 
+-	tx_ring->cpu = cpu;
+-	if (rx_ring)
+-		rx_ring->cpu = cpu;
+-
+ 	return;
+ out:
+ 	put_cpu();
+@@ -1997,11 +2007,10 @@ static int ena_io_poll(struct napi_struct *napi, int budget)
+ 			if (ena_com_get_adaptive_moderation_enabled(rx_ring->ena_dev))
+ 				ena_adjust_adaptive_rx_intr_moderation(ena_napi);
+ 
++			ena_update_ring_numa_node(tx_ring, rx_ring);
+ 			ena_unmask_interrupt(tx_ring, rx_ring);
+ 		}
+ 
+-		ena_update_ring_numa_node(tx_ring, rx_ring);
+-
+ 		ret = rx_work_done;
+ 	} else {
+ 		ret = budget;
+@@ -2388,7 +2397,7 @@ static int ena_create_io_tx_queue(struct ena_adapter *adapter, int qid)
+ 	ctx.mem_queue_type = ena_dev->tx_mem_queue_type;
+ 	ctx.msix_vector = msix_vector;
+ 	ctx.queue_size = tx_ring->ring_size;
+-	ctx.numa_node = cpu_to_node(tx_ring->cpu);
++	ctx.numa_node = tx_ring->numa_node;
+ 
+ 	rc = ena_com_create_io_queue(ena_dev, &ctx);
+ 	if (rc) {
+@@ -2456,7 +2465,7 @@ static int ena_create_io_rx_queue(struct ena_adapter *adapter, int qid)
+ 	ctx.mem_queue_type = ENA_ADMIN_PLACEMENT_POLICY_HOST;
+ 	ctx.msix_vector = msix_vector;
+ 	ctx.queue_size = rx_ring->ring_size;
+-	ctx.numa_node = cpu_to_node(rx_ring->cpu);
++	ctx.numa_node = rx_ring->numa_node;
+ 
+ 	rc = ena_com_create_io_queue(ena_dev, &ctx);
+ 	if (rc) {
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.h b/drivers/net/ethernet/amazon/ena/ena_netdev.h
+index f9d862b630fa..2cb141079474 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.h
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.h
+@@ -262,9 +262,11 @@ struct ena_ring {
+ 	bool disable_meta_caching;
+ 	u16 no_interrupt_event_cnt;
+ 
+-	/* cpu for TPH */
++	/* cpu and NUMA for TPH */
+ 	int cpu;
+-	 /* number of tx/rx_buffer_info's entries */
++	int numa_node;
++
++	/* number of tx/rx_buffer_info's entries */
+ 	int ring_size;
+ 
+ 	enum ena_admin_placement_policy_type tx_mem_queue_type;
 -- 
 2.35.1
 
