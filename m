@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 855F06FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:32:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07793C433D2;
-	Tue, 10 Jan 2023 18:32:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EC86FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:32:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C448C433D2;
+	Tue, 10 Jan 2023 18:32:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375521;
-	bh=ixnKv8wdPAj5tdS3ND0CS1tCHSm8LByOCvupJI+h+O0=;
+	s=korg; t=1673375524;
+	bh=C0QGxNGzypsXuB2ieAt69FcxXPFpclzfYsbQgmcvwTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NxsdhGa0kJaSwHQzcjlEpbtBmQvmlzj0zPkg5YMTEk2Ld6JN7DWEgj0jRspCsZ5iJ
-	 aWu1VLcbUy0isSv8gHPKtDfh3WgVwBmGClIvxg4nC1Q5CfFY+PClP2Pm65ve/UnYm7
-	 Ns1SIiUDZikMimoBI8cNJskte5sOGDto2D0C5I6c=
+	b=J0NhV/jdsuH2GgtXs6UHZVf9IMpGQ2rjArVCJ2DWf1RGpoB9ArLjQ1BFpaA+awlLT
+	 hp4z26WRth6xM7QGxgnseC6sV1x+sq+b9WvuhJninEAS3CbHX2VswmeqLKVz0Ut2lW
+	 k+VkDa429t1pPZmrlrSNRwFTqiIrD1CnuUPp7WnA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ruanjinjie <ruanjinjie@huawei.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
+	Rob Clark <robdclark@chromium.org>,
+	Steven Price <steven.price@arm.com>,
+	Rob Clark <robdclark@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 217/290] vdpa_sim: fix possible memory leak in vdpasim_net_init() and vdpasim_blk_init()
-Date: Tue, 10 Jan 2023 19:05:09 +0100
-Message-Id: <20230110180039.493649560@linuxfoundation.org>
+Subject: [PATCH 5.15 200/290] drm/panfrost: Fix GEM handle creation ref-counting
+Date: Tue, 10 Jan 2023 19:04:52 +0100
+Message-Id: <20230110180038.865121024@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -37,100 +36,136 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ruanjinjie <ruanjinjie@huawei.com>
+From: Steven Price <steven.price@arm.com>
 
-[ Upstream commit aeca7ff254843d49a8739f07f7dab1341450111d ]
+[ Upstream commit 4217c6ac817451d5116687f3cc6286220dc43d49 ]
 
-Inject fault while probing module, if device_register() fails in
-vdpasim_net_init() or vdpasim_blk_init(), but the refcount of kobject is
-not decreased to 0, the name allocated in dev_set_name() is leaked.
-Fix this by calling put_device(), so that name can be freed in
-callback function kobject_cleanup().
+panfrost_gem_create_with_handle() previously returned a BO but with the
+only reference being from the handle, which user space could in theory
+guess and release, causing a use-after-free. Additionally if the call to
+panfrost_gem_mapping_get() in panfrost_ioctl_create_bo() failed then
+a(nother) reference on the BO was dropped.
 
-(vdpa_sim_net)
-unreferenced object 0xffff88807eebc370 (size 16):
-  comm "modprobe", pid 3848, jiffies 4362982860 (age 18.153s)
-  hex dump (first 16 bytes):
-    76 64 70 61 73 69 6d 5f 6e 65 74 00 6b 6b 6b a5  vdpasim_net.kkk.
-  backtrace:
-    [<ffffffff8174f19e>] __kmalloc_node_track_caller+0x4e/0x150
-    [<ffffffff81731d53>] kstrdup+0x33/0x60
-    [<ffffffff83a5d421>] kobject_set_name_vargs+0x41/0x110
-    [<ffffffff82d87aab>] dev_set_name+0xab/0xe0
-    [<ffffffff82d91a23>] device_add+0xe3/0x1a80
-    [<ffffffffa0270013>] 0xffffffffa0270013
-    [<ffffffff81001c27>] do_one_initcall+0x87/0x2e0
-    [<ffffffff813739cb>] do_init_module+0x1ab/0x640
-    [<ffffffff81379d20>] load_module+0x5d00/0x77f0
-    [<ffffffff8137bc40>] __do_sys_finit_module+0x110/0x1b0
-    [<ffffffff83c4d505>] do_syscall_64+0x35/0x80
-    [<ffffffff83e0006a>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+The _create_with_handle() is a problematic pattern, so ditch it and
+instead create the handle in panfrost_ioctl_create_bo(). If the call to
+panfrost_gem_mapping_get() fails then this means that user space has
+indeed gone behind our back and freed the handle. In which case just
+return an error code.
 
-(vdpa_sim_blk)
-unreferenced object 0xffff8881070c1250 (size 16):
-  comm "modprobe", pid 6844, jiffies 4364069319 (age 17.572s)
-  hex dump (first 16 bytes):
-    76 64 70 61 73 69 6d 5f 62 6c 6b 00 6b 6b 6b a5  vdpasim_blk.kkk.
-  backtrace:
-    [<ffffffff8174f19e>] __kmalloc_node_track_caller+0x4e/0x150
-    [<ffffffff81731d53>] kstrdup+0x33/0x60
-    [<ffffffff83a5d421>] kobject_set_name_vargs+0x41/0x110
-    [<ffffffff82d87aab>] dev_set_name+0xab/0xe0
-    [<ffffffff82d91a23>] device_add+0xe3/0x1a80
-    [<ffffffffa0220013>] 0xffffffffa0220013
-    [<ffffffff81001c27>] do_one_initcall+0x87/0x2e0
-    [<ffffffff813739cb>] do_init_module+0x1ab/0x640
-    [<ffffffff81379d20>] load_module+0x5d00/0x77f0
-    [<ffffffff8137bc40>] __do_sys_finit_module+0x110/0x1b0
-    [<ffffffff83c4d505>] do_syscall_64+0x35/0x80
-    [<ffffffff83e0006a>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-Fixes: 899c4d187f6a ("vdpa_sim_blk: add support for vdpa management tool")
-Fixes: a3c06ae158dd ("vdpa_sim_net: Add support for user supported devices")
-
-Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Message-Id: <20221110082348.4105476-1-ruanjinjie@huawei.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Reported-by: Rob Clark <robdclark@chromium.org>
+Fixes: f3ba91228e8e ("drm/panfrost: Add initial panfrost driver")
+Signed-off-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221219140130.410578-1-steven.price@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_sim/vdpa_sim_blk.c | 4 +++-
- drivers/vdpa/vdpa_sim/vdpa_sim_net.c | 4 +++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panfrost/panfrost_drv.c | 27 ++++++++++++++++---------
+ drivers/gpu/drm/panfrost/panfrost_gem.c | 16 +--------------
+ drivers/gpu/drm/panfrost/panfrost_gem.h |  5 +----
+ 3 files changed, 20 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
-index a790903f243e..22b812c32bee 100644
---- a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
-+++ b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
-@@ -308,8 +308,10 @@ static int __init vdpasim_blk_init(void)
- 	int ret;
+diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/panfrost/panfrost_drv.c
+index e48e357ea4f1..4c271244092b 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_drv.c
++++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
+@@ -82,6 +82,7 @@ static int panfrost_ioctl_create_bo(struct drm_device *dev, void *data,
+ 	struct panfrost_gem_object *bo;
+ 	struct drm_panfrost_create_bo *args = data;
+ 	struct panfrost_gem_mapping *mapping;
++	int ret;
  
- 	ret = device_register(&vdpasim_blk_mgmtdev);
--	if (ret)
-+	if (ret) {
-+		put_device(&vdpasim_blk_mgmtdev);
- 		return ret;
-+	}
+ 	if (!args->size || args->pad ||
+ 	    (args->flags & ~(PANFROST_BO_NOEXEC | PANFROST_BO_HEAP)))
+@@ -92,21 +93,29 @@ static int panfrost_ioctl_create_bo(struct drm_device *dev, void *data,
+ 	    !(args->flags & PANFROST_BO_NOEXEC))
+ 		return -EINVAL;
  
- 	ret = vdpa_mgmtdev_register(&mgmt_dev);
- 	if (ret)
-diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
-index a1ab6163f7d1..f1c420c5e26e 100644
---- a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
-+++ b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
-@@ -194,8 +194,10 @@ static int __init vdpasim_net_init(void)
+-	bo = panfrost_gem_create_with_handle(file, dev, args->size, args->flags,
+-					     &args->handle);
++	bo = panfrost_gem_create(dev, args->size, args->flags);
+ 	if (IS_ERR(bo))
+ 		return PTR_ERR(bo);
+ 
++	ret = drm_gem_handle_create(file, &bo->base.base, &args->handle);
++	if (ret)
++		goto out;
++
+ 	mapping = panfrost_gem_mapping_get(bo, priv);
+-	if (!mapping) {
+-		drm_gem_object_put(&bo->base.base);
+-		return -EINVAL;
++	if (mapping) {
++		args->offset = mapping->mmnode.start << PAGE_SHIFT;
++		panfrost_gem_mapping_put(mapping);
++	} else {
++		/* This can only happen if the handle from
++		 * drm_gem_handle_create() has already been guessed and freed
++		 * by user space
++		 */
++		ret = -EINVAL;
  	}
  
- 	ret = device_register(&vdpasim_net_mgmtdev);
--	if (ret)
-+	if (ret) {
-+		put_device(&vdpasim_net_mgmtdev);
- 		return ret;
-+	}
+-	args->offset = mapping->mmnode.start << PAGE_SHIFT;
+-	panfrost_gem_mapping_put(mapping);
+-
+-	return 0;
++out:
++	drm_gem_object_put(&bo->base.base);
++	return ret;
+ }
  
- 	ret = vdpa_mgmtdev_register(&mgmt_dev);
- 	if (ret)
+ /**
+diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.c b/drivers/gpu/drm/panfrost/panfrost_gem.c
+index 6d9bdb9180cb..55e3a68ed28a 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_gem.c
++++ b/drivers/gpu/drm/panfrost/panfrost_gem.c
+@@ -234,12 +234,8 @@ struct drm_gem_object *panfrost_gem_create_object(struct drm_device *dev, size_t
+ }
+ 
+ struct panfrost_gem_object *
+-panfrost_gem_create_with_handle(struct drm_file *file_priv,
+-				struct drm_device *dev, size_t size,
+-				u32 flags,
+-				uint32_t *handle)
++panfrost_gem_create(struct drm_device *dev, size_t size, u32 flags)
+ {
+-	int ret;
+ 	struct drm_gem_shmem_object *shmem;
+ 	struct panfrost_gem_object *bo;
+ 
+@@ -255,16 +251,6 @@ panfrost_gem_create_with_handle(struct drm_file *file_priv,
+ 	bo->noexec = !!(flags & PANFROST_BO_NOEXEC);
+ 	bo->is_heap = !!(flags & PANFROST_BO_HEAP);
+ 
+-	/*
+-	 * Allocate an id of idr table where the obj is registered
+-	 * and handle has the id what user can see.
+-	 */
+-	ret = drm_gem_handle_create(file_priv, &shmem->base, handle);
+-	/* drop reference from allocate - handle holds it now. */
+-	drm_gem_object_put(&shmem->base);
+-	if (ret)
+-		return ERR_PTR(ret);
+-
+ 	return bo;
+ }
+ 
+diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.h b/drivers/gpu/drm/panfrost/panfrost_gem.h
+index 8088d5fd8480..ad2877eeeccd 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_gem.h
++++ b/drivers/gpu/drm/panfrost/panfrost_gem.h
+@@ -69,10 +69,7 @@ panfrost_gem_prime_import_sg_table(struct drm_device *dev,
+ 				   struct sg_table *sgt);
+ 
+ struct panfrost_gem_object *
+-panfrost_gem_create_with_handle(struct drm_file *file_priv,
+-				struct drm_device *dev, size_t size,
+-				u32 flags,
+-				uint32_t *handle);
++panfrost_gem_create(struct drm_device *dev, size_t size, u32 flags);
+ 
+ int panfrost_gem_open(struct drm_gem_object *obj, struct drm_file *file_priv);
+ void panfrost_gem_close(struct drm_gem_object *obj,
 -- 
 2.35.1
 
