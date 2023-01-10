@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5D3F7474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:34:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D854C433EF;
-	Tue, 10 Jan 2023 18:34:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA347474
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:34:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D5FC433D2;
+	Tue, 10 Jan 2023 18:34:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375649;
-	bh=TeVUh8dUZgnT16RGC+nQBIRxsr3/6yXJ8gB2mW3y3bE=;
+	s=korg; t=1673375652;
+	bh=aUImv6LgCM7cGIQJ+6bKz43jYvM0T5axOkEfUX9q1Vk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J++t0lnny9knlXG1UWJeLhicpGQrEp99p8n+SmsTSkVWtYG4XHb2Xa2QJR7CJIA9k
-	 2jPf+5A/ow8W9DXLF5xtObL74o6NmPRjnrLOzPrALRLnylVmQjFxePfuIX1+egMk5g
-	 Dbgv4sw4gpNqO5ibBF2W16M9UnCm65VIqFz3sqng=
+	b=1tvasmeTVAg1Rro3+dx1uLjP8WW7lwHs8mb1YxxseqJVvgq/pP/AIVTylEQul+uFb
+	 rA0ldKWl/3hJV3ttBOteF5blIhrdtITKUEqGZxWWKVm2N1uB/hiNU/hkhta+N72cdN
+	 m8gPFsvCnGyEKyYOEPuIyUGUzkEFXkETmyogP0rQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 257/290] caif: fix memory leak in cfctrl_linkup_request()
-Date: Tue, 10 Jan 2023 19:05:49 +0100
-Message-Id: <20230110180040.863721039@linuxfoundation.org>
+Subject: [PATCH 5.15 258/290] udf: Fix extension of the last extent in the file
+Date: Tue, 10 Jan 2023 19:05:50 +0100
+Message-Id: <20230110180040.894804167@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -36,45 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit fe69230f05897b3de758427b574fc98025dfc907 ]
+[ Upstream commit 83c7423d1eb6806d13c521d1002cc1a012111719 ]
 
-When linktype is unknown or kzalloc failed in cfctrl_linkup_request(),
-pkt is not released. Add release process to error path.
+When extending the last extent in the file within the last block, we
+wrongly computed the length of the last extent. This is mostly a
+cosmetical problem since the extent does not contain any data and the
+length will be fixed up by following operations but still.
 
-Fixes: b482cd2053e3 ("net-caif: add CAIF core protocol stack")
-Fixes: 8d545c8f958f ("caif: Disconnect without waiting for response")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Link: https://lore.kernel.org/r/20230104065146.1153009-1-shaozhengchao@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 1f3868f06855 ("udf: Fix extending file within last block")
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/caif/cfctrl.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ fs/udf/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/caif/cfctrl.c b/net/caif/cfctrl.c
-index 2809cbd6b7f7..d8cb4b2a076b 100644
---- a/net/caif/cfctrl.c
-+++ b/net/caif/cfctrl.c
-@@ -269,11 +269,15 @@ int cfctrl_linkup_request(struct cflayer *layer,
- 	default:
- 		pr_warn("Request setup of bad link type = %d\n",
- 			param->linktype);
-+		cfpkt_destroy(pkt);
- 		return -EINVAL;
- 	}
- 	req = kzalloc(sizeof(*req), GFP_KERNEL);
--	if (!req)
-+	if (!req) {
-+		cfpkt_destroy(pkt);
- 		return -ENOMEM;
-+	}
-+
- 	req->client_layer = user_layer;
- 	req->cmd = CFCTRL_CMD_LINK_SETUP;
- 	req->param = *param;
+diff --git a/fs/udf/inode.c b/fs/udf/inode.c
+index 6a0e8ef664c1..d2488b7e54a5 100644
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -599,7 +599,7 @@ static void udf_do_extend_final_block(struct inode *inode,
+ 	 */
+ 	if (new_elen <= (last_ext->extLength & UDF_EXTENT_LENGTH_MASK))
+ 		return;
+-	added_bytes = (last_ext->extLength & UDF_EXTENT_LENGTH_MASK) - new_elen;
++	added_bytes = new_elen - (last_ext->extLength & UDF_EXTENT_LENGTH_MASK);
+ 	last_ext->extLength += added_bytes;
+ 	UDF_I(inode)->i_lenExtents += added_bytes;
+ 
 -- 
 2.35.1
 
