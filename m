@@ -1,66 +1,91 @@
-Received: from mail-lj1-f172.google.com (mail-lj1-f172.google.com [209.85.208.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD538A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:16 +0000 (UTC)
-Received: by mail-lj1-f172.google.com with SMTP id n5so12914730ljc.9
-        for <patches@lists.linux.dev>; Tue, 10 Jan 2023 10:27:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=joelfernandes.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ShU3lDY6GJI8ggbz9GikiyJz3+sZxpSyvZWgc9tJAwk=;
-        b=ybAbiblUQPAF0VdFc+1XKh3mBUCtjfMA2Q/3lE3YbIJBAZXm8RbKZJZC7hHlUoHnH4
-         w3Mdnk7CTO/zXp7cpQ4TTx8A+Vdwu7rTYgeQ0f8qWmcMemC6m22fMLhQzQZg8pCgYyE6
-         RRlGp0P1j2p9KOcBkFTC/H4meA42m8twO1O3A=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ShU3lDY6GJI8ggbz9GikiyJz3+sZxpSyvZWgc9tJAwk=;
-        b=bUchp60Pthku6di05cXki/Fp+ZigLu/y7sk928pbmZFlZWeFRdPeBG/W2I8X8WM/eo
-         qEMhIHI+Ng9gAekn32v6JD0Io4/tbJmlJZd5LHpHMoeL1+CVRx2fuq4l0LJL56wFPL9X
-         p+rVIKQ2QIS7LLYHMzfYwYvAAB7sctNKKUE5ZHggOkCXNOaI5Em/pD78fO++X80P8yDJ
-         oABUCQRnTEvuniJ95iFiJTRcdUGSYnN848Xe1bu95xWEcJ6dwy2bUiqkLdSieAvCqW0Y
-         yE/Bhf9IqGTHRoPlfcjYZyITWabDc9DJYO19Q/gb+3EucUxTCKkuvFKeDOzeAfuB2Fml
-         ZSnQ==
-X-Gm-Message-State: AFqh2kp8y23Mqzayghg4kb21tGceZ/fVH0cNOD6wQGX7dWll4AhCvthw
-	tq9PnKa1RKRyLUpl7og1aru5oGBeUQnyJnu5UDoiOtp2hnf68g==
-X-Google-Smtp-Source: AMrXdXt/W4AlREqzhFnGF9afSPt07wXNzsyNaFjWN07K7Haos9cvue5bZfKDEKNEzr9ityRbRBH6lLdr6w7YF9p5+S0=
-X-Received: by 2002:a2e:3215:0:b0:27f:b98c:7a0e with SMTP id
- y21-20020a2e3215000000b0027fb98c7a0emr4688452ljy.356.1673375234806; Tue, 10
- Jan 2023 10:27:14 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE556FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7EDC433EF;
+	Tue, 10 Jan 2023 18:27:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1673375239;
+	bh=p5iYSV1K9TuhF1oOiAR0lCupnzhPDdYLUTw/w1bgos4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=EugUrMITGnmZypTL/zevBcrICQP1L3R+mkNsOB6e9B7BIZKDdA00fCsP/irG8Izmk
+	 iTcNl9Ss5Zg5eknI7mkMCd34WHoNzGNonAolkzDq7ohDvbEvpMIzb8F28b0RB+M5OE
+	 7o0BDDusbFWKOkDViLwz+ycGo/u+Nq7ttfwChgBc=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 5.15 124/290] PCI/sysfs: Fix double free in error path
+Date: Tue, 10 Jan 2023 19:03:36 +0100
+Message-Id: <20230110180036.100073528@linuxfoundation.org>
+X-Mailer: git-send-email 2.39.0
+In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
+References: <20230110180031.620810905@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230110180031.620810905@linuxfoundation.org> <20230110180033.597780936@linuxfoundation.org>
- <CAEXW_YQhoJkCNaBKRSLh5OCYn1ObA8dy63ZrgmRgpEaVorBnnQ@mail.gmail.com>
-In-Reply-To: <CAEXW_YQhoJkCNaBKRSLh5OCYn1ObA8dy63ZrgmRgpEaVorBnnQ@mail.gmail.com>
-From: Joel Fernandes <joel@joelfernandes.org>
-Date: Tue, 10 Jan 2023 13:27:02 -0500
-Message-ID: <CAEXW_YQeDCfP-2cJ5Qwx5gAiPxzn4uTEqKB6m3BsCwzpM43qAA@mail.gmail.com>
-Subject: Re: [PATCH 5.15 057/290] rcu-tasks: Simplify trc_read_check_handler()
- atomic operations
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	"Paul E. McKenney" <paulmck@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jan 10, 2023 at 1:26 PM Joel Fernandes <joel@joelfernandes.org> wrote:
->
-> On Tue, Jan 10, 2023 at 1:23 PM Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > From: Paul E. McKenney <paulmck@kernel.org>
-> >
-> > commit 96017bf9039763a2e02dcc6adaa18592cd73a39d upstream.
->
-> Thanks Greg, I had sent the same patch earlier for 5.15. Just so I
-> learn, anything I did wrong or should have done differently?
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-Never mind, I think it is just coming from your queue after you picked
-mine up...
+commit aa382ffa705bea9931ec92b6f3c70e1fdb372195 upstream.
+
+When pci_create_attr() fails, pci_remove_resource_files() is called which
+will iterate over the res_attr[_wc] arrays and frees every non NULL entry.
+To avoid a double free here set the array entry only after it's clear we
+successfully initialized it.
+
+Fixes: b562ec8f74e4 ("PCI: Don't leak memory if sysfs_create_bin_file() fails")
+Link: https://lore.kernel.org/r/20221007070735.GX986@pengutronix.de/
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/pci/pci-sysfs.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
+
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -1179,11 +1179,9 @@ static int pci_create_attr(struct pci_de
+ 
+ 	sysfs_bin_attr_init(res_attr);
+ 	if (write_combine) {
+-		pdev->res_attr_wc[num] = res_attr;
+ 		sprintf(res_attr_name, "resource%d_wc", num);
+ 		res_attr->mmap = pci_mmap_resource_wc;
+ 	} else {
+-		pdev->res_attr[num] = res_attr;
+ 		sprintf(res_attr_name, "resource%d", num);
+ 		if (pci_resource_flags(pdev, num) & IORESOURCE_IO) {
+ 			res_attr->read = pci_read_resource_io;
+@@ -1201,10 +1199,17 @@ static int pci_create_attr(struct pci_de
+ 	res_attr->size = pci_resource_len(pdev, num);
+ 	res_attr->private = (void *)(unsigned long)num;
+ 	retval = sysfs_create_bin_file(&pdev->dev.kobj, res_attr);
+-	if (retval)
++	if (retval) {
+ 		kfree(res_attr);
++		return retval;
++	}
++
++	if (write_combine)
++		pdev->res_attr_wc[num] = res_attr;
++	else
++		pdev->res_attr[num] = res_attr;
+ 
+-	return retval;
++	return 0;
+ }
+ 
+ /**
+
+
