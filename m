@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34800A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:07:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE03CC433EF;
-	Tue, 10 Jan 2023 18:07:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0D71A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:07:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 453D9C433EF;
+	Tue, 10 Jan 2023 18:07:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374039;
-	bh=IVsJLTN9Ds8ZTDHFMg6LQCsP1w+6bSjoafRpXZWh/fw=;
+	s=korg; t=1673374041;
+	bh=nZDmItBdGvC3CO5KZ+tgxZKIFpNdgUB4S5GVcgYHbrg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IeOqbKS+t2FWM3cdrC9YNdKMl5EhpnsFajVbjQbgjt+t5MFDd3fIfeOwxuZet6O+Q
-	 cCW/wn1WmqZwcMHFJAcT2US+wSgylhziN0+MWrcGZ2Rki3YRgVyQhc1JvPY1mNMmUq
-	 Y9U9mW8k7kQDuhxNYcMoUNzroNPoy/fMDWMq/AIc=
+	b=PsnXI5Lzxp6hj3eyX/yiBKJF7pyd4lhJ755fgxoSahQ7xdg7lLpMM5nuWy5KSFQEi
+	 VjwKDEy8LwURZuHd0kgzel8bhd1IXZx8INHzPw1LWfEeKqbTUTvc3ihQRKh+nCktXf
+	 WUh3Hch5SaURP2F4HDspTqu4wL39QJgOJLF/z+1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Jason Yan <yanaijie@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 008/148] phy: qcom-qmp-combo: fix broken power on
-Date: Tue, 10 Jan 2023 19:01:52 +0100
-Message-Id: <20230110180017.436940087@linuxfoundation.org>
+Subject: [PATCH 6.0 009/148] ext4: goto right label failed_mount3a
+Date: Tue, 10 Jan 2023 19:01:53 +0100
+Message-Id: <20230110180017.477766184@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -36,94 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Jason Yan <yanaijie@huawei.com>
 
-[ Upstream commit 7a7d86d14d073dfa3429c550667a8e78b99edbd4 ]
+[ Upstream commit 43bd6f1b49b61f43de4d4e33661b8dbe8c911f14 ]
 
-The PHY is powered on during phy-init by setting the SW_PWRDN bit in the
-COM_POWER_DOWN_CTRL register and then setting the same bit in the in the
-PCS_POWER_DOWN_CONTROL register that belongs to the USB part of the
-PHY.
+Before these two branches neither loaded the journal nor created the
+xattr cache. So the right label to goto is 'failed_mount3a'. Although
+this did not cause any issues because the error handler validated if the
+pointer is null. However this still made me confused when reading
+the code. So it's still worth to modify to goto the right label.
 
-Currently, whether power on succeeds depends on probe order and having
-the USB part of the PHY be initialised first. In case the DP part of the
-PHY is instead initialised first, the intended power on of the USB block
-results in a corrupted DP_PHY register (e.g. DP_PHY_AUX_CFG8).
-
-Add a pointer to the USB part of the PHY to the driver data and use that
-to power on the PHY also if the DP part of the PHY is initialised first.
-
-Fixes: 52e013d0bffa ("phy: qcom-qmp: Add support for DP in USB3+DP combo phy")
-Cc: stable@vger.kernel.org	# 5.10
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20221114081346.5116-5-johan+linaro@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Jason Yan <yanaijie@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Link: https://lore.kernel.org/r/20220916141527.1012715-2-yanaijie@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 89481b5fa8c0 ("ext4: correct inconsistent error msg in nojournal mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ fs/ext4/super.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index 0feda8eb93b5..5e011520650d 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -767,6 +767,7 @@ struct qcom_qmp {
- 	struct regulator_bulk_data *vregs;
- 
- 	struct qmp_phy **phys;
-+	struct qmp_phy *usb_phy;
- 
- 	struct mutex phy_mutex;
- 	int init_count;
-@@ -1607,7 +1608,7 @@ static int qcom_qmp_phy_combo_com_init(struct qmp_phy *qphy)
- {
- 	struct qcom_qmp *qmp = qphy->qmp;
- 	const struct qmp_phy_cfg *cfg = qphy->cfg;
--	void __iomem *pcs = qphy->pcs;
-+	struct qmp_phy *usb_phy = qmp->usb_phy;
- 	void __iomem *dp_com = qmp->dp_com;
- 	int ret;
- 
-@@ -1663,13 +1664,13 @@ static int qcom_qmp_phy_combo_com_init(struct qmp_phy *qphy)
- 		qphy_clrbits(dp_com, QPHY_V3_DP_COM_SW_RESET, SW_RESET);
- 	}
- 
--	if (cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL])
--		qphy_setbits(pcs,
--				cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
--				cfg->pwrdn_ctrl);
-+	if (usb_phy->cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL])
-+		qphy_setbits(usb_phy->pcs,
-+				usb_phy->cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
-+				usb_phy->cfg->pwrdn_ctrl);
- 	else
--		qphy_setbits(pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL,
--				cfg->pwrdn_ctrl);
-+		qphy_setbits(usb_phy->pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL,
-+				usb_phy->cfg->pwrdn_ctrl);
- 
- 	mutex_unlock(&qmp->phy_mutex);
- 
-@@ -2576,6 +2577,8 @@ static int qcom_qmp_phy_combo_probe(struct platform_device *pdev)
- 				goto err_node_put;
- 			}
- 
-+			qmp->usb_phy = qmp->phys[id];
-+
- 			/*
- 			 * Register the pipe clock provided by phy.
- 			 * See function description to see details of this pipe clock.
-@@ -2591,6 +2594,9 @@ static int qcom_qmp_phy_combo_probe(struct platform_device *pdev)
- 		id++;
- 	}
- 
-+	if (!qmp->usb_phy)
-+		return -EINVAL;
-+
- 	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
- 	if (!IS_ERR(phy_provider))
- 		dev_info(dev, "Registered Qcom-QMP phy\n");
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 2eae6e038f38..fedfe8cb78c6 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -5063,30 +5063,30 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
+ 		   ext4_has_feature_journal_needs_recovery(sb)) {
+ 		ext4_msg(sb, KERN_ERR, "required journal recovery "
+ 		       "suppressed and not mounted read-only");
+-		goto failed_mount_wq;
++		goto failed_mount3a;
+ 	} else {
+ 		/* Nojournal mode, all journal mount options are illegal */
+ 		if (test_opt2(sb, EXPLICIT_JOURNAL_CHECKSUM)) {
+ 			ext4_msg(sb, KERN_ERR, "can't mount with "
+ 				 "journal_checksum, fs mounted w/o journal");
+-			goto failed_mount_wq;
++			goto failed_mount3a;
+ 		}
+ 		if (test_opt(sb, JOURNAL_ASYNC_COMMIT)) {
+ 			ext4_msg(sb, KERN_ERR, "can't mount with "
+ 				 "journal_async_commit, fs mounted w/o journal");
+-			goto failed_mount_wq;
++			goto failed_mount3a;
+ 		}
+ 		if (sbi->s_commit_interval != JBD2_DEFAULT_MAX_COMMIT_AGE*HZ) {
+ 			ext4_msg(sb, KERN_ERR, "can't mount with "
+ 				 "commit=%lu, fs mounted w/o journal",
+ 				 sbi->s_commit_interval / HZ);
+-			goto failed_mount_wq;
++			goto failed_mount3a;
+ 		}
+ 		if (EXT4_MOUNT_DATA_FLAGS &
+ 		    (sbi->s_mount_opt ^ sbi->s_def_mount_opt)) {
+ 			ext4_msg(sb, KERN_ERR, "can't mount with "
+ 				 "data=, fs mounted w/o journal");
+-			goto failed_mount_wq;
++			goto failed_mount3a;
+ 		}
+ 		sbi->s_def_mount_opt &= ~EXT4_MOUNT_JOURNAL_CHECKSUM;
+ 		clear_opt(sb, JOURNAL_CHECKSUM);
 -- 
 2.35.1
 
