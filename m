@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88C8A6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:06:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DE94C433D2;
-	Tue, 10 Jan 2023 18:06:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4428F6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:06:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B439C433D2;
+	Tue, 10 Jan 2023 18:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374012;
-	bh=7OCf9YBphPRmke3NbGMxeSKXF1zqc0k+Hm3ka1BUirE=;
+	s=korg; t=1673374015;
+	bh=J7FBa41VCdWOW3WhQvIKSo9zaLEjMakbdgyb0o5uhg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zDFGfkIrGvGb6yYHpI0pAemdtxPyAfUuZbS4nJPzq1bQgtJAPbGGKmTERVBjHrnrk
-	 Cy+aZwdauVitVcKBlOmKJ4uS3l5ZOaGVJnhwkfsK5MnZdZJT+CVqj2hYO+Zc3cITfk
-	 Lnned61AFa/t9gwK0ejI6Nb4CqYec+g8jUVLQ2SE=
+	b=sJDSQEY5MfLoKldeDaYihNNA9aSf7Rhu78AURWqbbtboHUIvtMhLMAbBqu435Jaw6
+	 YqR/feZNCSUEMofWSU409PZPMUyJp6OIdoQthapyGuXkm8+b+Xx/daxZn9SxggchNq
+	 /2z8ONTJSEHPT6FtAVjG2AinNjInk8jhLs1AGB2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Prasad N <sprasad@microsoft.com>,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.0 004/148] cifs: refcount only the selected iface during interface update
-Date: Tue, 10 Jan 2023 19:01:48 +0100
-Message-Id: <20230110180017.306589539@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <kvalo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 013/148] wifi: ath9k: use proper statements in conditionals
+Date: Tue, 10 Jan 2023 19:01:57 +0100
+Message-Id: <20230110180017.606510705@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -35,41 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shyam Prasad N <sprasad@microsoft.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 7246210ecdd0cda97fa3e3bb15c32c6c2d9a23b5 upstream.
+[ Upstream commit b7dc753fe33a707379e2254317794a4dad6c0fe2 ]
 
-When the server interface for a channel is not active anymore,
-we have the logic to select an alternative interface. However
-this was not breaking out of the loop as soon as a new alternative
-was found. As a result, some interfaces may get refcounted unintentionally.
+A previous cleanup patch accidentally broke some conditional
+expressions by replacing the safe "do {} while (0)" constructs
+with empty macros. gcc points this out when extra warnings
+are enabled:
 
-There was also a bug in checking if we found an alternate iface.
-Fixed that too.
+drivers/net/wireless/ath/ath9k/hif_usb.c: In function 'ath9k_skb_queue_complete':
+drivers/net/wireless/ath/ath9k/hif_usb.c:251:57: error: suggest braces around empty body in an 'else' statement [-Werror=empty-body]
+  251 |                         TX_STAT_INC(hif_dev, skb_failed);
 
-Fixes: b54034a73baf ("cifs: during reconnect, update interface if necessary")
-Cc: stable@vger.kernel.org # 5.19+
-Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
-Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Make both sets of macros proper expressions again.
+
+Fixes: d7fc76039b74 ("ath9k: htc: clean up statistics macros")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221215165553.1950307-1-arnd@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/sess.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/wireless/ath/ath9k/htc.h | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/fs/cifs/sess.c
-+++ b/fs/cifs/sess.c
-@@ -292,9 +292,10 @@ cifs_chan_update_iface(struct cifs_ses *
- 			continue;
- 		}
- 		kref_get(&iface->refcount);
-+		break;
- 	}
+diff --git a/drivers/net/wireless/ath/ath9k/htc.h b/drivers/net/wireless/ath/ath9k/htc.h
+index 30f0765fb9fd..237f4ec2cffd 100644
+--- a/drivers/net/wireless/ath/ath9k/htc.h
++++ b/drivers/net/wireless/ath/ath9k/htc.h
+@@ -327,9 +327,9 @@ static inline struct ath9k_htc_tx_ctl *HTC_SKB_CB(struct sk_buff *skb)
+ }
  
--	if (!list_entry_is_head(iface, &ses->iface_list, iface_head)) {
-+	if (list_entry_is_head(iface, &ses->iface_list, iface_head)) {
- 		rc = 1;
- 		iface = NULL;
- 		cifs_dbg(FYI, "unable to find a suitable iface\n");
+ #ifdef CONFIG_ATH9K_HTC_DEBUGFS
+-#define __STAT_SAFE(hif_dev, expr)	((hif_dev)->htc_handle->drv_priv ? (expr) : 0)
+-#define CAB_STAT_INC(priv)		((priv)->debug.tx_stats.cab_queued++)
+-#define TX_QSTAT_INC(priv, q)		((priv)->debug.tx_stats.queue_stats[q]++)
++#define __STAT_SAFE(hif_dev, expr)	do { ((hif_dev)->htc_handle->drv_priv ? (expr) : 0); } while (0)
++#define CAB_STAT_INC(priv)		do { ((priv)->debug.tx_stats.cab_queued++); } while (0)
++#define TX_QSTAT_INC(priv, q)		do { ((priv)->debug.tx_stats.queue_stats[q]++); } while (0)
+ 
+ #define TX_STAT_INC(hif_dev, c) \
+ 		__STAT_SAFE((hif_dev), (hif_dev)->htc_handle->drv_priv->debug.tx_stats.c++)
+@@ -378,10 +378,10 @@ void ath9k_htc_get_et_stats(struct ieee80211_hw *hw,
+ 			    struct ethtool_stats *stats, u64 *data);
+ #else
+ 
+-#define TX_STAT_INC(hif_dev, c)
+-#define TX_STAT_ADD(hif_dev, c, a)
+-#define RX_STAT_INC(hif_dev, c)
+-#define RX_STAT_ADD(hif_dev, c, a)
++#define TX_STAT_INC(hif_dev, c)		do { } while (0)
++#define TX_STAT_ADD(hif_dev, c, a)	do { } while (0)
++#define RX_STAT_INC(hif_dev, c)		do { } while (0)
++#define RX_STAT_ADD(hif_dev, c, a)	do { } while (0)
+ 
+ #define CAB_STAT_INC(priv)
+ #define TX_QSTAT_INC(priv, c)
+-- 
+2.35.1
+
 
 
