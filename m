@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BC73C2C
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:30:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0A71C433D2;
-	Tue, 10 Jan 2023 18:30:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B8B6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:30:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9040BC433EF;
+	Tue, 10 Jan 2023 18:30:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375418;
-	bh=SrkUMDZATJU4p1H3jWIAr1HcM9vmlbBD06yYStk5Ekw=;
+	s=korg; t=1673375421;
+	bh=TLPhNNOhWhH/1mz4q+rjssDv0vh6wmbTXvfKYYoEA6M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2g8hUxso7UtVDcqHyBjsZMZWqjqbvJOtVZYThRhvIyGwQ9Yaf8G2lihfLlhEk6YLo
-	 oa4aN6GRu2C1o39jenvnrt9DtUiHK5FGu4/Bvg9HY4UP1rLdtLh6S0cGK8cJAOoPbn
-	 3yMbScuoSZYBrHzUPuX8AvyaoMXFAjD2dEQ95zzY=
+	b=csOe7ViJY1OONlR5GmAijP/f3rrpmG7KgeSW8DY6RrmbudaN0fPs+UY4IO/lxw8BG
+	 vs9HNws0GNYMgBO9j2RzmOIxBRBb9SQJVuIL6W/heXfQmdOMoFtUazP+hMKDM46zRr
+	 3S3TEc3u4WRITJJS5k2qaGnJDul90/k2Ll/Luwrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yazen Ghannam <yazen.ghannam@amd.com>,
-	Borislav Petkov <bp@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 183/290] x86/MCE/AMD: Clear DFR errors found in THR handler
-Date: Tue, 10 Jan 2023 19:04:35 +0100
-Message-Id: <20230110180038.259289248@linuxfoundation.org>
+	mhiramat@kernel.org,
+	zanussi@kernel.org,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.15 166/290] tracing: Fix issue of missing one synthetic field
+Date: Tue, 10 Jan 2023 19:04:18 +0100
+Message-Id: <20230110180037.639531066@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,101 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yazen Ghannam <yazen.ghannam@amd.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-[ Upstream commit bc1b705b0eee4c645ad8b3bbff3c8a66e9688362 ]
+commit ff4837f7fe59ff018eca4705a70eca5e0b486b97 upstream.
 
-AMD's MCA Thresholding feature counts errors of all severity levels, not
-just correctable errors. If a deferred error causes the threshold limit
-to be reached (it was the error that caused the overflow), then both a
-deferred error interrupt and a thresholding interrupt will be triggered.
+The maximum number of synthetic fields supported is defined as
+SYNTH_FIELDS_MAX which value currently is 64, but it actually fails
+when try to generate a synthetic event with 64 fields by executing like:
 
-The order of the interrupts is not guaranteed. If the threshold
-interrupt handler is executed first, then it will clear MCA_STATUS for
-the error. It will not check or clear MCA_DESTAT which also holds a copy
-of the deferred error. When the deferred error interrupt handler runs it
-will not find an error in MCA_STATUS, but it will find the error in
-MCA_DESTAT. This will cause two errors to be logged.
+  # echo "my_synth_event int v1; int v2; int v3; int v4; int v5; int v6;\
+   int v7; int v8; int v9; int v10; int v11; int v12; int v13; int v14;\
+   int v15; int v16; int v17; int v18; int v19; int v20; int v21; int v22;\
+   int v23; int v24; int v25; int v26; int v27; int v28; int v29; int v30;\
+   int v31; int v32; int v33; int v34; int v35; int v36; int v37; int v38;\
+   int v39; int v40; int v41; int v42; int v43; int v44; int v45; int v46;\
+   int v47; int v48; int v49; int v50; int v51; int v52; int v53; int v54;\
+   int v55; int v56; int v57; int v58; int v59; int v60; int v61; int v62;\
+   int v63; int v64" >> /sys/kernel/tracing/synthetic_events
 
-Check for deferred errors when handling a threshold interrupt. If a bank
-contains a deferred error, then clear the bank's MCA_DESTAT register.
+Correct the field counting to fix it.
 
-Define a new helper function to do the deferred error check and clearing
-of MCA_DESTAT.
+Link: https://lore.kernel.org/linux-trace-kernel/20221207091557.3137904-1-zhengyejian1@huawei.com
 
-  [ bp: Simplify, convert comment to passive voice. ]
-
-Fixes: 37d43acfd79f ("x86/mce/AMD: Redo error logging from APIC LVT interrupt handlers")
-Signed-off-by: Yazen Ghannam <yazen.ghannam@amd.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
+Cc: <mhiramat@kernel.org>
+Cc: <zanussi@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20220621155943.33623-1-yazen.ghannam@amd.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: c9e759b1e845 ("tracing: Rework synthetic event command parsing")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+[Fix conflict due to lack of c24be24aed405d64ebcf04526614c13b2adfb1d2]
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/mce/amd.c | 33 ++++++++++++++++++++-------------
- 1 file changed, 20 insertions(+), 13 deletions(-)
+ kernel/trace/trace_events_synth.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/kernel/cpu/mce/amd.c b/arch/x86/kernel/cpu/mce/amd.c
-index b8b7c304e4ba..6469d3135d26 100644
---- a/arch/x86/kernel/cpu/mce/amd.c
-+++ b/arch/x86/kernel/cpu/mce/amd.c
-@@ -965,6 +965,24 @@ _log_error_bank(unsigned int bank, u32 msr_stat, u32 msr_addr, u64 misc)
- 	return status & MCI_STATUS_DEFERRED;
- }
+--- a/kernel/trace/trace_events_synth.c
++++ b/kernel/trace/trace_events_synth.c
+@@ -1275,12 +1275,12 @@ static int __create_synth_event(const ch
+ 				goto err;
+ 			}
  
-+static bool _log_error_deferred(unsigned int bank, u32 misc)
-+{
-+	if (!_log_error_bank(bank, mca_msr_reg(bank, MCA_STATUS),
-+			     mca_msr_reg(bank, MCA_ADDR), misc))
-+		return false;
-+
-+	/*
-+	 * Non-SMCA systems don't have MCA_DESTAT/MCA_DEADDR registers.
-+	 * Return true here to avoid accessing these registers.
-+	 */
-+	if (!mce_flags.smca)
-+		return true;
-+
-+	/* Clear MCA_DESTAT if the deferred error was logged from MCA_STATUS. */
-+	wrmsrl(MSR_AMD64_SMCA_MCx_DESTAT(bank), 0);
-+	return true;
-+}
-+
- /*
-  * We have three scenarios for checking for Deferred errors:
-  *
-@@ -976,19 +994,8 @@ _log_error_bank(unsigned int bank, u32 msr_stat, u32 msr_addr, u64 misc)
-  */
- static void log_error_deferred(unsigned int bank)
- {
--	bool defrd;
--
--	defrd = _log_error_bank(bank, mca_msr_reg(bank, MCA_STATUS),
--				mca_msr_reg(bank, MCA_ADDR), 0);
--
--	if (!mce_flags.smca)
--		return;
--
--	/* Clear MCA_DESTAT if we logged the deferred error from MCA_STATUS. */
--	if (defrd) {
--		wrmsrl(MSR_AMD64_SMCA_MCx_DESTAT(bank), 0);
-+	if (_log_error_deferred(bank, 0))
- 		return;
--	}
+-			fields[n_fields++] = field;
+ 			if (n_fields == SYNTH_FIELDS_MAX) {
+ 				synth_err(SYNTH_ERR_TOO_MANY_FIELDS, 0);
+ 				ret = -EINVAL;
+ 				goto err;
+ 			}
++			fields[n_fields++] = field;
  
- 	/*
- 	 * Only deferred errors are logged in MCA_DE{STAT,ADDR} so just check
-@@ -1009,7 +1016,7 @@ static void amd_deferred_error_interrupt(void)
- 
- static void log_error_thresholding(unsigned int bank, u64 misc)
- {
--	_log_error_bank(bank, mca_msr_reg(bank, MCA_STATUS), mca_msr_reg(bank, MCA_ADDR), misc);
-+	_log_error_deferred(bank, misc);
- }
- 
- static void log_and_reset_block(struct threshold_block *block)
--- 
-2.35.1
-
+ 			n_fields_this_loop++;
+ 		}
 
 
