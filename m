@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 461B16FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:25:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81669C433EF;
-	Tue, 10 Jan 2023 18:25:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 188506FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:25:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71434C433D2;
+	Tue, 10 Jan 2023 18:25:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375144;
-	bh=EIZqDPd9fNOCBCswgpx07PnRiZiEE9xZ/S9dqsC6PNo=;
+	s=korg; t=1673375146;
+	bh=o0evxTQZ7hHbtrdnN+03QUm23PIlf09rrvcvTIaTnBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PfXJMXeeZBuADVrYIvfdEugS24vzAXZMF4FIFBH0lB5TNWnWqelLH1plkw+fIYCjS
-	 OLBeXYH+R81oQk8KGcWWRw/atZoyoHvfRutzbWy/VlTt6Fo4DzNdLX0TF4Xpla6Jj2
-	 tMtoiq+MZUNyqHtD2MaBMiC/hXBoyPZEUgTQG0j4=
+	b=rvYzMhTZwM4FkzQJTMVzw9QB2oP706tDK/W50W3lw4upO9htTrX3kx4so7bseicn/
+	 xZeNWTtwoTPKWjoBKOs3GcsvmabvAJj1PnS9pcd/A+YinS3a1pJuskHtLRAhXPqFUd
+	 4t4UsJoC3DC4WyncIZeKhPKnFPfv61RlnEenAgDc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Antonov <alexander.antonov@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>
-Subject: [PATCH 5.15 065/290] perf/x86/intel/uncore: Disable I/O stacks to PMU mapping on ICX-D
-Date: Tue, 10 Jan 2023 19:02:37 +0100
-Message-Id: <20230110180033.876593847@linuxfoundation.org>
+	Peter Maydell <peter.maydell@linaro.org>,
+	Rob Herring <robh@kernel.org>
+Subject: [PATCH 5.15 092/290] of/kexec: Fix reading 32-bit "linux,initrd-{start,end}" values
+Date: Tue, 10 Jan 2023 19:03:04 +0100
+Message-Id: <20230110180034.792413983@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,48 +34,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Antonov <alexander.antonov@linux.intel.com>
+From: Rob Herring <robh@kernel.org>
 
-commit efe062705d149b20a15498cb999a9edbb8241e6f upstream.
+commit e553ad8d7957697385e81034bf76db3b2cb2cf27 upstream.
 
-Current implementation of I/O stacks to PMU mapping doesn't support ICX-D.
-Detect ICX-D system to disable mapping.
+"linux,initrd-start" and "linux,initrd-end" can be 32-bit values even on
+a 64-bit platform. Ideally, the size should be based on
+'#address-cells', but that has never been enforced in the kernel's FDT
+boot parsing code (early_init_dt_check_for_initrd()). Bootloader
+behavior is known to vary. For example, kexec always writes these as
+64-bit. The result of incorrectly reading 32-bit values is most likely
+the reserved memory for the original initrd will still be reserved
+for the new kernel. The original arm64 equivalent of this code failed to
+release the initrd reserved memory in *all* cases.
 
-Fixes: 10337e95e04c ("perf/x86/intel/uncore: Enable I/O stacks to IIO PMON mapping on ICX")
-Signed-off-by: Alexander Antonov <alexander.antonov@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Use of_read_number() to mirror the early_init_dt_check_for_initrd()
+code.
+
+Fixes: b30be4dc733e ("of: Add a common kexec FDT setup function")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221117122833.3103580-5-alexander.antonov@linux.intel.com
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Link: https://lore.kernel.org/r/20221128202440.1411895-1-robh@kernel.org
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/uncore.h       |    1 +
- arch/x86/events/intel/uncore_snbep.c |    5 +++++
- 2 files changed, 6 insertions(+)
+ drivers/of/kexec.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/arch/x86/events/intel/uncore.h
-+++ b/arch/x86/events/intel/uncore.h
-@@ -2,6 +2,7 @@
- #include <linux/slab.h>
- #include <linux/pci.h>
- #include <asm/apicdef.h>
-+#include <asm/intel-family.h>
- #include <linux/io-64-nonatomic-lo-hi.h>
- 
- #include <linux/perf_event.h>
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -5144,6 +5144,11 @@ static int icx_iio_get_topology(struct i
- 
- static int icx_iio_set_mapping(struct intel_uncore_type *type)
+--- a/drivers/of/kexec.c
++++ b/drivers/of/kexec.c
+@@ -284,7 +284,7 @@ void *of_kexec_alloc_and_setup_fdt(const
+ 				   const char *cmdline, size_t extra_fdt_size)
  {
-+	/* Detect ICX-D system. This case is not supported */
-+	if (boot_cpu_data.x86_model == INTEL_FAM6_ICELAKE_D) {
-+		pmu_clear_mapping_attr(type->attr_update, &icx_iio_mapping_group);
-+		return -EPERM;
-+	}
- 	return pmu_iio_set_mapping(type, &icx_iio_mapping_group);
- }
+ 	void *fdt;
+-	int ret, chosen_node;
++	int ret, chosen_node, len;
+ 	const void *prop;
+ 	size_t fdt_size;
  
+@@ -327,19 +327,19 @@ void *of_kexec_alloc_and_setup_fdt(const
+ 		goto out;
+ 
+ 	/* Did we boot using an initrd? */
+-	prop = fdt_getprop(fdt, chosen_node, "linux,initrd-start", NULL);
++	prop = fdt_getprop(fdt, chosen_node, "linux,initrd-start", &len);
+ 	if (prop) {
+ 		u64 tmp_start, tmp_end, tmp_size;
+ 
+-		tmp_start = fdt64_to_cpu(*((const fdt64_t *) prop));
++		tmp_start = of_read_number(prop, len / 4);
+ 
+-		prop = fdt_getprop(fdt, chosen_node, "linux,initrd-end", NULL);
++		prop = fdt_getprop(fdt, chosen_node, "linux,initrd-end", &len);
+ 		if (!prop) {
+ 			ret = -EINVAL;
+ 			goto out;
+ 		}
+ 
+-		tmp_end = fdt64_to_cpu(*((const fdt64_t *) prop));
++		tmp_end = of_read_number(prop, len / 4);
+ 
+ 		/*
+ 		 * kexec reserves exact initrd size, while firmware may
 
 
