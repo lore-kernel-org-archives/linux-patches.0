@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA39A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612EFC433D2;
-	Tue, 10 Jan 2023 18:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884FFA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0736FC433D2;
+	Tue, 10 Jan 2023 18:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374261;
-	bh=GQGUFmhYX1ymiYp2gW0b6dWHKW8PtEC70qugp1r+wK8=;
+	s=korg; t=1673374264;
+	bh=aF9XGd847OBV9ASn/3QWJID57AOLr6pHJv2XGS0Veog=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cd1wGwejGEkUh9lgv7zjnbl2kGfqDEjPTt2RVZ8pqHigY2SOdxKGHx/YWcqQoQJVc
-	 +RvB7ZBZhKbwt8oteb7l1KPFoQGwC7INIvrVEQUSayz5TbP0NhL0A4Vxl6BsNsYQQY
-	 IjxUEYyncrOLXoRaH5nMFBLhmHONRDAez1i6BPqI=
+	b=JOIP35hLxHoiR7GGeo0ROBVJwAEKHjIMAmeMivAf3zFdf6vmb1ihkwC/AHr2TgoR/
+	 BFOU8VBhxw0+R6PYQu7hNjnwKQiw7cDzlsGiZ48GPpdeGS63T2oAcaRSZLtwWQPV7H
+	 qBpZJmty6S9Y4LgjqMduTh0ZhSviQB6wEkVNhM/4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Po-Hsu Lin <po-hsu.lin@canonical.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Carlo Caione <ccaione@baylibre.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 075/148] selftests: net: return non-zero for failures reported in arp_ndisc_evict_nocarrier
-Date: Tue, 10 Jan 2023 19:02:59 +0100
-Message-Id: <20230110180019.595763360@linuxfoundation.org>
+Subject: [PATCH 6.0 076/148] drm/meson: Reduce the FIFO lines held when AFBC is not used
+Date: Tue, 10 Jan 2023 19:03:00 +0100
+Message-Id: <20230110180019.627162866@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -35,97 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Po-Hsu Lin <po-hsu.lin@canonical.com>
+From: Carlo Caione <ccaione@baylibre.com>
 
-[ Upstream commit 1856628baa17032531916984808d1bdfd62700d4 ]
+[ Upstream commit 3b754ed6d1cd90017e66e5cc16f3923e4a952ffc ]
 
-Return non-zero return value if there is any failure reported in this
-script during the test. Otherwise it can only reflect the status of
-the last command.
+Having a bigger number of FIFO lines held after vsync is only useful to
+SoCs using AFBC to give time to the AFBC decoder to be reset, configured
+and enabled again.
 
-Fixes: f86ca07eb531 ("selftests: net: add arp_ndisc_evict_nocarrier")
-Signed-off-by: Po-Hsu Lin <po-hsu.lin@canonical.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+For SoCs not using AFBC this, on the contrary, is causing on some
+displays issues and a few pixels vertical offset in the displayed image.
+
+Conditionally increase the number of lines held after vsync only for
+SoCs using AFBC, leaving the default value for all the others.
+
+Fixes: 24e0d4058eff ("drm/meson: hold 32 lines after vsync to give time for AFBC start")
+Signed-off-by: Carlo Caione <ccaione@baylibre.com>
+Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
+[narmstrong: added fixes tag]
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221216-afbc_s905x-v1-0-033bebf780d9@baylibre.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/net/arp_ndisc_evict_nocarrier.sh        | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/meson/meson_viu.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/net/arp_ndisc_evict_nocarrier.sh b/tools/testing/selftests/net/arp_ndisc_evict_nocarrier.sh
-index b4ec1eeee6c9..4a110bb01e53 100755
---- a/tools/testing/selftests/net/arp_ndisc_evict_nocarrier.sh
-+++ b/tools/testing/selftests/net/arp_ndisc_evict_nocarrier.sh
-@@ -18,6 +18,7 @@ readonly V4_ADDR1=10.0.10.2
- readonly V6_ADDR0=2001:db8:91::1
- readonly V6_ADDR1=2001:db8:91::2
- nsid=100
-+ret=0
+diff --git a/drivers/gpu/drm/meson/meson_viu.c b/drivers/gpu/drm/meson/meson_viu.c
+index d4b907889a21..cd399b0b7181 100644
+--- a/drivers/gpu/drm/meson/meson_viu.c
++++ b/drivers/gpu/drm/meson/meson_viu.c
+@@ -436,15 +436,14 @@ void meson_viu_init(struct meson_drm *priv)
  
- cleanup_v6()
- {
-@@ -61,7 +62,7 @@ setup_v6() {
-     if [ $? -ne 0 ]; then
-         cleanup_v6
-         echo "failed"
--        exit
-+        exit 1
-     fi
+ 	/* Initialize OSD1 fifo control register */
+ 	reg = VIU_OSD_DDR_PRIORITY_URGENT |
+-		VIU_OSD_HOLD_FIFO_LINES(31) |
+ 		VIU_OSD_FIFO_DEPTH_VAL(32) | /* fifo_depth_val: 32*8=256 */
+ 		VIU_OSD_WORDS_PER_BURST(4) | /* 4 words in 1 burst */
+ 		VIU_OSD_FIFO_LIMITS(2);      /* fifo_lim: 2*16=32 */
  
-     # Set veth2 down, which will put veth1 in NOCARRIER state
-@@ -88,7 +89,7 @@ setup_v4() {
-     if [ $? -ne 0 ]; then
-         cleanup_v4
-         echo "failed"
--        exit
-+        exit 1
-     fi
+ 	if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_G12A))
+-		reg |= VIU_OSD_BURST_LENGTH_32;
++		reg |= (VIU_OSD_BURST_LENGTH_32 | VIU_OSD_HOLD_FIFO_LINES(31));
+ 	else
+-		reg |= VIU_OSD_BURST_LENGTH_64;
++		reg |= (VIU_OSD_BURST_LENGTH_64 | VIU_OSD_HOLD_FIFO_LINES(4));
  
-     # Set veth1 down, which will put veth0 in NOCARRIER state
-@@ -115,6 +116,7 @@ run_arp_evict_nocarrier_enabled() {
- 
-     if [ $? -eq 0 ];then
-         echo "failed"
-+        ret=1
-     else
-         echo "ok"
-     fi
-@@ -134,6 +136,7 @@ run_arp_evict_nocarrier_disabled() {
-         echo "ok"
-     else
-         echo "failed"
-+        ret=1
-     fi
- 
-     cleanup_v4
-@@ -164,6 +167,7 @@ run_ndisc_evict_nocarrier_enabled() {
- 
-     if [ $? -eq 0 ];then
-         echo "failed"
-+        ret=1
-     else
-         echo "ok"
-     fi
-@@ -182,6 +186,7 @@ run_ndisc_evict_nocarrier_disabled() {
-         echo "ok"
-     else
-         echo "failed"
-+        ret=1
-     fi
- 
-     cleanup_v6
-@@ -198,6 +203,7 @@ run_ndisc_evict_nocarrier_disabled_all() {
-         echo "ok"
-     else
-         echo "failed"
-+        ret=1
-     fi
- 
-     cleanup_v6
-@@ -218,3 +224,4 @@ if [ "$(id -u)" -ne 0 ];then
- fi
- 
- run_all_tests
-+exit $ret
+ 	writel_relaxed(reg, priv->io_base + _REG(VIU_OSD1_FIFO_CTRL_STAT));
+ 	writel_relaxed(reg, priv->io_base + _REG(VIU_OSD2_FIFO_CTRL_STAT));
 -- 
 2.35.1
 
