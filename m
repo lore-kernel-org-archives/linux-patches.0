@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B77F6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:31:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A52C43396;
-	Tue, 10 Jan 2023 18:31:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FEDA92B
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:31:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3382C433F0;
+	Tue, 10 Jan 2023 18:31:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375486;
-	bh=/b0X2GzlIjVbb7cbPaNwsZN+/KWDEnhDlyS77vNRY7U=;
+	s=korg; t=1673375489;
+	bh=cf9hTjRCL7/Y6tr2v00cKo1NDN1SlzphK+7/+IwXnmk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NDEWnbnv2J6exf7WH/TIiEqdikWDcjAgjzZQLRqq4SUsgNW97w9vNl+zjLBz8nlXW
-	 /PFbSO6tr774u0/a1KB+iIKHNrkUx+a3NjAs+1j9vmKR+8BDnRuN2YDgdJ85y/L4Sy
-	 wgFdRKUDPLL6UQxHHqQWCUwfTssSZdQgGCqKv4VA=
+	b=s1fA0ePPQOSc8AVjUW6jOMzdhOcLDvt2tAvxAz2XAO6Zq+H4Hh0vZ2EONllrIRcwF
+	 jHFUDqQAiM03+Y9aOIyEDHUktfruL+884NGm/JFPAt+BIkTXkLOhf3wkg5nQAbeu2M
+	 WcV6ynFA18UgzsgkfnVL0Fk2M+pmT9Vm5cppu8TU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"linux-ext4@vger.kernel.org, syzbot+1a748d0007eeac3ab079@syzkaller.appspotmail.com, Theodore Tso" <tytso@mit.edu>,
-	syzbot+1a748d0007eeac3ab079@syzkaller.appspotmail.com,
-	Eric Biggers <ebiggers@google.com>,
-	Theodore Ts'o <tytso@mit.edu>
-Subject: [PATCH 5.15 173/290] ext4: dont set up encryption key during jbd2 transaction
-Date: Tue, 10 Jan 2023 19:04:25 +0100
-Message-Id: <20230110180037.882717895@linuxfoundation.org>
+	Luben Tuikov <luben.tuikov@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 164/290] drm/amdgpu: make display pinning more flexible (v2)
+Date: Tue, 10 Jan 2023 19:04:16 +0100
+Message-Id: <20230110180037.558938217@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -36,160 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@kernel.org>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-From: Eric Biggers <ebiggers@google.com>
+commit 81d0bcf9900932633d270d5bc4a54ff599c6ebdb upstream.
 
-commit 4c0d5778385cb3618ff26a561ce41de2b7d9de70 upstream.
+Only apply the static threshold for Stoney and Carrizo.
+This hardware has certain requirements that don't allow
+mixing of GTT and VRAM.  Newer asics do not have these
+requirements so we should be able to be more flexible
+with where buffers end up.
 
-Commit a80f7fcf1867 ("ext4: fixup ext4_fc_track_* functions' signature")
-extended the scope of the transaction in ext4_unlink() too far, making
-it include the call to ext4_find_entry().  However, ext4_find_entry()
-can deadlock when called from within a transaction because it may need
-to set up the directory's encryption key.
-
-Fix this by restoring the transaction to its original scope.
-
-Reported-by: syzbot+1a748d0007eeac3ab079@syzkaller.appspotmail.com
-Fixes: a80f7fcf1867 ("ext4: fixup ext4_fc_track_* functions' signature")
-Cc: <stable@vger.kernel.org> # v5.10+
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20221106224841.279231-3-ebiggers@kernel.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2270
+Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2291
+Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2255
+Acked-by: Luben Tuikov <luben.tuikov@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h        |    4 ++--
- fs/ext4/fast_commit.c |    2 +-
- fs/ext4/namei.c       |   44 ++++++++++++++++++++++++--------------------
- 3 files changed, 27 insertions(+), 23 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_object.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -3647,8 +3647,8 @@ extern void ext4_initialize_dirent_tail(
- 					unsigned int blocksize);
- extern int ext4_handle_dirty_dirblock(handle_t *handle, struct inode *inode,
- 				      struct buffer_head *bh);
--extern int __ext4_unlink(handle_t *handle, struct inode *dir, const struct qstr *d_name,
--			 struct inode *inode);
-+extern int __ext4_unlink(struct inode *dir, const struct qstr *d_name,
-+			 struct inode *inode, struct dentry *dentry);
- extern int __ext4_link(struct inode *dir, struct inode *inode,
- 		       struct dentry *dentry);
- 
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -1330,7 +1330,7 @@ static int ext4_fc_replay_unlink(struct
- 		return 0;
- 	}
- 
--	ret = __ext4_unlink(NULL, old_parent, &entry, inode);
-+	ret = __ext4_unlink(old_parent, &entry, inode, NULL);
- 	/* -ENOENT ok coz it might not exist anymore. */
- 	if (ret == -ENOENT)
- 		ret = 0;
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -3204,14 +3204,20 @@ end_rmdir:
- 	return retval;
- }
- 
--int __ext4_unlink(handle_t *handle, struct inode *dir, const struct qstr *d_name,
--		  struct inode *inode)
-+int __ext4_unlink(struct inode *dir, const struct qstr *d_name,
-+		  struct inode *inode,
-+		  struct dentry *dentry /* NULL during fast_commit recovery */)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+@@ -1510,7 +1510,8 @@ u64 amdgpu_bo_gpu_offset_no_check(struct
+ uint32_t amdgpu_bo_get_preferred_domain(struct amdgpu_device *adev,
+ 					    uint32_t domain)
  {
- 	int retval = -ENOENT;
- 	struct buffer_head *bh;
- 	struct ext4_dir_entry_2 *de;
-+	handle_t *handle;
- 	int skip_remove_dentry = 0;
- 
-+	/*
-+	 * Keep this outside the transaction; it may have to set up the
-+	 * directory's encryption key, which isn't GFP_NOFS-safe.
-+	 */
- 	bh = ext4_find_entry(dir, d_name, &de, NULL);
- 	if (IS_ERR(bh))
- 		return PTR_ERR(bh);
-@@ -3228,7 +3234,14 @@ int __ext4_unlink(handle_t *handle, stru
- 		if (EXT4_SB(inode->i_sb)->s_mount_state & EXT4_FC_REPLAY)
- 			skip_remove_dentry = 1;
- 		else
--			goto out;
-+			goto out_bh;
-+	}
-+
-+	handle = ext4_journal_start(dir, EXT4_HT_DIR,
-+				    EXT4_DATA_TRANS_BLOCKS(dir->i_sb));
-+	if (IS_ERR(handle)) {
-+		retval = PTR_ERR(handle);
-+		goto out_bh;
- 	}
- 
- 	if (IS_DIRSYNC(dir))
-@@ -3237,12 +3250,12 @@ int __ext4_unlink(handle_t *handle, stru
- 	if (!skip_remove_dentry) {
- 		retval = ext4_delete_entry(handle, dir, de, bh);
- 		if (retval)
--			goto out;
-+			goto out_handle;
- 		dir->i_ctime = dir->i_mtime = current_time(dir);
- 		ext4_update_dx_flag(dir);
- 		retval = ext4_mark_inode_dirty(handle, dir);
- 		if (retval)
--			goto out;
-+			goto out_handle;
- 	} else {
- 		retval = 0;
- 	}
-@@ -3255,15 +3268,17 @@ int __ext4_unlink(handle_t *handle, stru
- 		ext4_orphan_add(handle, inode);
- 	inode->i_ctime = current_time(inode);
- 	retval = ext4_mark_inode_dirty(handle, inode);
--
--out:
-+	if (dentry && !retval)
-+		ext4_fc_track_unlink(handle, dentry);
-+out_handle:
-+	ext4_journal_stop(handle);
-+out_bh:
- 	brelse(bh);
- 	return retval;
- }
- 
- static int ext4_unlink(struct inode *dir, struct dentry *dentry)
- {
--	handle_t *handle;
- 	int retval;
- 
- 	if (unlikely(ext4_forced_shutdown(EXT4_SB(dir->i_sb))))
-@@ -3281,16 +3296,7 @@ static int ext4_unlink(struct inode *dir
- 	if (retval)
- 		goto out_trace;
- 
--	handle = ext4_journal_start(dir, EXT4_HT_DIR,
--				    EXT4_DATA_TRANS_BLOCKS(dir->i_sb));
--	if (IS_ERR(handle)) {
--		retval = PTR_ERR(handle);
--		goto out_trace;
--	}
--
--	retval = __ext4_unlink(handle, dir, &dentry->d_name, d_inode(dentry));
--	if (!retval)
--		ext4_fc_track_unlink(handle, dentry);
-+	retval = __ext4_unlink(dir, &dentry->d_name, d_inode(dentry), dentry);
- #ifdef CONFIG_UNICODE
- 	/* VFS negative dentries are incompatible with Encoding and
- 	 * Case-insensitiveness. Eventually we'll want avoid
-@@ -3301,8 +3307,6 @@ static int ext4_unlink(struct inode *dir
- 	if (IS_CASEFOLDED(dir))
- 		d_invalidate(dentry);
- #endif
--	if (handle)
--		ext4_journal_stop(handle);
- 
- out_trace:
- 	trace_ext4_unlink_exit(dentry, retval);
+-	if (domain == (AMDGPU_GEM_DOMAIN_VRAM | AMDGPU_GEM_DOMAIN_GTT)) {
++	if ((domain == (AMDGPU_GEM_DOMAIN_VRAM | AMDGPU_GEM_DOMAIN_GTT)) &&
++	    ((adev->asic_type == CHIP_CARRIZO) || (adev->asic_type == CHIP_STONEY))) {
+ 		domain = AMDGPU_GEM_DOMAIN_VRAM;
+ 		if (adev->gmc.real_vram_size <= AMDGPU_SG_THRESHOLD)
+ 			domain = AMDGPU_GEM_DOMAIN_GTT;
 
 
