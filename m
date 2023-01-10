@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 644ECA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:14:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D52B3C433D2;
-	Tue, 10 Jan 2023 18:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70764A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:14:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEECEC433EF;
+	Tue, 10 Jan 2023 18:14:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374469;
-	bh=NdONkRqDfhfsmbWdxtQFJ41sg3zPuAhjcGzhWYNQdZg=;
+	s=korg; t=1673374472;
+	bh=p+FoBVmN+7/qhlph2th6u60IRY/kk7ajIirBy8j6bVA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Qo2nihdGsNB4fyHS0DrrQrmhbW9dL9H914WHhb4nTqol++8TS2I8rA5rC1lI9us1
-	 i+fCOymQh8nQqMsvWxXRXB01Uqo/rebIX5W167HzkYeBLeTFQ/XFC7rQuzCcBt/b9n
-	 1EY1ISlbSTJQVmBJc0AlOkg3G4m5o/Tsm1c8XRes=
+	b=BaoGeolCt09FGHNn5oqy66uIqu6dk9mUYXTYJzFXc7IHa9EvvblFN+3FVVdtD0+9j
+	 cCFZTUIlYq9FMcjjpBZ3O/9w7I8djetNLfZ71gO6PK3q2iDbCvML1sOVQarXq/p57R
+	 D5MSdhwIS8hV1GWraejNr2IMQMO6CY6RFqRIoIK4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianlin Shi <jishi@redhat.com>,
-	Antoine Tenart <atenart@kernel.org>,
-	David Ahern <dsahern@kernel.org>,
+	Jie Wang <wangjie125@huawei.com>,
+	Hao Lan <lanhao@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 020/159] net: vrf: determine the dst using the original ifindex for multicast
-Date: Tue, 10 Jan 2023 19:02:48 +0100
-Message-Id: <20230110180018.954614625@linuxfoundation.org>
+Subject: [PATCH 6.1 029/159] net: hns3: add interrupts re-initialization while doing VF FLR
+Date: Tue, 10 Jan 2023 19:02:57 +0100
+Message-Id: <20230110180019.242088395@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -37,64 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Jie Wang <wangjie125@huawei.com>
 
-[ Upstream commit f2575c8f404911da83f25b688e12afcf4273e640 ]
+[ Upstream commit 09e6b30eeb254f1818a008cace3547159e908dfd ]
 
-Multicast packets received on an interface bound to a VRF are marked as
-belonging to the VRF and the skb device is updated to point to the VRF
-device itself. This was fine even when a route was associated to a
-device as when performing a fib table lookup 'oif' in fib6_table_lookup
-(coming from 'skb->dev->ifindex' in ip6_route_input) was set to 0 when
-FLOWI_FLAG_SKIP_NH_OIF was set.
+Currently keep alive message between PF and VF may be lost and the VF is
+unalive in PF. So the VF will not do reset during PF FLR reset process.
+This would make the allocated interrupt resources of VF invalid and VF
+would't receive or respond to PF any more.
 
-With commit 40867d74c374 ("net: Add l3mdev index to flow struct and
-avoid oif reset for port devices") this is not longer true and multicast
-traffic is not received on the original interface.
+So this patch adds VF interrupts re-initialization during VF FLR for VF
+recovery in above cases.
 
-Instead of adding back a similar check in fib6_table_lookup determine
-the dst using the original ifindex for multicast VRF traffic. To make
-things consistent across the function do the above for all strict
-packets, which was the logic before commit 6f12fa775530 ("vrf: mark skb
-for multicast or link-local as enslaved to VRF"). Note that reverting to
-this behavior should be fine as the change was about marking packets
-belonging to the VRF, not about their dst.
-
-Fixes: 40867d74c374 ("net: Add l3mdev index to flow struct and avoid oif reset for port devices")
-Reported-by: Jianlin Shi <jishi@redhat.com>
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20221220171825.1172237-1-atenart@kernel.org
+Fixes: 862d969a3a4d ("net: hns3: do VF's pci re-initialization while PF doing FLR")
+Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Signed-off-by: Hao Lan <lanhao@huawei.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vrf.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/vrf.c b/drivers/net/vrf.c
-index badf6f09ae51..f6dcec66f0a4 100644
---- a/drivers/net/vrf.c
-+++ b/drivers/net/vrf.c
-@@ -1385,8 +1385,8 @@ static struct sk_buff *vrf_ip6_rcv(struct net_device *vrf_dev,
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+index db6f7cdba958..081bd2c3f289 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+@@ -2767,7 +2767,8 @@ static int hclgevf_pci_reset(struct hclgevf_dev *hdev)
+ 	struct pci_dev *pdev = hdev->pdev;
+ 	int ret = 0;
  
- 	/* loopback, multicast & non-ND link-local traffic; do not push through
- 	 * packet taps again. Reset pkt_type for upper layers to process skb.
--	 * For strict packets with a source LLA, determine the dst using the
--	 * original ifindex.
-+	 * For non-loopback strict packets, determine the dst using the original
-+	 * ifindex.
- 	 */
- 	if (skb->pkt_type == PACKET_LOOPBACK || (need_strict && !is_ndisc)) {
- 		skb->dev = vrf_dev;
-@@ -1395,7 +1395,7 @@ static struct sk_buff *vrf_ip6_rcv(struct net_device *vrf_dev,
- 
- 		if (skb->pkt_type == PACKET_LOOPBACK)
- 			skb->pkt_type = PACKET_HOST;
--		else if (ipv6_addr_type(&ipv6_hdr(skb)->saddr) & IPV6_ADDR_LINKLOCAL)
-+		else
- 			vrf_ip6_input_dst(skb, vrf_dev, orig_iif);
- 
- 		goto out;
+-	if (hdev->reset_type == HNAE3_VF_FULL_RESET &&
++	if ((hdev->reset_type == HNAE3_VF_FULL_RESET ||
++	     hdev->reset_type == HNAE3_FLR_RESET) &&
+ 	    test_bit(HCLGEVF_STATE_IRQ_INITED, &hdev->state)) {
+ 		hclgevf_misc_irq_uninit(hdev);
+ 		hclgevf_uninit_msi(hdev);
 -- 
 2.35.1
 
