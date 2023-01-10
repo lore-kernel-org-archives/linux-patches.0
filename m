@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE556FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB7EDC433EF;
-	Tue, 10 Jan 2023 18:27:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABAE6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B091CC433EF;
+	Tue, 10 Jan 2023 18:27:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375239;
-	bh=p5iYSV1K9TuhF1oOiAR0lCupnzhPDdYLUTw/w1bgos4=;
+	s=korg; t=1673375242;
+	bh=LitOQAqDf6xYpF3xx9I0UAMH8jwSx6PXZnV7i2zHhdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EugUrMITGnmZypTL/zevBcrICQP1L3R+mkNsOB6e9B7BIZKDdA00fCsP/irG8Izmk
-	 iTcNl9Ss5Zg5eknI7mkMCd34WHoNzGNonAolkzDq7ohDvbEvpMIzb8F28b0RB+M5OE
-	 7o0BDDusbFWKOkDViLwz+ycGo/u+Nq7ttfwChgBc=
+	b=r6CTTIyQLVwqltK9Vdz/QqI/c2PnOWw5rx1mKh3UG1tPO1xA72KwZH9y+mVdv58Uz
+	 rlqy8jZ0q7QjQcsfJLfvuDnjVCYTfjP/3acR83gw3gzQNnLyRWYiOeLYRGgPO6kUnb
+	 CEWuymcA1T4Y1rPk65bl1+8yPaDQeEeU/FpuzCPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 5.15 124/290] PCI/sysfs: Fix double free in error path
-Date: Tue, 10 Jan 2023 19:03:36 +0100
-Message-Id: <20230110180036.100073528@linuxfoundation.org>
+	Guo Ren <guoren@linux.alibaba.com>,
+	Guo Ren <guoren@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 5.15 125/290] riscv: stacktrace: Fixup ftrace_graph_ret_addr retp argument
+Date: Tue, 10 Jan 2023 19:03:37 +0100
+Message-Id: <20230110180036.130507942@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -34,58 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+From: Guo Ren <guoren@linux.alibaba.com>
 
-commit aa382ffa705bea9931ec92b6f3c70e1fdb372195 upstream.
+commit 5c3022e4a616d800cf5f4c3a981d7992179e44a1 upstream.
 
-When pci_create_attr() fails, pci_remove_resource_files() is called which
-will iterate over the res_attr[_wc] arrays and frees every non NULL entry.
-To avoid a double free here set the array entry only after it's clear we
-successfully initialized it.
+The 'retp' is a pointer to the return address on the stack, so we
+must pass the current return address pointer as the 'retp'
+argument to ftrace_push_return_trace(). Not parent function's
+return address on the stack.
 
-Fixes: b562ec8f74e4 ("PCI: Don't leak memory if sysfs_create_bin_file() fails")
-Link: https://lore.kernel.org/r/20221007070735.GX986@pengutronix.de/
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Fixes: b785ec129bd9 ("riscv/ftrace: Add HAVE_FUNCTION_GRAPH_RET_ADDR_PTR support")
+Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
+Signed-off-by: Guo Ren <guoren@kernel.org>
+Link: https://lore.kernel.org/r/20221109064937.3643993-2-guoren@kernel.org
 Cc: stable@vger.kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci-sysfs.c |   13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+ arch/riscv/kernel/stacktrace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/pci/pci-sysfs.c
-+++ b/drivers/pci/pci-sysfs.c
-@@ -1179,11 +1179,9 @@ static int pci_create_attr(struct pci_de
+--- a/arch/riscv/kernel/stacktrace.c
++++ b/arch/riscv/kernel/stacktrace.c
+@@ -60,7 +60,7 @@ void notrace walk_stackframe(struct task
+ 		} else {
+ 			fp = frame->fp;
+ 			pc = ftrace_graph_ret_addr(current, NULL, frame->ra,
+-						   (unsigned long *)(fp - 8));
++						   &frame->ra);
+ 		}
  
- 	sysfs_bin_attr_init(res_attr);
- 	if (write_combine) {
--		pdev->res_attr_wc[num] = res_attr;
- 		sprintf(res_attr_name, "resource%d_wc", num);
- 		res_attr->mmap = pci_mmap_resource_wc;
- 	} else {
--		pdev->res_attr[num] = res_attr;
- 		sprintf(res_attr_name, "resource%d", num);
- 		if (pci_resource_flags(pdev, num) & IORESOURCE_IO) {
- 			res_attr->read = pci_read_resource_io;
-@@ -1201,10 +1199,17 @@ static int pci_create_attr(struct pci_de
- 	res_attr->size = pci_resource_len(pdev, num);
- 	res_attr->private = (void *)(unsigned long)num;
- 	retval = sysfs_create_bin_file(&pdev->dev.kobj, res_attr);
--	if (retval)
-+	if (retval) {
- 		kfree(res_attr);
-+		return retval;
-+	}
-+
-+	if (write_combine)
-+		pdev->res_attr_wc[num] = res_attr;
-+	else
-+		pdev->res_attr[num] = res_attr;
- 
--	return retval;
-+	return 0;
- }
- 
- /**
+ 	}
 
 
