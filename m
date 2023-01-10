@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4099BA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9B05C433D2;
-	Tue, 10 Jan 2023 18:11:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D747F6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CCF9C433EF;
+	Tue, 10 Jan 2023 18:11:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374293;
-	bh=0EmzjGfRrHROni54/k8DxWNMRSlURs9fsy6h3hdkmZ8=;
+	s=korg; t=1673374295;
+	bh=HS9QR5cW6xmwlrr6NhyefkngpCE/SDk/GLBeG7BHMFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C8Ce7MExPWdhCdpcVrxf7PxRToyBvINaStVNN0pJZU00UvH1HR3CqWXiHZjFy+RXf
-	 /k1eWajo3HMQnUOWjYU3HsKZZNuXi7H0shwNcxh/oT7dJIydase/zzMtco3aNrA9ev
-	 ZHUlfR3gxeeYz98cCJRgliYBxqz3yN+Anl2bdHIY=
+	b=PyBtlitxZOJor4onhuUL35Sw4vLTLd3Bhzc2MIiHNvhRDe/SSI4DICV+fy+HjjYwP
+	 MRif8O5IUp4iH+IZw98fZiETEN0Qk1O8ge4+Q9JfppjpQNOrbPE+gMFi18ABfwyDqP
+	 fMci5uP38YuEuReFjI7TyoqgC9CeGlQbW3topLjM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chung-Chiang Cheng <shepjeng@gmail.com>,
+	Anand Jain <anand.jain@oracle.com>,
 	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 119/148] btrfs: relax block-group-tree feature dependency checks
-Date: Tue, 10 Jan 2023 19:03:43 +0100
-Message-Id: <20230110180020.971099377@linuxfoundation.org>
+Subject: [PATCH 6.0 120/148] btrfs: fix compat_ro checks against remount
+Date: Tue, 10 Jan 2023 19:03:44 +0100
+Message-Id: <20230110180021.001842178@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -37,314 +39,150 @@ Content-Transfer-Encoding: 8bit
 
 From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit d7f67ac9a928fa158a95573406eac0a887bbc28c ]
+[ Upstream commit 2ba48b20049b5a76f34a85f853c9496d1b10533a ]
 
 [BUG]
-When one user did a wrong attempt to clear block group tree, which can
-not be done through mount option, by using "-o clear_cache,space_cache=v2",
-it will cause the following error on a fs with block-group-tree feature:
+Even with commit 81d5d61454c3 ("btrfs: enhance unsupported compat RO
+flags handling"), btrfs can still mount a fs with unsupported compat_ro
+flags read-only, then remount it RW:
 
-  BTRFS info (device dm-1): force clearing of disk cache
-  BTRFS info (device dm-1): using free space tree
-  BTRFS info (device dm-1): clearing free space tree
-  BTRFS info (device dm-1): clearing compat-ro feature flag for FREE_SPACE_TREE (0x1)
-  BTRFS info (device dm-1): clearing compat-ro feature flag for FREE_SPACE_TREE_VALID (0x2)
-  BTRFS error (device dm-1): block-group-tree feature requires fres-space-tree and no-holes
-  BTRFS error (device dm-1): super block corruption detected before writing it to disk
-  BTRFS: error (device dm-1) in write_all_supers:4318: errno=-117 Filesystem corrupted (unexpected superblock corruption detected)
-  BTRFS warning (device dm-1: state E): Skipping commit of aborted transaction.
+  # btrfs ins dump-super /dev/loop0 | grep compat_ro_flags -A 3
+  compat_ro_flags		0x403
+			( FREE_SPACE_TREE |
+			  FREE_SPACE_TREE_VALID |
+			  unknown flag: 0x400 )
+
+  # mount /dev/loop0 /mnt/btrfs
+  mount: /mnt/btrfs: wrong fs type, bad option, bad superblock on /dev/loop0, missing codepage or helper program, or other error.
+         dmesg(1) may have more information after failed mount system call.
+  ^^^ RW mount failed as expected ^^^
+
+  # dmesg -t | tail -n5
+  loop0: detected capacity change from 0 to 1048576
+  BTRFS: device fsid cb5b82f5-0fdd-4d81-9b4b-78533c324afa devid 1 transid 7 /dev/loop0 scanned by mount (1146)
+  BTRFS info (device loop0): using crc32c (crc32c-intel) checksum algorithm
+  BTRFS info (device loop0): using free space tree
+  BTRFS error (device loop0): cannot mount read-write because of unknown compat_ro features (0x403)
+  BTRFS error (device loop0): open_ctree failed
+
+  # mount /dev/loop0 -o ro /mnt/btrfs
+  # mount -o remount,rw /mnt/btrfs
+  ^^^ RW remount succeeded unexpectedly ^^^
 
 [CAUSE]
-Although the dependency for block-group-tree feature is just an
-artificial one (to reduce test matrix), we put the dependency check into
-btrfs_validate_super().
+Currently we use btrfs_check_features() to check compat_ro flags against
+our current mount flags.
 
-This is too strict, and during space cache clearing, we will have a
-window where free space tree is cleared, and we need to commit the super
-block.
+That function get reused between open_ctree() and btrfs_remount().
 
-In that window, we had block group tree without v2 cache, and triggered
-the artificial dependency check.
-
-This is not necessary at all, especially for such a soft dependency.
+But for btrfs_remount(), the super block we passed in still has the old
+mount flags, thus btrfs_check_features() still believes we're mounting
+read-only.
 
 [FIX]
-Introduce a new helper, btrfs_check_features(), to do all the runtime
-limitation checks, including:
+Replace the existing @sb argument with @is_rw_mount.
 
-- Unsupported incompat flags check
+As originally we only use @sb to determine if the mount is RW.
 
-- Unsupported compat RO flags check
+Now it's callers' responsibility to determine if the mount is RW, and
+since there are only two callers, the check is pretty simple:
 
-- Setting missing incompat flags
+- caller in open_ctree()
+  Just pass !sb_rdonly().
 
-- Artificial feature dependency checks
-  Currently only block group tree will rely on this.
+- caller in btrfs_remount()
+  Pass !(*flags & SB_RDONLY), as our check should be against the new
+  flags.
 
-- Subpage runtime check for v1 cache
+Now we can correctly reject the RW remount:
 
-With this helper, we can move quite some checks from
-open_ctree()/btrfs_remount() into it, and just call it after
-btrfs_parse_options().
+  # mount /dev/loop0 -o ro /mnt/btrfs
+  # mount -o remount,rw /mnt/btrfs
+  mount: /mnt/btrfs: mount point not mounted or bad option.
+         dmesg(1) may have more information after failed mount system call.
+  # dmesg -t | tail -n 1
+  BTRFS error (device loop0: state M): cannot mount read-write because of unknown compat_ro features (0x403)
 
-Now "-o clear_cache,space_cache=v2" will not trigger the above error
-anymore.
-
+Reported-by: Chung-Chiang Cheng <shepjeng@gmail.com>
+Fixes: 81d5d61454c3 ("btrfs: enhance unsupported compat RO flags handling")
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
 Signed-off-by: Qu Wenruo <wqu@suse.com>
 Reviewed-by: David Sterba <dsterba@suse.com>
-[ edit messages ]
 Signed-off-by: David Sterba <dsterba@suse.com>
-Stable-dep-of: 2ba48b20049b ("btrfs: fix compat_ro checks against remount")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 172 ++++++++++++++++++++++++++++-----------------
- fs/btrfs/disk-io.h |   1 +
- fs/btrfs/super.c   |  19 +----
- 3 files changed, 113 insertions(+), 79 deletions(-)
+ fs/btrfs/disk-io.c | 8 +++++---
+ fs/btrfs/disk-io.h | 2 +-
+ fs/btrfs/super.c   | 2 +-
+ 3 files changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 386039e13922..7834dc77c935 100644
+index 7834dc77c935..d7a7f6288e70 100644
 --- a/fs/btrfs/disk-io.c
 +++ b/fs/btrfs/disk-io.c
-@@ -3283,6 +3283,112 @@ int btrfs_start_pre_rw_mount(struct btrfs_fs_info *fs_info)
- 	return ret;
- }
- 
-+/*
-+ * Do various sanity and dependency checks of different features.
+@@ -3286,6 +3286,8 @@ int btrfs_start_pre_rw_mount(struct btrfs_fs_info *fs_info)
+ /*
+  * Do various sanity and dependency checks of different features.
+  *
++ * @is_rw_mount:	If the mount is read-write.
 + *
-+ * This is the place for less strict checks (like for subpage or artificial
-+ * feature dependencies).
-+ *
-+ * For strict checks or possible corruption detection, see
-+ * btrfs_validate_super().
-+ *
-+ * This should be called after btrfs_parse_options(), as some mount options
-+ * (space cache related) can modify on-disk format like free space tree and
-+ * screw up certain feature dependencies.
-+ */
-+int btrfs_check_features(struct btrfs_fs_info *fs_info, struct super_block *sb)
-+{
-+	struct btrfs_super_block *disk_super = fs_info->super_copy;
-+	u64 incompat = btrfs_super_incompat_flags(disk_super);
-+	const u64 compat_ro = btrfs_super_compat_ro_flags(disk_super);
-+	const u64 compat_ro_unsupp = (compat_ro & ~BTRFS_FEATURE_COMPAT_RO_SUPP);
-+
-+	if (incompat & ~BTRFS_FEATURE_INCOMPAT_SUPP) {
-+		btrfs_err(fs_info,
-+		"cannot mount because of unknown incompat features (0x%llx)",
-+		    incompat);
-+		return -EINVAL;
-+	}
-+
-+	/* Runtime limitation for mixed block groups. */
-+	if ((incompat & BTRFS_FEATURE_INCOMPAT_MIXED_GROUPS) &&
-+	    (fs_info->sectorsize != fs_info->nodesize)) {
-+		btrfs_err(fs_info,
-+"unequal nodesize/sectorsize (%u != %u) are not allowed for mixed block groups",
-+			fs_info->nodesize, fs_info->sectorsize);
-+		return -EINVAL;
-+	}
-+
-+	/* Mixed backref is an always-enabled feature. */
-+	incompat |= BTRFS_FEATURE_INCOMPAT_MIXED_BACKREF;
-+
-+	/* Set compression related flags just in case. */
-+	if (fs_info->compress_type == BTRFS_COMPRESS_LZO)
-+		incompat |= BTRFS_FEATURE_INCOMPAT_COMPRESS_LZO;
-+	else if (fs_info->compress_type == BTRFS_COMPRESS_ZSTD)
-+		incompat |= BTRFS_FEATURE_INCOMPAT_COMPRESS_ZSTD;
-+
-+	/*
-+	 * An ancient flag, which should really be marked deprecated.
-+	 * Such runtime limitation doesn't really need a incompat flag.
-+	 */
-+	if (btrfs_super_nodesize(disk_super) > PAGE_SIZE)
-+		incompat |= BTRFS_FEATURE_INCOMPAT_BIG_METADATA;
-+
-+	if (compat_ro_unsupp && !sb_rdonly(sb)) {
-+		btrfs_err(fs_info,
-+	"cannot mount read-write because of unknown compat_ro features (0x%llx)",
-+		       compat_ro);
-+		return -EINVAL;
-+	}
-+
-+	/*
-+	 * We have unsupported RO compat features, although RO mounted, we
-+	 * should not cause any metadata writes, including log replay.
-+	 * Or we could screw up whatever the new feature requires.
-+	 */
-+	if (compat_ro_unsupp && btrfs_super_log_root(disk_super) &&
-+	    !btrfs_test_opt(fs_info, NOLOGREPLAY)) {
-+		btrfs_err(fs_info,
-+"cannot replay dirty log with unsupported compat_ro features (0x%llx), try rescue=nologreplay",
-+			  compat_ro);
-+		return -EINVAL;
-+	}
-+
-+	/*
-+	 * Artificial limitations for block group tree, to force
-+	 * block-group-tree to rely on no-holes and free-space-tree.
-+	 */
-+	if (btrfs_fs_compat_ro(fs_info, BLOCK_GROUP_TREE) &&
-+	    (!btrfs_fs_incompat(fs_info, NO_HOLES) ||
-+	     !btrfs_test_opt(fs_info, FREE_SPACE_TREE))) {
-+		btrfs_err(fs_info,
-+"block-group-tree feature requires no-holes and free-space-tree features");
-+		return -EINVAL;
-+	}
-+
-+	/*
-+	 * Subpage runtime limitation on v1 cache.
-+	 *
-+	 * V1 space cache still has some hard codeed PAGE_SIZE usage, while
-+	 * we're already defaulting to v2 cache, no need to bother v1 as it's
-+	 * going to be deprecated anyway.
-+	 */
-+	if (fs_info->sectorsize < PAGE_SIZE && btrfs_test_opt(fs_info, SPACE_CACHE)) {
-+		btrfs_warn(fs_info,
-+	"v1 space cache is not supported for page size %lu with sectorsize %u",
-+			   PAGE_SIZE, fs_info->sectorsize);
-+		return -EINVAL;
-+	}
-+
-+	/* This can be called by remount, we need to protect the super block. */
-+	spin_lock(&fs_info->super_lock);
-+	btrfs_set_super_incompat_flags(disk_super, incompat);
-+	spin_unlock(&fs_info->super_lock);
-+
-+	return 0;
-+}
-+
- int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_devices,
- 		      char *options)
+  * This is the place for less strict checks (like for subpage or artificial
+  * feature dependencies).
+  *
+@@ -3296,7 +3298,7 @@ int btrfs_start_pre_rw_mount(struct btrfs_fs_info *fs_info)
+  * (space cache related) can modify on-disk format like free space tree and
+  * screw up certain feature dependencies.
+  */
+-int btrfs_check_features(struct btrfs_fs_info *fs_info, struct super_block *sb)
++int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
  {
-@@ -3432,72 +3538,12 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
+ 	struct btrfs_super_block *disk_super = fs_info->super_copy;
+ 	u64 incompat = btrfs_super_incompat_flags(disk_super);
+@@ -3335,7 +3337,7 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, struct super_block *sb)
+ 	if (btrfs_super_nodesize(disk_super) > PAGE_SIZE)
+ 		incompat |= BTRFS_FEATURE_INCOMPAT_BIG_METADATA;
+ 
+-	if (compat_ro_unsupp && !sb_rdonly(sb)) {
++	if (compat_ro_unsupp && is_rw_mount) {
+ 		btrfs_err(fs_info,
+ 	"cannot mount read-write because of unknown compat_ro features (0x%llx)",
+ 		       compat_ro);
+@@ -3538,7 +3540,7 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
  		goto fail_alloc;
  	}
  
--	features = btrfs_super_incompat_flags(disk_super) &
--		~BTRFS_FEATURE_INCOMPAT_SUPP;
--	if (features) {
--		btrfs_err(fs_info,
--		    "cannot mount because of unsupported optional features (0x%llx)",
--		    features);
--		err = -EINVAL;
--		goto fail_alloc;
--	}
--
--	features = btrfs_super_incompat_flags(disk_super);
--	features |= BTRFS_FEATURE_INCOMPAT_MIXED_BACKREF;
--	if (fs_info->compress_type == BTRFS_COMPRESS_LZO)
--		features |= BTRFS_FEATURE_INCOMPAT_COMPRESS_LZO;
--	else if (fs_info->compress_type == BTRFS_COMPRESS_ZSTD)
--		features |= BTRFS_FEATURE_INCOMPAT_COMPRESS_ZSTD;
--
--	/*
--	 * Flag our filesystem as having big metadata blocks if they are bigger
--	 * than the page size.
--	 */
--	if (btrfs_super_nodesize(disk_super) > PAGE_SIZE)
--		features |= BTRFS_FEATURE_INCOMPAT_BIG_METADATA;
--
--	/*
--	 * mixed block groups end up with duplicate but slightly offset
--	 * extent buffers for the same range.  It leads to corruptions
--	 */
--	if ((features & BTRFS_FEATURE_INCOMPAT_MIXED_GROUPS) &&
--	    (sectorsize != nodesize)) {
--		btrfs_err(fs_info,
--"unequal nodesize/sectorsize (%u != %u) are not allowed for mixed block groups",
--			nodesize, sectorsize);
--		goto fail_alloc;
--	}
--
--	/*
--	 * Needn't use the lock because there is no other task which will
--	 * update the flag.
--	 */
--	btrfs_set_super_incompat_flags(disk_super, features);
--
--	features = btrfs_super_compat_ro_flags(disk_super) &
--		~BTRFS_FEATURE_COMPAT_RO_SUPP;
--	if (!sb_rdonly(sb) && features) {
--		btrfs_err(fs_info,
--	"cannot mount read-write because of unsupported optional features (0x%llx)",
--		       features);
--		err = -EINVAL;
--		goto fail_alloc;
--	}
--	/*
--	 * We have unsupported RO compat features, although RO mounted, we
--	 * should not cause any metadata write, including log replay.
--	 * Or we could screw up whatever the new feature requires.
--	 */
--	if (unlikely(features && btrfs_super_log_root(disk_super) &&
--		     !btrfs_test_opt(fs_info, NOLOGREPLAY))) {
--		btrfs_err(fs_info,
--"cannot replay dirty log with unsupported compat_ro features (0x%llx), try rescue=nologreplay",
--			  features);
--		err = -EINVAL;
-+	ret = btrfs_check_features(fs_info, sb);
-+	if (ret < 0) {
-+		err = ret;
+-	ret = btrfs_check_features(fs_info, sb);
++	ret = btrfs_check_features(fs_info, !sb_rdonly(sb));
+ 	if (ret < 0) {
+ 		err = ret;
  		goto fail_alloc;
- 	}
- 
--
- 	if (sectorsize < PAGE_SIZE) {
- 		struct btrfs_subpage_info *subpage_info;
- 
 diff --git a/fs/btrfs/disk-io.h b/fs/btrfs/disk-io.h
-index 7e545ec09a10..c67c15d4d20b 100644
+index c67c15d4d20b..6e49979024f0 100644
 --- a/fs/btrfs/disk-io.h
 +++ b/fs/btrfs/disk-io.h
-@@ -48,6 +48,7 @@ int __cold open_ctree(struct super_block *sb,
+@@ -48,7 +48,7 @@ int __cold open_ctree(struct super_block *sb,
  void __cold close_ctree(struct btrfs_fs_info *fs_info);
  int btrfs_validate_super(struct btrfs_fs_info *fs_info,
  			 struct btrfs_super_block *sb, int mirror_num);
-+int btrfs_check_features(struct btrfs_fs_info *fs_info, struct super_block *sb);
+-int btrfs_check_features(struct btrfs_fs_info *fs_info, struct super_block *sb);
++int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount);
  int write_all_supers(struct btrfs_fs_info *fs_info, int max_mirrors);
  struct btrfs_super_block *btrfs_read_dev_super(struct block_device *bdev);
  struct btrfs_super_block *btrfs_read_dev_one_super(struct block_device *bdev,
 diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
-index 079855e9c881..b6f3f24ac95d 100644
+index b6f3f24ac95d..64bda2f53311 100644
 --- a/fs/btrfs/super.c
 +++ b/fs/btrfs/super.c
-@@ -2012,14 +2012,10 @@ static int btrfs_remount(struct super_block *sb, int *flags, char *data)
+@@ -2012,7 +2012,7 @@ static int btrfs_remount(struct super_block *sb, int *flags, char *data)
  	if (ret)
  		goto restore;
  
--	/* V1 cache is not supported for subpage mount. */
--	if (fs_info->sectorsize < PAGE_SIZE && btrfs_test_opt(fs_info, SPACE_CACHE)) {
--		btrfs_warn(fs_info,
--	"v1 space cache is not supported for page size %lu with sectorsize %u",
--			   PAGE_SIZE, fs_info->sectorsize);
--		ret = -EINVAL;
-+	ret = btrfs_check_features(fs_info, sb);
-+	if (ret < 0)
+-	ret = btrfs_check_features(fs_info, sb);
++	ret = btrfs_check_features(fs_info, !(*flags & SB_RDONLY));
+ 	if (ret < 0)
  		goto restore;
--	}
-+
- 	btrfs_remount_begin(fs_info, old_opts, *flags);
- 	btrfs_resize_thread_pool(fs_info,
- 		fs_info->thread_pool_size, old_thread_pool_size);
-@@ -2115,15 +2111,6 @@ static int btrfs_remount(struct super_block *sb, int *flags, char *data)
- 			ret = -EINVAL;
- 			goto restore;
- 		}
--		if (btrfs_super_compat_ro_flags(fs_info->super_copy) &
--		    ~BTRFS_FEATURE_COMPAT_RO_SUPP) {
--			btrfs_err(fs_info,
--		"can not remount read-write due to unsupported optional flags 0x%llx",
--				btrfs_super_compat_ro_flags(fs_info->super_copy) &
--				~BTRFS_FEATURE_COMPAT_RO_SUPP);
--			ret = -EINVAL;
--			goto restore;
--		}
- 		if (fs_info->fs_devices->rw_devices == 0) {
- 			ret = -EACCES;
- 			goto restore;
+ 
 -- 
 2.35.1
 
