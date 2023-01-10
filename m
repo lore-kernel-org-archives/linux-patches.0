@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36BA17474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:13:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF05CC433F1;
-	Tue, 10 Jan 2023 18:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 101387474
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:13:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88FE0C433D2;
+	Tue, 10 Jan 2023 18:13:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374413;
-	bh=kA1+UNpEGUxVyc3LQN4UpqcozozRaRV5EtErDfZHdjY=;
+	s=korg; t=1673374416;
+	bh=UmmP9nAoiVGcDPOobEbHkraUxstIymo9uKKeIwU19sU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eaOJLP7OeiCuzNFOHcBwc9tvRs4+88JjdkoRTQjS8fThUgzVLNn5Ne2cV7DVtEAT7
-	 oaLelY84d6JoWOvMXLJiktx0J5XkoHZTOYr/UHqSSmvh+vFtmogOmFSaRXsi4YfLH8
-	 J6ArfEQMF0Jn3Pd9T8DP0si6WSsrYQDxsJSVoFlk=
+	b=2CLHe+WtsajIIY0gipBgKof8XhjIC8KGxuDlVcSMndCRtSWOsolTO1C5KVto0/QLh
+	 a3QgL3WlCihsV4r4/HRt1McVlHP7+jNC2mAgJcvlAhm0/UrycbwiY0+BOWsZimfvg2
+	 jYEy1UE8DsQyW2GDmzoZZ8oo0w335Jz3oQOwzxJo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 010/159] phy: qcom-qmp-combo: fix broken power on
-Date: Tue, 10 Jan 2023 19:02:38 +0100
-Message-Id: <20230110180018.632849662@linuxfoundation.org>
+Subject: [PATCH 6.1 011/159] btrfs: fix an error handling path in btrfs_defrag_leaves()
+Date: Tue, 10 Jan 2023 19:02:39 +0100
+Message-Id: <20230110180018.667808652@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,94 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+[ Upstream commit db0a4a7b8e95f9312a59a67cbd5bc589f090e13d ]
 
-[ Upstream commit 7a7d86d14d073dfa3429c550667a8e78b99edbd4 ]
+All error handling paths end to 'out', except this memory allocation
+failure.
 
-The PHY is powered on during phy-init by setting the SW_PWRDN bit in the
-COM_POWER_DOWN_CTRL register and then setting the same bit in the in the
-PCS_POWER_DOWN_CONTROL register that belongs to the USB part of the
-PHY.
+This is spurious. So branch to the error handling path also in this case.
+It will add a call to:
 
-Currently, whether power on succeeds depends on probe order and having
-the USB part of the PHY be initialised first. In case the DP part of the
-PHY is instead initialised first, the intended power on of the USB block
-results in a corrupted DP_PHY register (e.g. DP_PHY_AUX_CFG8).
+	memset(&root->defrag_progress, 0,
+	       sizeof(root->defrag_progress));
 
-Add a pointer to the USB part of the PHY to the driver data and use that
-to power on the PHY also if the DP part of the PHY is initialised first.
-
-Fixes: 52e013d0bffa ("phy: qcom-qmp: Add support for DP in USB3+DP combo phy")
-Cc: stable@vger.kernel.org	# 5.10
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20221114081346.5116-5-johan+linaro@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 6702ed490ca0 ("Btrfs: Add run time btree defrag, and an ioctl to force btree defrag")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 20 +++++++++++++-------
- 1 file changed, 13 insertions(+), 7 deletions(-)
+ fs/btrfs/tree-defrag.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index 91f8ee79000d..adcda7762acf 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -955,6 +955,7 @@ struct qcom_qmp {
- 	struct regulator_bulk_data *vregs;
+diff --git a/fs/btrfs/tree-defrag.c b/fs/btrfs/tree-defrag.c
+index b6cf39f4e7e4..072ab9a1374b 100644
+--- a/fs/btrfs/tree-defrag.c
++++ b/fs/btrfs/tree-defrag.c
+@@ -31,8 +31,10 @@ int btrfs_defrag_leaves(struct btrfs_trans_handle *trans,
+ 		goto out;
  
- 	struct qmp_phy **phys;
-+	struct qmp_phy *usb_phy;
+ 	path = btrfs_alloc_path();
+-	if (!path)
+-		return -ENOMEM;
++	if (!path) {
++		ret = -ENOMEM;
++		goto out;
++	}
  
- 	struct mutex phy_mutex;
- 	int init_count;
-@@ -1978,7 +1979,7 @@ static int qmp_combo_com_init(struct qmp_phy *qphy)
- {
- 	struct qcom_qmp *qmp = qphy->qmp;
- 	const struct qmp_phy_cfg *cfg = qphy->cfg;
--	void __iomem *pcs = qphy->pcs;
-+	struct qmp_phy *usb_phy = qmp->usb_phy;
- 	void __iomem *dp_com = qmp->dp_com;
- 	int ret;
+ 	level = btrfs_header_level(root->node);
  
-@@ -2031,13 +2032,13 @@ static int qmp_combo_com_init(struct qmp_phy *qphy)
- 	qphy_clrbits(dp_com, QPHY_V3_DP_COM_SWI_CTRL, 0x03);
- 	qphy_clrbits(dp_com, QPHY_V3_DP_COM_SW_RESET, SW_RESET);
- 
--	if (cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL])
--		qphy_setbits(pcs,
--				cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
--				cfg->pwrdn_ctrl);
-+	if (usb_phy->cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL])
-+		qphy_setbits(usb_phy->pcs,
-+				usb_phy->cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
-+				usb_phy->cfg->pwrdn_ctrl);
- 	else
--		qphy_setbits(pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL,
--				cfg->pwrdn_ctrl);
-+		qphy_setbits(usb_phy->pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL,
-+				usb_phy->cfg->pwrdn_ctrl);
- 
- 	mutex_unlock(&qmp->phy_mutex);
- 
-@@ -2925,6 +2926,8 @@ static int qmp_combo_probe(struct platform_device *pdev)
- 				goto err_node_put;
- 			}
- 
-+			qmp->usb_phy = qmp->phys[id];
-+
- 			/*
- 			 * Register the pipe clock provided by phy.
- 			 * See function description to see details of this pipe clock.
-@@ -2940,6 +2943,9 @@ static int qmp_combo_probe(struct platform_device *pdev)
- 		id++;
- 	}
- 
-+	if (!qmp->usb_phy)
-+		return -EINVAL;
-+
- 	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
- 
- 	return PTR_ERR_OR_ZERO(phy_provider);
 -- 
 2.35.1
 
