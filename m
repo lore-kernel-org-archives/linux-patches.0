@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E4F0A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E81FCC433D2;
-	Tue, 10 Jan 2023 18:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06750A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFF5C433D2;
+	Tue, 10 Jan 2023 18:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374285;
-	bh=DnXSArOdudkIQbsIDrYRrYA0egXRhLIH/WMhZBcCFXw=;
+	s=korg; t=1673374287;
+	bh=6xBLK/vxGsRr/YngLXvQxTMpWB3M/uwGvWk9InodsZs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vpHWg94qcE2Pa89c+/TOQ4VUSO2TRrraFUVXekfSWDQtK+z8Z3OVu/CsfvVBPQ8lK
-	 keIyq6i1teno0ML6aM+FYvFszAREPp1StboE9C3MKTqM98LEasN4K5O72x6/IBXvyZ
-	 4sc83DTrn2oUQxVSnDFC2AmImaohIlnPAC3ciTNs=
+	b=MEjm9lMj5xdYzeMI7hBGhlFPOolQyQaAV55c1K27QvWaPoKMdnBL5Zwje8xGPJ9Fy
+	 qizTMHvZ8g2jpDfOvMtdvtWnM6gADyN4M0pTfDmoMLiD4BMkmZnfVK0fs5T/nw+R1P
+	 Zd3m/9O5gPaslAXVE4rIWnOY8dXeso9vERWNO04U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Goffredo Baroncelli <kreijack@libero.it>,
-	Anand Jain <anand.jain@oracle.com>,
 	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 116/148] btrfs: check superblock to ensure the fs was not modified at thaw time
-Date: Tue, 10 Jan 2023 19:03:40 +0100
-Message-Id: <20230110180020.878654076@linuxfoundation.org>
+Subject: [PATCH 6.0 117/148] btrfs: dont save block group root into super block
+Date: Tue, 10 Jan 2023 19:03:41 +0100
+Message-Id: <20230110180020.909769414@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -39,250 +37,209 @@ Content-Transfer-Encoding: 8bit
 
 From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit a05d3c9153145283ce9c58a1d7a9056fbb85f6a1 ]
+[ Upstream commit 14033b08a02916e85ffc5397e4ac15337359f3ae ]
 
-[BACKGROUND]
-There is an incident report that, one user hibernated the system, with
-one btrfs on removable device still mounted.
+The extent tree v2 needs a new root for storing all block group items,
+the whole feature hasn't been finished yet so we can afford to do some
+changes.
 
-Then by some incident, the btrfs got mounted and modified by another
-system/OS, then back to the hibernated system.
+My initial proposal years ago just added a new tree rootid, and load it
+from tree root, just like what we did for quota/free space tree/uuid/extent
+roots.
 
-After resuming from the hibernation, new write happened into the victim btrfs.
+But the extent tree v2 patches introduced a completely new way to store
+block group tree root into super block which is arguably wasteful.
 
-Now the fs is completely broken, since the underlying btrfs is no longer
-the same one before the hibernation, and the user lost their data due to
-various transid mismatch.
+Currently there are only 3 trees stored in super blocks, and they all
+have their valid reasons:
 
-[REPRODUCER]
-We can emulate the situation using the following small script:
+- Chunk root
+  Needed for bootstrap.
 
-  truncate -s 1G $dev
-  mkfs.btrfs -f $dev
-  mount $dev $mnt
-  fsstress -w -d $mnt -n 500
-  sync
-  xfs_freeze -f $mnt
-  cp $dev $dev.backup
+- Tree root
+  Really the entry point for all trees.
 
-  # There is no way to mount the same cloned fs on the same system,
-  # as the conflicting fsid will be rejected by btrfs.
-  # Thus here we have to wipe the fs using a different btrfs.
-  mkfs.btrfs -f $dev.backup
+- Log root
+  This is special as log root has to be updated out of existing
+  transaction mechanism.
 
-  dd if=$dev.backup of=$dev bs=1M
-  xfs_freeze -u $mnt
-  fsstress -w -d $mnt -n 20
-  umount $mnt
-  btrfs check $dev
+There is not even any reason to put block group root into super blocks,
+the block group tree is updated at the same time as the old extent tree,
+no need for extra bootstrap/out-of-transaction update.
 
-The final fsck will fail due to some tree blocks has incorrect fsid.
+So just move block group root from super block into tree root.
 
-This is enough to emulate the problem hit by the unfortunate user.
-
-[ENHANCEMENT]
-Although such case should not be that common, it can still happen from
-time to time.
-
->From the view of btrfs, we can detect any unexpected super block change,
-and if there is any unexpected change, we just mark the fs read-only,
-and thaw the fs.
-
-By this we can limit the damage to minimal, and I hope no one would lose
-their data by this anymore.
-
-Suggested-by: Goffredo Baroncelli <kreijack@libero.it>
-Link: https://lore.kernel.org/linux-btrfs/83bf3b4b-7f4c-387a-b286-9251e3991e34@bluemole.com/
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
 Signed-off-by: Qu Wenruo <wqu@suse.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Stable-dep-of: 2ba48b20049b ("btrfs: fix compat_ro checks against remount")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 25 ++++++++++++++-----
- fs/btrfs/disk-io.h |  4 +++-
- fs/btrfs/super.c   | 60 ++++++++++++++++++++++++++++++++++++++++++++++
- fs/btrfs/volumes.c |  2 +-
- 4 files changed, 83 insertions(+), 8 deletions(-)
+ fs/btrfs/block-rsv.c   |  1 +
+ fs/btrfs/ctree.h       | 27 ++-------------------------
+ fs/btrfs/disk-io.c     | 40 ++++++++++++++++++++--------------------
+ fs/btrfs/transaction.c |  8 --------
+ 4 files changed, 23 insertions(+), 53 deletions(-)
 
+diff --git a/fs/btrfs/block-rsv.c b/fs/btrfs/block-rsv.c
+index 06be0644dd37..6ce704d3bdd2 100644
+--- a/fs/btrfs/block-rsv.c
++++ b/fs/btrfs/block-rsv.c
+@@ -424,6 +424,7 @@ void btrfs_init_root_block_rsv(struct btrfs_root *root)
+ 	case BTRFS_CSUM_TREE_OBJECTID:
+ 	case BTRFS_EXTENT_TREE_OBJECTID:
+ 	case BTRFS_FREE_SPACE_TREE_OBJECTID:
++	case BTRFS_BLOCK_GROUP_TREE_OBJECTID:
+ 		root->block_rsv = &fs_info->delayed_refs_rsv;
+ 		break;
+ 	case BTRFS_ROOT_TREE_OBJECTID:
+diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
+index bad06add93d7..6b1a8b295970 100644
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -280,14 +280,9 @@ struct btrfs_super_block {
+ 	/* the UUID written into btree blocks */
+ 	u8 metadata_uuid[BTRFS_FSID_SIZE];
+ 
+-	/* Extent tree v2 */
+-	__le64 block_group_root;
+-	__le64 block_group_root_generation;
+-	u8 block_group_root_level;
+-
+ 	/* future expansion */
+-	u8 reserved8[7];
+-	__le64 reserved[25];
++	u8 reserved8[8];
++	__le64 reserved[27];
+ 	u8 sys_chunk_array[BTRFS_SYSTEM_CHUNK_ARRAY_SIZE];
+ 	struct btrfs_root_backup super_roots[BTRFS_NUM_BACKUP_ROOTS];
+ 
+@@ -2391,17 +2386,6 @@ BTRFS_SETGET_STACK_FUNCS(backup_bytes_used, struct btrfs_root_backup,
+ BTRFS_SETGET_STACK_FUNCS(backup_num_devices, struct btrfs_root_backup,
+ 		   num_devices, 64);
+ 
+-/*
+- * For extent tree v2 we overload the extent root with the block group root, as
+- * we will have multiple extent roots.
+- */
+-BTRFS_SETGET_STACK_FUNCS(backup_block_group_root, struct btrfs_root_backup,
+-			 extent_root, 64);
+-BTRFS_SETGET_STACK_FUNCS(backup_block_group_root_gen, struct btrfs_root_backup,
+-			 extent_root_gen, 64);
+-BTRFS_SETGET_STACK_FUNCS(backup_block_group_root_level,
+-			 struct btrfs_root_backup, extent_root_level, 8);
+-
+ /* struct btrfs_balance_item */
+ BTRFS_SETGET_FUNCS(balance_flags, struct btrfs_balance_item, flags, 64);
+ 
+@@ -2534,13 +2518,6 @@ BTRFS_SETGET_STACK_FUNCS(super_cache_generation, struct btrfs_super_block,
+ BTRFS_SETGET_STACK_FUNCS(super_magic, struct btrfs_super_block, magic, 64);
+ BTRFS_SETGET_STACK_FUNCS(super_uuid_tree_generation, struct btrfs_super_block,
+ 			 uuid_tree_generation, 64);
+-BTRFS_SETGET_STACK_FUNCS(super_block_group_root, struct btrfs_super_block,
+-			 block_group_root, 64);
+-BTRFS_SETGET_STACK_FUNCS(super_block_group_root_generation,
+-			 struct btrfs_super_block,
+-			 block_group_root_generation, 64);
+-BTRFS_SETGET_STACK_FUNCS(super_block_group_root_level, struct btrfs_super_block,
+-			 block_group_root_level, 8);
+ 
+ int btrfs_super_csum_size(const struct btrfs_super_block *s);
+ const char *btrfs_super_csum_name(u16 csum_type);
 diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index aa4bc213d301..c72074a234d2 100644
+index c72074a234d2..a4f78a347a1f 100644
 --- a/fs/btrfs/disk-io.c
 +++ b/fs/btrfs/disk-io.c
-@@ -2602,8 +2602,8 @@ static int btrfs_read_roots(struct btrfs_fs_info *fs_info)
-  * 		1, 2	2nd and 3rd backup copy
-  * 	       -1	skip bytenr check
-  */
--static int validate_super(struct btrfs_fs_info *fs_info,
--			    struct btrfs_super_block *sb, int mirror_num)
-+int btrfs_validate_super(struct btrfs_fs_info *fs_info,
-+			 struct btrfs_super_block *sb, int mirror_num)
- {
- 	u64 nodesize = btrfs_super_nodesize(sb);
- 	u64 sectorsize = btrfs_super_sectorsize(sb);
-@@ -2787,7 +2787,7 @@ static int validate_super(struct btrfs_fs_info *fs_info,
-  */
- static int btrfs_validate_mount_super(struct btrfs_fs_info *fs_info)
- {
--	return validate_super(fs_info, fs_info->super_copy, 0);
-+	return btrfs_validate_super(fs_info, fs_info->super_copy, 0);
- }
+@@ -1524,6 +1524,9 @@ static struct btrfs_root *btrfs_get_global_root(struct btrfs_fs_info *fs_info,
+ 	if (objectid == BTRFS_UUID_TREE_OBJECTID)
+ 		return btrfs_grab_root(fs_info->uuid_root) ?
+ 			fs_info->uuid_root : ERR_PTR(-ENOENT);
++	if (objectid == BTRFS_BLOCK_GROUP_TREE_OBJECTID)
++		return btrfs_grab_root(fs_info->block_group_root) ?
++			fs_info->block_group_root : ERR_PTR(-ENOENT);
+ 	if (objectid == BTRFS_FREE_SPACE_TREE_OBJECTID) {
+ 		struct btrfs_root *root = btrfs_global_root(fs_info, &key);
  
- /*
-@@ -2801,7 +2801,7 @@ static int btrfs_validate_write_super(struct btrfs_fs_info *fs_info,
- {
- 	int ret;
+@@ -1980,14 +1983,7 @@ static void backup_super_roots(struct btrfs_fs_info *info)
+ 	btrfs_set_backup_chunk_root_level(root_backup,
+ 			       btrfs_header_level(info->chunk_root->node));
  
--	ret = validate_super(fs_info, sb, -1);
-+	ret = btrfs_validate_super(fs_info, sb, -1);
- 	if (ret < 0)
- 		goto out;
- 	if (!btrfs_supported_super_csum(btrfs_super_csum_type(sb))) {
-@@ -3835,7 +3835,7 @@ static void btrfs_end_super_write(struct bio *bio)
- }
+-	if (btrfs_fs_incompat(info, EXTENT_TREE_V2)) {
+-		btrfs_set_backup_block_group_root(root_backup,
+-					info->block_group_root->node->start);
+-		btrfs_set_backup_block_group_root_gen(root_backup,
+-			btrfs_header_generation(info->block_group_root->node));
+-		btrfs_set_backup_block_group_root_level(root_backup,
+-			btrfs_header_level(info->block_group_root->node));
+-	} else {
++	if (!btrfs_fs_incompat(info, EXTENT_TREE_V2)) {
+ 		struct btrfs_root *extent_root = btrfs_extent_root(info, 0);
+ 		struct btrfs_root *csum_root = btrfs_csum_root(info, 0);
  
- struct btrfs_super_block *btrfs_read_dev_one_super(struct block_device *bdev,
--						   int copy_num)
-+						   int copy_num, bool drop_cache)
- {
- 	struct btrfs_super_block *super;
- 	struct page *page;
-@@ -3853,6 +3853,19 @@ struct btrfs_super_block *btrfs_read_dev_one_super(struct block_device *bdev,
- 	if (bytenr + BTRFS_SUPER_INFO_SIZE >= bdev_nr_bytes(bdev))
- 		return ERR_PTR(-EINVAL);
+@@ -2529,10 +2525,24 @@ static int btrfs_read_roots(struct btrfs_fs_info *fs_info)
+ 	if (ret)
+ 		return ret;
  
-+	if (drop_cache) {
-+		/* This should only be called with the primary sb. */
-+		ASSERT(copy_num == 0);
-+
-+		/*
-+		 * Drop the page of the primary superblock, so later read will
-+		 * always read from the device.
-+		 */
-+		invalidate_inode_pages2_range(mapping,
-+				bytenr >> PAGE_SHIFT,
-+				(bytenr + BTRFS_SUPER_INFO_SIZE) >> PAGE_SHIFT);
-+	}
-+
- 	page = read_cache_page_gfp(mapping, bytenr >> PAGE_SHIFT, GFP_NOFS);
- 	if (IS_ERR(page))
- 		return ERR_CAST(page);
-@@ -3884,7 +3897,7 @@ struct btrfs_super_block *btrfs_read_dev_super(struct block_device *bdev)
- 	 * later supers, using BTRFS_SUPER_MIRROR_MAX instead
- 	 */
- 	for (i = 0; i < 1; i++) {
--		super = btrfs_read_dev_one_super(bdev, i);
-+		super = btrfs_read_dev_one_super(bdev, i, false);
- 		if (IS_ERR(super))
- 			continue;
+-	location.objectid = BTRFS_DEV_TREE_OBJECTID;
+ 	location.type = BTRFS_ROOT_ITEM_KEY;
+ 	location.offset = 0;
  
-diff --git a/fs/btrfs/disk-io.h b/fs/btrfs/disk-io.h
-index 47ad8e0a2d33..aef981de672c 100644
---- a/fs/btrfs/disk-io.h
-+++ b/fs/btrfs/disk-io.h
-@@ -46,10 +46,12 @@ int __cold open_ctree(struct super_block *sb,
- 	       struct btrfs_fs_devices *fs_devices,
- 	       char *options);
- void __cold close_ctree(struct btrfs_fs_info *fs_info);
-+int btrfs_validate_super(struct btrfs_fs_info *fs_info,
-+			 struct btrfs_super_block *sb, int mirror_num);
- int write_all_supers(struct btrfs_fs_info *fs_info, int max_mirrors);
- struct btrfs_super_block *btrfs_read_dev_super(struct block_device *bdev);
- struct btrfs_super_block *btrfs_read_dev_one_super(struct block_device *bdev,
--						   int copy_num);
-+						   int copy_num, bool drop_cache);
- int btrfs_commit_super(struct btrfs_fs_info *fs_info);
- struct btrfs_root *btrfs_read_tree_root(struct btrfs_root *tree_root,
- 					struct btrfs_key *key);
-diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
-index ad3ce9700eaf..079855e9c881 100644
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -2562,11 +2562,71 @@ static int btrfs_freeze(struct super_block *sb)
- 	return btrfs_commit_transaction(trans);
- }
- 
-+static int check_dev_super(struct btrfs_device *dev)
-+{
-+	struct btrfs_fs_info *fs_info = dev->fs_info;
-+	struct btrfs_super_block *sb;
-+	int ret = 0;
-+
-+	/* This should be called with fs still frozen. */
-+	ASSERT(test_bit(BTRFS_FS_FROZEN, &fs_info->flags));
-+
-+	/* Missing dev, no need to check. */
-+	if (!dev->bdev)
-+		return 0;
-+
-+	/* Only need to check the primary super block. */
-+	sb = btrfs_read_dev_one_super(dev->bdev, 0, true);
-+	if (IS_ERR(sb))
-+		return PTR_ERR(sb);
-+
-+	/* Btrfs_validate_super() includes fsid check against super->fsid. */
-+	ret = btrfs_validate_super(fs_info, sb, 0);
-+	if (ret < 0)
-+		goto out;
-+
-+	if (btrfs_super_generation(sb) != fs_info->last_trans_committed) {
-+		btrfs_err(fs_info, "transid mismatch, has %llu expect %llu",
-+			btrfs_super_generation(sb),
-+			fs_info->last_trans_committed);
-+		ret = -EUCLEAN;
-+		goto out;
-+	}
-+out:
-+	btrfs_release_disk_super(sb);
-+	return ret;
-+}
-+
- static int btrfs_unfreeze(struct super_block *sb)
- {
- 	struct btrfs_fs_info *fs_info = btrfs_sb(sb);
-+	struct btrfs_device *device;
-+	int ret = 0;
- 
-+	/*
-+	 * Make sure the fs is not changed by accident (like hibernation then
-+	 * modified by other OS).
-+	 * If we found anything wrong, we mark the fs error immediately.
-+	 *
-+	 * And since the fs is frozen, no one can modify the fs yet, thus
-+	 * we don't need to hold device_list_mutex.
-+	 */
-+	list_for_each_entry(device, &fs_info->fs_devices->devices, dev_list) {
-+		ret = check_dev_super(device);
-+		if (ret < 0) {
-+			btrfs_handle_fs_error(fs_info, ret,
-+				"super block on devid %llu got modified unexpectedly",
-+				device->devid);
-+			break;
++	if (btrfs_fs_incompat(fs_info, EXTENT_TREE_V2)) {
++		location.objectid = BTRFS_BLOCK_GROUP_TREE_OBJECTID;
++		root = btrfs_read_tree_root(tree_root, &location);
++		if (IS_ERR(root)) {
++			if (!btrfs_test_opt(fs_info, IGNOREBADROOTS)) {
++				ret = PTR_ERR(root);
++				goto out;
++			}
++		} else {
++			set_bit(BTRFS_ROOT_TRACK_DIRTY, &root->state);
++			fs_info->block_group_root = root;
 +		}
 +	}
- 	clear_bit(BTRFS_FS_FROZEN, &fs_info->flags);
 +
-+	/*
-+	 * We still return 0, to allow VFS layer to unfreeze the fs even the
-+	 * above checks failed. Since the fs is either fine or read-only, we're
-+	 * safe to continue, without causing further damage.
-+	 */
- 	return 0;
++	location.objectid = BTRFS_DEV_TREE_OBJECTID;
+ 	root = btrfs_read_tree_root(tree_root, &location);
+ 	if (IS_ERR(root)) {
+ 		if (!btrfs_test_opt(fs_info, IGNOREBADROOTS)) {
+@@ -2862,17 +2872,7 @@ static int load_important_roots(struct btrfs_fs_info *fs_info)
+ 		btrfs_warn(fs_info, "couldn't read tree root");
+ 		return ret;
+ 	}
+-
+-	if (!btrfs_fs_incompat(fs_info, EXTENT_TREE_V2))
+-		return 0;
+-
+-	bytenr = btrfs_super_block_group_root(sb);
+-	gen = btrfs_super_block_group_root_generation(sb);
+-	level = btrfs_super_block_group_root_level(sb);
+-	ret = load_super_root(fs_info->block_group_root, bytenr, gen, level);
+-	if (ret)
+-		btrfs_warn(fs_info, "couldn't read block group root");
+-	return ret;
++	return 0;
  }
  
-diff --git a/fs/btrfs/volumes.c b/fs/btrfs/volumes.c
-index 6f006430115a..55c8bf9a5c89 100644
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -2029,7 +2029,7 @@ void btrfs_scratch_superblocks(struct btrfs_fs_info *fs_info,
- 		struct page *page;
- 		int ret;
+ static int __cold init_tree_roots(struct btrfs_fs_info *fs_info)
+diff --git a/fs/btrfs/transaction.c b/fs/btrfs/transaction.c
+index 0bec10740ad3..8fab3b274957 100644
+--- a/fs/btrfs/transaction.c
++++ b/fs/btrfs/transaction.c
+@@ -1912,14 +1912,6 @@ static void update_super_roots(struct btrfs_fs_info *fs_info)
+ 		super->cache_generation = 0;
+ 	if (test_bit(BTRFS_FS_UPDATE_UUID_TREE_GEN, &fs_info->flags))
+ 		super->uuid_tree_generation = root_item->generation;
+-
+-	if (btrfs_fs_incompat(fs_info, EXTENT_TREE_V2)) {
+-		root_item = &fs_info->block_group_root->root_item;
+-
+-		super->block_group_root = root_item->bytenr;
+-		super->block_group_root_generation = root_item->generation;
+-		super->block_group_root_level = root_item->level;
+-	}
+ }
  
--		disk_super = btrfs_read_dev_one_super(bdev, copy_num);
-+		disk_super = btrfs_read_dev_one_super(bdev, copy_num, false);
- 		if (IS_ERR(disk_super))
- 			continue;
- 
+ int btrfs_transaction_in_commit(struct btrfs_fs_info *info)
 -- 
 2.35.1
 
