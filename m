@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA706FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D389C433D2;
-	Tue, 10 Jan 2023 18:11:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F216FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85E7C433F0;
+	Tue, 10 Jan 2023 18:11:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374311;
-	bh=4oQpc33VE4R5IPFFjvsxk9UEnDWKggABIpooxfhfuP8=;
+	s=korg; t=1673374314;
+	bh=w3rkMHyOLysfq/DrTNdef7doeNH2+eXsesypNstpKKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yLnsoxA+Tn4lDW6qsShB0yEBshIpHiClmq5SMgNU3j/EwWlAtIXwjEDNtyk1vvctw
-	 h9Exo4SVvSsp9h/PEJ/J3EqSSMQ+40qBH8Zj+A7bdC+qymKK98AzxhmPy38gMQyXXo
-	 QaGW9IOxaw4+MUB2vF5xz4RhgDsHGkrCRmknHsv4=
+	b=x5/rWFGvtvVVeb5EbXo68NQGwCp5KyWW93FCNeMb3v69YLJunma7bcVFBGrJzOiGN
+	 3MdelbFiQiDMoqzcr6oD8upF+Sm8eUbWYvQG41bGBXKNYlcm78Eu3ObPofDShlmf8G
+	 2zi/+J/6SNv8BLw1LiilM5tKK2CHaj1yqE1K9WoA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuang Wang <nashuiliang@gmail.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Song Liu <song@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.0 125/148] bpf: Fix panic due to wrong pageattr of im->image
-Date: Tue, 10 Jan 2023 19:03:49 +0100
-Message-Id: <20230110180021.155021878@linuxfoundation.org>
+	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.0 126/148] Revert "drm/amd/display: Enable Freesync Video Mode by default"
+Date: Tue, 10 Jan 2023 19:03:50 +0100
+Message-Id: <20230110180021.185653179@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -36,79 +34,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chuang Wang <nashuiliang@gmail.com>
+From: Michel Dänzer <mdaenzer@redhat.com>
 
-commit 9ed1d9aeef5842ecacb660fce933613b58af1e00 upstream.
+commit 6fe6ece398f7431784847e922a2c8c385dc58a35 upstream.
 
-In the scenario where livepatch and kretfunc coexist, the pageattr of
-im->image is rox after arch_prepare_bpf_trampoline in
-bpf_trampoline_update, and then modify_fentry or register_fentry returns
--EAGAIN from bpf_tramp_ftrace_ops_func, the BPF_TRAMP_F_ORIG_STACK flag
-will be configured, and arch_prepare_bpf_trampoline will be re-executed.
+This reverts commit de05abe6b9d0fe08f65d744f7f75a4cba4df27ad.
 
-At this time, because the pageattr of im->image is rox,
-arch_prepare_bpf_trampoline will read and write im->image, which causes
-a fault. as follows:
+The bug referenced below was bisected to this commit. There has been no
+activity toward fixing it in 3 months, so let's revert for now.
 
-  insmod livepatch-sample.ko    # samples/livepatch/livepatch-sample.c
-  bpftrace -e 'kretfunc:cmdline_proc_show {}'
-
-BUG: unable to handle page fault for address: ffffffffa0206000
-PGD 322d067 P4D 322d067 PUD 322e063 PMD 1297e067 PTE d428061
-Oops: 0003 [#1] PREEMPT SMP PTI
-CPU: 2 PID: 270 Comm: bpftrace Tainted: G            E K    6.1.0 #5
-RIP: 0010:arch_prepare_bpf_trampoline+0xed/0x8c0
-RSP: 0018:ffffc90001083ad8 EFLAGS: 00010202
-RAX: ffffffffa0206000 RBX: 0000000000000020 RCX: 0000000000000000
-RDX: ffffffffa0206001 RSI: ffffffffa0206000 RDI: 0000000000000030
-RBP: ffffc90001083b70 R08: 0000000000000066 R09: ffff88800f51b400
-R10: 000000002e72c6e5 R11: 00000000d0a15080 R12: ffff8880110a68c8
-R13: 0000000000000000 R14: ffff88800f51b400 R15: ffffffff814fec10
-FS:  00007f87bc0dc780(0000) GS:ffff88803e600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffffffffa0206000 CR3: 0000000010b70000 CR4: 00000000000006e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<TASK>
- bpf_trampoline_update+0x25a/0x6b0
- __bpf_trampoline_link_prog+0x101/0x240
- bpf_trampoline_link_prog+0x2d/0x50
- bpf_tracing_prog_attach+0x24c/0x530
- bpf_raw_tp_link_attach+0x73/0x1d0
- __sys_bpf+0x100e/0x2570
- __x64_sys_bpf+0x1c/0x30
- do_syscall_64+0x5b/0x80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-With this patch, when modify_fentry or register_fentry returns -EAGAIN
-from bpf_tramp_ftrace_ops_func, the pageattr of im->image will be reset
-to nx+rw.
-
+Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2162
+Signed-off-by: Michel Dänzer <mdaenzer@redhat.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Fixes: 00963a2e75a8 ("bpf: Support bpf_trampoline on functions with IPMODIFY (e.g. livepatch)")
-Signed-off-by: Chuang Wang <nashuiliang@gmail.com>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20221224133146.780578-1-nashuiliang@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/trampoline.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h               |    1 
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c           |   27 ++++++++++++++++++++++
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   12 +++++----
+ 3 files changed, 35 insertions(+), 5 deletions(-)
 
---- a/kernel/bpf/trampoline.c
-+++ b/kernel/bpf/trampoline.c
-@@ -501,6 +501,10 @@ again:
- 		/* reset fops->func and fops->trampoline for re-register */
- 		tr->fops->func = NULL;
- 		tr->fops->trampoline = 0;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -196,6 +196,7 @@ extern int amdgpu_emu_mode;
+ extern uint amdgpu_smu_memory_pool_size;
+ extern int amdgpu_smu_pptable_id;
+ extern uint amdgpu_dc_feature_mask;
++extern uint amdgpu_freesync_vid_mode;
+ extern uint amdgpu_dc_debug_mask;
+ extern uint amdgpu_dc_visual_confirm;
+ extern uint amdgpu_dm_abm_level;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -177,6 +177,7 @@ int amdgpu_mes_kiq;
+ int amdgpu_noretry = -1;
+ int amdgpu_force_asic_type = -1;
+ int amdgpu_tmz = -1; /* auto */
++uint amdgpu_freesync_vid_mode;
+ int amdgpu_reset_method = -1; /* auto */
+ int amdgpu_num_kcq = -1;
+ int amdgpu_smartshift_bias;
+@@ -863,6 +864,32 @@ MODULE_PARM_DESC(tmz, "Enable TMZ featur
+ module_param_named(tmz, amdgpu_tmz, int, 0444);
+ 
+ /**
++ * DOC: freesync_video (uint)
++ * Enable the optimization to adjust front porch timing to achieve seamless
++ * mode change experience when setting a freesync supported mode for which full
++ * modeset is not needed.
++ *
++ * The Display Core will add a set of modes derived from the base FreeSync
++ * video mode into the corresponding connector's mode list based on commonly
++ * used refresh rates and VRR range of the connected display, when users enable
++ * this feature. From the userspace perspective, they can see a seamless mode
++ * change experience when the change between different refresh rates under the
++ * same resolution. Additionally, userspace applications such as Video playback
++ * can read this modeset list and change the refresh rate based on the video
++ * frame rate. Finally, the userspace can also derive an appropriate mode for a
++ * particular refresh rate based on the FreeSync Mode and add it to the
++ * connector's mode list.
++ *
++ * Note: This is an experimental feature.
++ *
++ * The default value: 0 (off).
++ */
++MODULE_PARM_DESC(
++	freesync_video,
++	"Enable freesync modesetting optimization feature (0 = off (default), 1 = on)");
++module_param_named(freesync_video, amdgpu_freesync_vid_mode, uint, 0444);
 +
-+		/* reset im->image memory attr for arch_prepare_bpf_trampoline */
-+		set_memory_nx((long)im->image, 1);
-+		set_memory_rw((long)im->image, 1);
- 		goto again;
- 	}
- #endif
++/**
+  * DOC: reset_method (int)
+  * GPU reset method (-1 = auto (default), 0 = legacy, 1 = mode0, 2 = mode1, 3 = mode2, 4 = baco)
+  */
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5821,7 +5821,8 @@ create_stream_for_sink(struct amdgpu_dm_
+ 		 */
+ 		DRM_DEBUG_DRIVER("No preferred mode found\n");
+ 	} else {
+-		recalculate_timing = is_freesync_video_mode(&mode, aconnector);
++		recalculate_timing = amdgpu_freesync_vid_mode &&
++				 is_freesync_video_mode(&mode, aconnector);
+ 		if (recalculate_timing) {
+ 			freesync_mode = get_highest_refresh_rate_mode(aconnector, false);
+ 			drm_mode_copy(&saved_mode, &mode);
+@@ -6895,7 +6896,7 @@ static void amdgpu_dm_connector_add_free
+ 	struct amdgpu_dm_connector *amdgpu_dm_connector =
+ 		to_amdgpu_dm_connector(connector);
+ 
+-	if (!edid)
++	if (!(amdgpu_freesync_vid_mode && edid))
+ 		return;
+ 
+ 	if (amdgpu_dm_connector->max_vfreq - amdgpu_dm_connector->min_vfreq > 10)
+@@ -8766,7 +8767,8 @@ static int dm_update_crtc_state(struct a
+ 		 * TODO: Refactor this function to allow this check to work
+ 		 * in all conditions.
+ 		 */
+-		if (dm_new_crtc_state->stream &&
++		if (amdgpu_freesync_vid_mode &&
++		    dm_new_crtc_state->stream &&
+ 		    is_timing_unchanged_for_freesync(new_crtc_state, old_crtc_state))
+ 			goto skip_modeset;
+ 
+@@ -8801,7 +8803,7 @@ static int dm_update_crtc_state(struct a
+ 		if (!dm_old_crtc_state->stream)
+ 			goto skip_modeset;
+ 
+-		if (dm_new_crtc_state->stream &&
++		if (amdgpu_freesync_vid_mode && dm_new_crtc_state->stream &&
+ 		    is_timing_unchanged_for_freesync(new_crtc_state,
+ 						     old_crtc_state)) {
+ 			new_crtc_state->mode_changed = false;
+@@ -8813,7 +8815,7 @@ static int dm_update_crtc_state(struct a
+ 			set_freesync_fixed_config(dm_new_crtc_state);
+ 
+ 			goto skip_modeset;
+-		} else if (aconnector &&
++		} else if (amdgpu_freesync_vid_mode && aconnector &&
+ 			   is_freesync_video_mode(&new_crtc_state->mode,
+ 						  aconnector)) {
+ 			struct drm_display_mode *high_mode;
 
 
