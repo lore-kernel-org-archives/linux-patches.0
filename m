@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D6CA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C4CFC433D2;
-	Tue, 10 Jan 2023 18:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B858EA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B08DC433EF;
+	Tue, 10 Jan 2023 18:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374575;
-	bh=wT79O2IlfnsJYtG+7jIgx1drQPzfSonDpZSZ/05KOYQ=;
+	s=korg; t=1673374578;
+	bh=wd6HwZ3z2rSh1FbO2fiX12iUIhaMbSiS/omuQOlAcuo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iLtb6xOUf5mwozZDcm/HHpKpiUuMCOH5HGAcp83Fv0CGun1A8klmoJxBn2xM+CDCk
-	 3YNidPmYg+SYsgjd0KayNFx3TfeAD6VuSDp+h2VOqWUfcOnkslGYoQ/say8r90R/Y/
-	 92q75YFAXRu/n/cAD0xYA5nRY3mdZoFLAL9KcglI=
+	b=RZWBNOAx8qSrJEB6GpcJA3ILRumj67B+tB4SruOo+P9uIpUw9DdJBQfBYw9xz6bQk
+	 hUpKBgCzqRQsu6gdDSqJpmZjdcm9cIWJNJbrmPlIyIRFDK2sftWp6hbKuG+O+GbWMe
+	 SUOO5XibSWThrN3tbFz2lVISixC0oB6HgeETic+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Eli Cohen <elic@nvidia.com>,
 	Maor Dickman <maord@nvidia.com>,
-	Roi Dayan <roid@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 061/159] net/mlx5e: Set geneve_tlv_option_0_exist when matching on geneve option
-Date: Tue, 10 Jan 2023 19:03:29 +0100
-Message-Id: <20230110180020.250825041@linuxfoundation.org>
+Subject: [PATCH 6.1 062/159] net/mlx5: Lag, fix failure to cancel delayed bond work
+Date: Tue, 10 Jan 2023 19:03:30 +0100
+Message-Id: <20230110180020.279889166@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,47 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maor Dickman <maord@nvidia.com>
+From: Eli Cohen <elic@nvidia.com>
 
-[ Upstream commit e54638a8380bd9c146a883035fffd0a821813682 ]
+[ Upstream commit 4d1c1379d71777ddeda3e54f8fc26e9ecbfd1009 ]
 
-The cited patch added support of matching on geneve option by setting
-geneve_tlv_option_0_data mask and key but didn't set geneve_tlv_option_0_exist
-bit which is required on some HWs when matching geneve_tlv_option_0_data parameter,
-this may cause in some cases for packets to wrongly match on rules with different
-geneve option.
+Commit 0d4e8ed139d8 ("net/mlx5: Lag, avoid lockdep warnings")
+accidentally removed a call to cancel delayed bond work thus it may
+cause queued delay to expire and fall on an already destroyed work
+queue.
 
-Example of such case is packet with geneve_tlv_object class=789 and data=456
-will wrongly match on rule with match geneve_tlv_object class=123 and data=456.
+Fix by restoring the call cancel_delayed_work_sync() before
+destroying the workqueue.
 
-Fix it by setting geneve_tlv_option_0_exist bit when supported by the HW when matching
-on geneve_tlv_option_0_data parameter.
+This prevents call trace such as this:
 
-Fixes: 9272e3df3023 ("net/mlx5e: Geneve, Add support for encap/decap flows offload")
-Signed-off-by: Maor Dickman <maord@nvidia.com>
-Reviewed-by: Roi Dayan <roid@nvidia.com>
+[  329.230417] BUG: kernel NULL pointer dereference, address: 0000000000000000
+ [  329.231444] #PF: supervisor write access in kernel mode
+ [  329.232233] #PF: error_code(0x0002) - not-present page
+ [  329.233007] PGD 0 P4D 0
+ [  329.233476] Oops: 0002 [#1] SMP
+ [  329.234012] CPU: 5 PID: 145 Comm: kworker/u20:4 Tainted: G OE      6.0.0-rc5_mlnx #1
+ [  329.235282] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+ [  329.236868] Workqueue: mlx5_cmd_0000:08:00.1 cmd_work_handler [mlx5_core]
+ [  329.237886] RIP: 0010:_raw_spin_lock+0xc/0x20
+ [  329.238585] Code: f0 0f b1 17 75 02 f3 c3 89 c6 e9 6f 3c 5f ff 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 0f 1f 44 00 00 31 c0 ba 01 00 00 00 <f0> 0f b1 17 75 02 f3 c3 89 c6 e9 45 3c 5f ff 0f 1f 44 00 00 0f 1f
+ [  329.241156] RSP: 0018:ffffc900001b0e98 EFLAGS: 00010046
+ [  329.241940] RAX: 0000000000000000 RBX: ffffffff82374ae0 RCX: 0000000000000000
+ [  329.242954] RDX: 0000000000000001 RSI: 0000000000000014 RDI: 0000000000000000
+ [  329.243974] RBP: ffff888106ccf000 R08: ffff8881004000c8 R09: ffff888100400000
+ [  329.244990] R10: 0000000000000000 R11: ffffffff826669f8 R12: 0000000000002000
+ [  329.246009] R13: 0000000000000005 R14: ffff888100aa7ce0 R15: ffff88852ca80000
+ [  329.247030] FS:  0000000000000000(0000) GS:ffff88852ca80000(0000) knlGS:0000000000000000
+ [  329.248260] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+ [  329.249111] CR2: 0000000000000000 CR3: 000000016d675001 CR4: 0000000000770ee0
+ [  329.250133] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+ [  329.251152] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+ [  329.252176] PKRU: 55555554
+
+Fixes: 0d4e8ed139d8 ("net/mlx5: Lag, avoid lockdep warnings")
+Signed-off-by: Eli Cohen <elic@nvidia.com>
+Reviewed-by: Maor Dickman <maord@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_geneve.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_geneve.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_geneve.c
-index f5b26f5a7de4..054d80c4e65c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_geneve.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_geneve.c
-@@ -273,6 +273,11 @@ static int mlx5e_tc_tun_parse_geneve_options(struct mlx5e_priv *priv,
- 		 geneve_tlv_option_0_data, be32_to_cpu(opt_data_key));
- 	MLX5_SET(fte_match_set_misc3, misc_3_c,
- 		 geneve_tlv_option_0_data, be32_to_cpu(opt_data_mask));
-+	if (MLX5_CAP_ESW_FLOWTABLE_FDB(priv->mdev,
-+				       ft_field_support.geneve_tlv_option_0_exist)) {
-+		MLX5_SET_TO_ONES(fte_match_set_misc, misc_c, geneve_tlv_option_0_exist);
-+		MLX5_SET_TO_ONES(fte_match_set_misc, misc_v, geneve_tlv_option_0_exist);
-+	}
- 
- 	spec->match_criteria_enable |= MLX5_MATCH_MISC_PARAMETERS_3;
- 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+index 32c3e0a649a7..ad32b80e8501 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
+@@ -228,6 +228,7 @@ static void mlx5_ldev_free(struct kref *ref)
+ 	if (ldev->nb.notifier_call)
+ 		unregister_netdevice_notifier_net(&init_net, &ldev->nb);
+ 	mlx5_lag_mp_cleanup(ldev);
++	cancel_delayed_work_sync(&ldev->bond_work);
+ 	destroy_workqueue(ldev->wq);
+ 	mlx5_lag_mpesw_cleanup(ldev);
+ 	mutex_destroy(&ldev->lock);
 -- 
 2.35.1
 
