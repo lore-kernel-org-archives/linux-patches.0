@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB1C7474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:20:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DC81C433EF;
-	Tue, 10 Jan 2023 18:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5ECA7474
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:20:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0A3C433EF;
+	Tue, 10 Jan 2023 18:20:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374853;
-	bh=cYrIxgrRHUpJln9EP7po+IDAjvE9X2NcKotwwqQ7jCU=;
+	s=korg; t=1673374856;
+	bh=pMyy/USbHxRYZdZu0xv9HNCGe3noCoPfJaLAAao0NFw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BB1x0x/ZREZiljZXPQ3ByVH2nqlYrI+TGqKPYWFtzzNuMwKeuOg59w6QbNM0eshBq
-	 RZL4tQLLGe8Y92aEEeCazFobqrZJLD0q77k/9ozDAxOuLjykvpCcHdiJ7RADwHEsAp
-	 c2SAQpWc44AE4XndFkVDSSYoLAMqf5agV3OGawvI=
+	b=Y8W1INIg3OqoEzeBEza+4CnaoW2BKxn0qFIem/ZwH5cCuuGPUpaW3VVk5tO3qNhKg
+	 I7gvb0uV8UoWNOA4t/nGnczHZkZu01EyiGoyuLHnWe3uRXki4/sUlpK2VF1/f5uMFE
+	 qe4y3kpBriLsKxTCQxgr1WnaXBjCAZSnGWv78u5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Liu <will@willsroot.io>,
-	=?UTF-8?q?Hrvoje=20Mi=C5=A1eti=C4=87?= <misetichrvoje@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 155/159] ksmbd: check nt_len to be at least CIFS_ENCPWD_SIZE in ksmbd_decode_ntlmssp_auth_blob
-Date: Tue, 10 Jan 2023 19:05:03 +0100
-Message-Id: <20230110180023.484149449@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.1 156/159] drm/i915/dsi: add support for ICL+ native MIPI GPIO sequence
+Date: Tue, 10 Jan 2023 19:05:04 +0100
+Message-Id: <20230110180023.533192604@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,38 +35,202 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: William Liu <will@willsroot.io>
+From: Jani Nikula <jani.nikula@intel.com>
 
-commit 797805d81baa814f76cf7bdab35f86408a79d707 upstream.
+commit 963bbdb32b47cfa67a449e715e1dcc525fbd01fc upstream.
 
-"nt_len - CIFS_ENCPWD_SIZE" is passed directly from
-ksmbd_decode_ntlmssp_auth_blob to ksmbd_auth_ntlmv2. Malicious requests
-can set nt_len to less than CIFS_ENCPWD_SIZE, which results in a negative
-number (or large unsigned value) used for a subsequent memcpy in
-ksmbd_auth_ntlvm2 and can cause a panic.
+Starting from ICL, the default for MIPI GPIO sequences seems to be using
+native GPIOs i.e. GPIOs available in the GPU. These native GPIOs reuse
+many pins that quite frankly seem scary to poke based on the VBT
+sequences. We pretty much have to trust that the board is configured
+such that the relevant HPD, PP_CONTROL and GPIO bits aren't used for
+anything else.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Cc: stable@vger.kernel.org
-Signed-off-by: William Liu <will@willsroot.io>
-Signed-off-by: Hrvoje Mišetić <misetichrvoje@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+MIPI sequence v4 also adds a flag to fall back to non-native sequences.
+
+v5:
+- Wrap SHOTPLUG_CTL_DDI modification in spin_lock() in icp_irq_handler()
+  too (Ville)
+- References instead of Closes issue 6131 because this does not fix everything
+
+v4:
+- Wrap SHOTPLUG_CTL_DDI modification in spin_lock_irq() (Ville)
+
+v3:
+- Fix -Wbitwise-conditional-parentheses (kernel test robot <lkp@intel.com>)
+
+v2:
+- Fix HPD pin output set (impacts GPIOs 0 and 5)
+- Fix GPIO data output direction set (impacts GPIOs 4 and 9)
+- Reduce register accesses to single intel_de_rwm()
+
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Reviewed-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221219105955.4014451-1-jani.nikula@intel.com
+(cherry picked from commit f087cfe6fcff58044f7aa3b284965af47f472fb0)
+Cc: stable@vger.kernel.org # 6.1
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/auth.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_dsi_vbt.c |   94 ++++++++++++++++++++++++++-
+ drivers/gpu/drm/i915/i915_irq.c              |    3 
+ drivers/gpu/drm/i915/i915_reg.h              |    1 
+ 3 files changed, 95 insertions(+), 3 deletions(-)
 
---- a/fs/ksmbd/auth.c
-+++ b/fs/ksmbd/auth.c
-@@ -322,7 +322,8 @@ int ksmbd_decode_ntlmssp_auth_blob(struc
- 	dn_off = le32_to_cpu(authblob->DomainName.BufferOffset);
- 	dn_len = le16_to_cpu(authblob->DomainName.Length);
+--- a/drivers/gpu/drm/i915/display/intel_dsi_vbt.c
++++ b/drivers/gpu/drm/i915/display/intel_dsi_vbt.c
+@@ -41,9 +41,11 @@
  
--	if (blob_len < (u64)dn_off + dn_len || blob_len < (u64)nt_off + nt_len)
-+	if (blob_len < (u64)dn_off + dn_len || blob_len < (u64)nt_off + nt_len ||
-+	    nt_len < CIFS_ENCPWD_SIZE)
- 		return -EINVAL;
+ #include "i915_drv.h"
+ #include "i915_reg.h"
++#include "intel_de.h"
+ #include "intel_display_types.h"
+ #include "intel_dsi.h"
+ #include "intel_dsi_vbt.h"
++#include "intel_gmbus_regs.h"
+ #include "vlv_dsi.h"
+ #include "vlv_dsi_regs.h"
+ #include "vlv_sideband.h"
+@@ -377,6 +379,85 @@ static void icl_exec_gpio(struct intel_c
+ 	drm_dbg_kms(&dev_priv->drm, "Skipping ICL GPIO element execution\n");
+ }
  
- 	/* TODO : use domain name that imported from configuration file */
++enum {
++	MIPI_RESET_1 = 0,
++	MIPI_AVDD_EN_1,
++	MIPI_BKLT_EN_1,
++	MIPI_AVEE_EN_1,
++	MIPI_VIO_EN_1,
++	MIPI_RESET_2,
++	MIPI_AVDD_EN_2,
++	MIPI_BKLT_EN_2,
++	MIPI_AVEE_EN_2,
++	MIPI_VIO_EN_2,
++};
++
++static void icl_native_gpio_set_value(struct drm_i915_private *dev_priv,
++				      int gpio, bool value)
++{
++	int index;
++
++	if (drm_WARN_ON(&dev_priv->drm, DISPLAY_VER(dev_priv) == 11 && gpio >= MIPI_RESET_2))
++		return;
++
++	switch (gpio) {
++	case MIPI_RESET_1:
++	case MIPI_RESET_2:
++		index = gpio == MIPI_RESET_1 ? HPD_PORT_A : HPD_PORT_B;
++
++		/*
++		 * Disable HPD to set the pin to output, and set output
++		 * value. The HPD pin should not be enabled for DSI anyway,
++		 * assuming the board design and VBT are sane, and the pin isn't
++		 * used by a non-DSI encoder.
++		 *
++		 * The locking protects against concurrent SHOTPLUG_CTL_DDI
++		 * modifications in irq setup and handling.
++		 */
++		spin_lock_irq(&dev_priv->irq_lock);
++		intel_de_rmw(dev_priv, SHOTPLUG_CTL_DDI,
++			     SHOTPLUG_CTL_DDI_HPD_ENABLE(index) |
++			     SHOTPLUG_CTL_DDI_HPD_OUTPUT_DATA(index),
++			     value ? SHOTPLUG_CTL_DDI_HPD_OUTPUT_DATA(index) : 0);
++		spin_unlock_irq(&dev_priv->irq_lock);
++		break;
++	case MIPI_AVDD_EN_1:
++	case MIPI_AVDD_EN_2:
++		index = gpio == MIPI_AVDD_EN_1 ? 0 : 1;
++
++		intel_de_rmw(dev_priv, PP_CONTROL(index), PANEL_POWER_ON,
++			     value ? PANEL_POWER_ON : 0);
++		break;
++	case MIPI_BKLT_EN_1:
++	case MIPI_BKLT_EN_2:
++		index = gpio == MIPI_AVDD_EN_1 ? 0 : 1;
++
++		intel_de_rmw(dev_priv, PP_CONTROL(index), EDP_BLC_ENABLE,
++			     value ? EDP_BLC_ENABLE : 0);
++		break;
++	case MIPI_AVEE_EN_1:
++	case MIPI_AVEE_EN_2:
++		index = gpio == MIPI_AVEE_EN_1 ? 1 : 2;
++
++		intel_de_rmw(dev_priv, GPIO(dev_priv, index),
++			     GPIO_CLOCK_VAL_OUT,
++			     GPIO_CLOCK_DIR_MASK | GPIO_CLOCK_DIR_OUT |
++			     GPIO_CLOCK_VAL_MASK | (value ? GPIO_CLOCK_VAL_OUT : 0));
++		break;
++	case MIPI_VIO_EN_1:
++	case MIPI_VIO_EN_2:
++		index = gpio == MIPI_VIO_EN_1 ? 1 : 2;
++
++		intel_de_rmw(dev_priv, GPIO(dev_priv, index),
++			     GPIO_DATA_VAL_OUT,
++			     GPIO_DATA_DIR_MASK | GPIO_DATA_DIR_OUT |
++			     GPIO_DATA_VAL_MASK | (value ? GPIO_DATA_VAL_OUT : 0));
++		break;
++	default:
++		MISSING_CASE(gpio);
++	}
++}
++
+ static const u8 *mipi_exec_gpio(struct intel_dsi *intel_dsi, const u8 *data)
+ {
+ 	struct drm_device *dev = intel_dsi->base.base.dev;
+@@ -384,8 +465,7 @@ static const u8 *mipi_exec_gpio(struct i
+ 	struct intel_connector *connector = intel_dsi->attached_connector;
+ 	u8 gpio_source, gpio_index = 0, gpio_number;
+ 	bool value;
+-
+-	drm_dbg_kms(&dev_priv->drm, "\n");
++	bool native = DISPLAY_VER(dev_priv) >= 11;
+ 
+ 	if (connector->panel.vbt.dsi.seq_version >= 3)
+ 		gpio_index = *data++;
+@@ -398,10 +478,18 @@ static const u8 *mipi_exec_gpio(struct i
+ 	else
+ 		gpio_source = 0;
+ 
++	if (connector->panel.vbt.dsi.seq_version >= 4 && *data & BIT(1))
++		native = false;
++
+ 	/* pull up/down */
+ 	value = *data++ & 1;
+ 
+-	if (DISPLAY_VER(dev_priv) >= 11)
++	drm_dbg_kms(&dev_priv->drm, "GPIO index %u, number %u, source %u, native %s, set to %s\n",
++		    gpio_index, gpio_number, gpio_source, str_yes_no(native), str_on_off(value));
++
++	if (native)
++		icl_native_gpio_set_value(dev_priv, gpio_number, value);
++	else if (DISPLAY_VER(dev_priv) >= 11)
+ 		icl_exec_gpio(connector, gpio_source, gpio_index, value);
+ 	else if (IS_VALLEYVIEW(dev_priv))
+ 		vlv_exec_gpio(connector, gpio_source, gpio_number, value);
+--- a/drivers/gpu/drm/i915/i915_irq.c
++++ b/drivers/gpu/drm/i915/i915_irq.c
+@@ -1981,8 +1981,11 @@ static void icp_irq_handler(struct drm_i
+ 	if (ddi_hotplug_trigger) {
+ 		u32 dig_hotplug_reg;
+ 
++		/* Locking due to DSI native GPIO sequences */
++		spin_lock(&dev_priv->irq_lock);
+ 		dig_hotplug_reg = intel_uncore_read(&dev_priv->uncore, SHOTPLUG_CTL_DDI);
+ 		intel_uncore_write(&dev_priv->uncore, SHOTPLUG_CTL_DDI, dig_hotplug_reg);
++		spin_unlock(&dev_priv->irq_lock);
+ 
+ 		intel_get_hpd_pins(dev_priv, &pin_mask, &long_mask,
+ 				   ddi_hotplug_trigger, dig_hotplug_reg,
+--- a/drivers/gpu/drm/i915/i915_reg.h
++++ b/drivers/gpu/drm/i915/i915_reg.h
+@@ -6035,6 +6035,7 @@
+ 
+ #define SHOTPLUG_CTL_DDI				_MMIO(0xc4030)
+ #define   SHOTPLUG_CTL_DDI_HPD_ENABLE(hpd_pin)			(0x8 << (_HPD_PIN_DDI(hpd_pin) * 4))
++#define   SHOTPLUG_CTL_DDI_HPD_OUTPUT_DATA(hpd_pin)		(0x4 << (_HPD_PIN_DDI(hpd_pin) * 4))
+ #define   SHOTPLUG_CTL_DDI_HPD_STATUS_MASK(hpd_pin)		(0x3 << (_HPD_PIN_DDI(hpd_pin) * 4))
+ #define   SHOTPLUG_CTL_DDI_HPD_NO_DETECT(hpd_pin)		(0x0 << (_HPD_PIN_DDI(hpd_pin) * 4))
+ #define   SHOTPLUG_CTL_DDI_HPD_SHORT_DETECT(hpd_pin)		(0x1 << (_HPD_PIN_DDI(hpd_pin) * 4))
 
 
