@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ABAE6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B091CC433EF;
-	Tue, 10 Jan 2023 18:27:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2BD6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA296C433EF;
+	Tue, 10 Jan 2023 18:27:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375242;
-	bh=LitOQAqDf6xYpF3xx9I0UAMH8jwSx6PXZnV7i2zHhdQ=;
+	s=korg; t=1673375245;
+	bh=1g8bunrCfIV6wTghoygRW85CedI0LGm+mHYXXS+sfgQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r6CTTIyQLVwqltK9Vdz/QqI/c2PnOWw5rx1mKh3UG1tPO1xA72KwZH9y+mVdv58Uz
-	 rlqy8jZ0q7QjQcsfJLfvuDnjVCYTfjP/3acR83gw3gzQNnLyRWYiOeLYRGgPO6kUnb
-	 CEWuymcA1T4Y1rPk65bl1+8yPaDQeEeU/FpuzCPU=
+	b=yE7DDsLOoUrTpzlEKt7isVs1ABVRNLNqYE6kn4lt7WjPRfQLBAPQEAd5z6hkd/aHm
+	 u9GeB83dgvK/2ppnFsn/wIVhLRzgC3ECgjW8L0CpDjSkC4GhOnZhGURWMKAOZlBom9
+	 +nXbBaY+PmLuUMjn8V9wgcdd4kiL/8fcAIu28B1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@linux.alibaba.com>,
-	Guo Ren <guoren@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.15 125/290] riscv: stacktrace: Fixup ftrace_graph_ret_addr retp argument
-Date: Tue, 10 Jan 2023 19:03:37 +0100
-Message-Id: <20230110180036.130507942@linuxfoundation.org>
+	Peter Zijlstra <peterz@infradead.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 5.15 099/290] x86/kprobes: Fix optprobe optimization check with CONFIG_RETHUNK
+Date: Tue, 10 Jan 2023 19:03:11 +0100
+Message-Id: <20230110180035.049744645@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,36 +34,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guo Ren <guoren@linux.alibaba.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 5c3022e4a616d800cf5f4c3a981d7992179e44a1 upstream.
+commit 63dc6325ff41ee9e570bde705ac34a39c5dbeb44 upstream.
 
-The 'retp' is a pointer to the return address on the stack, so we
-must pass the current return address pointer as the 'retp'
-argument to ftrace_push_return_trace(). Not parent function's
-return address on the stack.
+Since the CONFIG_RETHUNK and CONFIG_SLS will use INT3 for stopping
+speculative execution after function return, kprobe jump optimization
+always fails on the functions with such INT3 inside the function body.
+(It already checks the INT3 padding between functions, but not inside
+ the function)
 
-Fixes: b785ec129bd9 ("riscv/ftrace: Add HAVE_FUNCTION_GRAPH_RET_ADDR_PTR support")
-Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
-Signed-off-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20221109064937.3643993-2-guoren@kernel.org
+To avoid this issue, as same as kprobes, check whether the INT3 comes
+from kgdb or not, and if so, stop decoding and make it fail. The other
+INT3 will come from CONFIG_RETHUNK/CONFIG_SLS and those can be
+treated as a one-byte instruction.
+
+Fixes: e463a09af2f0 ("x86: Add straight-line-speculation mitigation")
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Link: https://lore.kernel.org/r/167146051929.1374301.7419382929328081706.stgit@devnote3
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/stacktrace.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/kprobes/opt.c |   28 ++++++++--------------------
+ 1 file changed, 8 insertions(+), 20 deletions(-)
 
---- a/arch/riscv/kernel/stacktrace.c
-+++ b/arch/riscv/kernel/stacktrace.c
-@@ -60,7 +60,7 @@ void notrace walk_stackframe(struct task
- 		} else {
- 			fp = frame->fp;
- 			pc = ftrace_graph_ret_addr(current, NULL, frame->ra,
--						   (unsigned long *)(fp - 8));
-+						   &frame->ra);
- 		}
+--- a/arch/x86/kernel/kprobes/opt.c
++++ b/arch/x86/kernel/kprobes/opt.c
+@@ -15,6 +15,7 @@
+ #include <linux/extable.h>
+ #include <linux/kdebug.h>
+ #include <linux/kallsyms.h>
++#include <linux/kgdb.h>
+ #include <linux/ftrace.h>
+ #include <linux/objtool.h>
+ #include <linux/pgtable.h>
+@@ -272,19 +273,6 @@ static int insn_is_indirect_jump(struct
+ 	return ret;
+ }
  
- 	}
+-static bool is_padding_int3(unsigned long addr, unsigned long eaddr)
+-{
+-	unsigned char ops;
+-
+-	for (; addr < eaddr; addr++) {
+-		if (get_kernel_nofault(ops, (void *)addr) < 0 ||
+-		    ops != INT3_INSN_OPCODE)
+-			return false;
+-	}
+-
+-	return true;
+-}
+-
+ /* Decode whole function to ensure any instructions don't jump into target */
+ static int can_optimize(unsigned long paddr)
+ {
+@@ -327,15 +315,15 @@ static int can_optimize(unsigned long pa
+ 		ret = insn_decode_kernel(&insn, (void *)recovered_insn);
+ 		if (ret < 0)
+ 			return 0;
+-
++#ifdef CONFIG_KGDB
+ 		/*
+-		 * In the case of detecting unknown breakpoint, this could be
+-		 * a padding INT3 between functions. Let's check that all the
+-		 * rest of the bytes are also INT3.
++		 * If there is a dynamically installed kgdb sw breakpoint,
++		 * this function should not be probed.
+ 		 */
+-		if (insn.opcode.bytes[0] == INT3_INSN_OPCODE)
+-			return is_padding_int3(addr, paddr - offset + size) ? 1 : 0;
+-
++		if (insn.opcode.bytes[0] == INT3_INSN_OPCODE &&
++		    kgdb_has_hit_break(addr))
++			return 0;
++#endif
+ 		/* Recover address */
+ 		insn.kaddr = (void *)addr;
+ 		insn.next_byte = (void *)(addr + insn.length);
 
 
