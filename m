@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658E1A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:09:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11BAC433EF;
-	Tue, 10 Jan 2023 18:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03847A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:09:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA1FC433D2;
+	Tue, 10 Jan 2023 18:09:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374149;
-	bh=gY1a5ERSTIZgrNMRDuG2O2Et1lzql3dRj0Y0QDk1ce8=;
+	s=korg; t=1673374151;
+	bh=al4WhUBLVcLg2wEADBFB5wreFDHHjfzHqyEexl0uWQE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tx/HC8AHdF/ExdKLCbdR7X5PaSo7Ua5EdZYcjxVX8/68QLqrl0bU3gRrJmapG5S2x
-	 kai1QDLOx+DW2U2Bim12MlP4Mrtw9TT68X2jVKsTQRop9cEfvaOkc6osFb3Ih5f8fk
-	 87WvDf+/OdXCmMxnCKHO7VYdryvfVbHzuMdUP/n0=
+	b=QuvPFN/T1TOywX3ofJWs7HrV90iPJUIEztHiLyW1USWcRVMIp+4+lvleA6uvEypef
+	 g4pByrtbeBPLIkCHTYCXHWDI3RcFt8qu7aINPrlm73bwS2exdCRvrDs4Y4Qc6viPLR
+	 2vPVwEbAQ3/oSYDOPoet5msWxtMjlvi2ZUSf7cOA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiguang Xiao <jiguang.xiao@windriver.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 063/148] net: amd-xgbe: add missed tasklet_kill
-Date: Tue, 10 Jan 2023 19:02:47 +0100
-Message-Id: <20230110180019.226757958@linuxfoundation.org>
+Subject: [PATCH 6.0 037/148] bnxt_en: Fix first buffer size calculations for XDP multi-buffer
+Date: Tue, 10 Jan 2023 19:02:21 +0100
+Message-Id: <20230110180018.400681960@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -35,69 +37,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiguang Xiao <jiguang.xiao@windriver.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit d530ece70f16f912e1d1bfeea694246ab78b0a4b ]
+[ Upstream commit 1abeacc1979fa4a756695f5030791d8f0fa934b9 ]
 
-The driver does not call tasklet_kill in several places.
-Add the calls to fix it.
+The size of the first buffer is always page size, and the useable
+space is the page size minus the offset and the skb_shared_info size.
+Make sure SKB and XDP buf sizes match so that the skb_shared_info
+is at the same offset seen from the SKB and XDP_BUF.
 
-Fixes: 85b85c853401 ("amd-xgbe: Re-issue interrupt if interrupt status not cleared")
-Signed-off-by: Jiguang Xiao <jiguang.xiao@windriver.com>
+build_skb() should be passed PAGE_SIZE.  xdp_init_buff() should
+be passed PAGE_SIZE as well.  xdp_get_shared_info_from_buff() will
+automatically deduct the skb_shared_info size if the XDP buffer
+has frags.  There is no need to keep bp->xdp_has_frags.
+
+Change BNXT_PAGE_MODE_BUF_SIZE to BNXT_MAX_PAGE_MODE_MTU_SBUF
+since this constant is really the MTU with ethernet header size
+subtracted.
+
+Also fix the BNXT_MAX_PAGE_MODE_MTU macro with proper parentheses.
+
+Fixes: 32861236190b ("bnxt: change receive ring space parameters")
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-drv.c  | 3 +++
- drivers/net/ethernet/amd/xgbe/xgbe-i2c.c  | 4 +++-
- drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 4 +++-
- 3 files changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c     |  9 +++++----
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h     | 15 +++++++++++----
+ drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c |  7 +------
+ 3 files changed, 17 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-index f342bb853189..2ee2cd4a1e35 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-@@ -1064,6 +1064,9 @@ static void xgbe_free_irqs(struct xgbe_prv_data *pdata)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 31c427d53b90..be82464e1a77 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -988,8 +988,7 @@ static struct sk_buff *bnxt_rx_multi_page_skb(struct bnxt *bp,
+ 	dma_addr -= bp->rx_dma_offset;
+ 	dma_unmap_page_attrs(&bp->pdev->dev, dma_addr, PAGE_SIZE, bp->rx_dir,
+ 			     DMA_ATTR_WEAK_ORDERING);
+-	skb = build_skb(page_address(page), BNXT_PAGE_MODE_BUF_SIZE +
+-					    bp->rx_dma_offset);
++	skb = build_skb(page_address(page), PAGE_SIZE);
+ 	if (!skb) {
+ 		__free_page(page);
+ 		return NULL;
+@@ -3966,8 +3965,10 @@ void bnxt_set_ring_params(struct bnxt *bp)
+ 		bp->rx_agg_ring_mask = (bp->rx_agg_nr_pages * RX_DESC_CNT) - 1;
  
- 	devm_free_irq(pdata->dev, pdata->dev_irq, pdata);
+ 		if (BNXT_RX_PAGE_MODE(bp)) {
+-			rx_space = BNXT_PAGE_MODE_BUF_SIZE;
+-			rx_size = BNXT_MAX_PAGE_MODE_MTU;
++			rx_space = PAGE_SIZE;
++			rx_size = PAGE_SIZE -
++				  ALIGN(max(NET_SKB_PAD, XDP_PACKET_HEADROOM), 8) -
++				  SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
+ 		} else {
+ 			rx_size = SKB_DATA_ALIGN(BNXT_RX_COPY_THRESH + NET_IP_ALIGN);
+ 			rx_space = rx_size + NET_SKB_PAD +
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index d5fa43cfe524..02741d499bf4 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -591,12 +591,20 @@ struct nqe_cn {
+ #define BNXT_RX_PAGE_SIZE (1 << BNXT_RX_PAGE_SHIFT)
  
-+	tasklet_kill(&pdata->tasklet_dev);
-+	tasklet_kill(&pdata->tasklet_ecc);
+ #define BNXT_MAX_MTU		9500
+-#define BNXT_PAGE_MODE_BUF_SIZE \
 +
- 	if (pdata->vdata->ecc_support && (pdata->dev_irq != pdata->ecc_irq))
- 		devm_free_irq(pdata->dev, pdata->ecc_irq, pdata);
++/* First RX buffer page in XDP multi-buf mode
++ *
++ * +-------------------------------------------------------------------------+
++ * | XDP_PACKET_HEADROOM | bp->rx_buf_use_size              | skb_shared_info|
++ * | (bp->rx_dma_offset) |                                  |                |
++ * +-------------------------------------------------------------------------+
++ */
++#define BNXT_MAX_PAGE_MODE_MTU_SBUF \
+ 	((unsigned int)PAGE_SIZE - VLAN_ETH_HLEN - NET_IP_ALIGN -	\
+ 	 XDP_PACKET_HEADROOM)
+ #define BNXT_MAX_PAGE_MODE_MTU	\
+-	BNXT_PAGE_MODE_BUF_SIZE - \
+-	SKB_DATA_ALIGN((unsigned int)sizeof(struct skb_shared_info))
++	(BNXT_MAX_PAGE_MODE_MTU_SBUF - \
++	 SKB_DATA_ALIGN((unsigned int)sizeof(struct skb_shared_info)))
  
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c b/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c
-index 22d4fc547a0a..a9ccc4258ee5 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c
-@@ -447,8 +447,10 @@ static void xgbe_i2c_stop(struct xgbe_prv_data *pdata)
- 	xgbe_i2c_disable(pdata);
- 	xgbe_i2c_clear_all_interrupts(pdata);
+ #define BNXT_MIN_PKT_SIZE	52
  
--	if (pdata->dev_irq != pdata->i2c_irq)
-+	if (pdata->dev_irq != pdata->i2c_irq) {
- 		devm_free_irq(pdata->dev, pdata->i2c_irq, pdata);
-+		tasklet_kill(&pdata->tasklet_i2c);
-+	}
+@@ -2131,7 +2139,6 @@ struct bnxt {
+ #define BNXT_DUMP_CRASH		1
+ 
+ 	struct bpf_prog		*xdp_prog;
+-	u8			xdp_has_frags;
+ 
+ 	struct bnxt_ptp_cfg	*ptp_cfg;
+ 	u8			ptp_all_rx_tstamp;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+index 2ceeaa818c1c..36d5202c0aee 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+@@ -193,9 +193,6 @@ void bnxt_xdp_buff_init(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
+ 	mapping = rx_buf->mapping - bp->rx_dma_offset;
+ 	dma_sync_single_for_cpu(&pdev->dev, mapping + offset, len, bp->rx_dir);
+ 
+-	if (bp->xdp_has_frags)
+-		buflen = BNXT_PAGE_MODE_BUF_SIZE + offset;
+-
+ 	xdp_init_buff(xdp, buflen, &rxr->xdp_rxq);
+ 	xdp_prepare_buff(xdp, data_ptr - offset, offset, len, false);
  }
+@@ -404,10 +401,8 @@ static int bnxt_xdp_set(struct bnxt *bp, struct bpf_prog *prog)
+ 		netdev_warn(dev, "ethtool rx/tx channels must be combined to support XDP.\n");
+ 		return -EOPNOTSUPP;
+ 	}
+-	if (prog) {
++	if (prog)
+ 		tx_xdp = bp->rx_nr_rings;
+-		bp->xdp_has_frags = prog->aux->xdp_has_frags;
+-	}
  
- static int xgbe_i2c_start(struct xgbe_prv_data *pdata)
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-index 4e97b4869522..0c5c1b155683 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-@@ -1390,8 +1390,10 @@ static void xgbe_phy_stop(struct xgbe_prv_data *pdata)
- 	/* Disable auto-negotiation */
- 	xgbe_an_disable_all(pdata);
- 
--	if (pdata->dev_irq != pdata->an_irq)
-+	if (pdata->dev_irq != pdata->an_irq) {
- 		devm_free_irq(pdata->dev, pdata->an_irq, pdata);
-+		tasklet_kill(&pdata->tasklet_an);
-+	}
- 
- 	pdata->phy_if.phy_impl.stop(pdata);
- 
+ 	tc = netdev_get_num_tc(dev);
+ 	if (!tc)
 -- 
 2.35.1
 
