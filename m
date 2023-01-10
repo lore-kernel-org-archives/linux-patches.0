@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468A36FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:17:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2938C433F1;
-	Tue, 10 Jan 2023 18:17:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D4D16FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:17:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79678C433D2;
+	Tue, 10 Jan 2023 18:17:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374647;
-	bh=TbJShuApEJ00R3MELDpxXoGrBbRwqF37F6xGQfTNIxY=;
+	s=korg; t=1673374649;
+	bh=FMnIbCjmAU0n39JpqMBBIvAVEFgIAyyMmNtyxw/BJus=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hVKhqbfG7xO+iMJvlaTYPVrvLZlLfDm2lNU53jnTT4ElEhTkoCG3zYPunch4ImdLH
-	 ROpRQCaGDVIu1OKCFT6TWyiF1+Rg63wJttP5PFZLL21Fe05CnALf0C3OykJqp73k0D
-	 JFRVeTZgUT9RMMqMNFwZWfArQTUZTe4/I85A8sx0=
+	b=aFEgeJbetV35nXcyiXjKGCvyx33EQi0SJq2MRueC0ordYSQ/fZ+PEa9Pj6I9Bywg5
+	 z5AbqNEFeMXZa1DwTSsza0Zje7YvlXUZN2/Pp2xCinQxibSiM6CbhKD6TtR0jlp+jV
+	 Lzdfyq5BPld19oBQlQgSvEC6YiqFHMgQF5SwNgjE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Agroskin <shayagr@amazon.com>,
-	David Arinzon <darinzon@amazon.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Nikolay Aleksandrov <razor@blackwall.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 068/159] net: ena: Dont register memory info on XDP exchange
-Date: Tue, 10 Jan 2023 19:03:36 +0100
-Message-Id: <20230110180020.462563955@linuxfoundation.org>
+Subject: [PATCH 6.1 086/159] vxlan: Fix memory leaks in error path
+Date: Tue, 10 Jan 2023 19:03:54 +0100
+Message-Id: <20230110180021.046835194@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,48 +36,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Arinzon <darinzon@amazon.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit 9c9e539956fa67efb8a65e32b72a853740b33445 ]
+[ Upstream commit 06bf62944144a92d83dd14fd1378d2a288259561 ]
 
-Since the queues aren't destroyed when we only exchange XDP programs,
-there's no need to re-register them again.
+The memory allocated by vxlan_vnigroup_init() is not freed in the error
+path, leading to memory leaks [1]. Fix by calling
+vxlan_vnigroup_uninit() in the error path.
 
-Fixes: 548c4940b9f1 ("net: ena: Implement XDP_TX action")
-Signed-off-by: Shay Agroskin <shayagr@amazon.com>
-Signed-off-by: David Arinzon <darinzon@amazon.com>
+The leaks can be reproduced by annotating gro_cells_init() with
+ALLOW_ERROR_INJECTION() and then running:
+
+ # echo "100" > /sys/kernel/debug/fail_function/probability
+ # echo "1" > /sys/kernel/debug/fail_function/times
+ # echo "gro_cells_init" > /sys/kernel/debug/fail_function/inject
+ # printf %#x -12 > /sys/kernel/debug/fail_function/gro_cells_init/retval
+ # ip link add name vxlan0 type vxlan dstport 4789 external vnifilter
+ RTNETLINK answers: Cannot allocate memory
+
+[1]
+unreferenced object 0xffff88810db84a00 (size 512):
+  comm "ip", pid 330, jiffies 4295010045 (age 66.016s)
+  hex dump (first 32 bytes):
+    f8 d5 76 0e 81 88 ff ff 01 00 00 00 00 00 00 02  ..v.............
+    03 00 04 00 48 00 00 00 00 00 00 01 04 00 01 00  ....H...........
+  backtrace:
+    [<ffffffff81a3097a>] kmalloc_trace+0x2a/0x60
+    [<ffffffff82f049fc>] vxlan_vnigroup_init+0x4c/0x160
+    [<ffffffff82ecd69e>] vxlan_init+0x1ae/0x280
+    [<ffffffff836858ca>] register_netdevice+0x57a/0x16d0
+    [<ffffffff82ef67b7>] __vxlan_dev_create+0x7c7/0xa50
+    [<ffffffff82ef6ce6>] vxlan_newlink+0xd6/0x130
+    [<ffffffff836d02ab>] __rtnl_newlink+0x112b/0x18a0
+    [<ffffffff836d0a8c>] rtnl_newlink+0x6c/0xa0
+    [<ffffffff836c0ddf>] rtnetlink_rcv_msg+0x43f/0xd40
+    [<ffffffff83908ce0>] netlink_rcv_skb+0x170/0x440
+    [<ffffffff839066af>] netlink_unicast+0x53f/0x810
+    [<ffffffff839072d8>] netlink_sendmsg+0x958/0xe70
+    [<ffffffff835c319f>] ____sys_sendmsg+0x78f/0xa90
+    [<ffffffff835cd6da>] ___sys_sendmsg+0x13a/0x1e0
+    [<ffffffff835cd94c>] __sys_sendmsg+0x11c/0x1f0
+    [<ffffffff8424da78>] do_syscall_64+0x38/0x80
+unreferenced object 0xffff88810e76d5f8 (size 192):
+  comm "ip", pid 330, jiffies 4295010045 (age 66.016s)
+  hex dump (first 32 bytes):
+    04 00 00 00 00 00 00 00 db e1 4f e7 00 00 00 00  ..........O.....
+    08 d6 76 0e 81 88 ff ff 08 d6 76 0e 81 88 ff ff  ..v.......v.....
+  backtrace:
+    [<ffffffff81a3162e>] __kmalloc_node+0x4e/0x90
+    [<ffffffff81a0e166>] kvmalloc_node+0xa6/0x1f0
+    [<ffffffff8276e1a3>] bucket_table_alloc.isra.0+0x83/0x460
+    [<ffffffff8276f18b>] rhashtable_init+0x43b/0x7c0
+    [<ffffffff82f04a1c>] vxlan_vnigroup_init+0x6c/0x160
+    [<ffffffff82ecd69e>] vxlan_init+0x1ae/0x280
+    [<ffffffff836858ca>] register_netdevice+0x57a/0x16d0
+    [<ffffffff82ef67b7>] __vxlan_dev_create+0x7c7/0xa50
+    [<ffffffff82ef6ce6>] vxlan_newlink+0xd6/0x130
+    [<ffffffff836d02ab>] __rtnl_newlink+0x112b/0x18a0
+    [<ffffffff836d0a8c>] rtnl_newlink+0x6c/0xa0
+    [<ffffffff836c0ddf>] rtnetlink_rcv_msg+0x43f/0xd40
+    [<ffffffff83908ce0>] netlink_rcv_skb+0x170/0x440
+    [<ffffffff839066af>] netlink_unicast+0x53f/0x810
+    [<ffffffff839072d8>] netlink_sendmsg+0x958/0xe70
+    [<ffffffff835c319f>] ____sys_sendmsg+0x78f/0xa90
+
+Fixes: f9c4bb0b245c ("vxlan: vni filtering support on collect metadata device")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Nikolay Aleksandrov <razor@blackwall.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_netdev.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/net/vxlan/vxlan_core.c | 19 +++++++++++++------
+ 1 file changed, 13 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-index 5a454b58498f..e313bb45319c 100644
---- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-@@ -512,16 +512,18 @@ static void ena_xdp_exchange_program_rx_in_range(struct ena_adapter *adapter,
- 						 struct bpf_prog *prog,
- 						 int first, int count)
- {
-+	struct bpf_prog *old_bpf_prog;
- 	struct ena_ring *rx_ring;
- 	int i = 0;
+diff --git a/drivers/net/vxlan/vxlan_core.c b/drivers/net/vxlan/vxlan_core.c
+index 6ab669dcd1c6..d4be39b19a6b 100644
+--- a/drivers/net/vxlan/vxlan_core.c
++++ b/drivers/net/vxlan/vxlan_core.c
+@@ -2917,16 +2917,23 @@ static int vxlan_init(struct net_device *dev)
+ 		vxlan_vnigroup_init(vxlan);
  
- 	for (i = first; i < count; i++) {
- 		rx_ring = &adapter->rx_ring[i];
--		xchg(&rx_ring->xdp_bpf_prog, prog);
--		if (prog) {
-+		old_bpf_prog = xchg(&rx_ring->xdp_bpf_prog, prog);
+ 	dev->tstats = netdev_alloc_pcpu_stats(struct pcpu_sw_netstats);
+-	if (!dev->tstats)
+-		return -ENOMEM;
++	if (!dev->tstats) {
++		err = -ENOMEM;
++		goto err_vnigroup_uninit;
++	}
+ 
+ 	err = gro_cells_init(&vxlan->gro_cells, dev);
+-	if (err) {
+-		free_percpu(dev->tstats);
+-		return err;
+-	}
++	if (err)
++		goto err_free_percpu;
+ 
+ 	return 0;
 +
-+		if (!old_bpf_prog && prog) {
- 			ena_xdp_register_rxq_info(rx_ring);
- 			rx_ring->rx_headroom = XDP_PACKET_HEADROOM;
--		} else {
-+		} else if (old_bpf_prog && !prog) {
- 			ena_xdp_unregister_rxq_info(rx_ring);
- 			rx_ring->rx_headroom = NET_SKB_PAD;
- 		}
++err_free_percpu:
++	free_percpu(dev->tstats);
++err_vnigroup_uninit:
++	if (vxlan->cfg.flags & VXLAN_F_VNIFILTER)
++		vxlan_vnigroup_uninit(vxlan);
++	return err;
+ }
+ 
+ static void vxlan_fdb_delete_default(struct vxlan_dev *vxlan, __be32 vni)
 -- 
 2.35.1
 
