@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14F596FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA48C433D2;
-	Tue, 10 Jan 2023 18:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A666FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36FD0C433F0;
+	Tue, 10 Jan 2023 18:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374300;
-	bh=eOl1NMaMazQGbtIBH02ohkfluw1QFycUlov2MiDILG0=;
+	s=korg; t=1673374303;
+	bh=wIJKBYaQ1VXqSBSFwrxCbb9ti8ZKJ7yZl0stDP+aba8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AuFeEvKaO9BffXnFg4AtbOxPG0P7K1Yw+mRVYuqfBS4wT6ucup+5ftn3yRkBvqQJz
-	 ZKN9RJsIG+Bg3p3tFzlbrEf6MGrrKW/0VXR2PnFnSFVDDwPnItnvwiZ0/kXwQEubhG
-	 NUBWu0Jr3xHGw08cNxe1eqIUTBD7JakCM8LPnmxs=
+	b=yivMUO5FqPfr89DqNsA3dVnQ9zu1qrOezBX7rRIMcIhmKlOllP61UmwQ0M4deW29H
+	 /f6VAagIy/y/i+ghIYLH4h7O7ruQwBJ/0e/s9VFLiXcqOe5l+CHoHbKJcPdRf7rwKG
+	 gDzSEX7xvJazNTad2bZ2YYTMyjAelaByc1fFGb3Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Rodrigo Branco <bsdaemon@google.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Baoquan He <bhe@redhat.com>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	stable@kernel.org
-Subject: [PATCH 6.0 121/148] x86/kexec: Fix double-free of elf header buffer
-Date: Tue, 10 Jan 2023 19:03:45 +0100
-Message-Id: <20230110180021.033234345@linuxfoundation.org>
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 6.0 122/148] x86/bugs: Flush IBP in ib_prctl_set()
+Date: Tue, 10 Jan 2023 19:03:46 +0100
+Message-Id: <20230110180021.062132400@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -37,46 +35,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Rodrigo Branco <bsdaemon@google.com>
 
-commit d00dd2f2645dca04cf399d8fc692f3f69b6dd996 upstream.
+commit a664ec9158eeddd75121d39c9a0758016097fa96 upstream.
 
-After
+We missed the window between the TIF flag update and the next reschedule.
 
-  b3e34a47f989 ("x86/kexec: fix memory leak of elf header buffer"),
-
-freeing image->elf_headers in the error path of crash_load_segments()
-is not needed because kimage_file_post_load_cleanup() will take
-care of that later. And not clearing it could result in a double-free.
-
-Drop the superfluous vfree() call at the error path of
-crash_load_segments().
-
-Fixes: b3e34a47f989 ("x86/kexec: fix memory leak of elf header buffer")
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Acked-by: Baoquan He <bhe@redhat.com>
-Acked-by: Vlastimil Babka <vbabka@suse.cz>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20221122115122.13937-1-tiwai@suse.de
+Signed-off-by: Rodrigo Branco <bsdaemon@google.com>
+Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/crash.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ arch/x86/kernel/cpu/bugs.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/arch/x86/kernel/crash.c
-+++ b/arch/x86/kernel/crash.c
-@@ -401,10 +401,8 @@ int crash_load_segments(struct kimage *i
- 	kbuf.buf_align = ELF_CORE_HEADER_ALIGN;
- 	kbuf.mem = KEXEC_BUF_MEM_UNKNOWN;
- 	ret = kexec_add_buffer(&kbuf);
--	if (ret) {
--		vfree((void *)image->elf_headers);
-+	if (ret)
- 		return ret;
--	}
- 	image->elf_load_addr = kbuf.mem;
- 	pr_debug("Loaded ELF headers at 0x%lx bufsz=0x%lx memsz=0x%lx\n",
- 		 image->elf_load_addr, kbuf.bufsz, kbuf.memsz);
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1951,6 +1951,8 @@ static int ib_prctl_set(struct task_stru
+ 		if (ctrl == PR_SPEC_FORCE_DISABLE)
+ 			task_set_spec_ib_force_disable(task);
+ 		task_update_spec_tif(task);
++		if (task == current)
++			indirect_branch_prediction_barrier();
+ 		break;
+ 	default:
+ 		return -ERANGE;
 
 
