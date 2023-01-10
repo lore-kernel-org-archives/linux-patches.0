@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 866E7A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:14:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0406C433EF;
-	Tue, 10 Jan 2023 18:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA956A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:14:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49EFEC433F0;
+	Tue, 10 Jan 2023 18:14:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374441;
-	bh=Q6JrCLq4Xrvr92tLcyK9c4mCTj7Px9T0ZwLJ8fiSQSw=;
+	s=korg; t=1673374444;
+	bh=8N9IoaFFPEWKDahZmRc4MIX/AxAv9fs11GFAWzj2gWY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zb9Azfbk86vqu9z7VaAJteebc95ZkQM46AbtePm2WSJo3wHblda8tpHXRnvicDMK2
-	 LjWT6RiLUXu+ozzxaDqvd3zp1+YdaFxQJNijcMvuz4bBixda+m+AHHI3KOYjyqf21r
-	 N4Ie7xuGW7OPXVOiljzwTQfeXuMAU3DOE/WUlgLc=
+	b=LGlBYFIFTOloiT/4pHayFz8lS8CSerSsM2F5wNaIl7Mn/g0qrfrnjRsAogzWf3XZc
+	 PppRtAvoNc54Q31ko/qfjG9rGkIT8GwoktN6T0U/vZGHLhBixlWGmnSdmysZabuX5x
+	 XpsYQ79h23BlM7BQzEykVVEJ2bAYv4+g+lLXk5mI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 002/159] btrfs: replace strncpy() with strscpy()
-Date: Tue, 10 Jan 2023 19:02:30 +0100
-Message-Id: <20230110180018.371262010@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 003/159] cifs: fix interface count calculation during refresh
+Date: Tue, 10 Jan 2023 19:02:31 +0100
+Message-Id: <20230110180018.402708055@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -35,63 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-[ Upstream commit 63d5429f68a3d4c4aa27e65a05196c17f86c41d6 ]
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-Using strncpy() on NUL-terminated strings are deprecated.  To avoid
-possible forming of non-terminated string strscpy() should be used.
+commit cc7d79d4fad6a4eab3f88c4bb237de72be4478f1 upstream.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+The last fix to iface_count did fix the overcounting issue.
+However, during each refresh, we could end up undercounting
+the iface_count, if a match was found.
 
-CC: stable@vger.kernel.org # 4.9+
-Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixing this by doing increments and decrements instead of
+setting it to 0 before each parsing of server interfaces.
+
+Fixes: 096bbeec7bd6 ("smb3: interface count displayed incorrectly")
+Cc: stable@vger.kernel.org # 6.1
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/ioctl.c      | 9 +++------
- fs/btrfs/rcu-string.h | 6 +++++-
- 2 files changed, 8 insertions(+), 7 deletions(-)
+ fs/cifs/smb2ops.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
-index 5ba2e810dc6e..fd1902573cde 100644
---- a/fs/btrfs/ioctl.c
-+++ b/fs/btrfs/ioctl.c
-@@ -3750,13 +3750,10 @@ static long btrfs_ioctl_dev_info(struct btrfs_fs_info *fs_info,
- 	di_args->bytes_used = btrfs_device_get_bytes_used(dev);
- 	di_args->total_bytes = btrfs_device_get_total_bytes(dev);
- 	memcpy(di_args->uuid, dev->uuid, sizeof(di_args->uuid));
--	if (dev->name) {
--		strncpy(di_args->path, rcu_str_deref(dev->name),
--				sizeof(di_args->path) - 1);
--		di_args->path[sizeof(di_args->path) - 1] = 0;
--	} else {
-+	if (dev->name)
-+		strscpy(di_args->path, rcu_str_deref(dev->name), sizeof(di_args->path));
-+	else
- 		di_args->path[0] = '\0';
--	}
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -530,7 +530,6 @@ parse_server_interfaces(struct network_i
+ 	p = buf;
  
- out:
- 	rcu_read_unlock();
-diff --git a/fs/btrfs/rcu-string.h b/fs/btrfs/rcu-string.h
-index 5c1a617eb25d..5c2b66d155ef 100644
---- a/fs/btrfs/rcu-string.h
-+++ b/fs/btrfs/rcu-string.h
-@@ -18,7 +18,11 @@ static inline struct rcu_string *rcu_string_strdup(const char *src, gfp_t mask)
- 					 (len * sizeof(char)), mask);
- 	if (!ret)
- 		return ret;
--	strncpy(ret->str, src, len);
-+	/* Warn if the source got unexpectedly truncated. */
-+	if (WARN_ON(strscpy(ret->str, src, len) < 0)) {
-+		kfree(ret);
-+		return NULL;
-+	}
- 	return ret;
- }
+ 	spin_lock(&ses->iface_lock);
+-	ses->iface_count = 0;
+ 	/*
+ 	 * Go through iface_list and do kref_put to remove
+ 	 * any unused ifaces. ifaces in use will be removed
+@@ -540,6 +539,7 @@ parse_server_interfaces(struct network_i
+ 				 iface_head) {
+ 		iface->is_active = 0;
+ 		kref_put(&iface->refcount, release_iface);
++		ses->iface_count--;
+ 	}
+ 	spin_unlock(&ses->iface_lock);
  
--- 
-2.35.1
-
+@@ -618,6 +618,7 @@ parse_server_interfaces(struct network_i
+ 				/* just get a ref so that it doesn't get picked/freed */
+ 				iface->is_active = 1;
+ 				kref_get(&iface->refcount);
++				ses->iface_count++;
+ 				spin_unlock(&ses->iface_lock);
+ 				goto next_iface;
+ 			} else if (ret < 0) {
 
 
