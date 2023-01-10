@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 857366FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:20:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43DFC433EF;
-	Tue, 10 Jan 2023 18:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0526FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:20:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B017AC433D2;
+	Tue, 10 Jan 2023 18:20:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374817;
-	bh=z2nNy7V2xDibHg1tTULdeywPbSJL51jOJhY+PHRIesk=;
+	s=korg; t=1673374820;
+	bh=9yfrKjpoLfam7sqSxNdXGHK6ZdtMKk+di4SnzdkCxu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xA4jirrgzekuaBPfv2uKmA89o1G8dSEKuNJUJOV6fPOqd1S6IbzV3gOh/0qoA/nJx
-	 aHAVaPIzqt3CKQMxP9efdlEMTXcJ4KnwK44xqGpndk4+8DxuNVYsXaDyJtlEA3bWVm
-	 firB9c4JetFP7vVRJcHi9Nlk/Npr1CS+OSfhSvZA=
+	b=tNkoFtwyN+NPUvDTxgiviQejlosdgXYUKcJbi2Cc/t2ack9eF9bDKZjZz+AARbcQ/
+	 UMzkQMzUSka5ccgyUFhMGvZSV5ON3opqq8ovtyOXg1VPiL8v/e1Prje4u5GKFTPBgU
+	 cPaZ8OYFSE4zDgc2iYd9igKAmQ+BfsvatCpZUbVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ma Jun <majun@amd.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>,
-	Javier Martinez Canillas <javierm@redhat.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-	Maxime Ripard <mripard@kernel.org>,
-	David Airlie <airlied@gmail.com>,
-	Daniel Vetter <daniel@ffwll.ch>,
-	dri-devel@lists.freedesktop.org
-Subject: [PATCH 6.1 144/159] drm/plane-helper: Add the missing declaration of drm_atomic_state
-Date: Tue, 10 Jan 2023 19:04:52 +0100
-Message-Id: <20230110180023.052617144@linuxfoundation.org>
+	Mukul Joshi <mukul.joshi@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 145/159] drm/amdkfd: Fix kernel warning during topology setup
+Date: Tue, 10 Jan 2023 19:04:53 +0100
+Message-Id: <20230110180023.096589987@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -40,48 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ma Jun <majun@amd.com>
+From: Mukul Joshi <mukul.joshi@amd.com>
 
-commit 4e699e34f923188175986ad8a74ab99f7034075e upstream.
+commit cf97eb7e47d4671084c7e114c5d88a3d0540ecbd upstream.
 
-Add the missing declaration of struct drm_atomic_state to fix the
-compile error below:
+This patch fixes the following kernel warning seen during
+driver load by correctly initializing the p2plink attr before
+creating the sysfs file:
 
-error: 'struct drm_atomic_state' declared inside parameter
-list will not be visible outside of this definition or declaration [-Werror]
+[  +0.002865] ------------[ cut here ]------------
+[  +0.002327] kobject: '(null)' (0000000056260cfb): is not initialized, yet kobject_put() is being called.
+[  +0.004780] WARNING: CPU: 32 PID: 1006 at lib/kobject.c:718 kobject_put+0xaa/0x1c0
+[  +0.001361] Call Trace:
+[  +0.001234]  <TASK>
+[  +0.001067]  kfd_remove_sysfs_node_entry+0x24a/0x2d0 [amdgpu]
+[  +0.003147]  kfd_topology_update_sysfs+0x3d/0x750 [amdgpu]
+[  +0.002890]  kfd_topology_add_device+0xbd7/0xc70 [amdgpu]
+[  +0.002844]  ? lock_release+0x13c/0x2e0
+[  +0.001936]  ? smu_cmn_send_smc_msg_with_param+0x1e8/0x2d0 [amdgpu]
+[  +0.003313]  ? amdgpu_dpm_get_mclk+0x54/0x60 [amdgpu]
+[  +0.002703]  kgd2kfd_device_init.cold+0x39f/0x4ed [amdgpu]
+[  +0.002930]  amdgpu_amdkfd_device_init+0x13d/0x1f0 [amdgpu]
+[  +0.002944]  amdgpu_device_init.cold+0x1464/0x17b4 [amdgpu]
+[  +0.002970]  ? pci_bus_read_config_word+0x43/0x80
+[  +0.002380]  amdgpu_driver_load_kms+0x15/0x100 [amdgpu]
+[  +0.002744]  amdgpu_pci_probe+0x147/0x370 [amdgpu]
+[  +0.002522]  local_pci_probe+0x40/0x80
+[  +0.001896]  work_for_cpu_fn+0x10/0x20
+[  +0.001892]  process_one_work+0x26e/0x5a0
+[  +0.002029]  worker_thread+0x1fd/0x3e0
+[  +0.001890]  ? process_one_work+0x5a0/0x5a0
+[  +0.002115]  kthread+0xea/0x110
+[  +0.001618]  ? kthread_complete_and_exit+0x20/0x20
+[  +0.002422]  ret_from_fork+0x1f/0x30
+[  +0.001808]  </TASK>
+[  +0.001103] irq event stamp: 59837
+[  +0.001718] hardirqs last  enabled at (59849): [<ffffffffb30fab12>] __up_console_sem+0x52/0x60
+[  +0.004414] hardirqs last disabled at (59860): [<ffffffffb30faaf7>] __up_console_sem+0x37/0x60
+[  +0.004414] softirqs last  enabled at (59654): [<ffffffffb307d9c7>] irq_exit_rcu+0xd7/0x130
+[  +0.004205] softirqs last disabled at (59649): [<ffffffffb307d9c7>] irq_exit_rcu+0xd7/0x130
+[  +0.004203] ---[ end trace 0000000000000000 ]---
 
-Signed-off-by: Ma Jun <majun@amd.com>
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Fixes: 8401bd361f59 ("drm/plane-helper: Add a drm_plane_helper_atomic_check() helper")
-Cc: Javier Martinez Canillas <javierm@redhat.com>
-Cc: Thomas Zimmermann <tzimmermann@suse.de>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
-Cc: Maxime Ripard <mripard@kernel.org>
-Cc: David Airlie <airlied@gmail.com>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: dri-devel@lists.freedesktop.org
-Cc: <stable@vger.kernel.org> # v6.1+
-Link: https://patchwork.freedesktop.org/patch/msgid/20221216030526.1335609-1-majun@amd.com
+Fixes: 0f28cca87e9a ("drm/amdkfd: Extend KFD device topology to surface peer-to-peer links")
+Signed-off-by: Mukul Joshi <mukul.joshi@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/drm/drm_plane_helper.h | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdkfd/kfd_topology.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/drm/drm_plane_helper.h b/include/drm/drm_plane_helper.h
-index ff83d2621687..3a574e8cd22f 100644
---- a/include/drm/drm_plane_helper.h
-+++ b/include/drm/drm_plane_helper.h
-@@ -26,6 +26,7 @@
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_topology.c
+@@ -801,7 +801,7 @@ static int kfd_build_sysfs_node_entry(st
  
- #include <linux/types.h>
- 
-+struct drm_atomic_state;
- struct drm_crtc;
- struct drm_framebuffer;
- struct drm_modeset_acquire_ctx;
--- 
-2.39.0
-
+ 		p2plink->attr.name = "properties";
+ 		p2plink->attr.mode = KFD_SYSFS_FILE_MODE;
+-		sysfs_attr_init(&iolink->attr);
++		sysfs_attr_init(&p2plink->attr);
+ 		ret = sysfs_create_file(p2plink->kobj, &p2plink->attr);
+ 		if (ret < 0)
+ 			return ret;
 
 
