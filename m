@@ -1,30 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF442A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:21:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63EA6C433F0;
-	Tue, 10 Jan 2023 18:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C9E23A6
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:21:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D80C433EF;
+	Tue, 10 Jan 2023 18:21:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374888;
-	bh=djq9lIQ0nqp7d9nYg+s4qgATiy3Xr6m3SiYI/DdRwGk=;
+	s=korg; t=1673374891;
+	bh=1Yn9xs+8eM3vJ1bB9yazJM9B1es2Cp2dFTZ6oDxZq38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mz8U3L2ulLc6tEGYzW3W3YT9AYL/0VCDhlgsclboToOUdmiRZ5grA4m3pD5tOBgfk
-	 4ewNWVD1P7W+vhnnJmP70/4ZjJ8Dz7mm2eyvXOHRcKeGztcIJoITz83N5B/W95MI4j
-	 cpl1HagVHBnKxXKjW8IuPAw3FoETNpLxxRluBMK0=
+	b=o/EtN1CSP/2oUAxmWmlDBe7JFc/OBC7U2ZKKhORUjQKlcYAWTiIOgxpfltiizfotG
+	 EZ4fC52uBvMN4xNs4puukqjQziXo5rubnIcH8u9nhWx9AOeb8xu7mTcwcuJZmUsw0+
+	 2tCVRGPeT03A08M/FaGxKsmS2dtfGLJF5pBiOHYA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 131/159] Revert "drm/amd/display: Enable Freesync Video Mode by default"
-Date: Tue, 10 Jan 2023 19:04:39 +0100
-Message-Id: <20230110180022.531254217@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 001/290] usb: dwc3: qcom: Fix memory leak in dwc3_qcom_interconnect_init
+Date: Tue, 10 Jan 2023 19:01:33 +0100
+Message-Id: <20230110180031.680514751@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
-References: <20230110180018.288460217@linuxfoundation.org>
+In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
+References: <20230110180031.620810905@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,127 +38,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michel Dänzer <mdaenzer@redhat.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit 6fe6ece398f7431784847e922a2c8c385dc58a35 upstream.
+[ Upstream commit 97a48da1619ba6bd42a0e5da0a03aa490a9496b1 ]
 
-This reverts commit de05abe6b9d0fe08f65d744f7f75a4cba4df27ad.
+of_icc_get() alloc resources for path handle, we should release it when not
+need anymore. Like the release in dwc3_qcom_interconnect_exit() function.
+Add icc_put() in error handling to fix this.
 
-The bug referenced below was bisected to this commit. There has been no
-activity toward fixing it in 3 months, so let's revert for now.
-
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2162
-Signed-off-by: Michel Dänzer <mdaenzer@redhat.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Fixes: bea46b981515 ("usb: dwc3: qcom: Add interconnect support in dwc3 driver")
+Cc: stable <stable@kernel.org>
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Link: https://lore.kernel.org/r/20221206081731.818107-1-linmq006@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu.h               |    1 
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c           |   27 ++++++++++++++++++++++
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   12 +++++----
- 3 files changed, 35 insertions(+), 5 deletions(-)
+ drivers/usb/dwc3/dwc3-qcom.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-@@ -196,6 +196,7 @@ extern int amdgpu_emu_mode;
- extern uint amdgpu_smu_memory_pool_size;
- extern int amdgpu_smu_pptable_id;
- extern uint amdgpu_dc_feature_mask;
-+extern uint amdgpu_freesync_vid_mode;
- extern uint amdgpu_dc_debug_mask;
- extern uint amdgpu_dc_visual_confirm;
- extern uint amdgpu_dm_abm_level;
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -180,6 +180,7 @@ int amdgpu_mes_kiq;
- int amdgpu_noretry = -1;
- int amdgpu_force_asic_type = -1;
- int amdgpu_tmz = -1; /* auto */
-+uint amdgpu_freesync_vid_mode;
- int amdgpu_reset_method = -1; /* auto */
- int amdgpu_num_kcq = -1;
- int amdgpu_smartshift_bias;
-@@ -878,6 +879,32 @@ MODULE_PARM_DESC(tmz, "Enable TMZ featur
- module_param_named(tmz, amdgpu_tmz, int, 0444);
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index d0352daab012..ec1de6f6c290 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -258,7 +258,8 @@ static int dwc3_qcom_interconnect_init(struct dwc3_qcom *qcom)
+ 	if (IS_ERR(qcom->icc_path_apps)) {
+ 		dev_err(dev, "failed to get apps-usb path: %ld\n",
+ 				PTR_ERR(qcom->icc_path_apps));
+-		return PTR_ERR(qcom->icc_path_apps);
++		ret = PTR_ERR(qcom->icc_path_apps);
++		goto put_path_ddr;
+ 	}
+ 
+ 	if (usb_get_maximum_speed(&qcom->dwc3->dev) >= USB_SPEED_SUPER ||
+@@ -271,17 +272,23 @@ static int dwc3_qcom_interconnect_init(struct dwc3_qcom *qcom)
+ 
+ 	if (ret) {
+ 		dev_err(dev, "failed to set bandwidth for usb-ddr path: %d\n", ret);
+-		return ret;
++		goto put_path_apps;
+ 	}
+ 
+ 	ret = icc_set_bw(qcom->icc_path_apps,
+ 		APPS_USB_AVG_BW, APPS_USB_PEAK_BW);
+ 	if (ret) {
+ 		dev_err(dev, "failed to set bandwidth for apps-usb path: %d\n", ret);
+-		return ret;
++		goto put_path_apps;
+ 	}
+ 
+ 	return 0;
++
++put_path_apps:
++	icc_put(qcom->icc_path_apps);
++put_path_ddr:
++	icc_put(qcom->icc_path_ddr);
++	return ret;
+ }
  
  /**
-+ * DOC: freesync_video (uint)
-+ * Enable the optimization to adjust front porch timing to achieve seamless
-+ * mode change experience when setting a freesync supported mode for which full
-+ * modeset is not needed.
-+ *
-+ * The Display Core will add a set of modes derived from the base FreeSync
-+ * video mode into the corresponding connector's mode list based on commonly
-+ * used refresh rates and VRR range of the connected display, when users enable
-+ * this feature. From the userspace perspective, they can see a seamless mode
-+ * change experience when the change between different refresh rates under the
-+ * same resolution. Additionally, userspace applications such as Video playback
-+ * can read this modeset list and change the refresh rate based on the video
-+ * frame rate. Finally, the userspace can also derive an appropriate mode for a
-+ * particular refresh rate based on the FreeSync Mode and add it to the
-+ * connector's mode list.
-+ *
-+ * Note: This is an experimental feature.
-+ *
-+ * The default value: 0 (off).
-+ */
-+MODULE_PARM_DESC(
-+	freesync_video,
-+	"Enable freesync modesetting optimization feature (0 = off (default), 1 = on)");
-+module_param_named(freesync_video, amdgpu_freesync_vid_mode, uint, 0444);
-+
-+/**
-  * DOC: reset_method (int)
-  * GPU reset method (-1 = auto (default), 0 = legacy, 1 = mode0, 2 = mode1, 3 = mode2, 4 = baco)
-  */
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -5807,7 +5807,8 @@ create_stream_for_sink(struct amdgpu_dm_
- 		 */
- 		DRM_DEBUG_DRIVER("No preferred mode found\n");
- 	} else {
--		recalculate_timing = is_freesync_video_mode(&mode, aconnector);
-+		recalculate_timing = amdgpu_freesync_vid_mode &&
-+				 is_freesync_video_mode(&mode, aconnector);
- 		if (recalculate_timing) {
- 			freesync_mode = get_highest_refresh_rate_mode(aconnector, false);
- 			drm_mode_copy(&saved_mode, &mode);
-@@ -6892,7 +6893,7 @@ static void amdgpu_dm_connector_add_free
- 	struct amdgpu_dm_connector *amdgpu_dm_connector =
- 		to_amdgpu_dm_connector(connector);
- 
--	if (!edid)
-+	if (!(amdgpu_freesync_vid_mode && edid))
- 		return;
- 
- 	if (amdgpu_dm_connector->max_vfreq - amdgpu_dm_connector->min_vfreq > 10)
-@@ -8753,7 +8754,8 @@ static int dm_update_crtc_state(struct a
- 		 * TODO: Refactor this function to allow this check to work
- 		 * in all conditions.
- 		 */
--		if (dm_new_crtc_state->stream &&
-+		if (amdgpu_freesync_vid_mode &&
-+		    dm_new_crtc_state->stream &&
- 		    is_timing_unchanged_for_freesync(new_crtc_state, old_crtc_state))
- 			goto skip_modeset;
- 
-@@ -8788,7 +8790,7 @@ static int dm_update_crtc_state(struct a
- 		if (!dm_old_crtc_state->stream)
- 			goto skip_modeset;
- 
--		if (dm_new_crtc_state->stream &&
-+		if (amdgpu_freesync_vid_mode && dm_new_crtc_state->stream &&
- 		    is_timing_unchanged_for_freesync(new_crtc_state,
- 						     old_crtc_state)) {
- 			new_crtc_state->mode_changed = false;
-@@ -8800,7 +8802,7 @@ static int dm_update_crtc_state(struct a
- 			set_freesync_fixed_config(dm_new_crtc_state);
- 
- 			goto skip_modeset;
--		} else if (aconnector &&
-+		} else if (amdgpu_freesync_vid_mode && aconnector &&
- 			   is_freesync_video_mode(&new_crtc_state->mode,
- 						  aconnector)) {
- 			struct drm_display_mode *high_mode;
+-- 
+2.35.1
+
 
 
