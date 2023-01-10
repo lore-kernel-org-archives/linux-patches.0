@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCCA15D1
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:30:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EAEBC433EF;
-	Tue, 10 Jan 2023 18:30:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0DEC3C2C
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:30:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50D1DC433D2;
+	Tue, 10 Jan 2023 18:30:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375402;
-	bh=RDlG89BbPXv1Aj8W02aAUx2HNRoExrRTQB546UcaMq4=;
+	s=korg; t=1673375405;
+	bh=gf1c2m8IT09Y8UwPaDq+AAzxI1m57jcTSRLPPp5drZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I4FAtKcvoeVkuykNYBz+mbrZ/hzRzCZ9v+Dgl2ANKHU5QC9dJMzR3CACW0vQPolp5
-	 QY7+Yd8IouuZz2ZeHTDiQYoEHlmVc687gTinkF0Mxsp3iC7UeAbueTqeWPZac/BEb1
-	 UqCTh5PcCbGRxs005agGYKl6fyZ7zX4q+PWSQA4w=
+	b=f3/LpOpthEMGbtbjwVp3lRfCHITFsDrt+a0JYg1HyeWKKtakW3Nheu8faFJ7ZQzkZ
+	 xllOCgLpqU2qMM+bOHKUGruZMqrdKbdHYSYEtDgAxOdkhf4b4Ygow2HFKiMRy4oRUQ
+	 b/eGmfRGDiotdQCV3sJ698VURmHzvM1dE38AOeh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 178/290] phy: qcom-qmp-combo: fix out-of-bounds clock access
-Date: Tue, 10 Jan 2023 19:04:30 +0100
-Message-Id: <20230110180038.054170887@linuxfoundation.org>
+Subject: [PATCH 5.15 179/290] btrfs: replace strncpy() with strscpy()
+Date: Tue, 10 Jan 2023 19:04:31 +0100
+Message-Id: <20230110180038.098221349@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -36,42 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-[ Upstream commit d8a5b59c5fc75c99ba17e3eb1a8f580d8d172b28 ]
+[ Upstream commit 63d5429f68a3d4c4aa27e65a05196c17f86c41d6 ]
 
-The SM8250 only uses three clocks but the DP configuration erroneously
-described four clocks.
+Using strncpy() on NUL-terminated strings are deprecated.  To avoid
+possible forming of non-terminated string strscpy() should be used.
 
-In case the DP part of the PHY is initialised before the USB part, this
-would lead to uninitialised memory beyond the bulk-clocks array to be
-treated as a clock pointer as the clocks are requested based on the USB
-configuration.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Fixes: aff188feb5e1 ("phy: qcom-qmp: add support for sm8250-usb3-dp phy")
-Cc: stable@vger.kernel.org	# 5.13
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20221114081346.5116-2-johan+linaro@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+CC: stable@vger.kernel.org # 4.9+
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/btrfs/ioctl.c      | 9 +++------
+ fs/btrfs/rcu-string.h | 6 +++++-
+ 2 files changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index 817298d8b0e3..a9687e040960 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -3805,8 +3805,8 @@ static const struct qmp_phy_cfg sm8250_dpphy_cfg = {
- 	.serdes_tbl_hbr3	= qmp_v4_dp_serdes_tbl_hbr3,
- 	.serdes_tbl_hbr3_num	= ARRAY_SIZE(qmp_v4_dp_serdes_tbl_hbr3),
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index 391a4af9c5e5..ed9c715d2579 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -3415,13 +3415,10 @@ static long btrfs_ioctl_dev_info(struct btrfs_fs_info *fs_info,
+ 	di_args->bytes_used = btrfs_device_get_bytes_used(dev);
+ 	di_args->total_bytes = btrfs_device_get_total_bytes(dev);
+ 	memcpy(di_args->uuid, dev->uuid, sizeof(di_args->uuid));
+-	if (dev->name) {
+-		strncpy(di_args->path, rcu_str_deref(dev->name),
+-				sizeof(di_args->path) - 1);
+-		di_args->path[sizeof(di_args->path) - 1] = 0;
+-	} else {
++	if (dev->name)
++		strscpy(di_args->path, rcu_str_deref(dev->name), sizeof(di_args->path));
++	else
+ 		di_args->path[0] = '\0';
+-	}
  
--	.clk_list		= qmp_v4_phy_clk_l,
--	.num_clks		= ARRAY_SIZE(qmp_v4_phy_clk_l),
-+	.clk_list		= qmp_v4_sm8250_usbphy_clk_l,
-+	.num_clks		= ARRAY_SIZE(qmp_v4_sm8250_usbphy_clk_l),
- 	.reset_list		= msm8996_usb3phy_reset_l,
- 	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
+ out:
+ 	rcu_read_unlock();
+diff --git a/fs/btrfs/rcu-string.h b/fs/btrfs/rcu-string.h
+index 5c1a617eb25d..5c2b66d155ef 100644
+--- a/fs/btrfs/rcu-string.h
++++ b/fs/btrfs/rcu-string.h
+@@ -18,7 +18,11 @@ static inline struct rcu_string *rcu_string_strdup(const char *src, gfp_t mask)
+ 					 (len * sizeof(char)), mask);
+ 	if (!ret)
+ 		return ret;
+-	strncpy(ret->str, src, len);
++	/* Warn if the source got unexpectedly truncated. */
++	if (WARN_ON(strscpy(ret->str, src, len) < 0)) {
++		kfree(ret);
++		return NULL;
++	}
+ 	return ret;
+ }
+ 
 -- 
 2.35.1
 
