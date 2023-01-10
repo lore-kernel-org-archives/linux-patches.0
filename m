@@ -1,109 +1,90 @@
-Received: from mail-lj1-f170.google.com (mail-lj1-f170.google.com [209.85.208.170])
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78FB7A92B
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 19:29:44 +0000 (UTC)
-Received: by mail-lj1-f170.google.com with SMTP id y18so10093753ljk.11
-        for <patches@lists.linux.dev>; Tue, 10 Jan 2023 11:29:44 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271E0A94F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 19:38:21 +0000 (UTC)
+Received: by mail-pf1-f170.google.com with SMTP id i65so6208350pfc.0
+        for <patches@lists.linux.dev>; Tue, 10 Jan 2023 11:38:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=C0mrhoty+Ut/5gp43tpMbErT7DWwGt+4GLr6GpRkjbQ=;
-        b=i1+w0zA7s1qv8jt4zUE+emrBPpmeSdaUBPz0yCFo1nbNg9YBG5C9AAvS4RNrL0co/Y
-         dqSyexwdFchejaYEPv5Wfg4lBoPaVxUCnM4E9fys7J60ul6YlINQL+lxBN5cjLvLT7fy
-         V1Xpg8rHHMcctUni8OS7+vepJW4M0IZKby69k=
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=aoXD1OgyDYyTbjMw5dZ27r0qsE54dNiVyR8gm0rBom4=;
+        b=SqXTCPwXJaDBdJJ2vWjcG1x9BYAe16IKAL5ViJ81Hybj9qnfN5eyxVIp94ZbY4Yate
+         pxYV9wvMU2GXxVLuMbpeHnRMQ5XPlzDLJUn0A3P6S5PzqQ19QICJudVwvepJYtfI1EOO
+         D4YU1k6nyVwOUuWpU4uR48xQyUBmmtGriodRzhc3mJMaOpEn1sMxlP/XVaIBxBukNW8V
+         9vOVkbvAz0yMN4dq+1b9I7ayu0M4ppvs3CTuztJHs6My3NBb9U0iWQqaJCnzqbep+AHD
+         ecB2I7Q60gKxpBP0Oc56I3t9InrtRgnjOw0qDg5mOVCSaocftLY5MSbcw26p2hwLzFEx
+         wbOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=C0mrhoty+Ut/5gp43tpMbErT7DWwGt+4GLr6GpRkjbQ=;
-        b=A/nqgmU3kUhYQuinlvReygIybR0yjIysMxO0ZQ9L+10DnnnAe3B3BWwLT8pW96ZjWM
-         fAskeZquAmfkjMdBfJ4M9pFbeD9J7M013+JMQH2NyyJ0nfEA+flmRl58sBdwiv5bQoSy
-         kQqrkg91F45ewOEdTKqv87KhgBptaUACB8Vu1gov417hmFSTfa2m3UiaMJGsyw1poc3J
-         s9Ehx/hvPDl/1gFATmX9Qa1uRVpD1/88rPeGff84fk5sk+OhyxpiN0peiRHTfOmShI7b
-         WWk012WKE3HXiGueXcxMzKFJkEV+C+lvjt+4FQgmX+QJx7K1gLX2cQvWiIt8Y7VxBsN0
-         26lA==
-X-Gm-Message-State: AFqh2krkRdzA+FQlmCugrdIGikir66CNSMqOhyhcKprt/s2iJmr2KcR+
-	gO6nBIX6qA3Mkd0I5EIFxRo/e+FGdtvOOFcRG0bCoQ==
-X-Google-Smtp-Source: AMrXdXvM2MfqylLeD7zuAdCzxczA9kWaE3YYfn4AhNYhK9aWSE+eYRCCCjZP2dMjqs5j2772EMlAYv4Eqh5jwd26EBI=
-X-Received: by 2002:a2e:2ac4:0:b0:27f:cc03:496a with SMTP id
- q187-20020a2e2ac4000000b0027fcc03496amr3837868ljq.359.1673378982518; Tue, 10
- Jan 2023 11:29:42 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 10 Jan 2023 11:29:41 -0800
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aoXD1OgyDYyTbjMw5dZ27r0qsE54dNiVyR8gm0rBom4=;
+        b=XrrAL3qCnz2o6xFh1GXGvMg/v5rxhs/uIh1DeMkqCgS8nmsIGlr8bHLbSae6lsQbL/
+         8RrMBQABEppTGyktbGNXGuF5QDJTwYyLjOz8S4eSioCJfhCiui2lt++0nfUpp93Sa7mT
+         QMMXcceqe47GFBlLSQyqTg+IYiPIUFTBwb/rv+gLmNsxEjOn2o6GADGeyAbrUhFcyRv4
+         tZJTnFZFUsi2g3s/Pf3NcA07TobBNzZtxofkGqbnwxsollaa/Mpz8DHKmEUAxwBc0Mqx
+         jtJJiZ96rgprxzP8x8eb9l5uDvXBfWWHVX7iFd4zJpZWLc54f0cuZZRUpT3DkTh+D1Iq
+         VpwA==
+X-Gm-Message-State: AFqh2koPtkYZp83cisx8jRULwDDNC3R9Y7aU1iwZKDfEC/awm5TzRMjc
+	9ugPD94pAKDbyrWl2FyPHw8=
+X-Google-Smtp-Source: AMrXdXsvKpBkQP/Od7HHJU5VOgqPMYAGSeav3H7/IcIUTcgNPcmJ1eVdqHWnXNYBwQ2/NNTsIHoV4A==
+X-Received: by 2002:aa7:8a42:0:b0:582:34f2:20f1 with SMTP id n2-20020aa78a42000000b0058234f220f1mr36105975pfa.11.1673379500566;
+        Tue, 10 Jan 2023 11:38:20 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id b6-20020a62cf06000000b005624e2e0508sm8417588pfg.207.2023.01.10.11.38.12
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Jan 2023 11:38:19 -0800 (PST)
+Message-ID: <1db853f8-cd98-2814-a643-8cff16886d07@gmail.com>
+Date: Tue, 10 Jan 2023 11:38:09 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <Y7nV+aeFiq5aD0xU@ravnborg.org>
-References: <20230106030108.2542081-1-swboyd@chromium.org> <Y7nV+aeFiq5aD0xU@ravnborg.org>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Tue, 10 Jan 2023 11:29:41 -0800
-Message-ID: <CAE-0n50QOv_+j1Pe19xKj4Cx2Y5_Ak5Kt68UBJuZt10D-jQ44g@mail.gmail.com>
-Subject: Re: [PATCH] drm/panel: boe-tv101wum-nl6: Ensure DSI writes succeed
- during disable
-To: Sam Ravnborg <sam@ravnborg.org>
-Cc: Thierry Reding <thierry.reding@gmail.com>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, dri-devel@lists.freedesktop.org, 
-	linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
-	yangcong <yangcong5@huaqin.corp-partner.google.com>, 
-	Douglas Anderson <dianders@chromium.org>, Jitao Shi <jitao.shi@mediatek.com>, 
-	Rob Clark <robdclark@chromium.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 6.1 000/159] 6.1.5-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230110180018.288460217@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Quoting Sam Ravnborg (2023-01-07 12:28:41)
-> On Thu, Jan 05, 2023 at 07:01:08PM -0800, Stephen Boyd wrote:
-> > The unprepare sequence has started to fail after moving to panel bridge
-> > code in the msm drm driver (commit 007ac0262b0d ("drm/msm/dsi: switch to
-> > DRM_PANEL_BRIDGE")). You'll see messages like this in the kernel logs:
-> >
-> >    panel-boe-tv101wum-nl6 ae94000.dsi.0: failed to set panel off: -22
-> >
-> > This is because boe_panel_enter_sleep_mode() needs an operating DSI link
-> > to set the panel into sleep mode. Performing those writes in the
-> > unprepare phase of bridge ops is too late, because the link has already
-> > been torn down by the DSI controller in post_disable, i.e. the PHY has
-> > been disabled, etc. See dsi_mgr_bridge_post_disable() for more details
-> > on the DSI .
-> >
-> > Split the unprepare function into a disable part and an unprepare part.
-> > For now, just the DSI writes to enter sleep mode are put in the disable
-> > function. This fixes the panel off routine and keeps the panel happy.
-> >
-> > My Wormdingler has an integrated touchscreen that stops responding to
-> > touch if the panel is only half disabled too. This patch fixes it. And
-> > finally, this saves power when the screen is off because without this
-> > fix the regulators for the panel are left enabled when nothing is being
-> > displayed on the screen.
->
-> The pattern we use in several (but not all) panel drivers are that
-> errors in unprepare/disable are logged but the function do not skip
-> the remainder of the function. This is to avoid that we do not disable
-> power supplies etc.
+On 1/10/23 10:02, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.5 release.
+> There are 159 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 12 Jan 2023 17:59:42 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.5-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Ah that would have made it so I didn't see a problem. But I wonder if
-the panel gets borked if you don't disable it via DSI writes before
-yanking the power?
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
->
-> For this case we could ask ourself if the display needs to enter sleep
-> mode right before we disable the regulator. But if the regulator is
-> fixed, so the disable has no effect, this seems OK.
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
 
-What do you mean by fixed?
-
->
-> Please fix the unprepare to not jump out early, on top of or together
-> with the other fix.
-
-After this patch the unprepare only bails out early if the bool
-'prepared' flag isn't set. Are you suggesting to get rid of that flag
-and unconditionally disable the regulators? Is it possible for the
-unprepare to be called multiple times without a balanced call to
-prepare?
