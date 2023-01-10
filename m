@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A71A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:17:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADCEEC433EF;
-	Tue, 10 Jan 2023 18:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFFCA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:17:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9070C433EF;
+	Tue, 10 Jan 2023 18:17:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374620;
-	bh=8CShB19b2PabsZfY8Y3L9yjEV2/BVxGz8vcvw6b9z2g=;
+	s=korg; t=1673374623;
+	bh=YK/0UUlaxphr6J3a2Ao81kULz1wlUs1AxQF+lzCbuto=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s7xfXvUwMppaz2Gj84nikxSpMkU7QnzcuhpGZVz9TkAIIgskFk4JKmAXuPzhX9lRj
-	 ZgvgjOMVwJnaC/echND4TIYBCabZl18go6MGuEGV/B4jMJKVOGPtZ+LipWAZ47wC59
-	 RQAXJMl9GfjLvamwqnRm+Dw81zfFqz2s5l8+9pFE=
+	b=Slgw5DZ/JCFVYV5G5dkzwP9YdTZGzIhtQCsRMuaxNyuYdzRE0PeNLuDT+1COUpPmv
+	 Hn5oUuxAKRw2IjVB7YqRQKVfLJCBlIIRJo4+ns7Loc9X9oEyEzDVZNT5JPV82QC8ge
+	 cUlUm0lvZ9u0QjZafEznf0rrJ+FgV73JUdIwjdAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maor Gottlieb <maorg@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Po-Hsu Lin <po-hsu.lin@canonical.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 077/159] RDMA/mlx5: Fix validation of max_rd_atomic caps for DC
-Date: Tue, 10 Jan 2023 19:03:45 +0100
-Message-Id: <20230110180020.758880398@linuxfoundation.org>
+Subject: [PATCH 6.1 078/159] selftests: net: fix cleanup_v6() for arp_ndisc_evict_nocarrier
+Date: Tue, 10 Jan 2023 19:03:46 +0100
+Message-Id: <20230110180020.796803376@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -35,93 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maor Gottlieb <maorg@nvidia.com>
+From: Po-Hsu Lin <po-hsu.lin@canonical.com>
 
-[ Upstream commit 8de8482fe5732fbef4f5af82bc0c0362c804cd1f ]
+[ Upstream commit 9c4d7f45d60745a1cea0e841fa5e3444c398d2f1 ]
 
-Currently, when modifying DC, we validate max_rd_atomic user attribute
-against the RC cap, validate against DC. RC and DC QP types have different
-device limitations.
+The cleanup_v6() will cause the arp_ndisc_evict_nocarrier script exit
+with 255 (No such file or directory), even the tests are good:
 
-This can cause userspace created DC QPs to malfunction.
+ # selftests: net: arp_ndisc_evict_nocarrier.sh
+ # run arp_evict_nocarrier=1 test
+ # RTNETLINK answers: File exists
+ # ok
+ # run arp_evict_nocarrier=0 test
+ # RTNETLINK answers: File exists
+ # ok
+ # run all.arp_evict_nocarrier=0 test
+ # RTNETLINK answers: File exists
+ # ok
+ # run ndisc_evict_nocarrier=1 test
+ # ok
+ # run ndisc_evict_nocarrier=0 test
+ # ok
+ # run all.ndisc_evict_nocarrier=0 test
+ # ok
+ not ok 1 selftests: net: arp_ndisc_evict_nocarrier.sh # exit=255
 
-Fixes: c32a4f296e1d ("IB/mlx5: Add support for DC Initiator QP")
-Link: https://lore.kernel.org/r/0c5aee72cea188c3bb770f4207cce7abc9b6fc74.1672231736.git.leonro@nvidia.com
-Signed-off-by: Maor Gottlieb <maorg@nvidia.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+This is because it's trying to modify the parameter for ipv4 instead.
+
+Also, tests for ipv6 (run_ndisc_evict_nocarrier_enabled() and
+run_ndisc_evict_nocarrier_disabled() are working on veth1, reflect
+this fact in cleanup_v6().
+
+Fixes: f86ca07eb531 ("selftests: net: add arp_ndisc_evict_nocarrier")
+Signed-off-by: Po-Hsu Lin <po-hsu.lin@canonical.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/qp.c | 49 +++++++++++++++++++++++----------
- 1 file changed, 35 insertions(+), 14 deletions(-)
+ tools/testing/selftests/net/arp_ndisc_evict_nocarrier.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
-index 40d9410ec303..cf953d23d18d 100644
---- a/drivers/infiniband/hw/mlx5/qp.c
-+++ b/drivers/infiniband/hw/mlx5/qp.c
-@@ -4502,6 +4502,40 @@ static bool mlx5_ib_modify_qp_allowed(struct mlx5_ib_dev *dev,
- 	return false;
+diff --git a/tools/testing/selftests/net/arp_ndisc_evict_nocarrier.sh b/tools/testing/selftests/net/arp_ndisc_evict_nocarrier.sh
+index b5af08af8559..b4ec1eeee6c9 100755
+--- a/tools/testing/selftests/net/arp_ndisc_evict_nocarrier.sh
++++ b/tools/testing/selftests/net/arp_ndisc_evict_nocarrier.sh
+@@ -24,8 +24,8 @@ cleanup_v6()
+     ip netns del me
+     ip netns del peer
+ 
+-    sysctl -w net.ipv4.conf.veth0.ndisc_evict_nocarrier=1 >/dev/null 2>&1
+-    sysctl -w net.ipv4.conf.all.ndisc_evict_nocarrier=1 >/dev/null 2>&1
++    sysctl -w net.ipv6.conf.veth1.ndisc_evict_nocarrier=1 >/dev/null 2>&1
++    sysctl -w net.ipv6.conf.all.ndisc_evict_nocarrier=1 >/dev/null 2>&1
  }
  
-+static int validate_rd_atomic(struct mlx5_ib_dev *dev, struct ib_qp_attr *attr,
-+			      int attr_mask, enum ib_qp_type qp_type)
-+{
-+	int log_max_ra_res;
-+	int log_max_ra_req;
-+
-+	if (qp_type == MLX5_IB_QPT_DCI) {
-+		log_max_ra_res = 1 << MLX5_CAP_GEN(dev->mdev,
-+						   log_max_ra_res_dc);
-+		log_max_ra_req = 1 << MLX5_CAP_GEN(dev->mdev,
-+						   log_max_ra_req_dc);
-+	} else {
-+		log_max_ra_res = 1 << MLX5_CAP_GEN(dev->mdev,
-+						   log_max_ra_res_qp);
-+		log_max_ra_req = 1 << MLX5_CAP_GEN(dev->mdev,
-+						   log_max_ra_req_qp);
-+	}
-+
-+	if (attr_mask & IB_QP_MAX_QP_RD_ATOMIC &&
-+	    attr->max_rd_atomic > log_max_ra_res) {
-+		mlx5_ib_dbg(dev, "invalid max_rd_atomic value %d\n",
-+			    attr->max_rd_atomic);
-+		return false;
-+	}
-+
-+	if (attr_mask & IB_QP_MAX_DEST_RD_ATOMIC &&
-+	    attr->max_dest_rd_atomic > log_max_ra_req) {
-+		mlx5_ib_dbg(dev, "invalid max_dest_rd_atomic value %d\n",
-+			    attr->max_dest_rd_atomic);
-+		return false;
-+	}
-+	return true;
-+}
-+
- int mlx5_ib_modify_qp(struct ib_qp *ibqp, struct ib_qp_attr *attr,
- 		      int attr_mask, struct ib_udata *udata)
- {
-@@ -4589,21 +4623,8 @@ int mlx5_ib_modify_qp(struct ib_qp *ibqp, struct ib_qp_attr *attr,
- 		goto out;
- 	}
- 
--	if (attr_mask & IB_QP_MAX_QP_RD_ATOMIC &&
--	    attr->max_rd_atomic >
--	    (1 << MLX5_CAP_GEN(dev->mdev, log_max_ra_res_qp))) {
--		mlx5_ib_dbg(dev, "invalid max_rd_atomic value %d\n",
--			    attr->max_rd_atomic);
--		goto out;
--	}
--
--	if (attr_mask & IB_QP_MAX_DEST_RD_ATOMIC &&
--	    attr->max_dest_rd_atomic >
--	    (1 << MLX5_CAP_GEN(dev->mdev, log_max_ra_req_qp))) {
--		mlx5_ib_dbg(dev, "invalid max_dest_rd_atomic value %d\n",
--			    attr->max_dest_rd_atomic);
-+	if (!validate_rd_atomic(dev, attr, attr_mask, qp_type))
- 		goto out;
--	}
- 
- 	if (cur_state == new_state && cur_state == IB_QPS_RESET) {
- 		err = 0;
+ create_ns()
 -- 
 2.35.1
 
