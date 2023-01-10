@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1EC6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:24:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65F39C433D2;
-	Tue, 10 Jan 2023 18:24:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 339286FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:24:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7894C433EF;
+	Tue, 10 Jan 2023 18:24:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375051;
-	bh=5vqMnOjPB/EzvYDjxxL+uagrVqeIhA4cDaoRhifpY2Y=;
+	s=korg; t=1673375054;
+	bh=5yRS6mx8C1HfwzAVjei95PV2yRsuOL6oYpiGnuR8FwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FF+BctLHB/64TNC1oOMfGhC9C2xnciTPJrcU6Q/1GK+GOTjGWxzNfRtRMTFg8sYeC
-	 czPqucOPtNOAiTiLytTsqjlfEfIlmEKC9Ts6PnE5duonV1SGR/3DQx5WRUh7ASZhPx
-	 H4SCTa1FKLXjQHlxXEMD+660IFXMC7DF9kX1A+ZA=
+	b=wentZVFItO4L3FYrLQbKYmw0zDrGSGH4EgBSJFg6Rh6Kh05OFHVz3E62z4EPew6t0
+	 v5gtdDPpL8ejiN3QkcyyXEE2drJAKJ3AoLTPZRDZQhmfSffZOkSTDfDG84okSQvesY
+	 OYOd6+MWUoRjk+8WaVF76tn0UvuGjoB66civsS+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	linux-media@vger.kernel.org,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH 5.15 060/290] media: stv0288: use explicitly signed char
-Date: Tue, 10 Jan 2023 19:02:32 +0100
-Message-Id: <20230110180033.702470964@linuxfoundation.org>
+	Borislav Petkov <bp@alien8.de>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 5.15 061/290] soc: qcom: Select REMAP_MMIO for LLCC driver
+Date: Tue, 10 Jan 2023 19:02:33 +0100
+Message-Id: <20230110180033.740985067@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,40 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit 7392134428c92a4cb541bd5c8f4f5c8d2e88364d upstream.
+commit 5d2fe2d7b616b8baa18348ead857b504fc2de336 upstream.
 
-With char becoming unsigned by default, and with `char` alone being
-ambiguous and based on architecture, signed chars need to be marked
-explicitly as such. Use `s8` and `u8` types here, since that's what
-surrounding code does. This fixes:
+LLCC driver uses REGMAP_MMIO for accessing the hardware registers. So
+select the dependency in Kconfig. Without this, there will be errors
+while building the driver with COMPILE_TEST only:
 
-drivers/media/dvb-frontends/stv0288.c:471 stv0288_set_frontend() warn: assigning (-9) to unsigned variable 'tm'
-drivers/media/dvb-frontends/stv0288.c:471 stv0288_set_frontend() warn: we never enter this loop
+ERROR: modpost: "__devm_regmap_init_mmio_clk" [drivers/soc/qcom/llcc-qcom.ko] undefined!
+make[1]: *** [scripts/Makefile.modpost:126: Module.symvers] Error 1
+make: *** [Makefile:1944: modpost] Error 2
 
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Cc: <stable@vger.kernel.org> # 4.19
+Fixes: a3134fb09e0b ("drivers: soc: Add LLCC driver")
+Reported-by: Borislav Petkov <bp@alien8.de>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221129071201.30024-2-manivannan.sadhasivam@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-frontends/stv0288.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/soc/qcom/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/media/dvb-frontends/stv0288.c
-+++ b/drivers/media/dvb-frontends/stv0288.c
-@@ -440,9 +440,8 @@ static int stv0288_set_frontend(struct d
- 	struct stv0288_state *state = fe->demodulator_priv;
- 	struct dtv_frontend_properties *c = &fe->dtv_property_cache;
- 
--	char tm;
--	unsigned char tda[3];
--	u8 reg, time_out = 0;
-+	u8 tda[3], reg, time_out = 0;
-+	s8 tm;
- 
- 	dprintk("%s : FE_SET_FRONTEND\n", __func__);
- 
+--- a/drivers/soc/qcom/Kconfig
++++ b/drivers/soc/qcom/Kconfig
+@@ -63,6 +63,7 @@ config QCOM_GSBI
+ config QCOM_LLCC
+ 	tristate "Qualcomm Technologies, Inc. LLCC driver"
+ 	depends on ARCH_QCOM || COMPILE_TEST
++	select REGMAP_MMIO
+ 	help
+ 	  Qualcomm Technologies, Inc. platform specific
+ 	  Last Level Cache Controller(LLCC) driver for platforms such as,
 
 
