@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47EB76FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:31:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABF0CC433EF;
-	Tue, 10 Jan 2023 18:31:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E146FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:31:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30F7C433D2;
+	Tue, 10 Jan 2023 18:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375464;
-	bh=k2p0wLgOJekaqvxa8FWqsgSF155bCm7gIvZUKf5Av/E=;
+	s=korg; t=1673375467;
+	bh=1cnXBobQ0Y4/JTuHzxMZROHcYD7vaHdIK3BPV9Wv0NM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P26e6OpQ+HSd4dD+bLsSFLePqtuUtCw/dCki27jLk9+W0II/vgLwDX0SyzPaVrzBE
-	 5A9Q5o1uTj93JLNkKnytXiKvVxJ0XGWOKFGUOn3A0b0vz681ukmk6fWKUnR+IkEqFB
-	 SR29CvEV9p9UL2BgvzR/5FOscZxvhF0m4MBWKG/M=
+	b=SASwxavrHrp9200ivYCUOGdJMa4mObjCCYFg8mOElBYvfI3Z9o1ZATqybrqCgJCEW
+	 crdyTe+8ZT/weldOuwtzVjLyH5txeGWr0xv/cA+6oWsQ1MzFSw7Ikhal2bRVwSt8Dn
+	 7O2b8pmU0woQmeYVN3m2su/1J73cQDx2jigTxPl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
-	Ramalingam C <ramalingam.c@intel.com>,
+	minoura makoto <minoura@valinux.co.jp>,
+	Hiroshi Shimamoto <h-shimamoto@nec.com>,
+	Trond Myklebust <trondmy@hammerspace.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 196/290] drm/i915/migrate: fix length calculation
-Date: Tue, 10 Jan 2023 19:04:48 +0100
-Message-Id: <20230110180038.726585526@linuxfoundation.org>
+Subject: [PATCH 5.15 197/290] SUNRPC: ensure the matching upcall is in-flight upon downcall
+Date: Tue, 10 Jan 2023 19:04:49 +0100
+Message-Id: <20230110180038.758240060@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -36,37 +37,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthew Auld <matthew.auld@intel.com>
+From: minoura makoto <minoura@valinux.co.jp>
 
-[ Upstream commit 31d70749bfe110593fbe8bf45e7c7788c7d85035 ]
+[ Upstream commit b18cba09e374637a0a3759d856a6bca94c133952 ]
 
-No need to insert PTEs for the PTE window itself, also foreach expects a
-length not an end offset, which could be gigantic here with a second
-engine.
+Commit 9130b8dbc6ac ("SUNRPC: allow for upcalls for the same uid
+but different gss service") introduced `auth` argument to
+__gss_find_upcall(), but in gss_pipe_downcall() it was left as NULL
+since it (and auth->service) was not (yet) determined.
 
-Signed-off-by: Matthew Auld <matthew.auld@intel.com>
-Cc: Thomas Hellström <thomas.hellstrom@linux.intel.com>
-Cc: Ramalingam C <ramalingam.c@intel.com>
-Reviewed-by: Ramalingam C <ramalingam.c@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20211206112539.3149779-3-matthew.auld@intel.com
+When multiple upcalls with the same uid and different service are
+ongoing, it could happen that __gss_find_upcall(), which returns the
+first match found in the pipe->in_downcall list, could not find the
+correct gss_msg corresponding to the downcall we are looking for.
+Moreover, it might return a msg which is not sent to rpc.gssd yet.
+
+We could see mount.nfs process hung in D state with multiple mount.nfs
+are executed in parallel.  The call trace below is of CentOS 7.9
+kernel-3.10.0-1160.24.1.el7.x86_64 but we observed the same hang w/
+elrepo kernel-ml-6.0.7-1.el7.
+
+PID: 71258  TASK: ffff91ebd4be0000  CPU: 36  COMMAND: "mount.nfs"
+ #0 [ffff9203ca3234f8] __schedule at ffffffffa3b8899f
+ #1 [ffff9203ca323580] schedule at ffffffffa3b88eb9
+ #2 [ffff9203ca323590] gss_cred_init at ffffffffc0355818 [auth_rpcgss]
+ #3 [ffff9203ca323658] rpcauth_lookup_credcache at ffffffffc0421ebc
+[sunrpc]
+ #4 [ffff9203ca3236d8] gss_lookup_cred at ffffffffc0353633 [auth_rpcgss]
+ #5 [ffff9203ca3236e8] rpcauth_lookupcred at ffffffffc0421581 [sunrpc]
+ #6 [ffff9203ca323740] rpcauth_refreshcred at ffffffffc04223d3 [sunrpc]
+ #7 [ffff9203ca3237a0] call_refresh at ffffffffc04103dc [sunrpc]
+ #8 [ffff9203ca3237b8] __rpc_execute at ffffffffc041e1c9 [sunrpc]
+ #9 [ffff9203ca323820] rpc_execute at ffffffffc0420a48 [sunrpc]
+
+The scenario is like this. Let's say there are two upcalls for
+services A and B, A -> B in pipe->in_downcall, B -> A in pipe->pipe.
+
+When rpc.gssd reads pipe to get the upcall msg corresponding to
+service B from pipe->pipe and then writes the response, in
+gss_pipe_downcall the msg corresponding to service A will be picked
+because only uid is used to find the msg and it is before the one for
+B in pipe->in_downcall.  And the process waiting for the msg
+corresponding to service A will be woken up.
+
+Actual scheduing of that process might be after rpc.gssd processes the
+next msg.  In rpc_pipe_generic_upcall it clears msg->errno (for A).
+The process is scheduled to see gss_msg->ctx == NULL and
+gss_msg->msg.errno == 0, therefore it cannot break the loop in
+gss_create_upcall and is never woken up after that.
+
+This patch adds a simple check to ensure that a msg which is not
+sent to rpc.gssd yet is not chosen as the matching upcall upon
+receiving a downcall.
+
+Signed-off-by: minoura makoto <minoura@valinux.co.jp>
+Signed-off-by: Hiroshi Shimamoto <h-shimamoto@nec.com>
+Tested-by: Hiroshi Shimamoto <h-shimamoto@nec.com>
+Cc: Trond Myklebust <trondmy@hammerspace.com>
+Fixes: 9130b8dbc6ac ("SUNRPC: allow for upcalls for same uid but different gss service")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_migrate.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/sunrpc/rpc_pipe_fs.h |  5 +++++
+ net/sunrpc/auth_gss/auth_gss.c     | 19 +++++++++++++++++--
+ 2 files changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_migrate.c b/drivers/gpu/drm/i915/gt/intel_migrate.c
-index fb7fe3a2b6c6..5b59a6effc20 100644
---- a/drivers/gpu/drm/i915/gt/intel_migrate.c
-+++ b/drivers/gpu/drm/i915/gt/intel_migrate.c
-@@ -133,7 +133,7 @@ static struct i915_address_space *migrate_vm(struct intel_gt *gt)
- 			goto err_vm;
+diff --git a/include/linux/sunrpc/rpc_pipe_fs.h b/include/linux/sunrpc/rpc_pipe_fs.h
+index cd188a527d16..3b35b6f6533a 100644
+--- a/include/linux/sunrpc/rpc_pipe_fs.h
++++ b/include/linux/sunrpc/rpc_pipe_fs.h
+@@ -92,6 +92,11 @@ extern ssize_t rpc_pipe_generic_upcall(struct file *, struct rpc_pipe_msg *,
+ 				       char __user *, size_t);
+ extern int rpc_queue_upcall(struct rpc_pipe *, struct rpc_pipe_msg *);
  
- 		/* Now allow the GPU to rewrite the PTE via its own ppGTT */
--		vm->vm.foreach(&vm->vm, base, base + sz, insert_pte, &d);
-+		vm->vm.foreach(&vm->vm, base, d.offset - base, insert_pte, &d);
- 	}
++/* returns true if the msg is in-flight, i.e., already eaten by the peer */
++static inline bool rpc_msg_is_inflight(const struct rpc_pipe_msg *msg) {
++	return (msg->copied != 0 && list_empty(&msg->list));
++}
++
+ struct rpc_clnt;
+ extern struct dentry *rpc_create_client_dir(struct dentry *, const char *, struct rpc_clnt *);
+ extern int rpc_remove_client_dir(struct rpc_clnt *);
+diff --git a/net/sunrpc/auth_gss/auth_gss.c b/net/sunrpc/auth_gss/auth_gss.c
+index 5f42aa5fc612..2ff66a6a7e54 100644
+--- a/net/sunrpc/auth_gss/auth_gss.c
++++ b/net/sunrpc/auth_gss/auth_gss.c
+@@ -301,7 +301,7 @@ __gss_find_upcall(struct rpc_pipe *pipe, kuid_t uid, const struct gss_auth *auth
+ 	list_for_each_entry(pos, &pipe->in_downcall, list) {
+ 		if (!uid_eq(pos->uid, uid))
+ 			continue;
+-		if (auth && pos->auth->service != auth->service)
++		if (pos->auth->service != auth->service)
+ 			continue;
+ 		refcount_inc(&pos->count);
+ 		return pos;
+@@ -685,6 +685,21 @@ gss_create_upcall(struct gss_auth *gss_auth, struct gss_cred *gss_cred)
+ 	return err;
+ }
  
- 	return &vm->vm;
++static struct gss_upcall_msg *
++gss_find_downcall(struct rpc_pipe *pipe, kuid_t uid)
++{
++	struct gss_upcall_msg *pos;
++	list_for_each_entry(pos, &pipe->in_downcall, list) {
++		if (!uid_eq(pos->uid, uid))
++			continue;
++		if (!rpc_msg_is_inflight(&pos->msg))
++			continue;
++		refcount_inc(&pos->count);
++		return pos;
++	}
++	return NULL;
++}
++
+ #define MSG_BUF_MAXSIZE 1024
+ 
+ static ssize_t
+@@ -731,7 +746,7 @@ gss_pipe_downcall(struct file *filp, const char __user *src, size_t mlen)
+ 	err = -ENOENT;
+ 	/* Find a matching upcall */
+ 	spin_lock(&pipe->lock);
+-	gss_msg = __gss_find_upcall(pipe, uid, NULL);
++	gss_msg = gss_find_downcall(pipe, uid);
+ 	if (gss_msg == NULL) {
+ 		spin_unlock(&pipe->lock);
+ 		goto err_put_ctx;
 -- 
 2.35.1
 
