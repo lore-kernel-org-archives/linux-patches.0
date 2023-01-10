@@ -1,26 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3874A6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:26:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E57BC433D2;
-	Tue, 10 Jan 2023 18:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 034976FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:26:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70790C433EF;
+	Tue, 10 Jan 2023 18:26:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375176;
-	bh=J3fX5e4y2THab1EuQpPnMsa/0H8Leg+fhzKfUtBMB5o=;
+	s=korg; t=1673375178;
+	bh=ldX9Gj9b+pHy704wZZd93DDiMSAUejVTE++tea0+yK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nr04zYZNWkOOoo6A8rNbJL41GrWdz9Xa5lCetZsgdApjpTd5oDMmTyIYvrSIpOiXC
-	 NKgXaQ2pVOx8x9RJdpBMs++TxjFeN4UiATo47Dg6cfyIKdruSPXkTlQGb6SXa4ncvn
-	 25ZNs6FUQdlh8eRDDcW5QSyZWqjURB1gWzzi8pUs=
+	b=lBmPkB8XAIOloHCKMt/HRPUQicLwrCX24OHSo+P/wlJ1lIcE9dl2qkU6eXRe5bbWR
+	 NIijVqazZMyeAi1oC1cYPa95f1CyNnLO82tqrdH/A8manMOSe/RNJcuzhTa6hZuipq
+	 JondkMjHu+QkiB51RHcRcFDo6P0t19q9Y3r/E/Eo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"John Warthog9 Hawley (VMware)" <warthog9@eaglescrag.net>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 5.15 062/290] kest.pl: Fix grub2 menu handling for rebooting
-Date: Tue, 10 Jan 2023 19:02:34 +0100
-Message-Id: <20230110180033.781084518@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"x86@kernel.org" <x86@kernel.org>,
+	Borislav Petkov <bp@alien8.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.15 097/290] ftrace/x86: Add back ftrace_expected for ftrace bug reports
+Date: Tue, 10 Jan 2023 19:03:09 +0100
+Message-Id: <20230110180034.978218508@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -34,123 +40,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 26df05a8c1420ad3de314fdd407e7fc2058cc7aa upstream.
+commit fd3dc56253acbe9c641a66d312d8393cd55eb04c upstream.
 
-grub2 has submenus where to use grub-reboot, it requires:
+After someone reported a bug report with a failed modification due to the
+expected value not matching what was found, it came to my attention that
+the ftrace_expected is no longer set when that happens. This makes for
+debugging the issue a bit more difficult.
 
-  grub-reboot X>Y
+Set ftrace_expected to the expected code before calling ftrace_bug, so
+that it shows what was expected and why it failed.
 
-where X is the main index and Y is the submenu. Thus if you have:
+Link: https://lore.kernel.org/all/CA+wXwBQ-VhK+hpBtYtyZP-NiX4g8fqRRWithFOHQW-0coQ3vLg@mail.gmail.com/
+Link: https://lore.kernel.org/linux-trace-kernel/20221209105247.01d4e51d@gandalf.local.home
 
-menuentry 'Debian GNU/Linux' --class debian --class gnu-linux ...
-	[...]
-}
-submenu 'Advanced options for Debian GNU/Linux' $menuentry_id_option ...
-        menuentry 'Debian GNU/Linux, with Linux 6.0.0-4-amd64' --class debian --class gnu-linux ...
-                [...]
-        }
-        menuentry 'Debian GNU/Linux, with Linux 6.0.0-4-amd64 (recovery mode)' --class debian --class gnu-linux ...
-		[...]
-        }
-        menuentry 'Debian GNU/Linux, with Linux test' --class debian --class gnu-linux ...
-                [...]
-        }
-
-And wanted to boot to the "Linux test" kernel, you need to run:
-
- # grub-reboot 1>2
-
-As 1 is the second top menu (the submenu) and 2 is the third of the sub
-menu entries.
-
-Have the grub.cfg parsing for grub2 handle such cases.
-
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: "x86@kernel.org" <x86@kernel.org>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Ingo Molnar <mingo@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: a15ba91361d46 ("ktest: Add support for grub2")
-Reviewed-by: John 'Warthog9' Hawley (VMware) <warthog9@eaglescrag.net>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+Fixes: 768ae4406a5c ("x86/ftrace: Use text_poke()")
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/ktest/ktest.pl |   20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ arch/x86/kernel/ftrace.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -1963,7 +1963,7 @@ sub run_scp_mod {
+--- a/arch/x86/kernel/ftrace.c
++++ b/arch/x86/kernel/ftrace.c
+@@ -219,7 +219,9 @@ void ftrace_replace_code(int enable)
  
- sub _get_grub_index {
- 
--    my ($command, $target, $skip) = @_;
-+    my ($command, $target, $skip, $submenu) = @_;
- 
-     return if (defined($grub_number) && defined($last_grub_menu) &&
- 	$last_grub_menu eq $grub_menu && defined($last_machine) &&
-@@ -1980,11 +1980,16 @@ sub _get_grub_index {
- 
-     my $found = 0;
- 
-+    my $submenu_number = 0;
-+
-     while (<IN>) {
- 	if (/$target/) {
- 	    $grub_number++;
- 	    $found = 1;
- 	    last;
-+	} elsif (defined($submenu) && /$submenu/) {
-+		$submenu_number++;
-+		$grub_number = -1;
- 	} elsif (/$skip/) {
- 	    $grub_number++;
+ 		ret = ftrace_verify_code(rec->ip, old);
+ 		if (ret) {
++			ftrace_expected = old;
+ 			ftrace_bug(ret, rec);
++			ftrace_expected = NULL;
+ 			return;
+ 		}
  	}
-@@ -1993,6 +1998,9 @@ sub _get_grub_index {
- 
-     dodie "Could not find '$grub_menu' through $command on $machine"
- 	if (!$found);
-+    if ($submenu_number > 0) {
-+	$grub_number = "$submenu_number>$grub_number";
-+    }
-     doprint "$grub_number\n";
-     $last_grub_menu = $grub_menu;
-     $last_machine = $machine;
-@@ -2003,6 +2011,7 @@ sub get_grub_index {
-     my $command;
-     my $target;
-     my $skip;
-+    my $submenu;
-     my $grub_menu_qt;
- 
-     if ($reboot_type !~ /^grub/) {
-@@ -2017,8 +2026,9 @@ sub get_grub_index {
- 	$skip = '^\s*title\s';
-     } elsif ($reboot_type eq "grub2") {
- 	$command = "cat $grub_file";
--	$target = '^menuentry.*' . $grub_menu_qt;
--	$skip = '^menuentry\s|^submenu\s';
-+	$target = '^\s*menuentry.*' . $grub_menu_qt;
-+	$skip = '^\s*menuentry';
-+	$submenu = '^\s*submenu\s';
-     } elsif ($reboot_type eq "grub2bls") {
- 	$command = $grub_bls_get;
- 	$target = '^title=.*' . $grub_menu_qt;
-@@ -2027,7 +2037,7 @@ sub get_grub_index {
- 	return;
-     }
- 
--    _get_grub_index($command, $target, $skip);
-+    _get_grub_index($command, $target, $skip, $submenu);
- }
- 
- sub wait_for_input {
-@@ -2090,7 +2100,7 @@ sub reboot_to {
-     if ($reboot_type eq "grub") {
- 	run_ssh "'(echo \"savedefault --default=$grub_number --once\" | grub --batch)'";
-     } elsif (($reboot_type eq "grub2") or ($reboot_type eq "grub2bls")) {
--	run_ssh "$grub_reboot $grub_number";
-+	run_ssh "$grub_reboot \"'$grub_number'\"";
-     } elsif ($reboot_type eq "syslinux") {
- 	run_ssh "$syslinux --once \\\"$syslinux_label\\\" $syslinux_path";
-     } elsif (defined $reboot_script) {
 
 
