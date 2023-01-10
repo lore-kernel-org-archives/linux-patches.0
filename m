@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA2C6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:25:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4DBCC433D2;
-	Tue, 10 Jan 2023 18:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD766FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:25:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 842D0C433EF;
+	Tue, 10 Jan 2023 18:25:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375108;
-	bh=IG1Ci72gEnu8wxa7S5h4ji4yqi6d7VlTIVmsoxWg+0o=;
+	s=korg; t=1673375110;
+	bh=ElH7abeN3VMb2QlXL88KTZ/TYWYmzKyL5+4uahvfH+g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1a3ADNmqo8l7wOMXdLip+2+fYuNOFAHEnLsG/42fgYXxx8U7KC5T+UpAo+pccB6kw
-	 OTI7asZ15sVXlKDDqLQm0DYzjh9dVtaWQWqieq9KBO6Px4lU/kYJkaXQLeVPyMOZam
-	 lyEBhMA+ah+7BAuj9E0XT7Ombd9PbUJhNLfqdI04=
+	b=d/VhzCMECTVTZ3g0TlubZDxjBLohm9ocivySkdwuxghPG5IaLKChZyv7nt7JzTY7y
+	 FLh9mtQ4/PdnweSsbkK3QmSkwEiu7IhpIKZWm4OqY9O9YePfez7qBZiOXLfK3wDD1Q
+	 gqa7gmXGhk5ixV2PrDC9oP7t0WW7PTmfccO6A4I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.15 081/290] dm cache: Fix ABBA deadlock between shrink_slab and dm_cache_metadata_abort
-Date: Tue, 10 Jan 2023 19:02:53 +0100
-Message-Id: <20230110180034.404791382@linuxfoundation.org>
+	Bixuan Cui <cuibixuan@linux.alibaba.com>,
+	Jason Yan <yanaijie@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 5.15 064/290] jbd2: use the correct print format
+Date: Tue, 10 Jan 2023 19:02:36 +0100
+Message-Id: <20230110180033.845135942@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -34,114 +36,213 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Bixuan Cui <cuibixuan@linux.alibaba.com>
 
-commit 352b837a5541690d4f843819028cf2b8be83d424 upstream.
+commit d87a7b4c77a997d5388566dd511ca8e6b8e8a0a8 upstream.
 
-Same ABBA deadlock pattern fixed in commit 4b60f452ec51 ("dm thin: Fix
-ABBA deadlock between shrink_slab and dm_pool_abort_metadata") to
-DM-cache's metadata.
+The print format error was found when using ftrace event:
+    <...>-1406 [000] .... 23599442.895823: jbd2_end_commit: dev 252,8 transaction -1866216965 sync 0 head -1866217368
+    <...>-1406 [000] .... 23599442.896299: jbd2_start_commit: dev 252,8 transaction -1866216964 sync 0
 
-Reported-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Cc: stable@vger.kernel.org
-Fixes: 028ae9f76f29 ("dm cache: add fail io mode and needs_check flag")
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Use the correct print format for transaction, head and tid.
+
+Fixes: 879c5e6b7cb4 ('jbd2: convert instrumentation from markers to tracepoints')
+Signed-off-by: Bixuan Cui <cuibixuan@linux.alibaba.com>
+Reviewed-by: Jason Yan <yanaijie@huawei.com>
+Link: https://lore.kernel.org/r/1665488024-95172-1-git-send-email-cuibixuan@linux.alibaba.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-metadata.c |   54 +++++++++++++++++++++++++++++++++++------
- 1 file changed, 47 insertions(+), 7 deletions(-)
+ include/trace/events/jbd2.h |   44 ++++++++++++++++++++++----------------------
+ 1 file changed, 22 insertions(+), 22 deletions(-)
 
---- a/drivers/md/dm-cache-metadata.c
-+++ b/drivers/md/dm-cache-metadata.c
-@@ -551,11 +551,13 @@ static int __create_persistent_data_obje
- 	return r;
- }
+--- a/include/trace/events/jbd2.h
++++ b/include/trace/events/jbd2.h
+@@ -40,7 +40,7 @@ DECLARE_EVENT_CLASS(jbd2_commit,
+ 	TP_STRUCT__entry(
+ 		__field(	dev_t,	dev			)
+ 		__field(	char,	sync_commit		  )
+-		__field(	int,	transaction		  )
++		__field(	tid_t,	transaction		  )
+ 	),
  
--static void __destroy_persistent_data_objects(struct dm_cache_metadata *cmd)
-+static void __destroy_persistent_data_objects(struct dm_cache_metadata *cmd,
-+					      bool destroy_bm)
- {
- 	dm_sm_destroy(cmd->metadata_sm);
- 	dm_tm_destroy(cmd->tm);
--	dm_block_manager_destroy(cmd->bm);
-+	if (destroy_bm)
-+		dm_block_manager_destroy(cmd->bm);
- }
+ 	TP_fast_assign(
+@@ -49,7 +49,7 @@ DECLARE_EVENT_CLASS(jbd2_commit,
+ 		__entry->transaction	= commit_transaction->t_tid;
+ 	),
  
- typedef unsigned long (*flags_mutator)(unsigned long);
-@@ -826,7 +828,7 @@ static struct dm_cache_metadata *lookup_
- 		cmd2 = lookup(bdev);
- 		if (cmd2) {
- 			mutex_unlock(&table_lock);
--			__destroy_persistent_data_objects(cmd);
-+			__destroy_persistent_data_objects(cmd, true);
- 			kfree(cmd);
- 			return cmd2;
- 		}
-@@ -874,7 +876,7 @@ void dm_cache_metadata_close(struct dm_c
- 		mutex_unlock(&table_lock);
+-	TP_printk("dev %d,%d transaction %d sync %d",
++	TP_printk("dev %d,%d transaction %u sync %d",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev),
+ 		  __entry->transaction, __entry->sync_commit)
+ );
+@@ -97,8 +97,8 @@ TRACE_EVENT(jbd2_end_commit,
+ 	TP_STRUCT__entry(
+ 		__field(	dev_t,	dev			)
+ 		__field(	char,	sync_commit		  )
+-		__field(	int,	transaction		  )
+-		__field(	int,	head		  	  )
++		__field(	tid_t,	transaction		  )
++		__field(	tid_t,	head		  	  )
+ 	),
  
- 		if (!cmd->fail_io)
--			__destroy_persistent_data_objects(cmd);
-+			__destroy_persistent_data_objects(cmd, true);
- 		kfree(cmd);
- 	}
- }
-@@ -1808,14 +1810,52 @@ int dm_cache_metadata_needs_check(struct
+ 	TP_fast_assign(
+@@ -108,7 +108,7 @@ TRACE_EVENT(jbd2_end_commit,
+ 		__entry->head		= journal->j_tail_sequence;
+ 	),
  
- int dm_cache_metadata_abort(struct dm_cache_metadata *cmd)
- {
--	int r;
-+	int r = -EINVAL;
-+	struct dm_block_manager *old_bm = NULL, *new_bm = NULL;
-+
-+	/* fail_io is double-checked with cmd->root_lock held below */
-+	if (unlikely(cmd->fail_io))
-+		return r;
-+
-+	/*
-+	 * Replacement block manager (new_bm) is created and old_bm destroyed outside of
-+	 * cmd root_lock to avoid ABBA deadlock that would result (due to life-cycle of
-+	 * shrinker associated with the block manager's bufio client vs cmd root_lock).
-+	 * - must take shrinker_rwsem without holding cmd->root_lock
-+	 */
-+	new_bm = dm_block_manager_create(cmd->bdev, DM_CACHE_METADATA_BLOCK_SIZE << SECTOR_SHIFT,
-+					 CACHE_MAX_CONCURRENT_LOCKS);
+-	TP_printk("dev %d,%d transaction %d sync %d head %d",
++	TP_printk("dev %d,%d transaction %u sync %d head %u",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev),
+ 		  __entry->transaction, __entry->sync_commit, __entry->head)
+ );
+@@ -134,14 +134,14 @@ TRACE_EVENT(jbd2_submit_inode_data,
+ );
  
- 	WRITE_LOCK(cmd);
--	__destroy_persistent_data_objects(cmd);
--	r = __create_persistent_data_objects(cmd, false);
-+	if (cmd->fail_io) {
-+		WRITE_UNLOCK(cmd);
-+		goto out;
-+	}
-+
-+	__destroy_persistent_data_objects(cmd, false);
-+	old_bm = cmd->bm;
-+	if (IS_ERR(new_bm)) {
-+		DMERR("could not create block manager during abort");
-+		cmd->bm = NULL;
-+		r = PTR_ERR(new_bm);
-+		goto out_unlock;
-+	}
-+
-+	cmd->bm = new_bm;
-+	r = __open_or_format_metadata(cmd, false);
-+	if (r) {
-+		cmd->bm = NULL;
-+		goto out_unlock;
-+	}
-+	new_bm = NULL;
-+out_unlock:
- 	if (r)
- 		cmd->fail_io = true;
- 	WRITE_UNLOCK(cmd);
-+	dm_block_manager_destroy(old_bm);
-+out:
-+	if (new_bm && !IS_ERR(new_bm))
-+		dm_block_manager_destroy(new_bm);
+ DECLARE_EVENT_CLASS(jbd2_handle_start_class,
+-	TP_PROTO(dev_t dev, unsigned long tid, unsigned int type,
++	TP_PROTO(dev_t dev, tid_t tid, unsigned int type,
+ 		 unsigned int line_no, int requested_blocks),
  
- 	return r;
- }
+ 	TP_ARGS(dev, tid, type, line_no, requested_blocks),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(		dev_t,	dev		)
+-		__field(	unsigned long,	tid		)
++		__field(		tid_t,	tid		)
+ 		__field(	 unsigned int,	type		)
+ 		__field(	 unsigned int,	line_no		)
+ 		__field(		  int,	requested_blocks)
+@@ -155,28 +155,28 @@ DECLARE_EVENT_CLASS(jbd2_handle_start_cl
+ 		__entry->requested_blocks = requested_blocks;
+ 	),
+ 
+-	TP_printk("dev %d,%d tid %lu type %u line_no %u "
++	TP_printk("dev %d,%d tid %u type %u line_no %u "
+ 		  "requested_blocks %d",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev), __entry->tid,
+ 		  __entry->type, __entry->line_no, __entry->requested_blocks)
+ );
+ 
+ DEFINE_EVENT(jbd2_handle_start_class, jbd2_handle_start,
+-	TP_PROTO(dev_t dev, unsigned long tid, unsigned int type,
++	TP_PROTO(dev_t dev, tid_t tid, unsigned int type,
+ 		 unsigned int line_no, int requested_blocks),
+ 
+ 	TP_ARGS(dev, tid, type, line_no, requested_blocks)
+ );
+ 
+ DEFINE_EVENT(jbd2_handle_start_class, jbd2_handle_restart,
+-	TP_PROTO(dev_t dev, unsigned long tid, unsigned int type,
++	TP_PROTO(dev_t dev, tid_t tid, unsigned int type,
+ 		 unsigned int line_no, int requested_blocks),
+ 
+ 	TP_ARGS(dev, tid, type, line_no, requested_blocks)
+ );
+ 
+ TRACE_EVENT(jbd2_handle_extend,
+-	TP_PROTO(dev_t dev, unsigned long tid, unsigned int type,
++	TP_PROTO(dev_t dev, tid_t tid, unsigned int type,
+ 		 unsigned int line_no, int buffer_credits,
+ 		 int requested_blocks),
+ 
+@@ -184,7 +184,7 @@ TRACE_EVENT(jbd2_handle_extend,
+ 
+ 	TP_STRUCT__entry(
+ 		__field(		dev_t,	dev		)
+-		__field(	unsigned long,	tid		)
++		__field(		tid_t,	tid		)
+ 		__field(	 unsigned int,	type		)
+ 		__field(	 unsigned int,	line_no		)
+ 		__field(		  int,	buffer_credits  )
+@@ -200,7 +200,7 @@ TRACE_EVENT(jbd2_handle_extend,
+ 		__entry->requested_blocks = requested_blocks;
+ 	),
+ 
+-	TP_printk("dev %d,%d tid %lu type %u line_no %u "
++	TP_printk("dev %d,%d tid %u type %u line_no %u "
+ 		  "buffer_credits %d requested_blocks %d",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev), __entry->tid,
+ 		  __entry->type, __entry->line_no, __entry->buffer_credits,
+@@ -208,7 +208,7 @@ TRACE_EVENT(jbd2_handle_extend,
+ );
+ 
+ TRACE_EVENT(jbd2_handle_stats,
+-	TP_PROTO(dev_t dev, unsigned long tid, unsigned int type,
++	TP_PROTO(dev_t dev, tid_t tid, unsigned int type,
+ 		 unsigned int line_no, int interval, int sync,
+ 		 int requested_blocks, int dirtied_blocks),
+ 
+@@ -217,7 +217,7 @@ TRACE_EVENT(jbd2_handle_stats,
+ 
+ 	TP_STRUCT__entry(
+ 		__field(		dev_t,	dev		)
+-		__field(	unsigned long,	tid		)
++		__field(		tid_t,	tid		)
+ 		__field(	 unsigned int,	type		)
+ 		__field(	 unsigned int,	line_no		)
+ 		__field(		  int,	interval	)
+@@ -237,7 +237,7 @@ TRACE_EVENT(jbd2_handle_stats,
+ 		__entry->dirtied_blocks	  = dirtied_blocks;
+ 	),
+ 
+-	TP_printk("dev %d,%d tid %lu type %u line_no %u interval %d "
++	TP_printk("dev %d,%d tid %u type %u line_no %u interval %d "
+ 		  "sync %d requested_blocks %d dirtied_blocks %d",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev), __entry->tid,
+ 		  __entry->type, __entry->line_no, __entry->interval,
+@@ -246,14 +246,14 @@ TRACE_EVENT(jbd2_handle_stats,
+ );
+ 
+ TRACE_EVENT(jbd2_run_stats,
+-	TP_PROTO(dev_t dev, unsigned long tid,
++	TP_PROTO(dev_t dev, tid_t tid,
+ 		 struct transaction_run_stats_s *stats),
+ 
+ 	TP_ARGS(dev, tid, stats),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(		dev_t,	dev		)
+-		__field(	unsigned long,	tid		)
++		__field(		tid_t,	tid		)
+ 		__field(	unsigned long,	wait		)
+ 		__field(	unsigned long,	request_delay	)
+ 		__field(	unsigned long,	running		)
+@@ -279,7 +279,7 @@ TRACE_EVENT(jbd2_run_stats,
+ 		__entry->blocks_logged	= stats->rs_blocks_logged;
+ 	),
+ 
+-	TP_printk("dev %d,%d tid %lu wait %u request_delay %u running %u "
++	TP_printk("dev %d,%d tid %u wait %u request_delay %u running %u "
+ 		  "locked %u flushing %u logging %u handle_count %u "
+ 		  "blocks %u blocks_logged %u",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev), __entry->tid,
+@@ -294,14 +294,14 @@ TRACE_EVENT(jbd2_run_stats,
+ );
+ 
+ TRACE_EVENT(jbd2_checkpoint_stats,
+-	TP_PROTO(dev_t dev, unsigned long tid,
++	TP_PROTO(dev_t dev, tid_t tid,
+ 		 struct transaction_chp_stats_s *stats),
+ 
+ 	TP_ARGS(dev, tid, stats),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(		dev_t,	dev		)
+-		__field(	unsigned long,	tid		)
++		__field(		tid_t,	tid		)
+ 		__field(	unsigned long,	chp_time	)
+ 		__field(		__u32,	forced_to_close	)
+ 		__field(		__u32,	written		)
+@@ -317,7 +317,7 @@ TRACE_EVENT(jbd2_checkpoint_stats,
+ 		__entry->dropped	= stats->cs_dropped;
+ 	),
+ 
+-	TP_printk("dev %d,%d tid %lu chp_time %u forced_to_close %u "
++	TP_printk("dev %d,%d tid %u chp_time %u forced_to_close %u "
+ 		  "written %u dropped %u",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev), __entry->tid,
+ 		  jiffies_to_msecs(__entry->chp_time),
 
 
