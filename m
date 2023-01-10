@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1859A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:15:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11AE3C433F0;
-	Tue, 10 Jan 2023 18:15:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E6FA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08CB6C433D2;
+	Tue, 10 Jan 2023 18:16:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374558;
-	bh=D9ihkQTjcQ+hTWO3+NUPKPxLt2mqk0abKfM1jTtszPk=;
+	s=korg; t=1673374561;
+	bh=1vPwRMs2yjD0xjGBksJHtpbk0dkBM+7GvvZTraCV8AU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KDwM6ijrZ9lmAepSno3KQ6Dnqs0Ma+V4XehiOQJLmbXmY0m2KfGZEn+myK9d7sYSp
-	 OZrkcGDFHmOTQNr3WmcPKIL+1zyZreOi+gX6EUZQS2BIULDkeDwP+4WDtNHzDpoEmH
-	 aw0yqLJJbJ7UOjMtaViQxzziuIjG/4FNCO8tbyug=
+	b=lYpDFdnCvQn+9yvNoIJF9ZnsVpD7hPZWtb3ojEm4+9YkFPzCv1+pa4S/Q9pAU0ZUG
+	 TszUUWLTBgwZ+UYDQ49BzS2QXl1dIurBNeQ8v0uFwtTT4FavE6fs1DgjrYToaSnwQq
+	 xCiHlgFyaIIRAe+a8MZj/ft4fxQ6OCCuQYFJq3Z4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Gal Pressman <gal@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/159] net/mlx5: Fix RoCE setting at HCA level
-Date: Tue, 10 Jan 2023 19:03:23 +0100
-Message-Id: <20230110180020.061583031@linuxfoundation.org>
+Subject: [PATCH 6.1 056/159] net/mlx5e: IPoIB, Dont allow CQE compression to be turned on by default
+Date: Tue, 10 Jan 2023 19:03:24 +0100
+Message-Id: <20230110180020.091877265@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,53 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shay Drory <shayd@nvidia.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit c4ad5f2bdad56265b23d3635494ecdb205431807 ]
+[ Upstream commit b12d581e83e3ae1080c32ab83f123005bd89a840 ]
 
-mlx5 PF can disable RoCE for its VFs and SFs. In such case RoCE is
-marked as unsupported on those VFs/SFs.
-The cited patch added an option for disable (and enable) RoCE at HCA
-level. However, that commit didn't check whether RoCE is supported on
-the HCA and enabled user to try and set RoCE to on.
-Fix it by checking whether the HCA supports RoCE.
+mlx5e_build_nic_params will turn CQE compression on if the hardware
+capability is enabled and the slow_pci_heuristic condition is detected.
+As IPoIB doesn't support CQE compression, make sure to disable the
+feature in the IPoIB profile init.
 
-Fixes: fbfa97b4d79f ("net/mlx5: Disable roce at HCA level")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Please note that the feature is not exposed to the user for IPoIB
+interfaces, so it can't be subsequently turned on.
+
+Fixes: b797a684b0dd ("net/mlx5e: Enable CQE compression when PCI is slower than link")
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Gal Pressman <gal@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/devlink.c | 2 +-
- drivers/net/ethernet/mellanox/mlx5/core/main.c    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-index 9e4e8d551884..97e9ec44a759 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/devlink.c
-@@ -468,7 +468,7 @@ static int mlx5_devlink_enable_roce_validate(struct devlink *devlink, u32 id,
- 	bool new_state = val.vbool;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
+index 4e3a75496dd9..84f5352b0ce1 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
+@@ -71,6 +71,10 @@ static void mlx5i_build_nic_params(struct mlx5_core_dev *mdev,
+ 	params->packet_merge.type = MLX5E_PACKET_MERGE_NONE;
+ 	params->hard_mtu = MLX5_IB_GRH_BYTES + MLX5_IPOIB_HARD_LEN;
+ 	params->tunneled_offload_en = false;
++
++	/* CQE compression is not supported for IPoIB */
++	params->rx_cqe_compress_def = false;
++	MLX5E_SET_PFLAG(params, MLX5E_PFLAG_RX_CQE_COMPRESS, params->rx_cqe_compress_def);
+ }
  
- 	if (new_state && !MLX5_CAP_GEN(dev, roce) &&
--	    !MLX5_CAP_GEN(dev, roce_rw_supported)) {
-+	    !(MLX5_CAP_GEN(dev, roce_rw_supported) && MLX5_CAP_GEN_MAX(dev, roce))) {
- 		NL_SET_ERR_MSG_MOD(extack, "Device doesn't support RoCE");
- 		return -EOPNOTSUPP;
- 	}
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index 6776bf5b8d55..00758312df06 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -614,7 +614,7 @@ static int handle_hca_cap(struct mlx5_core_dev *dev, void *set_ctx)
- 		MLX5_SET(cmd_hca_cap, set_hca_cap, num_total_dynamic_vf_msix,
- 			 MLX5_CAP_GEN_MAX(dev, num_total_dynamic_vf_msix));
- 
--	if (MLX5_CAP_GEN(dev, roce_rw_supported))
-+	if (MLX5_CAP_GEN(dev, roce_rw_supported) && MLX5_CAP_GEN_MAX(dev, roce))
- 		MLX5_SET(cmd_hca_cap, set_hca_cap, roce,
- 			 mlx5_is_roce_on(dev));
- 
+ /* Called directly after IPoIB netdevice was created to initialize SW structs */
 -- 
 2.35.1
 
