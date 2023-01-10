@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEEBA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:08:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621C4C433F2;
-	Tue, 10 Jan 2023 18:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C5DA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:08:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFEA9C433D2;
+	Tue, 10 Jan 2023 18:08:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374091;
-	bh=/CFWjlEv1k5sF1WtWPeQYPJ2W/TyBqJHil37cYtaW3E=;
+	s=korg; t=1673374094;
+	bh=moV446JPJH1/+WMO6IDH5Hw5NQd5GDgVHfnIsAeChX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0nzu3wNndz7IdbGNDe9eDWSrXnYxAHfwGOiS+Wo2/2uGl3GvAmT9lpAOvk0VZ9sGh
-	 4HzsR3z7qJfEZowfA3IY8KfrRCvxl08b3Amq5epMGR0lr0q582qpYl7Dov4RK3lP4Z
-	 +Do6aGx8reEmksnZnQ1VEW7WlT8tPqBEou0IOP68=
+	b=yD/zlU1lu2C4dOoD7EDHkf4EEBugp7J8CLgtEQSfQ6h1kwfqYfZ2QDLpNX/rmI0dd
+	 A/j34zj1iQ7Nd2Dyy+4uAMRCOgmaJkvIPZMNINeOodtaoH86pn7AucWkNNzJZlDrWV
+	 5YSsKFoy/JFDUCzwEdJvjfp3oP6o2+mUkimZGMPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>,
-	Robin Cowley <robin.cowley@thehutgroup.com>,
-	Chandan Kumar Rout <chandanx.rout@intel.com>
-Subject: [PATCH 6.0 019/148] ice: xsk: do not use xdp_return_frame() on tx_buf->raw_buf
-Date: Tue, 10 Jan 2023 19:02:03 +0100
-Message-Id: <20230110180017.811590778@linuxfoundation.org>
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 035/148] bnxt_en: Simplify bnxt_xdp_buff_init()
+Date: Tue, 10 Jan 2023 19:02:19 +0100
+Message-Id: <20230110180018.333482321@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -38,51 +38,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 53fc61be273a1e76dd5e356f91805dce00ff2d2c ]
+[ Upstream commit bbfc17e50ba2ed18dfef46b1c433d50a58566bf1 ]
 
-Previously ice XDP xmit routine was changed in a way that it avoids
-xdp_buff->xdp_frame conversion as it is simply not needed for handling
-XDP_TX action and what is more it saves us CPU cycles. This routine is
-re-used on ZC driver to handle XDP_TX action.
+bnxt_xdp_buff_init() does not modify the data_ptr or the len parameters,
+so no need to pass in the addresses of these parameters.
 
-Although for XDP_TX on Rx ZC xdp_buff that comes from xsk_buff_pool is
-converted to xdp_frame, xdp_frame itself is not stored inside
-ice_tx_buf, we only store raw data pointer. Casting this pointer to
-xdp_frame and calling against it xdp_return_frame in
-ice_clean_xdp_tx_buf() results in undefined behavior.
-
-To fix this, simply call page_frag_free() on tx_buf->raw_buf.
-Later intention is to remove the buff->frame conversion in order to
-simplify the codebase and improve XDP_TX performance on ZC.
-
-Fixes: 126cdfe1007a ("ice: xsk: Improve AF_XDP ZC Tx and use batching API")
-Reported-and-tested-by: Robin Cowley <robin.cowley@thehutgroup.com>
-Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
-Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Piotr Raczynski <piotr.raczynski@.intel.com>
-Link: https://lore.kernel.org/r/20221220175448.693999-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: b231c3f3414c ("bnxt: refactor bnxt_rx_xdp to separate xdp_init_buff/xdp_prepare_buff")
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_xsk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 6 +++---
+ drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
-index 056c904b83cc..79fa65d1cf20 100644
---- a/drivers/net/ethernet/intel/ice/ice_xsk.c
-+++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
-@@ -772,7 +772,7 @@ int ice_clean_rx_irq_zc(struct ice_rx_ring *rx_ring, int budget)
- static void
- ice_clean_xdp_tx_buf(struct ice_tx_ring *xdp_ring, struct ice_tx_buf *tx_buf)
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 57cabe20aa12..2c83bc890839 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -1922,7 +1922,7 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
+ 	dma_addr = rx_buf->mapping;
+ 
+ 	if (bnxt_xdp_attached(bp, rxr)) {
+-		bnxt_xdp_buff_init(bp, rxr, cons, &data_ptr, &len, &xdp);
++		bnxt_xdp_buff_init(bp, rxr, cons, data_ptr, len, &xdp);
+ 		if (agg_bufs) {
+ 			u32 frag_len = bnxt_rx_agg_pages_xdp(bp, cpr, &xdp,
+ 							     cp_cons, agg_bufs,
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+index c3065ec0a479..1847f191577d 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+@@ -177,7 +177,7 @@ bool bnxt_xdp_attached(struct bnxt *bp, struct bnxt_rx_ring_info *rxr)
+ }
+ 
+ void bnxt_xdp_buff_init(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
+-			u16 cons, u8 **data_ptr, unsigned int *len,
++			u16 cons, u8 *data_ptr, unsigned int len,
+ 			struct xdp_buff *xdp)
  {
--	xdp_return_frame((struct xdp_frame *)tx_buf->raw_buf);
-+	page_frag_free(tx_buf->raw_buf);
- 	xdp_ring->xdp_tx_active--;
- 	dma_unmap_single(xdp_ring->dev, dma_unmap_addr(tx_buf, dma),
- 			 dma_unmap_len(tx_buf, len), DMA_TO_DEVICE);
+ 	struct bnxt_sw_rx_bd *rx_buf;
+@@ -191,13 +191,13 @@ void bnxt_xdp_buff_init(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
+ 	offset = bp->rx_offset;
+ 
+ 	mapping = rx_buf->mapping - bp->rx_dma_offset;
+-	dma_sync_single_for_cpu(&pdev->dev, mapping + offset, *len, bp->rx_dir);
++	dma_sync_single_for_cpu(&pdev->dev, mapping + offset, len, bp->rx_dir);
+ 
+ 	if (bp->xdp_has_frags)
+ 		buflen = BNXT_PAGE_MODE_BUF_SIZE + offset;
+ 
+ 	xdp_init_buff(xdp, buflen, &rxr->xdp_rxq);
+-	xdp_prepare_buff(xdp, *data_ptr - offset, offset, *len, false);
++	xdp_prepare_buff(xdp, data_ptr - offset, offset, len, false);
+ }
+ 
+ void bnxt_xdp_buff_frags_free(struct bnxt_rx_ring_info *rxr,
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
+index 505911ae095d..2bbdb8e7c506 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
+@@ -27,7 +27,7 @@ int bnxt_xdp_xmit(struct net_device *dev, int num_frames,
+ bool bnxt_xdp_attached(struct bnxt *bp, struct bnxt_rx_ring_info *rxr);
+ 
+ void bnxt_xdp_buff_init(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
+-			u16 cons, u8 **data_ptr, unsigned int *len,
++			u16 cons, u8 *data_ptr, unsigned int len,
+ 			struct xdp_buff *xdp);
+ void bnxt_xdp_buff_frags_free(struct bnxt_rx_ring_info *rxr,
+ 			      struct xdp_buff *xdp);
 -- 
 2.35.1
 
