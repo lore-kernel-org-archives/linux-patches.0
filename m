@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F146FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:23:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FAA8C433F0;
-	Tue, 10 Jan 2023 18:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB866FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:23:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34036C433F0;
+	Tue, 10 Jan 2023 18:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375023;
-	bh=rR5I3FobV4jxanNDkf+PcZg4d6yiIHdwFwIxHst+Dhc=;
+	s=korg; t=1673375026;
+	bh=ixkTEoZYXLplN/kAqZ/0V186PgLAbaGyyxUyYO/bPD4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OrFP2OXza2kXj+eykAO2IKzckJWH5gPehvuRHgCioB/osBW5o9hUTaNX8iAuYsZ4Z
-	 XauTmN59CL/SL4+cssdLxe1gpW7YpVn1YvCCeVnHzeDJPV6RtbEQR39NlICgfSU9K2
-	 tFyCF2D1t4GD2yf22mnQoxVVKhT05TiVZs+Z3ttY=
+	b=k60r7b/WhffsKw5OCJxFAtI8TX9slZWhj5BUz2dJteumwC8eylHYO8YQQaUJ0zp5Y
+	 7QQmva/LPegF82ktiXAgLjnKbK7wxnL+deXseoxyQMy28wcGtqjaBjh2wZjOTOuGIc
+	 M/XgtpgTC6n7trSJinGJaQy56UlYYalms9zyo2b4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hanjun Guo <guohanjun@huawei.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 5.15 052/290] tpm: tpm_tis: Add the missed acpi_put_table() to fix memory leak
-Date: Tue, 10 Jan 2023 19:02:24 +0100
-Message-Id: <20230110180033.409847926@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>
+Subject: [PATCH 5.15 053/290] SUNRPC: Dont leak netobj memory when gss_read_proxy_verf() fails
+Date: Tue, 10 Jan 2023 19:02:25 +0100
+Message-Id: <20230110180033.447501605@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -34,55 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hanjun Guo <guohanjun@huawei.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit db9622f762104459ff87ecdf885cc42c18053fd9 upstream.
+commit da522b5fe1a5f8b7c20a0023e87b52a150e53bf5 upstream.
 
-In check_acpi_tpm2(), we get the TPM2 table just to make
-sure the table is there, not used after the init, so the
-acpi_put_table() should be added to release the ACPI memory.
-
-Fixes: 4cb586a188d4 ("tpm_tis: Consolidate the platform and acpi probe flow")
-Cc: stable@vger.kernel.org
-Signed-off-by: Hanjun Guo <guohanjun@huawei.com>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Fixes: 030d794bf498 ("SUNRPC: Use gssproxy upcall for server RPCGSS authentication.")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_tis.c |    9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ net/sunrpc/auth_gss/svcauth_gss.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/char/tpm/tpm_tis.c
-+++ b/drivers/char/tpm/tpm_tis.c
-@@ -125,6 +125,7 @@ static int check_acpi_tpm2(struct device
- 	const struct acpi_device_id *aid = acpi_match_device(tpm_acpi_tbl, dev);
- 	struct acpi_table_tpm2 *tbl;
- 	acpi_status st;
-+	int ret = 0;
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -1162,18 +1162,23 @@ static int gss_read_proxy_verf(struct sv
+ 		return res;
  
- 	if (!aid || aid->driver_data != DEVICE_IS_TPM2)
- 		return 0;
-@@ -132,8 +133,7 @@ static int check_acpi_tpm2(struct device
- 	/* If the ACPI TPM2 signature is matched then a global ACPI_SIG_TPM2
- 	 * table is mandatory
- 	 */
--	st =
--	    acpi_get_table(ACPI_SIG_TPM2, 1, (struct acpi_table_header **)&tbl);
-+	st = acpi_get_table(ACPI_SIG_TPM2, 1, (struct acpi_table_header **)&tbl);
- 	if (ACPI_FAILURE(st) || tbl->header.length < sizeof(*tbl)) {
- 		dev_err(dev, FW_BUG "failed to get TPM2 ACPI table\n");
- 		return -EINVAL;
-@@ -141,9 +141,10 @@ static int check_acpi_tpm2(struct device
+ 	inlen = svc_getnl(argv);
+-	if (inlen > (argv->iov_len + rqstp->rq_arg.page_len))
++	if (inlen > (argv->iov_len + rqstp->rq_arg.page_len)) {
++		kfree(in_handle->data);
+ 		return SVC_DENIED;
++	}
  
- 	/* The tpm2_crb driver handles this device */
- 	if (tbl->start_method != ACPI_TPM2_MEMORY_MAPPED)
--		return -ENODEV;
-+		ret = -ENODEV;
- 
--	return 0;
-+	acpi_put_table((struct acpi_table_header *)tbl);
-+	return ret;
- }
- #else
- static int check_acpi_tpm2(struct device *dev)
+ 	pages = DIV_ROUND_UP(inlen, PAGE_SIZE);
+ 	in_token->pages = kcalloc(pages, sizeof(struct page *), GFP_KERNEL);
+-	if (!in_token->pages)
++	if (!in_token->pages) {
++		kfree(in_handle->data);
+ 		return SVC_DENIED;
++	}
+ 	in_token->page_base = 0;
+ 	in_token->page_len = inlen;
+ 	for (i = 0; i < pages; i++) {
+ 		in_token->pages[i] = alloc_page(GFP_KERNEL);
+ 		if (!in_token->pages[i]) {
++			kfree(in_handle->data);
+ 			gss_free_in_token_pages(in_token);
+ 			return SVC_DENIED;
+ 		}
 
 
