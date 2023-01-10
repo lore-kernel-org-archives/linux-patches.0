@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119A26FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:19:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB28C433D2;
-	Tue, 10 Jan 2023 18:19:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49766FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:19:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 484DCC433D2;
+	Tue, 10 Jan 2023 18:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374748;
-	bh=imEYwgAC/dH8lSJZo74E+eAnfm3WoSPBrWYHOX4C0rg=;
+	s=korg; t=1673374751;
+	bh=hUoYY6F6FpWJZB58X7VFaaWni/kn8cgpFMjjLid3rVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ticTbfQ0CfCYGHeAYNwB1dxwmrtXvsNaghZz1D4fuLdOvsic43I/jRCA4HrCpxLUI
-	 j6cTgQdJL3TE/xA+HfK1CVSNDOYkQHHSnnI8hXZWVUaf/ILTwOocPEf1JK4FF/sglN
-	 m426sck5UnC5Hc47yGJUgIcbfCPtJsgD7P9gZ/2Q=
+	b=nZvwZX493OKTEP1OZtUlTae06VWtvdQm1Vwuz7DgOnwPOwGAksRJSoMZS8eYPO2pB
+	 LpMMuugrTaoRqda0IQj9BY+VeeQ1lOtFGMZ30IIvywddHLk5S07U7HBh2GD2hfThRH
+	 mNmTouZlYGssee02VngtuG5uXPDecj6wipT10VPg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 120/159] ACPI: video: Dont enable fallback path for creating ACPI backlight by default
-Date: Tue, 10 Jan 2023 19:04:28 +0100
-Message-Id: <20230110180022.134187184@linuxfoundation.org>
+Subject: [PATCH 6.1 121/159] io_uring: check for valid register opcode earlier
+Date: Tue, 10 Jan 2023 19:04:29 +0100
+Message-Id: <20230110180022.175777075@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,46 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 5aa9d943e9b6bf6e6023645cbe7ce7d5ed84baf4 ]
+[ Upstream commit 343190841a1f22b96996d9f8cfab902a4d1bfd0e ]
 
-The ACPI video detection code has a module parameter
-`register_backlight_delay` which is currently configured to 8 seconds.
-This means that if after 8 seconds of booting no native driver has created
-a backlight device then the code will attempt to make an ACPI video
-backlight device.
+We only check the register opcode value inside the restricted ring
+section, move it into the main io_uring_register() function instead
+and check it up front.
 
-This was intended as a safety mechanism with the backlight overhaul that
-occurred in kernel 6.1, but as it doesn't appear necesssary set it to be
-disabled by default.
-
-Suggested-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpi_video.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ io_uring/io_uring.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/acpi/acpi_video.c b/drivers/acpi/acpi_video.c
-index f64fdb029090..0c79f463fbfd 100644
---- a/drivers/acpi/acpi_video.c
-+++ b/drivers/acpi/acpi_video.c
-@@ -70,11 +70,7 @@ module_param(device_id_scheme, bool, 0444);
- static int only_lcd = -1;
- module_param(only_lcd, int, 0444);
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 71f1cabb9f3d..1bc68dfda340 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3897,8 +3897,6 @@ static int __io_uring_register(struct io_ring_ctx *ctx, unsigned opcode,
+ 		return -EEXIST;
  
--/*
-- * Display probing is known to take up to 5 seconds, so delay the fallback
-- * backlight registration by 5 seconds + 3 seconds for some extra margin.
-- */
--static int register_backlight_delay = 8;
-+static int register_backlight_delay;
- module_param(register_backlight_delay, int, 0444);
- MODULE_PARM_DESC(register_backlight_delay,
- 	"Delay in seconds before doing fallback (non GPU driver triggered) "
+ 	if (ctx->restricted) {
+-		if (opcode >= IORING_REGISTER_LAST)
+-			return -EINVAL;
+ 		opcode = array_index_nospec(opcode, IORING_REGISTER_LAST);
+ 		if (!test_bit(opcode, ctx->restrictions.register_op))
+ 			return -EACCES;
+@@ -4054,6 +4052,9 @@ SYSCALL_DEFINE4(io_uring_register, unsigned int, fd, unsigned int, opcode,
+ 	long ret = -EBADF;
+ 	struct fd f;
+ 
++	if (opcode >= IORING_REGISTER_LAST)
++		return -EINVAL;
++
+ 	f = fdget(fd);
+ 	if (!f.file)
+ 		return -EBADF;
 -- 
 2.35.1
 
