@@ -1,34 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3776FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:20:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35700C433D2;
-	Tue, 10 Jan 2023 18:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F6036FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:20:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6B93C433D2;
+	Tue, 10 Jan 2023 18:20:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374801;
-	bh=9NdXOmkiTVBp0bp3bFhoadq9j659g/3HfDuElJpJhKs=;
+	s=korg; t=1673374805;
+	bh=bdDW3LLmItTeom4b4EPuVajnxo0DYPgkWZ1jf9gfEmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rOIHvsRVO+8p8o/PdQC2c2kcw9ScJo+pgLeEyZeEmczqzWD9Vy9yyv5p3QP5M14RE
-	 e+dZtCnuah76s8EW0dxIQxWMhM+y6hbs3IyPUbbSYC8RUfTQDG9Yq5wZKViD0ruhe3
-	 C83kV2SnOl7K7zCrhcmWGG5mtj1DRkYeg4IbvBOM=
+	b=gZh0ZdoGADCoU2Sfrq3hdTNar95v7FWYrTkM0Oz5C8mXX56zEn7LiH/voZz4IOxh4
+	 SbEAVIxFOTqstNsc4OSN076Bg9XlvOutAQDwn0Nz9FcpJUKkyfRVJPCQND1P2vMyrR
+	 +bjS3QjdNVzkJXn6cZF1J217+WkhgwkgMUeohHqk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	bpf@vger.kernel.org,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Song Liu <songliubraving@fb.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 099/159] perf stat: Fix handling of --for-each-cgroup with --bpf-counters to match non BPF mode
-Date: Tue, 10 Jan 2023 19:04:07 +0100
-Message-Id: <20230110180021.437684262@linuxfoundation.org>
+	Ronald Wahl <ronald.wahl@raritan.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 132/159] Revert "net: dsa: qca8k: cache lo and hi for mdio write"
+Date: Tue, 10 Jan 2023 19:04:40 +0100
+Message-Id: <20230110180022.559245338@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -42,145 +35,177 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit 54b353a20c7e8be98414754f5aff98c8a68fcc1f ]
+commit 03cb9e6d0b32b768e3d9d473c5c4ca1100877664 upstream.
 
-The --for-each-cgroup can have the same cgroup multiple times, but this
-confuses BPF counters (since they have the same cgroup id), making only
-the last cgroup events to be counted.
+This reverts commit 2481d206fae7884cd07014fd1318e63af35e99eb.
 
-Let's check the cgroup name before adding a new entry to the cgroups
-list.
+The Documentation is very confusing about the topic.
+The cache logic for hi and lo is wrong and actually miss some regs to be
+actually written.
 
-Before:
+What the Documentation actually intended was that it's possible to skip
+writing hi OR lo if half of the reg is not needed to be written or read.
 
-  $ sudo ./perf stat -a --bpf-counters --for-each-cgroup /,/ sleep 1
+Revert the change in favor of a better and correct implementation.
 
-   Performance counter stats for 'system wide':
-
-       <not counted> msec cpu-clock                        /
-       <not counted>      context-switches                 /
-       <not counted>      cpu-migrations                   /
-       <not counted>      page-faults                      /
-       <not counted>      cycles                           /
-       <not counted>      instructions                     /
-       <not counted>      branches                         /
-       <not counted>      branch-misses                    /
-            8,016.04 msec cpu-clock                        /                #    7.998 CPUs utilized
-               6,152      context-switches                 /                #  767.461 /sec
-                 250      cpu-migrations                   /                #   31.187 /sec
-                 442      page-faults                      /                #   55.139 /sec
-         613,111,487      cycles                           /                #    0.076 GHz
-         280,599,604      instructions                     /                #    0.46  insn per cycle
-          57,692,724      branches                         /                #    7.197 M/sec
-           3,385,168      branch-misses                    /                #    5.87% of all branches
-
-         1.002220125 seconds time elapsed
-
-After it becomes similar to the non-BPF mode:
-
-  $ sudo ./perf stat -a --bpf-counters --for-each-cgroup /,/  sleep 1
-
-   Performance counter stats for 'system wide':
-
-            8,013.38 msec cpu-clock                        /                #    7.998 CPUs utilized
-               6,859      context-switches                 /                #  855.944 /sec
-                 334      cpu-migrations                   /                #   41.680 /sec
-                 345      page-faults                      /                #   43.053 /sec
-         782,326,119      cycles                           /                #    0.098 GHz
-         471,645,724      instructions                     /                #    0.60  insn per cycle
-          94,963,430      branches                         /                #   11.851 M/sec
-           3,685,511      branch-misses                    /                #    3.88% of all branches
-
-         1.001864539 seconds time elapsed
-
-Committer notes:
-
-As a reminder, to test with BPF counters one has to use BUILD_BPF_SKEL=1
-in the make command line and have clang/llvm installed when building
-perf, otherwise the --bpf-counters option will not be available:
-
-  # perf stat -a --bpf-counters --for-each-cgroup /,/ sleep 1
-  Error: unknown option `bpf-counters'
-
-   Usage: perf stat [<options>] [<command>]
-
-      -a, --all-cpus        system-wide collection from all CPUs
-  <SNIP>
-  #
-
-Fixes: bb1c15b60b981d10 ("perf stat: Support regex pattern in --for-each-cgroup")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: bpf@vger.kernel.org
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Song Liu <songliubraving@fb.com>
-Link: https://lore.kernel.org/r/20230104064402.1551516-5-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Ronald Wahl <ronald.wahl@raritan.com>
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Cc: stable@vger.kernel.org # v5.18+
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/cgroup.c | 23 ++++++++++++++++++-----
- 1 file changed, 18 insertions(+), 5 deletions(-)
+ drivers/net/dsa/qca/qca8k-8xxx.c |   61 +++++++--------------------------------
+ drivers/net/dsa/qca/qca8k.h      |    5 ---
+ 2 files changed, 12 insertions(+), 54 deletions(-)
 
-diff --git a/tools/perf/util/cgroup.c b/tools/perf/util/cgroup.c
-index e99b41f9be45..cd978c240e0d 100644
---- a/tools/perf/util/cgroup.c
-+++ b/tools/perf/util/cgroup.c
-@@ -224,6 +224,19 @@ static int add_cgroup_name(const char *fpath, const struct stat *sb __maybe_unus
- 	return 0;
+--- a/drivers/net/dsa/qca/qca8k-8xxx.c
++++ b/drivers/net/dsa/qca/qca8k-8xxx.c
+@@ -37,44 +37,6 @@ qca8k_split_addr(u32 regaddr, u16 *r1, u
  }
  
-+static int check_and_add_cgroup_name(const char *fpath)
-+{
-+	struct cgroup_name *cn;
-+
-+	list_for_each_entry(cn, &cgroup_list, list) {
-+		if (!strcmp(cn->name, fpath))
-+			return 0;
-+	}
-+
-+	/* pretend if it's added by ftw() */
-+	return add_cgroup_name(fpath, NULL, FTW_D, NULL);
-+}
-+
- static void release_cgroup_list(void)
+ static int
+-qca8k_set_lo(struct qca8k_priv *priv, int phy_id, u32 regnum, u16 lo)
+-{
+-	u16 *cached_lo = &priv->mdio_cache.lo;
+-	struct mii_bus *bus = priv->bus;
+-	int ret;
+-
+-	if (lo == *cached_lo)
+-		return 0;
+-
+-	ret = bus->write(bus, phy_id, regnum, lo);
+-	if (ret < 0)
+-		dev_err_ratelimited(&bus->dev,
+-				    "failed to write qca8k 32bit lo register\n");
+-
+-	*cached_lo = lo;
+-	return 0;
+-}
+-
+-static int
+-qca8k_set_hi(struct qca8k_priv *priv, int phy_id, u32 regnum, u16 hi)
+-{
+-	u16 *cached_hi = &priv->mdio_cache.hi;
+-	struct mii_bus *bus = priv->bus;
+-	int ret;
+-
+-	if (hi == *cached_hi)
+-		return 0;
+-
+-	ret = bus->write(bus, phy_id, regnum, hi);
+-	if (ret < 0)
+-		dev_err_ratelimited(&bus->dev,
+-				    "failed to write qca8k 32bit hi register\n");
+-
+-	*cached_hi = hi;
+-	return 0;
+-}
+-
+-static int
+ qca8k_mii_read32(struct mii_bus *bus, int phy_id, u32 regnum, u32 *val)
  {
- 	struct cgroup_name *cn;
-@@ -242,7 +255,7 @@ static int list_cgroups(const char *str)
- 	struct cgroup_name *cn;
- 	char *s;
+ 	int ret;
+@@ -97,7 +59,7 @@ qca8k_mii_read32(struct mii_bus *bus, in
+ }
  
--	/* use given name as is - for testing purpose */
-+	/* use given name as is when no regex is given */
- 	for (;;) {
- 		p = strchr(str, ',');
- 		e = p ? p : eos;
-@@ -253,13 +266,13 @@ static int list_cgroups(const char *str)
- 			s = strndup(str, e - str);
- 			if (!s)
- 				return -1;
--			/* pretend if it's added by ftw() */
--			ret = add_cgroup_name(s, NULL, FTW_D, NULL);
-+
-+			ret = check_and_add_cgroup_name(s);
- 			free(s);
--			if (ret)
-+			if (ret < 0)
- 				return -1;
- 		} else {
--			if (add_cgroup_name("", NULL, FTW_D, NULL) < 0)
-+			if (check_and_add_cgroup_name("/") < 0)
- 				return -1;
- 		}
+ static void
+-qca8k_mii_write32(struct qca8k_priv *priv, int phy_id, u32 regnum, u32 val)
++qca8k_mii_write32(struct mii_bus *bus, int phy_id, u32 regnum, u32 val)
+ {
+ 	u16 lo, hi;
+ 	int ret;
+@@ -105,9 +67,12 @@ qca8k_mii_write32(struct qca8k_priv *pri
+ 	lo = val & 0xffff;
+ 	hi = (u16)(val >> 16);
  
--- 
-2.35.1
-
+-	ret = qca8k_set_lo(priv, phy_id, regnum, lo);
++	ret = bus->write(bus, phy_id, regnum, lo);
+ 	if (ret >= 0)
+-		ret = qca8k_set_hi(priv, phy_id, regnum + 1, hi);
++		ret = bus->write(bus, phy_id, regnum + 1, hi);
++	if (ret < 0)
++		dev_err_ratelimited(&bus->dev,
++				    "failed to write qca8k 32bit register\n");
+ }
+ 
+ static int
+@@ -417,7 +382,7 @@ qca8k_regmap_write(void *ctx, uint32_t r
+ 	if (ret < 0)
+ 		goto exit;
+ 
+-	qca8k_mii_write32(priv, 0x10 | r2, r1, val);
++	qca8k_mii_write32(bus, 0x10 | r2, r1, val);
+ 
+ exit:
+ 	mutex_unlock(&bus->mdio_lock);
+@@ -450,7 +415,7 @@ qca8k_regmap_update_bits(void *ctx, uint
+ 
+ 	val &= ~mask;
+ 	val |= write_val;
+-	qca8k_mii_write32(priv, 0x10 | r2, r1, val);
++	qca8k_mii_write32(bus, 0x10 | r2, r1, val);
+ 
+ exit:
+ 	mutex_unlock(&bus->mdio_lock);
+@@ -725,14 +690,14 @@ qca8k_mdio_write(struct qca8k_priv *priv
+ 	if (ret)
+ 		goto exit;
+ 
+-	qca8k_mii_write32(priv, 0x10 | r2, r1, val);
++	qca8k_mii_write32(bus, 0x10 | r2, r1, val);
+ 
+ 	ret = qca8k_mdio_busy_wait(bus, QCA8K_MDIO_MASTER_CTRL,
+ 				   QCA8K_MDIO_MASTER_BUSY);
+ 
+ exit:
+ 	/* even if the busy_wait timeouts try to clear the MASTER_EN */
+-	qca8k_mii_write32(priv, 0x10 | r2, r1, 0);
++	qca8k_mii_write32(bus, 0x10 | r2, r1, 0);
+ 
+ 	mutex_unlock(&bus->mdio_lock);
+ 
+@@ -762,7 +727,7 @@ qca8k_mdio_read(struct qca8k_priv *priv,
+ 	if (ret)
+ 		goto exit;
+ 
+-	qca8k_mii_write32(priv, 0x10 | r2, r1, val);
++	qca8k_mii_write32(bus, 0x10 | r2, r1, val);
+ 
+ 	ret = qca8k_mdio_busy_wait(bus, QCA8K_MDIO_MASTER_CTRL,
+ 				   QCA8K_MDIO_MASTER_BUSY);
+@@ -773,7 +738,7 @@ qca8k_mdio_read(struct qca8k_priv *priv,
+ 
+ exit:
+ 	/* even if the busy_wait timeouts try to clear the MASTER_EN */
+-	qca8k_mii_write32(priv, 0x10 | r2, r1, 0);
++	qca8k_mii_write32(bus, 0x10 | r2, r1, 0);
+ 
+ 	mutex_unlock(&bus->mdio_lock);
+ 
+@@ -1943,8 +1908,6 @@ qca8k_sw_probe(struct mdio_device *mdiod
+ 	}
+ 
+ 	priv->mdio_cache.page = 0xffff;
+-	priv->mdio_cache.lo = 0xffff;
+-	priv->mdio_cache.hi = 0xffff;
+ 
+ 	/* Check the detected switch id */
+ 	ret = qca8k_read_switch_id(priv);
+--- a/drivers/net/dsa/qca/qca8k.h
++++ b/drivers/net/dsa/qca/qca8k.h
+@@ -375,11 +375,6 @@ struct qca8k_mdio_cache {
+  * mdio writes
+  */
+ 	u16 page;
+-/* lo and hi can also be cached and from Documentation we can skip one
+- * extra mdio write if lo or hi is didn't change.
+- */
+-	u16 lo;
+-	u16 hi;
+ };
+ 
+ struct qca8k_pcs {
 
 
