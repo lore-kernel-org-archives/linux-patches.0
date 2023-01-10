@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FB04A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABFC1C433EF;
-	Tue, 10 Jan 2023 18:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6210A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49B2DC433EF;
+	Tue, 10 Jan 2023 18:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374280;
-	bh=124vP880Sh+1mZ3HL7f14EB8racDxeisiaWDZsM5ejg=;
+	s=korg; t=1673374282;
+	bh=BFrKb7OzDrrezFusLSnmXhdPhl7qpmXKLqHt+jRXvcc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TiRI1v1FfdiUhEhzL8KnLOW7em4kg1MzjeKbTHP7LjyH5gxJmHEyRn0XGSH7sFxdS
-	 tsdzeKO3kLEllNsP3g6/cVAD37+nPpOimAQWflBO21TG8LYotQAUx5FFBSkLq/12cb
-	 cPtl5fhziwjZaiCA/B4VanpwLbF6owWV0P8FNHLM=
+	b=MMaYbX+vICoFyS1/s8BxDpFlFUKxuDzM2dEZ3iJ63DF+WdzC/MDOL1xI9PNs+OFwK
+	 tl/USHtpAJa5MMouuHIol84vhmi4I8uZVdElBWRT9kzAdLiaoHOxrSP1JoFwIzbEYx
+	 9RIk08qdv9yc81+LCnxBN7iABXWpEB08CIL6vUws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Kanchan Joshi <joshi.k@samsung.com>,
+	Archana Patni <archana.patni@intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 114/148] nvme: also return I/O command effects from nvme_command_effects
-Date: Tue, 10 Jan 2023 19:03:38 +0100
-Message-Id: <20230110180020.800310039@linuxfoundation.org>
+Subject: [PATCH 6.0 115/148] ASoC: SOF: Intel: pci-tgl: unblock S5 entry if DMA stop has failed"
+Date: Tue, 10 Jan 2023 19:03:39 +0100
+Message-Id: <20230110180020.837875449@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -36,79 +39,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 
-[ Upstream commit 831ed60c2aca2d7c517b2da22897a90224a97d27 ]
+[ Upstream commit 2aa2a5ead0ee0a358bf80a2984a641d1bf2adc2a ]
 
-To be able to use the Commands Supported and Effects Log for allowing
-unprivileged passtrough, it needs to be corretly reported for I/O
-commands as well.  Return the I/O command effects from
-nvme_command_effects, and also add a default list of effects for the
-NVM command set.  For other command sets, the Commands Supported and
-Effects log is required to be present already.
+If system shutdown has not been completed cleanly, it is possible the
+DMA stream shutdown has not been done, or was not clean.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
+If this is the case, Intel TGL/ADL HDA platforms may fail to shutdown
+cleanly due to pending HDA DMA transactions. To avoid this, detect this
+scenario in the shutdown callback, and perform an additional controller
+reset. This has been tested to unblock S5 entry if this condition is
+hit.
+
+Co-developed-by: Archana Patni <archana.patni@intel.com>
+Signed-off-by: Archana Patni <archana.patni@intel.com>
+Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Link: https://lore.kernel.org/r/20221209114529.3909192-2-kai.vehmanen@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 32 ++++++++++++++++++++++++++------
- 1 file changed, 26 insertions(+), 6 deletions(-)
+ sound/soc/sof/intel/hda-dsp.c | 72 +++++++++++++++++++++++++++++++++++
+ sound/soc/sof/intel/hda.h     |  1 +
+ sound/soc/sof/intel/tgl.c     |  2 +-
+ 3 files changed, 74 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 3582a28a1dce..f06bae83e8ee 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -1069,6 +1069,18 @@ static u32 nvme_known_admin_effects(u8 opcode)
- 	return 0;
+diff --git a/sound/soc/sof/intel/hda-dsp.c b/sound/soc/sof/intel/hda-dsp.c
+index eddfd77ad90f..0ab111814f1c 100644
+--- a/sound/soc/sof/intel/hda-dsp.c
++++ b/sound/soc/sof/intel/hda-dsp.c
+@@ -901,6 +901,78 @@ int hda_dsp_suspend(struct snd_sof_dev *sdev, u32 target_state)
+ 	return snd_sof_dsp_set_power_state(sdev, &target_dsp_state);
  }
  
-+static u32 nvme_known_nvm_effects(u8 opcode)
++static unsigned int hda_dsp_check_for_dma_streams(struct snd_sof_dev *sdev)
 +{
-+	switch (opcode) {
-+	case nvme_cmd_write:
-+	case nvme_cmd_write_zeroes:
-+	case nvme_cmd_write_uncor:
-+		 return NVME_CMD_EFFECTS_LBCC;
-+	default:
-+		return 0;
++	struct hdac_bus *bus = sof_to_bus(sdev);
++	struct hdac_stream *s;
++	unsigned int active_streams = 0;
++	int sd_offset;
++	u32 val;
++
++	list_for_each_entry(s, &bus->stream_list, list) {
++		sd_offset = SOF_STREAM_SD_OFFSET(s);
++		val = snd_sof_dsp_read(sdev, HDA_DSP_HDA_BAR,
++				       sd_offset);
++		if (val & SOF_HDA_SD_CTL_DMA_START)
++			active_streams |= BIT(s->index);
 +	}
++
++	return active_streams;
 +}
 +
- u32 nvme_command_effects(struct nvme_ctrl *ctrl, struct nvme_ns *ns, u8 opcode)
- {
- 	u32 effects = 0;
-@@ -1076,16 +1088,24 @@ u32 nvme_command_effects(struct nvme_ctrl *ctrl, struct nvme_ns *ns, u8 opcode)
- 	if (ns) {
- 		if (ns->head->effects)
- 			effects = le32_to_cpu(ns->head->effects->iocs[opcode]);
-+		if (ns->head->ids.csi == NVME_CAP_CSS_NVM)
-+			effects |= nvme_known_nvm_effects(opcode);
- 		if (effects & ~(NVME_CMD_EFFECTS_CSUPP | NVME_CMD_EFFECTS_LBCC))
- 			dev_warn_once(ctrl->device,
--				"IO command:%02x has unhandled effects:%08x\n",
-+				"IO command:%02x has unusual effects:%08x\n",
- 				opcode, effects);
--		return 0;
--	}
- 
--	if (ctrl->effects)
--		effects = le32_to_cpu(ctrl->effects->acs[opcode]);
--	effects |= nvme_known_admin_effects(opcode);
-+		/*
-+		 * NVME_CMD_EFFECTS_CSE_MASK causes a freeze all I/O queues,
-+		 * which would deadlock when done on an I/O command.  Note that
-+		 * We already warn about an unusual effect above.
-+		 */
-+		effects &= ~NVME_CMD_EFFECTS_CSE_MASK;
-+	} else {
-+		if (ctrl->effects)
-+			effects = le32_to_cpu(ctrl->effects->acs[opcode]);
-+		effects |= nvme_known_admin_effects(opcode);
++static int hda_dsp_s5_quirk(struct snd_sof_dev *sdev)
++{
++	int ret;
++
++	/*
++	 * Do not assume a certain timing between the prior
++	 * suspend flow, and running of this quirk function.
++	 * This is needed if the controller was just put
++	 * to reset before calling this function.
++	 */
++	usleep_range(500, 1000);
++
++	/*
++	 * Take controller out of reset to flush DMA
++	 * transactions.
++	 */
++	ret = hda_dsp_ctrl_link_reset(sdev, false);
++	if (ret < 0)
++		return ret;
++
++	usleep_range(500, 1000);
++
++	/* Restore state for shutdown, back to reset */
++	ret = hda_dsp_ctrl_link_reset(sdev, true);
++	if (ret < 0)
++		return ret;
++
++	return ret;
++}
++
++int hda_dsp_shutdown_dma_flush(struct snd_sof_dev *sdev)
++{
++	unsigned int active_streams;
++	int ret, ret2;
++
++	/* check if DMA cleanup has been successful */
++	active_streams = hda_dsp_check_for_dma_streams(sdev);
++
++	sdev->system_suspend_target = SOF_SUSPEND_S3;
++	ret = snd_sof_suspend(sdev->dev);
++
++	if (active_streams) {
++		dev_warn(sdev->dev,
++			 "There were active DSP streams (%#x) at shutdown, trying to recover\n",
++			 active_streams);
++		ret2 = hda_dsp_s5_quirk(sdev);
++		if (ret2 < 0)
++			dev_err(sdev->dev, "shutdown recovery failed (%d)\n", ret2);
 +	}
++
++	return ret;
++}
++
+ int hda_dsp_shutdown(struct snd_sof_dev *sdev)
+ {
+ 	sdev->system_suspend_target = SOF_SUSPEND_S3;
+diff --git a/sound/soc/sof/intel/hda.h b/sound/soc/sof/intel/hda.h
+index 5ef3e8775e36..554891e78cca 100644
+--- a/sound/soc/sof/intel/hda.h
++++ b/sound/soc/sof/intel/hda.h
+@@ -578,6 +578,7 @@ int hda_dsp_resume(struct snd_sof_dev *sdev);
+ int hda_dsp_runtime_suspend(struct snd_sof_dev *sdev);
+ int hda_dsp_runtime_resume(struct snd_sof_dev *sdev);
+ int hda_dsp_runtime_idle(struct snd_sof_dev *sdev);
++int hda_dsp_shutdown_dma_flush(struct snd_sof_dev *sdev);
+ int hda_dsp_shutdown(struct snd_sof_dev *sdev);
+ int hda_dsp_set_hw_params_upon_resume(struct snd_sof_dev *sdev);
+ void hda_dsp_dump(struct snd_sof_dev *sdev, u32 flags);
+diff --git a/sound/soc/sof/intel/tgl.c b/sound/soc/sof/intel/tgl.c
+index 6dfb4786c782..0173e5b255da 100644
+--- a/sound/soc/sof/intel/tgl.c
++++ b/sound/soc/sof/intel/tgl.c
+@@ -60,7 +60,7 @@ int sof_tgl_ops_init(struct snd_sof_dev *sdev)
+ 	memcpy(&sof_tgl_ops, &sof_hda_common_ops, sizeof(struct snd_sof_dsp_ops));
  
- 	return effects;
- }
+ 	/* probe/remove/shutdown */
+-	sof_tgl_ops.shutdown	= hda_dsp_shutdown;
++	sof_tgl_ops.shutdown	= hda_dsp_shutdown_dma_flush;
+ 
+ 	if (sdev->pdata->ipc_type == SOF_IPC) {
+ 		/* doorbell */
 -- 
 2.35.1
 
