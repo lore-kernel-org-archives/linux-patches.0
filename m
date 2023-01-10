@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22BB76FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775B9C433F0;
-	Tue, 10 Jan 2023 18:27:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119176FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C8B4C433D2;
+	Tue, 10 Jan 2023 18:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375267;
-	bh=31wB88fzA2ykbZWIb2ohvSobJbq5wXUvmiwmbtmNnKU=;
+	s=korg; t=1673375269;
+	bh=AIIe8Ged/CuIo0+OmKvgnzKmeBji8mpkBtsH1lhkHg4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ezG+V8J5x4UWoPYaOAnqWMEi2W0Ydv+3/36EjrPCBa3fnxuOV4RCjhBlDVpqiHsiu
-	 JC6erPxXvP+a5KbCpZhCoWNjeB2M2Q1QkhsXiMj0VafBEaeB7lwDjVHA72tD4AmY7P
-	 BQHoEjnJ+ygYeRsCoJd9ldWxzXSFdAnPH17FAsNE=
+	b=l1JEIrHLhEa/S5SIYptv/76ADWDUtYO139IP4Jgt/XTqTaIqLyEA43IywWitqQ9xF
+	 ybb7U+2mC33f5LPL3M8DnmzLa1KbKOLEe19n8xJjhJBVVcVnoGwZvymqmrOIhD1xnf
+	 RLKHaVNHqUXNHcfmNIhimyy3qVvr6aI+nge4WnxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Masami Hiramatsu <mhiramat@kernel.org>,
-	Rafael Mendonca <rafaelmendsr@gmail.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 103/290] tracing/probes: Handle system names with hyphens
-Date: Tue, 10 Jan 2023 19:03:15 +0100
-Message-Id: <20230110180035.303214356@linuxfoundation.org>
+Subject: [PATCH 5.15 104/290] tracing: Fix infinite loop in tracing_read_pipe on overflowed print_trace_line
+Date: Tue, 10 Jan 2023 19:03:16 +0100
+Message-Id: <20230110180035.334946510@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,85 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-commit 575b76cb885532aae13a9d979fd476bb2b156cb9 upstream.
+commit c1ac03af6ed45d05786c219d102f37eb44880f28 upstream.
 
-When creating probe names, a check is done to make sure it matches basic C
-standard variable naming standards. Basically, starts with alphabetic or
-underline, and then the rest of the characters have alpha-numeric or
-underline in them.
+print_trace_line may overflow seq_file buffer. If the event is not
+consumed, the while loop keeps peeking this event, causing a infinite loop.
 
-But system names do not have any true naming conventions, as they are
-created by the TRACE_SYSTEM macro and nothing tests to see what they are.
-The "xhci-hcd" trace events has a '-' in the system name. When trying to
-attach a eprobe to one of these trace points, it fails because the system
-name does not follow the variable naming convention because of the
-hyphen, and the eprobe checks fail on this.
-
-Allow hyphens in the system name so that eprobes can attach to the
-"xhci-hcd" trace events.
-
-Link: https://lore.kernel.org/all/Y3eJ8GiGnEvVd8%2FN@macondo/
-Link: https://lore.kernel.org/linux-trace-kernel/20221122122345.160f5077@gandalf.local.home
+Link: https://lkml.kernel.org/r/20221129113009.182425-1-yangjihong1@huawei.com
 
 Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: 5b7a96220900e ("tracing/probe: Check event/group naming rule at parsing")
-Reported-by: Rafael Mendonca <rafaelmendsr@gmail.com>
+Fixes: 088b1e427dbba ("ftrace: pipe fixes")
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.h       |   19 ++++++++++++++++---
- kernel/trace/trace_probe.c |    2 +-
- 2 files changed, 17 insertions(+), 4 deletions(-)
+ kernel/trace/trace.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -1939,17 +1939,30 @@ static __always_inline void trace_iterat
- }
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -6764,7 +6764,20 @@ waitagain:
  
- /* Check the name is good for event/group/fields */
--static inline bool is_good_name(const char *name)
-+static inline bool __is_good_name(const char *name, bool hash_ok)
- {
--	if (!isalpha(*name) && *name != '_')
-+	if (!isalpha(*name) && *name != '_' && (!hash_ok || *name != '-'))
- 		return false;
- 	while (*++name != '\0') {
--		if (!isalpha(*name) && !isdigit(*name) && *name != '_')
-+		if (!isalpha(*name) && !isdigit(*name) && *name != '_' &&
-+		    (!hash_ok || *name != '-'))
- 			return false;
- 	}
- 	return true;
- }
- 
-+/* Check the name is good for event/group/fields */
-+static inline bool is_good_name(const char *name)
-+{
-+	return __is_good_name(name, false);
-+}
+ 		ret = print_trace_line(iter);
+ 		if (ret == TRACE_TYPE_PARTIAL_LINE) {
+-			/* don't print partial lines */
++			/*
++			 * If one print_trace_line() fills entire trace_seq in one shot,
++			 * trace_seq_to_user() will returns -EBUSY because save_len == 0,
++			 * In this case, we need to consume it, otherwise, loop will peek
++			 * this event next time, resulting in an infinite loop.
++			 */
++			if (save_len == 0) {
++				iter->seq.full = 0;
++				trace_seq_puts(&iter->seq, "[LINE TOO BIG]\n");
++				trace_consume(iter);
++				break;
++			}
 +
-+/* Check the name is good for system */
-+static inline bool is_good_system_name(const char *name)
-+{
-+	return __is_good_name(name, true);
-+}
-+
- /* Convert certain expected symbols into '_' when generating event names */
- static inline void sanitize_event_name(char *name)
- {
---- a/kernel/trace/trace_probe.c
-+++ b/kernel/trace/trace_probe.c
-@@ -246,7 +246,7 @@ int traceprobe_parse_event_name(const ch
- 			return -EINVAL;
- 		}
- 		strlcpy(buf, event, slash - event + 1);
--		if (!is_good_name(buf)) {
-+		if (!is_good_system_name(buf)) {
- 			trace_probe_log_err(offset, BAD_GROUP_NAME);
- 			return -EINVAL;
++			/* In other cases, don't print partial lines */
+ 			iter->seq.seq.len = save_len;
+ 			break;
  		}
 
 
