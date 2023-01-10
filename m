@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEFBA6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:28:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7377EC433D2;
-	Tue, 10 Jan 2023 18:28:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAB26FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:28:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55243C433EF;
+	Tue, 10 Jan 2023 18:28:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375309;
-	bh=YXsvVkbz4VetYhwqccxBJRYFNckHVXQjcLQThVKAgvw=;
+	s=korg; t=1673375312;
+	bh=v/ci+9ycuLaarRqugNWRzLMwqLOn3h8IZ9Npx4pqoUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KN+PvN+YM4582yYaLqGiY69HGiFuEq6nH2q19nRnIXzgXH+zK/dexHfXWAmICY8IC
-	 eUXFwZgBGv/1kPrEfzVz2REfSh1hTOJ6+evoQ+MKeEsNIJzVQUTSHwiH3chWxXEw6o
-	 1QW11dNaVd4iR3ljwWNQS2Nr1a0lSirYxjC9CIp8=
+	b=TxkAnNz7rGjG99bBZh+BSz53hJMHmsTXtyeLR5FRpdR/dkaRmttiAMyiQenSCyzgi
+	 eF8wrKDOwKaflz0fc93GIhbxU2b/SscFXwndt3NrNnRdwOVmUMM2lccVNqLJorI+Rg
+	 L7IbHdLwN8SIev0m3PSrx1wSQKJ6qYSJ9FIWRznY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+05a0f0ccab4a25626e38@syzkaller.appspotmail.com,
-	Ye Bin <yebin10@huawei.com>,
-	Eric Whitney <enwlinux@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 5.15 148/290] ext4: fix reserved cluster accounting in __es_remove_extent()
-Date: Tue, 10 Jan 2023 19:04:00 +0100
-Message-Id: <20230110180036.945422079@linuxfoundation.org>
+	Kim Phillips <kim.phillips@amd.com>,
+	Suravee Suthikulpanit <Suravee.Suthikulpanit@amd.com>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 5.15 131/290] iommu/amd: Fix ivrs_acpihid cmdline parsing code
+Date: Tue, 10 Jan 2023 19:03:43 +0100
+Message-Id: <20230110180036.353739548@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -37,91 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ye Bin <yebin10@huawei.com>
+From: Kim Phillips <kim.phillips@amd.com>
 
-commit 1da18e38cb97e9521e93d63034521a9649524f64 upstream.
+commit 5f18e9f8868c6d4eae71678e7ebd4977b7d8c8cf upstream.
 
-When bigalloc is enabled, reserved cluster accounting for delayed
-allocation is handled in extent_status.c.  With a corrupted file
-system, it's possible for this accounting to be incorrect,
-dsicovered by Syzbot:
+The second (UID) strcmp in acpi_dev_hid_uid_match considers
+"0" and "00" different, which can prevent device registration.
 
-EXT4-fs error (device loop0): ext4_validate_block_bitmap:398: comm rep:
-	bg 0: block 5: invalid block bitmap
-EXT4-fs (loop0): Delayed block allocation failed for inode 18 at logical
-	offset 0 with max blocks 32 with error 28
-EXT4-fs (loop0): This should not happen!! Data will be lost
+Have the AMD IOMMU driver's ivrs_acpihid parsing code remove
+any leading zeroes to make the UID strcmp succeed.  Now users
+can safely specify "AMDxxxxx:00" or "AMDxxxxx:0" and expect
+the same behaviour.
 
-EXT4-fs (loop0): Total free blocks count 0
-EXT4-fs (loop0): Free/Dirty block details
-EXT4-fs (loop0): free_blocks=0
-EXT4-fs (loop0): dirty_blocks=32
-EXT4-fs (loop0): Block reservation details
-EXT4-fs (loop0): i_reserved_data_blocks=2
-EXT4-fs (loop0): Inode 18 (00000000845cd634):
-	i_reserved_data_blocks (1) not cleared!
-
-Above issue happens as follows:
-Assume:
-sbi->s_cluster_ratio = 16
-Step1:
-Insert delay block [0, 31] -> ei->i_reserved_data_blocks=2
-Step2:
-ext4_writepages
-  mpage_map_and_submit_extent -> return failed
-  mpage_release_unused_pages -> to release [0, 30]
-    ext4_es_remove_extent -> remove lblk=0 end=30
-      __es_remove_extent -> len1=0 len2=31-30=1
- __es_remove_extent:
- ...
- if (len2 > 0) {
-  ...
-	  if (len1 > 0) {
-		  ...
-	  } else {
-		es->es_lblk = end + 1;
-		es->es_len = len2;
-		...
-	  }
-  	if (count_reserved)
-		count_rsvd(inode, lblk, ...);
-	goto out; -> will return but didn't calculate 'reserved'
- ...
-Step3:
-ext4_destroy_inode -> trigger "i_reserved_data_blocks (1) not cleared!"
-
-To solve above issue if 'len2>0' call 'get_rsvd()' before goto out.
-
-Reported-by: syzbot+05a0f0ccab4a25626e38@syzkaller.appspotmail.com
-Fixes: 8fcc3a580651 ("ext4: rework reserved cluster accounting when invalidating pages")
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Eric Whitney <enwlinux@gmail.com>
-Link: https://lore.kernel.org/r/20221208033426.1832460-2-yebin@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Fixes: ca3bf5d47cec ("iommu/amd: Introduces ivrs_acpihid kernel parameter")
+Signed-off-by: Kim Phillips <kim.phillips@amd.com>
+Cc: stable@vger.kernel.org
+Cc: Suravee Suthikulpanit <Suravee.Suthikulpanit@amd.com>
+Cc: Joerg Roedel <jroedel@suse.de>
+Link: https://lore.kernel.org/r/20220919155638.391481-1-kim.phillips@amd.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents_status.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/iommu/amd/init.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/fs/ext4/extents_status.c
-+++ b/fs/ext4/extents_status.c
-@@ -1372,7 +1372,7 @@ retry:
- 		if (count_reserved)
- 			count_rsvd(inode, lblk, orig_es.es_len - len1 - len2,
- 				   &orig_es, &rc);
--		goto out;
-+		goto out_get_reserved;
+--- a/drivers/iommu/amd/init.c
++++ b/drivers/iommu/amd/init.c
+@@ -3226,6 +3226,13 @@ static int __init parse_ivrs_acpihid(cha
+ 		return 1;
  	}
  
- 	if (len1 > 0) {
-@@ -1414,6 +1414,7 @@ retry:
- 		}
- 	}
- 
-+out_get_reserved:
- 	if (count_reserved)
- 		*reserved = get_rsvd(inode, end, es, &rc);
- out:
++	/*
++	 * Ignore leading zeroes after ':', so e.g., AMDI0095:00
++	 * will match AMDI0095:0 in the second strcmp in acpi_dev_hid_uid_match
++	 */
++	while (*uid == '0' && *(uid + 1))
++		uid++;
++
+ 	i = early_acpihid_map_size++;
+ 	memcpy(early_acpihid_map[i].hid, hid, strlen(hid));
+ 	memcpy(early_acpihid_map[i].uid, uid, strlen(uid));
 
 
