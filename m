@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EC86FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:32:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C448C433D2;
-	Tue, 10 Jan 2023 18:32:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F466FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:32:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47C95C433D2;
+	Tue, 10 Jan 2023 18:32:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375524;
-	bh=C0QGxNGzypsXuB2ieAt69FcxXPFpclzfYsbQgmcvwTo=;
+	s=korg; t=1673375527;
+	bh=Zk/s7rsz7AClG+7lB9C48wODoVcp7IrNq8sQq/J/GdQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J0NhV/jdsuH2GgtXs6UHZVf9IMpGQ2rjArVCJ2DWf1RGpoB9ArLjQ1BFpaA+awlLT
-	 hp4z26WRth6xM7QGxgnseC6sV1x+sq+b9WvuhJninEAS3CbHX2VswmeqLKVz0Ut2lW
-	 k+VkDa429t1pPZmrlrSNRwFTqiIrD1CnuUPp7WnA=
+	b=0M/YFkW1Z3nrBvB60S28QYGaQ+brp5TTLZd1K0qhTVLPRowPa1AWt14Z9qXa5oPVd
+	 oZTAF8pRr2IXT4lTmgO+CSiSPWZ4wL0YlpHgF/Nsw6J/vLsqmTquUu5YxiiLF//RN9
+	 6BYkZRpZC6T3YS3O31+Ia4L+dXRBSgZfwZVhtBXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Steven Price <steven.price@arm.com>,
-	Rob Clark <robdclark@gmail.com>,
+	Yuan Can <yuancan@huawei.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 200/290] drm/panfrost: Fix GEM handle creation ref-counting
-Date: Tue, 10 Jan 2023 19:04:52 +0100
-Message-Id: <20230110180038.865121024@linuxfoundation.org>
+Subject: [PATCH 5.15 218/290] vhost/vsock: Fix error handling in vhost_vsock_init()
+Date: Tue, 10 Jan 2023 19:05:10 +0100
+Message-Id: <20230110180039.524709158@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -36,136 +37,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Price <steven.price@arm.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 4217c6ac817451d5116687f3cc6286220dc43d49 ]
+[ Upstream commit 7a4efe182ca61fb3e5307e69b261c57cbf434cd4 ]
 
-panfrost_gem_create_with_handle() previously returned a BO but with the
-only reference being from the handle, which user space could in theory
-guess and release, causing a use-after-free. Additionally if the call to
-panfrost_gem_mapping_get() in panfrost_ioctl_create_bo() failed then
-a(nother) reference on the BO was dropped.
+A problem about modprobe vhost_vsock failed is triggered with the
+following log given:
 
-The _create_with_handle() is a problematic pattern, so ditch it and
-instead create the handle in panfrost_ioctl_create_bo(). If the call to
-panfrost_gem_mapping_get() fails then this means that user space has
-indeed gone behind our back and freed the handle. In which case just
-return an error code.
+modprobe: ERROR: could not insert 'vhost_vsock': Device or resource busy
 
-Reported-by: Rob Clark <robdclark@chromium.org>
-Fixes: f3ba91228e8e ("drm/panfrost: Add initial panfrost driver")
-Signed-off-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Rob Clark <robdclark@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221219140130.410578-1-steven.price@arm.com
+The reason is that vhost_vsock_init() returns misc_register() directly
+without checking its return value, if misc_register() failed, it returns
+without calling vsock_core_unregister() on vhost_transport, resulting the
+vhost_vsock can never be installed later.
+A simple call graph is shown as below:
+
+ vhost_vsock_init()
+   vsock_core_register() # register vhost_transport
+   misc_register()
+     device_create_with_groups()
+       device_create_groups_vargs()
+         dev = kzalloc(...) # OOM happened
+   # return without unregister vhost_transport
+
+Fix by calling vsock_core_unregister() when misc_register() returns error.
+
+Fixes: 433fc58e6bf2 ("VSOCK: Introduce vhost_vsock.ko")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Message-Id: <20221108101705.45981-1-yuancan@huawei.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_drv.c | 27 ++++++++++++++++---------
- drivers/gpu/drm/panfrost/panfrost_gem.c | 16 +--------------
- drivers/gpu/drm/panfrost/panfrost_gem.h |  5 +----
- 3 files changed, 20 insertions(+), 28 deletions(-)
+ drivers/vhost/vsock.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/panfrost/panfrost_drv.c
-index e48e357ea4f1..4c271244092b 100644
---- a/drivers/gpu/drm/panfrost/panfrost_drv.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
-@@ -82,6 +82,7 @@ static int panfrost_ioctl_create_bo(struct drm_device *dev, void *data,
- 	struct panfrost_gem_object *bo;
- 	struct drm_panfrost_create_bo *args = data;
- 	struct panfrost_gem_mapping *mapping;
-+	int ret;
- 
- 	if (!args->size || args->pad ||
- 	    (args->flags & ~(PANFROST_BO_NOEXEC | PANFROST_BO_HEAP)))
-@@ -92,21 +93,29 @@ static int panfrost_ioctl_create_bo(struct drm_device *dev, void *data,
- 	    !(args->flags & PANFROST_BO_NOEXEC))
- 		return -EINVAL;
- 
--	bo = panfrost_gem_create_with_handle(file, dev, args->size, args->flags,
--					     &args->handle);
-+	bo = panfrost_gem_create(dev, args->size, args->flags);
- 	if (IS_ERR(bo))
- 		return PTR_ERR(bo);
- 
-+	ret = drm_gem_handle_create(file, &bo->base.base, &args->handle);
-+	if (ret)
-+		goto out;
+diff --git a/drivers/vhost/vsock.c b/drivers/vhost/vsock.c
+index 97bfe499222b..74ac0c28fe43 100644
+--- a/drivers/vhost/vsock.c
++++ b/drivers/vhost/vsock.c
+@@ -968,7 +968,14 @@ static int __init vhost_vsock_init(void)
+ 				  VSOCK_TRANSPORT_F_H2G);
+ 	if (ret < 0)
+ 		return ret;
+-	return misc_register(&vhost_vsock_misc);
 +
- 	mapping = panfrost_gem_mapping_get(bo, priv);
--	if (!mapping) {
--		drm_gem_object_put(&bo->base.base);
--		return -EINVAL;
-+	if (mapping) {
-+		args->offset = mapping->mmnode.start << PAGE_SHIFT;
-+		panfrost_gem_mapping_put(mapping);
-+	} else {
-+		/* This can only happen if the handle from
-+		 * drm_gem_handle_create() has already been guessed and freed
-+		 * by user space
-+		 */
-+		ret = -EINVAL;
- 	}
++	ret = misc_register(&vhost_vsock_misc);
++	if (ret) {
++		vsock_core_unregister(&vhost_transport.transport);
++		return ret;
++	}
++
++	return 0;
+ };
  
--	args->offset = mapping->mmnode.start << PAGE_SHIFT;
--	panfrost_gem_mapping_put(mapping);
--
--	return 0;
-+out:
-+	drm_gem_object_put(&bo->base.base);
-+	return ret;
- }
- 
- /**
-diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.c b/drivers/gpu/drm/panfrost/panfrost_gem.c
-index 6d9bdb9180cb..55e3a68ed28a 100644
---- a/drivers/gpu/drm/panfrost/panfrost_gem.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_gem.c
-@@ -234,12 +234,8 @@ struct drm_gem_object *panfrost_gem_create_object(struct drm_device *dev, size_t
- }
- 
- struct panfrost_gem_object *
--panfrost_gem_create_with_handle(struct drm_file *file_priv,
--				struct drm_device *dev, size_t size,
--				u32 flags,
--				uint32_t *handle)
-+panfrost_gem_create(struct drm_device *dev, size_t size, u32 flags)
- {
--	int ret;
- 	struct drm_gem_shmem_object *shmem;
- 	struct panfrost_gem_object *bo;
- 
-@@ -255,16 +251,6 @@ panfrost_gem_create_with_handle(struct drm_file *file_priv,
- 	bo->noexec = !!(flags & PANFROST_BO_NOEXEC);
- 	bo->is_heap = !!(flags & PANFROST_BO_HEAP);
- 
--	/*
--	 * Allocate an id of idr table where the obj is registered
--	 * and handle has the id what user can see.
--	 */
--	ret = drm_gem_handle_create(file_priv, &shmem->base, handle);
--	/* drop reference from allocate - handle holds it now. */
--	drm_gem_object_put(&shmem->base);
--	if (ret)
--		return ERR_PTR(ret);
--
- 	return bo;
- }
- 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.h b/drivers/gpu/drm/panfrost/panfrost_gem.h
-index 8088d5fd8480..ad2877eeeccd 100644
---- a/drivers/gpu/drm/panfrost/panfrost_gem.h
-+++ b/drivers/gpu/drm/panfrost/panfrost_gem.h
-@@ -69,10 +69,7 @@ panfrost_gem_prime_import_sg_table(struct drm_device *dev,
- 				   struct sg_table *sgt);
- 
- struct panfrost_gem_object *
--panfrost_gem_create_with_handle(struct drm_file *file_priv,
--				struct drm_device *dev, size_t size,
--				u32 flags,
--				uint32_t *handle);
-+panfrost_gem_create(struct drm_device *dev, size_t size, u32 flags);
- 
- int panfrost_gem_open(struct drm_gem_object *obj, struct drm_file *file_priv);
- void panfrost_gem_close(struct drm_gem_object *obj,
+ static void __exit vhost_vsock_exit(void)
 -- 
 2.35.1
 
