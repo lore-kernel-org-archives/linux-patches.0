@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 653706FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:31:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD9D7C433D2;
-	Tue, 10 Jan 2023 18:31:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F9B6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:31:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDF4EC433EF;
+	Tue, 10 Jan 2023 18:31:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375480;
-	bh=7SpcSdzupjlMER5OEfkLC9wDYdoAG8sN2rTwJtpmpZs=;
+	s=korg; t=1673375483;
+	bh=Hxwsf9WLf9i2RS6uWuCA8E/BYtuXOVVrWNpUjcXYi90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ohzzaCEQFEQ1DR9wCZKm0N1NgKI8Ve0TCqMzWLH7J6gl88Bnvs0PXrgFRMoGe8LVc
-	 AzL31/jhbfH7B3pa9ycCEk47NcOJL5Mu5FWnj6a6+3nOrOK8UirG16xHenade3eYZn
-	 kIqb8bGocYm1ZteVWofeDL1shqcGuOiMk+zWwFWo=
+	b=sT5IjEC54+9wEeU8GdvhoQCHi7kYdqD0NCaTcw/ab0BrDz+mzoN5yWWS8zn3Csc8Z
+	 Eh78tlrqV7V6jPlVkn4jtyK8sJ0vOniwheN0Vx8jaJXlWTIHmcj9u9+XesY8tmNNdM
+	 viRpPaxJafqxS1hPGO3E6IYv2YA0LM3opZKHNS+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Ye Bin <yebin10@huawei.com>,
-	Theodore Tso <tytso@mit.edu>,
-	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 5.15 171/290] ext4: fix potential out of bound read in ext4_fc_replay_scan()
-Date: Tue, 10 Jan 2023 19:04:23 +0100
-Message-Id: <20230110180037.813163503@linuxfoundation.org>
+	"linux-ext4@vger.kernel.org, Theodore Tso" <tytso@mit.edu>,
+	Eric Biggers <ebiggers@google.com>,
+	Theodore Ts'o <tytso@mit.edu>
+Subject: [PATCH 5.15 172/290] ext4: disable fast-commit of encrypted dir operations
+Date: Tue, 10 Jan 2023 19:04:24 +0100
+Message-Id: <20230110180037.847545517@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -38,97 +37,151 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Biggers <ebiggers@kernel.org>
 
-From: Ye Bin <yebin10@huawei.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit 1b45cc5c7b920fd8bf72e5a888ec7abeadf41e09 upstream.
+commit 0fbcb5251fc81b58969b272c4fb7374a7b922e3e upstream.
 
-For scan loop must ensure that at least EXT4_FC_TAG_BASE_LEN space. If remain
-space less than EXT4_FC_TAG_BASE_LEN which will lead to out of bound read
-when mounting corrupt file system image.
-ADD_RANGE/HEAD/TAIL is needed to add extra check when do journal scan, as this
-three tags will read data during scan, tag length couldn't less than data length
-which will read.
+fast-commit of create, link, and unlink operations in encrypted
+directories is completely broken because the unencrypted filenames are
+being written to the fast-commit journal instead of the encrypted
+filenames.  These operations can't be replayed, as encryption keys
+aren't present at journal replay time.  It is also an information leak.
 
-Cc: stable@kernel.org
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Link: https://lore.kernel.org/r/20220924075233.2315259-4-yebin10@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Until if/when we can get this working properly, make encrypted directory
+operations ineligible for fast-commit.
+
+Note that fast-commit operations on encrypted regular files continue to
+be allowed, as they seem to work.
+
+Fixes: aa75f4d3daae ("ext4: main fast-commit commit path")
+Cc: <stable@vger.kernel.org> # v5.10+
 Signed-off-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20221106224841.279231-2-ebiggers@kernel.org
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |   38 ++++++++++++++++++++++++++++++++++++--
- 1 file changed, 36 insertions(+), 2 deletions(-)
+ fs/ext4/fast_commit.c       |   41 +++++++++++++++++++++++++----------------
+ fs/ext4/fast_commit.h       |    1 +
+ include/trace/events/ext4.h |    7 +++++--
+ 3 files changed, 31 insertions(+), 18 deletions(-)
 
 --- a/fs/ext4/fast_commit.c
 +++ b/fs/ext4/fast_commit.c
-@@ -1907,6 +1907,34 @@ void ext4_fc_replay_cleanup(struct super
- 	kfree(sbi->s_fc_replay_state.fc_modified_inodes);
- }
+@@ -399,25 +399,34 @@ static int __track_dentry_update(struct
+ 	struct __track_dentry_update_args *dentry_update =
+ 		(struct __track_dentry_update_args *)arg;
+ 	struct dentry *dentry = dentry_update->dentry;
+-	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
++	struct inode *dir = dentry->d_parent->d_inode;
++	struct super_block *sb = inode->i_sb;
++	struct ext4_sb_info *sbi = EXT4_SB(sb);
  
-+static inline bool ext4_fc_tag_len_isvalid(struct ext4_fc_tl *tl,
-+					   u8 *val, u8 *end)
-+{
-+	if (val + tl->fc_len > end)
-+		return false;
+ 	mutex_unlock(&ei->i_fc_lock);
 +
-+	/* Here only check ADD_RANGE/TAIL/HEAD which will read data when do
-+	 * journal rescan before do CRC check. Other tags length check will
-+	 * rely on CRC check.
-+	 */
-+	switch (tl->fc_tag) {
-+	case EXT4_FC_TAG_ADD_RANGE:
-+		return (sizeof(struct ext4_fc_add_range) == tl->fc_len);
-+	case EXT4_FC_TAG_TAIL:
-+		return (sizeof(struct ext4_fc_tail) <= tl->fc_len);
-+	case EXT4_FC_TAG_HEAD:
-+		return (sizeof(struct ext4_fc_head) == tl->fc_len);
-+	case EXT4_FC_TAG_DEL_RANGE:
-+	case EXT4_FC_TAG_LINK:
-+	case EXT4_FC_TAG_UNLINK:
-+	case EXT4_FC_TAG_CREAT:
-+	case EXT4_FC_TAG_INODE:
-+	case EXT4_FC_TAG_PAD:
-+	default:
-+		return true;
++	if (IS_ENCRYPTED(dir)) {
++		ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_ENCRYPTED_FILENAME,
++					NULL);
++		mutex_lock(&ei->i_fc_lock);
++		return -EOPNOTSUPP;
 +	}
-+}
 +
- /*
-  * Recovery Scan phase handler
-  *
-@@ -1963,10 +1991,15 @@ static int ext4_fc_replay_scan(journal_t
+ 	node = kmem_cache_alloc(ext4_fc_dentry_cachep, GFP_NOFS);
+ 	if (!node) {
+-		ext4_fc_mark_ineligible(inode->i_sb, EXT4_FC_REASON_NOMEM, NULL);
++		ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_NOMEM, NULL);
+ 		mutex_lock(&ei->i_fc_lock);
+ 		return -ENOMEM;
  	}
  
- 	state->fc_replay_expected_off++;
--	for (cur = start; cur < end;
-+	for (cur = start; cur < end - EXT4_FC_TAG_BASE_LEN;
- 	     cur = cur + EXT4_FC_TAG_BASE_LEN + tl.fc_len) {
- 		ext4_fc_get_tl(&tl, cur);
- 		val = cur + EXT4_FC_TAG_BASE_LEN;
-+		if (!ext4_fc_tag_len_isvalid(&tl, val, end)) {
-+			ret = state->fc_replay_num_tags ?
-+				JBD2_FC_REPLAY_STOP : -ECANCELED;
-+			goto out_err;
-+		}
- 		ext4_debug("Scan phase, tag:%s, blk %lld\n",
- 			   tag2str(tl.fc_tag), bh->b_blocknr);
- 		switch (tl.fc_tag) {
-@@ -2077,7 +2110,7 @@ static int ext4_fc_replay(journal_t *jou
- 	start = (u8 *)bh->b_data;
- 	end = (__u8 *)bh->b_data + journal->j_blocksize - 1;
- 
--	for (cur = start; cur < end;
-+	for (cur = start; cur < end - EXT4_FC_TAG_BASE_LEN;
- 	     cur = cur + EXT4_FC_TAG_BASE_LEN + tl.fc_len) {
- 		ext4_fc_get_tl(&tl, cur);
- 		val = cur + EXT4_FC_TAG_BASE_LEN;
-@@ -2087,6 +2120,7 @@ static int ext4_fc_replay(journal_t *jou
- 			ext4_fc_set_bitmaps_and_counters(sb);
- 			break;
+ 	node->fcd_op = dentry_update->op;
+-	node->fcd_parent = dentry->d_parent->d_inode->i_ino;
++	node->fcd_parent = dir->i_ino;
+ 	node->fcd_ino = inode->i_ino;
+ 	if (dentry->d_name.len > DNAME_INLINE_LEN) {
+ 		node->fcd_name.name = kmalloc(dentry->d_name.len, GFP_NOFS);
+ 		if (!node->fcd_name.name) {
+ 			kmem_cache_free(ext4_fc_dentry_cachep, node);
+-			ext4_fc_mark_ineligible(inode->i_sb,
+-				EXT4_FC_REASON_NOMEM, NULL);
++			ext4_fc_mark_ineligible(sb, EXT4_FC_REASON_NOMEM, NULL);
+ 			mutex_lock(&ei->i_fc_lock);
+ 			return -ENOMEM;
  		}
-+
- 		ext4_debug("Replay phase, tag:%s\n", tag2str(tl.fc_tag));
- 		state->fc_replay_num_tags--;
- 		switch (tl.fc_tag) {
+@@ -2179,17 +2188,17 @@ void ext4_fc_init(struct super_block *sb
+ 	journal->j_fc_cleanup_callback = ext4_fc_cleanup;
+ }
+ 
+-static const char *fc_ineligible_reasons[] = {
+-	"Extended attributes changed",
+-	"Cross rename",
+-	"Journal flag changed",
+-	"Insufficient memory",
+-	"Swap boot",
+-	"Resize",
+-	"Dir renamed",
+-	"Falloc range op",
+-	"Data journalling",
+-	"FC Commit Failed"
++static const char * const fc_ineligible_reasons[] = {
++	[EXT4_FC_REASON_XATTR] = "Extended attributes changed",
++	[EXT4_FC_REASON_CROSS_RENAME] = "Cross rename",
++	[EXT4_FC_REASON_JOURNAL_FLAG_CHANGE] = "Journal flag changed",
++	[EXT4_FC_REASON_NOMEM] = "Insufficient memory",
++	[EXT4_FC_REASON_SWAP_BOOT] = "Swap boot",
++	[EXT4_FC_REASON_RESIZE] = "Resize",
++	[EXT4_FC_REASON_RENAME_DIR] = "Dir renamed",
++	[EXT4_FC_REASON_FALLOC_RANGE] = "Falloc range op",
++	[EXT4_FC_REASON_INODE_JOURNAL_DATA] = "Data journalling",
++	[EXT4_FC_REASON_ENCRYPTED_FILENAME] = "Encrypted filename",
+ };
+ 
+ int ext4_fc_info_show(struct seq_file *seq, void *v)
+--- a/fs/ext4/fast_commit.h
++++ b/fs/ext4/fast_commit.h
+@@ -96,6 +96,7 @@ enum {
+ 	EXT4_FC_REASON_RENAME_DIR,
+ 	EXT4_FC_REASON_FALLOC_RANGE,
+ 	EXT4_FC_REASON_INODE_JOURNAL_DATA,
++	EXT4_FC_REASON_ENCRYPTED_FILENAME,
+ 	EXT4_FC_REASON_MAX
+ };
+ 
+--- a/include/trace/events/ext4.h
++++ b/include/trace/events/ext4.h
+@@ -104,6 +104,7 @@ TRACE_DEFINE_ENUM(EXT4_FC_REASON_RESIZE)
+ TRACE_DEFINE_ENUM(EXT4_FC_REASON_RENAME_DIR);
+ TRACE_DEFINE_ENUM(EXT4_FC_REASON_FALLOC_RANGE);
+ TRACE_DEFINE_ENUM(EXT4_FC_REASON_INODE_JOURNAL_DATA);
++TRACE_DEFINE_ENUM(EXT4_FC_REASON_ENCRYPTED_FILENAME);
+ TRACE_DEFINE_ENUM(EXT4_FC_REASON_MAX);
+ 
+ #define show_fc_reason(reason)						\
+@@ -116,7 +117,8 @@ TRACE_DEFINE_ENUM(EXT4_FC_REASON_MAX);
+ 		{ EXT4_FC_REASON_RESIZE,	"RESIZE"},		\
+ 		{ EXT4_FC_REASON_RENAME_DIR,	"RENAME_DIR"},		\
+ 		{ EXT4_FC_REASON_FALLOC_RANGE,	"FALLOC_RANGE"},	\
+-		{ EXT4_FC_REASON_INODE_JOURNAL_DATA,	"INODE_JOURNAL_DATA"})
++		{ EXT4_FC_REASON_INODE_JOURNAL_DATA,	"INODE_JOURNAL_DATA"}, \
++		{ EXT4_FC_REASON_ENCRYPTED_FILENAME,	"ENCRYPTED_FILENAME"})
+ 
+ TRACE_EVENT(ext4_other_inode_update_time,
+ 	TP_PROTO(struct inode *inode, ino_t orig_ino),
+@@ -2764,7 +2766,7 @@ TRACE_EVENT(ext4_fc_stats,
+ 	),
+ 
+ 	TP_printk("dev %d,%d fc ineligible reasons:\n"
+-		  "%s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u "
++		  "%s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u, %s:%u"
+ 		  "num_commits:%lu, ineligible: %lu, numblks: %lu",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev),
+ 		  FC_REASON_NAME_STAT(EXT4_FC_REASON_XATTR),
+@@ -2776,6 +2778,7 @@ TRACE_EVENT(ext4_fc_stats,
+ 		  FC_REASON_NAME_STAT(EXT4_FC_REASON_RENAME_DIR),
+ 		  FC_REASON_NAME_STAT(EXT4_FC_REASON_FALLOC_RANGE),
+ 		  FC_REASON_NAME_STAT(EXT4_FC_REASON_INODE_JOURNAL_DATA),
++		  FC_REASON_NAME_STAT(EXT4_FC_REASON_ENCRYPTED_FILENAME),
+ 		  __entry->fc_commits, __entry->fc_ineligible_commits,
+ 		  __entry->fc_numblks)
+ );
 
 
