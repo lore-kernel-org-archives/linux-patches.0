@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ADD3A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA284C433D2;
-	Tue, 10 Jan 2023 18:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305ADA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A829AC433EF;
+	Tue, 10 Jan 2023 18:16:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374596;
-	bh=lm5dp+iK+CGHrjD/lZ2BdU786SnzQP4AwlJsbS6TUfM=;
+	s=korg; t=1673374602;
+	bh=2oD/y0D3rpipucRQMgvxc9+/kWgAozyojY34wdQ/9q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1+/Pvt8jTTH+WfT+LcxBQv8ecSbGlRfnghWqqWDJi4lGN/9gdIhIiBAw5sWCs3EhW
-	 DKvslPZs/lw3uMneK26O/8jZBeOw3HkYkT/C9JHbKmGqDvTZnC5NnQHUsA1TKMlIgX
-	 uJ6oBL1Qt8pV63ptjaXhdj31TYSiA/ezwYwe88/w=
+	b=xSAEoBNnHO9D63B3chTSksQO7OQoTB6Ls8PJCKRLt7+CxmdwDOdrU10ejFDg7vGUP
+	 v9NZVUREN7T/dDyKsVXnWciDvMLqR+Co+KyEQsjgVD7PmPSGU4WLOKEGT1KFRB9Vd0
+	 18YIEztkGjo1vXfuOAMx0vNJVrgcj74m/MzJqwwY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohammad Shuab Siddique <mohammad-shuab.siddique@broadcom.com>,
-	Ajit Khaparde <ajit.khaparde@broadcom.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jason Wang <jasowang@redhat.com>,
+	Eli Cohen <elic@nvidia.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 039/159] bnxt_en: Fix HDS and jumbo thresholds for RX packets
-Date: Tue, 10 Jan 2023 19:03:07 +0100
-Message-Id: <20230110180019.559487841@linuxfoundation.org>
+Subject: [PATCH 6.1 041/159] vdpa/mlx5: Fix wrong mac address deletion
+Date: Tue, 10 Jan 2023 19:03:09 +0100
+Message-Id: <20230110180019.620039599@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -38,53 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Eli Cohen <elic@nvidia.com>
 
-[ Upstream commit a056ebcc30e2f78451d66f615d2f6bdada3e6438 ]
+[ Upstream commit 1ab53760d322c82fb4cb5e81b5817065801e3ec4 ]
 
-The recent XDP multi-buffer feature has introduced regressions in the
-setting of HDS and jumbo thresholds.  HDS was accidentally disabled in
-the nornmal mode without XDP.  This patch restores jumbo HDS placement
-when not in XDP mode.  In XDP multi-buffer mode, HDS should be disabled
-and the jumbo threshold should be set to the usable page size in the
-first page buffer.
+Delete the old MAC from the table and not the new one which is not there
+yet.
 
-Fixes: 32861236190b ("bnxt: change receive ring space parameters")
-Reviewed-by: Mohammad Shuab Siddique <mohammad-shuab.siddique@broadcom.com>
-Reviewed-by: Ajit Khaparde <ajit.khaparde@broadcom.com>
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: baf2ad3f6a98 ("vdpa/mlx5: Add RX MAC VLAN filter support")
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Eli Cohen <elic@nvidia.com>
+Message-Id: <20221114131759.57883-4-elic@nvidia.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/vdpa/mlx5/net/mlx5_vnet.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index b0c9c9813d23..f5a8bae8d79a 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -5371,15 +5371,16 @@ static int bnxt_hwrm_vnic_set_hds(struct bnxt *bp, u16 vnic_id)
- 	req->flags = cpu_to_le32(VNIC_PLCMODES_CFG_REQ_FLAGS_JUMBO_PLACEMENT);
- 	req->enables = cpu_to_le32(VNIC_PLCMODES_CFG_REQ_ENABLES_JUMBO_THRESH_VALID);
+diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+index 3fb06dcee943..444d6572b2d0 100644
+--- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
++++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+@@ -1686,7 +1686,7 @@ static virtio_net_ctrl_ack handle_ctrl_mac(struct mlx5_vdpa_dev *mvdev, u8 cmd)
  
--	if (BNXT_RX_PAGE_MODE(bp) && !BNXT_RX_JUMBO_MODE(bp)) {
-+	if (BNXT_RX_PAGE_MODE(bp)) {
-+		req->jumbo_thresh = cpu_to_le16(bp->rx_buf_use_size);
-+	} else {
- 		req->flags |= cpu_to_le32(VNIC_PLCMODES_CFG_REQ_FLAGS_HDS_IPV4 |
- 					  VNIC_PLCMODES_CFG_REQ_FLAGS_HDS_IPV6);
- 		req->enables |=
- 			cpu_to_le32(VNIC_PLCMODES_CFG_REQ_ENABLES_HDS_THRESHOLD_VALID);
-+		req->jumbo_thresh = cpu_to_le16(bp->rx_copy_thresh);
-+		req->hds_threshold = cpu_to_le16(bp->rx_copy_thresh);
- 	}
--	/* thresholds not implemented in firmware yet */
--	req->jumbo_thresh = cpu_to_le16(bp->rx_copy_thresh);
--	req->hds_threshold = cpu_to_le16(bp->rx_copy_thresh);
- 	req->vnic_id = cpu_to_le32(vnic->fw_vnic_id);
- 	return hwrm_req_send(bp, req);
- }
+ 		/* Need recreate the flow table entry, so that the packet could forward back
+ 		 */
+-		mac_vlan_del(ndev, ndev->config.mac, 0, false);
++		mac_vlan_del(ndev, mac_back, 0, false);
+ 
+ 		if (mac_vlan_add(ndev, ndev->config.mac, 0, false)) {
+ 			mlx5_vdpa_warn(mvdev, "failed to insert forward rules, try to restore\n");
 -- 
 2.35.1
 
