@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF0C0A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:07:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45988C433D2;
-	Tue, 10 Jan 2023 18:07:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C3BA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:07:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC21C433EF;
+	Tue, 10 Jan 2023 18:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374049;
-	bh=UmmP9nAoiVGcDPOobEbHkraUxstIymo9uKKeIwU19sU=;
+	s=korg; t=1673374052;
+	bh=goc9zy/4l8vkIUno5Az/ePvO0Gv498KEOUcal1w97gg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0YFhnoGLFEHyEPxcruhdykdxWCVdHQ3bDh0EHHu3+GjNTkhm7iOTDO7qy0DScejAt
-	 OZfTB5TyafGEsa3YBBTrwCiX9AaUBBdDtszQDlKJkNAvk0JYgAXwU58CLoa+uL9oEI
-	 ffQLG9vHSa0R0s5JTqfEwJHYA6wmCsLGWO4jl3u8=
+	b=0G+PFmlVVKcq3XO4+4eGpkIh4P6UB8LgM0fNSvYZIdtm62ffAybv3jObCalYnhrFl
+	 cW6zzepbwGd+NqzDePeNH+IG4Gh+FNPeP4PjWnGhEOzV6J3qPppBnahG95Mmgtq3oA
+	 FqaSGlSQW+ntkTkrT9nI1cEoL2yYzyTottoxvWjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 012/148] btrfs: fix an error handling path in btrfs_defrag_leaves()
-Date: Tue, 10 Jan 2023 19:01:56 +0100
-Message-Id: <20230110180017.571096489@linuxfoundation.org>
+	Shyam Prasad N <sprasad@microsoft.com>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.0 003/148] cifs: fix interface count calculation during refresh
+Date: Tue, 10 Jan 2023 19:01:47 +0100
+Message-Id: <20230110180017.273086938@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -35,45 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-[ Upstream commit db0a4a7b8e95f9312a59a67cbd5bc589f090e13d ]
+From: Shyam Prasad N <sprasad@microsoft.com>
 
-All error handling paths end to 'out', except this memory allocation
-failure.
+commit cc7d79d4fad6a4eab3f88c4bb237de72be4478f1 upstream.
 
-This is spurious. So branch to the error handling path also in this case.
-It will add a call to:
+The last fix to iface_count did fix the overcounting issue.
+However, during each refresh, we could end up undercounting
+the iface_count, if a match was found.
 
-	memset(&root->defrag_progress, 0,
-	       sizeof(root->defrag_progress));
+Fixing this by doing increments and decrements instead of
+setting it to 0 before each parsing of server interfaces.
 
-Fixes: 6702ed490ca0 ("Btrfs: Add run time btree defrag, and an ioctl to force btree defrag")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 096bbeec7bd6 ("smb3: interface count displayed incorrectly")
+Cc: stable@vger.kernel.org # 6.1
+Signed-off-by: Shyam Prasad N <sprasad@microsoft.com>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-defrag.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/cifs/smb2ops.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/tree-defrag.c b/fs/btrfs/tree-defrag.c
-index b6cf39f4e7e4..072ab9a1374b 100644
---- a/fs/btrfs/tree-defrag.c
-+++ b/fs/btrfs/tree-defrag.c
-@@ -31,8 +31,10 @@ int btrfs_defrag_leaves(struct btrfs_trans_handle *trans,
- 		goto out;
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -530,7 +530,6 @@ parse_server_interfaces(struct network_i
+ 	p = buf;
  
- 	path = btrfs_alloc_path();
--	if (!path)
--		return -ENOMEM;
-+	if (!path) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
+ 	spin_lock(&ses->iface_lock);
+-	ses->iface_count = 0;
+ 	/*
+ 	 * Go through iface_list and do kref_put to remove
+ 	 * any unused ifaces. ifaces in use will be removed
+@@ -540,6 +539,7 @@ parse_server_interfaces(struct network_i
+ 				 iface_head) {
+ 		iface->is_active = 0;
+ 		kref_put(&iface->refcount, release_iface);
++		ses->iface_count--;
+ 	}
+ 	spin_unlock(&ses->iface_lock);
  
- 	level = btrfs_header_level(root->node);
- 
--- 
-2.35.1
-
+@@ -617,6 +617,7 @@ parse_server_interfaces(struct network_i
+ 				/* just get a ref so that it doesn't get picked/freed */
+ 				iface->is_active = 1;
+ 				kref_get(&iface->refcount);
++				ses->iface_count++;
+ 				spin_unlock(&ses->iface_lock);
+ 				goto next_iface;
+ 			} else if (ret < 0) {
 
 
