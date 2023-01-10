@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D324A6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:22:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437FEC433F0;
-	Tue, 10 Jan 2023 18:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E22DA6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:22:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 487CDC433EF;
+	Tue, 10 Jan 2023 18:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374974;
-	bh=AhlfT/ar6KkfA72yOOL2q9tadrb57H/GbX+37Aq1Rag=;
+	s=korg; t=1673374977;
+	bh=a5YlWnWmTHLR+tA/IesIk1jVQD9pXdX3MKABXMyf6EM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rSuubFN8ItejuT6uW2IOfEiDZaci1lL33vD53+g1Aduir0z81l233jY+85D7YIMfE
-	 1/NJ5WgQiWgK7ta5K9seCpWicXiEohdGaHmjTfE5yNFOmldyJBSlTcAFRcWk7RVVmF
-	 1a2+cGPIJfDLAZKQrBV9eajNDulPM0cvJvCZj0EI=
+	b=1OJPG46VVnjPQGOzxFsVpM69FLcSUNPtJMnkXDXyo+86xb8LayahnyNFmrnFT2WCI
+	 wiQaBDHaYbElsbWGOqP9T0MnZy3o0ZkCF/KOrrEv3S/QGJD3aYl5T9Oqx2Ow3kLou3
+	 6EzD+wneXsEv4lXe2EHJXfh7NKVAKfSfzMOp9Cds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 029/290] fs/ntfs3: Delete duplicate condition in ntfs_read_mft()
-Date: Tue, 10 Jan 2023 19:02:01 +0100
-Message-Id: <20230110180032.599765351@linuxfoundation.org>
+	Aditya Garg <gargaditya08@live.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 038/290] hfsplus: fix bug causing custom uid and gid being unable to be assigned with mount
+Date: Tue, 10 Jan 2023 19:02:10 +0100
+Message-Id: <20230110180032.896690089@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,44 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <dan.carpenter@oracle.com>
+From: Aditya Garg <gargaditya08@live.com>
 
-[ Upstream commit 658015167a8432b88f5d032e9d85d8fd50e5bf2c ]
+commit 9f2b5debc07073e6dfdd774e3594d0224b991927 upstream.
 
-There were two patches which addressed the same bug and added the same
-condition:
+Despite specifying UID and GID in mount command, the specified UID and GID
+were not being assigned. This patch fixes this issue.
 
-commit 6db620863f85 ("fs/ntfs3: Validate data run offset")
-commit 887bfc546097 ("fs/ntfs3: Fix slab-out-of-bounds read in run_unpack")
-
-Delete one condition.
-
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lkml.kernel.org/r/C0264BF5-059C-45CF-B8DA-3A3BD2C803A2@live.com
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/inode.c | 6 ------
- 1 file changed, 6 deletions(-)
+ fs/hfsplus/hfsplus_fs.h |    2 ++
+ fs/hfsplus/inode.c      |    4 ++--
+ fs/hfsplus/options.c    |    4 ++++
+ 3 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ntfs3/inode.c b/fs/ntfs3/inode.c
-index 00fd368e7b4a..ed640e4e3fac 100644
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -374,12 +374,6 @@ static struct inode *ntfs_read_mft(struct inode *inode,
+--- a/fs/hfsplus/hfsplus_fs.h
++++ b/fs/hfsplus/hfsplus_fs.h
+@@ -198,6 +198,8 @@ struct hfsplus_sb_info {
+ #define HFSPLUS_SB_HFSX		3
+ #define HFSPLUS_SB_CASEFOLD	4
+ #define HFSPLUS_SB_NOBARRIER	5
++#define HFSPLUS_SB_UID		6
++#define HFSPLUS_SB_GID		7
  
- 	t64 = le64_to_cpu(attr->nres.svcn);
+ static inline struct hfsplus_sb_info *HFSPLUS_SB(struct super_block *sb)
+ {
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -190,11 +190,11 @@ static void hfsplus_get_perms(struct ino
+ 	mode = be16_to_cpu(perms->mode);
  
--	/* offset to packed runs is out-of-bounds */
--	if (roff > asize) {
--		err = -EINVAL;
--		goto out;
--	}
--
- 	err = run_unpack_ex(run, sbi, ino, t64, le64_to_cpu(attr->nres.evcn),
- 			    t64, Add2Ptr(attr, roff), asize - roff);
- 	if (err < 0)
--- 
-2.35.1
-
+ 	i_uid_write(inode, be32_to_cpu(perms->owner));
+-	if (!i_uid_read(inode) && !mode)
++	if ((test_bit(HFSPLUS_SB_UID, &sbi->flags)) || (!i_uid_read(inode) && !mode))
+ 		inode->i_uid = sbi->uid;
+ 
+ 	i_gid_write(inode, be32_to_cpu(perms->group));
+-	if (!i_gid_read(inode) && !mode)
++	if ((test_bit(HFSPLUS_SB_GID, &sbi->flags)) || (!i_gid_read(inode) && !mode))
+ 		inode->i_gid = sbi->gid;
+ 
+ 	if (dir) {
+--- a/fs/hfsplus/options.c
++++ b/fs/hfsplus/options.c
+@@ -140,6 +140,8 @@ int hfsplus_parse_options(char *input, s
+ 			if (!uid_valid(sbi->uid)) {
+ 				pr_err("invalid uid specified\n");
+ 				return 0;
++			} else {
++				set_bit(HFSPLUS_SB_UID, &sbi->flags);
+ 			}
+ 			break;
+ 		case opt_gid:
+@@ -151,6 +153,8 @@ int hfsplus_parse_options(char *input, s
+ 			if (!gid_valid(sbi->gid)) {
+ 				pr_err("invalid gid specified\n");
+ 				return 0;
++			} else {
++				set_bit(HFSPLUS_SB_GID, &sbi->flags);
+ 			}
+ 			break;
+ 		case opt_part:
 
 
