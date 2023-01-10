@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11766FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60DACC433EF;
-	Tue, 10 Jan 2023 18:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB63E6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F178C433D2;
+	Tue, 10 Jan 2023 18:11:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374316;
-	bh=bdDW3LLmItTeom4b4EPuVajnxo0DYPgkWZ1jf9gfEmM=;
+	s=korg; t=1673374319;
+	bh=0qpt2WxXVJAOKL0pek8zJjOIL4XuD3ielMRG1ExgNK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FQa5h95o+YvVOQjVX3WLx/Q+AdhB9dPgb7IeYKyzItG/ORoh84V/eRrMArOlJcHa3
-	 86+dst1yNJQiPJ/IyoW+T4rZsMfJWQckKixdJNg5+XXgULoiKswC1qNI0or4uVr+I1
-	 0K7OUC09SouWrJh/9K0oD3o1yce7QSW2KQCHoRaQ=
+	b=rTE7cw2rUVI5GMkMuhr6LNGbfB4RH47DnJHW95J4y1RI2eWUAMfGheSabY9vI2FnQ
+	 rWwZrD6CQpEgvVFy3xpJztaQ3lFK0zqOgTPeBRdm35fDw/xH2XZ+hG8Z/eBhvkvjoK
+	 N1PZyAbUhon+0xyYa7CRfQujauqrDTwetE0aRF5Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ronald Wahl <ronald.wahl@raritan.com>,
 	Christian Marangi <ansuelsmth@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.0 127/148] Revert "net: dsa: qca8k: cache lo and hi for mdio write"
-Date: Tue, 10 Jan 2023 19:03:51 +0100
-Message-Id: <20230110180021.215469717@linuxfoundation.org>
+Subject: [PATCH 6.0 128/148] net: dsa: qca8k: fix wrong length value for mgmt eth packet
+Date: Tue, 10 Jan 2023 19:03:52 +0100
+Message-Id: <20230110180021.246783724@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -37,175 +37,104 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Marangi <ansuelsmth@gmail.com>
 
-commit 03cb9e6d0b32b768e3d9d473c5c4ca1100877664 upstream.
+commit 9807ae69746196ee4bbffe7d22d22ab2b61c6ed0 upstream.
 
-This reverts commit 2481d206fae7884cd07014fd1318e63af35e99eb.
+The assumption that Documentation was right about how this value work was
+wrong. It was discovered that the length value of the mgmt header is in
+step of word size.
 
-The Documentation is very confusing about the topic.
-The cache logic for hi and lo is wrong and actually miss some regs to be
-actually written.
+As an example to process 4 byte of data the correct length to set is 2.
+To process 8 byte 4, 12 byte 6, 16 byte 8...
 
-What the Documentation actually intended was that it's possible to skip
-writing hi OR lo if half of the reg is not needed to be written or read.
+Odd values will always return the next size on the ack packet.
+(length of 3 (6 byte) will always return 8 bytes of data)
 
-Revert the change in favor of a better and correct implementation.
+This means that a value of 15 (0xf) actually means reading/writing 32 bytes
+of data instead of 16 bytes. This behaviour is totally absent and not
+documented in the switch Documentation.
+
+In fact from Documentation the max value that mgmt eth can process is
+16 byte of data while in reality it can process 32 bytes at once.
+
+To handle this we always round up the length after deviding it for word
+size. We check if the result is odd and we round another time to align
+to what the switch will provide in the ack packet.
+The workaround for the length limit of 15 is still needed as the length
+reg max value is 0xf(15)
 
 Reported-by: Ronald Wahl <ronald.wahl@raritan.com>
+Tested-by: Ronald Wahl <ronald.wahl@raritan.com>
+Fixes: 90386223f44e ("net: dsa: qca8k: add support for larger read/write size with mgmt Ethernet")
 Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 Cc: stable@vger.kernel.org # v5.18+
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/qca/qca8k-8xxx.c |   61 +++++++--------------------------------
- drivers/net/dsa/qca/qca8k.h      |    5 ---
- 2 files changed, 12 insertions(+), 54 deletions(-)
+ drivers/net/dsa/qca/qca8k-8xxx.c |   45 ++++++++++++++++++++++++++++++---------
+ 1 file changed, 35 insertions(+), 10 deletions(-)
 
 --- a/drivers/net/dsa/qca/qca8k-8xxx.c
 +++ b/drivers/net/dsa/qca/qca8k-8xxx.c
-@@ -37,44 +37,6 @@ qca8k_split_addr(u32 regaddr, u16 *r1, u
- }
+@@ -111,7 +111,16 @@ static void qca8k_rw_reg_ack_handler(str
  
- static int
--qca8k_set_lo(struct qca8k_priv *priv, int phy_id, u32 regnum, u16 lo)
--{
--	u16 *cached_lo = &priv->mdio_cache.lo;
--	struct mii_bus *bus = priv->bus;
--	int ret;
--
--	if (lo == *cached_lo)
--		return 0;
--
--	ret = bus->write(bus, phy_id, regnum, lo);
--	if (ret < 0)
--		dev_err_ratelimited(&bus->dev,
--				    "failed to write qca8k 32bit lo register\n");
--
--	*cached_lo = lo;
--	return 0;
--}
--
--static int
--qca8k_set_hi(struct qca8k_priv *priv, int phy_id, u32 regnum, u16 hi)
--{
--	u16 *cached_hi = &priv->mdio_cache.hi;
--	struct mii_bus *bus = priv->bus;
--	int ret;
--
--	if (hi == *cached_hi)
--		return 0;
--
--	ret = bus->write(bus, phy_id, regnum, hi);
--	if (ret < 0)
--		dev_err_ratelimited(&bus->dev,
--				    "failed to write qca8k 32bit hi register\n");
--
--	*cached_hi = hi;
--	return 0;
--}
--
--static int
- qca8k_mii_read32(struct mii_bus *bus, int phy_id, u32 regnum, u32 *val)
- {
- 	int ret;
-@@ -97,7 +59,7 @@ qca8k_mii_read32(struct mii_bus *bus, in
- }
+ 	command = get_unaligned_le32(&mgmt_ethhdr->command);
+ 	cmd = FIELD_GET(QCA_HDR_MGMT_CMD, command);
++
+ 	len = FIELD_GET(QCA_HDR_MGMT_LENGTH, command);
++	/* Special case for len of 15 as this is the max value for len and needs to
++	 * be increased before converting it from word to dword.
++	 */
++	if (len == 15)
++		len++;
++
++	/* We can ignore odd value, we always round up them in the alloc function. */
++	len *= sizeof(u16);
  
- static void
--qca8k_mii_write32(struct qca8k_priv *priv, int phy_id, u32 regnum, u32 val)
-+qca8k_mii_write32(struct mii_bus *bus, int phy_id, u32 regnum, u32 val)
- {
- 	u16 lo, hi;
- 	int ret;
-@@ -105,9 +67,12 @@ qca8k_mii_write32(struct qca8k_priv *pri
- 	lo = val & 0xffff;
- 	hi = (u16)(val >> 16);
+ 	/* Make sure the seq match the requested packet */
+ 	if (get_unaligned_le32(&mgmt_ethhdr->seq) == mgmt_eth_data->seq)
+@@ -158,17 +167,33 @@ static struct sk_buff *qca8k_alloc_mdio_
+ 	if (!skb)
+ 		return NULL;
  
--	ret = qca8k_set_lo(priv, phy_id, regnum, lo);
-+	ret = bus->write(bus, phy_id, regnum, lo);
- 	if (ret >= 0)
--		ret = qca8k_set_hi(priv, phy_id, regnum + 1, hi);
-+		ret = bus->write(bus, phy_id, regnum + 1, hi);
-+	if (ret < 0)
-+		dev_err_ratelimited(&bus->dev,
-+				    "failed to write qca8k 32bit register\n");
- }
+-	/* Max value for len reg is 15 (0xf) but the switch actually return 16 byte
+-	 * Actually for some reason the steps are:
+-	 * 0: nothing
+-	 * 1-4: first 4 byte
+-	 * 5-6: first 12 byte
+-	 * 7-15: all 16 byte
++	/* Hdr mgmt length value is in step of word size.
++	 * As an example to process 4 byte of data the correct length to set is 2.
++	 * To process 8 byte 4, 12 byte 6, 16 byte 8...
++	 *
++	 * Odd values will always return the next size on the ack packet.
++	 * (length of 3 (6 byte) will always return 8 bytes of data)
++	 *
++	 * This means that a value of 15 (0xf) actually means reading/writing 32 bytes
++	 * of data.
++	 *
++	 * To correctly calculate the length we devide the requested len by word and
++	 * round up.
++	 * On the ack function we can skip the odd check as we already handle the
++	 * case here.
+ 	 */
+-	if (len == 16)
+-		real_len = 15;
+-	else
+-		real_len = len;
++	real_len = DIV_ROUND_UP(len, sizeof(u16));
++
++	/* We check if the result len is odd and we round up another time to
++	 * the next size. (length of 3 will be increased to 4 as switch will always
++	 * return 8 bytes)
++	 */
++	if (real_len % sizeof(u16) != 0)
++		real_len++;
++
++	/* Max reg value is 0xf(15) but switch will always return the next size (32 byte) */
++	if (real_len == 16)
++		real_len--;
  
- static int
-@@ -417,7 +382,7 @@ qca8k_regmap_write(void *ctx, uint32_t r
- 	if (ret < 0)
- 		goto exit;
- 
--	qca8k_mii_write32(priv, 0x10 | r2, r1, val);
-+	qca8k_mii_write32(bus, 0x10 | r2, r1, val);
- 
- exit:
- 	mutex_unlock(&bus->mdio_lock);
-@@ -450,7 +415,7 @@ qca8k_regmap_update_bits(void *ctx, uint
- 
- 	val &= ~mask;
- 	val |= write_val;
--	qca8k_mii_write32(priv, 0x10 | r2, r1, val);
-+	qca8k_mii_write32(bus, 0x10 | r2, r1, val);
- 
- exit:
- 	mutex_unlock(&bus->mdio_lock);
-@@ -725,14 +690,14 @@ qca8k_mdio_write(struct qca8k_priv *priv
- 	if (ret)
- 		goto exit;
- 
--	qca8k_mii_write32(priv, 0x10 | r2, r1, val);
-+	qca8k_mii_write32(bus, 0x10 | r2, r1, val);
- 
- 	ret = qca8k_mdio_busy_wait(bus, QCA8K_MDIO_MASTER_CTRL,
- 				   QCA8K_MDIO_MASTER_BUSY);
- 
- exit:
- 	/* even if the busy_wait timeouts try to clear the MASTER_EN */
--	qca8k_mii_write32(priv, 0x10 | r2, r1, 0);
-+	qca8k_mii_write32(bus, 0x10 | r2, r1, 0);
- 
- 	mutex_unlock(&bus->mdio_lock);
- 
-@@ -762,7 +727,7 @@ qca8k_mdio_read(struct qca8k_priv *priv,
- 	if (ret)
- 		goto exit;
- 
--	qca8k_mii_write32(priv, 0x10 | r2, r1, val);
-+	qca8k_mii_write32(bus, 0x10 | r2, r1, val);
- 
- 	ret = qca8k_mdio_busy_wait(bus, QCA8K_MDIO_MASTER_CTRL,
- 				   QCA8K_MDIO_MASTER_BUSY);
-@@ -773,7 +738,7 @@ qca8k_mdio_read(struct qca8k_priv *priv,
- 
- exit:
- 	/* even if the busy_wait timeouts try to clear the MASTER_EN */
--	qca8k_mii_write32(priv, 0x10 | r2, r1, 0);
-+	qca8k_mii_write32(bus, 0x10 | r2, r1, 0);
- 
- 	mutex_unlock(&bus->mdio_lock);
- 
-@@ -1943,8 +1908,6 @@ qca8k_sw_probe(struct mdio_device *mdiod
- 	}
- 
- 	priv->mdio_cache.page = 0xffff;
--	priv->mdio_cache.lo = 0xffff;
--	priv->mdio_cache.hi = 0xffff;
- 
- 	/* Check the detected switch id */
- 	ret = qca8k_read_switch_id(priv);
---- a/drivers/net/dsa/qca/qca8k.h
-+++ b/drivers/net/dsa/qca/qca8k.h
-@@ -375,11 +375,6 @@ struct qca8k_mdio_cache {
-  * mdio writes
-  */
- 	u16 page;
--/* lo and hi can also be cached and from Documentation we can skip one
-- * extra mdio write if lo or hi is didn't change.
-- */
--	u16 lo;
--	u16 hi;
- };
- 
- struct qca8k_pcs {
+ 	skb_reset_mac_header(skb);
+ 	skb_set_network_header(skb, skb->len);
 
 
