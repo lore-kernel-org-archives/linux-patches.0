@@ -1,35 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84E39A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:07:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4843C433D2;
-	Tue, 10 Jan 2023 18:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34800A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:07:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE03CC433EF;
+	Tue, 10 Jan 2023 18:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374036;
-	bh=MazqOz3mBOgpLDVrM8IiQPoQnCER46oXA8YS7qQjh20=;
+	s=korg; t=1673374039;
+	bh=IVsJLTN9Ds8ZTDHFMg6LQCsP1w+6bSjoafRpXZWh/fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZK7xGzfT3BbTSL7LzldCbzT8cIvk4UtP12saGUrD0ZPOLggWXnv3ZREl4Tl2yI1by
-	 0yKRqFqwdS97PBA25aQ6PYivG+MNpPrGfA/OPf8B2GctOgjxRCeFtAH+JcYfscMddv
-	 LiKlXsF6ZYj0SbqbdzxY9VkbGN1bhGQDVk8EnDkI=
+	b=IeOqbKS+t2FWM3cdrC9YNdKMl5EhpnsFajVbjQbgjt+t5MFDd3fIfeOwxuZet6O+Q
+	 cCW/wn1WmqZwcMHFJAcT2US+wSgylhziN0+MWrcGZ2Rki3YRgVyQhc1JvPY1mNMmUq
+	 Y9U9mW8k7kQDuhxNYcMoUNzroNPoy/fMDWMq/AIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Masami Hiramatsu <masami.hiramatsu.pt@hitachi.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 007/148] perf probe: Fix to get the DW_AT_decl_file and DW_AT_call_file as unsinged data
-Date: Tue, 10 Jan 2023 19:01:51 +0100
-Message-Id: <20230110180017.405672421@linuxfoundation.org>
+Subject: [PATCH 6.0 008/148] phy: qcom-qmp-combo: fix broken power on
+Date: Tue, 10 Jan 2023 19:01:52 +0100
+Message-Id: <20230110180017.436940087@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -43,89 +36,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit a9dfc46c67b52ad43b8e335e28f4cf8002c67793 ]
+[ Upstream commit 7a7d86d14d073dfa3429c550667a8e78b99edbd4 ]
 
-DWARF version 5 standard Sec 2.14 says that
+The PHY is powered on during phy-init by setting the SW_PWRDN bit in the
+COM_POWER_DOWN_CTRL register and then setting the same bit in the in the
+PCS_POWER_DOWN_CONTROL register that belongs to the USB part of the
+PHY.
 
-  Any debugging information entry representing the declaration of an object,
-  module, subprogram or type may have DW_AT_decl_file, DW_AT_decl_line and
-  DW_AT_decl_column attributes, each of whose value is an unsigned integer
-  constant.
+Currently, whether power on succeeds depends on probe order and having
+the USB part of the PHY be initialised first. In case the DP part of the
+PHY is instead initialised first, the intended power on of the USB block
+results in a corrupted DP_PHY register (e.g. DP_PHY_AUX_CFG8).
 
-So it should be an unsigned integer data. Also, even though the standard
-doesn't clearly say the DW_AT_call_file is signed or unsigned, the
-elfutils (eu-readelf) interprets it as unsigned integer data and it is
-natural to handle it as unsigned integer data as same as DW_AT_decl_file.
-This changes the DW_AT_call_file as unsigned integer data too.
+Add a pointer to the USB part of the PHY to the driver data and use that
+to power on the PHY also if the DP part of the PHY is initialised first.
 
-Fixes: 3f4460a28fb2f73d ("perf probe: Filter out redundant inline-instances")
-Signed-off-by: Masami Hiramatsu <mhiramat@kernel.org>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Masami Hiramatsu <masami.hiramatsu.pt@hitachi.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Link: https://lore.kernel.org/r/166761727445.480106.3738447577082071942.stgit@devnote3
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 52e013d0bffa ("phy: qcom-qmp: Add support for DP in USB3+DP combo phy")
+Cc: stable@vger.kernel.org	# 5.10
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20221114081346.5116-5-johan+linaro@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dwarf-aux.c | 21 ++++-----------------
- 1 file changed, 4 insertions(+), 17 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
-diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
-index a07efbadb775..623527edeac1 100644
---- a/tools/perf/util/dwarf-aux.c
-+++ b/tools/perf/util/dwarf-aux.c
-@@ -315,19 +315,6 @@ static int die_get_attr_udata(Dwarf_Die *tp_die, unsigned int attr_name,
- 	return 0;
- }
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+index 0feda8eb93b5..5e011520650d 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -767,6 +767,7 @@ struct qcom_qmp {
+ 	struct regulator_bulk_data *vregs;
  
--/* Get attribute and translate it as a sdata */
--static int die_get_attr_sdata(Dwarf_Die *tp_die, unsigned int attr_name,
--			      Dwarf_Sword *result)
--{
--	Dwarf_Attribute attr;
--
--	if (dwarf_attr_integrate(tp_die, attr_name, &attr) == NULL ||
--	    dwarf_formsdata(&attr, result) != 0)
--		return -ENOENT;
--
--	return 0;
--}
--
- /**
-  * die_is_signed_type - Check whether a type DIE is signed or not
-  * @tp_die: a DIE of a type
-@@ -467,9 +454,9 @@ int die_get_data_member_location(Dwarf_Die *mb_die, Dwarf_Word *offs)
- /* Get the call file index number in CU DIE */
- static int die_get_call_fileno(Dwarf_Die *in_die)
+ 	struct qmp_phy **phys;
++	struct qmp_phy *usb_phy;
+ 
+ 	struct mutex phy_mutex;
+ 	int init_count;
+@@ -1607,7 +1608,7 @@ static int qcom_qmp_phy_combo_com_init(struct qmp_phy *qphy)
  {
--	Dwarf_Sword idx;
-+	Dwarf_Word idx;
+ 	struct qcom_qmp *qmp = qphy->qmp;
+ 	const struct qmp_phy_cfg *cfg = qphy->cfg;
+-	void __iomem *pcs = qphy->pcs;
++	struct qmp_phy *usb_phy = qmp->usb_phy;
+ 	void __iomem *dp_com = qmp->dp_com;
+ 	int ret;
  
--	if (die_get_attr_sdata(in_die, DW_AT_call_file, &idx) == 0)
-+	if (die_get_attr_udata(in_die, DW_AT_call_file, &idx) == 0)
- 		return (int)idx;
- 	else
- 		return -ENOENT;
-@@ -478,9 +465,9 @@ static int die_get_call_fileno(Dwarf_Die *in_die)
- /* Get the declared file index number in CU DIE */
- static int die_get_decl_fileno(Dwarf_Die *pdie)
- {
--	Dwarf_Sword idx;
-+	Dwarf_Word idx;
+@@ -1663,13 +1664,13 @@ static int qcom_qmp_phy_combo_com_init(struct qmp_phy *qphy)
+ 		qphy_clrbits(dp_com, QPHY_V3_DP_COM_SW_RESET, SW_RESET);
+ 	}
  
--	if (die_get_attr_sdata(pdie, DW_AT_decl_file, &idx) == 0)
-+	if (die_get_attr_udata(pdie, DW_AT_decl_file, &idx) == 0)
- 		return (int)idx;
+-	if (cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL])
+-		qphy_setbits(pcs,
+-				cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
+-				cfg->pwrdn_ctrl);
++	if (usb_phy->cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL])
++		qphy_setbits(usb_phy->pcs,
++				usb_phy->cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
++				usb_phy->cfg->pwrdn_ctrl);
  	else
- 		return -ENOENT;
+-		qphy_setbits(pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL,
+-				cfg->pwrdn_ctrl);
++		qphy_setbits(usb_phy->pcs, QPHY_V2_PCS_POWER_DOWN_CONTROL,
++				usb_phy->cfg->pwrdn_ctrl);
+ 
+ 	mutex_unlock(&qmp->phy_mutex);
+ 
+@@ -2576,6 +2577,8 @@ static int qcom_qmp_phy_combo_probe(struct platform_device *pdev)
+ 				goto err_node_put;
+ 			}
+ 
++			qmp->usb_phy = qmp->phys[id];
++
+ 			/*
+ 			 * Register the pipe clock provided by phy.
+ 			 * See function description to see details of this pipe clock.
+@@ -2591,6 +2594,9 @@ static int qcom_qmp_phy_combo_probe(struct platform_device *pdev)
+ 		id++;
+ 	}
+ 
++	if (!qmp->usb_phy)
++		return -EINVAL;
++
+ 	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
+ 	if (!IS_ERR(phy_provider))
+ 		dev_info(dev, "Registered Qcom-QMP phy\n");
 -- 
 2.35.1
 
