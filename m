@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554B57474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C87ACC433EF;
-	Tue, 10 Jan 2023 18:27:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503D17474
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC68C433D2;
+	Tue, 10 Jan 2023 18:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375221;
-	bh=2N3IxBBaew08NRpgyGDAx6iQFHPkrI3e7ae5yz1PApk=;
+	s=korg; t=1673375224;
+	bh=go9v8viwIjZtLWIHYEBl2vH+FrY8ZELBcbuiFrPAVKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oen37yMQZyA2tgoNtcINz7T3rFFDoF6YbLeIOTPN3S5wJbIOfDxX8bJp69Nxh/jBo
-	 BTshpNYqgLpejkzQqueX4JyFWzDCW65iUvXubIKmXkLz1MUAUUa05A5qfMh2sQ3yHz
-	 dLp5i6lMEGK5CEI4Vp2VMsB4sP3ffDLR9td5Q7EU=
+	b=wNtiFzrYvDhc5QSWngAzh8aPUk9tvmEwyULZ+IecqxKjPWoXzp/U3JN0wzBUe/Aoh
+	 3IK8+4szN7zCyNSZUus6h7PeIvoD74T+p9lE26x8lQd4Zlmj4/nF/wpMBYMuoVQgKA
+	 nKUlKIqjcmKkF4TaHqwRrRibc7rI0pIJxSOQdreg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 5.15 118/290] ipu3-imgu: Fix NULL pointer dereference in imgu_subdev_set_selection()
-Date: Tue, 10 Jan 2023 19:03:30 +0100
-Message-Id: <20230110180035.868422724@linuxfoundation.org>
+	Zhang Yuchen <zhangyuchen.lcr@bytedance.com>,
+	Corey Minyard <cminyard@mvista.com>
+Subject: [PATCH 5.15 119/290] ipmi: fix long wait in unload when IPMI disconnect
+Date: Tue, 10 Jan 2023 19:03:31 +0100
+Message-Id: <20230110180035.910475961@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -34,135 +34,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maximilian Luz <luzmaximilian@gmail.com>
+From: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
 
-commit dc608edf7d45ba0c2ad14c06eccd66474fec7847 upstream.
+commit f6f1234d98cce69578bfac79df147a1f6660596c upstream.
 
-Calling v4l2_subdev_get_try_crop() and v4l2_subdev_get_try_compose()
-with a subdev state of NULL leads to a NULL pointer dereference. This
-can currently happen in imgu_subdev_set_selection() when the state
-passed in is NULL, as this method first gets pointers to both the "try"
-and "active" states and only then decides which to use.
+When fixing the problem mentioned in PATCH1, we also found
+the following problem:
 
-The same issue has been addressed for imgu_subdev_get_selection() with
-commit 30d03a0de650 ("ipu3-imgu: Fix NULL pointer dereference in active
-selection access"). However the issue still persists in
-imgu_subdev_set_selection().
+If the IPMI is disconnected and in the sending process, the
+uninstallation driver will be stuck for a long time.
 
-Therefore, apply a similar fix as done in the aforementioned commit to
-imgu_subdev_set_selection(). To keep things a bit cleaner, introduce
-helper functions for "crop" and "compose" access and use them in both
-imgu_subdev_set_selection() and imgu_subdev_get_selection().
+The main problem is that uninstalling the driver waits for curr_msg to
+be sent or HOSED. After stopping tasklet, the only place to trigger the
+timeout mechanism is the circular poll in shutdown_smi.
 
-Fixes: 0d346d2a6f54 ("media: v4l2-subdev: add subdev-wide state struct")
-Cc: stable@vger.kernel.org # for v5.14 and later
-Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+The poll function delays 10us and calls smi_event_handler(smi_info,10).
+Smi_event_handler deducts 10us from kcs->ibf_timeout.
+
+But the poll func is followed by schedule_timeout_uninterruptible(1).
+The time consumed here is not counted in kcs->ibf_timeout.
+
+So when 10us is deducted from kcs->ibf_timeout, at least 1 jiffies has
+actually passed. The waiting time has increased by more than a
+hundredfold.
+
+Now instead of calling poll(). call smi_event_handler() directly and
+calculate the elapsed time.
+
+For verification, you can directly use ebpf to check the kcs->
+ibf_timeout for each call to kcs_event() when IPMI is disconnected.
+Decrement at normal rate before unloading. The decrement rate becomes
+very slow after unloading.
+
+  $ bpftrace -e 'kprobe:kcs_event {printf("kcs->ibftimeout : %d\n",
+      *(arg0+584));}'
+
+Signed-off-by: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
+Message-Id: <20221007092617.87597-3-zhangyuchen.lcr@bytedance.com>
+Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/ipu3/ipu3-v4l2.c | 57 +++++++++++++++-----------
- 1 file changed, 34 insertions(+), 23 deletions(-)
+ drivers/char/ipmi/ipmi_si_intf.c |   27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/staging/media/ipu3/ipu3-v4l2.c b/drivers/staging/media/ipu3/ipu3-v4l2.c
-index ce13e746c15f..e530767e80a5 100644
---- a/drivers/staging/media/ipu3/ipu3-v4l2.c
-+++ b/drivers/staging/media/ipu3/ipu3-v4l2.c
-@@ -188,6 +188,28 @@ static int imgu_subdev_set_fmt(struct v4l2_subdev *sd,
- 	return 0;
+--- a/drivers/char/ipmi/ipmi_si_intf.c
++++ b/drivers/char/ipmi/ipmi_si_intf.c
+@@ -2152,6 +2152,20 @@ skip_fallback_noirq:
  }
+ module_init(init_ipmi_si);
  
-+static struct v4l2_rect *
-+imgu_subdev_get_crop(struct imgu_v4l2_subdev *sd,
-+		     struct v4l2_subdev_state *sd_state, unsigned int pad,
-+		     enum v4l2_subdev_format_whence which)
++static void wait_msg_processed(struct smi_info *smi_info)
 +{
-+	if (which == V4L2_SUBDEV_FORMAT_TRY)
-+		return v4l2_subdev_get_try_crop(&sd->subdev, sd_state, pad);
-+	else
-+		return &sd->rect.eff;
++	unsigned long jiffies_now;
++	long time_diff;
++
++	while (smi_info->curr_msg || (smi_info->si_state != SI_NORMAL)) {
++		jiffies_now = jiffies;
++		time_diff = (((long)jiffies_now - (long)smi_info->last_timeout_jiffies)
++		     * SI_USEC_PER_JIFFY);
++		smi_event_handler(smi_info, time_diff);
++		schedule_timeout_uninterruptible(1);
++	}
 +}
 +
-+static struct v4l2_rect *
-+imgu_subdev_get_compose(struct imgu_v4l2_subdev *sd,
-+			struct v4l2_subdev_state *sd_state, unsigned int pad,
-+			enum v4l2_subdev_format_whence which)
-+{
-+	if (which == V4L2_SUBDEV_FORMAT_TRY)
-+		return v4l2_subdev_get_try_compose(&sd->subdev, sd_state, pad);
-+	else
-+		return &sd->rect.bds;
-+}
-+
- static int imgu_subdev_get_selection(struct v4l2_subdev *sd,
- 				     struct v4l2_subdev_state *sd_state,
- 				     struct v4l2_subdev_selection *sel)
-@@ -200,18 +222,12 @@ static int imgu_subdev_get_selection(struct v4l2_subdev *sd,
- 
- 	switch (sel->target) {
- 	case V4L2_SEL_TGT_CROP:
--		if (sel->which == V4L2_SUBDEV_FORMAT_TRY)
--			sel->r = *v4l2_subdev_get_try_crop(sd, sd_state,
--							   sel->pad);
--		else
--			sel->r = imgu_sd->rect.eff;
-+		sel->r = *imgu_subdev_get_crop(imgu_sd, sd_state, sel->pad,
-+					       sel->which);
- 		return 0;
- 	case V4L2_SEL_TGT_COMPOSE:
--		if (sel->which == V4L2_SUBDEV_FORMAT_TRY)
--			sel->r = *v4l2_subdev_get_try_compose(sd, sd_state,
--							      sel->pad);
--		else
--			sel->r = imgu_sd->rect.bds;
-+		sel->r = *imgu_subdev_get_compose(imgu_sd, sd_state, sel->pad,
-+						  sel->which);
- 		return 0;
- 	default:
- 		return -EINVAL;
-@@ -223,10 +239,9 @@ static int imgu_subdev_set_selection(struct v4l2_subdev *sd,
- 				     struct v4l2_subdev_selection *sel)
+ static void shutdown_smi(void *send_info)
  {
- 	struct imgu_device *imgu = v4l2_get_subdevdata(sd);
--	struct imgu_v4l2_subdev *imgu_sd = container_of(sd,
--							struct imgu_v4l2_subdev,
--							subdev);
--	struct v4l2_rect *rect, *try_sel;
-+	struct imgu_v4l2_subdev *imgu_sd =
-+		container_of(sd, struct imgu_v4l2_subdev, subdev);
-+	struct v4l2_rect *rect;
+ 	struct smi_info *smi_info = send_info;
+@@ -2186,16 +2200,13 @@ static void shutdown_smi(void *send_info
+ 	 * in the BMC.  Note that timers and CPU interrupts are off,
+ 	 * so no need for locks.
+ 	 */
+-	while (smi_info->curr_msg || (smi_info->si_state != SI_NORMAL)) {
+-		poll(smi_info);
+-		schedule_timeout_uninterruptible(1);
+-	}
++	wait_msg_processed(smi_info);
++
+ 	if (smi_info->handlers)
+ 		disable_si_irq(smi_info);
+-	while (smi_info->curr_msg || (smi_info->si_state != SI_NORMAL)) {
+-		poll(smi_info);
+-		schedule_timeout_uninterruptible(1);
+-	}
++
++	wait_msg_processed(smi_info);
++
+ 	if (smi_info->handlers)
+ 		smi_info->handlers->cleanup(smi_info->si_sm);
  
- 	dev_dbg(&imgu->pci_dev->dev,
- 		 "set subdev %u sel which %u target 0x%4x rect [%ux%u]",
-@@ -238,22 +253,18 @@ static int imgu_subdev_set_selection(struct v4l2_subdev *sd,
- 
- 	switch (sel->target) {
- 	case V4L2_SEL_TGT_CROP:
--		try_sel = v4l2_subdev_get_try_crop(sd, sd_state, sel->pad);
--		rect = &imgu_sd->rect.eff;
-+		rect = imgu_subdev_get_crop(imgu_sd, sd_state, sel->pad,
-+					    sel->which);
- 		break;
- 	case V4L2_SEL_TGT_COMPOSE:
--		try_sel = v4l2_subdev_get_try_compose(sd, sd_state, sel->pad);
--		rect = &imgu_sd->rect.bds;
-+		rect = imgu_subdev_get_compose(imgu_sd, sd_state, sel->pad,
-+					       sel->which);
- 		break;
- 	default:
- 		return -EINVAL;
- 	}
- 
--	if (sel->which == V4L2_SUBDEV_FORMAT_TRY)
--		*try_sel = sel->r;
--	else
--		*rect = sel->r;
--
-+	*rect = sel->r;
- 	return 0;
- }
- 
--- 
-2.39.0
-
 
 
