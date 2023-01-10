@@ -1,31 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB206FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:19:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 617EDC433D2;
-	Tue, 10 Jan 2023 18:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3776FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:20:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35700C433D2;
+	Tue, 10 Jan 2023 18:20:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374798;
-	bh=/gmXCSockekduztdxVnD82uT04lVCy1kVkawtlYBnv0=;
+	s=korg; t=1673374801;
+	bh=9NdXOmkiTVBp0bp3bFhoadq9j659g/3HfDuElJpJhKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2AV55U/uu6U+tyPtGDzbrmJT65NW/9OYAhkg8yDENj6BHcBm5p0PhxI7HDU9u9L1G
-	 ZvJhK9rpz2V+bo55bHNwRgAVhh7nNMMvDHZ1+ta7kjk+3kean74fVR651TDUsC/Vki
-	 pNyTByf8Bx6YtmInX8YD2509l3L9JzCP8vqozFlU=
+	b=rOIHvsRVO+8p8o/PdQC2c2kcw9ScJo+pgLeEyZeEmczqzWD9Vy9yyv5p3QP5M14RE
+	 e+dZtCnuah76s8EW0dxIQxWMhM+y6hbs3IyPUbbSYC8RUfTQDG9Yq5wZKViD0ruhe3
+	 C83kV2SnOl7K7zCrhcmWGG5mtj1DRkYeg4IbvBOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7bb7cd3595533513a9e7@syzkaller.appspotmail.com,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Matthew Wilcox <willy@infradead.org>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	bpf@vger.kernel.org,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Song Liu <songliubraving@fb.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/159] hfs/hfsplus: avoid WARN_ON() for sanity check, use proper error handling
-Date: Tue, 10 Jan 2023 19:04:16 +0100
-Message-Id: <20230110180021.725907186@linuxfoundation.org>
+Subject: [PATCH 6.1 099/159] perf stat: Fix handling of --for-each-cgroup with --bpf-counters to match non BPF mode
+Date: Tue, 10 Jan 2023 19:04:07 +0100
+Message-Id: <20230110180021.437684262@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -39,93 +42,143 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Namhyung Kim <namhyung@kernel.org>
 
-[ Upstream commit cb7a95af78d29442b8294683eca4897544b8ef46 ]
+[ Upstream commit 54b353a20c7e8be98414754f5aff98c8a68fcc1f ]
 
-Commit 55d1cbbbb29e ("hfs/hfsplus: use WARN_ON for sanity check") fixed
-a build warning by turning a comment into a WARN_ON(), but it turns out
-that syzbot then complains because it can trigger said warning with a
-corrupted hfs image.
+The --for-each-cgroup can have the same cgroup multiple times, but this
+confuses BPF counters (since they have the same cgroup id), making only
+the last cgroup events to be counted.
 
-The warning actually does warn about a bad situation, but we are much
-better off just handling it as the error it is.  So rather than warn
-about us doing bad things, stop doing the bad things and return -EIO.
+Let's check the cgroup name before adding a new entry to the cgroups
+list.
 
-While at it, also fix a memory leak that was introduced by an earlier
-fix for a similar syzbot warning situation, and add a check for one case
-that historically wasn't handled at all (ie neither comment nor
-subsequent WARN_ON).
+Before:
 
-Reported-by: syzbot+7bb7cd3595533513a9e7@syzkaller.appspotmail.com
-Fixes: 55d1cbbbb29e ("hfs/hfsplus: use WARN_ON for sanity check")
-Fixes: 8d824e69d9f3 ("hfs: fix OOB Read in __hfs_brec_find")
-Link: https://lore.kernel.org/lkml/000000000000dbce4e05f170f289@google.com/
-Tested-by: Michael Schmitz <schmitzmic@gmail.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+  $ sudo ./perf stat -a --bpf-counters --for-each-cgroup /,/ sleep 1
+
+   Performance counter stats for 'system wide':
+
+       <not counted> msec cpu-clock                        /
+       <not counted>      context-switches                 /
+       <not counted>      cpu-migrations                   /
+       <not counted>      page-faults                      /
+       <not counted>      cycles                           /
+       <not counted>      instructions                     /
+       <not counted>      branches                         /
+       <not counted>      branch-misses                    /
+            8,016.04 msec cpu-clock                        /                #    7.998 CPUs utilized
+               6,152      context-switches                 /                #  767.461 /sec
+                 250      cpu-migrations                   /                #   31.187 /sec
+                 442      page-faults                      /                #   55.139 /sec
+         613,111,487      cycles                           /                #    0.076 GHz
+         280,599,604      instructions                     /                #    0.46  insn per cycle
+          57,692,724      branches                         /                #    7.197 M/sec
+           3,385,168      branch-misses                    /                #    5.87% of all branches
+
+         1.002220125 seconds time elapsed
+
+After it becomes similar to the non-BPF mode:
+
+  $ sudo ./perf stat -a --bpf-counters --for-each-cgroup /,/  sleep 1
+
+   Performance counter stats for 'system wide':
+
+            8,013.38 msec cpu-clock                        /                #    7.998 CPUs utilized
+               6,859      context-switches                 /                #  855.944 /sec
+                 334      cpu-migrations                   /                #   41.680 /sec
+                 345      page-faults                      /                #   43.053 /sec
+         782,326,119      cycles                           /                #    0.098 GHz
+         471,645,724      instructions                     /                #    0.60  insn per cycle
+          94,963,430      branches                         /                #   11.851 M/sec
+           3,685,511      branch-misses                    /                #    3.88% of all branches
+
+         1.001864539 seconds time elapsed
+
+Committer notes:
+
+As a reminder, to test with BPF counters one has to use BUILD_BPF_SKEL=1
+in the make command line and have clang/llvm installed when building
+perf, otherwise the --bpf-counters option will not be available:
+
+  # perf stat -a --bpf-counters --for-each-cgroup /,/ sleep 1
+  Error: unknown option `bpf-counters'
+
+   Usage: perf stat [<options>] [<command>]
+
+      -a, --all-cpus        system-wide collection from all CPUs
+  <SNIP>
+  #
+
+Fixes: bb1c15b60b981d10 ("perf stat: Support regex pattern in --for-each-cgroup")
+Signed-off-by: Namhyung Kim <namhyung@kernel.org>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: bpf@vger.kernel.org
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@kernel.org>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Song Liu <songliubraving@fb.com>
+Link: https://lore.kernel.org/r/20230104064402.1551516-5-namhyung@kernel.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfs/inode.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ tools/perf/util/cgroup.c | 23 ++++++++++++++++++-----
+ 1 file changed, 18 insertions(+), 5 deletions(-)
 
-diff --git a/fs/hfs/inode.c b/fs/hfs/inode.c
-index a0746be3c1de..80d17c520d0b 100644
---- a/fs/hfs/inode.c
-+++ b/fs/hfs/inode.c
-@@ -458,15 +458,16 @@ int hfs_write_inode(struct inode *inode, struct writeback_control *wbc)
- 		/* panic? */
- 		return -EIO;
- 
-+	res = -EIO;
- 	if (HFS_I(main_inode)->cat_key.CName.len > HFS_NAMELEN)
--		return -EIO;
-+		goto out;
- 	fd.search_key->cat = HFS_I(main_inode)->cat_key;
- 	if (hfs_brec_find(&fd))
--		/* panic? */
- 		goto out;
- 
- 	if (S_ISDIR(main_inode->i_mode)) {
--		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_dir));
-+		if (fd.entrylength < sizeof(struct hfs_cat_dir))
-+			goto out;
- 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
- 			   sizeof(struct hfs_cat_dir));
- 		if (rec.type != HFS_CDR_DIR ||
-@@ -479,6 +480,8 @@ int hfs_write_inode(struct inode *inode, struct writeback_control *wbc)
- 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
- 			    sizeof(struct hfs_cat_dir));
- 	} else if (HFS_IS_RSRC(inode)) {
-+		if (fd.entrylength < sizeof(struct hfs_cat_file))
-+			goto out;
- 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
- 			       sizeof(struct hfs_cat_file));
- 		hfs_inode_write_fork(inode, rec.file.RExtRec,
-@@ -486,7 +489,8 @@ int hfs_write_inode(struct inode *inode, struct writeback_control *wbc)
- 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
- 				sizeof(struct hfs_cat_file));
- 	} else {
--		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_file));
-+		if (fd.entrylength < sizeof(struct hfs_cat_file))
-+			goto out;
- 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
- 			   sizeof(struct hfs_cat_file));
- 		if (rec.type != HFS_CDR_FIL ||
-@@ -503,9 +507,10 @@ int hfs_write_inode(struct inode *inode, struct writeback_control *wbc)
- 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
- 			    sizeof(struct hfs_cat_file));
- 	}
-+	res = 0;
- out:
- 	hfs_find_exit(&fd);
--	return 0;
-+	return res;
+diff --git a/tools/perf/util/cgroup.c b/tools/perf/util/cgroup.c
+index e99b41f9be45..cd978c240e0d 100644
+--- a/tools/perf/util/cgroup.c
++++ b/tools/perf/util/cgroup.c
+@@ -224,6 +224,19 @@ static int add_cgroup_name(const char *fpath, const struct stat *sb __maybe_unus
+ 	return 0;
  }
  
- static struct dentry *hfs_file_lookup(struct inode *dir, struct dentry *dentry,
++static int check_and_add_cgroup_name(const char *fpath)
++{
++	struct cgroup_name *cn;
++
++	list_for_each_entry(cn, &cgroup_list, list) {
++		if (!strcmp(cn->name, fpath))
++			return 0;
++	}
++
++	/* pretend if it's added by ftw() */
++	return add_cgroup_name(fpath, NULL, FTW_D, NULL);
++}
++
+ static void release_cgroup_list(void)
+ {
+ 	struct cgroup_name *cn;
+@@ -242,7 +255,7 @@ static int list_cgroups(const char *str)
+ 	struct cgroup_name *cn;
+ 	char *s;
+ 
+-	/* use given name as is - for testing purpose */
++	/* use given name as is when no regex is given */
+ 	for (;;) {
+ 		p = strchr(str, ',');
+ 		e = p ? p : eos;
+@@ -253,13 +266,13 @@ static int list_cgroups(const char *str)
+ 			s = strndup(str, e - str);
+ 			if (!s)
+ 				return -1;
+-			/* pretend if it's added by ftw() */
+-			ret = add_cgroup_name(s, NULL, FTW_D, NULL);
++
++			ret = check_and_add_cgroup_name(s);
+ 			free(s);
+-			if (ret)
++			if (ret < 0)
+ 				return -1;
+ 		} else {
+-			if (add_cgroup_name("", NULL, FTW_D, NULL) < 0)
++			if (check_and_add_cgroup_name("/") < 0)
+ 				return -1;
+ 		}
+ 
 -- 
 2.35.1
 
