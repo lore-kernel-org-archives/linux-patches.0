@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34BFEA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:09:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0DA8C433F0;
-	Tue, 10 Jan 2023 18:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF492A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:09:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54981C433D2;
+	Tue, 10 Jan 2023 18:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374178;
-	bh=DsLJ6L4A+XGZHFUWQ0IXTedkImRz8ApCZXUKcKsJTdM=;
+	s=korg; t=1673374180;
+	bh=FlDJv/+5Ru/7oyuqch/s00FYsOWscsaneNxrRb557PI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yh9C/J5YQr8CYx6uMOZmRMYkKNzQl4VLjrOUcSAJvRY+CW5Lc5NucCKs1JmyvcapW
-	 or+zXHON6eTNUdJ1U4FizPlXUGAxDnUP6XFbh5ekdBvZrRjxjV50aHvGELYArsLVaM
-	 1pbI3HNoNrEyrj6kWtCGqr8RTUIbcY1LzJJQB6fg=
+	b=l0YbkrzXO+3YcWVj3G4oYucgspj9wKcXaK/8xT1zXrfvYt1DxMRuabWB01ZOe0jJR
+	 WiY6cR64j9Wn7YJKWtxDmE7eC1joiFvO6PfYF5eZDOrHNdkmfYq97Ec2cjd+My8Ce6
+	 gYhxIMF8UeWs/ApGiM88RuDLKZpqE9wRRzH2aqHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
+	Osama Abboud <osamaabb@amazon.com>,
+	Arthur Kiyanovski <akiyano@amazon.com>,
+	David Arinzon <darinzon@amazon.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 034/148] nfc: Fix potential resource leaks
-Date: Tue, 10 Jan 2023 19:02:18 +0100
-Message-Id: <20230110180018.303339986@linuxfoundation.org>
+Subject: [PATCH 6.0 068/148] net: ena: Fix rx_copybreak value update
+Date: Tue, 10 Jan 2023 19:02:52 +0100
+Message-Id: <20230110180019.378823646@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -35,125 +37,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: David Arinzon <darinzon@amazon.com>
 
-[ Upstream commit df49908f3c52d211aea5e2a14a93bbe67a2cb3af ]
+[ Upstream commit c7062aaee099f2f43d6f07a71744b44b94b94b34 ]
 
-nfc_get_device() take reference for the device, add missing
-nfc_put_device() to release it when not need anymore.
-Also fix the style warnning by use error EOPNOTSUPP instead of
-ENOTSUPP.
+Make the upper bound on rx_copybreak tighter, by
+making sure it is smaller than the minimum of mtu and
+ENA_PAGE_SIZE. With the current upper bound of mtu,
+rx_copybreak can be larger than a page. Such large
+rx_copybreak will not bring any performance benefit to
+the user and therefore makes no sense.
 
-Fixes: 5ce3f32b5264 ("NFC: netlink: SE API implementation")
-Fixes: 29e76924cf08 ("nfc: netlink: Add capability to reply to vendor_cmd with data")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+In addition, the value update was only reflected in
+the adapter structure, but not applied for each ring,
+causing it to not take effect.
+
+Fixes: 1738cd3ed342 ("net: ena: Add a driver for Amazon Elastic Network Adapters (ENA)")
+Signed-off-by: Osama Abboud <osamaabb@amazon.com>
+Signed-off-by: Arthur Kiyanovski <akiyano@amazon.com>
+Signed-off-by: David Arinzon <darinzon@amazon.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/netlink.c | 52 ++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 38 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_ethtool.c |  6 +-----
+ drivers/net/ethernet/amazon/ena/ena_netdev.c  | 18 ++++++++++++++++++
+ drivers/net/ethernet/amazon/ena/ena_netdev.h  |  2 ++
+ 3 files changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/net/nfc/netlink.c b/net/nfc/netlink.c
-index 7c62417ccfd7..32a08ae9ad11 100644
---- a/net/nfc/netlink.c
-+++ b/net/nfc/netlink.c
-@@ -1497,6 +1497,7 @@ static int nfc_genl_se_io(struct sk_buff *skb, struct genl_info *info)
- 	u32 dev_idx, se_idx;
- 	u8 *apdu;
- 	size_t apdu_len;
-+	int rc;
- 
- 	if (!info->attrs[NFC_ATTR_DEVICE_INDEX] ||
- 	    !info->attrs[NFC_ATTR_SE_INDEX] ||
-@@ -1510,25 +1511,37 @@ static int nfc_genl_se_io(struct sk_buff *skb, struct genl_info *info)
- 	if (!dev)
- 		return -ENODEV;
- 
--	if (!dev->ops || !dev->ops->se_io)
--		return -ENOTSUPP;
-+	if (!dev->ops || !dev->ops->se_io) {
-+		rc = -EOPNOTSUPP;
-+		goto put_dev;
-+	}
- 
- 	apdu_len = nla_len(info->attrs[NFC_ATTR_SE_APDU]);
--	if (apdu_len == 0)
--		return -EINVAL;
-+	if (apdu_len == 0) {
-+		rc = -EINVAL;
-+		goto put_dev;
-+	}
- 
- 	apdu = nla_data(info->attrs[NFC_ATTR_SE_APDU]);
--	if (!apdu)
--		return -EINVAL;
-+	if (!apdu) {
-+		rc = -EINVAL;
-+		goto put_dev;
-+	}
- 
- 	ctx = kzalloc(sizeof(struct se_io_ctx), GFP_KERNEL);
--	if (!ctx)
--		return -ENOMEM;
-+	if (!ctx) {
-+		rc = -ENOMEM;
-+		goto put_dev;
-+	}
- 
- 	ctx->dev_idx = dev_idx;
- 	ctx->se_idx = se_idx;
- 
--	return nfc_se_io(dev, se_idx, apdu, apdu_len, se_io_cb, ctx);
-+	rc = nfc_se_io(dev, se_idx, apdu, apdu_len, se_io_cb, ctx);
-+
-+put_dev:
-+	nfc_put_device(dev);
-+	return rc;
+diff --git a/drivers/net/ethernet/amazon/ena/ena_ethtool.c b/drivers/net/ethernet/amazon/ena/ena_ethtool.c
+index 39242c5a1729..108506721bcf 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_ethtool.c
++++ b/drivers/net/ethernet/amazon/ena/ena_ethtool.c
+@@ -887,11 +887,7 @@ static int ena_set_tunable(struct net_device *netdev,
+ 	switch (tuna->id) {
+ 	case ETHTOOL_RX_COPYBREAK:
+ 		len = *(u32 *)data;
+-		if (len > adapter->netdev->mtu) {
+-			ret = -EINVAL;
+-			break;
+-		}
+-		adapter->rx_copybreak = len;
++		ret = ena_set_rx_copybreak(adapter, len);
+ 		break;
+ 	default:
+ 		ret = -EINVAL;
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+index a27a7963df76..083754e0bf23 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -2816,6 +2816,24 @@ int ena_update_queue_sizes(struct ena_adapter *adapter,
+ 	return dev_was_up ? ena_up(adapter) : 0;
  }
  
- static int nfc_genl_vendor_cmd(struct sk_buff *skb,
-@@ -1551,14 +1564,21 @@ static int nfc_genl_vendor_cmd(struct sk_buff *skb,
- 	subcmd = nla_get_u32(info->attrs[NFC_ATTR_VENDOR_SUBCMD]);
- 
- 	dev = nfc_get_device(dev_idx);
--	if (!dev || !dev->vendor_cmds || !dev->n_vendor_cmds)
-+	if (!dev)
- 		return -ENODEV;
- 
-+	if (!dev->vendor_cmds || !dev->n_vendor_cmds) {
-+		err = -ENODEV;
-+		goto put_dev;
++int ena_set_rx_copybreak(struct ena_adapter *adapter, u32 rx_copybreak)
++{
++	struct ena_ring *rx_ring;
++	int i;
++
++	if (rx_copybreak > min_t(u16, adapter->netdev->mtu, ENA_PAGE_SIZE))
++		return -EINVAL;
++
++	adapter->rx_copybreak = rx_copybreak;
++
++	for (i = 0; i < adapter->num_io_queues; i++) {
++		rx_ring = &adapter->rx_ring[i];
++		rx_ring->rx_copybreak = rx_copybreak;
 +	}
 +
- 	if (info->attrs[NFC_ATTR_VENDOR_DATA]) {
- 		data = nla_data(info->attrs[NFC_ATTR_VENDOR_DATA]);
- 		data_len = nla_len(info->attrs[NFC_ATTR_VENDOR_DATA]);
--		if (data_len == 0)
--			return -EINVAL;
-+		if (data_len == 0) {
-+			err = -EINVAL;
-+			goto put_dev;
-+		}
- 	} else {
- 		data = NULL;
- 		data_len = 0;
-@@ -1573,10 +1593,14 @@ static int nfc_genl_vendor_cmd(struct sk_buff *skb,
- 		dev->cur_cmd_info = info;
- 		err = cmd->doit(dev, data, data_len);
- 		dev->cur_cmd_info = NULL;
--		return err;
-+		goto put_dev;
- 	}
- 
--	return -EOPNOTSUPP;
-+	err = -EOPNOTSUPP;
++	return 0;
++}
 +
-+put_dev:
-+	nfc_put_device(dev);
-+	return err;
- }
+ int ena_update_queue_count(struct ena_adapter *adapter, u32 new_channel_count)
+ {
+ 	struct ena_com_dev *ena_dev = adapter->ena_dev;
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.h b/drivers/net/ethernet/amazon/ena/ena_netdev.h
+index 290ae9bf47ee..f9d862b630fa 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.h
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.h
+@@ -392,6 +392,8 @@ int ena_update_queue_sizes(struct ena_adapter *adapter,
  
- /* message building helper */
+ int ena_update_queue_count(struct ena_adapter *adapter, u32 new_channel_count);
+ 
++int ena_set_rx_copybreak(struct ena_adapter *adapter, u32 rx_copybreak);
++
+ int ena_get_sset_count(struct net_device *netdev, int sset);
+ 
+ static inline void ena_reset_device(struct ena_adapter *adapter,
 -- 
 2.35.1
 
