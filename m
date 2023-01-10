@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 672737474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEAFAC433D2;
-	Tue, 10 Jan 2023 18:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6B5A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0BBCC433D2;
+	Tue, 10 Jan 2023 18:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375227;
-	bh=q5CGp8bn4dsXReRFvVoCcX4BMfwCKfQFTlWG2MLkJSc=;
+	s=korg; t=1673375230;
+	bh=jtBRg0qN1hf8VIQGcLgqzlTWHXsf1Orz0TBhX97ScsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mpDmRCKBVmbaRaesCxG9big+aPB+Ovzzxgmjfe5DpBBFsWF1DV2LCDQyyPmopBuSi
-	 ZHnBDE+Ab0IBTgr5K8fIPNPIyS5gjlKHcWFIqb7hvz0YHTQWIB5N2nrhio7mXT/Kon
-	 rwQUk6BRx5W3M61MdeBhPkr42Shp2jXwu58qvUBw=
+	b=dDmo2HgBEfjiz/dSOvIH/eeSdC8AVUrQpQXQmE63TH3d+3wHJMzOXNlUlZVELIdFi
+	 nzKsE5zF1VvbJi09cwZLys0g2a7NejxMCmnDlnbwXg/jxkf+MurhC/zlbezgJU6Yqn
+	 HWX+NAw7grOfj+LiJXwgj38JY6cH8aSU2bn4EDw8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Sverdlin <alexander.sverdlin@nokia.com>,
-	Tudor Ambarus <tudor.ambarus@microchip.com>
-Subject: [PATCH 5.15 120/290] mtd: spi-nor: Check for zero erase size in spi_nor_find_best_erase_type()
-Date: Tue, 10 Jan 2023 19:03:32 +0100
-Message-Id: <20230110180035.942406933@linuxfoundation.org>
+	stable@kernel.org,
+	Jiaming Li <lijiaming30@huawei.com>,
+	Huaxin Lu <luhuaxin1@huawei.com>,
+	Stefan Berger <stefanb@linux.ibm.com>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 5.15 121/290] ima: Fix a potential NULL pointer access in ima_restore_measurement_list
+Date: Tue, 10 Jan 2023 19:03:33 +0100
+Message-Id: <20230110180035.972434770@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -34,35 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Sverdlin <alexander.sverdlin@nokia.com>
+From: Huaxin Lu <luhuaxin1@huawei.com>
 
-commit 2ebc336be08160debfe27f87660cf550d710f3e9 upstream.
+commit 11220db412edae8dba58853238f53258268bdb88 upstream.
 
-Erase can be zeroed in spi_nor_parse_4bait() or
-spi_nor_init_non_uniform_erase_map(). In practice it happened with
-mt25qu256a, which supports 4K, 32K, 64K erases with 3b address commands,
-but only 4K and 64K erase with 4b address commands.
+In restore_template_fmt, when kstrdup fails, a non-NULL value will still be
+returned, which causes a NULL pointer access in template_desc_init_fields.
 
-Fixes: dc92843159a7 ("mtd: spi-nor: fix erase_type array to indicate current map conf")
-Signed-off-by: Alexander Sverdlin <alexander.sverdlin@nokia.com>
-Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20211119081412.29732-1-alexander.sverdlin@nokia.com
+Fixes: c7d09367702e ("ima: support restoring multiple template formats")
+Cc: stable@kernel.org
+Co-developed-by: Jiaming Li <lijiaming30@huawei.com>
+Signed-off-by: Jiaming Li <lijiaming30@huawei.com>
+Signed-off-by: Huaxin Lu <luhuaxin1@huawei.com>
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/core.c |    2 ++
- 1 file changed, 2 insertions(+)
+ security/integrity/ima/ima_template.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/mtd/spi-nor/core.c
-+++ b/drivers/mtd/spi-nor/core.c
-@@ -1409,6 +1409,8 @@ spi_nor_find_best_erase_type(const struc
- 			continue;
+--- a/security/integrity/ima/ima_template.c
++++ b/security/integrity/ima/ima_template.c
+@@ -336,8 +336,11 @@ static struct ima_template_desc *restore
  
- 		erase = &map->erase_type[i];
-+		if (!erase->size)
-+			continue;
+ 	template_desc->name = "";
+ 	template_desc->fmt = kstrdup(template_name, GFP_KERNEL);
+-	if (!template_desc->fmt)
++	if (!template_desc->fmt) {
++		kfree(template_desc);
++		template_desc = NULL;
+ 		goto out;
++	}
  
- 		/* Alignment is not mandatory for overlaid regions */
- 		if (region->offset & SNOR_OVERLAID_REGION &&
+ 	spin_lock(&template_list);
+ 	list_add_tail_rcu(&template_desc->list, &defined_templates);
 
 
