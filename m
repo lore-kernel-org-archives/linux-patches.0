@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884FFA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0736FC433D2;
-	Tue, 10 Jan 2023 18:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288B3A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4AEEC433D2;
+	Tue, 10 Jan 2023 18:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374264;
-	bh=aF9XGd847OBV9ASn/3QWJID57AOLr6pHJv2XGS0Veog=;
+	s=korg; t=1673374267;
+	bh=D91RMQ0G/ES9Evykr0eugd3+aShZD2wcaUaHl9DnH6g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JOIP35hLxHoiR7GGeo0ROBVJwAEKHjIMAmeMivAf3zFdf6vmb1ihkwC/AHr2TgoR/
-	 BFOU8VBhxw0+R6PYQu7hNjnwKQiw7cDzlsGiZ48GPpdeGS63T2oAcaRSZLtwWQPV7H
-	 qBpZJmty6S9Y4LgjqMduTh0ZhSviQB6wEkVNhM/4=
+	b=gr+c77PGaKady5fn8uqsOfbk6fgJFh35gkOzkrSOMR+xz3QEkK3wxe9JiS7RBVas9
+	 JROWiK1XtmEmW7AeBGrdMkGjPT2LM5sG3KT0qNN0mpH+GZma+rCJhqrChO3IRrzemr
+	 U9yLKpTF4x6uqWeWgSURawlpFcz6eXUNDnMX795U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlo Caione <ccaione@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Shay Agroskin <shayagr@amazon.com>,
+	David Arinzon <darinzon@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 076/148] drm/meson: Reduce the FIFO lines held when AFBC is not used
-Date: Tue, 10 Jan 2023 19:03:00 +0100
-Message-Id: <20230110180019.627162866@linuxfoundation.org>
+Subject: [PATCH 6.0 067/148] net: ena: Use bitmask to indicate packet redirection
+Date: Tue, 10 Jan 2023 19:02:51 +0100
+Message-Id: <20230110180019.348676490@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -36,54 +36,191 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlo Caione <ccaione@baylibre.com>
+From: David Arinzon <darinzon@amazon.com>
 
-[ Upstream commit 3b754ed6d1cd90017e66e5cc16f3923e4a952ffc ]
+[ Upstream commit 59811faa2c54dbcf44d575b5a8f6e7077da88dc2 ]
 
-Having a bigger number of FIFO lines held after vsync is only useful to
-SoCs using AFBC to give time to the AFBC decoder to be reset, configured
-and enabled again.
+Redirecting packets with XDP Redirect is done in two phases:
+1. A packet is passed by the driver to the kernel using
+   xdp_do_redirect().
+2. After finishing polling for new packets the driver lets the kernel
+   know that it can now process the redirected packet using
+   xdp_do_flush_map().
+   The packets' redirection is handled in the napi context of the
+   queue that called xdp_do_redirect()
 
-For SoCs not using AFBC this, on the contrary, is causing on some
-displays issues and a few pixels vertical offset in the displayed image.
+To avoid calling xdp_do_flush_map() each time the driver first checks
+whether any packets were redirected, using
+	xdp_flags |= xdp_verdict;
+and
+	if (xdp_flags & XDP_REDIRECT)
+	    xdp_do_flush_map()
 
-Conditionally increase the number of lines held after vsync only for
-SoCs using AFBC, leaving the default value for all the others.
+essentially treating XDP instructions as a bitmask, which isn't the case:
+    enum xdp_action {
+	    XDP_ABORTED = 0,
+	    XDP_DROP,
+	    XDP_PASS,
+	    XDP_TX,
+	    XDP_REDIRECT,
+    };
 
-Fixes: 24e0d4058eff ("drm/meson: hold 32 lines after vsync to give time for AFBC start")
-Signed-off-by: Carlo Caione <ccaione@baylibre.com>
-Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
-[narmstrong: added fixes tag]
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221216-afbc_s905x-v1-0-033bebf780d9@baylibre.com
+Given the current possible values of xdp_action, the current design
+doesn't have a bug (since XDP_REDIRECT = 100b), but it is still
+flawed.
+
+This patch makes the driver use a bitmask instead, to avoid future
+issues.
+
+Fixes: a318c70ad152 ("net: ena: introduce XDP redirect implementation")
+Signed-off-by: Shay Agroskin <shayagr@amazon.com>
+Signed-off-by: David Arinzon <darinzon@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_viu.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c | 26 ++++++++++++--------
+ drivers/net/ethernet/amazon/ena/ena_netdev.h |  9 +++++++
+ 2 files changed, 25 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/meson/meson_viu.c b/drivers/gpu/drm/meson/meson_viu.c
-index d4b907889a21..cd399b0b7181 100644
---- a/drivers/gpu/drm/meson/meson_viu.c
-+++ b/drivers/gpu/drm/meson/meson_viu.c
-@@ -436,15 +436,14 @@ void meson_viu_init(struct meson_drm *priv)
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+index 614f27f18164..a27a7963df76 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -374,9 +374,9 @@ static int ena_xdp_xmit(struct net_device *dev, int n,
  
- 	/* Initialize OSD1 fifo control register */
- 	reg = VIU_OSD_DDR_PRIORITY_URGENT |
--		VIU_OSD_HOLD_FIFO_LINES(31) |
- 		VIU_OSD_FIFO_DEPTH_VAL(32) | /* fifo_depth_val: 32*8=256 */
- 		VIU_OSD_WORDS_PER_BURST(4) | /* 4 words in 1 burst */
- 		VIU_OSD_FIFO_LIMITS(2);      /* fifo_lim: 2*16=32 */
+ static int ena_xdp_execute(struct ena_ring *rx_ring, struct xdp_buff *xdp)
+ {
++	u32 verdict = ENA_XDP_PASS;
+ 	struct bpf_prog *xdp_prog;
+ 	struct ena_ring *xdp_ring;
+-	u32 verdict = XDP_PASS;
+ 	struct xdp_frame *xdpf;
+ 	u64 *xdp_stat;
  
- 	if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_G12A))
--		reg |= VIU_OSD_BURST_LENGTH_32;
-+		reg |= (VIU_OSD_BURST_LENGTH_32 | VIU_OSD_HOLD_FIFO_LINES(31));
- 	else
--		reg |= VIU_OSD_BURST_LENGTH_64;
-+		reg |= (VIU_OSD_BURST_LENGTH_64 | VIU_OSD_HOLD_FIFO_LINES(4));
+@@ -393,7 +393,7 @@ static int ena_xdp_execute(struct ena_ring *rx_ring, struct xdp_buff *xdp)
+ 		if (unlikely(!xdpf)) {
+ 			trace_xdp_exception(rx_ring->netdev, xdp_prog, verdict);
+ 			xdp_stat = &rx_ring->rx_stats.xdp_aborted;
+-			verdict = XDP_ABORTED;
++			verdict = ENA_XDP_DROP;
+ 			break;
+ 		}
  
- 	writel_relaxed(reg, priv->io_base + _REG(VIU_OSD1_FIFO_CTRL_STAT));
- 	writel_relaxed(reg, priv->io_base + _REG(VIU_OSD2_FIFO_CTRL_STAT));
+@@ -409,29 +409,35 @@ static int ena_xdp_execute(struct ena_ring *rx_ring, struct xdp_buff *xdp)
+ 
+ 		spin_unlock(&xdp_ring->xdp_tx_lock);
+ 		xdp_stat = &rx_ring->rx_stats.xdp_tx;
++		verdict = ENA_XDP_TX;
+ 		break;
+ 	case XDP_REDIRECT:
+ 		if (likely(!xdp_do_redirect(rx_ring->netdev, xdp, xdp_prog))) {
+ 			xdp_stat = &rx_ring->rx_stats.xdp_redirect;
++			verdict = ENA_XDP_REDIRECT;
+ 			break;
+ 		}
+ 		trace_xdp_exception(rx_ring->netdev, xdp_prog, verdict);
+ 		xdp_stat = &rx_ring->rx_stats.xdp_aborted;
+-		verdict = XDP_ABORTED;
++		verdict = ENA_XDP_DROP;
+ 		break;
+ 	case XDP_ABORTED:
+ 		trace_xdp_exception(rx_ring->netdev, xdp_prog, verdict);
+ 		xdp_stat = &rx_ring->rx_stats.xdp_aborted;
++		verdict = ENA_XDP_DROP;
+ 		break;
+ 	case XDP_DROP:
+ 		xdp_stat = &rx_ring->rx_stats.xdp_drop;
++		verdict = ENA_XDP_DROP;
+ 		break;
+ 	case XDP_PASS:
+ 		xdp_stat = &rx_ring->rx_stats.xdp_pass;
++		verdict = ENA_XDP_PASS;
+ 		break;
+ 	default:
+ 		bpf_warn_invalid_xdp_action(rx_ring->netdev, xdp_prog, verdict);
+ 		xdp_stat = &rx_ring->rx_stats.xdp_invalid;
++		verdict = ENA_XDP_DROP;
+ 	}
+ 
+ 	ena_increase_stat(xdp_stat, 1, &rx_ring->syncp);
+@@ -1621,12 +1627,12 @@ static int ena_xdp_handle_buff(struct ena_ring *rx_ring, struct xdp_buff *xdp)
+ 	 * we expect, then we simply drop it
+ 	 */
+ 	if (unlikely(rx_ring->ena_bufs[0].len > ENA_XDP_MAX_MTU))
+-		return XDP_DROP;
++		return ENA_XDP_DROP;
+ 
+ 	ret = ena_xdp_execute(rx_ring, xdp);
+ 
+ 	/* The xdp program might expand the headers */
+-	if (ret == XDP_PASS) {
++	if (ret == ENA_XDP_PASS) {
+ 		rx_info->page_offset = xdp->data - xdp->data_hard_start;
+ 		rx_ring->ena_bufs[0].len = xdp->data_end - xdp->data;
+ 	}
+@@ -1665,7 +1671,7 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
+ 	xdp_init_buff(&xdp, ENA_PAGE_SIZE, &rx_ring->xdp_rxq);
+ 
+ 	do {
+-		xdp_verdict = XDP_PASS;
++		xdp_verdict = ENA_XDP_PASS;
+ 		skb = NULL;
+ 		ena_rx_ctx.ena_bufs = rx_ring->ena_bufs;
+ 		ena_rx_ctx.max_bufs = rx_ring->sgl_size;
+@@ -1693,7 +1699,7 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
+ 			xdp_verdict = ena_xdp_handle_buff(rx_ring, &xdp);
+ 
+ 		/* allocate skb and fill it */
+-		if (xdp_verdict == XDP_PASS)
++		if (xdp_verdict == ENA_XDP_PASS)
+ 			skb = ena_rx_skb(rx_ring,
+ 					 rx_ring->ena_bufs,
+ 					 ena_rx_ctx.descs,
+@@ -1711,13 +1717,13 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
+ 				/* Packets was passed for transmission, unmap it
+ 				 * from RX side.
+ 				 */
+-				if (xdp_verdict == XDP_TX || xdp_verdict == XDP_REDIRECT) {
++				if (xdp_verdict & ENA_XDP_FORWARDED) {
+ 					ena_unmap_rx_buff(rx_ring,
+ 							  &rx_ring->rx_buffer_info[req_id]);
+ 					rx_ring->rx_buffer_info[req_id].page = NULL;
+ 				}
+ 			}
+-			if (xdp_verdict != XDP_PASS) {
++			if (xdp_verdict != ENA_XDP_PASS) {
+ 				xdp_flags |= xdp_verdict;
+ 				total_len += ena_rx_ctx.ena_bufs[0].len;
+ 				res_budget--;
+@@ -1763,7 +1769,7 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
+ 		ena_refill_rx_bufs(rx_ring, refill_required);
+ 	}
+ 
+-	if (xdp_flags & XDP_REDIRECT)
++	if (xdp_flags & ENA_XDP_REDIRECT)
+ 		xdp_do_flush_map();
+ 
+ 	return work_done;
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.h b/drivers/net/ethernet/amazon/ena/ena_netdev.h
+index 1bdce99bf688..290ae9bf47ee 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.h
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.h
+@@ -409,6 +409,15 @@ enum ena_xdp_errors_t {
+ 	ENA_XDP_NO_ENOUGH_QUEUES,
+ };
+ 
++enum ENA_XDP_ACTIONS {
++	ENA_XDP_PASS		= 0,
++	ENA_XDP_TX		= BIT(0),
++	ENA_XDP_REDIRECT	= BIT(1),
++	ENA_XDP_DROP		= BIT(2)
++};
++
++#define ENA_XDP_FORWARDED (ENA_XDP_TX | ENA_XDP_REDIRECT)
++
+ static inline bool ena_xdp_present(struct ena_adapter *adapter)
+ {
+ 	return !!adapter->xdp_bpf_prog;
 -- 
 2.35.1
 
