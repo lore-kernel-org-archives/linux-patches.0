@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B2C6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:24:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB25C433EF;
-	Tue, 10 Jan 2023 18:24:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CABE46FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:24:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EACEC433D2;
+	Tue, 10 Jan 2023 18:24:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375077;
-	bh=hj+zY7cQJhO7F/fcOhPf9qe6r17hp6PKEhAVYrhHZcI=;
+	s=korg; t=1673375080;
+	bh=lZHPzIJC9Uk4LaExSWj3oDnqBU9NzKlHDKBskuGt+SE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kZavgxP6aYg8+5gbzNmuDUZPmfBjYJSKdC5IwStYCxx0O3gBh3/i0ypJDmRG7Ecad
-	 scrcODKkS5qE3B4w5GlYJBM18+HIz3qAE90uN6aCg1bjYbEZ+Ru7OkA0MTGmF/iK2M
-	 XojYLKEh2+qUxLcVPbGrh5rw6JcB4yIce7sqPL7o=
+	b=nXwM78lQJ1cnVF/Af+Uj5vBBQ1t6fxpgpP+MkB7ILtB01r6mLMSmvEUwT8kp114In
+	 ODm2B1SPHcnQXMNbOk6ddife0sLe6WHxNa9RICbEc2xoX6XyX4UHfkaY6/CanUr1wb
+	 C/Po1aHqtvqL8PMK8iJR+kd1xPraRxC0v3SvNOYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"John Warthog9 Hawley (VMware)" <warthog9@eaglescrag.net>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 063/290] ktest.pl minconfig: Unset configs instead of just removing them
-Date: Tue, 10 Jan 2023 19:02:35 +0100
-Message-Id: <20230110180033.811315253@linuxfoundation.org>
+	Shuah Khan <skhan@linuxfoundation.org>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 5.15 072/290] selftests: Use optional USERCFLAGS and USERLDFLAGS
+Date: Tue, 10 Jan 2023 19:02:44 +0100
+Message-Id: <20230110180034.118392715@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -34,45 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Mickaël Salaün <mic@digikod.net>
 
-commit ef784eebb56425eed6e9b16e7d47e5c00dcf9c38 upstream.
+commit de3ee3f63400a23954e7c1ad1cb8c20f29ab6fe3 upstream.
 
-After a full run of a make_min_config test, I noticed there were a lot of
-CONFIGs still enabled that really should not be. Looking at them, I
-noticed they were all defined as "default y". The issue is that the test
-simple removes the config and re-runs make oldconfig, which enables it
-again because it is set to default 'y'. Instead, explicitly disable the
-config with writing "# CONFIG_FOO is not set" to the file to keep it from
-being set again.
+This change enables to extend CFLAGS and LDFLAGS from command line, e.g.
+to extend compiler checks: make USERCFLAGS=-Werror USERLDFLAGS=-static
 
-With this change, one of my box's minconfigs went from 768 configs set,
-down to 521 configs set.
+USERCFLAGS and USERLDFLAGS are documented in
+Documentation/kbuild/makefiles.rst and Documentation/kbuild/kbuild.rst
 
-Link: https://lkml.kernel.org/r/20221202115936.016fce23@gandalf.local.home
+This should be backported (down to 5.10) to improve previous kernel
+versions testing as well.
 
+Cc: Shuah Khan <skhan@linuxfoundation.org>
 Cc: stable@vger.kernel.org
-Fixes: 0a05c769a9de5 ("ktest: Added config_bisect test type")
-Reviewed-by: John 'Warthog9' Hawley (VMware) <warthog9@eaglescrag.net>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Link: https://lore.kernel.org/r/20220909103901.1503436-1-mic@digikod.net
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/ktest/ktest.pl |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/lib.mk |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -3778,9 +3778,10 @@ sub test_this_config {
-     # .config to make sure it is missing the config that
-     # we had before
-     my %configs = %min_configs;
--    delete $configs{$config};
-+    $configs{$config} = "# $config is not set";
-     make_new_config ((values %configs), (values %keep_configs));
-     make_oldconfig;
-+    delete $configs{$config};
-     undef %configs;
-     assign_configs \%configs, $output_config;
+--- a/tools/testing/selftests/lib.mk
++++ b/tools/testing/selftests/lib.mk
+@@ -129,6 +129,11 @@ endef
+ clean:
+ 	$(CLEAN)
  
++# Enables to extend CFLAGS and LDFLAGS from command line, e.g.
++# make USERCFLAGS=-Werror USERLDFLAGS=-static
++CFLAGS += $(USERCFLAGS)
++LDFLAGS += $(USERLDFLAGS)
++
+ # When make O= with kselftest target from main level
+ # the following aren't defined.
+ #
 
 
