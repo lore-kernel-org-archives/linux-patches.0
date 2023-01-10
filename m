@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E7DA941
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:13:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34050C433EF;
-	Tue, 10 Jan 2023 18:13:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 848DCA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:13:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F215AC433EF;
+	Tue, 10 Jan 2023 18:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374429;
-	bh=kK2Z4HkYXIJ15m3SZkX8uCrmptpQd6JBxmfvXknrE0U=;
+	s=korg; t=1673374432;
+	bh=lOYfb9yQ2IjAmeG9ihKbH9wFjVyodaJLuuv90tFB7cE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p7UIdihCpAqTszpUava288i6oEKdViapoTq7Sz0bnzMhGQ4fSjMbA+PPFxi8l+1z0
-	 rhMXwDlLFAcspOhwvEu4MJD73+XESCjFkoiu1mcrIf4u2RCtPh0JdMbG95XSTrhbkp
-	 BbhOu8XDy9q1V7AQ0AjzLEUTKMzPyhnHa5f+2VVI=
+	b=u3idxPWlJCt6K2pqfZvyDw429WsrcCH8p5vDsGCKtGkIAYSHHN5wV7GbfJDhsiTyG
+	 Nlxr7/rFvZiEBSZdmJqtLRdtdGTos4snkdaJSDdJCTIUmxKc26cb+Tp+lkYojlo8Yg
+	 nIUgLxGpWhZZbFjx21lDkF7SoFRuXYv8bk7QsgrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Steven Price <steven.price@arm.com>,
-	Rob Clark <robdclark@gmail.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 015/159] drm/panfrost: Fix GEM handle creation ref-counting
-Date: Tue, 10 Jan 2023 19:02:43 +0100
-Message-Id: <20230110180018.792447983@linuxfoundation.org>
+Subject: [PATCH 6.1 016/159] netfilter: nf_tables: consolidate set description
+Date: Tue, 10 Jan 2023 19:02:44 +0100
+Message-Id: <20230110180018.823509822@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,136 +34,223 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Price <steven.price@arm.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit 4217c6ac817451d5116687f3cc6286220dc43d49 ]
+[ Upstream commit bed4a63ea4ae77cfe5aae004ef87379f0655260a ]
 
-panfrost_gem_create_with_handle() previously returned a BO but with the
-only reference being from the handle, which user space could in theory
-guess and release, causing a use-after-free. Additionally if the call to
-panfrost_gem_mapping_get() in panfrost_ioctl_create_bo() failed then
-a(nother) reference on the BO was dropped.
+Add the following fields to the set description:
 
-The _create_with_handle() is a problematic pattern, so ditch it and
-instead create the handle in panfrost_ioctl_create_bo(). If the call to
-panfrost_gem_mapping_get() fails then this means that user space has
-indeed gone behind our back and freed the handle. In which case just
-return an error code.
+- key type
+- data type
+- object type
+- policy
+- gc_int: garbage collection interval)
+- timeout: element timeout
 
-Reported-by: Rob Clark <robdclark@chromium.org>
-Fixes: f3ba91228e8e ("drm/panfrost: Add initial panfrost driver")
-Signed-off-by: Steven Price <steven.price@arm.com>
-Reviewed-by: Rob Clark <robdclark@gmail.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221219140130.410578-1-steven.price@arm.com
+This prepares for stricter set type checks on updates in a follow up
+patch.
+
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Stable-dep-of: f6594c372afd ("netfilter: nf_tables: perform type checking for existing sets")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/panfrost/panfrost_drv.c | 27 ++++++++++++++++---------
- drivers/gpu/drm/panfrost/panfrost_gem.c | 16 +--------------
- drivers/gpu/drm/panfrost/panfrost_gem.h |  5 +----
- 3 files changed, 20 insertions(+), 28 deletions(-)
+ include/net/netfilter/nf_tables.h | 12 +++++++
+ net/netfilter/nf_tables_api.c     | 58 +++++++++++++++----------------
+ 2 files changed, 40 insertions(+), 30 deletions(-)
 
-diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/panfrost/panfrost_drv.c
-index 2fa5afe21288..919e6cc04982 100644
---- a/drivers/gpu/drm/panfrost/panfrost_drv.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
-@@ -82,6 +82,7 @@ static int panfrost_ioctl_create_bo(struct drm_device *dev, void *data,
- 	struct panfrost_gem_object *bo;
- 	struct drm_panfrost_create_bo *args = data;
- 	struct panfrost_gem_mapping *mapping;
-+	int ret;
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index cdb7db9b0e25..ddcdde230747 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -311,17 +311,29 @@ struct nft_set_iter {
+ /**
+  *	struct nft_set_desc - description of set elements
+  *
++ *	@ktype: key type
+  *	@klen: key length
++ *	@dtype: data type
+  *	@dlen: data length
++ *	@objtype: object type
++ *	@flags: flags
+  *	@size: number of set elements
++ *	@policy: set policy
++ *	@gc_int: garbage collector interval
+  *	@field_len: length of each field in concatenation, bytes
+  *	@field_count: number of concatenated fields in element
+  *	@expr: set must support for expressions
+  */
+ struct nft_set_desc {
++	u32			ktype;
+ 	unsigned int		klen;
++	u32			dtype;
+ 	unsigned int		dlen;
++	u32			objtype;
+ 	unsigned int		size;
++	u32			policy;
++	u32			gc_int;
++	u64			timeout;
+ 	u8			field_len[NFT_REG32_COUNT];
+ 	u8			field_count;
+ 	bool			expr;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 7a09421f19e1..a31f8dc40646 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -3732,8 +3732,7 @@ static bool nft_set_ops_candidate(const struct nft_set_type *type, u32 flags)
+ static const struct nft_set_ops *
+ nft_select_set_ops(const struct nft_ctx *ctx,
+ 		   const struct nlattr * const nla[],
+-		   const struct nft_set_desc *desc,
+-		   enum nft_set_policies policy)
++		   const struct nft_set_desc *desc)
+ {
+ 	struct nftables_pernet *nft_net = nft_pernet(ctx->net);
+ 	const struct nft_set_ops *ops, *bops;
+@@ -3762,7 +3761,7 @@ nft_select_set_ops(const struct nft_ctx *ctx,
+ 		if (!ops->estimate(desc, flags, &est))
+ 			continue;
  
- 	if (!args->size || args->pad ||
- 	    (args->flags & ~(PANFROST_BO_NOEXEC | PANFROST_BO_HEAP)))
-@@ -92,21 +93,29 @@ static int panfrost_ioctl_create_bo(struct drm_device *dev, void *data,
- 	    !(args->flags & PANFROST_BO_NOEXEC))
- 		return -EINVAL;
+-		switch (policy) {
++		switch (desc->policy) {
+ 		case NFT_SET_POL_PERFORMANCE:
+ 			if (est.lookup < best.lookup)
+ 				break;
+@@ -4344,7 +4343,6 @@ static int nf_tables_set_desc_parse(struct nft_set_desc *desc,
+ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
+ 			    const struct nlattr * const nla[])
+ {
+-	u32 ktype, dtype, flags, policy, gc_int, objtype;
+ 	struct netlink_ext_ack *extack = info->extack;
+ 	u8 genmask = nft_genmask_next(info->net);
+ 	u8 family = info->nfmsg->nfgen_family;
+@@ -4357,10 +4355,10 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
+ 	struct nft_set *set;
+ 	struct nft_ctx ctx;
+ 	size_t alloc_size;
+-	u64 timeout;
+ 	char *name;
+ 	int err, i;
+ 	u16 udlen;
++	u32 flags;
+ 	u64 size;
  
--	bo = panfrost_gem_create_with_handle(file, dev, args->size, args->flags,
--					     &args->handle);
-+	bo = panfrost_gem_create(dev, args->size, args->flags);
- 	if (IS_ERR(bo))
- 		return PTR_ERR(bo);
+ 	if (nla[NFTA_SET_TABLE] == NULL ||
+@@ -4371,10 +4369,10 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
  
-+	ret = drm_gem_handle_create(file, &bo->base.base, &args->handle);
-+	if (ret)
-+		goto out;
-+
- 	mapping = panfrost_gem_mapping_get(bo, priv);
--	if (!mapping) {
--		drm_gem_object_put(&bo->base.base);
--		return -EINVAL;
-+	if (mapping) {
-+		args->offset = mapping->mmnode.start << PAGE_SHIFT;
-+		panfrost_gem_mapping_put(mapping);
-+	} else {
-+		/* This can only happen if the handle from
-+		 * drm_gem_handle_create() has already been guessed and freed
-+		 * by user space
-+		 */
-+		ret = -EINVAL;
+ 	memset(&desc, 0, sizeof(desc));
+ 
+-	ktype = NFT_DATA_VALUE;
++	desc.ktype = NFT_DATA_VALUE;
+ 	if (nla[NFTA_SET_KEY_TYPE] != NULL) {
+-		ktype = ntohl(nla_get_be32(nla[NFTA_SET_KEY_TYPE]));
+-		if ((ktype & NFT_DATA_RESERVED_MASK) == NFT_DATA_RESERVED_MASK)
++		desc.ktype = ntohl(nla_get_be32(nla[NFTA_SET_KEY_TYPE]));
++		if ((desc.ktype & NFT_DATA_RESERVED_MASK) == NFT_DATA_RESERVED_MASK)
+ 			return -EINVAL;
  	}
  
--	args->offset = mapping->mmnode.start << PAGE_SHIFT;
--	panfrost_gem_mapping_put(mapping);
--
--	return 0;
-+out:
-+	drm_gem_object_put(&bo->base.base);
-+	return ret;
- }
+@@ -4399,17 +4397,17 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
+ 			return -EOPNOTSUPP;
+ 	}
  
- /**
-diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.c b/drivers/gpu/drm/panfrost/panfrost_gem.c
-index 293e799e2fe8..3c812fbd126f 100644
---- a/drivers/gpu/drm/panfrost/panfrost_gem.c
-+++ b/drivers/gpu/drm/panfrost/panfrost_gem.c
-@@ -235,12 +235,8 @@ struct drm_gem_object *panfrost_gem_create_object(struct drm_device *dev, size_t
- }
+-	dtype = 0;
++	desc.dtype = 0;
+ 	if (nla[NFTA_SET_DATA_TYPE] != NULL) {
+ 		if (!(flags & NFT_SET_MAP))
+ 			return -EINVAL;
  
- struct panfrost_gem_object *
--panfrost_gem_create_with_handle(struct drm_file *file_priv,
--				struct drm_device *dev, size_t size,
--				u32 flags,
--				uint32_t *handle)
-+panfrost_gem_create(struct drm_device *dev, size_t size, u32 flags)
- {
--	int ret;
- 	struct drm_gem_shmem_object *shmem;
- 	struct panfrost_gem_object *bo;
+-		dtype = ntohl(nla_get_be32(nla[NFTA_SET_DATA_TYPE]));
+-		if ((dtype & NFT_DATA_RESERVED_MASK) == NFT_DATA_RESERVED_MASK &&
+-		    dtype != NFT_DATA_VERDICT)
++		desc.dtype = ntohl(nla_get_be32(nla[NFTA_SET_DATA_TYPE]));
++		if ((desc.dtype & NFT_DATA_RESERVED_MASK) == NFT_DATA_RESERVED_MASK &&
++		    desc.dtype != NFT_DATA_VERDICT)
+ 			return -EINVAL;
  
-@@ -256,16 +252,6 @@ panfrost_gem_create_with_handle(struct drm_file *file_priv,
- 	bo->noexec = !!(flags & PANFROST_BO_NOEXEC);
- 	bo->is_heap = !!(flags & PANFROST_BO_HEAP);
+-		if (dtype != NFT_DATA_VERDICT) {
++		if (desc.dtype != NFT_DATA_VERDICT) {
+ 			if (nla[NFTA_SET_DATA_LEN] == NULL)
+ 				return -EINVAL;
+ 			desc.dlen = ntohl(nla_get_be32(nla[NFTA_SET_DATA_LEN]));
+@@ -4424,34 +4422,34 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
+ 		if (!(flags & NFT_SET_OBJECT))
+ 			return -EINVAL;
  
--	/*
--	 * Allocate an id of idr table where the obj is registered
--	 * and handle has the id what user can see.
--	 */
--	ret = drm_gem_handle_create(file_priv, &shmem->base, handle);
--	/* drop reference from allocate - handle holds it now. */
--	drm_gem_object_put(&shmem->base);
--	if (ret)
--		return ERR_PTR(ret);
--
- 	return bo;
- }
+-		objtype = ntohl(nla_get_be32(nla[NFTA_SET_OBJ_TYPE]));
+-		if (objtype == NFT_OBJECT_UNSPEC ||
+-		    objtype > NFT_OBJECT_MAX)
++		desc.objtype = ntohl(nla_get_be32(nla[NFTA_SET_OBJ_TYPE]));
++		if (desc.objtype == NFT_OBJECT_UNSPEC ||
++		    desc.objtype > NFT_OBJECT_MAX)
+ 			return -EOPNOTSUPP;
+ 	} else if (flags & NFT_SET_OBJECT)
+ 		return -EINVAL;
+ 	else
+-		objtype = NFT_OBJECT_UNSPEC;
++		desc.objtype = NFT_OBJECT_UNSPEC;
  
-diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.h b/drivers/gpu/drm/panfrost/panfrost_gem.h
-index 8088d5fd8480..ad2877eeeccd 100644
---- a/drivers/gpu/drm/panfrost/panfrost_gem.h
-+++ b/drivers/gpu/drm/panfrost/panfrost_gem.h
-@@ -69,10 +69,7 @@ panfrost_gem_prime_import_sg_table(struct drm_device *dev,
- 				   struct sg_table *sgt);
+-	timeout = 0;
++	desc.timeout = 0;
+ 	if (nla[NFTA_SET_TIMEOUT] != NULL) {
+ 		if (!(flags & NFT_SET_TIMEOUT))
+ 			return -EINVAL;
  
- struct panfrost_gem_object *
--panfrost_gem_create_with_handle(struct drm_file *file_priv,
--				struct drm_device *dev, size_t size,
--				u32 flags,
--				uint32_t *handle);
-+panfrost_gem_create(struct drm_device *dev, size_t size, u32 flags);
+-		err = nf_msecs_to_jiffies64(nla[NFTA_SET_TIMEOUT], &timeout);
++		err = nf_msecs_to_jiffies64(nla[NFTA_SET_TIMEOUT], &desc.timeout);
+ 		if (err)
+ 			return err;
+ 	}
+-	gc_int = 0;
++	desc.gc_int = 0;
+ 	if (nla[NFTA_SET_GC_INTERVAL] != NULL) {
+ 		if (!(flags & NFT_SET_TIMEOUT))
+ 			return -EINVAL;
+-		gc_int = ntohl(nla_get_be32(nla[NFTA_SET_GC_INTERVAL]));
++		desc.gc_int = ntohl(nla_get_be32(nla[NFTA_SET_GC_INTERVAL]));
+ 	}
  
- int panfrost_gem_open(struct drm_gem_object *obj, struct drm_file *file_priv);
- void panfrost_gem_close(struct drm_gem_object *obj,
+-	policy = NFT_SET_POL_PERFORMANCE;
++	desc.policy = NFT_SET_POL_PERFORMANCE;
+ 	if (nla[NFTA_SET_POLICY] != NULL)
+-		policy = ntohl(nla_get_be32(nla[NFTA_SET_POLICY]));
++		desc.policy = ntohl(nla_get_be32(nla[NFTA_SET_POLICY]));
+ 
+ 	if (nla[NFTA_SET_DESC] != NULL) {
+ 		err = nf_tables_set_desc_parse(&desc, nla[NFTA_SET_DESC]);
+@@ -4496,7 +4494,7 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
+ 	if (!(info->nlh->nlmsg_flags & NLM_F_CREATE))
+ 		return -ENOENT;
+ 
+-	ops = nft_select_set_ops(&ctx, nla, &desc, policy);
++	ops = nft_select_set_ops(&ctx, nla, &desc);
+ 	if (IS_ERR(ops))
+ 		return PTR_ERR(ops);
+ 
+@@ -4536,18 +4534,18 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
+ 	set->table = table;
+ 	write_pnet(&set->net, net);
+ 	set->ops = ops;
+-	set->ktype = ktype;
++	set->ktype = desc.ktype;
+ 	set->klen = desc.klen;
+-	set->dtype = dtype;
+-	set->objtype = objtype;
++	set->dtype = desc.dtype;
++	set->objtype = desc.objtype;
+ 	set->dlen = desc.dlen;
+ 	set->flags = flags;
+ 	set->size = desc.size;
+-	set->policy = policy;
++	set->policy = desc.policy;
+ 	set->udlen = udlen;
+ 	set->udata = udata;
+-	set->timeout = timeout;
+-	set->gc_int = gc_int;
++	set->timeout = desc.timeout;
++	set->gc_int = desc.gc_int;
+ 
+ 	set->field_count = desc.field_count;
+ 	for (i = 0; i < desc.field_count; i++)
 -- 
 2.35.1
 
