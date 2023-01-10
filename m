@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621D07474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:13:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5FD9C433EF;
-	Tue, 10 Jan 2023 18:13:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A45967474
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:13:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92E03C433EF;
+	Tue, 10 Jan 2023 18:13:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374407;
-	bh=OqJS7mdcDFWczlCp7zGtOy4ei+eCaRVuC/4bgPswZSc=;
+	s=korg; t=1673374410;
+	bh=MNSnkI6d27yEiX6A/sPeo2+ooVeTpGc/VdS6BYJXUBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V4XCZNTHjkkLo3ohziCf9X8Be6BHwl/CuloGmsgbEgrnTv94dRUXgRvm5fzmAGKGi
-	 Ig/W61SvPoGUBgwwZeiUyEpQvBemRIPmXxLLk8rH5HxouacyYgU62vYz1vd9cTVL5n
-	 fe9SD2hwwMpg+SXokKddvkD3s8vIUFSzLiiB/GQo=
+	b=Mk+KinKgpa6OuHcbHmixzsnEDp5z7Atae+VIZBowfLNyuiiyF3cDqUuhDHL15YRHn
+	 SaKPIefAO80gGaCZHAZITKgJ0gBew+Sn0I6ppnCmMjrb4rxQbIcrbC0b9wpVVSGSvx
+	 qXkQdHufxtCUQ8Ukgee+9QwFstsaHCeWocpkjEOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Guo Ren <guoren@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.0 135/148] riscv, kprobes: Stricter c.jr/c.jalr decoding
-Date: Tue, 10 Jan 2023 19:03:59 +0100
-Message-Id: <20230110180021.460380563@linuxfoundation.org>
+	"Russell King (Oracle)" <linux@armlinux.org.uk>,
+	Jens Axboe <axboe@kernel.dk>,
+	Hui Tang <tanghui20@huawei.com>
+Subject: [PATCH 6.1 001/159] ARM: renumber bits related to _TIF_WORK_MASK
+Date: Tue, 10 Jan 2023 19:02:29 +0100
+Message-Id: <20230110180018.337858939@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
-References: <20230110180017.145591678@linuxfoundation.org>
+In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
+References: <20230110180018.288460217@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,54 +37,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Björn Töpel <bjorn@rivosinc.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit b2d473a6019ef9a54b0156ecdb2e0398c9fa6a24 upstream.
+commit 191f8453fc99a537ea78b727acea739782378b0d upstream.
 
-In the compressed instruction extension, c.jr, c.jalr, c.mv, and c.add
-is encoded the following way (each instruction is 16b):
+We want to ensure that the mask related to calling do_work_pending()
+is within the first 16 bits. Move bits unrelated to that outside of
+that range, to avoid spuriously calling do_work_pending() when we don't
+need to.
 
----+-+-----------+-----------+--
-100 0 rs1[4:0]!=0       00000 10 : c.jr
-100 1 rs1[4:0]!=0       00000 10 : c.jalr
-100 0  rd[4:0]!=0 rs2[4:0]!=0 10 : c.mv
-100 1  rd[4:0]!=0 rs2[4:0]!=0 10 : c.add
-
-The following logic is used to decode c.jr and c.jalr:
-
-  insn & 0xf007 == 0x8002 => instruction is an c.jr
-  insn & 0xf007 == 0x9002 => instruction is an c.jalr
-
-When 0xf007 is used to mask the instruction, c.mv can be incorrectly
-decoded as c.jr, and c.add as c.jalr.
-
-Correct the decoding by changing the mask from 0xf007 to 0xf07f.
-
-Fixes: c22b0bcb1dd0 ("riscv: Add kprobes supported")
-Signed-off-by: Björn Töpel <bjorn@rivosinc.com>
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20230102160748.1307289-1-bjorn@kernel.org
 Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 32d59773da38 ("arm: add support for TIF_NOTIFY_SIGNAL")
+Reported-and-tested-by: Hui Tang <tanghui20@huawei.com>
+Suggested-by: Russell King (Oracle) <linux@armlinux.org.uk>
+Link: https://lore.kernel.org/lkml/7ecb8f3c-2aeb-a905-0d4a-aa768b9649b5@huawei.com/
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/kernel/probes/simulate-insn.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/include/asm/thread_info.h |   13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
---- a/arch/riscv/kernel/probes/simulate-insn.h
-+++ b/arch/riscv/kernel/probes/simulate-insn.h
-@@ -31,9 +31,9 @@ __RISCV_INSN_FUNCS(fence,	0x7f, 0x0f);
- 	} while (0)
+--- a/arch/arm/include/asm/thread_info.h
++++ b/arch/arm/include/asm/thread_info.h
+@@ -128,15 +128,16 @@ extern int vfp_restore_user_hwstate(stru
+ #define TIF_NEED_RESCHED	1	/* rescheduling necessary */
+ #define TIF_NOTIFY_RESUME	2	/* callback before returning to user */
+ #define TIF_UPROBE		3	/* breakpointed or singlestepping */
+-#define TIF_SYSCALL_TRACE	4	/* syscall trace active */
+-#define TIF_SYSCALL_AUDIT	5	/* syscall auditing active */
+-#define TIF_SYSCALL_TRACEPOINT	6	/* syscall tracepoint instrumentation */
+-#define TIF_SECCOMP		7	/* seccomp syscall filtering active */
+-#define TIF_NOTIFY_SIGNAL	8	/* signal notifications exist */
++#define TIF_NOTIFY_SIGNAL	4	/* signal notifications exist */
  
- __RISCV_INSN_FUNCS(c_j,		0xe003, 0xa001);
--__RISCV_INSN_FUNCS(c_jr,	0xf007, 0x8002);
-+__RISCV_INSN_FUNCS(c_jr,	0xf07f, 0x8002);
- __RISCV_INSN_FUNCS(c_jal,	0xe003, 0x2001);
--__RISCV_INSN_FUNCS(c_jalr,	0xf007, 0x9002);
-+__RISCV_INSN_FUNCS(c_jalr,	0xf07f, 0x9002);
- __RISCV_INSN_FUNCS(c_beqz,	0xe003, 0xc001);
- __RISCV_INSN_FUNCS(c_bnez,	0xe003, 0xe001);
- __RISCV_INSN_FUNCS(c_ebreak,	0xffff, 0x9002);
+ #define TIF_USING_IWMMXT	17
+ #define TIF_MEMDIE		18	/* is terminating due to OOM killer */
+-#define TIF_RESTORE_SIGMASK	20
++#define TIF_RESTORE_SIGMASK	19
++#define TIF_SYSCALL_TRACE	20	/* syscall trace active */
++#define TIF_SYSCALL_AUDIT	21	/* syscall auditing active */
++#define TIF_SYSCALL_TRACEPOINT	22	/* syscall tracepoint instrumentation */
++#define TIF_SECCOMP		23	/* seccomp syscall filtering active */
++
+ 
+ #define _TIF_SIGPENDING		(1 << TIF_SIGPENDING)
+ #define _TIF_NEED_RESCHED	(1 << TIF_NEED_RESCHED)
 
 
