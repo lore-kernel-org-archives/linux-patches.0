@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4A16FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:19:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F89EC433EF;
-	Tue, 10 Jan 2023 18:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB206FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:19:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 617EDC433D2;
+	Tue, 10 Jan 2023 18:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374795;
-	bh=2cezEdyeVbanuF05iaJze5eync6lTSP7QdKfsdjcS0w=;
+	s=korg; t=1673374798;
+	bh=/gmXCSockekduztdxVnD82uT04lVCy1kVkawtlYBnv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jpQ/CFUcRRYNce6eCn9jjnhfutJT8hjvGyTrhuM4mRzbrUIwCqTbUj4y14Dg5BUEF
-	 CILz1c6qKP5hyeWee606eAPxMHTq8+L+kzZIf7/T/lA91nX4TLmMxH7tkWaZ/Bm2xC
-	 o2LbuYt4FdIEigAqukB7wJpq38sxbGwaMhmutGUQ=
+	b=2AV55U/uu6U+tyPtGDzbrmJT65NW/9OYAhkg8yDENj6BHcBm5p0PhxI7HDU9u9L1G
+	 ZvJhK9rpz2V+bo55bHNwRgAVhh7nNMMvDHZ1+ta7kjk+3kean74fVR651TDUsC/Vki
+	 pNyTByf8Bx6YtmInX8YD2509l3L9JzCP8vqozFlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+7bb7cd3595533513a9e7@syzkaller.appspotmail.com,
+	Michael Schmitz <schmitzmic@gmail.com>,
 	Arnd Bergmann <arnd@arndb.de>,
+	Matthew Wilcox <willy@infradead.org>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/159] usb: dwc3: xilinx: include linux/gpio/consumer.h
-Date: Tue, 10 Jan 2023 19:04:15 +0100
-Message-Id: <20230110180021.693612256@linuxfoundation.org>
+Subject: [PATCH 6.1 108/159] hfs/hfsplus: avoid WARN_ON() for sanity check, use proper error handling
+Date: Tue, 10 Jan 2023 19:04:16 +0100
+Message-Id: <20230110180021.725907186@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -34,40 +39,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit e498a04443240c15c3c857165f7b652b87f4fd96 ]
+[ Upstream commit cb7a95af78d29442b8294683eca4897544b8ef46 ]
 
-The newly added gpio consumer calls cause a build failure in configurations
-that fail to include the right header implicitly:
+Commit 55d1cbbbb29e ("hfs/hfsplus: use WARN_ON for sanity check") fixed
+a build warning by turning a comment into a WARN_ON(), but it turns out
+that syzbot then complains because it can trigger said warning with a
+corrupted hfs image.
 
-drivers/usb/dwc3/dwc3-xilinx.c: In function 'dwc3_xlnx_init_zynqmp':
-drivers/usb/dwc3/dwc3-xilinx.c:207:22: error: implicit declaration of function 'devm_gpiod_get_optional'; did you mean 'devm_clk_get_optional'? [-Werror=implicit-function-declaration]
-  207 |         reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_LOW);
-      |                      ^~~~~~~~~~~~~~~~~~~~~~~
-      |                      devm_clk_get_optional
+The warning actually does warn about a bad situation, but we are much
+better off just handling it as the error it is.  So rather than warn
+about us doing bad things, stop doing the bad things and return -EIO.
 
-Fixes: ca05b38252d7 ("usb: dwc3: xilinx: Add gpio-reset support")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230103121755.956027-1-arnd@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+While at it, also fix a memory leak that was introduced by an earlier
+fix for a similar syzbot warning situation, and add a check for one case
+that historically wasn't handled at all (ie neither comment nor
+subsequent WARN_ON).
+
+Reported-by: syzbot+7bb7cd3595533513a9e7@syzkaller.appspotmail.com
+Fixes: 55d1cbbbb29e ("hfs/hfsplus: use WARN_ON for sanity check")
+Fixes: 8d824e69d9f3 ("hfs: fix OOB Read in __hfs_brec_find")
+Link: https://lore.kernel.org/lkml/000000000000dbce4e05f170f289@google.com/
+Tested-by: Michael Schmitz <schmitzmic@gmail.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-xilinx.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/hfs/inode.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/usb/dwc3/dwc3-xilinx.c b/drivers/usb/dwc3/dwc3-xilinx.c
-index 8607d4c23283..0745e9f11b2e 100644
---- a/drivers/usb/dwc3/dwc3-xilinx.c
-+++ b/drivers/usb/dwc3/dwc3-xilinx.c
-@@ -13,6 +13,7 @@
- #include <linux/of.h>
- #include <linux/platform_device.h>
- #include <linux/dma-mapping.h>
-+#include <linux/gpio/consumer.h>
- #include <linux/of_gpio.h>
- #include <linux/of_platform.h>
- #include <linux/pm_runtime.h>
+diff --git a/fs/hfs/inode.c b/fs/hfs/inode.c
+index a0746be3c1de..80d17c520d0b 100644
+--- a/fs/hfs/inode.c
++++ b/fs/hfs/inode.c
+@@ -458,15 +458,16 @@ int hfs_write_inode(struct inode *inode, struct writeback_control *wbc)
+ 		/* panic? */
+ 		return -EIO;
+ 
++	res = -EIO;
+ 	if (HFS_I(main_inode)->cat_key.CName.len > HFS_NAMELEN)
+-		return -EIO;
++		goto out;
+ 	fd.search_key->cat = HFS_I(main_inode)->cat_key;
+ 	if (hfs_brec_find(&fd))
+-		/* panic? */
+ 		goto out;
+ 
+ 	if (S_ISDIR(main_inode->i_mode)) {
+-		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_dir));
++		if (fd.entrylength < sizeof(struct hfs_cat_dir))
++			goto out;
+ 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
+ 			   sizeof(struct hfs_cat_dir));
+ 		if (rec.type != HFS_CDR_DIR ||
+@@ -479,6 +480,8 @@ int hfs_write_inode(struct inode *inode, struct writeback_control *wbc)
+ 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
+ 			    sizeof(struct hfs_cat_dir));
+ 	} else if (HFS_IS_RSRC(inode)) {
++		if (fd.entrylength < sizeof(struct hfs_cat_file))
++			goto out;
+ 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
+ 			       sizeof(struct hfs_cat_file));
+ 		hfs_inode_write_fork(inode, rec.file.RExtRec,
+@@ -486,7 +489,8 @@ int hfs_write_inode(struct inode *inode, struct writeback_control *wbc)
+ 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
+ 				sizeof(struct hfs_cat_file));
+ 	} else {
+-		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_file));
++		if (fd.entrylength < sizeof(struct hfs_cat_file))
++			goto out;
+ 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
+ 			   sizeof(struct hfs_cat_file));
+ 		if (rec.type != HFS_CDR_FIL ||
+@@ -503,9 +507,10 @@ int hfs_write_inode(struct inode *inode, struct writeback_control *wbc)
+ 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
+ 			    sizeof(struct hfs_cat_file));
+ 	}
++	res = 0;
+ out:
+ 	hfs_find_exit(&fd);
+-	return 0;
++	return res;
+ }
+ 
+ static struct dentry *hfs_file_lookup(struct inode *dir, struct dentry *dentry,
 -- 
 2.35.1
 
