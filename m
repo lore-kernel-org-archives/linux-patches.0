@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17C4A6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:19:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8705FC433D2;
-	Tue, 10 Jan 2023 18:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A0A6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:19:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E04AC433EF;
+	Tue, 10 Jan 2023 18:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374780;
-	bh=t8f8DNXiDvRnjw2hNIYtvv1DZHWqIdv5xXPmWN+vyXk=;
+	s=korg; t=1673374783;
+	bh=OgXuRLzzsJEFs3qmOPhwLSmm0nSXHx05WDwCdh2CwyQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AaxkSTUZ4URueZB1RYHWMSmpbRfNwnpAJg8sWVYNtmYvO1dWedl+/CH8qzbC8hNPC
-	 7w20g/KJ6krgOop0kv6Jzz/HYBiJ/dm9uRLpqaLmDdmXm2sYvrUjEEtK3m3m4DriGD
-	 iZnCT/pT70IFRuzbrjkZQ0fCmpeDfzypJcTvlhAs=
+	b=dqowo+nt0ZN0l0nIV9B/Wmefkmujt0LqXEqw0C910+V2TP3b3vEFgRwGr6RwPemwA
+	 RIzpRxMJXTaaZiiFn4JWWsbPpvCoqloA0gm5foYaz+cbCz9EcHTmg6CGafa45ILfit
+	 Q9hBgjSLfLtMzUx/R74h/PDWx0DQwFJ/wHbR+gnE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuang Wang <nashuiliang@gmail.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Song Liu <song@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.1 130/159] bpf: Fix panic due to wrong pageattr of im->image
-Date: Tue, 10 Jan 2023 19:04:38 +0100
-Message-Id: <20230110180022.489564078@linuxfoundation.org>
+	Caleb Sander <csander@purestorage.com>,
+	Alok Prasad <palok@marvell.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 103/159] qed: allow sleep in qed_mcp_trace_dump()
+Date: Tue, 10 Jan 2023 19:04:11 +0100
+Message-Id: <20230110180021.560230399@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,79 +36,168 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chuang Wang <nashuiliang@gmail.com>
+From: Caleb Sander <csander@purestorage.com>
 
-commit 9ed1d9aeef5842ecacb660fce933613b58af1e00 upstream.
+[ Upstream commit 5401c3e0992860b11fb4b25796e4c4f1921740df ]
 
-In the scenario where livepatch and kretfunc coexist, the pageattr of
-im->image is rox after arch_prepare_bpf_trampoline in
-bpf_trampoline_update, and then modify_fentry or register_fentry returns
--EAGAIN from bpf_tramp_ftrace_ops_func, the BPF_TRAMP_F_ORIG_STACK flag
-will be configured, and arch_prepare_bpf_trampoline will be re-executed.
+By default, qed_mcp_cmd_and_union() delays 10us at a time in a loop
+that can run 500K times, so calls to qed_mcp_nvm_rd_cmd()
+may block the current thread for over 5s.
+We observed thread scheduling delays over 700ms in production,
+with stacktraces pointing to this code as the culprit.
 
-At this time, because the pageattr of im->image is rox,
-arch_prepare_bpf_trampoline will read and write im->image, which causes
-a fault. as follows:
+qed_mcp_trace_dump() is called from ethtool, so sleeping is permitted.
+It already can sleep in qed_mcp_halt(), which calls qed_mcp_cmd().
+Add a "can sleep" parameter to qed_find_nvram_image() and
+qed_nvram_read() so they can sleep during qed_mcp_trace_dump().
+qed_mcp_trace_get_meta_info() and qed_mcp_trace_read_meta(),
+called only by qed_mcp_trace_dump(), allow these functions to sleep.
+I can't tell if the other caller (qed_grc_dump_mcp_hw_dump()) can sleep,
+so keep b_can_sleep set to false when it calls these functions.
 
-  insmod livepatch-sample.ko    # samples/livepatch/livepatch-sample.c
-  bpftrace -e 'kretfunc:cmdline_proc_show {}'
+An example stacktrace from a custom warning we added to the kernel
+showing a thread that has not scheduled despite long needing resched:
+[ 2745.362925,17] ------------[ cut here ]------------
+[ 2745.362941,17] WARNING: CPU: 23 PID: 5640 at arch/x86/kernel/irq.c:233 do_IRQ+0x15e/0x1a0()
+[ 2745.362946,17] Thread not rescheduled for 744 ms after irq 99
+[ 2745.362956,17] Modules linked in: ...
+[ 2745.363339,17] CPU: 23 PID: 5640 Comm: lldpd Tainted: P           O    4.4.182+ #202104120910+6d1da174272d.61x
+[ 2745.363343,17] Hardware name: FOXCONN MercuryB/Quicksilver Controller, BIOS H11P1N09 07/08/2020
+[ 2745.363346,17]  0000000000000000 ffff885ec07c3ed8 ffffffff8131eb2f ffff885ec07c3f20
+[ 2745.363358,17]  ffffffff81d14f64 ffff885ec07c3f10 ffffffff81072ac2 ffff88be98ed0000
+[ 2745.363369,17]  0000000000000063 0000000000000174 0000000000000074 0000000000000000
+[ 2745.363379,17] Call Trace:
+[ 2745.363382,17]  <IRQ>  [<ffffffff8131eb2f>] dump_stack+0x8e/0xcf
+[ 2745.363393,17]  [<ffffffff81072ac2>] warn_slowpath_common+0x82/0xc0
+[ 2745.363398,17]  [<ffffffff81072b4c>] warn_slowpath_fmt+0x4c/0x50
+[ 2745.363404,17]  [<ffffffff810d5a8e>] ? rcu_irq_exit+0xae/0xc0
+[ 2745.363408,17]  [<ffffffff817c99fe>] do_IRQ+0x15e/0x1a0
+[ 2745.363413,17]  [<ffffffff817c7ac9>] common_interrupt+0x89/0x89
+[ 2745.363416,17]  <EOI>  [<ffffffff8132aa74>] ? delay_tsc+0x24/0x50
+[ 2745.363425,17]  [<ffffffff8132aa04>] __udelay+0x34/0x40
+[ 2745.363457,17]  [<ffffffffa04d45ff>] qed_mcp_cmd_and_union+0x36f/0x7d0 [qed]
+[ 2745.363473,17]  [<ffffffffa04d5ced>] qed_mcp_nvm_rd_cmd+0x4d/0x90 [qed]
+[ 2745.363490,17]  [<ffffffffa04e1dc7>] qed_mcp_trace_dump+0x4a7/0x630 [qed]
+[ 2745.363504,17]  [<ffffffffa04e2556>] ? qed_fw_asserts_dump+0x1d6/0x1f0 [qed]
+[ 2745.363520,17]  [<ffffffffa04e4ea7>] qed_dbg_mcp_trace_get_dump_buf_size+0x37/0x80 [qed]
+[ 2745.363536,17]  [<ffffffffa04ea881>] qed_dbg_feature_size+0x61/0xa0 [qed]
+[ 2745.363551,17]  [<ffffffffa04eb427>] qed_dbg_all_data_size+0x247/0x260 [qed]
+[ 2745.363560,17]  [<ffffffffa0482c10>] qede_get_regs_len+0x30/0x40 [qede]
+[ 2745.363566,17]  [<ffffffff816c9783>] ethtool_get_drvinfo+0xe3/0x190
+[ 2745.363570,17]  [<ffffffff816cc152>] dev_ethtool+0x1362/0x2140
+[ 2745.363575,17]  [<ffffffff8109bcc6>] ? finish_task_switch+0x76/0x260
+[ 2745.363580,17]  [<ffffffff817c2116>] ? __schedule+0x3c6/0x9d0
+[ 2745.363585,17]  [<ffffffff810dbd50>] ? hrtimer_start_range_ns+0x1d0/0x370
+[ 2745.363589,17]  [<ffffffff816c1e5b>] ? dev_get_by_name_rcu+0x6b/0x90
+[ 2745.363594,17]  [<ffffffff816de6a8>] dev_ioctl+0xe8/0x710
+[ 2745.363599,17]  [<ffffffff816a58a8>] sock_do_ioctl+0x48/0x60
+[ 2745.363603,17]  [<ffffffff816a5d87>] sock_ioctl+0x1c7/0x280
+[ 2745.363608,17]  [<ffffffff8111f393>] ? seccomp_phase1+0x83/0x220
+[ 2745.363612,17]  [<ffffffff811e3503>] do_vfs_ioctl+0x2b3/0x4e0
+[ 2745.363616,17]  [<ffffffff811e3771>] SyS_ioctl+0x41/0x70
+[ 2745.363619,17]  [<ffffffff817c6ffe>] entry_SYSCALL_64_fastpath+0x1e/0x79
+[ 2745.363622,17] ---[ end trace f6954aa440266421 ]---
 
-BUG: unable to handle page fault for address: ffffffffa0206000
-PGD 322d067 P4D 322d067 PUD 322e063 PMD 1297e067 PTE d428061
-Oops: 0003 [#1] PREEMPT SMP PTI
-CPU: 2 PID: 270 Comm: bpftrace Tainted: G            E K    6.1.0 #5
-RIP: 0010:arch_prepare_bpf_trampoline+0xed/0x8c0
-RSP: 0018:ffffc90001083ad8 EFLAGS: 00010202
-RAX: ffffffffa0206000 RBX: 0000000000000020 RCX: 0000000000000000
-RDX: ffffffffa0206001 RSI: ffffffffa0206000 RDI: 0000000000000030
-RBP: ffffc90001083b70 R08: 0000000000000066 R09: ffff88800f51b400
-R10: 000000002e72c6e5 R11: 00000000d0a15080 R12: ffff8880110a68c8
-R13: 0000000000000000 R14: ffff88800f51b400 R15: ffffffff814fec10
-FS:  00007f87bc0dc780(0000) GS:ffff88803e600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffffffffa0206000 CR3: 0000000010b70000 CR4: 00000000000006e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<TASK>
- bpf_trampoline_update+0x25a/0x6b0
- __bpf_trampoline_link_prog+0x101/0x240
- bpf_trampoline_link_prog+0x2d/0x50
- bpf_tracing_prog_attach+0x24c/0x530
- bpf_raw_tp_link_attach+0x73/0x1d0
- __sys_bpf+0x100e/0x2570
- __x64_sys_bpf+0x1c/0x30
- do_syscall_64+0x5b/0x80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-With this patch, when modify_fentry or register_fentry returns -EAGAIN
-from bpf_tramp_ftrace_ops_func, the pageattr of im->image will be reset
-to nx+rw.
-
-Cc: stable@vger.kernel.org
-Fixes: 00963a2e75a8 ("bpf: Support bpf_trampoline on functions with IPMODIFY (e.g. livepatch)")
-Signed-off-by: Chuang Wang <nashuiliang@gmail.com>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Song Liu <song@kernel.org>
-Link: https://lore.kernel.org/r/20221224133146.780578-1-nashuiliang@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c965db4446291 ("qed: Add support for debug data collection")
+Signed-off-by: Caleb Sander <csander@purestorage.com>
+Acked-by: Alok Prasad <palok@marvell.com>
+Link: https://lore.kernel.org/r/20230103233021.1457646-1-csander@purestorage.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/trampoline.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/qlogic/qed/qed_debug.c | 28 +++++++++++++++------
+ 1 file changed, 20 insertions(+), 8 deletions(-)
 
---- a/kernel/bpf/trampoline.c
-+++ b/kernel/bpf/trampoline.c
-@@ -489,6 +489,10 @@ again:
- 		/* reset fops->func and fops->trampoline for re-register */
- 		tr->fops->func = NULL;
- 		tr->fops->trampoline = 0;
-+
-+		/* reset im->image memory attr for arch_prepare_bpf_trampoline */
-+		set_memory_nx((long)im->image, 1);
-+		set_memory_rw((long)im->image, 1);
- 		goto again;
- 	}
- #endif
+diff --git a/drivers/net/ethernet/qlogic/qed/qed_debug.c b/drivers/net/ethernet/qlogic/qed/qed_debug.c
+index 86ecb080b153..cdcead614e9f 100644
+--- a/drivers/net/ethernet/qlogic/qed/qed_debug.c
++++ b/drivers/net/ethernet/qlogic/qed/qed_debug.c
+@@ -1832,7 +1832,8 @@ static enum dbg_status qed_find_nvram_image(struct qed_hwfn *p_hwfn,
+ 					    struct qed_ptt *p_ptt,
+ 					    u32 image_type,
+ 					    u32 *nvram_offset_bytes,
+-					    u32 *nvram_size_bytes)
++					    u32 *nvram_size_bytes,
++					    bool b_can_sleep)
+ {
+ 	u32 ret_mcp_resp, ret_mcp_param, ret_txn_size;
+ 	struct mcp_file_att file_att;
+@@ -1846,7 +1847,8 @@ static enum dbg_status qed_find_nvram_image(struct qed_hwfn *p_hwfn,
+ 					&ret_mcp_resp,
+ 					&ret_mcp_param,
+ 					&ret_txn_size,
+-					(u32 *)&file_att, false);
++					(u32 *)&file_att,
++					b_can_sleep);
+ 
+ 	/* Check response */
+ 	if (nvm_result || (ret_mcp_resp & FW_MSG_CODE_MASK) !=
+@@ -1873,7 +1875,9 @@ static enum dbg_status qed_find_nvram_image(struct qed_hwfn *p_hwfn,
+ static enum dbg_status qed_nvram_read(struct qed_hwfn *p_hwfn,
+ 				      struct qed_ptt *p_ptt,
+ 				      u32 nvram_offset_bytes,
+-				      u32 nvram_size_bytes, u32 *ret_buf)
++				      u32 nvram_size_bytes,
++				      u32 *ret_buf,
++				      bool b_can_sleep)
+ {
+ 	u32 ret_mcp_resp, ret_mcp_param, ret_read_size, bytes_to_copy;
+ 	s32 bytes_left = nvram_size_bytes;
+@@ -1899,7 +1903,7 @@ static enum dbg_status qed_nvram_read(struct qed_hwfn *p_hwfn,
+ 				       &ret_mcp_resp,
+ 				       &ret_mcp_param, &ret_read_size,
+ 				       (u32 *)((u8 *)ret_buf + read_offset),
+-				       false))
++				       b_can_sleep))
+ 			return DBG_STATUS_NVRAM_READ_FAILED;
+ 
+ 		/* Check response */
+@@ -3380,7 +3384,8 @@ static u32 qed_grc_dump_mcp_hw_dump(struct qed_hwfn *p_hwfn,
+ 				      p_ptt,
+ 				      NVM_TYPE_HW_DUMP_OUT,
+ 				      &hw_dump_offset_bytes,
+-				      &hw_dump_size_bytes);
++				      &hw_dump_size_bytes,
++				      false);
+ 	if (status != DBG_STATUS_OK)
+ 		return 0;
+ 
+@@ -3397,7 +3402,9 @@ static u32 qed_grc_dump_mcp_hw_dump(struct qed_hwfn *p_hwfn,
+ 		status = qed_nvram_read(p_hwfn,
+ 					p_ptt,
+ 					hw_dump_offset_bytes,
+-					hw_dump_size_bytes, dump_buf + offset);
++					hw_dump_size_bytes,
++					dump_buf + offset,
++					false);
+ 		if (status != DBG_STATUS_OK) {
+ 			DP_NOTICE(p_hwfn,
+ 				  "Failed to read MCP HW Dump image from NVRAM\n");
+@@ -4123,7 +4130,9 @@ static enum dbg_status qed_mcp_trace_get_meta_info(struct qed_hwfn *p_hwfn,
+ 	return qed_find_nvram_image(p_hwfn,
+ 				    p_ptt,
+ 				    nvram_image_type,
+-				    trace_meta_offset, trace_meta_size);
++				    trace_meta_offset,
++				    trace_meta_size,
++				    true);
+ }
+ 
+ /* Reads the MCP Trace meta data from NVRAM into the specified buffer */
+@@ -4139,7 +4148,10 @@ static enum dbg_status qed_mcp_trace_read_meta(struct qed_hwfn *p_hwfn,
+ 	/* Read meta data from NVRAM */
+ 	status = qed_nvram_read(p_hwfn,
+ 				p_ptt,
+-				nvram_offset_in_bytes, size_in_bytes, buf);
++				nvram_offset_in_bytes,
++				size_in_bytes,
++				buf,
++				true);
+ 	if (status != DBG_STATUS_OK)
+ 		return status;
+ 
+-- 
+2.35.1
+
 
 
