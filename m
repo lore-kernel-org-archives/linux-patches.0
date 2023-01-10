@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03847A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:09:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA1FC433D2;
-	Tue, 10 Jan 2023 18:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98178A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:09:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2180DC433EF;
+	Tue, 10 Jan 2023 18:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374151;
-	bh=al4WhUBLVcLg2wEADBFB5wreFDHHjfzHqyEexl0uWQE=;
+	s=korg; t=1673374154;
+	bh=i81+vgyo5eoEMD33WPTo3oucR8Vtafk+UhU2oREnPhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QuvPFN/T1TOywX3ofJWs7HrV90iPJUIEztHiLyW1USWcRVMIp+4+lvleA6uvEypef
-	 g4pByrtbeBPLIkCHTYCXHWDI3RcFt8qu7aINPrlm73bwS2exdCRvrDs4Y4Qc6viPLR
-	 2vPVwEbAQ3/oSYDOPoet5msWxtMjlvi2ZUSf7cOA=
+	b=VTiDZEXfP2Iug9TTIHur7nCNLvyZz2NXazWTFMMSyO4siLJyia/uLvMXsGW+nQgNU
+	 HjzOcbiiagsmIi1Eb4xUecHPbRyBRiouHfwlwzHfMnv58ml7y1uuqwN81Yr1cfW+P6
+	 fhFKN4e0MPNZpvPhEHxW+A7qlGSvS+QlXDz4ccyo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
+	Nati Koler <nkoler@amazon.com>,
+	David Arinzon <darinzon@amazon.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 037/148] bnxt_en: Fix first buffer size calculations for XDP multi-buffer
-Date: Tue, 10 Jan 2023 19:02:21 +0100
-Message-Id: <20230110180018.400681960@linuxfoundation.org>
+Subject: [PATCH 6.0 064/148] net: ena: Fix toeplitz initial hash value
+Date: Tue, 10 Jan 2023 19:02:48 +0100
+Message-Id: <20230110180019.260778575@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -37,127 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: David Arinzon <darinzon@amazon.com>
 
-[ Upstream commit 1abeacc1979fa4a756695f5030791d8f0fa934b9 ]
+[ Upstream commit 332b49ff637d6c1a75b971022a8b992cf3c57db1 ]
 
-The size of the first buffer is always page size, and the useable
-space is the page size minus the offset and the skb_shared_info size.
-Make sure SKB and XDP buf sizes match so that the skb_shared_info
-is at the same offset seen from the SKB and XDP_BUF.
+On driver initialization, RSS hash initial value is set to zero,
+instead of the default value. This happens because we pass NULL as
+the RSS key parameter, which caused us to never initialize
+the RSS hash value.
 
-build_skb() should be passed PAGE_SIZE.  xdp_init_buff() should
-be passed PAGE_SIZE as well.  xdp_get_shared_info_from_buff() will
-automatically deduct the skb_shared_info size if the XDP buffer
-has frags.  There is no need to keep bp->xdp_has_frags.
+This patch fixes it by making sure the initial value is set, no matter
+what the value of the RSS key is.
 
-Change BNXT_PAGE_MODE_BUF_SIZE to BNXT_MAX_PAGE_MODE_MTU_SBUF
-since this constant is really the MTU with ethernet header size
-subtracted.
-
-Also fix the BNXT_MAX_PAGE_MODE_MTU macro with proper parentheses.
-
-Fixes: 32861236190b ("bnxt: change receive ring space parameters")
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Fixes: 91a65b7d3ed8 ("net: ena: fix potential crash when rxfh key is NULL")
+Signed-off-by: Nati Koler <nkoler@amazon.com>
+Signed-off-by: David Arinzon <darinzon@amazon.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     |  9 +++++----
- drivers/net/ethernet/broadcom/bnxt/bnxt.h     | 15 +++++++++++----
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c |  7 +------
- 3 files changed, 17 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_com.c | 29 +++++++----------------
+ 1 file changed, 9 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index 31c427d53b90..be82464e1a77 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -988,8 +988,7 @@ static struct sk_buff *bnxt_rx_multi_page_skb(struct bnxt *bp,
- 	dma_addr -= bp->rx_dma_offset;
- 	dma_unmap_page_attrs(&bp->pdev->dev, dma_addr, PAGE_SIZE, bp->rx_dir,
- 			     DMA_ATTR_WEAK_ORDERING);
--	skb = build_skb(page_address(page), BNXT_PAGE_MODE_BUF_SIZE +
--					    bp->rx_dma_offset);
-+	skb = build_skb(page_address(page), PAGE_SIZE);
- 	if (!skb) {
- 		__free_page(page);
- 		return NULL;
-@@ -3966,8 +3965,10 @@ void bnxt_set_ring_params(struct bnxt *bp)
- 		bp->rx_agg_ring_mask = (bp->rx_agg_nr_pages * RX_DESC_CNT) - 1;
- 
- 		if (BNXT_RX_PAGE_MODE(bp)) {
--			rx_space = BNXT_PAGE_MODE_BUF_SIZE;
--			rx_size = BNXT_MAX_PAGE_MODE_MTU;
-+			rx_space = PAGE_SIZE;
-+			rx_size = PAGE_SIZE -
-+				  ALIGN(max(NET_SKB_PAD, XDP_PACKET_HEADROOM), 8) -
-+				  SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
- 		} else {
- 			rx_size = SKB_DATA_ALIGN(BNXT_RX_COPY_THRESH + NET_IP_ALIGN);
- 			rx_space = rx_size + NET_SKB_PAD +
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index d5fa43cfe524..02741d499bf4 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -591,12 +591,20 @@ struct nqe_cn {
- #define BNXT_RX_PAGE_SIZE (1 << BNXT_RX_PAGE_SHIFT)
- 
- #define BNXT_MAX_MTU		9500
--#define BNXT_PAGE_MODE_BUF_SIZE \
-+
-+/* First RX buffer page in XDP multi-buf mode
-+ *
-+ * +-------------------------------------------------------------------------+
-+ * | XDP_PACKET_HEADROOM | bp->rx_buf_use_size              | skb_shared_info|
-+ * | (bp->rx_dma_offset) |                                  |                |
-+ * +-------------------------------------------------------------------------+
-+ */
-+#define BNXT_MAX_PAGE_MODE_MTU_SBUF \
- 	((unsigned int)PAGE_SIZE - VLAN_ETH_HLEN - NET_IP_ALIGN -	\
- 	 XDP_PACKET_HEADROOM)
- #define BNXT_MAX_PAGE_MODE_MTU	\
--	BNXT_PAGE_MODE_BUF_SIZE - \
--	SKB_DATA_ALIGN((unsigned int)sizeof(struct skb_shared_info))
-+	(BNXT_MAX_PAGE_MODE_MTU_SBUF - \
-+	 SKB_DATA_ALIGN((unsigned int)sizeof(struct skb_shared_info)))
- 
- #define BNXT_MIN_PKT_SIZE	52
- 
-@@ -2131,7 +2139,6 @@ struct bnxt {
- #define BNXT_DUMP_CRASH		1
- 
- 	struct bpf_prog		*xdp_prog;
--	u8			xdp_has_frags;
- 
- 	struct bnxt_ptp_cfg	*ptp_cfg;
- 	u8			ptp_all_rx_tstamp;
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-index 2ceeaa818c1c..36d5202c0aee 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -193,9 +193,6 @@ void bnxt_xdp_buff_init(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
- 	mapping = rx_buf->mapping - bp->rx_dma_offset;
- 	dma_sync_single_for_cpu(&pdev->dev, mapping + offset, len, bp->rx_dir);
- 
--	if (bp->xdp_has_frags)
--		buflen = BNXT_PAGE_MODE_BUF_SIZE + offset;
--
- 	xdp_init_buff(xdp, buflen, &rxr->xdp_rxq);
- 	xdp_prepare_buff(xdp, data_ptr - offset, offset, len, false);
- }
-@@ -404,10 +401,8 @@ static int bnxt_xdp_set(struct bnxt *bp, struct bpf_prog *prog)
- 		netdev_warn(dev, "ethtool rx/tx channels must be combined to support XDP.\n");
+diff --git a/drivers/net/ethernet/amazon/ena/ena_com.c b/drivers/net/ethernet/amazon/ena/ena_com.c
+index 8c8b4c88c7de..451c3a1b6255 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_com.c
++++ b/drivers/net/ethernet/amazon/ena/ena_com.c
+@@ -2400,29 +2400,18 @@ int ena_com_fill_hash_function(struct ena_com_dev *ena_dev,
  		return -EOPNOTSUPP;
  	}
--	if (prog) {
-+	if (prog)
- 		tx_xdp = bp->rx_nr_rings;
--		bp->xdp_has_frags = prog->aux->xdp_has_frags;
--	}
  
- 	tc = netdev_get_num_tc(dev);
- 	if (!tc)
+-	switch (func) {
+-	case ENA_ADMIN_TOEPLITZ:
+-		if (key) {
+-			if (key_len != sizeof(hash_key->key)) {
+-				netdev_err(ena_dev->net_device,
+-					   "key len (%u) doesn't equal the supported size (%zu)\n",
+-					   key_len, sizeof(hash_key->key));
+-				return -EINVAL;
+-			}
+-			memcpy(hash_key->key, key, key_len);
+-			rss->hash_init_val = init_val;
+-			hash_key->key_parts = key_len / sizeof(hash_key->key[0]);
++	if ((func == ENA_ADMIN_TOEPLITZ) && key) {
++		if (key_len != sizeof(hash_key->key)) {
++			netdev_err(ena_dev->net_device,
++				   "key len (%u) doesn't equal the supported size (%zu)\n",
++				   key_len, sizeof(hash_key->key));
++			return -EINVAL;
+ 		}
+-		break;
+-	case ENA_ADMIN_CRC32:
+-		rss->hash_init_val = init_val;
+-		break;
+-	default:
+-		netdev_err(ena_dev->net_device, "Invalid hash function (%d)\n",
+-			   func);
+-		return -EINVAL;
++		memcpy(hash_key->key, key, key_len);
++		hash_key->key_parts = key_len / sizeof(hash_key->key[0]);
+ 	}
+ 
++	rss->hash_init_val = init_val;
+ 	old_func = rss->hash_func;
+ 	rss->hash_func = func;
+ 	rc = ena_com_set_hash_function(ena_dev);
 -- 
 2.35.1
 
