@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EA96FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:17:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3420DC433EF;
-	Tue, 10 Jan 2023 18:17:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AAC16FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:17:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9824C433F0;
+	Tue, 10 Jan 2023 18:17:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374675;
-	bh=VWEKKhS6lOCX25N9X8rKE03GrplIiMPb6anm80ak7cE=;
+	s=korg; t=1673374678;
+	bh=+MmWXyScwihFAttHuGDWqF/Q9yULNVEkh5ChxsCHQXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RSSAffxMH8WYyQbI995UYE5WuiY4tsZOIdVCr/n9nzpDLrgtf1EONEMf9Kr7atAu/
-	 ySrH+Jt6KHnWl3aJge8kaxcByDrpKe0xpk1guG4j6tufW4jN4liCWbhtRLNeg+anBo
-	 qVD/maa6b/yhTEq5mkbVRTfxxiyaO039u++aqToU=
+	b=UuSIFIr8BkrKgU9TmNrqmUJtTNVOiIMYSjXTT9ZijtMwtpiP5945JNDfaGTrATdl+
+	 85CLTOJuetYP+NAg/uhwLJTIydHX2A3w82ngZ/J2zf81i/299APUn7xI7Os6OuzCDF
+	 efZqDFqYuHgQTTuY31Shpf9pcsCyfxLziA0ykJhw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sunil Goutham <sgoutham@marvell.com>,
-	Geetha sowjanya <gakula@marvell.com>,
+	Shay Agroskin <shayagr@amazon.com>,
+	David Arinzon <darinzon@amazon.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 095/159] octeontx2-pf: Fix lmtst ID used in aura free
-Date: Tue, 10 Jan 2023 19:04:03 +0100
-Message-Id: <20230110180021.316266716@linuxfoundation.org>
+Subject: [PATCH 6.1 069/159] net: ena: Account for the number of processed bytes in XDP
+Date: Tue, 10 Jan 2023 19:03:37 +0100
+Message-Id: <20230110180020.497068448@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,109 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geetha sowjanya <gakula@marvell.com>
+From: David Arinzon <darinzon@amazon.com>
 
-[ Upstream commit 4af1b64f80fbe1275fb02c5f1c0cef099a4a231f ]
+[ Upstream commit c7f5e34d906320fdc996afa616676161c029cc02 ]
 
-Current code uses per_cpu pointer to get the lmtst_id mapped to
-the core on which aura_free() is executed. Using per_cpu pointer
-without preemption disable causing mismatch between lmtst_id and
-core on which pointer gets freed. This patch fixes the issue by
-disabling preemption around aura_free.
+The size of packets that were forwarded or dropped by XDP wasn't added
+to the total processed bytes statistic.
 
-Fixes: ef6c8da71eaf ("octeontx2-pf: cn10K: Reserve LMTST lines per core")
-Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
-Signed-off-by: Geetha sowjanya <gakula@marvell.com>
+Fixes: 548c4940b9f1 ("net: ena: Implement XDP_TX action")
+Signed-off-by: Shay Agroskin <shayagr@amazon.com>
+Signed-off-by: David Arinzon <darinzon@amazon.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../marvell/octeontx2/nic/otx2_common.c       | 30 +++++++++++++------
- 1 file changed, 21 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-index 9e10e7471b88..88f8772a61cd 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-@@ -1012,6 +1012,7 @@ static void otx2_pool_refill_task(struct work_struct *work)
- 	rbpool = cq->rbpool;
- 	free_ptrs = cq->pool_ptrs;
- 
-+	get_cpu();
- 	while (cq->pool_ptrs) {
- 		if (otx2_alloc_rbuf(pfvf, rbpool, &bufptr)) {
- 			/* Schedule a WQ if we fails to free atleast half of the
-@@ -1031,6 +1032,7 @@ static void otx2_pool_refill_task(struct work_struct *work)
- 		pfvf->hw_ops->aura_freeptr(pfvf, qidx, bufptr + OTX2_HEAD_ROOM);
- 		cq->pool_ptrs--;
- 	}
-+	put_cpu();
- 	cq->refill_task_sched = false;
- }
- 
-@@ -1368,6 +1370,7 @@ int otx2_sq_aura_pool_init(struct otx2_nic *pfvf)
- 	if (err)
- 		goto fail;
- 
-+	get_cpu();
- 	/* Allocate pointers and free them to aura/pool */
- 	for (qidx = 0; qidx < hw->tot_tx_queues; qidx++) {
- 		pool_id = otx2_get_pool_idx(pfvf, AURA_NIX_SQ, qidx);
-@@ -1376,18 +1379,24 @@ int otx2_sq_aura_pool_init(struct otx2_nic *pfvf)
- 		sq = &qset->sq[qidx];
- 		sq->sqb_count = 0;
- 		sq->sqb_ptrs = kcalloc(num_sqbs, sizeof(*sq->sqb_ptrs), GFP_KERNEL);
--		if (!sq->sqb_ptrs)
--			return -ENOMEM;
-+		if (!sq->sqb_ptrs) {
-+			err = -ENOMEM;
-+			goto err_mem;
-+		}
- 
- 		for (ptr = 0; ptr < num_sqbs; ptr++) {
--			if (otx2_alloc_rbuf(pfvf, pool, &bufptr))
--				return -ENOMEM;
-+			err = otx2_alloc_rbuf(pfvf, pool, &bufptr);
-+			if (err)
-+				goto err_mem;
- 			pfvf->hw_ops->aura_freeptr(pfvf, pool_id, bufptr);
- 			sq->sqb_ptrs[sq->sqb_count++] = (u64)bufptr;
- 		}
- 	}
- 
--	return 0;
-+err_mem:
-+	put_cpu();
-+	return err ? -ENOMEM : 0;
-+
- fail:
- 	otx2_mbox_reset(&pfvf->mbox.mbox, 0);
- 	otx2_aura_pool_free(pfvf);
-@@ -1426,18 +1435,21 @@ int otx2_rq_aura_pool_init(struct otx2_nic *pfvf)
- 	if (err)
- 		goto fail;
- 
-+	get_cpu();
- 	/* Allocate pointers and free them to aura/pool */
- 	for (pool_id = 0; pool_id < hw->rqpool_cnt; pool_id++) {
- 		pool = &pfvf->qset.pool[pool_id];
- 		for (ptr = 0; ptr < num_ptrs; ptr++) {
--			if (otx2_alloc_rbuf(pfvf, pool, &bufptr))
--				return -ENOMEM;
-+			err = otx2_alloc_rbuf(pfvf, pool, &bufptr);
-+			if (err)
-+				goto err_mem;
- 			pfvf->hw_ops->aura_freeptr(pfvf, pool_id,
- 						   bufptr + OTX2_HEAD_ROOM);
- 		}
- 	}
--
--	return 0;
-+err_mem:
-+	put_cpu();
-+	return err ? -ENOMEM : 0;
- fail:
- 	otx2_mbox_reset(&pfvf->mbox.mbox, 0);
- 	otx2_aura_pool_free(pfvf);
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+index e313bb45319c..69f2364b8468 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -1719,6 +1719,7 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
+ 			}
+ 			if (xdp_verdict != XDP_PASS) {
+ 				xdp_flags |= xdp_verdict;
++				total_len += ena_rx_ctx.ena_bufs[0].len;
+ 				res_budget--;
+ 				continue;
+ 			}
 -- 
 2.35.1
 
