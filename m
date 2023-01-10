@@ -1,35 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1FDEA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:10:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E60AC433EF;
-	Tue, 10 Jan 2023 18:10:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93713A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:10:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165DAC433EF;
+	Tue, 10 Jan 2023 18:10:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374206;
-	bh=xoYbi+hmUNgRsml78Ol/y1m/gtELfKwwvRgQtyDDQ1c=;
+	s=korg; t=1673374209;
+	bh=o9nbXYLdfIWE31qLTwJqyW3HvD2FxDd4E3J/ViaupjA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZwAlNVB3HeTpT0/pWiQdyHO22I2cPxT9G7IrXBUHbhSBDp6WC/fP1XlEJuiKD+lm+
-	 HpH/Jkxas1X3zNPAOOWNQZ1QTS401dBAQ/z0/U7MPwE+MU1nNrnrB9I8WHT1E5PznN
-	 UqtUAs3TSpKbMPeBv508bx0kMVbz9yQFIxurjOsc=
+	b=BlfAqY/qMu4daSj+Fk8mihRBinAfH2F5uxdaGYtnjuvtrNBOjY1xez5r5STe4wLXp
+	 jHsMb1azIlYuUhMtRG5fxfMJ8IyNxIZPJMgqyBaAsHicnsAZCtvGcOp6E/0YnYauk7
+	 ZIQrAy2ryALRBYd8jNx/wScw4JKWnLzPBHK7oCKU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Alexey Bayduraev <alexey.v.bayduraev@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	David Arinzon <darinzon@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 086/148] perf tools: Fix resources leak in perf_data__open_dir()
-Date: Tue, 10 Jan 2023 19:03:10 +0100
-Message-Id: <20230110180019.927000083@linuxfoundation.org>
+Subject: [PATCH 6.0 069/148] net: ena: Set default value for RX interrupt moderation
+Date: Tue, 10 Jan 2023 19:02:53 +0100
+Message-Id: <20230110180019.408369936@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -43,50 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: David Arinzon <darinzon@amazon.com>
 
-[ Upstream commit 0a6564ebd953c4590663c9a3c99a3ea9920ade6f ]
+[ Upstream commit e712f3e4920b3a1a5e6b536827d118e14862896c ]
 
-In perf_data__open_dir(), opendir() opens the directory stream.  Add
-missing closedir() to release it after use.
+RX ring can be NULL in XDP use cases where only TX queues
+are configured. In this scenario, the RX interrupt moderation
+value sent to the device remains in its default value of 0.
 
-Fixes: eb6176709b235b96 ("perf data: Add perf_data__open_dir_data function")
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Alexey Bayduraev <alexey.v.bayduraev@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20221229090903.1402395-1-linmq006@gmail.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+In this change, setting the default value of the RX interrupt
+moderation to be the same as of the TX.
+
+Fixes: 548c4940b9f1 ("net: ena: Implement XDP_TX action")
+Signed-off-by: David Arinzon <darinzon@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/data.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/data.c b/tools/perf/util/data.c
-index a7f68c309545..fc16299c915f 100644
---- a/tools/perf/util/data.c
-+++ b/tools/perf/util/data.c
-@@ -132,6 +132,7 @@ int perf_data__open_dir(struct perf_data *data)
- 		file->size = st.st_size;
- 	}
- 
-+	closedir(dir);
- 	if (!files)
- 		return -EINVAL;
- 
-@@ -140,6 +141,7 @@ int perf_data__open_dir(struct perf_data *data)
- 	return 0;
- 
- out_err:
-+	closedir(dir);
- 	close_dir(files, nr);
- 	return ret;
- }
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+index 083754e0bf23..b25a2fcff339 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -1823,8 +1823,9 @@ static void ena_adjust_adaptive_rx_intr_moderation(struct ena_napi *ena_napi)
+ static void ena_unmask_interrupt(struct ena_ring *tx_ring,
+ 					struct ena_ring *rx_ring)
+ {
++	u32 rx_interval = tx_ring->smoothed_interval;
+ 	struct ena_eth_io_intr_reg intr_reg;
+-	u32 rx_interval = 0;
++
+ 	/* Rx ring can be NULL when for XDP tx queues which don't have an
+ 	 * accompanying rx_ring pair.
+ 	 */
 -- 
 2.35.1
 
