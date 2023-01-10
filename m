@@ -1,35 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183C16FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:17:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AFCAC433D2;
-	Tue, 10 Jan 2023 18:17:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E998F6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:17:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BD79C433D2;
+	Tue, 10 Jan 2023 18:17:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374663;
-	bh=xoYbi+hmUNgRsml78Ol/y1m/gtELfKwwvRgQtyDDQ1c=;
+	s=korg; t=1673374666;
+	bh=p4dt/o+VKh4m5q/5yUy2pks5GSDjSqYgTOIINbJLB90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G7/7I+L1842CVmITfwNfbkNt71fwZPsm6hEtS1dNr8S1Hu2kLjAUeLpG0drRyf4C7
-	 2ssDyfiQVEyfxSqV0wJ4LFPfEb1nT3TNPvvlgb78tn/o/0pMbwHDh6zG2XRtG5O1VA
-	 v9xMYPnw+thpEjp7l3VSEgGjAPVpcpHYjOGmivq0=
+	b=RdJWINTO85eL75I/zARoIts8O+HKVsMMoLuShUwaNpp5+LLnKlY/Pn2HDB1B1p72E
+	 HDXM732h8x8BxR3X+I9oa7B+MZaWHLgOsr0zJq69w8QZpzwbuKOAsr3yHHHRlv10B5
+	 LLH2Y3aeb3ePwo2NibklGk602uA9di6FX7jeTs3s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Alexey Bayduraev <alexey.v.bayduraev@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Ian Ray <ian.ray@ge.com>,
+	Philipp Zabel <philipp.zabel@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/159] perf tools: Fix resources leak in perf_data__open_dir()
-Date: Tue, 10 Jan 2023 19:03:59 +0100
-Message-Id: <20230110180021.196874086@linuxfoundation.org>
+Subject: [PATCH 6.1 092/159] drm/imx: ipuv3-plane: Fix overlay plane width
+Date: Tue, 10 Jan 2023 19:04:00 +0100
+Message-Id: <20230110180021.227656377@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -43,50 +37,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Philipp Zabel <p.zabel@pengutronix.de>
 
-[ Upstream commit 0a6564ebd953c4590663c9a3c99a3ea9920ade6f ]
+[ Upstream commit 92d43bd3bc9728c1fb114d7011d46f5ea9489e28 ]
 
-In perf_data__open_dir(), opendir() opens the directory stream.  Add
-missing closedir() to release it after use.
+ipu_src_rect_width() was introduced to support odd screen resolutions
+such as 1366x768 by internally rounding up primary plane width to a
+multiple of 8 and compensating with reduced horizontal blanking.
+This also caused overlay plane width to be rounded up, which was not
+intended. Fix overlay plane width by limiting the rounding up to the
+primary plane.
 
-Fixes: eb6176709b235b96 ("perf data: Add perf_data__open_dir_data function")
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Alexey Bayduraev <alexey.v.bayduraev@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20221229090903.1402395-1-linmq006@gmail.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+drm_rect_width(&new_state->src) >> 16 is the same value as
+drm_rect_width(dst) because there is no plane scaling support.
+
+Fixes: 94dfec48fca7 ("drm/imx: Add 8 pixel alignment fix")
+Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
+Link: https://lore.kernel.org/r/20221108141420.176696-1-p.zabel@pengutronix.de
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221108141420.176696-1-p.zabel@pengutronix.de
+Tested-by: Ian Ray <ian.ray@ge.com>
+(cherry picked from commit 4333472f8d7befe62359fecb1083cd57a6e07bfc)
+Signed-off-by: Philipp Zabel <philipp.zabel@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/data.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/imx/ipuv3-plane.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/tools/perf/util/data.c b/tools/perf/util/data.c
-index a7f68c309545..fc16299c915f 100644
---- a/tools/perf/util/data.c
-+++ b/tools/perf/util/data.c
-@@ -132,6 +132,7 @@ int perf_data__open_dir(struct perf_data *data)
- 		file->size = st.st_size;
+diff --git a/drivers/gpu/drm/imx/ipuv3-plane.c b/drivers/gpu/drm/imx/ipuv3-plane.c
+index dba4f7d81d69..80142d9a4a55 100644
+--- a/drivers/gpu/drm/imx/ipuv3-plane.c
++++ b/drivers/gpu/drm/imx/ipuv3-plane.c
+@@ -614,6 +614,11 @@ static void ipu_plane_atomic_update(struct drm_plane *plane,
+ 		break;
  	}
  
-+	closedir(dir);
- 	if (!files)
- 		return -EINVAL;
++	if (ipu_plane->dp_flow == IPU_DP_FLOW_SYNC_BG)
++		width = ipu_src_rect_width(new_state);
++	else
++		width = drm_rect_width(&new_state->src) >> 16;
++
+ 	eba = drm_plane_state_to_eba(new_state, 0);
  
-@@ -140,6 +141,7 @@ int perf_data__open_dir(struct perf_data *data)
- 	return 0;
+ 	/*
+@@ -622,8 +627,7 @@ static void ipu_plane_atomic_update(struct drm_plane *plane,
+ 	 */
+ 	if (ipu_state->use_pre) {
+ 		axi_id = ipu_chan_assign_axi_id(ipu_plane->dma);
+-		ipu_prg_channel_configure(ipu_plane->ipu_ch, axi_id,
+-					  ipu_src_rect_width(new_state),
++		ipu_prg_channel_configure(ipu_plane->ipu_ch, axi_id, width,
+ 					  drm_rect_height(&new_state->src) >> 16,
+ 					  fb->pitches[0], fb->format->format,
+ 					  fb->modifier, &eba);
+@@ -678,9 +682,8 @@ static void ipu_plane_atomic_update(struct drm_plane *plane,
+ 		break;
+ 	}
  
- out_err:
-+	closedir(dir);
- 	close_dir(files, nr);
- 	return ret;
- }
+-	ipu_dmfc_config_wait4eot(ipu_plane->dmfc, ALIGN(drm_rect_width(dst), 8));
++	ipu_dmfc_config_wait4eot(ipu_plane->dmfc, width);
+ 
+-	width = ipu_src_rect_width(new_state);
+ 	height = drm_rect_height(&new_state->src) >> 16;
+ 	info = drm_format_info(fb->format->format);
+ 	ipu_calculate_bursts(width, info->cpp[0], fb->pitches[0],
+@@ -744,8 +747,7 @@ static void ipu_plane_atomic_update(struct drm_plane *plane,
+ 		ipu_cpmem_set_burstsize(ipu_plane->ipu_ch, 16);
+ 
+ 		ipu_cpmem_zero(ipu_plane->alpha_ch);
+-		ipu_cpmem_set_resolution(ipu_plane->alpha_ch,
+-					 ipu_src_rect_width(new_state),
++		ipu_cpmem_set_resolution(ipu_plane->alpha_ch, width,
+ 					 drm_rect_height(&new_state->src) >> 16);
+ 		ipu_cpmem_set_format_passthrough(ipu_plane->alpha_ch, 8);
+ 		ipu_cpmem_set_high_priority(ipu_plane->alpha_ch);
 -- 
 2.35.1
 
