@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E383D6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:28:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DC65C433D2;
-	Tue, 10 Jan 2023 18:28:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E026FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:28:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58604C433EF;
+	Tue, 10 Jan 2023 18:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375318;
-	bh=HmFYZlul07IaZ1P+1Z3h3JZbfO5qW35WbZD5qbt6uJ8=;
+	s=korg; t=1673375321;
+	bh=9c5EtoZS1v6TdAqK2jtuLZHsx3mSIs9alAJc0rZWXDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s92aMPfB6Yq9iFIMwY+dxqsJQYIxsAqAeLMfb5+KgNtQUhV4rm4Wovasp11gt7f9W
-	 SAL5LaxT33ZwqBqv8IIHE4/r6Mvvji1PRgdE7IjkAqL/h6eEfqlTMWWhtps1yLsINH
-	 EXTfHQ9L50Cqkgk3L/2URTG1bKHfEsZNcinp1t74=
+	b=Df0gDN0EEThKLswcidrQ3pJVf/wbkqYaIzTEnTcyznA4X7QRcJBYfXx2wLftPXTus
+	 qrFnLiLoT8ptH3YF9/IhUB1CUo882Mnkfblu0DeFe+8T5n8va6bmgaJpYh2cK3FUls
+	 oB84vPf2nJ9t7z0XbTufbgh7oPsKijo23+VM86g0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jason Yan <yanaijie@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 5.15 150/290] ext4: fix bug_on in __es_tree_search caused by bad boot loader inode
-Date: Tue, 10 Jan 2023 19:04:02 +0100
-Message-Id: <20230110180037.010878981@linuxfoundation.org>
+	Eric Biggers <ebiggers@google.com>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 151/290] ext4: fix leaking uninitialized memory in fast-commit journal
+Date: Tue, 10 Jan 2023 19:04:03 +0100
+Message-Id: <20230110180037.059557609@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -37,96 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Eric Biggers <ebiggers@google.com>
 
-commit 991ed014de0840c5dc405b679168924afb2952ac upstream.
+commit 594bc43b410316d70bb42aeff168837888d96810 upstream.
 
-We got a issue as fllows:
-==================================================================
- kernel BUG at fs/ext4/extents_status.c:203!
- invalid opcode: 0000 [#1] PREEMPT SMP
- CPU: 1 PID: 945 Comm: cat Not tainted 6.0.0-next-20221007-dirty #349
- RIP: 0010:ext4_es_end.isra.0+0x34/0x42
- RSP: 0018:ffffc9000143b768 EFLAGS: 00010203
- RAX: 0000000000000000 RBX: ffff8881769cd0b8 RCX: 0000000000000000
- RDX: 0000000000000000 RSI: ffffffff8fc27cf7 RDI: 00000000ffffffff
- RBP: ffff8881769cd0bc R08: 0000000000000000 R09: ffffc9000143b5f8
- R10: 0000000000000001 R11: 0000000000000001 R12: ffff8881769cd0a0
- R13: ffff8881768e5668 R14: 00000000768e52f0 R15: 0000000000000000
- FS: 00007f359f7f05c0(0000)GS:ffff88842fd00000(0000)knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007f359f5a2000 CR3: 000000017130c000 CR4: 00000000000006e0
- DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
- DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
- Call Trace:
-  <TASK>
-  __es_tree_search.isra.0+0x6d/0xf5
-  ext4_es_cache_extent+0xfa/0x230
-  ext4_cache_extents+0xd2/0x110
-  ext4_find_extent+0x5d5/0x8c0
-  ext4_ext_map_blocks+0x9c/0x1d30
-  ext4_map_blocks+0x431/0xa50
-  ext4_mpage_readpages+0x48e/0xe40
-  ext4_readahead+0x47/0x50
-  read_pages+0x82/0x530
-  page_cache_ra_unbounded+0x199/0x2a0
-  do_page_cache_ra+0x47/0x70
-  page_cache_ra_order+0x242/0x400
-  ondemand_readahead+0x1e8/0x4b0
-  page_cache_sync_ra+0xf4/0x110
-  filemap_get_pages+0x131/0xb20
-  filemap_read+0xda/0x4b0
-  generic_file_read_iter+0x13a/0x250
-  ext4_file_read_iter+0x59/0x1d0
-  vfs_read+0x28f/0x460
-  ksys_read+0x73/0x160
-  __x64_sys_read+0x1e/0x30
-  do_syscall_64+0x35/0x80
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-  </TASK>
-==================================================================
+When space at the end of fast-commit journal blocks is unused, make sure
+to zero it out so that uninitialized memory is not leaked to disk.
 
-In the above issue, ioctl invokes the swap_inode_boot_loader function to
-swap inode<5> and inode<12>. However, inode<5> contain incorrect imode and
-disordered extents, and i_nlink is set to 1. The extents check for inode in
-the ext4_iget function can be bypassed bacause 5 is EXT4_BOOT_LOADER_INO.
-While links_count is set to 1, the extents are not initialized in
-swap_inode_boot_loader. After the ioctl command is executed successfully,
-the extents are swapped to inode<12>, in this case, run the `cat` command
-to view inode<12>. And Bug_ON is triggered due to the incorrect extents.
-
-When the boot loader inode is not initialized, its imode can be one of the
-following:
-1) the imode is a bad type, which is marked as bad_inode in ext4_iget and
-   set to S_IFREG.
-2) the imode is good type but not S_IFREG.
-3) the imode is S_IFREG.
-
-The BUG_ON may be triggered by bypassing the check in cases 1 and 2.
-Therefore, when the boot loader inode is bad_inode or its imode is not
-S_IFREG, initialize the inode to avoid triggering the BUG.
-
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221026042310.3839669-5-libaokun1@huawei.com
+Fixes: aa75f4d3daae ("ext4: main fast-commit commit path")
+Cc: <stable@vger.kernel.org> # v5.10+
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20221106224841.279231-4-ebiggers@kernel.org
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ioctl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/fast_commit.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/fs/ext4/ioctl.c
-+++ b/fs/ext4/ioctl.c
-@@ -175,7 +175,7 @@ static long swap_inode_boot_loader(struc
- 	/* Protect extent tree against block allocations via delalloc */
- 	ext4_double_down_write_data_sem(inode, inode_bl);
+--- a/fs/ext4/fast_commit.c
++++ b/fs/ext4/fast_commit.c
+@@ -657,6 +657,9 @@ static u8 *ext4_fc_reserve_space(struct
+ 		*crc = ext4_chksum(sbi, *crc, tl, sizeof(*tl));
+ 	if (pad_len > 0)
+ 		ext4_fc_memzero(sb, tl + 1, pad_len, crc);
++	/* Don't leak uninitialized memory in the unused last byte. */
++	*((u8 *)(tl + 1) + pad_len) = 0;
++
+ 	ext4_fc_submit_bh(sb, false);
  
--	if (inode_bl->i_nlink == 0) {
-+	if (is_bad_inode(inode_bl) || !S_ISREG(inode_bl->i_mode)) {
- 		/* this inode has never been used as a BOOT_LOADER */
- 		set_nlink(inode_bl, 1);
- 		i_uid_write(inode_bl, 0);
+ 	ret = jbd2_fc_get_buf(EXT4_SB(sb)->s_journal, &bh);
+@@ -713,6 +716,8 @@ static int ext4_fc_write_tail(struct sup
+ 	dst += sizeof(tail.fc_tid);
+ 	tail.fc_crc = cpu_to_le32(crc);
+ 	ext4_fc_memcpy(sb, dst, &tail.fc_crc, sizeof(tail.fc_crc), NULL);
++	dst += sizeof(tail.fc_crc);
++	memset(dst, 0, bsize - off); /* Don't leak uninitialized memory. */
+ 
+ 	ext4_fc_submit_bh(sb, true);
+ 
 
 
