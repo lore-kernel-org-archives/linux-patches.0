@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6585F6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:28:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8271C433D2;
-	Tue, 10 Jan 2023 18:28:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F7C76FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:28:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B92A5C433EF;
+	Tue, 10 Jan 2023 18:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375301;
-	bh=hKrALJRB+rNEnhaaKB9mnPcW4CZbiNZso1Pnh6B0U2c=;
+	s=korg; t=1673375304;
+	bh=UzATLW43UjWhvWNVSECzizcT9lUiMwGVBkrne1sK4PA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VQeLhxfOtnOFhQghICuDVFYo2d/OiQX+vybUsvadsAgRue4722AL1JU94J94ISney
-	 jKp72MiZeEWHPc2vyjJ/UEqDyvOdfnWToobRYTl2bem/hLS6oUMa90f9BR2aWZo/pq
-	 BQ+nNRBEvu+zDci4/g8mj5wyLJWfLudm8jAHjCuc=
+	b=pC8HfmROQ9b/7LA7eYvQSV3vCwhCjkrrhmctmyaJrn1/SWT839xEFHFWhrnhDqEL+
+	 WlH7m0l8GuYigHQSKWMP77tGBFMh8tn2xZoMvG+KKozlu/13JnHdjQfFNe6mtic137
+	 W6e0DRTgcIP6c8FKlYhqNA2EbsqnztawMW5um1F8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 5.15 145/290] ext4: add EXT4_IGET_BAD flag to prevent unexpected bad inode
-Date: Tue, 10 Jan 2023 19:03:57 +0100
-Message-Id: <20230110180036.844244093@linuxfoundation.org>
+Subject: [PATCH 5.15 146/290] ext4: add helper to check quota inums
+Date: Tue, 10 Jan 2023 19:03:58 +0100
+Message-Id: <20230110180036.885459576@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -39,70 +39,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Baokun Li <libaokun1@huawei.com>
 
-commit 63b1e9bccb71fe7d7e3ddc9877dbdc85e5d2d023 upstream.
+commit 07342ec259df2a35d6a34aebce010567a80a0e15 upstream.
 
-There are many places that will get unhappy (and crash) when ext4_iget()
-returns a bad inode. However, if iget the boot loader inode, allows a bad
-inode to be returned, because the inode may not be initialized. This
-mechanism can be used to bypass some checks and cause panic. To solve this
-problem, we add a special iget flag EXT4_IGET_BAD. Only with this flag
-we'd be returning bad inode from ext4_iget(), otherwise we always return
-the error code if the inode is bad inode.(suggested by Jan Kara)
+Before quota is enabled, a check on the preset quota inums in
+ext4_super_block is added to prevent wrong quota inodes from being loaded.
+In addition, when the quota fails to be enabled, the quota type and quota
+inum are printed to facilitate fault locating.
 
 Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Jason Yan <yanaijie@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221026042310.3839669-4-libaokun1@huawei.com
+Link: https://lore.kernel.org/r/20221026042310.3839669-3-libaokun1@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h  |    3 ++-
- fs/ext4/inode.c |    8 +++++++-
- fs/ext4/ioctl.c |    3 ++-
- 3 files changed, 11 insertions(+), 3 deletions(-)
+ fs/ext4/super.c |   28 +++++++++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -2996,7 +2996,8 @@ int do_journal_get_write_access(handle_t
- typedef enum {
- 	EXT4_IGET_NORMAL =	0,
- 	EXT4_IGET_SPECIAL =	0x0001, /* OK to iget a system inode */
--	EXT4_IGET_HANDLE = 	0x0002	/* Inode # is from a handle */
-+	EXT4_IGET_HANDLE = 	0x0002,	/* Inode # is from a handle */
-+	EXT4_IGET_BAD =		0x0004  /* Allow to iget a bad inode */
- } ext4_iget_flags;
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -6309,6 +6309,20 @@ static int ext4_quota_on(struct super_bl
+ 	return err;
+ }
  
- extern struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4885,8 +4885,14 @@ struct inode *__ext4_iget(struct super_b
- 	if (IS_CASEFOLDED(inode) && !ext4_has_feature_casefold(inode->i_sb))
- 		ext4_error_inode(inode, function, line, 0,
- 				 "casefold flag without casefold feature");
--	brelse(iloc.bh);
-+	if (is_bad_inode(inode) && !(flags & EXT4_IGET_BAD)) {
-+		ext4_error_inode(inode, function, line, 0,
-+				 "bad inode without EXT4_IGET_BAD flag");
-+		ret = -EUCLEAN;
-+		goto bad_inode;
++static inline bool ext4_check_quota_inum(int type, unsigned long qf_inum)
++{
++	switch (type) {
++	case USRQUOTA:
++		return qf_inum == EXT4_USR_QUOTA_INO;
++	case GRPQUOTA:
++		return qf_inum == EXT4_GRP_QUOTA_INO;
++	case PRJQUOTA:
++		return qf_inum >= EXT4_GOOD_OLD_FIRST_INO;
++	default:
++		BUG();
 +	}
++}
++
+ static int ext4_quota_enable(struct super_block *sb, int type, int format_id,
+ 			     unsigned int flags)
+ {
+@@ -6325,9 +6339,16 @@ static int ext4_quota_enable(struct supe
+ 	if (!qf_inums[type])
+ 		return -EPERM;
  
-+	brelse(iloc.bh);
- 	unlock_new_inode(inode);
- 	return inode;
++	if (!ext4_check_quota_inum(type, qf_inums[type])) {
++		ext4_error(sb, "Bad quota inum: %lu, type: %d",
++				qf_inums[type], type);
++		return -EUCLEAN;
++	}
++
+ 	qf_inode = ext4_iget(sb, qf_inums[type], EXT4_IGET_SPECIAL);
+ 	if (IS_ERR(qf_inode)) {
+-		ext4_error(sb, "Bad quota inode # %lu", qf_inums[type]);
++		ext4_error(sb, "Bad quota inode: %lu, type: %d",
++				qf_inums[type], type);
+ 		return PTR_ERR(qf_inode);
+ 	}
  
---- a/fs/ext4/ioctl.c
-+++ b/fs/ext4/ioctl.c
-@@ -124,7 +124,8 @@ static long swap_inode_boot_loader(struc
- 	blkcnt_t blocks;
- 	unsigned short bytes;
+@@ -6366,8 +6387,9 @@ int ext4_enable_quotas(struct super_bloc
+ 			if (err) {
+ 				ext4_warning(sb,
+ 					"Failed to enable quota tracking "
+-					"(type=%d, err=%d). Please run "
+-					"e2fsck to fix.", type, err);
++					"(type=%d, err=%d, ino=%lu). "
++					"Please run e2fsck to fix.", type,
++					err, qf_inums[type]);
+ 				for (type--; type >= 0; type--) {
+ 					struct inode *inode;
  
--	inode_bl = ext4_iget(sb, EXT4_BOOT_LOADER_INO, EXT4_IGET_SPECIAL);
-+	inode_bl = ext4_iget(sb, EXT4_BOOT_LOADER_INO,
-+			EXT4_IGET_SPECIAL | EXT4_IGET_BAD);
- 	if (IS_ERR(inode_bl))
- 		return PTR_ERR(inode_bl);
- 	ei_bl = EXT4_I(inode_bl);
 
 
