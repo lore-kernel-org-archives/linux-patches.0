@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 359977474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:33:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5469C433D2;
-	Tue, 10 Jan 2023 18:33:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DBC77474
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:33:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7574C433EF;
+	Tue, 10 Jan 2023 18:33:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375597;
-	bh=tM5jMiHZ4UKmta86IYYK4t+6FQ4uP2htZNeqxkq2lbA=;
+	s=korg; t=1673375600;
+	bh=n53qNVpwsShEcDcp0InQiGVJ7v/tZlALFobTjaxJ2+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yNLb3sAdkN7Rh9fUbH6yej1kfl7YlVHEFeooDmLcofYv1rcpwHzPtEO3qqcOveKVn
-	 /J8nK1xHclDKQfiQhD7shssMAwAoXwGB0Q5SaCpox9RohycEiCw/TUbK/6W16K/WSt
-	 9Rpjgyu1r13pooqHajQAaHjMgQVT6oCqVoFcbKqo=
+	b=u7gXQGemGaP4MDizCqzkkbb6kjTMleUh8QIL1xtIs8RmUeC7brOrglP8233JoR1fQ
+	 g/8Ol4jBIl7To2I1bFXZV81Fb/LNavEQ430FNW9dSZwM4blFFUaaG/+AdwCpsrqkOk
+	 t9PZ5dXX3N83rYXjYZoSbNm0zls2V4yjMsxkpZUw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abboud <osamaabb@amazon.com>,
-	Arthur Kiyanovski <akiyano@amazon.com>,
-	David Arinzon <darinzon@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 234/290] net: ena: Fix rx_copybreak value update
-Date: Tue, 10 Jan 2023 19:05:26 +0100
-Message-Id: <20230110180040.087271316@linuxfoundation.org>
+Subject: [PATCH 5.15 243/290] gpio: sifive: Fix refcount leak in sifive_gpio_probe
+Date: Tue, 10 Jan 2023 19:05:35 +0100
+Message-Id: <20230110180040.405647993@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -37,92 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Arinzon <darinzon@amazon.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit c7062aaee099f2f43d6f07a71744b44b94b94b34 ]
+[ Upstream commit 694175cd8a1643cde3acb45c9294bca44a8e08e9 ]
 
-Make the upper bound on rx_copybreak tighter, by
-making sure it is smaller than the minimum of mtu and
-ENA_PAGE_SIZE. With the current upper bound of mtu,
-rx_copybreak can be larger than a page. Such large
-rx_copybreak will not bring any performance benefit to
-the user and therefore makes no sense.
+of_irq_find_parent() returns a node pointer with refcount incremented,
+We should use of_node_put() on it when not needed anymore.
+Add missing of_node_put() to avoid refcount leak.
 
-In addition, the value update was only reflected in
-the adapter structure, but not applied for each ring,
-causing it to not take effect.
-
-Fixes: 1738cd3ed342 ("net: ena: Add a driver for Amazon Elastic Network Adapters (ENA)")
-Signed-off-by: Osama Abboud <osamaabb@amazon.com>
-Signed-off-by: Arthur Kiyanovski <akiyano@amazon.com>
-Signed-off-by: David Arinzon <darinzon@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 96868dce644d ("gpio/sifive: Add GPIO driver for SiFive SoCs")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_ethtool.c |  6 +-----
- drivers/net/ethernet/amazon/ena/ena_netdev.c  | 18 ++++++++++++++++++
- drivers/net/ethernet/amazon/ena/ena_netdev.h  |  2 ++
- 3 files changed, 21 insertions(+), 5 deletions(-)
+ drivers/gpio/gpio-sifive.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_ethtool.c b/drivers/net/ethernet/amazon/ena/ena_ethtool.c
-index 13e745cf3781..413082f10dc1 100644
---- a/drivers/net/ethernet/amazon/ena/ena_ethtool.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_ethtool.c
-@@ -880,11 +880,7 @@ static int ena_set_tunable(struct net_device *netdev,
- 	switch (tuna->id) {
- 	case ETHTOOL_RX_COPYBREAK:
- 		len = *(u32 *)data;
--		if (len > adapter->netdev->mtu) {
--			ret = -EINVAL;
--			break;
--		}
--		adapter->rx_copybreak = len;
-+		ret = ena_set_rx_copybreak(adapter, len);
- 		break;
- 	default:
- 		ret = -EINVAL;
-diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-index 294f21a839cf..8f1b205e7333 100644
---- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-@@ -2829,6 +2829,24 @@ int ena_update_queue_sizes(struct ena_adapter *adapter,
- 	return dev_was_up ? ena_up(adapter) : 0;
- }
- 
-+int ena_set_rx_copybreak(struct ena_adapter *adapter, u32 rx_copybreak)
-+{
-+	struct ena_ring *rx_ring;
-+	int i;
-+
-+	if (rx_copybreak > min_t(u16, adapter->netdev->mtu, ENA_PAGE_SIZE))
-+		return -EINVAL;
-+
-+	adapter->rx_copybreak = rx_copybreak;
-+
-+	for (i = 0; i < adapter->num_io_queues; i++) {
-+		rx_ring = &adapter->rx_ring[i];
-+		rx_ring->rx_copybreak = rx_copybreak;
-+	}
-+
-+	return 0;
-+}
-+
- int ena_update_queue_count(struct ena_adapter *adapter, u32 new_channel_count)
- {
- 	struct ena_com_dev *ena_dev = adapter->ena_dev;
-diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.h b/drivers/net/ethernet/amazon/ena/ena_netdev.h
-index ada2f8faa33a..2b5eb573ff23 100644
---- a/drivers/net/ethernet/amazon/ena/ena_netdev.h
-+++ b/drivers/net/ethernet/amazon/ena/ena_netdev.h
-@@ -404,6 +404,8 @@ int ena_update_queue_sizes(struct ena_adapter *adapter,
- 
- int ena_update_queue_count(struct ena_adapter *adapter, u32 new_channel_count);
- 
-+int ena_set_rx_copybreak(struct ena_adapter *adapter, u32 rx_copybreak);
-+
- int ena_get_sset_count(struct net_device *netdev, int sset);
- 
- enum ena_xdp_errors_t {
+diff --git a/drivers/gpio/gpio-sifive.c b/drivers/gpio/gpio-sifive.c
+index 7d82388b4ab7..f50236e68e88 100644
+--- a/drivers/gpio/gpio-sifive.c
++++ b/drivers/gpio/gpio-sifive.c
+@@ -209,6 +209,7 @@ static int sifive_gpio_probe(struct platform_device *pdev)
+ 		return -ENODEV;
+ 	}
+ 	parent = irq_find_host(irq_parent);
++	of_node_put(irq_parent);
+ 	if (!parent) {
+ 		dev_err(dev, "no IRQ parent domain\n");
+ 		return -ENODEV;
 -- 
 2.35.1
 
