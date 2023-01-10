@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4C177474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:34:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9C55C433EF;
-	Tue, 10 Jan 2023 18:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D107474
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:34:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BDA5C433EF;
+	Tue, 10 Jan 2023 18:34:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375665;
-	bh=ddG3QBwF8T64A+niWfQE99/jFh+5VsFSgyYnBNmFRwY=;
+	s=korg; t=1673375670;
+	bh=dkwE2U3VisqLuKKylwsFrqTdMcqScCR/wbvasPXcHpg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zVV5s3BoGDMGttDxFmVAgw1MmhTnqdT2XvCa8Tf7HVp6+E9cpjxCtJedGtm8MOQY+
-	 mnTqKgcR26BZOd22hNL0jvW1YcN+sXfjp9nRvJpZwGdd9E05M0HBq+Tj/R7fj6jC4a
-	 d0twb+kib2x0y5yiMRqSMCa+TSlmq+3YSFkhDDbc=
+	b=iuvwdqzT0BqX47sia1VucHG1B8UwoajhBElwnzFRlv7kLX7zmLxbR75FbHzaF3htp
+	 lc/KCn3Z3zpgUGuKPj2HtmrNm+jF0FGr8qLpExLVNDPwziwIdIiIh/sIxPfcyT8bbn
+	 8VXtGFe91vxYAdNbNwFLDoQODcDfevCSt/4rzS6s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Keith Busch <kbusch@kernel.org>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Kanchan Joshi <joshi.k@samsung.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
+	David Arinzon <darinzon@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 262/290] nvmet: use NVME_CMD_EFFECTS_CSUPP instead of open coding it
-Date: Tue, 10 Jan 2023 19:05:54 +0100
-Message-Id: <20230110180041.034697284@linuxfoundation.org>
+Subject: [PATCH 5.15 236/290] net: ena: Update NUMA TPH hint register upon NUMA node update
+Date: Tue, 10 Jan 2023 19:05:28 +0100
+Message-Id: <20230110180040.155070190@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -38,73 +35,153 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: David Arinzon <darinzon@amazon.com>
 
-[ Upstream commit 61f37154c599cf9f2f84dcbd9be842f8645a7099 ]
+[ Upstream commit a8ee104f986e720cea52133885cc822d459398c7 ]
 
-Use NVME_CMD_EFFECTS_CSUPP instead of open coding it and assign a
-single value to multiple array entries instead of repeated assignments.
+The device supports a PCIe optimization hint, which indicates on
+which NUMA the queue is currently processed. This hint is utilized
+by PCIe in order to reduce its access time by accessing the
+correct NUMA resources and maintaining cache coherence.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+The driver calls the register update for the hint (called TPH -
+TLP Processing Hint) during the NAPI loop.
+
+Though the update is expected upon a NUMA change (when a queue
+is moved from one NUMA to the other), the current logic performs
+a register update when the queue is moved to a different CPU,
+but the CPU is not necessarily in a different NUMA.
+
+The changes include:
+1. Performing the TPH update only when the queue has switched
+a NUMA node.
+2. Moving the TPH update call to be triggered only when NAPI was
+scheduled from interrupt context, as opposed to a busy-polling loop.
+This is due to the fact that during busy-polling, the frequency
+of CPU switches for a particular queue is significantly higher,
+thus, the likelihood to switch NUMA is much higher. Therefore,
+providing the frequent updates to the device upon a NUMA update
+are unlikely to be beneficial.
+
+Fixes: 1738cd3ed342 ("net: ena: Add a driver for Amazon Elastic Network Adapters (ENA)")
+Signed-off-by: David Arinzon <darinzon@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/admin-cmd.c | 35 ++++++++++++++++++---------------
- 1 file changed, 19 insertions(+), 16 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c | 27 +++++++++++++-------
+ drivers/net/ethernet/amazon/ena/ena_netdev.h |  6 +++--
+ 2 files changed, 22 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/nvme/target/admin-cmd.c b/drivers/nvme/target/admin-cmd.c
-index 52bb262d267a..bf78c58ed41d 100644
---- a/drivers/nvme/target/admin-cmd.c
-+++ b/drivers/nvme/target/admin-cmd.c
-@@ -164,26 +164,29 @@ static void nvmet_execute_get_log_page_smart(struct nvmet_req *req)
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+index b1533a45f645..23c9750850e9 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -684,6 +684,7 @@ static void ena_init_io_rings_common(struct ena_adapter *adapter,
+ 	ring->ena_dev = adapter->ena_dev;
+ 	ring->per_napi_packets = 0;
+ 	ring->cpu = 0;
++	ring->numa_node = 0;
+ 	ring->no_interrupt_event_cnt = 0;
+ 	u64_stats_init(&ring->syncp);
+ }
+@@ -787,6 +788,7 @@ static int ena_setup_tx_resources(struct ena_adapter *adapter, int qid)
+ 	tx_ring->next_to_use = 0;
+ 	tx_ring->next_to_clean = 0;
+ 	tx_ring->cpu = ena_irq->cpu;
++	tx_ring->numa_node = node;
+ 	return 0;
  
- static void nvmet_get_cmd_effects_nvm(struct nvme_effects_log *log)
- {
--	log->acs[nvme_admin_get_log_page]	= cpu_to_le32(1 << 0);
--	log->acs[nvme_admin_identify]		= cpu_to_le32(1 << 0);
--	log->acs[nvme_admin_abort_cmd]		= cpu_to_le32(1 << 0);
--	log->acs[nvme_admin_set_features]	= cpu_to_le32(1 << 0);
--	log->acs[nvme_admin_get_features]	= cpu_to_le32(1 << 0);
--	log->acs[nvme_admin_async_event]	= cpu_to_le32(1 << 0);
--	log->acs[nvme_admin_keep_alive]		= cpu_to_le32(1 << 0);
--
--	log->iocs[nvme_cmd_read]		= cpu_to_le32(1 << 0);
--	log->iocs[nvme_cmd_write]		= cpu_to_le32(1 << 0);
--	log->iocs[nvme_cmd_flush]		= cpu_to_le32(1 << 0);
--	log->iocs[nvme_cmd_dsm]			= cpu_to_le32(1 << 0);
--	log->iocs[nvme_cmd_write_zeroes]	= cpu_to_le32(1 << 0);
-+	log->acs[nvme_admin_get_log_page] =
-+	log->acs[nvme_admin_identify] =
-+	log->acs[nvme_admin_abort_cmd] =
-+	log->acs[nvme_admin_set_features] =
-+	log->acs[nvme_admin_get_features] =
-+	log->acs[nvme_admin_async_event] =
-+	log->acs[nvme_admin_keep_alive] =
-+		cpu_to_le32(NVME_CMD_EFFECTS_CSUPP);
+ err_push_buf_intermediate_buf:
+@@ -919,6 +921,7 @@ static int ena_setup_rx_resources(struct ena_adapter *adapter,
+ 	rx_ring->next_to_clean = 0;
+ 	rx_ring->next_to_use = 0;
+ 	rx_ring->cpu = ena_irq->cpu;
++	rx_ring->numa_node = node;
+ 
+ 	return 0;
+ }
+@@ -1876,20 +1879,27 @@ static void ena_update_ring_numa_node(struct ena_ring *tx_ring,
+ 	if (likely(tx_ring->cpu == cpu))
+ 		goto out;
+ 
++	tx_ring->cpu = cpu;
++	if (rx_ring)
++		rx_ring->cpu = cpu;
 +
-+	log->iocs[nvme_cmd_read] =
-+	log->iocs[nvme_cmd_write] =
-+	log->iocs[nvme_cmd_flush] =
-+	log->iocs[nvme_cmd_dsm]	=
-+	log->iocs[nvme_cmd_write_zeroes] =
-+		cpu_to_le32(NVME_CMD_EFFECTS_CSUPP);
- }
+ 	numa_node = cpu_to_node(cpu);
++
++	if (likely(tx_ring->numa_node == numa_node))
++		goto out;
++
+ 	put_cpu();
  
- static void nvmet_get_cmd_effects_zns(struct nvme_effects_log *log)
- {
--	log->iocs[nvme_cmd_zone_append]		= cpu_to_le32(1 << 0);
--	log->iocs[nvme_cmd_zone_mgmt_send]	= cpu_to_le32(1 << 0);
--	log->iocs[nvme_cmd_zone_mgmt_recv]	= cpu_to_le32(1 << 0);
-+	log->iocs[nvme_cmd_zone_append] =
-+	log->iocs[nvme_cmd_zone_mgmt_send] =
-+	log->iocs[nvme_cmd_zone_mgmt_recv] =
-+		cpu_to_le32(NVME_CMD_EFFECTS_CSUPP);
- }
+ 	if (numa_node != NUMA_NO_NODE) {
+ 		ena_com_update_numa_node(tx_ring->ena_com_io_cq, numa_node);
+-		if (rx_ring)
++		tx_ring->numa_node = numa_node;
++		if (rx_ring) {
++			rx_ring->numa_node = numa_node;
+ 			ena_com_update_numa_node(rx_ring->ena_com_io_cq,
+ 						 numa_node);
++		}
+ 	}
  
- static void nvmet_execute_get_log_cmd_effects_ns(struct nvmet_req *req)
+-	tx_ring->cpu = cpu;
+-	if (rx_ring)
+-		rx_ring->cpu = cpu;
+-
+ 	return;
+ out:
+ 	put_cpu();
+@@ -2010,11 +2020,10 @@ static int ena_io_poll(struct napi_struct *napi, int budget)
+ 			if (ena_com_get_adaptive_moderation_enabled(rx_ring->ena_dev))
+ 				ena_adjust_adaptive_rx_intr_moderation(ena_napi);
+ 
++			ena_update_ring_numa_node(tx_ring, rx_ring);
+ 			ena_unmask_interrupt(tx_ring, rx_ring);
+ 		}
+ 
+-		ena_update_ring_numa_node(tx_ring, rx_ring);
+-
+ 		ret = rx_work_done;
+ 	} else {
+ 		ret = budget;
+@@ -2401,7 +2410,7 @@ static int ena_create_io_tx_queue(struct ena_adapter *adapter, int qid)
+ 	ctx.mem_queue_type = ena_dev->tx_mem_queue_type;
+ 	ctx.msix_vector = msix_vector;
+ 	ctx.queue_size = tx_ring->ring_size;
+-	ctx.numa_node = cpu_to_node(tx_ring->cpu);
++	ctx.numa_node = tx_ring->numa_node;
+ 
+ 	rc = ena_com_create_io_queue(ena_dev, &ctx);
+ 	if (rc) {
+@@ -2469,7 +2478,7 @@ static int ena_create_io_rx_queue(struct ena_adapter *adapter, int qid)
+ 	ctx.mem_queue_type = ENA_ADMIN_PLACEMENT_POLICY_HOST;
+ 	ctx.msix_vector = msix_vector;
+ 	ctx.queue_size = rx_ring->ring_size;
+-	ctx.numa_node = cpu_to_node(rx_ring->cpu);
++	ctx.numa_node = rx_ring->numa_node;
+ 
+ 	rc = ena_com_create_io_queue(ena_dev, &ctx);
+ 	if (rc) {
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.h b/drivers/net/ethernet/amazon/ena/ena_netdev.h
+index 2b5eb573ff23..bf2a39c91c00 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.h
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.h
+@@ -273,9 +273,11 @@ struct ena_ring {
+ 	bool disable_meta_caching;
+ 	u16 no_interrupt_event_cnt;
+ 
+-	/* cpu for TPH */
++	/* cpu and NUMA for TPH */
+ 	int cpu;
+-	 /* number of tx/rx_buffer_info's entries */
++	int numa_node;
++
++	/* number of tx/rx_buffer_info's entries */
+ 	int ring_size;
+ 
+ 	enum ena_admin_placement_policy_type tx_mem_queue_type;
 -- 
 2.35.1
 
