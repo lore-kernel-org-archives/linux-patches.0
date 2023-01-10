@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D747F6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CCF9C433EF;
-	Tue, 10 Jan 2023 18:11:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845DE6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBBBFC433D2;
+	Tue, 10 Jan 2023 18:11:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374295;
-	bh=HS9QR5cW6xmwlrr6NhyefkngpCE/SDk/GLBeG7BHMFw=;
+	s=korg; t=1673374298;
+	bh=/gmXCSockekduztdxVnD82uT04lVCy1kVkawtlYBnv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PyBtlitxZOJor4onhuUL35Sw4vLTLd3Bhzc2MIiHNvhRDe/SSI4DICV+fy+HjjYwP
-	 MRif8O5IUp4iH+IZw98fZiETEN0Qk1O8ge4+Q9JfppjpQNOrbPE+gMFi18ABfwyDqP
-	 fMci5uP38YuEuReFjI7TyoqgC9CeGlQbW3topLjM=
+	b=H1/9nxSOddFH5wAQQib0UNb/OsAJOTrWvrO2QjHe6gWAb3WkpGqgPzikwCVnDPDlY
+	 b7E31II4nSC/nYy7V45ysQ4RKtFN0Tqdh3FAYKkBurrYPHhMRooWXs4V/NCleiQxC+
+	 6tRHUmx8Wj6Kpijv6SEzdWPQD+jpDgLeux+PgJ0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chung-Chiang Cheng <shepjeng@gmail.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	syzbot+7bb7cd3595533513a9e7@syzkaller.appspotmail.com,
+	Michael Schmitz <schmitzmic@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Matthew Wilcox <willy@infradead.org>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 120/148] btrfs: fix compat_ro checks against remount
-Date: Tue, 10 Jan 2023 19:03:44 +0100
-Message-Id: <20230110180021.001842178@linuxfoundation.org>
+Subject: [PATCH 6.0 103/148] hfs/hfsplus: avoid WARN_ON() for sanity check, use proper error handling
+Date: Tue, 10 Jan 2023 19:03:27 +0100
+Message-Id: <20230110180020.453894970@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -37,152 +39,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qu Wenruo <wqu@suse.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 2ba48b20049b5a76f34a85f853c9496d1b10533a ]
+[ Upstream commit cb7a95af78d29442b8294683eca4897544b8ef46 ]
 
-[BUG]
-Even with commit 81d5d61454c3 ("btrfs: enhance unsupported compat RO
-flags handling"), btrfs can still mount a fs with unsupported compat_ro
-flags read-only, then remount it RW:
+Commit 55d1cbbbb29e ("hfs/hfsplus: use WARN_ON for sanity check") fixed
+a build warning by turning a comment into a WARN_ON(), but it turns out
+that syzbot then complains because it can trigger said warning with a
+corrupted hfs image.
 
-  # btrfs ins dump-super /dev/loop0 | grep compat_ro_flags -A 3
-  compat_ro_flags		0x403
-			( FREE_SPACE_TREE |
-			  FREE_SPACE_TREE_VALID |
-			  unknown flag: 0x400 )
+The warning actually does warn about a bad situation, but we are much
+better off just handling it as the error it is.  So rather than warn
+about us doing bad things, stop doing the bad things and return -EIO.
 
-  # mount /dev/loop0 /mnt/btrfs
-  mount: /mnt/btrfs: wrong fs type, bad option, bad superblock on /dev/loop0, missing codepage or helper program, or other error.
-         dmesg(1) may have more information after failed mount system call.
-  ^^^ RW mount failed as expected ^^^
+While at it, also fix a memory leak that was introduced by an earlier
+fix for a similar syzbot warning situation, and add a check for one case
+that historically wasn't handled at all (ie neither comment nor
+subsequent WARN_ON).
 
-  # dmesg -t | tail -n5
-  loop0: detected capacity change from 0 to 1048576
-  BTRFS: device fsid cb5b82f5-0fdd-4d81-9b4b-78533c324afa devid 1 transid 7 /dev/loop0 scanned by mount (1146)
-  BTRFS info (device loop0): using crc32c (crc32c-intel) checksum algorithm
-  BTRFS info (device loop0): using free space tree
-  BTRFS error (device loop0): cannot mount read-write because of unknown compat_ro features (0x403)
-  BTRFS error (device loop0): open_ctree failed
-
-  # mount /dev/loop0 -o ro /mnt/btrfs
-  # mount -o remount,rw /mnt/btrfs
-  ^^^ RW remount succeeded unexpectedly ^^^
-
-[CAUSE]
-Currently we use btrfs_check_features() to check compat_ro flags against
-our current mount flags.
-
-That function get reused between open_ctree() and btrfs_remount().
-
-But for btrfs_remount(), the super block we passed in still has the old
-mount flags, thus btrfs_check_features() still believes we're mounting
-read-only.
-
-[FIX]
-Replace the existing @sb argument with @is_rw_mount.
-
-As originally we only use @sb to determine if the mount is RW.
-
-Now it's callers' responsibility to determine if the mount is RW, and
-since there are only two callers, the check is pretty simple:
-
-- caller in open_ctree()
-  Just pass !sb_rdonly().
-
-- caller in btrfs_remount()
-  Pass !(*flags & SB_RDONLY), as our check should be against the new
-  flags.
-
-Now we can correctly reject the RW remount:
-
-  # mount /dev/loop0 -o ro /mnt/btrfs
-  # mount -o remount,rw /mnt/btrfs
-  mount: /mnt/btrfs: mount point not mounted or bad option.
-         dmesg(1) may have more information after failed mount system call.
-  # dmesg -t | tail -n 1
-  BTRFS error (device loop0: state M): cannot mount read-write because of unknown compat_ro features (0x403)
-
-Reported-by: Chung-Chiang Cheng <shepjeng@gmail.com>
-Fixes: 81d5d61454c3 ("btrfs: enhance unsupported compat RO flags handling")
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Reported-by: syzbot+7bb7cd3595533513a9e7@syzkaller.appspotmail.com
+Fixes: 55d1cbbbb29e ("hfs/hfsplus: use WARN_ON for sanity check")
+Fixes: 8d824e69d9f3 ("hfs: fix OOB Read in __hfs_brec_find")
+Link: https://lore.kernel.org/lkml/000000000000dbce4e05f170f289@google.com/
+Tested-by: Michael Schmitz <schmitzmic@gmail.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Viacheslav Dubeyko <slava@dubeyko.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/disk-io.c | 8 +++++---
- fs/btrfs/disk-io.h | 2 +-
- fs/btrfs/super.c   | 2 +-
- 3 files changed, 7 insertions(+), 5 deletions(-)
+ fs/hfs/inode.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/fs/btrfs/disk-io.c b/fs/btrfs/disk-io.c
-index 7834dc77c935..d7a7f6288e70 100644
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -3286,6 +3286,8 @@ int btrfs_start_pre_rw_mount(struct btrfs_fs_info *fs_info)
- /*
-  * Do various sanity and dependency checks of different features.
-  *
-+ * @is_rw_mount:	If the mount is read-write.
-+ *
-  * This is the place for less strict checks (like for subpage or artificial
-  * feature dependencies).
-  *
-@@ -3296,7 +3298,7 @@ int btrfs_start_pre_rw_mount(struct btrfs_fs_info *fs_info)
-  * (space cache related) can modify on-disk format like free space tree and
-  * screw up certain feature dependencies.
-  */
--int btrfs_check_features(struct btrfs_fs_info *fs_info, struct super_block *sb)
-+int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount)
- {
- 	struct btrfs_super_block *disk_super = fs_info->super_copy;
- 	u64 incompat = btrfs_super_incompat_flags(disk_super);
-@@ -3335,7 +3337,7 @@ int btrfs_check_features(struct btrfs_fs_info *fs_info, struct super_block *sb)
- 	if (btrfs_super_nodesize(disk_super) > PAGE_SIZE)
- 		incompat |= BTRFS_FEATURE_INCOMPAT_BIG_METADATA;
+diff --git a/fs/hfs/inode.c b/fs/hfs/inode.c
+index a0746be3c1de..80d17c520d0b 100644
+--- a/fs/hfs/inode.c
++++ b/fs/hfs/inode.c
+@@ -458,15 +458,16 @@ int hfs_write_inode(struct inode *inode, struct writeback_control *wbc)
+ 		/* panic? */
+ 		return -EIO;
  
--	if (compat_ro_unsupp && !sb_rdonly(sb)) {
-+	if (compat_ro_unsupp && is_rw_mount) {
- 		btrfs_err(fs_info,
- 	"cannot mount read-write because of unknown compat_ro features (0x%llx)",
- 		       compat_ro);
-@@ -3538,7 +3540,7 @@ int __cold open_ctree(struct super_block *sb, struct btrfs_fs_devices *fs_device
- 		goto fail_alloc;
++	res = -EIO;
+ 	if (HFS_I(main_inode)->cat_key.CName.len > HFS_NAMELEN)
+-		return -EIO;
++		goto out;
+ 	fd.search_key->cat = HFS_I(main_inode)->cat_key;
+ 	if (hfs_brec_find(&fd))
+-		/* panic? */
+ 		goto out;
+ 
+ 	if (S_ISDIR(main_inode->i_mode)) {
+-		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_dir));
++		if (fd.entrylength < sizeof(struct hfs_cat_dir))
++			goto out;
+ 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
+ 			   sizeof(struct hfs_cat_dir));
+ 		if (rec.type != HFS_CDR_DIR ||
+@@ -479,6 +480,8 @@ int hfs_write_inode(struct inode *inode, struct writeback_control *wbc)
+ 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
+ 			    sizeof(struct hfs_cat_dir));
+ 	} else if (HFS_IS_RSRC(inode)) {
++		if (fd.entrylength < sizeof(struct hfs_cat_file))
++			goto out;
+ 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
+ 			       sizeof(struct hfs_cat_file));
+ 		hfs_inode_write_fork(inode, rec.file.RExtRec,
+@@ -486,7 +489,8 @@ int hfs_write_inode(struct inode *inode, struct writeback_control *wbc)
+ 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
+ 				sizeof(struct hfs_cat_file));
+ 	} else {
+-		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_file));
++		if (fd.entrylength < sizeof(struct hfs_cat_file))
++			goto out;
+ 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
+ 			   sizeof(struct hfs_cat_file));
+ 		if (rec.type != HFS_CDR_FIL ||
+@@ -503,9 +507,10 @@ int hfs_write_inode(struct inode *inode, struct writeback_control *wbc)
+ 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
+ 			    sizeof(struct hfs_cat_file));
  	}
++	res = 0;
+ out:
+ 	hfs_find_exit(&fd);
+-	return 0;
++	return res;
+ }
  
--	ret = btrfs_check_features(fs_info, sb);
-+	ret = btrfs_check_features(fs_info, !sb_rdonly(sb));
- 	if (ret < 0) {
- 		err = ret;
- 		goto fail_alloc;
-diff --git a/fs/btrfs/disk-io.h b/fs/btrfs/disk-io.h
-index c67c15d4d20b..6e49979024f0 100644
---- a/fs/btrfs/disk-io.h
-+++ b/fs/btrfs/disk-io.h
-@@ -48,7 +48,7 @@ int __cold open_ctree(struct super_block *sb,
- void __cold close_ctree(struct btrfs_fs_info *fs_info);
- int btrfs_validate_super(struct btrfs_fs_info *fs_info,
- 			 struct btrfs_super_block *sb, int mirror_num);
--int btrfs_check_features(struct btrfs_fs_info *fs_info, struct super_block *sb);
-+int btrfs_check_features(struct btrfs_fs_info *fs_info, bool is_rw_mount);
- int write_all_supers(struct btrfs_fs_info *fs_info, int max_mirrors);
- struct btrfs_super_block *btrfs_read_dev_super(struct block_device *bdev);
- struct btrfs_super_block *btrfs_read_dev_one_super(struct block_device *bdev,
-diff --git a/fs/btrfs/super.c b/fs/btrfs/super.c
-index b6f3f24ac95d..64bda2f53311 100644
---- a/fs/btrfs/super.c
-+++ b/fs/btrfs/super.c
-@@ -2012,7 +2012,7 @@ static int btrfs_remount(struct super_block *sb, int *flags, char *data)
- 	if (ret)
- 		goto restore;
- 
--	ret = btrfs_check_features(fs_info, sb);
-+	ret = btrfs_check_features(fs_info, !(*flags & SB_RDONLY));
- 	if (ret < 0)
- 		goto restore;
- 
+ static struct dentry *hfs_file_lookup(struct inode *dir, struct dentry *dentry,
 -- 
 2.35.1
 
