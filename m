@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906BC7474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:26:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A95C433D2;
-	Tue, 10 Jan 2023 18:26:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708427474
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:26:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D762AC433EF;
+	Tue, 10 Jan 2023 18:26:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375215;
-	bh=s0kT/Y1VsWxsKgOLbCakZ/h0VaCKTkR4AhzbQxJecp4=;
+	s=korg; t=1673375218;
+	bh=y5DniMxNRtSzu9TC3krROfIIsCP56drbQKlJIOx3htg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2HSpx17VKJVzMTomsDJBfvQEjkyg3gsCRpfe5YH9l/TJ2fcXt2BjAnVRNXTwPhE8L
-	 XYqAa3iuBwJZqquDeeviPj2Fqmm9E3RISCCBM2xeegWVywphJ6ZlqfbSNKa9BybQ6V
-	 yOX5l3mPhK/9ebNgoEZAlOXTKbrERFo/JBPP63/E=
+	b=ZfUd3592jvHI7yWsz60xqD970IFj8Jdew5V73njjQXdA3RgLk6/ev2kXwMRaRhMx7
+	 pDMJJ/5wYsSIHJt1Ph//dcwuDaU/A+vvxqa+gPL/PXwpayDajhsEYfRifVohhtab2H
+	 DwvDwHCeqDrxXUMgL3+MbLWyCT+FjAT2amtaKUAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <michael@walle.cc>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 5.15 116/290] wifi: wilc1000: sdio: fix module autoloading
-Date: Tue, 10 Jan 2023 19:03:28 +0100
-Message-Id: <20230110180035.806444227@linuxfoundation.org>
+	Paul Cercueil <paul@crapouillou.net>,
+	Aidan MacDonald <aidanmacdonald.0x0@gmail.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.15 117/290] ASoC: jz4740-i2s: Handle independent FIFO flush bits
+Date: Tue, 10 Jan 2023 19:03:29 +0100
+Message-Id: <20230110180035.837166507@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -34,31 +35,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Walle <michael@walle.cc>
+From: Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
 
-commit 57d545b5a3d6ce3a8fb6b093f02bfcbb908973f3 upstream.
+commit 8b3a9ad86239f80ed569e23c3954a311f66481d6 upstream.
 
-There are no SDIO module aliases included in the driver, therefore,
-module autoloading isn't working. Add the proper MODULE_DEVICE_TABLE().
+On the JZ4740, there is a single bit that flushes (empties) both
+the transmit and receive FIFO. Later SoCs have independent flush
+bits for each FIFO.
 
+Independent FIFOs can be flushed before the snd_soc_dai_active()
+check because it won't disturb other active streams. This ensures
+that the FIFO we're about to use is always flushed before starting
+up. With shared FIFOs we can't do that because if another substream
+is active, flushing its FIFO would cause underrun errors.
+
+This also fixes a bug: since we were only setting the JZ4740's
+flush bit, which corresponds to the TX FIFO flush bit on other
+SoCs, other SoCs were not having their RX FIFO flushed at all.
+
+Fixes: 967beb2e8777 ("ASoC: jz4740: Add jz4780 support")
+Reviewed-by: Paul Cercueil <paul@crapouillou.net>
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Walle <michael@walle.cc>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221027171221.491937-1-michael@walle.cc
+Signed-off-by: Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
+Link: https://lore.kernel.org/r/20221023143328.160866-2-aidanmacdonald.0x0@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/microchip/wilc1000/sdio.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/jz4740/jz4740-i2s.c |   39 ++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 34 insertions(+), 5 deletions(-)
 
---- a/drivers/net/wireless/microchip/wilc1000/sdio.c
-+++ b/drivers/net/wireless/microchip/wilc1000/sdio.c
-@@ -20,6 +20,7 @@ static const struct sdio_device_id wilc_
- 	{ SDIO_DEVICE(SDIO_VENDOR_ID_MICROCHIP_WILC, SDIO_DEVICE_ID_MICROCHIP_WILC1000) },
- 	{ },
+--- a/sound/soc/jz4740/jz4740-i2s.c
++++ b/sound/soc/jz4740/jz4740-i2s.c
+@@ -56,7 +56,8 @@
+ #define JZ_AIC_CTRL_MONO_TO_STEREO BIT(11)
+ #define JZ_AIC_CTRL_SWITCH_ENDIANNESS BIT(10)
+ #define JZ_AIC_CTRL_SIGNED_TO_UNSIGNED BIT(9)
+-#define JZ_AIC_CTRL_FLUSH		BIT(8)
++#define JZ_AIC_CTRL_TFLUSH		BIT(8)
++#define JZ_AIC_CTRL_RFLUSH		BIT(7)
+ #define JZ_AIC_CTRL_ENABLE_ROR_INT BIT(6)
+ #define JZ_AIC_CTRL_ENABLE_TUR_INT BIT(5)
+ #define JZ_AIC_CTRL_ENABLE_RFS_INT BIT(4)
+@@ -91,6 +92,8 @@ enum jz47xx_i2s_version {
+ struct i2s_soc_info {
+ 	enum jz47xx_i2s_version version;
+ 	struct snd_soc_dai_driver *dai;
++
++	bool shared_fifo_flush;
  };
-+MODULE_DEVICE_TABLE(sdio, wilc_sdio_ids);
  
- #define WILC_SDIO_BLOCK_SIZE 512
+ struct jz4740_i2s {
+@@ -119,19 +122,44 @@ static inline void jz4740_i2s_write(cons
+ 	writel(value, i2s->base + reg);
+ }
  
++static inline void jz4740_i2s_set_bits(const struct jz4740_i2s *i2s,
++	unsigned int reg, uint32_t bits)
++{
++	uint32_t value = jz4740_i2s_read(i2s, reg);
++	value |= bits;
++	jz4740_i2s_write(i2s, reg, value);
++}
++
+ static int jz4740_i2s_startup(struct snd_pcm_substream *substream,
+ 	struct snd_soc_dai *dai)
+ {
+ 	struct jz4740_i2s *i2s = snd_soc_dai_get_drvdata(dai);
+-	uint32_t conf, ctrl;
++	uint32_t conf;
+ 	int ret;
+ 
++	/*
++	 * When we can flush FIFOs independently, only flush the FIFO
++	 * that is starting up. We can do this when the DAI is active
++	 * because it does not disturb other active substreams.
++	 */
++	if (!i2s->soc_info->shared_fifo_flush) {
++		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
++			jz4740_i2s_set_bits(i2s, JZ_REG_AIC_CTRL, JZ_AIC_CTRL_TFLUSH);
++		else
++			jz4740_i2s_set_bits(i2s, JZ_REG_AIC_CTRL, JZ_AIC_CTRL_RFLUSH);
++	}
++
+ 	if (snd_soc_dai_active(dai))
+ 		return 0;
+ 
+-	ctrl = jz4740_i2s_read(i2s, JZ_REG_AIC_CTRL);
+-	ctrl |= JZ_AIC_CTRL_FLUSH;
+-	jz4740_i2s_write(i2s, JZ_REG_AIC_CTRL, ctrl);
++	/*
++	 * When there is a shared flush bit for both FIFOs, the TFLUSH
++	 * bit flushes both FIFOs. Flushing while the DAI is active would
++	 * cause FIFO underruns in other active substreams so we have to
++	 * guard this behind the snd_soc_dai_active() check.
++	 */
++	if (i2s->soc_info->shared_fifo_flush)
++		jz4740_i2s_set_bits(i2s, JZ_REG_AIC_CTRL, JZ_AIC_CTRL_TFLUSH);
+ 
+ 	ret = clk_prepare_enable(i2s->clk_i2s);
+ 	if (ret)
+@@ -462,6 +490,7 @@ static struct snd_soc_dai_driver jz4740_
+ static const struct i2s_soc_info jz4740_i2s_soc_info = {
+ 	.version = JZ_I2S_JZ4740,
+ 	.dai = &jz4740_i2s_dai,
++	.shared_fifo_flush = true,
+ };
+ 
+ static const struct i2s_soc_info jz4760_i2s_soc_info = {
 
 
