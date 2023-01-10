@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61BCA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:08:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CA5CC433F0;
-	Tue, 10 Jan 2023 18:08:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF36A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:08:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C395AC433EF;
+	Tue, 10 Jan 2023 18:08:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374120;
-	bh=84o0GqxpmsEE6vaEkN1SMsDAVV8CdMFA43JfPjhlFe0=;
+	s=korg; t=1673374123;
+	bh=0sWyWXZjvmFbjGYs3WwcKgwVVnnct+7QuQl1g+2dcek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iNWScytj8/axRJRJ5zA3WhuKxMcDNhJRkOXbzz1R0bNaCtQXX/+OeuR43O++fgit/
-	 wUnoWiKBYNN0irjnq6DmGL/TCtpW6E31cw7x/mBDfahkRKfmiE6fZYMX75RriR2B7n
-	 1XKo4z2n7GWEpxGrVzR4smMM1zxOjsxrY9NxkgVg=
+	b=wCpymw7L67FdsjpoCKo6qhVaGwQxCf9wM6ZUr1gFwifaAVImiRp51/1m5YPyXVxZ1
+	 wx+6xJktvowFNWrKWM0Ec9YwGgMxveFYniedBpihZ5PJa/2+Zfw2Wb36ZRb6l7/6n0
+	 7Z0G50rg3yGe7CkR3zOt/JwWVmuS70udCtqD15CQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 053/148] net/mlx5: Avoid recovery in probe flows
-Date: Tue, 10 Jan 2023 19:02:37 +0100
-Message-Id: <20230110180018.908536808@linuxfoundation.org>
+Subject: [PATCH 6.0 036/148] bnxt_en: Fix XDP RX path
+Date: Tue, 10 Jan 2023 19:02:20 +0100
+Message-Id: <20230110180018.364599449@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -36,47 +37,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shay Drory <shayd@nvidia.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 9078e843efec530f279a155f262793c58b0746bd ]
+[ Upstream commit 9b3e607871ea5ee90f10f5be3965fc07f2aa3ef7 ]
 
-Currently, recovery is done without considering whether the device is
-still in probe flow.
-This may lead to recovery before device have finished probed
-successfully. e.g.: while mlx5_init_one() is running. Recovery flow is
-using functionality that is loaded only by mlx5_init_one(), and there
-is no point in running recovery without mlx5_init_one() finished
-successfully.
+The XDP program can change the starting address of the RX data buffer and
+this information needs to be passed back from bnxt_rx_xdp() to
+bnxt_rx_pkt() for the XDP_PASS case so that the SKB can point correctly
+to the modified buffer address.  Add back the data_ptr parameter to
+bnxt_rx_xdp() to make this work.
 
-Fix it by waiting for probe flow to finish and checking whether the
-device is probed before trying to perform recovery.
-
-Fixes: 51d138c2610a ("net/mlx5: Fix health error state handling")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: b231c3f3414c ("bnxt: refactor bnxt_rx_xdp to separate xdp_init_buff/xdp_prepare_buff")
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/health.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 7 +++++--
+ drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h | 4 ++--
+ 3 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/health.c b/drivers/net/ethernet/mellanox/mlx5/core/health.c
-index 2cf2c9948446..0ed239eadf39 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/health.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/health.c
-@@ -674,6 +674,12 @@ static void mlx5_fw_fatal_reporter_err_work(struct work_struct *work)
- 	dev = container_of(priv, struct mlx5_core_dev, priv);
- 	devlink = priv_to_devlink(dev);
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 2c83bc890839..31c427d53b90 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -1937,7 +1937,7 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
+ 	}
  
-+	mutex_lock(&dev->intf_state_mutex);
-+	if (test_bit(MLX5_DROP_NEW_HEALTH_WORK, &health->flags)) {
-+		mlx5_core_err(dev, "health works are not permitted at this stage\n");
-+		return;
+ 	if (xdp_active) {
+-		if (bnxt_rx_xdp(bp, rxr, cons, xdp, data, &len, event)) {
++		if (bnxt_rx_xdp(bp, rxr, cons, xdp, data, &data_ptr, &len, event)) {
+ 			rc = 1;
+ 			goto next_rx;
+ 		}
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+index 1847f191577d..2ceeaa818c1c 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+@@ -222,7 +222,8 @@ void bnxt_xdp_buff_frags_free(struct bnxt_rx_ring_info *rxr,
+  * false   - packet should be passed to the stack.
+  */
+ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
+-		 struct xdp_buff xdp, struct page *page, unsigned int *len, u8 *event)
++		 struct xdp_buff xdp, struct page *page, u8 **data_ptr,
++		 unsigned int *len, u8 *event)
+ {
+ 	struct bpf_prog *xdp_prog = READ_ONCE(rxr->xdp_prog);
+ 	struct bnxt_tx_ring_info *txr;
+@@ -255,8 +256,10 @@ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
+ 		*event &= ~BNXT_RX_EVENT;
+ 
+ 	*len = xdp.data_end - xdp.data;
+-	if (orig_data != xdp.data)
++	if (orig_data != xdp.data) {
+ 		offset = xdp.data - xdp.data_hard_start;
++		*data_ptr = xdp.data_hard_start + offset;
 +	}
-+	mutex_unlock(&dev->intf_state_mutex);
- 	enter_error_state(dev, false);
- 	if (IS_ERR_OR_NULL(health->fw_fatal_reporter)) {
- 		devl_lock(devlink);
+ 
+ 	switch (act) {
+ 	case XDP_PASS:
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
+index 2bbdb8e7c506..ea430d6961df 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
+@@ -18,8 +18,8 @@ struct bnxt_sw_tx_bd *bnxt_xmit_bd(struct bnxt *bp,
+ 				   struct xdp_buff *xdp);
+ void bnxt_tx_int_xdp(struct bnxt *bp, struct bnxt_napi *bnapi, int nr_pkts);
+ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
+-		 struct xdp_buff xdp, struct page *page, unsigned int *len,
+-		 u8 *event);
++		 struct xdp_buff xdp, struct page *page, u8 **data_ptr,
++		 unsigned int *len, u8 *event);
+ int bnxt_xdp(struct net_device *dev, struct netdev_bpf *xdp);
+ int bnxt_xdp_xmit(struct net_device *dev, int num_frames,
+ 		  struct xdp_frame **frames, u32 flags);
 -- 
 2.35.1
 
