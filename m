@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E1D16FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:20:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D63B4C433D2;
-	Tue, 10 Jan 2023 18:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C0EA6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:20:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C595BC433D2;
+	Tue, 10 Jan 2023 18:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374836;
-	bh=uCYUh72vBFjzwmz50me+PrTbWUZV1WLilXeESQebrVE=;
+	s=korg; t=1673374839;
+	bh=0qpt2WxXVJAOKL0pek8zJjOIL4XuD3ielMRG1ExgNK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hy2peAz7qWQUO5gwDdP4/RjTf9buzZNNgytXOCy8KQ9m1kytukr5ottnI05QnJGEQ
-	 yyS/k5OTJpfzHXUgyrKbEoBbzioibTeUIYjlx0Mge+wyDUQBKCMKx7Z01wQMajm9me
-	 1+GYDlkjzF+h/nk7w9u3xxRJrfbyNsuL8OhJV+qc=
+	b=nLY6qAnwKUEwWHfyCsuzv4gFe6Cn37OYDwtRFyIMX59nh7qzove03uSBJJxWOq44P
+	 Nn7zO8F9R2DDgChKAGbqgGYYlHThz39nu+ir6I5XE6Ztt97nSJAabSvqSETxXX+Lge
+	 pqINT3wS0oY6FK6HjnzXePSxRO2Hr/o+VDpgjLdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alvin Lee <Alvin.Lee2@amd.com>,
-	Jun Lei <Jun.Lei@amd.com>,
-	Brian Chang <Brian.Chang@amd.com>,
-	Dillon Varone <Dillon.Varone@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 150/159] drm/amd/display: Add check for DET fetch latency hiding for dcn32
-Date: Tue, 10 Jan 2023 19:04:58 +0100
-Message-Id: <20230110180023.290608302@linuxfoundation.org>
+	Ronald Wahl <ronald.wahl@raritan.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 133/159] net: dsa: qca8k: fix wrong length value for mgmt eth packet
+Date: Tue, 10 Jan 2023 19:04:41 +0100
+Message-Id: <20230110180022.601506833@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -39,223 +35,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dillon Varone <Dillon.Varone@amd.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-[ Upstream commit 6d4727c80947de0e6fad58b196a9d215e3b32608 ]
+commit 9807ae69746196ee4bbffe7d22d22ab2b61c6ed0 upstream.
 
-[WHY?]
-Some configurations are constructed with very marginal DET buffers relative to
-the worst possible time required to fetch a swath.
+The assumption that Documentation was right about how this value work was
+wrong. It was discovered that the length value of the mgmt header is in
+step of word size.
 
-[HOW?]
-Add a check to see that the DET buffer allocated for each pipe can hide the
-latency for all pipes to fetch at least one swath.
+As an example to process 4 byte of data the correct length to set is 2.
+To process 8 byte 4, 12 byte 6, 16 byte 8...
 
-Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
-Reviewed-by: Jun Lei <Jun.Lei@amd.com>
-Acked-by: Brian Chang <Brian.Chang@amd.com>
-Signed-off-by: Dillon Varone <Dillon.Varone@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: f3c23bea598a ("drm/amd/display: Uninitialized variables causing 4k60 UCLK to stay at DPM1 and not DPM0")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Odd values will always return the next size on the ack packet.
+(length of 3 (6 byte) will always return 8 bytes of data)
+
+This means that a value of 15 (0xf) actually means reading/writing 32 bytes
+of data instead of 16 bytes. This behaviour is totally absent and not
+documented in the switch Documentation.
+
+In fact from Documentation the max value that mgmt eth can process is
+16 byte of data while in reality it can process 32 bytes at once.
+
+To handle this we always round up the length after deviding it for word
+size. We check if the result is odd and we round another time to align
+to what the switch will provide in the ack packet.
+The workaround for the length limit of 15 is still needed as the length
+reg max value is 0xf(15)
+
+Reported-by: Ronald Wahl <ronald.wahl@raritan.com>
+Tested-by: Ronald Wahl <ronald.wahl@raritan.com>
+Fixes: 90386223f44e ("net: dsa: qca8k: add support for larger read/write size with mgmt Ethernet")
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Cc: stable@vger.kernel.org # v5.18+
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../dc/dml/dcn32/display_mode_vba_32.c        | 39 +++++++++++
- .../dc/dml/dcn32/display_mode_vba_util_32.c   | 69 +++++++++++++++++++
- .../dc/dml/dcn32/display_mode_vba_util_32.h   | 18 +++++
- .../drm/amd/display/dc/dml/display_mode_vba.h |  2 +
- 4 files changed, 128 insertions(+)
+ drivers/net/dsa/qca/qca8k-8xxx.c |   45 ++++++++++++++++++++++++++++++---------
+ 1 file changed, 35 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
-index 9afd9ba23fb2..820042f6aaca 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_32.c
-@@ -670,6 +670,25 @@ static void DISPCLKDPPCLKDCFCLKDeepSleepPrefetchParametersWatermarksAndPerforman
- 		v->cursor_bw[k] = mode_lib->vba.NumberOfCursors[k] * mode_lib->vba.CursorWidth[k][0] * mode_lib->vba.CursorBPP[k][0] / 8 / (mode_lib->vba.HTotal[k] / mode_lib->vba.PixelClock[k]) * mode_lib->vba.VRatio[k];
- 	}
+--- a/drivers/net/dsa/qca/qca8k-8xxx.c
++++ b/drivers/net/dsa/qca/qca8k-8xxx.c
+@@ -111,7 +111,16 @@ static void qca8k_rw_reg_ack_handler(str
  
-+	v->NotEnoughDETSwathFillLatencyHiding = dml32_CalculateDETSwathFillLatencyHiding(
-+						mode_lib->vba.NumberOfActiveSurfaces,
-+						mode_lib->vba.ReturnBW,
-+						v->UrgentLatency,
-+						mode_lib->vba.SwathHeightY,
-+						mode_lib->vba.SwathHeightC,
-+						v->swath_width_luma_ub,
-+						v->swath_width_chroma_ub,
-+						v->BytePerPixelDETY,
-+						v->BytePerPixelDETC,
-+						mode_lib->vba.DETBufferSizeY,
-+						mode_lib->vba.DETBufferSizeC,
-+						mode_lib->vba.DPPPerPlane,
-+						mode_lib->vba.HTotal,
-+						mode_lib->vba.PixelClock,
-+						mode_lib->vba.VRatio,
-+						mode_lib->vba.VRatioChroma,
-+						mode_lib->vba.UsesMALLForPStateChange);
+ 	command = get_unaligned_le32(&mgmt_ethhdr->command);
+ 	cmd = FIELD_GET(QCA_HDR_MGMT_CMD, command);
 +
- 	for (k = 0; k < mode_lib->vba.NumberOfActiveSurfaces; ++k) {
- 		v->MaxVStartupLines[k] = ((mode_lib->vba.Interlace[k] &&
- 				!mode_lib->vba.ProgressiveToInterlaceUnitInOPP) ?
-@@ -1664,6 +1683,7 @@ static void mode_support_configuration(struct vba_vars_st *v,
- 				&& mode_lib->vba.PTEBufferSizeNotExceeded[i][j] == true
- 				&& mode_lib->vba.DCCMetaBufferSizeNotExceeded[i][j] == true
- 				&& mode_lib->vba.NonsupportedDSCInputBPC == false
-+				&& mode_lib->vba.NotEnoughDETSwathFillLatencyHidingPerState[i][j] == false
- 				&& !mode_lib->vba.ExceededMALLSize
- 				&& ((mode_lib->vba.HostVMEnable == false
- 				&& !mode_lib->vba.ImmediateFlipRequiredFinal)
-@@ -3158,6 +3178,25 @@ void dml32_ModeSupportAndSystemConfigurationFull(struct display_mode_lib *mode_l
- 					mode_lib->vba.UrgentBurstFactorChroma,
- 					mode_lib->vba.UrgentBurstFactorCursor);
+ 	len = FIELD_GET(QCA_HDR_MGMT_LENGTH, command);
++	/* Special case for len of 15 as this is the max value for len and needs to
++	 * be increased before converting it from word to dword.
++	 */
++	if (len == 15)
++		len++;
++
++	/* We can ignore odd value, we always round up them in the alloc function. */
++	len *= sizeof(u16);
  
-+			mode_lib->vba.NotEnoughDETSwathFillLatencyHidingPerState[i][j] = dml32_CalculateDETSwathFillLatencyHiding(
-+					mode_lib->vba.NumberOfActiveSurfaces,
-+					mode_lib->vba.ReturnBWPerState[i][j],
-+					mode_lib->vba.UrgLatency[i],
-+					mode_lib->vba.SwathHeightYThisState,
-+					mode_lib->vba.SwathHeightCThisState,
-+					mode_lib->vba.swath_width_luma_ub_this_state,
-+					mode_lib->vba.swath_width_chroma_ub_this_state,
-+					mode_lib->vba.BytePerPixelInDETY,
-+					mode_lib->vba.BytePerPixelInDETC,
-+					mode_lib->vba.DETBufferSizeYThisState,
-+					mode_lib->vba.DETBufferSizeCThisState,
-+					mode_lib->vba.NoOfDPPThisState,
-+					mode_lib->vba.HTotal,
-+					mode_lib->vba.PixelClock,
-+					mode_lib->vba.VRatio,
-+					mode_lib->vba.VRatioChroma,
-+					mode_lib->vba.UsesMALLForPStateChange);
-+
- 			v->dummy_vars.dml32_ModeSupportAndSystemConfigurationFull.VMDataOnlyReturnBWPerState = dml32_get_return_bw_mbps_vm_only(&mode_lib->vba.soc, i,
- 					mode_lib->vba.DCFCLKState[i][j], mode_lib->vba.FabricClockPerState[i],
- 					mode_lib->vba.DRAMSpeedPerState[i]);
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.c
-index debe46b24a3e..5af601cff1a0 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.c
-@@ -6228,3 +6228,72 @@ void dml32_CalculateImmediateFlipBandwithSupport(unsigned int NumberOfActiveSurf
- 	*ImmediateFlipBandwidthSupport = (*TotalBandwidth <= ReturnBW);
- 	*FractionOfUrgentBandwidth = *TotalBandwidth / ReturnBW;
- }
-+
-+bool dml32_CalculateDETSwathFillLatencyHiding(unsigned int NumberOfActiveSurfaces,
-+		double ReturnBW,
-+		double UrgentLatency,
-+		unsigned int SwathHeightY[],
-+		unsigned int SwathHeightC[],
-+		unsigned int SwathWidthY[],
-+		unsigned int SwathWidthC[],
-+		double  BytePerPixelInDETY[],
-+		double  BytePerPixelInDETC[],
-+		unsigned int    DETBufferSizeY[],
-+		unsigned int    DETBufferSizeC[],
-+		unsigned int	NumOfDPP[],
-+		unsigned int	HTotal[],
-+		double	PixelClock[],
-+		double	VRatioY[],
-+		double	VRatioC[],
-+		enum dm_use_mall_for_pstate_change_mode UsesMALLForPStateChange[DC__NUM_DPP__MAX])
-+{
-+	int k;
-+	double SwathSizeAllSurfaces = 0;
-+	double SwathSizeAllSurfacesInFetchTimeUs;
-+	double DETSwathLatencyHidingUs;
-+	double DETSwathLatencyHidingYUs;
-+	double DETSwathLatencyHidingCUs;
-+	double SwathSizePerSurfaceY[DC__NUM_DPP__MAX];
-+	double SwathSizePerSurfaceC[DC__NUM_DPP__MAX];
-+	bool NotEnoughDETSwathFillLatencyHiding = false;
-+
-+	/* calculate sum of single swath size for all pipes in bytes*/
-+	for (k = 0; k < NumberOfActiveSurfaces; k++) {
-+		SwathSizePerSurfaceY[k] += SwathHeightY[k] * SwathWidthY[k] * BytePerPixelInDETY[k] * NumOfDPP[k];
-+
-+		if (SwathHeightC[k] != 0)
-+			SwathSizePerSurfaceC[k] += SwathHeightC[k] * SwathWidthC[k] * BytePerPixelInDETC[k] * NumOfDPP[k];
-+		else
-+			SwathSizePerSurfaceC[k] = 0;
-+
-+		SwathSizeAllSurfaces += SwathSizePerSurfaceY[k] + SwathSizePerSurfaceC[k];
-+	}
-+
-+	SwathSizeAllSurfacesInFetchTimeUs = SwathSizeAllSurfaces / ReturnBW + UrgentLatency;
-+
-+	/* ensure all DET - 1 swath can hide a fetch for all surfaces */
-+	for (k = 0; k < NumberOfActiveSurfaces; k++) {
-+		double LineTime = HTotal[k] / PixelClock[k];
-+
-+		/* only care if surface is not phantom */
-+		if (UsesMALLForPStateChange[k] != dm_use_mall_pstate_change_phantom_pipe) {
-+			DETSwathLatencyHidingYUs = (dml_floor(DETBufferSizeY[k] / BytePerPixelInDETY[k] / SwathWidthY[k], 1.0) - SwathHeightY[k]) / VRatioY[k] * LineTime;
-+
-+			if (SwathHeightC[k] != 0) {
-+				DETSwathLatencyHidingCUs = (dml_floor(DETBufferSizeC[k] / BytePerPixelInDETC[k] / SwathWidthC[k], 1.0) - SwathHeightC[k]) / VRatioC[k] * LineTime;
-+
-+				DETSwathLatencyHidingUs = dml_min(DETSwathLatencyHidingYUs, DETSwathLatencyHidingCUs);
-+			} else {
-+				DETSwathLatencyHidingUs = DETSwathLatencyHidingYUs;
-+			}
-+
-+			/* DET must be able to hide time to fetch 1 swath for each surface */
-+			if (DETSwathLatencyHidingUs < SwathSizeAllSurfacesInFetchTimeUs) {
-+				NotEnoughDETSwathFillLatencyHiding = true;
-+				break;
-+			}
-+		}
-+	}
-+
-+	return NotEnoughDETSwathFillLatencyHiding;
-+}
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.h b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.h
-index 3989c2a28fae..779c6805f599 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.h
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/display_mode_vba_util_32.h
-@@ -1141,4 +1141,22 @@ void dml32_CalculateImmediateFlipBandwithSupport(unsigned int NumberOfActiveSurf
- 		double  *FractionOfUrgentBandwidth,
- 		bool *ImmediateFlipBandwidthSupport);
+ 	/* Make sure the seq match the requested packet */
+ 	if (get_unaligned_le32(&mgmt_ethhdr->seq) == mgmt_eth_data->seq)
+@@ -158,17 +167,33 @@ static struct sk_buff *qca8k_alloc_mdio_
+ 	if (!skb)
+ 		return NULL;
  
-+bool dml32_CalculateDETSwathFillLatencyHiding(unsigned int NumberOfActiveSurfaces,
-+		double ReturnBW,
-+		double UrgentLatency,
-+		unsigned int SwathHeightY[],
-+		unsigned int SwathHeightC[],
-+		unsigned int SwathWidthY[],
-+		unsigned int SwathWidthC[],
-+		double  BytePerPixelInDETY[],
-+		double  BytePerPixelInDETC[],
-+		unsigned int    DETBufferSizeY[],
-+		unsigned int    DETBufferSizeC[],
-+		unsigned int	NumOfDPP[],
-+		unsigned int	HTotal[],
-+		double	PixelClock[],
-+		double	VRatioY[],
-+		double	VRatioC[],
-+		enum dm_use_mall_for_pstate_change_mode UsesMALLForPStateChange[DC__NUM_DPP__MAX]);
+-	/* Max value for len reg is 15 (0xf) but the switch actually return 16 byte
+-	 * Actually for some reason the steps are:
+-	 * 0: nothing
+-	 * 1-4: first 4 byte
+-	 * 5-6: first 12 byte
+-	 * 7-15: all 16 byte
++	/* Hdr mgmt length value is in step of word size.
++	 * As an example to process 4 byte of data the correct length to set is 2.
++	 * To process 8 byte 4, 12 byte 6, 16 byte 8...
++	 *
++	 * Odd values will always return the next size on the ack packet.
++	 * (length of 3 (6 byte) will always return 8 bytes of data)
++	 *
++	 * This means that a value of 15 (0xf) actually means reading/writing 32 bytes
++	 * of data.
++	 *
++	 * To correctly calculate the length we devide the requested len by word and
++	 * round up.
++	 * On the ack function we can skip the odd check as we already handle the
++	 * case here.
+ 	 */
+-	if (len == 16)
+-		real_len = 15;
+-	else
+-		real_len = len;
++	real_len = DIV_ROUND_UP(len, sizeof(u16));
 +
- #endif
-diff --git a/drivers/gpu/drm/amd/display/dc/dml/display_mode_vba.h b/drivers/gpu/drm/amd/display/dc/dml/display_mode_vba.h
-index a0207a8f8756..2b34b02dbd45 100644
---- a/drivers/gpu/drm/amd/display/dc/dml/display_mode_vba.h
-+++ b/drivers/gpu/drm/amd/display/dc/dml/display_mode_vba.h
-@@ -1041,6 +1041,7 @@ struct vba_vars_st {
- 	double MinFullDETBufferingTime;
- 	double AverageReadBandwidthGBytePerSecond;
- 	bool   FirstMainPlane;
-+	bool NotEnoughDETSwathFillLatencyHiding;
++	/* We check if the result len is odd and we round up another time to
++	 * the next size. (length of 3 will be increased to 4 as switch will always
++	 * return 8 bytes)
++	 */
++	if (real_len % sizeof(u16) != 0)
++		real_len++;
++
++	/* Max reg value is 0xf(15) but switch will always return the next size (32 byte) */
++	if (real_len == 16)
++		real_len--;
  
- 	unsigned int ViewportWidthChroma[DC__NUM_DPP__MAX];
- 	unsigned int ViewportHeightChroma[DC__NUM_DPP__MAX];
-@@ -1224,6 +1225,7 @@ struct vba_vars_st {
- 	unsigned int BlockWidthC[DC__NUM_DPP__MAX];
- 	unsigned int SubViewportLinesNeededInMALL[DC__NUM_DPP__MAX];
- 	bool VActiveBandwithSupport[DC__VOLTAGE_STATES][2];
-+	bool NotEnoughDETSwathFillLatencyHidingPerState[DC__VOLTAGE_STATES][2];
- 	struct dummy_vars dummy_vars;
- };
- 
--- 
-2.35.1
-
+ 	skb_reset_mac_header(skb);
+ 	skb_set_network_header(skb, skb->len);
 
 
