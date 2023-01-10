@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305ADA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A829AC433EF;
-	Tue, 10 Jan 2023 18:16:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44F59A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5439C433D2;
+	Tue, 10 Jan 2023 18:16:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374602;
-	bh=2oD/y0D3rpipucRQMgvxc9+/kWgAozyojY34wdQ/9q0=;
+	s=korg; t=1673374605;
+	bh=1JIWVJ0flhz7FPNn6lszDP5EwvZGL1coAPAAM2Gmcds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xSAEoBNnHO9D63B3chTSksQO7OQoTB6Ls8PJCKRLt7+CxmdwDOdrU10ejFDg7vGUP
-	 v9NZVUREN7T/dDyKsVXnWciDvMLqR+Co+KyEQsjgVD7PmPSGU4WLOKEGT1KFRB9Vd0
-	 18YIEztkGjo1vXfuOAMx0vNJVrgcj74m/MzJqwwY=
+	b=1s/mxw/7eaGhX8ua54IC/waHEQ+W7ZzQVn9AtsasoXGejn9eP48Ygv5teJXpMLhYE
+	 L0QBfV6PCo2eoqP1wXhl2yO15LrEntUDO0gnkV0hTnMwb2rCGmCLLXfGNIZ+5y83/B
+	 jH7XJetiaIReBv6XbbljlCozSAmEhZp4vU5pUmAE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Wang <jasowang@redhat.com>,
-	Eli Cohen <elic@nvidia.com>,
+	ruanjinjie <ruanjinjie@huawei.com>,
+	Stefano Garzarella <sgarzare@redhat.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/159] vdpa/mlx5: Fix wrong mac address deletion
-Date: Tue, 10 Jan 2023 19:03:09 +0100
-Message-Id: <20230110180019.620039599@linuxfoundation.org>
+Subject: [PATCH 6.1 042/159] vdpa_sim: fix possible memory leak in vdpasim_net_init() and vdpasim_blk_init()
+Date: Tue, 10 Jan 2023 19:03:10 +0100
+Message-Id: <20230110180019.654823011@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,36 +37,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eli Cohen <elic@nvidia.com>
+From: ruanjinjie <ruanjinjie@huawei.com>
 
-[ Upstream commit 1ab53760d322c82fb4cb5e81b5817065801e3ec4 ]
+[ Upstream commit aeca7ff254843d49a8739f07f7dab1341450111d ]
 
-Delete the old MAC from the table and not the new one which is not there
-yet.
+Inject fault while probing module, if device_register() fails in
+vdpasim_net_init() or vdpasim_blk_init(), but the refcount of kobject is
+not decreased to 0, the name allocated in dev_set_name() is leaked.
+Fix this by calling put_device(), so that name can be freed in
+callback function kobject_cleanup().
 
-Fixes: baf2ad3f6a98 ("vdpa/mlx5: Add RX MAC VLAN filter support")
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Eli Cohen <elic@nvidia.com>
-Message-Id: <20221114131759.57883-4-elic@nvidia.com>
+(vdpa_sim_net)
+unreferenced object 0xffff88807eebc370 (size 16):
+  comm "modprobe", pid 3848, jiffies 4362982860 (age 18.153s)
+  hex dump (first 16 bytes):
+    76 64 70 61 73 69 6d 5f 6e 65 74 00 6b 6b 6b a5  vdpasim_net.kkk.
+  backtrace:
+    [<ffffffff8174f19e>] __kmalloc_node_track_caller+0x4e/0x150
+    [<ffffffff81731d53>] kstrdup+0x33/0x60
+    [<ffffffff83a5d421>] kobject_set_name_vargs+0x41/0x110
+    [<ffffffff82d87aab>] dev_set_name+0xab/0xe0
+    [<ffffffff82d91a23>] device_add+0xe3/0x1a80
+    [<ffffffffa0270013>] 0xffffffffa0270013
+    [<ffffffff81001c27>] do_one_initcall+0x87/0x2e0
+    [<ffffffff813739cb>] do_init_module+0x1ab/0x640
+    [<ffffffff81379d20>] load_module+0x5d00/0x77f0
+    [<ffffffff8137bc40>] __do_sys_finit_module+0x110/0x1b0
+    [<ffffffff83c4d505>] do_syscall_64+0x35/0x80
+    [<ffffffff83e0006a>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+(vdpa_sim_blk)
+unreferenced object 0xffff8881070c1250 (size 16):
+  comm "modprobe", pid 6844, jiffies 4364069319 (age 17.572s)
+  hex dump (first 16 bytes):
+    76 64 70 61 73 69 6d 5f 62 6c 6b 00 6b 6b 6b a5  vdpasim_blk.kkk.
+  backtrace:
+    [<ffffffff8174f19e>] __kmalloc_node_track_caller+0x4e/0x150
+    [<ffffffff81731d53>] kstrdup+0x33/0x60
+    [<ffffffff83a5d421>] kobject_set_name_vargs+0x41/0x110
+    [<ffffffff82d87aab>] dev_set_name+0xab/0xe0
+    [<ffffffff82d91a23>] device_add+0xe3/0x1a80
+    [<ffffffffa0220013>] 0xffffffffa0220013
+    [<ffffffff81001c27>] do_one_initcall+0x87/0x2e0
+    [<ffffffff813739cb>] do_init_module+0x1ab/0x640
+    [<ffffffff81379d20>] load_module+0x5d00/0x77f0
+    [<ffffffff8137bc40>] __do_sys_finit_module+0x110/0x1b0
+    [<ffffffff83c4d505>] do_syscall_64+0x35/0x80
+    [<ffffffff83e0006a>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+Fixes: 899c4d187f6a ("vdpa_sim_blk: add support for vdpa management tool")
+Fixes: a3c06ae158dd ("vdpa_sim_net: Add support for user supported devices")
+
+Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Message-Id: <20221110082348.4105476-1-ruanjinjie@huawei.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/mlx5/net/mlx5_vnet.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/vdpa/vdpa_sim/vdpa_sim_blk.c | 4 +++-
+ drivers/vdpa/vdpa_sim/vdpa_sim_net.c | 4 +++-
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
-index 3fb06dcee943..444d6572b2d0 100644
---- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
-+++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
-@@ -1686,7 +1686,7 @@ static virtio_net_ctrl_ack handle_ctrl_mac(struct mlx5_vdpa_dev *mvdev, u8 cmd)
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
+index c6db1a1baf76..f745926237a8 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim_blk.c
+@@ -427,8 +427,10 @@ static int __init vdpasim_blk_init(void)
+ 	int ret;
  
- 		/* Need recreate the flow table entry, so that the packet could forward back
- 		 */
--		mac_vlan_del(ndev, ndev->config.mac, 0, false);
-+		mac_vlan_del(ndev, mac_back, 0, false);
+ 	ret = device_register(&vdpasim_blk_mgmtdev);
+-	if (ret)
++	if (ret) {
++		put_device(&vdpasim_blk_mgmtdev);
+ 		return ret;
++	}
  
- 		if (mac_vlan_add(ndev, ndev->config.mac, 0, false)) {
- 			mlx5_vdpa_warn(mvdev, "failed to insert forward rules, try to restore\n");
+ 	ret = vdpa_mgmtdev_register(&mgmt_dev);
+ 	if (ret)
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
+index c3cb225ea469..11f5a121df24 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
+@@ -305,8 +305,10 @@ static int __init vdpasim_net_init(void)
+ 	int ret;
+ 
+ 	ret = device_register(&vdpasim_net_mgmtdev);
+-	if (ret)
++	if (ret) {
++		put_device(&vdpasim_net_mgmtdev);
+ 		return ret;
++	}
+ 
+ 	ret = vdpa_mgmtdev_register(&mgmt_dev);
+ 	if (ret)
 -- 
 2.35.1
 
