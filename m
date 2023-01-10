@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708427474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:26:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D762AC433EF;
-	Tue, 10 Jan 2023 18:26:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554B57474
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C87ACC433EF;
+	Tue, 10 Jan 2023 18:27:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375218;
-	bh=y5DniMxNRtSzu9TC3krROfIIsCP56drbQKlJIOx3htg=;
+	s=korg; t=1673375221;
+	bh=2N3IxBBaew08NRpgyGDAx6iQFHPkrI3e7ae5yz1PApk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZfUd3592jvHI7yWsz60xqD970IFj8Jdew5V73njjQXdA3RgLk6/ev2kXwMRaRhMx7
-	 pDMJJ/5wYsSIHJt1Ph//dcwuDaU/A+vvxqa+gPL/PXwpayDajhsEYfRifVohhtab2H
-	 DwvDwHCeqDrxXUMgL3+MbLWyCT+FjAT2amtaKUAM=
+	b=Oen37yMQZyA2tgoNtcINz7T3rFFDoF6YbLeIOTPN3S5wJbIOfDxX8bJp69Nxh/jBo
+	 BTshpNYqgLpejkzQqueX4JyFWzDCW65iUvXubIKmXkLz1MUAUUa05A5qfMh2sQ3yHz
+	 dLp5i6lMEGK5CEI4Vp2VMsB4sP3ffDLR9td5Q7EU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Cercueil <paul@crapouillou.net>,
-	Aidan MacDonald <aidanmacdonald.0x0@gmail.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 117/290] ASoC: jz4740-i2s: Handle independent FIFO flush bits
-Date: Tue, 10 Jan 2023 19:03:29 +0100
-Message-Id: <20230110180035.837166507@linuxfoundation.org>
+	Maximilian Luz <luzmaximilian@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: [PATCH 5.15 118/290] ipu3-imgu: Fix NULL pointer dereference in imgu_subdev_set_selection()
+Date: Tue, 10 Jan 2023 19:03:30 +0100
+Message-Id: <20230110180035.868422724@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,112 +34,135 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
+From: Maximilian Luz <luzmaximilian@gmail.com>
 
-commit 8b3a9ad86239f80ed569e23c3954a311f66481d6 upstream.
+commit dc608edf7d45ba0c2ad14c06eccd66474fec7847 upstream.
 
-On the JZ4740, there is a single bit that flushes (empties) both
-the transmit and receive FIFO. Later SoCs have independent flush
-bits for each FIFO.
+Calling v4l2_subdev_get_try_crop() and v4l2_subdev_get_try_compose()
+with a subdev state of NULL leads to a NULL pointer dereference. This
+can currently happen in imgu_subdev_set_selection() when the state
+passed in is NULL, as this method first gets pointers to both the "try"
+and "active" states and only then decides which to use.
 
-Independent FIFOs can be flushed before the snd_soc_dai_active()
-check because it won't disturb other active streams. This ensures
-that the FIFO we're about to use is always flushed before starting
-up. With shared FIFOs we can't do that because if another substream
-is active, flushing its FIFO would cause underrun errors.
+The same issue has been addressed for imgu_subdev_get_selection() with
+commit 30d03a0de650 ("ipu3-imgu: Fix NULL pointer dereference in active
+selection access"). However the issue still persists in
+imgu_subdev_set_selection().
 
-This also fixes a bug: since we were only setting the JZ4740's
-flush bit, which corresponds to the TX FIFO flush bit on other
-SoCs, other SoCs were not having their RX FIFO flushed at all.
+Therefore, apply a similar fix as done in the aforementioned commit to
+imgu_subdev_set_selection(). To keep things a bit cleaner, introduce
+helper functions for "crop" and "compose" access and use them in both
+imgu_subdev_set_selection() and imgu_subdev_get_selection().
 
-Fixes: 967beb2e8777 ("ASoC: jz4740: Add jz4780 support")
-Reviewed-by: Paul Cercueil <paul@crapouillou.net>
-Cc: stable@vger.kernel.org
-Signed-off-by: Aidan MacDonald <aidanmacdonald.0x0@gmail.com>
-Link: https://lore.kernel.org/r/20221023143328.160866-2-aidanmacdonald.0x0@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 0d346d2a6f54 ("media: v4l2-subdev: add subdev-wide state struct")
+Cc: stable@vger.kernel.org # for v5.14 and later
+Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/jz4740/jz4740-i2s.c |   39 ++++++++++++++++++++++++++++++++++-----
- 1 file changed, 34 insertions(+), 5 deletions(-)
+ drivers/staging/media/ipu3/ipu3-v4l2.c | 57 +++++++++++++++-----------
+ 1 file changed, 34 insertions(+), 23 deletions(-)
 
---- a/sound/soc/jz4740/jz4740-i2s.c
-+++ b/sound/soc/jz4740/jz4740-i2s.c
-@@ -56,7 +56,8 @@
- #define JZ_AIC_CTRL_MONO_TO_STEREO BIT(11)
- #define JZ_AIC_CTRL_SWITCH_ENDIANNESS BIT(10)
- #define JZ_AIC_CTRL_SIGNED_TO_UNSIGNED BIT(9)
--#define JZ_AIC_CTRL_FLUSH		BIT(8)
-+#define JZ_AIC_CTRL_TFLUSH		BIT(8)
-+#define JZ_AIC_CTRL_RFLUSH		BIT(7)
- #define JZ_AIC_CTRL_ENABLE_ROR_INT BIT(6)
- #define JZ_AIC_CTRL_ENABLE_TUR_INT BIT(5)
- #define JZ_AIC_CTRL_ENABLE_RFS_INT BIT(4)
-@@ -91,6 +92,8 @@ enum jz47xx_i2s_version {
- struct i2s_soc_info {
- 	enum jz47xx_i2s_version version;
- 	struct snd_soc_dai_driver *dai;
-+
-+	bool shared_fifo_flush;
- };
- 
- struct jz4740_i2s {
-@@ -119,19 +122,44 @@ static inline void jz4740_i2s_write(cons
- 	writel(value, i2s->base + reg);
+diff --git a/drivers/staging/media/ipu3/ipu3-v4l2.c b/drivers/staging/media/ipu3/ipu3-v4l2.c
+index ce13e746c15f..e530767e80a5 100644
+--- a/drivers/staging/media/ipu3/ipu3-v4l2.c
++++ b/drivers/staging/media/ipu3/ipu3-v4l2.c
+@@ -188,6 +188,28 @@ static int imgu_subdev_set_fmt(struct v4l2_subdev *sd,
+ 	return 0;
  }
  
-+static inline void jz4740_i2s_set_bits(const struct jz4740_i2s *i2s,
-+	unsigned int reg, uint32_t bits)
++static struct v4l2_rect *
++imgu_subdev_get_crop(struct imgu_v4l2_subdev *sd,
++		     struct v4l2_subdev_state *sd_state, unsigned int pad,
++		     enum v4l2_subdev_format_whence which)
 +{
-+	uint32_t value = jz4740_i2s_read(i2s, reg);
-+	value |= bits;
-+	jz4740_i2s_write(i2s, reg, value);
++	if (which == V4L2_SUBDEV_FORMAT_TRY)
++		return v4l2_subdev_get_try_crop(&sd->subdev, sd_state, pad);
++	else
++		return &sd->rect.eff;
 +}
 +
- static int jz4740_i2s_startup(struct snd_pcm_substream *substream,
- 	struct snd_soc_dai *dai)
- {
- 	struct jz4740_i2s *i2s = snd_soc_dai_get_drvdata(dai);
--	uint32_t conf, ctrl;
-+	uint32_t conf;
- 	int ret;
- 
-+	/*
-+	 * When we can flush FIFOs independently, only flush the FIFO
-+	 * that is starting up. We can do this when the DAI is active
-+	 * because it does not disturb other active substreams.
-+	 */
-+	if (!i2s->soc_info->shared_fifo_flush) {
-+		if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
-+			jz4740_i2s_set_bits(i2s, JZ_REG_AIC_CTRL, JZ_AIC_CTRL_TFLUSH);
-+		else
-+			jz4740_i2s_set_bits(i2s, JZ_REG_AIC_CTRL, JZ_AIC_CTRL_RFLUSH);
-+	}
++static struct v4l2_rect *
++imgu_subdev_get_compose(struct imgu_v4l2_subdev *sd,
++			struct v4l2_subdev_state *sd_state, unsigned int pad,
++			enum v4l2_subdev_format_whence which)
++{
++	if (which == V4L2_SUBDEV_FORMAT_TRY)
++		return v4l2_subdev_get_try_compose(&sd->subdev, sd_state, pad);
++	else
++		return &sd->rect.bds;
++}
 +
- 	if (snd_soc_dai_active(dai))
+ static int imgu_subdev_get_selection(struct v4l2_subdev *sd,
+ 				     struct v4l2_subdev_state *sd_state,
+ 				     struct v4l2_subdev_selection *sel)
+@@ -200,18 +222,12 @@ static int imgu_subdev_get_selection(struct v4l2_subdev *sd,
+ 
+ 	switch (sel->target) {
+ 	case V4L2_SEL_TGT_CROP:
+-		if (sel->which == V4L2_SUBDEV_FORMAT_TRY)
+-			sel->r = *v4l2_subdev_get_try_crop(sd, sd_state,
+-							   sel->pad);
+-		else
+-			sel->r = imgu_sd->rect.eff;
++		sel->r = *imgu_subdev_get_crop(imgu_sd, sd_state, sel->pad,
++					       sel->which);
  		return 0;
+ 	case V4L2_SEL_TGT_COMPOSE:
+-		if (sel->which == V4L2_SUBDEV_FORMAT_TRY)
+-			sel->r = *v4l2_subdev_get_try_compose(sd, sd_state,
+-							      sel->pad);
+-		else
+-			sel->r = imgu_sd->rect.bds;
++		sel->r = *imgu_subdev_get_compose(imgu_sd, sd_state, sel->pad,
++						  sel->which);
+ 		return 0;
+ 	default:
+ 		return -EINVAL;
+@@ -223,10 +239,9 @@ static int imgu_subdev_set_selection(struct v4l2_subdev *sd,
+ 				     struct v4l2_subdev_selection *sel)
+ {
+ 	struct imgu_device *imgu = v4l2_get_subdevdata(sd);
+-	struct imgu_v4l2_subdev *imgu_sd = container_of(sd,
+-							struct imgu_v4l2_subdev,
+-							subdev);
+-	struct v4l2_rect *rect, *try_sel;
++	struct imgu_v4l2_subdev *imgu_sd =
++		container_of(sd, struct imgu_v4l2_subdev, subdev);
++	struct v4l2_rect *rect;
  
--	ctrl = jz4740_i2s_read(i2s, JZ_REG_AIC_CTRL);
--	ctrl |= JZ_AIC_CTRL_FLUSH;
--	jz4740_i2s_write(i2s, JZ_REG_AIC_CTRL, ctrl);
-+	/*
-+	 * When there is a shared flush bit for both FIFOs, the TFLUSH
-+	 * bit flushes both FIFOs. Flushing while the DAI is active would
-+	 * cause FIFO underruns in other active substreams so we have to
-+	 * guard this behind the snd_soc_dai_active() check.
-+	 */
-+	if (i2s->soc_info->shared_fifo_flush)
-+		jz4740_i2s_set_bits(i2s, JZ_REG_AIC_CTRL, JZ_AIC_CTRL_TFLUSH);
+ 	dev_dbg(&imgu->pci_dev->dev,
+ 		 "set subdev %u sel which %u target 0x%4x rect [%ux%u]",
+@@ -238,22 +253,18 @@ static int imgu_subdev_set_selection(struct v4l2_subdev *sd,
  
- 	ret = clk_prepare_enable(i2s->clk_i2s);
- 	if (ret)
-@@ -462,6 +490,7 @@ static struct snd_soc_dai_driver jz4740_
- static const struct i2s_soc_info jz4740_i2s_soc_info = {
- 	.version = JZ_I2S_JZ4740,
- 	.dai = &jz4740_i2s_dai,
-+	.shared_fifo_flush = true,
- };
+ 	switch (sel->target) {
+ 	case V4L2_SEL_TGT_CROP:
+-		try_sel = v4l2_subdev_get_try_crop(sd, sd_state, sel->pad);
+-		rect = &imgu_sd->rect.eff;
++		rect = imgu_subdev_get_crop(imgu_sd, sd_state, sel->pad,
++					    sel->which);
+ 		break;
+ 	case V4L2_SEL_TGT_COMPOSE:
+-		try_sel = v4l2_subdev_get_try_compose(sd, sd_state, sel->pad);
+-		rect = &imgu_sd->rect.bds;
++		rect = imgu_subdev_get_compose(imgu_sd, sd_state, sel->pad,
++					       sel->which);
+ 		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
  
- static const struct i2s_soc_info jz4760_i2s_soc_info = {
+-	if (sel->which == V4L2_SUBDEV_FORMAT_TRY)
+-		*try_sel = sel->r;
+-	else
+-		*rect = sel->r;
+-
++	*rect = sel->r;
+ 	return 0;
+ }
+ 
+-- 
+2.39.0
+
 
 
