@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3C9E23A6
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:21:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D80C433EF;
-	Tue, 10 Jan 2023 18:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43E9A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:21:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB27C433D2;
+	Tue, 10 Jan 2023 18:21:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374891;
-	bh=1Yn9xs+8eM3vJ1bB9yazJM9B1es2Cp2dFTZ6oDxZq38=;
+	s=korg; t=1673374894;
+	bh=jbKrjFf5vEHQ/m6vPNkHUzH1B0zdwcDmQy/lMABskgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o/EtN1CSP/2oUAxmWmlDBe7JFc/OBC7U2ZKKhORUjQKlcYAWTiIOgxpfltiizfotG
-	 EZ4fC52uBvMN4xNs4puukqjQziXo5rubnIcH8u9nhWx9AOeb8xu7mTcwcuJZmUsw0+
-	 2tCVRGPeT03A08M/FaGxKsmS2dtfGLJF5pBiOHYA=
+	b=B5LSQzcWWRkJM+wdiPs0vgfcQOmx5GmNMxmFKTubMe1Ea0vQw34ZJwT5IiWbJxmln
+	 RS3GPWhLcNjBnqfKZT8yzFsAvE3DCPE2m2lGI8mMc7VqqgYita+D+8w6ttAWAqWzX7
+	 l9XwnAso+p2kMAHVTO9IDw/HpJJXXk4ec50wmijw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-	Miaoqian Lin <linmq006@gmail.com>,
+	Adrian Freund <adrian@freund.io>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 001/290] usb: dwc3: qcom: Fix memory leak in dwc3_qcom_interconnect_init
-Date: Tue, 10 Jan 2023 19:01:33 +0100
-Message-Id: <20230110180031.680514751@linuxfoundation.org>
+Subject: [PATCH 5.15 010/290] ACPI: resource: do IRQ override on Lenovo 14ALC7
+Date: Tue, 10 Jan 2023 19:01:42 +0100
+Message-Id: <20230110180031.974625149@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,65 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Adrian Freund <adrian@freund.io>
 
-[ Upstream commit 97a48da1619ba6bd42a0e5da0a03aa490a9496b1 ]
+[ Upstream commit f3cb9b740869712d448edf3b9ef5952b847caf8b ]
 
-of_icc_get() alloc resources for path handle, we should release it when not
-need anymore. Like the release in dwc3_qcom_interconnect_exit() function.
-Add icc_put() in error handling to fix this.
+Commit bfcdf58380b1 ("ACPI: resource: do IRQ override on LENOVO IdeaPad")
+added an override for Lenovo IdeaPad 5 16ALC7. The 14ALC7 variant also
+suffers from a broken touchscreen and trackpad.
 
-Fixes: bea46b981515 ("usb: dwc3: qcom: Add interconnect support in dwc3 driver")
-Cc: stable <stable@kernel.org>
-Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Link: https://lore.kernel.org/r/20221206081731.818107-1-linmq006@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9946e39fe8d0 ("ACPI: resource: skip IRQ override on AMD Zen platforms")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216804
+Signed-off-by: Adrian Freund <adrian@freund.io>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c | 13 ++++++++++---
+ drivers/acpi/resource.c | 13 ++++++++++---
  1 file changed, 10 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index d0352daab012..ec1de6f6c290 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -258,7 +258,8 @@ static int dwc3_qcom_interconnect_init(struct dwc3_qcom *qcom)
- 	if (IS_ERR(qcom->icc_path_apps)) {
- 		dev_err(dev, "failed to get apps-usb path: %ld\n",
- 				PTR_ERR(qcom->icc_path_apps));
--		return PTR_ERR(qcom->icc_path_apps);
-+		ret = PTR_ERR(qcom->icc_path_apps);
-+		goto put_path_ddr;
- 	}
+diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
+index d0bed7e66a33..33921949bd8f 100644
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -417,7 +417,14 @@ static const struct dmi_system_id asus_laptop[] = {
+ 	{ }
+ };
  
- 	if (usb_get_maximum_speed(&qcom->dwc3->dev) >= USB_SPEED_SUPER ||
-@@ -271,17 +272,23 @@ static int dwc3_qcom_interconnect_init(struct dwc3_qcom *qcom)
+-static const struct dmi_system_id lenovo_82ra[] = {
++static const struct dmi_system_id lenovo_laptop[] = {
++	{
++		.ident = "LENOVO IdeaPad Flex 5 14ALC7",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "82R9"),
++		},
++	},
+ 	{
+ 		.ident = "LENOVO IdeaPad Flex 5 16ALC7",
+ 		.matches = {
+@@ -451,8 +458,8 @@ struct irq_override_cmp {
+ static const struct irq_override_cmp override_table[] = {
+ 	{ medion_laptop, 1, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, false },
+ 	{ asus_laptop, 1, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, false },
+-	{ lenovo_82ra, 6, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, true },
+-	{ lenovo_82ra, 10, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, true },
++	{ lenovo_laptop, 6, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, true },
++	{ lenovo_laptop, 10, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, true },
+ 	{ schenker_gm_rg, 1, ACPI_EDGE_SENSITIVE, ACPI_ACTIVE_LOW, 1, true },
+ };
  
- 	if (ret) {
- 		dev_err(dev, "failed to set bandwidth for usb-ddr path: %d\n", ret);
--		return ret;
-+		goto put_path_apps;
- 	}
- 
- 	ret = icc_set_bw(qcom->icc_path_apps,
- 		APPS_USB_AVG_BW, APPS_USB_PEAK_BW);
- 	if (ret) {
- 		dev_err(dev, "failed to set bandwidth for apps-usb path: %d\n", ret);
--		return ret;
-+		goto put_path_apps;
- 	}
- 
- 	return 0;
-+
-+put_path_apps:
-+	icc_put(qcom->icc_path_apps);
-+put_path_ddr:
-+	icc_put(qcom->icc_path_ddr);
-+	return ret;
- }
- 
- /**
 -- 
 2.35.1
 
