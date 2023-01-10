@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4A746FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:25:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28068C433F0;
-	Tue, 10 Jan 2023 18:25:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6AA6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:25:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A198C43392;
+	Tue, 10 Jan 2023 18:25:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375155;
-	bh=niq1puUHSWRuqR67eOn4otG54988L9xjSn9/iX5cTwA=;
+	s=korg; t=1673375158;
+	bh=YBDoitX4F0A6gQFe56jbY7V95X6BzrcqhBBjUQLDT/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FX8cMZ7PkUBdQcf9ZBHeEUWNudJqfqc9ebdBkk/6GxJ17DPO/Nm1bVFmRF7fXRDmn
-	 B0DiwWBGL1OGsNFhcRHspQPFLQBXElbHYtAu+8Xxootjjp4aXMWwAWMDUW1YDZeSHI
-	 q0VmXBiqzSVx+mWB4QqyPQvHu+W0hvPTCETy13TE=
+	b=Hkmp+KItiKF/TTlesXM0tJFoYHNKswa9Y9gzrnNS3dr1tIbFaL1ViWc3p4BPXxRIG
+	 54T0CdSAS3o3SCCft+gCTsX+nIyuxydOgLcXLClNiMSmXb/tRIoDFcVvvi4K4jJh49
+	 uK8qcjU5KWcOn4QBMdCTCM9+yG3iFiYrhRpZKqpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Lewis <aaronlewis@google.com>,
-	Yu Zhang <yu.c.zhang@linux.intel.com>,
-	Sean Christopherson <seanjc@google.com>,
-	Jim Mattson <jmattson@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 5.15 095/290] KVM: nVMX: Properly expose ENABLE_USR_WAIT_PAUSE control to L1
-Date: Tue, 10 Jan 2023 19:03:07 +0100
-Message-Id: <20230110180034.894293364@linuxfoundation.org>
+	Alexander Antonov <alexander.antonov@linux.intel.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>
+Subject: [PATCH 5.15 066/290] perf/x86/intel/uncore: Clear attr_update properly
+Date: Tue, 10 Jan 2023 19:02:38 +0100
+Message-Id: <20230110180033.907907583@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -37,60 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Alexander Antonov <alexander.antonov@linux.intel.com>
 
-commit 31de69f4eea77b28a9724b3fa55aae104fc91fc7 upstream.
+commit 6532783310e2b2f50dc13f46c49aa6546cb6e7a3 upstream.
 
-Set ENABLE_USR_WAIT_PAUSE in KVM's supported VMX MSR configuration if the
-feature is supported in hardware and enabled in KVM's base, non-nested
-configuration, i.e. expose ENABLE_USR_WAIT_PAUSE to L1 if it's supported.
-This fixes a bug where saving/restoring, i.e. migrating, a vCPU will fail
-if WAITPKG (the associated CPUID feature) is enabled for the vCPU, and
-obviously allows L1 to enable the feature for L2.
+Current clear_attr_update procedure in pmu_set_mapping() sets attr_update
+field in NULL that is not correct because intel_uncore_type pmu types can
+contain several groups in attr_update field. For example, SPR platform
+already has uncore_alias_group to update and then UPI topology group will
+be added in next patches.
 
-KVM already effectively exposes ENABLE_USR_WAIT_PAUSE to L1 by stuffing
-the allowed-1 control ina vCPU's virtual MSR_IA32_VMX_PROCBASED_CTLS2 when
-updating secondary controls in response to KVM_SET_CPUID(2), but (a) that
-depends on flawed code (KVM shouldn't touch VMX MSRs in response to CPUID
-updates) and (b) runs afoul of vmx_restore_control_msr()'s restriction
-that the guest value must be a strict subset of the supported host value.
+Fix current behavior and clear attr_update group related to mapping only.
 
-Although no past commit explicitly enabled nested support for WAITPKG,
-doing so is safe and functionally correct from an architectural
-perspective as no additional KVM support is needed to virtualize TPAUSE,
-UMONITOR, and UMWAIT for L2 relative to L1, and KVM already forwards
-VM-Exits to L1 as necessary (commit bf653b78f960, "KVM: vmx: Introduce
-handle_unexpected_vmexit and handle WAITPKG vmexit").
-
-Note, KVM always keeps the hosts MSR_IA32_UMWAIT_CONTROL resident in
-hardware, i.e. always runs both L1 and L2 with the host's power management
-settings for TPAUSE and UMWAIT.  See commit bf09fb6cba4f ("KVM: VMX: Stop
-context switching MSR_IA32_UMWAIT_CONTROL") for more details.
-
-Fixes: e69e72faa3a0 ("KVM: x86: Add support for user wait instructions")
+Fixes: bb42b3d39781 ("perf/x86/intel/uncore: Expose an Uncore unit to IIO PMON mapping")
+Signed-off-by: Alexander Antonov <alexander.antonov@linux.intel.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
 Cc: stable@vger.kernel.org
-Reported-by: Aaron Lewis <aaronlewis@google.com>
-Reported-by: Yu Zhang <yu.c.zhang@linux.intel.com>
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Reviewed-by: Jim Mattson <jmattson@google.com>
-Message-Id: <20221213062306.667649-2-seanjc@google.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Link: https://lore.kernel.org/r/20221117122833.3103580-4-alexander.antonov@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/vmx/nested.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/events/intel/uncore_snbep.c |   17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -6666,7 +6666,8 @@ void nested_vmx_setup_ctls_msrs(struct n
- 		SECONDARY_EXEC_ENABLE_INVPCID |
- 		SECONDARY_EXEC_RDSEED_EXITING |
- 		SECONDARY_EXEC_XSAVES |
--		SECONDARY_EXEC_TSC_SCALING;
-+		SECONDARY_EXEC_TSC_SCALING |
-+		SECONDARY_EXEC_ENABLE_USR_WAIT_PAUSE;
+--- a/arch/x86/events/intel/uncore_snbep.c
++++ b/arch/x86/events/intel/uncore_snbep.c
+@@ -3804,6 +3804,21 @@ static const struct attribute_group *skx
+ 	NULL,
+ };
  
- 	/*
- 	 * We can emulate "VMCS shadowing," even if the hardware
++static void pmu_clear_mapping_attr(const struct attribute_group **groups,
++				   struct attribute_group *ag)
++{
++	int i;
++
++	for (i = 0; groups[i]; i++) {
++		if (groups[i] == ag) {
++			for (i++; groups[i]; i++)
++				groups[i - 1] = groups[i];
++			groups[i - 1] = NULL;
++			break;
++		}
++	}
++}
++
+ static int
+ pmu_iio_set_mapping(struct intel_uncore_type *type, struct attribute_group *ag)
+ {
+@@ -3852,7 +3867,7 @@ clear_attrs:
+ clear_topology:
+ 	kfree(type->topology);
+ clear_attr_update:
+-	type->attr_update = NULL;
++	pmu_clear_mapping_attr(type->attr_update, ag);
+ 	return ret;
+ }
+ 
 
 
