@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5453E6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:30:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C36D9C433EF;
-	Tue, 10 Jan 2023 18:30:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677A76FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:30:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CEF76C433D2;
+	Tue, 10 Jan 2023 18:30:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375452;
-	bh=CH99LmLlpJyF1HU6ghgPC5wuPDtN37XumhKyFC9gY9o=;
+	s=korg; t=1673375455;
+	bh=u3ScWIUxO3NcaVexuYMtFc5TdZEK44N1eLTM0uZlS3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2jWZQd+stLru2vbonAicCs49eDc5mKdWZjKxvzo0Dc63X8OLbaEi7n0nYHgldlVfs
-	 gAAIy2LVmuhoeeMSMNHYosHkJVNq/VzHdtDG8PuHvP8EtsZ+ksImJpzylEocTHB75z
-	 4Kf80e611C+kXsw3SnUgDvycFunFqPgewA9Kk3qI=
+	b=dY7TSIP+icoQWL7wyQUOa+Lexl8Vp3sK0PJildFIRKQuyfwyBPf+E8To2cxkcN9mi
+	 pztrZmKDqDdzl94s+WAqN66LqH+T6xGL4zzVy8UItCcfNgXbMKRIqlEpazzUoKJS+K
+	 l3HVMj7EMuw5MrKRBZEohMorRFVsWUyNqrDDgCMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thilo Fromm <t-lo@linux.microsoft.com>,
+	Ritesh Harjani <riteshh@linux.ibm.com>,
 	Jan Kara <jack@suse.cz>,
-	Andreas Dilger <adilger@dilger.ca>,
+	Harshad Shirwadkar <harshadshirwadkar@gmail.com>,
 	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>,
-	Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
-Subject: [PATCH 5.15 193/290] ext4: fix deadlock due to mbcache entry corruption
-Date: Tue, 10 Jan 2023 19:04:45 +0100
-Message-Id: <20230110180038.612351307@linuxfoundation.org>
+	Eric Biggers <ebiggers@google.com>
+Subject: [PATCH 5.15 167/290] ext4: remove unused enum EXT4_FC_COMMIT_FAILED
+Date: Tue, 10 Jan 2023 19:04:19 +0100
+Message-Id: <20230110180037.673263016@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -38,143 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Eric Biggers <ebiggers@kernel.org>
 
-[ Upstream commit a44e84a9b7764c72896f7241a0ec9ac7e7ef38dd ]
+From: Ritesh Harjani <riteshh@linux.ibm.com>
 
-When manipulating xattr blocks, we can deadlock infinitely looping
-inside ext4_xattr_block_set() where we constantly keep finding xattr
-block for reuse in mbcache but we are unable to reuse it because its
-reference count is too big. This happens because cache entry for the
-xattr block is marked as reusable (e_reusable set) although its
-reference count is too big. When this inconsistency happens, this
-inconsistent state is kept indefinitely and so ext4_xattr_block_set()
-keeps retrying indefinitely.
+commit c864ccd182d6ff2730a0f5b636c6b7c48f6f4f7f upstream.
 
-The inconsistent state is caused by non-atomic update of e_reusable bit.
-e_reusable is part of a bitfield and e_reusable update can race with
-update of e_referenced bit in the same bitfield resulting in loss of one
-of the updates. Fix the problem by using atomic bitops instead.
+Below commit removed all references of EXT4_FC_COMMIT_FAILED.
+commit 0915e464cb274 ("ext4: simplify updating of fast commit stats")
 
-This bug has been around for many years, but it became *much* easier
-to hit after commit 65f8b80053a1 ("ext4: fix race when reusing xattr
-blocks").
+Just remove it since it is not used anymore.
 
-Cc: stable@vger.kernel.org
-Fixes: 6048c64b2609 ("mbcache: add reusable flag to cache entries")
-Fixes: 65f8b80053a1 ("ext4: fix race when reusing xattr blocks")
-Reported-and-tested-by: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
-Reported-by: Thilo Fromm <t-lo@linux.microsoft.com>
-Link: https://lore.kernel.org/r/c77bf00f-4618-7149-56f1-b8d1664b9d07@linux.microsoft.com/
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Andreas Dilger <adilger@dilger.ca>
-Link: https://lore.kernel.org/r/20221123193950.16758-1-jack@suse.cz
+Signed-off-by: Ritesh Harjani <riteshh@linux.ibm.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Harshad Shirwadkar <harshadshirwadkar@gmail.com>
+Link: https://lore.kernel.org/r/c941357e476be07a1138c7319ca5faab7fb80fc6.1647057583.git.riteshh@linux.ibm.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c         |  4 ++--
- fs/mbcache.c            | 14 ++++++++------
- include/linux/mbcache.h |  9 +++++++--
- 3 files changed, 17 insertions(+), 10 deletions(-)
+ fs/ext4/fast_commit.h |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
-index 5ac31d3baab4..b92da41e9640 100644
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -1281,7 +1281,7 @@ ext4_xattr_release_block(handle_t *handle, struct inode *inode,
- 				ce = mb_cache_entry_get(ea_block_cache, hash,
- 							bh->b_blocknr);
- 				if (ce) {
--					ce->e_reusable = 1;
-+					set_bit(MBE_REUSABLE_B, &ce->e_flags);
- 					mb_cache_entry_put(ea_block_cache, ce);
- 				}
- 			}
-@@ -2045,7 +2045,7 @@ ext4_xattr_block_set(handle_t *handle, struct inode *inode,
- 				}
- 				BHDR(new_bh)->h_refcount = cpu_to_le32(ref);
- 				if (ref == EXT4_XATTR_REFCOUNT_MAX)
--					ce->e_reusable = 0;
-+					clear_bit(MBE_REUSABLE_B, &ce->e_flags);
- 				ea_bdebug(new_bh, "reusing; refcount now=%d",
- 					  ref);
- 				ext4_xattr_block_csum_set(inode, new_bh);
-diff --git a/fs/mbcache.c b/fs/mbcache.c
-index 950f1829a7fd..7a12ae87c806 100644
---- a/fs/mbcache.c
-+++ b/fs/mbcache.c
-@@ -94,8 +94,9 @@ int mb_cache_entry_create(struct mb_cache *cache, gfp_t mask, u32 key,
- 	atomic_set(&entry->e_refcnt, 1);
- 	entry->e_key = key;
- 	entry->e_value = value;
--	entry->e_reusable = reusable;
--	entry->e_referenced = 0;
-+	entry->e_flags = 0;
-+	if (reusable)
-+		set_bit(MBE_REUSABLE_B, &entry->e_flags);
- 	head = mb_cache_entry_head(cache, key);
- 	hlist_bl_lock(head);
- 	hlist_bl_for_each_entry(dup, dup_node, head, e_hash_list) {
-@@ -162,7 +163,8 @@ static struct mb_cache_entry *__entry_find(struct mb_cache *cache,
- 	while (node) {
- 		entry = hlist_bl_entry(node, struct mb_cache_entry,
- 				       e_hash_list);
--		if (entry->e_key == key && entry->e_reusable &&
-+		if (entry->e_key == key &&
-+		    test_bit(MBE_REUSABLE_B, &entry->e_flags) &&
- 		    atomic_inc_not_zero(&entry->e_refcnt))
- 			goto out;
- 		node = node->next;
-@@ -318,7 +320,7 @@ EXPORT_SYMBOL(mb_cache_entry_delete_or_get);
- void mb_cache_entry_touch(struct mb_cache *cache,
- 			  struct mb_cache_entry *entry)
- {
--	entry->e_referenced = 1;
-+	set_bit(MBE_REFERENCED_B, &entry->e_flags);
- }
- EXPORT_SYMBOL(mb_cache_entry_touch);
- 
-@@ -343,9 +345,9 @@ static unsigned long mb_cache_shrink(struct mb_cache *cache,
- 		entry = list_first_entry(&cache->c_list,
- 					 struct mb_cache_entry, e_list);
- 		/* Drop initial hash reference if there is no user */
--		if (entry->e_referenced ||
-+		if (test_bit(MBE_REFERENCED_B, &entry->e_flags) ||
- 		    atomic_cmpxchg(&entry->e_refcnt, 1, 0) != 1) {
--			entry->e_referenced = 0;
-+			clear_bit(MBE_REFERENCED_B, &entry->e_flags);
- 			list_move_tail(&entry->e_list, &cache->c_list);
- 			continue;
- 		}
-diff --git a/include/linux/mbcache.h b/include/linux/mbcache.h
-index e9d5ece87794..591bc4cefe1d 100644
---- a/include/linux/mbcache.h
-+++ b/include/linux/mbcache.h
-@@ -10,6 +10,12 @@
- 
- struct mb_cache;
- 
-+/* Cache entry flags */
-+enum {
-+	MBE_REFERENCED_B = 0,
-+	MBE_REUSABLE_B
-+};
-+
- struct mb_cache_entry {
- 	/* List of entries in cache - protected by cache->c_list_lock */
- 	struct list_head	e_list;
-@@ -26,8 +32,7 @@ struct mb_cache_entry {
- 	atomic_t		e_refcnt;
- 	/* Key in hash - stable during lifetime of the entry */
- 	u32			e_key;
--	u32			e_referenced:1;
--	u32			e_reusable:1;
-+	unsigned long		e_flags;
- 	/* User provided value - stable during lifetime of the entry */
- 	u64			e_value;
+--- a/fs/ext4/fast_commit.h
++++ b/fs/ext4/fast_commit.h
+@@ -93,7 +93,6 @@ enum {
+ 	EXT4_FC_REASON_RENAME_DIR,
+ 	EXT4_FC_REASON_FALLOC_RANGE,
+ 	EXT4_FC_REASON_INODE_JOURNAL_DATA,
+-	EXT4_FC_COMMIT_FAILED,
+ 	EXT4_FC_REASON_MAX
  };
--- 
-2.35.1
-
+ 
 
 
