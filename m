@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71CBD6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:25:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB961C433EF;
-	Tue, 10 Jan 2023 18:25:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 677FC6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:25:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0610C433EF;
+	Tue, 10 Jan 2023 18:25:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375131;
-	bh=V8zPG/IfKobL5RDYEPT2r9W/On5PYTdz9V1zJrInIuo=;
+	s=korg; t=1673375134;
+	bh=8w5r0LZIIdz6UjLwWQ67v7wVV2LyK9omJrN1JcjgiBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V4484zMQKRIHSaEj/IpGCAe1JERjpl+T8wdA0nr0vX1pXwuRHTwnXG/S7OSD3ouOG
-	 9zhRQ/lYvGCh7Jvo1sFlx0qU2+mw/oX6ZZtDdU1iQS43gS7tUOUDfY6MoXiozEzC+J
-	 ZCHxGfAImcUsUAlX1WEs6Qb4H3Z/VX5TXoETj+c8=
+	b=cQaL7iBQG5EPtL5sIk1OCu7jM9mM6RC4/BksWuV53TD0MAQM5iwUtRWf7z+U7RtbB
+	 Fn0ZKS7fxB8kJ0wXXRpDiaTJBw1iVFSVLeLXSMxeewBmEsviOIheoPmPr+cSjiQOmS
+	 rURJ2cm+JbfxAn9hC120PL8NOGGe2LxcZrRPmcgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Meng <luomeng12@huawei.com>,
 	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.15 088/290] dm cache: Fix UAF in destroy()
-Date: Tue, 10 Jan 2023 19:03:00 +0100
-Message-Id: <20230110180034.641552767@linuxfoundation.org>
+Subject: [PATCH 5.15 089/290] dm cache: set needs_check flag after aborting metadata
+Date: Tue, 10 Jan 2023 19:03:01 +0100
+Message-Id: <20230110180034.680337168@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -34,33 +33,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luo Meng <luomeng12@huawei.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-commit 6a459d8edbdbe7b24db42a5a9f21e6aa9e00c2aa upstream.
+commit 6b9973861cb2e96dcd0bb0f1baddc5c034207c5c upstream.
 
-Dm_cache also has the same UAF problem when dm_resume()
-and dm_destroy() are concurrent.
+Otherwise the commit that will be aborted will be associated with the
+metadata objects that will be torn down.  Must write needs_check flag
+to metadata with a reset block manager.
 
-Therefore, cancelling timer again in destroy().
+Found through code-inspection (and compared against dm-thin.c).
 
 Cc: stable@vger.kernel.org
-Fixes: c6b4fcbad044e ("dm: add cache target")
-Signed-off-by: Luo Meng <luomeng12@huawei.com>
+Fixes: 028ae9f76f29 ("dm cache: add fail io mode and needs_check flag")
 Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-target.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/md/dm-cache-target.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 --- a/drivers/md/dm-cache-target.c
 +++ b/drivers/md/dm-cache-target.c
-@@ -1895,6 +1895,7 @@ static void destroy(struct cache *cache)
- 	if (cache->prison)
- 		dm_bio_prison_destroy_v2(cache->prison);
+@@ -915,16 +915,16 @@ static void abort_transaction(struct cac
+ 	if (get_cache_mode(cache) >= CM_READ_ONLY)
+ 		return;
  
-+	cancel_delayed_work_sync(&cache->waker);
- 	if (cache->wq)
- 		destroy_workqueue(cache->wq);
+-	if (dm_cache_metadata_set_needs_check(cache->cmd)) {
+-		DMERR("%s: failed to set 'needs_check' flag in metadata", dev_name);
+-		set_cache_mode(cache, CM_FAIL);
+-	}
+-
+ 	DMERR_LIMIT("%s: aborting current metadata transaction", dev_name);
+ 	if (dm_cache_metadata_abort(cache->cmd)) {
+ 		DMERR("%s: failed to abort metadata transaction", dev_name);
+ 		set_cache_mode(cache, CM_FAIL);
+ 	}
++
++	if (dm_cache_metadata_set_needs_check(cache->cmd)) {
++		DMERR("%s: failed to set 'needs_check' flag in metadata", dev_name);
++		set_cache_mode(cache, CM_FAIL);
++	}
+ }
  
+ static void metadata_operation_failed(struct cache *cache, const char *op, int r)
 
 
