@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985D16FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:12:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78A3C433D2;
-	Tue, 10 Jan 2023 18:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E325A6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:12:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E19F8C433EF;
+	Tue, 10 Jan 2023 18:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374367;
-	bh=cYrIxgrRHUpJln9EP7po+IDAjvE9X2NcKotwwqQ7jCU=;
+	s=korg; t=1673374370;
+	bh=5qBgZrEU9QTReooa3VV96A8GGKnPsNfmShLSGQ3rlAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O1OUGonmpGh1bLBHfdv3A11FIe/r4KH/0UsGmBhJIEINXq2ktkTPmYshjWzh3az2T
-	 2RegZPLzqU/HcllMegWDP5Tet1I42tnhR5irZh3jd8gzqsSKcE52pSq6h4UNweVEkm
-	 okMgNuKBptFWeLXR2d0eJYfnLJsLsvev23M1prYE=
+	b=AF4OirmvRkffXp688RkuTFj2aNlGo9bcKUWgMcZlztbruxtJzmonea1Msb2DR64HV
+	 /TuKIPxGCkCVRNLcdpnUU5h0yOWRd1dxR2qp6sgye/1nBtcm8A8ufhC0jgtr+Qu0qg
+	 iu7HJin0KQBNcAcDaVm37PRdz6RUO29ikMa4PRLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	William Liu <will@willsroot.io>,
-	=?UTF-8?q?Hrvoje=20Mi=C5=A1eti=C4=87?= <misetichrvoje@gmail.com>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.0 145/148] ksmbd: check nt_len to be at least CIFS_ENCPWD_SIZE in ksmbd_decode_ntlmssp_auth_blob
-Date: Tue, 10 Jan 2023 19:04:09 +0100
-Message-Id: <20230110180021.780871196@linuxfoundation.org>
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 6.0 146/148] btrfs: make thaw time super block check to also verify checksum
+Date: Tue, 10 Jan 2023 19:04:10 +0100
+Message-Id: <20230110180021.815272890@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -36,38 +35,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: William Liu <will@willsroot.io>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 797805d81baa814f76cf7bdab35f86408a79d707 upstream.
+commit 3d17adea74a56a4965f7a603d8ed8c66bb9356d9 upstream.
 
-"nt_len - CIFS_ENCPWD_SIZE" is passed directly from
-ksmbd_decode_ntlmssp_auth_blob to ksmbd_auth_ntlmv2. Malicious requests
-can set nt_len to less than CIFS_ENCPWD_SIZE, which results in a negative
-number (or large unsigned value) used for a subsequent memcpy in
-ksmbd_auth_ntlvm2 and can cause a panic.
+Previous commit a05d3c915314 ("btrfs: check superblock to ensure the fs
+was not modified at thaw time") only checks the content of the super
+block, but it doesn't really check if the on-disk super block has a
+matching checksum.
 
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
-Cc: stable@vger.kernel.org
-Signed-off-by: William Liu <will@willsroot.io>
-Signed-off-by: Hrvoje Mišetić <misetichrvoje@gmail.com>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+This patch will add the checksum verification to thaw time superblock
+verification.
+
+This involves the following extra changes:
+
+- Export btrfs_check_super_csum()
+  As we need to call it in super.c.
+
+- Change the argument list of btrfs_check_super_csum()
+  Instead of passing a char *, directly pass struct btrfs_super_block *
+  pointer.
+
+- Verify that our checksum type didn't change before checking the
+  checksum value, like it's done at mount time
+
+Fixes: a05d3c915314 ("btrfs: check superblock to ensure the fs was not modified at thaw time")
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/auth.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/disk-io.c |   10 ++++------
+ fs/btrfs/disk-io.h |    2 ++
+ fs/btrfs/super.c   |   16 ++++++++++++++++
+ 3 files changed, 22 insertions(+), 6 deletions(-)
 
---- a/fs/ksmbd/auth.c
-+++ b/fs/ksmbd/auth.c
-@@ -322,7 +322,8 @@ int ksmbd_decode_ntlmssp_auth_blob(struc
- 	dn_off = le32_to_cpu(authblob->DomainName.BufferOffset);
- 	dn_len = le16_to_cpu(authblob->DomainName.Length);
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -167,11 +167,9 @@ static bool btrfs_supported_super_csum(u
+  * Return 0 if the superblock checksum type matches the checksum value of that
+  * algorithm. Pass the raw disk superblock data.
+  */
+-static int btrfs_check_super_csum(struct btrfs_fs_info *fs_info,
+-				  char *raw_disk_sb)
++int btrfs_check_super_csum(struct btrfs_fs_info *fs_info,
++			   const struct btrfs_super_block *disk_sb)
+ {
+-	struct btrfs_super_block *disk_sb =
+-		(struct btrfs_super_block *)raw_disk_sb;
+ 	char result[BTRFS_CSUM_SIZE];
+ 	SHASH_DESC_ON_STACK(shash, fs_info->csum_shash);
  
--	if (blob_len < (u64)dn_off + dn_len || blob_len < (u64)nt_off + nt_len)
-+	if (blob_len < (u64)dn_off + dn_len || blob_len < (u64)nt_off + nt_len ||
-+	    nt_len < CIFS_ENCPWD_SIZE)
- 		return -EINVAL;
+@@ -182,7 +180,7 @@ static int btrfs_check_super_csum(struct
+ 	 * BTRFS_SUPER_INFO_SIZE range, we expect that the unused space is
+ 	 * filled with zeros and is included in the checksum.
+ 	 */
+-	crypto_shash_digest(shash, raw_disk_sb + BTRFS_CSUM_SIZE,
++	crypto_shash_digest(shash, (const u8 *)disk_sb + BTRFS_CSUM_SIZE,
+ 			    BTRFS_SUPER_INFO_SIZE - BTRFS_CSUM_SIZE, result);
  
- 	/* TODO : use domain name that imported from configuration file */
+ 	if (memcmp(disk_sb->csum, result, fs_info->csum_size))
+@@ -3471,7 +3469,7 @@ int __cold open_ctree(struct super_block
+ 	 * We want to check superblock checksum, the type is stored inside.
+ 	 * Pass the whole disk block of size BTRFS_SUPER_INFO_SIZE (4k).
+ 	 */
+-	if (btrfs_check_super_csum(fs_info, (u8 *)disk_super)) {
++	if (btrfs_check_super_csum(fs_info, disk_super)) {
+ 		btrfs_err(fs_info, "superblock checksum mismatch");
+ 		err = -EINVAL;
+ 		btrfs_release_disk_super(disk_super);
+--- a/fs/btrfs/disk-io.h
++++ b/fs/btrfs/disk-io.h
+@@ -42,6 +42,8 @@ struct extent_buffer *btrfs_find_create_
+ void btrfs_clean_tree_block(struct extent_buffer *buf);
+ void btrfs_clear_oneshot_options(struct btrfs_fs_info *fs_info);
+ int btrfs_start_pre_rw_mount(struct btrfs_fs_info *fs_info);
++int btrfs_check_super_csum(struct btrfs_fs_info *fs_info,
++			   const struct btrfs_super_block *disk_sb);
+ int __cold open_ctree(struct super_block *sb,
+ 	       struct btrfs_fs_devices *fs_devices,
+ 	       char *options);
+--- a/fs/btrfs/super.c
++++ b/fs/btrfs/super.c
+@@ -2553,6 +2553,7 @@ static int check_dev_super(struct btrfs_
+ {
+ 	struct btrfs_fs_info *fs_info = dev->fs_info;
+ 	struct btrfs_super_block *sb;
++	u16 csum_type;
+ 	int ret = 0;
+ 
+ 	/* This should be called with fs still frozen. */
+@@ -2567,6 +2568,21 @@ static int check_dev_super(struct btrfs_
+ 	if (IS_ERR(sb))
+ 		return PTR_ERR(sb);
+ 
++	/* Verify the checksum. */
++	csum_type = btrfs_super_csum_type(sb);
++	if (csum_type != btrfs_super_csum_type(fs_info->super_copy)) {
++		btrfs_err(fs_info, "csum type changed, has %u expect %u",
++			  csum_type, btrfs_super_csum_type(fs_info->super_copy));
++		ret = -EUCLEAN;
++		goto out;
++	}
++
++	if (btrfs_check_super_csum(fs_info, sb)) {
++		btrfs_err(fs_info, "csum for on-disk super block no longer matches");
++		ret = -EUCLEAN;
++		goto out;
++	}
++
+ 	/* Btrfs_validate_super() includes fsid check against super->fsid. */
+ 	ret = btrfs_validate_super(fs_info, sb, 0);
+ 	if (ret < 0)
 
 
