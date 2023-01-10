@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB866FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:23:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34036C433F0;
-	Tue, 10 Jan 2023 18:23:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF4F56FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:23:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C8B2C433F1;
+	Tue, 10 Jan 2023 18:23:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375026;
-	bh=ixkTEoZYXLplN/kAqZ/0V186PgLAbaGyyxUyYO/bPD4=;
+	s=korg; t=1673375029;
+	bh=QnvjRGIqM9Ckpjf65P+sC2J/8O32NT2H6LdMzphI6l0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k60r7b/WhffsKw5OCJxFAtI8TX9slZWhj5BUz2dJteumwC8eylHYO8YQQaUJ0zp5Y
-	 7QQmva/LPegF82ktiXAgLjnKbK7wxnL+deXseoxyQMy28wcGtqjaBjh2wZjOTOuGIc
-	 M/XgtpgTC6n7trSJinGJaQy56UlYYalms9zyo2b4=
+	b=X28SN7WtgxNuU1lZAcfrRRrjWPRGdCMsmj2UJaTSE0pOtcj7smDb+fvFAkP8GTumm
+	 NxG2AEZGXrVNtVXiw0KXbTry0n80mCT8xcdamwB+U10D7QhOMMnfvLDVBt+6fOPQ9Z
+	 bdqFzvh/HXCeti7jGvULaAPBes7tNEsfd4/4Gppw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>
-Subject: [PATCH 5.15 053/290] SUNRPC: Dont leak netobj memory when gss_read_proxy_verf() fails
-Date: Tue, 10 Jan 2023 19:02:25 +0100
-Message-Id: <20230110180033.447501605@linuxfoundation.org>
+	Marco Elver <elver@google.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>
+Subject: [PATCH 5.15 054/290] kcsan: Instrument memcpy/memset/memmove with newer Clang
+Date: Tue, 10 Jan 2023 19:02:26 +0100
+Message-Id: <20230110180033.481725091@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -34,46 +34,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Marco Elver <elver@google.com>
 
-commit da522b5fe1a5f8b7c20a0023e87b52a150e53bf5 upstream.
+commit 7c201739beef1a586d806463f1465429cdce34c5 upstream.
 
-Fixes: 030d794bf498 ("SUNRPC: Use gssproxy upcall for server RPCGSS authentication.")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+With Clang version 16+, -fsanitize=thread will turn
+memcpy/memset/memmove calls in instrumented functions into
+__tsan_memcpy/__tsan_memset/__tsan_memmove calls respectively.
+
+Add these functions to the core KCSAN runtime, so that we (a) catch data
+races with mem* functions, and (b) won't run into linker errors with
+such newer compilers.
+
+Cc: stable@vger.kernel.org # v5.10+
+Signed-off-by: Marco Elver <elver@google.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+[ elver@google.com: adjust check_access() call for v5.15 and earlier. ]
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/svcauth_gss.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ kernel/kcsan/core.c |   50 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -1162,18 +1162,23 @@ static int gss_read_proxy_verf(struct sv
- 		return res;
+--- a/kernel/kcsan/core.c
++++ b/kernel/kcsan/core.c
+@@ -14,10 +14,12 @@
+ #include <linux/init.h>
+ #include <linux/kernel.h>
+ #include <linux/list.h>
++#include <linux/minmax.h>
+ #include <linux/moduleparam.h>
+ #include <linux/percpu.h>
+ #include <linux/preempt.h>
+ #include <linux/sched.h>
++#include <linux/string.h>
+ #include <linux/uaccess.h>
  
- 	inlen = svc_getnl(argv);
--	if (inlen > (argv->iov_len + rqstp->rq_arg.page_len))
-+	if (inlen > (argv->iov_len + rqstp->rq_arg.page_len)) {
-+		kfree(in_handle->data);
- 		return SVC_DENIED;
-+	}
- 
- 	pages = DIV_ROUND_UP(inlen, PAGE_SIZE);
- 	in_token->pages = kcalloc(pages, sizeof(struct page *), GFP_KERNEL);
--	if (!in_token->pages)
-+	if (!in_token->pages) {
-+		kfree(in_handle->data);
- 		return SVC_DENIED;
-+	}
- 	in_token->page_base = 0;
- 	in_token->page_len = inlen;
- 	for (i = 0; i < pages; i++) {
- 		in_token->pages[i] = alloc_page(GFP_KERNEL);
- 		if (!in_token->pages[i]) {
-+			kfree(in_handle->data);
- 			gss_free_in_token_pages(in_token);
- 			return SVC_DENIED;
- 		}
+ #include "encoding.h"
+@@ -1060,3 +1062,51 @@ EXPORT_SYMBOL(__tsan_atomic_thread_fence
+ void __tsan_atomic_signal_fence(int memorder);
+ void __tsan_atomic_signal_fence(int memorder) { }
+ EXPORT_SYMBOL(__tsan_atomic_signal_fence);
++
++#ifdef __HAVE_ARCH_MEMSET
++void *__tsan_memset(void *s, int c, size_t count);
++noinline void *__tsan_memset(void *s, int c, size_t count)
++{
++	/*
++	 * Instead of not setting up watchpoints where accessed size is greater
++	 * than MAX_ENCODABLE_SIZE, truncate checked size to MAX_ENCODABLE_SIZE.
++	 */
++	size_t check_len = min_t(size_t, count, MAX_ENCODABLE_SIZE);
++
++	check_access(s, check_len, KCSAN_ACCESS_WRITE);
++	return memset(s, c, count);
++}
++#else
++void *__tsan_memset(void *s, int c, size_t count) __alias(memset);
++#endif
++EXPORT_SYMBOL(__tsan_memset);
++
++#ifdef __HAVE_ARCH_MEMMOVE
++void *__tsan_memmove(void *dst, const void *src, size_t len);
++noinline void *__tsan_memmove(void *dst, const void *src, size_t len)
++{
++	size_t check_len = min_t(size_t, len, MAX_ENCODABLE_SIZE);
++
++	check_access(dst, check_len, KCSAN_ACCESS_WRITE);
++	check_access(src, check_len, 0);
++	return memmove(dst, src, len);
++}
++#else
++void *__tsan_memmove(void *dst, const void *src, size_t len) __alias(memmove);
++#endif
++EXPORT_SYMBOL(__tsan_memmove);
++
++#ifdef __HAVE_ARCH_MEMCPY
++void *__tsan_memcpy(void *dst, const void *src, size_t len);
++noinline void *__tsan_memcpy(void *dst, const void *src, size_t len)
++{
++	size_t check_len = min_t(size_t, len, MAX_ENCODABLE_SIZE);
++
++	check_access(dst, check_len, KCSAN_ACCESS_WRITE);
++	check_access(src, check_len, 0);
++	return memcpy(dst, src, len);
++}
++#else
++void *__tsan_memcpy(void *dst, const void *src, size_t len) __alias(memcpy);
++#endif
++EXPORT_SYMBOL(__tsan_memcpy);
 
 
