@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E87A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:09:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC73EC433D2;
-	Tue, 10 Jan 2023 18:09:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10BDBA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:09:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AA68C433D2;
+	Tue, 10 Jan 2023 18:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374183;
-	bh=r5jRDURQtmfPweQ/ycytf0tigCa7nBejWzgIABBu6O4=;
+	s=korg; t=1673374185;
+	bh=72ve7lWZsViKGgo3D+Vbi1ulsZyPUI9G+5vwBV2mwic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k4bkSEuCLjUQPfnZawD1OBz+rlMz4TWaJzZYjqSGS9T6kWONmWiEiQZsxfsjHddNK
-	 zzGXcdHRqbPh1tTQjE/dj/k+4ayiJEtwZAl+1dZR21ABue9AhmfrnPIFPh7M2mN92f
-	 QtA5jFgg5IAv3+9ILg9/cuCKeS8MreCa07udDaVg=
+	b=Beelpxc2brxPo8/oDiVTLtSMNLUZaQPGGYGtC67esDng94iOEKaBO0eKoZZpFocQS
+	 R7z7cKBGz3YyBinkVDNSSQCyJkicARMqDOdbpnWCOpNtZWqqRRwp5L8669SItHYJCI
+	 BtQQYFgP/7Wu/NqK3ZWh4GyL3HUUkImpmzMZLscc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Xiubo Li <xiubli@redhat.com>,
-	Christoph Hellwig <hch@infradead.org>,
 	Jeff Layton <jlayton@kernel.org>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 077/148] filelock: new helper: vfs_inode_has_locks
-Date: Tue, 10 Jan 2023 19:03:01 +0100
-Message-Id: <20230110180019.657028184@linuxfoundation.org>
+Subject: [PATCH 6.0 078/148] ceph: switch to vfs_inode_has_locks() to fix file lock bug
+Date: Tue, 10 Jan 2023 19:03:02 +0100
+Message-Id: <20230110180019.685662551@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -36,87 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Xiubo Li <xiubli@redhat.com>
 
-[ Upstream commit ab1ddef98a715eddb65309ffa83267e4e84a571e ]
+[ Upstream commit 461ab10ef7e6ea9b41a0571a7fc6a72af9549a3c ]
 
-Ceph has a need to know whether a particular inode has any locks set on
-it. It's currently tracking that by a num_locks field in its
-filp->private_data, but that's problematic as it tries to decrement this
-field when releasing locks and that can race with the file being torn
-down.
+For the POSIX locks they are using the same owner, which is the
+thread id. And multiple POSIX locks could be merged into single one,
+so when checking whether the 'file' has locks may fail.
 
-Add a new vfs_inode_has_locks helper that just returns whether any locks
-are currently held on the inode.
+For a file where some openers use locking and others don't is a
+really odd usage pattern though. Locks are like stoplights -- they
+only work if everyone pays attention to them.
 
-Reviewed-by: Xiubo Li <xiubli@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@infradead.org>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Stable-dep-of: 461ab10ef7e6 ("ceph: switch to vfs_inode_has_locks() to fix file lock bug")
+Just switch ceph_get_caps() to check whether any locks are set on
+the inode. If there are POSIX/OFD/FLOCK locks on the file at the
+time, we should set CHECK_FILELOCK, regardless of what fd was used
+to set the lock.
+
+Fixes: ff5d913dfc71 ("ceph: return -EIO if read/write against filp that lost file locks")
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Ilya Dryomov <idryomov@gmail.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/locks.c         | 23 +++++++++++++++++++++++
- include/linux/fs.h |  6 ++++++
- 2 files changed, 29 insertions(+)
+ fs/ceph/caps.c  | 2 +-
+ fs/ceph/locks.c | 4 ----
+ fs/ceph/super.h | 1 -
+ 3 files changed, 1 insertion(+), 6 deletions(-)
 
-diff --git a/fs/locks.c b/fs/locks.c
-index 607f94a0e789..7dc129cc1a26 100644
---- a/fs/locks.c
-+++ b/fs/locks.c
-@@ -2669,6 +2669,29 @@ int vfs_cancel_lock(struct file *filp, struct file_lock *fl)
- }
- EXPORT_SYMBOL_GPL(vfs_cancel_lock);
+diff --git a/fs/ceph/caps.c b/fs/ceph/caps.c
+index 02b5c0ac5654..af8dbcf932ab 100644
+--- a/fs/ceph/caps.c
++++ b/fs/ceph/caps.c
+@@ -2910,7 +2910,7 @@ int ceph_get_caps(struct file *filp, int need, int want, loff_t endoff, int *got
  
-+/**
-+ * vfs_inode_has_locks - are any file locks held on @inode?
-+ * @inode: inode to check for locks
-+ *
-+ * Return true if there are any FL_POSIX or FL_FLOCK locks currently
-+ * set on @inode.
-+ */
-+bool vfs_inode_has_locks(struct inode *inode)
-+{
-+	struct file_lock_context *ctx;
-+	bool ret;
-+
-+	ctx = smp_load_acquire(&inode->i_flctx);
-+	if (!ctx)
-+		return false;
-+
-+	spin_lock(&ctx->flc_lock);
-+	ret = !list_empty(&ctx->flc_posix) || !list_empty(&ctx->flc_flock);
-+	spin_unlock(&ctx->flc_lock);
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(vfs_inode_has_locks);
-+
- #ifdef CONFIG_PROC_FS
- #include <linux/proc_fs.h>
- #include <linux/seq_file.h>
-diff --git a/include/linux/fs.h b/include/linux/fs.h
-index 8e79a761c56c..17a1a57adbe0 100644
---- a/include/linux/fs.h
-+++ b/include/linux/fs.h
-@@ -1170,6 +1170,7 @@ extern int locks_delete_block(struct file_lock *);
- extern int vfs_test_lock(struct file *, struct file_lock *);
- extern int vfs_lock_file(struct file *, unsigned int, struct file_lock *, struct file_lock *);
- extern int vfs_cancel_lock(struct file *filp, struct file_lock *fl);
-+bool vfs_inode_has_locks(struct inode *inode);
- extern int locks_lock_inode_wait(struct inode *inode, struct file_lock *fl);
- extern int __break_lease(struct inode *inode, unsigned int flags, unsigned int type);
- extern void lease_get_mtime(struct inode *, struct timespec64 *time);
-@@ -1284,6 +1285,11 @@ static inline int vfs_cancel_lock(struct file *filp, struct file_lock *fl)
- 	return 0;
- }
+ 	while (true) {
+ 		flags &= CEPH_FILE_MODE_MASK;
+-		if (atomic_read(&fi->num_locks))
++		if (vfs_inode_has_locks(inode))
+ 			flags |= CHECK_FILELOCK;
+ 		_got = 0;
+ 		ret = try_get_cap_refs(inode, need, want, endoff,
+diff --git a/fs/ceph/locks.c b/fs/ceph/locks.c
+index 3e2843e86e27..b191426bf880 100644
+--- a/fs/ceph/locks.c
++++ b/fs/ceph/locks.c
+@@ -32,18 +32,14 @@ void __init ceph_flock_init(void)
  
-+static inline bool vfs_inode_has_locks(struct inode *inode)
-+{
-+	return false;
-+}
-+
- static inline int locks_lock_inode_wait(struct inode *inode, struct file_lock *fl)
+ static void ceph_fl_copy_lock(struct file_lock *dst, struct file_lock *src)
  {
- 	return -ENOLCK;
+-	struct ceph_file_info *fi = dst->fl_file->private_data;
+ 	struct inode *inode = file_inode(dst->fl_file);
+ 	atomic_inc(&ceph_inode(inode)->i_filelock_ref);
+-	atomic_inc(&fi->num_locks);
+ }
+ 
+ static void ceph_fl_release_lock(struct file_lock *fl)
+ {
+-	struct ceph_file_info *fi = fl->fl_file->private_data;
+ 	struct inode *inode = file_inode(fl->fl_file);
+ 	struct ceph_inode_info *ci = ceph_inode(inode);
+-	atomic_dec(&fi->num_locks);
+ 	if (atomic_dec_and_test(&ci->i_filelock_ref)) {
+ 		/* clear error when all locks are released */
+ 		spin_lock(&ci->i_ceph_lock);
+diff --git a/fs/ceph/super.h b/fs/ceph/super.h
+index 40630e6f691c..ae4126f63410 100644
+--- a/fs/ceph/super.h
++++ b/fs/ceph/super.h
+@@ -788,7 +788,6 @@ struct ceph_file_info {
+ 	struct list_head rw_contexts;
+ 
+ 	u32 filp_gen;
+-	atomic_t num_locks;
+ };
+ 
+ struct ceph_dir_file_info {
 -- 
 2.35.1
 
