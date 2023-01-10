@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C29E06FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:31:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E57BC433EF;
-	Tue, 10 Jan 2023 18:31:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38936FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:31:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 120C5C433D2;
+	Tue, 10 Jan 2023 18:31:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375515;
-	bh=xbv9mDpcDrHE+3MaMvq7hoVRF/3NzkaZCOxsgp8lXiY=;
+	s=korg; t=1673375518;
+	bh=HKQ7PsnS85SH7cyDcIJA3NOTBxKs3zJlJOaq3AWqmgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vstFL0lK5fDLlJTH4qhdNQWvCegPVBLWq6dugqmlbW1Iq1lL7fHBT7Y4scp2jQeJP
-	 YZICoh790ITFyi4ll/US5obZ0p55ZeePcbfHXyl0wpAtRq4WR39jodXqg5Nudbbr12
-	 GLhWZsb0vQS7jjkeYN6Cy+zc5cJ8WBGHPHPxO45I=
+	b=R+J4+z3BETU8/DsBs3bccWf/TSCJZZg6CF7OLXxH/lz/NVd1ihk+8wvKhjM2LZG1G
+	 S4l1kTPzZc2KzCvnLAwZanTcVxb2INw7FiVn3HNJqUaecWtHjmnxhXPZFIEpiHvcgW
+	 BJVZ1SnBNDgpCfPq4ImZSYRfQcwZY1ApCuN4+gtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Johnny S. Lee" <foss@jsl.io>,
+	Miaoqian Lin <linmq006@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 215/290] net: dsa: mv88e6xxx: depend on PTP conditionally
-Date: Tue, 10 Jan 2023 19:05:07 +0100
-Message-Id: <20230110180039.419353363@linuxfoundation.org>
+Subject: [PATCH 5.15 216/290] nfc: Fix potential resource leaks
+Date: Tue, 10 Jan 2023 19:05:08 +0100
+Message-Id: <20230110180039.458720490@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,53 +35,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johnny S. Lee <foss@jsl.io>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit 30e725537546248bddc12eaac2fe0a258917f190 ]
+[ Upstream commit df49908f3c52d211aea5e2a14a93bbe67a2cb3af ]
 
-PTP hardware timestamping related objects are not linked when PTP
-support for MV88E6xxx (NET_DSA_MV88E6XXX_PTP) is disabled, therefore
-NET_DSA_MV88E6XXX should not depend on PTP_1588_CLOCK_OPTIONAL
-regardless of NET_DSA_MV88E6XXX_PTP.
+nfc_get_device() take reference for the device, add missing
+nfc_put_device() to release it when not need anymore.
+Also fix the style warnning by use error EOPNOTSUPP instead of
+ENOTSUPP.
 
-Instead, condition more strictly on how NET_DSA_MV88E6XXX_PTP's
-dependencies are met, making sure that it cannot be enabled when
-NET_DSA_MV88E6XXX=y and PTP_1588_CLOCK=m.
-
-In other words, this commit allows NET_DSA_MV88E6XXX to be built-in
-while PTP_1588_CLOCK is a module, as long as NET_DSA_MV88E6XXX_PTP is
-prevented from being enabled.
-
-Fixes: e5f31552674e ("ethernet: fix PTP_1588_CLOCK dependencies")
-Signed-off-by: Johnny S. Lee <foss@jsl.io>
+Fixes: 5ce3f32b5264 ("NFC: netlink: SE API implementation")
+Fixes: 29e76924cf08 ("nfc: netlink: Add capability to reply to vendor_cmd with data")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mv88e6xxx/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/nfc/netlink.c | 52 ++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 38 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/dsa/mv88e6xxx/Kconfig b/drivers/net/dsa/mv88e6xxx/Kconfig
-index 7a2445a34eb7..e3181d5471df 100644
---- a/drivers/net/dsa/mv88e6xxx/Kconfig
-+++ b/drivers/net/dsa/mv88e6xxx/Kconfig
-@@ -2,7 +2,6 @@
- config NET_DSA_MV88E6XXX
- 	tristate "Marvell 88E6xxx Ethernet switch fabric support"
- 	depends on NET_DSA
--	depends on PTP_1588_CLOCK_OPTIONAL
- 	select IRQ_DOMAIN
- 	select NET_DSA_TAG_EDSA
- 	select NET_DSA_TAG_DSA
-@@ -13,7 +12,8 @@ config NET_DSA_MV88E6XXX
- config NET_DSA_MV88E6XXX_PTP
- 	bool "PTP support for Marvell 88E6xxx"
- 	default n
--	depends on NET_DSA_MV88E6XXX && PTP_1588_CLOCK
-+	depends on (NET_DSA_MV88E6XXX = y && PTP_1588_CLOCK = y) || \
-+	           (NET_DSA_MV88E6XXX = m && PTP_1588_CLOCK)
- 	help
- 	  Say Y to enable PTP hardware timestamping on Marvell 88E6xxx switch
- 	  chips that support it.
+diff --git a/net/nfc/netlink.c b/net/nfc/netlink.c
+index a207f0b8137b..d928d5a24bbc 100644
+--- a/net/nfc/netlink.c
++++ b/net/nfc/netlink.c
+@@ -1497,6 +1497,7 @@ static int nfc_genl_se_io(struct sk_buff *skb, struct genl_info *info)
+ 	u32 dev_idx, se_idx;
+ 	u8 *apdu;
+ 	size_t apdu_len;
++	int rc;
+ 
+ 	if (!info->attrs[NFC_ATTR_DEVICE_INDEX] ||
+ 	    !info->attrs[NFC_ATTR_SE_INDEX] ||
+@@ -1510,25 +1511,37 @@ static int nfc_genl_se_io(struct sk_buff *skb, struct genl_info *info)
+ 	if (!dev)
+ 		return -ENODEV;
+ 
+-	if (!dev->ops || !dev->ops->se_io)
+-		return -ENOTSUPP;
++	if (!dev->ops || !dev->ops->se_io) {
++		rc = -EOPNOTSUPP;
++		goto put_dev;
++	}
+ 
+ 	apdu_len = nla_len(info->attrs[NFC_ATTR_SE_APDU]);
+-	if (apdu_len == 0)
+-		return -EINVAL;
++	if (apdu_len == 0) {
++		rc = -EINVAL;
++		goto put_dev;
++	}
+ 
+ 	apdu = nla_data(info->attrs[NFC_ATTR_SE_APDU]);
+-	if (!apdu)
+-		return -EINVAL;
++	if (!apdu) {
++		rc = -EINVAL;
++		goto put_dev;
++	}
+ 
+ 	ctx = kzalloc(sizeof(struct se_io_ctx), GFP_KERNEL);
+-	if (!ctx)
+-		return -ENOMEM;
++	if (!ctx) {
++		rc = -ENOMEM;
++		goto put_dev;
++	}
+ 
+ 	ctx->dev_idx = dev_idx;
+ 	ctx->se_idx = se_idx;
+ 
+-	return nfc_se_io(dev, se_idx, apdu, apdu_len, se_io_cb, ctx);
++	rc = nfc_se_io(dev, se_idx, apdu, apdu_len, se_io_cb, ctx);
++
++put_dev:
++	nfc_put_device(dev);
++	return rc;
+ }
+ 
+ static int nfc_genl_vendor_cmd(struct sk_buff *skb,
+@@ -1551,14 +1564,21 @@ static int nfc_genl_vendor_cmd(struct sk_buff *skb,
+ 	subcmd = nla_get_u32(info->attrs[NFC_ATTR_VENDOR_SUBCMD]);
+ 
+ 	dev = nfc_get_device(dev_idx);
+-	if (!dev || !dev->vendor_cmds || !dev->n_vendor_cmds)
++	if (!dev)
+ 		return -ENODEV;
+ 
++	if (!dev->vendor_cmds || !dev->n_vendor_cmds) {
++		err = -ENODEV;
++		goto put_dev;
++	}
++
+ 	if (info->attrs[NFC_ATTR_VENDOR_DATA]) {
+ 		data = nla_data(info->attrs[NFC_ATTR_VENDOR_DATA]);
+ 		data_len = nla_len(info->attrs[NFC_ATTR_VENDOR_DATA]);
+-		if (data_len == 0)
+-			return -EINVAL;
++		if (data_len == 0) {
++			err = -EINVAL;
++			goto put_dev;
++		}
+ 	} else {
+ 		data = NULL;
+ 		data_len = 0;
+@@ -1573,10 +1593,14 @@ static int nfc_genl_vendor_cmd(struct sk_buff *skb,
+ 		dev->cur_cmd_info = info;
+ 		err = cmd->doit(dev, data, data_len);
+ 		dev->cur_cmd_info = NULL;
+-		return err;
++		goto put_dev;
+ 	}
+ 
+-	return -EOPNOTSUPP;
++	err = -EOPNOTSUPP;
++
++put_dev:
++	nfc_put_device(dev);
++	return err;
+ }
+ 
+ /* message building helper */
 -- 
 2.35.1
 
