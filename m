@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727DE6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD13C433EF;
-	Tue, 10 Jan 2023 18:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BBAC6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA3F7C433EF;
+	Tue, 10 Jan 2023 18:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375248;
-	bh=eJ0VRc9PuWyAsoO5PIQYsnPOpsJZpDN7OfcXDHUzTsY=;
+	s=korg; t=1673375251;
+	bh=Qz2qusZJrX6VVCjEVjf5ce6SRu0+p0xhiKnVaIC+20A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rRua7eMarXfyzPxtogovKf8wOq25CGGcUSmddnibPhpYXW+dj9QFYOm/11fl8dup1
-	 ZMM+/aV1D+YtVtMB074KBEGaMMy/y8Eb2dYVaek0RI/GzahyLPHGubGAt/EWxyKYC0
-	 Yf/MXCm7OVk8Tn/hqH5vCINAozE8i4IobAHn/xFk=
+	b=0dhN7SQBtyyM6IZDhANMo8ZHjXLMp2U0yNb6EwWaFntILzM4IZgxnmjzg7pJ6bcVy
+	 NqRlMGyu3RTFYHws2e+7+MBDCmBaZk2X9syBmJCjz8Rag2X/nbegkWnqyj2hBLdJjh
+	 Rxm93skCp6teoDhQHBPIEkTSACzLcjfkk4vnGk+k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Matyukevich <sergey.matyukevich@syntacore.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.15 126/290] riscv: mm: notify remote harts about mmu cache updates
-Date: Tue, 10 Jan 2023 19:03:38 +0100
-Message-Id: <20230110180036.170357425@linuxfoundation.org>
+	Rolf Eike Beer <eike-kernel@sf-tec.de>,
+	Corentin Labbe <clabbe@baylibre.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	stable@kernel.org
+Subject: [PATCH 5.15 127/290] crypto: n2 - add missing hash statesize
+Date: Tue, 10 Jan 2023 19:03:39 +0100
+Message-Id: <20230110180036.213982990@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -34,161 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
+From: Corentin Labbe <clabbe@baylibre.com>
 
-commit 4bd1d80efb5af640f99157f39b50fb11326ce641 upstream.
+commit 76a4e874593543a2dff91d249c95bac728df2774 upstream.
 
-Current implementation of update_mmu_cache function performs local TLB
-flush. It does not take into account ASID information. Besides, it does
-not take into account other harts currently running the same mm context
-or possible migration of the running context to other harts. Meanwhile
-TLB flush is not performed for every context switch if ASID support
-is enabled.
+Add missing statesize to hash templates.
+This is mandatory otherwise no algorithms can be registered as the core
+requires statesize to be set.
 
-Patch [1] proposed to add ASID support to update_mmu_cache to avoid
-flushing local TLB entirely. This patch takes into account other
-harts currently running the same mm context as well as possible
-migration of this context to other harts.
-
-For this purpose the approach from flush_icache_mm is reused. Remote
-harts currently running the same mm context are informed via SBI calls
-that they need to flush their local TLBs. All the other harts are marked
-as needing a deferred TLB flush when this mm context runs on them.
-
-[1] https://lore.kernel.org/linux-riscv/20220821013926.8968-1-tjytimi@163.com/
-
-Signed-off-by: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
-Fixes: 65d4b9c53017 ("RISC-V: Implement ASID allocator")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-riscv/20220829205219.283543-1-geomatsi@gmail.com/#t
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+CC: stable@kernel.org # 4.3+
+Reported-by: Rolf Eike Beer <eike-kernel@sf-tec.de>
+Tested-by: Rolf Eike Beer <eike-kernel@sf-tec.de>
+Fixes: 0a625fd2abaa ("crypto: n2 - Add Niagara2 crypto driver")
+Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/include/asm/mmu.h      |    2 ++
- arch/riscv/include/asm/pgtable.h  |    2 +-
- arch/riscv/include/asm/tlbflush.h |   18 ++++++++++++++++++
- arch/riscv/mm/context.c           |   10 ++++++++++
- arch/riscv/mm/tlbflush.c          |   28 +++++++++++-----------------
- 5 files changed, 42 insertions(+), 18 deletions(-)
+ drivers/crypto/n2_core.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/arch/riscv/include/asm/mmu.h
-+++ b/arch/riscv/include/asm/mmu.h
-@@ -19,6 +19,8 @@ typedef struct {
- #ifdef CONFIG_SMP
- 	/* A local icache flush is needed before user execution can resume. */
- 	cpumask_t icache_stale_mask;
-+	/* A local tlb flush is needed before user execution can resume. */
-+	cpumask_t tlb_stale_mask;
- #endif
- } mm_context_t;
+--- a/drivers/crypto/n2_core.c
++++ b/drivers/crypto/n2_core.c
+@@ -1229,6 +1229,7 @@ struct n2_hash_tmpl {
+ 	const u8	*hash_init;
+ 	u8		hw_op_hashsz;
+ 	u8		digest_size;
++	u8		statesize;
+ 	u8		block_size;
+ 	u8		auth_type;
+ 	u8		hmac_type;
+@@ -1260,6 +1261,7 @@ static const struct n2_hash_tmpl hash_tm
+ 	  .hmac_type	= AUTH_TYPE_HMAC_MD5,
+ 	  .hw_op_hashsz	= MD5_DIGEST_SIZE,
+ 	  .digest_size	= MD5_DIGEST_SIZE,
++	  .statesize	= sizeof(struct md5_state),
+ 	  .block_size	= MD5_HMAC_BLOCK_SIZE },
+ 	{ .name		= "sha1",
+ 	  .hash_zero	= sha1_zero_message_hash,
+@@ -1268,6 +1270,7 @@ static const struct n2_hash_tmpl hash_tm
+ 	  .hmac_type	= AUTH_TYPE_HMAC_SHA1,
+ 	  .hw_op_hashsz	= SHA1_DIGEST_SIZE,
+ 	  .digest_size	= SHA1_DIGEST_SIZE,
++	  .statesize	= sizeof(struct sha1_state),
+ 	  .block_size	= SHA1_BLOCK_SIZE },
+ 	{ .name		= "sha256",
+ 	  .hash_zero	= sha256_zero_message_hash,
+@@ -1276,6 +1279,7 @@ static const struct n2_hash_tmpl hash_tm
+ 	  .hmac_type	= AUTH_TYPE_HMAC_SHA256,
+ 	  .hw_op_hashsz	= SHA256_DIGEST_SIZE,
+ 	  .digest_size	= SHA256_DIGEST_SIZE,
++	  .statesize	= sizeof(struct sha256_state),
+ 	  .block_size	= SHA256_BLOCK_SIZE },
+ 	{ .name		= "sha224",
+ 	  .hash_zero	= sha224_zero_message_hash,
+@@ -1284,6 +1288,7 @@ static const struct n2_hash_tmpl hash_tm
+ 	  .hmac_type	= AUTH_TYPE_RESERVED,
+ 	  .hw_op_hashsz	= SHA256_DIGEST_SIZE,
+ 	  .digest_size	= SHA224_DIGEST_SIZE,
++	  .statesize	= sizeof(struct sha256_state),
+ 	  .block_size	= SHA224_BLOCK_SIZE },
+ };
+ #define NUM_HASH_TMPLS ARRAY_SIZE(hash_tmpls)
+@@ -1424,6 +1429,7 @@ static int __n2_register_one_ahash(const
  
---- a/arch/riscv/include/asm/pgtable.h
-+++ b/arch/riscv/include/asm/pgtable.h
-@@ -386,7 +386,7 @@ static inline void update_mmu_cache(stru
- 	 * Relying on flush_tlb_fix_spurious_fault would suffice, but
- 	 * the extra traps reduce performance.  So, eagerly SFENCE.VMA.
- 	 */
--	local_flush_tlb_page(address);
-+	flush_tlb_page(vma, address);
- }
+ 	halg = &ahash->halg;
+ 	halg->digestsize = tmpl->digest_size;
++	halg->statesize = tmpl->statesize;
  
- static inline void update_mmu_cache_pmd(struct vm_area_struct *vma,
---- a/arch/riscv/include/asm/tlbflush.h
-+++ b/arch/riscv/include/asm/tlbflush.h
-@@ -22,6 +22,24 @@ static inline void local_flush_tlb_page(
- {
- 	ALT_FLUSH_TLB_PAGE(__asm__ __volatile__ ("sfence.vma %0" : : "r" (addr) : "memory"));
- }
-+
-+static inline void local_flush_tlb_all_asid(unsigned long asid)
-+{
-+	__asm__ __volatile__ ("sfence.vma x0, %0"
-+			:
-+			: "r" (asid)
-+			: "memory");
-+}
-+
-+static inline void local_flush_tlb_page_asid(unsigned long addr,
-+		unsigned long asid)
-+{
-+	__asm__ __volatile__ ("sfence.vma %0, %1"
-+			:
-+			: "r" (addr), "r" (asid)
-+			: "memory");
-+}
-+
- #else /* CONFIG_MMU */
- #define local_flush_tlb_all()			do { } while (0)
- #define local_flush_tlb_page(addr)		do { } while (0)
---- a/arch/riscv/mm/context.c
-+++ b/arch/riscv/mm/context.c
-@@ -196,6 +196,16 @@ switch_mm_fast:
- 
- 	if (need_flush_tlb)
- 		local_flush_tlb_all();
-+#ifdef CONFIG_SMP
-+	else {
-+		cpumask_t *mask = &mm->context.tlb_stale_mask;
-+
-+		if (cpumask_test_cpu(cpu, mask)) {
-+			cpumask_clear_cpu(cpu, mask);
-+			local_flush_tlb_all_asid(cntx & asid_mask);
-+		}
-+	}
-+#endif
- }
- 
- static void set_mm_noasid(struct mm_struct *mm)
---- a/arch/riscv/mm/tlbflush.c
-+++ b/arch/riscv/mm/tlbflush.c
-@@ -5,23 +5,7 @@
- #include <linux/sched.h>
- #include <asm/sbi.h>
- #include <asm/mmu_context.h>
--
--static inline void local_flush_tlb_all_asid(unsigned long asid)
--{
--	__asm__ __volatile__ ("sfence.vma x0, %0"
--			:
--			: "r" (asid)
--			: "memory");
--}
--
--static inline void local_flush_tlb_page_asid(unsigned long addr,
--		unsigned long asid)
--{
--	__asm__ __volatile__ ("sfence.vma %0, %1"
--			:
--			: "r" (addr), "r" (asid)
--			: "memory");
--}
-+#include <asm/tlbflush.h>
- 
- void flush_tlb_all(void)
- {
-@@ -31,6 +15,7 @@ void flush_tlb_all(void)
- static void __sbi_tlb_flush_range(struct mm_struct *mm, unsigned long start,
- 				  unsigned long size, unsigned long stride)
- {
-+	struct cpumask *pmask = &mm->context.tlb_stale_mask;
- 	struct cpumask *cmask = mm_cpumask(mm);
- 	struct cpumask hmask;
- 	unsigned int cpuid;
-@@ -45,6 +30,15 @@ static void __sbi_tlb_flush_range(struct
- 	if (static_branch_unlikely(&use_asid_allocator)) {
- 		unsigned long asid = atomic_long_read(&mm->context.id);
- 
-+		/*
-+		 * TLB will be immediately flushed on harts concurrently
-+		 * executing this MM context. TLB flush on other harts
-+		 * is deferred until this MM context migrates there.
-+		 */
-+		cpumask_setall(pmask);
-+		cpumask_clear_cpu(cpuid, pmask);
-+		cpumask_andnot(pmask, pmask, cmask);
-+
- 		if (broadcast) {
- 			riscv_cpuid_to_hartid_mask(cmask, &hmask);
- 			sbi_remote_sfence_vma_asid(cpumask_bits(&hmask),
+ 	base = &halg->base;
+ 	snprintf(base->cra_name, CRYPTO_MAX_ALG_NAME, "%s", tmpl->name);
 
 
