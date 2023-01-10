@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 303CB6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94FAC433D2;
-	Tue, 10 Jan 2023 18:27:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A5A6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47565C433EF;
+	Tue, 10 Jan 2023 18:27:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375273;
-	bh=jiIx4HYpVT3taMwTPfdx3q/sP+YnH5gARTg3EPGV9x8=;
+	s=korg; t=1673375275;
+	bh=QlhaI9/s2EQZ3Ica7fZLpGbjmNEy1NFh+wztxGQIkbg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MTho2gcycQKbdUJDFkLH4296uOSJ0i/KY+HZi3V0c+HKXM8IQEwj8OSVj4bFscPHn
-	 nZXbTg6FMDSbAV9OAwSjFiVNIsFKQNClVVmM6q+sb3BIudc34lOlGmfYqniUY9vOOK
-	 LDIlBt9DqTbS7WGfGV7ZKrvaOZvYMe9FNwivVsTY=
+	b=BAOIJnODtoJG9mjQvgRQg/1uKW3XAa/HV87uVNI2kVKQdxB+kh45jk0RgrCfBniEl
+	 FQled4H8UC2Lhp/aASSLd+a959yX9hHkjkxT9ywuJErVwtWCVN30faI6wL/62V7Tmf
+	 QV+QVj+AF8LFZUaPXMw4ASX5Jaw/dck/+rI5Urjg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 5.15 105/290] staging: media: tegra-video: fix chan->mipi value on error
-Date: Tue, 10 Jan 2023 19:03:17 +0100
-Message-Id: <20230110180035.379953395@linuxfoundation.org>
+	Ashok Raj <ashok.raj@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 5.15 096/290] x86/microcode/intel: Do not retry microcode reloading on the APs
+Date: Tue, 10 Jan 2023 19:03:08 +0100
+Message-Id: <20230110180034.937263934@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,53 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Ashok Raj <ashok.raj@intel.com>
 
-commit 10b5ce6743c839fa75336042c64e2479caec9430 upstream.
+commit be1b670f61443aa5d0d01782e9b8ea0ee825d018 upstream.
 
-chan->mipi takes the return value of tegra_mipi_request() which can be a
-valid pointer or an error. However chan->mipi is checked in several places,
-including error-cleanup code in tegra_csi_channels_cleanup(), as 'if
-(chan->mipi)', which suggests the initial intent was that chan->mipi should
-be either NULL or a valid pointer, never an error. As a consequence,
-cleanup code in case of tegra_mipi_request() errors would dereference an
-invalid pointer.
+The retries in load_ucode_intel_ap() were in place to support systems
+with mixed steppings. Mixed steppings are no longer supported and there is
+only one microcode image at a time. Any retries will simply reattempt to
+apply the same image over and over without making progress.
 
-Fix by ensuring chan->mipi always contains either NULL or a void pointer.
+  [ bp: Zap the circumstantial reasoning from the commit message. ]
 
-Also add that to the documentation.
-
-Fixes: 523c857e34ce ("media: tegra-video: Add CSI MIPI pads calibration")
+Fixes: 06b8534cb728 ("x86/microcode: Rework microcode loading")
+Signed-off-by: Ashok Raj <ashok.raj@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Link: https://lore.kernel.org/r/20221129210832.107850-3-ashok.raj@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/tegra-video/csi.c |    1 +
- drivers/staging/media/tegra-video/csi.h |    2 +-
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/microcode/intel.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/drivers/staging/media/tegra-video/csi.c
-+++ b/drivers/staging/media/tegra-video/csi.c
-@@ -448,6 +448,7 @@ static int tegra_csi_channel_alloc(struc
- 	chan->mipi = tegra_mipi_request(csi->dev, node);
- 	if (IS_ERR(chan->mipi)) {
- 		ret = PTR_ERR(chan->mipi);
-+		chan->mipi = NULL;
- 		dev_err(csi->dev, "failed to get mipi device: %d\n", ret);
- 	}
+--- a/arch/x86/kernel/cpu/microcode/intel.c
++++ b/arch/x86/kernel/cpu/microcode/intel.c
+@@ -659,7 +659,6 @@ void load_ucode_intel_ap(void)
+ 	else
+ 		iup = &intel_ucode_patch;
  
---- a/drivers/staging/media/tegra-video/csi.h
-+++ b/drivers/staging/media/tegra-video/csi.h
-@@ -56,7 +56,7 @@ struct tegra_csi;
-  * @framerate: active framerate for TPG
-  * @h_blank: horizontal blanking for TPG active format
-  * @v_blank: vertical blanking for TPG active format
-- * @mipi: mipi device for corresponding csi channel pads
-+ * @mipi: mipi device for corresponding csi channel pads, or NULL if not applicable (TPG, error)
-  * @pixel_rate: active pixel rate from the sensor on this channel
-  */
- struct tegra_csi_channel {
+-reget:
+ 	if (!*iup) {
+ 		patch = __load_ucode_intel(&uci);
+ 		if (!patch)
+@@ -670,12 +669,7 @@ reget:
+ 
+ 	uci.mc = *iup;
+ 
+-	if (apply_microcode_early(&uci, true)) {
+-		/* Mixed-silicon system? Try to refetch the proper patch: */
+-		*iup = NULL;
+-
+-		goto reget;
+-	}
++	apply_microcode_early(&uci, true);
+ }
+ 
+ static struct microcode_intel *find_patch(struct ucode_cpu_info *uci)
 
 
