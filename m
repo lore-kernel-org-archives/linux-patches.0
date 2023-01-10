@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D107474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:34:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BDA5C433EF;
-	Tue, 10 Jan 2023 18:34:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 992E37474
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:34:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 114C1C433EF;
+	Tue, 10 Jan 2023 18:34:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375670;
-	bh=dkwE2U3VisqLuKKylwsFrqTdMcqScCR/wbvasPXcHpg=;
+	s=korg; t=1673375673;
+	bh=PUvFWrT9DlCbVEwFrGsscLlqDiFiyTjq461Sr9f4JQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iuvwdqzT0BqX47sia1VucHG1B8UwoajhBElwnzFRlv7kLX7zmLxbR75FbHzaF3htp
-	 lc/KCn3Z3zpgUGuKPj2HtmrNm+jF0FGr8qLpExLVNDPwziwIdIiIh/sIxPfcyT8bbn
-	 8VXtGFe91vxYAdNbNwFLDoQODcDfevCSt/4rzS6s=
+	b=d6LjiXUQEy73nk1gBqJRN8j8wWLoJ4sHEDuRmJXGgxSl8ZJ4kRY275xWf9k3e8EzC
+	 nw5kdS8kbATxkF+93YK5R6ck8CecPffjbMqNVJEAFkI7SstywjPMaS9t05NL2+OtKk
+	 xmLGGmvGFgn6D3m8iUowvo2X45m6OeIDhQEsNOKI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Arinzon <darinzon@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
+	Kanchan Joshi <joshi.k@samsung.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 236/290] net: ena: Update NUMA TPH hint register upon NUMA node update
-Date: Tue, 10 Jan 2023 19:05:28 +0100
-Message-Id: <20230110180040.155070190@linuxfoundation.org>
+Subject: [PATCH 5.15 263/290] nvme: also return I/O command effects from nvme_command_effects
+Date: Tue, 10 Jan 2023 19:05:55 +0100
+Message-Id: <20230110180041.065114728@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,153 +36,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Arinzon <darinzon@amazon.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit a8ee104f986e720cea52133885cc822d459398c7 ]
+[ Upstream commit 831ed60c2aca2d7c517b2da22897a90224a97d27 ]
 
-The device supports a PCIe optimization hint, which indicates on
-which NUMA the queue is currently processed. This hint is utilized
-by PCIe in order to reduce its access time by accessing the
-correct NUMA resources and maintaining cache coherence.
+To be able to use the Commands Supported and Effects Log for allowing
+unprivileged passtrough, it needs to be corretly reported for I/O
+commands as well.  Return the I/O command effects from
+nvme_command_effects, and also add a default list of effects for the
+NVM command set.  For other command sets, the Commands Supported and
+Effects log is required to be present already.
 
-The driver calls the register update for the hint (called TPH -
-TLP Processing Hint) during the NAPI loop.
-
-Though the update is expected upon a NUMA change (when a queue
-is moved from one NUMA to the other), the current logic performs
-a register update when the queue is moved to a different CPU,
-but the CPU is not necessarily in a different NUMA.
-
-The changes include:
-1. Performing the TPH update only when the queue has switched
-a NUMA node.
-2. Moving the TPH update call to be triggered only when NAPI was
-scheduled from interrupt context, as opposed to a busy-polling loop.
-This is due to the fact that during busy-polling, the frequency
-of CPU switches for a particular queue is significantly higher,
-thus, the likelihood to switch NUMA is much higher. Therefore,
-providing the frequent updates to the device upon a NUMA update
-are unlikely to be beneficial.
-
-Fixes: 1738cd3ed342 ("net: ena: Add a driver for Amazon Elastic Network Adapters (ENA)")
-Signed-off-by: David Arinzon <darinzon@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Kanchan Joshi <joshi.k@samsung.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_netdev.c | 27 +++++++++++++-------
- drivers/net/ethernet/amazon/ena/ena_netdev.h |  6 +++--
- 2 files changed, 22 insertions(+), 11 deletions(-)
+ drivers/nvme/host/core.c | 32 ++++++++++++++++++++++++++------
+ 1 file changed, 26 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-index b1533a45f645..23c9750850e9 100644
---- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-@@ -684,6 +684,7 @@ static void ena_init_io_rings_common(struct ena_adapter *adapter,
- 	ring->ena_dev = adapter->ena_dev;
- 	ring->per_napi_packets = 0;
- 	ring->cpu = 0;
-+	ring->numa_node = 0;
- 	ring->no_interrupt_event_cnt = 0;
- 	u64_stats_init(&ring->syncp);
- }
-@@ -787,6 +788,7 @@ static int ena_setup_tx_resources(struct ena_adapter *adapter, int qid)
- 	tx_ring->next_to_use = 0;
- 	tx_ring->next_to_clean = 0;
- 	tx_ring->cpu = ena_irq->cpu;
-+	tx_ring->numa_node = node;
- 	return 0;
- 
- err_push_buf_intermediate_buf:
-@@ -919,6 +921,7 @@ static int ena_setup_rx_resources(struct ena_adapter *adapter,
- 	rx_ring->next_to_clean = 0;
- 	rx_ring->next_to_use = 0;
- 	rx_ring->cpu = ena_irq->cpu;
-+	rx_ring->numa_node = node;
- 
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 2d5b5e0fb66a..672f53d5651a 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1113,6 +1113,18 @@ static u32 nvme_known_admin_effects(u8 opcode)
  	return 0;
  }
-@@ -1876,20 +1879,27 @@ static void ena_update_ring_numa_node(struct ena_ring *tx_ring,
- 	if (likely(tx_ring->cpu == cpu))
- 		goto out;
  
-+	tx_ring->cpu = cpu;
-+	if (rx_ring)
-+		rx_ring->cpu = cpu;
++static u32 nvme_known_nvm_effects(u8 opcode)
++{
++	switch (opcode) {
++	case nvme_cmd_write:
++	case nvme_cmd_write_zeroes:
++	case nvme_cmd_write_uncor:
++		 return NVME_CMD_EFFECTS_LBCC;
++	default:
++		return 0;
++	}
++}
 +
- 	numa_node = cpu_to_node(cpu);
-+
-+	if (likely(tx_ring->numa_node == numa_node))
-+		goto out;
-+
- 	put_cpu();
+ u32 nvme_command_effects(struct nvme_ctrl *ctrl, struct nvme_ns *ns, u8 opcode)
+ {
+ 	u32 effects = 0;
+@@ -1120,16 +1132,24 @@ u32 nvme_command_effects(struct nvme_ctrl *ctrl, struct nvme_ns *ns, u8 opcode)
+ 	if (ns) {
+ 		if (ns->head->effects)
+ 			effects = le32_to_cpu(ns->head->effects->iocs[opcode]);
++		if (ns->head->ids.csi == NVME_CAP_CSS_NVM)
++			effects |= nvme_known_nvm_effects(opcode);
+ 		if (effects & ~(NVME_CMD_EFFECTS_CSUPP | NVME_CMD_EFFECTS_LBCC))
+ 			dev_warn_once(ctrl->device,
+-				"IO command:%02x has unhandled effects:%08x\n",
++				"IO command:%02x has unusual effects:%08x\n",
+ 				opcode, effects);
+-		return 0;
+-	}
  
- 	if (numa_node != NUMA_NO_NODE) {
- 		ena_com_update_numa_node(tx_ring->ena_com_io_cq, numa_node);
--		if (rx_ring)
-+		tx_ring->numa_node = numa_node;
-+		if (rx_ring) {
-+			rx_ring->numa_node = numa_node;
- 			ena_com_update_numa_node(rx_ring->ena_com_io_cq,
- 						 numa_node);
-+		}
- 	}
+-	if (ctrl->effects)
+-		effects = le32_to_cpu(ctrl->effects->acs[opcode]);
+-	effects |= nvme_known_admin_effects(opcode);
++		/*
++		 * NVME_CMD_EFFECTS_CSE_MASK causes a freeze all I/O queues,
++		 * which would deadlock when done on an I/O command.  Note that
++		 * We already warn about an unusual effect above.
++		 */
++		effects &= ~NVME_CMD_EFFECTS_CSE_MASK;
++	} else {
++		if (ctrl->effects)
++			effects = le32_to_cpu(ctrl->effects->acs[opcode]);
++		effects |= nvme_known_admin_effects(opcode);
++	}
  
--	tx_ring->cpu = cpu;
--	if (rx_ring)
--		rx_ring->cpu = cpu;
--
- 	return;
- out:
- 	put_cpu();
-@@ -2010,11 +2020,10 @@ static int ena_io_poll(struct napi_struct *napi, int budget)
- 			if (ena_com_get_adaptive_moderation_enabled(rx_ring->ena_dev))
- 				ena_adjust_adaptive_rx_intr_moderation(ena_napi);
- 
-+			ena_update_ring_numa_node(tx_ring, rx_ring);
- 			ena_unmask_interrupt(tx_ring, rx_ring);
- 		}
- 
--		ena_update_ring_numa_node(tx_ring, rx_ring);
--
- 		ret = rx_work_done;
- 	} else {
- 		ret = budget;
-@@ -2401,7 +2410,7 @@ static int ena_create_io_tx_queue(struct ena_adapter *adapter, int qid)
- 	ctx.mem_queue_type = ena_dev->tx_mem_queue_type;
- 	ctx.msix_vector = msix_vector;
- 	ctx.queue_size = tx_ring->ring_size;
--	ctx.numa_node = cpu_to_node(tx_ring->cpu);
-+	ctx.numa_node = tx_ring->numa_node;
- 
- 	rc = ena_com_create_io_queue(ena_dev, &ctx);
- 	if (rc) {
-@@ -2469,7 +2478,7 @@ static int ena_create_io_rx_queue(struct ena_adapter *adapter, int qid)
- 	ctx.mem_queue_type = ENA_ADMIN_PLACEMENT_POLICY_HOST;
- 	ctx.msix_vector = msix_vector;
- 	ctx.queue_size = rx_ring->ring_size;
--	ctx.numa_node = cpu_to_node(rx_ring->cpu);
-+	ctx.numa_node = rx_ring->numa_node;
- 
- 	rc = ena_com_create_io_queue(ena_dev, &ctx);
- 	if (rc) {
-diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.h b/drivers/net/ethernet/amazon/ena/ena_netdev.h
-index 2b5eb573ff23..bf2a39c91c00 100644
---- a/drivers/net/ethernet/amazon/ena/ena_netdev.h
-+++ b/drivers/net/ethernet/amazon/ena/ena_netdev.h
-@@ -273,9 +273,11 @@ struct ena_ring {
- 	bool disable_meta_caching;
- 	u16 no_interrupt_event_cnt;
- 
--	/* cpu for TPH */
-+	/* cpu and NUMA for TPH */
- 	int cpu;
--	 /* number of tx/rx_buffer_info's entries */
-+	int numa_node;
-+
-+	/* number of tx/rx_buffer_info's entries */
- 	int ring_size;
- 
- 	enum ena_admin_placement_policy_type tx_mem_queue_type;
+ 	return effects;
+ }
 -- 
 2.35.1
 
