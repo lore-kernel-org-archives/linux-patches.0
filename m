@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A2376FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:33:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3702C433EF;
-	Tue, 10 Jan 2023 18:33:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1216FCF
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:33:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE375C433F0;
+	Tue, 10 Jan 2023 18:33:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375582;
-	bh=HYXyHXdqUa4HxQZQeVe7B60xLLqKpBhVx6oSYUYuaF4=;
+	s=korg; t=1673375588;
+	bh=VYWLCPCjOxlzsoYd1BEjuStBHWfWxouoZS7kR+gb8LU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AJ1gauCG5P8jVXIYZc8OKWmPjGdaTlIdW3ZjmsgPWgsoIZ2sh3JSYuLn0ZnMO8lsn
-	 KlUVloFAgJiRk1e9voNix8Lb14BP+80LHnV2bv+XKWiTiksDVnNZLxW2wqQGFHHizm
-	 8+6MAMHSzBSs0aEVyGt5nEK3xarc/im0KNMCvcR0=
+	b=D+aKeLbYaoJcBCyBnSvYpYTCXFxTZZ8EylDK0xkfP7XoLdrOEky1Iw6NiADrKHqsT
+	 wpC5b5hjKDijD+defQpJaNxb9rhbh/s/vtoTXv5xOGcZ1f+52RS8WmfTuLyvPAPBqa
+	 Bxuw1QDb7hQhWXMOGt91E/kf2yUlCYMVmsL3dJwI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronak Doshi <doshir@vmware.com>,
-	Peng Li <lpeng@vmware.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Magnus Karlsson <magnus.karlsson@gmail.com>,
+	Shawn Bohrer <sbohrer@cloudflare.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 204/290] vmxnet3: correctly report csum_level for encapsulated packet
-Date: Tue, 10 Jan 2023 19:04:56 +0100
-Message-Id: <20230110180039.024236208@linuxfoundation.org>
+Subject: [PATCH 5.15 206/290] veth: Fix race with AF_XDP exposing old or uninitialized descriptors
+Date: Tue, 10 Jan 2023 19:04:58 +0100
+Message-Id: <20230110180039.091179179@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -36,53 +36,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ronak Doshi <doshir@vmware.com>
+From: Shawn Bohrer <sbohrer@cloudflare.com>
 
-[ Upstream commit 3d8f2c4269d08f8793e946279dbdf5e972cc4911 ]
+[ Upstream commit fa349e396e4886d742fd6501c599ec627ef1353b ]
 
-Commit dacce2be3312 ("vmxnet3: add geneve and vxlan tunnel offload
-support") added support for encapsulation offload. However, the
-pathc did not report correctly the csum_level for encapsulated packet.
+When AF_XDP is used on on a veth interface the RX ring is updated in two
+steps.  veth_xdp_rcv() removes packet descriptors from the FILL ring
+fills them and places them in the RX ring updating the cached_prod
+pointer.  Later xdp_do_flush() syncs the RX ring prod pointer with the
+cached_prod pointer allowing user-space to see the recently filled in
+descriptors.  The rings are intended to be SPSC, however the existing
+order in veth_poll allows the xdp_do_flush() to run concurrently with
+another CPU creating a race condition that allows user-space to see old
+or uninitialized descriptors in the RX ring.  This bug has been observed
+in production systems.
 
-This patch fixes this issue by reporting correct csum level for the
-encapsulated packet.
+To summarize, we are expecting this ordering:
 
-Fixes: dacce2be3312 ("vmxnet3: add geneve and vxlan tunnel offload support")
-Signed-off-by: Ronak Doshi <doshir@vmware.com>
-Acked-by: Peng Li <lpeng@vmware.com>
-Link: https://lore.kernel.org/r/20221220202556.24421-1-doshir@vmware.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+CPU 0 __xsk_rcv_zc()
+CPU 0 __xsk_map_flush()
+CPU 2 __xsk_rcv_zc()
+CPU 2 __xsk_map_flush()
+
+But we are seeing this order:
+
+CPU 0 __xsk_rcv_zc()
+CPU 2 __xsk_rcv_zc()
+CPU 0 __xsk_map_flush()
+CPU 2 __xsk_map_flush()
+
+This occurs because we rely on NAPI to ensure that only one napi_poll
+handler is running at a time for the given veth receive queue.
+napi_schedule_prep() will prevent multiple instances from getting
+scheduled. However calling napi_complete_done() signals that this
+napi_poll is complete and allows subsequent calls to
+napi_schedule_prep() and __napi_schedule() to succeed in scheduling a
+concurrent napi_poll before the xdp_do_flush() has been called.  For the
+veth driver a concurrent call to napi_schedule_prep() and
+__napi_schedule() can occur on a different CPU because the veth xmit
+path can additionally schedule a napi_poll creating the race.
+
+The fix as suggested by Magnus Karlsson, is to simply move the
+xdp_do_flush() call before napi_complete_done().  This syncs the
+producer ring pointers before another instance of napi_poll can be
+scheduled on another CPU.  It will also slightly improve performance by
+moving the flush closer to when the descriptors were placed in the
+RX ring.
+
+Fixes: d1396004dd86 ("veth: Add XDP TX and REDIRECT")
+Suggested-by: Magnus Karlsson <magnus.karlsson@gmail.com>
+Signed-off-by: Shawn Bohrer <sbohrer@cloudflare.com>
+Link: https://lore.kernel.org/r/20221220185903.1105011-1-sbohrer@cloudflare.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vmxnet3/vmxnet3_drv.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ drivers/net/veth.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/vmxnet3/vmxnet3_drv.c b/drivers/net/vmxnet3/vmxnet3_drv.c
-index 21896e221300..b88092a6bc85 100644
---- a/drivers/net/vmxnet3/vmxnet3_drv.c
-+++ b/drivers/net/vmxnet3/vmxnet3_drv.c
-@@ -1242,6 +1242,10 @@ vmxnet3_rx_csum(struct vmxnet3_adapter *adapter,
- 		    (le32_to_cpu(gdesc->dword[3]) &
- 		     VMXNET3_RCD_CSUM_OK) == VMXNET3_RCD_CSUM_OK) {
- 			skb->ip_summed = CHECKSUM_UNNECESSARY;
-+			if ((le32_to_cpu(gdesc->dword[0]) &
-+				     (1UL << VMXNET3_RCD_HDR_INNER_SHIFT))) {
-+				skb->csum_level = 1;
-+			}
- 			WARN_ON_ONCE(!(gdesc->rcd.tcp || gdesc->rcd.udp) &&
- 				     !(le32_to_cpu(gdesc->dword[0]) &
- 				     (1UL << VMXNET3_RCD_HDR_INNER_SHIFT)));
-@@ -1251,6 +1255,10 @@ vmxnet3_rx_csum(struct vmxnet3_adapter *adapter,
- 		} else if (gdesc->rcd.v6 && (le32_to_cpu(gdesc->dword[3]) &
- 					     (1 << VMXNET3_RCD_TUC_SHIFT))) {
- 			skb->ip_summed = CHECKSUM_UNNECESSARY;
-+			if ((le32_to_cpu(gdesc->dword[0]) &
-+				     (1UL << VMXNET3_RCD_HDR_INNER_SHIFT))) {
-+				skb->csum_level = 1;
-+			}
- 			WARN_ON_ONCE(!(gdesc->rcd.tcp || gdesc->rcd.udp) &&
- 				     !(le32_to_cpu(gdesc->dword[0]) &
- 				     (1UL << VMXNET3_RCD_HDR_INNER_SHIFT)));
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index 64fa8e9c0a22..41cb9179e8b7 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -916,6 +916,9 @@ static int veth_poll(struct napi_struct *napi, int budget)
+ 	xdp_set_return_frame_no_direct();
+ 	done = veth_xdp_rcv(rq, budget, &bq, &stats);
+ 
++	if (stats.xdp_redirect > 0)
++		xdp_do_flush();
++
+ 	if (done < budget && napi_complete_done(napi, done)) {
+ 		/* Write rx_notify_masked before reading ptr_ring */
+ 		smp_store_mb(rq->rx_notify_masked, false);
+@@ -929,8 +932,6 @@ static int veth_poll(struct napi_struct *napi, int budget)
+ 
+ 	if (stats.xdp_tx > 0)
+ 		veth_xdp_flush(rq, &bq);
+-	if (stats.xdp_redirect > 0)
+-		xdp_do_flush();
+ 	xdp_clear_return_frame_no_direct();
+ 
+ 	return done;
 -- 
 2.35.1
 
