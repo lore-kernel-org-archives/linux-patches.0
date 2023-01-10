@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40697A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99C61C433F0;
-	Tue, 10 Jan 2023 18:16:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51E1CA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB13C433EF;
+	Tue, 10 Jan 2023 18:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374608;
-	bh=hheDl6dpJScVhrmPq2AAcUlVM0ti6E2A5kbDfg9FTRI=;
+	s=korg; t=1673374611;
+	bh=xbv9mDpcDrHE+3MaMvq7hoVRF/3NzkaZCOxsgp8lXiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KrHyrUCgD1kpawugZpeV8V6fXgkr3L8cLU+ifw8cDvChVMbBRwlDFZJDouJNQ+Oey
-	 BDaDHaHUMD1f7d1q9lRrRxL0MH933l3mG1kUTpd1qeVyXr6KQrlmlR3GvaFKaxzrSr
-	 GgOduTAw9b6SkaKQAprK+2+ZvNdLLxnod3TGi3Sg=
+	b=slCfSttzgkMdwXpLme7osIRYuTuZAZO9ilXGBzSOnpmRVJ+CsQJLT/MG0nvszvwzv
+	 vSPpY84Hy7HO+40CjZHQyghyiSwmvs/u5789jNFH6kd+J/tnstTP6iFhPL9hziHU5Q
+	 SpHfiISl/BctCPBLTsausReiR77spDI5v9nRoRuI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
+	"Johnny S. Lee" <foss@jsl.io>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/159] vhost/vsock: Fix error handling in vhost_vsock_init()
-Date: Tue, 10 Jan 2023 19:03:11 +0100
-Message-Id: <20230110180019.683589816@linuxfoundation.org>
+Subject: [PATCH 6.1 034/159] net: dsa: mv88e6xxx: depend on PTP conditionally
+Date: Tue, 10 Jan 2023 19:03:02 +0100
+Message-Id: <20230110180019.395912489@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -37,62 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Johnny S. Lee <foss@jsl.io>
 
-[ Upstream commit 7a4efe182ca61fb3e5307e69b261c57cbf434cd4 ]
+[ Upstream commit 30e725537546248bddc12eaac2fe0a258917f190 ]
 
-A problem about modprobe vhost_vsock failed is triggered with the
-following log given:
+PTP hardware timestamping related objects are not linked when PTP
+support for MV88E6xxx (NET_DSA_MV88E6XXX_PTP) is disabled, therefore
+NET_DSA_MV88E6XXX should not depend on PTP_1588_CLOCK_OPTIONAL
+regardless of NET_DSA_MV88E6XXX_PTP.
 
-modprobe: ERROR: could not insert 'vhost_vsock': Device or resource busy
+Instead, condition more strictly on how NET_DSA_MV88E6XXX_PTP's
+dependencies are met, making sure that it cannot be enabled when
+NET_DSA_MV88E6XXX=y and PTP_1588_CLOCK=m.
 
-The reason is that vhost_vsock_init() returns misc_register() directly
-without checking its return value, if misc_register() failed, it returns
-without calling vsock_core_unregister() on vhost_transport, resulting the
-vhost_vsock can never be installed later.
-A simple call graph is shown as below:
+In other words, this commit allows NET_DSA_MV88E6XXX to be built-in
+while PTP_1588_CLOCK is a module, as long as NET_DSA_MV88E6XXX_PTP is
+prevented from being enabled.
 
- vhost_vsock_init()
-   vsock_core_register() # register vhost_transport
-   misc_register()
-     device_create_with_groups()
-       device_create_groups_vargs()
-         dev = kzalloc(...) # OOM happened
-   # return without unregister vhost_transport
-
-Fix by calling vsock_core_unregister() when misc_register() returns error.
-
-Fixes: 433fc58e6bf2 ("VSOCK: Introduce vhost_vsock.ko")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Message-Id: <20221108101705.45981-1-yuancan@huawei.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
+Fixes: e5f31552674e ("ethernet: fix PTP_1588_CLOCK dependencies")
+Signed-off-by: Johnny S. Lee <foss@jsl.io>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/vsock.c | 9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/net/dsa/mv88e6xxx/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/vhost/vsock.c b/drivers/vhost/vsock.c
-index 5703775af129..10a7d23731fe 100644
---- a/drivers/vhost/vsock.c
-+++ b/drivers/vhost/vsock.c
-@@ -959,7 +959,14 @@ static int __init vhost_vsock_init(void)
- 				  VSOCK_TRANSPORT_F_H2G);
- 	if (ret < 0)
- 		return ret;
--	return misc_register(&vhost_vsock_misc);
-+
-+	ret = misc_register(&vhost_vsock_misc);
-+	if (ret) {
-+		vsock_core_unregister(&vhost_transport.transport);
-+		return ret;
-+	}
-+
-+	return 0;
- };
- 
- static void __exit vhost_vsock_exit(void)
+diff --git a/drivers/net/dsa/mv88e6xxx/Kconfig b/drivers/net/dsa/mv88e6xxx/Kconfig
+index 7a2445a34eb7..e3181d5471df 100644
+--- a/drivers/net/dsa/mv88e6xxx/Kconfig
++++ b/drivers/net/dsa/mv88e6xxx/Kconfig
+@@ -2,7 +2,6 @@
+ config NET_DSA_MV88E6XXX
+ 	tristate "Marvell 88E6xxx Ethernet switch fabric support"
+ 	depends on NET_DSA
+-	depends on PTP_1588_CLOCK_OPTIONAL
+ 	select IRQ_DOMAIN
+ 	select NET_DSA_TAG_EDSA
+ 	select NET_DSA_TAG_DSA
+@@ -13,7 +12,8 @@ config NET_DSA_MV88E6XXX
+ config NET_DSA_MV88E6XXX_PTP
+ 	bool "PTP support for Marvell 88E6xxx"
+ 	default n
+-	depends on NET_DSA_MV88E6XXX && PTP_1588_CLOCK
++	depends on (NET_DSA_MV88E6XXX = y && PTP_1588_CLOCK = y) || \
++	           (NET_DSA_MV88E6XXX = m && PTP_1588_CLOCK)
+ 	help
+ 	  Say Y to enable PTP hardware timestamping on Marvell 88E6xxx switch
+ 	  chips that support it.
 -- 
 2.35.1
 
