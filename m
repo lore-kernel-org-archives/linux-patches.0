@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2BD6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA296C433EF;
-	Tue, 10 Jan 2023 18:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727DE6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD13C433EF;
+	Tue, 10 Jan 2023 18:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375245;
-	bh=1g8bunrCfIV6wTghoygRW85CedI0LGm+mHYXXS+sfgQ=;
+	s=korg; t=1673375248;
+	bh=eJ0VRc9PuWyAsoO5PIQYsnPOpsJZpDN7OfcXDHUzTsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yE7DDsLOoUrTpzlEKt7isVs1ABVRNLNqYE6kn4lt7WjPRfQLBAPQEAd5z6hkd/aHm
-	 u9GeB83dgvK/2ppnFsn/wIVhLRzgC3ECgjW8L0CpDjSkC4GhOnZhGURWMKAOZlBom9
-	 +nXbBaY+PmLuUMjn8V9wgcdd4kiL/8fcAIu28B1Q=
+	b=rRua7eMarXfyzPxtogovKf8wOq25CGGcUSmddnibPhpYXW+dj9QFYOm/11fl8dup1
+	 ZMM+/aV1D+YtVtMB074KBEGaMMy/y8Eb2dYVaek0RI/GzahyLPHGubGAt/EWxyKYC0
+	 Yf/MXCm7OVk8Tn/hqH5vCINAozE8i4IobAHn/xFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
-Subject: [PATCH 5.15 099/290] x86/kprobes: Fix optprobe optimization check with CONFIG_RETHUNK
-Date: Tue, 10 Jan 2023 19:03:11 +0100
-Message-Id: <20230110180035.049744645@linuxfoundation.org>
+	Sergey Matyukevich <sergey.matyukevich@syntacore.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 5.15 126/290] riscv: mm: notify remote harts about mmu cache updates
+Date: Tue, 10 Jan 2023 19:03:38 +0100
+Message-Id: <20230110180036.170357425@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -34,84 +34,161 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
 
-commit 63dc6325ff41ee9e570bde705ac34a39c5dbeb44 upstream.
+commit 4bd1d80efb5af640f99157f39b50fb11326ce641 upstream.
 
-Since the CONFIG_RETHUNK and CONFIG_SLS will use INT3 for stopping
-speculative execution after function return, kprobe jump optimization
-always fails on the functions with such INT3 inside the function body.
-(It already checks the INT3 padding between functions, but not inside
- the function)
+Current implementation of update_mmu_cache function performs local TLB
+flush. It does not take into account ASID information. Besides, it does
+not take into account other harts currently running the same mm context
+or possible migration of the running context to other harts. Meanwhile
+TLB flush is not performed for every context switch if ASID support
+is enabled.
 
-To avoid this issue, as same as kprobes, check whether the INT3 comes
-from kgdb or not, and if so, stop decoding and make it fail. The other
-INT3 will come from CONFIG_RETHUNK/CONFIG_SLS and those can be
-treated as a one-byte instruction.
+Patch [1] proposed to add ASID support to update_mmu_cache to avoid
+flushing local TLB entirely. This patch takes into account other
+harts currently running the same mm context as well as possible
+migration of this context to other harts.
 
-Fixes: e463a09af2f0 ("x86: Add straight-line-speculation mitigation")
-Suggested-by: Peter Zijlstra <peterz@infradead.org>
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+For this purpose the approach from flush_icache_mm is reused. Remote
+harts currently running the same mm context are informed via SBI calls
+that they need to flush their local TLBs. All the other harts are marked
+as needing a deferred TLB flush when this mm context runs on them.
+
+[1] https://lore.kernel.org/linux-riscv/20220821013926.8968-1-tjytimi@163.com/
+
+Signed-off-by: Sergey Matyukevich <sergey.matyukevich@syntacore.com>
+Fixes: 65d4b9c53017 ("RISC-V: Implement ASID allocator")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/167146051929.1374301.7419382929328081706.stgit@devnote3
+Link: https://lore.kernel.org/linux-riscv/20220829205219.283543-1-geomatsi@gmail.com/#t
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/kprobes/opt.c |   28 ++++++++--------------------
- 1 file changed, 8 insertions(+), 20 deletions(-)
+ arch/riscv/include/asm/mmu.h      |    2 ++
+ arch/riscv/include/asm/pgtable.h  |    2 +-
+ arch/riscv/include/asm/tlbflush.h |   18 ++++++++++++++++++
+ arch/riscv/mm/context.c           |   10 ++++++++++
+ arch/riscv/mm/tlbflush.c          |   28 +++++++++++-----------------
+ 5 files changed, 42 insertions(+), 18 deletions(-)
 
---- a/arch/x86/kernel/kprobes/opt.c
-+++ b/arch/x86/kernel/kprobes/opt.c
-@@ -15,6 +15,7 @@
- #include <linux/extable.h>
- #include <linux/kdebug.h>
- #include <linux/kallsyms.h>
-+#include <linux/kgdb.h>
- #include <linux/ftrace.h>
- #include <linux/objtool.h>
- #include <linux/pgtable.h>
-@@ -272,19 +273,6 @@ static int insn_is_indirect_jump(struct
- 	return ret;
+--- a/arch/riscv/include/asm/mmu.h
++++ b/arch/riscv/include/asm/mmu.h
+@@ -19,6 +19,8 @@ typedef struct {
+ #ifdef CONFIG_SMP
+ 	/* A local icache flush is needed before user execution can resume. */
+ 	cpumask_t icache_stale_mask;
++	/* A local tlb flush is needed before user execution can resume. */
++	cpumask_t tlb_stale_mask;
+ #endif
+ } mm_context_t;
+ 
+--- a/arch/riscv/include/asm/pgtable.h
++++ b/arch/riscv/include/asm/pgtable.h
+@@ -386,7 +386,7 @@ static inline void update_mmu_cache(stru
+ 	 * Relying on flush_tlb_fix_spurious_fault would suffice, but
+ 	 * the extra traps reduce performance.  So, eagerly SFENCE.VMA.
+ 	 */
+-	local_flush_tlb_page(address);
++	flush_tlb_page(vma, address);
  }
  
--static bool is_padding_int3(unsigned long addr, unsigned long eaddr)
+ static inline void update_mmu_cache_pmd(struct vm_area_struct *vma,
+--- a/arch/riscv/include/asm/tlbflush.h
++++ b/arch/riscv/include/asm/tlbflush.h
+@@ -22,6 +22,24 @@ static inline void local_flush_tlb_page(
+ {
+ 	ALT_FLUSH_TLB_PAGE(__asm__ __volatile__ ("sfence.vma %0" : : "r" (addr) : "memory"));
+ }
++
++static inline void local_flush_tlb_all_asid(unsigned long asid)
++{
++	__asm__ __volatile__ ("sfence.vma x0, %0"
++			:
++			: "r" (asid)
++			: "memory");
++}
++
++static inline void local_flush_tlb_page_asid(unsigned long addr,
++		unsigned long asid)
++{
++	__asm__ __volatile__ ("sfence.vma %0, %1"
++			:
++			: "r" (addr), "r" (asid)
++			: "memory");
++}
++
+ #else /* CONFIG_MMU */
+ #define local_flush_tlb_all()			do { } while (0)
+ #define local_flush_tlb_page(addr)		do { } while (0)
+--- a/arch/riscv/mm/context.c
++++ b/arch/riscv/mm/context.c
+@@ -196,6 +196,16 @@ switch_mm_fast:
+ 
+ 	if (need_flush_tlb)
+ 		local_flush_tlb_all();
++#ifdef CONFIG_SMP
++	else {
++		cpumask_t *mask = &mm->context.tlb_stale_mask;
++
++		if (cpumask_test_cpu(cpu, mask)) {
++			cpumask_clear_cpu(cpu, mask);
++			local_flush_tlb_all_asid(cntx & asid_mask);
++		}
++	}
++#endif
+ }
+ 
+ static void set_mm_noasid(struct mm_struct *mm)
+--- a/arch/riscv/mm/tlbflush.c
++++ b/arch/riscv/mm/tlbflush.c
+@@ -5,23 +5,7 @@
+ #include <linux/sched.h>
+ #include <asm/sbi.h>
+ #include <asm/mmu_context.h>
+-
+-static inline void local_flush_tlb_all_asid(unsigned long asid)
 -{
--	unsigned char ops;
--
--	for (; addr < eaddr; addr++) {
--		if (get_kernel_nofault(ops, (void *)addr) < 0 ||
--		    ops != INT3_INSN_OPCODE)
--			return false;
--	}
--
--	return true;
+-	__asm__ __volatile__ ("sfence.vma x0, %0"
+-			:
+-			: "r" (asid)
+-			: "memory");
 -}
 -
- /* Decode whole function to ensure any instructions don't jump into target */
- static int can_optimize(unsigned long paddr)
+-static inline void local_flush_tlb_page_asid(unsigned long addr,
+-		unsigned long asid)
+-{
+-	__asm__ __volatile__ ("sfence.vma %0, %1"
+-			:
+-			: "r" (addr), "r" (asid)
+-			: "memory");
+-}
++#include <asm/tlbflush.h>
+ 
+ void flush_tlb_all(void)
  {
-@@ -327,15 +315,15 @@ static int can_optimize(unsigned long pa
- 		ret = insn_decode_kernel(&insn, (void *)recovered_insn);
- 		if (ret < 0)
- 			return 0;
--
-+#ifdef CONFIG_KGDB
- 		/*
--		 * In the case of detecting unknown breakpoint, this could be
--		 * a padding INT3 between functions. Let's check that all the
--		 * rest of the bytes are also INT3.
-+		 * If there is a dynamically installed kgdb sw breakpoint,
-+		 * this function should not be probed.
- 		 */
--		if (insn.opcode.bytes[0] == INT3_INSN_OPCODE)
--			return is_padding_int3(addr, paddr - offset + size) ? 1 : 0;
--
-+		if (insn.opcode.bytes[0] == INT3_INSN_OPCODE &&
-+		    kgdb_has_hit_break(addr))
-+			return 0;
-+#endif
- 		/* Recover address */
- 		insn.kaddr = (void *)addr;
- 		insn.next_byte = (void *)(addr + insn.length);
+@@ -31,6 +15,7 @@ void flush_tlb_all(void)
+ static void __sbi_tlb_flush_range(struct mm_struct *mm, unsigned long start,
+ 				  unsigned long size, unsigned long stride)
+ {
++	struct cpumask *pmask = &mm->context.tlb_stale_mask;
+ 	struct cpumask *cmask = mm_cpumask(mm);
+ 	struct cpumask hmask;
+ 	unsigned int cpuid;
+@@ -45,6 +30,15 @@ static void __sbi_tlb_flush_range(struct
+ 	if (static_branch_unlikely(&use_asid_allocator)) {
+ 		unsigned long asid = atomic_long_read(&mm->context.id);
+ 
++		/*
++		 * TLB will be immediately flushed on harts concurrently
++		 * executing this MM context. TLB flush on other harts
++		 * is deferred until this MM context migrates there.
++		 */
++		cpumask_setall(pmask);
++		cpumask_clear_cpu(cpuid, pmask);
++		cpumask_andnot(pmask, pmask, cmask);
++
+ 		if (broadcast) {
+ 			riscv_cpuid_to_hartid_mask(cmask, &hmask);
+ 			sbi_remote_sfence_vma_asid(cpumask_bits(&hmask),
 
 
