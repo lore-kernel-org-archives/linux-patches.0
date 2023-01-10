@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C604F6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:12:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D1C8C433F0;
-	Tue, 10 Jan 2023 18:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9686FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:12:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E28FCC433EF;
+	Tue, 10 Jan 2023 18:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374324;
-	bh=KoA8v2Anve2Hy3NsYGykVYAmzhdRQY2RqcDs1xt48xo=;
+	s=korg; t=1673374327;
+	bh=FbV0q6beeAFmQblRc8HSsLotow8WXUVOUrnLu92Y8wE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gaa65bvhQ8ozWtzmSgn1uJ/Rh3c9jf52EYJR1OFaLjaSTqHmKTeqgg+Eb9gTPG864
-	 QVqOA2Q9jYROU68JiggqigvqHpPD7leE0QvM8i4dsYTvKeWNgA64qQeOAAB//ycC+M
-	 /JPIVcUcDSGiHWLHbDyLbM6MlUpYgyl2VdU9EGnc=
+	b=YtAVSz+THTyzsw/Ti19JTxtsH4vyfihVA32cDgvTTnHlT5CzHu4V55LeLGka74oVt
+	 6cxXBeIWv58EspT5YYFevqxl7NkLG8NVprFg0ZvHUlevgt2IjXZmB/KjUccBmcMiFj
+	 Ma+kcmX58BGgI6QyaSz9hmr6uAmQimnEV56JNb0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mikelley@microsoft.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.0 130/148] block: dont allow splitting of a REQ_NOWAIT bio
-Date: Tue, 10 Jan 2023 19:03:54 +0100
-Message-Id: <20230110180021.308674383@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.0 104/148] ASoC: SOF: Revert: "core: unregister clients and machine drivers in .shutdown"
+Date: Tue, 10 Jan 2023 19:03:28 +0100
+Message-Id: <20230110180020.483536549@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -35,47 +39,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Kai Vehmanen <kai.vehmanen@linux.intel.com>
 
-commit 9cea62b2cbabff8ed46f2df17778b624ad9dd25a upstream.
+[ Upstream commit 44fda61d2bcfb74a942df93959e083a4e8eff75f ]
 
-If we split a bio marked with REQ_NOWAIT, then we can trigger spurious
-EAGAIN if constituent parts of that split bio end up failing request
-allocations. Parts will complete just fine, but just a single failure
-in one of the chained bios will yield an EAGAIN final result for the
-parent bio.
+The unregister machine drivers call is not safe to do when
+kexec is used. Kexec-lite gets blocked with following backtrace:
 
-Return EAGAIN early if we end up needing to split such a bio, which
-allows for saner recovery handling.
+[   84.943749] Freezing user space processes ... (elapsed 0.111 seconds) done.
+[  246.784446] INFO: task kexec-lite:5123 blocked for more than 122 seconds.
+[  246.819035] Call Trace:
+[  246.821782]  <TASK>
+[  246.824186]  __schedule+0x5f9/0x1263
+[  246.828231]  schedule+0x87/0xc5
+[  246.831779]  snd_card_disconnect_sync+0xb5/0x127
+...
+[  246.889249]  snd_sof_device_shutdown+0xb4/0x150
+[  246.899317]  pci_device_shutdown+0x37/0x61
+[  246.903990]  device_shutdown+0x14c/0x1d6
+[  246.908391]  kernel_kexec+0x45/0xb9
 
-Cc: stable@vger.kernel.org # 5.15+
-Link: https://github.com/axboe/liburing/issues/766
-Reported-by: Michael Kelley <mikelley@microsoft.com>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This reverts commit 83bfc7e793b555291785136c3ae86abcdc046887.
+
+Reported-by: Ricardo Ribalda <ribalda@chromium.org>
+Cc: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Link: https://lore.kernel.org/r/20221209114529.3909192-3-kai.vehmanen@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-merge.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ sound/soc/sof/core.c | 9 ---------
+ 1 file changed, 9 deletions(-)
 
---- a/block/blk-merge.c
-+++ b/block/blk-merge.c
-@@ -300,6 +300,16 @@ static struct bio *bio_split_rw(struct b
- 	*segs = nsegs;
- 	return NULL;
- split:
-+	/*
-+	 * We can't sanely support splitting for a REQ_NOWAIT bio. End it
-+	 * with EAGAIN if splitting is required and return an error pointer.
-+	 */
-+	if (bio->bi_opf & REQ_NOWAIT) {
-+		bio->bi_status = BLK_STS_AGAIN;
-+		bio_endio(bio);
-+		return ERR_PTR(-EAGAIN);
-+	}
-+
- 	*segs = nsegs;
+diff --git a/sound/soc/sof/core.c b/sound/soc/sof/core.c
+index c99b5e6c026c..694a2d94a222 100644
+--- a/sound/soc/sof/core.c
++++ b/sound/soc/sof/core.c
+@@ -472,19 +472,10 @@ EXPORT_SYMBOL(snd_sof_device_remove);
+ int snd_sof_device_shutdown(struct device *dev)
+ {
+ 	struct snd_sof_dev *sdev = dev_get_drvdata(dev);
+-	struct snd_sof_pdata *pdata = sdev->pdata;
  
- 	/*
+ 	if (IS_ENABLED(CONFIG_SND_SOC_SOF_PROBE_WORK_QUEUE))
+ 		cancel_work_sync(&sdev->probe_work);
+ 
+-	/*
+-	 * make sure clients and machine driver(s) are unregistered to force
+-	 * all userspace devices to be closed prior to the DSP shutdown sequence
+-	 */
+-	sof_unregister_clients(sdev);
+-
+-	snd_sof_machine_unregister(sdev, pdata);
+-
+ 	if (sdev->fw_state == SOF_FW_BOOT_COMPLETE)
+ 		return snd_sof_shutdown(sdev);
+ 
+-- 
+2.35.1
+
 
 
