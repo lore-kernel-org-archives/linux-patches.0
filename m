@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46304A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:21:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E5BC433D2;
-	Tue, 10 Jan 2023 18:21:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF442A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:21:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63EA6C433F0;
+	Tue, 10 Jan 2023 18:21:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374886;
-	bh=sivQZ7fBkirVjV4uvmddVbqfmKT1DffMkbAStZfykFw=;
+	s=korg; t=1673374888;
+	bh=djq9lIQ0nqp7d9nYg+s4qgATiy3Xr6m3SiYI/DdRwGk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HmdubQpqFmxxecQa/MTYkbpsWL205GoUddep6qG0eKRerVAIP/bzcg5SK4QWxuMF7
-	 NL/7bLTGWgTXklvgSw6mbDNT2aQ7xkRAE4+0ef58PcM22vhsXab1znRfKHBX+HJd50
-	 fHvrJQOuz6akU1LKXJBIN2djq+HViUGMr0YiJaKk=
+	b=Mz8U3L2ulLc6tEGYzW3W3YT9AYL/0VCDhlgsclboToOUdmiRZ5grA4m3pD5tOBgfk
+	 4ewNWVD1P7W+vhnnJmP70/4ZjJ8Dz7mm2eyvXOHRcKeGztcIJoITz83N5B/W95MI4j
+	 cpl1HagVHBnKxXKjW8IuPAw3FoETNpLxxRluBMK0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 140/159] thermal: int340x: Add missing attribute for data rate base
-Date: Tue, 10 Jan 2023 19:04:48 +0100
-Message-Id: <20230110180022.884499846@linuxfoundation.org>
+	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 131/159] Revert "drm/amd/display: Enable Freesync Video Mode by default"
+Date: Tue, 10 Jan 2023 19:04:39 +0100
+Message-Id: <20230110180022.531254217@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -34,56 +34,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Michel Dänzer <mdaenzer@redhat.com>
 
-commit b878d3ba9bb41cddb73ba4b56e5552f0a638daca upstream.
+commit 6fe6ece398f7431784847e922a2c8c385dc58a35 upstream.
 
-Commit 473be51142ad ("thermal: int340x: processor_thermal: Add RFIM
-driver")' added rfi_restriction_data_rate_base string, mmio details and
-documentation, but missed adding attribute to sysfs.
+This reverts commit de05abe6b9d0fe08f65d744f7f75a4cba4df27ad.
 
-Add missing sysfs attribute.
+The bug referenced below was bisected to this commit. There has been no
+activity toward fixing it in 3 months, so let's revert for now.
 
-Fixes: 473be51142ad ("thermal: int340x: processor_thermal: Add RFIM driver")
-Cc: 5.11+ <stable@vger.kernel.org> # v5.11+
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2162
+Signed-off-by: Michel Dänzer <mdaenzer@redhat.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu.h               |    1 
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c           |   27 ++++++++++++++++++++++
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   12 +++++----
+ 3 files changed, 35 insertions(+), 5 deletions(-)
 
---- a/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c
-+++ b/drivers/thermal/intel/int340x_thermal/processor_thermal_rfim.c
-@@ -172,6 +172,7 @@ static const struct attribute_group fivr
- RFIM_SHOW(rfi_restriction_run_busy, 1)
- RFIM_SHOW(rfi_restriction_err_code, 1)
- RFIM_SHOW(rfi_restriction_data_rate, 1)
-+RFIM_SHOW(rfi_restriction_data_rate_base, 1)
- RFIM_SHOW(ddr_data_rate_point_0, 1)
- RFIM_SHOW(ddr_data_rate_point_1, 1)
- RFIM_SHOW(ddr_data_rate_point_2, 1)
-@@ -181,11 +182,13 @@ RFIM_SHOW(rfi_disable, 1)
- RFIM_STORE(rfi_restriction_run_busy, 1)
- RFIM_STORE(rfi_restriction_err_code, 1)
- RFIM_STORE(rfi_restriction_data_rate, 1)
-+RFIM_STORE(rfi_restriction_data_rate_base, 1)
- RFIM_STORE(rfi_disable, 1)
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
+@@ -196,6 +196,7 @@ extern int amdgpu_emu_mode;
+ extern uint amdgpu_smu_memory_pool_size;
+ extern int amdgpu_smu_pptable_id;
+ extern uint amdgpu_dc_feature_mask;
++extern uint amdgpu_freesync_vid_mode;
+ extern uint amdgpu_dc_debug_mask;
+ extern uint amdgpu_dc_visual_confirm;
+ extern uint amdgpu_dm_abm_level;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -180,6 +180,7 @@ int amdgpu_mes_kiq;
+ int amdgpu_noretry = -1;
+ int amdgpu_force_asic_type = -1;
+ int amdgpu_tmz = -1; /* auto */
++uint amdgpu_freesync_vid_mode;
+ int amdgpu_reset_method = -1; /* auto */
+ int amdgpu_num_kcq = -1;
+ int amdgpu_smartshift_bias;
+@@ -878,6 +879,32 @@ MODULE_PARM_DESC(tmz, "Enable TMZ featur
+ module_param_named(tmz, amdgpu_tmz, int, 0444);
  
- static DEVICE_ATTR_RW(rfi_restriction_run_busy);
- static DEVICE_ATTR_RW(rfi_restriction_err_code);
- static DEVICE_ATTR_RW(rfi_restriction_data_rate);
-+static DEVICE_ATTR_RW(rfi_restriction_data_rate_base);
- static DEVICE_ATTR_RO(ddr_data_rate_point_0);
- static DEVICE_ATTR_RO(ddr_data_rate_point_1);
- static DEVICE_ATTR_RO(ddr_data_rate_point_2);
-@@ -248,6 +251,7 @@ static struct attribute *dvfs_attrs[] =
- 	&dev_attr_rfi_restriction_run_busy.attr,
- 	&dev_attr_rfi_restriction_err_code.attr,
- 	&dev_attr_rfi_restriction_data_rate.attr,
-+	&dev_attr_rfi_restriction_data_rate_base.attr,
- 	&dev_attr_ddr_data_rate_point_0.attr,
- 	&dev_attr_ddr_data_rate_point_1.attr,
- 	&dev_attr_ddr_data_rate_point_2.attr,
+ /**
++ * DOC: freesync_video (uint)
++ * Enable the optimization to adjust front porch timing to achieve seamless
++ * mode change experience when setting a freesync supported mode for which full
++ * modeset is not needed.
++ *
++ * The Display Core will add a set of modes derived from the base FreeSync
++ * video mode into the corresponding connector's mode list based on commonly
++ * used refresh rates and VRR range of the connected display, when users enable
++ * this feature. From the userspace perspective, they can see a seamless mode
++ * change experience when the change between different refresh rates under the
++ * same resolution. Additionally, userspace applications such as Video playback
++ * can read this modeset list and change the refresh rate based on the video
++ * frame rate. Finally, the userspace can also derive an appropriate mode for a
++ * particular refresh rate based on the FreeSync Mode and add it to the
++ * connector's mode list.
++ *
++ * Note: This is an experimental feature.
++ *
++ * The default value: 0 (off).
++ */
++MODULE_PARM_DESC(
++	freesync_video,
++	"Enable freesync modesetting optimization feature (0 = off (default), 1 = on)");
++module_param_named(freesync_video, amdgpu_freesync_vid_mode, uint, 0444);
++
++/**
+  * DOC: reset_method (int)
+  * GPU reset method (-1 = auto (default), 0 = legacy, 1 = mode0, 2 = mode1, 3 = mode2, 4 = baco)
+  */
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -5807,7 +5807,8 @@ create_stream_for_sink(struct amdgpu_dm_
+ 		 */
+ 		DRM_DEBUG_DRIVER("No preferred mode found\n");
+ 	} else {
+-		recalculate_timing = is_freesync_video_mode(&mode, aconnector);
++		recalculate_timing = amdgpu_freesync_vid_mode &&
++				 is_freesync_video_mode(&mode, aconnector);
+ 		if (recalculate_timing) {
+ 			freesync_mode = get_highest_refresh_rate_mode(aconnector, false);
+ 			drm_mode_copy(&saved_mode, &mode);
+@@ -6892,7 +6893,7 @@ static void amdgpu_dm_connector_add_free
+ 	struct amdgpu_dm_connector *amdgpu_dm_connector =
+ 		to_amdgpu_dm_connector(connector);
+ 
+-	if (!edid)
++	if (!(amdgpu_freesync_vid_mode && edid))
+ 		return;
+ 
+ 	if (amdgpu_dm_connector->max_vfreq - amdgpu_dm_connector->min_vfreq > 10)
+@@ -8753,7 +8754,8 @@ static int dm_update_crtc_state(struct a
+ 		 * TODO: Refactor this function to allow this check to work
+ 		 * in all conditions.
+ 		 */
+-		if (dm_new_crtc_state->stream &&
++		if (amdgpu_freesync_vid_mode &&
++		    dm_new_crtc_state->stream &&
+ 		    is_timing_unchanged_for_freesync(new_crtc_state, old_crtc_state))
+ 			goto skip_modeset;
+ 
+@@ -8788,7 +8790,7 @@ static int dm_update_crtc_state(struct a
+ 		if (!dm_old_crtc_state->stream)
+ 			goto skip_modeset;
+ 
+-		if (dm_new_crtc_state->stream &&
++		if (amdgpu_freesync_vid_mode && dm_new_crtc_state->stream &&
+ 		    is_timing_unchanged_for_freesync(new_crtc_state,
+ 						     old_crtc_state)) {
+ 			new_crtc_state->mode_changed = false;
+@@ -8800,7 +8802,7 @@ static int dm_update_crtc_state(struct a
+ 			set_freesync_fixed_config(dm_new_crtc_state);
+ 
+ 			goto skip_modeset;
+-		} else if (aconnector &&
++		} else if (amdgpu_freesync_vid_mode && aconnector &&
+ 			   is_freesync_video_mode(&new_crtc_state->mode,
+ 						  aconnector)) {
+ 			struct drm_display_mode *high_mode;
 
 
