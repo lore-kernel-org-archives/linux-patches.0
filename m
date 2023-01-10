@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D926FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:32:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E04C6C433D2;
-	Tue, 10 Jan 2023 18:32:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8643F6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:32:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0B73C433F0;
+	Tue, 10 Jan 2023 18:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375564;
-	bh=+ikifFwu8+Qq9LeeGYkoF3OOU5wnDSYALPC/q6nADqk=;
+	s=korg; t=1673375567;
+	bh=Pg2FGqIHWi9kYe3FyBV8LFPemLhEwC1JLiQqyDGl4LQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2nFZSZwM/D/GLqE9/QNObQ26hEf/PzreWQzu/Gis8Hna4CaMy8i9eHCxSTqfzsjPB
-	 ofPVMFfVqVO2w+33O9DIKcsTUbX7YocW2gAGrP87W+kFNjAowlL1yDN143Qsadq+WJ
-	 XEas0F3nqJKSXI4svB0VEe7xIO8EmgrHQMg+vEfU=
+	b=Nw9wXMGTIgBztYXvIbQp90R+9VFi6Mx5USsriD/w4vy+Jx8I4Y+6pO1gyOLU2AW1L
+	 Y+zBatz5wDSM3pI5F1tNvFDEU6/qnAOGFqPl6pQe0xbhAlMPxN9yNIKyw5e6wNWJ/F
+	 5EOqarqWGS89HwxczCdEk0vr6eE5y811rzWAtHTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiguang Xiao <jiguang.xiao@windriver.com>,
+	Nati Koler <nkoler@amazon.com>,
+	David Arinzon <darinzon@amazon.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 229/290] net: amd-xgbe: add missed tasklet_kill
-Date: Tue, 10 Jan 2023 19:05:21 +0100
-Message-Id: <20230110180039.923535456@linuxfoundation.org>
+Subject: [PATCH 5.15 230/290] net: ena: Fix toeplitz initial hash value
+Date: Tue, 10 Jan 2023 19:05:22 +0100
+Message-Id: <20230110180039.964439961@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,69 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiguang Xiao <jiguang.xiao@windriver.com>
+From: David Arinzon <darinzon@amazon.com>
 
-[ Upstream commit d530ece70f16f912e1d1bfeea694246ab78b0a4b ]
+[ Upstream commit 332b49ff637d6c1a75b971022a8b992cf3c57db1 ]
 
-The driver does not call tasklet_kill in several places.
-Add the calls to fix it.
+On driver initialization, RSS hash initial value is set to zero,
+instead of the default value. This happens because we pass NULL as
+the RSS key parameter, which caused us to never initialize
+the RSS hash value.
 
-Fixes: 85b85c853401 ("amd-xgbe: Re-issue interrupt if interrupt status not cleared")
-Signed-off-by: Jiguang Xiao <jiguang.xiao@windriver.com>
+This patch fixes it by making sure the initial value is set, no matter
+what the value of the RSS key is.
+
+Fixes: 91a65b7d3ed8 ("net: ena: fix potential crash when rxfh key is NULL")
+Signed-off-by: Nati Koler <nkoler@amazon.com>
+Signed-off-by: David Arinzon <darinzon@amazon.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-drv.c  | 3 +++
- drivers/net/ethernet/amd/xgbe/xgbe-i2c.c  | 4 +++-
- drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 4 +++-
- 3 files changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_com.c | 29 +++++++----------------
+ 1 file changed, 9 insertions(+), 20 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-index e6883d52d230..555db1871ec9 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-@@ -1064,6 +1064,9 @@ static void xgbe_free_irqs(struct xgbe_prv_data *pdata)
+diff --git a/drivers/net/ethernet/amazon/ena/ena_com.c b/drivers/net/ethernet/amazon/ena/ena_com.c
+index ab413fc1f68e..f0faad149a3b 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_com.c
++++ b/drivers/net/ethernet/amazon/ena/ena_com.c
+@@ -2392,29 +2392,18 @@ int ena_com_fill_hash_function(struct ena_com_dev *ena_dev,
+ 		return -EOPNOTSUPP;
+ 	}
  
- 	devm_free_irq(pdata->dev, pdata->dev_irq, pdata);
+-	switch (func) {
+-	case ENA_ADMIN_TOEPLITZ:
+-		if (key) {
+-			if (key_len != sizeof(hash_key->key)) {
+-				netdev_err(ena_dev->net_device,
+-					   "key len (%u) doesn't equal the supported size (%zu)\n",
+-					   key_len, sizeof(hash_key->key));
+-				return -EINVAL;
+-			}
+-			memcpy(hash_key->key, key, key_len);
+-			rss->hash_init_val = init_val;
+-			hash_key->key_parts = key_len / sizeof(hash_key->key[0]);
++	if ((func == ENA_ADMIN_TOEPLITZ) && key) {
++		if (key_len != sizeof(hash_key->key)) {
++			netdev_err(ena_dev->net_device,
++				   "key len (%u) doesn't equal the supported size (%zu)\n",
++				   key_len, sizeof(hash_key->key));
++			return -EINVAL;
+ 		}
+-		break;
+-	case ENA_ADMIN_CRC32:
+-		rss->hash_init_val = init_val;
+-		break;
+-	default:
+-		netdev_err(ena_dev->net_device, "Invalid hash function (%d)\n",
+-			   func);
+-		return -EINVAL;
++		memcpy(hash_key->key, key, key_len);
++		hash_key->key_parts = key_len / sizeof(hash_key->key[0]);
+ 	}
  
-+	tasklet_kill(&pdata->tasklet_dev);
-+	tasklet_kill(&pdata->tasklet_ecc);
-+
- 	if (pdata->vdata->ecc_support && (pdata->dev_irq != pdata->ecc_irq))
- 		devm_free_irq(pdata->dev, pdata->ecc_irq, pdata);
- 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c b/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c
-index 22d4fc547a0a..a9ccc4258ee5 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c
-@@ -447,8 +447,10 @@ static void xgbe_i2c_stop(struct xgbe_prv_data *pdata)
- 	xgbe_i2c_disable(pdata);
- 	xgbe_i2c_clear_all_interrupts(pdata);
- 
--	if (pdata->dev_irq != pdata->i2c_irq)
-+	if (pdata->dev_irq != pdata->i2c_irq) {
- 		devm_free_irq(pdata->dev, pdata->i2c_irq, pdata);
-+		tasklet_kill(&pdata->tasklet_i2c);
-+	}
- }
- 
- static int xgbe_i2c_start(struct xgbe_prv_data *pdata)
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-index 4e97b4869522..0c5c1b155683 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-@@ -1390,8 +1390,10 @@ static void xgbe_phy_stop(struct xgbe_prv_data *pdata)
- 	/* Disable auto-negotiation */
- 	xgbe_an_disable_all(pdata);
- 
--	if (pdata->dev_irq != pdata->an_irq)
-+	if (pdata->dev_irq != pdata->an_irq) {
- 		devm_free_irq(pdata->dev, pdata->an_irq, pdata);
-+		tasklet_kill(&pdata->tasklet_an);
-+	}
- 
- 	pdata->phy_if.phy_impl.stop(pdata);
- 
++	rss->hash_init_val = init_val;
+ 	old_func = rss->hash_func;
+ 	rss->hash_func = func;
+ 	rc = ena_com_set_hash_function(ena_dev);
 -- 
 2.35.1
 
