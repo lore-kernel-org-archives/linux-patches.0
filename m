@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851466FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:18:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF4B0C433D2;
-	Tue, 10 Jan 2023 18:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B00F6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:18:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57CAC433EF;
+	Tue, 10 Jan 2023 18:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374722;
-	bh=nbEQCC/a/+NsXj6d7pAHo1OtVx4lNUjq9z845PL8KLE=;
+	s=korg; t=1673374725;
+	bh=51Vl4qwwnCJjAgopIpAUTcV0XVq46xyRJEVhQUdt8t4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fLzUhOGlboFPJRSlEgoq+ZzzUuRB09X5YS0jcHgPRsY5ykZUEn4dfw+O0U5gpZegK
-	 oPYKYJiu4w9i82k9lCCo4y5JFe8heWnvTD3hWwSBe7WwpnZpu+hWAu2g97TqnAkNGR
-	 XAVD+6I9sNZjQ8vhqklCYypuoqW5Gz0hBhbiKtdA=
+	b=gALutRDG5JXH8VwnNGWxLRgcMrc0jK4ZShvo/jOuq1OHvukis2uEw/NDky2zznNOW
+	 YnKJ/Jv/j8XYeaN7lksJVEBQ81KrJpeI3kvvWqWruiy8uL0p/Kq4Ods7GCVP7oP5r1
+	 RTXI4MRVg3dFheosgvr8YdJG8bO2rsGNKuS/4dk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YC Hung <yc.hung@mediatek.com>,
-	Curtis Malainey <cujomalainey@chromium.org>,
-	Mark Brown <broonie@kernel.org>,
+	Alex Deucher <Alexander.Deucher@amd.com>,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	AMD Graphics <amd-gfx@lists.freedesktop.org>,
+	Luben Tuikov <luben.tuikov@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 112/159] ASoC: SOF: mediatek: initialize panic_info to zero
-Date: Tue, 10 Jan 2023 19:04:20 +0100
-Message-Id: <20230110180021.858949235@linuxfoundation.org>
+Subject: [PATCH 6.1 113/159] drm/amdgpu: Fix size validation for non-exclusive domains (v4)
+Date: Tue, 10 Jan 2023 19:04:21 +0100
+Message-Id: <20230110180021.895490092@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,36 +38,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YC Hung <yc.hung@mediatek.com>
+From: Luben Tuikov <luben.tuikov@amd.com>
 
-[ Upstream commit 7bd220f2ba9014b78f0304178103393554b8c4fe ]
+[ Upstream commit 7554886daa31eacc8e7fac9e15bbce67d10b8f1f ]
 
-Coverity spotted that panic_info is not initialized to zero in
-mtk_adsp_dump. Using uninitialized value panic_info.linenum when
-calling snd_sof_get_status. Fix this coverity by initializing
-panic_info struct as zero.
+Fix amdgpu_bo_validate_size() to check whether the TTM domain manager for the
+requested memory exists, else we get a kernel oops when dereferencing "man".
 
-Signed-off-by: YC Hung <yc.hung@mediatek.com>
-Reviewed-by: Curtis Malainey <cujomalainey@chromium.org>
-Link: https://lore.kernel.org/r/20221213115617.25086-1-yc.hung@mediatek.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+v2: Make the patch standalone, i.e. not dependent on local patches.
+v3: Preserve old behaviour and just check that the manager pointer is not
+    NULL.
+v4: Complain if GTT domain requested and it is uninitialized--most likely a
+    bug.
+
+Cc: Alex Deucher <Alexander.Deucher@amd.com>
+Cc: Christian König <christian.koenig@amd.com>
+Cc: AMD Graphics <amd-gfx@lists.freedesktop.org>
+Signed-off-by: Luben Tuikov <luben.tuikov@amd.com>
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/mediatek/mtk-adsp-common.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_object.c | 19 ++++++++-----------
+ 1 file changed, 8 insertions(+), 11 deletions(-)
 
-diff --git a/sound/soc/sof/mediatek/mtk-adsp-common.c b/sound/soc/sof/mediatek/mtk-adsp-common.c
-index 1e0769c668a7..de8dbe27cd0d 100644
---- a/sound/soc/sof/mediatek/mtk-adsp-common.c
-+++ b/sound/soc/sof/mediatek/mtk-adsp-common.c
-@@ -60,7 +60,7 @@ void mtk_adsp_dump(struct snd_sof_dev *sdev, u32 flags)
- {
- 	char *level = (flags & SOF_DBG_DUMP_OPTIONAL) ? KERN_DEBUG : KERN_ERR;
- 	struct sof_ipc_dsp_oops_xtensa xoops;
--	struct sof_ipc_panic_info panic_info;
-+	struct sof_ipc_panic_info panic_info = {};
- 	u32 stack[MTK_ADSP_STACK_DUMP_SIZE];
- 	u32 status;
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+index 3df13d841e4d..3be3cba3a16d 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
+@@ -446,27 +446,24 @@ static bool amdgpu_bo_validate_size(struct amdgpu_device *adev,
+ 
+ 	/*
+ 	 * If GTT is part of requested domains the check must succeed to
+-	 * allow fall back to GTT
++	 * allow fall back to GTT.
+ 	 */
+ 	if (domain & AMDGPU_GEM_DOMAIN_GTT) {
+ 		man = ttm_manager_type(&adev->mman.bdev, TTM_PL_TT);
+ 
+-		if (size < man->size)
++		if (man && size < man->size)
+ 			return true;
+-		else
+-			goto fail;
+-	}
+-
+-	if (domain & AMDGPU_GEM_DOMAIN_VRAM) {
++		else if (!man)
++			WARN_ON_ONCE("GTT domain requested but GTT mem manager uninitialized");
++		goto fail;
++	} else if (domain & AMDGPU_GEM_DOMAIN_VRAM) {
+ 		man = ttm_manager_type(&adev->mman.bdev, TTM_PL_VRAM);
+ 
+-		if (size < man->size)
++		if (man && size < man->size)
+ 			return true;
+-		else
+-			goto fail;
++		goto fail;
+ 	}
+ 
+-
+ 	/* TODO add more domains checks, such as AMDGPU_GEM_DOMAIN_CPU */
+ 	return true;
  
 -- 
 2.35.1
