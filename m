@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 736236FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:13:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E394AC433F0;
-	Tue, 10 Jan 2023 18:13:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8D2F6FCF
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:13:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7CACC433F1;
+	Tue, 10 Jan 2023 18:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374395;
-	bh=/RE/oCTyk+8Re2BuLJRIvYogNAwsGpHS5v7SCMwQlXw=;
+	s=korg; t=1673374401;
+	bh=crB9Rdh0h9jCxbbNJhNtCqjf7ifM9NLkH7Fa0seJnfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qA3Xt8ebgl/Bl0RYiYmMa97uU7r17vDBfyOxF6ecypQ4fe0XlUls2UjDZ92NpPg6u
-	 bkqCwLid1lz3s3e4yFT4gtvYewUzNKHuwOsEQ086jfFz9UCdEOxinI6oCOZVb+RGYt
-	 wHMUIF67EWP5ADmT9kNBvk2UdRIPBnHFFC815Rbk=
+	b=tWwazh+sd3RASvIz97Oyj4t7m/3fTfjf6e6y/djAPm5R9LjKw9pkDmuapPlBtKAbx
+	 mByelzUw6E78gnQJeath9BG3IItOA6s462eIOf6RHJIrHFKEdzgu9vcs9N1fUb4WD2
+	 icBjOx1NstLrZfYvmvlTcI4dXdfwugnSiky0dNCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Mendonca <rafaelmendsr@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Suwan Kim <suwan.kim027@gmail.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 141/148] virtio_blk: Fix signedness bug in virtblk_prep_rq()
-Date: Tue, 10 Jan 2023 19:04:05 +0100
-Message-Id: <20230110180021.653163787@linuxfoundation.org>
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
+	Namjae Jeon <linkinjeon@kernel.org>,
+	Steve French <stfrench@microsoft.com>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 6.0 143/148] ksmbd: fix infinite loop in ksmbd_conn_handler_loop()
+Date: Tue, 10 Jan 2023 19:04:07 +0100
+Message-Id: <20230110180021.715411224@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -39,53 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael Mendonca <rafaelmendsr@gmail.com>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-[ Upstream commit a26116c1e74028914f281851488546c91cbae57d ]
+commit 83dcedd5540d4ac61376ddff5362f7d9f866a6ec upstream.
 
-The virtblk_map_data() function returns negative error codes, however, the
-'nents' field of vbr->sg_table is an unsigned int, which causes the error
-handling not to work correctly.
+If kernel_recvmsg() return -EAGAIN in ksmbd_tcp_readv() and go round
+again, It will cause infinite loop issue. And all threads from next
+connections would be doing that. This patch add max retry count(2) to
+avoid it. kernel_recvmsg() will wait during 7sec timeout and try to
+retry two time if -EAGAIN is returned. And add flags of kvmalloc to
+__GFP_NOWARN and __GFP_NORETRY to disconnect immediately without
+retrying on memory alloation failure.
 
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
 Cc: stable@vger.kernel.org
-Fixes: 0e9911fa768f ("virtio-blk: support mq_ops->queue_rqs()")
-Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
-Message-Id: <20221021204126.927603-1-rafaelmendsr@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Suwan Kim <suwan.kim027@gmail.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Acked-by: Jason Wang <jasowang@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-18259
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/virtio_blk.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ fs/ksmbd/connection.c    |    7 +++++--
+ fs/ksmbd/transport_tcp.c |    5 ++++-
+ 2 files changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/block/virtio_blk.c b/drivers/block/virtio_blk.c
-index b3b1191281ea..53931fcef0d5 100644
---- a/drivers/block/virtio_blk.c
-+++ b/drivers/block/virtio_blk.c
-@@ -330,14 +330,16 @@ static blk_status_t virtblk_prep_rq(struct blk_mq_hw_ctx *hctx,
- 					struct virtblk_req *vbr)
- {
- 	blk_status_t status;
-+	int num;
+--- a/fs/ksmbd/connection.c
++++ b/fs/ksmbd/connection.c
+@@ -310,9 +310,12 @@ int ksmbd_conn_handler_loop(void *p)
  
- 	status = virtblk_setup_cmd(vblk->vdev, req, vbr);
- 	if (unlikely(status))
- 		return status;
+ 		/* 4 for rfc1002 length field */
+ 		size = pdu_size + 4;
+-		conn->request_buf = kvmalloc(size, GFP_KERNEL);
++		conn->request_buf = kvmalloc(size,
++					     GFP_KERNEL |
++					     __GFP_NOWARN |
++					     __GFP_NORETRY);
+ 		if (!conn->request_buf)
+-			continue;
++			break;
  
--	vbr->sg_table.nents = virtblk_map_data(hctx, req, vbr);
--	if (unlikely(vbr->sg_table.nents < 0))
-+	num = virtblk_map_data(hctx, req, vbr);
-+	if (unlikely(num < 0))
- 		return virtblk_fail_to_queue(req, -ENOMEM);
-+	vbr->sg_table.nents = num;
+ 		memcpy(conn->request_buf, hdr_buf, sizeof(hdr_buf));
+ 		if (!ksmbd_smb_request(conn))
+--- a/fs/ksmbd/transport_tcp.c
++++ b/fs/ksmbd/transport_tcp.c
+@@ -295,6 +295,7 @@ static int ksmbd_tcp_readv(struct tcp_tr
+ 	struct msghdr ksmbd_msg;
+ 	struct kvec *iov;
+ 	struct ksmbd_conn *conn = KSMBD_TRANS(t)->conn;
++	int max_retry = 2;
  
- 	blk_mq_start_request(req);
- 
--- 
-2.35.1
-
+ 	iov = get_conn_iovec(t, nr_segs);
+ 	if (!iov)
+@@ -321,9 +322,11 @@ static int ksmbd_tcp_readv(struct tcp_tr
+ 		} else if (conn->status == KSMBD_SESS_NEED_RECONNECT) {
+ 			total_read = -EAGAIN;
+ 			break;
+-		} else if (length == -ERESTARTSYS || length == -EAGAIN) {
++		} else if ((length == -ERESTARTSYS || length == -EAGAIN) &&
++			   max_retry) {
+ 			usleep_range(1000, 2000);
+ 			length = 0;
++			max_retry--;
+ 			continue;
+ 		} else if (length <= 0) {
+ 			total_read = -EAGAIN;
 
 
