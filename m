@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF3FA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:07:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6759C433EF;
-	Tue, 10 Jan 2023 18:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35FCBA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:07:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB655C433EF;
+	Tue, 10 Jan 2023 18:07:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374044;
-	bh=zhIDN1V9+cgc3xKA8KmzVxE5jZb8/vgHLnbqpmY3j/E=;
+	s=korg; t=1673374047;
+	bh=vpaTrvBJxnXvLYryMu2XfyB5YPqtWcLg50aPxfKu2Es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P0dK8685taguGsgexp2N6/QrVrzaBAx85KZQ0ZCmedm3pyektd7wbJu2EHwt9qA8Z
-	 BDNgcSWH/f178pN1nM51Db042flihfEx/+tRMnUGFsRFzAtAOSRJabnnbo7pzzpiXz
-	 ECjkNaY71N7LIzo9QDIEXJIqBVhy0kboK+4IcfDs=
+	b=U6ENqH0A57IHtOK/HMboDAsLlDnGMZW7nHsGsx/s4D7fQTwrl/sXbX8699DpFmsLh
+	 xhrEmnwpedZmJ7Ow6ixf4FXmgYaaVKGo+iDYh8xIUcS7t1+hwguba1RZSmalJzTqoW
+	 hOvgmfHiopxdzl5NdISn6s78EmIqg6FNg1p12oxA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
+	minoura makoto <minoura@valinux.co.jp>,
+	Hiroshi Shimamoto <h-shimamoto@nec.com>,
+	Trond Myklebust <trondmy@hammerspace.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 010/148] ext4: correct inconsistent error msg in nojournal mode
-Date: Tue, 10 Jan 2023 19:01:54 +0100
-Message-Id: <20230110180017.509176090@linuxfoundation.org>
+Subject: [PATCH 6.0 011/148] SUNRPC: ensure the matching upcall is in-flight upon downcall
+Date: Tue, 10 Jan 2023 19:01:55 +0100
+Message-Id: <20230110180017.539752192@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -37,53 +37,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: minoura makoto <minoura@valinux.co.jp>
 
-[ Upstream commit 89481b5fa8c0640e62ba84c6020cee895f7ac643 ]
+[ Upstream commit b18cba09e374637a0a3759d856a6bca94c133952 ]
 
-When we used the journal_async_commit mounting option in nojournal mode,
-the kernel told me that "can't mount with journal_checksum", was very
-confusing. I find that when we mount with journal_async_commit, both the
-JOURNAL_ASYNC_COMMIT and EXPLICIT_JOURNAL_CHECKSUM flags are set. However,
-in the error branch, CHECKSUM is checked before ASYNC_COMMIT. As a result,
-the above inconsistency occurs, and the ASYNC_COMMIT branch becomes dead
-code that cannot be executed. Therefore, we exchange the positions of the
-two judgments to make the error msg more accurate.
+Commit 9130b8dbc6ac ("SUNRPC: allow for upcalls for the same uid
+but different gss service") introduced `auth` argument to
+__gss_find_upcall(), but in gss_pipe_downcall() it was left as NULL
+since it (and auth->service) was not (yet) determined.
 
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221109074343.4184862-1-libaokun1@huawei.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+When multiple upcalls with the same uid and different service are
+ongoing, it could happen that __gss_find_upcall(), which returns the
+first match found in the pipe->in_downcall list, could not find the
+correct gss_msg corresponding to the downcall we are looking for.
+Moreover, it might return a msg which is not sent to rpc.gssd yet.
+
+We could see mount.nfs process hung in D state with multiple mount.nfs
+are executed in parallel.  The call trace below is of CentOS 7.9
+kernel-3.10.0-1160.24.1.el7.x86_64 but we observed the same hang w/
+elrepo kernel-ml-6.0.7-1.el7.
+
+PID: 71258  TASK: ffff91ebd4be0000  CPU: 36  COMMAND: "mount.nfs"
+ #0 [ffff9203ca3234f8] __schedule at ffffffffa3b8899f
+ #1 [ffff9203ca323580] schedule at ffffffffa3b88eb9
+ #2 [ffff9203ca323590] gss_cred_init at ffffffffc0355818 [auth_rpcgss]
+ #3 [ffff9203ca323658] rpcauth_lookup_credcache at ffffffffc0421ebc
+[sunrpc]
+ #4 [ffff9203ca3236d8] gss_lookup_cred at ffffffffc0353633 [auth_rpcgss]
+ #5 [ffff9203ca3236e8] rpcauth_lookupcred at ffffffffc0421581 [sunrpc]
+ #6 [ffff9203ca323740] rpcauth_refreshcred at ffffffffc04223d3 [sunrpc]
+ #7 [ffff9203ca3237a0] call_refresh at ffffffffc04103dc [sunrpc]
+ #8 [ffff9203ca3237b8] __rpc_execute at ffffffffc041e1c9 [sunrpc]
+ #9 [ffff9203ca323820] rpc_execute at ffffffffc0420a48 [sunrpc]
+
+The scenario is like this. Let's say there are two upcalls for
+services A and B, A -> B in pipe->in_downcall, B -> A in pipe->pipe.
+
+When rpc.gssd reads pipe to get the upcall msg corresponding to
+service B from pipe->pipe and then writes the response, in
+gss_pipe_downcall the msg corresponding to service A will be picked
+because only uid is used to find the msg and it is before the one for
+B in pipe->in_downcall.  And the process waiting for the msg
+corresponding to service A will be woken up.
+
+Actual scheduing of that process might be after rpc.gssd processes the
+next msg.  In rpc_pipe_generic_upcall it clears msg->errno (for A).
+The process is scheduled to see gss_msg->ctx == NULL and
+gss_msg->msg.errno == 0, therefore it cannot break the loop in
+gss_create_upcall and is never woken up after that.
+
+This patch adds a simple check to ensure that a msg which is not
+sent to rpc.gssd yet is not chosen as the matching upcall upon
+receiving a downcall.
+
+Signed-off-by: minoura makoto <minoura@valinux.co.jp>
+Signed-off-by: Hiroshi Shimamoto <h-shimamoto@nec.com>
+Tested-by: Hiroshi Shimamoto <h-shimamoto@nec.com>
+Cc: Trond Myklebust <trondmy@hammerspace.com>
+Fixes: 9130b8dbc6ac ("SUNRPC: allow for upcalls for same uid but different gss service")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ include/linux/sunrpc/rpc_pipe_fs.h |  5 +++++
+ net/sunrpc/auth_gss/auth_gss.c     | 19 +++++++++++++++++--
+ 2 files changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index fedfe8cb78c6..ac083526c115 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -5066,14 +5066,15 @@ static int __ext4_fill_super(struct fs_context *fc, struct super_block *sb)
- 		goto failed_mount3a;
- 	} else {
- 		/* Nojournal mode, all journal mount options are illegal */
--		if (test_opt2(sb, EXPLICIT_JOURNAL_CHECKSUM)) {
-+		if (test_opt(sb, JOURNAL_ASYNC_COMMIT)) {
- 			ext4_msg(sb, KERN_ERR, "can't mount with "
--				 "journal_checksum, fs mounted w/o journal");
-+				 "journal_async_commit, fs mounted w/o journal");
- 			goto failed_mount3a;
- 		}
--		if (test_opt(sb, JOURNAL_ASYNC_COMMIT)) {
+diff --git a/include/linux/sunrpc/rpc_pipe_fs.h b/include/linux/sunrpc/rpc_pipe_fs.h
+index cd188a527d16..3b35b6f6533a 100644
+--- a/include/linux/sunrpc/rpc_pipe_fs.h
++++ b/include/linux/sunrpc/rpc_pipe_fs.h
+@@ -92,6 +92,11 @@ extern ssize_t rpc_pipe_generic_upcall(struct file *, struct rpc_pipe_msg *,
+ 				       char __user *, size_t);
+ extern int rpc_queue_upcall(struct rpc_pipe *, struct rpc_pipe_msg *);
+ 
++/* returns true if the msg is in-flight, i.e., already eaten by the peer */
++static inline bool rpc_msg_is_inflight(const struct rpc_pipe_msg *msg) {
++	return (msg->copied != 0 && list_empty(&msg->list));
++}
 +
-+		if (test_opt2(sb, EXPLICIT_JOURNAL_CHECKSUM)) {
- 			ext4_msg(sb, KERN_ERR, "can't mount with "
--				 "journal_async_commit, fs mounted w/o journal");
-+				 "journal_checksum, fs mounted w/o journal");
- 			goto failed_mount3a;
- 		}
- 		if (sbi->s_commit_interval != JBD2_DEFAULT_MAX_COMMIT_AGE*HZ) {
+ struct rpc_clnt;
+ extern struct dentry *rpc_create_client_dir(struct dentry *, const char *, struct rpc_clnt *);
+ extern int rpc_remove_client_dir(struct rpc_clnt *);
+diff --git a/net/sunrpc/auth_gss/auth_gss.c b/net/sunrpc/auth_gss/auth_gss.c
+index 7bb247c51e2f..2d7b1e03110a 100644
+--- a/net/sunrpc/auth_gss/auth_gss.c
++++ b/net/sunrpc/auth_gss/auth_gss.c
+@@ -302,7 +302,7 @@ __gss_find_upcall(struct rpc_pipe *pipe, kuid_t uid, const struct gss_auth *auth
+ 	list_for_each_entry(pos, &pipe->in_downcall, list) {
+ 		if (!uid_eq(pos->uid, uid))
+ 			continue;
+-		if (auth && pos->auth->service != auth->service)
++		if (pos->auth->service != auth->service)
+ 			continue;
+ 		refcount_inc(&pos->count);
+ 		return pos;
+@@ -686,6 +686,21 @@ gss_create_upcall(struct gss_auth *gss_auth, struct gss_cred *gss_cred)
+ 	return err;
+ }
+ 
++static struct gss_upcall_msg *
++gss_find_downcall(struct rpc_pipe *pipe, kuid_t uid)
++{
++	struct gss_upcall_msg *pos;
++	list_for_each_entry(pos, &pipe->in_downcall, list) {
++		if (!uid_eq(pos->uid, uid))
++			continue;
++		if (!rpc_msg_is_inflight(&pos->msg))
++			continue;
++		refcount_inc(&pos->count);
++		return pos;
++	}
++	return NULL;
++}
++
+ #define MSG_BUF_MAXSIZE 1024
+ 
+ static ssize_t
+@@ -732,7 +747,7 @@ gss_pipe_downcall(struct file *filp, const char __user *src, size_t mlen)
+ 	err = -ENOENT;
+ 	/* Find a matching upcall */
+ 	spin_lock(&pipe->lock);
+-	gss_msg = __gss_find_upcall(pipe, uid, NULL);
++	gss_msg = gss_find_downcall(pipe, uid);
+ 	if (gss_msg == NULL) {
+ 		spin_unlock(&pipe->lock);
+ 		goto err_put_ctx;
 -- 
 2.35.1
 
