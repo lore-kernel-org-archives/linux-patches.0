@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51A92A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:08:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9EEEC433EF;
-	Tue, 10 Jan 2023 18:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEEBA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:08:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 621C4C433F2;
+	Tue, 10 Jan 2023 18:08:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374089;
-	bh=I/sl2UGRqOISXruPbGjEzY0hBc8yilnmyoCw4FWvD3c=;
+	s=korg; t=1673374091;
+	bh=/CFWjlEv1k5sF1WtWPeQYPJ2W/TyBqJHil37cYtaW3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qf73GuLGlUY5fW3sZ944RKhbaphNj6m4wz+5aodV5IZzb+0syM2yhKcLmU1I95X35
-	 4fyz9gMjW5SV+nV8oXc5VBGhE6JKrkoA8TwvF620GHUau+S8I/5al38DdX5p9ZODot
-	 vEwyjjFNMw/qlBcyh210x/B0Kx41AGC02zYlSsJs=
+	b=0nzu3wNndz7IdbGNDe9eDWSrXnYxAHfwGOiS+Wo2/2uGl3GvAmT9lpAOvk0VZ9sGh
+	 4HzsR3z7qJfEZowfA3IY8KfrRCvxl08b3Amq5epMGR0lr0q582qpYl7Dov4RK3lP4Z
+	 +Do6aGx8reEmksnZnQ1VEW7WlT8tPqBEou0IOP68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Wang <wangjie125@huawei.com>,
-	Hao Lan <lanhao@huawei.com>,
+	Maciej Fijalkowski <maciej.fijalkowski@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 028/148] net: hns3: add interrupts re-initialization while doing VF FLR
-Date: Tue, 10 Jan 2023 19:02:12 +0100
-Message-Id: <20230110180018.094820758@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	Robin Cowley <robin.cowley@thehutgroup.com>,
+	Chandan Kumar Rout <chandanx.rout@intel.com>
+Subject: [PATCH 6.0 019/148] ice: xsk: do not use xdp_return_frame() on tx_buf->raw_buf
+Date: Tue, 10 Jan 2023 19:02:03 +0100
+Message-Id: <20230110180017.811590778@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -36,41 +38,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jie Wang <wangjie125@huawei.com>
+From: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
 
-[ Upstream commit 09e6b30eeb254f1818a008cace3547159e908dfd ]
+[ Upstream commit 53fc61be273a1e76dd5e356f91805dce00ff2d2c ]
 
-Currently keep alive message between PF and VF may be lost and the VF is
-unalive in PF. So the VF will not do reset during PF FLR reset process.
-This would make the allocated interrupt resources of VF invalid and VF
-would't receive or respond to PF any more.
+Previously ice XDP xmit routine was changed in a way that it avoids
+xdp_buff->xdp_frame conversion as it is simply not needed for handling
+XDP_TX action and what is more it saves us CPU cycles. This routine is
+re-used on ZC driver to handle XDP_TX action.
 
-So this patch adds VF interrupts re-initialization during VF FLR for VF
-recovery in above cases.
+Although for XDP_TX on Rx ZC xdp_buff that comes from xsk_buff_pool is
+converted to xdp_frame, xdp_frame itself is not stored inside
+ice_tx_buf, we only store raw data pointer. Casting this pointer to
+xdp_frame and calling against it xdp_return_frame in
+ice_clean_xdp_tx_buf() results in undefined behavior.
 
-Fixes: 862d969a3a4d ("net: hns3: do VF's pci re-initialization while PF doing FLR")
-Signed-off-by: Jie Wang <wangjie125@huawei.com>
-Signed-off-by: Hao Lan <lanhao@huawei.com>
+To fix this, simply call page_frag_free() on tx_buf->raw_buf.
+Later intention is to remove the buff->frame conversion in order to
+simplify the codebase and improve XDP_TX performance on ZC.
+
+Fixes: 126cdfe1007a ("ice: xsk: Improve AF_XDP ZC Tx and use batching API")
+Reported-and-tested-by: Robin Cowley <robin.cowley@thehutgroup.com>
+Signed-off-by: Maciej Fijalkowski <maciej.fijalkowski@intel.com>
+Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Piotr Raczynski <piotr.raczynski@.intel.com>
+Link: https://lore.kernel.org/r/20221220175448.693999-1-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_xsk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-index 26f87330173e..c551508e6932 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-@@ -2767,7 +2767,8 @@ static int hclgevf_pci_reset(struct hclgevf_dev *hdev)
- 	struct pci_dev *pdev = hdev->pdev;
- 	int ret = 0;
- 
--	if (hdev->reset_type == HNAE3_VF_FULL_RESET &&
-+	if ((hdev->reset_type == HNAE3_VF_FULL_RESET ||
-+	     hdev->reset_type == HNAE3_FLR_RESET) &&
- 	    test_bit(HCLGEVF_STATE_IRQ_INITED, &hdev->state)) {
- 		hclgevf_misc_irq_uninit(hdev);
- 		hclgevf_uninit_msi(hdev);
+diff --git a/drivers/net/ethernet/intel/ice/ice_xsk.c b/drivers/net/ethernet/intel/ice/ice_xsk.c
+index 056c904b83cc..79fa65d1cf20 100644
+--- a/drivers/net/ethernet/intel/ice/ice_xsk.c
++++ b/drivers/net/ethernet/intel/ice/ice_xsk.c
+@@ -772,7 +772,7 @@ int ice_clean_rx_irq_zc(struct ice_rx_ring *rx_ring, int budget)
+ static void
+ ice_clean_xdp_tx_buf(struct ice_tx_ring *xdp_ring, struct ice_tx_buf *tx_buf)
+ {
+-	xdp_return_frame((struct xdp_frame *)tx_buf->raw_buf);
++	page_frag_free(tx_buf->raw_buf);
+ 	xdp_ring->xdp_tx_active--;
+ 	dma_unmap_single(xdp_ring->dev, dma_unmap_addr(tx_buf, dma),
+ 			 dma_unmap_len(tx_buf, len), DMA_TO_DEVICE);
 -- 
 2.35.1
 
