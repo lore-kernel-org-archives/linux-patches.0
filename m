@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1A9A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900DFC433D2;
-	Tue, 10 Jan 2023 18:16:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40EA2A941
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A007CC433EF;
+	Tue, 10 Jan 2023 18:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374592;
-	bh=Jzo1fSGFLtDH53nP91JViVFQCMgLGz9KkLEPfuwH8o4=;
+	s=korg; t=1673374599;
+	bh=NLDaGtG/aGC806gBRUr5J9DkRwkEETYuF4Z0jBKtvJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y9brZnomzVE9e8wRAjGV1rVvhjBTjBZ/tCE+ltPNQ0mUS3ZXxrY+rvjwhnY/XY8CV
-	 1H4OwsPNL7H4rr9ri0pR+KgEf65W8k4R27FhsqMXOavhHqVqYdTfTeX7N2Hd+NJqu4
-	 LyEInzo8hzBU4PnEizaclySMzjpl/6D2Vd0IbYNM=
+	b=IwmgqCuodRqMfNRsgWYbb7KHfENEFe+OEQkPB0wvJYCwsUG5ig/pe7fVg+2Ox3nY+
+	 zALG40DMmOyMdzv/zJI+0yKH/6qW/527VxrlqzPSMti3LJ6surQm3xZ0qJqf9to0yH
+	 Y0amts+gfWqIdMe0Jpgv9Q82PnQ8ZK43g7ReVvA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Somnath Kotur <somnath.kotur@broadcom.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jason Wang <jasowang@redhat.com>,
+	Eli Cohen <elic@nvidia.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 038/159] bnxt_en: Fix first buffer size calculations for XDP multi-buffer
-Date: Tue, 10 Jan 2023 19:03:06 +0100
-Message-Id: <20230110180019.528415152@linuxfoundation.org>
+Subject: [PATCH 6.1 040/159] vdpa/mlx5: Fix rule forwarding VLAN to TIR
+Date: Tue, 10 Jan 2023 19:03:08 +0100
+Message-Id: <20230110180019.590326141@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -37,127 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Eli Cohen <elic@nvidia.com>
 
-[ Upstream commit 1abeacc1979fa4a756695f5030791d8f0fa934b9 ]
+[ Upstream commit a6ce72c0fb6041f9871f880b2d02b294f7f49cb4 ]
 
-The size of the first buffer is always page size, and the useable
-space is the page size minus the offset and the skb_shared_info size.
-Make sure SKB and XDP buf sizes match so that the skb_shared_info
-is at the same offset seen from the SKB and XDP_BUF.
+Set the VLAN id to the header values field instead of overwriting the
+headers criteria field.
 
-build_skb() should be passed PAGE_SIZE.  xdp_init_buff() should
-be passed PAGE_SIZE as well.  xdp_get_shared_info_from_buff() will
-automatically deduct the skb_shared_info size if the XDP buffer
-has frags.  There is no need to keep bp->xdp_has_frags.
+Before this fix, VLAN filtering would not really work and tagged packets
+would be forwarded unfiltered to the TIR.
 
-Change BNXT_PAGE_MODE_BUF_SIZE to BNXT_MAX_PAGE_MODE_MTU_SBUF
-since this constant is really the MTU with ethernet header size
-subtracted.
-
-Also fix the BNXT_MAX_PAGE_MODE_MTU macro with proper parentheses.
-
-Fixes: 32861236190b ("bnxt: change receive ring space parameters")
-Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: baf2ad3f6a98 ("vdpa/mlx5: Add RX MAC VLAN filter support")
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Eli Cohen <elic@nvidia.com>
+Message-Id: <20221114131759.57883-2-elic@nvidia.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c     |  9 +++++----
- drivers/net/ethernet/broadcom/bnxt/bnxt.h     | 15 +++++++++++----
- drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c |  7 +------
- 3 files changed, 17 insertions(+), 14 deletions(-)
+ drivers/vdpa/mlx5/net/mlx5_vnet.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index a83d534a096a..b0c9c9813d23 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -988,8 +988,7 @@ static struct sk_buff *bnxt_rx_multi_page_skb(struct bnxt *bp,
- 	dma_addr -= bp->rx_dma_offset;
- 	dma_unmap_page_attrs(&bp->pdev->dev, dma_addr, PAGE_SIZE, bp->rx_dir,
- 			     DMA_ATTR_WEAK_ORDERING);
--	skb = build_skb(page_address(page), BNXT_PAGE_MODE_BUF_SIZE +
--					    bp->rx_dma_offset);
-+	skb = build_skb(page_address(page), PAGE_SIZE);
- 	if (!skb) {
- 		__free_page(page);
- 		return NULL;
-@@ -3966,8 +3965,10 @@ void bnxt_set_ring_params(struct bnxt *bp)
- 		bp->rx_agg_ring_mask = (bp->rx_agg_nr_pages * RX_DESC_CNT) - 1;
- 
- 		if (BNXT_RX_PAGE_MODE(bp)) {
--			rx_space = BNXT_PAGE_MODE_BUF_SIZE;
--			rx_size = BNXT_MAX_PAGE_MODE_MTU;
-+			rx_space = PAGE_SIZE;
-+			rx_size = PAGE_SIZE -
-+				  ALIGN(max(NET_SKB_PAD, XDP_PACKET_HEADROOM), 8) -
-+				  SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
- 		} else {
- 			rx_size = SKB_DATA_ALIGN(BNXT_RX_COPY_THRESH + NET_IP_ALIGN);
- 			rx_space = rx_size + NET_SKB_PAD +
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-index d5fa43cfe524..02741d499bf4 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
-@@ -591,12 +591,20 @@ struct nqe_cn {
- #define BNXT_RX_PAGE_SIZE (1 << BNXT_RX_PAGE_SHIFT)
- 
- #define BNXT_MAX_MTU		9500
--#define BNXT_PAGE_MODE_BUF_SIZE \
-+
-+/* First RX buffer page in XDP multi-buf mode
-+ *
-+ * +-------------------------------------------------------------------------+
-+ * | XDP_PACKET_HEADROOM | bp->rx_buf_use_size              | skb_shared_info|
-+ * | (bp->rx_dma_offset) |                                  |                |
-+ * +-------------------------------------------------------------------------+
-+ */
-+#define BNXT_MAX_PAGE_MODE_MTU_SBUF \
- 	((unsigned int)PAGE_SIZE - VLAN_ETH_HLEN - NET_IP_ALIGN -	\
- 	 XDP_PACKET_HEADROOM)
- #define BNXT_MAX_PAGE_MODE_MTU	\
--	BNXT_PAGE_MODE_BUF_SIZE - \
--	SKB_DATA_ALIGN((unsigned int)sizeof(struct skb_shared_info))
-+	(BNXT_MAX_PAGE_MODE_MTU_SBUF - \
-+	 SKB_DATA_ALIGN((unsigned int)sizeof(struct skb_shared_info)))
- 
- #define BNXT_MIN_PKT_SIZE	52
- 
-@@ -2131,7 +2139,6 @@ struct bnxt {
- #define BNXT_DUMP_CRASH		1
- 
- 	struct bpf_prog		*xdp_prog;
--	u8			xdp_has_frags;
- 
- 	struct bnxt_ptp_cfg	*ptp_cfg;
- 	u8			ptp_all_rx_tstamp;
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-index 2ceeaa818c1c..36d5202c0aee 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
-@@ -193,9 +193,6 @@ void bnxt_xdp_buff_init(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
- 	mapping = rx_buf->mapping - bp->rx_dma_offset;
- 	dma_sync_single_for_cpu(&pdev->dev, mapping + offset, len, bp->rx_dir);
- 
--	if (bp->xdp_has_frags)
--		buflen = BNXT_PAGE_MODE_BUF_SIZE + offset;
--
- 	xdp_init_buff(xdp, buflen, &rxr->xdp_rxq);
- 	xdp_prepare_buff(xdp, data_ptr - offset, offset, len, false);
- }
-@@ -404,10 +401,8 @@ static int bnxt_xdp_set(struct bnxt *bp, struct bpf_prog *prog)
- 		netdev_warn(dev, "ethtool rx/tx channels must be combined to support XDP.\n");
- 		return -EOPNOTSUPP;
+diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+index 90913365def4..3fb06dcee943 100644
+--- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
++++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+@@ -1468,11 +1468,13 @@ static int mlx5_vdpa_add_mac_vlan_rules(struct mlx5_vdpa_net *ndev, u8 *mac,
+ 	dmac_v = MLX5_ADDR_OF(fte_match_param, headers_v, outer_headers.dmac_47_16);
+ 	eth_broadcast_addr(dmac_c);
+ 	ether_addr_copy(dmac_v, mac);
+-	MLX5_SET(fte_match_set_lyr_2_4, headers_c, cvlan_tag, 1);
++	if (ndev->mvdev.actual_features & BIT_ULL(VIRTIO_NET_F_CTRL_VLAN)) {
++		MLX5_SET(fte_match_set_lyr_2_4, headers_c, cvlan_tag, 1);
++		MLX5_SET_TO_ONES(fte_match_set_lyr_2_4, headers_c, first_vid);
++	}
+ 	if (tagged) {
+ 		MLX5_SET(fte_match_set_lyr_2_4, headers_v, cvlan_tag, 1);
+-		MLX5_SET_TO_ONES(fte_match_set_lyr_2_4, headers_c, first_vid);
+-		MLX5_SET(fte_match_set_lyr_2_4, headers_c, first_vid, vid);
++		MLX5_SET(fte_match_set_lyr_2_4, headers_v, first_vid, vid);
  	}
--	if (prog) {
-+	if (prog)
- 		tx_xdp = bp->rx_nr_rings;
--		bp->xdp_has_frags = prog->aux->xdp_has_frags;
--	}
- 
- 	tc = netdev_get_num_tc(dev);
- 	if (!tc)
+ 	flow_act.action = MLX5_FLOW_CONTEXT_ACTION_FWD_DEST;
+ 	dest.type = MLX5_FLOW_DESTINATION_TYPE_TIR;
 -- 
 2.35.1
 
