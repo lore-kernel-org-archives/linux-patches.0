@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E88E6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:18:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4C24C433EF;
-	Tue, 10 Jan 2023 18:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59B106FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:18:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6186C433EF;
+	Tue, 10 Jan 2023 18:18:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374687;
-	bh=E6w9vkkCRK30bshLdsRm41Ouwuoy/fR5khqMNRjI+eo=;
+	s=korg; t=1673374690;
+	bh=EQ1jRH5vIEAHNeX6uQDmxhMkhx15/XlqY/KvqTJPKcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k4+1DCc3SYwvLtp8Iealu0yvtYeBhEX1trrUxVH71efZnEoo1kqfoXrALZG/pqg+m
-	 yHPRZvMMw29GguOhf8Qqta5NK7J93TxnbhLahE70HupXZDONo1d3ZJ2SG4ygKjDxJN
-	 XkxnxIttvnfXjCZqfbsNxnqfsqaGWGGxlS/Wevg8=
+	b=vnSwSaV0pVmaouAnzmonayPg/bxHgX1jUOdTe7Oyo4Mycia8eZE0Z0al8rD8nvBJX
+	 Yd3KWm/AJY800C/sMkFcChllZU6zi8ks4QJSsFt6ZGb7+Q+MYodcy/VS2ASQzYtTTh
+	 /9vHW0fF3joqFTuK2FgTin/tfGdWuxvkJ3gRlJUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Song Liu <songliubraving@fb.com>,
+	Shay Agroskin <shayagr@amazon.com>,
+	David Arinzon <darinzon@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 098/159] perf stat: Fix handling of unsupported cgroup events when using BPF counters
-Date: Tue, 10 Jan 2023 19:04:06 +0100
-Message-Id: <20230110180021.407967863@linuxfoundation.org>
+Subject: [PATCH 6.1 070/159] net: ena: Use bitmask to indicate packet redirection
+Date: Tue, 10 Jan 2023 19:03:38 +0100
+Message-Id: <20230110180020.538657438@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -41,86 +36,191 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namhyung Kim <namhyung@kernel.org>
+From: David Arinzon <darinzon@amazon.com>
 
-[ Upstream commit 2d656b0f81b22101db0447f890e39fdd736b745e ]
+[ Upstream commit 59811faa2c54dbcf44d575b5a8f6e7077da88dc2 ]
 
-When --for-each-cgroup option is used, it fails when any of events is
-not supported and exits immediately.  This is not how 'perf stat'
-handles unsupported events.
+Redirecting packets with XDP Redirect is done in two phases:
+1. A packet is passed by the driver to the kernel using
+   xdp_do_redirect().
+2. After finishing polling for new packets the driver lets the kernel
+   know that it can now process the redirected packet using
+   xdp_do_flush_map().
+   The packets' redirection is handled in the napi context of the
+   queue that called xdp_do_redirect()
 
-Let's ignore the failure and proceed with others so that the output is
-similar to when BPF counters are not used:
+To avoid calling xdp_do_flush_map() each time the driver first checks
+whether any packets were redirected, using
+	xdp_flags |= xdp_verdict;
+and
+	if (xdp_flags & XDP_REDIRECT)
+	    xdp_do_flush_map()
 
-Before:
+essentially treating XDP instructions as a bitmask, which isn't the case:
+    enum xdp_action {
+	    XDP_ABORTED = 0,
+	    XDP_DROP,
+	    XDP_PASS,
+	    XDP_TX,
+	    XDP_REDIRECT,
+    };
 
-  $ sudo ./perf stat -a --bpf-counters -e L1-icache-loads,L1-dcache-loads --for-each-cgroup system.slice,user.slice sleep 1
-  Failed to open first cgroup events
-  $
+Given the current possible values of xdp_action, the current design
+doesn't have a bug (since XDP_REDIRECT = 100b), but it is still
+flawed.
 
-After it shows output similat to when --bpf-counters isn't specified:
+This patch makes the driver use a bitmask instead, to avoid future
+issues.
 
-  $ sudo ./perf stat -a --bpf-counters -e L1-icache-loads,L1-dcache-loads --for-each-cgroup system.slice,user.slice sleep 1
-
-   Performance counter stats for 'system wide':
-
-     <not supported>      L1-icache-loads                  system.slice
-          29,892,418      L1-dcache-loads                  system.slice
-     <not supported>      L1-icache-loads                  user.slice
-          52,497,220      L1-dcache-loads                  user.slice
-  $
-
-Fixes: 944138f048f7d759 ("perf stat: Enable BPF counter with --for-each-cgroup")
-Signed-off-by: Namhyung Kim <namhyung@kernel.org>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@kernel.org>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Song Liu <songliubraving@fb.com>
-Link: https://lore.kernel.org/r/20230104064402.1551516-4-namhyung@kernel.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: a318c70ad152 ("net: ena: introduce XDP redirect implementation")
+Signed-off-by: Shay Agroskin <shayagr@amazon.com>
+Signed-off-by: David Arinzon <darinzon@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/bpf_counter_cgroup.c | 14 +++-----------
- 1 file changed, 3 insertions(+), 11 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_netdev.c | 26 ++++++++++++--------
+ drivers/net/ethernet/amazon/ena/ena_netdev.h |  9 +++++++
+ 2 files changed, 25 insertions(+), 10 deletions(-)
 
-diff --git a/tools/perf/util/bpf_counter_cgroup.c b/tools/perf/util/bpf_counter_cgroup.c
-index 3c2df7522f6f..1c82377ed78b 100644
---- a/tools/perf/util/bpf_counter_cgroup.c
-+++ b/tools/perf/util/bpf_counter_cgroup.c
-@@ -116,27 +116,19 @@ static int bperf_load_program(struct evlist *evlist)
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+index 69f2364b8468..821355c5db10 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -374,9 +374,9 @@ static int ena_xdp_xmit(struct net_device *dev, int n,
  
- 			/* open single copy of the events w/o cgroup */
- 			err = evsel__open_per_cpu(evsel, evsel->core.cpus, -1);
--			if (err) {
--				pr_err("Failed to open first cgroup events\n");
--				goto out;
--			}
-+			if (err == 0)
-+				evsel->supported = true;
+ static int ena_xdp_execute(struct ena_ring *rx_ring, struct xdp_buff *xdp)
+ {
++	u32 verdict = ENA_XDP_PASS;
+ 	struct bpf_prog *xdp_prog;
+ 	struct ena_ring *xdp_ring;
+-	u32 verdict = XDP_PASS;
+ 	struct xdp_frame *xdpf;
+ 	u64 *xdp_stat;
  
- 			map_fd = bpf_map__fd(skel->maps.events);
- 			perf_cpu_map__for_each_cpu(cpu, j, evsel->core.cpus) {
- 				int fd = FD(evsel, j);
- 				__u32 idx = evsel->core.idx * total_cpus + cpu.cpu;
- 
--				err = bpf_map_update_elem(map_fd, &idx, &fd,
--							  BPF_ANY);
--				if (err < 0) {
--					pr_err("Failed to update perf_event fd\n");
--					goto out;
--				}
-+				bpf_map_update_elem(map_fd, &idx, &fd, BPF_ANY);
- 			}
- 
- 			evsel->cgrp = leader_cgrp;
+@@ -393,7 +393,7 @@ static int ena_xdp_execute(struct ena_ring *rx_ring, struct xdp_buff *xdp)
+ 		if (unlikely(!xdpf)) {
+ 			trace_xdp_exception(rx_ring->netdev, xdp_prog, verdict);
+ 			xdp_stat = &rx_ring->rx_stats.xdp_aborted;
+-			verdict = XDP_ABORTED;
++			verdict = ENA_XDP_DROP;
+ 			break;
  		}
--		evsel->supported = true;
  
- 		if (evsel->cgrp == cgrp)
- 			continue;
+@@ -409,29 +409,35 @@ static int ena_xdp_execute(struct ena_ring *rx_ring, struct xdp_buff *xdp)
+ 
+ 		spin_unlock(&xdp_ring->xdp_tx_lock);
+ 		xdp_stat = &rx_ring->rx_stats.xdp_tx;
++		verdict = ENA_XDP_TX;
+ 		break;
+ 	case XDP_REDIRECT:
+ 		if (likely(!xdp_do_redirect(rx_ring->netdev, xdp, xdp_prog))) {
+ 			xdp_stat = &rx_ring->rx_stats.xdp_redirect;
++			verdict = ENA_XDP_REDIRECT;
+ 			break;
+ 		}
+ 		trace_xdp_exception(rx_ring->netdev, xdp_prog, verdict);
+ 		xdp_stat = &rx_ring->rx_stats.xdp_aborted;
+-		verdict = XDP_ABORTED;
++		verdict = ENA_XDP_DROP;
+ 		break;
+ 	case XDP_ABORTED:
+ 		trace_xdp_exception(rx_ring->netdev, xdp_prog, verdict);
+ 		xdp_stat = &rx_ring->rx_stats.xdp_aborted;
++		verdict = ENA_XDP_DROP;
+ 		break;
+ 	case XDP_DROP:
+ 		xdp_stat = &rx_ring->rx_stats.xdp_drop;
++		verdict = ENA_XDP_DROP;
+ 		break;
+ 	case XDP_PASS:
+ 		xdp_stat = &rx_ring->rx_stats.xdp_pass;
++		verdict = ENA_XDP_PASS;
+ 		break;
+ 	default:
+ 		bpf_warn_invalid_xdp_action(rx_ring->netdev, xdp_prog, verdict);
+ 		xdp_stat = &rx_ring->rx_stats.xdp_invalid;
++		verdict = ENA_XDP_DROP;
+ 	}
+ 
+ 	ena_increase_stat(xdp_stat, 1, &rx_ring->syncp);
+@@ -1621,12 +1627,12 @@ static int ena_xdp_handle_buff(struct ena_ring *rx_ring, struct xdp_buff *xdp)
+ 	 * we expect, then we simply drop it
+ 	 */
+ 	if (unlikely(rx_ring->ena_bufs[0].len > ENA_XDP_MAX_MTU))
+-		return XDP_DROP;
++		return ENA_XDP_DROP;
+ 
+ 	ret = ena_xdp_execute(rx_ring, xdp);
+ 
+ 	/* The xdp program might expand the headers */
+-	if (ret == XDP_PASS) {
++	if (ret == ENA_XDP_PASS) {
+ 		rx_info->page_offset = xdp->data - xdp->data_hard_start;
+ 		rx_ring->ena_bufs[0].len = xdp->data_end - xdp->data;
+ 	}
+@@ -1665,7 +1671,7 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
+ 	xdp_init_buff(&xdp, ENA_PAGE_SIZE, &rx_ring->xdp_rxq);
+ 
+ 	do {
+-		xdp_verdict = XDP_PASS;
++		xdp_verdict = ENA_XDP_PASS;
+ 		skb = NULL;
+ 		ena_rx_ctx.ena_bufs = rx_ring->ena_bufs;
+ 		ena_rx_ctx.max_bufs = rx_ring->sgl_size;
+@@ -1693,7 +1699,7 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
+ 			xdp_verdict = ena_xdp_handle_buff(rx_ring, &xdp);
+ 
+ 		/* allocate skb and fill it */
+-		if (xdp_verdict == XDP_PASS)
++		if (xdp_verdict == ENA_XDP_PASS)
+ 			skb = ena_rx_skb(rx_ring,
+ 					 rx_ring->ena_bufs,
+ 					 ena_rx_ctx.descs,
+@@ -1711,13 +1717,13 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
+ 				/* Packets was passed for transmission, unmap it
+ 				 * from RX side.
+ 				 */
+-				if (xdp_verdict == XDP_TX || xdp_verdict == XDP_REDIRECT) {
++				if (xdp_verdict & ENA_XDP_FORWARDED) {
+ 					ena_unmap_rx_buff(rx_ring,
+ 							  &rx_ring->rx_buffer_info[req_id]);
+ 					rx_ring->rx_buffer_info[req_id].page = NULL;
+ 				}
+ 			}
+-			if (xdp_verdict != XDP_PASS) {
++			if (xdp_verdict != ENA_XDP_PASS) {
+ 				xdp_flags |= xdp_verdict;
+ 				total_len += ena_rx_ctx.ena_bufs[0].len;
+ 				res_budget--;
+@@ -1763,7 +1769,7 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
+ 		ena_refill_rx_bufs(rx_ring, refill_required);
+ 	}
+ 
+-	if (xdp_flags & XDP_REDIRECT)
++	if (xdp_flags & ENA_XDP_REDIRECT)
+ 		xdp_do_flush_map();
+ 
+ 	return work_done;
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.h b/drivers/net/ethernet/amazon/ena/ena_netdev.h
+index 1bdce99bf688..290ae9bf47ee 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.h
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.h
+@@ -409,6 +409,15 @@ enum ena_xdp_errors_t {
+ 	ENA_XDP_NO_ENOUGH_QUEUES,
+ };
+ 
++enum ENA_XDP_ACTIONS {
++	ENA_XDP_PASS		= 0,
++	ENA_XDP_TX		= BIT(0),
++	ENA_XDP_REDIRECT	= BIT(1),
++	ENA_XDP_DROP		= BIT(2)
++};
++
++#define ENA_XDP_FORWARDED (ENA_XDP_TX | ENA_XDP_REDIRECT)
++
+ static inline bool ena_xdp_present(struct ena_adapter *adapter)
+ {
+ 	return !!adapter->xdp_bpf_prog;
 -- 
 2.35.1
 
