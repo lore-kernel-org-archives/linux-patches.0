@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 474136FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:19:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A11C2C433D2;
-	Tue, 10 Jan 2023 18:19:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119A26FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:19:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CB28C433D2;
+	Tue, 10 Jan 2023 18:19:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374746;
-	bh=UlT9AyQJrOphxL9D4sOxgWO6v1t53v9ZwcsYV1P4vc8=;
+	s=korg; t=1673374748;
+	bh=imEYwgAC/dH8lSJZo74E+eAnfm3WoSPBrWYHOX4C0rg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tfrkCOcotPXy1De1kSkUa0TED2mZzCrABQTW6IP3cW/9BaH2eLLQgNxYlgoYc5w6E
-	 AfXqc8V7QHj/mStZ3OKxBJjOHIM/8FayMYA1ya52Zv9hTDI2ry7RER4x0aFB71aZ1L
-	 XhM69w2TeRDO7dLgp5i+OpDdmfjE4BzJGn2oetYI=
+	b=ticTbfQ0CfCYGHeAYNwB1dxwmrtXvsNaghZz1D4fuLdOvsic43I/jRCA4HrCpxLUI
+	 j6cTgQdJL3TE/xA+HfK1CVSNDOYkQHHSnnI8hXZWVUaf/ILTwOocPEf1JK4FF/sglN
+	 m426sck5UnC5Hc47yGJUgIcbfCPtJsgD7P9gZ/2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mario Limonciello <mario.limonciello@amd.com>,
 	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 119/159] drm/amd/display: Report to ACPI video if no panels were found
-Date: Tue, 10 Jan 2023 19:04:27 +0100
-Message-Id: <20230110180022.098786948@linuxfoundation.org>
+Subject: [PATCH 6.1 120/159] ACPI: video: Dont enable fallback path for creating ACPI backlight by default
+Date: Tue, 10 Jan 2023 19:04:28 +0100
+Message-Id: <20230110180022.134187184@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -38,44 +38,44 @@ Content-Transfer-Encoding: 8bit
 
 From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit c573e240609ff781a0246c0c8c8351abd0475287 ]
+[ Upstream commit 5aa9d943e9b6bf6e6023645cbe7ce7d5ed84baf4 ]
 
-On desktop APUs amdgpu doesn't create a native backlight device
-as no eDP panels are found.  However if the BIOS has reported
-backlight control methods in the ACPI tables then an acpi_video0
-backlight device will be made 8 seconds after boot.
+The ACPI video detection code has a module parameter
+`register_backlight_delay` which is currently configured to 8 seconds.
+This means that if after 8 seconds of booting no native driver has created
+a backlight device then the code will attempt to make an ACPI video
+backlight device.
 
-This has manifested in a power slider on a number of desktop APUs
-ranging from Ryzen 5000 through Ryzen 7000 on various motherboard
-manufacturers. To avoid this, report to the acpi video detection
-that the system does not have any panel connected in the native
-driver.
+This was intended as a safety mechanism with the backlight overhaul that
+occurred in kernel 6.1, but as it doesn't appear necesssary set it to be
+disabled by default.
 
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=1783786
-Reported-by: Hans de Goede <hdegoede@redhat.com>
+Suggested-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/acpi/acpi_video.c | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index c2c26fbea512..6f1cc5ce4c7a 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -4372,6 +4372,10 @@ static int amdgpu_dm_initialize_drm_device(struct amdgpu_device *adev)
- 		amdgpu_set_panel_orientation(&aconnector->base);
- 	}
+diff --git a/drivers/acpi/acpi_video.c b/drivers/acpi/acpi_video.c
+index f64fdb029090..0c79f463fbfd 100644
+--- a/drivers/acpi/acpi_video.c
++++ b/drivers/acpi/acpi_video.c
+@@ -70,11 +70,7 @@ module_param(device_id_scheme, bool, 0444);
+ static int only_lcd = -1;
+ module_param(only_lcd, int, 0444);
  
-+	/* If we didn't find a panel, notify the acpi video detection */
-+	if (dm->adev->flags & AMD_IS_APU && dm->num_of_edps == 0)
-+		acpi_video_report_nolcd();
-+
- 	/* Software is initialized. Now we can register interrupt handlers. */
- 	switch (adev->asic_type) {
- #if defined(CONFIG_DRM_AMD_DC_SI)
+-/*
+- * Display probing is known to take up to 5 seconds, so delay the fallback
+- * backlight registration by 5 seconds + 3 seconds for some extra margin.
+- */
+-static int register_backlight_delay = 8;
++static int register_backlight_delay;
+ module_param(register_backlight_delay, int, 0444);
+ MODULE_PARM_DESC(register_backlight_delay,
+ 	"Delay in seconds before doing fallback (non GPU driver triggered) "
 -- 
 2.35.1
 
