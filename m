@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 708F5A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0038C433D2;
-	Tue, 10 Jan 2023 18:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54397A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C53C433D2;
+	Tue, 10 Jan 2023 18:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374587;
-	bh=PG9bbsNRsUoTO+fMT1NbkkRe2sG2BtS68LlzWi+wv4g=;
+	s=korg; t=1673374590;
+	bh=nukHdRz8XGSOyYCf4ai04Ir8nZ9g+VychrCDlFmW8tA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GQupqi7RiZQ8YxzNVBu96X8MlQhgpvJBJfmjG1t4T6aEew0EYczPjkT8fahV/TacJ
-	 8HHrlUchK0CCAKr0xdvfiO+5EwPBKZydCQzDG8401e2Qoj+IHrydO3o06Phf21umEs
-	 UEIYosuTs7wulmJOFiM+B/RnPNeX7989Ep987vv0=
+	b=p4ROA4LWFfKsnEDEsDEIVvJjdttPCce15ehxC3JBv/s+fgxg+0y2y0SDXshl9y987
+	 DwoPHP4dDPFOngAwCa0Fo9B3cMmIFoLz3k+z4+LmX3eak3Fg2DXA87k6AkQLwWEVa9
+	 +pN8Z46x1GdVWUVl6yHF2J0GBpCw8ciwhmbsHg+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Joanne Koong <joannelkoong@gmail.com>,
+	Jian Shen <shenjian15@huawei.com>,
+	Hao Lan <lanhao@huawei.com>,
+	kernel test robot <lkp@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 064/159] tcp: Add TIME_WAIT sockets in bhash2.
-Date: Tue, 10 Jan 2023 19:03:32 +0100
-Message-Id: <20230110180020.340075157@linuxfoundation.org>
+Subject: [PATCH 6.1 065/159] net: hns3: refine the handling for VF heartbeat
+Date: Tue, 10 Jan 2023 19:03:33 +0100
+Message-Id: <20230110180020.370015434@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -38,260 +37,309 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit 936a192f974018b4f6040f6f77b1cc1e75bd8666 ]
+[ Upstream commit fec7352117fa301bfbc31bacc14bb9a579376b36 ]
 
-Jiri Slaby reported regression of bind() with a simple repro. [0]
+Currently, the PF check the VF alive by the KEEP_ALVE
+mailbox from VF. VF keep sending the mailbox per 2
+seconds. Once PF lost the mailbox for more than 8
+seconds, it will regards the VF is abnormal, and stop
+notifying the state change to VF, include link state,
+vf mac, reset, even though it receives the KEEP_ALIVE
+mailbox again. It's inreasonable.
 
-The repro creates a TIME_WAIT socket and tries to bind() a new socket
-with the same local address and port.  Before commit 28044fc1d495 ("net:
-Add a bhash2 table hashed by port and address"), the bind() failed with
--EADDRINUSE, but now it succeeds.
+This patch fixes it. PF will record the state change which
+need to notify VF when lost the VF's KEEP_ALIVE mailbox.
+And notify VF when receive the mailbox again. Introduce a
+new flag HCLGE_VPORT_STATE_INITED, used to distinguish the
+case whether VF driver loaded or not. For VF will query
+these states when initializing, so it's unnecessary to
+notify it in this case.
 
-The cited commit should have put TIME_WAIT sockets into bhash2; otherwise,
-inet_bhash2_conflict() misses TIME_WAIT sockets when validating bind()
-requests if the address is not a wildcard one.
-
-The straight option is to move sk_bind2_node from struct sock to struct
-sock_common to add twsk to bhash2 as implemented as RFC. [1]  However, the
-binary layout change in the struct sock could affect performances moving
-hot fields on different cachelines.
-
-To avoid that, we add another TIME_WAIT list in inet_bind2_bucket and check
-it while validating bind().
-
-[0]: https://lore.kernel.org/netdev/6b971a4e-c7d8-411e-1f92-fda29b5b2fb9@kernel.org/
-[1]: https://lore.kernel.org/netdev/20221221151258.25748-2-kuniyu@amazon.com/
-
-Fixes: 28044fc1d495 ("net: Add a bhash2 table hashed by port and address")
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
-Suggested-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Acked-by: Joanne Koong <joannelkoong@gmail.com>
+Fixes: aa5c4f175be6 ("net: hns3: add reset handling for VF when doing PF reset")
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Hao Lan <lanhao@huawei.com>
+Reported-by: kernel test robot <lkp@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/inet_hashtables.h    |  4 ++++
- include/net/inet_timewait_sock.h |  5 +++++
- net/ipv4/inet_connection_sock.c  | 26 ++++++++++++++++++++++----
- net/ipv4/inet_hashtables.c       |  8 +++++---
- net/ipv4/inet_timewait_sock.c    | 31 +++++++++++++++++++++++++++++--
- 5 files changed, 65 insertions(+), 9 deletions(-)
+ .../hisilicon/hns3/hns3pf/hclge_main.c        | 57 +++++++++++----
+ .../hisilicon/hns3/hns3pf/hclge_main.h        |  7 ++
+ .../hisilicon/hns3/hns3pf/hclge_mbx.c         | 71 ++++++++++++++++---
+ 3 files changed, 112 insertions(+), 23 deletions(-)
 
-diff --git a/include/net/inet_hashtables.h b/include/net/inet_hashtables.h
-index 69174093078f..99bd823e97f6 100644
---- a/include/net/inet_hashtables.h
-+++ b/include/net/inet_hashtables.h
-@@ -108,6 +108,10 @@ struct inet_bind2_bucket {
- 	struct hlist_node	node;
- 	/* List of sockets hashed to this bucket */
- 	struct hlist_head	owners;
-+	/* bhash has twsk in owners, but bhash2 has twsk in
-+	 * deathrow not to add a member in struct sock_common.
-+	 */
-+	struct hlist_head	deathrow;
- };
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+index 6c2742f59c77..07ad5f35219e 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
+@@ -3910,9 +3910,17 @@ static int hclge_set_all_vf_rst(struct hclge_dev *hdev, bool reset)
+ 			return ret;
+ 		}
  
- static inline struct net *ib_net(const struct inet_bind_bucket *ib)
-diff --git a/include/net/inet_timewait_sock.h b/include/net/inet_timewait_sock.h
-index 5b47545f22d3..4a8e578405cb 100644
---- a/include/net/inet_timewait_sock.h
-+++ b/include/net/inet_timewait_sock.h
-@@ -73,9 +73,14 @@ struct inet_timewait_sock {
- 	u32			tw_priority;
- 	struct timer_list	tw_timer;
- 	struct inet_bind_bucket	*tw_tb;
-+	struct inet_bind2_bucket	*tw_tb2;
-+	struct hlist_node		tw_bind2_node;
- };
- #define tw_tclass tw_tos
+-		if (!reset || !test_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state))
++		if (!reset ||
++		    !test_bit(HCLGE_VPORT_STATE_INITED, &vport->state))
+ 			continue;
  
-+#define twsk_for_each_bound_bhash2(__tw, list) \
-+	hlist_for_each_entry(__tw, list, tw_bind2_node)
++		if (!test_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state) &&
++		    hdev->reset_type == HNAE3_FUNC_RESET) {
++			set_bit(HCLGE_VPORT_NEED_NOTIFY_RESET,
++				&vport->need_notify);
++			continue;
++		}
 +
- static inline struct inet_timewait_sock *inet_twsk(const struct sock *sk)
+ 		/* Inform VF to process the reset.
+ 		 * hclge_inform_reset_assert_to_vf may fail if VF
+ 		 * driver is not loaded.
+@@ -4609,18 +4617,25 @@ static void hclge_reset_service_task(struct hclge_dev *hdev)
+ 
+ static void hclge_update_vport_alive(struct hclge_dev *hdev)
  {
- 	return (struct inet_timewait_sock *)sk;
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 4a34bc7cb15e..0465ada82799 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -173,22 +173,40 @@ static bool inet_bind_conflict(const struct sock *sk, struct sock *sk2,
- 	return false;
- }
- 
-+static bool __inet_bhash2_conflict(const struct sock *sk, struct sock *sk2,
-+				   kuid_t sk_uid, bool relax,
-+				   bool reuseport_cb_ok, bool reuseport_ok)
-+{
-+	if (sk->sk_family == AF_INET && ipv6_only_sock(sk2))
-+		return false;
++#define HCLGE_ALIVE_SECONDS_NORMAL		8
 +
-+	return inet_bind_conflict(sk, sk2, sk_uid, relax,
-+				  reuseport_cb_ok, reuseport_ok);
-+}
-+
- static bool inet_bhash2_conflict(const struct sock *sk,
- 				 const struct inet_bind2_bucket *tb2,
- 				 kuid_t sk_uid,
- 				 bool relax, bool reuseport_cb_ok,
- 				 bool reuseport_ok)
- {
-+	struct inet_timewait_sock *tw2;
- 	struct sock *sk2;
++	unsigned long alive_time = HCLGE_ALIVE_SECONDS_NORMAL * HZ;
+ 	int i;
  
- 	sk_for_each_bound_bhash2(sk2, &tb2->owners) {
--		if (sk->sk_family == AF_INET && ipv6_only_sock(sk2))
--			continue;
-+		if (__inet_bhash2_conflict(sk, sk2, sk_uid, relax,
-+					   reuseport_cb_ok, reuseport_ok))
-+			return true;
-+	}
+ 	/* start from vport 1 for PF is always alive */
+ 	for (i = 1; i < hdev->num_alloc_vport; i++) {
+ 		struct hclge_vport *vport = &hdev->vport[i];
  
--		if (inet_bind_conflict(sk, sk2, sk_uid, relax,
--				       reuseport_cb_ok, reuseport_ok))
-+	twsk_for_each_bound_bhash2(tw2, &tb2->deathrow) {
-+		sk2 = (struct sock *)tw2;
-+
-+		if (__inet_bhash2_conflict(sk, sk2, sk_uid, relax,
-+					   reuseport_cb_ok, reuseport_ok))
- 			return true;
- 	}
-+
- 	return false;
- }
- 
-diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
-index 3cec471a2cd2..67f5e5440802 100644
---- a/net/ipv4/inet_hashtables.c
-+++ b/net/ipv4/inet_hashtables.c
-@@ -116,6 +116,7 @@ static void inet_bind2_bucket_init(struct inet_bind2_bucket *tb,
- #endif
- 		tb->rcv_saddr = sk->sk_rcv_saddr;
- 	INIT_HLIST_HEAD(&tb->owners);
-+	INIT_HLIST_HEAD(&tb->deathrow);
- 	hlist_add_head(&tb->node, &head->chain);
- }
- 
-@@ -137,7 +138,7 @@ struct inet_bind2_bucket *inet_bind2_bucket_create(struct kmem_cache *cachep,
- /* Caller must hold hashbucket lock for this tb with local BH disabled */
- void inet_bind2_bucket_destroy(struct kmem_cache *cachep, struct inet_bind2_bucket *tb)
- {
--	if (hlist_empty(&tb->owners)) {
-+	if (hlist_empty(&tb->owners) && hlist_empty(&tb->deathrow)) {
- 		__hlist_del(&tb->node);
- 		kmem_cache_free(cachep, tb);
- 	}
-@@ -1103,15 +1104,16 @@ int __inet_hash_connect(struct inet_timewait_death_row *death_row,
- 	/* Head lock still held and bh's disabled */
- 	inet_bind_hash(sk, tb, tb2, port);
- 
--	spin_unlock(&head2->lock);
+-		if (time_after(jiffies, vport->last_active_jiffies + 8 * HZ))
++		if (!test_bit(HCLGE_VPORT_STATE_INITED, &vport->state) ||
++		    !test_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state))
++			continue;
++		if (time_after(jiffies, vport->last_active_jiffies +
++			       alive_time)) {
+ 			clear_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state);
 -
- 	if (sk_unhashed(sk)) {
- 		inet_sk(sk)->inet_sport = htons(port);
- 		inet_ehash_nolisten(sk, (struct sock *)tw, NULL);
+-		/* If vf is not alive, set to default value */
+-		if (!test_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state))
+-			vport->mps = HCLGE_MAC_DEFAULT_FRAME;
++			dev_warn(&hdev->pdev->dev,
++				 "VF %u heartbeat timeout\n",
++				 i - HCLGE_VF_VPORT_START_NUM);
++		}
  	}
- 	if (tw)
- 		inet_twsk_bind_unhash(tw, hinfo);
-+
-+	spin_unlock(&head2->lock);
- 	spin_unlock(&head->lock);
-+
- 	if (tw)
- 		inet_twsk_deschedule_put(tw);
- 	local_bh_enable();
-diff --git a/net/ipv4/inet_timewait_sock.c b/net/ipv4/inet_timewait_sock.c
-index 66fc940f9521..1d77d992e6e7 100644
---- a/net/ipv4/inet_timewait_sock.c
-+++ b/net/ipv4/inet_timewait_sock.c
-@@ -29,6 +29,7 @@
- void inet_twsk_bind_unhash(struct inet_timewait_sock *tw,
- 			  struct inet_hashinfo *hashinfo)
- {
-+	struct inet_bind2_bucket *tb2 = tw->tw_tb2;
- 	struct inet_bind_bucket *tb = tw->tw_tb;
- 
- 	if (!tb)
-@@ -37,6 +38,11 @@ void inet_twsk_bind_unhash(struct inet_timewait_sock *tw,
- 	__hlist_del(&tw->tw_bind_node);
- 	tw->tw_tb = NULL;
- 	inet_bind_bucket_destroy(hashinfo->bind_bucket_cachep, tb);
-+
-+	__hlist_del(&tw->tw_bind2_node);
-+	tw->tw_tb2 = NULL;
-+	inet_bind2_bucket_destroy(hashinfo->bind2_bucket_cachep, tb2);
-+
- 	__sock_put((struct sock *)tw);
  }
  
-@@ -45,7 +51,7 @@ static void inet_twsk_kill(struct inet_timewait_sock *tw)
+@@ -8064,9 +8079,11 @@ int hclge_vport_start(struct hclge_vport *vport)
  {
- 	struct inet_hashinfo *hashinfo = tw->tw_dr->hashinfo;
- 	spinlock_t *lock = inet_ehash_lockp(hashinfo, tw->tw_hash);
--	struct inet_bind_hashbucket *bhead;
-+	struct inet_bind_hashbucket *bhead, *bhead2;
+ 	struct hclge_dev *hdev = vport->back;
  
- 	spin_lock(lock);
- 	sk_nulls_del_node_init_rcu((struct sock *)tw);
-@@ -54,9 +60,13 @@ static void inet_twsk_kill(struct inet_timewait_sock *tw)
- 	/* Disassociate with bind bucket. */
- 	bhead = &hashinfo->bhash[inet_bhashfn(twsk_net(tw), tw->tw_num,
- 			hashinfo->bhash_size)];
-+	bhead2 = inet_bhashfn_portaddr(hashinfo, (struct sock *)tw,
-+				       twsk_net(tw), tw->tw_num);
++	set_bit(HCLGE_VPORT_STATE_INITED, &vport->state);
+ 	set_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state);
+ 	set_bit(HCLGE_VPORT_STATE_PROMISC_CHANGE, &vport->state);
+ 	vport->last_active_jiffies = jiffies;
++	vport->need_notify = 0;
  
- 	spin_lock(&bhead->lock);
-+	spin_lock(&bhead2->lock);
- 	inet_twsk_bind_unhash(tw, hashinfo);
-+	spin_unlock(&bhead2->lock);
- 	spin_unlock(&bhead->lock);
+ 	if (test_bit(vport->vport_id, hdev->vport_config_block)) {
+ 		if (vport->vport_id) {
+@@ -8084,7 +8101,9 @@ int hclge_vport_start(struct hclge_vport *vport)
  
- 	refcount_dec(&tw->tw_dr->tw_refcount);
-@@ -93,6 +103,12 @@ static void inet_twsk_add_bind_node(struct inet_timewait_sock *tw,
- 	hlist_add_head(&tw->tw_bind_node, list);
+ void hclge_vport_stop(struct hclge_vport *vport)
+ {
++	clear_bit(HCLGE_VPORT_STATE_INITED, &vport->state);
+ 	clear_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state);
++	vport->need_notify = 0;
  }
  
-+static void inet_twsk_add_bind2_node(struct inet_timewait_sock *tw,
-+				     struct hlist_head *list)
+ static int hclge_client_start(struct hnae3_handle *handle)
+@@ -9208,7 +9227,8 @@ static int hclge_set_vf_mac(struct hnae3_handle *handle, int vf,
+ 		return 0;
+ 	}
+ 
+-	dev_info(&hdev->pdev->dev, "MAC of VF %d has been set to %s\n",
++	dev_info(&hdev->pdev->dev,
++		 "MAC of VF %d has been set to %s, will be active after VF reset\n",
+ 		 vf, format_mac_addr);
+ 	return 0;
+ }
+@@ -10465,12 +10485,16 @@ static int hclge_set_vf_vlan_filter(struct hnae3_handle *handle, int vfid,
+ 	 * for DEVICE_VERSION_V3, vf doesn't need to know about the port based
+ 	 * VLAN state.
+ 	 */
+-	if (ae_dev->dev_version < HNAE3_DEVICE_VERSION_V3 &&
+-	    test_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state))
+-		(void)hclge_push_vf_port_base_vlan_info(&hdev->vport[0],
+-							vport->vport_id,
+-							state, &vlan_info);
+-
++	if (ae_dev->dev_version < HNAE3_DEVICE_VERSION_V3) {
++		if (test_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state))
++			(void)hclge_push_vf_port_base_vlan_info(&hdev->vport[0],
++								vport->vport_id,
++								state,
++								&vlan_info);
++		else
++			set_bit(HCLGE_VPORT_NEED_NOTIFY_VF_VLAN,
++				&vport->need_notify);
++	}
+ 	return 0;
+ }
+ 
+@@ -11941,7 +11965,7 @@ static void hclge_reset_vport_state(struct hclge_dev *hdev)
+ 	int i;
+ 
+ 	for (i = 0; i < hdev->num_alloc_vport; i++) {
+-		hclge_vport_stop(vport);
++		clear_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state);
+ 		vport++;
+ 	}
+ }
+@@ -12955,6 +12979,11 @@ static void hclge_clear_vport_vf_info(struct hclge_vport *vport, int vfid)
+ 	struct hclge_vlan_info vlan_info;
+ 	int ret;
+ 
++	clear_bit(HCLGE_VPORT_STATE_INITED, &vport->state);
++	clear_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state);
++	vport->need_notify = 0;
++	vport->mps = 0;
++
+ 	/* after disable sriov, clean VF rate configured by PF */
+ 	ret = hclge_tm_qs_shaper_cfg(vport, 0);
+ 	if (ret)
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
+index 495b639b0dc2..13f23d606e77 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
+@@ -995,9 +995,15 @@ enum HCLGE_VPORT_STATE {
+ 	HCLGE_VPORT_STATE_MAC_TBL_CHANGE,
+ 	HCLGE_VPORT_STATE_PROMISC_CHANGE,
+ 	HCLGE_VPORT_STATE_VLAN_FLTR_CHANGE,
++	HCLGE_VPORT_STATE_INITED,
+ 	HCLGE_VPORT_STATE_MAX
+ };
+ 
++enum HCLGE_VPORT_NEED_NOTIFY {
++	HCLGE_VPORT_NEED_NOTIFY_RESET,
++	HCLGE_VPORT_NEED_NOTIFY_VF_VLAN,
++};
++
+ struct hclge_vlan_info {
+ 	u16 vlan_proto; /* so far support 802.1Q only */
+ 	u16 qos;
+@@ -1044,6 +1050,7 @@ struct hclge_vport {
+ 	struct hnae3_handle roce;
+ 
+ 	unsigned long state;
++	unsigned long need_notify;
+ 	unsigned long last_active_jiffies;
+ 	u32 mps; /* Max packet size */
+ 	struct hclge_vf_info vf_info;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
+index a7b06c63143c..04ff9bf12185 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
+@@ -124,17 +124,26 @@ static int hclge_send_mbx_msg(struct hclge_vport *vport, u8 *msg, u16 msg_len,
+ 	return status;
+ }
+ 
++static int hclge_inform_vf_reset(struct hclge_vport *vport, u16 reset_type)
 +{
-+	hlist_add_head(&tw->tw_bind2_node, list);
++	__le16 msg_data;
++	u8 dest_vfid;
++
++	dest_vfid = (u8)vport->vport_id;
++	msg_data = cpu_to_le16(reset_type);
++
++	/* send this requested info to VF */
++	return hclge_send_mbx_msg(vport, (u8 *)&msg_data, sizeof(msg_data),
++				  HCLGE_MBX_ASSERTING_RESET, dest_vfid);
 +}
 +
- /*
-  * Enter the time wait state. This is called with locally disabled BH.
-  * Essentially we whip up a timewait bucket, copy the relevant info into it
-@@ -105,17 +121,28 @@ void inet_twsk_hashdance(struct inet_timewait_sock *tw, struct sock *sk,
- 	const struct inet_connection_sock *icsk = inet_csk(sk);
- 	struct inet_ehash_bucket *ehead = inet_ehash_bucket(hashinfo, sk->sk_hash);
- 	spinlock_t *lock = inet_ehash_lockp(hashinfo, sk->sk_hash);
--	struct inet_bind_hashbucket *bhead;
-+	struct inet_bind_hashbucket *bhead, *bhead2;
-+
- 	/* Step 1: Put TW into bind hash. Original socket stays there too.
- 	   Note, that any socket with inet->num != 0 MUST be bound in
- 	   binding cache, even if it is closed.
- 	 */
- 	bhead = &hashinfo->bhash[inet_bhashfn(twsk_net(tw), inet->inet_num,
- 			hashinfo->bhash_size)];
-+	bhead2 = inet_bhashfn_portaddr(hashinfo, sk, twsk_net(tw), inet->inet_num);
-+
- 	spin_lock(&bhead->lock);
-+	spin_lock(&bhead2->lock);
-+
- 	tw->tw_tb = icsk->icsk_bind_hash;
- 	WARN_ON(!icsk->icsk_bind_hash);
- 	inet_twsk_add_bind_node(tw, &tw->tw_tb->owners);
-+
-+	tw->tw_tb2 = icsk->icsk_bind2_hash;
-+	WARN_ON(!icsk->icsk_bind2_hash);
-+	inet_twsk_add_bind2_node(tw, &tw->tw_tb2->deathrow);
-+
-+	spin_unlock(&bhead2->lock);
- 	spin_unlock(&bhead->lock);
+ int hclge_inform_reset_assert_to_vf(struct hclge_vport *vport)
+ {
+ 	struct hclge_dev *hdev = vport->back;
+-	__le16 msg_data;
+ 	u16 reset_type;
+-	u8 dest_vfid;
  
- 	spin_lock(lock);
+ 	BUILD_BUG_ON(HNAE3_MAX_RESET > U16_MAX);
+ 
+-	dest_vfid = (u8)vport->vport_id;
+-
+ 	if (hdev->reset_type == HNAE3_FUNC_RESET)
+ 		reset_type = HNAE3_VF_PF_FUNC_RESET;
+ 	else if (hdev->reset_type == HNAE3_FLR_RESET)
+@@ -142,11 +151,7 @@ int hclge_inform_reset_assert_to_vf(struct hclge_vport *vport)
+ 	else
+ 		reset_type = HNAE3_VF_FUNC_RESET;
+ 
+-	msg_data = cpu_to_le16(reset_type);
+-
+-	/* send this requested info to VF */
+-	return hclge_send_mbx_msg(vport, (u8 *)&msg_data, sizeof(msg_data),
+-				  HCLGE_MBX_ASSERTING_RESET, dest_vfid);
++	return hclge_inform_vf_reset(vport, reset_type);
+ }
+ 
+ static void hclge_free_vector_ring_chain(struct hnae3_ring_chain_node *head)
+@@ -652,9 +657,56 @@ static int hclge_reset_vf(struct hclge_vport *vport)
+ 	return hclge_func_reset_cmd(hdev, vport->vport_id);
+ }
+ 
++static void hclge_notify_vf_config(struct hclge_vport *vport)
++{
++	struct hclge_dev *hdev = vport->back;
++	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(hdev->pdev);
++	struct hclge_port_base_vlan_config *vlan_cfg;
++	int ret;
++
++	hclge_push_vf_link_status(vport);
++	if (test_bit(HCLGE_VPORT_NEED_NOTIFY_RESET, &vport->need_notify)) {
++		ret = hclge_inform_vf_reset(vport, HNAE3_VF_PF_FUNC_RESET);
++		if (ret) {
++			dev_err(&hdev->pdev->dev,
++				"failed to inform VF %u reset!",
++				vport->vport_id - HCLGE_VF_VPORT_START_NUM);
++			return;
++		}
++		vport->need_notify = 0;
++		return;
++	}
++
++	if (ae_dev->dev_version < HNAE3_DEVICE_VERSION_V3 &&
++	    test_bit(HCLGE_VPORT_NEED_NOTIFY_VF_VLAN, &vport->need_notify)) {
++		vlan_cfg = &vport->port_base_vlan_cfg;
++		ret = hclge_push_vf_port_base_vlan_info(&hdev->vport[0],
++							vport->vport_id,
++							vlan_cfg->state,
++							&vlan_cfg->vlan_info);
++		if (ret) {
++			dev_err(&hdev->pdev->dev,
++				"failed to inform VF %u port base vlan!",
++				vport->vport_id - HCLGE_VF_VPORT_START_NUM);
++			return;
++		}
++		clear_bit(HCLGE_VPORT_NEED_NOTIFY_VF_VLAN, &vport->need_notify);
++	}
++}
++
+ static void hclge_vf_keep_alive(struct hclge_vport *vport)
+ {
++	struct hclge_dev *hdev = vport->back;
++
+ 	vport->last_active_jiffies = jiffies;
++
++	if (test_bit(HCLGE_VPORT_STATE_INITED, &vport->state) &&
++	    !test_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state)) {
++		set_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state);
++		dev_info(&hdev->pdev->dev, "VF %u is alive!",
++			 vport->vport_id - HCLGE_VF_VPORT_START_NUM);
++		hclge_notify_vf_config(vport);
++	}
+ }
+ 
+ static int hclge_set_vf_mtu(struct hclge_vport *vport,
+@@ -954,6 +1006,7 @@ static int hclge_mbx_vf_uninit_handler(struct hclge_mbx_ops_param *param)
+ 	hclge_rm_vport_all_mac_table(param->vport, true,
+ 				     HCLGE_MAC_ADDR_MC);
+ 	hclge_rm_vport_all_vlan_table(param->vport, true);
++	param->vport->mps = 0;
+ 	return 0;
+ }
+ 
 -- 
 2.35.1
 
