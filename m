@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601B97474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:26:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6DDC433D2;
-	Tue, 10 Jan 2023 18:26:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A363D7474
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:26:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D0FC433EF;
+	Tue, 10 Jan 2023 18:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375206;
-	bh=8aQTdZPbthd0oFASr0UjKiG1mwMMkeX332+n5g1948Q=;
+	s=korg; t=1673375209;
+	bh=a3SrtMPOpfa7g6GNQtdu1xyMFAj+xosFpM/Tc6gTXWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NIyVmHRX8ZYhjBHXMnbgQQK8unkKD2xtEPew5+YbpEq+Pl8XuGAEv7QO1I0rJv5KK
-	 2ZWVTGWlTJ26mvC/yz3GQswF6N6l4ajHi9no85kZDJ+Sd+ACjBGsXHiEHCucDXT4yC
-	 W0eYDrRnH7/ZSYXYRxc0opO8QrWYILkwQsG+xPeU=
+	b=QddIrm7aQSRveZmICkwAsNsxMd7OHI2Gtz65JtVxiUKsYPN6RzoHkdSu8f3WR0RV3
+	 CH0Q6JMsBi6BJ+j5k7lg7LRPN+fH4ows/1nj+W7tiwz9Ohl0Gsxvx9MaCo7rOgNNJV
+	 fiQRYPZU5QAZ4JXw6CRame2Tzdgf9YG3Dpto5gAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 5.15 114/290] md/bitmap: Fix bitmap chunk size overflow issues
-Date: Tue, 10 Jan 2023 19:03:26 +0100
-Message-Id: <20230110180035.722557452@linuxfoundation.org>
+	Aditya Garg <gargaditya08@live.com>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 5.15 115/290] efi: Add iMac Pro 2017 to uefi skip cert quirk
+Date: Tue, 10 Jan 2023 19:03:27 +0100
+Message-Id: <20230110180035.767137370@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,99 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>
+From: Aditya Garg <gargaditya08@live.com>
 
-commit 4555211190798b6b6fa2c37667d175bf67945c78 upstream.
+commit 0be56a116220f9e5731a6609e66a11accfe8d8e2 upstream.
 
-- limit bitmap chunk size internal u64 variable to values not overflowing
-  the u32 bitmap superblock structure variable stored on persistent media
-- assign bitmap chunk size internal u64 variable from unsigned values to
-  avoid possible sign extension artifacts when assigning from a s32 value
-
-The bug has been there since at least kernel 4.0.
-Steps to reproduce it:
-1: mdadm -C /dev/mdx -l 1 --bitmap=internal --bitmap-chunk=256M -e 1.2
--n2 /dev/rnbd1 /dev/rnbd2
-2 resize member device rnbd1 and rnbd2 to 8 TB
-3 mdadm --grow /dev/mdx --size=max
-
-The bitmap_chunksize will overflow without patch.
+The iMac Pro 2017 is also a T2 Mac. Thus add it to the list of uefi skip
+cert.
 
 Cc: stable@vger.kernel.org
-
-Signed-off-by: Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Song Liu <song@kernel.org>
+Fixes: 155ca952c7ca ("efi: Do not import certificates from UEFI Secure Boot for T2 Macs")
+Link: https://lore.kernel.org/linux-integrity/9D46D92F-1381-4F10-989C-1A12CD2FFDD8@live.com/
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md-bitmap.c |   20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ security/integrity/platform_certs/load_uefi.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -486,7 +486,7 @@ void md_bitmap_print_sb(struct bitmap *b
- 	sb = kmap_atomic(bitmap->storage.sb_page);
- 	pr_debug("%s: bitmap file superblock:\n", bmname(bitmap));
- 	pr_debug("         magic: %08x\n", le32_to_cpu(sb->magic));
--	pr_debug("       version: %d\n", le32_to_cpu(sb->version));
-+	pr_debug("       version: %u\n", le32_to_cpu(sb->version));
- 	pr_debug("          uuid: %08x.%08x.%08x.%08x\n",
- 		 le32_to_cpu(*(__le32 *)(sb->uuid+0)),
- 		 le32_to_cpu(*(__le32 *)(sb->uuid+4)),
-@@ -497,11 +497,11 @@ void md_bitmap_print_sb(struct bitmap *b
- 	pr_debug("events cleared: %llu\n",
- 		 (unsigned long long) le64_to_cpu(sb->events_cleared));
- 	pr_debug("         state: %08x\n", le32_to_cpu(sb->state));
--	pr_debug("     chunksize: %d B\n", le32_to_cpu(sb->chunksize));
--	pr_debug("  daemon sleep: %ds\n", le32_to_cpu(sb->daemon_sleep));
-+	pr_debug("     chunksize: %u B\n", le32_to_cpu(sb->chunksize));
-+	pr_debug("  daemon sleep: %us\n", le32_to_cpu(sb->daemon_sleep));
- 	pr_debug("     sync size: %llu KB\n",
- 		 (unsigned long long)le64_to_cpu(sb->sync_size)/2);
--	pr_debug("max write behind: %d\n", le32_to_cpu(sb->write_behind));
-+	pr_debug("max write behind: %u\n", le32_to_cpu(sb->write_behind));
- 	kunmap_atomic(sb);
- }
+--- a/security/integrity/platform_certs/load_uefi.c
++++ b/security/integrity/platform_certs/load_uefi.c
+@@ -34,6 +34,7 @@ static const struct dmi_system_id uefi_s
+ 	{ UEFI_QUIRK_SKIP_CERT("Apple Inc.", "MacPro7,1") },
+ 	{ UEFI_QUIRK_SKIP_CERT("Apple Inc.", "iMac20,1") },
+ 	{ UEFI_QUIRK_SKIP_CERT("Apple Inc.", "iMac20,2") },
++	{ UEFI_QUIRK_SKIP_CERT("Apple Inc.", "iMacPro1,1") },
+ 	{ }
+ };
  
-@@ -2106,7 +2106,8 @@ int md_bitmap_resize(struct bitmap *bitm
- 			bytes = DIV_ROUND_UP(chunks, 8);
- 			if (!bitmap->mddev->bitmap_info.external)
- 				bytes += sizeof(bitmap_super_t);
--		} while (bytes > (space << 9));
-+		} while (bytes > (space << 9) && (chunkshift + BITMAP_BLOCK_SHIFT) <
-+			(BITS_PER_BYTE * sizeof(((bitmap_super_t *)0)->chunksize) - 1));
- 	} else
- 		chunkshift = ffz(~chunksize) - BITMAP_BLOCK_SHIFT;
- 
-@@ -2151,7 +2152,7 @@ int md_bitmap_resize(struct bitmap *bitm
- 	bitmap->counts.missing_pages = pages;
- 	bitmap->counts.chunkshift = chunkshift;
- 	bitmap->counts.chunks = chunks;
--	bitmap->mddev->bitmap_info.chunksize = 1 << (chunkshift +
-+	bitmap->mddev->bitmap_info.chunksize = 1UL << (chunkshift +
- 						     BITMAP_BLOCK_SHIFT);
- 
- 	blocks = min(old_counts.chunks << old_counts.chunkshift,
-@@ -2177,8 +2178,8 @@ int md_bitmap_resize(struct bitmap *bitm
- 				bitmap->counts.missing_pages = old_counts.pages;
- 				bitmap->counts.chunkshift = old_counts.chunkshift;
- 				bitmap->counts.chunks = old_counts.chunks;
--				bitmap->mddev->bitmap_info.chunksize = 1 << (old_counts.chunkshift +
--									     BITMAP_BLOCK_SHIFT);
-+				bitmap->mddev->bitmap_info.chunksize =
-+					1UL << (old_counts.chunkshift + BITMAP_BLOCK_SHIFT);
- 				blocks = old_counts.chunks << old_counts.chunkshift;
- 				pr_warn("Could not pre-allocate in-memory bitmap for cluster raid\n");
- 				break;
-@@ -2519,6 +2520,9 @@ chunksize_store(struct mddev *mddev, con
- 	if (csize < 512 ||
- 	    !is_power_of_2(csize))
- 		return -EINVAL;
-+	if (BITS_PER_LONG > 32 && csize >= (1ULL << (BITS_PER_BYTE *
-+		sizeof(((bitmap_super_t *)0)->chunksize))))
-+		return -EOVERFLOW;
- 	mddev->bitmap_info.chunksize = csize;
- 	return len;
- }
 
 
