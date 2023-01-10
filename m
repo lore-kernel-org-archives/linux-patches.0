@@ -1,95 +1,151 @@
-Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout-b-110.mailbox.org (mout-b-110.mailbox.org [195.10.208.55])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD7923A3
-	for <patches@lists.linux.dev>; Mon,  9 Jan 2023 23:27:12 +0000 (UTC)
-Received: by mail-yb1-f177.google.com with SMTP id 203so10104535yby.10
-        for <patches@lists.linux.dev>; Mon, 09 Jan 2023 15:27:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=UY+1Fpt0FK7lLfeSUW68NLIUA8SVjtGE9huFocWEeKs=;
-        b=RsPeIV8aR7aKfgIzo27xLUiVGHbaKd/HgO/xGdeCY4Z0KxryxI15LpnavV/6d0HkhV
-         1cKBycFNaX2/yd8D6T4WqDnRfD8maa7cOcBxaCQcuuADA9aHi2YzyJELnsqub6TGp2wf
-         TLdcpBx0OUvtWE1eg4dBoCmAq8geiYAFNLdlFnMZtTMP507iy8hRLh/oc1b1DZYFY7zG
-         3PMnSMKODrz2VQ7e08Hddf+pM4njPz0TzM62IeX22sczwbtilNPm9m5402co2okNV6pO
-         ncrcgvDkMhibTOzPPDsCz34FFZr1bUXGhPG99LWJ98CDztQ+QSI3cir8Erx0QRl60ZRi
-         qWsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=UY+1Fpt0FK7lLfeSUW68NLIUA8SVjtGE9huFocWEeKs=;
-        b=YTCzYoRTJUdgDl9p6JGXPuS3MNdqabNYeRYtxlI3RkXJyjLGqGmWnL0XDn8VSSo8E1
-         iEwFqdeRgFHUmgFaAzX8surZPK9qtLdyy1wrfphiRk+iXEGXhkDhZQfLUMSohxgShisW
-         EMk1T4/pTvJBwKdzz/LBOW3kqd1qLFqS/4SyajxRz3vMVeNSNsqgfl10/1jfF7is3ppT
-         yLI2fz3chAq+KZIDh5m2/kmK+q/TH2HRnqwqeKAl34WmFGLxXYw6GxLaK9Z9whsQJFZh
-         lt5J1ui3lDbx0Mj1p8Sn81CuCR0Ra2kGgCAf7GppXCc2pmC4b2vgygESgPx3JKsTfPzC
-         jaUQ==
-X-Gm-Message-State: AFqh2ko6Fa0HmXdXCfmhnTXBe5dxzZfyi50kbJtNwfZBVBryWF9Y4K3b
-	r9n9PRB1ilk0cmXSJBgXmiEwOm6YPV2QVxdYRF0=
-X-Google-Smtp-Source: AMrXdXvrlbd5h1RWMBpkgFbj03OSP8b8iebn8qrpIDcVK3qInC9NLlZPapSxLJBCkgA0jhZXCtuRUWOP8uBZd2h4Q1M=
-X-Received: by 2002:a25:7702:0:b0:7b4:bdd7:e631 with SMTP id
- s2-20020a257702000000b007b4bdd7e631mr2014500ybc.507.1673306831157; Mon, 09
- Jan 2023 15:27:11 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307813C28
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 10:21:53 +0000 (UTC)
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-b-110.mailbox.org (Postfix) with ESMTPS id 4Nrmtq4LVhz9t7Z;
+	Tue, 10 Jan 2023 11:16:35 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyantec.com; s=default;
+	t=1673345795;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=6IUg8Et5IkHA9DdwmBM0zPxl4bj+zRYsG0exsYo0MV0=;
+	b=poeGSm+lgAhdQHYBpqCTYPAZ8w3Pb1lDmlitQO9C27MYchgg2SQJ3E9SDkQ40CbNWEs/X0
+	6W3/S+e0MyKAb90i1y9+sWmuQQ74/RjmHjFv41hneE7Zmg9GgQUznfyt9lopyESrZxJhxl
+	3R2RPETiIW87xD05Qn8+PWMvMT2CZ3kdP3f321XrHPEkD74PKH3t7v8zW7YUwuK9szOqtb
+	VoBXflXAqp1h8eunk9/zUEYOnj3I3V3OuushZ4cI/d7HjUHeWPFaOtqZQ/2ol3P/kv5d5p
+	24CHzCuW4jBdcHnWpK1xo1cOHq9Khe8m49T+tAMijQnYAsqct393gaItk/jDVA==
+From: Finn Behrens <fin@nyantec.com>
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Masahiro Yamada <masahiroy@kernel.org>, linux-kbuild@vger.kernel.org,
+ Nathan Chancellor <nathan@kernel.org>,
+ Nick Desaulniers <ndesaulniers@google.com>,
+ Nicolas Schier <nicolas@fjasle.eu>, rust-for-linux@vger.kernel.org,
+ linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+ Alex Gaynor <alex.gaynor@gmail.com>,
+ Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
+ Gary Guo <gary@garyguo.net>,
+ =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
+Subject: Re: [PATCH 2/6] kbuild: rust_is_available: print docs reference
+Date: Tue, 10 Jan 2023 11:16:33 +0100
+Message-ID: <1E542F5E-220F-4061-BC71-F37C76616F34@nyantec.com>
+In-Reply-To: <20230109204520.539080-2-ojeda@kernel.org>
+References: <20230109204520.539080-1-ojeda@kernel.org>
+ <20230109204520.539080-2-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230109204520.539080-1-ojeda@kernel.org> <20230109204520.539080-3-ojeda@kernel.org>
- <Y7yZTBIF58+1Fj5m@boqun-archlinux>
-In-Reply-To: <Y7yZTBIF58+1Fj5m@boqun-archlinux>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Tue, 10 Jan 2023 00:27:00 +0100
-Message-ID: <CANiq72=bqp_tPL9qq6OYBv1uyByL65_e4Bp4r8pfdBFf-2gBwA@mail.gmail.com>
-Subject: Re: [PATCH 3/6] kbuild: rust_is_available: add check for `bindgen` invocation
-To: Boqun Feng <boqun.feng@gmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, Masahiro Yamada <masahiroy@kernel.org>, linux-kbuild@vger.kernel.org, 
-	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
-	Nicolas Schier <nicolas@fjasle.eu>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Alexandru Radovici <msg4alex@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Wedson Almeida Filho <wedsonaf@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
+X-Rspamd-Queue-Id: 4Nrmtq4LVhz9t7Z
 
-On Mon, Jan 9, 2023 at 11:47 PM Boqun Feng <boqun.feng@gmail.com> wrote:
+
+
+On 9 Jan 2023, at 21:45, Miguel Ojeda wrote:
+
+> People trying out the Rust support in the kernel may get
+> warnings and errors from `scripts/rust_is_available.sh`
+> from the `rustavailable` target or the build step.
 >
-> Per Documentation/process/maintainer-tip.rst, the "Reported-by" tag does
-> require "Name <mailaddress>" format. Given we already have the GitHub
-> issue link, I wonder whether it's better we ask for the reporter's
-> email address (and real name) for the "Reported-by" field, and if they
-> prefer to not providing one, we just don't use the "Reported-by" tag
-> since we still have the GitHub issue link for their contribution.
+> Some of those users may be following the Quick Start guide,
+> but others may not (likely those getting warnings from
+> the build step instead of the target).
 >
-> Thoughts?
+> While the messages are fairly clear on what the problem is,
+> it may not be clear how to solve the particular issue,
+> especially for those not aware of the documentation.
+>
+> We could add all sorts of details on the script for each one,
+> but it is better to point users to the documentation instead,
+> where it is easily readable in different formats. It also
+> avoids duplication.
+>
+> Thus add a reference to the documentation whenever the script
+> fails or there is at least a warning.
+As I always use my systems rustc/bindgen, I always get the warning, which=
+ already clutters the build output a bit. But I see why it is helpful, so=
+ not a fan, but this patch is reasonable.
+>
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+Reviewed-by: Finn Behrens <fin@nyantec.com>
 
-As far as I understand, that is for the tip tree (though
-`checkpatch.pl` complained too), and I am not sure in that guide they
-intend it to mean it is the only form accepted.
+Regards,
+Finn
+> ---
+> Note that is based on top of patch "kbuild: rust: remove -v
+> option of scripts/rust_is_available.sh" applied on v6.2-rc3:
+> https://lore.kernel.org/rust-for-linux/20230109061436.3146442-1-masahir=
+oy@kernel.org/
+>
+>  scripts/rust_is_available.sh | 17 +++++++++++++++++
+>  1 file changed, 17 insertions(+)
+>
+> diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.s=
+h
+> index eaeafebf8572..c907cf881c2c 100755
+> --- a/scripts/rust_is_available.sh
+> +++ b/scripts/rust_is_available.sh
+> @@ -21,6 +21,20 @@ get_canonical_version()
+>  	echo $((100000 * $1 + 100 * $2 + $3))
+>  }
+>
+> +# Print a reference to the setup guide in the documentation.
+> +print_docs_reference()
+> +{
+> +	echo >&2 "***"
+> +	echo >&2 "*** Please see Documentation/rust/quick-start.rst for detai=
+ls"
+> +	echo >&2 "*** on how to setup Rust support."
+> +	echo >&2 "***"
+> +}
+> +
+> +# If the script fails for any reason, or if there was any warning, the=
+n
+> +# print a reference to the documentation on exit.
+> +warning=3D0
+> +trap 'if [ $? -ne 0 ] || [ $warning -ne 0 ]; then print_docs_reference=
+; fi' EXIT
+> +
+>  # Check that the Rust compiler exists.
+>  if ! command -v "$RUSTC" >/dev/null; then
+>  	echo >&2 "***"
+> @@ -62,6 +76,7 @@ if [ "$rust_compiler_cversion" -gt "$rust_compiler_mi=
+n_cversion" ]; then
+>  	echo >&2 "***   Your version:     $rust_compiler_version"
+>  	echo >&2 "***   Expected version: $rust_compiler_min_version"
+>  	echo >&2 "***"
+> +	warning=3D1
+>  fi
+>
+>  # Check that the Rust bindings generator is suitable.
+> @@ -89,6 +104,7 @@ if [ "$rust_bindings_generator_cversion" -gt "$rust_=
+bindings_generator_min_cvers
+>  	echo >&2 "***   Your version:     $rust_bindings_generator_version"
+>  	echo >&2 "***   Expected version: $rust_bindings_generator_min_versio=
+n"
+>  	echo >&2 "***"
+> +	warning=3D1
+>  fi
+>
+>  # Check that the `libclang` used by the Rust bindings generator is sui=
+table.
+> @@ -128,6 +144,7 @@ if [ "$cc_name" =3D Clang ]; then
+>  		echo >&2 "***   libclang version: $bindgen_libclang_version"
+>  		echo >&2 "***   Clang version:    $clang_version"
+>  		echo >&2 "***"
+> +		warning=3D1
+>  	fi
+>  fi
+>
+> -- =
 
-In this case, I ended up deciding to add it since it was not a
-Signed-off-by/Reviewed-by/Acked-by (so not as critical, i.e. no
-DCO/RSO/...) and there are quite a few other instances, including
-different CIs and tools, raw emails, security teams, etc.
-
-So it doesn't look like it is required to be a "real name" like some
-of the other tags, and sometimes we may need to do otherwise anyway
-(for those cases), and I guess we don't want to discourage reports too
-much. Perhaps we can, at least, ask for an email address -- that is
-way more common in the log, and gives us a potential way to contact
-people and send the patches to.
-
-In any case, I agree we should prefer the "real name" way as much as
-possible. I had sent a message to each GitHub issue/PR linking back to
-the patches, but I will send another to offer them to use their real
-name if they prefer.
-
-Thanks for taking a look! :)
-
-Cheers,
-Miguel
+> 2.39.0
