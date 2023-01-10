@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A363D7474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:26:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07D0FC433EF;
-	Tue, 10 Jan 2023 18:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8604A7474
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:26:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09039C433EF;
+	Tue, 10 Jan 2023 18:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375209;
-	bh=a3SrtMPOpfa7g6GNQtdu1xyMFAj+xosFpM/Tc6gTXWE=;
+	s=korg; t=1673375212;
+	bh=mKJ1aGPNXMFzwdU9M0rzlYDOi2xZvL5zclJgBwYODAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QddIrm7aQSRveZmICkwAsNsxMd7OHI2Gtz65JtVxiUKsYPN6RzoHkdSu8f3WR0RV3
-	 CH0Q6JMsBi6BJ+j5k7lg7LRPN+fH4ows/1nj+W7tiwz9Ohl0Gsxvx9MaCo7rOgNNJV
-	 fiQRYPZU5QAZ4JXw6CRame2Tzdgf9YG3Dpto5gAo=
+	b=r7KurthpnXBwJRfKoJaOmieF4fGK3294EfRkS3xLjzIwG96V7L7xXkg2DOVbTacI7
+	 prAvyAZeB2JjAk3U3m8Tl7RW8WO+E2nIyAmLeQoC50B1HF6+dS5up/PGWBa1tyex2j
+	 x2WUvwLZIBBQreQMIoZ4PNrymm3gPq5/N/66cPe8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Garg <gargaditya08@live.com>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 5.15 115/290] efi: Add iMac Pro 2017 to uefi skip cert quirk
-Date: Tue, 10 Jan 2023 19:03:27 +0100
-Message-Id: <20230110180035.767137370@linuxfoundation.org>
+	Peter Zijlstra <peterz@infradead.org>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 5.15 098/290] x86/kprobes: Fix kprobes instruction boudary check with CONFIG_RETHUNK
+Date: Tue, 10 Jan 2023 19:03:10 +0100
+Message-Id: <20230110180035.018723256@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -34,32 +34,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aditya Garg <gargaditya08@live.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-commit 0be56a116220f9e5731a6609e66a11accfe8d8e2 upstream.
+commit 1993bf97992df2d560287f3c4120eda57426843d upstream.
 
-The iMac Pro 2017 is also a T2 Mac. Thus add it to the list of uefi skip
-cert.
+Since the CONFIG_RETHUNK and CONFIG_SLS will use INT3 for stopping
+speculative execution after RET instruction, kprobes always failes to
+check the probed instruction boundary by decoding the function body if
+the probed address is after such sequence. (Note that some conditional
+code blocks will be placed after function return, if compiler decides
+it is not on the hot path.)
 
+This is because kprobes expects kgdb puts the INT3 as a software
+breakpoint and it will replace the original instruction.
+But these INT3 are not such purpose, it doesn't need to recover the
+original instruction.
+
+To avoid this issue, kprobes checks whether the INT3 is owned by
+kgdb or not, and if so, stop decoding and make it fail. The other
+INT3 will come from CONFIG_RETHUNK/CONFIG_SLS and those can be
+treated as a one-byte instruction.
+
+Fixes: e463a09af2f0 ("x86: Add straight-line-speculation mitigation")
+Suggested-by: Peter Zijlstra <peterz@infradead.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Cc: stable@vger.kernel.org
-Fixes: 155ca952c7ca ("efi: Do not import certificates from UEFI Secure Boot for T2 Macs")
-Link: https://lore.kernel.org/linux-integrity/9D46D92F-1381-4F10-989C-1A12CD2FFDD8@live.com/
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Link: https://lore.kernel.org/r/167146051026.1374301.392728975473572291.stgit@devnote3
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/platform_certs/load_uefi.c |    1 +
- 1 file changed, 1 insertion(+)
+ arch/x86/kernel/kprobes/core.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/security/integrity/platform_certs/load_uefi.c
-+++ b/security/integrity/platform_certs/load_uefi.c
-@@ -34,6 +34,7 @@ static const struct dmi_system_id uefi_s
- 	{ UEFI_QUIRK_SKIP_CERT("Apple Inc.", "MacPro7,1") },
- 	{ UEFI_QUIRK_SKIP_CERT("Apple Inc.", "iMac20,1") },
- 	{ UEFI_QUIRK_SKIP_CERT("Apple Inc.", "iMac20,2") },
-+	{ UEFI_QUIRK_SKIP_CERT("Apple Inc.", "iMacPro1,1") },
- 	{ }
- };
+--- a/arch/x86/kernel/kprobes/core.c
++++ b/arch/x86/kernel/kprobes/core.c
+@@ -37,6 +37,7 @@
+ #include <linux/extable.h>
+ #include <linux/kdebug.h>
+ #include <linux/kallsyms.h>
++#include <linux/kgdb.h>
+ #include <linux/ftrace.h>
+ #include <linux/kasan.h>
+ #include <linux/moduleloader.h>
+@@ -289,12 +290,15 @@ static int can_probe(unsigned long paddr
+ 		if (ret < 0)
+ 			return 0;
+ 
++#ifdef CONFIG_KGDB
+ 		/*
+-		 * Another debugging subsystem might insert this breakpoint.
+-		 * In that case, we can't recover it.
++		 * If there is a dynamically installed kgdb sw breakpoint,
++		 * this function should not be probed.
+ 		 */
+-		if (insn.opcode.bytes[0] == INT3_INSN_OPCODE)
++		if (insn.opcode.bytes[0] == INT3_INSN_OPCODE &&
++		    kgdb_has_hit_break(addr))
+ 			return 0;
++#endif
+ 		addr += insn.length;
+ 	}
  
 
 
