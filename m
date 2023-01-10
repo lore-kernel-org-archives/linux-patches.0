@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFBD7474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:36:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E02C433D2;
-	Tue, 10 Jan 2023 18:36:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D759E7474
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:36:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF95C433D2;
+	Tue, 10 Jan 2023 18:36:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375770;
-	bh=77CO5/6Y79gVhlVH7YMAuyvsjvzNXAYUQJQnGCfVr4g=;
+	s=korg; t=1673375772;
+	bh=dd92YWzFiVZhgBOTETbDWYg8nbJN+PJhfSxol844Rnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=anuqKkEco6+OslkB03KyQZ7Dg3ycKzFhncoublFoIset3z6LdGg5frya/iv/KhvUR
-	 V/VLOpj192gEkH57MtwQs2+nzohglxUmDkX0IHjpdhRLVdNUHO/3Xa5NYqPXqwDDus
-	 AFdTjaum+Ec3HtuFlrCo5EFD4dURgAq/3U4lsavk=
+	b=lCOSY6Nxin2jJuJ1Gb9FQwgJmF77Z7jTLaUUGVYWNxgfiiJP2IqL1Eclh51VCzEFN
+	 sntLxvGIEeQT0hHCbaWjyvezef9LicQjmO5PPxyaJHusBqjMUNqt9xtZXTGRn6YD6W
+	 qksWPLS106Qf6EslJOTUysvYTjJtUM14ZUx4BbvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Christian Brauner <christian.brauner@ubuntu.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Jan Kara <jack@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.15 276/290] hfs/hfsplus: use WARN_ON for sanity check
-Date: Tue, 10 Jan 2023 19:06:08 +0100
-Message-Id: <20230110180041.459425419@linuxfoundation.org>
+	Steve Dickson <steved@redhat.com>,
+	JianHong Yin <yin-jianhong@163.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 5.15 267/290] nfsd: fix handling of readdir in v4root vs. mount upcall timeout
+Date: Tue, 10 Jan 2023 19:05:59 +0100
+Message-Id: <20230110180041.185830868@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -38,118 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit 55d1cbbbb29e6656c662ee8f73ba1fc4777532eb upstream.
+commit cad853374d85fe678d721512cecfabd7636e51f3 upstream.
 
-gcc warns about a couple of instances in which a sanity check exists but
-the author wasn't sure how to react to it failing, which makes it look
-like a possible bug:
+If v4 READDIR operation hits a mountpoint and gets back an error,
+then it will include that entry in the reply and set RDATTR_ERROR for it
+to the error.
 
-  fs/hfsplus/inode.c: In function 'hfsplus_cat_read_inode':
-  fs/hfsplus/inode.c:503:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
-    503 |                         /* panic? */;
-        |                                     ^
-  fs/hfsplus/inode.c:524:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
-    524 |                         /* panic? */;
-        |                                     ^
-  fs/hfsplus/inode.c: In function 'hfsplus_cat_write_inode':
-  fs/hfsplus/inode.c:582:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
-    582 |                         /* panic? */;
-        |                                     ^
-  fs/hfsplus/inode.c:608:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
-    608 |                         /* panic? */;
-        |                                     ^
-  fs/hfs/inode.c: In function 'hfs_write_inode':
-  fs/hfs/inode.c:464:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
-    464 |                         /* panic? */;
-        |                                     ^
-  fs/hfs/inode.c:485:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
-    485 |                         /* panic? */;
-        |                                     ^
+That's fine for "normal" exported filesystems, but on the v4root, we
+need to be more careful to only expose the existence of dentries that
+lead to exports.
 
-panic() is probably not the correct choice here, but a WARN_ON
-seems appropriate and avoids the compile-time warning.
+If the mountd upcall times out while checking to see whether a
+mountpoint on the v4root is exported, then we have no recourse other
+than to fail the whole operation.
 
-Link: https://lkml.kernel.org/r/20210927102149.1809384-1-arnd@kernel.org
-Link: https://lore.kernel.org/all/20210322223249.2632268-1-arnd@kernel.org/
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Christian Brauner <christian.brauner@ubuntu.com>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <christian.brauner@ubuntu.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Jan Kara <jack@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Steve Dickson <steved@redhat.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216777
+Reported-by: JianHong Yin <yin-jianhong@163.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfs/inode.c     |    6 ++----
- fs/hfsplus/inode.c |   12 ++++--------
- 2 files changed, 6 insertions(+), 12 deletions(-)
+ fs/nfsd/nfs4xdr.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
---- a/fs/hfs/inode.c
-+++ b/fs/hfs/inode.c
-@@ -464,8 +464,7 @@ int hfs_write_inode(struct inode *inode,
- 		goto out;
- 
- 	if (S_ISDIR(main_inode->i_mode)) {
--		if (fd.entrylength < sizeof(struct hfs_cat_dir))
--			/* panic? */;
-+		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_dir));
- 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
- 			   sizeof(struct hfs_cat_dir));
- 		if (rec.type != HFS_CDR_DIR ||
-@@ -485,8 +484,7 @@ int hfs_write_inode(struct inode *inode,
- 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
- 				sizeof(struct hfs_cat_file));
- 	} else {
--		if (fd.entrylength < sizeof(struct hfs_cat_file))
--			/* panic? */;
-+		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_file));
- 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
- 			   sizeof(struct hfs_cat_file));
- 		if (rec.type != HFS_CDR_FIL ||
---- a/fs/hfsplus/inode.c
-+++ b/fs/hfsplus/inode.c
-@@ -509,8 +509,7 @@ int hfsplus_cat_read_inode(struct inode
- 	if (type == HFSPLUS_FOLDER) {
- 		struct hfsplus_cat_folder *folder = &entry.folder;
- 
--		if (fd->entrylength < sizeof(struct hfsplus_cat_folder))
--			/* panic? */;
-+		WARN_ON(fd->entrylength < sizeof(struct hfsplus_cat_folder));
- 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
- 					sizeof(struct hfsplus_cat_folder));
- 		hfsplus_get_perms(inode, &folder->permissions, 1);
-@@ -530,8 +529,7 @@ int hfsplus_cat_read_inode(struct inode
- 	} else if (type == HFSPLUS_FILE) {
- 		struct hfsplus_cat_file *file = &entry.file;
- 
--		if (fd->entrylength < sizeof(struct hfsplus_cat_file))
--			/* panic? */;
-+		WARN_ON(fd->entrylength < sizeof(struct hfsplus_cat_file));
- 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
- 					sizeof(struct hfsplus_cat_file));
- 
-@@ -588,8 +586,7 @@ int hfsplus_cat_write_inode(struct inode
- 	if (S_ISDIR(main_inode->i_mode)) {
- 		struct hfsplus_cat_folder *folder = &entry.folder;
- 
--		if (fd.entrylength < sizeof(struct hfsplus_cat_folder))
--			/* panic? */;
-+		WARN_ON(fd.entrylength < sizeof(struct hfsplus_cat_folder));
- 		hfs_bnode_read(fd.bnode, &entry, fd.entryoffset,
- 					sizeof(struct hfsplus_cat_folder));
- 		/* simple node checks? */
-@@ -614,8 +611,7 @@ int hfsplus_cat_write_inode(struct inode
- 	} else {
- 		struct hfsplus_cat_file *file = &entry.file;
- 
--		if (fd.entrylength < sizeof(struct hfsplus_cat_file))
--			/* panic? */;
-+		WARN_ON(fd.entrylength < sizeof(struct hfsplus_cat_file));
- 		hfs_bnode_read(fd.bnode, &entry, fd.entryoffset,
- 					sizeof(struct hfsplus_cat_file));
- 		hfsplus_inode_write_fork(inode, &file->data_fork);
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -3514,6 +3514,17 @@ nfsd4_encode_dirent(void *ccdv, const ch
+ 	case nfserr_noent:
+ 		xdr_truncate_encode(xdr, start_offset);
+ 		goto skip_entry;
++	case nfserr_jukebox:
++		/*
++		 * The pseudoroot should only display dentries that lead to
++		 * exports. If we get EJUKEBOX here, then we can't tell whether
++		 * this entry should be included. Just fail the whole READDIR
++		 * with NFS4ERR_DELAY in that case, and hope that the situation
++		 * will resolve itself by the client's next attempt.
++		 */
++		if (cd->rd_fhp->fh_export->ex_flags & NFSEXP_V4ROOT)
++			goto fail;
++		fallthrough;
+ 	default:
+ 		/*
+ 		 * If the client requested the RDATTR_ERROR attribute,
 
 
