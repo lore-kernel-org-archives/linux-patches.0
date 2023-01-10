@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8FC6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:27:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F864C433EF;
-	Tue, 10 Jan 2023 18:27:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A00726FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:28:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D66EC433EF;
+	Tue, 10 Jan 2023 18:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375278;
-	bh=+6HINLH99K/PZvEoeD/YFUfi3Gag3I21MVoPQzcYZz8=;
+	s=korg; t=1673375281;
+	bh=Hwa8o7r8odp/e5oqGGwCtlTyOwSrK1CPBSMknm2Qcfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vyI90apbQmHJDlxx99oZjWQOrTnx820km0FQfab9LuwOZx2pLuEcNlc4/LMqkOdPI
-	 egoi1aizPbPu8SE4/i4RmXehi7msDK8BCnmsmDZenMtg1iOQOnciC+H0l1RFxmi1Y1
-	 b7nFvBEtJ7DKsKNZi2cxRUWm/ZaLFAwmo374V+4k=
+	b=c/Up6ZFfS/T7nGNGuiBxvI5AKR54R9cwwW1oGULEXumChT3FjhuK+3Fv+hAtqjnAL
+	 mWa0F7U9m4uNx+icdwBgqrQ5VMqF63Ku+zc+h0XicjKJNS7wtngwBJVeq7FJ2E1j3p
+	 2VYx2y9qG/OGun5lxMlOVgnId1qud/Dv20NQmyRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 130/290] phy: qcom-qmp-combo: fix sc8180x reset
-Date: Tue, 10 Jan 2023 19:03:42 +0100
-Message-Id: <20230110180036.321887226@linuxfoundation.org>
+	stable@kernel.org,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 139/290] ext4: silence the warning when evicting inode with dioread_nolock
+Date: Tue, 10 Jan 2023 19:03:51 +0100
+Message-Id: <20230110180036.649155927@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,39 +36,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit 910dd4883d757af5faac92590f33f0f7da963032 upstream.
+commit bc12ac98ea2e1b70adc6478c8b473a0003b659d3 upstream.
 
-The SC8180X has two resets but the DP configuration erroneously
-described only one.
+When evicting an inode with default dioread_nolock, it could be raced by
+the unwritten extents converting kworker after writeback some new
+allocated dirty blocks. It convert unwritten extents to written, the
+extents could be merged to upper level and free extent blocks, so it
+could mark the inode dirty again even this inode has been marked
+I_FREEING. But the inode->i_io_list check and warning in
+ext4_evict_inode() missing this corner case. Fortunately,
+ext4_evict_inode() will wait all extents converting finished before this
+check, so it will not lead to inode use-after-free problem, every thing
+is OK besides this warning. The WARN_ON_ONCE was originally designed
+for finding inode use-after-free issues in advance, but if we add
+current dioread_nolock case in, it will become not quite useful, so fix
+this warning by just remove this check.
 
-In case the DP part of the PHY is initialised before the USB part (e.g.
-depending on probe order), then only the first reset would be asserted.
+ ======
+ WARNING: CPU: 7 PID: 1092 at fs/ext4/inode.c:227
+ ext4_evict_inode+0x875/0xc60
+ ...
+ RIP: 0010:ext4_evict_inode+0x875/0xc60
+ ...
+ Call Trace:
+  <TASK>
+  evict+0x11c/0x2b0
+  iput+0x236/0x3a0
+  do_unlinkat+0x1b4/0x490
+  __x64_sys_unlinkat+0x4c/0xb0
+  do_syscall_64+0x3b/0x90
+  entry_SYSCALL_64_after_hwframe+0x46/0xb0
+ RIP: 0033:0x7fa933c1115b
+ ======
 
-Fixes: 1633802cd4ac ("phy: qcom: qmp: Add SC8180x USB/DP combo")
-Cc: stable@vger.kernel.org	# 5.15
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20221114081346.5116-4-johan+linaro@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+rm                          kworker
+                            ext4_end_io_end()
+vfs_unlink()
+ ext4_unlink()
+                             ext4_convert_unwritten_io_end_vec()
+                              ext4_convert_unwritten_extents()
+                               ext4_map_blocks()
+                                ext4_ext_map_blocks()
+                                 ext4_ext_try_to_merge_up()
+                                  __mark_inode_dirty()
+                                   check !I_FREEING
+                                   locked_inode_to_wb_and_lock_list()
+ iput()
+  iput_final()
+   evict()
+    ext4_evict_inode()
+     truncate_inode_pages_final() //wait release io_end
+                                    inode_io_list_move_locked()
+                             ext4_release_io_end()
+     trigger WARN_ON_ONCE()
+
+Cc: stable@kernel.org
+Fixes: ceff86fddae8 ("ext4: Avoid freeing inodes on dirty list")
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20220629112647.4141034-1-yi.zhang@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/ext4/inode.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -3417,8 +3417,8 @@ static const struct qmp_phy_cfg sc7180_d
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -225,13 +225,13 @@ void ext4_evict_inode(struct inode *inod
  
- 	.clk_list		= qmp_v3_phy_clk_l,
- 	.num_clks		= ARRAY_SIZE(qmp_v3_phy_clk_l),
--	.reset_list		= sc7180_usb3phy_reset_l,
--	.num_resets		= ARRAY_SIZE(sc7180_usb3phy_reset_l),
-+	.reset_list		= msm8996_usb3phy_reset_l,
-+	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
- 	.vreg_list		= qmp_phy_vreg_l,
- 	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
- 	.regs			= qmp_v3_usb3phy_regs_layout,
+ 	/*
+ 	 * For inodes with journalled data, transaction commit could have
+-	 * dirtied the inode. Flush worker is ignoring it because of I_FREEING
+-	 * flag but we still need to remove the inode from the writeback lists.
++	 * dirtied the inode. And for inodes with dioread_nolock, unwritten
++	 * extents converting worker could merge extents and also have dirtied
++	 * the inode. Flush worker is ignoring it because of I_FREEING flag but
++	 * we still need to remove the inode from the writeback lists.
+ 	 */
+-	if (!list_empty_careful(&inode->i_io_list)) {
+-		WARN_ON_ONCE(!ext4_should_journal_data(inode));
++	if (!list_empty_careful(&inode->i_io_list))
+ 		inode_io_list_del(inode);
+-	}
+ 
+ 	/*
+ 	 * Protect us against freezing - iput() caller didn't have to have any
 
 
