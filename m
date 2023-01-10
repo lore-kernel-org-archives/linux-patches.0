@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 695487474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:35:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5711C433EF;
-	Tue, 10 Jan 2023 18:35:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 309F47474
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:35:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90EF1C433D2;
+	Tue, 10 Jan 2023 18:35:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375703;
-	bh=c4l+5b5kwebcU8irDqq4ifj0wYyLox3WF5JPzrgR8qQ=;
+	s=korg; t=1673375706;
+	bh=R11KfLR/mtPLWUd51U0iVynTDRA3SeN70ZC8NXe3XSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SiWQ4/0WC1w3WPkI1qBc9Yp3NEkxr/diCt23S3SOOcn200Sp9yI0pHIhYF5dIWtJX
-	 R45++jO7fupTV+51Ap/QsPgCGSYzeO4Okuew7xh6YGcGGNiiwocQ2yDpSAYorpuBFw
-	 ZxrqCD/As8qtxpRJwP185uLgivXLXJa2aDKIQPBQ=
+	b=F7qYP71vHo3GUG6UZCXdtKbAmmGVhW2kDH5/S31chMewoED0icTNJVh+4ChDfd5jj
+	 6ZekQBb4eT3TnFLL3ryUj7Fxe9y+GZRHNEmIICVXCv3Y6K0GyhBMS3+LZqLssUCpS+
+	 EBh8w93N6QQp50Xmx00t01RUdSzTQMLwsrUYOclE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Agroskin <shayagr@amazon.com>,
-	David Arinzon <darinzon@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 233/290] net: ena: Use bitmask to indicate packet redirection
-Date: Tue, 10 Jan 2023 19:05:25 +0100
-Message-Id: <20230110180040.055812280@linuxfoundation.org>
+	it+linux-fbdev@molgen.mpg.de,
+	"Z. Liu" <liuzx@knownsec.com>,
+	Rich Felker <dalias@libc.org>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.15 268/290] fbdev: matroxfb: G200eW: Increase max memory from 1 MB to 16 MB
+Date: Tue, 10 Jan 2023 19:06:00 +0100
+Message-Id: <20230110180041.215368558@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -36,193 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Arinzon <darinzon@amazon.com>
+From: Paul Menzel <pmenzel@molgen.mpg.de>
 
-[ Upstream commit 59811faa2c54dbcf44d575b5a8f6e7077da88dc2 ]
+commit f685dd7a8025f2554f73748cfdb8143a21fb92c7 upstream.
 
-Redirecting packets with XDP Redirect is done in two phases:
-1. A packet is passed by the driver to the kernel using
-   xdp_do_redirect().
-2. After finishing polling for new packets the driver lets the kernel
-   know that it can now process the redirected packet using
-   xdp_do_flush_map().
-   The packets' redirection is handled in the napi context of the
-   queue that called xdp_do_redirect()
+Commit 62d89a7d49af ("video: fbdev: matroxfb: set maxvram of vbG200eW to
+the same as vbG200 to avoid black screen") accidently decreases the
+maximum memory size for the Matrox G200eW (102b:0532) from 8 MB to 1 MB
+by missing one zero. This caused the driver initialization to fail with
+the messages below, as the minimum required VRAM size is 2 MB:
 
-To avoid calling xdp_do_flush_map() each time the driver first checks
-whether any packets were redirected, using
-	xdp_flags |= xdp_verdict;
-and
-	if (xdp_flags & XDP_REDIRECT)
-	    xdp_do_flush_map()
+     [    9.436420] matroxfb: Matrox MGA-G200eW (PCI) detected
+     [    9.444502] matroxfb: cannot determine memory size
+     [    9.449316] matroxfb: probe of 0000:0a:03.0 failed with error -1
 
-essentially treating XDP instructions as a bitmask, which isn't the case:
-    enum xdp_action {
-	    XDP_ABORTED = 0,
-	    XDP_DROP,
-	    XDP_PASS,
-	    XDP_TX,
-	    XDP_REDIRECT,
-    };
+So, add the missing 0 to make it the intended 16 MB. Successfully tested on
+the Dell PowerEdge R910/0KYD3D, BIOS 2.10.0 08/29/2013, that the warning is
+gone.
 
-Given the current possible values of xdp_action, the current design
-doesn't have a bug (since XDP_REDIRECT = 100b), but it is still
-flawed.
+While at it, add a leading 0 to the maxdisplayable entry, so it’s aligned
+properly. The value could probably also be increased from 8 MB to 16 MB, as
+the G200 uses the same values, but I have not checked any datasheet.
 
-This patch makes the driver use a bitmask instead, to avoid future
-issues.
+Note, matroxfb is obsolete and superseded by the maintained DRM driver
+mga200, which is used by default on most systems where both drivers are
+available. Therefore, on most systems it was only a cosmetic issue.
 
-Fixes: a318c70ad152 ("net: ena: introduce XDP redirect implementation")
-Signed-off-by: Shay Agroskin <shayagr@amazon.com>
-Signed-off-by: David Arinzon <darinzon@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 62d89a7d49af ("video: fbdev: matroxfb: set maxvram of vbG200eW to the same as vbG200 to avoid black screen")
+Link: https://lore.kernel.org/linux-fbdev/972999d3-b75d-5680-fcef-6e6905c52ac5@suse.de/T/#mb6953a9995ebd18acc8552f99d6db39787aec775
+Cc: it+linux-fbdev@molgen.mpg.de
+Cc: Z. Liu <liuzx@knownsec.com>
+Cc: Rich Felker <dalias@libc.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_netdev.c | 26 ++++++++++++--------
- drivers/net/ethernet/amazon/ena/ena_netdev.h |  9 +++++++
- 2 files changed, 25 insertions(+), 10 deletions(-)
+ drivers/video/fbdev/matrox/matroxfb_base.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-index 31afbd17e690..294f21a839cf 100644
---- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-@@ -378,9 +378,9 @@ static int ena_xdp_xmit(struct net_device *dev, int n,
- 
- static int ena_xdp_execute(struct ena_ring *rx_ring, struct xdp_buff *xdp)
- {
-+	u32 verdict = ENA_XDP_PASS;
- 	struct bpf_prog *xdp_prog;
- 	struct ena_ring *xdp_ring;
--	u32 verdict = XDP_PASS;
- 	struct xdp_frame *xdpf;
- 	u64 *xdp_stat;
- 
-@@ -397,7 +397,7 @@ static int ena_xdp_execute(struct ena_ring *rx_ring, struct xdp_buff *xdp)
- 		if (unlikely(!xdpf)) {
- 			trace_xdp_exception(rx_ring->netdev, xdp_prog, verdict);
- 			xdp_stat = &rx_ring->rx_stats.xdp_aborted;
--			verdict = XDP_ABORTED;
-+			verdict = ENA_XDP_DROP;
- 			break;
- 		}
- 
-@@ -413,29 +413,35 @@ static int ena_xdp_execute(struct ena_ring *rx_ring, struct xdp_buff *xdp)
- 
- 		spin_unlock(&xdp_ring->xdp_tx_lock);
- 		xdp_stat = &rx_ring->rx_stats.xdp_tx;
-+		verdict = ENA_XDP_TX;
- 		break;
- 	case XDP_REDIRECT:
- 		if (likely(!xdp_do_redirect(rx_ring->netdev, xdp, xdp_prog))) {
- 			xdp_stat = &rx_ring->rx_stats.xdp_redirect;
-+			verdict = ENA_XDP_REDIRECT;
- 			break;
- 		}
- 		trace_xdp_exception(rx_ring->netdev, xdp_prog, verdict);
- 		xdp_stat = &rx_ring->rx_stats.xdp_aborted;
--		verdict = XDP_ABORTED;
-+		verdict = ENA_XDP_DROP;
- 		break;
- 	case XDP_ABORTED:
- 		trace_xdp_exception(rx_ring->netdev, xdp_prog, verdict);
- 		xdp_stat = &rx_ring->rx_stats.xdp_aborted;
-+		verdict = ENA_XDP_DROP;
- 		break;
- 	case XDP_DROP:
- 		xdp_stat = &rx_ring->rx_stats.xdp_drop;
-+		verdict = ENA_XDP_DROP;
- 		break;
- 	case XDP_PASS:
- 		xdp_stat = &rx_ring->rx_stats.xdp_pass;
-+		verdict = ENA_XDP_PASS;
- 		break;
- 	default:
- 		bpf_warn_invalid_xdp_action(verdict);
- 		xdp_stat = &rx_ring->rx_stats.xdp_invalid;
-+		verdict = ENA_XDP_DROP;
- 	}
- 
- 	ena_increase_stat(xdp_stat, 1, &rx_ring->syncp);
-@@ -1631,12 +1637,12 @@ static int ena_xdp_handle_buff(struct ena_ring *rx_ring, struct xdp_buff *xdp)
- 	 * we expect, then we simply drop it
- 	 */
- 	if (unlikely(rx_ring->ena_bufs[0].len > ENA_XDP_MAX_MTU))
--		return XDP_DROP;
-+		return ENA_XDP_DROP;
- 
- 	ret = ena_xdp_execute(rx_ring, xdp);
- 
- 	/* The xdp program might expand the headers */
--	if (ret == XDP_PASS) {
-+	if (ret == ENA_XDP_PASS) {
- 		rx_info->page_offset = xdp->data - xdp->data_hard_start;
- 		rx_ring->ena_bufs[0].len = xdp->data_end - xdp->data;
- 	}
-@@ -1675,7 +1681,7 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
- 	xdp_init_buff(&xdp, ENA_PAGE_SIZE, &rx_ring->xdp_rxq);
- 
- 	do {
--		xdp_verdict = XDP_PASS;
-+		xdp_verdict = ENA_XDP_PASS;
- 		skb = NULL;
- 		ena_rx_ctx.ena_bufs = rx_ring->ena_bufs;
- 		ena_rx_ctx.max_bufs = rx_ring->sgl_size;
-@@ -1703,7 +1709,7 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
- 			xdp_verdict = ena_xdp_handle_buff(rx_ring, &xdp);
- 
- 		/* allocate skb and fill it */
--		if (xdp_verdict == XDP_PASS)
-+		if (xdp_verdict == ENA_XDP_PASS)
- 			skb = ena_rx_skb(rx_ring,
- 					 rx_ring->ena_bufs,
- 					 ena_rx_ctx.descs,
-@@ -1721,13 +1727,13 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
- 				/* Packets was passed for transmission, unmap it
- 				 * from RX side.
- 				 */
--				if (xdp_verdict == XDP_TX || xdp_verdict == XDP_REDIRECT) {
-+				if (xdp_verdict & ENA_XDP_FORWARDED) {
- 					ena_unmap_rx_buff(rx_ring,
- 							  &rx_ring->rx_buffer_info[req_id]);
- 					rx_ring->rx_buffer_info[req_id].page = NULL;
- 				}
- 			}
--			if (xdp_verdict != XDP_PASS) {
-+			if (xdp_verdict != ENA_XDP_PASS) {
- 				xdp_flags |= xdp_verdict;
- 				total_len += ena_rx_ctx.ena_bufs[0].len;
- 				res_budget--;
-@@ -1773,7 +1779,7 @@ static int ena_clean_rx_irq(struct ena_ring *rx_ring, struct napi_struct *napi,
- 		ena_refill_rx_bufs(rx_ring, refill_required);
- 	}
- 
--	if (xdp_flags & XDP_REDIRECT)
-+	if (xdp_flags & ENA_XDP_REDIRECT)
- 		xdp_do_flush_map();
- 
- 	return work_done;
-diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.h b/drivers/net/ethernet/amazon/ena/ena_netdev.h
-index 0c39fc2fa345..ada2f8faa33a 100644
---- a/drivers/net/ethernet/amazon/ena/ena_netdev.h
-+++ b/drivers/net/ethernet/amazon/ena/ena_netdev.h
-@@ -412,6 +412,15 @@ enum ena_xdp_errors_t {
- 	ENA_XDP_NO_ENOUGH_QUEUES,
+--- a/drivers/video/fbdev/matrox/matroxfb_base.c
++++ b/drivers/video/fbdev/matrox/matroxfb_base.c
+@@ -1377,8 +1377,8 @@ static struct video_board vbG200 = {
+ 	.lowlevel = &matrox_G100
  };
- 
-+enum ENA_XDP_ACTIONS {
-+	ENA_XDP_PASS		= 0,
-+	ENA_XDP_TX		= BIT(0),
-+	ENA_XDP_REDIRECT	= BIT(1),
-+	ENA_XDP_DROP		= BIT(2)
-+};
-+
-+#define ENA_XDP_FORWARDED (ENA_XDP_TX | ENA_XDP_REDIRECT)
-+
- static inline bool ena_xdp_present(struct ena_adapter *adapter)
- {
- 	return !!adapter->xdp_bpf_prog;
--- 
-2.35.1
-
+ static struct video_board vbG200eW = {
+-	.maxvram = 0x100000,
+-	.maxdisplayable = 0x800000,
++	.maxvram = 0x1000000,
++	.maxdisplayable = 0x0800000,
+ 	.accelID = FB_ACCEL_MATROX_MGAG200,
+ 	.lowlevel = &matrox_G100
+ };
 
 
