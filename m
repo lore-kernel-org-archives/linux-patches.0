@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81C4CA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:15:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03DB6C433EF;
-	Tue, 10 Jan 2023 18:15:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D00FA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:15:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13956C433D2;
+	Tue, 10 Jan 2023 18:15:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374504;
-	bh=cnZlEloloM0ArrjYXpSXD8jMSDXQ6W0bZNsO3rFj+bA=;
+	s=korg; t=1673374507;
+	bh=nz96L2JG1bFpBLoFpcaf90jDFTRHdQpm1pRS6o4nttg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ac0hpftLm1yvTy7eZfdibdReBVQpL9hcDeQy4ZIpwCbezzPt/UJ7R7d5H38OHGvAC
-	 rZl3iM4dTkJxQ42VDRnPqt1G1fzzYvPZQW/zPyAJMlwMZw+Q6obDBCkPmJk+mkMh2i
-	 vSSWS7KRNuA/OWaJwxlCp9qVk2xsiu1NqPM23hig=
+	b=iRpWDDwYs0IlHgKaE0yf5l0aHRO5z4xaQBCnKl1+bpZo0d7FClAoHPlc1pqL3zggs
+	 +75ARaEPKCDPeZt9RB0Qsr2hSS6uB0tvFMbne8BXsd52/17WjEPxuomSK7zcvTPBM1
+	 caqUN0TOeFfuoi5Qx9Hs+KqPckepLYh/t4X6frvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Piotr Raczynski <piotr.raczynski@intel.com>,
+	Magnus Karlsson <magnus.karlsson@gmail.com>,
+	Shawn Bohrer <sbohrer@cloudflare.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 026/159] net: lan966x: Fix configuration of the PCS
-Date: Tue, 10 Jan 2023 19:02:54 +0100
-Message-Id: <20230110180019.141577123@linuxfoundation.org>
+Subject: [PATCH 6.1 027/159] veth: Fix race with AF_XDP exposing old or uninitialized descriptors
+Date: Tue, 10 Jan 2023 19:02:55 +0100
+Message-Id: <20230110180019.178079861@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,47 +36,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Horatiu Vultur <horatiu.vultur@microchip.com>
+From: Shawn Bohrer <sbohrer@cloudflare.com>
 
-[ Upstream commit d717f9474e3fb7e6bd3e43ca16e131f04320ed6f ]
+[ Upstream commit fa349e396e4886d742fd6501c599ec627ef1353b ]
 
-When the PCS was taken out of reset, we were changing by mistake also
-the speed to 100 Mbit. But in case the link was going down, the link
-up routine was setting correctly the link speed. If the link was not
-getting down then the speed was forced to run at 100 even if the
-speed was something else.
-On lan966x, to set the speed link to 1G or 2.5G a value of 1 needs to be
-written in DEV_CLOCK_CFG_LINK_SPEED. This is similar to the procedure in
-lan966x_port_init.
+When AF_XDP is used on on a veth interface the RX ring is updated in two
+steps.  veth_xdp_rcv() removes packet descriptors from the FILL ring
+fills them and places them in the RX ring updating the cached_prod
+pointer.  Later xdp_do_flush() syncs the RX ring prod pointer with the
+cached_prod pointer allowing user-space to see the recently filled in
+descriptors.  The rings are intended to be SPSC, however the existing
+order in veth_poll allows the xdp_do_flush() to run concurrently with
+another CPU creating a race condition that allows user-space to see old
+or uninitialized descriptors in the RX ring.  This bug has been observed
+in production systems.
 
-The issue was reproduced using 1000base-x sfp module using the commands:
-ip link set dev eth2 up
-ip link addr add 10.97.10.2/24 dev eth2
-ethtool -s eth2 speed 1000 autoneg off
+To summarize, we are expecting this ordering:
 
-Fixes: d28d6d2e37d1 ("net: lan966x: add port module support")
-Signed-off-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Piotr Raczynski <piotr.raczynski@intel.com>
-Link: https://lore.kernel.org/r/20221221093315.939133-1-horatiu.vultur@microchip.com
+CPU 0 __xsk_rcv_zc()
+CPU 0 __xsk_map_flush()
+CPU 2 __xsk_rcv_zc()
+CPU 2 __xsk_map_flush()
+
+But we are seeing this order:
+
+CPU 0 __xsk_rcv_zc()
+CPU 2 __xsk_rcv_zc()
+CPU 0 __xsk_map_flush()
+CPU 2 __xsk_map_flush()
+
+This occurs because we rely on NAPI to ensure that only one napi_poll
+handler is running at a time for the given veth receive queue.
+napi_schedule_prep() will prevent multiple instances from getting
+scheduled. However calling napi_complete_done() signals that this
+napi_poll is complete and allows subsequent calls to
+napi_schedule_prep() and __napi_schedule() to succeed in scheduling a
+concurrent napi_poll before the xdp_do_flush() has been called.  For the
+veth driver a concurrent call to napi_schedule_prep() and
+__napi_schedule() can occur on a different CPU because the veth xmit
+path can additionally schedule a napi_poll creating the race.
+
+The fix as suggested by Magnus Karlsson, is to simply move the
+xdp_do_flush() call before napi_complete_done().  This syncs the
+producer ring pointers before another instance of napi_poll can be
+scheduled on another CPU.  It will also slightly improve performance by
+moving the flush closer to when the descriptors were placed in the
+RX ring.
+
+Fixes: d1396004dd86 ("veth: Add XDP TX and REDIRECT")
+Suggested-by: Magnus Karlsson <magnus.karlsson@gmail.com>
+Signed-off-by: Shawn Bohrer <sbohrer@cloudflare.com>
+Link: https://lore.kernel.org/r/20221220185903.1105011-1-sbohrer@cloudflare.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_port.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/veth.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_port.c b/drivers/net/ethernet/microchip/lan966x/lan966x_port.c
-index 1a61c6cdb077..0050fcb988b7 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_port.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_port.c
-@@ -381,7 +381,7 @@ int lan966x_port_pcs_set(struct lan966x_port *port,
- 	}
+diff --git a/drivers/net/veth.c b/drivers/net/veth.c
+index 09682ea3354e..bd385ccd0d18 100644
+--- a/drivers/net/veth.c
++++ b/drivers/net/veth.c
+@@ -974,6 +974,9 @@ static int veth_poll(struct napi_struct *napi, int budget)
+ 	xdp_set_return_frame_no_direct();
+ 	done = veth_xdp_rcv(rq, budget, &bq, &stats);
  
- 	/* Take PCS out of reset */
--	lan_rmw(DEV_CLOCK_CFG_LINK_SPEED_SET(2) |
-+	lan_rmw(DEV_CLOCK_CFG_LINK_SPEED_SET(LAN966X_SPEED_1000) |
- 		DEV_CLOCK_CFG_PCS_RX_RST_SET(0) |
- 		DEV_CLOCK_CFG_PCS_TX_RST_SET(0),
- 		DEV_CLOCK_CFG_LINK_SPEED |
++	if (stats.xdp_redirect > 0)
++		xdp_do_flush();
++
+ 	if (done < budget && napi_complete_done(napi, done)) {
+ 		/* Write rx_notify_masked before reading ptr_ring */
+ 		smp_store_mb(rq->rx_notify_masked, false);
+@@ -987,8 +990,6 @@ static int veth_poll(struct napi_struct *napi, int budget)
+ 
+ 	if (stats.xdp_tx > 0)
+ 		veth_xdp_flush(rq, &bq);
+-	if (stats.xdp_redirect > 0)
+-		xdp_do_flush();
+ 	xdp_clear_return_frame_no_direct();
+ 
+ 	return done;
 -- 
 2.35.1
 
