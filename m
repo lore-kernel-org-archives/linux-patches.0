@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C55DD6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:23:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D00DC433EF;
-	Tue, 10 Jan 2023 18:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8F506FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:23:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DCEFC433D2;
+	Tue, 10 Jan 2023 18:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375035;
-	bh=ret46/LcU2YGtUqVc0FGhBHKTOuNAiqwvd142O1puPs=;
+	s=korg; t=1673375038;
+	bh=kcSBweqE1m8UESWclii2tT3H9nH29LcQbkd5nxOTB/c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B490vBdRHcO/H2VO7skD4YZ5JLssFbGqTzM4mIXjL0Gb9P8WKfZtc4xG+fhMg+aI0
-	 NesY5wSAybhtx2y7scHW6E5MvJ3zngovGtN0pd8vLGgQykriHvXsImulMztx7oaEvn
-	 SO5TW2ahZ/OgEvugiQfrpGIDeMfTwNMntUPoCzXk=
+	b=wNbB7aCUTm7ifprSzr1TBqghRxelr8ZL4siFL8m9kKLlMNOG9+sRtwBal3xbnSLYT
+	 vgzSMGOts19eXL1a/YFlRjfaPP9/U0k427E6l8Dv0tQw1/90rHBgKLE9AhuTGH0hGX
+	 B5eyBKwJHOQHcZ2giI5Nw6r5Z0dDpo0Q+5VXswQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Rander Wang <rander.wang@intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Vinod Koul <vkoul@kernel.org>,
-	Mark Brown <broonie@kernel.org>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 056/290] ASoC/SoundWire: dai: expand stream concept beyond SoundWire
-Date: Tue, 10 Jan 2023 19:02:28 +0100
-Message-Id: <20230110180033.556388184@linuxfoundation.org>
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Joel Fernandes <joel@joelfernandes.org>
+Subject: [PATCH 5.15 057/290] rcu-tasks: Simplify trc_read_check_handler() atomic operations
+Date: Tue, 10 Jan 2023 19:02:29 +0100
+Message-Id: <20230110180033.597780936@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -39,395 +34,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Paul E. McKenney <paulmck@kernel.org>
 
-commit e8444560b4d9302a511f0996f4cfdf85b628f4ca upstream.
+commit 96017bf9039763a2e02dcc6adaa18592cd73a39d upstream.
 
-The HDAudio ASoC support relies on the set_tdm_slots() helper to store
-the HDaudio stream tag in the tx_mask. This only works because of the
-pre-existing order in soc-pcm.c, where the hw_params() is handled for
-codec_dais *before* cpu_dais. When the order is reversed, the
-stream_tag is used as a mask in the codec fixup functions:
+Currently, trc_wait_for_one_reader() atomically increments
+the trc_n_readers_need_end counter before sending the IPI
+invoking trc_read_check_handler().  All failure paths out of
+trc_read_check_handler() and also from the smp_call_function_single()
+within trc_wait_for_one_reader() must carefully atomically decrement
+this counter.  This is more complex than it needs to be.
 
-	/* fixup params based on TDM slot masks */
-	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK &&
-	    codec_dai->tx_mask)
-		soc_pcm_codec_params_fixup(&codec_params,
-					   codec_dai->tx_mask);
+This commit therefore simplifies things and saves a few lines of
+code by dispensing with the atomic decrements in favor of having
+trc_read_check_handler() do the atomic increment only in the success case.
+In theory, this represents no change in functionality.
 
-As a result of this confusion, the codec_params_fixup() ends-up
-generating bad channel masks, depending on what stream_tag was
-allocated.
-
-We could add a flag to state that the tx_mask is really not a mask,
-but it would be quite ugly to persist in overloading concepts.
-
-Instead, this patch suggests a more generic get/set 'stream' API based
-on the existing model for SoundWire. We can expand the concept to
-store 'stream' opaque information that is specific to different DAI
-types. In the case of HDAudio DAIs, we only need to store a stream tag
-as an unsigned char pointer. The TDM rx_ and tx_masks should really
-only be used to store masks.
-
-Rename get_sdw_stream/set_sdw_stream callbacks and helpers as
-get_stream/set_stream. No functionality change beyond the rename.
-
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Rander Wang <rander.wang@intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@intel.com>
-Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Acked-By: Vinod Koul <vkoul@kernel.org>
-Link: https://lore.kernel.org/r/20211224021034.26635-5-yung-chuan.liao@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Cc: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Cc: Joel Fernandes <joel@joelfernandes.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soundwire/intel.c        |    8 ++++----
- drivers/soundwire/qcom.c         |    8 ++++----
- drivers/soundwire/stream.c       |    4 ++--
- include/sound/soc-dai.h          |   32 ++++++++++++++++----------------
- sound/soc/codecs/max98373-sdw.c  |    2 +-
- sound/soc/codecs/rt1308-sdw.c    |    2 +-
- sound/soc/codecs/rt1316-sdw.c    |    2 +-
- sound/soc/codecs/rt5682-sdw.c    |    2 +-
- sound/soc/codecs/rt700.c         |    2 +-
- sound/soc/codecs/rt711-sdca.c    |    2 +-
- sound/soc/codecs/rt711.c         |    2 +-
- sound/soc/codecs/rt715-sdca.c    |    2 +-
- sound/soc/codecs/rt715.c         |    2 +-
- sound/soc/codecs/sdw-mockup.c    |    2 +-
- sound/soc/codecs/wcd938x.c       |    2 +-
- sound/soc/codecs/wsa881x.c       |    2 +-
- sound/soc/intel/boards/sof_sdw.c |    6 +++---
- sound/soc/qcom/sdm845.c          |    4 ++--
- sound/soc/qcom/sm8250.c          |    4 ++--
- 19 files changed, 45 insertions(+), 45 deletions(-)
+ kernel/rcu/tasks.h |   20 +++-----------------
+ 1 file changed, 3 insertions(+), 17 deletions(-)
 
---- a/drivers/soundwire/intel.c
-+++ b/drivers/soundwire/intel.c
-@@ -1065,8 +1065,8 @@ static const struct snd_soc_dai_ops inte
- 	.prepare = intel_prepare,
- 	.hw_free = intel_hw_free,
- 	.shutdown = intel_shutdown,
--	.set_sdw_stream = intel_pcm_set_sdw_stream,
--	.get_sdw_stream = intel_get_sdw_stream,
-+	.set_stream = intel_pcm_set_sdw_stream,
-+	.get_stream = intel_get_sdw_stream,
- };
+--- a/kernel/rcu/tasks.h
++++ b/kernel/rcu/tasks.h
+@@ -892,32 +892,24 @@ static void trc_read_check_handler(void
  
- static const struct snd_soc_dai_ops intel_pdm_dai_ops = {
-@@ -1075,8 +1075,8 @@ static const struct snd_soc_dai_ops inte
- 	.prepare = intel_prepare,
- 	.hw_free = intel_hw_free,
- 	.shutdown = intel_shutdown,
--	.set_sdw_stream = intel_pdm_set_sdw_stream,
--	.get_sdw_stream = intel_get_sdw_stream,
-+	.set_stream = intel_pdm_set_sdw_stream,
-+	.get_stream = intel_get_sdw_stream,
- };
+ 	// If the task is no longer running on this CPU, leave.
+ 	if (unlikely(texp != t)) {
+-		if (WARN_ON_ONCE(atomic_dec_and_test(&trc_n_readers_need_end)))
+-			wake_up(&trc_wait);
+ 		goto reset_ipi; // Already on holdout list, so will check later.
+ 	}
  
- static const struct snd_soc_component_driver dai_component = {
---- a/drivers/soundwire/qcom.c
-+++ b/drivers/soundwire/qcom.c
-@@ -1032,8 +1032,8 @@ static int qcom_swrm_startup(struct snd_
- 	ctrl->sruntime[dai->id] = sruntime;
+ 	// If the task is not in a read-side critical section, and
+ 	// if this is the last reader, awaken the grace-period kthread.
+ 	if (likely(!READ_ONCE(t->trc_reader_nesting))) {
+-		if (WARN_ON_ONCE(atomic_dec_and_test(&trc_n_readers_need_end)))
+-			wake_up(&trc_wait);
+-		// Mark as checked after decrement to avoid false
+-		// positives on the above WARN_ON_ONCE().
+ 		WRITE_ONCE(t->trc_reader_checked, true);
+ 		goto reset_ipi;
+ 	}
+ 	// If we are racing with an rcu_read_unlock_trace(), try again later.
+-	if (unlikely(READ_ONCE(t->trc_reader_nesting) < 0)) {
+-		if (WARN_ON_ONCE(atomic_dec_and_test(&trc_n_readers_need_end)))
+-			wake_up(&trc_wait);
++	if (unlikely(READ_ONCE(t->trc_reader_nesting) < 0))
+ 		goto reset_ipi;
+-	}
+ 	WRITE_ONCE(t->trc_reader_checked, true);
  
- 	for_each_rtd_codec_dais(rtd, i, codec_dai) {
--		ret = snd_soc_dai_set_sdw_stream(codec_dai, sruntime,
--						 substream->stream);
-+		ret = snd_soc_dai_set_stream(codec_dai, sruntime,
-+					     substream->stream);
- 		if (ret < 0 && ret != -ENOTSUPP) {
- 			dev_err(dai->dev, "Failed to set sdw stream on %s\n",
- 				codec_dai->name);
-@@ -1059,8 +1059,8 @@ static const struct snd_soc_dai_ops qcom
- 	.hw_free = qcom_swrm_hw_free,
- 	.startup = qcom_swrm_startup,
- 	.shutdown = qcom_swrm_shutdown,
--	.set_sdw_stream = qcom_swrm_set_sdw_stream,
--	.get_sdw_stream = qcom_swrm_get_sdw_stream,
-+	.set_stream = qcom_swrm_set_sdw_stream,
-+	.get_stream = qcom_swrm_get_sdw_stream,
- };
+ 	// Get here if the task is in a read-side critical section.  Set
+ 	// its state so that it will awaken the grace-period kthread upon
+ 	// exit from that critical section.
++	atomic_inc(&trc_n_readers_need_end); // One more to wait on.
+ 	WARN_ON_ONCE(READ_ONCE(t->trc_reader_special.b.need_qs));
+ 	WRITE_ONCE(t->trc_reader_special.b.need_qs, true);
  
- static const struct snd_soc_component_driver qcom_swrm_dai_component = {
---- a/drivers/soundwire/stream.c
-+++ b/drivers/soundwire/stream.c
-@@ -1880,7 +1880,7 @@ static int set_stream(struct snd_pcm_sub
+@@ -1017,21 +1009,15 @@ static void trc_wait_for_one_reader(stru
+ 		if (per_cpu(trc_ipi_to_cpu, cpu) || t->trc_ipi_to_cpu >= 0)
+ 			return;
  
- 	/* Set stream pointer on all DAIs */
- 	for_each_rtd_dais(rtd, i, dai) {
--		ret = snd_soc_dai_set_sdw_stream(dai, sdw_stream, substream->stream);
-+		ret = snd_soc_dai_set_stream(dai, sdw_stream, substream->stream);
- 		if (ret < 0) {
- 			dev_err(rtd->dev, "failed to set stream pointer on dai %s\n", dai->name);
- 			break;
-@@ -1951,7 +1951,7 @@ void sdw_shutdown_stream(void *sdw_subst
- 	/* Find stream from first CPU DAI */
- 	dai = asoc_rtd_to_cpu(rtd, 0);
- 
--	sdw_stream = snd_soc_dai_get_sdw_stream(dai, substream->stream);
-+	sdw_stream = snd_soc_dai_get_stream(dai, substream->stream);
- 
- 	if (IS_ERR(sdw_stream)) {
- 		dev_err(rtd->dev, "no stream found for DAI %s\n", dai->name);
---- a/include/sound/soc-dai.h
-+++ b/include/sound/soc-dai.h
-@@ -295,9 +295,9 @@ struct snd_soc_dai_ops {
- 			unsigned int *rx_num, unsigned int *rx_slot);
- 	int (*set_tristate)(struct snd_soc_dai *dai, int tristate);
- 
--	int (*set_sdw_stream)(struct snd_soc_dai *dai,
--			void *stream, int direction);
--	void *(*get_sdw_stream)(struct snd_soc_dai *dai, int direction);
-+	int (*set_stream)(struct snd_soc_dai *dai,
-+			  void *stream, int direction);
-+	void *(*get_stream)(struct snd_soc_dai *dai, int direction);
- 
- 	/*
- 	 * DAI digital mute - optional.
-@@ -515,42 +515,42 @@ static inline void *snd_soc_dai_get_drvd
- }
- 
- /**
-- * snd_soc_dai_set_sdw_stream() - Configures a DAI for SDW stream operation
-+ * snd_soc_dai_set_stream() - Configures a DAI for stream operation
-  * @dai: DAI
-- * @stream: STREAM
-+ * @stream: STREAM (opaque structure depending on DAI type)
-  * @direction: Stream direction(Playback/Capture)
-- * SoundWire subsystem doesn't have a notion of direction and we reuse
-+ * Some subsystems, such as SoundWire, don't have a notion of direction and we reuse
-  * the ASoC stream direction to configure sink/source ports.
-  * Playback maps to source ports and Capture for sink ports.
-  *
-  * This should be invoked with NULL to clear the stream set previously.
-  * Returns 0 on success, a negative error code otherwise.
-  */
--static inline int snd_soc_dai_set_sdw_stream(struct snd_soc_dai *dai,
--				void *stream, int direction)
-+static inline int snd_soc_dai_set_stream(struct snd_soc_dai *dai,
-+					 void *stream, int direction)
- {
--	if (dai->driver->ops->set_sdw_stream)
--		return dai->driver->ops->set_sdw_stream(dai, stream, direction);
-+	if (dai->driver->ops->set_stream)
-+		return dai->driver->ops->set_stream(dai, stream, direction);
- 	else
- 		return -ENOTSUPP;
- }
- 
- /**
-- * snd_soc_dai_get_sdw_stream() - Retrieves SDW stream from DAI
-+ * snd_soc_dai_get_stream() - Retrieves stream from DAI
-  * @dai: DAI
-  * @direction: Stream direction(Playback/Capture)
-  *
-  * This routine only retrieves that was previously configured
-- * with snd_soc_dai_get_sdw_stream()
-+ * with snd_soc_dai_get_stream()
-  *
-  * Returns pointer to stream or an ERR_PTR value, e.g.
-  * ERR_PTR(-ENOTSUPP) if callback is not supported;
-  */
--static inline void *snd_soc_dai_get_sdw_stream(struct snd_soc_dai *dai,
--					       int direction)
-+static inline void *snd_soc_dai_get_stream(struct snd_soc_dai *dai,
-+					   int direction)
- {
--	if (dai->driver->ops->get_sdw_stream)
--		return dai->driver->ops->get_sdw_stream(dai, direction);
-+	if (dai->driver->ops->get_stream)
-+		return dai->driver->ops->get_stream(dai, direction);
- 	else
- 		return ERR_PTR(-ENOTSUPP);
- }
---- a/sound/soc/codecs/max98373-sdw.c
-+++ b/sound/soc/codecs/max98373-sdw.c
-@@ -741,7 +741,7 @@ static int max98373_sdw_set_tdm_slot(str
- static const struct snd_soc_dai_ops max98373_dai_sdw_ops = {
- 	.hw_params = max98373_sdw_dai_hw_params,
- 	.hw_free = max98373_pcm_hw_free,
--	.set_sdw_stream = max98373_set_sdw_stream,
-+	.set_stream = max98373_set_sdw_stream,
- 	.shutdown = max98373_shutdown,
- 	.set_tdm_slot = max98373_sdw_set_tdm_slot,
- };
---- a/sound/soc/codecs/rt1308-sdw.c
-+++ b/sound/soc/codecs/rt1308-sdw.c
-@@ -613,7 +613,7 @@ static const struct snd_soc_component_dr
- static const struct snd_soc_dai_ops rt1308_aif_dai_ops = {
- 	.hw_params = rt1308_sdw_hw_params,
- 	.hw_free	= rt1308_sdw_pcm_hw_free,
--	.set_sdw_stream	= rt1308_set_sdw_stream,
-+	.set_stream	= rt1308_set_sdw_stream,
- 	.shutdown	= rt1308_sdw_shutdown,
- 	.set_tdm_slot	= rt1308_sdw_set_tdm_slot,
- };
---- a/sound/soc/codecs/rt1316-sdw.c
-+++ b/sound/soc/codecs/rt1316-sdw.c
-@@ -602,7 +602,7 @@ static const struct snd_soc_component_dr
- static const struct snd_soc_dai_ops rt1316_aif_dai_ops = {
- 	.hw_params = rt1316_sdw_hw_params,
- 	.hw_free	= rt1316_sdw_pcm_hw_free,
--	.set_sdw_stream	= rt1316_set_sdw_stream,
-+	.set_stream	= rt1316_set_sdw_stream,
- 	.shutdown	= rt1316_sdw_shutdown,
- };
- 
---- a/sound/soc/codecs/rt5682-sdw.c
-+++ b/sound/soc/codecs/rt5682-sdw.c
-@@ -272,7 +272,7 @@ static int rt5682_sdw_hw_free(struct snd
- static const struct snd_soc_dai_ops rt5682_sdw_ops = {
- 	.hw_params	= rt5682_sdw_hw_params,
- 	.hw_free	= rt5682_sdw_hw_free,
--	.set_sdw_stream	= rt5682_set_sdw_stream,
-+	.set_stream	= rt5682_set_sdw_stream,
- 	.shutdown	= rt5682_sdw_shutdown,
- };
- 
---- a/sound/soc/codecs/rt700.c
-+++ b/sound/soc/codecs/rt700.c
-@@ -1015,7 +1015,7 @@ static int rt700_pcm_hw_free(struct snd_
- static const struct snd_soc_dai_ops rt700_ops = {
- 	.hw_params	= rt700_pcm_hw_params,
- 	.hw_free	= rt700_pcm_hw_free,
--	.set_sdw_stream	= rt700_set_sdw_stream,
-+	.set_stream	= rt700_set_sdw_stream,
- 	.shutdown	= rt700_shutdown,
- };
- 
---- a/sound/soc/codecs/rt711-sdca.c
-+++ b/sound/soc/codecs/rt711-sdca.c
-@@ -1361,7 +1361,7 @@ static int rt711_sdca_pcm_hw_free(struct
- static const struct snd_soc_dai_ops rt711_sdca_ops = {
- 	.hw_params	= rt711_sdca_pcm_hw_params,
- 	.hw_free	= rt711_sdca_pcm_hw_free,
--	.set_sdw_stream	= rt711_sdca_set_sdw_stream,
-+	.set_stream	= rt711_sdca_set_sdw_stream,
- 	.shutdown	= rt711_sdca_shutdown,
- };
- 
---- a/sound/soc/codecs/rt711.c
-+++ b/sound/soc/codecs/rt711.c
-@@ -1092,7 +1092,7 @@ static int rt711_pcm_hw_free(struct snd_
- static const struct snd_soc_dai_ops rt711_ops = {
- 	.hw_params	= rt711_pcm_hw_params,
- 	.hw_free	= rt711_pcm_hw_free,
--	.set_sdw_stream	= rt711_set_sdw_stream,
-+	.set_stream	= rt711_set_sdw_stream,
- 	.shutdown	= rt711_shutdown,
- };
- 
---- a/sound/soc/codecs/rt715-sdca.c
-+++ b/sound/soc/codecs/rt715-sdca.c
-@@ -938,7 +938,7 @@ static int rt715_sdca_pcm_hw_free(struct
- static const struct snd_soc_dai_ops rt715_sdca_ops = {
- 	.hw_params	= rt715_sdca_pcm_hw_params,
- 	.hw_free	= rt715_sdca_pcm_hw_free,
--	.set_sdw_stream	= rt715_sdca_set_sdw_stream,
-+	.set_stream	= rt715_sdca_set_sdw_stream,
- 	.shutdown	= rt715_sdca_shutdown,
- };
- 
---- a/sound/soc/codecs/rt715.c
-+++ b/sound/soc/codecs/rt715.c
-@@ -909,7 +909,7 @@ static int rt715_pcm_hw_free(struct snd_
- static const struct snd_soc_dai_ops rt715_ops = {
- 	.hw_params	= rt715_pcm_hw_params,
- 	.hw_free	= rt715_pcm_hw_free,
--	.set_sdw_stream	= rt715_set_sdw_stream,
-+	.set_stream	= rt715_set_sdw_stream,
- 	.shutdown	= rt715_shutdown,
- };
- 
---- a/sound/soc/codecs/sdw-mockup.c
-+++ b/sound/soc/codecs/sdw-mockup.c
-@@ -138,7 +138,7 @@ static int sdw_mockup_pcm_hw_free(struct
- static const struct snd_soc_dai_ops sdw_mockup_ops = {
- 	.hw_params	= sdw_mockup_pcm_hw_params,
- 	.hw_free	= sdw_mockup_pcm_hw_free,
--	.set_sdw_stream	= sdw_mockup_set_sdw_stream,
-+	.set_stream	= sdw_mockup_set_sdw_stream,
- 	.shutdown	= sdw_mockup_shutdown,
- };
- 
---- a/sound/soc/codecs/wcd938x.c
-+++ b/sound/soc/codecs/wcd938x.c
-@@ -4302,7 +4302,7 @@ static int wcd938x_codec_set_sdw_stream(
- static const struct snd_soc_dai_ops wcd938x_sdw_dai_ops = {
- 	.hw_params = wcd938x_codec_hw_params,
- 	.hw_free = wcd938x_codec_free,
--	.set_sdw_stream = wcd938x_codec_set_sdw_stream,
-+	.set_stream = wcd938x_codec_set_sdw_stream,
- };
- 
- static struct snd_soc_dai_driver wcd938x_dais[] = {
---- a/sound/soc/codecs/wsa881x.c
-+++ b/sound/soc/codecs/wsa881x.c
-@@ -1026,7 +1026,7 @@ static const struct snd_soc_dai_ops wsa8
- 	.hw_params = wsa881x_hw_params,
- 	.hw_free = wsa881x_hw_free,
- 	.mute_stream = wsa881x_digital_mute,
--	.set_sdw_stream = wsa881x_set_sdw_stream,
-+	.set_stream = wsa881x_set_sdw_stream,
- };
- 
- static struct snd_soc_dai_driver wsa881x_dais[] = {
---- a/sound/soc/intel/boards/sof_sdw.c
-+++ b/sound/soc/intel/boards/sof_sdw.c
-@@ -291,7 +291,7 @@ int sdw_prepare(struct snd_pcm_substream
- 	/* Find stream from first CPU DAI */
- 	dai = asoc_rtd_to_cpu(rtd, 0);
- 
--	sdw_stream = snd_soc_dai_get_sdw_stream(dai, substream->stream);
-+	sdw_stream = snd_soc_dai_get_stream(dai, substream->stream);
- 
- 	if (IS_ERR(sdw_stream)) {
- 		dev_err(rtd->dev, "no stream found for DAI %s", dai->name);
-@@ -311,7 +311,7 @@ int sdw_trigger(struct snd_pcm_substream
- 	/* Find stream from first CPU DAI */
- 	dai = asoc_rtd_to_cpu(rtd, 0);
- 
--	sdw_stream = snd_soc_dai_get_sdw_stream(dai, substream->stream);
-+	sdw_stream = snd_soc_dai_get_stream(dai, substream->stream);
- 
- 	if (IS_ERR(sdw_stream)) {
- 		dev_err(rtd->dev, "no stream found for DAI %s", dai->name);
-@@ -350,7 +350,7 @@ int sdw_hw_free(struct snd_pcm_substream
- 	/* Find stream from first CPU DAI */
- 	dai = asoc_rtd_to_cpu(rtd, 0);
- 
--	sdw_stream = snd_soc_dai_get_sdw_stream(dai, substream->stream);
-+	sdw_stream = snd_soc_dai_get_stream(dai, substream->stream);
- 
- 	if (IS_ERR(sdw_stream)) {
- 		dev_err(rtd->dev, "no stream found for DAI %s", dai->name);
---- a/sound/soc/qcom/sdm845.c
-+++ b/sound/soc/qcom/sdm845.c
-@@ -56,8 +56,8 @@ static int sdm845_slim_snd_hw_params(str
- 	int ret = 0, i;
- 
- 	for_each_rtd_codec_dais(rtd, i, codec_dai) {
--		sruntime = snd_soc_dai_get_sdw_stream(codec_dai,
--						      substream->stream);
-+		sruntime = snd_soc_dai_get_stream(codec_dai,
-+						  substream->stream);
- 		if (sruntime != ERR_PTR(-ENOTSUPP))
- 			pdata->sruntime[cpu_dai->id] = sruntime;
- 
---- a/sound/soc/qcom/sm8250.c
-+++ b/sound/soc/qcom/sm8250.c
-@@ -70,8 +70,8 @@ static int sm8250_snd_hw_params(struct s
- 	switch (cpu_dai->id) {
- 	case WSA_CODEC_DMA_RX_0:
- 		for_each_rtd_codec_dais(rtd, i, codec_dai) {
--			sruntime = snd_soc_dai_get_sdw_stream(codec_dai,
--						      substream->stream);
-+			sruntime = snd_soc_dai_get_stream(codec_dai,
-+							  substream->stream);
- 			if (sruntime != ERR_PTR(-ENOTSUPP))
- 				pdata->sruntime[cpu_dai->id] = sruntime;
+-		atomic_inc(&trc_n_readers_need_end);
+ 		per_cpu(trc_ipi_to_cpu, cpu) = true;
+ 		t->trc_ipi_to_cpu = cpu;
+ 		rcu_tasks_trace.n_ipis++;
+-		if (smp_call_function_single(cpu,
+-					     trc_read_check_handler, t, 0)) {
++		if (smp_call_function_single(cpu, trc_read_check_handler, t, 0)) {
+ 			// Just in case there is some other reason for
+ 			// failure than the target CPU being offline.
+ 			rcu_tasks_trace.n_ipis_fails++;
+ 			per_cpu(trc_ipi_to_cpu, cpu) = false;
+ 			t->trc_ipi_to_cpu = cpu;
+-			if (atomic_dec_and_test(&trc_n_readers_need_end)) {
+-				WARN_ON_ONCE(1);
+-				wake_up(&trc_wait);
+-			}
  		}
+ 	}
+ }
 
 
