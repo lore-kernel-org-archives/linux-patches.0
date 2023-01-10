@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB63E6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F178C433D2;
-	Tue, 10 Jan 2023 18:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 376D76FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:12:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3906C433D2;
+	Tue, 10 Jan 2023 18:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374319;
-	bh=0qpt2WxXVJAOKL0pek8zJjOIL4XuD3ielMRG1ExgNK4=;
+	s=korg; t=1673374322;
+	bh=PmgdSdYQSI2Mwtt6WZ0RgPDMDdHRbpjhytYVNPRN2aY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rTE7cw2rUVI5GMkMuhr6LNGbfB4RH47DnJHW95J4y1RI2eWUAMfGheSabY9vI2FnQ
-	 rWwZrD6CQpEgvVFy3xpJztaQ3lFK0zqOgTPeBRdm35fDw/xH2XZ+hG8Z/eBhvkvjoK
-	 N1PZyAbUhon+0xyYa7CRfQujauqrDTwetE0aRF5Q=
+	b=eVEMJnCP9piHCKosCR5O1KhJPE/nPfV2d2nV9LuWNvO64uOiYeAuyFM50jQvAaK4j
+	 U34+ryzhm+kQHJ/dyilhtuWoD1P8y5kqiHx/lgEWkPxAvMlmy8AiCRDvE+lcHNDG1l
+	 UylPDH+vFIJZkTf0ma0VGJeJFZiEnyp2bBQy4dSY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ronald Wahl <ronald.wahl@raritan.com>,
 	Christian Marangi <ansuelsmth@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.0 128/148] net: dsa: qca8k: fix wrong length value for mgmt eth packet
-Date: Tue, 10 Jan 2023 19:03:52 +0100
-Message-Id: <20230110180021.246783724@linuxfoundation.org>
+Subject: [PATCH 6.0 129/148] net: dsa: tag_qca: fix wrong MGMT_DATA2 size
+Date: Tue, 10 Jan 2023 19:03:53 +0100
+Message-Id: <20230110180021.277307517@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -37,104 +37,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Christian Marangi <ansuelsmth@gmail.com>
 
-commit 9807ae69746196ee4bbffe7d22d22ab2b61c6ed0 upstream.
+commit d9dba91be71f03cc75bcf39fc0d5d99ff33f1ae0 upstream.
 
-The assumption that Documentation was right about how this value work was
-wrong. It was discovered that the length value of the mgmt header is in
-step of word size.
+It was discovered that MGMT_DATA2 can contain up to 28 bytes of data
+instead of the 12 bytes written in the Documentation by accounting the
+limit of 16 bytes declared in Documentation subtracting the first 4 byte
+in the packet header.
 
-As an example to process 4 byte of data the correct length to set is 2.
-To process 8 byte 4, 12 byte 6, 16 byte 8...
+Update the define with the real world value.
 
-Odd values will always return the next size on the ack packet.
-(length of 3 (6 byte) will always return 8 bytes of data)
-
-This means that a value of 15 (0xf) actually means reading/writing 32 bytes
-of data instead of 16 bytes. This behaviour is totally absent and not
-documented in the switch Documentation.
-
-In fact from Documentation the max value that mgmt eth can process is
-16 byte of data while in reality it can process 32 bytes at once.
-
-To handle this we always round up the length after deviding it for word
-size. We check if the result is odd and we round another time to align
-to what the switch will provide in the ack packet.
-The workaround for the length limit of 15 is still needed as the length
-reg max value is 0xf(15)
-
-Reported-by: Ronald Wahl <ronald.wahl@raritan.com>
 Tested-by: Ronald Wahl <ronald.wahl@raritan.com>
-Fixes: 90386223f44e ("net: dsa: qca8k: add support for larger read/write size with mgmt Ethernet")
+Fixes: c2ee8181fddb ("net: dsa: tag_qca: add define for handling mgmt Ethernet packet")
 Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
 Cc: stable@vger.kernel.org # v5.18+
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/dsa/qca/qca8k-8xxx.c |   45 ++++++++++++++++++++++++++++++---------
- 1 file changed, 35 insertions(+), 10 deletions(-)
+ include/linux/dsa/tag_qca.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/net/dsa/qca/qca8k-8xxx.c
-+++ b/drivers/net/dsa/qca/qca8k-8xxx.c
-@@ -111,7 +111,16 @@ static void qca8k_rw_reg_ack_handler(str
+diff --git a/include/linux/dsa/tag_qca.h b/include/linux/dsa/tag_qca.h
+index b1b5720d89a5..ee657452f122 100644
+--- a/include/linux/dsa/tag_qca.h
++++ b/include/linux/dsa/tag_qca.h
+@@ -45,8 +45,8 @@ struct sk_buff;
+ 					QCA_HDR_MGMT_COMMAND_LEN + \
+ 					QCA_HDR_MGMT_DATA1_LEN)
  
- 	command = get_unaligned_le32(&mgmt_ethhdr->command);
- 	cmd = FIELD_GET(QCA_HDR_MGMT_CMD, command);
-+
- 	len = FIELD_GET(QCA_HDR_MGMT_LENGTH, command);
-+	/* Special case for len of 15 as this is the max value for len and needs to
-+	 * be increased before converting it from word to dword.
-+	 */
-+	if (len == 15)
-+		len++;
-+
-+	/* We can ignore odd value, we always round up them in the alloc function. */
-+	len *= sizeof(u16);
+-#define QCA_HDR_MGMT_DATA2_LEN		12 /* Other 12 byte for the mdio data */
+-#define QCA_HDR_MGMT_PADDING_LEN	34 /* Padding to reach the min Ethernet packet */
++#define QCA_HDR_MGMT_DATA2_LEN		28 /* Other 28 byte for the mdio data */
++#define QCA_HDR_MGMT_PADDING_LEN	18 /* Padding to reach the min Ethernet packet */
  
- 	/* Make sure the seq match the requested packet */
- 	if (get_unaligned_le32(&mgmt_ethhdr->seq) == mgmt_eth_data->seq)
-@@ -158,17 +167,33 @@ static struct sk_buff *qca8k_alloc_mdio_
- 	if (!skb)
- 		return NULL;
- 
--	/* Max value for len reg is 15 (0xf) but the switch actually return 16 byte
--	 * Actually for some reason the steps are:
--	 * 0: nothing
--	 * 1-4: first 4 byte
--	 * 5-6: first 12 byte
--	 * 7-15: all 16 byte
-+	/* Hdr mgmt length value is in step of word size.
-+	 * As an example to process 4 byte of data the correct length to set is 2.
-+	 * To process 8 byte 4, 12 byte 6, 16 byte 8...
-+	 *
-+	 * Odd values will always return the next size on the ack packet.
-+	 * (length of 3 (6 byte) will always return 8 bytes of data)
-+	 *
-+	 * This means that a value of 15 (0xf) actually means reading/writing 32 bytes
-+	 * of data.
-+	 *
-+	 * To correctly calculate the length we devide the requested len by word and
-+	 * round up.
-+	 * On the ack function we can skip the odd check as we already handle the
-+	 * case here.
- 	 */
--	if (len == 16)
--		real_len = 15;
--	else
--		real_len = len;
-+	real_len = DIV_ROUND_UP(len, sizeof(u16));
-+
-+	/* We check if the result len is odd and we round up another time to
-+	 * the next size. (length of 3 will be increased to 4 as switch will always
-+	 * return 8 bytes)
-+	 */
-+	if (real_len % sizeof(u16) != 0)
-+		real_len++;
-+
-+	/* Max reg value is 0xf(15) but switch will always return the next size (32 byte) */
-+	if (real_len == 16)
-+		real_len--;
- 
- 	skb_reset_mac_header(skb);
- 	skb_set_network_header(skb, skb->len);
+ #define QCA_HDR_MGMT_PKT_LEN		(QCA_HDR_MGMT_HEADER_LEN + \
+ 					QCA_HDR_LEN + \
+-- 
+2.39.0
+
 
 
