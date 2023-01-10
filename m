@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6801FA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:09:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43A7C433EF;
-	Tue, 10 Jan 2023 18:09:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F361CA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:09:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C330C433EF;
+	Tue, 10 Jan 2023 18:09:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374162;
-	bh=LolvUDwdmMy6uXD2MfeDzzgWrtgUtC7qWzba5APy6ao=;
+	s=korg; t=1673374164;
+	bh=NLDaGtG/aGC806gBRUr5J9DkRwkEETYuF4Z0jBKtvJo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y382+W7bAT98gLXJIm96vFPcT05NB61Ose8x2cWtn1HOuSSz46uO9WsCf1jTf2GXl
-	 VHC5rCzWSpAAww/lpXhXiYCb0YOsCvQqiuv65zpM+p3FD5JprbpL1xhyVyGAOlRId9
-	 JTOkwC98LG8feNzmhP7aDR6P/eb4dFSbXkXuvuls=
+	b=zmrsGnmopBpZv77vkJd2pm4Rpj4z0YAejh4wojurfKze91vUh6IAoArz44giYHKdn
+	 AMZZ3SNXX9/batwzPRtR54aSd74N2tnPniUSbQ9KbTLnMBWCBg4vXV9nfRv2/NXOig
+	 L8tFqr2ODam4PjROZPRWYKUU0VMMS5fLgzMh7nY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mohammad Shuab Siddique <mohammad-shuab.siddique@broadcom.com>,
-	Ajit Khaparde <ajit.khaparde@broadcom.com>,
-	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jason Wang <jasowang@redhat.com>,
+	Eli Cohen <elic@nvidia.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 038/148] bnxt_en: Fix HDS and jumbo thresholds for RX packets
-Date: Tue, 10 Jan 2023 19:02:22 +0100
-Message-Id: <20230110180018.429858414@linuxfoundation.org>
+Subject: [PATCH 6.0 039/148] vdpa/mlx5: Fix rule forwarding VLAN to TIR
+Date: Tue, 10 Jan 2023 19:02:23 +0100
+Message-Id: <20230110180018.459007366@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -38,53 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Eli Cohen <elic@nvidia.com>
 
-[ Upstream commit a056ebcc30e2f78451d66f615d2f6bdada3e6438 ]
+[ Upstream commit a6ce72c0fb6041f9871f880b2d02b294f7f49cb4 ]
 
-The recent XDP multi-buffer feature has introduced regressions in the
-setting of HDS and jumbo thresholds.  HDS was accidentally disabled in
-the nornmal mode without XDP.  This patch restores jumbo HDS placement
-when not in XDP mode.  In XDP multi-buffer mode, HDS should be disabled
-and the jumbo threshold should be set to the usable page size in the
-first page buffer.
+Set the VLAN id to the header values field instead of overwriting the
+headers criteria field.
 
-Fixes: 32861236190b ("bnxt: change receive ring space parameters")
-Reviewed-by: Mohammad Shuab Siddique <mohammad-shuab.siddique@broadcom.com>
-Reviewed-by: Ajit Khaparde <ajit.khaparde@broadcom.com>
-Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Before this fix, VLAN filtering would not really work and tagged packets
+would be forwarded unfiltered to the TIR.
+
+Fixes: baf2ad3f6a98 ("vdpa/mlx5: Add RX MAC VLAN filter support")
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Eli Cohen <elic@nvidia.com>
+Message-Id: <20221114131759.57883-2-elic@nvidia.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ drivers/vdpa/mlx5/net/mlx5_vnet.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-index be82464e1a77..1b38295254e2 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -5371,15 +5371,16 @@ static int bnxt_hwrm_vnic_set_hds(struct bnxt *bp, u16 vnic_id)
- 	req->flags = cpu_to_le32(VNIC_PLCMODES_CFG_REQ_FLAGS_JUMBO_PLACEMENT);
- 	req->enables = cpu_to_le32(VNIC_PLCMODES_CFG_REQ_ENABLES_JUMBO_THRESH_VALID);
- 
--	if (BNXT_RX_PAGE_MODE(bp) && !BNXT_RX_JUMBO_MODE(bp)) {
-+	if (BNXT_RX_PAGE_MODE(bp)) {
-+		req->jumbo_thresh = cpu_to_le16(bp->rx_buf_use_size);
-+	} else {
- 		req->flags |= cpu_to_le32(VNIC_PLCMODES_CFG_REQ_FLAGS_HDS_IPV4 |
- 					  VNIC_PLCMODES_CFG_REQ_FLAGS_HDS_IPV6);
- 		req->enables |=
- 			cpu_to_le32(VNIC_PLCMODES_CFG_REQ_ENABLES_HDS_THRESHOLD_VALID);
-+		req->jumbo_thresh = cpu_to_le16(bp->rx_copy_thresh);
-+		req->hds_threshold = cpu_to_le16(bp->rx_copy_thresh);
+diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+index 90913365def4..3fb06dcee943 100644
+--- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
++++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+@@ -1468,11 +1468,13 @@ static int mlx5_vdpa_add_mac_vlan_rules(struct mlx5_vdpa_net *ndev, u8 *mac,
+ 	dmac_v = MLX5_ADDR_OF(fte_match_param, headers_v, outer_headers.dmac_47_16);
+ 	eth_broadcast_addr(dmac_c);
+ 	ether_addr_copy(dmac_v, mac);
+-	MLX5_SET(fte_match_set_lyr_2_4, headers_c, cvlan_tag, 1);
++	if (ndev->mvdev.actual_features & BIT_ULL(VIRTIO_NET_F_CTRL_VLAN)) {
++		MLX5_SET(fte_match_set_lyr_2_4, headers_c, cvlan_tag, 1);
++		MLX5_SET_TO_ONES(fte_match_set_lyr_2_4, headers_c, first_vid);
++	}
+ 	if (tagged) {
+ 		MLX5_SET(fte_match_set_lyr_2_4, headers_v, cvlan_tag, 1);
+-		MLX5_SET_TO_ONES(fte_match_set_lyr_2_4, headers_c, first_vid);
+-		MLX5_SET(fte_match_set_lyr_2_4, headers_c, first_vid, vid);
++		MLX5_SET(fte_match_set_lyr_2_4, headers_v, first_vid, vid);
  	}
--	/* thresholds not implemented in firmware yet */
--	req->jumbo_thresh = cpu_to_le16(bp->rx_copy_thresh);
--	req->hds_threshold = cpu_to_le16(bp->rx_copy_thresh);
- 	req->vnic_id = cpu_to_le32(vnic->fw_vnic_id);
- 	return hwrm_req_send(bp, req);
- }
+ 	flow_act.action = MLX5_FLOW_CONTEXT_ACTION_FWD_DEST;
+ 	dest.type = MLX5_FLOW_DESTINATION_TYPE_TIR;
 -- 
 2.35.1
 
