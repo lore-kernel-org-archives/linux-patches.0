@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAB26FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:28:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55243C433EF;
-	Tue, 10 Jan 2023 18:28:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA1E26FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:28:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44CF8C433D2;
+	Tue, 10 Jan 2023 18:28:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375312;
-	bh=v/ci+9ycuLaarRqugNWRzLMwqLOn3h8IZ9Npx4pqoUQ=;
+	s=korg; t=1673375315;
+	bh=klK8k98N1/aMAR8o70ZfvSD3KevfMpw7nLCKsWQzM/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TxkAnNz7rGjG99bBZh+BSz53hJMHmsTXtyeLR5FRpdR/dkaRmttiAMyiQenSCyzgi
-	 eF8wrKDOwKaflz0fc93GIhbxU2b/SscFXwndt3NrNnRdwOVmUMM2lccVNqLJorI+Rg
-	 L7IbHdLwN8SIev0m3PSrx1wSQKJ6qYSJ9FIWRznY=
+	b=IUQymJ2HoGqf+bcgQ9kqKzwK5XM0vzvCHpvCSLAfypUuj+W4sSDLWOmLOouQdWwwc
+	 fU95ZwIE5a3UcNRIw9f/9ZGd+ogsEKbOoqhuIvaqfiAcoAgAuISKfEJtb2a8K2ZpLH
+	 etC1w86sBJVxVgbVu4ZjuevL5KvCAEOb1BM3h+HU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kim Phillips <kim.phillips@amd.com>,
-	Suravee Suthikulpanit <Suravee.Suthikulpanit@amd.com>,
-	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 5.15 131/290] iommu/amd: Fix ivrs_acpihid cmdline parsing code
-Date: Tue, 10 Jan 2023 19:03:43 +0100
-Message-Id: <20230110180036.353739548@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Zhang Yi <yi.zhang@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 5.15 149/290] ext4: check and assert if marking an no_delete evicting inode dirty
+Date: Tue, 10 Jan 2023 19:04:01 +0100
+Message-Id: <20230110180036.980717866@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,45 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kim Phillips <kim.phillips@amd.com>
+From: Zhang Yi <yi.zhang@huawei.com>
 
-commit 5f18e9f8868c6d4eae71678e7ebd4977b7d8c8cf upstream.
+commit 318cdc822c63b6e2befcfdc2088378ae6fa18def upstream.
 
-The second (UID) strcmp in acpi_dev_hid_uid_match considers
-"0" and "00" different, which can prevent device registration.
+In ext4_evict_inode(), if we evicting an inode in the 'no_delete' path,
+it cannot be raced by another mark_inode_dirty(). If it happens,
+someone else may accidentally dirty it without holding inode refcount
+and probably cause use-after-free issues in the writeback procedure.
+It's indiscoverable and hard to debug, so add an WARN_ON_ONCE() to
+check and detect this issue in advance.
 
-Have the AMD IOMMU driver's ivrs_acpihid parsing code remove
-any leading zeroes to make the UID strcmp succeed.  Now users
-can safely specify "AMDxxxxx:00" or "AMDxxxxx:0" and expect
-the same behaviour.
-
-Fixes: ca3bf5d47cec ("iommu/amd: Introduces ivrs_acpihid kernel parameter")
-Signed-off-by: Kim Phillips <kim.phillips@amd.com>
-Cc: stable@vger.kernel.org
-Cc: Suravee Suthikulpanit <Suravee.Suthikulpanit@amd.com>
-Cc: Joerg Roedel <jroedel@suse.de>
-Link: https://lore.kernel.org/r/20220919155638.391481-1-kim.phillips@amd.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Suggested-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Zhang Yi <yi.zhang@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20220629112647.4141034-2-yi.zhang@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd/init.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/ext4/inode.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -3226,6 +3226,13 @@ static int __init parse_ivrs_acpihid(cha
- 		return 1;
- 	}
- 
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -338,6 +338,12 @@ stop_handle:
+ 	ext4_xattr_inode_array_free(ea_inode_array);
+ 	return;
+ no_delete:
 +	/*
-+	 * Ignore leading zeroes after ':', so e.g., AMDI0095:00
-+	 * will match AMDI0095:0 in the second strcmp in acpi_dev_hid_uid_match
++	 * Check out some where else accidentally dirty the evicting inode,
++	 * which may probably cause inode use-after-free issues later.
 +	 */
-+	while (*uid == '0' && *(uid + 1))
-+		uid++;
++	WARN_ON_ONCE(!list_empty_careful(&inode->i_io_list));
 +
- 	i = early_acpihid_map_size++;
- 	memcpy(early_acpihid_map[i].hid, hid, strlen(hid));
- 	memcpy(early_acpihid_map[i].uid, uid, strlen(uid));
+ 	if (!list_empty(&EXT4_I(inode)->i_fc_list))
+ 		ext4_fc_mark_ineligible(inode->i_sb, EXT4_FC_REASON_NOMEM, NULL);
+ 	ext4_clear_inode(inode);	/* We must guarantee clearing of inode... */
 
 
