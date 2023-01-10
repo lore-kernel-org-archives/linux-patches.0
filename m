@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87AB6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:12:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E913C433D2;
-	Tue, 10 Jan 2023 18:12:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB06F6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:12:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41732C433EF;
+	Tue, 10 Jan 2023 18:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374361;
-	bh=zlkQeW0j/joRxquS61ZaE9dXO4i0jwb0Iajw7tswj5A=;
+	s=korg; t=1673374364;
+	bh=Hcsc32datdJIw2r0yngOaym2xlbqVvOOHNwIVM7PqJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tNnRC3FGWLsZv5CeCex4U+hwzkjKPicvRa/1M4w3PsdRdej8vXglQ+8RsArGc0E/6
-	 2PW8HMn3kJ72Azx7caeV8NLTWf/aub3k7rKHACMJO62eZt1qkcA256vSZ83bk5FfE5
-	 3JCaCcPsNHpJoOblCGTk21RIvH5s+bBK3kBhoAQo=
+	b=oTFrnoDFTquDR00bVI6ny0NgmqqqgtT2eNpiakNnNJQBlpw3ShZG6EfCHVWjXnzyw
+	 hJMZUQKnKSQMsSqVU5XgkoM/tQewFfCiGNsKu7CybQCbZ1L3qGbdIavKwEwsZHhCgX
+	 qo3ym6C+8fAd09cCa/PRWw9SEWcvoxx/6By+ovms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 101/148] udf: Fix extension of the last extent in the file
-Date: Tue, 10 Jan 2023 19:03:25 +0100
-Message-Id: <20230110180020.394592601@linuxfoundation.org>
+	Andreas Rammhold <andreas@rammhold.de>,
+	Rob Herring <robh@kernel.org>
+Subject: [PATCH 6.0 136/148] of/fdt: run soc memory setup when early_init_dt_scan_memory fails
+Date: Tue, 10 Jan 2023 19:04:00 +0100
+Message-Id: <20230110180021.490252631@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -34,37 +34,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Andreas Rammhold <andreas@rammhold.de>
 
-[ Upstream commit 83c7423d1eb6806d13c521d1002cc1a012111719 ]
+commit 2a12187d5853d9fd5102278cecef7dac7c8ce7ea upstream.
 
-When extending the last extent in the file within the last block, we
-wrongly computed the length of the last extent. This is mostly a
-cosmetical problem since the extent does not contain any data and the
-length will be fixed up by following operations but still.
+If memory has been found early_init_dt_scan_memory now returns 1. If
+it hasn't found any memory it will return 0, allowing other memory
+setup mechanisms to carry on.
 
-Fixes: 1f3868f06855 ("udf: Fix extending file within last block")
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Previously early_init_dt_scan_memory always returned 0 without
+distinguishing between any kind of memory setup being done or not. Any
+code path after the early_init_dt_scan memory call in the ramips
+plat_mem_setup code wouldn't be executed anymore. Making
+early_init_dt_scan_memory the only way to initialize the memory.
+
+Some boards, including my mt7621 based Cudy X6 board, depend on memory
+initialization being done via the soc_info.mem_detect function
+pointer. Those wouldn't be able to obtain memory and panic the kernel
+during early bootup with the message "early_init_dt_alloc_memory_arch:
+Failed to allocate 12416 bytes align=0x40".
+
+Fixes: 1f012283e936 ("of/fdt: Rework early_init_dt_scan_memory() to call directly")
+Cc: stable@vger.kernel.org
+Signed-off-by: Andreas Rammhold <andreas@rammhold.de>
+Link: https://lore.kernel.org/r/20221223112748.2935235-1-andreas@rammhold.de
+Signed-off-by: Rob Herring <robh@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/udf/inode.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/mips/ralink/of.c |    2 +-
+ drivers/of/fdt.c      |    6 ++++--
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/fs/udf/inode.c b/fs/udf/inode.c
-index b9a83820e1ad..3c380140515d 100644
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -600,7 +600,7 @@ static void udf_do_extend_final_block(struct inode *inode,
- 	 */
- 	if (new_elen <= (last_ext->extLength & UDF_EXTENT_LENGTH_MASK))
- 		return;
--	added_bytes = (last_ext->extLength & UDF_EXTENT_LENGTH_MASK) - new_elen;
-+	added_bytes = new_elen - (last_ext->extLength & UDF_EXTENT_LENGTH_MASK);
- 	last_ext->extLength += added_bytes;
- 	UDF_I(inode)->i_lenExtents += added_bytes;
+--- a/arch/mips/ralink/of.c
++++ b/arch/mips/ralink/of.c
+@@ -64,7 +64,7 @@ void __init plat_mem_setup(void)
+ 	dtb = get_fdt();
+ 	__dt_setup_arch(dtb);
  
--- 
-2.35.1
-
+-	if (!early_init_dt_scan_memory())
++	if (early_init_dt_scan_memory())
+ 		return;
+ 
+ 	if (soc_info.mem_detect)
+--- a/drivers/of/fdt.c
++++ b/drivers/of/fdt.c
+@@ -1106,7 +1106,7 @@ u64 __init dt_mem_next_cell(int s, const
+  */
+ int __init early_init_dt_scan_memory(void)
+ {
+-	int node;
++	int node, found_memory = 0;
+ 	const void *fdt = initial_boot_params;
+ 
+ 	fdt_for_each_subnode(node, fdt, 0) {
+@@ -1146,6 +1146,8 @@ int __init early_init_dt_scan_memory(voi
+ 
+ 			early_init_dt_add_memory_arch(base, size);
+ 
++			found_memory = 1;
++
+ 			if (!hotpluggable)
+ 				continue;
+ 
+@@ -1154,7 +1156,7 @@ int __init early_init_dt_scan_memory(voi
+ 					base, base + size);
+ 		}
+ 	}
+-	return 0;
++	return found_memory;
+ }
+ 
+ int __init early_init_dt_scan_chosen(char *cmdline)
 
 
