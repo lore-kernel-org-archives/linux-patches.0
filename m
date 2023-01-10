@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 350C66FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:29:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D4CDC433F2;
-	Tue, 10 Jan 2023 18:29:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E62F6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:29:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0949C433D2;
+	Tue, 10 Jan 2023 18:29:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375374;
-	bh=QuTpqDaHpS8o8SloplrIfm3XWizvw1atJ7Rxe86lGBE=;
+	s=korg; t=1673375377;
+	bh=BtWuyQgJY+UbUc6UgCrqT0l99SP0imJdfuo9ZmZ66M0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lRJ5/8pJQCAZ70Rk3C1qME3unJ8CmLX/kORq9R1ZoUtIZajmKYp26lL1iTH2/6B92
-	 udV8OViFp8MfBht4frsN91pO/elJU1YG2PYHO62FfM8KDyN2RK/Y9MY1C7Z8/6Xsv1
-	 MpfN164iJI4lOSSAP3Hv0DP7d3j4Xlx1D3KIbC24=
+	b=j2Dqm2iDGo0R3QOxTvc0YJ9wIiCTs1BV4Q9OYwAg8oMfgyBxGRSPGNpRuP9L7KUFA
+	 JBBNSgTaFsdyuHxWt0tENcPT9d45DjG6iALKhUD2bdxPsMwURvoKVAajvKSt0QgPGF
+	 p12yJDHpNX9GCWPCMtYIJ2XuEVZSYVvSjk1g8Lg4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zackr@vmware.com>,
-	Michael Banack <banackm@vmware.com>,
-	Martin Krastev <krastevm@vmware.com>
-Subject: [PATCH 5.15 136/290] drm/vmwgfx: Validate the box size for the snooped cursor
-Date: Tue, 10 Jan 2023 19:03:48 +0100
-Message-Id: <20230110180036.543094567@linuxfoundation.org>
+	Mikko Kovanen <mikko.kovanen@aavamobile.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 5.15 137/290] drm/i915/dsi: fix VBT send packet port selection for dual link DSI
+Date: Tue, 10 Jan 2023 19:03:49 +0100
+Message-Id: <20230110180036.579191428@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,37 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zack Rusin <zackr@vmware.com>
+From: Mikko Kovanen <mikko.kovanen@aavamobile.com>
 
-commit 4cf949c7fafe21e085a4ee386bb2dade9067316e upstream.
+commit f9cdf4130671d767071607d0a7568c9bd36a68d0 upstream.
 
-Invalid userspace dma surface copies could potentially overflow
-the memcpy from the surface to the snooped image leading to crashes.
-To fix it the dimensions of the copybox have to be validated
-against the expected size of the snooped cursor.
+intel_dsi->ports contains bitmask of enabled ports and correspondingly
+logic for selecting port for VBT packet sending must use port specific
+bitmask when deciding appropriate port.
 
-Signed-off-by: Zack Rusin <zackr@vmware.com>
-Fixes: 2ac863719e51 ("vmwgfx: Snoop DMA transfers with non-covering sizes")
-Cc: <stable@vger.kernel.org> # v3.2+
-Reviewed-by: Michael Banack <banackm@vmware.com>
-Reviewed-by: Martin Krastev <krastevm@vmware.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221026031936.1004280-1-zack@kde.org
+Fixes: 08c59dde71b7 ("drm/i915/dsi: fix VBT send packet port selection for ICL+")
+Cc: stable@vger.kernel.org
+Signed-off-by: Mikko Kovanen <mikko.kovanen@aavamobile.com>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/DBBPR09MB466592B16885D99ABBF2393A91119@DBBPR09MB4665.eurprd09.prod.outlook.com
+(cherry picked from commit 8d58bb7991c45f6b60710cc04c9498c6ea96db90)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_dsi_vbt.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-@@ -186,7 +186,8 @@ void vmw_kms_cursor_snoop(struct vmw_sur
- 	if (cmd->dma.guest.ptr.offset % PAGE_SIZE ||
- 	    box->x != 0    || box->y != 0    || box->z != 0    ||
- 	    box->srcx != 0 || box->srcy != 0 || box->srcz != 0 ||
--	    box->d != 1    || box_count != 1) {
-+	    box->d != 1    || box_count != 1 ||
-+	    box->w > 64 || box->h > 64) {
- 		/* TODO handle none page aligned offsets */
- 		/* TODO handle more dst & src != 0 */
- 		/* TODO handle more then one copy */
+--- a/drivers/gpu/drm/i915/display/intel_dsi_vbt.c
++++ b/drivers/gpu/drm/i915/display/intel_dsi_vbt.c
+@@ -133,9 +133,9 @@ static enum port intel_dsi_seq_port_to_p
+ 		return ffs(intel_dsi->ports) - 1;
+ 
+ 	if (seq_port) {
+-		if (intel_dsi->ports & PORT_B)
++		if (intel_dsi->ports & BIT(PORT_B))
+ 			return PORT_B;
+-		else if (intel_dsi->ports & PORT_C)
++		else if (intel_dsi->ports & BIT(PORT_C))
+ 			return PORT_C;
+ 	}
+ 
 
 
