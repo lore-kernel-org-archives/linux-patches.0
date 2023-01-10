@@ -1,39 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8477A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01F4BC433EF;
-	Tue, 10 Jan 2023 18:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAFBAA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 191F4C433EF;
+	Tue, 10 Jan 2023 18:16:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374581;
-	bh=+Lit4qXqjTU8SXzTxs+LdrnFmU+EcXSJrDMEiB6WfCk=;
+	s=korg; t=1673374584;
+	bh=sJbNDVqeUB6hBhszBFPEQPXgKTnUPpTdcG7iiRE056Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=evNfgRYDsNPLiDxwSOwyyBN+PZsweDoUfGtCCa4+iRNeetT2GoEhMkyCzC8cX9BHu
-	 4x273fXq8+7z05uSxn4WHQRhJhwWLDmN9ruRA6Tu/mXyB4JiSan/xnHWix3aDrdmNa
-	 B8N3Fh26X+7CrJV1cJ7g7zVqxz1QMFA5rqN1mxRM=
+	b=bYNTTqXmHsa8MJ+dVd/6O6HRLkIxJ9a2nSR1jGACPY2FrmtZ2jM20SoYxtovoZMOI
+	 QJJqcOkelEnd0gAWRrDtQJ24eib1ZiJlZ2twEUJiQk1WvWAR4V/meROmD9CTYrXpxq
+	 6twiErELtsFMONRvxZd8r+JAV7FHQi/D32Wbd3V8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <v4bel@theori.io>,
-	Alexei Starovoitov <ast@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Martin KaFai Lau <martin.lau@linux.dev>,
-	Song Liu <song@kernel.org>,
-	Yonghong Song <yhs@fb.com>,
-	KP Singh <kpsingh@kernel.org>,
-	Stanislav Fomichev <sdf@google.com>,
-	Hao Luo <haoluo@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	bpf@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/159] bpf: Always use maximal size for copy_array()
-Date: Tue, 10 Jan 2023 19:03:31 +0100
-Message-Id: <20230110180020.309474655@linuxfoundation.org>
+Subject: [PATCH 6.1 037/159] bnxt_en: Fix XDP RX path
+Date: Tue, 10 Jan 2023 19:03:05 +0100
+Message-Id: <20230110180019.497412113@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -47,69 +37,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit 45435d8da71f9f3e6860e6e6ea9667b6ec17ec64 ]
+[ Upstream commit 9b3e607871ea5ee90f10f5be3965fc07f2aa3ef7 ]
 
-Instead of counting on prior allocations to have sized allocations to
-the next kmalloc bucket size, always perform a krealloc that is at least
-ksize(dst) in size (which is a no-op), so the size can be correctly
-tracked by all the various allocation size trackers (KASAN,
-__alloc_size, etc).
+The XDP program can change the starting address of the RX data buffer and
+this information needs to be passed back from bnxt_rx_xdp() to
+bnxt_rx_pkt() for the XDP_PASS case so that the SKB can point correctly
+to the modified buffer address.  Add back the data_ptr parameter to
+bnxt_rx_xdp() to make this work.
 
-Reported-by: Hyunwoo Kim <v4bel@theori.io>
-Link: https://lore.kernel.org/bpf/20221223094551.GA1439509@ubuntu
-Fixes: ceb35b666d42 ("bpf/verifier: Use kmalloc_size_roundup() to match ksize() usage")
-Cc: Alexei Starovoitov <ast@kernel.org>
-Cc: Daniel Borkmann <daniel@iogearbox.net>
-Cc: John Fastabend <john.fastabend@gmail.com>
-Cc: Andrii Nakryiko <andrii@kernel.org>
-Cc: Martin KaFai Lau <martin.lau@linux.dev>
-Cc: Song Liu <song@kernel.org>
-Cc: Yonghong Song <yhs@fb.com>
-Cc: KP Singh <kpsingh@kernel.org>
-Cc: Stanislav Fomichev <sdf@google.com>
-Cc: Hao Luo <haoluo@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: bpf@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221223182836.never.866-kees@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: b231c3f3414c ("bnxt: refactor bnxt_rx_xdp to separate xdp_init_buff/xdp_prepare_buff")
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c     | 2 +-
+ drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c | 7 +++++--
+ drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h | 4 ++--
+ 3 files changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 242fe307032f..b4d5b343c191 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -1000,6 +1000,8 @@ static void print_insn_state(struct bpf_verifier_env *env,
-  */
- static void *copy_array(void *dst, const void *src, size_t n, size_t size, gfp_t flags)
- {
-+	size_t alloc_bytes;
-+	void *orig = dst;
- 	size_t bytes;
- 
- 	if (ZERO_OR_NULL_PTR(src))
-@@ -1008,11 +1010,11 @@ static void *copy_array(void *dst, const void *src, size_t n, size_t size, gfp_t
- 	if (unlikely(check_mul_overflow(n, size, &bytes)))
- 		return NULL;
- 
--	if (ksize(dst) < ksize(src)) {
--		kfree(dst);
--		dst = kmalloc_track_caller(kmalloc_size_roundup(bytes), flags);
--		if (!dst)
--			return NULL;
-+	alloc_bytes = max(ksize(orig), kmalloc_size_roundup(bytes));
-+	dst = krealloc(orig, alloc_bytes, flags);
-+	if (!dst) {
-+		kfree(orig);
-+		return NULL;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index 0166c99cb7c6..a83d534a096a 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -1937,7 +1937,7 @@ static int bnxt_rx_pkt(struct bnxt *bp, struct bnxt_cp_ring_info *cpr,
  	}
  
- 	memcpy(dst, src, bytes);
+ 	if (xdp_active) {
+-		if (bnxt_rx_xdp(bp, rxr, cons, xdp, data, &len, event)) {
++		if (bnxt_rx_xdp(bp, rxr, cons, xdp, data, &data_ptr, &len, event)) {
+ 			rc = 1;
+ 			goto next_rx;
+ 		}
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+index 1847f191577d..2ceeaa818c1c 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+@@ -222,7 +222,8 @@ void bnxt_xdp_buff_frags_free(struct bnxt_rx_ring_info *rxr,
+  * false   - packet should be passed to the stack.
+  */
+ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
+-		 struct xdp_buff xdp, struct page *page, unsigned int *len, u8 *event)
++		 struct xdp_buff xdp, struct page *page, u8 **data_ptr,
++		 unsigned int *len, u8 *event)
+ {
+ 	struct bpf_prog *xdp_prog = READ_ONCE(rxr->xdp_prog);
+ 	struct bnxt_tx_ring_info *txr;
+@@ -255,8 +256,10 @@ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
+ 		*event &= ~BNXT_RX_EVENT;
+ 
+ 	*len = xdp.data_end - xdp.data;
+-	if (orig_data != xdp.data)
++	if (orig_data != xdp.data) {
+ 		offset = xdp.data - xdp.data_hard_start;
++		*data_ptr = xdp.data_hard_start + offset;
++	}
+ 
+ 	switch (act) {
+ 	case XDP_PASS:
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
+index 2bbdb8e7c506..ea430d6961df 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.h
+@@ -18,8 +18,8 @@ struct bnxt_sw_tx_bd *bnxt_xmit_bd(struct bnxt *bp,
+ 				   struct xdp_buff *xdp);
+ void bnxt_tx_int_xdp(struct bnxt *bp, struct bnxt_napi *bnapi, int nr_pkts);
+ bool bnxt_rx_xdp(struct bnxt *bp, struct bnxt_rx_ring_info *rxr, u16 cons,
+-		 struct xdp_buff xdp, struct page *page, unsigned int *len,
+-		 u8 *event);
++		 struct xdp_buff xdp, struct page *page, u8 **data_ptr,
++		 unsigned int *len, u8 *event);
+ int bnxt_xdp(struct net_device *dev, struct netdev_bpf *xdp);
+ int bnxt_xdp_xmit(struct net_device *dev, int num_frames,
+ 		  struct xdp_frame **frames, u32 flags);
 -- 
 2.35.1
 
