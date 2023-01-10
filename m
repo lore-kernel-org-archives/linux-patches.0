@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAA216FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:30:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45255C433F1;
-	Tue, 10 Jan 2023 18:30:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FB76FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:30:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21BECC433D2;
+	Tue, 10 Jan 2023 18:30:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375433;
-	bh=23Y+SkDURi9CGMI5edQEczX2f06PQaExVNlvLySayM8=;
+	s=korg; t=1673375436;
+	bh=MazqOz3mBOgpLDVrM8IiQPoQnCER46oXA8YS7qQjh20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oC1u7nVsbQWT4Jpycgpol5McX76MtABdaGmRuPJs1qOv5klDr9YUx6xynHrqwYnTM
-	 fo4ZkCKNcWdoWZmc7AOgvP8Ar/PX2GtCE3p/l7kOmh939vdYPu3lk+75IkfEccGYqd
-	 qSieq8FvQ1cOnZZiLRTPf1Do3oN/tNko76VOPPCY=
+	b=m7lZYuUNsoSOdOm3Ywewkae63zuQEIBHeeQdliJtJ9/HLx8oJF7hKcJ7zURYAcWdi
+	 NKP+IvVy9te/gG1dvjTdTD2TcccmZl9sU0nfb+Y5Cn245iJKhDukGhuz52/fx3Nrmj
+	 RXsnzL3hpnHNtxU+70plmLXJW30sql/jWwBM1mHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,13 +22,14 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ingo Molnar <mingo@redhat.com>,
 	Jiri Olsa <jolsa@kernel.org>,
 	Mark Rutland <mark.rutland@arm.com>,
+	Masami Hiramatsu <masami.hiramatsu.pt@hitachi.com>,
 	Peter Zijlstra <peterz@infradead.org>,
 	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 187/290] perf probe: Use dwarf_attr_integrate as generic DWARF attr accessor
-Date: Tue, 10 Jan 2023 19:04:39 +0100
-Message-Id: <20230110180038.408369697@linuxfoundation.org>
+Subject: [PATCH 5.15 188/290] perf probe: Fix to get the DW_AT_decl_file and DW_AT_call_file as unsinged data
+Date: Tue, 10 Jan 2023 19:04:40 +0100
+Message-Id: <20230110180038.443835403@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -44,50 +45,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit f828929ab7f0dc3353e4a617f94f297fa8f3dec3 ]
+[ Upstream commit a9dfc46c67b52ad43b8e335e28f4cf8002c67793 ]
 
-Use dwarf_attr_integrate() instead of dwarf_attr() for generic attribute
-acccessor functions, so that it can find the specified attribute from
-abstact origin DIE etc.
+DWARF version 5 standard Sec 2.14 says that
 
+  Any debugging information entry representing the declaration of an object,
+  module, subprogram or type may have DW_AT_decl_file, DW_AT_decl_line and
+  DW_AT_decl_column attributes, each of whose value is an unsigned integer
+  constant.
+
+So it should be an unsigned integer data. Also, even though the standard
+doesn't clearly say the DW_AT_call_file is signed or unsigned, the
+elfutils (eu-readelf) interprets it as unsigned integer data and it is
+natural to handle it as unsigned integer data as same as DW_AT_decl_file.
+This changes the DW_AT_call_file as unsigned integer data too.
+
+Fixes: 3f4460a28fb2f73d ("perf probe: Filter out redundant inline-instances")
 Signed-off-by: Masami Hiramatsu <mhiramat@kernel.org>
 Acked-by: Namhyung Kim <namhyung@kernel.org>
 Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
 Cc: Ingo Molnar <mingo@redhat.com>
 Cc: Jiri Olsa <jolsa@kernel.org>
 Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Masami Hiramatsu <masami.hiramatsu.pt@hitachi.com>
 Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: stable@vger.kernel.org
 Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Link: https://lore.kernel.org/r/166731051988.2100653.13595339994343449770.stgit@devnote3
+Link: https://lore.kernel.org/r/166761727445.480106.3738447577082071942.stgit@devnote3
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: a9dfc46c67b5 ("perf probe: Fix to get the DW_AT_decl_file and DW_AT_call_file as unsinged data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dwarf-aux.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/perf/util/dwarf-aux.c | 21 ++++-----------------
+ 1 file changed, 4 insertions(+), 17 deletions(-)
 
 diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
-index 609ca1671501..a07efbadb775 100644
+index a07efbadb775..623527edeac1 100644
 --- a/tools/perf/util/dwarf-aux.c
 +++ b/tools/perf/util/dwarf-aux.c
-@@ -308,7 +308,7 @@ static int die_get_attr_udata(Dwarf_Die *tp_die, unsigned int attr_name,
+@@ -315,19 +315,6 @@ static int die_get_attr_udata(Dwarf_Die *tp_die, unsigned int attr_name,
+ 	return 0;
+ }
+ 
+-/* Get attribute and translate it as a sdata */
+-static int die_get_attr_sdata(Dwarf_Die *tp_die, unsigned int attr_name,
+-			      Dwarf_Sword *result)
+-{
+-	Dwarf_Attribute attr;
+-
+-	if (dwarf_attr_integrate(tp_die, attr_name, &attr) == NULL ||
+-	    dwarf_formsdata(&attr, result) != 0)
+-		return -ENOENT;
+-
+-	return 0;
+-}
+-
+ /**
+  * die_is_signed_type - Check whether a type DIE is signed or not
+  * @tp_die: a DIE of a type
+@@ -467,9 +454,9 @@ int die_get_data_member_location(Dwarf_Die *mb_die, Dwarf_Word *offs)
+ /* Get the call file index number in CU DIE */
+ static int die_get_call_fileno(Dwarf_Die *in_die)
  {
- 	Dwarf_Attribute attr;
+-	Dwarf_Sword idx;
++	Dwarf_Word idx;
  
--	if (dwarf_attr(tp_die, attr_name, &attr) == NULL ||
-+	if (dwarf_attr_integrate(tp_die, attr_name, &attr) == NULL ||
- 	    dwarf_formudata(&attr, result) != 0)
+-	if (die_get_attr_sdata(in_die, DW_AT_call_file, &idx) == 0)
++	if (die_get_attr_udata(in_die, DW_AT_call_file, &idx) == 0)
+ 		return (int)idx;
+ 	else
  		return -ENOENT;
- 
-@@ -321,7 +321,7 @@ static int die_get_attr_sdata(Dwarf_Die *tp_die, unsigned int attr_name,
+@@ -478,9 +465,9 @@ static int die_get_call_fileno(Dwarf_Die *in_die)
+ /* Get the declared file index number in CU DIE */
+ static int die_get_decl_fileno(Dwarf_Die *pdie)
  {
- 	Dwarf_Attribute attr;
+-	Dwarf_Sword idx;
++	Dwarf_Word idx;
  
--	if (dwarf_attr(tp_die, attr_name, &attr) == NULL ||
-+	if (dwarf_attr_integrate(tp_die, attr_name, &attr) == NULL ||
- 	    dwarf_formsdata(&attr, result) != 0)
+-	if (die_get_attr_sdata(pdie, DW_AT_decl_file, &idx) == 0)
++	if (die_get_attr_udata(pdie, DW_AT_decl_file, &idx) == 0)
+ 		return (int)idx;
+ 	else
  		return -ENOENT;
- 
 -- 
 2.35.1
 
