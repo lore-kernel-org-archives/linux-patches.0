@@ -1,87 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D759E7474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:36:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BF95C433D2;
-	Tue, 10 Jan 2023 18:36:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375772;
-	bh=dd92YWzFiVZhgBOTETbDWYg8nbJN+PJhfSxol844Rnk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lCOSY6Nxin2jJuJ1Gb9FQwgJmF77Z7jTLaUUGVYWNxgfiiJP2IqL1Eclh51VCzEFN
-	 sntLxvGIEeQT0hHCbaWjyvezef9LicQjmO5PPxyaJHusBqjMUNqt9xtZXTGRn6YD6W
-	 qksWPLS106Qf6EslJOTUysvYTjJtUM14ZUx4BbvA=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Steve Dickson <steved@redhat.com>,
-	JianHong Yin <yin-jianhong@163.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.15 267/290] nfsd: fix handling of readdir in v4root vs. mount upcall timeout
-Date: Tue, 10 Jan 2023 19:05:59 +0100
-Message-Id: <20230110180041.185830868@linuxfoundation.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
-References: <20230110180031.620810905@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7569BA92B
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 19:06:01 +0000 (UTC)
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-4b718cab0e4so166453467b3.9
+        for <patches@lists.linux.dev>; Tue, 10 Jan 2023 11:06:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XCwyXZ8v69nxWVcxtEAn9KfGkzaGevR3ns9wimMR6ic=;
+        b=eU4fQ0MJtrWbl3qlhQy2aBeVqq2XfAAjP/zu1rSqBDiC8+s9bNvLZHkQeGRIOSrvS7
+         eovdtjLIjioi+z0bZKbBVXdWZF5i8ZUoJGEGpeeKtpaaEovFGzGtKx3U0ln5cqQRgwGT
+         qLxxVjC/hoCabkqKbqUqYY4xP9TWhSTwspE7RNLJAN4Hi1SEhx0vyQQ9oWSRPYzW2dJ1
+         SijK1NM2QcGcc0oxno1o4BHcEh4f9OamTG8ZF39yzOfOVKFES6A5uy7yA2tiSZugQm+E
+         AXKKioAy9DfMCNBAyL1lQlPmQUEn40zIKvUZEKU6r4CDduc4hyLdi/F9Wul3WcU3WZ2l
+         v8AQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XCwyXZ8v69nxWVcxtEAn9KfGkzaGevR3ns9wimMR6ic=;
+        b=O65DW894b66SAM0lDmdlIuLH4VVkPGudVpJhUqwJhgBqk7vBwQHxdvvBXvA28GFKsv
+         Msq1TieHoueziLZjXjT+VUOSxdbyWEUrI1A1xPc8qz/mRX4JYbGfn30LWDsyq3rpMJ1X
+         pRiCWxHSMSpjIbZfJskMyVWjmnNqS8O1nVLDHlL3R0q7A9vLzf08tNAhKat7aAfFOFOw
+         0K6TGTrh6r671lhYY2LOVidLeCY28dmGNjAdiW3cK394ryGmo1zrSLuzi8wjmzj947Ks
+         Oi5z98HRLzYwCYlosRj8/xwGjhf1Xr+5vnRc5v3dseJ1A0lHCQv1xtlQu2zdKmMkOC5o
+         PQVA==
+X-Gm-Message-State: AFqh2kquw6lCfg8UaHItWLNm4vpCmF8n68SpwSv+9FaTsLHj5iTRN3VF
+	k6CTuwwpcM69jcVdzoFGcNM=
+X-Google-Smtp-Source: AMrXdXvDZdRsHQJY+Vh2CB3gJuG+irHektVvnnEDMARBodrGh7SNo9Ps3Jh+DMszzf0T4+3orlPglw==
+X-Received: by 2002:a05:7500:438c:b0:ef:9e99:331e with SMTP id fn12-20020a057500438c00b000ef9e99331emr3073619gab.55.1673377558193;
+        Tue, 10 Jan 2023 11:05:58 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id c4-20020a05620a268400b006fefa5f7fcesm2880802qkp.10.2023.01.10.11.05.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 10 Jan 2023 11:05:57 -0800 (PST)
+Message-ID: <227de28a-5f2f-a6f1-6e84-e0d0d5dc6bcc@gmail.com>
+Date: Tue, 10 Jan 2023 11:05:51 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 5.15 000/290] 5.15.87-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230110180031.620810905@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Jeff Layton <jlayton@kernel.org>
+On 1/10/23 10:01, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.87 release.
+> There are 290 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 12 Jan 2023 17:59:42 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.87-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-commit cad853374d85fe678d721512cecfabd7636e51f3 upstream.
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
 
-If v4 READDIR operation hits a mountpoint and gets back an error,
-then it will include that entry in the reply and set RDATTR_ERROR for it
-to the error.
-
-That's fine for "normal" exported filesystems, but on the v4root, we
-need to be more careful to only expose the existence of dentries that
-lead to exports.
-
-If the mountd upcall times out while checking to see whether a
-mountpoint on the v4root is exported, then we have no recourse other
-than to fail the whole operation.
-
-Cc: Steve Dickson <steved@redhat.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216777
-Reported-by: JianHong Yin <yin-jianhong@163.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- fs/nfsd/nfs4xdr.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
-
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -3514,6 +3514,17 @@ nfsd4_encode_dirent(void *ccdv, const ch
- 	case nfserr_noent:
- 		xdr_truncate_encode(xdr, start_offset);
- 		goto skip_entry;
-+	case nfserr_jukebox:
-+		/*
-+		 * The pseudoroot should only display dentries that lead to
-+		 * exports. If we get EJUKEBOX here, then we can't tell whether
-+		 * this entry should be included. Just fail the whole READDIR
-+		 * with NFS4ERR_DELAY in that case, and hope that the situation
-+		 * will resolve itself by the client's next attempt.
-+		 */
-+		if (cd->rd_fhp->fh_export->ex_flags & NFSEXP_V4ROOT)
-+			goto fail;
-+		fallthrough;
- 	default:
- 		/*
- 		 * If the client requested the RDATTR_ERROR attribute,
-
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
 
