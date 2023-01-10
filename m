@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82A57A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:14:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBD13C433EF;
-	Tue, 10 Jan 2023 18:14:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93739A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:14:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0613CC433D2;
+	Tue, 10 Jan 2023 18:14:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374495;
-	bh=I55RRaJo8CB8Gsjw4Snwb+ITZ5sv/GfIsVsT52D0O5E=;
+	s=korg; t=1673374498;
+	bh=oAEqRG+laijM8HelGJCJ5FW9c/X3/w7fZRFkFZdBw6w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EU9xNfLJfQ2+lGRmx9zBxX0EZ1SArAY0knEA7Z+/kYexPX9Pi4rlu31rUg32L0Cg3
-	 O+5O2RmY8U6gPrZptlFkixjzE0dfl9jJGp0DXq3ibrDtNgiJpA7LwyukqUUrapWl5a
-	 RLTswJW6znDvp76XNv1oeEmwiHFUXSTzH4RgVubQ=
+	b=kSHVp69UbX6QGMEtaqx54ipbfN32/Shk08F3074atbXodnHf4sDlfBsNW2sWT+QYX
+	 r9hR3IkVm1pLisJbEgTROozpC1Wo95QZ7Zxusxuqo5ROLB/68jYRDdfKgTdxQzgrEc
+	 yJWEV5Hq2hZTnvlFOzllY1qa+HKNnSCsP+qBzBc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Mat Martineau <mathew.j.martineau@linux.intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 023/159] mptcp: fix lockdep false positive
-Date: Tue, 10 Jan 2023 19:02:51 +0100
-Message-Id: <20230110180019.045496259@linuxfoundation.org>
+Subject: [PATCH 6.1 024/159] netfilter: nf_tables: honor set timeout and garbage collection updates
+Date: Tue, 10 Jan 2023 19:02:52 +0100
+Message-Id: <20230110180019.080840506@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -37,158 +35,206 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-[ Upstream commit fec3adfd754ccc99a7230e8ab9f105b65fb07bcc ]
+[ Upstream commit 123b99619cca94bdca0bf7bde9abe28f0a0dfe06 ]
 
-MattB reported a lockdep splat in the mptcp listener code cleanup:
+Set timeout and garbage collection interval updates are ignored on
+updates. Add transaction to update global set element timeout and
+garbage collection interval.
 
- WARNING: possible circular locking dependency detected
- packetdrill/14278 is trying to acquire lock:
- ffff888017d868f0 ((work_completion)(&msk->work)){+.+.}-{0:0}, at: __flush_work (kernel/workqueue.c:3069)
-
- but task is already holding lock:
- ffff888017d84130 (sk_lock-AF_INET){+.+.}-{0:0}, at: mptcp_close (net/mptcp/protocol.c:2973)
-
- which lock already depends on the new lock.
-
- the existing dependency chain (in reverse order) is:
-
- -> #1 (sk_lock-AF_INET){+.+.}-{0:0}:
-        __lock_acquire (kernel/locking/lockdep.c:5055)
-        lock_acquire (kernel/locking/lockdep.c:466)
-        lock_sock_nested (net/core/sock.c:3463)
-        mptcp_worker (net/mptcp/protocol.c:2614)
-        process_one_work (kernel/workqueue.c:2294)
-        worker_thread (include/linux/list.h:292)
-        kthread (kernel/kthread.c:376)
-        ret_from_fork (arch/x86/entry/entry_64.S:312)
-
- -> #0 ((work_completion)(&msk->work)){+.+.}-{0:0}:
-        check_prev_add (kernel/locking/lockdep.c:3098)
-        validate_chain (kernel/locking/lockdep.c:3217)
-        __lock_acquire (kernel/locking/lockdep.c:5055)
-        lock_acquire (kernel/locking/lockdep.c:466)
-        __flush_work (kernel/workqueue.c:3070)
-        __cancel_work_timer (kernel/workqueue.c:3160)
-        mptcp_cancel_work (net/mptcp/protocol.c:2758)
-        mptcp_subflow_queue_clean (net/mptcp/subflow.c:1817)
-        __mptcp_close_ssk (net/mptcp/protocol.c:2363)
-        mptcp_destroy_common (net/mptcp/protocol.c:3170)
-        mptcp_destroy (include/net/sock.h:1495)
-        __mptcp_destroy_sock (net/mptcp/protocol.c:2886)
-        __mptcp_close (net/mptcp/protocol.c:2959)
-        mptcp_close (net/mptcp/protocol.c:2974)
-        inet_release (net/ipv4/af_inet.c:432)
-        __sock_release (net/socket.c:651)
-        sock_close (net/socket.c:1367)
-        __fput (fs/file_table.c:320)
-        task_work_run (kernel/task_work.c:181 (discriminator 1))
-        exit_to_user_mode_prepare (include/linux/resume_user_mode.h:49)
-        syscall_exit_to_user_mode (kernel/entry/common.c:130)
-        do_syscall_64 (arch/x86/entry/common.c:87)
-        entry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:120)
-
- other info that might help us debug this:
-
-  Possible unsafe locking scenario:
-
-        CPU0                    CPU1
-        ----                    ----
-   lock(sk_lock-AF_INET);
-                                lock((work_completion)(&msk->work));
-                                lock(sk_lock-AF_INET);
-   lock((work_completion)(&msk->work));
-
-  *** DEADLOCK ***
-
-The report is actually a false positive, since the only existing lock
-nesting is the msk socket lock acquired by the mptcp work.
-cancel_work_sync() is invoked without the relevant socket lock being
-held, but under a different (the msk listener) socket lock.
-
-We could silence the splat adding a per workqueue dynamic lockdep key,
-but that looks overkill. Instead just tell lockdep the msk socket lock
-is not held around cancel_work_sync().
-
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/322
-Fixes: 30e51b923e43 ("mptcp: fix unreleased socket in accept queue")
-Reported-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Reviewed-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 96518518cc41 ("netfilter: add nftables")
+Suggested-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/protocol.c |  2 +-
- net/mptcp/protocol.h |  2 +-
- net/mptcp/subflow.c  | 19 +++++++++++++++++--
- 3 files changed, 19 insertions(+), 4 deletions(-)
+ include/net/netfilter/nf_tables.h | 13 ++++++-
+ net/netfilter/nf_tables_api.c     | 63 ++++++++++++++++++++++---------
+ 2 files changed, 57 insertions(+), 19 deletions(-)
 
-diff --git a/net/mptcp/protocol.c b/net/mptcp/protocol.c
-index e64ea2ca1c7a..e97465f0c667 100644
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2371,7 +2371,7 @@ static void __mptcp_close_ssk(struct sock *sk, struct sock *ssk,
- 		/* otherwise tcp will dispose of the ssk and subflow ctx */
- 		if (ssk->sk_state == TCP_LISTEN) {
- 			tcp_set_state(ssk, TCP_CLOSE);
--			mptcp_subflow_queue_clean(ssk);
-+			mptcp_subflow_queue_clean(sk, ssk);
- 			inet_csk_listen_stop(ssk);
- 		}
- 		__tcp_close(ssk, 0);
-diff --git a/net/mptcp/protocol.h b/net/mptcp/protocol.h
-index 380bddbc52d4..62e9ff237b6e 100644
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -614,7 +614,7 @@ void mptcp_close_ssk(struct sock *sk, struct sock *ssk,
- 		     struct mptcp_subflow_context *subflow);
- void __mptcp_subflow_send_ack(struct sock *ssk);
- void mptcp_subflow_reset(struct sock *ssk);
--void mptcp_subflow_queue_clean(struct sock *ssk);
-+void mptcp_subflow_queue_clean(struct sock *sk, struct sock *ssk);
- void mptcp_sock_graft(struct sock *sk, struct socket *parent);
- struct socket *__mptcp_nmpc_socket(const struct mptcp_sock *msk);
- bool __mptcp_close(struct sock *sk, long timeout);
-diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
-index 613f515fedf0..9d3701fdb293 100644
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1733,7 +1733,7 @@ static void subflow_state_change(struct sock *sk)
- 	}
+diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
+index ddcdde230747..1daededfa75e 100644
+--- a/include/net/netfilter/nf_tables.h
++++ b/include/net/netfilter/nf_tables.h
+@@ -592,7 +592,9 @@ void *nft_set_catchall_gc(const struct nft_set *set);
+ 
+ static inline unsigned long nft_set_gc_interval(const struct nft_set *set)
+ {
+-	return set->gc_int ? msecs_to_jiffies(set->gc_int) : HZ;
++	u32 gc_int = READ_ONCE(set->gc_int);
++
++	return gc_int ? msecs_to_jiffies(gc_int) : HZ;
  }
  
--void mptcp_subflow_queue_clean(struct sock *listener_ssk)
-+void mptcp_subflow_queue_clean(struct sock *listener_sk, struct sock *listener_ssk)
- {
- 	struct request_sock_queue *queue = &inet_csk(listener_ssk)->icsk_accept_queue;
- 	struct mptcp_sock *msk, *next, *head = NULL;
-@@ -1782,8 +1782,23 @@ void mptcp_subflow_queue_clean(struct sock *listener_ssk)
+ /**
+@@ -1563,6 +1565,9 @@ struct nft_trans_rule {
+ struct nft_trans_set {
+ 	struct nft_set			*set;
+ 	u32				set_id;
++	u32				gc_int;
++	u64				timeout;
++	bool				update;
+ 	bool				bound;
+ };
  
- 		do_cancel_work = __mptcp_close(sk, 0);
- 		release_sock(sk);
--		if (do_cancel_work)
-+		if (do_cancel_work) {
-+			/* lockdep will report a false positive ABBA deadlock
-+			 * between cancel_work_sync and the listener socket.
-+			 * The involved locks belong to different sockets WRT
-+			 * the existing AB chain.
-+			 * Using a per socket key is problematic as key
-+			 * deregistration requires process context and must be
-+			 * performed at socket disposal time, in atomic
-+			 * context.
-+			 * Just tell lockdep to consider the listener socket
-+			 * released here.
-+			 */
-+			mutex_release(&listener_sk->sk_lock.dep_map, _RET_IP_);
- 			mptcp_cancel_work(sk);
-+			mutex_acquire(&listener_sk->sk_lock.dep_map,
-+				      SINGLE_DEPTH_NESTING, 0, _RET_IP_);
-+		}
- 		sock_put(sk);
+@@ -1572,6 +1577,12 @@ struct nft_trans_set {
+ 	(((struct nft_trans_set *)trans->data)->set_id)
+ #define nft_trans_set_bound(trans)	\
+ 	(((struct nft_trans_set *)trans->data)->bound)
++#define nft_trans_set_update(trans)	\
++	(((struct nft_trans_set *)trans->data)->update)
++#define nft_trans_set_timeout(trans)	\
++	(((struct nft_trans_set *)trans->data)->timeout)
++#define nft_trans_set_gc_int(trans)	\
++	(((struct nft_trans_set *)trans->data)->gc_int)
+ 
+ struct nft_trans_chain {
+ 	bool				update;
+diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
+index 6e68cab474c2..3ba8c291fcaa 100644
+--- a/net/netfilter/nf_tables_api.c
++++ b/net/netfilter/nf_tables_api.c
+@@ -465,8 +465,9 @@ static int nft_delrule_by_chain(struct nft_ctx *ctx)
+ 	return 0;
+ }
+ 
+-static int nft_trans_set_add(const struct nft_ctx *ctx, int msg_type,
+-			     struct nft_set *set)
++static int __nft_trans_set_add(const struct nft_ctx *ctx, int msg_type,
++			       struct nft_set *set,
++			       const struct nft_set_desc *desc)
+ {
+ 	struct nft_trans *trans;
+ 
+@@ -474,17 +475,28 @@ static int nft_trans_set_add(const struct nft_ctx *ctx, int msg_type,
+ 	if (trans == NULL)
+ 		return -ENOMEM;
+ 
+-	if (msg_type == NFT_MSG_NEWSET && ctx->nla[NFTA_SET_ID] != NULL) {
++	if (msg_type == NFT_MSG_NEWSET && ctx->nla[NFTA_SET_ID] && !desc) {
+ 		nft_trans_set_id(trans) =
+ 			ntohl(nla_get_be32(ctx->nla[NFTA_SET_ID]));
+ 		nft_activate_next(ctx->net, set);
+ 	}
+ 	nft_trans_set(trans) = set;
++	if (desc) {
++		nft_trans_set_update(trans) = true;
++		nft_trans_set_gc_int(trans) = desc->gc_int;
++		nft_trans_set_timeout(trans) = desc->timeout;
++	}
+ 	nft_trans_commit_list_add_tail(ctx->net, trans);
+ 
+ 	return 0;
+ }
+ 
++static int nft_trans_set_add(const struct nft_ctx *ctx, int msg_type,
++			     struct nft_set *set)
++{
++	return __nft_trans_set_add(ctx, msg_type, set, NULL);
++}
++
+ static int nft_delset(const struct nft_ctx *ctx, struct nft_set *set)
+ {
+ 	int err;
+@@ -3996,8 +4008,10 @@ static int nf_tables_fill_set_concat(struct sk_buff *skb,
+ static int nf_tables_fill_set(struct sk_buff *skb, const struct nft_ctx *ctx,
+ 			      const struct nft_set *set, u16 event, u16 flags)
+ {
+-	struct nlmsghdr *nlh;
++	u64 timeout = READ_ONCE(set->timeout);
++	u32 gc_int = READ_ONCE(set->gc_int);
+ 	u32 portid = ctx->portid;
++	struct nlmsghdr *nlh;
+ 	struct nlattr *nest;
+ 	u32 seq = ctx->seq;
+ 	int i;
+@@ -4033,13 +4047,13 @@ static int nf_tables_fill_set(struct sk_buff *skb, const struct nft_ctx *ctx,
+ 	    nla_put_be32(skb, NFTA_SET_OBJ_TYPE, htonl(set->objtype)))
+ 		goto nla_put_failure;
+ 
+-	if (set->timeout &&
++	if (timeout &&
+ 	    nla_put_be64(skb, NFTA_SET_TIMEOUT,
+-			 nf_jiffies64_to_msecs(set->timeout),
++			 nf_jiffies64_to_msecs(timeout),
+ 			 NFTA_SET_PAD))
+ 		goto nla_put_failure;
+-	if (set->gc_int &&
+-	    nla_put_be32(skb, NFTA_SET_GC_INTERVAL, htonl(set->gc_int)))
++	if (gc_int &&
++	    nla_put_be32(skb, NFTA_SET_GC_INTERVAL, htonl(gc_int)))
+ 		goto nla_put_failure;
+ 
+ 	if (set->policy != NFT_SET_POL_PERFORMANCE) {
+@@ -4584,7 +4598,10 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
+ 		for (i = 0; i < num_exprs; i++)
+ 			nft_expr_destroy(&ctx, exprs[i]);
+ 
+-		return err;
++		if (err < 0)
++			return err;
++
++		return __nft_trans_set_add(&ctx, NFT_MSG_NEWSET, set, &desc);
  	}
  
+ 	if (!(info->nlh->nlmsg_flags & NLM_F_CREATE))
+@@ -6022,7 +6039,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 			return err;
+ 	} else if (set->flags & NFT_SET_TIMEOUT &&
+ 		   !(flags & NFT_SET_ELEM_INTERVAL_END)) {
+-		timeout = set->timeout;
++		timeout = READ_ONCE(set->timeout);
+ 	}
+ 
+ 	expiration = 0;
+@@ -6123,7 +6140,7 @@ static int nft_add_set_elem(struct nft_ctx *ctx, struct nft_set *set,
+ 		if (err < 0)
+ 			goto err_parse_key_end;
+ 
+-		if (timeout != set->timeout) {
++		if (timeout != READ_ONCE(set->timeout)) {
+ 			err = nft_set_ext_add(&tmpl, NFT_SET_EXT_TIMEOUT);
+ 			if (err < 0)
+ 				goto err_parse_key_end;
+@@ -9039,14 +9056,20 @@ static int nf_tables_commit(struct net *net, struct sk_buff *skb)
+ 				nft_flow_rule_destroy(nft_trans_flow_rule(trans));
+ 			break;
+ 		case NFT_MSG_NEWSET:
+-			nft_clear(net, nft_trans_set(trans));
+-			/* This avoids hitting -EBUSY when deleting the table
+-			 * from the transaction.
+-			 */
+-			if (nft_set_is_anonymous(nft_trans_set(trans)) &&
+-			    !list_empty(&nft_trans_set(trans)->bindings))
+-				trans->ctx.table->use--;
++			if (nft_trans_set_update(trans)) {
++				struct nft_set *set = nft_trans_set(trans);
+ 
++				WRITE_ONCE(set->timeout, nft_trans_set_timeout(trans));
++				WRITE_ONCE(set->gc_int, nft_trans_set_gc_int(trans));
++			} else {
++				nft_clear(net, nft_trans_set(trans));
++				/* This avoids hitting -EBUSY when deleting the table
++				 * from the transaction.
++				 */
++				if (nft_set_is_anonymous(nft_trans_set(trans)) &&
++				    !list_empty(&nft_trans_set(trans)->bindings))
++					trans->ctx.table->use--;
++			}
+ 			nf_tables_set_notify(&trans->ctx, nft_trans_set(trans),
+ 					     NFT_MSG_NEWSET, GFP_KERNEL);
+ 			nft_trans_destroy(trans);
+@@ -9268,6 +9291,10 @@ static int __nf_tables_abort(struct net *net, enum nfnl_abort_action action)
+ 			nft_trans_destroy(trans);
+ 			break;
+ 		case NFT_MSG_NEWSET:
++			if (nft_trans_set_update(trans)) {
++				nft_trans_destroy(trans);
++				break;
++			}
+ 			trans->ctx.table->use--;
+ 			if (nft_trans_set_bound(trans)) {
+ 				nft_trans_destroy(trans);
 -- 
 2.35.1
 
