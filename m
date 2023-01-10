@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D547474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:33:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2FCC433EF;
-	Tue, 10 Jan 2023 18:33:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 359977474
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:33:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5469C433D2;
+	Tue, 10 Jan 2023 18:33:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375594;
-	bh=A/ExnhSVHK7qignorG62La22hdVT0sMzzctwBDzImmY=;
+	s=korg; t=1673375597;
+	bh=tM5jMiHZ4UKmta86IYYK4t+6FQ4uP2htZNeqxkq2lbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s46YpNymQ0tnKcMEhF8TsuBVhYeugQTflKg8G2+BWfZBXwZRPgslX2Y8NPrdZMAQp
-	 8CSeIuFXLxl6yTgBqavSQ++AySdXLRgZTjwnK2UpaYaL0VyXNI7znECSwBt+75/iBg
-	 VckWnVWMIPb/vpkm2ppGfXoWVQVaOzaZFN3W+o9k=
+	b=yNLb3sAdkN7Rh9fUbH6yej1kfl7YlVHEFeooDmLcofYv1rcpwHzPtEO3qqcOveKVn
+	 /J8nK1xHclDKQfiQhD7shssMAwAoXwGB0Q5SaCpox9RohycEiCw/TUbK/6W16K/WSt
+	 9Rpjgyu1r13pooqHajQAaHjMgQVT6oCqVoFcbKqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	David Sterba <dsterba@suse.com>,
+	Osama Abboud <osamaabb@amazon.com>,
+	Arthur Kiyanovski <akiyano@amazon.com>,
+	David Arinzon <darinzon@amazon.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 198/290] btrfs: fix an error handling path in btrfs_defrag_leaves()
-Date: Tue, 10 Jan 2023 19:04:50 +0100
-Message-Id: <20230110180038.799192375@linuxfoundation.org>
+Subject: [PATCH 5.15 234/290] net: ena: Fix rx_copybreak value update
+Date: Tue, 10 Jan 2023 19:05:26 +0100
+Message-Id: <20230110180040.087271316@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,43 +37,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-[ Upstream commit db0a4a7b8e95f9312a59a67cbd5bc589f090e13d ]
+From: David Arinzon <darinzon@amazon.com>
 
-All error handling paths end to 'out', except this memory allocation
-failure.
+[ Upstream commit c7062aaee099f2f43d6f07a71744b44b94b94b34 ]
 
-This is spurious. So branch to the error handling path also in this case.
-It will add a call to:
+Make the upper bound on rx_copybreak tighter, by
+making sure it is smaller than the minimum of mtu and
+ENA_PAGE_SIZE. With the current upper bound of mtu,
+rx_copybreak can be larger than a page. Such large
+rx_copybreak will not bring any performance benefit to
+the user and therefore makes no sense.
 
-	memset(&root->defrag_progress, 0,
-	       sizeof(root->defrag_progress));
+In addition, the value update was only reflected in
+the adapter structure, but not applied for each ring,
+causing it to not take effect.
 
-Fixes: 6702ed490ca0 ("Btrfs: Add run time btree defrag, and an ioctl to force btree defrag")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: 1738cd3ed342 ("net: ena: Add a driver for Amazon Elastic Network Adapters (ENA)")
+Signed-off-by: Osama Abboud <osamaabb@amazon.com>
+Signed-off-by: Arthur Kiyanovski <akiyano@amazon.com>
+Signed-off-by: David Arinzon <darinzon@amazon.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/tree-defrag.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/amazon/ena/ena_ethtool.c |  6 +-----
+ drivers/net/ethernet/amazon/ena/ena_netdev.c  | 18 ++++++++++++++++++
+ drivers/net/ethernet/amazon/ena/ena_netdev.h  |  2 ++
+ 3 files changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/fs/btrfs/tree-defrag.c b/fs/btrfs/tree-defrag.c
-index 7c45d960b53c..259a3b5f9303 100644
---- a/fs/btrfs/tree-defrag.c
-+++ b/fs/btrfs/tree-defrag.c
-@@ -39,8 +39,10 @@ int btrfs_defrag_leaves(struct btrfs_trans_handle *trans,
- 		goto out;
+diff --git a/drivers/net/ethernet/amazon/ena/ena_ethtool.c b/drivers/net/ethernet/amazon/ena/ena_ethtool.c
+index 13e745cf3781..413082f10dc1 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_ethtool.c
++++ b/drivers/net/ethernet/amazon/ena/ena_ethtool.c
+@@ -880,11 +880,7 @@ static int ena_set_tunable(struct net_device *netdev,
+ 	switch (tuna->id) {
+ 	case ETHTOOL_RX_COPYBREAK:
+ 		len = *(u32 *)data;
+-		if (len > adapter->netdev->mtu) {
+-			ret = -EINVAL;
+-			break;
+-		}
+-		adapter->rx_copybreak = len;
++		ret = ena_set_rx_copybreak(adapter, len);
+ 		break;
+ 	default:
+ 		ret = -EINVAL;
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+index 294f21a839cf..8f1b205e7333 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
+@@ -2829,6 +2829,24 @@ int ena_update_queue_sizes(struct ena_adapter *adapter,
+ 	return dev_was_up ? ena_up(adapter) : 0;
+ }
  
- 	path = btrfs_alloc_path();
--	if (!path)
--		return -ENOMEM;
-+	if (!path) {
-+		ret = -ENOMEM;
-+		goto out;
++int ena_set_rx_copybreak(struct ena_adapter *adapter, u32 rx_copybreak)
++{
++	struct ena_ring *rx_ring;
++	int i;
++
++	if (rx_copybreak > min_t(u16, adapter->netdev->mtu, ENA_PAGE_SIZE))
++		return -EINVAL;
++
++	adapter->rx_copybreak = rx_copybreak;
++
++	for (i = 0; i < adapter->num_io_queues; i++) {
++		rx_ring = &adapter->rx_ring[i];
++		rx_ring->rx_copybreak = rx_copybreak;
 +	}
++
++	return 0;
++}
++
+ int ena_update_queue_count(struct ena_adapter *adapter, u32 new_channel_count)
+ {
+ 	struct ena_com_dev *ena_dev = adapter->ena_dev;
+diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.h b/drivers/net/ethernet/amazon/ena/ena_netdev.h
+index ada2f8faa33a..2b5eb573ff23 100644
+--- a/drivers/net/ethernet/amazon/ena/ena_netdev.h
++++ b/drivers/net/ethernet/amazon/ena/ena_netdev.h
+@@ -404,6 +404,8 @@ int ena_update_queue_sizes(struct ena_adapter *adapter,
  
- 	level = btrfs_header_level(root->node);
+ int ena_update_queue_count(struct ena_adapter *adapter, u32 new_channel_count);
  
++int ena_set_rx_copybreak(struct ena_adapter *adapter, u32 rx_copybreak);
++
+ int ena_get_sset_count(struct net_device *netdev, int sset);
+ 
+ enum ena_xdp_errors_t {
 -- 
 2.35.1
 
