@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93713A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:10:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 165DAC433EF;
-	Tue, 10 Jan 2023 18:10:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 550ECA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:10:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17F9C433EF;
+	Tue, 10 Jan 2023 18:10:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374209;
-	bh=o9nbXYLdfIWE31qLTwJqyW3HvD2FxDd4E3J/ViaupjA=;
+	s=korg; t=1673374212;
+	bh=75i0XpobXTTFAm3StXjdoef9ukBtI8ePJVRs50TY/H8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BlfAqY/qMu4daSj+Fk8mihRBinAfH2F5uxdaGYtnjuvtrNBOjY1xez5r5STe4wLXp
-	 jHsMb1azIlYuUhMtRG5fxfMJ8IyNxIZPJMgqyBaAsHicnsAZCtvGcOp6E/0YnYauk7
-	 ZIQrAy2ryALRBYd8jNx/wScw4JKWnLzPBHK7oCKU=
+	b=h/q2FTPk1t58nXTvQV+0UMVvFXszy+ivISau8nX5HO4bH2QbJGgwsKT2fIyDf6i7H
+	 A0l2Day2Cw12T+KexpGfqy1xVw57zH9fC2QUdzHvtxDw7r6GeZ+CztBUVanaiVbN4o
+	 BQD8AQgG75Djcox/EZX2OX9l37vrQsfnGLtIJmx4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Arinzon <darinzon@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Ian Ray <ian.ray@ge.com>,
+	Philipp Zabel <philipp.zabel@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 069/148] net: ena: Set default value for RX interrupt moderation
-Date: Tue, 10 Jan 2023 19:02:53 +0100
-Message-Id: <20230110180019.408369936@linuxfoundation.org>
+Subject: [PATCH 6.0 087/148] drm/imx: ipuv3-plane: Fix overlay plane width
+Date: Tue, 10 Jan 2023 19:03:11 +0100
+Message-Id: <20230110180019.958809876@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -35,40 +37,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Arinzon <darinzon@amazon.com>
+From: Philipp Zabel <p.zabel@pengutronix.de>
 
-[ Upstream commit e712f3e4920b3a1a5e6b536827d118e14862896c ]
+[ Upstream commit 92d43bd3bc9728c1fb114d7011d46f5ea9489e28 ]
 
-RX ring can be NULL in XDP use cases where only TX queues
-are configured. In this scenario, the RX interrupt moderation
-value sent to the device remains in its default value of 0.
+ipu_src_rect_width() was introduced to support odd screen resolutions
+such as 1366x768 by internally rounding up primary plane width to a
+multiple of 8 and compensating with reduced horizontal blanking.
+This also caused overlay plane width to be rounded up, which was not
+intended. Fix overlay plane width by limiting the rounding up to the
+primary plane.
 
-In this change, setting the default value of the RX interrupt
-moderation to be the same as of the TX.
+drm_rect_width(&new_state->src) >> 16 is the same value as
+drm_rect_width(dst) because there is no plane scaling support.
 
-Fixes: 548c4940b9f1 ("net: ena: Implement XDP_TX action")
-Signed-off-by: David Arinzon <darinzon@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 94dfec48fca7 ("drm/imx: Add 8 pixel alignment fix")
+Reviewed-by: Lucas Stach <l.stach@pengutronix.de>
+Link: https://lore.kernel.org/r/20221108141420.176696-1-p.zabel@pengutronix.de
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221108141420.176696-1-p.zabel@pengutronix.de
+Tested-by: Ian Ray <ian.ray@ge.com>
+(cherry picked from commit 4333472f8d7befe62359fecb1083cd57a6e07bfc)
+Signed-off-by: Philipp Zabel <philipp.zabel@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_netdev.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/imx/ipuv3-plane.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-index 083754e0bf23..b25a2fcff339 100644
---- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-@@ -1823,8 +1823,9 @@ static void ena_adjust_adaptive_rx_intr_moderation(struct ena_napi *ena_napi)
- static void ena_unmask_interrupt(struct ena_ring *tx_ring,
- 					struct ena_ring *rx_ring)
- {
-+	u32 rx_interval = tx_ring->smoothed_interval;
- 	struct ena_eth_io_intr_reg intr_reg;
--	u32 rx_interval = 0;
+diff --git a/drivers/gpu/drm/imx/ipuv3-plane.c b/drivers/gpu/drm/imx/ipuv3-plane.c
+index ea5f594955df..4b05f310071c 100644
+--- a/drivers/gpu/drm/imx/ipuv3-plane.c
++++ b/drivers/gpu/drm/imx/ipuv3-plane.c
+@@ -615,6 +615,11 @@ static void ipu_plane_atomic_update(struct drm_plane *plane,
+ 		break;
+ 	}
+ 
++	if (ipu_plane->dp_flow == IPU_DP_FLOW_SYNC_BG)
++		width = ipu_src_rect_width(new_state);
++	else
++		width = drm_rect_width(&new_state->src) >> 16;
 +
- 	/* Rx ring can be NULL when for XDP tx queues which don't have an
- 	 * accompanying rx_ring pair.
+ 	eba = drm_plane_state_to_eba(new_state, 0);
+ 
+ 	/*
+@@ -623,8 +628,7 @@ static void ipu_plane_atomic_update(struct drm_plane *plane,
  	 */
+ 	if (ipu_state->use_pre) {
+ 		axi_id = ipu_chan_assign_axi_id(ipu_plane->dma);
+-		ipu_prg_channel_configure(ipu_plane->ipu_ch, axi_id,
+-					  ipu_src_rect_width(new_state),
++		ipu_prg_channel_configure(ipu_plane->ipu_ch, axi_id, width,
+ 					  drm_rect_height(&new_state->src) >> 16,
+ 					  fb->pitches[0], fb->format->format,
+ 					  fb->modifier, &eba);
+@@ -679,9 +683,8 @@ static void ipu_plane_atomic_update(struct drm_plane *plane,
+ 		break;
+ 	}
+ 
+-	ipu_dmfc_config_wait4eot(ipu_plane->dmfc, ALIGN(drm_rect_width(dst), 8));
++	ipu_dmfc_config_wait4eot(ipu_plane->dmfc, width);
+ 
+-	width = ipu_src_rect_width(new_state);
+ 	height = drm_rect_height(&new_state->src) >> 16;
+ 	info = drm_format_info(fb->format->format);
+ 	ipu_calculate_bursts(width, info->cpp[0], fb->pitches[0],
+@@ -745,8 +748,7 @@ static void ipu_plane_atomic_update(struct drm_plane *plane,
+ 		ipu_cpmem_set_burstsize(ipu_plane->ipu_ch, 16);
+ 
+ 		ipu_cpmem_zero(ipu_plane->alpha_ch);
+-		ipu_cpmem_set_resolution(ipu_plane->alpha_ch,
+-					 ipu_src_rect_width(new_state),
++		ipu_cpmem_set_resolution(ipu_plane->alpha_ch, width,
+ 					 drm_rect_height(&new_state->src) >> 16);
+ 		ipu_cpmem_set_format_passthrough(ipu_plane->alpha_ch, 8);
+ 		ipu_cpmem_set_high_priority(ipu_plane->alpha_ch);
 -- 
 2.35.1
 
