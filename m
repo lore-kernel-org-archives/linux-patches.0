@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EDC06FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:31:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0247FC433D2;
-	Tue, 10 Jan 2023 18:31:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0BB6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:31:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4481C433EF;
+	Tue, 10 Jan 2023 18:31:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375474;
-	bh=skCkBDvtoqjOERuQidAgjLCegiUd4Q5dsCdU5kXM8IU=;
+	s=korg; t=1673375477;
+	bh=QACbFCJd4t+Gb42iKf/qn3OgeQvXxzfYJCI8ir+8mZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EQh9K9I5uv5U0uhxbwaaWvnN7NngO+GtNosheU4wNJYxccEZij+cBbqYlNpTB308Q
-	 1hR46VtwIxTYDJMWptbW4zcJhkNaBf2QTu0cpuqyyM3f0YUUq59PfRp4awQ1pS+yDx
-	 cIlTwY78DeMajNqogzG1NMrSIAI1bZwFG2hlwqwY=
+	b=ageYkp2FPlRB9zUSi4st8+DC4q7EYH1nOK9wunQjQG2Hl3DcgHyjA9ef/35DQKwTx
+	 +STFzpF6+cw5vfaWeuC7e1q97vAzC/3Z+y6j3MSLNvfS+Wwr9OmIv1kfXJ7Qc5aDeR
+	 ey1/k/3H19nNqcrNinx1zZNpguLHLRjiFDq/U6no=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ye Bin <yebin10@huawei.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 5.15 169/290] ext4: introduce EXT4_FC_TAG_BASE_LEN helper
-Date: Tue, 10 Jan 2023 19:04:21 +0100
-Message-Id: <20230110180037.749025241@linuxfoundation.org>
+Subject: [PATCH 5.15 170/290] ext4: factor out ext4_fc_get_tl()
+Date: Tue, 10 Jan 2023 19:04:22 +0100
+Message-Id: <20230110180037.781665298@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -39,191 +39,147 @@ From: Eric Biggers <ebiggers@kernel.org>
 
 From: Ye Bin <yebin10@huawei.com>
 
-commit fdc2a3c75dd8345c5b48718af90bad1a7811bedb upstream.
+commit dcc5827484d6e53ccda12334f8bbfafcc593ceda upstream.
 
-Introduce EXT4_FC_TAG_BASE_LEN helper for calculate length of
-struct ext4_fc_tl.
+Factor out ext4_fc_get_tl() to fill 'tl' with host byte order.
 
 Signed-off-by: Ye Bin <yebin10@huawei.com>
-Link: https://lore.kernel.org/r/20220924075233.2315259-2-yebin10@huawei.com
+Link: https://lore.kernel.org/r/20220924075233.2315259-3-yebin10@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |   54 +++++++++++++++++++++++++-------------------------
- fs/ext4/fast_commit.h |    3 ++
- 2 files changed, 31 insertions(+), 26 deletions(-)
+ fs/ext4/fast_commit.c |   46 +++++++++++++++++++++++++---------------------
+ 1 file changed, 25 insertions(+), 21 deletions(-)
 
 --- a/fs/ext4/fast_commit.c
 +++ b/fs/ext4/fast_commit.c
-@@ -631,10 +631,10 @@ static u8 *ext4_fc_reserve_space(struct
- 	 * After allocating len, we should have space at least for a 0 byte
- 	 * padding.
- 	 */
--	if (len + sizeof(struct ext4_fc_tl) > bsize)
-+	if (len + EXT4_FC_TAG_BASE_LEN > bsize)
- 		return NULL;
+@@ -1271,7 +1271,7 @@ struct dentry_info_args {
+ };
  
--	if (bsize - off - 1 > len + sizeof(struct ext4_fc_tl)) {
-+	if (bsize - off - 1 > len + EXT4_FC_TAG_BASE_LEN) {
- 		/*
- 		 * Only allocate from current buffer if we have enough space for
- 		 * this request AND we have space to add a zero byte padding.
-@@ -651,10 +651,10 @@ static u8 *ext4_fc_reserve_space(struct
- 	/* Need to add PAD tag */
- 	tl = (struct ext4_fc_tl *)(sbi->s_fc_bh->b_data + off);
- 	tl->fc_tag = cpu_to_le16(EXT4_FC_TAG_PAD);
--	pad_len = bsize - off - 1 - sizeof(struct ext4_fc_tl);
-+	pad_len = bsize - off - 1 - EXT4_FC_TAG_BASE_LEN;
- 	tl->fc_len = cpu_to_le16(pad_len);
- 	if (crc)
--		*crc = ext4_chksum(sbi, *crc, tl, sizeof(*tl));
-+		*crc = ext4_chksum(sbi, *crc, tl, EXT4_FC_TAG_BASE_LEN);
- 	if (pad_len > 0)
- 		ext4_fc_memzero(sb, tl + 1, pad_len, crc);
- 	/* Don't leak uninitialized memory in the unused last byte. */
-@@ -699,7 +699,7 @@ static int ext4_fc_write_tail(struct sup
- 	 * ext4_fc_reserve_space takes care of allocating an extra block if
- 	 * there's no enough space on this block for accommodating this tail.
- 	 */
--	dst = ext4_fc_reserve_space(sb, sizeof(tl) + sizeof(tail), &crc);
-+	dst = ext4_fc_reserve_space(sb, EXT4_FC_TAG_BASE_LEN + sizeof(tail), &crc);
- 	if (!dst)
- 		return -ENOSPC;
- 
-@@ -709,8 +709,8 @@ static int ext4_fc_write_tail(struct sup
- 	tl.fc_len = cpu_to_le16(bsize - off - 1 + sizeof(struct ext4_fc_tail));
- 	sbi->s_fc_bytes = round_up(sbi->s_fc_bytes, bsize);
- 
--	ext4_fc_memcpy(sb, dst, &tl, sizeof(tl), &crc);
--	dst += sizeof(tl);
-+	ext4_fc_memcpy(sb, dst, &tl, EXT4_FC_TAG_BASE_LEN, &crc);
-+	dst += EXT4_FC_TAG_BASE_LEN;
- 	tail.fc_tid = cpu_to_le32(sbi->s_journal->j_running_transaction->t_tid);
- 	ext4_fc_memcpy(sb, dst, &tail.fc_tid, sizeof(tail.fc_tid), &crc);
- 	dst += sizeof(tail.fc_tid);
-@@ -734,15 +734,15 @@ static bool ext4_fc_add_tlv(struct super
- 	struct ext4_fc_tl tl;
- 	u8 *dst;
- 
--	dst = ext4_fc_reserve_space(sb, sizeof(tl) + len, crc);
-+	dst = ext4_fc_reserve_space(sb, EXT4_FC_TAG_BASE_LEN + len, crc);
- 	if (!dst)
- 		return false;
- 
- 	tl.fc_tag = cpu_to_le16(tag);
- 	tl.fc_len = cpu_to_le16(len);
- 
--	ext4_fc_memcpy(sb, dst, &tl, sizeof(tl), crc);
--	ext4_fc_memcpy(sb, dst + sizeof(tl), val, len, crc);
-+	ext4_fc_memcpy(sb, dst, &tl, EXT4_FC_TAG_BASE_LEN, crc);
-+	ext4_fc_memcpy(sb, dst + EXT4_FC_TAG_BASE_LEN, val, len, crc);
- 
- 	return true;
- }
-@@ -754,8 +754,8 @@ static bool ext4_fc_add_dentry_tlv(struc
+ static inline void tl_to_darg(struct dentry_info_args *darg,
+-			      struct  ext4_fc_tl *tl, u8 *val)
++			      struct ext4_fc_tl *tl, u8 *val)
+ {
  	struct ext4_fc_dentry_info fcd;
- 	struct ext4_fc_tl tl;
- 	int dlen = fc_dentry->fcd_name.len;
--	u8 *dst = ext4_fc_reserve_space(sb, sizeof(tl) + sizeof(fcd) + dlen,
--					crc);
-+	u8 *dst = ext4_fc_reserve_space(sb,
-+			EXT4_FC_TAG_BASE_LEN + sizeof(fcd) + dlen, crc);
  
- 	if (!dst)
- 		return false;
-@@ -764,8 +764,8 @@ static bool ext4_fc_add_dentry_tlv(struc
- 	fcd.fc_ino = cpu_to_le32(fc_dentry->fcd_ino);
- 	tl.fc_tag = cpu_to_le16(fc_dentry->fcd_op);
- 	tl.fc_len = cpu_to_le16(sizeof(fcd) + dlen);
--	ext4_fc_memcpy(sb, dst, &tl, sizeof(tl), crc);
--	dst += sizeof(tl);
-+	ext4_fc_memcpy(sb, dst, &tl, EXT4_FC_TAG_BASE_LEN, crc);
-+	dst += EXT4_FC_TAG_BASE_LEN;
- 	ext4_fc_memcpy(sb, dst, &fcd, sizeof(fcd), crc);
- 	dst += sizeof(fcd);
- 	ext4_fc_memcpy(sb, dst, fc_dentry->fcd_name.name, dlen, crc);
-@@ -801,13 +801,13 @@ static int ext4_fc_write_inode(struct in
+@@ -1280,8 +1280,14 @@ static inline void tl_to_darg(struct den
+ 	darg->parent_ino = le32_to_cpu(fcd.fc_parent_ino);
+ 	darg->ino = le32_to_cpu(fcd.fc_ino);
+ 	darg->dname = val + offsetof(struct ext4_fc_dentry_info, fc_dname);
+-	darg->dname_len = le16_to_cpu(tl->fc_len) -
+-		sizeof(struct ext4_fc_dentry_info);
++	darg->dname_len = tl->fc_len - sizeof(struct ext4_fc_dentry_info);
++}
++
++static inline void ext4_fc_get_tl(struct ext4_fc_tl *tl, u8 *val)
++{
++	memcpy(tl, val, EXT4_FC_TAG_BASE_LEN);
++	tl->fc_len = le16_to_cpu(tl->fc_len);
++	tl->fc_tag = le16_to_cpu(tl->fc_tag);
+ }
  
- 	ret = -ECANCELED;
- 	dst = ext4_fc_reserve_space(inode->i_sb,
--			sizeof(tl) + inode_len + sizeof(fc_inode.fc_ino), crc);
-+		EXT4_FC_TAG_BASE_LEN + inode_len + sizeof(fc_inode.fc_ino), crc);
- 	if (!dst)
- 		goto err;
+ /* Unlink replay function */
+@@ -1446,7 +1452,7 @@ static int ext4_fc_replay_inode(struct s
+ 	struct ext4_inode *raw_fc_inode;
+ 	struct inode *inode = NULL;
+ 	struct ext4_iloc iloc;
+-	int inode_len, ino, ret, tag = le16_to_cpu(tl->fc_tag);
++	int inode_len, ino, ret, tag = tl->fc_tag;
+ 	struct ext4_extent_header *eh;
  
--	if (!ext4_fc_memcpy(inode->i_sb, dst, &tl, sizeof(tl), crc))
-+	if (!ext4_fc_memcpy(inode->i_sb, dst, &tl, EXT4_FC_TAG_BASE_LEN, crc))
- 		goto err;
--	dst += sizeof(tl);
-+	dst += EXT4_FC_TAG_BASE_LEN;
- 	if (!ext4_fc_memcpy(inode->i_sb, dst, &fc_inode, sizeof(fc_inode), crc))
- 		goto err;
- 	dst += sizeof(fc_inode);
-@@ -1957,9 +1957,10 @@ static int ext4_fc_replay_scan(journal_t
- 	}
+ 	memcpy(&fc_inode, val, sizeof(fc_inode));
+@@ -1471,7 +1477,7 @@ static int ext4_fc_replay_inode(struct s
+ 	if (ret)
+ 		goto out;
+ 
+-	inode_len = le16_to_cpu(tl->fc_len) - sizeof(struct ext4_fc_inode);
++	inode_len = tl->fc_len - sizeof(struct ext4_fc_inode);
+ 	raw_inode = ext4_raw_inode(&iloc);
+ 
+ 	memcpy(raw_inode, raw_fc_inode, offsetof(struct ext4_inode, i_block));
+@@ -1958,12 +1964,12 @@ static int ext4_fc_replay_scan(journal_t
  
  	state->fc_replay_expected_off++;
--	for (cur = start; cur < end; cur = cur + sizeof(tl) + le16_to_cpu(tl.fc_len)) {
--		memcpy(&tl, cur, sizeof(tl));
--		val = cur + sizeof(tl);
-+	for (cur = start; cur < end;
-+	     cur = cur + EXT4_FC_TAG_BASE_LEN + le16_to_cpu(tl.fc_len)) {
-+		memcpy(&tl, cur, EXT4_FC_TAG_BASE_LEN);
-+		val = cur + EXT4_FC_TAG_BASE_LEN;
+ 	for (cur = start; cur < end;
+-	     cur = cur + EXT4_FC_TAG_BASE_LEN + le16_to_cpu(tl.fc_len)) {
+-		memcpy(&tl, cur, EXT4_FC_TAG_BASE_LEN);
++	     cur = cur + EXT4_FC_TAG_BASE_LEN + tl.fc_len) {
++		ext4_fc_get_tl(&tl, cur);
+ 		val = cur + EXT4_FC_TAG_BASE_LEN;
  		ext4_debug("Scan phase, tag:%s, blk %lld\n",
- 			  tag2str(le16_to_cpu(tl.fc_tag)), bh->b_blocknr);
- 		switch (le16_to_cpu(tl.fc_tag)) {
-@@ -1982,13 +1983,13 @@ static int ext4_fc_replay_scan(journal_t
+-			  tag2str(le16_to_cpu(tl.fc_tag)), bh->b_blocknr);
+-		switch (le16_to_cpu(tl.fc_tag)) {
++			   tag2str(tl.fc_tag), bh->b_blocknr);
++		switch (tl.fc_tag) {
+ 		case EXT4_FC_TAG_ADD_RANGE:
+ 			memcpy(&ext, val, sizeof(ext));
+ 			ex = (struct ext4_extent *)&ext.fc_ex;
+@@ -1983,7 +1989,7 @@ static int ext4_fc_replay_scan(journal_t
  		case EXT4_FC_TAG_PAD:
  			state->fc_cur_tag++;
  			state->fc_crc = ext4_chksum(sbi, state->fc_crc, cur,
--					sizeof(tl) + le16_to_cpu(tl.fc_len));
-+				EXT4_FC_TAG_BASE_LEN + le16_to_cpu(tl.fc_len));
+-				EXT4_FC_TAG_BASE_LEN + le16_to_cpu(tl.fc_len));
++				EXT4_FC_TAG_BASE_LEN + tl.fc_len);
  			break;
  		case EXT4_FC_TAG_TAIL:
  			state->fc_cur_tag++;
- 			memcpy(&tail, val, sizeof(tail));
- 			state->fc_crc = ext4_chksum(sbi, state->fc_crc, cur,
--						sizeof(tl) +
-+						EXT4_FC_TAG_BASE_LEN +
- 						offsetof(struct ext4_fc_tail,
- 						fc_crc));
- 			if (le32_to_cpu(tail.fc_tid) == expected_tid &&
-@@ -2015,7 +2016,7 @@ static int ext4_fc_replay_scan(journal_t
+@@ -2016,7 +2022,7 @@ static int ext4_fc_replay_scan(journal_t
  			}
  			state->fc_cur_tag++;
  			state->fc_crc = ext4_chksum(sbi, state->fc_crc, cur,
--					    sizeof(tl) + le16_to_cpu(tl.fc_len));
-+				EXT4_FC_TAG_BASE_LEN + le16_to_cpu(tl.fc_len));
+-				EXT4_FC_TAG_BASE_LEN + le16_to_cpu(tl.fc_len));
++				EXT4_FC_TAG_BASE_LEN + tl.fc_len);
  			break;
  		default:
  			ret = state->fc_replay_num_tags ?
-@@ -2070,9 +2071,10 @@ static int ext4_fc_replay(journal_t *jou
- 	start = (u8 *)bh->b_data;
+@@ -2072,8 +2078,8 @@ static int ext4_fc_replay(journal_t *jou
  	end = (__u8 *)bh->b_data + journal->j_blocksize - 1;
  
--	for (cur = start; cur < end; cur = cur + sizeof(tl) + le16_to_cpu(tl.fc_len)) {
--		memcpy(&tl, cur, sizeof(tl));
--		val = cur + sizeof(tl);
-+	for (cur = start; cur < end;
-+	     cur = cur + EXT4_FC_TAG_BASE_LEN + le16_to_cpu(tl.fc_len)) {
-+		memcpy(&tl, cur, EXT4_FC_TAG_BASE_LEN);
-+		val = cur + EXT4_FC_TAG_BASE_LEN;
+ 	for (cur = start; cur < end;
+-	     cur = cur + EXT4_FC_TAG_BASE_LEN + le16_to_cpu(tl.fc_len)) {
+-		memcpy(&tl, cur, EXT4_FC_TAG_BASE_LEN);
++	     cur = cur + EXT4_FC_TAG_BASE_LEN + tl.fc_len) {
++		ext4_fc_get_tl(&tl, cur);
+ 		val = cur + EXT4_FC_TAG_BASE_LEN;
  
  		if (state->fc_replay_num_tags == 0) {
- 			ret = JBD2_FC_REPLAY_STOP;
---- a/fs/ext4/fast_commit.h
-+++ b/fs/ext4/fast_commit.h
-@@ -70,6 +70,9 @@ struct ext4_fc_tail {
- 	__le32 fc_crc;
- };
- 
-+/* Tag base length */
-+#define EXT4_FC_TAG_BASE_LEN (sizeof(struct ext4_fc_tl))
-+
- /*
-  * Fast commit status codes
-  */
+@@ -2081,10 +2087,9 @@ static int ext4_fc_replay(journal_t *jou
+ 			ext4_fc_set_bitmaps_and_counters(sb);
+ 			break;
+ 		}
+-		ext4_debug("Replay phase, tag:%s\n",
+-				tag2str(le16_to_cpu(tl.fc_tag)));
++		ext4_debug("Replay phase, tag:%s\n", tag2str(tl.fc_tag));
+ 		state->fc_replay_num_tags--;
+-		switch (le16_to_cpu(tl.fc_tag)) {
++		switch (tl.fc_tag) {
+ 		case EXT4_FC_TAG_LINK:
+ 			ret = ext4_fc_replay_link(sb, &tl, val);
+ 			break;
+@@ -2105,19 +2110,18 @@ static int ext4_fc_replay(journal_t *jou
+ 			break;
+ 		case EXT4_FC_TAG_PAD:
+ 			trace_ext4_fc_replay(sb, EXT4_FC_TAG_PAD, 0,
+-					     le16_to_cpu(tl.fc_len), 0);
++					     tl.fc_len, 0);
+ 			break;
+ 		case EXT4_FC_TAG_TAIL:
+-			trace_ext4_fc_replay(sb, EXT4_FC_TAG_TAIL, 0,
+-					     le16_to_cpu(tl.fc_len), 0);
++			trace_ext4_fc_replay(sb, EXT4_FC_TAG_TAIL,
++					     0, tl.fc_len, 0);
+ 			memcpy(&tail, val, sizeof(tail));
+ 			WARN_ON(le32_to_cpu(tail.fc_tid) != expected_tid);
+ 			break;
+ 		case EXT4_FC_TAG_HEAD:
+ 			break;
+ 		default:
+-			trace_ext4_fc_replay(sb, le16_to_cpu(tl.fc_tag), 0,
+-					     le16_to_cpu(tl.fc_len), 0);
++			trace_ext4_fc_replay(sb, tl.fc_tag, 0, tl.fc_len, 0);
+ 			ret = -ECANCELED;
+ 			break;
+ 		}
 
 
