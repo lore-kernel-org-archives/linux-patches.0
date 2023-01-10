@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0E4B6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:24:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B756C433F0;
-	Tue, 10 Jan 2023 18:24:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4B2C6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:24:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DB25C433EF;
+	Tue, 10 Jan 2023 18:24:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375074;
-	bh=pMJ3hOavDOzIjoOP6K6IW2sqQwEonGnmWExMr3dkPBQ=;
+	s=korg; t=1673375077;
+	bh=hj+zY7cQJhO7F/fcOhPf9qe6r17hp6PKEhAVYrhHZcI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eceFs6nVYeJ/PMyepjP12azrvv3lHhNrHRb4Zr8KPojreu/5jJaw/oMc9n8WYsgro
-	 wlLKxyFRbBvYjc67rAL61sojqIJJ5Us6UIwiYAxahNjTMNcoB/+Sy4dFEXZQ+a1gFz
-	 XTHtnhnBCbm++ayjpatZwx5MVvZQjIR2wu/P2Wso=
+	b=kZavgxP6aYg8+5gbzNmuDUZPmfBjYJSKdC5IwStYCxx0O3gBh3/i0ypJDmRG7Ecad
+	 scrcODKkS5qE3B4w5GlYJBM18+HIz3qAE90uN6aCg1bjYbEZ+Ru7OkA0MTGmF/iK2M
+	 XojYLKEh2+qUxLcVPbGrh5rw6JcB4yIce7sqPL7o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzot <syzbot+33f3faaa0c08744f7d40@syzkaller.appspotmail.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 028/290] fs/ntfs3: Use __GFP_NOWARN allocation at ntfs_fill_super()
-Date: Tue, 10 Jan 2023 19:02:00 +0100
-Message-Id: <20230110180032.558684057@linuxfoundation.org>
+	"John Warthog9 Hawley (VMware)" <warthog9@eaglescrag.net>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.15 063/290] ktest.pl minconfig: Unset configs instead of just removing them
+Date: Tue, 10 Jan 2023 19:02:35 +0100
+Message-Id: <20230110180033.811315253@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -36,39 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-[ Upstream commit 59bfd7a483da36bd202532a3d9ea1f14f3bf3aaf ]
+commit ef784eebb56425eed6e9b16e7d47e5c00dcf9c38 upstream.
 
-syzbot is reporting too large allocation at ntfs_fill_super() [1], for a
-crafted filesystem can contain bogus inode->i_size. Add __GFP_NOWARN in
-order to avoid too large allocation warning, than exhausting memory by
-using kvmalloc().
+After a full run of a make_min_config test, I noticed there were a lot of
+CONFIGs still enabled that really should not be. Looking at them, I
+noticed they were all defined as "default y". The issue is that the test
+simple removes the config and re-runs make oldconfig, which enables it
+again because it is set to default 'y'. Instead, explicitly disable the
+config with writing "# CONFIG_FOO is not set" to the file to keep it from
+being set again.
 
-Link: https://syzkaller.appspot.com/bug?extid=33f3faaa0c08744f7d40 [1]
-Reported-by: syzot <syzbot+33f3faaa0c08744f7d40@syzkaller.appspotmail.com>
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+With this change, one of my box's minconfigs went from 768 configs set,
+down to 521 configs set.
+
+Link: https://lkml.kernel.org/r/20221202115936.016fce23@gandalf.local.home
+
+Cc: stable@vger.kernel.org
+Fixes: 0a05c769a9de5 ("ktest: Added config_bisect test type")
+Reviewed-by: John 'Warthog9' Hawley (VMware) <warthog9@eaglescrag.net>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/super.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/ktest/ktest.pl |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ntfs3/super.c b/fs/ntfs3/super.c
-index a18fb431abbe..33b1833ad525 100644
---- a/fs/ntfs3/super.c
-+++ b/fs/ntfs3/super.c
-@@ -1136,7 +1136,7 @@ static int ntfs_fill_super(struct super_block *sb, struct fs_context *fc)
- 		goto put_inode_out;
- 	}
- 	bytes = inode->i_size;
--	sbi->def_table = t = kmalloc(bytes, GFP_NOFS);
-+	sbi->def_table = t = kmalloc(bytes, GFP_NOFS | __GFP_NOWARN);
- 	if (!t) {
- 		err = -ENOMEM;
- 		goto put_inode_out;
--- 
-2.35.1
-
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -3778,9 +3778,10 @@ sub test_this_config {
+     # .config to make sure it is missing the config that
+     # we had before
+     my %configs = %min_configs;
+-    delete $configs{$config};
++    $configs{$config} = "# $config is not set";
+     make_new_config ((values %configs), (values %keep_configs));
+     make_oldconfig;
++    delete $configs{$config};
+     undef %configs;
+     assign_configs \%configs, $output_config;
+ 
 
 
