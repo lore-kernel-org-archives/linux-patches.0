@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A42C6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:32:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97AACC433EF;
-	Tue, 10 Jan 2023 18:32:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ACAF6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:32:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3E9DC433EF;
+	Tue, 10 Jan 2023 18:32:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375558;
-	bh=NuUtDbxuA3n3PBjoaCTEehvd5Xsx/FEgE/wkr6Y4rKc=;
+	s=korg; t=1673375561;
+	bh=TLcAoKOOrytHrR5zm0L7Fa5L0yWYku3xqp1n/7eTZXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GPvpQ3ytGBQwmyX8OJlWIgeS/hLVSEE51IHidZf1Cx90k0AaM5qMgEIgsmkTTRelT
-	 W4NUYI9oMMRMrkzTGV5cRRglacWeTfzoWqdo7vq3esUc+cLymxibBecPv8KgnB6Eyu
-	 7mKL0ljeB2/qjHO2Zen+TUQlAL2lxGyBMsoAIPWc=
+	b=KNVMNXlGOHPKwo4bZ6DkZgaZpQtCaoNuAFKoqUlRBe9bgmqDkDYG6cXGztaL0EndB
+	 Az+MDd/5mt1Ic6mAx/uEYPauhlXSXwkDvSAsK3y6o8W8uMo7414KHPhq/kI2vFxSIn
+	 plSt5GqaF3dogWI9RES4TNJcT9vnkZS2Cr6olul4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Adham Faris <afaris@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 201/290] netfilter: nf_tables: consolidate set description
-Date: Tue, 10 Jan 2023 19:04:53 +0100
-Message-Id: <20230110180038.905078986@linuxfoundation.org>
+Subject: [PATCH 5.15 228/290] net/mlx5e: Fix hw mtu initializing at XDP SQ allocation
+Date: Tue, 10 Jan 2023 19:05:20 +0100
+Message-Id: <20230110180039.887020518@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -34,223 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Adham Faris <afaris@nvidia.com>
 
-[ Upstream commit bed4a63ea4ae77cfe5aae004ef87379f0655260a ]
+[ Upstream commit 1e267ab88dc44c48f556218f7b7f14c76f7aa066 ]
 
-Add the following fields to the set description:
+Current xdp xmit functions logic (mlx5e_xmit_xdp_frame_mpwqe or
+mlx5e_xmit_xdp_frame), validates xdp packet length by comparing it to
+hw mtu (configured at xdp sq allocation) before xmiting it. This check
+does not account for ethernet fcs length (calculated and filled by the
+nic). Hence, when we try sending packets with length > (hw-mtu -
+ethernet-fcs-size), the device port drops it and tx_errors_phy is
+incremented. Desired behavior is to catch these packets and drop them
+by the driver.
 
-- key type
-- data type
-- object type
-- policy
-- gc_int: garbage collection interval)
-- timeout: element timeout
+Fix this behavior in XDP SQ allocation function (mlx5e_alloc_xdpsq) by
+subtracting ethernet FCS header size (4 Bytes) from current hw mtu
+value, since ethernet FCS is calculated and written to ethernet frames
+by the nic.
 
-This prepares for stricter set type checks on updates in a follow up
-patch.
-
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Stable-dep-of: f6594c372afd ("netfilter: nf_tables: perform type checking for existing sets")
+Fixes: d8bec2b29a82 ("net/mlx5e: Support bpf_xdp_adjust_head()")
+Signed-off-by: Adham Faris <afaris@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/netfilter/nf_tables.h | 12 +++++++
- net/netfilter/nf_tables_api.c     | 58 +++++++++++++++----------------
- 2 files changed, 40 insertions(+), 30 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/net/netfilter/nf_tables.h b/include/net/netfilter/nf_tables.h
-index 53746494eb84..5377dbfba120 100644
---- a/include/net/netfilter/nf_tables.h
-+++ b/include/net/netfilter/nf_tables.h
-@@ -283,17 +283,29 @@ struct nft_set_iter {
- /**
-  *	struct nft_set_desc - description of set elements
-  *
-+ *	@ktype: key type
-  *	@klen: key length
-+ *	@dtype: data type
-  *	@dlen: data length
-+ *	@objtype: object type
-+ *	@flags: flags
-  *	@size: number of set elements
-+ *	@policy: set policy
-+ *	@gc_int: garbage collector interval
-  *	@field_len: length of each field in concatenation, bytes
-  *	@field_count: number of concatenated fields in element
-  *	@expr: set must support for expressions
-  */
- struct nft_set_desc {
-+	u32			ktype;
- 	unsigned int		klen;
-+	u32			dtype;
- 	unsigned int		dlen;
-+	u32			objtype;
- 	unsigned int		size;
-+	u32			policy;
-+	u32			gc_int;
-+	u64			timeout;
- 	u8			field_len[NFT_REG32_COUNT];
- 	u8			field_count;
- 	bool			expr;
-diff --git a/net/netfilter/nf_tables_api.c b/net/netfilter/nf_tables_api.c
-index 3fac57d66dda..dd19726a9ac9 100644
---- a/net/netfilter/nf_tables_api.c
-+++ b/net/netfilter/nf_tables_api.c
-@@ -3635,8 +3635,7 @@ static bool nft_set_ops_candidate(const struct nft_set_type *type, u32 flags)
- static const struct nft_set_ops *
- nft_select_set_ops(const struct nft_ctx *ctx,
- 		   const struct nlattr * const nla[],
--		   const struct nft_set_desc *desc,
--		   enum nft_set_policies policy)
-+		   const struct nft_set_desc *desc)
- {
- 	struct nftables_pernet *nft_net = nft_pernet(ctx->net);
- 	const struct nft_set_ops *ops, *bops;
-@@ -3665,7 +3664,7 @@ nft_select_set_ops(const struct nft_ctx *ctx,
- 		if (!ops->estimate(desc, flags, &est))
- 			continue;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index c1c4f380803a..be19f5cf9d15 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -977,7 +977,7 @@ static int mlx5e_alloc_xdpsq(struct mlx5e_channel *c,
+ 	sq->channel   = c;
+ 	sq->uar_map   = mdev->mlx5e_res.hw_objs.bfreg.map;
+ 	sq->min_inline_mode = params->tx_min_inline_mode;
+-	sq->hw_mtu    = MLX5E_SW2HW_MTU(params, params->sw_mtu);
++	sq->hw_mtu    = MLX5E_SW2HW_MTU(params, params->sw_mtu) - ETH_FCS_LEN;
+ 	sq->xsk_pool  = xsk_pool;
  
--		switch (policy) {
-+		switch (desc->policy) {
- 		case NFT_SET_POL_PERFORMANCE:
- 			if (est.lookup < best.lookup)
- 				break;
-@@ -4247,7 +4246,6 @@ static int nf_tables_set_desc_parse(struct nft_set_desc *desc,
- static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
- 			    const struct nlattr * const nla[])
- {
--	u32 ktype, dtype, flags, policy, gc_int, objtype;
- 	struct netlink_ext_ack *extack = info->extack;
- 	u8 genmask = nft_genmask_next(info->net);
- 	u8 family = info->nfmsg->nfgen_family;
-@@ -4260,10 +4258,10 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
- 	struct nft_set *set;
- 	struct nft_ctx ctx;
- 	size_t alloc_size;
--	u64 timeout;
- 	char *name;
- 	int err, i;
- 	u16 udlen;
-+	u32 flags;
- 	u64 size;
- 
- 	if (nla[NFTA_SET_TABLE] == NULL ||
-@@ -4274,10 +4272,10 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
- 
- 	memset(&desc, 0, sizeof(desc));
- 
--	ktype = NFT_DATA_VALUE;
-+	desc.ktype = NFT_DATA_VALUE;
- 	if (nla[NFTA_SET_KEY_TYPE] != NULL) {
--		ktype = ntohl(nla_get_be32(nla[NFTA_SET_KEY_TYPE]));
--		if ((ktype & NFT_DATA_RESERVED_MASK) == NFT_DATA_RESERVED_MASK)
-+		desc.ktype = ntohl(nla_get_be32(nla[NFTA_SET_KEY_TYPE]));
-+		if ((desc.ktype & NFT_DATA_RESERVED_MASK) == NFT_DATA_RESERVED_MASK)
- 			return -EINVAL;
- 	}
- 
-@@ -4302,17 +4300,17 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
- 			return -EOPNOTSUPP;
- 	}
- 
--	dtype = 0;
-+	desc.dtype = 0;
- 	if (nla[NFTA_SET_DATA_TYPE] != NULL) {
- 		if (!(flags & NFT_SET_MAP))
- 			return -EINVAL;
- 
--		dtype = ntohl(nla_get_be32(nla[NFTA_SET_DATA_TYPE]));
--		if ((dtype & NFT_DATA_RESERVED_MASK) == NFT_DATA_RESERVED_MASK &&
--		    dtype != NFT_DATA_VERDICT)
-+		desc.dtype = ntohl(nla_get_be32(nla[NFTA_SET_DATA_TYPE]));
-+		if ((desc.dtype & NFT_DATA_RESERVED_MASK) == NFT_DATA_RESERVED_MASK &&
-+		    desc.dtype != NFT_DATA_VERDICT)
- 			return -EINVAL;
- 
--		if (dtype != NFT_DATA_VERDICT) {
-+		if (desc.dtype != NFT_DATA_VERDICT) {
- 			if (nla[NFTA_SET_DATA_LEN] == NULL)
- 				return -EINVAL;
- 			desc.dlen = ntohl(nla_get_be32(nla[NFTA_SET_DATA_LEN]));
-@@ -4327,34 +4325,34 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
- 		if (!(flags & NFT_SET_OBJECT))
- 			return -EINVAL;
- 
--		objtype = ntohl(nla_get_be32(nla[NFTA_SET_OBJ_TYPE]));
--		if (objtype == NFT_OBJECT_UNSPEC ||
--		    objtype > NFT_OBJECT_MAX)
-+		desc.objtype = ntohl(nla_get_be32(nla[NFTA_SET_OBJ_TYPE]));
-+		if (desc.objtype == NFT_OBJECT_UNSPEC ||
-+		    desc.objtype > NFT_OBJECT_MAX)
- 			return -EOPNOTSUPP;
- 	} else if (flags & NFT_SET_OBJECT)
- 		return -EINVAL;
- 	else
--		objtype = NFT_OBJECT_UNSPEC;
-+		desc.objtype = NFT_OBJECT_UNSPEC;
- 
--	timeout = 0;
-+	desc.timeout = 0;
- 	if (nla[NFTA_SET_TIMEOUT] != NULL) {
- 		if (!(flags & NFT_SET_TIMEOUT))
- 			return -EINVAL;
- 
--		err = nf_msecs_to_jiffies64(nla[NFTA_SET_TIMEOUT], &timeout);
-+		err = nf_msecs_to_jiffies64(nla[NFTA_SET_TIMEOUT], &desc.timeout);
- 		if (err)
- 			return err;
- 	}
--	gc_int = 0;
-+	desc.gc_int = 0;
- 	if (nla[NFTA_SET_GC_INTERVAL] != NULL) {
- 		if (!(flags & NFT_SET_TIMEOUT))
- 			return -EINVAL;
--		gc_int = ntohl(nla_get_be32(nla[NFTA_SET_GC_INTERVAL]));
-+		desc.gc_int = ntohl(nla_get_be32(nla[NFTA_SET_GC_INTERVAL]));
- 	}
- 
--	policy = NFT_SET_POL_PERFORMANCE;
-+	desc.policy = NFT_SET_POL_PERFORMANCE;
- 	if (nla[NFTA_SET_POLICY] != NULL)
--		policy = ntohl(nla_get_be32(nla[NFTA_SET_POLICY]));
-+		desc.policy = ntohl(nla_get_be32(nla[NFTA_SET_POLICY]));
- 
- 	if (nla[NFTA_SET_DESC] != NULL) {
- 		err = nf_tables_set_desc_parse(&desc, nla[NFTA_SET_DESC]);
-@@ -4399,7 +4397,7 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
- 	if (!(info->nlh->nlmsg_flags & NLM_F_CREATE))
- 		return -ENOENT;
- 
--	ops = nft_select_set_ops(&ctx, nla, &desc, policy);
-+	ops = nft_select_set_ops(&ctx, nla, &desc);
- 	if (IS_ERR(ops))
- 		return PTR_ERR(ops);
- 
-@@ -4439,18 +4437,18 @@ static int nf_tables_newset(struct sk_buff *skb, const struct nfnl_info *info,
- 	set->table = table;
- 	write_pnet(&set->net, net);
- 	set->ops = ops;
--	set->ktype = ktype;
-+	set->ktype = desc.ktype;
- 	set->klen = desc.klen;
--	set->dtype = dtype;
--	set->objtype = objtype;
-+	set->dtype = desc.dtype;
-+	set->objtype = desc.objtype;
- 	set->dlen = desc.dlen;
- 	set->flags = flags;
- 	set->size = desc.size;
--	set->policy = policy;
-+	set->policy = desc.policy;
- 	set->udlen = udlen;
- 	set->udata = udata;
--	set->timeout = timeout;
--	set->gc_int = gc_int;
-+	set->timeout = desc.timeout;
-+	set->gc_int = desc.gc_int;
- 
- 	set->field_count = desc.field_count;
- 	for (i = 0; i < desc.field_count; i++)
+ 	sq->stats = sq->xsk_pool ?
 -- 
 2.35.1
 
