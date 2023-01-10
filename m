@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A70F6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:26:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74D91C433EF;
-	Tue, 10 Jan 2023 18:26:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28D2D6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:26:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86F63C433D2;
+	Tue, 10 Jan 2023 18:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375181;
-	bh=AIqqYvq4AIDF5nBYlo0SKI2ihqFbvKDY7cGRkNiegtw=;
+	s=korg; t=1673375185;
+	bh=sDwQr0Wn1l01rcLgMrwtjowdjVfEvBNikKRTBJ+29/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Owsh/gRGBBqs+qssdz5NlH91b7ehU+HpIZm5DE8ODRdQVBPLRa5Jv8yQyGo5nFrg6
-	 F+Y8915lKJRZwg8+V8PEcCRfg+f5Ze8Kgx2WpKIVxcVBNUa/yNuxtS5Cka8RbpcUPL
-	 gfkkMzXhx6lNcaEOWdWmDTTxeTKUJ7uE1yKQISYA=
+	b=fs3M/jOyJyfi3SfAjEC9LUUUBTIWu4K1ncGy7Gms3HaXwGi50aUMKezJAuu57arU1
+	 t3n0jB1Dngj/bK3+nujC+ZJOLRVhiJ4h3KorxIvieVCXW/ZVCnOignRiZwmg5DB0K3
+	 Mlx9CVdyeR1veKebCxQ9UNdY0HJ0BC88QaboTOeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sowjanya Komatineni <skomatineni@nvidia.com>,
-	Luca Ceresoli <luca.ceresoli@bootlin.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Subject: [PATCH 5.15 106/290] staging: media: tegra-video: fix device_node use after free
-Date: Tue, 10 Jan 2023 19:03:18 +0100
-Message-Id: <20230110180035.423844388@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Subject: [PATCH 5.15 107/290] ARM: 9256/1: NWFPE: avoid compiler-generated __aeabi_uldivmod
+Date: Tue, 10 Jan 2023 19:03:19 +0100
+Message-Id: <20230110180035.467200525@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,58 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Ceresoli <luca.ceresoli@bootlin.com>
+From: Nick Desaulniers <ndesaulniers@google.com>
 
-commit c4d344163c3a7f90712525f931a6c016bbb35e18 upstream.
+commit 3220022038b9a3845eea762af85f1c5694b9f861 upstream.
 
-At probe time this code path is followed:
+clang-15's ability to elide loops completely became more aggressive when
+it can deduce how a variable is being updated in a loop. Counting down
+one variable by an increment of another can be replaced by a modulo
+operation.
 
- * tegra_csi_init
-   * tegra_csi_channels_alloc
-     * for_each_child_of_node(node, channel) -- iterates over channels
-       * automatically gets 'channel'
-         * tegra_csi_channel_alloc()
-           * saves into chan->of_node a pointer to the channel OF node
-       * automatically gets and puts 'channel'
-       * now the node saved in chan->of_node has refcount 0, can disappear
-   * tegra_csi_channels_init
-     * iterates over channels
-       * tegra_csi_channel_init -- uses chan->of_node
+For 64b variables on 32b ARM EABI targets, this can result in the
+compiler generating calls to __aeabi_uldivmod, which it does for a do
+while loop in float64_rem().
 
-After that, chan->of_node keeps storing the node until the device is
-removed.
+For the kernel, we'd generally prefer that developers not open code 64b
+division via binary / operators and instead use the more explicit
+helpers from div64.h. On arm-linux-gnuabi targets, failure to do so can
+result in linkage failures due to undefined references to
+__aeabi_uldivmod().
 
-of_node_get() the node and of_node_put() it during teardown to avoid any
-risk.
+While developers can avoid open coding divisions on 64b variables, the
+compiler doesn't know that the Linux kernel has a partial implementation
+of a compiler runtime (--rtlib) to enforce this convention.
 
-Fixes: 1ebaeb09830f ("media: tegra-video: Add support for external sensor capture")
+It's also undecidable for the compiler whether the code in question
+would be faster to execute the loop vs elide it and do the 64b division.
+
+While I actively avoid using the internal -mllvm command line flags, I
+think we get better code than using barrier() here, which will force
+reloads+spills in the loop for all toolchains.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1666
+
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
 Cc: stable@vger.kernel.org
-Cc: Sowjanya Komatineni <skomatineni@nvidia.com>
-Signed-off-by: Luca Ceresoli <luca.ceresoli@bootlin.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/media/tegra-video/csi.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm/nwfpe/Makefile |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/staging/media/tegra-video/csi.c
-+++ b/drivers/staging/media/tegra-video/csi.c
-@@ -433,7 +433,7 @@ static int tegra_csi_channel_alloc(struc
- 	for (i = 0; i < chan->numgangports; i++)
- 		chan->csi_port_nums[i] = port_num + i * CSI_PORTS_PER_BRICK;
+--- a/arch/arm/nwfpe/Makefile
++++ b/arch/arm/nwfpe/Makefile
+@@ -11,3 +11,9 @@ nwfpe-y				+= fpa11.o fpa11_cpdo.o fpa11
+ 				   entry.o
  
--	chan->of_node = node;
-+	chan->of_node = of_node_get(node);
- 	chan->numpads = num_pads;
- 	if (num_pads & 0x2) {
- 		chan->pads[0].flags = MEDIA_PAD_FL_SINK;
-@@ -641,6 +641,7 @@ static void tegra_csi_channels_cleanup(s
- 			media_entity_cleanup(&subdev->entity);
- 		}
- 
-+		of_node_put(chan->of_node);
- 		list_del(&chan->list);
- 		kfree(chan);
- 	}
+ nwfpe-$(CONFIG_FPE_NWFPE_XP)	+= extended_cpdo.o
++
++# Try really hard to avoid generating calls to __aeabi_uldivmod() from
++# float64_rem() due to loop elision.
++ifdef CONFIG_CC_IS_CLANG
++CFLAGS_softfloat.o	+= -mllvm -replexitval=never
++endif
 
 
