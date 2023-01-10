@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B8B6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:30:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9040BC433EF;
-	Tue, 10 Jan 2023 18:30:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28EB6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:30:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC6B0C433D2;
+	Tue, 10 Jan 2023 18:30:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375421;
-	bh=TLPhNNOhWhH/1mz4q+rjssDv0vh6wmbTXvfKYYoEA6M=;
+	s=korg; t=1673375424;
+	bh=SdsEu2qjFZonISoZLOg9uqAT+nYbr0e8oWfCEGcSSio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=csOe7ViJY1OONlR5GmAijP/f3rrpmG7KgeSW8DY6RrmbudaN0fPs+UY4IO/lxw8BG
-	 vs9HNws0GNYMgBO9j2RzmOIxBRBb9SQJVuIL6W/heXfQmdOMoFtUazP+hMKDM46zRr
-	 3S3TEc3u4WRITJJS5k2qaGnJDul90/k2Ll/Luwrg=
+	b=m10MoKyaF8EgVm8VRObzfaZn2rJ8ciL9e4w3ztK2zwifghVXUiNZgF6OHYEmtUu+l
+	 q0W0OHFC7bBtQBlPrFQeC4gy9YtjJ8gt/NvSg5j/c3WwnjmR+4l2GbsVzyc9ObteGL
+	 3/nvGa4sU+NwxvLWmA+V0O6BwVCUwbsoiXBl9iss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	zanussi@kernel.org,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 166/290] tracing: Fix issue of missing one synthetic field
-Date: Tue, 10 Jan 2023 19:04:18 +0100
-Message-Id: <20230110180037.639531066@linuxfoundation.org>
+	linux-fsd@tesla.com,
+	Smitha T Murthy <smitha.t@samsung.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 184/290] media: s5p-mfc: Fix to handle reference queue during finishing
+Date: Tue, 10 Jan 2023 19:04:36 +0100
+Message-Id: <20230110180038.298352767@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -36,56 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Smitha T Murthy <smitha.t@samsung.com>
 
-commit ff4837f7fe59ff018eca4705a70eca5e0b486b97 upstream.
+[ Upstream commit d8a46bc4e1e0446459daa77c4ce14218d32dacf9 ]
 
-The maximum number of synthetic fields supported is defined as
-SYNTH_FIELDS_MAX which value currently is 64, but it actually fails
-when try to generate a synthetic event with 64 fields by executing like:
+On receiving last buffer driver puts MFC to MFCINST_FINISHING state which
+in turn skips transferring of frame from SRC to REF queue. This causes
+driver to stop MFC encoding and last frame is lost.
 
-  # echo "my_synth_event int v1; int v2; int v3; int v4; int v5; int v6;\
-   int v7; int v8; int v9; int v10; int v11; int v12; int v13; int v14;\
-   int v15; int v16; int v17; int v18; int v19; int v20; int v21; int v22;\
-   int v23; int v24; int v25; int v26; int v27; int v28; int v29; int v30;\
-   int v31; int v32; int v33; int v34; int v35; int v36; int v37; int v38;\
-   int v39; int v40; int v41; int v42; int v43; int v44; int v45; int v46;\
-   int v47; int v48; int v49; int v50; int v51; int v52; int v53; int v54;\
-   int v55; int v56; int v57; int v58; int v59; int v60; int v61; int v62;\
-   int v63; int v64" >> /sys/kernel/tracing/synthetic_events
+This patch guarantees safe handling of frames during MFCINST_FINISHING and
+correct clearing of workbit to avoid early stopping of encoding.
 
-Correct the field counting to fix it.
+Fixes: af9357467810 ("[media] MFC: Add MFC 5.1 V4L2 driver")
 
-Link: https://lore.kernel.org/linux-trace-kernel/20221207091557.3137904-1-zhengyejian1@huawei.com
-
-Cc: <mhiramat@kernel.org>
-Cc: <zanussi@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: c9e759b1e845 ("tracing: Rework synthetic event command parsing")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-[Fix conflict due to lack of c24be24aed405d64ebcf04526614c13b2adfb1d2]
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-fsd@tesla.com
+Signed-off-by: Smitha T Murthy <smitha.t@samsung.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_synth.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/s5p-mfc/s5p_mfc_enc.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
---- a/kernel/trace/trace_events_synth.c
-+++ b/kernel/trace/trace_events_synth.c
-@@ -1275,12 +1275,12 @@ static int __create_synth_event(const ch
- 				goto err;
- 			}
+diff --git a/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c b/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c
+index 1fad99edb091..3da1775a65f1 100644
+--- a/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c
++++ b/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c
+@@ -1218,6 +1218,7 @@ static int enc_post_frame_start(struct s5p_mfc_ctx *ctx)
+ 	unsigned long mb_y_addr, mb_c_addr;
+ 	int slice_type;
+ 	unsigned int strm_size;
++	bool src_ready;
  
--			fields[n_fields++] = field;
- 			if (n_fields == SYNTH_FIELDS_MAX) {
- 				synth_err(SYNTH_ERR_TOO_MANY_FIELDS, 0);
- 				ret = -EINVAL;
- 				goto err;
+ 	slice_type = s5p_mfc_hw_call(dev->mfc_ops, get_enc_slice_type, dev);
+ 	strm_size = s5p_mfc_hw_call(dev->mfc_ops, get_enc_strm_size, dev);
+@@ -1257,7 +1258,8 @@ static int enc_post_frame_start(struct s5p_mfc_ctx *ctx)
  			}
-+			fields[n_fields++] = field;
- 
- 			n_fields_this_loop++;
  		}
+ 	}
+-	if ((ctx->src_queue_cnt > 0) && (ctx->state == MFCINST_RUNNING)) {
++	if (ctx->src_queue_cnt > 0 && (ctx->state == MFCINST_RUNNING ||
++				       ctx->state == MFCINST_FINISHING)) {
+ 		mb_entry = list_entry(ctx->src_queue.next, struct s5p_mfc_buf,
+ 									list);
+ 		if (mb_entry->flags & MFC_BUF_FLAG_USED) {
+@@ -1288,7 +1290,13 @@ static int enc_post_frame_start(struct s5p_mfc_ctx *ctx)
+ 		vb2_set_plane_payload(&mb_entry->b->vb2_buf, 0, strm_size);
+ 		vb2_buffer_done(&mb_entry->b->vb2_buf, VB2_BUF_STATE_DONE);
+ 	}
+-	if ((ctx->src_queue_cnt == 0) || (ctx->dst_queue_cnt == 0))
++
++	src_ready = true;
++	if (ctx->state == MFCINST_RUNNING && ctx->src_queue_cnt == 0)
++		src_ready = false;
++	if (ctx->state == MFCINST_FINISHING && ctx->ref_queue_cnt == 0)
++		src_ready = false;
++	if (!src_ready || ctx->dst_queue_cnt == 0)
+ 		clear_work_bit(ctx);
+ 
+ 	return 0;
+-- 
+2.35.1
+
 
 
