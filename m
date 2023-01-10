@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF96D6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:17:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42BD7C433EF;
-	Tue, 10 Jan 2023 18:17:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EA96FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:17:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3420DC433EF;
+	Tue, 10 Jan 2023 18:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374672;
-	bh=E4zifE4q5H41KJGt0KstlOFc+Yql2FapGIGLWhl4NCk=;
+	s=korg; t=1673374675;
+	bh=VWEKKhS6lOCX25N9X8rKE03GrplIiMPb6anm80ak7cE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IUq45KLXbo/K4n+pUi2T6KeUpKiZJ/BcN8HPNFKGkTOa/7SfhrFfEJeC4nprYvg2S
-	 jUkPw6JoV5J/kbh2+RuyWVcpTw8RFpGnhKtsNsbIrippUd8T/YrHYBcvAjU8bXFBdh
-	 81T2ycpP8gXPGV+Srn7XzYFp5wNLAKEII6AIRagg=
+	b=RSSAffxMH8WYyQbI995UYE5WuiY4tsZOIdVCr/n9nzpDLrgtf1EONEMf9Kr7atAu/
+	 ySrH+Jt6KHnWl3aJge8kaxcByDrpKe0xpk1guG4j6tufW4jN4liCWbhtRLNeg+anBo
+	 qVD/maa6b/yhTEq5mkbVRTfxxiyaO039u++aqToU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniil Tatianin <d-tatianin@yandex-team.ru>,
-	Jiri Pirko <jiri@nvidia.com>,
+	Sunil Goutham <sgoutham@marvell.com>,
+	Geetha sowjanya <gakula@marvell.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 094/159] drivers/net/bonding/bond_3ad: return when theres no aggregator
-Date: Tue, 10 Jan 2023 19:04:02 +0100
-Message-Id: <20230110180021.286514008@linuxfoundation.org>
+Subject: [PATCH 6.1 095/159] octeontx2-pf: Fix lmtst ID used in aura free
+Date: Tue, 10 Jan 2023 19:04:03 +0100
+Message-Id: <20230110180021.316266716@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,37 +36,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniil Tatianin <d-tatianin@yandex-team.ru>
+From: Geetha sowjanya <gakula@marvell.com>
 
-[ Upstream commit 9c807965483f42df1d053b7436eedd6cf28ece6f ]
+[ Upstream commit 4af1b64f80fbe1275fb02c5f1c0cef099a4a231f ]
 
-Otherwise we would dereference a NULL aggregator pointer when calling
-__set_agg_ports_ready on the line below.
+Current code uses per_cpu pointer to get the lmtst_id mapped to
+the core on which aura_free() is executed. Using per_cpu pointer
+without preemption disable causing mismatch between lmtst_id and
+core on which pointer gets freed. This patch fixes the issue by
+disabling preemption around aura_free.
 
-Found by Linux Verification Center (linuxtesting.org) with the SVACE
-static analysis tool.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Fixes: ef6c8da71eaf ("octeontx2-pf: cn10K: Reserve LMTST lines per core")
+Signed-off-by: Sunil Goutham <sgoutham@marvell.com>
+Signed-off-by: Geetha sowjanya <gakula@marvell.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_3ad.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../marvell/octeontx2/nic/otx2_common.c       | 30 +++++++++++++------
+ 1 file changed, 21 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_3ad.c b/drivers/net/bonding/bond_3ad.c
-index e58a1e0cadd2..9270977e6c7f 100644
---- a/drivers/net/bonding/bond_3ad.c
-+++ b/drivers/net/bonding/bond_3ad.c
-@@ -1540,6 +1540,7 @@ static void ad_port_selection_logic(struct port *port, bool *update_slave_arr)
- 			slave_err(bond->dev, port->slave->dev,
- 				  "Port %d did not find a suitable aggregator\n",
- 				  port->actor_port_number);
-+			return;
+diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
+index 9e10e7471b88..88f8772a61cd 100644
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
+@@ -1012,6 +1012,7 @@ static void otx2_pool_refill_task(struct work_struct *work)
+ 	rbpool = cq->rbpool;
+ 	free_ptrs = cq->pool_ptrs;
+ 
++	get_cpu();
+ 	while (cq->pool_ptrs) {
+ 		if (otx2_alloc_rbuf(pfvf, rbpool, &bufptr)) {
+ 			/* Schedule a WQ if we fails to free atleast half of the
+@@ -1031,6 +1032,7 @@ static void otx2_pool_refill_task(struct work_struct *work)
+ 		pfvf->hw_ops->aura_freeptr(pfvf, qidx, bufptr + OTX2_HEAD_ROOM);
+ 		cq->pool_ptrs--;
+ 	}
++	put_cpu();
+ 	cq->refill_task_sched = false;
+ }
+ 
+@@ -1368,6 +1370,7 @@ int otx2_sq_aura_pool_init(struct otx2_nic *pfvf)
+ 	if (err)
+ 		goto fail;
+ 
++	get_cpu();
+ 	/* Allocate pointers and free them to aura/pool */
+ 	for (qidx = 0; qidx < hw->tot_tx_queues; qidx++) {
+ 		pool_id = otx2_get_pool_idx(pfvf, AURA_NIX_SQ, qidx);
+@@ -1376,18 +1379,24 @@ int otx2_sq_aura_pool_init(struct otx2_nic *pfvf)
+ 		sq = &qset->sq[qidx];
+ 		sq->sqb_count = 0;
+ 		sq->sqb_ptrs = kcalloc(num_sqbs, sizeof(*sq->sqb_ptrs), GFP_KERNEL);
+-		if (!sq->sqb_ptrs)
+-			return -ENOMEM;
++		if (!sq->sqb_ptrs) {
++			err = -ENOMEM;
++			goto err_mem;
++		}
+ 
+ 		for (ptr = 0; ptr < num_sqbs; ptr++) {
+-			if (otx2_alloc_rbuf(pfvf, pool, &bufptr))
+-				return -ENOMEM;
++			err = otx2_alloc_rbuf(pfvf, pool, &bufptr);
++			if (err)
++				goto err_mem;
+ 			pfvf->hw_ops->aura_freeptr(pfvf, pool_id, bufptr);
+ 			sq->sqb_ptrs[sq->sqb_count++] = (u64)bufptr;
  		}
  	}
- 	/* if all aggregator's ports are READY_N == TRUE, set ready=TRUE
+ 
+-	return 0;
++err_mem:
++	put_cpu();
++	return err ? -ENOMEM : 0;
++
+ fail:
+ 	otx2_mbox_reset(&pfvf->mbox.mbox, 0);
+ 	otx2_aura_pool_free(pfvf);
+@@ -1426,18 +1435,21 @@ int otx2_rq_aura_pool_init(struct otx2_nic *pfvf)
+ 	if (err)
+ 		goto fail;
+ 
++	get_cpu();
+ 	/* Allocate pointers and free them to aura/pool */
+ 	for (pool_id = 0; pool_id < hw->rqpool_cnt; pool_id++) {
+ 		pool = &pfvf->qset.pool[pool_id];
+ 		for (ptr = 0; ptr < num_ptrs; ptr++) {
+-			if (otx2_alloc_rbuf(pfvf, pool, &bufptr))
+-				return -ENOMEM;
++			err = otx2_alloc_rbuf(pfvf, pool, &bufptr);
++			if (err)
++				goto err_mem;
+ 			pfvf->hw_ops->aura_freeptr(pfvf, pool_id,
+ 						   bufptr + OTX2_HEAD_ROOM);
+ 		}
+ 	}
+-
+-	return 0;
++err_mem:
++	put_cpu();
++	return err ? -ENOMEM : 0;
+ fail:
+ 	otx2_mbox_reset(&pfvf->mbox.mbox, 0);
+ 	otx2_aura_pool_free(pfvf);
 -- 
 2.35.1
 
