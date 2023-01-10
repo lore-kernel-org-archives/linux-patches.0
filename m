@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7353BA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:07:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5D9C433D2;
-	Tue, 10 Jan 2023 18:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E674A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:07:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EAE4C433EF;
+	Tue, 10 Jan 2023 18:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374060;
-	bh=SLCtXeuthS/7mZVAiU1AlaOgkEXYdEdE3v/fzMSQW1s=;
+	s=korg; t=1673374062;
+	bh=hoe1RCmQz79P0aXU40qFi8IHVezbn95IsYiYMh5Tw7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JEfsxkelEzMgvH7Ya/T/1n4Eg6KDkEV9K1WYvXESiWmrhM1AopKjYqDLMwFcbenfy
-	 bsMLN/vO01NXFGPQuZA6tLu3Us5adrwdP9kSejMNE1fR5A5fqsVN2fjuFbDCj0PR7j
-	 0cbS5aSxxpH6G2kOe/m8ydRHZf3IVhWdtrJkPGtg=
+	b=BtzbfaLARRXRLUzBU9BflYpjQ3ScMz6ww5Bqa4crXVd1GieJdGpTmg4UcKitvdjxQ
+	 bH8Cz6UVZr5U6Uwgjpg63elYiKO7CBPY5urdh1jJYS1uJkldG/f5LUK25vFX8kpgO4
+	 h+exaTzN69R3jrhihPlm7lodLNRsTIgLpwPpaLlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
-	Hao Lan <lanhao@huawei.com>,
+	syzbot+232ebdbd36706c965ebf@syzkaller.appspotmail.com,
+	Cong Wang <cong.wang@bytedance.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Hawkins Jiawei <yin31149@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 030/148] net: hns3: fix VF promisc mode not update when mac table full
-Date: Tue, 10 Jan 2023 19:02:14 +0100
-Message-Id: <20230110180018.167688236@linuxfoundation.org>
+Subject: [PATCH 6.0 031/148] net: sched: fix memory leak in tcindex_set_parms
+Date: Tue, 10 Jan 2023 19:02:15 +0100
+Message-Id: <20230110180018.198972513@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -36,132 +40,148 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Hawkins Jiawei <yin31149@gmail.com>
 
-[ Upstream commit 8ee57c7b8406c7aa8ca31e014440c87c6383f429 ]
+[ Upstream commit 399ab7fe0fa0d846881685fd4e57e9a8ef7559f7 ]
 
-Currently, it missed set HCLGE_VPORT_STATE_PROMISC_CHANGE
-flag for VF when vport->overflow_promisc_flags changed.
-So the VF won't check whether to update promisc mode in
-this case. So add it.
+Syzkaller reports a memory leak as follows:
+====================================
+BUG: memory leak
+unreferenced object 0xffff88810c287f00 (size 256):
+  comm "syz-executor105", pid 3600, jiffies 4294943292 (age 12.990s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<ffffffff814cf9f0>] kmalloc_trace+0x20/0x90 mm/slab_common.c:1046
+    [<ffffffff839c9e07>] kmalloc include/linux/slab.h:576 [inline]
+    [<ffffffff839c9e07>] kmalloc_array include/linux/slab.h:627 [inline]
+    [<ffffffff839c9e07>] kcalloc include/linux/slab.h:659 [inline]
+    [<ffffffff839c9e07>] tcf_exts_init include/net/pkt_cls.h:250 [inline]
+    [<ffffffff839c9e07>] tcindex_set_parms+0xa7/0xbe0 net/sched/cls_tcindex.c:342
+    [<ffffffff839caa1f>] tcindex_change+0xdf/0x120 net/sched/cls_tcindex.c:553
+    [<ffffffff8394db62>] tc_new_tfilter+0x4f2/0x1100 net/sched/cls_api.c:2147
+    [<ffffffff8389e91c>] rtnetlink_rcv_msg+0x4dc/0x5d0 net/core/rtnetlink.c:6082
+    [<ffffffff839eba67>] netlink_rcv_skb+0x87/0x1d0 net/netlink/af_netlink.c:2540
+    [<ffffffff839eab87>] netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
+    [<ffffffff839eab87>] netlink_unicast+0x397/0x4c0 net/netlink/af_netlink.c:1345
+    [<ffffffff839eb046>] netlink_sendmsg+0x396/0x710 net/netlink/af_netlink.c:1921
+    [<ffffffff8383e796>] sock_sendmsg_nosec net/socket.c:714 [inline]
+    [<ffffffff8383e796>] sock_sendmsg+0x56/0x80 net/socket.c:734
+    [<ffffffff8383eb08>] ____sys_sendmsg+0x178/0x410 net/socket.c:2482
+    [<ffffffff83843678>] ___sys_sendmsg+0xa8/0x110 net/socket.c:2536
+    [<ffffffff838439c5>] __sys_sendmmsg+0x105/0x330 net/socket.c:2622
+    [<ffffffff83843c14>] __do_sys_sendmmsg net/socket.c:2651 [inline]
+    [<ffffffff83843c14>] __se_sys_sendmmsg net/socket.c:2648 [inline]
+    [<ffffffff83843c14>] __x64_sys_sendmmsg+0x24/0x30 net/socket.c:2648
+    [<ffffffff84605fd5>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<ffffffff84605fd5>] do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+    [<ffffffff84800087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+====================================
 
-Fixes: 1e6e76101fd9 ("net: hns3: configure promisc mode for VF asynchronously")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
-Signed-off-by: Hao Lan <lanhao@huawei.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Kernel uses tcindex_change() to change an existing
+filter properties.
+
+Yet the problem is that, during the process of changing,
+if `old_r` is retrieved from `p->perfect`, then
+kernel uses tcindex_alloc_perfect_hash() to newly
+allocate filter results, uses tcindex_filter_result_init()
+to clear the old filter result, without destroying
+its tcf_exts structure, which triggers the above memory leak.
+
+To be more specific, there are only two source for the `old_r`,
+according to the tcindex_lookup(). `old_r` is retrieved from
+`p->perfect`, or `old_r` is retrieved from `p->h`.
+
+  * If `old_r` is retrieved from `p->perfect`, kernel uses
+tcindex_alloc_perfect_hash() to newly allocate the
+filter results. Then `r` is assigned with `cp->perfect + handle`,
+which is newly allocated. So condition `old_r && old_r != r` is
+true in this situation, and kernel uses tcindex_filter_result_init()
+to clear the old filter result, without destroying
+its tcf_exts structure
+
+  * If `old_r` is retrieved from `p->h`, then `p->perfect` is NULL
+according to the tcindex_lookup(). Considering that `cp->h`
+is directly copied from `p->h` and `p->perfect` is NULL,
+`r` is assigned with `tcindex_lookup(cp, handle)`, whose value
+should be the same as `old_r`, so condition `old_r && old_r != r`
+is false in this situation, kernel ignores using
+tcindex_filter_result_init() to clear the old filter result.
+
+So only when `old_r` is retrieved from `p->perfect` does kernel use
+tcindex_filter_result_init() to clear the old filter result, which
+triggers the above memory leak.
+
+Considering that there already exists a tc_filter_wq workqueue
+to destroy the old tcindex_data by tcindex_partial_destroy_work()
+at the end of tcindex_set_parms(), this patch solves
+this memory leak bug by removing this old filter result
+clearing part and delegating it to the tc_filter_wq workqueue.
+
+Note that this patch doesn't introduce any other issues. If
+`old_r` is retrieved from `p->perfect`, this patch just
+delegates old filter result clearing part to the
+tc_filter_wq workqueue; If `old_r` is retrieved from `p->h`,
+kernel doesn't reach the old filter result clearing part, so
+removing this part has no effect.
+
+[Thanks to the suggestion from Jakub Kicinski, Cong Wang, Paolo Abeni
+and Dmitry Vyukov]
+
+Fixes: b9a24bb76bf6 ("net_sched: properly handle failure case of tcf_exts_init()")
+Link: https://lore.kernel.org/all/0000000000001de5c505ebc9ec59@google.com/
+Reported-by: syzbot+232ebdbd36706c965ebf@syzkaller.appspotmail.com
+Tested-by: syzbot+232ebdbd36706c965ebf@syzkaller.appspotmail.com
+Cc: Cong Wang <cong.wang@bytedance.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../hisilicon/hns3/hns3pf/hclge_main.c        | 75 +++++++++++--------
- 1 file changed, 43 insertions(+), 32 deletions(-)
+ net/sched/cls_tcindex.c | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 7e8a60f2401c..2a1765eed4c8 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -12536,60 +12536,71 @@ static int hclge_gro_en(struct hnae3_handle *handle, bool enable)
- 	return ret;
- }
- 
--static void hclge_sync_promisc_mode(struct hclge_dev *hdev)
-+static int hclge_sync_vport_promisc_mode(struct hclge_vport *vport)
+diff --git a/net/sched/cls_tcindex.c b/net/sched/cls_tcindex.c
+index 742c7d49a958..8d1ef858db87 100644
+--- a/net/sched/cls_tcindex.c
++++ b/net/sched/cls_tcindex.c
+@@ -332,7 +332,7 @@ tcindex_set_parms(struct net *net, struct tcf_proto *tp, unsigned long base,
+ 		  struct tcindex_filter_result *r, struct nlattr **tb,
+ 		  struct nlattr *est, u32 flags, struct netlink_ext_ack *extack)
  {
--	struct hclge_vport *vport = &hdev->vport[0];
- 	struct hnae3_handle *handle = &vport->nic;
-+	struct hclge_dev *hdev = vport->back;
-+	bool uc_en = false;
-+	bool mc_en = false;
- 	u8 tmp_flags;
-+	bool bc_en;
- 	int ret;
--	u16 i;
+-	struct tcindex_filter_result new_filter_result, *old_r = r;
++	struct tcindex_filter_result new_filter_result;
+ 	struct tcindex_data *cp = NULL, *oldp;
+ 	struct tcindex_filter *f = NULL; /* make gcc behave */
+ 	struct tcf_result cr = {};
+@@ -401,7 +401,7 @@ tcindex_set_parms(struct net *net, struct tcf_proto *tp, unsigned long base,
+ 	err = tcindex_filter_result_init(&new_filter_result, cp, net);
+ 	if (err < 0)
+ 		goto errout_alloc;
+-	if (old_r)
++	if (r)
+ 		cr = r->res;
  
- 	if (vport->last_promisc_flags != vport->overflow_promisc_flags) {
- 		set_bit(HCLGE_VPORT_STATE_PROMISC_CHANGE, &vport->state);
- 		vport->last_promisc_flags = vport->overflow_promisc_flags;
+ 	err = -EBUSY;
+@@ -478,14 +478,6 @@ tcindex_set_parms(struct net *net, struct tcf_proto *tp, unsigned long base,
+ 		tcf_bind_filter(tp, &cr, base);
  	}
  
--	if (test_bit(HCLGE_VPORT_STATE_PROMISC_CHANGE, &vport->state)) {
-+	if (!test_and_clear_bit(HCLGE_VPORT_STATE_PROMISC_CHANGE,
-+				&vport->state))
-+		return 0;
-+
-+	/* for PF */
-+	if (!vport->vport_id) {
- 		tmp_flags = handle->netdev_flags | vport->last_promisc_flags;
- 		ret = hclge_set_promisc_mode(handle, tmp_flags & HNAE3_UPE,
- 					     tmp_flags & HNAE3_MPE);
--		if (!ret) {
--			clear_bit(HCLGE_VPORT_STATE_PROMISC_CHANGE,
--				  &vport->state);
-+		if (!ret)
- 			set_bit(HCLGE_VPORT_STATE_VLAN_FLTR_CHANGE,
- 				&vport->state);
+-	if (old_r && old_r != r) {
+-		err = tcindex_filter_result_init(old_r, cp, net);
+-		if (err < 0) {
+-			kfree(f);
+-			goto errout_alloc;
 -		}
-+		else
-+			set_bit(HCLGE_VPORT_STATE_PROMISC_CHANGE,
-+				&vport->state);
-+		return ret;
- 	}
- 
--	for (i = 1; i < hdev->num_alloc_vport; i++) {
--		bool uc_en = false;
--		bool mc_en = false;
--		bool bc_en;
-+	/* for VF */
-+	if (vport->vf_info.trusted) {
-+		uc_en = vport->vf_info.request_uc_en > 0 ||
-+			vport->overflow_promisc_flags & HNAE3_OVERFLOW_UPE;
-+		mc_en = vport->vf_info.request_mc_en > 0 ||
-+			vport->overflow_promisc_flags & HNAE3_OVERFLOW_MPE;
-+	}
-+	bc_en = vport->vf_info.request_bc_en > 0;
- 
--		vport = &hdev->vport[i];
-+	ret = hclge_cmd_set_promisc_mode(hdev, vport->vport_id, uc_en,
-+					 mc_en, bc_en);
-+	if (ret) {
-+		set_bit(HCLGE_VPORT_STATE_PROMISC_CHANGE, &vport->state);
-+		return ret;
-+	}
-+	hclge_set_vport_vlan_fltr_change(vport);
- 
--		if (!test_and_clear_bit(HCLGE_VPORT_STATE_PROMISC_CHANGE,
--					&vport->state))
--			continue;
-+	return 0;
-+}
- 
--		if (vport->vf_info.trusted) {
--			uc_en = vport->vf_info.request_uc_en > 0 ||
--				vport->overflow_promisc_flags &
--				HNAE3_OVERFLOW_UPE;
--			mc_en = vport->vf_info.request_mc_en > 0 ||
--				vport->overflow_promisc_flags &
--				HNAE3_OVERFLOW_MPE;
--		}
--		bc_en = vport->vf_info.request_bc_en > 0;
-+static void hclge_sync_promisc_mode(struct hclge_dev *hdev)
-+{
-+	struct hclge_vport *vport;
-+	int ret;
-+	u16 i;
- 
--		ret = hclge_cmd_set_promisc_mode(hdev, vport->vport_id, uc_en,
--						 mc_en, bc_en);
--		if (ret) {
--			set_bit(HCLGE_VPORT_STATE_PROMISC_CHANGE,
--				&vport->state);
-+	for (i = 0; i < hdev->num_alloc_vport; i++) {
-+		vport = &hdev->vport[i];
-+
-+		ret = hclge_sync_vport_promisc_mode(vport);
-+		if (ret)
- 			return;
--		}
--		hclge_set_vport_vlan_fltr_change(vport);
- 	}
- }
- 
+-	}
+-
+ 	oldp = p;
+ 	r->res = cr;
+ 	tcf_exts_change(&r->exts, &e);
 -- 
 2.35.1
 
