@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF492A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:09:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54981C433D2;
-	Tue, 10 Jan 2023 18:09:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71E87A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:09:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC73EC433D2;
+	Tue, 10 Jan 2023 18:09:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374180;
-	bh=FlDJv/+5Ru/7oyuqch/s00FYsOWscsaneNxrRb557PI=;
+	s=korg; t=1673374183;
+	bh=r5jRDURQtmfPweQ/ycytf0tigCa7nBejWzgIABBu6O4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l0YbkrzXO+3YcWVj3G4oYucgspj9wKcXaK/8xT1zXrfvYt1DxMRuabWB01ZOe0jJR
-	 WiY6cR64j9Wn7YJKWtxDmE7eC1joiFvO6PfYF5eZDOrHNdkmfYq97Ec2cjd+My8Ce6
-	 gYhxIMF8UeWs/ApGiM88RuDLKZpqE9wRRzH2aqHM=
+	b=k4bkSEuCLjUQPfnZawD1OBz+rlMz4TWaJzZYjqSGS9T6kWONmWiEiQZsxfsjHddNK
+	 zzGXcdHRqbPh1tTQjE/dj/k+4ayiJEtwZAl+1dZR21ABue9AhmfrnPIFPh7M2mN92f
+	 QtA5jFgg5IAv3+9ILg9/cuCKeS8MreCa07udDaVg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Osama Abboud <osamaabb@amazon.com>,
-	Arthur Kiyanovski <akiyano@amazon.com>,
-	David Arinzon <darinzon@amazon.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Xiubo Li <xiubli@redhat.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	Jeff Layton <jlayton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 068/148] net: ena: Fix rx_copybreak value update
-Date: Tue, 10 Jan 2023 19:02:52 +0100
-Message-Id: <20230110180019.378823646@linuxfoundation.org>
+Subject: [PATCH 6.0 077/148] filelock: new helper: vfs_inode_has_locks
+Date: Tue, 10 Jan 2023 19:03:01 +0100
+Message-Id: <20230110180019.657028184@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -37,92 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Arinzon <darinzon@amazon.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit c7062aaee099f2f43d6f07a71744b44b94b94b34 ]
+[ Upstream commit ab1ddef98a715eddb65309ffa83267e4e84a571e ]
 
-Make the upper bound on rx_copybreak tighter, by
-making sure it is smaller than the minimum of mtu and
-ENA_PAGE_SIZE. With the current upper bound of mtu,
-rx_copybreak can be larger than a page. Such large
-rx_copybreak will not bring any performance benefit to
-the user and therefore makes no sense.
+Ceph has a need to know whether a particular inode has any locks set on
+it. It's currently tracking that by a num_locks field in its
+filp->private_data, but that's problematic as it tries to decrement this
+field when releasing locks and that can race with the file being torn
+down.
 
-In addition, the value update was only reflected in
-the adapter structure, but not applied for each ring,
-causing it to not take effect.
+Add a new vfs_inode_has_locks helper that just returns whether any locks
+are currently held on the inode.
 
-Fixes: 1738cd3ed342 ("net: ena: Add a driver for Amazon Elastic Network Adapters (ENA)")
-Signed-off-by: Osama Abboud <osamaabb@amazon.com>
-Signed-off-by: Arthur Kiyanovski <akiyano@amazon.com>
-Signed-off-by: David Arinzon <darinzon@amazon.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reviewed-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@infradead.org>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Stable-dep-of: 461ab10ef7e6 ("ceph: switch to vfs_inode_has_locks() to fix file lock bug")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amazon/ena/ena_ethtool.c |  6 +-----
- drivers/net/ethernet/amazon/ena/ena_netdev.c  | 18 ++++++++++++++++++
- drivers/net/ethernet/amazon/ena/ena_netdev.h  |  2 ++
- 3 files changed, 21 insertions(+), 5 deletions(-)
+ fs/locks.c         | 23 +++++++++++++++++++++++
+ include/linux/fs.h |  6 ++++++
+ 2 files changed, 29 insertions(+)
 
-diff --git a/drivers/net/ethernet/amazon/ena/ena_ethtool.c b/drivers/net/ethernet/amazon/ena/ena_ethtool.c
-index 39242c5a1729..108506721bcf 100644
---- a/drivers/net/ethernet/amazon/ena/ena_ethtool.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_ethtool.c
-@@ -887,11 +887,7 @@ static int ena_set_tunable(struct net_device *netdev,
- 	switch (tuna->id) {
- 	case ETHTOOL_RX_COPYBREAK:
- 		len = *(u32 *)data;
--		if (len > adapter->netdev->mtu) {
--			ret = -EINVAL;
--			break;
--		}
--		adapter->rx_copybreak = len;
-+		ret = ena_set_rx_copybreak(adapter, len);
- 		break;
- 	default:
- 		ret = -EINVAL;
-diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.c b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-index a27a7963df76..083754e0bf23 100644
---- a/drivers/net/ethernet/amazon/ena/ena_netdev.c
-+++ b/drivers/net/ethernet/amazon/ena/ena_netdev.c
-@@ -2816,6 +2816,24 @@ int ena_update_queue_sizes(struct ena_adapter *adapter,
- 	return dev_was_up ? ena_up(adapter) : 0;
+diff --git a/fs/locks.c b/fs/locks.c
+index 607f94a0e789..7dc129cc1a26 100644
+--- a/fs/locks.c
++++ b/fs/locks.c
+@@ -2669,6 +2669,29 @@ int vfs_cancel_lock(struct file *filp, struct file_lock *fl)
+ }
+ EXPORT_SYMBOL_GPL(vfs_cancel_lock);
+ 
++/**
++ * vfs_inode_has_locks - are any file locks held on @inode?
++ * @inode: inode to check for locks
++ *
++ * Return true if there are any FL_POSIX or FL_FLOCK locks currently
++ * set on @inode.
++ */
++bool vfs_inode_has_locks(struct inode *inode)
++{
++	struct file_lock_context *ctx;
++	bool ret;
++
++	ctx = smp_load_acquire(&inode->i_flctx);
++	if (!ctx)
++		return false;
++
++	spin_lock(&ctx->flc_lock);
++	ret = !list_empty(&ctx->flc_posix) || !list_empty(&ctx->flc_flock);
++	spin_unlock(&ctx->flc_lock);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(vfs_inode_has_locks);
++
+ #ifdef CONFIG_PROC_FS
+ #include <linux/proc_fs.h>
+ #include <linux/seq_file.h>
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index 8e79a761c56c..17a1a57adbe0 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -1170,6 +1170,7 @@ extern int locks_delete_block(struct file_lock *);
+ extern int vfs_test_lock(struct file *, struct file_lock *);
+ extern int vfs_lock_file(struct file *, unsigned int, struct file_lock *, struct file_lock *);
+ extern int vfs_cancel_lock(struct file *filp, struct file_lock *fl);
++bool vfs_inode_has_locks(struct inode *inode);
+ extern int locks_lock_inode_wait(struct inode *inode, struct file_lock *fl);
+ extern int __break_lease(struct inode *inode, unsigned int flags, unsigned int type);
+ extern void lease_get_mtime(struct inode *, struct timespec64 *time);
+@@ -1284,6 +1285,11 @@ static inline int vfs_cancel_lock(struct file *filp, struct file_lock *fl)
+ 	return 0;
  }
  
-+int ena_set_rx_copybreak(struct ena_adapter *adapter, u32 rx_copybreak)
++static inline bool vfs_inode_has_locks(struct inode *inode)
 +{
-+	struct ena_ring *rx_ring;
-+	int i;
-+
-+	if (rx_copybreak > min_t(u16, adapter->netdev->mtu, ENA_PAGE_SIZE))
-+		return -EINVAL;
-+
-+	adapter->rx_copybreak = rx_copybreak;
-+
-+	for (i = 0; i < adapter->num_io_queues; i++) {
-+		rx_ring = &adapter->rx_ring[i];
-+		rx_ring->rx_copybreak = rx_copybreak;
-+	}
-+
-+	return 0;
++	return false;
 +}
 +
- int ena_update_queue_count(struct ena_adapter *adapter, u32 new_channel_count)
+ static inline int locks_lock_inode_wait(struct inode *inode, struct file_lock *fl)
  {
- 	struct ena_com_dev *ena_dev = adapter->ena_dev;
-diff --git a/drivers/net/ethernet/amazon/ena/ena_netdev.h b/drivers/net/ethernet/amazon/ena/ena_netdev.h
-index 290ae9bf47ee..f9d862b630fa 100644
---- a/drivers/net/ethernet/amazon/ena/ena_netdev.h
-+++ b/drivers/net/ethernet/amazon/ena/ena_netdev.h
-@@ -392,6 +392,8 @@ int ena_update_queue_sizes(struct ena_adapter *adapter,
- 
- int ena_update_queue_count(struct ena_adapter *adapter, u32 new_channel_count);
- 
-+int ena_set_rx_copybreak(struct ena_adapter *adapter, u32 rx_copybreak);
-+
- int ena_get_sset_count(struct net_device *netdev, int sset);
- 
- static inline void ena_reset_device(struct ena_adapter *adapter,
+ 	return -ENOLCK;
 -- 
 2.35.1
 
