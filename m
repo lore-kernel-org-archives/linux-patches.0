@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54397A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C53C433D2;
-	Tue, 10 Jan 2023 18:16:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B1A9A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:16:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 900DFC433D2;
+	Tue, 10 Jan 2023 18:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374590;
-	bh=nukHdRz8XGSOyYCf4ai04Ir8nZ9g+VychrCDlFmW8tA=;
+	s=korg; t=1673374592;
+	bh=Jzo1fSGFLtDH53nP91JViVFQCMgLGz9KkLEPfuwH8o4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p4ROA4LWFfKsnEDEsDEIVvJjdttPCce15ehxC3JBv/s+fgxg+0y2y0SDXshl9y987
-	 DwoPHP4dDPFOngAwCa0Fo9B3cMmIFoLz3k+z4+LmX3eak3Fg2DXA87k6AkQLwWEVa9
-	 +pN8Z46x1GdVWUVl6yHF2J0GBpCw8ciwhmbsHg+I=
+	b=Y9brZnomzVE9e8wRAjGV1rVvhjBTjBZ/tCE+ltPNQ0mUS3ZXxrY+rvjwhnY/XY8CV
+	 1H4OwsPNL7H4rr9ri0pR+KgEf65W8k4R27FhsqMXOavhHqVqYdTfTeX7N2Hd+NJqu4
+	 LyEInzo8hzBU4PnEizaclySMzjpl/6D2Vd0IbYNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jian Shen <shenjian15@huawei.com>,
-	Hao Lan <lanhao@huawei.com>,
-	kernel test robot <lkp@intel.com>,
+	Somnath Kotur <somnath.kotur@broadcom.com>,
+	Andy Gospodarek <andrew.gospodarek@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/159] net: hns3: refine the handling for VF heartbeat
-Date: Tue, 10 Jan 2023 19:03:33 +0100
-Message-Id: <20230110180020.370015434@linuxfoundation.org>
+Subject: [PATCH 6.1 038/159] bnxt_en: Fix first buffer size calculations for XDP multi-buffer
+Date: Tue, 10 Jan 2023 19:03:06 +0100
+Message-Id: <20230110180019.528415152@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -37,309 +37,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jian Shen <shenjian15@huawei.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-[ Upstream commit fec7352117fa301bfbc31bacc14bb9a579376b36 ]
+[ Upstream commit 1abeacc1979fa4a756695f5030791d8f0fa934b9 ]
 
-Currently, the PF check the VF alive by the KEEP_ALVE
-mailbox from VF. VF keep sending the mailbox per 2
-seconds. Once PF lost the mailbox for more than 8
-seconds, it will regards the VF is abnormal, and stop
-notifying the state change to VF, include link state,
-vf mac, reset, even though it receives the KEEP_ALIVE
-mailbox again. It's inreasonable.
+The size of the first buffer is always page size, and the useable
+space is the page size minus the offset and the skb_shared_info size.
+Make sure SKB and XDP buf sizes match so that the skb_shared_info
+is at the same offset seen from the SKB and XDP_BUF.
 
-This patch fixes it. PF will record the state change which
-need to notify VF when lost the VF's KEEP_ALIVE mailbox.
-And notify VF when receive the mailbox again. Introduce a
-new flag HCLGE_VPORT_STATE_INITED, used to distinguish the
-case whether VF driver loaded or not. For VF will query
-these states when initializing, so it's unnecessary to
-notify it in this case.
+build_skb() should be passed PAGE_SIZE.  xdp_init_buff() should
+be passed PAGE_SIZE as well.  xdp_get_shared_info_from_buff() will
+automatically deduct the skb_shared_info size if the XDP buffer
+has frags.  There is no need to keep bp->xdp_has_frags.
 
-Fixes: aa5c4f175be6 ("net: hns3: add reset handling for VF when doing PF reset")
-Signed-off-by: Jian Shen <shenjian15@huawei.com>
-Signed-off-by: Hao Lan <lanhao@huawei.com>
-Reported-by: kernel test robot <lkp@intel.com>
+Change BNXT_PAGE_MODE_BUF_SIZE to BNXT_MAX_PAGE_MODE_MTU_SBUF
+since this constant is really the MTU with ethernet header size
+subtracted.
+
+Also fix the BNXT_MAX_PAGE_MODE_MTU macro with proper parentheses.
+
+Fixes: 32861236190b ("bnxt: change receive ring space parameters")
+Reviewed-by: Somnath Kotur <somnath.kotur@broadcom.com>
+Reviewed-by: Andy Gospodarek <andrew.gospodarek@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../hisilicon/hns3/hns3pf/hclge_main.c        | 57 +++++++++++----
- .../hisilicon/hns3/hns3pf/hclge_main.h        |  7 ++
- .../hisilicon/hns3/hns3pf/hclge_mbx.c         | 71 ++++++++++++++++---
- 3 files changed, 112 insertions(+), 23 deletions(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c     |  9 +++++----
+ drivers/net/ethernet/broadcom/bnxt/bnxt.h     | 15 +++++++++++----
+ drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c |  7 +------
+ 3 files changed, 17 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-index 6c2742f59c77..07ad5f35219e 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.c
-@@ -3910,9 +3910,17 @@ static int hclge_set_all_vf_rst(struct hclge_dev *hdev, bool reset)
- 			return ret;
- 		}
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.c b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+index a83d534a096a..b0c9c9813d23 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -988,8 +988,7 @@ static struct sk_buff *bnxt_rx_multi_page_skb(struct bnxt *bp,
+ 	dma_addr -= bp->rx_dma_offset;
+ 	dma_unmap_page_attrs(&bp->pdev->dev, dma_addr, PAGE_SIZE, bp->rx_dir,
+ 			     DMA_ATTR_WEAK_ORDERING);
+-	skb = build_skb(page_address(page), BNXT_PAGE_MODE_BUF_SIZE +
+-					    bp->rx_dma_offset);
++	skb = build_skb(page_address(page), PAGE_SIZE);
+ 	if (!skb) {
+ 		__free_page(page);
+ 		return NULL;
+@@ -3966,8 +3965,10 @@ void bnxt_set_ring_params(struct bnxt *bp)
+ 		bp->rx_agg_ring_mask = (bp->rx_agg_nr_pages * RX_DESC_CNT) - 1;
  
--		if (!reset || !test_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state))
-+		if (!reset ||
-+		    !test_bit(HCLGE_VPORT_STATE_INITED, &vport->state))
- 			continue;
+ 		if (BNXT_RX_PAGE_MODE(bp)) {
+-			rx_space = BNXT_PAGE_MODE_BUF_SIZE;
+-			rx_size = BNXT_MAX_PAGE_MODE_MTU;
++			rx_space = PAGE_SIZE;
++			rx_size = PAGE_SIZE -
++				  ALIGN(max(NET_SKB_PAD, XDP_PACKET_HEADROOM), 8) -
++				  SKB_DATA_ALIGN(sizeof(struct skb_shared_info));
+ 		} else {
+ 			rx_size = SKB_DATA_ALIGN(BNXT_RX_COPY_THRESH + NET_IP_ALIGN);
+ 			rx_space = rx_size + NET_SKB_PAD +
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt.h b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+index d5fa43cfe524..02741d499bf4 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.h
+@@ -591,12 +591,20 @@ struct nqe_cn {
+ #define BNXT_RX_PAGE_SIZE (1 << BNXT_RX_PAGE_SHIFT)
  
-+		if (!test_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state) &&
-+		    hdev->reset_type == HNAE3_FUNC_RESET) {
-+			set_bit(HCLGE_VPORT_NEED_NOTIFY_RESET,
-+				&vport->need_notify);
-+			continue;
-+		}
+ #define BNXT_MAX_MTU		9500
+-#define BNXT_PAGE_MODE_BUF_SIZE \
 +
- 		/* Inform VF to process the reset.
- 		 * hclge_inform_reset_assert_to_vf may fail if VF
- 		 * driver is not loaded.
-@@ -4609,18 +4617,25 @@ static void hclge_reset_service_task(struct hclge_dev *hdev)
++/* First RX buffer page in XDP multi-buf mode
++ *
++ * +-------------------------------------------------------------------------+
++ * | XDP_PACKET_HEADROOM | bp->rx_buf_use_size              | skb_shared_info|
++ * | (bp->rx_dma_offset) |                                  |                |
++ * +-------------------------------------------------------------------------+
++ */
++#define BNXT_MAX_PAGE_MODE_MTU_SBUF \
+ 	((unsigned int)PAGE_SIZE - VLAN_ETH_HLEN - NET_IP_ALIGN -	\
+ 	 XDP_PACKET_HEADROOM)
+ #define BNXT_MAX_PAGE_MODE_MTU	\
+-	BNXT_PAGE_MODE_BUF_SIZE - \
+-	SKB_DATA_ALIGN((unsigned int)sizeof(struct skb_shared_info))
++	(BNXT_MAX_PAGE_MODE_MTU_SBUF - \
++	 SKB_DATA_ALIGN((unsigned int)sizeof(struct skb_shared_info)))
  
- static void hclge_update_vport_alive(struct hclge_dev *hdev)
- {
-+#define HCLGE_ALIVE_SECONDS_NORMAL		8
-+
-+	unsigned long alive_time = HCLGE_ALIVE_SECONDS_NORMAL * HZ;
- 	int i;
+ #define BNXT_MIN_PKT_SIZE	52
  
- 	/* start from vport 1 for PF is always alive */
- 	for (i = 1; i < hdev->num_alloc_vport; i++) {
- 		struct hclge_vport *vport = &hdev->vport[i];
+@@ -2131,7 +2139,6 @@ struct bnxt {
+ #define BNXT_DUMP_CRASH		1
  
--		if (time_after(jiffies, vport->last_active_jiffies + 8 * HZ))
-+		if (!test_bit(HCLGE_VPORT_STATE_INITED, &vport->state) ||
-+		    !test_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state))
-+			continue;
-+		if (time_after(jiffies, vport->last_active_jiffies +
-+			       alive_time)) {
- 			clear_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state);
+ 	struct bpf_prog		*xdp_prog;
+-	u8			xdp_has_frags;
+ 
+ 	struct bnxt_ptp_cfg	*ptp_cfg;
+ 	u8			ptp_all_rx_tstamp;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+index 2ceeaa818c1c..36d5202c0aee 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_xdp.c
+@@ -193,9 +193,6 @@ void bnxt_xdp_buff_init(struct bnxt *bp, struct bnxt_rx_ring_info *rxr,
+ 	mapping = rx_buf->mapping - bp->rx_dma_offset;
+ 	dma_sync_single_for_cpu(&pdev->dev, mapping + offset, len, bp->rx_dir);
+ 
+-	if (bp->xdp_has_frags)
+-		buflen = BNXT_PAGE_MODE_BUF_SIZE + offset;
 -
--		/* If vf is not alive, set to default value */
--		if (!test_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state))
--			vport->mps = HCLGE_MAC_DEFAULT_FRAME;
-+			dev_warn(&hdev->pdev->dev,
-+				 "VF %u heartbeat timeout\n",
-+				 i - HCLGE_VF_VPORT_START_NUM);
-+		}
+ 	xdp_init_buff(xdp, buflen, &rxr->xdp_rxq);
+ 	xdp_prepare_buff(xdp, data_ptr - offset, offset, len, false);
+ }
+@@ -404,10 +401,8 @@ static int bnxt_xdp_set(struct bnxt *bp, struct bpf_prog *prog)
+ 		netdev_warn(dev, "ethtool rx/tx channels must be combined to support XDP.\n");
+ 		return -EOPNOTSUPP;
  	}
- }
+-	if (prog) {
++	if (prog)
+ 		tx_xdp = bp->rx_nr_rings;
+-		bp->xdp_has_frags = prog->aux->xdp_has_frags;
+-	}
  
-@@ -8064,9 +8079,11 @@ int hclge_vport_start(struct hclge_vport *vport)
- {
- 	struct hclge_dev *hdev = vport->back;
- 
-+	set_bit(HCLGE_VPORT_STATE_INITED, &vport->state);
- 	set_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state);
- 	set_bit(HCLGE_VPORT_STATE_PROMISC_CHANGE, &vport->state);
- 	vport->last_active_jiffies = jiffies;
-+	vport->need_notify = 0;
- 
- 	if (test_bit(vport->vport_id, hdev->vport_config_block)) {
- 		if (vport->vport_id) {
-@@ -8084,7 +8101,9 @@ int hclge_vport_start(struct hclge_vport *vport)
- 
- void hclge_vport_stop(struct hclge_vport *vport)
- {
-+	clear_bit(HCLGE_VPORT_STATE_INITED, &vport->state);
- 	clear_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state);
-+	vport->need_notify = 0;
- }
- 
- static int hclge_client_start(struct hnae3_handle *handle)
-@@ -9208,7 +9227,8 @@ static int hclge_set_vf_mac(struct hnae3_handle *handle, int vf,
- 		return 0;
- 	}
- 
--	dev_info(&hdev->pdev->dev, "MAC of VF %d has been set to %s\n",
-+	dev_info(&hdev->pdev->dev,
-+		 "MAC of VF %d has been set to %s, will be active after VF reset\n",
- 		 vf, format_mac_addr);
- 	return 0;
- }
-@@ -10465,12 +10485,16 @@ static int hclge_set_vf_vlan_filter(struct hnae3_handle *handle, int vfid,
- 	 * for DEVICE_VERSION_V3, vf doesn't need to know about the port based
- 	 * VLAN state.
- 	 */
--	if (ae_dev->dev_version < HNAE3_DEVICE_VERSION_V3 &&
--	    test_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state))
--		(void)hclge_push_vf_port_base_vlan_info(&hdev->vport[0],
--							vport->vport_id,
--							state, &vlan_info);
--
-+	if (ae_dev->dev_version < HNAE3_DEVICE_VERSION_V3) {
-+		if (test_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state))
-+			(void)hclge_push_vf_port_base_vlan_info(&hdev->vport[0],
-+								vport->vport_id,
-+								state,
-+								&vlan_info);
-+		else
-+			set_bit(HCLGE_VPORT_NEED_NOTIFY_VF_VLAN,
-+				&vport->need_notify);
-+	}
- 	return 0;
- }
- 
-@@ -11941,7 +11965,7 @@ static void hclge_reset_vport_state(struct hclge_dev *hdev)
- 	int i;
- 
- 	for (i = 0; i < hdev->num_alloc_vport; i++) {
--		hclge_vport_stop(vport);
-+		clear_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state);
- 		vport++;
- 	}
- }
-@@ -12955,6 +12979,11 @@ static void hclge_clear_vport_vf_info(struct hclge_vport *vport, int vfid)
- 	struct hclge_vlan_info vlan_info;
- 	int ret;
- 
-+	clear_bit(HCLGE_VPORT_STATE_INITED, &vport->state);
-+	clear_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state);
-+	vport->need_notify = 0;
-+	vport->mps = 0;
-+
- 	/* after disable sriov, clean VF rate configured by PF */
- 	ret = hclge_tm_qs_shaper_cfg(vport, 0);
- 	if (ret)
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
-index 495b639b0dc2..13f23d606e77 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_main.h
-@@ -995,9 +995,15 @@ enum HCLGE_VPORT_STATE {
- 	HCLGE_VPORT_STATE_MAC_TBL_CHANGE,
- 	HCLGE_VPORT_STATE_PROMISC_CHANGE,
- 	HCLGE_VPORT_STATE_VLAN_FLTR_CHANGE,
-+	HCLGE_VPORT_STATE_INITED,
- 	HCLGE_VPORT_STATE_MAX
- };
- 
-+enum HCLGE_VPORT_NEED_NOTIFY {
-+	HCLGE_VPORT_NEED_NOTIFY_RESET,
-+	HCLGE_VPORT_NEED_NOTIFY_VF_VLAN,
-+};
-+
- struct hclge_vlan_info {
- 	u16 vlan_proto; /* so far support 802.1Q only */
- 	u16 qos;
-@@ -1044,6 +1050,7 @@ struct hclge_vport {
- 	struct hnae3_handle roce;
- 
- 	unsigned long state;
-+	unsigned long need_notify;
- 	unsigned long last_active_jiffies;
- 	u32 mps; /* Max packet size */
- 	struct hclge_vf_info vf_info;
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
-index a7b06c63143c..04ff9bf12185 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
-@@ -124,17 +124,26 @@ static int hclge_send_mbx_msg(struct hclge_vport *vport, u8 *msg, u16 msg_len,
- 	return status;
- }
- 
-+static int hclge_inform_vf_reset(struct hclge_vport *vport, u16 reset_type)
-+{
-+	__le16 msg_data;
-+	u8 dest_vfid;
-+
-+	dest_vfid = (u8)vport->vport_id;
-+	msg_data = cpu_to_le16(reset_type);
-+
-+	/* send this requested info to VF */
-+	return hclge_send_mbx_msg(vport, (u8 *)&msg_data, sizeof(msg_data),
-+				  HCLGE_MBX_ASSERTING_RESET, dest_vfid);
-+}
-+
- int hclge_inform_reset_assert_to_vf(struct hclge_vport *vport)
- {
- 	struct hclge_dev *hdev = vport->back;
--	__le16 msg_data;
- 	u16 reset_type;
--	u8 dest_vfid;
- 
- 	BUILD_BUG_ON(HNAE3_MAX_RESET > U16_MAX);
- 
--	dest_vfid = (u8)vport->vport_id;
--
- 	if (hdev->reset_type == HNAE3_FUNC_RESET)
- 		reset_type = HNAE3_VF_PF_FUNC_RESET;
- 	else if (hdev->reset_type == HNAE3_FLR_RESET)
-@@ -142,11 +151,7 @@ int hclge_inform_reset_assert_to_vf(struct hclge_vport *vport)
- 	else
- 		reset_type = HNAE3_VF_FUNC_RESET;
- 
--	msg_data = cpu_to_le16(reset_type);
--
--	/* send this requested info to VF */
--	return hclge_send_mbx_msg(vport, (u8 *)&msg_data, sizeof(msg_data),
--				  HCLGE_MBX_ASSERTING_RESET, dest_vfid);
-+	return hclge_inform_vf_reset(vport, reset_type);
- }
- 
- static void hclge_free_vector_ring_chain(struct hnae3_ring_chain_node *head)
-@@ -652,9 +657,56 @@ static int hclge_reset_vf(struct hclge_vport *vport)
- 	return hclge_func_reset_cmd(hdev, vport->vport_id);
- }
- 
-+static void hclge_notify_vf_config(struct hclge_vport *vport)
-+{
-+	struct hclge_dev *hdev = vport->back;
-+	struct hnae3_ae_dev *ae_dev = pci_get_drvdata(hdev->pdev);
-+	struct hclge_port_base_vlan_config *vlan_cfg;
-+	int ret;
-+
-+	hclge_push_vf_link_status(vport);
-+	if (test_bit(HCLGE_VPORT_NEED_NOTIFY_RESET, &vport->need_notify)) {
-+		ret = hclge_inform_vf_reset(vport, HNAE3_VF_PF_FUNC_RESET);
-+		if (ret) {
-+			dev_err(&hdev->pdev->dev,
-+				"failed to inform VF %u reset!",
-+				vport->vport_id - HCLGE_VF_VPORT_START_NUM);
-+			return;
-+		}
-+		vport->need_notify = 0;
-+		return;
-+	}
-+
-+	if (ae_dev->dev_version < HNAE3_DEVICE_VERSION_V3 &&
-+	    test_bit(HCLGE_VPORT_NEED_NOTIFY_VF_VLAN, &vport->need_notify)) {
-+		vlan_cfg = &vport->port_base_vlan_cfg;
-+		ret = hclge_push_vf_port_base_vlan_info(&hdev->vport[0],
-+							vport->vport_id,
-+							vlan_cfg->state,
-+							&vlan_cfg->vlan_info);
-+		if (ret) {
-+			dev_err(&hdev->pdev->dev,
-+				"failed to inform VF %u port base vlan!",
-+				vport->vport_id - HCLGE_VF_VPORT_START_NUM);
-+			return;
-+		}
-+		clear_bit(HCLGE_VPORT_NEED_NOTIFY_VF_VLAN, &vport->need_notify);
-+	}
-+}
-+
- static void hclge_vf_keep_alive(struct hclge_vport *vport)
- {
-+	struct hclge_dev *hdev = vport->back;
-+
- 	vport->last_active_jiffies = jiffies;
-+
-+	if (test_bit(HCLGE_VPORT_STATE_INITED, &vport->state) &&
-+	    !test_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state)) {
-+		set_bit(HCLGE_VPORT_STATE_ALIVE, &vport->state);
-+		dev_info(&hdev->pdev->dev, "VF %u is alive!",
-+			 vport->vport_id - HCLGE_VF_VPORT_START_NUM);
-+		hclge_notify_vf_config(vport);
-+	}
- }
- 
- static int hclge_set_vf_mtu(struct hclge_vport *vport,
-@@ -954,6 +1006,7 @@ static int hclge_mbx_vf_uninit_handler(struct hclge_mbx_ops_param *param)
- 	hclge_rm_vport_all_mac_table(param->vport, true,
- 				     HCLGE_MAC_ADDR_MC);
- 	hclge_rm_vport_all_vlan_table(param->vport, true);
-+	param->vport->mps = 0;
- 	return 0;
- }
- 
+ 	tc = netdev_get_num_tc(dev);
+ 	if (!tc)
 -- 
 2.35.1
 
