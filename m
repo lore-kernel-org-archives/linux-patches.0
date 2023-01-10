@@ -1,35 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FB76FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:30:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21BECC433D2;
-	Tue, 10 Jan 2023 18:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D544A6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:30:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4562EC433D2;
+	Tue, 10 Jan 2023 18:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375436;
-	bh=MazqOz3mBOgpLDVrM8IiQPoQnCER46oXA8YS7qQjh20=;
+	s=korg; t=1673375439;
+	bh=qhhyOKllGRL9irDnPq1l4bZup0he4hGa0pBYGaVGkmg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m7lZYuUNsoSOdOm3Ywewkae63zuQEIBHeeQdliJtJ9/HLx8oJF7hKcJ7zURYAcWdi
-	 NKP+IvVy9te/gG1dvjTdTD2TcccmZl9sU0nfb+Y5Cn245iJKhDukGhuz52/fx3Nrmj
-	 RXsnzL3hpnHNtxU+70plmLXJW30sql/jWwBM1mHU=
+	b=xGb6psU6LcknNU0P7ExH1HfFj21WMDSJx33U7klEjoBR2oFM32y+hv1kH7VjDgoVB
+	 6hLbdkCU9jmeRPg0piTAxRzCENpnyBObKFgLf8QkwgzdJTuntWf+XN+1EaiPdZpHIX
+	 4LGkyYqp33V6HWpEcRDonmbd8rQ49U6HUNUGWoKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Masami Hiramatsu <masami.hiramatsu.pt@hitachi.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Biju Das <biju.das.jz@bp.renesas.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 188/290] perf probe: Fix to get the DW_AT_decl_file and DW_AT_call_file as unsinged data
-Date: Tue, 10 Jan 2023 19:04:40 +0100
-Message-Id: <20230110180038.443835403@linuxfoundation.org>
+Subject: [PATCH 5.15 189/290] ravb: Fix "failed to switch device to config mode" message during unbind
+Date: Tue, 10 Jan 2023 19:04:41 +0100
+Message-Id: <20230110180038.479626056@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -43,89 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Biju Das <biju.das.jz@bp.renesas.com>
 
-[ Upstream commit a9dfc46c67b52ad43b8e335e28f4cf8002c67793 ]
+[ Upstream commit c72a7e42592b2e18d862cf120876070947000d7a ]
 
-DWARF version 5 standard Sec 2.14 says that
+This patch fixes the error "ravb 11c20000.ethernet eth0: failed to switch
+device to config mode" during unbind.
 
-  Any debugging information entry representing the declaration of an object,
-  module, subprogram or type may have DW_AT_decl_file, DW_AT_decl_line and
-  DW_AT_decl_column attributes, each of whose value is an unsigned integer
-  constant.
+We are doing register access after pm_runtime_put_sync().
 
-So it should be an unsigned integer data. Also, even though the standard
-doesn't clearly say the DW_AT_call_file is signed or unsigned, the
-elfutils (eu-readelf) interprets it as unsigned integer data and it is
-natural to handle it as unsigned integer data as same as DW_AT_decl_file.
-This changes the DW_AT_call_file as unsigned integer data too.
+We usually do cleanup in reverse order of init. Currently in
+remove(), the "pm_runtime_put_sync" is not in reverse order.
 
-Fixes: 3f4460a28fb2f73d ("perf probe: Filter out redundant inline-instances")
-Signed-off-by: Masami Hiramatsu <mhiramat@kernel.org>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Masami Hiramatsu <masami.hiramatsu.pt@hitachi.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
+Probe
+	reset_control_deassert(rstc);
+	pm_runtime_enable(&pdev->dev);
+	pm_runtime_get_sync(&pdev->dev);
+
+remove
+	pm_runtime_put_sync(&pdev->dev);
+	unregister_netdev(ndev);
+	..
+	ravb_mdio_release(priv);
+	pm_runtime_disable(&pdev->dev);
+
+Consider the call to unregister_netdev()
+unregister_netdev->unregister_netdevice_queue->rollback_registered_many
+that calls the below functions which access the registers after
+pm_runtime_put_sync()
+ 1) ravb_get_stats
+ 2) ravb_close
+
+Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
 Cc: stable@vger.kernel.org
-Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Link: https://lore.kernel.org/r/166761727445.480106.3738447577082071942.stgit@devnote3
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Link: https://lore.kernel.org/r/20221214105118.2495313-1-biju.das.jz@bp.renesas.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dwarf-aux.c | 21 ++++-----------------
- 1 file changed, 4 insertions(+), 17 deletions(-)
+ drivers/net/ethernet/renesas/ravb_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
-index a07efbadb775..623527edeac1 100644
---- a/tools/perf/util/dwarf-aux.c
-+++ b/tools/perf/util/dwarf-aux.c
-@@ -315,19 +315,6 @@ static int die_get_attr_udata(Dwarf_Die *tp_die, unsigned int attr_name,
- 	return 0;
- }
- 
--/* Get attribute and translate it as a sdata */
--static int die_get_attr_sdata(Dwarf_Die *tp_die, unsigned int attr_name,
--			      Dwarf_Sword *result)
--{
--	Dwarf_Attribute attr;
--
--	if (dwarf_attr_integrate(tp_die, attr_name, &attr) == NULL ||
--	    dwarf_formsdata(&attr, result) != 0)
--		return -ENOENT;
--
--	return 0;
--}
--
- /**
-  * die_is_signed_type - Check whether a type DIE is signed or not
-  * @tp_die: a DIE of a type
-@@ -467,9 +454,9 @@ int die_get_data_member_location(Dwarf_Die *mb_die, Dwarf_Word *offs)
- /* Get the call file index number in CU DIE */
- static int die_get_call_fileno(Dwarf_Die *in_die)
- {
--	Dwarf_Sword idx;
-+	Dwarf_Word idx;
- 
--	if (die_get_attr_sdata(in_die, DW_AT_call_file, &idx) == 0)
-+	if (die_get_attr_udata(in_die, DW_AT_call_file, &idx) == 0)
- 		return (int)idx;
- 	else
- 		return -ENOENT;
-@@ -478,9 +465,9 @@ static int die_get_call_fileno(Dwarf_Die *in_die)
- /* Get the declared file index number in CU DIE */
- static int die_get_decl_fileno(Dwarf_Die *pdie)
- {
--	Dwarf_Sword idx;
-+	Dwarf_Word idx;
- 
--	if (die_get_attr_sdata(pdie, DW_AT_decl_file, &idx) == 0)
-+	if (die_get_attr_udata(pdie, DW_AT_decl_file, &idx) == 0)
- 		return (int)idx;
- 	else
- 		return -ENOENT;
+diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+index 77a19336abec..c89bcdd15f16 100644
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -2378,11 +2378,11 @@ static int ravb_remove(struct platform_device *pdev)
+ 			  priv->desc_bat_dma);
+ 	/* Set reset mode */
+ 	ravb_write(ndev, CCC_OPC_RESET, CCC);
+-	pm_runtime_put_sync(&pdev->dev);
+ 	unregister_netdev(ndev);
+ 	netif_napi_del(&priv->napi[RAVB_NC]);
+ 	netif_napi_del(&priv->napi[RAVB_BE]);
+ 	ravb_mdio_release(priv);
++	pm_runtime_put_sync(&pdev->dev);
+ 	pm_runtime_disable(&pdev->dev);
+ 	reset_control_assert(priv->rstc);
+ 	free_netdev(ndev);
 -- 
 2.35.1
 
