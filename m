@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F01AA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:10:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA4A1C433D2;
-	Tue, 10 Jan 2023 18:10:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAA39A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612EFC433D2;
+	Tue, 10 Jan 2023 18:11:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374259;
-	bh=YK/0UUlaxphr6J3a2Ao81kULz1wlUs1AxQF+lzCbuto=;
+	s=korg; t=1673374261;
+	bh=GQGUFmhYX1ymiYp2gW0b6dWHKW8PtEC70qugp1r+wK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y4ItPiIPcL229NsFEdRRiH/DNgi3qvvaKU6TxCOR+Vwzwutg4vaSkOXHXAwzKfzMK
-	 qRJwAsHH3kaUlqj+lOanlUhpj9uU4XSUd2lh3AGCaKn7Ep46Hs56TOgorO553RTkxK
-	 2IzEyaUxLgsgJNB9b1kg5IdVzV+vTKic7VGWY4ec=
+	b=cd1wGwejGEkUh9lgv7zjnbl2kGfqDEjPTt2RVZ8pqHigY2SOdxKGHx/YWcqQoQJVc
+	 +RvB7ZBZhKbwt8oteb7l1KPFoQGwC7INIvrVEQUSayz5TbP0NhL0A4Vxl6BsNsYQQY
+	 IjxUEYyncrOLXoRaH5nMFBLhmHONRDAez1i6BPqI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Po-Hsu Lin <po-hsu.lin@canonical.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 074/148] selftests: net: fix cleanup_v6() for arp_ndisc_evict_nocarrier
-Date: Tue, 10 Jan 2023 19:02:58 +0100
-Message-Id: <20230110180019.560157286@linuxfoundation.org>
+Subject: [PATCH 6.0 075/148] selftests: net: return non-zero for failures reported in arp_ndisc_evict_nocarrier
+Date: Tue, 10 Jan 2023 19:02:59 +0100
+Message-Id: <20230110180019.595763360@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -37,58 +37,95 @@ Content-Transfer-Encoding: 8bit
 
 From: Po-Hsu Lin <po-hsu.lin@canonical.com>
 
-[ Upstream commit 9c4d7f45d60745a1cea0e841fa5e3444c398d2f1 ]
+[ Upstream commit 1856628baa17032531916984808d1bdfd62700d4 ]
 
-The cleanup_v6() will cause the arp_ndisc_evict_nocarrier script exit
-with 255 (No such file or directory), even the tests are good:
-
- # selftests: net: arp_ndisc_evict_nocarrier.sh
- # run arp_evict_nocarrier=1 test
- # RTNETLINK answers: File exists
- # ok
- # run arp_evict_nocarrier=0 test
- # RTNETLINK answers: File exists
- # ok
- # run all.arp_evict_nocarrier=0 test
- # RTNETLINK answers: File exists
- # ok
- # run ndisc_evict_nocarrier=1 test
- # ok
- # run ndisc_evict_nocarrier=0 test
- # ok
- # run all.ndisc_evict_nocarrier=0 test
- # ok
- not ok 1 selftests: net: arp_ndisc_evict_nocarrier.sh # exit=255
-
-This is because it's trying to modify the parameter for ipv4 instead.
-
-Also, tests for ipv6 (run_ndisc_evict_nocarrier_enabled() and
-run_ndisc_evict_nocarrier_disabled() are working on veth1, reflect
-this fact in cleanup_v6().
+Return non-zero return value if there is any failure reported in this
+script during the test. Otherwise it can only reflect the status of
+the last command.
 
 Fixes: f86ca07eb531 ("selftests: net: add arp_ndisc_evict_nocarrier")
 Signed-off-by: Po-Hsu Lin <po-hsu.lin@canonical.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/arp_ndisc_evict_nocarrier.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../selftests/net/arp_ndisc_evict_nocarrier.sh        | 11 +++++++++--
+ 1 file changed, 9 insertions(+), 2 deletions(-)
 
 diff --git a/tools/testing/selftests/net/arp_ndisc_evict_nocarrier.sh b/tools/testing/selftests/net/arp_ndisc_evict_nocarrier.sh
-index b5af08af8559..b4ec1eeee6c9 100755
+index b4ec1eeee6c9..4a110bb01e53 100755
 --- a/tools/testing/selftests/net/arp_ndisc_evict_nocarrier.sh
 +++ b/tools/testing/selftests/net/arp_ndisc_evict_nocarrier.sh
-@@ -24,8 +24,8 @@ cleanup_v6()
-     ip netns del me
-     ip netns del peer
+@@ -18,6 +18,7 @@ readonly V4_ADDR1=10.0.10.2
+ readonly V6_ADDR0=2001:db8:91::1
+ readonly V6_ADDR1=2001:db8:91::2
+ nsid=100
++ret=0
  
--    sysctl -w net.ipv4.conf.veth0.ndisc_evict_nocarrier=1 >/dev/null 2>&1
--    sysctl -w net.ipv4.conf.all.ndisc_evict_nocarrier=1 >/dev/null 2>&1
-+    sysctl -w net.ipv6.conf.veth1.ndisc_evict_nocarrier=1 >/dev/null 2>&1
-+    sysctl -w net.ipv6.conf.all.ndisc_evict_nocarrier=1 >/dev/null 2>&1
- }
+ cleanup_v6()
+ {
+@@ -61,7 +62,7 @@ setup_v6() {
+     if [ $? -ne 0 ]; then
+         cleanup_v6
+         echo "failed"
+-        exit
++        exit 1
+     fi
  
- create_ns()
+     # Set veth2 down, which will put veth1 in NOCARRIER state
+@@ -88,7 +89,7 @@ setup_v4() {
+     if [ $? -ne 0 ]; then
+         cleanup_v4
+         echo "failed"
+-        exit
++        exit 1
+     fi
+ 
+     # Set veth1 down, which will put veth0 in NOCARRIER state
+@@ -115,6 +116,7 @@ run_arp_evict_nocarrier_enabled() {
+ 
+     if [ $? -eq 0 ];then
+         echo "failed"
++        ret=1
+     else
+         echo "ok"
+     fi
+@@ -134,6 +136,7 @@ run_arp_evict_nocarrier_disabled() {
+         echo "ok"
+     else
+         echo "failed"
++        ret=1
+     fi
+ 
+     cleanup_v4
+@@ -164,6 +167,7 @@ run_ndisc_evict_nocarrier_enabled() {
+ 
+     if [ $? -eq 0 ];then
+         echo "failed"
++        ret=1
+     else
+         echo "ok"
+     fi
+@@ -182,6 +186,7 @@ run_ndisc_evict_nocarrier_disabled() {
+         echo "ok"
+     else
+         echo "failed"
++        ret=1
+     fi
+ 
+     cleanup_v6
+@@ -198,6 +203,7 @@ run_ndisc_evict_nocarrier_disabled_all() {
+         echo "ok"
+     else
+         echo "failed"
++        ret=1
+     fi
+ 
+     cleanup_v6
+@@ -218,3 +224,4 @@ if [ "$(id -u)" -ne 0 ];then
+ fi
+ 
+ run_all_tests
++exit $ret
 -- 
 2.35.1
 
