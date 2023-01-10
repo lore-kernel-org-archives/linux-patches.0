@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B00F6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:18:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D57CAC433EF;
-	Tue, 10 Jan 2023 18:18:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F98D6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:18:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B846AC433EF;
+	Tue, 10 Jan 2023 18:18:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374725;
-	bh=51Vl4qwwnCJjAgopIpAUTcV0XVq46xyRJEVhQUdt8t4=;
+	s=korg; t=1673374728;
+	bh=2au/8bzdU54fuOLPavMaj3vnB5+dwzQQIVuc7L2p3uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gALutRDG5JXH8VwnNGWxLRgcMrc0jK4ZShvo/jOuq1OHvukis2uEw/NDky2zznNOW
-	 YnKJ/Jv/j8XYeaN7lksJVEBQ81KrJpeI3kvvWqWruiy8uL0p/Kq4Ods7GCVP7oP5r1
-	 RTXI4MRVg3dFheosgvr8YdJG8bO2rsGNKuS/4dk0=
+	b=vgbAPTQEAlt5Pic6fcxFIw/Q4Dfz9C1hwSNbVyhF9+wM4MGGPatH7icTgEwbxbuKS
+	 ab99mBYBjTeC0ns7I4Tm9KNY8gzizJLL5BiWM4HCzf8V4RrQZJKk6z/yEMcWY8mRkQ
+	 O079/+0lwlSLM/9LL8DOmPmlSS3qVQLdIOr895yY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <Alexander.Deucher@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	AMD Graphics <amd-gfx@lists.freedesktop.org>,
-	Luben Tuikov <luben.tuikov@amd.com>,
+	Philip Yang <Philip.Yang@amd.com>,
+	Felix Kuehling <Felix.Kuehling@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 113/159] drm/amdgpu: Fix size validation for non-exclusive domains (v4)
-Date: Tue, 10 Jan 2023 19:04:21 +0100
-Message-Id: <20230110180021.895490092@linuxfoundation.org>
+Subject: [PATCH 6.1 114/159] drm/amdkfd: Fix kfd_process_device_init_vm error handling
+Date: Tue, 10 Jan 2023 19:04:22 +0100
+Message-Id: <20230110180021.930227054@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -38,70 +36,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luben Tuikov <luben.tuikov@amd.com>
+From: Philip Yang <Philip.Yang@amd.com>
 
-[ Upstream commit 7554886daa31eacc8e7fac9e15bbce67d10b8f1f ]
+[ Upstream commit 29d48b87db64b6697ddad007548e51d032081c59 ]
 
-Fix amdgpu_bo_validate_size() to check whether the TTM domain manager for the
-requested memory exists, else we get a kernel oops when dereferencing "man".
+Should only destroy the ib_mem and let process cleanup worker to free
+the outstanding BOs. Reset the pointer in pdd->qpd structure, to avoid
+NULL pointer access in process destroy worker.
 
-v2: Make the patch standalone, i.e. not dependent on local patches.
-v3: Preserve old behaviour and just check that the manager pointer is not
-    NULL.
-v4: Complain if GTT domain requested and it is uninitialized--most likely a
-    bug.
+ BUG: kernel NULL pointer dereference, address: 0000000000000010
+ Call Trace:
+  amdgpu_amdkfd_gpuvm_unmap_gtt_bo_from_kernel+0x46/0xb0 [amdgpu]
+  kfd_process_device_destroy_cwsr_dgpu+0x40/0x70 [amdgpu]
+  kfd_process_destroy_pdds+0x71/0x190 [amdgpu]
+  kfd_process_wq_release+0x2a2/0x3b0 [amdgpu]
+  process_one_work+0x2a1/0x600
+  worker_thread+0x39/0x3d0
 
-Cc: Alex Deucher <Alexander.Deucher@amd.com>
-Cc: Christian König <christian.koenig@amd.com>
-Cc: AMD Graphics <amd-gfx@lists.freedesktop.org>
-Signed-off-by: Luben Tuikov <luben.tuikov@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Philip Yang <Philip.Yang@amd.com>
+Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_object.c | 19 ++++++++-----------
- 1 file changed, 8 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/amd/amdkfd/kfd_process.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-index 3df13d841e4d..3be3cba3a16d 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-@@ -446,27 +446,24 @@ static bool amdgpu_bo_validate_size(struct amdgpu_device *adev,
+diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_process.c b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+index 951b63677248..9821fa9268d3 100644
+--- a/drivers/gpu/drm/amd/amdkfd/kfd_process.c
++++ b/drivers/gpu/drm/amd/amdkfd/kfd_process.c
+@@ -689,13 +689,13 @@ void kfd_process_destroy_wq(void)
+ }
  
- 	/*
- 	 * If GTT is part of requested domains the check must succeed to
--	 * allow fall back to GTT
-+	 * allow fall back to GTT.
- 	 */
- 	if (domain & AMDGPU_GEM_DOMAIN_GTT) {
- 		man = ttm_manager_type(&adev->mman.bdev, TTM_PL_TT);
+ static void kfd_process_free_gpuvm(struct kgd_mem *mem,
+-			struct kfd_process_device *pdd, void *kptr)
++			struct kfd_process_device *pdd, void **kptr)
+ {
+ 	struct kfd_dev *dev = pdd->dev;
  
--		if (size < man->size)
-+		if (man && size < man->size)
- 			return true;
--		else
--			goto fail;
--	}
--
--	if (domain & AMDGPU_GEM_DOMAIN_VRAM) {
-+		else if (!man)
-+			WARN_ON_ONCE("GTT domain requested but GTT mem manager uninitialized");
-+		goto fail;
-+	} else if (domain & AMDGPU_GEM_DOMAIN_VRAM) {
- 		man = ttm_manager_type(&adev->mman.bdev, TTM_PL_VRAM);
- 
--		if (size < man->size)
-+		if (man && size < man->size)
- 			return true;
--		else
--			goto fail;
-+		goto fail;
+-	if (kptr) {
++	if (kptr && *kptr) {
+ 		amdgpu_amdkfd_gpuvm_unmap_gtt_bo_from_kernel(mem);
+-		kptr = NULL;
++		*kptr = NULL;
  	}
  
--
- 	/* TODO add more domains checks, such as AMDGPU_GEM_DOMAIN_CPU */
- 	return true;
+ 	amdgpu_amdkfd_gpuvm_unmap_memory_from_gpu(dev->adev, mem, pdd->drm_priv);
+@@ -795,7 +795,7 @@ static void kfd_process_device_destroy_ib_mem(struct kfd_process_device *pdd)
+ 	if (!qpd->ib_kaddr || !qpd->ib_base)
+ 		return;
  
+-	kfd_process_free_gpuvm(qpd->ib_mem, pdd, qpd->ib_kaddr);
++	kfd_process_free_gpuvm(qpd->ib_mem, pdd, &qpd->ib_kaddr);
+ }
+ 
+ struct kfd_process *kfd_create_process(struct file *filep)
+@@ -1277,7 +1277,7 @@ static void kfd_process_device_destroy_cwsr_dgpu(struct kfd_process_device *pdd)
+ 	if (!dev->cwsr_enabled || !qpd->cwsr_kaddr || !qpd->cwsr_base)
+ 		return;
+ 
+-	kfd_process_free_gpuvm(qpd->cwsr_mem, pdd, qpd->cwsr_kaddr);
++	kfd_process_free_gpuvm(qpd->cwsr_mem, pdd, &qpd->cwsr_kaddr);
+ }
+ 
+ void kfd_process_set_trap_handler(struct qcm_process_device *qpd,
+@@ -1598,8 +1598,8 @@ int kfd_process_device_init_vm(struct kfd_process_device *pdd,
+ 	return 0;
+ 
+ err_init_cwsr:
++	kfd_process_device_destroy_ib_mem(pdd);
+ err_reserve_ib_mem:
+-	kfd_process_device_free_bos(pdd);
+ 	pdd->drm_priv = NULL;
+ 
+ 	return ret;
 -- 
 2.35.1
 
