@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45F216FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B85E7C433F0;
-	Tue, 10 Jan 2023 18:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11766FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:11:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60DACC433EF;
+	Tue, 10 Jan 2023 18:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374314;
-	bh=w3rkMHyOLysfq/DrTNdef7doeNH2+eXsesypNstpKKY=;
+	s=korg; t=1673374316;
+	bh=bdDW3LLmItTeom4b4EPuVajnxo0DYPgkWZ1jf9gfEmM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5/rWFGvtvVVeb5EbXo68NQGwCp5KyWW93FCNeMb3v69YLJunma7bcVFBGrJzOiGN
-	 3MdelbFiQiDMoqzcr6oD8upF+Sm8eUbWYvQG41bGBXKNYlcm78Eu3ObPofDShlmf8G
-	 2zi/+J/6SNv8BLw1LiilM5tKK2CHaj1yqE1K9WoA=
+	b=FQa5h95o+YvVOQjVX3WLx/Q+AdhB9dPgb7IeYKyzItG/ORoh84V/eRrMArOlJcHa3
+	 86+dst1yNJQiPJ/IyoW+T4rZsMfJWQckKixdJNg5+XXgULoiKswC1qNI0or4uVr+I1
+	 0K7OUC09SouWrJh/9K0oD3o1yce7QSW2KQCHoRaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Michel=20D=C3=A4nzer?= <mdaenzer@redhat.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.0 126/148] Revert "drm/amd/display: Enable Freesync Video Mode by default"
-Date: Tue, 10 Jan 2023 19:03:50 +0100
-Message-Id: <20230110180021.185653179@linuxfoundation.org>
+	Ronald Wahl <ronald.wahl@raritan.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.0 127/148] Revert "net: dsa: qca8k: cache lo and hi for mdio write"
+Date: Tue, 10 Jan 2023 19:03:51 +0100
+Message-Id: <20230110180021.215469717@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -34,127 +35,177 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michel Dänzer <mdaenzer@redhat.com>
+From: Christian Marangi <ansuelsmth@gmail.com>
 
-commit 6fe6ece398f7431784847e922a2c8c385dc58a35 upstream.
+commit 03cb9e6d0b32b768e3d9d473c5c4ca1100877664 upstream.
 
-This reverts commit de05abe6b9d0fe08f65d744f7f75a4cba4df27ad.
+This reverts commit 2481d206fae7884cd07014fd1318e63af35e99eb.
 
-The bug referenced below was bisected to this commit. There has been no
-activity toward fixing it in 3 months, so let's revert for now.
+The Documentation is very confusing about the topic.
+The cache logic for hi and lo is wrong and actually miss some regs to be
+actually written.
 
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2162
-Signed-off-by: Michel Dänzer <mdaenzer@redhat.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+What the Documentation actually intended was that it's possible to skip
+writing hi OR lo if half of the reg is not needed to be written or read.
+
+Revert the change in favor of a better and correct implementation.
+
+Reported-by: Ronald Wahl <ronald.wahl@raritan.com>
+Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
+Cc: stable@vger.kernel.org # v5.18+
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu.h               |    1 
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c           |   27 ++++++++++++++++++++++
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |   12 +++++----
- 3 files changed, 35 insertions(+), 5 deletions(-)
+ drivers/net/dsa/qca/qca8k-8xxx.c |   61 +++++++--------------------------------
+ drivers/net/dsa/qca/qca8k.h      |    5 ---
+ 2 files changed, 12 insertions(+), 54 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu.h
-@@ -196,6 +196,7 @@ extern int amdgpu_emu_mode;
- extern uint amdgpu_smu_memory_pool_size;
- extern int amdgpu_smu_pptable_id;
- extern uint amdgpu_dc_feature_mask;
-+extern uint amdgpu_freesync_vid_mode;
- extern uint amdgpu_dc_debug_mask;
- extern uint amdgpu_dc_visual_confirm;
- extern uint amdgpu_dm_abm_level;
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -177,6 +177,7 @@ int amdgpu_mes_kiq;
- int amdgpu_noretry = -1;
- int amdgpu_force_asic_type = -1;
- int amdgpu_tmz = -1; /* auto */
-+uint amdgpu_freesync_vid_mode;
- int amdgpu_reset_method = -1; /* auto */
- int amdgpu_num_kcq = -1;
- int amdgpu_smartshift_bias;
-@@ -863,6 +864,32 @@ MODULE_PARM_DESC(tmz, "Enable TMZ featur
- module_param_named(tmz, amdgpu_tmz, int, 0444);
+--- a/drivers/net/dsa/qca/qca8k-8xxx.c
++++ b/drivers/net/dsa/qca/qca8k-8xxx.c
+@@ -37,44 +37,6 @@ qca8k_split_addr(u32 regaddr, u16 *r1, u
+ }
  
- /**
-+ * DOC: freesync_video (uint)
-+ * Enable the optimization to adjust front porch timing to achieve seamless
-+ * mode change experience when setting a freesync supported mode for which full
-+ * modeset is not needed.
-+ *
-+ * The Display Core will add a set of modes derived from the base FreeSync
-+ * video mode into the corresponding connector's mode list based on commonly
-+ * used refresh rates and VRR range of the connected display, when users enable
-+ * this feature. From the userspace perspective, they can see a seamless mode
-+ * change experience when the change between different refresh rates under the
-+ * same resolution. Additionally, userspace applications such as Video playback
-+ * can read this modeset list and change the refresh rate based on the video
-+ * frame rate. Finally, the userspace can also derive an appropriate mode for a
-+ * particular refresh rate based on the FreeSync Mode and add it to the
-+ * connector's mode list.
-+ *
-+ * Note: This is an experimental feature.
-+ *
-+ * The default value: 0 (off).
-+ */
-+MODULE_PARM_DESC(
-+	freesync_video,
-+	"Enable freesync modesetting optimization feature (0 = off (default), 1 = on)");
-+module_param_named(freesync_video, amdgpu_freesync_vid_mode, uint, 0444);
-+
-+/**
-  * DOC: reset_method (int)
-  * GPU reset method (-1 = auto (default), 0 = legacy, 1 = mode0, 2 = mode1, 3 = mode2, 4 = baco)
+ static int
+-qca8k_set_lo(struct qca8k_priv *priv, int phy_id, u32 regnum, u16 lo)
+-{
+-	u16 *cached_lo = &priv->mdio_cache.lo;
+-	struct mii_bus *bus = priv->bus;
+-	int ret;
+-
+-	if (lo == *cached_lo)
+-		return 0;
+-
+-	ret = bus->write(bus, phy_id, regnum, lo);
+-	if (ret < 0)
+-		dev_err_ratelimited(&bus->dev,
+-				    "failed to write qca8k 32bit lo register\n");
+-
+-	*cached_lo = lo;
+-	return 0;
+-}
+-
+-static int
+-qca8k_set_hi(struct qca8k_priv *priv, int phy_id, u32 regnum, u16 hi)
+-{
+-	u16 *cached_hi = &priv->mdio_cache.hi;
+-	struct mii_bus *bus = priv->bus;
+-	int ret;
+-
+-	if (hi == *cached_hi)
+-		return 0;
+-
+-	ret = bus->write(bus, phy_id, regnum, hi);
+-	if (ret < 0)
+-		dev_err_ratelimited(&bus->dev,
+-				    "failed to write qca8k 32bit hi register\n");
+-
+-	*cached_hi = hi;
+-	return 0;
+-}
+-
+-static int
+ qca8k_mii_read32(struct mii_bus *bus, int phy_id, u32 regnum, u32 *val)
+ {
+ 	int ret;
+@@ -97,7 +59,7 @@ qca8k_mii_read32(struct mii_bus *bus, in
+ }
+ 
+ static void
+-qca8k_mii_write32(struct qca8k_priv *priv, int phy_id, u32 regnum, u32 val)
++qca8k_mii_write32(struct mii_bus *bus, int phy_id, u32 regnum, u32 val)
+ {
+ 	u16 lo, hi;
+ 	int ret;
+@@ -105,9 +67,12 @@ qca8k_mii_write32(struct qca8k_priv *pri
+ 	lo = val & 0xffff;
+ 	hi = (u16)(val >> 16);
+ 
+-	ret = qca8k_set_lo(priv, phy_id, regnum, lo);
++	ret = bus->write(bus, phy_id, regnum, lo);
+ 	if (ret >= 0)
+-		ret = qca8k_set_hi(priv, phy_id, regnum + 1, hi);
++		ret = bus->write(bus, phy_id, regnum + 1, hi);
++	if (ret < 0)
++		dev_err_ratelimited(&bus->dev,
++				    "failed to write qca8k 32bit register\n");
+ }
+ 
+ static int
+@@ -417,7 +382,7 @@ qca8k_regmap_write(void *ctx, uint32_t r
+ 	if (ret < 0)
+ 		goto exit;
+ 
+-	qca8k_mii_write32(priv, 0x10 | r2, r1, val);
++	qca8k_mii_write32(bus, 0x10 | r2, r1, val);
+ 
+ exit:
+ 	mutex_unlock(&bus->mdio_lock);
+@@ -450,7 +415,7 @@ qca8k_regmap_update_bits(void *ctx, uint
+ 
+ 	val &= ~mask;
+ 	val |= write_val;
+-	qca8k_mii_write32(priv, 0x10 | r2, r1, val);
++	qca8k_mii_write32(bus, 0x10 | r2, r1, val);
+ 
+ exit:
+ 	mutex_unlock(&bus->mdio_lock);
+@@ -725,14 +690,14 @@ qca8k_mdio_write(struct qca8k_priv *priv
+ 	if (ret)
+ 		goto exit;
+ 
+-	qca8k_mii_write32(priv, 0x10 | r2, r1, val);
++	qca8k_mii_write32(bus, 0x10 | r2, r1, val);
+ 
+ 	ret = qca8k_mdio_busy_wait(bus, QCA8K_MDIO_MASTER_CTRL,
+ 				   QCA8K_MDIO_MASTER_BUSY);
+ 
+ exit:
+ 	/* even if the busy_wait timeouts try to clear the MASTER_EN */
+-	qca8k_mii_write32(priv, 0x10 | r2, r1, 0);
++	qca8k_mii_write32(bus, 0x10 | r2, r1, 0);
+ 
+ 	mutex_unlock(&bus->mdio_lock);
+ 
+@@ -762,7 +727,7 @@ qca8k_mdio_read(struct qca8k_priv *priv,
+ 	if (ret)
+ 		goto exit;
+ 
+-	qca8k_mii_write32(priv, 0x10 | r2, r1, val);
++	qca8k_mii_write32(bus, 0x10 | r2, r1, val);
+ 
+ 	ret = qca8k_mdio_busy_wait(bus, QCA8K_MDIO_MASTER_CTRL,
+ 				   QCA8K_MDIO_MASTER_BUSY);
+@@ -773,7 +738,7 @@ qca8k_mdio_read(struct qca8k_priv *priv,
+ 
+ exit:
+ 	/* even if the busy_wait timeouts try to clear the MASTER_EN */
+-	qca8k_mii_write32(priv, 0x10 | r2, r1, 0);
++	qca8k_mii_write32(bus, 0x10 | r2, r1, 0);
+ 
+ 	mutex_unlock(&bus->mdio_lock);
+ 
+@@ -1943,8 +1908,6 @@ qca8k_sw_probe(struct mdio_device *mdiod
+ 	}
+ 
+ 	priv->mdio_cache.page = 0xffff;
+-	priv->mdio_cache.lo = 0xffff;
+-	priv->mdio_cache.hi = 0xffff;
+ 
+ 	/* Check the detected switch id */
+ 	ret = qca8k_read_switch_id(priv);
+--- a/drivers/net/dsa/qca/qca8k.h
++++ b/drivers/net/dsa/qca/qca8k.h
+@@ -375,11 +375,6 @@ struct qca8k_mdio_cache {
+  * mdio writes
   */
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -5821,7 +5821,8 @@ create_stream_for_sink(struct amdgpu_dm_
- 		 */
- 		DRM_DEBUG_DRIVER("No preferred mode found\n");
- 	} else {
--		recalculate_timing = is_freesync_video_mode(&mode, aconnector);
-+		recalculate_timing = amdgpu_freesync_vid_mode &&
-+				 is_freesync_video_mode(&mode, aconnector);
- 		if (recalculate_timing) {
- 			freesync_mode = get_highest_refresh_rate_mode(aconnector, false);
- 			drm_mode_copy(&saved_mode, &mode);
-@@ -6895,7 +6896,7 @@ static void amdgpu_dm_connector_add_free
- 	struct amdgpu_dm_connector *amdgpu_dm_connector =
- 		to_amdgpu_dm_connector(connector);
+ 	u16 page;
+-/* lo and hi can also be cached and from Documentation we can skip one
+- * extra mdio write if lo or hi is didn't change.
+- */
+-	u16 lo;
+-	u16 hi;
+ };
  
--	if (!edid)
-+	if (!(amdgpu_freesync_vid_mode && edid))
- 		return;
- 
- 	if (amdgpu_dm_connector->max_vfreq - amdgpu_dm_connector->min_vfreq > 10)
-@@ -8766,7 +8767,8 @@ static int dm_update_crtc_state(struct a
- 		 * TODO: Refactor this function to allow this check to work
- 		 * in all conditions.
- 		 */
--		if (dm_new_crtc_state->stream &&
-+		if (amdgpu_freesync_vid_mode &&
-+		    dm_new_crtc_state->stream &&
- 		    is_timing_unchanged_for_freesync(new_crtc_state, old_crtc_state))
- 			goto skip_modeset;
- 
-@@ -8801,7 +8803,7 @@ static int dm_update_crtc_state(struct a
- 		if (!dm_old_crtc_state->stream)
- 			goto skip_modeset;
- 
--		if (dm_new_crtc_state->stream &&
-+		if (amdgpu_freesync_vid_mode && dm_new_crtc_state->stream &&
- 		    is_timing_unchanged_for_freesync(new_crtc_state,
- 						     old_crtc_state)) {
- 			new_crtc_state->mode_changed = false;
-@@ -8813,7 +8815,7 @@ static int dm_update_crtc_state(struct a
- 			set_freesync_fixed_config(dm_new_crtc_state);
- 
- 			goto skip_modeset;
--		} else if (aconnector &&
-+		} else if (amdgpu_freesync_vid_mode && aconnector &&
- 			   is_freesync_video_mode(&new_crtc_state->mode,
- 						  aconnector)) {
- 			struct drm_display_mode *high_mode;
+ struct qca8k_pcs {
 
 
