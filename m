@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15E026FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:28:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58604C433EF;
-	Tue, 10 Jan 2023 18:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 162196FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:28:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 697C4C433F0;
+	Tue, 10 Jan 2023 18:28:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375321;
-	bh=9c5EtoZS1v6TdAqK2jtuLZHsx3mSIs9alAJc0rZWXDY=;
+	s=korg; t=1673375324;
+	bh=YjPvMOdLx0yvjv0q3sP6lHIjlktSrDU8OaCbMpUrboU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Df0gDN0EEThKLswcidrQ3pJVf/wbkqYaIzTEnTcyznA4X7QRcJBYfXx2wLftPXTus
-	 qrFnLiLoT8ptH3YF9/IhUB1CUo882Mnkfblu0DeFe+8T5n8va6bmgaJpYh2cK3FUls
-	 oB84vPf2nJ9t7z0XbTufbgh7oPsKijo23+VM86g0=
+	b=r8Y2U2HQTmJ/yCUdbc3ZG2YcmlCo2YJfO5SmfyjbwWmJiADQhUvyh+6cvIx/DDyn5
+	 nircttbjN70gXfCLUeU4jrsn1lQ68T30Zr6o2W2v1/kSpOgBtMOau6TaTbWPPKtaEp
+	 GYV6zWIiYOZqiqhNGgqKJtCXI84v1AkxKW4Ocxow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	syzbot+57b25da729eb0b88177d@syzkaller.appspotmail.com,
+	Ye Bin <yebin10@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Eric Biggers <ebiggers@google.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 5.15 151/290] ext4: fix leaking uninitialized memory in fast-commit journal
-Date: Tue, 10 Jan 2023 19:04:03 +0100
-Message-Id: <20230110180037.059557609@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 5.15 152/290] ext4: fix uninititialized value in ext4_evict_inode
+Date: Tue, 10 Jan 2023 19:04:04 +0100
+Message-Id: <20230110180037.104007008@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -34,43 +38,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Ye Bin <yebin10@huawei.com>
 
-commit 594bc43b410316d70bb42aeff168837888d96810 upstream.
+commit 7ea71af94eaaaf6d9aed24bc94a05b977a741cb9 upstream.
 
-When space at the end of fast-commit journal blocks is unused, make sure
-to zero it out so that uninitialized memory is not leaked to disk.
+Syzbot found the following issue:
+=====================================================
+BUG: KMSAN: uninit-value in ext4_evict_inode+0xdd/0x26b0 fs/ext4/inode.c:180
+ ext4_evict_inode+0xdd/0x26b0 fs/ext4/inode.c:180
+ evict+0x365/0x9a0 fs/inode.c:664
+ iput_final fs/inode.c:1747 [inline]
+ iput+0x985/0xdd0 fs/inode.c:1773
+ __ext4_new_inode+0xe54/0x7ec0 fs/ext4/ialloc.c:1361
+ ext4_mknod+0x376/0x840 fs/ext4/namei.c:2844
+ vfs_mknod+0x79d/0x830 fs/namei.c:3914
+ do_mknodat+0x47d/0xaa0
+ __do_sys_mknodat fs/namei.c:3992 [inline]
+ __se_sys_mknodat fs/namei.c:3989 [inline]
+ __ia32_sys_mknodat+0xeb/0x150 fs/namei.c:3989
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x33/0x70 arch/x86/entry/common.c:203
+ do_SYSENTER_32+0x1b/0x20 arch/x86/entry/common.c:246
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
 
-Fixes: aa75f4d3daae ("ext4: main fast-commit commit path")
-Cc: <stable@vger.kernel.org> # v5.10+
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20221106224841.279231-4-ebiggers@kernel.org
+Uninit was created at:
+ __alloc_pages+0x9f1/0xe80 mm/page_alloc.c:5578
+ alloc_pages+0xaae/0xd80 mm/mempolicy.c:2285
+ alloc_slab_page mm/slub.c:1794 [inline]
+ allocate_slab+0x1b5/0x1010 mm/slub.c:1939
+ new_slab mm/slub.c:1992 [inline]
+ ___slab_alloc+0x10c3/0x2d60 mm/slub.c:3180
+ __slab_alloc mm/slub.c:3279 [inline]
+ slab_alloc_node mm/slub.c:3364 [inline]
+ slab_alloc mm/slub.c:3406 [inline]
+ __kmem_cache_alloc_lru mm/slub.c:3413 [inline]
+ kmem_cache_alloc_lru+0x6f3/0xb30 mm/slub.c:3429
+ alloc_inode_sb include/linux/fs.h:3117 [inline]
+ ext4_alloc_inode+0x5f/0x860 fs/ext4/super.c:1321
+ alloc_inode+0x83/0x440 fs/inode.c:259
+ new_inode_pseudo fs/inode.c:1018 [inline]
+ new_inode+0x3b/0x430 fs/inode.c:1046
+ __ext4_new_inode+0x2a7/0x7ec0 fs/ext4/ialloc.c:959
+ ext4_mkdir+0x4d5/0x1560 fs/ext4/namei.c:2992
+ vfs_mkdir+0x62a/0x870 fs/namei.c:4035
+ do_mkdirat+0x466/0x7b0 fs/namei.c:4060
+ __do_sys_mkdirat fs/namei.c:4075 [inline]
+ __se_sys_mkdirat fs/namei.c:4073 [inline]
+ __ia32_sys_mkdirat+0xc4/0x120 fs/namei.c:4073
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x33/0x70 arch/x86/entry/common.c:203
+ do_SYSENTER_32+0x1b/0x20 arch/x86/entry/common.c:246
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
+
+CPU: 1 PID: 4625 Comm: syz-executor.2 Not tainted 6.1.0-rc4-syzkaller-62821-gcb231e2f67ec #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+=====================================================
+
+Now, 'ext4_alloc_inode()' didn't init 'ei->i_flags'. If new inode failed
+before set 'ei->i_flags' in '__ext4_new_inode()', then do 'iput()'. As after
+6bc0d63dad7f commit will access 'ei->i_flags' in 'ext4_evict_inode()' which
+will lead to access uninit-value.
+To solve above issue just init 'ei->i_flags' in 'ext4_alloc_inode()'.
+
+Reported-by: syzbot+57b25da729eb0b88177d@syzkaller.appspotmail.com
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Fixes: 6bc0d63dad7f ("ext4: remove EA inode entry from mbcache on inode eviction")
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20221117073603.2598882-1-yebin@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/fast_commit.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/ext4/super.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/ext4/fast_commit.c
-+++ b/fs/ext4/fast_commit.c
-@@ -657,6 +657,9 @@ static u8 *ext4_fc_reserve_space(struct
- 		*crc = ext4_chksum(sbi, *crc, tl, sizeof(*tl));
- 	if (pad_len > 0)
- 		ext4_fc_memzero(sb, tl + 1, pad_len, crc);
-+	/* Don't leak uninitialized memory in the unused last byte. */
-+	*((u8 *)(tl + 1) + pad_len) = 0;
-+
- 	ext4_fc_submit_bh(sb, false);
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -1288,6 +1288,7 @@ static struct inode *ext4_alloc_inode(st
+ 		return NULL;
  
- 	ret = jbd2_fc_get_buf(EXT4_SB(sb)->s_journal, &bh);
-@@ -713,6 +716,8 @@ static int ext4_fc_write_tail(struct sup
- 	dst += sizeof(tail.fc_tid);
- 	tail.fc_crc = cpu_to_le32(crc);
- 	ext4_fc_memcpy(sb, dst, &tail.fc_crc, sizeof(tail.fc_crc), NULL);
-+	dst += sizeof(tail.fc_crc);
-+	memset(dst, 0, bsize - off); /* Don't leak uninitialized memory. */
- 
- 	ext4_fc_submit_bh(sb, true);
- 
+ 	inode_set_iversion(&ei->vfs_inode, 1);
++	ei->i_flags = 0;
+ 	spin_lock_init(&ei->i_raw_lock);
+ 	INIT_LIST_HEAD(&ei->i_prealloc_list);
+ 	atomic_set(&ei->i_prealloc_active, 0);
 
 
