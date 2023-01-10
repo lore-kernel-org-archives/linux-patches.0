@@ -1,151 +1,86 @@
-Received: from mout-b-110.mailbox.org (mout-b-110.mailbox.org [195.10.208.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 307813C28
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 10:21:53 +0000 (UTC)
-Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-384) server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mout-b-110.mailbox.org (Postfix) with ESMTPS id 4Nrmtq4LVhz9t7Z;
-	Tue, 10 Jan 2023 11:16:35 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nyantec.com; s=default;
-	t=1673345795;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=6IUg8Et5IkHA9DdwmBM0zPxl4bj+zRYsG0exsYo0MV0=;
-	b=poeGSm+lgAhdQHYBpqCTYPAZ8w3Pb1lDmlitQO9C27MYchgg2SQJ3E9SDkQ40CbNWEs/X0
-	6W3/S+e0MyKAb90i1y9+sWmuQQ74/RjmHjFv41hneE7Zmg9GgQUznfyt9lopyESrZxJhxl
-	3R2RPETiIW87xD05Qn8+PWMvMT2CZ3kdP3f321XrHPEkD74PKH3t7v8zW7YUwuK9szOqtb
-	VoBXflXAqp1h8eunk9/zUEYOnj3I3V3OuushZ4cI/d7HjUHeWPFaOtqZQ/2ol3P/kv5d5p
-	24CHzCuW4jBdcHnWpK1xo1cOHq9Khe8m49T+tAMijQnYAsqct393gaItk/jDVA==
-From: Finn Behrens <fin@nyantec.com>
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Masahiro Yamada <masahiroy@kernel.org>, linux-kbuild@vger.kernel.org,
- Nathan Chancellor <nathan@kernel.org>,
- Nick Desaulniers <ndesaulniers@google.com>,
- Nicolas Schier <nicolas@fjasle.eu>, rust-for-linux@vger.kernel.org,
- linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- Alex Gaynor <alex.gaynor@gmail.com>,
- Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>,
- Gary Guo <gary@garyguo.net>,
- =?utf-8?q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
-Subject: Re: [PATCH 2/6] kbuild: rust_is_available: print docs reference
-Date: Tue, 10 Jan 2023 11:16:33 +0100
-Message-ID: <1E542F5E-220F-4061-BC71-F37C76616F34@nyantec.com>
-In-Reply-To: <20230109204520.539080-2-ojeda@kernel.org>
-References: <20230109204520.539080-1-ojeda@kernel.org>
- <20230109204520.539080-2-ojeda@kernel.org>
+Received: from wind.enjellic.com (wind.enjellic.com [76.10.64.91])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id A7F666137
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 11:05:49 +0000 (UTC)
+Received: from wind.enjellic.com (localhost [127.0.0.1])
+	by wind.enjellic.com (8.15.2/8.15.2) with ESMTP id 30AB1UCJ013380;
+	Tue, 10 Jan 2023 05:01:30 -0600
+Received: (from greg@localhost)
+	by wind.enjellic.com (8.15.2/8.15.2/Submit) id 30AB1SPZ013379;
+	Tue, 10 Jan 2023 05:01:28 -0600
+Date: Tue, 10 Jan 2023 05:01:28 -0600
+From: "Dr. Greg" <greg@enjellic.com>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: Andy Lutomirski <luto@kernel.org>, "Jason A. Donenfeld" <Jason@zx2c4.com>,
+        Yann Droneaud <ydroneaud@opteya.com>, Ingo Molnar <mingo@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        patches@lists.linux.dev, Thomas Gleixner <tglx@linutronix.de>,
+        Linux Crypto Mailing List <linux-crypto@vger.kernel.org>,
+        Linux API <linux-api@vger.kernel.org>,
+        the arch/x86 maintainers <x86@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+        "Carlos O'Donell" <carlos@redhat.com>,
+        Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+        Jann Horn <jannh@google.com>, Christian Brauner <brauner@kernel.org>,
+        linux-mm@kvack.org
+Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always lazily freeable mappings
+Message-ID: <20230110110128.GA12987@wind.enjellic.com>
+Reply-To: "Dr. Greg" <greg@enjellic.com>
+References: <CAHk-=whQdWFw+0eGttxsWBHZg1+uh=0MhxXYtvJGX4t9P1MgNw@mail.gmail.com> <Y7SJ+/axonTK0Fir@zx2c4.com> <CAHk-=wi4gshfKjbhEO_xZdVb9ztXf0iuv5kKhxtvAHf2HzTmng@mail.gmail.com> <Y7STv9+p248zr+0a@zx2c4.com> <10302240-51ec-0854-2c86-16752d67a9be@opteya.com> <Y7dV1lVUYjqs8fh0@zx2c4.com> <CAHk-=wijEC_oDzfUajhmp=ZVnzMTXgjxHEcxAfaHiNQm4iAcqA@mail.gmail.com> <CAHk-=wiO4rp8oVmj6i6vvC97gNePLN-SxhSK=UozA88G6nxBGQ@mail.gmail.com> <f36f19ee-5bff-4cd0-b9a9-0fe987cf6d38@app.fastmail.com> <CAHk-=wgLWcKq2AdrTmTOxJKn6w4oEpEGdipWAah5Xad5-Yii6Q@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
-X-Rspamd-Queue-Id: 4Nrmtq4LVhz9t7Z
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAHk-=wgLWcKq2AdrTmTOxJKn6w4oEpEGdipWAah5Xad5-Yii6Q@mail.gmail.com>
+User-Agent: Mutt/1.4i
+X-Greylist: Sender passed SPF test, not delayed by milter-greylist-4.2.3 (wind.enjellic.com [127.0.0.1]); Tue, 10 Jan 2023 05:01:30 -0600 (CST)
 
+On Fri, Jan 06, 2023 at 01:10:44PM -0800, Linus Torvalds wrote:
 
+Good morning, I hope the week is going well for everyone.
 
-On 9 Jan 2023, at 21:45, Miguel Ojeda wrote:
+> On Fri, Jan 6, 2023 at 12:54 PM Andy Lutomirski <luto@kernel.org> wrote:
+> >
+> > I'm going to suggest a very very different approach: fix secret
+> > storage in memory for real. That is, don't lock "super secret
+> > sensitive stuff" into memory, and don't wipe it either. *Encrypt* it.
+> 
+> I don't think you're wrong, but people will complain about key
+> management, and worry about that part instead.
+> 
+> Honestly, this is what SGX and CPU enclaves is _supposed_ to all do
+> for you, but then nobody uses it for various reasons.
 
-> People trying out the Rust support in the kernel may get
-> warnings and errors from `scripts/rust_is_available.sh`
-> from the `rustavailable` target or the build step.
->
-> Some of those users may be following the Quick Start guide,
-> but others may not (likely those getting warnings from
-> the build step instead of the target).
->
-> While the messages are fairly clear on what the problem is,
-> it may not be clear how to solve the particular issue,
-> especially for those not aware of the documentation.
->
-> We could add all sorts of details on the script for each one,
-> but it is better to point users to the documentation instead,
-> where it is easily readable in different formats. It also
-> avoids duplication.
->
-> Thus add a reference to the documentation whenever the script
-> fails or there is at least a warning.
-As I always use my systems rustc/bindgen, I always get the warning, which=
- already clutters the build output a bit. But I see why it is helpful, so=
- not a fan, but this patch is reasonable.
->
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
-Reviewed-by: Finn Behrens <fin@nyantec.com>
+The principal problem is that enclave technology was not made either
+ubiquitous or accessible, long story there, suitable for multiple
+snifters of single malt.
 
-Regards,
-Finn
-> ---
-> Note that is based on top of patch "kbuild: rust: remove -v
-> option of scripts/rust_is_available.sh" applied on v6.2-rc3:
-> https://lore.kernel.org/rust-for-linux/20230109061436.3146442-1-masahir=
-oy@kernel.org/
->
->  scripts/rust_is_available.sh | 17 +++++++++++++++++
->  1 file changed, 17 insertions(+)
->
-> diff --git a/scripts/rust_is_available.sh b/scripts/rust_is_available.s=
-h
-> index eaeafebf8572..c907cf881c2c 100755
-> --- a/scripts/rust_is_available.sh
-> +++ b/scripts/rust_is_available.sh
-> @@ -21,6 +21,20 @@ get_canonical_version()
->  	echo $((100000 * $1 + 100 * $2 + $3))
->  }
->
-> +# Print a reference to the setup guide in the documentation.
-> +print_docs_reference()
-> +{
-> +	echo >&2 "***"
-> +	echo >&2 "*** Please see Documentation/rust/quick-start.rst for detai=
-ls"
-> +	echo >&2 "*** on how to setup Rust support."
-> +	echo >&2 "***"
-> +}
-> +
-> +# If the script fails for any reason, or if there was any warning, the=
-n
-> +# print a reference to the documentation on exit.
-> +warning=3D0
-> +trap 'if [ $? -ne 0 ] || [ $warning -ne 0 ]; then print_docs_reference=
-; fi' EXIT
-> +
->  # Check that the Rust compiler exists.
->  if ! command -v "$RUSTC" >/dev/null; then
->  	echo >&2 "***"
-> @@ -62,6 +76,7 @@ if [ "$rust_compiler_cversion" -gt "$rust_compiler_mi=
-n_cversion" ]; then
->  	echo >&2 "***   Your version:     $rust_compiler_version"
->  	echo >&2 "***   Expected version: $rust_compiler_min_version"
->  	echo >&2 "***"
-> +	warning=3D1
->  fi
->
->  # Check that the Rust bindings generator is suitable.
-> @@ -89,6 +104,7 @@ if [ "$rust_bindings_generator_cversion" -gt "$rust_=
-bindings_generator_min_cvers
->  	echo >&2 "***   Your version:     $rust_bindings_generator_version"
->  	echo >&2 "***   Expected version: $rust_bindings_generator_min_versio=
-n"
->  	echo >&2 "***"
-> +	warning=3D1
->  fi
->
->  # Check that the `libclang` used by the Rust bindings generator is sui=
-table.
-> @@ -128,6 +144,7 @@ if [ "$cc_name" =3D Clang ]; then
->  		echo >&2 "***   libclang version: $bindgen_libclang_version"
->  		echo >&2 "***   Clang version:    $clang_version"
->  		echo >&2 "***"
-> +		warning=3D1
->  	fi
->  fi
->
-> -- =
+Unfortunately, the same goes for just about every other hardware
+security technology.  Every conversation comes down to; "what is the
+business case for the technology", which translated means, how much
+money are we going to make off it.
 
-> 2.39.0
+Encrypting memory based secrets, as an alternative to wiping them, is
+attractive, but hardware support is needed to do key management
+securely and correctly.  Even than, by definition, there will be a
+window when the material needs to be in memory as plaintext.
+
+A discussion can be had in this arena about perfection being the enemy
+of good.  If you are truely interested in perfection in this endeavor,
+you need to have a trusted platform definition and implementation.
+
+Which, if history is any indication, needs to be an open architecture
+with respect to both software and hardware.
+
+>                Linus
+
+Best wishes to everyone for a productive remainder of the week.
+
+As always,
+Dr. Greg
+
+The Quixote Project - Flailing at the Travails of Cybersecurity
