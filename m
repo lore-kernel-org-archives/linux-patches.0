@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A236FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:19:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65AB4C433EF;
-	Tue, 10 Jan 2023 18:19:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2CCD6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:19:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552A2C433EF;
+	Tue, 10 Jan 2023 18:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374786;
-	bh=mM9hQQdsSaOws+dktzHTN33AcjfUxJ/YEfP2W+5W2u4=;
+	s=korg; t=1673374789;
+	bh=ZY4/f/YyFx47o2IEsclZofW3dUb4bvE17OAZxYAB8NI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j/KRkr7wZ7jLDIIXdfMfvrxTi7HXEi305Qn6s0WHE6KhCadVsZcZ7m3K5bTjo3Elt
-	 sQCZ9Elk51mxRjBV1aq8zkCpeVJrWKIf+zxwTjajw4Egm2nn3nw1fyo62cygZDs9Ri
-	 NJoX2yGIbHvnYGsVq46b5wJaSofF0xj7/1FlQuok=
+	b=H8EtXaULQ7MKH3yaAUwI+TZ85jJ3GV86KKE0tkfbfEuG2JQsstiq6tNNawfse9kQi
+	 My6nRn4pU2o/uWj8sHoiwN5gB/NKd5JEv890l6UjzE0U90BXmJLCbPKuEX5Nvx19RS
+	 hOVnxXdnuUCDE7NrHCx5mxzPkxfTt3VUHw9pusaw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	slipper <slipper.alive@gmail.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Jiri Pirko <jiri@nvidia.com>,
 	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/159] net/ulp: prevent ULP without clone op from entering the LISTEN status
-Date: Tue, 10 Jan 2023 19:04:12 +0100
-Message-Id: <20230110180021.591659945@linuxfoundation.org>
+Subject: [PATCH 6.1 105/159] caif: fix memory leak in cfctrl_linkup_request()
+Date: Tue, 10 Jan 2023 19:04:13 +0100
+Message-Id: <20230110180021.622018919@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,82 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 2c02d41d71f90a5168391b6a5f2954112ba2307c ]
+[ Upstream commit fe69230f05897b3de758427b574fc98025dfc907 ]
 
-When an ULP-enabled socket enters the LISTEN status, the listener ULP data
-pointer is copied inside the child/accepted sockets by sk_clone_lock().
+When linktype is unknown or kzalloc failed in cfctrl_linkup_request(),
+pkt is not released. Add release process to error path.
 
-The relevant ULP can take care of de-duplicating the context pointer via
-the clone() operation, but only MPTCP and SMC implement such op.
-
-Other ULPs may end-up with a double-free at socket disposal time.
-
-We can't simply clear the ULP data at clone time, as TLS replaces the
-socket ops with custom ones assuming a valid TLS ULP context is
-available.
-
-Instead completely prevent clone-less ULP sockets from entering the
-LISTEN status.
-
-Fixes: 734942cc4ea6 ("tcp: ULP infrastructure")
-Reported-by: slipper <slipper.alive@gmail.com>
+Fixes: b482cd2053e3 ("net-caif: add CAIF core protocol stack")
+Fixes: 8d545c8f958f ("caif: Disconnect without waiting for response")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20230104065146.1153009-1-shaozhengchao@huawei.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/4b80c3d1dbe3d0ab072f80450c202d9bc88b4b03.1672740602.git.pabeni@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/inet_connection_sock.c | 14 ++++++++++++++
- net/ipv4/tcp_ulp.c              |  4 ++++
- 2 files changed, 18 insertions(+)
+ net/caif/cfctrl.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
-index 0465ada82799..647b3c6b575e 100644
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1200,12 +1200,26 @@ void inet_csk_prepare_forced_close(struct sock *sk)
- }
- EXPORT_SYMBOL(inet_csk_prepare_forced_close);
- 
-+static int inet_ulp_can_listen(const struct sock *sk)
-+{
-+	const struct inet_connection_sock *icsk = inet_csk(sk);
+diff --git a/net/caif/cfctrl.c b/net/caif/cfctrl.c
+index cc405d8c7c30..8480684f2762 100644
+--- a/net/caif/cfctrl.c
++++ b/net/caif/cfctrl.c
+@@ -269,11 +269,15 @@ int cfctrl_linkup_request(struct cflayer *layer,
+ 	default:
+ 		pr_warn("Request setup of bad link type = %d\n",
+ 			param->linktype);
++		cfpkt_destroy(pkt);
+ 		return -EINVAL;
+ 	}
+ 	req = kzalloc(sizeof(*req), GFP_KERNEL);
+-	if (!req)
++	if (!req) {
++		cfpkt_destroy(pkt);
+ 		return -ENOMEM;
++	}
 +
-+	if (icsk->icsk_ulp_ops && !icsk->icsk_ulp_ops->clone)
-+		return -EINVAL;
-+
-+	return 0;
-+}
-+
- int inet_csk_listen_start(struct sock *sk)
- {
- 	struct inet_connection_sock *icsk = inet_csk(sk);
- 	struct inet_sock *inet = inet_sk(sk);
- 	int err;
- 
-+	err = inet_ulp_can_listen(sk);
-+	if (unlikely(err))
-+		return err;
-+
- 	reqsk_queue_alloc(&icsk->icsk_accept_queue);
- 
- 	sk->sk_ack_backlog = 0;
-diff --git a/net/ipv4/tcp_ulp.c b/net/ipv4/tcp_ulp.c
-index 9ae50b1bd844..05b6077b9f2c 100644
---- a/net/ipv4/tcp_ulp.c
-+++ b/net/ipv4/tcp_ulp.c
-@@ -139,6 +139,10 @@ static int __tcp_set_ulp(struct sock *sk, const struct tcp_ulp_ops *ulp_ops)
- 	if (sk->sk_socket)
- 		clear_bit(SOCK_SUPPORT_ZC, &sk->sk_socket->flags);
- 
-+	err = -EINVAL;
-+	if (!ulp_ops->clone && sk->sk_state == TCP_LISTEN)
-+		goto out_err;
-+
- 	err = ulp_ops->init(sk);
- 	if (err)
- 		goto out_err;
+ 	req->client_layer = user_layer;
+ 	req->cmd = CFCTRL_CMD_LINK_SETUP;
+ 	req->param = *param;
 -- 
 2.35.1
 
