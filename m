@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D46D6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:29:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A515CC433F0;
-	Tue, 10 Jan 2023 18:29:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFCCA15D1
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:30:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9EAEBC433EF;
+	Tue, 10 Jan 2023 18:30:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375399;
-	bh=qJrV89CsO+/FvgnnSTAWxvS20GRi1b82ZGmEhhK76qc=;
+	s=korg; t=1673375402;
+	bh=RDlG89BbPXv1Aj8W02aAUx2HNRoExrRTQB546UcaMq4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hw9buUqCGJmlMUu3cr5peVgwKl4g0nctvhY4SqSFTvdBphtBycKH6jJj4q80R9GLT
-	 eYULdl2ce4pvxUe2uvtocJ7p0Dm2Tz3qTzXSOACdXn8YwDnSR/cetxLilllPlzpkyF
-	 bHRwrOd1jCMYujgMUTmja2XTuTxgD2dm4fCKLJiI=
+	b=I4FAtKcvoeVkuykNYBz+mbrZ/hzRzCZ9v+Dgl2ANKHU5QC9dJMzR3CACW0vQPolp5
+	 QY7+Yd8IouuZz2ZeHTDiQYoEHlmVc687gTinkF0Mxsp3iC7UeAbueTqeWPZac/BEb1
+	 UqCTh5PcCbGRxs005agGYKl6fyZ7zX4q+PWSQA4w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <linux@armlinux.org.uk>,
-	Jens Axboe <axboe@kernel.dk>,
-	Hui Tang <tanghui20@huawei.com>
-Subject: [PATCH 5.15 177/290] ARM: renumber bits related to _TIF_WORK_MASK
-Date: Tue, 10 Jan 2023 19:04:29 +0100
-Message-Id: <20230110180038.023473246@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 178/290] phy: qcom-qmp-combo: fix out-of-bounds clock access
+Date: Tue, 10 Jan 2023 19:04:30 +0100
+Message-Id: <20230110180038.054170887@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,50 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+[ Upstream commit d8a5b59c5fc75c99ba17e3eb1a8f580d8d172b28 ]
 
-commit 191f8453fc99a537ea78b727acea739782378b0d upstream.
+The SM8250 only uses three clocks but the DP configuration erroneously
+described four clocks.
 
-We want to ensure that the mask related to calling do_work_pending()
-is within the first 16 bits. Move bits unrelated to that outside of
-that range, to avoid spuriously calling do_work_pending() when we don't
-need to.
+In case the DP part of the PHY is initialised before the USB part, this
+would lead to uninitialised memory beyond the bulk-clocks array to be
+treated as a clock pointer as the clocks are requested based on the USB
+configuration.
 
-Cc: stable@vger.kernel.org
-Fixes: 32d59773da38 ("arm: add support for TIF_NOTIFY_SIGNAL")
-Reported-and-tested-by: Hui Tang <tanghui20@huawei.com>
-Suggested-by: Russell King (Oracle) <linux@armlinux.org.uk>
-Link: https://lore.kernel.org/lkml/7ecb8f3c-2aeb-a905-0d4a-aa768b9649b5@huawei.com/
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: aff188feb5e1 ("phy: qcom-qmp: add support for sm8250-usb3-dp phy")
+Cc: stable@vger.kernel.org	# 5.13
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20221114081346.5116-2-johan+linaro@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/include/asm/thread_info.h |   13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm/include/asm/thread_info.h
-+++ b/arch/arm/include/asm/thread_info.h
-@@ -129,15 +129,16 @@ extern int vfp_restore_user_hwstate(stru
- #define TIF_NEED_RESCHED	1	/* rescheduling necessary */
- #define TIF_NOTIFY_RESUME	2	/* callback before returning to user */
- #define TIF_UPROBE		3	/* breakpointed or singlestepping */
--#define TIF_SYSCALL_TRACE	4	/* syscall trace active */
--#define TIF_SYSCALL_AUDIT	5	/* syscall auditing active */
--#define TIF_SYSCALL_TRACEPOINT	6	/* syscall tracepoint instrumentation */
--#define TIF_SECCOMP		7	/* seccomp syscall filtering active */
--#define TIF_NOTIFY_SIGNAL	8	/* signal notifications exist */
-+#define TIF_NOTIFY_SIGNAL	4	/* signal notifications exist */
+diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+index 817298d8b0e3..a9687e040960 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+@@ -3805,8 +3805,8 @@ static const struct qmp_phy_cfg sm8250_dpphy_cfg = {
+ 	.serdes_tbl_hbr3	= qmp_v4_dp_serdes_tbl_hbr3,
+ 	.serdes_tbl_hbr3_num	= ARRAY_SIZE(qmp_v4_dp_serdes_tbl_hbr3),
  
- #define TIF_USING_IWMMXT	17
- #define TIF_MEMDIE		18	/* is terminating due to OOM killer */
--#define TIF_RESTORE_SIGMASK	20
-+#define TIF_RESTORE_SIGMASK	19
-+#define TIF_SYSCALL_TRACE	20	/* syscall trace active */
-+#define TIF_SYSCALL_AUDIT	21	/* syscall auditing active */
-+#define TIF_SYSCALL_TRACEPOINT	22	/* syscall tracepoint instrumentation */
-+#define TIF_SECCOMP		23	/* seccomp syscall filtering active */
-+
- 
- #define _TIF_SIGPENDING		(1 << TIF_SIGPENDING)
- #define _TIF_NEED_RESCHED	(1 << TIF_NEED_RESCHED)
+-	.clk_list		= qmp_v4_phy_clk_l,
+-	.num_clks		= ARRAY_SIZE(qmp_v4_phy_clk_l),
++	.clk_list		= qmp_v4_sm8250_usbphy_clk_l,
++	.num_clks		= ARRAY_SIZE(qmp_v4_sm8250_usbphy_clk_l),
+ 	.reset_list		= msm8996_usb3phy_reset_l,
+ 	.num_resets		= ARRAY_SIZE(msm8996_usb3phy_reset_l),
+ 	.vreg_list		= qmp_phy_vreg_l,
+-- 
+2.35.1
+
 
 
