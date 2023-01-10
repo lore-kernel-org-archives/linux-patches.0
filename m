@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD4CA6FCF
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:20:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47331C433EF;
-	Tue, 10 Jan 2023 18:20:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 163DE6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:20:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C1DC433D2;
+	Tue, 10 Jan 2023 18:20:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374847;
-	bh=+zJF0Zy2PAnDM+h3YOj5IHxJQygTkz4FiCB3DGO2e1I=;
+	s=korg; t=1673374844;
+	bh=4TF8tqhfo5TpvXjjkDOaufGntD8y+TLVXpOYik8QrpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J8SnAbNCsp7iCYbjbvDgClPafA50fLX6wf4yVh5aazyXmOOHCaPgYi9Jngr+sEzZo
-	 5xVnrLQwh7f4Gd+VU0nqcAEhNjgkiqbgvl3+sMleTpjYPqLtM6C4aPDjXjmswrRC4g
-	 zwYSVq1+cZxhhGSkWfGxwI2sxinwE4sAcY6oq3vE=
+	b=L1Fh+Rhvgp7z4/tTXNarABaCVfdgkiseJ9qHECXPuSAnM4qh6Q7VgSmYJBe8i6T1L
+	 deKhuIJJb7yOoOBYX2dZ218IgW4HzJBreI2/dmdb+dVHBmnMr9xmzMkkqr/NwCXY+g
+	 sNw2455oO0CJDvGlJAoxyoV88pPreUSlPTulXnJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.1 153/159] ksmbd: fix infinite loop in ksmbd_conn_handler_loop()
-Date: Tue, 10 Jan 2023 19:05:01 +0100
-Message-Id: <20230110180023.397196697@linuxfoundation.org>
+	=?UTF-8?q?=E5=B0=8F=E5=A4=AA?= <nospam@kota.moe>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 152/159] btrfs: handle case when repair happens with dev-replace
+Date: Tue, 10 Jan 2023 19:05:00 +0100
+Message-Id: <20230110180023.362391836@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,69 +36,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 83dcedd5540d4ac61376ddff5362f7d9f866a6ec upstream.
+[ Upstream commit d73a27b86fc722c28a26ec64002e3a7dc86d1c07 ]
 
-If kernel_recvmsg() return -EAGAIN in ksmbd_tcp_readv() and go round
-again, It will cause infinite loop issue. And all threads from next
-connections would be doing that. This patch add max retry count(2) to
-avoid it. kernel_recvmsg() will wait during 7sec timeout and try to
-retry two time if -EAGAIN is returned. And add flags of kvmalloc to
-__GFP_NOWARN and __GFP_NORETRY to disconnect immediately without
-retrying on memory alloation failure.
+[BUG]
+There is a bug report that a BUG_ON() in btrfs_repair_io_failure()
+(originally repair_io_failure() in v6.0 kernel) got triggered when
+replacing a unreliable disk:
 
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
-Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-18259
-Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  BTRFS warning (device sda1): csum failed root 257 ino 2397453 off 39624704 csum 0xb0d18c75 expected csum 0x4dae9c5e mirror 3
+  kernel BUG at fs/btrfs/extent_io.c:2380!
+  invalid opcode: 0000 [#1] PREEMPT SMP NOPTI
+  CPU: 9 PID: 3614331 Comm: kworker/u257:2 Tainted: G           OE      6.0.0-5-amd64 #1  Debian 6.0.10-2
+  Hardware name: Micro-Star International Co., Ltd. MS-7C60/TRX40 PRO WIFI (MS-7C60), BIOS 2.70 07/01/2021
+  Workqueue: btrfs-endio btrfs_end_bio_work [btrfs]
+  RIP: 0010:repair_io_failure+0x24a/0x260 [btrfs]
+  Call Trace:
+   <TASK>
+   clean_io_failure+0x14d/0x180 [btrfs]
+   end_bio_extent_readpage+0x412/0x6e0 [btrfs]
+   ? __switch_to+0x106/0x420
+   process_one_work+0x1c7/0x380
+   worker_thread+0x4d/0x380
+   ? rescuer_thread+0x3a0/0x3a0
+   kthread+0xe9/0x110
+   ? kthread_complete_and_exit+0x20/0x20
+   ret_from_fork+0x22/0x30
+
+[CAUSE]
+
+Before the BUG_ON(), we got some read errors from the replace target
+first, note the mirror number (3, which is beyond RAID1 duplication,
+thus it's read from the replace target device).
+
+Then at the BUG_ON() location, we are trying to writeback the repaired
+sectors back the failed device.
+
+The check looks like this:
+
+		ret = btrfs_map_block(fs_info, BTRFS_MAP_WRITE, logical,
+				      &map_length, &bioc, mirror_num);
+		if (ret)
+			goto out_counter_dec;
+		BUG_ON(mirror_num != bioc->mirror_num);
+
+But inside btrfs_map_block(), we can modify bioc->mirror_num especially
+for dev-replace:
+
+	if (dev_replace_is_ongoing && mirror_num == map->num_stripes + 1 &&
+	    !need_full_stripe(op) && dev_replace->tgtdev != NULL) {
+		ret = get_extra_mirror_from_replace(fs_info, logical, *length,
+						    dev_replace->srcdev->devid,
+						    &mirror_num,
+					    &physical_to_patch_in_first_stripe);
+		patch_the_first_stripe_for_dev_replace = 1;
+	}
+
+Thus if we're repairing the replace target device, we're going to
+trigger that BUG_ON().
+
+But in reality, the read failure from the replace target device may be
+that, our replace hasn't reached the range we're reading, thus we're
+reading garbage, but with replace running, the range would be properly
+filled later.
+
+Thus in that case, we don't need to do anything but let the replace
+routine to handle it.
+
+[FIX]
+Instead of a BUG_ON(), just skip the repair if we're repairing the
+device replace target device.
+
+Reported-by: 小太 <nospam@kota.moe>
+Link: https://lore.kernel.org/linux-btrfs/CACsxjPYyJGQZ+yvjzxA1Nn2LuqkYqTCcUH43S=+wXhyf8S00Ag@mail.gmail.com/
+CC: stable@vger.kernel.org # 6.0+
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ksmbd/connection.c    |    7 +++++--
- fs/ksmbd/transport_tcp.c |    5 ++++-
- 2 files changed, 9 insertions(+), 3 deletions(-)
+ fs/btrfs/extent_io.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
---- a/fs/ksmbd/connection.c
-+++ b/fs/ksmbd/connection.c
-@@ -316,9 +316,12 @@ int ksmbd_conn_handler_loop(void *p)
+diff --git a/fs/btrfs/extent_io.c b/fs/btrfs/extent_io.c
+index 4dcf22e051ff..acb3c5c3b025 100644
+--- a/fs/btrfs/extent_io.c
++++ b/fs/btrfs/extent_io.c
+@@ -580,7 +580,16 @@ static int repair_io_failure(struct btrfs_fs_info *fs_info, u64 ino, u64 start,
+ 				      &map_length, &bioc, mirror_num);
+ 		if (ret)
+ 			goto out_counter_dec;
+-		BUG_ON(mirror_num != bioc->mirror_num);
++		/*
++		 * This happens when dev-replace is also running, and the
++		 * mirror_num indicates the dev-replace target.
++		 *
++		 * In this case, we don't need to do anything, as the read
++		 * error just means the replace progress hasn't reached our
++		 * read range, and later replace routine would handle it well.
++		 */
++		if (mirror_num != bioc->mirror_num)
++			goto out_counter_dec;
+ 	}
  
- 		/* 4 for rfc1002 length field */
- 		size = pdu_size + 4;
--		conn->request_buf = kvmalloc(size, GFP_KERNEL);
-+		conn->request_buf = kvmalloc(size,
-+					     GFP_KERNEL |
-+					     __GFP_NOWARN |
-+					     __GFP_NORETRY);
- 		if (!conn->request_buf)
--			continue;
-+			break;
- 
- 		memcpy(conn->request_buf, hdr_buf, sizeof(hdr_buf));
- 		if (!ksmbd_smb_request(conn))
---- a/fs/ksmbd/transport_tcp.c
-+++ b/fs/ksmbd/transport_tcp.c
-@@ -295,6 +295,7 @@ static int ksmbd_tcp_readv(struct tcp_tr
- 	struct msghdr ksmbd_msg;
- 	struct kvec *iov;
- 	struct ksmbd_conn *conn = KSMBD_TRANS(t)->conn;
-+	int max_retry = 2;
- 
- 	iov = get_conn_iovec(t, nr_segs);
- 	if (!iov)
-@@ -321,9 +322,11 @@ static int ksmbd_tcp_readv(struct tcp_tr
- 		} else if (conn->status == KSMBD_SESS_NEED_RECONNECT) {
- 			total_read = -EAGAIN;
- 			break;
--		} else if (length == -ERESTARTSYS || length == -EAGAIN) {
-+		} else if ((length == -ERESTARTSYS || length == -EAGAIN) &&
-+			   max_retry) {
- 			usleep_range(1000, 2000);
- 			length = 0;
-+			max_retry--;
- 			continue;
- 		} else if (length <= 0) {
- 			total_read = -EAGAIN;
+ 	sector = bioc->stripes[bioc->mirror_num - 1].physical >> 9;
+-- 
+2.35.1
+
 
 
