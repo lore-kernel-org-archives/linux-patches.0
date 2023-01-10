@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85C916FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:29:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5A9C433F0;
-	Tue, 10 Jan 2023 18:29:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C7BD6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:29:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6551C433EF;
+	Tue, 10 Jan 2023 18:29:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375349;
-	bh=jGpGwlKI4Jq0DWdCVBZOUM7IzaG7s5nbf4MfBQaJJUQ=;
+	s=korg; t=1673375352;
+	bh=MmC78Fi0wtPXXJtVuKWOJiw9aVaLdwHpX40716mURks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=abybSjjv2fBSRWxKR48gifMd6VxPWfS3KHnDSQlFd39zdEaZV7BgZLQRGPXu6yIO0
-	 I/4Fkj5uRGpF2Yzwlg2M9/bSN0vrqjBgah+QIl9KCt2YcV/JbQXmRiWo7kH43JD+H1
-	 S+cNp1s0wI/q0UhCHD5jZdBA+6lgP3MD0C3NtJQ8=
+	b=V279YgoaxvxpHHYpZSxTuvOc/Ti5K/Lf6rgrjoxqTZTyF+LzA6W1fvN1MWm0K1SZ/
+	 K85iAJ+7U26rqbpffW1CMAatNKLltmNL0JYIrfgP6q1EkibtIR2FkGUByFyUHgZwBQ
+	 BQhciPVkkmSFW04fd77pL+wTubzQPSgWIaredVQ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
 	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 5.15 159/290] ext4: fix inode leak in ext4_xattr_inode_create() on an error path
-Date: Tue, 10 Jan 2023 19:04:11 +0100
-Message-Id: <20230110180037.375427935@linuxfoundation.org>
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.15 160/290] ext4: initialize quota before expanding inode in setproject ioctl
+Date: Tue, 10 Jan 2023 19:04:12 +0100
+Message-Id: <20230110180037.416491049@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -36,53 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ye Bin <yebin10@huawei.com>
+From: Jan Kara <jack@suse.cz>
 
-commit e4db04f7d3dbbe16680e0ded27ea2a65b10f766a upstream.
+commit 1485f726c6dec1a1f85438f2962feaa3d585526f upstream.
 
-There is issue as follows when do setxattr with inject fault:
+Make sure we initialize quotas before possibly expanding inode space
+(and thus maybe needing to allocate external xattr block) in
+ext4_ioctl_setproject(). This prevents not accounting the necessary
+block allocation.
 
-[localhost]# fsck.ext4  -fn  /dev/sda
-e2fsck 1.46.6-rc1 (12-Sep-2022)
-Pass 1: Checking inodes, blocks, and sizes
-Pass 2: Checking directory structure
-Pass 3: Checking directory connectivity
-Pass 4: Checking reference counts
-Unattached zero-length inode 15.  Clear? no
-
-Unattached inode 15
-Connect to /lost+found? no
-
-Pass 5: Checking group summary information
-
-/dev/sda: ********** WARNING: Filesystem still has errors **********
-
-/dev/sda: 15/655360 files (0.0% non-contiguous), 66755/2621440 blocks
-
-This occurs in 'ext4_xattr_inode_create()'. If 'ext4_mark_inode_dirty()'
-fails, dropping i_nlink of the inode is needed. Or will lead to inode leak.
-
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221208023233.1231330-5-yebin@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Signed-off-by: Jan Kara <jack@suse.cz>
 Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20221207115937.26601-1-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/ext4/ioctl.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -1441,6 +1441,9 @@ static struct inode *ext4_xattr_inode_cr
- 		if (!err)
- 			err = ext4_inode_attach_jinode(ea_inode);
- 		if (err) {
-+			if (ext4_xattr_inode_dec_ref(handle, ea_inode))
-+				ext4_warning_inode(ea_inode,
-+					"cleanup dec ref error %d", err);
- 			iput(ea_inode);
- 			return ERR_PTR(err);
- 		}
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -492,6 +492,10 @@ static int ext4_ioctl_setproject(struct
+ 	if (ext4_is_quota_file(inode))
+ 		return err;
+ 
++	err = dquot_initialize(inode);
++	if (err)
++		return err;
++
+ 	err = ext4_get_inode_loc(inode, &iloc);
+ 	if (err)
+ 		return err;
+@@ -507,10 +511,6 @@ static int ext4_ioctl_setproject(struct
+ 		brelse(iloc.bh);
+ 	}
+ 
+-	err = dquot_initialize(inode);
+-	if (err)
+-		return err;
+-
+ 	handle = ext4_journal_start(inode, EXT4_HT_QUOTA,
+ 		EXT4_QUOTA_INIT_BLOCKS(sb) +
+ 		EXT4_QUOTA_DEL_BLOCKS(sb) + 3);
 
 
