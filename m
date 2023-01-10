@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96B11A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:09:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A2E0C433EF;
-	Tue, 10 Jan 2023 18:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BD27A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:09:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADBC8C433D2;
+	Tue, 10 Jan 2023 18:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374141;
-	bh=W2ZA42LxkmspmCSpJqNhI9UlfDiggxcQmXejsapH+QM=;
+	s=korg; t=1673374144;
+	bh=Hwurm5mbX+g2QRl/NLU/ieeaFZOAJILoCq5INb9cfmc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HXrQe3HfQocOrXPS0xKe1GMN+hgf3RdAEsfFBxn7iYvESlA3rk6/HS/KQJXOpQ3mM
-	 t6Wp5+AzlBlmJpxTFoPnI6+OK62vahh7YiCZR+/QRDSP6pPBDMZYJT7rN154lU5uUv
-	 AubEKy7Dz6u8mykO2WuW2WJxUMKIrfTKKJUEl9bA=
+	b=sWMCp6e3wft4nMpbMC1utwyigjLagcfqAhBCLYPvVnVqUh0x+lXKT3bEAUmQivQM3
+	 2kmk/48w/H8+VpglTZ0IZHQwK4LQkOl/cFCF5h9ydsmzsfFu32De5EolgRuyoFDvQM
+	 n7fwB3DLymZBs3LgEoG0Fr5c5/xk8fEFpl2ABgtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eli Cohen <elic@nvidia.com>,
-	Maor Dickman <maord@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Hao Lan <lanhao@huawei.com>,
+	Guangbin Huang <huangguangbin2@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 060/148] net/mlx5: Lag, fix failure to cancel delayed bond work
-Date: Tue, 10 Jan 2023 19:02:44 +0100
-Message-Id: <20230110180019.126484175@linuxfoundation.org>
+Subject: [PATCH 6.0 061/148] net: hns3: refactor function hclge_mbx_handler()
+Date: Tue, 10 Jan 2023 19:02:45 +0100
+Message-Id: <20230110180019.157262646@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -36,64 +36,494 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eli Cohen <elic@nvidia.com>
+From: Hao Lan <lanhao@huawei.com>
 
-[ Upstream commit 4d1c1379d71777ddeda3e54f8fc26e9ecbfd1009 ]
+[ Upstream commit 09431ed8de874881e2d5d430042d718ae074d371 ]
 
-Commit 0d4e8ed139d8 ("net/mlx5: Lag, avoid lockdep warnings")
-accidentally removed a call to cancel delayed bond work thus it may
-cause queued delay to expire and fall on an already destroyed work
-queue.
+Currently, the function hclge_mbx_handler() has too many switch-case
+statements, it makes this function too long. To improve code readability,
+refactor this function and use lookup table instead.
 
-Fix by restoring the call cancel_delayed_work_sync() before
-destroying the workqueue.
-
-This prevents call trace such as this:
-
-[  329.230417] BUG: kernel NULL pointer dereference, address: 0000000000000000
- [  329.231444] #PF: supervisor write access in kernel mode
- [  329.232233] #PF: error_code(0x0002) - not-present page
- [  329.233007] PGD 0 P4D 0
- [  329.233476] Oops: 0002 [#1] SMP
- [  329.234012] CPU: 5 PID: 145 Comm: kworker/u20:4 Tainted: G OE      6.0.0-rc5_mlnx #1
- [  329.235282] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
- [  329.236868] Workqueue: mlx5_cmd_0000:08:00.1 cmd_work_handler [mlx5_core]
- [  329.237886] RIP: 0010:_raw_spin_lock+0xc/0x20
- [  329.238585] Code: f0 0f b1 17 75 02 f3 c3 89 c6 e9 6f 3c 5f ff 66 66 2e 0f 1f 84 00 00 00 00 00 0f 1f 40 00 0f 1f 44 00 00 31 c0 ba 01 00 00 00 <f0> 0f b1 17 75 02 f3 c3 89 c6 e9 45 3c 5f ff 0f 1f 44 00 00 0f 1f
- [  329.241156] RSP: 0018:ffffc900001b0e98 EFLAGS: 00010046
- [  329.241940] RAX: 0000000000000000 RBX: ffffffff82374ae0 RCX: 0000000000000000
- [  329.242954] RDX: 0000000000000001 RSI: 0000000000000014 RDI: 0000000000000000
- [  329.243974] RBP: ffff888106ccf000 R08: ffff8881004000c8 R09: ffff888100400000
- [  329.244990] R10: 0000000000000000 R11: ffffffff826669f8 R12: 0000000000002000
- [  329.246009] R13: 0000000000000005 R14: ffff888100aa7ce0 R15: ffff88852ca80000
- [  329.247030] FS:  0000000000000000(0000) GS:ffff88852ca80000(0000) knlGS:0000000000000000
- [  329.248260] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- [  329.249111] CR2: 0000000000000000 CR3: 000000016d675001 CR4: 0000000000770ee0
- [  329.250133] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
- [  329.251152] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
- [  329.252176] PKRU: 55555554
-
-Fixes: 0d4e8ed139d8 ("net/mlx5: Lag, avoid lockdep warnings")
-Signed-off-by: Eli Cohen <elic@nvidia.com>
-Reviewed-by: Maor Dickman <maord@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Hao Lan <lanhao@huawei.com>
+Signed-off-by: Guangbin Huang <huangguangbin2@huawei.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: fec7352117fa ("net: hns3: refine the handling for VF heartbeat")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../net/ethernet/hisilicon/hns3/hclge_mbx.h   |  11 +
+ .../hisilicon/hns3/hns3pf/hclge_mbx.c         | 415 ++++++++++++------
+ 2 files changed, 284 insertions(+), 142 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-index bbe810f3b373..c142011d2097 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lag/lag.c
-@@ -201,6 +201,7 @@ static void mlx5_ldev_free(struct kref *ref)
- 	if (ldev->nb.notifier_call)
- 		unregister_netdevice_notifier_net(&init_net, &ldev->nb);
- 	mlx5_lag_mp_cleanup(ldev);
-+	cancel_delayed_work_sync(&ldev->bond_work);
- 	destroy_workqueue(ldev->wq);
- 	mlx5_lag_mpesw_cleanup(ldev);
- 	mutex_destroy(&ldev->lock);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hclge_mbx.h b/drivers/net/ethernet/hisilicon/hns3/hclge_mbx.h
+index 7d4ae467f3ad..abcd7877f7d2 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hclge_mbx.h
++++ b/drivers/net/ethernet/hisilicon/hns3/hclge_mbx.h
+@@ -233,6 +233,17 @@ struct hclgevf_mbx_arq_ring {
+ 	__le16 msg_q[HCLGE_MBX_MAX_ARQ_MSG_NUM][HCLGE_MBX_MAX_ARQ_MSG_SIZE];
+ };
+ 
++struct hclge_dev;
++
++#define HCLGE_MBX_OPCODE_MAX 256
++struct hclge_mbx_ops_param {
++	struct hclge_vport *vport;
++	struct hclge_mbx_vf_to_pf_cmd *req;
++	struct hclge_respond_to_vf_msg *resp_msg;
++};
++
++typedef int (*hclge_mbx_ops_fn)(struct hclge_mbx_ops_param *param);
++
+ #define hclge_mbx_ring_ptr_move_crq(crq) \
+ 	(crq->next_to_use = (crq->next_to_use + 1) % crq->desc_num)
+ #define hclge_mbx_tail_ptr_move_arq(arq) \
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
+index e1012f7f9b73..a7b06c63143c 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3pf/hclge_mbx.c
+@@ -779,17 +779,284 @@ static void hclge_handle_vf_tbl(struct hclge_vport *vport,
+ 	}
+ }
+ 
++static int
++hclge_mbx_map_ring_to_vector_handler(struct hclge_mbx_ops_param *param)
++{
++	return hclge_map_unmap_ring_to_vf_vector(param->vport, true,
++						 param->req);
++}
++
++static int
++hclge_mbx_unmap_ring_to_vector_handler(struct hclge_mbx_ops_param *param)
++{
++	return hclge_map_unmap_ring_to_vf_vector(param->vport, false,
++						 param->req);
++}
++
++static int
++hclge_mbx_get_ring_vector_map_handler(struct hclge_mbx_ops_param *param)
++{
++	int ret;
++
++	ret = hclge_get_vf_ring_vector_map(param->vport, param->req,
++					   param->resp_msg);
++	if (ret)
++		dev_err(&param->vport->back->pdev->dev,
++			"PF fail(%d) to get VF ring vector map\n",
++			ret);
++	return ret;
++}
++
++static int hclge_mbx_set_promisc_mode_handler(struct hclge_mbx_ops_param *param)
++{
++	hclge_set_vf_promisc_mode(param->vport, param->req);
++	return 0;
++}
++
++static int hclge_mbx_set_unicast_handler(struct hclge_mbx_ops_param *param)
++{
++	int ret;
++
++	ret = hclge_set_vf_uc_mac_addr(param->vport, param->req);
++	if (ret)
++		dev_err(&param->vport->back->pdev->dev,
++			"PF fail(%d) to set VF UC MAC Addr\n",
++			ret);
++	return ret;
++}
++
++static int hclge_mbx_set_multicast_handler(struct hclge_mbx_ops_param *param)
++{
++	int ret;
++
++	ret = hclge_set_vf_mc_mac_addr(param->vport, param->req);
++	if (ret)
++		dev_err(&param->vport->back->pdev->dev,
++			"PF fail(%d) to set VF MC MAC Addr\n",
++			ret);
++	return ret;
++}
++
++static int hclge_mbx_set_vlan_handler(struct hclge_mbx_ops_param *param)
++{
++	int ret;
++
++	ret = hclge_set_vf_vlan_cfg(param->vport, param->req, param->resp_msg);
++	if (ret)
++		dev_err(&param->vport->back->pdev->dev,
++			"PF failed(%d) to config VF's VLAN\n",
++			ret);
++	return ret;
++}
++
++static int hclge_mbx_set_alive_handler(struct hclge_mbx_ops_param *param)
++{
++	int ret;
++
++	ret = hclge_set_vf_alive(param->vport, param->req);
++	if (ret)
++		dev_err(&param->vport->back->pdev->dev,
++			"PF failed(%d) to set VF's ALIVE\n",
++			ret);
++	return ret;
++}
++
++static int hclge_mbx_get_qinfo_handler(struct hclge_mbx_ops_param *param)
++{
++	hclge_get_vf_queue_info(param->vport, param->resp_msg);
++	return 0;
++}
++
++static int hclge_mbx_get_qdepth_handler(struct hclge_mbx_ops_param *param)
++{
++	hclge_get_vf_queue_depth(param->vport, param->resp_msg);
++	return 0;
++}
++
++static int hclge_mbx_get_basic_info_handler(struct hclge_mbx_ops_param *param)
++{
++	hclge_get_basic_info(param->vport, param->resp_msg);
++	return 0;
++}
++
++static int hclge_mbx_get_link_status_handler(struct hclge_mbx_ops_param *param)
++{
++	int ret;
++
++	ret = hclge_push_vf_link_status(param->vport);
++	if (ret)
++		dev_err(&param->vport->back->pdev->dev,
++			"failed to inform link stat to VF, ret = %d\n",
++			ret);
++	return ret;
++}
++
++static int hclge_mbx_queue_reset_handler(struct hclge_mbx_ops_param *param)
++{
++	return hclge_mbx_reset_vf_queue(param->vport, param->req,
++					param->resp_msg);
++}
++
++static int hclge_mbx_reset_handler(struct hclge_mbx_ops_param *param)
++{
++	return hclge_reset_vf(param->vport);
++}
++
++static int hclge_mbx_keep_alive_handler(struct hclge_mbx_ops_param *param)
++{
++	hclge_vf_keep_alive(param->vport);
++	return 0;
++}
++
++static int hclge_mbx_set_mtu_handler(struct hclge_mbx_ops_param *param)
++{
++	int ret;
++
++	ret = hclge_set_vf_mtu(param->vport, param->req);
++	if (ret)
++		dev_err(&param->vport->back->pdev->dev,
++			"VF fail(%d) to set mtu\n", ret);
++	return ret;
++}
++
++static int hclge_mbx_get_qid_in_pf_handler(struct hclge_mbx_ops_param *param)
++{
++	return hclge_get_queue_id_in_pf(param->vport, param->req,
++					param->resp_msg);
++}
++
++static int hclge_mbx_get_rss_key_handler(struct hclge_mbx_ops_param *param)
++{
++	return hclge_get_rss_key(param->vport, param->req, param->resp_msg);
++}
++
++static int hclge_mbx_get_link_mode_handler(struct hclge_mbx_ops_param *param)
++{
++	hclge_get_link_mode(param->vport, param->req);
++	return 0;
++}
++
++static int
++hclge_mbx_get_vf_flr_status_handler(struct hclge_mbx_ops_param *param)
++{
++	hclge_rm_vport_all_mac_table(param->vport, false,
++				     HCLGE_MAC_ADDR_UC);
++	hclge_rm_vport_all_mac_table(param->vport, false,
++				     HCLGE_MAC_ADDR_MC);
++	hclge_rm_vport_all_vlan_table(param->vport, false);
++	return 0;
++}
++
++static int hclge_mbx_vf_uninit_handler(struct hclge_mbx_ops_param *param)
++{
++	hclge_rm_vport_all_mac_table(param->vport, true,
++				     HCLGE_MAC_ADDR_UC);
++	hclge_rm_vport_all_mac_table(param->vport, true,
++				     HCLGE_MAC_ADDR_MC);
++	hclge_rm_vport_all_vlan_table(param->vport, true);
++	return 0;
++}
++
++static int hclge_mbx_get_media_type_handler(struct hclge_mbx_ops_param *param)
++{
++	hclge_get_vf_media_type(param->vport, param->resp_msg);
++	return 0;
++}
++
++static int hclge_mbx_push_link_status_handler(struct hclge_mbx_ops_param *param)
++{
++	hclge_handle_link_change_event(param->vport->back, param->req);
++	return 0;
++}
++
++static int hclge_mbx_get_mac_addr_handler(struct hclge_mbx_ops_param *param)
++{
++	hclge_get_vf_mac_addr(param->vport, param->resp_msg);
++	return 0;
++}
++
++static int hclge_mbx_ncsi_error_handler(struct hclge_mbx_ops_param *param)
++{
++	hclge_handle_ncsi_error(param->vport->back);
++	return 0;
++}
++
++static int hclge_mbx_handle_vf_tbl_handler(struct hclge_mbx_ops_param *param)
++{
++	hclge_handle_vf_tbl(param->vport, param->req);
++	return 0;
++}
++
++static const hclge_mbx_ops_fn hclge_mbx_ops_list[HCLGE_MBX_OPCODE_MAX] = {
++	[HCLGE_MBX_RESET]   = hclge_mbx_reset_handler,
++	[HCLGE_MBX_SET_UNICAST] = hclge_mbx_set_unicast_handler,
++	[HCLGE_MBX_SET_MULTICAST] = hclge_mbx_set_multicast_handler,
++	[HCLGE_MBX_SET_VLAN] = hclge_mbx_set_vlan_handler,
++	[HCLGE_MBX_MAP_RING_TO_VECTOR] = hclge_mbx_map_ring_to_vector_handler,
++	[HCLGE_MBX_UNMAP_RING_TO_VECTOR] = hclge_mbx_unmap_ring_to_vector_handler,
++	[HCLGE_MBX_SET_PROMISC_MODE] = hclge_mbx_set_promisc_mode_handler,
++	[HCLGE_MBX_GET_QINFO] = hclge_mbx_get_qinfo_handler,
++	[HCLGE_MBX_GET_QDEPTH] = hclge_mbx_get_qdepth_handler,
++	[HCLGE_MBX_GET_BASIC_INFO] = hclge_mbx_get_basic_info_handler,
++	[HCLGE_MBX_GET_RSS_KEY] = hclge_mbx_get_rss_key_handler,
++	[HCLGE_MBX_GET_MAC_ADDR] = hclge_mbx_get_mac_addr_handler,
++	[HCLGE_MBX_GET_LINK_STATUS] = hclge_mbx_get_link_status_handler,
++	[HCLGE_MBX_QUEUE_RESET] = hclge_mbx_queue_reset_handler,
++	[HCLGE_MBX_KEEP_ALIVE] = hclge_mbx_keep_alive_handler,
++	[HCLGE_MBX_SET_ALIVE] = hclge_mbx_set_alive_handler,
++	[HCLGE_MBX_SET_MTU] = hclge_mbx_set_mtu_handler,
++	[HCLGE_MBX_GET_QID_IN_PF] = hclge_mbx_get_qid_in_pf_handler,
++	[HCLGE_MBX_GET_LINK_MODE] = hclge_mbx_get_link_mode_handler,
++	[HCLGE_MBX_GET_MEDIA_TYPE] = hclge_mbx_get_media_type_handler,
++	[HCLGE_MBX_VF_UNINIT] = hclge_mbx_vf_uninit_handler,
++	[HCLGE_MBX_HANDLE_VF_TBL] = hclge_mbx_handle_vf_tbl_handler,
++	[HCLGE_MBX_GET_RING_VECTOR_MAP] = hclge_mbx_get_ring_vector_map_handler,
++	[HCLGE_MBX_GET_VF_FLR_STATUS] = hclge_mbx_get_vf_flr_status_handler,
++	[HCLGE_MBX_PUSH_LINK_STATUS] = hclge_mbx_push_link_status_handler,
++	[HCLGE_MBX_NCSI_ERROR] = hclge_mbx_ncsi_error_handler,
++};
++
++static void hclge_mbx_request_handling(struct hclge_mbx_ops_param *param)
++{
++	hclge_mbx_ops_fn cmd_func = NULL;
++	struct hclge_dev *hdev;
++	int ret = 0;
++
++	hdev = param->vport->back;
++	cmd_func = hclge_mbx_ops_list[param->req->msg.code];
++	if (cmd_func)
++		ret = cmd_func(param);
++	else
++		dev_err(&hdev->pdev->dev,
++			"un-supported mailbox message, code = %u\n",
++			param->req->msg.code);
++
++	/* PF driver should not reply IMP */
++	if (hnae3_get_bit(param->req->mbx_need_resp, HCLGE_MBX_NEED_RESP_B) &&
++	    param->req->msg.code < HCLGE_MBX_GET_VF_FLR_STATUS) {
++		param->resp_msg->status = ret;
++		if (time_is_before_jiffies(hdev->last_mbx_scheduled +
++					   HCLGE_MBX_SCHED_TIMEOUT))
++			dev_warn(&hdev->pdev->dev,
++				 "resp vport%u mbx(%u,%u) late\n",
++				 param->req->mbx_src_vfid,
++				 param->req->msg.code,
++				 param->req->msg.subcode);
++
++		hclge_gen_resp_to_vf(param->vport, param->req, param->resp_msg);
++	}
++}
++
+ void hclge_mbx_handler(struct hclge_dev *hdev)
+ {
+ 	struct hclge_comm_cmq_ring *crq = &hdev->hw.hw.cmq.crq;
+ 	struct hclge_respond_to_vf_msg resp_msg;
+ 	struct hclge_mbx_vf_to_pf_cmd *req;
+-	struct hclge_vport *vport;
++	struct hclge_mbx_ops_param param;
+ 	struct hclge_desc *desc;
+-	bool is_del = false;
+ 	unsigned int flag;
+-	int ret = 0;
+ 
++	param.resp_msg = &resp_msg;
+ 	/* handle all the mailbox requests in the queue */
+ 	while (!hclge_cmd_crq_empty(&hdev->hw)) {
+ 		if (test_bit(HCLGE_COMM_STATE_CMD_DISABLE,
+@@ -814,152 +1081,16 @@ void hclge_mbx_handler(struct hclge_dev *hdev)
+ 			continue;
+ 		}
+ 
+-		vport = &hdev->vport[req->mbx_src_vfid];
+-
+ 		trace_hclge_pf_mbx_get(hdev, req);
+ 
+ 		/* clear the resp_msg before processing every mailbox message */
+ 		memset(&resp_msg, 0, sizeof(resp_msg));
+-
+-		switch (req->msg.code) {
+-		case HCLGE_MBX_MAP_RING_TO_VECTOR:
+-			ret = hclge_map_unmap_ring_to_vf_vector(vport, true,
+-								req);
+-			break;
+-		case HCLGE_MBX_UNMAP_RING_TO_VECTOR:
+-			ret = hclge_map_unmap_ring_to_vf_vector(vport, false,
+-								req);
+-			break;
+-		case HCLGE_MBX_GET_RING_VECTOR_MAP:
+-			ret = hclge_get_vf_ring_vector_map(vport, req,
+-							   &resp_msg);
+-			if (ret)
+-				dev_err(&hdev->pdev->dev,
+-					"PF fail(%d) to get VF ring vector map\n",
+-					ret);
+-			break;
+-		case HCLGE_MBX_SET_PROMISC_MODE:
+-			hclge_set_vf_promisc_mode(vport, req);
+-			break;
+-		case HCLGE_MBX_SET_UNICAST:
+-			ret = hclge_set_vf_uc_mac_addr(vport, req);
+-			if (ret)
+-				dev_err(&hdev->pdev->dev,
+-					"PF fail(%d) to set VF UC MAC Addr\n",
+-					ret);
+-			break;
+-		case HCLGE_MBX_SET_MULTICAST:
+-			ret = hclge_set_vf_mc_mac_addr(vport, req);
+-			if (ret)
+-				dev_err(&hdev->pdev->dev,
+-					"PF fail(%d) to set VF MC MAC Addr\n",
+-					ret);
+-			break;
+-		case HCLGE_MBX_SET_VLAN:
+-			ret = hclge_set_vf_vlan_cfg(vport, req, &resp_msg);
+-			if (ret)
+-				dev_err(&hdev->pdev->dev,
+-					"PF failed(%d) to config VF's VLAN\n",
+-					ret);
+-			break;
+-		case HCLGE_MBX_SET_ALIVE:
+-			ret = hclge_set_vf_alive(vport, req);
+-			if (ret)
+-				dev_err(&hdev->pdev->dev,
+-					"PF failed(%d) to set VF's ALIVE\n",
+-					ret);
+-			break;
+-		case HCLGE_MBX_GET_QINFO:
+-			hclge_get_vf_queue_info(vport, &resp_msg);
+-			break;
+-		case HCLGE_MBX_GET_QDEPTH:
+-			hclge_get_vf_queue_depth(vport, &resp_msg);
+-			break;
+-		case HCLGE_MBX_GET_BASIC_INFO:
+-			hclge_get_basic_info(vport, &resp_msg);
+-			break;
+-		case HCLGE_MBX_GET_LINK_STATUS:
+-			ret = hclge_push_vf_link_status(vport);
+-			if (ret)
+-				dev_err(&hdev->pdev->dev,
+-					"failed to inform link stat to VF, ret = %d\n",
+-					ret);
+-			break;
+-		case HCLGE_MBX_QUEUE_RESET:
+-			ret = hclge_mbx_reset_vf_queue(vport, req, &resp_msg);
+-			break;
+-		case HCLGE_MBX_RESET:
+-			ret = hclge_reset_vf(vport);
+-			break;
+-		case HCLGE_MBX_KEEP_ALIVE:
+-			hclge_vf_keep_alive(vport);
+-			break;
+-		case HCLGE_MBX_SET_MTU:
+-			ret = hclge_set_vf_mtu(vport, req);
+-			if (ret)
+-				dev_err(&hdev->pdev->dev,
+-					"VF fail(%d) to set mtu\n", ret);
+-			break;
+-		case HCLGE_MBX_GET_QID_IN_PF:
+-			ret = hclge_get_queue_id_in_pf(vport, req, &resp_msg);
+-			break;
+-		case HCLGE_MBX_GET_RSS_KEY:
+-			ret = hclge_get_rss_key(vport, req, &resp_msg);
+-			break;
+-		case HCLGE_MBX_GET_LINK_MODE:
+-			hclge_get_link_mode(vport, req);
+-			break;
+-		case HCLGE_MBX_GET_VF_FLR_STATUS:
+-		case HCLGE_MBX_VF_UNINIT:
+-			is_del = req->msg.code == HCLGE_MBX_VF_UNINIT;
+-			hclge_rm_vport_all_mac_table(vport, is_del,
+-						     HCLGE_MAC_ADDR_UC);
+-			hclge_rm_vport_all_mac_table(vport, is_del,
+-						     HCLGE_MAC_ADDR_MC);
+-			hclge_rm_vport_all_vlan_table(vport, is_del);
+-			break;
+-		case HCLGE_MBX_GET_MEDIA_TYPE:
+-			hclge_get_vf_media_type(vport, &resp_msg);
+-			break;
+-		case HCLGE_MBX_PUSH_LINK_STATUS:
+-			hclge_handle_link_change_event(hdev, req);
+-			break;
+-		case HCLGE_MBX_GET_MAC_ADDR:
+-			hclge_get_vf_mac_addr(vport, &resp_msg);
+-			break;
+-		case HCLGE_MBX_NCSI_ERROR:
+-			hclge_handle_ncsi_error(hdev);
+-			break;
+-		case HCLGE_MBX_HANDLE_VF_TBL:
+-			hclge_handle_vf_tbl(vport, req);
+-			break;
+-		default:
+-			dev_err(&hdev->pdev->dev,
+-				"un-supported mailbox message, code = %u\n",
+-				req->msg.code);
+-			break;
+-		}
+-
+-		/* PF driver should not reply IMP */
+-		if (hnae3_get_bit(req->mbx_need_resp, HCLGE_MBX_NEED_RESP_B) &&
+-		    req->msg.code < HCLGE_MBX_GET_VF_FLR_STATUS) {
+-			resp_msg.status = ret;
+-			if (time_is_before_jiffies(hdev->last_mbx_scheduled +
+-						   HCLGE_MBX_SCHED_TIMEOUT))
+-				dev_warn(&hdev->pdev->dev,
+-					 "resp vport%u mbx(%u,%u) late\n",
+-					 req->mbx_src_vfid,
+-					 req->msg.code,
+-					 req->msg.subcode);
+-
+-			hclge_gen_resp_to_vf(vport, req, &resp_msg);
+-		}
++		param.vport = &hdev->vport[req->mbx_src_vfid];
++		param.req = req;
++		hclge_mbx_request_handling(&param);
+ 
+ 		crq->desc[crq->next_to_use].flag = 0;
+ 		hclge_mbx_ring_ptr_move_crq(crq);
+-
+-		/* reinitialize ret after complete the mbx message processing */
+-		ret = 0;
+ 	}
+ 
+ 	/* Write back CMDQ_RQ header pointer, M7 need this pointer */
 -- 
 2.35.1
 
