@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D414EA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:10:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BAE4C433D2;
-	Tue, 10 Jan 2023 18:10:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76525A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:10:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19C9C433D2;
+	Tue, 10 Jan 2023 18:10:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374214;
-	bh=C0j+hwubaVzbBy2zsflSWNv6PYZpDP0K3kDviiz78Wo=;
+	s=korg; t=1673374217;
+	bh=E4zifE4q5H41KJGt0KstlOFc+Yql2FapGIGLWhl4NCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L2uQYvqs73Qw1680r9QKG4SHoQz5hcriERB4csXT8jlqC8slFSeISZ+DCjHzVOqKE
-	 nzCAfYzPcxZeZnkpW++r/hecupo9K/Z4HhEhYClsHgMaAh285m3dOlkXGM0yrQ6p/+
-	 5rscG4+yDAHrKSP3dd6rbgMULoNgDMUwhv5DRU7A=
+	b=u5mbVrlCUwNTR0To0tFTJTsL6DdJWJx8ISpydo8Nan8fl2rK+Fh23YEQI7JomXBil
+	 jHL0I7fES5Fp0XCBKtCeDRyCRLj5n7UUwWOBA1NqgkBUqdEufPBVuRWcE0msoHHXN5
+	 sRECkBSQle4TAyz5igRDTEw9WSofMtBeH7JombD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzbot+bed15dbf10294aa4f2ae@syzkaller.appspotmail.com>,
-	Hillf Danton <hdanton@sina.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Daniil Tatianin <d-tatianin@yandex-team.ru>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 088/148] fs/ntfs3: dont hold ni_lock when calling truncate_setsize()
-Date: Tue, 10 Jan 2023 19:03:12 +0100
-Message-Id: <20230110180019.988725224@linuxfoundation.org>
+Subject: [PATCH 6.0 089/148] drivers/net/bonding/bond_3ad: return when theres no aggregator
+Date: Tue, 10 Jan 2023 19:03:13 +0100
+Message-Id: <20230110180020.019061958@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -37,49 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-[ Upstream commit 0226635c304cfd5c9db9b78c259cb713819b057e ]
+[ Upstream commit 9c807965483f42df1d053b7436eedd6cf28ece6f ]
 
-syzbot is reporting hung task at do_user_addr_fault() [1], for there is
-a silent deadlock between PG_locked bit and ni_lock lock.
+Otherwise we would dereference a NULL aggregator pointer when calling
+__set_agg_ports_ready on the line below.
 
-Since filemap_update_page() calls filemap_read_folio() after calling
-folio_trylock() which will set PG_locked bit, ntfs_truncate() must not
-call truncate_setsize() which will wait for PG_locked bit to be cleared
-when holding ni_lock lock.
+Found by Linux Verification Center (linuxtesting.org) with the SVACE
+static analysis tool.
 
-Link: https://lore.kernel.org/all/00000000000060d41f05f139aa44@google.com/
-Link: https://syzkaller.appspot.com/bug?extid=bed15dbf10294aa4f2ae [1]
-Reported-by: syzbot <syzbot+bed15dbf10294aa4f2ae@syzkaller.appspotmail.com>
-Debugged-by: Linus Torvalds <torvalds@linux-foundation.org>
-Co-developed-by: Hillf Danton <hdanton@sina.com>
-Signed-off-by: Hillf Danton <hdanton@sina.com>
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Fixes: 4342306f0f0d ("fs/ntfs3: Add file operations and implementation")
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ntfs3/file.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/bonding/bond_3ad.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ntfs3/file.c b/fs/ntfs3/file.c
-index 4f2ffc7ef296..f31c0389a2e7 100644
---- a/fs/ntfs3/file.c
-+++ b/fs/ntfs3/file.c
-@@ -486,10 +486,10 @@ static int ntfs_truncate(struct inode *inode, loff_t new_size)
- 
- 	new_valid = ntfs_up_block(sb, min_t(u64, ni->i_valid, new_size));
- 
--	ni_lock(ni);
--
- 	truncate_setsize(inode, new_size);
- 
-+	ni_lock(ni);
-+
- 	down_write(&ni->file.run_lock);
- 	err = attr_set_size(ni, ATTR_DATA, NULL, 0, &ni->file.run, new_size,
- 			    &new_valid, ni->mi.sbi->options->prealloc, NULL);
+diff --git a/drivers/net/bonding/bond_3ad.c b/drivers/net/bonding/bond_3ad.c
+index e58a1e0cadd2..9270977e6c7f 100644
+--- a/drivers/net/bonding/bond_3ad.c
++++ b/drivers/net/bonding/bond_3ad.c
+@@ -1540,6 +1540,7 @@ static void ad_port_selection_logic(struct port *port, bool *update_slave_arr)
+ 			slave_err(bond->dev, port->slave->dev,
+ 				  "Port %d did not find a suitable aggregator\n",
+ 				  port->actor_port_number);
++			return;
+ 		}
+ 	}
+ 	/* if all aggregator's ports are READY_N == TRUE, set ready=TRUE
 -- 
 2.35.1
 
