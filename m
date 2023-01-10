@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9198FA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:17:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08718C433D2;
-	Tue, 10 Jan 2023 18:17:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58E1A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:17:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0C4C433EF;
+	Tue, 10 Jan 2023 18:17:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374629;
-	bh=aF9XGd847OBV9ASn/3QWJID57AOLr6pHJv2XGS0Veog=;
+	s=korg; t=1673374632;
+	bh=bl0m86tgHe2ysPxMbV8YWTNzCdQHm8EQ/RCwp3e/c7g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GbgJsR0PoVQzhxALvxoHS8TqSjPJ5R/aO1g2mJQgBgooBuVPr8ljqjtQdJHx0JbMY
-	 jgFGB6OH2Xcfiy1pYwx082XU+i91lphm365maujeYQ1X9ELeV6lmhBsLKdgldnUm7G
-	 9fgqaicNukWfTkaKM1ZDUIYlt5/GoPvED397YJHI=
+	b=YnCHYU3dCo1FrSPfEFyS/vuL/doInIr/jxSfDKVqYUj0HuU7JMLXtxUJ7zYl5LVAD
+	 TnkVsSRr8PXBP9pJinv00PY/Ibgxsm0IexFVp0VWca9d/Ie/lrDXxdLHH03EY8bB3D
+	 bDlcgaT/c2/5DjdkdCPq+lA60mDrV0xxc6BAeaJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlo Caione <ccaione@baylibre.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	Xiubo Li <xiubli@redhat.com>,
+	Christoph Hellwig <hch@infradead.org>,
+	Jeff Layton <jlayton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/159] drm/meson: Reduce the FIFO lines held when AFBC is not used
-Date: Tue, 10 Jan 2023 19:03:48 +0100
-Message-Id: <20230110180020.859872586@linuxfoundation.org>
+Subject: [PATCH 6.1 081/159] filelock: new helper: vfs_inode_has_locks
+Date: Tue, 10 Jan 2023 19:03:49 +0100
+Message-Id: <20230110180020.891073504@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,54 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlo Caione <ccaione@baylibre.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 3b754ed6d1cd90017e66e5cc16f3923e4a952ffc ]
+[ Upstream commit ab1ddef98a715eddb65309ffa83267e4e84a571e ]
 
-Having a bigger number of FIFO lines held after vsync is only useful to
-SoCs using AFBC to give time to the AFBC decoder to be reset, configured
-and enabled again.
+Ceph has a need to know whether a particular inode has any locks set on
+it. It's currently tracking that by a num_locks field in its
+filp->private_data, but that's problematic as it tries to decrement this
+field when releasing locks and that can race with the file being torn
+down.
 
-For SoCs not using AFBC this, on the contrary, is causing on some
-displays issues and a few pixels vertical offset in the displayed image.
+Add a new vfs_inode_has_locks helper that just returns whether any locks
+are currently held on the inode.
 
-Conditionally increase the number of lines held after vsync only for
-SoCs using AFBC, leaving the default value for all the others.
-
-Fixes: 24e0d4058eff ("drm/meson: hold 32 lines after vsync to give time for AFBC start")
-Signed-off-by: Carlo Caione <ccaione@baylibre.com>
-Acked-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
-[narmstrong: added fixes tag]
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221216-afbc_s905x-v1-0-033bebf780d9@baylibre.com
+Reviewed-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@infradead.org>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Stable-dep-of: 461ab10ef7e6 ("ceph: switch to vfs_inode_has_locks() to fix file lock bug")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/meson/meson_viu.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ fs/locks.c         | 23 +++++++++++++++++++++++
+ include/linux/fs.h |  6 ++++++
+ 2 files changed, 29 insertions(+)
 
-diff --git a/drivers/gpu/drm/meson/meson_viu.c b/drivers/gpu/drm/meson/meson_viu.c
-index d4b907889a21..cd399b0b7181 100644
---- a/drivers/gpu/drm/meson/meson_viu.c
-+++ b/drivers/gpu/drm/meson/meson_viu.c
-@@ -436,15 +436,14 @@ void meson_viu_init(struct meson_drm *priv)
+diff --git a/fs/locks.c b/fs/locks.c
+index 607f94a0e789..7dc129cc1a26 100644
+--- a/fs/locks.c
++++ b/fs/locks.c
+@@ -2669,6 +2669,29 @@ int vfs_cancel_lock(struct file *filp, struct file_lock *fl)
+ }
+ EXPORT_SYMBOL_GPL(vfs_cancel_lock);
  
- 	/* Initialize OSD1 fifo control register */
- 	reg = VIU_OSD_DDR_PRIORITY_URGENT |
--		VIU_OSD_HOLD_FIFO_LINES(31) |
- 		VIU_OSD_FIFO_DEPTH_VAL(32) | /* fifo_depth_val: 32*8=256 */
- 		VIU_OSD_WORDS_PER_BURST(4) | /* 4 words in 1 burst */
- 		VIU_OSD_FIFO_LIMITS(2);      /* fifo_lim: 2*16=32 */
++/**
++ * vfs_inode_has_locks - are any file locks held on @inode?
++ * @inode: inode to check for locks
++ *
++ * Return true if there are any FL_POSIX or FL_FLOCK locks currently
++ * set on @inode.
++ */
++bool vfs_inode_has_locks(struct inode *inode)
++{
++	struct file_lock_context *ctx;
++	bool ret;
++
++	ctx = smp_load_acquire(&inode->i_flctx);
++	if (!ctx)
++		return false;
++
++	spin_lock(&ctx->flc_lock);
++	ret = !list_empty(&ctx->flc_posix) || !list_empty(&ctx->flc_flock);
++	spin_unlock(&ctx->flc_lock);
++	return ret;
++}
++EXPORT_SYMBOL_GPL(vfs_inode_has_locks);
++
+ #ifdef CONFIG_PROC_FS
+ #include <linux/proc_fs.h>
+ #include <linux/seq_file.h>
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index 6b115bce14b9..081d1f539628 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -1170,6 +1170,7 @@ extern int locks_delete_block(struct file_lock *);
+ extern int vfs_test_lock(struct file *, struct file_lock *);
+ extern int vfs_lock_file(struct file *, unsigned int, struct file_lock *, struct file_lock *);
+ extern int vfs_cancel_lock(struct file *filp, struct file_lock *fl);
++bool vfs_inode_has_locks(struct inode *inode);
+ extern int locks_lock_inode_wait(struct inode *inode, struct file_lock *fl);
+ extern int __break_lease(struct inode *inode, unsigned int flags, unsigned int type);
+ extern void lease_get_mtime(struct inode *, struct timespec64 *time);
+@@ -1284,6 +1285,11 @@ static inline int vfs_cancel_lock(struct file *filp, struct file_lock *fl)
+ 	return 0;
+ }
  
- 	if (meson_vpu_is_compatible(priv, VPU_COMPATIBLE_G12A))
--		reg |= VIU_OSD_BURST_LENGTH_32;
-+		reg |= (VIU_OSD_BURST_LENGTH_32 | VIU_OSD_HOLD_FIFO_LINES(31));
- 	else
--		reg |= VIU_OSD_BURST_LENGTH_64;
-+		reg |= (VIU_OSD_BURST_LENGTH_64 | VIU_OSD_HOLD_FIFO_LINES(4));
- 
- 	writel_relaxed(reg, priv->io_base + _REG(VIU_OSD1_FIFO_CTRL_STAT));
- 	writel_relaxed(reg, priv->io_base + _REG(VIU_OSD2_FIFO_CTRL_STAT));
++static inline bool vfs_inode_has_locks(struct inode *inode)
++{
++	return false;
++}
++
+ static inline int locks_lock_inode_wait(struct inode *inode, struct file_lock *fl)
+ {
+ 	return -ENOLCK;
 -- 
 2.35.1
 
