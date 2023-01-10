@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 854CBA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:10:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A2FEC433EF;
-	Tue, 10 Jan 2023 18:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2034AA93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:10:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9934BC433D2;
+	Tue, 10 Jan 2023 18:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374243;
-	bh=OgXuRLzzsJEFs3qmOPhwLSmm0nSXHx05WDwCdh2CwyQ=;
+	s=korg; t=1673374246;
+	bh=6R0CvhkpieQoc+JnFEmfqrkUWdMfgeta52S0TUfGxow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XdPF33yoDVFf0ZgOILCsO/FU9HDm7TL4+6++xsQXyOZThNspfchPpUMthC1NHL4/K
-	 AaeEMujdUTs1pEgWhZVA0mMmCG9X6KsOF8jfEesin+1cCMEBflLcYbHF3V2vWw/Luj
-	 H8cgi+PcQ8+jDsi+Xa0tSYVo9U25/Ndjr163zIMQ=
+	b=H3B/0VQu1U1+m7bTluIhMzyIg8RMWwQ5pkK8gyg41MGYLQz2fIGgndStT8KBe7wit
+	 MqZPKnO220Q4BlZ7i6UsGoPpbD8v4MYmsZBCwzbyBZjK5EXLJTov3lVJ5vwQrQWcem
+	 /FEvzCNOxFoJrZ5ygIuQgo/jOgypzGAprK0YwsYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Sander <csander@purestorage.com>,
-	Alok Prasad <palok@marvell.com>,
+	slipper <slipper.alive@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 098/148] qed: allow sleep in qed_mcp_trace_dump()
-Date: Tue, 10 Jan 2023 19:03:22 +0100
-Message-Id: <20230110180020.297231696@linuxfoundation.org>
+Subject: [PATCH 6.0 099/148] net/ulp: prevent ULP without clone op from entering the LISTEN status
+Date: Tue, 10 Jan 2023 19:03:23 +0100
+Message-Id: <20230110180020.326759306@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -36,166 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Caleb Sander <csander@purestorage.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 5401c3e0992860b11fb4b25796e4c4f1921740df ]
+[ Upstream commit 2c02d41d71f90a5168391b6a5f2954112ba2307c ]
 
-By default, qed_mcp_cmd_and_union() delays 10us at a time in a loop
-that can run 500K times, so calls to qed_mcp_nvm_rd_cmd()
-may block the current thread for over 5s.
-We observed thread scheduling delays over 700ms in production,
-with stacktraces pointing to this code as the culprit.
+When an ULP-enabled socket enters the LISTEN status, the listener ULP data
+pointer is copied inside the child/accepted sockets by sk_clone_lock().
 
-qed_mcp_trace_dump() is called from ethtool, so sleeping is permitted.
-It already can sleep in qed_mcp_halt(), which calls qed_mcp_cmd().
-Add a "can sleep" parameter to qed_find_nvram_image() and
-qed_nvram_read() so they can sleep during qed_mcp_trace_dump().
-qed_mcp_trace_get_meta_info() and qed_mcp_trace_read_meta(),
-called only by qed_mcp_trace_dump(), allow these functions to sleep.
-I can't tell if the other caller (qed_grc_dump_mcp_hw_dump()) can sleep,
-so keep b_can_sleep set to false when it calls these functions.
+The relevant ULP can take care of de-duplicating the context pointer via
+the clone() operation, but only MPTCP and SMC implement such op.
 
-An example stacktrace from a custom warning we added to the kernel
-showing a thread that has not scheduled despite long needing resched:
-[ 2745.362925,17] ------------[ cut here ]------------
-[ 2745.362941,17] WARNING: CPU: 23 PID: 5640 at arch/x86/kernel/irq.c:233 do_IRQ+0x15e/0x1a0()
-[ 2745.362946,17] Thread not rescheduled for 744 ms after irq 99
-[ 2745.362956,17] Modules linked in: ...
-[ 2745.363339,17] CPU: 23 PID: 5640 Comm: lldpd Tainted: P           O    4.4.182+ #202104120910+6d1da174272d.61x
-[ 2745.363343,17] Hardware name: FOXCONN MercuryB/Quicksilver Controller, BIOS H11P1N09 07/08/2020
-[ 2745.363346,17]  0000000000000000 ffff885ec07c3ed8 ffffffff8131eb2f ffff885ec07c3f20
-[ 2745.363358,17]  ffffffff81d14f64 ffff885ec07c3f10 ffffffff81072ac2 ffff88be98ed0000
-[ 2745.363369,17]  0000000000000063 0000000000000174 0000000000000074 0000000000000000
-[ 2745.363379,17] Call Trace:
-[ 2745.363382,17]  <IRQ>  [<ffffffff8131eb2f>] dump_stack+0x8e/0xcf
-[ 2745.363393,17]  [<ffffffff81072ac2>] warn_slowpath_common+0x82/0xc0
-[ 2745.363398,17]  [<ffffffff81072b4c>] warn_slowpath_fmt+0x4c/0x50
-[ 2745.363404,17]  [<ffffffff810d5a8e>] ? rcu_irq_exit+0xae/0xc0
-[ 2745.363408,17]  [<ffffffff817c99fe>] do_IRQ+0x15e/0x1a0
-[ 2745.363413,17]  [<ffffffff817c7ac9>] common_interrupt+0x89/0x89
-[ 2745.363416,17]  <EOI>  [<ffffffff8132aa74>] ? delay_tsc+0x24/0x50
-[ 2745.363425,17]  [<ffffffff8132aa04>] __udelay+0x34/0x40
-[ 2745.363457,17]  [<ffffffffa04d45ff>] qed_mcp_cmd_and_union+0x36f/0x7d0 [qed]
-[ 2745.363473,17]  [<ffffffffa04d5ced>] qed_mcp_nvm_rd_cmd+0x4d/0x90 [qed]
-[ 2745.363490,17]  [<ffffffffa04e1dc7>] qed_mcp_trace_dump+0x4a7/0x630 [qed]
-[ 2745.363504,17]  [<ffffffffa04e2556>] ? qed_fw_asserts_dump+0x1d6/0x1f0 [qed]
-[ 2745.363520,17]  [<ffffffffa04e4ea7>] qed_dbg_mcp_trace_get_dump_buf_size+0x37/0x80 [qed]
-[ 2745.363536,17]  [<ffffffffa04ea881>] qed_dbg_feature_size+0x61/0xa0 [qed]
-[ 2745.363551,17]  [<ffffffffa04eb427>] qed_dbg_all_data_size+0x247/0x260 [qed]
-[ 2745.363560,17]  [<ffffffffa0482c10>] qede_get_regs_len+0x30/0x40 [qede]
-[ 2745.363566,17]  [<ffffffff816c9783>] ethtool_get_drvinfo+0xe3/0x190
-[ 2745.363570,17]  [<ffffffff816cc152>] dev_ethtool+0x1362/0x2140
-[ 2745.363575,17]  [<ffffffff8109bcc6>] ? finish_task_switch+0x76/0x260
-[ 2745.363580,17]  [<ffffffff817c2116>] ? __schedule+0x3c6/0x9d0
-[ 2745.363585,17]  [<ffffffff810dbd50>] ? hrtimer_start_range_ns+0x1d0/0x370
-[ 2745.363589,17]  [<ffffffff816c1e5b>] ? dev_get_by_name_rcu+0x6b/0x90
-[ 2745.363594,17]  [<ffffffff816de6a8>] dev_ioctl+0xe8/0x710
-[ 2745.363599,17]  [<ffffffff816a58a8>] sock_do_ioctl+0x48/0x60
-[ 2745.363603,17]  [<ffffffff816a5d87>] sock_ioctl+0x1c7/0x280
-[ 2745.363608,17]  [<ffffffff8111f393>] ? seccomp_phase1+0x83/0x220
-[ 2745.363612,17]  [<ffffffff811e3503>] do_vfs_ioctl+0x2b3/0x4e0
-[ 2745.363616,17]  [<ffffffff811e3771>] SyS_ioctl+0x41/0x70
-[ 2745.363619,17]  [<ffffffff817c6ffe>] entry_SYSCALL_64_fastpath+0x1e/0x79
-[ 2745.363622,17] ---[ end trace f6954aa440266421 ]---
+Other ULPs may end-up with a double-free at socket disposal time.
 
-Fixes: c965db4446291 ("qed: Add support for debug data collection")
-Signed-off-by: Caleb Sander <csander@purestorage.com>
-Acked-by: Alok Prasad <palok@marvell.com>
-Link: https://lore.kernel.org/r/20230103233021.1457646-1-csander@purestorage.com
+We can't simply clear the ULP data at clone time, as TLS replaces the
+socket ops with custom ones assuming a valid TLS ULP context is
+available.
+
+Instead completely prevent clone-less ULP sockets from entering the
+LISTEN status.
+
+Fixes: 734942cc4ea6 ("tcp: ULP infrastructure")
+Reported-by: slipper <slipper.alive@gmail.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/4b80c3d1dbe3d0ab072f80450c202d9bc88b4b03.1672740602.git.pabeni@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qed/qed_debug.c | 28 +++++++++++++++------
- 1 file changed, 20 insertions(+), 8 deletions(-)
+ net/ipv4/inet_connection_sock.c | 14 ++++++++++++++
+ net/ipv4/tcp_ulp.c              |  4 ++++
+ 2 files changed, 18 insertions(+)
 
-diff --git a/drivers/net/ethernet/qlogic/qed/qed_debug.c b/drivers/net/ethernet/qlogic/qed/qed_debug.c
-index 86ecb080b153..cdcead614e9f 100644
---- a/drivers/net/ethernet/qlogic/qed/qed_debug.c
-+++ b/drivers/net/ethernet/qlogic/qed/qed_debug.c
-@@ -1832,7 +1832,8 @@ static enum dbg_status qed_find_nvram_image(struct qed_hwfn *p_hwfn,
- 					    struct qed_ptt *p_ptt,
- 					    u32 image_type,
- 					    u32 *nvram_offset_bytes,
--					    u32 *nvram_size_bytes)
-+					    u32 *nvram_size_bytes,
-+					    bool b_can_sleep)
- {
- 	u32 ret_mcp_resp, ret_mcp_param, ret_txn_size;
- 	struct mcp_file_att file_att;
-@@ -1846,7 +1847,8 @@ static enum dbg_status qed_find_nvram_image(struct qed_hwfn *p_hwfn,
- 					&ret_mcp_resp,
- 					&ret_mcp_param,
- 					&ret_txn_size,
--					(u32 *)&file_att, false);
-+					(u32 *)&file_att,
-+					b_can_sleep);
- 
- 	/* Check response */
- 	if (nvm_result || (ret_mcp_resp & FW_MSG_CODE_MASK) !=
-@@ -1873,7 +1875,9 @@ static enum dbg_status qed_find_nvram_image(struct qed_hwfn *p_hwfn,
- static enum dbg_status qed_nvram_read(struct qed_hwfn *p_hwfn,
- 				      struct qed_ptt *p_ptt,
- 				      u32 nvram_offset_bytes,
--				      u32 nvram_size_bytes, u32 *ret_buf)
-+				      u32 nvram_size_bytes,
-+				      u32 *ret_buf,
-+				      bool b_can_sleep)
- {
- 	u32 ret_mcp_resp, ret_mcp_param, ret_read_size, bytes_to_copy;
- 	s32 bytes_left = nvram_size_bytes;
-@@ -1899,7 +1903,7 @@ static enum dbg_status qed_nvram_read(struct qed_hwfn *p_hwfn,
- 				       &ret_mcp_resp,
- 				       &ret_mcp_param, &ret_read_size,
- 				       (u32 *)((u8 *)ret_buf + read_offset),
--				       false))
-+				       b_can_sleep))
- 			return DBG_STATUS_NVRAM_READ_FAILED;
- 
- 		/* Check response */
-@@ -3380,7 +3384,8 @@ static u32 qed_grc_dump_mcp_hw_dump(struct qed_hwfn *p_hwfn,
- 				      p_ptt,
- 				      NVM_TYPE_HW_DUMP_OUT,
- 				      &hw_dump_offset_bytes,
--				      &hw_dump_size_bytes);
-+				      &hw_dump_size_bytes,
-+				      false);
- 	if (status != DBG_STATUS_OK)
- 		return 0;
- 
-@@ -3397,7 +3402,9 @@ static u32 qed_grc_dump_mcp_hw_dump(struct qed_hwfn *p_hwfn,
- 		status = qed_nvram_read(p_hwfn,
- 					p_ptt,
- 					hw_dump_offset_bytes,
--					hw_dump_size_bytes, dump_buf + offset);
-+					hw_dump_size_bytes,
-+					dump_buf + offset,
-+					false);
- 		if (status != DBG_STATUS_OK) {
- 			DP_NOTICE(p_hwfn,
- 				  "Failed to read MCP HW Dump image from NVRAM\n");
-@@ -4123,7 +4130,9 @@ static enum dbg_status qed_mcp_trace_get_meta_info(struct qed_hwfn *p_hwfn,
- 	return qed_find_nvram_image(p_hwfn,
- 				    p_ptt,
- 				    nvram_image_type,
--				    trace_meta_offset, trace_meta_size);
-+				    trace_meta_offset,
-+				    trace_meta_size,
-+				    true);
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index 971969cc7e17..fb01211a255b 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1037,12 +1037,26 @@ void inet_csk_prepare_forced_close(struct sock *sk)
  }
+ EXPORT_SYMBOL(inet_csk_prepare_forced_close);
  
- /* Reads the MCP Trace meta data from NVRAM into the specified buffer */
-@@ -4139,7 +4148,10 @@ static enum dbg_status qed_mcp_trace_read_meta(struct qed_hwfn *p_hwfn,
- 	/* Read meta data from NVRAM */
- 	status = qed_nvram_read(p_hwfn,
- 				p_ptt,
--				nvram_offset_in_bytes, size_in_bytes, buf);
-+				nvram_offset_in_bytes,
-+				size_in_bytes,
-+				buf,
-+				true);
- 	if (status != DBG_STATUS_OK)
- 		return status;
++static int inet_ulp_can_listen(const struct sock *sk)
++{
++	const struct inet_connection_sock *icsk = inet_csk(sk);
++
++	if (icsk->icsk_ulp_ops && !icsk->icsk_ulp_ops->clone)
++		return -EINVAL;
++
++	return 0;
++}
++
+ int inet_csk_listen_start(struct sock *sk)
+ {
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
+ 	struct inet_sock *inet = inet_sk(sk);
+ 	int err;
  
++	err = inet_ulp_can_listen(sk);
++	if (unlikely(err))
++		return err;
++
+ 	reqsk_queue_alloc(&icsk->icsk_accept_queue);
+ 
+ 	sk->sk_ack_backlog = 0;
+diff --git a/net/ipv4/tcp_ulp.c b/net/ipv4/tcp_ulp.c
+index 9ae50b1bd844..05b6077b9f2c 100644
+--- a/net/ipv4/tcp_ulp.c
++++ b/net/ipv4/tcp_ulp.c
+@@ -139,6 +139,10 @@ static int __tcp_set_ulp(struct sock *sk, const struct tcp_ulp_ops *ulp_ops)
+ 	if (sk->sk_socket)
+ 		clear_bit(SOCK_SUPPORT_ZC, &sk->sk_socket->flags);
+ 
++	err = -EINVAL;
++	if (!ulp_ops->clone && sk->sk_state == TCP_LISTEN)
++		goto out_err;
++
+ 	err = ulp_ops->init(sk);
+ 	if (err)
+ 		goto out_err;
 -- 
 2.35.1
 
