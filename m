@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B43E9A93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:21:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB27C433D2;
-	Tue, 10 Jan 2023 18:21:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D240D6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:21:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E3EC433D2;
+	Tue, 10 Jan 2023 18:21:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374894;
-	bh=jbKrjFf5vEHQ/m6vPNkHUzH1B0zdwcDmQy/lMABskgU=;
+	s=korg; t=1673374897;
+	bh=8skN8bpyKyT8v7iwET29azJN+vswFiGAVoPeQRr1F30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B5LSQzcWWRkJM+wdiPs0vgfcQOmx5GmNMxmFKTubMe1Ea0vQw34ZJwT5IiWbJxmln
-	 RS3GPWhLcNjBnqfKZT8yzFsAvE3DCPE2m2lGI8mMc7VqqgYita+D+8w6ttAWAqWzX7
-	 l9XwnAso+p2kMAHVTO9IDw/HpJJXXk4ec50wmijw=
+	b=pSEzMYEeIe2mjxccDwBIiF/0wD0oXH/I4Yct4WmYUW8SUvdBBC1Tds+pAT71jPyoY
+	 ffNyXtcMvwbNbwg5zE7z0kPmUm1VbJ2UgMHCQc28xMcgHkeql0iDcsgPqD7qjMT8Tz
+	 U8TI4rNhU2MrywVfqMwpoD2YOvxxEXEcRf5kI1VE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Freund <adrian@freund.io>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Yi Zhang <yi.zhang@redhat.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 010/290] ACPI: resource: do IRQ override on Lenovo 14ALC7
-Date: Tue, 10 Jan 2023 19:01:42 +0100
-Message-Id: <20230110180031.974625149@linuxfoundation.org>
+Subject: [PATCH 5.15 011/290] block, bfq: fix uaf for bfqq in bfq_exit_icq_bfqq
+Date: Tue, 10 Jan 2023 19:01:43 +0100
+Message-Id: <20230110180032.003884551@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -35,54 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Freund <adrian@freund.io>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit f3cb9b740869712d448edf3b9ef5952b847caf8b ]
+[ Upstream commit 246cf66e300b76099b5dbd3fdd39e9a5dbc53f02 ]
 
-Commit bfcdf58380b1 ("ACPI: resource: do IRQ override on LENOVO IdeaPad")
-added an override for Lenovo IdeaPad 5 16ALC7. The 14ALC7 variant also
-suffers from a broken touchscreen and trackpad.
+Commit 64dc8c732f5c ("block, bfq: fix possible uaf for 'bfqq->bic'")
+will access 'bic->bfqq' in bic_set_bfqq(), however, bfq_exit_icq_bfqq()
+can free bfqq first, and then call bic_set_bfqq(), which will cause uaf.
 
-Fixes: 9946e39fe8d0 ("ACPI: resource: skip IRQ override on AMD Zen platforms")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216804
-Signed-off-by: Adrian Freund <adrian@freund.io>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fix the problem by moving bfq_exit_bfqq() behind bic_set_bfqq().
+
+Fixes: 64dc8c732f5c ("block, bfq: fix possible uaf for 'bfqq->bic'")
+Reported-by: Yi Zhang <yi.zhang@redhat.com>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Link: https://lore.kernel.org/r/20221226030605.1437081-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/resource.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ block/bfq-iosched.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
-index d0bed7e66a33..33921949bd8f 100644
---- a/drivers/acpi/resource.c
-+++ b/drivers/acpi/resource.c
-@@ -417,7 +417,14 @@ static const struct dmi_system_id asus_laptop[] = {
- 	{ }
- };
+diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
+index b8b6e9eae94b..85120d7b5cf0 100644
+--- a/block/bfq-iosched.c
++++ b/block/bfq-iosched.c
+@@ -5251,8 +5251,8 @@ static void bfq_exit_icq_bfqq(struct bfq_io_cq *bic, bool is_sync)
+ 		unsigned long flags;
  
--static const struct dmi_system_id lenovo_82ra[] = {
-+static const struct dmi_system_id lenovo_laptop[] = {
-+	{
-+		.ident = "LENOVO IdeaPad Flex 5 14ALC7",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "82R9"),
-+		},
-+	},
- 	{
- 		.ident = "LENOVO IdeaPad Flex 5 16ALC7",
- 		.matches = {
-@@ -451,8 +458,8 @@ struct irq_override_cmp {
- static const struct irq_override_cmp override_table[] = {
- 	{ medion_laptop, 1, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, false },
- 	{ asus_laptop, 1, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, false },
--	{ lenovo_82ra, 6, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, true },
--	{ lenovo_82ra, 10, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, true },
-+	{ lenovo_laptop, 6, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, true },
-+	{ lenovo_laptop, 10, ACPI_LEVEL_SENSITIVE, ACPI_ACTIVE_LOW, 0, true },
- 	{ schenker_gm_rg, 1, ACPI_EDGE_SENSITIVE, ACPI_ACTIVE_LOW, 1, true },
- };
- 
+ 		spin_lock_irqsave(&bfqd->lock, flags);
+-		bfq_exit_bfqq(bfqd, bfqq);
+ 		bic_set_bfqq(bic, NULL, is_sync);
++		bfq_exit_bfqq(bfqd, bfqq);
+ 		spin_unlock_irqrestore(&bfqd->lock, flags);
+ 	}
+ }
 -- 
 2.35.1
 
