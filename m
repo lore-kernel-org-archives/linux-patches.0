@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98FE6FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:25:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B47CC433EF;
-	Tue, 10 Jan 2023 18:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966306FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:25:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46BDC433D2;
+	Tue, 10 Jan 2023 18:25:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375125;
-	bh=E+k1Oi8qB3JWMnB0Rv0gwrVg80L4EiYApzwOQySh1Vs=;
+	s=korg; t=1673375128;
+	bh=LhWl0omNmVi7EgqXmPg+hdgSg1MWw1rP7Yn7OECaM/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t8QdTsxeMsvwdkjJM4BYXFtNpzGslPzUgMBqF17lKi/Ohml9SY3e9WFrehIK8JFzm
-	 wMr0Pb/GXm5Kr7w+7vEtfuVpzKDSw3r2WRPF1AbTtYtH5xpkKNWkTxtAUH0yfmdbhM
-	 CC1nMMgiHK7WyQZB5TjidEwGJBSiIbIiMhVDppY8=
+	b=xyypc0LIr5rQ3u0225QmjGMBY/bAYrn6a6lugxepSbiREzGEmL33Dfq2W0nThKJ5y
+	 L0Uw8t1qZKQeIyvT5XIMT5lrNRtnBMv8hTNxVR9zjeORaEhmN7q8e9pY3jIIz+S9n5
+	 6dNnND4lmyMphgBNl791N6S6/c4NImPbVJ5kLbJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Luo Meng <luomeng12@huawei.com>,
 	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.15 086/290] dm integrity: Fix UAF in dm_integrity_dtr()
-Date: Tue, 10 Jan 2023 19:02:58 +0100
-Message-Id: <20230110180034.576429342@linuxfoundation.org>
+Subject: [PATCH 5.15 087/290] dm clone: Fix UAF in clone_dtr()
+Date: Tue, 10 Jan 2023 19:02:59 +0100
+Message-Id: <20230110180034.606851165@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -36,32 +36,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Luo Meng <luomeng12@huawei.com>
 
-commit f50cb2cbabd6c4a60add93d72451728f86e4791c upstream.
+commit e4b5957c6f749a501c464f92792f1c8e26b61a94 upstream.
 
-Dm_integrity also has the same UAF problem when dm_resume()
+Dm_clone also has the same UAF problem when dm_resume()
 and dm_destroy() are concurrent.
 
-Therefore, cancelling timer again in dm_integrity_dtr().
+Therefore, cancelling timer again in clone_dtr().
 
 Cc: stable@vger.kernel.org
-Fixes: 7eada909bfd7a ("dm: add integrity target")
+Fixes: 7431b7835f554 ("dm: add clone target")
 Signed-off-by: Luo Meng <luomeng12@huawei.com>
 Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-integrity.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/md/dm-clone-target.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/md/dm-integrity.c
-+++ b/drivers/md/dm-integrity.c
-@@ -4539,6 +4539,8 @@ static void dm_integrity_dtr(struct dm_t
- 	BUG_ON(!RB_EMPTY_ROOT(&ic->in_progress));
- 	BUG_ON(!list_empty(&ic->wait_list));
+--- a/drivers/md/dm-clone-target.c
++++ b/drivers/md/dm-clone-target.c
+@@ -1959,6 +1959,7 @@ static void clone_dtr(struct dm_target *
  
-+	if (ic->mode == 'B')
-+		cancel_delayed_work_sync(&ic->bitmap_flush_work);
- 	if (ic->metadata_wq)
- 		destroy_workqueue(ic->metadata_wq);
- 	if (ic->wait_wq)
+ 	mempool_exit(&clone->hydration_pool);
+ 	dm_kcopyd_client_destroy(clone->kcopyd_client);
++	cancel_delayed_work_sync(&clone->waker);
+ 	destroy_workqueue(clone->wq);
+ 	hash_table_exit(clone);
+ 	dm_clone_metadata_close(clone->cmd);
 
 
