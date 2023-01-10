@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9517474
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:33:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6D70C433D2;
-	Tue, 10 Jan 2023 18:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43D547474
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:33:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E2FCC433EF;
+	Tue, 10 Jan 2023 18:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375591;
-	bh=BRGuaEKPHSVYe83gmpfiQedi2iIvJ4GGztzO3LRNtBs=;
+	s=korg; t=1673375594;
+	bh=A/ExnhSVHK7qignorG62La22hdVT0sMzzctwBDzImmY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Cz9B2GBMmpYfvZIwcxT3qeBo1w2Se8yr+UGba1ORQFSHBhDz3DMSk1C+MDsWMFrN6
-	 qg2GITWTg5xHQvkxgmgFkrXqKEXyrY7RHfcgPm76sQ1TvWiZTuvQ9m/I3pZ/V0f9d9
-	 GcG4wiaXWgq9QvgNdaANh7wISv2wC5K8bj3JZ0ZQ=
+	b=s46YpNymQ0tnKcMEhF8TsuBVhYeugQTflKg8G2+BWfZBXwZRPgslX2Y8NPrdZMAQp
+	 8CSeIuFXLxl6yTgBqavSQ++AySdXLRgZTjwnK2UpaYaL0VyXNI7znECSwBt+75/iBg
+	 VckWnVWMIPb/vpkm2ppGfXoWVQVaOzaZFN3W+o9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Wang Yugui <wangyugui@e16-tech.com>
-Subject: [PATCH 5.15 207/290] nfsd: shut down the NFSv4 state objects before the filecache
-Date: Tue, 10 Jan 2023 19:04:59 +0100
-Message-Id: <20230110180039.135311140@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 198/290] btrfs: fix an error handling path in btrfs_defrag_leaves()
+Date: Tue, 10 Jan 2023 19:04:50 +0100
+Message-Id: <20230110180038.799192375@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -36,40 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+[ Upstream commit db0a4a7b8e95f9312a59a67cbd5bc589f090e13d ]
 
-[ Upstream commit 789e1e10f214c00ca18fc6610824c5b9876ba5f2 ]
+All error handling paths end to 'out', except this memory allocation
+failure.
 
-Currently, we shut down the filecache before trying to clean up the
-stateids that depend on it. This leads to the kernel trying to free an
-nfsd_file twice, and a refcount overput on the nf_mark.
+This is spurious. So branch to the error handling path also in this case.
+It will add a call to:
 
-Change the shutdown procedure to tear down all of the stateids prior
-to shutting down the filecache.
+	memset(&root->defrag_progress, 0,
+	       sizeof(root->defrag_progress));
 
-Reported-and-tested-by: Wang Yugui <wangyugui@e16-tech.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Fixes: 5e113224c17e ("nfsd: nfsd_file cache entries should be per net namespace")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 6702ed490ca0 ("Btrfs: Add run time btree defrag, and an ioctl to force btree defrag")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfssvc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/tree-defrag.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index ccb59e91011b..373695cc62a7 100644
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -425,8 +425,8 @@ static void nfsd_shutdown_net(struct net *net)
- {
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+diff --git a/fs/btrfs/tree-defrag.c b/fs/btrfs/tree-defrag.c
+index 7c45d960b53c..259a3b5f9303 100644
+--- a/fs/btrfs/tree-defrag.c
++++ b/fs/btrfs/tree-defrag.c
+@@ -39,8 +39,10 @@ int btrfs_defrag_leaves(struct btrfs_trans_handle *trans,
+ 		goto out;
  
--	nfsd_file_cache_shutdown_net(net);
- 	nfs4_state_shutdown_net(net);
-+	nfsd_file_cache_shutdown_net(net);
- 	if (nn->lockd_up) {
- 		lockd_down(net);
- 		nn->lockd_up = false;
+ 	path = btrfs_alloc_path();
+-	if (!path)
+-		return -ENOMEM;
++	if (!path) {
++		ret = -ENOMEM;
++		goto out;
++	}
+ 
+ 	level = btrfs_header_level(root->node);
+ 
 -- 
 2.35.1
 
