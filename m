@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16E06FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:19:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599B4C433EF;
-	Tue, 10 Jan 2023 18:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF57D6FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:19:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 523B4C433EF;
+	Tue, 10 Jan 2023 18:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374771;
-	bh=22HAGiukrXkkaMj7OWqoQPAnNinEEvlaQs24bXIJ7Vw=;
+	s=korg; t=1673374774;
+	bh=U0IgMbheWfPsgM7fBPstUM3K0hXuWEkzuDByQym12CE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RhVyZrr0iuIDpDey6JibxVjR4tK3mjo3WiGsNwZ8pPIx9V7JEceAHOxB2Ym6pPBsf
-	 rHubH0e9kZP0bnuRnw0fe1wP6bxugL4hN04WsRtAFMgVPJXk1ZkJIvGPwxrBDueFEt
-	 kMoisrs6lujW17P9nH0MfKD2chEVtWggPv3r0Rtg=
+	b=u5ckhKcL0vlwc0IPaDuTRT709qravn51QmEed4V62jfWieQnYI5SdHngFs1p6zEyD
+	 f9OtZTcug+vjU7x3Zp/8bKVjAmUkqYjisrEoKZ9LelhJ8nLqMEphIoCuDePzlkE0fx
+	 f6yC18jDRTWfVvLn3wJoelQSv/ceITWtjAbBkKC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Dickson <steved@redhat.com>,
-	JianHong Yin <yin-jianhong@163.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 128/159] nfsd: fix handling of readdir in v4root vs. mount upcall timeout
-Date: Tue, 10 Jan 2023 19:04:36 +0100
-Message-Id: <20230110180022.430811006@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Ming Lei <ming.lei@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 102/159] ublk: honor IO_URING_F_NONBLOCK for handling control command
+Date: Tue, 10 Jan 2023 19:04:10 +0100
+Message-Id: <20230110180021.529737547@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 References: <20230110180018.288460217@linuxfoundation.org>
@@ -36,52 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit cad853374d85fe678d721512cecfabd7636e51f3 upstream.
+[ Upstream commit fa8e442e832a3647cdd90f3e606c473a51bc1b26 ]
 
-If v4 READDIR operation hits a mountpoint and gets back an error,
-then it will include that entry in the reply and set RDATTR_ERROR for it
-to the error.
+Most of control command handlers may sleep, so return -EAGAIN in case
+of IO_URING_F_NONBLOCK to defer the handling into io wq context.
 
-That's fine for "normal" exported filesystems, but on the v4root, we
-need to be more careful to only expose the existence of dentries that
-lead to exports.
-
-If the mountd upcall times out while checking to see whether a
-mountpoint on the v4root is exported, then we have no recourse other
-than to fail the whole operation.
-
-Cc: Steve Dickson <steved@redhat.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216777
-Reported-by: JianHong Yin <yin-jianhong@163.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 71f28f3136af ("ublk_drv: add io_uring based userspace block driver")
+Reported-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
+Link: https://lore.kernel.org/r/20230104133235.836536-1-ming.lei@redhat.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4xdr.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/block/ublk_drv.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -3570,6 +3570,17 @@ nfsd4_encode_dirent(void *ccdv, const ch
- 	case nfserr_noent:
- 		xdr_truncate_encode(xdr, start_offset);
- 		goto skip_entry;
-+	case nfserr_jukebox:
-+		/*
-+		 * The pseudoroot should only display dentries that lead to
-+		 * exports. If we get EJUKEBOX here, then we can't tell whether
-+		 * this entry should be included. Just fail the whole READDIR
-+		 * with NFS4ERR_DELAY in that case, and hope that the situation
-+		 * will resolve itself by the client's next attempt.
-+		 */
-+		if (cd->rd_fhp->fh_export->ex_flags & NFSEXP_V4ROOT)
-+			goto fail;
-+		fallthrough;
- 	default:
- 		/*
- 		 * If the client requested the RDATTR_ERROR attribute,
+diff --git a/drivers/block/ublk_drv.c b/drivers/block/ublk_drv.c
+index e9de9d846b73..17b677b5d3b2 100644
+--- a/drivers/block/ublk_drv.c
++++ b/drivers/block/ublk_drv.c
+@@ -1992,6 +1992,9 @@ static int ublk_ctrl_uring_cmd(struct io_uring_cmd *cmd,
+ 	struct ublksrv_ctrl_cmd *header = (struct ublksrv_ctrl_cmd *)cmd->cmd;
+ 	int ret = -EINVAL;
+ 
++	if (issue_flags & IO_URING_F_NONBLOCK)
++		return -EAGAIN;
++
+ 	ublk_ctrl_cmd_dump(cmd);
+ 
+ 	if (!(issue_flags & IO_URING_F_SQE128))
+-- 
+2.35.1
+
 
 
