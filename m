@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CABE46FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:24:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EACEC433D2;
-	Tue, 10 Jan 2023 18:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49556FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:24:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C8AC433D2;
+	Tue, 10 Jan 2023 18:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375080;
-	bh=lZHPzIJC9Uk4LaExSWj3oDnqBU9NzKlHDKBskuGt+SE=;
+	s=korg; t=1673375083;
+	bh=yaHBIuIAl34nhrTwnheacBJHnZjVUe1lU80y62L09dg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nXwM78lQJ1cnVF/Af+Uj5vBBQ1t6fxpgpP+MkB7ILtB01r6mLMSmvEUwT8kp114In
-	 ODm2B1SPHcnQXMNbOk6ddife0sLe6WHxNa9RICbEc2xoX6XyX4UHfkaY6/CanUr1wb
-	 C/Po1aHqtvqL8PMK8iJR+kd1xPraRxC0v3SvNOYY=
+	b=d91RF2df0CZP+HXcjJ3Bb1gIphhXetXn4jUdBPbuQx+R+5UrAOxnYYb4ur3aVqiMO
+	 s0KofYPoOdJ2ZC2P8AyAOs4W6pFveth0E3NFtlZODe6WdFNrva+Ryuu/yk3QGD6WND
+	 oYZDsTUlRQZIER2bFjR6aFL5L5yjhA7x6UNwDAeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 5.15 072/290] selftests: Use optional USERCFLAGS and USERLDFLAGS
-Date: Tue, 10 Jan 2023 19:02:44 +0100
-Message-Id: <20230110180034.118392715@linuxfoundation.org>
+	Chanwoo Choi <cwchoi00@gmail.com>,
+	MyungJoo Ham <myungjoo.ham@samsung.com>,
+	Kant Fan <kant@allwinnertech.com>,
+	Chanwoo Choi <cw00.choi@samsung.com>
+Subject: [PATCH 5.15 073/290] PM/devfreq: governor: Add a private governor_data for governor
+Date: Tue, 10 Jan 2023 19:02:45 +0100
+Message-Id: <20230110180034.159980095@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -34,42 +36,144 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Kant Fan <kant@allwinnertech.com>
 
-commit de3ee3f63400a23954e7c1ad1cb8c20f29ab6fe3 upstream.
+commit 5fdded8448924e3631d466eea499b11606c43640 upstream.
 
-This change enables to extend CFLAGS and LDFLAGS from command line, e.g.
-to extend compiler checks: make USERCFLAGS=-Werror USERLDFLAGS=-static
+The member void *data in the structure devfreq can be overwrite
+by governor_userspace. For example:
+1. The device driver assigned the devfreq governor to simple_ondemand
+by the function devfreq_add_device() and init the devfreq member
+void *data to a pointer of a static structure devfreq_simple_ondemand_data
+by the function devfreq_add_device().
+2. The user changed the devfreq governor to userspace by the command
+"echo userspace > /sys/class/devfreq/.../governor".
+3. The governor userspace alloced a dynamic memory for the struct
+userspace_data and assigend the member void *data of devfreq to
+this memory by the function userspace_init().
+4. The user changed the devfreq governor back to simple_ondemand
+by the command "echo simple_ondemand > /sys/class/devfreq/.../governor".
+5. The governor userspace exited and assigned the member void *data
+in the structure devfreq to NULL by the function userspace_exit().
+6. The governor simple_ondemand fetched the static information of
+devfreq_simple_ondemand_data in the function
+devfreq_simple_ondemand_func() but the member void *data of devfreq was
+assigned to NULL by the function userspace_exit().
+7. The information of upthreshold and downdifferential is lost
+and the governor simple_ondemand can't work correctly.
 
-USERCFLAGS and USERLDFLAGS are documented in
-Documentation/kbuild/makefiles.rst and Documentation/kbuild/kbuild.rst
+The member void *data in the structure devfreq is designed for
+a static pointer used in a governor and inited by the function
+devfreq_add_device(). This patch add an element named governor_data
+in the devfreq structure which can be used by a governor(E.g userspace)
+who want to assign a private data to do some private things.
 
-This should be backported (down to 5.10) to improve previous kernel
-versions testing as well.
-
-Cc: Shuah Khan <skhan@linuxfoundation.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-Link: https://lore.kernel.org/r/20220909103901.1503436-1-mic@digikod.net
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fixes: ce26c5bb9569 ("PM / devfreq: Add basic governors")
+Cc: stable@vger.kernel.org # 5.10+
+Reviewed-by: Chanwoo Choi <cwchoi00@gmail.com>
+Acked-by: MyungJoo Ham <myungjoo.ham@samsung.com>
+Signed-off-by: Kant Fan <kant@allwinnertech.com>
+Signed-off-by: Chanwoo Choi <cw00.choi@samsung.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/lib.mk |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/devfreq/devfreq.c            |    6 ++----
+ drivers/devfreq/governor_userspace.c |   12 ++++++------
+ include/linux/devfreq.h              |    7 ++++---
+ 3 files changed, 12 insertions(+), 13 deletions(-)
 
---- a/tools/testing/selftests/lib.mk
-+++ b/tools/testing/selftests/lib.mk
-@@ -129,6 +129,11 @@ endef
- clean:
- 	$(CLEAN)
+--- a/drivers/devfreq/devfreq.c
++++ b/drivers/devfreq/devfreq.c
+@@ -775,8 +775,7 @@ static void remove_sysfs_files(struct de
+  * @dev:	the device to add devfreq feature.
+  * @profile:	device-specific profile to run devfreq.
+  * @governor_name:	name of the policy to choose frequency.
+- * @data:	private data for the governor. The devfreq framework does not
+- *		touch this value.
++ * @data:	devfreq driver pass to governors, governor should not change it.
+  */
+ struct devfreq *devfreq_add_device(struct device *dev,
+ 				   struct devfreq_dev_profile *profile,
+@@ -1003,8 +1002,7 @@ static void devm_devfreq_dev_release(str
+  * @dev:	the device to add devfreq feature.
+  * @profile:	device-specific profile to run devfreq.
+  * @governor_name:	name of the policy to choose frequency.
+- * @data:	private data for the governor. The devfreq framework does not
+- *		touch this value.
++ * @data:	 devfreq driver pass to governors, governor should not change it.
+  *
+  * This function manages automatically the memory of devfreq device using device
+  * resource management and simplify the free operation for memory of devfreq
+--- a/drivers/devfreq/governor_userspace.c
++++ b/drivers/devfreq/governor_userspace.c
+@@ -21,7 +21,7 @@ struct userspace_data {
  
-+# Enables to extend CFLAGS and LDFLAGS from command line, e.g.
-+# make USERCFLAGS=-Werror USERLDFLAGS=-static
-+CFLAGS += $(USERCFLAGS)
-+LDFLAGS += $(USERLDFLAGS)
-+
- # When make O= with kselftest target from main level
- # the following aren't defined.
- #
+ static int devfreq_userspace_func(struct devfreq *df, unsigned long *freq)
+ {
+-	struct userspace_data *data = df->data;
++	struct userspace_data *data = df->governor_data;
+ 
+ 	if (data->valid)
+ 		*freq = data->user_frequency;
+@@ -40,7 +40,7 @@ static ssize_t set_freq_store(struct dev
+ 	int err = 0;
+ 
+ 	mutex_lock(&devfreq->lock);
+-	data = devfreq->data;
++	data = devfreq->governor_data;
+ 
+ 	sscanf(buf, "%lu", &wanted);
+ 	data->user_frequency = wanted;
+@@ -60,7 +60,7 @@ static ssize_t set_freq_show(struct devi
+ 	int err = 0;
+ 
+ 	mutex_lock(&devfreq->lock);
+-	data = devfreq->data;
++	data = devfreq->governor_data;
+ 
+ 	if (data->valid)
+ 		err = sprintf(buf, "%lu\n", data->user_frequency);
+@@ -91,7 +91,7 @@ static int userspace_init(struct devfreq
+ 		goto out;
+ 	}
+ 	data->valid = false;
+-	devfreq->data = data;
++	devfreq->governor_data = data;
+ 
+ 	err = sysfs_create_group(&devfreq->dev.kobj, &dev_attr_group);
+ out:
+@@ -107,8 +107,8 @@ static void userspace_exit(struct devfre
+ 	if (devfreq->dev.kobj.sd)
+ 		sysfs_remove_group(&devfreq->dev.kobj, &dev_attr_group);
+ 
+-	kfree(devfreq->data);
+-	devfreq->data = NULL;
++	kfree(devfreq->governor_data);
++	devfreq->governor_data = NULL;
+ }
+ 
+ static int devfreq_userspace_handler(struct devfreq *devfreq,
+--- a/include/linux/devfreq.h
++++ b/include/linux/devfreq.h
+@@ -149,8 +149,8 @@ struct devfreq_stats {
+  * @work:	delayed work for load monitoring.
+  * @previous_freq:	previously configured frequency value.
+  * @last_status:	devfreq user device info, performance statistics
+- * @data:	Private data of the governor. The devfreq framework does not
+- *		touch this.
++ * @data:	devfreq driver pass to governors, governor should not change it.
++ * @governor_data:	private data for governors, devfreq core doesn't touch it.
+  * @user_min_freq_req:	PM QoS minimum frequency request from user (via sysfs)
+  * @user_max_freq_req:	PM QoS maximum frequency request from user (via sysfs)
+  * @scaling_min_freq:	Limit minimum frequency requested by OPP interface
+@@ -187,7 +187,8 @@ struct devfreq {
+ 	unsigned long previous_freq;
+ 	struct devfreq_dev_status last_status;
+ 
+-	void *data; /* private data for governors */
++	void *data;
++	void *governor_data;
+ 
+ 	struct dev_pm_qos_request user_min_freq_req;
+ 	struct dev_pm_qos_request user_max_freq_req;
 
 
