@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 488DAA93F
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:07:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9072C433D2;
-	Tue, 10 Jan 2023 18:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAF74A93F
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:07:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E9C8C433F1;
+	Tue, 10 Jan 2023 18:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673374055;
-	bh=dxvRW6dFLhKgPgWUlDfu+Oq5yPu/CSlBU1d0/Ct9OvU=;
+	s=korg; t=1673374057;
+	bh=a7LAalaE5DCtNWMBi1DaxNqNMcDk+bGCwWyBJMrQpbs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TvR8vKnlnl8/2nbd6ESl2BqY6f+lWvK5Q/QUtXinxpbrTUKL3FYnQo9ZkgMucAimA
-	 z44tMNUDWuMZ2/T2BL5X3PBbk6cel7wBl9d0gVERLkJb0vns0rvUIlFJhKCQKDwWHc
-	 rnjgFybAG3rczYDI/EHKEHfFO5zDH77kT1qkE74I=
+	b=Zs4XEVnnHRzPC/uTIcLFQaogEfU5g1Z+cQsJkDWCruEpIQkt9VJtIAPN/D3MEguXg
+	 EhXqqp8HNOqv8L+k6tC67nyOnkH/lqlsLaIiLXj0lMAXK9P5uvkxNAQFvamVGFf2Oh
+	 9dUY1BdNmx/jRhk87Mii8ygnWM+7M+gUuu0c1QV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianlin Shi <jishi@redhat.com>,
-	Antoine Tenart <atenart@kernel.org>,
-	David Ahern <dsahern@kernel.org>,
+	Jian Shen <shenjian15@huawei.com>,
+	Hao Lan <lanhao@huawei.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.0 020/148] net: vrf: determine the dst using the original ifindex for multicast
-Date: Tue, 10 Jan 2023 19:02:04 +0100
-Message-Id: <20230110180017.842221790@linuxfoundation.org>
+Subject: [PATCH 6.0 029/148] net: hns3: fix miss L3E checking for rx packet
+Date: Tue, 10 Jan 2023 19:02:13 +0100
+Message-Id: <20230110180018.131753674@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
 References: <20230110180017.145591678@linuxfoundation.org>
@@ -37,64 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Antoine Tenart <atenart@kernel.org>
+From: Jian Shen <shenjian15@huawei.com>
 
-[ Upstream commit f2575c8f404911da83f25b688e12afcf4273e640 ]
+[ Upstream commit 7d89b53cea1a702f97117fb4361523519bb1e52c ]
 
-Multicast packets received on an interface bound to a VRF are marked as
-belonging to the VRF and the skb device is updated to point to the VRF
-device itself. This was fine even when a route was associated to a
-device as when performing a fib table lookup 'oif' in fib6_table_lookup
-(coming from 'skb->dev->ifindex' in ip6_route_input) was set to 0 when
-FLOWI_FLAG_SKIP_NH_OIF was set.
+For device supports RXD advanced layout, the driver will
+return directly if the hardware finish the checksum
+calculate. It cause missing L3E checking for ip packets.
+Fixes it.
 
-With commit 40867d74c374 ("net: Add l3mdev index to flow struct and
-avoid oif reset for port devices") this is not longer true and multicast
-traffic is not received on the original interface.
-
-Instead of adding back a similar check in fib6_table_lookup determine
-the dst using the original ifindex for multicast VRF traffic. To make
-things consistent across the function do the above for all strict
-packets, which was the logic before commit 6f12fa775530 ("vrf: mark skb
-for multicast or link-local as enslaved to VRF"). Note that reverting to
-this behavior should be fine as the change was about marking packets
-belonging to the VRF, not about their dst.
-
-Fixes: 40867d74c374 ("net: Add l3mdev index to flow struct and avoid oif reset for port devices")
-Reported-by: Jianlin Shi <jishi@redhat.com>
-Signed-off-by: Antoine Tenart <atenart@kernel.org>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Link: https://lore.kernel.org/r/20221220171825.1172237-1-atenart@kernel.org
+Fixes: 1ddc028ac849 ("net: hns3: refactor out RX completion checksum")
+Signed-off-by: Jian Shen <shenjian15@huawei.com>
+Signed-off-by: Hao Lan <lanhao@huawei.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/vrf.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3_enet.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/vrf.c b/drivers/net/vrf.c
-index 5df7a0abc39d..f7f40e3fe9cc 100644
---- a/drivers/net/vrf.c
-+++ b/drivers/net/vrf.c
-@@ -1385,8 +1385,8 @@ static struct sk_buff *vrf_ip6_rcv(struct net_device *vrf_dev,
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+index 44d4265f109a..d5d7fae354e7 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3_enet.c
+@@ -3813,18 +3813,16 @@ static int hns3_gro_complete(struct sk_buff *skb, u32 l234info)
+ 	return 0;
+ }
  
- 	/* loopback, multicast & non-ND link-local traffic; do not push through
- 	 * packet taps again. Reset pkt_type for upper layers to process skb.
--	 * For strict packets with a source LLA, determine the dst using the
--	 * original ifindex.
-+	 * For non-loopback strict packets, determine the dst using the original
-+	 * ifindex.
- 	 */
- 	if (skb->pkt_type == PACKET_LOOPBACK || (need_strict && !is_ndisc)) {
- 		skb->dev = vrf_dev;
-@@ -1395,7 +1395,7 @@ static struct sk_buff *vrf_ip6_rcv(struct net_device *vrf_dev,
+-static bool hns3_checksum_complete(struct hns3_enet_ring *ring,
++static void hns3_checksum_complete(struct hns3_enet_ring *ring,
+ 				   struct sk_buff *skb, u32 ptype, u16 csum)
+ {
+ 	if (ptype == HNS3_INVALID_PTYPE ||
+ 	    hns3_rx_ptype_tbl[ptype].ip_summed != CHECKSUM_COMPLETE)
+-		return false;
++		return;
  
- 		if (skb->pkt_type == PACKET_LOOPBACK)
- 			skb->pkt_type = PACKET_HOST;
--		else if (ipv6_addr_type(&ipv6_hdr(skb)->saddr) & IPV6_ADDR_LINKLOCAL)
-+		else
- 			vrf_ip6_input_dst(skb, vrf_dev, orig_iif);
+ 	hns3_ring_stats_update(ring, csum_complete);
+ 	skb->ip_summed = CHECKSUM_COMPLETE;
+ 	skb->csum = csum_unfold((__force __sum16)csum);
+-
+-	return true;
+ }
  
- 		goto out;
+ static void hns3_rx_handle_csum(struct sk_buff *skb, u32 l234info,
+@@ -3884,8 +3882,7 @@ static void hns3_rx_checksum(struct hns3_enet_ring *ring, struct sk_buff *skb,
+ 		ptype = hnae3_get_field(ol_info, HNS3_RXD_PTYPE_M,
+ 					HNS3_RXD_PTYPE_S);
+ 
+-	if (hns3_checksum_complete(ring, skb, ptype, csum))
+-		return;
++	hns3_checksum_complete(ring, skb, ptype, csum);
+ 
+ 	/* check if hardware has done checksum */
+ 	if (!(bd_base_info & BIT(HNS3_RXD_L3L4P_B)))
+@@ -3894,6 +3891,7 @@ static void hns3_rx_checksum(struct hns3_enet_ring *ring, struct sk_buff *skb,
+ 	if (unlikely(l234info & (BIT(HNS3_RXD_L3E_B) | BIT(HNS3_RXD_L4E_B) |
+ 				 BIT(HNS3_RXD_OL3E_B) |
+ 				 BIT(HNS3_RXD_OL4E_B)))) {
++		skb->ip_summed = CHECKSUM_NONE;
+ 		hns3_ring_stats_update(ring, l3l4_csum_err);
+ 
+ 		return;
 -- 
 2.35.1
 
