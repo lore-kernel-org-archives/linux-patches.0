@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766F06FBB
-	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:29:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAC0DC433D2;
-	Tue, 10 Jan 2023 18:29:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BB416FBB
+	for <patches@lists.linux.dev>; Tue, 10 Jan 2023 18:29:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCDC3C433EF;
+	Tue, 10 Jan 2023 18:29:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673375384;
-	bh=sOwc8x8/9w8lQ5AceYz1z9e5A8bHZuetFSUpcTEDFzo=;
+	s=korg; t=1673375387;
+	bh=1ubklAFHVW7csSkJ3bvFLHU+IWuN6cvvHpOO6KJwJ8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0IAMRFxeyATGI4n8zrv3Fusc4cmcJpI14W5sNgg1HDFb2BPiRgt/gHR1/O5/O2u4b
-	 rzhAJKA2C5jIC07BifyEs2eV8C3K3H5FIjYWRoSBjC2yWglPBFzmMWQZm1O9dYlRDf
-	 nWVE8ml7wX4SZ7NyIAtrmfJlWKV4q/jsKDjRg3co=
+	b=A3TEdio0Hy1nu4PU/x6cYFeW2BO3dKkIuzP58Qj5vPHyJq1mAkh43VTWTTLkV/gte
+	 eiHQyVwdhJZH97T+NRuQuEDc16pEFBW0ayAMGxlB1VYLiuiRAy8ek8t1BA291+t5tq
+	 iE7M5BfU+BbTtkcXwIzXt5Ja0MQVLyjw8z1hCXRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Saravana Kannan <saravanak@google.com>,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>
-Subject: [PATCH 5.15 129/290] driver core: Fix bus_type.match() error handling in __driver_attach()
-Date: Tue, 10 Jan 2023 19:03:41 +0100
-Message-Id: <20230110180036.286423590@linuxfoundation.org>
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 165/290] block: mq-deadline: Fix dd_finish_request() for zoned devices
+Date: Tue, 10 Jan 2023 19:04:17 +0100
+Message-Id: <20230110180037.599451655@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 References: <20230110180031.620810905@linuxfoundation.org>
@@ -34,46 +35,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Isaac J. Manjarres <isaacmanjarres@google.com>
+From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-commit 27c0d217340e47ec995557f61423ef415afba987 upstream.
+commit 2820e5d0820ac4daedff1272616a53d9c7682fd2 upstream.
 
-When a driver registers with a bus, it will attempt to match with every
-device on the bus through the __driver_attach() function. Currently, if
-the bus_type.match() function encounters an error that is not
--EPROBE_DEFER, __driver_attach() will return a negative error code, which
-causes the driver registration logic to stop trying to match with the
-remaining devices on the bus.
+dd_finish_request() tests if the per prio fifo_list is not empty to
+determine if request dispatching must be restarted for handling blocked
+write requests to zoned devices with a call to
+blk_mq_sched_mark_restart_hctx(). While simple, this implementation has
+2 problems:
 
-This behavior is not correct; a failure while matching a driver to a
-device does not mean that the driver won't be able to match and bind
-with other devices on the bus. Update the logic in __driver_attach()
-to reflect this.
+1) Only the priority level of the completed request is considered.
+   However, writes to a zone may be blocked due to other writes to the
+   same zone using a different priority level. While this is unlikely to
+   happen in practice, as writing a zone with different IO priorirites
+   does not make sense, nothing in the code prevents this from
+   happening.
+2) The use of list_empty() is dangerous as dd_finish_request() does not
+   take dd->lock and may run concurrently with the insert and dispatch
+   code.
 
-Fixes: 656b8035b0ee ("ARM: 8524/1: driver cohandle -EPROBE_DEFER from bus_type.match()")
-Cc: stable@vger.kernel.org
-Cc: Saravana Kannan <saravanak@google.com>
-Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
-Link: https://lore.kernel.org/r/20220921001414.4046492-1-isaacmanjarres@google.com
+Fix these 2 problems by testing the write fifo list of all priority
+levels using the new helper dd_has_write_work(), and by testing each
+fifo list using list_empty_careful().
+
+Fixes: c807ab520fc3 ("block/mq-deadline: Add I/O priority support")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Link: https://lore.kernel.org/r/20221124021208.242541-2-damien.lemoal@opensource.wdc.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/base/dd.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ block/mq-deadline.c |   18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
---- a/drivers/base/dd.c
-+++ b/drivers/base/dd.c
-@@ -1127,7 +1127,11 @@ static int __driver_attach(struct device
- 		return 0;
- 	} else if (ret < 0) {
- 		dev_dbg(dev, "Bus failed to match device: %d\n", ret);
--		return ret;
-+		/*
-+		 * Driver could not match with device, but may match with
-+		 * another device on the bus.
-+		 */
-+		return 0;
- 	} /* ret > 0 means positive match */
+--- a/block/mq-deadline.c
++++ b/block/mq-deadline.c
+@@ -791,6 +791,18 @@ static void dd_prepare_request(struct re
+ 	rq->elv.priv[0] = NULL;
+ }
  
- 	if (driver_allows_async_probing(drv)) {
++static bool dd_has_write_work(struct blk_mq_hw_ctx *hctx)
++{
++	struct deadline_data *dd = hctx->queue->elevator->elevator_data;
++	enum dd_prio p;
++
++	for (p = 0; p <= DD_PRIO_MAX; p++)
++		if (!list_empty_careful(&dd->per_prio[p].fifo_list[DD_WRITE]))
++			return true;
++
++	return false;
++}
++
+ /*
+  * Callback from inside blk_mq_free_request().
+  *
+@@ -813,7 +825,6 @@ static void dd_finish_request(struct req
+ 	struct deadline_data *dd = q->elevator->elevator_data;
+ 	const u8 ioprio_class = dd_rq_ioclass(rq);
+ 	const enum dd_prio prio = ioprio_class_to_prio[ioprio_class];
+-	struct dd_per_prio *per_prio = &dd->per_prio[prio];
+ 
+ 	/*
+ 	 * The block layer core may call dd_finish_request() without having
+@@ -829,9 +840,10 @@ static void dd_finish_request(struct req
+ 
+ 		spin_lock_irqsave(&dd->zone_lock, flags);
+ 		blk_req_zone_write_unlock(rq);
+-		if (!list_empty(&per_prio->fifo_list[DD_WRITE]))
+-			blk_mq_sched_mark_restart_hctx(rq->mq_hctx);
+ 		spin_unlock_irqrestore(&dd->zone_lock, flags);
++
++		if (dd_has_write_work(rq->mq_hctx))
++			blk_mq_sched_mark_restart_hctx(rq->mq_hctx);
+ 	}
+ }
+ 
 
 
