@@ -1,138 +1,174 @@
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (mail-dm6nam11on2070.outbound.protection.outlook.com [40.107.223.70])
+Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7F020FF
-	for <patches@lists.linux.dev>; Wed, 11 Jan 2023 11:18:05 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=fnElb/yeigB894jCwr1cEJuhuKTlWVDeU7TzLcC0Lr8zaRuM/XLMgyhzZpdzVoTbzlPrr3sAT0AZfPi3WshZLMvektD+YIpkK3zIVVSsc7GUCsY/bjK064U95Xf2bwhSK4281sbDSyFmu0SKKC79TR6KqVbJpZSs7KXQHzyIDn+D4ylORqZeqR6lrm1JTq7OM4UXemsWegiMfIldVxdNUozXp/Ar/7a/h1atCLN7h6JuCfCNfsgugq2GVlvmiFbCyq0s6QC4nQUm+9gkpKFe5nQxYN6oXZzfWcNQXir+PxdrfM+uU84vYu7GLZ9qDRuK+vmzl0vg7hXG4FMXr6l/1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kuDOSvfS9Cth5Xq+4GE1yqvNKZlN1ZxoBbki7Kox7A0=;
- b=ZVQEavEvPMWRCfRcPfTcv8Os6y/p/cX+3KqxfPu5gTYHSQNgKlr72j8TjwxHkUPH5K7757OnrqjefeMgPNosMhuK8Yg4NxdB9GCdjqdGcbUP4Z1fB/rCNdf5WrbWGDY5Bb2C+R+535EAc4JCnVK450IysqLnonFTPTR9yHfqpdi81fYEvK4CJUEuKmW8uUJ1ulhVAxBC6OvQgxx82LQ+MlVBqR1Vtk4Aa+YlZHj6FzAzkvZ1uQmVD6oB32gGQoGP0hypczroptBiPCG7O2RXmh36/pEEE5gPzK+cCUQg2nk/EdXIM+RuZI+f6pUJwszY3fBenW/QzyjW9u13evq4UQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kuDOSvfS9Cth5Xq+4GE1yqvNKZlN1ZxoBbki7Kox7A0=;
- b=lkLhYypoFm8mYp6O05qQZZqyBQF0nKjluNryQTl4Ns0l6+A3iIMFh7L96Zl7USQ5otNs0xfMPqo40r1RRke2y7LGcQgkTIMOgaXkzoM41Nb6NCJV92h0CiKsnTIeFz7NnQ4FELh87sm93fPt4GMrcLXBVY11T7ZF9PI/hE/CTzi64a7Cwe7n48EGiLyG1i6ATYi4zc7w5WeHQ96Hxxt8uMGzciiK7SqHcKGba98BqkW99vWJpsGEiNiTZy2aBcaY9ZaM5uWVLjpxGHFCMOtvhVIN6urEzMNeBX4gY64rGl77Wj9/xbTrGTgPKv8w2GBNalGKKdmI2qpMH+AE58kyIA==
-Received: from MN2PR14CA0022.namprd14.prod.outlook.com (2603:10b6:208:23e::27)
- by DS0PR12MB7557.namprd12.prod.outlook.com (2603:10b6:8:133::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5986.18; Wed, 11 Jan
- 2023 11:18:02 +0000
-Received: from BL02EPF000108E8.namprd05.prod.outlook.com
- (2603:10b6:208:23e:cafe::d2) by MN2PR14CA0022.outlook.office365.com
- (2603:10b6:208:23e::27) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6002.13 via Frontend
- Transport; Wed, 11 Jan 2023 11:18:02 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- BL02EPF000108E8.mail.protection.outlook.com (10.167.241.201) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6002.11 via Frontend Transport; Wed, 11 Jan 2023 11:18:02 +0000
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 11 Jan
- 2023 03:17:45 -0800
-Received: from rnnvmail205.nvidia.com (10.129.68.10) by rnnvmail205.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Wed, 11 Jan
- 2023 03:17:45 -0800
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.10) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36 via Frontend
- Transport; Wed, 11 Jan 2023 03:17:45 -0800
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH 6.0 000/148] 6.0.19-rc1 review
-In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
-References: <20230110180017.145591678@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A905E20FF
+	for <patches@lists.linux.dev>; Wed, 11 Jan 2023 11:18:39 +0000 (UTC)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.west.internal (Postfix) with ESMTP id 99BD33200893;
+	Wed, 11 Jan 2023 06:18:37 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute6.internal (MEProxy); Wed, 11 Jan 2023 06:18:38 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm2; t=1673435917; x=1673522317; bh=wj7dokJE/o
+	CdRPfLLEKd/DR8ZKUiRt18pjl/CZgIeIM=; b=UgCf6ZrzKNXwISE0Ija02CCvza
+	L510RcV9qYo3FTIaPK3xOCQqFBIbs/pki5WgEYSgEsiqb//l+Z0q/LBo4IxVhdL6
+	zYkhkQg34Thsmkpvv0R/pnjizlimfVldxR/dp7fVQM0s09uqjjNmIUzpWf8mPswQ
+	dB9MgNLJDPsAhlz+fiSo26SIOnCHactXdIjI7DL6f0MBou6mZuOYVNwjRudaFfhU
+	hXxfPSe/wypgaC+AP7CQHBPj6OiS67Kw6t0JQeSoI+mPVx27IOU4W4uWPc6GlNW0
+	/gb+VMzk4dYiq7GnrpKH3BkrgAam+GZXXMm21wPUco8/JbOMxre6EIxrc9NQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1673435917; x=1673522317; bh=wj7dokJE/oCdRPfLLEKd/DR8ZKUi
+	Rt18pjl/CZgIeIM=; b=Rbrxzcnz4/WPxoyDUpdJK4mHalKFqw3975pXeL+TlvhL
+	EHl0ZarhXT8Ff8z4JxlBivxL374YDlsjtfJpx63xTX5DsYf5bGuC4y+KZtm+XKhe
+	JDYOU0WlcLbmccVA1yYasGQdOH61kG6O45kRXuUNP8Jss6UUz85TIVmgOr6Bcq7H
+	qt9BtgZyXITTVaoNDOov5jrman+z4Z1gyafNzNMzaOe+BLOGBNYPDYFQy5JMr8N0
+	Ya6lOx1KmRZuW6w67CTTj4QmFt+Op3djRezqRlgBBkI9SnK2Ctlll9mZfHH3bWnm
+	ldhzH0BLBGT2zjwVx3UGojYnbudKK2nLr8s6VxHy3A==
+X-ME-Sender: <xms:DJu-YxCxaDAIEwRiDwQygzv95STscWgQzcCd7FBt5BpV69nvsWlg_Q>
+    <xme:DJu-Y_jfXQ6i-LDd5vXBqVGTjI2_rM_ihauN90WiqiDT4vReFXUHrwr4BMA7PaRfO
+    KRZF22VkxmryHL1qOg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrleeggddvgecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdetrhhn
+    ugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtth
+    gvrhhnpeeghffgieejjeekhfeiuddvudfgudeuheelffekhffgtdduieffhfeigefhgfdu
+    ueenucffohhmrghinhepthhugihsuhhithgvrdgtohhmnecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomheprghrnhgusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:DJu-Y8mEMfUo1UAsUl8wwe6YBhs_Ju6xdTq0xZJ6h7tyEUx46BOLsA>
+    <xmx:DJu-Y7yLkd_O58p86bbWXW5I9GGXaZ7Q9cNukkN7djvrBkPSVSoprA>
+    <xmx:DJu-Y2QrFwp0j3nOCRWqOGeIgtZ5WJaHDpasimfm8pK455zBI3eQYw>
+    <xmx:DZu-Y7i2dCcP9hc9bhoyzZw4NcCynlMX5D1K8HH6ZuD3pAgWYr-BAg>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id A36BEB60086; Wed, 11 Jan 2023 06:18:36 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-1185-g841157300a-fm-20221208.002-g84115730
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Message-ID: <46a17533-142f-4952-b9f4-760b7ea4642d@rnnvmail205.nvidia.com>
-Date: Wed, 11 Jan 2023 03:17:45 -0800
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF000108E8:EE_|DS0PR12MB7557:EE_
-X-MS-Office365-Filtering-Correlation-Id: 714150d3-38c4-4835-bd34-08daf3c58136
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	+Hoy1dfRCNTtgKqgFipfjg1i+qFNOX8DZBvWCF2YU92+PxCO9Jj9cRvI701xucAqtPrKQZQk0ynXbOvIdoYlrJVAyuXsebyf/btQUuNCy83DW/YH/EPN+5I889Ka4qDMFn+g+HyPYy0maU/Aj/S6UAZbEaT7wVeP48D6ngoGWjxgCLPdQGAHdTn5Q0XBSbSZdmSf0JH1wTd+tJ+gqpkU4QzTPG7Tn5z1OjRAJXoWYq8R8Rqv+zEMBXJpIFAO5uYDQnSdDc6jC7M9fEBEMrMhJp9aSYvuToaKbNSAshtbDdPeqqKtpinv8ado7iZmpm5fI++scxbWD6gBaUJfz/fe9LHQ5eVv/ikL4BkSxcqygtw8+KPoDIEzQbDUsE+Xae65OyOg9ZO+f/LEynRwiXBcwM3Jw0FuZlDrCkoSxDMHVSOSA47gLwQuUc9faiVyrhCDNyuMK6fqmLvQdM4umd35LVhYtU/zbMWZUW9jIly8i0kNsjL29p/PZ3vCpO9gZoyjZVVvqcnXu0bWU/sGN0GhH4Q/nPlH1ZJYN3R34MwOV8uOFv6PdnQGhUxGnTtrVFVxofh7H+rP+CgB4eur5GbRdrWa2na3WggNgNOIo9+hJTQE/BK/hKROL5xnQHsIPEhbmA/CUV0Te9XPBgTBMv0mHyvroPFYmaxeDUYjWkp7aTRknit2wp8wDafX0luiar5aerDWPRQVqBgWCoz1/QKf2hdXPkVBbDVkLNwzpwC7W8/4GfnY694pSP2vRlROaOCScX6LCABVoMlqdR7wH9h1bJWJwOClzqYfamUIaArD/Vs=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230022)(4636009)(136003)(396003)(346002)(376002)(39860400002)(451199015)(40470700004)(46966006)(36840700001)(186003)(40480700001)(316002)(5660300002)(26005)(966005)(7416002)(478600001)(40460700003)(47076005)(4326008)(336012)(6916009)(54906003)(8676002)(41300700001)(70206006)(70586007)(82310400005)(8936002)(31696002)(86362001)(426003)(31686004)(36860700001)(82740400003)(356005)(2906002)(7636003);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jan 2023 11:18:02.6270
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 714150d3-38c4-4835-bd34-08daf3c58136
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BL02EPF000108E8.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB7557
+Mime-Version: 1.0
+Message-Id: <45e6c885-3035-4cd7-a4d0-69127814ef32@app.fastmail.com>
+In-Reply-To: 
+ <CA+G9fYsChy=HzEwkBVydPW4gJhDjkB87dY9FA833H2tZLfSh-w@mail.gmail.com>
+References: <20230110180017.145591678@linuxfoundation.org>
+ <CA+G9fYtpM7X15rY6g6asDxrjxDSfj5sDiP8P5Yb1TS3VVmjGNw@mail.gmail.com>
+ <bd62bccb-6970-4cdb-ae23-792b5867705d@app.fastmail.com>
+ <CA+G9fYsChy=HzEwkBVydPW4gJhDjkB87dY9FA833H2tZLfSh-w@mail.gmail.com>
+Date: Wed, 11 Jan 2023 12:18:16 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Naresh Kamboju" <naresh.kamboju@linaro.org>
+Cc: "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
+ patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ "Linus Torvalds" <torvalds@linux-foundation.org>,
+ "Andrew Morton" <akpm@linux-foundation.org>,
+ "Guenter Roeck" <linux@roeck-us.net>, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, "Pavel Machek" <pavel@denx.de>,
+ "Jon Hunter" <jonathanh@nvidia.com>,
+ "Florian Fainelli" <f.fainelli@gmail.com>,
+ "Sudip Mukherjee" <sudipm.mukherjee@gmail.com>, srw@sladewatkins.net,
+ rwarsow@gmx.de, "Mark Brown" <broonie@kernel.org>
+Subject: Re: [PATCH 6.0 000/148] 6.0.19-rc1 review
+Content-Type: text/plain
 
-On Tue, 10 Jan 2023 19:01:44 +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.0.19 release.
-> There are 148 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> NOTE, this will probably be the LAST 6.0.y release.  If there is
-> anything preventing you from moving to 6.1.y right now, please let me
-> know.
-> 
-> Responses should be made by Thu, 12 Jan 2023 17:59:42 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.19-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.0.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+On Wed, Jan 11, 2023, at 10:31, Naresh Kamboju wrote:
+> On Wed, 11 Jan 2023 at 13:48, Arnd Bergmann <arnd@arndb.de> wrote:
+>> On Wed, Jan 11, 2023, at 07:16, Naresh Kamboju wrote:
+>> > On Tue, 10 Jan 2023 at 23:36, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+>
+> Yes, it ran successfully on 6.0.18.
+>
+> On the same kernel 6.0.19-rc1 built with gcc-12 did not find this panic.
+> The reported issue is specific to clang-15 build.
 
-All tests passing for Tegra ...
+Ok, and was the 6.0.18 build using the exact same clang-15 toolchain,
+or could there have been an update to any of the tools?
 
-Test results for stable-v6.0:
-    11 builds:	11 pass, 0 fail
-    28 boots:	28 pass, 0 fail
-    130 tests:	130 pass, 0 fail
+Have you seen results with older clang releases?
 
-Linux version:	6.0.19-rc1-ga7ffaeeaf9bb
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                tegra20-ventana, tegra210-p2371-2180,
-                tegra210-p3450-0000, tegra30-cardhu-a04
+>> > [ 2893.044339] Insufficient stack space to handle exception!
+>> > [ 2893.044351] ESR: 0x0000000096000047 -- DABT (current EL)
+>> > [ 2893.044360] FAR: 0xffff8000128180d0
+>> > [ 2893.044364] Task stack:     [0xffff800012a18000..0xffff800012a1c000]
+>> > [ 2893.044370] IRQ stack:      [0xffff80000a798000..0xffff80000a79c000]
+>> > [ 2893.044375] Overflow stack: [0xffff0000f77c4310..0xffff0000f77c5310]
+>> ...
+>> > [ 2893.044413] pc : el1h_64_sync+0x0/0x68
+>> > [ 2893.044430] lr : wp_page_copy+0xf8/0x90c
+>> > [ 2893.044445] sp : ffff8000128180d0
+>> ...
+>> > [ 2893.044646]  panic+0x168/0x374
+>> > [ 2893.044658]  test_taint+0x0/0x38
+>> > [ 2893.044667]  panic_bad_stack+0x110/0x124
+>> > [ 2893.044675]  handle_bad_stack+0x34/0x48
+>> > [ 2893.044685]  __bad_stack+0x78/0x7c
+>> > [ 2893.044692]  el1h_64_sync+0x0/0x68
+>> > [ 2893.044700]  do_wp_page+0x4a0/0x5c8
+>> > [ 2893.044708]  handle_mm_fault+0x7fc/0x14dc
+>> > [ 2893.044718]  do_page_fault+0x29c/0x450
+>> > [ 2893.044727]  do_mem_abort+0x4c/0xf8
+>> > [ 2893.044741]  el0_da+0x48/0xa8
+>> > [ 2893.044750]  el0t_64_sync_handler+0xcc/0xf0
+>> > [ 2893.044759]  el0t_64_sync+0x18c/0x190
+>>
+>> It claims that the stack overflow happened in do_wp_page(),
+>> but that has a really short call chain. It would be good
+>> to have the source line for do_wp_page+0x4a0/0x5c8 and
+>> wp_page_copy+0xf8/0x90c to see where exactly it was.
+>>
+>> >   artifact-location:
+>> > https://storage.tuxsuite.com/public/linaro/lkft/builds/2K9JDtix2mHMoYRjNkBef3oR5JT
+>>
+>
+> Adding " / " at end works.
+> https://storage.tuxsuite.com/public/linaro/lkft/builds/2K9JDtix2mHMoYRjNkBef3oR5JT/
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Ok, I disassembled the image to see what happened.
 
-Jon
+do_wp_page+0x4a0/0x5c8 is the call to wp_page_copy(), so I would
+guess the el1h_64_sync fault actually happened in that function.
+
+lr : wp_page_copy+0xf8/0x90c the return address from
+__mem_cgroup_charge(), but I suspect it's not where the fault
+happened either, just the last address that was in the
+link register.
+
+el1h_64_sync+0x0/0x68 is a "paciasp" pointer authentication
+instruction.
+
+__bad_stack is actually called from 'vectors', which has this
+code for calling el1h_64_sync, from kernel_ventry:
+
+ffff800008011200:       d10543ff        sub     sp, sp, #0x150
+ffff800008011204:       8b2063ff        add     sp, sp, x0
+ffff800008011208:       cb2063e0        sub     x0, sp, x0
+ffff80000801120c:       37700080        tbnz    w0, #14, ffff80000801121c <vectors+0x21c>
+ffff800008011210:       cb2063e0        sub     x0, sp, x0
+ffff800008011214:       cb2063ff        sub     sp, sp, x0
+ffff800008011218:       14000201        b       ffff800008011a1c <el1h_64_sync>
+ffff80000801121c:       d51bd040        msr     tpidr_el0, x0
+ffff800008011220:       cb2063e0        sub     x0, sp, x0
+ffff800008011224:       d51bd060        msr     tpidrro_el0, x0
+ffff800008011228:       f0010a80        adrp    x0, ffff80000a164000 <overflow_stack+0xcf0>
+ffff80000801122c:       910c401f        add     sp, x0, #0x310
+ffff800008011230:       d538d080        mrs     x0, tpidr_el1
+ffff800008011234:       8b2063ff        add     sp, sp, x0
+ffff800008011238:       d53bd040        mrs     x0, tpidr_el0
+ffff80000801123c:       cb2063e0        sub     x0, sp, x0
+ffff800008011240:       f274cc1f        tst     x0, #0xfffffffffffff000
+ffff800008011244:       54002de1        b.ne    ffff800008011800 <__bad_stack>  // b.any
+ffff800008011248:       cb2063ff        sub     sp, sp, x0
+ffff80000801124c:       d53bd060        mrs     x0, tpidrro_el0
+ffff800008011250:       140001f3        b       ffff800008011a1c <el1h_64_sync>
+
+and here I'm lost now.
+
+      Arnd
