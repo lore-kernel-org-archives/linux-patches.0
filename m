@@ -1,43 +1,43 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF404256E
-	for <patches@lists.linux.dev>; Wed, 11 Jan 2023 13:00:44 +0000 (UTC)
-Received: by mail-wr1-f47.google.com with SMTP id h16so14928188wrz.12
-        for <patches@lists.linux.dev>; Wed, 11 Jan 2023 05:00:44 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC1B5256E
+	for <patches@lists.linux.dev>; Wed, 11 Jan 2023 13:02:06 +0000 (UTC)
+Received: by mail-wr1-f44.google.com with SMTP id k8so448194wrc.9
+        for <patches@lists.linux.dev>; Wed, 11 Jan 2023 05:02:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=GciVknUp2+tJrdQZ3wGdbeoH9KpDzgfg+dAYwK6p4NQ=;
-        b=hFs0FLeBgkXlb8v7+s7DzG2Gy3uf0Cp4O4WExnbWOF++Vn1pUqBIHMU2Ri+G0wss6p
-         4sCe4pfh0UvfFFDYxHWP8738wJvhNliIxM14ZJm2hIdA9i1eDBCqg1qBjDSu7EdlASED
-         v9/Xh8XRRAXVDsTmOACbb8iq0NDDhK9XJsyJz2pT5aipt+MGYVnSdi790tR39lG5lS2T
-         VXS6gBa8tsPuXPv4aejCiub4BRberdhUIMkG39SOxHskx6UxJ4b7D1Pa8i4shxnxqRP8
-         WpyFe9s2atWwRrgkL8rGoH/6SgexZQBhmgoau1ha3tjXqtp2nwPWeMQG0F7in8nXiE3N
-         DxZg==
+        bh=pqLXNc7RAugZUpob9cm6wuqqrL/nJ70ZfGAMn/EOoRU=;
+        b=jWKM+LIMDWA3ZNABfM0jkH79WXGM5ex+Yxt+pWrtsms6QzD3Zu4XK2SZGuYFLr79Wu
+         lSSVUgy78X3xvQ1kDZYqsdphDMFrjIB+pdXWK8j/t4Ox0Vy4IKAd0cdPk3NDmSuS/xPr
+         IhSgVOGr188/v+wcrtnOIWJ/48nFb1hnIvLfTaruklUNq5QkrQzzmpRWTqzXBBQKnLaQ
+         yJJgkUCSQcmlIgPf469+EuEomKEP9NdlrPEhPAwLv9lPJYj3QLBP0Ku10xrEkh0DKZzJ
+         xR4egh9T5CpyRlKyKuR9sl9BTUsiypc6UOtS5irHHnz8iD+1rnmkj9+Uc5oT8t69gedO
+         LSPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GciVknUp2+tJrdQZ3wGdbeoH9KpDzgfg+dAYwK6p4NQ=;
-        b=hsef16BFPWs2RKZfyXDhgjsvT71Fw+aI5w/i5MFzoxw1DlZbr3TARNkfMPZrXCuH1O
-         wYHAAz/EVOwZ5bRyVxbvrXZwtGS+lB7HjYTvZnsXobItLyOJodsURR806yUcaG6K47Cl
-         svILfK0OU4tvQjLmKTRR3UdiZQrGxGIJX7Vms5HDgykpC45mfx/dndR9C2e/mbxWHcd0
-         CU0ualOd18XbeXNL3viO/Oz4vRpHGgHW/nKj44jrBI5x3wReOc6CrtB/ZiAheKyPVXv6
-         656wtHekGrno+jsr50aRKWiV/0fi/1BGFRtC+9A71fN18qoz2dAzsJyBSAAmSVsJKyhI
-         pPxA==
-X-Gm-Message-State: AFqh2kqYtu8ExU9WlVDPffwdqw01JHfG5WXwdI6cZP+/Sb/41j7A5sq8
-	bcfu5b5/ZbigVEFpHRC7u0E=
-X-Google-Smtp-Source: AMrXdXsORqDA5bKI9k1rg0ymSgo23lzq1B638aQ0UaQn2i8MWHUvB5+6xgf5+Q2xQ8/2JEEHid+hBQ==
-X-Received: by 2002:a5d:5c12:0:b0:242:800:9a7f with SMTP id cc18-20020a5d5c12000000b0024208009a7fmr48838506wrb.65.1673442042777;
-        Wed, 11 Jan 2023 05:00:42 -0800 (PST)
+        bh=pqLXNc7RAugZUpob9cm6wuqqrL/nJ70ZfGAMn/EOoRU=;
+        b=5epc/skrkjWiM36cklAZP4fne997kNf3cUO82AAGKofkYpKIvd2OQCCFjamkVy2rJj
+         PBKqVXU3gvOlX/tH96RyUffh/8Q3cTkbDCTIqQpnL3YoR0oEQoUhiD/w7MAUE9p9j/fh
+         CjPURedRJ5Taf5Au1zb/zEy91CgvwEUOrRzSy/y4XFkb8RRIvgHlmdLhIj+0Fomy207S
+         Sr5E2WhcPO1AH3KrehA6fxg+mfKdgRGSfyKxV9E7IRxmK2K8ah4ynt2wLvQK5LYtFfsx
+         2jJdpt8dQHtDX5T3Tbgd0JWXf0hXPUJSi8Pj3/nmI5g4PbKOTOcJcr/K/dssircT7V8A
+         RyBQ==
+X-Gm-Message-State: AFqh2kpxav2dFi+mWLVmJVxblL/G8PHbW9nWVyjAPszWnabb53neg0yt
+	w1K1imYT8U1mUB9zFwf5P2c=
+X-Google-Smtp-Source: AMrXdXtMfWw/+HTr5Jegwc181mbmydBXmrWNAXj7eP79GT4Gn2OPcw2S2rWA3O8Do7z2BdGFUOm48Q==
+X-Received: by 2002:a05:6000:5c9:b0:2b0:bc05:b463 with SMTP id bh9-20020a05600005c900b002b0bc05b463mr18143511wrb.7.1673442125180;
+        Wed, 11 Jan 2023 05:02:05 -0800 (PST)
 Received: from debian ([167.98.27.226])
-        by smtp.gmail.com with ESMTPSA id c13-20020adffb0d000000b00241fde8fe04sm13629177wrr.7.2023.01.11.05.00.41
+        by smtp.gmail.com with ESMTPSA id i5-20020a5d55c5000000b002a6f329203esm13875406wrw.61.2023.01.11.05.02.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Jan 2023 05:00:42 -0800 (PST)
-Date: Wed, 11 Jan 2023 13:00:40 +0000
+        Wed, 11 Jan 2023 05:02:04 -0800 (PST)
+Date: Wed, 11 Jan 2023 13:02:03 +0000
 From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -46,9 +46,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
 	rwarsow@gmx.de
-Subject: Re: [PATCH 6.0 000/148] 6.0.19-rc1 review
-Message-ID: <Y76y+IsErvZyJEIU@debian>
-References: <20230110180017.145591678@linuxfoundation.org>
+Subject: Re: [PATCH 5.15 000/290] 5.15.87-rc1 review
+Message-ID: <Y76zS/EtFvJhDlQG@debian>
+References: <20230110180031.620810905@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,26 +57,22 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
+In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 
 Hi Greg,
 
-On Tue, Jan 10, 2023 at 07:01:44PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.0.19 release.
-> There are 148 patches in this series, all will be posted as a response
+On Tue, Jan 10, 2023 at 07:01:32PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.87 release.
+> There are 290 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> NOTE, this will probably be the LAST 6.0.y release.  If there is
-> anything preventing you from moving to 6.1.y right now, please let me
-> know.
 > 
 > Responses should be made by Thu, 12 Jan 2023 17:59:42 +0000.
 > Anything received after that time might be too late.
 
 Build test (gcc version 12.2.1 20221127):
-mips: 52 configs -> no failure
-arm: 100 configs -> no failure
+mips: 62 configs -> no failure
+arm: 99 configs -> no failure
 arm64: 3 configs -> no failure
 x86_64: 4 configs -> no failure
 alpha allmodconfig -> no failure
@@ -90,12 +86,11 @@ Boot test:
 x86_64: Booted on my test laptop. No regression.
 x86_64: Booted on qemu. No regression. [1]
 arm64: Booted on rpi4b (4GB model). No regression. [2]
+mips: Booted on ci20 board. No regression. [3]
 
-mips: Booted on ci20 board.
-Known issue - VNC server fails to start.
-
-[1]. https://openqa.qa.codethink.co.uk/tests/2608
-[2]. https://openqa.qa.codethink.co.uk/tests/2611
+[1]. https://openqa.qa.codethink.co.uk/tests/2607
+[2]. https://openqa.qa.codethink.co.uk/tests/2612
+[3]. https://openqa.qa.codethink.co.uk/tests/2615
 
 Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
 
