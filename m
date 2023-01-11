@@ -1,163 +1,99 @@
-Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6460C256E
-	for <patches@lists.linux.dev>; Wed, 11 Jan 2023 12:52:56 +0000 (UTC)
-Received: by mail-vs1-f53.google.com with SMTP id t10so4992852vsr.3
-        for <patches@lists.linux.dev>; Wed, 11 Jan 2023 04:52:56 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43390256E
+	for <patches@lists.linux.dev>; Wed, 11 Jan 2023 12:59:00 +0000 (UTC)
+Received: by mail-wm1-f41.google.com with SMTP id j16-20020a05600c1c1000b003d9ef8c274bso8210470wms.0
+        for <patches@lists.linux.dev>; Wed, 11 Jan 2023 04:59:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=rLqRf9VgAmK96U2aRgTND14SHPmEKdSAmyPaFPSFzBE=;
-        b=YsGSPW8RNCDctVWQ6PSdppj4BtIihq41e2b8fYoCbUQ0JTDYQTxjhnQNpQebZZIGyc
-         T/s+OZgmmhoLP/qENU0DbODnagcuUyp/JaqVt7ERGrqF9LUXagvQIdGQ76MU5AH+ePZt
-         dMWc/7BPeateozG+ykDN4SgOndaJVFzTJVdVBn6IKMQ8drCCUFO1d22h6NQrqKEHbBZx
-         +4Li3a/DJfZpHhiR4r4kSrNEzSqJk47WpIprpuwFkIM6aH/5+vLYde9qJMTzACsGI/kM
-         4Y29c7+G2BOw1nsbz+TW9stTCnIXLDiIdzgdiGDW+rvop53WIBmExwQay/95+bU08Q5p
-         JT/Q==
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=bmMcIUft4WbYyd1YhRNwUDrox+14DCGIc71j97XsCZc=;
+        b=jJYGjutRCIJ7bxY/mRz8HyQPYqMotaewXKqHE1baOqVh8HUMWW5gUwf1Kyz3EQLZo8
+         cUsJsvYqNqVe9NsATCX8xtbRkLCRzI8lRmSLX7IOgAEChR2MSeLcsPtT2Yz9+Cjde4lZ
+         Gkf5tt6R3QH+CbEJ8jHDC+pzRFP9L3ufPTUi+zSiQ4VOAbWgObw7hAkdU3HR8BMo5YqQ
+         Rd29B7RQQAWOKgB3URL0/aWcC8WKZRtruDllMNbbUWGTNHNR0f0n2LBBteNDqduHT/e0
+         S/i/7GmaakpvTofjUzy7w1ndeGBllLFrlpHPFS0Pofsuq1CoM3/jOfCw8z4YdwOpJr6E
+         FDOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rLqRf9VgAmK96U2aRgTND14SHPmEKdSAmyPaFPSFzBE=;
-        b=ZYAcbMsJtOtvX5C/K1LFoZXDTRjzOL9KPYFfdG3TiKzx94dEQbcD8KH5bDiLs0YR9j
-         LSiRX2cROJBolryPf9/6TGG24NHwx40xph6tYiOhKPDOr/exfg1cs/L7ZDv/gyeIxeEh
-         mMxzm2Y2P9Zp504AppSAyAaXfOm9oPRG/skMRMR/sarodXJMGUS6zHpqafNe/yy/immC
-         TEpwFo8bffDN+VM1sI4vFeCCeaIUlOPUdrNPKkbYWvUDnamEhBvm55XtST1z7LW5RYfN
-         fvYYy9wDhX/3LJ7M9t1DbvxYkjSy2I64UXfDkrbTYEO3q1fDdFC2Evtt90oRWQtJTsDp
-         5T0A==
-X-Gm-Message-State: AFqh2ko41ElJ2vX7bnzCARRA46wltRIDDTWEMMmb3MMcK+yUU/O9YXbt
-	GP08mD4jQRljG8a4Y61GKhUQjJ085/QIoWO2ygX0bg==
-X-Google-Smtp-Source: AMrXdXv3jhAnLlQZspK/k3OVxEpxZdj7+RYjlT4MNoTfoXbrKcQt8G79bKWDfAGr034gTz3vKsMugiCiDXtxRlIhGHk=
-X-Received: by 2002:a67:ec94:0:b0:3b5:32d0:edcc with SMTP id
- h20-20020a67ec94000000b003b532d0edccmr10096934vsp.24.1673441575070; Wed, 11
- Jan 2023 04:52:55 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bmMcIUft4WbYyd1YhRNwUDrox+14DCGIc71j97XsCZc=;
+        b=dZ+P0j6V8q21yIQK+BJcx4NhApfGKKMvcfPLTlhB4mEGwZCMTdZPSCGMM9pYSC/FUD
+         JGoqWXgM1YxFBqzt4GucqstESJKuMaCGmBtDSFktmg2wb3ugdh2X9YWR96R1C5IHsQaa
+         tNEIu/W5HOpQApsZSJ6kD8GbQFlCQ0TXSkTEPfBavcKfUU1I/Lrcj5EDVfLDx9CHMtjG
+         ET+y3dbq76K7wvjXpze6iWBdnArqojbvHF/6UYek56JtiWAcKgUcdJ9qJ21YnIj93CLW
+         HEEEmjvwIFfROLJnuqz7w+9dVED66Wlzhaf4RXZzsTYMrcIw1ubxSel3DAh22jul9REk
+         YjKQ==
+X-Gm-Message-State: AFqh2kqXWM3M8eFD+Dr5ttzSfK114VD08Lurxl0+RCclUYTvHNRZmxyq
+	yYY2A72PjrmNYQokGIfNd20=
+X-Google-Smtp-Source: AMrXdXve0ye9QtTUBMqF9HXnzpbarAwLO2ONitQ31GE8gMiYOnzrDPD95Gt5cJJ0b/L0iRueVm7Vrw==
+X-Received: by 2002:a05:600c:3550:b0:3d9:ed30:6a73 with SMTP id i16-20020a05600c355000b003d9ed306a73mr9392280wmq.9.1673441938343;
+        Wed, 11 Jan 2023 04:58:58 -0800 (PST)
+Received: from debian ([167.98.27.226])
+        by smtp.gmail.com with ESMTPSA id fc14-20020a05600c524e00b003a3442f1229sm26143990wmb.29.2023.01.11.04.58.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Jan 2023 04:58:58 -0800 (PST)
+Date: Wed, 11 Jan 2023 12:58:56 +0000
+From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/159] 6.1.5-rc1 review
+Message-ID: <Y76ykHsQcyusWNah@debian>
+References: <20230110180018.288460217@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230110180017.145591678@linuxfoundation.org> <CA+G9fYtpM7X15rY6g6asDxrjxDSfj5sDiP8P5Yb1TS3VVmjGNw@mail.gmail.com>
- <bd62bccb-6970-4cdb-ae23-792b5867705d@app.fastmail.com> <CA+G9fYsChy=HzEwkBVydPW4gJhDjkB87dY9FA833H2tZLfSh-w@mail.gmail.com>
- <45e6c885-3035-4cd7-a4d0-69127814ef32@app.fastmail.com>
-In-Reply-To: <45e6c885-3035-4cd7-a4d0-69127814ef32@app.fastmail.com>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Wed, 11 Jan 2023 18:22:43 +0530
-Message-ID: <CA+G9fYvNsy=NVJw+79ecnhnKTtnEmOGLTAP_2mm6cUE4jaF8ZA@mail.gmail.com>
-Subject: Re: [PATCH 6.0 000/148] 6.0.19-rc1 review
-To: Arnd Bergmann <arnd@arndb.de>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	Linus Torvalds <torvalds@linux-foundation.org>, Andrew Morton <akpm@linux-foundation.org>, 
-	Guenter Roeck <linux@roeck-us.net>, shuah@kernel.org, patches@kernelci.org, 
-	lkft-triage@lists.linaro.org, Pavel Machek <pavel@denx.de>, 
-	Jon Hunter <jonathanh@nvidia.com>, Florian Fainelli <f.fainelli@gmail.com>, 
-	Sudip Mukherjee <sudipm.mukherjee@gmail.com>, srw@sladewatkins.net, rwarsow@gmx.de, 
-	Mark Brown <broonie@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
 
-On Wed, 11 Jan 2023 at 16:48, Arnd Bergmann <arnd@arndb.de> wrote:
->
-> On Wed, Jan 11, 2023, at 10:31, Naresh Kamboju wrote:
-> > On Wed, 11 Jan 2023 at 13:48, Arnd Bergmann <arnd@arndb.de> wrote:
-> >> On Wed, Jan 11, 2023, at 07:16, Naresh Kamboju wrote:
-> >> > On Tue, 10 Jan 2023 at 23:36, Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
-> >
-> > Yes, it ran successfully on 6.0.18.
-> >
-> > On the same kernel 6.0.19-rc1 built with gcc-12 did not find this panic.
-> > The reported issue is specific to clang-15 build.
+Hi Greg,
 
-After retesting a couple of times it is confirmed that it is not reproducible.
+On Tue, Jan 10, 2023 at 07:02:28PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.5 release.
+> There are 159 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 12 Jan 2023 17:59:42 +0000.
+> Anything received after that time might be too late.
 
-> Ok, and was the 6.0.18 build using the exact same clang-15 toolchain,
-> or could there have been an update to any of the tools?
+Build test (gcc version 12.2.1 20221127):
+mips: 52 configs -> no failure
+arm: 100 configs -> no failure
+arm64: 3 configs -> no failure
+x86_64: 4 configs -> no failure
+alpha allmodconfig -> no failure
+csky allmodconfig -> no failure
+powerpc allmodconfig -> no failure
+riscv allmodconfig -> no failure
+s390 allmodconfig -> no failure
+xtensa allmodconfig -> no failure
 
-it is same Clang version 15.0.6
+Boot test:
+x86_64: Booted on my test laptop. No regression.
+x86_64: Booted on qemu. No regression. [1]
+arm64: Booted on rpi4b (4GB model). No regression. [2]
+mips: Booted on ci20 board. No regression. [3]
 
-> Have you seen results with older clang releases?
+[1]. https://openqa.qa.codethink.co.uk/tests/2609
+[2]. https://openqa.qa.codethink.co.uk/tests/2610
+[3]. https://openqa.qa.codethink.co.uk/tests/2613
 
-We are not testing with older clang versions.
+Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
 
->
-> >> > [ 2893.044339] Insufficient stack space to handle exception!
-> >> > [ 2893.044351] ESR: 0x0000000096000047 -- DABT (current EL)
-> >> > [ 2893.044360] FAR: 0xffff8000128180d0
-> >> > [ 2893.044364] Task stack:     [0xffff800012a18000..0xffff800012a1c000]
-> >> > [ 2893.044370] IRQ stack:      [0xffff80000a798000..0xffff80000a79c000]
-> >> > [ 2893.044375] Overflow stack: [0xffff0000f77c4310..0xffff0000f77c5310]
-> >> ...
-> >> > [ 2893.044413] pc : el1h_64_sync+0x0/0x68
-> >> > [ 2893.044430] lr : wp_page_copy+0xf8/0x90c
-> >> > [ 2893.044445] sp : ffff8000128180d0
-> >> ...
-> >> > [ 2893.044646]  panic+0x168/0x374
-> >> > [ 2893.044658]  test_taint+0x0/0x38
-> >> > [ 2893.044667]  panic_bad_stack+0x110/0x124
-> >> > [ 2893.044675]  handle_bad_stack+0x34/0x48
-> >> > [ 2893.044685]  __bad_stack+0x78/0x7c
-> >> > [ 2893.044692]  el1h_64_sync+0x0/0x68
-> >> > [ 2893.044700]  do_wp_page+0x4a0/0x5c8
-> >> > [ 2893.044708]  handle_mm_fault+0x7fc/0x14dc
-> >> > [ 2893.044718]  do_page_fault+0x29c/0x450
-> >> > [ 2893.044727]  do_mem_abort+0x4c/0xf8
-> >> > [ 2893.044741]  el0_da+0x48/0xa8
-> >> > [ 2893.044750]  el0t_64_sync_handler+0xcc/0xf0
-> >> > [ 2893.044759]  el0t_64_sync+0x18c/0x190
-> >>
-> >> It claims that the stack overflow happened in do_wp_page(),
-> >> but that has a really short call chain. It would be good
-> >> to have the source line for do_wp_page+0x4a0/0x5c8 and
-> >> wp_page_copy+0xf8/0x90c to see where exactly it was.
-> >>
-> >> >   artifact-location:
-> >> > https://storage.tuxsuite.com/public/linaro/lkft/builds/2K9JDtix2mHMoYRjNkBef3oR5JT
-> >>
-> >
-> > Adding " / " at end works.
-> > https://storage.tuxsuite.com/public/linaro/lkft/builds/2K9JDtix2mHMoYRjNkBef3oR5JT/
->
-> Ok, I disassembled the image to see what happened.
->
-> do_wp_page+0x4a0/0x5c8 is the call to wp_page_copy(), so I would
-> guess the el1h_64_sync fault actually happened in that function.
->
-> lr : wp_page_copy+0xf8/0x90c the return address from
-> __mem_cgroup_charge(), but I suspect it's not where the fault
-> happened either, just the last address that was in the
-> link register.
->
-> el1h_64_sync+0x0/0x68 is a "paciasp" pointer authentication
-> instruction.
->
-> __bad_stack is actually called from 'vectors', which has this
-> code for calling el1h_64_sync, from kernel_ventry:
->
-> ffff800008011200:       d10543ff        sub     sp, sp, #0x150
-> ffff800008011204:       8b2063ff        add     sp, sp, x0
-> ffff800008011208:       cb2063e0        sub     x0, sp, x0
-> ffff80000801120c:       37700080        tbnz    w0, #14, ffff80000801121c <vectors+0x21c>
-> ffff800008011210:       cb2063e0        sub     x0, sp, x0
-> ffff800008011214:       cb2063ff        sub     sp, sp, x0
-> ffff800008011218:       14000201        b       ffff800008011a1c <el1h_64_sync>
-> ffff80000801121c:       d51bd040        msr     tpidr_el0, x0
-> ffff800008011220:       cb2063e0        sub     x0, sp, x0
-> ffff800008011224:       d51bd060        msr     tpidrro_el0, x0
-> ffff800008011228:       f0010a80        adrp    x0, ffff80000a164000 <overflow_stack+0xcf0>
-> ffff80000801122c:       910c401f        add     sp, x0, #0x310
-> ffff800008011230:       d538d080        mrs     x0, tpidr_el1
-> ffff800008011234:       8b2063ff        add     sp, sp, x0
-> ffff800008011238:       d53bd040        mrs     x0, tpidr_el0
-> ffff80000801123c:       cb2063e0        sub     x0, sp, x0
-> ffff800008011240:       f274cc1f        tst     x0, #0xfffffffffffff000
-> ffff800008011244:       54002de1        b.ne    ffff800008011800 <__bad_stack>  // b.any
-> ffff800008011248:       cb2063ff        sub     sp, sp, x0
-> ffff80000801124c:       d53bd060        mrs     x0, tpidrro_el0
-> ffff800008011250:       140001f3        b       ffff800008011a1c <el1h_64_sync>
->
-> and here I'm lost now.
->
->       Arnd
+-- 
+Regards
+Sudip
