@@ -1,85 +1,126 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from smtpout.efficios.com (smtpout.efficios.com [167.114.26.122])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 294F529A9
-	for <patches@lists.linux.dev>; Wed, 11 Jan 2023 18:56:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2BDBC433D2;
-	Wed, 11 Jan 2023 18:56:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1673463406;
-	bh=f8ehkPRhHvV4m7LtWW7PXiL69ZVJua3vpOb9mfjdtdE=;
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD60A2101
+	for <patches@lists.linux.dev>; Wed, 11 Jan 2023 22:33:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=efficios.com;
+	s=smtpout1; t=1673475805;
+	bh=1Oxpyw0xOs6/7W8Tuvd1QWxZNFxc0oTmNh4yGrJ47L0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=CTC5LydZRZRfJKyil15GzxfhFdFn0DmoTPXH9ptU4zHksDXPYeJiO4Hsvg25XebWv
-	 34lzPhxy9XDe2ivG/uFVSjx3H0+1Ml3xH63vD4e0pGdn9CD19yNVD1gCRnealOe3vm
-	 U1bubACchyII08Ln7rwoKgVXT1gWq2Vl4PC2gTod4q/qQKGE7aD2a6gET9EESpNLBf
-	 1BGcQbodA/xJ09MDE6AzXbI4BL0K1o1HWvYnO7UFm7ajeXHnR3pX1KP9I74uGF4Xt7
-	 4fxQOV8iaU9MofweW/fXWsphy+o6SZxM8MOiSRQEODez1XEI+kylTXwYuU4I7Q00OG
-	 KzWdbL5PyNTXQ==
-Date: Wed, 11 Jan 2023 18:56:41 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.0 000/148] 6.0.19-rc1 review
-Message-ID: <Y78GafBrQyywPXJE@spud>
-References: <20230110180017.145591678@linuxfoundation.org>
+	b=ahLgkiB5IQ5QRVqLfHoeZAVd/D9rkVuFxvdtTNVcpj+nX3+Rzvw9sNQfLAFLHAfuC
+	 fx2epI4w+DJKuXv6m4KR7SNDMY4qMZkhSzNmwfHDp9UqNnqPC07Z+ESFd62ySxl27x
+	 1wDae6L32WANYrSWVuQ5r5f0bvZJC1zbqZBt+qAO6TYRifgM/TovLMfKe8NlW3HsLj
+	 fGxSA7BZCmBpd8/UoA5TukoL0tLQap1kgsp3nWKpTHdr1PKfLtKXSds8I04INn6pf9
+	 2Ku8+BOZMXNrPpCwYL7CdG4HKbEZoiMxoIHB2d2PRE0F6GcbbuI2DJ91Zc50i/9/Ua
+	 ZUhqiJZIJYa4A==
+Received: from localhost (192-222-180-24.qc.cable.ebox.net [192.222.180.24])
+	by smtpout.efficios.com (Postfix) with ESMTPSA id 4Nshz073rzzgWG;
+	Wed, 11 Jan 2023 17:23:24 -0500 (EST)
+Date: Wed, 11 Jan 2023 17:23:56 -0500
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+To: "Jason A. Donenfeld" <Jason@zx2c4.com>
+Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	tglx@linutronix.de, linux-crypto@vger.kernel.org,
+	linux-api@vger.kernel.org, x86@kernel.org,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
+	Carlos O'Donell <carlos@redhat.com>,
+	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
+	Jann Horn <jannh@google.com>,
+	Christian Brauner <brauner@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: Re: [PATCH v14 0/7] implement getrandom() in vDSO
+Message-ID: <Y782/D2WZJRR8SHY@localhost>
+References: <20230101162910.710293-1-Jason@zx2c4.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="bAdeVB51TK1R1zyN"
-Content-Disposition: inline
-In-Reply-To: <20230110180017.145591678@linuxfoundation.org>
-
-
---bAdeVB51TK1R1zyN
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230101162910.710293-1-Jason@zx2c4.com>
 
-On Tue, Jan 10, 2023 at 07:01:44PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.0.19 release.
-> There are 148 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
-> NOTE, this will probably be the LAST 6.0.y release.  If there is
-> anything preventing you from moving to 6.1.y right now, please let me
-> know.
->=20
-> Responses should be made by Thu, 12 Jan 2023 17:59:42 +0000.
-> Anything received after that time might be too late.
->=20
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.0.19-=
-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git=
- linux-6.0.y
-> and the diffstat can be found below.
+On 01-Jan-2023 05:29:03 PM, Jason A. Donenfeld wrote:
+[...]
+> Two statements:
+> 
+>   1) Userspace wants faster cryptographically secure random numbers of
+>      arbitrary size, big or small.
+> 
+>   2) Userspace is currently unable to safely roll its own RNG with the
+>      same security profile as getrandom().
+>
+[...]
+> API-wise, the vDSO gains this function:
+> 
+>   ssize_t vgetrandom(void *buffer, size_t len, unsigned int flags, void *opaque_state);
+> 
+> The return value and the first 3 arguments are the same as ordinary
+> getrandom(), while the last argument is a pointer to some state
+> allocated with vgetrandom_alloc(), explained below. Were all four
+> arguments passed to the getrandom syscall, nothing different would
+> happen, and the functions would have the exact same behavior.
+> 
+> Then, we introduce a new syscall:
+> 
+>   void *vgetrandom_alloc(unsigned int *num, unsigned int *size_per_each,
+>                          unsigned long addr, unsigned int flags);
+> 
+> This takes a hinted number of opaque states in `num`, and returns a
+> pointer to an array of opaque states, the number actually allocated back
+> in `num`, and the size in bytes of each one in `size_per_each`, enabling
+> a libc to slice up the returned array into a state per each thread. (The
+> `flags` and `addr` arguments, as well as the `*size_per_each` input
+> value, are reserved for the future and are forced to be zero for now.)
+> 
+> Libc is expected to allocate a chunk of these on first use, and then
+> dole them out to threads as they're created, allocating more when
+> needed. The returned address of the first state may be passed to
+> munmap(2) with a length of `num * size_per_each`, in order to deallocate
+> the memory.
+> 
+> We very intentionally do *not* leave state allocation up to the caller
+> of vgetrandom, but provide vgetrandom_alloc for that allocation. There
+> are too many weird things that can go wrong, and it's important that
+> vDSO does not provide too generic of a mechanism. It's not going to
+> store its state in just any old memory address. It'll do it only in ones
+> it allocates.
 
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
+[...]
+
+Have you considered extending rseq(2) per-thread "struct rseq" with an
+additional "prng_seed" pointer field, which would point to a per-thread
+memory area accessible both from userspace (at address
+__builtin_thread_pointer() + __rseq_offset) and from kernel's
+return-to-userspace rseq notification code (which can handle page
+faults) ?
+
+This way, the kernel can update its content when returning to userspace
+if an update is needed since the last update.
+
+Would that be sufficient as prng seed for your security requirements ?
+
+Implementation-wise, the semantic of the prng_seed could be entirely
+internal to a vgetrandom vDSO implementation, but the allocation of the
+memory holding this seed would be the responsibility of libc.
+
+libc could query the size required by the kernel for this prng seed with
+a new getauxval(3) entry, e.g. AT_RSEQ_PRNG_SIZE. By doing so, libc
+would only allocate as much memory as needed by the kernel vDSO
+implementation.
+
+This would remove the need for any kind of vgetrandom_alloc system call
+and all its associated complexity.
+
+Thoughts ?
 
 Thanks,
-Conor.
 
+Mathieu
 
---bAdeVB51TK1R1zyN
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCY78GaQAKCRB4tDGHoIJi
-0hjiAPwI9gIMKNfvL9N+noXsBQnD1KZLqtNo/LJGWXiuLI5LSwEA7hu31GyC6QQe
-xtS9CSeR2IPw2AyqDZiKvLca9DF6Www=
-=J4si
------END PGP SIGNATURE-----
-
---bAdeVB51TK1R1zyN--
+-- 
+Mathieu Desnoyers
+EfficiOS Inc.
+http://www.efficios.com
