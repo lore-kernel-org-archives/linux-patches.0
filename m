@@ -1,83 +1,158 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57A3E17D0
-	for <patches@lists.linux.dev>; Wed, 11 Jan 2023 07:27:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71144C433EF;
-	Wed, 11 Jan 2023 07:27:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1673422043;
-	bh=UNsE1Sfj5VIoaJ3hwnzx1FJI4j5UgDzN3GkA3q+AUVs=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dxD1oUY/RiJXEOCbw6ek4gNpqHM0mBLH6ylbuGTsQAmrEb31BsclPpX+2w001z2pN
-	 wUn2V4BtVR/nBTABTB5MnBq06fXVLWWfWRrD0RIISkXhqA5EOFB1nTdr5j5bRpUP3f
-	 ZxIKCi4iBi5pmrl0OWhPYkSqWrgS8L44gJpC1UDmdu4s/T6YO1bkVqdB2GTAK1Bcod
-	 VSVPPxRe8wziAVI8YJRZZtr6lhVzI7fDpKtki8x8Swdnsl3VwZimXrvodTZCDZlrM9
-	 NHE74X7+o/MQvCYmP1ytwFRCo8LJMBdxHdGiwm1G9qPq8jL925wbDD5CKFYMhW4uaX
-	 0kJUFhw7jl+Qw==
-Date: Tue, 10 Jan 2023 23:27:20 -0800
-From: Eric Biggers <ebiggers@kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: Florian Weimer <fweimer@redhat.com>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Andy Lutomirski <luto@kernel.org>, Ingo Molnar <mingo@kernel.org>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	tglx@linutronix.de, linux-crypto@vger.kernel.org,
-	linux-api@vger.kernel.org, x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>, linux-mm@kvack.org,
-	mlichvar@redhat.com
-Subject: Re: [PATCH v14 2/7] mm: add VM_DROPPABLE for designating always
- lazily freeable mappings
-Message-ID: <Y75k2KaDz2WdcXLk@sol.localdomain>
-References: <20230101162910.710293-1-Jason@zx2c4.com>
- <20230101162910.710293-3-Jason@zx2c4.com>
- <Y7QIg/hAIk7eZE42@gmail.com>
- <CALCETrWdw5kxrtr4M7AkKYDOJEE1cU1wENWgmgOxn0rEJz4y3w@mail.gmail.com>
- <CAHk-=wg_6Uhkjy12Vq_hN6rQqGRP2nE15rkgiAo6Qay5aOeigg@mail.gmail.com>
- <Y7SDgtXayQCy6xT6@zx2c4.com>
- <CAHk-=whQdWFw+0eGttxsWBHZg1+uh=0MhxXYtvJGX4t9P1MgNw@mail.gmail.com>
- <874jt0kndq.fsf@oldenburg.str.redhat.com>
- <CAHk-=wg7vMC2VmSBdVw7EKV+7UDiftQEg3L+3Rc0rcjjfsvs5A@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8772417D0
+	for <patches@lists.linux.dev>; Wed, 11 Jan 2023 08:18:24 +0000 (UTC)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.west.internal (Postfix) with ESMTP id 43945320095D;
+	Wed, 11 Jan 2023 03:18:22 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute6.internal (MEProxy); Wed, 11 Jan 2023 03:18:23 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to; s=fm2; t=1673425101; x=
+	1673511501; bh=XKgo32eBKf4n2shX8Ii4Fh607OuEYZIvIY/YMhXRHz8=; b=N
+	slmSf3kKzUZFP1UhEgwnXiC6vEs3eYtYwzSKP9urcK4b6KggCO6UfN8n7hRj2ih+
+	FseJAx9REurJgEfRKViFWCjRAJzsgv+nvSxO6YkfQz4sHyYypEDK/kXV1hem1R/t
+	Sx9lg4+AS1E4VL+Wclgoaddq7khMdj5eRwdZXCR1RyY3Pa52rsEpqBGbmVHrx6wF
+	1NijJKKJfoMfq4bvwu27avyB82QVxKZk28dRAvb0GxBU/wKoR5K6IVCnsQU4LRoq
+	2j1uSap8nxv+rYRij+1lQkQ+KjmNQ2tbQPIn1JeuTzgodJ3jSyBDN50kaGw71QOv
+	+ZGxnN1ooj1Flx6WUugng==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1673425101; x=
+	1673511501; bh=XKgo32eBKf4n2shX8Ii4Fh607OuEYZIvIY/YMhXRHz8=; b=f
+	tBTA1DDhlvJNVZytWHJ2b33+IOQ4XZDAkNNhMh0+sYrDX2zpJC+wavVS2HCBkeQZ
+	pODo3/zQTLkYXXcSYP9MR0AvLEI5lxgkID2SDNudRZLptbuuGMXnglsPEhfk+R57
+	pZ58awFzBjwbB4u4I/8rdkfLacLpSqmxW0Ij6ikj9wH+LgrnAicJL6iDloOggnGy
+	Ow4mPnID7MoJROqRJnwm4tkq12jrNjL69EsUrji611AIha7cL4UiQ3rDZf/IvTmZ
+	KQ2dQzgqU8RGF5t45MGBAFYHgA+fewzexueJQSrW3rK8V2I+LjdjhI6GgShQd/jd
+	GcZF/BLm86mrGYa1/QqGQ==
+X-ME-Sender: <xms:zXC-Yw_EAtnt6guQ1VpVp5H8Edan5yFOhQlGYJr5WHtxZrJz5EKtgg>
+    <xme:zXC-Y4sQHeqVVzQZkas8sj8cAHXMw96JEnEOpiybUncl5GYJLBeBmg7rJvr0_7q9U
+    xftuA5crYA7dl3QsrI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrleefgdduudekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdet
+    rhhnugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrg
+    htthgvrhhnpeektdegueffheefgeetvdeuhedvledttefgudefteejheeugefhtdduvdff
+    jeekffenucffohhmrghinhepthhugihsuhhithgvrdgtohhmnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghrnhgusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:zXC-Y2BFwYyHDWGNaQjM4jBISEhc0E_d8VN2oQ9a2kqkcWz3klu54Q>
+    <xmx:zXC-Ywc2AgzQw6QlIiIzAtGLznxyzyw3MI4hQMD0vHC_LTTwDa_DsQ>
+    <xmx:zXC-Y1MPMzaKuSIk6Tlolv-vuF_BxcNM9IjIyabpqzKp065hxhNgaQ>
+    <xmx:zXC-Y2sppElqP-0va7-emHGCkmmvfqTPZAWr8XcfmNUsWjsZYz5RLg>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 6E2EDB60086; Wed, 11 Jan 2023 03:18:21 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-1185-g841157300a-fm-20221208.002-g84115730
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAHk-=wg7vMC2VmSBdVw7EKV+7UDiftQEg3L+3Rc0rcjjfsvs5A@mail.gmail.com>
+Mime-Version: 1.0
+Message-Id: <bd62bccb-6970-4cdb-ae23-792b5867705d@app.fastmail.com>
+In-Reply-To: 
+ <CA+G9fYtpM7X15rY6g6asDxrjxDSfj5sDiP8P5Yb1TS3VVmjGNw@mail.gmail.com>
+References: <20230110180017.145591678@linuxfoundation.org>
+ <CA+G9fYtpM7X15rY6g6asDxrjxDSfj5sDiP8P5Yb1TS3VVmjGNw@mail.gmail.com>
+Date: Wed, 11 Jan 2023 09:18:01 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Naresh Kamboju" <naresh.kamboju@linaro.org>,
+ "Greg Kroah-Hartman" <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org,
+ "Linus Torvalds" <torvalds@linux-foundation.org>,
+ "Andrew Morton" <akpm@linux-foundation.org>,
+ "Guenter Roeck" <linux@roeck-us.net>, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, "Pavel Machek" <pavel@denx.de>,
+ "Jon Hunter" <jonathanh@nvidia.com>,
+ "Florian Fainelli" <f.fainelli@gmail.com>,
+ "Sudip Mukherjee" <sudipm.mukherjee@gmail.com>, srw@sladewatkins.net,
+ rwarsow@gmx.de, "Mark Brown" <broonie@kernel.org>
+Subject: Re: [PATCH 6.0 000/148] 6.0.19-rc1 review
+Content-Type: text/plain;charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 09, 2023 at 08:28:58AM -0600, Linus Torvalds wrote:
-> On Mon, Jan 9, 2023 at 4:34 AM Florian Weimer <fweimer@redhat.com> wrote:
-> >
-> > We did these changes on the glibc side because Jason sounded very
-> > confident that he's able to deliver vDSO acceleration for getrandom.  If
-> > that fails to materialize, we'll just have to add back userspace
-> > buffering in glibc.
-> 
-> My whole argument has been that user-space buffering is the sane thing
-> to do. Most definitely for something like glibc.
-> 
-> The number of people who go "oh, no, my buffer or randomness could be
-> exposed by insert-odd-situation-here" is approximately zero, and then
-> the onus should be on *them* to do something special.
-> 
-> Because *they* are special. Precious little snowflake special.
-> 
->              Linus
+On Wed, Jan 11, 2023, at 07:16, Naresh Kamboju wrote:
+> On Tue, 10 Jan 2023 at 23:36, Greg Kroah-Hartman <gregkh@linuxfoundati=
+on.org> wrote:
+>>
+>
+> Results from Linaro=E2=80=99s test farm.
+> Regressions on arm64 Raspberry Pi 4 Model B.
+>
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+>
+> While running LTP controllers cgroup_fj_stress_blkio test cases
+> the Insufficient stack space to handle exception! occurred and
+> followed by kernel panic on arm64 Raspberry Pi 4 Model B with
+> clang-15 built kernel Image.
+>
+> The full boot and test log attached to this email and build and
+> Kconfig links provided in the bottom of this email.
+>
+> I will try to reproduce this reported issue and get back to you.
 
-How would userspace decide when to reseed its CRNGs, then?
+I looked at the log between 6.0.18 and 6.0.19-rc1, but don't see
+any arm64 or memory management patches that could result in this.
+Do you know if 6.0.18 ran successfull
+> [ 2893.044339] Insufficient stack space to handle exception!
+> [ 2893.044351] ESR: 0x0000000096000047 -- DABT (current EL)
+> [ 2893.044360] FAR: 0xffff8000128180d0
+> [ 2893.044364] Task stack:     [0xffff800012a18000..0xffff800012a1c000]
+> [ 2893.044370] IRQ stack:      [0xffff80000a798000..0xffff80000a79c000]
+> [ 2893.044375] Overflow stack: [0xffff0000f77c4310..0xffff0000f77c5310]
+...
+> [ 2893.044413] pc : el1h_64_sync+0x0/0x68
+> [ 2893.044430] lr : wp_page_copy+0xf8/0x90c
+> [ 2893.044445] sp : ffff8000128180d0
+...
+> [ 2893.044692]  el1h_64_sync+0x0/0x68
+> [ 2893.044700]  do_wp_page+0x4a0/0x5c8
+> [ 2893.044708]  handle_mm_fault+0x7fc/0x14dc
+> [ 2893.044718]  do_page_fault+0x29c/0x450
+> [ 2893.044727]  do_mem_abort+0x4c/0xf8
+> [ 2893.044741]  el0_da+0x48/0xa8
+> [ 2893.044750]  el0t_64_sync_handler+0xcc/0xf0
+> [ 2893.044759]  el0t_64_sync+0x18c/0x190
 
-IMO, the main benefit of the VDSO getrandom over a traditional userspace CRNG is
-that it makes reseeds of the kernel's CRNG take effect immediately.  See the
-cover letter, where Jason explains this.
+It claims that the stack overflow happened in do_wp_page(),
+but that has a really short call chain. It would be good
+to have the source line for do_wp_page+0x4a0/0x5c8 and
+wp_page_copy+0xf8/0x90c to see where exactly it was.
 
-It's definitely important to make the memory used by userspace CRNGs have
-appropriate semantics, but my understanding is that's not the main point.
 
-- Eric
+> [ 2893.285975] WARNING: CPU: 2 PID: 315758 at kernel/sched/core.c:3119
+> set_task_cpu+0x14c/0x208
+....
+> [ 2893.286117] CPU: 2 PID: 315758 Comm: cgroup_fj_stres Not tainted
+> [ 2893.286416]  arch_timer_handler_phys+0x44/0x54
+> [ 2893.286427]  handle_percpu_devid_irq+0x90/0x220
+> [ 2893.286439]  generic_handle_domain_irq+0x38/0x50
+> [ 2893.286447]  gic_handle_irq+0x68/0xe8
+> [ 2893.286455]  el1_interrupt+0x88/0xc8
+> [ 2893.286464]  el1h_64_irq_handler+0x18/0x24
+> [ 2893.286474]  el1h_64_irq+0x64/0x68
+> [ 2893.286482]  panic+0x2d8/0x374
+
+This is apparently a second unrelated bug -- it still processes timer
+interrupts after calling panic() and this apparently fails because
+the system is already unusable.
+
+>   artifact-location:
+> https://storage.tuxsuite.com/public/linaro/lkft/builds/2K9JDtix2mHMoYR=
+jNkBef3oR5JT
+
+file not found. I tried to get the vmlinux file to look at the disassemb=
+ly
+but the artifacts appear to be gone already.
+
+     Arnd
