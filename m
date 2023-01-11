@@ -1,82 +1,81 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB0933D2
-	for <patches@lists.linux.dev>; Wed, 11 Jan 2023 17:28:21 +0000 (UTC)
-Received: by mail-pl1-f178.google.com with SMTP id g23so1906065plq.12
-        for <patches@lists.linux.dev>; Wed, 11 Jan 2023 09:28:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=yrIkiViylEgVu6ZuHAgyOCheYiQrsg59YN+MI+nDprE=;
-        b=c0ufZIq2sgNi3qTiU/Xmc7FOpFVXquc1lNGuLhG1Q5T8HOKoPQ22tbICHXW2MGIBQB
-         1uGGRYrhwJHffT7seCIt+lRPOawH7rwRpYmuksI4NOve8pG6TGuccYvJM8U4OQIWyyyV
-         GQioQmFqrlXwhNBA1IckELxRi2d0MZxBNHbD07ItF4/D920V8nlhy5VSGLcY962huHMB
-         Sxe6jvArbrnNBM25wRnTaeQElrJKRdjfUZLFA0kVvn6GjBHsz0AS9zK9dylqqoFqtiJf
-         M4ayUZAvqzYbCQ+dS5uvLl3/BFz0J5kVgHZcIQ2igN+RF7HxXUoLID4cJTflNo29xPM3
-         DatA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yrIkiViylEgVu6ZuHAgyOCheYiQrsg59YN+MI+nDprE=;
-        b=b8U641XlSxjIbudfXS86BdbAvibFEFPQmeFbn3joojft0ONsGh/Xf1EINOzHU1TbmU
-         elWsOzx43tf0lMoW3FbJi1Kv5MBQEkUMQgNHqJRMhy4bNYs3sWpwwRt6jqqrGqeIyPs+
-         +LFk2SKOKN7vbwR13ZgTM4ctxtolbI3tmtfstZ4ryLvO1kjVSuHRXQCfq9v9uwsC5UhB
-         4SJfbZUkfn6dumAgMv4qLCmw/JUxD+PCzTiLrF7Jr5VvCjVius07e9eTmfUeyOZnbIGq
-         ofwBazeKDpT5KNBKQCNWtVHaK3ptJ4eyJosaD5ZXoFxhQY8ZePEyvhRjBhj+fEG+JPLl
-         Hzsg==
-X-Gm-Message-State: AFqh2kqOoU13QuJNwX20du7nEi+5mucmdlunflhbVsttsyKfc8k59KNb
-	cQZh+tjWdRrDZbfxeGboqNILrxd7PBZlv3Crq6E=
-X-Google-Smtp-Source: AMrXdXuecLOQ3peFwfbkliYpXmwQqXfiKu4JVnPUtGOEQ8OaH8Vw9YJ0/wHazgyiQahR7HS/wLEAMDErgVMcjh9ecHo=
-X-Received: by 2002:a17:90b:4fc9:b0:226:85d6:e6fc with SMTP id
- qa9-20020a17090b4fc900b0022685d6e6fcmr2997258pjb.12.1673458099034; Wed, 11
- Jan 2023 09:28:19 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 256FF29A9
+	for <patches@lists.linux.dev>; Wed, 11 Jan 2023 18:55:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB788C433D2;
+	Wed, 11 Jan 2023 18:55:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1673463326;
+	bh=1mtyVJ+eDRZasVR09aEPxUk1jiKct8AhwB7gd7YYPws=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ew17GEygfBoFYf5RPBhZxgNbVtjvjXa0L4p8Cd1bpzbnfJRVXTDWc1wxSC1uiDy48
+	 y/tCYcM8uj2tjx6sq38q4slatXPBCz7AAzT/ZfOj2yz5asxuB+LKSkQH8idv4PQpZA
+	 yyuPoXsqdWOYm2XHIxFawliI6H4Lq/IL43lwE8YJ+fJdEKfuLiJ8Zs5tYr2TdlhVFe
+	 4WC1B1RRSgoM/7t6XeI4Pkomgiyon1cMBVEJYi6J7fCdQ/uVN2qd8pJksGB7qi2Kvc
+	 Q1l5R/M0Kuuw6T8Ny5qBG7w3nEemB+VN8vVU0ULK1Kpb4Qv/Oq2kWj0uVKlhdBMd67
+	 M/T3SEOa8xKwA==
+Date: Wed, 11 Jan 2023 18:55:21 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/159] 6.1.5-rc1 review
+Message-ID: <Y78GGa5rNou1BWzL@spud>
+References: <20230110180018.288460217@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230110180018.288460217@linuxfoundation.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="u3prk4W3F/n3buwe"
+Content-Disposition: inline
 In-Reply-To: <20230110180018.288460217@linuxfoundation.org>
-From: Allen Pais <stable.kernel.dev@gmail.com>
-Date: Wed, 11 Jan 2023 09:28:08 -0800
-Message-ID: <CAJq+SaB6HWg7PJpMn6+k_mrumTOh8CK3qFKxmcE=csTZrn+29A@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/159] 6.1.5-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
 
+
+--u3prk4W3F/n3buwe
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Jan 10, 2023 at 07:02:28PM +0100, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.1.5 release.
 > There are 159 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+>=20
 > Responses should be made by Thu, 12 Jan 2023 17:59:42 +0000.
 > Anything received after that time might be too late.
->
+>=20
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.5-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.5-r=
+c1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git=
+ linux-6.1.y
 > and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
 
-Compiled and booted on my x86_64 and ARM64 test systems. No errors or
-regressions.
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
 
-Tested-by: Allen Pais <apais@linux.microsoft.com>
+Thanks,
+Conor.
 
-Thanks.
+
+--u3prk4W3F/n3buwe
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCY78GGQAKCRB4tDGHoIJi
+0pmqAQCBSfGbB1tQfyciGu5GaWr7H7kYXGQwb3apMGAGzYgINAEAi37rovfiqPxS
+KKinZ8dsHd4p05sCzi9OdfxL9TwxfQY=
+=Itc6
+-----END PGP SIGNATURE-----
+
+--u3prk4W3F/n3buwe--
