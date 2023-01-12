@@ -1,34 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2995779C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:36:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721DBC433EF;
-	Thu, 12 Jan 2023 14:36:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA5779C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:36:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CD0CC433D2;
+	Thu, 12 Jan 2023 14:36:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534193;
-	bh=cS6AgKbD6npXC4P3ZngCAsHmiRt7+jCjDGkO4slLGKs=;
+	s=korg; t=1673534196;
+	bh=loHd7o1euyQkRHZMtRK5kkYds/xaBePBJShnTnsKFfs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mzvbUS3R/BFoj+0nlRnsjvRpzrM0dAYojFRwC5I5UMorBjo3s5M3hQIz/X/CGqUh6
-	 aUOJ28CVSf6CnhjwLdJ4m/iEJiC9nD1PFRSs6tvGCRNcSpL+24W8YDWsyZyD+1tf9b
-	 E3PkKAo9RFysrUbe2C58UQR02DZku2Nm3G18Xdvg=
+	b=cvwnLz/JAVUQpRLCdeNWD6WCp/VFLRATAbF8j1EiPzBE5NgOLJFb6k6W/dmY9+Xd1
+	 nm1koIXEYkrlUc4QB5UzlpILQGQ+Kh963NAIcl6PCt0oNxbCaepGYUrc0N1yvmu794
+	 DoQKiIZDwAeP3ZbiyhXNK0F509i75XJX6E1EtCsc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Rob Clark <robdclark@chromium.org>,
+	Steven Price <steven.price@arm.com>,
+	Rob Clark <robdclark@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 699/783] perf probe: Use dwarf_attr_integrate as generic DWARF attr accessor
-Date: Thu, 12 Jan 2023 14:56:55 +0100
-Message-Id: <20230112135556.732113203@linuxfoundation.org>
+Subject: [PATCH 5.10 726/783] drm/panfrost: Fix GEM handle creation ref-counting
+Date: Thu, 12 Jan 2023 14:57:22 +0100
+Message-Id: <20230112135558.007425411@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -42,52 +36,136 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Steven Price <steven.price@arm.com>
 
-[ Upstream commit f828929ab7f0dc3353e4a617f94f297fa8f3dec3 ]
+[ Upstream commit 4217c6ac817451d5116687f3cc6286220dc43d49 ]
 
-Use dwarf_attr_integrate() instead of dwarf_attr() for generic attribute
-acccessor functions, so that it can find the specified attribute from
-abstact origin DIE etc.
+panfrost_gem_create_with_handle() previously returned a BO but with the
+only reference being from the handle, which user space could in theory
+guess and release, causing a use-after-free. Additionally if the call to
+panfrost_gem_mapping_get() in panfrost_ioctl_create_bo() failed then
+a(nother) reference on the BO was dropped.
 
-Signed-off-by: Masami Hiramatsu <mhiramat@kernel.org>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Link: https://lore.kernel.org/r/166731051988.2100653.13595339994343449770.stgit@devnote3
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: a9dfc46c67b5 ("perf probe: Fix to get the DW_AT_decl_file and DW_AT_call_file as unsinged data")
+The _create_with_handle() is a problematic pattern, so ditch it and
+instead create the handle in panfrost_ioctl_create_bo(). If the call to
+panfrost_gem_mapping_get() fails then this means that user space has
+indeed gone behind our back and freed the handle. In which case just
+return an error code.
+
+Reported-by: Rob Clark <robdclark@chromium.org>
+Fixes: f3ba91228e8e ("drm/panfrost: Add initial panfrost driver")
+Signed-off-by: Steven Price <steven.price@arm.com>
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221219140130.410578-1-steven.price@arm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dwarf-aux.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/panfrost/panfrost_drv.c | 27 ++++++++++++++++---------
+ drivers/gpu/drm/panfrost/panfrost_gem.c | 16 +--------------
+ drivers/gpu/drm/panfrost/panfrost_gem.h |  5 +----
+ 3 files changed, 20 insertions(+), 28 deletions(-)
 
-diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
-index 4343356f3cf9..dc02685a1eec 100644
---- a/tools/perf/util/dwarf-aux.c
-+++ b/tools/perf/util/dwarf-aux.c
-@@ -308,7 +308,7 @@ static int die_get_attr_udata(Dwarf_Die *tp_die, unsigned int attr_name,
+diff --git a/drivers/gpu/drm/panfrost/panfrost_drv.c b/drivers/gpu/drm/panfrost/panfrost_drv.c
+index 1dfc457bbefc..4af25c0b6570 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_drv.c
++++ b/drivers/gpu/drm/panfrost/panfrost_drv.c
+@@ -81,6 +81,7 @@ static int panfrost_ioctl_create_bo(struct drm_device *dev, void *data,
+ 	struct panfrost_gem_object *bo;
+ 	struct drm_panfrost_create_bo *args = data;
+ 	struct panfrost_gem_mapping *mapping;
++	int ret;
+ 
+ 	if (!args->size || args->pad ||
+ 	    (args->flags & ~(PANFROST_BO_NOEXEC | PANFROST_BO_HEAP)))
+@@ -91,21 +92,29 @@ static int panfrost_ioctl_create_bo(struct drm_device *dev, void *data,
+ 	    !(args->flags & PANFROST_BO_NOEXEC))
+ 		return -EINVAL;
+ 
+-	bo = panfrost_gem_create_with_handle(file, dev, args->size, args->flags,
+-					     &args->handle);
++	bo = panfrost_gem_create(dev, args->size, args->flags);
+ 	if (IS_ERR(bo))
+ 		return PTR_ERR(bo);
+ 
++	ret = drm_gem_handle_create(file, &bo->base.base, &args->handle);
++	if (ret)
++		goto out;
++
+ 	mapping = panfrost_gem_mapping_get(bo, priv);
+-	if (!mapping) {
+-		drm_gem_object_put(&bo->base.base);
+-		return -EINVAL;
++	if (mapping) {
++		args->offset = mapping->mmnode.start << PAGE_SHIFT;
++		panfrost_gem_mapping_put(mapping);
++	} else {
++		/* This can only happen if the handle from
++		 * drm_gem_handle_create() has already been guessed and freed
++		 * by user space
++		 */
++		ret = -EINVAL;
+ 	}
+ 
+-	args->offset = mapping->mmnode.start << PAGE_SHIFT;
+-	panfrost_gem_mapping_put(mapping);
+-
+-	return 0;
++out:
++	drm_gem_object_put(&bo->base.base);
++	return ret;
+ }
+ 
+ /**
+diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.c b/drivers/gpu/drm/panfrost/panfrost_gem.c
+index 1d917cea5ceb..c843fbfdb878 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_gem.c
++++ b/drivers/gpu/drm/panfrost/panfrost_gem.c
+@@ -232,12 +232,8 @@ struct drm_gem_object *panfrost_gem_create_object(struct drm_device *dev, size_t
+ }
+ 
+ struct panfrost_gem_object *
+-panfrost_gem_create_with_handle(struct drm_file *file_priv,
+-				struct drm_device *dev, size_t size,
+-				u32 flags,
+-				uint32_t *handle)
++panfrost_gem_create(struct drm_device *dev, size_t size, u32 flags)
  {
- 	Dwarf_Attribute attr;
+-	int ret;
+ 	struct drm_gem_shmem_object *shmem;
+ 	struct panfrost_gem_object *bo;
  
--	if (dwarf_attr(tp_die, attr_name, &attr) == NULL ||
-+	if (dwarf_attr_integrate(tp_die, attr_name, &attr) == NULL ||
- 	    dwarf_formudata(&attr, result) != 0)
- 		return -ENOENT;
+@@ -253,16 +249,6 @@ panfrost_gem_create_with_handle(struct drm_file *file_priv,
+ 	bo->noexec = !!(flags & PANFROST_BO_NOEXEC);
+ 	bo->is_heap = !!(flags & PANFROST_BO_HEAP);
  
-@@ -321,7 +321,7 @@ static int die_get_attr_sdata(Dwarf_Die *tp_die, unsigned int attr_name,
- {
- 	Dwarf_Attribute attr;
+-	/*
+-	 * Allocate an id of idr table where the obj is registered
+-	 * and handle has the id what user can see.
+-	 */
+-	ret = drm_gem_handle_create(file_priv, &shmem->base, handle);
+-	/* drop reference from allocate - handle holds it now. */
+-	drm_gem_object_put(&shmem->base);
+-	if (ret)
+-		return ERR_PTR(ret);
+-
+ 	return bo;
+ }
  
--	if (dwarf_attr(tp_die, attr_name, &attr) == NULL ||
-+	if (dwarf_attr_integrate(tp_die, attr_name, &attr) == NULL ||
- 	    dwarf_formsdata(&attr, result) != 0)
- 		return -ENOENT;
+diff --git a/drivers/gpu/drm/panfrost/panfrost_gem.h b/drivers/gpu/drm/panfrost/panfrost_gem.h
+index 8088d5fd8480..ad2877eeeccd 100644
+--- a/drivers/gpu/drm/panfrost/panfrost_gem.h
++++ b/drivers/gpu/drm/panfrost/panfrost_gem.h
+@@ -69,10 +69,7 @@ panfrost_gem_prime_import_sg_table(struct drm_device *dev,
+ 				   struct sg_table *sgt);
  
+ struct panfrost_gem_object *
+-panfrost_gem_create_with_handle(struct drm_file *file_priv,
+-				struct drm_device *dev, size_t size,
+-				u32 flags,
+-				uint32_t *handle);
++panfrost_gem_create(struct drm_device *dev, size_t size, u32 flags);
+ 
+ int panfrost_gem_open(struct drm_gem_object *obj, struct drm_file *file_priv);
+ void panfrost_gem_close(struct drm_gem_object *obj,
 -- 
 2.35.1
 
