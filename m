@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A894F749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:11:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F58C433EF;
-	Thu, 12 Jan 2023 14:11:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C25C749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:11:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D2B2C433F1;
+	Thu, 12 Jan 2023 14:11:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532686;
-	bh=HKKAal8cEkvyVEn0qVeBHyyUFDXqTYyN55CxLs2gtAI=;
+	s=korg; t=1673532689;
+	bh=UBc0hF8DfhKPOqTyNXOkq1eqV2N4WgScwG+SqkW3ByA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sK3BV8CF3bPLbD9sC2gxZyKbyqBKE7U9eX+f90IjlyafBp1ZP/w7VZj53P/R3RebG
-	 cD+XwhVtGiURTrKyE1Gb0WBEuoAVGP36zOjBNWiJmM4WaQJOyB7Yiq4WHx+QA5KaH6
-	 DrhrF35SxNFhln8Ea8dsYgjYof7RnwB0pgHUYYOM=
+	b=uwBvZM6mXyaKu/2YsmbdewuAWGhAtN5fH3ZzaXmTue9JG5ZGdGRgRMYYynA1u+aVz
+	 asytSlh3PxtKx4Hiw31CmtXt1bkNweqtn7auaGvl94/5RDnljoInKRDIfTzvZAWQC0
+	 sALLVdfSnHUy0819Udt2wE/pvYXZ768sxct1dPVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 236/783] mmc: mmci: fix return value check of mmc_add_host()
-Date: Thu, 12 Jan 2023 14:49:12 +0100
-Message-Id: <20230112135535.316861459@linuxfoundation.org>
+Subject: [PATCH 5.10 245/783] blktrace: Fix output non-blktrace event when blk_classic option enabled
+Date: Thu, 12 Jan 2023 14:49:21 +0100
+Message-Id: <20230112135535.754010613@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,44 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-[ Upstream commit b38a20f29a49ae04d23750d104b25400b792b98c ]
+[ Upstream commit f596da3efaf4130ff61cd029558845808df9bf99 ]
 
-mmc_add_host() may return error, if we ignore its return value,
-it will lead two issues:
-1. The memory that allocated in mmc_alloc_host() is leaked.
-2. In the remove() path, mmc_remove_host() will be called to
-   delete device, but it's not added yet, it will lead a kernel
-   crash because of null-ptr-deref in device_del().
+When the blk_classic option is enabled, non-blktrace events must be
+filtered out. Otherwise, events of other types are output in the blktrace
+classic format, which is unexpected.
 
-So fix this by checking the return value and goto error path which
-will call mmc_free_host().
+The problem can be triggered in the following ways:
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221109133539.3275664-1-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+  # echo 1 > /sys/kernel/debug/tracing/options/blk_classic
+  # echo 1 > /sys/kernel/debug/tracing/events/enable
+  # echo blk > /sys/kernel/debug/tracing/current_tracer
+  # cat /sys/kernel/debug/tracing/trace_pipe
+
+Fixes: c71a89615411 ("blktrace: add ftrace plugin")
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Link: https://lore.kernel.org/r/20221122040410.85113-1-yangjihong1@huawei.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mmci.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ kernel/trace/blktrace.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/mmci.c b/drivers/mmc/host/mmci.c
-index b5684e5d79e6..5d83c8e7bf5c 100644
---- a/drivers/mmc/host/mmci.c
-+++ b/drivers/mmc/host/mmci.c
-@@ -2191,7 +2191,9 @@ static int mmci_probe(struct amba_device *dev,
- 	pm_runtime_set_autosuspend_delay(&dev->dev, 50);
- 	pm_runtime_use_autosuspend(&dev->dev);
+diff --git a/kernel/trace/blktrace.c b/kernel/trace/blktrace.c
+index 15a376f85e09..ab912cc60760 100644
+--- a/kernel/trace/blktrace.c
++++ b/kernel/trace/blktrace.c
+@@ -1592,7 +1592,8 @@ blk_trace_event_print_binary(struct trace_iterator *iter, int flags,
  
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret)
-+		goto clk_disable;
+ static enum print_line_t blk_tracer_print_line(struct trace_iterator *iter)
+ {
+-	if (!(blk_tracer_flags.val & TRACE_BLK_OPT_CLASSIC))
++	if ((iter->ent->type != TRACE_BLK) ||
++	    !(blk_tracer_flags.val & TRACE_BLK_OPT_CLASSIC))
+ 		return TRACE_TYPE_UNHANDLED;
  
- 	pm_runtime_put(&dev->dev);
- 	return 0;
+ 	return print_one_line(iter, true);
 -- 
 2.35.1
 
