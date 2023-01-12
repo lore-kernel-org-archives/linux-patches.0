@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD28179C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:39:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41E3BC433EF;
-	Thu, 12 Jan 2023 14:39:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C657379CF
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:39:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6FBC433EF;
+	Thu, 12 Jan 2023 14:39:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534376;
-	bh=2t7uGqMTax23Dnuh0AhaQnvprCDG2EdO9Yh1YCMpxOA=;
+	s=korg; t=1673534382;
+	bh=5PSiAyXwH78FC2CxoOVvMpg4fqE65O7a2dLACCLpZVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ErmS4uY7uea0BF00vVvjuHl6GMdU6vAc788+Roh+EFXPtmsNlmmvSHzx2PHdOB6/T
-	 kGL11l2APo9O2OMSDe1o7pJruRi+gYUqI9UrweBDLtaCJB+1DFOuo9Jbxw5dZr20Wu
-	 cjf9256iE+vJaYuke4kr6TL9LkOdbFDCJezORfZo=
+	b=waLtd8jETUfYn7x3D7/fOptShNk1THikbOSMM2TD50VFW4QW9ysA5G3f80EA7Jc64
+	 pYQ/W/xP0Ajl6+/4J3fgU3WAI/mRoYVtz6ybLENcho1QGfF7fHFJ+O+cguhjKmK12B
+	 bPVtYwgchFhLIVSEsEXyVG8FOKnDIqtGXG7S5xfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Christian Brauner <christian.brauner@ubuntu.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
+	stable@kernel.org,
+	Mike Galbraith <efault@gmx.de>,
 	Jan Kara <jack@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.10 768/783] hfs/hfsplus: use WARN_ON for sanity check
-Date: Thu, 12 Jan 2023 14:58:04 +0100
-Message-Id: <20230112135559.970834277@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 5.10 770/783] mbcache: Avoid nesting of cache->c_list_lock under bit locks
+Date: Thu, 12 Jan 2023 14:58:06 +0100
+Message-Id: <20230112135600.070325208@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -38,118 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jan Kara <jack@suse.cz>
 
-commit 55d1cbbbb29e6656c662ee8f73ba1fc4777532eb upstream.
+commit 5fc4cbd9fde5d4630494fd6ffc884148fb618087 upstream.
 
-gcc warns about a couple of instances in which a sanity check exists but
-the author wasn't sure how to react to it failing, which makes it look
-like a possible bug:
+Commit 307af6c87937 ("mbcache: automatically delete entries from cache
+on freeing") started nesting cache->c_list_lock under the bit locks
+protecting hash buckets of the mbcache hash table in
+mb_cache_entry_create(). This causes problems for real-time kernels
+because there spinlocks are sleeping locks while bitlocks stay atomic.
+Luckily the nesting is easy to avoid by holding entry reference until
+the entry is added to the LRU list. This makes sure we cannot race with
+entry deletion.
 
-  fs/hfsplus/inode.c: In function 'hfsplus_cat_read_inode':
-  fs/hfsplus/inode.c:503:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
-    503 |                         /* panic? */;
-        |                                     ^
-  fs/hfsplus/inode.c:524:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
-    524 |                         /* panic? */;
-        |                                     ^
-  fs/hfsplus/inode.c: In function 'hfsplus_cat_write_inode':
-  fs/hfsplus/inode.c:582:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
-    582 |                         /* panic? */;
-        |                                     ^
-  fs/hfsplus/inode.c:608:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
-    608 |                         /* panic? */;
-        |                                     ^
-  fs/hfs/inode.c: In function 'hfs_write_inode':
-  fs/hfs/inode.c:464:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
-    464 |                         /* panic? */;
-        |                                     ^
-  fs/hfs/inode.c:485:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
-    485 |                         /* panic? */;
-        |                                     ^
-
-panic() is probably not the correct choice here, but a WARN_ON
-seems appropriate and avoids the compile-time warning.
-
-Link: https://lkml.kernel.org/r/20210927102149.1809384-1-arnd@kernel.org
-Link: https://lore.kernel.org/all/20210322223249.2632268-1-arnd@kernel.org/
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Christian Brauner <christian.brauner@ubuntu.com>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Christian Brauner <christian.brauner@ubuntu.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Jan Kara <jack@suse.cz>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: stable@kernel.org
+Fixes: 307af6c87937 ("mbcache: automatically delete entries from cache on freeing")
+Reported-by: Mike Galbraith <efault@gmx.de>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20220908091032.10513-1-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfs/inode.c     |    6 ++----
- fs/hfsplus/inode.c |   12 ++++--------
- 2 files changed, 6 insertions(+), 12 deletions(-)
+ fs/mbcache.c |   17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
---- a/fs/hfs/inode.c
-+++ b/fs/hfs/inode.c
-@@ -462,8 +462,7 @@ int hfs_write_inode(struct inode *inode,
- 		goto out;
+--- a/fs/mbcache.c
++++ b/fs/mbcache.c
+@@ -90,8 +90,14 @@ int mb_cache_entry_create(struct mb_cach
+ 		return -ENOMEM;
  
- 	if (S_ISDIR(main_inode->i_mode)) {
--		if (fd.entrylength < sizeof(struct hfs_cat_dir))
--			/* panic? */;
-+		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_dir));
- 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
- 			   sizeof(struct hfs_cat_dir));
- 		if (rec.type != HFS_CDR_DIR ||
-@@ -483,8 +482,7 @@ int hfs_write_inode(struct inode *inode,
- 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
- 				sizeof(struct hfs_cat_file));
- 	} else {
--		if (fd.entrylength < sizeof(struct hfs_cat_file))
--			/* panic? */;
-+		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_file));
- 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
- 			   sizeof(struct hfs_cat_file));
- 		if (rec.type != HFS_CDR_FIL ||
---- a/fs/hfsplus/inode.c
-+++ b/fs/hfsplus/inode.c
-@@ -497,8 +497,7 @@ int hfsplus_cat_read_inode(struct inode
- 	if (type == HFSPLUS_FOLDER) {
- 		struct hfsplus_cat_folder *folder = &entry.folder;
+ 	INIT_LIST_HEAD(&entry->e_list);
+-	/* Initial hash reference */
+-	atomic_set(&entry->e_refcnt, 1);
++	/*
++	 * We create entry with two references. One reference is kept by the
++	 * hash table, the other reference is used to protect us from
++	 * mb_cache_entry_delete_or_get() until the entry is fully setup. This
++	 * avoids nesting of cache->c_list_lock into hash table bit locks which
++	 * is problematic for RT.
++	 */
++	atomic_set(&entry->e_refcnt, 2);
+ 	entry->e_key = key;
+ 	entry->e_value = value;
+ 	entry->e_flags = 0;
+@@ -107,15 +113,12 @@ int mb_cache_entry_create(struct mb_cach
+ 		}
+ 	}
+ 	hlist_bl_add_head(&entry->e_hash_list, head);
+-	/*
+-	 * Add entry to LRU list before it can be found by
+-	 * mb_cache_entry_delete() to avoid races
+-	 */
++	hlist_bl_unlock(head);
+ 	spin_lock(&cache->c_list_lock);
+ 	list_add_tail(&entry->e_list, &cache->c_list);
+ 	cache->c_entry_count++;
+ 	spin_unlock(&cache->c_list_lock);
+-	hlist_bl_unlock(head);
++	mb_cache_entry_put(cache, entry);
  
--		if (fd->entrylength < sizeof(struct hfsplus_cat_folder))
--			/* panic? */;
-+		WARN_ON(fd->entrylength < sizeof(struct hfsplus_cat_folder));
- 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
- 					sizeof(struct hfsplus_cat_folder));
- 		hfsplus_get_perms(inode, &folder->permissions, 1);
-@@ -518,8 +517,7 @@ int hfsplus_cat_read_inode(struct inode
- 	} else if (type == HFSPLUS_FILE) {
- 		struct hfsplus_cat_file *file = &entry.file;
- 
--		if (fd->entrylength < sizeof(struct hfsplus_cat_file))
--			/* panic? */;
-+		WARN_ON(fd->entrylength < sizeof(struct hfsplus_cat_file));
- 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
- 					sizeof(struct hfsplus_cat_file));
- 
-@@ -576,8 +574,7 @@ int hfsplus_cat_write_inode(struct inode
- 	if (S_ISDIR(main_inode->i_mode)) {
- 		struct hfsplus_cat_folder *folder = &entry.folder;
- 
--		if (fd.entrylength < sizeof(struct hfsplus_cat_folder))
--			/* panic? */;
-+		WARN_ON(fd.entrylength < sizeof(struct hfsplus_cat_folder));
- 		hfs_bnode_read(fd.bnode, &entry, fd.entryoffset,
- 					sizeof(struct hfsplus_cat_folder));
- 		/* simple node checks? */
-@@ -602,8 +599,7 @@ int hfsplus_cat_write_inode(struct inode
- 	} else {
- 		struct hfsplus_cat_file *file = &entry.file;
- 
--		if (fd.entrylength < sizeof(struct hfsplus_cat_file))
--			/* panic? */;
-+		WARN_ON(fd.entrylength < sizeof(struct hfsplus_cat_file));
- 		hfs_bnode_read(fd.bnode, &entry, fd.entryoffset,
- 					sizeof(struct hfsplus_cat_file));
- 		hfsplus_inode_write_fork(inode, &file->data_fork);
+ 	return 0;
+ }
 
 
