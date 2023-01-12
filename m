@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA4179C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:28:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80EA9C433F1;
-	Thu, 12 Jan 2023 14:28:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11A2979C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:28:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79EA0C433F1;
+	Thu, 12 Jan 2023 14:28:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533727;
-	bh=sab/sXztno/3zqSpsXMjLfQipiAEXgFC/BJX8Gr59uk=;
+	s=korg; t=1673533730;
+	bh=idDQYFBnPoHyKZW7irh4JXoKDYRFXTdA2C582XvunAs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H0dWYkkCqeDyQvCzFtN5Bcooxb2lWGouyxl8Eg6ciJ7vCwo2KlBer5hbmf7VA9PrS
-	 wWWYPdfMO3vANF+haaLQaOjWbJsThdmcUVjwzTqmYxM57JrPeBCeTuo6/8iWKESiW0
-	 aBew6AyKlPPrCX2SQDZBUbByOL42T1hWkVD5JWW8=
+	b=YJMpBVoDHsCvSx4czi55Yv1M4jvYTjT5lLg0nP+e/F8kddDTG1At/Cq8x4nwry5rs
+	 TW0fqIs43JUKKZH0vbwgy2LfI3DMWLg9uFcyuCePIRg8Zo2OoP2mKOYjC5/kxBBj8H
+	 ShzZDCBDTTlP6h81h+JAWu2tas+03m5DOuV0U5OA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 565/783] iio: adc128s052: add proper .data members in adc128_of_match table
-Date: Thu, 12 Jan 2023 14:54:41 +0100
-Message-Id: <20230112135550.423261680@linuxfoundation.org>
+	Guenter Roeck <linux@roeck-us.net>,
+	Klaus Jensen <k.jensen@samsung.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 574/783] nvme-pci: fix doorbell buffer value endianness
+Date: Thu, 12 Jan 2023 14:54:50 +0100
+Message-Id: <20230112135550.855307340@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,53 +36,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+From: Klaus Jensen <k.jensen@samsung.com>
 
-commit e2af60f5900c6ade53477b494ffb54690eee11f5 upstream.
+[ Upstream commit b5f96cb719d8ba220b565ddd3ba4ac0d8bcfb130 ]
 
-Prior to commit bd5d54e4d49d ("iio: adc128s052: add ACPI _HID
-AANT1280"), the driver unconditionally used spi_get_device_id() to get
-the index into the adc128_config array.
+When using shadow doorbells, the event index and the doorbell values are
+written to host memory. Prior to this patch, the values written would
+erroneously be written in host endianness. This causes trouble on
+big-endian platforms. Fix this by adding missing endian conversions.
 
-However, with that commit, OF-based boards now incorrectly treat all
-supported sensors as if they are an adc128s052, because all the .data
-members of the adc128_of_match table are implicitly 0. Our board,
-which has an adc122s021, thus exposes 8 channels whereas it really
-only has two.
+This issue was noticed by Guenter while testing various big-endian
+platforms under QEMU[1]. A similar fix required for hw/nvme in QEMU is
+up for review as well[2].
 
-Fixes: bd5d54e4d49d ("iio: adc128s052: add ACPI _HID AANT1280")
-Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20221115132324.1078169-1-linux@rasmusvillemoes.dk
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  [1]: https://lore.kernel.org/qemu-devel/20221209110022.GA3396194@roeck-us.net/
+  [2]: https://lore.kernel.org/qemu-devel/20221212114409.34972-4-its@irrelevant.dk/
+
+Fixes: f9f38e33389c ("nvme: improve performance for virtual NVMe devices")
+Reported-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/ti-adc128s052.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/nvme/host/pci.c | 25 +++++++++++++------------
+ 1 file changed, 13 insertions(+), 12 deletions(-)
 
---- a/drivers/iio/adc/ti-adc128s052.c
-+++ b/drivers/iio/adc/ti-adc128s052.c
-@@ -193,13 +193,13 @@ static int adc128_remove(struct spi_devi
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index c222d7bf6ce1..948b027a75d3 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -139,9 +139,9 @@ struct nvme_dev {
+ 	mempool_t *iod_mempool;
+ 
+ 	/* shadow doorbell buffer support: */
+-	u32 *dbbuf_dbs;
++	__le32 *dbbuf_dbs;
+ 	dma_addr_t dbbuf_dbs_dma_addr;
+-	u32 *dbbuf_eis;
++	__le32 *dbbuf_eis;
+ 	dma_addr_t dbbuf_eis_dma_addr;
+ 
+ 	/* host memory buffer support: */
+@@ -209,10 +209,10 @@ struct nvme_queue {
+ #define NVMEQ_SQ_CMB		1
+ #define NVMEQ_DELETE_ERROR	2
+ #define NVMEQ_POLLED		3
+-	u32 *dbbuf_sq_db;
+-	u32 *dbbuf_cq_db;
+-	u32 *dbbuf_sq_ei;
+-	u32 *dbbuf_cq_ei;
++	__le32 *dbbuf_sq_db;
++	__le32 *dbbuf_cq_db;
++	__le32 *dbbuf_sq_ei;
++	__le32 *dbbuf_cq_ei;
+ 	struct completion delete_done;
+ };
+ 
+@@ -334,11 +334,11 @@ static inline int nvme_dbbuf_need_event(u16 event_idx, u16 new_idx, u16 old)
  }
  
- static const struct of_device_id adc128_of_match[] = {
--	{ .compatible = "ti,adc128s052", },
--	{ .compatible = "ti,adc122s021", },
--	{ .compatible = "ti,adc122s051", },
--	{ .compatible = "ti,adc122s101", },
--	{ .compatible = "ti,adc124s021", },
--	{ .compatible = "ti,adc124s051", },
--	{ .compatible = "ti,adc124s101", },
-+	{ .compatible = "ti,adc128s052", .data = (void*)0L, },
-+	{ .compatible = "ti,adc122s021", .data = (void*)1L, },
-+	{ .compatible = "ti,adc122s051", .data = (void*)1L, },
-+	{ .compatible = "ti,adc122s101", .data = (void*)1L, },
-+	{ .compatible = "ti,adc124s021", .data = (void*)2L, },
-+	{ .compatible = "ti,adc124s051", .data = (void*)2L, },
-+	{ .compatible = "ti,adc124s101", .data = (void*)2L, },
- 	{ /* sentinel */ },
- };
- MODULE_DEVICE_TABLE(of, adc128_of_match);
+ /* Update dbbuf and return true if an MMIO is required */
+-static bool nvme_dbbuf_update_and_check_event(u16 value, u32 *dbbuf_db,
+-					      volatile u32 *dbbuf_ei)
++static bool nvme_dbbuf_update_and_check_event(u16 value, __le32 *dbbuf_db,
++					      volatile __le32 *dbbuf_ei)
+ {
+ 	if (dbbuf_db) {
+-		u16 old_value;
++		u16 old_value, event_idx;
+ 
+ 		/*
+ 		 * Ensure that the queue is written before updating
+@@ -346,8 +346,8 @@ static bool nvme_dbbuf_update_and_check_event(u16 value, u32 *dbbuf_db,
+ 		 */
+ 		wmb();
+ 
+-		old_value = *dbbuf_db;
+-		*dbbuf_db = value;
++		old_value = le32_to_cpu(*dbbuf_db);
++		*dbbuf_db = cpu_to_le32(value);
+ 
+ 		/*
+ 		 * Ensure that the doorbell is updated before reading the event
+@@ -357,7 +357,8 @@ static bool nvme_dbbuf_update_and_check_event(u16 value, u32 *dbbuf_db,
+ 		 */
+ 		mb();
+ 
+-		if (!nvme_dbbuf_need_event(*dbbuf_ei, value, old_value))
++		event_idx = le32_to_cpu(*dbbuf_ei);
++		if (!nvme_dbbuf_need_event(event_idx, value, old_value))
+ 			return false;
+ 	}
+ 
+-- 
+2.35.1
+
 
 
