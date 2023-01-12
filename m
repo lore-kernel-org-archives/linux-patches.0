@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0A8379C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:32:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16646C433A8;
-	Thu, 12 Jan 2023 14:32:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9092079C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:32:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA418C433EF;
+	Thu, 12 Jan 2023 14:32:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533929;
-	bh=8yx7VHqOxfznkS4KtcOunc1wyZ2/AlyvqifprNDAnuY=;
+	s=korg; t=1673533932;
+	bh=xxgQ1qMIt6GbL0CgYCSBLQfoj8CkXvgdaTjaf6KfTOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DO4OURWcIc4MGeVUo3na6aaqrB8o4cvNCveJlKghPM2EHrZ6pP/g7uwkmvNxv71X8
-	 CS1waoyBMPaLTAL7Lmon+L9ez8pub/Mw0szlKTkPYZIAco8vfqhyu2ipOjmMvUVx7C
-	 hNLRMAzLLnfacFNzmM1twXoz69Qm4HIXHwX3trNI=
+	b=LasO9TnP16UwT0WEdsc8OXLdEDzsFM2FHdVpyMO2T2xneA7hmj43PWcth0SjGKKJD
+	 XUAyhYLsp9SI2W+CiJjvAOcFUbnCib5eVRirYAstuJSLGxQUalupPFP/6QycLezvzC
+	 FBwY4S2WN6qcrpFGPtfXMZ8DOQfsD+DXhN9IqCdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Meng <luomeng12@huawei.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.10 631/783] dm clone: Fix UAF in clone_dtr()
-Date: Thu, 12 Jan 2023 14:55:47 +0100
-Message-Id: <20230112135553.559336345@linuxfoundation.org>
+	mhiramat@kernel.org,
+	zanussi@kernel.org,
+	Zheng Yejian <zhengyejian1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.10 640/783] tracing/hist: Fix wrong return value in parse_action_params()
+Date: Thu, 12 Jan 2023 14:55:56 +0100
+Message-Id: <20230112135553.977603631@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -34,33 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luo Meng <luomeng12@huawei.com>
+From: Zheng Yejian <zhengyejian1@huawei.com>
 
-commit e4b5957c6f749a501c464f92792f1c8e26b61a94 upstream.
+commit 2cc6a528882d0e0ccbc1bca5f95b8c963cedac54 upstream.
 
-Dm_clone also has the same UAF problem when dm_resume()
-and dm_destroy() are concurrent.
+When number of synth fields is more than SYNTH_FIELDS_MAX,
+parse_action_params() should return -EINVAL.
 
-Therefore, cancelling timer again in clone_dtr().
+Link: https://lore.kernel.org/linux-trace-kernel/20221207034635.2253990-1-zhengyejian1@huawei.com
 
+Cc: <mhiramat@kernel.org>
+Cc: <zanussi@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: 7431b7835f554 ("dm: add clone target")
-Signed-off-by: Luo Meng <luomeng12@huawei.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: c282a386a397 ("tracing: Add 'onmatch' hist trigger action support")
+Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-clone-target.c |    1 +
+ kernel/trace/trace_events_hist.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/md/dm-clone-target.c
-+++ b/drivers/md/dm-clone-target.c
-@@ -1966,6 +1966,7 @@ static void clone_dtr(struct dm_target *
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -3115,6 +3115,7 @@ static int parse_action_params(struct tr
+ 	while (params) {
+ 		if (data->n_params >= SYNTH_FIELDS_MAX) {
+ 			hist_err(tr, HIST_ERR_TOO_MANY_PARAMS, 0);
++			ret = -EINVAL;
+ 			goto out;
+ 		}
  
- 	mempool_exit(&clone->hydration_pool);
- 	dm_kcopyd_client_destroy(clone->kcopyd_client);
-+	cancel_delayed_work_sync(&clone->waker);
- 	destroy_workqueue(clone->wq);
- 	hash_table_exit(clone);
- 	dm_clone_metadata_close(clone->cmd);
 
 
