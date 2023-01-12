@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA1379C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:26:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0F0DC433EF;
-	Thu, 12 Jan 2023 14:26:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 872FB79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:26:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3B40C433F0;
+	Thu, 12 Jan 2023 14:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533598;
-	bh=z4GeaDspsSR9VcH57Drr7ZHFVuhV4eam1z3XfMGCKSA=;
+	s=korg; t=1673533601;
+	bh=3bQZms1Q/NfXwfpfOBcf1EJ0aE/Ph+tiVn3J1/hEl9c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EFRO+TMgaAnlThwdQxjhx5CY1eT5obHOhClC7BrXQTeK8nWdlSFuiBS3Bw/UcOhEl
-	 IN+JDYn8lIqBh69BAI62+ud59KPlQwx5JATt2BJUDZcK9rObBwAj1wdB231QJmdts3
-	 a+wt0Q06gadiL1Gf0hg+WFOfcT9dhmdeePZ18CCY=
+	b=NLhAO60tEKRClPWoKpv0Z45dZjjHJ4Shofjz+59QWWp4gW4fOfbBMWD+yNKXO1yQG
+	 66EDLA8LV0wT8AMbZCEz0veYAPDRmGHwvZXMwLYpFb6MZeWyLOSfhhKKz2BnshiT9W
+	 LhMd7/j9Redf5Q0nMFsXuJ3/bPbeetL35OOsWIik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Liska <mliska@suse.cz>,
-	Ariel Elior <aelior@marvell.com>,
-	Manish Chopra <manishc@marvell.com>,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Rui Zhang <zr.zhang@vivo.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 503/783] qed (gcc13): use u16 for fid to be big enough
-Date: Thu, 12 Jan 2023 14:53:39 +0100
-Message-Id: <20230112135547.532040781@linuxfoundation.org>
+Subject: [PATCH 5.10 530/783] regulator: core: fix use_count leakage when handling boot-on
+Date: Thu, 12 Jan 2023 14:54:06 +0100
+Message-Id: <20230112135548.787940562@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -38,51 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Rui Zhang <zr.zhang@vivo.com>
 
-[ Upstream commit 7d84118229bf7f7290438c85caa8e49de52d50c1 ]
+[ Upstream commit 0591b14ce0398125439c759f889647369aa616a0 ]
 
-gcc 13 correctly reports overflow in qed_grc_dump_addr_range():
-In file included from drivers/net/ethernet/qlogic/qed/qed.h:23,
-                 from drivers/net/ethernet/qlogic/qed/qed_debug.c:10:
-drivers/net/ethernet/qlogic/qed/qed_debug.c: In function 'qed_grc_dump_addr_range':
-include/linux/qed/qed_if.h:1217:9: error: overflow in conversion from 'int' to 'u8' {aka 'unsigned char'} changes value from '(int)vf_id << 8 | 128' to '128' [-Werror=overflow]
+I found a use_count leakage towards supply regulator of rdev with
+boot-on option.
 
-We do:
-  u8 fid;
-  ...
-  fid = vf_id << 8 | 128;
+┌───────────────────┐           ┌───────────────────┐
+│  regulator_dev A  │           │  regulator_dev B  │
+│     (boot-on)     │           │     (boot-on)     │
+│    use_count=0    │◀──supply──│    use_count=1    │
+│                   │           │                   │
+└───────────────────┘           └───────────────────┘
 
-Since fid is 16bit (and the stored value above too), fid should be u16,
-not u8. Fix that.
+In case of rdev(A) configured with `regulator-boot-on', the use_count
+of supplying regulator(B) will increment inside
+regulator_enable(rdev->supply).
 
-Cc: Martin Liska <mliska@suse.cz>
-Cc: Ariel Elior <aelior@marvell.com>
-Cc: Manish Chopra <manishc@marvell.com>
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20221031114354.10398-1-jirislaby@kernel.org
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Thus, B will acts like always-on, and further balanced
+regulator_enable/disable cannot actually disable it anymore.
+
+However, B was also configured with `regulator-boot-on', we wish it
+could be disabled afterwards.
+
+Signed-off-by: Rui Zhang <zr.zhang@vivo.com>
+Link: https://lore.kernel.org/r/20221201033806.2567812-1-zr.zhang@vivo.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qed/qed_debug.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/regulator/core.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qed/qed_debug.c b/drivers/net/ethernet/qlogic/qed/qed_debug.c
-index 6ab3e60d4928..4b4077cf2d26 100644
---- a/drivers/net/ethernet/qlogic/qed/qed_debug.c
-+++ b/drivers/net/ethernet/qlogic/qed/qed_debug.c
-@@ -1796,9 +1796,10 @@ static u32 qed_grc_dump_addr_range(struct qed_hwfn *p_hwfn,
- 				   u8 split_id)
- {
- 	struct dbg_tools_data *dev_data = &p_hwfn->dbg_info;
--	u8 port_id = 0, pf_id = 0, vf_id = 0, fid = 0;
-+	u8 port_id = 0, pf_id = 0, vf_id = 0;
- 	bool read_using_dmae = false;
- 	u32 thresh;
-+	u16 fid;
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 4472c31b9b00..df746ba5c1bc 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1428,7 +1428,13 @@ static int set_machine_constraints(struct regulator_dev *rdev)
+ 		if (rdev->supply_name && !rdev->supply)
+ 			return -EPROBE_DEFER;
  
- 	if (!dump)
- 		return len;
+-		if (rdev->supply) {
++		/* If supplying regulator has already been enabled,
++		 * it's not intended to have use_count increment
++		 * when rdev is only boot-on.
++		 */
++		if (rdev->supply &&
++		    (rdev->constraints->always_on ||
++		     !regulator_is_enabled(rdev->supply))) {
+ 			ret = regulator_enable(rdev->supply);
+ 			if (ret < 0) {
+ 				_regulator_put(rdev->supply);
 -- 
 2.35.1
 
