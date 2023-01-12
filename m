@@ -1,29 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B7BA79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:36:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95991C433EF;
-	Thu, 12 Jan 2023 14:36:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2995779C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:36:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721DBC433EF;
+	Thu, 12 Jan 2023 14:36:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534190;
-	bh=L9FGUhW3sJUgrnlz/l6vXjkMxba9BAXjwVEp6MA726U=;
+	s=korg; t=1673534193;
+	bh=cS6AgKbD6npXC4P3ZngCAsHmiRt7+jCjDGkO4slLGKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jY1wzWQqAJb5Wl92DZbPsu6KhtXJPnINwopdog/P1/euyVfaHdF0DZGDTqt+2P8nd
-	 /CIo/hYBathm/fVXijhchOOWZ+rywfrPGOQyyJmy5q62tM504ogb0UEJ8zk887j1pG
-	 V14HtgR6kjzN1Hmcemd8TOZIzM0gRqo1GjbiJIIk=
+	b=mzvbUS3R/BFoj+0nlRnsjvRpzrM0dAYojFRwC5I5UMorBjo3s5M3hQIz/X/CGqUh6
+	 aUOJ28CVSf6CnhjwLdJ4m/iEJiC9nD1PFRSs6tvGCRNcSpL+24W8YDWsyZyD+1tf9b
+	 E3PkKAo9RFysrUbe2C58UQR02DZku2Nm3G18Xdvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Parthasarathy <anpartha@meta.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Stanislav Fomichev <sdf@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 725/783] bpf: pull before calling skb_postpull_rcsum()
-Date: Thu, 12 Jan 2023 14:57:21 +0100
-Message-Id: <20230112135557.965267067@linuxfoundation.org>
+Subject: [PATCH 5.10 699/783] perf probe: Use dwarf_attr_integrate as generic DWARF attr accessor
+Date: Thu, 12 Jan 2023 14:56:55 +0100
+Message-Id: <20230112135556.732113203@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -37,59 +42,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit 54c3f1a81421f85e60ae2eaae7be3727a09916ee ]
+[ Upstream commit f828929ab7f0dc3353e4a617f94f297fa8f3dec3 ]
 
-Anand hit a BUG() when pulling off headers on egress to a SW tunnel.
-We get to skb_checksum_help() with an invalid checksum offset
-(commit d7ea0d9df2a6 ("net: remove two BUG() from skb_checksum_help()")
-converted those BUGs to WARN_ONs()).
-He points out oddness in how skb_postpull_rcsum() gets used.
-Indeed looks like we should pull before "postpull", otherwise
-the CHECKSUM_PARTIAL fixup from skb_postpull_rcsum() will not
-be able to do its job:
+Use dwarf_attr_integrate() instead of dwarf_attr() for generic attribute
+acccessor functions, so that it can find the specified attribute from
+abstact origin DIE etc.
 
-	if (skb->ip_summed == CHECKSUM_PARTIAL &&
-	    skb_checksum_start_offset(skb) < 0)
-		skb->ip_summed = CHECKSUM_NONE;
-
-Reported-by: Anand Parthasarathy <anpartha@meta.com>
-Fixes: 6578171a7ff0 ("bpf: add bpf_skb_change_proto helper")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Link: https://lore.kernel.org/r/20221220004701.402165-1-kuba@kernel.org
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Masami Hiramatsu <mhiramat@kernel.org>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/r/166731051988.2100653.13595339994343449770.stgit@devnote3
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: a9dfc46c67b5 ("perf probe: Fix to get the DW_AT_decl_file and DW_AT_call_file as unsinged data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ tools/perf/util/dwarf-aux.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index e3cdbd4996e0..a5df0cf46bbf 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -3201,15 +3201,18 @@ static int bpf_skb_generic_push(struct sk_buff *skb, u32 off, u32 len)
- 
- static int bpf_skb_generic_pop(struct sk_buff *skb, u32 off, u32 len)
+diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
+index 4343356f3cf9..dc02685a1eec 100644
+--- a/tools/perf/util/dwarf-aux.c
++++ b/tools/perf/util/dwarf-aux.c
+@@ -308,7 +308,7 @@ static int die_get_attr_udata(Dwarf_Die *tp_die, unsigned int attr_name,
  {
-+	void *old_data;
-+
- 	/* skb_ensure_writable() is not needed here, as we're
- 	 * already working on an uncloned skb.
- 	 */
- 	if (unlikely(!pskb_may_pull(skb, off + len)))
- 		return -ENOMEM;
+ 	Dwarf_Attribute attr;
  
--	skb_postpull_rcsum(skb, skb->data + off, len);
--	memmove(skb->data + len, skb->data, off);
-+	old_data = skb->data;
- 	__skb_pull(skb, len);
-+	skb_postpull_rcsum(skb, old_data + off, len);
-+	memmove(skb->data, old_data, off);
+-	if (dwarf_attr(tp_die, attr_name, &attr) == NULL ||
++	if (dwarf_attr_integrate(tp_die, attr_name, &attr) == NULL ||
+ 	    dwarf_formudata(&attr, result) != 0)
+ 		return -ENOENT;
  
- 	return 0;
- }
+@@ -321,7 +321,7 @@ static int die_get_attr_sdata(Dwarf_Die *tp_die, unsigned int attr_name,
+ {
+ 	Dwarf_Attribute attr;
+ 
+-	if (dwarf_attr(tp_die, attr_name, &attr) == NULL ||
++	if (dwarf_attr_integrate(tp_die, attr_name, &attr) == NULL ||
+ 	    dwarf_formsdata(&attr, result) != 0)
+ 		return -ENOENT;
+ 
 -- 
 2.35.1
 
