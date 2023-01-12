@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5ED0746A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:02:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5197BC433EF;
-	Thu, 12 Jan 2023 14:02:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4491C749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:02:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0621C433D2;
+	Thu, 12 Jan 2023 14:02:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532172;
-	bh=vNOX5CTowkEPEot9OLMSd2AJ/J3CXBga3HhFTdyCRBQ=;
+	s=korg; t=1673532178;
+	bh=dcolAIIE9qrALefgEd8yK+woU8B6YS6RxK50a9ee1Ho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C5bkGWtCTRJRCBvt7H3tT0GC0V2VrXNLhNyUWbJRddd3mpoX2VE1Jjhv4ALzBGdb8
-	 lk+T/z5Ta1o1MM0Pe4KwugHsbRXNAwJ8cMXFVLDnHKVPvNwL4Yynmhl+62gwa6okEd
-	 PDN5JHRAnpCRBXTUKLxxfXO+TBBY3fW58cB0nfdQ=
+	b=P71fMMZv5ypmXST7htSbRj5URYJcgs0WFV5L2o2I+PeB9tWM6AaujEQ82mLBWF+/R
+	 nnOUFaKFvv0QtgDncUFx6qwNWVPEBmvkV/nRAQqFQ0ak6fyNTPVP5o3jsnvs+ztEzv
+	 GxUIFaolbzzLkmGZ7uTRIny01x6sI2nk6HkvneB0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 046/783] alpha: fix syscall entry in !AUDUT_SYSCALL case
-Date: Thu, 12 Jan 2023 14:46:02 +0100
-Message-Id: <20230112135526.286544336@linuxfoundation.org>
+Subject: [PATCH 5.10 070/783] cpufreq: amd_freq_sensitivity: Add missing pci_dev_put()
+Date: Thu, 12 Jan 2023 14:46:26 +0100
+Message-Id: <20230112135527.402366389@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -34,38 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit f7b2431a6d22f7a91c567708e071dfcd6d66db14 ]
+[ Upstream commit 91fda1f88c0968f1491ab150bb01690525af150a ]
 
-We only want to take the slow path if SYSCALL_TRACE or SYSCALL_AUDIT is
-set; on !AUDIT_SYSCALL configs the current tree hits it whenever _any_
-thread flag (including NEED_RESCHED, NOTIFY_SIGNAL, etc.) happens to
-be set.
+pci_get_device() will increase the reference count for the returned
+pci_dev. We need to use pci_dev_put() to decrease the reference count
+after using pci_get_device(). Let's add it.
 
-Fixes: a9302e843944 "alpha: Enable system-call auditing support"
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Fixes: 59a3b3a8db16 ("cpufreq: AMD: Ignore the check for ProcFeedback in ST/CZ")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/kernel/entry.S | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/cpufreq/amd_freq_sensitivity.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/alpha/kernel/entry.S b/arch/alpha/kernel/entry.S
-index 2e09248f8324..c27d01232799 100644
---- a/arch/alpha/kernel/entry.S
-+++ b/arch/alpha/kernel/entry.S
-@@ -469,8 +469,10 @@ entSys:
- #ifdef CONFIG_AUDITSYSCALL
- 	lda     $6, _TIF_SYSCALL_TRACE | _TIF_SYSCALL_AUDIT
- 	and     $3, $6, $3
--#endif
- 	bne     $3, strace
-+#else
-+	blbs    $3, strace		/* check for SYSCALL_TRACE in disguise */
-+#endif
- 	beq	$4, 1f
- 	ldq	$27, 0($5)
- 1:	jsr	$26, ($27), sys_ni_syscall
+diff --git a/drivers/cpufreq/amd_freq_sensitivity.c b/drivers/cpufreq/amd_freq_sensitivity.c
+index d0b10baf039a..151771129c7b 100644
+--- a/drivers/cpufreq/amd_freq_sensitivity.c
++++ b/drivers/cpufreq/amd_freq_sensitivity.c
+@@ -124,6 +124,8 @@ static int __init amd_freq_sensitivity_init(void)
+ 	if (!pcidev) {
+ 		if (!boot_cpu_has(X86_FEATURE_PROC_FEEDBACK))
+ 			return -ENODEV;
++	} else {
++		pci_dev_put(pcidev);
+ 	}
+ 
+ 	if (rdmsrl_safe(MSR_AMD64_FREQ_SENSITIVITY_ACTUAL, &val))
 -- 
 2.35.1
 
