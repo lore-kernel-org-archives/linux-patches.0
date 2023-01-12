@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E7A2749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:12:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88E76C433F0;
-	Thu, 12 Jan 2023 14:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38DE7749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:12:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A0C5C433EF;
+	Thu, 12 Jan 2023 14:12:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532764;
-	bh=Q/rRuMYWOK/w/tLWxb9Ie3tw9DniL0DJikkmVHz0wYk=;
+	s=korg; t=1673532767;
+	bh=wqaclhBzTt6ktyXPRNG36VUhvCo8tZ2oafJJkpgZXbE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eX4z1qKBwSBQKzx24rR9hr7sebtVxUPm9mOA3w5aZAo/aoIATqbpkExtFzfIiWhCq
-	 1L2TXzECm3eoS9kz6vJxqbdDRUsqb9IevfNyKWwCm9UX6r0AHFpOD5u1kN4Nc3h5Qm
-	 KnvwTbQi1FtAM7j5kUEf9A/gI7HB8kGriDJX35fo=
+	b=tWYqfVYGF6DdEuiy7mD3eRHhrizUxARc24ECl1J2AtvHpl1oG6bk5IsYvt75URGi2
+	 fHJhgZ6yLL74HVZWDTEYRr2KJ7gySLYg6XfZxrIfyXhpD1vmhewiPPoF6lGFyL2R+8
+	 GjtsKZOdbO+ts4gvGftzBFCa9v6U5+acv3U297tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Pilmore <epilmore@gigaio.com>,
-	Dave Jiang <dave.jiang@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 267/783] ntb_netdev: Use dev_kfree_skb_any() in interrupt context
-Date: Thu, 12 Jan 2023 14:49:43 +0100
-Message-Id: <20230112135536.806443050@linuxfoundation.org>
+Subject: [PATCH 5.10 239/783] media: coda: Add check for kmalloc
+Date: Thu, 12 Jan 2023 14:49:15 +0100
+Message-Id: <20230112135535.456003184@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,71 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Pilmore <epilmore@gigaio.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 5f7d78b2b12a9d561f48fa00bab29b40f4616dad ]
+[ Upstream commit 6e5e5defdb8b0186312c2f855ace175aee6daf9b ]
 
-TX/RX callback handlers (ntb_netdev_tx_handler(),
-ntb_netdev_rx_handler()) can be called in interrupt
-context via the DMA framework when the respective
-DMA operations have completed. As such, any calls
-by these routines to free skb's, should use the
-interrupt context safe dev_kfree_skb_any() function.
+As the kmalloc may return NULL pointer,
+it should be better to check the return value
+in order to avoid NULL poineter dereference,
+same as the others.
 
-Previously, these callback handlers would call the
-interrupt unsafe version of dev_kfree_skb(). This has
-not presented an issue on Intel IOAT DMA engines as
-that driver utilizes tasklets rather than a hard
-interrupt handler, like the AMD PTDMA DMA driver.
-On AMD systems, a kernel WARNING message is
-encountered, which is being issued from
-skb_release_head_state() due to in_hardirq()
-being true.
-
-Besides the user visible WARNING from the kernel,
-the other symptom of this bug was that TCP/IP performance
-across the ntb_netdev interface was very poor, i.e.
-approximately an order of magnitude below what was
-expected. With the repair to use dev_kfree_skb_any(),
-kernel WARNINGs from skb_release_head_state() ceased
-and TCP/IP performance, as measured by iperf, was on
-par with expected results, approximately 20 Gb/s on
-AMD Milan based server. Note that this performance
-is comparable with Intel based servers.
-
-Fixes: 765ccc7bc3d91 ("ntb_netdev: correct skb leak")
-Fixes: 548c237c0a997 ("net: Add support for NTB virtual ethernet device")
-Signed-off-by: Eric Pilmore <epilmore@gigaio.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Link: https://lore.kernel.org/r/20221209000659.8318-1-epilmore@gigaio.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: cb1d3a336371 ("[media] coda: add CODA7541 JPEG support")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ntb_netdev.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/platform/coda/coda-bit.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ntb_netdev.c b/drivers/net/ntb_netdev.c
-index 1b7d588ff3c5..b701ee83e64a 100644
---- a/drivers/net/ntb_netdev.c
-+++ b/drivers/net/ntb_netdev.c
-@@ -137,7 +137,7 @@ static void ntb_netdev_rx_handler(struct ntb_transport_qp *qp, void *qp_data,
- enqueue_again:
- 	rc = ntb_transport_rx_enqueue(qp, skb, skb->data, ndev->mtu + ETH_HLEN);
- 	if (rc) {
--		dev_kfree_skb(skb);
-+		dev_kfree_skb_any(skb);
- 		ndev->stats.rx_errors++;
- 		ndev->stats.rx_fifo_errors++;
- 	}
-@@ -192,7 +192,7 @@ static void ntb_netdev_tx_handler(struct ntb_transport_qp *qp, void *qp_data,
- 		ndev->stats.tx_aborted_errors++;
+diff --git a/drivers/media/platform/coda/coda-bit.c b/drivers/media/platform/coda/coda-bit.c
+index b8a70ef8e8ec..6ffa12e83e42 100644
+--- a/drivers/media/platform/coda/coda-bit.c
++++ b/drivers/media/platform/coda/coda-bit.c
+@@ -1082,10 +1082,16 @@ static int coda_start_encoding(struct coda_ctx *ctx)
  	}
  
--	dev_kfree_skb(skb);
-+	dev_kfree_skb_any(skb);
+ 	if (dst_fourcc == V4L2_PIX_FMT_JPEG) {
+-		if (!ctx->params.jpeg_qmat_tab[0])
++		if (!ctx->params.jpeg_qmat_tab[0]) {
+ 			ctx->params.jpeg_qmat_tab[0] = kmalloc(64, GFP_KERNEL);
+-		if (!ctx->params.jpeg_qmat_tab[1])
++			if (!ctx->params.jpeg_qmat_tab[0])
++				return -ENOMEM;
++		}
++		if (!ctx->params.jpeg_qmat_tab[1]) {
+ 			ctx->params.jpeg_qmat_tab[1] = kmalloc(64, GFP_KERNEL);
++			if (!ctx->params.jpeg_qmat_tab[1])
++				return -ENOMEM;
++		}
+ 		coda_set_jpeg_compression_quality(ctx, ctx->params.jpeg_quality);
+ 	}
  
- 	if (ntb_transport_tx_free_entry(dev->qp) >= tx_start) {
- 		/* Make sure anybody stopping the queue after this sees the new
 -- 
 2.35.1
 
