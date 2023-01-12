@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10AFD746A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:00:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88EA0C433EF;
-	Thu, 12 Jan 2023 14:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B129F746A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:00:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A65C433EF;
+	Thu, 12 Jan 2023 14:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532038;
-	bh=Ws6JxjOE0cyqbqFW1RBire7KAQYzyONk1Aq1pWi7DxQ=;
+	s=korg; t=1673532041;
+	bh=UdRqLFL5zMFiyl4XTCz27cDNjAUKdYCaldfdUFfSlgE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zuB5s8amJmb4VBadyzdpXT1wlZQlu3G7sR3BgoU/xa2OIweqcLHy9tQ6FhkRCXmkP
-	 9V804t1nHZYHRNJ02tJH8ZvGS+WYHtAmIHVRhhYztGuHwug1lThP6wSy/6T9cR68Az
-	 KWUMVdAfnZrR+yCcxTdnjUvJcomTP5f48fsYUuzQ=
+	b=h19bkTwqepdJ87F++IHos7EGsVBBoRoScHhqE5OeJhqpogNsAw9G/2NyvioyHudzl
+	 QGLW+8VJ2q/xDUuceu7gBzFcBZS8/ZKlS79f9keIQ/oZUVaGuELvYdouHy3aaB8Gwa
+	 nGOdajfgNpu3PUetJWD1Bdb8l+cCmP1ifX4YR4Bo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
 	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 032/783] ARM: dts: armada-375: Fix assigned-addresses for every PCIe Root Port
-Date: Thu, 12 Jan 2023 14:45:48 +0100
-Message-Id: <20230112135525.642965947@linuxfoundation.org>
+Subject: [PATCH 5.10 033/783] ARM: dts: armada-38x: Fix assigned-addresses for every PCIe Root Port
+Date: Thu, 12 Jan 2023 14:45:49 +0100
+Message-Id: <20230112135525.690775888@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -37,31 +37,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 823956d2436f70ced74c0fe8ab99facd8abfc060 ]
+[ Upstream commit 44f47b7a8fa4678ce4c38ea74837e4996b9df6d6 ]
 
 BDF of resource in DT assigned-addresses property of Marvell PCIe Root Port
 (PCI-to-PCI bridge) should match BDF in address part in that DT node name
 as specified resource belongs to Marvell PCIe Root Port itself.
 
-Fixes: 4de59085091f ("ARM: mvebu: add Device Tree description of the Armada 375 SoC")
+Fixes: 0d3d96ab0059 ("ARM: mvebu: add Device Tree description of the Armada 380/385 SoCs")
 Signed-off-by: Pali Rohár <pali@kernel.org>
 Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/armada-375.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/armada-380.dtsi | 4 ++--
+ arch/arm/boot/dts/armada-385.dtsi | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm/boot/dts/armada-375.dtsi b/arch/arm/boot/dts/armada-375.dtsi
-index 9805e507c695..d117fc4ae6d9 100644
---- a/arch/arm/boot/dts/armada-375.dtsi
-+++ b/arch/arm/boot/dts/armada-375.dtsi
-@@ -582,7 +582,7 @@ pcie0: pcie@1,0 {
- 
- 			pcie1: pcie@2,0 {
+diff --git a/arch/arm/boot/dts/armada-380.dtsi b/arch/arm/boot/dts/armada-380.dtsi
+index cff1269f3fbf..7146cc8f082a 100644
+--- a/arch/arm/boot/dts/armada-380.dtsi
++++ b/arch/arm/boot/dts/armada-380.dtsi
+@@ -79,7 +79,7 @@ pcie@1,0 {
+ 			/* x1 port */
+ 			pcie@2,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x40000 0 0x2000>;
++				assigned-addresses = <0x82001000 0 0x40000 0 0x2000>;
+ 				reg = <0x1000 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
+@@ -98,7 +98,7 @@ pcie@2,0 {
+ 			/* x1 port */
+ 			pcie@3,0 {
  				device_type = "pci";
 -				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
-+				assigned-addresses = <0x82001000 0 0x44000 0 0x2000>;
++				assigned-addresses = <0x82001800 0 0x44000 0 0x2000>;
+ 				reg = <0x1800 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
+diff --git a/arch/arm/boot/dts/armada-385.dtsi b/arch/arm/boot/dts/armada-385.dtsi
+index f0022d10c715..f081f7cb66e5 100644
+--- a/arch/arm/boot/dts/armada-385.dtsi
++++ b/arch/arm/boot/dts/armada-385.dtsi
+@@ -84,7 +84,7 @@ pcie1: pcie@1,0 {
+ 			/* x1 port */
+ 			pcie2: pcie@2,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x40000 0 0x2000>;
++				assigned-addresses = <0x82001000 0 0x40000 0 0x2000>;
  				reg = <0x1000 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
+@@ -103,7 +103,7 @@ pcie2: pcie@2,0 {
+ 			/* x1 port */
+ 			pcie3: pcie@3,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
++				assigned-addresses = <0x82001800 0 0x44000 0 0x2000>;
+ 				reg = <0x1800 0 0 0 0>;
+ 				#address-cells = <3>;
+ 				#size-cells = <2>;
+@@ -125,7 +125,7 @@ pcie3: pcie@3,0 {
+ 			 */
+ 			pcie4: pcie@4,0 {
+ 				device_type = "pci";
+-				assigned-addresses = <0x82000800 0 0x48000 0 0x2000>;
++				assigned-addresses = <0x82002000 0 0x48000 0 0x2000>;
+ 				reg = <0x2000 0 0 0 0>;
  				#address-cells = <3>;
  				#size-cells = <2>;
 -- 
