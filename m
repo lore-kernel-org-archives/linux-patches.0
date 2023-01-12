@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10654749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:06:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75094C433EF;
-	Thu, 12 Jan 2023 14:06:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11667749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:06:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E4E6C433D2;
+	Thu, 12 Jan 2023 14:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532414;
-	bh=P3VqbGCBm4P/kbJZQbaLI3UD2Z/ekxPtxHEkgdz8wRc=;
+	s=korg; t=1673532417;
+	bh=wq4bDd4H6qySyRzitSqhHpM9fIO2IBlisTF0+giign8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TentpMVrTORL6pxiGhY0ievvA4c6oHr6Q1lC0v3/CaUy5rFuxwzF9SJkIQU2Nj6aU
-	 szs1Xn8w4y3S23VsIwar+dFeG0g/uWTN8gJvPQxE/PzNcbnvBEua6d3hLah8lkNdjr
-	 R7Ye0Qr9DnLNFdjb3FcaROL11ixuH4Nhh8NNhn0Q=
+	b=k2PoIQpuGvIWMNsx+Jxzk69Agxc5v9DIgNjZ2F7xMURjTk8koc56G8/dR3zRGkNsD
+	 wMOcyQX1YdqNZnLhFtITSZx8J6RMySKpmTAtRm0t1KsicxLIy6NILMiA9IfUpdXxUj
+	 zfSgpHNBTTtnQVHWaU4OLPuU421XfShxTS4IBfOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <kafai@fb.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 137/783] bpf: Check the other end of slot_type for STACK_SPILL
-Date: Thu, 12 Jan 2023 14:47:33 +0100
-Message-Id: <20230112135530.671166669@linuxfoundation.org>
+Subject: [PATCH 5.10 155/783] wifi: ath10k: Fix return value in ath10k_pci_init()
+Date: Thu, 12 Jan 2023 14:47:51 +0100
+Message-Id: <20230112135531.534620199@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,145 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin KaFai Lau <kafai@fb.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 27113c59b6d0a587b29ae72d4ff3f832f58b0651 ]
+[ Upstream commit 2af7749047d8d6ad43feff69f555a13a6a6c2831 ]
 
-Every 8 bytes of the stack is tracked by a bpf_stack_state.
-Within each bpf_stack_state, there is a 'u8 slot_type[8]' to track
-the type of each byte.  Verifier tests slot_type[0] == STACK_SPILL
-to decide if the spilled reg state is saved.  Verifier currently only
-saves the reg state if the whole 8 bytes are spilled to the stack,
-so checking the slot_type[7] is the same as checking slot_type[0].
+This driver is attempting to register to support two different buses.
+if either of these is successful then ath10k_pci_init() should return 0
+so that hardware attached to the successful bus can be probed and
+supported. only if both of these are unsuccessful should ath10k_pci_init()
+return an errno.
 
-The later patch will allow verifier to save the bounded scalar
-reg also for <8 bytes spill.  There is a llvm patch [1] to ensure
-the <8 bytes spill will be 8-byte aligned,  so checking
-slot_type[7] instead of slot_type[0] is required.
-
-While at it, this patch refactors the slot_type[0] == STACK_SPILL
-test into a new function is_spilled_reg() and change the
-slot_type[0] check to slot_type[7] check in there also.
-
-[1] https://reviews.llvm.org/D109073
-
-Signed-off-by: Martin KaFai Lau <kafai@fb.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://lore.kernel.org/bpf/20210922004934.624194-1-kafai@fb.com
-Stable-dep-of: 529409ea92d5 ("bpf: propagate precision across all frames, not just the last one")
+Fixes: 0b523ced9a3c ("ath10k: add basic skeleton to support ahb")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Reviewed-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20221110061926.18163-1-xiujianfeng@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 30 +++++++++++++++++++-----------
- 1 file changed, 19 insertions(+), 11 deletions(-)
+ drivers/net/wireless/ath/ath10k/pci.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 30e0fa1bd83c..034eb3030ce9 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -562,6 +562,14 @@ const char *kernel_type_name(u32 id)
- 				  btf_type_by_id(btf_vmlinux, id)->name_off);
- }
+diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
+index 86f52bcb3e4d..67e240327fb3 100644
+--- a/drivers/net/wireless/ath/ath10k/pci.c
++++ b/drivers/net/wireless/ath/ath10k/pci.c
+@@ -3799,18 +3799,22 @@ static struct pci_driver ath10k_pci_driver = {
  
-+/* The reg state of a pointer or a bounded scalar was saved when
-+ * it was spilled to the stack.
-+ */
-+static bool is_spilled_reg(const struct bpf_stack_state *stack)
-+{
-+	return stack->slot_type[BPF_REG_SIZE - 1] == STACK_SPILL;
-+}
-+
- static void print_verifier_state(struct bpf_verifier_env *env,
- 				 const struct bpf_func_state *state)
+ static int __init ath10k_pci_init(void)
  {
-@@ -666,7 +674,7 @@ static void print_verifier_state(struct bpf_verifier_env *env,
- 			continue;
- 		verbose(env, " fp%d", (-i - 1) * BPF_REG_SIZE);
- 		print_liveness(env, state->stack[i].spilled_ptr.live);
--		if (state->stack[i].slot_type[0] == STACK_SPILL) {
-+		if (is_spilled_reg(&state->stack[i])) {
- 			reg = &state->stack[i].spilled_ptr;
- 			t = reg->type;
- 			verbose(env, "=%s", reg_type_str[t]);
-@@ -2009,7 +2017,7 @@ static void mark_all_scalars_precise(struct bpf_verifier_env *env,
- 				reg->precise = true;
- 			}
- 			for (j = 0; j < func->allocated_stack / BPF_REG_SIZE; j++) {
--				if (func->stack[j].slot_type[0] != STACK_SPILL)
-+				if (!is_spilled_reg(&func->stack[j]))
- 					continue;
- 				reg = &func->stack[j].spilled_ptr;
- 				if (reg->type != SCALAR_VALUE)
-@@ -2051,7 +2059,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
- 	}
+-	int ret;
++	int ret1, ret2;
  
- 	while (spi >= 0) {
--		if (func->stack[spi].slot_type[0] != STACK_SPILL) {
-+		if (!is_spilled_reg(&func->stack[spi])) {
- 			stack_mask = 0;
- 			break;
- 		}
-@@ -2150,7 +2158,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
- 				return 0;
- 			}
+-	ret = pci_register_driver(&ath10k_pci_driver);
+-	if (ret)
++	ret1 = pci_register_driver(&ath10k_pci_driver);
++	if (ret1)
+ 		printk(KERN_ERR "failed to register ath10k pci driver: %d\n",
+-		       ret);
++		       ret1);
  
--			if (func->stack[i].slot_type[0] != STACK_SPILL) {
-+			if (!is_spilled_reg(&func->stack[i])) {
- 				stack_mask &= ~(1ull << i);
- 				continue;
- 			}
-@@ -2348,7 +2356,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 		/* regular write of data into stack destroys any spilled ptr */
- 		state->stack[spi].spilled_ptr.type = NOT_INIT;
- 		/* Mark slots as STACK_MISC if they belonged to spilled ptr. */
--		if (state->stack[spi].slot_type[0] == STACK_SPILL)
-+		if (is_spilled_reg(&state->stack[spi]))
- 			for (i = 0; i < BPF_REG_SIZE; i++)
- 				state->stack[spi].slot_type[i] = STACK_MISC;
+-	ret = ath10k_ahb_init();
+-	if (ret)
+-		printk(KERN_ERR "ahb init failed: %d\n", ret);
++	ret2 = ath10k_ahb_init();
++	if (ret2)
++		printk(KERN_ERR "ahb init failed: %d\n", ret2);
  
-@@ -2562,7 +2570,7 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
- 	stype = reg_state->stack[spi].slot_type;
- 	reg = &reg_state->stack[spi].spilled_ptr;
+-	return ret;
++	if (ret1 && ret2)
++		return ret1;
++
++	/* registered to at least one bus */
++	return 0;
+ }
+ module_init(ath10k_pci_init);
  
--	if (stype[0] == STACK_SPILL) {
-+	if (is_spilled_reg(&reg_state->stack[spi])) {
- 		if (size != BPF_REG_SIZE) {
- 			if (reg->type != SCALAR_VALUE) {
- 				verbose_linfo(env, env->insn_idx, "; ");
-@@ -4081,11 +4089,11 @@ static int check_stack_range_initialized(
- 			goto mark;
- 		}
- 
--		if (state->stack[spi].slot_type[0] == STACK_SPILL &&
-+		if (is_spilled_reg(&state->stack[spi]) &&
- 		    state->stack[spi].spilled_ptr.type == PTR_TO_BTF_ID)
- 			goto mark;
- 
--		if (state->stack[spi].slot_type[0] == STACK_SPILL &&
-+		if (is_spilled_reg(&state->stack[spi]) &&
- 		    (state->stack[spi].spilled_ptr.type == SCALAR_VALUE ||
- 		     env->allow_ptr_leaks)) {
- 			if (clobber) {
-@@ -9282,9 +9290,9 @@ static bool stacksafe(struct bpf_verifier_env *env, struct bpf_func_state *old,
- 			 * return false to continue verification of this path
- 			 */
- 			return false;
--		if (i % BPF_REG_SIZE)
-+		if (i % BPF_REG_SIZE != BPF_REG_SIZE - 1)
- 			continue;
--		if (old->stack[spi].slot_type[0] != STACK_SPILL)
-+		if (!is_spilled_reg(&old->stack[spi]))
- 			continue;
- 		if (!regsafe(env, &old->stack[spi].spilled_ptr,
- 			     &cur->stack[spi].spilled_ptr, idmap))
-@@ -9491,7 +9499,7 @@ static int propagate_precision(struct bpf_verifier_env *env,
- 	}
- 
- 	for (i = 0; i < state->allocated_stack / BPF_REG_SIZE; i++) {
--		if (state->stack[i].slot_type[0] != STACK_SPILL)
-+		if (!is_spilled_reg(&state->stack[i]))
- 			continue;
- 		state_reg = &state->stack[i].spilled_ptr;
- 		if (state_reg->type != SCALAR_VALUE ||
 -- 
 2.35.1
 
