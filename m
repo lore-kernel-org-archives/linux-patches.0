@@ -1,111 +1,84 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEAE579F8
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 17:49:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10CEDC433F1
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 17:49:51 +0000 (UTC)
-Authentication-Results: smtp.kernel.org;
-	dkim=pass (1024-bit key) header.d=zx2c4.com header.i=@zx2c4.com header.b="H4O9hc5O"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=zx2c4.com; s=20210105;
-	t=1673545787;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=A7DMh06CMcFgJjStpStxXavfvThQkXamahLt/MITO4I=;
-	b=H4O9hc5OvySji42+gvOMAbWZESvbt+Vllxz/9xWfnRC46BhUorqgcDEKJV2gWWYuuXVbTL
-	/nV/1oRzeaugbj+6jWFyt+ncc3ay+9O1+MpydkWVqjwkNjkzjSrgs298kcBtGUqqk0ZZSV
-	NQRfBs8l2tBGOKeR0+Pr6yywPPaK0iE=
-Received: 
-	by mail.zx2c4.com (ZX2C4 Mail Server) with ESMTPSA id 9c32559c (TLSv1.3:TLS_AES_256_GCM_SHA384:256:NO)
-	for <patches@lists.linux.dev>;
-	Thu, 12 Jan 2023 17:49:47 +0000 (UTC)
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-4a2f8ad29d5so250359517b3.8
-        for <patches@lists.linux.dev>; Thu, 12 Jan 2023 09:49:47 -0800 (PST)
-X-Gm-Message-State: AFqh2kop/e9eEcFD/IwHwdei/nT2GA+wm56/ICgUehlMcimGcBFMJMRU
-	PnYan2FoN0GdrORzmtxX9CTitDnR4i30EAxrOdI=
-X-Google-Smtp-Source: AMrXdXv3v3wwoofXvAn0i52oE2wu2AesOkpt83M/5nj367cjSEvCBYHr8Y4YqbcwKFmIgh2cUc6UeGILBC523DmLEIM=
-X-Received: by 2002:a0d:d552:0:b0:368:e6b8:77f1 with SMTP id
- x79-20020a0dd552000000b00368e6b877f1mr2520323ywd.414.1673545784796; Thu, 12
- Jan 2023 09:49:44 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48F3B8470
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 18:45:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB87BC433D2;
+	Thu, 12 Jan 2023 18:45:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1673549129;
+	bh=z2EaDr0mycRicVJhhuAX799aLzcYHxAh4bAC2+rrckk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=M9OFZkoJT9dJoq+CcSI50P/Tj4OPjOhmaHPj6y7ioLP8aX9qN9Ji6S8hJducBfNXM
+	 ju3hTRnEhaSFCISGoX6gFuEUCe+x6jQrfOc+N2xlR2QwMJs2/qgpy7eK1pfrSynSxq
+	 LUqsD0N0LBqVN6ceZC4G2wVwIJW57mt50xiyECDIJK+VmcsO7m0pj03BOpIkgBOrfd
+	 yoWX3EukIzX/O3TQ/bBhANOqkDl7i3Q2d0JQuANWw0qUXOl9kiR9n4h94jx/j2BVW1
+	 Tl5kEKXhYGxUl4nUs8miW5v0R9rDBej1ulfLtQzPcG0J42P23DcEPzjDY7WrACxgVs
+	 T+FdbHHuJXTag==
+Date: Thu, 12 Jan 2023 18:45:24 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 00/10] 6.1.6-rc1 review
+Message-ID: <Y8BVRObU8v8KUZxx@spud>
+References: <20230112135326.981869724@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230101162910.710293-1-Jason@zx2c4.com> <20230101162910.710293-8-Jason@zx2c4.com>
- <2bee307f-182f-c556-d136-8451b490d74e@csgroup.eu>
-In-Reply-To: <2bee307f-182f-c556-d136-8451b490d74e@csgroup.eu>
-From: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Date: Thu, 12 Jan 2023 18:49:34 +0100
-X-Gmail-Original-Message-ID: <CAHmME9oGY88EXimqj6E6k1FuprMLTmxbzZ3THA7k7iWKyexgUA@mail.gmail.com>
-Message-ID: <CAHmME9oGY88EXimqj6E6k1FuprMLTmxbzZ3THA7k7iWKyexgUA@mail.gmail.com>
-Subject: Re: [PATCH v14 7/7] x86: vdso: Wire up getrandom() vDSO implementation
-To: Christophe Leroy <christophe.leroy@csgroup.eu>
-Cc: "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, 
-	"patches@lists.linux.dev" <patches@lists.linux.dev>, "tglx@linutronix.de" <tglx@linutronix.de>, 
-	"linux-crypto@vger.kernel.org" <linux-crypto@vger.kernel.org>, 
-	"linux-api@vger.kernel.org" <linux-api@vger.kernel.org>, "x86@kernel.org" <x86@kernel.org>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>, "Carlos O'Donell" <carlos@redhat.com>, 
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>, Jann Horn <jannh@google.com>, 
-	Christian Brauner <brauner@kernel.org>, Samuel Neves <sneves@dei.uc.pt>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="fwuvP1Jk5iVb4Kyb"
+Content-Disposition: inline
+In-Reply-To: <20230112135326.981869724@linuxfoundation.org>
+
+
+--fwuvP1Jk5iVb4Kyb
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi Christophe,
+Hey Greg,
 
-Thanks for the review.
+On Thu, Jan 12, 2023 at 02:56:21PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.6 release.
+> There are 10 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
+> Responses should be made by Sat, 14 Jan 2023 13:53:18 +0000.
+> Anything received after that time might be too late.
+>=20
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.6-r=
+c1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git=
+ linux-6.1.y
+> and the diffstat can be found below.
 
-On Thu, Jan 12, 2023 at 6:27 PM Christophe Leroy
-<christophe.leroy@csgroup.eu> wrote:
-> Le 01/01/2023 =C3=A0 17:29, Jason A. Donenfeld a =C3=A9crit :
-> > Hook up the generic vDSO implementation to the x86 vDSO data page. Sinc=
-e
-> > the existing vDSO infrastructure is heavily based on the timekeeping
-> > functionality, which works over arrays of bases, a new macro is
-> > introduced for vvars that are not arrays.
-> >
-> > The vDSO function requires a ChaCha20 implementation that does not writ=
-e
-> > to the stack, yet can still do an entire ChaCha20 permutation, so
-> > provide this using SSE2, since this is userland code that must work on
-> > all x86-64 processors. There's a simple test for this code as well.
->
-> As far as I understand the test is not dependent on the architecture,
-> can it be a separate patch ?
+Looks like not much in it that's of concern for RISC-V, but FWIW:
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
 
-The test is dependent on architectures for which there's a vDSO
-implementation. I could move it to a patch before or after this one,
-though, if you think it'd be better to keep this commit as a template
-commit for other architectures.
+Thanks,
+Conor.
 
-> Also, as the chacha implementation is standalone and can be tested by
-> the above mentionned simple test, can it be a separate patch as well ?
 
-No, that actually needs to be part of this one, as it's part and
-parcel of the x86 implementation.
+--fwuvP1Jk5iVb4Kyb
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> Then the last patch only has the glue to wire-up getrandom VDSO to the
-> architecture, and can be used as a reference for other architectures.
+-----BEGIN PGP SIGNATURE-----
 
-This is part of the required glue, so no, it belongs in this one.
-> > + *   rdx: 8-byte counter input/output
->
-> Why a 8-byte counter ? According to RFC 7539, chacha20 takes:
-> Are you mixing up the upper part of the counter with the nonce ? In that
-> case you can't say you use a 0 nonce, can you ?
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCY8BVRAAKCRB4tDGHoIJi
+0kz3AP9fjlEnFeqSysQuxkZNT480k3srTgkwc0n/z2c0kPmtcQEAxEzq1Cj7Z2J2
+XbY4+l1/snNjOSwuxonSUFB4vjoPKAQ=
+=HsRv
+-----END PGP SIGNATURE-----
 
-No, I'm not mixing anything up. This is the same algorithm that
-random.c uses. And wireguard, for that matter. 8 byte nonce, 8 byte
-block counter. In this case, the nonce is 0.
-
-> > +#include <sodium/crypto_stream_chacha20.h>
->
-> Is that standard ? Every distribution has sodium ?
-
-As far as I can tell, yes.
-
-Jason
+--fwuvP1Jk5iVb4Kyb--
