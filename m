@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3535679C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:31:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 955DBC433D2;
-	Thu, 12 Jan 2023 14:31:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 675F879C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:31:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C092EC433F0;
+	Thu, 12 Jan 2023 14:31:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533905;
-	bh=s7X+KmEAaEiJnhorZQ5GprRiMjyCep1Uap2IWHnrDys=;
+	s=korg; t=1673533908;
+	bh=SaNMoVGdocXBfJzYf9ayIABTAX+7q8SKgAY4tITswhg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H2kkXOyDeH6rZq09GYK1BvjtIdHGKm8fcsW7m7paw2Ddo0Jg2x9DN5vQM+ZJHXy2n
-	 Pw5D/2/Hf43amgYO8o2PHq8V/ChyFRW+3lI7klRRNnBnf1dGZYopUkoVLq9b/C6/rG
-	 rCMSth88ltCZn++szyjULQGNWAzXQZM60J+UzMr0=
+	b=079sdfNfSSz75/tz0/mXGbzlTLI8p+ogzcck4Jnt6xqXxO5LRNHVjAVZdN6uBifF0
+	 9njEVDHgMGOH8gQ2aKvPpdFfGqMMARi/XH6EWQ1enJkktfKJT1m0nE4OLMnRXuZcWM
+	 BkPCUgtqjPmEDTwRmzu4rJZWOz4zfhY9wTXKWbSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Meng <luomeng12@huawei.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.10 629/783] dm thin: Fix UAF in run_timer_softirq()
-Date: Thu, 12 Jan 2023 14:55:45 +0100
-Message-Id: <20230112135553.461265773@linuxfoundation.org>
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Rander Wang <rander.wang@intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 601/783] ASoC: Intel/SOF: use set_stream() instead of set_tdm_slots() for HDAudio
+Date: Thu, 12 Jan 2023 14:55:17 +0100
+Message-Id: <20230112135552.126453573@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -34,100 +38,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luo Meng <luomeng12@huawei.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-commit 88430ebcbc0ec637b710b947738839848c20feff upstream.
+commit 636110411ca726f19ef8e87b0be51bb9a4cdef06 upstream.
 
-When dm_resume() and dm_destroy() are concurrent, it will
-lead to UAF, as follows:
+Overloading the tx_mask with a linear value is asking for trouble and
+only works because the codec_dai hw_params() is called before the
+cpu_dai hw_params().
 
- BUG: KASAN: use-after-free in __run_timers+0x173/0x710
- Write of size 8 at addr ffff88816d9490f0 by task swapper/0/0
-<snip>
- Call Trace:
-  <IRQ>
-  dump_stack_lvl+0x73/0x9f
-  print_report.cold+0x132/0xaa2
-  _raw_spin_lock_irqsave+0xcd/0x160
-  __run_timers+0x173/0x710
-  kasan_report+0xad/0x110
-  __run_timers+0x173/0x710
-  __asan_store8+0x9c/0x140
-  __run_timers+0x173/0x710
-  call_timer_fn+0x310/0x310
-  pvclock_clocksource_read+0xfa/0x250
-  kvm_clock_read+0x2c/0x70
-  kvm_clock_get_cycles+0xd/0x20
-  ktime_get+0x5c/0x110
-  lapic_next_event+0x38/0x50
-  clockevents_program_event+0xf1/0x1e0
-  run_timer_softirq+0x49/0x90
-  __do_softirq+0x16e/0x62c
-  __irq_exit_rcu+0x1fa/0x270
-  irq_exit_rcu+0x12/0x20
-  sysvec_apic_timer_interrupt+0x8e/0xc0
+Move to the more generic set_stream() API to pass the hdac_stream
+information.
 
-One of the concurrency UAF can be shown as below:
-
-        use                                  free
-do_resume                           |
-  __find_device_hash_cell           |
-    dm_get                          |
-      atomic_inc(&md->holders)      |
-                                    | dm_destroy
-                                    |   __dm_destroy
-                                    |     if (!dm_suspended_md(md))
-                                    |     atomic_read(&md->holders)
-                                    |     msleep(1)
-  dm_resume                         |
-    __dm_resume                     |
-      dm_table_resume_targets       |
-        pool_resume                 |
-          do_waker  #add delay work |
-  dm_put                            |
-    atomic_dec(&md->holders)        |
-                                    |     dm_table_destroy
-                                    |       pool_dtr
-                                    |         __pool_dec
-                                    |           __pool_destroy
-                                    |             destroy_workqueue
-                                    |             kfree(pool) # free pool
-        time out
-__do_softirq
-  run_timer_softirq # pool has already been freed
-
-This can be easily reproduced using:
-  1. create thin-pool
-  2. dmsetup suspend pool
-  3. dmsetup resume pool
-  4. dmsetup remove_all # Concurrent with 3
-
-The root cause of this UAF bug is that dm_resume() adds timer after
-dm_destroy() skips cancelling the timer because of suspend status.
-After timeout, it will call run_timer_softirq(), however pool has
-already been freed. The concurrency UAF bug will happen.
-
-Therefore, cancelling timer again in __pool_destroy().
-
-Cc: stable@vger.kernel.org
-Fixes: 991d9fa02da0d ("dm: add thin provisioning target")
-Signed-off-by: Luo Meng <luomeng12@huawei.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Rander Wang <rander.wang@intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@intel.com>
+Signed-off-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Link: https://lore.kernel.org/r/20211224021034.26635-6-yung-chuan.liao@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-thin.c |    2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/codecs/hdac_hda.c       |   22 +++++++++++-----------
+ sound/soc/intel/skylake/skl-pcm.c |    7 ++-----
+ sound/soc/sof/intel/hda-dai.c     |    7 ++-----
+ 3 files changed, 15 insertions(+), 21 deletions(-)
 
---- a/drivers/md/dm-thin.c
-+++ b/drivers/md/dm-thin.c
-@@ -2907,6 +2907,8 @@ static void __pool_destroy(struct pool *
- 	dm_bio_prison_destroy(pool->prison);
- 	dm_kcopyd_client_destroy(pool->copier);
+--- a/sound/soc/codecs/hdac_hda.c
++++ b/sound/soc/codecs/hdac_hda.c
+@@ -46,9 +46,8 @@ static int hdac_hda_dai_hw_params(struct
+ 				  struct snd_soc_dai *dai);
+ static int hdac_hda_dai_hw_free(struct snd_pcm_substream *substream,
+ 				struct snd_soc_dai *dai);
+-static int hdac_hda_dai_set_tdm_slot(struct snd_soc_dai *dai,
+-				     unsigned int tx_mask, unsigned int rx_mask,
+-				     int slots, int slot_width);
++static int hdac_hda_dai_set_stream(struct snd_soc_dai *dai, void *stream,
++				   int direction);
+ static struct hda_pcm *snd_soc_find_pcm_from_dai(struct hdac_hda_priv *hda_pvt,
+ 						 struct snd_soc_dai *dai);
  
-+	cancel_delayed_work_sync(&pool->waker);
-+	cancel_delayed_work_sync(&pool->no_space_timeout);
- 	if (pool->wq)
- 		destroy_workqueue(pool->wq);
+@@ -58,7 +57,7 @@ static const struct snd_soc_dai_ops hdac
+ 	.prepare = hdac_hda_dai_prepare,
+ 	.hw_params = hdac_hda_dai_hw_params,
+ 	.hw_free = hdac_hda_dai_hw_free,
+-	.set_tdm_slot = hdac_hda_dai_set_tdm_slot,
++	.set_stream = hdac_hda_dai_set_stream,
+ };
  
+ static struct snd_soc_dai_driver hdac_hda_dais[] = {
+@@ -180,21 +179,22 @@ static struct snd_soc_dai_driver hdac_hd
+ 
+ };
+ 
+-static int hdac_hda_dai_set_tdm_slot(struct snd_soc_dai *dai,
+-				     unsigned int tx_mask, unsigned int rx_mask,
+-				     int slots, int slot_width)
++static int hdac_hda_dai_set_stream(struct snd_soc_dai *dai,
++				   void *stream, int direction)
+ {
+ 	struct snd_soc_component *component = dai->component;
+ 	struct hdac_hda_priv *hda_pvt;
+ 	struct hdac_hda_pcm *pcm;
++	struct hdac_stream *hstream;
++
++	if (!stream)
++		return -EINVAL;
+ 
+ 	hda_pvt = snd_soc_component_get_drvdata(component);
+ 	pcm = &hda_pvt->pcm[dai->id];
++	hstream = (struct hdac_stream *)stream;
+ 
+-	if (tx_mask)
+-		pcm->stream_tag[SNDRV_PCM_STREAM_PLAYBACK] = tx_mask;
+-	else
+-		pcm->stream_tag[SNDRV_PCM_STREAM_CAPTURE] = rx_mask;
++	pcm->stream_tag[direction] = hstream->stream_tag;
+ 
+ 	return 0;
+ }
+--- a/sound/soc/intel/skylake/skl-pcm.c
++++ b/sound/soc/intel/skylake/skl-pcm.c
+@@ -563,11 +563,8 @@ static int skl_link_hw_params(struct snd
+ 
+ 	stream_tag = hdac_stream(link_dev)->stream_tag;
+ 
+-	/* set the stream tag in the codec dai dma params  */
+-	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
+-		snd_soc_dai_set_tdm_slot(codec_dai, stream_tag, 0, 0, 0);
+-	else
+-		snd_soc_dai_set_tdm_slot(codec_dai, 0, stream_tag, 0, 0);
++	/* set the hdac_stream in the codec dai */
++	snd_soc_dai_set_stream(codec_dai, hdac_stream(link_dev), substream->stream);
+ 
+ 	p_params.s_fmt = snd_pcm_format_width(params_format(params));
+ 	p_params.ch = params_channels(params);
+--- a/sound/soc/sof/intel/hda-dai.c
++++ b/sound/soc/sof/intel/hda-dai.c
+@@ -236,11 +236,8 @@ static int hda_link_hw_params(struct snd
+ 	if (!link)
+ 		return -EINVAL;
+ 
+-	/* set the stream tag in the codec dai dma params */
+-	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
+-		snd_soc_dai_set_tdm_slot(codec_dai, stream_tag, 0, 0, 0);
+-	else
+-		snd_soc_dai_set_tdm_slot(codec_dai, 0, stream_tag, 0, 0);
++	/* set the hdac_stream in the codec dai */
++	snd_soc_dai_set_stream(codec_dai, hdac_stream(link_dev), substream->stream);
+ 
+ 	p_params.s_fmt = snd_pcm_format_width(params_format(params));
+ 	p_params.ch = params_channels(params);
 
 
