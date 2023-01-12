@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830B7746A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:02:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C812C433D2;
-	Thu, 12 Jan 2023 14:02:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4D56746A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:02:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAB9EC433EF;
+	Thu, 12 Jan 2023 14:02:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532153;
-	bh=oUy1YHXf9gaMHhBloDrU8ywTqrKWT29m0WoTbOLnN00=;
+	s=korg; t=1673532156;
+	bh=Q1J0+QDRDdqbKCV8jK/CSqhRD6+HaxWQ8KpoTNgF/qc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eJiEIonkjCScVqTp6uYtndqZzrsCM1/u+RdLEByGQRIEGFT2DkmELDJl3xOIUFHjc
-	 DoCdpySksknKyyT6HBj2HnvmnOZ4rYGG4j/IpW05FQaQ/3qm6JVWPuuFCKdCqH/RQg
-	 pvgWf4E0lmSEmFCUPh4xYA5S7IXufr2JkOoJYWeM=
+	b=w4w0kUVRhoUijPNbXK32DK+1Ds8yCJ4pVNcPKU844LvOf4F7YYE1DnnNLnE34bzlv
+	 QQk2ccGc+Bz6J4EvyfYPnwMsVAxYAuBmzfDSlUHVmY5uW2h+M2p92Q/LQSzLfBG/vM
+	 W7NEFUT0mAjEJXYWaMp8M2i8PDhMSq+gYSZgVZXE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhi Li <yieli@redhat.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Maxim Uvarov <maxim.uvarov@linaro.org>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 068/783] nfsd: dont call nfsd_file_put from client states seqfile display
-Date: Thu, 12 Jan 2023 14:46:24 +0100
-Message-Id: <20230112135527.304171167@linuxfoundation.org>
+Subject: [PATCH 5.10 041/783] tpm/tpm_ftpm_tee: Fix error handling in ftpm_mod_init()
+Date: Thu, 12 Jan 2023 14:45:57 +0100
+Message-Id: <20230112135526.035548525@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,145 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit e0aa651068bfd520afcd357af8ecd2de005fc83d ]
+[ Upstream commit 2b7d07f7acaac2c7750e420dcf4414588ede6d03 ]
 
-We had a report of this:
+The ftpm_mod_init() returns the driver_register() directly without checking
+its return value, if driver_register() failed, the ftpm_tee_plat_driver is
+not unregistered.
 
-    BUG: sleeping function called from invalid context at fs/nfsd/filecache.c:440
+Fix by unregister ftpm_tee_plat_driver when driver_register() failed.
 
-...with a stack trace showing nfsd_file_put being called from
-nfs4_show_open. This code has always tried to call fput while holding a
-spinlock, but we recently changed this to use the filecache, and that
-started triggering the might_sleep() in nfsd_file_put.
-
-states_start takes and holds the cl_lock while iterating over the
-client's states, and we can't sleep with that held.
-
-Have the various nfs4_show_* functions instead hold the fi_lock instead
-of taking a nfsd_file reference.
-
-Fixes: 78599c42ae3c ("nfsd4: add file to display list of client's opens")
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2138357
-Reported-by: Zhi Li <yieli@redhat.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 9f1944c23c8c ("tpm_ftpm_tee: register driver on TEE bus")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Maxim Uvarov <maxim.uvarov@linaro.org>
+Acked-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4state.c | 51 +++++++++++++++++++++++++++++----------------
- 1 file changed, 33 insertions(+), 18 deletions(-)
+ drivers/char/tpm/tpm_ftpm_tee.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
-index 665d0eaeb8db..9a47cc66963f 100644
---- a/fs/nfsd/nfs4state.c
-+++ b/fs/nfsd/nfs4state.c
-@@ -507,15 +507,26 @@ find_any_file(struct nfs4_file *f)
- 	return ret;
- }
+diff --git a/drivers/char/tpm/tpm_ftpm_tee.c b/drivers/char/tpm/tpm_ftpm_tee.c
+index 6e3235565a4d..d9daaafdd295 100644
+--- a/drivers/char/tpm/tpm_ftpm_tee.c
++++ b/drivers/char/tpm/tpm_ftpm_tee.c
+@@ -397,7 +397,13 @@ static int __init ftpm_mod_init(void)
+ 	if (rc)
+ 		return rc;
  
--static struct nfsd_file *find_deleg_file(struct nfs4_file *f)
-+static struct nfsd_file *find_any_file_locked(struct nfs4_file *f)
- {
--	struct nfsd_file *ret = NULL;
-+	lockdep_assert_held(&f->fi_lock);
+-	return driver_register(&ftpm_tee_driver.driver);
++	rc = driver_register(&ftpm_tee_driver.driver);
++	if (rc) {
++		platform_driver_unregister(&ftpm_tee_plat_driver);
++		return rc;
++	}
 +
-+	if (f->fi_fds[O_RDWR])
-+		return f->fi_fds[O_RDWR];
-+	if (f->fi_fds[O_WRONLY])
-+		return f->fi_fds[O_WRONLY];
-+	if (f->fi_fds[O_RDONLY])
-+		return f->fi_fds[O_RDONLY];
-+	return NULL;
-+}
-+
-+static struct nfsd_file *find_deleg_file_locked(struct nfs4_file *f)
-+{
-+	lockdep_assert_held(&f->fi_lock);
- 
--	spin_lock(&f->fi_lock);
- 	if (f->fi_deleg_file)
--		ret = nfsd_file_get(f->fi_deleg_file);
--	spin_unlock(&f->fi_lock);
--	return ret;
-+		return f->fi_deleg_file;
-+	return NULL;
++	return 0;
  }
  
- static atomic_long_t num_delegations;
-@@ -2462,9 +2473,11 @@ static int nfs4_show_open(struct seq_file *s, struct nfs4_stid *st)
- 	ols = openlockstateid(st);
- 	oo = ols->st_stateowner;
- 	nf = st->sc_file;
--	file = find_any_file(nf);
-+
-+	spin_lock(&nf->fi_lock);
-+	file = find_any_file_locked(nf);
- 	if (!file)
--		return 0;
-+		goto out;
- 
- 	seq_printf(s, "- ");
- 	nfs4_show_stateid(s, &st->sc_stateid);
-@@ -2486,8 +2499,8 @@ static int nfs4_show_open(struct seq_file *s, struct nfs4_stid *st)
- 	seq_printf(s, ", ");
- 	nfs4_show_owner(s, oo);
- 	seq_printf(s, " }\n");
--	nfsd_file_put(file);
--
-+out:
-+	spin_unlock(&nf->fi_lock);
- 	return 0;
- }
- 
-@@ -2501,9 +2514,10 @@ static int nfs4_show_lock(struct seq_file *s, struct nfs4_stid *st)
- 	ols = openlockstateid(st);
- 	oo = ols->st_stateowner;
- 	nf = st->sc_file;
--	file = find_any_file(nf);
-+	spin_lock(&nf->fi_lock);
-+	file = find_any_file_locked(nf);
- 	if (!file)
--		return 0;
-+		goto out;
- 
- 	seq_printf(s, "- ");
- 	nfs4_show_stateid(s, &st->sc_stateid);
-@@ -2523,8 +2537,8 @@ static int nfs4_show_lock(struct seq_file *s, struct nfs4_stid *st)
- 	seq_printf(s, ", ");
- 	nfs4_show_owner(s, oo);
- 	seq_printf(s, " }\n");
--	nfsd_file_put(file);
--
-+out:
-+	spin_unlock(&nf->fi_lock);
- 	return 0;
- }
- 
-@@ -2536,9 +2550,10 @@ static int nfs4_show_deleg(struct seq_file *s, struct nfs4_stid *st)
- 
- 	ds = delegstateid(st);
- 	nf = st->sc_file;
--	file = find_deleg_file(nf);
-+	spin_lock(&nf->fi_lock);
-+	file = find_deleg_file_locked(nf);
- 	if (!file)
--		return 0;
-+		goto out;
- 
- 	seq_printf(s, "- ");
- 	nfs4_show_stateid(s, &st->sc_stateid);
-@@ -2554,8 +2569,8 @@ static int nfs4_show_deleg(struct seq_file *s, struct nfs4_stid *st)
- 	seq_printf(s, ", ");
- 	nfs4_show_fname(s, file);
- 	seq_printf(s, " }\n");
--	nfsd_file_put(file);
--
-+out:
-+	spin_unlock(&nf->fi_lock);
- 	return 0;
- }
- 
+ static void __exit ftpm_mod_exit(void)
 -- 
 2.35.1
 
