@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98E16749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:04:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06D8C433F0;
-	Thu, 12 Jan 2023 14:04:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2297749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:04:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08A0BC433D2;
+	Thu, 12 Jan 2023 14:04:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532283;
-	bh=BTAg/nCpFIffMDG03h+efaSYsv5OSaE6QIl5RxYs44Y=;
+	s=korg; t=1673532289;
+	bh=cVyPpOf6cwsLXhZx4Cf472KFLRstmpsQAq7CKedBvTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qU7LktSe3GBy8vFKnpQRc/ljatzvqW7N/6qVzMfeBTclLK2GpRZN8nrL+SFAmt40r
-	 2xS9AV0gsMV40wVbLOFdcZgvBqT8GUwPvtBGZhGo6mS003pnreo5hnWZwfYUaw9BCV
-	 fvtpgWLN2F0gUOoqijeivr79Fubs7OBAIsmLutBE=
+	b=2RKZPwFoKLa1x2PUhJYo66WK9+FrpvCkfp97mHW1dWWLLJiKArBaFsDzXDXpT5cI6
+	 WOCO7J2PJt7n96wIgRuLhg/lTO8xzcXs2jC3x5qFRrx7BRlKwX3mJZU0nMadrrcEbC
+	 rHUqxN3jFlFBhgoxgpH3zkNegC5o0bMJAlaVrPV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
+	Ezequiel Garcia <ezequiel@collabora.com>,
+	Jacopo Mondi <jacopo+renesas@jmondi.org>,
+	Helen Koike <helen.koike@collabora.com>,
 	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 111/783] media: i2c: ad5820: Fix error path
-Date: Thu, 12 Jan 2023 14:47:07 +0100
-Message-Id: <20230112135529.350626930@linuxfoundation.org>
+Subject: [PATCH 5.10 113/783] media: exynos4-is: Use v4l2_async_notifier_add_fwnode_remote_subdev
+Date: Thu, 12 Jan 2023 14:47:09 +0100
+Message-Id: <20230112135529.444912132@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,49 +38,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Ezequiel Garcia <ezequiel@collabora.com>
 
-[ Upstream commit 9fce241660f37d9e95e93c0ae6fba8cfefa5797b ]
+[ Upstream commit 3a2822bfe45c50abd9f76a8547a77a1f6a0e8c8d ]
 
-Error path seems to be swaped. Fix the order and provide some meaningful
-names.
+The use of v4l2_async_notifier_add_subdev will be discouraged.
+Drivers are instead encouraged to use a helper such as
+v4l2_async_notifier_add_fwnode_remote_subdev.
 
-Fixes: bee3d5115611 ("[media] ad5820: Add driver for auto-focus coil")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+This fixes a misuse of the API, as v4l2_async_notifier_add_subdev
+should get a kmalloc'ed struct v4l2_async_subdev,
+removing some boilerplate code while at it.
+
+Use the appropriate helper v4l2_async_notifier_add_fwnode_remote_subdev,
+which handles the needed setup, instead of open-coding it.
+
+Signed-off-by: Ezequiel Garcia <ezequiel@collabora.com>
+Reviewed-by: Jacopo Mondi <jacopo+renesas@jmondi.org>
+Reviewed-by: Helen Koike <helen.koike@collabora.com>
 Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Stable-dep-of: f98a5c2e1c43 ("media: exynos4-is: don't rely on the v4l2_async_subdev internals")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ad5820.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/media/platform/exynos4-is/media-dev.c | 24 ++++++++++---------
+ drivers/media/platform/exynos4-is/media-dev.h |  2 +-
+ 2 files changed, 14 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/media/i2c/ad5820.c b/drivers/media/i2c/ad5820.c
-index 19c74db0649f..f55322eebf6d 100644
---- a/drivers/media/i2c/ad5820.c
-+++ b/drivers/media/i2c/ad5820.c
-@@ -329,18 +329,18 @@ static int ad5820_probe(struct i2c_client *client,
+diff --git a/drivers/media/platform/exynos4-is/media-dev.c b/drivers/media/platform/exynos4-is/media-dev.c
+index a9a8f0433fb2..3d877c5ae290 100644
+--- a/drivers/media/platform/exynos4-is/media-dev.c
++++ b/drivers/media/platform/exynos4-is/media-dev.c
+@@ -401,6 +401,7 @@ static int fimc_md_parse_one_endpoint(struct fimc_md *fmd,
+ 	int index = fmd->num_sensors;
+ 	struct fimc_source_info *pd = &fmd->sensor[index].pdata;
+ 	struct device_node *rem, *np;
++	struct v4l2_async_subdev *asd;
+ 	struct v4l2_fwnode_endpoint endpoint = { .bus_type = 0 };
+ 	int ret;
  
- 	ret = media_entity_pads_init(&coil->subdev.entity, 0, NULL);
- 	if (ret < 0)
--		goto cleanup2;
-+		goto clean_mutex;
+@@ -418,10 +419,10 @@ static int fimc_md_parse_one_endpoint(struct fimc_md *fmd,
+ 	pd->mux_id = (endpoint.base.port - 1) & 0x1;
  
- 	ret = v4l2_async_register_subdev(&coil->subdev);
- 	if (ret < 0)
--		goto cleanup;
-+		goto clean_entity;
+ 	rem = of_graph_get_remote_port_parent(ep);
+-	of_node_put(ep);
+ 	if (rem == NULL) {
+ 		v4l2_info(&fmd->v4l2_dev, "Remote device at %pOF not found\n",
+ 							ep);
++		of_node_put(ep);
+ 		return 0;
+ 	}
  
- 	return ret;
+@@ -450,6 +451,7 @@ static int fimc_md_parse_one_endpoint(struct fimc_md *fmd,
+ 	 * checking parent's node name.
+ 	 */
+ 	np = of_get_parent(rem);
++	of_node_put(rem);
  
--cleanup2:
--	mutex_destroy(&coil->power_lock);
--cleanup:
-+clean_entity:
- 	media_entity_cleanup(&coil->subdev.entity);
-+clean_mutex:
-+	mutex_destroy(&coil->power_lock);
- 	return ret;
- }
+ 	if (of_node_name_eq(np, "i2c-isp"))
+ 		pd->fimc_bus_type = FIMC_BUS_TYPE_ISP_WRITEBACK;
+@@ -458,20 +460,19 @@ static int fimc_md_parse_one_endpoint(struct fimc_md *fmd,
+ 	of_node_put(np);
  
+ 	if (WARN_ON(index >= ARRAY_SIZE(fmd->sensor))) {
+-		of_node_put(rem);
++		of_node_put(ep);
+ 		return -EINVAL;
+ 	}
+ 
+-	fmd->sensor[index].asd.match_type = V4L2_ASYNC_MATCH_FWNODE;
+-	fmd->sensor[index].asd.match.fwnode = of_fwnode_handle(rem);
++	asd = v4l2_async_notifier_add_fwnode_remote_subdev(
++		&fmd->subdev_notifier, of_fwnode_handle(ep), sizeof(*asd));
+ 
+-	ret = v4l2_async_notifier_add_subdev(&fmd->subdev_notifier,
+-					     &fmd->sensor[index].asd);
+-	if (ret) {
+-		of_node_put(rem);
+-		return ret;
+-	}
++	of_node_put(ep);
++
++	if (IS_ERR(asd))
++		return PTR_ERR(asd);
+ 
++	fmd->sensor[index].asd = asd;
+ 	fmd->num_sensors++;
+ 
+ 	return 0;
+@@ -1377,7 +1378,8 @@ static int subdev_notifier_bound(struct v4l2_async_notifier *notifier,
+ 
+ 	/* Find platform data for this sensor subdev */
+ 	for (i = 0; i < ARRAY_SIZE(fmd->sensor); i++)
+-		if (fmd->sensor[i].asd.match.fwnode ==
++		if (fmd->sensor[i].asd &&
++		    fmd->sensor[i].asd->match.fwnode ==
+ 		    of_fwnode_handle(subdev->dev->of_node))
+ 			si = &fmd->sensor[i];
+ 
+diff --git a/drivers/media/platform/exynos4-is/media-dev.h b/drivers/media/platform/exynos4-is/media-dev.h
+index 9447fafe23c6..a3876d668ea6 100644
+--- a/drivers/media/platform/exynos4-is/media-dev.h
++++ b/drivers/media/platform/exynos4-is/media-dev.h
+@@ -83,7 +83,7 @@ struct fimc_camclk_info {
+  */
+ struct fimc_sensor_info {
+ 	struct fimc_source_info pdata;
+-	struct v4l2_async_subdev asd;
++	struct v4l2_async_subdev *asd;
+ 	struct v4l2_subdev *subdev;
+ 	struct fimc_dev *host;
+ };
 -- 
 2.35.1
 
