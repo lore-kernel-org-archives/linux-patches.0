@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6191E749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:17:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC152C433D2;
-	Thu, 12 Jan 2023 14:17:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73206749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:17:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE58FC433D2;
+	Thu, 12 Jan 2023 14:17:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533050;
-	bh=JTmJWxzod1+anGvK4mCIgc0gcvpVwk+YAwhLoCTaMVo=;
+	s=korg; t=1673533053;
+	bh=PmFXWecuphzLQL/a/Q8T9AW6nA8rcnx1ptG09ywE4do=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mNSmiXi+Dmc8pVcDOUN64+wzjXAwwVVtQbg5bCTj4jNgDFus8lYaFXnpltkHXqQRm
-	 LjS8ZZzFKIQstqT58vBe9rul/v8roR9enq+vgdMNuLghxh1oTUseCbjF/jGudU4jqw
-	 z2j/7c/4a1crear8tuvdVD7PzgWLX/aJG9yaSPRk=
+	b=YYHvUiz1UNsp6C/txrWVc6u1bwHstvvdG2MbmwPgfS4gNfX593FwRyZu0iKPT43bi
+	 Rjxw31hTVmjidHznddjbLUoiLzSej0tEEufxgxu9nPNxU+1LAyFfwz8YSn1eog1jrn
+	 f8+sxpFqLsVkjO9o3WfWM8R6G8u2mUJrKhFIfPbI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 354/783] serial: pch: Fix PCI device refcount leak in pch_request_dma()
-Date: Thu, 12 Jan 2023 14:51:10 +0100
-Message-Id: <20230112135540.738988893@linuxfoundation.org>
+Subject: [PATCH 5.10 337/783] crypto: img-hash - Fix variable dereferenced before check hdev->req
+Date: Thu, 12 Jan 2023 14:50:53 +0100
+Message-Id: <20230112135539.926646181@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -34,56 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 8be3a7bf773700534a6e8f87f6ed2ed111254be5 ]
+[ Upstream commit 04ba54e5af8f8f0137b08cb51a0b3a2e1ea46c94 ]
 
-As comment of pci_get_slot() says, it returns a pci_device with its
-refcount increased. The caller must decrement the reference count by
-calling pci_dev_put().
+Smatch report warning as follows:
 
-Since 'dma_dev' is only used to filter the channel in filter(), we can
-call pci_dev_put() before exiting from pch_request_dma(). Add the
-missing pci_dev_put() for the normal and error path.
+drivers/crypto/img-hash.c:366 img_hash_dma_task() warn: variable
+dereferenced before check 'hdev->req'
 
-Fixes: 3c6a483275f4 ("Serial: EG20T: add PCH_UART driver")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Link: https://lore.kernel.org/r/20221122114559.27692-1-wangxiongfeng2@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Variable dereferenced should be done after check 'hdev->req',
+fix it.
+
+Fixes: d358f1abbf71 ("crypto: img-hash - Add Imagination Technologies hw hash accelerator")
+Fixes: 10badea259fa ("crypto: img-hash - Fix null pointer exception")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/pch_uart.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/crypto/img-hash.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/tty/serial/pch_uart.c b/drivers/tty/serial/pch_uart.c
-index 351ad0b02029..fa2061f1cf3d 100644
---- a/drivers/tty/serial/pch_uart.c
-+++ b/drivers/tty/serial/pch_uart.c
-@@ -711,6 +711,7 @@ static void pch_request_dma(struct uart_port *port)
- 	if (!chan) {
- 		dev_err(priv->port.dev, "%s:dma_request_channel FAILS(Tx)\n",
- 			__func__);
-+		pci_dev_put(dma_dev);
- 		return;
- 	}
- 	priv->chan_tx = chan;
-@@ -727,6 +728,7 @@ static void pch_request_dma(struct uart_port *port)
- 			__func__);
- 		dma_release_channel(priv->chan_tx);
- 		priv->chan_tx = NULL;
-+		pci_dev_put(dma_dev);
- 		return;
- 	}
+diff --git a/drivers/crypto/img-hash.c b/drivers/crypto/img-hash.c
+index 91f555ccbb31..cecae50d0f58 100644
+--- a/drivers/crypto/img-hash.c
++++ b/drivers/crypto/img-hash.c
+@@ -357,12 +357,16 @@ static int img_hash_dma_init(struct img_hash_dev *hdev)
+ static void img_hash_dma_task(unsigned long d)
+ {
+ 	struct img_hash_dev *hdev = (struct img_hash_dev *)d;
+-	struct img_hash_request_ctx *ctx = ahash_request_ctx(hdev->req);
++	struct img_hash_request_ctx *ctx;
+ 	u8 *addr;
+ 	size_t nbytes, bleft, wsend, len, tbc;
+ 	struct scatterlist tsg;
  
-@@ -734,6 +736,8 @@ static void pch_request_dma(struct uart_port *port)
- 	priv->rx_buf_virt = dma_alloc_coherent(port->dev, port->fifosize,
- 				    &priv->rx_buf_dma, GFP_KERNEL);
- 	priv->chan_rx = chan;
+-	if (!hdev->req || !ctx->sg)
++	if (!hdev->req)
++		return;
 +
-+	pci_dev_put(dma_dev);
- }
++	ctx = ahash_request_ctx(hdev->req);
++	if (!ctx->sg)
+ 		return;
  
- static void pch_dma_rx_complete(void *arg)
+ 	addr = sg_virt(ctx->sg);
 -- 
 2.35.1
 
