@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E96746A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 13:57:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA307C433EF;
-	Thu, 12 Jan 2023 13:57:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8C1746A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 13:58:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94494C433D2;
+	Thu, 12 Jan 2023 13:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673531875;
-	bh=/JlfAO5F8GQUXx9ZbY192XkACLPf3EhZ0v7/USpRT0I=;
+	s=korg; t=1673531913;
+	bh=UXfMH7/r4UKwS1swWh+mW741FVixZ4vWOI9gvqa2Wg8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ecMl0QZ/fg15byoKm4SSbpIB+qIvWO6itWvHelD3Fu98y3bcLSY1hS4vpMitG7tTL
-	 r+iuiglvKPm10L19Zn0LBVcXNZlRc+0n1EGF5E9NqZXi/BXQsjrENxkCOFXKahzXSJ
-	 DR7FBjFkjtdtgW0IgZslg7jpSGTFBia2+G0CC1/w=
+	b=er0vzAfm442fBpcq+HdKFYw5HlRXL7xDPNlWofO1tupaYH0qc7/wkcEFacfRjEKNi
+	 6UOxRS62jfWqrjqaMx/lTWBBlWnTDOXFFEHkzc92y8sylFkPSfUQJEjqIR6YKtH2nZ
+	 0H0nXr7EYDH27FADAmh4iSY4WdxQkit6fhZO9S+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Huey <me@kylehuey.com>,
-	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 5.15 03/10] x86/fpu: Add a pkru argument to copy_uabi_from_kernel_to_xstate().
-Date: Thu, 12 Jan 2023 14:56:40 +0100
-Message-Id: <20230112135326.807828831@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 001/783] usb: musb: remove extra check in musb_gadget_vbus_draw
+Date: Thu, 12 Jan 2023 14:45:17 +0100
+Message-Id: <20230112135524.230954792@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230112135326.689857506@linuxfoundation.org>
-References: <20230112135326.689857506@linuxfoundation.org>
+In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
+References: <20230112135524.143670746@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,56 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kyle Huey <me@kylehuey.com>
+From: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
 
-commit 1c813ce0305571e1b2e4cc4acca451da9e6ad18f upstream
+[ Upstream commit ecec4b20d29c3d6922dafe7d2555254a454272d2 ]
 
-ptrace (through PTRACE_SETREGSET with NT_X86_XSTATE) ultimately calls
-copy_uabi_from_kernel_to_xstate(). In preparation for eventually handling
-PKRU in copy_uabi_to_xstate, pass in a pointer to the PKRU location.
+The checks for musb->xceiv and musb->xceiv->set_power duplicate those in
+usb_phy_set_power(), so there is no need of them. Moreover, not calling
+usb_phy_set_power() results in usb_phy_set_charger_current() not being
+called, so current USB config max current is not propagated through USB
+charger framework and charger drivers may try to draw more current than
+allowed or possible.
 
-Signed-off-by: Kyle Huey <me@kylehuey.com>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/all/20221115230932.7126-3-khuey%40kylehuey.com
+Fix that by removing those extra checks and calling usb_phy_set_power()
+directly.
+
+Tested on Motorola Droid4 and Nokia N900
+
+Fixes: a9081a008f84 ("usb: phy: Add USB charger support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
+Link: https://lore.kernel.org/r/1669400475-4762-1-git-send-email-ivo.g.dimitrov.75@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/fpu/xstate.h |    2 +-
- arch/x86/kernel/fpu/regset.c      |    2 +-
- arch/x86/kernel/fpu/xstate.c      |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/usb/musb/musb_gadget.c | 2 --
+ 1 file changed, 2 deletions(-)
 
---- a/arch/x86/include/asm/fpu/xstate.h
-+++ b/arch/x86/include/asm/fpu/xstate.h
-@@ -136,7 +136,7 @@ extern void __init update_regset_xstate_
- 
- void *get_xsave_addr(struct xregs_state *xsave, int xfeature_nr);
- int xfeature_size(int xfeature_nr);
--int copy_uabi_from_kernel_to_xstate(struct xregs_state *xsave, const void *kbuf);
-+int copy_uabi_from_kernel_to_xstate(struct xregs_state *xsave, const void *kbuf, u32 *pkru);
- int copy_sigframe_from_user_to_xstate(struct task_struct *tsk, const void __user *ubuf);
- 
- void xsaves(struct xregs_state *xsave, u64 mask);
---- a/arch/x86/kernel/fpu/regset.c
-+++ b/arch/x86/kernel/fpu/regset.c
-@@ -163,7 +163,7 @@ int xstateregs_set(struct task_struct *t
- 	}
- 
- 	fpu_force_restore(fpu);
--	ret = copy_uabi_from_kernel_to_xstate(&fpu->state.xsave, kbuf ?: tmpbuf);
-+	ret = copy_uabi_from_kernel_to_xstate(&fpu->state.xsave, kbuf ?: tmpbuf, &target->thread.pkru);
- 
- out:
- 	vfree(tmpbuf);
---- a/arch/x86/kernel/fpu/xstate.c
-+++ b/arch/x86/kernel/fpu/xstate.c
-@@ -1159,7 +1159,7 @@ static int copy_uabi_to_xstate(struct xr
-  * format and copy to the target thread. This is called from
-  * xstateregs_set().
-  */
--int copy_uabi_from_kernel_to_xstate(struct xregs_state *xsave, const void *kbuf)
-+int copy_uabi_from_kernel_to_xstate(struct xregs_state *xsave, const void *kbuf, u32 *pkru)
+diff --git a/drivers/usb/musb/musb_gadget.c b/drivers/usb/musb/musb_gadget.c
+index c273eee35aaa..8dc657c71541 100644
+--- a/drivers/usb/musb/musb_gadget.c
++++ b/drivers/usb/musb/musb_gadget.c
+@@ -1628,8 +1628,6 @@ static int musb_gadget_vbus_draw(struct usb_gadget *gadget, unsigned mA)
  {
- 	return copy_uabi_to_xstate(xsave, kbuf, NULL);
+ 	struct musb	*musb = gadget_to_musb(gadget);
+ 
+-	if (!musb->xceiv->set_power)
+-		return -EOPNOTSUPP;
+ 	return usb_phy_set_power(musb->xceiv, mA);
  }
+ 
+-- 
+2.35.1
+
 
 
