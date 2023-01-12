@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A30749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:07:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E261EC433EF;
-	Thu, 12 Jan 2023 14:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89BA1749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:07:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00330C433EF;
+	Thu, 12 Jan 2023 14:07:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532448;
-	bh=ZfuMTvaXR7vYufO7myoSwUdVrUQrGnWXh+hGe7/lD9M=;
+	s=korg; t=1673532451;
+	bh=LVl4985XGkw23i2N8Od/Lg72vxVAbqRGPb1NbBOKMW8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V3xs5KOl8GoIdinh6lZz+DeKz/cxJhpC+7+P9a7YdDPSviBNvIER0MRsFuT0ndeCm
-	 o1bv9+3w1RwVcbOUqMZcQ0ZX9hXmFMTyQAhxjJxfWkmi+BhxOS9eb0F0YqLtcXjU4h
-	 cCmqVM2TP+XnAz1IDwqD3Zl9obcVXFE1VUA0+3WE=
+	b=PG/8CCeqnQS2UMwZ0mPDjycrQrC86lBfnP8aoJAPJQGsZna3GJmYislBhoRe68Vd+
+	 vIUu6m2IMTZY+gi5YwFL/w5SsS29E/FwZGo2u8eUnVXolr3QC0HLo56UymrblFfS+r
+	 BhH5NTMv1+7kPnQEGBE1YiYYMdruESnDQjrTg0bA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Baisong Zhong <zhongbaisong@huawei.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 138/783] bpf: propagate precision across all frames, not just the last one
-Date: Thu, 12 Jan 2023 14:47:34 +0100
-Message-Id: <20230112135530.721538711@linuxfoundation.org>
+Subject: [PATCH 5.10 165/783] ALSA: pcm: fix undefined behavior in bit shift for SNDRV_PCM_RATE_KNOT
+Date: Thu, 12 Jan 2023 14:48:01 +0100
+Message-Id: <20230112135531.975484954@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,158 +35,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrii Nakryiko <andrii@kernel.org>
+From: Baisong Zhong <zhongbaisong@huawei.com>
 
-[ Upstream commit 529409ea92d590659be487ba0839710329bd8074 ]
+[ Upstream commit b5172e62458f8e6ff359e5f096044a488db90ac5 ]
 
-When equivalent completed state is found and it has additional precision
-restrictions, BPF verifier propagates precision to
-currently-being-verified state chain (i.e., including parent states) so
-that if some of the states in the chain are not yet completed, necessary
-precision restrictions are enforced.
+Shifting signed 32-bit value by 31 bits is undefined, so changing
+significant bit to unsigned. The UBSAN warning calltrace like below:
 
-Unfortunately, right now this happens only for the last frame (deepest
-active subprogram's frame), not all the frames. This can lead to
-incorrect matching of states due to missing precision marker. Currently
-this doesn't seem possible as BPF verifier forces everything to precise
-when validated BPF program has any subprograms. But with the next patch
-lifting this restriction, this becomes problematic.
+UBSAN: shift-out-of-bounds in sound/core/pcm_native.c:2676:21
+left shift of 1 by 31 places cannot be represented in type 'int'
+...
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x8d/0xcf
+ ubsan_epilogue+0xa/0x44
+ __ubsan_handle_shift_out_of_bounds+0x1e7/0x208
+ snd_pcm_open_substream+0x9f0/0xa90
+ snd_pcm_oss_open.part.26+0x313/0x670
+ snd_pcm_oss_open+0x30/0x40
+ soundcore_open+0x18b/0x2e0
+ chrdev_open+0xe2/0x270
+ do_dentry_open+0x2f7/0x620
+ path_openat+0xd66/0xe70
+ do_filp_open+0xe3/0x170
+ do_sys_openat2+0x357/0x4a0
+ do_sys_open+0x87/0xd0
+ do_syscall_64+0x34/0x80
 
-In fact, without this fix, we'll start getting failure in one of the
-existing test_verifier test cases:
-
-  #906/p precise: cross frame pruning FAIL
-  Unexpected success to load!
-  verification time 48 usec
-  stack depth 0+0
-  processed 26 insns (limit 1000000) max_states_per_insn 3 total_states 17 peak_states 17 mark_read 8
-
-This patch adds precision propagation across all frames.
-
-Fixes: a3ce685dd01a ("bpf: fix precision tracking")
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/r/20221104163649.121784-3-andrii@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
+Link: https://lore.kernel.org/r/20221121110044.3115686-1-zhongbaisong@huawei.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 71 ++++++++++++++++++++++++-------------------
- 1 file changed, 39 insertions(+), 32 deletions(-)
+ include/sound/pcm.h | 36 ++++++++++++++++++------------------
+ 1 file changed, 18 insertions(+), 18 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 034eb3030ce9..232c93357b90 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2027,7 +2027,7 @@ static void mark_all_scalars_precise(struct bpf_verifier_env *env,
- 		}
- }
+diff --git a/include/sound/pcm.h b/include/sound/pcm.h
+index 5ffc2efedd9f..6554a9f71c62 100644
+--- a/include/sound/pcm.h
++++ b/include/sound/pcm.h
+@@ -106,24 +106,24 @@ struct snd_pcm_ops {
+ #define SNDRV_PCM_POS_XRUN		((snd_pcm_uframes_t)-1)
  
--static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
-+static int __mark_chain_precision(struct bpf_verifier_env *env, int frame, int regno,
- 				  int spi)
- {
- 	struct bpf_verifier_state *st = env->cur_state;
-@@ -2044,7 +2044,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
- 	if (!env->bpf_capable)
- 		return 0;
- 
--	func = st->frame[st->curframe];
-+	func = st->frame[frame];
- 	if (regno >= 0) {
- 		reg = &func->regs[regno];
- 		if (reg->type != SCALAR_VALUE) {
-@@ -2125,7 +2125,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
- 			break;
- 
- 		new_marks = false;
--		func = st->frame[st->curframe];
-+		func = st->frame[frame];
- 		bitmap_from_u64(mask, reg_mask);
- 		for_each_set_bit(i, mask, 32) {
- 			reg = &func->regs[i];
-@@ -2191,12 +2191,17 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
- 
- static int mark_chain_precision(struct bpf_verifier_env *env, int regno)
- {
--	return __mark_chain_precision(env, regno, -1);
-+	return __mark_chain_precision(env, env->cur_state->curframe, regno, -1);
- }
- 
--static int mark_chain_precision_stack(struct bpf_verifier_env *env, int spi)
-+static int mark_chain_precision_frame(struct bpf_verifier_env *env, int frame, int regno)
- {
--	return __mark_chain_precision(env, -1, spi);
-+	return __mark_chain_precision(env, frame, regno, -1);
-+}
+ /* If you change this don't forget to change rates[] table in pcm_native.c */
+-#define SNDRV_PCM_RATE_5512		(1<<0)		/* 5512Hz */
+-#define SNDRV_PCM_RATE_8000		(1<<1)		/* 8000Hz */
+-#define SNDRV_PCM_RATE_11025		(1<<2)		/* 11025Hz */
+-#define SNDRV_PCM_RATE_16000		(1<<3)		/* 16000Hz */
+-#define SNDRV_PCM_RATE_22050		(1<<4)		/* 22050Hz */
+-#define SNDRV_PCM_RATE_32000		(1<<5)		/* 32000Hz */
+-#define SNDRV_PCM_RATE_44100		(1<<6)		/* 44100Hz */
+-#define SNDRV_PCM_RATE_48000		(1<<7)		/* 48000Hz */
+-#define SNDRV_PCM_RATE_64000		(1<<8)		/* 64000Hz */
+-#define SNDRV_PCM_RATE_88200		(1<<9)		/* 88200Hz */
+-#define SNDRV_PCM_RATE_96000		(1<<10)		/* 96000Hz */
+-#define SNDRV_PCM_RATE_176400		(1<<11)		/* 176400Hz */
+-#define SNDRV_PCM_RATE_192000		(1<<12)		/* 192000Hz */
+-#define SNDRV_PCM_RATE_352800		(1<<13)		/* 352800Hz */
+-#define SNDRV_PCM_RATE_384000		(1<<14)		/* 384000Hz */
+-
+-#define SNDRV_PCM_RATE_CONTINUOUS	(1<<30)		/* continuous range */
+-#define SNDRV_PCM_RATE_KNOT		(1<<31)		/* supports more non-continuos rates */
++#define SNDRV_PCM_RATE_5512		(1U<<0)		/* 5512Hz */
++#define SNDRV_PCM_RATE_8000		(1U<<1)		/* 8000Hz */
++#define SNDRV_PCM_RATE_11025		(1U<<2)		/* 11025Hz */
++#define SNDRV_PCM_RATE_16000		(1U<<3)		/* 16000Hz */
++#define SNDRV_PCM_RATE_22050		(1U<<4)		/* 22050Hz */
++#define SNDRV_PCM_RATE_32000		(1U<<5)		/* 32000Hz */
++#define SNDRV_PCM_RATE_44100		(1U<<6)		/* 44100Hz */
++#define SNDRV_PCM_RATE_48000		(1U<<7)		/* 48000Hz */
++#define SNDRV_PCM_RATE_64000		(1U<<8)		/* 64000Hz */
++#define SNDRV_PCM_RATE_88200		(1U<<9)		/* 88200Hz */
++#define SNDRV_PCM_RATE_96000		(1U<<10)	/* 96000Hz */
++#define SNDRV_PCM_RATE_176400		(1U<<11)	/* 176400Hz */
++#define SNDRV_PCM_RATE_192000		(1U<<12)	/* 192000Hz */
++#define SNDRV_PCM_RATE_352800		(1U<<13)	/* 352800Hz */
++#define SNDRV_PCM_RATE_384000		(1U<<14)	/* 384000Hz */
 +
-+static int mark_chain_precision_stack_frame(struct bpf_verifier_env *env, int frame, int spi)
-+{
-+	return __mark_chain_precision(env, frame, -1, spi);
- }
++#define SNDRV_PCM_RATE_CONTINUOUS	(1U<<30)	/* continuous range */
++#define SNDRV_PCM_RATE_KNOT		(1U<<31)	/* supports more non-continuos rates */
  
- static bool is_spillable_regtype(enum bpf_reg_type type)
-@@ -9483,34 +9488,36 @@ static int propagate_precision(struct bpf_verifier_env *env,
- {
- 	struct bpf_reg_state *state_reg;
- 	struct bpf_func_state *state;
--	int i, err = 0;
-+	int i, err = 0, fr;
- 
--	state = old->frame[old->curframe];
--	state_reg = state->regs;
--	for (i = 0; i < BPF_REG_FP; i++, state_reg++) {
--		if (state_reg->type != SCALAR_VALUE ||
--		    !state_reg->precise)
--			continue;
--		if (env->log.level & BPF_LOG_LEVEL2)
--			verbose(env, "propagating r%d\n", i);
--		err = mark_chain_precision(env, i);
--		if (err < 0)
--			return err;
--	}
-+	for (fr = old->curframe; fr >= 0; fr--) {
-+		state = old->frame[fr];
-+		state_reg = state->regs;
-+		for (i = 0; i < BPF_REG_FP; i++, state_reg++) {
-+			if (state_reg->type != SCALAR_VALUE ||
-+			    !state_reg->precise)
-+				continue;
-+			if (env->log.level & BPF_LOG_LEVEL2)
-+				verbose(env, "frame %d: propagating r%d\n", i, fr);
-+			err = mark_chain_precision_frame(env, fr, i);
-+			if (err < 0)
-+				return err;
-+		}
- 
--	for (i = 0; i < state->allocated_stack / BPF_REG_SIZE; i++) {
--		if (!is_spilled_reg(&state->stack[i]))
--			continue;
--		state_reg = &state->stack[i].spilled_ptr;
--		if (state_reg->type != SCALAR_VALUE ||
--		    !state_reg->precise)
--			continue;
--		if (env->log.level & BPF_LOG_LEVEL2)
--			verbose(env, "propagating fp%d\n",
--				(-i - 1) * BPF_REG_SIZE);
--		err = mark_chain_precision_stack(env, i);
--		if (err < 0)
--			return err;
-+		for (i = 0; i < state->allocated_stack / BPF_REG_SIZE; i++) {
-+			if (!is_spilled_reg(&state->stack[i]))
-+				continue;
-+			state_reg = &state->stack[i].spilled_ptr;
-+			if (state_reg->type != SCALAR_VALUE ||
-+			    !state_reg->precise)
-+				continue;
-+			if (env->log.level & BPF_LOG_LEVEL2)
-+				verbose(env, "frame %d: propagating fp%d\n",
-+					(-i - 1) * BPF_REG_SIZE, fr);
-+			err = mark_chain_precision_stack_frame(env, fr, i);
-+			if (err < 0)
-+				return err;
-+		}
- 	}
- 	return 0;
- }
+ #define SNDRV_PCM_RATE_8000_44100	(SNDRV_PCM_RATE_8000|SNDRV_PCM_RATE_11025|\
+ 					 SNDRV_PCM_RATE_16000|SNDRV_PCM_RATE_22050|\
 -- 
 2.35.1
 
