@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1284D749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:06:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82E2AC433D2;
-	Thu, 12 Jan 2023 14:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECDDD749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:06:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73CA6C433EF;
+	Thu, 12 Jan 2023 14:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532408;
-	bh=YiyV8zWoNEHoS6O2/wYwT2h5G7m0Wj9gvhJbJaeFG2Q=;
+	s=korg; t=1673532411;
+	bh=rYfHoQsCCnqHiLGNcf1GRnnlLKNn6No29tz0Oxkw/Vs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1fMM/i+MNeNXr5+8WmSlxikbQ004WMrQAk+Js2eRWlqxu1hzF5e9O0ot/ODf019zP
-	 dRXSJ0QPIIU5Hr3HLn4e6qOEyWcFEhh75Ygo6ON1uHFYR7v7Y2Mm61MLoYVslw7nMu
-	 oQnhD/WSGBrH7oHkGdRuDhW23WXWLXxnkv8AUVTQ=
+	b=YhuFb/k9oW0gp2VBJeNeKy9j8QCPRUSgnAqowoNnVKcch3cSdrHCObCOSSRfLcB6r
+	 KVKeiWTkHdCoONsqX3Y340gUN5RLVD1xduTByZJ/WQdF9/wMO5IVqrTT6pIw+A4+78
+	 VCWK3gZuqS8DtjTSnliGl98JfOW11iGRh/G6aAGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	GUO Zihua <guozihua@huawei.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
 	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 153/783] integrity: Fix memory leakage in keyring allocation error path
-Date: Thu, 12 Jan 2023 14:47:49 +0100
-Message-Id: <20230112135531.442734600@linuxfoundation.org>
+Subject: [PATCH 5.10 154/783] ima: Fix misuse of dereference of pointer in template_desc_init_fields()
+Date: Thu, 12 Jan 2023 14:47:50 +0100
+Message-Id: <20230112135531.485558519@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,45 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: GUO Zihua <guozihua@huawei.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 39419ef7af0916cc3620ecf1ed42d29659109bf3 ]
+[ Upstream commit 25369175ce84813dd99d6604e710dc2491f68523 ]
 
-Key restriction is allocated in integrity_init_keyring(). However, if
-keyring allocation failed, it is not freed, causing memory leaks.
+The input parameter @fields is type of struct ima_template_field ***, so
+when allocates array memory for @fields, the size of element should be
+sizeof(**field) instead of sizeof(*field).
 
-Fixes: 2b6aa412ff23 ("KEYS: Use structure to capture key restriction function and data")
-Signed-off-by: GUO Zihua <guozihua@huawei.com>
+Actually the original code would not cause any runtime error, but it's
+better to make it logically right.
+
+Fixes: adf53a778a0a ("ima: new templates management mechanism")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
 Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/digsig.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ security/integrity/ima/ima_template.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/security/integrity/digsig.c b/security/integrity/digsig.c
-index 0f518dcfde05..de442af7b336 100644
---- a/security/integrity/digsig.c
-+++ b/security/integrity/digsig.c
-@@ -120,6 +120,7 @@ int __init integrity_init_keyring(const unsigned int id)
- {
- 	struct key_restriction *restriction;
- 	key_perm_t perm;
-+	int ret;
+diff --git a/security/integrity/ima/ima_template.c b/security/integrity/ima/ima_template.c
+index f64c01d53e96..e053c741997b 100644
+--- a/security/integrity/ima/ima_template.c
++++ b/security/integrity/ima/ima_template.c
+@@ -220,11 +220,11 @@ int template_desc_init_fields(const char *template_fmt,
+ 	}
  
- 	perm = (KEY_POS_ALL & ~KEY_POS_SETATTR) | KEY_USR_VIEW
- 		| KEY_USR_READ | KEY_USR_SEARCH;
-@@ -140,7 +141,10 @@ int __init integrity_init_keyring(const unsigned int id)
- 	perm |= KEY_USR_WRITE;
+ 	if (fields && num_fields) {
+-		*fields = kmalloc_array(i, sizeof(*fields), GFP_KERNEL);
++		*fields = kmalloc_array(i, sizeof(**fields), GFP_KERNEL);
+ 		if (*fields == NULL)
+ 			return -ENOMEM;
  
- out:
--	return __integrity_init_keyring(id, perm, restriction);
-+	ret = __integrity_init_keyring(id, perm, restriction);
-+	if (ret)
-+		kfree(restriction);
-+	return ret;
- }
+-		memcpy(*fields, found_fields, i * sizeof(*fields));
++		memcpy(*fields, found_fields, i * sizeof(**fields));
+ 		*num_fields = i;
+ 	}
  
- int __init integrity_add_key(const unsigned int id, const void *data,
 -- 
 2.35.1
 
