@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC10749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:08:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CEE5C433EF;
-	Thu, 12 Jan 2023 14:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5B2E749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:08:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19AC9C433EF;
+	Thu, 12 Jan 2023 14:08:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532494;
-	bh=/ktH43AALJeYfa4XMHiFVmunaH4Ur4pLwRBUZ/3JUiw=;
+	s=korg; t=1673532500;
+	bh=gihJot3oJNgntvCgukCheTf67coQHkcH43exqMvu04s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wkVSOTXYlGyxIdwgYu0mV+erUclIhvrHJ9sc7G5fO5kkmOJbJShpCweG4AV7oioWR
-	 afNI1ygf4o6Atof62SZZs2xaiPfCGsyJ99uG3D2hAXNESsXHbn3Ne6kOuOW2yNO0Cx
-	 UGpkdSDfUS7+G+fXvqkb3fnxFyYNd+Nslz7wXjoU=
+	b=zgZ4jxuKocInopZztecRZHP6Hbz8EKv+aHKk8E6NfYhC9UvqDH+KPlzEeFSy3Kk29
+	 QBOTX1iJ7Zwzbn399AgNeeDjTs3PPS+yzhjHhcj2vvHxZpG8EmWvjkU+ol3oiYfLdi
+	 +3k41xiOHllZsAVvPEwC+VgC/KPw2TikbNGIGwGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Zekun <zhangzekun11@huawei.com>,
-	Thierry Reding <treding@nvidia.com>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 181/783] drm/tegra: Add missing clk_disable_unprepare() in tegra_dc_probe()
-Date: Thu, 12 Jan 2023 14:48:17 +0100
-Message-Id: <20230112135532.709277075@linuxfoundation.org>
+Subject: [PATCH 5.10 183/783] ASoC: mediatek: mtk-btcvsd: Add checks for write and read of mtk_btcvsd_snd
+Date: Thu, 12 Jan 2023 14:48:19 +0100
+Message-Id: <20230112135532.807142169@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,37 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Zekun <zhangzekun11@huawei.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 7ad4384d53c67672a8720cdc2ef638d7d1710ab8 ]
+[ Upstream commit d067b3378a78c9c3048ac535e31c171b6f5b5846 ]
 
-Add the missing clk_disable_unprepare() before return from
-tegra_dc_probe() in the error handling path.
+As the mtk_btcvsd_snd_write and mtk_btcvsd_snd_read may return error,
+it should be better to catch the exception.
 
-Fixes: f68ba6912bd2 ("drm/tegra: dc: Link DC1 to DC0 on Tegra20")
-Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Fixes: 4bd8597dc36c ("ASoC: mediatek: add btcvsd driver")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Link: https://lore.kernel.org/r/20221116030750.40500-1-jiasheng@iscas.ac.cn
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/tegra/dc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/mediatek/common/mtk-btcvsd.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/tegra/dc.c b/drivers/gpu/drm/tegra/dc.c
-index ceb86338c003..958d12da902d 100644
---- a/drivers/gpu/drm/tegra/dc.c
-+++ b/drivers/gpu/drm/tegra/dc.c
-@@ -2564,8 +2564,10 @@ static int tegra_dc_probe(struct platform_device *pdev)
- 	usleep_range(2000, 4000);
+diff --git a/sound/soc/mediatek/common/mtk-btcvsd.c b/sound/soc/mediatek/common/mtk-btcvsd.c
+index 86e982e3209e..e1f57b0dedd0 100644
+--- a/sound/soc/mediatek/common/mtk-btcvsd.c
++++ b/sound/soc/mediatek/common/mtk-btcvsd.c
+@@ -1038,11 +1038,9 @@ static int mtk_pcm_btcvsd_copy(struct snd_soc_component *component,
+ 	struct mtk_btcvsd_snd *bt = snd_soc_component_get_drvdata(component);
  
- 	err = reset_control_assert(dc->rst);
--	if (err < 0)
-+	if (err < 0) {
-+		clk_disable_unprepare(dc->clk);
- 		return err;
-+	}
+ 	if (substream->stream == SNDRV_PCM_STREAM_PLAYBACK)
+-		mtk_btcvsd_snd_write(bt, buf, count);
++		return mtk_btcvsd_snd_write(bt, buf, count);
+ 	else
+-		mtk_btcvsd_snd_read(bt, buf, count);
+-
+-	return 0;
++		return mtk_btcvsd_snd_read(bt, buf, count);
+ }
  
- 	usleep_range(2000, 4000);
- 
+ /* kcontrol */
 -- 
 2.35.1
 
