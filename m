@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8120D79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:19:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8D71C433EF;
-	Thu, 12 Jan 2023 14:19:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 851CC79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:19:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EABF1C433D2;
+	Thu, 12 Jan 2023 14:19:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533170;
-	bh=HRL0szz7m3tX6TfUqS2i3vmZRRETeIWr52yGzkEUzXg=;
+	s=korg; t=1673533173;
+	bh=EZxh70upKmVdfl0+AlR0i4wB+kJ8+6/XUEIDBeWQNOA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k9MCoZkFN4IHp/MgRhi0KnkjtAxSyfLudCj0j2ASfVT/pn6angJ6fTG6uwolCr5fm
-	 SBHNExp+OX3mNJhxhnC6PgK5G/cvrvMP8bBToVnTY8/0SBfXRUR7txxXpKPzq9ZcyX
-	 Ei+ApWubzX+D9R+vhAHUwsfUTLe2BR45a0WX/XKw=
+	b=b0AnNa+1vae7ZcStKtrDd8XGgtWyuxwgr3sM2GjeU808Jj9K1apcVONyFgH7riWHO
+	 cJ+w8T+QqHMQZ4wgpwCn/VXBdT16OUev2BKUAmrZXZl3OOYx1phOxMwtnOij8PeM4Y
+	 mamX4XySRuTcl9CrC+hG5d4O+chj44SUelhd4YbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Marcus Folkesson <marcus.folkesson@gmail.com>,
+	Jacky Bai <ping.bai@nxp.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 392/783] samples: vfio-mdev: Fix missing pci_disable_device() in mdpy_fb_probe()
-Date: Thu, 12 Jan 2023 14:51:48 +0100
-Message-Id: <20230112135542.483608171@linuxfoundation.org>
+Subject: [PATCH 5.10 393/783] thermal/drivers/imx8mm_thermal: Validate temperature range
+Date: Thu, 12 Jan 2023 14:51:49 +0100
+Message-Id: <20230112135542.533891371@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,56 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Marcus Folkesson <marcus.folkesson@gmail.com>
 
-[ Upstream commit d1f0f50fbbbbca1e3e8157e51934613bf88f6d44 ]
+[ Upstream commit d37edc7370273306d8747097fafa62436c1cfe16 ]
 
-Add missing pci_disable_device() in fail path of mdpy_fb_probe().
-Besides, fix missing release functions in mdpy_fb_remove().
+Check against the upper temperature limit (125 degrees C) before
+consider the temperature valid.
 
-Fixes: cacade1946a4 ("sample: vfio mdev display - guest driver")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Link: https://lore.kernel.org/r/20221208013341.3999-1-shangxiaojing@huawei.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Fixes: 5eed800a6811 ("thermal: imx8mm: Add support for i.MX8MM thermal monitoring unit")
+Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
+Reviewed-by: Jacky Bai <ping.bai@nxp.com>
+Link: https://lore.kernel.org/r/20221014073507.1594844-1-marcus.folkesson@gmail.com
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/vfio-mdev/mdpy-fb.c | 8 +++++++-
+ drivers/thermal/imx8mm_thermal.c | 8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/samples/vfio-mdev/mdpy-fb.c b/samples/vfio-mdev/mdpy-fb.c
-index 9ec93d90e8a5..4eb7aa11cfbb 100644
---- a/samples/vfio-mdev/mdpy-fb.c
-+++ b/samples/vfio-mdev/mdpy-fb.c
-@@ -109,7 +109,7 @@ static int mdpy_fb_probe(struct pci_dev *pdev,
+diff --git a/drivers/thermal/imx8mm_thermal.c b/drivers/thermal/imx8mm_thermal.c
+index 0f4cabd2a8c6..6be16e0598b6 100644
+--- a/drivers/thermal/imx8mm_thermal.c
++++ b/drivers/thermal/imx8mm_thermal.c
+@@ -65,8 +65,14 @@ static int imx8mm_tmu_get_temp(void *data, int *temp)
+ 	u32 val;
  
- 	ret = pci_request_regions(pdev, "mdpy-fb");
- 	if (ret < 0)
--		return ret;
-+		goto err_disable_dev;
- 
- 	pci_read_config_dword(pdev, MDPY_FORMAT_OFFSET, &format);
- 	pci_read_config_dword(pdev, MDPY_WIDTH_OFFSET,	&width);
-@@ -191,6 +191,9 @@ static int mdpy_fb_probe(struct pci_dev *pdev,
- err_release_regions:
- 	pci_release_regions(pdev);
- 
-+err_disable_dev:
-+	pci_disable_device(pdev);
+ 	val = readl_relaxed(tmu->base + TRITSR) & TRITSR_TEMP0_VAL_MASK;
 +
- 	return ret;
- }
++	/*
++	 * Do not validate against the V bit (bit 31) due to errata
++	 * ERR051272: TMU: Bit 31 of registers TMU_TSCR/TMU_TRITSR/TMU_TRATSR invalid
++	 */
++
+ 	*temp = val * 1000;
+-	if (*temp < VER1_TEMP_LOW_LIMIT)
++	if (*temp < VER1_TEMP_LOW_LIMIT || *temp > VER2_TEMP_HIGH_LIMIT)
+ 		return -EAGAIN;
  
-@@ -199,7 +202,10 @@ static void mdpy_fb_remove(struct pci_dev *pdev)
- 	struct fb_info *info = pci_get_drvdata(pdev);
- 
- 	unregister_framebuffer(info);
-+	iounmap(info->screen_base);
- 	framebuffer_release(info);
-+	pci_release_regions(pdev);
-+	pci_disable_device(pdev);
- }
- 
- static struct pci_device_id mdpy_fb_pci_table[] = {
+ 	return 0;
 -- 
 2.35.1
 
