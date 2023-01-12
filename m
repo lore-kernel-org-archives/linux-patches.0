@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0980379C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:18:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 811EBC433EF;
-	Thu, 12 Jan 2023 14:18:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0D279C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:18:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9134FC433D2;
+	Thu, 12 Jan 2023 14:18:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533098;
-	bh=3umGfoUesU0Bpc2kWu35atFs2Nf2q8EV/o6o+K/LdK0=;
+	s=korg; t=1673533102;
+	bh=u2G7KsNvx1t4p0w3cv/P1PjhwpUFctrHwEigoF/gCIw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p1nuZ3dDFTj5YyCPuQoOP7V96/MH7p4MLdusV2+x1RhSdym2i7iv5y0x5P19NTtZb
-	 iIHDeQV+nqFguRHjg5qsN+8SkHMWM9SDgfZaFqQnI4HZJBe1rjy6Qo/yVMMR9Tijf1
-	 575378J5IwKkU7ohJiX0NNgEhAuVcTAq2q5/VFgU=
+	b=AnUEVb+G5xY+oTuuHRbB/K1iOJS0Bu7jYReR9iIyYhaKZJgLmhml1BrdLIbPQgmJb
+	 nj3xid0eY3E0xKynqSRbp/Z+D77JogsSoiNPTb5u+XW60s1Je3yHJhzvzcqR+vIYHs
+	 8mmviQeFStrjOFXgkggIipCFZuu3FN9xV9NBN7gg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 339/783] hwrng: geode - Fix PCI device refcount leak
-Date: Thu, 12 Jan 2023 14:50:55 +0100
-Message-Id: <20230112135540.026395439@linuxfoundation.org>
+Subject: [PATCH 5.10 340/783] IB/IPoIB: Fix queue count inconsistency for PKEY child interfaces
+Date: Thu, 12 Jan 2023 14:50:56 +0100
+Message-Id: <20230112135540.076291764@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,113 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 9f6ec8dc574efb7f4f3d7ee9cd59ae307e78f445 ]
+[ Upstream commit dbc94a0fb81771a38733c0e8f2ea8c4fa6934dc1 ]
 
-for_each_pci_dev() is implemented by pci_get_device(). The comment of
-pci_get_device() says that it will increase the reference count for the
-returned pci_dev and also decrease the reference count for the input
-pci_dev @from if it is not NULL.
+There are 2 ways to create IPoIB PKEY child interfaces:
+1) Writing a PKEY to /sys/class/net/<ib parent interface>/create_child.
+2) Using netlink with iproute.
 
-If we break for_each_pci_dev() loop with pdev not NULL, we need to call
-pci_dev_put() to decrease the reference count. We add a new struct
-'amd_geode_priv' to record pointer of the pci_dev and membase, and then
-add missing pci_dev_put() for the normal and error path.
+While with sysfs the child interface has the same number of tx and
+rx queues as the parent, with netlink there will always be 1 tx
+and 1 rx queue for the child interface. That's because the
+get_num_tx/rx_queues() netlink ops are missing and the default value
+of 1 is taken for the number of queues (in rtnl_create_link()).
 
-Fixes: ef5d862734b8 ("[PATCH] Add Geode HW RNG driver")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+This change adds the get_num_tx/rx_queues() ops which allows for
+interfaces with multiple queues to be created over netlink. This
+constant only represents the max number of tx and rx queues on that
+net device.
+
+Fixes: 9baa0b036410 ("IB/ipoib: Add rtnl_link_ops support")
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Link: https://lore.kernel.org/r/f4a42c8aa43c02d5ae5559a60c3e5e0f18c82531.1670485816.git.leonro@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/geode-rng.c | 36 +++++++++++++++++++++++-------
- 1 file changed, 28 insertions(+), 8 deletions(-)
+ drivers/infiniband/ulp/ipoib/ipoib_netlink.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/char/hw_random/geode-rng.c b/drivers/char/hw_random/geode-rng.c
-index e1d421a36a13..207272979f23 100644
---- a/drivers/char/hw_random/geode-rng.c
-+++ b/drivers/char/hw_random/geode-rng.c
-@@ -51,6 +51,10 @@ static const struct pci_device_id pci_tbl[] = {
+diff --git a/drivers/infiniband/ulp/ipoib/ipoib_netlink.c b/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
+index 5b05cf3837da..28e9b70844e4 100644
+--- a/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
++++ b/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
+@@ -42,6 +42,11 @@ static const struct nla_policy ipoib_policy[IFLA_IPOIB_MAX + 1] = {
+ 	[IFLA_IPOIB_UMCAST]	= { .type = NLA_U16 },
  };
- MODULE_DEVICE_TABLE(pci, pci_tbl);
  
-+struct amd_geode_priv {
-+	struct pci_dev *pcidev;
-+	void __iomem *membase;
-+};
- 
- static int geode_rng_data_read(struct hwrng *rng, u32 *data)
- {
-@@ -90,6 +94,7 @@ static int __init mod_init(void)
- 	const struct pci_device_id *ent;
- 	void __iomem *mem;
- 	unsigned long rng_base;
-+	struct amd_geode_priv *priv;
- 
- 	for_each_pci_dev(pdev) {
- 		ent = pci_match_id(pci_tbl, pdev);
-@@ -97,17 +102,26 @@ static int __init mod_init(void)
- 			goto found;
- 	}
- 	/* Device not found. */
--	goto out;
-+	return err;
- 
- found:
-+	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
-+	if (!priv) {
-+		err = -ENOMEM;
-+		goto put_dev;
-+	}
++static unsigned int ipoib_get_max_num_queues(void)
++{
++	return min_t(unsigned int, num_possible_cpus(), 128);
++}
 +
- 	rng_base = pci_resource_start(pdev, 0);
- 	if (rng_base == 0)
--		goto out;
-+		goto free_priv;
- 	err = -ENOMEM;
- 	mem = ioremap(rng_base, 0x58);
- 	if (!mem)
--		goto out;
--	geode_rng.priv = (unsigned long)mem;
-+		goto free_priv;
-+
-+	geode_rng.priv = (unsigned long)priv;
-+	priv->membase = mem;
-+	priv->pcidev = pdev;
- 
- 	pr_info("AMD Geode RNG detected\n");
- 	err = hwrng_register(&geode_rng);
-@@ -116,20 +130,26 @@ static int __init mod_init(void)
- 		       err);
- 		goto err_unmap;
- 	}
--out:
- 	return err;
- 
- err_unmap:
- 	iounmap(mem);
--	goto out;
-+free_priv:
-+	kfree(priv);
-+put_dev:
-+	pci_dev_put(pdev);
-+	return err;
- }
- 
- static void __exit mod_exit(void)
+ static int ipoib_fill_info(struct sk_buff *skb, const struct net_device *dev)
  {
--	void __iomem *mem = (void __iomem *)geode_rng.priv;
-+	struct amd_geode_priv *priv;
+ 	struct ipoib_dev_priv *priv = ipoib_priv(dev);
+@@ -173,6 +178,8 @@ static struct rtnl_link_ops ipoib_link_ops __read_mostly = {
+ 	.changelink	= ipoib_changelink,
+ 	.get_size	= ipoib_get_size,
+ 	.fill_info	= ipoib_fill_info,
++	.get_num_rx_queues = ipoib_get_max_num_queues,
++	.get_num_tx_queues = ipoib_get_max_num_queues,
+ };
  
-+	priv = (struct amd_geode_priv *)geode_rng.priv;
- 	hwrng_unregister(&geode_rng);
--	iounmap(mem);
-+	iounmap(priv->membase);
-+	pci_dev_put(priv->pcidev);
-+	kfree(priv);
- }
- 
- module_init(mod_init);
+ struct rtnl_link_ops *ipoib_get_link_ops(void)
 -- 
 2.35.1
 
