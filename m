@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7692749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:12:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15A04C433F0;
-	Thu, 12 Jan 2023 14:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB70E749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:12:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D275C433EF;
+	Thu, 12 Jan 2023 14:12:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532720;
-	bh=PNYxQ4gbJXH00k7LcULfpP5dn23lqv6yiGWcguIefYY=;
+	s=korg; t=1673532723;
+	bh=9pWoQPo7Jzw0LxwPuyq/qcaWqiPzFGPqVIoqfjHoMwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NRp1Qpmo94VAZBOXeSYfe1Pa5dxfyH7PzWxgHgbUAtuMY9vZrwHgs4jJUgAYDQgI8
-	 RQBp35o4DkBhplTm+R9cIFmrSgmQ49mtx1602qRimRyY3Ifr4jToyHDD4tygfooatM
-	 dgkraKsd3hfcG7jMNgF+M776NhvtlpyvybVoJAsM=
+	b=MjIUOVconAZS5JQ5omCl5VzhJFuataauW75ssOSgYhfB0/KiqJi/Gtk4W9b1oz2eY
+	 svTsJFBCxB+8wuMcMcdn1kK/FlT6Hb7E2oIeAjshbop3qVUkmvai9F/t3Ul7meOXjx
+	 br9gPkewFzEPUWIulppWkhqxyhOX5a6aPe5vqeOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liang He <windhl@126.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Li Zetao <lizetao1@huawei.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 237/783] media: c8sectpfe: Add of_node_put() when breaking out of loop
-Date: Thu, 12 Jan 2023 14:49:13 +0100
-Message-Id: <20230112135535.355704799@linuxfoundation.org>
+Subject: [PATCH 5.10 255/783] net: farsync: Fix kmemleak when rmmods farsync
+Date: Thu, 12 Jan 2023 14:49:31 +0100
+Message-Id: <20230112135536.218729621@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,34 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liang He <windhl@126.com>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit 63ff05a1ad242a5a0f897921c87b70d601bda59c ]
+[ Upstream commit 2f623aaf9f31de968dea6169849706a2f9be444c ]
 
-In configure_channels(), we should call of_node_put() when breaking
-out of for_each_child_of_node() which will automatically increase
-and decrease the refcount.
+There are two memory leaks reported by kmemleak:
 
-Fixes: c5f5d0f99794 ("[media] c8sectpfe: STiH407/10 Linux DVB demux support")
-Signed-off-by: Liang He <windhl@126.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+  unreferenced object 0xffff888114b20200 (size 128):
+    comm "modprobe", pid 4846, jiffies 4295146524 (age 401.345s)
+    hex dump (first 32 bytes):
+      e0 62 57 09 81 88 ff ff e0 62 57 09 81 88 ff ff  .bW......bW.....
+      01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    backtrace:
+      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
+      [<ffffffff83d35c78>] __hw_addr_add_ex+0x198/0x6c0
+      [<ffffffff83d3989d>] dev_addr_init+0x13d/0x230
+      [<ffffffff83d1063d>] alloc_netdev_mqs+0x10d/0xe50
+      [<ffffffff82b4a06e>] alloc_hdlcdev+0x2e/0x80
+      [<ffffffffa016a741>] fst_add_one+0x601/0x10e0 [farsync]
+      ...
+
+  unreferenced object 0xffff88810b85b000 (size 1024):
+    comm "modprobe", pid 4846, jiffies 4295146523 (age 401.346s)
+    hex dump (first 32 bytes):
+      00 00 b0 02 00 c9 ff ff 00 70 0a 00 00 c9 ff ff  .........p......
+      00 00 00 f2 00 00 00 f3 0a 00 00 00 02 00 00 00  ................
+    backtrace:
+      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
+      [<ffffffffa016a294>] fst_add_one+0x154/0x10e0 [farsync]
+      [<ffffffff82060e83>] local_pci_probe+0xd3/0x170
+      ...
+
+The root cause is traced to the netdev and fst_card_info are not freed
+when removes one fst in fst_remove_one(), which may trigger oom if
+repeated insmod and rmmod module.
+
+Fix it by adding free_netdev() and kfree() in fst_remove_one(), just as
+the operations on the error handling path in fst_add_one().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wan/farsync.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c b/drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c
-index dbe7788083a4..b7e0ec265b70 100644
---- a/drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c
-+++ b/drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c
-@@ -937,6 +937,7 @@ static int configure_channels(struct c8sectpfei *fei)
- 		if (ret) {
- 			dev_err(fei->dev,
- 				"configure_memdma_and_inputblock failed\n");
-+			of_node_put(child);
- 			goto err_unmap;
- 		}
- 		index++;
+diff --git a/drivers/net/wan/farsync.c b/drivers/net/wan/farsync.c
+index b50cf11d197d..36a6958b6a0b 100644
+--- a/drivers/net/wan/farsync.c
++++ b/drivers/net/wan/farsync.c
+@@ -2612,6 +2612,7 @@ fst_remove_one(struct pci_dev *pdev)
+ 	for (i = 0; i < card->nports; i++) {
+ 		struct net_device *dev = port_to_dev(&card->ports[i]);
+ 		unregister_hdlc_device(dev);
++		free_netdev(dev);
+ 	}
+ 
+ 	fst_disable_intr(card);
+@@ -2632,6 +2633,7 @@ fst_remove_one(struct pci_dev *pdev)
+ 				  card->tx_dma_handle_card);
+ 	}
+ 	fst_card_array[card->card_no] = NULL;
++	kfree(card);
+ }
+ 
+ static struct pci_driver fst_driver = {
 -- 
 2.35.1
 
