@@ -1,27 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8900749F
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:21:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46158C433D2;
-	Thu, 12 Jan 2023 14:21:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3847749F
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:21:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78B6C433D2;
+	Thu, 12 Jan 2023 14:21:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533289;
-	bh=50ow/X8mAdybbxLFGEt5Qy11Y+GlBtkQEH/rytZpPvk=;
+	s=korg; t=1673533292;
+	bh=MbBMdMGrAmv6pGDS1oCkTeeY7MKwixW/5O26uoTOoKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wzIkbfNlKjjWcvx23/ngAb+/vLBxRzcta5W5JJw9WaWrm9KzDlQ84BzTYoYua3uDx
-	 U1Pr9VLL9ZnevG6RneCn5Cl9PIOOIUoNl/DTdd1ntGjdBa14dC1kR4pJM8hDQpvSIh
-	 XZK0EkE2WXzOlTGFwRXVbcyOhwC/hL8LipojPaus=
+	b=v9icDpy7/PgYlyIe1Mx/eajRJ/LDIPCnGJOD/vab9Th0lBT+x3+cYzmnR4/N8mlsk
+	 oCQz+MqS2fJyxmEhDAfVFWZgoTT6xsqX+Dvw4hqPzNzjTURgxznUn2zWL9bjUyPGAq
+	 L6f8xWtcFDtWmb/3Qpl+qV/MjRbmRxaLlUKW1iwQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Leo Yan <leo.yan@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	bpf@vger.kernel.org,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 430/783] macintosh: fix possible memory leak in macio_add_one_device()
-Date: Thu, 12 Jan 2023 14:52:26 +0100
-Message-Id: <20230112135544.248875397@linuxfoundation.org>
+Subject: [PATCH 5.10 404/783] perf trace: Handle failure when trace point folder is missed
+Date: Thu, 12 Jan 2023 14:52:00 +0100
+Message-Id: <20230112135543.036012321@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,40 +43,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Leo Yan <leo.yan@linaro.org>
 
-[ Upstream commit 5ca86eae55a2f006e6c1edd2029b2cacb6979515 ]
+[ Upstream commit 03e9a5d8eb552a1bf692a9c8a5ecd50f4e428006 ]
 
-Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's
-bus_id string array"), the name of device is allocated dynamically. It
-needs to be freed when of_device_register() fails. Call put_device() to
-give up the reference that's taken in device_initialize(), so that it
-can be freed in kobject_cleanup() when the refcount hits 0.
+On Arm64 a case is perf tools fails to find the corresponding trace
+point folder for system calls listed in the table 'syscalltbl_arm64',
+e.g. the generated system call table contains "lookup_dcookie" but we
+cannot find out the matched trace point folder for it.
 
-macio device is freed in macio_release_dev(), so the kfree() can be
-removed.
+We need to figure out if there have any issue for the generated system
+call table, on the other hand, we need to handle the case when trace
+point folder is missed under sysfs, this patch sets the flag
+syscall::nonexistent as true and returns the error from
+trace__read_syscall_info().
 
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20221104032551.1075335-1-yangyingliang@huawei.com
+Another problem is for trace__syscall_info(), it returns two different
+values if a system call doesn't exist: at the first time calling
+trace__syscall_info() it returns NULL when the system call doesn't exist,
+later if call trace__syscall_info() again for the same missed system
+call, it returns pointer of syscall.  trace__syscall_info() checks the
+condition 'syscalls.table[id].name == NULL', but the name will be
+assigned in the first invoking even the system call is not found.
+
+So checking system call's name in trace__syscall_info() is not the right
+thing to do, this patch simply checks flag syscall::nonexistent to make
+decision if a system call exists or not, finally trace__syscall_info()
+returns the consistent result (NULL) if a system call doesn't existed.
+
+Fixes: b8b1033fcaa091d8 ("perf trace: Mark syscall ids that are not allocated to avoid unnecessary error messages")
+Signed-off-by: Leo Yan <leo.yan@linaro.org>
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: bpf@vger.kernel.org
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20221121075237.127706-4-leo.yan@linaro.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/macintosh/macio_asic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/perf/builtin-trace.c | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/macintosh/macio_asic.c b/drivers/macintosh/macio_asic.c
-index 49af60bdac92..7db2e23a5ac8 100644
---- a/drivers/macintosh/macio_asic.c
-+++ b/drivers/macintosh/macio_asic.c
-@@ -425,7 +425,7 @@ static struct macio_dev * macio_add_one_device(struct macio_chip *chip,
- 	if (of_device_register(&dev->ofdev) != 0) {
- 		printk(KERN_DEBUG"macio: device registration error for %s!\n",
- 		       dev_name(&dev->ofdev.dev));
--		kfree(dev);
-+		put_device(&dev->ofdev.dev);
- 		return NULL;
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index 1a7279687f25..8de0d0a740de 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -1794,13 +1794,19 @@ static int trace__read_syscall_info(struct trace *trace, int id)
+ 		sc->tp_format = trace_event__tp_format("syscalls", tp_name);
  	}
+ 
++	/*
++	 * Fails to read trace point format via sysfs node, so the trace point
++	 * doesn't exist.  Set the 'nonexistent' flag as true.
++	 */
++	if (IS_ERR(sc->tp_format)) {
++		sc->nonexistent = true;
++		return PTR_ERR(sc->tp_format);
++	}
++
+ 	if (syscall__alloc_arg_fmts(sc, IS_ERR(sc->tp_format) ?
+ 					RAW_SYSCALL_ARGS_NUM : sc->tp_format->format.nr_fields))
+ 		return -ENOMEM;
+ 
+-	if (IS_ERR(sc->tp_format))
+-		return PTR_ERR(sc->tp_format);
+-
+ 	sc->args = sc->tp_format->format.fields;
+ 	/*
+ 	 * We need to check and discard the first variable '__syscall_nr'
+@@ -2117,11 +2123,8 @@ static struct syscall *trace__syscall_info(struct trace *trace,
+ 	    (err = trace__read_syscall_info(trace, id)) != 0)
+ 		goto out_cant_read;
+ 
+-	if (trace->syscalls.table[id].name == NULL) {
+-		if (trace->syscalls.table[id].nonexistent)
+-			return NULL;
++	if (trace->syscalls.table && trace->syscalls.table[id].nonexistent)
+ 		goto out_cant_read;
+-	}
+ 
+ 	return &trace->syscalls.table[id];
  
 -- 
 2.35.1
