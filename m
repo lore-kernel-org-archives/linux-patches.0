@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F80E79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:24:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBA10C433F1;
-	Thu, 12 Jan 2023 14:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29A8A79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:24:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86A48C433F1;
+	Thu, 12 Jan 2023 14:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533493;
-	bh=gyt17c2sM9YeTb6QnjGkkTttJqE24TnHpZ9dG0bwRSo=;
+	s=korg; t=1673533496;
+	bh=4jd6ruqudRD1vVIEqiyuBp9dASpT91D9wpGVIY+UDhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kZGststxo2XlMYI6fFg7pndUiVP2C2O5w/7qz+s5Dy1rkgMR+AQU5J2rhGuMvqAyf
-	 ZQ1mXATAK1oTMxqu/iBAh+crPFIWo5NXODXJXbejN6XJm7Vh/Ld8v9ltxG2ukFF8gN
-	 t18taolWMgoOw3O1cA6BnhdWrnpyHUeiIiwYXdcU=
+	b=OSVMCbDUMWj6m5jyvjQi1tqXp/E5wqBtWRpt/w0iKSRe/+p1a1VvNHtc0K3BTVovz
+	 9IQIqvIVQuozE4vw9FleAiFP9VIckcqxQjo3Iqq2lhr155RQB6V4JX4UWFdg5/6RRt
+	 ACDTjtkh5PJ33GtdNAUXzi8w/z8/HcBJyK2gdW34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Doug Brown <doug@schmorgal.com>,
-	Christian Gmeiner <christian.gmeiner@gmail.com>,
-	Lucas Stach <l.stach@pengutronix.de>,
+	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 496/783] drm/etnaviv: add missing quirks for GC300
-Date: Thu, 12 Jan 2023 14:53:32 +0100
-Message-Id: <20230112135547.190084263@linuxfoundation.org>
+Subject: [PATCH 5.10 470/783] igc: Add checking for basetime less than zero
+Date: Thu, 12 Jan 2023 14:53:06 +0100
+Message-Id: <20230112135546.012627654@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,51 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Doug Brown <doug@schmorgal.com>
+From: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
 
-[ Upstream commit cc7d3fb446a91f24978a6aa59cbb578f92e22242 ]
+[ Upstream commit 3b61764fb49a6e147ac90d71dccdddc9d5508ba1 ]
 
-The GC300's features register doesn't specify that a 2D pipe is
-available, and like the GC600, its idle register reports zero bits where
-modules aren't present.
+Using the tc qdisc command, the user can set basetime to any value.
+Checking should be done on the driver's side to prevent registering
+basetime values that are less than zero.
 
-Signed-off-by: Doug Brown <doug@schmorgal.com>
-Reviewed-by: Christian Gmeiner <christian.gmeiner@gmail.com>
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Fixes: ec50a9d437f0 ("igc: Add support for taprio offloading")
+Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gpu.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_main.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-index 2520b7dad6ce..f3281d56b1d8 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gpu.c
-@@ -408,6 +408,12 @@ static void etnaviv_hw_identify(struct etnaviv_gpu *gpu)
- 	if (gpu->identity.model == chipModel_GC700)
- 		gpu->identity.features &= ~chipFeatures_FAST_CLEAR;
- 
-+	/* These models/revisions don't have the 2D pipe bit */
-+	if ((gpu->identity.model == chipModel_GC500 &&
-+	     gpu->identity.revision <= 2) ||
-+	    gpu->identity.model == chipModel_GC300)
-+		gpu->identity.features |= chipFeatures_PIPE_2D;
-+
- 	if ((gpu->identity.model == chipModel_GC500 &&
- 	     gpu->identity.revision < 2) ||
- 	    (gpu->identity.model == chipModel_GC300 &&
-@@ -441,8 +447,9 @@ static void etnaviv_hw_identify(struct etnaviv_gpu *gpu)
- 				gpu_read(gpu, VIVS_HI_CHIP_MINOR_FEATURE_5);
+diff --git a/drivers/net/ethernet/intel/igc/igc_main.c b/drivers/net/ethernet/intel/igc/igc_main.c
+index f4082ea7beaa..45069dc0ccc6 100644
+--- a/drivers/net/ethernet/intel/igc/igc_main.c
++++ b/drivers/net/ethernet/intel/igc/igc_main.c
+@@ -4912,6 +4912,9 @@ static int igc_save_qbv_schedule(struct igc_adapter *adapter,
+ 		return 0;
  	}
  
--	/* GC600 idle register reports zero bits where modules aren't present */
--	if (gpu->identity.model == chipModel_GC600)
-+	/* GC600/300 idle register reports zero bits where modules aren't present */
-+	if (gpu->identity.model == chipModel_GC600 ||
-+	    gpu->identity.model == chipModel_GC300)
- 		gpu->idle_mask = VIVS_HI_IDLE_STATE_TX |
- 				 VIVS_HI_IDLE_STATE_RA |
- 				 VIVS_HI_IDLE_STATE_SE |
++	if (qopt->base_time < 0)
++		return -ERANGE;
++
+ 	if (adapter->base_time)
+ 		return -EALREADY;
+ 
 -- 
 2.35.1
 
