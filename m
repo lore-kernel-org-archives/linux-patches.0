@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4491C749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:02:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0621C433D2;
-	Thu, 12 Jan 2023 14:02:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78C09746A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:02:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA8AC433EF;
+	Thu, 12 Jan 2023 14:02:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532178;
-	bh=dcolAIIE9qrALefgEd8yK+woU8B6YS6RxK50a9ee1Ho=;
+	s=korg; t=1673532175;
+	bh=MmZndOaLMjkcSk+jOPl1a193kr6TtQLfne/99ziUtwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P71fMMZv5ypmXST7htSbRj5URYJcgs0WFV5L2o2I+PeB9tWM6AaujEQ82mLBWF+/R
-	 nnOUFaKFvv0QtgDncUFx6qwNWVPEBmvkV/nRAQqFQ0ak6fyNTPVP5o3jsnvs+ztEzv
-	 GxUIFaolbzzLkmGZ7uTRIny01x6sI2nk6HkvneB0=
+	b=UfDeRMV0FkBFoWGkOdjjLIRJJmJme6i0sXarWN1mx+Enhvw4Em/BfkzaPLjyHJc5t
+	 tdTdYTjAuYZ0RRsH4ywoL/XYv16ChngREoFKUczHm4ldJ8GAwyl6CjuKfj+HaOnKRn
+	 DLqyxULoci/oucxITqCzdUdJFeaGboS1AlKxjshU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 070/783] cpufreq: amd_freq_sensitivity: Add missing pci_dev_put()
-Date: Thu, 12 Jan 2023 14:46:26 +0100
-Message-Id: <20230112135527.402366389@linuxfoundation.org>
+Subject: [PATCH 5.10 037/783] arm64: dts: armada-3720-turris-mox: Add missing interrupt for RTC
+Date: Thu, 12 Jan 2023 14:45:53 +0100
+Message-Id: <20230112135525.861372380@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,35 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Pali Rohár <pali@kernel.org>
 
-[ Upstream commit 91fda1f88c0968f1491ab150bb01690525af150a ]
+[ Upstream commit 21aad8ba615e9c39cee6c5d0b76726f63791926c ]
 
-pci_get_device() will increase the reference count for the returned
-pci_dev. We need to use pci_dev_put() to decrease the reference count
-after using pci_get_device(). Let's add it.
+MCP7940MT-I/MNY RTC has connected interrupt line to GPIO2_5.
 
-Fixes: 59a3b3a8db16 ("cpufreq: AMD: Ignore the check for ProcFeedback in ST/CZ")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 7109d817db2e ("arm64: dts: marvell: add DTS for Turris Mox")
+Signed-off-by: Pali Rohár <pali@kernel.org>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd_freq_sensitivity.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/cpufreq/amd_freq_sensitivity.c b/drivers/cpufreq/amd_freq_sensitivity.c
-index d0b10baf039a..151771129c7b 100644
---- a/drivers/cpufreq/amd_freq_sensitivity.c
-+++ b/drivers/cpufreq/amd_freq_sensitivity.c
-@@ -124,6 +124,8 @@ static int __init amd_freq_sensitivity_init(void)
- 	if (!pcidev) {
- 		if (!boot_cpu_has(X86_FEATURE_PROC_FEEDBACK))
- 			return -ENODEV;
-+	} else {
-+		pci_dev_put(pcidev);
- 	}
+diff --git a/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts b/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts
+index 00e5dbf4b823..eea8d23683dc 100644
+--- a/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts
++++ b/arch/arm64/boot/dts/marvell/armada-3720-turris-mox.dts
+@@ -124,9 +124,12 @@ &i2c0 {
+ 	/delete-property/ mrvl,i2c-fast-mode;
+ 	status = "okay";
  
- 	if (rdmsrl_safe(MSR_AMD64_FREQ_SENSITIVITY_ACTUAL, &val))
++	/* MCP7940MT-I/MNY RTC */
+ 	rtc@6f {
+ 		compatible = "microchip,mcp7940x";
+ 		reg = <0x6f>;
++		interrupt-parent = <&gpiosb>;
++		interrupts = <5 0>; /* GPIO2_5 */
+ 	};
+ };
+ 
 -- 
 2.35.1
 
