@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A28579C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:22:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C7DC433D2;
-	Thu, 12 Jan 2023 14:22:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED0279C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:22:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D3C1C433EF;
+	Thu, 12 Jan 2023 14:22:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533359;
-	bh=piYsiKQhUDZbKt2SXX51ncrTS1o5Ezm+L0eGppOyJUo=;
+	s=korg; t=1673533362;
+	bh=/DgKjMxU6hyD45A9yhMhmgnNb9IqEgRUFdJDPpDlL/I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qVlp3z1o7R3/5Ybq7JDTE0bTtWMSqTLrVRvG6CX6eVJc1F0xbJlqp7KthCWXEqQqP
-	 yictPaHM3ZuFVhNp1Uvynr9qlpFy9871lMm5OtwUtT61WFzVzq3pTjN7kMVurksr4U
-	 e7NtT8REZt2SLu1BKkFlVaMXXMJyLdWdhAzK35Rs=
+	b=dJMWFyj6qbSDHxX6GM7lMOHtU4v8+nM/YsqoeajdUMJXn7Rbmx0S4itRdq0Xq/hj8
+	 b7UAju94jcmgdWQnhtb/IcW5iYPBV/wx0I5+hwHkKD6s5rFJHgoWnOb39s5R30rivr
+	 qUcijYuP8EqzW7Nkc01+skfOWMGm6AyRWW+9JMBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 436/783] powerpc/xive: add missing iounmap() in error path in xive_spapr_populate_irq_data()
-Date: Thu, 12 Jan 2023 14:52:32 +0100
-Message-Id: <20230112135544.511563057@linuxfoundation.org>
+Subject: [PATCH 5.10 454/783] rtc: pic32: Move devm_rtc_allocate_device earlier in pic32_rtc_probe()
+Date: Thu, 12 Jan 2023 14:52:50 +0100
+Message-Id: <20230112135545.298841552@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,35 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 8b49670f3bb3f10cd4d5a6dca17f5a31b173ecdc ]
+[ Upstream commit 90cd5c88830140c9fade92a8027e0fb2c6e4cc49 ]
 
-If remapping 'data->trig_page' fails, the 'data->eoi_mmio' need be unmapped
-before returning from xive_spapr_populate_irq_data().
+The pic32_rtc_enable(pdata, 0) and clk_disable_unprepare(pdata->clk)
+should be called in the error handling of devm_rtc_allocate_device(),
+so we should move devm_rtc_allocate_device earlier in pic32_rtc_probe()
+to fix it.
 
-Fixes: eac1e731b59e ("powerpc/xive: guest exploitation of the XIVE interrupt controller")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20221017032333.1852406-1-yangyingliang@huawei.com
+Fixes: 6515e23b9fde ("rtc: pic32: convert to devm_rtc_allocate_device")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221123015953.1998521-1-cuigaosheng1@huawei.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/sysdev/xive/spapr.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/rtc/rtc-pic32.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/powerpc/sysdev/xive/spapr.c b/arch/powerpc/sysdev/xive/spapr.c
-index 38e8b9896174..53cf14349d5e 100644
---- a/arch/powerpc/sysdev/xive/spapr.c
-+++ b/arch/powerpc/sysdev/xive/spapr.c
-@@ -425,6 +425,7 @@ static int xive_spapr_populate_irq_data(u32 hw_irq, struct xive_irq_data *data)
+diff --git a/drivers/rtc/rtc-pic32.c b/drivers/rtc/rtc-pic32.c
+index 2b6946744654..7be1ca1633fc 100644
+--- a/drivers/rtc/rtc-pic32.c
++++ b/drivers/rtc/rtc-pic32.c
+@@ -324,16 +324,16 @@ static int pic32_rtc_probe(struct platform_device *pdev)
  
- 	data->trig_mmio = ioremap(data->trig_page, 1u << data->esb_shift);
- 	if (!data->trig_mmio) {
-+		iounmap(data->eoi_mmio);
- 		pr_err("Failed to map trigger page for irq 0x%x\n", hw_irq);
- 		return -ENOMEM;
- 	}
+ 	spin_lock_init(&pdata->alarm_lock);
+ 
++	pdata->rtc = devm_rtc_allocate_device(&pdev->dev);
++	if (IS_ERR(pdata->rtc))
++		return PTR_ERR(pdata->rtc);
++
+ 	clk_prepare_enable(pdata->clk);
+ 
+ 	pic32_rtc_enable(pdata, 1);
+ 
+ 	device_init_wakeup(&pdev->dev, 1);
+ 
+-	pdata->rtc = devm_rtc_allocate_device(&pdev->dev);
+-	if (IS_ERR(pdata->rtc))
+-		return PTR_ERR(pdata->rtc);
+-
+ 	pdata->rtc->ops = &pic32_rtcops;
+ 	pdata->rtc->range_min = RTC_TIMESTAMP_BEGIN_2000;
+ 	pdata->rtc->range_max = RTC_TIMESTAMP_END_2099;
 -- 
 2.35.1
 
