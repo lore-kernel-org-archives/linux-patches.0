@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C5F746A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:02:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D505BC433EF;
-	Thu, 12 Jan 2023 14:02:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830B7746A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:02:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C812C433D2;
+	Thu, 12 Jan 2023 14:02:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532150;
-	bh=QxUXvCtFKVHLov9PqhwUpCzD9soQcTPiHUGWOkFciIc=;
+	s=korg; t=1673532153;
+	bh=oUy1YHXf9gaMHhBloDrU8ywTqrKWT29m0WoTbOLnN00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WW6ZpJxFPohA97gOkMXXWMh8fGtpfVYwngmxbSj05mjmXbM2SxmwftBLSM1fJt/V5
-	 GjwSlfiOQQM1jqyB413w/ThB/sM9MDitZI2X2V3sS7qRPAFt0F+jM8B29n8NobstdJ
-	 3B3Jh/cbnpetpaUEub6IlPLseMbJ/u8szcPlCxRc=
+	b=eJiEIonkjCScVqTp6uYtndqZzrsCM1/u+RdLEByGQRIEGFT2DkmELDJl3xOIUFHjc
+	 DoCdpySksknKyyT6HBj2HnvmnOZ4rYGG4j/IpW05FQaQ/3qm6JVWPuuFCKdCqH/RQg
+	 pvgWf4E0lmSEmFCUPh4xYA5S7IXufr2JkOoJYWeM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Qiuxu Zhuo <qiuxu.zhuo@intel.com>,
-	Tony Luck <tony.luck@intel.com>,
+	Zhi Li <yieli@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 067/783] EDAC/i10nm: fix refcount leak in pci_get_dev_wrapper()
-Date: Thu, 12 Jan 2023 14:46:23 +0100
-Message-Id: <20230112135527.251978780@linuxfoundation.org>
+Subject: [PATCH 5.10 068/783] nfsd: dont call nfsd_file_put from client states seqfile display
+Date: Thu, 12 Jan 2023 14:46:24 +0100
+Message-Id: <20230112135527.304171167@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,40 +36,143 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 9c8921555907f4d723f01ed2d859b66f2d14f08e ]
+[ Upstream commit e0aa651068bfd520afcd357af8ecd2de005fc83d ]
 
-As the comment of pci_get_domain_bus_and_slot() says, it returns
-a PCI device with refcount incremented, so it doesn't need to
-call an extra pci_dev_get() in pci_get_dev_wrapper(), and the PCI
-device needs to be put in the error path.
+We had a report of this:
 
-Fixes: d4dc89d069aa ("EDAC, i10nm: Add a driver for Intel 10nm server processors")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Qiuxu Zhuo <qiuxu.zhuo@intel.com>
-Signed-off-by: Tony Luck <tony.luck@intel.com>
-Link: https://lore.kernel.org/r/20221128065512.3572550-1-yangyingliang@huawei.com
+    BUG: sleeping function called from invalid context at fs/nfsd/filecache.c:440
+
+...with a stack trace showing nfsd_file_put being called from
+nfs4_show_open. This code has always tried to call fput while holding a
+spinlock, but we recently changed this to use the filecache, and that
+started triggering the might_sleep() in nfsd_file_put.
+
+states_start takes and holds the cl_lock while iterating over the
+client's states, and we can't sleep with that held.
+
+Have the various nfs4_show_* functions instead hold the fi_lock instead
+of taking a nfsd_file reference.
+
+Fixes: 78599c42ae3c ("nfsd4: add file to display list of client's opens")
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2138357
+Reported-by: Zhi Li <yieli@redhat.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/i10nm_base.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/nfsd/nfs4state.c | 51 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 33 insertions(+), 18 deletions(-)
 
-diff --git a/drivers/edac/i10nm_base.c b/drivers/edac/i10nm_base.c
-index 3a7362f968c9..43dbea6b6e30 100644
---- a/drivers/edac/i10nm_base.c
-+++ b/drivers/edac/i10nm_base.c
-@@ -53,11 +53,10 @@ static struct pci_dev *pci_get_dev_wrapper(int dom, unsigned int bus,
- 	if (unlikely(pci_enable_device(pdev) < 0)) {
- 		edac_dbg(2, "Failed to enable device %02x:%02x.%x\n",
- 			 bus, dev, fun);
-+		pci_dev_put(pdev);
- 		return NULL;
- 	}
+diff --git a/fs/nfsd/nfs4state.c b/fs/nfsd/nfs4state.c
+index 665d0eaeb8db..9a47cc66963f 100644
+--- a/fs/nfsd/nfs4state.c
++++ b/fs/nfsd/nfs4state.c
+@@ -507,15 +507,26 @@ find_any_file(struct nfs4_file *f)
+ 	return ret;
+ }
  
--	pci_dev_get(pdev);
+-static struct nfsd_file *find_deleg_file(struct nfs4_file *f)
++static struct nfsd_file *find_any_file_locked(struct nfs4_file *f)
+ {
+-	struct nfsd_file *ret = NULL;
++	lockdep_assert_held(&f->fi_lock);
++
++	if (f->fi_fds[O_RDWR])
++		return f->fi_fds[O_RDWR];
++	if (f->fi_fds[O_WRONLY])
++		return f->fi_fds[O_WRONLY];
++	if (f->fi_fds[O_RDONLY])
++		return f->fi_fds[O_RDONLY];
++	return NULL;
++}
++
++static struct nfsd_file *find_deleg_file_locked(struct nfs4_file *f)
++{
++	lockdep_assert_held(&f->fi_lock);
+ 
+-	spin_lock(&f->fi_lock);
+ 	if (f->fi_deleg_file)
+-		ret = nfsd_file_get(f->fi_deleg_file);
+-	spin_unlock(&f->fi_lock);
+-	return ret;
++		return f->fi_deleg_file;
++	return NULL;
+ }
+ 
+ static atomic_long_t num_delegations;
+@@ -2462,9 +2473,11 @@ static int nfs4_show_open(struct seq_file *s, struct nfs4_stid *st)
+ 	ols = openlockstateid(st);
+ 	oo = ols->st_stateowner;
+ 	nf = st->sc_file;
+-	file = find_any_file(nf);
++
++	spin_lock(&nf->fi_lock);
++	file = find_any_file_locked(nf);
+ 	if (!file)
+-		return 0;
++		goto out;
+ 
+ 	seq_printf(s, "- ");
+ 	nfs4_show_stateid(s, &st->sc_stateid);
+@@ -2486,8 +2499,8 @@ static int nfs4_show_open(struct seq_file *s, struct nfs4_stid *st)
+ 	seq_printf(s, ", ");
+ 	nfs4_show_owner(s, oo);
+ 	seq_printf(s, " }\n");
+-	nfsd_file_put(file);
 -
- 	return pdev;
++out:
++	spin_unlock(&nf->fi_lock);
+ 	return 0;
+ }
+ 
+@@ -2501,9 +2514,10 @@ static int nfs4_show_lock(struct seq_file *s, struct nfs4_stid *st)
+ 	ols = openlockstateid(st);
+ 	oo = ols->st_stateowner;
+ 	nf = st->sc_file;
+-	file = find_any_file(nf);
++	spin_lock(&nf->fi_lock);
++	file = find_any_file_locked(nf);
+ 	if (!file)
+-		return 0;
++		goto out;
+ 
+ 	seq_printf(s, "- ");
+ 	nfs4_show_stateid(s, &st->sc_stateid);
+@@ -2523,8 +2537,8 @@ static int nfs4_show_lock(struct seq_file *s, struct nfs4_stid *st)
+ 	seq_printf(s, ", ");
+ 	nfs4_show_owner(s, oo);
+ 	seq_printf(s, " }\n");
+-	nfsd_file_put(file);
+-
++out:
++	spin_unlock(&nf->fi_lock);
+ 	return 0;
+ }
+ 
+@@ -2536,9 +2550,10 @@ static int nfs4_show_deleg(struct seq_file *s, struct nfs4_stid *st)
+ 
+ 	ds = delegstateid(st);
+ 	nf = st->sc_file;
+-	file = find_deleg_file(nf);
++	spin_lock(&nf->fi_lock);
++	file = find_deleg_file_locked(nf);
+ 	if (!file)
+-		return 0;
++		goto out;
+ 
+ 	seq_printf(s, "- ");
+ 	nfs4_show_stateid(s, &st->sc_stateid);
+@@ -2554,8 +2569,8 @@ static int nfs4_show_deleg(struct seq_file *s, struct nfs4_stid *st)
+ 	seq_printf(s, ", ");
+ 	nfs4_show_fname(s, file);
+ 	seq_printf(s, " }\n");
+-	nfsd_file_put(file);
+-
++out:
++	spin_unlock(&nf->fi_lock);
+ 	return 0;
  }
  
 -- 
