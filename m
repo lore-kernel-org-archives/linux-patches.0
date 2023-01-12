@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63043749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:16:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 660F3C433D2;
-	Thu, 12 Jan 2023 14:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D8C5749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:16:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83037C433D2;
+	Thu, 12 Jan 2023 14:16:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533014;
-	bh=FkL/gRwtYHPM20wQyKws5rG7peWoGXoe9EQZ10OhwgA=;
+	s=korg; t=1673533017;
+	bh=tx0CpBE5hDC0enMfy+MRO98pfbbmnQ2jrEXd2n+NoVM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h/fSi3HlSw3VmA1vKqhXmooJDF/p4LZDunswetc5z7IAJgOgsaAtDjfRlD1gQA8q4
-	 IdTlzA4pQs1w367HftpzYyra8Pk5W+mMDKPdo6G2uZNIWSzLZZfubDyTQsCF1IVnrV
-	 r6d2itKGOeEfvsQpTZqRTuSVni3wTARPaXW/0M04=
+	b=ozj/gqq+1S5/1yAwkZzHtkWe6HaNMPEJrDx2tn/YVYKbOs0KIvf8OuAiI1Xjgc6GV
+	 5eSOQkrm5nkbfoGP+kuy4j9672yITKzfbNxYDyD2ErsCzI//VNKa+oMX6g/+2H+Fvy
+	 PqnKdchm2+dTpHPhLunKHntl6vCJ8LtXZXuBsTY0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Douglas Gilbert <dgilbert@interlog.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 310/783] RDMA/hns: fix memory leak in hns_roce_alloc_mr()
-Date: Thu, 12 Jan 2023 14:50:26 +0100
-Message-Id: <20230112135538.704790792@linuxfoundation.org>
+Subject: [PATCH 5.10 301/783] scsi: scsi_debug: Fix a warning in resp_write_scat()
+Date: Thu, 12 Jan 2023 14:50:17 +0100
+Message-Id: <20230112135538.288292440@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,39 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit a115aa00b18f7b8982b8f458149632caf64a862a ]
+[ Upstream commit 216e179724c1d9f57a8ababf8bd7aaabef67f01b ]
 
-When hns_roce_mr_enable() failed in hns_roce_alloc_mr(), mr_key is not
-released. Compiled test only.
+As 'lbdof_blen' is coming from user, if the size in kzalloc() is >=
+MAX_ORDER then we hit a warning.
 
-Fixes: 9b2cf76c9f05 ("RDMA/hns: Optimize PBL buffer allocation process")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20221119070834.48502-1-shaozhengchao@huawei.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Call trace:
+
+sg_ioctl
+ sg_ioctl_common
+   scsi_ioctl
+    sg_scsi_ioctl
+     blk_execute_rq
+      blk_mq_sched_insert_request
+       blk_mq_run_hw_queue
+        __blk_mq_delay_run_hw_queue
+         __blk_mq_run_hw_queue
+          blk_mq_sched_dispatch_requests
+           __blk_mq_sched_dispatch_requests
+            blk_mq_dispatch_rq_list
+             scsi_queue_rq
+              scsi_dispatch_cmd
+               scsi_debug_queuecommand
+                schedule_resp
+                 resp_write_scat
+
+If you try to allocate a memory larger than(>=) MAX_ORDER, then kmalloc()
+will definitely fail.  It creates a stack trace and messes up dmesg.  The
+user controls the size here so if they specify a too large size it will
+fail.
+
+Add __GFP_NOWARN in order to avoid too large allocation warning.  This is
+detected by static analysis using smatch.
+
+Fixes: 481b5e5c7949 ("scsi: scsi_debug: add resp_write_scat function")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Link: https://lore.kernel.org/r/20221111100526.1790533-1-harshit.m.mogalapalli@oracle.com
+Acked-by: Douglas Gilbert <dgilbert@interlog.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hns/hns_roce_mr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/scsi_debug.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hns/hns_roce_mr.c b/drivers/infiniband/hw/hns/hns_roce_mr.c
-index 6d7cc724862f..1c342a7bd7df 100644
---- a/drivers/infiniband/hw/hns/hns_roce_mr.c
-+++ b/drivers/infiniband/hw/hns/hns_roce_mr.c
-@@ -456,10 +456,10 @@ struct ib_mr *hns_roce_alloc_mr(struct ib_pd *pd, enum ib_mr_type mr_type,
- 
- 	return &mr->ibmr;
- 
--err_key:
--	free_mr_key(hr_dev, mr);
- err_pbl:
- 	free_mr_pbl(hr_dev, mr);
-+err_key:
-+	free_mr_key(hr_dev, mr);
- err_free:
- 	kfree(mr);
- 	return ERR_PTR(ret);
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index cc20621bb49d..110d0e7f9413 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -3619,7 +3619,7 @@ static int resp_write_scat(struct scsi_cmnd *scp,
+ 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INVALID_FIELD_IN_CDB, 0);
+ 		return illegal_condition_result;
+ 	}
+-	lrdp = kzalloc(lbdof_blen, GFP_ATOMIC);
++	lrdp = kzalloc(lbdof_blen, GFP_ATOMIC | __GFP_NOWARN);
+ 	if (lrdp == NULL)
+ 		return SCSI_MLQUEUE_HOST_BUSY;
+ 	if (sdebug_verbose)
 -- 
 2.35.1
 
