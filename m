@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD50C79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:25:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14598C433F1;
-	Thu, 12 Jan 2023 14:25:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CA8D79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:25:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13167C433D2;
+	Thu, 12 Jan 2023 14:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533532;
-	bh=FSsv1Qt4W1/uQvi48LAPtdUt7iKXNJabjclblcQa16o=;
+	s=korg; t=1673533535;
+	bh=3JIyISy8p5hbvOydf/XGcy0KPSvDf1VcjeoXMziTT7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Atl+bGn4MpxqnCJ88DL2dJQaV8tK4M8aQx2zJbxAqjygwKvKRe841Jq+aWJtVYnA
-	 dvhbP7QxIQxf9A9gdySFze15JAH/moKWxZTQlaBtoHLoKSaeBSO6SpOL2v1Ek8Ip+H
-	 VIGRTV+kUyva8Rd6AYCF3w7p8+tDRJUGR5HQKdjk=
+	b=biBLF7eF1cacGoDKvRFigo/8SzghM2Ysh9zIhxQOaenonoAQwiLbBB81b4JoOdfY3
+	 BslisrfwZRIlk7In0+jxxS5xrXTwe70IU7Skma1CPxiNbNu0uNPrKBWahjvUxGv6zh
+	 iXIOQPxiPekXmJCKZGNMKorUvpJwa1S5rF1Zp2Aw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yuchen <zhangyuchen.lcr@bytedance.com>,
-	Corey Minyard <cminyard@mvista.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 501/783] ipmi: fix memleak when unload ipmi driver
-Date: Thu, 12 Jan 2023 14:53:37 +0100
-Message-Id: <20230112135547.429149486@linuxfoundation.org>
+Subject: [PATCH 5.10 510/783] drm/amdgpu: Fix type of second parameter in odn_edit_dpm_table() callback
+Date: Thu, 12 Jan 2023 14:53:46 +0100
+Message-Id: <20230112135547.857077358@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,62 +37,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 36992eb6b9b83f7f9cdc8e74fb5799d7b52e83e9 ]
+[ Upstream commit e4d0ef752081e7aa6ffb7ccac11c499c732a2e05 ]
 
-After the IPMI disconnect problem, the memory kept rising and we tried
-to unload the driver to free the memory. However, only part of the
-free memory is recovered after the driver is uninstalled. Using
-ebpf to hook free functions, we find that neither ipmi_user nor
-ipmi_smi_msg is free, only ipmi_recv_msg is free.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-We find that the deliver_smi_err_response call in clean_smi_msgs does
-the destroy processing on each message from the xmit_msg queue without
-checking the return value and free ipmi_smi_msg.
+  drivers/gpu/drm/amd/amdgpu/../pm/swsmu/amdgpu_smu.c:3008:29: error: incompatible function pointer types initializing 'int (*)(void *, uint32_t, long *, uint32_t)' (aka 'int (*)(void *, unsigned int, long *, unsigned int)') with an expression of type 'int (void *, enum PP_OD_DPM_TABLE_COMMAND, long *, uint32_t)' (aka 'int (void *, enum PP_OD_DPM_TABLE_COMMAND, long *, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
+          .odn_edit_dpm_table      = smu_od_edit_dpm_table,
+                                     ^~~~~~~~~~~~~~~~~~~~~
+  1 error generated.
 
-deliver_smi_err_response is called only at this location. Adding the
-free handling has no effect.
+There are only two implementations of ->odn_edit_dpm_table() in 'struct
+amd_pm_funcs': smu_od_edit_dpm_table() and pp_odn_edit_dpm_table(). One
+has a second parameter type of 'enum PP_OD_DPM_TABLE_COMMAND' and the
+other uses 'u32'. Ultimately, smu_od_edit_dpm_table() calls
+->od_edit_dpm_table() from 'struct pptable_funcs' and
+pp_odn_edit_dpm_table() calls ->odn_edit_dpm_table() from 'struct
+pp_hwmgr_func', which both have a second parameter type of 'enum
+PP_OD_DPM_TABLE_COMMAND'.
 
-To verify, try using ebpf to trace the free function.
+Update the type parameter in both the prototype in 'struct amd_pm_funcs'
+and pp_odn_edit_dpm_table() to 'enum PP_OD_DPM_TABLE_COMMAND', which
+cleans up the warning.
 
-  $ bpftrace -e 'kretprobe:ipmi_alloc_recv_msg {printf("alloc rcv
-      %p\n",retval);} kprobe:free_recv_msg {printf("free recv %p\n",
-      arg0)} kretprobe:ipmi_alloc_smi_msg {printf("alloc smi %p\n",
-        retval);} kprobe:free_smi_msg {printf("free smi  %p\n",arg0)}'
-
-Signed-off-by: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
-Message-Id: <20221007092617.87597-4-zhangyuchen.lcr@bytedance.com>
-[Fixed the comment above handle_one_recv_msg().]
-Signed-off-by: Corey Minyard <cminyard@mvista.com>
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Reported-by: Sami Tolvanen <samitolvanen@google.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/ipmi/ipmi_msghandler.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/include/kgd_pp_interface.h   | 3 ++-
+ drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
-index 05e7339752ac..223b90247648 100644
---- a/drivers/char/ipmi/ipmi_msghandler.c
-+++ b/drivers/char/ipmi/ipmi_msghandler.c
-@@ -3540,12 +3540,16 @@ static void deliver_smi_err_response(struct ipmi_smi *intf,
- 				     struct ipmi_smi_msg *msg,
- 				     unsigned char err)
- {
-+	int rv;
- 	msg->rsp[0] = msg->data[0] | 4;
- 	msg->rsp[1] = msg->data[1];
- 	msg->rsp[2] = err;
- 	msg->rsp_size = 3;
--	/* It's an error, so it will never requeue, no need to check return. */
--	handle_one_recv_msg(intf, msg);
-+
-+	/* This will never requeue, but it may ask us to free the message. */
-+	rv = handle_one_recv_msg(intf, msg);
-+	if (rv == 0)
-+		ipmi_free_smi_msg(msg);
+diff --git a/drivers/gpu/drm/amd/include/kgd_pp_interface.h b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
+index 94132c70d7af..5e8876ad1a1b 100644
+--- a/drivers/gpu/drm/amd/include/kgd_pp_interface.h
++++ b/drivers/gpu/drm/amd/include/kgd_pp_interface.h
+@@ -282,7 +282,8 @@ struct amd_pm_funcs {
+ 	int (*get_power_profile_mode)(void *handle, char *buf);
+ 	int (*set_power_profile_mode)(void *handle, long *input, uint32_t size);
+ 	int (*set_fine_grain_clk_vol)(void *handle, uint32_t type, long *input, uint32_t size);
+-	int (*odn_edit_dpm_table)(void *handle, uint32_t type, long *input, uint32_t size);
++	int (*odn_edit_dpm_table)(void *handle, enum PP_OD_DPM_TABLE_COMMAND type,
++				  long *input, uint32_t size);
+ 	int (*set_mp1_state)(void *handle, enum pp_mp1_state mp1_state);
+ 	int (*smu_i2c_bus_access)(void *handle, bool acquire);
+ /* export to DC */
+diff --git a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
+index eab9768029c1..a98ea29b2fd5 100644
+--- a/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/amd_powerplay.c
+@@ -924,7 +924,8 @@ static int pp_set_fine_grain_clk_vol(void *handle, uint32_t type, long *input, u
+ 	return hwmgr->hwmgr_func->set_fine_grain_clk_vol(hwmgr, type, input, size);
  }
  
- static void cleanup_smi_msgs(struct ipmi_smi *intf)
+-static int pp_odn_edit_dpm_table(void *handle, uint32_t type, long *input, uint32_t size)
++static int pp_odn_edit_dpm_table(void *handle, enum PP_OD_DPM_TABLE_COMMAND type,
++				 long *input, uint32_t size)
+ {
+ 	struct pp_hwmgr *hwmgr = handle;
+ 
 -- 
 2.35.1
 
