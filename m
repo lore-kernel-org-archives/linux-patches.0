@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FC08749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:07:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9A83C433EF;
-	Thu, 12 Jan 2023 14:07:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75A30749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:07:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E261EC433EF;
+	Thu, 12 Jan 2023 14:07:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532445;
-	bh=LGOHPDBw1KAt+raTD7/6s1bLsfE+D6jrN6uafj/hFC4=;
+	s=korg; t=1673532448;
+	bh=ZfuMTvaXR7vYufO7myoSwUdVrUQrGnWXh+hGe7/lD9M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gRqf9kpzjyf66mLLKvivmAuAHS7JfsccuTt1de0MFCg2tBtjdZSFHNmsbnUPltNr7
-	 aRxzsznrYX+GyqAySPo4BdEasvbZ4d1XXXpuNdaEVBVuyMl3DLY6xgTPh0UbIe3GYK
-	 QevtjLkkf0MgRKVu7FQypTzKlOyVI6F+jWZGyeQs=
+	b=V3xs5KOl8GoIdinh6lZz+DeKz/cxJhpC+7+P9a7YdDPSviBNvIER0MRsFuT0ndeCm
+	 o1bv9+3w1RwVcbOUqMZcQ0ZX9hXmFMTyQAhxjJxfWkmi+BhxOS9eb0F0YqLtcXjU4h
+	 cCmqVM2TP+XnAz1IDwqD3Zl9obcVXFE1VUA0+3WE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marcus Folkesson <marcus.folkesson@gmail.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 164/783] HID: hid-sensor-custom: set fixed size for custom attributes
-Date: Thu, 12 Jan 2023 14:48:00 +0100
-Message-Id: <20230112135531.935175666@linuxfoundation.org>
+Subject: [PATCH 5.10 138/783] bpf: propagate precision across all frames, not just the last one
+Date: Thu, 12 Jan 2023 14:47:34 +0100
+Message-Id: <20230112135530.721538711@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,46 +35,158 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marcus Folkesson <marcus.folkesson@gmail.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit 9d013910df22de91333a0acc81d1dbb115bd76f6 ]
+[ Upstream commit 529409ea92d590659be487ba0839710329bd8074 ]
 
-This is no bugfix (so no Fixes: tag is necessary) as it is
-taken care of in hid_sensor_custom_add_attributes().
+When equivalent completed state is found and it has additional precision
+restrictions, BPF verifier propagates precision to
+currently-being-verified state chain (i.e., including parent states) so
+that if some of the states in the chain are not yet completed, necessary
+precision restrictions are enforced.
 
-The motivation for this patch is that:
-hid_sensor_custom_field.attr_name and
-hid_sensor_custom_field.attrs
-has the size of HID_CUSTOM_TOTAL_ATTRS and used in same context.
+Unfortunately, right now this happens only for the last frame (deepest
+active subprogram's frame), not all the frames. This can lead to
+incorrect matching of states due to missing precision marker. Currently
+this doesn't seem possible as BPF verifier forces everything to precise
+when validated BPF program has any subprograms. But with the next patch
+lifting this restriction, this becomes problematic.
 
-We compare against HID_CUSTOM_TOTAL_ATTRS when
-looping through hid_custom_attrs.
+In fact, without this fix, we'll start getting failure in one of the
+existing test_verifier test cases:
 
-We will silent the smatch error:
-hid_sensor_custom_add_attributes() error: buffer overflow
-'hid_custom_attrs' 8 <= 10
+  #906/p precise: cross frame pruning FAIL
+  Unexpected success to load!
+  verification time 48 usec
+  stack depth 0+0
+  processed 26 insns (limit 1000000) max_states_per_insn 3 total_states 17 peak_states 17 mark_read 8
 
-Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
-Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+This patch adds precision propagation across all frames.
+
+Fixes: a3ce685dd01a ("bpf: fix precision tracking")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20221104163649.121784-3-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-sensor-custom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 71 ++++++++++++++++++++++++-------------------
+ 1 file changed, 39 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/hid/hid-sensor-custom.c b/drivers/hid/hid-sensor-custom.c
-index 4d25577a8573..971600a6397a 100644
---- a/drivers/hid/hid-sensor-custom.c
-+++ b/drivers/hid/hid-sensor-custom.c
-@@ -59,7 +59,7 @@ struct hid_sensor_sample {
- 	u32 raw_len;
- } __packed;
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 034eb3030ce9..232c93357b90 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -2027,7 +2027,7 @@ static void mark_all_scalars_precise(struct bpf_verifier_env *env,
+ 		}
+ }
  
--static struct attribute hid_custom_attrs[] = {
-+static struct attribute hid_custom_attrs[HID_CUSTOM_TOTAL_ATTRS] = {
- 	{.name = "name", .mode = S_IRUGO},
- 	{.name = "units", .mode = S_IRUGO},
- 	{.name = "unit-expo", .mode = S_IRUGO},
+-static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
++static int __mark_chain_precision(struct bpf_verifier_env *env, int frame, int regno,
+ 				  int spi)
+ {
+ 	struct bpf_verifier_state *st = env->cur_state;
+@@ -2044,7 +2044,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
+ 	if (!env->bpf_capable)
+ 		return 0;
+ 
+-	func = st->frame[st->curframe];
++	func = st->frame[frame];
+ 	if (regno >= 0) {
+ 		reg = &func->regs[regno];
+ 		if (reg->type != SCALAR_VALUE) {
+@@ -2125,7 +2125,7 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
+ 			break;
+ 
+ 		new_marks = false;
+-		func = st->frame[st->curframe];
++		func = st->frame[frame];
+ 		bitmap_from_u64(mask, reg_mask);
+ 		for_each_set_bit(i, mask, 32) {
+ 			reg = &func->regs[i];
+@@ -2191,12 +2191,17 @@ static int __mark_chain_precision(struct bpf_verifier_env *env, int regno,
+ 
+ static int mark_chain_precision(struct bpf_verifier_env *env, int regno)
+ {
+-	return __mark_chain_precision(env, regno, -1);
++	return __mark_chain_precision(env, env->cur_state->curframe, regno, -1);
+ }
+ 
+-static int mark_chain_precision_stack(struct bpf_verifier_env *env, int spi)
++static int mark_chain_precision_frame(struct bpf_verifier_env *env, int frame, int regno)
+ {
+-	return __mark_chain_precision(env, -1, spi);
++	return __mark_chain_precision(env, frame, regno, -1);
++}
++
++static int mark_chain_precision_stack_frame(struct bpf_verifier_env *env, int frame, int spi)
++{
++	return __mark_chain_precision(env, frame, -1, spi);
+ }
+ 
+ static bool is_spillable_regtype(enum bpf_reg_type type)
+@@ -9483,34 +9488,36 @@ static int propagate_precision(struct bpf_verifier_env *env,
+ {
+ 	struct bpf_reg_state *state_reg;
+ 	struct bpf_func_state *state;
+-	int i, err = 0;
++	int i, err = 0, fr;
+ 
+-	state = old->frame[old->curframe];
+-	state_reg = state->regs;
+-	for (i = 0; i < BPF_REG_FP; i++, state_reg++) {
+-		if (state_reg->type != SCALAR_VALUE ||
+-		    !state_reg->precise)
+-			continue;
+-		if (env->log.level & BPF_LOG_LEVEL2)
+-			verbose(env, "propagating r%d\n", i);
+-		err = mark_chain_precision(env, i);
+-		if (err < 0)
+-			return err;
+-	}
++	for (fr = old->curframe; fr >= 0; fr--) {
++		state = old->frame[fr];
++		state_reg = state->regs;
++		for (i = 0; i < BPF_REG_FP; i++, state_reg++) {
++			if (state_reg->type != SCALAR_VALUE ||
++			    !state_reg->precise)
++				continue;
++			if (env->log.level & BPF_LOG_LEVEL2)
++				verbose(env, "frame %d: propagating r%d\n", i, fr);
++			err = mark_chain_precision_frame(env, fr, i);
++			if (err < 0)
++				return err;
++		}
+ 
+-	for (i = 0; i < state->allocated_stack / BPF_REG_SIZE; i++) {
+-		if (!is_spilled_reg(&state->stack[i]))
+-			continue;
+-		state_reg = &state->stack[i].spilled_ptr;
+-		if (state_reg->type != SCALAR_VALUE ||
+-		    !state_reg->precise)
+-			continue;
+-		if (env->log.level & BPF_LOG_LEVEL2)
+-			verbose(env, "propagating fp%d\n",
+-				(-i - 1) * BPF_REG_SIZE);
+-		err = mark_chain_precision_stack(env, i);
+-		if (err < 0)
+-			return err;
++		for (i = 0; i < state->allocated_stack / BPF_REG_SIZE; i++) {
++			if (!is_spilled_reg(&state->stack[i]))
++				continue;
++			state_reg = &state->stack[i].spilled_ptr;
++			if (state_reg->type != SCALAR_VALUE ||
++			    !state_reg->precise)
++				continue;
++			if (env->log.level & BPF_LOG_LEVEL2)
++				verbose(env, "frame %d: propagating fp%d\n",
++					(-i - 1) * BPF_REG_SIZE, fr);
++			err = mark_chain_precision_stack_frame(env, fr, i);
++			if (err < 0)
++				return err;
++		}
+ 	}
+ 	return 0;
+ }
 -- 
 2.35.1
 
