@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06AB279C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:37:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62968C433D2;
-	Thu, 12 Jan 2023 14:36:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 183F179C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:37:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 683CDC433EF;
+	Thu, 12 Jan 2023 14:37:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534219;
-	bh=ZyZS115hb3PeZD+QWWIAkyD6eQxEvCphqh1RE6TrmAs=;
+	s=korg; t=1673534222;
+	bh=IQCPls0N8qp3WAr9HH+fABId8nmk4sskcx4l34bRF38=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eiSDwexcHKgq2ZP/N2W0e+UBoQjAOfiFBdTPI0/MUtfTOVgOP2NukpoIMGzbhmSLx
-	 awi964D6SM6pa2XEt7A2H5AtKa3TAsfqrVolNXmk2710aT7h6mLDp/fX2K4eKVn+nB
-	 hyLS50XpBEKy+T0q/0/k2tUzp6DNKGgvAKVQzLt0=
+	b=M6WZ71Cxt0okM1I+WQSsClQcvphxKltHvnmCia9GjrJQWs7zOZeSF7k++DgY9OaVx
+	 +Lg4Lz7qrYJ/u4UnnEwHn4d+645Yqtcgk/8M87MuYZIRvbDkBjzLqEyMlEtk3+Zh+8
+	 kSemwLTZjfslzHXN53NlMY/iKeEOx8tUyJafxH9Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Huang <chenhuang5@huawei.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Palmer Dabbelt <palmerdabbelt@google.com>,
+	linux-fsd@tesla.com,
+	Smitha T Murthy <smitha.t@samsung.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 705/783] riscv/stacktrace: Fix stack output without ra on the stack top
-Date: Thu, 12 Jan 2023 14:57:01 +0100
-Message-Id: <20230112135557.037549900@linuxfoundation.org>
+Subject: [PATCH 5.10 696/783] media: s5p-mfc: Fix to handle reference queue during finishing
+Date: Thu, 12 Jan 2023 14:56:52 +0100
+Message-Id: <20230112135556.582721418@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,70 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Huang <chenhuang5@huawei.com>
+From: Smitha T Murthy <smitha.t@samsung.com>
 
-[ Upstream commit f766f77a74f5784d8d4d3c36b1900731f97d08d0 ]
+[ Upstream commit d8a46bc4e1e0446459daa77c4ce14218d32dacf9 ]
 
-When a function doesn't have a callee, then it will not
-push ra into the stack, such as lkdtm_BUG() function,
+On receiving last buffer driver puts MFC to MFCINST_FINISHING state which
+in turn skips transferring of frame from SRC to REF queue. This causes
+driver to stop MFC encoding and last frame is lost.
 
-addi	sp,sp,-16
-sd	s0,8(sp)
-addi	s0,sp,16
-ebreak
+This patch guarantees safe handling of frames during MFCINST_FINISHING and
+correct clearing of workbit to avoid early stopping of encoding.
 
-The struct stackframe use {fp,ra} to get information from
-stack, if walk_stackframe() with pr_regs, we will obtain
-wrong value and bad stacktrace,
+Fixes: af9357467810 ("[media] MFC: Add MFC 5.1 V4L2 driver")
 
-[<ffffffe00066c56c>] lkdtm_BUG+0x6/0x8
----[ end trace 18da3fbdf08e25d5 ]---
-
-Correct the next fp and pc, after that, full stacktrace
-shown as expects,
-
-[<ffffffe00066c56c>] lkdtm_BUG+0x6/0x8
-[<ffffffe0008b24a4>] lkdtm_do_action+0x14/0x1c
-[<ffffffe00066c372>] direct_entry+0xc0/0x10a
-[<ffffffe000439f86>] full_proxy_write+0x42/0x6a
-[<ffffffe000309626>] vfs_write+0x7e/0x214
-[<ffffffe00030992a>] ksys_write+0x98/0xc0
-[<ffffffe000309960>] sys_write+0xe/0x16
-[<ffffffe0002014bc>] ret_from_syscall+0x0/0x2
----[ end trace 61917f3d9a9fadcd ]---
-
-Signed-off-by: Chen Huang <chenhuang5@huawei.com>
-Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
-Signed-off-by: Palmer Dabbelt <palmerdabbelt@google.com>
-Stable-dep-of: 5c3022e4a616 ("riscv: stacktrace: Fixup ftrace_graph_ret_addr retp argument")
+Cc: stable@vger.kernel.org
+Cc: linux-fsd@tesla.com
+Signed-off-by: Smitha T Murthy <smitha.t@samsung.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/stacktrace.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ drivers/media/platform/s5p-mfc/s5p_mfc_enc.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
-index 595342910c3f..6cbde6b43fd2 100644
---- a/arch/riscv/kernel/stacktrace.c
-+++ b/arch/riscv/kernel/stacktrace.c
-@@ -57,9 +57,15 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
- 		/* Unwind stack frame */
- 		frame = (struct stackframe *)fp - 1;
- 		sp = fp;
--		fp = frame->fp;
--		pc = ftrace_graph_ret_addr(current, NULL, frame->ra,
--					   (unsigned long *)(fp - 8));
-+		if (regs && (regs->epc == pc) && (frame->fp & 0x7)) {
-+			fp = frame->ra;
-+			pc = regs->ra;
-+		} else {
-+			fp = frame->fp;
-+			pc = ftrace_graph_ret_addr(current, NULL, frame->ra,
-+						   (unsigned long *)(fp - 8));
-+		}
-+
- 	}
- }
+diff --git a/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c b/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c
+index acc2217dd7e9..62a1ad347fa7 100644
+--- a/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c
++++ b/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c
+@@ -1218,6 +1218,7 @@ static int enc_post_frame_start(struct s5p_mfc_ctx *ctx)
+ 	unsigned long mb_y_addr, mb_c_addr;
+ 	int slice_type;
+ 	unsigned int strm_size;
++	bool src_ready;
  
+ 	slice_type = s5p_mfc_hw_call(dev->mfc_ops, get_enc_slice_type, dev);
+ 	strm_size = s5p_mfc_hw_call(dev->mfc_ops, get_enc_strm_size, dev);
+@@ -1257,7 +1258,8 @@ static int enc_post_frame_start(struct s5p_mfc_ctx *ctx)
+ 			}
+ 		}
+ 	}
+-	if ((ctx->src_queue_cnt > 0) && (ctx->state == MFCINST_RUNNING)) {
++	if (ctx->src_queue_cnt > 0 && (ctx->state == MFCINST_RUNNING ||
++				       ctx->state == MFCINST_FINISHING)) {
+ 		mb_entry = list_entry(ctx->src_queue.next, struct s5p_mfc_buf,
+ 									list);
+ 		if (mb_entry->flags & MFC_BUF_FLAG_USED) {
+@@ -1288,7 +1290,13 @@ static int enc_post_frame_start(struct s5p_mfc_ctx *ctx)
+ 		vb2_set_plane_payload(&mb_entry->b->vb2_buf, 0, strm_size);
+ 		vb2_buffer_done(&mb_entry->b->vb2_buf, VB2_BUF_STATE_DONE);
+ 	}
+-	if ((ctx->src_queue_cnt == 0) || (ctx->dst_queue_cnt == 0))
++
++	src_ready = true;
++	if (ctx->state == MFCINST_RUNNING && ctx->src_queue_cnt == 0)
++		src_ready = false;
++	if (ctx->state == MFCINST_FINISHING && ctx->ref_queue_cnt == 0)
++		src_ready = false;
++	if (!src_ready || ctx->dst_queue_cnt == 0)
+ 		clear_work_bit(ctx);
+ 
+ 	return 0;
 -- 
 2.35.1
 
