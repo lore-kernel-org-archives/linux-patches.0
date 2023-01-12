@@ -1,35 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 614F479C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:36:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B528EC433D2;
-	Thu, 12 Jan 2023 14:36:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35EDD79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:36:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9684FC433EF;
+	Thu, 12 Jan 2023 14:36:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534205;
-	bh=oMisTdy3ctI1aXiYEZk/+ZWUxZaLF4FneRFEPfmLhOc=;
+	s=korg; t=1673534208;
+	bh=UM9mLuX0Ht3tQ3iSEeO0cPmwXWD2DJoJrneHwJbmh6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CZKmVjBZ8+GiuQk4VRcgwVShYLB9OQVvhSp0g76OMVRme1uSaXHAIrvKjSnwxoVpf
-	 BcDYQ/hjyE9FBlgh2+OqpRj/mGOj3jAmFOHI3iUglnRh+6xRRFPXLtGArQCNJpb4i4
-	 5Q1coFw/eWr3XXCQ+pSSi+DLmpamRvWQz0y9U/Wo=
+	b=qhQr+s+IutWjQvmZDf7UwhnbFM5Rn87mFwfIe5ioRDXh5HB/wHKoblZ6MggJnk+Om
+	 i7cLp0EvtmRYznp3onqZ//nOjNen+C35/gl6iLPVBxIXnnSUnEeb3lGtyfoi40VKeD
+	 T0IMZx+Udu7pfBoVcrP6MYQzWULcY9Ni3kbjH+2s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Borislav Petkov <bp@suse.de>,
 	Masami Hiramatsu <mhiramat@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Masami Hiramatsu <masami.hiramatsu.pt@hitachi.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 700/783] perf probe: Fix to get the DW_AT_decl_file and DW_AT_call_file as unsinged data
-Date: Thu, 12 Jan 2023 14:56:56 +0100
-Message-Id: <20230112135556.783637514@linuxfoundation.org>
+Subject: [PATCH 5.10 701/783] x86/kprobes: Convert to insn_decode()
+Date: Thu, 12 Jan 2023 14:56:57 +0100
+Message-Id: <20230112135556.836129118@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -43,89 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Borislav Petkov <bp@suse.de>
 
-[ Upstream commit a9dfc46c67b52ad43b8e335e28f4cf8002c67793 ]
+[ Upstream commit 77e768ec1391dc0d6cd89822aa60b9a1c1bd8128 ]
 
-DWARF version 5 standard Sec 2.14 says that
+Simplify code, improve decoding error checking.
 
-  Any debugging information entry representing the declaration of an object,
-  module, subprogram or type may have DW_AT_decl_file, DW_AT_decl_line and
-  DW_AT_decl_column attributes, each of whose value is an unsigned integer
-  constant.
-
-So it should be an unsigned integer data. Also, even though the standard
-doesn't clearly say the DW_AT_call_file is signed or unsigned, the
-elfutils (eu-readelf) interprets it as unsigned integer data and it is
-natural to handle it as unsigned integer data as same as DW_AT_decl_file.
-This changes the DW_AT_call_file as unsigned integer data too.
-
-Fixes: 3f4460a28fb2f73d ("perf probe: Filter out redundant inline-instances")
-Signed-off-by: Masami Hiramatsu <mhiramat@kernel.org>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Masami Hiramatsu <masami.hiramatsu.pt@hitachi.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Link: https://lore.kernel.org/r/166761727445.480106.3738447577082071942.stgit@devnote3
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Acked-by: Masami Hiramatsu <mhiramat@kernel.org>
+Link: https://lkml.kernel.org/r/20210304174237.31945-12-bp@alien8.de
+Stable-dep-of: 63dc6325ff41 ("x86/kprobes: Fix optprobe optimization check with CONFIG_RETHUNK")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dwarf-aux.c | 21 ++++-----------------
- 1 file changed, 4 insertions(+), 17 deletions(-)
+ arch/x86/kernel/kprobes/core.c | 17 +++++++++++------
+ arch/x86/kernel/kprobes/opt.c  |  9 +++++++--
+ 2 files changed, 18 insertions(+), 8 deletions(-)
 
-diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
-index dc02685a1eec..f8a10d5148f6 100644
---- a/tools/perf/util/dwarf-aux.c
-+++ b/tools/perf/util/dwarf-aux.c
-@@ -315,19 +315,6 @@ static int die_get_attr_udata(Dwarf_Die *tp_die, unsigned int attr_name,
- 	return 0;
- }
+diff --git a/arch/x86/kernel/kprobes/core.c b/arch/x86/kernel/kprobes/core.c
+index 97e1d2a9898f..5de757099186 100644
+--- a/arch/x86/kernel/kprobes/core.c
++++ b/arch/x86/kernel/kprobes/core.c
+@@ -293,6 +293,8 @@ static int can_probe(unsigned long paddr)
+ 	/* Decode instructions */
+ 	addr = paddr - offset;
+ 	while (addr < paddr) {
++		int ret;
++
+ 		/*
+ 		 * Check if the instruction has been modified by another
+ 		 * kprobe, in which case we replace the breakpoint by the
+@@ -304,8 +306,10 @@ static int can_probe(unsigned long paddr)
+ 		__addr = recover_probed_instruction(buf, addr);
+ 		if (!__addr)
+ 			return 0;
+-		kernel_insn_init(&insn, (void *)__addr, MAX_INSN_SIZE);
+-		insn_get_length(&insn);
++
++		ret = insn_decode(&insn, (void *)__addr, MAX_INSN_SIZE, INSN_MODE_KERN);
++		if (ret < 0)
++			return 0;
  
--/* Get attribute and translate it as a sdata */
--static int die_get_attr_sdata(Dwarf_Die *tp_die, unsigned int attr_name,
--			      Dwarf_Sword *result)
--{
--	Dwarf_Attribute attr;
--
--	if (dwarf_attr_integrate(tp_die, attr_name, &attr) == NULL ||
--	    dwarf_formsdata(&attr, result) != 0)
--		return -ENOENT;
--
--	return 0;
--}
--
- /**
-  * die_is_signed_type - Check whether a type DIE is signed or not
-  * @tp_die: a DIE of a type
-@@ -467,9 +454,9 @@ int die_get_data_member_location(Dwarf_Die *mb_die, Dwarf_Word *offs)
- /* Get the call file index number in CU DIE */
- static int die_get_call_fileno(Dwarf_Die *in_die)
+ #ifdef CONFIG_KGDB
+ 		/*
+@@ -351,8 +355,8 @@ static int is_IF_modifier(kprobe_opcode_t *insn)
+ int __copy_instruction(u8 *dest, u8 *src, u8 *real, struct insn *insn)
  {
--	Dwarf_Sword idx;
-+	Dwarf_Word idx;
+ 	kprobe_opcode_t buf[MAX_INSN_SIZE];
+-	unsigned long recovered_insn =
+-		recover_probed_instruction(buf, (unsigned long)src);
++	unsigned long recovered_insn = recover_probed_instruction(buf, (unsigned long)src);
++	int ret;
  
--	if (die_get_attr_sdata(in_die, DW_AT_call_file, &idx) == 0)
-+	if (die_get_attr_udata(in_die, DW_AT_call_file, &idx) == 0)
- 		return (int)idx;
- 	else
- 		return -ENOENT;
-@@ -478,9 +465,9 @@ static int die_get_call_fileno(Dwarf_Die *in_die)
- /* Get the declared file index number in CU DIE */
- static int die_get_decl_fileno(Dwarf_Die *pdie)
- {
--	Dwarf_Sword idx;
-+	Dwarf_Word idx;
+ 	if (!recovered_insn || !insn)
+ 		return 0;
+@@ -362,8 +366,9 @@ int __copy_instruction(u8 *dest, u8 *src, u8 *real, struct insn *insn)
+ 			MAX_INSN_SIZE))
+ 		return 0;
  
--	if (die_get_attr_sdata(pdie, DW_AT_decl_file, &idx) == 0)
-+	if (die_get_attr_udata(pdie, DW_AT_decl_file, &idx) == 0)
- 		return (int)idx;
- 	else
- 		return -ENOENT;
+-	kernel_insn_init(insn, dest, MAX_INSN_SIZE);
+-	insn_get_length(insn);
++	ret = insn_decode(insn, dest, MAX_INSN_SIZE, INSN_MODE_KERN);
++	if (ret < 0)
++		return 0;
+ 
+ 	/* We can not probe force emulate prefixed instruction */
+ 	if (insn_has_emulate_prefix(insn))
+diff --git a/arch/x86/kernel/kprobes/opt.c b/arch/x86/kernel/kprobes/opt.c
+index 08eb23074f92..4299fc865732 100644
+--- a/arch/x86/kernel/kprobes/opt.c
++++ b/arch/x86/kernel/kprobes/opt.c
+@@ -312,6 +312,8 @@ static int can_optimize(unsigned long paddr)
+ 	addr = paddr - offset;
+ 	while (addr < paddr - offset + size) { /* Decode until function end */
+ 		unsigned long recovered_insn;
++		int ret;
++
+ 		if (search_exception_tables(addr))
+ 			/*
+ 			 * Since some fixup code will jumps into this function,
+@@ -321,8 +323,11 @@ static int can_optimize(unsigned long paddr)
+ 		recovered_insn = recover_probed_instruction(buf, addr);
+ 		if (!recovered_insn)
+ 			return 0;
+-		kernel_insn_init(&insn, (void *)recovered_insn, MAX_INSN_SIZE);
+-		insn_get_length(&insn);
++
++		ret = insn_decode(&insn, (void *)recovered_insn, MAX_INSN_SIZE, INSN_MODE_KERN);
++		if (ret < 0)
++			return 0;
++
+ 		/*
+ 		 * In the case of detecting unknown breakpoint, this could be
+ 		 * a padding INT3 between functions. Let's check that all the
 -- 
 2.35.1
 
