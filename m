@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58BAE749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:15:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3CC1C433D2;
-	Thu, 12 Jan 2023 14:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EA83749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:15:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 800B6C433D2;
+	Thu, 12 Jan 2023 14:15:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532944;
-	bh=+4Zvaa0MdZ8E7XuqalKiyLuNju0/wJug6N0636E/LTI=;
+	s=korg; t=1673532947;
+	bh=MLexiIDWYDyc9ZJo27kz+6Mg3C3rKfXYAX3RCcnrX/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t17I9wd1FLB3hC/lESEIrZTwtOow8OjnhxoioxMtUrzzaix92zhdgkBNZ21l5JGWd
-	 0QCPYzknQLGU+eH9GXUuJZFgftIseMgfCwBREInTSgIqSfEtYhGdiwq02vcm/sFlZh
-	 YLhh4T9ao65Xra0IXkfiuk2HCEydO9bkEO6t56zk=
+	b=frKHGuKi9rKT2rspB3EYcyJ2m9DGdPDh1INYtkIn5pdhQ+9WALutOZAKjbQ+/uQit
+	 9A5e13cb2yXTdrVWHwDcpsazZe7PPAbsoHVsorSdLEu9/pQfZWvKiNOV419DTggKZc
+	 5Ur9CYwv0G1Mg85mrOi1RalOFSb0+M5sS36sEw1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 303/783] crypto: cryptd - Use request context instead of stack for sub-request
-Date: Thu, 12 Jan 2023 14:50:19 +0100
-Message-Id: <20230112135538.377724640@linuxfoundation.org>
+Subject: [PATCH 5.10 321/783] scsi: fcoe: Fix possible name leak when device_register() fails
+Date: Thu, 12 Jan 2023 14:50:37 +0100
+Message-Id: <20230112135539.208784758@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -34,126 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 3a58c231172537f7b0e19d93ed33decd04f80eab ]
+[ Upstream commit 47b6a122c7b69a876c7ee2fc064a26b09627de9d ]
 
-cryptd is buggy as it tries to use sync_skcipher without going
-through the proper sync_skcipher interface.  In fact it doesn't
-even need sync_skcipher since it's already a proper skcipher and
-can easily access the request context instead of using something
-off the stack.
+If device_register() returns an error, the name allocated by dev_set_name()
+needs to be freed. As the comment of device_register() says, one should use
+put_device() to give up the reference in the error path. Fix this by
+calling put_device(), then the name can be freed in kobject_cleanup().
 
-Fixes: 36b3875a97b8 ("crypto: cryptd - Remove VLA usage of skcipher")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+The 'fcf' is freed in fcoe_fcf_device_release(), so the kfree() in the
+error path can be removed.
+
+The 'ctlr' is freed in fcoe_ctlr_device_release(), so don't use the error
+label, just return NULL after calling put_device().
+
+Fixes: 9a74e884ee71 ("[SCSI] libfcoe: Add fcoe_sysfs")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221112094310.3633291-1-yangyingliang@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/cryptd.c | 36 +++++++++++++++++++-----------------
- 1 file changed, 19 insertions(+), 17 deletions(-)
+ drivers/scsi/fcoe/fcoe_sysfs.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/crypto/cryptd.c b/crypto/cryptd.c
-index 668095eca0fa..ca3a40fc7da9 100644
---- a/crypto/cryptd.c
-+++ b/crypto/cryptd.c
-@@ -68,11 +68,12 @@ struct aead_instance_ctx {
+diff --git a/drivers/scsi/fcoe/fcoe_sysfs.c b/drivers/scsi/fcoe/fcoe_sysfs.c
+index ffef2c8eddc6..68d8027d5108 100644
+--- a/drivers/scsi/fcoe/fcoe_sysfs.c
++++ b/drivers/scsi/fcoe/fcoe_sysfs.c
+@@ -830,14 +830,15 @@ struct fcoe_ctlr_device *fcoe_ctlr_device_add(struct device *parent,
  
- struct cryptd_skcipher_ctx {
- 	refcount_t refcnt;
--	struct crypto_sync_skcipher *child;
-+	struct crypto_skcipher *child;
- };
+ 	dev_set_name(&ctlr->dev, "ctlr_%d", ctlr->id);
+ 	error = device_register(&ctlr->dev);
+-	if (error)
+-		goto out_del_q2;
++	if (error) {
++		destroy_workqueue(ctlr->devloss_work_q);
++		destroy_workqueue(ctlr->work_q);
++		put_device(&ctlr->dev);
++		return NULL;
++	}
  
- struct cryptd_skcipher_request_ctx {
- 	crypto_completion_t complete;
-+	struct skcipher_request req;
- };
+ 	return ctlr;
  
- struct cryptd_hash_ctx {
-@@ -227,13 +228,13 @@ static int cryptd_skcipher_setkey(struct crypto_skcipher *parent,
- 				  const u8 *key, unsigned int keylen)
- {
- 	struct cryptd_skcipher_ctx *ctx = crypto_skcipher_ctx(parent);
--	struct crypto_sync_skcipher *child = ctx->child;
-+	struct crypto_skcipher *child = ctx->child;
+-out_del_q2:
+-	destroy_workqueue(ctlr->devloss_work_q);
+-	ctlr->devloss_work_q = NULL;
+ out_del_q:
+ 	destroy_workqueue(ctlr->work_q);
+ 	ctlr->work_q = NULL;
+@@ -1036,16 +1037,16 @@ struct fcoe_fcf_device *fcoe_fcf_device_add(struct fcoe_ctlr_device *ctlr,
+ 	fcf->selected = new_fcf->selected;
  
--	crypto_sync_skcipher_clear_flags(child, CRYPTO_TFM_REQ_MASK);
--	crypto_sync_skcipher_set_flags(child,
--				       crypto_skcipher_get_flags(parent) &
--					 CRYPTO_TFM_REQ_MASK);
--	return crypto_sync_skcipher_setkey(child, key, keylen);
-+	crypto_skcipher_clear_flags(child, CRYPTO_TFM_REQ_MASK);
-+	crypto_skcipher_set_flags(child,
-+				  crypto_skcipher_get_flags(parent) &
-+				  CRYPTO_TFM_REQ_MASK);
-+	return crypto_skcipher_setkey(child, key, keylen);
+ 	error = device_register(&fcf->dev);
+-	if (error)
+-		goto out_del;
++	if (error) {
++		put_device(&fcf->dev);
++		goto out;
++	}
+ 
+ 	fcf->state = FCOE_FCF_STATE_CONNECTED;
+ 	list_add_tail(&fcf->peers, &ctlr->fcfs);
+ 
+ 	return fcf;
+ 
+-out_del:
+-	kfree(fcf);
+ out:
+ 	return NULL;
  }
- 
- static void cryptd_skcipher_complete(struct skcipher_request *req, int err)
-@@ -258,13 +259,13 @@ static void cryptd_skcipher_encrypt(struct crypto_async_request *base,
- 	struct cryptd_skcipher_request_ctx *rctx = skcipher_request_ctx(req);
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct cryptd_skcipher_ctx *ctx = crypto_skcipher_ctx(tfm);
--	struct crypto_sync_skcipher *child = ctx->child;
--	SYNC_SKCIPHER_REQUEST_ON_STACK(subreq, child);
-+	struct skcipher_request *subreq = &rctx->req;
-+	struct crypto_skcipher *child = ctx->child;
- 
- 	if (unlikely(err == -EINPROGRESS))
- 		goto out;
- 
--	skcipher_request_set_sync_tfm(subreq, child);
-+	skcipher_request_set_tfm(subreq, child);
- 	skcipher_request_set_callback(subreq, CRYPTO_TFM_REQ_MAY_SLEEP,
- 				      NULL, NULL);
- 	skcipher_request_set_crypt(subreq, req->src, req->dst, req->cryptlen,
-@@ -286,13 +287,13 @@ static void cryptd_skcipher_decrypt(struct crypto_async_request *base,
- 	struct cryptd_skcipher_request_ctx *rctx = skcipher_request_ctx(req);
- 	struct crypto_skcipher *tfm = crypto_skcipher_reqtfm(req);
- 	struct cryptd_skcipher_ctx *ctx = crypto_skcipher_ctx(tfm);
--	struct crypto_sync_skcipher *child = ctx->child;
--	SYNC_SKCIPHER_REQUEST_ON_STACK(subreq, child);
-+	struct skcipher_request *subreq = &rctx->req;
-+	struct crypto_skcipher *child = ctx->child;
- 
- 	if (unlikely(err == -EINPROGRESS))
- 		goto out;
- 
--	skcipher_request_set_sync_tfm(subreq, child);
-+	skcipher_request_set_tfm(subreq, child);
- 	skcipher_request_set_callback(subreq, CRYPTO_TFM_REQ_MAY_SLEEP,
- 				      NULL, NULL);
- 	skcipher_request_set_crypt(subreq, req->src, req->dst, req->cryptlen,
-@@ -343,9 +344,10 @@ static int cryptd_skcipher_init_tfm(struct crypto_skcipher *tfm)
- 	if (IS_ERR(cipher))
- 		return PTR_ERR(cipher);
- 
--	ctx->child = (struct crypto_sync_skcipher *)cipher;
-+	ctx->child = cipher;
- 	crypto_skcipher_set_reqsize(
--		tfm, sizeof(struct cryptd_skcipher_request_ctx));
-+		tfm, sizeof(struct cryptd_skcipher_request_ctx) +
-+		     crypto_skcipher_reqsize(cipher));
- 	return 0;
- }
- 
-@@ -353,7 +355,7 @@ static void cryptd_skcipher_exit_tfm(struct crypto_skcipher *tfm)
- {
- 	struct cryptd_skcipher_ctx *ctx = crypto_skcipher_ctx(tfm);
- 
--	crypto_free_sync_skcipher(ctx->child);
-+	crypto_free_skcipher(ctx->child);
- }
- 
- static void cryptd_skcipher_free(struct skcipher_instance *inst)
-@@ -931,7 +933,7 @@ struct crypto_skcipher *cryptd_skcipher_child(struct cryptd_skcipher *tfm)
- {
- 	struct cryptd_skcipher_ctx *ctx = crypto_skcipher_ctx(&tfm->base);
- 
--	return &ctx->child->base;
-+	return ctx->child;
- }
- EXPORT_SYMBOL_GPL(cryptd_skcipher_child);
- 
 -- 
 2.35.1
 
