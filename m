@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF8C79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:29:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D419AC433EF;
-	Thu, 12 Jan 2023 14:29:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E6C79CE
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:29:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A85CC433D2;
+	Thu, 12 Jan 2023 14:29:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533796;
-	bh=7SnJQGvgtJRvEgpsEeIL25fx1CggEPI0+icVR9veNTc=;
+	s=korg; t=1673533799;
+	bh=jse15sWSUF8fiwMzGrRKE7ws1pc0QgF8ieHcmmdlhfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t4ebslyCXdKviSC7P1URA8c1wWL+T9uEd6ZE3sU33+PSvh+hNMFjz4xXxSrlyJ1Hl
-	 9k0sg4C3q0wxqD0qWKkqAGw0QZV0qGuVfU3JkptV2/E+LQzz65dBDx3NbR7Y9GHM85
-	 RcZrQQal7j9UDo+xZgkwgeJHmx92UAezoyVCdGcE=
+	b=xaQMvHjj0G45bWsBfYfmTvSoRueokKi1UW3JYYScnznKuq9Zgn56pY/DjUil88unc
+	 65sqTX0sQhtVvFpyZzxgBZK4uP1B3ZjQ9awvkZDCRVigu5Vn729uhj0Mrl2wooby67
+	 kj5f4MrK5Hotp/vKnUMoe5oN4OrmS0UFMT1O5qDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rickard x Andersson <rickaran@axis.com>,
-	Peter Oberparleiter <oberpar@linux.ibm.com>,
-	Martin Liska <mliska@suse.cz>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 567/783] gcov: add support for checksum field
-Date: Thu, 12 Jan 2023 14:54:43 +0100
-Message-Id: <20230112135550.515952694@linuxfoundation.org>
+	Pavel Machek <pavel@denx.de>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 5.10 594/783] f2fs: should put a page when checking the summary info
+Date: Thu, 12 Jan 2023 14:55:10 +0100
+Message-Id: <20230112135551.810846123@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,49 +35,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rickard x Andersson <rickaran@axis.com>
+From: Pavel Machek <pavel@denx.de>
 
-commit e96b95c2b7a63a454b6498e2df67aac14d046d13 upstream.
+commit c3db3c2fd9992c08f49aa93752d3c103c3a4f6aa upstream.
 
-In GCC version 12.1 a checksum field was added.
+The commit introduces another bug.
 
-This patch fixes a kernel crash occurring during boot when using
-gcov-kernel with GCC version 12.2.  The crash occurred on a system running
-on i.MX6SX.
-
-Link: https://lkml.kernel.org/r/20221220102318.3418501-1-rickaran@axis.com
-Fixes: 977ef30a7d88 ("gcov: support GCC 12.1 and newer compilers")
-Signed-off-by: Rickard x Andersson <rickaran@axis.com>
-Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Tested-by: Peter Oberparleiter <oberpar@linux.ibm.com>
-Reviewed-by: Martin Liska <mliska@suse.cz>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Fixes: c6ad7fd16657e ("f2fs: fix to do sanity check on summary info")
+Signed-off-by: Pavel Machek <pavel@denx.de>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/gcov/gcc_4_7.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ fs/f2fs/gc.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/gcov/gcc_4_7.c
-+++ b/kernel/gcov/gcc_4_7.c
-@@ -85,6 +85,7 @@ struct gcov_fn_info {
-  * @version: gcov version magic indicating the gcc version used for compilation
-  * @next: list head for a singly-linked list
-  * @stamp: uniquifying time stamp
-+ * @checksum: unique object checksum
-  * @filename: name of the associated gcov data file
-  * @merge: merge functions (null for unused counter type)
-  * @n_functions: number of instrumented functions
-@@ -97,6 +98,10 @@ struct gcov_info {
- 	unsigned int version;
- 	struct gcov_info *next;
- 	unsigned int stamp;
-+ /* Since GCC 12.1 a checksum field is added. */
-+#if (__GNUC__ >= 12)
-+	unsigned int checksum;
-+#endif
- 	const char *filename;
- 	void (*merge[GCOV_COUNTERS])(gcov_type *, unsigned int);
- 	unsigned int n_functions;
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -1008,6 +1008,7 @@ static bool is_alive(struct f2fs_sb_info
+ 	if (ofs_in_node >= max_addrs) {
+ 		f2fs_err(sbi, "Inconsistent ofs_in_node:%u in summary, ino:%u, nid:%u, max:%u",
+ 			ofs_in_node, dni->ino, dni->nid, max_addrs);
++		f2fs_put_page(node_page, 1);
+ 		return false;
+ 	}
+ 
 
 
