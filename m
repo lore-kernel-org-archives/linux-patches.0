@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773FB79CE
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:26:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4817C433EF;
-	Thu, 12 Jan 2023 14:26:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 631BD79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:26:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBFB8C433EF;
+	Thu, 12 Jan 2023 14:26:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533577;
-	bh=WXxvuQIMFOQKH7FW4CdPaCRCSn/NcHDSX4NxJunGLcE=;
+	s=korg; t=1673533580;
+	bh=Z9/utPV3HyJ/YyA51QPQTpU/ZGH62v8J49esyzJm1UA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n0HQGRcw2vi/rMwHy9f71fvN5LQwhzO5g0pIo3Oppr5tcW4eKIGXgXPvusVUjdfi5
-	 dPFel2XeF+DyfZt94hIqTImnvDdEzHiUumRBHSsBRncXf4/GOBuzD4apG5o+hwD6s/
-	 gL92/eumS/ygvVrYqTvkZYU7GkFCa/5rCK7hx+4o=
+	b=N6NbF2pqJ05iwKToRQCs3MoDmwLUBIDcobvZiI3RLbH/tgVVkMUz7SD154B7N81AQ
+	 x49peM8LkZXsJbpQ9aResWSvgjgM66iOlCfnyYZIQaNDtKVmPA8ABvDFXAN4T4kh9v
+	 GhMdGC2XZg/cMIKigAFxQG339s3viADoSW5mjppk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+8dd0551dda6020944c5d@syzkaller.appspotmail.com,
-	Stanislav Fomichev <sdf@google.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Yonghong Song <yhs@fb.com>,
+	Maxim Korotkov <korotkov.maxim.s@gmail.com>,
+	Alexander Lobakin <alexandr.lobakin@intel.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 523/783] bpf: Prevent decl_tag from being referenced in func_proto arg
-Date: Thu, 12 Jan 2023 14:53:59 +0100
-Message-Id: <20230112135548.452957902@linuxfoundation.org>
+Subject: [PATCH 5.10 524/783] ethtool: avoiding integer overflow in ethtool_phys_id()
+Date: Thu, 12 Jan 2023 14:54:00 +0100
+Message-Id: <20230112135548.501344148@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -37,53 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanislav Fomichev <sdf@google.com>
+From: Maxim Korotkov <korotkov.maxim.s@gmail.com>
 
-[ Upstream commit f17472d4599697d701aa239b4c475a506bccfd19 ]
+[ Upstream commit 64a8f8f7127da228d59a39e2c5e75f86590f90b4 ]
 
-Syzkaller managed to hit another decl_tag issue:
+The value of an arithmetic expression "n * id.data" is subject
+to possible overflow due to a failure to cast operands to a larger data
+type before performing arithmetic. Used macro for multiplication instead
+operator for avoiding overflow.
 
-  btf_func_proto_check kernel/bpf/btf.c:4506 [inline]
-  btf_check_all_types kernel/bpf/btf.c:4734 [inline]
-  btf_parse_type_sec+0x1175/0x1980 kernel/bpf/btf.c:4763
-  btf_parse kernel/bpf/btf.c:5042 [inline]
-  btf_new_fd+0x65a/0xb00 kernel/bpf/btf.c:6709
-  bpf_btf_load+0x6f/0x90 kernel/bpf/syscall.c:4342
-  __sys_bpf+0x50a/0x6c0 kernel/bpf/syscall.c:5034
-  __do_sys_bpf kernel/bpf/syscall.c:5093 [inline]
-  __se_sys_bpf kernel/bpf/syscall.c:5091 [inline]
-  __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:5091
-  do_syscall_64+0x54/0x70 arch/x86/entry/common.c:48
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-This seems similar to commit ea68376c8bed ("bpf: prevent decl_tag from being
-referenced in func_proto") but for the argument.
-
-Reported-by: syzbot+8dd0551dda6020944c5d@syzkaller.appspotmail.com
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/bpf/20221123035422.872531-2-sdf@google.com
+Signed-off-by: Maxim Korotkov <korotkov.maxim.s@gmail.com>
+Reviewed-by: Alexander Lobakin <alexandr.lobakin@intel.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/20221122122901.22294-1-korotkov.maxim.s@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ net/ethtool/ioctl.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index 9232938e3f96..52e704860739 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -3675,6 +3675,11 @@ static int btf_func_proto_check(struct btf_verifier_env *env,
- 			break;
- 		}
+diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
+index 80d2a00d3097..47c2dd4a9b9f 100644
+--- a/net/ethtool/ioctl.c
++++ b/net/ethtool/ioctl.c
+@@ -1966,7 +1966,8 @@ static int ethtool_phys_id(struct net_device *dev, void __user *useraddr)
+ 	} else {
+ 		/* Driver expects to be called at twice the frequency in rc */
+ 		int n = rc * 2, interval = HZ / n;
+-		u64 count = n * id.data, i = 0;
++		u64 count = mul_u32_u32(n, id.data);
++		u64 i = 0;
  
-+		if (btf_type_is_resolve_source_only(arg_type)) {
-+			btf_verifier_log_type(env, t, "Invalid arg#%u", i + 1);
-+			return -EINVAL;
-+		}
-+
- 		if (args[i].name_off &&
- 		    (!btf_name_offset_valid(btf, args[i].name_off) ||
- 		     !btf_name_valid_identifier(btf, args[i].name_off))) {
+ 		do {
+ 			rtnl_lock();
 -- 
 2.35.1
 
