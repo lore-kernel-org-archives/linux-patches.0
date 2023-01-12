@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F8079C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:27:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311CEC433F0;
-	Thu, 12 Jan 2023 14:27:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C49CC79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:27:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B141C433EF;
+	Thu, 12 Jan 2023 14:27:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533648;
-	bh=3HCbNt4mobz1svFbJzWXW4f95dqb8jaYCgLJRH5T+Bg=;
+	s=korg; t=1673533651;
+	bh=c5ek1v5dLrDhnFVuWu8EarzwTdP/aikC4pRLpPab3PQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ySOYgDoiVk54Xvq91CZIcuLURVtp4H+LW3rliS3t0e3zx6K3mw/N7V5GijBv6nfUL
-	 frVkCyvm8Re0YlTT1PsZ0MxqMwJsnhoTX1dPHZgJuhK/J0vLy2+l/Qp6YolpyYKz9v
-	 Ikl1A8Se2Jla5W0eLb4cmTOicLQmBfAQWS5nqqKQ=
+	b=huJfYsgOBS1jw+jnCxfnfK9eihOP8CnMFp/L9jTG1pGodvYAaewlTWtoi/qSetfWa
+	 Q+D1W+hNHuYlnrZi9f1XKucF2YxIDunIytldOWqzt/789xy/hy8PUJXYYv+BGE7ZQm
+	 jIywC5pIgE0JbAi+LzV1ztxlkIRFQZAiQ44NCH9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Wang Jingjin <wangjingjin1@huawei.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 547/783] ASoC: wm8994: Fix potential deadlock
-Date: Thu, 12 Jan 2023 14:54:23 +0100
-Message-Id: <20230112135549.568520688@linuxfoundation.org>
+Subject: [PATCH 5.10 548/783] ASoC: rockchip: spdif: Add missing clk_disable_unprepare() in rk_spdif_runtime_resume()
+Date: Thu, 12 Jan 2023 14:54:24 +0100
+Message-Id: <20230112135549.618416912@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,40 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Wang Jingjin <wangjingjin1@huawei.com>
 
-[ Upstream commit 9529dc167ffcdfd201b9f0eda71015f174095f7e ]
+[ Upstream commit 6d94d0090527b1763872275a7ccd44df7219b31e ]
 
-Fix this by dropping wm8994->accdet_lock while calling
-cancel_delayed_work_sync(&wm8994->mic_work) in wm1811_jackdet_irq().
+rk_spdif_runtime_resume() may have called clk_prepare_enable() before return
+from failed branches, add missing clk_disable_unprepare() in this case.
 
-Fixes: c0cc3f166525 ("ASoC: wm8994: Allow a delay between jack insertion and microphone detect")
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20221209091657.1183-1-m.szyprowski@samsung.com
+Fixes: f874b80e1571 ("ASoC: rockchip: Add rockchip SPDIF transceiver driver")
+Signed-off-by: Wang Jingjin <wangjingjin1@huawei.com>
+Link: https://lore.kernel.org/r/20221208063900.4180790-1-wangjingjin1@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8994.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ sound/soc/rockchip/rockchip_spdif.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
-index f57884113406..d3a7480fda43 100644
---- a/sound/soc/codecs/wm8994.c
-+++ b/sound/soc/codecs/wm8994.c
-@@ -3853,7 +3853,12 @@ static irqreturn_t wm1811_jackdet_irq(int irq, void *data)
- 	} else {
- 		dev_dbg(component->dev, "Jack not detected\n");
+diff --git a/sound/soc/rockchip/rockchip_spdif.c b/sound/soc/rockchip/rockchip_spdif.c
+index 674810851fbc..ccddcd9926af 100644
+--- a/sound/soc/rockchip/rockchip_spdif.c
++++ b/sound/soc/rockchip/rockchip_spdif.c
+@@ -86,6 +86,7 @@ static int __maybe_unused rk_spdif_runtime_resume(struct device *dev)
  
-+		/* Release wm8994->accdet_lock to avoid deadlock:
-+		 * cancel_delayed_work_sync() takes wm8994->mic_work internal
-+		 * lock and wm1811_mic_work takes wm8994->accdet_lock */
-+		mutex_unlock(&wm8994->accdet_lock);
- 		cancel_delayed_work_sync(&wm8994->mic_work);
-+		mutex_lock(&wm8994->accdet_lock);
- 
- 		snd_soc_component_update_bits(component, WM8958_MICBIAS2,
- 				    WM8958_MICB2_DISCH, WM8958_MICB2_DISCH);
+ 	ret = clk_prepare_enable(spdif->hclk);
+ 	if (ret) {
++		clk_disable_unprepare(spdif->mclk);
+ 		dev_err(spdif->dev, "hclk clock enable failed %d\n", ret);
+ 		return ret;
+ 	}
 -- 
 2.35.1
 
