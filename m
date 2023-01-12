@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCD9A79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:32:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2567BC433F2;
-	Thu, 12 Jan 2023 14:32:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE46679C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:32:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E9ABC433F2;
+	Thu, 12 Jan 2023 14:32:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533953;
-	bh=fFCsKEu7OU2N+D0C3ALJQzv8IMr7pFBWMQFOpISIQa8=;
+	s=korg; t=1673533956;
+	bh=66h0ahMfWUG4UiOA/SnThe4rUc9VPGxQ/L8JgSjEe74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u5F9QcaYjXiJ1fIr7bao5OTjpWEI+lxZlvbS8f7A7b78FrKgRVKjgC7w7jC3VaKnL
-	 R9FHj/tY0Ob0Gz4aG6REcc8wUPo3PjyUTDMozjtX4cGeyIzRzVeqDQhFJbYIbQRm3s
-	 nMGUnlJp+vjVyuiD1K79SAVls/z2Fobexl4+MxD0=
+	b=JCHojUS2iQXQhGj1X0ygZ9GZF3rHKr57Y7A1o3a83wfeX4N1bE8j5zw4VE9/SJMYx
+	 RhugVm87ci2LQwf31V6ZYscHz9keV3v8xEzGCAZnREA9cYoRI8SMFkAy5lT1ifjUW+
+	 8zC4r5IGNlOFucD0wAR0BGQc9N2LF7Uf3n3Na40k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.10 647/783] cifs: fix missing display of three mount options
-Date: Thu, 12 Jan 2023 14:56:03 +0100
-Message-Id: <20230112135554.321537801@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>
+Subject: [PATCH 5.10 648/783] rtc: ds1347: fix value written to century register
+Date: Thu, 12 Jan 2023 14:56:04 +0100
+Message-Id: <20230112135554.371115599@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -34,41 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steve French <stfrench@microsoft.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit 2bfd81043e944af0e52835ef6d9b41795af22341 upstream.
+commit 4dfe05bdc1ade79b943d4979a2e2a8b5ef68fbb5 upstream.
 
-Three mount options: "tcpnodelay" and "noautotune" and "noblocksend"
-were not displayed when passed in on cifs/smb3 mounts (e.g. displayed
-in /proc/mounts e.g.).  No change to defaults so these are not
-displayed if not specified on mount.
+In `ds1347_set_time()`, the wrong value is being written to the
+`DS1347_CENTURY_REG` register.  It needs to be converted to BCD.  Fix
+it.
 
-Cc: stable@vger.kernel.org
-Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Fixes: 147dae76dbb9 ("rtc: ds1347: handle century register")
+Cc: <stable@vger.kernel.org> # v5.5+
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20221027163249.447416-1-abbotti@mev.co.uk
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/cifsfs.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/rtc/rtc-ds1347.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/cifs/cifsfs.c
-+++ b/fs/cifs/cifsfs.c
-@@ -619,9 +619,15 @@ cifs_show_options(struct seq_file *s, st
- 	seq_printf(s, ",echo_interval=%lu",
- 			tcon->ses->server->echo_interval / HZ);
+--- a/drivers/rtc/rtc-ds1347.c
++++ b/drivers/rtc/rtc-ds1347.c
+@@ -112,7 +112,7 @@ static int ds1347_set_time(struct device
+ 		return err;
  
--	/* Only display max_credits if it was overridden on mount */
-+	/* Only display the following if overridden on mount */
- 	if (tcon->ses->server->max_credits != SMB2_MAX_CREDITS_AVAILABLE)
- 		seq_printf(s, ",max_credits=%u", tcon->ses->server->max_credits);
-+	if (tcon->ses->server->tcp_nodelay)
-+		seq_puts(s, ",tcpnodelay");
-+	if (tcon->ses->server->noautotune)
-+		seq_puts(s, ",noautotune");
-+	if (tcon->ses->server->noblocksnd)
-+		seq_puts(s, ",noblocksend");
+ 	century = (dt->tm_year / 100) + 19;
+-	err = regmap_write(map, DS1347_CENTURY_REG, century);
++	err = regmap_write(map, DS1347_CENTURY_REG, bin2bcd(century));
+ 	if (err)
+ 		return err;
  
- 	if (tcon->snapshot_time)
- 		seq_printf(s, ",snapshot=%llu", tcon->snapshot_time);
 
 
