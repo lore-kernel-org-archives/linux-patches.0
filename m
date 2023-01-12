@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C144D79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:32:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4480AC433F0;
-	Thu, 12 Jan 2023 14:32:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9DA579C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:32:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C98CC433EF;
+	Thu, 12 Jan 2023 14:32:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533962;
-	bh=HkauKw7sF3DOMpakq10EffHxGSqfsWbhj3x6thbYu8s=;
+	s=korg; t=1673533965;
+	bh=a3SrtMPOpfa7g6GNQtdu1xyMFAj+xosFpM/Tc6gTXWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KWzfVKYCWbPyUlDCeZamZYTfhD6gXfgU6bleQtrAoFREAOztx8xjTmmlP1d6wIURK
-	 u321nhWsDExr6cWhoQF1Wui+ag2D0qBp/8Xrxdy6BTj8qsXqHG7ZGLSWz1MQyxAzOF
-	 f9yTkXSV/YF6+ptJc02v85IeYsAi7zR//JuWRhV0=
+	b=JoTBKlc3qzXG7vNzoV8F99JUcTn7TDvga18BnCe+1lGWv5aRNSNUDqYbMd0ZaulA5
+	 XkRA2sXqTPMwPD8fzxmH3uR1Q9E7TeQAG6IaVZmjEAmt3N8pjBTtA5JxNhsN1S30c0
+	 kiyccjT4cc5qKLl1qqrFLjEG95vO+RVE3fqXBqco=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Meng <luomeng12@huawei.com>,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.10 632/783] dm cache: Fix UAF in destroy()
-Date: Thu, 12 Jan 2023 14:55:48 +0100
-Message-Id: <20230112135553.608263856@linuxfoundation.org>
+	Aditya Garg <gargaditya08@live.com>,
+	Mimi Zohar <zohar@linux.ibm.com>
+Subject: [PATCH 5.10 650/783] efi: Add iMac Pro 2017 to uefi skip cert quirk
+Date: Thu, 12 Jan 2023 14:56:06 +0100
+Message-Id: <20230112135554.457471261@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -34,33 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luo Meng <luomeng12@huawei.com>
+From: Aditya Garg <gargaditya08@live.com>
 
-commit 6a459d8edbdbe7b24db42a5a9f21e6aa9e00c2aa upstream.
+commit 0be56a116220f9e5731a6609e66a11accfe8d8e2 upstream.
 
-Dm_cache also has the same UAF problem when dm_resume()
-and dm_destroy() are concurrent.
-
-Therefore, cancelling timer again in destroy().
+The iMac Pro 2017 is also a T2 Mac. Thus add it to the list of uefi skip
+cert.
 
 Cc: stable@vger.kernel.org
-Fixes: c6b4fcbad044e ("dm: add cache target")
-Signed-off-by: Luo Meng <luomeng12@huawei.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Fixes: 155ca952c7ca ("efi: Do not import certificates from UEFI Secure Boot for T2 Macs")
+Link: https://lore.kernel.org/linux-integrity/9D46D92F-1381-4F10-989C-1A12CD2FFDD8@live.com/
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-target.c |    1 +
+ security/integrity/platform_certs/load_uefi.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -1965,6 +1965,7 @@ static void destroy(struct cache *cache)
- 	if (cache->prison)
- 		dm_bio_prison_destroy_v2(cache->prison);
- 
-+	cancel_delayed_work_sync(&cache->waker);
- 	if (cache->wq)
- 		destroy_workqueue(cache->wq);
+--- a/security/integrity/platform_certs/load_uefi.c
++++ b/security/integrity/platform_certs/load_uefi.c
+@@ -34,6 +34,7 @@ static const struct dmi_system_id uefi_s
+ 	{ UEFI_QUIRK_SKIP_CERT("Apple Inc.", "MacPro7,1") },
+ 	{ UEFI_QUIRK_SKIP_CERT("Apple Inc.", "iMac20,1") },
+ 	{ UEFI_QUIRK_SKIP_CERT("Apple Inc.", "iMac20,2") },
++	{ UEFI_QUIRK_SKIP_CERT("Apple Inc.", "iMacPro1,1") },
+ 	{ }
+ };
  
 
 
