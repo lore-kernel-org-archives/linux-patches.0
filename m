@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB0C749E
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:12:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66403C433D2;
-	Thu, 12 Jan 2023 14:12:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00146749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:12:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22436C433F0;
+	Thu, 12 Jan 2023 14:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532757;
-	bh=/qstePaWwVoqNJinnTPLhRr1bJicMkp4Vwoxl6xorRE=;
+	s=korg; t=1673532754;
+	bh=PEMwDXyr7GpQpghHh2id0Gd8AINQiSGh6JAvEJUUc8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d1+imMAEr4XkLMRG2Uw1xivUGzcpGy6mUUTONaysWe3looTabJPgSdDwrH+JR/v5s
-	 4IiJyZlu1ppV0sCv9ES5FLcFNh7yymCigaOE3jXJr22TBK9efoXqnt3x2Ht9ES3dhF
-	 FKYmTzvVwLymmFnkQ5QCsuR4CCNkEJfaGr1swx0I=
+	b=VLt8Co2rHUyMjXj1iWYxACD64Ay8E9VFRjmX/H8+tRLvBCj58sQLA9rnsSkND4wXG
+	 xTSKKZMXFyg7YcX6ebpwSvSLNT8U7VOd3dbEOnm1zfUnw86WKBaABSykrAkuKbE/v/
+	 9dsGqBlxetcyrF2Az9e/mHv0QsZwvRDHtkR6BO8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Markus Schneider-Pargmann <msp@baylibre.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 265/783] can: tcan4x5x: Remove invalid write in clear_interrupts
-Date: Thu, 12 Jan 2023 14:49:41 +0100
-Message-Id: <20230112135536.716607685@linuxfoundation.org>
+Subject: [PATCH 5.10 238/783] media: coda: Add check for dcoda_iram_alloc
+Date: Thu, 12 Jan 2023 14:49:14 +0100
+Message-Id: <20230112135535.404643601@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,42 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Markus Schneider-Pargmann <msp@baylibre.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 40c9e4f676abbe194541d88e796341c92d5a13c0 ]
+[ Upstream commit 6b8082238fb8bb20f67e46388123e67a5bbc558d ]
 
-Register 0x824 TCAN4X5X_MCAN_INT_REG is a read-only register. Any writes
-to this register do not have any effect.
+As the coda_iram_alloc may return NULL pointer,
+it should be better to check the return value
+in order to avoid NULL poineter dereference,
+same as the others.
 
-Remove this write. The m_can driver aldready clears the interrupts in
-m_can_isr() by writing to M_CAN_IR which is translated to register
-0x1050 which is a writable version of this register.
-
-Fixes: 5443c226ba91 ("can: tcan4x5x: Add tcan4x5x driver to the kernel")
-Signed-off-by: Markus Schneider-Pargmann <msp@baylibre.com>
-Link: https://lore.kernel.org/all/20221206115728.1056014-9-msp@baylibre.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: b313bcc9a467 ("[media] coda: simplify IRAM setup")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/m_can/tcan4x5x.c | 5 -----
- 1 file changed, 5 deletions(-)
+ drivers/media/platform/coda/coda-bit.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/can/m_can/tcan4x5x.c b/drivers/net/can/m_can/tcan4x5x.c
-index f169d9090e52..f903f78af087 100644
---- a/drivers/net/can/m_can/tcan4x5x.c
-+++ b/drivers/net/can/m_can/tcan4x5x.c
-@@ -294,11 +294,6 @@ static int tcan4x5x_clear_interrupts(struct m_can_classdev *cdev)
- 	if (ret)
- 		return ret;
+diff --git a/drivers/media/platform/coda/coda-bit.c b/drivers/media/platform/coda/coda-bit.c
+index 159c9de85788..b8a70ef8e8ec 100644
+--- a/drivers/media/platform/coda/coda-bit.c
++++ b/drivers/media/platform/coda/coda-bit.c
+@@ -852,7 +852,7 @@ static void coda_setup_iram(struct coda_ctx *ctx)
+ 		/* Only H.264BP and H.263P3 are considered */
+ 		iram_info->buf_dbk_y_use = coda_iram_alloc(iram_info, w64);
+ 		iram_info->buf_dbk_c_use = coda_iram_alloc(iram_info, w64);
+-		if (!iram_info->buf_dbk_c_use)
++		if (!iram_info->buf_dbk_y_use || !iram_info->buf_dbk_c_use)
+ 			goto out;
+ 		iram_info->axi_sram_use |= dbk_bits;
  
--	ret = tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_MCAN_INT_REG,
--				      TCAN4X5X_ENABLE_MCAN_INT);
--	if (ret)
--		return ret;
--
- 	ret = tcan4x5x_write_tcan_reg(cdev, TCAN4X5X_INT_FLAGS,
- 				      TCAN4X5X_CLEAR_ALL_INT);
- 	if (ret)
+@@ -876,7 +876,7 @@ static void coda_setup_iram(struct coda_ctx *ctx)
+ 
+ 		iram_info->buf_dbk_y_use = coda_iram_alloc(iram_info, w128);
+ 		iram_info->buf_dbk_c_use = coda_iram_alloc(iram_info, w128);
+-		if (!iram_info->buf_dbk_c_use)
++		if (!iram_info->buf_dbk_y_use || !iram_info->buf_dbk_c_use)
+ 			goto out;
+ 		iram_info->axi_sram_use |= dbk_bits;
+ 
 -- 
 2.35.1
 
