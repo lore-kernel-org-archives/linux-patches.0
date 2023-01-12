@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B0C6749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:13:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A02C433D2;
-	Thu, 12 Jan 2023 14:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B4E97749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:13:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BAF9C433D2;
+	Thu, 12 Jan 2023 14:13:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532788;
-	bh=4kbemMex2oVRLLSm+HzMkJrdnvmPiKeNLAQ/wxEIytI=;
+	s=korg; t=1673532791;
+	bh=E4lei+1C8TJdzdU6L6ZhYCyB0ufrywpb31IgqBawctE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QSAS+BCLotzBIkoHnZhvd9rLI+Yo6dteWChd4UVgos/VaAmjlD0iWeDkFSJMvXUdY
-	 UI0164taHrTNSohJRtinSQy4aFgbS59wD7nAGn+1Rw3n3HRptFgxtctCc/23mbe5JG
-	 EkVpLUStll5uzcFSboq9ipu8NaVvYnoSyw4GBgwA=
+	b=NxM7SkW+sVWdJ703EppFdvqEQnXYBP2KzC1QAea/pUEkIQFV5tMu/ykogC2uiKhBQ
+	 BgBm1FzF2s0+x++fVSHUzpkNioOPtfOJPvwF7Bvf7IrzYoZpQJeoKEp8thr9qEUe6C
+	 8ku1det21k85XivInOhKFOuzkAR8f08BuZSFM9bQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 269/783] Bluetooth: btusb: dont call kfree_skb() under spin_lock_irqsave()
-Date: Thu, 12 Jan 2023 14:49:45 +0100
-Message-Id: <20230112135536.885550789@linuxfoundation.org>
+Subject: [PATCH 5.10 278/783] apparmor: fix lockdep warning when removing a namespace
+Date: Thu, 12 Jan 2023 14:49:54 +0100
+Message-Id: <20230112135537.286562800@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,43 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: John Johansen <john.johansen@canonical.com>
 
-[ Upstream commit b15a6bd3c80c77faec8317319b97f976b1a08332 ]
+[ Upstream commit 9c4557efc558a68e4cd973490fd936d6e3414db8 ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with interrupts being disabled. So replace kfree_skb()
-with dev_kfree_skb_irq() under spin_lock_irqsave().
+Fix the following lockdep warning
 
-Fixes: 803b58367ffb ("Bluetooth: btusb: Implement driver internal packet reassembly")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+[ 1119.158984] ============================================
+[ 1119.158988] WARNING: possible recursive locking detected
+[ 1119.158996] 6.0.0-rc1+ #257 Tainted: G            E    N
+[ 1119.158999] --------------------------------------------
+[ 1119.159001] bash/80100 is trying to acquire lock:
+[ 1119.159007] ffff88803e79b4a0 (&ns->lock/1){+.+.}-{4:4}, at: destroy_ns.part.0+0x43/0x140
+[ 1119.159028]
+               but task is already holding lock:
+[ 1119.159030] ffff8881009764a0 (&ns->lock/1){+.+.}-{4:4}, at: aa_remove_profiles+0x3f0/0x640
+[ 1119.159040]
+               other info that might help us debug this:
+[ 1119.159042]  Possible unsafe locking scenario:
+
+[ 1119.159043]        CPU0
+[ 1119.159045]        ----
+[ 1119.159047]   lock(&ns->lock/1);
+[ 1119.159051]   lock(&ns->lock/1);
+[ 1119.159055]
+                *** DEADLOCK ***
+
+Which is caused by an incorrect lockdep nesting notation
+
+Fixes: feb3c766a3ab ("apparmor: fix possible recursive lock warning in __aa_create_ns")
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/btusb.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ security/apparmor/policy.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 54001ad5de9f..3d905fda9b29 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -661,13 +661,13 @@ static inline void btusb_free_frags(struct btusb_data *data)
+diff --git a/security/apparmor/policy.c b/security/apparmor/policy.c
+index 4c010c9a6af1..fcf22577f606 100644
+--- a/security/apparmor/policy.c
++++ b/security/apparmor/policy.c
+@@ -1125,7 +1125,7 @@ ssize_t aa_remove_profiles(struct aa_ns *policy_ns, struct aa_label *subj,
  
- 	spin_lock_irqsave(&data->rxlock, flags);
- 
--	kfree_skb(data->evt_skb);
-+	dev_kfree_skb_irq(data->evt_skb);
- 	data->evt_skb = NULL;
- 
--	kfree_skb(data->acl_skb);
-+	dev_kfree_skb_irq(data->acl_skb);
- 	data->acl_skb = NULL;
- 
--	kfree_skb(data->sco_skb);
-+	dev_kfree_skb_irq(data->sco_skb);
- 	data->sco_skb = NULL;
- 
- 	spin_unlock_irqrestore(&data->rxlock, flags);
+ 	if (!name) {
+ 		/* remove namespace - can only happen if fqname[0] == ':' */
+-		mutex_lock_nested(&ns->parent->lock, ns->level);
++		mutex_lock_nested(&ns->parent->lock, ns->parent->level);
+ 		__aa_bump_ns_revision(ns);
+ 		__aa_remove_ns(ns);
+ 		mutex_unlock(&ns->parent->lock);
 -- 
 2.35.1
 
