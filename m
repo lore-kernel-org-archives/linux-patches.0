@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F215879C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:39:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552FDC433D2;
-	Thu, 12 Jan 2023 14:39:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B054579C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:39:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2734BC433D2;
+	Thu, 12 Jan 2023 14:39:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534379;
-	bh=pUQvjGqdJkWthjMcph/nbp4lFl8qybwy9Vgh2BmmZq4=;
+	s=korg; t=1673534385;
+	bh=ySDeX7+pwcge0UVuMRBqC+2dWj5FsbYEiazND/UAFfg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w9VikGtuACJa+NWegwTTcd35hff3dV5PkgbHEDjY3KfoECZByXbAc5VIpEb8ZycSS
-	 EJ5294Vqppvov8b5HE6/QQnJ6CeXICvIgTQOS2HTkycY9rb1uHRFbfnuFPI6Eyh2yT
-	 dlBO2gHhb/7/dM978/qkmAHJw9lC1AYIDZgIQjNw=
+	b=KXq7nwwGyv42cQKXw9BXppNSPsM5VdYYHeewg5i3OxEFqPXbzZJR67t6Ch3z2JMJm
+	 JErRR67qVcTcsFsh4M35euEvLtnLrxx6mHsbai8JFdasQQSCg8Bl5mF3BBYd3wYV/F
+	 1u654lIle0JhRYQxDhDP4GCq3xYY4H5mE6WDnswA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7bb7cd3595533513a9e7@syzkaller.appspotmail.com,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Matthew Wilcox <willy@infradead.org>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 5.10 769/783] hfs/hfsplus: avoid WARN_ON() for sanity check, use proper error handling
-Date: Thu, 12 Jan 2023 14:58:05 +0100
-Message-Id: <20230112135600.020544323@linuxfoundation.org>
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 5.10 771/783] efi: random: combine bootloader provided RNG seed with RNG protocol output
+Date: Thu, 12 Jan 2023 14:58:07 +0100
+Message-Id: <20230112135600.120845917@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -38,90 +34,180 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit cb7a95af78d29442b8294683eca4897544b8ef46 upstream.
+commit 196dff2712ca5a2e651977bb2fe6b05474111a83 upstream.
 
-Commit 55d1cbbbb29e ("hfs/hfsplus: use WARN_ON for sanity check") fixed
-a build warning by turning a comment into a WARN_ON(), but it turns out
-that syzbot then complains because it can trigger said warning with a
-corrupted hfs image.
+Instead of blindly creating the EFI random seed configuration table if
+the RNG protocol is implemented and works, check whether such a EFI
+configuration table was provided by an earlier boot stage and if so,
+concatenate the existing and the new seeds, leaving it up to the core
+code to mix it in and credit it the way it sees fit.
 
-The warning actually does warn about a bad situation, but we are much
-better off just handling it as the error it is.  So rather than warn
-about us doing bad things, stop doing the bad things and return -EIO.
+This can be used for, e.g., systemd-boot, to pass an additional seed to
+Linux in a way that can be consumed by the kernel very early. In that
+case, the following definitions should be used to pass the seed to the
+EFI stub:
 
-While at it, also fix a memory leak that was introduced by an earlier
-fix for a similar syzbot warning situation, and add a check for one case
-that historically wasn't handled at all (ie neither comment nor
-subsequent WARN_ON).
+struct linux_efi_random_seed {
+      u32     size; // of the 'seed' array in bytes
+      u8      seed[];
+};
 
-Reported-by: syzbot+7bb7cd3595533513a9e7@syzkaller.appspotmail.com
-Fixes: 55d1cbbbb29e ("hfs/hfsplus: use WARN_ON for sanity check")
-Fixes: 8d824e69d9f3 ("hfs: fix OOB Read in __hfs_brec_find")
-Link: https://lore.kernel.org/lkml/000000000000dbce4e05f170f289@google.com/
-Tested-by: Michael Schmitz <schmitzmic@gmail.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+The memory for the struct must be allocated as EFI_ACPI_RECLAIM_MEMORY
+pool memory, and the address of the struct in memory should be installed
+as a EFI configuration table using the following GUID:
+
+LINUX_EFI_RANDOM_SEED_TABLE_GUID        1ce1e5bc-7ceb-42f2-81e5-8aadf180f57b
+
+Note that doing so is safe even on kernels that were built without this
+patch applied, but the seed will simply be overwritten with a seed
+derived from the EFI RNG protocol, if available. The recommended seed
+size is 32 bytes, and seeds larger than 512 bytes are considered
+corrupted and ignored entirely.
+
+In order to preserve forward secrecy, seeds from previous bootloaders
+are memzero'd out, and in order to preserve memory, those older seeds
+are also freed from memory. Freeing from memory without first memzeroing
+is not safe to do, as it's possible that nothing else will ever
+overwrite those pages used by EFI.
+
+Reviewed-by: Jason A. Donenfeld <Jason@zx2c4.com>
+[ardb: incorporate Jason's followup changes to extend the maximum seed
+       size on the consumer end, memzero() it and drop a needless printk]
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfs/inode.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/firmware/efi/efi.c             |    4 +--
+ drivers/firmware/efi/libstub/efistub.h |    2 +
+ drivers/firmware/efi/libstub/random.c  |   42 ++++++++++++++++++++++++++++-----
+ include/linux/efi.h                    |    2 -
+ 4 files changed, 40 insertions(+), 10 deletions(-)
 
---- a/fs/hfs/inode.c
-+++ b/fs/hfs/inode.c
-@@ -454,15 +454,16 @@ int hfs_write_inode(struct inode *inode,
- 		/* panic? */
- 		return -EIO;
+--- a/drivers/firmware/efi/efi.c
++++ b/drivers/firmware/efi/efi.c
+@@ -590,7 +590,7 @@ int __init efi_config_parse_tables(const
  
-+	res = -EIO;
- 	if (HFS_I(main_inode)->cat_key.CName.len > HFS_NAMELEN)
--		return -EIO;
-+		goto out;
- 	fd.search_key->cat = HFS_I(main_inode)->cat_key;
- 	if (hfs_brec_find(&fd))
--		/* panic? */
- 		goto out;
+ 		seed = early_memremap(efi_rng_seed, sizeof(*seed));
+ 		if (seed != NULL) {
+-			size = min(seed->size, EFI_RANDOM_SEED_SIZE);
++			size = min_t(u32, seed->size, SZ_1K); // sanity check
+ 			early_memunmap(seed, sizeof(*seed));
+ 		} else {
+ 			pr_err("Could not map UEFI random seed!\n");
+@@ -599,8 +599,8 @@ int __init efi_config_parse_tables(const
+ 			seed = early_memremap(efi_rng_seed,
+ 					      sizeof(*seed) + size);
+ 			if (seed != NULL) {
+-				pr_notice("seeding entropy pool\n");
+ 				add_bootloader_randomness(seed->bits, size);
++				memzero_explicit(seed->bits, size);
+ 				early_memunmap(seed, sizeof(*seed) + size);
+ 			} else {
+ 				pr_err("Could not map UEFI random seed!\n");
+--- a/drivers/firmware/efi/libstub/efistub.h
++++ b/drivers/firmware/efi/libstub/efistub.h
+@@ -767,6 +767,8 @@ efi_status_t efi_get_random_bytes(unsign
+ efi_status_t efi_random_alloc(unsigned long size, unsigned long align,
+ 			      unsigned long *addr, unsigned long random_seed);
  
- 	if (S_ISDIR(main_inode->i_mode)) {
--		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_dir));
-+		if (fd.entrylength < sizeof(struct hfs_cat_dir))
-+			goto out;
- 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
- 			   sizeof(struct hfs_cat_dir));
- 		if (rec.type != HFS_CDR_DIR ||
-@@ -475,6 +476,8 @@ int hfs_write_inode(struct inode *inode,
- 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
- 			    sizeof(struct hfs_cat_dir));
- 	} else if (HFS_IS_RSRC(inode)) {
-+		if (fd.entrylength < sizeof(struct hfs_cat_file))
-+			goto out;
- 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
- 			       sizeof(struct hfs_cat_file));
- 		hfs_inode_write_fork(inode, rec.file.RExtRec,
-@@ -482,7 +485,8 @@ int hfs_write_inode(struct inode *inode,
- 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
- 				sizeof(struct hfs_cat_file));
- 	} else {
--		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_file));
-+		if (fd.entrylength < sizeof(struct hfs_cat_file))
-+			goto out;
- 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
- 			   sizeof(struct hfs_cat_file));
- 		if (rec.type != HFS_CDR_FIL ||
-@@ -499,9 +503,10 @@ int hfs_write_inode(struct inode *inode,
- 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
- 			    sizeof(struct hfs_cat_file));
- 	}
-+	res = 0;
- out:
- 	hfs_find_exit(&fd);
--	return 0;
-+	return res;
++efi_status_t efi_random_get_seed(void);
++
+ efi_status_t check_platform_features(void);
+ 
+ void *get_efi_config_table(efi_guid_t guid);
+--- a/drivers/firmware/efi/libstub/random.c
++++ b/drivers/firmware/efi/libstub/random.c
+@@ -67,8 +67,9 @@ efi_status_t efi_random_get_seed(void)
+ 	efi_guid_t rng_proto = EFI_RNG_PROTOCOL_GUID;
+ 	efi_guid_t rng_algo_raw = EFI_RNG_ALGORITHM_RAW;
+ 	efi_guid_t rng_table_guid = LINUX_EFI_RANDOM_SEED_TABLE_GUID;
++	struct linux_efi_random_seed *prev_seed, *seed = NULL;
++	int prev_seed_size = 0, seed_size = EFI_RANDOM_SEED_SIZE;
+ 	efi_rng_protocol_t *rng = NULL;
+-	struct linux_efi_random_seed *seed = NULL;
+ 	efi_status_t status;
+ 
+ 	status = efi_bs_call(locate_protocol, &rng_proto, NULL, (void **)&rng);
+@@ -76,18 +77,33 @@ efi_status_t efi_random_get_seed(void)
+ 		return status;
+ 
+ 	/*
++	 * Check whether a seed was provided by a prior boot stage. In that
++	 * case, instead of overwriting it, let's create a new buffer that can
++	 * hold both, and concatenate the existing and the new seeds.
++	 * Note that we should read the seed size with caution, in case the
++	 * table got corrupted in memory somehow.
++	 */
++	prev_seed = get_efi_config_table(LINUX_EFI_RANDOM_SEED_TABLE_GUID);
++	if (prev_seed && prev_seed->size <= 512U) {
++		prev_seed_size = prev_seed->size;
++		seed_size += prev_seed_size;
++	}
++
++	/*
+ 	 * Use EFI_ACPI_RECLAIM_MEMORY here so that it is guaranteed that the
+ 	 * allocation will survive a kexec reboot (although we refresh the seed
+ 	 * beforehand)
+ 	 */
+ 	status = efi_bs_call(allocate_pool, EFI_ACPI_RECLAIM_MEMORY,
+-			     sizeof(*seed) + EFI_RANDOM_SEED_SIZE,
++			     struct_size(seed, bits, seed_size),
+ 			     (void **)&seed);
+-	if (status != EFI_SUCCESS)
+-		return status;
++	if (status != EFI_SUCCESS) {
++		efi_warn("Failed to allocate memory for RNG seed.\n");
++		goto err_warn;
++	}
+ 
+ 	status = efi_call_proto(rng, get_rng, &rng_algo_raw,
+-				 EFI_RANDOM_SEED_SIZE, seed->bits);
++				EFI_RANDOM_SEED_SIZE, seed->bits);
+ 
+ 	if (status == EFI_UNSUPPORTED)
+ 		/*
+@@ -100,14 +116,28 @@ efi_status_t efi_random_get_seed(void)
+ 	if (status != EFI_SUCCESS)
+ 		goto err_freepool;
+ 
+-	seed->size = EFI_RANDOM_SEED_SIZE;
++	seed->size = seed_size;
++	if (prev_seed_size)
++		memcpy(seed->bits + EFI_RANDOM_SEED_SIZE, prev_seed->bits,
++		       prev_seed_size);
++
+ 	status = efi_bs_call(install_configuration_table, &rng_table_guid, seed);
+ 	if (status != EFI_SUCCESS)
+ 		goto err_freepool;
+ 
++	if (prev_seed_size) {
++		/* wipe and free the old seed if we managed to install the new one */
++		memzero_explicit(prev_seed->bits, prev_seed_size);
++		efi_bs_call(free_pool, prev_seed);
++	}
+ 	return EFI_SUCCESS;
+ 
+ err_freepool:
++	memzero_explicit(seed, struct_size(seed, bits, seed_size));
+ 	efi_bs_call(free_pool, seed);
++	efi_warn("Failed to obtain seed from EFI_RNG_PROTOCOL\n");
++err_warn:
++	if (prev_seed)
++		efi_warn("Retaining bootloader-supplied seed only");
+ 	return status;
  }
+--- a/include/linux/efi.h
++++ b/include/linux/efi.h
+@@ -1108,8 +1108,6 @@ void efi_check_for_embedded_firmwares(vo
+ static inline void efi_check_for_embedded_firmwares(void) { }
+ #endif
  
- static struct dentry *hfs_file_lookup(struct inode *dir, struct dentry *dentry,
+-efi_status_t efi_random_get_seed(void);
+-
+ void efi_retrieve_tpm2_eventlog(void);
+ 
+ /*
 
 
