@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11E979C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:34:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5991AC433F0;
-	Thu, 12 Jan 2023 14:34:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3A7C79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:34:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E9BC43392;
+	Thu, 12 Jan 2023 14:34:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534094;
-	bh=RN1e4t4GIp74Yg+vWq7EfLneIjaJuaMy8roP6TXo+OQ=;
+	s=korg; t=1673534097;
+	bh=CZie6Zl/JvCNlAcACEu/WRTvzTyXKgEVE7jRIdiyDxU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d5gcDKBXRb4BwGKGMLO3uVv3yt3d4dYXLzQnBTcYRit/+RcoAzGewTsa1KlwZno89
-	 m1A0+u4zvsU22cTTOwtJQVNVyW4I/h2/DCz9euEZcTnX6u3fZJ1ooKAsOEtJ0t98W1
-	 ZYEtKCOQr5D4atknYKlgRJgJ78QEwiNDvqVExNug=
+	b=hiNBZ9JeUKatmZbhP3v48QK1RBiC+6zX3e14I8SozrC+GKLu44XSK5O84uIMx1LHZ
+	 DpoZ5XSFpRPtet084ldls2p+4aEYiewr0nq1FIHIMHMEph42/OS/BEfHpZ5uA4OhgS
+	 BJMQqB3lko6aApsdKvIuBDs2ISx80Iq7+cuJRXZk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zackr@vmware.com>,
-	Michael Banack <banackm@vmware.com>,
-	Martin Krastev <krastevm@vmware.com>
-Subject: [PATCH 5.10 666/783] drm/vmwgfx: Validate the box size for the snooped cursor
-Date: Thu, 12 Jan 2023 14:56:22 +0100
-Message-Id: <20230112135555.218933743@linuxfoundation.org>
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 693/783] btrfs: replace strncpy() with strscpy()
+Date: Thu, 12 Jan 2023 14:56:49 +0100
+Message-Id: <20230112135556.434610093@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,37 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zack Rusin <zackr@vmware.com>
+[ Upstream commit 63d5429f68a3d4c4aa27e65a05196c17f86c41d6 ]
 
-commit 4cf949c7fafe21e085a4ee386bb2dade9067316e upstream.
+Using strncpy() on NUL-terminated strings are deprecated.  To avoid
+possible forming of non-terminated string strscpy() should be used.
 
-Invalid userspace dma surface copies could potentially overflow
-the memcpy from the surface to the snooped image leading to crashes.
-To fix it the dimensions of the copybox have to be validated
-against the expected size of the snooped cursor.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Signed-off-by: Zack Rusin <zackr@vmware.com>
-Fixes: 2ac863719e51 ("vmwgfx: Snoop DMA transfers with non-covering sizes")
-Cc: <stable@vger.kernel.org> # v3.2+
-Reviewed-by: Michael Banack <banackm@vmware.com>
-Reviewed-by: Martin Krastev <krastevm@vmware.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221026031936.1004280-1-zack@kde.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: stable@vger.kernel.org # 4.9+
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_kms.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/ioctl.c      | 9 +++------
+ fs/btrfs/rcu-string.h | 6 +++++-
+ 2 files changed, 8 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
-@@ -182,7 +182,8 @@ void vmw_kms_cursor_snoop(struct vmw_sur
- 	if (cmd->dma.guest.ptr.offset % PAGE_SIZE ||
- 	    box->x != 0    || box->y != 0    || box->z != 0    ||
- 	    box->srcx != 0 || box->srcy != 0 || box->srcz != 0 ||
--	    box->d != 1    || box_count != 1) {
-+	    box->d != 1    || box_count != 1 ||
-+	    box->w > 64 || box->h > 64) {
- 		/* TODO handle none page aligned offsets */
- 		/* TODO handle more dst & src != 0 */
- 		/* TODO handle more then one copy */
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index a17076a05c4d..fc335b5e44df 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -3401,13 +3401,10 @@ static long btrfs_ioctl_dev_info(struct btrfs_fs_info *fs_info,
+ 	di_args->bytes_used = btrfs_device_get_bytes_used(dev);
+ 	di_args->total_bytes = btrfs_device_get_total_bytes(dev);
+ 	memcpy(di_args->uuid, dev->uuid, sizeof(di_args->uuid));
+-	if (dev->name) {
+-		strncpy(di_args->path, rcu_str_deref(dev->name),
+-				sizeof(di_args->path) - 1);
+-		di_args->path[sizeof(di_args->path) - 1] = 0;
+-	} else {
++	if (dev->name)
++		strscpy(di_args->path, rcu_str_deref(dev->name), sizeof(di_args->path));
++	else
+ 		di_args->path[0] = '\0';
+-	}
+ 
+ out:
+ 	rcu_read_unlock();
+diff --git a/fs/btrfs/rcu-string.h b/fs/btrfs/rcu-string.h
+index 5c1a617eb25d..5c2b66d155ef 100644
+--- a/fs/btrfs/rcu-string.h
++++ b/fs/btrfs/rcu-string.h
+@@ -18,7 +18,11 @@ static inline struct rcu_string *rcu_string_strdup(const char *src, gfp_t mask)
+ 					 (len * sizeof(char)), mask);
+ 	if (!ret)
+ 		return ret;
+-	strncpy(ret->str, src, len);
++	/* Warn if the source got unexpectedly truncated. */
++	if (WARN_ON(strscpy(ret->str, src, len) < 0)) {
++		kfree(ret);
++		return NULL;
++	}
+ 	return ret;
+ }
+ 
+-- 
+2.35.1
+
 
 
