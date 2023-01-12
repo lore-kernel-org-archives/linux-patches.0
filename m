@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AFFC79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:29:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65CDC433EF;
-	Thu, 12 Jan 2023 14:29:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 650C979C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:29:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7CBEC433F0;
+	Thu, 12 Jan 2023 14:29:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533781;
-	bh=4GSJIjkhwecQAX1OwnPl0Ywo7HTJUiFNDgajxNdv1u8=;
+	s=korg; t=1673533784;
+	bh=V8JDEOHxZYVaGl2463GBfoBZjYbsHwH465h8fIzUM6Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eHOoKBnlk67oc72ZZCAO1hA6QpWp3ckLmunX8XVlhvcsEt8KB7i2IyWfrl9BSOKfj
-	 6STctUyJhJ//OVv6tHJjVTp/rJanGPeFghwraRtl572xd+jCi3Ywm8kmPnILUtsQ7M
-	 keOthiZiP56NJoyquj/sc6bNRcLC/Q9kILPoJQWI=
+	b=Ptbs4l/zkceB+Q/D1t6iBZfG0Dm1IUJJkUWxuHg/+yCUoM/cz12rN/TyhvUFfAcdo
+	 o3Zz7nqLOGxB33oHfUoC11s/vYIaJXKcqcqosHt9XJfC57lwoJLQN+vhyg8EvoHnGr
+	 LgExYTMapHNmsjrpNiilx4LglGkUjaypavHnlSNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Artem Egorkine <arteme@gmail.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 589/783] ALSA: line6: correct midi status byte when receiving data from podxt
-Date: Thu, 12 Jan 2023 14:55:05 +0100
-Message-Id: <20230112135551.575704721@linuxfoundation.org>
+Subject: [PATCH 5.10 590/783] ALSA: line6: fix stack overflow in line6_midi_transmit
+Date: Thu, 12 Jan 2023 14:55:06 +0100
+Message-Id: <20230112135551.632282763@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,143 +36,32 @@ Content-Transfer-Encoding: 8bit
 
 From: Artem Egorkine <arteme@gmail.com>
 
-commit 8508fa2e7472f673edbeedf1b1d2b7a6bb898ecc upstream.
+commit b8800d324abb50160560c636bfafe2c81001b66c upstream.
 
-A PODxt device sends 0xb2, 0xc2 or 0xf2 as a status byte for MIDI
-messages over USB that should otherwise have a 0xb0, 0xc0 or 0xf0
-status byte. This is usually corrected by the driver on other OSes.
-
-This fixes MIDI sysex messages sent by PODxt.
-
-[ tiwai: fixed white spaces ]
+Correctly calculate available space including the size of the chunk
+buffer. This fixes a buffer overflow when multiple MIDI sysex
+messages are sent to a PODxt device.
 
 Signed-off-by: Artem Egorkine <arteme@gmail.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20221225105728.1153989-1-arteme@gmail.com
+Link: https://lore.kernel.org/r/20221225105728.1153989-2-arteme@gmail.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/line6/driver.c  |    3 ++-
- sound/usb/line6/midi.c    |    3 ++-
- sound/usb/line6/midibuf.c |   25 +++++++++++++++++--------
- sound/usb/line6/midibuf.h |    5 ++++-
- sound/usb/line6/pod.c     |    3 ++-
- 5 files changed, 27 insertions(+), 12 deletions(-)
+ sound/usb/line6/midi.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/sound/usb/line6/driver.c
-+++ b/sound/usb/line6/driver.c
-@@ -304,7 +304,8 @@ static void line6_data_received(struct u
- 		for (;;) {
- 			done =
- 				line6_midibuf_read(mb, line6->buffer_message,
--						LINE6_MIDI_MESSAGE_MAXLEN);
-+						   LINE6_MIDI_MESSAGE_MAXLEN,
-+						   LINE6_MIDIBUF_READ_RX);
- 
- 			if (done <= 0)
- 				break;
 --- a/sound/usb/line6/midi.c
 +++ b/sound/usb/line6/midi.c
-@@ -56,7 +56,8 @@ static void line6_midi_transmit(struct s
+@@ -44,7 +44,8 @@ static void line6_midi_transmit(struct s
+ 	int req, done;
  
  	for (;;) {
- 		done = line6_midibuf_read(mb, chunk,
--					  LINE6_FALLBACK_MAXPACKETSIZE);
-+					  LINE6_FALLBACK_MAXPACKETSIZE,
-+					  LINE6_MIDIBUF_READ_TX);
+-		req = min(line6_midibuf_bytes_free(mb), line6->max_packet_size);
++		req = min3(line6_midibuf_bytes_free(mb), line6->max_packet_size,
++			   LINE6_FALLBACK_MAXPACKETSIZE);
+ 		done = snd_rawmidi_transmit_peek(substream, chunk, req);
  
  		if (done == 0)
- 			break;
---- a/sound/usb/line6/midibuf.c
-+++ b/sound/usb/line6/midibuf.c
-@@ -9,6 +9,7 @@
- 
- #include "midibuf.h"
- 
-+
- static int midibuf_message_length(unsigned char code)
- {
- 	int message_length;
-@@ -20,12 +21,7 @@ static int midibuf_message_length(unsign
- 
- 		message_length = length[(code >> 4) - 8];
- 	} else {
--		/*
--		   Note that according to the MIDI specification 0xf2 is
--		   the "Song Position Pointer", but this is used by Line 6
--		   to send sysex messages to the host.
--		 */
--		static const int length[] = { -1, 2, -1, 2, -1, -1, 1, 1, 1, 1,
-+		static const int length[] = { -1, 2, 2, 2, -1, -1, 1, 1, 1, -1,
- 			1, 1, 1, -1, 1, 1
- 		};
- 		message_length = length[code & 0x0f];
-@@ -125,7 +121,7 @@ int line6_midibuf_write(struct midi_buff
- }
- 
- int line6_midibuf_read(struct midi_buffer *this, unsigned char *data,
--		       int length)
-+		       int length, int read_type)
- {
- 	int bytes_used;
- 	int length1, length2;
-@@ -148,9 +144,22 @@ int line6_midibuf_read(struct midi_buffe
- 
- 	length1 = this->size - this->pos_read;
- 
--	/* check MIDI command length */
- 	command = this->buf[this->pos_read];
-+	/*
-+	   PODxt always has status byte lower nibble set to 0010,
-+	   when it means to send 0000, so we correct if here so
-+	   that control/program changes come on channel 1 and
-+	   sysex message status byte is correct
-+	 */
-+	if (read_type == LINE6_MIDIBUF_READ_RX) {
-+		if (command == 0xb2 || command == 0xc2 || command == 0xf2) {
-+			unsigned char fixed = command & 0xf0;
-+			this->buf[this->pos_read] = fixed;
-+			command = fixed;
-+		}
-+	}
- 
-+	/* check MIDI command length */
- 	if (command & 0x80) {
- 		midi_length = midibuf_message_length(command);
- 		this->command_prev = command;
---- a/sound/usb/line6/midibuf.h
-+++ b/sound/usb/line6/midibuf.h
-@@ -8,6 +8,9 @@
- #ifndef MIDIBUF_H
- #define MIDIBUF_H
- 
-+#define LINE6_MIDIBUF_READ_TX 0
-+#define LINE6_MIDIBUF_READ_RX 1
-+
- struct midi_buffer {
- 	unsigned char *buf;
- 	int size;
-@@ -23,7 +26,7 @@ extern void line6_midibuf_destroy(struct
- extern int line6_midibuf_ignore(struct midi_buffer *mb, int length);
- extern int line6_midibuf_init(struct midi_buffer *mb, int size, int split);
- extern int line6_midibuf_read(struct midi_buffer *mb, unsigned char *data,
--			      int length);
-+			      int length, int read_type);
- extern void line6_midibuf_reset(struct midi_buffer *mb);
- extern int line6_midibuf_write(struct midi_buffer *mb, unsigned char *data,
- 			       int length);
---- a/sound/usb/line6/pod.c
-+++ b/sound/usb/line6/pod.c
-@@ -159,8 +159,9 @@ static struct line6_pcm_properties pod_p
- 	.bytes_per_channel = 3 /* SNDRV_PCM_FMTBIT_S24_3LE */
- };
- 
-+
- static const char pod_version_header[] = {
--	0xf2, 0x7e, 0x7f, 0x06, 0x02
-+	0xf0, 0x7e, 0x7f, 0x06, 0x02
- };
- 
- static char *pod_alloc_sysex_buffer(struct usb_line6_pod *pod, int code,
 
 
