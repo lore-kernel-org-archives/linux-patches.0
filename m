@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA15749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:06:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35F1C433D2;
-	Thu, 12 Jan 2023 14:06:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69AA5749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:06:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B06A2C433F0;
+	Thu, 12 Jan 2023 14:06:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532376;
-	bh=pe5eKJ6QFQLexdOIxDequbId2uIwFad5KU1W1iWG8Jw=;
+	s=korg; t=1673532373;
+	bh=7RP4bFCmSmxgoTpawRnr5tTohrlim9hfMYdf297KNgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QdLwAfLemSRD3TERFdfVgv7qQ+E7JpaAioPOMkzgq1GByrfI+LpWYfTP01CltvTei
-	 uoUE7BiSbuKqOGqJbKXrFpN6mYZ9wUbl5LkVbXMAvn+nRRNhPZ6rfCYflgd9cXBbWw
-	 NGWFeV1Dcr0aNeWitaWV/1jViKCBfsq/9o3jQXHk=
+	b=b+yYjHnZL8N7FTy3EuBX5zmpiK8RKRTgPG3J6NhiGh1z3xiMQImKk3Rp2q3cktvbK
+	 HE68cv6WzFpqLUfN7l1Fotbc8/446JH4syhMAvx5+zY4LCwGxfDDlvzAj72KMx4An5
+	 wtYxNnJV7UKEwgbwwGHMnKfb0erUbZd//kZTbF50=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Junlin Yang <yangjunlin@yulong.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 110/783] media: coda: jpeg: Add check for kmalloc
-Date: Thu, 12 Jan 2023 14:47:06 +0100
-Message-Id: <20230112135529.298158876@linuxfoundation.org>
+Subject: [PATCH 5.10 109/783] pata_ipx4xx_cf: Fix unsigned comparison with less than zero
+Date: Thu, 12 Jan 2023 14:47:05 +0100
+Message-Id: <20230112135529.246871071@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,45 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Junlin Yang <yangjunlin@yulong.com>
 
-[ Upstream commit f30ce3d3760b22ee33c8d9c2e223764ad30bdc5f ]
+[ Upstream commit c38ae56ee034623c59e39c0130ca0dec086c1a39 ]
 
-As kmalloc can return NULL pointer, it should be better to
-check the return value and return error, same as
-coda_jpeg_decode_header.
+The return from the call to platform_get_irq() is int, it can be
+a negative error code, however this is being assigned to an unsigned
+int variable 'irq', so making 'irq' an int, and change the position to
+keep the code format.
 
-Fixes: 96f6f62c4656 ("media: coda: jpeg: add CODA960 JPEG encoder support")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+./drivers/ata/pata_ixp4xx_cf.c:168:5-8:
+WARNING: Unsigned expression compared with zero: irq > 0
+
+Signed-off-by: Junlin Yang <yangjunlin@yulong.com>
+Link: https://lore.kernel.org/r/20210409135426.1773-1-angkery@163.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/coda/coda-jpeg.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/ata/pata_ixp4xx_cf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/coda/coda-jpeg.c b/drivers/media/platform/coda/coda-jpeg.c
-index a72f4655e5ad..b7bf529f18f7 100644
---- a/drivers/media/platform/coda/coda-jpeg.c
-+++ b/drivers/media/platform/coda/coda-jpeg.c
-@@ -1052,10 +1052,16 @@ static int coda9_jpeg_start_encoding(struct coda_ctx *ctx)
- 		v4l2_err(&dev->v4l2_dev, "error loading Huffman tables\n");
- 		return ret;
- 	}
--	if (!ctx->params.jpeg_qmat_tab[0])
-+	if (!ctx->params.jpeg_qmat_tab[0]) {
- 		ctx->params.jpeg_qmat_tab[0] = kmalloc(64, GFP_KERNEL);
--	if (!ctx->params.jpeg_qmat_tab[1])
-+		if (!ctx->params.jpeg_qmat_tab[0])
-+			return -ENOMEM;
-+	}
-+	if (!ctx->params.jpeg_qmat_tab[1]) {
- 		ctx->params.jpeg_qmat_tab[1] = kmalloc(64, GFP_KERNEL);
-+		if (!ctx->params.jpeg_qmat_tab[1])
-+			return -ENOMEM;
-+	}
- 	coda_set_jpeg_compression_quality(ctx, ctx->params.jpeg_quality);
+diff --git a/drivers/ata/pata_ixp4xx_cf.c b/drivers/ata/pata_ixp4xx_cf.c
+index abc0e87ca1a8..43215a4c1e54 100644
+--- a/drivers/ata/pata_ixp4xx_cf.c
++++ b/drivers/ata/pata_ixp4xx_cf.c
+@@ -135,12 +135,12 @@ static void ixp4xx_setup_port(struct ata_port *ap,
  
- 	return 0;
+ static int ixp4xx_pata_probe(struct platform_device *pdev)
+ {
+-	unsigned int irq;
+ 	struct resource *cs0, *cs1;
+ 	struct ata_host *host;
+ 	struct ata_port *ap;
+ 	struct ixp4xx_pata_data *data = dev_get_platdata(&pdev->dev);
+ 	int ret;
++	int irq;
+ 
+ 	cs0 = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	cs1 = platform_get_resource(pdev, IORESOURCE_MEM, 1);
 -- 
 2.35.1
 
