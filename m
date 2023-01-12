@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5F2B79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:35:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 461E8C433EF;
-	Thu, 12 Jan 2023 14:35:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B7F179C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:35:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DA3C433D2;
+	Thu, 12 Jan 2023 14:35:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534127;
-	bh=qgRQMPUO1Uc+cH74o/UKEo8XOXmapK+SQ9IzDbHibi4=;
+	s=korg; t=1673534130;
+	bh=ImpJ5Ma5yRxB38pco1XNWpfo5aDPEMjz3RvoEPfzQ5k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kBAH3dB50YuYpdjOnnx32ooxpiNCbhzr6WbkAOTNEwZWoXrcS/tmx/wM2GyueZUY4
-	 4xHii82tkmkQAxiWi3OHNIQ6sRl8r1Tts8EV6IEMMfkkWgJa33+DS/Zw2IRZYtWBV8
-	 7M/sF7A86rdc0ck9n/LQFVekviQ3ArLcatiF6WWs=
+	b=qJ5HOySoP9e2Pge0lXE2rYidgWVcbSvyBXxVCY33qkmEZNVOSkwn9aL6iLWETn3+D
+	 E4y4bhWWX/OLcJHX6P36oOUREXpaFvUYdV7qNahahHXfxuFxVP3dJqPy9GHjn1xqIT
+	 hvQOvlY2BTd4s9UiuO/9oBSqUxP5zkIts9++l+O0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-fsd@tesla.com,
-	Smitha T Murthy <smitha.t@samsung.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Guo Ren <guoren@linux.alibaba.com>,
+	Guo Ren <guoren@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 697/783] media: s5p-mfc: Clear workbit to handle error condition
-Date: Thu, 12 Jan 2023 14:56:53 +0100
-Message-Id: <20230112135556.631910047@linuxfoundation.org>
+Subject: [PATCH 5.10 706/783] riscv: stacktrace: Fixup ftrace_graph_ret_addr retp argument
+Date: Thu, 12 Jan 2023 14:57:02 +0100
+Message-Id: <20230112135557.090086495@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,41 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Smitha T Murthy <smitha.t@samsung.com>
+From: Guo Ren <guoren@linux.alibaba.com>
 
-[ Upstream commit d3f3c2fe54e30b0636496d842ffbb5ad3a547f9b ]
+[ Upstream commit 5c3022e4a616d800cf5f4c3a981d7992179e44a1 ]
 
-During error on CLOSE_INSTANCE command, ctx_work_bits was not getting
-cleared. During consequent mfc execution NULL pointer dereferencing of
-this context led to kernel panic. This patch fixes this issue by making
-sure to clear ctx_work_bits always.
+The 'retp' is a pointer to the return address on the stack, so we
+must pass the current return address pointer as the 'retp'
+argument to ftrace_push_return_trace(). Not parent function's
+return address on the stack.
 
-Fixes: 818cd91ab8c6 ("[media] s5p-mfc: Extract open/close MFC instance commands")
+Fixes: b785ec129bd9 ("riscv/ftrace: Add HAVE_FUNCTION_GRAPH_RET_ADDR_PTR support")
+Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
+Signed-off-by: Guo Ren <guoren@kernel.org>
+Link: https://lore.kernel.org/r/20221109064937.3643993-2-guoren@kernel.org
 Cc: stable@vger.kernel.org
-Cc: linux-fsd@tesla.com
-Signed-off-by: Smitha T Murthy <smitha.t@samsung.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/s5p-mfc/s5p_mfc_ctrl.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ arch/riscv/kernel/stacktrace.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/s5p-mfc/s5p_mfc_ctrl.c b/drivers/media/platform/s5p-mfc/s5p_mfc_ctrl.c
-index da138c314963..58822ec5370e 100644
---- a/drivers/media/platform/s5p-mfc/s5p_mfc_ctrl.c
-+++ b/drivers/media/platform/s5p-mfc/s5p_mfc_ctrl.c
-@@ -468,8 +468,10 @@ void s5p_mfc_close_mfc_inst(struct s5p_mfc_dev *dev, struct s5p_mfc_ctx *ctx)
- 	s5p_mfc_hw_call(dev->mfc_ops, try_run, dev);
- 	/* Wait until instance is returned or timeout occurred */
- 	if (s5p_mfc_wait_for_done_ctx(ctx,
--				S5P_MFC_R2H_CMD_CLOSE_INSTANCE_RET, 0))
-+				S5P_MFC_R2H_CMD_CLOSE_INSTANCE_RET, 0)){
-+		clear_work_bit_irqsave(ctx);
- 		mfc_err("Err returning instance\n");
-+	}
+diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
+index 6cbde6b43fd2..1e53fbe5eb78 100644
+--- a/arch/riscv/kernel/stacktrace.c
++++ b/arch/riscv/kernel/stacktrace.c
+@@ -63,7 +63,7 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
+ 		} else {
+ 			fp = frame->fp;
+ 			pc = ftrace_graph_ret_addr(current, NULL, frame->ra,
+-						   (unsigned long *)(fp - 8));
++						   &frame->ra);
+ 		}
  
- 	/* Free resources */
- 	s5p_mfc_hw_call(dev->mfc_ops, release_codec_buffers, ctx);
+ 	}
 -- 
 2.35.1
 
