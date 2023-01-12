@@ -1,35 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3847749F
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:21:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78B6C433D2;
-	Thu, 12 Jan 2023 14:21:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0472749F
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:21:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37AFAC433D2;
+	Thu, 12 Jan 2023 14:21:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533292;
-	bh=MbBMdMGrAmv6pGDS1oCkTeeY7MKwixW/5O26uoTOoKM=;
+	s=korg; t=1673533295;
+	bh=iaHhf4jyQ6UpD9eH7qonXdE6Xa+4+4bfnh3agU2pf5Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v9icDpy7/PgYlyIe1Mx/eajRJ/LDIPCnGJOD/vab9Th0lBT+x3+cYzmnR4/N8mlsk
-	 oCQz+MqS2fJyxmEhDAfVFWZgoTT6xsqX+Dvw4hqPzNzjTURgxznUn2zWL9bjUyPGAq
-	 L6f8xWtcFDtWmb/3Qpl+qV/MjRbmRxaLlUKW1iwQ=
+	b=WXUbR0ZpiCjhbqTM7WICADZGoOCA6p47mCLVF/fIp7TcPxfins2JRr3VMvKrhwmaK
+	 yGG9mJ0V/FrWdLp7o6pIt3AGenqkiBLou82XQUeoGAeis8y4n4jy72no1TqWv444Zr
+	 sT+a5U2Fng1MoWeWx3WllXFNvaM/tZPQIfz+qlno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@linaro.org>,
-	Ian Rogers <irogers@google.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	bpf@vger.kernel.org,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Hacash Robot <hacashRobot@santino.com>,
+	Xie Shaowen <studentxswpy@163.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 404/783] perf trace: Handle failure when trace point folder is missed
-Date: Thu, 12 Jan 2023 14:52:00 +0100
-Message-Id: <20230112135543.036012321@linuxfoundation.org>
+Subject: [PATCH 5.10 431/783] macintosh/macio-adb: check the return value of ioremap()
+Date: Thu, 12 Jan 2023 14:52:27 +0100
+Message-Id: <20230112135544.299641415@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -43,91 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leo Yan <leo.yan@linaro.org>
+From: Xie Shaowen <studentxswpy@163.com>
 
-[ Upstream commit 03e9a5d8eb552a1bf692a9c8a5ecd50f4e428006 ]
+[ Upstream commit dbaa3105736d4d73063ea0a3b01cd7fafce924e6 ]
 
-On Arm64 a case is perf tools fails to find the corresponding trace
-point folder for system calls listed in the table 'syscalltbl_arm64',
-e.g. the generated system call table contains "lookup_dcookie" but we
-cannot find out the matched trace point folder for it.
+The function ioremap() in macio_init() can fail, so its return value
+should be checked.
 
-We need to figure out if there have any issue for the generated system
-call table, on the other hand, we need to handle the case when trace
-point folder is missed under sysfs, this patch sets the flag
-syscall::nonexistent as true and returns the error from
-trace__read_syscall_info().
-
-Another problem is for trace__syscall_info(), it returns two different
-values if a system call doesn't exist: at the first time calling
-trace__syscall_info() it returns NULL when the system call doesn't exist,
-later if call trace__syscall_info() again for the same missed system
-call, it returns pointer of syscall.  trace__syscall_info() checks the
-condition 'syscalls.table[id].name == NULL', but the name will be
-assigned in the first invoking even the system call is not found.
-
-So checking system call's name in trace__syscall_info() is not the right
-thing to do, this patch simply checks flag syscall::nonexistent to make
-decision if a system call exists or not, finally trace__syscall_info()
-returns the consistent result (NULL) if a system call doesn't existed.
-
-Fixes: b8b1033fcaa091d8 ("perf trace: Mark syscall ids that are not allocated to avoid unnecessary error messages")
-Signed-off-by: Leo Yan <leo.yan@linaro.org>
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: bpf@vger.kernel.org
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20221121075237.127706-4-leo.yan@linaro.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 36874579dbf4c ("[PATCH] powerpc: macio-adb build fix")
+Reported-by: Hacash Robot <hacashRobot@santino.com>
+Signed-off-by: Xie Shaowen <studentxswpy@163.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20220802074148.3213659-1-studentxswpy@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+ drivers/macintosh/macio-adb.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 1a7279687f25..8de0d0a740de 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -1794,13 +1794,19 @@ static int trace__read_syscall_info(struct trace *trace, int id)
- 		sc->tp_format = trace_event__tp_format("syscalls", tp_name);
+diff --git a/drivers/macintosh/macio-adb.c b/drivers/macintosh/macio-adb.c
+index d4759db002c6..defe65f51fa2 100644
+--- a/drivers/macintosh/macio-adb.c
++++ b/drivers/macintosh/macio-adb.c
+@@ -106,6 +106,10 @@ int macio_init(void)
+ 		return -ENXIO;
  	}
- 
-+	/*
-+	 * Fails to read trace point format via sysfs node, so the trace point
-+	 * doesn't exist.  Set the 'nonexistent' flag as true.
-+	 */
-+	if (IS_ERR(sc->tp_format)) {
-+		sc->nonexistent = true;
-+		return PTR_ERR(sc->tp_format);
+ 	adb = ioremap(r.start, sizeof(struct adb_regs));
++	if (!adb) {
++		of_node_put(adbs);
++		return -ENOMEM;
 +	}
-+
- 	if (syscall__alloc_arg_fmts(sc, IS_ERR(sc->tp_format) ?
- 					RAW_SYSCALL_ARGS_NUM : sc->tp_format->format.nr_fields))
- 		return -ENOMEM;
  
--	if (IS_ERR(sc->tp_format))
--		return PTR_ERR(sc->tp_format);
--
- 	sc->args = sc->tp_format->format.fields;
- 	/*
- 	 * We need to check and discard the first variable '__syscall_nr'
-@@ -2117,11 +2123,8 @@ static struct syscall *trace__syscall_info(struct trace *trace,
- 	    (err = trace__read_syscall_info(trace, id)) != 0)
- 		goto out_cant_read;
- 
--	if (trace->syscalls.table[id].name == NULL) {
--		if (trace->syscalls.table[id].nonexistent)
--			return NULL;
-+	if (trace->syscalls.table && trace->syscalls.table[id].nonexistent)
- 		goto out_cant_read;
--	}
- 
- 	return &trace->syscalls.table[id];
- 
+ 	out_8(&adb->ctrl.r, 0);
+ 	out_8(&adb->intr.r, 0);
 -- 
 2.35.1
 
