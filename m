@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54D5479C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:33:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C54C433EF;
-	Thu, 12 Jan 2023 14:33:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4348779C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:33:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97C7BC433D2;
+	Thu, 12 Jan 2023 14:33:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533996;
-	bh=Z27P/gi6NT29AN0woT3zGMsVpl9qRzHvmp/2G3ngZVs=;
+	s=korg; t=1673533999;
+	bh=zafvU+hyAbfGaeKEBejgUefE+wk0/vtGTxF2hYoyDoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p9YvIwXkVqPYTsMQPMfEC2Jgj3ZbjNuAqYVUY9iwevyQB1Lv5/N09UTsLGHv9Tatu
-	 ehbplIbwYvSBzGRuVHkxbS09BaWDke+VEatbIpmZ28StJAfdv1H2ZNVSLm1fyq7Suk
-	 K6mfl2qYhIRwgyVkv2i4tynnNWogJa4tGLcsd1pM=
+	b=M6QcPYfZv7eu2e6QrHbdpVkvfeT4ivliWMdo8VGVWNT0eEZT0T4/QMARAu6dyG9z3
+	 OzFeJp9GDXOEtnYGnKKK+5mdD7vz9ZlQ7PSjFru0yKXcFM3CXtD64R0H7TTRCASrnV
+	 iToMefUY808Lsl13j/iA0NLpetFo0ahqORJeeOTc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 5.10 633/783] dm cache: set needs_check flag after aborting metadata
-Date: Thu, 12 Jan 2023 14:55:49 +0100
-Message-Id: <20230112135553.656882321@linuxfoundation.org>
+	Saravana Kannan <saravanak@google.com>,
+	"Isaac J. Manjarres" <isaacmanjarres@google.com>
+Subject: [PATCH 5.10 660/783] driver core: Fix bus_type.match() error handling in __driver_attach()
+Date: Thu, 12 Jan 2023 14:56:16 +0100
+Message-Id: <20230112135554.946762058@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -33,47 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Isaac J. Manjarres <isaacmanjarres@google.com>
 
-commit 6b9973861cb2e96dcd0bb0f1baddc5c034207c5c upstream.
+commit 27c0d217340e47ec995557f61423ef415afba987 upstream.
 
-Otherwise the commit that will be aborted will be associated with the
-metadata objects that will be torn down.  Must write needs_check flag
-to metadata with a reset block manager.
+When a driver registers with a bus, it will attempt to match with every
+device on the bus through the __driver_attach() function. Currently, if
+the bus_type.match() function encounters an error that is not
+-EPROBE_DEFER, __driver_attach() will return a negative error code, which
+causes the driver registration logic to stop trying to match with the
+remaining devices on the bus.
 
-Found through code-inspection (and compared against dm-thin.c).
+This behavior is not correct; a failure while matching a driver to a
+device does not mean that the driver won't be able to match and bind
+with other devices on the bus. Update the logic in __driver_attach()
+to reflect this.
 
+Fixes: 656b8035b0ee ("ARM: 8524/1: driver cohandle -EPROBE_DEFER from bus_type.match()")
 Cc: stable@vger.kernel.org
-Fixes: 028ae9f76f29 ("dm cache: add fail io mode and needs_check flag")
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Cc: Saravana Kannan <saravanak@google.com>
+Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
+Link: https://lore.kernel.org/r/20220921001414.4046492-1-isaacmanjarres@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-target.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/base/dd.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -985,16 +985,16 @@ static void abort_transaction(struct cac
- 	if (get_cache_mode(cache) >= CM_READ_ONLY)
- 		return;
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -1088,7 +1088,11 @@ static int __driver_attach(struct device
+ 		return 0;
+ 	} else if (ret < 0) {
+ 		dev_dbg(dev, "Bus failed to match device: %d\n", ret);
+-		return ret;
++		/*
++		 * Driver could not match with device, but may match with
++		 * another device on the bus.
++		 */
++		return 0;
+ 	} /* ret > 0 means positive match */
  
--	if (dm_cache_metadata_set_needs_check(cache->cmd)) {
--		DMERR("%s: failed to set 'needs_check' flag in metadata", dev_name);
--		set_cache_mode(cache, CM_FAIL);
--	}
--
- 	DMERR_LIMIT("%s: aborting current metadata transaction", dev_name);
- 	if (dm_cache_metadata_abort(cache->cmd)) {
- 		DMERR("%s: failed to abort metadata transaction", dev_name);
- 		set_cache_mode(cache, CM_FAIL);
- 	}
-+
-+	if (dm_cache_metadata_set_needs_check(cache->cmd)) {
-+		DMERR("%s: failed to set 'needs_check' flag in metadata", dev_name);
-+		set_cache_mode(cache, CM_FAIL);
-+	}
- }
- 
- static void metadata_operation_failed(struct cache *cache, const char *op, int r)
+ 	if (driver_allows_async_probing(drv)) {
 
 
