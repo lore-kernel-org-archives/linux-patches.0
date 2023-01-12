@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5862879C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:34:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2BF9C433EF;
-	Thu, 12 Jan 2023 14:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8255179C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:34:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43CCC433EF;
+	Thu, 12 Jan 2023 14:34:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534059;
-	bh=42Hu71NTX/QxC2ivMWnlv4Azqa6uLp+RGnpO0frZQF0=;
+	s=korg; t=1673534062;
+	bh=5WKHmf+ghsh8UAEx6ij7UzNzhTKBNbfgN2GnxZwB/ec=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DNT+b3X25jFU5OnFIj5edAX9oAs9gypKBVZyehSlj9RCAvMlYgt+IKlCQ/pPj+LE0
-	 yHWImWADXjIaQVAt8vpoQw6qODjsg/XOm6YkJWkEFDMTKIvt61eLNDoI9ic7PBqTfp
-	 zMWeCq6sYf33PoJcaBPVe5KXMcZrXpwbK+Om6aQk=
+	b=V8DmwzUxGPxnkQyS7E2xaneiy7NYmsBtOzIi1+q4H8O3LHcoQAMcxRoOFrD/iJBAj
+	 HpnEPrai7htSOBOJU8r8Ur3UGJN7gJXo5aH860uQFPAQULi/inttHLtyD5a9Edp39c
+	 E/qMq4hU+p+HJdC52+kArbpvE2EMy7AMHKZ7uch0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Lu=C3=ADs=20Henriques?= <lhenriques@suse.de>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 5.10 682/783] ext4: fix error code return to user-space in ext4_get_branch()
-Date: Thu, 12 Jan 2023 14:56:38 +0100
-Message-Id: <20230112135555.936587344@linuxfoundation.org>
+	Simon Ser <contact@emersion.fr>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Lyude Paul <lyude@redhat.com>,
+	=?UTF-8?q?Jonas=20=C3=85dahl?= <jadahl@redhat.com>
+Subject: [PATCH 5.10 665/783] drm/connector: send hotplug uevent on connector cleanup
+Date: Thu, 12 Jan 2023 14:56:21 +0100
+Message-Id: <20230112135555.170227920@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,48 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luís Henriques <lhenriques@suse.de>
+From: Simon Ser <contact@emersion.fr>
 
-commit 26d75a16af285a70863ba6a81f85d81e7e65da50 upstream.
+commit 6fdc2d490ea1369d17afd7e6eb66fecc5b7209bc upstream.
 
-If a block is out of range in ext4_get_branch(), -ENOMEM will be returned
-to user-space.  Obviously, this error code isn't really useful.  This
-patch fixes it by making sure the right error code (-EFSCORRUPTED) is
-propagated to user-space.  EUCLEAN is more informative than ENOMEM.
+A typical DP-MST unplug removes a KMS connector. However care must
+be taken to properly synchronize with user-space. The expected
+sequence of events is the following:
 
-Signed-off-by: Luís Henriques <lhenriques@suse.de>
-Link: https://lore.kernel.org/r/20221109181445.17843-1-lhenriques@suse.de
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+1. The kernel notices that the DP-MST port is gone.
+2. The kernel marks the connector as disconnected, then sends a
+   uevent to make user-space re-scan the connector list.
+3. User-space notices the connector goes from connected to disconnected,
+   disables it.
+4. Kernel handles the IOCTL disabling the connector. On success,
+   the very last reference to the struct drm_connector is dropped and
+   drm_connector_cleanup() is called.
+5. The connector is removed from the list, and a uevent is sent to tell
+   user-space that the connector disappeared.
+
+The very last step was missing. As a result, user-space thought the
+connector still existed and could try to disable it again. Since the
+kernel no longer knows about the connector, that would end up with
+EINVAL and confused user-space.
+
+Fix this by sending a hotplug uevent from drm_connector_cleanup().
+
+Signed-off-by: Simon Ser <contact@emersion.fr>
+Cc: stable@vger.kernel.org
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: Jonas Ådahl <jadahl@redhat.com>
+Tested-by: Jonas Ådahl <jadahl@redhat.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221017153150.60675-2-contact@emersion.fr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/indirect.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/drm_connector.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/ext4/indirect.c
-+++ b/fs/ext4/indirect.c
-@@ -148,6 +148,7 @@ static Indirect *ext4_get_branch(struct
- 	struct super_block *sb = inode->i_sb;
- 	Indirect *p = chain;
- 	struct buffer_head *bh;
-+	unsigned int key;
- 	int ret = -EIO;
+--- a/drivers/gpu/drm/drm_connector.c
++++ b/drivers/gpu/drm/drm_connector.c
+@@ -484,6 +484,9 @@ void drm_connector_cleanup(struct drm_co
+ 	mutex_destroy(&connector->mutex);
  
- 	*err = 0;
-@@ -156,7 +157,13 @@ static Indirect *ext4_get_branch(struct
- 	if (!p->key)
- 		goto no_block;
- 	while (--depth) {
--		bh = sb_getblk(sb, le32_to_cpu(p->key));
-+		key = le32_to_cpu(p->key);
-+		if (key > ext4_blocks_count(EXT4_SB(sb)->s_es)) {
-+			/* the block was out of range */
-+			ret = -EFSCORRUPTED;
-+			goto failure;
-+		}
-+		bh = sb_getblk(sb, key);
- 		if (unlikely(!bh)) {
- 			ret = -ENOMEM;
- 			goto failure;
+ 	memset(connector, 0, sizeof(*connector));
++
++	if (dev->registered)
++		drm_sysfs_hotplug_event(dev);
+ }
+ EXPORT_SYMBOL(drm_connector_cleanup);
+ 
 
 
