@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A4EF749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:10:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 645EAC43396;
-	Thu, 12 Jan 2023 14:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A286A749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:10:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A82BC433D2;
+	Thu, 12 Jan 2023 14:10:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532616;
-	bh=125hRsD974JRQuUAE1Rqj04eNNc+Gp6X6EKhqGlof9s=;
+	s=korg; t=1673532619;
+	bh=KMHOMXOBIGBLUfThaRP2aQ7LUPmY+bXru+OjApyD2eo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AaXen/nROysJNXV7wz4U0LSFLuejfXWG4Sh9fhpOVH5+tSoi00aZxsM/3bttJDOrK
-	 YliMgUfolEoFvJyIRbSJBdyzTbXSo35+e+w2m+pFVWg+UnOxzWovAaH15ActKnbJO0
-	 UqO624bO0dIfQ1z3T/ImiuR8VulG6OtUxHmHSsTw=
+	b=J7Kat2QX1lzamdwch0TJp3ARw1GRmjaNDhjDE9S9BQBZnk0aQlTwCr23DSwxJ1oJ4
+	 JacLACs5HBLYdrchxMrvyMal6CacqiGPny4ziCM9ixd3CP8FBaEEYxZdB2EUoYiyTD
+	 T0smGJEHZKPb6XZ8JF19fezIuUCNecHb1ve/ue5E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 203/783] wifi: cfg80211: Fix not unregister reg_pdev when load_builtin_regdb_keys() fails
-Date: Thu, 12 Jan 2023 14:48:39 +0100
-Message-Id: <20230112135533.756783542@linuxfoundation.org>
+Subject: [PATCH 5.10 221/783] SUNRPC: Fix missing release socket in rpc_sockname()
+Date: Thu, 12 Jan 2023 14:48:57 +0100
+Message-Id: <20230112135534.606420438@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,54 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Wang ShaoBo <bobo.shaobowang@huawei.com>
 
-[ Upstream commit 833a9fd28c9b7ccb39a334721379e992dc1c0c89 ]
+[ Upstream commit 50fa355bc0d75911fe9d5072a5ba52cdb803aff7 ]
 
-In regulatory_init_db(), when it's going to return a error, reg_pdev
-should be unregistered. When load_builtin_regdb_keys() fails it doesn't
-do it and makes cfg80211 can't be reload with report:
+socket dynamically created is not released when getting an unintended
+address family type in rpc_sockname(), direct to out_release for calling
+sock_release().
 
-sysfs: cannot create duplicate filename '/devices/platform/regulatory.0'
- ...
- <TASK>
- dump_stack_lvl+0x79/0x9b
- sysfs_warn_dup.cold+0x1c/0x29
- sysfs_create_dir_ns+0x22d/0x290
- kobject_add_internal+0x247/0x800
- kobject_add+0x135/0x1b0
- device_add+0x389/0x1be0
- platform_device_add+0x28f/0x790
- platform_device_register_full+0x376/0x4b0
- regulatory_init+0x9a/0x4b2 [cfg80211]
- cfg80211_init+0x84/0x113 [cfg80211]
- ...
-
-Fixes: 90a53e4432b1 ("cfg80211: implement regdb signature checking")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221109090237.214127-1-chenzhongjin@huawei.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: 2e738fdce22f ("SUNRPC: Add API to acquire source address")
+Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/reg.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sunrpc/clnt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/wireless/reg.c b/net/wireless/reg.c
-index a1e64d967bd3..90297264d8ae 100644
---- a/net/wireless/reg.c
-+++ b/net/wireless/reg.c
-@@ -4185,8 +4185,10 @@ static int __init regulatory_init_db(void)
- 		return -EINVAL;
- 
- 	err = load_builtin_regdb_keys();
--	if (err)
-+	if (err) {
-+		platform_device_unregister(reg_pdev);
- 		return err;
-+	}
- 
- 	/* We always try to get an update for the static regdomain */
- 	err = regulatory_hint_core(cfg80211_world_regdom->alpha2);
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index 78c6648af782..c478108ca6a6 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -1361,7 +1361,7 @@ static int rpc_sockname(struct net *net, struct sockaddr *sap, size_t salen,
+ 		break;
+ 	default:
+ 		err = -EAFNOSUPPORT;
+-		goto out;
++		goto out_release;
+ 	}
+ 	if (err < 0) {
+ 		dprintk("RPC:       can't bind UDP socket (%d)\n", err);
 -- 
 2.35.1
 
