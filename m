@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9D9B749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:08:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3490FC433D2;
-	Thu, 12 Jan 2023 14:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCC10749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:08:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CEE5C433EF;
+	Thu, 12 Jan 2023 14:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532497;
-	bh=QR6MxQrldUdDWMfrKT93GGo/bMaTZQ2jwrNxGnVBOgU=;
+	s=korg; t=1673532494;
+	bh=/ktH43AALJeYfa4XMHiFVmunaH4Ur4pLwRBUZ/3JUiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l96uSzz61EKGqmEXVwv4LP2hKTazaYu5ZZVePhg1DIc1meuLIcwxKuIMqtNr+XBeT
-	 us7/q68g9w4SbrpCA1pTQ9sFgu3LvY4wv0wGnUvVovoQgayqT4DDS7ypBIuKhiv8Wk
-	 posTy3X3eE33Bf7Z2015jfgxD17TRuijGtUyyavo=
+	b=wkVSOTXYlGyxIdwgYu0mV+erUclIhvrHJ9sc7G5fO5kkmOJbJShpCweG4AV7oioWR
+	 afNI1ygf4o6Atof62SZZs2xaiPfCGsyJ99uG3D2hAXNESsXHbn3Ne6kOuOW2yNO0Cx
+	 UGpkdSDfUS7+G+fXvqkb3fnxFyYNd+Nslz7wXjoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Zhang Zekun <zhangzekun11@huawei.com>,
+	Thierry Reding <treding@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 182/783] ASoC: dt-bindings: wcd9335: fix reset line polarity in example
-Date: Thu, 12 Jan 2023 14:48:18 +0100
-Message-Id: <20230112135532.757618451@linuxfoundation.org>
+Subject: [PATCH 5.10 181/783] drm/tegra: Add missing clk_disable_unprepare() in tegra_dc_probe()
+Date: Thu, 12 Jan 2023 14:48:17 +0100
+Message-Id: <20230112135532.709277075@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,37 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Zhang Zekun <zhangzekun11@huawei.com>
 
-[ Upstream commit 34cb111f8a7b98b5fec809dd194003bca20ef1b2 ]
+[ Upstream commit 7ad4384d53c67672a8720cdc2ef638d7d1710ab8 ]
 
-When resetting the block, the reset line is being driven low and then
-high, which means that the line in DTS should be annotated as "active
-low".
+Add the missing clk_disable_unprepare() before return from
+tegra_dc_probe() in the error handling path.
 
-Fixes: 1877c9fda1b7 ("ASoC: dt-bindings: add dt bindings for wcd9335 audio codec")
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20221027074652.1044235-2-dmitry.torokhov@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: f68ba6912bd2 ("drm/tegra: dc: Link DC1 to DC0 on Tegra20")
+Signed-off-by: Zhang Zekun <zhangzekun11@huawei.com>
+Signed-off-by: Thierry Reding <treding@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/sound/qcom,wcd9335.txt | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/tegra/dc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd9335.txt b/Documentation/devicetree/bindings/sound/qcom,wcd9335.txt
-index 5d6ea66a863f..1f75feec3dec 100644
---- a/Documentation/devicetree/bindings/sound/qcom,wcd9335.txt
-+++ b/Documentation/devicetree/bindings/sound/qcom,wcd9335.txt
-@@ -109,7 +109,7 @@ audio-codec@1{
- 	reg  = <1 0>;
- 	interrupts = <&msmgpio 54 IRQ_TYPE_LEVEL_HIGH>;
- 	interrupt-names = "intr2"
--	reset-gpios = <&msmgpio 64 0>;
-+	reset-gpios = <&msmgpio 64 GPIO_ACTIVE_LOW>;
- 	slim-ifc-dev  = <&wc9335_ifd>;
- 	clock-names = "mclk", "native";
- 	clocks = <&rpmcc RPM_SMD_DIV_CLK1>,
+diff --git a/drivers/gpu/drm/tegra/dc.c b/drivers/gpu/drm/tegra/dc.c
+index ceb86338c003..958d12da902d 100644
+--- a/drivers/gpu/drm/tegra/dc.c
++++ b/drivers/gpu/drm/tegra/dc.c
+@@ -2564,8 +2564,10 @@ static int tegra_dc_probe(struct platform_device *pdev)
+ 	usleep_range(2000, 4000);
+ 
+ 	err = reset_control_assert(dc->rst);
+-	if (err < 0)
++	if (err < 0) {
++		clk_disable_unprepare(dc->clk);
+ 		return err;
++	}
+ 
+ 	usleep_range(2000, 4000);
+ 
 -- 
 2.35.1
 
