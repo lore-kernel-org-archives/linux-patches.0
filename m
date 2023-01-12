@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D86A2F35
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:31:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791D6C433F0;
-	Thu, 12 Jan 2023 14:31:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4302D79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:31:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B9AC433EF;
+	Thu, 12 Jan 2023 14:31:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533895;
-	bh=mmZSIWafq5VPbI9MeekxliG96surjcdwYxVt5Puuk2Q=;
+	s=korg; t=1673533899;
+	bh=PyIcpMYQGUMJldcFOaOEtetGcA/WfAG+Iz2VCHEzh4c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=APdjC0YwWU9XAhxHucJAmb6K0svsHxxayWbtGZYeqmU6R5osREJERjKCmINNo1RJt
-	 LZi2IAYGQVah+d7Cx5CmyhKEA+thKu8+Djv9SX7vL7aBEmmT/k9K94dF5zuWuhKuoa
-	 9F6LvANSAw5C3Df2405QGaeMycvWh3KulI7mqOOc=
+	b=d6M7bdumeRVF2gVLBlkSe1CNM3secISkqiyw/6VScZuge3RdWsfjJSVy4NTFBeiSy
+	 ipcUvvf9+nHvFaOneKdwVmkM9bJB8Ix+KiTJcu30Er3R4pHDzrZsNDujDKfmxOrF0e
+	 9jaBfnWppoW1LoheBLfKKb6TEZnz5+MTrFsJeIcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>
-Subject: [PATCH 5.10 600/783] kcsan: Instrument memcpy/memset/memmove with newer Clang
-Date: Thu, 12 Jan 2023 14:55:16 +0100
-Message-Id: <20230112135552.084039031@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Joe Thornber <ejt@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 5.10 627/783] dm thin: Use last transactions pmd->root when commit failed
+Date: Thu, 12 Jan 2023 14:55:43 +0100
+Message-Id: <20230112135553.377536361@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -34,93 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marco Elver <elver@google.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit 7c201739beef1a586d806463f1465429cdce34c5 upstream.
+commit 7991dbff6849f67e823b7cc0c15e5a90b0549b9f upstream.
 
-With Clang version 16+, -fsanitize=thread will turn
-memcpy/memset/memmove calls in instrumented functions into
-__tsan_memcpy/__tsan_memset/__tsan_memmove calls respectively.
+Recently we found a softlock up problem in dm thin pool btree lookup
+code due to corrupted metadata:
 
-Add these functions to the core KCSAN runtime, so that we (a) catch data
-races with mem* functions, and (b) won't run into linker errors with
-such newer compilers.
+ Kernel panic - not syncing: softlockup: hung tasks
+ CPU: 7 PID: 2669225 Comm: kworker/u16:3
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+ Workqueue: dm-thin do_worker [dm_thin_pool]
+ Call Trace:
+   <IRQ>
+   dump_stack+0x9c/0xd3
+   panic+0x35d/0x6b9
+   watchdog_timer_fn.cold+0x16/0x25
+   __run_hrtimer+0xa2/0x2d0
+   </IRQ>
+   RIP: 0010:__relink_lru+0x102/0x220 [dm_bufio]
+   __bufio_new+0x11f/0x4f0 [dm_bufio]
+   new_read+0xa3/0x1e0 [dm_bufio]
+   dm_bm_read_lock+0x33/0xd0 [dm_persistent_data]
+   ro_step+0x63/0x100 [dm_persistent_data]
+   btree_lookup_raw.constprop.0+0x44/0x220 [dm_persistent_data]
+   dm_btree_lookup+0x16f/0x210 [dm_persistent_data]
+   dm_thin_find_block+0x12c/0x210 [dm_thin_pool]
+   __process_bio_read_only+0xc5/0x400 [dm_thin_pool]
+   process_thin_deferred_bios+0x1a4/0x4a0 [dm_thin_pool]
+   process_one_work+0x3c5/0x730
 
-Cc: stable@vger.kernel.org # v5.10+
-Signed-off-by: Marco Elver <elver@google.com>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-[ elver@google.com: adjust check_access() call for v5.15 and earlier. ]
+Following process may generate a broken btree mixed with fresh and
+stale btree nodes, which could get dm thin trapped in an infinite loop
+while looking up data block:
+ Transaction 1: pmd->root = A, A->B->C   // One path in btree
+                pmd->root = X, X->Y->Z   // Copy-up
+ Transaction 2: X,Z is updated on disk, Y write failed.
+                // Commit failed, dm thin becomes read-only.
+                process_bio_read_only
+		 dm_thin_find_block
+		  __find_block
+		   dm_btree_lookup(pmd->root)
+The pmd->root points to a broken btree, Y may contain stale node
+pointing to any block, for example X, which gets dm thin trapped into
+a dead loop while looking up Z.
+
+Fix this by setting pmd->root in __open_metadata(), so that dm thin
+will use the last transaction's pmd->root if commit failed.
+
+Fetch a reproducer in [Link].
+
+Linke: https://bugzilla.kernel.org/show_bug.cgi?id=216790
+Cc: stable@vger.kernel.org
+Fixes: 991d9fa02da0 ("dm: add thin provisioning target")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Acked-by: Joe Thornber <ejt@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/kcsan/core.c |   50 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+ drivers/md/dm-thin-metadata.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/kernel/kcsan/core.c
-+++ b/kernel/kcsan/core.c
-@@ -9,10 +9,12 @@
- #include <linux/init.h>
- #include <linux/kernel.h>
- #include <linux/list.h>
-+#include <linux/minmax.h>
- #include <linux/moduleparam.h>
- #include <linux/percpu.h>
- #include <linux/preempt.h>
- #include <linux/sched.h>
-+#include <linux/string.h>
- #include <linux/uaccess.h>
+--- a/drivers/md/dm-thin-metadata.c
++++ b/drivers/md/dm-thin-metadata.c
+@@ -701,6 +701,15 @@ static int __open_metadata(struct dm_poo
+ 		goto bad_cleanup_data_sm;
+ 	}
  
- #include "atomic.h"
-@@ -1045,3 +1047,51 @@ EXPORT_SYMBOL(__tsan_atomic_thread_fence
- void __tsan_atomic_signal_fence(int memorder);
- void __tsan_atomic_signal_fence(int memorder) { }
- EXPORT_SYMBOL(__tsan_atomic_signal_fence);
-+
-+#ifdef __HAVE_ARCH_MEMSET
-+void *__tsan_memset(void *s, int c, size_t count);
-+noinline void *__tsan_memset(void *s, int c, size_t count)
-+{
 +	/*
-+	 * Instead of not setting up watchpoints where accessed size is greater
-+	 * than MAX_ENCODABLE_SIZE, truncate checked size to MAX_ENCODABLE_SIZE.
++	 * For pool metadata opening process, root setting is redundant
++	 * because it will be set again in __begin_transaction(). But dm
++	 * pool aborting process really needs to get last transaction's
++	 * root to avoid accessing broken btree.
 +	 */
-+	size_t check_len = min_t(size_t, count, MAX_ENCODABLE_SIZE);
++	pmd->root = le64_to_cpu(disk_super->data_mapping_root);
++	pmd->details_root = le64_to_cpu(disk_super->device_details_root);
 +
-+	check_access(s, check_len, KCSAN_ACCESS_WRITE);
-+	return memset(s, c, count);
-+}
-+#else
-+void *__tsan_memset(void *s, int c, size_t count) __alias(memset);
-+#endif
-+EXPORT_SYMBOL(__tsan_memset);
-+
-+#ifdef __HAVE_ARCH_MEMMOVE
-+void *__tsan_memmove(void *dst, const void *src, size_t len);
-+noinline void *__tsan_memmove(void *dst, const void *src, size_t len)
-+{
-+	size_t check_len = min_t(size_t, len, MAX_ENCODABLE_SIZE);
-+
-+	check_access(dst, check_len, KCSAN_ACCESS_WRITE);
-+	check_access(src, check_len, 0);
-+	return memmove(dst, src, len);
-+}
-+#else
-+void *__tsan_memmove(void *dst, const void *src, size_t len) __alias(memmove);
-+#endif
-+EXPORT_SYMBOL(__tsan_memmove);
-+
-+#ifdef __HAVE_ARCH_MEMCPY
-+void *__tsan_memcpy(void *dst, const void *src, size_t len);
-+noinline void *__tsan_memcpy(void *dst, const void *src, size_t len)
-+{
-+	size_t check_len = min_t(size_t, len, MAX_ENCODABLE_SIZE);
-+
-+	check_access(dst, check_len, KCSAN_ACCESS_WRITE);
-+	check_access(src, check_len, 0);
-+	return memcpy(dst, src, len);
-+}
-+#else
-+void *__tsan_memcpy(void *dst, const void *src, size_t len) __alias(memcpy);
-+#endif
-+EXPORT_SYMBOL(__tsan_memcpy);
+ 	__setup_btree_details(pmd);
+ 	dm_bm_unlock(sblock);
+ 
 
 
