@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04EA9746A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:01:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7368CC433EF;
-	Thu, 12 Jan 2023 14:01:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3290F746A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:01:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC3FC433D2;
+	Thu, 12 Jan 2023 14:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532078;
-	bh=Cl79ujPTQVD85seVZFI5KggUxqs2QUJXgn6CQkt7jNM=;
+	s=korg; t=1673532082;
+	bh=2p5PbZtNS19iSZBeh4HhOY5d3lk+4ey/PQLGJvYqF5U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eGEbw6Kp7XiSt8fgbN/pW2lX528CJXD79zJoZFfhtYUpgBgFPifCLjY/2p5kVio2N
-	 v+4WphUpJNf5JYvCgnrMTvxILe/FT2D/5ypQhskiHX14lQvww44sOp2vqGv6EbYLxG
-	 b/vY6IlHwyLqw/ru72g0CXOSG05NCtDrEqeTaDEM=
+	b=q/fEm2RFxQN8mIl+zCCPap3f/C7TEeSxaSXqKwt8cQx/PqoGi/CO1nbBguP6rwAdG
+	 8gtFDyTspUAEFsmnhClGWtzuV5j4eyW3CatLkJfgk07pGpMFTjbZkht8yMpkhEahYr
+	 xCPuihiHpmDunMPUMQiN9Ye6Yp3jIi4d2i4SjZuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
-	Kees Cook <keescook@chromium.org>,
+	xiongxin <xiongxin@kylinos.cn>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 038/783] pstore/ram: Fix error return code in ramoops_probe()
-Date: Thu, 12 Jan 2023 14:45:54 +0100
-Message-Id: <20230112135525.915402053@linuxfoundation.org>
+Subject: [PATCH 5.10 047/783] PM: hibernate: Fix mistake in kerneldoc comment
+Date: Thu, 12 Jan 2023 14:46:03 +0100
+Message-Id: <20230112135526.338773474@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,43 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: xiongxin <xiongxin@kylinos.cn>
 
-[ Upstream commit e1fce564900f8734edf15b87f028c57e14f6e28d ]
+[ Upstream commit 6e5d7300cbe7c3541bc31f16db3e9266e6027b4b ]
 
-In the if (dev_of_node(dev) && !pdata) path, the "err" may be assigned a
-value of 0, so the error return code -EINVAL may be incorrectly set
-to 0. To fix set valid return code before calling to goto.
+The actual maximum image size formula in hibernate_preallocate_memory()
+is as follows:
 
-Fixes: 35da60941e44 ("pstore/ram: add Device Tree bindings")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/1669969374-46582-1-git-send-email-wangyufen@huawei.com
+max_size = (count - (size + PAGES_FOR_IO)) / 2
+	    - 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE);
+
+but the one in the kerneldoc comment of the function is different and
+incorrect.
+
+Fixes: ddeb64870810 ("PM / Hibernate: Add sysfs knob to control size of memory for drivers")
+Signed-off-by: xiongxin <xiongxin@kylinos.cn>
+[ rjw: Subject and changelog rewrite ]
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/power/snapshot.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
-index ca6d8a867285..98e579ce0d63 100644
---- a/fs/pstore/ram.c
-+++ b/fs/pstore/ram.c
-@@ -730,6 +730,7 @@ static int ramoops_probe(struct platform_device *pdev)
- 	/* Make sure we didn't get bogus platform data pointer. */
- 	if (!pdata) {
- 		pr_err("NULL platform data\n");
-+		err = -EINVAL;
- 		goto fail_out;
- 	}
- 
-@@ -737,6 +738,7 @@ static int ramoops_probe(struct platform_device *pdev)
- 			!pdata->ftrace_size && !pdata->pmsg_size)) {
- 		pr_err("The memory size and the record/console size must be "
- 			"non-zero\n");
-+		err = -EINVAL;
- 		goto fail_out;
- 	}
- 
+diff --git a/kernel/power/snapshot.c b/kernel/power/snapshot.c
+index 1da013f50059..f5dccd445d36 100644
+--- a/kernel/power/snapshot.c
++++ b/kernel/power/snapshot.c
+@@ -1677,8 +1677,8 @@ static unsigned long minimum_image_size(unsigned long saveable)
+  * /sys/power/reserved_size, respectively).  To make this happen, we compute the
+  * total number of available page frames and allocate at least
+  *
+- * ([page frames total] + PAGES_FOR_IO + [metadata pages]) / 2
+- *  + 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE)
++ * ([page frames total] - PAGES_FOR_IO - [metadata pages]) / 2
++ *  - 2 * DIV_ROUND_UP(reserved_size, PAGE_SIZE)
+  *
+  * of them, which corresponds to the maximum size of a hibernation image.
+  *
 -- 
 2.35.1
 
