@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FA8F79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:38:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9FCAC433EF;
-	Thu, 12 Jan 2023 14:38:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D70D79CF
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:38:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3DDC433F0;
+	Thu, 12 Jan 2023 14:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534319;
-	bh=Mi8KTjiACr0OTCZSXvQvNzJMwcmueiJRIwek9QJqanQ=;
+	s=korg; t=1673534325;
+	bh=zyixeITa0MAXp7uZnaFI7xF7lLPKtNyRF61slFzk6zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LDSre5NJ/onaahgq2B4g9gbWJlnU/8yp8NLGgZGNwccUziT9uypIcGd6VaM2KdJ/n
-	 nxOMJcI/DvqMR/k5Ui5JpEblYZljnIXECvBieEhAf8oVAmNCFIs4Fo/e8jggJwaNtd
-	 Fj5U9LkvN2le1njnPA0wOk919VMFCWVjUL25dwZA=
+	b=VXevAPL48NkHSSiOroVv18/iEnHN5GLlTtAC17CygNnBmHPaEsh3/J+FSrhK61G8b
+	 pO3zsNvS2N9T8vFX7MRiHlYsrHM5osLhXBNLMNSadAT5tVKZtCO49KFB13CrqJAu/C
+	 kR+gq1TTQQG2z0qR8C8+TlwIU/ievm1qxaF1s59I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 738/783] net/mlx5: Avoid recovery in probe flows
-Date: Thu, 12 Jan 2023 14:57:34 +0100
-Message-Id: <20230112135558.565192338@linuxfoundation.org>
+	Ben Dooks <ben-linux@fluff.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 5.10 763/783] riscv: uaccess: fix type of 0 variable on error in get_user()
+Date: Thu, 12 Jan 2023 14:57:59 +0100
+Message-Id: <20230112135559.733800900@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,49 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shay Drory <shayd@nvidia.com>
+From: Ben Dooks <ben-linux@fluff.org>
 
-[ Upstream commit 9078e843efec530f279a155f262793c58b0746bd ]
+commit b9b916aee6715cd7f3318af6dc360c4729417b94 upstream.
 
-Currently, recovery is done without considering whether the device is
-still in probe flow.
-This may lead to recovery before device have finished probed
-successfully. e.g.: while mlx5_init_one() is running. Recovery flow is
-using functionality that is loaded only by mlx5_init_one(), and there
-is no point in running recovery without mlx5_init_one() finished
-successfully.
+If the get_user(x, ptr) has x as a pointer, then the setting
+of (x) = 0 is going to produce the following sparse warning,
+so fix this by forcing the type of 'x' when access_ok() fails.
 
-Fix it by waiting for probe flow to finish and checking whether the
-device is probed before trying to perform recovery.
+fs/aio.c:2073:21: warning: Using plain integer as NULL pointer
 
-Fixes: 51d138c2610a ("net/mlx5: Fix health error state handling")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Ben Dooks <ben-linux@fluff.org>
+Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
+Link: https://lore.kernel.org/r/20221229170545.718264-1-ben-linux@fluff.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/health.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/riscv/include/asm/uaccess.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/health.c b/drivers/net/ethernet/mellanox/mlx5/core/health.c
-index 0c32c485eb58..b21054514736 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/health.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/health.c
-@@ -618,6 +618,12 @@ static void mlx5_fw_fatal_reporter_err_work(struct work_struct *work)
- 	priv = container_of(health, struct mlx5_priv, health);
- 	dev = container_of(priv, struct mlx5_core_dev, priv);
+--- a/arch/riscv/include/asm/uaccess.h
++++ b/arch/riscv/include/asm/uaccess.h
+@@ -216,7 +216,7 @@ do {								\
+ 	might_fault();						\
+ 	access_ok(__p, sizeof(*__p)) ?		\
+ 		__get_user((x), __p) :				\
+-		((x) = 0, -EFAULT);				\
++		((x) = (__force __typeof__(x))0, -EFAULT);	\
+ })
  
-+	mutex_lock(&dev->intf_state_mutex);
-+	if (test_bit(MLX5_DROP_NEW_HEALTH_WORK, &health->flags)) {
-+		mlx5_core_err(dev, "health works are not permitted at this stage\n");
-+		return;
-+	}
-+	mutex_unlock(&dev->intf_state_mutex);
- 	enter_error_state(dev, false);
- 	if (IS_ERR_OR_NULL(health->fw_fatal_reporter)) {
- 		if (mlx5_health_try_recover(dev))
--- 
-2.35.1
-
+ #define __put_user_asm(insn, x, ptr, err)			\
 
 
