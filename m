@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D413C749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:05:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39829C433D2;
-	Thu, 12 Jan 2023 14:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6439749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:06:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A64AC433D2;
+	Thu, 12 Jan 2023 14:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532357;
-	bh=YIHzqQvK3Xn8/oVxXi7rdsWjNMSapbwzB9vPUderR7k=;
+	s=korg; t=1673532360;
+	bh=poIdrKlCEeLSed71h3BEtZ6tV7M8z6o9QyTL8FF6Eio=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tMOytFGdgPbVFFavTyD9pEtvbqAGrU87w6OWlibN7zC92ptSnrcwj0Cu2zZYwYyXl
-	 ryxHH9O2veQ4Z+yA2kXHvdKSvbUM1nSPWnm3gYiOCfaBC/6+mOcZQGyg2vtbkIHpY5
-	 8IIUDlDy6/zmIO3HzwVKZ1sBUU4MAM4BEfCBbii8=
+	b=LlyCvUugg9QRnzBjGMPK++JGQgWOlSknuioN68qR503OEgnNS49x2tq17R7VnM/4P
+	 O51vkPd5aVHUr05Ok3VwOVn7G5yfgL8nmvD8Fkn5NdxgcVTO2mZYn8p/4CdsOyotUZ
+	 BgFQsikX/pc5SLU7rse1OWgjXYUbZpG6JIKchoeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 134/783] media: vivid: fix compose size exceed boundary
-Date: Thu, 12 Jan 2023 14:47:30 +0100
-Message-Id: <20230112135530.532928398@linuxfoundation.org>
+Subject: [PATCH 5.10 105/783] wifi: rtl8xxxu: Fix reading the vendor of combo chips
+Date: Thu, 12 Jan 2023 14:47:01 +0100
+Message-Id: <20230112135529.070727033@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,55 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 94a7ad9283464b75b12516c5512541d467cefcf8 ]
+[ Upstream commit 6f103aeb5e985ac08f3a4a049a2c17294f40cff9 ]
 
-syzkaller found a bug:
+The wifi + bluetooth combo chips (RTL8723AU and RTL8723BU) read the
+chip vendor from the wrong register because the val32 variable gets
+overwritten. Add one more variable to avoid this.
 
- BUG: unable to handle page fault for address: ffffc9000a3b1000
- #PF: supervisor write access in kernel mode
- #PF: error_code(0x0002) - not-present page
- PGD 100000067 P4D 100000067 PUD 10015f067 PMD 1121ca067 PTE 0
- Oops: 0002 [#1] PREEMPT SMP
- CPU: 0 PID: 23489 Comm: vivid-000-vid-c Not tainted 6.1.0-rc1+ #512
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
- RIP: 0010:memcpy_erms+0x6/0x10
-[...]
- Call Trace:
-  <TASK>
-  ? tpg_fill_plane_buffer+0x856/0x15b0
-  vivid_fillbuff+0x8ac/0x1110
-  vivid_thread_vid_cap_tick+0x361/0xc90
-  vivid_thread_vid_cap+0x21a/0x3a0
-  kthread+0x143/0x180
-  ret_from_fork+0x1f/0x30
-  </TASK>
+This had no real effect on RTL8723BU. It may have had an effect on
+RTL8723AU.
 
-This is because we forget to check boundary after adjust compose->height
-int V4L2_SEL_TGT_CROP case. Add v4l2_rect_map_inside() to fix this problem
-for this case.
-
-Fixes: ef834f7836ec ("[media] vivid: add the video capture and output parts")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 26f1fad29ad9 ("New driver: rtl8xxxu (mac80211)")
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/24af8024-2f07-552b-93d8-38823d8e3cb0@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vivid/vivid-vid-cap.c | 1 +
- 1 file changed, 1 insertion(+)
+ .../wireless/realtek/rtl8xxxu/rtl8xxxu_core.c    | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/media/test-drivers/vivid/vivid-vid-cap.c b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-index d493bd17481b..437889e51ca0 100644
---- a/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-+++ b/drivers/media/test-drivers/vivid/vivid-vid-cap.c
-@@ -961,6 +961,7 @@ int vivid_vid_cap_s_selection(struct file *file, void *fh, struct v4l2_selection
- 			if (dev->has_compose_cap) {
- 				v4l2_rect_set_min_size(compose, &min_rect);
- 				v4l2_rect_set_max_size(compose, &max_rect);
-+				v4l2_rect_map_inside(compose, &fmt);
- 			}
- 			dev->fmt_cap_rect = fmt;
- 			tpg_s_buf_height(&dev->tpg, fmt.height);
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+index e34cd6fed7e8..43898f105bb7 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -1607,18 +1607,18 @@ static void rtl8xxxu_print_chipinfo(struct rtl8xxxu_priv *priv)
+ static int rtl8xxxu_identify_chip(struct rtl8xxxu_priv *priv)
+ {
+ 	struct device *dev = &priv->udev->dev;
+-	u32 val32, bonding;
++	u32 val32, bonding, sys_cfg;
+ 	u16 val16;
+ 
+-	val32 = rtl8xxxu_read32(priv, REG_SYS_CFG);
+-	priv->chip_cut = (val32 & SYS_CFG_CHIP_VERSION_MASK) >>
++	sys_cfg = rtl8xxxu_read32(priv, REG_SYS_CFG);
++	priv->chip_cut = (sys_cfg & SYS_CFG_CHIP_VERSION_MASK) >>
+ 		SYS_CFG_CHIP_VERSION_SHIFT;
+-	if (val32 & SYS_CFG_TRP_VAUX_EN) {
++	if (sys_cfg & SYS_CFG_TRP_VAUX_EN) {
+ 		dev_info(dev, "Unsupported test chip\n");
+ 		return -ENOTSUPP;
+ 	}
+ 
+-	if (val32 & SYS_CFG_BT_FUNC) {
++	if (sys_cfg & SYS_CFG_BT_FUNC) {
+ 		if (priv->chip_cut >= 3) {
+ 			sprintf(priv->chip_name, "8723BU");
+ 			priv->rtl_chip = RTL8723B;
+@@ -1640,7 +1640,7 @@ static int rtl8xxxu_identify_chip(struct rtl8xxxu_priv *priv)
+ 		if (val32 & MULTI_GPS_FUNC_EN)
+ 			priv->has_gps = 1;
+ 		priv->is_multi_func = 1;
+-	} else if (val32 & SYS_CFG_TYPE_ID) {
++	} else if (sys_cfg & SYS_CFG_TYPE_ID) {
+ 		bonding = rtl8xxxu_read32(priv, REG_HPON_FSM);
+ 		bonding &= HPON_FSM_BONDING_MASK;
+ 		if (priv->fops->tx_desc_size ==
+@@ -1688,7 +1688,7 @@ static int rtl8xxxu_identify_chip(struct rtl8xxxu_priv *priv)
+ 	case RTL8188E:
+ 	case RTL8192E:
+ 	case RTL8723B:
+-		switch (val32 & SYS_CFG_VENDOR_EXT_MASK) {
++		switch (sys_cfg & SYS_CFG_VENDOR_EXT_MASK) {
+ 		case SYS_CFG_VENDOR_ID_TSMC:
+ 			sprintf(priv->chip_vendor, "TSMC");
+ 			break;
+@@ -1705,7 +1705,7 @@ static int rtl8xxxu_identify_chip(struct rtl8xxxu_priv *priv)
+ 		}
+ 		break;
+ 	default:
+-		if (val32 & SYS_CFG_VENDOR_ID) {
++		if (sys_cfg & SYS_CFG_VENDOR_ID) {
+ 			sprintf(priv->chip_vendor, "UMC");
+ 			priv->vendor_umc = 1;
+ 		} else {
 -- 
 2.35.1
 
