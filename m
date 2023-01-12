@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49E6749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:09:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E9A4C433EF;
-	Thu, 12 Jan 2023 14:09:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1F2E749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:09:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43055C433D2;
+	Thu, 12 Jan 2023 14:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532552;
-	bh=Pk0q9uwC2iu/RwQNNfxXF2GAs2R7SOi4sg0pxzKMKkQ=;
+	s=korg; t=1673532555;
+	bh=pkxb+LhNGkSQEQFDthM1BykkvxGJojxZ477GB/uFzTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d1TkAUkIHNsAujuf93tccoGLtdWn03as2c4mLQk8IHWpXA/rl72rxDZPxWX5+HGDe
-	 vvUvTssPCQWx8R6vHmXQvb95LlOTHsoVQkyIOkBTvMdhpL7cjt1ReqWLIOIjNB7kcQ
-	 cf6ysuJti33t76R7ZSrT1M9WhU1IuQBnuSZ5Ehxo=
+	b=b6EvqNCQUvaHN3OgKkftmftPjHXcb+k//ucQ3cdmAgt2LHbfr40VvupI1lB4jZt5M
+	 6QGNe5ZluIl9U6GRgQN8J2pIK6CYf4hacb2VDbTbFV4z01XZ/ImatBw8GFtz/nG+BL
+	 sHXOQgHfPuHjPv/t2zxlspaKTpj7TFWHY+7319Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Daniel Borkmann <daniel@iogearbox.net>,
 	Jakub Sitnicki <jakub@cloudflare.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 198/783] bpf, sockmap: Fix repeated calls to sock_put() when msg has more_data
-Date: Thu, 12 Jan 2023 14:48:34 +0100
-Message-Id: <20230112135533.507080072@linuxfoundation.org>
+Subject: [PATCH 5.10 199/783] bpf, sockmap: Fix data loss caused by using apply_bytes on ingress redirect
+Date: Thu, 12 Jan 2023 14:48:35 +0100
+Message-Id: <20230112135533.554268757@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -38,76 +38,42 @@ Content-Transfer-Encoding: 8bit
 
 From: Pengcheng Yang <yangpc@wangsu.com>
 
-[ Upstream commit 7a9841ca025275b5b0edfb0b618934abb6ceec15 ]
+[ Upstream commit 9072931f020bfd907d6d89ee21ff1481cd78b407 ]
 
-In tcp_bpf_send_verdict() redirection, the eval variable is assigned to
-__SK_REDIRECT after the apply_bytes data is sent, if msg has more_data,
-sock_put() will be called multiple times.
+Use apply_bytes on ingress redirect, when apply_bytes is less than
+the length of msg data, some data may be skipped and lost in
+bpf_tcp_ingress().
 
-We should reset the eval variable to __SK_NONE every time more_data
-starts.
+If there is still data in the scatterlist that has not been consumed,
+we cannot move the msg iter.
 
-This causes:
-
-IPv4: Attempt to release TCP socket in state 1 00000000b4c925d7
-------------[ cut here ]------------
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 5 PID: 4482 at lib/refcount.c:25 refcount_warn_saturate+0x7d/0x110
-Modules linked in:
-CPU: 5 PID: 4482 Comm: sockhash_bypass Kdump: loaded Not tainted 6.0.0 #1
-Hardware name: Red Hat KVM, BIOS 1.11.0-2.el7 04/01/2014
-Call Trace:
- <TASK>
- __tcp_transmit_skb+0xa1b/0xb90
- ? __alloc_skb+0x8c/0x1a0
- ? __kmalloc_node_track_caller+0x184/0x320
- tcp_write_xmit+0x22a/0x1110
- __tcp_push_pending_frames+0x32/0xf0
- do_tcp_sendpages+0x62d/0x640
- tcp_bpf_push+0xae/0x2c0
- tcp_bpf_sendmsg_redir+0x260/0x410
- ? preempt_count_add+0x70/0xa0
- tcp_bpf_send_verdict+0x386/0x4b0
- tcp_bpf_sendmsg+0x21b/0x3b0
- sock_sendmsg+0x58/0x70
- __sys_sendto+0xfa/0x170
- ? xfd_validate_state+0x1d/0x80
- ? switch_fpu_return+0x59/0xe0
- __x64_sys_sendto+0x24/0x30
- do_syscall_64+0x37/0x90
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Fixes: cd9733f5d75c ("tcp_bpf: Fix one concurrency problem in the tcp_bpf_send_verdict function")
+Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
 Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
 Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
 Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/1669718441-2654-2-git-send-email-yangpc@wangsu.com
+Link: https://lore.kernel.org/bpf/1669718441-2654-4-git-send-email-yangpc@wangsu.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_bpf.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/ipv4/tcp_bpf.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index 809ee0f32d59..027f7f9256e1 100644
+index 027f7f9256e1..6a1685461f89 100644
 --- a/net/ipv4/tcp_bpf.c
 +++ b/net/ipv4/tcp_bpf.c
-@@ -316,7 +316,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 	bool cork = false, enospc = sk_msg_full(msg);
- 	struct sock *sk_redir;
- 	u32 tosend, origsize, sent, delta = 0;
--	u32 eval = __SK_NONE;
-+	u32 eval;
- 	int ret;
+@@ -125,8 +125,11 @@ static int bpf_tcp_ingress(struct sock *sk, struct sk_psock *psock,
+ 		tmp->sg.end = i;
+ 		if (apply) {
+ 			apply_bytes -= size;
+-			if (!apply_bytes)
++			if (!apply_bytes) {
++				if (sge->length)
++					sk_msg_iter_var_prev(i);
+ 				break;
++			}
+ 		}
+ 	} while (i != msg->sg.end);
  
- more_data:
-@@ -347,6 +347,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
- 	tosend = msg->sg.size;
- 	if (psock->apply_bytes && psock->apply_bytes < tosend)
- 		tosend = psock->apply_bytes;
-+	eval = __SK_NONE;
- 
- 	switch (psock->eval) {
- 	case __SK_PASS:
 -- 
 2.35.1
 
