@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD01746A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:01:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CDABC433D2;
-	Thu, 12 Jan 2023 14:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8134746A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:01:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EBE3C433EF;
+	Thu, 12 Jan 2023 14:01:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532111;
-	bh=HPmIDxaoMR6U9pgJ5s3dbnjhjWZLgiwkRCFGedtKinE=;
+	s=korg; t=1673532113;
+	bh=Zj9v1liHklHYKjP0Yes7cbUTORLjQ//yW9lHFa/qzgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H+HSqOASzr3QAxLRoRioHqThwo+kXcLgOq5nYIddeUSg2IkAY2NHzIg6/Z+FAGqlg
-	 AzTXq37mMZyhcxJtEZXw2/a7Ne3EwKeEfB2LSYYbE8VLQ6BWY2ZFqlH6HmlV/7dirN
-	 Pj5fPXqJsZYRG24OFUuYtTPShv6xacmFb0Y+BHho=
+	b=qhJ3uc4kOCr1cTafggRQlyJgFIQsGKm2ZkBC0AYLBCu2x72lCqYtpt8WJjisg+H6F
+	 Q7FPBxDLqW76GSEajJrHgop4VLQAfZd/iXe/gbna+smuOIRvfmFbACWmMXVvRQLL6X
+	 /9EO4JWjQsNuITnr1vfZHbPMH5S8wwhrwYNfHCyc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Doug Brown <doug@schmorgal.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 056/783] lib/fonts: fix undefined behavior in bit shift for get_default_font
-Date: Thu, 12 Jan 2023 14:46:12 +0100
-Message-Id: <20230112135526.732509712@linuxfoundation.org>
+Subject: [PATCH 5.10 039/783] ARM: mmp: fix timer_read delay
+Date: Thu, 12 Jan 2023 14:45:55 +0100
+Message-Id: <20230112135525.954077524@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,77 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Doug Brown <doug@schmorgal.com>
 
-[ Upstream commit 6fe888c4d2fb174408e4540bb2d5602b9f507f90 ]
+[ Upstream commit e348b4014c31041e13ff370669ba3348c4d385e3 ]
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned.  The UBSAN warning calltrace like below:
+timer_read() was using an empty 100-iteration loop to wait for the
+TMR_CVWR register to capture the latest timer counter value. The delay
+wasn't long enough. This resulted in CPU idle time being extremely
+underreported on PXA168 with CONFIG_NO_HZ_IDLE=y.
 
-UBSAN: shift-out-of-bounds in lib/fonts/fonts.c:139:20
-left shift of 1 by 31 places cannot be represented in type 'int'
- <TASK>
- dump_stack_lvl+0x7d/0xa5
- dump_stack+0x15/0x1b
- ubsan_epilogue+0xe/0x4e
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
- get_default_font+0x1c7/0x1f0
- fbcon_startup+0x347/0x3a0
- do_take_over_console+0xce/0x270
- do_fbcon_takeover+0xa1/0x170
- do_fb_registered+0x2a8/0x340
- fbcon_fb_registered+0x47/0xe0
- register_framebuffer+0x294/0x4a0
- __drm_fb_helper_initial_config_and_unlock+0x43c/0x880 [drm_kms_helper]
- drm_fb_helper_initial_config+0x52/0x80 [drm_kms_helper]
- drm_fbdev_client_hotplug+0x156/0x1b0 [drm_kms_helper]
- drm_fbdev_generic_setup+0xfc/0x290 [drm_kms_helper]
- bochs_pci_probe+0x6ca/0x772 [bochs]
- local_pci_probe+0x4d/0xb0
- pci_device_probe+0x119/0x320
- really_probe+0x181/0x550
- __driver_probe_device+0xc6/0x220
- driver_probe_device+0x32/0x100
- __driver_attach+0x195/0x200
- bus_for_each_dev+0xbb/0x120
- driver_attach+0x27/0x30
- bus_add_driver+0x22e/0x2f0
- driver_register+0xa9/0x190
- __pci_register_driver+0x90/0xa0
- bochs_pci_driver_init+0x52/0x1000 [bochs]
- do_one_initcall+0x76/0x430
- do_init_module+0x61/0x28a
- load_module+0x1f82/0x2e50
- __do_sys_finit_module+0xf8/0x190
- __x64_sys_finit_module+0x23/0x30
- do_syscall_64+0x58/0x80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
- </TASK>
+Switch to the approach used in the vendor kernel, which implements the
+capture delay by reading TMR_CVWR a few times instead.
 
-Link: https://lkml.kernel.org/r/20221031113829.4183153-1-cuigaosheng1@huawei.com
-Fixes: c81f717cb9e0 ("fbcon: Fix typo and bogus logic in get_default_font")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 49cbe78637eb ("[ARM] pxa: add base support for Marvell's PXA168 processor line")
+Signed-off-by: Doug Brown <doug@schmorgal.com>
+Link: https://lore.kernel.org/r/20221204005117.53452-3-doug@schmorgal.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/fonts/fonts.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/arm/mach-mmp/time.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/lib/fonts/fonts.c b/lib/fonts/fonts.c
-index 5f4b07b56cd9..973866438608 100644
---- a/lib/fonts/fonts.c
-+++ b/lib/fonts/fonts.c
-@@ -135,8 +135,8 @@ const struct font_desc *get_default_font(int xres, int yres, u32 font_w,
- 		if (res > 20)
- 			c += 20 - res;
+diff --git a/arch/arm/mach-mmp/time.c b/arch/arm/mach-mmp/time.c
+index 41b2e8abc9e6..708816caf859 100644
+--- a/arch/arm/mach-mmp/time.c
++++ b/arch/arm/mach-mmp/time.c
+@@ -43,18 +43,21 @@
+ static void __iomem *mmp_timer_base = TIMERS_VIRT_BASE;
  
--		if ((font_w & (1 << (f->width - 1))) &&
--		    (font_h & (1 << (f->height - 1))))
-+		if ((font_w & (1U << (f->width - 1))) &&
-+		    (font_h & (1U << (f->height - 1))))
- 			c += 1000;
+ /*
+- * FIXME: the timer needs some delay to stablize the counter capture
++ * Read the timer through the CVWR register. Delay is required after requesting
++ * a read. The CR register cannot be directly read due to metastability issues
++ * documented in the PXA168 software manual.
+  */
+ static inline uint32_t timer_read(void)
+ {
+-	int delay = 100;
++	uint32_t val;
++	int delay = 3;
  
- 		if (c > cc) {
+ 	__raw_writel(1, mmp_timer_base + TMR_CVWR(1));
+ 
+ 	while (delay--)
+-		cpu_relax();
++		val = __raw_readl(mmp_timer_base + TMR_CVWR(1));
+ 
+-	return __raw_readl(mmp_timer_base + TMR_CVWR(1));
++	return val;
+ }
+ 
+ static u64 notrace mmp_read_sched_clock(void)
 -- 
 2.35.1
 
