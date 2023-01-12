@@ -1,35 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C1379C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:20:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61EF2C433EF;
-	Thu, 12 Jan 2023 14:20:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E022779C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:20:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F9D2C433EF;
+	Thu, 12 Jan 2023 14:20:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533222;
-	bh=awHxN+nsyEUcV9vLMhKhFRWKxVYaD91iq9LNHD0n0jg=;
+	s=korg; t=1673533225;
+	bh=1aDzHVJOO/fZ4iIayeO2soOTOjlNcQS0cN0dPRM3Ufc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mPy6W4WU/XFxHx3Y9HpvM1k7D2LfgMCq5w61lyTMdebxqKYBPXbkrcD3/hl8mTyd2
-	 9OZdoec8fHwgAu/B5yvrdfRJNXt9aUtExTBxKvcdHo6XRV8+m6i4ujDECQXUZG2Ogp
-	 fVOUH+I0cggCg15eM8BZ8w+ALbj2S1EKonkuTP6w=
+	b=hIbMiXpHwWPKRq9SbNG6F3gku5NDiXEs/cKqV3iUJGFgzO3Bx4YwkzzEBT7gF2haE
+	 /U9qLV7DF7kVKWcqG5niOsoBV8KbtbzXGTpDbYayKhCPFiQkC7j6v+4jHO8j706YTo
+	 vRC5gvu8/kWMDhF9l5ICFLONdoitrkDg8725qBj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Yan <leo.yan@linaro.org>,
-	Ian Rogers <irogers@google.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	bpf@vger.kernel.org,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 402/783] perf trace: Return error if a system call doesnt exist
-Date: Thu, 12 Jan 2023 14:51:58 +0100
-Message-Id: <20230112135542.944748466@linuxfoundation.org>
+Subject: [PATCH 5.10 411/783] iommu/sun50i: Fix R/W permission check
+Date: Thu, 12 Jan 2023 14:52:07 +0100
+Message-Id: <20230112135543.374868542@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -43,53 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leo Yan <leo.yan@linaro.org>
+From: Jernej Skrabec <jernej.skrabec@gmail.com>
 
-[ Upstream commit d4223e1776c30b2ce8d0e6eaadcbf696e60fca3c ]
+[ Upstream commit eac0104dc69be50bed86926d6f32e82b44f8c921 ]
 
-When a system call is not detected, the reason is either because the
-system call ID is out of scope or failure to find the corresponding path
-in the sysfs, trace__read_syscall_info() returns zero.  Finally, without
-returning an error value it introduces confusion for the caller.
+Because driver has enum type permissions and iommu subsystem has bitmap
+type, we have to be careful how check for combined read and write
+permissions is done. In such case, we have to mask both permissions and
+check that both are set at the same time.
 
-This patch lets the function trace__read_syscall_info() to return
--EEXIST when a system call doesn't exist.
+Current code just masks both flags but doesn't check that both are set.
+In short, it always sets R/W permission, regardles if requested
+permissions were RO, WO or RW. Fix that.
 
-Fixes: b8b1033fcaa091d8 ("perf trace: Mark syscall ids that are not allocated to avoid unnecessary error messages")
-Signed-off-by: Leo Yan <leo.yan@linaro.org>
-Acked-by: Ian Rogers <irogers@google.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: bpf@vger.kernel.org
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/r/20221121075237.127706-3-leo.yan@linaro.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 4100b8c229b3 ("iommu: Add Allwinner H6 IOMMU driver")
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://lore.kernel.org/r/20221025165415.307591-4-jernej.skrabec@gmail.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/iommu/sun50i-iommu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index de80534473af..555e16d8d55b 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -1774,11 +1774,11 @@ static int trace__read_syscall_info(struct trace *trace, int id)
- #endif
- 	sc = trace->syscalls.table + id;
- 	if (sc->nonexistent)
--		return 0;
-+		return -EEXIST;
+diff --git a/drivers/iommu/sun50i-iommu.c b/drivers/iommu/sun50i-iommu.c
+index 2512eabbf4ac..68aee56e2231 100644
+--- a/drivers/iommu/sun50i-iommu.c
++++ b/drivers/iommu/sun50i-iommu.c
+@@ -272,7 +272,7 @@ static u32 sun50i_mk_pte(phys_addr_t page, int prot)
+ 	enum sun50i_iommu_aci aci;
+ 	u32 flags = 0;
  
- 	if (name == NULL) {
- 		sc->nonexistent = true;
--		return 0;
-+		return -EEXIST;
- 	}
- 
- 	sc->name = name;
+-	if (prot & (IOMMU_READ | IOMMU_WRITE))
++	if ((prot & (IOMMU_READ | IOMMU_WRITE)) == (IOMMU_READ | IOMMU_WRITE))
+ 		aci = SUN50I_IOMMU_ACI_RD_WR;
+ 	else if (prot & IOMMU_READ)
+ 		aci = SUN50I_IOMMU_ACI_RD;
 -- 
 2.35.1
 
