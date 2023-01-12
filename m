@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED419749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:03:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D43BC433F1;
-	Thu, 12 Jan 2023 14:03:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 889D6749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:03:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09DB1C433F0;
+	Thu, 12 Jan 2023 14:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532222;
-	bh=9vTcMY4RAAO/RAaPJDqWyd001/EyEIqqpWPAarnpH2U=;
+	s=korg; t=1673532225;
+	bh=wkAQ1xibcMr0ugYAPfpVyg0mwskgwMgFNCWDHl7RLzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tZEFa14BqCuf5vQnfP2Op+Rega3HVgRrbnNObQm7v3rps2G/aGlq5khaGKkgQ1oMC
-	 mEeUsRcYBpqtOhkt0kMhfZ+4AsMNdWnmrXG7ypQlnaPdnlh4ZC/Q0R24pOgSFAD1kJ
-	 9hlDchLuWlz61M/m502JhTMCqSY0U1BgQ1kpqQE0=
+	b=cSajpjP5TO+sUodS4f9wJmkjVCUFvNbKFZPe/wgrPd38RP4FtNahhFkihuISRNVZk
+	 fn1D8f78rKRDCh4ll9VJrORiQlmWOZVIQKJRSr0STPNvt1/udwiJgb+SHC2Xp9Zv5n
+	 ofDcrKWhnEktioPR0rdFNfIw5kqeLcZGr/Wj48LU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Juergen Gross <jgross@suse.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 090/783] xen/privcmd: Fix a possible warning in privcmd_ioctl_mmap_resource()
-Date: Thu, 12 Jan 2023 14:46:46 +0100
-Message-Id: <20230112135528.356673887@linuxfoundation.org>
+Subject: [PATCH 5.10 091/783] PM: runtime: Improve path in rpm_idle() when no callback
+Date: Thu, 12 Jan 2023 14:46:47 +0100
+Message-Id: <20230112135528.399632756@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,44 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-[ Upstream commit 8b997b2bb2c53b76a6db6c195930e9ab8e4b0c79 ]
+[ Upstream commit 5a2bd1b1c64e1ac5627db3767ac465f18606315c ]
 
-As 'kdata.num' is user-controlled data, if user tries to allocate
-memory larger than(>=) MAX_ORDER, then kcalloc() will fail, it
-creates a stack trace and messes up dmesg with a warning.
+When pm_runtime_no_callbacks() has been called for a struct device to set
+the dev->power.no_callbacks flag for it, it enables rpm_idle() to take a
+slightly quicker path by assuming that a ->runtime_idle() callback would
+have returned 0 to indicate success.
 
-Call trace:
--> privcmd_ioctl
---> privcmd_ioctl_mmap_resource
+A device that does not have the dev->power.no_callbacks flag set for it,
+may still be missing a corresponding ->runtime_idle() callback, in which
+case the slower path in rpm_idle() is taken. Let's improve the behaviour
+for this case, by aligning code to the quicker path.
 
-Add __GFP_NOWARN in order to avoid too large allocation warning.
-This is detected by static analysis using smatch.
-
-Fixes: 3ad0876554ca ("xen/privcmd: add IOCTL_PRIVCMD_MMAP_RESOURCE")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20221126050745.778967-1-harshit.m.mogalapalli@oracle.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: bc80c2e438dc ("PM: runtime: Do not call __rpm_callback() from rpm_idle()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/privcmd.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/base/power/runtime.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/xen/privcmd.c b/drivers/xen/privcmd.c
-index cd5f2f09468e..28537a1a0e0b 100644
---- a/drivers/xen/privcmd.c
-+++ b/drivers/xen/privcmd.c
-@@ -760,7 +760,7 @@ static long privcmd_ioctl_mmap_resource(struct file *file,
- 		goto out;
- 	}
+diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+index 835a39e84c1d..532d910fe1cf 100644
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -464,7 +464,10 @@ static int rpm_idle(struct device *dev, int rpmflags)
+ 	/* Pending requests need to be canceled. */
+ 	dev->power.request = RPM_REQ_NONE;
  
--	pfns = kcalloc(kdata.num, sizeof(*pfns), GFP_KERNEL);
-+	pfns = kcalloc(kdata.num, sizeof(*pfns), GFP_KERNEL | __GFP_NOWARN);
- 	if (!pfns) {
- 		rc = -ENOMEM;
+-	if (dev->power.no_callbacks)
++	callback = RPM_GET_CALLBACK(dev, runtime_idle);
++
++	/* If no callback assume success. */
++	if (!callback || dev->power.no_callbacks)
  		goto out;
+ 
+ 	/* Carry out an asynchronous or a synchronous idle notification. */
+@@ -480,10 +483,7 @@ static int rpm_idle(struct device *dev, int rpmflags)
+ 
+ 	dev->power.idle_notification = true;
+ 
+-	callback = RPM_GET_CALLBACK(dev, runtime_idle);
+-
+-	if (callback)
+-		retval = __rpm_callback(callback, dev);
++	retval = __rpm_callback(callback, dev);
+ 
+ 	dev->power.idle_notification = false;
+ 	wake_up_all(&dev->power.wait_queue);
 -- 
 2.35.1
 
