@@ -1,34 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCD4379C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:27:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32A76C433EF;
-	Thu, 12 Jan 2023 14:27:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EFD79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:27:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86ADDC433D2;
+	Thu, 12 Jan 2023 14:27:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533661;
-	bh=k58RRflD6JGFt7EF93aoHdhUah760czXjm3Zmz65dMQ=;
+	s=korg; t=1673533664;
+	bh=j7AMXqA6UutmlOa0DqAvRRIKjbXaFBBgrVpU+1Oe9Rw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fgp2vIyLW8Y24DpxsyrXeVPTdAtokXhpsv0BHBhCKAJMNxTj3NCUUEJlpHrC4CcaS
-	 ByM7sBJS9eQ4t2ydF3Pucx8TPNmJeaVqSaoOt9VJA7baFuF/K5T1m+1q04Ri48PhJ5
-	 Yc924KV4tPGYIcZ+x6lG3N/Ip+4eLkawI5t/ih1E=
+	b=D4xxXhfH3Gk1RN3mGRN2Apmdys1gYsyICzorpwjKzWYh2LPVvUATt6katkh9DeEBp
+	 MWDCjIUgCqWnUMMjfci1WrMt7KR7LKWv0dy0Wz1T3VrYX7HMHDcZnrHsEYEj6qOk5o
+	 2nIyBbsSLxmjpSi2b/IB0YA8VvB4CH4blJpnloDE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Wang <wvw@google.com>,
-	Midas Chien <midaschieh@google.com>,
-	Connor OBrien <connoro@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Anton Vorontsov <anton@enomsg.org>,
-	Colin Cross <ccross@android.com>,
-	Tony Luck <tony.luck@intel.com>,
-	kernel-team@android.com,
-	John Stultz <jstultz@google.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 551/783] pstore: Switch pmsg_lock to an rt_mutex to avoid priority inversion
-Date: Thu, 12 Jan 2023 14:54:27 +0100
-Message-Id: <20230112135549.764226566@linuxfoundation.org>
+Subject: [PATCH 5.10 534/783] clk: st: Fix memory leak in st_of_quadfs_setup()
+Date: Thu, 12 Jan 2023 14:54:10 +0100
+Message-Id: <20230112135548.961420251@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -42,68 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Stultz <jstultz@google.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 76d62f24db07f22ccf9bc18ca793c27d4ebef721 ]
+[ Upstream commit cfd3ffb36f0d566846163118651d868e607300ba ]
 
-Wei Wang reported seeing priority inversion caused latencies
-caused by contention on pmsg_lock, and suggested it be switched
-to a rt_mutex.
+If st_clk_register_quadfs_pll() fails, @lock should be freed before goto
+@err_exit, otherwise will cause meory leak issue, fix it.
 
-I was initially hesitant this would help, as the tasks in that
-trace all seemed to be SCHED_NORMAL, so the benefit would be
-limited to only nice boosting.
-
-However, another similar issue was raised where the priority
-inversion was seen did involve a blocked RT task so it is clear
-this would be helpful in that case.
-
-Cc: Wei Wang <wvw@google.com>
-Cc: Midas Chien<midaschieh@google.com>
-Cc: Connor O'Brien <connoro@google.com>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Anton Vorontsov <anton@enomsg.org>
-Cc: Colin Cross <ccross@android.com>
-Cc: Tony Luck <tony.luck@intel.com>
-Cc: kernel-team@android.com
-Fixes: 9d5438f462ab ("pstore: Add pmsg - user-space accessible pstore object")
-Reported-by: Wei Wang <wvw@google.com>
-Signed-off-by: John Stultz <jstultz@google.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221214231834.3711880-1-jstultz@google.com
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Link: https://lore.kernel.org/r/20221122133614.184910-1-xiujianfeng@huawei.com
+Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/pmsg.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/clk/st/clkgen-fsyn.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/fs/pstore/pmsg.c b/fs/pstore/pmsg.c
-index d8542ec2f38c..18cf94b597e0 100644
---- a/fs/pstore/pmsg.c
-+++ b/fs/pstore/pmsg.c
-@@ -7,9 +7,10 @@
- #include <linux/device.h>
- #include <linux/fs.h>
- #include <linux/uaccess.h>
-+#include <linux/rtmutex.h>
- #include "internal.h"
+diff --git a/drivers/clk/st/clkgen-fsyn.c b/drivers/clk/st/clkgen-fsyn.c
+index f1adc858b590..0e58a7cda427 100644
+--- a/drivers/clk/st/clkgen-fsyn.c
++++ b/drivers/clk/st/clkgen-fsyn.c
+@@ -942,9 +942,10 @@ static void __init st_of_quadfs_setup(struct device_node *np,
  
--static DEFINE_MUTEX(pmsg_lock);
-+static DEFINE_RT_MUTEX(pmsg_lock);
- 
- static ssize_t write_pmsg(struct file *file, const char __user *buf,
- 			  size_t count, loff_t *ppos)
-@@ -28,9 +29,9 @@ static ssize_t write_pmsg(struct file *file, const char __user *buf,
- 	if (!access_ok(buf, count))
- 		return -EFAULT;
- 
--	mutex_lock(&pmsg_lock);
-+	rt_mutex_lock(&pmsg_lock);
- 	ret = psinfo->write_user(&record, buf);
--	mutex_unlock(&pmsg_lock);
-+	rt_mutex_unlock(&pmsg_lock);
- 	return ret ? ret : count;
- }
- 
+ 	clk = st_clk_register_quadfs_pll(pll_name, clk_parent_name, data,
+ 			reg, lock);
+-	if (IS_ERR(clk))
++	if (IS_ERR(clk)) {
++		kfree(lock);
+ 		goto err_exit;
+-	else
++	} else
+ 		pr_debug("%s: parent %s rate %u\n",
+ 			__clk_get_name(clk),
+ 			__clk_get_name(clk_get_parent(clk)),
 -- 
 2.35.1
 
