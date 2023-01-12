@@ -1,27 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD82B79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:20:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41F2FC433EF;
-	Thu, 12 Jan 2023 14:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD00579C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:20:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 219C6C433D2;
+	Thu, 12 Jan 2023 14:20:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533254;
-	bh=Q3RRNW/4Y8IGb6JHUuP6QOaF/4nox5ULu15M35rdAYQ=;
+	s=korg; t=1673533257;
+	bh=yzN/Why6yeHkJoFc18jHGbVWYEpHCJqKRAObYYK8yaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rEVDp46pk9/T58LlYrPeXRb7P5YTwqqNhdLt46/7GQdUyASZ5p1ne38LseR+yysoP
-	 FGmtBpu1FfGkRGaQBgpiUlzlrsQ9JE1tbIG1RyuwxUj+ApP438Cj66ieDuLxudirwy
-	 kL+K1ym6vyUMTm50yfUmSAxU73KlLnd3Fn6cdfgU=
+	b=rTJzEHAuyqvsDSvHjMlpvh7Q9JpubvP48mNKnNbe8kZQwMMhyygqrrS4zJnDq0HBL
+	 kddkuLAZ3D8mCr0/l1REDQes/xNi1FCcMZ+S/V3nbFxuUse+1HgT3OYvxP14AVRpob
+	 orBHAaP8Zj+DwCxAC1jBCDluei268kf+ddIvVYak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Leo Yan <leo.yan@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	bpf@vger.kernel.org,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 420/783] rtc: cmos: fix build on non-ACPI platforms
-Date: Thu, 12 Jan 2023 14:52:16 +0100
-Message-Id: <20230112135543.800605151@linuxfoundation.org>
+Subject: [PATCH 5.10 403/783] perf trace: Use macro RAW_SYSCALL_ARGS_NUM to replace number
+Date: Thu, 12 Jan 2023 14:51:59 +0100
+Message-Id: <20230112135542.994865240@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,36 +43,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+From: Leo Yan <leo.yan@linaro.org>
 
-[ Upstream commit db4e955ae333567dea02822624106c0b96a2f84f ]
+[ Upstream commit eadcab4c7a66e1df03d32da0db55d89fd9343fcc ]
 
-Now that rtc_wake_setup is called outside of cmos_wake_setup, it also need
-to be defined on non-ACPI platforms.
+This patch defines a macro RAW_SYSCALL_ARGS_NUM to replace the open
+coded number '6'.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/r/20221018203512.2532407-1-alexandre.belloni@bootlin.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
+Signed-off-by: Leo Yan <leo.yan@linaro.org>
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: bpf@vger.kernel.org
+Link: https://lore.kernel.org/r/20221121075237.127706-2-leo.yan@linaro.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: 03e9a5d8eb55 ("perf trace: Handle failure when trace point folder is missed")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 3 +++
- 1 file changed, 3 insertions(+)
+ tools/perf/builtin-trace.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 426e6a67cc38..ff556a93a397 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -1351,6 +1351,9 @@ static void cmos_check_acpi_rtc_status(struct device *dev,
- {
- }
- 
-+static void rtc_wake_setup(struct device *dev)
-+{
-+}
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index 555e16d8d55b..1a7279687f25 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -87,6 +87,8 @@
+ # define F_LINUX_SPECIFIC_BASE	1024
  #endif
  
- #ifdef	CONFIG_PNP
++#define RAW_SYSCALL_ARGS_NUM	6
++
+ /*
+  * strtoul: Go from a string to a value, i.e. for msr: MSR_FS_BASE to 0xc0000100
+  */
+@@ -107,7 +109,7 @@ struct syscall_fmt {
+ 		const char *sys_enter,
+ 			   *sys_exit;
+ 	}	   bpf_prog_name;
+-	struct syscall_arg_fmt arg[6];
++	struct syscall_arg_fmt arg[RAW_SYSCALL_ARGS_NUM];
+ 	u8	   nr_args;
+ 	bool	   errpid;
+ 	bool	   timeout;
+@@ -1216,7 +1218,7 @@ struct syscall {
+  */
+ struct bpf_map_syscall_entry {
+ 	bool	enabled;
+-	u16	string_args_len[6];
++	u16	string_args_len[RAW_SYSCALL_ARGS_NUM];
+ };
+ 
+ /*
+@@ -1641,7 +1643,7 @@ static int syscall__alloc_arg_fmts(struct syscall *sc, int nr_args)
+ {
+ 	int idx;
+ 
+-	if (nr_args == 6 && sc->fmt && sc->fmt->nr_args != 0)
++	if (nr_args == RAW_SYSCALL_ARGS_NUM && sc->fmt && sc->fmt->nr_args != 0)
+ 		nr_args = sc->fmt->nr_args;
+ 
+ 	sc->arg_fmt = calloc(nr_args, sizeof(*sc->arg_fmt));
+@@ -1792,7 +1794,8 @@ static int trace__read_syscall_info(struct trace *trace, int id)
+ 		sc->tp_format = trace_event__tp_format("syscalls", tp_name);
+ 	}
+ 
+-	if (syscall__alloc_arg_fmts(sc, IS_ERR(sc->tp_format) ? 6 : sc->tp_format->format.nr_fields))
++	if (syscall__alloc_arg_fmts(sc, IS_ERR(sc->tp_format) ?
++					RAW_SYSCALL_ARGS_NUM : sc->tp_format->format.nr_fields))
+ 		return -ENOMEM;
+ 
+ 	if (IS_ERR(sc->tp_format))
 -- 
 2.35.1
 
