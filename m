@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8255179C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:34:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E43CCC433EF;
-	Thu, 12 Jan 2023 14:34:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8ED8B79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:34:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EEDFEC433F0;
+	Thu, 12 Jan 2023 14:34:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534062;
-	bh=5WKHmf+ghsh8UAEx6ij7UzNzhTKBNbfgN2GnxZwB/ec=;
+	s=korg; t=1673534065;
+	bh=8owLa3/ATTuA3Us4653WNRnhbj9DSLTiuYhFqc1X0E8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V8DmwzUxGPxnkQyS7E2xaneiy7NYmsBtOzIi1+q4H8O3LHcoQAMcxRoOFrD/iJBAj
-	 HpnEPrai7htSOBOJU8r8Ur3UGJN7gJXo5aH860uQFPAQULi/inttHLtyD5a9Edp39c
-	 E/qMq4hU+p+HJdC52+kArbpvE2EMy7AMHKZ7uch0=
+	b=SvSnjxAoScpAvMcMBe6ffpC/UGUJuW6jNCPDoJyrT2YDKa4t+vnpNTT/qpRDaP7Kr
+	 +I4RT843OsIuQz9sWdkY/N4hTWs4ByQKN2Yrfg3njiJQj0BmgHndUq3Wq/eONLyT30
+	 TQmIOHhiS3GiVHTx0I6R16B/bINv0+AU+H1FWD2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Ser <contact@emersion.fr>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Lyude Paul <lyude@redhat.com>,
-	=?UTF-8?q?Jonas=20=C3=85dahl?= <jadahl@redhat.com>
-Subject: [PATCH 5.10 665/783] drm/connector: send hotplug uevent on connector cleanup
-Date: Thu, 12 Jan 2023 14:56:21 +0100
-Message-Id: <20230112135555.170227920@linuxfoundation.org>
+	Eric Sandeen <sandeen@redhat.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 5.10 683/783] ext4: avoid BUG_ON when creating xattrs
+Date: Thu, 12 Jan 2023 14:56:39 +0100
+Message-Id: <20230112135555.985957532@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,56 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Simon Ser <contact@emersion.fr>
+From: Jan Kara <jack@suse.cz>
 
-commit 6fdc2d490ea1369d17afd7e6eb66fecc5b7209bc upstream.
+commit b40ebaf63851b3a401b0dc9263843538f64f5ce6 upstream.
 
-A typical DP-MST unplug removes a KMS connector. However care must
-be taken to properly synchronize with user-space. The expected
-sequence of events is the following:
+Commit fb0a387dcdcd ("ext4: limit block allocations for indirect-block
+files to < 2^32") added code to try to allocate xattr block with 32-bit
+block number for indirect block based files on the grounds that these
+files cannot use larger block numbers. It also added BUG_ON when
+allocated block could not fit into 32 bits. This is however bogus
+reasoning because xattr block is stored in inode->i_file_acl and
+inode->i_file_acl_hi and as such even indirect block based files can
+happily use full 48 bits for xattr block number. The proper handling
+seems to be there basically since 64-bit block number support was added.
+So remove the bogus limitation and BUG_ON.
 
-1. The kernel notices that the DP-MST port is gone.
-2. The kernel marks the connector as disconnected, then sends a
-   uevent to make user-space re-scan the connector list.
-3. User-space notices the connector goes from connected to disconnected,
-   disables it.
-4. Kernel handles the IOCTL disabling the connector. On success,
-   the very last reference to the struct drm_connector is dropped and
-   drm_connector_cleanup() is called.
-5. The connector is removed from the list, and a uevent is sent to tell
-   user-space that the connector disappeared.
-
-The very last step was missing. As a result, user-space thought the
-connector still existed and could try to disable it again. Since the
-kernel no longer knows about the connector, that would end up with
-EINVAL and confused user-space.
-
-Fix this by sending a hotplug uevent from drm_connector_cleanup().
-
-Signed-off-by: Simon Ser <contact@emersion.fr>
-Cc: stable@vger.kernel.org
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: Jonas Ådahl <jadahl@redhat.com>
-Tested-by: Jonas Ådahl <jadahl@redhat.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221017153150.60675-2-contact@emersion.fr
+Cc: Eric Sandeen <sandeen@redhat.com>
+Fixes: fb0a387dcdcd ("ext4: limit block allocations for indirect-block files to < 2^32")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221121130929.32031-1-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_connector.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/ext4/xattr.c |    8 --------
+ 1 file changed, 8 deletions(-)
 
---- a/drivers/gpu/drm/drm_connector.c
-+++ b/drivers/gpu/drm/drm_connector.c
-@@ -484,6 +484,9 @@ void drm_connector_cleanup(struct drm_co
- 	mutex_destroy(&connector->mutex);
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -2049,19 +2049,11 @@ inserted:
  
- 	memset(connector, 0, sizeof(*connector));
-+
-+	if (dev->registered)
-+		drm_sysfs_hotplug_event(dev);
- }
- EXPORT_SYMBOL(drm_connector_cleanup);
+ 			goal = ext4_group_first_block_no(sb,
+ 						EXT4_I(inode)->i_block_group);
+-
+-			/* non-extent files can't have physical blocks past 2^32 */
+-			if (!(ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)))
+-				goal = goal & EXT4_MAX_BLOCK_FILE_PHYS;
+-
+ 			block = ext4_new_meta_blocks(handle, inode, goal, 0,
+ 						     NULL, &error);
+ 			if (error)
+ 				goto cleanup;
+ 
+-			if (!(ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS)))
+-				BUG_ON(block > EXT4_MAX_BLOCK_FILE_PHYS);
+-
+ 			ea_idebug(inode, "creating block %llu",
+ 				  (unsigned long long)block);
  
 
 
