@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E711D749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:16:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B4F7C433D2;
-	Thu, 12 Jan 2023 14:16:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C949749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:16:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9425FC433EF;
+	Thu, 12 Jan 2023 14:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532975;
-	bh=5pID0J6smr0rwgMjNuusAWZx8gUTXzLrVgKuW/eg/64=;
+	s=korg; t=1673532978;
+	bh=xz+TTkS0MPxBTZJga/N0pFjfGkaX2eFaiQmDqoEdAWE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ptIsm0+abghkYwAeF1yVs4WUUwZeqA48oPIdxbSa9CfzsNnByiciLznmAYw2arF6f
-	 AdrHG2ZbS/SzsrR+d4iXrD2k0jqfJnc4EMJTY3IvJSZlA269eOygjXgLz97Ut/uarR
-	 E6KQWLjQ4Wq9HXIp2KV5CRFK6xYDyl995zggj/KI=
+	b=MvCtSlPBFua1IEWvr0l4ug7QM97XZcvQEfDBzRkNId2gM7qmejVdOLH/X6KpbCver
+	 Kvu6wcbpf8kzH5CPjxl7q5gwNwpqzVqu20408H+fqBI365865GapooZ9woznIk7Cs3
+	 1U+DZUWsWtJ1/yn74qIAj+BLePNpjmygVW5k0Aro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Mark Greer <mgreer@animalcreek.com>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Weili Qian <qianweili@huawei.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 330/783] crypto: omap-sham - Use pm_runtime_resume_and_get() in omap_sham_probe()
-Date: Thu, 12 Jan 2023 14:50:46 +0100
-Message-Id: <20230112135539.608830317@linuxfoundation.org>
+Subject: [PATCH 5.10 304/783] crypto: hisilicon/qm - add missing pci_dev_put() in q_num_set()
+Date: Thu, 12 Jan 2023 14:50:20 +0100
+Message-Id: <20230112135538.423664424@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,38 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 7bcceb4c9896b1b672b636ae70fe75110d6bf1ad ]
+[ Upstream commit cc7710d0d4ebc6998f04035cde4f32c5ddbe9d7f ]
 
-omap_sham_probe() calls pm_runtime_get_sync() and calls
-pm_runtime_put_sync() latter to put usage_counter. However,
-pm_runtime_get_sync() will increment usage_counter even it failed. Fix
-it by replacing it with pm_runtime_resume_and_get() to keep usage
-counter balanced.
+pci_get_device() will increase the reference count for the returned
+pci_dev. We need to use pci_dev_put() to decrease the reference count
+before q_num_set() returns.
 
-Fixes: b359f034c8bf ("crypto: omap-sham - Convert to use pm_runtime API")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Acked-by: Mark Greer <mgreer@animalcreek.com>
+Fixes: c8b4b477079d ("crypto: hisilicon - add HiSilicon HPRE accelerator")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Reviewed-by: Weili Qian <qianweili@huawei.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/omap-sham.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/hisilicon/qm.h | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/crypto/omap-sham.c b/drivers/crypto/omap-sham.c
-index 48f78e34cf8d..5a57617441b8 100644
---- a/drivers/crypto/omap-sham.c
-+++ b/drivers/crypto/omap-sham.c
-@@ -2130,7 +2130,7 @@ static int omap_sham_probe(struct platform_device *pdev)
- 	pm_runtime_enable(dev);
- 	pm_runtime_irq_safe(dev);
+diff --git a/drivers/crypto/hisilicon/qm.h b/drivers/crypto/hisilicon/qm.h
+index 0420f4ce7197..aaad3d76dc04 100644
+--- a/drivers/crypto/hisilicon/qm.h
++++ b/drivers/crypto/hisilicon/qm.h
+@@ -289,14 +289,14 @@ struct hisi_qp {
+ static inline int q_num_set(const char *val, const struct kernel_param *kp,
+ 			    unsigned int device)
+ {
+-	struct pci_dev *pdev = pci_get_device(PCI_VENDOR_ID_HUAWEI,
+-					      device, NULL);
++	struct pci_dev *pdev;
+ 	u32 n, q_num;
+ 	int ret;
  
--	err = pm_runtime_get_sync(dev);
-+	err = pm_runtime_resume_and_get(dev);
- 	if (err < 0) {
- 		dev_err(dev, "failed to get sync: %d\n", err);
- 		goto err_pm;
+ 	if (!val)
+ 		return -EINVAL;
+ 
++	pdev = pci_get_device(PCI_VENDOR_ID_HUAWEI, device, NULL);
+ 	if (!pdev) {
+ 		q_num = min_t(u32, QM_QNUM_V1, QM_QNUM_V2);
+ 		pr_info("No device found currently, suppose queue number is %d\n",
+@@ -306,6 +306,8 @@ static inline int q_num_set(const char *val, const struct kernel_param *kp,
+ 			q_num = QM_QNUM_V1;
+ 		else
+ 			q_num = QM_QNUM_V2;
++
++		pci_dev_put(pdev);
+ 	}
+ 
+ 	ret = kstrtou32(val, 10, &n);
 -- 
 2.35.1
 
