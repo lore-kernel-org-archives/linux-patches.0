@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2753979C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:28:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89A71C433EF;
-	Thu, 12 Jan 2023 14:28:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EA4179C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:28:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80EA9C433F1;
+	Thu, 12 Jan 2023 14:28:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533724;
-	bh=z6ngnWlYAKii2CbcyqOb51nA7XbFl3j2/4OxumNYyLo=;
+	s=korg; t=1673533727;
+	bh=sab/sXztno/3zqSpsXMjLfQipiAEXgFC/BJX8Gr59uk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0xKdlNvVOzeDa+cMK8tuaBfRME6qlhBrUfsKx/7pM1ohqEfV0xT2lpbuMmyqIuv1c
-	 Q0fsK6u6IteBxtCRM40APrdBBpe6Ot60XwH7PdFBMQYSBDxr5+xWdhmDLsC0tMYRNk
-	 zGvmzljToG/cfLvjJ8DPgIunV4ix+0+mXhwF7mlE=
+	b=H0dWYkkCqeDyQvCzFtN5Bcooxb2lWGouyxl8Eg6ciJ7vCwo2KlBer5hbmf7VA9PrS
+	 wWWYPdfMO3vANF+haaLQaOjWbJsThdmcUVjwzTqmYxM57JrPeBCeTuo6/8iWKESiW0
+	 aBew6AyKlPPrCX2SQDZBUbByOL42T1hWkVD5JWW8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wolfram Sang <wsa+renesas@sang-engineering.com>,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 532/783] mmc: renesas_sdhi: better reset from HS400 mode
-Date: Thu, 12 Jan 2023 14:54:08 +0100
-Message-Id: <20230112135548.877072603@linuxfoundation.org>
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.10 565/783] iio: adc128s052: add proper .data members in adc128_of_match table
+Date: Thu, 12 Jan 2023 14:54:41 +0100
+Message-Id: <20230112135550.423261680@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,40 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wolfram Sang <wsa+renesas@sang-engineering.com>
+From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
 
-[ Upstream commit 0da69dd2155019ed4c444ede0e79ce7a4a6af627 ]
+commit e2af60f5900c6ade53477b494ffb54690eee11f5 upstream.
 
-Up to now, HS400 adjustment mode was only disabled on soft reset when a
-calibration table was in use. It is safer, though, to disable it as soon
-as the instance has an adjustment related quirk set, i.e. bad taps or a
-calibration table.
+Prior to commit bd5d54e4d49d ("iio: adc128s052: add ACPI _HID
+AANT1280"), the driver unconditionally used spi_get_device_id() to get
+the index into the adc128_config array.
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
-Reviewed-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Tested-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Link: https://lore.kernel.org/r/20221120113457.42010-3-wsa+renesas@sang-engineering.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+However, with that commit, OF-based boards now incorrectly treat all
+supported sensors as if they are an adc128s052, because all the .data
+members of the adc128_of_match table are implicitly 0. Our board,
+which has an adc122s021, thus exposes 8 channels whereas it really
+only has two.
+
+Fixes: bd5d54e4d49d ("iio: adc128s052: add ACPI _HID AANT1280")
+Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/20221115132324.1078169-1-linux@rasmusvillemoes.dk
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/renesas_sdhi_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/adc/ti-adc128s052.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/mmc/host/renesas_sdhi_core.c b/drivers/mmc/host/renesas_sdhi_core.c
-index ac01fb518386..a49b8fe2a098 100644
---- a/drivers/mmc/host/renesas_sdhi_core.c
-+++ b/drivers/mmc/host/renesas_sdhi_core.c
-@@ -537,7 +537,7 @@ static void renesas_sdhi_reset_hs400_mode(struct tmio_mmc_host *host,
- 			 SH_MOBILE_SDHI_SCC_TMPPORT2_HS400OSEL) &
- 			sd_scc_read32(host, priv, SH_MOBILE_SDHI_SCC_TMPPORT2));
+--- a/drivers/iio/adc/ti-adc128s052.c
++++ b/drivers/iio/adc/ti-adc128s052.c
+@@ -193,13 +193,13 @@ static int adc128_remove(struct spi_devi
+ }
  
--	if (priv->adjust_hs400_calib_table)
-+	if (priv->quirks && (priv->quirks->hs400_calib_table || priv->quirks->hs400_bad_taps))
- 		renesas_sdhi_adjust_hs400_mode_disable(host);
- 
- 	sd_ctrl_write16(host, CTL_SD_CARD_CLK_CTL, CLK_CTL_SCLKEN |
--- 
-2.35.1
-
+ static const struct of_device_id adc128_of_match[] = {
+-	{ .compatible = "ti,adc128s052", },
+-	{ .compatible = "ti,adc122s021", },
+-	{ .compatible = "ti,adc122s051", },
+-	{ .compatible = "ti,adc122s101", },
+-	{ .compatible = "ti,adc124s021", },
+-	{ .compatible = "ti,adc124s051", },
+-	{ .compatible = "ti,adc124s101", },
++	{ .compatible = "ti,adc128s052", .data = (void*)0L, },
++	{ .compatible = "ti,adc122s021", .data = (void*)1L, },
++	{ .compatible = "ti,adc122s051", .data = (void*)1L, },
++	{ .compatible = "ti,adc122s101", .data = (void*)1L, },
++	{ .compatible = "ti,adc124s021", .data = (void*)2L, },
++	{ .compatible = "ti,adc124s051", .data = (void*)2L, },
++	{ .compatible = "ti,adc124s101", .data = (void*)2L, },
+ 	{ /* sentinel */ },
+ };
+ MODULE_DEVICE_TABLE(of, adc128_of_match);
 
 
