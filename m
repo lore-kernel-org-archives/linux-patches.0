@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D964746A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:01:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67CC4C433D2;
-	Thu, 12 Jan 2023 14:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04EA9746A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:01:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7368CC433EF;
+	Thu, 12 Jan 2023 14:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532075;
-	bh=BwwHk3weBC4wztuoP8owwyQiLO/Om3KFMylwqheF70o=;
+	s=korg; t=1673532078;
+	bh=Cl79ujPTQVD85seVZFI5KggUxqs2QUJXgn6CQkt7jNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MtdcqkJt3IKL7SdGxjhB0bIoqF05xuXdLcuGoAvGwUlyGeW2h3d71Zfqhuex1z8T4
-	 lbwFMZCUXCkX8NTEVl258ZgwzMpWPp91iSoXB0Bx8vvP3/rot4a8jfjVw1V7Q2UrZb
-	 RgkEoLL7PMpWz2jY9koTp2MapQfaX3Jb3rpKggns=
+	b=eGEbw6Kp7XiSt8fgbN/pW2lX528CJXD79zJoZFfhtYUpgBgFPifCLjY/2p5kVio2N
+	 v+4WphUpJNf5JYvCgnrMTvxILe/FT2D/5ypQhskiHX14lQvww44sOp2vqGv6EbYLxG
+	 b/vY6IlHwyLqw/ru72g0CXOSG05NCtDrEqeTaDEM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca@z3ntu.xyz>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Wang Yufen <wangyufen@huawei.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 004/783] ARM: dts: qcom: apq8064: fix coresight compatible
-Date: Thu, 12 Jan 2023 14:45:20 +0100
-Message-Id: <20230112135524.372051682@linuxfoundation.org>
+Subject: [PATCH 5.10 038/783] pstore/ram: Fix error return code in ramoops_probe()
+Date: Thu, 12 Jan 2023 14:45:54 +0100
+Message-Id: <20230112135525.915402053@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -37,37 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Weiss <luca@z3ntu.xyz>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit a42b1ee868361f1cb0492f1bdaefb43e0751e468 ]
+[ Upstream commit e1fce564900f8734edf15b87f028c57e14f6e28d ]
 
-There's a typo missing the arm, prefix of arm,coresight-etb10. Fix it to
-make devicetree validation happier.
+In the if (dev_of_node(dev) && !pdata) path, the "err" may be assigned a
+value of 0, so the error return code -EINVAL may be incorrectly set
+to 0. To fix set valid return code before calling to goto.
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-Fixes: 7a5c275fd821 ("ARM: dts: qcom: Add apq8064 CoreSight components")
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221013190657.48499-3-luca@z3ntu.xyz
+Fixes: 35da60941e44 ("pstore/ram: add Device Tree bindings")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/1669969374-46582-1-git-send-email-wangyufen@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/qcom-apq8064.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/pstore/ram.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-index 72c4a9fc41a2..fb25ede1ce9f 100644
---- a/arch/arm/boot/dts/qcom-apq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-@@ -1571,7 +1571,7 @@ wifi {
- 		};
+diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
+index ca6d8a867285..98e579ce0d63 100644
+--- a/fs/pstore/ram.c
++++ b/fs/pstore/ram.c
+@@ -730,6 +730,7 @@ static int ramoops_probe(struct platform_device *pdev)
+ 	/* Make sure we didn't get bogus platform data pointer. */
+ 	if (!pdata) {
+ 		pr_err("NULL platform data\n");
++		err = -EINVAL;
+ 		goto fail_out;
+ 	}
  
- 		etb@1a01000 {
--			compatible = "coresight-etb10", "arm,primecell";
-+			compatible = "arm,coresight-etb10", "arm,primecell";
- 			reg = <0x1a01000 0x1000>;
+@@ -737,6 +738,7 @@ static int ramoops_probe(struct platform_device *pdev)
+ 			!pdata->ftrace_size && !pdata->pmsg_size)) {
+ 		pr_err("The memory size and the record/console size must be "
+ 			"non-zero\n");
++		err = -EINVAL;
+ 		goto fail_out;
+ 	}
  
- 			clocks = <&rpmcc RPM_QDSS_CLK>;
 -- 
 2.35.1
 
