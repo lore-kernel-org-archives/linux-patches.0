@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73206749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:17:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE58FC433D2;
-	Thu, 12 Jan 2023 14:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC56E749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:17:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0405DC433EF;
+	Thu, 12 Jan 2023 14:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533053;
-	bh=PmFXWecuphzLQL/a/Q8T9AW6nA8rcnx1ptG09ywE4do=;
+	s=korg; t=1673533056;
+	bh=oirjHvUm/24DGQLv4pPofWFz6LgNO1j6+Bh8e6KtH1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YYHvUiz1UNsp6C/txrWVc6u1bwHstvvdG2MbmwPgfS4gNfX593FwRyZu0iKPT43bi
-	 Rjxw31hTVmjidHznddjbLUoiLzSej0tEEufxgxu9nPNxU+1LAyFfwz8YSn1eog1jrn
-	 f8+sxpFqLsVkjO9o3WfWM8R6G8u2mUJrKhFIfPbI=
+	b=e3qWCkCWrV2xkx+vB4Wj+1oNl/Zh0MvcxlUvsQPHrZo3J/1tfVfkOO7By1TZSCp6n
+	 fCXMx9XNVjxCRzHfoew2nPGQRu43G6kwdbCq4XfZ3/OFsek8FJoHz97GEi8vfqcP0Q
+	 ZZV5PMDaFWke2Tu+UjaH3QJtf7jBvYOLG8FGJf14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Tobias Klauser <tklauser@distanz.ch>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jiri Slaby <jslaby@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 337/783] crypto: img-hash - Fix variable dereferenced before check hdev->req
-Date: Thu, 12 Jan 2023 14:50:53 +0100
-Message-Id: <20230112135539.926646181@linuxfoundation.org>
+Subject: [PATCH 5.10 355/783] tty: serial: clean up stop-tx part in altera_uart_tx_chars()
+Date: Thu, 12 Jan 2023 14:51:11 +0100
+Message-Id: <20230112135540.788808918@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,50 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Jiri Slaby <jslaby@suse.cz>
 
-[ Upstream commit 04ba54e5af8f8f0137b08cb51a0b3a2e1ea46c94 ]
+[ Upstream commit d9c128117da41cf4cb0e80ae565b5d3ac79dffac ]
 
-Smatch report warning as follows:
+The "stop TX" path in altera_uart_tx_chars() is open-coded, so:
+* use uart_circ_empty() to check if the buffer is empty, and
+* when true, call altera_uart_stop_tx().
 
-drivers/crypto/img-hash.c:366 img_hash_dma_task() warn: variable
-dereferenced before check 'hdev->req'
-
-Variable dereferenced should be done after check 'hdev->req',
-fix it.
-
-Fixes: d358f1abbf71 ("crypto: img-hash - Add Imagination Technologies hw hash accelerator")
-Fixes: 10badea259fa ("crypto: img-hash - Fix null pointer exception")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Cc: Tobias Klauser <tklauser@distanz.ch>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Tobias Klauser <tklauser@distanz.ch>
+Signed-off-by: Jiri Slaby <jslaby@suse.cz>
+Link: https://lore.kernel.org/r/20220920052049.20507-3-jslaby@suse.cz
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 1307c5d33cce ("serial: altera_uart: fix locking in polling mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/img-hash.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/tty/serial/altera_uart.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/crypto/img-hash.c b/drivers/crypto/img-hash.c
-index 91f555ccbb31..cecae50d0f58 100644
---- a/drivers/crypto/img-hash.c
-+++ b/drivers/crypto/img-hash.c
-@@ -357,12 +357,16 @@ static int img_hash_dma_init(struct img_hash_dev *hdev)
- static void img_hash_dma_task(unsigned long d)
- {
- 	struct img_hash_dev *hdev = (struct img_hash_dev *)d;
--	struct img_hash_request_ctx *ctx = ahash_request_ctx(hdev->req);
-+	struct img_hash_request_ctx *ctx;
- 	u8 *addr;
- 	size_t nbytes, bleft, wsend, len, tbc;
- 	struct scatterlist tsg;
+diff --git a/drivers/tty/serial/altera_uart.c b/drivers/tty/serial/altera_uart.c
+index 0e487ce091ac..508a3c2b7781 100644
+--- a/drivers/tty/serial/altera_uart.c
++++ b/drivers/tty/serial/altera_uart.c
+@@ -274,10 +274,8 @@ static void altera_uart_tx_chars(struct altera_uart *pp)
+ 	if (uart_circ_chars_pending(xmit) < WAKEUP_CHARS)
+ 		uart_write_wakeup(port);
  
--	if (!hdev->req || !ctx->sg)
-+	if (!hdev->req)
-+		return;
-+
-+	ctx = ahash_request_ctx(hdev->req);
-+	if (!ctx->sg)
- 		return;
+-	if (xmit->head == xmit->tail) {
+-		pp->imr &= ~ALTERA_UART_CONTROL_TRDY_MSK;
+-		altera_uart_update_ctrl_reg(pp);
+-	}
++	if (uart_circ_empty(xmit))
++		altera_uart_stop_tx(port);
+ }
  
- 	addr = sg_virt(ctx->sg);
+ static irqreturn_t altera_uart_interrupt(int irq, void *data)
 -- 
 2.35.1
 
