@@ -1,93 +1,70 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8972D79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:39:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C4A0C433D2;
-	Thu, 12 Jan 2023 14:39:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534388;
-	bh=R11KfLR/mtPLWUd51U0iVynTDRA3SeN70ZC8NXe3XSk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nhSegHiIYY8jKphO6NAqQUpLngHKE5DpFnitNIcoDX50SmBUFcFjWFYJIeh31Xv4s
-	 xrpICsIdJTEgUtHOaTkFfTbeqg9KniCTrUHcuk+VfKCxoofH3MCQ6SxAoiJPC/9tHG
-	 2f758bsoEvuQJAnZgoJIbupYjK7upKM+5K5S8Vwg=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	it+linux-fbdev@molgen.mpg.de,
-	"Z. Liu" <liuzx@knownsec.com>,
-	Rich Felker <dalias@libc.org>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 5.10 762/783] fbdev: matroxfb: G200eW: Increase max memory from 1 MB to 16 MB
-Date: Thu, 12 Jan 2023 14:57:58 +0100
-Message-Id: <20230112135559.693596791@linuxfoundation.org>
-X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
-References: <20230112135524.143670746@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBEF979C9;
+	Thu, 12 Jan 2023 15:56:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2EBC433F0;
+	Thu, 12 Jan 2023 15:56:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1673539019;
+	bh=jVnUX1HGL2gh5Pn/FhhNok6HWG0zem3mXf+tFOv4oTo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=PsM6lFByFZNcJejpqXWxQ75oEuqp47dI16BAXhtaV4bMK8m0zTc57+HOqw8A+Q6gg
+	 009T5f+JKmgNaj3O8RJ3a8bT5xdCwqCoANeIvSkhbTiAugRd4qlwZoeibQwDfTCSOo
+	 KrByOMAJdLwSr+JPfsiY0JmEU7u3QdOqFJ0T3nl+4U+0lATl02LC0tai9IuVzjickU
+	 qFAZ2kloCjPf1MwMpRJJQ1tlgVq7TYrxACs9af/t4WfIL0NEfrNxJU8Zt2Y4y/Z3FX
+	 2ZsmP/C0LDUzgOaQdpvRkox9ItTl5HyZrCqI9UQ8Ok8Ox48EwvAgmuQWstQnbAUjyz
+	 Bsdofl/i76t0A==
+Date: Thu, 12 Jan 2023 08:56:57 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Jocelyn Falempe <jfalempe@redhat.com>
+Cc: Jani Nikula <jani.nikula@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+	Kees Cook <keescook@chromium.org>, Tom Rix <trix@redhat.com>,
+	intel-gfx@lists.freedesktop.org, llvm@lists.linux.dev,
+	Nick Desaulniers <ndesaulniers@google.com>, patches@lists.linux.dev,
+	dri-devel@lists.freedesktop.org,
+	Andrzej Hajda <andrzej.hajda@intel.com>,
+	Sami Tolvanen <samitolvanen@google.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>
+Subject: Re: [PATCH v2] drm/i915: Fix CFI violations in gt_sysfs
+Message-ID: <Y8Atycuni0bl8std@dev-arch.thelio-3990X>
+References: <20221013205909.1282545-1-nathan@kernel.org>
+ <4dcf830e-62a5-837b-7590-ac5395f84c14@redhat.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4dcf830e-62a5-837b-7590-ac5395f84c14@redhat.com>
 
-From: Paul Menzel <pmenzel@molgen.mpg.de>
+Hi Jocelyn,
 
-commit f685dd7a8025f2554f73748cfdb8143a21fb92c7 upstream.
+On Thu, Jan 12, 2023 at 11:08:17AM +0100, Jocelyn Falempe wrote:
+> This patch does also solve a kernel crash when reading
+> /sys/class/drm/card1/gt/gt0/* on a skylake machine:
+> https://bugzilla.redhat.com/show_bug.cgi?id=2154880
 
-Commit 62d89a7d49af ("video: fbdev: matroxfb: set maxvram of vbG200eW to
-the same as vbG200 to avoid black screen") accidently decreases the
-maximum memory size for the Matrox G200eW (102b:0532) from 8 MB to 1 MB
-by missing one zero. This caused the driver initialization to fail with
-the messages below, as the minimum required VRAM size is 2 MB:
+Interesting, I wonder what aspect of this patch fixes this because I am
+not sure that is an intended consequence of this change but that is
+still good to hear!
 
-     [    9.436420] matroxfb: Matrox MGA-G200eW (PCI) detected
-     [    9.444502] matroxfb: cannot determine memory size
-     [    9.449316] matroxfb: probe of 0000:0a:03.0 failed with error -1
+For the record, this is commit a8a4f0467d70 ("drm/i915: Fix CFI
+violations in gt_sysfs") in mainline.
 
-So, add the missing 0 to make it the intended 16 MB. Successfully tested on
-the Dell PowerEdge R910/0KYD3D, BIOS 2.10.0 08/29/2013, that the warning is
-gone.
+> Do you think it can be backported to stable releases ?
+> Conflicts are trivial on top of v6.0 at least.
 
-While at it, add a leading 0 to the maxdisplayable entry, so it’s aligned
-properly. The value could probably also be increased from 8 MB to 16 MB, as
-the G200 uses the same values, but I have not checked any datasheet.
+I had a report from another user of this crash affecting them with kCFI
+so it is on my TODO to backport it to 6.1 (6.0 just went EOL) but I am
+currently out of the office until next Wednesday so I won't be able to
+get to it until then (as I would like to test the backport on affected
+hardware). If someone wants to beat me to it, I won't complain ;)
 
-Note, matroxfb is obsolete and superseded by the maintained DRM driver
-mga200, which is used by default on most systems where both drivers are
-available. Therefore, on most systems it was only a cosmetic issue.
-
-Fixes: 62d89a7d49af ("video: fbdev: matroxfb: set maxvram of vbG200eW to the same as vbG200 to avoid black screen")
-Link: https://lore.kernel.org/linux-fbdev/972999d3-b75d-5680-fcef-6e6905c52ac5@suse.de/T/#mb6953a9995ebd18acc8552f99d6db39787aec775
-Cc: it+linux-fbdev@molgen.mpg.de
-Cc: Z. Liu <liuzx@knownsec.com>
-Cc: Rich Felker <dalias@libc.org>
-Cc: stable@vger.kernel.org
-Signed-off-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/video/fbdev/matrox/matroxfb_base.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
---- a/drivers/video/fbdev/matrox/matroxfb_base.c
-+++ b/drivers/video/fbdev/matrox/matroxfb_base.c
-@@ -1377,8 +1377,8 @@ static struct video_board vbG200 = {
- 	.lowlevel = &matrox_G100
- };
- static struct video_board vbG200eW = {
--	.maxvram = 0x100000,
--	.maxdisplayable = 0x800000,
-+	.maxvram = 0x1000000,
-+	.maxdisplayable = 0x0800000,
- 	.accelID = FB_ACCEL_MATROX_MGAG200,
- 	.lowlevel = &matrox_G100
- };
-
-
+Cheers,
+Nathan
