@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AB2749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:13:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0596C433F0;
-	Thu, 12 Jan 2023 14:13:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D094749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:13:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C321CC433D2;
+	Thu, 12 Jan 2023 14:13:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532822;
-	bh=L1Myazw+YJPpfoU+ZYBfhr+G9ONcDTYqNtvMCYAb3YM=;
+	s=korg; t=1673532825;
+	bh=1FPtuU7xjRCaH/7jFuCKqz4gE6zcQ5V+s5YDIB/hrcw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BEpoeODLwBBE7AKN92utXHjtemUYAJVoQ7Xyd/zJ63eXnvCqikseE0f6LpEgdDUNK
-	 ZxAA7ghPxtEM7T2LffOtHhUtIZm0OW3LZDPj1gsz/mHU9I+p/WmN9oR9eQRghVBISj
-	 NlKCC/kKeuVlpmRgzCUAxVcz1OKQ9kpjijh1jkgI=
+	b=pKVBRBljFaapkpBqZdIKwiK46EYwtcbYulb8+0TUz57e5upR8WY9n1bAgj2Gheahy
+	 ffygu8ziEwVWAqGPq77asHyb242L/TYwaWiOYD2WpEYATRZx0F0ja5VFy8y3DH7XWF
+	 qLlQJM7D03pNDgIYYmukm8ZX552pUUO2aOLMoG14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	John Keeping <john@metanate.com>,
+	Corentin Labbe <clabbe@baylibre.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 270/783] Bluetooth: hci_qca: dont call kfree_skb() under spin_lock_irqsave()
-Date: Thu, 12 Jan 2023 14:49:46 +0100
-Message-Id: <20230112135536.926004966@linuxfoundation.org>
+Subject: [PATCH 5.10 288/783] crypto: rockchip - do not do custom power management
+Date: Thu, 12 Jan 2023 14:50:04 +0100
+Message-Id: <20230112135537.724132169@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,35 +36,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Corentin Labbe <clabbe@baylibre.com>
 
-[ Upstream commit df4cfc91208e0a98f078223793f5871b1a82cc54 ]
+[ Upstream commit c50ef1411c8cbad0c7db100c477126076b6e3348 ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with interrupts being disabled. So replace kfree_skb()
-with dev_kfree_skb_irq() under spin_lock_irqsave().
+The clock enable/disable at tfm init/exit is fragile,
+if 2 tfm are init in the same time and one is removed just after,
+it will leave the hardware uncloked even if a user remains.
 
-Fixes: 0ff252c1976d ("Bluetooth: hciuart: Add support QCA chipset for UART")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Instead simply enable clocks at probe time.
+We will do PM later.
+
+Fixes: ce0183cb6464b ("crypto: rockchip - switch to skcipher API")
+Reviewed-by: John Keeping <john@metanate.com>
+Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_qca.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/crypto/rockchip/rk3288_crypto.c          | 4 ++--
+ drivers/crypto/rockchip/rk3288_crypto.h          | 2 --
+ drivers/crypto/rockchip/rk3288_crypto_ahash.c    | 3 +--
+ drivers/crypto/rockchip/rk3288_crypto_skcipher.c | 5 +++--
+ 4 files changed, 6 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index eea18aed17f8..60b0e13bb9fc 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -905,7 +905,7 @@ static int qca_enqueue(struct hci_uart *hu, struct sk_buff *skb)
- 	default:
- 		BT_ERR("Illegal tx state: %d (losing packet)",
- 		       qca->tx_ibs_state);
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
- 		break;
- 	}
+diff --git a/drivers/crypto/rockchip/rk3288_crypto.c b/drivers/crypto/rockchip/rk3288_crypto.c
+index 35d73061d156..5f8444b9633a 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto.c
++++ b/drivers/crypto/rockchip/rk3288_crypto.c
+@@ -395,8 +395,7 @@ static int rk_crypto_probe(struct platform_device *pdev)
+ 		     rk_crypto_done_task_cb, (unsigned long)crypto_info);
+ 	crypto_init_queue(&crypto_info->queue, 50);
  
+-	crypto_info->enable_clk = rk_crypto_enable_clk;
+-	crypto_info->disable_clk = rk_crypto_disable_clk;
++	rk_crypto_enable_clk(crypto_info);
+ 	crypto_info->load_data = rk_load_data;
+ 	crypto_info->unload_data = rk_unload_data;
+ 	crypto_info->enqueue = rk_crypto_enqueue;
+@@ -423,6 +422,7 @@ static int rk_crypto_remove(struct platform_device *pdev)
+ 	struct rk_crypto_info *crypto_tmp = platform_get_drvdata(pdev);
+ 
+ 	rk_crypto_unregister();
++	rk_crypto_disable_clk(crypto_tmp);
+ 	tasklet_kill(&crypto_tmp->done_task);
+ 	tasklet_kill(&crypto_tmp->queue_task);
+ 	return 0;
+diff --git a/drivers/crypto/rockchip/rk3288_crypto.h b/drivers/crypto/rockchip/rk3288_crypto.h
+index 3db595570c9c..39ffcd630760 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto.h
++++ b/drivers/crypto/rockchip/rk3288_crypto.h
+@@ -219,8 +219,6 @@ struct rk_crypto_info {
+ 	int (*start)(struct rk_crypto_info *dev);
+ 	int (*update)(struct rk_crypto_info *dev);
+ 	void (*complete)(struct crypto_async_request *base, int err);
+-	int (*enable_clk)(struct rk_crypto_info *dev);
+-	void (*disable_clk)(struct rk_crypto_info *dev);
+ 	int (*load_data)(struct rk_crypto_info *dev,
+ 			 struct scatterlist *sg_src,
+ 			 struct scatterlist *sg_dst);
+diff --git a/drivers/crypto/rockchip/rk3288_crypto_ahash.c b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
+index 81befe7febaa..9583310a69d5 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto_ahash.c
++++ b/drivers/crypto/rockchip/rk3288_crypto_ahash.c
+@@ -301,7 +301,7 @@ static int rk_cra_hash_init(struct crypto_tfm *tfm)
+ 				 sizeof(struct rk_ahash_rctx) +
+ 				 crypto_ahash_reqsize(tctx->fallback_tfm));
+ 
+-	return tctx->dev->enable_clk(tctx->dev);
++	return 0;
+ }
+ 
+ static void rk_cra_hash_exit(struct crypto_tfm *tfm)
+@@ -309,7 +309,6 @@ static void rk_cra_hash_exit(struct crypto_tfm *tfm)
+ 	struct rk_ahash_ctx *tctx = crypto_tfm_ctx(tfm);
+ 
+ 	free_page((unsigned long)tctx->dev->addr_vir);
+-	return tctx->dev->disable_clk(tctx->dev);
+ }
+ 
+ struct rk_crypto_tmp rk_ahash_sha1 = {
+diff --git a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
+index 5bbf0d2722e1..8c44a19eab75 100644
+--- a/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
++++ b/drivers/crypto/rockchip/rk3288_crypto_skcipher.c
+@@ -388,8 +388,10 @@ static int rk_ablk_init_tfm(struct crypto_skcipher *tfm)
+ 	ctx->dev->update = rk_ablk_rx;
+ 	ctx->dev->complete = rk_crypto_complete;
+ 	ctx->dev->addr_vir = (char *)__get_free_page(GFP_KERNEL);
++	if (!ctx->dev->addr_vir)
++		return -ENOMEM;
+ 
+-	return ctx->dev->addr_vir ? ctx->dev->enable_clk(ctx->dev) : -ENOMEM;
++	return 0;
+ }
+ 
+ static void rk_ablk_exit_tfm(struct crypto_skcipher *tfm)
+@@ -397,7 +399,6 @@ static void rk_ablk_exit_tfm(struct crypto_skcipher *tfm)
+ 	struct rk_cipher_ctx *ctx = crypto_skcipher_ctx(tfm);
+ 
+ 	free_page((unsigned long)ctx->dev->addr_vir);
+-	ctx->dev->disable_clk(ctx->dev);
+ }
+ 
+ struct rk_crypto_tmp rk_ecb_aes_alg = {
 -- 
 2.35.1
 
