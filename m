@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B129F746A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:00:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A65C433EF;
-	Thu, 12 Jan 2023 14:00:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09310746A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:00:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CB44C433EF;
+	Thu, 12 Jan 2023 14:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532041;
-	bh=UdRqLFL5zMFiyl4XTCz27cDNjAUKdYCaldfdUFfSlgE=;
+	s=korg; t=1673532044;
+	bh=WtZAXc5Egf1UunsDb5GUEiXIqTaTsmu1xJmUV254pls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h19bkTwqepdJ87F++IHos7EGsVBBoRoScHhqE5OeJhqpogNsAw9G/2NyvioyHudzl
-	 QGLW+8VJ2q/xDUuceu7gBzFcBZS8/ZKlS79f9keIQ/oZUVaGuELvYdouHy3aaB8Gwa
-	 nGOdajfgNpu3PUetJWD1Bdb8l+cCmP1ifX4YR4Bo=
+	b=h7znMZUrQXLV54EX8THpGO9RflWgiBnGsRhAfeqOdEdxSGOCRnJA+eiEhbcege6lp
+	 V3axbcAubhs+Ev0feL1kevHcXXprMhuetu7jNdD2MoSrhJVCxTbDTnGcr+A92x/94S
+	 d7SYzNZ2BLPx55FDUKdKAszWchFnpgM1qtTmLqGM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Stephan Gerhold <stephan.gerhold@kernkonzept.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 033/783] ARM: dts: armada-38x: Fix assigned-addresses for every PCIe Root Port
-Date: Thu, 12 Jan 2023 14:45:49 +0100
-Message-Id: <20230112135525.690775888@linuxfoundation.org>
+Subject: [PATCH 5.10 007/783] arm64: dts: qcom: msm8916: Drop MSS fallback compatible
+Date: Thu, 12 Jan 2023 14:45:23 +0100
+Message-Id: <20230112135524.520737254@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,76 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
 
-[ Upstream commit 44f47b7a8fa4678ce4c38ea74837e4996b9df6d6 ]
+[ Upstream commit ff02ac621634e82c0c34d02a79d402ae700cdfd0 ]
 
-BDF of resource in DT assigned-addresses property of Marvell PCIe Root Port
-(PCI-to-PCI bridge) should match BDF in address part in that DT node name
-as specified resource belongs to Marvell PCIe Root Port itself.
+MSM8916 was originally using the "qcom,q6v5-pil" compatible for the
+MSS remoteproc. Later it was decided to use SoC-specific compatibles
+instead, so "qcom,msm8916-mss-pil" is now the preferred compatible.
 
-Fixes: 0d3d96ab0059 ("ARM: mvebu: add Device Tree description of the Armada 380/385 SoCs")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Commit 60a05ed059a0 ("arm64: dts: qcom: msm8916: Add MSM8916-specific
+compatibles to SCM/MSS") updated the MSM8916 device tree to make use of
+the new compatible but still kept the old "qcom,q6v5-pil" as fallback.
+
+This is inconsistent with other SoCs and conflicts with the description
+in the binding documentation (which says that only one compatible should
+be present). Also, it has no functional advantage since older kernels
+could not handle this DT anyway (e.g. "power-domains" in the MSS node is
+only supported by kernels that also support "qcom,msm8916-mss-pil").
+
+Make this consistent with other SoCs by using only the
+"qcom,msm8916-mss-pil" compatible.
+
+Fixes: 60a05ed059a0 ("arm64: dts: qcom: msm8916: Add MSM8916-specific compatibles to SCM/MSS")
+Signed-off-by: Stephan Gerhold <stephan.gerhold@kernkonzept.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20220718140344.1831731-2-stephan.gerhold@kernkonzept.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/armada-380.dtsi | 4 ++--
- arch/arm/boot/dts/armada-385.dtsi | 6 +++---
- 2 files changed, 5 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8916.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/armada-380.dtsi b/arch/arm/boot/dts/armada-380.dtsi
-index cff1269f3fbf..7146cc8f082a 100644
---- a/arch/arm/boot/dts/armada-380.dtsi
-+++ b/arch/arm/boot/dts/armada-380.dtsi
-@@ -79,7 +79,7 @@ pcie@1,0 {
- 			/* x1 port */
- 			pcie@2,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x40000 0 0x2000>;
-+				assigned-addresses = <0x82001000 0 0x40000 0 0x2000>;
- 				reg = <0x1000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -98,7 +98,7 @@ pcie@2,0 {
- 			/* x1 port */
- 			pcie@3,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
-+				assigned-addresses = <0x82001800 0 0x44000 0 0x2000>;
- 				reg = <0x1800 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-diff --git a/arch/arm/boot/dts/armada-385.dtsi b/arch/arm/boot/dts/armada-385.dtsi
-index f0022d10c715..f081f7cb66e5 100644
---- a/arch/arm/boot/dts/armada-385.dtsi
-+++ b/arch/arm/boot/dts/armada-385.dtsi
-@@ -84,7 +84,7 @@ pcie1: pcie@1,0 {
- 			/* x1 port */
- 			pcie2: pcie@2,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x40000 0 0x2000>;
-+				assigned-addresses = <0x82001000 0 0x40000 0 0x2000>;
- 				reg = <0x1000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -103,7 +103,7 @@ pcie2: pcie@2,0 {
- 			/* x1 port */
- 			pcie3: pcie@3,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
-+				assigned-addresses = <0x82001800 0 0x44000 0 0x2000>;
- 				reg = <0x1800 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -125,7 +125,7 @@ pcie3: pcie@3,0 {
- 			 */
- 			pcie4: pcie@4,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x48000 0 0x2000>;
-+				assigned-addresses = <0x82002000 0 0x48000 0 0x2000>;
- 				reg = <0x2000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+index 291276a38d7c..c32e4a3833f2 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
+@@ -1249,7 +1249,7 @@ spmi_bus: spmi@200f000 {
+ 		};
+ 
+ 		mpss: remoteproc@4080000 {
+-			compatible = "qcom,msm8916-mss-pil", "qcom,q6v5-pil";
++			compatible = "qcom,msm8916-mss-pil";
+ 			reg = <0x04080000 0x100>,
+ 			      <0x04020000 0x040>;
+ 
 -- 
 2.35.1
 
