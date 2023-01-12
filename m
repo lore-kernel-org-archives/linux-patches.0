@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE5679C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:21:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11F63C433EF;
-	Thu, 12 Jan 2023 14:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3CE779C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:21:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23733C433D2;
+	Thu, 12 Jan 2023 14:21:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533310;
-	bh=+bpwetV2LU1ff15V/8g0/4eBKS2uxah7labs5OX4CiI=;
+	s=korg; t=1673533313;
+	bh=Oo5MrFqSZygHlosJH2LKQ6Q8kYUtx4rhV+QzuldlPOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UHIt7DMQtJeHDQvKQ7GHZs0C/fF5zmtz6bsN9sQ9xauFgF0LLazkDzvmrEcC9atI3
-	 9EljL8sDgjLQ6F40AhZOEW9kDX2ZJhAGuLBovP53ZvsSxZNyHWmN2cmGYgNtr0Dy6H
-	 6peoMTpgiQpbYTs2v9B2/vhBTY+1ZIsV08rl/9vE=
+	b=wI8OOBZyu+E1JP0mBLZEFQFg1r5CdPx2YwhiUCQElPfgzH7lTOg258cPJHBt4TZpH
+	 YY61DBzTcTyAFwveqTvg7aRmB+q0K62nk/UdNsdgIg2j1n0VilOOw7XfCdnZ3mnFYH
+	 4gUrKe76lz50FhY8iPMOYX6xBOht3Zb7kwu733hE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ruanjinjie <ruanjinjie@huawei.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Bernard Metzler <bmt@zurich.ibm.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 407/783] power: supply: fix null pointer dereferencing in power_supply_get_battery_info
-Date: Thu, 12 Jan 2023 14:52:03 +0100
-Message-Id: <20230112135543.188344644@linuxfoundation.org>
+Subject: [PATCH 5.10 408/783] RDMA/siw: Fix pointer cast warning
+Date: Thu, 12 Jan 2023 14:52:04 +0100
+Message-Id: <20230112135543.236440842@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,41 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ruanjinjie <ruanjinjie@huawei.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 104bb8a663451404a26331263ce5b96c34504049 ]
+[ Upstream commit 5244ca88671a1981ceec09c5c8809f003e6a62aa ]
 
-when kmalloc() fail to allocate memory in kasprintf(), propname
-will be NULL, strcmp() called by of_get_property() will cause
-null pointer dereference.
+The previous build fix left a remaining issue in configurations with
+64-bit dma_addr_t on 32-bit architectures:
 
-So return ENOMEM if kasprintf() return NULL pointer.
+drivers/infiniband/sw/siw/siw_qp_tx.c: In function 'siw_get_pblpage':
+drivers/infiniband/sw/siw/siw_qp_tx.c:32:37: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
+   32 |                 return virt_to_page((void *)paddr);
+      |                                     ^
 
-Fixes: 3afb50d7125b ("power: supply: core: Add some helpers to use the battery OCV capacity table")
-Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Use the same double cast here that the driver uses elsewhere to convert
+between dma_addr_t and void*.
+
+Fixes: 0d1b756acf60 ("RDMA/siw: Pass a pointer to virt_to_page()")
+Link: https://lore.kernel.org/r/20221215170347.2612403-1-arnd@kernel.org
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Bernard Metzler <bmt@zurich.ibm.com>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/power_supply_core.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/infiniband/sw/siw/siw_qp_tx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
-index be2cb925c115..2b644590fa8e 100644
---- a/drivers/power/supply/power_supply_core.c
-+++ b/drivers/power/supply/power_supply_core.c
-@@ -677,6 +677,11 @@ int power_supply_get_battery_info(struct power_supply *psy,
- 		int i, tab_len, size;
+diff --git a/drivers/infiniband/sw/siw/siw_qp_tx.c b/drivers/infiniband/sw/siw/siw_qp_tx.c
+index 3c3ae5ef2942..df8802b4981c 100644
+--- a/drivers/infiniband/sw/siw/siw_qp_tx.c
++++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
+@@ -29,7 +29,7 @@ static struct page *siw_get_pblpage(struct siw_mem *mem, u64 addr, int *idx)
+ 	dma_addr_t paddr = siw_pbl_get_buffer(pbl, offset, NULL, idx);
  
- 		propname = kasprintf(GFP_KERNEL, "ocv-capacity-table-%d", index);
-+		if (!propname) {
-+			power_supply_put_battery_info(psy, info);
-+			err = -ENOMEM;
-+			goto out_put_node;
-+		}
- 		list = of_get_property(battery_np, propname, &size);
- 		if (!list || !size) {
- 			dev_err(&psy->dev, "failed to get %s\n", propname);
+ 	if (paddr)
+-		return virt_to_page((void *)paddr);
++		return virt_to_page((void *)(uintptr_t)paddr);
+ 
+ 	return NULL;
+ }
 -- 
 2.35.1
 
