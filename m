@@ -1,37 +1,56 @@
-Received: from smtpout.efficios.com (smtpout.efficios.com [167.114.26.122])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD60A2101
-	for <patches@lists.linux.dev>; Wed, 11 Jan 2023 22:33:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=efficios.com;
-	s=smtpout1; t=1673475805;
-	bh=1Oxpyw0xOs6/7W8Tuvd1QWxZNFxc0oTmNh4yGrJ47L0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ahLgkiB5IQ5QRVqLfHoeZAVd/D9rkVuFxvdtTNVcpj+nX3+Rzvw9sNQfLAFLHAfuC
-	 fx2epI4w+DJKuXv6m4KR7SNDMY4qMZkhSzNmwfHDp9UqNnqPC07Z+ESFd62ySxl27x
-	 1wDae6L32WANYrSWVuQ5r5f0bvZJC1zbqZBt+qAO6TYRifgM/TovLMfKe8NlW3HsLj
-	 fGxSA7BZCmBpd8/UoA5TukoL0tLQap1kgsp3nWKpTHdr1PKfLtKXSds8I04INn6pf9
-	 2Ku8+BOZMXNrPpCwYL7CdG4HKbEZoiMxoIHB2d2PRE0F6GcbbuI2DJ91Zc50i/9/Ua
-	 ZUhqiJZIJYa4A==
-Received: from localhost (192-222-180-24.qc.cable.ebox.net [192.222.180.24])
-	by smtpout.efficios.com (Postfix) with ESMTPSA id 4Nshz073rzzgWG;
-	Wed, 11 Jan 2023 17:23:24 -0500 (EST)
-Date: Wed, 11 Jan 2023 17:23:56 -0500
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-To: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	tglx@linutronix.de, linux-crypto@vger.kernel.org,
-	linux-api@vger.kernel.org, x86@kernel.org,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Adhemerval Zanella Netto <adhemerval.zanella@linaro.org>,
-	Carlos O'Donell <carlos@redhat.com>,
-	Florian Weimer <fweimer@redhat.com>, Arnd Bergmann <arnd@arndb.de>,
-	Jann Horn <jannh@google.com>,
-	Christian Brauner <brauner@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: Re: [PATCH v14 0/7] implement getrandom() in vDSO
-Message-ID: <Y782/D2WZJRR8SHY@localhost>
-References: <20230101162910.710293-1-Jason@zx2c4.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F4E361
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 00:39:31 +0000 (UTC)
+Received: by mail-oi1-f181.google.com with SMTP id r205so14133837oib.9
+        for <patches@lists.linux.dev>; Wed, 11 Jan 2023 16:39:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=uw3RvlkKhUSjn7U3F/k7IOc1Tg1nh4Rqs+vIJtAUYKA=;
+        b=cYangVCx1U7zVgFlFhhsN7JCHIowhA+tge8oP+Ym/boTZSUqk7eiF8lBiPvVrn32K6
+         6pjI9HB+TGOnDBUKBTlyZsHFHP1PdTIE1X72gB/GVPX9I3Vz3eBZrH/5g8gUkdYPaCpB
+         i+7tMd6Drty6QOMz7B2egSDX946Ka52UsJkK+yX1YOkSOY2ASuYvxD2EcaxMvq+09BcN
+         /Dan6XkeM/H4ru7vtCQmOdE5U8WCntwIIewzuzehI5Q4w6eDbcY7132BLGUk/K8njCvC
+         nTKDUkjwVW/yexogXpoqb1kyGZbxENSOhrf6Mjp96FgKAH2v56TT0BJzi9aXrBC210Z5
+         yagg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uw3RvlkKhUSjn7U3F/k7IOc1Tg1nh4Rqs+vIJtAUYKA=;
+        b=3p94SvsXv7CxYjwJaRAsYG+7RUvkKIAe+kjmi5VOA7/yUVIQJ0UYECbzW8b2DOg7ti
+         DCdNU2wbqBL+DwL+HtBEDFkmXkDZckdmRevFdICGYNoJnyB0nMOyRCa9m/A9fRUI95DF
+         Vq7ri7aCnKJQs9h08++Izs5tZUW1HvNXgAIfqIfcBiSEfm5gw2Pycl1qQkNnDiHTzowa
+         g4LUMCLMeqTBJ7zxogSLpGjB/r3HNCgyYvC5BxAo1JmGN3LmdwegGLybA0t0x2PjZZ//
+         2wYpK5L9pUu8OM8F5EkCwLuMvXffFjQ/87BLbG3FvXlUruxZDpPZF4CJmsV7EGRNDeZB
+         N26A==
+X-Gm-Message-State: AFqh2krOAEePZ3H6MAoZJmUh58SkOjvGaj+32PLbegSi9Jiuqn4+s8+E
+	oW8M3gT8JENAweeDjZz+eBg=
+X-Google-Smtp-Source: AMrXdXviHuvmM5cC7C+C2BQTX9qM0pGn1HpXy6yzaarspSxgC7qprJlollUgHOYeLp1U68EFW8kP+g==
+X-Received: by 2002:aca:1c13:0:b0:364:7618:8d1e with SMTP id c19-20020aca1c13000000b0036476188d1emr1770185oic.34.1673483970636;
+        Wed, 11 Jan 2023 16:39:30 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id r16-20020a0568080ab000b0035bce2a39c7sm7278029oij.21.2023.01.11.16.39.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Jan 2023 16:39:29 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Wed, 11 Jan 2023 16:39:28 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.15 000/290] 5.15.87-rc1 review
+Message-ID: <20230112003928.GA1991532@roeck-us.net>
+References: <20230110180031.620810905@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -40,87 +59,23 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230101162910.710293-1-Jason@zx2c4.com>
+In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
 
-On 01-Jan-2023 05:29:03 PM, Jason A. Donenfeld wrote:
-[...]
-> Two statements:
+On Tue, Jan 10, 2023 at 07:01:32PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.87 release.
+> There are 290 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
->   1) Userspace wants faster cryptographically secure random numbers of
->      arbitrary size, big or small.
+> Responses should be made by Thu, 12 Jan 2023 17:59:42 +0000.
+> Anything received after that time might be too late.
 > 
->   2) Userspace is currently unable to safely roll its own RNG with the
->      same security profile as getrandom().
->
-[...]
-> API-wise, the vDSO gains this function:
-> 
->   ssize_t vgetrandom(void *buffer, size_t len, unsigned int flags, void *opaque_state);
-> 
-> The return value and the first 3 arguments are the same as ordinary
-> getrandom(), while the last argument is a pointer to some state
-> allocated with vgetrandom_alloc(), explained below. Were all four
-> arguments passed to the getrandom syscall, nothing different would
-> happen, and the functions would have the exact same behavior.
-> 
-> Then, we introduce a new syscall:
-> 
->   void *vgetrandom_alloc(unsigned int *num, unsigned int *size_per_each,
->                          unsigned long addr, unsigned int flags);
-> 
-> This takes a hinted number of opaque states in `num`, and returns a
-> pointer to an array of opaque states, the number actually allocated back
-> in `num`, and the size in bytes of each one in `size_per_each`, enabling
-> a libc to slice up the returned array into a state per each thread. (The
-> `flags` and `addr` arguments, as well as the `*size_per_each` input
-> value, are reserved for the future and are forced to be zero for now.)
-> 
-> Libc is expected to allocate a chunk of these on first use, and then
-> dole them out to threads as they're created, allocating more when
-> needed. The returned address of the first state may be passed to
-> munmap(2) with a length of `num * size_per_each`, in order to deallocate
-> the memory.
-> 
-> We very intentionally do *not* leave state allocation up to the caller
-> of vgetrandom, but provide vgetrandom_alloc for that allocation. There
-> are too many weird things that can go wrong, and it's important that
-> vDSO does not provide too generic of a mechanism. It's not going to
-> store its state in just any old memory address. It'll do it only in ones
-> it allocates.
 
-[...]
+Build results:
+	total: 160 pass: 160 fail: 0
+Qemu test results:
+	total: 489 pass: 489 fail: 0
 
-Have you considered extending rseq(2) per-thread "struct rseq" with an
-additional "prng_seed" pointer field, which would point to a per-thread
-memory area accessible both from userspace (at address
-__builtin_thread_pointer() + __rseq_offset) and from kernel's
-return-to-userspace rseq notification code (which can handle page
-faults) ?
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
-This way, the kernel can update its content when returning to userspace
-if an update is needed since the last update.
-
-Would that be sufficient as prng seed for your security requirements ?
-
-Implementation-wise, the semantic of the prng_seed could be entirely
-internal to a vgetrandom vDSO implementation, but the allocation of the
-memory holding this seed would be the responsibility of libc.
-
-libc could query the size required by the kernel for this prng seed with
-a new getauxval(3) entry, e.g. AT_RSEQ_PRNG_SIZE. By doing so, libc
-would only allocate as much memory as needed by the kernel vDSO
-implementation.
-
-This would remove the need for any kind of vgetrandom_alloc system call
-and all its associated complexity.
-
-Thoughts ?
-
-Thanks,
-
-Mathieu
-
--- 
-Mathieu Desnoyers
-EfficiOS Inc.
-http://www.efficios.com
+Guenter
