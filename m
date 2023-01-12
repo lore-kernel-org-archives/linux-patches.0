@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C709B79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:29:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A3F9C433F0;
-	Thu, 12 Jan 2023 14:29:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D856A79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:29:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C63FC433EF;
+	Thu, 12 Jan 2023 14:29:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533771;
-	bh=iej5SzVVe/+7WPmbKdX4DiLDJTi6jsnUCG5+qtbjSEA=;
+	s=korg; t=1673533774;
+	bh=lasleWUw7vzBpGUvHnIfMOkjVTi4DEd7O+vWu2gOH94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZcBaGOKs+t6ObEixOhAuFamNplTuZA5/n1+qkgKgWNKTmY1TYWueSxAT0cbWxgmMS
-	 SzQ+WL/zMjONqPrDYg46NdaVN/UK3wqxhss4r+m3pVUm5P/0uLqJsZss7YZbysw4yX
-	 cAtJu+wpB2AV0Ytk6s0ZbPeHwCVaxN8Vtr48Idkw=
+	b=MN25qHDkBpo7sIbEBdoJ1JyLYWswqRcYjfmF6cFnBy14B8mn+L2uFtnt+SQNeYElM
+	 36zBn1DWEar6mPNxYrMmQVEc/a/HezWA70qpRegFtdX5rLcerF/Hvx3S9RF3vyS5hD
+	 BaPas/ePy4ReVShaszo/SYUNyFUMOM19QKvRDC+w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Garg <gargaditya08@live.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 586/783] hfsplus: fix bug causing custom uid and gid being unable to be assigned with mount
-Date: Thu, 12 Jan 2023 14:55:02 +0100
-Message-Id: <20230112135551.427729355@linuxfoundation.org>
+	Wang Yufen <wangyufen@huawei.com>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 5.10 587/783] binfmt: Fix error return code in load_elf_fdpic_binary()
+Date: Thu, 12 Jan 2023 14:55:03 +0100
+Message-Id: <20230112135551.478066905@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,71 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aditya Garg <gargaditya08@live.com>
+From: Wang Yufen <wangyufen@huawei.com>
 
-commit 9f2b5debc07073e6dfdd774e3594d0224b991927 upstream.
+commit e7f703ff2507f4e9f496da96cd4b78fd3026120c upstream.
 
-Despite specifying UID and GID in mount command, the specified UID and GID
-were not being assigned. This patch fixes this issue.
+Fix to return a negative error code from create_elf_fdpic_tables()
+instead of 0.
 
-Link: https://lkml.kernel.org/r/C0264BF5-059C-45CF-B8DA-3A3BD2C803A2@live.com
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: stable@vger.kernel.org
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/1669945261-30271-1-git-send-email-wangyufen@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfsplus/hfsplus_fs.h |    2 ++
- fs/hfsplus/inode.c      |    4 ++--
- fs/hfsplus/options.c    |    4 ++++
- 3 files changed, 8 insertions(+), 2 deletions(-)
+ fs/binfmt_elf_fdpic.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/fs/hfsplus/hfsplus_fs.h
-+++ b/fs/hfsplus/hfsplus_fs.h
-@@ -198,6 +198,8 @@ struct hfsplus_sb_info {
- #define HFSPLUS_SB_HFSX		3
- #define HFSPLUS_SB_CASEFOLD	4
- #define HFSPLUS_SB_NOBARRIER	5
-+#define HFSPLUS_SB_UID		6
-+#define HFSPLUS_SB_GID		7
+--- a/fs/binfmt_elf_fdpic.c
++++ b/fs/binfmt_elf_fdpic.c
+@@ -434,8 +434,9 @@ static int load_elf_fdpic_binary(struct
+ 	current->mm->start_stack = current->mm->start_brk + stack_size;
+ #endif
  
- static inline struct hfsplus_sb_info *HFSPLUS_SB(struct super_block *sb)
- {
---- a/fs/hfsplus/inode.c
-+++ b/fs/hfsplus/inode.c
-@@ -187,11 +187,11 @@ static void hfsplus_get_perms(struct ino
- 	mode = be16_to_cpu(perms->mode);
+-	if (create_elf_fdpic_tables(bprm, current->mm,
+-				    &exec_params, &interp_params) < 0)
++	retval = create_elf_fdpic_tables(bprm, current->mm, &exec_params,
++					 &interp_params);
++	if (retval < 0)
+ 		goto error;
  
- 	i_uid_write(inode, be32_to_cpu(perms->owner));
--	if (!i_uid_read(inode) && !mode)
-+	if ((test_bit(HFSPLUS_SB_UID, &sbi->flags)) || (!i_uid_read(inode) && !mode))
- 		inode->i_uid = sbi->uid;
- 
- 	i_gid_write(inode, be32_to_cpu(perms->group));
--	if (!i_gid_read(inode) && !mode)
-+	if ((test_bit(HFSPLUS_SB_GID, &sbi->flags)) || (!i_gid_read(inode) && !mode))
- 		inode->i_gid = sbi->gid;
- 
- 	if (dir) {
---- a/fs/hfsplus/options.c
-+++ b/fs/hfsplus/options.c
-@@ -140,6 +140,8 @@ int hfsplus_parse_options(char *input, s
- 			if (!uid_valid(sbi->uid)) {
- 				pr_err("invalid uid specified\n");
- 				return 0;
-+			} else {
-+				set_bit(HFSPLUS_SB_UID, &sbi->flags);
- 			}
- 			break;
- 		case opt_gid:
-@@ -151,6 +153,8 @@ int hfsplus_parse_options(char *input, s
- 			if (!gid_valid(sbi->gid)) {
- 				pr_err("invalid gid specified\n");
- 				return 0;
-+			} else {
-+				set_bit(HFSPLUS_SB_GID, &sbi->flags);
- 			}
- 			break;
- 		case opt_part:
+ 	kdebug("- start_code  %lx", current->mm->start_code);
 
 
