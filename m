@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F355F79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:22:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5777EC433EF;
-	Thu, 12 Jan 2023 14:22:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A28579C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:22:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69C7DC433D2;
+	Thu, 12 Jan 2023 14:22:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533356;
-	bh=gxDd4f5LkgmMNJXfkpe3yvdT/dyR7zSd72jXU0hoj/Q=;
+	s=korg; t=1673533359;
+	bh=piYsiKQhUDZbKt2SXX51ncrTS1o5Ezm+L0eGppOyJUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V3SnznCfiWZT72c4Qrc+/0UKYSBl4dcWp5680AvKE7aG/07VuugRSszXmFYbmnw15
-	 m9HEBGjp+mRVocnk9MWgYey321dvHzAbGpxY1m9wtmfA3gaWBg5e/NT7K8IY1KDt/p
-	 aro69m1G9gzfuLG1o2iSqW1iAs9g/Hcul5vVr8+8=
+	b=qVlp3z1o7R3/5Ybq7JDTE0bTtWMSqTLrVRvG6CX6eVJc1F0xbJlqp7KthCWXEqQqP
+	 yictPaHM3ZuFVhNp1Uvynr9qlpFy9871lMm5OtwUtT61WFzVzq3pTjN7kMVurksr4U
+	 e7NtT8REZt2SLu1BKkFlVaMXXMJyLdWdhAzK35Rs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 453/783] rtc: st-lpc: Add missing clk_disable_unprepare in st_rtc_probe()
-Date: Thu, 12 Jan 2023 14:52:49 +0100
-Message-Id: <20230112135545.251921105@linuxfoundation.org>
+Subject: [PATCH 5.10 436/783] powerpc/xive: add missing iounmap() in error path in xive_spapr_populate_irq_data()
+Date: Thu, 12 Jan 2023 14:52:32 +0100
+Message-Id: <20230112135544.511563057@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,33 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 5fb733d7bd6949e90028efdce8bd528c6ab7cf1e ]
+[ Upstream commit 8b49670f3bb3f10cd4d5a6dca17f5a31b173ecdc ]
 
-The clk_disable_unprepare() should be called in the error handling
-of clk_get_rate(), fix it.
+If remapping 'data->trig_page' fails, the 'data->eoi_mmio' need be unmapped
+before returning from xive_spapr_populate_irq_data().
 
-Fixes: b5b2bdfc2893 ("rtc: st: Add new driver for ST's LPC RTC")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://lore.kernel.org/r/20221123014805.1993052-1-cuigaosheng1@huawei.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: eac1e731b59e ("powerpc/xive: guest exploitation of the XIVE interrupt controller")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20221017032333.1852406-1-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-st-lpc.c | 1 +
+ arch/powerpc/sysdev/xive/spapr.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/rtc/rtc-st-lpc.c b/drivers/rtc/rtc-st-lpc.c
-index 0c65448b85ee..7d53f7e2febc 100644
---- a/drivers/rtc/rtc-st-lpc.c
-+++ b/drivers/rtc/rtc-st-lpc.c
-@@ -238,6 +238,7 @@ static int st_rtc_probe(struct platform_device *pdev)
+diff --git a/arch/powerpc/sysdev/xive/spapr.c b/arch/powerpc/sysdev/xive/spapr.c
+index 38e8b9896174..53cf14349d5e 100644
+--- a/arch/powerpc/sysdev/xive/spapr.c
++++ b/arch/powerpc/sysdev/xive/spapr.c
+@@ -425,6 +425,7 @@ static int xive_spapr_populate_irq_data(u32 hw_irq, struct xive_irq_data *data)
  
- 	rtc->clkrate = clk_get_rate(rtc->clk);
- 	if (!rtc->clkrate) {
-+		clk_disable_unprepare(rtc->clk);
- 		dev_err(&pdev->dev, "Unable to fetch clock rate\n");
- 		return -EINVAL;
+ 	data->trig_mmio = ioremap(data->trig_page, 1u << data->esb_shift);
+ 	if (!data->trig_mmio) {
++		iounmap(data->eoi_mmio);
+ 		pr_err("Failed to map trigger page for irq 0x%x\n", hw_irq);
+ 		return -ENOMEM;
  	}
 -- 
 2.35.1
