@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E49749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:07:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C374C433EF;
-	Thu, 12 Jan 2023 14:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1AB9749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:07:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0526BC433D2;
+	Thu, 12 Jan 2023 14:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532473;
-	bh=oNuDA0DAcm50EiO4YsD06YQwhEjLDCa9l1nEVkzNXxI=;
+	s=korg; t=1673532476;
+	bh=VvXy63uXCcFZrZ8+oipT7MulRH9gIJTrgealz7rgMvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ixpSBraLUi2ieITXtCVyYIzrZBu1bCgSQarMiRRMbH2uOt+1ZnKly/u63R4KFCdKf
-	 ttV4xsKjGqw9owbWWs+PzLqEAv1/UNFZybZy70XK35PQKyfHHlrQKwdafZ8Bh7hYAI
-	 aUk8MotoDkU1t80hfluZ3+VYwn3pTJIOyoW+BViI=
+	b=TteLkYEXWRt81eCCPTvoE4W4P7Ml9pmy/SeO0KmAW5XDqOysZFcEOSt90x3ROJ5fq
+	 orPFZqB9ZUrvCSNU6eIZqD40OShCwQqkT3ER5x2AGZg6ozD6lxSt9S/O+jgv8WIP4N
+	 ZPl97fW4dxLdXOtM5NurdBMXiv76i4E6WY0sS4Kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Robert Foss <robert.foss@linaro.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	netdev@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 143/783] media: camss: Clean up received buffers on failed start of streaming
-Date: Thu, 12 Jan 2023 14:47:39 +0100
-Message-Id: <20230112135530.959176644@linuxfoundation.org>
+Subject: [PATCH 5.10 144/783] net, proc: Provide PROC_FS=n fallback for proc_create_net_single_write()
+Date: Thu, 12 Jan 2023 14:47:40 +0100
+Message-Id: <20230112135531.009922223@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -37,60 +38,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit c8f3582345e6a69da65ab588f7c4c2d1685b0e80 ]
+[ Upstream commit c3d96f690a790074b508fe183a41e36a00cd7ddd ]
 
-It is required to return the received buffers, if streaming can not be
-started. For instance media_pipeline_start() may fail with EPIPE, if
-a link validation between entities is not passed, and in such a case
-a user gets a kernel warning:
+Provide a CONFIG_PROC_FS=n fallback for proc_create_net_single_write().
 
-  WARNING: CPU: 1 PID: 520 at drivers/media/common/videobuf2/videobuf2-core.c:1592 vb2_start_streaming+0xec/0x160
-  <snip>
-  Call trace:
-   vb2_start_streaming+0xec/0x160
-   vb2_core_streamon+0x9c/0x1a0
-   vb2_ioctl_streamon+0x68/0xbc
-   v4l_streamon+0x30/0x3c
-   __video_do_ioctl+0x184/0x3e0
-   video_usercopy+0x37c/0x7b0
-   video_ioctl2+0x24/0x40
-   v4l2_ioctl+0x4c/0x70
+Also provide a fallback for proc_create_net_data_write().
 
-The fix is to correct the error path in video_start_streaming() of camss.
-
-Fixes: 0ac2586c410f ("media: camss: Add files which handle the video device nodes")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: 564def71765c ("proc: Add a way to make network proc files writable")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+cc: netdev@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-video.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ include/linux/proc_fs.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-index 15965e63cb61..9333a7a33d4d 100644
---- a/drivers/media/platform/qcom/camss/camss-video.c
-+++ b/drivers/media/platform/qcom/camss/camss-video.c
-@@ -444,7 +444,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
+diff --git a/include/linux/proc_fs.h b/include/linux/proc_fs.h
+index 000cc0533c33..8c892730a1f1 100644
+--- a/include/linux/proc_fs.h
++++ b/include/linux/proc_fs.h
+@@ -190,8 +190,10 @@ static inline void proc_remove(struct proc_dir_entry *de) {}
+ static inline int remove_proc_subtree(const char *name, struct proc_dir_entry *parent) { return 0; }
  
- 	ret = media_pipeline_start(&vdev->entity, &video->pipe);
- 	if (ret < 0)
--		return ret;
-+		goto flush_buffers;
+ #define proc_create_net_data(name, mode, parent, ops, state_size, data) ({NULL;})
++#define proc_create_net_data_write(name, mode, parent, ops, write, state_size, data) ({NULL;})
+ #define proc_create_net(name, mode, parent, state_size, ops) ({NULL;})
+ #define proc_create_net_single(name, mode, parent, show, data) ({NULL;})
++#define proc_create_net_single_write(name, mode, parent, show, write, data) ({NULL;})
  
- 	ret = video_check_format(video);
- 	if (ret < 0)
-@@ -473,6 +473,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
- error:
- 	media_pipeline_stop(&vdev->entity);
- 
-+flush_buffers:
- 	video->ops->flush_buffers(video, VB2_BUF_STATE_QUEUED);
- 
- 	return ret;
+ static inline struct pid *tgid_pidfd_to_pid(const struct file *file)
+ {
 -- 
 2.35.1
 
