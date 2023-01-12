@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB13F79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:23:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0BE1C433EF;
-	Thu, 12 Jan 2023 14:23:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 097FA79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:23:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BCFC433F2;
+	Thu, 12 Jan 2023 14:23:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533423;
-	bh=eIyGQwYvZ3wNwvA2OOytTQrxnuJbIjeA7zqaBWARaxY=;
+	s=korg; t=1673533426;
+	bh=fErM/nS5AKdkuMKYzcjCzX7TJtUGZ6MN7lqqrlTbzco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M5D/4oWMIRwHGzpw3AQocmVGDt+vmllxlJh9RNjuwhpseU2DZCBpd3t5FsuyTo/w8
-	 b9RLXba4UMntCSmlRBx6DhYDSHabtk/3YEvNxrDJoZoCiz/xCJff6dP8AnF0qYSxek
-	 PAZHl2/h4pXXLvCS8+LQIW2AMB0GpfA3YVraFlok=
+	b=CTCqgyXki6Mkzm6p44q7ZQ5NIz0dZuqybDmB/2TRkVnKu665Mg/anC2gM6xVO42Ik
+	 YD4QudNmdAvUfhbsgWxk0iWpy2NuJU3Wld850YpTjxbQmNZ7R79dBFEov5uxmCRvmT
+	 uvpHPi5Vko8jigHXZpdpAJFau2Wq4T2HtdHgrlIk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 443/783] selftests/powerpc: Fix resource leaks
-Date: Thu, 12 Jan 2023 14:52:39 +0100
-Message-Id: <20230112135544.807462360@linuxfoundation.org>
+Subject: [PATCH 5.10 434/783] powerpc/xmon: Enable breakpoints on 8xx
+Date: Thu, 12 Jan 2023 14:52:30 +0100
+Message-Id: <20230112135544.427000750@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,49 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-[ Upstream commit 8f4ab7da904ab7027ccd43ddb4f0094e932a5877 ]
+[ Upstream commit 30662217885d7341161924acf1665924d7d37d64 ]
 
-In check_all_cpu_dscr_defaults, opendir() opens the directory stream.
-Add missing closedir() in the error path to release it.
+Since commit 4ad8622dc548 ("powerpc/8xx: Implement hw_breakpoint"),
+8xx has breakpoints so there is no reason to opt breakpoint logic
+out of xmon for the 8xx.
 
-In check_cpu_dscr_default, open() creates an open file descriptor.
-Add missing close() in the error path to release it.
-
-Fixes: ebd5858c904b ("selftests/powerpc: Add test for all DSCR sysfs interfaces")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Fixes: 4ad8622dc548 ("powerpc/8xx: Implement hw_breakpoint")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20221205084429.570654-1-linmq006@gmail.com
+Link: https://lore.kernel.org/r/b0607f1113d1558e73476bb06db0ee16d31a6e5b.1608716197.git.christophe.leroy@csgroup.eu
+Stable-dep-of: 1c4a4a4c8410 ("powerpc/xmon: Fix -Wswitch-unreachable warning in bpt_cmds")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/powerpc/dscr/dscr_sysfs_test.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/powerpc/xmon/xmon.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/tools/testing/selftests/powerpc/dscr/dscr_sysfs_test.c b/tools/testing/selftests/powerpc/dscr/dscr_sysfs_test.c
-index fbbdffdb2e5d..f20d1c166d1e 100644
---- a/tools/testing/selftests/powerpc/dscr/dscr_sysfs_test.c
-+++ b/tools/testing/selftests/powerpc/dscr/dscr_sysfs_test.c
-@@ -24,6 +24,7 @@ static int check_cpu_dscr_default(char *file, unsigned long val)
- 	rc = read(fd, buf, sizeof(buf));
- 	if (rc == -1) {
- 		perror("read() failed");
-+		close(fd);
- 		return 1;
- 	}
- 	close(fd);
-@@ -65,8 +66,10 @@ static int check_all_cpu_dscr_defaults(unsigned long val)
- 		if (access(file, F_OK))
- 			continue;
+diff --git a/arch/powerpc/xmon/xmon.c b/arch/powerpc/xmon/xmon.c
+index 5559edf36756..c6a36b4045e8 100644
+--- a/arch/powerpc/xmon/xmon.c
++++ b/arch/powerpc/xmon/xmon.c
+@@ -1383,7 +1383,6 @@ static long check_bp_loc(unsigned long addr)
+ 	return 1;
+ }
  
--		if (check_cpu_dscr_default(file, val))
-+		if (check_cpu_dscr_default(file, val)) {
-+			closedir(sysfs);
- 			return 1;
-+		}
- 	}
- 	closedir(sysfs);
- 	return 0;
+-#ifndef CONFIG_PPC_8xx
+ static int find_free_data_bpt(void)
+ {
+ 	int i;
+@@ -1395,7 +1394,6 @@ static int find_free_data_bpt(void)
+ 	printf("Couldn't find free breakpoint register\n");
+ 	return -1;
+ }
+-#endif
+ 
+ static void print_data_bpts(void)
+ {
+@@ -1435,7 +1433,6 @@ bpt_cmds(void)
+ 	cmd = inchar();
+ 
+ 	switch (cmd) {
+-#ifndef CONFIG_PPC_8xx
+ 	static const char badaddr[] = "Only kernel addresses are permitted for breakpoints\n";
+ 	int mode;
+ 	case 'd':	/* bd - hardware data breakpoint */
+@@ -1497,7 +1494,6 @@ bpt_cmds(void)
+ 			force_enable_xmon();
+ 		}
+ 		break;
+-#endif
+ 
+ 	case 'c':
+ 		if (!scanhex(&a)) {
 -- 
 2.35.1
 
