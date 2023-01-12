@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FCDA749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:08:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69AC0C433D2;
-	Thu, 12 Jan 2023 14:08:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3900A749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:08:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACB40C433EF;
+	Thu, 12 Jan 2023 14:08:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532506;
-	bh=f74FlJa5li0/L0Fp8ZqCCRb640nEvTPCqUDgnhKtCG8=;
+	s=korg; t=1673532510;
+	bh=6tm0Su+NcKMix7Bw5mhBAoULzit8+XW0NqvG2w/L1hA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PhWz60mK8CCnwW65PmZueEsLqqrYBsdTuq9eof8lmEBZ9WYm5Ftwx3aeTIegioaHB
-	 THE5hBWbgiKe8wmTfwEfrVWfba4lyLv432yLMhtrNcvFpj3KskSVqE21//lM1RQwxa
-	 T5fs5pFuL4rsECvOgTWemkcR5y3YDHN2G9yP2FGI=
+	b=qctQ6jaLjNoO1C1rw7mPj0RAL2KQtpDQjz/9bEB22+4A+FGI4LLy76CDMzfagWrHF
+	 Y/QKgQaAd6e392f3RujYL8tRhWxiMB0khNHt9zT6ek1esaAF6E5PdoAIyQPsMB6ROs
+	 evCceMKX0H6zpOvNkM0w6WhqIZveuxqVO8klfoVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 185/783] NFSv4.2: Fix a memory stomp in decode_attr_security_label
-Date: Thu, 12 Jan 2023 14:48:21 +0100
-Message-Id: <20230112135532.905633458@linuxfoundation.org>
+Subject: [PATCH 5.10 186/783] NFSv4.2: Fix initialisation of struct nfs4_label
+Date: Thu, 12 Jan 2023 14:48:22 +0100
+Message-Id: <20230112135532.953899886@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,39 +36,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 43c1031f7110967c240cb6e922adcfc4b8899183 ]
+[ Upstream commit c528f70f504434eaff993a5ddd52203a2010d51f ]
 
-We must not change the value of label->len if it is zero, since that
-indicates we stored a label.
+The call to nfs4_label_init_security() should return a fully initialised
+label.
 
-Fixes: b4487b935452 ("nfs: Fix getxattr kernel panic and memory overflow")
+Fixes: aa9c2669626c ("NFS: Client implementation of Labeled-NFS")
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4xdr.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ fs/nfs/nfs4proc.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/fs/nfs/nfs4xdr.c b/fs/nfs/nfs4xdr.c
-index f8c89f9f4d52..f1e599553f2b 100644
---- a/fs/nfs/nfs4xdr.c
-+++ b/fs/nfs/nfs4xdr.c
-@@ -4168,12 +4168,10 @@ static int decode_attr_security_label(struct xdr_stream *xdr, uint32_t *bitmap,
- 			return -EIO;
- 		bitmap[2] &= ~FATTR4_WORD2_SECURITY_LABEL;
- 		if (len < NFS4_MAXLABELLEN) {
--			if (label) {
--				if (label->len) {
--					if (label->len < len)
--						return -ERANGE;
--					memcpy(label->label, p, len);
--				}
-+			if (label && label->len) {
-+				if (label->len < len)
-+					return -ERANGE;
-+				memcpy(label->label, p, len);
- 				label->len = len;
- 				label->pi = pi;
- 				label->lfs = lfs;
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 36af3734ac87..15550d673e61 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -130,6 +130,11 @@ nfs4_label_init_security(struct inode *dir, struct dentry *dentry,
+ 	if (nfs_server_capable(dir, NFS_CAP_SECURITY_LABEL) == 0)
+ 		return NULL;
+ 
++	label->lfs = 0;
++	label->pi = 0;
++	label->len = 0;
++	label->label = NULL;
++
+ 	err = security_dentry_init_security(dentry, sattr->ia_mode,
+ 				&dentry->d_name, (void **)&label->label, &label->len);
+ 	if (err == 0)
+@@ -3793,7 +3798,7 @@ nfs4_atomic_open(struct inode *dir, struct nfs_open_context *ctx,
+ 		int open_flags, struct iattr *attr, int *opened)
+ {
+ 	struct nfs4_state *state;
+-	struct nfs4_label l = {0, 0, 0, NULL}, *label = NULL;
++	struct nfs4_label l, *label;
+ 
+ 	label = nfs4_label_init_security(dir, ctx->dentry, attr, &l);
+ 
+@@ -4557,7 +4562,7 @@ nfs4_proc_create(struct inode *dir, struct dentry *dentry, struct iattr *sattr,
+ 		 int flags)
+ {
+ 	struct nfs_server *server = NFS_SERVER(dir);
+-	struct nfs4_label l, *ilabel = NULL;
++	struct nfs4_label l, *ilabel;
+ 	struct nfs_open_context *ctx;
+ 	struct nfs4_state *state;
+ 	int status = 0;
+@@ -4916,7 +4921,7 @@ static int nfs4_proc_symlink(struct inode *dir, struct dentry *dentry,
+ 	struct nfs4_exception exception = {
+ 		.interruptible = true,
+ 	};
+-	struct nfs4_label l, *label = NULL;
++	struct nfs4_label l, *label;
+ 	int err;
+ 
+ 	label = nfs4_label_init_security(dir, dentry, sattr, &l);
+@@ -4957,7 +4962,7 @@ static int nfs4_proc_mkdir(struct inode *dir, struct dentry *dentry,
+ 	struct nfs4_exception exception = {
+ 		.interruptible = true,
+ 	};
+-	struct nfs4_label l, *label = NULL;
++	struct nfs4_label l, *label;
+ 	int err;
+ 
+ 	label = nfs4_label_init_security(dir, dentry, sattr, &l);
+@@ -5078,7 +5083,7 @@ static int nfs4_proc_mknod(struct inode *dir, struct dentry *dentry,
+ 	struct nfs4_exception exception = {
+ 		.interruptible = true,
+ 	};
+-	struct nfs4_label l, *label = NULL;
++	struct nfs4_label l, *label;
+ 	int err;
+ 
+ 	label = nfs4_label_init_security(dir, dentry, sattr, &l);
 -- 
 2.35.1
 
