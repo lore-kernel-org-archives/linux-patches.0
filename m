@@ -1,105 +1,136 @@
-Received: from qproxy5-pub.mail.unifiedlayer.com (qproxy5-pub.mail.unifiedlayer.com [69.89.21.30])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE8C2560
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 10:55:32 +0000 (UTC)
-Received: from gproxy4-pub.mail.unifiedlayer.com (gproxy4-pub.mail.unifiedlayer.com [69.89.23.142])
-	by qproxy5.mail.unifiedlayer.com (Postfix) with ESMTP id 8D5488023AC8
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 10:34:30 +0000 (UTC)
-Received: from cmgw14.mail.unifiedlayer.com (unknown [10.0.90.129])
-	by progateway6.mail.pro1.eigbox.com (Postfix) with ESMTP id D34C510046FD8
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 10:34:23 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id Fuudpc64II3SyFuudpSz69; Thu, 12 Jan 2023 10:34:23 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=Pr9W0yA3 c=1 sm=1 tr=0 ts=63bfe22f
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=RvmDmJFTN0MA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=Hb3yA03KV983punxqLMA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=DCc3XlxNqADuGnNawjyPGM382LoIqxxCBJw5HrzyTIk=; b=1qW4FU5hU8KRXtbF2ENFm15qQ9
-	t4ZBjV6hapbf2AvpOIm9arnJINGZmtbsM7XK1k0oMg3/pah5URRFPHeLCjeHEcvPwujBAkUxRgyuw
-	yDL1qJasZ8/CadbsPlVWPsMdeuVMP90c/wrhD28WNp739XhRr+P0+gN4NLO+iwJGifhhBQq8iDb4M
-	jRXySSfk5nksMg4+4lT+ea7iGQyishEs1loB9mG62DgLJhUIuTAoNWH3KVfOBm+UY8c0oZdonIlDm
-	6SLUToc4tH8N4UPSPRaK34wsgyGsWrO+OT/WBDpU50WFOdN8i2xBbX5IReFW8pRY18dqcy7BuKy0n
-	Z4giGmDA==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:51236 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1pFuuc-002AnF-DW;
-	Thu, 12 Jan 2023 03:34:22 -0700
-Subject: Re: [PATCH 5.15 000/290] 5.15.87-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230110180031.620810905@linuxfoundation.org>
-In-Reply-To: <20230110180031.620810905@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <0a23518a-fa75-52d0-81b9-b6528ca8d7b4@w6rz.net>
-Date: Thu, 12 Jan 2023 02:34:16 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38BFB746A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 13:56:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5289BC433D2;
+	Thu, 12 Jan 2023 13:56:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1673531794;
+	bh=XjnPNbpo8wZwjaiWpJO9k4JM0ll8s/YEgOAYL+rpehU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=t8W3j0J+od6sMCkV8IsUIE0xZGBC9Y4HnxHZ4/tFCBzx/2B1VM3PcMaH5TWu/1qYq
+	 Ww3eTYSFE65fGI9MrKPczpo75uWBrXVZVJJZx/Er8+Y272guhyV9z6tyYNdovbHM9c
+	 E/GcfL0GufkZ5TlQUw+G/THTOzxoaONb+6buqhn0=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 6.1 00/10] 6.1.6-rc1 review
+Date: Thu, 12 Jan 2023 14:56:21 +0100
+Message-Id: <20230112135326.981869724@linuxfoundation.org>
+X-Mailer: git-send-email 2.39.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1pFuuc-002AnF-DW
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:51236
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.6-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.1.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.1.6-rc1
+X-KernelTest-Deadline: 2023-01-14T13:53+00:00
+Content-Transfer-Encoding: 8bit
 
-On 1/10/23 10:01 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.87 release.
-> There are 290 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 12 Jan 2023 17:59:42 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.87-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+This is the start of the stable review cycle for the 6.1.6 release.
+There are 10 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Responses should be made by Sat, 14 Jan 2023 13:53:18 +0000.
+Anything received after that time might be too late.
 
-Tested-by: Ron Economos <re@w6rz.net>
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.6-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+and the diffstat can be found below.
+
+thanks,
+
+greg k-h
+
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.1.6-rc1
+
+Frederick Lawler <fred@cloudflare.com>
+    net: sched: disallow noqueue for qdisc classes
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    gcc: disable -Warray-bounds for gcc-11 too
+
+Chuck Lever <chuck.lever@oracle.com>
+    Revert "SUNRPC: Use RMW bitops in single-threaded hot paths"
+
+Kyle Huey <me@kylehuey.com>
+    selftests/vm/pkeys: Add a regression test for setting PKRU through ptrace
+
+Kyle Huey <me@kylehuey.com>
+    x86/fpu: Emulate XRSTOR's behavior if the xfeatures PKRU bit is not set
+
+Kyle Huey <me@kylehuey.com>
+    x86/fpu: Allow PKRU to be (once again) written by ptrace.
+
+Kyle Huey <me@kylehuey.com>
+    x86/fpu: Add a pkru argument to copy_uabi_to_xstate()
+
+Kyle Huey <me@kylehuey.com>
+    x86/fpu: Add a pkru argument to copy_uabi_from_kernel_to_xstate().
+
+Kyle Huey <me@kylehuey.com>
+    x86/fpu: Take task_struct* in copy_sigframe_from_user_to_xstate()
+
+Helge Deller <deller@gmx.de>
+    parisc: Align parisc MADV_XXX constants with all other architectures
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                     |   4 +-
+ arch/parisc/include/uapi/asm/mman.h          |  29 +++---
+ arch/parisc/kernel/sys_parisc.c              |  28 ++++++
+ arch/parisc/kernel/syscalls/syscall.tbl      |   2 +-
+ arch/x86/kernel/fpu/core.c                   |  19 ++--
+ arch/x86/kernel/fpu/regset.c                 |   2 +-
+ arch/x86/kernel/fpu/signal.c                 |   2 +-
+ arch/x86/kernel/fpu/xstate.c                 |  52 ++++++++++-
+ arch/x86/kernel/fpu/xstate.h                 |   4 +-
+ fs/nfsd/nfs4proc.c                           |   7 +-
+ fs/nfsd/nfs4xdr.c                            |   2 +-
+ init/Kconfig                                 |   6 +-
+ net/sched/sch_api.c                          |   5 +
+ net/sunrpc/auth_gss/svcauth_gss.c            |   4 +-
+ net/sunrpc/svc.c                             |   6 +-
+ net/sunrpc/svc_xprt.c                        |   2 +-
+ net/sunrpc/svcsock.c                         |   8 +-
+ net/sunrpc/xprtrdma/svc_rdma_transport.c     |   2 +-
+ tools/arch/parisc/include/uapi/asm/mman.h    |  12 +--
+ tools/perf/bench/bench.h                     |  12 ---
+ tools/testing/selftests/vm/pkey-x86.h        |  12 +++
+ tools/testing/selftests/vm/protection_keys.c | 131 ++++++++++++++++++++++++++-
+ 22 files changed, 276 insertions(+), 75 deletions(-)
+
 
