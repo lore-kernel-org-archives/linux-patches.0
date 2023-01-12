@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD959746A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:03:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34DC7C433EF;
-	Thu, 12 Jan 2023 14:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6CE5746A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:03:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DF9BC433F1;
+	Thu, 12 Jan 2023 14:03:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532207;
-	bh=do/0GTpAyFyhRtnTAuO/GyVFH1VtWDBGsj//fnzYUa0=;
+	s=korg; t=1673532210;
+	bh=YUtlyE25mxe9mtNaKKtPLxMeq9fIAwri0r5PDHdPRAg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aB7EYocVlEpTHH9Hv875r++ALMVCzWoYOOUsniaR726IW0WRVvF1vutX2ZYliJrvB
-	 GNTunZv1W4R1vMaeX2Bh+bX3GkAx3W7UMBPam+3fjcvJ95TdjartnFHlptiQEp717L
-	 eCr0H1R4PBaIq2trX5Kh8QqYDaFXYk29n1UlMFlg=
+	b=y490Onugbj4Xn35iZBT6rLNsV0T89EHTiXPyoXkrEpvwt6ft9mHFq3vmokrzuVHgD
+	 GxlGCbNRBLWoH7LRjnMofzxaBfSIli369xfxdDnvwzXud+eT6YL9hHx7SG4IYOmFUZ
+	 Ncs+AwoJTy27UZ1q63o9AckLmXZMTf8DB7zkoo7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zetao <lizetao1@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Seiji Nishikawa <snishika@redhat.com>,
+	Denys Vlasenko <dvlasenk@redhat.com>,
+	Oleg Nesterov <oleg@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 086/783] ACPICA: Fix use-after-free in acpi_ut_copy_ipackage_to_ipackage()
-Date: Thu, 12 Jan 2023 14:46:42 +0100
-Message-Id: <20230112135528.157273668@linuxfoundation.org>
+Subject: [PATCH 5.10 087/783] uprobes/x86: Allow to probe a NOP instruction with 0x66 prefix
+Date: Thu, 12 Jan 2023 14:46:43 +0100
+Message-Id: <20230112135528.206048120@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,68 +38,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Zetao <lizetao1@huawei.com>
+From: Oleg Nesterov <oleg@redhat.com>
 
-[ Upstream commit 470188b09e92d83c5a997f25f0e8fb8cd2bc3469 ]
+[ Upstream commit cefa72129e45313655d53a065b8055aaeb01a0c9 ]
 
-There is an use-after-free reported by KASAN:
+Intel ICC -hotpatch inserts 2-byte "0x66 0x90" NOP at the start of each
+function to reserve extra space for hot-patching, and currently it is not
+possible to probe these functions because branch_setup_xol_ops() wrongly
+rejects NOP with REP prefix as it treats them like word-sized branch
+instructions.
 
-  BUG: KASAN: use-after-free in acpi_ut_remove_reference+0x3b/0x82
-  Read of size 1 at addr ffff888112afc460 by task modprobe/2111
-  CPU: 0 PID: 2111 Comm: modprobe Not tainted 6.1.0-rc7-dirty
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
-  Call Trace:
-   <TASK>
-   kasan_report+0xae/0xe0
-   acpi_ut_remove_reference+0x3b/0x82
-   acpi_ut_copy_iobject_to_iobject+0x3be/0x3d5
-   acpi_ds_store_object_to_local+0x15d/0x3a0
-   acpi_ex_store+0x78d/0x7fd
-   acpi_ex_opcode_1A_1T_1R+0xbe4/0xf9b
-   acpi_ps_parse_aml+0x217/0x8d5
-   ...
-   </TASK>
-
-The root cause of the problem is that the acpi_operand_object
-is freed when acpi_ut_walk_package_tree() fails in
-acpi_ut_copy_ipackage_to_ipackage(), lead to repeated release in
-acpi_ut_copy_iobject_to_iobject(). The problem was introduced
-by "8aa5e56eeb61" commit, this commit is to fix memory leak in
-acpi_ut_copy_iobject_to_iobject(), repeatedly adding remove
-operation, lead to "acpi_operand_object" used after free.
-
-Fix it by removing acpi_ut_remove_reference() in
-acpi_ut_copy_ipackage_to_ipackage(). acpi_ut_copy_ipackage_to_ipackage()
-is called to copy an internal package object into another internal
-package object, when it fails, the memory of acpi_operand_object
-should be freed by the caller.
-
-Fixes: 8aa5e56eeb61 ("ACPICA: Utilities: Fix memory leak in acpi_ut_copy_iobject_to_iobject")
-Signed-off-by: Li Zetao <lizetao1@huawei.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 250bbd12c2fe ("uprobes/x86: Refuse to attach uprobe to "word-sized" branch insns")
+Reported-by: Seiji Nishikawa <snishika@redhat.com>
+Suggested-by: Denys Vlasenko <dvlasenk@redhat.com>
+Signed-off-by: Oleg Nesterov <oleg@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Link: https://lore.kernel.org/r/20221204173933.GA31544@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/utcopy.c | 7 -------
- 1 file changed, 7 deletions(-)
+ arch/x86/kernel/uprobes.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/acpica/utcopy.c b/drivers/acpi/acpica/utcopy.c
-index 41bdd0278dd8..9a7cc679e544 100644
---- a/drivers/acpi/acpica/utcopy.c
-+++ b/drivers/acpi/acpica/utcopy.c
-@@ -916,13 +916,6 @@ acpi_ut_copy_ipackage_to_ipackage(union acpi_operand_object *source_obj,
- 	status = acpi_ut_walk_package_tree(source_obj, dest_obj,
- 					   acpi_ut_copy_ielement_to_ielement,
- 					   walk_state);
--	if (ACPI_FAILURE(status)) {
--
--		/* On failure, delete the destination package object */
--
--		acpi_ut_remove_reference(dest_obj);
--	}
--
- 	return_ACPI_STATUS(status);
- }
+diff --git a/arch/x86/kernel/uprobes.c b/arch/x86/kernel/uprobes.c
+index 138bdb1fd136..9f948b2d26f6 100644
+--- a/arch/x86/kernel/uprobes.c
++++ b/arch/x86/kernel/uprobes.c
+@@ -722,8 +722,9 @@ static int branch_setup_xol_ops(struct arch_uprobe *auprobe, struct insn *insn)
+ 	switch (opc1) {
+ 	case 0xeb:	/* jmp 8 */
+ 	case 0xe9:	/* jmp 32 */
+-	case 0x90:	/* prefix* + nop; same as jmp with .offs = 0 */
+ 		break;
++	case 0x90:	/* prefix* + nop; same as jmp with .offs = 0 */
++		goto setup;
  
+ 	case 0xe8:	/* call relative */
+ 		branch_clear_offset(auprobe, insn);
+@@ -753,6 +754,7 @@ static int branch_setup_xol_ops(struct arch_uprobe *auprobe, struct insn *insn)
+ 			return -ENOTSUPP;
+ 	}
+ 
++setup:
+ 	auprobe->branch.opc1 = opc1;
+ 	auprobe->branch.ilen = insn->length;
+ 	auprobe->branch.offs = insn->immediate.value;
 -- 
 2.35.1
 
