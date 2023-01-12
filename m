@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D7C79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:21:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28E27C433EF;
-	Thu, 12 Jan 2023 14:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ACE5679C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:21:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11F63C433EF;
+	Thu, 12 Jan 2023 14:21:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533307;
-	bh=Q3y9vALH9h1rU+RebOmrtFuTgf/yZ+V4xxFKJAIgKHc=;
+	s=korg; t=1673533310;
+	bh=+bpwetV2LU1ff15V/8g0/4eBKS2uxah7labs5OX4CiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IF3o6Gb+Fbd7uc5Z2AsYYzYliA2vi5+l10te7UGPX/zd0CsjGah+QDRsgFMnhkOzI
-	 JhV9BtqEMXBVwtf9C3T/XJ/m7sEEffllyCybYm2oq6BvHh6WQu1yEH1LpJsVJ4bwJm
-	 5SOqw0Nc0RGBvjKiNyX8u8RyWoe+L11eD4AjipmE=
+	b=UHIt7DMQtJeHDQvKQ7GHZs0C/fF5zmtz6bsN9sQ9xauFgF0LLazkDzvmrEcC9atI3
+	 9EljL8sDgjLQ6F40AhZOEW9kDX2ZJhAGuLBovP53ZvsSxZNyHWmN2cmGYgNtr0Dy6H
+	 6peoMTpgiQpbYTs2v9B2/vhBTY+1ZIsV08rl/9vE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
+	ruanjinjie <ruanjinjie@huawei.com>,
+	Baolin Wang <baolin.wang@linux.alibaba.com>,
 	Sebastian Reichel <sebastian.reichel@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 406/783] HSI: omap_ssi_core: Fix error handling in ssi_init()
-Date: Thu, 12 Jan 2023 14:52:02 +0100
-Message-Id: <20230112135543.138489589@linuxfoundation.org>
+Subject: [PATCH 5.10 407/783] power: supply: fix null pointer dereferencing in power_supply_get_battery_info
+Date: Thu, 12 Jan 2023 14:52:03 +0100
+Message-Id: <20230112135543.188344644@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,43 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: ruanjinjie <ruanjinjie@huawei.com>
 
-[ Upstream commit 3ffa9f713c39a213a08d9ff13ab983a8aa5d8b5d ]
+[ Upstream commit 104bb8a663451404a26331263ce5b96c34504049 ]
 
-The ssi_init() returns the platform_driver_register() directly without
-checking its return value, if platform_driver_register() failed, the
-ssi_pdriver is not unregistered.
-Fix by unregister ssi_pdriver when the last platform_driver_register()
-failed.
+when kmalloc() fail to allocate memory in kasprintf(), propname
+will be NULL, strcmp() called by of_get_property() will cause
+null pointer dereference.
 
-Fixes: 0fae198988b8 ("HSI: omap_ssi: built omap_ssi and omap_ssi_port into one module")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
+So return ENOMEM if kasprintf() return NULL pointer.
+
+Fixes: 3afb50d7125b ("power: supply: core: Add some helpers to use the battery OCV capacity table")
+Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
+Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
 Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hsi/controllers/omap_ssi_core.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/power/supply/power_supply_core.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hsi/controllers/omap_ssi_core.c b/drivers/hsi/controllers/omap_ssi_core.c
-index 052cf3e92dd6..26f2c3c01297 100644
---- a/drivers/hsi/controllers/omap_ssi_core.c
-+++ b/drivers/hsi/controllers/omap_ssi_core.c
-@@ -631,7 +631,13 @@ static int __init ssi_init(void) {
- 	if (ret)
- 		return ret;
+diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
+index be2cb925c115..2b644590fa8e 100644
+--- a/drivers/power/supply/power_supply_core.c
++++ b/drivers/power/supply/power_supply_core.c
+@@ -677,6 +677,11 @@ int power_supply_get_battery_info(struct power_supply *psy,
+ 		int i, tab_len, size;
  
--	return platform_driver_register(&ssi_port_pdriver);
-+	ret = platform_driver_register(&ssi_port_pdriver);
-+	if (ret) {
-+		platform_driver_unregister(&ssi_pdriver);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- module_init(ssi_init);
- 
+ 		propname = kasprintf(GFP_KERNEL, "ocv-capacity-table-%d", index);
++		if (!propname) {
++			power_supply_put_battery_info(psy, info);
++			err = -ENOMEM;
++			goto out_put_node;
++		}
+ 		list = of_get_property(battery_np, propname, &size);
+ 		if (!list || !size) {
+ 			dev_err(&psy->dev, "failed to get %s\n", propname);
 -- 
 2.35.1
 
