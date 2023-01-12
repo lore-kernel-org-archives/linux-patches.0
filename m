@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF4AB746A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 13:57:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2311DC433EF;
-	Thu, 12 Jan 2023 13:56:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F14D746A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 13:57:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DD38C433EF;
+	Thu, 12 Jan 2023 13:57:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673531820;
-	bh=H8t5L49o0g/XMciPO70pXGcB6byECZ2Psx0oSm9ps6w=;
+	s=korg; t=1673531823;
+	bh=PjPAaAFiqvBB7Xv7doTYQ0HK1EOaXydqqAJiLTRoYrU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZuO4rPeTPlFOSKW81D+8wXVX+I9HOv5OlyGjP9a56jQHgcYqXrGJkkx7Atcy3c8up
-	 00BYfoTBc6LoncaivrWDrmIkiXUxpSN/CZ/ioJ8UbU/ra+dQ0TK2xXUeHzEM7RQlTF
-	 e4tGd0vF//ZYDrPn67QbsLgbn3vwllu2vHwXda6E=
+	b=fCORxo85GC7jlxf5h/K9Ngebs0X6Ovv1wCs1fMsLIuShsjmijPLbOG8nj+8EO7gZ0
+	 TEgmGC77V2B1DKi8OaicFBNcrAn3TIRv2iDKH3oqcq/ySq0hkB5N4ndwtqafD9erpx
+	 Z7HPwJ4KLBuUVl/JVY4Q1yimQapTyajqketxII48=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 6.1 08/10] Revert "SUNRPC: Use RMW bitops in single-threaded hot paths"
-Date: Thu, 12 Jan 2023 14:56:29 +0100
-Message-Id: <20230112135327.324829549@linuxfoundation.org>
+	Kees Cook <kees@kernel.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Guenter Roeck <linux@roeck-us.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.1 09/10] gcc: disable -Warray-bounds for gcc-11 too
+Date: Thu, 12 Jan 2023 14:56:30 +0100
+Message-Id: <20230112135327.373332907@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135326.981869724@linuxfoundation.org>
 References: <20230112135326.981869724@linuxfoundation.org>
@@ -34,159 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 7827c81f0248e3c2f40d438b020f3d222f002171 upstream.
+commit 5a41237ad1d4b62008f93163af1d9b1da90729d8 upstream.
 
-The premise that "Once an svc thread is scheduled and executing an
-RPC, no other processes will touch svc_rqst::rq_flags" is false.
-svc_xprt_enqueue() examines the RQ_BUSY flag in scheduled nfsd
-threads when determining which thread to wake up next.
+We had already disabled this warning for gcc-12 due to bugs in the value
+range analysis, but it turns out we end up having some similar problems
+with gcc-11.3 too, so let's disable it there too.
 
-Found via KCSAN.
+Older gcc versions end up being increasingly less relevant, and
+hopefully clang and newer version of gcc (ie gcc-13) end up working
+reliably enough that we still get the build coverage even when we
+disable this for some versions.
 
-Fixes: 28df0988815f ("SUNRPC: Use RMW bitops in single-threaded hot paths")
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Link: https://lore.kernel.org/all/20221227002941.GA2691687@roeck-us.net/
+Link: https://lore.kernel.org/all/D8BDBF66-E44C-45D4-9758-BAAA4F0C1998@kernel.org/
+Cc: Kees Cook <kees@kernel.org>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Cc: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfs4proc.c                       |    7 +++----
- fs/nfsd/nfs4xdr.c                        |    2 +-
- net/sunrpc/auth_gss/svcauth_gss.c        |    4 ++--
- net/sunrpc/svc.c                         |    6 +++---
- net/sunrpc/svc_xprt.c                    |    2 +-
- net/sunrpc/svcsock.c                     |    8 ++++----
- net/sunrpc/xprtrdma/svc_rdma_transport.c |    2 +-
- 7 files changed, 15 insertions(+), 16 deletions(-)
+ init/Kconfig |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -928,7 +928,7 @@ nfsd4_read(struct svc_rqst *rqstp, struc
- 	 * the client wants us to do more in this compound:
- 	 */
- 	if (!nfsd4_last_compound_op(rqstp))
--		__clear_bit(RQ_SPLICE_OK, &rqstp->rq_flags);
-+		clear_bit(RQ_SPLICE_OK, &rqstp->rq_flags);
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -892,13 +892,17 @@ config CC_IMPLICIT_FALLTHROUGH
+ 	default "-Wimplicit-fallthrough=5" if CC_IS_GCC && $(cc-option,-Wimplicit-fallthrough=5)
+ 	default "-Wimplicit-fallthrough" if CC_IS_CLANG && $(cc-option,-Wunreachable-code-fallthrough)
  
- 	/* check stateid */
- 	status = nfs4_preprocess_stateid_op(rqstp, cstate, &cstate->current_fh,
-@@ -2615,12 +2615,11 @@ nfsd4_proc_compound(struct svc_rqst *rqs
- 	cstate->minorversion = args->minorversion;
- 	fh_init(current_fh, NFS4_FHSIZE);
- 	fh_init(save_fh, NFS4_FHSIZE);
--
- 	/*
- 	 * Don't use the deferral mechanism for NFSv4; compounds make it
- 	 * too hard to avoid non-idempotency problems.
- 	 */
--	__clear_bit(RQ_USEDEFERRAL, &rqstp->rq_flags);
-+	clear_bit(RQ_USEDEFERRAL, &rqstp->rq_flags);
+-# Currently, disable gcc-12 array-bounds globally.
++# Currently, disable gcc-11,12 array-bounds globally.
+ # We may want to target only particular configurations some day.
++config GCC11_NO_ARRAY_BOUNDS
++	def_bool y
++
+ config GCC12_NO_ARRAY_BOUNDS
+ 	def_bool y
  
- 	/*
- 	 * According to RFC3010, this takes precedence over all other errors.
-@@ -2742,7 +2741,7 @@ encode_op:
- out:
- 	cstate->status = status;
- 	/* Reset deferral mechanism for RPC deferrals */
--	__set_bit(RQ_USEDEFERRAL, &rqstp->rq_flags);
-+	set_bit(RQ_USEDEFERRAL, &rqstp->rq_flags);
- 	return rpc_success;
- }
+ config CC_NO_ARRAY_BOUNDS
+ 	bool
++	default y if CC_IS_GCC && GCC_VERSION >= 110000 && GCC_VERSION < 120000 && GCC11_NO_ARRAY_BOUNDS
+ 	default y if CC_IS_GCC && GCC_VERSION >= 120000 && GCC_VERSION < 130000 && GCC12_NO_ARRAY_BOUNDS
  
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -2464,7 +2464,7 @@ nfsd4_decode_compound(struct nfsd4_compo
- 	argp->rqstp->rq_cachetype = cachethis ? RC_REPLBUFF : RC_NOCACHE;
- 
- 	if (readcount > 1 || max_reply > PAGE_SIZE - auth_slack)
--		__clear_bit(RQ_SPLICE_OK, &argp->rqstp->rq_flags);
-+		clear_bit(RQ_SPLICE_OK, &argp->rqstp->rq_flags);
- 
- 	return true;
- }
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -900,7 +900,7 @@ unwrap_integ_data(struct svc_rqst *rqstp
- 	 * rejecting the server-computed MIC in this somewhat rare case,
- 	 * do not use splice with the GSS integrity service.
- 	 */
--	__clear_bit(RQ_SPLICE_OK, &rqstp->rq_flags);
-+	clear_bit(RQ_SPLICE_OK, &rqstp->rq_flags);
- 
- 	/* Did we already verify the signature on the original pass through? */
- 	if (rqstp->rq_deferred)
-@@ -972,7 +972,7 @@ unwrap_priv_data(struct svc_rqst *rqstp,
- 	int pad, remaining_len, offset;
- 	u32 rseqno;
- 
--	__clear_bit(RQ_SPLICE_OK, &rqstp->rq_flags);
-+	clear_bit(RQ_SPLICE_OK, &rqstp->rq_flags);
- 
- 	priv_len = svc_getnl(&buf->head[0]);
- 	if (rqstp->rq_deferred) {
---- a/net/sunrpc/svc.c
-+++ b/net/sunrpc/svc.c
-@@ -1244,10 +1244,10 @@ svc_process_common(struct svc_rqst *rqst
- 		goto err_short_len;
- 
- 	/* Will be turned off by GSS integrity and privacy services */
--	__set_bit(RQ_SPLICE_OK, &rqstp->rq_flags);
-+	set_bit(RQ_SPLICE_OK, &rqstp->rq_flags);
- 	/* Will be turned off only when NFSv4 Sessions are used */
--	__set_bit(RQ_USEDEFERRAL, &rqstp->rq_flags);
--	__clear_bit(RQ_DROPME, &rqstp->rq_flags);
-+	set_bit(RQ_USEDEFERRAL, &rqstp->rq_flags);
-+	clear_bit(RQ_DROPME, &rqstp->rq_flags);
- 
- 	svc_putu32(resv, rqstp->rq_xid);
- 
---- a/net/sunrpc/svc_xprt.c
-+++ b/net/sunrpc/svc_xprt.c
-@@ -1238,7 +1238,7 @@ static struct cache_deferred_req *svc_de
- 	trace_svc_defer(rqstp);
- 	svc_xprt_get(rqstp->rq_xprt);
- 	dr->xprt = rqstp->rq_xprt;
--	__set_bit(RQ_DROPME, &rqstp->rq_flags);
-+	set_bit(RQ_DROPME, &rqstp->rq_flags);
- 
- 	dr->handle.revisit = svc_revisit;
- 	return &dr->handle;
---- a/net/sunrpc/svcsock.c
-+++ b/net/sunrpc/svcsock.c
-@@ -298,9 +298,9 @@ static void svc_sock_setbufsize(struct s
- static void svc_sock_secure_port(struct svc_rqst *rqstp)
- {
- 	if (svc_port_is_privileged(svc_addr(rqstp)))
--		__set_bit(RQ_SECURE, &rqstp->rq_flags);
-+		set_bit(RQ_SECURE, &rqstp->rq_flags);
- 	else
--		__clear_bit(RQ_SECURE, &rqstp->rq_flags);
-+		clear_bit(RQ_SECURE, &rqstp->rq_flags);
- }
- 
- /*
-@@ -1008,9 +1008,9 @@ static int svc_tcp_recvfrom(struct svc_r
- 	rqstp->rq_xprt_ctxt   = NULL;
- 	rqstp->rq_prot	      = IPPROTO_TCP;
- 	if (test_bit(XPT_LOCAL, &svsk->sk_xprt.xpt_flags))
--		__set_bit(RQ_LOCAL, &rqstp->rq_flags);
-+		set_bit(RQ_LOCAL, &rqstp->rq_flags);
- 	else
--		__clear_bit(RQ_LOCAL, &rqstp->rq_flags);
-+		clear_bit(RQ_LOCAL, &rqstp->rq_flags);
- 
- 	p = (__be32 *)rqstp->rq_arg.head[0].iov_base;
- 	calldir = p[1];
---- a/net/sunrpc/xprtrdma/svc_rdma_transport.c
-+++ b/net/sunrpc/xprtrdma/svc_rdma_transport.c
-@@ -602,7 +602,7 @@ static int svc_rdma_has_wspace(struct sv
- 
- static void svc_rdma_secure_port(struct svc_rqst *rqstp)
- {
--	__set_bit(RQ_SECURE, &rqstp->rq_flags);
-+	set_bit(RQ_SECURE, &rqstp->rq_flags);
- }
- 
- static void svc_rdma_kill_temp_xprt(struct svc_xprt *xprt)
+ #
 
 
