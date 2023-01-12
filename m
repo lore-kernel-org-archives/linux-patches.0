@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A09A79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:30:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D8FC433EF;
-	Thu, 12 Jan 2023 14:30:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9045D79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:30:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA731C433EF;
+	Thu, 12 Jan 2023 14:30:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533827;
-	bh=7E3nHgAfkm9oyDn+S4KQFsFdg0Z9uo2gyHjxdObYOYQ=;
+	s=korg; t=1673533830;
+	bh=rR5I3FobV4jxanNDkf+PcZg4d6yiIHdwFwIxHst+Dhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rgFGNGgQoEHVBj7mEJzQRrRVdGHKN6kLDZbgkGw95iWzhxoCQWG3guWdb/f/IqW5i
-	 ODHBGNvues6EuIrQ6e7WyNcslHwmsQ9466F1WEP23b8nZpaM+Sn2Hl0hkTzb8GNCHV
-	 /vYfBePHL6IeDd6qcQz6WfVopC1CuMW4ToYLHDCk=
+	b=k72Nap4+0o6ir4NzSn8vrbGjNfDAZ6WIRsG7V5cUsgWSmbymZNUprHAIWChLRtQhh
+	 oS0SBPImfUkDaqjoV2cvlAJ0b6ChOlJ1/PhnWUeEgAeDItdd+6z13dq7ax0DSFU8Pk
+	 EYpZ4aACBypiORlxlMB3Ry1Np1ez5tRF5mkvn8kM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Stable@vger.kernel.org
-Subject: [PATCH 5.10 564/783] iio: adc: ad_sigma_delta: do not use internal iio_dev lock
-Date: Thu, 12 Jan 2023 14:54:40 +0100
-Message-Id: <20230112135550.387443557@linuxfoundation.org>
+	Hanjun Guo <guohanjun@huawei.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 5.10 598/783] tpm: tpm_tis: Add the missed acpi_put_table() to fix memory leak
+Date: Thu, 12 Jan 2023 14:55:14 +0100
+Message-Id: <20230112135551.996357729@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,51 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Hanjun Guo <guohanjun@huawei.com>
 
-commit 20228a1d5a55e7db0c6720840f2c7d2b48c55f69 upstream.
+commit db9622f762104459ff87ecdf885cc42c18053fd9 upstream.
 
-Drop 'mlock' usage by making use of iio_device_claim_direct_mode().
-This change actually makes sure we cannot do a single conversion while
-buffering is enable. Note there was a potential race in the previous
-code since we were only acquiring the lock after checking if the bus is
-enabled.
+In check_acpi_tpm2(), we get the TPM2 table just to make
+sure the table is there, not used after the init, so the
+acpi_put_table() should be added to release the ACPI memory.
 
-Fixes: af3008485ea0 ("iio:adc: Add common code for ADI Sigma Delta devices")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Cc: <Stable@vger.kernel.org> #No rush as race is very old.
-Link: https://lore.kernel.org/r/20220920112821.975359-2-nuno.sa@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 4cb586a188d4 ("tpm_tis: Consolidate the platform and acpi probe flow")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hanjun Guo <guohanjun@huawei.com>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad_sigma_delta.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/char/tpm/tpm_tis.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/iio/adc/ad_sigma_delta.c
-+++ b/drivers/iio/adc/ad_sigma_delta.c
-@@ -280,10 +280,10 @@ int ad_sigma_delta_single_conversion(str
- 	unsigned int data_reg;
- 	int ret = 0;
+--- a/drivers/char/tpm/tpm_tis.c
++++ b/drivers/char/tpm/tpm_tis.c
+@@ -125,6 +125,7 @@ static int check_acpi_tpm2(struct device
+ 	const struct acpi_device_id *aid = acpi_match_device(tpm_acpi_tbl, dev);
+ 	struct acpi_table_tpm2 *tbl;
+ 	acpi_status st;
++	int ret = 0;
  
--	if (iio_buffer_enabled(indio_dev))
--		return -EBUSY;
-+	ret = iio_device_claim_direct_mode(indio_dev);
-+	if (ret)
-+		return ret;
+ 	if (!aid || aid->driver_data != DEVICE_IS_TPM2)
+ 		return 0;
+@@ -132,8 +133,7 @@ static int check_acpi_tpm2(struct device
+ 	/* If the ACPI TPM2 signature is matched then a global ACPI_SIG_TPM2
+ 	 * table is mandatory
+ 	 */
+-	st =
+-	    acpi_get_table(ACPI_SIG_TPM2, 1, (struct acpi_table_header **)&tbl);
++	st = acpi_get_table(ACPI_SIG_TPM2, 1, (struct acpi_table_header **)&tbl);
+ 	if (ACPI_FAILURE(st) || tbl->header.length < sizeof(*tbl)) {
+ 		dev_err(dev, FW_BUG "failed to get TPM2 ACPI table\n");
+ 		return -EINVAL;
+@@ -141,9 +141,10 @@ static int check_acpi_tpm2(struct device
  
--	mutex_lock(&indio_dev->mlock);
- 	ad_sigma_delta_set_channel(sigma_delta, chan->address);
+ 	/* The tpm2_crb driver handles this device */
+ 	if (tbl->start_method != ACPI_TPM2_MEMORY_MAPPED)
+-		return -ENODEV;
++		ret = -ENODEV;
  
- 	spi_bus_lock(sigma_delta->spi->master);
-@@ -322,7 +322,7 @@ out:
- 	ad_sigma_delta_set_mode(sigma_delta, AD_SD_MODE_IDLE);
- 	sigma_delta->bus_locked = false;
- 	spi_bus_unlock(sigma_delta->spi->master);
--	mutex_unlock(&indio_dev->mlock);
-+	iio_device_release_direct_mode(indio_dev);
- 
- 	if (ret)
- 		return ret;
+-	return 0;
++	acpi_put_table((struct acpi_table_header *)tbl);
++	return ret;
+ }
+ #else
+ static int check_acpi_tpm2(struct device *dev)
 
 
