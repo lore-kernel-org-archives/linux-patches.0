@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7579579C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:18:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCDC0C433EF;
-	Thu, 12 Jan 2023 14:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD7E79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:18:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5FB5C433D2;
+	Thu, 12 Jan 2023 14:18:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533087;
-	bh=kF+UJ2+GxPrysisT/BDB8fHKcqKuKNa+EmWQ2Nb8Tuc=;
+	s=korg; t=1673533090;
+	bh=tP5GtcpL8y1odZI4Boe03MmjASKA2EbFGCclmc2dx8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=luA7QJEJEZ6HvbrzXRgosBidROtcgGCt6qw/nSK2WfdyCqFTDvjng8056dL722kcY
-	 BZBwUpcrjlJH5uisr4Y8ts1f5DtMflykOjS3OkSR08fZfqiUw68MVuixOQ5p7Iq3GT
-	 9y4/2YiZFcmpFNxfegb+kozqqRqKoQ1UO2ckN4mM=
+	b=fgSrk0MQbD86x687nqQyGxAf4uUxfbWP6WHOHjbPsUlCci9ulGFJB82tmY9ewohMv
+	 1L40C27kVC7WqZE+cK8mGjDE8blKkqLZTpu/ViNh5TGqrikhDr1m5TB341zq9xPLnM
+	 bGo08T9czaZ5Ybv7ZzsmpEwU8M3GD3LzNqFt5PRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Andrew Donnellan <ajd@linux.ibm.com>,
+	Frederic Barrat <fbarrat@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 338/783] hwrng: amd - Fix PCI device refcount leak
-Date: Thu, 12 Jan 2023 14:50:54 +0100
-Message-Id: <20230112135539.975409623@linuxfoundation.org>
+Subject: [PATCH 5.10 365/783] cxl: fix possible null-ptr-deref in cxl_guest_init_afu|adapter()
+Date: Thu, 12 Jan 2023 14:51:21 +0100
+Message-Id: <20230112135541.261376836@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,74 +36,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit ecadb5b0111ea19fc7c240bb25d424a94471eb7d ]
+[ Upstream commit 61c80d1c3833e196256fb060382db94f24d3d9a7 ]
 
-for_each_pci_dev() is implemented by pci_get_device(). The comment of
-pci_get_device() says that it will increase the reference count for the
-returned pci_dev and also decrease the reference count for the input
-pci_dev @from if it is not NULL.
+If device_register() fails in cxl_register_afu|adapter(), the device
+is not added, device_unregister() can not be called in the error path,
+otherwise it will cause a null-ptr-deref because of removing not added
+device.
 
-If we break for_each_pci_dev() loop with pdev not NULL, we need to call
-pci_dev_put() to decrease the reference count. Add the missing
-pci_dev_put() for the normal and error path.
+As comment of device_register() says, it should use put_device() to give
+up the reference in the error path. So split device_unregister() into
+device_del() and put_device(), then goes to put dev when register fails.
 
-Fixes: 96d63c0297cc ("[PATCH] Add AMD HW RNG driver")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 14baf4d9c739 ("cxl: Add guest-specific code")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Acked-by: Andrew Donnellan <ajd@linux.ibm.com>
+Acked-by: Frederic Barrat <fbarrat@linux.ibm.com>
+Link: https://lore.kernel.org/r/20221111145440.2426970-1-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/amd-rng.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/misc/cxl/guest.c | 24 ++++++++++++++----------
+ 1 file changed, 14 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/char/hw_random/amd-rng.c b/drivers/char/hw_random/amd-rng.c
-index 9959c762da2f..db3dd467194c 100644
---- a/drivers/char/hw_random/amd-rng.c
-+++ b/drivers/char/hw_random/amd-rng.c
-@@ -143,15 +143,19 @@ static int __init mod_init(void)
- found:
- 	err = pci_read_config_dword(pdev, 0x58, &pmbase);
- 	if (err)
--		return err;
-+		goto put_dev;
+diff --git a/drivers/misc/cxl/guest.c b/drivers/misc/cxl/guest.c
+index 186308f1f8eb..6334376826a9 100644
+--- a/drivers/misc/cxl/guest.c
++++ b/drivers/misc/cxl/guest.c
+@@ -959,10 +959,10 @@ int cxl_guest_init_afu(struct cxl *adapter, int slice, struct device_node *afu_n
+ 	 * if it returns an error!
+ 	 */
+ 	if ((rc = cxl_register_afu(afu)))
+-		goto err_put1;
++		goto err_put_dev;
  
- 	pmbase &= 0x0000FF00;
--	if (pmbase == 0)
--		return -EIO;
-+	if (pmbase == 0) {
-+		err = -EIO;
-+		goto put_dev;
-+	}
+ 	if ((rc = cxl_sysfs_afu_add(afu)))
+-		goto err_put1;
++		goto err_del_dev;
  
- 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
--	if (!priv)
--		return -ENOMEM;
-+	if (!priv) {
-+		err = -ENOMEM;
-+		goto put_dev;
-+	}
+ 	/*
+ 	 * pHyp doesn't expose the programming models supported by the
+@@ -978,7 +978,7 @@ int cxl_guest_init_afu(struct cxl *adapter, int slice, struct device_node *afu_n
+ 		afu->modes_supported = CXL_MODE_DIRECTED;
  
- 	if (!request_region(pmbase + PMBASE_OFFSET, PMBASE_SIZE, DRV_NAME)) {
- 		dev_err(&pdev->dev, DRV_NAME " region 0x%x already in use!\n",
-@@ -185,6 +189,8 @@ static int __init mod_init(void)
- 	release_region(pmbase + PMBASE_OFFSET, PMBASE_SIZE);
- out:
- 	kfree(priv);
-+put_dev:
-+	pci_dev_put(pdev);
- 	return err;
- }
+ 	if ((rc = cxl_afu_select_best_mode(afu)))
+-		goto err_put2;
++		goto err_remove_sysfs;
  
-@@ -200,6 +206,8 @@ static void __exit mod_exit(void)
+ 	adapter->afu[afu->slice] = afu;
  
- 	release_region(priv->pmbase + PMBASE_OFFSET, PMBASE_SIZE);
+@@ -998,10 +998,12 @@ int cxl_guest_init_afu(struct cxl *adapter, int slice, struct device_node *afu_n
  
-+	pci_dev_put(priv->pcidev);
-+
- 	kfree(priv);
- }
+ 	return 0;
  
+-err_put2:
++err_remove_sysfs:
+ 	cxl_sysfs_afu_remove(afu);
+-err_put1:
+-	device_unregister(&afu->dev);
++err_del_dev:
++	device_del(&afu->dev);
++err_put_dev:
++	put_device(&afu->dev);
+ 	free = false;
+ 	guest_release_serr_irq(afu);
+ err2:
+@@ -1135,18 +1137,20 @@ struct cxl *cxl_guest_init_adapter(struct device_node *np, struct platform_devic
+ 	 * even if it returns an error!
+ 	 */
+ 	if ((rc = cxl_register_adapter(adapter)))
+-		goto err_put1;
++		goto err_put_dev;
+ 
+ 	if ((rc = cxl_sysfs_adapter_add(adapter)))
+-		goto err_put1;
++		goto err_del_dev;
+ 
+ 	/* release the context lock as the adapter is configured */
+ 	cxl_adapter_context_unlock(adapter);
+ 
+ 	return adapter;
+ 
+-err_put1:
+-	device_unregister(&adapter->dev);
++err_del_dev:
++	device_del(&adapter->dev);
++err_put_dev:
++	put_device(&adapter->dev);
+ 	free = false;
+ 	cxl_guest_remove_chardev(adapter);
+ err1:
 -- 
 2.35.1
 
