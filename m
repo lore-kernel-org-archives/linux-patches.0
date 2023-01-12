@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7595779C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:18:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E70C433D2;
-	Thu, 12 Jan 2023 14:18:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2CD79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:18:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4180C433EF;
+	Thu, 12 Jan 2023 14:18:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533121;
-	bh=A+9ksah5KvmIWx3MrKo+M9nNXzXe9yZyLD3ExquifNs=;
+	s=korg; t=1673533124;
+	bh=WHvjIPfXR6wCZmEvNgRMRF/Y7PP2OLq3M1aBJnafGwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kqPeyXW10DwkLxONGA5iEJb4QwcGQqiQ/AhU+t1toz7b+zrKrPV7ilznsDVUHx+ar
-	 pKe5QS2SKsAD6NEdXRtkUH7MQZipqnlSLrwyv7wA35VWZKwAj/BBr4A9JaECNP7Zl0
-	 /6Rqsc5UOQb6u55Um0O9rwJgQlIbAnZKUQZrFVqs=
+	b=WuH17J/ZXf2z3rhKcdiPmouQIEgmsEzfJu2333CpaGpdLFcHYTLFUvN4i0EDt7fXy
+	 A9m2FvllUNbqZyEdgkG8ymhyOCLId55+c+U/RTEXCm1PwayF6ytWugeUFzoJcFXp7U
+	 jnW/qW21S5ijlK8+hBSbGmc0dL6WvgHrmGYtMh/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Alexandru Ardelean <ardeleanalex@gmail.com>,
-	Nuno Sa <nuno.sa@analog.com>,
-	Barry Song <song.bao.hua@hisilicon.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Lars-Peter Clausen <lars@metafoo.de>,
+	Lee Jones <lee@kernel.org>,
+	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+	John Keeping <john@metanate.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 369/783] iio:imu:adis: Use IRQF_NO_AUTOEN instead of irq request then disable
-Date: Thu, 12 Jan 2023 14:51:25 +0100
-Message-Id: <20230112135541.439174562@linuxfoundation.org>
+Subject: [PATCH 5.10 378/783] usb: gadget: f_hid: fix refcount leak on error path
+Date: Thu, 12 Jan 2023 14:51:34 +0100
+Message-Id: <20230112135541.821864164@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -39,106 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From: John Keeping <john@metanate.com>
 
-[ Upstream commit 30f6a542b7d39b1ba990a28a3891bc03691d8d41 ]
+[ Upstream commit 70a3288a7586526315105c699b687d78cd32559a ]
 
-This is a bit involved as the adis library code already has some
-sanity checking of the flags of the requested irq that we need
-to ensure is happy to pass through the IRQF_NO_AUTOEN flag untouched.
+When failing to allocate report_desc, opts->refcnt has already been
+incremented so it needs to be decremented to avoid leaving the options
+structure permanently locked.
 
-Using this flag avoids us autoenabling the irq in the adis16460 and
-adis16475 drivers which cover parts that don't have any means of
-masking the interrupt on the device end.
-
-Note, compile tested only!
-
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Alexandru Ardelean <ardeleanalex@gmail.com>
-Reviewed-by: Nuno Sa <nuno.sa@analog.com>
-Reviewed-by: Barry Song <song.bao.hua@hisilicon.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Reviewed-by: Lars-Peter Clausen <lars@metafoo.de>
-Link: https://lore.kernel.org/r/20210402184544.488862-7-jic23@kernel.org
-Stable-dep-of: 99c05e4283a1 ("iio: adis: add '__adis_enable_irq()' implementation")
+Fixes: 21a9476a7ba8 ("usb: gadget: hid: add configfs support")
+Tested-by: Lee Jones <lee@kernel.org>
+Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Reviewed-by: Lee Jones <lee@kernel.org>
+Signed-off-by: John Keeping <john@metanate.com>
+Link: https://lore.kernel.org/r/20221122123523.3068034-3-john@metanate.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/imu/adis16460.c    |  4 ++--
- drivers/iio/imu/adis16475.c    |  5 +++--
- drivers/iio/imu/adis_trigger.c | 11 ++++++-----
- 3 files changed, 11 insertions(+), 9 deletions(-)
+ drivers/usb/gadget/function/f_hid.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/iio/imu/adis16460.c b/drivers/iio/imu/adis16460.c
-index 74a161e39733..73bf45e859b8 100644
---- a/drivers/iio/imu/adis16460.c
-+++ b/drivers/iio/imu/adis16460.c
-@@ -403,12 +403,12 @@ static int adis16460_probe(struct spi_device *spi)
- 	if (ret)
- 		return ret;
- 
-+	/* We cannot mask the interrupt, so ensure it isn't auto enabled */
-+	st->adis.irq_flag |= IRQF_NO_AUTOEN;
- 	ret = devm_adis_setup_buffer_and_trigger(&st->adis, indio_dev, NULL);
- 	if (ret)
- 		return ret;
- 
--	adis16460_enable_irq(&st->adis, 0);
--
- 	ret = __adis_initial_startup(&st->adis);
- 	if (ret)
- 		return ret;
-diff --git a/drivers/iio/imu/adis16475.c b/drivers/iio/imu/adis16475.c
-index 3c4e4deb8760..8ab88ba4892c 100644
---- a/drivers/iio/imu/adis16475.c
-+++ b/drivers/iio/imu/adis16475.c
-@@ -1196,6 +1196,9 @@ static int adis16475_config_irq_pin(struct adis16475 *st)
- 		return -EINVAL;
- 	}
- 
-+	/* We cannot mask the interrupt so ensure it's not enabled at request */
-+	st->adis.irq_flag |= IRQF_NO_AUTOEN;
-+
- 	val = ADIS16475_MSG_CTRL_DR_POL(polarity);
- 	ret = __adis_update_bits(&st->adis, ADIS16475_REG_MSG_CTRL,
- 				 ADIS16475_MSG_CTRL_DR_POL_MASK, val);
-@@ -1300,8 +1303,6 @@ static int adis16475_probe(struct spi_device *spi)
- 	if (ret)
- 		return ret;
- 
--	adis16475_enable_irq(&st->adis, false);
--
- 	ret = devm_iio_device_register(&spi->dev, indio_dev);
- 	if (ret)
- 		return ret;
-diff --git a/drivers/iio/imu/adis_trigger.c b/drivers/iio/imu/adis_trigger.c
-index 64e0ba51cb18..17058ac7aa9f 100644
---- a/drivers/iio/imu/adis_trigger.c
-+++ b/drivers/iio/imu/adis_trigger.c
-@@ -36,18 +36,19 @@ static void adis_trigger_setup(struct adis *adis)
- 
- static int adis_validate_irq_flag(struct adis *adis)
- {
-+	unsigned long direction = adis->irq_flag & IRQF_TRIGGER_MASK;
- 	/*
- 	 * Typically this devices have data ready either on the rising edge or
- 	 * on the falling edge of the data ready pin. This checks enforces that
- 	 * one of those is set in the drivers... It defaults to
--	 * IRQF_TRIGGER_RISING for backward compatibility wiht devices that
-+	 * IRQF_TRIGGER_RISING for backward compatibility with devices that
- 	 * don't support changing the pin polarity.
- 	 */
--	if (!adis->irq_flag) {
--		adis->irq_flag = IRQF_TRIGGER_RISING;
-+	if (direction == IRQF_TRIGGER_NONE) {
-+		adis->irq_flag |= IRQF_TRIGGER_RISING;
- 		return 0;
--	} else if (adis->irq_flag != IRQF_TRIGGER_RISING &&
--		   adis->irq_flag != IRQF_TRIGGER_FALLING) {
-+	} else if (direction != IRQF_TRIGGER_RISING &&
-+		   direction != IRQF_TRIGGER_FALLING) {
- 		dev_err(&adis->spi->dev, "Invalid IRQ mask: %08lx\n",
- 			adis->irq_flag);
- 		return -EINVAL;
+diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
+index 97e927eacc62..e7cf56b13c64 100644
+--- a/drivers/usb/gadget/function/f_hid.c
++++ b/drivers/usb/gadget/function/f_hid.c
+@@ -1292,6 +1292,7 @@ static struct usb_function *hidg_alloc(struct usb_function_instance *fi)
+ 						 GFP_KERNEL);
+ 		if (!hidg->report_desc) {
+ 			put_device(&hidg->dev);
++			--opts->refcnt;
+ 			mutex_unlock(&opts->lock);
+ 			return ERR_PTR(-ENOMEM);
+ 		}
 -- 
 2.35.1
 
