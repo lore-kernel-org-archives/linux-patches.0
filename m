@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A571749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:11:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8502CC433EF;
-	Thu, 12 Jan 2023 14:11:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89684749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:11:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C94D9C433F0;
+	Thu, 12 Jan 2023 14:11:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532708;
-	bh=l9AOlS29MLEVOvw/Jr0qb7P4Cmzp6IpF/g+zdJHvoBo=;
+	s=korg; t=1673532711;
+	bh=N33rmCxZvLDR8x+IZHMxTV6ecmdwHFbUyYeXdOBtkZU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iPbaAlDhtuWtxu3E3wpxzSD2Zoc9zT2xqyTSm0gBSRB45PxfUuYqP/JEhLtxhmxyX
-	 eRoeHPw1Dzs1GgoaErkSIri3W0/2uqTsdiSkvXiaeZmdv7SbehiZCW8H4Yu1L7FUoo
-	 pa1Z/gXkMi8kQ4ebwKSlz/qtfLg1n2qvKQo8+ud8=
+	b=FzqTqW3hiHi8x0yeczwSOdI5fKXWZUFIJ1CuexC0GsHEbR77wnKr/sZuydZAv1RI8
+	 V4TJiE7pr4qO0dTaIMd4eo0rgD8J6Xb+nSRemUgyHAMu/Nmi/KrO6pNKhIUYWFMus9
+	 3yBAPE8Ig7Ju0Hg8LlB9pNd1Bf13zXnDDBtkXLfU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 251/783] net: stmmac: selftests: fix potential memleak in stmmac_test_arpoffload()
-Date: Thu, 12 Jan 2023 14:49:27 +0100
-Message-Id: <20230112135536.032156863@linuxfoundation.org>
+Subject: [PATCH 5.10 252/783] drivers: net: qlcnic: Fix potential memory leak in qlcnic_sriov_init()
+Date: Thu, 12 Jan 2023 14:49:28 +0100
+Message-Id: <20230112135536.071616398@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,47 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Changzhong <zhangchangzhong@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit f150b63f3fa5fdd81e0dd6151e8850268e29438c ]
+[ Upstream commit 01de1123322e4fe1bbd0fcdf0982511b55519c03 ]
 
-The skb allocated by stmmac_test_get_arp_skb() hasn't been released in
-some error handling case, which will lead to a memory leak. Fix this up
-by adding kfree_skb() to release skb.
+If vp alloc failed in qlcnic_sriov_init(), all previously allocated vp
+needs to be freed.
 
-Compile tested only.
-
-Fixes: 5e3fb0a6e2b3 ("net: stmmac: selftests: Implement the ARP Offload test")
-Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Fixes: f197a7aa6288 ("qlcnic: VF-PF communication channel implementation")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-index dd5c4ef92ef3..ea7200b7b647 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
-@@ -1654,12 +1654,16 @@ static int stmmac_test_arpoffload(struct stmmac_priv *priv)
- 	}
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
+index 8367891bfb13..e864c453c5e6 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
+@@ -221,6 +221,8 @@ int qlcnic_sriov_init(struct qlcnic_adapter *adapter, int num_vfs)
+ 	return 0;
  
- 	ret = stmmac_set_arp_offload(priv, priv->hw, true, ip_addr);
--	if (ret)
-+	if (ret) {
-+		kfree_skb(skb);
- 		goto cleanup;
-+	}
+ qlcnic_destroy_async_wq:
++	while (i--)
++		kfree(sriov->vf_info[i].vp);
+ 	destroy_workqueue(bc->bc_async_wq);
  
- 	ret = dev_set_promiscuity(priv->dev, 1);
--	if (ret)
-+	if (ret) {
-+		kfree_skb(skb);
- 		goto cleanup;
-+	}
- 
- 	ret = dev_direct_xmit(skb, 0);
- 	if (ret)
+ qlcnic_destroy_trans_wq:
 -- 
 2.35.1
 
