@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 277D3749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:06:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82B9CC433F2;
-	Thu, 12 Jan 2023 14:06:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C65749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:06:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66AEAC433D2;
+	Thu, 12 Jan 2023 14:06:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532379;
-	bh=XZbEQknCyg1jcKzd9RfraxZOjt78kJ1E9oqPv1n3/h4=;
+	s=korg; t=1673532381;
+	bh=ClZwr9aJZmy9HaWO8W6t3ZjkIxFiNawZ/DFvyAckVb0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QqXneLLAsvkJAj+aD2z+FQQz7Ne8ZkvN7Kk3YlXeO4rQByyTWAPF2uax+tH4NXlJX
-	 BCqCd1doGYgW49jlRxqXFA8eeHaJQLbEJ+oMF/bBesBuLeks/+YljLetHmEyVyMhVB
-	 HjDjvBbGgAL+r6XdZ0OESUbw5LIlecvS0Zm072t8=
+	b=QYdxQ7Nzf8OMbN3VBs7PR79XA4mTThNHhsjeAaikN6GZpMGIvTMWPMTGhBSHwWfJA
+	 B0ULolUcsqwqhwKmHG4oLcLVPAprFpCkqvnocVfftia/Mv/x/vs8CoTXbV0EiYKeXq
+	 zzklQv30Bgn7KVfQzYkarPgby+imWaxjBpuKmiiY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhangPeng <zhangpeng362@huawei.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	syzbot+dc3b1cf9111ab5fe98e7@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Andrii Nakryiko <andrii@kernel.org>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 101/783] hfs: Fix OOB Write in hfs_asc2mac
-Date: Thu, 12 Jan 2023 14:46:57 +0100
-Message-Id: <20230112135528.883059782@linuxfoundation.org>
+Subject: [PATCH 5.10 136/783] bpf: propagate precision in ALU/ALU64 operations
+Date: Thu, 12 Jan 2023 14:47:32 +0100
+Message-Id: <20230112135530.631283497@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -37,64 +35,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangPeng <zhangpeng362@huawei.com>
+From: Andrii Nakryiko <andrii@kernel.org>
 
-[ Upstream commit c53ed55cb275344086e32a7080a6b19cb183650b ]
+[ Upstream commit a3b666bfa9c9edc05bca62a87abafe0936bd7f97 ]
 
-Syzbot reported a OOB Write bug:
+When processing ALU/ALU64 operations (apart from BPF_MOV, which is
+handled correctly already; and BPF_NEG and BPF_END are special and don't
+have source register), if destination register is already marked
+precise, this causes problem with potentially missing precision tracking
+for the source register. E.g., when we have r1 >>= r5 and r1 is marked
+precise, but r5 isn't, this will lead to r5 staying as imprecise. This
+is due to the precision backtracking logic stopping early when it sees
+r1 is already marked precise. If r1 wasn't precise, we'd keep
+backtracking and would add r5 to the set of registers that need to be
+marked precise. So there is a discrepancy here which can lead to invalid
+and incompatible states matched due to lack of precision marking on r5.
+If r1 wasn't precise, precision backtracking would correctly mark both
+r1 and r5 as precise.
 
-loop0: detected capacity change from 0 to 64
-==================================================================
-BUG: KASAN: slab-out-of-bounds in hfs_asc2mac+0x467/0x9a0
-fs/hfs/trans.c:133
-Write of size 1 at addr ffff88801848314e by task syz-executor391/3632
+This is simple to fix, though. During the forward instruction simulation
+pass, for arithmetic operations of `scalar <op>= scalar` form (where
+<op> is ALU or ALU64 operations), if destination register is already
+precise, mark source register as precise. This applies only when both
+involved registers are SCALARs. `ptr += scalar` and `scalar += ptr`
+cases are already handled correctly.
 
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
- print_address_description+0x74/0x340 mm/kasan/report.c:284
- print_report+0x107/0x1f0 mm/kasan/report.c:395
- kasan_report+0xcd/0x100 mm/kasan/report.c:495
- hfs_asc2mac+0x467/0x9a0 fs/hfs/trans.c:133
- hfs_cat_build_key+0x92/0x170 fs/hfs/catalog.c:28
- hfs_lookup+0x1ab/0x2c0 fs/hfs/dir.c:31
- lookup_open fs/namei.c:3391 [inline]
- open_last_lookups fs/namei.c:3481 [inline]
- path_openat+0x10e6/0x2df0 fs/namei.c:3710
- do_filp_open+0x264/0x4f0 fs/namei.c:3740
+This does have (negative) effect on some selftest programs and few
+Cilium programs.  ~/baseline-tmp-results.csv are veristat results with
+this patch, while ~/baseline-results.csv is without it. See post
+scriptum for instructions on how to make Cilium programs testable with
+veristat. Correctness has a price.
 
-If in->len is much larger than HFS_NAMELEN(31) which is the maximum
-length of an HFS filename, a OOB write could occur in hfs_asc2mac(). In
-that case, when the dst reaches the boundary, the srclen is still
-greater than 0, which causes a OOB write.
-Fix this by adding a check on dstlen in while() before writing to dst
-address.
+$ ./veristat -C -e file,prog,insns,states ~/baseline-results.csv ~/baseline-tmp-results.csv | grep -v '+0'
+File                     Program               Total insns (A)  Total insns (B)  Total insns (DIFF)  Total states (A)  Total states (B)  Total states (DIFF)
+-----------------------  --------------------  ---------------  ---------------  ------------------  ----------------  ----------------  -------------------
+bpf_cubic.bpf.linked1.o  bpf_cubic_cong_avoid              997             1700      +703 (+70.51%)                62                90        +28 (+45.16%)
+test_l4lb.bpf.linked1.o  balancer_ingress                 4559             5469      +910 (+19.96%)               118               126          +8 (+6.78%)
+-----------------------  --------------------  ---------------  ---------------  ------------------  ----------------  ----------------  -------------------
 
-Link: https://lkml.kernel.org/r/20221202030038.1391945-1-zhangpeng362@huawei.com
-Fixes: 328b92278650 ("[PATCH] hfs: NLS support")
-Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Reported-by: <syzbot+dc3b1cf9111ab5fe98e7@syzkaller.appspotmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+$ ./veristat -C -e file,prog,verdict,insns,states ~/baseline-results-cilium.csv ~/baseline-tmp-results-cilium.csv | grep -v '+0'
+File           Program                         Total insns (A)  Total insns (B)  Total insns (DIFF)  Total states (A)  Total states (B)  Total states (DIFF)
+-------------  ------------------------------  ---------------  ---------------  ------------------  ----------------  ----------------  -------------------
+bpf_host.o     tail_nodeport_nat_ingress_ipv6             4448             5261      +813 (+18.28%)               234               247         +13 (+5.56%)
+bpf_host.o     tail_nodeport_nat_ipv6_egress              3396             3446        +50 (+1.47%)               201               203          +2 (+1.00%)
+bpf_lxc.o      tail_nodeport_nat_ingress_ipv6             4448             5261      +813 (+18.28%)               234               247         +13 (+5.56%)
+bpf_overlay.o  tail_nodeport_nat_ingress_ipv6             4448             5261      +813 (+18.28%)               234               247         +13 (+5.56%)
+bpf_xdp.o      tail_lb_ipv4                              71736            73442      +1706 (+2.38%)              4295              4370         +75 (+1.75%)
+-------------  ------------------------------  ---------------  ---------------  ------------------  ----------------  ----------------  -------------------
+
+P.S. To make Cilium ([0]) programs libbpf-compatible and thus
+veristat-loadable, apply changes from topmost commit in [1], which does
+minimal changes to Cilium source code, mostly around SEC() annotations
+and BPF map definitions.
+
+  [0] https://github.com/cilium/cilium/
+  [1] https://github.com/anakryiko/cilium/commits/libbpf-friendliness
+
+Fixes: b5dc0163d8fd ("bpf: precise scalar_value tracking")
+Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
+Link: https://lore.kernel.org/r/20221104163649.121784-2-andrii@kernel.org
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfs/trans.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/verifier.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/fs/hfs/trans.c b/fs/hfs/trans.c
-index 39f5e343bf4d..fdb0edb8a607 100644
---- a/fs/hfs/trans.c
-+++ b/fs/hfs/trans.c
-@@ -109,7 +109,7 @@ void hfs_asc2mac(struct super_block *sb, struct hfs_name *out, const struct qstr
- 	if (nls_io) {
- 		wchar_t ch;
- 
--		while (srclen > 0) {
-+		while (srclen > 0 && dstlen > 0) {
- 			size = nls_io->char2uni(src, srclen, &ch);
- 			if (size < 0) {
- 				ch = '?';
+diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
+index 4d62822f5502..30e0fa1bd83c 100644
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -6992,6 +6992,11 @@ static int adjust_reg_min_max_vals(struct bpf_verifier_env *env,
+ 				return err;
+ 			return adjust_ptr_min_max_vals(env, insn,
+ 						       dst_reg, src_reg);
++		} else if (dst_reg->precise) {
++			/* if dst_reg is precise, src_reg should be precise as well */
++			err = mark_chain_precision(env, insn->src_reg);
++			if (err)
++				return err;
+ 		}
+ 	} else {
+ 		/* Pretend the src is a reg with a known value, since we only
 -- 
 2.35.1
 
