@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA36C749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:07:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE26C433D2;
-	Thu, 12 Jan 2023 14:07:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F563749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:07:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CE6BC433D2;
+	Thu, 12 Jan 2023 14:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532457;
-	bh=tux6KU2OyUFp7H2CsRUMqzPGvjFm91D5gvGxVMxjcu0=;
+	s=korg; t=1673532461;
+	bh=W1LKCVn0PBOqt+2V60iYP5trZHeO5f7NMecwdQZPAEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cvbLCuUrniv/MGc/zpBBpfBITZjE4Xyug2zAofmFQiKah8cwPe+fzLspc5DcGV2Hi
-	 nNf+06Aj/tbylj4ZMTqJijJ2l2L8YKNTlOO60hWiAcCXaek6N0eAjF1x/Hd5y0A2q8
-	 d7zKIuar3NvrA+vNqZTAxnwsbn4AvTXlYhj+uMXo=
+	b=K9IfkZoam3YeVBJYnibap0fP2Fnw3RyM3vAtbjXngtGuHbj5981x1ou/Cs9/fBXio
+	 cU6hI1iyuFgwl88fOzSfsSeZRxh6cieX9RMujXhiwiwFtXnNIw2Z0sJW6hZtLi1LEu
+	 NNCGk/BMtxZCd8kPCpJ1XnnZmHBBBf3UYIj/BuOo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 167/783] regulator: core: use kfree_const() to free space conditionally
-Date: Thu, 12 Jan 2023 14:48:03 +0100
-Message-Id: <20230112135532.059578554@linuxfoundation.org>
+Subject: [PATCH 5.10 139/783] clk: qcom: gcc-sm8250: Use retention mode for USB GDSCs
+Date: Thu, 12 Jan 2023 14:47:35 +0100
+Message-Id: <20230112135530.770165544@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,36 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang ShaoBo <bobo.shaobowang@huawei.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit dc8d006d15b623c1d80b90b45d6dcb6e890dad09 ]
+[ Upstream commit ac1c5a03d3772b1db25e8092f771aa33f6ae2f7e ]
 
-Use kfree_const() to free supply_name conditionally in create_regulator()
-as supply_name may be allocated from kmalloc() or directly from .rodata
-section.
+USB controllers on SM8250 doesn't work after coming back from suspend.
+This can be fixed by keeping the USB GDSCs in retention mode so that
+hardware can keep them ON and put into rentention mode once the parent
+domain goes to a low power state.
 
-Fixes: 87fe29b61f95 ("regulator: push allocations in create_regulator() outside of lock")
-Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
-Link: https://lore.kernel.org/r/20221123034616.3609537-1-bobo.shaobowang@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 3e5770921a88 ("clk: qcom: gcc: Add global clock controller driver for SM8250")
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221102091320.66007-1-manivannan.sadhasivam@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/clk/qcom/gcc-sm8250.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 876afa3919c1..60c0be2ea5c5 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -1645,7 +1645,7 @@ static struct regulator *create_regulator(struct regulator_dev *rdev,
+diff --git a/drivers/clk/qcom/gcc-sm8250.c b/drivers/clk/qcom/gcc-sm8250.c
+index ab594a0f0c40..7ec11acc8298 100644
+--- a/drivers/clk/qcom/gcc-sm8250.c
++++ b/drivers/clk/qcom/gcc-sm8250.c
+@@ -3268,7 +3268,7 @@ static struct gdsc usb30_prim_gdsc = {
+ 	.pd = {
+ 		.name = "usb30_prim_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ };
  
- 	regulator = kzalloc(sizeof(*regulator), GFP_KERNEL);
- 	if (regulator == NULL) {
--		kfree(supply_name);
-+		kfree_const(supply_name);
- 		return NULL;
- 	}
+ static struct gdsc usb30_sec_gdsc = {
+@@ -3276,7 +3276,7 @@ static struct gdsc usb30_sec_gdsc = {
+ 	.pd = {
+ 		.name = "usb30_sec_gdsc",
+ 	},
+-	.pwrsts = PWRSTS_OFF_ON,
++	.pwrsts = PWRSTS_RET_ON,
+ };
  
+ static struct gdsc hlos1_vote_mmnoc_mmu_tbu_hf0_gdsc = {
 -- 
 2.35.1
 
