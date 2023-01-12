@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B63779C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:29:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70C64C433D2;
-	Thu, 12 Jan 2023 14:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2881479C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:29:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84998C433D2;
+	Thu, 12 Jan 2023 14:29:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533757;
-	bh=veC60ZZIxlv7xmN1vv6FVX95uUYCp0YvFsG6iTaE4ME=;
+	s=korg; t=1673533761;
+	bh=9Y8+0tCbis1OwSmOIeTE0Xv5Sw/JNrBjXmc5bHcmOfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oVEBXkPhLYdTOC5edpX0g2Eck2miMt2VVB0pRTS6p/x64aOddEnb0JtSv9sF1ThuS
-	 KtTB+Dq/0C+5gSdGQwiNp9vyM+suKDrlw4v95u05Ucmk+r6ZZOv0kTfnho6YvwcM7I
-	 v/1ks9cY4zBqxo0auH2Z2FcjRUK6KiTnw6r4eVLE=
+	b=qD8YScmjYq3GKusVknEj3lIHpbFgczwDaeaUEBvyMopnJ92gKZoXW91Hw89SOBWFF
+	 4W896qMQXHRMddb0yn4+HxLzaHyRDCJckOT7Oz4c6m5qPI9fnpFWRl1x2ilKFOopwV
+	 Fyx58RQvRPRtfmJmtU6o+kFejEty8DukU6vuPTuU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akito <the@akito.ooo>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
-	Jiri Kosina <jkosina@suse.cz>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 583/783] HID: multitouch: fix Asus ExpertBook P2 P2451FA trackpoint
-Date: Thu, 12 Jan 2023 14:54:59 +0100
-Message-Id: <20230112135551.286383608@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 5.10 566/783] regulator: core: fix deadlock on regulator enable
+Date: Thu, 12 Jan 2023 14:54:42 +0100
+Message-Id: <20230112135550.464310413@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,50 +34,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: José Expósito <jose.exposito89@gmail.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 4eab1c2fe06c98a4dff258dd64800b6986c101e9 ]
+commit cb3543cff90a4448ed560ac86c98033ad5fecda9 upstream.
 
-The HID descriptor of this device contains two mouse collections, one
-for mouse emulation and the other for the trackpoint.
+When updating the operating mode as part of regulator enable, the caller
+has already locked the regulator tree and drms_uA_update() must not try
+to do the same in order not to trigger a deadlock.
 
-Both collections get merged and, because the first one defines X and Y,
-the movemenent events reported by the trackpoint collection are
-ignored.
+The lock inversion is reported by lockdep as:
 
-Set the MT_CLS_WIN_8_FORCE_MULTI_INPUT class for this device to be able
-to receive its reports.
+  ======================================================
+  WARNING: possible circular locking dependency detected
+  6.1.0-next-20221215 #142 Not tainted
+  ------------------------------------------------------
+  udevd/154 is trying to acquire lock:
+  ffffc11f123d7e50 (regulator_list_mutex){+.+.}-{3:3}, at: regulator_lock_dependent+0x54/0x280
 
-This fix is similar to/based on commit 40d5bb87377a ("HID: multitouch:
-enable multi-input as a quirk for some devices").
+  but task is already holding lock:
+  ffff80000e4c36e8 (regulator_ww_class_acquire){+.+.}-{0:0}, at: regulator_enable+0x34/0x80
 
-Link: https://gitlab.freedesktop.org/libinput/libinput/-/issues/825
-Reported-by: Akito <the@akito.ooo>
-Tested-by: Akito <the@akito.ooo>
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  which lock already depends on the new lock.
+
+  ...
+
+   Possible unsafe locking scenario:
+
+         CPU0                    CPU1
+         ----                    ----
+    lock(regulator_ww_class_acquire);
+                                 lock(regulator_list_mutex);
+                                 lock(regulator_ww_class_acquire);
+    lock(regulator_list_mutex);
+
+   *** DEADLOCK ***
+
+just before probe of a Qualcomm UFS controller (occasionally) deadlocks
+when enabling one of its regulators.
+
+Fixes: 9243a195be7a ("regulator: core: Change voltage setting path")
+Fixes: f8702f9e4aa7 ("regulator: core: Use ww_mutex for regulators locking")
+Cc: stable@vger.kernel.org      # 5.0
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20221215104646.19818-1-johan+linaro@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hid/hid-multitouch.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/regulator/core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-multitouch.c b/drivers/hid/hid-multitouch.c
-index a78ce16d4782..ea8c52f0aa78 100644
---- a/drivers/hid/hid-multitouch.c
-+++ b/drivers/hid/hid-multitouch.c
-@@ -1912,6 +1912,10 @@ static const struct hid_device_id mt_devices[] = {
- 		HID_DEVICE(BUS_I2C, HID_GROUP_MULTITOUCH_WIN_8,
- 			USB_VENDOR_ID_ELAN, 0x313a) },
- 
-+	{ .driver_data = MT_CLS_WIN_8_FORCE_MULTI_INPUT,
-+		HID_DEVICE(BUS_I2C, HID_GROUP_MULTITOUCH_WIN_8,
-+			USB_VENDOR_ID_ELAN, 0x3148) },
-+
- 	/* Elitegroup panel */
- 	{ .driver_data = MT_CLS_SERIAL,
- 		MT_USB_DEVICE(USB_VENDOR_ID_ELITEGROUP,
--- 
-2.35.1
-
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -980,7 +980,7 @@ static int drms_uA_update(struct regulat
+ 		/* get input voltage */
+ 		input_uV = 0;
+ 		if (rdev->supply)
+-			input_uV = regulator_get_voltage(rdev->supply);
++			input_uV = regulator_get_voltage_rdev(rdev->supply->rdev);
+ 		if (input_uV <= 0)
+ 			input_uV = rdev->constraints->input_uV;
+ 		if (input_uV <= 0) {
 
 
