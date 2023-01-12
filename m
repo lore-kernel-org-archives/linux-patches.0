@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0EFC79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:27:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EB74C433EF;
-	Thu, 12 Jan 2023 14:27:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE0B379C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:27:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 596CBC433EF;
+	Thu, 12 Jan 2023 14:27:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533626;
-	bh=l1wuZT8MGIVYYTFKEkjyAeCihuBJ63AUnrtE5WvRH04=;
+	s=korg; t=1673533629;
+	bh=iTuO9QfbW5dOdxV+MuKHqJvpops+DbnddqpcwT5+1hA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nQ4taH0O2vLSTxZlxaNLeN+5HcLMxun71um5BK0l6pLnUaewcQcFIQuZtguZR1S73
-	 cv2Anoe8R3FfRoMdFGzXlTsSz5Kp37Ye7hZoX/2yQRnx/TC5eScrqdx6f0yr9AOXgS
-	 cnroXQ+1iVj5aNWcK9/dwJB91nXZUFqtTRjSjtMQ=
+	b=KsonDskccly5qM/4LjNzpsAdVr6ZMcdJtIlg4sIjSeW8ZDGG0D9eTyS7/uHSKDeLM
+	 9n0hTYCm3fOvjcjOXJzN+K/+f7Rilpe1ydpaTeS/Q2JkcHSkJKiabpZ1sRCsaaGD0v
+	 EI14xOp3az6C6qeQk9SOLhGZKVYGL3dQE2gDdklw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	syzbot+9ca7a12fd736d93e0232@syzkaller.appspotmail.com,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 500/783] ASoC: codecs: rt298: Add quirk for KBL-R RVP platform
-Date: Thu, 12 Jan 2023 14:53:36 +0100
-Message-Id: <20230112135547.388978326@linuxfoundation.org>
+Subject: [PATCH 5.10 533/783] media: si470x: Fix use-after-free in si470x_int_in_callback()
+Date: Thu, 12 Jan 2023 14:54:09 +0100
+Message-Id: <20230112135548.916611807@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,40 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit 953dbd1cef18ce9ac0d69c1bd735b929fe52a17e ]
+[ Upstream commit 7d21e0b1b41b21d628bf2afce777727bd4479aa5 ]
 
-KBL-R RVP platforms also use combojack, so we need to enable that
-configuration for them.
+syzbot reported use-after-free in si470x_int_in_callback() [1].  This
+indicates that urb->context, which contains struct si470x_device
+object, is freed when si470x_int_in_callback() is called.
 
-Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://lore.kernel.org/r/20221010121955.718168-4-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+The cause of this issue is that si470x_int_in_callback() is called for
+freed urb.
+
+si470x_usb_driver_probe() calls si470x_start_usb(), which then calls
+usb_submit_urb() and si470x_start().  If si470x_start_usb() fails,
+si470x_usb_driver_probe() doesn't kill urb, but it just frees struct
+si470x_device object, as depicted below:
+
+si470x_usb_driver_probe()
+  ...
+  si470x_start_usb()
+    ...
+    usb_submit_urb()
+    retval = si470x_start()
+    return retval
+  if (retval < 0)
+    free struct si470x_device object, but don't kill urb
+
+This patch fixes this issue by killing urb when si470x_start_usb()
+fails and urb is submitted.  If si470x_start_usb() fails and urb is
+not submitted, i.e. submitting usb fails, it just frees struct
+si470x_device object.
+
+Reported-by: syzbot+9ca7a12fd736d93e0232@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=94ed6dddd5a55e90fd4bab942aa4bb297741d977 [1]
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt298.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/media/radio/si470x/radio-si470x-usb.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/codecs/rt298.c b/sound/soc/codecs/rt298.c
-index dc0273a5a11f..1ca06213e3a3 100644
---- a/sound/soc/codecs/rt298.c
-+++ b/sound/soc/codecs/rt298.c
-@@ -1168,6 +1168,13 @@ static const struct dmi_system_id force_combo_jack_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Geminilake")
- 		}
- 	},
-+	{
-+		.ident = "Intel Kabylake R RVP",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Kabylake Client platform")
-+		}
-+	},
- 	{ }
- };
+diff --git a/drivers/media/radio/si470x/radio-si470x-usb.c b/drivers/media/radio/si470x/radio-si470x-usb.c
+index 3f8634a46573..1365ae732b79 100644
+--- a/drivers/media/radio/si470x/radio-si470x-usb.c
++++ b/drivers/media/radio/si470x/radio-si470x-usb.c
+@@ -733,8 +733,10 @@ static int si470x_usb_driver_probe(struct usb_interface *intf,
  
+ 	/* start radio */
+ 	retval = si470x_start_usb(radio);
+-	if (retval < 0)
++	if (retval < 0 && !radio->int_in_running)
+ 		goto err_buf;
++	else if (retval < 0)	/* in case of radio->int_in_running == 1 */
++		goto err_all;
+ 
+ 	/* set initial frequency */
+ 	si470x_set_freq(radio, 87.5 * FREQ_MUL); /* available in all regions */
 -- 
 2.35.1
 
