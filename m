@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4836C79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:24:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A19C433EF;
-	Thu, 12 Jan 2023 14:24:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BED79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:24:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2BFBC433EF;
+	Thu, 12 Jan 2023 14:24:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533442;
-	bh=PQkAW1FznKaIgtAJtDkVLEq6tnqvBy19QUU6ARi4sKU=;
+	s=korg; t=1673533445;
+	bh=ZoG+g9iE0n/fqDxGtdZ1wzfeqZvxk/HDdpwsr1ZI1uU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oTLi2b16CBhIrnNZ+ITqqfY6oRTsnosOlY97Ar5o1W4ZltkmgcuiCacnCQBwsjewW
-	 6IS6xzZwKUETszKQ7Up0oMfgwXHzC2oZ2knFFlWr0PsheTK3HfcFJlOCdVhZ94Y3wo
-	 y15j3tpqGgDc/W4XKO4G5Zi1k4PAZQh6pTTqrxAk=
+	b=X1dFGa8eJNlTSzA8hJB+cDenVmTdBTYqv/vxO9+hGsIaWopXNfaV6+IIPKOhBNrro
+	 w//9zzi/5dPFgv+i5bTVf3w7LDjkWPVbQMAT0+P4q5Q3lH33+j2rmbK+IzLGT26B5G
+	 4j1hSbV/rC6TjxliC/TcJpy+u78Po69yupMoCMHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 480/783] rxrpc: Fix missing unlock in rxrpc_do_sendmsg()
-Date: Thu, 12 Jan 2023 14:53:16 +0100
-Message-Id: <20230112135546.448450297@linuxfoundation.org>
+Subject: [PATCH 5.10 481/783] myri10ge: Fix an error handling path in myri10ge_probe()
+Date: Thu, 12 Jan 2023 14:53:17 +0100
+Message-Id: <20230112135546.497047190@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -37,45 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 4feb2c44629e6f9b459b41a5a60491069d346a95 ]
+[ Upstream commit d83b950d44d2982c0e62e3d81b0f35ab09431008 ]
 
-One of the error paths in rxrpc_do_sendmsg() doesn't unlock the call mutex
-before returning.  Fix it to do this.
+Some memory allocated in myri10ge_probe_slices() is not released in the
+error handling path of myri10ge_probe().
 
-Note that this still doesn't get rid of the checker warning:
+Add the corresponding kfree(), as already done in the remove function.
 
-   ../net/rxrpc/sendmsg.c:617:5: warning: context imbalance in 'rxrpc_do_sendmsg' - wrong count at exit
-
-I think the interplay between the socket lock and the call's user_mutex may
-be too complicated for checker to analyse, especially as
-rxrpc_new_client_call_for_sendmsg(), which it calls, returns with the
-call's user_mutex if successful but unconditionally drops the socket lock.
-
-Fixes: e754eba685aa ("rxrpc: Provide a cmsg to specify the amount of Tx data for a call")
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
+Fixes: 0dcffac1a329 ("myri10ge: add multislices support")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rxrpc/sendmsg.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/myricom/myri10ge/myri10ge.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/rxrpc/sendmsg.c b/net/rxrpc/sendmsg.c
-index eef3c14fd1c1..a670553159ab 100644
---- a/net/rxrpc/sendmsg.c
-+++ b/net/rxrpc/sendmsg.c
-@@ -733,7 +733,7 @@ int rxrpc_do_sendmsg(struct rxrpc_sock *rx, struct msghdr *msg, size_t len)
- 			if (call->tx_total_len != -1 ||
- 			    call->tx_pending ||
- 			    call->tx_top != 0)
--				goto error_put;
-+				goto out_put_unlock;
- 			call->tx_total_len = p.call.tx_total_len;
- 		}
- 	}
+diff --git a/drivers/net/ethernet/myricom/myri10ge/myri10ge.c b/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
+index 1664e9184c9c..5a1ed4818baa 100644
+--- a/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
++++ b/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
+@@ -3920,6 +3920,7 @@ static int myri10ge_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	myri10ge_free_slices(mgp);
+ 
+ abort_with_firmware:
++	kfree(mgp->msix_vectors);
+ 	myri10ge_dummy_rdma(mgp, 0);
+ 
+ abort_with_ioremap:
 -- 
 2.35.1
 
