@@ -1,27 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCB9746A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:03:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 407E9C433F1;
-	Thu, 12 Jan 2023 14:03:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6391746A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:03:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 319FDC433EF;
+	Thu, 12 Jan 2023 14:03:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532213;
-	bh=Mxf9dpy4LwzoPvNpZ6SaPwVGCGMGGxJvAKvGMn/wKYQ=;
+	s=korg; t=1673532216;
+	bh=2ONSy7Qz/S4ya/YPlKdd00Np+Ynz3y981BINXLYkj2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VA0VlTa4gzMTAwFxhb4uKrtOtcc1YexGOzfQl9P0jrbpvuy7WwbjtmEqkKk0TJFnB
-	 pZXtESu+7c/c9tSxTP+wtaY1k2n6vwHCGNSp+nA+sQbtrAcDdJKbKEBuntPl8K/UTE
-	 a8pfMg1oXz7FA+ykEv7byr6JLvG0arTEry0wnXlU=
+	b=1aABM7OVwP0L1WK/qh428i17TE9IAahaw4gYKscA96A0XjtWy33J1jMmpgYSTbe+8
+	 40+Bfi0pKmSRbloc/Bi9t/U1S4MMNDyqMWOEYJIPAIY3xba02HgJ4dBFCjZn+4r9qt
+	 sv1/Re9YiHY07YIcASADX72eJxBNDyAq646FuvAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Juergen Gross <jgross@suse.com>,
+	Akinobu Mita <akinobu.mita@gmail.com>,
+	Zhao Gongyi <zhaogongyi@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Oscar Salvador <osalvador@suse.de>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 088/783] x86/xen: Fix memory leak in xen_smp_intr_init{_pv}()
-Date: Thu, 12 Jan 2023 14:46:44 +0100
-Message-Id: <20230112135528.256660030@linuxfoundation.org>
+Subject: [PATCH 5.10 071/783] libfs: add DEFINE_SIMPLE_ATTRIBUTE_SIGNED for signed value
+Date: Thu, 12 Jan 2023 14:46:27 +0100
+Message-Id: <20230112135527.446060191@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,176 +44,137 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Akinobu Mita <akinobu.mita@gmail.com>
 
-[ Upstream commit 69143f60868b3939ddc89289b29db593b647295e ]
+[ Upstream commit 2e41f274f9aa71cdcc69dc1f26a3f9304a651804 ]
 
-These local variables @{resched|pmu|callfunc...}_name saves the new
-string allocated by kasprintf(), and when bind_{v}ipi_to_irqhandler()
-fails, it goes to the @fail tag, and calls xen_smp_intr_free{_pv}() to
-free resource, however the new string is not saved, which cause a memory
-leak issue. fix it.
+Patch series "fix error when writing negative value to simple attribute
+files".
 
-Fixes: 9702785a747a ("i386: move xen")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20221123155858.11382-2-xiujianfeng@huawei.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+The simple attribute files do not accept a negative value since the commit
+488dac0c9237 ("libfs: fix error cast of negative value in
+simple_attr_write()"), but some attribute files want to accept a negative
+value.
+
+This patch (of 3):
+
+The simple attribute files do not accept a negative value since the commit
+488dac0c9237 ("libfs: fix error cast of negative value in
+simple_attr_write()"), so we have to use a 64-bit value to write a
+negative value.
+
+This adds DEFINE_SIMPLE_ATTRIBUTE_SIGNED for a signed value.
+
+Link: https://lkml.kernel.org/r/20220919172418.45257-1-akinobu.mita@gmail.com
+Link: https://lkml.kernel.org/r/20220919172418.45257-2-akinobu.mita@gmail.com
+Fixes: 488dac0c9237 ("libfs: fix error cast of negative value in simple_attr_write()")
+Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
+Reported-by: Zhao Gongyi <zhaogongyi@huawei.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Rafael J. Wysocki <rafael@kernel.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Wei Yongjun <weiyongjun1@huawei.com>
+Cc: Yicong Yang <yangyicong@hisilicon.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/smp.c    | 24 ++++++++++++------------
- arch/x86/xen/smp_pv.c | 12 ++++++------
- 2 files changed, 18 insertions(+), 18 deletions(-)
+ fs/libfs.c         | 22 +++++++++++++++++++---
+ include/linux/fs.h | 12 ++++++++++--
+ 2 files changed, 29 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/xen/smp.c b/arch/x86/xen/smp.c
-index c1b2f764b29a..cdec892b28e2 100644
---- a/arch/x86/xen/smp.c
-+++ b/arch/x86/xen/smp.c
-@@ -32,30 +32,30 @@ static irqreturn_t xen_reschedule_interrupt(int irq, void *dev_id)
+diff --git a/fs/libfs.c b/fs/libfs.c
+index 7124c2e8df2f..aa0fbd720409 100644
+--- a/fs/libfs.c
++++ b/fs/libfs.c
+@@ -955,8 +955,8 @@ ssize_t simple_attr_read(struct file *file, char __user *buf,
+ EXPORT_SYMBOL_GPL(simple_attr_read);
  
- void xen_smp_intr_free(unsigned int cpu)
+ /* interpret the buffer as a number to call the set function with */
+-ssize_t simple_attr_write(struct file *file, const char __user *buf,
+-			  size_t len, loff_t *ppos)
++static ssize_t simple_attr_write_xsigned(struct file *file, const char __user *buf,
++			  size_t len, loff_t *ppos, bool is_signed)
  {
-+	kfree(per_cpu(xen_resched_irq, cpu).name);
-+	per_cpu(xen_resched_irq, cpu).name = NULL;
- 	if (per_cpu(xen_resched_irq, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_resched_irq, cpu).irq, NULL);
- 		per_cpu(xen_resched_irq, cpu).irq = -1;
--		kfree(per_cpu(xen_resched_irq, cpu).name);
--		per_cpu(xen_resched_irq, cpu).name = NULL;
- 	}
-+	kfree(per_cpu(xen_callfunc_irq, cpu).name);
-+	per_cpu(xen_callfunc_irq, cpu).name = NULL;
- 	if (per_cpu(xen_callfunc_irq, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_callfunc_irq, cpu).irq, NULL);
- 		per_cpu(xen_callfunc_irq, cpu).irq = -1;
--		kfree(per_cpu(xen_callfunc_irq, cpu).name);
--		per_cpu(xen_callfunc_irq, cpu).name = NULL;
- 	}
-+	kfree(per_cpu(xen_debug_irq, cpu).name);
-+	per_cpu(xen_debug_irq, cpu).name = NULL;
- 	if (per_cpu(xen_debug_irq, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_debug_irq, cpu).irq, NULL);
- 		per_cpu(xen_debug_irq, cpu).irq = -1;
--		kfree(per_cpu(xen_debug_irq, cpu).name);
--		per_cpu(xen_debug_irq, cpu).name = NULL;
- 	}
-+	kfree(per_cpu(xen_callfuncsingle_irq, cpu).name);
-+	per_cpu(xen_callfuncsingle_irq, cpu).name = NULL;
- 	if (per_cpu(xen_callfuncsingle_irq, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_callfuncsingle_irq, cpu).irq,
- 				       NULL);
- 		per_cpu(xen_callfuncsingle_irq, cpu).irq = -1;
--		kfree(per_cpu(xen_callfuncsingle_irq, cpu).name);
--		per_cpu(xen_callfuncsingle_irq, cpu).name = NULL;
- 	}
+ 	struct simple_attr *attr;
+ 	unsigned long long val;
+@@ -977,7 +977,10 @@ ssize_t simple_attr_write(struct file *file, const char __user *buf,
+ 		goto out;
+ 
+ 	attr->set_buf[size] = '\0';
+-	ret = kstrtoull(attr->set_buf, 0, &val);
++	if (is_signed)
++		ret = kstrtoll(attr->set_buf, 0, &val);
++	else
++		ret = kstrtoull(attr->set_buf, 0, &val);
+ 	if (ret)
+ 		goto out;
+ 	ret = attr->set(attr->data, val);
+@@ -987,8 +990,21 @@ ssize_t simple_attr_write(struct file *file, const char __user *buf,
+ 	mutex_unlock(&attr->mutex);
+ 	return ret;
+ }
++
++ssize_t simple_attr_write(struct file *file, const char __user *buf,
++			  size_t len, loff_t *ppos)
++{
++	return simple_attr_write_xsigned(file, buf, len, ppos, false);
++}
+ EXPORT_SYMBOL_GPL(simple_attr_write);
+ 
++ssize_t simple_attr_write_signed(struct file *file, const char __user *buf,
++			  size_t len, loff_t *ppos)
++{
++	return simple_attr_write_xsigned(file, buf, len, ppos, true);
++}
++EXPORT_SYMBOL_GPL(simple_attr_write_signed);
++
+ /**
+  * generic_fh_to_dentry - generic helper for the fh_to_dentry export operation
+  * @sb:		filesystem to do the file handle conversion on
+diff --git a/include/linux/fs.h b/include/linux/fs.h
+index ebfc0b2b4969..9a477e537361 100644
+--- a/include/linux/fs.h
++++ b/include/linux/fs.h
+@@ -3345,7 +3345,7 @@ void simple_transaction_set(struct file *file, size_t n);
+  * All attributes contain a text representation of a numeric value
+  * that are accessed with the get() and set() functions.
+  */
+-#define DEFINE_SIMPLE_ATTRIBUTE(__fops, __get, __set, __fmt)		\
++#define DEFINE_SIMPLE_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, __is_signed)	\
+ static int __fops ## _open(struct inode *inode, struct file *file)	\
+ {									\
+ 	__simple_attr_check_format(__fmt, 0ull);			\
+@@ -3356,10 +3356,16 @@ static const struct file_operations __fops = {				\
+ 	.open	 = __fops ## _open,					\
+ 	.release = simple_attr_release,					\
+ 	.read	 = simple_attr_read,					\
+-	.write	 = simple_attr_write,					\
++	.write	 = (__is_signed) ? simple_attr_write_signed : simple_attr_write,	\
+ 	.llseek	 = generic_file_llseek,					\
  }
  
-@@ -65,6 +65,7 @@ int xen_smp_intr_init(unsigned int cpu)
- 	char *resched_name, *callfunc_name, *debug_name;
- 
- 	resched_name = kasprintf(GFP_KERNEL, "resched%d", cpu);
-+	per_cpu(xen_resched_irq, cpu).name = resched_name;
- 	rc = bind_ipi_to_irqhandler(XEN_RESCHEDULE_VECTOR,
- 				    cpu,
- 				    xen_reschedule_interrupt,
-@@ -74,9 +75,9 @@ int xen_smp_intr_init(unsigned int cpu)
- 	if (rc < 0)
- 		goto fail;
- 	per_cpu(xen_resched_irq, cpu).irq = rc;
--	per_cpu(xen_resched_irq, cpu).name = resched_name;
- 
- 	callfunc_name = kasprintf(GFP_KERNEL, "callfunc%d", cpu);
-+	per_cpu(xen_callfunc_irq, cpu).name = callfunc_name;
- 	rc = bind_ipi_to_irqhandler(XEN_CALL_FUNCTION_VECTOR,
- 				    cpu,
- 				    xen_call_function_interrupt,
-@@ -86,10 +87,10 @@ int xen_smp_intr_init(unsigned int cpu)
- 	if (rc < 0)
- 		goto fail;
- 	per_cpu(xen_callfunc_irq, cpu).irq = rc;
--	per_cpu(xen_callfunc_irq, cpu).name = callfunc_name;
- 
- 	if (!xen_fifo_events) {
- 		debug_name = kasprintf(GFP_KERNEL, "debug%d", cpu);
-+		per_cpu(xen_debug_irq, cpu).name = debug_name;
- 		rc = bind_virq_to_irqhandler(VIRQ_DEBUG, cpu,
- 					     xen_debug_interrupt,
- 					     IRQF_PERCPU | IRQF_NOBALANCING,
-@@ -97,10 +98,10 @@ int xen_smp_intr_init(unsigned int cpu)
- 		if (rc < 0)
- 			goto fail;
- 		per_cpu(xen_debug_irq, cpu).irq = rc;
--		per_cpu(xen_debug_irq, cpu).name = debug_name;
- 	}
- 
- 	callfunc_name = kasprintf(GFP_KERNEL, "callfuncsingle%d", cpu);
-+	per_cpu(xen_callfuncsingle_irq, cpu).name = callfunc_name;
- 	rc = bind_ipi_to_irqhandler(XEN_CALL_FUNCTION_SINGLE_VECTOR,
- 				    cpu,
- 				    xen_call_function_single_interrupt,
-@@ -110,7 +111,6 @@ int xen_smp_intr_init(unsigned int cpu)
- 	if (rc < 0)
- 		goto fail;
- 	per_cpu(xen_callfuncsingle_irq, cpu).irq = rc;
--	per_cpu(xen_callfuncsingle_irq, cpu).name = callfunc_name;
- 
- 	return 0;
- 
-diff --git a/arch/x86/xen/smp_pv.c b/arch/x86/xen/smp_pv.c
-index 35b6d15d874d..64873937cd1d 100644
---- a/arch/x86/xen/smp_pv.c
-+++ b/arch/x86/xen/smp_pv.c
-@@ -98,18 +98,18 @@ asmlinkage __visible void cpu_bringup_and_idle(void)
- 
- void xen_smp_intr_free_pv(unsigned int cpu)
++#define DEFINE_SIMPLE_ATTRIBUTE(__fops, __get, __set, __fmt)		\
++	DEFINE_SIMPLE_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, false)
++
++#define DEFINE_SIMPLE_ATTRIBUTE_SIGNED(__fops, __get, __set, __fmt)	\
++	DEFINE_SIMPLE_ATTRIBUTE_XSIGNED(__fops, __get, __set, __fmt, true)
++
+ static inline __printf(1, 2)
+ void __simple_attr_check_format(const char *fmt, ...)
  {
-+	kfree(per_cpu(xen_irq_work, cpu).name);
-+	per_cpu(xen_irq_work, cpu).name = NULL;
- 	if (per_cpu(xen_irq_work, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_irq_work, cpu).irq, NULL);
- 		per_cpu(xen_irq_work, cpu).irq = -1;
--		kfree(per_cpu(xen_irq_work, cpu).name);
--		per_cpu(xen_irq_work, cpu).name = NULL;
- 	}
+@@ -3374,6 +3380,8 @@ ssize_t simple_attr_read(struct file *file, char __user *buf,
+ 			 size_t len, loff_t *ppos);
+ ssize_t simple_attr_write(struct file *file, const char __user *buf,
+ 			  size_t len, loff_t *ppos);
++ssize_t simple_attr_write_signed(struct file *file, const char __user *buf,
++				 size_t len, loff_t *ppos);
  
-+	kfree(per_cpu(xen_pmu_irq, cpu).name);
-+	per_cpu(xen_pmu_irq, cpu).name = NULL;
- 	if (per_cpu(xen_pmu_irq, cpu).irq >= 0) {
- 		unbind_from_irqhandler(per_cpu(xen_pmu_irq, cpu).irq, NULL);
- 		per_cpu(xen_pmu_irq, cpu).irq = -1;
--		kfree(per_cpu(xen_pmu_irq, cpu).name);
--		per_cpu(xen_pmu_irq, cpu).name = NULL;
- 	}
- }
- 
-@@ -119,6 +119,7 @@ int xen_smp_intr_init_pv(unsigned int cpu)
- 	char *callfunc_name, *pmu_name;
- 
- 	callfunc_name = kasprintf(GFP_KERNEL, "irqwork%d", cpu);
-+	per_cpu(xen_irq_work, cpu).name = callfunc_name;
- 	rc = bind_ipi_to_irqhandler(XEN_IRQ_WORK_VECTOR,
- 				    cpu,
- 				    xen_irq_work_interrupt,
-@@ -128,10 +129,10 @@ int xen_smp_intr_init_pv(unsigned int cpu)
- 	if (rc < 0)
- 		goto fail;
- 	per_cpu(xen_irq_work, cpu).irq = rc;
--	per_cpu(xen_irq_work, cpu).name = callfunc_name;
- 
- 	if (is_xen_pmu) {
- 		pmu_name = kasprintf(GFP_KERNEL, "pmu%d", cpu);
-+		per_cpu(xen_pmu_irq, cpu).name = pmu_name;
- 		rc = bind_virq_to_irqhandler(VIRQ_XENPMU, cpu,
- 					     xen_pmu_irq_handler,
- 					     IRQF_PERCPU|IRQF_NOBALANCING,
-@@ -139,7 +140,6 @@ int xen_smp_intr_init_pv(unsigned int cpu)
- 		if (rc < 0)
- 			goto fail;
- 		per_cpu(xen_pmu_irq, cpu).irq = rc;
--		per_cpu(xen_pmu_irq, cpu).name = pmu_name;
- 	}
- 
- 	return 0;
+ struct ctl_table;
+ int proc_nr_files(struct ctl_table *table, int write,
 -- 
 2.35.1
 
