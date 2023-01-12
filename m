@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED538749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:09:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54755C433D2;
-	Thu, 12 Jan 2023 14:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E2B749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:09:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CF23C433EF;
+	Thu, 12 Jan 2023 14:09:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532558;
-	bh=m1IxbLrpI7W2Q1QS3dv28YZB4dwEg8us00arkpoiCwk=;
+	s=korg; t=1673532561;
+	bh=7qLmqE8QTVKMXtI49wmANbW9/uUd5pcOBlNAulz7ZJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AsQVMkXxXLVsLAUKzFWxGYpc0Jejvt/eXESIeHig5zGUQAIaCc3ItgQWnP+gZJOwc
-	 Kvn7TenQ7IjHd5HJx+Ry0dByMQIsFD1n/Q2Lu7Qy5lgpXHadAuJ4CjgolTl/k5BtQk
-	 O4yED+bhde7tYBgYfGgIjg8Tyr2GjAqVkxuhwpKc=
+	b=v/RrIsIvUv2jK9+IclnRLiw43cNJT0zWa8fF6OBdZSq4eL1YWdyDp33hw8vhgGvz0
+	 AH2ZjElC80l+uj8Yno7OSWb8w485fVbz7KxBCZ3mP0aZmycySal9ZpU5ocjK/A06pp
+	 kqPrEkbxms7wuwDGnIcMVoLw4B0PtqALsVHVnfOM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Jay Vosburgh <jay.vosburgh@canonical.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Xiaomeng Tong <xiam0nd.tong@gmail.com>,
+	=?UTF-8?q?Christoph=20B=C3=B6hmwalder?= <christoph.boehmwalder@linbit.com>,
+	Lars Ellenberg <lars.ellenberg@linbit.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 200/783] bonding: uninitialized variable in bond_miimon_inspect()
-Date: Thu, 12 Jan 2023 14:48:36 +0100
-Message-Id: <20230112135533.607627695@linuxfoundation.org>
+Subject: [PATCH 5.10 172/783] drbd: fix an invalid memory access caused by incorrect use of list iterator
+Date: Thu, 12 Jan 2023 14:48:08 +0100
+Message-Id: <20230112135532.297254798@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -37,39 +37,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Xiaomeng Tong <xiam0nd.tong@gmail.com>
 
-[ Upstream commit e5214f363dabca240446272dac54d404501ad5e5 ]
+[ Upstream commit ae4d37b5df749926891583d42a6801b5da11e3c1 ]
 
-The "ignore_updelay" variable needs to be initialized to false.
+The bug is here:
+	idr_remove(&connection->peer_devices, vnr);
 
-Fixes: f8a65ab2f3ff ("bonding: fix link recovery in mode 2 when updelay is nonzero")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
-Link: https://lore.kernel.org/r/Y4SWJlh3ohJ6EPTL@kili
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+If the previous for_each_connection() don't exit early (no goto hit
+inside the loop), the iterator 'connection' after the loop will be a
+bogus pointer to an invalid structure object containing the HEAD
+(&resource->connections). As a result, the use of 'connection' above
+will lead to a invalid memory access (including a possible invalid free
+as idr_remove could call free_layer).
+
+The original intention should have been to remove all peer_devices,
+but the following lines have already done the work. So just remove
+this line and the unneeded label, to fix this bug.
+
+Cc: stable@vger.kernel.org
+Fixes: c06ece6ba6f1b ("drbd: Turn connection->volumes into connection->peer_devices")
+Signed-off-by: Xiaomeng Tong <xiam0nd.tong@gmail.com>
+Reviewed-by: Christoph Böhmwalder <christoph.boehmwalder@linbit.com>
+Reviewed-by: Lars Ellenberg <lars.ellenberg@linbit.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/block/drbd/drbd_main.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index e66092518fdd..c40b92f8d16b 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2393,10 +2393,10 @@ static int bond_slave_info_query(struct net_device *bond_dev, struct ifslave *in
- /* called with rcu_read_lock() */
- static int bond_miimon_inspect(struct bonding *bond)
- {
-+	bool ignore_updelay = false;
- 	int link_state, commit = 0;
- 	struct list_head *iter;
- 	struct slave *slave;
--	bool ignore_updelay;
+diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
+index 51450f7c81af..420bdaf8c356 100644
+--- a/drivers/block/drbd/drbd_main.c
++++ b/drivers/block/drbd/drbd_main.c
+@@ -2819,7 +2819,7 @@ enum drbd_ret_code drbd_create_device(struct drbd_config_context *adm_ctx, unsig
  
- 	if (BOND_MODE(bond) == BOND_MODE_ACTIVEBACKUP) {
- 		ignore_updelay = !rcu_dereference(bond->curr_active_slave);
+ 	if (init_submitter(device)) {
+ 		err = ERR_NOMEM;
+-		goto out_idr_remove_vol;
++		goto out_idr_remove_from_resource;
+ 	}
+ 
+ 	add_disk(disk);
+@@ -2836,8 +2836,6 @@ enum drbd_ret_code drbd_create_device(struct drbd_config_context *adm_ctx, unsig
+ 	drbd_debugfs_device_add(device);
+ 	return NO_ERROR;
+ 
+-out_idr_remove_vol:
+-	idr_remove(&connection->peer_devices, vnr);
+ out_idr_remove_from_resource:
+ 	for_each_connection_safe(connection, n, resource) {
+ 		peer_device = idr_remove(&connection->peer_devices, vnr);
 -- 
 2.35.1
 
