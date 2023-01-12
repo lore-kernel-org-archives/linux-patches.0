@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC9C8746A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 13:56:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19531C433EF;
-	Thu, 12 Jan 2023 13:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABEA2746A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 13:56:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29ADBC433D2;
+	Thu, 12 Jan 2023 13:56:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673531814;
-	bh=r71t3A8yZyO9U0ZRvIUSiV52p6kKnJohpgNzU8tDcIs=;
+	s=korg; t=1673531817;
+	bh=exXC12YeHw3xmfqn0iAaKjjtLRqa/stXVjVuPraFu8I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wFrbBJNG3uAHEJjYqsyMHp7lNBP4sLmX2StOFVfq2DxA8ZjXVqh6nmTDOLoUYcIld
-	 g0vPmshz/4Gir4ANRkRL/4R+Lt8cnQBFDDhzOo66UQOpe14rJ7mO7wDqZD/gi66wj4
-	 Az1/eUIBg4Lh+Yg6wkV4wfBLQrc5Lf+uCxLY0nk4=
+	b=Bm0rltWzUEcK/i+mcSWyzHKZguy9F9i89mBMeMog5tZDnA3MTsx1jQLQWz0ecZ3rZ
+	 mEKYi3RHoEk27SVfaX2mIj9zqAR+HiXfz9g/NwzPl3sGQweqRvI09EDIoLyCvNX4iW
+	 JfUfCywdUm3BlSpz7XKFIr0GbfoQOsHAU6m/1DW0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kyle Huey <me@kylehuey.com>,
 	Dave Hansen <dave.hansen@linux.intel.com>
-Subject: [PATCH 6.1 06/10] x86/fpu: Emulate XRSTORs behavior if the xfeatures PKRU bit is not set
-Date: Thu, 12 Jan 2023 14:56:27 +0100
-Message-Id: <20230112135327.251899789@linuxfoundation.org>
+Subject: [PATCH 6.1 07/10] selftests/vm/pkeys: Add a regression test for setting PKRU through ptrace
+Date: Thu, 12 Jan 2023 14:56:28 +0100
+Message-Id: <20230112135327.286565304@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135326.981869724@linuxfoundation.org>
 References: <20230112135326.981869724@linuxfoundation.org>
@@ -36,74 +36,198 @@ Content-Transfer-Encoding: 8bit
 
 From: Kyle Huey <me@kylehuey.com>
 
-commit d7e5aceace514a2b1b3ca3dc44f93f1704766ca7 upstream.
+commit 6ea25770b043c7997ab21d1ce95ba5de4d3d85d9 upstream.
 
-The hardware XRSTOR instruction resets the PKRU register to its hardware
-init value (namely 0) if the PKRU bit is not set in the xfeatures mask.
-Emulating that here restores the pre-5.14 behavior for PTRACE_SET_REGSET
-with NT_X86_XSTATE, and makes sigreturn (which still uses XRSTOR) and
-ptrace behave identically. KVM has never used XRSTOR and never had this
-behavior, so KVM opts-out of this emulation by passing a NULL pkru pointer
-to copy_uabi_to_xstate().
+This tests PTRACE_SETREGSET with NT_X86_XSTATE modifying PKRU directly and
+removing the PKRU bit from XSTATE_BV.
 
-Fixes: e84ba47e313d ("x86/fpu: Hook up PKRU into ptrace()")
 Signed-off-by: Kyle Huey <me@kylehuey.com>
 Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Link: https://lore.kernel.org/all/20221115230932.7126-6-khuey%40kylehuey.com
+Link: https://lore.kernel.org/all/20221115230932.7126-7-khuey%40kylehuey.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/fpu/core.c   |    8 ++++++++
- arch/x86/kernel/fpu/xstate.c |   15 ++++++++++++++-
- 2 files changed, 22 insertions(+), 1 deletion(-)
+ tools/testing/selftests/vm/pkey-x86.h        |   12 ++
+ tools/testing/selftests/vm/protection_keys.c |  131 ++++++++++++++++++++++++++-
+ 2 files changed, 141 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/fpu/core.c
-+++ b/arch/x86/kernel/fpu/core.c
-@@ -404,6 +404,14 @@ int fpu_copy_uabi_to_guest_fpstate(struc
- 	if (ustate->xsave.header.xfeatures & ~xcr0)
- 		return -EINVAL;
- 
-+	/*
-+	 * Nullify @vpkru to preserve its current value if PKRU's bit isn't set
-+	 * in the header.  KVM's odd ABI is to leave PKRU untouched in this
-+	 * case (all other components are eventually re-initialized).
-+	 */
-+	if (!(ustate->xsave.header.xfeatures & XFEATURE_MASK_PKRU))
-+		vpkru = NULL;
-+
- 	return copy_uabi_from_kernel_to_xstate(kstate, ustate, vpkru);
+--- a/tools/testing/selftests/vm/pkey-x86.h
++++ b/tools/testing/selftests/vm/pkey-x86.h
+@@ -104,6 +104,18 @@ static inline int cpu_has_pkeys(void)
+ 	return 1;
  }
- EXPORT_SYMBOL_GPL(fpu_copy_uabi_to_guest_fpstate);
---- a/arch/x86/kernel/fpu/xstate.c
-+++ b/arch/x86/kernel/fpu/xstate.c
-@@ -1219,8 +1219,14 @@ static int copy_from_buffer(void *dst, u
-  *	it is harmless.
-  * 2.	When called from ptrace the PKRU register will be restored from the
-  *	thread_struct's pkru field. A pointer to that is passed in @pkru.
-+ *	The kernel will restore it manually, so the XRSTOR behavior that resets
-+ *	the PKRU register to the hardware init value (0) if the corresponding
-+ *	xfeatures bit is not set is emulated here.
-  * 3.	When called from KVM the PKRU register will be restored from the vcpu's
-- *	pkru field. A pointer to that is passed in @pkru.
-+ *	pkru field. A pointer to that is passed in @pkru. KVM hasn't used
-+ *	XRSTOR and hasn't had the PKRU resetting behavior described above. To
-+ *	preserve that KVM behavior, it passes NULL for @pkru if the xfeatures
-+ *	bit is not set.
+ 
++static inline int cpu_max_xsave_size(void)
++{
++	unsigned long XSTATE_CPUID = 0xd;
++	unsigned int eax;
++	unsigned int ebx;
++	unsigned int ecx;
++	unsigned int edx;
++
++	__cpuid_count(XSTATE_CPUID, 0, eax, ebx, ecx, edx);
++	return ecx;
++}
++
+ static inline u32 pkey_bit_position(int pkey)
+ {
+ 	return pkey * PKEY_BITS_PER_PKEY;
+--- a/tools/testing/selftests/vm/protection_keys.c
++++ b/tools/testing/selftests/vm/protection_keys.c
+@@ -18,12 +18,13 @@
+  *	do a plain mprotect() to a mprotect_pkey() area and make sure the pkey sticks
+  *
+  * Compile like this:
+- *	gcc      -o protection_keys    -O2 -g -std=gnu99 -pthread -Wall protection_keys.c -lrt -ldl -lm
+- *	gcc -m32 -o protection_keys_32 -O2 -g -std=gnu99 -pthread -Wall protection_keys.c -lrt -ldl -lm
++ *	gcc -mxsave      -o protection_keys    -O2 -g -std=gnu99 -pthread -Wall protection_keys.c -lrt -ldl -lm
++ *	gcc -mxsave -m32 -o protection_keys_32 -O2 -g -std=gnu99 -pthread -Wall protection_keys.c -lrt -ldl -lm
   */
- static int copy_uabi_to_xstate(struct fpstate *fpstate, const void *kbuf,
- 			       const void __user *ubuf, u32 *pkru)
-@@ -1277,6 +1283,13 @@ static int copy_uabi_to_xstate(struct fp
+ #define _GNU_SOURCE
+ #define __SANE_USERSPACE_TYPES__
+ #include <errno.h>
++#include <linux/elf.h>
+ #include <linux/futex.h>
+ #include <time.h>
+ #include <sys/time.h>
+@@ -1550,6 +1551,129 @@ void test_implicit_mprotect_exec_only_me
+ 	do_not_expect_pkey_fault("plain read on recently PROT_EXEC area");
+ }
  
- 		xpkru = __raw_xsave_addr(xsave, XFEATURE_PKRU);
- 		*pkru = xpkru->pkru;
-+	} else {
++#if defined(__i386__) || defined(__x86_64__)
++void test_ptrace_modifies_pkru(int *ptr, u16 pkey)
++{
++	u32 new_pkru;
++	pid_t child;
++	int status, ret;
++	int pkey_offset = pkey_reg_xstate_offset();
++	size_t xsave_size = cpu_max_xsave_size();
++	void *xsave;
++	u32 *pkey_register;
++	u64 *xstate_bv;
++	struct iovec iov;
++
++	new_pkru = ~read_pkey_reg();
++	/* Don't make PROT_EXEC mappings inaccessible */
++	new_pkru &= ~3;
++
++	child = fork();
++	pkey_assert(child >= 0);
++	dprintf3("[%d] fork() ret: %d\n", getpid(), child);
++	if (!child) {
++		ptrace(PTRACE_TRACEME, 0, 0, 0);
++		/* Stop and allow the tracer to modify PKRU directly */
++		raise(SIGSTOP);
++
 +		/*
-+		 * KVM may pass NULL here to indicate that it does not need
-+		 * PKRU updated.
++		 * need __read_pkey_reg() version so we do not do shadow_pkey_reg
++		 * checking
 +		 */
-+		if (pkru)
-+			*pkru = 0;
- 	}
++		if (__read_pkey_reg() != new_pkru)
++			exit(1);
++
++		/* Stop and allow the tracer to clear XSTATE_BV for PKRU */
++		raise(SIGSTOP);
++
++		if (__read_pkey_reg() != 0)
++			exit(1);
++
++		/* Stop and allow the tracer to examine PKRU */
++		raise(SIGSTOP);
++
++		exit(0);
++	}
++
++	pkey_assert(child == waitpid(child, &status, 0));
++	dprintf3("[%d] waitpid(%d) status: %x\n", getpid(), child, status);
++	pkey_assert(WIFSTOPPED(status) && WSTOPSIG(status) == SIGSTOP);
++
++	xsave = (void *)malloc(xsave_size);
++	pkey_assert(xsave > 0);
++
++	/* Modify the PKRU register directly */
++	iov.iov_base = xsave;
++	iov.iov_len = xsave_size;
++	ret = ptrace(PTRACE_GETREGSET, child, (void *)NT_X86_XSTATE, &iov);
++	pkey_assert(ret == 0);
++
++	pkey_register = (u32 *)(xsave + pkey_offset);
++	pkey_assert(*pkey_register == read_pkey_reg());
++
++	*pkey_register = new_pkru;
++
++	ret = ptrace(PTRACE_SETREGSET, child, (void *)NT_X86_XSTATE, &iov);
++	pkey_assert(ret == 0);
++
++	/* Test that the modification is visible in ptrace before any execution */
++	memset(xsave, 0xCC, xsave_size);
++	ret = ptrace(PTRACE_GETREGSET, child, (void *)NT_X86_XSTATE, &iov);
++	pkey_assert(ret == 0);
++	pkey_assert(*pkey_register == new_pkru);
++
++	/* Execute the tracee */
++	ret = ptrace(PTRACE_CONT, child, 0, 0);
++	pkey_assert(ret == 0);
++
++	/* Test that the tracee saw the PKRU value change */
++	pkey_assert(child == waitpid(child, &status, 0));
++	dprintf3("[%d] waitpid(%d) status: %x\n", getpid(), child, status);
++	pkey_assert(WIFSTOPPED(status) && WSTOPSIG(status) == SIGSTOP);
++
++	/* Test that the modification is visible in ptrace after execution */
++	memset(xsave, 0xCC, xsave_size);
++	ret = ptrace(PTRACE_GETREGSET, child, (void *)NT_X86_XSTATE, &iov);
++	pkey_assert(ret == 0);
++	pkey_assert(*pkey_register == new_pkru);
++
++	/* Clear the PKRU bit from XSTATE_BV */
++	xstate_bv = (u64 *)(xsave + 512);
++	*xstate_bv &= ~(1 << 9);
++
++	ret = ptrace(PTRACE_SETREGSET, child, (void *)NT_X86_XSTATE, &iov);
++	pkey_assert(ret == 0);
++
++	/* Test that the modification is visible in ptrace before any execution */
++	memset(xsave, 0xCC, xsave_size);
++	ret = ptrace(PTRACE_GETREGSET, child, (void *)NT_X86_XSTATE, &iov);
++	pkey_assert(ret == 0);
++	pkey_assert(*pkey_register == 0);
++
++	ret = ptrace(PTRACE_CONT, child, 0, 0);
++	pkey_assert(ret == 0);
++
++	/* Test that the tracee saw the PKRU value go to 0 */
++	pkey_assert(child == waitpid(child, &status, 0));
++	dprintf3("[%d] waitpid(%d) status: %x\n", getpid(), child, status);
++	pkey_assert(WIFSTOPPED(status) && WSTOPSIG(status) == SIGSTOP);
++
++	/* Test that the modification is visible in ptrace after execution */
++	memset(xsave, 0xCC, xsave_size);
++	ret = ptrace(PTRACE_GETREGSET, child, (void *)NT_X86_XSTATE, &iov);
++	pkey_assert(ret == 0);
++	pkey_assert(*pkey_register == 0);
++
++	ret = ptrace(PTRACE_CONT, child, 0, 0);
++	pkey_assert(ret == 0);
++	pkey_assert(child == waitpid(child, &status, 0));
++	dprintf3("[%d] waitpid(%d) status: %x\n", getpid(), child, status);
++	pkey_assert(WIFEXITED(status));
++	pkey_assert(WEXITSTATUS(status) == 0);
++	free(xsave);
++}
++#endif
++
+ void test_mprotect_pkey_on_unsupported_cpu(int *ptr, u16 pkey)
+ {
+ 	int size = PAGE_SIZE;
+@@ -1585,6 +1709,9 @@ void (*pkey_tests[])(int *ptr, u16 pkey)
+ 	test_pkey_syscalls_bad_args,
+ 	test_pkey_alloc_exhaust,
+ 	test_pkey_alloc_free_attach_pkey0,
++#if defined(__i386__) || defined(__x86_64__)
++	test_ptrace_modifies_pkru,
++#endif
+ };
  
- 	/*
+ void run_tests_once(void)
 
 
