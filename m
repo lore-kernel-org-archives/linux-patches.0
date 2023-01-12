@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 160A779C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:20:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50A6CC433EF;
-	Thu, 12 Jan 2023 14:20:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9A279C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:20:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2269BC433D2;
+	Thu, 12 Jan 2023 14:20:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533216;
-	bh=9pFFUg0IgDwx9H9mLeKLwC1kDYtC/pf+jTE5N8Pvr64=;
+	s=korg; t=1673533219;
+	bh=l0YJsElX6GBt25o6kpVSuB7Iw5XqVWFcuYzU4gFsfsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vj/2eP7juDQ7sAMH2eAp1hGGjyFvfaJEzA97J8N217iRSArWFVNfFqdWk34WvqGUM
-	 Th8fQQsaxl1hQJe7vV2+u7vQ7lro4Kf6aamUQhtVsnEcmKAWqxaD26KqogK9/MZnq5
-	 dqkbu064iaWUqs/WiRvHJxPVL8WRLFQ8Gvmx/0i8=
+	b=XGZHK5hskB/VtCOKbOx8204RVO4oggNKhkTX1ZCsSZQiXIMKD2js9jfbV9ltpVuQt
+	 vvRZRNXj7ygUpHjTOBEmZgKPGExBg8Taob7J95vLwm0fPQtWyoOvuHE8MTur/jfy23
+	 FfU5eMUoIVeUKRs9YlRBfbvkMlQj0wD7E60IfG5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
-	John Keeping <john@metanate.com>,
+	Barry Song <song.bao.hua@hisilicon.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@kernel.org>,
+	dmitry.torokhov@gmail.com,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 377/783] usb: gadget: f_hid: fix f_hidg lifetime vs cdev
-Date: Thu, 12 Jan 2023 14:51:33 +0100
-Message-Id: <20230112135541.787122392@linuxfoundation.org>
+Subject: [PATCH 5.10 368/783] genirq: Add IRQF_NO_AUTOEN for request_irq/nmi()
+Date: Thu, 12 Jan 2023 14:51:24 +0100
+Message-Id: <20230112135541.391994386@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,162 +37,105 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Keeping <john@metanate.com>
+From: Barry Song <song.bao.hua@hisilicon.com>
 
-[ Upstream commit 89ff3dfac604614287ad5aad9370c3f984ea3f4b ]
+[ Upstream commit cbe16f35bee6880becca6f20d2ebf6b457148552 ]
 
-The embedded struct cdev does not have its lifetime correctly tied to
-the enclosing struct f_hidg, so there is a use-after-free if /dev/hidgN
-is held open while the gadget is deleted.
+Many drivers don't want interrupts enabled automatically via request_irq().
+So they are handling this issue by either way of the below two:
 
-This can readily be replicated with libusbgx's example programs (for
-conciseness - operating directly via configfs is equivalent):
+(1)
+  irq_set_status_flags(irq, IRQ_NOAUTOEN);
+  request_irq(dev, irq...);
 
-	gadget-hid
-	exec 3<> /dev/hidg0
-	gadget-vid-pid-remove
-	exec 3<&-
+(2)
+  request_irq(dev, irq...);
+  disable_irq(irq);
 
-Pull the existing device up in to struct f_hidg and make use of the
-cdev_device_{add,del}() helpers.  This changes the lifetime of the
-device object to match struct f_hidg, but note that it is still added
-and deleted at the same time.
+The code in the second way is silly and unsafe. In the small time gap
+between request_irq() and disable_irq(), interrupts can still come.
 
-Fixes: 71adf1189469 ("USB: gadget: add HID gadget driver")
-Tested-by: Lee Jones <lee@kernel.org>
-Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Reviewed-by: Lee Jones <lee@kernel.org>
-Signed-off-by: John Keeping <john@metanate.com>
-Link: https://lore.kernel.org/r/20221122123523.3068034-2-john@metanate.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+The code in the first way is safe though it's subobtimal.
+
+Add a new IRQF_NO_AUTOEN flag which can be handed in by drivers to
+request_irq() and request_nmi(). It prevents the automatic enabling of the
+requested interrupt/nmi in the same safe way as #1 above. With that the
+various usage sites of #1 and #2 above can be simplified and corrected.
+
+Signed-off-by: Barry Song <song.bao.hua@hisilicon.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: dmitry.torokhov@gmail.com
+Link: https://lore.kernel.org/r/20210302224916.13980-2-song.bao.hua@hisilicon.com
+Stable-dep-of: 99c05e4283a1 ("iio: adis: add '__adis_enable_irq()' implementation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_hid.c | 52 ++++++++++++++++-------------
- 1 file changed, 28 insertions(+), 24 deletions(-)
+ include/linux/interrupt.h |  4 ++++
+ kernel/irq/manage.c       | 11 +++++++++--
+ 2 files changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
-index 8cb199f52b52..97e927eacc62 100644
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -71,7 +71,7 @@ struct f_hidg {
- 	wait_queue_head_t		write_queue;
- 	struct usb_request		*req;
+diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
+index ee8299eb1f52..0652b4858ba6 100644
+--- a/include/linux/interrupt.h
++++ b/include/linux/interrupt.h
+@@ -61,6 +61,9 @@
+  *                interrupt handler after suspending interrupts. For system
+  *                wakeup devices users need to implement wakeup detection in
+  *                their interrupt handlers.
++ * IRQF_NO_AUTOEN - Don't enable IRQ or NMI automatically when users request it.
++ *                Users will enable it explicitly by enable_irq() or enable_nmi()
++ *                later.
+  */
+ #define IRQF_SHARED		0x00000080
+ #define IRQF_PROBE_SHARED	0x00000100
+@@ -74,6 +77,7 @@
+ #define IRQF_NO_THREAD		0x00010000
+ #define IRQF_EARLY_RESUME	0x00020000
+ #define IRQF_COND_SUSPEND	0x00040000
++#define IRQF_NO_AUTOEN		0x00080000
  
--	int				minor;
-+	struct device			dev;
- 	struct cdev			cdev;
- 	struct usb_function		func;
+ #define IRQF_TIMER		(__IRQF_TIMER | IRQF_NO_SUSPEND | IRQF_NO_THREAD)
  
-@@ -84,6 +84,14 @@ static inline struct f_hidg *func_to_hidg(struct usb_function *f)
- 	return container_of(f, struct f_hidg, func);
- }
- 
-+static void hidg_release(struct device *dev)
-+{
-+	struct f_hidg *hidg = container_of(dev, struct f_hidg, dev);
-+
-+	kfree(hidg->set_report_buf);
-+	kfree(hidg);
-+}
-+
- /*-------------------------------------------------------------------------*/
- /*                           Static descriptors                            */
- 
-@@ -904,9 +912,7 @@ static int hidg_bind(struct usb_configuration *c, struct usb_function *f)
- 	struct usb_ep		*ep;
- 	struct f_hidg		*hidg = func_to_hidg(f);
- 	struct usb_string	*us;
--	struct device		*device;
- 	int			status;
--	dev_t			dev;
- 
- 	/* maybe allocate device-global string IDs, and patch descriptors */
- 	us = usb_gstrings_attach(c->cdev, ct_func_strings,
-@@ -999,21 +1005,11 @@ static int hidg_bind(struct usb_configuration *c, struct usb_function *f)
- 
- 	/* create char device */
- 	cdev_init(&hidg->cdev, &f_hidg_fops);
--	dev = MKDEV(major, hidg->minor);
--	status = cdev_add(&hidg->cdev, dev, 1);
-+	status = cdev_device_add(&hidg->cdev, &hidg->dev);
- 	if (status)
- 		goto fail_free_descs;
- 
--	device = device_create(hidg_class, NULL, dev, NULL,
--			       "%s%d", "hidg", hidg->minor);
--	if (IS_ERR(device)) {
--		status = PTR_ERR(device);
--		goto del;
--	}
--
- 	return 0;
--del:
--	cdev_del(&hidg->cdev);
- fail_free_descs:
- 	usb_free_all_descriptors(f);
- fail:
-@@ -1244,9 +1240,7 @@ static void hidg_free(struct usb_function *f)
- 
- 	hidg = func_to_hidg(f);
- 	opts = container_of(f->fi, struct f_hid_opts, func_inst);
--	kfree(hidg->report_desc);
--	kfree(hidg->set_report_buf);
--	kfree(hidg);
-+	put_device(&hidg->dev);
- 	mutex_lock(&opts->lock);
- 	--opts->refcnt;
- 	mutex_unlock(&opts->lock);
-@@ -1256,8 +1250,7 @@ static void hidg_unbind(struct usb_configuration *c, struct usb_function *f)
- {
- 	struct f_hidg *hidg = func_to_hidg(f);
- 
--	device_destroy(hidg_class, MKDEV(major, hidg->minor));
--	cdev_del(&hidg->cdev);
-+	cdev_device_del(&hidg->cdev, &hidg->dev);
- 
- 	usb_free_all_descriptors(f);
- }
-@@ -1266,6 +1259,7 @@ static struct usb_function *hidg_alloc(struct usb_function_instance *fi)
- {
- 	struct f_hidg *hidg;
- 	struct f_hid_opts *opts;
-+	int ret;
- 
- 	/* allocate and initialize one new instance */
- 	hidg = kzalloc(sizeof(*hidg), GFP_KERNEL);
-@@ -1277,17 +1271,27 @@ static struct usb_function *hidg_alloc(struct usb_function_instance *fi)
- 	mutex_lock(&opts->lock);
- 	++opts->refcnt;
- 
--	hidg->minor = opts->minor;
-+	device_initialize(&hidg->dev);
-+	hidg->dev.release = hidg_release;
-+	hidg->dev.class = hidg_class;
-+	hidg->dev.devt = MKDEV(major, opts->minor);
-+	ret = dev_set_name(&hidg->dev, "hidg%d", opts->minor);
-+	if (ret) {
-+		--opts->refcnt;
-+		mutex_unlock(&opts->lock);
-+		return ERR_PTR(ret);
-+	}
-+
- 	hidg->bInterfaceSubClass = opts->subclass;
- 	hidg->bInterfaceProtocol = opts->protocol;
- 	hidg->report_length = opts->report_length;
- 	hidg->report_desc_length = opts->report_desc_length;
- 	if (opts->report_desc) {
--		hidg->report_desc = kmemdup(opts->report_desc,
--					    opts->report_desc_length,
--					    GFP_KERNEL);
-+		hidg->report_desc = devm_kmemdup(&hidg->dev, opts->report_desc,
-+						 opts->report_desc_length,
-+						 GFP_KERNEL);
- 		if (!hidg->report_desc) {
--			kfree(hidg);
-+			put_device(&hidg->dev);
- 			mutex_unlock(&opts->lock);
- 			return ERR_PTR(-ENOMEM);
+diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
+index 3cb29835632f..437b073dc487 100644
+--- a/kernel/irq/manage.c
++++ b/kernel/irq/manage.c
+@@ -1667,7 +1667,8 @@ __setup_irq(unsigned int irq, struct irq_desc *desc, struct irqaction *new)
+ 			irqd_set(&desc->irq_data, IRQD_NO_BALANCING);
  		}
+ 
+-		if (irq_settings_can_autoenable(desc)) {
++		if (!(new->flags & IRQF_NO_AUTOEN) &&
++		    irq_settings_can_autoenable(desc)) {
+ 			irq_startup(desc, IRQ_RESEND, IRQ_START_COND);
+ 		} else {
+ 			/*
+@@ -2054,10 +2055,15 @@ int request_threaded_irq(unsigned int irq, irq_handler_t handler,
+ 	 * which interrupt is which (messes up the interrupt freeing
+ 	 * logic etc).
+ 	 *
++	 * Also shared interrupts do not go well with disabling auto enable.
++	 * The sharing interrupt might request it while it's still disabled
++	 * and then wait for interrupts forever.
++	 *
+ 	 * Also IRQF_COND_SUSPEND only makes sense for shared interrupts and
+ 	 * it cannot be set along with IRQF_NO_SUSPEND.
+ 	 */
+ 	if (((irqflags & IRQF_SHARED) && !dev_id) ||
++	    ((irqflags & IRQF_SHARED) && (irqflags & IRQF_NO_AUTOEN)) ||
+ 	    (!(irqflags & IRQF_SHARED) && (irqflags & IRQF_COND_SUSPEND)) ||
+ 	    ((irqflags & IRQF_NO_SUSPEND) && (irqflags & IRQF_COND_SUSPEND)))
+ 		return -EINVAL;
+@@ -2213,7 +2219,8 @@ int request_nmi(unsigned int irq, irq_handler_t handler,
+ 
+ 	desc = irq_to_desc(irq);
+ 
+-	if (!desc || irq_settings_can_autoenable(desc) ||
++	if (!desc || (irq_settings_can_autoenable(desc) &&
++	    !(irqflags & IRQF_NO_AUTOEN)) ||
+ 	    !irq_settings_can_request(desc) ||
+ 	    WARN_ON(irq_settings_is_per_cpu_devid(desc)) ||
+ 	    !irq_supports_nmi(desc))
 -- 
 2.35.1
 
