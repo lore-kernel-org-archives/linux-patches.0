@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D9F749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:07:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4CBC433EF;
-	Thu, 12 Jan 2023 14:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E49749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:07:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C374C433EF;
+	Thu, 12 Jan 2023 14:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532470;
-	bh=SiEo8VBRxjV34hHMwL+bIwfqbbgPPAkwGicAhqlDPb4=;
+	s=korg; t=1673532473;
+	bh=oNuDA0DAcm50EiO4YsD06YQwhEjLDCa9l1nEVkzNXxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QdP1lfeHgVyXdfLxVUlNhv/G3JAJqUgYsewIa2XiFmthvE3ZztaV5q17apCwALc/I
-	 9EfRkZw68dsPds9ylM+k68SX4NsgLnsrCOFH1fcVv0mn4AT5epTPKLbRCI0nYJt6tn
-	 9QjXSscg4qhBa5qExas+vRI2oYOwrVIeECr1mB74=
+	b=ixpSBraLUi2ieITXtCVyYIzrZBu1bCgSQarMiRRMbH2uOt+1ZnKly/u63R4KFCdKf
+	 ttV4xsKjGqw9owbWWs+PzLqEAv1/UNFZybZy70XK35PQKyfHHlrQKwdafZ8Bh7hYAI
+	 aUk8MotoDkU1t80hfluZ3+VYwn3pTJIOyoW+BViI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Kalle Valo <kvalo@kernel.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Robert Foss <robert.foss@linaro.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 142/783] wifi: rsi: Fix handling of 802.3 EAPOL frames sent via control port
-Date: Thu, 12 Jan 2023 14:47:38 +0100
-Message-Id: <20230112135530.911064517@linuxfoundation.org>
+Subject: [PATCH 5.10 143/783] media: camss: Clean up received buffers on failed start of streaming
+Date: Thu, 12 Jan 2023 14:47:39 +0100
+Message-Id: <20230112135530.959176644@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,90 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit b8f6efccbb9dc0ff5dee7e20d69a4747298ee603 ]
+[ Upstream commit c8f3582345e6a69da65ab588f7c4c2d1685b0e80 ]
 
-When using wpa_supplicant v2.10, this driver is no longer able to
-associate with any AP and fails in the EAPOL 4-way handshake while
-sending the 2/4 message to the AP. The problem is not present in
-wpa_supplicant v2.9 or older. The problem stems from HostAP commit
-144314eaa ("wpa_supplicant: Send EAPOL frames over nl80211 where available")
-which changes the way EAPOL frames are sent, from them being send
-at L2 frames to them being sent via nl80211 control port.
+It is required to return the received buffers, if streaming can not be
+started. For instance media_pipeline_start() may fail with EPIPE, if
+a link validation between entities is not passed, and in such a case
+a user gets a kernel warning:
 
-An EAPOL frame sent as L2 frame is passed to the WiFi driver with
-skb->protocol ETH_P_PAE, while EAPOL frame sent via nl80211 control
-port has skb->protocol set to ETH_P_802_3 . The later happens in
-ieee80211_tx_control_port(), where the EAPOL frame is encapsulated
-into 802.3 frame.
+  WARNING: CPU: 1 PID: 520 at drivers/media/common/videobuf2/videobuf2-core.c:1592 vb2_start_streaming+0xec/0x160
+  <snip>
+  Call trace:
+   vb2_start_streaming+0xec/0x160
+   vb2_core_streamon+0x9c/0x1a0
+   vb2_ioctl_streamon+0x68/0xbc
+   v4l_streamon+0x30/0x3c
+   __video_do_ioctl+0x184/0x3e0
+   video_usercopy+0x37c/0x7b0
+   video_ioctl2+0x24/0x40
+   v4l2_ioctl+0x4c/0x70
 
-The rsi_91x driver handles ETH_P_PAE EAPOL frames as high-priority
-frames and sends them via highest-priority transmit queue, while
-the ETH_P_802_3 frames are sent as regular frames. The EAPOL 4-way
-handshake frames must be sent as highest-priority, otherwise the
-4-way handshake times out.
+The fix is to correct the error path in video_start_streaming() of camss.
 
-Therefore, to fix this problem, inspect the skb control flags and
-if flag IEEE80211_TX_CTRL_PORT_CTRL_PROTO is set, assume this is
-an EAPOL frame and transmit the frame via high-priority queue just
-like other ETH_P_PAE frames.
-
-Fixes: 0eb42586cf87 ("rsi: data packet descriptor enhancements")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221104163339.227432-1-marex@denx.de
+Fixes: 0ac2586c410f ("media: camss: Add files which handle the video device nodes")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_core.c | 4 +++-
- drivers/net/wireless/rsi/rsi_91x_hal.c  | 6 +++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/media/platform/qcom/camss/camss-video.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_core.c b/drivers/net/wireless/rsi/rsi_91x_core.c
-index 9c4c58557248..b7fa03813da1 100644
---- a/drivers/net/wireless/rsi/rsi_91x_core.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_core.c
-@@ -466,7 +466,9 @@ void rsi_core_xmit(struct rsi_common *common, struct sk_buff *skb)
- 							      tid, 0);
- 			}
- 		}
--		if (skb->protocol == cpu_to_be16(ETH_P_PAE)) {
-+
-+		if (IEEE80211_SKB_CB(skb)->control.flags &
-+		    IEEE80211_TX_CTRL_PORT_CTRL_PROTO) {
- 			q_num = MGMT_SOFT_Q;
- 			skb->priority = q_num;
- 		}
-diff --git a/drivers/net/wireless/rsi/rsi_91x_hal.c b/drivers/net/wireless/rsi/rsi_91x_hal.c
-index dca81a4bbdd7..30d2eccbcadd 100644
---- a/drivers/net/wireless/rsi/rsi_91x_hal.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_hal.c
-@@ -162,12 +162,16 @@ int rsi_prepare_data_desc(struct rsi_common *common, struct sk_buff *skb)
- 	u8 header_size;
- 	u8 vap_id = 0;
- 	u8 dword_align_bytes;
-+	bool tx_eapol;
- 	u16 seq_num;
+diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
+index 15965e63cb61..9333a7a33d4d 100644
+--- a/drivers/media/platform/qcom/camss/camss-video.c
++++ b/drivers/media/platform/qcom/camss/camss-video.c
+@@ -444,7 +444,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
  
- 	info = IEEE80211_SKB_CB(skb);
- 	vif = info->control.vif;
- 	tx_params = (struct skb_info *)info->driver_data;
+ 	ret = media_pipeline_start(&vdev->entity, &video->pipe);
+ 	if (ret < 0)
+-		return ret;
++		goto flush_buffers;
  
-+	tx_eapol = IEEE80211_SKB_CB(skb)->control.flags &
-+		   IEEE80211_TX_CTRL_PORT_CTRL_PROTO;
-+
- 	header_size = FRAME_DESC_SZ + sizeof(struct rsi_xtended_desc);
- 	if (header_size > skb_headroom(skb)) {
- 		rsi_dbg(ERR_ZONE, "%s: Unable to send pkt\n", __func__);
-@@ -231,7 +235,7 @@ int rsi_prepare_data_desc(struct rsi_common *common, struct sk_buff *skb)
- 		}
- 	}
+ 	ret = video_check_format(video);
+ 	if (ret < 0)
+@@ -473,6 +473,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
+ error:
+ 	media_pipeline_stop(&vdev->entity);
  
--	if (skb->protocol == cpu_to_be16(ETH_P_PAE)) {
-+	if (tx_eapol) {
- 		rsi_dbg(INFO_ZONE, "*** Tx EAPOL ***\n");
++flush_buffers:
+ 	video->ops->flush_buffers(video, VB2_BUF_STATE_QUEUED);
  
- 		data_desc->frame_info = cpu_to_le16(RATE_INFO_ENABLE);
+ 	return ret;
 -- 
 2.35.1
 
