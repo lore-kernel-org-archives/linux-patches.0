@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49BD679C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:28:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B14F2C433D2;
-	Thu, 12 Jan 2023 14:28:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B7C079CE
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:28:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC30CC433F0;
+	Thu, 12 Jan 2023 14:28:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533698;
-	bh=YQKS/rpStmGrZKPeSL0eAJmUklWKF0SSZbbLL7gi+k0=;
+	s=korg; t=1673533704;
+	bh=p4kp86KIyUfMP+bB6fcVuZ4QnmRE18fuZ7/pMbiJ3dI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uodhnLc+6NkPY0lqe3iw2hCAU7euo44q8Kj15eIP4HB0uOzz12D/1v1lYURma3rS7
-	 RCtDrM45FK0vjhd0DAiGN6tkDh+onf0Tp2xfzov4D+YZmKI1mr41jsNpeEUpV3OzDA
-	 OU+KL1OYGh3Nz1+D6U5LGZeQg72KmHNyVbWrWmts=
+	b=s4aoI2YGfqotTWnp/3I1cviyUk7DYZi7SzizyRl3qMZvARVNzokx6ezyF9eIwqqR3
+	 7yXBYdG9jkZh2iGWs2Hc+uDp3vd3UnS43jpni0Qbnrj0KxlgnrsNujtE+GJS4NAtXX
+	 5F5SG2f8EOnWI2szWYe1zZGw81yvtvlE5T0yl7V8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a3e6acd85ded5c16a709@syzkaller.appspotmail.com,
-	Hawkins Jiawei <yin31149@gmail.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Ian Kent <raven@themaw.net>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 535/783] hugetlbfs: fix null-ptr-deref in hugetlbfs_parse_param()
-Date: Thu, 12 Jan 2023 14:54:11 +0100
-Message-Id: <20230112135548.999274729@linuxfoundation.org>
+	Jeff Mahoney <jeffm@suse.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Mimi Zohar <zohar@linux.ibm.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 5.10 563/783] reiserfs: Add missing calls to reiserfs_security_free()
+Date: Thu, 12 Jan 2023 14:54:39 +0100
+Message-Id: <20230112135550.347483696@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -39,96 +37,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hawkins Jiawei <yin31149@gmail.com>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-[ Upstream commit 26215b7ee923b9251f7bb12c4e5f09dc465d35f2 ]
+commit 572302af1258459e124437b8f3369357447afac7 upstream.
 
-Syzkaller reports a null-ptr-deref bug as follows:
-======================================================
-KASAN: null-ptr-deref in range [0x0000000000000000-0x0000000000000007]
-RIP: 0010:hugetlbfs_parse_param+0x1dd/0x8e0 fs/hugetlbfs/inode.c:1380
-[...]
-Call Trace:
- <TASK>
- vfs_parse_fs_param fs/fs_context.c:148 [inline]
- vfs_parse_fs_param+0x1f9/0x3c0 fs/fs_context.c:129
- vfs_parse_fs_string+0xdb/0x170 fs/fs_context.c:191
- generic_parse_monolithic+0x16f/0x1f0 fs/fs_context.c:231
- do_new_mount fs/namespace.c:3036 [inline]
- path_mount+0x12de/0x1e20 fs/namespace.c:3370
- do_mount fs/namespace.c:3383 [inline]
- __do_sys_mount fs/namespace.c:3591 [inline]
- __se_sys_mount fs/namespace.c:3568 [inline]
- __x64_sys_mount+0x27f/0x300 fs/namespace.c:3568
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
- [...]
- </TASK>
-======================================================
+Commit 57fe60df6241 ("reiserfs: add atomic addition of selinux attributes
+during inode creation") defined reiserfs_security_free() to free the name
+and value of a security xattr allocated by the active LSM through
+security_old_inode_init_security(). However, this function is not called
+in the reiserfs code.
 
-According to commit "vfs: parse: deal with zero length string value",
-kernel will set the param->string to null pointer in vfs_parse_fs_string()
-if fs string has zero length.
+Thus, add a call to reiserfs_security_free() whenever
+reiserfs_security_init() is called, and initialize value to NULL, to avoid
+to call kfree() on an uninitialized pointer.
 
-Yet the problem is that, hugetlbfs_parse_param() will dereference the
-param->string, without checking whether it is a null pointer.  To be more
-specific, if hugetlbfs_parse_param() parses an illegal mount parameter,
-such as "size=,", kernel will constructs struct fs_parameter with null
-pointer in vfs_parse_fs_string(), then passes this struct fs_parameter to
-hugetlbfs_parse_param(), which triggers the above null-ptr-deref bug.
+Finally, remove the kfree() for the xattr name, as it is not allocated
+anymore.
 
-This patch solves it by adding sanity check on param->string
-in hugetlbfs_parse_param().
-
-Link: https://lkml.kernel.org/r/20221020231609.4810-1-yin31149@gmail.com
-Reported-by: syzbot+a3e6acd85ded5c16a709@syzkaller.appspotmail.com
-Tested-by: syzbot+a3e6acd85ded5c16a709@syzkaller.appspotmail.com
-  Link: https://lore.kernel.org/all/0000000000005ad00405eb7148c6@google.com/
-Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
-Reviewed-by: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Hawkins Jiawei <yin31149@gmail.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Ian Kent <raven@themaw.net>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 57fe60df6241 ("reiserfs: add atomic addition of selinux attributes during inode creation")
+Cc: stable@vger.kernel.org
+Cc: Jeff Mahoney <jeffm@suse.com>
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reported-by: Mimi Zohar <zohar@linux.ibm.com>
+Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hugetlbfs/inode.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/reiserfs/namei.c          |    4 ++++
+ fs/reiserfs/xattr_security.c |    2 +-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/fs/hugetlbfs/inode.c b/fs/hugetlbfs/inode.c
-index a2f43f1a85f8..5181e6d4e18c 100644
---- a/fs/hugetlbfs/inode.c
-+++ b/fs/hugetlbfs/inode.c
-@@ -1261,7 +1261,7 @@ static int hugetlbfs_parse_param(struct fs_context *fc, struct fs_parameter *par
+--- a/fs/reiserfs/namei.c
++++ b/fs/reiserfs/namei.c
+@@ -695,6 +695,7 @@ static int reiserfs_create(struct inode
  
- 	case Opt_size:
- 		/* memparse() will accept a K/M/G without a digit */
--		if (!isdigit(param->string[0]))
-+		if (!param->string || !isdigit(param->string[0]))
- 			goto bad_val;
- 		ctx->max_size_opt = memparse(param->string, &rest);
- 		ctx->max_val_type = SIZE_STD;
-@@ -1271,7 +1271,7 @@ static int hugetlbfs_parse_param(struct fs_context *fc, struct fs_parameter *par
+ out_failed:
+ 	reiserfs_write_unlock(dir->i_sb);
++	reiserfs_security_free(&security);
+ 	return retval;
+ }
  
- 	case Opt_nr_inodes:
- 		/* memparse() will accept a K/M/G without a digit */
--		if (!isdigit(param->string[0]))
-+		if (!param->string || !isdigit(param->string[0]))
- 			goto bad_val;
- 		ctx->nr_inodes = memparse(param->string, &rest);
- 		return 0;
-@@ -1287,7 +1287,7 @@ static int hugetlbfs_parse_param(struct fs_context *fc, struct fs_parameter *par
+@@ -778,6 +779,7 @@ static int reiserfs_mknod(struct inode *
  
- 	case Opt_min_size:
- 		/* memparse() will accept a K/M/G without a digit */
--		if (!isdigit(param->string[0]))
-+		if (!param->string || !isdigit(param->string[0]))
- 			goto bad_val;
- 		ctx->min_size_opt = memparse(param->string, &rest);
- 		ctx->min_val_type = SIZE_STD;
--- 
-2.35.1
-
+ out_failed:
+ 	reiserfs_write_unlock(dir->i_sb);
++	reiserfs_security_free(&security);
+ 	return retval;
+ }
+ 
+@@ -876,6 +878,7 @@ static int reiserfs_mkdir(struct inode *
+ 	retval = journal_end(&th);
+ out_failed:
+ 	reiserfs_write_unlock(dir->i_sb);
++	reiserfs_security_free(&security);
+ 	return retval;
+ }
+ 
+@@ -1191,6 +1194,7 @@ static int reiserfs_symlink(struct inode
+ 	retval = journal_end(&th);
+ out_failed:
+ 	reiserfs_write_unlock(parent_dir->i_sb);
++	reiserfs_security_free(&security);
+ 	return retval;
+ }
+ 
+--- a/fs/reiserfs/xattr_security.c
++++ b/fs/reiserfs/xattr_security.c
+@@ -49,6 +49,7 @@ int reiserfs_security_init(struct inode
+ 	int error;
+ 
+ 	sec->name = NULL;
++	sec->value = NULL;
+ 
+ 	/* Don't add selinux attributes on xattrs - they'll never get used */
+ 	if (IS_PRIVATE(dir))
+@@ -94,7 +95,6 @@ int reiserfs_security_write(struct reise
+ 
+ void reiserfs_security_free(struct reiserfs_security_handle *sec)
+ {
+-	kfree(sec->name);
+ 	kfree(sec->value);
+ 	sec->name = NULL;
+ 	sec->value = NULL;
 
 
