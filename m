@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEFDD749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:10:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47E95C433D2;
-	Thu, 12 Jan 2023 14:10:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 028DD749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:10:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 46919C433EF;
+	Thu, 12 Jan 2023 14:10:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532646;
-	bh=mGI0MQc9FfHFClE/U9xBR8eDBfcP0c3KSZPzSgISeWk=;
+	s=korg; t=1673532649;
+	bh=ggaHZDIhWgyy59i+LG7c5MJLm+sWHFU8wo0iCjr8F/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q3gJFhrjyLzZVOMaV0ja4Gdj0XBqiBtYcnQ6QgBMhVWBoiuyiPObIsuDbh51dXM3u
-	 Ehg2V5WhwB5A2mXjDYpNHXKeGiq/n2CTevUcDjmOZ9ZfwPKXYCwmNTuQJ7XxqgLmn6
-	 ig+WFHBnZUkrGn6F3gIc4FxkDIuW4GXWPa4FhIHQ=
+	b=mn2nV83AvcmBK3/mQ7kcD0sdkA/dMaOBEZoWGwTfQ3e7EXwmDg0n8KHIztHCRVDkt
+	 qXBFnJEh5YzW3CkgjBwsAO6QEjn/+id7vd2aEDf+xAGOzAHUvD+AhR/3DEZ/E6XSZS
+	 xqTvA3pZcwVceCYfu+DEY+G1xbWBDpAJr65pmmcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Deren Wu <deren.wu@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 230/783] mmc: wmt-sdmmc: fix return value check of mmc_add_host()
-Date: Thu, 12 Jan 2023 14:49:06 +0100
-Message-Id: <20230112135535.034129484@linuxfoundation.org>
+Subject: [PATCH 5.10 204/783] wifi: mt76: fix coverity overrun-call in mt76_get_txpower()
+Date: Thu, 12 Jan 2023 14:48:40 +0100
+Message-Id: <20230112135533.796097528@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,47 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Deren Wu <deren.wu@mediatek.com>
 
-[ Upstream commit 29276d56f6ed138db0f38cd31aedc0b725c8c76c ]
+[ Upstream commit 03dd0d49de7db680a856fa566963bb8421f46368 ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+Make sure the nss is valid for nss_delta array. Return zero
+if the index is invalid.
 
-So fix this by checking the return value and goto error path which will call
-mmc_free_host(), besides, clk_disable_unprepare() also needs be called.
+Coverity message:
+Event overrun-call: Overrunning callee's array of size 4 by passing
+argument "n_chains" (which evaluates to 15) in call to
+"mt76_tx_power_nss_delta".
+int delta = mt76_tx_power_nss_delta(n_chains);
 
-Fixes: 3a96dff0f828 ("mmc: SD/MMC Host Controller for Wondermedia WM8505/WM8650")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-10-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 07cda406308b ("mt76: fix rounding issues on converting per-chain and combined txpower")
+Signed-off-by: Deren Wu <deren.wu@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/wmt-sdmmc.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt76.h | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/wmt-sdmmc.c b/drivers/mmc/host/wmt-sdmmc.c
-index 8df722ec57ed..393319548857 100644
---- a/drivers/mmc/host/wmt-sdmmc.c
-+++ b/drivers/mmc/host/wmt-sdmmc.c
-@@ -859,11 +859,15 @@ static int wmt_mci_probe(struct platform_device *pdev)
- 	/* configure the controller to a known 'ready' state */
- 	wmt_reset_hardware(mmc);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt76.h b/drivers/net/wireless/mediatek/mt76/mt76.h
+index a5be66de1cff..5a8060790a61 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt76.h
++++ b/drivers/net/wireless/mediatek/mt76/mt76.h
+@@ -884,8 +884,9 @@ static inline bool mt76_is_skb_pktid(u8 pktid)
+ static inline u8 mt76_tx_power_nss_delta(u8 nss)
+ {
+ 	static const u8 nss_delta[4] = { 0, 6, 9, 12 };
++	u8 idx = nss - 1;
  
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret)
-+		goto fail7;
+-	return nss_delta[nss - 1];
++	return (idx < ARRAY_SIZE(nss_delta)) ? nss_delta[idx] : 0;
+ }
  
- 	dev_info(&pdev->dev, "WMT SDHC Controller initialized\n");
- 
- 	return 0;
-+fail7:
-+	clk_disable_unprepare(priv->clk_sdmmc);
- fail6:
- 	clk_put(priv->clk_sdmmc);
- fail5_and_a_half:
+ static inline bool mt76_testmode_enabled(struct mt76_dev *dev)
 -- 
 2.35.1
 
