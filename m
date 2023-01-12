@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70096749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:09:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D8EC433EF;
-	Thu, 12 Jan 2023 14:09:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99A59749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:09:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0EB1C433EF;
+	Thu, 12 Jan 2023 14:09:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532583;
-	bh=/XwOQVQwrwaYDNVEakEk0XWZIqq0U47a84BBArdTfXQ=;
+	s=korg; t=1673532586;
+	bh=HaGbFttjHtxaufg1ZWo33eccYnvnm3aK55UE5hHOgyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZYV3DWBETwZWK0vzHDHOAndBse6wBLtijALalHlMwYJQix6+4yYfrbYel3EvzXHVI
-	 BAUy+BfDlKFvJhziD4H8YQe92y8JDMm+sNyzsmjzcFXShNzvGIginYFemqDFZOxNMT
-	 x8TYH/9Ns04Gx26pGtMJQ8ZzymkZHHJoOYMPudvk=
+	b=KorlVfl+28drV/MfAUyLv/7hG08j2Nnou5WHrjK0VJsfXYbFsdcvuGvcMwtmE6h8k
+	 BB2eZSJci4VpKgA86U8FTV3fwpNLMX/K/vDk3qD5LDckwluYzNcs/m1qnve+ejSRoM
+	 XKGTbpqCCyoV8nq7oQnalYvr6DtQ+Df7Nq79l6/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 202/783] wifi: mac80211: fix memory leak in ieee80211_if_add()
-Date: Thu, 12 Jan 2023 14:48:38 +0100
-Message-Id: <20230112135533.707133636@linuxfoundation.org>
+Subject: [PATCH 5.10 211/783] hsr: Synchronize sequence number updates.
+Date: Thu, 12 Jan 2023 14:48:47 +0100
+Message-Id: <20230112135534.129749721@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,34 +35,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit 13e5afd3d773c6fc6ca2b89027befaaaa1ea7293 ]
+[ Upstream commit 5c7aa13210c3abdd34fd421f62347665ec6eb551 ]
 
-When register_netdevice() failed in ieee80211_if_add(), ndev->tstats
-isn't released. Fix it.
+hsr_register_frame_out() compares new sequence_nr vs the old one
+recorded in hsr_node::seq_out and if the new sequence_nr is higher then
+it will be written to hsr_node::seq_out as the new value.
 
-Fixes: 5a490510ba5f ("mac80211: use per-CPU TX/RX statistics")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20221117064500.319983-1-shaozhengchao@huawei.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+This operation isn't locked so it is possible that two frames with the
+same sequence number arrive (via the two slave devices) and are fed to
+hsr_register_frame_out() at the same time. Both will pass the check and
+update the sequence counter later to the same value. As a result the
+content of the same packet is fed into the stack twice.
+
+This was noticed by running ping and observing DUP being reported from
+time to time.
+
+Instead of using the hsr_priv::seqnr_lock for the whole receive path (as
+it is for sending in the master node) add an additional lock that is only
+used for sequence number checks and updates.
+
+Add a per-node lock that is used during sequence number reads and
+updates.
+
+Fixes: f421436a591d3 ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/iface.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/hsr/hsr_framereg.c | 9 ++++++++-
+ net/hsr/hsr_framereg.h | 2 ++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
-index 3a15ef8dd322..d04e5a1a7e0e 100644
---- a/net/mac80211/iface.c
-+++ b/net/mac80211/iface.c
-@@ -2013,6 +2013,7 @@ int ieee80211_if_add(struct ieee80211_local *local, const char *name,
+diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
+index 805f974923b9..20cb6b7dbc69 100644
+--- a/net/hsr/hsr_framereg.c
++++ b/net/hsr/hsr_framereg.c
+@@ -159,6 +159,7 @@ static struct hsr_node *hsr_add_node(struct hsr_priv *hsr,
+ 		return NULL;
  
- 		ret = register_netdevice(ndev);
- 		if (ret) {
-+			ieee80211_if_free(ndev);
- 			free_netdev(ndev);
- 			return ret;
- 		}
+ 	ether_addr_copy(new_node->macaddress_A, addr);
++	spin_lock_init(&new_node->seq_out_lock);
+ 
+ 	/* We are only interested in time diffs here, so use current jiffies
+ 	 * as initialization. (0 could trigger an spurious ring error warning).
+@@ -311,6 +312,7 @@ void hsr_handle_sup_frame(struct hsr_frame_info *frame)
+ 		goto done;
+ 
+ 	ether_addr_copy(node_real->macaddress_B, ethhdr->h_source);
++	spin_lock_bh(&node_real->seq_out_lock);
+ 	for (i = 0; i < HSR_PT_PORTS; i++) {
+ 		if (!node_curr->time_in_stale[i] &&
+ 		    time_after(node_curr->time_in[i], node_real->time_in[i])) {
+@@ -321,6 +323,7 @@ void hsr_handle_sup_frame(struct hsr_frame_info *frame)
+ 		if (seq_nr_after(node_curr->seq_out[i], node_real->seq_out[i]))
+ 			node_real->seq_out[i] = node_curr->seq_out[i];
+ 	}
++	spin_unlock_bh(&node_real->seq_out_lock);
+ 	node_real->addr_B_port = port_rcv->type;
+ 
+ 	spin_lock_bh(&hsr->list_lock);
+@@ -413,13 +416,17 @@ void hsr_register_frame_in(struct hsr_node *node, struct hsr_port *port,
+ int hsr_register_frame_out(struct hsr_port *port, struct hsr_node *node,
+ 			   u16 sequence_nr)
+ {
++	spin_lock_bh(&node->seq_out_lock);
+ 	if (seq_nr_before_or_eq(sequence_nr, node->seq_out[port->type]) &&
+ 	    time_is_after_jiffies(node->time_out[port->type] +
+-	    msecs_to_jiffies(HSR_ENTRY_FORGET_TIME)))
++	    msecs_to_jiffies(HSR_ENTRY_FORGET_TIME))) {
++		spin_unlock_bh(&node->seq_out_lock);
+ 		return 1;
++	}
+ 
+ 	node->time_out[port->type] = jiffies;
+ 	node->seq_out[port->type] = sequence_nr;
++	spin_unlock_bh(&node->seq_out_lock);
+ 	return 0;
+ }
+ 
+diff --git a/net/hsr/hsr_framereg.h b/net/hsr/hsr_framereg.h
+index d9628e7a5f05..5a771cb3f032 100644
+--- a/net/hsr/hsr_framereg.h
++++ b/net/hsr/hsr_framereg.h
+@@ -69,6 +69,8 @@ void prp_update_san_info(struct hsr_node *node, bool is_sup);
+ 
+ struct hsr_node {
+ 	struct list_head	mac_list;
++	/* Protect R/W access to seq_out */
++	spinlock_t		seq_out_lock;
+ 	unsigned char		macaddress_A[ETH_ALEN];
+ 	unsigned char		macaddress_B[ETH_ALEN];
+ 	/* Local slave through which AddrB frames are received from this node */
 -- 
 2.35.1
 
