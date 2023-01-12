@@ -1,29 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D9A279C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:20:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2269BC433D2;
-	Thu, 12 Jan 2023 14:20:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C1379C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:20:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61EF2C433EF;
+	Thu, 12 Jan 2023 14:20:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533219;
-	bh=l0YJsElX6GBt25o6kpVSuB7Iw5XqVWFcuYzU4gFsfsA=;
+	s=korg; t=1673533222;
+	bh=awHxN+nsyEUcV9vLMhKhFRWKxVYaD91iq9LNHD0n0jg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XGZHK5hskB/VtCOKbOx8204RVO4oggNKhkTX1ZCsSZQiXIMKD2js9jfbV9ltpVuQt
-	 vvRZRNXj7ygUpHjTOBEmZgKPGExBg8Taob7J95vLwm0fPQtWyoOvuHE8MTur/jfy23
-	 FfU5eMUoIVeUKRs9YlRBfbvkMlQj0wD7E60IfG5g=
+	b=mPy6W4WU/XFxHx3Y9HpvM1k7D2LfgMCq5w61lyTMdebxqKYBPXbkrcD3/hl8mTyd2
+	 9OZdoec8fHwgAu/B5yvrdfRJNXt9aUtExTBxKvcdHo6XRV8+m6i4ujDECQXUZG2Ogp
+	 fVOUH+I0cggCg15eM8BZ8w+ALbj2S1EKonkuTP6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Barry Song <song.bao.hua@hisilicon.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@kernel.org>,
-	dmitry.torokhov@gmail.com,
+	Leo Yan <leo.yan@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	bpf@vger.kernel.org,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 368/783] genirq: Add IRQF_NO_AUTOEN for request_irq/nmi()
-Date: Thu, 12 Jan 2023 14:51:24 +0100
-Message-Id: <20230112135541.391994386@linuxfoundation.org>
+Subject: [PATCH 5.10 402/783] perf trace: Return error if a system call doesnt exist
+Date: Thu, 12 Jan 2023 14:51:58 +0100
+Message-Id: <20230112135542.944748466@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -37,105 +43,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Barry Song <song.bao.hua@hisilicon.com>
+From: Leo Yan <leo.yan@linaro.org>
 
-[ Upstream commit cbe16f35bee6880becca6f20d2ebf6b457148552 ]
+[ Upstream commit d4223e1776c30b2ce8d0e6eaadcbf696e60fca3c ]
 
-Many drivers don't want interrupts enabled automatically via request_irq().
-So they are handling this issue by either way of the below two:
+When a system call is not detected, the reason is either because the
+system call ID is out of scope or failure to find the corresponding path
+in the sysfs, trace__read_syscall_info() returns zero.  Finally, without
+returning an error value it introduces confusion for the caller.
 
-(1)
-  irq_set_status_flags(irq, IRQ_NOAUTOEN);
-  request_irq(dev, irq...);
+This patch lets the function trace__read_syscall_info() to return
+-EEXIST when a system call doesn't exist.
 
-(2)
-  request_irq(dev, irq...);
-  disable_irq(irq);
-
-The code in the second way is silly and unsafe. In the small time gap
-between request_irq() and disable_irq(), interrupts can still come.
-
-The code in the first way is safe though it's subobtimal.
-
-Add a new IRQF_NO_AUTOEN flag which can be handed in by drivers to
-request_irq() and request_nmi(). It prevents the automatic enabling of the
-requested interrupt/nmi in the same safe way as #1 above. With that the
-various usage sites of #1 and #2 above can be simplified and corrected.
-
-Signed-off-by: Barry Song <song.bao.hua@hisilicon.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: dmitry.torokhov@gmail.com
-Link: https://lore.kernel.org/r/20210302224916.13980-2-song.bao.hua@hisilicon.com
-Stable-dep-of: 99c05e4283a1 ("iio: adis: add '__adis_enable_irq()' implementation")
+Fixes: b8b1033fcaa091d8 ("perf trace: Mark syscall ids that are not allocated to avoid unnecessary error messages")
+Signed-off-by: Leo Yan <leo.yan@linaro.org>
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: bpf@vger.kernel.org
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20221121075237.127706-3-leo.yan@linaro.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/interrupt.h |  4 ++++
- kernel/irq/manage.c       | 11 +++++++++--
- 2 files changed, 13 insertions(+), 2 deletions(-)
+ tools/perf/builtin-trace.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/interrupt.h b/include/linux/interrupt.h
-index ee8299eb1f52..0652b4858ba6 100644
---- a/include/linux/interrupt.h
-+++ b/include/linux/interrupt.h
-@@ -61,6 +61,9 @@
-  *                interrupt handler after suspending interrupts. For system
-  *                wakeup devices users need to implement wakeup detection in
-  *                their interrupt handlers.
-+ * IRQF_NO_AUTOEN - Don't enable IRQ or NMI automatically when users request it.
-+ *                Users will enable it explicitly by enable_irq() or enable_nmi()
-+ *                later.
-  */
- #define IRQF_SHARED		0x00000080
- #define IRQF_PROBE_SHARED	0x00000100
-@@ -74,6 +77,7 @@
- #define IRQF_NO_THREAD		0x00010000
- #define IRQF_EARLY_RESUME	0x00020000
- #define IRQF_COND_SUSPEND	0x00040000
-+#define IRQF_NO_AUTOEN		0x00080000
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index de80534473af..555e16d8d55b 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -1774,11 +1774,11 @@ static int trace__read_syscall_info(struct trace *trace, int id)
+ #endif
+ 	sc = trace->syscalls.table + id;
+ 	if (sc->nonexistent)
+-		return 0;
++		return -EEXIST;
  
- #define IRQF_TIMER		(__IRQF_TIMER | IRQF_NO_SUSPEND | IRQF_NO_THREAD)
+ 	if (name == NULL) {
+ 		sc->nonexistent = true;
+-		return 0;
++		return -EEXIST;
+ 	}
  
-diff --git a/kernel/irq/manage.c b/kernel/irq/manage.c
-index 3cb29835632f..437b073dc487 100644
---- a/kernel/irq/manage.c
-+++ b/kernel/irq/manage.c
-@@ -1667,7 +1667,8 @@ __setup_irq(unsigned int irq, struct irq_desc *desc, struct irqaction *new)
- 			irqd_set(&desc->irq_data, IRQD_NO_BALANCING);
- 		}
- 
--		if (irq_settings_can_autoenable(desc)) {
-+		if (!(new->flags & IRQF_NO_AUTOEN) &&
-+		    irq_settings_can_autoenable(desc)) {
- 			irq_startup(desc, IRQ_RESEND, IRQ_START_COND);
- 		} else {
- 			/*
-@@ -2054,10 +2055,15 @@ int request_threaded_irq(unsigned int irq, irq_handler_t handler,
- 	 * which interrupt is which (messes up the interrupt freeing
- 	 * logic etc).
- 	 *
-+	 * Also shared interrupts do not go well with disabling auto enable.
-+	 * The sharing interrupt might request it while it's still disabled
-+	 * and then wait for interrupts forever.
-+	 *
- 	 * Also IRQF_COND_SUSPEND only makes sense for shared interrupts and
- 	 * it cannot be set along with IRQF_NO_SUSPEND.
- 	 */
- 	if (((irqflags & IRQF_SHARED) && !dev_id) ||
-+	    ((irqflags & IRQF_SHARED) && (irqflags & IRQF_NO_AUTOEN)) ||
- 	    (!(irqflags & IRQF_SHARED) && (irqflags & IRQF_COND_SUSPEND)) ||
- 	    ((irqflags & IRQF_NO_SUSPEND) && (irqflags & IRQF_COND_SUSPEND)))
- 		return -EINVAL;
-@@ -2213,7 +2219,8 @@ int request_nmi(unsigned int irq, irq_handler_t handler,
- 
- 	desc = irq_to_desc(irq);
- 
--	if (!desc || irq_settings_can_autoenable(desc) ||
-+	if (!desc || (irq_settings_can_autoenable(desc) &&
-+	    !(irqflags & IRQF_NO_AUTOEN)) ||
- 	    !irq_settings_can_request(desc) ||
- 	    WARN_ON(irq_settings_is_per_cpu_devid(desc)) ||
- 	    !irq_supports_nmi(desc))
+ 	sc->name = name;
 -- 
 2.35.1
 
