@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3E5179C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:27:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67775C433EF;
-	Thu, 12 Jan 2023 14:27:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00CF79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:27:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A64BC433D2;
+	Thu, 12 Jan 2023 14:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533670;
-	bh=ajIbsM6L983ki7D8tBTa5VlzTbjo8YeKKHj0cPHE0+8=;
+	s=korg; t=1673533676;
+	bh=dpmVpboLheGSJMPOzxzicSl0IiIsWK5IYGeDzphjmks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aHEdJETv1lGV8rxNQyrqTvTRld/bm1UhcoP1fb3HdWqkr5QrB2H+VlJUl+R0/RxXY
-	 lML6fgXPRTbdU8lSCVgtdU6YZ+WKIMuC6IXCOytkUnDNrBKZwDJIKtyTZjzMUXrfYI
-	 MtxgsbAxzAKfShKU4i5RuPnIk2S00xBzsTBlClTM=
+	b=tOieIvWqx3ezHw1zAQ/Mhne4QapFJJjR9FdP8E/dj37KCtWhVwA1wxTiEbfG1ZT/o
+	 IN22Gy/TN1PbykxAmSLmyGtdpGh2pc3DO9ChmGdI4QHDaC62IE8jIxRRk27LVy1cWE
+	 OCaPjmGm9QSzQodKYGSjtR+1XYh909ffWgI3J88I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marc Dionne <marc.dionne@auristor.com>,
-	David Howells <dhowells@redhat.com>,
-	linux-afs@lists.infradead.org,
+	GUO Zihua <guozihua@huawei.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 553/783] afs: Fix lost servers_outstanding count
-Date: Thu, 12 Jan 2023 14:54:29 +0100
-Message-Id: <20230112135549.863739826@linuxfoundation.org>
+Subject: [PATCH 5.10 555/783] ima: Simplify ima_lsm_copy_rule
+Date: Thu, 12 Jan 2023 14:54:31 +0100
+Message-Id: <20230112135549.954610694@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,57 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: GUO Zihua <guozihua@huawei.com>
 
-[ Upstream commit 36f82c93ee0bd88f1c95a52537906b8178b537f1 ]
+[ Upstream commit d57378d3aa4d864d9e590482602068af1b20c0c5 ]
 
-The afs_fs_probe_dispatcher() work function is passed a count on
-net->servers_outstanding when it is scheduled (which may come via its
-timer).  This is passed back to the work_item, passed to the timer or
-dropped at the end of the dispatcher function.
+Currently ima_lsm_copy_rule() set the arg_p field of the source rule to
+NULL, so that the source rule could be freed afterward. It does not make
+sense for this behavior to be inside a "copy" function. So move it
+outside and let the caller handle this field.
 
-But, at the top of the dispatcher function, there are two checks which
-skip the rest of the function: if the network namespace is being destroyed
-or if there are no fileservers to probe.  These two return paths, however,
-do not drop the count passed to the dispatcher, and so, sometimes, the
-destruction of a network namespace, such as induced by rmmod of the kafs
-module, may get stuck in afs_purge_servers(), waiting for
-net->servers_outstanding to become zero.
+ima_lsm_copy_rule() now produce a shallow copy of the original entry
+including args_p field. Meaning only the lsm.rule and the rule itself
+should be freed for the original rule. Thus, instead of calling
+ima_lsm_free_rule() which frees lsm.rule as well as args_p field, free
+the lsm.rule directly.
 
-Fix this by adding the missing decrements in afs_fs_probe_dispatcher().
-
-Fixes: f6cbb368bcb0 ("afs: Actively poll fileservers to maintain NAT or firewall openings")
-Reported-by: Marc Dionne <marc.dionne@auristor.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-Tested-by: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-Link: https://lore.kernel.org/r/167164544917.2072364.3759519569649459359.stgit@warthog.procyon.org.uk/
+Signed-off-by: GUO Zihua <guozihua@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/afs/fs_probe.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ security/integrity/ima/ima_policy.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/fs/afs/fs_probe.c b/fs/afs/fs_probe.c
-index 04d42e49fc59..def80365fe79 100644
---- a/fs/afs/fs_probe.c
-+++ b/fs/afs/fs_probe.c
-@@ -360,12 +360,15 @@ void afs_fs_probe_dispatcher(struct work_struct *work)
- 	unsigned long nowj, timer_at, poll_at;
- 	bool first_pass = true, set_timer = false;
+diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
+index a83ce111cf50..96ecb7d25403 100644
+--- a/security/integrity/ima/ima_policy.c
++++ b/security/integrity/ima/ima_policy.c
+@@ -370,12 +370,6 @@ static struct ima_rule_entry *ima_lsm_copy_rule(struct ima_rule_entry *entry)
  
--	if (!net->live)
-+	if (!net->live) {
-+		afs_dec_servers_outstanding(net);
- 		return;
-+	}
+ 		nentry->lsm[i].type = entry->lsm[i].type;
+ 		nentry->lsm[i].args_p = entry->lsm[i].args_p;
+-		/*
+-		 * Remove the reference from entry so that the associated
+-		 * memory will not be freed during a later call to
+-		 * ima_lsm_free_rule(entry).
+-		 */
+-		entry->lsm[i].args_p = NULL;
  
- 	_enter("");
+ 		ima_filter_rule_init(nentry->lsm[i].type, Audit_equal,
+ 				     nentry->lsm[i].args_p,
+@@ -389,6 +383,7 @@ static struct ima_rule_entry *ima_lsm_copy_rule(struct ima_rule_entry *entry)
  
- 	if (list_empty(&net->fs_probe_fast) && list_empty(&net->fs_probe_slow)) {
-+		afs_dec_servers_outstanding(net);
- 		_leave(" [none]");
- 		return;
- 	}
+ static int ima_lsm_update_rule(struct ima_rule_entry *entry)
+ {
++	int i;
+ 	struct ima_rule_entry *nentry;
+ 
+ 	nentry = ima_lsm_copy_rule(entry);
+@@ -403,7 +398,8 @@ static int ima_lsm_update_rule(struct ima_rule_entry *entry)
+ 	 * references and the entry itself. All other memory refrences will now
+ 	 * be owned by nentry.
+ 	 */
+-	ima_lsm_free_rule(entry);
++	for (i = 0; i < MAX_LSM_RULES; i++)
++		ima_filter_rule_free(entry->lsm[i].rule);
+ 	kfree(entry);
+ 
+ 	return 0;
 -- 
 2.35.1
 
