@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1AB9749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:07:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0526BC433D2;
-	Thu, 12 Jan 2023 14:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0984749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:07:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16186C433EF;
+	Thu, 12 Jan 2023 14:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532476;
-	bh=VvXy63uXCcFZrZ8+oipT7MulRH9gIJTrgealz7rgMvk=;
+	s=korg; t=1673532479;
+	bh=C7zSOxVWncV1jQ+W3PKDFJsLWUvmD7Grf3NtbQDWWqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TteLkYEXWRt81eCCPTvoE4W4P7Ml9pmy/SeO0KmAW5XDqOysZFcEOSt90x3ROJ5fq
-	 orPFZqB9ZUrvCSNU6eIZqD40OShCwQqkT3ER5x2AGZg6ozD6lxSt9S/O+jgv8WIP4N
-	 ZPl97fW4dxLdXOtM5NurdBMXiv76i4E6WY0sS4Kg=
+	b=CdtcfthG6a2xMxIUV+ZlFl3hdFWGpfTRBW23L8e2y6fz4OTvtPEebZPwtEaQkdt0D
+	 Ni/oZkeui6xl65kYAPh5b/oA9w98xKzkeITIMIvjARSR8kztCKlmEOQiI/bcVL5ZoE
+	 4WmI1wEndj8rHSME33AG3OjcKJcDeld10suwQ6Po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	David Howells <dhowells@redhat.com>,
-	Marc Dionne <marc.dionne@auristor.com>,
-	linux-afs@lists.infradead.org,
-	netdev@vger.kernel.org,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 144/783] net, proc: Provide PROC_FS=n fallback for proc_create_net_single_write()
-Date: Thu, 12 Jan 2023 14:47:40 +0100
-Message-Id: <20230112135531.009922223@linuxfoundation.org>
+Subject: [PATCH 5.10 135/783] media: platform: exynos4-is: fix return value check in fimc_md_probe()
+Date: Thu, 12 Jan 2023 14:47:31 +0100
+Message-Id: <20230112135530.583213499@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -38,40 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Howells <dhowells@redhat.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit c3d96f690a790074b508fe183a41e36a00cd7ddd ]
+[ Upstream commit e38e42c078da4af962d322b97e726dcb2f184e3f ]
 
-Provide a CONFIG_PROC_FS=n fallback for proc_create_net_single_write().
+devm_pinctrl_get() may return ERR_PTR(-EPROBE_DEFER), add a minus sign
+to fix it.
 
-Also provide a fallback for proc_create_net_data_write().
-
-Fixes: 564def71765c ("proc: Add a way to make network proc files writable")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: David Howells <dhowells@redhat.com>
-cc: Marc Dionne <marc.dionne@auristor.com>
-cc: linux-afs@lists.infradead.org
-cc: netdev@vger.kernel.org
+Fixes: 4163851f7b99 ("[media] s5p-fimc: Use pinctrl API for camera ports configuration")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/proc_fs.h | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/platform/exynos4-is/media-dev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/proc_fs.h b/include/linux/proc_fs.h
-index 000cc0533c33..8c892730a1f1 100644
---- a/include/linux/proc_fs.h
-+++ b/include/linux/proc_fs.h
-@@ -190,8 +190,10 @@ static inline void proc_remove(struct proc_dir_entry *de) {}
- static inline int remove_proc_subtree(const char *name, struct proc_dir_entry *parent) { return 0; }
- 
- #define proc_create_net_data(name, mode, parent, ops, state_size, data) ({NULL;})
-+#define proc_create_net_data_write(name, mode, parent, ops, write, state_size, data) ({NULL;})
- #define proc_create_net(name, mode, parent, state_size, ops) ({NULL;})
- #define proc_create_net_single(name, mode, parent, show, data) ({NULL;})
-+#define proc_create_net_single_write(name, mode, parent, show, write, data) ({NULL;})
- 
- static inline struct pid *tgid_pidfd_to_pid(const struct file *file)
- {
+diff --git a/drivers/media/platform/exynos4-is/media-dev.c b/drivers/media/platform/exynos4-is/media-dev.c
+index 8603c578f55f..a9ab2a28fc26 100644
+--- a/drivers/media/platform/exynos4-is/media-dev.c
++++ b/drivers/media/platform/exynos4-is/media-dev.c
+@@ -1470,7 +1470,7 @@ static int fimc_md_probe(struct platform_device *pdev)
+ 	pinctrl = devm_pinctrl_get(dev);
+ 	if (IS_ERR(pinctrl)) {
+ 		ret = PTR_ERR(pinctrl);
+-		if (ret != EPROBE_DEFER)
++		if (ret != -EPROBE_DEFER)
+ 			dev_err(dev, "Failed to get pinctrl: %d\n", ret);
+ 		goto err_clk;
+ 	}
 -- 
 2.35.1
 
