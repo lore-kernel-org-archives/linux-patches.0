@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D70D79CF
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:38:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC3DDC433F0;
-	Thu, 12 Jan 2023 14:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8251079C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:38:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAB45C433EF;
+	Thu, 12 Jan 2023 14:38:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534325;
-	bh=zyixeITa0MAXp7uZnaFI7xF7lLPKtNyRF61slFzk6zc=;
+	s=korg; t=1673534322;
+	bh=6aSeGWTcl4Sbjn4pU5NkgqWHZUtaE5A1qSNjvcrgwXg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VXevAPL48NkHSSiOroVv18/iEnHN5GLlTtAC17CygNnBmHPaEsh3/J+FSrhK61G8b
-	 pO3zsNvS2N9T8vFX7MRiHlYsrHM5osLhXBNLMNSadAT5tVKZtCO49KFB13CrqJAu/C
-	 kR+gq1TTQQG2z0qR8C8+TlwIU/ievm1qxaF1s59I=
+	b=OthHlx6uFxGjL67ALw1PQ2Fv3hO5zWDcy1fev/flY+0Y9PQdZby65dk7BlmU4z8Rw
+	 7d3PfbOro9oJVNLkaimxwecl8bhCnJCU86xcwjior+nROKb/LAre4bW37aovZOImgm
+	 7Pi0liIepB2WAJc3VcUp9N2mga038Y7SrQuUuJCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ben Dooks <ben-linux@fluff.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.10 763/783] riscv: uaccess: fix type of 0 variable on error in get_user()
-Date: Thu, 12 Jan 2023 14:57:59 +0100
-Message-Id: <20230112135559.733800900@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Wang Yugui <wangyugui@e16-tech.com>
+Subject: [PATCH 5.10 729/783] nfsd: shut down the NFSv4 state objects before the filecache
+Date: Thu, 12 Jan 2023 14:57:25 +0100
+Message-Id: <20230112135558.136329754@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -34,36 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ben Dooks <ben-linux@fluff.org>
+From: Jeff Layton <jlayton@kernel.org>
 
-commit b9b916aee6715cd7f3318af6dc360c4729417b94 upstream.
+[ Upstream commit 789e1e10f214c00ca18fc6610824c5b9876ba5f2 ]
 
-If the get_user(x, ptr) has x as a pointer, then the setting
-of (x) = 0 is going to produce the following sparse warning,
-so fix this by forcing the type of 'x' when access_ok() fails.
+Currently, we shut down the filecache before trying to clean up the
+stateids that depend on it. This leads to the kernel trying to free an
+nfsd_file twice, and a refcount overput on the nf_mark.
 
-fs/aio.c:2073:21: warning: Using plain integer as NULL pointer
+Change the shutdown procedure to tear down all of the stateids prior
+to shutting down the filecache.
 
-Signed-off-by: Ben Dooks <ben-linux@fluff.org>
-Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
-Link: https://lore.kernel.org/r/20221229170545.718264-1-ben-linux@fluff.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-and-tested-by: Wang Yugui <wangyugui@e16-tech.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Fixes: 5e113224c17e ("nfsd: nfsd_file cache entries should be per net namespace")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/include/asm/uaccess.h |    2 +-
+ fs/nfsd/nfssvc.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/riscv/include/asm/uaccess.h
-+++ b/arch/riscv/include/asm/uaccess.h
-@@ -216,7 +216,7 @@ do {								\
- 	might_fault();						\
- 	access_ok(__p, sizeof(*__p)) ?		\
- 		__get_user((x), __p) :				\
--		((x) = 0, -EFAULT);				\
-+		((x) = (__force __typeof__(x))0, -EFAULT);	\
- })
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index 9323e30a7eaf..c7fffe1453bd 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -426,8 +426,8 @@ static void nfsd_shutdown_net(struct net *net)
+ {
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
  
- #define __put_user_asm(insn, x, ptr, err)			\
+-	nfsd_file_cache_shutdown_net(net);
+ 	nfs4_state_shutdown_net(net);
++	nfsd_file_cache_shutdown_net(net);
+ 	if (nn->lockd_up) {
+ 		lockd_down(net);
+ 		nn->lockd_up = false;
+-- 
+2.35.1
+
 
 
