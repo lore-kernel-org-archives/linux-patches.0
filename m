@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1E4D746A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:00:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA33C433EF;
-	Thu, 12 Jan 2023 14:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA19E746A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:00:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17D0DC433F0;
+	Thu, 12 Jan 2023 14:00:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532054;
-	bh=HUf9MG2SfcBunpcTtBkx/jnbFRtfDyIu7IDdNiW7qcU=;
+	s=korg; t=1673532057;
+	bh=qHBfJLbLQ0v7X5t4Uy1/NIPkRN13OrWOIbZ4pXUz+Rk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MtX35mcdRhbHVvVsgJRUF2QYhe+s+ulhUjyL6hqf7GcL/w6xC6igy/k5ai8xfEI2n
-	 RYzwC+n5Wjtwqu1o84mY/wpQzkDng4yDuBSyIm6+YxFM3RsDZ5Kq1LYcjzL7tsyMZo
-	 fO8bYpMODs3suS3VwBEpDoTsVLSseQZPm8SN6ccM=
+	b=A83v/39dSVXbjxzFGEm1BQXK2DBxIoWS/VtpsvPd85MWhzReTt6E6gmSNTgmrlSZO
+	 YYHRkbsjXyRXv+Dxmn7yI81WSb9KItbumQIV+3hiCjwnGGZ0b7mNw3fBSIRBheuZpN
+	 qfZ95UY1kI6WUvUTihYuCWOKtnZMMKeECwJssYOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Marco Elver <elver@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 036/783] ARM: dts: turris-omnia: Add switch port 6 node
-Date: Thu, 12 Jan 2023 14:45:52 +0100
-Message-Id: <20230112135525.819484674@linuxfoundation.org>
+Subject: [PATCH 5.10 008/783] objtool, kcsan: Add volatile read/write instrumentation to whitelist
+Date: Thu, 12 Jan 2023 14:45:24 +0100
+Message-Id: <20230112135524.566730069@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,44 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Marco Elver <elver@google.com>
 
-[ Upstream commit f87db2005f73876602211af0ee156817019b6bda ]
+[ Upstream commit 63646fcba5bb4b59a19031c21913f94e46a3d0d4 ]
 
-Switch port 6 is connected to eth0, so add appropriate device tree node for it.
+Adds KCSAN's volatile instrumentation to objtool's uaccess whitelist.
 
-Fixes: 26ca8b52d6e1 ("ARM: dts: add support for Turris Omnia")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+Recent kernel change have shown that this was missing from the uaccess
+whitelist (since the first upstreamed version of KCSAN):
+
+  mm/gup.o: warning: objtool: fault_in_readable+0x101: call to __tsan_volatile_write1() with UACCESS enabled
+
+Fixes: 75d75b7a4d54 ("kcsan: Support distinguishing volatile accesses")
+Signed-off-by: Marco Elver <elver@google.com>
+Reviewed-by: Dmitry Vyukov <dvyukov@google.com>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/armada-385-turris-omnia.dts | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ tools/objtool/check.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/arch/arm/boot/dts/armada-385-turris-omnia.dts b/arch/arm/boot/dts/armada-385-turris-omnia.dts
-index c0a026ac7be8..320c759b4090 100644
---- a/arch/arm/boot/dts/armada-385-turris-omnia.dts
-+++ b/arch/arm/boot/dts/armada-385-turris-omnia.dts
-@@ -297,7 +297,17 @@ fixed-link {
- 				};
- 			};
- 
--			/* port 6 is connected to eth0 */
-+			ports@6 {
-+				reg = <6>;
-+				label = "cpu";
-+				ethernet = <&eth0>;
-+				phy-mode = "rgmii-id";
-+
-+				fixed-link {
-+					speed = <1000>;
-+					full-duplex;
-+				};
-+			};
- 		};
- 	};
- };
+diff --git a/tools/objtool/check.c b/tools/objtool/check.c
+index ea80b29b9913..5d64b673da2d 100644
+--- a/tools/objtool/check.c
++++ b/tools/objtool/check.c
+@@ -802,6 +802,16 @@ static const char *uaccess_safe_builtin[] = {
+ 	"__tsan_read_write4",
+ 	"__tsan_read_write8",
+ 	"__tsan_read_write16",
++	"__tsan_volatile_read1",
++	"__tsan_volatile_read2",
++	"__tsan_volatile_read4",
++	"__tsan_volatile_read8",
++	"__tsan_volatile_read16",
++	"__tsan_volatile_write1",
++	"__tsan_volatile_write2",
++	"__tsan_volatile_write4",
++	"__tsan_volatile_write8",
++	"__tsan_volatile_write16",
+ 	"__tsan_atomic8_load",
+ 	"__tsan_atomic16_load",
+ 	"__tsan_atomic32_load",
 -- 
 2.35.1
 
