@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4384B79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:38:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0C7EC433D2;
-	Thu, 12 Jan 2023 14:38:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34C2479C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:38:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E773C433F0;
+	Thu, 12 Jan 2023 14:38:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534289;
-	bh=GxaxqPW3u45nNr+ODfXGWGQFFhxVzQPtxd9ex9+Uy+U=;
+	s=korg; t=1673534292;
+	bh=crd+OrhRcgDaQwVOpHTmc7/lCfH1nGHqxhPpLmlQekU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pO1y8vlfJn7lVJmFoycozRsMC06RaaxIuGVSvN4T+8Ss+vj3BAmzC1ZI+58s3xxKh
-	 IOB62ys4mKnV0gbtBC0c6IlsoAV8Ztz/DR6i80zoUcfiQeocf9hcaXttxkl9MSPOXT
-	 QtuqBzkqCRHdd9c3Lse38yx8yflc1aevK2Kc7yTY=
+	b=wys77MeCC3xAMcDJ7iCefU/OIh0uRZhGBBkREqWIW1JkWKTUl+M8ThA6vdWvRhx/4
+	 qVp0kjD45VyXbPwFMZMF2JE07Xrh/nEWlEAgjGfIw/s9g7h8RznwwPJLb671HsOwwH
+	 wdVgIbKp5LCfUL7Y+2fhlIw8kQK6Pi5s1VFmZFpM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Daniil Tatianin <d-tatianin@yandex-team.ru>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 758/783] ASoC: Intel: bytcr_rt5640: Add quirk for the Advantech MICA-071 tablet
-Date: Thu, 12 Jan 2023 14:57:54 +0100
-Message-Id: <20230112135559.504522754@linuxfoundation.org>
+Subject: [PATCH 5.10 732/783] qlcnic: prevent ->dcb use-after-free on qlcnic_dcb_enable() failure
+Date: Thu, 12 Jan 2023 14:57:28 +0100
+Message-Id: <20230112135558.274065229@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,56 +36,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-[ Upstream commit a1dec9d70b6ad97087b60b81d2492134a84208c6 ]
+[ Upstream commit 13a7c8964afcd8ca43c0b6001ebb0127baa95362 ]
 
-The Advantech MICA-071 tablet deviates from the defaults for
-a non CR Bay Trail based tablet in several ways:
+adapter->dcb would get silently freed inside qlcnic_dcb_enable() in
+case qlcnic_dcb_attach() would return an error, which always happens
+under OOM conditions. This would lead to use-after-free because both
+of the existing callers invoke qlcnic_dcb_get_info() on the obtained
+pointer, which is potentially freed at that point.
 
-1. It uses an analog MIC on IN3 rather then using DMIC1
-2. It only has 1 speaker
-3. It needs the OVCD current threshold to be set to 1500uA instead of
-   the default 2000uA to reliable differentiate between headphones vs
-   headsets
+Propagate errors from qlcnic_dcb_enable(), and instead free the dcb
+pointer at callsite using qlcnic_dcb_free(). This also removes the now
+unused qlcnic_clear_dcb_ops() helper, which was a simple wrapper around
+kfree() also causing memory leaks for partially initialized dcb.
 
-Add a quirk with these settings for this tablet.
+Found by Linux Verification Center (linuxtesting.org) with the SVACE
+static analysis tool.
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20221213123246.11226-1-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 3c44bba1d270 ("qlcnic: Disable DCB operations from SR-IOV VFs")
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_rt5640.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_init.c |  8 +++++++-
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_dcb.h       | 10 ++--------
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c      |  8 +++++++-
+ 3 files changed, 16 insertions(+), 10 deletions(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_rt5640.c b/sound/soc/intel/boards/bytcr_rt5640.c
-index 3020a993f6ef..8a99cb6dfcd6 100644
---- a/sound/soc/intel/boards/bytcr_rt5640.c
-+++ b/sound/soc/intel/boards/bytcr_rt5640.c
-@@ -430,6 +430,21 @@ static const struct dmi_system_id byt_rt5640_quirk_table[] = {
- 					BYT_RT5640_SSP0_AIF1 |
- 					BYT_RT5640_MCLK_EN),
- 	},
-+	{
-+		/* Advantech MICA-071 */
-+		.matches = {
-+			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "Advantech"),
-+			DMI_EXACT_MATCH(DMI_PRODUCT_NAME, "MICA-071"),
-+		},
-+		/* OVCD Th = 1500uA to reliable detect head-phones vs -set */
-+		.driver_data = (void *)(BYT_RT5640_IN3_MAP |
-+					BYT_RT5640_JD_SRC_JD2_IN4N |
-+					BYT_RT5640_OVCD_TH_1500UA |
-+					BYT_RT5640_OVCD_SF_0P75 |
-+					BYT_RT5640_MONO_SPEAKER |
-+					BYT_RT5640_DIFF_MIC |
-+					BYT_RT5640_MCLK_EN),
-+	},
- 	{
- 		.matches = {
- 			DMI_EXACT_MATCH(DMI_SYS_VENDOR, "ARCHOS"),
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_init.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_init.c
+index d2c190732d3e..beeeec8516b8 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_init.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_init.c
+@@ -2505,7 +2505,13 @@ int qlcnic_83xx_init(struct qlcnic_adapter *adapter, int pci_using_dac)
+ 		goto disable_mbx_intr;
+ 
+ 	qlcnic_83xx_clear_function_resources(adapter);
+-	qlcnic_dcb_enable(adapter->dcb);
++
++	err = qlcnic_dcb_enable(adapter->dcb);
++	if (err) {
++		qlcnic_dcb_free(adapter->dcb);
++		goto disable_mbx_intr;
++	}
++
+ 	qlcnic_83xx_initialize_nic(adapter, 1);
+ 	qlcnic_dcb_get_info(adapter->dcb);
+ 
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_dcb.h b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_dcb.h
+index 7519773eaca6..22afa2be85fd 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_dcb.h
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_dcb.h
+@@ -41,11 +41,6 @@ struct qlcnic_dcb {
+ 	unsigned long			state;
+ };
+ 
+-static inline void qlcnic_clear_dcb_ops(struct qlcnic_dcb *dcb)
+-{
+-	kfree(dcb);
+-}
+-
+ static inline int qlcnic_dcb_get_hw_capability(struct qlcnic_dcb *dcb)
+ {
+ 	if (dcb && dcb->ops->get_hw_capability)
+@@ -112,9 +107,8 @@ static inline void qlcnic_dcb_init_dcbnl_ops(struct qlcnic_dcb *dcb)
+ 		dcb->ops->init_dcbnl_ops(dcb);
+ }
+ 
+-static inline void qlcnic_dcb_enable(struct qlcnic_dcb *dcb)
++static inline int qlcnic_dcb_enable(struct qlcnic_dcb *dcb)
+ {
+-	if (dcb && qlcnic_dcb_attach(dcb))
+-		qlcnic_clear_dcb_ops(dcb);
++	return dcb ? qlcnic_dcb_attach(dcb) : 0;
+ }
+ #endif
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c
+index 27c07b2412f4..44b745293fd0 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c
+@@ -2622,7 +2622,13 @@ qlcnic_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 			 "Device does not support MSI interrupts\n");
+ 
+ 	if (qlcnic_82xx_check(adapter)) {
+-		qlcnic_dcb_enable(adapter->dcb);
++		err = qlcnic_dcb_enable(adapter->dcb);
++		if (err) {
++			qlcnic_dcb_free(adapter->dcb);
++			dev_err(&pdev->dev, "Failed to enable DCB\n");
++			goto err_out_free_hw;
++		}
++
+ 		qlcnic_dcb_get_info(adapter->dcb);
+ 		err = qlcnic_setup_intr(adapter);
+ 
 -- 
 2.35.1
 
