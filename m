@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A98F749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:06:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CDD5BC433EF;
-	Thu, 12 Jan 2023 14:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA15749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:06:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A35F1C433D2;
+	Thu, 12 Jan 2023 14:06:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532370;
-	bh=JG2fjaTuM+C/WNcZeB7C7R3k7QSjeF1fQ2L85pdVXBs=;
+	s=korg; t=1673532376;
+	bh=pe5eKJ6QFQLexdOIxDequbId2uIwFad5KU1W1iWG8Jw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qUEQzELz1q1Rh6CxOnQ5snLPWwncCAgf6+6omZtkl7YpSpLSdV6Gj44JAYzm5bOc5
-	 bGH5H5wG7pKPywR49++J/T/Lgdm7N2ddpnkqCQbrUKf3J+qSrymJhZMmKL9sPzKY4j
-	 ZuiciqsObKDmHwz3BZoUjAf+2Q/6lLEgg/1QSILI=
+	b=QdLwAfLemSRD3TERFdfVgv7qQ+E7JpaAioPOMkzgq1GByrfI+LpWYfTP01CltvTei
+	 uoUE7BiSbuKqOGqJbKXrFpN6mYZ9wUbl5LkVbXMAvn+nRRNhPZ6rfCYflgd9cXBbWw
+	 NGWFeV1Dcr0aNeWitaWV/1jViKCBfsq/9o3jQXHk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shung-Hsi Yu <shung-hsi.yu@suse.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 108/783] libbpf: Fix null-pointer dereference in find_prog_by_sec_insn()
-Date: Thu, 12 Jan 2023 14:47:04 +0100
-Message-Id: <20230112135529.207303327@linuxfoundation.org>
+Subject: [PATCH 5.10 110/783] media: coda: jpeg: Add check for kmalloc
+Date: Thu, 12 Jan 2023 14:47:06 +0100
+Message-Id: <20230112135529.298158876@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,41 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shung-Hsi Yu <shung-hsi.yu@suse.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit d0d382f95a9270dcf803539d6781d6bd67e3f5b2 ]
+[ Upstream commit f30ce3d3760b22ee33c8d9c2e223764ad30bdc5f ]
 
-When there are no program sections, obj->programs is left unallocated,
-and find_prog_by_sec_insn()'s search lands on &obj->programs[0] == NULL,
-and will cause null-pointer dereference in the following access to
-prog->sec_idx.
+As kmalloc can return NULL pointer, it should be better to
+check the return value and return error, same as
+coda_jpeg_decode_header.
 
-Guard the search with obj->nr_programs similar to what's being done in
-__bpf_program__iter() to prevent null-pointer access from happening.
-
-Fixes: db2b8b06423c ("libbpf: Support CO-RE relocations for multi-prog sections")
-Signed-off-by: Shung-Hsi Yu <shung-hsi.yu@suse.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20221012022353.7350-4-shung-hsi.yu@suse.com
+Fixes: 96f6f62c4656 ("media: coda: jpeg: add CODA960 JPEG encoder support")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/lib/bpf/libbpf.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/media/platform/coda/coda-jpeg.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/tools/lib/bpf/libbpf.c b/tools/lib/bpf/libbpf.c
-index 66d7f8d494de..015ed8253f73 100644
---- a/tools/lib/bpf/libbpf.c
-+++ b/tools/lib/bpf/libbpf.c
-@@ -3479,6 +3479,9 @@ static struct bpf_program *find_prog_by_sec_insn(const struct bpf_object *obj,
- 	int l = 0, r = obj->nr_programs - 1, m;
- 	struct bpf_program *prog;
+diff --git a/drivers/media/platform/coda/coda-jpeg.c b/drivers/media/platform/coda/coda-jpeg.c
+index a72f4655e5ad..b7bf529f18f7 100644
+--- a/drivers/media/platform/coda/coda-jpeg.c
++++ b/drivers/media/platform/coda/coda-jpeg.c
+@@ -1052,10 +1052,16 @@ static int coda9_jpeg_start_encoding(struct coda_ctx *ctx)
+ 		v4l2_err(&dev->v4l2_dev, "error loading Huffman tables\n");
+ 		return ret;
+ 	}
+-	if (!ctx->params.jpeg_qmat_tab[0])
++	if (!ctx->params.jpeg_qmat_tab[0]) {
+ 		ctx->params.jpeg_qmat_tab[0] = kmalloc(64, GFP_KERNEL);
+-	if (!ctx->params.jpeg_qmat_tab[1])
++		if (!ctx->params.jpeg_qmat_tab[0])
++			return -ENOMEM;
++	}
++	if (!ctx->params.jpeg_qmat_tab[1]) {
+ 		ctx->params.jpeg_qmat_tab[1] = kmalloc(64, GFP_KERNEL);
++		if (!ctx->params.jpeg_qmat_tab[1])
++			return -ENOMEM;
++	}
+ 	coda_set_jpeg_compression_quality(ctx, ctx->params.jpeg_quality);
  
-+	if (!obj->nr_programs)
-+		return NULL;
-+
- 	while (l < r) {
- 		m = l + (r - l + 1) / 2;
- 		prog = &obj->programs[m];
+ 	return 0;
 -- 
 2.35.1
 
