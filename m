@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA17A79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:34:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45B34C433D2;
-	Thu, 12 Jan 2023 14:34:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F11E979C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:34:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5991AC433F0;
+	Thu, 12 Jan 2023 14:34:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534091;
-	bh=hg9vQWgi088EO1jB7dtOWG7rUUvSRhN8hRnowNFf2aU=;
+	s=korg; t=1673534094;
+	bh=RN1e4t4GIp74Yg+vWq7EfLneIjaJuaMy8roP6TXo+OQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=di59EkN77M3v39WL1MzP/mFbW/diVqfh62R1m3tHCd1m5HRNvzqDlzXNyJ737SSzL
-	 aHuUU9KvUAkZ4bWDgKNgqiMoYzVWHZyl5FQQGSjaOLooUBle5ljyaoDCg04xou1G5h
-	 TnooSwh6SkrPzjDxhYbIyHZXEgmAq1XnBkDk5epg=
+	b=d5gcDKBXRb4BwGKGMLO3uVv3yt3d4dYXLzQnBTcYRit/+RcoAzGewTsa1KlwZno89
+	 m1A0+u4zvsU22cTTOwtJQVNVyW4I/h2/DCz9euEZcTnX6u3fZJ1ooKAsOEtJ0t98W1
+	 ZYEtKCOQr5D4atknYKlgRJgJ78QEwiNDvqVExNug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Antonov <alexander.antonov@linux.intel.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 692/783] perf/x86/intel/uncore: Clear attr_update properly
-Date: Thu, 12 Jan 2023 14:56:48 +0100
-Message-Id: <20230112135556.393401651@linuxfoundation.org>
+	Zack Rusin <zackr@vmware.com>,
+	Michael Banack <banackm@vmware.com>,
+	Martin Krastev <krastevm@vmware.com>
+Subject: [PATCH 5.10 666/783] drm/vmwgfx: Validate the box size for the snooped cursor
+Date: Thu, 12 Jan 2023 14:56:22 +0100
+Message-Id: <20230112135555.218933743@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,66 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Antonov <alexander.antonov@linux.intel.com>
+From: Zack Rusin <zackr@vmware.com>
 
-[ Upstream commit 6532783310e2b2f50dc13f46c49aa6546cb6e7a3 ]
+commit 4cf949c7fafe21e085a4ee386bb2dade9067316e upstream.
 
-Current clear_attr_update procedure in pmu_set_mapping() sets attr_update
-field in NULL that is not correct because intel_uncore_type pmu types can
-contain several groups in attr_update field. For example, SPR platform
-already has uncore_alias_group to update and then UPI topology group will
-be added in next patches.
+Invalid userspace dma surface copies could potentially overflow
+the memcpy from the surface to the snooped image leading to crashes.
+To fix it the dimensions of the copybox have to be validated
+against the expected size of the snooped cursor.
 
-Fix current behavior and clear attr_update group related to mapping only.
-
-Fixes: bb42b3d39781 ("perf/x86/intel/uncore: Expose an Uncore unit to IIO PMON mapping")
-Signed-off-by: Alexander Antonov <alexander.antonov@linux.intel.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221117122833.3103580-4-alexander.antonov@linux.intel.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Zack Rusin <zackr@vmware.com>
+Fixes: 2ac863719e51 ("vmwgfx: Snoop DMA transfers with non-covering sizes")
+Cc: <stable@vger.kernel.org> # v3.2+
+Reviewed-by: Michael Banack <banackm@vmware.com>
+Reviewed-by: Martin Krastev <krastevm@vmware.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221026031936.1004280-1-zack@kde.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/events/intel/uncore_snbep.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
-index 03e34a440cdf..ad084a5a1463 100644
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -3747,6 +3747,21 @@ static const struct attribute_group *skx_iio_attr_update[] = {
- 	NULL,
- };
- 
-+static void pmu_clear_mapping_attr(const struct attribute_group **groups,
-+				   struct attribute_group *ag)
-+{
-+	int i;
-+
-+	for (i = 0; groups[i]; i++) {
-+		if (groups[i] == ag) {
-+			for (i++; groups[i]; i++)
-+				groups[i - 1] = groups[i];
-+			groups[i - 1] = NULL;
-+			break;
-+		}
-+	}
-+}
-+
- static int
- pmu_iio_set_mapping(struct intel_uncore_type *type, struct attribute_group *ag)
- {
-@@ -3795,7 +3810,7 @@ pmu_iio_set_mapping(struct intel_uncore_type *type, struct attribute_group *ag)
- clear_topology:
- 	kfree(type->topology);
- clear_attr_update:
--	type->attr_update = NULL;
-+	pmu_clear_mapping_attr(type->attr_update, ag);
- 	return ret;
- }
- 
--- 
-2.35.1
-
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_kms.c
+@@ -182,7 +182,8 @@ void vmw_kms_cursor_snoop(struct vmw_sur
+ 	if (cmd->dma.guest.ptr.offset % PAGE_SIZE ||
+ 	    box->x != 0    || box->y != 0    || box->z != 0    ||
+ 	    box->srcx != 0 || box->srcy != 0 || box->srcz != 0 ||
+-	    box->d != 1    || box_count != 1) {
++	    box->d != 1    || box_count != 1 ||
++	    box->w > 64 || box->h > 64) {
+ 		/* TODO handle none page aligned offsets */
+ 		/* TODO handle more dst & src != 0 */
+ 		/* TODO handle more then one copy */
 
 
