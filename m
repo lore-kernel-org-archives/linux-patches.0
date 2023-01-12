@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD6F779C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:37:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53358C433F0;
-	Thu, 12 Jan 2023 14:37:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E570879C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:37:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C714C433D2;
+	Thu, 12 Jan 2023 14:37:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534234;
-	bh=ZVw6xi5FOV4USayG73uMIWgm58Br0PBUGIfcjuqnO+A=;
+	s=korg; t=1673534237;
+	bh=ELknwW91AvAoAA8leIEPR/jnP6NKrkXbJ8KkjSWqRLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=phBdJ0O+iukpIG90c79Gn6MHpWc7tdUUD7YZwfv4/C9Knii2yyMBtbnIRWaMzjepy
-	 pZpSzLis5kqDe5eFgqtE+Vao+Cgw4EG4+I9Zzopa1LC/24EdKTKUl+h6qT0k2dXPDv
-	 Fsf7rvddYIarQ4FqsXOnpdz0cgojUsyWeEb3FDs8=
+	b=GievBFcZtT2X3nlKFMgF9nYXMpqLo/7xQRuWQ11GvK5NSBY/NgmiJMAp9/P83jYtz
+	 eBA6KjP2ccDqMFpUSY5l8QSKKbD1kjP31SgeEMw8tdCRCtfzn1XECnv2hOdOIgYXKX
+	 Fpa7VhfBG+FdGLLw+VGe4/4kZjfBlRLLphR1SF0E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiguang Xiao <jiguang.xiao@windriver.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 741/783] net: amd-xgbe: add missed tasklet_kill
-Date: Thu, 12 Jan 2023 14:57:37 +0100
-Message-Id: <20230112135558.712671358@linuxfoundation.org>
+Subject: [PATCH 5.10 742/783] net: phy: xgmiitorgmii: Fix refcount leak in xgmiitorgmii_probe
+Date: Thu, 12 Jan 2023 14:57:38 +0100
+Message-Id: <20230112135558.761660688@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,68 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiguang Xiao <jiguang.xiao@windriver.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit d530ece70f16f912e1d1bfeea694246ab78b0a4b ]
+[ Upstream commit d039535850ee47079d59527e96be18d8e0daa84b ]
 
-The driver does not call tasklet_kill in several places.
-Add the calls to fix it.
+of_phy_find_device() return device node with refcount incremented.
+Call put_device() to relese it when not needed anymore.
 
-Fixes: 85b85c853401 ("amd-xgbe: Re-issue interrupt if interrupt status not cleared")
-Signed-off-by: Jiguang Xiao <jiguang.xiao@windriver.com>
+Fixes: ab4e6ee578e8 ("net: phy: xgmiitorgmii: Check phy_driver ready before accessing")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-drv.c  | 3 +++
- drivers/net/ethernet/amd/xgbe/xgbe-i2c.c  | 4 +++-
- drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 4 +++-
- 3 files changed, 9 insertions(+), 2 deletions(-)
+ drivers/net/phy/xilinx_gmii2rgmii.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-index a816b30bca04..a5d6faf7b89e 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-@@ -1064,6 +1064,9 @@ static void xgbe_free_irqs(struct xgbe_prv_data *pdata)
+diff --git a/drivers/net/phy/xilinx_gmii2rgmii.c b/drivers/net/phy/xilinx_gmii2rgmii.c
+index 151c2a3f0b3a..7a78dfdfa5bd 100644
+--- a/drivers/net/phy/xilinx_gmii2rgmii.c
++++ b/drivers/net/phy/xilinx_gmii2rgmii.c
+@@ -82,6 +82,7 @@ static int xgmiitorgmii_probe(struct mdio_device *mdiodev)
  
- 	devm_free_irq(pdata->dev, pdata->dev_irq, pdata);
- 
-+	tasklet_kill(&pdata->tasklet_dev);
-+	tasklet_kill(&pdata->tasklet_ecc);
-+
- 	if (pdata->vdata->ecc_support && (pdata->dev_irq != pdata->ecc_irq))
- 		devm_free_irq(pdata->dev, pdata->ecc_irq, pdata);
- 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c b/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c
-index 22d4fc547a0a..a9ccc4258ee5 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c
-@@ -447,8 +447,10 @@ static void xgbe_i2c_stop(struct xgbe_prv_data *pdata)
- 	xgbe_i2c_disable(pdata);
- 	xgbe_i2c_clear_all_interrupts(pdata);
- 
--	if (pdata->dev_irq != pdata->i2c_irq)
-+	if (pdata->dev_irq != pdata->i2c_irq) {
- 		devm_free_irq(pdata->dev, pdata->i2c_irq, pdata);
-+		tasklet_kill(&pdata->tasklet_i2c);
-+	}
- }
- 
- static int xgbe_i2c_start(struct xgbe_prv_data *pdata)
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-index 4e97b4869522..0c5c1b155683 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-@@ -1390,8 +1390,10 @@ static void xgbe_phy_stop(struct xgbe_prv_data *pdata)
- 	/* Disable auto-negotiation */
- 	xgbe_an_disable_all(pdata);
- 
--	if (pdata->dev_irq != pdata->an_irq)
-+	if (pdata->dev_irq != pdata->an_irq) {
- 		devm_free_irq(pdata->dev, pdata->an_irq, pdata);
-+		tasklet_kill(&pdata->tasklet_an);
-+	}
- 
- 	pdata->phy_if.phy_impl.stop(pdata);
+ 	if (!priv->phy_dev->drv) {
+ 		dev_info(dev, "Attached phy not ready\n");
++		put_device(&priv->phy_dev->mdio.dev);
+ 		return -EPROBE_DEFER;
+ 	}
  
 -- 
 2.35.1
