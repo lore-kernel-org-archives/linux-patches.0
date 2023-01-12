@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CC22749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:17:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6DBC433EF;
-	Thu, 12 Jan 2023 14:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F73D749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:17:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8C57C433D2;
+	Thu, 12 Jan 2023 14:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533066;
-	bh=eGRkUZd18hkSfFkG5EwSsUjix4jFQmANwCYQyTr7yo8=;
+	s=korg; t=1673533069;
+	bh=qc7xB+NqwBeDJyGysf5cVnCJvys9+4WQf2nl4XEY1pw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sWRWOqL75Dmvxh8JvczBBcXfw1t7Jla5sTmB5svhPOTtLx/1X5DxgEdaHuXfXzKBj
-	 jG/gaXd3HuzweRsQ/GklMN1v+YgR0vg1wfqdvBvSK6SPbKxpdgziIbU3MIF1vhZ4PQ
-	 990qb9HE0f0WxekwMqs6zbOL3419PYtu+JzFQ9NQ=
+	b=UQ9V4YD2MzmIK85wZM2N4+2j9UxhKk/6/aXYZVW9I9WBfEcOrabII710Pmc7D8lpC
+	 g9VkGJw9pFbwWKZGQv0Rd10yJ8kvwfGKhPagOcS1ZEPSE5c6XN0+X45lI0fJGzCxW1
+	 Euxy+SXIR9ebQ9Gc7LdRtwHFiPUQ6WuRtDV/qh+E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 358/783] serial: sunsab: Fix error handling in sunsab_init()
-Date: Thu, 12 Jan 2023 14:51:14 +0100
-Message-Id: <20230112135540.930398464@linuxfoundation.org>
+Subject: [PATCH 5.10 359/783] test_firmware: fix memory leak in test_firmware_init()
+Date: Thu, 12 Jan 2023 14:51:15 +0100
+Message-Id: <20230112135540.980357617@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -34,44 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit 1a6ec673fb627c26e2267ca0a03849f91dbd9b40 ]
+[ Upstream commit 7610615e8cdb3f6f5bbd9d8e7a5d8a63e3cabf2e ]
 
-The sunsab_init() returns the platform_driver_register() directly without
-checking its return value, if platform_driver_register() failed, the
-allocated sunsab_ports is leaked.
-Fix by free sunsab_ports and set it to NULL when platform_driver_register()
-failed.
+When misc_register() failed in test_firmware_init(), the memory pointed
+by test_fw_config->name is not released. The memory leak information is
+as follows:
+unreferenced object 0xffff88810a34cb00 (size 32):
+  comm "insmod", pid 7952, jiffies 4294948236 (age 49.060s)
+  hex dump (first 32 bytes):
+    74 65 73 74 2d 66 69 72 6d 77 61 72 65 2e 62 69  test-firmware.bi
+    6e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  n...............
+  backtrace:
+    [<ffffffff81b21fcb>] __kmalloc_node_track_caller+0x4b/0xc0
+    [<ffffffff81affb96>] kstrndup+0x46/0xc0
+    [<ffffffffa0403a49>] __test_firmware_config_init+0x29/0x380 [test_firmware]
+    [<ffffffffa040f068>] 0xffffffffa040f068
+    [<ffffffff81002c41>] do_one_initcall+0x141/0x780
+    [<ffffffff816a72c3>] do_init_module+0x1c3/0x630
+    [<ffffffff816adb9e>] load_module+0x623e/0x76a0
+    [<ffffffff816af471>] __do_sys_finit_module+0x181/0x240
+    [<ffffffff89978f99>] do_syscall_64+0x39/0xb0
+    [<ffffffff89a0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fixes: c4d37215a824 ("[SERIAL] sunsab: Convert to of_driver framework.")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Link: https://lore.kernel.org/r/20221123061212.52593-1-yuancan@huawei.com
+Fixes: c92316bf8e94 ("test_firmware: add batched firmware tests")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Acked-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lore.kernel.org/r/20221119035721.18268-1-shaozhengchao@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/sunsab.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ lib/test_firmware.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/tty/serial/sunsab.c b/drivers/tty/serial/sunsab.c
-index bab551f46963..451c7233623f 100644
---- a/drivers/tty/serial/sunsab.c
-+++ b/drivers/tty/serial/sunsab.c
-@@ -1137,7 +1137,13 @@ static int __init sunsab_init(void)
- 		}
- 	}
+diff --git a/lib/test_firmware.c b/lib/test_firmware.c
+index 2baa275a6ddf..76550d2e2edc 100644
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -1114,6 +1114,7 @@ static int __init test_firmware_init(void)
  
--	return platform_driver_register(&sab_driver);
-+	err = platform_driver_register(&sab_driver);
-+	if (err) {
-+		kfree(sunsab_ports);
-+		sunsab_ports = NULL;
-+	}
-+
-+	return err;
- }
- 
- static void __exit sunsab_exit(void)
+ 	rc = misc_register(&test_fw_misc_device);
+ 	if (rc) {
++		__test_firmware_config_free();
+ 		kfree(test_fw_config);
+ 		pr_err("could not register misc device: %d\n", rc);
+ 		return rc;
 -- 
 2.35.1
 
