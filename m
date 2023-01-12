@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469B079C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:31:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFCA5C433EF;
-	Thu, 12 Jan 2023 14:31:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C04079C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:31:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86463C433EF;
+	Thu, 12 Jan 2023 14:31:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533861;
-	bh=HvS1E68sRO6vEsoCle7ot2ncaAQB9rkDwBYN3kGRY4A=;
+	s=korg; t=1673533863;
+	bh=HLYGwh8W1owOthZL04DgE1B08evCzcBUvnLS5UMVSaw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oZzGdmH75zx1pv5CJDg2g3RUYcNf7bWl3Iq9808ZdBMKRmaW+bfWJJmdCI5pKk5nN
-	 bdTSHr5rgEyLU/dkS8q8mumPcqYJCTI2Gen6hIOJnBxMl2rXha0gZuVXD0vgsbn3RZ
-	 lNxoYhY2YVY+prAybilN0FOlpKFa1UcZi/fiMTF8=
+	b=0JPyWpOkQVsdZV1YBKgzTQT7UyjWZdSD45TJO2EDY68g2qPp6TtTpP3chGSui8EGq
+	 rQY2LNfFNQTE1OjH8mJx/d8CTSMs4JLZqWI1oJGtmhReg7r3Cek3hzzuqN6Pjx51Dh
+	 QDxZ2qL2gEOgv0vsjxivWlG8VH6u4fAl/RoAJbmE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Chen <wenchao.chen@unisoc.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 616/783] mmc: sdhci-sprd: Disable CLK_AUTO when the clock is less than 400K
-Date: Thu, 12 Jan 2023 14:55:32 +0100
-Message-Id: <20230112135552.817813358@linuxfoundation.org>
+	Chuck Lever <chuck.lever@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>
+Subject: [PATCH 5.10 599/783] SUNRPC: Dont leak netobj memory when gss_read_proxy_verf() fails
+Date: Thu, 12 Jan 2023 14:55:15 +0100
+Message-Id: <20230112135552.043539944@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -34,47 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wenchao Chen <wenchao.chen@unisoc.com>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-commit ff874dbc4f868af128b412a9bd92637103cf11d7 upstream.
+commit da522b5fe1a5f8b7c20a0023e87b52a150e53bf5 upstream.
 
-When the clock is less than 400K, some SD cards fail to initialize
-because CLK_AUTO is enabled.
-
-Fixes: fb8bd90f83c4 ("mmc: sdhci-sprd: Add Spreadtrum's initial host controller")
-Signed-off-by: Wenchao Chen <wenchao.chen@unisoc.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221207051909.32126-1-wenchao.chen@unisoc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 030d794bf498 ("SUNRPC: Use gssproxy upcall for server RPCGSS authentication.")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-sprd.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ net/sunrpc/auth_gss/svcauth_gss.c |    9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
---- a/drivers/mmc/host/sdhci-sprd.c
-+++ b/drivers/mmc/host/sdhci-sprd.c
-@@ -224,13 +224,15 @@ static inline void _sdhci_sprd_set_clock
- 	div = ((div & 0x300) >> 2) | ((div & 0xFF) << 8);
- 	sdhci_enable_clk(host, div);
+--- a/net/sunrpc/auth_gss/svcauth_gss.c
++++ b/net/sunrpc/auth_gss/svcauth_gss.c
+@@ -1156,18 +1156,23 @@ static int gss_read_proxy_verf(struct sv
+ 		return res;
  
--	/* enable auto gate sdhc_enable_auto_gate */
--	val = sdhci_readl(host, SDHCI_SPRD_REG_32_BUSY_POSI);
--	mask = SDHCI_SPRD_BIT_OUTR_CLK_AUTO_EN |
--	       SDHCI_SPRD_BIT_INNR_CLK_AUTO_EN;
--	if (mask != (val & mask)) {
--		val |= mask;
--		sdhci_writel(host, val, SDHCI_SPRD_REG_32_BUSY_POSI);
-+	/* Enable CLK_AUTO when the clock is greater than 400K. */
-+	if (clk > 400000) {
-+		val = sdhci_readl(host, SDHCI_SPRD_REG_32_BUSY_POSI);
-+		mask = SDHCI_SPRD_BIT_OUTR_CLK_AUTO_EN |
-+			SDHCI_SPRD_BIT_INNR_CLK_AUTO_EN;
-+		if (mask != (val & mask)) {
-+			val |= mask;
-+			sdhci_writel(host, val, SDHCI_SPRD_REG_32_BUSY_POSI);
-+		}
- 	}
- }
+ 	inlen = svc_getnl(argv);
+-	if (inlen > (argv->iov_len + rqstp->rq_arg.page_len))
++	if (inlen > (argv->iov_len + rqstp->rq_arg.page_len)) {
++		kfree(in_handle->data);
+ 		return SVC_DENIED;
++	}
  
+ 	pages = DIV_ROUND_UP(inlen, PAGE_SIZE);
+ 	in_token->pages = kcalloc(pages, sizeof(struct page *), GFP_KERNEL);
+-	if (!in_token->pages)
++	if (!in_token->pages) {
++		kfree(in_handle->data);
+ 		return SVC_DENIED;
++	}
+ 	in_token->page_base = 0;
+ 	in_token->page_len = inlen;
+ 	for (i = 0; i < pages; i++) {
+ 		in_token->pages[i] = alloc_page(GFP_KERNEL);
+ 		if (!in_token->pages[i]) {
++			kfree(in_handle->data);
+ 			gss_free_in_token_pages(in_token);
+ 			return SVC_DENIED;
+ 		}
 
 
