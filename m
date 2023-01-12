@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5968749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:11:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18990C433EF;
-	Thu, 12 Jan 2023 14:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAD73749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:11:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8A8C433D2;
+	Thu, 12 Jan 2023 14:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532680;
-	bh=KWbypAibzVAGEhqZTljc3d/eK7Wu9lIMQwxlQBI9Xbg=;
+	s=korg; t=1673532683;
+	bh=9g3w6FqGG5dKfjDgxqMNoBNcBj3pFG2i7rm2kfMKH0s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M1PyNzGM6/ggVeQZ244B5Ak9kYVGY4urMCchm61PxBeBa4tZVX9BpUk7bmDlgc4jX
-	 L9t7gY0YyqQWejQP/vLHYcAM3Aw35/6WFz82npLlj5FbqJz9M91Fv/OUy9vvuNJls+
-	 D8/MHi7K/oaxoEAm5Y29r67l4xFKb28cyxImT5Cs=
+	b=BX2WOiPhko+7C7ucZKLQwL6pwwxsCbx7Kr24anmY//ZqQR323iSSCO/G2SNX3PF85
+	 usUt5cJSqXPx8wHiBarrjR7w7VecV/4bcXyS2FOq8RPJ/mCdzJouYFcA16b3KDsIM7
+	 462lk4yUecxrHicBcmwniwXXfx5tAYMDn/hASAFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexander Sverdlin <alexander.sverdlin@siemens.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 210/783] hsr: Synchronize sending frames to have always incremented outgoing seq nr.
-Date: Thu, 12 Jan 2023 14:48:46 +0100
-Message-Id: <20230112135534.079964635@linuxfoundation.org>
+Subject: [PATCH 5.10 201/783] spi: spidev: mask SPI_CS_HIGH in SPI_IOC_RD_MODE
+Date: Thu, 12 Jan 2023 14:48:37 +0100
+Message-Id: <20230112135533.657723768@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,134 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Alexander Sverdlin <alexander.sverdlin@siemens.com>
 
-[ Upstream commit 06afd2c31d338fa762548580c1bf088703dd1e03 ]
+[ Upstream commit 7dbfa445ff7393d1c4c066c1727c9e0af1251958 ]
 
-Sending frames via the hsr (master) device requires a sequence number
-which is tracked in hsr_priv::sequence_nr and protected by
-hsr_priv::seqnr_lock. Each time a new frame is sent, it will obtain a
-new id and then send it via the slave devices.
-Each time a packet is sent (via hsr_forward_do()) the sequence number is
-checked via hsr_register_frame_out() to ensure that a frame is not
-handled twice. This make sense for the receiving side to ensure that the
-frame is not injected into the stack twice after it has been received
-from both slave ports.
+Commit f3186dd87669 ("spi: Optionally use GPIO descriptors for CS GPIOs")
+has changed the user-space interface so that bogus SPI_CS_HIGH started
+to appear in the mask returned by SPI_IOC_RD_MODE even for active-low CS
+pins. Commit 138c9c32f090
+("spi: spidev: Fix CS polarity if GPIO descriptors are used") fixed only
+SPI_IOC_WR_MODE part of the problem. Let's fix SPI_IOC_RD_MODE
+symmetrically.
 
-There is no locking to cover the sending path which means the following
-scenario is possible:
+Test case:
 
-  CPU0				CPU1
-  hsr_dev_xmit(skb1)		hsr_dev_xmit(skb2)
-   fill_frame_info()             fill_frame_info()
-    hsr_fill_frame_info()         hsr_fill_frame_info()
-     handle_std_frame()            handle_std_frame()
-      skb1's sequence_nr = 1
-                                    skb2's sequence_nr = 2
-   hsr_forward_do()              hsr_forward_do()
+	#include <sys/ioctl.h>
+	#include <fcntl.h>
+	#include <linux/spi/spidev.h>
 
-                                   hsr_register_frame_out(, 2)  // okay, send)
+	int main(int argc, char **argv)
+	{
+		char modew = SPI_CPHA;
+		char moder;
+		int f = open("/dev/spidev0.0", O_RDWR);
 
-    hsr_register_frame_out(, 1) // stop, lower seq duplicate
+		if (f < 0)
+			return 1;
 
-Both skbs (or their struct hsr_frame_info) received an unique id.
-However since skb2 was sent before skb1, the higher sequence number was
-recorded in hsr_register_frame_out() and the late arriving skb1 was
-dropped and never sent.
+		ioctl(f, SPI_IOC_WR_MODE, &modew);
+		ioctl(f, SPI_IOC_RD_MODE, &moder);
 
-This scenario has been observed in a three node HSR setup, with node1 +
-node2 having ping and iperf running in parallel. From time to time ping
-reported a missing packet. Based on tracing that missing ping packet did
-not leave the system.
+		return moder == modew ? 0 : 2;
+	}
 
-It might be possible (didn't check) to drop the sequence number check on
-the sending side. But if the higher sequence number leaves on wire
-before the lower does and the destination receives them in that order
-and it will drop the packet with the lower sequence number and never
-inject into the stack.
-Therefore it seems the only way is to lock the whole path from obtaining
-the sequence number and sending via dev_queue_xmit() and assuming the
-packets leave on wire in the same order (and don't get reordered by the
-NIC).
-
-Cover the whole path for the master interface from obtaining the ID
-until after it has been forwarded via hsr_forward_skb() to ensure the
-skbs are sent to the NIC in the order of the assigned sequence numbers.
-
-Fixes: f421436a591d3 ("net/hsr: Add support for the High-availability Seamless Redundancy protocol (HSRv0)")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: f3186dd87669 ("spi: Optionally use GPIO descriptors for CS GPIOs")
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@siemens.com>
+Link: https://lore.kernel.org/r/20221130162927.539512-1-alexander.sverdlin@siemens.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_device.c  | 12 +++++++-----
- net/hsr/hsr_forward.c |  3 +--
- 2 files changed, 8 insertions(+), 7 deletions(-)
+ drivers/spi/spidev.c | 21 ++++++++++++++++-----
+ 1 file changed, 16 insertions(+), 5 deletions(-)
 
-diff --git a/net/hsr/hsr_device.c b/net/hsr/hsr_device.c
-index 037ad39564a4..84e6ef4f3525 100644
---- a/net/hsr/hsr_device.c
-+++ b/net/hsr/hsr_device.c
-@@ -219,7 +219,9 @@ static netdev_tx_t hsr_dev_xmit(struct sk_buff *skb, struct net_device *dev)
- 		skb->dev = master->dev;
- 		skb_reset_mac_header(skb);
- 		skb_reset_mac_len(skb);
-+		spin_lock_bh(&hsr->seqnr_lock);
- 		hsr_forward_skb(skb, master);
-+		spin_unlock_bh(&hsr->seqnr_lock);
- 	} else {
- 		atomic_long_inc(&dev->tx_dropped);
- 		dev_kfree_skb_any(skb);
-@@ -306,7 +308,6 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
- 		hsr_stag->sequence_nr = htons(hsr->sequence_nr);
- 		hsr->sequence_nr++;
- 	}
--	spin_unlock_bh(&hsr->seqnr_lock);
- 
- 	hsr_stag->HSR_TLV_type = type;
- 	/* TODO: Why 12 in HSRv0? */
-@@ -317,11 +318,13 @@ static void send_hsr_supervision_frame(struct hsr_port *master,
- 	hsr_sp = skb_put(skb, sizeof(struct hsr_sup_payload));
- 	ether_addr_copy(hsr_sp->macaddress_A, master->dev->dev_addr);
- 
--	if (skb_put_padto(skb, ETH_ZLEN))
-+	if (skb_put_padto(skb, ETH_ZLEN)) {
-+		spin_unlock_bh(&hsr->seqnr_lock);
- 		return;
-+	}
- 
- 	hsr_forward_skb(skb, master);
--
-+	spin_unlock_bh(&hsr->seqnr_lock);
- 	return;
- }
- 
-@@ -360,9 +363,8 @@ static void send_prp_supervision_frame(struct hsr_port *master,
- 		return;
- 	}
- 
--	spin_unlock_bh(&hsr->seqnr_lock);
--
- 	hsr_forward_skb(skb, master);
-+	spin_unlock_bh(&hsr->seqnr_lock);
- }
- 
- /* Announce (supervision frame) timer function
-diff --git a/net/hsr/hsr_forward.c b/net/hsr/hsr_forward.c
-index 142bed7f1fea..aec48e670fb6 100644
---- a/net/hsr/hsr_forward.c
-+++ b/net/hsr/hsr_forward.c
-@@ -446,10 +446,9 @@ static void handle_std_frame(struct sk_buff *skb,
- 		frame->is_from_san = true;
- 	} else {
- 		/* Sequence nr for the master node */
--		spin_lock_bh(&hsr->seqnr_lock);
-+		lockdep_assert_held(&hsr->seqnr_lock);
- 		frame->sequence_nr = hsr->sequence_nr;
- 		hsr->sequence_nr++;
--		spin_unlock_bh(&hsr->seqnr_lock);
- 	}
- }
- 
+diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
+index 859910ec8d9f..9c5ec99431d2 100644
+--- a/drivers/spi/spidev.c
++++ b/drivers/spi/spidev.c
+@@ -376,12 +376,23 @@ spidev_ioctl(struct file *filp, unsigned int cmd, unsigned long arg)
+ 	switch (cmd) {
+ 	/* read requests */
+ 	case SPI_IOC_RD_MODE:
+-		retval = put_user(spi->mode & SPI_MODE_MASK,
+-					(__u8 __user *)arg);
+-		break;
+ 	case SPI_IOC_RD_MODE32:
+-		retval = put_user(spi->mode & SPI_MODE_MASK,
+-					(__u32 __user *)arg);
++		tmp = spi->mode;
++
++		{
++			struct spi_controller *ctlr = spi->controller;
++
++			if (ctlr->use_gpio_descriptors && ctlr->cs_gpiods &&
++			    ctlr->cs_gpiods[spi->chip_select])
++				tmp &= ~SPI_CS_HIGH;
++		}
++
++		if (cmd == SPI_IOC_RD_MODE)
++			retval = put_user(tmp & SPI_MODE_MASK,
++					  (__u8 __user *)arg);
++		else
++			retval = put_user(tmp & SPI_MODE_MASK,
++					  (__u32 __user *)arg);
+ 		break;
+ 	case SPI_IOC_RD_LSB_FIRST:
+ 		retval = put_user((spi->mode & SPI_LSB_FIRST) ?  1 : 0,
 -- 
 2.35.1
 
