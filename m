@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 563C379C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:30:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8908C433D2;
-	Thu, 12 Jan 2023 14:30:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 469B079C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:31:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFCA5C433EF;
+	Thu, 12 Jan 2023 14:31:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533858;
-	bh=x8me41N348hYbjwYMm5GojH45ZUnFvfBjbyZQRgZt1I=;
+	s=korg; t=1673533861;
+	bh=HvS1E68sRO6vEsoCle7ot2ncaAQB9rkDwBYN3kGRY4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tAXee1Zx2MGHsJ1d/hp1chqVTIFSX23ckN/ZJQZ8yFDEXXG0Q4cH29m6FEkNraARt
-	 gjJd4JSloS1GM7xucPzEErCEi7r9w4f6D+bV5x8Sr/WOm2Lnht6K8yHMmUPTyI4lRa
-	 7gxDXOFEs4bWl2N0ORw3jNmw2W+QEoIMQg+/pJA4=
+	b=oZzGdmH75zx1pv5CJDg2g3RUYcNf7bWl3Iq9808ZdBMKRmaW+bfWJJmdCI5pKk5nN
+	 bdTSHr5rgEyLU/dkS8q8mumPcqYJCTI2Gen6hIOJnBxMl2rXha0gZuVXD0vgsbn3RZ
+	 lNxoYhY2YVY+prAybilN0FOlpKFa1UcZi/fiMTF8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Douglas Anderson <dianders@chromium.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.10 615/783] arm64: dts: qcom: sdm845-db845c: correct SPI2 pins drive strength
-Date: Thu, 12 Jan 2023 14:55:31 +0100
-Message-Id: <20230112135552.774078356@linuxfoundation.org>
+	Wenchao Chen <wenchao.chen@unisoc.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.10 616/783] mmc: sdhci-sprd: Disable CLK_AUTO when the clock is less than 400K
+Date: Thu, 12 Jan 2023 14:55:32 +0100
+Message-Id: <20230112135552.817813358@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,44 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Wenchao Chen <wenchao.chen@unisoc.com>
 
-commit 9905370560d9c29adc15f4937c5a0c0dac05f0b4 upstream.
+commit ff874dbc4f868af128b412a9bd92637103cf11d7 upstream.
 
-The pin configuration (done with generic pin controller helpers and
-as expressed by bindings) requires children nodes with either:
-1. "pins" property and the actual configuration,
-2. another set of nodes with above point.
+When the clock is less than 400K, some SD cards fail to initialize
+because CLK_AUTO is enabled.
 
-The qup_spi2_default pin configuration uses alreaady the second method
-with a "pinmux" child, so configure drive-strength similarly in
-"pinconf".  Otherwise the PIN drive strength would not be applied.
-
-Fixes: 8d23a0040475 ("arm64: dts: qcom: db845c: add Low speed expansion i2c and spi nodes")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221010114417.29859-2-krzysztof.kozlowski@linaro.org
+Fixes: fb8bd90f83c4 ("mmc: sdhci-sprd: Add Spreadtrum's initial host controller")
+Signed-off-by: Wenchao Chen <wenchao.chen@unisoc.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20221207051909.32126-1-wenchao.chen@unisoc.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/qcom/sdm845-db845c.dts |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci-sprd.c |   16 +++++++++-------
+ 1 file changed, 9 insertions(+), 7 deletions(-)
 
---- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
-@@ -1045,7 +1045,10 @@
+--- a/drivers/mmc/host/sdhci-sprd.c
++++ b/drivers/mmc/host/sdhci-sprd.c
+@@ -224,13 +224,15 @@ static inline void _sdhci_sprd_set_clock
+ 	div = ((div & 0x300) >> 2) | ((div & 0xFF) << 8);
+ 	sdhci_enable_clk(host, div);
  
- /* PINCTRL - additions to nodes defined in sdm845.dtsi */
- &qup_spi2_default {
--	drive-strength = <16>;
-+	pinconf {
-+		pins = "gpio27", "gpio28", "gpio29", "gpio30";
-+		drive-strength = <16>;
-+	};
- };
+-	/* enable auto gate sdhc_enable_auto_gate */
+-	val = sdhci_readl(host, SDHCI_SPRD_REG_32_BUSY_POSI);
+-	mask = SDHCI_SPRD_BIT_OUTR_CLK_AUTO_EN |
+-	       SDHCI_SPRD_BIT_INNR_CLK_AUTO_EN;
+-	if (mask != (val & mask)) {
+-		val |= mask;
+-		sdhci_writel(host, val, SDHCI_SPRD_REG_32_BUSY_POSI);
++	/* Enable CLK_AUTO when the clock is greater than 400K. */
++	if (clk > 400000) {
++		val = sdhci_readl(host, SDHCI_SPRD_REG_32_BUSY_POSI);
++		mask = SDHCI_SPRD_BIT_OUTR_CLK_AUTO_EN |
++			SDHCI_SPRD_BIT_INNR_CLK_AUTO_EN;
++		if (mask != (val & mask)) {
++			val |= mask;
++			sdhci_writel(host, val, SDHCI_SPRD_REG_32_BUSY_POSI);
++		}
+ 	}
+ }
  
- &qup_uart3_default{
 
 
