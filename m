@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07FC1749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:11:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 636ACC433D2;
-	Thu, 12 Jan 2023 14:11:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1053F749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:11:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F2AC433EF;
+	Thu, 12 Jan 2023 14:11:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532701;
-	bh=pF9927STBAh5+q5BUnPWn+RRGuWkL9EHOCcMKPeNSaY=;
+	s=korg; t=1673532704;
+	bh=fU62R64QBHBPOniaRNtAr/rtrigTFf2fHK2358w6E2A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gkRDuRZRiIHBc2mb8/G35lK1lD+ASACTnMuHhYFFaktD++QH20lGqhwnb5TVwmWRC
-	 uWKEglJ2Kz2lNSaSYbPOh+ng+z+okadFFDN5rWBoPxxnip87EOoj+3WpEDBhdBizrG
-	 k+DiVdsDjm4CBS97LwmlpyrpP7AhTR5ONgz4GrlY=
+	b=tPuiLvXxn3cdO28IReiqG4SXtNz0zIU/ITGyqPXzpndRBx2NY38ocBUeQ4SiVo08c
+	 Hs1SHvbob3KhKmr2BZMGf0dXjgbCDIAn7nmcUkHxN3nvuqopIyG43AjHLNccX9cH8M
+	 tDF+BntqeeKewA3vgzlCcomg9Z59Sm9T+e2CaYhI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
-	Stefano Garzarella <sgarzare@redhat.com>,
-	Vishnu Dasa <vdasa@vmware.com>,
+	Yongqiang Liu <liuyongqiang13@huawei.com>,
+	Jiri Pirko <jiri@nvidia.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 249/783] net: vmw_vsock: vmci: Check memcpy_from_msg()
-Date: Thu, 12 Jan 2023 14:49:25 +0100
-Message-Id: <20230112135535.942546915@linuxfoundation.org>
+Subject: [PATCH 5.10 250/783] net: defxx: Fix missing err handling in dfx_init()
+Date: Thu, 12 Jan 2023 14:49:26 +0100
+Message-Id: <20230112135535.993949709@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -37,45 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+From: Yongqiang Liu <liuyongqiang13@huawei.com>
 
-[ Upstream commit 44aa5a6dba8283bfda28b1517af4de711c5652a4 ]
+[ Upstream commit ae18dcdff0f8d7e84cd3fd9f496518b5e72d185d ]
 
-vmci_transport_dgram_enqueue() does not check the return value
-of memcpy_from_msg().  If memcpy_from_msg() fails, it is possible that
-uninitialized memory contents are sent unintentionally instead of user's
-message in the datagram to the destination.  Return with an error if
-memcpy_from_msg() fails.
+When eisa_driver_register() or tc_register_driver() failed,
+the modprobe defxx would fail with some err log as follows:
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+ Error: Driver 'defxx' is already registered, aborting...
 
-Fixes: 0f7db23a07af ("vmci_transport: switch ->enqeue_dgram, ->enqueue_stream and ->dequeue_stream to msghdr")
-Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
-Reviewed-by: Vishnu Dasa <vdasa@vmware.com>
+Fix this issue by adding err hanling in dfx_init().
+
+Fixes: e89a2cfb7d7b5 ("[TC] defxx: TURBOchannel support")
+Signed-off-by: Yongqiang Liu <liuyongqiang13@huawei.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/vmw_vsock/vmci_transport.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/net/fddi/defxx.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/net/vmw_vsock/vmci_transport.c b/net/vmw_vsock/vmci_transport.c
-index a9ca95a0fcdd..8c2856cbfecc 100644
---- a/net/vmw_vsock/vmci_transport.c
-+++ b/net/vmw_vsock/vmci_transport.c
-@@ -1713,7 +1713,11 @@ static int vmci_transport_dgram_enqueue(
- 	if (!dg)
- 		return -ENOMEM;
+diff --git a/drivers/net/fddi/defxx.c b/drivers/net/fddi/defxx.c
+index c7ce6d5491af..442bdc6e8dc4 100644
+--- a/drivers/net/fddi/defxx.c
++++ b/drivers/net/fddi/defxx.c
+@@ -3844,10 +3844,24 @@ static int dfx_init(void)
+ 	int status;
  
--	memcpy_from_msg(VMCI_DG_PAYLOAD(dg), msg, len);
-+	err = memcpy_from_msg(VMCI_DG_PAYLOAD(dg), msg, len);
-+	if (err) {
-+		kfree(dg);
-+		return err;
-+	}
+ 	status = pci_register_driver(&dfx_pci_driver);
+-	if (!status)
+-		status = eisa_driver_register(&dfx_eisa_driver);
+-	if (!status)
+-		status = tc_register_driver(&dfx_tc_driver);
++	if (status)
++		goto err_pci_register;
++
++	status = eisa_driver_register(&dfx_eisa_driver);
++	if (status)
++		goto err_eisa_register;
++
++	status = tc_register_driver(&dfx_tc_driver);
++	if (status)
++		goto err_tc_register;
++
++	return 0;
++
++err_tc_register:
++	eisa_driver_unregister(&dfx_eisa_driver);
++err_eisa_register:
++	pci_unregister_driver(&dfx_pci_driver);
++err_pci_register:
+ 	return status;
+ }
  
- 	dg->dst = vmci_make_handle(remote_addr->svm_cid,
- 				   remote_addr->svm_port);
 -- 
 2.35.1
 
