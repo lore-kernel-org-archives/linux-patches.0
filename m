@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF75B79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:19:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 240E9C433EF;
-	Thu, 12 Jan 2023 14:19:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA50B79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:19:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33DA2C433D2;
+	Thu, 12 Jan 2023 14:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533151;
-	bh=KIH72uI4TLQYi5JpgYDvWMGpctY769nbI78JnbEJASg=;
+	s=korg; t=1673533154;
+	bh=m22/9FuUJg1regPUCYE/ppXSR0JJAWxRNvmMrB/SHss=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eVmy4Va3zZXGidlGosEUqO7pHMmXujuUFn5Cc1pCF7Ah2WZay7FuC1uqcKW5Qcm7F
-	 G4pAlD5qR+iLRwtwMQgZ2HZ7xrHk6fabpf2KyoEFP2PEYGuOO4l5bOd0lacT6d+kxt
-	 crtHNqZjJ3MAl+cyaWqLGIn1Qtb+FeL6byPMzMVw=
+	b=dWrjrE65eWzkDmiZ0PMCJzHJ45kEPe+BoR6+BaxjzL4Ae8Go0ajJwIzIO701aGica
+	 QRz3DrBB7fA8qxTB4nV3eKWhuWkmipuNwXNhQWfR9KxPRLwb3mhiITblO0dqZVfoUR
+	 E+A3wO/1dGk9HtmMsQaQcSg6cwoO2WcVihwv81BU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 387/783] gpiolib: cdev: fix NULL-pointer dereferences
-Date: Thu, 12 Jan 2023 14:51:43 +0100
-Message-Id: <20230112135542.242498464@linuxfoundation.org>
+Subject: [PATCH 5.10 370/783] iio: adis: handle devices that cannot unmask the drdy pin
+Date: Thu, 12 Jan 2023 14:51:26 +0100
+Message-Id: <20230112135541.489080306@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,132 +35,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Nuno Sá <nuno.sa@analog.com>
 
-[ Upstream commit 533aae7c94dbc2b14301cfd68ae7e0e90f0c8438 ]
+[ Upstream commit 31fa357ac809affd9f9a7d0b5d1991951e16beec ]
 
-There are several places where we can crash the kernel by requesting
-lines, unbinding the GPIO device, then calling any of the system calls
-relevant to the GPIO character device's annonymous file descriptors:
-ioctl(), read(), poll().
+Some devices can't mask/unmask the data ready pin and in those cases
+each driver was just calling '{dis}enable_irq()' to control the trigger
+state. This change, moves that handling into the library by introducing
+a new boolean in the data structure that tells the library that the
+device cannot unmask the pin.
 
-While I observed it with the GPIO simulator, it will also happen for any
-of the GPIO devices that can be hot-unplugged - for instance any HID GPIO
-expander (e.g. CP2112).
+On top of controlling the trigger state, we can also use this flag to
+automatically request the IRQ with 'IRQF_NO_AUTOEN' in case it is set.
+So far, all users of the library want to start operation with IRQs/DRDY
+pin disabled so it should be fairly safe to do this inside the library.
 
-This affects both v1 and v2 uAPI.
-
-This fixes it partially by checking if gdev->chip is not NULL but it
-doesn't entirely remedy the situation as we still have a race condition
-in which another thread can remove the device after the check.
-
-Fixes: d7c51b47ac11 ("gpio: userspace ABI for reading/writing GPIO lines")
-Fixes: 3c0d9c635ae2 ("gpiolib: cdev: support GPIO_V2_GET_LINE_IOCTL and GPIO_V2_LINE_GET_VALUES_IOCTL")
-Fixes: aad955842d1c ("gpiolib: cdev: support GPIO_V2_GET_LINEINFO_IOCTL and GPIO_V2_GET_LINEINFO_WATCH_IOCTL")
-Fixes: a54756cb24ea ("gpiolib: cdev: support GPIO_V2_LINE_SET_CONFIG_IOCTL")
-Fixes: 7b8e00d98168 ("gpiolib: cdev: support GPIO_V2_LINE_SET_VALUES_IOCTL")
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Nuno Sá <nuno.sa@analog.com>
+Link: https://lore.kernel.org/r/20210903141423.517028-3-nuno.sa@analog.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Stable-dep-of: 99c05e4283a1 ("iio: adis: add '__adis_enable_irq()' implementation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpiolib-cdev.c | 27 +++++++++++++++++++++++++++
- 1 file changed, 27 insertions(+)
+ drivers/iio/imu/adis.c         | 15 ++++++++++++++-
+ drivers/iio/imu/adis_trigger.c |  4 ++++
+ include/linux/iio/imu/adis.h   |  2 ++
+ 3 files changed, 20 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpio/gpiolib-cdev.c b/drivers/gpio/gpiolib-cdev.c
-index b51b4d7a611e..40d0196d8bdc 100644
---- a/drivers/gpio/gpiolib-cdev.c
-+++ b/drivers/gpio/gpiolib-cdev.c
-@@ -200,6 +200,9 @@ static long linehandle_ioctl(struct file *file, unsigned int cmd,
- 	unsigned int i;
- 	int ret;
- 
-+	if (!lh->gdev->chip)
-+		return -ENODEV;
+diff --git a/drivers/iio/imu/adis.c b/drivers/iio/imu/adis.c
+index 715eef81bc24..5fcf269e98a6 100644
+--- a/drivers/iio/imu/adis.c
++++ b/drivers/iio/imu/adis.c
+@@ -290,6 +290,13 @@ int adis_enable_irq(struct adis *adis, bool enable)
+ 	if (adis->data->enable_irq) {
+ 		ret = adis->data->enable_irq(adis, enable);
+ 		goto out_unlock;
++	} else if (adis->data->unmasked_drdy) {
++		if (enable)
++			enable_irq(adis->spi->irq);
++		else
++			disable_irq(adis->spi->irq);
 +
- 	switch (cmd) {
- 	case GPIOHANDLE_GET_LINE_VALUES_IOCTL:
- 		/* NOTE: It's okay to read values of output lines */
-@@ -1165,6 +1168,9 @@ static long linereq_ioctl(struct file *file, unsigned int cmd,
- 	struct linereq *lr = file->private_data;
- 	void __user *ip = (void __user *)arg;
++		goto out_unlock;
+ 	}
  
-+	if (!lr->gdev->chip)
-+		return -ENODEV;
+ 	ret = __adis_read_reg_16(adis, adis->data->msc_ctrl_reg, &msc);
+@@ -434,7 +441,13 @@ int __adis_initial_startup(struct adis *adis)
+ 	if (ret)
+ 		return ret;
+ 
+-	adis_enable_irq(adis, false);
++	/*
++	 * don't bother calling this if we can't unmask the IRQ as in this case
++	 * the IRQ is most likely not yet requested and we will request it
++	 * with 'IRQF_NO_AUTOEN' anyways.
++	 */
++	if (!adis->data->unmasked_drdy)
++		adis_enable_irq(adis, false);
+ 
+ 	if (!adis->data->prod_id_reg)
+ 		return 0;
+diff --git a/drivers/iio/imu/adis_trigger.c b/drivers/iio/imu/adis_trigger.c
+index 17058ac7aa9f..76b0488ef41b 100644
+--- a/drivers/iio/imu/adis_trigger.c
++++ b/drivers/iio/imu/adis_trigger.c
+@@ -37,6 +37,10 @@ static void adis_trigger_setup(struct adis *adis)
+ static int adis_validate_irq_flag(struct adis *adis)
+ {
+ 	unsigned long direction = adis->irq_flag & IRQF_TRIGGER_MASK;
 +
- 	switch (cmd) {
- 	case GPIO_V2_LINE_GET_VALUES_IOCTL:
- 		return linereq_get_values(lr, ip);
-@@ -1191,6 +1197,9 @@ static __poll_t linereq_poll(struct file *file,
- 	struct linereq *lr = file->private_data;
- 	__poll_t events = 0;
- 
-+	if (!lr->gdev->chip)
-+		return EPOLLHUP | EPOLLERR;
-+
- 	poll_wait(file, &lr->wait, wait);
- 
- 	if (!kfifo_is_empty_spinlocked_noirqsave(&lr->events,
-@@ -1210,6 +1219,9 @@ static ssize_t linereq_read(struct file *file,
- 	ssize_t bytes_read = 0;
- 	int ret;
- 
-+	if (!lr->gdev->chip)
-+		return -ENODEV;
-+
- 	if (count < sizeof(le))
- 		return -EINVAL;
- 
-@@ -1475,6 +1487,9 @@ static __poll_t lineevent_poll(struct file *file,
- 	struct lineevent_state *le = file->private_data;
- 	__poll_t events = 0;
- 
-+	if (!le->gdev->chip)
-+		return EPOLLHUP | EPOLLERR;
-+
- 	poll_wait(file, &le->wait, wait);
- 
- 	if (!kfifo_is_empty_spinlocked_noirqsave(&le->events, &le->wait.lock))
-@@ -1510,6 +1525,9 @@ static ssize_t lineevent_read(struct file *file,
- 	ssize_t ge_size;
- 	int ret;
- 
-+	if (!le->gdev->chip)
-+		return -ENODEV;
-+
++	/* We cannot mask the interrupt so ensure it's not enabled at request */
++	if (adis->data->unmasked_drdy)
++		adis->irq_flag |= IRQF_NO_AUTOEN;
  	/*
- 	 * When compatible system call is being used the struct gpioevent_data,
- 	 * in case of at least ia32, has different size due to the alignment
-@@ -1588,6 +1606,9 @@ static long lineevent_ioctl(struct file *file, unsigned int cmd,
- 	void __user *ip = (void __user *)arg;
- 	struct gpiohandle_data ghd;
+ 	 * Typically this devices have data ready either on the rising edge or
+ 	 * on the falling edge of the data ready pin. This checks enforces that
+diff --git a/include/linux/iio/imu/adis.h b/include/linux/iio/imu/adis.h
+index 04e96d688ba9..2ced0c88f481 100644
+--- a/include/linux/iio/imu/adis.h
++++ b/include/linux/iio/imu/adis.h
+@@ -49,6 +49,7 @@ struct adis_timeout {
+  * @status_error_mask: Bitmask of errors supported by the device
+  * @timeouts: Chip specific delays
+  * @enable_irq: Hook for ADIS devices that have a special IRQ enable/disable
++ * @unmasked_drdy: True for devices that cannot mask/unmask the data ready pin
+  * @has_paging: True if ADIS device has paged registers
+  * @burst_reg_cmd:	Register command that triggers burst
+  * @burst_len:		Burst size in the SPI RX buffer. If @burst_max_len is defined,
+@@ -77,6 +78,7 @@ struct adis_data {
+ 	unsigned int status_error_mask;
  
-+	if (!le->gdev->chip)
-+		return -ENODEV;
-+
- 	/*
- 	 * We can get the value for an event line but not set it,
- 	 * because it is input by definition.
-@@ -2168,6 +2189,9 @@ static __poll_t lineinfo_watch_poll(struct file *file,
- 	struct gpio_chardev_data *cdev = file->private_data;
- 	__poll_t events = 0;
+ 	int (*enable_irq)(struct adis *adis, bool enable);
++	bool unmasked_drdy;
  
-+	if (!cdev->gdev->chip)
-+		return EPOLLHUP | EPOLLERR;
-+
- 	poll_wait(file, &cdev->wait, pollt);
+ 	bool has_paging;
  
- 	if (!kfifo_is_empty_spinlocked_noirqsave(&cdev->events,
-@@ -2186,6 +2210,9 @@ static ssize_t lineinfo_watch_read(struct file *file, char __user *buf,
- 	int ret;
- 	size_t event_size;
- 
-+	if (!cdev->gdev->chip)
-+		return -ENODEV;
-+
- #ifndef CONFIG_GPIO_CDEV_V1
- 	event_size = sizeof(struct gpio_v2_line_info_changed);
- 	if (count < event_size)
 -- 
 2.35.1
 
