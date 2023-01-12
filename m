@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600D5749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:13:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CDCC433EF;
-	Thu, 12 Jan 2023 14:13:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AB2749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:13:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0596C433F0;
+	Thu, 12 Jan 2023 14:13:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532819;
-	bh=Fcq213SnMnf54uGEEhpZ8HlaTHB+eCQCWjZVM3hau6I=;
+	s=korg; t=1673532822;
+	bh=L1Myazw+YJPpfoU+ZYBfhr+G9ONcDTYqNtvMCYAb3YM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xv6UvupYo6xvsiTCqprEjpLIWwJ82jkeG6fag7jasBta0ETtXjmxQZifIIImkNC1Y
-	 AM4M5+f6TGoV16k+pF0pC5HlckXGe8XFmVIKYK8nb+XSt2puBZxDGLRGePhTjqJGng
-	 yaORnc5jcNJySjq6VQu2uVeGq5hxGVkxfNRdfaFM=
+	b=BEpoeODLwBBE7AKN92utXHjtemUYAJVoQ7Xyd/zJ63eXnvCqikseE0f6LpEgdDUNK
+	 ZxAA7ghPxtEM7T2LffOtHhUtIZm0OW3LZDPj1gsz/mHU9I+p/WmN9oR9eQRghVBISj
+	 NlKCC/kKeuVlpmRgzCUAxVcz1OKQ9kpjijh1jkgI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Zhang Qilong <zhangqilong3@huawei.com>,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 287/783] f2fs: Fix the race condition of resize flag between resizefs
-Date: Thu, 12 Jan 2023 14:50:03 +0100
-Message-Id: <20230112135537.689650786@linuxfoundation.org>
+Subject: [PATCH 5.10 270/783] Bluetooth: hci_qca: dont call kfree_skb() under spin_lock_irqsave()
+Date: Thu, 12 Jan 2023 14:49:46 +0100
+Message-Id: <20230112135536.926004966@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -37,72 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Qilong <zhangqilong3@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 28fc4e9077ce59ab28c89c20dc6be5154473218f ]
+[ Upstream commit df4cfc91208e0a98f078223793f5871b1a82cc54 ]
 
-Because the set/clear SBI_IS_RESIZEFS flag not between any locks,
-In the following case:
-  thread1			thread2
-   ->ioctl(resizefs)
-    ->set RESIZEFS flag		 ->ioctl(resizefs)
-    ...                   	  ->set RESIZEFS flag
-    ->clear RESIZEFS flag
-    				  ->resizefs stream
-				    # No RESIZEFS flag in the stream
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with interrupts being disabled. So replace kfree_skb()
+with dev_kfree_skb_irq() under spin_lock_irqsave().
 
-Also before freeze_super, the resizefs not started, we should not set
-the SBI_IS_RESIZEFS flag.
-
-So move the set/clear SBI_IS_RESIZEFS flag between the cp_mutex and
-gc_lock.
-
-Fixes: b4b10061ef98 ("f2fs: refactor resize_fs to avoid meta updates in progress")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: 0ff252c1976d ("Bluetooth: hciuart: Add support QCA chipset for UART")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/gc.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/bluetooth/hci_qca.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
-index 3baa62ef6e3a..5ac0b605335f 100644
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -2035,8 +2035,6 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
- 	if (err)
- 		return err;
- 
--	set_sbi_flag(sbi, SBI_IS_RESIZEFS);
--
- 	freeze_super(sbi->sb);
- 	down_write(&sbi->gc_lock);
- 	mutex_lock(&sbi->cp_mutex);
-@@ -2052,6 +2050,7 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
- 	if (err)
- 		goto out_err;
- 
-+	set_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	err = free_segment_range(sbi, secs, false);
- 	if (err)
- 		goto recover_out;
-@@ -2075,6 +2074,7 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
- 		f2fs_commit_super(sbi, false);
+diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+index eea18aed17f8..60b0e13bb9fc 100644
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -905,7 +905,7 @@ static int qca_enqueue(struct hci_uart *hu, struct sk_buff *skb)
+ 	default:
+ 		BT_ERR("Illegal tx state: %d (losing packet)",
+ 		       qca->tx_ibs_state);
+-		kfree_skb(skb);
++		dev_kfree_skb_irq(skb);
+ 		break;
  	}
- recover_out:
-+	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	if (err) {
- 		set_sbi_flag(sbi, SBI_NEED_FSCK);
- 		f2fs_err(sbi, "resize_fs failed, should run fsck to repair!");
-@@ -2087,6 +2087,5 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
- 	mutex_unlock(&sbi->cp_mutex);
- 	up_write(&sbi->gc_lock);
- 	thaw_super(sbi->sb);
--	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
- 	return err;
- }
+ 
 -- 
 2.35.1
 
