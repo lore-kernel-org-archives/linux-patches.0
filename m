@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8251079C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:38:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAB45C433EF;
-	Thu, 12 Jan 2023 14:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6465679D0
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:38:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB2EBC433D2;
+	Thu, 12 Jan 2023 14:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534322;
-	bh=6aSeGWTcl4Sbjn4pU5NkgqWHZUtaE5A1qSNjvcrgwXg=;
+	s=korg; t=1673534328;
+	bh=IEsXqHYVweLuzQAYjINd9l9nUTDUu6YIw4SJDjbK5IQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OthHlx6uFxGjL67ALw1PQ2Fv3hO5zWDcy1fev/flY+0Y9PQdZby65dk7BlmU4z8Rw
-	 7d3PfbOro9oJVNLkaimxwecl8bhCnJCU86xcwjior+nROKb/LAre4bW37aovZOImgm
-	 7Pi0liIepB2WAJc3VcUp9N2mga038Y7SrQuUuJCY=
+	b=RZdXgieQKhZ19e9WdQP4LIuUJLmZAVGQQ2ajnH+Dd3f7hMLG+4cZAuXNOTuKQ6MCv
+	 XpcomcwRrf9kmQXtN03yte944Tiw4fYpbf9pyTmS/N5o4sWDnZ/d9TGo2gawrcq2Hd
+	 MCPvP+gr9nii6QyssfFOQncqbS5avskA5wZnny0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Wang Yugui <wangyugui@e16-tech.com>
-Subject: [PATCH 5.10 729/783] nfsd: shut down the NFSv4 state objects before the filecache
-Date: Thu, 12 Jan 2023 14:57:25 +0100
-Message-Id: <20230112135558.136329754@linuxfoundation.org>
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 5.10 772/783] io_uring: Fix unsigned res comparison with zero in io_fixup_rw_res()
+Date: Thu, 12 Jan 2023 14:58:08 +0100
+Message-Id: <20230112135600.170942359@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,42 +33,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit 789e1e10f214c00ca18fc6610824c5b9876ba5f2 ]
+Smatch warning: io_fixup_rw_res() warn:
+	unsigned 'res' is never less than zero.
 
-Currently, we shut down the filecache before trying to clean up the
-stateids that depend on it. This leads to the kernel trying to free an
-nfsd_file twice, and a refcount overput on the nf_mark.
+Change type of 'res' from unsigned to long.
 
-Change the shutdown procedure to tear down all of the stateids prior
-to shutting down the filecache.
-
-Reported-and-tested-by: Wang Yugui <wangyugui@e16-tech.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Fixes: 5e113224c17e ("nfsd: nfsd_file cache entries should be per net namespace")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: d6b7efc722a2 ("io_uring/rw: fix error'ed retry return values")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nfsd/nfssvc.c | 2 +-
+ io_uring/io_uring.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index 9323e30a7eaf..c7fffe1453bd 100644
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -426,8 +426,8 @@ static void nfsd_shutdown_net(struct net *net)
- {
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -2702,7 +2702,7 @@ static bool __io_complete_rw_common(stru
+ 	return false;
+ }
  
--	nfsd_file_cache_shutdown_net(net);
- 	nfs4_state_shutdown_net(net);
-+	nfsd_file_cache_shutdown_net(net);
- 	if (nn->lockd_up) {
- 		lockd_down(net);
- 		nn->lockd_up = false;
--- 
-2.35.1
-
+-static inline int io_fixup_rw_res(struct io_kiocb *req, unsigned res)
++static inline int io_fixup_rw_res(struct io_kiocb *req, long res)
+ {
+ 	struct io_async_rw *io = req->async_data;
+ 
 
 
