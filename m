@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1769A746A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 13:57:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 791D3C433D2;
-	Thu, 12 Jan 2023 13:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67FD746A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 13:57:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B8C1C433EF;
+	Thu, 12 Jan 2023 13:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673531826;
-	bh=Y7EGuV5nDIn9MMkRELJG7wn7Y89H0W8OT48fYQEPeKY=;
+	s=korg; t=1673531834;
+	bh=yzal9NjS3yOPkIvhCLzXo9oc1OG+nh8i5mZp6b2XE9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S1kvQs7hRhI2HyJoARgA0IdRNb/cxFTwJMlwCF67PMI6yY/1hTR0MIsHPhN/lEWNP
-	 psfSn13GYOEB+/KCITI14pIm9Zf0oVaKkUrDzrysEc6sSfD3lnxWODvIuT+rSglRVl
-	 5jBTWjud2+HoBoFJqos31Dt6gFCo8um0L1i1k4hA=
+	b=DpVleGN8QU3EsLWmbHcZFUEaxfeermEPbw0QGK01hvaRB7tRY3fQ7JD0srz+8e8nt
+	 zdYeh05YbT0TaOnrIC/3igdhqmoz1fT+IYanLyycXD0fdJN5/fqt46lN5qMX6xPTtY
+	 kN3BoPb3AdJcEwWflalnZD+eIR2TMWBjoZW1uMOU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederick Lawler <fred@cloudflare.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 10/10] net: sched: disallow noqueue for qdisc classes
-Date: Thu, 12 Jan 2023 14:56:31 +0100
-Message-Id: <20230112135327.411324794@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.15 01/10] parisc: Align parisc MADV_XXX constants with all other architectures
+Date: Thu, 12 Jan 2023 14:56:38 +0100
+Message-Id: <20230112135326.743668233@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230112135326.981869724@linuxfoundation.org>
-References: <20230112135326.981869724@linuxfoundation.org>
+In-Reply-To: <20230112135326.689857506@linuxfoundation.org>
+References: <20230112135326.689857506@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,93 +35,177 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frederick Lawler <fred@cloudflare.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 96398560f26aa07e8f2969d73c8197e6a6d10407 upstream.
+commit 71bdea6f798b425bc0003780b13e3fdecb16a010 upstream.
 
-While experimenting with applying noqueue to a classful queue discipline,
-we discovered a NULL pointer dereference in the __dev_queue_xmit()
-path that generates a kernel OOPS:
+Adjust some MADV_XXX constants to be in sync what their values are on
+all other platforms. There is currently no reason to have an own
+numbering on parisc, but it requires workarounds in many userspace
+sources (e.g. glibc, qemu, ...) - which are often forgotten and thus
+introduce bugs and different behaviour on parisc.
 
-    # dev=enp0s5
-    # tc qdisc replace dev $dev root handle 1: htb default 1
-    # tc class add dev $dev parent 1: classid 1:1 htb rate 10mbit
-    # tc qdisc add dev $dev parent 1:1 handle 10: noqueue
-    # ping -I $dev -w 1 -c 1 1.1.1.1
+A wrapper avoids an ABI breakage for existing userspace applications by
+translating any old values to the new ones, so this change allows us to
+move over all programs to the new ABI over time.
 
-[    2.172856] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[    2.173217] #PF: supervisor instruction fetch in kernel mode
-...
-[    2.178451] Call Trace:
-[    2.178577]  <TASK>
-[    2.178686]  htb_enqueue+0x1c8/0x370
-[    2.178880]  dev_qdisc_enqueue+0x15/0x90
-[    2.179093]  __dev_queue_xmit+0x798/0xd00
-[    2.179305]  ? _raw_write_lock_bh+0xe/0x30
-[    2.179522]  ? __local_bh_enable_ip+0x32/0x70
-[    2.179759]  ? ___neigh_create+0x610/0x840
-[    2.179968]  ? eth_header+0x21/0xc0
-[    2.180144]  ip_finish_output2+0x15e/0x4f0
-[    2.180348]  ? dst_output+0x30/0x30
-[    2.180525]  ip_push_pending_frames+0x9d/0xb0
-[    2.180739]  raw_sendmsg+0x601/0xcb0
-[    2.180916]  ? _raw_spin_trylock+0xe/0x50
-[    2.181112]  ? _raw_spin_unlock_irqrestore+0x16/0x30
-[    2.181354]  ? get_page_from_freelist+0xcd6/0xdf0
-[    2.181594]  ? sock_sendmsg+0x56/0x60
-[    2.181781]  sock_sendmsg+0x56/0x60
-[    2.181958]  __sys_sendto+0xf7/0x160
-[    2.182139]  ? handle_mm_fault+0x6e/0x1d0
-[    2.182366]  ? do_user_addr_fault+0x1e1/0x660
-[    2.182627]  __x64_sys_sendto+0x1b/0x30
-[    2.182881]  do_syscall_64+0x38/0x90
-[    2.183085]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-...
-[    2.187402]  </TASK>
-
-Previously in commit d66d6c3152e8 ("net: sched: register noqueue
-qdisc"), NULL was set for the noqueue discipline on noqueue init
-so that __dev_queue_xmit() falls through for the noqueue case. This
-also sets a bypass of the enqueue NULL check in the
-register_qdisc() function for the struct noqueue_disc_ops.
-
-Classful queue disciplines make it past the NULL check in
-__dev_queue_xmit() because the discipline is set to htb (in this case),
-and then in the call to __dev_xmit_skb(), it calls into htb_enqueue()
-which grabs a leaf node for a class and then calls qdisc_enqueue() by
-passing in a queue discipline which assumes ->enqueue() is not set to NULL.
-
-Fix this by not allowing classes to be assigned to the noqueue
-discipline. Linux TC Notes states that classes cannot be set to
-the noqueue discipline. [1] Let's enforce that here.
-
-Links:
-1. https://linux-tc-notes.sourceforge.net/tc/doc/sch_noqueue.txt
-
-Fixes: d66d6c3152e8 ("net: sched: register noqueue qdisc")
-Cc: stable@vger.kernel.org
-Signed-off-by: Frederick Lawler <fred@cloudflare.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/r/20230109163906.706000-1-fred@cloudflare.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_api.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/parisc/include/uapi/asm/mman.h       |   27 +++++++++++++--------------
+ arch/parisc/kernel/sys_parisc.c           |   27 +++++++++++++++++++++++++++
+ arch/parisc/kernel/syscalls/syscall.tbl   |    2 +-
+ tools/arch/parisc/include/uapi/asm/mman.h |   12 ++++++------
+ tools/perf/bench/bench.h                  |   12 ------------
+ 5 files changed, 47 insertions(+), 33 deletions(-)
 
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -1132,6 +1132,11 @@ skip:
- 			return -ENOENT;
- 		}
+--- a/arch/parisc/include/uapi/asm/mman.h
++++ b/arch/parisc/include/uapi/asm/mman.h
+@@ -49,31 +49,30 @@
+ #define MADV_DONTFORK	10		/* don't inherit across fork */
+ #define MADV_DOFORK	11		/* do inherit across fork */
  
-+		if (new && new->ops == &noqueue_qdisc_ops) {
-+			NL_SET_ERR_MSG(extack, "Cannot assign noqueue to a class");
-+			return -EINVAL;
-+		}
+-#define MADV_COLD	20		/* deactivate these pages */
+-#define MADV_PAGEOUT	21		/* reclaim these pages */
++#define MADV_MERGEABLE   12		/* KSM may merge identical pages */
++#define MADV_UNMERGEABLE 13		/* KSM may not merge identical pages */
+ 
+-#define MADV_POPULATE_READ	22	/* populate (prefault) page tables readable */
+-#define MADV_POPULATE_WRITE	23	/* populate (prefault) page tables writable */
++#define MADV_HUGEPAGE	14		/* Worth backing with hugepages */
++#define MADV_NOHUGEPAGE 15		/* Not worth backing with hugepages */
+ 
+-#define MADV_MERGEABLE   65		/* KSM may merge identical pages */
+-#define MADV_UNMERGEABLE 66		/* KSM may not merge identical pages */
++#define MADV_DONTDUMP   16		/* Explicity exclude from the core dump,
++					   overrides the coredump filter bits */
++#define MADV_DODUMP	17		/* Clear the MADV_NODUMP flag */
+ 
+-#define MADV_HUGEPAGE	67		/* Worth backing with hugepages */
+-#define MADV_NOHUGEPAGE	68		/* Not worth backing with hugepages */
++#define MADV_WIPEONFORK 18		/* Zero memory on fork, child only */
++#define MADV_KEEPONFORK 19		/* Undo MADV_WIPEONFORK */
+ 
+-#define MADV_DONTDUMP   69		/* Explicity exclude from the core dump,
+-					   overrides the coredump filter bits */
+-#define MADV_DODUMP	70		/* Clear the MADV_NODUMP flag */
++#define MADV_COLD	20		/* deactivate these pages */
++#define MADV_PAGEOUT	21		/* reclaim these pages */
+ 
+-#define MADV_WIPEONFORK 71		/* Zero memory on fork, child only */
+-#define MADV_KEEPONFORK 72		/* Undo MADV_WIPEONFORK */
++#define MADV_POPULATE_READ	22	/* populate (prefault) page tables readable */
++#define MADV_POPULATE_WRITE	23	/* populate (prefault) page tables writable */
+ 
+ #define MADV_HWPOISON     100		/* poison a page for testing */
+ #define MADV_SOFT_OFFLINE 101		/* soft offline page for testing */
+ 
+ /* compatibility flags */
+ #define MAP_FILE	0
+-#define MAP_VARIABLE	0
+ 
+ #define PKEY_DISABLE_ACCESS	0x1
+ #define PKEY_DISABLE_WRITE	0x2
+--- a/arch/parisc/kernel/sys_parisc.c
++++ b/arch/parisc/kernel/sys_parisc.c
+@@ -463,3 +463,30 @@ asmlinkage long parisc_inotify_init1(int
+ 	flags = FIX_O_NONBLOCK(flags);
+ 	return sys_inotify_init1(flags);
+ }
 +
- 		err = cops->graft(parent, cl, new, &old, extack);
- 		if (err)
- 			return err;
++/*
++ * madvise() wrapper
++ *
++ * Up to kernel v6.1 parisc has different values than all other
++ * platforms for the MADV_xxx flags listed below.
++ * To keep binary compatibility with existing userspace programs
++ * translate the former values to the new values.
++ *
++ * XXX: Remove this wrapper in year 2025 (or later)
++ */
++
++asmlinkage notrace long parisc_madvise(unsigned long start, size_t len_in, int behavior)
++{
++	switch (behavior) {
++	case 65: behavior = MADV_MERGEABLE;	break;
++	case 66: behavior = MADV_UNMERGEABLE;	break;
++	case 67: behavior = MADV_HUGEPAGE;	break;
++	case 68: behavior = MADV_NOHUGEPAGE;	break;
++	case 69: behavior = MADV_DONTDUMP;	break;
++	case 70: behavior = MADV_DODUMP;	break;
++	case 71: behavior = MADV_WIPEONFORK;	break;
++	case 72: behavior = MADV_KEEPONFORK;	break;
++	}
++
++	return sys_madvise(start, len_in, behavior);
++}
+--- a/arch/parisc/kernel/syscalls/syscall.tbl
++++ b/arch/parisc/kernel/syscalls/syscall.tbl
+@@ -131,7 +131,7 @@
+ 116	common	sysinfo			sys_sysinfo			compat_sys_sysinfo
+ 117	common	shutdown		sys_shutdown
+ 118	common	fsync			sys_fsync
+-119	common	madvise			sys_madvise
++119	common	madvise			parisc_madvise
+ 120	common	clone			sys_clone_wrapper
+ 121	common	setdomainname		sys_setdomainname
+ 122	common	sendfile		sys_sendfile			compat_sys_sendfile
+--- a/tools/arch/parisc/include/uapi/asm/mman.h
++++ b/tools/arch/parisc/include/uapi/asm/mman.h
+@@ -1,20 +1,20 @@
+ /* SPDX-License-Identifier: GPL-2.0 WITH Linux-syscall-note */
+ #ifndef TOOLS_ARCH_PARISC_UAPI_ASM_MMAN_FIX_H
+ #define TOOLS_ARCH_PARISC_UAPI_ASM_MMAN_FIX_H
+-#define MADV_DODUMP	70
++#define MADV_DODUMP	17
+ #define MADV_DOFORK	11
+-#define MADV_DONTDUMP   69
++#define MADV_DONTDUMP   16
+ #define MADV_DONTFORK	10
+ #define MADV_DONTNEED   4
+ #define MADV_FREE	8
+-#define MADV_HUGEPAGE	67
+-#define MADV_MERGEABLE   65
+-#define MADV_NOHUGEPAGE	68
++#define MADV_HUGEPAGE	14
++#define MADV_MERGEABLE  12
++#define MADV_NOHUGEPAGE 15
+ #define MADV_NORMAL     0
+ #define MADV_RANDOM     1
+ #define MADV_REMOVE	9
+ #define MADV_SEQUENTIAL 2
+-#define MADV_UNMERGEABLE 66
++#define MADV_UNMERGEABLE 13
+ #define MADV_WILLNEED   3
+ #define MAP_ANONYMOUS	0x10
+ #define MAP_DENYWRITE	0x0800
+--- a/tools/perf/bench/bench.h
++++ b/tools/perf/bench/bench.h
+@@ -10,25 +10,13 @@ extern struct timeval bench__start, benc
+  * The madvise transparent hugepage constants were added in glibc
+  * 2.13. For compatibility with older versions of glibc, define these
+  * tokens if they are not already defined.
+- *
+- * PA-RISC uses different madvise values from other architectures and
+- * needs to be special-cased.
+  */
+-#ifdef __hppa__
+-# ifndef MADV_HUGEPAGE
+-#  define MADV_HUGEPAGE		67
+-# endif
+-# ifndef MADV_NOHUGEPAGE
+-#  define MADV_NOHUGEPAGE	68
+-# endif
+-#else
+ # ifndef MADV_HUGEPAGE
+ #  define MADV_HUGEPAGE		14
+ # endif
+ # ifndef MADV_NOHUGEPAGE
+ #  define MADV_NOHUGEPAGE	15
+ # endif
+-#endif
+ 
+ int bench_numa(int argc, const char **argv);
+ int bench_sched_messaging(int argc, const char **argv);
 
 
