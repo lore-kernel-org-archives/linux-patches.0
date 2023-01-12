@@ -1,28 +1,42 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14EFD79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:27:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86ADDC433D2;
-	Thu, 12 Jan 2023 14:27:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FC179C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:27:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A187C433D2;
+	Thu, 12 Jan 2023 14:27:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533664;
-	bh=j7AMXqA6UutmlOa0DqAvRRIKjbXaFBBgrVpU+1Oe9Rw=;
+	s=korg; t=1673533667;
+	bh=7RdxT3Vxsqz+U4p64o5sqTMbWRMSFOTc/xaxmyfD9i4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D4xxXhfH3Gk1RN3mGRN2Apmdys1gYsyICzorpwjKzWYh2LPVvUATt6katkh9DeEBp
-	 MWDCjIUgCqWnUMMjfci1WrMt7KR7LKWv0dy0Wz1T3VrYX7HMHDcZnrHsEYEj6qOk5o
-	 2nIyBbsSLxmjpSi2b/IB0YA8VvB4CH4blJpnloDE=
+	b=pX+hXl+uDFUH2ZE0PxMLUqYBSSHmRlAmgxobQBdP33XH1FNG8IJej4eq7m0gtuSNH
+	 46+thb/6ZqdxbEGSgZO+YHIMcO7viYxlDmlPMnBpOiqtPXFiIypWCe60z7rICdgeAb
+	 ljT4f4G9rvcwCRJZ9ASYrGmbcYql07O/E34kVys0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Andi Kleen <ak@linux.intel.com>,
+	Carsten Haitzler <carsten.haitzler@arm.com>,
+	Ian Rogers <irogers@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Leo Yan <leo.yan@linaro.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	martin.lau@kernel.org,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	Ravi Bangoria <ravi.bangoria@linux.ibm.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 534/783] clk: st: Fix memory leak in st_of_quadfs_setup()
-Date: Thu, 12 Jan 2023 14:54:10 +0100
-Message-Id: <20230112135548.961420251@linuxfoundation.org>
+Subject: [PATCH 5.10 552/783] perf debug: Set debug_peo_args and redirect_to_stderr variable to correct values in perf_quiet_option()
+Date: Thu, 12 Jan 2023 14:54:28 +0100
+Message-Id: <20230112135549.815160021@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,39 +50,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-[ Upstream commit cfd3ffb36f0d566846163118651d868e607300ba ]
+[ Upstream commit 188ac720d364035008a54d249cf47b4cc100f819 ]
 
-If st_clk_register_quadfs_pll() fails, @lock should be freed before goto
-@err_exit, otherwise will cause meory leak issue, fix it.
+When perf uses quiet mode, perf_quiet_option() sets the 'debug_peo_args'
+variable to -1, and display_attr() incorrectly determines the value of
+'debug_peo_args'.  As a result, unexpected information is displayed.
 
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Link: https://lore.kernel.org/r/20221122133614.184910-1-xiujianfeng@huawei.com
-Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Before:
+
+  # perf record --quiet -- ls > /dev/null
+  ------------------------------------------------------------
+  perf_event_attr:
+    size                             128
+    { sample_period, sample_freq }   4000
+    sample_type                      IP|TID|TIME|PERIOD
+    read_format                      ID|LOST
+    disabled                         1
+    inherit                          1
+    mmap                             1
+    comm                             1
+    freq                             1
+    enable_on_exec                   1
+    task                             1
+    precise_ip                       3
+    sample_id_all                    1
+    exclude_guest                    1
+    mmap2                            1
+    comm_exec                        1
+    ksymbol                          1
+    bpf_event                        1
+  ------------------------------------------------------------
+  ...
+
+After:
+  # perf record --quiet -- ls > /dev/null
+  #
+
+redirect_to_stderr is a similar problem.
+
+Fixes: f78eaef0e0493f60 ("perf tools: Allow to force redirect pr_debug to stderr.")
+Fixes: ccd26741f5e6bdf2 ("perf tool: Provide an option to print perf_event_open args and return value")
+Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Carsten Haitzler <carsten.haitzler@arm.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Leo Yan <leo.yan@linaro.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: martin.lau@kernel.org
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Ravi Bangoria <ravi.bangoria@amd.com>
+Cc: Ravi Bangoria <ravi.bangoria@linux.ibm.com>
+Link: https://lore.kernel.org/r/20221220035702.188413-2-yangjihong1@huawei.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/st/clkgen-fsyn.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/perf/util/debug.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/clk/st/clkgen-fsyn.c b/drivers/clk/st/clkgen-fsyn.c
-index f1adc858b590..0e58a7cda427 100644
---- a/drivers/clk/st/clkgen-fsyn.c
-+++ b/drivers/clk/st/clkgen-fsyn.c
-@@ -942,9 +942,10 @@ static void __init st_of_quadfs_setup(struct device_node *np,
+diff --git a/tools/perf/util/debug.c b/tools/perf/util/debug.c
+index 0af163abaa62..854dd3d2d8de 100644
+--- a/tools/perf/util/debug.c
++++ b/tools/perf/util/debug.c
+@@ -207,6 +207,10 @@ int perf_quiet_option(void)
+ 		opt++;
+ 	}
  
- 	clk = st_clk_register_quadfs_pll(pll_name, clk_parent_name, data,
- 			reg, lock);
--	if (IS_ERR(clk))
-+	if (IS_ERR(clk)) {
-+		kfree(lock);
- 		goto err_exit;
--	else
-+	} else
- 		pr_debug("%s: parent %s rate %u\n",
- 			__clk_get_name(clk),
- 			__clk_get_name(clk_get_parent(clk)),
++	/* For debug variables that are used as bool types, set to 0. */
++	redirect_to_stderr = 0;
++	debug_peo_args = 0;
++
+ 	return 0;
+ }
+ 
 -- 
 2.35.1
 
