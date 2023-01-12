@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FDA79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:24:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B882DC433D2;
-	Thu, 12 Jan 2023 14:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E68979C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:24:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1B9CC433EF;
+	Thu, 12 Jan 2023 14:24:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533463;
-	bh=NsKQ7cX8s43XnWuwFNk6M4yVAVwZYpw6eO3XxXVi0c8=;
+	s=korg; t=1673533466;
+	bh=F1JA5kgwiRUQgQMgSFHXyA042OntNyRNiUZKAZHDIBE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fgS9F1NaHEUwtIsLynv2r0vqpOllEscmh8RNZ4UDqydwBx4RRD1X18XVn9vHIWIWI
-	 c++wXtN/Ox/LkWXPrMXo9TkA+8j8siGNcAGztTVgDBWnTIq5eT5SDGRL+e0WwyVLWe
-	 a+LJ6P4+TdymKoTUW35D/LZLrZOa3ZnQIq/yCRGQ=
+	b=IDSJ2DTcdit+CYCRoAFyjXoKj9RpnyjTOn/AHroY82ivdP7VqZSt6fSRiUhHgX+bC
+	 27avs8MDyUXi3XHvUPB1kW6CX4g2+9itGynkaNEGi3CiadRvboNZYphRQdaaWWJV4B
+	 at5Qcg+tMoewlnt2RrIm6MOQQs+sd2+wxfYWmvMw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 469/783] igc: Use strict cycles for Qbv scheduling
-Date: Thu, 12 Jan 2023 14:53:05 +0100
-Message-Id: <20230112135545.966622241@linuxfoundation.org>
+Subject: [PATCH 5.10 487/783] binfmt_misc: fix shift-out-of-bounds in check_special_flags
+Date: Thu, 12 Jan 2023 14:53:23 +0100
+Message-Id: <20230112135546.762093832@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -38,50 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vinicius Costa Gomes <vinicius.gomes@intel.com>
+From: Liu Shixin <liushixin2@huawei.com>
 
-[ Upstream commit d8f45be01dd9381065a3778a579385249ed011dc ]
+[ Upstream commit 6a46bf558803dd2b959ca7435a5c143efe837217 ]
 
-Configuring strict cycle mode in the controller forces more well
-behaved transmissions when taprio is offloaded.
+UBSAN reported a shift-out-of-bounds warning:
 
-When set this strict_cycle and strict_end, transmission is not
-enabled if the whole packet cannot be completed before end of
-the Qbv cycle.
+ left shift of 1 by 31 places cannot be represented in type 'int'
+ Call Trace:
+  <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x8d/0xcf lib/dump_stack.c:106
+  ubsan_epilogue+0xa/0x44 lib/ubsan.c:151
+  __ubsan_handle_shift_out_of_bounds+0x1e7/0x208 lib/ubsan.c:322
+  check_special_flags fs/binfmt_misc.c:241 [inline]
+  create_entry fs/binfmt_misc.c:456 [inline]
+  bm_register_write+0x9d3/0xa20 fs/binfmt_misc.c:654
+  vfs_write+0x11e/0x580 fs/read_write.c:582
+  ksys_write+0xcf/0x120 fs/read_write.c:637
+  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+  do_syscall_64+0x34/0x80 arch/x86/entry/common.c:80
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ RIP: 0033:0x4194e1
 
-Fixes: 82faa9b79950 ("igc: Add support for ETF offloading")
-Signed-off-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: Aravindhan Gunasekaran <aravindhan.gunasekaran@intel.com>
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Since the type of Node's flags is unsigned long, we should define these
+macros with same type too.
+
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221102025123.1117184-1-liushixin2@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_tsn.c | 11 ++---------
- 1 file changed, 2 insertions(+), 9 deletions(-)
+ fs/binfmt_misc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_tsn.c b/drivers/net/ethernet/intel/igc/igc_tsn.c
-index 174103c4bea6..2d4db2a547b2 100644
---- a/drivers/net/ethernet/intel/igc/igc_tsn.c
-+++ b/drivers/net/ethernet/intel/igc/igc_tsn.c
-@@ -92,15 +92,8 @@ static int igc_tsn_enable_offload(struct igc_adapter *adapter)
- 		wr32(IGC_STQT(i), ring->start_time);
- 		wr32(IGC_ENDQT(i), ring->end_time);
+diff --git a/fs/binfmt_misc.c b/fs/binfmt_misc.c
+index 11b5bf241955..ce0047feea72 100644
+--- a/fs/binfmt_misc.c
++++ b/fs/binfmt_misc.c
+@@ -44,10 +44,10 @@ static LIST_HEAD(entries);
+ static int enabled = 1;
  
--		if (adapter->base_time) {
--			/* If we have a base_time we are in "taprio"
--			 * mode and we need to be strict about the
--			 * cycles: only transmit a packet if it can be
--			 * completed during that cycle.
--			 */
--			txqctl |= IGC_TXQCTL_STRICT_CYCLE |
--				IGC_TXQCTL_STRICT_END;
--		}
-+		txqctl |= IGC_TXQCTL_STRICT_CYCLE |
-+			IGC_TXQCTL_STRICT_END;
+ enum {Enabled, Magic};
+-#define MISC_FMT_PRESERVE_ARGV0 (1 << 31)
+-#define MISC_FMT_OPEN_BINARY (1 << 30)
+-#define MISC_FMT_CREDENTIALS (1 << 29)
+-#define MISC_FMT_OPEN_FILE (1 << 28)
++#define MISC_FMT_PRESERVE_ARGV0 (1UL << 31)
++#define MISC_FMT_OPEN_BINARY (1UL << 30)
++#define MISC_FMT_CREDENTIALS (1UL << 29)
++#define MISC_FMT_OPEN_FILE (1UL << 28)
  
- 		if (ring->launchtime_enable)
- 			txqctl |= IGC_TXQCTL_QUEUE_MODE_LAUNCHT;
+ typedef struct {
+ 	struct list_head list;
 -- 
 2.35.1
 
