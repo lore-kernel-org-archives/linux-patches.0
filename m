@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF11E746A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:01:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A9B6C433EF;
-	Thu, 12 Jan 2023 14:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA9B749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:01:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42D9CC433D2;
+	Thu, 12 Jan 2023 14:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532063;
-	bh=+8A78q1ww1z/NDjK3cqrITmEk/bJ489GwbL+JtnA1Nc=;
+	s=korg; t=1673532066;
+	bh=VLa1tK1QH1ISOWwngbyqgw7EdYyBJFJW0IeaZDx88Q0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eUpzgZTt/Cn/jgRrWAahOpE/jyGlzV18lgsw67u1Bx43m9gnzSVvB+kWXVQ+/1fHb
-	 TyY4IzwkujMT5qRyLP2NQeAOpop9PIB69D/uBXNpUYmjdufBtzIIprcK3kbzZ0h7Ym
-	 z7dRP/iNLJrNZFOG9e+tiPlWufYpeeZBJBbMq3zo=
+	b=zCoqnhYB5K+URUwqV6ts12LTM15we+Dy/24X6hqNGzUFe5Wme0i2ZCUiMXesu4i3I
+	 ljvJs1CNdpPxG5IWHYtPfU6b/c0umhCYVIcUghp0T3IQ83TyMYrzKeyfa+/BtxLcOu
+	 fZ3PxjKRS4v739FySaugW4WzJ03s2Ta1K2EX+fzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Chen Jiahao <chenjiahao16@huawei.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 010/783] ARM: dts: stm32: Fix AV96 WLAN regulator gpio property
-Date: Thu, 12 Jan 2023 14:45:26 +0100
-Message-Id: <20230112135524.663240103@linuxfoundation.org>
+Subject: [PATCH 5.10 011/783] drivers: soc: ti: knav_qmss_queue: Mark knav_acc_firmwares as static
+Date: Thu, 12 Jan 2023 14:45:27 +0100
+Message-Id: <20230112135524.698691850@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,36 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Chen Jiahao <chenjiahao16@huawei.com>
 
-[ Upstream commit d5d577e3d50713ad11d98dbdaa48bb494346c26d ]
+[ Upstream commit adf85adc2a7199b41e7a4da083bd17274a3d6969 ]
 
-The WLAN regulator uses 'gpios' property instead of 'gpio' to specify
-regulator enable GPIO. While the former is also currently handled by
-the Linux kernel regulator-fixed driver, the later is the correct one
-per DT bindings. Update the DT to use the later.
+There is a sparse warning shown below:
 
-Fixes: 7dd5cbba42c93 ("ARM: dts: stm32: Enable WiFi on AV96")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+drivers/soc/ti/knav_qmss_queue.c:70:12: warning: symbol
+'knav_acc_firmwares' was not declared. Should it be static?
+
+Since 'knav_acc_firmwares' is only called within knav_qmss_queue.c,
+mark it as static to fix the warning.
+
+Fixes: 96ee19becc3b ("soc: ti: add firmware file name as part of the driver")
+Signed-off-by: Chen Jiahao <chenjiahao16@huawei.com>
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Link: https://lore.kernel.org/r/20221019153212.72350-1-chenjiahao16@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi | 2 +-
+ drivers/soc/ti/knav_qmss_queue.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
-index f3e0c790a4b1..723b39bb2129 100644
---- a/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
-+++ b/arch/arm/boot/dts/stm32mp15xx-dhcor-avenger96.dtsi
-@@ -100,7 +100,7 @@ wlan_pwr: regulator-wlan {
- 		regulator-min-microvolt = <3300000>;
- 		regulator-max-microvolt = <3300000>;
+diff --git a/drivers/soc/ti/knav_qmss_queue.c b/drivers/soc/ti/knav_qmss_queue.c
+index 53e36d4328d1..baab7d558a69 100644
+--- a/drivers/soc/ti/knav_qmss_queue.c
++++ b/drivers/soc/ti/knav_qmss_queue.c
+@@ -67,7 +67,7 @@ static DEFINE_MUTEX(knav_dev_lock);
+  * Newest followed by older ones. Search is done from start of the array
+  * until a firmware file is found.
+  */
+-const char *knav_acc_firmwares[] = {"ks2_qmss_pdsp_acc48.bin"};
++static const char * const knav_acc_firmwares[] = {"ks2_qmss_pdsp_acc48.bin"};
  
--		gpios = <&gpioz 3 GPIO_ACTIVE_HIGH>;
-+		gpio = <&gpioz 3 GPIO_ACTIVE_HIGH>;
- 		enable-active-high;
- 	};
- };
+ static bool device_ready;
+ bool knav_qmss_device_ready(void)
 -- 
 2.35.1
 
