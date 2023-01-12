@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B7B4749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:09:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8085AC433EF;
-	Thu, 12 Jan 2023 14:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D400749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:09:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8259AC433EF;
+	Thu, 12 Jan 2023 14:09:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532567;
-	bh=64ooScDa5u/46BdxaDje6BvhAbJW/8KHbxYab9I3bBo=;
+	s=korg; t=1673532571;
+	bh=d1G0DuA6RxYXjT/GUy3M9gsw936aVm/8yuFSdQ6B1co=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SLckPD+OTho7VQTq0pjQuA3Okwe/23bNo4ODFINvdf1Nd1EVQEmve0u+1BnXBctGc
-	 EDlgIMSV5Ce50+HFFIN4xufzInhmJdgCy6Mbx9mQF+48h0odH3NLf5FwDrDUwAZBon
-	 YkqURNYPD9Lc5IT5Wl9WtBVgl9NS0mPCtVKZw0GY=
+	b=oNbl+fRxunqtJdPqcJ8mM/UlcdwE4jCkJ7hz17rcw4c46Rn6m6aeVTR7hrVQYLDTy
+	 3Qk9BwvlKiqiBYGXwbGtvPQvSJqaJaaGoVw+NlVtOs4EMHD80Co/jlNmM9+XRC6KNf
+	 N7DuugPAcps3vD3eF1bNJEXUa6wwqOUuWI+nkMTk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com,
+	Gautam Menghani <gautammenghani201@gmail.com>,
+	Sean Young <sean@mess.org>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 174/783] media: vimc: Fix wrong function called when vimc_init() fails
-Date: Thu, 12 Jan 2023 14:48:10 +0100
-Message-Id: <20230112135532.387932797@linuxfoundation.org>
+Subject: [PATCH 5.10 175/783] media: imon: fix a race condition in send_packet()
+Date: Thu, 12 Jan 2023 14:48:11 +0100
+Message-Id: <20230112135532.439928606@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,46 +37,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Gautam Menghani <gautammenghani201@gmail.com>
 
-[ Upstream commit f74d3f326d1d5b8951ce263c59a121ecfa65e7c0 ]
+[ Upstream commit 813ceef062b53d68f296aa3cb944b21a091fabdb ]
 
-In vimc_init(), when platform_driver_register(&vimc_pdrv) fails,
-platform_driver_unregister(&vimc_pdrv) is wrongly called rather than
-platform_device_unregister(&vimc_pdev), which causes kernel warning:
+The function send_packet() has a race condition as follows:
 
- Unexpected driver unregister!
- WARNING: CPU: 1 PID: 14517 at drivers/base/driver.c:270 driver_unregister+0x8f/0xb0
- RIP: 0010:driver_unregister+0x8f/0xb0
- Call Trace:
-  <TASK>
-  vimc_init+0x7d/0x1000 [vimc]
-  do_one_initcall+0xd0/0x4e0
-  do_init_module+0x1cf/0x6b0
-  load_module+0x65c2/0x7820
+func send_packet()
+{
+    // do work
+    call usb_submit_urb()
+    mutex_unlock()
+    wait_for_event_interruptible()  <-- lock gone
+    mutex_lock()
+}
 
-Fixes: 4a29b7090749 ("[media] vimc: Subdevices as modules")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+func vfd_write()
+{
+    mutex_lock()
+    call send_packet()  <- prev call is not completed
+    mutex_unlock()
+}
+
+When the mutex is unlocked and the function send_packet() waits for the
+call to complete, vfd_write() can start another call, which leads to the
+"URB submitted while active" warning in usb_submit_urb().
+Fix this by removing the mutex_unlock() call in send_packet() and using
+mutex_lock_interruptible().
+
+Link: https://syzkaller.appspot.com/bug?id=e378e6a51fbe6c5cc43e34f131cc9a315ef0337e
+
+Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
+Reported-by: syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com
+Signed-off-by: Gautam Menghani <gautammenghani201@gmail.com>
+Signed-off-by: Sean Young <sean@mess.org>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/test-drivers/vimc/vimc-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/rc/imon.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/media/test-drivers/vimc/vimc-core.c b/drivers/media/test-drivers/vimc/vimc-core.c
-index 4b0ae6f51d76..857529ce3638 100644
---- a/drivers/media/test-drivers/vimc/vimc-core.c
-+++ b/drivers/media/test-drivers/vimc/vimc-core.c
-@@ -357,7 +357,7 @@ static int __init vimc_init(void)
- 	if (ret) {
- 		dev_err(&vimc_pdev.dev,
- 			"platform driver registration failed (err=%d)\n", ret);
--		platform_driver_unregister(&vimc_pdrv);
-+		platform_device_unregister(&vimc_pdev);
- 		return ret;
- 	}
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index bc9ac6002e25..98a38755c694 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -646,15 +646,14 @@ static int send_packet(struct imon_context *ictx)
+ 		pr_err_ratelimited("error submitting urb(%d)\n", retval);
+ 	} else {
+ 		/* Wait for transmission to complete (or abort) */
+-		mutex_unlock(&ictx->lock);
+ 		retval = wait_for_completion_interruptible(
+ 				&ictx->tx.finished);
+ 		if (retval) {
+ 			usb_kill_urb(ictx->tx_urb);
+ 			pr_err_ratelimited("task interrupted\n");
+ 		}
+-		mutex_lock(&ictx->lock);
  
++		ictx->tx.busy = false;
+ 		retval = ictx->tx.status;
+ 		if (retval)
+ 			pr_err_ratelimited("packet tx failed (%d)\n", retval);
+@@ -958,7 +957,8 @@ static ssize_t vfd_write(struct file *file, const char __user *buf,
+ 	if (ictx->disconnected)
+ 		return -ENODEV;
+ 
+-	mutex_lock(&ictx->lock);
++	if (mutex_lock_interruptible(&ictx->lock))
++		return -ERESTARTSYS;
+ 
+ 	if (!ictx->dev_present_intf0) {
+ 		pr_err_ratelimited("no iMON device present\n");
 -- 
 2.35.1
 
