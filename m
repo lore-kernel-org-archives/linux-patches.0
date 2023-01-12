@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C949749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:16:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9425FC433EF;
-	Thu, 12 Jan 2023 14:16:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BC16749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:16:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF37FC433EF;
+	Thu, 12 Jan 2023 14:16:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532978;
-	bh=xz+TTkS0MPxBTZJga/N0pFjfGkaX2eFaiQmDqoEdAWE=;
+	s=korg; t=1673532982;
+	bh=GmCXSwPE5NP+SaO5s7kju7LigtOKyGlQFSX61WElufY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MvCtSlPBFua1IEWvr0l4ug7QM97XZcvQEfDBzRkNId2gM7qmejVdOLH/X6KpbCver
-	 Kvu6wcbpf8kzH5CPjxl7q5gwNwpqzVqu20408H+fqBI365865GapooZ9woznIk7Cs3
-	 1U+DZUWsWtJ1/yn74qIAj+BLePNpjmygVW5k0Aro=
+	b=egnNkK0+t9BdFVsxQ8nVHgMQQ9I7MCmbmf4X+oeZRMfvuqt4h4cWbCgk0E2yFueXw
+	 d5NaH/xN5PXPKzVgnvr52258A7St1hHTgPT6VM67P1EHttsHQ/tDmUH1parY9Wz86s
+	 8ZNGXS0t6n36t+564puGce1SFspMoZ27Vwc51Ygs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Weili Qian <qianweili@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Tong Tiangen <tongtiangen@huawei.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 304/783] crypto: hisilicon/qm - add missing pci_dev_put() in q_num_set()
-Date: Thu, 12 Jan 2023 14:50:20 +0100
-Message-Id: <20230112135538.423664424@linuxfoundation.org>
+Subject: [PATCH 5.10 331/783] riscv/mm: add arch hook arch_clear_hugepage_flags
+Date: Thu, 12 Jan 2023 14:50:47 +0100
+Message-Id: <20230112135539.648707238@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,53 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Tong Tiangen <tongtiangen@huawei.com>
 
-[ Upstream commit cc7710d0d4ebc6998f04035cde4f32c5ddbe9d7f ]
+[ Upstream commit d8bf77a1dc3079692f54be3087a5fd16d90027b0 ]
 
-pci_get_device() will increase the reference count for the returned
-pci_dev. We need to use pci_dev_put() to decrease the reference count
-before q_num_set() returns.
+With the PG_arch_1 we keep track if the page's data cache is clean,
+architecture rely on this property to treat new pages as dirty with
+respect to the data cache and perform the flushing before mapping the pages
+into userspace.
 
-Fixes: c8b4b477079d ("crypto: hisilicon - add HiSilicon HPRE accelerator")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Reviewed-by: Weili Qian <qianweili@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+This patch adds a new architecture hook, arch_clear_hugepage_flags,so that
+architectures which rely on the page flags being in a particular state for
+fresh allocations can adjust the flags accordingly when a page is freed
+into the pool.
+
+Fixes: 9e953cda5cdf ("riscv: Introduce huge page support for 32/64bit kernel")
+Signed-off-by: Tong Tiangen <tongtiangen@huawei.com>
+Link: https://lore.kernel.org/r/20221024094725.3054311-3-tongtiangen@huawei.com
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/hisilicon/qm.h | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/riscv/include/asm/hugetlb.h | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/crypto/hisilicon/qm.h b/drivers/crypto/hisilicon/qm.h
-index 0420f4ce7197..aaad3d76dc04 100644
---- a/drivers/crypto/hisilicon/qm.h
-+++ b/drivers/crypto/hisilicon/qm.h
-@@ -289,14 +289,14 @@ struct hisi_qp {
- static inline int q_num_set(const char *val, const struct kernel_param *kp,
- 			    unsigned int device)
- {
--	struct pci_dev *pdev = pci_get_device(PCI_VENDOR_ID_HUAWEI,
--					      device, NULL);
-+	struct pci_dev *pdev;
- 	u32 n, q_num;
- 	int ret;
+diff --git a/arch/riscv/include/asm/hugetlb.h b/arch/riscv/include/asm/hugetlb.h
+index a5c2ca1d1cd8..ec19d6afc896 100644
+--- a/arch/riscv/include/asm/hugetlb.h
++++ b/arch/riscv/include/asm/hugetlb.h
+@@ -5,4 +5,10 @@
+ #include <asm-generic/hugetlb.h>
+ #include <asm/page.h>
  
- 	if (!val)
- 		return -EINVAL;
- 
-+	pdev = pci_get_device(PCI_VENDOR_ID_HUAWEI, device, NULL);
- 	if (!pdev) {
- 		q_num = min_t(u32, QM_QNUM_V1, QM_QNUM_V2);
- 		pr_info("No device found currently, suppose queue number is %d\n",
-@@ -306,6 +306,8 @@ static inline int q_num_set(const char *val, const struct kernel_param *kp,
- 			q_num = QM_QNUM_V1;
- 		else
- 			q_num = QM_QNUM_V2;
++static inline void arch_clear_hugepage_flags(struct page *page)
++{
++	clear_bit(PG_dcache_clean, &page->flags);
++}
++#define arch_clear_hugepage_flags arch_clear_hugepage_flags
 +
-+		pci_dev_put(pdev);
- 	}
- 
- 	ret = kstrtou32(val, 10, &n);
+ #endif /* _ASM_RISCV_HUGETLB_H */
 -- 
 2.35.1
 
