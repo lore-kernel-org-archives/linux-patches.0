@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CA5749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:13:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A63F4C433EF;
-	Thu, 12 Jan 2023 14:13:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 600D5749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:13:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7CDCC433EF;
+	Thu, 12 Jan 2023 14:13:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532816;
-	bh=+rRUzIhOfQwvFzP52YVytULo+9hnjReQI8X1hS4XcXI=;
+	s=korg; t=1673532819;
+	bh=Fcq213SnMnf54uGEEhpZ8HlaTHB+eCQCWjZVM3hau6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nAyU9PiMcVREAiKq4U0dS+9Wl8DRRfu7ztM9DD6mSpYXdQBkL+D52YpnxjKeMRfYc
-	 xs5WdU2i82PLdD1R4IS+XPB7Wa/Yvje5ont77r00LtPpy7ivxxQJBUoMFQKR9zjcuF
-	 ZD7tpseLCqb+rzPFaqgliYSCyKGL+yruw+9X+N68=
+	b=xv6UvupYo6xvsiTCqprEjpLIWwJ82jkeG6fag7jasBta0ETtXjmxQZifIIImkNC1Y
+	 AM4M5+f6TGoV16k+pF0pC5HlckXGe8XFmVIKYK8nb+XSt2puBZxDGLRGePhTjqJGng
+	 yaORnc5jcNJySjq6VQu2uVeGq5hxGVkxfNRdfaFM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Lorenzo Pieralisi <lpieralisi@kernel.org>,
-	Om Prakash Singh <omp@nvidia.com>,
-	Kishon Vijay Abraham I <kishon@ti.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Zhang Qilong <zhangqilong3@huawei.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 286/783] PCI: pci-epf-test: Register notifier if only core_init_notifier is enabled
-Date: Thu, 12 Jan 2023 14:50:02 +0100
-Message-Id: <20230112135537.644758442@linuxfoundation.org>
+Subject: [PATCH 5.10 287/783] f2fs: Fix the race condition of resize flag between resizefs
+Date: Thu, 12 Jan 2023 14:50:03 +0100
+Message-Id: <20230112135537.689650786@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -37,37 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+From: Zhang Qilong <zhangqilong3@huawei.com>
 
-[ Upstream commit 6acd25cc98ce0c9ee4fefdaf44fc8bca534b26e5 ]
+[ Upstream commit 28fc4e9077ce59ab28c89c20dc6be5154473218f ]
 
-The pci_epf_test_notifier function should be installed also if only
-core_init_notifier is enabled. Fix the current logic.
+Because the set/clear SBI_IS_RESIZEFS flag not between any locks,
+In the following case:
+  thread1			thread2
+   ->ioctl(resizefs)
+    ->set RESIZEFS flag		 ->ioctl(resizefs)
+    ...                   	  ->set RESIZEFS flag
+    ->clear RESIZEFS flag
+    				  ->resizefs stream
+				    # No RESIZEFS flag in the stream
 
-Link: https://lore.kernel.org/r/20220825090101.20474-1-hayashi.kunihiko@socionext.com
-Fixes: 5e50ee27d4a5 ("PCI: pci-epf-test: Add support to defer core initialization")
-Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Signed-off-by: Lorenzo Pieralisi <lpieralisi@kernel.org>
-Acked-by: Om Prakash Singh <omp@nvidia.com>
-Acked-by: Kishon Vijay Abraham I <kishon@ti.com>
+Also before freeze_super, the resizefs not started, we should not set
+the SBI_IS_RESIZEFS flag.
+
+So move the set/clear SBI_IS_RESIZEFS flag between the cp_mutex and
+gc_lock.
+
+Fixes: b4b10061ef98 ("f2fs: refactor resize_fs to avoid meta updates in progress")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pci/endpoint/functions/pci-epf-test.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/gc.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/pci/endpoint/functions/pci-epf-test.c b/drivers/pci/endpoint/functions/pci-epf-test.c
-index ddfeca9016a0..ef52f5097eb3 100644
---- a/drivers/pci/endpoint/functions/pci-epf-test.c
-+++ b/drivers/pci/endpoint/functions/pci-epf-test.c
-@@ -870,7 +870,7 @@ static int pci_epf_test_bind(struct pci_epf *epf)
- 	if (ret)
- 		epf_test->dma_supported = false;
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 3baa62ef6e3a..5ac0b605335f 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -2035,8 +2035,6 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
+ 	if (err)
+ 		return err;
  
--	if (linkup_notifier) {
-+	if (linkup_notifier || core_init_notifier) {
- 		epf->nb.notifier_call = pci_epf_test_notifier;
- 		pci_epc_register_notifier(epc, &epf->nb);
- 	} else {
+-	set_sbi_flag(sbi, SBI_IS_RESIZEFS);
+-
+ 	freeze_super(sbi->sb);
+ 	down_write(&sbi->gc_lock);
+ 	mutex_lock(&sbi->cp_mutex);
+@@ -2052,6 +2050,7 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
+ 	if (err)
+ 		goto out_err;
+ 
++	set_sbi_flag(sbi, SBI_IS_RESIZEFS);
+ 	err = free_segment_range(sbi, secs, false);
+ 	if (err)
+ 		goto recover_out;
+@@ -2075,6 +2074,7 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
+ 		f2fs_commit_super(sbi, false);
+ 	}
+ recover_out:
++	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
+ 	if (err) {
+ 		set_sbi_flag(sbi, SBI_NEED_FSCK);
+ 		f2fs_err(sbi, "resize_fs failed, should run fsck to repair!");
+@@ -2087,6 +2087,5 @@ int f2fs_resize_fs(struct f2fs_sb_info *sbi, __u64 block_count)
+ 	mutex_unlock(&sbi->cp_mutex);
+ 	up_write(&sbi->gc_lock);
+ 	thaw_super(sbi->sb);
+-	clear_sbi_flag(sbi, SBI_IS_RESIZEFS);
+ 	return err;
+ }
 -- 
 2.35.1
 
