@@ -1,33 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10CBA749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:04:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37FF1C433D2;
-	Thu, 12 Jan 2023 14:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B4A0749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:04:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473A7C433D2;
+	Thu, 12 Jan 2023 14:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532246;
-	bh=OTzQ5ZHhTu9kDtqyQjOrJZWU9fI/zD6cMSkNShdbsks=;
+	s=korg; t=1673532249;
+	bh=lomZ4pZK6Ek1cuGNK35hkaOAos1qguTINJQwSxAZRrc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d5PLQ5YO90RjbHRTfwwzB8PydMw0/wbw1pSzujwpCVbX6uv2A+KE4QqLSqINBXOH4
-	 dX9O5ww5oJj8QUxibTQA8Iibt/JL+NMD9eri4KuQqqRLbwWoo2nF7QN1Brd7lYAhgh
-	 VD0VrswpGRDumkxUUiYkHmOMUBWp5a/ErovYiBOw=
+	b=1bOR12EOThXsDG4SEWGflL5DHcXLFdUL0Y+sCuNQgY4waiDygHBc85XllQZzSc3AD
+	 EW8IxqYX5HzSi8Eag4pyWoax6zdMF6ZTNy2ugbkmSDsIFXNmA7ngHUdhqj+D0CRtgI
+	 d50sJm7dV7tzk58KoOwAir4VErtC9G4xa3d6tyok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Weiyang <wangweiyang2@huawei.com>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Dan Carpenter <error27@gmail.com>,
-	Jakob Koschel <jakobkoschel@gmail.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Matt Porter <mporter@kernel.crashing.org>,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Akinobu Mita <akinobu.mita@gmail.com>,
+	Zhao Gongyi <zhaogongyi@huawei.com>,
+	David Hildenbrand <david@redhat.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Oscar Salvador <osalvador@suse.de>,
+	"Rafael J. Wysocki" <rafael@kernel.org>,
+	Shuah Khan <shuah@kernel.org>,
+	Wei Yongjun <weiyongjun1@huawei.com>,
+	Yicong Yang <yangyicong@hisilicon.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 098/783] rapidio: fix possible UAF when kfifo_alloc() fails
-Date: Thu, 12 Jan 2023 14:46:54 +0100
-Message-Id: <20230112135528.744219704@linuxfoundation.org>
+Subject: [PATCH 5.10 072/783] lib/notifier-error-inject: fix error when writing -errno to debugfs file
+Date: Thu, 12 Jan 2023 14:46:28 +0100
+Message-Id: <20230112135527.495175241@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -41,56 +44,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Weiyang <wangweiyang2@huawei.com>
+From: Akinobu Mita <akinobu.mita@gmail.com>
 
-[ Upstream commit 02d7d89f816951e0862147d751b1150d67aaebdd ]
+[ Upstream commit f883c3edd2c432a2931ec8773c70a570115a50fe ]
 
-If kfifo_alloc() fails in mport_cdev_open(), goto err_fifo and just free
-priv. But priv is still in the chdev->file_list, then list traversal
-may cause UAF. This fixes the following smatch warning:
+The simple attribute files do not accept a negative value since the commit
+488dac0c9237 ("libfs: fix error cast of negative value in
+simple_attr_write()").
 
-drivers/rapidio/devices/rio_mport_cdev.c:1930 mport_cdev_open() warn: '&priv->list' not removed from list
+This restores the previous behaviour by using newly introduced
+DEFINE_SIMPLE_ATTRIBUTE_SIGNED instead of DEFINE_SIMPLE_ATTRIBUTE.
 
-Link: https://lkml.kernel.org/r/20221123095147.52408-1-wangweiyang2@huawei.com
-Fixes: e8de370188d0 ("rapidio: add mport char device driver")
-Signed-off-by: Wang Weiyang <wangweiyang2@huawei.com>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Dan Carpenter <error27@gmail.com>
-Cc: Jakob Koschel <jakobkoschel@gmail.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Cc: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lkml.kernel.org/r/20220919172418.45257-3-akinobu.mita@gmail.com
+Fixes: 488dac0c9237 ("libfs: fix error cast of negative value in simple_attr_write()")
+Signed-off-by: Akinobu Mita <akinobu.mita@gmail.com>
+Reported-by: Zhao Gongyi <zhaogongyi@huawei.com>
+Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Oscar Salvador <osalvador@suse.de>
+Cc: Rafael J. Wysocki <rafael@kernel.org>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Wei Yongjun <weiyongjun1@huawei.com>
+Cc: Yicong Yang <yangyicong@hisilicon.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rapidio/devices/rio_mport_cdev.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ lib/notifier-error-inject.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/rapidio/devices/rio_mport_cdev.c b/drivers/rapidio/devices/rio_mport_cdev.c
-index 48cd9b7f3b89..b8c09eaa23b5 100644
---- a/drivers/rapidio/devices/rio_mport_cdev.c
-+++ b/drivers/rapidio/devices/rio_mport_cdev.c
-@@ -1903,10 +1903,6 @@ static int mport_cdev_open(struct inode *inode, struct file *filp)
+diff --git a/lib/notifier-error-inject.c b/lib/notifier-error-inject.c
+index 21016b32d313..2b24ea6c9497 100644
+--- a/lib/notifier-error-inject.c
++++ b/lib/notifier-error-inject.c
+@@ -15,7 +15,7 @@ static int debugfs_errno_get(void *data, u64 *val)
+ 	return 0;
+ }
  
- 	priv->md = chdev;
+-DEFINE_SIMPLE_ATTRIBUTE(fops_errno, debugfs_errno_get, debugfs_errno_set,
++DEFINE_SIMPLE_ATTRIBUTE_SIGNED(fops_errno, debugfs_errno_get, debugfs_errno_set,
+ 			"%lld\n");
  
--	mutex_lock(&chdev->file_mutex);
--	list_add_tail(&priv->list, &chdev->file_list);
--	mutex_unlock(&chdev->file_mutex);
--
- 	INIT_LIST_HEAD(&priv->db_filters);
- 	INIT_LIST_HEAD(&priv->pw_filters);
- 	spin_lock_init(&priv->fifo_lock);
-@@ -1925,6 +1921,9 @@ static int mport_cdev_open(struct inode *inode, struct file *filp)
- 	spin_lock_init(&priv->req_lock);
- 	mutex_init(&priv->dma_lock);
- #endif
-+	mutex_lock(&chdev->file_mutex);
-+	list_add_tail(&priv->list, &chdev->file_list);
-+	mutex_unlock(&chdev->file_mutex);
- 
- 	filp->private_data = priv;
- 	goto out;
+ static struct dentry *debugfs_create_errno(const char *name, umode_t mode,
 -- 
 2.35.1
 
