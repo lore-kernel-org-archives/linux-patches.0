@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE6C746A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 13:57:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0C83C433F0;
-	Thu, 12 Jan 2023 13:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E96746A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 13:57:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA307C433EF;
+	Thu, 12 Jan 2023 13:57:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673531872;
-	bh=3+u11lPi/YASPJ8JjHPxHvsZ1Psr/k1W+uTTsEVTIzA=;
+	s=korg; t=1673531875;
+	bh=/JlfAO5F8GQUXx9ZbY192XkACLPf3EhZ0v7/USpRT0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Us2BcOc2vyix0PrKPQN34O2S1vGVvRnsJ4U7O1R3Py4ICYzvKTGR1LMQja0czKVw
-	 dj7sSzMgRnkIz8shID2HgyI8PrgHWX/0VKqbdFdz8ExAe5GIc4vTFiE/ClUrZTshoW
-	 JY3A9DJLMjbNvSgF3kdxEA8rIRrZNsaqhqEbtsdI=
+	b=ecMl0QZ/fg15byoKm4SSbpIB+qIvWO6itWvHelD3Fu98y3bcLSY1hS4vpMitG7tTL
+	 r+iuiglvKPm10L19Zn0LBVcXNZlRc+0n1EGF5E9NqZXi/BXQsjrENxkCOFXKahzXSJ
+	 DR7FBjFkjtdtgW0IgZslg7jpSGTFBia2+G0CC1/w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	slipper <slipper.alive@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 10/10] net/ulp: prevent ULP without clone op from entering the LISTEN status
-Date: Thu, 12 Jan 2023 14:56:47 +0100
-Message-Id: <20230112135327.087488002@linuxfoundation.org>
+	Kyle Huey <me@kylehuey.com>,
+	Dave Hansen <dave.hansen@linux.intel.com>
+Subject: [PATCH 5.15 03/10] x86/fpu: Add a pkru argument to copy_uabi_from_kernel_to_xstate().
+Date: Thu, 12 Jan 2023 14:56:40 +0100
+Message-Id: <20230112135326.807828831@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135326.689857506@linuxfoundation.org>
 References: <20230112135326.689857506@linuxfoundation.org>
@@ -35,77 +34,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Kyle Huey <me@kylehuey.com>
 
-commit 2c02d41d71f90a5168391b6a5f2954112ba2307c upstream.
+commit 1c813ce0305571e1b2e4cc4acca451da9e6ad18f upstream
 
-When an ULP-enabled socket enters the LISTEN status, the listener ULP data
-pointer is copied inside the child/accepted sockets by sk_clone_lock().
+ptrace (through PTRACE_SETREGSET with NT_X86_XSTATE) ultimately calls
+copy_uabi_from_kernel_to_xstate(). In preparation for eventually handling
+PKRU in copy_uabi_to_xstate, pass in a pointer to the PKRU location.
 
-The relevant ULP can take care of de-duplicating the context pointer via
-the clone() operation, but only MPTCP and SMC implement such op.
-
-Other ULPs may end-up with a double-free at socket disposal time.
-
-We can't simply clear the ULP data at clone time, as TLS replaces the
-socket ops with custom ones assuming a valid TLS ULP context is
-available.
-
-Instead completely prevent clone-less ULP sockets from entering the
-LISTEN status.
-
-Fixes: 734942cc4ea6 ("tcp: ULP infrastructure")
-Reported-by: slipper <slipper.alive@gmail.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/4b80c3d1dbe3d0ab072f80450c202d9bc88b4b03.1672740602.git.pabeni@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Kyle Huey <me@kylehuey.com>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Link: https://lore.kernel.org/all/20221115230932.7126-3-khuey%40kylehuey.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_connection_sock.c |   16 +++++++++++++++-
- net/ipv4/tcp_ulp.c              |    4 ++++
- 2 files changed, 19 insertions(+), 1 deletion(-)
+ arch/x86/include/asm/fpu/xstate.h |    2 +-
+ arch/x86/kernel/fpu/regset.c      |    2 +-
+ arch/x86/kernel/fpu/xstate.c      |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1040,11 +1040,25 @@ void inet_csk_prepare_forced_close(struc
- }
- EXPORT_SYMBOL(inet_csk_prepare_forced_close);
+--- a/arch/x86/include/asm/fpu/xstate.h
++++ b/arch/x86/include/asm/fpu/xstate.h
+@@ -136,7 +136,7 @@ extern void __init update_regset_xstate_
  
-+static int inet_ulp_can_listen(const struct sock *sk)
-+{
-+	const struct inet_connection_sock *icsk = inet_csk(sk);
-+
-+	if (icsk->icsk_ulp_ops && !icsk->icsk_ulp_ops->clone)
-+		return -EINVAL;
-+
-+	return 0;
-+}
-+
- int inet_csk_listen_start(struct sock *sk, int backlog)
+ void *get_xsave_addr(struct xregs_state *xsave, int xfeature_nr);
+ int xfeature_size(int xfeature_nr);
+-int copy_uabi_from_kernel_to_xstate(struct xregs_state *xsave, const void *kbuf);
++int copy_uabi_from_kernel_to_xstate(struct xregs_state *xsave, const void *kbuf, u32 *pkru);
+ int copy_sigframe_from_user_to_xstate(struct task_struct *tsk, const void __user *ubuf);
+ 
+ void xsaves(struct xregs_state *xsave, u64 mask);
+--- a/arch/x86/kernel/fpu/regset.c
++++ b/arch/x86/kernel/fpu/regset.c
+@@ -163,7 +163,7 @@ int xstateregs_set(struct task_struct *t
+ 	}
+ 
+ 	fpu_force_restore(fpu);
+-	ret = copy_uabi_from_kernel_to_xstate(&fpu->state.xsave, kbuf ?: tmpbuf);
++	ret = copy_uabi_from_kernel_to_xstate(&fpu->state.xsave, kbuf ?: tmpbuf, &target->thread.pkru);
+ 
+ out:
+ 	vfree(tmpbuf);
+--- a/arch/x86/kernel/fpu/xstate.c
++++ b/arch/x86/kernel/fpu/xstate.c
+@@ -1159,7 +1159,7 @@ static int copy_uabi_to_xstate(struct xr
+  * format and copy to the target thread. This is called from
+  * xstateregs_set().
+  */
+-int copy_uabi_from_kernel_to_xstate(struct xregs_state *xsave, const void *kbuf)
++int copy_uabi_from_kernel_to_xstate(struct xregs_state *xsave, const void *kbuf, u32 *pkru)
  {
- 	struct inet_connection_sock *icsk = inet_csk(sk);
- 	struct inet_sock *inet = inet_sk(sk);
--	int err = -EADDRINUSE;
-+	int err;
-+
-+	err = inet_ulp_can_listen(sk);
-+	if (unlikely(err))
-+		return err;
- 
- 	reqsk_queue_alloc(&icsk->icsk_accept_queue);
- 
---- a/net/ipv4/tcp_ulp.c
-+++ b/net/ipv4/tcp_ulp.c
-@@ -136,6 +136,10 @@ static int __tcp_set_ulp(struct sock *sk
- 	if (icsk->icsk_ulp_ops)
- 		goto out_err;
- 
-+	err = -EINVAL;
-+	if (!ulp_ops->clone && sk->sk_state == TCP_LISTEN)
-+		goto out_err;
-+
- 	err = ulp_ops->init(sk);
- 	if (err)
- 		goto out_err;
+ 	return copy_uabi_to_xstate(xsave, kbuf, NULL);
+ }
 
 
