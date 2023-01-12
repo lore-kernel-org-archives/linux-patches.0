@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B85E279C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:27:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FA96C433F1;
-	Thu, 12 Jan 2023 14:27:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F8079C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:27:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 311CEC433F0;
+	Thu, 12 Jan 2023 14:27:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673533645;
-	bh=zobPRlxv6WpYyK6SexJAhf/Aq26dXZdWGdc4ErOr0X4=;
+	s=korg; t=1673533648;
+	bh=3HCbNt4mobz1svFbJzWXW4f95dqb8jaYCgLJRH5T+Bg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oITYGeO5h8H/CNaLYIJhgbbuw8TCNHZAhfas9/+KfeRG2IOuslichBJMl+5Hpnu0n
-	 PggBfixXTV8kl/+TInCkfG7wtxy1cxLVuOpeI+QPHxZesgRTXfCPEtx99a0oTRErV+
-	 rBATAbw6ZBW1k++ZMH6phThEeTAF8LKFxzKHtPjE=
+	b=ySOYgDoiVk54Xvq91CZIcuLURVtp4H+LW3rliS3t0e3zx6K3mw/N7V5GijBv6nfUL
+	 frVkCyvm8Re0YlTT1PsZ0MxqMwJsnhoTX1dPHZgJuhK/J0vLy2+l/Qp6YolpyYKz9v
+	 Ikl1A8Se2Jla5W0eLb4cmTOicLQmBfAQWS5nqqKQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Jingjin <wangjingjin1@huawei.com>,
+	Marek Szyprowski <m.szyprowski@samsung.com>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 546/783] ASoC: rockchip: pdm: Add missing clk_disable_unprepare() in rockchip_pdm_runtime_resume()
-Date: Thu, 12 Jan 2023 14:54:22 +0100
-Message-Id: <20230112135549.527139698@linuxfoundation.org>
+Subject: [PATCH 5.10 547/783] ASoC: wm8994: Fix potential deadlock
+Date: Thu, 12 Jan 2023 14:54:23 +0100
+Message-Id: <20230112135549.568520688@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,34 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Jingjin <wangjingjin1@huawei.com>
+From: Marek Szyprowski <m.szyprowski@samsung.com>
 
-[ Upstream commit ef0a098efb36660326c133af9b5a04a96a00e3ca ]
+[ Upstream commit 9529dc167ffcdfd201b9f0eda71015f174095f7e ]
 
-The clk_disable_unprepare() should be called in the error handling of
-rockchip_pdm_runtime_resume().
+Fix this by dropping wm8994->accdet_lock while calling
+cancel_delayed_work_sync(&wm8994->mic_work) in wm1811_jackdet_irq().
 
-Fixes: fc05a5b22253 ("ASoC: rockchip: add support for pdm controller")
-Signed-off-by: Wang Jingjin <wangjingjin1@huawei.com>
-Link: https://lore.kernel.org/r/20221205032802.2422983-1-wangjingjin1@huawei.com
+Fixes: c0cc3f166525 ("ASoC: wm8994: Allow a delay between jack insertion and microphone detect")
+Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20221209091657.1183-1-m.szyprowski@samsung.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/rockchip/rockchip_pdm.c | 1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/wm8994.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/sound/soc/rockchip/rockchip_pdm.c b/sound/soc/rockchip/rockchip_pdm.c
-index 5adb293d0435..94cfbc90390b 100644
---- a/sound/soc/rockchip/rockchip_pdm.c
-+++ b/sound/soc/rockchip/rockchip_pdm.c
-@@ -368,6 +368,7 @@ static int rockchip_pdm_runtime_resume(struct device *dev)
+diff --git a/sound/soc/codecs/wm8994.c b/sound/soc/codecs/wm8994.c
+index f57884113406..d3a7480fda43 100644
+--- a/sound/soc/codecs/wm8994.c
++++ b/sound/soc/codecs/wm8994.c
+@@ -3853,7 +3853,12 @@ static irqreturn_t wm1811_jackdet_irq(int irq, void *data)
+ 	} else {
+ 		dev_dbg(component->dev, "Jack not detected\n");
  
- 	ret = clk_prepare_enable(pdm->hclk);
- 	if (ret) {
-+		clk_disable_unprepare(pdm->clk);
- 		dev_err(pdm->dev, "hclock enable failed %d\n", ret);
- 		return ret;
- 	}
++		/* Release wm8994->accdet_lock to avoid deadlock:
++		 * cancel_delayed_work_sync() takes wm8994->mic_work internal
++		 * lock and wm1811_mic_work takes wm8994->accdet_lock */
++		mutex_unlock(&wm8994->accdet_lock);
+ 		cancel_delayed_work_sync(&wm8994->mic_work);
++		mutex_lock(&wm8994->accdet_lock);
+ 
+ 		snd_soc_component_update_bits(component, WM8958_MICBIAS2,
+ 				    WM8958_MICB2_DISCH, WM8958_MICB2_DISCH);
 -- 
 2.35.1
 
