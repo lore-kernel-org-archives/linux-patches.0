@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A808F79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:39:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B31CC433EF;
-	Thu, 12 Jan 2023 14:39:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B431279C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:39:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DE52C433EF;
+	Thu, 12 Jan 2023 14:39:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534358;
-	bh=hKYGC5H2oiLKLMRiQ9bbuBinHNDMMLRAg3FgR9iX3xs=;
+	s=korg; t=1673534361;
+	bh=HZk4ACem8Go7022uSocZgWvDiuQ18L5+jIfHY0AMvEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ql0SJ0oS8oiKv4HQRWyoPzjFgTZjk+j+OZDjBaMaG2vhWgpenqZ9gJuG/I5F4VZMj
-	 ewIwMDOdnAJrh6/8jlE3gWRjLgfDB2nEKgrdZMKeGQiCqsq28yZyl5SfbUcNVy5Z8c
-	 dchiL8w9VhMyleRyNGJum9oWhu6/+oJJouxoEaOs=
+	b=fd+sd+oB/uRRJbPCrua6NPsaLDE1FDQM62uHXUWq3zEG+GvifFGmgUTIMqYsuMiaO
+	 q6nKH/34VXx5muedSNionD6KF0Zzlthj8AHIXOztTWUhqV9lRgMrUM1l+UAh7BVDS8
+	 fKhFpUqVwsdhvWeSJj4D2cCqLTQJbkR9T5aClSdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Wang, Zhi" <zhi.a.wang@intel.com>,
-	"He, Yu" <yu.he@intel.com>,
-	Zhenyu Wang <zhenyuw@linux.intel.com>,
-	Wang,
-	He
-Subject: [PATCH 5.10 764/783] drm/i915/gvt: fix gvt debugfs destroy
-Date: Thu, 12 Jan 2023 14:58:00 +0100
-Message-Id: <20230112135559.783232518@linuxfoundation.org>
+	Frederick Lawler <fred@cloudflare.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 782/783] net: sched: disallow noqueue for qdisc classes
+Date: Thu, 12 Jan 2023 14:58:18 +0100
+Message-Id: <20230112135600.653492778@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -37,94 +35,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhenyu Wang <zhenyuw@linux.intel.com>
+From: Frederick Lawler <fred@cloudflare.com>
 
-commit c4b850d1f448a901fbf4f7f36dec38c84009b489 upstream.
+commit 96398560f26aa07e8f2969d73c8197e6a6d10407 upstream.
 
-When gvt debug fs is destroyed, need to have a sane check if drm
-minor's debugfs root is still available or not, otherwise in case like
-device remove through unbinding, drm minor's debugfs directory has
-already been removed, then intel_gvt_debugfs_clean() would act upon
-dangling pointer like below oops.
+While experimenting with applying noqueue to a classful queue discipline,
+we discovered a NULL pointer dereference in the __dev_queue_xmit()
+path that generates a kernel OOPS:
 
-i915 0000:00:02.0: Direct firmware load for i915/gvt/vid_0x8086_did_0x1926_rid_0x0a.golden_hw_state failed with error -2
-i915 0000:00:02.0: MDEV: Registered
-Console: switching to colour dummy device 80x25
-i915 0000:00:02.0: MDEV: Unregistering
-BUG: kernel NULL pointer dereference, address: 00000000000000a0
-PGD 0 P4D 0
-Oops: 0002 [#1] PREEMPT SMP PTI
-CPU: 2 PID: 2486 Comm: gfx-unbind.sh Tainted: G          I        6.1.0-rc8+ #15
-Hardware name: Dell Inc. XPS 13 9350/0JXC1H, BIOS 1.13.0 02/10/2020
-RIP: 0010:down_write+0x1f/0x90
-Code: 1d ff ff 0f 1f 84 00 00 00 00 00 0f 1f 44 00 00 53 48 89 fb e8 62 c0 ff ff bf 01 00 00 00 e8 28 5e 31 ff 31 c0 ba 01 00 00 00 <f0> 48 0f b1 13 75 33 65 48 8b 04 25 c0 bd 01 00 48 89 43 08 bf 01
-RSP: 0018:ffff9eb3036ffcc8 EFLAGS: 00010246
-RAX: 0000000000000000 RBX: 00000000000000a0 RCX: ffffff8100000000
-RDX: 0000000000000001 RSI: 0000000000000064 RDI: ffffffffa48787a8
-RBP: ffff9eb3036ffd30 R08: ffffeb1fc45a0608 R09: ffffeb1fc45a05c0
-R10: 0000000000000002 R11: 0000000000000000 R12: 0000000000000000
-R13: ffff91acc33fa328 R14: ffff91acc033f080 R15: ffff91acced533e0
-FS:  00007f6947bba740(0000) GS:ffff91ae36d00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00000000000000a0 CR3: 00000001133a2002 CR4: 00000000003706e0
-Call Trace:
- <TASK>
- simple_recursive_removal+0x9f/0x2a0
- ? start_creating.part.0+0x120/0x120
- ? _raw_spin_lock+0x13/0x40
- debugfs_remove+0x40/0x60
- intel_gvt_debugfs_clean+0x15/0x30 [kvmgt]
- intel_gvt_clean_device+0x49/0xe0 [kvmgt]
- intel_gvt_driver_remove+0x2f/0xb0
- i915_driver_remove+0xa4/0xf0
- i915_pci_remove+0x1a/0x30
- pci_device_remove+0x33/0xa0
- device_release_driver_internal+0x1b2/0x230
- unbind_store+0xe0/0x110
- kernfs_fop_write_iter+0x11b/0x1f0
- vfs_write+0x203/0x3d0
- ksys_write+0x63/0xe0
- do_syscall_64+0x37/0x90
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7f6947cb5190
-Code: 40 00 48 8b 15 71 9c 0d 00 f7 d8 64 89 02 48 c7 c0 ff ff ff ff eb b7 0f 1f 00 80 3d 51 24 0e 00 00 74 17 b8 01 00 00 00 0f 05 <48> 3d 00 f0 ff ff 77 58 c3 0f 1f 80 00 00 00 00 48 83 ec 28 48 89
-RSP: 002b:00007ffcbac45a28 EFLAGS: 00000202 ORIG_RAX: 0000000000000001
-RAX: ffffffffffffffda RBX: 000000000000000d RCX: 00007f6947cb5190
-RDX: 000000000000000d RSI: 0000555e35c866a0 RDI: 0000000000000001
-RBP: 0000555e35c866a0 R08: 0000000000000002 R09: 0000555e358cb97c
-R10: 0000000000000000 R11: 0000000000000202 R12: 0000000000000001
-R13: 000000000000000d R14: 0000000000000000 R15: 0000555e358cb8e0
- </TASK>
-Modules linked in: kvmgt
-CR2: 00000000000000a0
----[ end trace 0000000000000000 ]---
+    # dev=enp0s5
+    # tc qdisc replace dev $dev root handle 1: htb default 1
+    # tc class add dev $dev parent 1: classid 1:1 htb rate 10mbit
+    # tc qdisc add dev $dev parent 1:1 handle 10: noqueue
+    # ping -I $dev -w 1 -c 1 1.1.1.1
 
-Cc: Wang, Zhi <zhi.a.wang@intel.com>
-Cc: He, Yu <yu.he@intel.com>
+[    2.172856] BUG: kernel NULL pointer dereference, address: 0000000000000000
+[    2.173217] #PF: supervisor instruction fetch in kernel mode
+...
+[    2.178451] Call Trace:
+[    2.178577]  <TASK>
+[    2.178686]  htb_enqueue+0x1c8/0x370
+[    2.178880]  dev_qdisc_enqueue+0x15/0x90
+[    2.179093]  __dev_queue_xmit+0x798/0xd00
+[    2.179305]  ? _raw_write_lock_bh+0xe/0x30
+[    2.179522]  ? __local_bh_enable_ip+0x32/0x70
+[    2.179759]  ? ___neigh_create+0x610/0x840
+[    2.179968]  ? eth_header+0x21/0xc0
+[    2.180144]  ip_finish_output2+0x15e/0x4f0
+[    2.180348]  ? dst_output+0x30/0x30
+[    2.180525]  ip_push_pending_frames+0x9d/0xb0
+[    2.180739]  raw_sendmsg+0x601/0xcb0
+[    2.180916]  ? _raw_spin_trylock+0xe/0x50
+[    2.181112]  ? _raw_spin_unlock_irqrestore+0x16/0x30
+[    2.181354]  ? get_page_from_freelist+0xcd6/0xdf0
+[    2.181594]  ? sock_sendmsg+0x56/0x60
+[    2.181781]  sock_sendmsg+0x56/0x60
+[    2.181958]  __sys_sendto+0xf7/0x160
+[    2.182139]  ? handle_mm_fault+0x6e/0x1d0
+[    2.182366]  ? do_user_addr_fault+0x1e1/0x660
+[    2.182627]  __x64_sys_sendto+0x1b/0x30
+[    2.182881]  do_syscall_64+0x38/0x90
+[    2.183085]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+...
+[    2.187402]  </TASK>
+
+Previously in commit d66d6c3152e8 ("net: sched: register noqueue
+qdisc"), NULL was set for the noqueue discipline on noqueue init
+so that __dev_queue_xmit() falls through for the noqueue case. This
+also sets a bypass of the enqueue NULL check in the
+register_qdisc() function for the struct noqueue_disc_ops.
+
+Classful queue disciplines make it past the NULL check in
+__dev_queue_xmit() because the discipline is set to htb (in this case),
+and then in the call to __dev_xmit_skb(), it calls into htb_enqueue()
+which grabs a leaf node for a class and then calls qdisc_enqueue() by
+passing in a queue discipline which assumes ->enqueue() is not set to NULL.
+
+Fix this by not allowing classes to be assigned to the noqueue
+discipline. Linux TC Notes states that classes cannot be set to
+the noqueue discipline. [1] Let's enforce that here.
+
+Links:
+1. https://linux-tc-notes.sourceforge.net/tc/doc/sch_noqueue.txt
+
+Fixes: d66d6c3152e8 ("net: sched: register noqueue qdisc")
 Cc: stable@vger.kernel.org
-Reviewed-by: Zhi Wang <zhi.a.wang@intel.com>
-Fixes: bc7b0be316ae ("drm/i915/gvt: Add basic debugfs infrastructure")
-Signed-off-by: Zhenyu Wang <zhenyuw@linux.intel.com>
-Link: http://patchwork.freedesktop.org/patch/msgid/20221219140357.769557-1-zhenyuw@linux.intel.com
+Signed-off-by: Frederick Lawler <fred@cloudflare.com>
+Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/r/20230109163906.706000-1-fred@cloudflare.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gvt/debugfs.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ net/sched/sch_api.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/i915/gvt/debugfs.c
-+++ b/drivers/gpu/drm/i915/gvt/debugfs.c
-@@ -199,6 +199,10 @@ void intel_gvt_debugfs_init(struct intel
-  */
- void intel_gvt_debugfs_clean(struct intel_gvt *gvt)
- {
--	debugfs_remove_recursive(gvt->debugfs_root);
--	gvt->debugfs_root = NULL;
-+	struct drm_minor *minor = gvt->gt->i915->drm.primary;
+--- a/net/sched/sch_api.c
++++ b/net/sched/sch_api.c
+@@ -1114,6 +1114,11 @@ skip:
+ 			return -ENOENT;
+ 		}
+ 
++		if (new && new->ops == &noqueue_qdisc_ops) {
++			NL_SET_ERR_MSG(extack, "Cannot assign noqueue to a class");
++			return -EINVAL;
++		}
 +
-+	if (minor->debugfs_root) {
-+		debugfs_remove_recursive(gvt->debugfs_root);
-+		gvt->debugfs_root = NULL;
-+	}
- }
+ 		err = cops->graft(parent, cl, new, &old, extack);
+ 		if (err)
+ 			return err;
 
 
