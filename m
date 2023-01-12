@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00146749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:12:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22436C433F0;
-	Thu, 12 Jan 2023 14:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FC00749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:12:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78852C433EF;
+	Thu, 12 Jan 2023 14:12:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532754;
-	bh=PEMwDXyr7GpQpghHh2id0Gd8AINQiSGh6JAvEJUUc8g=;
+	s=korg; t=1673532760;
+	bh=YkGOJ4m4WSiDNRsBJ9E3p65qhsIOfDdYuMZnxwnNCN8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VLt8Co2rHUyMjXj1iWYxACD64Ay8E9VFRjmX/H8+tRLvBCj58sQLA9rnsSkND4wXG
-	 xTSKKZMXFyg7YcX6ebpwSvSLNT8U7VOd3dbEOnm1zfUnw86WKBaABSykrAkuKbE/v/
-	 9dsGqBlxetcyrF2Az9e/mHv0QsZwvRDHtkR6BO8M=
+	b=kZBMQPX+//PonIEN0UsFJks3gT68kXH6w91DRN1xKjV27Kp/5liiMVF4WHw1/leiI
+	 uQXTt7vHNood6duxl7STmK9CUnp+bGYM71JpFcVeh26pbE13zXejreo8KQNtEnayV0
+	 Rj2gaj0YQc5fe5Tn0Qynrqa/PQ+cjVZXmOOHGNjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Jerry Ray <jerry.ray@microchip.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 238/783] media: coda: Add check for dcoda_iram_alloc
-Date: Thu, 12 Jan 2023 14:49:14 +0100
-Message-Id: <20230112135535.404643601@linuxfoundation.org>
+Subject: [PATCH 5.10 266/783] net: lan9303: Fix read error execution path
+Date: Thu, 12 Jan 2023 14:49:42 +0100
+Message-Id: <20230112135536.754624871@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,45 +37,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Jerry Ray <jerry.ray@microchip.com>
 
-[ Upstream commit 6b8082238fb8bb20f67e46388123e67a5bbc558d ]
+[ Upstream commit 8964916d206071b058c6351f88b1966bd58cbde0 ]
 
-As the coda_iram_alloc may return NULL pointer,
-it should be better to check the return value
-in order to avoid NULL poineter dereference,
-same as the others.
+This patch fixes an issue where a read failure of a port statistic counter
+will return unknown results.  While it is highly unlikely the read will
+ever fail, it is much cleaner to return a zero for the stat count.
 
-Fixes: b313bcc9a467 ("[media] coda: simplify IRAM setup")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: a1292595e006 ("net: dsa: add new DSA switch driver for the SMSC-LAN9303")
+Signed-off-by: Jerry Ray <jerry.ray@microchip.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/20221209153502.7429-1-jerry.ray@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/coda/coda-bit.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/dsa/lan9303-core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/coda/coda-bit.c b/drivers/media/platform/coda/coda-bit.c
-index 159c9de85788..b8a70ef8e8ec 100644
---- a/drivers/media/platform/coda/coda-bit.c
-+++ b/drivers/media/platform/coda/coda-bit.c
-@@ -852,7 +852,7 @@ static void coda_setup_iram(struct coda_ctx *ctx)
- 		/* Only H.264BP and H.263P3 are considered */
- 		iram_info->buf_dbk_y_use = coda_iram_alloc(iram_info, w64);
- 		iram_info->buf_dbk_c_use = coda_iram_alloc(iram_info, w64);
--		if (!iram_info->buf_dbk_c_use)
-+		if (!iram_info->buf_dbk_y_use || !iram_info->buf_dbk_c_use)
- 			goto out;
- 		iram_info->axi_sram_use |= dbk_bits;
+diff --git a/drivers/net/dsa/lan9303-core.c b/drivers/net/dsa/lan9303-core.c
+index c79bb8cf962c..deeed50a42c0 100644
+--- a/drivers/net/dsa/lan9303-core.c
++++ b/drivers/net/dsa/lan9303-core.c
+@@ -1002,9 +1002,11 @@ static void lan9303_get_ethtool_stats(struct dsa_switch *ds, int port,
+ 		ret = lan9303_read_switch_port(
+ 			chip, port, lan9303_mib[u].offset, &reg);
  
-@@ -876,7 +876,7 @@ static void coda_setup_iram(struct coda_ctx *ctx)
- 
- 		iram_info->buf_dbk_y_use = coda_iram_alloc(iram_info, w128);
- 		iram_info->buf_dbk_c_use = coda_iram_alloc(iram_info, w128);
--		if (!iram_info->buf_dbk_c_use)
-+		if (!iram_info->buf_dbk_y_use || !iram_info->buf_dbk_c_use)
- 			goto out;
- 		iram_info->axi_sram_use |= dbk_bits;
- 
+-		if (ret)
++		if (ret) {
+ 			dev_warn(chip->dev, "Reading status port %d reg %u failed\n",
+ 				 port, lan9303_mib[u].offset);
++			reg = 0;
++		}
+ 		data[u] = reg;
+ 	}
+ }
 -- 
 2.35.1
 
