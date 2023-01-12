@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06643749D
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:15:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E10AC433D2;
-	Thu, 12 Jan 2023 14:15:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DFF5749D
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:15:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC91EC433EF;
+	Thu, 12 Jan 2023 14:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532909;
-	bh=GfQ9IhbqJZi6hN1otynwz6mnWtPBlALTI3LI4fjsnck=;
+	s=korg; t=1673532915;
+	bh=af86XSpY/aUQSa/g78jDbGzbzMLUKqYR2gyN9MUnEnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iXbjkzViE0xF2fxpY36zLpubTJqFDp5mZMNw7CIomhpgo0m2IfKsxd9/vF5yMmZe1
-	 s54UwlSTZWjT1WaebW1UMeUhkcPpIFDMJiRnFsidohzLkiYFzK8xn+SG7vnlfB0k8o
-	 VX7sSxyAaj0gqZGlk2Diwceu7gD3BnE7t7rZYAsY=
+	b=BFPrwWp7E9bfwDN1mgccR2vfPC35J9eSuwmUwUvehDmLYrzyGJsADYZU0UW423bdL
+	 q0fDHp2Geewn/ZS7yzFnLwB8w+fwJ6yiUMf13IJFTC29f6HGXCahe14ckhIPqRUSh6
+	 e98d+BFo7AFkKX6VX8yYUoxTdNqzGd+tzqcycRrQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yiqun <zhangyiqun@phytium.com.cn>,
+	syzbot+bc05445bc14148d51915@syzkaller.appspotmail.com,
+	Daniel Jordan <daniel.m.jordan@oracle.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 313/783] crypto: tcrypt - Fix multibuffer skcipher speed test mem leak
-Date: Thu, 12 Jan 2023 14:50:29 +0100
-Message-Id: <20230112135538.840817550@linuxfoundation.org>
+Subject: [PATCH 5.10 314/783] padata: Always leave BHs disabled when running ->parallel()
+Date: Thu, 12 Jan 2023 14:50:30 +0100
+Message-Id: <20230112135538.880960080@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,43 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Yiqun <zhangyiqun@phytium.com.cn>
+From: Daniel Jordan <daniel.m.jordan@oracle.com>
 
-[ Upstream commit 1aa33fc8d4032227253ceb736f47c52b859d9683 ]
+[ Upstream commit 34c3a47d20ae55b3600fed733bf96eafe9c500d5 ]
 
-In the past, the data for mb-skcipher test has been allocated
-twice, that means the first allcated memory area is without
-free, which may cause a potential memory leakage. So this
-patch is to remove one allocation to fix this error.
+A deadlock can happen when an overloaded system runs ->parallel() in the
+context of the current task:
 
-Fixes: e161c5930c15 ("crypto: tcrypt - add multibuf skcipher...")
-Signed-off-by: Zhang Yiqun <zhangyiqun@phytium.com.cn>
+    padata_do_parallel
+      ->parallel()
+        pcrypt_aead_enc/dec
+          padata_do_serial
+            spin_lock(&reorder->lock) // BHs still enabled
+              <interrupt>
+                ...
+                  __do_softirq
+                    ...
+                      padata_do_serial
+                        spin_lock(&reorder->lock)
+
+It's a bug for BHs to be on in _do_serial as Steffen points out, so
+ensure they're off in the "current task" case like they are in
+padata_parallel_worker to avoid this situation.
+
+Reported-by: syzbot+bc05445bc14148d51915@syzkaller.appspotmail.com
+Fixes: 4611ce224688 ("padata: allocate work structures for parallel jobs from a pool")
+Signed-off-by: Daniel Jordan <daniel.m.jordan@oracle.com>
+Acked-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/tcrypt.c | 9 ---------
- 1 file changed, 9 deletions(-)
+ kernel/padata.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/crypto/tcrypt.c b/crypto/tcrypt.c
-index 8609174e036e..7972d2784b3b 100644
---- a/crypto/tcrypt.c
-+++ b/crypto/tcrypt.c
-@@ -1282,15 +1282,6 @@ static void test_mb_skcipher_speed(const char *algo, int enc, int secs,
- 			goto out_free_tfm;
- 		}
+diff --git a/kernel/padata.c b/kernel/padata.c
+index d4d3ba6e1728..4d31a69a9b38 100644
+--- a/kernel/padata.c
++++ b/kernel/padata.c
+@@ -220,14 +220,16 @@ int padata_do_parallel(struct padata_shell *ps,
+ 	pw = padata_work_alloc();
+ 	spin_unlock(&padata_works_lock);
  
--
--	for (i = 0; i < num_mb; ++i)
--		if (testmgr_alloc_buf(data[i].xbuf)) {
--			while (i--)
--				testmgr_free_buf(data[i].xbuf);
--			goto out_free_tfm;
--		}
--
--
- 	for (i = 0; i < num_mb; ++i) {
- 		data[i].req = skcipher_request_alloc(tfm, GFP_KERNEL);
- 		if (!data[i].req) {
++	if (!pw) {
++		/* Maximum works limit exceeded, run in the current task. */
++		padata->parallel(padata);
++	}
++
+ 	rcu_read_unlock_bh();
+ 
+ 	if (pw) {
+ 		padata_work_init(pw, padata_parallel_worker, padata, 0);
+ 		queue_work(pinst->parallel_wq, &pw->pw_work);
+-	} else {
+-		/* Maximum works limit exceeded, run in the current task. */
+-		padata->parallel(padata);
+ 	}
+ 
+ 	return 0;
 -- 
 2.35.1
 
