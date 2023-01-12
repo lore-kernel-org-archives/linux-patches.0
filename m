@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C87F79C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:33:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87811C433D2;
-	Thu, 12 Jan 2023 14:33:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3439279C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:33:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC83C433F0;
+	Thu, 12 Jan 2023 14:33:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534028;
-	bh=tCshiWcTYy6mvN5x1VPQnRQIF6uLj44V3yIWC6Ms7ro=;
+	s=korg; t=1673534032;
+	bh=YNvrCNDtdIYedqMdh7FZqLeDtkR3nCLOvOMuQBxGUU8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c/3uBzsbB2H0V/LJIyTaJ7SzYXGibeWsTMNBwKNQRq00loWpoTg687t0axGwCW7oU
-	 zUuffDaAbB35ZE6JhDsPAtBosdzyKXTotBkHzGFfj7CFCC6IsShbzcJt/vNAaWVzyi
-	 bp05ZFgjd5Sc6zpaUmFyHVPkuBEzbHKNPiHOzY/s=
+	b=vQbMkpQ5ETbiWoUiWuQUR6+Ih88wzWhXRjkLq4kBE5iqgZk1ibMdPhWtIZEKHc27m
+	 3BFAAG/Gb18yEhBzhrsbA9s9vjMyXmzn0jVNeo99v+lqiWICQlu41wRC33sV/ojmLw
+	 /Ye1osWnHWCc9wASsKkmgQR4UP7wM5SVsw3Dpur8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Weiyang <wangweiyang2@huawei.com>,
-	Aristeu Rozanski <aris@redhat.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 5.10 664/783] device_cgroup: Roll back to original exceptions after copy failure
-Date: Thu, 12 Jan 2023 14:56:20 +0100
-Message-Id: <20230112135555.130656486@linuxfoundation.org>
+	Baokun Li <libaokun1@huawei.com>,
+	Jason Yan <yanaijie@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 5.10 673/783] ext4: add EXT4_IGET_BAD flag to prevent unexpected bad inode
+Date: Thu, 12 Jan 2023 14:56:29 +0100
+Message-Id: <20230112135555.537801787@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,95 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Weiyang <wangweiyang2@huawei.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit e68bfbd3b3c3a0ec3cf8c230996ad8cabe90322f upstream.
+commit 63b1e9bccb71fe7d7e3ddc9877dbdc85e5d2d023 upstream.
 
-When add the 'a *:* rwm' entry to devcgroup A's whitelist, at first A's
-exceptions will be cleaned and A's behavior is changed to
-DEVCG_DEFAULT_ALLOW. Then parent's exceptions will be copyed to A's
-whitelist. If copy failure occurs, just return leaving A to grant
-permissions to all devices. And A may grant more permissions than
-parent.
+There are many places that will get unhappy (and crash) when ext4_iget()
+returns a bad inode. However, if iget the boot loader inode, allows a bad
+inode to be returned, because the inode may not be initialized. This
+mechanism can be used to bypass some checks and cause panic. To solve this
+problem, we add a special iget flag EXT4_IGET_BAD. Only with this flag
+we'd be returning bad inode from ext4_iget(), otherwise we always return
+the error code if the inode is bad inode.(suggested by Jan Kara)
 
-Backup A's whitelist and recover original exceptions after copy
-failure.
-
-Cc: stable@vger.kernel.org
-Fixes: 4cef7299b478 ("device_cgroup: add proper checking when changing default behavior")
-Signed-off-by: Wang Weiyang <wangweiyang2@huawei.com>
-Reviewed-by: Aristeu Rozanski <aris@redhat.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jason Yan <yanaijie@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221026042310.3839669-4-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/device_cgroup.c |   33 +++++++++++++++++++++++++++++----
- 1 file changed, 29 insertions(+), 4 deletions(-)
+ fs/ext4/ext4.h  |    3 ++-
+ fs/ext4/inode.c |    8 +++++++-
+ fs/ext4/ioctl.c |    3 ++-
+ 3 files changed, 11 insertions(+), 3 deletions(-)
 
---- a/security/device_cgroup.c
-+++ b/security/device_cgroup.c
-@@ -81,6 +81,17 @@ free_and_exit:
- 	return -ENOMEM;
- }
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -2842,7 +2842,8 @@ int do_journal_get_write_access(handle_t
+ typedef enum {
+ 	EXT4_IGET_NORMAL =	0,
+ 	EXT4_IGET_SPECIAL =	0x0001, /* OK to iget a system inode */
+-	EXT4_IGET_HANDLE = 	0x0002	/* Inode # is from a handle */
++	EXT4_IGET_HANDLE = 	0x0002,	/* Inode # is from a handle */
++	EXT4_IGET_BAD =		0x0004  /* Allow to iget a bad inode */
+ } ext4_iget_flags;
  
-+static void dev_exceptions_move(struct list_head *dest, struct list_head *orig)
-+{
-+	struct dev_exception_item *ex, *tmp;
-+
-+	lockdep_assert_held(&devcgroup_mutex);
-+
-+	list_for_each_entry_safe(ex, tmp, orig, list) {
-+		list_move_tail(&ex->list, dest);
+ extern struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4969,8 +4969,14 @@ struct inode *__ext4_iget(struct super_b
+ 	if (IS_CASEFOLDED(inode) && !ext4_has_feature_casefold(inode->i_sb))
+ 		ext4_error_inode(inode, function, line, 0,
+ 				 "casefold flag without casefold feature");
+-	brelse(iloc.bh);
++	if (is_bad_inode(inode) && !(flags & EXT4_IGET_BAD)) {
++		ext4_error_inode(inode, function, line, 0,
++				 "bad inode without EXT4_IGET_BAD flag");
++		ret = -EUCLEAN;
++		goto bad_inode;
 +	}
-+}
-+
- /*
-  * called under devcgroup_mutex
-  */
-@@ -603,11 +614,13 @@ static int devcgroup_update_access(struc
- 	int count, rc = 0;
- 	struct dev_exception_item ex;
- 	struct dev_cgroup *parent = css_to_devcgroup(devcgroup->css.parent);
-+	struct dev_cgroup tmp_devcgrp;
  
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EPERM;
++	brelse(iloc.bh);
+ 	unlock_new_inode(inode);
+ 	return inode;
  
- 	memset(&ex, 0, sizeof(ex));
-+	memset(&tmp_devcgrp, 0, sizeof(tmp_devcgrp));
- 	b = buffer;
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -121,7 +121,8 @@ static long swap_inode_boot_loader(struc
+ 	blkcnt_t blocks;
+ 	unsigned short bytes;
  
- 	switch (*b) {
-@@ -619,15 +632,27 @@ static int devcgroup_update_access(struc
- 
- 			if (!may_allow_all(parent))
- 				return -EPERM;
--			dev_exception_clean(devcgroup);
--			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
--			if (!parent)
-+			if (!parent) {
-+				devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
-+				dev_exception_clean(devcgroup);
- 				break;
-+			}
- 
-+			INIT_LIST_HEAD(&tmp_devcgrp.exceptions);
-+			rc = dev_exceptions_copy(&tmp_devcgrp.exceptions,
-+						 &devcgroup->exceptions);
-+			if (rc)
-+				return rc;
-+			dev_exception_clean(devcgroup);
- 			rc = dev_exceptions_copy(&devcgroup->exceptions,
- 						 &parent->exceptions);
--			if (rc)
-+			if (rc) {
-+				dev_exceptions_move(&devcgroup->exceptions,
-+						    &tmp_devcgrp.exceptions);
- 				return rc;
-+			}
-+			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
-+			dev_exception_clean(&tmp_devcgrp);
- 			break;
- 		case DEVCG_DENY:
- 			if (css_has_online_children(&devcgroup->css))
+-	inode_bl = ext4_iget(sb, EXT4_BOOT_LOADER_INO, EXT4_IGET_SPECIAL);
++	inode_bl = ext4_iget(sb, EXT4_BOOT_LOADER_INO,
++			EXT4_IGET_SPECIAL | EXT4_IGET_BAD);
+ 	if (IS_ERR(inode_bl))
+ 		return PTR_ERR(inode_bl);
+ 	ei_bl = EXT4_I(inode_bl);
 
 
