@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F96479C9
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:38:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B423C433D2;
-	Thu, 12 Jan 2023 14:38:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF9C79C9
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:38:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2FB5C433EF;
+	Thu, 12 Jan 2023 14:38:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673534301;
-	bh=tFfHK2fBYyM4RyG17wVxNZZfDz4XZHSCtc8mBNyE70g=;
+	s=korg; t=1673534304;
+	bh=sEedI5jSoSi2M74h6RIk11KY7c9jCmK2hW2qv+b5deU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cBSVAGglRT1J30cbGuUoEaxzwSSsoMIKk6vDAlMc84v/24WvJbYk2+2/Pxc1r86aW
-	 t8dnW8RWqisho1RBfmQTACYGeuLgMv7m0BRI1Ebl6DMpkSLCRrflOiUmGPwQKsGg5c
-	 ivs9T5bvHaWraTbFaxei8aK1Gp2tFRimejRZE51U=
+	b=xJkTJ1xSp2JKzU6ufZ+xAi0/gBW5KtANTSTt6Z23aj3VzJZ9RHQqcDWwapZITi2t3
+	 qnC6kvmZVVHOo4gJKbKdCMKkpFP3U2pOJDHTKncC5A89R+o7c89GGi06hqFYVjHqYu
+	 +Ng11mUNBDALC6XGODAzyV8k27F3LKVr7tcnXlZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steve Dickson <steved@redhat.com>,
-	JianHong Yin <yin-jianhong@163.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>
-Subject: [PATCH 5.10 761/783] nfsd: fix handling of readdir in v4root vs. mount upcall timeout
-Date: Thu, 12 Jan 2023 14:57:57 +0100
-Message-Id: <20230112135559.645071687@linuxfoundation.org>
+	Miaoqian Lin <linmq006@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 733/783] nfc: Fix potential resource leaks
+Date: Thu, 12 Jan 2023 14:57:29 +0100
+Message-Id: <20230112135558.322256716@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -36,52 +35,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-commit cad853374d85fe678d721512cecfabd7636e51f3 upstream.
+[ Upstream commit df49908f3c52d211aea5e2a14a93bbe67a2cb3af ]
 
-If v4 READDIR operation hits a mountpoint and gets back an error,
-then it will include that entry in the reply and set RDATTR_ERROR for it
-to the error.
+nfc_get_device() take reference for the device, add missing
+nfc_put_device() to release it when not need anymore.
+Also fix the style warnning by use error EOPNOTSUPP instead of
+ENOTSUPP.
 
-That's fine for "normal" exported filesystems, but on the v4root, we
-need to be more careful to only expose the existence of dentries that
-lead to exports.
-
-If the mountd upcall times out while checking to see whether a
-mountpoint on the v4root is exported, then we have no recourse other
-than to fail the whole operation.
-
-Cc: Steve Dickson <steved@redhat.com>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216777
-Reported-by: JianHong Yin <yin-jianhong@163.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 5ce3f32b5264 ("NFC: netlink: SE API implementation")
+Fixes: 29e76924cf08 ("nfc: netlink: Add capability to reply to vendor_cmd with data")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4xdr.c |   11 +++++++++++
- 1 file changed, 11 insertions(+)
+ net/nfc/netlink.c | 52 ++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 38 insertions(+), 14 deletions(-)
 
---- a/fs/nfsd/nfs4xdr.c
-+++ b/fs/nfsd/nfs4xdr.c
-@@ -3405,6 +3405,17 @@ nfsd4_encode_dirent(void *ccdv, const ch
- 	case nfserr_noent:
- 		xdr_truncate_encode(xdr, start_offset);
- 		goto skip_entry;
-+	case nfserr_jukebox:
-+		/*
-+		 * The pseudoroot should only display dentries that lead to
-+		 * exports. If we get EJUKEBOX here, then we can't tell whether
-+		 * this entry should be included. Just fail the whole READDIR
-+		 * with NFS4ERR_DELAY in that case, and hope that the situation
-+		 * will resolve itself by the client's next attempt.
-+		 */
-+		if (cd->rd_fhp->fh_export->ex_flags & NFSEXP_V4ROOT)
-+			goto fail;
-+		fallthrough;
- 	default:
- 		/*
- 		 * If the client requested the RDATTR_ERROR attribute,
+diff --git a/net/nfc/netlink.c b/net/nfc/netlink.c
+index b8939ebaa6d3..610caea4feec 100644
+--- a/net/nfc/netlink.c
++++ b/net/nfc/netlink.c
+@@ -1497,6 +1497,7 @@ static int nfc_genl_se_io(struct sk_buff *skb, struct genl_info *info)
+ 	u32 dev_idx, se_idx;
+ 	u8 *apdu;
+ 	size_t apdu_len;
++	int rc;
+ 
+ 	if (!info->attrs[NFC_ATTR_DEVICE_INDEX] ||
+ 	    !info->attrs[NFC_ATTR_SE_INDEX] ||
+@@ -1510,25 +1511,37 @@ static int nfc_genl_se_io(struct sk_buff *skb, struct genl_info *info)
+ 	if (!dev)
+ 		return -ENODEV;
+ 
+-	if (!dev->ops || !dev->ops->se_io)
+-		return -ENOTSUPP;
++	if (!dev->ops || !dev->ops->se_io) {
++		rc = -EOPNOTSUPP;
++		goto put_dev;
++	}
+ 
+ 	apdu_len = nla_len(info->attrs[NFC_ATTR_SE_APDU]);
+-	if (apdu_len == 0)
+-		return -EINVAL;
++	if (apdu_len == 0) {
++		rc = -EINVAL;
++		goto put_dev;
++	}
+ 
+ 	apdu = nla_data(info->attrs[NFC_ATTR_SE_APDU]);
+-	if (!apdu)
+-		return -EINVAL;
++	if (!apdu) {
++		rc = -EINVAL;
++		goto put_dev;
++	}
+ 
+ 	ctx = kzalloc(sizeof(struct se_io_ctx), GFP_KERNEL);
+-	if (!ctx)
+-		return -ENOMEM;
++	if (!ctx) {
++		rc = -ENOMEM;
++		goto put_dev;
++	}
+ 
+ 	ctx->dev_idx = dev_idx;
+ 	ctx->se_idx = se_idx;
+ 
+-	return nfc_se_io(dev, se_idx, apdu, apdu_len, se_io_cb, ctx);
++	rc = nfc_se_io(dev, se_idx, apdu, apdu_len, se_io_cb, ctx);
++
++put_dev:
++	nfc_put_device(dev);
++	return rc;
+ }
+ 
+ static int nfc_genl_vendor_cmd(struct sk_buff *skb,
+@@ -1551,14 +1564,21 @@ static int nfc_genl_vendor_cmd(struct sk_buff *skb,
+ 	subcmd = nla_get_u32(info->attrs[NFC_ATTR_VENDOR_SUBCMD]);
+ 
+ 	dev = nfc_get_device(dev_idx);
+-	if (!dev || !dev->vendor_cmds || !dev->n_vendor_cmds)
++	if (!dev)
+ 		return -ENODEV;
+ 
++	if (!dev->vendor_cmds || !dev->n_vendor_cmds) {
++		err = -ENODEV;
++		goto put_dev;
++	}
++
+ 	if (info->attrs[NFC_ATTR_VENDOR_DATA]) {
+ 		data = nla_data(info->attrs[NFC_ATTR_VENDOR_DATA]);
+ 		data_len = nla_len(info->attrs[NFC_ATTR_VENDOR_DATA]);
+-		if (data_len == 0)
+-			return -EINVAL;
++		if (data_len == 0) {
++			err = -EINVAL;
++			goto put_dev;
++		}
+ 	} else {
+ 		data = NULL;
+ 		data_len = 0;
+@@ -1573,10 +1593,14 @@ static int nfc_genl_vendor_cmd(struct sk_buff *skb,
+ 		dev->cur_cmd_info = info;
+ 		err = cmd->doit(dev, data, data_len);
+ 		dev->cur_cmd_info = NULL;
+-		return err;
++		goto put_dev;
+ 	}
+ 
+-	return -EOPNOTSUPP;
++	err = -EOPNOTSUPP;
++
++put_dev:
++	nfc_put_device(dev);
++	return err;
+ }
+ 
+ /* message building helper */
+-- 
+2.35.1
+
 
 
