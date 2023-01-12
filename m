@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90D0749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:09:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20B55C433EF;
-	Thu, 12 Jan 2023 14:09:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B49E6749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:09:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E9A4C433EF;
+	Thu, 12 Jan 2023 14:09:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532549;
-	bh=S8B+7BUL+uRwVISrw8I+/MgAHOjDqUc4NVsmGQ2/cNM=;
+	s=korg; t=1673532552;
+	bh=Pk0q9uwC2iu/RwQNNfxXF2GAs2R7SOi4sg0pxzKMKkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MANaZhqqoPj7I9AFn1f0WShGKl2o+/1x90yZLZW7efyeFyM6YvGtM/u/SVGRF6pj6
-	 8lem16pt8nc3AHBcXAFx+YaQJ9j9WKalD3aZPXzM16VLM4pAvuyHxo0afGBUtXDIjs
-	 /VRfSlqjFp/fUPw3D4ZHpSb1/S88DzZGchhN9s4w=
+	b=d1TkAUkIHNsAujuf93tccoGLtdWn03as2c4mLQk8IHWpXA/rl72rxDZPxWX5+HGDe
+	 vvUvTssPCQWx8R6vHmXQvb95LlOTHsoVQkyIOkBTvMdhpL7cjt1ReqWLIOIjNB7kcQ
+	 cf6ysuJti33t76R7ZSrT1M9WhU1IuQBnuSZ5Ehxo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yongjun <zhengyongjun3@huawei.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Pengcheng Yang <yangpc@wangsu.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 171/783] mtd: maps: pxa2xx-flash: fix memory leak in probe
-Date: Thu, 12 Jan 2023 14:48:07 +0100
-Message-Id: <20230112135532.247193684@linuxfoundation.org>
+Subject: [PATCH 5.10 198/783] bpf, sockmap: Fix repeated calls to sock_put() when msg has more_data
+Date: Thu, 12 Jan 2023 14:48:34 +0100
+Message-Id: <20230112135533.507080072@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -35,42 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yongjun <zhengyongjun3@huawei.com>
+From: Pengcheng Yang <yangpc@wangsu.com>
 
-[ Upstream commit 2399401feee27c639addc5b7e6ba519d3ca341bf ]
+[ Upstream commit 7a9841ca025275b5b0edfb0b618934abb6ceec15 ]
 
-Free 'info' upon remapping error to avoid a memory leak.
+In tcp_bpf_send_verdict() redirection, the eval variable is assigned to
+__SK_REDIRECT after the apply_bytes data is sent, if msg has more_data,
+sock_put() will be called multiple times.
 
-Fixes: e644f7d62894 ("[MTD] MAPS: Merge Lubbock and Mainstone drivers into common PXA2xx driver")
-Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
-[<miquel.raynal@bootlin.com>: Reword the commit log]
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20221119073307.22929-1-zhengyongjun3@huawei.com
+We should reset the eval variable to __SK_NONE every time more_data
+starts.
+
+This causes:
+
+IPv4: Attempt to release TCP socket in state 1 00000000b4c925d7
+------------[ cut here ]------------
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 5 PID: 4482 at lib/refcount.c:25 refcount_warn_saturate+0x7d/0x110
+Modules linked in:
+CPU: 5 PID: 4482 Comm: sockhash_bypass Kdump: loaded Not tainted 6.0.0 #1
+Hardware name: Red Hat KVM, BIOS 1.11.0-2.el7 04/01/2014
+Call Trace:
+ <TASK>
+ __tcp_transmit_skb+0xa1b/0xb90
+ ? __alloc_skb+0x8c/0x1a0
+ ? __kmalloc_node_track_caller+0x184/0x320
+ tcp_write_xmit+0x22a/0x1110
+ __tcp_push_pending_frames+0x32/0xf0
+ do_tcp_sendpages+0x62d/0x640
+ tcp_bpf_push+0xae/0x2c0
+ tcp_bpf_sendmsg_redir+0x260/0x410
+ ? preempt_count_add+0x70/0xa0
+ tcp_bpf_send_verdict+0x386/0x4b0
+ tcp_bpf_sendmsg+0x21b/0x3b0
+ sock_sendmsg+0x58/0x70
+ __sys_sendto+0xfa/0x170
+ ? xfd_validate_state+0x1d/0x80
+ ? switch_fpu_return+0x59/0xe0
+ __x64_sys_sendto+0x24/0x30
+ do_syscall_64+0x37/0x90
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Fixes: cd9733f5d75c ("tcp_bpf: Fix one concurrency problem in the tcp_bpf_send_verdict function")
+Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
+Link: https://lore.kernel.org/bpf/1669718441-2654-2-git-send-email-yangpc@wangsu.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/maps/pxa2xx-flash.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ipv4/tcp_bpf.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/maps/pxa2xx-flash.c b/drivers/mtd/maps/pxa2xx-flash.c
-index 7d96758a8f04..6e5e55755970 100644
---- a/drivers/mtd/maps/pxa2xx-flash.c
-+++ b/drivers/mtd/maps/pxa2xx-flash.c
-@@ -66,6 +66,7 @@ static int pxa2xx_flash_probe(struct platform_device *pdev)
- 	if (!info->map.virt) {
- 		printk(KERN_WARNING "Failed to ioremap %s\n",
- 		       info->map.name);
-+		kfree(info);
- 		return -ENOMEM;
- 	}
- 	info->map.cached = ioremap_cache(info->map.phys, info->map.size);
-@@ -87,6 +88,7 @@ static int pxa2xx_flash_probe(struct platform_device *pdev)
- 		iounmap((void *)info->map.virt);
- 		if (info->map.cached)
- 			iounmap(info->map.cached);
-+		kfree(info);
- 		return -EIO;
- 	}
- 	info->mtd->dev.parent = &pdev->dev;
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index 809ee0f32d59..027f7f9256e1 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -316,7 +316,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
+ 	bool cork = false, enospc = sk_msg_full(msg);
+ 	struct sock *sk_redir;
+ 	u32 tosend, origsize, sent, delta = 0;
+-	u32 eval = __SK_NONE;
++	u32 eval;
+ 	int ret;
+ 
+ more_data:
+@@ -347,6 +347,7 @@ static int tcp_bpf_send_verdict(struct sock *sk, struct sk_psock *psock,
+ 	tosend = msg->sg.size;
+ 	if (psock->apply_bytes && psock->apply_bytes < tosend)
+ 		tosend = psock->apply_bytes;
++	eval = __SK_NONE;
+ 
+ 	switch (psock->eval) {
+ 	case __SK_PASS:
 -- 
 2.35.1
 
