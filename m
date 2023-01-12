@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB97749A
-	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:04:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF858C433EF;
-	Thu, 12 Jan 2023 14:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6814F749A
+	for <patches@lists.linux.dev>; Thu, 12 Jan 2023 14:04:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6695C433F0;
+	Thu, 12 Jan 2023 14:04:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673532274;
-	bh=D7vWAd2QM3x++CDRAcyaA6IESMGrPik27SkSHuvJR38=;
+	s=korg; t=1673532277;
+	bh=thwD+DMszyIKDikjgBclBzvBuPVChoy8+4+YRj94YDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S8ZytTiqBhfdZVaFb/U0vuSgQMwTLJIdy026OR8SNH3jMUFPPl8YVaoHly0yCwHFa
-	 XQpmaWovTYoIHxirBoJa7w8jorkrzpPK1zXq5bAvYwnTV0xRx/uBv9Pkr1DNXW6dz8
-	 q0HvPI0Yjly6P4pfRMx+qAnjaBoQitbQmEmJaP5A=
+	b=PhxDGgnt3IybSdmPRkC+3lOP1CAS+pXyX8cXa/EItMgtyDoafpjUlPJ06mU7YVSzg
+	 YJNrPxXeECqB4FG6h66rasDSzL9rLfAJ2m7cY/UvZsNGlWoZmmSvBza/IUB8UdmAkx
+	 8PAdQLKXQpYfoIJy1VyQG8X7n079NgHh8TckjPWU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Matt Porter <mporter@kernel.crashing.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 078/783] rapidio: fix possible name leaks when rio_add_device() fails
-Date: Thu, 12 Jan 2023 14:46:34 +0100
-Message-Id: <20230112135527.780458859@linuxfoundation.org>
+Subject: [PATCH 5.10 069/783] genirq/irqdesc: Dont try to remove non-existing sysfs files
+Date: Thu, 12 Jan 2023 14:46:25 +0100
+Message-Id: <20230112135527.356678181@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
 References: <20230112135524.143670746@linuxfoundation.org>
@@ -39,71 +37,110 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit f9574cd48679926e2a569e1957a5a1bcc8a719ac ]
+[ Upstream commit 9049e1ca41983ab773d7ea244bee86d7835ec9f5 ]
 
-Patch series "rapidio: fix three possible memory leaks".
+Fault injection tests trigger warnings like this:
 
-This patchset fixes three name leaks in error handling.
- - patch #1 fixes two name leaks while rio_add_device() fails.
- - patch #2 fixes a name leak while  rio_register_mport() fails.
+  kernfs: can not remove 'chip_name', no directory
+  WARNING: CPU: 0 PID: 253 at fs/kernfs/dir.c:1616 kernfs_remove_by_name_ns+0xce/0xe0
+  RIP: 0010:kernfs_remove_by_name_ns+0xce/0xe0
+  Call Trace:
+   <TASK>
+   remove_files.isra.1+0x3f/0xb0
+   sysfs_remove_group+0x68/0xe0
+   sysfs_remove_groups+0x41/0x70
+   __kobject_del+0x45/0xc0
+   kobject_del+0x29/0x40
+   free_desc+0x42/0x70
+   irq_free_descs+0x5e/0x90
 
-This patch (of 2):
+The reason is that the interrupt descriptor sysfs handling does not roll
+back on a failing kobject_add() during allocation. If the descriptor is
+freed later on, kobject_del() is invoked with a not added kobject resulting
+in the above warnings.
 
-If rio_add_device() returns error, the name allocated by dev_set_name()
-need be freed.  It should use put_device() to give up the reference in the
-error path, so that the name can be freed in kobject_cleanup(), and the
-'rdev' can be freed in rio_release_dev().
+A proper rollback in case of a kobject_add() failure would be the straight
+forward solution. But this is not possible due to the way how interrupt
+descriptor sysfs handling works.
 
-Link: https://lkml.kernel.org/r/20221114152636.2939035-1-yangyingliang@huawei.com
-Link: https://lkml.kernel.org/r/20221114152636.2939035-2-yangyingliang@huawei.com
-Fixes: e8de370188d0 ("rapidio: add mport char device driver")
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+Interrupt descriptors are allocated before sysfs becomes available. So the
+sysfs files for the early allocated descriptors are added later in the boot
+process. At this point there can be nothing useful done about a failing
+kobject_add(). For consistency the interrupt descriptor allocation always
+treats kobject_add() failures as non-critical and just emits a warning.
+
+To solve this problem, keep track in the interrupt descriptor whether
+kobject_add() was successful or not and make the invocation of
+kobject_del() conditional on that.
+
+[ tglx: Massage changelog, comments and use a state bit. ]
+
+Fixes: ecb3f394c5db ("genirq: Expose interrupt information through sysfs")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20221128151612.1786122-1-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rapidio/devices/rio_mport_cdev.c | 7 +++++--
- drivers/rapidio/rio-scan.c               | 8 ++++++--
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ kernel/irq/internals.h |  2 ++
+ kernel/irq/irqdesc.c   | 15 +++++++++------
+ 2 files changed, 11 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/rapidio/devices/rio_mport_cdev.c b/drivers/rapidio/devices/rio_mport_cdev.c
-index 94331d999d27..48cd9b7f3b89 100644
---- a/drivers/rapidio/devices/rio_mport_cdev.c
-+++ b/drivers/rapidio/devices/rio_mport_cdev.c
-@@ -1803,8 +1803,11 @@ static int rio_mport_add_riodev(struct mport_cdev_priv *priv,
- 		rio_init_dbell_res(&rdev->riores[RIO_DOORBELL_RESOURCE],
- 				   0, 0xffff);
- 	err = rio_add_device(rdev);
--	if (err)
--		goto cleanup;
-+	if (err) {
-+		put_device(&rdev->dev);
-+		return err;
-+	}
-+
- 	rio_dev_get(rdev);
+diff --git a/kernel/irq/internals.h b/kernel/irq/internals.h
+index e58342ace11f..f1d83a8b4417 100644
+--- a/kernel/irq/internals.h
++++ b/kernel/irq/internals.h
+@@ -52,6 +52,7 @@ enum {
+  * IRQS_PENDING			- irq is pending and replayed later
+  * IRQS_SUSPENDED		- irq is suspended
+  * IRQS_NMI			- irq line is used to deliver NMIs
++ * IRQS_SYSFS			- descriptor has been added to sysfs
+  */
+ enum {
+ 	IRQS_AUTODETECT		= 0x00000001,
+@@ -64,6 +65,7 @@ enum {
+ 	IRQS_SUSPENDED		= 0x00000800,
+ 	IRQS_TIMINGS		= 0x00001000,
+ 	IRQS_NMI		= 0x00002000,
++	IRQS_SYSFS		= 0x00004000,
+ };
  
- 	return 0;
-diff --git a/drivers/rapidio/rio-scan.c b/drivers/rapidio/rio-scan.c
-index 19b0c33f4a62..fdcf742b2adb 100644
---- a/drivers/rapidio/rio-scan.c
-+++ b/drivers/rapidio/rio-scan.c
-@@ -454,8 +454,12 @@ static struct rio_dev *rio_setup_device(struct rio_net *net,
- 				   0, 0xffff);
+ #include "debug.h"
+diff --git a/kernel/irq/irqdesc.c b/kernel/irq/irqdesc.c
+index ca36c6179aa7..9b0914a063f9 100644
+--- a/kernel/irq/irqdesc.c
++++ b/kernel/irq/irqdesc.c
+@@ -288,22 +288,25 @@ static void irq_sysfs_add(int irq, struct irq_desc *desc)
+ 	if (irq_kobj_base) {
+ 		/*
+ 		 * Continue even in case of failure as this is nothing
+-		 * crucial.
++		 * crucial and failures in the late irq_sysfs_init()
++		 * cannot be rolled back.
+ 		 */
+ 		if (kobject_add(&desc->kobj, irq_kobj_base, "%d", irq))
+ 			pr_warn("Failed to add kobject for irq %d\n", irq);
++		else
++			desc->istate |= IRQS_SYSFS;
+ 	}
+ }
  
- 	ret = rio_add_device(rdev);
--	if (ret)
--		goto cleanup;
-+	if (ret) {
-+		if (rswitch)
-+			kfree(rswitch->route_table);
-+		put_device(&rdev->dev);
-+		return NULL;
-+	}
- 
- 	rio_dev_get(rdev);
+ static void irq_sysfs_del(struct irq_desc *desc)
+ {
+ 	/*
+-	 * If irq_sysfs_init() has not yet been invoked (early boot), then
+-	 * irq_kobj_base is NULL and the descriptor was never added.
+-	 * kobject_del() complains about a object with no parent, so make
+-	 * it conditional.
++	 * Only invoke kobject_del() when kobject_add() was successfully
++	 * invoked for the descriptor. This covers both early boot, where
++	 * sysfs is not initialized yet, and the case of a failed
++	 * kobject_add() invocation.
+ 	 */
+-	if (irq_kobj_base)
++	if (desc->istate & IRQS_SYSFS)
+ 		kobject_del(&desc->kobj);
+ }
  
 -- 
 2.35.1
