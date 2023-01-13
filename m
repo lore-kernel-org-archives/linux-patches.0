@@ -1,130 +1,74 @@
-Received: from mail-lf1-f50.google.com (mail-lf1-f50.google.com [209.85.167.50])
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79DFFBA3A
-	for <patches@lists.linux.dev>; Fri, 13 Jan 2023 21:12:10 +0000 (UTC)
-Received: by mail-lf1-f50.google.com with SMTP id g13so34821861lfv.7
-        for <patches@lists.linux.dev>; Fri, 13 Jan 2023 13:12:10 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59E0A627
+	for <patches@lists.linux.dev>; Fri, 13 Jan 2023 23:10:22 +0000 (UTC)
+Received: by mail-yb1-f178.google.com with SMTP id 20so5090074ybl.0
+        for <patches@lists.linux.dev>; Fri, 13 Jan 2023 15:10:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
-         :from:references:in-reply-to:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=r5E2jUOsmFLtdYppT5Vp0YBT45RVJ+ABe3kgqhVZhkI=;
-        b=IkJ+FOVocZ4ttJ4pEh+dqaYc1loiq1VzM4s8rw3sfw+1LDPtVXu3+QCzwNyI/P+Oz3
-         Q8GtrQlQFVgEw2AwhcdO9Y+lo70CcrUxOaUVv6K3tg9hOQIlRZure7tE16OwYGB+40y7
-         IkaTssjuMdbN49fZTK+WSj6EXgdB+69XdqZus=
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=12LpQywJJjBUt3FCMjBNpWZt4HLsrmq3D+lfWqk6LQM=;
+        b=fRrF6T6XabAL4uomg1EBZjf0pG8RRsV9KFwYLgx0AgGZ5PzhyNocQe6FI8oroqiu5q
+         eOfUU4c2+Ed1v+y9Z1doeIlckw+oOgbTct1ziWgWR6MX3BaWmALJcE/pMOtF1OK+BACi
+         bULY/xzsuDVDHcvRw8Gw+Ml4y46953meYP8XqKxShlh2WaVgRkgYF5lo5q6m8G8K00kK
+         cB1zYo2puvKiPeyUjvCOjNSWXVr/D+lb9iFTh07ISTck420D6q7SF4Bg5Nu4Q+NvxfmK
+         4E1BucCijZaAtoAZJurv49EQz5dCPv5iIIydwMdAwgy0DjT1rvib24QS/PWyDbWZcqSa
+         RTAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:user-agent
-         :from:references:in-reply-to:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=r5E2jUOsmFLtdYppT5Vp0YBT45RVJ+ABe3kgqhVZhkI=;
-        b=GEdV42gDW+2wTOHgXPoTIUuM9KYWdlN0odAKWgm2WzNxqbXXuZtq6xSkMndUhsiOI+
-         UC/n+bTB8YJciJ6DEumeuJz/8J9wzY6cauWbbGbQ0364yljHg/6Aa1/eO8GUAA1ofXkK
-         BgE4JcO864JqfLjvcFWlC31IhnGnfClE3M0uuXp9Y6pfAuU5eVM5Uh1p97axc0aYZ/6W
-         ICa4CFRCMZv2AexI3NiVDfp0PBzjFqPXsJeUBv8asgyFkmsxD3vEqGB3tUnBshZgcdmv
-         HTZ1e2Y+O2oNXckFJFfAISKM0vw9+ZBttcYFRXY875q1PXP7jOUkgctN0H/WiD1a+CzD
-         q+Ig==
-X-Gm-Message-State: AFqh2kqJvsf0omSG4MXKUDISavnUVMG72jpq7BqTUH0KcOyHI+gpz8TD
-	6sQqr1Zf4lvHObJl96bwOny6kYqcXCjQZ0DCS7T/Mw==
-X-Google-Smtp-Source: AMrXdXsEHDMUikQ5Emug3xW/Z4eyYFdBuE++yVRLiUqBN6JN5+W+1CZEk4riH+MmzQZSNNRp1Leh8neGlYysREAjyE0=
-X-Received: by 2002:a05:6512:4017:b0:4bd:35fd:65b5 with SMTP id
- br23-20020a056512401700b004bd35fd65b5mr8207466lfb.297.1673644328511; Fri, 13
- Jan 2023 13:12:08 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 13 Jan 2023 15:12:07 -0600
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=12LpQywJJjBUt3FCMjBNpWZt4HLsrmq3D+lfWqk6LQM=;
+        b=lvfGdL/DVwBOrCHx9x5VBaWRDvV1oQIqK8DEtKpnlXtMAGcr4oRMJb8jg3hDHc2hlm
+         8wJsmRgCjx6XkqnV3PjeCLhgZz3621oatrnjQqhwYfOUVYFQxInfUR9QwhTo3yujrINq
+         akDROKo3/lVnywGOSFXKIVTOJWRV3qlC4MZirW/zf+0wEnQKOwR+qKR/DVgs7vYeMzcV
+         NBd3mAtJ0kyCvl98/j3evrWVtB113fZEEwlclQzJeSdjLScSEa6e9UjXpWSPbXhjAw/D
+         EeophVYCFrJpL2HthklYCttcpuxb0IphGSVg97gyB4Se8hQ9J+izkmO7r+kPBBlKSGEh
+         7sKg==
+X-Gm-Message-State: AFqh2ko8AWsDXS7J6x3WvCf+bfMwTBQwc6LVvjs46F9UbAoeMhGucQSP
+	6nWSIee7V0fWNrms9wGiUlsK5ovhNoa9bO0LnaM=
+X-Google-Smtp-Source: AMrXdXs0dEMNst1mDvKhLbzcUm5c3putoAqwcOSEik/6eKrko8ZBfOxL/z4F7QwYPbUY7iJt64JnMnFORkPuNWfECts=
+X-Received: by 2002:a25:bc43:0:b0:7b2:343d:6b11 with SMTP id
+ d3-20020a25bc43000000b007b2343d6b11mr4500515ybk.75.1673651421281; Fri, 13 Jan
+ 2023 15:10:21 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <CAPY8ntA=Dq6GFQ3gEOm9PzPyOa9bHTr8JrpXLibnai7xKqRbpQ@mail.gmail.com>
-References: <20230106030108.2542081-1-swboyd@chromium.org> <CAPY8ntA=Dq6GFQ3gEOm9PzPyOa9bHTr8JrpXLibnai7xKqRbpQ@mail.gmail.com>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Fri, 13 Jan 2023 15:12:07 -0600
-Message-ID: <CAE-0n53UFuyYvjJUWViXy9Eex2mpBRJGtt4vGc2cbFZS9i8xFw@mail.gmail.com>
-Subject: Re: [PATCH] drm/panel: boe-tv101wum-nl6: Ensure DSI writes succeed
- during disable
-To: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Cc: Thierry Reding <thierry.reding@gmail.com>, Rob Clark <robdclark@chromium.org>, 
-	Douglas Anderson <dianders@chromium.org>, Jitao Shi <jitao.shi@mediatek.com>, 
-	yangcong <yangcong5@huaqin.corp-partner.google.com>, linux-kernel@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, patches@lists.linux.dev, 
-	linux-mediatek@lists.infradead.org, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sam Ravnborg <sam@ravnborg.org>, 
-	linux-arm-kernel@lists.infradead.org
+References: <20230109204520.539080-1-ojeda@kernel.org> <20230109204520.539080-3-ojeda@kernel.org>
+ <CAK7LNATVJ5e=DnbJ++03iEMk0bN3-UvODBLkEKcYdSnJZa_tmA@mail.gmail.com> <CAK7LNASDu+i4G88TYYa6feg-bha-_cLv1si_ujuSMbWuyUve0Q@mail.gmail.com>
+In-Reply-To: <CAK7LNASDu+i4G88TYYa6feg-bha-_cLv1si_ujuSMbWuyUve0Q@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Sat, 14 Jan 2023 00:10:10 +0100
+Message-ID: <CANiq72k6jCf_LP5vmBHKEpZ5njmH+u1HpJUjs_GyFi1a4B94ew@mail.gmail.com>
+Subject: Re: [PATCH 3/6] kbuild: rust_is_available: add check for `bindgen` invocation
+To: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>, linux-kbuild@vger.kernel.org, 
+	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
+	Nicolas Schier <nicolas@fjasle.eu>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Alexandru Radovici <msg4alex@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Quoting Dave Stevenson (2023-01-13 08:27:29)
-> Hi Stephen
+On Thu, Jan 12, 2023 at 5:35 AM Masahiro Yamada <masahiroy@kernel.org> wrote:
 >
-> On Fri, 6 Jan 2023 at 03:01, Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > The unprepare sequence has started to fail after moving to panel bridge
-> > code in the msm drm driver (commit 007ac0262b0d ("drm/msm/dsi: switch t=
-o
-> > DRM_PANEL_BRIDGE")). You'll see messages like this in the kernel logs:
-> >
-> >    panel-boe-tv101wum-nl6 ae94000.dsi.0: failed to set panel off: -22
-> >
-> > This is because boe_panel_enter_sleep_mode() needs an operating DSI lin=
-k
-> > to set the panel into sleep mode. Performing those writes in the
-> > unprepare phase of bridge ops is too late, because the link has already
-> > been torn down by the DSI controller in post_disable, i.e. the PHY has
-> > been disabled, etc. See dsi_mgr_bridge_post_disable() for more details
-> > on the DSI .
-> >
-> > Split the unprepare function into a disable part and an unprepare part.
-> > For now, just the DSI writes to enter sleep mode are put in the disable
-> > function. This fixes the panel off routine and keeps the panel happy.
+> I meant this:
 >
-> It is documented that the mipi_dsi_host_ops transfer function should
-> be called with the host in any state [1], so the host driver is
-> failing there.
+> if ! bindgen_libclang_output=$(LC_ALL=C "$BINDGEN" $(dirname
+> $0)/rust_is_available_bindgen_libclang.h 2>&1 >/dev/null); then
+>        [snip]
+> fi
+>
+> (">/dev/null" was lost in the previous email)
 
-Thanks for the info! It says "Drivers that need the underlying device to
-be powered to perform these operations will first need to make sure it=E2=
-=80=99s
-been properly enabled." Does that mean the panel driver needs to make
-sure the underlying dsi host device is powered? The sentence is too
-ambiguous for me to understand what 'drivers' and 'underlying device'
-are.
+I used the error code in the message below. I am happy either way.
 
->
-> This sounds like the same issue I was addressing in adding the
-> prepare_prev_first flag to drm_panel, and pre_enable_prev_first to
-> drm_bridge via [2].
-> Defining prepare_prev_first for your panel would result in the host
-> pre_enable being called before the panel prepare, and therefore the
-> transfer calls from boe_panel_init_dcs_cmd boe_panel_prepare won't be
-> relying on the DSI host powering up early. It will also call the panel
-> unprepare before the DSI host bridge post_disable is called, and
-> therefore the DSI host will still be powered up and the transfer won't
-> fail.
->
-> Actually I've just noted the comment at [3]. [2] is that framework fix
-> that means that the magic workaround isn't required, but it will
-> require this panel to opt in to the ordering change.
-
-Cool. Glad that we can clean that up with your series.
-
-Is it wrong to split unprepare to a disable and unprepare phase? I'm not
-super keen on fixing 6.1 stable kernels by opting this driver into the
-ordering change. Splitting the phase into two is small and simple and
-works. I suspect changing the ordering may uncover more bugs, or be a
-larger task. I'd be glad to test that series[2] from you to get rid of
-[3].
-
->
->
-> [1] https://www.kernel.org/doc/html/latest/gpu/drm-kms-helpers.html#c.mip=
-i_dsi_host_ops
-> [2] https://patchwork.freedesktop.org/series/100252/
-> [3] https://github.com/torvalds/linux/blob/master/drivers/gpu/drm/msm/dsi=
-/dsi_manager.c#L47
->
+Cheers,
+Miguel
