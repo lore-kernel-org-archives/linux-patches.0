@@ -1,90 +1,99 @@
-Received: from szxga01-in.huawei.com (szxga01-in.huawei.com [45.249.212.187])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B37F258E
-	for <patches@lists.linux.dev>; Fri, 13 Jan 2023 10:47:55 +0000 (UTC)
-Received: from kwepemm600020.china.huawei.com (unknown [172.30.72.57])
-	by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4Ntd321qWXznVJ9;
-	Fri, 13 Jan 2023 18:30:06 +0800 (CST)
-Received: from [127.0.0.1] (10.174.178.94) by kwepemm600020.china.huawei.com
- (7.193.23.147) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.34; Fri, 13 Jan
- 2023 18:31:43 +0800
-Message-ID: <2ca47bfe-a579-2097-7789-b42ce213fb22@huawei.com>
-Date: Fri, 13 Jan 2023 18:31:41 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71EB3640
+	for <patches@lists.linux.dev>; Fri, 13 Jan 2023 12:31:02 +0000 (UTC)
+Received: by mail-wm1-f51.google.com with SMTP id g10so15168997wmo.1
+        for <patches@lists.linux.dev>; Fri, 13 Jan 2023 04:31:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=lhD1UdTqj8iuVwP6vGidIrXIpnvoDQg/rcDN5jZ5puE=;
+        b=YZe90POZyiXSi9ctF3BVQ5n/U/IsC6HgnvfvOuI1ZPiK5hfenl5XL5htj+ysGmBVO7
+         ArnP2mZdvXFae2BBbK8vVy9MuBJgHz5v+ABzyTTYjYAAAWheDnfO1vRcqW/j3tEIsauM
+         bFzrXpTg+rBaGPKjSecRrse8vRNjpsu8h6ehq1deDQaWVW2R1mDtkvZ1QLVUmUdQKp35
+         rZK5PA1JHK2qQKGlteZo+PAW23np+6Ek+HTiATlinhIkwaPNI5XezKrWsK4cpe9Xtraw
+         oZoRAk4YSOl1fdRBmXTH2cU3CcRvOKzZ3Mm+0gut+983bpd6iRIPGXp/f6+W1wvjME8a
+         MYAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lhD1UdTqj8iuVwP6vGidIrXIpnvoDQg/rcDN5jZ5puE=;
+        b=I4AbZRsBGXfBNJDQh0V2cleqSWHHuTDO5DoaeusbFr3DvFkPLzm0CTh/mvf2CtIM9i
+         IRx6bfWDxDN+pQZ8/FpdpwaKdwfZyL//w0EX9SRgzVdbujen7kF7btUAhtrZX77eiVDF
+         wXX7Kaqhpbxwzy23S8vaVISbE2yeP/CcvNFVgKSYrqEdF/Hn+y4b+BnfmMMyoJ7pddIm
+         KS+bl6rgREIzTT/eK2athLhw3KWxwoNGKr7wpmDlp+/StWOzBfPCuOCXqhPYUNNB5DHF
+         1vzJABFAUdIEArRBekuW/Ool2DrsBqYqdZa2Vw2cYqFX2HA3cX1sm1FnjHacd26G6VJX
+         s6nA==
+X-Gm-Message-State: AFqh2krZ+iJ0c4Wuf5R7vDovhQiLqOLo+P2NClzjKby0FFe0jz9EIKtk
+	FpNqy3RFLvB5EYCzKo7hM7k=
+X-Google-Smtp-Source: AMrXdXupbdwZaqdjvV/WL7dNflPEOWjDbEIHBUvVmhulrO8pzyqCkTJJn4PUN/YAHCwrmOea0XEbPg==
+X-Received: by 2002:a05:600c:1d20:b0:3d2:2aaf:316 with SMTP id l32-20020a05600c1d2000b003d22aaf0316mr58525914wms.36.1673613060577;
+        Fri, 13 Jan 2023 04:31:00 -0800 (PST)
+Received: from debian ([2a10:d582:3bb:0:63f8:f640:f53e:dd47])
+        by smtp.gmail.com with ESMTPSA id m13-20020adfe94d000000b002714b3d2348sm18910428wrn.25.2023.01.13.04.30.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Jan 2023 04:31:00 -0800 (PST)
+Date: Fri, 13 Jan 2023 12:30:53 +0000
+From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 00/10] 6.1.6-rc1 review
+Message-ID: <Y8FO/VuiRVFzbQ8V@debian>
+References: <20230112135326.981869724@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [PATCH 5.10 000/783] 5.10.163-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>
-References: <20230112135524.143670746@linuxfoundation.org>
-Content-Language: en-US
-From: zhouzhixiu <zhouzhixiu@huawei.com>
-In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.174.178.94]
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
- kwepemm600020.china.huawei.com (7.193.23.147)
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230112135326.981869724@linuxfoundation.org>
 
+Hi Greg,
 
-On 2023/1/12 21:45, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.163 release.
-> There are 783 patches in this series, all will be posted as a response
+On Thu, Jan 12, 2023 at 02:56:21PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.6 release.
+> There are 10 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Sat, 14 Jan 2023 13:53:18 +0000.
 > Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.163-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-> -------------
-Tested on arm64 and x86 for  5.10.163-rc1,
 
-Kernel 
-repo:https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-Branch: linux-5.10.y
-Version:  5.10.163-rc1
-Commit: d33d55703c7895c3dd8793cbad6046db91df21db
-Compiler: gcc version 7.3.0 (GCC)
+Build test (gcc version 12.2.1 20221127):
+mips: 52 configs -> no failure
+arm: 100 configs -> no failure
+arm64: 3 configs -> no failure
+x86_64: 4 configs -> no failure
+alpha allmodconfig -> no failure
+csky allmodconfig -> no failure
+powerpc allmodconfig -> no failure
+riscv allmodconfig -> no failure
+s390 allmodconfig -> no failure
+xtensa allmodconfig -> no failure
 
-arm64:
---------------------------------------------------------------------
-Testcase Result Summary:
-total: 9023
-passed: 9023
-failed: 0
-timeout: 0
---------------------------------------------------------------------
+Boot test:
+x86_64: Booted on my test laptop. No regression.
+x86_64: Booted on qemu. No regression. [1]
+arm64: Booted on rpi4b (4GB model). No regression. [2]
+mips: Booted on ci20 board. No regression. [3]
 
-x86:
---------------------------------------------------------------------
-Testcase Result Summary:
-total: 9023
-passed: 9023
-failed: 0
-timeout: 0
---------------------------------------------------------------------
-Tested-by: Hulk Robot <hulkrobot@huawei.com>
+[1]. https://openqa.qa.codethink.co.uk/tests/2630
+[2]. https://openqa.qa.codethink.co.uk/tests/2631
+[3]. https://openqa.qa.codethink.co.uk/tests/2634
 
+Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
+
+-- 
+Regards
+Sudip
