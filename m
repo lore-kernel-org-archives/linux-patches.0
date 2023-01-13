@@ -1,52 +1,90 @@
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 4042C36C
-	for <patches@lists.linux.dev>; Fri, 13 Jan 2023 01:37:20 +0000 (UTC)
-Received: by linux.microsoft.com (Postfix, from userid 1131)
-	id D3B2120DFE06; Thu, 12 Jan 2023 17:37:19 -0800 (PST)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com D3B2120DFE06
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1673573839;
-	bh=w5X0JTpcgb7Z+MBG+besMNQMxkZXg5N1okZUi3uLhHU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=JoGjcnnC+9Swu8JZrxp2bSJQyVmjMnQiJZQrqiivFuvctlsldkANKq4EBJuqjgYKw
-	 GuRxS+SEjRexu77ZWRhjbO4Oiw00NGg4ssJvlwFCbz5WNZvvsIcvsQS2yg08mjr4S8
-	 TRjVDdxqjCcErb1O8f4oNBg6d54iqce8X+OCi9Xo=
-Date: Thu, 12 Jan 2023 17:37:19 -0800
-From: Kelsey Steele <kelseysteele@linux.microsoft.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 00/10] 6.1.6-rc1 review
-Message-ID: <20230113013719.GB27117@linuxonhyperv3.guj3yctzbm1etfxqx2vob5hsef.xx.internal.cloudapp.net>
-References: <20230112135326.981869724@linuxfoundation.org>
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46FE0628
+	for <patches@lists.linux.dev>; Fri, 13 Jan 2023 03:00:48 +0000 (UTC)
+Received: by mail-ej1-f46.google.com with SMTP id u19so49215139ejm.8
+        for <patches@lists.linux.dev>; Thu, 12 Jan 2023 19:00:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl-com.20210112.gappssmtp.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=O4qDazh6QwMY3LvG+D+8H3mKX/MyNkX+etoMzkezwE8=;
+        b=pYTE8kAoX/zWZB4SBkbDjTTBh9UWIFd+P6SC5jQkDEeDj7PdVlns9VanBfpC7qY5kO
+         MiGmJTQ7FQnjxnzX6GW5X28SLY8Q3CMu+fFKhPhJ3ItVJa0BivOqTLXojoCrL+IjSgGn
+         5Pa6324U9cLfYcL+Csd2ytA4CDUMZ+D+3GkubrvDJFdkcX3m4/o5hQ0D8s1LKCIMS7mV
+         H9ZEgSXw+J/DMm1ojfv4nYY8stBifqXGnU/lYH+GGkwCCji7nxKvLSSx4VpPL9QbRy/m
+         D7QCeR+kr056reSnTMDH8uD34/UwFZwHU9Hu63SSd4eTfpWLyFlHWs7OvOgtkd5RytIX
+         Kosw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=O4qDazh6QwMY3LvG+D+8H3mKX/MyNkX+etoMzkezwE8=;
+        b=JFG/JyBSJkbKhRWzoO532XfDM7vljQHmKSiStc112QPXMB7oeLGHqNEFPZ37GSL2Hs
+         QIIpndiqNpbLgVn06o/NKNxbuukgPdbSDsGk6n8ZtZTI5Vro6njf/HF3w/dOD4gZdnzi
+         sFByWhWJS1Vm8LNwIO9jGWpMsJ/xQXIvusIknIYN3X5I7gaUsjlrrILoFy6OENRcZNU6
+         STIG4/FA5Qx09jMcfnhj6NJBaEizufclEKqoMm4cvttsqZXvXbSANwLTJC8OtSdt6TiL
+         +xPaT4aE3etKQWKX3mOLm0g2h7fqotge86/rNdz2ZSyPIi/amJJf6qOIAN1l/rxbTqzw
+         nhrQ==
+X-Gm-Message-State: AFqh2koXFwwxeUk/R43vL2KlUpq9psxVfMTTBNuUAjcZvworALeIcIOP
+	Ya+FeaVqFnG8MH4dcPCuI9fTTfQHWF+zsjF31cg0yw==
+X-Google-Smtp-Source: AMrXdXsbh24iYUuFadTTe1PMFifWTOQcuum+A9Uz95nsAZ60lsYQu66zxBEUz4ouiTYVDeR6nqEhn+NNkGF3JuYlD0s=
+X-Received: by 2002:a17:906:3b5a:b0:82c:356c:c4c8 with SMTP id
+ h26-20020a1709063b5a00b0082c356cc4c8mr4396513ejf.649.1673578846300; Thu, 12
+ Jan 2023 19:00:46 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+References: <20230112135326.981869724@linuxfoundation.org>
 In-Reply-To: <20230112135326.981869724@linuxfoundation.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
+Date: Fri, 13 Jan 2023 12:02:42 +0900
+Message-ID: <CAKL4bV6F5KmT0iE4MLVVW0o_SMyFN1dj-Y+Rt6xN63yAhXtAXA@mail.gmail.com>
+Subject: Re: [PATCH 6.1 00/10] 6.1.6-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Jan 12, 2023 at 02:56:21PM +0100, Greg Kroah-Hartman wrote:
+Hi Greg
+
 > This is the start of the stable review cycle for the 6.1.6 release.
 > There are 10 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>
 > Responses should be made by Sat, 14 Jan 2023 13:53:18 +0000.
 > Anything received after that time might be too late.
- 
-No regressions found on WSL x86_64 or WSL arm64
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.6-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-Built, booted, and reviewed dmesg.
+6.1.6-rc1 tested.
 
-Thank you.
+x86_64
 
-Tested-by: Kelsey Steele <kelseysteele@linux.microsoft.com>
+build successfully completed
+boot successfully completed
+
+Lenovo ThinkPad X1 Nano Gen1(Intel i5-1130G7, arch linux)
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
