@@ -1,123 +1,92 @@
-Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+Received: from mail-lf1-f48.google.com (mail-lf1-f48.google.com [209.85.167.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D248BA3A
-	for <patches@lists.linux.dev>; Fri, 13 Jan 2023 20:46:00 +0000 (UTC)
-Received: by mail-pj1-f44.google.com with SMTP id bj3so20344556pjb.0
-        for <patches@lists.linux.dev>; Fri, 13 Jan 2023 12:46:00 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E195BA3A
+	for <patches@lists.linux.dev>; Fri, 13 Jan 2023 20:49:46 +0000 (UTC)
+Received: by mail-lf1-f48.google.com with SMTP id f34so34712341lfv.10
+        for <patches@lists.linux.dev>; Fri, 13 Jan 2023 12:49:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HBi2/qyUC845LFRzXkZZ02iiz+01kFcIC3Wu67immxs=;
-        b=kRx8bFUPs6e81RW6/OJxTlgFo1g1CRAgsbMtDsiYYz1TT8RfZ5L10WQk0D1yMzb6oz
-         1SPZhnB2GsQ9u9XBeFaUxrlxcIU6mAsuURwLUKKIkirlrAt5lGd7cOQJUibEOaodzeu2
-         douiBjk0yrxsKBHiaoNilKGx0iiaJybztmtqE=
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fkHnDayGcMAohLKGEspej/e05EdmPSY3auvLO5nhKvg=;
+        b=B1hyLm+idg00BzqYNZMLiXGprSAGG6i9IwN0XKFvJoTp+bbSmW2iNf+GJtXCutZOO3
+         8RgU6vVG5lOlOdS4Jh+/EFjzMIfNlQs2UESZqPIAVNO8K6uwqRQpbb6GfpuoMr4V1iJU
+         C54ylt/YF1UuhIaYBPOGvyctdx3Rtziy4tGIc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HBi2/qyUC845LFRzXkZZ02iiz+01kFcIC3Wu67immxs=;
-        b=QUhwcrXWrB8w+ZLeOkYArO3t4GEpO1V6CvWeoE01VflI0Cm49S3FV3PmEElwvyWEdt
-         z/dttXLA88yS7RH77kEqw4bvcaBYQoGeqbwHHTtjs7B2iGaRNl+tQUsIDRTaD6oRlmFL
-         4GUtVZeFocGNmm6RsA0mVlSDh3tBLhykX5EKVuQWzp7r8ixgEgcJlw/TowojZ0ASYiP5
-         rIYEPvqOPAeVTWMVd1aqtKcZ4ze7tOQpneOOYlAwDYJIsJVSg0KtnTN6dvAOWmW1Rfsm
-         FTIs3MyviEp07LzrGFEjeDmc/V2wacMi2maNof3Fv5SirKi+3yoftt6PgUgZocXE+Lqe
-         834Q==
-X-Gm-Message-State: AFqh2kpy7gkDwKbejcBHu3PyC18wztdKfvCwg8kXAegI4ZaZsBpNZTUR
-	9dARmTg0f587A40ZQUvjG++FNn80s1JYnB6q
-X-Google-Smtp-Source: AMrXdXsf6LhytMMpI9hgTdoKV3tVJYPmL/AlUKNgDNZqknFWYgZVH1aN/OnaJq2PKABVv+k5Fo8pIQ==
-X-Received: by 2002:a17:902:c454:b0:192:b52f:33bb with SMTP id m20-20020a170902c45400b00192b52f33bbmr9843370plm.45.1673642759860;
-        Fri, 13 Jan 2023 12:45:59 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:11a:201:4652:3752:b9b7:29f9])
-        by smtp.gmail.com with ESMTPSA id f21-20020a170902e99500b001945b984341sm4010081plb.100.2023.01.13.12.45.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Jan 2023 12:45:59 -0800 (PST)
-From: Stephen Boyd <swboyd@chromium.org>
-To: stable@vger.kernel.org
-Cc: Johan Hovold <johan+linaro@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15.y v2 5/5] phy: qcom-qmp-combo: fix runtime suspend
-Date: Fri, 13 Jan 2023 12:45:48 -0800
-Message-Id: <20230113204548.578798-6-swboyd@chromium.org>
-X-Mailer: git-send-email 2.39.0.314.g84b9a713c41-goog
-In-Reply-To: <20230113204548.578798-1-swboyd@chromium.org>
-References: <20230113204548.578798-1-swboyd@chromium.org>
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fkHnDayGcMAohLKGEspej/e05EdmPSY3auvLO5nhKvg=;
+        b=EUS+pwd5Hmu6uk5J0jtBUfiTw+QQXMZQVgVAthI/rOIH5dZffU5wCg9DZ6YEJYLJdH
+         EcBTd8X+1nzumXkGrpjIFKjQ6ewnNRcV04FASPw8Vfh9zX44iZpx8ZHfeDaK8DCQuvYh
+         tGq468zWlwD1abc+Y7ftVtk9qYXB4PbkMqOnC5nDStS/C1Xh3VxeWRXQgrQwxuk+XKnK
+         G0wESUA17GooQ6C5BXOlseUL/y2Caes0ZyvBHxukBiLvdq4sKX+uymwY3ecKakXPa0Xr
+         ZKxElr/AkT1y3bOXxYbhsIeOKjfDJdaoZjyaMBIFk26tPvXxLMuWkJOw6UR340Bq9QNm
+         WL5Q==
+X-Gm-Message-State: AFqh2koauXLmKECR+i2W5UhlbymONx5AdsslSp/lk6t0tzUZMSXdq2QX
+	YlQpHU3VUNIVnO6urEJSqgI8+v4ITnSlC6OKD7Ihcw==
+X-Google-Smtp-Source: AMrXdXsFLXpkYgLqPlD2aDMji/uNDYTLN9rr6vjDLKKJD82SrMUZ1JiyUGLTXyWhvAyNsS4E39x10UQlL6/nncEdZ5s=
+X-Received: by 2002:ac2:4e50:0:b0:4ca:e48d:2b4b with SMTP id
+ f16-20020ac24e50000000b004cae48d2b4bmr8301849lfr.511.1673642984424; Fri, 13
+ Jan 2023 12:49:44 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 13 Jan 2023 14:49:43 -0600
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <Y8FwGTWeYtX0j8MX@ravnborg.org>
+References: <20230106030108.2542081-1-swboyd@chromium.org> <Y7nV+aeFiq5aD0xU@ravnborg.org>
+ <CAE-0n50QOv_+j1Pe19xKj4Cx2Y5_Ak5Kt68UBJuZt10D-jQ44g@mail.gmail.com> <Y8FwGTWeYtX0j8MX@ravnborg.org>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Fri, 13 Jan 2023 14:49:43 -0600
+Message-ID: <CAE-0n51XmyzSeKuGNn2BsJew3fK_cEHNoDpVVRqStNAF+Zzp1A@mail.gmail.com>
+Subject: Re: [PATCH] drm/panel: boe-tv101wum-nl6: Ensure DSI writes succeed
+ during disable
+To: Sam Ravnborg <sam@ravnborg.org>
+Cc: Thierry Reding <thierry.reding@gmail.com>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, dri-devel@lists.freedesktop.org, 
+	linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
+	yangcong <yangcong5@huaqin.corp-partner.google.com>, 
+	Douglas Anderson <dianders@chromium.org>, Jitao Shi <jitao.shi@mediatek.com>, 
+	Rob Clark <robdclark@chromium.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Johan Hovold <johan+linaro@kernel.org>
+Quoting Sam Ravnborg (2023-01-13 06:52:09)
+> Hi Stephen,
+> On Tue, Jan 10, 2023 at 11:29:41AM -0800, Stephen Boyd wrote:
+> > Quoting Sam Ravnborg (2023-01-07 12:28:41)
+> >
+> > >
+> > > For this case we could ask ourself if the display needs to enter sleep
+> > > mode right before we disable the regulator. But if the regulator is
+> > > fixed, so the disable has no effect, this seems OK.
+> >
+> > What do you mean by fixed?
+> What I tried to say here is if we have a fixed regulator - or in others
+> words a supply voltage we cannot turn off, then entering sleep mode is
+> important to reduce power consumption.
+> But any sane design where power consumption is a concern will have the
+> possibility to turn off the power anyway.
 
-commit c7b98de745cffdceefc077ad5cf9cda032ef8959 upstream.
+Ok got it!
 
-Drop the confused runtime-suspend type check which effectively broke
-runtime PM if the DP child node happens to be parsed before the USB
-child node during probe (e.g. due to order of child nodes in the
-devicetree).
+>
+> >
+> > >
+> > > Please fix the unprepare to not jump out early, on top of or together
+> > > with the other fix.
+> >
+> > After this patch the unprepare only bails out early if the bool
+> > 'prepared' flag isn't set.
+> OK, then everything is fine.
+>
 
-Instead use the new driver data USB PHY pointer to access the USB
-configuration and resources.
-
-Fixes: 52e013d0bffa ("phy: qcom-qmp: Add support for DP in USB3+DP combo phy")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20221114081346.5116-6-johan+linaro@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-[swboyd@chromium.org: Backport to pre-split driver]
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index b8646eaf1767..64a42e28e99f 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -4985,15 +4985,11 @@ static void qcom_qmp_phy_disable_autonomous_mode(struct qmp_phy *qphy)
- static int __maybe_unused qcom_qmp_phy_runtime_suspend(struct device *dev)
- {
- 	struct qcom_qmp *qmp = dev_get_drvdata(dev);
--	struct qmp_phy *qphy = qmp->phys[0];
-+	struct qmp_phy *qphy = qmp->usb_phy;
- 	const struct qmp_phy_cfg *cfg = qphy->cfg;
- 
- 	dev_vdbg(dev, "Suspending QMP phy, mode:%d\n", qphy->mode);
- 
--	/* Supported only for USB3 PHY and luckily USB3 is the first phy */
--	if (cfg->type != PHY_TYPE_USB3)
--		return 0;
--
- 	if (!qmp->init_count) {
- 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
- 		return 0;
-@@ -5010,16 +5006,12 @@ static int __maybe_unused qcom_qmp_phy_runtime_suspend(struct device *dev)
- static int __maybe_unused qcom_qmp_phy_runtime_resume(struct device *dev)
- {
- 	struct qcom_qmp *qmp = dev_get_drvdata(dev);
--	struct qmp_phy *qphy = qmp->phys[0];
-+	struct qmp_phy *qphy = qmp->usb_phy;
- 	const struct qmp_phy_cfg *cfg = qphy->cfg;
- 	int ret = 0;
- 
- 	dev_vdbg(dev, "Resuming QMP phy, mode:%d\n", qphy->mode);
- 
--	/* Supported only for USB3 PHY and luckily USB3 is the first phy */
--	if (cfg->type != PHY_TYPE_USB3)
--		return 0;
--
- 	if (!qmp->init_count) {
- 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
- 		return 0;
--- 
-https://chromeos.dev
-
+Doug pointed out that enable isn't symmetric because it doesn't do the
+DSI writes. I've updated the patch and I'll send a v2.
