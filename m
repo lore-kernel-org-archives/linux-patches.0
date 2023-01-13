@@ -1,40 +1,40 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA2CC377
-	for <patches@lists.linux.dev>; Fri, 13 Jan 2023 00:54:12 +0000 (UTC)
-Received: by mail-pj1-f43.google.com with SMTP id m7-20020a17090a730700b00225ebb9cd01so25385152pjk.3
-        for <patches@lists.linux.dev>; Thu, 12 Jan 2023 16:54:12 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3440036C
+	for <patches@lists.linux.dev>; Fri, 13 Jan 2023 00:54:14 +0000 (UTC)
+Received: by mail-pj1-f48.google.com with SMTP id q23-20020a17090a065700b002290913a521so3147746pje.5
+        for <patches@lists.linux.dev>; Thu, 12 Jan 2023 16:54:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mYLtqXctG0w1LDFrtR6bI6BtOkIAb//0EdxGpdC0Co8=;
-        b=W8yTfno6MmIJHmnAjTFoN9Fq6mR6U4UbfNzG0fYw4g8/AfMBbpxuOPPe6tULefgZtL
-         BIuXTKSFvb4r6hQ5qH3XVuQyMfXLZ4I4LqZCLCyT8tXePbX8IVSPEjX8lgnnAOYnuJ9A
-         muFX8SBY9q4Q9MzxBg41WOtgwhODwuzLRpJYo=
+        bh=6wTahgPOn0LySuA1i9bASDFyi3Ueigx8xRo8Xbilw4I=;
+        b=U+sQqif0/Muwdc6NYnuRVJ/j6zAussnLylJFzP3+XGWl1klHVC4kb2atu717aEslzA
+         NqVodkM/ROdq5D0SYpKOyR74tTv0KKYlk+jtzkRmuOtN353d1p2bmajYiizRUFMhI13H
+         JeyHme9Xr/xYbipOCXs3Fmvj0rBMaCC5vHuhA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mYLtqXctG0w1LDFrtR6bI6BtOkIAb//0EdxGpdC0Co8=;
-        b=nSvfQsU8uCrjHTD+8zQpzR6XLJdVTH5McgDNpim6sv18OKfk/7noWAVU/dGUQv4z6X
-         Zx+hGvBLOK48IMSzeFeTCUHHoAmbmV4xhdOLTBpEOuWg+PPa9YVQorgTl1nfDiMnFP80
-         PLyx6e6KJeVoSIdSxARsHXsdMXLE4kMu154E+IpsSxH2HvGVNwbx4opOA2kTzTCDIzUm
-         9daPlEjMuW2Z153yWt3laN0KfvKMyy/bnKpaZ7oGLM23MfLJ2se6nPzIBmZ/dRU4NwGO
-         wMm4hPv0Ne9Ug3LjLt9FSm04USQ/KnhEYB+FOuxpZbaJChIyd9pXvPT6K221QiI48nTf
-         W8HA==
-X-Gm-Message-State: AFqh2kpkXRkJH5/qIFBaBcFOJi/9Yp7ZmUGpPom7mfloXgWNQIZd3K9s
-	oDdiYbw8iPI/Pn7QV1YkZL1ODw==
-X-Google-Smtp-Source: AMrXdXusxrqyCQz9+WG1sdtE6YE5LRkp8kO3M+C8igKjPuLrVn0x7V/jWbyAkpfXAfWLSevWkB3hOA==
-X-Received: by 2002:a05:6a20:8362:b0:ac:7a44:db55 with SMTP id z34-20020a056a20836200b000ac7a44db55mr77255609pzc.39.1673571252275;
-        Thu, 12 Jan 2023 16:54:12 -0800 (PST)
+        bh=6wTahgPOn0LySuA1i9bASDFyi3Ueigx8xRo8Xbilw4I=;
+        b=7PXxWUTPV9fz4/EFDtKKeO/gkzoEFL/JL47Dp+9RXt0lhMjRtFi6fTjk1AIAQsgPXF
+         ipDeXjo5Q0Q1VfAl1mUfeDAP7u4lgeab903a3vzSQTNmKuwhAeZ7kqLdS25ueUsXJfUq
+         SM9hUUKb6q+bWB8KIUhG8Z9ZskkPSMuGvJPGOz1FtT0YscdvmpdU1NBYsVPD7mfUd1U+
+         JryEW0EWA0Hco4HHd5JYK5cge2MgrHVWCzsY6w4m7j3U0Iz5VvPCtLJbNrr36CTjq5as
+         8wgIT0NONiu1owP7NWzHZCzG++tldCE71qhPda3uRjvMYq7u7bMJIeRCHMjb/kDWlI1X
+         9i/w==
+X-Gm-Message-State: AFqh2krRF60wMGostl1HKkc2jdcwUric4Z33aoUy3wV4O6xSpWltMNrU
+	AfZQEwRX5Wf+LlTe50IEnMjs6A==
+X-Google-Smtp-Source: AMrXdXuFP3bnEy2rZYHKu3/UtPStVpANsmmC7JzX1z4v5Zlv4YYFYFbBwTG8gZF1b7urQ8yQc5GpUw==
+X-Received: by 2002:a05:6a20:548e:b0:9d:efd3:66ca with SMTP id i14-20020a056a20548e00b0009defd366camr110139183pzk.17.1673571253651;
+        Thu, 12 Jan 2023 16:54:13 -0800 (PST)
 Received: from smtp.gmail.com ([2620:15c:11a:201:4652:3752:b9b7:29f9])
-        by smtp.gmail.com with ESMTPSA id u11-20020a6540cb000000b0046ff3634a78sm10676614pgp.71.2023.01.12.16.54.11
+        by smtp.gmail.com with ESMTPSA id u11-20020a6540cb000000b0046ff3634a78sm10676614pgp.71.2023.01.12.16.54.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Jan 2023 16:54:11 -0800 (PST)
+        Thu, 12 Jan 2023 16:54:13 -0800 (PST)
 From: Stephen Boyd <swboyd@chromium.org>
 To: stable@vger.kernel.org
 Cc: Johan Hovold <johan+linaro@kernel.org>,
@@ -42,9 +42,9 @@ Cc: Johan Hovold <johan+linaro@kernel.org>,
 	patches@lists.linux.dev,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15.y 3/4] phy: qcom-qmp-combo: fix broken power on
-Date: Thu, 12 Jan 2023 16:54:04 -0800
-Message-Id: <20230113005405.3992011-4-swboyd@chromium.org>
+Subject: [PATCH 5.15.y 4/4] phy: qcom-qmp-combo: fix runtime suspend
+Date: Thu, 12 Jan 2023 16:54:05 -0800
+Message-Id: <20230113005405.3992011-5-swboyd@chromium.org>
 X-Mailer: git-send-email 2.39.0.314.g84b9a713c41-goog
 In-Reply-To: <20230113005405.3992011-1-swboyd@chromium.org>
 References: <20230113005405.3992011-1-swboyd@chromium.org>
@@ -58,94 +58,66 @@ Content-Transfer-Encoding: 8bit
 
 From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 7a7d86d14d073dfa3429c550667a8e78b99edbd4 upstream.
+commit c7b98de745cffdceefc077ad5cf9cda032ef8959 upstream.
 
-The PHY is powered on during phy-init by setting the SW_PWRDN bit in the
-COM_POWER_DOWN_CTRL register and then setting the same bit in the in the
-PCS_POWER_DOWN_CONTROL register that belongs to the USB part of the
-PHY.
+Drop the confused runtime-suspend type check which effectively broke
+runtime PM if the DP child node happens to be parsed before the USB
+child node during probe (e.g. due to order of child nodes in the
+devicetree).
 
-Currently, whether power on succeeds depends on probe order and having
-the USB part of the PHY be initialised first. In case the DP part of the
-PHY is instead initialised first, the intended power on of the USB block
-results in a corrupted DP_PHY register (e.g. DP_PHY_AUX_CFG8).
-
-Add a pointer to the USB part of the PHY to the driver data and use that
-to power on the PHY also if the DP part of the PHY is initialised first.
+Instead use the new driver data USB PHY pointer to access the USB
+configuration and resources.
 
 Fixes: 52e013d0bffa ("phy: qcom-qmp: Add support for DP in USB3+DP combo phy")
-Cc: stable@vger.kernel.org	# 5.10
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20221114081346.5116-5-johan+linaro@kernel.org
+Link: https://lore.kernel.org/r/20221114081346.5116-6-johan+linaro@kernel.org
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 [swboyd@chromium.org: Backport to pre-split driver]
 Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/phy/qualcomm/phy-qcom-qmp.c | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
 diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index c6f860ce3d99..9fda6d283f20 100644
+index 9fda6d283f20..d928afe2ebba 100644
 --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
 +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -2919,6 +2919,7 @@ struct qcom_qmp {
- 	struct regulator_bulk_data *vregs;
- 
- 	struct qmp_phy **phys;
-+	struct qmp_phy *usb_phy;
- 
- 	struct mutex phy_mutex;
- 	int init_count;
-@@ -4554,7 +4555,7 @@ static int qcom_qmp_phy_com_init(struct qmp_phy *qphy)
- 	struct qcom_qmp *qmp = qphy->qmp;
+@@ -4985,15 +4985,11 @@ static void qcom_qmp_phy_disable_autonomous_mode(struct qmp_phy *qphy)
+ static int __maybe_unused qcom_qmp_phy_runtime_suspend(struct device *dev)
+ {
+ 	struct qcom_qmp *qmp = dev_get_drvdata(dev);
+-	struct qmp_phy *qphy = qmp->phys[0];
++	struct qmp_phy *qphy = qmp->usb_phy;
  	const struct qmp_phy_cfg *cfg = qphy->cfg;
- 	void __iomem *serdes = qphy->serdes;
--	void __iomem *pcs = qphy->pcs;
-+	struct qmp_phy *usb_phy = qmp->usb_phy;
- 	void __iomem *dp_com = qmp->dp_com;
- 	int ret, i;
  
-@@ -4620,13 +4621,13 @@ static int qcom_qmp_phy_com_init(struct qmp_phy *qphy)
- 		qphy_setbits(serdes, cfg->regs[QPHY_COM_POWER_DOWN_CONTROL],
- 			     SW_PWRDN);
- 	} else {
--		if (cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL])
--			qphy_setbits(pcs,
--					cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
--					cfg->pwrdn_ctrl);
-+		if (usb_phy->cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL])
-+			qphy_setbits(usb_phy->pcs,
-+					usb_phy->cfg->regs[QPHY_PCS_POWER_DOWN_CONTROL],
-+					usb_phy->cfg->pwrdn_ctrl);
- 		else
--			qphy_setbits(pcs, QPHY_POWER_DOWN_CONTROL,
--					cfg->pwrdn_ctrl);
-+			qphy_setbits(usb_phy->pcs, QPHY_POWER_DOWN_CONTROL,
-+					usb_phy->cfg->pwrdn_ctrl);
- 	}
+ 	dev_vdbg(dev, "Suspending QMP phy, mode:%d\n", qphy->mode);
  
- 	mutex_unlock(&qmp->phy_mutex);
-@@ -5769,6 +5770,9 @@ static int qcom_qmp_phy_probe(struct platform_device *pdev)
- 			goto err_node_put;
- 		}
+-	/* Supported only for USB3 PHY and luckily USB3 is the first phy */
+-	if (cfg->type != PHY_TYPE_USB3)
+-		return 0;
+-
+ 	if (!qmp->init_count) {
+ 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
+ 		return 0;
+@@ -5010,16 +5006,12 @@ static int __maybe_unused qcom_qmp_phy_runtime_suspend(struct device *dev)
+ static int __maybe_unused qcom_qmp_phy_runtime_resume(struct device *dev)
+ {
+ 	struct qcom_qmp *qmp = dev_get_drvdata(dev);
+-	struct qmp_phy *qphy = qmp->phys[0];
++	struct qmp_phy *qphy = qmp->usb_phy;
+ 	const struct qmp_phy_cfg *cfg = qphy->cfg;
+ 	int ret = 0;
  
-+		if (cfg->type == PHY_TYPE_USB3)
-+			qmp->usb_phy = qmp->phys[id];
-+
- 		/*
- 		 * Register the pipe clock provided by phy.
- 		 * See function description to see details of this pipe clock.
-@@ -5791,6 +5795,9 @@ static int qcom_qmp_phy_probe(struct platform_device *pdev)
- 		id++;
- 	}
+ 	dev_vdbg(dev, "Resuming QMP phy, mode:%d\n", qphy->mode);
  
-+	if (!qmp->usb_phy)
-+		return -EINVAL;
-+
- 	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
- 	if (!IS_ERR(phy_provider))
- 		dev_info(dev, "Registered Qcom-QMP phy\n");
+-	/* Supported only for USB3 PHY and luckily USB3 is the first phy */
+-	if (cfg->type != PHY_TYPE_USB3)
+-		return 0;
+-
+ 	if (!qmp->init_count) {
+ 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
+ 		return 0;
 -- 
 https://chromeos.dev
 
