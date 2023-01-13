@@ -1,175 +1,228 @@
-Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
+Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3302F2A
-	for <patches@lists.linux.dev>; Fri, 13 Jan 2023 16:27:46 +0000 (UTC)
-Received: by mail-vk1-f169.google.com with SMTP id l129so9560781vkh.6
-        for <patches@lists.linux.dev>; Fri, 13 Jan 2023 08:27:46 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6F33AD4A
+	for <patches@lists.linux.dev>; Fri, 13 Jan 2023 17:32:58 +0000 (UTC)
+Received: by mail-vk1-f181.google.com with SMTP id q21so2241099vka.3
+        for <patches@lists.linux.dev>; Fri, 13 Jan 2023 09:32:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=raspberrypi.com; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8K/16wcw70g3853WB4bevqY45r4f6kMjEA+IYsdkDYY=;
-        b=iGJOEt8ndx9S9t9mnzB3G2gCDTZNO1tXjhSiYvNzozMtXH/KeS6K3xEXo5Y6n0LSQX
-         2DgR8VBGHq7ZsloVs/sKaMKxiV47xE+PoyL/ffZ7zoLPkxjS1jtUnmXpP0y77WI70/BE
-         U0s4dok1NhO5F1VBQRZihTY4nyT8PWMql/zNhM2pn4KpbDp/bhbLnvK9Wjz7vDHpOrXZ
-         VABz8C5bMhkhhqnjRJzkB4jM3Bnyrk7yQvmMk/ONbBKBeTD7PIK/5k20wP4QvD85qcwo
-         TgpuxLsEmJz0xnSwPWEu9i9KLHVC+1fR1yiLWyURT6iwhMqj4wwwsYuySwyG6Z+rwUVc
-         A/7w==
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=E3d0L9EXeSI2xa3z2QyuDWU/GW2S6z4vkLQnF3O+530=;
+        b=OnIoo9VUst637PaD3GIGw+8rqKwnkQLsUdbTvqYBTm4qQSS43PvGy96ENnv07t7th9
+         xuw99hglKZn282xWmPZ8NLUPi0eeog0mBAouU8QIjMzhcKJwdeQg1x9pq7Z9sDyvRh+X
+         B/T4naIBWhijaV1Z9nqPex9nz221WvdDsLkjyHvOjPxlITEPSM5vOtKSU++6UI8qTcEy
+         p53PYTGQOLK1Yda9yfp+DFHADAEl9aPTTUgVFvFJ9g53XXTQehKJmunG+gay+ZHnUAhv
+         ELxHmy37t/N3j8K3UW3/SMnN8dKSdWGA0f+3dmA4wJR5bGTuYBmupLM2mef25oYMFoti
+         eUmw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8K/16wcw70g3853WB4bevqY45r4f6kMjEA+IYsdkDYY=;
-        b=EHWwQ4eT97DyVATUwASoGuUgyqeoh6sas5t2N7xOkydlm4ORCy+0rk81WnRMp9l4ab
-         yZrHlKIBBH3GCjwSGcoDOFAdO74/yqXJRpWumA7LrqtuQqU94k+u+0JZjn6048ndhHYW
-         sIZpO7wx3WrMLVRQ4kIqpLOmh7Ty95YPtoXHw2GPvqNLYYj1YdY1wJQjagwZkPy7GSyq
-         uh8QshZTm+R9qJkp66c6KKXAHpsnuGM5sJT0pbNjgB8xXVwTfw6FA76TNQwesN1aQBzw
-         kYq+qsLSSuC1d8J0NFlAjiKldgyX/MqCmcNKH+9msXDPaSpkLaOoKGxKmDzFcQPhliM3
-         R87g==
-X-Gm-Message-State: AFqh2kp9HGNoDf6YgPzKM+wIyyjQt+zE51v5LGXgaUB15uGzuRLM7oCu
-	KCUqggJcbmFR2Wc113GDPRVxYG7KpQmJnzXQTI8ANsKywRZiyse3
-X-Google-Smtp-Source: AMrXdXted3g6f9FMBDZMKLKDidfaUBO0lwDfRqcINCLqTHIg2JU6SKu+UJRIODTJ9PYp+yhkkqL1z4wgduGpqrneqV0=
-X-Received: by 2002:a1f:1243:0:b0:3da:e97f:4dd7 with SMTP id
- 64-20020a1f1243000000b003dae97f4dd7mr1741706vks.36.1673627265794; Fri, 13 Jan
- 2023 08:27:45 -0800 (PST)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=E3d0L9EXeSI2xa3z2QyuDWU/GW2S6z4vkLQnF3O+530=;
+        b=Ph7t2+4IIRh56aXiZ7GxmJcV1K9ubKNhlTCagl4m3YvoK7LfsSmSmXLMPxUV4DLjAh
+         Nuui3DkJXzrYJoVXlzP2QfS4PySolx+b12RxOI5TamoQjBtqpVtaeb8W3btlMrTb57o6
+         CZOqyssBuun/E+Pxflh1sqmpi28pzU94vooN15TTSAB6OgN+lM7EwqJjdWYEJDHVA20h
+         K5MvyjsdlMrhjCn1ylIz5QMgN/WeHo8BJsMDrGaw1I1A9XXq103tEtCYRU4l7bo0AxnJ
+         7Pw068Je5E/hITYF7mVNFvwdhwwQQQFiEFY658StigzMSY7qRYqHLJZ8pzL7eRMc8VXw
+         FuDw==
+X-Gm-Message-State: AFqh2kr2FnsGnfMBDH4zYHcLWwOVh1mHUPwo4aEqkeBL8h5jw9liRWs6
+	sayD5BUbmmajDCJiLluWpVKcTLs97tVgkjYO1Z1ZUQ==
+X-Google-Smtp-Source: AMrXdXstM05aG5ZJ1+4SwdzPR7faL+HVwyRkbnLgjVAkWQ3RO1tj8uFpevrmAq5Yn0yPIfIA1D9zoiwHkDdEjzqcwF0=
+X-Received: by 2002:a1f:3215:0:b0:3d5:86ff:6638 with SMTP id
+ y21-20020a1f3215000000b003d586ff6638mr8249719vky.30.1673631177317; Fri, 13
+ Jan 2023 09:32:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230106030108.2542081-1-swboyd@chromium.org>
-In-Reply-To: <20230106030108.2542081-1-swboyd@chromium.org>
-From: Dave Stevenson <dave.stevenson@raspberrypi.com>
-Date: Fri, 13 Jan 2023 16:27:29 +0000
-Message-ID: <CAPY8ntA=Dq6GFQ3gEOm9PzPyOa9bHTr8JrpXLibnai7xKqRbpQ@mail.gmail.com>
-Subject: Re: [PATCH] drm/panel: boe-tv101wum-nl6: Ensure DSI writes succeed
- during disable
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: Thierry Reding <thierry.reding@gmail.com>, Rob Clark <robdclark@chromium.org>, 
-	Douglas Anderson <dianders@chromium.org>, Jitao Shi <jitao.shi@mediatek.com>, 
-	yangcong <yangcong5@huaqin.corp-partner.google.com>, linux-kernel@vger.kernel.org, 
-	dri-devel@lists.freedesktop.org, patches@lists.linux.dev, 
-	linux-mediatek@lists.infradead.org, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Sam Ravnborg <sam@ravnborg.org>, 
-	linux-arm-kernel@lists.infradead.org
+References: <20230112135326.981869724@linuxfoundation.org>
+In-Reply-To: <20230112135326.981869724@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Fri, 13 Jan 2023 23:02:45 +0530
+Message-ID: <CA+G9fYukcyTgt2xavZqcxv55vC5vn2havo9A+wCjo9aVBpzR6g@mail.gmail.com>
+Subject: Re: [PATCH 6.1 00/10] 6.1.6-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Stephen
+On Thu, 12 Jan 2023 at 19:26, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.6 release.
+> There are 10 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 14 Jan 2023 13:53:18 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.1.6-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-On Fri, 6 Jan 2023 at 03:01, Stephen Boyd <swboyd@chromium.org> wrote:
->
-> The unprepare sequence has started to fail after moving to panel bridge
-> code in the msm drm driver (commit 007ac0262b0d ("drm/msm/dsi: switch to
-> DRM_PANEL_BRIDGE")). You'll see messages like this in the kernel logs:
->
->    panel-boe-tv101wum-nl6 ae94000.dsi.0: failed to set panel off: -22
->
-> This is because boe_panel_enter_sleep_mode() needs an operating DSI link
-> to set the panel into sleep mode. Performing those writes in the
-> unprepare phase of bridge ops is too late, because the link has already
-> been torn down by the DSI controller in post_disable, i.e. the PHY has
-> been disabled, etc. See dsi_mgr_bridge_post_disable() for more details
-> on the DSI .
->
-> Split the unprepare function into a disable part and an unprepare part.
-> For now, just the DSI writes to enter sleep mode are put in the disable
-> function. This fixes the panel off routine and keeps the panel happy.
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
 
-It is documented that the mipi_dsi_host_ops transfer function should
-be called with the host in any state [1], so the host driver is
-failing there.
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-This sounds like the same issue I was addressing in adding the
-prepare_prev_first flag to drm_panel, and pre_enable_prev_first to
-drm_bridge via [2].
-Defining prepare_prev_first for your panel would result in the host
-pre_enable being called before the panel prepare, and therefore the
-transfer calls from boe_panel_init_dcs_cmd boe_panel_prepare won't be
-relying on the DSI host powering up early. It will also call the panel
-unprepare before the DSI host bridge post_disable is called, and
-therefore the DSI host will still be powered up and the transfer won't
-fail.
+## Build
+* kernel: 6.1.6-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.1.y
+* git commit: 5eedeabf82ee83045c63fd32b2473e1d61885204
+* git describe: v6.1.5-11-g5eedeabf82ee
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.5=
+-11-g5eedeabf82ee
 
-Actually I've just noted the comment at [3]. [2] is that framework fix
-that means that the magic workaround isn't required, but it will
-require this panel to opt in to the ordering change.
+## Test Regressions (compared to v6.1.4-160-g06bcfb15cd3b)
 
-Cheers.
-  Dave
+## Metric Regressions (compared to v6.1.4-160-g06bcfb15cd3b)
 
-[1] https://www.kernel.org/doc/html/latest/gpu/drm-kms-helpers.html#c.mipi_dsi_host_ops
-[2] https://patchwork.freedesktop.org/series/100252/
-[3] https://github.com/torvalds/linux/blob/master/drivers/gpu/drm/msm/dsi/dsi_manager.c#L47
+## Test Fixes (compared to v6.1.4-160-g06bcfb15cd3b)
 
-> My Wormdingler has an integrated touchscreen that stops responding to
-> touch if the panel is only half disabled too. This patch fixes it. And
-> finally, this saves power when the screen is off because without this
-> fix the regulators for the panel are left enabled when nothing is being
-> displayed on the screen.
->
-> Fixes: 007ac0262b0d ("drm/msm/dsi: switch to DRM_PANEL_BRIDGE")
-> Fixes: a869b9db7adf ("drm/panel: support for boe tv101wum-nl6 wuxga dsi video mode panel")
-> Cc: yangcong <yangcong5@huaqin.corp-partner.google.com>
-> Cc: Douglas Anderson <dianders@chromium.org>
-> Cc: Jitao Shi <jitao.shi@mediatek.com>
-> Cc: Sam Ravnborg <sam@ravnborg.org>
-> Cc: Rob Clark <robdclark@chromium.org>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 16 ++++++++++++----
->  1 file changed, 12 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-> index 857a2f0420d7..c924f1124ebc 100644
-> --- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-> +++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
-> @@ -1193,14 +1193,11 @@ static int boe_panel_enter_sleep_mode(struct boe_panel *boe)
->         return 0;
->  }
->
-> -static int boe_panel_unprepare(struct drm_panel *panel)
-> +static int boe_panel_disable(struct drm_panel *panel)
->  {
->         struct boe_panel *boe = to_boe_panel(panel);
->         int ret;
->
-> -       if (!boe->prepared)
-> -               return 0;
-> -
->         ret = boe_panel_enter_sleep_mode(boe);
->         if (ret < 0) {
->                 dev_err(panel->dev, "failed to set panel off: %d\n", ret);
-> @@ -1209,6 +1206,16 @@ static int boe_panel_unprepare(struct drm_panel *panel)
->
->         msleep(150);
->
-> +       return 0;
-> +}
-> +
-> +static int boe_panel_unprepare(struct drm_panel *panel)
-> +{
-> +       struct boe_panel *boe = to_boe_panel(panel);
-> +
-> +       if (!boe->prepared)
-> +               return 0;
-> +
->         if (boe->desc->discharge_on_disable) {
->                 regulator_disable(boe->avee);
->                 regulator_disable(boe->avdd);
-> @@ -1528,6 +1535,7 @@ static enum drm_panel_orientation boe_panel_get_orientation(struct drm_panel *pa
->  }
->
->  static const struct drm_panel_funcs boe_panel_funcs = {
-> +       .disable = boe_panel_disable,
->         .unprepare = boe_panel_unprepare,
->         .prepare = boe_panel_prepare,
->         .enable = boe_panel_enable,
->
-> base-commit: 1b929c02afd37871d5afb9d498426f83432e71c2
-> --
-> https://chromeos.dev
->
+## Metric Fixes (compared to v6.1.4-160-g06bcfb15cd3b)
+
+## Test result summary
+total: 183886, pass: 153292, fail: 5185, skip: 25382, xfail: 27
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 151 total, 148 passed, 3 failed
+* arm64: 51 total, 50 passed, 1 failed
+* i386: 39 total, 36 passed, 3 failed
+* mips: 30 total, 28 passed, 2 failed
+* parisc: 8 total, 8 passed, 0 failed
+* powerpc: 38 total, 32 passed, 6 failed
+* riscv: 16 total, 15 passed, 1 failed
+* s390: 16 total, 14 passed, 2 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 44 total, 44 passed, 0 failed
+
+## Test suites summary
+* boot
+* fwts
+* igt-gpu-tools
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-open-posix-tests
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* packetdrill
+* perf
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
