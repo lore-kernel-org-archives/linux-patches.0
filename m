@@ -1,52 +1,52 @@
-Received: from mail-yb1-f182.google.com (mail-yb1-f182.google.com [209.85.219.182])
+Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E17DA627
-	for <patches@lists.linux.dev>; Fri, 13 Jan 2023 23:13:16 +0000 (UTC)
-Received: by mail-yb1-f182.google.com with SMTP id 203so24145025yby.10
-        for <patches@lists.linux.dev>; Fri, 13 Jan 2023 15:13:16 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F99ABA57
+	for <patches@lists.linux.dev>; Fri, 13 Jan 2023 23:15:32 +0000 (UTC)
+Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-4db05a4db9bso82539647b3.10
+        for <patches@lists.linux.dev>; Fri, 13 Jan 2023 15:15:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=q6fjwFARDZpPxSIIIp1tFOycB9wl1pphbajvby7rx9s=;
-        b=n5a3CaKEcj5VYNkID/sozPmUYqTpPAJeD+VL/ZpwAP/hLzaTNm47kX6XjMwYYa5rI+
-         Zxl/2B/jyvSg/xiP+T9dw+MMkK/av9LiXPvq0U2FTvI27LLAuM4zog/Asf7rmdJD3RJp
-         9xMGAzig24loJnaqcw+yBuQYqrwFkiERy/HYjsEkcd0UFh1mawt2AnMTxUq6AdTIU/5c
-         r7q30QM1WD3jhFTidzev453cuwMpZcKrKdE/jKgZNwQ6SOR1hNfQ68gz8fh7+PugjUMo
-         Wipl7XEeyS5Y7c3gFxs5RfZ++Pd0Gab575mEr/jg2LdKPUsqNKYsqvc09giFQYRgbVNm
-         OC6Q==
+        bh=Ciy0ZWTd3lGR7fuS0JZR+cGtHCn30vXUtznCeqNuNtU=;
+        b=P76dLekgwuMNxZPfxLDlCyL/lIIgZNjPmY8vqWnk0vw6tZRka1mEs/c8B0YbZ+vj4F
+         TX5TiAAk93fQN3ebB++KENBioubOoKCEL3JihUsWc0QTwmYXioEV9h1tG67Ar3kjujNv
+         Z/pIsqffFrsiSAswGddq5zo3MnHmlc4eXhaR2XkmKXUPMKeMhntx9MQ3yWXu2TGjPVI/
+         7ahQSi7qmjq0c6FGW08WYmBTg15PzLqT9bk41vHUAuYM1moOM9f3s2ZKLABOaCn+5bEb
+         bl7hhVRapNCFqtfbS25qUZcHq0nVJucpG0Gus9ivCPuJt3gmC3AZkJQw8ii+LiMD1Gt2
+         Ef8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=q6fjwFARDZpPxSIIIp1tFOycB9wl1pphbajvby7rx9s=;
-        b=y0BUgwtyt8vURLFwAS3KQiShXlGA9uPxt4ZBdzh+5wTTjGTwskINv+p9qahqxWsHvG
-         zenagMqiDJmL12uJg9/2s1+dLgCw+bG0zipecASXO9lMFQO0XycoR20bOtLKDPMsaAZG
-         xGZzIJ5sz/Bmkm0jbSOko6TAfOvq7+1VGJEgqQppVEEaEKhlnUjBVHZ91wbO8slXL9Ne
-         ytS3yJsVbpVrEBSXhKIv14G3ns/0ElZJYcwWD67yKwUYxet3WmXJj9/mNmT97rfC5P1y
-         4c8UW7WRhtOI9cQsfUbi94czw07kv550tA7YadV19eDaVe7ME2t4B56Wf12xe2tvGfEF
-         C4Vw==
-X-Gm-Message-State: AFqh2kpsoqsffKt1aFlGwH+EsYc1oL3i20uu12kPeiNbf5gUm5/9+/Z9
-	jPzfBrBm6uxCdsaiD5VYsR7jzplIoEdIg/KAPXw=
-X-Google-Smtp-Source: AMrXdXvoTnn8SvkX6vZq37n4LxAUyWFzoyi5yBE3W0VJpCla3kdj2cETTQMc/PmuTAwpfi51GTfwJM3siTKFcxcg1sI=
-X-Received: by 2002:a25:1004:0:b0:712:faac:e6b2 with SMTP id
- 4-20020a251004000000b00712faace6b2mr8662761ybq.632.1673651595940; Fri, 13 Jan
- 2023 15:13:15 -0800 (PST)
+        bh=Ciy0ZWTd3lGR7fuS0JZR+cGtHCn30vXUtznCeqNuNtU=;
+        b=2mq8WTK1f20EgMitAjy5MlG9lqDST9b8lQMW3zi5g0+STo9AEOWRN22Fl3O4lpHAwz
+         YyZ8o2t5k6k5zPs+4teSKsEHG52L/gbJ6NLNCQiktqJ/uZJAIX+oHdGMSuemhaiFddvo
+         BDAFe63EDVDJOrWN/xRpXoiVYl3yc05WjdXdysos4CQ+hgbbq3O2uZs4j69iuqHQG5aX
+         +/plWlMGUh+Q4I+LG505O7x/Lgbt90f9C8JTj+ZztRUv6S5mKfbjCU4vSuhIcU6Vs2aR
+         QUF7WfVwEZ4IR7M4VX11F3t1gEMBInlV/2o8YpwS39tYQhT8uhikdf72Mtu1HCHASAjh
+         lINA==
+X-Gm-Message-State: AFqh2krcehOtDlkP5MztWq6Xx+Gem0o3r+SzxDdH6uKUOc1rIIkLoazs
+	JH8xZHg6LsPxNTRXiYitkqAROSKfPS1kdV7fQ1k=
+X-Google-Smtp-Source: AMrXdXum1Gc10mvDU+me61PfBaM5bpzVPQ2VyOympq/MwbmX4aEfLhJswzFyNI8ktuxhCAO0/ad2BGCOH77e+aAW7c0=
+X-Received: by 2002:a05:690c:dc3:b0:4db:3ac0:78a3 with SMTP id
+ db3-20020a05690c0dc300b004db3ac078a3mr941595ywb.266.1673651731430; Fri, 13
+ Jan 2023 15:15:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230109204520.539080-1-ojeda@kernel.org> <CANiq72m_+xJYUxrwFc7vNLkuOb6zC-W-wDzXjbPb8Ursqzwiaw@mail.gmail.com>
- <CAK7LNATmRkSU2n6AaeJenE-18gbUd4ZShFNfKysEjyCo4Q-eAA@mail.gmail.com>
-In-Reply-To: <CAK7LNATmRkSU2n6AaeJenE-18gbUd4ZShFNfKysEjyCo4Q-eAA@mail.gmail.com>
+References: <20230109204520.539080-1-ojeda@kernel.org> <20230109204520.539080-6-ojeda@kernel.org>
+ <CAK7LNAQYk6s11MASRHW6oxtkqF00EJVqhHOP=5rynWt-QDUsXw@mail.gmail.com>
+In-Reply-To: <CAK7LNAQYk6s11MASRHW6oxtkqF00EJVqhHOP=5rynWt-QDUsXw@mail.gmail.com>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sat, 14 Jan 2023 00:13:04 +0100
-Message-ID: <CANiq72=G0P-XZ6Kn2XYFwbSdqG7Yh4f5zgAr-fn+85QJCMRZUA@mail.gmail.com>
-Subject: Re: [PATCH 1/6] docs: rust: add paragraph about finding a suitable `libclang`
+Date: Sat, 14 Jan 2023 00:15:20 +0100
+Message-ID: <CANiq72kyUr9PGYqHTsNzYn0_cyuYA0vAxHLC08ivxKo5XvOESg@mail.gmail.com>
+Subject: Re: [PATCH 6/6] kbuild: rust_is_available: normalize version matching
 To: Masahiro Yamada <masahiroy@kernel.org>
 Cc: Miguel Ojeda <ojeda@kernel.org>, linux-kbuild@vger.kernel.org, 
 	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
@@ -54,23 +54,32 @@ Cc: Miguel Ojeda <ojeda@kernel.org>, linux-kbuild@vger.kernel.org,
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
 	Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	Jonathan Corbet <corbet@lwn.net>, linux-doc@vger.kernel.org
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Jan 12, 2023 at 7:05 AM Masahiro Yamada <masahiroy@kernel.org> wrote:
+On Thu, Jan 12, 2023 at 7:23 AM Masahiro Yamada <masahiroy@kernel.org> wrote:
 >
-> Yes, I can take this, but the doc change
-> is independent of the rest, and will not conflict with
-> any Kbuild changes.
+> Maybe, your purpose is to use sed consistently, but
+> perhaps you can avoid forking sed if you know the
+> format of the first line.
+
+The most unknown format would be the one of the libclang check, where
+there may be other lines before the one we are interested in. However,
+the pattern expansion would still match newlines, right?
+
+> BTW, what is missing here is, you do not check if
+> ${RUSTC} is really rustc.
 >
-> So, you can apply this one to your tree.
+> I can fool this script to print
+> "arithmetic expression: expecting primary: "100000 *  + 100 *  + "
 
-The doc change is not fully independent: this patch is first because
-the next commit uses the fact that the documentation is written (to
-point the user to it), and the commit message mentions this.
+We can test if nothing was printed by `sed` for that (or do it with
+shell builtins).
 
-Not a big deal, but it would look better if all are in at once.
+Having said that, I would say fooling the script on purpose is an more
+of an oddity compared to the case `MAKEFLAGS` attempts to cover
+(please see my reply on the other patch). So if we cover this, then I
+would say we should really cover the other one.
 
 Cheers,
 Miguel
