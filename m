@@ -1,39 +1,40 @@
-Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EAFD2F51
-	for <patches@lists.linux.dev>; Sat, 14 Jan 2023 12:11:58 +0000 (UTC)
-Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-4d4303c9de6so169092337b3.2
-        for <patches@lists.linux.dev>; Sat, 14 Jan 2023 04:11:58 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B3A33D1
+	for <patches@lists.linux.dev>; Sat, 14 Jan 2023 12:12:32 +0000 (UTC)
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-4c24993965eso313382627b3.12
+        for <patches@lists.linux.dev>; Sat, 14 Jan 2023 04:12:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=qadApUskd1cmnf3V0uX5pB2OviK6XICzMAvYb4D0ACk=;
-        b=M8tRVcsnUUjmGQBAPSt+T9H0jGs8nH+t+8hiN5SYI2LHcyzNswtdQQ3Drv8cMPyUcn
-         s3SdC+JPZxQcKd5mydvVkEkDbgfo0cTws8Scju/gyWs9Wd0+LmOCck8RcnxWjMrwE6Cu
-         mDG0S2BIeJeIqf6GZNQSePK3t3WBSBNwcHwWLrtfIVzxqOQyraX22PcHV9LYzkGryp5x
-         rL8LqYKtiykkaFXA4+YAO2vhYfxcro0+05XqqE4lxiaIty551MI6nmoxrpzSebqp0Q9z
-         IGJNWmVnlf9QQdEOY93ENXZserVaLj7rDN5jYsLE03q1cALsG/gqbpH2i+WLeOhJAhXn
-         2G0A==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ocG+aQYX3J6pPZiaecLuAdSLxqQP2C97Q6clgYMlPSQ=;
+        b=NnTUf4zMPGcuJ6iWKPXSOQftiob0xB7Hg/1iZUp5RaIZwPisRkMZ6aSHAyd6P+G6xf
+         0bj0mYQz7wfvxYCF9HSGHnF2Nwde7H5fkl3u1aEznXqeS/D22qj95sAETiNhl3PVZW4n
+         FuLhGW4vqCUSBXe824IQ1DVGVf0kJIiMKLtQcK0dvW5uoVfY02T7pZ+wia4FKYqSm821
+         l6FLI1h9zFMCtK37fOWufwrXnEIL8HxipROm+S+n6akXZ1hJevJAuyq6JZPs7RA6ryfi
+         UktJFQaaI5z+IuSw31GbU1wqvS+4x9gVGjcTZk0I36dxhAq0QailGg+nDEh00yjzWl+9
+         OEjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=qadApUskd1cmnf3V0uX5pB2OviK6XICzMAvYb4D0ACk=;
-        b=salUIROtxxtNtEiFcr73t8elvzo48T8y1Y13gGgsXYJ64sLKlPPQcRXH8v/7PZn56d
-         3otx0Awwcd3E+ZdjVfhBZmuBahlBZ15nbl4UIE5S0YRdjrjTwLmg+bSNG3Qr1rIGVO/2
-         2Eplfhf/4OEYs+NHC4KAQ/q+hg4VAqc2x87r7U7xMS5qDS7qz66hkB8cwp9se8plhnsa
-         vLK6pLk9a926vG4LH6ZfSk9EOAz1z3pfVFofxBgVKOKHa9H/D/c++zMcBatNfeuFsoDO
-         pl7bE8lDN7SAU9i86NXpcRYVBOLXGvwsMzuJtJOOuuSbtnP4QPoRw7rGuf3k5EI4Qz5F
-         Viag==
-X-Gm-Message-State: AFqh2kpfe+yOWjJoAIjkerkoLEDPU4D0+Lf9OBIlzQt7R85Um0H2MTua
-	I5avgU4JoXJCrJhN30j8tO677T88zO0syMg3ateFxN03bPDNPh6pesz0bQ==
-X-Google-Smtp-Source: AMrXdXvskHzenVRqRLn+Wh7NzU6ue6GUkYyPPdOgZ2b+ge/bwI1705ql2ufw1IejiURmm52e6z7nQdxJKKQAa7E5/fQ=
-X-Received: by 2002:a81:a110:0:b0:484:a94f:210 with SMTP id
- y16-20020a81a110000000b00484a94f0210mr1543433ywg.129.1673698317372; Sat, 14
- Jan 2023 04:11:57 -0800 (PST)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ocG+aQYX3J6pPZiaecLuAdSLxqQP2C97Q6clgYMlPSQ=;
+        b=hZMpP5mt/L9tkWvnkun7LTa6zHvBPih/E5T4xN0VTasZWGu56ZiAzaVqPYLLOsKNs0
+         qc+j9gOsxcPb6fuQDjHv3OdfF+dH+Kf4E7pqy20j81FE9sssertJfKNPQ43iZ1LgRELw
+         SiWRDJyFFfWsRibz8lYOQbgCuSnK1UMvMBeDXv7K74wngMH1/wDXH0SeF1nCFf/WK9sB
+         h7LlORqZvDRPFEbAVHFfufZ6j6XQvMimY0fZ7YlHLGTpR5yHoxZkG3U/x2ctBJ3ATqMp
+         /Y4KwnZrrC5eYNSyIgthFG6km5YSDdwP+9LofQXIPzgEnuYLPGjTtCrA+3RKUAsgXzf3
+         f85w==
+X-Gm-Message-State: AFqh2kr2eT5y7ka35aw+2FLSYkgnDIdYOg5nqQgdyXDvGZoZGagTqJqs
+	7auaimL3rCvt9+NMuYVoRWxfxyIiNb0JhabdmDY=
+X-Google-Smtp-Source: AMrXdXuMmb7KLM5QgZsTcsQwoQKe4cn16T9y85eLJUWL3VYmrFA94ufuFZpeh1+313LveyMesX8TLRkUmKEG37iM/w0=
+X-Received: by 2002:a81:b60b:0:b0:45c:d900:f30c with SMTP id
+ u11-20020a81b60b000000b0045cd900f30cmr3752622ywh.256.1673698351831; Sat, 14
+ Jan 2023 04:12:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -41,39 +42,29 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20230109204520.539080-1-ojeda@kernel.org> <20230109204520.539080-3-ojeda@kernel.org>
- <CAK7LNATVJ5e=DnbJ++03iEMk0bN3-UvODBLkEKcYdSnJZa_tmA@mail.gmail.com>
- <CAK7LNASDu+i4G88TYYa6feg-bha-_cLv1si_ujuSMbWuyUve0Q@mail.gmail.com>
- <CANiq72k6jCf_LP5vmBHKEpZ5njmH+u1HpJUjs_GyFi1a4B94ew@mail.gmail.com> <CAK7LNAS-5UaBX4CYrt_VFZrfHxLy=M=CpT8Hb-LpH4EAntRRSw@mail.gmail.com>
-In-Reply-To: <CAK7LNAS-5UaBX4CYrt_VFZrfHxLy=M=CpT8Hb-LpH4EAntRRSw@mail.gmail.com>
+In-Reply-To: <20230109204520.539080-3-ojeda@kernel.org>
 From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Sat, 14 Jan 2023 13:11:46 +0100
-Message-ID: <CANiq72mRkJV37b+WP1PtpiOVUkRG5w9mJyVQfzJQRGKXvHOKng@mail.gmail.com>
+Date: Sat, 14 Jan 2023 13:12:20 +0100
+Message-ID: <CANiq72nZ0YUYOUO4NAKDzQKisxguovb=f2f4uNcL3TqwEWRQeg@mail.gmail.com>
 Subject: Re: [PATCH 3/6] kbuild: rust_is_available: add check for `bindgen` invocation
-To: Masahiro Yamada <masahiroy@kernel.org>
-Cc: Miguel Ojeda <ojeda@kernel.org>, linux-kbuild@vger.kernel.org, 
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Masahiro Yamada <masahiroy@kernel.org>, linux-kbuild@vger.kernel.org, 
 	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
 	Nicolas Schier <nicolas@fjasle.eu>, rust-for-linux@vger.kernel.org, 
 	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
 	Alexandru Radovici <msg4alex@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
 	Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	=?UTF-8?Q?Fran=C3=A7ois_Valenduc?= <francoisvalenduc@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jan 14, 2023 at 10:44 AM Masahiro Yamada <masahiroy@kernel.org> wrote:
+On Mon, Jan 9, 2023 at 9:45 PM Miguel Ojeda <ojeda@kernel.org> wrote:
 >
-> Ah, I see.
->
-> How about this?
->
-> bindgen_libclang_output=$(LC_ALL=C "$BINDGEN" $(dirname
-> $0)/rust_is_available_bindgen_libclang.h 2>&1 >/dev/null) \
->          || bindgen_libclang_code=$?
->
-> You can get the error code of bindgen without toggling -e.
+> Reported-by: fvalenduc (@fvalenduc)
 
-As you prefer -- personally I tend to avoid assigning two variables in
-a single "statement" (like in C), but I am also happy avoiding to
-toggle `-e` since it is global state and therefore ugly too anyway.
+Cc'ing Fran=C3=A7ois who gave emailed me his name and address, thus a
+better tag can be written here for v2.
 
 Cheers,
 Miguel
