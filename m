@@ -1,62 +1,79 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f179.google.com (mail-yw1-f179.google.com [209.85.128.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18FDC20F6
-	for <patches@lists.linux.dev>; Sat, 14 Jan 2023 09:49:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56236C433EF;
-	Sat, 14 Jan 2023 09:49:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673689740;
-	bh=+hMv+Svmm+dRm+e9VzK/6V4/+PwwyRsmIeGLUjQ4Fqo=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ME1n68EzsJlnbttczOCVRPV9DMvdUFNJVZeU41P/CIhMVbwbZ4huc8rmtcTWrHzm4
-	 mWTPnItAyHOssscO9EB2kTRfJte+b2XrflMZJFS4iyD01yT0vn1/ApwdphHqfe/CKH
-	 Hw8PH/UZAkgdLRCFkvImPdWlCene5FZLqtrhOOaI=
-Date: Sat, 14 Jan 2023 10:48:57 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: stable@vger.kernel.org, Denis Nikitin <denik@chromium.org>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	Marc Zyngier <maz@kernel.org>
-Subject: Re: [PATCH 5.15.y] KVM: arm64: nvhe: Fix build with profile
- optimization
-Message-ID: <Y8J6iSOVwGslj3jV@kroah.com>
-References: <20230113002210.3984665-1-swboyd@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EAFD2F51
+	for <patches@lists.linux.dev>; Sat, 14 Jan 2023 12:11:58 +0000 (UTC)
+Received: by mail-yw1-f179.google.com with SMTP id 00721157ae682-4d4303c9de6so169092337b3.2
+        for <patches@lists.linux.dev>; Sat, 14 Jan 2023 04:11:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=qadApUskd1cmnf3V0uX5pB2OviK6XICzMAvYb4D0ACk=;
+        b=M8tRVcsnUUjmGQBAPSt+T9H0jGs8nH+t+8hiN5SYI2LHcyzNswtdQQ3Drv8cMPyUcn
+         s3SdC+JPZxQcKd5mydvVkEkDbgfo0cTws8Scju/gyWs9Wd0+LmOCck8RcnxWjMrwE6Cu
+         mDG0S2BIeJeIqf6GZNQSePK3t3WBSBNwcHwWLrtfIVzxqOQyraX22PcHV9LYzkGryp5x
+         rL8LqYKtiykkaFXA4+YAO2vhYfxcro0+05XqqE4lxiaIty551MI6nmoxrpzSebqp0Q9z
+         IGJNWmVnlf9QQdEOY93ENXZserVaLj7rDN5jYsLE03q1cALsG/gqbpH2i+WLeOhJAhXn
+         2G0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=qadApUskd1cmnf3V0uX5pB2OviK6XICzMAvYb4D0ACk=;
+        b=salUIROtxxtNtEiFcr73t8elvzo48T8y1Y13gGgsXYJ64sLKlPPQcRXH8v/7PZn56d
+         3otx0Awwcd3E+ZdjVfhBZmuBahlBZ15nbl4UIE5S0YRdjrjTwLmg+bSNG3Qr1rIGVO/2
+         2Eplfhf/4OEYs+NHC4KAQ/q+hg4VAqc2x87r7U7xMS5qDS7qz66hkB8cwp9se8plhnsa
+         vLK6pLk9a926vG4LH6ZfSk9EOAz1z3pfVFofxBgVKOKHa9H/D/c++zMcBatNfeuFsoDO
+         pl7bE8lDN7SAU9i86NXpcRYVBOLXGvwsMzuJtJOOuuSbtnP4QPoRw7rGuf3k5EI4Qz5F
+         Viag==
+X-Gm-Message-State: AFqh2kpfe+yOWjJoAIjkerkoLEDPU4D0+Lf9OBIlzQt7R85Um0H2MTua
+	I5avgU4JoXJCrJhN30j8tO677T88zO0syMg3ateFxN03bPDNPh6pesz0bQ==
+X-Google-Smtp-Source: AMrXdXvskHzenVRqRLn+Wh7NzU6ue6GUkYyPPdOgZ2b+ge/bwI1705ql2ufw1IejiURmm52e6z7nQdxJKKQAa7E5/fQ=
+X-Received: by 2002:a81:a110:0:b0:484:a94f:210 with SMTP id
+ y16-20020a81a110000000b00484a94f0210mr1543433ywg.129.1673698317372; Sat, 14
+ Jan 2023 04:11:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230113002210.3984665-1-swboyd@chromium.org>
+References: <20230109204520.539080-1-ojeda@kernel.org> <20230109204520.539080-3-ojeda@kernel.org>
+ <CAK7LNATVJ5e=DnbJ++03iEMk0bN3-UvODBLkEKcYdSnJZa_tmA@mail.gmail.com>
+ <CAK7LNASDu+i4G88TYYa6feg-bha-_cLv1si_ujuSMbWuyUve0Q@mail.gmail.com>
+ <CANiq72k6jCf_LP5vmBHKEpZ5njmH+u1HpJUjs_GyFi1a4B94ew@mail.gmail.com> <CAK7LNAS-5UaBX4CYrt_VFZrfHxLy=M=CpT8Hb-LpH4EAntRRSw@mail.gmail.com>
+In-Reply-To: <CAK7LNAS-5UaBX4CYrt_VFZrfHxLy=M=CpT8Hb-LpH4EAntRRSw@mail.gmail.com>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Sat, 14 Jan 2023 13:11:46 +0100
+Message-ID: <CANiq72mRkJV37b+WP1PtpiOVUkRG5w9mJyVQfzJQRGKXvHOKng@mail.gmail.com>
+Subject: Re: [PATCH 3/6] kbuild: rust_is_available: add check for `bindgen` invocation
+To: Masahiro Yamada <masahiroy@kernel.org>
+Cc: Miguel Ojeda <ojeda@kernel.org>, linux-kbuild@vger.kernel.org, 
+	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
+	Nicolas Schier <nicolas@fjasle.eu>, rust-for-linux@vger.kernel.org, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Alexandru Radovici <msg4alex@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
+	Wedson Almeida Filho <wedsonaf@gmail.com>, Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Jan 12, 2023 at 04:22:10PM -0800, Stephen Boyd wrote:
-> From: Denis Nikitin <denik@chromium.org>
-> 
-> commit bde971a83bbff78561458ded236605a365411b87 upstream.
-> 
-> Kernel build with clang and KCFLAGS=-fprofile-sample-use=<profile> fails with:
-> 
-> error: arch/arm64/kvm/hyp/nvhe/kvm_nvhe.tmp.o: Unexpected SHT_REL
-> section ".rel.llvm.call-graph-profile"
-> 
-> Starting from 13.0.0 llvm can generate SHT_REL section, see
-> https://reviews.llvm.org/rGca3bdb57fa1ac98b711a735de048c12b5fdd8086.
-> gen-hyprel does not support SHT_REL relocation section.
-> 
-> Filter out profile use flags to fix the build with profile optimization.
-> 
-> Signed-off-by: Denis Nikitin <denik@chromium.org>
-> Signed-off-by: Marc Zyngier <maz@kernel.org>
-> Link: https://lore.kernel.org/r/20221014184532.3153551-1-denik@chromium.org
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
-> 
-> I need this to properly compile 5.15.y stable kernels in the chromeos build
-> system.
+On Sat, Jan 14, 2023 at 10:44 AM Masahiro Yamada <masahiroy@kernel.org> wrote:
+>
+> Ah, I see.
+>
+> How about this?
+>
+> bindgen_libclang_output=$(LC_ALL=C "$BINDGEN" $(dirname
+> $0)/rust_is_available_bindgen_libclang.h 2>&1 >/dev/null) \
+>          || bindgen_libclang_code=$?
+>
+> You can get the error code of bindgen without toggling -e.
 
-Now queued up, thanks.
+As you prefer -- personally I tend to avoid assigning two variables in
+a single "statement" (like in C), but I am also happy avoiding to
+toggle `-e` since it is global state and therefore ugly too anyway.
 
-greg k-h
+Cheers,
+Miguel
