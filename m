@@ -1,105 +1,168 @@
-Received: from qproxy4-pub.mail.unifiedlayer.com (qproxy4-pub.mail.unifiedlayer.com [66.147.248.250])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f47.google.com (mail-pj1-f47.google.com [209.85.216.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47EDBBA57
-	for <patches@lists.linux.dev>; Fri, 13 Jan 2023 23:47:35 +0000 (UTC)
-Received: from progateway7-pub.mail.pro1.eigbox.com (gproxy5-pub.mail.unifiedlayer.com [67.222.38.55])
-	by qproxy4.mail.unifiedlayer.com (Postfix) with ESMTP id D30008038EF5
-	for <patches@lists.linux.dev>; Fri, 13 Jan 2023 23:26:44 +0000 (UTC)
-Received: from cmgw14.mail.unifiedlayer.com (unknown [10.0.90.129])
-	by progateway7.mail.pro1.eigbox.com (Postfix) with ESMTP id 2DBB110047C0A
-	for <patches@lists.linux.dev>; Fri, 13 Jan 2023 23:26:37 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id GTRVp2qfRI3SyGTRVptWaK; Fri, 13 Jan 2023 23:26:37 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=Pr9W0yA3 c=1 sm=1 tr=0 ts=63c1e8ad
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=RvmDmJFTN0MA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=uJXoyXs2SWzOjiTBKGkA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=wHGbrhCQsYGBvnsMDI9Sc8XtN0LjMmgv6I4KTkqII/Q=; b=r0r4CG2TTmT9lusgtrd/RylcSx
-	nnC5EraDyh1bCg83gOe5WN0dhEWAFeqFYjnaCxUB3Lx08qzDBxyvp4usO/2KDRXc5zbxHnW3j0S53
-	vW1v//ItAUhUgDWAIDAtAtw0scLeEAvrtShAND7ALW0BlyXyZ/Gp2OEaVpPyvGnL3oOFiP+ZZ6GaQ
-	s41FcXeCk6MhCaX2Ra3ZxFTw+Bzh5gUe1Ljhlv6F0G9Em+v0LlUdXu5pC15C/necIi6oNg8UbaZCb
-	mpdSbA6wc+M3R7dSH4erc/4iYro2bL5h8HA99gXsoclutOspuzOqigIyLXRk9Iu8UR23MhQsetwW+
-	2TUXk1Sw==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:51374 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1pGTRT-003UAp-Sf;
-	Fri, 13 Jan 2023 16:26:35 -0700
-Subject: Re: [PATCH 5.10 000/783] 5.10.163-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230112135524.143670746@linuxfoundation.org>
-In-Reply-To: <20230112135524.143670746@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <1e9676f3-e436-3f69-ddff-abfc6ba5804d@w6rz.net>
-Date: Fri, 13 Jan 2023 15:26:29 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DAE67C
+	for <patches@lists.linux.dev>; Sat, 14 Jan 2023 00:09:12 +0000 (UTC)
+Received: by mail-pj1-f47.google.com with SMTP id o1-20020a17090a678100b00219cf69e5f0so28536643pjj.2
+        for <patches@lists.linux.dev>; Fri, 13 Jan 2023 16:09:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iCt1TVcQGT69o0NxFcLxxxAse3ihgOBwig0LVJHKNSQ=;
+        b=PbPnpcZ8eF/CwYhed0OtyJu8Vmo2IAckT9ykkO30Wp2z+MDwWjyn/lhG4KDd0f171G
+         qP5MTty7fpLNF1p7JwY3jjwkYxy9Bikgc7JsJBqj4XvvfhK+f1Y0DBZgOddOIO/4xHNf
+         wo+du5YEL8RN8nKdgGHhfMUzV749F4sCl1kh8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iCt1TVcQGT69o0NxFcLxxxAse3ihgOBwig0LVJHKNSQ=;
+        b=OPAOG1hBUEmB6jx+NbqQHmUC2WRkTLmf4eZnUjHsWif4VyG9sCp2i2mKDpSpD0HQ6I
+         c5d08Oj4ycWF6UVFmwVUpJze1VSfNNLAr3c8wdQstlGRoY9iEOchSlSM7Q/I4Sy5qjpk
+         BNdGirgW8H3raGxA+X2kC6UwFAFDxsfChV6OhfckSJjROuTXLeFqjdJ5asZey180Owjz
+         /mBs9LrfxeQ7JxakUYY5bT09MkU/8Bsvehtc+8ohl4zM10aQtNCM8mneexBSPW94mrbQ
+         wwEJncLXYKc7FSD8DMCLO67iVsNXHuyq9Rp78jXmon9cEqQMXyX0JCxJ6pyky/FDyIdg
+         bQxQ==
+X-Gm-Message-State: AFqh2kpvawt44QY1RFiNgTXR7C1wrTAOeLhqYfywt1wrqEBRJl1SpYVn
+	kfqu6Bxg8/xWKrCmhBCXeBvjBQ==
+X-Google-Smtp-Source: AMrXdXvx17AIp+ECFymjutA1xBaxl0yWe14V9QyFLYnxxmH8Bd1cQLvxABFqH5ZfQYMYlm2zXzKovg==
+X-Received: by 2002:a17:902:8d81:b0:194:4339:f12e with SMTP id v1-20020a1709028d8100b001944339f12emr13815441plo.1.1673654952381;
+        Fri, 13 Jan 2023 16:09:12 -0800 (PST)
+Received: from smtp.gmail.com ([2620:15c:11a:201:4652:3752:b9b7:29f9])
+        by smtp.gmail.com with ESMTPSA id n15-20020a170902d2cf00b0018963b8e131sm14637072plc.290.2023.01.13.16.09.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 13 Jan 2023 16:09:11 -0800 (PST)
+From: Stephen Boyd <swboyd@chromium.org>
+To: Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@ti.com>
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org,
+	linux-phy@lists.infradead.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: [PATCH] phy: qcom-qmp: Introduce Kconfig symbols for discrete drivers
+Date: Fri, 13 Jan 2023 16:09:10 -0800
+Message-Id: <20230114000910.1256462-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.39.0.314.g84b9a713c41-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1pGTRT-003UAp-Sf
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:51374
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Transfer-Encoding: 8bit
 
-On 1/12/23 5:45 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.163 release.
-> There are 783 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sat, 14 Jan 2023 13:53:18 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.163-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Introduce a config option for each QMP PHY driver now that the QMP PHY
+mega-driver has been split up into different modules. This allows kernel
+configurators to limit the binary size of the kernel by only compiling
+in the QMP PHY driver that they need, or to split the module up into one
+per PHY driver instead of one module for all the QMP PHY drivers.
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Leave the old config QCOM_QMP in place and make it into a menuconfig so
+that 'make olddefconfig' continues to work. Furthermore, set the default
+of the new Kconfig symbols to be QCOM_QMP so that the transition is
+smooth.
 
-Tested-by: Ron Economos <re@w6rz.net>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ drivers/phy/qualcomm/Kconfig  | 50 ++++++++++++++++++++++++++++++++---
+ drivers/phy/qualcomm/Makefile | 12 ++++-----
+ 2 files changed, 52 insertions(+), 10 deletions(-)
+
+diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
+index 5c98850f5a36..1d3a8062e651 100644
+--- a/drivers/phy/qualcomm/Kconfig
++++ b/drivers/phy/qualcomm/Kconfig
+@@ -50,13 +50,55 @@ config PHY_QCOM_PCIE2
+ 	  Enable this to support the Qualcomm PCIe PHY, used with the Synopsys
+ 	  based PCIe controller.
+ 
+-config PHY_QCOM_QMP
+-	tristate "Qualcomm QMP PHY Driver"
++menuconfig PHY_QCOM_QMP
++	tristate "Qualcomm QMP PHY Drivers"
+ 	depends on OF && COMMON_CLK && (ARCH_QCOM || COMPILE_TEST)
++
++if PHY_QCOM_QMP
++
++config PHY_QCOM_QMP_COMBO
++	tristate "Qualcomm QMP Combo PHY Driver"
++	default PHY_QCOM_QMP
++	select GENERIC_PHY
++	help
++	  Enable this to support the QMP Combo PHY transceiver that is used
++	  with USB3 and DisplayPort controllers on Qualcomm chips.
++
++config PHY_QCOM_QMP_PCIE
++	tristate "Qualcomm QMP PCIe PHY Driver"
++	depends on PCI || COMPILE_TEST
++	select GENERIC_PHY
++	default PHY_QCOM_QMP
++	help
++	  Enable this to support the QMP PCIe PHY transceiver that is used
++	  with PCIe controllers on Qualcomm chips.
++
++config PHY_QCOM_QMP_PCIE_8996
++	tristate "Qualcomm QMP PCIe 8996 PHY Driver"
++	depends on PCI || COMPILE_TEST
+ 	select GENERIC_PHY
++	default PHY_QCOM_QMP
+ 	help
+-	  Enable this to support the QMP PHY transceiver that is used
+-	  with controllers such as PCIe, UFS, and USB on Qualcomm chips.
++	  Enable this to support the QMP PCIe PHY transceiver that is used
++	  with PCIe controllers on Qualcomm msm8996 chips.
++
++config PHY_QCOM_QMP_UFS
++	tristate "Qualcomm QMP UFS PHY Driver"
++	select GENERIC_PHY
++	default PHY_QCOM_QMP
++	help
++	  Enable this to support the QMP UFS PHY transceiver that is used
++	  with UFS controllers on Qualcomm chips.
++
++config PHY_QCOM_QMP_USB
++	tristate "Qualcomm QMP USB PHY Driver"
++	select GENERIC_PHY
++	default PHY_QCOM_QMP
++	help
++	  Enable this to support the QMP USB PHY transceiver that is used
++	  with USB3 controllers on Qualcomm chips.
++
++endif # PHY_QCOM_QMP
+ 
+ config PHY_QCOM_QUSB2
+ 	tristate "Qualcomm QUSB2 PHY Driver"
+diff --git a/drivers/phy/qualcomm/Makefile b/drivers/phy/qualcomm/Makefile
+index 65f6c30a3e93..79dd4e507961 100644
+--- a/drivers/phy/qualcomm/Makefile
++++ b/drivers/phy/qualcomm/Makefile
+@@ -5,12 +5,12 @@ obj-$(CONFIG_PHY_QCOM_EDP)		+= phy-qcom-edp.o
+ obj-$(CONFIG_PHY_QCOM_IPQ4019_USB)	+= phy-qcom-ipq4019-usb.o
+ obj-$(CONFIG_PHY_QCOM_IPQ806X_SATA)	+= phy-qcom-ipq806x-sata.o
+ obj-$(CONFIG_PHY_QCOM_PCIE2)		+= phy-qcom-pcie2.o
+-obj-$(CONFIG_PHY_QCOM_QMP)		+= \
+-	phy-qcom-qmp-combo.o \
+-	phy-qcom-qmp-pcie.o \
+-	phy-qcom-qmp-pcie-msm8996.o \
+-	phy-qcom-qmp-ufs.o \
+-	phy-qcom-qmp-usb.o
++
++obj-$(CONFIG_PHY_QCOM_QMP_COMBO)	+= phy-qcom-qmp-combo.o
++obj-$(CONFIG_PHY_QCOM_QMP_PCIE)		+= phy-qcom-qmp-pcie.o
++obj-$(CONFIG_PHY_QCOM_QMP_PCIE_8996)	+= phy-qcom-qmp-pcie-msm8996.o
++obj-$(CONFIG_PHY_QCOM_QMP_UFS)		+= phy-qcom-qmp-ufs.o
++obj-$(CONFIG_PHY_QCOM_QMP_USB)		+= phy-qcom-qmp-usb.o
+ 
+ obj-$(CONFIG_PHY_QCOM_QUSB2)		+= phy-qcom-qusb2.o
+ obj-$(CONFIG_PHY_QCOM_USB_HS) 		+= phy-qcom-usb-hs.o
+
+base-commit: 30a0b95b1335e12efef89dd78518ed3e4a71a763
+-- 
+https://chromeos.dev
 
