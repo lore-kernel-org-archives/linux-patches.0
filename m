@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9059E46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:24:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16876C433EF;
-	Mon, 16 Jan 2023 16:24:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32C9246B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:24:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE04FC433F0;
+	Mon, 16 Jan 2023 16:24:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886253;
-	bh=AOgJp2rz1eHJsmVjxa/9tV4yqO2H9rRxOebxHhWHsXM=;
+	s=korg; t=1673886256;
+	bh=Kl/cgxz9cr6eBBx7GQ4xmyhsp6+HzWpWKUZ+Tj2jVoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LyvBrJbjQqBuRAB/gw/q4YGdsfUR4mcJK3HO/iRwFAvYx/odWWsq0sGz4hNWc8aY4
-	 MSKr56c2ujxbUGi38zgU2UQUb9a270xXyA+cfDVK2H/EaZa4bYq/Ql9vpTy/Gzy+C0
-	 oRoDJU4jLQWTvIDyG9PtmRC4KOquBm5C0YE0Voas=
+	b=aeWO39ZEiFSHaYYpGPUl60pDOa7Li+qd48F7sSzFP2k5O6I8LqrhEjRmHVReCuiuR
+	 7qSXS/Q60nQGKOLi2zvlWogRYUAh3gFR6D/naDd6zkxEwzgpEUmVumyxBgcgyg0gFI
+	 AzfT8qXFeuUbR3f2h5CfHwim0sXNN2Q70ac0OKm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Yuan Can <yuancan@huawei.com>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 361/658] remoteproc: sysmon: fix memory leak in qcom_add_sysmon_subdev()
-Date: Mon, 16 Jan 2023 16:47:29 +0100
-Message-Id: <20230116154926.104936230@linuxfoundation.org>
+Subject: [PATCH 5.4 362/658] remoteproc: qcom_q6v5_pas: Fix missing of_node_put() in adsp_alloc_memory_region()
+Date: Mon, 16 Jan 2023 16:47:30 +0100
+Message-Id: <20230116154926.145837026@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,46 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit e01ce676aaef3b13d02343d7e70f9637d93a3367 ]
+[ Upstream commit 38e7d9c19276832ebb0277f415b9214bf7baeb37 ]
 
-The kfree() should be called when of_irq_get_byname() fails or
-devm_request_threaded_irq() fails in qcom_add_sysmon_subdev(),
-otherwise there will be a memory leak, so add kfree() to fix it.
+The pointer node is returned by of_parse_phandle() with refcount
+incremented. We should use of_node_put() on it when done.
 
-Fixes: 027045a6e2b7 ("remoteproc: qcom: Add shutdown-ack irq")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Fixes: b9e718e950c3 ("remoteproc: Introduce Qualcomm ADSP PIL")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221129105650.1539187-1-cuigaosheng1@huawei.com
+Link: https://lore.kernel.org/r/20221203070639.15128-1-yuancan@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/qcom_sysmon.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/remoteproc/qcom_q6v5_pas.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/remoteproc/qcom_sysmon.c b/drivers/remoteproc/qcom_sysmon.c
-index c231314eab66..b7d0c35c5058 100644
---- a/drivers/remoteproc/qcom_sysmon.c
-+++ b/drivers/remoteproc/qcom_sysmon.c
-@@ -518,7 +518,9 @@ struct qcom_sysmon *qcom_add_sysmon_subdev(struct rproc *rproc,
- 		if (sysmon->shutdown_irq != -ENODATA) {
- 			dev_err(sysmon->dev,
- 				"failed to retrieve shutdown-ack IRQ\n");
--			return ERR_PTR(sysmon->shutdown_irq);
-+			ret = sysmon->shutdown_irq;
-+			kfree(sysmon);
-+			return ERR_PTR(ret);
- 		}
- 	} else {
- 		ret = devm_request_threaded_irq(sysmon->dev,
-@@ -529,6 +531,7 @@ struct qcom_sysmon *qcom_add_sysmon_subdev(struct rproc *rproc,
- 		if (ret) {
- 			dev_err(sysmon->dev,
- 				"failed to acquire shutdown-ack IRQ\n");
-+			kfree(sysmon);
- 			return ERR_PTR(ret);
- 		}
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index db4b3c4bacd7..d48f4b5c8df7 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
++++ b/drivers/remoteproc/qcom_q6v5_pas.c
+@@ -230,6 +230,7 @@ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
  	}
+ 
+ 	ret = of_address_to_resource(node, 0, &r);
++	of_node_put(node);
+ 	if (ret)
+ 		return ret;
+ 
 -- 
 2.35.1
 
