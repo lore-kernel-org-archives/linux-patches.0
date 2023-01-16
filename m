@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DAD86FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:06:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A69C433EF;
-	Mon, 16 Jan 2023 17:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8916FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:06:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67FA1C433D2;
+	Mon, 16 Jan 2023 17:06:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888802;
-	bh=G5WkIFBvv5Ss4kjUcZ7g+dDsbUqTeesvkSvd4dJF4Ng=;
+	s=korg; t=1673888804;
+	bh=3YrXqdrA1O6zYakGWdAvTVPymq93bwx+hlktvckr0Lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rn+0YMRmuIWaKR4CoYrGB1thBBjnK5o9uy0tSQZVl+hSXUurAEuVG4yJD0INmX/0A
-	 36BU7Whqq2cla9iCfCRvrEBIQzLRiXWEx2b7k7AyqkKne2HTFbm2fx4UemmP4d7VtA
-	 h71zDhYWiufs5PoiJsM+y6QKKHDiiAmVT1eetF7k=
+	b=X9WFpz/VcEk6E9SCGLqyIysnAlgBsJlFv5ElbYGUeHnQ0m+B6I6XUql97MlECu/ot
+	 S4VM9IVMmyhRGvGD2YyuQiFEBHeQHim7GnRyWypskZETRFKgrAKS1cJCON8a0j3nW3
+	 r1FERmFpitdNSyw8cqaKR0n1vPQjrs3YfrkLwaPQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 114/338] media: coda: Add check for kmalloc
-Date: Mon, 16 Jan 2023 16:49:47 +0100
-Message-Id: <20230116154825.816877379@linuxfoundation.org>
+Subject: [PATCH 4.14 115/338] clk: samsung: Fix memory leak in _samsung_clk_register_pll()
+Date: Mon, 16 Jan 2023 16:49:48 +0100
+Message-Id: <20230116154825.855332884@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,46 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 6e5e5defdb8b0186312c2f855ace175aee6daf9b ]
+[ Upstream commit 5174e5b0d1b669a489524192b6adcbb3c54ebc72 ]
 
-As the kmalloc may return NULL pointer,
-it should be better to check the return value
-in order to avoid NULL poineter dereference,
-same as the others.
+If clk_register() fails, @pll->rate_table may have allocated memory by
+kmemdup(), so it needs to be freed, otherwise will cause memory leak
+issue, this patch fixes it.
 
-Fixes: cb1d3a336371 ("[media] coda: add CODA7541 JPEG support")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 3ff6e0d8d64d ("clk: samsung: Add support to register rate_table for samsung plls")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Link: https://lore.kernel.org/r/20221123032015.63980-1-xiujianfeng@huawei.com
+Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/coda/coda-bit.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/clk/samsung/clk-pll.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/coda/coda-bit.c b/drivers/media/platform/coda/coda-bit.c
-index 7a96b53bcf6b..e21cf732a86e 100644
---- a/drivers/media/platform/coda/coda-bit.c
-+++ b/drivers/media/platform/coda/coda-bit.c
-@@ -865,10 +865,16 @@ static int coda_start_encoding(struct coda_ctx *ctx)
+diff --git a/drivers/clk/samsung/clk-pll.c b/drivers/clk/samsung/clk-pll.c
+index 037c61484098..8778425e2e87 100644
+--- a/drivers/clk/samsung/clk-pll.c
++++ b/drivers/clk/samsung/clk-pll.c
+@@ -1392,6 +1392,7 @@ static void __init _samsung_clk_register_pll(struct samsung_clk_provider *ctx,
+ 	if (ret) {
+ 		pr_err("%s: failed to register pll clock %s : %d\n",
+ 			__func__, pll_clk->name, ret);
++		kfree(pll->rate_table);
+ 		kfree(pll);
+ 		return;
  	}
- 
- 	if (dst_fourcc == V4L2_PIX_FMT_JPEG) {
--		if (!ctx->params.jpeg_qmat_tab[0])
-+		if (!ctx->params.jpeg_qmat_tab[0]) {
- 			ctx->params.jpeg_qmat_tab[0] = kmalloc(64, GFP_KERNEL);
--		if (!ctx->params.jpeg_qmat_tab[1])
-+			if (!ctx->params.jpeg_qmat_tab[0])
-+				return -ENOMEM;
-+		}
-+		if (!ctx->params.jpeg_qmat_tab[1]) {
- 			ctx->params.jpeg_qmat_tab[1] = kmalloc(64, GFP_KERNEL);
-+			if (!ctx->params.jpeg_qmat_tab[1])
-+				return -ENOMEM;
-+		}
- 		coda_set_jpeg_compression_quality(ctx, ctx->params.jpeg_quality);
- 	}
- 
 -- 
 2.35.1
 
