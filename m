@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589DD6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:50:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34B8C433D2;
-	Mon, 16 Jan 2023 16:50:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EF36FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:50:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 690F7C433D2;
+	Mon, 16 Jan 2023 16:50:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887850;
-	bh=lONnZUYdmxL+lS8NCm+zuvasQrksKLDrLsRlogJFoYc=;
+	s=korg; t=1673887852;
+	bh=yABKi0f5dDfM0CZGDAx9wL8heeI6qgjxf9Iu0GzQMBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lCignZu/R7XkDplLCgMN1ftza6gEIRgkyRP9bV9ssa6o5qvA7i8P91vAhWNm6m25X
-	 aWC6AeiuqhoX1mVME6iX4tXa4cghl0aFAWi9GPagEbiR20hBMM9LihCRAQG+cKlU4p
-	 4F0NDhy2fCJ9XnFrel4ZFc5mOoAVcERJw2eS4VUE=
+	b=luxPpZHub0Y9VbjMi3CdFpfG1S4xYqW6BeqTDod6Ikoy1iCEJRGA0mKIVgpV8kkYC
+	 +dEAQtbH322QyTI6D66YmrgHNOSbDP/taQxcbXP9t89WrrHf/nRD5PVBrm0xIc5K9W
+	 OheYTyYowyoeUgy6Y+/QCgSg38GaHs9QOzAlyM4I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Nie <jun.nie@linaro.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Cong Wang <cong.wang@bytedance.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+4caeae4c7103813598ae@syzkaller.appspotmail.com
-Subject: [PATCH 4.19 306/521] net_sched: reject TCF_EM_SIMPLE case for complex ematch module
-Date: Mon, 16 Jan 2023 16:49:28 +0100
-Message-Id: <20230116154900.811261210@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 307/521] rxrpc: Fix missing unlock in rxrpc_do_sendmsg()
+Date: Mon, 16 Jan 2023 16:49:29 +0100
+Message-Id: <20230116154900.851876888@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -39,50 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cong Wang <cong.wang@bytedance.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit 9cd3fd2054c3b3055163accbf2f31a4426f10317 ]
+[ Upstream commit 4feb2c44629e6f9b459b41a5a60491069d346a95 ]
 
-When TCF_EM_SIMPLE was introduced, it is supposed to be convenient
-for ematch implementation:
+One of the error paths in rxrpc_do_sendmsg() doesn't unlock the call mutex
+before returning.  Fix it to do this.
 
-https://lore.kernel.org/all/20050105110048.GO26856@postel.suug.ch/
+Note that this still doesn't get rid of the checker warning:
 
-"You don't have to, providing a 32bit data chunk without TCF_EM_SIMPLE
-set will simply result in allocating & copy. It's an optimization,
-nothing more."
+   ../net/rxrpc/sendmsg.c:617:5: warning: context imbalance in 'rxrpc_do_sendmsg' - wrong count at exit
 
-So if an ematch module provides ops->datalen that means it wants a
-complex data structure (saved in its em->data) instead of a simple u32
-value. We should simply reject such a combination, otherwise this u32
-could be misinterpreted as a pointer.
+I think the interplay between the socket lock and the call's user_mutex may
+be too complicated for checker to analyse, especially as
+rxrpc_new_client_call_for_sendmsg(), which it calls, returns with the
+call's user_mutex if successful but unconditionally drops the socket lock.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-and-tested-by: syzbot+4caeae4c7103813598ae@syzkaller.appspotmail.com
-Reported-by: Jun Nie <jun.nie@linaro.org>
-Cc: Jamal Hadi Salim <jhs@mojatatu.com>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Cong Wang <cong.wang@bytedance.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: e754eba685aa ("rxrpc: Provide a cmsg to specify the amount of Tx data for a call")
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/ematch.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/rxrpc/sendmsg.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/ematch.c b/net/sched/ematch.c
-index 113a133ee544..5ba3548d2eb7 100644
---- a/net/sched/ematch.c
-+++ b/net/sched/ematch.c
-@@ -259,6 +259,8 @@ static int tcf_em_validate(struct tcf_proto *tp,
- 			 * the value carried.
- 			 */
- 			if (em_hdr->flags & TCF_EM_SIMPLE) {
-+				if (em->ops->datalen > 0)
-+					goto errout;
- 				if (data_len < sizeof(u32))
- 					goto errout;
- 				em->data = *(u32 *) data;
+diff --git a/net/rxrpc/sendmsg.c b/net/rxrpc/sendmsg.c
+index 0220a2935002..a7a09eb04d93 100644
+--- a/net/rxrpc/sendmsg.c
++++ b/net/rxrpc/sendmsg.c
+@@ -689,7 +689,7 @@ int rxrpc_do_sendmsg(struct rxrpc_sock *rx, struct msghdr *msg, size_t len)
+ 			if (call->tx_total_len != -1 ||
+ 			    call->tx_pending ||
+ 			    call->tx_top != 0)
+-				goto error_put;
++				goto out_put_unlock;
+ 			call->tx_total_len = p.call.tx_total_len;
+ 		}
+ 	}
 -- 
 2.35.1
 
