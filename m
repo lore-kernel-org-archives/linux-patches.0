@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC76346B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:07:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324D4C433EF;
-	Mon, 16 Jan 2023 16:07:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5081A46B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:07:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C86EAC433EF;
+	Mon, 16 Jan 2023 16:07:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885267;
-	bh=bhB3u7KRuIDhfOGfS9S4Rehu1Wi2ISGA2qR3xKaEZRU=;
+	s=korg; t=1673885270;
+	bh=umQjfgcVdDPx000jvkzEuxnQzuCBxzj6IRiqKzqPEoo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E72oWKjpQAwYaSDzd+AzhhXfhukvjfpgJIzFRhxqMGZcRnGd8oFPb8k9ROcToeBU7
-	 o4tYljuF+qOLWBZtpcPoX/lk3RA4eTgmMkoyVA/MF2G9Wb0vQ5f3zzwBsac31VTAu3
-	 FL/XbWHMfaUIm8E7DkcGkhqtiNo506eg02GLWpZY=
+	b=X15w29E+GFclXMDoOrbgOszZk3g8X61DsVnitCp4uC29qhy7A4CsWscDemd87O4AN
+	 6MSU9P+tMJ8bm08kqgxXciyCQW+qTYBhngcS8oWsAGQAQrA+Tsl1BinzrmUSyqJqsM
+	 lrfNFFDjKjJtrkdb6y2THELnEyOFURaEnx8QICIQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Li Jun <jun.li@nxp.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 22/64] dt-bindings: clocks: imx8mp: Add ID for usb suspend clock
-Date: Mon, 16 Jan 2023 16:51:29 +0100
-Message-Id: <20230116154744.380724729@linuxfoundation.org>
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 5.10 13/64] drm/msm/dp: do not complete dp_aux_cmd_fifo_tx() if irq is not for aux transfer
+Date: Mon, 16 Jan 2023 16:51:20 +0100
+Message-Id: <20230116154744.104217733@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
 References: <20230116154743.577276578@linuxfoundation.org>
@@ -37,41 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Jun <jun.li@nxp.com>
+From: Kuogee Hsieh <quic_khsieh@quicinc.com>
 
-[ Upstream commit 5c1f7f1090947d494c30042123e0ec846f696336 ]
+commit 1cba0d150fa102439114a91b3e215909efc9f169 upstream.
 
-usb suspend clock has a gate shared with usb_root_clk.
+There are 3 possible interrupt sources are handled by DP controller,
+HPDstatus, Controller state changes and Aux read/write transaction.
+At every irq, DP controller have to check isr status of every interrupt
+sources and service the interrupt if its isr status bits shows interrupts
+are pending. There is potential race condition may happen at current aux
+isr handler implementation since it is always complete dp_aux_cmd_fifo_tx()
+even irq is not for aux read or write transaction. This may cause aux read
+transaction return premature if host aux data read is in the middle of
+waiting for sink to complete transferring data to host while irq happen.
+This will cause host's receiving buffer contains unexpected data. This
+patch fixes this problem by checking aux isr and return immediately at
+aux isr handler if there are no any isr status bits set.
 
-Fixes: 9c140d9926761 ("clk: imx: Add support for i.MX8MP clock driver")
-Cc: stable@vger.kernel.org # v5.19+
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Tested-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Li Jun <jun.li@nxp.com>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/1664549663-20364-1-git-send-email-jun.li@nxp.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Current there is a bug report regrading eDP edid corruption happen during
+system booting up. After lengthy debugging to found that VIDEO_READY
+interrupt was continuously firing during system booting up which cause
+dp_aux_isr() to complete dp_aux_cmd_fifo_tx() prematurely to retrieve data
+from aux hardware buffer which is not yet contains complete data transfer
+from sink. This cause edid corruption.
+
+Follows are the signature at kernel logs when problem happen,
+EDID has corrupt header
+panel-simple-dp-aux aux-aea0000.edp: Couldn't identify panel via EDID
+
+Changes in v2:
+-- do complete if (ret == IRQ_HANDLED) ay dp-aux_isr()
+-- add more commit text
+
+Changes in v3:
+-- add Stephen suggested
+-- dp_aux_isr() return IRQ_XXX back to caller
+-- dp_ctrl_isr() return IRQ_XXX back to caller
+
+Changes in v4:
+-- split into two patches
+
+Changes in v5:
+-- delete empty line between tags
+
+Changes in v6:
+-- remove extra "that" and fixed line more than 75 char at commit text
+
+Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/516121/
+Link: https://lore.kernel.org/r/1672193785-11003-2-git-send-email-quic_khsieh@quicinc.com
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/dt-bindings/clock/imx8mp-clock.h | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/msm/dp/dp_aux.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/include/dt-bindings/clock/imx8mp-clock.h b/include/dt-bindings/clock/imx8mp-clock.h
-index 0ba16b76eb2f..d7e513243dd2 100644
---- a/include/dt-bindings/clock/imx8mp-clock.h
-+++ b/include/dt-bindings/clock/imx8mp-clock.h
-@@ -328,8 +328,9 @@
- #define IMX8MP_CLK_CLKOUT2_SEL			317
- #define IMX8MP_CLK_CLKOUT2_DIV			318
- #define IMX8MP_CLK_CLKOUT2			319
-+#define IMX8MP_CLK_USB_SUSP			320
+--- a/drivers/gpu/drm/msm/dp/dp_aux.c
++++ b/drivers/gpu/drm/msm/dp/dp_aux.c
+@@ -423,6 +423,10 @@ void dp_aux_isr(struct drm_dp_aux *dp_au
  
--#define IMX8MP_CLK_END				320
-+#define IMX8MP_CLK_END				321
+ 	aux->isr = dp_catalog_aux_get_irq(aux->catalog);
  
- #define IMX8MP_CLK_AUDIOMIX_SAI1_IPG		0
- #define IMX8MP_CLK_AUDIOMIX_SAI1_MCLK1		1
--- 
-2.35.1
-
++	/* no interrupts pending, return immediately */
++	if (!isr)
++		return;
++
+ 	if (!aux->cmd_busy)
+ 		return;
+ 
 
 
