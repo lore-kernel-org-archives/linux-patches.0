@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F03A36FA3
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:11:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 496E8C433EF;
-	Mon, 16 Jan 2023 17:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9436FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:11:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBD2AC433EF;
+	Mon, 16 Jan 2023 17:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889087;
-	bh=26V1S1kH4evNJIaFICZXesihf6vws02FRB76sceQdWg=;
+	s=korg; t=1673889090;
+	bh=bSa5CxUacWm9ZAF7X8/Vd7f9wXON7cZ4FUUwnIl9hrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SIGyOEN6Qu/V0eriHSSOUSqT80YuDbw0GaDM0Mf2zWDFo7HPt4jJClwyTp9A4BKvk
-	 zwS5xc8BszUGY172AHYbnH8F1YpZpPGgxUhx9XsXO35m+BJE5gWaxRUWNvk5hMsR7E
-	 0Xb5ZQ46hghX34preO0Wckaw1tea426hOsJPrO24=
+	b=sKM9EyibCjp0mBy69aagfnd2FUMRXkTVIroGCQycXyKaIKA15M62saJjdQQM6d2Pb
+	 VuORZj/vrTT/Hmk432TvB7e/8c6AZI5S4+2AI7QMCu7EzmSrlMKHgKb4IjTUOeZX/V
+	 V2pyoC786P9WU4qFW2psz2yvYcdZk+rh6vlLf+tM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,12 +23,13 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Anton Vorontsov <anton@enomsg.org>,
 	Colin Cross <ccross@android.com>,
 	Tony Luck <tony.luck@intel.com>,
+	kernel test robot <lkp@intel.com>,
 	kernel-team@android.com,
 	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 254/338] pstore: Switch pmsg_lock to an rt_mutex to avoid priority inversion
-Date: Mon, 16 Jan 2023 16:52:07 +0100
-Message-Id: <20230116154832.151831651@linuxfoundation.org>
+Subject: [PATCH 4.14 255/338] pstore: Make sure CONFIG_PSTORE_PMSG selects CONFIG_RT_MUTEXES
+Date: Mon, 16 Jan 2023 16:52:08 +0100
+Message-Id: <20230116154832.188869905@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -44,19 +45,17 @@ Content-Transfer-Encoding: 8bit
 
 From: John Stultz <jstultz@google.com>
 
-[ Upstream commit 76d62f24db07f22ccf9bc18ca793c27d4ebef721 ]
+[ Upstream commit 2f4fec5943407318b9523f01ce1f5d668c028332 ]
 
-Wei Wang reported seeing priority inversion caused latencies
-caused by contention on pmsg_lock, and suggested it be switched
-to a rt_mutex.
+In commit 76d62f24db07 ("pstore: Switch pmsg_lock to an rt_mutex
+to avoid priority inversion") I changed a lock to an rt_mutex.
 
-I was initially hesitant this would help, as the tasks in that
-trace all seemed to be SCHED_NORMAL, so the benefit would be
-limited to only nice boosting.
+However, its possible that CONFIG_RT_MUTEXES is not enabled,
+which then results in a build failure, as the 0day bot detected:
+  https://lore.kernel.org/linux-mm/202212211244.TwzWZD3H-lkp@intel.com/
 
-However, another similar issue was raised where the priority
-inversion was seen did involve a blocked RT task so it is clear
-this would be helpful in that case.
+Thus this patch changes CONFIG_PSTORE_PMSG to select
+CONFIG_RT_MUTEXES, which ensures the build will not fail.
 
 Cc: Wei Wang <wvw@google.com>
 Cc: Midas Chien<midaschieh@google.com>
@@ -65,45 +64,30 @@ Cc: Kees Cook <keescook@chromium.org>
 Cc: Anton Vorontsov <anton@enomsg.org>
 Cc: Colin Cross <ccross@android.com>
 Cc: Tony Luck <tony.luck@intel.com>
+Cc: kernel test robot <lkp@intel.com>
 Cc: kernel-team@android.com
-Fixes: 9d5438f462ab ("pstore: Add pmsg - user-space accessible pstore object")
-Reported-by: Wei Wang <wvw@google.com>
+Fixes: 76d62f24db07 ("pstore: Switch pmsg_lock to an rt_mutex to avoid priority inversion")
+Reported-by: kernel test robot <lkp@intel.com>
 Signed-off-by: John Stultz <jstultz@google.com>
 Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221214231834.3711880-1-jstultz@google.com
+Link: https://lore.kernel.org/r/20221221051855.15761-1-jstultz@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/pmsg.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/pstore/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/pstore/pmsg.c b/fs/pstore/pmsg.c
-index 24db02de1787..ffc13ea196d2 100644
---- a/fs/pstore/pmsg.c
-+++ b/fs/pstore/pmsg.c
-@@ -15,9 +15,10 @@
- #include <linux/device.h>
- #include <linux/fs.h>
- #include <linux/uaccess.h>
-+#include <linux/rtmutex.h>
- #include "internal.h"
- 
--static DEFINE_MUTEX(pmsg_lock);
-+static DEFINE_RT_MUTEX(pmsg_lock);
- 
- static ssize_t write_pmsg(struct file *file, const char __user *buf,
- 			  size_t count, loff_t *ppos)
-@@ -36,9 +37,9 @@ static ssize_t write_pmsg(struct file *file, const char __user *buf,
- 	if (!access_ok(VERIFY_READ, buf, count))
- 		return -EFAULT;
- 
--	mutex_lock(&pmsg_lock);
-+	rt_mutex_lock(&pmsg_lock);
- 	ret = psinfo->write_user(&record, buf);
--	mutex_unlock(&pmsg_lock);
-+	rt_mutex_unlock(&pmsg_lock);
- 	return ret ? ret : count;
- }
- 
+diff --git a/fs/pstore/Kconfig b/fs/pstore/Kconfig
+index b42e5bd6d8ff..144e5027fe84 100644
+--- a/fs/pstore/Kconfig
++++ b/fs/pstore/Kconfig
+@@ -51,6 +51,7 @@ config PSTORE_CONSOLE
+ config PSTORE_PMSG
+ 	bool "Log user space messages"
+ 	depends on PSTORE
++	select RT_MUTEXES
+ 	help
+ 	  When the option is enabled, pstore will export a character
+ 	  interface /dev/pmsg0 to log user space messages. On reboot
 -- 
 2.35.1
 
