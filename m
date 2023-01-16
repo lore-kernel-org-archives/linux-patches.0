@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58DF6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:57:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62662C433EF;
-	Mon, 16 Jan 2023 16:57:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875CC6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:57:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B234C433EF;
+	Mon, 16 Jan 2023 16:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888271;
-	bh=XalcQgvmaKEiJxgess2rg5blO9B8KGoVgxoeRmUeb4A=;
+	s=korg; t=1673888274;
+	bh=nVGsJtcZMJkMAyKKW8nLPq8Pe4HeM5FVMpHyzCs+MMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2XOmO+o4oDJnUFycc7luqRRFUzec9wCRMRxulXlaYRDdfZTs6hFHwSqaMXzzbQE3l
-	 80osQNAr5k5hRmNyaYmPFjSNBmu3JYagOEM4egfD+Nsf39gUirA0qn3lCkZjH86N2c
-	 UzFO6tJ7OGKmleYJiDfHvG/gmRGyzcmlAsXad4oU=
+	b=ajIHY/R4pqExfoNTw4RIRarXJhDm2cV6Xyxvt2JH1slyHihNfEYiOLqpg8CF4Cwfs
+	 H7SHi2lJlfql9/yfcHxmiiekQKqFghBbetOk9n2av1PBn37Y15yBblkMS8EeZB2+mo
+	 F/DjGPr083vQgo6IHoQlI7CGNlAeY+BvuyoRAAvA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 4.19 466/521] s390/percpu: add READ_ONCE() to arch_this_cpu_to_op_simple()
-Date: Mon, 16 Jan 2023 16:52:08 +0100
-Message-Id: <20230116154908.018724552@linuxfoundation.org>
+	slipper <slipper.alive@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.19 467/521] net/ulp: prevent ULP without clone op from entering the LISTEN status
+Date: Mon, 16 Jan 2023 16:52:09 +0100
+Message-Id: <20230116154908.071998106@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -34,32 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit e3f360db08d55a14112bd27454e616a24296a8b0 upstream.
+commit 2c02d41d71f90a5168391b6a5f2954112ba2307c upstream.
 
-Make sure that *ptr__ within arch_this_cpu_to_op_simple() is only
-dereferenced once by using READ_ONCE(). Otherwise the compiler could
-generate incorrect code.
+When an ULP-enabled socket enters the LISTEN status, the listener ULP data
+pointer is copied inside the child/accepted sockets by sk_clone_lock().
 
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+The relevant ULP can take care of de-duplicating the context pointer via
+the clone() operation, but only MPTCP and SMC implement such op.
+
+Other ULPs may end-up with a double-free at socket disposal time.
+
+We can't simply clear the ULP data at clone time, as TLS replaces the
+socket ops with custom ones assuming a valid TLS ULP context is
+available.
+
+Instead completely prevent clone-less ULP sockets from entering the
+LISTEN status.
+
+Fixes: 734942cc4ea6 ("tcp: ULP infrastructure")
+Reported-by: slipper <slipper.alive@gmail.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Link: https://lore.kernel.org/r/4b80c3d1dbe3d0ab072f80450c202d9bc88b4b03.1672740602.git.pabeni@redhat.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/include/asm/percpu.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/inet_connection_sock.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/arch/s390/include/asm/percpu.h
-+++ b/arch/s390/include/asm/percpu.h
-@@ -31,7 +31,7 @@
- 	pcp_op_T__ *ptr__;						\
- 	preempt_disable_notrace();					\
- 	ptr__ = raw_cpu_ptr(&(pcp));					\
--	prev__ = *ptr__;						\
-+	prev__ = READ_ONCE(*ptr__);					\
- 	do {								\
- 		old__ = prev__;						\
- 		new__ = old__ op (val);					\
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -903,11 +903,25 @@ void inet_csk_prepare_forced_close(struc
+ }
+ EXPORT_SYMBOL(inet_csk_prepare_forced_close);
+ 
++static int inet_ulp_can_listen(const struct sock *sk)
++{
++	const struct inet_connection_sock *icsk = inet_csk(sk);
++
++	if (icsk->icsk_ulp_ops)
++		return -EINVAL;
++
++	return 0;
++}
++
+ int inet_csk_listen_start(struct sock *sk, int backlog)
+ {
+ 	struct inet_connection_sock *icsk = inet_csk(sk);
+ 	struct inet_sock *inet = inet_sk(sk);
+-	int err = -EADDRINUSE;
++	int err;
++
++	err = inet_ulp_can_listen(sk);
++	if (unlikely(err))
++		return err;
+ 
+ 	reqsk_queue_alloc(&icsk->icsk_accept_queue);
+ 
 
 
