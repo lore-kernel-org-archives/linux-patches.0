@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CF06FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:47:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62E69C433EF;
-	Mon, 16 Jan 2023 16:47:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8034F6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:47:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 028C5C433EF;
+	Mon, 16 Jan 2023 16:47:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887665;
-	bh=7/ad7jKmIR6gw2k7Ybizj+A3e78iiAKykP+W6kdNHKs=;
+	s=korg; t=1673887668;
+	bh=JgKe15jaV9shHN3aN5fip3zQtjObwCyaBdkTTFakv3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xf0i03nK8v4vIck1H6U61J33+lQmTNnThImauk3OARAX/uF/Z2MZhvMCtvh+XcwAy
-	 oXdmYo7L9+/L3fXFNhEcM0kE9C90rCADHhbVxWGHw6DHFZuVOKY9Ijqy2AqJWzAbDr
-	 RnXTr4NIw+CuMQtCs/IJRqVHwk84j+7276YgVdMs=
+	b=ntb3A6XAvkaZgKKDYmg9TUKVrxOq+m3Wny5T14aijiWL53mBepJatx6w2PGt6aLJB
+	 1g2CnJqRb5pIKVdFU0uplKaZfyYvEO40ZS9O45kSSGDoRQJMF++U0MQ0uGrQ9TlcPs
+	 uGWgTIVnH+DowlV43+VQpI1GWKdeimmdIWEHOMks=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Tobias Klauser <tklauser@distanz.ch>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jiri Slaby <jslaby@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 196/521] scsi: hpsa: Fix error handling in hpsa_add_sas_host()
-Date: Mon, 16 Jan 2023 16:47:38 +0100
-Message-Id: <20230116154855.846244060@linuxfoundation.org>
+Subject: [PATCH 4.19 229/521] tty: serial: altera_uart_{r,t}x_chars() need only uart_port
+Date: Mon, 16 Jan 2023 16:48:11 +0100
+Message-Id: <20230116154857.393129344@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,52 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jiri Slaby <jslaby@suse.cz>
 
-[ Upstream commit 4ef174a3ad9b5d73c1b6573e244ebba2b0d86eac ]
+[ Upstream commit 3af44d9bb0539d5fa27d6159d696fda5f3747bff ]
 
-hpsa_sas_port_add_phy() does:
-  ...
-  sas_phy_add()  -> may return error here
-  sas_port_add_phy()
-  ...
+Both altera_uart_{r,t}x_chars() need only uart_port, not altera_uart. So
+pass the former from altera_uart_interrupt() directly.
 
-Whereas hpsa_free_sas_phy() does:
-  ...
-  sas_port_delete_phy()
-  sas_phy_delete()
-  ...
+Apart it maybe saves a dereference, this makes the transition of
+altera_uart_tx_chars() easier to follow in the next patch.
 
-If hpsa_sas_port_add_phy() returns an error, hpsa_free_sas_phy() can not be
-called to free the memory because the port and the phy have not been added
-yet.
-
-Replace hpsa_free_sas_phy() with sas_phy_free() and kfree() to avoid kernel
-crash in this case.
-
-Fixes: d04e62b9d63a ("hpsa: add in sas transport class")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221110151129.394389-1-yangyingliang@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Cc: Tobias Klauser <tklauser@distanz.ch>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Tobias Klauser <tklauser@distanz.ch>
+Signed-off-by: Jiri Slaby <jslaby@suse.cz>
+Link: https://lore.kernel.org/r/20220920052049.20507-4-jslaby@suse.cz
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 1307c5d33cce ("serial: altera_uart: fix locking in polling mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hpsa.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/tty/serial/altera_uart.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
-index 1a4fc8b8a9cd..392dfc8f3cbb 100644
---- a/drivers/scsi/hpsa.c
-+++ b/drivers/scsi/hpsa.c
-@@ -9700,7 +9700,8 @@ static int hpsa_add_sas_host(struct ctlr_info *h)
- 	return 0;
+diff --git a/drivers/tty/serial/altera_uart.c b/drivers/tty/serial/altera_uart.c
+index 508a3c2b7781..20c610440133 100644
+--- a/drivers/tty/serial/altera_uart.c
++++ b/drivers/tty/serial/altera_uart.c
+@@ -199,9 +199,8 @@ static void altera_uart_set_termios(struct uart_port *port,
+ 	 */
+ }
  
- free_sas_phy:
--	hpsa_free_sas_phy(hpsa_sas_phy);
-+	sas_phy_free(hpsa_sas_phy->phy);
-+	kfree(hpsa_sas_phy);
- free_sas_port:
- 	hpsa_free_sas_port(hpsa_sas_port);
- free_sas_node:
+-static void altera_uart_rx_chars(struct altera_uart *pp)
++static void altera_uart_rx_chars(struct uart_port *port)
+ {
+-	struct uart_port *port = &pp->port;
+ 	unsigned char ch, flag;
+ 	unsigned short status;
+ 
+@@ -248,9 +247,8 @@ static void altera_uart_rx_chars(struct altera_uart *pp)
+ 	spin_lock(&port->lock);
+ }
+ 
+-static void altera_uart_tx_chars(struct altera_uart *pp)
++static void altera_uart_tx_chars(struct uart_port *port)
+ {
+-	struct uart_port *port = &pp->port;
+ 	struct circ_buf *xmit = &port->state->xmit;
+ 
+ 	if (port->x_char) {
+@@ -288,9 +286,9 @@ static irqreturn_t altera_uart_interrupt(int irq, void *data)
+ 
+ 	spin_lock(&port->lock);
+ 	if (isr & ALTERA_UART_STATUS_RRDY_MSK)
+-		altera_uart_rx_chars(pp);
++		altera_uart_rx_chars(port);
+ 	if (isr & ALTERA_UART_STATUS_TRDY_MSK)
+-		altera_uart_tx_chars(pp);
++		altera_uart_tx_chars(port);
+ 	spin_unlock(&port->lock);
+ 
+ 	return IRQ_RETVAL(isr);
 -- 
 2.35.1
 
