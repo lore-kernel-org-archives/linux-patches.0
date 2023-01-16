@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB216FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:02:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9929C433EF;
-	Mon, 16 Jan 2023 17:02:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBD66FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:02:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4438FC433F1;
+	Mon, 16 Jan 2023 17:02:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888557;
-	bh=3W9j+q4l8x8x/NQjRcjMUyJ8xbCAPMUVmPZR8UpqD44=;
+	s=korg; t=1673888559;
+	bh=zCWgfGEKB53D+rsTM6YQqAirDWNCbJ91GkCecbug6ao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q8n2z7pM1x+u5X2h235JnB62bAm82qhC/4QeoLmzkMXg8RwRWvgPze5FvoA7KBi5o
-	 SaBqhv2SW6oRJl1BLKXyb733Xxux/1S2iNPz39A+TreY82npuuPdWrPUJiXx/0IUJv
-	 LXB72l0IHrfXH5BX9FUoYSIUC6NLfnhwRWbLbljQ=
+	b=XS+3sJ+1Bf8i58akipD8y0iJ+5zDVU4YBJW0IeRZvmjEqV9EojBU7w0nN0UoKM7Gx
+	 QXFmTI96oxkx7+QgrcFrT2EDrdSO/mmfgj+b4dwS+DfTDCWBIYwgeR2MFtquxriI4Z
+	 UbHDqbMkLGj/YJ0vLNKVPL0xDgfGPBPKLuQUJ24I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Akihiko Odaki <akihiko.odaki@daynix.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.14 020/338] igb: Initialize mailbox message for VF reset
-Date: Mon, 16 Jan 2023 16:48:13 +0100
-Message-Id: <20230116154821.641582697@linuxfoundation.org>
+	Sungwoo Kim <iam@sung-woo.kim>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 021/338] Bluetooth: L2CAP: Fix u8 overflow
+Date: Mon, 16 Jan 2023 16:48:14 +0100
+Message-Id: <20230116154821.683124589@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -36,38 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Nguyen <anthony.l.nguyen@intel.com>
+From: Sungwoo Kim <iam@sung-woo.kim>
 
-commit de5dc44370fbd6b46bd7f1a1e00369be54a041c8 upstream.
+[ Upstream commit bcd70260ef56e0aee8a4fc6cd214a419900b0765 ]
 
-When a MAC address is not assigned to the VF, that portion of the message
-sent to the VF is not set. The memory, however, is allocated from the
-stack meaning that information may be leaked to the VM. Initialize the
-message buffer to 0 so that no information is passed to the VM in this
-case.
+By keep sending L2CAP_CONF_REQ packets, chan->num_conf_rsp increases
+multiple times and eventually it will wrap around the maximum number
+(i.e., 255).
+This patch prevents this by adding a boundary check with
+L2CAP_MAX_CONF_RSP
 
-Fixes: 6ddbc4cf1f4d ("igb: Indicate failure on vf reset for empty mac address")
-Reported-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20221212190031.3983342-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Btmon log:
+Bluetooth monitor ver 5.64
+= Note: Linux version 6.1.0-rc2 (x86_64)                               0.264594
+= Note: Bluetooth subsystem version 2.22                               0.264636
+@ MGMT Open: btmon (privileged) version 1.22                  {0x0001} 0.272191
+= New Index: 00:00:00:00:00:00 (Primary,Virtual,hci0)          [hci0] 13.877604
+@ RAW Open: 9496 (privileged) version 2.22                   {0x0002} 13.890741
+= Open Index: 00:00:00:00:00:00                                [hci0] 13.900426
+(...)
+> ACL Data RX: Handle 200 flags 0x00 dlen 1033             #32 [hci0] 14.273106
+        invalid packet size (12 != 1033)
+        08 00 01 00 02 01 04 00 01 10 ff ff              ............
+> ACL Data RX: Handle 200 flags 0x00 dlen 1547             #33 [hci0] 14.273561
+        invalid packet size (14 != 1547)
+        0a 00 01 00 04 01 06 00 40 00 00 00 00 00        ........@.....
+> ACL Data RX: Handle 200 flags 0x00 dlen 2061             #34 [hci0] 14.274390
+        invalid packet size (16 != 2061)
+        0c 00 01 00 04 01 08 00 40 00 00 00 00 00 00 04  ........@.......
+> ACL Data RX: Handle 200 flags 0x00 dlen 2061             #35 [hci0] 14.274932
+        invalid packet size (16 != 2061)
+        0c 00 01 00 04 01 08 00 40 00 00 00 07 00 03 00  ........@.......
+= bluetoothd: Bluetooth daemon 5.43                                   14.401828
+> ACL Data RX: Handle 200 flags 0x00 dlen 1033             #36 [hci0] 14.275753
+        invalid packet size (12 != 1033)
+        08 00 01 00 04 01 04 00 40 00 00 00              ........@...
+
+Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bluetooth/l2cap_core.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/igb/igb_main.c
-+++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -6422,7 +6422,7 @@ static void igb_vf_reset_msg(struct igb_
- {
- 	struct e1000_hw *hw = &adapter->hw;
- 	unsigned char *vf_mac = adapter->vf_data[vf].vf_mac_addresses;
--	u32 reg, msgbuf[3];
-+	u32 reg, msgbuf[3] = {};
- 	u8 *addr = (u8 *)(&msgbuf[1]);
+diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
+index 494f3a7b9cf8..a5a19be51aff 100644
+--- a/net/bluetooth/l2cap_core.c
++++ b/net/bluetooth/l2cap_core.c
+@@ -4193,7 +4193,8 @@ static inline int l2cap_config_req(struct l2cap_conn *conn,
  
- 	/* process all the same items cleared in a function level reset */
+ 	chan->ident = cmd->ident;
+ 	l2cap_send_cmd(conn, cmd->ident, L2CAP_CONF_RSP, len, rsp);
+-	chan->num_conf_rsp++;
++	if (chan->num_conf_rsp < L2CAP_CONF_MAX_CONF_RSP)
++		chan->num_conf_rsp++;
+ 
+ 	/* Reset config buffer. */
+ 	chan->conf_len = 0;
+-- 
+2.35.1
+
 
 
