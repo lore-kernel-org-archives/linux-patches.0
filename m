@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169236FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:58:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90217C433EF;
-	Mon, 16 Jan 2023 16:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E006FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:58:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A51C433F0;
+	Mon, 16 Jan 2023 16:58:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888284;
-	bh=TS1SiHI61BdoJj455kyEoQji7eZO0vqk7zEug9Vdo5o=;
+	s=korg; t=1673888287;
+	bh=vYH5vVa8x9BGiD6OdbFudTHoc+lEMW+SVsVA8zR5fw0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RUS1HIwUdMoMbACL3DCz/qcIHgLJE8fr77q88aj9BkRH5aWwRlOIuizqpH6CJ+wYE
-	 e+O2JEuYfk5nf9P8Lne7jvj7y7PVBz9OY3j6WLbOUGh2KUVBuTjaJfoL4ZYPKLah/o
-	 c0qBsS0VsTVs1Yvd2ubb6oorgomxZ2gxrfJ4+pE8=
+	b=rlzrfXnuXZNtlwP8exXcsCWYiikqrJjXyUpimx0XcpsJPIWQITPaHDNHd/BwYw6br
+	 LqPZ/D0DyGoHI/znwUCbNrUsf9tv3JNxZH3UpvvbaO27LIF88k/BXM746dE2ycFF3Q
+	 9n/jrpaiVgjED/8vhz41okJabLmBVDnMVvOSXy8g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <zengyhkyle@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.19 471/521] ipv6: raw: Deduct extension header length in rawv6_push_pending_frames
-Date: Mon, 16 Jan 2023 16:52:13 +0100
-Message-Id: <20230116154908.248778881@linuxfoundation.org>
+	Michael Walle <michael@walle.cc>,
+	Kalle Valo <kvalo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 472/521] wifi: wilc1000: sdio: fix module autoloading
+Date: Mon, 16 Jan 2023 16:52:14 +0100
+Message-Id: <20230116154908.291057246@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,42 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Michael Walle <michael@walle.cc>
 
-commit cb3e9864cdbe35ff6378966660edbcbac955fe17 upstream.
+[ Upstream commit 57d545b5a3d6ce3a8fb6b093f02bfcbb908973f3 ]
 
-The total cork length created by ip6_append_data includes extension
-headers, so we must exclude them when comparing them against the
-IPV6_CHECKSUM offset which does not include extension headers.
+There are no SDIO module aliases included in the driver, therefore,
+module autoloading isn't working. Add the proper MODULE_DEVICE_TABLE().
 
-Reported-by: Kyle Zeng <zengyhkyle@gmail.com>
-Fixes: 357b40a18b04 ("[IPV6]: IPV6_CHECKSUM socket option can corrupt kernel memory")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Michael Walle <michael@walle.cc>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221027171221.491937-1-michael@walle.cc
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv6/raw.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/staging/wilc1000/wilc_sdio.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -544,6 +544,7 @@ csum_copy_err:
- static int rawv6_push_pending_frames(struct sock *sk, struct flowi6 *fl6,
- 				     struct raw6_sock *rp)
- {
-+	struct ipv6_txoptions *opt;
- 	struct sk_buff *skb;
- 	int err = 0;
- 	int offset;
-@@ -561,6 +562,9 @@ static int rawv6_push_pending_frames(str
+diff --git a/drivers/staging/wilc1000/wilc_sdio.c b/drivers/staging/wilc1000/wilc_sdio.c
+index e52c3bdeaf04..b4d456f3fb1b 100644
+--- a/drivers/staging/wilc1000/wilc_sdio.c
++++ b/drivers/staging/wilc1000/wilc_sdio.c
+@@ -18,6 +18,7 @@ static const struct sdio_device_id wilc_sdio_ids[] = {
+ 	{ SDIO_DEVICE(SDIO_VENDOR_ID_WILC, SDIO_DEVICE_ID_WILC) },
+ 	{ },
+ };
++MODULE_DEVICE_TABLE(sdio, wilc_sdio_ids);
  
- 	offset = rp->offset;
- 	total_len = inet_sk(sk)->cork.base.length;
-+	opt = inet6_sk(sk)->cork.opt;
-+	total_len -= opt ? opt->opt_flen : 0;
-+
- 	if (offset >= total_len - 1) {
- 		err = -EINVAL;
- 		ip6_flush_pending_frames(sk);
+ #define WILC_SDIO_BLOCK_SIZE 512
+ 
+-- 
+2.35.1
+
 
 
