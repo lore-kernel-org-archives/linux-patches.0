@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5081A46B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:07:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C86EAC433EF;
-	Mon, 16 Jan 2023 16:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D2F46B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:07:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDF4C433EF;
+	Mon, 16 Jan 2023 16:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885270;
-	bh=umQjfgcVdDPx000jvkzEuxnQzuCBxzj6IRiqKzqPEoo=;
+	s=korg; t=1673885272;
+	bh=NlwaFl4fCSE4di+67CjcjEObbgnj08iaMsqqOMThHQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X15w29E+GFclXMDoOrbgOszZk3g8X61DsVnitCp4uC29qhy7A4CsWscDemd87O4AN
-	 6MSU9P+tMJ8bm08kqgxXciyCQW+qTYBhngcS8oWsAGQAQrA+Tsl1BinzrmUSyqJqsM
-	 lrfNFFDjKjJtrkdb6y2THELnEyOFURaEnx8QICIQ=
+	b=W+/5mmNQBcjY79KD5AMsAvXsYNy3xlZYwIyzVvObVyAVRCcoxcRVsJ0UGQ25g5Fq+
+	 rUsHVkE13tzAzzXhBhX2D50TZnlwzHheoKZSlOFqJs66S7moSHBrM94U+RXARD9Iiw
+	 f+E/10rBtEef5+475oOQVKuYeCLHGJ1jNBaIQPFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuogee Hsieh <quic_khsieh@quicinc.com>,
-	Douglas Anderson <dianders@chromium.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: [PATCH 5.10 13/64] drm/msm/dp: do not complete dp_aux_cmd_fifo_tx() if irq is not for aux transfer
-Date: Mon, 16 Jan 2023 16:51:20 +0100
-Message-Id: <20230116154744.104217733@linuxfoundation.org>
+	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 46/64] nfc: pn533: Wait for out_urbs completion in pn533_usb_send_frame()
+Date: Mon, 16 Jan 2023 16:51:53 +0100
+Message-Id: <20230116154745.169141969@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
 References: <20230116154743.577276578@linuxfoundation.org>
@@ -36,77 +35,129 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuogee Hsieh <quic_khsieh@quicinc.com>
+From: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
 
-commit 1cba0d150fa102439114a91b3e215909efc9f169 upstream.
+[ Upstream commit 9dab880d675b9d0dd56c6428e4e8352a3339371d ]
 
-There are 3 possible interrupt sources are handled by DP controller,
-HPDstatus, Controller state changes and Aux read/write transaction.
-At every irq, DP controller have to check isr status of every interrupt
-sources and service the interrupt if its isr status bits shows interrupts
-are pending. There is potential race condition may happen at current aux
-isr handler implementation since it is always complete dp_aux_cmd_fifo_tx()
-even irq is not for aux read or write transaction. This may cause aux read
-transaction return premature if host aux data read is in the middle of
-waiting for sink to complete transferring data to host while irq happen.
-This will cause host's receiving buffer contains unexpected data. This
-patch fixes this problem by checking aux isr and return immediately at
-aux isr handler if there are no any isr status bits set.
+Fix a use-after-free that occurs in hcd when in_urb sent from
+pn533_usb_send_frame() is completed earlier than out_urb. Its callback
+frees the skb data in pn533_send_async_complete() that is used as a
+transfer buffer of out_urb. Wait before sending in_urb until the
+callback of out_urb is called. To modify the callback of out_urb alone,
+separate the complete function of out_urb and ack_urb.
 
-Current there is a bug report regrading eDP edid corruption happen during
-system booting up. After lengthy debugging to found that VIDEO_READY
-interrupt was continuously firing during system booting up which cause
-dp_aux_isr() to complete dp_aux_cmd_fifo_tx() prematurely to retrieve data
-from aux hardware buffer which is not yet contains complete data transfer
-from sink. This cause edid corruption.
+Found by a modified version of syzkaller.
 
-Follows are the signature at kernel logs when problem happen,
-EDID has corrupt header
-panel-simple-dp-aux aux-aea0000.edp: Couldn't identify panel via EDID
+BUG: KASAN: use-after-free in dummy_timer
+Call Trace:
+ memcpy (mm/kasan/shadow.c:65)
+ dummy_perform_transfer (drivers/usb/gadget/udc/dummy_hcd.c:1352)
+ transfer (drivers/usb/gadget/udc/dummy_hcd.c:1453)
+ dummy_timer (drivers/usb/gadget/udc/dummy_hcd.c:1972)
+ arch_static_branch (arch/x86/include/asm/jump_label.h:27)
+ static_key_false (include/linux/jump_label.h:207)
+ timer_expire_exit (include/trace/events/timer.h:127)
+ call_timer_fn (kernel/time/timer.c:1475)
+ expire_timers (kernel/time/timer.c:1519)
+ __run_timers (kernel/time/timer.c:1790)
+ run_timer_softirq (kernel/time/timer.c:1803)
 
-Changes in v2:
--- do complete if (ret == IRQ_HANDLED) ay dp-aux_isr()
--- add more commit text
-
-Changes in v3:
--- add Stephen suggested
--- dp_aux_isr() return IRQ_XXX back to caller
--- dp_ctrl_isr() return IRQ_XXX back to caller
-
-Changes in v4:
--- split into two patches
-
-Changes in v5:
--- delete empty line between tags
-
-Changes in v6:
--- remove extra "that" and fixed line more than 75 char at commit text
-
-Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
-Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
-Tested-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/516121/
-Link: https://lore.kernel.org/r/1672193785-11003-2-git-send-email-quic_khsieh@quicinc.com
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c46ee38620a2 ("NFC: pn533: add NXP pn533 nfc device driver")
+Signed-off-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/dp/dp_aux.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/nfc/pn533/usb.c | 44 ++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 41 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/msm/dp/dp_aux.c
-+++ b/drivers/gpu/drm/msm/dp/dp_aux.c
-@@ -423,6 +423,10 @@ void dp_aux_isr(struct drm_dp_aux *dp_au
+diff --git a/drivers/nfc/pn533/usb.c b/drivers/nfc/pn533/usb.c
+index 84f2983bf384..57b07446bb76 100644
+--- a/drivers/nfc/pn533/usb.c
++++ b/drivers/nfc/pn533/usb.c
+@@ -153,10 +153,17 @@ static int pn533_usb_send_ack(struct pn533 *dev, gfp_t flags)
+ 	return usb_submit_urb(phy->ack_urb, flags);
+ }
  
- 	aux->isr = dp_catalog_aux_get_irq(aux->catalog);
- 
-+	/* no interrupts pending, return immediately */
-+	if (!isr)
-+		return;
++struct pn533_out_arg {
++	struct pn533_usb_phy *phy;
++	struct completion done;
++};
 +
- 	if (!aux->cmd_busy)
- 		return;
+ static int pn533_usb_send_frame(struct pn533 *dev,
+ 				struct sk_buff *out)
+ {
+ 	struct pn533_usb_phy *phy = dev->phy;
++	struct pn533_out_arg arg;
++	void *cntx;
+ 	int rc;
  
+ 	if (phy->priv == NULL)
+@@ -168,10 +175,17 @@ static int pn533_usb_send_frame(struct pn533 *dev,
+ 	print_hex_dump_debug("PN533 TX: ", DUMP_PREFIX_NONE, 16, 1,
+ 			     out->data, out->len, false);
+ 
++	init_completion(&arg.done);
++	cntx = phy->out_urb->context;
++	phy->out_urb->context = &arg;
++
+ 	rc = usb_submit_urb(phy->out_urb, GFP_KERNEL);
+ 	if (rc)
+ 		return rc;
+ 
++	wait_for_completion(&arg.done);
++	phy->out_urb->context = cntx;
++
+ 	if (dev->protocol_type == PN533_PROTO_REQ_RESP) {
+ 		/* request for response for sent packet directly */
+ 		rc = pn533_submit_urb_for_response(phy, GFP_KERNEL);
+@@ -412,7 +426,31 @@ static int pn533_acr122_poweron_rdr(struct pn533_usb_phy *phy)
+ 	return arg.rc;
+ }
+ 
+-static void pn533_send_complete(struct urb *urb)
++static void pn533_out_complete(struct urb *urb)
++{
++	struct pn533_out_arg *arg = urb->context;
++	struct pn533_usb_phy *phy = arg->phy;
++
++	switch (urb->status) {
++	case 0:
++		break; /* success */
++	case -ECONNRESET:
++	case -ENOENT:
++		dev_dbg(&phy->udev->dev,
++			"The urb has been stopped (status %d)\n",
++			urb->status);
++		break;
++	case -ESHUTDOWN:
++	default:
++		nfc_err(&phy->udev->dev,
++			"Urb failure (status %d)\n",
++			urb->status);
++	}
++
++	complete(&arg->done);
++}
++
++static void pn533_ack_complete(struct urb *urb)
+ {
+ 	struct pn533_usb_phy *phy = urb->context;
+ 
+@@ -500,10 +538,10 @@ static int pn533_usb_probe(struct usb_interface *interface,
+ 
+ 	usb_fill_bulk_urb(phy->out_urb, phy->udev,
+ 			  usb_sndbulkpipe(phy->udev, out_endpoint),
+-			  NULL, 0, pn533_send_complete, phy);
++			  NULL, 0, pn533_out_complete, phy);
+ 	usb_fill_bulk_urb(phy->ack_urb, phy->udev,
+ 			  usb_sndbulkpipe(phy->udev, out_endpoint),
+-			  NULL, 0, pn533_send_complete, phy);
++			  NULL, 0, pn533_ack_complete, phy);
+ 
+ 	switch (id->driver_info) {
+ 	case PN533_DEVICE_STD:
+-- 
+2.35.1
+
 
 
