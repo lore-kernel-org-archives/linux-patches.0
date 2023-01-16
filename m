@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8A233EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:59:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 057CBC433EF;
-	Mon, 16 Jan 2023 15:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F12F33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:59:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9870BC433D2;
+	Mon, 16 Jan 2023 15:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884772;
-	bh=zcZbQURYp1IZ9FbIBuVxyn5sgoRJwWItAC98RqVTXAE=;
+	s=korg; t=1673884775;
+	bh=95MzELXbmXfwUuEQQ2+CW4+v+lrHNXwiM9pIXIcxov4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fRXzEu2PMAURdJvB0Jz/+wL15G9E5LxLGCu+PGrshq3Mu0ygrOimPV/i/r+1fewim
-	 BZCe62dqoAYD247F6JPTT7PRxtlNPK7gRWYZjZpALYANQocduBMHJMb5IwuSz2aWSY
-	 g6G3gnkNiUX6YVvITN020DwtvUShRDwapUATMFxE=
+	b=uMlqwft/06ENNdReKQo+bdV2llE92+BgkFaOK5c/WvmA/n7XEcFw0PKE5yY6PfUu4
+	 Q4oj9SmGuk6uJhEhviiJ18EkYRj3bFXCpbixFnnIDnNL5RgxGpQ9FMDzYodmfnxZ5L
+	 npT9/mHoZjeq3mb/nJwlxDXwCPxbSIKM6OuiICSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Richard Gobert <richardbgobert@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Abaci Robot <abaci@linux.alibaba.com>,
+	Yang Li <yang.lee@linux.alibaba.com>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 132/183] gro: avoid checking for a failed search
-Date: Mon, 16 Jan 2023 16:50:55 +0100
-Message-Id: <20230116154808.964447639@linuxfoundation.org>
+Subject: [PATCH 6.1 104/183] drm/msm/dpu: Fix some kernel-doc comments
+Date: Mon, 16 Jan 2023 16:50:27 +0100
+Message-Id: <20230116154807.771286596@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,110 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Richard Gobert <richardbgobert@gmail.com>
+From: Yang Li <yang.lee@linux.alibaba.com>
 
-[ Upstream commit e081ecf084d31809242fb0b9f35484d5fb3a161a ]
+[ Upstream commit 1bdeb321d1f856346fe0078af09c9e7ffbd2ca7a ]
 
-After searching for a protocol handler in dev_gro_receive, checking for
-failure is redundant. Skip the failure code after finding the
-corresponding handler.
+Make the description of @init to @p in dpu_encoder_phys_wb_init()
+and remove @wb_roi in dpu_encoder_phys_wb_setup_fb() to clear the below
+warnings:
 
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Richard Gobert <richardbgobert@gmail.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Link: https://lore.kernel.org/r/20221108123320.GA59373@debian
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 7871f54e3dee ("gro: take care of DODGY packets")
+drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c:139: warning: Excess function parameter 'wb_roi' description in 'dpu_encoder_phys_wb_setup_fb'
+drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c:699: warning: Function parameter or member 'p' not described in 'dpu_encoder_phys_wb_init'
+drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c:699: warning: Excess function parameter 'init' description in 'dpu_encoder_phys_wb_init'
+
+Link: https://bugzilla.openanolis.cn/show_bug.cgi?id=3067
+Reported-by: Abaci Robot <abaci@linux.alibaba.com>
+Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
+Fixes: d7d0e73f7de3 ("drm/msm/dpu: introduce the dpu_encoder_phys_* for writeback")
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Patchwork: https://patchwork.freedesktop.org/patch/511605/
+Link: https://lore.kernel.org/r/20221115014902.45240-1-yang.lee@linux.alibaba.com
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/gro.c | 70 +++++++++++++++++++++++++-------------------------
- 1 file changed, 35 insertions(+), 35 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/net/core/gro.c b/net/core/gro.c
-index bc9451743307..8e0fe85a647d 100644
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -489,45 +489,45 @@ static enum gro_result dev_gro_receive(struct napi_struct *napi, struct sk_buff
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+index 7cbcef6efe17..62f6ff6abf41 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_wb.c
+@@ -132,7 +132,6 @@ static void dpu_encoder_phys_wb_set_qos(struct dpu_encoder_phys *phys_enc)
+  * dpu_encoder_phys_wb_setup_fb - setup output framebuffer
+  * @phys_enc:	Pointer to physical encoder
+  * @fb:		Pointer to output framebuffer
+- * @wb_roi:	Pointer to output region of interest
+  */
+ static void dpu_encoder_phys_wb_setup_fb(struct dpu_encoder_phys *phys_enc,
+ 		struct drm_framebuffer *fb)
+@@ -692,7 +691,7 @@ static void dpu_encoder_phys_wb_init_ops(struct dpu_encoder_phys_ops *ops)
  
- 	rcu_read_lock();
- 	list_for_each_entry_rcu(ptype, head, list) {
--		if (ptype->type != type || !ptype->callbacks.gro_receive)
--			continue;
--
--		skb_set_network_header(skb, skb_gro_offset(skb));
--		skb_reset_mac_len(skb);
--		BUILD_BUG_ON(sizeof_field(struct napi_gro_cb, zeroed) != sizeof(u32));
--		BUILD_BUG_ON(!IS_ALIGNED(offsetof(struct napi_gro_cb, zeroed),
--					 sizeof(u32))); /* Avoid slow unaligned acc */
--		*(u32 *)&NAPI_GRO_CB(skb)->zeroed = 0;
--		NAPI_GRO_CB(skb)->flush = skb_has_frag_list(skb);
--		NAPI_GRO_CB(skb)->is_atomic = 1;
--		NAPI_GRO_CB(skb)->count = 1;
--		if (unlikely(skb_is_gso(skb))) {
--			NAPI_GRO_CB(skb)->count = skb_shinfo(skb)->gso_segs;
--			/* Only support TCP at the moment. */
--			if (!skb_is_gso_tcp(skb))
--				NAPI_GRO_CB(skb)->flush = 1;
--		}
--
--		/* Setup for GRO checksum validation */
--		switch (skb->ip_summed) {
--		case CHECKSUM_COMPLETE:
--			NAPI_GRO_CB(skb)->csum = skb->csum;
--			NAPI_GRO_CB(skb)->csum_valid = 1;
--			break;
--		case CHECKSUM_UNNECESSARY:
--			NAPI_GRO_CB(skb)->csum_cnt = skb->csum_level + 1;
--			break;
--		}
-+		if (ptype->type == type && ptype->callbacks.gro_receive)
-+			goto found_ptype;
-+	}
-+	rcu_read_unlock();
-+	goto normal;
-+
-+found_ptype:
-+	skb_set_network_header(skb, skb_gro_offset(skb));
-+	skb_reset_mac_len(skb);
-+	BUILD_BUG_ON(sizeof_field(struct napi_gro_cb, zeroed) != sizeof(u32));
-+	BUILD_BUG_ON(!IS_ALIGNED(offsetof(struct napi_gro_cb, zeroed),
-+					sizeof(u32))); /* Avoid slow unaligned acc */
-+	*(u32 *)&NAPI_GRO_CB(skb)->zeroed = 0;
-+	NAPI_GRO_CB(skb)->flush = skb_has_frag_list(skb);
-+	NAPI_GRO_CB(skb)->is_atomic = 1;
-+	NAPI_GRO_CB(skb)->count = 1;
-+	if (unlikely(skb_is_gso(skb))) {
-+		NAPI_GRO_CB(skb)->count = skb_shinfo(skb)->gso_segs;
-+		/* Only support TCP at the moment. */
-+		if (!skb_is_gso_tcp(skb))
-+			NAPI_GRO_CB(skb)->flush = 1;
-+	}
- 
--		pp = INDIRECT_CALL_INET(ptype->callbacks.gro_receive,
--					ipv6_gro_receive, inet_gro_receive,
--					&gro_list->list, skb);
-+	/* Setup for GRO checksum validation */
-+	switch (skb->ip_summed) {
-+	case CHECKSUM_COMPLETE:
-+		NAPI_GRO_CB(skb)->csum = skb->csum;
-+		NAPI_GRO_CB(skb)->csum_valid = 1;
-+		break;
-+	case CHECKSUM_UNNECESSARY:
-+		NAPI_GRO_CB(skb)->csum_cnt = skb->csum_level + 1;
- 		break;
- 	}
--	rcu_read_unlock();
- 
--	if (&ptype->list == head)
--		goto normal;
-+	pp = INDIRECT_CALL_INET(ptype->callbacks.gro_receive,
-+				ipv6_gro_receive, inet_gro_receive,
-+				&gro_list->list, skb);
-+
-+	rcu_read_unlock();
- 
- 	if (PTR_ERR(pp) == -EINPROGRESS) {
- 		ret = GRO_CONSUMED;
+ /**
+  * dpu_encoder_phys_wb_init - initialize writeback encoder
+- * @init:	Pointer to init info structure with initialization params
++ * @p:	Pointer to init info structure with initialization params
+  */
+ struct dpu_encoder_phys *dpu_encoder_phys_wb_init(
+ 		struct dpu_enc_phys_init_params *p)
 -- 
 2.35.1
 
