@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 751316FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:10:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB5EFC433F0;
-	Mon, 16 Jan 2023 17:10:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DC276FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:10:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91547C433D2;
+	Mon, 16 Jan 2023 17:10:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889011;
-	bh=Zr5+rd/DM/JA4jkAFChvzZ1KpESeG0fHR5HoskmIKQA=;
+	s=korg; t=1673889013;
+	bh=aTjcHvXyQs/tqs+Mrj/cng7jBZ/gFHXuLjqMVQaO7+E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y6rwtoezMgQvZrXItdB0yezsI247KcBvWivP6THsHidwuWgHNCUlBZ2TDVZsInVTb
-	 K9m36mFhgaUA2iicDrxuLJ7Q21judEbNiGmX9KXHwV8nrKiVnJxtC3zL8MVuZPB77J
-	 bi8StAOMSSVEMX9OQHsGPCyvAYemOsgeY8Ck7Q94=
+	b=viY6GV3ZmG6BO5+DlHKQWJeXK5rW3YXbwWuybhjDdK0bnMbwiAyJtTh1kx6cGGdKx
+	 CVWgzYW1/DEd2nNa+e6QuT1B7qvkDxUWZeG5r2M7vy1crA1axNVeT0O/tdp8TISFH5
+	 uQ3MtPTZLAH+lzcBAmwolZkQYZ3kFc1REBGlUl/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Zhang Yuchen <zhangyuchen.lcr@bytedance.com>,
+	Corey Minyard <cminyard@mvista.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 225/338] ASoC: codecs: rt298: Add quirk for KBL-R RVP platform
-Date: Mon, 16 Jan 2023 16:51:38 +0100
-Message-Id: <20230116154830.837044614@linuxfoundation.org>
+Subject: [PATCH 4.14 226/338] ipmi: fix memleak when unload ipmi driver
+Date: Mon, 16 Jan 2023 16:51:39 +0100
+Message-Id: <20230116154830.888780000@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -36,40 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+From: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
 
-[ Upstream commit 953dbd1cef18ce9ac0d69c1bd735b929fe52a17e ]
+[ Upstream commit 36992eb6b9b83f7f9cdc8e74fb5799d7b52e83e9 ]
 
-KBL-R RVP platforms also use combojack, so we need to enable that
-configuration for them.
+After the IPMI disconnect problem, the memory kept rising and we tried
+to unload the driver to free the memory. However, only part of the
+free memory is recovered after the driver is uninstalled. Using
+ebpf to hook free functions, we find that neither ipmi_user nor
+ipmi_smi_msg is free, only ipmi_recv_msg is free.
 
-Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://lore.kernel.org/r/20221010121955.718168-4-cezary.rojewski@intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+We find that the deliver_smi_err_response call in clean_smi_msgs does
+the destroy processing on each message from the xmit_msg queue without
+checking the return value and free ipmi_smi_msg.
+
+deliver_smi_err_response is called only at this location. Adding the
+free handling has no effect.
+
+To verify, try using ebpf to trace the free function.
+
+  $ bpftrace -e 'kretprobe:ipmi_alloc_recv_msg {printf("alloc rcv
+      %p\n",retval);} kprobe:free_recv_msg {printf("free recv %p\n",
+      arg0)} kretprobe:ipmi_alloc_smi_msg {printf("alloc smi %p\n",
+        retval);} kprobe:free_smi_msg {printf("free smi  %p\n",arg0)}'
+
+Signed-off-by: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
+Message-Id: <20221007092617.87597-4-zhangyuchen.lcr@bytedance.com>
+[Fixed the comment above handle_one_recv_msg().]
+Signed-off-by: Corey Minyard <cminyard@mvista.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt298.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/char/ipmi/ipmi_msghandler.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/codecs/rt298.c b/sound/soc/codecs/rt298.c
-index ce963768449f..041955eb7922 100644
---- a/sound/soc/codecs/rt298.c
-+++ b/sound/soc/codecs/rt298.c
-@@ -1170,6 +1170,13 @@ static const struct dmi_system_id force_combo_jack_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Geminilake")
- 		}
- 	},
-+	{
-+		.ident = "Intel Kabylake R RVP",
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Intel Corporation"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "Kabylake Client platform")
-+		}
-+	},
- 	{ }
- };
+diff --git a/drivers/char/ipmi/ipmi_msghandler.c b/drivers/char/ipmi/ipmi_msghandler.c
+index f72a272eeb9b..de03c5c07896 100644
+--- a/drivers/char/ipmi/ipmi_msghandler.c
++++ b/drivers/char/ipmi/ipmi_msghandler.c
+@@ -2931,12 +2931,16 @@ static void deliver_smi_err_response(ipmi_smi_t intf,
+ 				     struct ipmi_smi_msg *msg,
+ 				     unsigned char err)
+ {
++	int rv;
+ 	msg->rsp[0] = msg->data[0] | 4;
+ 	msg->rsp[1] = msg->data[1];
+ 	msg->rsp[2] = err;
+ 	msg->rsp_size = 3;
+-	/* It's an error, so it will never requeue, no need to check return. */
+-	handle_one_recv_msg(intf, msg);
++
++	/* This will never requeue, but it may ask us to free the message. */
++	rv = handle_one_recv_msg(intf, msg);
++	if (rv == 0)
++		ipmi_free_smi_msg(msg);
+ }
  
+ static void cleanup_smi_msgs(ipmi_smi_t intf)
 -- 
 2.35.1
 
