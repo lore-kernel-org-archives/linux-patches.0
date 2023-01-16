@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CF4933EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:54:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95AABC433F0;
-	Mon, 16 Jan 2023 15:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A314133EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BFB6C433F0;
+	Mon, 16 Jan 2023 15:55:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884497;
-	bh=yBWUZxEUKOQLK1gTS3IxwiG6EM/K5H18kRuE5kQ/9qM=;
+	s=korg; t=1673884500;
+	bh=3rTy7XE1Pmj3KGs8RvnNtqtkfT0SywqxFhep8j3Pn3w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vti8ZJEHHWyGFR2mavYfOYYJKrHzAITBvZxbIyIY6pO5t07is+J3uXcju25dpSho0
-	 82zYj5UcBNNnebEwwfVSEwcw9o9sjB60ksYYzioyyoWhSMhWONfY185hg0/Txy/O+D
-	 trm9O9o3QGFdB5bmcyNF8irtQaMxQUCA9cRQsLgQ=
+	b=RiYTsknd7xilCf0RS6DSjruUXiT0htu0GgVBdHEcNSoDzmUfIn8JlqR90n/PiBgG6
+	 uZvjCn9tTsQD38/z7qh8gRuXb0h2A3JwHB6d4dUiIg25JWtjQtGbti5LAA9j6YeKm1
+	 x/y4nJufud8xGOOv0vbBxCtBxd+/TDG+9KOAOEdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Matthew Auld <matthew.auld@intel.com>
-Subject: [PATCH 6.1 028/183] drm: Optimize drm buddy top-down allocation method
-Date: Mon, 16 Jan 2023 16:49:11 +0100
-Message-Id: <20230116154804.560156805@linuxfoundation.org>
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Mika Kuoppala <mika.kuoppala@linux.intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.1 029/183] drm/i915/gt: Reset twice
+Date: Mon, 16 Jan 2023 16:49:12 +0100
+Message-Id: <20230116154804.602579121@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,170 +37,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
+From: Chris Wilson <chris@chris-wilson.co.uk>
 
-commit 5640e81607152d7f2d2558227c0f6cb78b8f39cf upstream.
+commit d3de5616d36462a646f5b360ba82d3b09ff668eb upstream.
 
-We are observing performance drop in many usecases which include
-games, 3D benchmark applications,etc.. To solve this problem, We
-are strictly not allowing top down flag enabled allocations to
-steal the memory space from cpu visible region.
+After applying an engine reset, on some platforms like Jasperlake, we
+occasionally detect that the engine state is not cleared until shortly
+after the resume. As we try to resume the engine with volatile internal
+state, the first request fails with a spurious CS event (it looks like
+it reports a lite-restore to the hung context, instead of the expected
+idle->active context switch).
 
-The idea is, we are sorting each order list entries in
-ascending order and compare the last entry of each order
-list in the freelist and return the max block.
-
-This patch improves the 3D benchmark scores and solves
-fragmentation issues.
-
-All drm buddy selftests are verfied.
-drm_buddy: pass:6 fail:0 skip:0 total:6
-
-Signed-off-by: Arunpravin Paneer Selvam <Arunpravin.PaneerSelvam@amd.com>
-Acked-by: Christian König <christian.koenig@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230112120027.3072-1-Arunpravin.PaneerSelvam@amd.com
-Signed-off-by: Christian König <christian.koenig@amd.com>
-CC: Cc: stable@vger.kernel.org # 5.18+
+Signed-off-by: Chris Wilson <chris@chris-wilson.co.uk>
+Cc: stable@vger.kernel.org
+Cc: Mika Kuoppala <mika.kuoppala@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Reviewed-by: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221212161338.1007659-1-andi.shyti@linux.intel.com
+(cherry picked from commit 3db9d590557da3aa2c952f2fecd3e9b703dad790)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_buddy.c |   83 +++++++++++++++++++++++++++++---------------
- 1 file changed, 55 insertions(+), 28 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_reset.c |   34 ++++++++++++++++++++++++++++------
+ 1 file changed, 28 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/drm_buddy.c
-+++ b/drivers/gpu/drm/drm_buddy.c
-@@ -38,6 +38,25 @@ static void drm_block_free(struct drm_bu
- 	kmem_cache_free(slab_blocks, block);
- }
- 
-+static void list_insert_sorted(struct drm_buddy *mm,
-+			       struct drm_buddy_block *block)
-+{
-+	struct drm_buddy_block *node;
-+	struct list_head *head;
-+
-+	head = &mm->free_list[drm_buddy_block_order(block)];
-+	if (list_empty(head)) {
-+		list_add(&block->link, head);
-+		return;
-+	}
-+
-+	list_for_each_entry(node, head, link)
-+		if (drm_buddy_block_offset(block) < drm_buddy_block_offset(node))
-+			break;
-+
-+	__list_add(&block->link, node->link.prev, &node->link);
-+}
-+
- static void mark_allocated(struct drm_buddy_block *block)
+--- a/drivers/gpu/drm/i915/gt/intel_reset.c
++++ b/drivers/gpu/drm/i915/gt/intel_reset.c
+@@ -278,6 +278,7 @@ out:
+ static int gen6_hw_domain_reset(struct intel_gt *gt, u32 hw_domain_mask)
  {
- 	block->header &= ~DRM_BUDDY_HEADER_STATE;
-@@ -52,8 +71,7 @@ static void mark_free(struct drm_buddy *
- 	block->header &= ~DRM_BUDDY_HEADER_STATE;
- 	block->header |= DRM_BUDDY_FREE;
- 
--	list_add(&block->link,
--		 &mm->free_list[drm_buddy_block_order(block)]);
-+	list_insert_sorted(mm, block);
- }
- 
- static void mark_split(struct drm_buddy_block *block)
-@@ -387,20 +405,26 @@ err_undo:
- }
- 
- static struct drm_buddy_block *
--get_maxblock(struct list_head *head)
-+get_maxblock(struct drm_buddy *mm, unsigned int order)
- {
- 	struct drm_buddy_block *max_block = NULL, *node;
-+	unsigned int i;
- 
--	max_block = list_first_entry_or_null(head,
--					     struct drm_buddy_block,
--					     link);
--	if (!max_block)
--		return NULL;
--
--	list_for_each_entry(node, head, link) {
--		if (drm_buddy_block_offset(node) >
--		    drm_buddy_block_offset(max_block))
--			max_block = node;
-+	for (i = order; i <= mm->max_order; ++i) {
-+		if (!list_empty(&mm->free_list[i])) {
-+			node = list_last_entry(&mm->free_list[i],
-+					       struct drm_buddy_block,
-+					       link);
-+			if (!max_block) {
-+				max_block = node;
-+				continue;
-+			}
-+
-+			if (drm_buddy_block_offset(node) >
-+			    drm_buddy_block_offset(max_block)) {
-+				max_block = node;
-+			}
-+		}
- 	}
- 
- 	return max_block;
-@@ -412,20 +436,23 @@ alloc_from_freelist(struct drm_buddy *mm
- 		    unsigned long flags)
- {
- 	struct drm_buddy_block *block = NULL;
--	unsigned int i;
-+	unsigned int tmp;
+ 	struct intel_uncore *uncore = gt->uncore;
++	int loops = 2;
  	int err;
  
--	for (i = order; i <= mm->max_order; ++i) {
--		if (flags & DRM_BUDDY_TOPDOWN_ALLOCATION) {
--			block = get_maxblock(&mm->free_list[i]);
--			if (block)
--				break;
--		} else {
--			block = list_first_entry_or_null(&mm->free_list[i],
--							 struct drm_buddy_block,
--							 link);
--			if (block)
--				break;
-+	if (flags & DRM_BUDDY_TOPDOWN_ALLOCATION) {
-+		block = get_maxblock(mm, order);
-+		if (block)
-+			/* Store the obtained block order */
-+			tmp = drm_buddy_block_order(block);
-+	} else {
-+		for (tmp = order; tmp <= mm->max_order; ++tmp) {
-+			if (!list_empty(&mm->free_list[tmp])) {
-+				block = list_last_entry(&mm->free_list[tmp],
-+							struct drm_buddy_block,
-+							link);
-+				if (block)
-+					break;
-+			}
- 		}
- 	}
+ 	/*
+@@ -285,18 +286,39 @@ static int gen6_hw_domain_reset(struct i
+ 	 * for fifo space for the write or forcewake the chip for
+ 	 * the read
+ 	 */
+-	intel_uncore_write_fw(uncore, GEN6_GDRST, hw_domain_mask);
++	do {
++		intel_uncore_write_fw(uncore, GEN6_GDRST, hw_domain_mask);
  
-@@ -434,18 +461,18 @@ alloc_from_freelist(struct drm_buddy *mm
+-	/* Wait for the device to ack the reset requests */
+-	err = __intel_wait_for_register_fw(uncore,
+-					   GEN6_GDRST, hw_domain_mask, 0,
+-					   500, 0,
+-					   NULL);
++		/*
++		 * Wait for the device to ack the reset requests.
++		 *
++		 * On some platforms, e.g. Jasperlake, we see that the
++		 * engine register state is not cleared until shortly after
++		 * GDRST reports completion, causing a failure as we try
++		 * to immediately resume while the internal state is still
++		 * in flux. If we immediately repeat the reset, the second
++		 * reset appears to serialise with the first, and since
++		 * it is a no-op, the registers should retain their reset
++		 * value. However, there is still a concern that upon
++		 * leaving the second reset, the internal engine state
++		 * is still in flux and not ready for resuming.
++		 */
++		err = __intel_wait_for_register_fw(uncore, GEN6_GDRST,
++						   hw_domain_mask, 0,
++						   2000, 0,
++						   NULL);
++	} while (err == 0 && --loops);
+ 	if (err)
+ 		GT_TRACE(gt,
+ 			 "Wait for 0x%08x engines reset failed\n",
+ 			 hw_domain_mask);
  
- 	BUG_ON(!drm_buddy_block_is_free(block));
- 
--	while (i != order) {
-+	while (tmp != order) {
- 		err = split_block(mm, block);
- 		if (unlikely(err))
- 			goto err_undo;
- 
- 		block = block->right;
--		i--;
-+		tmp--;
- 	}
- 	return block;
- 
- err_undo:
--	if (i != order)
-+	if (tmp != order)
- 		__drm_buddy_free(mm, block);
- 	return ERR_PTR(err);
++	/*
++	 * As we have observed that the engine state is still volatile
++	 * after GDRST is acked, impose a small delay to let everything settle.
++	 */
++	udelay(50);
++
+ 	return err;
  }
+ 
 
 
