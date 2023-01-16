@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C60546B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:30:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21EA1C433D2;
-	Mon, 16 Jan 2023 16:30:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472C746B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:31:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C281CC433EF;
+	Mon, 16 Jan 2023 16:31:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886659;
-	bh=23aIuIpSz0GmorfB4Zw8S7EL8gnoi0Bvprkul4f1nus=;
+	s=korg; t=1673886662;
+	bh=XQJ+ki4qxIj80zW53LXOaU856iYtzvKF2xtrUBFmQvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WBnwPF6jqmLauGWMJpm9snDEnUQ7pam+iadZX6hrfeeBhfwbcs0x2VxkGZEFZj1Y9
-	 kWZoqciDsMTc2h5Ho4qt8sbikoyPPa84cUAVOwJEqFA4I2PVN/S9AVnNbCXf2xk9cv
-	 PzdcE8iKRzvmlOz/wF/NTYSA1+eW4+e19AaUt16c=
+	b=giO8Z/1DjQbXWXyrH7e/Fozb9oC4hYBSZ6uLK+y3ujXpguvC3m4wfO2bZiX3I9Dtt
+	 AkbcetkXIRPbMYoEOwdJww5QW78xhaqRLb4djeC/RUU9WoytpT9iVYqvrPNIGdLyg+
+	 G0cjWa/FE90Oop20INnjtuet8HbsPrbzMXt+y66Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Chen <wenchao.chen@unisoc.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.4 483/658] mmc: sdhci-sprd: Disable CLK_AUTO when the clock is less than 400K
-Date: Mon, 16 Jan 2023 16:49:31 +0100
-Message-Id: <20230116154931.606766170@linuxfoundation.org>
+	Qu Wenruo <wqu@suse.com>,
+	Boris Burkov <boris@bur.io>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.4 484/658] btrfs: fix resolving backrefs for inline extent followed by prealloc
+Date: Mon, 16 Jan 2023 16:49:32 +0100
+Message-Id: <20230116154931.659117640@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -34,47 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wenchao Chen <wenchao.chen@unisoc.com>
+From: Boris Burkov <boris@bur.io>
 
-commit ff874dbc4f868af128b412a9bd92637103cf11d7 upstream.
+commit 560840afc3e63bbe5d9c5ef6b2ecf8f3589adff6 upstream.
 
-When the clock is less than 400K, some SD cards fail to initialize
-because CLK_AUTO is enabled.
+If a file consists of an inline extent followed by a regular or prealloc
+extent, then a legitimate attempt to resolve a logical address in the
+non-inline region will result in add_all_parents reading the invalid
+offset field of the inline extent. If the inline extent item is placed
+in the leaf eb s.t. it is the first item, attempting to access the
+offset field will not only be meaningless, it will go past the end of
+the eb and cause this panic:
 
-Fixes: fb8bd90f83c4 ("mmc: sdhci-sprd: Add Spreadtrum's initial host controller")
-Signed-off-by: Wenchao Chen <wenchao.chen@unisoc.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221207051909.32126-1-wenchao.chen@unisoc.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+  [17.626048] BTRFS warning (device dm-2): bad eb member end: ptr 0x3fd4 start 30834688 member offset 16377 size 8
+  [17.631693] general protection fault, probably for non-canonical address 0x5088000000000: 0000 [#1] SMP PTI
+  [17.635041] CPU: 2 PID: 1267 Comm: btrfs Not tainted 5.12.0-07246-g75175d5adc74-dirty #199
+  [17.637969] Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.14.0-0-g155821a1990b-prebuilt.qemu.org 04/01/2014
+  [17.641995] RIP: 0010:btrfs_get_64+0xe7/0x110
+  [17.649890] RSP: 0018:ffffc90001f73a08 EFLAGS: 00010202
+  [17.651652] RAX: 0000000000000001 RBX: ffff88810c42d000 RCX: 0000000000000000
+  [17.653921] RDX: 0005088000000000 RSI: ffffc90001f73a0f RDI: 0000000000000001
+  [17.656174] RBP: 0000000000000ff9 R08: 0000000000000007 R09: c0000000fffeffff
+  [17.658441] R10: ffffc90001f73790 R11: ffffc90001f73788 R12: ffff888106afe918
+  [17.661070] R13: 0000000000003fd4 R14: 0000000000003f6f R15: cdcdcdcdcdcdcdcd
+  [17.663617] FS:  00007f64e7627d80(0000) GS:ffff888237c80000(0000) knlGS:0000000000000000
+  [17.666525] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  [17.668664] CR2: 000055d4a39152e8 CR3: 000000010c596002 CR4: 0000000000770ee0
+  [17.671253] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+  [17.673634] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+  [17.676034] PKRU: 55555554
+  [17.677004] Call Trace:
+  [17.677877]  add_all_parents+0x276/0x480
+  [17.679325]  find_parent_nodes+0xfae/0x1590
+  [17.680771]  btrfs_find_all_leafs+0x5e/0xa0
+  [17.682217]  iterate_extent_inodes+0xce/0x260
+  [17.683809]  ? btrfs_inode_flags_to_xflags+0x50/0x50
+  [17.685597]  ? iterate_inodes_from_logical+0xa1/0xd0
+  [17.687404]  iterate_inodes_from_logical+0xa1/0xd0
+  [17.689121]  ? btrfs_inode_flags_to_xflags+0x50/0x50
+  [17.691010]  btrfs_ioctl_logical_to_ino+0x131/0x190
+  [17.692946]  btrfs_ioctl+0x104a/0x2f60
+  [17.694384]  ? selinux_file_ioctl+0x182/0x220
+  [17.695995]  ? __x64_sys_ioctl+0x84/0xc0
+  [17.697394]  __x64_sys_ioctl+0x84/0xc0
+  [17.698697]  do_syscall_64+0x33/0x40
+  [17.700017]  entry_SYSCALL_64_after_hwframe+0x44/0xae
+  [17.701753] RIP: 0033:0x7f64e72761b7
+  [17.709355] RSP: 002b:00007ffefb067f58 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
+  [17.712088] RAX: ffffffffffffffda RBX: 0000000000000003 RCX: 00007f64e72761b7
+  [17.714667] RDX: 00007ffefb067fb0 RSI: 00000000c0389424 RDI: 0000000000000003
+  [17.717386] RBP: 00007ffefb06d188 R08: 000055d4a390d2b0 R09: 00007f64e7340a60
+  [17.719938] R10: 0000000000000231 R11: 0000000000000246 R12: 0000000000000001
+  [17.722383] R13: 0000000000000000 R14: 00000000c0389424 R15: 000055d4a38fd2a0
+  [17.724839] Modules linked in:
+
+Fix the bug by detecting the inline extent item in add_all_parents and
+skipping to the next extent item.
+
+CC: stable@vger.kernel.org # 4.9+
+Reviewed-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: Boris Burkov <boris@bur.io>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-sprd.c |   16 +++++++++-------
- 1 file changed, 9 insertions(+), 7 deletions(-)
+ fs/btrfs/backref.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/mmc/host/sdhci-sprd.c
-+++ b/drivers/mmc/host/sdhci-sprd.c
-@@ -223,13 +223,15 @@ static inline void _sdhci_sprd_set_clock
- 	div = ((div & 0x300) >> 2) | ((div & 0xFF) << 8);
- 	sdhci_enable_clk(host, div);
+--- a/fs/btrfs/backref.c
++++ b/fs/btrfs/backref.c
+@@ -431,6 +431,7 @@ static int add_all_parents(struct btrfs_
+ 	u64 wanted_disk_byte = ref->wanted_disk_byte;
+ 	u64 count = 0;
+ 	u64 data_offset;
++	u8 type;
  
--	/* enable auto gate sdhc_enable_auto_gate */
--	val = sdhci_readl(host, SDHCI_SPRD_REG_32_BUSY_POSI);
--	mask = SDHCI_SPRD_BIT_OUTR_CLK_AUTO_EN |
--	       SDHCI_SPRD_BIT_INNR_CLK_AUTO_EN;
--	if (mask != (val & mask)) {
--		val |= mask;
--		sdhci_writel(host, val, SDHCI_SPRD_REG_32_BUSY_POSI);
-+	/* Enable CLK_AUTO when the clock is greater than 400K. */
-+	if (clk > 400000) {
-+		val = sdhci_readl(host, SDHCI_SPRD_REG_32_BUSY_POSI);
-+		mask = SDHCI_SPRD_BIT_OUTR_CLK_AUTO_EN |
-+			SDHCI_SPRD_BIT_INNR_CLK_AUTO_EN;
-+		if (mask != (val & mask)) {
-+			val |= mask;
-+			sdhci_writel(host, val, SDHCI_SPRD_REG_32_BUSY_POSI);
-+		}
- 	}
- }
+ 	if (level != 0) {
+ 		eb = path->nodes[level];
+@@ -485,6 +486,9 @@ static int add_all_parents(struct btrfs_
+ 			continue;
+ 		}
+ 		fi = btrfs_item_ptr(eb, slot, struct btrfs_file_extent_item);
++		type = btrfs_file_extent_type(eb, fi);
++		if (type == BTRFS_FILE_EXTENT_INLINE)
++			goto next;
+ 		disk_byte = btrfs_file_extent_disk_bytenr(eb, fi);
+ 		data_offset = btrfs_file_extent_offset(eb, fi);
  
 
 
