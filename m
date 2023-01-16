@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A72F6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:09:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10673C433F1;
-	Mon, 16 Jan 2023 17:09:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29ECD6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:09:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A562DC433F0;
+	Mon, 16 Jan 2023 17:09:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888956;
-	bh=RnIOD5BCXzKk9040UUeviWUtHgOoAnz0jaHrZgNKLso=;
+	s=korg; t=1673888959;
+	bh=6Uh7j4D3yEdu+ipKNwEXJuy040UfVvNZV9jiyr5a+5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uMCxUdiBl3r9tpT/CceewLVrTID4PUw+Tos4Jlitjv4lwEoU6gbzJGSdQPwvMY2jN
-	 0enAtbcv4YOmRZrLYSQBUctPx7rqEhxGcK/JzubBP6oYhZFrbdIPTgja6GIO+9WNHt
-	 AIsFGCd04LfGPj7S+HL+y6Xz533eCgYEhdRQqmCU=
+	b=l0rlxShsG/ofLHxp8g9D69VzuBeE0KABdwI/6YvoyPMZuGbXH7IokVX/UqhrUTA1k
+	 ooqYrK9mJsMNJGvpZaetFlDUuVhPEcBOhsPPyzlAZMKYbBRRFLAOazmT5qDMOArELG
+	 fnDnrD9wDzCSOA8vh6le94oc9vpTMcnkuuj2CyzE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Xiyu Yang <xiyuyang19@fudan.edu.cn>,
+	"J. Bruce Fields" <bfields@redhat.com>,
+	Dan Aloni <dan.aloni@vastdata.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 203/338] rtc: st-lpc: Add missing clk_disable_unprepare in st_rtc_probe()
-Date: Mon, 16 Jan 2023 16:51:16 +0100
-Message-Id: <20230116154829.835299525@linuxfoundation.org>
+Subject: [PATCH 4.14 204/338] nfsd: under NFSv4.1, fix double svc_xprt_put on rpc_create failure
+Date: Mon, 16 Jan 2023 16:51:17 +0100
+Message-Id: <20230116154829.876389911@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,34 +38,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Dan Aloni <dan.aloni@vastdata.com>
 
-[ Upstream commit 5fb733d7bd6949e90028efdce8bd528c6ab7cf1e ]
+[ Upstream commit 3bc8edc98bd43540dbe648e4ef91f443d6d20a24 ]
 
-The clk_disable_unprepare() should be called in the error handling
-of clk_get_rate(), fix it.
+On error situation `clp->cl_cb_conn.cb_xprt` should not be given
+a reference to the xprt otherwise both client cleanup and the
+error handling path of the caller call to put it. Better to
+delay handing over the reference to a later branch.
 
-Fixes: b5b2bdfc2893 ("rtc: st: Add new driver for ST's LPC RTC")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://lore.kernel.org/r/20221123014805.1993052-1-cuigaosheng1@huawei.com
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+[   72.530665] refcount_t: underflow; use-after-free.
+[   72.531933] WARNING: CPU: 0 PID: 173 at lib/refcount.c:28 refcount_warn_saturate+0xcf/0x120
+[   72.533075] Modules linked in: nfsd(OE) nfsv4(OE) nfsv3(OE) nfs(OE) lockd(OE) compat_nfs_ssc(OE) nfs_acl(OE) rpcsec_gss_krb5(OE) auth_rpcgss(OE) rpcrdma(OE) dns_resolver fscache netfs grace rdma_cm iw_cm ib_cm sunrpc(OE) mlx5_ib mlx5_core mlxfw pci_hyperv_intf ib_uverbs ib_core xt_MASQUERADE nf_conntrack_netlink nft_counter xt_addrtype nft_compat br_netfilter bridge stp llc nft_reject_inet nf_reject_ipv4 nf_reject_ipv6 nft_reject nft_ct nft_chain_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 ip_set overlay nf_tables nfnetlink crct10dif_pclmul crc32_pclmul ghash_clmulni_intel xfs serio_raw virtio_net virtio_blk net_failover failover fuse [last unloaded: sunrpc]
+[   72.540389] CPU: 0 PID: 173 Comm: kworker/u16:5 Tainted: G           OE     5.15.82-dan #1
+[   72.541511] Hardware name: Red Hat KVM/RHEL-AV, BIOS 1.16.0-3.module+el8.7.0+1084+97b81f61 04/01/2014
+[   72.542717] Workqueue: nfsd4_callbacks nfsd4_run_cb_work [nfsd]
+[   72.543575] RIP: 0010:refcount_warn_saturate+0xcf/0x120
+[   72.544299] Code: 55 00 0f 0b 5d e9 01 50 98 00 80 3d 75 9e 39 08 00 0f 85 74 ff ff ff 48 c7 c7 e8 d1 60 8e c6 05 61 9e 39 08 01 e8 f6 51 55 00 <0f> 0b 5d e9 d9 4f 98 00 80 3d 4b 9e 39 08 00 0f 85 4c ff ff ff 48
+[   72.546666] RSP: 0018:ffffb3f841157cf0 EFLAGS: 00010286
+[   72.547393] RAX: 0000000000000026 RBX: ffff89ac6231d478 RCX: 0000000000000000
+[   72.548324] RDX: ffff89adb7c2c2c0 RSI: ffff89adb7c205c0 RDI: ffff89adb7c205c0
+[   72.549271] RBP: ffffb3f841157cf0 R08: 0000000000000000 R09: c0000000ffefffff
+[   72.550209] R10: 0000000000000001 R11: ffffb3f841157ad0 R12: ffff89ac6231d180
+[   72.551142] R13: ffff89ac6231d478 R14: ffff89ac40c06180 R15: ffff89ac6231d4b0
+[   72.552089] FS:  0000000000000000(0000) GS:ffff89adb7c00000(0000) knlGS:0000000000000000
+[   72.553175] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[   72.553934] CR2: 0000563a310506a8 CR3: 0000000109a66000 CR4: 0000000000350ef0
+[   72.554874] Call Trace:
+[   72.555278]  <TASK>
+[   72.555614]  svc_xprt_put+0xaf/0xe0 [sunrpc]
+[   72.556276]  nfsd4_process_cb_update.isra.11+0xb7/0x410 [nfsd]
+[   72.557087]  ? update_load_avg+0x82/0x610
+[   72.557652]  ? cpuacct_charge+0x60/0x70
+[   72.558212]  ? dequeue_entity+0xdb/0x3e0
+[   72.558765]  ? queued_spin_unlock+0x9/0x20
+[   72.559358]  nfsd4_run_cb_work+0xfc/0x270 [nfsd]
+[   72.560031]  process_one_work+0x1df/0x390
+[   72.560600]  worker_thread+0x37/0x3b0
+[   72.561644]  ? process_one_work+0x390/0x390
+[   72.562247]  kthread+0x12f/0x150
+[   72.562710]  ? set_kthread_struct+0x50/0x50
+[   72.563309]  ret_from_fork+0x22/0x30
+[   72.563818]  </TASK>
+[   72.564189] ---[ end trace 031117b1c72ec616 ]---
+[   72.566019] list_add corruption. next->prev should be prev (ffff89ac4977e538), but was ffff89ac4763e018. (next=ffff89ac4763e018).
+[   72.567647] ------------[ cut here ]------------
+
+Fixes: a4abc6b12eb1 ("nfsd: Fix svc_xprt refcnt leak when setup callback client failed")
+Cc: Xiyu Yang <xiyuyang19@fudan.edu.cn>
+Cc: J. Bruce Fields <bfields@redhat.com>
+Signed-off-by: Dan Aloni <dan.aloni@vastdata.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-st-lpc.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/nfsd/nfs4callback.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/rtc/rtc-st-lpc.c b/drivers/rtc/rtc-st-lpc.c
-index 82b0af159a28..6f33e705928f 100644
---- a/drivers/rtc/rtc-st-lpc.c
-+++ b/drivers/rtc/rtc-st-lpc.c
-@@ -246,6 +246,7 @@ static int st_rtc_probe(struct platform_device *pdev)
- 
- 	rtc->clkrate = clk_get_rate(rtc->clk);
- 	if (!rtc->clkrate) {
-+		clk_disable_unprepare(rtc->clk);
- 		dev_err(&pdev->dev, "Unable to fetch clock rate\n");
- 		return -EINVAL;
+diff --git a/fs/nfsd/nfs4callback.c b/fs/nfsd/nfs4callback.c
+index 22b784e7ef50..e347abf3dfa0 100644
+--- a/fs/nfsd/nfs4callback.c
++++ b/fs/nfsd/nfs4callback.c
+@@ -813,7 +813,6 @@ static int setup_callback_client(struct nfs4_client *clp, struct nfs4_cb_conn *c
+ 	} else {
+ 		if (!conn->cb_xprt)
+ 			return -EINVAL;
+-		clp->cl_cb_conn.cb_xprt = conn->cb_xprt;
+ 		clp->cl_cb_session = ses;
+ 		args.bc_xprt = conn->cb_xprt;
+ 		args.prognumber = clp->cl_cb_session->se_cb_prog;
+@@ -833,6 +832,9 @@ static int setup_callback_client(struct nfs4_client *clp, struct nfs4_cb_conn *c
+ 		rpc_shutdown_client(client);
+ 		return PTR_ERR(cred);
  	}
++
++	if (clp->cl_minorversion != 0)
++		clp->cl_cb_conn.cb_xprt = conn->cb_xprt;
+ 	clp->cl_cb_client = client;
+ 	clp->cl_cb_cred = cred;
+ 	return 0;
 -- 
 2.35.1
 
