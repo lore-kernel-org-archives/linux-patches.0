@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03376FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:13:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388A4C433D2;
-	Mon, 16 Jan 2023 17:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17EBB6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:13:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92D7BC433F1;
+	Mon, 16 Jan 2023 17:13:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889192;
-	bh=6s2Tb3eHH6LLYT7Fut/hhoaprggUaScGwRqF1wzu1jc=;
+	s=korg; t=1673889197;
+	bh=Id/6QiHmc49JSw3V/6uvLLQXRIYgxzWR8UqB0rESjY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wNAicm7W151WRjk4BADUGgHbAnAhsplYnsDarJVP41g1HL1WtICHZX8eGnpgdNp/O
-	 3PoX6Kob04oxWVNYnjO7AviK0MrHCDWS4ngaTfje0IJV9fEyhcS2BjQWEzdd1Yq53l
-	 hceKWzdwrxi4yd+k+Cgec1w/lNNQ+0JE2fWHg08Y=
+	b=b1+CTr+xkClX4/ccZApN1d635EGwFbkgkwNTjwo9P2biIe3r/XGxvBYFc5gPgX+YK
+	 O1gOebxn5V54xjAHxOaGLEh8JmrPDFuq1MRRFeay1iGjU0w+enNpIPWTUS8SFApiLU
+	 pwcsP2a1M/F+EGOdV5gzFwXK+xPegLADbrhY3dG4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
-Subject: [PATCH 4.14 276/338] selftests: Use optional USERCFLAGS and USERLDFLAGS
-Date: Mon, 16 Jan 2023 16:52:29 +0100
-Message-Id: <20230116154833.111828948@linuxfoundation.org>
+	Simon Ser <contact@emersion.fr>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Lyude Paul <lyude@redhat.com>,
+	=?UTF-8?q?Jonas=20=C3=85dahl?= <jadahl@redhat.com>
+Subject: [PATCH 4.14 295/338] drm/connector: send hotplug uevent on connector cleanup
+Date: Mon, 16 Jan 2023 16:52:48 +0100
+Message-Id: <20230116154833.952612950@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -34,42 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mickaël Salaün <mic@digikod.net>
+From: Simon Ser <contact@emersion.fr>
 
-commit de3ee3f63400a23954e7c1ad1cb8c20f29ab6fe3 upstream.
+commit 6fdc2d490ea1369d17afd7e6eb66fecc5b7209bc upstream.
 
-This change enables to extend CFLAGS and LDFLAGS from command line, e.g.
-to extend compiler checks: make USERCFLAGS=-Werror USERLDFLAGS=-static
+A typical DP-MST unplug removes a KMS connector. However care must
+be taken to properly synchronize with user-space. The expected
+sequence of events is the following:
 
-USERCFLAGS and USERLDFLAGS are documented in
-Documentation/kbuild/makefiles.rst and Documentation/kbuild/kbuild.rst
+1. The kernel notices that the DP-MST port is gone.
+2. The kernel marks the connector as disconnected, then sends a
+   uevent to make user-space re-scan the connector list.
+3. User-space notices the connector goes from connected to disconnected,
+   disables it.
+4. Kernel handles the IOCTL disabling the connector. On success,
+   the very last reference to the struct drm_connector is dropped and
+   drm_connector_cleanup() is called.
+5. The connector is removed from the list, and a uevent is sent to tell
+   user-space that the connector disappeared.
 
-This should be backported (down to 5.10) to improve previous kernel
-versions testing as well.
+The very last step was missing. As a result, user-space thought the
+connector still existed and could try to disable it again. Since the
+kernel no longer knows about the connector, that would end up with
+EINVAL and confused user-space.
 
-Cc: Shuah Khan <skhan@linuxfoundation.org>
+Fix this by sending a hotplug uevent from drm_connector_cleanup().
+
+Signed-off-by: Simon Ser <contact@emersion.fr>
 Cc: stable@vger.kernel.org
-Signed-off-by: Mickaël Salaün <mic@digikod.net>
-Link: https://lore.kernel.org/r/20220909103901.1503436-1-mic@digikod.net
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Lyude Paul <lyude@redhat.com>
+Cc: Jonas Ådahl <jadahl@redhat.com>
+Tested-by: Jonas Ådahl <jadahl@redhat.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221017153150.60675-2-contact@emersion.fr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/lib.mk |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/drm_connector.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/tools/testing/selftests/lib.mk
-+++ b/tools/testing/selftests/lib.mk
-@@ -103,6 +103,11 @@ endef
- clean:
- 	$(CLEAN)
+--- a/drivers/gpu/drm/drm_connector.c
++++ b/drivers/gpu/drm/drm_connector.c
+@@ -352,6 +352,9 @@ void drm_connector_cleanup(struct drm_co
+ 	mutex_destroy(&connector->mutex);
  
-+# Enables to extend CFLAGS and LDFLAGS from command line, e.g.
-+# make USERCFLAGS=-Werror USERLDFLAGS=-static
-+CFLAGS += $(USERCFLAGS)
-+LDFLAGS += $(USERLDFLAGS)
+ 	memset(connector, 0, sizeof(*connector));
 +
- # When make O= with kselftest target from main level
- # the following aren't defined.
- #
++	if (dev->registered)
++		drm_sysfs_hotplug_event(dev);
+ }
+ EXPORT_SYMBOL(drm_connector_cleanup);
+ 
 
 
