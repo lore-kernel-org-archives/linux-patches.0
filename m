@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F71933F1
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:12:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E681DC433F1;
-	Mon, 16 Jan 2023 16:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE8A633F0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:12:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56A90C433D2;
+	Mon, 16 Jan 2023 16:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885559;
-	bh=Y1DO5o7BuAe5s+ybFJLesPQquWluBXAXBGwYrizFhzo=;
+	s=korg; t=1673885556;
+	bh=yQi0KKFy++VnQxeN1EaZEtnH9V/nrQBt/zrBPeiXXF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n/XTiElGQ1+Q9o2iF0wgDOEVo9nZpRQv29RJcfRd6iT4Qbd+azy30HaZkun62KeNw
-	 TDS5ekXxGmhx9ZCb5zAH3/u/iXhMjZgn22Q73MOyqczSQhv7RW8VhRSSyIHfok3oIo
-	 Iaf45mOzhqxfNZXvGkEcORPMf+7CoPnB2gd5A6y8=
+	b=nXNJkqfFSxSUpxBekNowBVtaRkOUQxcmFBW+KP8W2TIrIZuCZ6uOX6PkdORvxAIli
+	 s/5Uxg7/Qb6vC+o66hG//eBjZYOHMTkiFfHWt68fl6OtGdT0Cj/ISxHCaxTZWA47gA
+	 /9doaQ2UgyUa5lszGo1urCD2G9qiISoWHdHpHhWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Liao <liaoyu15@huawei.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 090/658] platform/x86: mxm-wmi: fix memleak in mxm_wmi_call_mx[ds|mx]()
-Date: Mon, 16 Jan 2023 16:42:58 +0100
-Message-Id: <20230116154913.681402971@linuxfoundation.org>
+Subject: [PATCH 5.4 058/658] timerqueue: Use rb_entry_safe() in timerqueue_getnext()
+Date: Mon, 16 Jan 2023 16:42:26 +0100
+Message-Id: <20230116154912.332350787@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,60 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Liao <liaoyu15@huawei.com>
+From: Barnabás Pőcze <pobrn@protonmail.com>
 
-[ Upstream commit 727cc0147f5066e359aca65cc6cc5e6d64cc15d8 ]
+[ Upstream commit 2f117484329b233455ee278f2d9b0a4356835060 ]
 
-The ACPI buffer memory (out.pointer) returned by wmi_evaluate_method()
-is not freed after the call, so it leads to memory leak.
+When `timerqueue_getnext()` is called on an empty timer queue, it will
+use `rb_entry()` on a NULL pointer, which is invalid. Fix that by using
+`rb_entry_safe()` which handles NULL pointers.
 
-The method results in ACPI buffer is not used, so just pass NULL to
-wmi_evaluate_method() which fixes the memory leak.
+This has not caused any issues so far because the offset of the `rb_node`
+member in `timerqueue_node` is 0, so `rb_entry()` is essentially a no-op.
 
-Fixes: 99b38b4acc0d ("platform/x86: add MXM WMI driver.")
-Signed-off-by: Yu Liao <liaoyu15@huawei.com>
-Link: https://lore.kernel.org/r/20221129011101.2042315-1-liaoyu15@huawei.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 511885d7061e ("lib/timerqueue: Rely on rbtree semantics for next timer")
+Signed-off-by: Barnabás Pőcze <pobrn@protonmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20221114195421.342929-1-pobrn@protonmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/mxm-wmi.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ include/linux/timerqueue.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/x86/mxm-wmi.c b/drivers/platform/x86/mxm-wmi.c
-index 9a19fbd2f734..9a457956025a 100644
---- a/drivers/platform/x86/mxm-wmi.c
-+++ b/drivers/platform/x86/mxm-wmi.c
-@@ -35,13 +35,11 @@ int mxm_wmi_call_mxds(int adapter)
- 		.xarg = 1,
- 	};
- 	struct acpi_buffer input = { (acpi_size)sizeof(args), &args };
--	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER, NULL };
- 	acpi_status status;
+diff --git a/include/linux/timerqueue.h b/include/linux/timerqueue.h
+index 93884086f392..adc80e29168e 100644
+--- a/include/linux/timerqueue.h
++++ b/include/linux/timerqueue.h
+@@ -35,7 +35,7 @@ struct timerqueue_node *timerqueue_getnext(struct timerqueue_head *head)
+ {
+ 	struct rb_node *leftmost = rb_first_cached(&head->rb_root);
  
- 	printk("calling mux switch %d\n", adapter);
+-	return rb_entry(leftmost, struct timerqueue_node, node);
++	return rb_entry_safe(leftmost, struct timerqueue_node, node);
+ }
  
--	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input,
--				     &output);
-+	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input, NULL);
- 
- 	if (ACPI_FAILURE(status))
- 		return status;
-@@ -60,13 +58,11 @@ int mxm_wmi_call_mxmx(int adapter)
- 		.xarg = 1,
- 	};
- 	struct acpi_buffer input = { (acpi_size)sizeof(args), &args };
--	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER, NULL };
- 	acpi_status status;
- 
- 	printk("calling mux switch %d\n", adapter);
- 
--	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input,
--				     &output);
-+	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input, NULL);
- 
- 	if (ACPI_FAILURE(status))
- 		return status;
+ static inline void timerqueue_init(struct timerqueue_node *node)
 -- 
 2.35.1
 
