@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E24276FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:13:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68605C433EF;
-	Mon, 16 Jan 2023 17:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BEDF6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:14:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1367AC433EF;
+	Mon, 16 Jan 2023 17:14:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889239;
-	bh=VeCUNm8+faq/7zlANrVqTuK+g085Wwf4/uJ/WiqqIY8=;
+	s=korg; t=1673889242;
+	bh=kCnWFqIJsJsLVNUsATSvvvUu5AIaJy/0EUf4PgVt0UA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mNVbBaufk9wW8pSV1gbgX0xxd3NGi27r9jA2Xrh+n925oN3rKZeHCAx7G/TXDkVyS
-	 5J4dNRWKwObb6YXXsoKiDAT1jH11hOYd+UYa+YDD5v4UbKkZAcBvtCbvcBmPg2OQg6
-	 BZSXQO+BC5aSX04r/GHFGa9UMewpmt4qn7eLOdaQ=
+	b=vQOzz3pGoVEGzhvvToxiG0qZNtlDngZyItoYhrtcy+HQLg1iKIjxGlYEbj+xLdMjd
+	 KVMbfhAkTLRQsUwGtHofslCA2XXJr9GL6dxm6ZfKaahSK8+k0cz0jTZrKFsGqyueKI
+	 sp4GlTOtzdALERL3XqbeJ7hdtwgJ2O8P9xCPRJAk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 4.14 281/338] dm cache: set needs_check flag after aborting metadata
-Date: Mon, 16 Jan 2023 16:52:34 +0100
-Message-Id: <20230116154833.339803647@linuxfoundation.org>
+	Ashok Raj <ashok.raj@intel.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 4.14 282/338] x86/microcode/intel: Do not retry microcode reloading on the APs
+Date: Mon, 16 Jan 2023 16:52:35 +0100
+Message-Id: <20230116154833.379983219@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -33,47 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Snitzer <snitzer@kernel.org>
+From: Ashok Raj <ashok.raj@intel.com>
 
-commit 6b9973861cb2e96dcd0bb0f1baddc5c034207c5c upstream.
+commit be1b670f61443aa5d0d01782e9b8ea0ee825d018 upstream.
 
-Otherwise the commit that will be aborted will be associated with the
-metadata objects that will be torn down.  Must write needs_check flag
-to metadata with a reset block manager.
+The retries in load_ucode_intel_ap() were in place to support systems
+with mixed steppings. Mixed steppings are no longer supported and there is
+only one microcode image at a time. Any retries will simply reattempt to
+apply the same image over and over without making progress.
 
-Found through code-inspection (and compared against dm-thin.c).
+  [ bp: Zap the circumstantial reasoning from the commit message. ]
 
+Fixes: 06b8534cb728 ("x86/microcode: Rework microcode loading")
+Signed-off-by: Ashok Raj <ashok.raj@intel.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
 Cc: stable@vger.kernel.org
-Fixes: 028ae9f76f29 ("dm cache: add fail io mode and needs_check flag")
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Link: https://lore.kernel.org/r/20221129210832.107850-3-ashok.raj@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-cache-target.c |   10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/x86/kernel/cpu/microcode/intel.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/drivers/md/dm-cache-target.c
-+++ b/drivers/md/dm-cache-target.c
-@@ -1019,16 +1019,16 @@ static void abort_transaction(struct cac
- 	if (get_cache_mode(cache) >= CM_READ_ONLY)
- 		return;
+--- a/arch/x86/kernel/cpu/microcode/intel.c
++++ b/arch/x86/kernel/cpu/microcode/intel.c
+@@ -662,7 +662,6 @@ void load_ucode_intel_ap(void)
+ 	else
+ 		iup = &intel_ucode_patch;
  
--	if (dm_cache_metadata_set_needs_check(cache->cmd)) {
--		DMERR("%s: failed to set 'needs_check' flag in metadata", dev_name);
--		set_cache_mode(cache, CM_FAIL);
--	}
+-reget:
+ 	if (!*iup) {
+ 		patch = __load_ucode_intel(&uci);
+ 		if (!patch)
+@@ -673,12 +672,7 @@ reget:
+ 
+ 	uci.mc = *iup;
+ 
+-	if (apply_microcode_early(&uci, true)) {
+-		/* Mixed-silicon system? Try to refetch the proper patch: */
+-		*iup = NULL;
 -
- 	DMERR_LIMIT("%s: aborting current metadata transaction", dev_name);
- 	if (dm_cache_metadata_abort(cache->cmd)) {
- 		DMERR("%s: failed to abort metadata transaction", dev_name);
- 		set_cache_mode(cache, CM_FAIL);
- 	}
-+
-+	if (dm_cache_metadata_set_needs_check(cache->cmd)) {
-+		DMERR("%s: failed to set 'needs_check' flag in metadata", dev_name);
-+		set_cache_mode(cache, CM_FAIL);
-+	}
+-		goto reget;
+-	}
++	apply_microcode_early(&uci, true);
  }
  
- static void metadata_operation_failed(struct cache *cache, const char *op, int r)
+ static struct microcode_intel *find_patch(struct ucode_cpu_info *uci)
 
 
