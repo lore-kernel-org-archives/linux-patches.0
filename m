@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9304C6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:57:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18AE2C433D2;
-	Mon, 16 Jan 2023 16:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B53A6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:57:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1FAC433F0;
+	Mon, 16 Jan 2023 16:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888229;
-	bh=r+ErnnFDSWRKU1HeNnAJMyBzcmsj89HdihPsua9tMK4=;
+	s=korg; t=1673888232;
+	bh=7uvtiZsQiXByGYzrT7Kbuh0ZMO6iIueX7kjfodR6j/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z/w1EwvFH5ax5L/AIWYbbXbNc6iSENU1yXjyY0Ricpdyzl4BX/rOI6UK3pyaTcyb0
-	 uROUOiPEYnF3hijVqyiQhZc3z+hv8zJRs8YpdizVZJJHGyVsAJU5ijcZ+CZk2TDjgv
-	 y/sLSTD2C0g6ssDcOZmPD1GY72XTt+3whVKngJcU=
+	b=EIzWTBw1ebP9yETHEOoJ8PM0hPQ05xoCTcWdYEJzxTugLqw7go9Mbk/JxRxOt3rC0
+	 1O3rmSKFVA+/tAiRUQAi+LBFSx9yY5oR2NimY3uVNpGsvE2GLupnJYu2d0xJoILGp1
+	 obehUTuToqZHlKzVCBxACIz/W65mzrMntyh3GFjk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Szymon Heidrich <szymon.heidrich@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 449/521] net: sched: atm: dont intepret cls results when asked to drop
-Date: Mon, 16 Jan 2023 16:51:51 +0100
-Message-Id: <20230116154907.211242816@linuxfoundation.org>
+Subject: [PATCH 4.19 450/521] usb: rndis_host: Secure rndis_query check against int overflow
+Date: Mon, 16 Jan 2023 16:51:52 +0100
+Message-Id: <20230116154907.249036885@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,40 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jamal Hadi Salim <jhs@mojatatu.com>
+From: Szymon Heidrich <szymon.heidrich@gmail.com>
 
-[ Upstream commit a2965c7be0522eaa18808684b7b82b248515511b ]
+[ Upstream commit c7dd13805f8b8fc1ce3b6d40f6aff47e66b72ad2 ]
 
-If asked to drop a packet via TC_ACT_SHOT it is unsafe to assume
-res.class contains a valid pointer
-Fixes: b0188d4dbe5f ("[NET_SCHED]: sch_atm: Lindent")
+Variables off and len typed as uint32 in rndis_query function
+are controlled by incoming RNDIS response message thus their
+value may be manipulated. Setting off to a unexpectetly large
+value will cause the sum with len and 8 to overflow and pass
+the implemented validation step. Consequently the response
+pointer will be referring to a location past the expected
+buffer boundaries allowing information leakage e.g. via
+RNDIS_OID_802_3_PERMANENT_ADDRESS OID.
 
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Fixes: ddda08624013 ("USB: rndis_host, various cleanups")
+Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_atm.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/usb/rndis_host.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/net/sched/sch_atm.c b/net/sched/sch_atm.c
-index 9a1bfa13a6cd..ff825f40ea04 100644
---- a/net/sched/sch_atm.c
-+++ b/net/sched/sch_atm.c
-@@ -394,10 +394,13 @@ static int atm_tc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
- 				result = tcf_classify(skb, fl, &res, true);
- 				if (result < 0)
- 					continue;
-+				if (result == TC_ACT_SHOT)
-+					goto done;
-+
- 				flow = (struct atm_flow_data *)res.class;
- 				if (!flow)
- 					flow = lookup_flow(sch, res.classid);
--				goto done;
-+				goto drop;
- 			}
- 		}
- 		flow = NULL;
+diff --git a/drivers/net/usb/rndis_host.c b/drivers/net/usb/rndis_host.c
+index ab41a63aa4aa..497d6bcdc276 100644
+--- a/drivers/net/usb/rndis_host.c
++++ b/drivers/net/usb/rndis_host.c
+@@ -267,7 +267,8 @@ static int rndis_query(struct usbnet *dev, struct usb_interface *intf,
+ 
+ 	off = le32_to_cpu(u.get_c->offset);
+ 	len = le32_to_cpu(u.get_c->len);
+-	if (unlikely((8 + off + len) > CONTROL_BUFFER_SIZE))
++	if (unlikely((off > CONTROL_BUFFER_SIZE - 8) ||
++		     (len > CONTROL_BUFFER_SIZE - 8 - off)))
+ 		goto response_error;
+ 
+ 	if (*reply_len != -1 && len != *reply_len)
 -- 
 2.35.1
 
