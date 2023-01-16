@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B216FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:39:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17136C433EF;
-	Mon, 16 Jan 2023 16:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5649E6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:39:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A97DBC433D2;
+	Mon, 16 Jan 2023 16:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887193;
-	bh=hMYsCiQUGcYmL3Jyxrb5QuX0Lq42ul9xre1vEk+88v4=;
+	s=korg; t=1673887196;
+	bh=fkOHRz18g8+K6OE9uQoeoZHEV50ropEvWm3m3vnf/dc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R7vqcmCVxMmdOW7ndQEVwqQ149kQ//MTHRKWXKDEVrH+zl4uu7AISY5d8eFV5Otq4
-	 DbIuSznjAZOOSOMUTvoqqyHDGqHzkDAbntqt8tvpb1NdqgetDuJPE567hxJM8uSaTg
-	 8FMPu0eCvW1/t9/jqSnI/pqRsMx9Q0PyJYgfYXgk=
+	b=msP46iTHD9RI8sf6wrzXCdgadZDxl0444082cSZ9rpKWL5owT44WoxTfAlmgj17cK
+	 p8r3/pbsADUT4eW04fOKHZmeZ2DpCIrdaki/dXtpavSw+NrBKUqSPY/t4DQo1Ua4BR
+	 xWo8AVgdfJAXhFIoOMEoFGC8EwNJ6hcfPrRF/4Wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Wang Yufen <wangyufen@huawei.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 057/521] cpufreq: amd_freq_sensitivity: Add missing pci_dev_put()
-Date: Mon, 16 Jan 2023 16:45:19 +0100
-Message-Id: <20230116154849.806269453@linuxfoundation.org>
+Subject: [PATCH 4.19 040/521] pstore/ram: Fix error return code in ramoops_probe()
+Date: Mon, 16 Jan 2023 16:45:02 +0100
+Message-Id: <20230116154849.082205421@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,35 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit 91fda1f88c0968f1491ab150bb01690525af150a ]
+[ Upstream commit e1fce564900f8734edf15b87f028c57e14f6e28d ]
 
-pci_get_device() will increase the reference count for the returned
-pci_dev. We need to use pci_dev_put() to decrease the reference count
-after using pci_get_device(). Let's add it.
+In the if (dev_of_node(dev) && !pdata) path, the "err" may be assigned a
+value of 0, so the error return code -EINVAL may be incorrectly set
+to 0. To fix set valid return code before calling to goto.
 
-Fixes: 59a3b3a8db16 ("cpufreq: AMD: Ignore the check for ProcFeedback in ST/CZ")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 35da60941e44 ("pstore/ram: add Device Tree bindings")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/1669969374-46582-1-git-send-email-wangyufen@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/amd_freq_sensitivity.c | 2 ++
+ fs/pstore/ram.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/cpufreq/amd_freq_sensitivity.c b/drivers/cpufreq/amd_freq_sensitivity.c
-index 4b4f128c3488..cacd4c67d9be 100644
---- a/drivers/cpufreq/amd_freq_sensitivity.c
-+++ b/drivers/cpufreq/amd_freq_sensitivity.c
-@@ -122,6 +122,8 @@ static int __init amd_freq_sensitivity_init(void)
- 	if (!pcidev) {
- 		if (!static_cpu_has(X86_FEATURE_PROC_FEEDBACK))
- 			return -ENODEV;
-+	} else {
-+		pci_dev_put(pcidev);
+diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
+index bafbab2dd039..33294dee7d7f 100644
+--- a/fs/pstore/ram.c
++++ b/fs/pstore/ram.c
+@@ -753,6 +753,7 @@ static int ramoops_probe(struct platform_device *pdev)
+ 	/* Make sure we didn't get bogus platform data pointer. */
+ 	if (!pdata) {
+ 		pr_err("NULL platform data\n");
++		err = -EINVAL;
+ 		goto fail_out;
  	}
  
- 	if (rdmsrl_safe(MSR_AMD64_FREQ_SENSITIVITY_ACTUAL, &val))
+@@ -760,6 +761,7 @@ static int ramoops_probe(struct platform_device *pdev)
+ 			!pdata->ftrace_size && !pdata->pmsg_size)) {
+ 		pr_err("The memory size and the record/console size must be "
+ 			"non-zero\n");
++		err = -EINVAL;
+ 		goto fail_out;
+ 	}
+ 
 -- 
 2.35.1
 
