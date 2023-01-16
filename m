@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5150A6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:35:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C37C1C433D2;
-	Mon, 16 Jan 2023 16:35:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B9656FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:35:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98CDEC433EF;
+	Mon, 16 Jan 2023 16:35:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886910;
-	bh=k+aQ0o5Qdo598IiqTJpP87kl4JXAOtFa/cMtEL+roCE=;
+	s=korg; t=1673886913;
+	bh=Wp7xpZrf6wMe5TcsPvuPC2ee1vebzZ31wgFKsOH+2kI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lsNgBcXNNA7XFYHdWhjnE5rqUqTA+q7e4tQ5409wvrZAeQJnoGsYHyx2lgkFdeXSE
-	 FpjQbZpTyaKI5Cw4fI7qnjcyKrwE3xGNGEG0vXECtZt1nQXV02LfgXA8Kwda5lR5ZU
-	 avxNAjkmsBJViRqqkXL3KV7nHeeUGviu4Mv7/h48=
+	b=aGqfFMdkt59CqKf8Ql/wDdauQ7Za3h1ah0jM6btlDwZnNbsGGUQ66g4oGUjKtBP03
+	 McmFwNPB14bDtNy9tTtpI4S/RtXmR4Nn6Dx0doMNbsq+ILx5gJokxFW9w+BEWh8wPA
+	 PBXVR7n7dsWaVJy8F9LfMQP7JhClA/b6kVu5uZM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	slipper <slipper.alive@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 607/658] net/ulp: prevent ULP without clone op from entering the LISTEN status
-Date: Mon, 16 Jan 2023 16:51:35 +0100
-Message-Id: <20230116154937.273783165@linuxfoundation.org>
+	Clement Lecigne <clecigne@google.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Jaroslav Kysela <perex@perex.cz>,
+	stable@kernel.org
+Subject: [PATCH 5.4 608/658] ALSA: pcm: Move rwsem lock inside snd_ctl_elem_read to prevent UAF
+Date: Mon, 16 Jan 2023 16:51:36 +0100
+Message-Id: <20230116154937.324744856@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,63 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Clement Lecigne <clecigne@google.com>
 
-commit 2c02d41d71f90a5168391b6a5f2954112ba2307c upstream.
+[ Note: this is a fix that works around the bug equivalently as the
+  two upstream commits:
+   1fa4445f9adf ("ALSA: control - introduce snd_ctl_notify_one() helper")
+   56b88b50565c ("ALSA: pcm: Move rwsem lock inside snd_ctl_elem_read to prevent UAF")
+  but in a simpler way to fit with older stable trees -- tiwai ]
 
-When an ULP-enabled socket enters the LISTEN status, the listener ULP data
-pointer is copied inside the child/accepted sockets by sk_clone_lock().
+Add missing locking in ctl_elem_read_user/ctl_elem_write_user which can be
+easily triggered and turned into an use-after-free.
 
-The relevant ULP can take care of de-duplicating the context pointer via
-the clone() operation, but only MPTCP and SMC implement such op.
+Example code paths with SNDRV_CTL_IOCTL_ELEM_READ:
 
-Other ULPs may end-up with a double-free at socket disposal time.
+64-bits:
+snd_ctl_ioctl
+  snd_ctl_elem_read_user
+    [takes controls_rwsem]
+    snd_ctl_elem_read [lock properly held, all good]
+    [drops controls_rwsem]
 
-We can't simply clear the ULP data at clone time, as TLS replaces the
-socket ops with custom ones assuming a valid TLS ULP context is
-available.
+32-bits (compat):
+snd_ctl_ioctl_compat
+  snd_ctl_elem_write_read_compat
+    ctl_elem_write_read
+      snd_ctl_elem_read [missing lock, not good]
 
-Instead completely prevent clone-less ULP sockets from entering the
-LISTEN status.
+CVE-2023-0266 was assigned for this issue.
 
-Fixes: 734942cc4ea6 ("tcp: ULP infrastructure")
-Reported-by: slipper <slipper.alive@gmail.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Link: https://lore.kernel.org/r/4b80c3d1dbe3d0ab072f80450c202d9bc88b4b03.1672740602.git.pabeni@redhat.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Clement Lecigne <clecigne@google.com>
+Cc: stable@kernel.org # 5.12 and older
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Reviewed-by: Jaroslav Kysela <perex@perex.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_connection_sock.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ sound/core/control_compat.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -902,11 +902,25 @@ void inet_csk_prepare_forced_close(struc
- }
- EXPORT_SYMBOL(inet_csk_prepare_forced_close);
- 
-+static int inet_ulp_can_listen(const struct sock *sk)
-+{
-+	const struct inet_connection_sock *icsk = inet_csk(sk);
-+
-+	if (icsk->icsk_ulp_ops)
-+		return -EINVAL;
-+
-+	return 0;
-+}
-+
- int inet_csk_listen_start(struct sock *sk, int backlog)
- {
- 	struct inet_connection_sock *icsk = inet_csk(sk);
- 	struct inet_sock *inet = inet_sk(sk);
--	int err = -EADDRINUSE;
-+	int err;
-+
-+	err = inet_ulp_can_listen(sk);
-+	if (unlikely(err))
-+		return err;
- 
- 	reqsk_queue_alloc(&icsk->icsk_accept_queue);
- 
+--- a/sound/core/control_compat.c
++++ b/sound/core/control_compat.c
+@@ -306,7 +306,9 @@ static int ctl_elem_read_user(struct snd
+ 	err = snd_power_wait(card, SNDRV_CTL_POWER_D0);
+ 	if (err < 0)
+ 		goto error;
++	down_read(&card->controls_rwsem);
+ 	err = snd_ctl_elem_read(card, data);
++	up_read(&card->controls_rwsem);
+ 	if (err < 0)
+ 		goto error;
+ 	err = copy_ctl_value_to_user(userdata, valuep, data, type, count);
+@@ -334,7 +336,9 @@ static int ctl_elem_write_user(struct sn
+ 	err = snd_power_wait(card, SNDRV_CTL_POWER_D0);
+ 	if (err < 0)
+ 		goto error;
++	down_write(&card->controls_rwsem);
+ 	err = snd_ctl_elem_write(card, file, data);
++	up_write(&card->controls_rwsem);
+ 	if (err < 0)
+ 		goto error;
+ 	err = copy_ctl_value_to_user(userdata, valuep, data, type, count);
 
 
