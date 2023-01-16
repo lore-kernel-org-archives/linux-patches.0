@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0263933EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A7FEC433F1;
-	Mon, 16 Jan 2023 16:00:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5BF33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6C5C433F0;
+	Mon, 16 Jan 2023 16:00:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884803;
-	bh=weLb9qUT72LFeVd1nEIh3UGqo0eNlzY5VxB7l3ffpNg=;
+	s=korg; t=1673884806;
+	bh=mpCpMyDgDSLbCOWwnoq/YrmGquLxe7mhGXaOuDITfgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FOzvJSW1d7wH3GDmFG2GP5N35gnnb/BGBY+xIj4J30XPZG+e72xrQp/RfxZVNmBCY
-	 2ipZUV7Z+BSCdQY1dxjjVAa3jWedU7cY3RCrCPRwYsSzylVrSDJBssp5cvTVDNtcPr
-	 C1Z9FPLRtRJjuW0aTU6aSd1yYlEWBNswzTP6JjEE=
+	b=ykusRaC+wHMN2umhc5ds1P7KielvnX8KbeCXsPIxUPkZqeeQ3AuW3eR6q1+Z5nul9
+	 0zg739TqkzNuH6SfVOq+Rr7VfKKuYpp7r4gH1kLkOPwbkEfoGeRQCM6m+Y6X3ei24u
+	 qxP2IbZFIj7S9iMNZconejyVZ543xmOe142RNmcs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maaz Mombasawala <mombasawalam@vmware.com>,
-	Martin Krastev <krastevm@vmware.com>,
 	Zack Rusin <zackr@vmware.com>,
+	Martin Krastev <krastevm@vmware.com>,
+	Maaz Mombasawala <mombasawalam@vmware.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 146/183] drm/vmwgfx: Remove vmwgfx_hashtab
-Date: Mon, 16 Jan 2023 16:51:09 +0100
-Message-Id: <20230116154809.511091289@linuxfoundation.org>
+Subject: [PATCH 6.1 147/183] drm/vmwgfx: Remove rcu locks from user resources
+Date: Mon, 16 Jan 2023 16:51:10 +0100
+Message-Id: <20230116154809.550720265@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,460 +36,590 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maaz Mombasawala <mombasawalam@vmware.com>
+From: Zack Rusin <zackr@vmware.com>
 
-[ Upstream commit 9da30cdd6a318595199319708c143ae318f804ef ]
+[ Upstream commit a309c7194e8a2f8bd4539b9449917913f6c2cd50 ]
 
-The vmwgfx driver has migrated from using the hashtable in vmwgfx_hashtab
-to the linux/hashtable implementation. Remove the vmwgfx_hashtab from the
-driver.
+User resource lookups used rcu to avoid two extra atomics. Unfortunately
+the rcu paths were buggy and it was easy to make the driver crash by
+submitting command buffers from two different threads. Because the
+lookups never show up in performance profiles replace them with a
+regular spin lock which fixes the races in accesses to those shared
+resources.
 
-Signed-off-by: Maaz Mombasawala <mombasawalam@vmware.com>
-Reviewed-by: Martin Krastev <krastevm@vmware.com>
-Reviewed-by: Zack Rusin <zackr@vmware.com>
+Fixes kernel oops'es in IGT's vmwgfx execution_buffer stress test and
+seen crashes with apps using shared resources.
+
+Fixes: e14c02e6b699 ("drm/vmwgfx: Look up objects without taking a reference")
 Signed-off-by: Zack Rusin <zackr@vmware.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221022040236.616490-12-zack@kde.org
-Stable-dep-of: a309c7194e8a ("drm/vmwgfx: Remove rcu locks from user resources")
+Reviewed-by: Martin Krastev <krastevm@vmware.com>
+Reviewed-by: Maaz Mombasawala <mombasawalam@vmware.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221207172907.959037-1-zack@kde.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/gpu/todo.rst                 |  11 --
- drivers/gpu/drm/vmwgfx/Makefile            |   2 +-
- drivers/gpu/drm/vmwgfx/ttm_object.c        |   8 +-
- drivers/gpu/drm/vmwgfx/ttm_object.h        |   2 -
- drivers/gpu/drm/vmwgfx/vmwgfx_cmdbuf_res.c |   4 +-
- drivers/gpu/drm/vmwgfx/vmwgfx_drv.h        |   6 +-
- drivers/gpu/drm/vmwgfx/vmwgfx_hashtab.c    | 199 ---------------------
- drivers/gpu/drm/vmwgfx/vmwgfx_hashtab.h    |  83 ---------
- 8 files changed, 12 insertions(+), 303 deletions(-)
- delete mode 100644 drivers/gpu/drm/vmwgfx/vmwgfx_hashtab.c
- delete mode 100644 drivers/gpu/drm/vmwgfx/vmwgfx_hashtab.h
+ drivers/gpu/drm/vmwgfx/ttm_object.c      |  41 +-----
+ drivers/gpu/drm/vmwgfx/ttm_object.h      |  14 --
+ drivers/gpu/drm/vmwgfx/vmwgfx_bo.c       |  38 -----
+ drivers/gpu/drm/vmwgfx/vmwgfx_drv.h      |  18 +--
+ drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c  | 176 +++++++++++------------
+ drivers/gpu/drm/vmwgfx/vmwgfx_resource.c |  33 -----
+ 6 files changed, 87 insertions(+), 233 deletions(-)
 
-diff --git a/Documentation/gpu/todo.rst b/Documentation/gpu/todo.rst
-index 393d218e4a0c..b2c6aaf1edf2 100644
---- a/Documentation/gpu/todo.rst
-+++ b/Documentation/gpu/todo.rst
-@@ -651,17 +651,6 @@ See drivers/gpu/drm/amd/display/TODO for tasks.
- 
- Contact: Harry Wentland, Alex Deucher
- 
--vmwgfx: Replace hashtable with Linux' implementation
------------------------------------------------------
--
--The vmwgfx driver uses its own hashtable implementation. Replace the
--code with Linux' implementation and update the callers. It's mostly a
--refactoring task, but the interfaces are different.
--
--Contact: Zack Rusin, Thomas Zimmermann <tzimmermann@suse.de>
--
--Level: Intermediate
--
- Bootsplash
- ==========
- 
-diff --git a/drivers/gpu/drm/vmwgfx/Makefile b/drivers/gpu/drm/vmwgfx/Makefile
-index eee73b9aa404..68e350f410ad 100644
---- a/drivers/gpu/drm/vmwgfx/Makefile
-+++ b/drivers/gpu/drm/vmwgfx/Makefile
-@@ -1,5 +1,5 @@
- # SPDX-License-Identifier: GPL-2.0
--vmwgfx-y := vmwgfx_execbuf.o vmwgfx_gmr.o vmwgfx_hashtab.o vmwgfx_kms.o vmwgfx_drv.o \
-+vmwgfx-y := vmwgfx_execbuf.o vmwgfx_gmr.o vmwgfx_kms.o vmwgfx_drv.o \
- 	    vmwgfx_ioctl.o vmwgfx_resource.o vmwgfx_ttm_buffer.o \
- 	    vmwgfx_cmd.o vmwgfx_irq.o vmwgfx_ldu.o vmwgfx_ttm_glue.o \
- 	    vmwgfx_overlay.o vmwgfx_gmrid_manager.o vmwgfx_fence.o \
 diff --git a/drivers/gpu/drm/vmwgfx/ttm_object.c b/drivers/gpu/drm/vmwgfx/ttm_object.c
-index c07b81fbc495..932b125ebf3d 100644
+index 932b125ebf3d..ddf8373c1d77 100644
 --- a/drivers/gpu/drm/vmwgfx/ttm_object.c
 +++ b/drivers/gpu/drm/vmwgfx/ttm_object.c
-@@ -284,7 +284,7 @@ ttm_base_object_noref_lookup(struct ttm_object_file *tfile, uint64_t key)
- 	}
- 
- 	__release(RCU);
--	return drm_hash_entry(hash, struct ttm_ref_object, hash)->obj;
-+	return hlist_entry(hash, struct ttm_ref_object, hash)->obj;
+@@ -254,40 +254,6 @@ void ttm_base_object_unref(struct ttm_base_object **p_base)
+ 	kref_put(&base->refcount, ttm_release_base);
  }
- EXPORT_SYMBOL(ttm_base_object_noref_lookup);
  
-@@ -299,7 +299,7 @@ struct ttm_base_object *ttm_base_object_lookup(struct ttm_object_file *tfile,
- 	ret = ttm_tfile_find_ref_rcu(tfile, key, &hash);
+-/**
+- * ttm_base_object_noref_lookup - look up a base object without reference
+- * @tfile: The struct ttm_object_file the object is registered with.
+- * @key: The object handle.
+- *
+- * This function looks up a ttm base object and returns a pointer to it
+- * without refcounting the pointer. The returned pointer is only valid
+- * until ttm_base_object_noref_release() is called, and the object
+- * pointed to by the returned pointer may be doomed. Any persistent usage
+- * of the object requires a refcount to be taken using kref_get_unless_zero().
+- * Iff this function returns successfully it needs to be paired with
+- * ttm_base_object_noref_release() and no sleeping- or scheduling functions
+- * may be called inbetween these function callse.
+- *
+- * Return: A pointer to the object if successful or NULL otherwise.
+- */
+-struct ttm_base_object *
+-ttm_base_object_noref_lookup(struct ttm_object_file *tfile, uint64_t key)
+-{
+-	struct vmwgfx_hash_item *hash;
+-	int ret;
+-
+-	rcu_read_lock();
+-	ret = ttm_tfile_find_ref_rcu(tfile, key, &hash);
+-	if (ret) {
+-		rcu_read_unlock();
+-		return NULL;
+-	}
+-
+-	__release(RCU);
+-	return hlist_entry(hash, struct ttm_ref_object, hash)->obj;
+-}
+-EXPORT_SYMBOL(ttm_base_object_noref_lookup);
+-
+ struct ttm_base_object *ttm_base_object_lookup(struct ttm_object_file *tfile,
+ 					       uint64_t key)
+ {
+@@ -295,15 +261,16 @@ struct ttm_base_object *ttm_base_object_lookup(struct ttm_object_file *tfile,
+ 	struct vmwgfx_hash_item *hash;
+ 	int ret;
+ 
+-	rcu_read_lock();
+-	ret = ttm_tfile_find_ref_rcu(tfile, key, &hash);
++	spin_lock(&tfile->lock);
++	ret = ttm_tfile_find_ref(tfile, key, &hash);
  
  	if (likely(ret == 0)) {
--		base = drm_hash_entry(hash, struct ttm_ref_object, hash)->obj;
-+		base = hlist_entry(hash, struct ttm_ref_object, hash)->obj;
+ 		base = hlist_entry(hash, struct ttm_ref_object, hash)->obj;
  		if (!kref_get_unless_zero(&base->refcount))
  			base = NULL;
  	}
-@@ -343,7 +343,7 @@ int ttm_ref_object_add(struct ttm_object_file *tfile,
- 		ret = ttm_tfile_find_ref_rcu(tfile, base->handle, &hash);
+-	rcu_read_unlock();
++	spin_unlock(&tfile->lock);
++
  
- 		if (ret == 0) {
--			ref = drm_hash_entry(hash, struct ttm_ref_object, hash);
-+			ref = hlist_entry(hash, struct ttm_ref_object, hash);
- 			if (kref_get_unless_zero(&ref->kref)) {
- 				rcu_read_unlock();
- 				break;
-@@ -407,7 +407,7 @@ int ttm_ref_object_base_unref(struct ttm_object_file *tfile,
- 		spin_unlock(&tfile->lock);
- 		return -EINVAL;
- 	}
--	ref = drm_hash_entry(hash, struct ttm_ref_object, hash);
-+	ref = hlist_entry(hash, struct ttm_ref_object, hash);
- 	kref_put(&ref->kref, ttm_ref_object_release);
- 	spin_unlock(&tfile->lock);
- 	return 0;
+ 	return base;
+ }
 diff --git a/drivers/gpu/drm/vmwgfx/ttm_object.h b/drivers/gpu/drm/vmwgfx/ttm_object.h
-index 67f30d589e27..f0ebbe340ad6 100644
+index f0ebbe340ad6..8098a3846bae 100644
 --- a/drivers/gpu/drm/vmwgfx/ttm_object.h
 +++ b/drivers/gpu/drm/vmwgfx/ttm_object.h
-@@ -42,8 +42,6 @@
- #include <linux/list.h>
- #include <linux/rcupdate.h>
+@@ -307,18 +307,4 @@ extern int ttm_prime_handle_to_fd(struct ttm_object_file *tfile,
+ #define ttm_prime_object_kfree(__obj, __prime)		\
+ 	kfree_rcu(__obj, __prime.base.rhead)
  
--#include "vmwgfx_hashtab.h"
+-struct ttm_base_object *
+-ttm_base_object_noref_lookup(struct ttm_object_file *tfile, uint64_t key);
+-
+-/**
+- * ttm_base_object_noref_release - release a base object pointer looked up
+- * without reference
+- *
+- * Releases a base object pointer looked up with ttm_base_object_noref_lookup().
+- */
+-static inline void ttm_base_object_noref_release(void)
+-{
+-	__acquire(RCU);
+-	rcu_read_unlock();
+-}
+ #endif
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
+index 822251aaab0a..973a0a52462e 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
+@@ -715,44 +715,6 @@ int vmw_user_bo_lookup(struct drm_file *filp,
+ 	return 0;
+ }
+ 
+-/**
+- * vmw_user_bo_noref_lookup - Look up a vmw user buffer object without reference
+- * @filp: The TTM object file the handle is registered with.
+- * @handle: The user buffer object handle.
+- *
+- * This function looks up a struct vmw_bo and returns a pointer to the
+- * struct vmw_buffer_object it derives from without refcounting the pointer.
+- * The returned pointer is only valid until vmw_user_bo_noref_release() is
+- * called, and the object pointed to by the returned pointer may be doomed.
+- * Any persistent usage of the object requires a refcount to be taken using
+- * ttm_bo_reference_unless_doomed(). Iff this function returns successfully it
+- * needs to be paired with vmw_user_bo_noref_release() and no sleeping-
+- * or scheduling functions may be called in between these function calls.
+- *
+- * Return: A struct vmw_buffer_object pointer if successful or negative
+- * error pointer on failure.
+- */
+-struct vmw_buffer_object *
+-vmw_user_bo_noref_lookup(struct drm_file *filp, u32 handle)
+-{
+-	struct vmw_buffer_object *vmw_bo;
+-	struct ttm_buffer_object *bo;
+-	struct drm_gem_object *gobj = drm_gem_object_lookup(filp, handle);
+-
+-	if (!gobj) {
+-		DRM_ERROR("Invalid buffer object handle 0x%08lx.\n",
+-			  (unsigned long)handle);
+-		return ERR_PTR(-ESRCH);
+-	}
+-	vmw_bo = gem_to_vmw_bo(gobj);
+-	bo = ttm_bo_get_unless_zero(&vmw_bo->base);
+-	vmw_bo = vmw_buffer_object(bo);
+-	drm_gem_object_put(gobj);
+-
+-	return vmw_bo;
+-}
+-
 -
  /**
-  * enum ttm_object_type
-  *
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_cmdbuf_res.c b/drivers/gpu/drm/vmwgfx/vmwgfx_cmdbuf_res.c
-index 142aef686fcd..47bc0b411055 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_cmdbuf_res.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_cmdbuf_res.c
-@@ -88,7 +88,7 @@ vmw_cmdbuf_res_lookup(struct vmw_cmdbuf_res_manager *man,
- 
- 	hash_for_each_possible_rcu(man->resources, hash, head, key) {
- 		if (hash->key == key)
--			return drm_hash_entry(hash, struct vmw_cmdbuf_res, hash)->res;
-+			return hlist_entry(hash, struct vmw_cmdbuf_res, hash)->res;
- 	}
- 	return ERR_PTR(-EINVAL);
- }
-@@ -243,7 +243,7 @@ int vmw_cmdbuf_res_remove(struct vmw_cmdbuf_res_manager *man,
- 
- 	hash_for_each_possible_rcu(man->resources, hash, head, key) {
- 		if (hash->key == key) {
--			entry = drm_hash_entry(hash, struct vmw_cmdbuf_res, hash);
-+			entry = hlist_entry(hash, struct vmw_cmdbuf_res, hash);
- 			break;
- 		}
- 	}
+  * vmw_bo_fence_single - Utility function to fence a single TTM buffer
+  *                       object without unreserving it.
 diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-index d87aeedb78d0..7c45c3de0dcf 100644
+index 7c45c3de0dcf..0bc1ebc43002 100644
 --- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
 +++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-@@ -43,7 +43,6 @@
- #include "ttm_object.h"
+@@ -826,12 +826,7 @@ extern int vmw_user_resource_lookup_handle(
+ 	uint32_t handle,
+ 	const struct vmw_user_resource_conv *converter,
+ 	struct vmw_resource **p_res);
+-extern struct vmw_resource *
+-vmw_user_resource_noref_lookup_handle(struct vmw_private *dev_priv,
+-				      struct ttm_object_file *tfile,
+-				      uint32_t handle,
+-				      const struct vmw_user_resource_conv *
+-				      converter);
++
+ extern int vmw_stream_claim_ioctl(struct drm_device *dev, void *data,
+ 				  struct drm_file *file_priv);
+ extern int vmw_stream_unref_ioctl(struct drm_device *dev, void *data,
+@@ -870,15 +865,6 @@ static inline bool vmw_resource_mob_attached(const struct vmw_resource *res)
+ 	return !RB_EMPTY_NODE(&res->mob_node);
+ }
  
- #include "vmwgfx_fence.h"
--#include "vmwgfx_hashtab.h"
- #include "vmwgfx_reg.h"
- #include "vmwgfx_validation.h"
+-/**
+- * vmw_user_resource_noref_release - release a user resource pointer looked up
+- * without reference
+- */
+-static inline void vmw_user_resource_noref_release(void)
+-{
+-	ttm_base_object_noref_release();
+-}
+-
+ /**
+  * Buffer object helper functions - vmwgfx_bo.c
+  */
+@@ -930,8 +916,6 @@ extern void vmw_bo_unmap(struct vmw_buffer_object *vbo);
+ extern void vmw_bo_move_notify(struct ttm_buffer_object *bo,
+ 			       struct ttm_resource *mem);
+ extern void vmw_bo_swap_notify(struct ttm_buffer_object *bo);
+-extern struct vmw_buffer_object *
+-vmw_user_bo_noref_lookup(struct drm_file *filp, u32 handle);
  
-@@ -104,6 +103,11 @@ struct vmw_fpriv {
- 	bool gb_aware; /* user-space is guest-backed aware */
- };
+ /**
+  * vmw_bo_adjust_prio - Adjust the buffer object eviction priority
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+index c943ab801ca7..70cfed4fdba0 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
+@@ -290,20 +290,26 @@ static void vmw_execbuf_rcache_update(struct vmw_res_cache_entry *rcache,
+ 	rcache->valid_handle = 0;
+ }
  
-+struct vmwgfx_hash_item {
-+	struct hlist_node head;
-+	unsigned long key;
++enum vmw_val_add_flags {
++	vmw_val_add_flag_none  =      0,
++	vmw_val_add_flag_noctx = 1 << 0,
 +};
 +
  /**
-  * struct vmw_buffer_object - TTM buffer object with vmwgfx additions
-  * @base: The TTM buffer object
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_hashtab.c b/drivers/gpu/drm/vmwgfx/vmwgfx_hashtab.c
-deleted file mode 100644
-index 06aebc12774e..000000000000
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_hashtab.c
-+++ /dev/null
-@@ -1,199 +0,0 @@
--/*
-- * Copyright 2006 Tungsten Graphics, Inc., Bismarck, ND. USA.
-- * All Rights Reserved.
+- * vmw_execbuf_res_noref_val_add - Add a resource described by an unreferenced
+- * rcu-protected pointer to the validation list.
++ * vmw_execbuf_res_val_add - Add a resource to the validation list.
+  *
+  * @sw_context: Pointer to the software context.
+  * @res: Unreferenced rcu-protected pointer to the resource.
+  * @dirty: Whether to change dirty status.
++ * @flags: specifies whether to use the context or not
+  *
+  * Returns: 0 on success. Negative error code on failure. Typical error codes
+  * are %-EINVAL on inconsistency and %-ESRCH if the resource was doomed.
+  */
+-static int vmw_execbuf_res_noref_val_add(struct vmw_sw_context *sw_context,
+-					 struct vmw_resource *res,
+-					 u32 dirty)
++static int vmw_execbuf_res_val_add(struct vmw_sw_context *sw_context,
++				   struct vmw_resource *res,
++				   u32 dirty,
++				   u32 flags)
+ {
+ 	struct vmw_private *dev_priv = res->dev_priv;
+ 	int ret;
+@@ -318,24 +324,30 @@ static int vmw_execbuf_res_noref_val_add(struct vmw_sw_context *sw_context,
+ 		if (dirty)
+ 			vmw_validation_res_set_dirty(sw_context->ctx,
+ 						     rcache->private, dirty);
+-		vmw_user_resource_noref_release();
+ 		return 0;
+ 	}
+ 
+-	priv_size = vmw_execbuf_res_size(dev_priv, res_type);
+-	ret = vmw_validation_add_resource(sw_context->ctx, res, priv_size,
+-					  dirty, (void **)&ctx_info,
+-					  &first_usage);
+-	vmw_user_resource_noref_release();
+-	if (ret)
+-		return ret;
++	if ((flags & vmw_val_add_flag_noctx) != 0) {
++		ret = vmw_validation_add_resource(sw_context->ctx, res, 0, dirty,
++						  (void **)&ctx_info, NULL);
++		if (ret)
++			return ret;
+ 
+-	if (priv_size && first_usage) {
+-		ret = vmw_cmd_ctx_first_setup(dev_priv, sw_context, res,
+-					      ctx_info);
+-		if (ret) {
+-			VMW_DEBUG_USER("Failed first usage context setup.\n");
++	} else {
++		priv_size = vmw_execbuf_res_size(dev_priv, res_type);
++		ret = vmw_validation_add_resource(sw_context->ctx, res, priv_size,
++						  dirty, (void **)&ctx_info,
++						  &first_usage);
++		if (ret)
+ 			return ret;
++
++		if (priv_size && first_usage) {
++			ret = vmw_cmd_ctx_first_setup(dev_priv, sw_context, res,
++						      ctx_info);
++			if (ret) {
++				VMW_DEBUG_USER("Failed first usage context setup.\n");
++				return ret;
++			}
+ 		}
+ 	}
+ 
+@@ -343,43 +355,6 @@ static int vmw_execbuf_res_noref_val_add(struct vmw_sw_context *sw_context,
+ 	return 0;
+ }
+ 
+-/**
+- * vmw_execbuf_res_noctx_val_add - Add a non-context resource to the resource
+- * validation list if it's not already on it
 - *
-- * Permission is hereby granted, free of charge, to any person obtaining a
-- * copy of this software and associated documentation files (the
-- * "Software"), to deal in the Software without restriction, including
-- * without limitation the rights to use, copy, modify, merge, publish,
-- * distribute, sub license, and/or sell copies of the Software, and to
-- * permit persons to whom the Software is furnished to do so, subject to
-- * the following conditions:
+- * @sw_context: Pointer to the software context.
+- * @res: Pointer to the resource.
+- * @dirty: Whether to change dirty status.
 - *
-- * The above copyright notice and this permission notice (including the
-- * next paragraph) shall be included in all copies or substantial portions
-- * of the Software.
-- *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-- * FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL
-- * THE COPYRIGHT HOLDERS, AUTHORS AND/OR ITS SUPPLIERS BE LIABLE FOR ANY CLAIM,
-- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-- * USE OR OTHER DEALINGS IN THE SOFTWARE.
+- * Returns: Zero on success. Negative error code on failure.
 - */
--
--/*
-- * Simple open hash tab implementation.
-- *
-- * Authors:
-- * Thomas Hellström <thomas-at-tungstengraphics-dot-com>
-- */
--
--#include <linux/export.h>
--#include <linux/hash.h>
--#include <linux/mm.h>
--#include <linux/rculist.h>
--#include <linux/slab.h>
--#include <linux/vmalloc.h>
--
--#include <drm/drm_print.h>
--
--#include "vmwgfx_hashtab.h"
--
--int vmwgfx_ht_create(struct vmwgfx_open_hash *ht, unsigned int order)
+-static int vmw_execbuf_res_noctx_val_add(struct vmw_sw_context *sw_context,
+-					 struct vmw_resource *res,
+-					 u32 dirty)
 -{
--	unsigned int size = 1 << order;
--
--	ht->order = order;
--	ht->table = NULL;
--	if (size <= PAGE_SIZE / sizeof(*ht->table))
--		ht->table = kcalloc(size, sizeof(*ht->table), GFP_KERNEL);
--	else
--		ht->table = vzalloc(array_size(size, sizeof(*ht->table)));
--	if (!ht->table) {
--		DRM_ERROR("Out of memory for hash table\n");
--		return -ENOMEM;
--	}
--	return 0;
--}
--
--void vmwgfx_ht_verbose_list(struct vmwgfx_open_hash *ht, unsigned long key)
--{
--	struct vmwgfx_hash_item *entry;
--	struct hlist_head *h_list;
--	unsigned int hashed_key;
--	int count = 0;
--
--	hashed_key = hash_long(key, ht->order);
--	DRM_DEBUG("Key is 0x%08lx, Hashed key is 0x%08x\n", key, hashed_key);
--	h_list = &ht->table[hashed_key];
--	hlist_for_each_entry(entry, h_list, head)
--		DRM_DEBUG("count %d, key: 0x%08lx\n", count++, entry->key);
--}
--
--static struct hlist_node *vmwgfx_ht_find_key(struct vmwgfx_open_hash *ht, unsigned long key)
--{
--	struct vmwgfx_hash_item *entry;
--	struct hlist_head *h_list;
--	unsigned int hashed_key;
--
--	hashed_key = hash_long(key, ht->order);
--	h_list = &ht->table[hashed_key];
--	hlist_for_each_entry(entry, h_list, head) {
--		if (entry->key == key)
--			return &entry->head;
--		if (entry->key > key)
--			break;
--	}
--	return NULL;
--}
--
--static struct hlist_node *vmwgfx_ht_find_key_rcu(struct vmwgfx_open_hash *ht, unsigned long key)
--{
--	struct vmwgfx_hash_item *entry;
--	struct hlist_head *h_list;
--	unsigned int hashed_key;
--
--	hashed_key = hash_long(key, ht->order);
--	h_list = &ht->table[hashed_key];
--	hlist_for_each_entry_rcu(entry, h_list, head) {
--		if (entry->key == key)
--			return &entry->head;
--		if (entry->key > key)
--			break;
--	}
--	return NULL;
--}
--
--int vmwgfx_ht_insert_item(struct vmwgfx_open_hash *ht, struct vmwgfx_hash_item *item)
--{
--	struct vmwgfx_hash_item *entry;
--	struct hlist_head *h_list;
--	struct hlist_node *parent;
--	unsigned int hashed_key;
--	unsigned long key = item->key;
--
--	hashed_key = hash_long(key, ht->order);
--	h_list = &ht->table[hashed_key];
--	parent = NULL;
--	hlist_for_each_entry(entry, h_list, head) {
--		if (entry->key == key)
--			return -EINVAL;
--		if (entry->key > key)
--			break;
--		parent = &entry->head;
--	}
--	if (parent)
--		hlist_add_behind_rcu(&item->head, parent);
--	else
--		hlist_add_head_rcu(&item->head, h_list);
--	return 0;
--}
--
--/*
-- * Just insert an item and return any "bits" bit key that hasn't been
-- * used before.
-- */
--int vmwgfx_ht_just_insert_please(struct vmwgfx_open_hash *ht, struct vmwgfx_hash_item *item,
--				 unsigned long seed, int bits, int shift,
--				 unsigned long add)
--{
+-	struct vmw_res_cache_entry *rcache;
+-	enum vmw_res_type res_type = vmw_res_type(res);
+-	void *ptr;
 -	int ret;
--	unsigned long mask = (1UL << bits) - 1;
--	unsigned long first, unshifted_key;
 -
--	unshifted_key = hash_long(seed, bits);
--	first = unshifted_key;
--	do {
--		item->key = (unshifted_key << shift) + add;
--		ret = vmwgfx_ht_insert_item(ht, item);
--		if (ret)
--			unshifted_key = (unshifted_key + 1) & mask;
--	} while (ret && (unshifted_key != first));
--
--	if (ret) {
--		DRM_ERROR("Available key bit space exhausted\n");
--		return -EINVAL;
--	}
--	return 0;
--}
--
--int vmwgfx_ht_find_item(struct vmwgfx_open_hash *ht, unsigned long key,
--			struct vmwgfx_hash_item **item)
--{
--	struct hlist_node *list;
--
--	list = vmwgfx_ht_find_key_rcu(ht, key);
--	if (!list)
--		return -EINVAL;
--
--	*item = hlist_entry(list, struct vmwgfx_hash_item, head);
--	return 0;
--}
--
--int vmwgfx_ht_remove_key(struct vmwgfx_open_hash *ht, unsigned long key)
--{
--	struct hlist_node *list;
--
--	list = vmwgfx_ht_find_key(ht, key);
--	if (list) {
--		hlist_del_init_rcu(list);
+-	rcache = &sw_context->res_cache[res_type];
+-	if (likely(rcache->valid && rcache->res == res)) {
+-		if (dirty)
+-			vmw_validation_res_set_dirty(sw_context->ctx,
+-						     rcache->private, dirty);
 -		return 0;
 -	}
--	return -EINVAL;
--}
 -
--int vmwgfx_ht_remove_item(struct vmwgfx_open_hash *ht, struct vmwgfx_hash_item *item)
--{
--	hlist_del_init_rcu(&item->head);
+-	ret = vmw_validation_add_resource(sw_context->ctx, res, 0, dirty,
+-					  &ptr, NULL);
+-	if (ret)
+-		return ret;
+-
+-	vmw_execbuf_rcache_update(rcache, res, ptr);
+-
 -	return 0;
 -}
 -
--void vmwgfx_ht_remove(struct vmwgfx_open_hash *ht)
+ /**
+  * vmw_view_res_val_add - Add a view and the surface it's pointing to to the
+  * validation list
+@@ -398,13 +373,13 @@ static int vmw_view_res_val_add(struct vmw_sw_context *sw_context,
+ 	 * First add the resource the view is pointing to, otherwise it may be
+ 	 * swapped out when the view is validated.
+ 	 */
+-	ret = vmw_execbuf_res_noctx_val_add(sw_context, vmw_view_srf(view),
+-					    vmw_view_dirtying(view));
++	ret = vmw_execbuf_res_val_add(sw_context, vmw_view_srf(view),
++				      vmw_view_dirtying(view), vmw_val_add_flag_noctx);
+ 	if (ret)
+ 		return ret;
+ 
+-	return vmw_execbuf_res_noctx_val_add(sw_context, view,
+-					     VMW_RES_DIRTY_NONE);
++	return vmw_execbuf_res_val_add(sw_context, view, VMW_RES_DIRTY_NONE,
++				       vmw_val_add_flag_noctx);
+ }
+ 
+ /**
+@@ -475,8 +450,9 @@ static int vmw_resource_context_res_add(struct vmw_private *dev_priv,
+ 			if (IS_ERR(res))
+ 				continue;
+ 
+-			ret = vmw_execbuf_res_noctx_val_add(sw_context, res,
+-							    VMW_RES_DIRTY_SET);
++			ret = vmw_execbuf_res_val_add(sw_context, res,
++						      VMW_RES_DIRTY_SET,
++						      vmw_val_add_flag_noctx);
+ 			if (unlikely(ret != 0))
+ 				return ret;
+ 		}
+@@ -490,9 +466,9 @@ static int vmw_resource_context_res_add(struct vmw_private *dev_priv,
+ 		if (vmw_res_type(entry->res) == vmw_res_view)
+ 			ret = vmw_view_res_val_add(sw_context, entry->res);
+ 		else
+-			ret = vmw_execbuf_res_noctx_val_add
+-				(sw_context, entry->res,
+-				 vmw_binding_dirtying(entry->bt));
++			ret = vmw_execbuf_res_val_add(sw_context, entry->res,
++						      vmw_binding_dirtying(entry->bt),
++						      vmw_val_add_flag_noctx);
+ 		if (unlikely(ret != 0))
+ 			break;
+ 	}
+@@ -658,7 +634,8 @@ vmw_cmd_res_check(struct vmw_private *dev_priv,
+ {
+ 	struct vmw_res_cache_entry *rcache = &sw_context->res_cache[res_type];
+ 	struct vmw_resource *res;
+-	int ret;
++	int ret = 0;
++	bool needs_unref = false;
+ 
+ 	if (p_res)
+ 		*p_res = NULL;
+@@ -683,17 +660,18 @@ vmw_cmd_res_check(struct vmw_private *dev_priv,
+ 		if (ret)
+ 			return ret;
+ 
+-		res = vmw_user_resource_noref_lookup_handle
+-			(dev_priv, sw_context->fp->tfile, *id_loc, converter);
+-		if (IS_ERR(res)) {
++		ret = vmw_user_resource_lookup_handle
++			(dev_priv, sw_context->fp->tfile, *id_loc, converter, &res);
++		if (ret != 0) {
+ 			VMW_DEBUG_USER("Could not find/use resource 0x%08x.\n",
+ 				       (unsigned int) *id_loc);
+-			return PTR_ERR(res);
++			return ret;
+ 		}
++		needs_unref = true;
+ 
+-		ret = vmw_execbuf_res_noref_val_add(sw_context, res, dirty);
++		ret = vmw_execbuf_res_val_add(sw_context, res, dirty, vmw_val_add_flag_none);
+ 		if (unlikely(ret != 0))
+-			return ret;
++			goto res_check_done;
+ 
+ 		if (rcache->valid && rcache->res == res) {
+ 			rcache->valid_handle = true;
+@@ -708,7 +686,11 @@ vmw_cmd_res_check(struct vmw_private *dev_priv,
+ 	if (p_res)
+ 		*p_res = res;
+ 
+-	return 0;
++res_check_done:
++	if (needs_unref)
++		vmw_resource_unreference(&res);
++
++	return ret;
+ }
+ 
+ /**
+@@ -1171,9 +1153,9 @@ static int vmw_translate_mob_ptr(struct vmw_private *dev_priv,
+ 	int ret;
+ 
+ 	vmw_validation_preload_bo(sw_context->ctx);
+-	vmw_bo = vmw_user_bo_noref_lookup(sw_context->filp, handle);
+-	if (IS_ERR(vmw_bo)) {
+-		VMW_DEBUG_USER("Could not find or use MOB buffer.\n");
++	ret = vmw_user_bo_lookup(sw_context->filp, handle, &vmw_bo);
++	if (ret != 0) {
++		drm_dbg(&dev_priv->drm, "Could not find or use MOB buffer.\n");
+ 		return PTR_ERR(vmw_bo);
+ 	}
+ 	ret = vmw_validation_add_bo(sw_context->ctx, vmw_bo, true, false);
+@@ -1225,9 +1207,9 @@ static int vmw_translate_guest_ptr(struct vmw_private *dev_priv,
+ 	int ret;
+ 
+ 	vmw_validation_preload_bo(sw_context->ctx);
+-	vmw_bo = vmw_user_bo_noref_lookup(sw_context->filp, handle);
+-	if (IS_ERR(vmw_bo)) {
+-		VMW_DEBUG_USER("Could not find or use GMR region.\n");
++	ret = vmw_user_bo_lookup(sw_context->filp, handle, &vmw_bo);
++	if (ret != 0) {
++		drm_dbg(&dev_priv->drm, "Could not find or use GMR region.\n");
+ 		return PTR_ERR(vmw_bo);
+ 	}
+ 	ret = vmw_validation_add_bo(sw_context->ctx, vmw_bo, false, false);
+@@ -2025,8 +2007,9 @@ static int vmw_cmd_set_shader(struct vmw_private *dev_priv,
+ 		res = vmw_shader_lookup(vmw_context_res_man(ctx),
+ 					cmd->body.shid, cmd->body.type);
+ 		if (!IS_ERR(res)) {
+-			ret = vmw_execbuf_res_noctx_val_add(sw_context, res,
+-							    VMW_RES_DIRTY_NONE);
++			ret = vmw_execbuf_res_val_add(sw_context, res,
++						      VMW_RES_DIRTY_NONE,
++						      vmw_val_add_flag_noctx);
+ 			if (unlikely(ret != 0))
+ 				return ret;
+ 
+@@ -2273,8 +2256,9 @@ static int vmw_cmd_dx_set_shader(struct vmw_private *dev_priv,
+ 			return PTR_ERR(res);
+ 		}
+ 
+-		ret = vmw_execbuf_res_noctx_val_add(sw_context, res,
+-						    VMW_RES_DIRTY_NONE);
++		ret = vmw_execbuf_res_val_add(sw_context, res,
++					      VMW_RES_DIRTY_NONE,
++					      vmw_val_add_flag_noctx);
+ 		if (ret)
+ 			return ret;
+ 	}
+@@ -2777,8 +2761,8 @@ static int vmw_cmd_dx_bind_shader(struct vmw_private *dev_priv,
+ 		return PTR_ERR(res);
+ 	}
+ 
+-	ret = vmw_execbuf_res_noctx_val_add(sw_context, res,
+-					    VMW_RES_DIRTY_NONE);
++	ret = vmw_execbuf_res_val_add(sw_context, res, VMW_RES_DIRTY_NONE,
++				      vmw_val_add_flag_noctx);
+ 	if (ret) {
+ 		VMW_DEBUG_USER("Error creating resource validation node.\n");
+ 		return ret;
+@@ -3098,8 +3082,8 @@ static int vmw_cmd_dx_bind_streamoutput(struct vmw_private *dev_priv,
+ 
+ 	vmw_dx_streamoutput_set_size(res, cmd->body.sizeInBytes);
+ 
+-	ret = vmw_execbuf_res_noctx_val_add(sw_context, res,
+-					    VMW_RES_DIRTY_NONE);
++	ret = vmw_execbuf_res_val_add(sw_context, res, VMW_RES_DIRTY_NONE,
++				      vmw_val_add_flag_noctx);
+ 	if (ret) {
+ 		DRM_ERROR("Error creating resource validation node.\n");
+ 		return ret;
+@@ -3148,8 +3132,8 @@ static int vmw_cmd_dx_set_streamoutput(struct vmw_private *dev_priv,
+ 		return 0;
+ 	}
+ 
+-	ret = vmw_execbuf_res_noctx_val_add(sw_context, res,
+-					    VMW_RES_DIRTY_NONE);
++	ret = vmw_execbuf_res_val_add(sw_context, res, VMW_RES_DIRTY_NONE,
++				      vmw_val_add_flag_noctx);
+ 	if (ret) {
+ 		DRM_ERROR("Error creating resource validation node.\n");
+ 		return ret;
+@@ -4067,22 +4051,26 @@ static int vmw_execbuf_tie_context(struct vmw_private *dev_priv,
+ 	if (ret)
+ 		return ret;
+ 
+-	res = vmw_user_resource_noref_lookup_handle
++	ret = vmw_user_resource_lookup_handle
+ 		(dev_priv, sw_context->fp->tfile, handle,
+-		 user_context_converter);
+-	if (IS_ERR(res)) {
++		 user_context_converter, &res);
++	if (ret != 0) {
+ 		VMW_DEBUG_USER("Could not find or user DX context 0x%08x.\n",
+ 			       (unsigned int) handle);
+-		return PTR_ERR(res);
++		return ret;
+ 	}
+ 
+-	ret = vmw_execbuf_res_noref_val_add(sw_context, res, VMW_RES_DIRTY_SET);
+-	if (unlikely(ret != 0))
++	ret = vmw_execbuf_res_val_add(sw_context, res, VMW_RES_DIRTY_SET,
++				      vmw_val_add_flag_none);
++	if (unlikely(ret != 0)) {
++		vmw_resource_unreference(&res);
+ 		return ret;
++	}
+ 
+ 	sw_context->dx_ctx_node = vmw_execbuf_info_from_res(sw_context, res);
+ 	sw_context->man = vmw_context_res_man(res);
+ 
++	vmw_resource_unreference(&res);
+ 	return 0;
+ }
+ 
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_resource.c b/drivers/gpu/drm/vmwgfx/vmwgfx_resource.c
+index f66caa540e14..c7d645e5ec7b 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_resource.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_resource.c
+@@ -281,39 +281,6 @@ int vmw_user_resource_lookup_handle(struct vmw_private *dev_priv,
+ 	return ret;
+ }
+ 
+-/**
+- * vmw_user_resource_noref_lookup_handle - lookup a struct resource from a
+- * TTM user-space handle and perform basic type checks
+- *
+- * @dev_priv:     Pointer to a device private struct
+- * @tfile:        Pointer to a struct ttm_object_file identifying the caller
+- * @handle:       The TTM user-space handle
+- * @converter:    Pointer to an object describing the resource type
+- *
+- * If the handle can't be found or is associated with an incorrect resource
+- * type, -EINVAL will be returned.
+- */
+-struct vmw_resource *
+-vmw_user_resource_noref_lookup_handle(struct vmw_private *dev_priv,
+-				      struct ttm_object_file *tfile,
+-				      uint32_t handle,
+-				      const struct vmw_user_resource_conv
+-				      *converter)
 -{
--	if (ht->table) {
--		kvfree(ht->table);
--		ht->table = NULL;
+-	struct ttm_base_object *base;
+-
+-	base = ttm_base_object_noref_lookup(tfile, handle);
+-	if (!base)
+-		return ERR_PTR(-ESRCH);
+-
+-	if (unlikely(ttm_base_object_type(base) != converter->object_type)) {
+-		ttm_base_object_noref_release();
+-		return ERR_PTR(-EINVAL);
 -	}
+-
+-	return converter->base_obj_to_res(base);
 -}
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_hashtab.h b/drivers/gpu/drm/vmwgfx/vmwgfx_hashtab.h
-deleted file mode 100644
-index a9ce12922e21..000000000000
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_hashtab.h
-+++ /dev/null
-@@ -1,83 +0,0 @@
--/*
-- * Copyright 2006 Tungsten Graphics, Inc., Bismack, ND. USA.
-- * All Rights Reserved.
-- *
-- * Permission is hereby granted, free of charge, to any person obtaining a
-- * copy of this software and associated documentation files (the
-- * "Software"), to deal in the Software without restriction, including
-- * without limitation the rights to use, copy, modify, merge, publish,
-- * distribute, sub license, and/or sell copies of the Software, and to
-- * permit persons to whom the Software is furnished to do so, subject to
-- * the following conditions:
-- *
-- * The above copyright notice and this permission notice (including the
-- * next paragraph) shall be included in all copies or substantial portions
-- * of the Software.
-- *
-- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-- * FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL
-- * THE COPYRIGHT HOLDERS, AUTHORS AND/OR ITS SUPPLIERS BE LIABLE FOR ANY CLAIM,
-- * DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-- * OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-- * USE OR OTHER DEALINGS IN THE SOFTWARE.
-- */
 -
--/*
-- * Simple open hash tab implementation.
-- *
-- * Authors:
-- * Thomas Hellström <thomas-at-tungstengraphics-dot-com>
-- */
--
--/*
-- * TODO: Replace this hashtable with Linux' generic implementation
-- *       from <linux/hashtable.h>.
-- */
--
--#ifndef VMWGFX_HASHTAB_H
--#define VMWGFX_HASHTAB_H
--
--#include <linux/list.h>
--
--#define drm_hash_entry(_ptr, _type, _member) container_of(_ptr, _type, _member)
--
--struct vmwgfx_hash_item {
--	struct hlist_node head;
--	unsigned long key;
--};
--
--struct vmwgfx_open_hash {
--	struct hlist_head *table;
--	u8 order;
--};
--
--int vmwgfx_ht_create(struct vmwgfx_open_hash *ht, unsigned int order);
--int vmwgfx_ht_insert_item(struct vmwgfx_open_hash *ht, struct vmwgfx_hash_item *item);
--int vmwgfx_ht_just_insert_please(struct vmwgfx_open_hash *ht, struct vmwgfx_hash_item *item,
--				 unsigned long seed, int bits, int shift,
--				 unsigned long add);
--int vmwgfx_ht_find_item(struct vmwgfx_open_hash *ht, unsigned long key,
--			struct vmwgfx_hash_item **item);
--
--void vmwgfx_ht_verbose_list(struct vmwgfx_open_hash *ht, unsigned long key);
--int vmwgfx_ht_remove_key(struct vmwgfx_open_hash *ht, unsigned long key);
--int vmwgfx_ht_remove_item(struct vmwgfx_open_hash *ht, struct vmwgfx_hash_item *item);
--void vmwgfx_ht_remove(struct vmwgfx_open_hash *ht);
--
--/*
-- * RCU-safe interface
-- *
-- * The user of this API needs to make sure that two or more instances of the
-- * hash table manipulation functions are never run simultaneously.
-- * The lookup function vmwgfx_ht_find_item_rcu may, however, run simultaneously
-- * with any of the manipulation functions as long as it's called from within
-- * an RCU read-locked section.
-- */
--#define vmwgfx_ht_insert_item_rcu vmwgfx_ht_insert_item
--#define vmwgfx_ht_just_insert_please_rcu vmwgfx_ht_just_insert_please
--#define vmwgfx_ht_remove_key_rcu vmwgfx_ht_remove_key
--#define vmwgfx_ht_remove_item_rcu vmwgfx_ht_remove_item
--#define vmwgfx_ht_find_item_rcu vmwgfx_ht_find_item
--
--#endif
+ /*
+  * Helper function that looks either a surface or bo.
+  *
 -- 
 2.35.1
 
