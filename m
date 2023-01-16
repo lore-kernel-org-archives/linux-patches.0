@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 167CA6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:08:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E817C433D2;
-	Mon, 16 Jan 2023 17:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7C26FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:08:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32AE8C433D2;
+	Mon, 16 Jan 2023 17:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888924;
-	bh=LE/eE5UItzkVM3ncfNV0hBxL2FkEF5n2mHNN4XPbE2g=;
+	s=korg; t=1673888927;
+	bh=QM7aua7ZEybVKMFCACZuR1qlc+bR4qXQAeiUNikaH4s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gz1g5mIDux0BHMwHRied5HJIwS6HAsMgseSxk8jZOcYc2I3aBIs1pYI8DucGnnPaU
-	 Jwb6JMwpsssnm0yvNLSM+Nw6dMFm/v53SJ1eYtY95LQbvqgpGhBrrNqBwJPfpUoB6D
-	 weQolBG5Rg80hzlt9yUB7n+QexfRgtsW4deZ8+40=
+	b=rAuFjdebMpx1ctdJnbPoKxDmMOXhmazzE4fHsYa3ZQrG6HuV1HewlNqU45+yhk38r
+	 2jW4QXb7KzfefLYLSs/DmU4tAgpmczunOf6lLks6Ctxx+Btu+RuUT88MCPh2cv5HJo
+	 N6yg2fjjZ8+E8Xch4sUCJdmUBBRT/PMn0s0O5IFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Yuan Can <yuancan@huawei.com>,
 	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 192/338] iommu/amd: Fix pci device refcount leak in ppr_notifier()
-Date: Mon, 16 Jan 2023 16:51:05 +0100
-Message-Id: <20230116154829.318631268@linuxfoundation.org>
+Subject: [PATCH 4.14 193/338] iommu/fsl_pamu: Fix resource leak in fsl_pamu_probe()
+Date: Mon, 16 Jan 2023 16:51:06 +0100
+Message-Id: <20230116154829.368401689@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,36 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 6cf0981c2233f97d56938d9d61845383d6eb227c ]
+[ Upstream commit 73f5fc5f884ad0c5f7d57f66303af64f9f002526 ]
 
-As comment of pci_get_domain_bus_and_slot() says, it returns
-a pci device with refcount increment, when finish using it,
-the caller must decrement the reference count by calling
-pci_dev_put(). So call it before returning from ppr_notifier()
-to avoid refcount leak.
+The fsl_pamu_probe() returns directly when create_csd() failed, leaving
+irq and memories unreleased.
+Fix by jumping to error if create_csd() returns error.
 
-Fixes: daae2d25a477 ("iommu/amd: Don't copy GCR3 table root pointer")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221118093604.216371-1-yangyingliang@huawei.com
+Fixes: 695093e38c3e ("iommu/fsl: Freescale PAMU driver and iommu implementation.")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20221121082022.19091-1-yuancan@huawei.com
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/amd_iommu_v2.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/fsl_pamu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iommu/amd_iommu_v2.c b/drivers/iommu/amd_iommu_v2.c
-index 7d94e1d39e5e..4449fa56f065 100644
---- a/drivers/iommu/amd_iommu_v2.c
-+++ b/drivers/iommu/amd_iommu_v2.c
-@@ -624,6 +624,7 @@ static int ppr_notifier(struct notifier_block *nb, unsigned long e, void *data)
- 	put_device_state(dev_state);
- 
- out:
-+	pci_dev_put(pdev);
- 	return ret;
- }
+diff --git a/drivers/iommu/fsl_pamu.c b/drivers/iommu/fsl_pamu.c
+index 8540625796a1..b6a0c6d3b204 100644
+--- a/drivers/iommu/fsl_pamu.c
++++ b/drivers/iommu/fsl_pamu.c
+@@ -1134,7 +1134,7 @@ static int fsl_pamu_probe(struct platform_device *pdev)
+ 		ret = create_csd(ppaact_phys, mem_size, csd_port_id);
+ 		if (ret) {
+ 			dev_err(dev, "could not create coherence subdomain\n");
+-			return ret;
++			goto error;
+ 		}
+ 	}
  
 -- 
 2.35.1
