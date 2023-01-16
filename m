@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EFD76FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:53:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9E82C433EF;
-	Mon, 16 Jan 2023 16:53:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D93716FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:53:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F09C433D2;
+	Mon, 16 Jan 2023 16:53:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888003;
-	bh=OEzMX2QBCarEPGj3nv0syZnlYMTrmJvqWJspe9cOE6k=;
+	s=korg; t=1673888005;
+	bh=FFT92f9FLlnPqJ4WXdrhhKnQ36lyXMAjIaaOy4oNPRQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q/tn+1QEVgSGW5kV9vAe3qE5+XJSs4Y7hiCutPIAb1qD/HIMSyvbWJYqdsLTfgxqV
-	 nE6X4haTUTbUaixkGe5QuoA9Uj1jFMGGvUk1ovcPMAPz7N2Y0XTnRMvs/I+pWa8te8
-	 RMriB0oVqW7SYDuEZMti5EGNZTWFa49pFO7irCzk=
+	b=zE2Biq1pi19Se8LRznJlPuPts3oL/m+9dqteuX4PIYaIIgvoAlukf3+R3pg4kiDNg
+	 bScUMwNHzjnHpGBdBZJKVWUnHS8DrOgdU+ajJR0RG1xzwaSsuNiyoHtX+ncmVEa+Na
+	 Lu874w02IBIvp74v01+0xGCeZSUplZ4ansI/rDaI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6fd64001c20aa99e34a4@syzkaller.appspotmail.com,
-	Schspa Shi <schspa@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dokyung Song <dokyungs@yonsei.ac.kr>,
+	Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
+	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 334/521] mrp: introduce active flags to prevent UAF when applicant uninit
-Date: Mon, 16 Jan 2023 16:49:56 +0100
-Message-Id: <20230116154902.115361595@linuxfoundation.org>
+Subject: [PATCH 4.19 325/521] wifi: brcmfmac: Fix potential shift-out-of-bounds in brcmf_fw_alloc_request()
+Date: Mon, 16 Jan 2023 16:49:47 +0100
+Message-Id: <20230116154901.692293321@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,124 +37,146 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Schspa Shi <schspa@gmail.com>
+From: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
 
-[ Upstream commit ab0377803dafc58f1e22296708c1c28e309414d6 ]
+[ Upstream commit 81d17f6f3331f03c8eafdacea68ab773426c1e3c ]
 
-The caller of del_timer_sync must prevent restarting of the timer, If
-we have no this synchronization, there is a small probability that the
-cancellation will not be successful.
+This patch fixes a shift-out-of-bounds in brcmfmac that occurs in
+BIT(chiprev) when a 'chiprev' provided by the device is too large.
+It should also not be equal to or greater than BITS_PER_TYPE(u32)
+as we do bitwise AND with a u32 variable and BIT(chiprev). The patch
+adds a check that makes the function return NULL if that is the case.
+Note that the NULL case is later handled by the bus-specific caller,
+brcmf_usb_probe_cb() or brcmf_usb_reset_resume(), for example.
 
-And syzbot report the fellowing crash:
-==================================================================
-BUG: KASAN: use-after-free in hlist_add_head include/linux/list.h:929 [inline]
-BUG: KASAN: use-after-free in enqueue_timer+0x18/0xa4 kernel/time/timer.c:605
-Write at addr f9ff000024df6058 by task syz-fuzzer/2256
-Pointer tag: [f9], memory tag: [fe]
+Found by a modified version of syzkaller.
 
-CPU: 1 PID: 2256 Comm: syz-fuzzer Not tainted 6.1.0-rc5-syzkaller-00008-
-ge01d50cbd6ee #0
-Hardware name: linux,dummy-virt (DT)
-Call trace:
- dump_backtrace.part.0+0xe0/0xf0 arch/arm64/kernel/stacktrace.c:156
- dump_backtrace arch/arm64/kernel/stacktrace.c:162 [inline]
- show_stack+0x18/0x40 arch/arm64/kernel/stacktrace.c:163
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x68/0x84 lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:284 [inline]
- print_report+0x1a8/0x4a0 mm/kasan/report.c:395
- kasan_report+0x94/0xb4 mm/kasan/report.c:495
- __do_kernel_fault+0x164/0x1e0 arch/arm64/mm/fault.c:320
- do_bad_area arch/arm64/mm/fault.c:473 [inline]
- do_tag_check_fault+0x78/0x8c arch/arm64/mm/fault.c:749
- do_mem_abort+0x44/0x94 arch/arm64/mm/fault.c:825
- el1_abort+0x40/0x60 arch/arm64/kernel/entry-common.c:367
- el1h_64_sync_handler+0xd8/0xe4 arch/arm64/kernel/entry-common.c:427
- el1h_64_sync+0x64/0x68 arch/arm64/kernel/entry.S:576
- hlist_add_head include/linux/list.h:929 [inline]
- enqueue_timer+0x18/0xa4 kernel/time/timer.c:605
- mod_timer+0x14/0x20 kernel/time/timer.c:1161
- mrp_periodic_timer_arm net/802/mrp.c:614 [inline]
- mrp_periodic_timer+0xa0/0xc0 net/802/mrp.c:627
- call_timer_fn.constprop.0+0x24/0x80 kernel/time/timer.c:1474
- expire_timers+0x98/0xc4 kernel/time/timer.c:1519
+UBSAN: shift-out-of-bounds in drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
+shift exponent 151055786 is too large for 64-bit type 'long unsigned int'
+CPU: 0 PID: 1885 Comm: kworker/0:2 Tainted: G           O      5.14.0+ #132
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
+Workqueue: usb_hub_wq hub_event
+Call Trace:
+ dump_stack_lvl+0x57/0x7d
+ ubsan_epilogue+0x5/0x40
+ __ubsan_handle_shift_out_of_bounds.cold+0x53/0xdb
+ ? lock_chain_count+0x20/0x20
+ brcmf_fw_alloc_request.cold+0x19/0x3ea
+ ? brcmf_fw_get_firmwares+0x250/0x250
+ ? brcmf_usb_ioctl_resp_wait+0x1a7/0x1f0
+ brcmf_usb_get_fwname+0x114/0x1a0
+ ? brcmf_usb_reset_resume+0x120/0x120
+ ? number+0x6c4/0x9a0
+ brcmf_c_process_clm_blob+0x168/0x590
+ ? put_dec+0x90/0x90
+ ? enable_ptr_key_workfn+0x20/0x20
+ ? brcmf_common_pd_remove+0x50/0x50
+ ? rcu_read_lock_sched_held+0xa1/0xd0
+ brcmf_c_preinit_dcmds+0x673/0xc40
+ ? brcmf_c_set_joinpref_default+0x100/0x100
+ ? rcu_read_lock_sched_held+0xa1/0xd0
+ ? rcu_read_lock_bh_held+0xb0/0xb0
+ ? lock_acquire+0x19d/0x4e0
+ ? find_held_lock+0x2d/0x110
+ ? brcmf_usb_deq+0x1cc/0x260
+ ? mark_held_locks+0x9f/0xe0
+ ? lockdep_hardirqs_on_prepare+0x273/0x3e0
+ ? _raw_spin_unlock_irqrestore+0x47/0x50
+ ? trace_hardirqs_on+0x1c/0x120
+ ? brcmf_usb_deq+0x1a7/0x260
+ ? brcmf_usb_rx_fill_all+0x5a/0xf0
+ brcmf_attach+0x246/0xd40
+ ? wiphy_new_nm+0x1476/0x1d50
+ ? kmemdup+0x30/0x40
+ brcmf_usb_probe+0x12de/0x1690
+ ? brcmf_usbdev_qinit.constprop.0+0x470/0x470
+ usb_probe_interface+0x25f/0x710
+ really_probe+0x1be/0xa90
+ __driver_probe_device+0x2ab/0x460
+ ? usb_match_id.part.0+0x88/0xc0
+ driver_probe_device+0x49/0x120
+ __device_attach_driver+0x18a/0x250
+ ? driver_allows_async_probing+0x120/0x120
+ bus_for_each_drv+0x123/0x1a0
+ ? bus_rescan_devices+0x20/0x20
+ ? lockdep_hardirqs_on_prepare+0x273/0x3e0
+ ? trace_hardirqs_on+0x1c/0x120
+ __device_attach+0x207/0x330
+ ? device_bind_driver+0xb0/0xb0
+ ? kobject_uevent_env+0x230/0x12c0
+ bus_probe_device+0x1a2/0x260
+ device_add+0xa61/0x1ce0
+ ? __mutex_unlock_slowpath+0xe7/0x660
+ ? __fw_devlink_link_to_suppliers+0x550/0x550
+ usb_set_configuration+0x984/0x1770
+ ? kernfs_create_link+0x175/0x230
+ usb_generic_driver_probe+0x69/0x90
+ usb_probe_device+0x9c/0x220
+ really_probe+0x1be/0xa90
+ __driver_probe_device+0x2ab/0x460
+ driver_probe_device+0x49/0x120
+ __device_attach_driver+0x18a/0x250
+ ? driver_allows_async_probing+0x120/0x120
+ bus_for_each_drv+0x123/0x1a0
+ ? bus_rescan_devices+0x20/0x20
+ ? lockdep_hardirqs_on_prepare+0x273/0x3e0
+ ? trace_hardirqs_on+0x1c/0x120
+ __device_attach+0x207/0x330
+ ? device_bind_driver+0xb0/0xb0
+ ? kobject_uevent_env+0x230/0x12c0
+ bus_probe_device+0x1a2/0x260
+ device_add+0xa61/0x1ce0
+ ? __fw_devlink_link_to_suppliers+0x550/0x550
+ usb_new_device.cold+0x463/0xf66
+ ? hub_disconnect+0x400/0x400
+ ? _raw_spin_unlock_irq+0x24/0x30
+ hub_event+0x10d5/0x3330
+ ? hub_port_debounce+0x280/0x280
+ ? __lock_acquire+0x1671/0x5790
+ ? wq_calc_node_cpumask+0x170/0x2a0
+ ? lock_release+0x640/0x640
+ ? rcu_read_lock_sched_held+0xa1/0xd0
+ ? rcu_read_lock_bh_held+0xb0/0xb0
+ ? lockdep_hardirqs_on_prepare+0x273/0x3e0
+ process_one_work+0x873/0x13e0
+ ? lock_release+0x640/0x640
+ ? pwq_dec_nr_in_flight+0x320/0x320
+ ? rwlock_bug.part.0+0x90/0x90
+ worker_thread+0x8b/0xd10
+ ? __kthread_parkme+0xd9/0x1d0
+ ? process_one_work+0x13e0/0x13e0
+ kthread+0x379/0x450
+ ? _raw_spin_unlock_irq+0x24/0x30
+ ? set_kthread_struct+0x100/0x100
+ ret_from_fork+0x1f/0x30
 
-To fix it, we can introduce a new active flags to make sure the timer will
-not restart.
-
-Reported-by: syzbot+6fd64001c20aa99e34a4@syzkaller.appspotmail.com
-
-Signed-off-by: Schspa Shi <schspa@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: Dokyung Song <dokyungs@yonsei.ac.kr>
+Reported-by: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
+Reported-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+Signed-off-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221024071329.504277-1-linuxlovemin@yonsei.ac.kr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/mrp.h |  1 +
- net/802/mrp.c     | 18 +++++++++++++-----
- 2 files changed, 14 insertions(+), 5 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/include/net/mrp.h b/include/net/mrp.h
-index ef58b4a07190..c6c53370e390 100644
---- a/include/net/mrp.h
-+++ b/include/net/mrp.h
-@@ -120,6 +120,7 @@ struct mrp_applicant {
- 	struct sk_buff		*pdu;
- 	struct rb_root		mad;
- 	struct rcu_head		rcu;
-+	bool			active;
- };
+diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
+index 4e5a6c311d1a..d8460835ff00 100644
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
+@@ -648,6 +648,11 @@ brcmf_fw_alloc_request(u32 chip, u32 chiprev,
+ 	char end = '\0';
+ 	size_t reqsz;
  
- struct mrp_port {
-diff --git a/net/802/mrp.c b/net/802/mrp.c
-index 32f87d458f05..ce6e4774d333 100644
---- a/net/802/mrp.c
-+++ b/net/802/mrp.c
-@@ -609,7 +609,10 @@ static void mrp_join_timer(struct timer_list *t)
- 	spin_unlock(&app->lock);
- 
- 	mrp_queue_xmit(app);
--	mrp_join_timer_arm(app);
-+	spin_lock(&app->lock);
-+	if (likely(app->active))
-+		mrp_join_timer_arm(app);
-+	spin_unlock(&app->lock);
- }
- 
- static void mrp_periodic_timer_arm(struct mrp_applicant *app)
-@@ -623,11 +626,12 @@ static void mrp_periodic_timer(struct timer_list *t)
- 	struct mrp_applicant *app = from_timer(app, t, periodic_timer);
- 
- 	spin_lock(&app->lock);
--	mrp_mad_event(app, MRP_EVENT_PERIODIC);
--	mrp_pdu_queue(app);
-+	if (likely(app->active)) {
-+		mrp_mad_event(app, MRP_EVENT_PERIODIC);
-+		mrp_pdu_queue(app);
-+		mrp_periodic_timer_arm(app);
++	if (chiprev >= BITS_PER_TYPE(u32)) {
++		brcmf_err("Invalid chip revision %u\n", chiprev);
++		return NULL;
 +	}
- 	spin_unlock(&app->lock);
--
--	mrp_periodic_timer_arm(app);
- }
- 
- static int mrp_pdu_parse_end_mark(struct sk_buff *skb, int *offset)
-@@ -875,6 +879,7 @@ int mrp_init_applicant(struct net_device *dev, struct mrp_application *appl)
- 	app->dev = dev;
- 	app->app = appl;
- 	app->mad = RB_ROOT;
-+	app->active = true;
- 	spin_lock_init(&app->lock);
- 	skb_queue_head_init(&app->queue);
- 	rcu_assign_pointer(dev->mrp_port->applicants[appl->type], app);
-@@ -903,6 +908,9 @@ void mrp_uninit_applicant(struct net_device *dev, struct mrp_application *appl)
- 
- 	RCU_INIT_POINTER(port->applicants[appl->type], NULL);
- 
-+	spin_lock_bh(&app->lock);
-+	app->active = false;
-+	spin_unlock_bh(&app->lock);
- 	/* Delete timer and generate a final TX event to flush out
- 	 * all pending messages before the applicant is gone.
- 	 */
++
+ 	for (i = 0; i < table_size; i++) {
+ 		if (mapping_table[i].chipid == chip &&
+ 		    mapping_table[i].revmask & BIT(chiprev))
 -- 
 2.35.1
 
