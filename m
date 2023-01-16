@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485F433F0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:12:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0B49C433EF;
-	Mon, 16 Jan 2023 16:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F71933F1
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:12:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E681DC433F1;
+	Mon, 16 Jan 2023 16:12:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885554;
-	bh=/EDt0kOiSQuBfVXzCijxUJreh/NgWK01WumrG59bQos=;
+	s=korg; t=1673885559;
+	bh=Y1DO5o7BuAe5s+ybFJLesPQquWluBXAXBGwYrizFhzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LwovTShJj3p8PIEoACXaTSG/1dkUSJl2GWwbIeGppu3K6NgcXWEmwqKfTdz5NuLXg
-	 Pcfrze+7deAyMW/f7ApqBd3+dlrYLfhj+DyTl7uveq47EM+y4iQWTzGXruPX7IPZMI
-	 53hpoSW9TW1xsMYvaqEf2ygtFQPUhr2xLzu1m1P4=
+	b=n/XTiElGQ1+Q9o2iF0wgDOEVo9nZpRQv29RJcfRd6iT4Qbd+azy30HaZkun62KeNw
+	 TDS5ekXxGmhx9ZCb5zAH3/u/iXhMjZgn22Q73MOyqczSQhv7RW8VhRSSyIHfok3oIo
+	 Iaf45mOzhqxfNZXvGkEcORPMf+7CoPnB2gd5A6y8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Yu Liao <liaoyu15@huawei.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 067/658] irqchip: gic-pm: Use pm_runtime_resume_and_get() in gic_probe()
-Date: Mon, 16 Jan 2023 16:42:35 +0100
-Message-Id: <20230116154912.706195826@linuxfoundation.org>
+Subject: [PATCH 5.4 090/658] platform/x86: mxm-wmi: fix memleak in mxm_wmi_call_mx[ds|mx]()
+Date: Mon, 16 Jan 2023 16:42:58 +0100
+Message-Id: <20230116154913.681402971@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,37 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Yu Liao <liaoyu15@huawei.com>
 
-[ Upstream commit f9ee20c85b3a3ba0afd3672630ec4f93d339f015 ]
+[ Upstream commit 727cc0147f5066e359aca65cc6cc5e6d64cc15d8 ]
 
-gic_probe() calls pm_runtime_get_sync() and added fail path as
-rpm_put to put usage_counter. However, pm_runtime_get_sync()
-will increment usage_counter even it failed. Fix it by replacing it with
-pm_runtime_resume_and_get() to keep usage counter balanced.
+The ACPI buffer memory (out.pointer) returned by wmi_evaluate_method()
+is not freed after the call, so it leads to memory leak.
 
-Fixes: 9c8edddfc992 ("irqchip/gic: Add platform driver for non-root GICs that require RPM")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20221124065150.22809-1-shangxiaojing@huawei.com
+The method results in ACPI buffer is not used, so just pass NULL to
+wmi_evaluate_method() which fixes the memory leak.
+
+Fixes: 99b38b4acc0d ("platform/x86: add MXM WMI driver.")
+Signed-off-by: Yu Liao <liaoyu15@huawei.com>
+Link: https://lore.kernel.org/r/20221129011101.2042315-1-liaoyu15@huawei.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-pm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/mxm-wmi.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/irqchip/irq-gic-pm.c b/drivers/irqchip/irq-gic-pm.c
-index 1337ceceb59b..8be7d136c3bf 100644
---- a/drivers/irqchip/irq-gic-pm.c
-+++ b/drivers/irqchip/irq-gic-pm.c
-@@ -104,7 +104,7 @@ static int gic_probe(struct platform_device *pdev)
+diff --git a/drivers/platform/x86/mxm-wmi.c b/drivers/platform/x86/mxm-wmi.c
+index 9a19fbd2f734..9a457956025a 100644
+--- a/drivers/platform/x86/mxm-wmi.c
++++ b/drivers/platform/x86/mxm-wmi.c
+@@ -35,13 +35,11 @@ int mxm_wmi_call_mxds(int adapter)
+ 		.xarg = 1,
+ 	};
+ 	struct acpi_buffer input = { (acpi_size)sizeof(args), &args };
+-	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER, NULL };
+ 	acpi_status status;
  
- 	pm_runtime_enable(dev);
+ 	printk("calling mux switch %d\n", adapter);
  
--	ret = pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
- 	if (ret < 0)
- 		goto rpm_disable;
+-	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input,
+-				     &output);
++	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input, NULL);
  
+ 	if (ACPI_FAILURE(status))
+ 		return status;
+@@ -60,13 +58,11 @@ int mxm_wmi_call_mxmx(int adapter)
+ 		.xarg = 1,
+ 	};
+ 	struct acpi_buffer input = { (acpi_size)sizeof(args), &args };
+-	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER, NULL };
+ 	acpi_status status;
+ 
+ 	printk("calling mux switch %d\n", adapter);
+ 
+-	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input,
+-				     &output);
++	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input, NULL);
+ 
+ 	if (ACPI_FAILURE(status))
+ 		return status;
 -- 
 2.35.1
 
