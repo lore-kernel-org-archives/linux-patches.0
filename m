@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E3733EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:02:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1735DC433F0;
-	Mon, 16 Jan 2023 16:02:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331CE33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:02:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAACBC433EF;
+	Mon, 16 Jan 2023 16:02:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884958;
-	bh=9Ze9LIHHY6BwSB7dGnFn+PUCMl0LJ5jbNK/TSTZzAVY=;
+	s=korg; t=1673884961;
+	bh=Kenpv//yVaC1hbbREjbg7AMEnjzXeo3nc95/vmj5snw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yNhv3p86Cb8HXeksGm/i4NcMf0WgrzfVAsnTH8vodrq0wJPbfoqDNujCwXkUvpVOd
-	 nWNeFezffLGEH5YQikUnhRqqEWD5VVnBh+ePLBi8u1K7Ha4ltrhGQGO6POV+fM8mDF
-	 qA7NCPjSWnBSSLbGqFulb24r4g8IxkFGtqFgpT1w=
+	b=0c8KF+OfBHgILipmEWrBj6MSQrfYXQl0ruEcOHeBIgrXofyWt8rcNGDTGEQWYPKZK
+	 t1zYp5uBqaIlwZxRV+bZe17KsyTBgCuAKrkt6yRo6vX71DeOUxuukf1gkr7MLJCFdS
+	 Fq77gFEQ7mxow4PeLAR0tEOdgbzijQpd3MP9cTfk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Maximilian Luz <luzmaximilian@gmail.com>,
 	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 5.15 20/86] platform/x86: dell-privacy: Only register SW_CAMERA_LENS_COVER if present
-Date: Mon, 16 Jan 2023 16:50:54 +0100
-Message-Id: <20230116154747.936812983@linuxfoundation.org>
+Subject: [PATCH 5.15 21/86] platform/surface: aggregator: Ignore command messages not intended for us
+Date: Mon, 16 Jan 2023 16:50:55 +0100
+Message-Id: <20230116154747.988496322@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -33,65 +34,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Maximilian Luz <luzmaximilian@gmail.com>
 
-commit 6dc485f9940df8105ea729cbeb7a7d18d409dde5 upstream.
+commit ae0fa0a3126a86c801c3220fcd8eefe03aa39f3e upstream.
 
-Unlike keys where userspace only reacts to keypresses, userspace may act
-on switches in both (0 and 1) of their positions.
+It is possible that we (the host/kernel driver) receive command messages
+that are not intended for us. Ignore those for now.
 
-For example if a SW_TABLET_MODE switch is registered then GNOME will not
-automatically show the onscreen keyboard when a text field gets focus on
-touchscreen devices when SW_TABLET_MODE reports 0 and when SW_TABLET_MODE
-reports 1 libinput will block (filter out) builtin keyboard and touchpad
-events.
+The whole story is a bit more complicated: It is possible to enable
+debug output on SAM, which is sent via SSH command messages. By default
+this output is sent to a debug connector, with its own target ID
+(TID=0x03). It is possible to override the target of the debug output
+and set it to the host/kernel driver. This, however, does not change the
+original target ID of the message. Meaning, we receive messages with
+TID=0x03 (debug) but expect to only receive messages with TID=0x00
+(host).
 
-So to avoid unwanted side-effects EV_SW type inputs should only be
-registered if they are actually present, only register SW_CAMERA_LENS_COVER
-if it is actually there.
+The problem is that the different target ID also comes with a different
+scope of request IDs. In particular, these do not follow the standard
+event rules (i.e. do not fall into a set of small reserved values).
+Therefore, current message handling interprets them as responses to
+pending requests and tries to match them up via the request ID. However,
+these debug output messages are not in fact responses, and therefore
+this will at best fail to find the request and at worst pass on the
+wrong data as response for a request.
 
-Fixes: 8af9fa37b8a3 ("platform/x86: dell-privacy: Add support for Dell hardware privacy")
+Therefore ignore any command messages not intended for us (host) for
+now. We can implement support for the debug messages once we have a
+better understanding of them.
+
+Note that this may also provide a bit more stability and avoid some
+driver confusion in case any other targets want to talk to us in the
+future, since we don't yet know what to do with those as well. A warning
+for the dropped messages should suffice for now and also give us a
+chance of discovering new targets if they come along without any
+potential for bugs/instabilities.
+
+Fixes: c167b9c7e3d6 ("platform/surface: Add Surface Aggregator subsystem")
+Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
+Link: https://lore.kernel.org/r/20221202223327.690880-2-luzmaximilian@gmail.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20221221220724.119594-2-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/dell/dell-wmi-privacy.c |   19 +++++++++++++++----
- 1 file changed, 15 insertions(+), 4 deletions(-)
+ .../surface/aggregator/ssh_request_layer.c         | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
---- a/drivers/platform/x86/dell/dell-wmi-privacy.c
-+++ b/drivers/platform/x86/dell/dell-wmi-privacy.c
-@@ -295,7 +295,7 @@ static int dell_privacy_wmi_probe(struct
- {
- 	struct privacy_wmi_data *priv;
- 	struct key_entry *keymap;
--	int ret, i;
-+	int ret, i, j;
+diff --git a/drivers/platform/surface/aggregator/ssh_request_layer.c b/drivers/platform/surface/aggregator/ssh_request_layer.c
+index f5565570f16c..69132976d297 100644
+--- a/drivers/platform/surface/aggregator/ssh_request_layer.c
++++ b/drivers/platform/surface/aggregator/ssh_request_layer.c
+@@ -916,6 +916,20 @@ static void ssh_rtl_rx_command(struct ssh_ptl *p, const struct ssam_span *data)
+ 	if (sshp_parse_command(dev, data, &command, &command_data))
+ 		return;
  
- 	ret = wmi_has_guid(DELL_PRIVACY_GUID);
- 	if (!ret)
-@@ -321,9 +321,20 @@ static int dell_privacy_wmi_probe(struct
- 	/* remap the keymap code with Dell privacy key type 0x12 as prefix
- 	 * KEY_MICMUTE scancode will be reported as 0x120001
- 	 */
--	for (i = 0; i < ARRAY_SIZE(dell_wmi_keymap_type_0012); i++) {
--		keymap[i] = dell_wmi_keymap_type_0012[i];
--		keymap[i].code |= (0x0012 << 16);
-+	for (i = 0, j = 0; i < ARRAY_SIZE(dell_wmi_keymap_type_0012); i++) {
-+		/*
-+		 * Unlike keys where only presses matter, userspace may act
-+		 * on switches in both of their positions. Only register
-+		 * SW_CAMERA_LENS_COVER if it is actually there.
-+		 */
-+		if (dell_wmi_keymap_type_0012[i].type == KE_VSW &&
-+		    dell_wmi_keymap_type_0012[i].sw.code == SW_CAMERA_LENS_COVER &&
-+		    !(priv->features_present & BIT(DELL_PRIVACY_TYPE_CAMERA)))
-+			continue;
++	/*
++	 * Check if the message was intended for us. If not, drop it.
++	 *
++	 * Note: We will need to change this to handle debug messages. On newer
++	 * generation devices, these seem to be sent to tid_out=0x03. We as
++	 * host can still receive them as they can be forwarded via an override
++	 * option on SAM, but doing so does not change tid_out=0x00.
++	 */
++	if (command->tid_out != 0x00) {
++		rtl_warn(rtl, "rtl: dropping message not intended for us (tid = %#04x)\n",
++			 command->tid_out);
++		return;
++	}
 +
-+		keymap[j] = dell_wmi_keymap_type_0012[i];
-+		keymap[j].code |= (0x0012 << 16);
-+		j++;
- 	}
- 	ret = sparse_keymap_setup(priv->input_dev, keymap, NULL);
- 	kfree(keymap);
+ 	if (ssh_rqid_is_event(get_unaligned_le16(&command->rqid)))
+ 		ssh_rtl_rx_event(rtl, command, &command_data);
+ 	else
+-- 
+2.39.0
+
 
 
