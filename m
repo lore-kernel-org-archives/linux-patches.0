@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D15F6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:36:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99163C433F0;
-	Mon, 16 Jan 2023 16:36:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF6616FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:37:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45AD3C433F2;
+	Mon, 16 Jan 2023 16:37:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887019;
-	bh=Hhaael2frZSe6Jse1qUuGwLB43dKPfzxCToi/yJM1MM=;
+	s=korg; t=1673887021;
+	bh=4RgNY5rjJdgrSxkcvYDBZUS2OGJA3RRHso35XDx+7ek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jaTdEfElhZ3Of7iLcU5QEt1X45oKcFbJRutGrbMIB4stSYMEzoLgr4PV7OPPHa0cN
-	 uww/iWOPOOhcIuCY+swmzE8p0RlYVY/c9ijp0dRIj74Sb5lM0vudzW1WzOwelzJdra
-	 Sv0L/ncqAFUe8CH0cuok4xhwq2992hwFfvVM6JR8=
+	b=fSHUis4BaZEPwBFGm/QXbGzPbhdfs3jF9modY7lEFgsYqtHhurra/VW87e1DN/+Og
+	 aiB9euH97peXy8uubwIvzijZUTqTiqFqynws6XIEMyeSwnyIff8v2AXALwZUihzseO
+	 3104Ve9Jbyl5Vz7jrrrSb2BIRc+HAI7xRogtblK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Chan <adchan@google.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.4 609/658] ALSA: hda/hdmi: Add a HP device 0x8715 to force connect list
-Date: Mon, 16 Jan 2023 16:51:37 +0100
-Message-Id: <20230116154937.360880386@linuxfoundation.org>
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Yong Wu <yong.wu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
+	Joerg Roedel <jroedel@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 643/658] iommu/mediatek-v1: Fix an error handling path in mtk_iommu_v1_probe()
+Date: Mon, 16 Jan 2023 16:52:11 +0100
+Message-Id: <20230116154938.906381351@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -34,31 +38,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Chan <adchan@google.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-commit de1ccb9e61728dd941fe0e955a7a129418657267 upstream.
+[ Upstream commit 142e821f68cf5da79ce722cb9c1323afae30e185 ]
 
-Add the 'HP Engage Flex Mini' device to the force connect list to
-enable audio through HDMI.
+A clk, prepared and enabled in mtk_iommu_v1_hw_init(), is not released in
+the error handling path of mtk_iommu_v1_probe().
 
-Signed-off-by: Adrian Chan <adchan@google.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230109210520.16060-1-adchan@google.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add the corresponding clk_disable_unprepare(), as already done in the
+remove function.
+
+Fixes: b17336c55d89 ("iommu/mediatek: add support for mtk iommu generation one HW")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Yong Wu <yong.wu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Link: https://lore.kernel.org/r/593e7b7d97c6e064b29716b091a9d4fd122241fb.1671473163.git.christophe.jaillet@wanadoo.fr
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_hdmi.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/iommu/mtk_iommu_v1.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -1821,6 +1821,7 @@ static const struct snd_pci_quirk force_
- 	SND_PCI_QUIRK(0x103c, 0x870f, "HP", 1),
- 	SND_PCI_QUIRK(0x103c, 0x871a, "HP", 1),
- 	SND_PCI_QUIRK(0x103c, 0x8711, "HP", 1),
-+	SND_PCI_QUIRK(0x103c, 0x8715, "HP", 1),
- 	SND_PCI_QUIRK(0x1462, 0xec94, "MS-7C94", 1),
- 	{}
- };
+diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
+index 7b1833b0f059..e31bd281e59d 100644
+--- a/drivers/iommu/mtk_iommu_v1.c
++++ b/drivers/iommu/mtk_iommu_v1.c
+@@ -626,7 +626,7 @@ static int mtk_iommu_probe(struct platform_device *pdev)
+ 	ret = iommu_device_sysfs_add(&data->iommu, &pdev->dev, NULL,
+ 				     dev_name(&pdev->dev));
+ 	if (ret)
+-		return ret;
++		goto out_clk_unprepare;
+ 
+ 	iommu_device_set_ops(&data->iommu, &mtk_iommu_ops);
+ 
+@@ -651,6 +651,8 @@ static int mtk_iommu_probe(struct platform_device *pdev)
+ 	iommu_device_unregister(&data->iommu);
+ out_sysfs_remove:
+ 	iommu_device_sysfs_remove(&data->iommu);
++out_clk_unprepare:
++	clk_disable_unprepare(data->bclk);
+ 	return ret;
+ }
+ 
+-- 
+2.35.1
+
 
 
