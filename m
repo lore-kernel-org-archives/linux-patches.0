@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B32D33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:54:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04BB7C433EF;
-	Mon, 16 Jan 2023 15:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103C433EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:54:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0EAC433D2;
+	Mon, 16 Jan 2023 15:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884474;
-	bh=PmeZbxQ+6S4uH9vuvSdYM118QIROdsv0FbagLLAYx5g=;
+	s=korg; t=1673884476;
+	bh=z4iyO4piXfHR860uL1CWtubebOroVttaghFPALSBrj0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EVVyQ4Ac+lVIJw3j6u304a/ckp0Qq3CpYJz2DCrVGDssWEqpB6SLCXTn2QgEj+Awn
-	 Z99hMMmwjDsxQORbGhfo1C16TKoFjvB6KIWdJIRzszeyO/s5VkgAzJZtqphYfO7z/q
-	 MyGlbbxEN3zr6+d2mMDfPmv2qUDNGLy+O6VMLOYg=
+	b=PcRgjF6Gb7qbkpki2T1hV7tNIJPJYDIJecCZD/cdZOlPyRol4G1Kc36Rf412b+meq
+	 M2QBKBb37XU8kVwZEIRK8O4J9Bjfboe/zOjcDEia4/ZoEQWmZem+wPqXdJhqCMxPSf
+	 Y7FquHkcr0Al6foBFTPPiSU4FZ0FDgOUxgddq0Uc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ivan T. Ivanov" <iivanov@suse.de>,
-	Hector Martin <marcan@marcan.st>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Peter Robinson <pbrobinson@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 020/183] brcmfmac: Prefer DT board type over DMI board type
-Date: Mon, 16 Jan 2023 16:49:03 +0100
-Message-Id: <20230116154804.257378726@linuxfoundation.org>
+	Brian Norris <computersforpeace@gmail.com>,
+	Stephan Gerhold <stephan@gerhold.net>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 021/183] ASoC: qcom: lpass-cpu: Fix fallback SD line index handling
+Date: Mon, 16 Jan 2023 16:49:04 +0100
+Message-Id: <20230116154804.291656162@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -37,56 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivan T. Ivanov <iivanov@suse.de>
+From: Brian Norris <computersforpeace@gmail.com>
 
-commit a5a36720c3f650f859f5e9535dd62d06f13f4f3b upstream.
+commit 000bca8d706d1bf7cca01af75787247c5a2fdedf upstream.
 
-The introduction of support for Apple board types inadvertently changed
-the precedence order, causing hybrid SMBIOS+DT platforms to look up the
-firmware using the DMI information instead of the device tree compatible
-to generate the board type. Revert back to the old behavior,
-as affected platforms use firmwares named after the DT compatible.
+These indices should reference the ID placed within the dai_driver
+array, not the indices of the array itself.
 
-Fixes: 7682de8b3351 ("wifi: brcmfmac: of: Fetch Apple properties")
+This fixes commit 4ff028f6c108 ("ASoC: qcom: lpass-cpu: Make I2S SD
+lines configurable"), which among others, broke IPQ8064 audio
+(sound/soc/qcom/lpass-ipq806x.c) because it uses ID 4 but we'd stop
+initializing the mi2s_playback_sd_mode and mi2s_capture_sd_mode arrays
+at ID 0.
 
-[1] https://bugzilla.opensuse.org/show_bug.cgi?id=1206697#c13
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Ivan T. Ivanov <iivanov@suse.de>
-Reviewed-by: Hector Martin <marcan@marcan.st>
-Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Tested-by: Peter Robinson <pbrobinson@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 4ff028f6c108 ("ASoC: qcom: lpass-cpu: Make I2S SD lines configurable")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Brian Norris <computersforpeace@gmail.com>
+Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
+Link: https://lore.kernel.org/r/20221231061545.2110253-1-computersforpeace@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c | 5 +++--
+ sound/soc/qcom/lpass-cpu.c |    5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-index a83699de01ec..fdd0c9abc1a1 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/of.c
-@@ -79,7 +79,8 @@ void brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
- 	/* Apple ARM64 platforms have their own idea of board type, passed in
- 	 * via the device tree. They also have an antenna SKU parameter
- 	 */
--	if (!of_property_read_string(np, "brcm,board-type", &prop))
-+	err = of_property_read_string(np, "brcm,board-type", &prop);
-+	if (!err)
- 		settings->board_type = prop;
+--- a/sound/soc/qcom/lpass-cpu.c
++++ b/sound/soc/qcom/lpass-cpu.c
+@@ -1037,10 +1037,11 @@ static void of_lpass_cpu_parse_dai_data(
+ 					struct lpass_data *data)
+ {
+ 	struct device_node *node;
+-	int ret, id;
++	int ret, i, id;
  
- 	if (!of_property_read_string(np, "apple,antenna-sku", &prop))
-@@ -87,7 +88,7 @@ void brcmf_of_probe(struct device *dev, enum brcmf_bus_type bus_type,
- 
- 	/* Set board-type to the first string of the machine compatible prop */
- 	root = of_find_node_by_path("/");
--	if (root && !settings->board_type) {
-+	if (root && err) {
- 		char *board_type;
- 		const char *tmp;
- 
--- 
-2.39.0
-
+ 	/* Allow all channels by default for backwards compatibility */
+-	for (id = 0; id < data->variant->num_dai; id++) {
++	for (i = 0; i < data->variant->num_dai; i++) {
++		id = data->variant->dai_driver[i].id;
+ 		data->mi2s_playback_sd_mode[id] = LPAIF_I2SCTL_MODE_8CH;
+ 		data->mi2s_capture_sd_mode[id] = LPAIF_I2SCTL_MODE_8CH;
+ 	}
 
 
