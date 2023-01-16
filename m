@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5423633EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BF0C433D2;
-	Mon, 16 Jan 2023 15:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B8033EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9273EC433D2;
+	Mon, 16 Jan 2023 15:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884524;
-	bh=6tsBmFtam1/tY3esMmayO7fRCaEfHUxqGVnxy6B+b34=;
+	s=korg; t=1673884526;
+	bh=QdC4cgQODGkKUIbrNESF99GYx8pGTR1ixjbIP1YIP3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v5xbzJ2kQHIgIKrXhbPYim8I/VEq89xn9RiGzEF7bX87yzrRcwdt0/HDnb/6lsmbM
-	 E869l2fLJWpwLeeFmQIGiTO0niY9+1MmKvjVY1337Pg+hPbUiH0Sw1LuL3/m+BQwpD
-	 hb5tyZrCHf5it26F0dPaxdqCh84tpEyx70A+7aug=
+	b=oesxEViYW8NFD1pImV3Vq3QUVrOon0zRGf2yONEKvxfcDqVP/lTyfNHCmTAMt4WSA
+	 XC0JgKM2fwK5Rc6j6cd7opTqiAFbmoG1m0uw5hvWlsSRYf1MR12kDQ6pCZTXhjHafC
+	 SKnAm4Z8UTIU2DMTr49br1GwHpMhqYyrr+GVcEp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ding Hui <dinghui@sangfor.com.cn>,
+	Peter Jones <pjones@redhat.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>,
+	Matthew Garrett <mjg59@srcf.ucam.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.1 009/183] efi: fix userspace infinite retry read efivars after EFI runtime services page fault
-Date: Mon, 16 Jan 2023 16:48:52 +0100
-Message-Id: <20230116154803.768917283@linuxfoundation.org>
+Subject: [PATCH 6.1 010/183] efi: tpm: Avoid READ_ONCE() for accessing the event log
+Date: Mon, 16 Jan 2023 16:48:53 +0100
+Message-Id: <20230116154803.819910275@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -34,45 +37,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ding Hui <dinghui@sangfor.com.cn>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit e006ac3003080177cf0b673441a4241f77aaecce upstream.
+commit d3f450533bbcb6dd4d7d59cadc9b61b7321e4ac1 upstream.
 
-After [1][2], if we catch exceptions due to EFI runtime service, we will
-clear EFI_RUNTIME_SERVICES bit to disable EFI runtime service, then the
-subsequent routine which invoke the EFI runtime service should fail.
+Nathan reports that recent kernels built with LTO will crash when doing
+EFI boot using Fedora's GRUB and SHIM. The culprit turns out to be a
+misaligned load from the TPM event log, which is annotated with
+READ_ONCE(), and under LTO, this gets translated into a LDAR instruction
+which does not tolerate misaligned accesses.
 
-But the userspace cat efivars through /sys/firmware/efi/efivars/ will stuck
-and infinite loop calling read() due to efivarfs_file_read() return -EINTR.
+Interestingly, this does not happen when booting the same kernel
+straight from the UEFI shell, and so the fact that the event log may
+appear misaligned in memory may be caused by a bug in GRUB or SHIM.
 
-The -EINTR is converted from EFI_ABORTED by efi_status_to_err(), and is
-an improper return value in this situation, so let virt_efi_xxx() return
-EFI_DEVICE_ERROR and converted to -EIO to invoker.
+However, using READ_ONCE() to access firmware tables is slightly unusual
+in any case, and here, we only need to ensure that 'event' is not
+dereferenced again after it gets unmapped, but this is already taken
+care of by the implicit barrier() semantics of the early_memunmap()
+call.
 
 Cc: <stable@vger.kernel.org>
-Fixes: 3425d934fc03 ("efi/x86: Handle page faults occurring while running EFI runtime services")
-Fixes: 23715a26c8d8 ("arm64: efi: Recover from synchronous exceptions occurring in firmware")
-Signed-off-by: Ding Hui <dinghui@sangfor.com.cn>
+Cc: Peter Jones <pjones@redhat.com>
+Cc: Jarkko Sakkinen <jarkko@kernel.org>
+Cc: Matthew Garrett <mjg59@srcf.ucam.org>
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://github.com/ClangBuiltLinux/linux/issues/1782
 Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/runtime-wrappers.c | 1 +
- 1 file changed, 1 insertion(+)
+ include/linux/tpm_eventlog.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/efi/runtime-wrappers.c b/drivers/firmware/efi/runtime-wrappers.c
-index 7feee3d9c2bf..1fba4e09cdcf 100644
---- a/drivers/firmware/efi/runtime-wrappers.c
-+++ b/drivers/firmware/efi/runtime-wrappers.c
-@@ -62,6 +62,7 @@ struct efi_runtime_work efi_rts_work;
- 									\
- 	if (!efi_enabled(EFI_RUNTIME_SERVICES)) {			\
- 		pr_warn_once("EFI Runtime Services are disabled!\n");	\
-+		efi_rts_work.status = EFI_DEVICE_ERROR;			\
- 		goto exit;						\
- 	}								\
- 									\
--- 
-2.39.0
-
+--- a/include/linux/tpm_eventlog.h
++++ b/include/linux/tpm_eventlog.h
+@@ -198,8 +198,8 @@ static __always_inline int __calc_tpm2_e
+ 	 * The loop below will unmap these fields if the log is larger than
+ 	 * one page, so save them here for reference:
+ 	 */
+-	count = READ_ONCE(event->count);
+-	event_type = READ_ONCE(event->event_type);
++	count = event->count;
++	event_type = event->event_type;
+ 
+ 	/* Verify that it's the log header */
+ 	if (event_header->pcr_idx != 0 ||
 
 
