@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A314133EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BFB6C433F0;
-	Mon, 16 Jan 2023 15:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9985433EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2134FC433EF;
+	Mon, 16 Jan 2023 15:55:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884500;
-	bh=3rTy7XE1Pmj3KGs8RvnNtqtkfT0SywqxFhep8j3Pn3w=;
+	s=korg; t=1673884503;
+	bh=8qRTdXvIvxl0/gerX2qxYxM0dkK3Mf/RxEFqs2Rw+T8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RiYTsknd7xilCf0RS6DSjruUXiT0htu0GgVBdHEcNSoDzmUfIn8JlqR90n/PiBgG6
-	 uZvjCn9tTsQD38/z7qh8gRuXb0h2A3JwHB6d4dUiIg25JWtjQtGbti5LAA9j6YeKm1
-	 x/y4nJufud8xGOOv0vbBxCtBxd+/TDG+9KOAOEdY=
+	b=FS+117yzegP93yp4CxlFZqiEk0MDh31VKGyGlx7MgCAhQR6JQlKjmP/fryzLZVXzA
+	 FkqY9tlRcFqMOhZ2nP7KMuVpyPrU0rhTYvGLOd7FL6k4M490/KCAKU38Du0nuWrnCW
+	 k4wEbFQFgNg174C2LOiaHiOE9muhEb+A5TKwusbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wilson <chris@chris-wilson.co.uk>,
-	Mika Kuoppala <mika.kuoppala@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
+	=?UTF-8?q?Thomas=20Hellstr=C3=B6m?= <thomas.hellstrom@linux.intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Matthew Auld <matthew.auld@intel.com>,
 	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.1 029/183] drm/i915/gt: Reset twice
-Date: Mon, 16 Jan 2023 16:49:12 +0100
-Message-Id: <20230116154804.602579121@linuxfoundation.org>
+Subject: [PATCH 6.1 030/183] drm/i915: Reserve enough fence slot for i915_vma_unbind_async
+Date: Mon, 16 Jan 2023 16:49:13 +0100
+Message-Id: <20230116154804.633702520@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -37,85 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Wilson <chris@chris-wilson.co.uk>
+From: Nirmoy Das <nirmoy.das@intel.com>
 
-commit d3de5616d36462a646f5b360ba82d3b09ff668eb upstream.
+commit 476fdcdaaae7b06c780cdfc234c704107f16c529 upstream.
 
-After applying an engine reset, on some platforms like Jasperlake, we
-occasionally detect that the engine state is not cleared until shortly
-after the resume. As we try to resume the engine with volatile internal
-state, the first request fails with a spurious CS event (it looks like
-it reports a lite-restore to the hung context, instead of the expected
-idle->active context switch).
+A nested dma_resv_reserve_fences(1) will not reserve slot from the
+2nd call onwards and folowing dma_resv_add_fence() might hit the
+"BUG_ON(fobj->num_fences >= fobj->max_fences)" check.
 
-Signed-off-by: Chris Wilson <chris@chris-wilson.co.uk>
-Cc: stable@vger.kernel.org
-Cc: Mika Kuoppala <mika.kuoppala@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Reviewed-by: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221212161338.1007659-1-andi.shyti@linux.intel.com
-(cherry picked from commit 3db9d590557da3aa2c952f2fecd3e9b703dad790)
+I915 hit above nested dma_resv case in ttm_bo_handle_move_mem() with
+async unbind:
+
+dma_resv_reserve_fences() from --> ttm_bo_handle_move_mem()
+        dma_resv_reserve_fences() from --> i915_vma_unbind_async()
+        dma_resv_add_fence() from --> i915_vma_unbind_async()
+dma_resv_add_fence() from -->ttm_bo_move_accel_cleanup()
+
+Resolve this by adding an extra fence in i915_vma_unbind_async().
+
+Suggested-by: Thomas Hellström <thomas.hellstrom@linux.intel.com>
+Fixes: 2f6b90da9192 ("drm/i915: Use vma resources for async unbinding")
+Cc: <stable@vger.kernel.org> # v5.18+
+Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Matthew Auld <matthew.auld@intel.com>
+Signed-off-by: Matthew Auld <matthew.auld@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221223092011.11657-1-nirmoy.das@intel.com
+(cherry picked from commit 4f0755c2faf7388616109717facc5bbde6850e60)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_reset.c |   34 ++++++++++++++++++++++++++++------
- 1 file changed, 28 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/i915/i915_vma.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/gt/intel_reset.c
-+++ b/drivers/gpu/drm/i915/gt/intel_reset.c
-@@ -278,6 +278,7 @@ out:
- static int gen6_hw_domain_reset(struct intel_gt *gt, u32 hw_domain_mask)
- {
- 	struct intel_uncore *uncore = gt->uncore;
-+	int loops = 2;
- 	int err;
+--- a/drivers/gpu/drm/i915/i915_vma.c
++++ b/drivers/gpu/drm/i915/i915_vma.c
+@@ -2114,7 +2114,7 @@ int i915_vma_unbind_async(struct i915_vm
+ 	if (!obj->mm.rsgt)
+ 		return -EBUSY;
  
- 	/*
-@@ -285,18 +286,39 @@ static int gen6_hw_domain_reset(struct i
- 	 * for fifo space for the write or forcewake the chip for
- 	 * the read
- 	 */
--	intel_uncore_write_fw(uncore, GEN6_GDRST, hw_domain_mask);
-+	do {
-+		intel_uncore_write_fw(uncore, GEN6_GDRST, hw_domain_mask);
- 
--	/* Wait for the device to ack the reset requests */
--	err = __intel_wait_for_register_fw(uncore,
--					   GEN6_GDRST, hw_domain_mask, 0,
--					   500, 0,
--					   NULL);
-+		/*
-+		 * Wait for the device to ack the reset requests.
-+		 *
-+		 * On some platforms, e.g. Jasperlake, we see that the
-+		 * engine register state is not cleared until shortly after
-+		 * GDRST reports completion, causing a failure as we try
-+		 * to immediately resume while the internal state is still
-+		 * in flux. If we immediately repeat the reset, the second
-+		 * reset appears to serialise with the first, and since
-+		 * it is a no-op, the registers should retain their reset
-+		 * value. However, there is still a concern that upon
-+		 * leaving the second reset, the internal engine state
-+		 * is still in flux and not ready for resuming.
-+		 */
-+		err = __intel_wait_for_register_fw(uncore, GEN6_GDRST,
-+						   hw_domain_mask, 0,
-+						   2000, 0,
-+						   NULL);
-+	} while (err == 0 && --loops);
+-	err = dma_resv_reserve_fences(obj->base.resv, 1);
++	err = dma_resv_reserve_fences(obj->base.resv, 2);
  	if (err)
- 		GT_TRACE(gt,
- 			 "Wait for 0x%08x engines reset failed\n",
- 			 hw_domain_mask);
- 
-+	/*
-+	 * As we have observed that the engine state is still volatile
-+	 * after GDRST is acked, impose a small delay to let everything settle.
-+	 */
-+	udelay(50);
-+
- 	return err;
- }
+ 		return -EBUSY;
  
 
 
