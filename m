@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4688733EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:58:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD235C433EF;
-	Mon, 16 Jan 2023 15:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D951533EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:58:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61017C433EF;
+	Mon, 16 Jan 2023 15:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884694;
-	bh=R32NOMQiJMN4poX7/zD1fmWHmFPIY4pZxMOc4ln9+po=;
+	s=korg; t=1673884696;
+	bh=k9/yn1qX9AeyRCE+EJ+zJyIjAOBaC5vdQe2eUwZA/Zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NQ338LZ8Ikem8ak++R2eWD7aUx8F4vY98ip1buS81n9xq+uYShA/eb2M5fhprGeue
-	 F/O4RGOakd+8lqqMNMJjysUOL2IqR/XNqZV95WFasxzXMRirqivUCfXb/4+JKJVH0G
-	 1HwJ797TbmxUsw2Oeias+vJlHVYa4qtg6F0hLZ28=
+	b=Ov9wopbL7ehfeRryTkKLsd5E49zZDKxfXPpdzylfRYxNGuaZx9Jy1XyCnrN1iBteO
+	 cRotl+5/l7mx7+Twc4bD4YJ+og8DIGbFgMRZ9EMykSkCeHjQvNFatGERSXgDm26NFJ
+	 O5AEZhBvshUPKOr0YXO8Lb8rpMHRezc3QMjBEiNM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kenneth Feng <kenneth.feng@amd.com>,
-	Yang Wang <kevinyang.wang@amd.com>,
+	Candice Li <candice.li@amd.com>,
+	Evan Quan <evan.quan@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 075/183] drm/amd/pm: enable mode1 reset on smu_v13_0_10
-Date: Mon, 16 Jan 2023 16:49:58 +0100
-Message-Id: <20230116154806.582224771@linuxfoundation.org>
+Subject: [PATCH 6.1 076/183] drm/amd/pm: Enable bad memory page/channel recording support for smu v13_0_0
+Date: Mon, 16 Jan 2023 16:49:59 +0100
+Message-Id: <20230116154806.618497173@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,188 +36,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kenneth Feng <kenneth.feng@amd.com>
+From: Candice Li <candice.li@amd.com>
 
-[ Upstream commit 60cfad329ab877cb62975ea78ed442c2496990ba ]
+[ Upstream commit 48aa62f07467c8fcd4b4ec7851e13c83e89a1558 ]
 
-enable mode1 reset and prioritize debug port on smu_v13_0_10
-as a more reliable message processing
+Send message to SMU to update bad memory page and bad channel info.
 
-v2 - move mode1 reset callback to smu_v13_0_0_ppt.c
-
-Signed-off-by: Kenneth Feng <kenneth.feng@amd.com>
-Reviewed-by: Yang Wang <kevinyang.wang@amd.com>
+Signed-off-by: Candice Li <candice.li@amd.com>
+Reviewed-by: Evan Quan <evan.quan@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Stable-dep-of: 1794f6a9535b ("drm/amd/pm: enable GPO dynamic control support for SMU13.0.0")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/soc21.c            |  1 +
- drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h |  4 ++
- .../drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c  | 53 ++++++++++++++++++-
- drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c        | 18 +++++++
- drivers/gpu/drm/amd/pm/swsmu/smu_cmn.h        |  3 ++
- 5 files changed, 77 insertions(+), 2 deletions(-)
+ .../pm/swsmu/inc/pmfw_if/smu_v13_0_0_ppsmc.h  |  8 +++-
+ drivers/gpu/drm/amd/pm/swsmu/inc/smu_types.h  |  4 +-
+ .../drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c  | 39 +++++++++++++++++++
+ 3 files changed, 49 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/soc21.c b/drivers/gpu/drm/amd/amdgpu/soc21.c
-index 8b297ade69a2..f1913d879811 100644
---- a/drivers/gpu/drm/amd/amdgpu/soc21.c
-+++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
-@@ -322,6 +322,7 @@ soc21_asic_reset_method(struct amdgpu_device *adev)
- 	switch (adev->ip_versions[MP1_HWIP][0]) {
- 	case IP_VERSION(13, 0, 0):
- 	case IP_VERSION(13, 0, 7):
-+	case IP_VERSION(13, 0, 10):
- 		return AMD_RESET_METHOD_MODE1;
- 	case IP_VERSION(13, 0, 4):
- 		return AMD_RESET_METHOD_MODE2;
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h b/drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h
-index f816b1dd110e..44bbf17e4bef 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h
-+++ b/drivers/gpu/drm/amd/pm/swsmu/inc/amdgpu_smu.h
-@@ -568,6 +568,10 @@ struct smu_context
- 	u32 param_reg;
- 	u32 msg_reg;
- 	u32 resp_reg;
-+
-+	u32 debug_param_reg;
-+	u32 debug_msg_reg;
-+	u32 debug_resp_reg;
- };
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu_v13_0_0_ppsmc.h b/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu_v13_0_0_ppsmc.h
+index 9ebb8f39732a..8b8266890a10 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu_v13_0_0_ppsmc.h
++++ b/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu_v13_0_0_ppsmc.h
+@@ -131,7 +131,13 @@
+ #define PPSMC_MSG_EnableAudioStutterWA           0x44
+ #define PPSMC_MSG_PowerUpUmsch                   0x45
+ #define PPSMC_MSG_PowerDownUmsch                 0x46
+-#define PPSMC_Message_Count                      0x47
++#define PPSMC_MSG_SetDcsArch                     0x47
++#define PPSMC_MSG_TriggerVFFLR                   0x48
++#define PPSMC_MSG_SetNumBadMemoryPagesRetired    0x49
++#define PPSMC_MSG_SetBadMemoryPagesRetiredFlagsPerChannel 0x4A
++#define PPSMC_MSG_SetPriorityDeltaGain           0x4B
++#define PPSMC_MSG_AllowIHHostInterrupt           0x4C
++#define PPSMC_Message_Count                      0x4D
  
- struct i2c_adapter;
+ //Debug Dump Message
+ #define DEBUGSMC_MSG_TestMessage                    0x1
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_types.h b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_types.h
+index 58098b82df66..a4e3425b1027 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_types.h
++++ b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_types.h
+@@ -239,7 +239,9 @@
+ 	__SMU_DUMMY_MAP(DriverMode2Reset), \
+ 	__SMU_DUMMY_MAP(GetGfxOffStatus),		 \
+ 	__SMU_DUMMY_MAP(GetGfxOffEntryCount),		 \
+-	__SMU_DUMMY_MAP(LogGfxOffResidency),
++	__SMU_DUMMY_MAP(LogGfxOffResidency),			\
++	__SMU_DUMMY_MAP(SetNumBadMemoryPagesRetired),		\
++	__SMU_DUMMY_MAP(SetBadMemoryPagesRetiredFlagsPerChannel),
+ 
+ #undef __SMU_DUMMY_MAP
+ #define __SMU_DUMMY_MAP(type)	SMU_MSG_##type
 diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-index be43de9dd496..73bae7eaefa2 100644
+index 73bae7eaefa2..884d4176b412 100644
 --- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
 +++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -70,6 +70,26 @@
+@@ -141,6 +141,9 @@ static struct cmn2asic_msg_mapping smu_v13_0_0_message_map[SMU_MSG_MAX_COUNT] =
+ 	MSG_MAP(PrepareMp1ForUnload,		PPSMC_MSG_PrepareMp1ForUnload,         0),
+ 	MSG_MAP(DFCstateControl,		PPSMC_MSG_SetExternalClientDfCstateAllow, 0),
+ 	MSG_MAP(ArmD3,				PPSMC_MSG_ArmD3,                       0),
++	MSG_MAP(SetNumBadMemoryPagesRetired,	PPSMC_MSG_SetNumBadMemoryPagesRetired,   0),
++	MSG_MAP(SetBadMemoryPagesRetiredFlagsPerChannel,
++			    PPSMC_MSG_SetBadMemoryPagesRetiredFlagsPerChannel,   0),
+ };
  
- #define MP0_MP1_DATA_REGION_SIZE_COMBOPPTABLE	0x4000
- 
-+#define mmMP1_SMN_C2PMSG_66                                                                            0x0282
-+#define mmMP1_SMN_C2PMSG_66_BASE_IDX                                                                   0
-+
-+#define mmMP1_SMN_C2PMSG_82                                                                            0x0292
-+#define mmMP1_SMN_C2PMSG_82_BASE_IDX                                                                   0
-+
-+#define mmMP1_SMN_C2PMSG_90                                                                            0x029a
-+#define mmMP1_SMN_C2PMSG_90_BASE_IDX                                                                   0
-+
-+#define mmMP1_SMN_C2PMSG_75                                                                            0x028b
-+#define mmMP1_SMN_C2PMSG_75_BASE_IDX                                                                   0
-+
-+#define mmMP1_SMN_C2PMSG_53                                                                            0x0275
-+#define mmMP1_SMN_C2PMSG_53_BASE_IDX                                                                   0
-+
-+#define mmMP1_SMN_C2PMSG_54                                                                            0x0276
-+#define mmMP1_SMN_C2PMSG_54_BASE_IDX                                                                   0
-+
-+#define DEBUGSMC_MSG_Mode1Reset	2
-+
- static struct cmn2asic_msg_mapping smu_v13_0_0_message_map[SMU_MSG_MAX_COUNT] = {
- 	MSG_MAP(TestMessage,			PPSMC_MSG_TestMessage,                 1),
- 	MSG_MAP(GetSmuVersion,			PPSMC_MSG_GetSmuVersion,               1),
-@@ -1879,6 +1899,35 @@ static int smu_v13_0_0_set_df_cstate(struct smu_context *smu,
- 					       NULL);
+ static struct cmn2asic_mapping smu_v13_0_0_clk_map[SMU_CLK_COUNT] = {
+@@ -1928,6 +1931,40 @@ static void smu_v13_0_0_set_smu_mailbox_registers(struct smu_context *smu)
+ 	smu->debug_resp_reg = SOC15_REG_OFFSET(MP1, 0, mmMP1_SMN_C2PMSG_54);
  }
  
-+static int smu_v13_0_0_mode1_reset(struct smu_context *smu)
++static int smu_v13_0_0_smu_send_bad_mem_page_num(struct smu_context *smu,
++		uint32_t size)
 +{
-+	int ret;
-+	struct amdgpu_device *adev = smu->adev;
++	int ret = 0;
 +
-+	if (adev->ip_versions[MP1_HWIP][0] == IP_VERSION(13, 0, 10))
-+		ret = smu_cmn_send_debug_smc_msg(smu, DEBUGSMC_MSG_Mode1Reset);
-+	else
-+		ret = smu_cmn_send_smc_msg(smu, SMU_MSG_Mode1Reset, NULL);
-+
-+	if (!ret)
-+		msleep(SMU13_MODE1_RESET_WAIT_TIME_IN_MS);
++	/* message SMU to update the bad page number on SMUBUS */
++	ret = smu_cmn_send_smc_msg_with_param(smu,
++					  SMU_MSG_SetNumBadMemoryPagesRetired,
++					  size, NULL);
++	if (ret)
++		dev_err(smu->adev->dev,
++			  "[%s] failed to message SMU to update bad memory pages number\n",
++			  __func__);
 +
 +	return ret;
 +}
 +
-+static void smu_v13_0_0_set_smu_mailbox_registers(struct smu_context *smu)
++static int smu_v13_0_0_send_bad_mem_channel_flag(struct smu_context *smu,
++		uint32_t size)
 +{
-+	struct amdgpu_device *adev = smu->adev;
++	int ret = 0;
 +
-+	smu->param_reg = SOC15_REG_OFFSET(MP1, 0, mmMP1_SMN_C2PMSG_82);
-+	smu->msg_reg = SOC15_REG_OFFSET(MP1, 0, mmMP1_SMN_C2PMSG_66);
-+	smu->resp_reg = SOC15_REG_OFFSET(MP1, 0, mmMP1_SMN_C2PMSG_90);
++	/* message SMU to update the bad channel info on SMUBUS */
++	ret = smu_cmn_send_smc_msg_with_param(smu,
++				  SMU_MSG_SetBadMemoryPagesRetiredFlagsPerChannel,
++				  size, NULL);
++	if (ret)
++		dev_err(smu->adev->dev,
++			  "[%s] failed to message SMU to update bad memory pages channel info\n",
++			  __func__);
 +
-+	smu->debug_param_reg = SOC15_REG_OFFSET(MP1, 0, mmMP1_SMN_C2PMSG_53);
-+	smu->debug_msg_reg = SOC15_REG_OFFSET(MP1, 0, mmMP1_SMN_C2PMSG_75);
-+	smu->debug_resp_reg = SOC15_REG_OFFSET(MP1, 0, mmMP1_SMN_C2PMSG_54);
++	return ret;
 +}
 +
  static const struct pptable_funcs smu_v13_0_0_ppt_funcs = {
  	.get_allowed_feature_mask = smu_v13_0_0_get_allowed_feature_mask,
  	.set_default_dpm_table = smu_v13_0_0_set_default_dpm_table,
-@@ -1946,7 +1995,7 @@ static const struct pptable_funcs smu_v13_0_0_ppt_funcs = {
- 	.baco_enter = smu_v13_0_0_baco_enter,
- 	.baco_exit = smu_v13_0_0_baco_exit,
- 	.mode1_reset_is_support = smu_v13_0_0_is_mode1_reset_supported,
--	.mode1_reset = smu_v13_0_mode1_reset,
-+	.mode1_reset = smu_v13_0_0_mode1_reset,
+@@ -1998,6 +2035,8 @@ static const struct pptable_funcs smu_v13_0_0_ppt_funcs = {
+ 	.mode1_reset = smu_v13_0_0_mode1_reset,
  	.set_mp1_state = smu_v13_0_0_set_mp1_state,
  	.set_df_cstate = smu_v13_0_0_set_df_cstate,
++	.send_hbm_bad_pages_num = smu_v13_0_0_smu_send_bad_mem_page_num,
++	.send_hbm_bad_channel_flag = smu_v13_0_0_send_bad_mem_channel_flag,
  };
-@@ -1960,5 +2009,5 @@ void smu_v13_0_0_set_ppt_funcs(struct smu_context *smu)
- 	smu->table_map = smu_v13_0_0_table_map;
- 	smu->pwr_src_map = smu_v13_0_0_pwr_src_map;
- 	smu->workload_map = smu_v13_0_0_workload_map;
--	smu_v13_0_set_smu_mailbox_registers(smu);
-+	smu_v13_0_0_set_smu_mailbox_registers(smu);
- }
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
-index e4f8f90ac5aa..768b6e7dbd77 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.c
-@@ -233,6 +233,18 @@ static void __smu_cmn_send_msg(struct smu_context *smu,
- 	WREG32(smu->msg_reg, msg);
- }
  
-+static int __smu_cmn_send_debug_msg(struct smu_context *smu,
-+			       u32 msg,
-+			       u32 param)
-+{
-+	struct amdgpu_device *adev = smu->adev;
-+
-+	WREG32(smu->debug_param_reg, param);
-+	WREG32(smu->debug_msg_reg, msg);
-+	WREG32(smu->debug_resp_reg, 0);
-+
-+	return 0;
-+}
- /**
-  * smu_cmn_send_msg_without_waiting -- send the message; don't wait for status
-  * @smu: pointer to an SMU context
-@@ -386,6 +398,12 @@ int smu_cmn_send_smc_msg(struct smu_context *smu,
- 					       read_arg);
- }
- 
-+int smu_cmn_send_debug_smc_msg(struct smu_context *smu,
-+			 uint32_t msg)
-+{
-+	return __smu_cmn_send_debug_msg(smu, msg, 0);
-+}
-+
- int smu_cmn_to_asic_specific_index(struct smu_context *smu,
- 				   enum smu_cmn2asic_mapping_type type,
- 				   uint32_t index)
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.h b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.h
-index 1526ce09c399..f82cf76dd3a4 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.h
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu_cmn.h
-@@ -42,6 +42,9 @@ int smu_cmn_send_smc_msg(struct smu_context *smu,
- 			 enum smu_message_type msg,
- 			 uint32_t *read_arg);
- 
-+int smu_cmn_send_debug_smc_msg(struct smu_context *smu,
-+			 uint32_t msg);
-+
- int smu_cmn_wait_for_response(struct smu_context *smu);
- 
- int smu_cmn_to_asic_specific_index(struct smu_context *smu,
+ void smu_v13_0_0_set_ppt_funcs(struct smu_context *smu)
 -- 
 2.35.1
 
