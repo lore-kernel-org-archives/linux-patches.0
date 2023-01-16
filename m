@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245DD33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A01BAC433D2;
-	Mon, 16 Jan 2023 16:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B498833EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3911EC433D2;
+	Mon, 16 Jan 2023 16:01:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884880;
-	bh=E01V5XLMeZzO/7m/W6rpRk7DgC939qDkEyYKSOku9lI=;
+	s=korg; t=1673884882;
+	bh=cMzVHi6y81arKg8yTwml2AJUiL/SRH1fF4NxImU0KTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KwZAEYCpZayfCVZwsYGMaz09E8aqf/P4Vsr2duTnFBwPScIwtxhhkhb9Z4fvIPU+D
-	 nKrJqgB6vSz3urd+b4qf/pac6vr0QYy7LLGRK9n2/JAVarB1PIDndEyeHhz7X5DEvp
-	 /EjbZ6+2q2f8QiRvYvqQA7idps4Pc4lDtSqV6WBM=
+	b=xElkhIHhzqfTwoUuDlWqEiSk3CZQsCZv7wKSSZetuG7E7WdRMfwsyDOCyRNmcIBOl
+	 +XQF4PtdI2XFinT5TrFeWMuuRf3fz0iFR9y2cHcsuDILS6a1khs02M20wg8rphrFcF
+	 DiVzZnAEW5oIl3fMOOpGOWGZZDiKvznTUzhpeW0I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Heng <liheng40@huawei.com>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 175/183] efi: fix NULL-deref in init error path
-Date: Mon, 16 Jan 2023 16:51:38 +0100
-Message-Id: <20230116154810.686038903@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+6805087452d72929404e@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 176/183] io_uring: lock overflowing for IOPOLL
+Date: Mon, 16 Jan 2023 16:51:39 +0100
+Message-Id: <20230116154810.730325486@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,54 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit 703c13fe3c9af557d312f5895ed6a5fda2711104 ]
+commit 544d163d659d45a206d8929370d5a2984e546cb7 upstream.
 
-In cases where runtime services are not supported or have been disabled,
-the runtime services workqueue will never have been allocated.
+syzbot reports an issue with overflow filling for IOPOLL:
 
-Do not try to destroy the workqueue unconditionally in the unlikely
-event that EFI initialisation fails to avoid dereferencing a NULL
-pointer.
+WARNING: CPU: 0 PID: 28 at io_uring/io_uring.c:734 io_cqring_event_overflow+0x1c0/0x230 io_uring/io_uring.c:734
+CPU: 0 PID: 28 Comm: kworker/u4:1 Not tainted 6.2.0-rc3-syzkaller-16369-g358a161a6a9e #0
+Workqueue: events_unbound io_ring_exit_work
+Call trace:
+ io_cqring_event_overflow+0x1c0/0x230 io_uring/io_uring.c:734
+ io_req_cqe_overflow+0x5c/0x70 io_uring/io_uring.c:773
+ io_fill_cqe_req io_uring/io_uring.h:168 [inline]
+ io_do_iopoll+0x474/0x62c io_uring/rw.c:1065
+ io_iopoll_try_reap_events+0x6c/0x108 io_uring/io_uring.c:1513
+ io_uring_try_cancel_requests+0x13c/0x258 io_uring/io_uring.c:3056
+ io_ring_exit_work+0xec/0x390 io_uring/io_uring.c:2869
+ process_one_work+0x2d8/0x504 kernel/workqueue.c:2289
+ worker_thread+0x340/0x610 kernel/workqueue.c:2436
+ kthread+0x12c/0x158 kernel/kthread.c:376
+ ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:863
 
-Fixes: 98086df8b70c ("efi: add missed destroy_workqueue when efisubsys_init fails")
-Cc: stable@vger.kernel.org
-Cc: Li Heng <liheng40@huawei.com>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+There is no real problem for normal IOPOLL as flush is also called with
+uring_lock taken, but it's getting more complicated for IOPOLL|SQPOLL,
+for which __io_cqring_overflow_flush() happens from the CQ waiting path.
+
+Reported-and-tested-by: syzbot+6805087452d72929404e@syzkaller.appspotmail.com
+Cc: stable@vger.kernel.org # 5.10+
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/efi.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ io_uring/rw.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/efi/efi.c b/drivers/firmware/efi/efi.c
-index f12cc29bd4b8..033aac6be7da 100644
---- a/drivers/firmware/efi/efi.c
-+++ b/drivers/firmware/efi/efi.c
-@@ -374,8 +374,8 @@ static int __init efisubsys_init(void)
- 	efi_kobj = kobject_create_and_add("efi", firmware_kobj);
- 	if (!efi_kobj) {
- 		pr_err("efi: Firmware registration failed.\n");
--		destroy_workqueue(efi_rts_wq);
--		return -ENOMEM;
-+		error = -ENOMEM;
-+		goto err_destroy_wq;
+diff --git a/io_uring/rw.c b/io_uring/rw.c
+index bb47cc4da713..6223472095d2 100644
+--- a/io_uring/rw.c
++++ b/io_uring/rw.c
+@@ -1055,7 +1055,11 @@ int io_do_iopoll(struct io_ring_ctx *ctx, bool force_nonspin)
+ 			continue;
+ 
+ 		req->cqe.flags = io_put_kbuf(req, 0);
+-		__io_fill_cqe_req(req->ctx, req);
++		if (unlikely(!__io_fill_cqe_req(ctx, req))) {
++			spin_lock(&ctx->completion_lock);
++			io_req_cqe_overflow(req);
++			spin_unlock(&ctx->completion_lock);
++		}
  	}
  
- 	if (efi_rt_services_supported(EFI_RT_SUPPORTED_GET_VARIABLE |
-@@ -423,7 +423,10 @@ static int __init efisubsys_init(void)
- 		generic_ops_unregister();
- err_put:
- 	kobject_put(efi_kobj);
--	destroy_workqueue(efi_rts_wq);
-+err_destroy_wq:
-+	if (efi_rts_wq)
-+		destroy_workqueue(efi_rts_wq);
-+
- 	return error;
- }
- 
+ 	if (unlikely(!nr_events))
 -- 
 2.35.1
 
