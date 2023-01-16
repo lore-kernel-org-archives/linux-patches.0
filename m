@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CD686FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:53:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE1C8C433D2;
-	Mon, 16 Jan 2023 16:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB1C46FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:53:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 747E0C433EF;
+	Mon, 16 Jan 2023 16:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887995;
-	bh=QRa0eIVbsbW9g5JpvfzL7feFfmbM1zfjhgxh46De3JU=;
+	s=korg; t=1673887997;
+	bh=KZFU1leGzQQD6HVHzCIQHyBf69zaJo1yZHVmC8bGzM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H3+vBOHmOCIg5BvMH3YVHBM/JJjYFxq+X3tnofJFN5GPOh8ilDC/2Ia/Bw/5vM9ax
-	 iWjLkLHvurT08U6HKcpM2qOfastfBte6aTIOS52ZQlE6l5HeazJVEaEY6jOD6FlRSw
-	 cvfcGkhXnkvtf5hS8/r7A8zzwIlWg35d7N5OHVYY=
+	b=LvWOCvl0PPgTK7RZE59WpW7f4YgBpWjtMwPqWF3fpi6sqsAlnqPQd6zjPZOB7wKnO
+	 2/2yoY/A3esti287rAeN0VFEV68Wq8YhTV6iey4s93psI93t6G+DvG3GjfoC2Vr3VU
+	 rqC1C0Pe1SS3MTz5Vdv4eZO9TkcMY+yOFTk9qTZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alain Volmat <alain.volmat@foss.st.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Li Zhong <floridsleeves@gmail.com>,
+	Song Liu <song@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 331/521] drm/sti: Use drm_mode_copy()
-Date: Mon, 16 Jan 2023 16:49:53 +0100
-Message-Id: <20230116154901.978493822@linuxfoundation.org>
+Subject: [PATCH 4.19 332/521] drivers/md/md-bitmap: check the return value of md_bitmap_get_counter()
+Date: Mon, 16 Jan 2023 16:49:54 +0100
+Message-Id: <20230116154902.030098499@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,116 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Li Zhong <floridsleeves@gmail.com>
 
-[ Upstream commit 442cf8e22ba25a77cb9092d78733fdbac9844e50 ]
+[ Upstream commit 3bd548e5b819b8c0f2c9085de775c5c7bff9052f ]
 
-struct drm_display_mode embeds a list head, so overwriting
-the full struct with another one will corrupt the list
-(if the destination mode is on a list). Use drm_mode_copy()
-instead which explicitly preserves the list head of
-the destination mode.
+Check the return value of md_bitmap_get_counter() in case it returns
+NULL pointer, which will result in a null pointer dereference.
 
-Even if we know the destination mode is not on any list
-using drm_mode_copy() seems decent as it sets a good
-example. Bad examples of not using it might eventually
-get copied into code where preserving the list head
-actually matters.
+v2: update the check to include other dereference
 
-Obviously one case not covered here is when the mode
-itself is embedded in a larger structure and the whole
-structure is copied. But if we are careful when copying
-into modes embedded in structures I think we can be a
-little more reassured that bogus list heads haven't been
-propagated in.
-
-@is_mode_copy@
-@@
-drm_mode_copy(...)
-{
-...
-}
-
-@depends on !is_mode_copy@
-struct drm_display_mode *mode;
-expression E, S;
-@@
-(
-- *mode = E
-+ drm_mode_copy(mode, &E)
-|
-- memcpy(mode, E, S)
-+ drm_mode_copy(mode, E)
-)
-
-@depends on !is_mode_copy@
-struct drm_display_mode mode;
-expression E;
-@@
-(
-- mode = E
-+ drm_mode_copy(&mode, &E)
-|
-- memcpy(&mode, E, S)
-+ drm_mode_copy(&mode, E)
-)
-
-@@
-struct drm_display_mode *mode;
-@@
-- &*mode
-+ mode
-
-Cc: Alain Volmat <alain.volmat@foss.st.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221107192545.9896-8-ville.syrjala@linux.intel.com
-Reviewed-by: Daniel Vetter <daniel.vetter@ffwll.ch>
+Signed-off-by: Li Zhong <floridsleeves@gmail.com>
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/sti/sti_dvo.c  | 2 +-
- drivers/gpu/drm/sti/sti_hda.c  | 2 +-
- drivers/gpu/drm/sti/sti_hdmi.c | 2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/md/md-bitmap.c | 27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
 
-diff --git a/drivers/gpu/drm/sti/sti_dvo.c b/drivers/gpu/drm/sti/sti_dvo.c
-index b08376b7611b..a3f01721c552 100644
---- a/drivers/gpu/drm/sti/sti_dvo.c
-+++ b/drivers/gpu/drm/sti/sti_dvo.c
-@@ -288,7 +288,7 @@ static void sti_dvo_set_mode(struct drm_bridge *bridge,
+diff --git a/drivers/md/md-bitmap.c b/drivers/md/md-bitmap.c
+index 7cf9d34ce20e..157a1735d7b7 100644
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -2191,20 +2191,23 @@ int md_bitmap_resize(struct bitmap *bitmap, sector_t blocks,
  
- 	DRM_DEBUG_DRIVER("\n");
- 
--	memcpy(&dvo->mode, mode, sizeof(struct drm_display_mode));
-+	drm_mode_copy(&dvo->mode, mode);
- 
- 	/* According to the path used (main or aux), the dvo clocks should
- 	 * have a different parent clock. */
-diff --git a/drivers/gpu/drm/sti/sti_hda.c b/drivers/gpu/drm/sti/sti_hda.c
-index 19b9b5ed1297..33c9efa06f68 100644
---- a/drivers/gpu/drm/sti/sti_hda.c
-+++ b/drivers/gpu/drm/sti/sti_hda.c
-@@ -518,7 +518,7 @@ static void sti_hda_set_mode(struct drm_bridge *bridge,
- 
- 	DRM_DEBUG_DRIVER("\n");
- 
--	memcpy(&hda->mode, mode, sizeof(struct drm_display_mode));
-+	drm_mode_copy(&hda->mode, mode);
- 
- 	if (!hda_get_mode_idx(hda->mode, &mode_idx)) {
- 		DRM_ERROR("Undefined mode\n");
-diff --git a/drivers/gpu/drm/sti/sti_hdmi.c b/drivers/gpu/drm/sti/sti_hdmi.c
-index ccf718404a1c..3acf044ba366 100644
---- a/drivers/gpu/drm/sti/sti_hdmi.c
-+++ b/drivers/gpu/drm/sti/sti_hdmi.c
-@@ -926,7 +926,7 @@ static void sti_hdmi_set_mode(struct drm_bridge *bridge,
- 	DRM_DEBUG_DRIVER("\n");
- 
- 	/* Copy the drm display mode in the connector local structure */
--	memcpy(&hdmi->mode, mode, sizeof(struct drm_display_mode));
-+	drm_mode_copy(&hdmi->mode, mode);
- 
- 	/* Update clock framerate according to the selected mode */
- 	ret = clk_set_rate(hdmi->clk_pix, mode->clock * 1000);
+ 		if (set) {
+ 			bmc_new = md_bitmap_get_counter(&bitmap->counts, block, &new_blocks, 1);
+-			if (*bmc_new == 0) {
+-				/* need to set on-disk bits too. */
+-				sector_t end = block + new_blocks;
+-				sector_t start = block >> chunkshift;
+-				start <<= chunkshift;
+-				while (start < end) {
+-					md_bitmap_file_set_bit(bitmap, block);
+-					start += 1 << chunkshift;
++			if (bmc_new) {
++				if (*bmc_new == 0) {
++					/* need to set on-disk bits too. */
++					sector_t end = block + new_blocks;
++					sector_t start = block >> chunkshift;
++
++					start <<= chunkshift;
++					while (start < end) {
++						md_bitmap_file_set_bit(bitmap, block);
++						start += 1 << chunkshift;
++					}
++					*bmc_new = 2;
++					md_bitmap_count_page(&bitmap->counts, block, 1);
++					md_bitmap_set_pending(&bitmap->counts, block);
+ 				}
+-				*bmc_new = 2;
+-				md_bitmap_count_page(&bitmap->counts, block, 1);
+-				md_bitmap_set_pending(&bitmap->counts, block);
++				*bmc_new |= NEEDED_MASK;
+ 			}
+-			*bmc_new |= NEEDED_MASK;
+ 			if (new_blocks < old_blocks)
+ 				old_blocks = new_blocks;
+ 		}
 -- 
 2.35.1
 
