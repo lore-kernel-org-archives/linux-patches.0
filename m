@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9B446B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:26:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2173C433D2;
-	Mon, 16 Jan 2023 16:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F4446B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:26:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69175C433F0;
+	Mon, 16 Jan 2023 16:26:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886409;
-	bh=Hxf2ofDOFkuf3zwfsf9fN5cHTWuI+VZDWO/d7iDRhKI=;
+	s=korg; t=1673886411;
+	bh=LuAHi2MEmxJzATGZGGoXnCHjr0rmtyOXS+/nVIHQn2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rGOf8QzPjFyWujXpitd7yNthjOhGiJkQ6esq67OPbslPox2B0TAxHEuZZfCDI8fhd
-	 s5uomkEtD9a6ovEWNKLwCm23KX8+Q28rL18IBX0d5RARzqgTPJhD8t7ZX8OSNuOprm
-	 HQpEU0lRuoup3y8VzNmdWpjrDoaf3Ap4M6uMnnGI=
+	b=i+nxky6QZNPthY7d4YhIiWFHmBv4usldOfMXJUb2RPVCmJGCQ/x3h4N9MHHIsj6nW
+	 cWNdioKXiQAuuovz1ZcPmHRJbxzwyhz5zbM+rCN46v9S4QABxFLkke4o1wZrU9ltTH
+	 0l57F7Ispu0k9Ribv+i0l35fEdIJQ6qscAy6NVGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eelco Chaudron <echaudro@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 379/658] openvswitch: Fix flow lookup to use unmasked key
-Date: Mon, 16 Jan 2023 16:47:47 +0100
-Message-Id: <20230116154926.886444081@linuxfoundation.org>
+Subject: [PATCH 5.4 413/658] net: add atomic_long_t to net_device_stats fields
+Date: Mon, 16 Jan 2023 16:48:21 +0100
+Message-Id: <20230116154928.500222105@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,119 +35,163 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eelco Chaudron <echaudro@redhat.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 68bb10101e6b0a6bb44e9c908ef795fc4af99eae ]
+[ Upstream commit 6c1c5097781f563b70a81683ea6fdac21637573b ]
 
-The commit mentioned below causes the ovs_flow_tbl_lookup() function
-to be called with the masked key. However, it's supposed to be called
-with the unmasked key. This due to the fact that the datapath supports
-installing wider flows, and OVS relies on this behavior. For example
-if ipv4(src=1.1.1.1/192.0.0.0, dst=1.1.1.2/192.0.0.0) exists, a wider
-flow (smaller mask) of ipv4(src=192.1.1.1/128.0.0.0,dst=192.1.1.2/
-128.0.0.0) is allowed to be added.
+Long standing KCSAN issues are caused by data-race around
+some dev->stats changes.
 
-However, if we try to add a wildcard rule, the installation fails:
+Most performance critical paths already use per-cpu
+variables, or per-queue ones.
 
-$ ovs-appctl dpctl/add-flow system@myDP "in_port(1),eth_type(0x0800), \
-  ipv4(src=1.1.1.1/192.0.0.0,dst=1.1.1.2/192.0.0.0,frag=no)" 2
-$ ovs-appctl dpctl/add-flow system@myDP "in_port(1),eth_type(0x0800), \
-  ipv4(src=192.1.1.1/0.0.0.0,dst=49.1.1.2/0.0.0.0,frag=no)" 2
-ovs-vswitchd: updating flow table (File exists)
+It is reasonable (and more correct) to use atomic operations
+for the slow paths.
 
-The reason is that the key used to determine if the flow is already
-present in the system uses the original key ANDed with the mask.
-This results in the IP address not being part of the (miniflow) key,
-i.e., being substituted with an all-zero value. When doing the actual
-lookup, this results in the key wrongfully matching the first flow,
-and therefore the flow does not get installed.
+This patch adds an union for each field of net_device_stats,
+so that we can convert paths that are not yet protected
+by a spinlock or a mutex.
 
-This change reverses the commit below, but rather than having the key
-on the stack, it's allocated.
+netdev_stats_to_stats64() no longer has an #if BITS_PER_LONG==64
 
-Fixes: 190aa3e77880 ("openvswitch: Fix Frame-size larger than 1024 bytes warning.")
+Note that the memcpy() we were using on 64bit arches
+had no provision to avoid load-tearing,
+while atomic_long_read() is providing the needed protection
+at no cost.
 
-Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/datapath.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ include/linux/netdevice.h | 58 +++++++++++++++++++++++----------------
+ include/net/dst.h         |  5 ++--
+ net/core/dev.c            | 14 ++--------
+ 3 files changed, 40 insertions(+), 37 deletions(-)
 
-diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
-index 5dc517d64965..a8a8396dd983 100644
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -910,6 +910,7 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 	struct sw_flow_mask mask;
- 	struct sk_buff *reply;
- 	struct datapath *dp;
-+	struct sw_flow_key *key;
- 	struct sw_flow_actions *acts;
- 	struct sw_flow_match match;
- 	u32 ufid_flags = ovs_nla_get_ufid_flags(a[OVS_FLOW_ATTR_UFID_FLAGS]);
-@@ -937,24 +938,26 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 	}
+diff --git a/include/linux/netdevice.h b/include/linux/netdevice.h
+index c70b79dba1dc..73bc0f53303f 100644
+--- a/include/linux/netdevice.h
++++ b/include/linux/netdevice.h
+@@ -160,31 +160,38 @@ static inline bool dev_xmit_complete(int rc)
+  *	(unsigned long) so they can be read and written atomically.
+  */
  
- 	/* Extract key. */
--	ovs_match_init(&match, &new_flow->key, false, &mask);
-+	key = kzalloc(sizeof(*key), GFP_KERNEL);
-+	if (!key) {
-+		error = -ENOMEM;
-+		goto err_kfree_key;
++#define NET_DEV_STAT(FIELD)			\
++	union {					\
++		unsigned long FIELD;		\
++		atomic_long_t __##FIELD;	\
 +	}
 +
-+	ovs_match_init(&match, key, false, &mask);
- 	error = ovs_nla_get_match(net, &match, a[OVS_FLOW_ATTR_KEY],
- 				  a[OVS_FLOW_ATTR_MASK], log);
- 	if (error)
- 		goto err_kfree_flow;
+ struct net_device_stats {
+-	unsigned long	rx_packets;
+-	unsigned long	tx_packets;
+-	unsigned long	rx_bytes;
+-	unsigned long	tx_bytes;
+-	unsigned long	rx_errors;
+-	unsigned long	tx_errors;
+-	unsigned long	rx_dropped;
+-	unsigned long	tx_dropped;
+-	unsigned long	multicast;
+-	unsigned long	collisions;
+-	unsigned long	rx_length_errors;
+-	unsigned long	rx_over_errors;
+-	unsigned long	rx_crc_errors;
+-	unsigned long	rx_frame_errors;
+-	unsigned long	rx_fifo_errors;
+-	unsigned long	rx_missed_errors;
+-	unsigned long	tx_aborted_errors;
+-	unsigned long	tx_carrier_errors;
+-	unsigned long	tx_fifo_errors;
+-	unsigned long	tx_heartbeat_errors;
+-	unsigned long	tx_window_errors;
+-	unsigned long	rx_compressed;
+-	unsigned long	tx_compressed;
++	NET_DEV_STAT(rx_packets);
++	NET_DEV_STAT(tx_packets);
++	NET_DEV_STAT(rx_bytes);
++	NET_DEV_STAT(tx_bytes);
++	NET_DEV_STAT(rx_errors);
++	NET_DEV_STAT(tx_errors);
++	NET_DEV_STAT(rx_dropped);
++	NET_DEV_STAT(tx_dropped);
++	NET_DEV_STAT(multicast);
++	NET_DEV_STAT(collisions);
++	NET_DEV_STAT(rx_length_errors);
++	NET_DEV_STAT(rx_over_errors);
++	NET_DEV_STAT(rx_crc_errors);
++	NET_DEV_STAT(rx_frame_errors);
++	NET_DEV_STAT(rx_fifo_errors);
++	NET_DEV_STAT(rx_missed_errors);
++	NET_DEV_STAT(tx_aborted_errors);
++	NET_DEV_STAT(tx_carrier_errors);
++	NET_DEV_STAT(tx_fifo_errors);
++	NET_DEV_STAT(tx_heartbeat_errors);
++	NET_DEV_STAT(tx_window_errors);
++	NET_DEV_STAT(rx_compressed);
++	NET_DEV_STAT(tx_compressed);
+ };
++#undef NET_DEV_STAT
  
-+	ovs_flow_mask_key(&new_flow->key, key, true, &mask);
+ 
+ #include <linux/cache.h>
+@@ -4936,4 +4943,9 @@ do {								\
+ 
+ extern struct net_device *blackhole_netdev;
+ 
++/* Note: Avoid these macros in fast path, prefer per-cpu or per-queue counters. */
++#define DEV_STATS_INC(DEV, FIELD) atomic_long_inc(&(DEV)->stats.__##FIELD)
++#define DEV_STATS_ADD(DEV, FIELD, VAL) 	\
++		atomic_long_add((VAL), &(DEV)->stats.__##FIELD)
 +
- 	/* Extract flow identifier. */
- 	error = ovs_nla_get_identifier(&new_flow->id, a[OVS_FLOW_ATTR_UFID],
--				       &new_flow->key, log);
-+				       key, log);
- 	if (error)
- 		goto err_kfree_flow;
- 
--	/* unmasked key is needed to match when ufid is not used. */
--	if (ovs_identifier_is_key(&new_flow->id))
--		match.key = new_flow->id.unmasked_key;
--
--	ovs_flow_mask_key(&new_flow->key, &new_flow->key, true, &mask);
--
- 	/* Validate actions. */
- 	error = ovs_nla_copy_actions(net, a[OVS_FLOW_ATTR_ACTIONS],
- 				     &new_flow->key, &acts, log);
-@@ -981,7 +984,7 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 	if (ovs_identifier_is_ufid(&new_flow->id))
- 		flow = ovs_flow_tbl_lookup_ufid(&dp->table, &new_flow->id);
- 	if (!flow)
--		flow = ovs_flow_tbl_lookup(&dp->table, &new_flow->key);
-+		flow = ovs_flow_tbl_lookup(&dp->table, key);
- 	if (likely(!flow)) {
- 		rcu_assign_pointer(new_flow->sf_acts, acts);
- 
-@@ -1051,6 +1054,8 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 
- 	if (reply)
- 		ovs_notify(&dp_flow_genl_family, reply, info);
-+
-+	kfree(key);
- 	return 0;
- 
- err_unlock_ovs:
-@@ -1060,6 +1065,8 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 	ovs_nla_free_flow_actions(acts);
- err_kfree_flow:
- 	ovs_flow_free(new_flow, false);
-+err_kfree_key:
-+	kfree(key);
- error:
- 	return error;
+ #endif	/* _LINUX_NETDEVICE_H */
+diff --git a/include/net/dst.h b/include/net/dst.h
+index 433f7c1ce8a9..34185e527726 100644
+--- a/include/net/dst.h
++++ b/include/net/dst.h
+@@ -357,9 +357,8 @@ static inline void __skb_tunnel_rx(struct sk_buff *skb, struct net_device *dev,
+ static inline void skb_tunnel_rx(struct sk_buff *skb, struct net_device *dev,
+ 				 struct net *net)
+ {
+-	/* TODO : stats should be SMP safe */
+-	dev->stats.rx_packets++;
+-	dev->stats.rx_bytes += skb->len;
++	DEV_STATS_INC(dev, rx_packets);
++	DEV_STATS_ADD(dev, rx_bytes, skb->len);
+ 	__skb_tunnel_rx(skb, dev, net);
  }
+ 
+diff --git a/net/core/dev.c b/net/core/dev.c
+index 84bc6d0e8560..296bed9431f3 100644
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -9461,24 +9461,16 @@ void netdev_run_todo(void)
+ void netdev_stats_to_stats64(struct rtnl_link_stats64 *stats64,
+ 			     const struct net_device_stats *netdev_stats)
+ {
+-#if BITS_PER_LONG == 64
+-	BUILD_BUG_ON(sizeof(*stats64) < sizeof(*netdev_stats));
+-	memcpy(stats64, netdev_stats, sizeof(*netdev_stats));
+-	/* zero out counters that only exist in rtnl_link_stats64 */
+-	memset((char *)stats64 + sizeof(*netdev_stats), 0,
+-	       sizeof(*stats64) - sizeof(*netdev_stats));
+-#else
+-	size_t i, n = sizeof(*netdev_stats) / sizeof(unsigned long);
+-	const unsigned long *src = (const unsigned long *)netdev_stats;
++	size_t i, n = sizeof(*netdev_stats) / sizeof(atomic_long_t);
++	const atomic_long_t *src = (atomic_long_t *)netdev_stats;
+ 	u64 *dst = (u64 *)stats64;
+ 
+ 	BUILD_BUG_ON(n > sizeof(*stats64) / sizeof(u64));
+ 	for (i = 0; i < n; i++)
+-		dst[i] = src[i];
++		dst[i] = atomic_long_read(&src[i]);
+ 	/* zero out counters that only exist in rtnl_link_stats64 */
+ 	memset((char *)stats64 + n * sizeof(u64), 0,
+ 	       sizeof(*stats64) - n * sizeof(u64));
+-#endif
+ }
+ EXPORT_SYMBOL(netdev_stats_to_stats64);
+ 
 -- 
 2.35.1
 
