@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B5433EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5124C433EF;
-	Mon, 16 Jan 2023 16:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D2633EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF9BC433EF;
+	Mon, 16 Jan 2023 16:03:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884987;
-	bh=A8e5zLPLqxa7YcOIHon/d4PfntYS2PPjo1gGHQprKYo=;
+	s=korg; t=1673884989;
+	bh=pvltEXSiUFC9diafDbsx26spIIwbWPkznqU+5td83ng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s0XvuAvcweGh85G0JdHpmSXb2PdCLC4e0D7Nvr1ESVRyj6hCQX6z3oLNrHFxLl99S
-	 XY20+L3/1kV/Y9C2qRrBFFQnxLFYv/u79b9t+/NT1vkFw2w5TSK8j78Lu0d6Zlj1EA
-	 AGStHYzQqNDXzWgwRgPcrGaDYHckdnwBB6cie3hQ=
+	b=XmdQBuKw6f61gmjQqcdPMBrn+nBrRK3mP6ITZvbf6ghmx1x0WtN4fl89kXd/oEC0g
+	 kjoNAL8swmcZ7FT5nszu7H5E/VzECnUUbT3lIwgcPAZk8i+ZtG5QzbnJcoQUqn9h2t
+	 4vthg2wPwe+J8EjxDJ9XdkRChQpmedZknVq4UGig=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Nikitin <denik@chromium.org>,
-	Marc Zyngier <maz@kernel.org>,
-	Stephen Boyd <swboyd@chromium.org>
-Subject: [PATCH 5.15 06/86] KVM: arm64: nvhe: Fix build with profile optimization
-Date: Mon, 16 Jan 2023 16:50:40 +0100
-Message-Id: <20230116154747.331758988@linuxfoundation.org>
+	Jinrong Liang <cloudliang@tencent.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Subject: [PATCH 5.15 07/86] selftests: kvm: Fix a compile error in selftests/kvm/rseq_test.c
+Date: Mon, 16 Jan 2023 16:50:41 +0100
+Message-Id: <20230116154747.362531821@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -35,42 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Denis Nikitin <denik@chromium.org>
+From: Jinrong Liang <cloudliang@tencent.com>
 
-commit bde971a83bbff78561458ded236605a365411b87 upstream.
+commit 561cafebb2cf97b0927b4fb0eba22de6200f682e upstream.
 
-Kernel build with clang and KCFLAGS=-fprofile-sample-use=<profile> fails with:
+The following warning appears when executing:
+	make -C tools/testing/selftests/kvm
 
-error: arch/arm64/kvm/hyp/nvhe/kvm_nvhe.tmp.o: Unexpected SHT_REL
-section ".rel.llvm.call-graph-profile"
+rseq_test.c: In function ‘main’:
+rseq_test.c:237:33: warning: implicit declaration of function ‘gettid’; did you mean ‘getgid’? [-Wimplicit-function-declaration]
+          (void *)(unsigned long)gettid());
+                                 ^~~~~~
+                                 getgid
+/usr/bin/ld: /tmp/ccr5mMko.o: in function `main':
+../kvm/tools/testing/selftests/kvm/rseq_test.c:237: undefined reference to `gettid'
+collect2: error: ld returned 1 exit status
+make: *** [../lib.mk:173: ../kvm/tools/testing/selftests/kvm/rseq_test] Error 1
 
-Starting from 13.0.0 llvm can generate SHT_REL section, see
-https://reviews.llvm.org/rGca3bdb57fa1ac98b711a735de048c12b5fdd8086.
-gen-hyprel does not support SHT_REL relocation section.
+Use the more compatible syscall(SYS_gettid) instead of gettid() to fix it.
+More subsequent reuse may cause it to be wrapped in a lib file.
 
-Filter out profile use flags to fix the build with profile optimization.
-
-Signed-off-by: Denis Nikitin <denik@chromium.org>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20221014184532.3153551-1-denik@chromium.org
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Jinrong Liang <cloudliang@tencent.com>
+Message-Id: <20220802071240.84626-1-cloudliang@tencent.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/hyp/nvhe/Makefile |    4 ++++
- 1 file changed, 4 insertions(+)
+ tools/testing/selftests/kvm/rseq_test.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/arm64/kvm/hyp/nvhe/Makefile
-+++ b/arch/arm64/kvm/hyp/nvhe/Makefile
-@@ -83,6 +83,10 @@ quiet_cmd_hypcopy = HYPCOPY $@
- # Remove ftrace, Shadow Call Stack, and CFI CFLAGS.
- # This is equivalent to the 'notrace', '__noscs', and '__nocfi' annotations.
- KBUILD_CFLAGS := $(filter-out $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS) $(CC_FLAGS_CFI), $(KBUILD_CFLAGS))
-+# Starting from 13.0.0 llvm emits SHT_REL section '.llvm.call-graph-profile'
-+# when profile optimization is applied. gen-hyprel does not support SHT_REL and
-+# causes a build failure. Remove profile optimization flags.
-+KBUILD_CFLAGS := $(filter-out -fprofile-sample-use=% -fprofile-use=%, $(KBUILD_CFLAGS))
+--- a/tools/testing/selftests/kvm/rseq_test.c
++++ b/tools/testing/selftests/kvm/rseq_test.c
+@@ -233,7 +233,7 @@ int main(int argc, char *argv[])
+ 	ucall_init(vm, NULL);
  
- # KVM nVHE code is run at a different exception code with a different map, so
- # compiler instrumentation that inserts callbacks or checks into the code may
+ 	pthread_create(&migration_thread, NULL, migration_worker,
+-		       (void *)(unsigned long)gettid());
++		       (void *)(unsigned long)syscall(SYS_gettid));
+ 
+ 	for (i = 0; !done; i++) {
+ 		vcpu_run(vm, VCPU_ID);
 
 
