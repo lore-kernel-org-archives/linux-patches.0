@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A559E33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC36C433D2;
-	Mon, 16 Jan 2023 15:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B7833EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B276DC433EF;
+	Mon, 16 Jan 2023 15:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884555;
-	bh=MU8wepNEKBoAoupapCSody0HU15y//59seMrIiAZ70E=;
+	s=korg; t=1673884558;
+	bh=c02ktNMsOPqj1DcBGfy4olfsu9rckusVQhg+n6RGST4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Av2XvtgYEmhBi5XRebMQHYwyMvFsEAoO0Ln2ealg1cs+xBK7ONe4ITJbaCo6kCIN
-	 8tNjNKrfB8yeUd7QgT+38GCjveTSNEow551RLmEOSON7gteTFerGWDFThdVtZ6isTF
-	 VRBvzLZ+VFVeAo6gJuBZJ14mxqBoEsH0hiaRW6mY=
+	b=F5u+5JJiZUV8XlH2t571f1rjP50op85Wzw37e5SronxR/LupAR9TzslbjTrsvOuAq
+	 m4Nq9tTeooWTDcpjBeRc9BTYMpvdKFieqn0sb8WCTG+F0Mjj8BiTaEaSamFhvko8Q5
+	 ZH0ogM8AgR/qOYVxWJFpQVdkwcDeQ9D9smz7K3do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 051/183] platform/x86: dell-privacy: Fix SW_CAMERA_LENS_COVER reporting
-Date: Mon, 16 Jan 2023 16:49:34 +0100
-Message-Id: <20230116154805.519705490@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: [PATCH 6.1 052/183] dt-bindings: msm: dsi-controller-main: Fix operating-points-v2 constraint
+Date: Mon, 16 Jan 2023 16:49:35 +0100
+Message-Id: <20230116154805.557317861@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -33,80 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit 1af7fef0d9d3fa075bf4e850f705df1fe97d33ce upstream.
+commit cdf64343f91a1225e9e3d4ce4261962cd41b4ddd upstream.
 
-Use KE_VSW instead of KE_SW for the SW_CAMERA_LENS_COVER key_entry
-and get the value of the switch from the status field when handling
-SW_CAMERA_LENS_COVER events, instead of always reporting 0.
+The existing msm8916.dtsi does not depend on nor require operating points.
 
-Also correctly set the initial SW_CAMERA_LENS_COVER value.
-
-Fixes: 8af9fa37b8a3 ("platform/x86: dell-privacy: Add support for Dell hardware privacy")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20221221220724.119594-1-hdegoede@redhat.com
+Fixes: 4dbe55c97741 ("dt-bindings: msm: dsi: add yaml schemas for DSI bindings")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/515940/
+Link: https://lore.kernel.org/r/20221223021025.1646636-2-bryan.odonoghue@linaro.org
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/dell/dell-wmi-privacy.c |   22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/platform/x86/dell/dell-wmi-privacy.c
-+++ b/drivers/platform/x86/dell/dell-wmi-privacy.c
-@@ -61,7 +61,7 @@ static const struct key_entry dell_wmi_k
- 	/* privacy mic mute */
- 	{ KE_KEY, 0x0001, { KEY_MICMUTE } },
- 	/* privacy camera mute */
--	{ KE_SW,  0x0002, { SW_CAMERA_LENS_COVER } },
-+	{ KE_VSW, 0x0002, { SW_CAMERA_LENS_COVER } },
- 	{ KE_END, 0},
- };
+--- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+@@ -135,7 +135,6 @@ required:
+   - assigned-clocks
+   - assigned-clock-parents
+   - power-domains
+-  - operating-points-v2
+   - ports
  
-@@ -115,11 +115,15 @@ bool dell_privacy_process_event(int type
- 
- 	switch (code) {
- 	case DELL_PRIVACY_AUDIO_EVENT: /* Mic mute */
--	case DELL_PRIVACY_CAMERA_EVENT: /* Camera mute */
- 		priv->last_status = status;
- 		sparse_keymap_report_entry(priv->input_dev, key, 1, true);
- 		ret = true;
- 		break;
-+	case DELL_PRIVACY_CAMERA_EVENT: /* Camera mute */
-+		priv->last_status = status;
-+		sparse_keymap_report_entry(priv->input_dev, key, !(status & CAMERA_STATUS), false);
-+		ret = true;
-+		break;
- 	default:
- 		dev_dbg(&priv->wdev->dev, "unknown event type 0x%04x 0x%04x\n", type, code);
- 	}
-@@ -304,6 +308,11 @@ static int dell_privacy_wmi_probe(struct
- 
- 	dev_set_drvdata(&wdev->dev, priv);
- 	priv->wdev = wdev;
-+
-+	ret = get_current_status(priv->wdev);
-+	if (ret)
-+		return ret;
-+
- 	/* create evdev passing interface */
- 	priv->input_dev = devm_input_allocate_device(&wdev->dev);
- 	if (!priv->input_dev)
-@@ -342,11 +351,12 @@ static int dell_privacy_wmi_probe(struct
- 	priv->input_dev->name = "Dell Privacy Driver";
- 	priv->input_dev->id.bustype = BUS_HOST;
- 
--	ret = input_register_device(priv->input_dev);
--	if (ret)
--		return ret;
-+	/* Report initial camera-cover status */
-+	if (priv->features_present & BIT(DELL_PRIVACY_TYPE_CAMERA))
-+		input_report_switch(priv->input_dev, SW_CAMERA_LENS_COVER,
-+				    !(priv->last_status & CAMERA_STATUS));
- 
--	ret = get_current_status(priv->wdev);
-+	ret = input_register_device(priv->input_dev);
- 	if (ret)
- 		return ret;
- 
+ additionalProperties: false
 
 
