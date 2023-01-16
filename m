@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 364EA6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:38:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE11BC433EF;
-	Mon, 16 Jan 2023 16:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CABE86FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:38:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52BD8C433D2;
+	Mon, 16 Jan 2023 16:38:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887117;
-	bh=06yKw/v3JO85P5VVB5xSu9jWPv7fIvnmmkEgBNFiGf8=;
+	s=korg; t=1673887119;
+	bh=D9sZ/drgf3/+GvXPkWY+eQ+Qbf4SrNoYKds7Ssxej3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SZB29Xe5w3hMHfASHGKe0qrmV3a8i1g1ElRUitoDDfWrMIw/6BEoulNNPDL8Im2ev
-	 EjO2Yho+R2zOO8VuPvP66L3KPFVWrNLLPFIzirTdDCu87vdczGeGSgWCm6pF4B6De7
-	 9PYG/sTwpviZUpAOH+PV9koe8+si6qy+4a3VhamA=
+	b=bkr4/1J/1NlatDwxMiPW+IS2L2tcevmUk/CdbIHEV7JgHzMukaVMLyxqBDVfOVuj8
+	 7LlfEfylYb+6UOFWVOWEAeJTt4rYzaVaI4dCV2KXuDUWRIpuih+KG1Uk7cfy9zRnHD
+	 xvGVcl2/m0HRIe8S/QU2r4uCSmO8UNL/4z+eRqlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Suzuki K Poulose <suzuki.poulose@arm.com>,
-	Will Deacon <will@kernel.org>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 027/521] perf: arm_dsu: Fix hotplug callback leak in dsu_pmu_init()
-Date: Mon, 16 Jan 2023 16:44:49 +0100
-Message-Id: <20230116154848.522214291@linuxfoundation.org>
+Subject: [PATCH 4.19 028/521] arm64: dts: mt2712e: Fix unit_address_vs_reg warning for oscillators
+Date: Mon, 16 Jan 2023 16:44:50 +0100
+Message-Id: <20230116154848.570737170@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,44 +35,108 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit facafab7611f7b872c6b9eeaff53461ef11f482e ]
+[ Upstream commit e4495a0a8b3d84816c9a46edf3ce060bbf267475 ]
 
-dsu_pmu_init() won't remove the callback added by cpuhp_setup_state_multi()
-when platform_driver_register() failed. Remove the callback by
-cpuhp_remove_multi_state() in fail path.
+Rename the fixed-clock oscillators to remove the unit address.
 
-Similar to the handling of arm_ccn_init() in commit 26242b330093 ("bus:
-arm-ccn: Prevent hotplug callback leak")
+This solves unit_address_vs_reg warnings.
 
-Fixes: 7520fa99246d ("perf: ARM DynamIQ Shared Unit PMU support")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
-Link: https://lore.kernel.org/r/20221115070207.32634-2-yuancan@huawei.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 5d4839709c8e ("arm64: dts: mt2712: Add clock controller device nodes")
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Link: https://lore.kernel.org/r/20221013152212.416661-4-angelogioacchino.delregno@collabora.com
+Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/perf/arm_dsu_pmu.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt2712e.dtsi | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/perf/arm_dsu_pmu.c b/drivers/perf/arm_dsu_pmu.c
-index 660cb8ac886a..961533ba33e7 100644
---- a/drivers/perf/arm_dsu_pmu.c
-+++ b/drivers/perf/arm_dsu_pmu.c
-@@ -823,7 +823,11 @@ static int __init dsu_pmu_init(void)
- 	if (ret < 0)
- 		return ret;
- 	dsu_pmu_cpuhp_state = ret;
--	return platform_driver_register(&dsu_pmu_driver);
-+	ret = platform_driver_register(&dsu_pmu_driver);
-+	if (ret)
-+		cpuhp_remove_multi_state(dsu_pmu_cpuhp_state);
-+
-+	return ret;
- }
+diff --git a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
+index 75cc0f7cc088..b002bfd85be0 100644
+--- a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
++++ b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
+@@ -158,70 +158,70 @@ sys_clk: dummyclk {
+ 		#clock-cells = <0>;
+ 	};
  
- static void __exit dsu_pmu_exit(void)
+-	clk26m: oscillator@0 {
++	clk26m: oscillator-26m {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <26000000>;
+ 		clock-output-names = "clk26m";
+ 	};
+ 
+-	clk32k: oscillator@1 {
++	clk32k: oscillator-32k {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <32768>;
+ 		clock-output-names = "clk32k";
+ 	};
+ 
+-	clkfpc: oscillator@2 {
++	clkfpc: oscillator-50m {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <50000000>;
+ 		clock-output-names = "clkfpc";
+ 	};
+ 
+-	clkaud_ext_i_0: oscillator@3 {
++	clkaud_ext_i_0: oscillator-aud0 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <6500000>;
+ 		clock-output-names = "clkaud_ext_i_0";
+ 	};
+ 
+-	clkaud_ext_i_1: oscillator@4 {
++	clkaud_ext_i_1: oscillator-aud1 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <196608000>;
+ 		clock-output-names = "clkaud_ext_i_1";
+ 	};
+ 
+-	clkaud_ext_i_2: oscillator@5 {
++	clkaud_ext_i_2: oscillator-aud2 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <180633600>;
+ 		clock-output-names = "clkaud_ext_i_2";
+ 	};
+ 
+-	clki2si0_mck_i: oscillator@6 {
++	clki2si0_mck_i: oscillator-i2s0 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <30000000>;
+ 		clock-output-names = "clki2si0_mck_i";
+ 	};
+ 
+-	clki2si1_mck_i: oscillator@7 {
++	clki2si1_mck_i: oscillator-i2s1 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <30000000>;
+ 		clock-output-names = "clki2si1_mck_i";
+ 	};
+ 
+-	clki2si2_mck_i: oscillator@8 {
++	clki2si2_mck_i: oscillator-i2s2 {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <30000000>;
+ 		clock-output-names = "clki2si2_mck_i";
+ 	};
+ 
+-	clktdmin_mclk_i: oscillator@9 {
++	clktdmin_mclk_i: oscillator-mclk {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+ 		clock-frequency = <30000000>;
 -- 
 2.35.1
 
