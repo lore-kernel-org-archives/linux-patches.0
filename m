@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E23F33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC2D8C433EF;
-	Mon, 16 Jan 2023 16:01:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7F533EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A747C433D2;
+	Mon, 16 Jan 2023 16:01:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884872;
-	bh=5bVf8AfvZtU0d3byqWmqRMr9golDSxvft2wOswkGnx8=;
+	s=korg; t=1673884874;
+	bh=EXJXN2Xsxu1uilrvCdBrPZtWG02Ak5SJeVBAyKiudeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IdqCJf16dFh0zyZhbGBJBEMoN54ONcj2oxvfK275BKO+3RiXICryIZlr/znfV94RK
-	 hoJgHA/K4AWSpUAui8jTdRshe3nVU4ZX+bvBDvsfxvdoZVWhuyf6rxEl/mlzakfrZT
-	 Rf858shZtzjUjAd5Plp43RR5oqCwEsP9PzH8Is88=
+	b=UfQA/CaVznFUa/BOKXq+OCzPyx4lC814+llSJaKS21rCR5IPpKCvmZM+/ENgjFwpv
+	 xa1rvPRoKU8V9V1n7KICEje65q0jXJ2hZqOkXnHp/PIUy4wNJMYx4MRQ3IrkK+ZcCB
+	 1nJNY2yiITOXRa9X4LLo3YnrNlOJiTn3tDG9AWh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Coco Li <lixiaoyan@google.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	Jaroslav Pulchart <jaroslav.pulchart@gooddata.com>
-Subject: [PATCH 6.1 133/183] gro: take care of DODGY packets
-Date: Mon, 16 Jan 2023 16:50:56 +0100
-Message-Id: <20230116154808.994962053@linuxfoundation.org>
+	Mike Leach <mike.leach@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 165/183] perf build: Properly guard libbpf includes
+Date: Mon, 16 Jan 2023 16:51:28 +0100
+Message-Id: <20230116154810.267038258@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -38,46 +41,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Ian Rogers <irogers@google.com>
 
-[ Upstream commit 7871f54e3deed68a27111dda162c4fe9b9c65f8f ]
+[ Upstream commit d891f2b724b39a2a41e3ad7b57110193993242ff ]
 
-Jaroslav reported a recent throughput regression with virtio_net
-caused by blamed commit.
+Including libbpf header files should be guarded by HAVE_LIBBPF_SUPPORT.
+In bpf_counter.h, move the skeleton utilities under HAVE_BPF_SKEL.
 
-It is unclear if DODGY GSO packets coming from user space
-can be accepted by GRO engine in the future with minimal
-changes, and if there is any expected gain from it.
-
-In the meantime, make sure to detect and flush DODGY packets.
-
-Fixes: 5eddb24901ee ("gro: add support of (hw)gro packets to gro stack")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-and-bisected-by: Jaroslav Pulchart <jaroslav.pulchart@gooddata.com>
-Cc: Coco Li <lixiaoyan@google.com>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: d6a735ef3277c45f ("perf bpf_counter: Move common functions to bpf_counter.h")
+Reported-by: Mike Leach <mike.leach@linaro.org>
+Signed-off-by: Ian Rogers <irogers@google.com>
+Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Tested-by: Jiri Olsa <jolsa@kernel.org>
+Tested-by: Mike Leach <mike.leach@linaro.org>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: http://lore.kernel.org/lkml/20230105172243.7238-1-mike.leach@linaro.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/gro.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tools/perf/builtin-trace.c    | 2 ++
+ tools/perf/util/bpf_counter.h | 6 ++++++
+ 2 files changed, 8 insertions(+)
 
-diff --git a/net/core/gro.c b/net/core/gro.c
-index 8e0fe85a647d..1b4abfb9a7a1 100644
---- a/net/core/gro.c
-+++ b/net/core/gro.c
-@@ -507,8 +507,9 @@ static enum gro_result dev_gro_receive(struct napi_struct *napi, struct sk_buff
- 	NAPI_GRO_CB(skb)->count = 1;
- 	if (unlikely(skb_is_gso(skb))) {
- 		NAPI_GRO_CB(skb)->count = skb_shinfo(skb)->gso_segs;
--		/* Only support TCP at the moment. */
--		if (!skb_is_gso_tcp(skb))
-+		/* Only support TCP and non DODGY users. */
-+		if (!skb_is_gso_tcp(skb) ||
-+		    (skb_shinfo(skb)->gso_type & SKB_GSO_DODGY))
- 			NAPI_GRO_CB(skb)->flush = 1;
- 	}
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index 3dcf6aed1ef7..97b17f8941dc 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -17,7 +17,9 @@
+ #include "util/record.h"
+ #include <traceevent/event-parse.h>
+ #include <api/fs/tracing_path.h>
++#ifdef HAVE_LIBBPF_SUPPORT
+ #include <bpf/bpf.h>
++#endif
+ #include "util/bpf_map.h"
+ #include "util/rlimit.h"
+ #include "builtin.h"
+diff --git a/tools/perf/util/bpf_counter.h b/tools/perf/util/bpf_counter.h
+index 4dbf26408b69..c6d21c07b14c 100644
+--- a/tools/perf/util/bpf_counter.h
++++ b/tools/perf/util/bpf_counter.h
+@@ -4,9 +4,12 @@
  
+ #include <linux/list.h>
+ #include <sys/resource.h>
++
++#ifdef HAVE_LIBBPF_SUPPORT
+ #include <bpf/bpf.h>
+ #include <bpf/btf.h>
+ #include <bpf/libbpf.h>
++#endif
+ 
+ struct evsel;
+ struct target;
+@@ -87,6 +90,8 @@ static inline void set_max_rlimit(void)
+ 	setrlimit(RLIMIT_MEMLOCK, &rinf);
+ }
+ 
++#ifdef HAVE_BPF_SKEL
++
+ static inline __u32 bpf_link_get_id(int fd)
+ {
+ 	struct bpf_link_info link_info = { .id = 0, };
+@@ -127,5 +132,6 @@ static inline int bperf_trigger_reading(int prog_fd, int cpu)
+ 
+ 	return bpf_prog_test_run_opts(prog_fd, &opts);
+ }
++#endif /* HAVE_BPF_SKEL */
+ 
+ #endif /* __PERF_BPF_COUNTER_H */
 -- 
 2.35.1
 
